@@ -11,9 +11,7 @@ This framework contains SBB (Swiss Federal Railways) UI elements for Flutter App
 To use this plugin, add `design_system_flutter` as a [dependency in your pubspec.yaml file](https://flutter.io/platform-plugins/). As this is a private plugin, you must add it as a Git dependency:
 ```yaml
 dependencies:
-  design_system_flutter:
-    git:
-      url: ssh://git@codessh.sbb.ch:7999/kd_flutter/design_system_flutter.git
+  design_system_flutter: 0.2.0
 ```
 ## Getting Started
 ---
@@ -24,13 +22,6 @@ import 'package:design_system_flutter/design_system_flutter.dart';
 ```
 
 After that simply use the provided fonts, styles, colors, widgets...
-
-# Widget Catalog
----
-## SBBCheckBox
-
-![SBB CheckBox](doc/images/sbb_checkbox.gif)
-
 
 ### SBB internal documentation
 
@@ -52,6 +43,10 @@ General instructions on _how_ to contribute can be found under [Contributing](Co
 ## Authors
 
 * **Tran Hoang**
+* **Raab Ulrich**
+* **Mosberger Dominik**
+* **Schmucki Dominik**
+* **Müller Patrice**
 
 
 ## License
