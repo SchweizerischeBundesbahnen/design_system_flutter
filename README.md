@@ -11,7 +11,9 @@ This framework contains SBB (Swiss Federal Railways) UI elements for Flutter App
 To use this plugin, add `design_system_flutter` as a [dependency in your pubspec.yaml file](https://flutter.io/platform-plugins/). As this is a private plugin, you must add it as a Git dependency:
 ```yaml
 dependencies:
-  design_system_flutter: 0.2.0
+  design_system_flutter:
+    git:
+      url: https://github.com/SchweizerischeBundesbahnen/design_system_flutter.git
 ```
 ## Getting Started
 ---
