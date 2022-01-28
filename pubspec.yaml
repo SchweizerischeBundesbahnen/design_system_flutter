@@ -1,0 +1,50 @@
+name: design_system_flutter
+description: Design System Mobile for Flutter
+version: 0.2.0
+homepage: https://mob.sbb.ch
+
+environment:
+  sdk: '>=2.12.0 <3.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  # https://pub.dev/packages/lint
+  lint: ^1.5.3
+
+  # https://pub.dev/packages/golden_toolkit
+  golden_toolkit: ^0.9.0
+
+flutter:
+  assets:
+    - lib/fonts/
+  fonts:
+    - family: SBBWeb
+      fonts:
+        - asset: packages/design_system_flutter/fonts/SBBWeb-Bold.ttf
+          weight: 700
+        - asset: packages/design_system_flutter/fonts/SBBWeb-Roman.ttf
+          weight: 400
+        - asset: packages/design_system_flutter/fonts/SBBWeb-Italic.ttf
+          weight: 400
+          style: italic
+        - asset: packages/design_system_flutter/fonts/SBBWeb-Light.ttf
+          weight: 300
+        - asset: packages/design_system_flutter/fonts/SBBWeb-Thin.ttf
+          weight: 200
+        - asset: packages/design_system_flutter/fonts/SBBWeb-Ultra-Light.ttf
+          weight: 100
+    - family: SBBIconsSmall
+      fonts:
+        - asset: packages/design_system_flutter/fonts/font-sbb-icons-small.ttf
+    - family: SBBIconsMedium
+      fonts:
+        - asset: packages/design_system_flutter/fonts/font-sbb-icons-medium.ttf
+    - family: SBBIconsLarge
+      fonts:
+        - asset: packages/design_system_flutter/fonts/font-sbb-icons-large.ttf
