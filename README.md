@@ -1,8 +1,6 @@
 # Design System Mobile for Flutter
-https://img.shields.io/github/license/SchweizerischeBundesbahnen/design_system_flutter
-https://img.shields.io/github/workflow/status/SchweizerischeBundesbahnen/design_system_flutter/Flutter%20CI
-
-
+![GitHub](https://img.shields.io/github/license/SchweizerischeBundesbahnen/design_system_flutter)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/SchweizerischeBundesbahnen/design_system_flutter/Flutter%20CI)
 
 [Design System Mobile](https://designsystems.app.sbb.ch/) in Flutter (yes, it could be that easy...).
 
