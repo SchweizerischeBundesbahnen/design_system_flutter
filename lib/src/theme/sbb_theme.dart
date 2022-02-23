@@ -307,6 +307,9 @@ class SBBThemeData {
     // Toast
     TextStyle? toastTextStyle,
     Color? toastBackgroundColor,
+
+    // Tab Bar
+    TextStyle? tabBarTextStyle,
   }) {
     _setDefaultValues(
       brightness: brightness,
@@ -540,6 +543,9 @@ class SBBThemeData {
       // Toast
       toastTextStyle: toastTextStyle,
       toastBackgroundColor: toastBackgroundColor,
+
+      // Tab Bar
+      tabBarTextStyle: tabBarTextStyle,
     );
   }
 
@@ -775,6 +781,9 @@ class SBBThemeData {
     // Toast
     TextStyle? toastTextStyle,
     Color? toastBackgroundColor,
+
+    // Tab Bar
+    TextStyle? tabBarTextStyle,
   }) {
     _setDefaultValues(
       brightness: brightness,
@@ -1008,6 +1017,9 @@ class SBBThemeData {
       // Toast
       toastTextStyle: toastTextStyle,
       toastBackgroundColor: toastBackgroundColor,
+
+      // Tab Bar
+      tabBarTextStyle: tabBarTextStyle,
     );
   }
 
@@ -1243,6 +1255,9 @@ class SBBThemeData {
     // Toast
     TextStyle? toastTextStyle,
     Color? toastBackgroundColor,
+
+    // Tab Bar
+    TextStyle? tabBarTextStyle,
   }) {
     _setDefaultValues(
       brightness: brightness,
@@ -1476,6 +1491,9 @@ class SBBThemeData {
       // Toast
       toastTextStyle: toastTextStyle,
       toastBackgroundColor: toastBackgroundColor,
+
+      // Tab Bar
+      tabBarTextStyle: tabBarTextStyle,
     );
   }
 
@@ -1711,6 +1729,9 @@ class SBBThemeData {
   late TextStyle toastTextStyle;
   late Color toastBackgroundColor;
 
+  // Tab Bar
+  late TextStyle tabBarTextStyle;
+
   SBBThemeData copyWith({
     Brightness? brightness,
     Color? primaryColor,
@@ -1943,6 +1964,9 @@ class SBBThemeData {
     // Toast
     TextStyle? toastTextStyle,
     Color? toastBackgroundColor,
+
+    // Tab Bar
+    TextStyle? tabBarTextStyle,
   }) {
     final defaultTheme = SBBThemeData(brightness: this.brightness);
     return SBBThemeData(
@@ -2287,6 +2311,9 @@ class SBBThemeData {
       // Toast
       toastTextStyle: toastTextStyle ?? (this.toastTextStyle == defaultTheme.toastTextStyle ? null : this.toastTextStyle),
       toastBackgroundColor: toastBackgroundColor ?? (this.toastBackgroundColor == defaultTheme.toastBackgroundColor ? null : this.toastBackgroundColor),
+
+      // Tab Bar
+      tabBarTextStyle: tabBarTextStyle ?? (this.tabBarTextStyle == defaultTheme.tabBarTextStyle ? null : this.tabBarTextStyle),
     );
   }
 
@@ -2522,6 +2549,9 @@ class SBBThemeData {
     // Toast
     TextStyle? toastTextStyle,
     Color? toastBackgroundColor,
+
+    // Tab Bar
+    TextStyle? tabBarTextStyle,
   }) {
     this.brightness = brightness ?? Brightness.light;
 
@@ -2777,6 +2807,9 @@ class SBBThemeData {
     // Toast
     this.toastTextStyle = toastTextStyle ?? themedTextStyle(textStyle: SBBTextStyles.smallLight, color: SBBColors.white);
     this.toastBackgroundColor = toastBackgroundColor ?? themeValue(SBBColors.black.withOpacity(0.5), SBBColors.white.withOpacity(0.3));
+
+    // Tab Bar
+    this.tabBarTextStyle = tabBarTextStyle ?? themedTextStyle(textStyle: SBBTextStyles.extraSmallLight.copyWith(fontWeight: FontWeight.w500));
   }
 
   ThemeData createTheme() {
