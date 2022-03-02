@@ -19,6 +19,7 @@ import 'pages/onboarding_page.dart';
 import 'pages/radio_button_page.dart';
 import 'pages/segmented_button_page.dart';
 import 'pages/select_page.dart';
+import 'pages/tab_bar_page.dart';
 import 'pages/text_field_page.dart';
 import 'pages/toast_page.dart';
 import 'pages/typography_page.dart';
@@ -105,7 +106,8 @@ class MyApp extends StatelessWidget {
                             _DemoEntry('Header', HeaderPage()),
                             _DemoEntry('Modal', ModalPage()),
                             _DemoEntry('Toast', ToastPage()),
-                            _DemoEntry('Onboarding', OnboardingPage(), isLastElement: true),
+                            _DemoEntry('Onboarding', OnboardingPage()),
+                            _DemoEntry('Tab Bar', TabBarPage(), isLastElement: true),
                           ],
                         ),
                       ),
