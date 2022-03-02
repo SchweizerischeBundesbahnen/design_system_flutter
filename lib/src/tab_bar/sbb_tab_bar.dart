@@ -14,8 +14,8 @@ import 'tab_item_widget.dart';
 /// Items is a list of all tabs that should be shown in the TabBar.
 /// OnTabChanged defines what happens when a tab is selected.
 /// NavigationDataStream is the current state. A [Stream] of [TabBarNavigationData]
-class SbbTabBar extends StatefulWidget {
-  const SbbTabBar({
+class SBBTabBar extends StatefulWidget {
+  const SBBTabBar({
     required this.items,
     required this.onTabChanged,
     required this.navigationDataStream,
@@ -27,7 +27,7 @@ class SbbTabBar extends StatefulWidget {
   final Stream<TabBarNavigationData> navigationDataStream;
 
   @override
-  State<SbbTabBar> createState() => _SbbTabBarState();
+  State<SBBTabBar> createState() => _SBBTabBarState();
 }
 
 class _TabBarNotification extends Notification {
@@ -36,7 +36,7 @@ class _TabBarNotification extends Notification {
   final TabBarDrawData data;
 }
 
-class _SbbTabBarState extends State<SbbTabBar> with SingleTickerProviderStateMixin {
+class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMixin {
   late TabBarDrawData tabBarData = TabBarDrawData.empty(widget.items);
 
   late AnimationController _controller;

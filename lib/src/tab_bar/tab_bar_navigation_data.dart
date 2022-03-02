@@ -2,7 +2,7 @@ import 'package:flutter/widgets.dart';
 
 import '../../design_system_flutter.dart';
 
-/// The data of the current state of the [SbbTabBar]
+/// The data of the current state of the [SBBTabBar]
 class TabBarNavigationData {
   const TabBarNavigationData(this.currentPage, this.previousPage, this.selectedTab);
 

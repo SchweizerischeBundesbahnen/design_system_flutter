@@ -10,15 +10,25 @@ class TabBarPage extends StatefulWidget {
   State<TabBarPage> createState() => _TabBarPageState();
 }
 
-class _TabBarPageState extends State<TabBarPage> {
+class _TabBarPageState extends State<TabBarPage> with SingleTickerProviderStateMixin {
   final items = <TabBarItem>[
-    _Item1(),
-    _Item2(),
-    _Item3(),
-    _Item4(),
+    _DemoItem('1', SBBIcons.train_small),
+    _DemoItem('2', SBBIcons.station_small),
+    _DemoItem('3', SBBIcons.archive_box_small),
+    _DemoItem('4', SBBIcons.arrow_compass_small),
   ];
 
   final _streamController = StreamController<TabBarNavigationData>();
+
+  late TabBarItem _selectedTab = items[0];
+  late AnimationController _animationController = AnimationController(vsync: this, duration: kThemeAnimationDuration);
+  late Animation<double> _animation = Tween(begin: 0.0, end: 4.0).animate(_animationController);
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController.addListener(() => _streamController.add(TabBarNavigationData(_animation.value, _animation.value, _selectedTab)));
+  }
 
   @override
   void dispose() {
@@ -34,10 +44,13 @@ class _TabBarPageState extends State<TabBarPage> {
             child: ThemeModeSegmentedButton(),
           ),
           Expanded(child: Container()),
-          SbbTabBar(
+          SBBTabBar(
             navigationDataStream: _streamController.stream,
             items: items,
-            onTabChanged: (t) => _streamController.add(TabBarNavigationData.simple(items, t)),
+            onTabChanged: (t) {
+              _selectedTab = t;
+              _animationController.animateTo(items.indexOf(t) / items.length, duration: kThemeAnimationDuration);
+            },
           ),
           Expanded(child: Container()),
         ],
@@ -52,20 +65,4 @@ class _DemoItem extends TabBarItem {
 
   @override
   String translateSemantics(BuildContext context, int index, int length) => 'Element $index von $length';
-}
-
-class _Item1 extends _DemoItem {
-  _Item1() : super('1', SBBIcons.train_small);
-}
-
-class _Item2 extends _DemoItem {
-  _Item2() : super('2', SBBIcons.station_small);
-}
-
-class _Item3 extends _DemoItem {
-  _Item3() : super('3', SBBIcons.archive_box_small);
-}
-
-class _Item4 extends _DemoItem {
-  _Item4() : super('4', SBBIcons.arrow_compass_small);
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../design_system_flutter.dart';
 
-/// A filler item for the usage of [SbbTabBar] together with a [ScrollView] and a [Stack] to achieve a scroll behind the Tab Bar effect.
+/// A filler item for the usage of [SBBTabBar] together with a [ScrollView] and a [Stack] to achieve a scroll behind the Tab Bar effect.
 /// Add [TabBarFiller] as the last element to make all element in a [ScrollView] visible.
 class TabBarFiller extends StatelessWidget {
   const TabBarFiller({
@@ -14,7 +14,7 @@ class TabBarFiller extends StatelessWidget {
         child: TabBarFiller(key: key),
       );
 
-  /// Returns the calculated size of the [SbbTabBar] according to [Orientation] and [MediaQueryData.textScaleFactor]
+  /// Returns the calculated size of the [SBBTabBar] according to [Orientation] and [MediaQueryData.textScaleFactor]
   static double calcHeight(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     final portrait = mediaQuery.orientation == Orientation.portrait;
