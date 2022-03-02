@@ -129,35 +129,33 @@ class SBBModalSheet extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        Stack(
-          children: [
-            Positioned.fill(
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.of(context).pop();
-                },
-                child: Container(color: SBBColors.transparent),
-              ),
-            ),
-            Container(
-              margin: EdgeInsets.only(
-                top: sbbTheme.statusBarHeight + sbbDefaultSpacing,
-              ),
-              decoration: BoxDecoration(
-                color: sbbTheme.modalBackgroundColor,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(sbbDefaultSpacing),
-                  topRight: Radius.circular(sbbDefaultSpacing),
-                ),
-              ),
-              child: _ModalHeader(title),
-            ),
-          ],
+        GestureDetector(
+          onTap: () {
+            Navigator.of(context).pop();
+          },
+          child: Container(
+            height: sbbTheme.statusBarHeight + sbbDefaultSpacing,
+            color: SBBColors.transparent,
+          ),
         ),
         Flexible(
           child: Container(
-            color: sbbTheme.modalBackgroundColor,
-            child: child,
+            decoration: BoxDecoration(
+              color: sbbTheme.modalBackgroundColor,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(sbbDefaultSpacing),
+                topRight: Radius.circular(sbbDefaultSpacing),
+              ),
+            ),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _ModalHeader(title),
+                Flexible(
+                  child: child,
+                ),
+              ],
+            ),
           ),
         ),
       ],
