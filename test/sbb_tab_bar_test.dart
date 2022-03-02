@@ -16,17 +16,17 @@ void main() {
         'Test TabBar',
         Column(
           children: [
-            SbbTabBar(
+            SBBTabBar(
               items: items,
               onTabChanged: (tab) => {},
               navigationDataStream: Stream.value(TabBarNavigationData.simple(items, items.skip(1).first)),
             ),
-            SbbTabBar(
+            SBBTabBar(
               items: items2,
               onTabChanged: (tab) => {},
               navigationDataStream: Stream.value(TabBarNavigationData.simple(items2, items2.last)),
             ),
-            SbbTabBar(
+            SBBTabBar(
               items: items3,
               onTabChanged: (tab) => {},
               navigationDataStream: Stream.value(TabBarNavigationData.simple(items3, items3.first)),

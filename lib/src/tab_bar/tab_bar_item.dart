@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../design_system_flutter.dart';
 
-/// Description of an Element in the [SbbTabBar]
+/// Description of an Element in the [SBBTabBar]
 abstract class TabBarItem {
   const TabBarItem(this.id, this.icon);
 
