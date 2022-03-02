@@ -92,14 +92,37 @@ Future<T?> showSBBModalSheet<T>({
   required BuildContext context,
   required String title,
   required Widget child,
+  bool useRootNavigator = false,
 }) {
   return showModalBottomSheet<T>(
     context: context,
     isScrollControlled: true,
     backgroundColor: SBBColors.transparent,
+    useRootNavigator: useRootNavigator,
     builder: (BuildContext context) {
       return SBBModalSheet(
         title: title,
+        child: child,
+      );
+    },
+    barrierColor: SBBInternal.barrierColor,
+  );
+}
+
+Future<T?> showCustomSBBModalSheet<T>({
+  required BuildContext context,
+  required Widget header,
+  required Widget child,
+  bool useRootNavigator = false,
+}) {
+  return showModalBottomSheet<T>(
+    context: context,
+    isScrollControlled: true,
+    backgroundColor: SBBColors.transparent,
+    useRootNavigator: useRootNavigator,
+    builder: (BuildContext context) {
+      return SBBModalSheet.custom(
+        header: header,
         child: child,
       );
     },
@@ -114,13 +137,44 @@ Future<T?> showSBBModalSheet<T>({
 /// * [showSBBModalSheet], which is typically used to display this Widget.
 /// * <https://digital.sbb.ch/de/design-system-mobile-new/module/modal>
 class SBBModalSheet extends StatelessWidget {
-  const SBBModalSheet({
+  SBBModalSheet({
     Key? key,
-    required this.title,
+    required String title,
+    required Widget child,
+  }) : this._(
+          key: key,
+          headerBuilder: (BuildContext context) => Padding(
+            padding: const EdgeInsetsDirectional.fromSTEB(
+              sbbDefaultSpacing,
+              sbbDefaultSpacing,
+              0.0,
+              sbbDefaultSpacing,
+            ),
+            child: Text(
+              title,
+              style: SBBTheme.of(context).modalTitleTextStyle,
+            ),
+          ),
+          child: child,
+        );
+
+  SBBModalSheet.custom({
+    Key? key,
+    required Widget header,
+    required Widget child,
+  }) : this._(
+          key: key,
+          headerBuilder: (BuildContext context) => header,
+          child: child,
+        );
+
+  const SBBModalSheet._({
+    Key? key,
+    required this.headerBuilder,
     required this.child,
   }) : super(key: key);
 
-  final String title;
+  final WidgetBuilder headerBuilder;
   final Widget child;
 
   @override
@@ -150,7 +204,23 @@ class SBBModalSheet extends StatelessWidget {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                _ModalHeader(title),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: headerBuilder.call(context),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(6.0),
+                      child: SBBIconButtonSmall(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        icon: SBBIcons.cross_small,
+                      ),
+                    ),
+                  ],
+                ),
                 Flexible(
                   child: child,
                 ),

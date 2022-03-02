@@ -5,6 +5,8 @@
 ## [Unreleased]
 ### Added
 * Added `SBBLogo` (SBB Signet)
+* Added `SBBTabBar`
+* Added global function `showCustomSBBModalSheet`
 * `SBBThemeData`: Added constructor `override` for easier targeted theme customizing
 * `SBBThemeData`: Added field `defaultRootContainerPadding`
 * `SBBTextField`: Added field `obscureText`
@@ -19,6 +21,8 @@
 * `SBBIconButtonSmallBorderless`: Added field `focusNode`
 * `SBBIconFormButton`: Added field `focusNode`
 * `SBBIconTextButton`: Added field `focusNode`
+* `SBBModalSheet`: Added field `useRootNavigator`
+* `SBBModalSheet`: Added constructor `custom` for header customizing
 ### Changed
 * `SBBHeader`: Renamed field `onPressedSBBSignet` to `onPressedLogo`
 * `SBBHeader`: Renamed field `sbbSignetTooltip` to `logoTooltip`
@@ -27,6 +31,7 @@
 ### Removed
 ### Fixed
 * `SBBHeader`: SBB Logo now excluded from semantics if `onPressedLogo` is `null`
+* `SBBModalSheet`: Fine line that sometimes was visible below the header is now gone
 
 ---
 
