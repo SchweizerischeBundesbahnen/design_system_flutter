@@ -29,9 +29,9 @@ After that simply use the provided fonts, styles, colors, widgets...
 
 ### SBB internal documentation
 
-A the moment, the following documents are only available to persons internal to SBB:
+A the moment, the following documents are only available to people internal to SBB:
 * [SBB Design System Mobile documentation](https://digital.sbb.ch/de/design-system-mobile-new "Design System Mobile documentation") (new version since 2021)
-* [AppBakery libraries](https://sbb.sharepoint.com/sites/app-bakery/SitePages/Mobile-Libraries.aspx "AppBakery liraries")
+* [AppBakery libraries](https://sbb.sharepoint.com/sites/app-bakery/SitePages/Mobile-Libraries.aspx "AppBakery libraries")
 * [Figma](https://www.figma.com/file/56woOj0p1qEOrZiTzi4mJ7/SBB-Mobile-Library-%28draft%29 "Figma library")
 
 ## Getting help
@@ -47,9 +47,9 @@ General instructions on _how_ to contribute can be found under [Contributing](Co
 ## Authors
 
 * **Tran Hoang**
-* **Raab Ulrich**
 * **Mosberger Dominik**
 * **Schmucki Dominik**
+* **Raab Ulrich**
 * **Müller Patrice**
 
 ## License
