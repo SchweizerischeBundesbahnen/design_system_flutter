@@ -27,6 +27,7 @@
 * `SBBHeader`: Renamed field `onPressedSBBSignet` to `onPressedLogo`
 * `SBBHeader`: Renamed field `sbbSignetTooltip` to `logoTooltip`
 * `SBBOnboarding`: Padding now defined by `SBBThemeData.defaultRootContainerPadding` 
+* `SBBTextStyles`: Adjusted `fontSize` and `height` values to match the current specifications
 ### Deprecated
 ### Removed
 ### Fixed
