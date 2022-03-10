@@ -60,7 +60,7 @@ class TabBarCurveClipper extends CustomClipper<Path> {
 
     if ((nextPercent > 0.0 || selectedOverride != null) && isNeighbour && data.paddingBetween < 64.0) {
       final c = Tween(begin: shape1.pRight.dx, end: shape2.pLeft.dx).transform(nextPercent);
-      path.quadraticBezierTo(c, 6.0, shape2.pLeft.dx, shape2.pLeft.dy);
+      path.quadraticBezierTo(c, 0.0, shape2.pLeft.dx, shape2.pLeft.dy);
     } else {
       path
         ..quadraticBezierTo(shape1.cRight.dx, shape1.cRight.dy, shape1.pCurveRight.dx, shape1.pCurveRight.dy)
