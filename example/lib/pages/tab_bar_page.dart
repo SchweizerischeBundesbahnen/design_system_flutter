@@ -16,13 +16,14 @@ class _TabBarPageState extends State<TabBarPage> with SingleTickerProviderStateM
     _DemoItem('2', SBBIcons.station_small),
     _DemoItem('3', SBBIcons.archive_box_small),
     _DemoItem('4', SBBIcons.arrow_compass_small),
+    _DemoItem('5', SBBIcons.arrow_compass_small),
   ];
 
   final _streamController = StreamController<TabBarNavigationData>();
 
   late TabBarItem _selectedTab = items[0];
   late AnimationController _animationController = AnimationController(vsync: this, duration: kThemeAnimationDuration);
-  late Animation<double> _animation = Tween(begin: 0.0, end: 4.0).animate(_animationController);
+  late Animation<double> _animation = Tween(begin: 0.0, end: items.length.toDouble()).animate(_animationController);
 
   @override
   void initState() {
