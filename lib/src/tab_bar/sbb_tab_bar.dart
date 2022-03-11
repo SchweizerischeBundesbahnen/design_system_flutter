@@ -127,6 +127,7 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
                           key: Key('${tab.id}_button'),
                           onTap: () => widget.onTabChanged(tab),
                           onTapDown: (_) {
+                            if (snapshotData.selectedTab == tab) return;
                             _controller.reset();
                             _controller.forward();
                             _selectedOverride = widget.items.indexOf(tab);

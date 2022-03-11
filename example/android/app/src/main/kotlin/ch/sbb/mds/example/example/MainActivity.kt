@@ -1,6 +1,5 @@
 package ch.sbb.mds.example.example
 
-import android.os.Bundle
 import androidx.annotation.NonNull
 
 import io.flutter.embedding.android.FlutterActivity
