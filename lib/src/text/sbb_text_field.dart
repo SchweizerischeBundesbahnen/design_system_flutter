@@ -32,7 +32,6 @@ class SBBTextField extends StatefulWidget {
     this.icon,
     this.focusNode,
     this.suffixIcon,
-    this.alignLabelWithHint,
     this.obscureText = false,
   }) : super(key: key);
 
@@ -47,9 +46,6 @@ class SBBTextField extends StatefulWidget {
 
   /// The label moves upward on focus.
   final String? labelText;
-
-  /// Align the label to top instead of center
-  final bool? alignLabelWithHint;
 
   /// The hint shows only in an empty field.
   final String? hintText;
@@ -105,37 +101,37 @@ class _SBBTextField extends State<SBBTextField> {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsetsDirectional.only(
-        start: 16.0,
-        top: 8.0,
+        start: sbbDefaultSpacing,
+        top: 0.0,
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (widget.icon != null)
             Padding(
-              padding: const EdgeInsetsDirectional.only(top: 12.0, end: 8.0),
+              padding: const EdgeInsetsDirectional.only(
+                top: 12.0,
+                end: 8.0,
+              ),
               child: Icon(widget.icon),
             ),
           Expanded(
-            child: Stack(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    buildTextField(context),
-                    SBBTextFieldUnderline(
-                      errorText: widget.errorText,
-                      hasFocus: _hasFocus,
-                      isLastElement: widget.isLastElement,
-                    )
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  children: [
+                    Expanded(
+                      child: buildTextField(context),
+                    ),
+                    if (widget.suffixIcon != null) widget.suffixIcon!,
                   ],
                 ),
-                if (widget.suffixIcon != null)
-                  Positioned(
-                    top: -4.0,
-                    right: 0.0,
-                    child: widget.suffixIcon!,
-                  )
+                SBBTextFieldUnderline(
+                  errorText: widget.errorText,
+                  hasFocus: _hasFocus,
+                  isLastElement: widget.isLastElement,
+                )
               ],
             ),
           ),
@@ -146,6 +142,17 @@ class _SBBTextField extends State<SBBTextField> {
 
   TextField buildTextField(BuildContext context) {
     final sbbTheme = SBBTheme.of(context);
+    final labelStyle = widget.enabled
+        ? sbbTheme.textFieldPlaceholderTextStyle
+        : sbbTheme.textFieldPlaceholderTextStyleDisabled;
+    // adjust floating label style to get desired sizes
+    final floatingLabelStyle = labelStyle.copyWith(
+      fontSize: SBBTextStyles.helpersLabel.fontSize! * 1.335,
+      height: 1.6,
+    );
+    final style = widget.enabled
+        ? sbbTheme.textFieldTextStyle
+        : sbbTheme.textFieldTextStyleDisabled;
     return TextField(
       focusNode: _focus,
       controller: widget.controller,
@@ -161,20 +168,25 @@ class _SBBTextField extends State<SBBTextField> {
       onSubmitted: widget.onSubmitted,
       enabled: widget.enabled,
       decoration: InputDecoration(
+        isDense: true,
         labelText: widget.labelText,
         focusedBorder: InputBorder.none,
         enabledBorder: InputBorder.none,
         disabledBorder: InputBorder.none,
         errorBorder: InputBorder.none,
         focusedErrorBorder: InputBorder.none,
-        contentPadding: widget.maxLines == 1 ? const EdgeInsets.only(bottom: 2.0) : const EdgeInsetsDirectional.only(bottom: sbbDefaultSpacing / 2, end: sbbDefaultSpacing),
-        labelStyle: widget.enabled ? sbbTheme.textFieldPlaceholderTextStyle : sbbTheme.textFieldPlaceholderTextStyleDisabled,
+        contentPadding: EdgeInsetsDirectional.only(
+          bottom: sbbDefaultSpacing / 2,
+          top: 2.0, // depends on the height of the label text
+        ),
+        floatingLabelStyle: floatingLabelStyle,
+        labelStyle: labelStyle,
         hintText: widget.hintText,
-        hintStyle: widget.enabled ? sbbTheme.textFieldPlaceholderTextStyle : sbbTheme.textFieldPlaceholderTextStyleDisabled,
+        hintStyle: labelStyle,
         hintMaxLines: widget.hintMaxLines,
-        alignLabelWithHint: widget.alignLabelWithHint,
+        alignLabelWithHint: true,
       ),
-      style: widget.enabled ? sbbTheme.textFieldTextStyle : sbbTheme.textFieldTextStyleDisabled,
+      style: style,
       inputFormatters: widget.inputFormatters,
       textCapitalization: widget.textCapitalization,
       textInputAction: widget.textInputAction,

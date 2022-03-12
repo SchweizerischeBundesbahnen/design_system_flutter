@@ -13,26 +13,18 @@ class SBBListHeader extends StatelessWidget {
     this.title, {
     Key? key,
     this.padding,
-    this.icon,
-    this.onCallToAction,
-  })  : assert(icon != null && onCallToAction != null || icon == null && onCallToAction == null),
-        super(key: key);
+  }) : super(key: key);
 
   final String title;
   final EdgeInsetsGeometry? padding;
-  final IconData? icon;
-  final VoidCallback? onCallToAction;
-
-  static const _listHeaderHeight = 40.0;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: _listHeaderHeight,
+    return Padding(
       padding: padding ??
-          EdgeInsetsDirectional.only(
-            start: sbbDefaultSpacing,
-            end: onCallToAction == null ? sbbDefaultSpacing : sbbDefaultSpacing / 2,
+          EdgeInsets.symmetric(
+            horizontal: sbbDefaultSpacing,
+            vertical: sbbDefaultSpacing / 2,
           ),
       child: Row(
         children: [
@@ -44,11 +36,6 @@ class SBBListHeader extends StatelessWidget {
               style: SBBTheme.of(context).listHeaderTextStyle,
             ),
           ),
-          if (onCallToAction != null)
-            SBBIconButtonSmall(
-              onPressed: onCallToAction,
-              icon: icon!,
-            ),
         ],
       ),
     );
