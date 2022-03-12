@@ -33,7 +33,7 @@ class SBBTextStyles {
 
   static const TextStyle mediumLight = TextStyle(
     fontSize: 16.0,
-    height: 1.25,
+    height: 20.0 / 16.0,
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w300,
     fontFamily: SBBWebFont,
@@ -41,7 +41,7 @@ class SBBTextStyles {
 
   static const TextStyle mediumBold = TextStyle(
     fontSize: 16.0,
-    height: 1.25,
+    height: 20.0 / 16.0,
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w700,
     fontFamily: SBBWebFont,
@@ -65,15 +65,15 @@ class SBBTextStyles {
 
   static const TextStyle extraSmallLight = TextStyle(
     fontSize: 12.0,
-    height: 20.0 / 12.0,
+    height: 16.0 / 12.0,
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w300,
     fontFamily: SBBWebFont,
   );
 
   static const TextStyle helpersLabel = TextStyle(
-    fontSize: 12.0,
-    height: 1.2,
+    fontSize: 10.0,
+    height: 12.0 / 10.0,
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w300,
     fontFamily: SBBWebFont,

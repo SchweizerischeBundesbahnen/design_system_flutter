@@ -2,8 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import '../../design_system_flutter.dart';
-
 /// SBB Toast. Use according to documentation.
 ///
 /// See also:
@@ -14,6 +12,7 @@ class SBBToast {
 
   static const durationShort = const Duration(milliseconds: 2000);
   static const durationLong = const Duration(milliseconds: 3500);
+  static const defaultBottom = 30.0;
 
   final OverlayState _overlayState;
 
@@ -26,7 +25,11 @@ class SBBToast {
     return SBBToast._(Overlay.of(context, rootOverlay: true)!);
   }
 
-  void show({required String message, Duration duration = durationShort}) {
+  void show({
+    required String message,
+    Duration duration = durationShort,
+    double bottom = defaultBottom,
+  }) {
     final showToastMessage = () {
       remove();
       _streamController = StreamController<bool>();
@@ -35,6 +38,7 @@ class SBBToast {
         message,
         duration,
         _streamController!.stream,
+        bottom,
       );
       _overlayState.insert(_overlayEntry!);
       _fadeOutTimer = Timer(duration + kThemeAnimationDuration * 2, () {
@@ -73,12 +77,13 @@ class SBBToast {
     String message,
     Duration duration,
     Stream<bool> stream,
+    double bottom,
   ) {
     return OverlayEntry(builder: (context) {
       return Positioned(
         left: 0.0,
         right: 0.0,
-        bottom: 30.0,
+        bottom: bottom,
         child: Align(
           alignment: Alignment.center,
           child: IgnorePointer(
