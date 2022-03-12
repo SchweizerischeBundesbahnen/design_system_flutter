@@ -23,6 +23,7 @@
 * `SBBIconTextButton`: Added field `focusNode`
 * `SBBModalSheet`: Added field `useRootNavigator`
 * `SBBModalSheet`: Added constructor `custom` for header customizing
+* `SBBToast`: Added field `bottom`
 ### Changed
 * `SBBHeader`: Renamed field `onPressedSBBSignet` to `onPressedLogo`
 * `SBBHeader`: Renamed field `sbbSignetTooltip` to `logoTooltip`
