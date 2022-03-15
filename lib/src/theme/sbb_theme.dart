@@ -2,20 +2,28 @@ import 'package:flutter/material.dart';
 
 import '../../design_system_flutter.dart';
 import '../sbb_internal.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 typedef ThemedWidgetBuilder = Widget Function(BuildContext context, ThemeData theme, ThemeData darkTheme);
 
 const sbbDefaultSpacing = 16.0;
 
+enum HostPlatform {
+  web,
+  native
+}
+
 class SBBTheme extends StatelessWidget {
   factory SBBTheme({
     SBBThemeData? theme,
     SBBThemeData? darkTheme,
+    HostPlatform hostType = kIsWeb ? HostPlatform.web : HostPlatform.native,
     required ThemedWidgetBuilder builder,
   }) {
     return SBBTheme._(
-      theme: theme ?? SBBThemeData.light(),
-      darkTheme: darkTheme ?? SBBThemeData.dark(),
+      theme: theme ?? SBBThemeData.light(hostPlatform: hostType),
+      darkTheme: darkTheme ?? SBBThemeData.dark(hostPlatform: hostType),
+      hostType: hostType,
       builder: builder,
     );
   }
@@ -33,6 +41,7 @@ class SBBTheme extends StatelessWidget {
 
   const SBBTheme._({
     Key? key,
+    this.hostType = kIsWeb ? HostPlatform.web : HostPlatform.native,
     required this.theme,
     required this.darkTheme,
     required this.builder,
@@ -41,6 +50,7 @@ class SBBTheme extends StatelessWidget {
   final SBBThemeData theme;
   final SBBThemeData darkTheme;
   final ThemedWidgetBuilder builder;
+  final HostPlatform hostType;
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +66,8 @@ class SBBTheme extends StatelessWidget {
 
   static SBBThemeData of(BuildContext context) {
     final inheritedTheme = context.dependOnInheritedWidgetOfExactType<_InheritedTheme>();
-    return Theme.of(context).brightness == Brightness.dark ? inheritedTheme?.darkTheme ?? SBBThemeData.dark() : inheritedTheme?.theme ?? SBBThemeData.light();
+    final defaultHostPlatform = kIsWeb ? HostPlatform.web : HostPlatform.native;
+    return Theme.of(context).brightness == Brightness.dark ? inheritedTheme?.darkTheme ?? SBBThemeData.dark(hostPlatform: inheritedTheme?.darkTheme.hostPlatform ?? defaultHostPlatform) : inheritedTheme?.theme ?? SBBThemeData.light(hostPlatform: inheritedTheme?.theme.hostPlatform ?? defaultHostPlatform);
   }
 }
 
@@ -75,8 +86,10 @@ class _InheritedTheme extends InheritedWidget {
 }
 
 class SBBThemeData {
-  SBBThemeData({
-    Brightness? brightness,
+
+  factory SBBThemeData(
+    {
+    required Brightness brightness,
     Color? primaryColor,
     Color? primaryColorDark,
     MaterialColor? primarySwatch,
@@ -86,6 +99,9 @@ class SBBThemeData {
     TextStyle? defaultTextStyle,
     Color? dividerColor,
     double? defaultRootContainerPadding,
+
+    // web / native
+    HostPlatform? hostPlatform,
 
     // Icon
     Color? iconColor,
@@ -311,1426 +327,890 @@ class SBBThemeData {
     // Tab Bar
     TextStyle? tabBarTextStyle,
   }) {
-    _setDefaultValues(
-      brightness: brightness,
-      primaryColor: primaryColor,
-      primaryColorDark: primaryColorDark,
-      primarySwatch: primarySwatch,
-      backgroundColor: backgroundColor,
-      fontFamily: fontFamily,
-      defaultTextColor: defaultTextColor,
-      defaultTextStyle: defaultTextStyle,
-      dividerColor: dividerColor,
-      defaultRootContainerPadding: defaultRootContainerPadding,
+    // SET hard-coded default values HERE
 
-      // Icon
-      iconColor: iconColor,
+    final bool _isLight = brightness == Brightness.light;
 
-      // Header
-      headerBackgroundColor: headerBackgroundColor,
-      headerButtonBackgroundColorHighlighted: headerButtonBackgroundColorHighlighted,
-      headerIconColor: headerIconColor,
-      headerTextStyle: headerTextStyle,
+    themeValue<T>(T lightThemeValue, T darkThemeValue) => _isLight ? lightThemeValue : darkThemeValue;
 
-      // PrimaryButton
-      primaryButtonBackgroundColor: primaryButtonBackgroundColor,
-      primaryButtonBackgroundColorHighlighted: primaryButtonBackgroundColorHighlighted,
-      primaryButtonBackgroundColorDisabled: primaryButtonBackgroundColorDisabled,
-      primaryButtonBackgroundColorLoading: primaryButtonBackgroundColorLoading,
-      primaryButtonTextStyle: primaryButtonTextStyle,
-      primaryButtonTextStyleHighlighted: primaryButtonTextStyleHighlighted,
-      primaryButtonTextStyleDisabled: primaryButtonTextStyleDisabled,
-      primaryButtonTextStyleLoading: primaryButtonTextStyleLoading,
+    primaryColor = primaryColor ?? SBBColors.red;
+    primaryColorDark = primaryColorDark ?? SBBColors.red125;
+    primarySwatch = primarySwatch ??
+        MaterialColor(
+          primaryColor.value,
+          <int, Color>{
+            50:  primaryColor,
+            100: primaryColor,
+            200: primaryColor,
+            300: primaryColor,
+            400: primaryColor,
+            500: primaryColor,
+            600: primaryColor,
+            700: primaryColor,
+            800: primaryColor,
+            900: primaryColor,
+          },
+        );
+    backgroundColor = backgroundColor ?? themeValue(SBBColors.milk, SBBColors.black);
+    fontFamily = fontFamily ?? defaultTextStyle?.fontFamily ?? SBBWebFont;
+    defaultTextColor = defaultTextColor ?? defaultTextStyle?.color ?? themeValue(SBBColors.black, SBBColors.white);
+    defaultTextStyle =
+        (defaultTextStyle ?? SBBTextStyles.mediumLight).copyWith(fontFamily: defaultTextStyle?.fontFamily ?? fontFamily, color: defaultTextStyle?.color ?? defaultTextColor);
+    dividerColor = dividerColor ?? themeValue(SBBColors.cloud, const Color(0xFF2A2A2A));
+    defaultRootContainerPadding = defaultRootContainerPadding ?? sbbDefaultSpacing;
 
-      // PrimaryButtonNegative
-      primaryButtonNegativeBackgroundColor: primaryButtonNegativeBackgroundColor,
-      primaryButtonNegativeBackgroundColorHighlighted: primaryButtonNegativeBackgroundColorHighlighted,
-      primaryButtonNegativeBackgroundColorDisabled: primaryButtonNegativeBackgroundColorDisabled,
-      primaryButtonNegativeBackgroundColorLoading: primaryButtonNegativeBackgroundColorLoading,
-      primaryButtonNegativeBorderColor: primaryButtonNegativeBorderColor,
-      primaryButtonNegativeBorderColorHighlighted: primaryButtonNegativeBorderColorHighlighted,
-      primaryButtonNegativeBorderColorDisabled: primaryButtonNegativeBorderColorDisabled,
-      primaryButtonNegativeBorderColorLoading: primaryButtonNegativeBorderColorLoading,
-      primaryButtonNegativeTextStyle: primaryButtonNegativeTextStyle,
-      primaryButtonNegativeTextStyleHighlighted: primaryButtonNegativeTextStyleHighlighted,
-      primaryButtonNegativeTextStyleDisabled: primaryButtonNegativeTextStyleDisabled,
-      primaryButtonNegativeTextStyleLoading: primaryButtonNegativeTextStyleLoading,
+    themedTextStyle({TextStyle? textStyle, Color? color}) => (textStyle ?? defaultTextStyle!).copyWith(fontFamily: fontFamily, color: color ?? defaultTextColor);
 
-      // SecondaryButton
-      secondaryButtonBackgroundColor: secondaryButtonBackgroundColor,
-      secondaryButtonBackgroundColorHighlighted: secondaryButtonBackgroundColorHighlighted,
-      secondaryButtonBackgroundColorDisabled: secondaryButtonBackgroundColorDisabled,
-      secondaryButtonBackgroundColorLoading: secondaryButtonBackgroundColorLoading,
-      secondaryButtonBorderColor: secondaryButtonBorderColor,
-      secondaryButtonBorderColorHighlighted: secondaryButtonBorderColorHighlighted,
-      secondaryButtonBorderColorDisabled: secondaryButtonBorderColorDisabled,
-      secondaryButtonBorderColorLoading: secondaryButtonBorderColorLoading,
-      secondaryButtonTextStyle: secondaryButtonTextStyle,
-      secondaryButtonTextStyleHighlighted: secondaryButtonTextStyleHighlighted,
-      secondaryButtonTextStyleDisabled: secondaryButtonTextStyleDisabled,
-      secondaryButtonTextStyleLoading: secondaryButtonTextStyleLoading,
-
-      // TertiaryButtonLarge
-      tertiaryButtonLargeBackgroundColor: tertiaryButtonLargeBackgroundColor,
-      tertiaryButtonLargeBackgroundColorHighlighted: tertiaryButtonLargeBackgroundColorHighlighted,
-      tertiaryButtonLargeBackgroundColorDisabled: tertiaryButtonLargeBackgroundColorDisabled,
-      tertiaryButtonLargeBorderColor: tertiaryButtonLargeBorderColor,
-      tertiaryButtonLargeBorderColorHighlighted: tertiaryButtonLargeBorderColorHighlighted,
-      tertiaryButtonLargeBorderColorDisabled: tertiaryButtonLargeBorderColorDisabled,
-      tertiaryButtonLargeTextStyle: tertiaryButtonLargeTextStyle,
-      tertiaryButtonLargeTextStyleHighlighted: tertiaryButtonLargeTextStyleHighlighted,
-      tertiaryButtonLargeTextStyleDisabled: tertiaryButtonLargeTextStyleDisabled,
-
-      // TertiaryButtonSmall
-      tertiaryButtonSmallBackgroundColor: tertiaryButtonSmallBackgroundColor,
-      tertiaryButtonSmallBackgroundColorHighlighted: tertiaryButtonSmallBackgroundColorHighlighted,
-      tertiaryButtonSmallBackgroundColorDisabled: tertiaryButtonSmallBackgroundColorDisabled,
-      tertiaryButtonSmallBorderColor: tertiaryButtonSmallBorderColor,
-      tertiaryButtonSmallBorderColorHighlighted: tertiaryButtonSmallBorderColorHighlighted,
-      tertiaryButtonSmallBorderColorDisabled: tertiaryButtonSmallBorderColorDisabled,
-      tertiaryButtonSmallTextStyle: tertiaryButtonSmallTextStyle,
-      tertiaryButtonSmallTextStyleHighlighted: tertiaryButtonSmallTextStyleHighlighted,
-      tertiaryButtonSmallTextStyleDisabled: tertiaryButtonSmallTextStyleDisabled,
-
-      // IconButtonLarge
-      iconButtonLargeBackgroundColor: iconButtonLargeBackgroundColor,
-      iconButtonLargeBackgroundColorHighlighted: iconButtonLargeBackgroundColorHighlighted,
-      iconButtonLargeBackgroundColorDisabled: iconButtonLargeBackgroundColorDisabled,
-      iconButtonLargeBorderColor: iconButtonLargeBorderColor,
-      iconButtonLargeBorderColorHighlighted: iconButtonLargeBorderColorHighlighted,
-      iconButtonLargeBorderColorDisabled: iconButtonLargeBorderColorDisabled,
-      iconButtonLargeIconColor: iconButtonLargeIconColor,
-      iconButtonLargeIconColorHighlighted: iconButtonLargeIconColorHighlighted,
-      iconButtonLargeIconColorDisabled: iconButtonLargeIconColorDisabled,
-
-      // IconButtonSmall
-      iconButtonSmallBackgroundColor: iconButtonSmallBackgroundColor,
-      iconButtonSmallBackgroundColorHighlighted: iconButtonSmallBackgroundColorHighlighted,
-      iconButtonSmallBackgroundColorDisabled: iconButtonSmallBackgroundColorDisabled,
-      iconButtonSmallBorderColor: iconButtonSmallBorderColor,
-      iconButtonSmallBorderColorHighlighted: iconButtonSmallBorderColorHighlighted,
-      iconButtonSmallBorderColorDisabled: iconButtonSmallBorderColorDisabled,
-      iconButtonSmallIconColor: iconButtonSmallIconColor,
-      iconButtonSmallIconColorHighlighted: iconButtonSmallIconColorHighlighted,
-      iconButtonSmallIconColorDisabled: iconButtonSmallIconColorDisabled,
-
-      // IconButtonSmallNegative
-      iconButtonSmallNegativeBackgroundColor: iconButtonSmallNegativeBackgroundColor,
-      iconButtonSmallNegativeBackgroundColorHighlighted: iconButtonSmallNegativeBackgroundColorHighlighted,
-      iconButtonSmallNegativeBackgroundColorDisabled: iconButtonSmallNegativeBackgroundColorDisabled,
-      iconButtonSmallNegativeBorderColor: iconButtonSmallNegativeBorderColor,
-      iconButtonSmallNegativeBorderColorHighlighted: iconButtonSmallNegativeBorderColorHighlighted,
-      iconButtonSmallNegativeBorderColorDisabled: iconButtonSmallNegativeBorderColorDisabled,
-      iconButtonSmallNegativeIconColor: iconButtonSmallNegativeIconColor,
-      iconButtonSmallNegativeIconColorHighlighted: iconButtonSmallNegativeIconColorHighlighted,
-      iconButtonSmallNegativeIconColorDisabled: iconButtonSmallNegativeIconColorDisabled,
-
-      // IconButtonSmallBorderless
-      iconButtonSmallBorderlessBackgroundColor: iconButtonSmallBorderlessBackgroundColor,
-      iconButtonSmallBorderlessBackgroundColorHighlighted: iconButtonSmallBorderlessBackgroundColorHighlighted,
-      iconButtonSmallBorderlessBackgroundColorDisabled: iconButtonSmallBorderlessBackgroundColorDisabled,
-      iconButtonSmallBorderlessIconColor: iconButtonSmallBorderlessIconColor,
-      iconButtonSmallBorderlessIconColorHighlighted: iconButtonSmallBorderlessIconColorHighlighted,
-      iconButtonSmallBorderlessIconColorDisabled: iconButtonSmallBorderlessIconColorDisabled,
-
-      // IconFormButton
-      iconFormButtonBackgroundColor: iconFormButtonBackgroundColor,
-      iconFormButtonBackgroundColorHighlighted: iconFormButtonBackgroundColorHighlighted,
-      iconFormButtonBackgroundColorDisabled: iconFormButtonBackgroundColorDisabled,
-      iconFormButtonBorderColor: iconFormButtonBorderColor,
-      iconFormButtonBorderColorHighlighted: iconFormButtonBorderColorHighlighted,
-      iconFormButtonBorderColorDisabled: iconFormButtonBorderColorDisabled,
-      iconFormButtonIconColor: iconFormButtonIconColor,
-      iconFormButtonIconColorHighlighted: iconFormButtonIconColorHighlighted,
-      iconFormButtonIconColorDisabled: iconFormButtonIconColorDisabled,
-
-      // IconTextButton
-      iconTextButtonBackgroundColor: iconTextButtonBackgroundColor,
-      iconTextButtonBackgroundColorHighlighted: iconTextButtonBackgroundColorHighlighted,
-      iconTextButtonBackgroundColorDisabled: iconTextButtonBackgroundColorDisabled,
-      iconTextButtonIconColor: iconTextButtonIconColor,
-      iconTextButtonIconColorHighlighted: iconTextButtonIconColorHighlighted,
-      iconTextButtonIconColorDisabled: iconTextButtonIconColorDisabled,
-      iconTextButtonTextStyle: iconTextButtonTextStyle,
-      iconTextButtonTextStyleHighlighted: iconTextButtonTextStyleHighlighted,
-      iconTextButtonTextStyleDisabled: iconTextButtonTextStyleDisabled,
-
-      // Link
-      linkTextStyle: linkTextStyle,
-      linkTextStyleHighlighted: linkTextStyleHighlighted,
-
-      //ListHeader
-      listHeaderTextStyle: listHeaderTextStyle,
-
-      // ListItem
-      listItemBackgroundColor: listItemBackgroundColor,
-      listItemBackgroundColorHighlighted: listItemBackgroundColorHighlighted,
-      listItemTitleTextStyle: listItemTitleTextStyle,
-      listItemSubtitleTextStyle: listItemSubtitleTextStyle,
-
-      // Checkbox
-      checkboxColor: checkboxColor,
-      checkboxColorDisabled: checkboxColorDisabled,
-      checkboxBackgroundColor: checkboxBackgroundColor,
-      checkboxBackgroundColorHighlighted: checkboxBackgroundColorHighlighted,
-      checkboxBackgroundColorDisabled: checkboxBackgroundColorDisabled,
-      checkboxBorderColor: checkboxBorderColor,
-      checkboxBorderColorDisabled: checkboxBorderColorDisabled,
-      checkboxListItemBackgroundColor: checkboxListItemBackgroundColor,
-      checkboxListItemBackgroundColorHighlighted: checkboxListItemBackgroundColorHighlighted,
-      checkboxListItemBackgroundColorDisabled: checkboxListItemBackgroundColorDisabled,
-      checkboxListItemIconColor: checkboxListItemIconColor,
-      checkboxListItemIconColorDisabled: checkboxListItemIconColorDisabled,
-      checkboxListItemTextStyle: checkboxListItemTextStyle,
-      checkboxListItemTextStyleDisabled: checkboxListItemTextStyleDisabled,
-      checkboxListItemSecondaryTextStyle: checkboxListItemSecondaryTextStyle,
-      checkboxListItemSecondaryTextStyleDisabled: checkboxListItemSecondaryTextStyleDisabled,
-
-      // RadioButton
-      radioButtonColor: radioButtonColor,
-      radioButtonColorDisabled: radioButtonColorDisabled,
-      radioButtonBackgroundColor: radioButtonBackgroundColor,
-      radioButtonBackgroundColorHighlighted: radioButtonBackgroundColorHighlighted,
-      radioButtonBackgroundColorDisabled: radioButtonBackgroundColorDisabled,
-      radioButtonBorderColor: radioButtonBorderColor,
-      radioButtonBorderColorDisabled: radioButtonBorderColorDisabled,
-      radioButtonListItemBackgroundColor: radioButtonListItemBackgroundColor,
-      radioButtonListItemBackgroundColorHighlighted: radioButtonListItemBackgroundColorHighlighted,
-      radioButtonListItemBackgroundColorDisabled: radioButtonListItemBackgroundColorDisabled,
-      radioButtonListItemIconColor: radioButtonListItemIconColor,
-      radioButtonListItemIconColorDisabled: radioButtonListItemIconColorDisabled,
-      radioButtonListItemTextStyle: radioButtonListItemTextStyle,
-      radioButtonListItemTextStyleDisabled: radioButtonListItemTextStyleDisabled,
-      radioButtonListItemSecondaryTextStyle: radioButtonListItemSecondaryTextStyle,
-      radioButtonListItemSecondaryTextStyleDisabled: radioButtonListItemSecondaryTextStyleDisabled,
-
-      // SegmentedButton
-      segmentedButtonBackgroundColor: segmentedButtonBackgroundColor,
-      segmentedButtonSelectedColor: segmentedButtonSelectedColor,
-      segmentedButtonTextStyle: segmentedButtonTextStyle,
-
-      // TextField
-      textFieldTextStyle: textFieldTextStyle,
-      textFieldTextStyleDisabled: textFieldTextStyleDisabled,
-      textFieldPlaceholderTextStyle: textFieldPlaceholderTextStyle,
-      textFieldPlaceholderTextStyleDisabled: textFieldPlaceholderTextStyleDisabled,
-      textFieldErrorTextStyle: textFieldErrorTextStyle,
-      textFieldDividerColor: textFieldDividerColor,
-      textFieldDividerColorHighlighted: textFieldDividerColorHighlighted,
-      textFieldDividerColorError: textFieldDividerColorError,
-      textFieldCursorColor: textFieldCursorColor,
-      textFieldSelectionColor: textFieldSelectionColor,
-      textFieldSelectionHandleColor: textFieldSelectionHandleColor,
-      textFieldIconColor: textFieldIconColor,
-      textFieldIconColorDisabled: textFieldIconColorDisabled,
-
-      // Group
-      groupBackgroundColor: groupBackgroundColor,
-
-      // Accordion
-      accordionTitleTextStyle: accordionTitleTextStyle,
-      accordionBodyTextStyle: accordionBodyTextStyle,
-      accordionBackgroundColor: accordionBackgroundColor,
-
-      // Modal
-      modalBackgroundColor: modalBackgroundColor,
-      modalTitleTextStyle: modalTitleTextStyle,
-
-      // Select
-      selectLabelTextStyle: selectLabelTextStyle,
-      selectLabelTextStyleDisabled: selectLabelTextStyleDisabled,
-
-      // Toast
-      toastTextStyle: toastTextStyle,
-      toastBackgroundColor: toastBackgroundColor,
-
-      // Tab Bar
-      tabBarTextStyle: tabBarTextStyle,
-    );
-  }
-
-  SBBThemeData.light({
-    Brightness? brightness = Brightness.light,
-    Color? primaryColor,
-    Color? primaryColorDark,
-    MaterialColor? primarySwatch,
-    Color? backgroundColor,
-    String? fontFamily,
-    Color? defaultTextColor,
-    TextStyle? defaultTextStyle,
-    Color? dividerColor,
-    double? defaultRootContainerPadding,
+    // defaults to native
+    hostPlatform = hostPlatform ?? HostPlatform.native;
 
     // Icon
-    Color? iconColor,
+    iconColor = iconColor ?? themeValue(SBBColors.black, SBBColors.white);
 
     // Header
-    Color? headerBackgroundColor,
-    Color? headerButtonBackgroundColorHighlighted,
-    Color? headerIconColor,
-    TextStyle? headerTextStyle,
+    headerBackgroundColor = headerBackgroundColor ?? primaryColor;
+    headerButtonBackgroundColorHighlighted = headerButtonBackgroundColorHighlighted ?? primaryColorDark;
+    headerIconColor = headerIconColor ?? SBBColors.white;
+    headerTextStyle = headerTextStyle ?? themedTextStyle(textStyle: SBBTextStyles.largeLight, color: headerIconColor);
 
     // PrimaryButton
-    Color? primaryButtonBackgroundColor,
-    Color? primaryButtonBackgroundColorHighlighted,
-    Color? primaryButtonBackgroundColorDisabled,
-    Color? primaryButtonBackgroundColorLoading,
-    TextStyle? primaryButtonTextStyle,
-    TextStyle? primaryButtonTextStyleHighlighted,
-    TextStyle? primaryButtonTextStyleDisabled,
-    TextStyle? primaryButtonTextStyleLoading,
+    primaryButtonBackgroundColor = primaryButtonBackgroundColor ?? primaryColor;
+    primaryButtonBackgroundColorHighlighted = primaryButtonBackgroundColorHighlighted ?? primaryColorDark;
+    primaryButtonBackgroundColorDisabled = primaryButtonBackgroundColorDisabled ?? themeValue(SBBColors.cement, SBBColors.iron);
+    primaryButtonBackgroundColorLoading = primaryButtonBackgroundColorLoading ?? primaryButtonBackgroundColorDisabled;
+    primaryButtonTextStyle = primaryButtonTextStyle ?? themedTextStyle(color: SBBColors.white);
+    primaryButtonTextStyleHighlighted = primaryButtonTextStyleHighlighted ?? primaryButtonTextStyle;
+    primaryButtonTextStyleDisabled = primaryButtonTextStyleDisabled ?? primaryButtonTextStyle;
+    primaryButtonTextStyleLoading = primaryButtonTextStyleLoading ?? primaryButtonTextStyleDisabled;
 
     // PrimaryButtonNegative
-    Color? primaryButtonNegativeBackgroundColor,
-    Color? primaryButtonNegativeBackgroundColorHighlighted,
-    Color? primaryButtonNegativeBackgroundColorDisabled,
-    Color? primaryButtonNegativeBackgroundColorLoading,
-    Color? primaryButtonNegativeBorderColor,
-    Color? primaryButtonNegativeBorderColorHighlighted,
-    Color? primaryButtonNegativeBorderColorDisabled,
-    Color? primaryButtonNegativeBorderColorLoading,
-    TextStyle? primaryButtonNegativeTextStyle,
-    TextStyle? primaryButtonNegativeTextStyleHighlighted,
-    TextStyle? primaryButtonNegativeTextStyleDisabled,
-    TextStyle? primaryButtonNegativeTextStyleLoading,
+    primaryButtonNegativeBackgroundColor = primaryButtonNegativeBackgroundColor ?? SBBColors.transparent;
+    primaryButtonNegativeBackgroundColorHighlighted = primaryButtonNegativeBackgroundColorHighlighted ?? themeValue(SBBColors.black.withOpacity(0.2), SBBColors.white.withOpacity(0.2));
+    primaryButtonNegativeBackgroundColorDisabled = primaryButtonNegativeBackgroundColorDisabled ?? SBBColors.transparent;
+    primaryButtonNegativeBackgroundColorLoading = primaryButtonNegativeBackgroundColorLoading ?? primaryButtonNegativeBackgroundColorDisabled;
+    primaryButtonNegativeBorderColor = primaryButtonNegativeBorderColor ?? SBBColors.white;
+    primaryButtonNegativeBorderColorHighlighted = primaryButtonNegativeBorderColorHighlighted ?? primaryButtonNegativeBorderColor;
+    primaryButtonNegativeBorderColorDisabled = primaryButtonNegativeBorderColorDisabled ?? SBBColors.white.withOpacity(0.5);
+    primaryButtonNegativeBorderColorLoading = primaryButtonNegativeBorderColorLoading ?? primaryButtonNegativeBorderColorDisabled;
+    primaryButtonNegativeTextStyle = primaryButtonNegativeTextStyle ?? themedTextStyle(color: SBBColors.white);
+    primaryButtonNegativeTextStyleHighlighted = primaryButtonNegativeTextStyleHighlighted ?? primaryButtonNegativeTextStyle;
+    primaryButtonNegativeTextStyleDisabled = primaryButtonNegativeTextStyleDisabled ?? primaryButtonNegativeTextStyle;
+    primaryButtonNegativeTextStyleLoading = primaryButtonNegativeTextStyleLoading ?? primaryButtonNegativeTextStyleDisabled;
 
     // SecondaryButton
-    Color? secondaryButtonBackgroundColor,
-    Color? secondaryButtonBackgroundColorHighlighted,
-    Color? secondaryButtonBackgroundColorDisabled,
-    Color? secondaryButtonBackgroundColorLoading,
-    Color? secondaryButtonBorderColor,
-    Color? secondaryButtonBorderColorHighlighted,
-    Color? secondaryButtonBorderColorDisabled,
-    Color? secondaryButtonBorderColorLoading,
-    TextStyle? secondaryButtonTextStyle,
-    TextStyle? secondaryButtonTextStyleHighlighted,
-    TextStyle? secondaryButtonTextStyleDisabled,
-    TextStyle? secondaryButtonTextStyleLoading,
+    secondaryButtonBackgroundColor = secondaryButtonBackgroundColor ?? SBBColors.transparent;
+    secondaryButtonBackgroundColorHighlighted = secondaryButtonBackgroundColorHighlighted ?? themeValue(SBBColors.milk, SBBColors.iron);
+    secondaryButtonBackgroundColorDisabled = secondaryButtonBackgroundColorDisabled ?? secondaryButtonBackgroundColor;
+    secondaryButtonBackgroundColorLoading = secondaryButtonBackgroundColorLoading ?? secondaryButtonBackgroundColorDisabled;
+    secondaryButtonBorderColor = secondaryButtonBorderColor ?? primaryColor;
+    secondaryButtonBorderColorHighlighted = secondaryButtonBorderColorHighlighted ?? primaryColorDark;
+    secondaryButtonBorderColorDisabled = secondaryButtonBorderColorDisabled ?? themeValue(SBBColors.cement, SBBColors.iron);
+    secondaryButtonBorderColorLoading = secondaryButtonBorderColorLoading ?? secondaryButtonBorderColorDisabled;
+    secondaryButtonTextStyle = secondaryButtonTextStyle ?? themedTextStyle(color: primaryColor);
+    secondaryButtonTextStyleHighlighted = secondaryButtonTextStyleHighlighted ?? themedTextStyle(color: primaryColorDark);
+    secondaryButtonTextStyleDisabled = secondaryButtonTextStyleDisabled ?? themedTextStyle(color: SBBColors.metal);
+    secondaryButtonTextStyleLoading = secondaryButtonTextStyleLoading ?? secondaryButtonTextStyleDisabled;
 
     // TertiaryButtonLarge
-    Color? tertiaryButtonLargeBackgroundColor,
-    Color? tertiaryButtonLargeBackgroundColorHighlighted,
-    Color? tertiaryButtonLargeBackgroundColorDisabled,
-    Color? tertiaryButtonLargeBorderColor,
-    Color? tertiaryButtonLargeBorderColorHighlighted,
-    Color? tertiaryButtonLargeBorderColorDisabled,
-    TextStyle? tertiaryButtonLargeTextStyle,
-    TextStyle? tertiaryButtonLargeTextStyleHighlighted,
-    TextStyle? tertiaryButtonLargeTextStyleDisabled,
+    tertiaryButtonLargeBackgroundColor = tertiaryButtonLargeBackgroundColor ?? themeValue(SBBColors.white, SBBColors.transparent);
+    tertiaryButtonLargeBackgroundColorHighlighted = tertiaryButtonLargeBackgroundColorHighlighted ?? themeValue(SBBColors.milk, SBBColors.iron);
+    tertiaryButtonLargeBackgroundColorDisabled = tertiaryButtonLargeBackgroundColorDisabled ?? themeValue(SBBColors.transparent, SBBColors.transparent);
+    tertiaryButtonLargeBorderColor = tertiaryButtonLargeBorderColor ?? SBBColors.smoke;
+    tertiaryButtonLargeBorderColorHighlighted = tertiaryButtonLargeBorderColorHighlighted ?? tertiaryButtonLargeBorderColor;
+    tertiaryButtonLargeBorderColorDisabled = tertiaryButtonLargeBorderColorDisabled ?? themeValue(SBBColors.cloud, SBBColors.iron);
+    tertiaryButtonLargeTextStyle = tertiaryButtonLargeTextStyle ?? themedTextStyle();
+    tertiaryButtonLargeTextStyleHighlighted = tertiaryButtonLargeTextStyleHighlighted ?? tertiaryButtonLargeTextStyle;
+    tertiaryButtonLargeTextStyleDisabled = tertiaryButtonLargeTextStyleDisabled ?? tertiaryButtonLargeTextStyle.copyWith(color: SBBColors.metal);
 
     // TertiaryButtonSmall
-    Color? tertiaryButtonSmallBackgroundColor,
-    Color? tertiaryButtonSmallBackgroundColorHighlighted,
-    Color? tertiaryButtonSmallBackgroundColorDisabled,
-    Color? tertiaryButtonSmallBorderColor,
-    Color? tertiaryButtonSmallBorderColorHighlighted,
-    Color? tertiaryButtonSmallBorderColorDisabled,
-    TextStyle? tertiaryButtonSmallTextStyle,
-    TextStyle? tertiaryButtonSmallTextStyleHighlighted,
-    TextStyle? tertiaryButtonSmallTextStyleDisabled,
+    tertiaryButtonSmallBackgroundColor = tertiaryButtonSmallBackgroundColor ?? tertiaryButtonLargeBackgroundColor;
+    tertiaryButtonSmallBackgroundColorHighlighted = tertiaryButtonSmallBackgroundColorHighlighted ?? tertiaryButtonLargeBackgroundColorHighlighted;
+    tertiaryButtonSmallBackgroundColorDisabled = tertiaryButtonSmallBackgroundColorDisabled ?? tertiaryButtonLargeBackgroundColorDisabled;
+    tertiaryButtonSmallBorderColor = tertiaryButtonSmallBorderColor ?? tertiaryButtonLargeBorderColor;
+    tertiaryButtonSmallBorderColorHighlighted = tertiaryButtonSmallBorderColorHighlighted ?? tertiaryButtonLargeBorderColorHighlighted;
+    tertiaryButtonSmallBorderColorDisabled = tertiaryButtonSmallBorderColorDisabled ?? tertiaryButtonLargeBorderColorDisabled;
+    tertiaryButtonSmallTextStyle = tertiaryButtonSmallTextStyle ?? themedTextStyle(textStyle: SBBTextStyles.smallLight);
+    tertiaryButtonSmallTextStyleHighlighted = tertiaryButtonSmallTextStyleHighlighted ?? tertiaryButtonSmallTextStyle;
+    tertiaryButtonSmallTextStyleDisabled = tertiaryButtonSmallTextStyleDisabled ?? tertiaryButtonSmallTextStyle.copyWith(color: tertiaryButtonLargeTextStyleDisabled.color);
 
     // IconButtonLarge
-    Color? iconButtonLargeBackgroundColor,
-    Color? iconButtonLargeBackgroundColorHighlighted,
-    Color? iconButtonLargeBackgroundColorDisabled,
-    Color? iconButtonLargeBorderColor,
-    Color? iconButtonLargeBorderColorHighlighted,
-    Color? iconButtonLargeBorderColorDisabled,
-    Color? iconButtonLargeIconColor,
-    Color? iconButtonLargeIconColorHighlighted,
-    Color? iconButtonLargeIconColorDisabled,
+    iconButtonLargeBackgroundColor = iconButtonLargeBackgroundColor ?? tertiaryButtonLargeBackgroundColor;
+    iconButtonLargeBackgroundColorHighlighted = iconButtonLargeBackgroundColorHighlighted ?? tertiaryButtonLargeBackgroundColorHighlighted;
+    iconButtonLargeBackgroundColorDisabled = iconButtonLargeBackgroundColorDisabled ?? SBBColors.transparent;
+    iconButtonLargeBorderColor = iconButtonLargeBorderColor ?? tertiaryButtonLargeBorderColor;
+    iconButtonLargeBorderColorHighlighted = iconButtonLargeBorderColorHighlighted ?? tertiaryButtonLargeBorderColorHighlighted;
+    iconButtonLargeBorderColorDisabled = iconButtonLargeBorderColorDisabled ?? themeValue(SBBColors.cloud, SBBColors.iron);
+    iconButtonLargeIconColor = iconButtonLargeIconColor ?? iconColor;
+    iconButtonLargeIconColorHighlighted = iconButtonLargeIconColorHighlighted ?? iconButtonLargeIconColor;
+    iconButtonLargeIconColorDisabled = iconButtonLargeIconColorDisabled ?? iconButtonLargeBorderColorDisabled;
 
     // IconButtonSmall
-    Color? iconButtonSmallBackgroundColor,
-    Color? iconButtonSmallBackgroundColorHighlighted,
-    Color? iconButtonSmallBackgroundColorDisabled,
-    Color? iconButtonSmallBorderColor,
-    Color? iconButtonSmallBorderColorHighlighted,
-    Color? iconButtonSmallBorderColorDisabled,
-    Color? iconButtonSmallIconColor,
-    Color? iconButtonSmallIconColorHighlighted,
-    Color? iconButtonSmallIconColorDisabled,
+    iconButtonSmallBackgroundColor = iconButtonSmallBackgroundColor ?? iconButtonLargeBackgroundColor;
+    iconButtonSmallBackgroundColorHighlighted = iconButtonSmallBackgroundColorHighlighted ?? iconButtonLargeBackgroundColorHighlighted;
+    iconButtonSmallBackgroundColorDisabled = iconButtonSmallBackgroundColorDisabled ?? iconButtonLargeBackgroundColorDisabled;
+    iconButtonSmallBorderColor = iconButtonSmallBorderColor ?? iconButtonLargeBorderColor;
+    iconButtonSmallBorderColorHighlighted = iconButtonSmallBorderColorHighlighted ?? iconButtonLargeBorderColorHighlighted;
+    iconButtonSmallBorderColorDisabled = iconButtonSmallBorderColorDisabled ?? iconButtonLargeBorderColorDisabled;
+    iconButtonSmallIconColor = iconButtonSmallIconColor ?? iconButtonLargeIconColor;
+    iconButtonSmallIconColorHighlighted = iconButtonSmallIconColorHighlighted ?? iconButtonLargeIconColorHighlighted;
+    iconButtonSmallIconColorDisabled = iconButtonSmallIconColorDisabled ?? iconButtonLargeIconColorDisabled;
 
     // IconButtonSmallNegative
-    Color? iconButtonSmallNegativeBackgroundColor,
-    Color? iconButtonSmallNegativeBackgroundColorHighlighted,
-    Color? iconButtonSmallNegativeBackgroundColorDisabled,
-    Color? iconButtonSmallNegativeBorderColor,
-    Color? iconButtonSmallNegativeBorderColorHighlighted,
-    Color? iconButtonSmallNegativeBorderColorDisabled,
-    Color? iconButtonSmallNegativeIconColor,
-    Color? iconButtonSmallNegativeIconColorHighlighted,
-    Color? iconButtonSmallNegativeIconColorDisabled,
+    iconButtonSmallNegativeBackgroundColor = iconButtonSmallNegativeBackgroundColor ?? primaryButtonNegativeBackgroundColor;
+    iconButtonSmallNegativeBackgroundColorHighlighted = iconButtonSmallNegativeBackgroundColorHighlighted ?? primaryButtonNegativeBackgroundColorHighlighted;
+    iconButtonSmallNegativeBackgroundColorDisabled = iconButtonSmallNegativeBackgroundColorDisabled ?? primaryButtonNegativeBackgroundColorDisabled;
+    iconButtonSmallNegativeBorderColor = iconButtonSmallNegativeBorderColor ?? primaryButtonNegativeBorderColor;
+    iconButtonSmallNegativeBorderColorHighlighted = iconButtonSmallNegativeBorderColorHighlighted ?? primaryButtonNegativeBorderColorHighlighted;
+    iconButtonSmallNegativeBorderColorDisabled = iconButtonSmallNegativeBorderColorDisabled ?? primaryButtonNegativeBorderColorDisabled;
+    iconButtonSmallNegativeIconColor = iconButtonSmallNegativeIconColor ?? iconButtonSmallNegativeBorderColor;
+    iconButtonSmallNegativeIconColorHighlighted = iconButtonSmallNegativeIconColorHighlighted ?? iconButtonSmallNegativeBorderColorHighlighted;
+    iconButtonSmallNegativeIconColorDisabled = iconButtonSmallNegativeIconColorDisabled ?? iconButtonSmallNegativeBorderColorDisabled;
 
     // IconButtonSmallBorderless
-    Color? iconButtonSmallBorderlessBackgroundColor,
-    Color? iconButtonSmallBorderlessBackgroundColorHighlighted,
-    Color? iconButtonSmallBorderlessBackgroundColorDisabled,
-    Color? iconButtonSmallBorderlessIconColor,
-    Color? iconButtonSmallBorderlessIconColorHighlighted,
-    Color? iconButtonSmallBorderlessIconColorDisabled,
+    iconButtonSmallBorderlessBackgroundColor = iconButtonSmallBorderlessBackgroundColor ?? SBBColors.transparent;
+    iconButtonSmallBorderlessBackgroundColorHighlighted = iconButtonSmallBorderlessBackgroundColorHighlighted ?? SBBColors.transparent;
+    iconButtonSmallBorderlessBackgroundColorDisabled = iconButtonSmallBorderlessBackgroundColorDisabled ?? SBBColors.transparent;
+    iconButtonSmallBorderlessIconColor = iconButtonSmallBorderlessIconColor ?? iconButtonSmallIconColor;
+    iconButtonSmallBorderlessIconColorHighlighted = iconButtonSmallBorderlessIconColorHighlighted ?? themeValue(SBBColors.metal, SBBColors.aluminum);
+    iconButtonSmallBorderlessIconColorDisabled = iconButtonSmallBorderlessIconColorDisabled ?? iconButtonSmallIconColorDisabled;
 
     // IconFormButton
-    Color? iconFormButtonBackgroundColor,
-    Color? iconFormButtonBackgroundColorHighlighted,
-    Color? iconFormButtonBackgroundColorDisabled,
-    Color? iconFormButtonBorderColor,
-    Color? iconFormButtonBorderColorHighlighted,
-    Color? iconFormButtonBorderColorDisabled,
-    Color? iconFormButtonIconColor,
-    Color? iconFormButtonIconColorHighlighted,
-    Color? iconFormButtonIconColorDisabled,
+    iconFormButtonBackgroundColor = iconFormButtonBackgroundColor ?? iconButtonLargeBackgroundColor;
+    iconFormButtonBackgroundColorHighlighted = iconFormButtonBackgroundColorHighlighted ?? iconButtonLargeBackgroundColorHighlighted;
+    iconFormButtonBackgroundColorDisabled = iconFormButtonBackgroundColorDisabled ?? iconButtonLargeBackgroundColorDisabled;
+    iconFormButtonBorderColor = iconFormButtonBorderColor ?? iconButtonLargeBorderColor;
+    iconFormButtonBorderColorHighlighted = iconFormButtonBorderColorHighlighted ?? iconButtonLargeBorderColorHighlighted;
+    iconFormButtonBorderColorDisabled = iconFormButtonBorderColorDisabled ?? iconButtonLargeBorderColorDisabled;
+    iconFormButtonIconColor = iconFormButtonIconColor ?? iconButtonLargeIconColor;
+    iconFormButtonIconColorHighlighted = iconFormButtonIconColorHighlighted ?? iconButtonLargeIconColorHighlighted;
+    iconFormButtonIconColorDisabled = iconFormButtonIconColorDisabled ?? iconButtonLargeIconColorDisabled;
 
     // IconTextButton
-    Color? iconTextButtonBackgroundColor,
-    Color? iconTextButtonBackgroundColorHighlighted,
-    Color? iconTextButtonBackgroundColorDisabled,
-    Color? iconTextButtonIconColor,
-    Color? iconTextButtonIconColorHighlighted,
-    Color? iconTextButtonIconColorDisabled,
-    TextStyle? iconTextButtonTextStyle,
-    TextStyle? iconTextButtonTextStyleHighlighted,
-    TextStyle? iconTextButtonTextStyleDisabled,
+    iconTextButtonBackgroundColor = iconTextButtonBackgroundColor ?? themeValue(SBBColors.white, SBBColors.charcoal);
+    iconTextButtonBackgroundColorHighlighted = iconTextButtonBackgroundColorHighlighted ?? themeValue(SBBColors.milk, SBBColors.iron);
+    iconTextButtonBackgroundColorDisabled = iconTextButtonBackgroundColorDisabled ?? iconTextButtonBackgroundColor;
+    iconTextButtonTextStyle = iconTextButtonTextStyle ?? tertiaryButtonSmallTextStyle;
+    iconTextButtonTextStyleHighlighted = iconTextButtonTextStyleHighlighted ?? tertiaryButtonSmallTextStyleHighlighted;
+    iconTextButtonTextStyleDisabled = iconTextButtonTextStyleDisabled ?? tertiaryButtonSmallTextStyleDisabled;
+    iconTextButtonIconColor = iconTextButtonIconColor ?? iconTextButtonTextStyle.color!;
+    iconTextButtonIconColorHighlighted = iconTextButtonIconColorHighlighted ?? iconTextButtonTextStyleHighlighted.color!;
+    iconTextButtonIconColorDisabled = iconTextButtonIconColorDisabled ?? iconTextButtonTextStyleDisabled.color!;
 
     // Link
-    TextStyle? linkTextStyle,
-    TextStyle? linkTextStyleHighlighted,
+    linkTextStyle = linkTextStyle ?? defaultTextStyle.copyWith(color: primaryColor);
+    linkTextStyleHighlighted = linkTextStyleHighlighted ?? linkTextStyle.copyWith(color: themeValue(primaryColorDark, SBBColors.white));
 
     //ListHeader
-    TextStyle? listHeaderTextStyle,
+    listHeaderTextStyle = listHeaderTextStyle ?? themedTextStyle(textStyle: SBBTextStyles.smallLight);
 
     // ListItem
-    Color? listItemBackgroundColor,
-    Color? listItemBackgroundColorHighlighted,
-    TextStyle? listItemTitleTextStyle,
-    TextStyle? listItemSubtitleTextStyle,
+    listItemBackgroundColor = listItemBackgroundColor ?? SBBColors.transparent;
+    listItemBackgroundColorHighlighted = listItemBackgroundColorHighlighted ?? themeValue(SBBColors.milk, SBBColors.iron);
+    listItemTitleTextStyle = listItemTitleTextStyle ?? themedTextStyle();
+    listItemSubtitleTextStyle =
+        listItemSubtitleTextStyle ?? themedTextStyle(textStyle: SBBTextStyles.extraSmallLight.copyWith(height: 16.0 / 12.0), color: themeValue(SBBColors.metal, SBBColors.cement));
 
-    // Checkbox
-    Color? checkboxColor,
-    Color? checkboxColorDisabled,
-    Color? checkboxBackgroundColor,
-    Color? checkboxBackgroundColorHighlighted,
-    Color? checkboxBackgroundColorDisabled,
-    Color? checkboxBorderColor,
-    Color? checkboxBorderColorDisabled,
-    Color? checkboxListItemBackgroundColor,
-    Color? checkboxListItemBackgroundColorHighlighted,
-    Color? checkboxListItemBackgroundColorDisabled,
-    Color? checkboxListItemIconColor,
-    Color? checkboxListItemIconColorDisabled,
-    TextStyle? checkboxListItemTextStyle,
-    TextStyle? checkboxListItemTextStyleDisabled,
-    TextStyle? checkboxListItemSecondaryTextStyle,
-    TextStyle? checkboxListItemSecondaryTextStyleDisabled,
+    // Checkbox TODO define toggleable colors for checkbox and radiobutton?
+    checkboxColor = checkboxColor ?? primaryColor;
+    checkboxColorDisabled = checkboxColorDisabled ?? SBBColors.metal;
+    checkboxBackgroundColor = checkboxBackgroundColor ?? themeValue(SBBColors.white, SBBColors.transparent);
+    checkboxBackgroundColorHighlighted = checkboxBackgroundColorHighlighted ?? listItemBackgroundColorHighlighted;
+    checkboxBackgroundColorDisabled = checkboxBackgroundColorDisabled ?? SBBColors.transparent;
+    checkboxBorderColor = checkboxBorderColor ?? SBBColors.smoke;
+    checkboxBorderColorDisabled = checkboxBorderColorDisabled ?? themeValue(SBBColors.cloud, SBBColors.iron);
+    checkboxListItemBackgroundColor = checkboxListItemBackgroundColor ?? listItemBackgroundColor;
+    checkboxListItemBackgroundColorHighlighted = checkboxListItemBackgroundColorHighlighted ?? listItemBackgroundColorHighlighted;
+    checkboxListItemBackgroundColorDisabled = checkboxListItemBackgroundColorDisabled ?? checkboxListItemBackgroundColor;
+    checkboxListItemIconColor = checkboxListItemIconColor ?? iconColor;
+    checkboxListItemIconColorDisabled = checkboxListItemIconColorDisabled ?? SBBColors.metal;
+    checkboxListItemTextStyle = checkboxListItemTextStyle ?? listItemTitleTextStyle;
+    checkboxListItemTextStyleDisabled = checkboxListItemTextStyleDisabled ?? listItemTitleTextStyle.copyWith(color: SBBColors.metal);
+    checkboxListItemSecondaryTextStyle = checkboxListItemSecondaryTextStyle ?? listItemSubtitleTextStyle;
+    checkboxListItemSecondaryTextStyleDisabled = checkboxListItemSecondaryTextStyleDisabled ?? checkboxListItemSecondaryTextStyle.copyWith(color: SBBColors.metal);
 
-    // RadioButton
-    Color? radioButtonColor,
-    Color? radioButtonColorDisabled,
-    Color? radioButtonBackgroundColor,
-    Color? radioButtonBackgroundColorHighlighted,
-    Color? radioButtonBackgroundColorDisabled,
-    Color? radioButtonBorderColor,
-    Color? radioButtonBorderColorDisabled,
-    Color? radioButtonListItemBackgroundColor,
-    Color? radioButtonListItemBackgroundColorHighlighted,
-    Color? radioButtonListItemBackgroundColorDisabled,
-    Color? radioButtonListItemIconColor,
-    Color? radioButtonListItemIconColorDisabled,
-    TextStyle? radioButtonListItemTextStyle,
-    TextStyle? radioButtonListItemTextStyleDisabled,
-    TextStyle? radioButtonListItemSecondaryTextStyle,
-    TextStyle? radioButtonListItemSecondaryTextStyleDisabled,
+    // RadioButton TODO define toggleable colors for checkbox and radiobutton?
+    radioButtonColor = radioButtonColor ?? primaryColor;
+    radioButtonColorDisabled = radioButtonColorDisabled ?? SBBColors.metal;
+    radioButtonBackgroundColor = radioButtonBackgroundColor ?? themeValue(SBBColors.white, SBBColors.transparent);
+    radioButtonBackgroundColorHighlighted = radioButtonBackgroundColorHighlighted ?? listItemBackgroundColorHighlighted;
+    radioButtonBackgroundColorDisabled = radioButtonBackgroundColorDisabled ?? SBBColors.transparent;
+    radioButtonBorderColor = radioButtonBorderColor ?? SBBColors.smoke;
+    radioButtonBorderColorDisabled = radioButtonBorderColorDisabled ?? themeValue(SBBColors.cloud, SBBColors.iron);
+    radioButtonListItemBackgroundColor = radioButtonListItemBackgroundColor ?? listItemBackgroundColor;
+    radioButtonListItemBackgroundColorHighlighted = radioButtonListItemBackgroundColorHighlighted ?? listItemBackgroundColorHighlighted;
+    radioButtonListItemBackgroundColorDisabled = radioButtonListItemBackgroundColorDisabled ?? radioButtonListItemBackgroundColor;
+    radioButtonListItemIconColor = radioButtonListItemIconColor ?? iconColor;
+    radioButtonListItemIconColorDisabled = radioButtonListItemIconColorDisabled ?? SBBColors.metal;
+    radioButtonListItemTextStyle = radioButtonListItemTextStyle ?? listItemTitleTextStyle;
+    radioButtonListItemTextStyleDisabled = radioButtonListItemTextStyleDisabled ?? listItemTitleTextStyle.copyWith(color: SBBColors.metal);
+    radioButtonListItemSecondaryTextStyle = radioButtonListItemSecondaryTextStyle ?? listItemSubtitleTextStyle;
+    radioButtonListItemSecondaryTextStyleDisabled = radioButtonListItemSecondaryTextStyleDisabled ?? radioButtonListItemSecondaryTextStyle.copyWith(color: SBBColors.metal);
 
     // SegmentedButton
-    Color? segmentedButtonBackgroundColor,
-    Color? segmentedButtonSelectedColor,
-    TextStyle? segmentedButtonTextStyle,
+    segmentedButtonBackgroundColor = segmentedButtonBackgroundColor ?? themeValue(SBBColors.cloud, SBBColors.iron);
+    segmentedButtonSelectedColor = segmentedButtonSelectedColor ?? themeValue(SBBColors.white, SBBColors.black);
+    segmentedButtonTextStyle = segmentedButtonTextStyle ?? themedTextStyle();
 
     // TextField
-    TextStyle? textFieldTextStyle,
-    TextStyle? textFieldTextStyleDisabled,
-    TextStyle? textFieldPlaceholderTextStyle,
-    TextStyle? textFieldPlaceholderTextStyleDisabled,
-    TextStyle? textFieldErrorTextStyle,
-    Color? textFieldDividerColor,
-    Color? textFieldDividerColorHighlighted,
-    Color? textFieldDividerColorError,
-    Color? textFieldCursorColor,
-    Color? textFieldSelectionColor,
-    Color? textFieldSelectionHandleColor,
-    Color? textFieldIconColor,
-    Color? textFieldIconColorDisabled,
+    textFieldTextStyle = textFieldTextStyle ?? themedTextStyle();
+    textFieldTextStyleDisabled = textFieldTextStyleDisabled ?? textFieldTextStyle.copyWith(color: SBBColors.metal);
+    textFieldPlaceholderTextStyle = textFieldPlaceholderTextStyle ?? themedTextStyle(color: themeValue(SBBColors.metal, SBBColors.cement));
+    textFieldPlaceholderTextStyleDisabled =
+        textFieldPlaceholderTextStyleDisabled ?? themeValue(textFieldPlaceholderTextStyle, textFieldPlaceholderTextStyle.copyWith(color: SBBColors.metal));
+    textFieldErrorTextStyle = textFieldErrorTextStyle ?? themedTextStyle(textStyle: SBBTextStyles.helpersLabel, color: SBBColors.red150);
+    textFieldDividerColor = textFieldDividerColor ?? dividerColor;
+    textFieldDividerColorHighlighted = textFieldDividerColorHighlighted ?? themeValue(SBBColors.black, SBBColors.white);
+    textFieldDividerColorError = textFieldDividerColorError ?? SBBColors.red;
+    textFieldCursorColor = textFieldCursorColor ?? SBBColors.sky;
+    textFieldSelectionColor = textFieldSelectionColor ?? textFieldCursorColor.withOpacity(0.5);
+    textFieldSelectionHandleColor = textFieldSelectionHandleColor ?? textFieldCursorColor;
+    textFieldIconColor = textFieldIconColor ?? iconColor;
+    textFieldIconColorDisabled = textFieldIconColorDisabled ?? SBBColors.metal;
 
     // Group
-    Color? groupBackgroundColor,
+    groupBackgroundColor = groupBackgroundColor ?? themeValue(SBBColors.white, SBBColors.charcoal);
 
     // Accordion
-    TextStyle? accordionTitleTextStyle,
-    TextStyle? accordionBodyTextStyle,
-    Color? accordionBackgroundColor,
+    accordionTitleTextStyle = accordionTitleTextStyle ?? themedTextStyle(textStyle: SBBTextStyles.largeLight);
+    accordionBodyTextStyle = accordionBodyTextStyle ?? themedTextStyle(textStyle: SBBTextStyles.smallLight);
+    accordionBackgroundColor = accordionBackgroundColor ?? groupBackgroundColor;
 
     // Modal
-    Color? modalBackgroundColor,
-    TextStyle? modalTitleTextStyle,
+    modalBackgroundColor = modalBackgroundColor ?? themeValue(SBBColors.milk, SBBColors.midnight);
+    modalTitleTextStyle = modalTitleTextStyle ?? themedTextStyle(textStyle: SBBTextStyles.largeLight);
 
     // Select
-    TextStyle? selectLabelTextStyle,
-    TextStyle? selectLabelTextStyleDisabled,
+    selectLabelTextStyle = selectLabelTextStyle ?? themedTextStyle(textStyle: SBBTextStyles.helpersLabel, color: textFieldPlaceholderTextStyle.color);
+    selectLabelTextStyleDisabled = selectLabelTextStyleDisabled ?? selectLabelTextStyle.copyWith(color: textFieldPlaceholderTextStyleDisabled?.color);
 
     // Toast
-    TextStyle? toastTextStyle,
-    Color? toastBackgroundColor,
+    toastTextStyle = toastTextStyle ?? themedTextStyle(textStyle: SBBTextStyles.smallLight, color: SBBColors.white);
+    toastBackgroundColor = toastBackgroundColor ?? themeValue(SBBColors.black.withOpacity(0.5), SBBColors.white.withOpacity(0.3));
 
     // Tab Bar
-    TextStyle? tabBarTextStyle,
-  }) {
-    _setDefaultValues(
+    tabBarTextStyle = tabBarTextStyle ?? themedTextStyle(textStyle: SBBTextStyles.extraSmallLight.copyWith(fontWeight: FontWeight.w500));
+
+    // pass them on to constructor that requires all
+    return SBBThemeData.raw(
       brightness: brightness,
-      primaryColor: primaryColor,
-      primaryColorDark: primaryColorDark,
-      primarySwatch: primarySwatch,
-      backgroundColor: backgroundColor,
-      fontFamily: fontFamily,
-      defaultTextColor: defaultTextColor,
-      defaultTextStyle: defaultTextStyle,
-      dividerColor: dividerColor,
-      defaultRootContainerPadding: defaultRootContainerPadding,
-
-      // Icon
-      iconColor: iconColor,
-
-      // Header
-      headerBackgroundColor: headerBackgroundColor,
+      primaryColor : primaryColor,
+      primaryColorDark:    primaryColorDark,
+      primarySwatch:    primarySwatch,
+      backgroundColor:    backgroundColor!,
+      fontFamily:    fontFamily,
+      defaultTextColor:    defaultTextColor!,
+      defaultTextStyle:    defaultTextStyle,
+      dividerColor:    dividerColor!,
+      defaultRootContainerPadding:    defaultRootContainerPadding,
+      hostPlatform:    hostPlatform,
+      iconColor:    iconColor!,
+      headerBackgroundColor:    headerBackgroundColor,
       headerButtonBackgroundColorHighlighted: headerButtonBackgroundColorHighlighted,
-      headerIconColor: headerIconColor,
-      headerTextStyle: headerTextStyle,
-
-      // PrimaryButton
-      primaryButtonBackgroundColor: primaryButtonBackgroundColor,
-      primaryButtonBackgroundColorHighlighted: primaryButtonBackgroundColorHighlighted,
-      primaryButtonBackgroundColorDisabled: primaryButtonBackgroundColorDisabled,
-      primaryButtonBackgroundColorLoading: primaryButtonBackgroundColorLoading,
-      primaryButtonTextStyle: primaryButtonTextStyle,
-      primaryButtonTextStyleHighlighted: primaryButtonTextStyleHighlighted,
-      primaryButtonTextStyleDisabled: primaryButtonTextStyleDisabled,
-      primaryButtonTextStyleLoading: primaryButtonTextStyleLoading,
-
-      // PrimaryButtonNegative
-      primaryButtonNegativeBackgroundColor: primaryButtonNegativeBackgroundColor,
-      primaryButtonNegativeBackgroundColorHighlighted: primaryButtonNegativeBackgroundColorHighlighted,
-      primaryButtonNegativeBackgroundColorDisabled: primaryButtonNegativeBackgroundColorDisabled,
-      primaryButtonNegativeBackgroundColorLoading: primaryButtonNegativeBackgroundColorLoading,
-      primaryButtonNegativeBorderColor: primaryButtonNegativeBorderColor,
-      primaryButtonNegativeBorderColorHighlighted: primaryButtonNegativeBorderColorHighlighted,
-      primaryButtonNegativeBorderColorDisabled: primaryButtonNegativeBorderColorDisabled,
-      primaryButtonNegativeBorderColorLoading: primaryButtonNegativeBorderColorLoading,
-      primaryButtonNegativeTextStyle: primaryButtonNegativeTextStyle,
-      primaryButtonNegativeTextStyleHighlighted: primaryButtonNegativeTextStyleHighlighted,
-      primaryButtonNegativeTextStyleDisabled: primaryButtonNegativeTextStyleDisabled,
-      primaryButtonNegativeTextStyleLoading: primaryButtonNegativeTextStyleLoading,
-
-      // SecondaryButton
-      secondaryButtonBackgroundColor: secondaryButtonBackgroundColor,
-      secondaryButtonBackgroundColorHighlighted: secondaryButtonBackgroundColorHighlighted,
-      secondaryButtonBackgroundColorDisabled: secondaryButtonBackgroundColorDisabled,
-      secondaryButtonBackgroundColorLoading: secondaryButtonBackgroundColorLoading,
-      secondaryButtonBorderColor: secondaryButtonBorderColor,
-      secondaryButtonBorderColorHighlighted: secondaryButtonBorderColorHighlighted,
-      secondaryButtonBorderColorDisabled: secondaryButtonBorderColorDisabled,
-      secondaryButtonBorderColorLoading: secondaryButtonBorderColorLoading,
-      secondaryButtonTextStyle: secondaryButtonTextStyle,
-      secondaryButtonTextStyleHighlighted: secondaryButtonTextStyleHighlighted,
-      secondaryButtonTextStyleDisabled: secondaryButtonTextStyleDisabled,
-      secondaryButtonTextStyleLoading: secondaryButtonTextStyleLoading,
-
-      // TertiaryButtonLarge
-      tertiaryButtonLargeBackgroundColor: tertiaryButtonLargeBackgroundColor,
-      tertiaryButtonLargeBackgroundColorHighlighted: tertiaryButtonLargeBackgroundColorHighlighted,
-      tertiaryButtonLargeBackgroundColorDisabled: tertiaryButtonLargeBackgroundColorDisabled,
-      tertiaryButtonLargeBorderColor: tertiaryButtonLargeBorderColor,
-      tertiaryButtonLargeBorderColorHighlighted: tertiaryButtonLargeBorderColorHighlighted,
-      tertiaryButtonLargeBorderColorDisabled: tertiaryButtonLargeBorderColorDisabled,
-      tertiaryButtonLargeTextStyle: tertiaryButtonLargeTextStyle,
-      tertiaryButtonLargeTextStyleHighlighted: tertiaryButtonLargeTextStyleHighlighted,
-      tertiaryButtonLargeTextStyleDisabled: tertiaryButtonLargeTextStyleDisabled,
-
-      // TertiaryButtonSmall
-      tertiaryButtonSmallBackgroundColor: tertiaryButtonSmallBackgroundColor,
-      tertiaryButtonSmallBackgroundColorHighlighted: tertiaryButtonSmallBackgroundColorHighlighted,
-      tertiaryButtonSmallBackgroundColorDisabled: tertiaryButtonSmallBackgroundColorDisabled,
-      tertiaryButtonSmallBorderColor: tertiaryButtonSmallBorderColor,
-      tertiaryButtonSmallBorderColorHighlighted: tertiaryButtonSmallBorderColorHighlighted,
-      tertiaryButtonSmallBorderColorDisabled: tertiaryButtonSmallBorderColorDisabled,
-      tertiaryButtonSmallTextStyle: tertiaryButtonSmallTextStyle,
-      tertiaryButtonSmallTextStyleHighlighted: tertiaryButtonSmallTextStyleHighlighted,
-      tertiaryButtonSmallTextStyleDisabled: tertiaryButtonSmallTextStyleDisabled,
-
-      // IconButtonLarge
-      iconButtonLargeBackgroundColor: iconButtonLargeBackgroundColor,
-      iconButtonLargeBackgroundColorHighlighted: iconButtonLargeBackgroundColorHighlighted,
-      iconButtonLargeBackgroundColorDisabled: iconButtonLargeBackgroundColorDisabled,
-      iconButtonLargeBorderColor: iconButtonLargeBorderColor,
-      iconButtonLargeBorderColorHighlighted: iconButtonLargeBorderColorHighlighted,
-      iconButtonLargeBorderColorDisabled: iconButtonLargeBorderColorDisabled,
-      iconButtonLargeIconColor: iconButtonLargeIconColor,
-      iconButtonLargeIconColorHighlighted: iconButtonLargeIconColorHighlighted,
-      iconButtonLargeIconColorDisabled: iconButtonLargeIconColorDisabled,
-
-      // IconButtonSmall
-      iconButtonSmallBackgroundColor: iconButtonSmallBackgroundColor,
-      iconButtonSmallBackgroundColorHighlighted: iconButtonSmallBackgroundColorHighlighted,
-      iconButtonSmallBackgroundColorDisabled: iconButtonSmallBackgroundColorDisabled,
-      iconButtonSmallBorderColor: iconButtonSmallBorderColor,
-      iconButtonSmallBorderColorHighlighted: iconButtonSmallBorderColorHighlighted,
-      iconButtonSmallBorderColorDisabled: iconButtonSmallBorderColorDisabled,
-      iconButtonSmallIconColor: iconButtonSmallIconColor,
-      iconButtonSmallIconColorHighlighted: iconButtonSmallIconColorHighlighted,
-      iconButtonSmallIconColorDisabled: iconButtonSmallIconColorDisabled,
-
-      // IconButtonSmallNegative
-      iconButtonSmallNegativeBackgroundColor: iconButtonSmallNegativeBackgroundColor,
-      iconButtonSmallNegativeBackgroundColorHighlighted: iconButtonSmallNegativeBackgroundColorHighlighted,
-      iconButtonSmallNegativeBackgroundColorDisabled: iconButtonSmallNegativeBackgroundColorDisabled,
-      iconButtonSmallNegativeBorderColor: iconButtonSmallNegativeBorderColor,
-      iconButtonSmallNegativeBorderColorHighlighted: iconButtonSmallNegativeBorderColorHighlighted,
-      iconButtonSmallNegativeBorderColorDisabled: iconButtonSmallNegativeBorderColorDisabled,
-      iconButtonSmallNegativeIconColor: iconButtonSmallNegativeIconColor,
-      iconButtonSmallNegativeIconColorHighlighted: iconButtonSmallNegativeIconColorHighlighted,
-      iconButtonSmallNegativeIconColorDisabled: iconButtonSmallNegativeIconColorDisabled,
-
-      // IconButtonSmallBorderless
-      iconButtonSmallBorderlessBackgroundColor: iconButtonSmallBorderlessBackgroundColor,
-      iconButtonSmallBorderlessBackgroundColorHighlighted: iconButtonSmallBorderlessBackgroundColorHighlighted,
-      iconButtonSmallBorderlessBackgroundColorDisabled: iconButtonSmallBorderlessBackgroundColorDisabled,
-      iconButtonSmallBorderlessIconColor: iconButtonSmallBorderlessIconColor,
-      iconButtonSmallBorderlessIconColorHighlighted: iconButtonSmallBorderlessIconColorHighlighted,
-      iconButtonSmallBorderlessIconColorDisabled: iconButtonSmallBorderlessIconColorDisabled,
-
-      // IconFormButton
-      iconFormButtonBackgroundColor: iconFormButtonBackgroundColor,
-      iconFormButtonBackgroundColorHighlighted: iconFormButtonBackgroundColorHighlighted,
-      iconFormButtonBackgroundColorDisabled: iconFormButtonBackgroundColorDisabled,
-      iconFormButtonBorderColor: iconFormButtonBorderColor,
-      iconFormButtonBorderColorHighlighted: iconFormButtonBorderColorHighlighted,
-      iconFormButtonBorderColorDisabled: iconFormButtonBorderColorDisabled,
-      iconFormButtonIconColor: iconFormButtonIconColor,
-      iconFormButtonIconColorHighlighted: iconFormButtonIconColorHighlighted,
-      iconFormButtonIconColorDisabled: iconFormButtonIconColorDisabled,
-
-      // IconTextButton
-      iconTextButtonBackgroundColor: iconTextButtonBackgroundColor,
-      iconTextButtonBackgroundColorHighlighted: iconTextButtonBackgroundColorHighlighted,
-      iconTextButtonBackgroundColorDisabled: iconTextButtonBackgroundColorDisabled,
-      iconTextButtonIconColor: iconTextButtonIconColor,
-      iconTextButtonIconColorHighlighted: iconTextButtonIconColorHighlighted,
-      iconTextButtonIconColorDisabled: iconTextButtonIconColorDisabled,
-      iconTextButtonTextStyle: iconTextButtonTextStyle,
-      iconTextButtonTextStyleHighlighted: iconTextButtonTextStyleHighlighted,
-      iconTextButtonTextStyleDisabled: iconTextButtonTextStyleDisabled,
-
-      // Link
-      linkTextStyle: linkTextStyle,
-      linkTextStyleHighlighted: linkTextStyleHighlighted,
-
-      //ListHeader
-      listHeaderTextStyle: listHeaderTextStyle,
-
-      // ListItem
-      listItemBackgroundColor: listItemBackgroundColor,
-      listItemBackgroundColorHighlighted: listItemBackgroundColorHighlighted,
-      listItemTitleTextStyle: listItemTitleTextStyle,
-      listItemSubtitleTextStyle: listItemSubtitleTextStyle,
-
-      // Checkbox
-      checkboxColor: checkboxColor,
-      checkboxColorDisabled: checkboxColorDisabled,
-      checkboxBackgroundColor: checkboxBackgroundColor,
-      checkboxBackgroundColorHighlighted: checkboxBackgroundColorHighlighted,
-      checkboxBackgroundColorDisabled: checkboxBackgroundColorDisabled,
-      checkboxBorderColor: checkboxBorderColor,
-      checkboxBorderColorDisabled: checkboxBorderColorDisabled,
-      checkboxListItemBackgroundColor: checkboxListItemBackgroundColor,
-      checkboxListItemBackgroundColorHighlighted: checkboxListItemBackgroundColorHighlighted,
-      checkboxListItemBackgroundColorDisabled: checkboxListItemBackgroundColorDisabled,
-      checkboxListItemIconColor: checkboxListItemIconColor,
-      checkboxListItemIconColorDisabled: checkboxListItemIconColorDisabled,
-      checkboxListItemTextStyle: checkboxListItemTextStyle,
-      checkboxListItemTextStyleDisabled: checkboxListItemTextStyleDisabled,
-      checkboxListItemSecondaryTextStyle: checkboxListItemSecondaryTextStyle,
-      checkboxListItemSecondaryTextStyleDisabled: checkboxListItemSecondaryTextStyleDisabled,
-
-      // RadioButton
-      radioButtonColor: radioButtonColor,
-      radioButtonColorDisabled: radioButtonColorDisabled,
-      radioButtonBackgroundColor: radioButtonBackgroundColor,
-      radioButtonBackgroundColorHighlighted: radioButtonBackgroundColorHighlighted,
-      radioButtonBackgroundColorDisabled: radioButtonBackgroundColorDisabled,
-      radioButtonBorderColor: radioButtonBorderColor,
-      radioButtonBorderColorDisabled: radioButtonBorderColorDisabled,
-      radioButtonListItemBackgroundColor: radioButtonListItemBackgroundColor,
-      radioButtonListItemBackgroundColorHighlighted: radioButtonListItemBackgroundColorHighlighted,
-      radioButtonListItemBackgroundColorDisabled: radioButtonListItemBackgroundColorDisabled,
-      radioButtonListItemIconColor: radioButtonListItemIconColor,
-      radioButtonListItemIconColorDisabled: radioButtonListItemIconColorDisabled,
-      radioButtonListItemTextStyle: radioButtonListItemTextStyle,
-      radioButtonListItemTextStyleDisabled: radioButtonListItemTextStyleDisabled,
-      radioButtonListItemSecondaryTextStyle: radioButtonListItemSecondaryTextStyle,
-      radioButtonListItemSecondaryTextStyleDisabled: radioButtonListItemSecondaryTextStyleDisabled,
-
-      // SegmentedButton
-      segmentedButtonBackgroundColor: segmentedButtonBackgroundColor,
-      segmentedButtonSelectedColor: segmentedButtonSelectedColor,
-      segmentedButtonTextStyle: segmentedButtonTextStyle,
-
-      // TextField
-      textFieldTextStyle: textFieldTextStyle,
-      textFieldTextStyleDisabled: textFieldTextStyleDisabled,
-      textFieldPlaceholderTextStyle: textFieldPlaceholderTextStyle,
-      textFieldPlaceholderTextStyleDisabled: textFieldPlaceholderTextStyleDisabled,
-      textFieldErrorTextStyle: textFieldErrorTextStyle,
-      textFieldDividerColor: textFieldDividerColor,
-      textFieldDividerColorHighlighted: textFieldDividerColorHighlighted,
-      textFieldDividerColorError: textFieldDividerColorError,
-      textFieldCursorColor: textFieldCursorColor,
-      textFieldSelectionColor: textFieldSelectionColor,
-      textFieldSelectionHandleColor: textFieldSelectionHandleColor,
-      textFieldIconColor: textFieldIconColor,
-      textFieldIconColorDisabled: textFieldIconColorDisabled,
-
-      // Group
-      groupBackgroundColor: groupBackgroundColor,
-
-      // Accordion
-      accordionTitleTextStyle: accordionTitleTextStyle,
-      accordionBodyTextStyle: accordionBodyTextStyle,
-      accordionBackgroundColor: accordionBackgroundColor,
-
-      // Modal
-      modalBackgroundColor: modalBackgroundColor,
-      modalTitleTextStyle: modalTitleTextStyle,
-
-      // Select
-      selectLabelTextStyle: selectLabelTextStyle,
-      selectLabelTextStyleDisabled: selectLabelTextStyleDisabled,
-
-      // Toast
-      toastTextStyle: toastTextStyle,
-      toastBackgroundColor: toastBackgroundColor,
-
-      // Tab Bar
-      tabBarTextStyle: tabBarTextStyle,
+      headerIconColor:    headerIconColor,
+      headerTextStyle:    headerTextStyle,
+      primaryButtonBackgroundColor:    primaryButtonBackgroundColor,
+      primaryButtonBackgroundColorHighlighted:    primaryButtonBackgroundColorHighlighted,
+      primaryButtonBackgroundColorDisabled:    primaryButtonBackgroundColorDisabled!,
+      primaryButtonBackgroundColorLoading:    primaryButtonBackgroundColorLoading!,
+      primaryButtonTextStyle:    primaryButtonTextStyle,
+      primaryButtonTextStyleHighlighted:    primaryButtonTextStyleHighlighted,
+      primaryButtonTextStyleDisabled:    primaryButtonTextStyleDisabled,
+      primaryButtonTextStyleLoading:    primaryButtonTextStyleLoading,
+      primaryButtonNegativeBackgroundColor:    primaryButtonNegativeBackgroundColor,
+      primaryButtonNegativeBackgroundColorHighlighted:    primaryButtonNegativeBackgroundColorHighlighted!,
+      primaryButtonNegativeBackgroundColorDisabled:    primaryButtonNegativeBackgroundColorDisabled,
+      primaryButtonNegativeBackgroundColorLoading:    primaryButtonNegativeBackgroundColorLoading,
+      primaryButtonNegativeBorderColor:    primaryButtonNegativeBorderColor,
+      primaryButtonNegativeBorderColorHighlighted:    primaryButtonNegativeBorderColorHighlighted,
+      primaryButtonNegativeBorderColorDisabled:    primaryButtonNegativeBorderColorDisabled,
+      primaryButtonNegativeBorderColorLoading:    primaryButtonNegativeBorderColorLoading,
+      primaryButtonNegativeTextStyle:    primaryButtonNegativeTextStyle,
+      primaryButtonNegativeTextStyleHighlighted:    primaryButtonNegativeTextStyleHighlighted,
+      primaryButtonNegativeTextStyleDisabled:    primaryButtonNegativeTextStyleDisabled,
+      primaryButtonNegativeTextStyleLoading:    primaryButtonNegativeTextStyleLoading,
+      secondaryButtonBackgroundColor:    secondaryButtonBackgroundColor,
+      secondaryButtonBackgroundColorHighlighted:    secondaryButtonBackgroundColorHighlighted!,
+      secondaryButtonBackgroundColorDisabled:    secondaryButtonBackgroundColorDisabled,
+      secondaryButtonBackgroundColorLoading:    secondaryButtonBackgroundColorLoading,
+      secondaryButtonBorderColor:    secondaryButtonBorderColor,
+      secondaryButtonBorderColorHighlighted:    secondaryButtonBorderColorHighlighted,
+      secondaryButtonBorderColorDisabled:    secondaryButtonBorderColorDisabled!,
+      secondaryButtonBorderColorLoading:    secondaryButtonBorderColorLoading!,
+      secondaryButtonTextStyle:    secondaryButtonTextStyle,
+      secondaryButtonTextStyleHighlighted:    secondaryButtonTextStyleHighlighted,
+      secondaryButtonTextStyleDisabled:    secondaryButtonTextStyleDisabled,
+      secondaryButtonTextStyleLoading:    secondaryButtonTextStyleLoading,
+      tertiaryButtonLargeBackgroundColor:    tertiaryButtonLargeBackgroundColor!,
+      tertiaryButtonLargeBackgroundColorHighlighted:    tertiaryButtonLargeBackgroundColorHighlighted!,
+      tertiaryButtonLargeBackgroundColorDisabled:    tertiaryButtonLargeBackgroundColorDisabled!,
+      tertiaryButtonLargeBorderColor:    tertiaryButtonLargeBorderColor,
+      tertiaryButtonLargeBorderColorHighlighted:    tertiaryButtonLargeBorderColorHighlighted,
+      tertiaryButtonLargeBorderColorDisabled:    tertiaryButtonLargeBorderColorDisabled!,
+      tertiaryButtonLargeTextStyle:    tertiaryButtonLargeTextStyle,
+      tertiaryButtonLargeTextStyleHighlighted:    tertiaryButtonLargeTextStyleHighlighted,
+      tertiaryButtonLargeTextStyleDisabled:    tertiaryButtonLargeTextStyleDisabled,
+      tertiaryButtonSmallBackgroundColor:    tertiaryButtonSmallBackgroundColor!,
+      tertiaryButtonSmallBackgroundColorHighlighted:    tertiaryButtonSmallBackgroundColorHighlighted!,
+      tertiaryButtonSmallBackgroundColorDisabled:    tertiaryButtonSmallBackgroundColorDisabled!,
+      tertiaryButtonSmallBorderColor:    tertiaryButtonSmallBorderColor,
+      tertiaryButtonSmallBorderColorHighlighted:    tertiaryButtonSmallBorderColorHighlighted,
+      tertiaryButtonSmallBorderColorDisabled:    tertiaryButtonSmallBorderColorDisabled!,
+      tertiaryButtonSmallTextStyle:    tertiaryButtonSmallTextStyle,
+      tertiaryButtonSmallTextStyleHighlighted:    tertiaryButtonSmallTextStyleHighlighted,
+      tertiaryButtonSmallTextStyleDisabled:    tertiaryButtonSmallTextStyleDisabled,
+      iconButtonLargeBackgroundColor:    iconButtonLargeBackgroundColor!,
+      iconButtonLargeBackgroundColorHighlighted:    iconButtonLargeBackgroundColorHighlighted!,
+      iconButtonLargeBackgroundColorDisabled:    iconButtonLargeBackgroundColorDisabled,
+      iconButtonLargeBorderColor:    iconButtonLargeBorderColor,
+      iconButtonLargeBorderColorHighlighted:    iconButtonLargeBorderColorHighlighted,
+      iconButtonLargeBorderColorDisabled:    iconButtonLargeBorderColorDisabled!,
+      iconButtonLargeIconColor:    iconButtonLargeIconColor!,
+      iconButtonLargeIconColorHighlighted:    iconButtonLargeIconColorHighlighted!,
+      iconButtonLargeIconColorDisabled:    iconButtonLargeIconColorDisabled!,
+      iconButtonSmallBackgroundColor:    iconButtonSmallBackgroundColor!,
+      iconButtonSmallBackgroundColorHighlighted:    iconButtonSmallBackgroundColorHighlighted!,
+      iconButtonSmallBackgroundColorDisabled:    iconButtonSmallBackgroundColorDisabled,
+      iconButtonSmallBorderColor:    iconButtonSmallBorderColor,
+      iconButtonSmallBorderColorHighlighted:    iconButtonSmallBorderColorHighlighted,
+      iconButtonSmallBorderColorDisabled:    iconButtonSmallBorderColorDisabled!,
+      iconButtonSmallIconColor:    iconButtonSmallIconColor!,
+      iconButtonSmallIconColorHighlighted:    iconButtonSmallIconColorHighlighted!,
+      iconButtonSmallIconColorDisabled:    iconButtonSmallIconColorDisabled!,
+      iconButtonSmallNegativeBackgroundColor:    iconButtonSmallNegativeBackgroundColor,
+      iconButtonSmallNegativeBackgroundColorHighlighted:    iconButtonSmallNegativeBackgroundColorHighlighted!,
+      iconButtonSmallNegativeBackgroundColorDisabled:    iconButtonSmallNegativeBackgroundColorDisabled,
+      iconButtonSmallNegativeBorderColor:    iconButtonSmallNegativeBorderColor,
+      iconButtonSmallNegativeBorderColorHighlighted:    iconButtonSmallNegativeBorderColorHighlighted,
+      iconButtonSmallNegativeBorderColorDisabled:    iconButtonSmallNegativeBorderColorDisabled,
+      iconButtonSmallNegativeIconColor:    iconButtonSmallNegativeIconColor,
+      iconButtonSmallNegativeIconColorHighlighted:    iconButtonSmallNegativeIconColorHighlighted,
+      iconButtonSmallNegativeIconColorDisabled:    iconButtonSmallNegativeIconColorDisabled,
+      iconButtonSmallBorderlessBackgroundColor:    iconButtonSmallBorderlessBackgroundColor,
+      iconButtonSmallBorderlessBackgroundColorHighlighted:    iconButtonSmallBorderlessBackgroundColorHighlighted,
+      iconButtonSmallBorderlessBackgroundColorDisabled:    iconButtonSmallBorderlessBackgroundColorDisabled,
+      iconButtonSmallBorderlessIconColor:    iconButtonSmallBorderlessIconColor!,
+      iconButtonSmallBorderlessIconColorHighlighted:    iconButtonSmallBorderlessIconColorHighlighted!,
+      iconButtonSmallBorderlessIconColorDisabled:    iconButtonSmallBorderlessIconColorDisabled!,
+      iconFormButtonBackgroundColor:    iconFormButtonBackgroundColor!,
+      iconFormButtonBackgroundColorHighlighted:    iconFormButtonBackgroundColorHighlighted!,
+      iconFormButtonBackgroundColorDisabled:    iconFormButtonBackgroundColorDisabled,
+      iconFormButtonBorderColor:    iconFormButtonBorderColor,
+      iconFormButtonBorderColorHighlighted:    iconFormButtonBorderColorHighlighted,
+      iconFormButtonBorderColorDisabled:    iconFormButtonBorderColorDisabled!,
+      iconFormButtonIconColor:    iconFormButtonIconColor!,
+      iconFormButtonIconColorHighlighted:    iconFormButtonIconColorHighlighted!,
+      iconFormButtonIconColorDisabled:    iconFormButtonIconColorDisabled!,
+      iconTextButtonBackgroundColor:    iconTextButtonBackgroundColor!,
+      iconTextButtonBackgroundColorHighlighted:    iconTextButtonBackgroundColorHighlighted!,
+      iconTextButtonBackgroundColorDisabled:    iconTextButtonBackgroundColorDisabled!,
+      iconTextButtonIconColor:    iconTextButtonIconColor,
+      iconTextButtonIconColorHighlighted:    iconTextButtonIconColorHighlighted,
+      iconTextButtonIconColorDisabled:    iconTextButtonIconColorDisabled,
+      iconTextButtonTextStyle:    iconTextButtonTextStyle,
+      iconTextButtonTextStyleHighlighted:    iconTextButtonTextStyleHighlighted,
+      iconTextButtonTextStyleDisabled:    iconTextButtonTextStyleDisabled,
+      linkTextStyle:    linkTextStyle,
+      linkTextStyleHighlighted:    linkTextStyleHighlighted,
+      listHeaderTextStyle:    listHeaderTextStyle,
+      listItemBackgroundColor:    listItemBackgroundColor,
+      listItemBackgroundColorHighlighted:    listItemBackgroundColorHighlighted!,
+      listItemTitleTextStyle:    listItemTitleTextStyle,
+      listItemSubtitleTextStyle:    listItemSubtitleTextStyle,
+      checkboxColor:    checkboxColor,
+      checkboxColorDisabled:    checkboxColorDisabled,
+      checkboxBackgroundColor:    checkboxBackgroundColor!,
+      checkboxBackgroundColorHighlighted:    checkboxBackgroundColorHighlighted!,
+      checkboxBackgroundColorDisabled:    checkboxBackgroundColorDisabled,
+      checkboxBorderColor:    checkboxBorderColor,
+      checkboxBorderColorDisabled:    checkboxBorderColorDisabled!,
+      checkboxListItemBackgroundColor:    checkboxListItemBackgroundColor,
+      checkboxListItemBackgroundColorHighlighted:    checkboxListItemBackgroundColorHighlighted!,
+      checkboxListItemBackgroundColorDisabled:    checkboxListItemBackgroundColorDisabled,
+      checkboxListItemIconColor:    checkboxListItemIconColor!,
+      checkboxListItemIconColorDisabled:    checkboxListItemIconColorDisabled,
+      checkboxListItemTextStyle:    checkboxListItemTextStyle,
+      checkboxListItemTextStyleDisabled:    checkboxListItemTextStyleDisabled,
+      checkboxListItemSecondaryTextStyle:    checkboxListItemSecondaryTextStyle,
+      checkboxListItemSecondaryTextStyleDisabled:    checkboxListItemSecondaryTextStyleDisabled,
+      radioButtonColor:    radioButtonColor,
+      radioButtonColorDisabled:    radioButtonColorDisabled,
+      radioButtonBackgroundColor:    radioButtonBackgroundColor!,
+      radioButtonBackgroundColorHighlighted:    radioButtonBackgroundColorHighlighted!,
+      radioButtonBackgroundColorDisabled:    radioButtonBackgroundColorDisabled,
+      radioButtonBorderColor:    radioButtonBorderColor,
+      radioButtonBorderColorDisabled:    radioButtonBorderColorDisabled!,
+      radioButtonListItemBackgroundColor:    radioButtonListItemBackgroundColor,
+      radioButtonListItemBackgroundColorHighlighted:    radioButtonListItemBackgroundColorHighlighted!,
+      radioButtonListItemBackgroundColorDisabled:    radioButtonListItemBackgroundColorDisabled,
+      radioButtonListItemIconColor:    radioButtonListItemIconColor!,
+      radioButtonListItemIconColorDisabled:    radioButtonListItemIconColorDisabled,
+      radioButtonListItemTextStyle:    radioButtonListItemTextStyle,
+      radioButtonListItemTextStyleDisabled:    radioButtonListItemTextStyleDisabled,
+      radioButtonListItemSecondaryTextStyle:    radioButtonListItemSecondaryTextStyle,
+      radioButtonListItemSecondaryTextStyleDisabled:    radioButtonListItemSecondaryTextStyleDisabled,
+      segmentedButtonBackgroundColor:    segmentedButtonBackgroundColor!,
+      segmentedButtonSelectedColor:    segmentedButtonSelectedColor!,
+      segmentedButtonTextStyle:    segmentedButtonTextStyle,
+      textFieldTextStyle:    textFieldTextStyle,
+      textFieldTextStyleDisabled:    textFieldTextStyleDisabled,
+      textFieldPlaceholderTextStyle:    textFieldPlaceholderTextStyle,
+      textFieldPlaceholderTextStyleDisabled:    textFieldPlaceholderTextStyleDisabled!,
+      textFieldErrorTextStyle:    textFieldErrorTextStyle,
+      textFieldDividerColor:    textFieldDividerColor!,
+      textFieldDividerColorHighlighted:    textFieldDividerColorHighlighted!,
+      textFieldDividerColorError:    textFieldDividerColorError,
+      textFieldCursorColor:    textFieldCursorColor,
+      textFieldSelectionColor:    textFieldSelectionColor,
+      textFieldSelectionHandleColor:    textFieldSelectionHandleColor,
+      textFieldIconColor:    textFieldIconColor!,
+      textFieldIconColorDisabled:    textFieldIconColorDisabled,
+      groupBackgroundColor:    groupBackgroundColor!,
+      accordionTitleTextStyle:    accordionTitleTextStyle,
+      accordionBodyTextStyle:    accordionBodyTextStyle,
+      accordionBackgroundColor:    accordionBackgroundColor!,
+      modalBackgroundColor:    modalBackgroundColor!,
+      modalTitleTextStyle:    modalTitleTextStyle,
+      selectLabelTextStyle:    selectLabelTextStyle,
+      selectLabelTextStyleDisabled:    selectLabelTextStyleDisabled,
+      toastTextStyle:    toastTextStyle,
+      toastBackgroundColor:    toastBackgroundColor!,
+      tabBarTextStyle:    tabBarTextStyle,
     );
   }
 
-  SBBThemeData.dark({
-    Brightness? brightness = Brightness.dark,
-    Color? primaryColor,
-    Color? primaryColorDark,
-    MaterialColor? primarySwatch,
-    Color? backgroundColor,
-    String? fontFamily,
-    Color? defaultTextColor,
-    TextStyle? defaultTextStyle,
-    Color? dividerColor,
-    double? defaultRootContainerPadding,
+  SBBThemeData.raw({
+    required this.brightness,
+    required this.primaryColor,
+    required this.primaryColorDark,
+    required this.primarySwatch,
+    required this.backgroundColor,
+    required this.fontFamily,
+    required this.defaultTextColor,
+    required this.defaultTextStyle,
+    required this.dividerColor,
+    required this.defaultRootContainerPadding,
+    required this.hostPlatform,
+    required this.iconColor,
+    required this.headerBackgroundColor,
+    required this.headerButtonBackgroundColorHighlighted,
+    required this.headerIconColor,
+    required this.headerTextStyle,
+    required this.primaryButtonBackgroundColor,
+    required this.primaryButtonBackgroundColorHighlighted,
+    required this.primaryButtonBackgroundColorDisabled,
+    required this.primaryButtonBackgroundColorLoading,
+    required this.primaryButtonTextStyle,
+    required this.primaryButtonTextStyleHighlighted,
+    required this.primaryButtonTextStyleDisabled,
+    required this.primaryButtonTextStyleLoading,
+    required this.primaryButtonNegativeBackgroundColor,
+    required this.primaryButtonNegativeBackgroundColorHighlighted,
+    required this.primaryButtonNegativeBackgroundColorDisabled,
+    required this.primaryButtonNegativeBackgroundColorLoading,
+    required this.primaryButtonNegativeBorderColor,
+    required this.primaryButtonNegativeBorderColorHighlighted,
+    required this.primaryButtonNegativeBorderColorDisabled,
+    required this.primaryButtonNegativeBorderColorLoading,
+    required this.primaryButtonNegativeTextStyle,
+    required this.primaryButtonNegativeTextStyleHighlighted,
+    required this.primaryButtonNegativeTextStyleDisabled,
+    required this.primaryButtonNegativeTextStyleLoading,
+    required this.secondaryButtonBackgroundColor,
+    required this.secondaryButtonBackgroundColorHighlighted,
+    required this.secondaryButtonBackgroundColorDisabled,
+    required this.secondaryButtonBackgroundColorLoading,
+    required this.secondaryButtonBorderColor,
+    required this.secondaryButtonBorderColorHighlighted,
+    required this.secondaryButtonBorderColorDisabled,
+    required this.secondaryButtonBorderColorLoading,
+    required this.secondaryButtonTextStyle,
+    required this.secondaryButtonTextStyleHighlighted,
+    required this.secondaryButtonTextStyleDisabled,
+    required this.secondaryButtonTextStyleLoading,
+    required this.tertiaryButtonLargeBackgroundColor,
+    required this.tertiaryButtonLargeBackgroundColorHighlighted,
+    required this.tertiaryButtonLargeBackgroundColorDisabled,
+    required this.tertiaryButtonLargeBorderColor,
+    required this.tertiaryButtonLargeBorderColorHighlighted,
+    required this.tertiaryButtonLargeBorderColorDisabled,
+    required this.tertiaryButtonLargeTextStyle,
+    required this.tertiaryButtonLargeTextStyleHighlighted,
+    required this.tertiaryButtonLargeTextStyleDisabled,
+    required this.tertiaryButtonSmallBackgroundColor,
+    required this.tertiaryButtonSmallBackgroundColorHighlighted,
+    required this.tertiaryButtonSmallBackgroundColorDisabled,
+    required this.tertiaryButtonSmallBorderColor,
+    required this.tertiaryButtonSmallBorderColorHighlighted,
+    required this.tertiaryButtonSmallBorderColorDisabled,
+    required this.tertiaryButtonSmallTextStyle,
+    required this.tertiaryButtonSmallTextStyleHighlighted,
+    required this.tertiaryButtonSmallTextStyleDisabled,
+    required this.iconButtonLargeBackgroundColor,
+    required this.iconButtonLargeBackgroundColorHighlighted,
+    required this.iconButtonLargeBackgroundColorDisabled,
+    required this.iconButtonLargeBorderColor,
+    required this.iconButtonLargeBorderColorHighlighted,
+    required this.iconButtonLargeBorderColorDisabled,
+    required this.iconButtonLargeIconColor,
+    required this.iconButtonLargeIconColorHighlighted,
+    required this.iconButtonLargeIconColorDisabled,
+    required this.iconButtonSmallBackgroundColor,
+    required this.iconButtonSmallBackgroundColorHighlighted,
+    required this.iconButtonSmallBackgroundColorDisabled,
+    required this.iconButtonSmallBorderColor,
+    required this.iconButtonSmallBorderColorHighlighted,
+    required this.iconButtonSmallBorderColorDisabled,
+    required this.iconButtonSmallIconColor,
+    required this.iconButtonSmallIconColorHighlighted,
+    required this.iconButtonSmallIconColorDisabled,
+    required this.iconButtonSmallNegativeBackgroundColor,
+    required this.iconButtonSmallNegativeBackgroundColorHighlighted,
+    required this.iconButtonSmallNegativeBackgroundColorDisabled,
+    required this.iconButtonSmallNegativeBorderColor,
+    required this.iconButtonSmallNegativeBorderColorHighlighted,
+    required this.iconButtonSmallNegativeBorderColorDisabled,
+    required this.iconButtonSmallNegativeIconColor,
+    required this.iconButtonSmallNegativeIconColorHighlighted,
+    required this.iconButtonSmallNegativeIconColorDisabled,
+    required this.iconButtonSmallBorderlessBackgroundColor,
+    required this.iconButtonSmallBorderlessBackgroundColorHighlighted,
+    required this.iconButtonSmallBorderlessBackgroundColorDisabled,
+    required this.iconButtonSmallBorderlessIconColor,
+    required this.iconButtonSmallBorderlessIconColorHighlighted,
+    required this.iconButtonSmallBorderlessIconColorDisabled,
+    required this.iconFormButtonBackgroundColor,
+    required this.iconFormButtonBackgroundColorHighlighted,
+    required this.iconFormButtonBackgroundColorDisabled,
+    required this.iconFormButtonBorderColor,
+    required this.iconFormButtonBorderColorHighlighted,
+    required this.iconFormButtonBorderColorDisabled,
+    required this.iconFormButtonIconColor,
+    required this.iconFormButtonIconColorHighlighted,
+    required this.iconFormButtonIconColorDisabled,
+    required this.iconTextButtonBackgroundColor,
+    required this.iconTextButtonBackgroundColorHighlighted,
+    required this.iconTextButtonBackgroundColorDisabled,
+    required this.iconTextButtonIconColor,
+    required this.iconTextButtonIconColorHighlighted,
+    required this.iconTextButtonIconColorDisabled,
+    required this.iconTextButtonTextStyle,
+    required this.iconTextButtonTextStyleHighlighted,
+    required this.iconTextButtonTextStyleDisabled,
+    required this.linkTextStyle,
+    required this.linkTextStyleHighlighted,
+    required this.listHeaderTextStyle,
+    required this.listItemBackgroundColor,
+    required this.listItemBackgroundColorHighlighted,
+    required this.listItemTitleTextStyle,
+    required this.listItemSubtitleTextStyle,
+    required this.checkboxColor,
+    required this.checkboxColorDisabled,
+    required this.checkboxBackgroundColor,
+    required this.checkboxBackgroundColorHighlighted,
+    required this.checkboxBackgroundColorDisabled,
+    required this.checkboxBorderColor,
+    required this.checkboxBorderColorDisabled,
+    required this.checkboxListItemBackgroundColor,
+    required this.checkboxListItemBackgroundColorHighlighted,
+    required this.checkboxListItemBackgroundColorDisabled,
+    required this.checkboxListItemIconColor,
+    required this.checkboxListItemIconColorDisabled,
+    required this.checkboxListItemTextStyle,
+    required this.checkboxListItemTextStyleDisabled,
+    required this.checkboxListItemSecondaryTextStyle,
+    required this.checkboxListItemSecondaryTextStyleDisabled,
+    required this.radioButtonColor,
+    required this.radioButtonColorDisabled,
+    required this.radioButtonBackgroundColor,
+    required this.radioButtonBackgroundColorHighlighted,
+    required this.radioButtonBackgroundColorDisabled,
+    required this.radioButtonBorderColor,
+    required this.radioButtonBorderColorDisabled,
+    required this.radioButtonListItemBackgroundColor,
+    required this.radioButtonListItemBackgroundColorHighlighted,
+    required this.radioButtonListItemBackgroundColorDisabled,
+    required this.radioButtonListItemIconColor,
+    required this.radioButtonListItemIconColorDisabled,
+    required this.radioButtonListItemTextStyle,
+    required this.radioButtonListItemTextStyleDisabled,
+    required this.radioButtonListItemSecondaryTextStyle,
+    required this.radioButtonListItemSecondaryTextStyleDisabled,
+    required this.segmentedButtonBackgroundColor,
+    required this.segmentedButtonSelectedColor,
+    required this.segmentedButtonTextStyle,
+    required this.textFieldTextStyle,
+    required this.textFieldTextStyleDisabled,
+    required this.textFieldPlaceholderTextStyle,
+    required this.textFieldPlaceholderTextStyleDisabled,
+    required this.textFieldErrorTextStyle,
+    required this.textFieldDividerColor,
+    required this.textFieldDividerColorHighlighted,
+    required this.textFieldDividerColorError,
+    required this.textFieldCursorColor,
+    required this.textFieldSelectionColor,
+    required this.textFieldSelectionHandleColor,
+    required this.textFieldIconColor,
+    required this.textFieldIconColorDisabled,
+    required this.groupBackgroundColor,
+    required this.accordionTitleTextStyle,
+    required this.accordionBodyTextStyle,
+    required this.accordionBackgroundColor,
+    required this.modalBackgroundColor,
+    required this.modalTitleTextStyle,
+    required this.selectLabelTextStyle,
+    required this.selectLabelTextStyleDisabled,
+    required this.toastTextStyle,
+    required this.toastBackgroundColor,
+    required this.tabBarTextStyle,
+  });
 
-    // Icon
-    Color? iconColor,
+  /// Light Theme
+  /// 
+  /// used as fallback
+  factory SBBThemeData.light({required HostPlatform hostPlatform}) => SBBThemeData(brightness: Brightness.light, hostPlatform: hostPlatform);
 
-    // Header
-    Color? headerBackgroundColor,
-    Color? headerButtonBackgroundColorHighlighted,
-    Color? headerIconColor,
-    TextStyle? headerTextStyle,
+  /// Dark Theme
+  factory SBBThemeData.dark({required HostPlatform hostPlatform})  => SBBThemeData(brightness: Brightness.dark, hostPlatform: hostPlatform);
 
-    // PrimaryButton
-    Color? primaryButtonBackgroundColor,
-    Color? primaryButtonBackgroundColorHighlighted,
-    Color? primaryButtonBackgroundColorDisabled,
-    Color? primaryButtonBackgroundColorLoading,
-    TextStyle? primaryButtonTextStyle,
-    TextStyle? primaryButtonTextStyleHighlighted,
-    TextStyle? primaryButtonTextStyleDisabled,
-    TextStyle? primaryButtonTextStyleLoading,
+  factory SBBThemeData.fallback() => SBBThemeData.light(hostPlatform: HostPlatform.native);
 
-    // PrimaryButtonNegative
-    Color? primaryButtonNegativeBackgroundColor,
-    Color? primaryButtonNegativeBackgroundColorHighlighted,
-    Color? primaryButtonNegativeBackgroundColorDisabled,
-    Color? primaryButtonNegativeBackgroundColorLoading,
-    Color? primaryButtonNegativeBorderColor,
-    Color? primaryButtonNegativeBorderColorHighlighted,
-    Color? primaryButtonNegativeBorderColorDisabled,
-    Color? primaryButtonNegativeBorderColorLoading,
-    TextStyle? primaryButtonNegativeTextStyle,
-    TextStyle? primaryButtonNegativeTextStyleHighlighted,
-    TextStyle? primaryButtonNegativeTextStyleDisabled,
-    TextStyle? primaryButtonNegativeTextStyleLoading,
 
-    // SecondaryButton
-    Color? secondaryButtonBackgroundColor,
-    Color? secondaryButtonBackgroundColorHighlighted,
-    Color? secondaryButtonBackgroundColorDisabled,
-    Color? secondaryButtonBackgroundColorLoading,
-    Color? secondaryButtonBorderColor,
-    Color? secondaryButtonBorderColorHighlighted,
-    Color? secondaryButtonBorderColorDisabled,
-    Color? secondaryButtonBorderColorLoading,
-    TextStyle? secondaryButtonTextStyle,
-    TextStyle? secondaryButtonTextStyleHighlighted,
-    TextStyle? secondaryButtonTextStyleDisabled,
-    TextStyle? secondaryButtonTextStyleLoading,
+  final Brightness brightness;
+  final Color primaryColor;
+  final Color primaryColorDark;
+  final MaterialColor primarySwatch;
+  final Color backgroundColor;
+  final String fontFamily;
+  final Color defaultTextColor;
+  final TextStyle defaultTextStyle;
+  final Color dividerColor;
+  final double defaultRootContainerPadding;
 
-    // TertiaryButtonLarge
-    Color? tertiaryButtonLargeBackgroundColor,
-    Color? tertiaryButtonLargeBackgroundColorHighlighted,
-    Color? tertiaryButtonLargeBackgroundColorDisabled,
-    Color? tertiaryButtonLargeBorderColor,
-    Color? tertiaryButtonLargeBorderColorHighlighted,
-    Color? tertiaryButtonLargeBorderColorDisabled,
-    TextStyle? tertiaryButtonLargeTextStyle,
-    TextStyle? tertiaryButtonLargeTextStyleHighlighted,
-    TextStyle? tertiaryButtonLargeTextStyleDisabled,
-
-    // TertiaryButtonSmall
-    Color? tertiaryButtonSmallBackgroundColor,
-    Color? tertiaryButtonSmallBackgroundColorHighlighted,
-    Color? tertiaryButtonSmallBackgroundColorDisabled,
-    Color? tertiaryButtonSmallBorderColor,
-    Color? tertiaryButtonSmallBorderColorHighlighted,
-    Color? tertiaryButtonSmallBorderColorDisabled,
-    TextStyle? tertiaryButtonSmallTextStyle,
-    TextStyle? tertiaryButtonSmallTextStyleHighlighted,
-    TextStyle? tertiaryButtonSmallTextStyleDisabled,
-
-    // IconButtonLarge
-    Color? iconButtonLargeBackgroundColor,
-    Color? iconButtonLargeBackgroundColorHighlighted,
-    Color? iconButtonLargeBackgroundColorDisabled,
-    Color? iconButtonLargeBorderColor,
-    Color? iconButtonLargeBorderColorHighlighted,
-    Color? iconButtonLargeBorderColorDisabled,
-    Color? iconButtonLargeIconColor,
-    Color? iconButtonLargeIconColorHighlighted,
-    Color? iconButtonLargeIconColorDisabled,
-
-    // IconButtonSmall
-    Color? iconButtonSmallBackgroundColor,
-    Color? iconButtonSmallBackgroundColorHighlighted,
-    Color? iconButtonSmallBackgroundColorDisabled,
-    Color? iconButtonSmallBorderColor,
-    Color? iconButtonSmallBorderColorHighlighted,
-    Color? iconButtonSmallBorderColorDisabled,
-    Color? iconButtonSmallIconColor,
-    Color? iconButtonSmallIconColorHighlighted,
-    Color? iconButtonSmallIconColorDisabled,
-
-    // IconButtonSmallNegative
-    Color? iconButtonSmallNegativeBackgroundColor,
-    Color? iconButtonSmallNegativeBackgroundColorHighlighted,
-    Color? iconButtonSmallNegativeBackgroundColorDisabled,
-    Color? iconButtonSmallNegativeBorderColor,
-    Color? iconButtonSmallNegativeBorderColorHighlighted,
-    Color? iconButtonSmallNegativeBorderColorDisabled,
-    Color? iconButtonSmallNegativeIconColor,
-    Color? iconButtonSmallNegativeIconColorHighlighted,
-    Color? iconButtonSmallNegativeIconColorDisabled,
-
-    // IconButtonSmallBorderless
-    Color? iconButtonSmallBorderlessBackgroundColor,
-    Color? iconButtonSmallBorderlessBackgroundColorHighlighted,
-    Color? iconButtonSmallBorderlessBackgroundColorDisabled,
-    Color? iconButtonSmallBorderlessIconColor,
-    Color? iconButtonSmallBorderlessIconColorHighlighted,
-    Color? iconButtonSmallBorderlessIconColorDisabled,
-
-    // IconFormButton
-    Color? iconFormButtonBackgroundColor,
-    Color? iconFormButtonBackgroundColorHighlighted,
-    Color? iconFormButtonBackgroundColorDisabled,
-    Color? iconFormButtonBorderColor,
-    Color? iconFormButtonBorderColorHighlighted,
-    Color? iconFormButtonBorderColorDisabled,
-    Color? iconFormButtonIconColor,
-    Color? iconFormButtonIconColorHighlighted,
-    Color? iconFormButtonIconColorDisabled,
-
-    // IconTextButton
-    Color? iconTextButtonBackgroundColor,
-    Color? iconTextButtonBackgroundColorHighlighted,
-    Color? iconTextButtonBackgroundColorDisabled,
-    Color? iconTextButtonIconColor,
-    Color? iconTextButtonIconColorHighlighted,
-    Color? iconTextButtonIconColorDisabled,
-    TextStyle? iconTextButtonTextStyle,
-    TextStyle? iconTextButtonTextStyleHighlighted,
-    TextStyle? iconTextButtonTextStyleDisabled,
-
-    // Link
-    TextStyle? linkTextStyle,
-    TextStyle? linkTextStyleHighlighted,
-
-    //ListHeader
-    TextStyle? listHeaderTextStyle,
-
-    // ListItem
-    Color? listItemBackgroundColor,
-    Color? listItemBackgroundColorHighlighted,
-    TextStyle? listItemTitleTextStyle,
-    TextStyle? listItemSubtitleTextStyle,
-
-    // Checkbox
-    Color? checkboxColor,
-    Color? checkboxColorDisabled,
-    Color? checkboxBackgroundColor,
-    Color? checkboxBackgroundColorHighlighted,
-    Color? checkboxBackgroundColorDisabled,
-    Color? checkboxBorderColor,
-    Color? checkboxBorderColorDisabled,
-    Color? checkboxListItemBackgroundColor,
-    Color? checkboxListItemBackgroundColorHighlighted,
-    Color? checkboxListItemBackgroundColorDisabled,
-    Color? checkboxListItemIconColor,
-    Color? checkboxListItemIconColorDisabled,
-    TextStyle? checkboxListItemTextStyle,
-    TextStyle? checkboxListItemTextStyleDisabled,
-    TextStyle? checkboxListItemSecondaryTextStyle,
-    TextStyle? checkboxListItemSecondaryTextStyleDisabled,
-
-    // RadioButton
-    Color? radioButtonColor,
-    Color? radioButtonColorDisabled,
-    Color? radioButtonBackgroundColor,
-    Color? radioButtonBackgroundColorHighlighted,
-    Color? radioButtonBackgroundColorDisabled,
-    Color? radioButtonBorderColor,
-    Color? radioButtonBorderColorDisabled,
-    Color? radioButtonListItemBackgroundColor,
-    Color? radioButtonListItemBackgroundColorHighlighted,
-    Color? radioButtonListItemBackgroundColorDisabled,
-    Color? radioButtonListItemIconColor,
-    Color? radioButtonListItemIconColorDisabled,
-    TextStyle? radioButtonListItemTextStyle,
-    TextStyle? radioButtonListItemTextStyleDisabled,
-    TextStyle? radioButtonListItemSecondaryTextStyle,
-    TextStyle? radioButtonListItemSecondaryTextStyleDisabled,
-
-    // SegmentedButton
-    Color? segmentedButtonBackgroundColor,
-    Color? segmentedButtonSelectedColor,
-    TextStyle? segmentedButtonTextStyle,
-
-    // TextField
-    TextStyle? textFieldTextStyle,
-    TextStyle? textFieldTextStyleDisabled,
-    TextStyle? textFieldPlaceholderTextStyle,
-    TextStyle? textFieldPlaceholderTextStyleDisabled,
-    TextStyle? textFieldErrorTextStyle,
-    Color? textFieldDividerColor,
-    Color? textFieldDividerColorHighlighted,
-    Color? textFieldDividerColorError,
-    Color? textFieldCursorColor,
-    Color? textFieldSelectionColor,
-    Color? textFieldSelectionHandleColor,
-    Color? textFieldIconColor,
-    Color? textFieldIconColorDisabled,
-
-    // Group
-    Color? groupBackgroundColor,
-
-    // Accordion
-    TextStyle? accordionTitleTextStyle,
-    TextStyle? accordionBodyTextStyle,
-    Color? accordionBackgroundColor,
-
-    // Modal
-    Color? modalBackgroundColor,
-    TextStyle? modalTitleTextStyle,
-
-    // Select
-    TextStyle? selectLabelTextStyle,
-    TextStyle? selectLabelTextStyleDisabled,
-
-    // Toast
-    TextStyle? toastTextStyle,
-    Color? toastBackgroundColor,
-
-    // Tab Bar
-    TextStyle? tabBarTextStyle,
-  }) {
-    _setDefaultValues(
-      brightness: brightness,
-      primaryColor: primaryColor,
-      primaryColorDark: primaryColorDark,
-      primarySwatch: primarySwatch,
-      backgroundColor: backgroundColor,
-      fontFamily: fontFamily,
-      defaultTextColor: defaultTextColor,
-      defaultTextStyle: defaultTextStyle,
-      dividerColor: dividerColor,
-      defaultRootContainerPadding: defaultRootContainerPadding,
-
-      // Icon
-      iconColor: iconColor,
-
-      // Header
-      headerBackgroundColor: headerBackgroundColor,
-      headerButtonBackgroundColorHighlighted: headerButtonBackgroundColorHighlighted,
-      headerIconColor: headerIconColor,
-      headerTextStyle: headerTextStyle,
-
-      // PrimaryButton
-      primaryButtonBackgroundColor: primaryButtonBackgroundColor,
-      primaryButtonBackgroundColorHighlighted: primaryButtonBackgroundColorHighlighted,
-      primaryButtonBackgroundColorDisabled: primaryButtonBackgroundColorDisabled,
-      primaryButtonBackgroundColorLoading: primaryButtonBackgroundColorLoading,
-      primaryButtonTextStyle: primaryButtonTextStyle,
-      primaryButtonTextStyleHighlighted: primaryButtonTextStyleHighlighted,
-      primaryButtonTextStyleDisabled: primaryButtonTextStyleDisabled,
-      primaryButtonTextStyleLoading: primaryButtonTextStyleLoading,
-
-      // PrimaryButtonNegative
-      primaryButtonNegativeBackgroundColor: primaryButtonNegativeBackgroundColor,
-      primaryButtonNegativeBackgroundColorHighlighted: primaryButtonNegativeBackgroundColorHighlighted,
-      primaryButtonNegativeBackgroundColorDisabled: primaryButtonNegativeBackgroundColorDisabled,
-      primaryButtonNegativeBackgroundColorLoading: primaryButtonNegativeBackgroundColorLoading,
-      primaryButtonNegativeBorderColor: primaryButtonNegativeBorderColor,
-      primaryButtonNegativeBorderColorHighlighted: primaryButtonNegativeBorderColorHighlighted,
-      primaryButtonNegativeBorderColorDisabled: primaryButtonNegativeBorderColorDisabled,
-      primaryButtonNegativeBorderColorLoading: primaryButtonNegativeBorderColorLoading,
-      primaryButtonNegativeTextStyle: primaryButtonNegativeTextStyle,
-      primaryButtonNegativeTextStyleHighlighted: primaryButtonNegativeTextStyleHighlighted,
-      primaryButtonNegativeTextStyleDisabled: primaryButtonNegativeTextStyleDisabled,
-      primaryButtonNegativeTextStyleLoading: primaryButtonNegativeTextStyleLoading,
-
-      // SecondaryButton
-      secondaryButtonBackgroundColor: secondaryButtonBackgroundColor,
-      secondaryButtonBackgroundColorHighlighted: secondaryButtonBackgroundColorHighlighted,
-      secondaryButtonBackgroundColorDisabled: secondaryButtonBackgroundColorDisabled,
-      secondaryButtonBackgroundColorLoading: secondaryButtonBackgroundColorLoading,
-      secondaryButtonBorderColor: secondaryButtonBorderColor,
-      secondaryButtonBorderColorHighlighted: secondaryButtonBorderColorHighlighted,
-      secondaryButtonBorderColorDisabled: secondaryButtonBorderColorDisabled,
-      secondaryButtonBorderColorLoading: secondaryButtonBorderColorLoading,
-      secondaryButtonTextStyle: secondaryButtonTextStyle,
-      secondaryButtonTextStyleHighlighted: secondaryButtonTextStyleHighlighted,
-      secondaryButtonTextStyleDisabled: secondaryButtonTextStyleDisabled,
-      secondaryButtonTextStyleLoading: secondaryButtonTextStyleLoading,
-
-      // TertiaryButtonLarge
-      tertiaryButtonLargeBackgroundColor: tertiaryButtonLargeBackgroundColor,
-      tertiaryButtonLargeBackgroundColorHighlighted: tertiaryButtonLargeBackgroundColorHighlighted,
-      tertiaryButtonLargeBackgroundColorDisabled: tertiaryButtonLargeBackgroundColorDisabled,
-      tertiaryButtonLargeBorderColor: tertiaryButtonLargeBorderColor,
-      tertiaryButtonLargeBorderColorHighlighted: tertiaryButtonLargeBorderColorHighlighted,
-      tertiaryButtonLargeBorderColorDisabled: tertiaryButtonLargeBorderColorDisabled,
-      tertiaryButtonLargeTextStyle: tertiaryButtonLargeTextStyle,
-      tertiaryButtonLargeTextStyleHighlighted: tertiaryButtonLargeTextStyleHighlighted,
-      tertiaryButtonLargeTextStyleDisabled: tertiaryButtonLargeTextStyleDisabled,
-
-      // TertiaryButtonSmall
-      tertiaryButtonSmallBackgroundColor: tertiaryButtonSmallBackgroundColor,
-      tertiaryButtonSmallBackgroundColorHighlighted: tertiaryButtonSmallBackgroundColorHighlighted,
-      tertiaryButtonSmallBackgroundColorDisabled: tertiaryButtonSmallBackgroundColorDisabled,
-      tertiaryButtonSmallBorderColor: tertiaryButtonSmallBorderColor,
-      tertiaryButtonSmallBorderColorHighlighted: tertiaryButtonSmallBorderColorHighlighted,
-      tertiaryButtonSmallBorderColorDisabled: tertiaryButtonSmallBorderColorDisabled,
-      tertiaryButtonSmallTextStyle: tertiaryButtonSmallTextStyle,
-      tertiaryButtonSmallTextStyleHighlighted: tertiaryButtonSmallTextStyleHighlighted,
-      tertiaryButtonSmallTextStyleDisabled: tertiaryButtonSmallTextStyleDisabled,
-
-      // IconButtonLarge
-      iconButtonLargeBackgroundColor: iconButtonLargeBackgroundColor,
-      iconButtonLargeBackgroundColorHighlighted: iconButtonLargeBackgroundColorHighlighted,
-      iconButtonLargeBackgroundColorDisabled: iconButtonLargeBackgroundColorDisabled,
-      iconButtonLargeBorderColor: iconButtonLargeBorderColor,
-      iconButtonLargeBorderColorHighlighted: iconButtonLargeBorderColorHighlighted,
-      iconButtonLargeBorderColorDisabled: iconButtonLargeBorderColorDisabled,
-      iconButtonLargeIconColor: iconButtonLargeIconColor,
-      iconButtonLargeIconColorHighlighted: iconButtonLargeIconColorHighlighted,
-      iconButtonLargeIconColorDisabled: iconButtonLargeIconColorDisabled,
-
-      // IconButtonSmall
-      iconButtonSmallBackgroundColor: iconButtonSmallBackgroundColor,
-      iconButtonSmallBackgroundColorHighlighted: iconButtonSmallBackgroundColorHighlighted,
-      iconButtonSmallBackgroundColorDisabled: iconButtonSmallBackgroundColorDisabled,
-      iconButtonSmallBorderColor: iconButtonSmallBorderColor,
-      iconButtonSmallBorderColorHighlighted: iconButtonSmallBorderColorHighlighted,
-      iconButtonSmallBorderColorDisabled: iconButtonSmallBorderColorDisabled,
-      iconButtonSmallIconColor: iconButtonSmallIconColor,
-      iconButtonSmallIconColorHighlighted: iconButtonSmallIconColorHighlighted,
-      iconButtonSmallIconColorDisabled: iconButtonSmallIconColorDisabled,
-
-      // IconButtonSmallNegative
-      iconButtonSmallNegativeBackgroundColor: iconButtonSmallNegativeBackgroundColor,
-      iconButtonSmallNegativeBackgroundColorHighlighted: iconButtonSmallNegativeBackgroundColorHighlighted,
-      iconButtonSmallNegativeBackgroundColorDisabled: iconButtonSmallNegativeBackgroundColorDisabled,
-      iconButtonSmallNegativeBorderColor: iconButtonSmallNegativeBorderColor,
-      iconButtonSmallNegativeBorderColorHighlighted: iconButtonSmallNegativeBorderColorHighlighted,
-      iconButtonSmallNegativeBorderColorDisabled: iconButtonSmallNegativeBorderColorDisabled,
-      iconButtonSmallNegativeIconColor: iconButtonSmallNegativeIconColor,
-      iconButtonSmallNegativeIconColorHighlighted: iconButtonSmallNegativeIconColorHighlighted,
-      iconButtonSmallNegativeIconColorDisabled: iconButtonSmallNegativeIconColorDisabled,
-
-      // IconButtonSmallBorderless
-      iconButtonSmallBorderlessBackgroundColor: iconButtonSmallBorderlessBackgroundColor,
-      iconButtonSmallBorderlessBackgroundColorHighlighted: iconButtonSmallBorderlessBackgroundColorHighlighted,
-      iconButtonSmallBorderlessBackgroundColorDisabled: iconButtonSmallBorderlessBackgroundColorDisabled,
-      iconButtonSmallBorderlessIconColor: iconButtonSmallBorderlessIconColor,
-      iconButtonSmallBorderlessIconColorHighlighted: iconButtonSmallBorderlessIconColorHighlighted,
-      iconButtonSmallBorderlessIconColorDisabled: iconButtonSmallBorderlessIconColorDisabled,
-
-      // IconFormButton
-      iconFormButtonBackgroundColor: iconFormButtonBackgroundColor,
-      iconFormButtonBackgroundColorHighlighted: iconFormButtonBackgroundColorHighlighted,
-      iconFormButtonBackgroundColorDisabled: iconFormButtonBackgroundColorDisabled,
-      iconFormButtonBorderColor: iconFormButtonBorderColor,
-      iconFormButtonBorderColorHighlighted: iconFormButtonBorderColorHighlighted,
-      iconFormButtonBorderColorDisabled: iconFormButtonBorderColorDisabled,
-      iconFormButtonIconColor: iconFormButtonIconColor,
-      iconFormButtonIconColorHighlighted: iconFormButtonIconColorHighlighted,
-      iconFormButtonIconColorDisabled: iconFormButtonIconColorDisabled,
-
-      // IconTextButton
-      iconTextButtonBackgroundColor: iconTextButtonBackgroundColor,
-      iconTextButtonBackgroundColorHighlighted: iconTextButtonBackgroundColorHighlighted,
-      iconTextButtonBackgroundColorDisabled: iconTextButtonBackgroundColorDisabled,
-      iconTextButtonIconColor: iconTextButtonIconColor,
-      iconTextButtonIconColorHighlighted: iconTextButtonIconColorHighlighted,
-      iconTextButtonIconColorDisabled: iconTextButtonIconColorDisabled,
-      iconTextButtonTextStyle: iconTextButtonTextStyle,
-      iconTextButtonTextStyleHighlighted: iconTextButtonTextStyleHighlighted,
-      iconTextButtonTextStyleDisabled: iconTextButtonTextStyleDisabled,
-
-      // Link
-      linkTextStyle: linkTextStyle,
-      linkTextStyleHighlighted: linkTextStyleHighlighted,
-
-      //ListHeader
-      listHeaderTextStyle: listHeaderTextStyle,
-
-      // ListItem
-      listItemBackgroundColor: listItemBackgroundColor,
-      listItemBackgroundColorHighlighted: listItemBackgroundColorHighlighted,
-      listItemTitleTextStyle: listItemTitleTextStyle,
-      listItemSubtitleTextStyle: listItemSubtitleTextStyle,
-
-      // Checkbox
-      checkboxColor: checkboxColor,
-      checkboxColorDisabled: checkboxColorDisabled,
-      checkboxBackgroundColor: checkboxBackgroundColor,
-      checkboxBackgroundColorHighlighted: checkboxBackgroundColorHighlighted,
-      checkboxBackgroundColorDisabled: checkboxBackgroundColorDisabled,
-      checkboxBorderColor: checkboxBorderColor,
-      checkboxBorderColorDisabled: checkboxBorderColorDisabled,
-      checkboxListItemBackgroundColor: checkboxListItemBackgroundColor,
-      checkboxListItemBackgroundColorHighlighted: checkboxListItemBackgroundColorHighlighted,
-      checkboxListItemBackgroundColorDisabled: checkboxListItemBackgroundColorDisabled,
-      checkboxListItemIconColor: checkboxListItemIconColor,
-      checkboxListItemIconColorDisabled: checkboxListItemIconColorDisabled,
-      checkboxListItemTextStyle: checkboxListItemTextStyle,
-      checkboxListItemTextStyleDisabled: checkboxListItemTextStyleDisabled,
-      checkboxListItemSecondaryTextStyle: checkboxListItemSecondaryTextStyle,
-      checkboxListItemSecondaryTextStyleDisabled: checkboxListItemSecondaryTextStyleDisabled,
-
-      // RadioButton
-      radioButtonColor: radioButtonColor,
-      radioButtonColorDisabled: radioButtonColorDisabled,
-      radioButtonBackgroundColor: radioButtonBackgroundColor,
-      radioButtonBackgroundColorHighlighted: radioButtonBackgroundColorHighlighted,
-      radioButtonBackgroundColorDisabled: radioButtonBackgroundColorDisabled,
-      radioButtonBorderColor: radioButtonBorderColor,
-      radioButtonBorderColorDisabled: radioButtonBorderColorDisabled,
-      radioButtonListItemBackgroundColor: radioButtonListItemBackgroundColor,
-      radioButtonListItemBackgroundColorHighlighted: radioButtonListItemBackgroundColorHighlighted,
-      radioButtonListItemBackgroundColorDisabled: radioButtonListItemBackgroundColorDisabled,
-      radioButtonListItemIconColor: radioButtonListItemIconColor,
-      radioButtonListItemIconColorDisabled: radioButtonListItemIconColorDisabled,
-      radioButtonListItemTextStyle: radioButtonListItemTextStyle,
-      radioButtonListItemTextStyleDisabled: radioButtonListItemTextStyleDisabled,
-      radioButtonListItemSecondaryTextStyle: radioButtonListItemSecondaryTextStyle,
-      radioButtonListItemSecondaryTextStyleDisabled: radioButtonListItemSecondaryTextStyleDisabled,
-
-      // SegmentedButton
-      segmentedButtonBackgroundColor: segmentedButtonBackgroundColor,
-      segmentedButtonSelectedColor: segmentedButtonSelectedColor,
-      segmentedButtonTextStyle: segmentedButtonTextStyle,
-
-      // TextField
-      textFieldTextStyle: textFieldTextStyle,
-      textFieldTextStyleDisabled: textFieldTextStyleDisabled,
-      textFieldPlaceholderTextStyle: textFieldPlaceholderTextStyle,
-      textFieldPlaceholderTextStyleDisabled: textFieldPlaceholderTextStyleDisabled,
-      textFieldErrorTextStyle: textFieldErrorTextStyle,
-      textFieldDividerColor: textFieldDividerColor,
-      textFieldDividerColorHighlighted: textFieldDividerColorHighlighted,
-      textFieldDividerColorError: textFieldDividerColorError,
-      textFieldCursorColor: textFieldCursorColor,
-      textFieldSelectionColor: textFieldSelectionColor,
-      textFieldSelectionHandleColor: textFieldSelectionHandleColor,
-      textFieldIconColor: textFieldIconColor,
-      textFieldIconColorDisabled: textFieldIconColorDisabled,
-
-      // Group
-      groupBackgroundColor: groupBackgroundColor,
-
-      // Accordion
-      accordionTitleTextStyle: accordionTitleTextStyle,
-      accordionBodyTextStyle: accordionBodyTextStyle,
-      accordionBackgroundColor: accordionBackgroundColor,
-
-      // Modal
-      modalBackgroundColor: modalBackgroundColor,
-      modalTitleTextStyle: modalTitleTextStyle,
-
-      // Select
-      selectLabelTextStyle: selectLabelTextStyle,
-      selectLabelTextStyleDisabled: selectLabelTextStyleDisabled,
-
-      // Toast
-      toastTextStyle: toastTextStyle,
-      toastBackgroundColor: toastBackgroundColor,
-
-      // Tab Bar
-      tabBarTextStyle: tabBarTextStyle,
-    );
-  }
-
-  late Brightness brightness;
-  late Color primaryColor;
-  late Color primaryColorDark;
-  late MaterialColor primarySwatch;
-  late Color backgroundColor;
-  late String fontFamily;
-  late Color defaultTextColor;
-  late TextStyle defaultTextStyle;
-  late Color dividerColor;
-  late double defaultRootContainerPadding;
+  final HostPlatform hostPlatform;
 
   // Icon
-  late Color iconColor;
+  final Color iconColor;
 
   // Header
-  late Color headerBackgroundColor;
-  late Color headerButtonBackgroundColorHighlighted;
-  late Color headerIconColor;
-  late TextStyle headerTextStyle;
+  final Color headerBackgroundColor;
+  final Color headerButtonBackgroundColorHighlighted;
+  final Color headerIconColor;
+  final TextStyle headerTextStyle;
 
   // PrimaryButton
-  late Color primaryButtonBackgroundColor;
-  late Color primaryButtonBackgroundColorHighlighted;
-  late Color primaryButtonBackgroundColorDisabled;
-  late Color primaryButtonBackgroundColorLoading;
-  late TextStyle primaryButtonTextStyle;
-  late TextStyle primaryButtonTextStyleHighlighted;
-  late TextStyle primaryButtonTextStyleDisabled;
-  late TextStyle primaryButtonTextStyleLoading;
+  final Color primaryButtonBackgroundColor;
+  final Color primaryButtonBackgroundColorHighlighted;
+  final Color primaryButtonBackgroundColorDisabled;
+  final Color primaryButtonBackgroundColorLoading;
+  final TextStyle primaryButtonTextStyle;
+  final TextStyle primaryButtonTextStyleHighlighted;
+  final TextStyle primaryButtonTextStyleDisabled;
+  final TextStyle primaryButtonTextStyleLoading;
 
   // PrimaryButtonNegative
-  late Color primaryButtonNegativeBackgroundColor;
-  late Color primaryButtonNegativeBackgroundColorHighlighted;
-  late Color primaryButtonNegativeBackgroundColorDisabled;
-  late Color primaryButtonNegativeBackgroundColorLoading;
-  late Color primaryButtonNegativeBorderColor;
-  late Color primaryButtonNegativeBorderColorHighlighted;
-  late Color primaryButtonNegativeBorderColorDisabled;
-  late Color primaryButtonNegativeBorderColorLoading;
-  late TextStyle primaryButtonNegativeTextStyle;
-  late TextStyle primaryButtonNegativeTextStyleHighlighted;
-  late TextStyle primaryButtonNegativeTextStyleDisabled;
-  late TextStyle primaryButtonNegativeTextStyleLoading;
+  final Color primaryButtonNegativeBackgroundColor;
+  final Color primaryButtonNegativeBackgroundColorHighlighted;
+  final Color primaryButtonNegativeBackgroundColorDisabled;
+  final Color primaryButtonNegativeBackgroundColorLoading;
+  final Color primaryButtonNegativeBorderColor;
+  final Color primaryButtonNegativeBorderColorHighlighted;
+  final Color primaryButtonNegativeBorderColorDisabled;
+  final Color primaryButtonNegativeBorderColorLoading;
+  final TextStyle primaryButtonNegativeTextStyle;
+  final TextStyle primaryButtonNegativeTextStyleHighlighted;
+  final TextStyle primaryButtonNegativeTextStyleDisabled;
+  final TextStyle primaryButtonNegativeTextStyleLoading;
 
   // SecondaryButton
-  late Color secondaryButtonBackgroundColor;
-  late Color secondaryButtonBackgroundColorHighlighted;
-  late Color secondaryButtonBackgroundColorDisabled;
-  late Color secondaryButtonBackgroundColorLoading;
-  late Color secondaryButtonBorderColor;
-  late Color secondaryButtonBorderColorHighlighted;
-  late Color secondaryButtonBorderColorDisabled;
-  late Color secondaryButtonBorderColorLoading;
-  late TextStyle secondaryButtonTextStyle;
-  late TextStyle secondaryButtonTextStyleHighlighted;
-  late TextStyle secondaryButtonTextStyleDisabled;
-  late TextStyle secondaryButtonTextStyleLoading;
+  final Color secondaryButtonBackgroundColor;
+  final Color secondaryButtonBackgroundColorHighlighted;
+  final Color secondaryButtonBackgroundColorDisabled;
+  final Color secondaryButtonBackgroundColorLoading;
+  final Color secondaryButtonBorderColor;
+  final Color secondaryButtonBorderColorHighlighted;
+  final Color secondaryButtonBorderColorDisabled;
+  final Color secondaryButtonBorderColorLoading;
+  final TextStyle secondaryButtonTextStyle;
+  final TextStyle secondaryButtonTextStyleHighlighted;
+  final TextStyle secondaryButtonTextStyleDisabled;
+  final TextStyle secondaryButtonTextStyleLoading;
 
   // TertiaryButtonLarge
-  late Color tertiaryButtonLargeBackgroundColor;
-  late Color tertiaryButtonLargeBackgroundColorHighlighted;
-  late Color tertiaryButtonLargeBackgroundColorDisabled;
-  late Color tertiaryButtonLargeBorderColor;
-  late Color tertiaryButtonLargeBorderColorHighlighted;
-  late Color tertiaryButtonLargeBorderColorDisabled;
-  late TextStyle tertiaryButtonLargeTextStyle;
-  late TextStyle tertiaryButtonLargeTextStyleHighlighted;
-  late TextStyle tertiaryButtonLargeTextStyleDisabled;
+  final Color tertiaryButtonLargeBackgroundColor;
+  final Color tertiaryButtonLargeBackgroundColorHighlighted;
+  final Color tertiaryButtonLargeBackgroundColorDisabled;
+  final Color tertiaryButtonLargeBorderColor;
+  final Color tertiaryButtonLargeBorderColorHighlighted;
+  final Color tertiaryButtonLargeBorderColorDisabled;
+  final TextStyle tertiaryButtonLargeTextStyle;
+  final TextStyle tertiaryButtonLargeTextStyleHighlighted;
+  final TextStyle tertiaryButtonLargeTextStyleDisabled;
 
   // TertiaryButtonSmall
-  late Color tertiaryButtonSmallBackgroundColor;
-  late Color tertiaryButtonSmallBackgroundColorHighlighted;
-  late Color tertiaryButtonSmallBackgroundColorDisabled;
-  late Color tertiaryButtonSmallBorderColor;
-  late Color tertiaryButtonSmallBorderColorHighlighted;
-  late Color tertiaryButtonSmallBorderColorDisabled;
-  late TextStyle tertiaryButtonSmallTextStyle;
-  late TextStyle tertiaryButtonSmallTextStyleHighlighted;
-  late TextStyle tertiaryButtonSmallTextStyleDisabled;
+  final Color tertiaryButtonSmallBackgroundColor;
+  final Color tertiaryButtonSmallBackgroundColorHighlighted;
+  final Color tertiaryButtonSmallBackgroundColorDisabled;
+  final Color tertiaryButtonSmallBorderColor;
+  final Color tertiaryButtonSmallBorderColorHighlighted;
+  final Color tertiaryButtonSmallBorderColorDisabled;
+  final TextStyle tertiaryButtonSmallTextStyle;
+  final TextStyle tertiaryButtonSmallTextStyleHighlighted;
+  final TextStyle tertiaryButtonSmallTextStyleDisabled;
 
   // IconButtonLarge
-  late Color iconButtonLargeBackgroundColor;
-  late Color iconButtonLargeBackgroundColorHighlighted;
-  late Color iconButtonLargeBackgroundColorDisabled;
-  late Color iconButtonLargeBorderColor;
-  late Color iconButtonLargeBorderColorHighlighted;
-  late Color iconButtonLargeBorderColorDisabled;
-  late Color iconButtonLargeIconColor;
-  late Color iconButtonLargeIconColorHighlighted;
-  late Color iconButtonLargeIconColorDisabled;
+  final Color iconButtonLargeBackgroundColor;
+  final Color iconButtonLargeBackgroundColorHighlighted;
+  final Color iconButtonLargeBackgroundColorDisabled;
+  final Color iconButtonLargeBorderColor;
+  final Color iconButtonLargeBorderColorHighlighted;
+  final Color iconButtonLargeBorderColorDisabled;
+  final Color iconButtonLargeIconColor;
+  final Color iconButtonLargeIconColorHighlighted;
+  final Color iconButtonLargeIconColorDisabled;
 
   // IconButtonSmall
-  late Color iconButtonSmallBackgroundColor;
-  late Color iconButtonSmallBackgroundColorHighlighted;
-  late Color iconButtonSmallBackgroundColorDisabled;
-  late Color iconButtonSmallBorderColor;
-  late Color iconButtonSmallBorderColorHighlighted;
-  late Color iconButtonSmallBorderColorDisabled;
-  late Color iconButtonSmallIconColor;
-  late Color iconButtonSmallIconColorHighlighted;
-  late Color iconButtonSmallIconColorDisabled;
+  final Color iconButtonSmallBackgroundColor;
+  final Color iconButtonSmallBackgroundColorHighlighted;
+  final Color iconButtonSmallBackgroundColorDisabled;
+  final Color iconButtonSmallBorderColor;
+  final Color iconButtonSmallBorderColorHighlighted;
+  final Color iconButtonSmallBorderColorDisabled;
+  final Color iconButtonSmallIconColor;
+  final Color iconButtonSmallIconColorHighlighted;
+  final Color iconButtonSmallIconColorDisabled;
 
   // IconButtonSmallNegative
-  late Color iconButtonSmallNegativeBackgroundColor;
-  late Color iconButtonSmallNegativeBackgroundColorHighlighted;
-  late Color iconButtonSmallNegativeBackgroundColorDisabled;
-  late Color iconButtonSmallNegativeBorderColor;
-  late Color iconButtonSmallNegativeBorderColorHighlighted;
-  late Color iconButtonSmallNegativeBorderColorDisabled;
-  late Color iconButtonSmallNegativeIconColor;
-  late Color iconButtonSmallNegativeIconColorHighlighted;
-  late Color iconButtonSmallNegativeIconColorDisabled;
+  final Color iconButtonSmallNegativeBackgroundColor;
+  final Color iconButtonSmallNegativeBackgroundColorHighlighted;
+  final Color iconButtonSmallNegativeBackgroundColorDisabled;
+  final Color iconButtonSmallNegativeBorderColor;
+  final Color iconButtonSmallNegativeBorderColorHighlighted;
+  final Color iconButtonSmallNegativeBorderColorDisabled;
+  final Color iconButtonSmallNegativeIconColor;
+  final Color iconButtonSmallNegativeIconColorHighlighted;
+  final Color iconButtonSmallNegativeIconColorDisabled;
 
   // IconButtonSmallBorderless
-  late Color iconButtonSmallBorderlessBackgroundColor;
-  late Color iconButtonSmallBorderlessBackgroundColorHighlighted;
-  late Color iconButtonSmallBorderlessBackgroundColorDisabled;
-  late Color iconButtonSmallBorderlessIconColor;
-  late Color iconButtonSmallBorderlessIconColorHighlighted;
-  late Color iconButtonSmallBorderlessIconColorDisabled;
+  final Color iconButtonSmallBorderlessBackgroundColor;
+  final Color iconButtonSmallBorderlessBackgroundColorHighlighted;
+  final Color iconButtonSmallBorderlessBackgroundColorDisabled;
+  final Color iconButtonSmallBorderlessIconColor;
+  final Color iconButtonSmallBorderlessIconColorHighlighted;
+  final Color iconButtonSmallBorderlessIconColorDisabled;
 
   // IconFormButton
-  late Color iconFormButtonBackgroundColor;
-  late Color iconFormButtonBackgroundColorHighlighted;
-  late Color iconFormButtonBackgroundColorDisabled;
-  late Color iconFormButtonBorderColor;
-  late Color iconFormButtonBorderColorHighlighted;
-  late Color iconFormButtonBorderColorDisabled;
-  late Color iconFormButtonIconColor;
-  late Color iconFormButtonIconColorHighlighted;
-  late Color iconFormButtonIconColorDisabled;
+  final Color iconFormButtonBackgroundColor;
+  final Color iconFormButtonBackgroundColorHighlighted;
+  final Color iconFormButtonBackgroundColorDisabled;
+  final Color iconFormButtonBorderColor;
+  final Color iconFormButtonBorderColorHighlighted;
+  final Color iconFormButtonBorderColorDisabled;
+  final Color iconFormButtonIconColor;
+  final Color iconFormButtonIconColorHighlighted;
+  final Color iconFormButtonIconColorDisabled;
 
   // IconTextButton
-  late Color iconTextButtonBackgroundColor;
-  late Color iconTextButtonBackgroundColorHighlighted;
-  late Color iconTextButtonBackgroundColorDisabled;
-  late Color iconTextButtonIconColor;
-  late Color iconTextButtonIconColorHighlighted;
-  late Color iconTextButtonIconColorDisabled;
-  late TextStyle iconTextButtonTextStyle;
-  late TextStyle iconTextButtonTextStyleHighlighted;
-  late TextStyle iconTextButtonTextStyleDisabled;
+  final Color iconTextButtonBackgroundColor;
+  final Color iconTextButtonBackgroundColorHighlighted;
+  final Color iconTextButtonBackgroundColorDisabled;
+  final Color iconTextButtonIconColor;
+  final Color iconTextButtonIconColorHighlighted;
+  final Color iconTextButtonIconColorDisabled;
+  final TextStyle iconTextButtonTextStyle;
+  final TextStyle iconTextButtonTextStyleHighlighted;
+  final TextStyle iconTextButtonTextStyleDisabled;
 
   // Link
-  late TextStyle linkTextStyle;
-  late TextStyle linkTextStyleHighlighted;
+  final TextStyle linkTextStyle;
+  final TextStyle linkTextStyleHighlighted;
 
   //ListHeader
-  late TextStyle listHeaderTextStyle;
+  final TextStyle listHeaderTextStyle;
 
   // ListItem
-  late Color listItemBackgroundColor;
-  late Color listItemBackgroundColorHighlighted;
-  late TextStyle listItemTitleTextStyle;
-  late TextStyle listItemSubtitleTextStyle;
+  final Color listItemBackgroundColor;
+  final Color listItemBackgroundColorHighlighted;
+  final TextStyle listItemTitleTextStyle;
+  final TextStyle listItemSubtitleTextStyle;
 
   // Checkbox
-  late Color checkboxColor;
-  late Color checkboxColorDisabled;
-  late Color checkboxBackgroundColor;
-  late Color checkboxBackgroundColorHighlighted;
-  late Color checkboxBackgroundColorDisabled;
-  late Color checkboxBorderColor;
-  late Color checkboxBorderColorDisabled;
-  late Color checkboxListItemBackgroundColor;
-  late Color checkboxListItemBackgroundColorHighlighted;
-  late Color checkboxListItemBackgroundColorDisabled;
-  late Color checkboxListItemIconColor;
-  late Color checkboxListItemIconColorDisabled;
-  late TextStyle checkboxListItemTextStyle;
-  late TextStyle checkboxListItemTextStyleDisabled;
-  late TextStyle checkboxListItemSecondaryTextStyle;
-  late TextStyle checkboxListItemSecondaryTextStyleDisabled;
+  final Color checkboxColor;
+  final Color checkboxColorDisabled;
+  final Color checkboxBackgroundColor;
+  final Color checkboxBackgroundColorHighlighted;
+  final Color checkboxBackgroundColorDisabled;
+  final Color checkboxBorderColor;
+  final Color checkboxBorderColorDisabled;
+  final Color checkboxListItemBackgroundColor;
+  final Color checkboxListItemBackgroundColorHighlighted;
+  final Color checkboxListItemBackgroundColorDisabled;
+  final Color checkboxListItemIconColor;
+  final Color checkboxListItemIconColorDisabled;
+  final TextStyle checkboxListItemTextStyle;
+  final TextStyle checkboxListItemTextStyleDisabled;
+  final TextStyle checkboxListItemSecondaryTextStyle;
+  final TextStyle checkboxListItemSecondaryTextStyleDisabled;
 
   // RadioButton
-  late Color radioButtonColor;
-  late Color radioButtonColorDisabled;
-  late Color radioButtonBackgroundColor;
-  late Color radioButtonBackgroundColorHighlighted;
-  late Color radioButtonBackgroundColorDisabled;
-  late Color radioButtonBorderColor;
-  late Color radioButtonBorderColorDisabled;
-  late Color radioButtonListItemBackgroundColor;
-  late Color radioButtonListItemBackgroundColorHighlighted;
-  late Color radioButtonListItemBackgroundColorDisabled;
-  late Color radioButtonListItemIconColor;
-  late Color radioButtonListItemIconColorDisabled;
-  late TextStyle radioButtonListItemTextStyle;
-  late TextStyle radioButtonListItemTextStyleDisabled;
-  late TextStyle radioButtonListItemSecondaryTextStyle;
-  late TextStyle radioButtonListItemSecondaryTextStyleDisabled;
+  final Color radioButtonColor;
+  final Color radioButtonColorDisabled;
+  final Color radioButtonBackgroundColor;
+  final Color radioButtonBackgroundColorHighlighted;
+  final Color radioButtonBackgroundColorDisabled;
+  final Color radioButtonBorderColor;
+  final Color radioButtonBorderColorDisabled;
+  final Color radioButtonListItemBackgroundColor;
+  final Color radioButtonListItemBackgroundColorHighlighted;
+  final Color radioButtonListItemBackgroundColorDisabled;
+  final Color radioButtonListItemIconColor;
+  final Color radioButtonListItemIconColorDisabled;
+  final TextStyle radioButtonListItemTextStyle;
+  final TextStyle radioButtonListItemTextStyleDisabled;
+  final TextStyle radioButtonListItemSecondaryTextStyle;
+  final TextStyle radioButtonListItemSecondaryTextStyleDisabled;
 
   // SegmentedButton
-  late Color segmentedButtonBackgroundColor;
-  late Color segmentedButtonSelectedColor;
-  late TextStyle segmentedButtonTextStyle;
+  final Color segmentedButtonBackgroundColor;
+  final Color segmentedButtonSelectedColor;
+  final TextStyle segmentedButtonTextStyle;
 
   // TextField
-  late TextStyle textFieldTextStyle;
-  late TextStyle textFieldTextStyleDisabled;
-  late TextStyle textFieldPlaceholderTextStyle;
-  late TextStyle textFieldPlaceholderTextStyleDisabled;
-  late TextStyle textFieldErrorTextStyle;
-  late Color textFieldDividerColor;
-  late Color textFieldDividerColorHighlighted;
-  late Color textFieldDividerColorError;
-  late Color textFieldCursorColor;
-  late Color textFieldSelectionColor;
-  late Color textFieldSelectionHandleColor;
-  late Color textFieldIconColor;
-  late Color textFieldIconColorDisabled;
+  final TextStyle textFieldTextStyle;
+  final TextStyle textFieldTextStyleDisabled;
+  final TextStyle textFieldPlaceholderTextStyle;
+  final TextStyle textFieldPlaceholderTextStyleDisabled;
+  final TextStyle textFieldErrorTextStyle;
+  final Color textFieldDividerColor;
+  final Color textFieldDividerColorHighlighted;
+  final Color textFieldDividerColorError;
+  final Color textFieldCursorColor;
+  final Color textFieldSelectionColor;
+  final Color textFieldSelectionHandleColor;
+  final Color textFieldIconColor;
+  final Color textFieldIconColorDisabled;
 
   // Group
-  late Color groupBackgroundColor;
+  final Color groupBackgroundColor;
 
   // Accordion
-  late TextStyle accordionTitleTextStyle;
-  late TextStyle accordionBodyTextStyle;
-  late Color accordionBackgroundColor;
+  final TextStyle accordionTitleTextStyle;
+  final TextStyle accordionBodyTextStyle;
+  final Color accordionBackgroundColor;
 
   // Modal
-  late Color modalBackgroundColor;
-  late TextStyle modalTitleTextStyle;
+  final Color modalBackgroundColor;
+  final TextStyle modalTitleTextStyle;
 
   // Select
-  late TextStyle selectLabelTextStyle;
-  late TextStyle selectLabelTextStyleDisabled;
+  final TextStyle selectLabelTextStyle;
+  final TextStyle selectLabelTextStyleDisabled;
 
   // Toast
-  late TextStyle toastTextStyle;
-  late Color toastBackgroundColor;
+  final TextStyle toastTextStyle;
+  final Color toastBackgroundColor;
 
   // Tab Bar
-  late TextStyle tabBarTextStyle;
+  final TextStyle tabBarTextStyle;
 
   SBBThemeData copyWith({
     Brightness? brightness,
@@ -1744,6 +1224,8 @@ class SBBThemeData {
     Color? dividerColor,
     double? defaultRootContainerPadding,
 
+    HostPlatform? hostPlatform,
+
     // Icon
     Color? iconColor,
 
@@ -1968,7 +1450,7 @@ class SBBThemeData {
     // Tab Bar
     TextStyle? tabBarTextStyle,
   }) {
-    final defaultTheme = SBBThemeData(brightness: this.brightness);
+    final defaultTheme = SBBThemeData.fallback();
     return SBBThemeData(
       brightness: brightness ?? this.brightness,
       primaryColor: primaryColor ?? (this.primaryColor == defaultTheme.primaryColor ? null : this.primaryColor),
@@ -1980,6 +1462,9 @@ class SBBThemeData {
       defaultTextStyle: defaultTextStyle ?? (this.defaultTextStyle == defaultTheme.defaultTextStyle ? null : this.defaultTextStyle),
       dividerColor: dividerColor ?? (this.dividerColor == defaultTheme.dividerColor ? null : this.dividerColor),
       defaultRootContainerPadding: defaultRootContainerPadding ?? (this.defaultRootContainerPadding == defaultTheme.defaultRootContainerPadding ? null : this.defaultRootContainerPadding),
+
+      // native / web
+      hostPlatform: hostPlatform ?? defaultTheme.hostPlatform,
 
       // Icon
       iconColor: iconColor ?? (this.iconColor == defaultTheme.iconColor ? null : this.iconColor),
@@ -2317,501 +1802,6 @@ class SBBThemeData {
     );
   }
 
-  void _setDefaultValues({
-    Brightness? brightness,
-    Color? primaryColor,
-    Color? primaryColorDark,
-    MaterialColor? primarySwatch,
-    Color? backgroundColor,
-    String? fontFamily,
-    Color? defaultTextColor,
-    TextStyle? defaultTextStyle,
-    Color? dividerColor,
-    double? defaultRootContainerPadding,
-
-    // Icon
-    Color? iconColor,
-
-    // Header
-    Color? headerBackgroundColor,
-    Color? headerButtonBackgroundColorHighlighted,
-    Color? headerIconColor,
-    TextStyle? headerTextStyle,
-
-    // PrimaryButton
-    Color? primaryButtonBackgroundColor,
-    Color? primaryButtonBackgroundColorHighlighted,
-    Color? primaryButtonBackgroundColorDisabled,
-    Color? primaryButtonBackgroundColorLoading,
-    TextStyle? primaryButtonTextStyle,
-    TextStyle? primaryButtonTextStyleHighlighted,
-    TextStyle? primaryButtonTextStyleDisabled,
-    TextStyle? primaryButtonTextStyleLoading,
-
-    // PrimaryButtonNegative
-    Color? primaryButtonNegativeBackgroundColor,
-    Color? primaryButtonNegativeBackgroundColorHighlighted,
-    Color? primaryButtonNegativeBackgroundColorDisabled,
-    Color? primaryButtonNegativeBackgroundColorLoading,
-    Color? primaryButtonNegativeBorderColor,
-    Color? primaryButtonNegativeBorderColorHighlighted,
-    Color? primaryButtonNegativeBorderColorDisabled,
-    Color? primaryButtonNegativeBorderColorLoading,
-    TextStyle? primaryButtonNegativeTextStyle,
-    TextStyle? primaryButtonNegativeTextStyleHighlighted,
-    TextStyle? primaryButtonNegativeTextStyleDisabled,
-    TextStyle? primaryButtonNegativeTextStyleLoading,
-
-    // SecondaryButton
-    Color? secondaryButtonBackgroundColor,
-    Color? secondaryButtonBackgroundColorHighlighted,
-    Color? secondaryButtonBackgroundColorDisabled,
-    Color? secondaryButtonBackgroundColorLoading,
-    Color? secondaryButtonBorderColor,
-    Color? secondaryButtonBorderColorHighlighted,
-    Color? secondaryButtonBorderColorDisabled,
-    Color? secondaryButtonBorderColorLoading,
-    TextStyle? secondaryButtonTextStyle,
-    TextStyle? secondaryButtonTextStyleHighlighted,
-    TextStyle? secondaryButtonTextStyleDisabled,
-    TextStyle? secondaryButtonTextStyleLoading,
-
-    // TertiaryButtonLarge
-    Color? tertiaryButtonLargeBackgroundColor,
-    Color? tertiaryButtonLargeBackgroundColorHighlighted,
-    Color? tertiaryButtonLargeBackgroundColorDisabled,
-    Color? tertiaryButtonLargeBorderColor,
-    Color? tertiaryButtonLargeBorderColorHighlighted,
-    Color? tertiaryButtonLargeBorderColorDisabled,
-    TextStyle? tertiaryButtonLargeTextStyle,
-    TextStyle? tertiaryButtonLargeTextStyleHighlighted,
-    TextStyle? tertiaryButtonLargeTextStyleDisabled,
-
-    // TertiaryButtonSmall
-    Color? tertiaryButtonSmallBackgroundColor,
-    Color? tertiaryButtonSmallBackgroundColorHighlighted,
-    Color? tertiaryButtonSmallBackgroundColorDisabled,
-    Color? tertiaryButtonSmallBorderColor,
-    Color? tertiaryButtonSmallBorderColorHighlighted,
-    Color? tertiaryButtonSmallBorderColorDisabled,
-    TextStyle? tertiaryButtonSmallTextStyle,
-    TextStyle? tertiaryButtonSmallTextStyleHighlighted,
-    TextStyle? tertiaryButtonSmallTextStyleDisabled,
-
-    // IconButtonLarge
-    Color? iconButtonLargeBackgroundColor,
-    Color? iconButtonLargeBackgroundColorHighlighted,
-    Color? iconButtonLargeBackgroundColorDisabled,
-    Color? iconButtonLargeBorderColor,
-    Color? iconButtonLargeBorderColorHighlighted,
-    Color? iconButtonLargeBorderColorDisabled,
-    Color? iconButtonLargeIconColor,
-    Color? iconButtonLargeIconColorHighlighted,
-    Color? iconButtonLargeIconColorDisabled,
-
-    // IconButtonSmall
-    Color? iconButtonSmallBackgroundColor,
-    Color? iconButtonSmallBackgroundColorHighlighted,
-    Color? iconButtonSmallBackgroundColorDisabled,
-    Color? iconButtonSmallBorderColor,
-    Color? iconButtonSmallBorderColorHighlighted,
-    Color? iconButtonSmallBorderColorDisabled,
-    Color? iconButtonSmallIconColor,
-    Color? iconButtonSmallIconColorHighlighted,
-    Color? iconButtonSmallIconColorDisabled,
-
-    // IconButtonSmallNegative
-    Color? iconButtonSmallNegativeBackgroundColor,
-    Color? iconButtonSmallNegativeBackgroundColorHighlighted,
-    Color? iconButtonSmallNegativeBackgroundColorDisabled,
-    Color? iconButtonSmallNegativeBorderColor,
-    Color? iconButtonSmallNegativeBorderColorHighlighted,
-    Color? iconButtonSmallNegativeBorderColorDisabled,
-    Color? iconButtonSmallNegativeIconColor,
-    Color? iconButtonSmallNegativeIconColorHighlighted,
-    Color? iconButtonSmallNegativeIconColorDisabled,
-
-    // IconButtonSmallBorderless
-    Color? iconButtonSmallBorderlessBackgroundColor,
-    Color? iconButtonSmallBorderlessBackgroundColorHighlighted,
-    Color? iconButtonSmallBorderlessBackgroundColorDisabled,
-    Color? iconButtonSmallBorderlessIconColor,
-    Color? iconButtonSmallBorderlessIconColorHighlighted,
-    Color? iconButtonSmallBorderlessIconColorDisabled,
-
-    // IconFormButton
-    Color? iconFormButtonBackgroundColor,
-    Color? iconFormButtonBackgroundColorHighlighted,
-    Color? iconFormButtonBackgroundColorDisabled,
-    Color? iconFormButtonBorderColor,
-    Color? iconFormButtonBorderColorHighlighted,
-    Color? iconFormButtonBorderColorDisabled,
-    Color? iconFormButtonIconColor,
-    Color? iconFormButtonIconColorHighlighted,
-    Color? iconFormButtonIconColorDisabled,
-
-    // IconTextButton
-    Color? iconTextButtonBackgroundColor,
-    Color? iconTextButtonBackgroundColorHighlighted,
-    Color? iconTextButtonBackgroundColorDisabled,
-    Color? iconTextButtonIconColor,
-    Color? iconTextButtonIconColorHighlighted,
-    Color? iconTextButtonIconColorDisabled,
-    TextStyle? iconTextButtonTextStyle,
-    TextStyle? iconTextButtonTextStyleHighlighted,
-    TextStyle? iconTextButtonTextStyleDisabled,
-
-    // Link
-    TextStyle? linkTextStyle,
-    TextStyle? linkTextStyleHighlighted,
-
-    //ListHeader
-    TextStyle? listHeaderTextStyle,
-
-    // ListItem
-    Color? listItemBackgroundColor,
-    Color? listItemBackgroundColorHighlighted,
-    TextStyle? listItemTitleTextStyle,
-    TextStyle? listItemSubtitleTextStyle,
-
-    // Checkbox
-    Color? checkboxColor,
-    Color? checkboxColorDisabled,
-    Color? checkboxBackgroundColor,
-    Color? checkboxBackgroundColorHighlighted,
-    Color? checkboxBackgroundColorDisabled,
-    Color? checkboxBorderColor,
-    Color? checkboxBorderColorDisabled,
-    Color? checkboxListItemBackgroundColor,
-    Color? checkboxListItemBackgroundColorHighlighted,
-    Color? checkboxListItemBackgroundColorDisabled,
-    Color? checkboxListItemIconColor,
-    Color? checkboxListItemIconColorDisabled,
-    TextStyle? checkboxListItemTextStyle,
-    TextStyle? checkboxListItemTextStyleDisabled,
-    TextStyle? checkboxListItemSecondaryTextStyle,
-    TextStyle? checkboxListItemSecondaryTextStyleDisabled,
-
-    // RadioButton
-    Color? radioButtonColor,
-    Color? radioButtonColorDisabled,
-    Color? radioButtonBackgroundColor,
-    Color? radioButtonBackgroundColorHighlighted,
-    Color? radioButtonBackgroundColorDisabled,
-    Color? radioButtonBorderColor,
-    Color? radioButtonBorderColorDisabled,
-    Color? radioButtonListItemBackgroundColor,
-    Color? radioButtonListItemBackgroundColorHighlighted,
-    Color? radioButtonListItemBackgroundColorDisabled,
-    Color? radioButtonListItemIconColor,
-    Color? radioButtonListItemIconColorDisabled,
-    TextStyle? radioButtonListItemTextStyle,
-    TextStyle? radioButtonListItemTextStyleDisabled,
-    TextStyle? radioButtonListItemSecondaryTextStyle,
-    TextStyle? radioButtonListItemSecondaryTextStyleDisabled,
-
-    // SegmentedButton
-    Color? segmentedButtonBackgroundColor,
-    Color? segmentedButtonSelectedColor,
-    TextStyle? segmentedButtonTextStyle,
-
-    // TextField
-    TextStyle? textFieldTextStyle,
-    TextStyle? textFieldTextStyleDisabled,
-    TextStyle? textFieldPlaceholderTextStyle,
-    TextStyle? textFieldPlaceholderTextStyleDisabled,
-    TextStyle? textFieldErrorTextStyle,
-    Color? textFieldDividerColor,
-    Color? textFieldDividerColorHighlighted,
-    Color? textFieldDividerColorError,
-    Color? textFieldCursorColor,
-    Color? textFieldSelectionColor,
-    Color? textFieldSelectionHandleColor,
-    Color? textFieldIconColor,
-    Color? textFieldIconColorDisabled,
-
-    // Group
-    Color? groupBackgroundColor,
-
-    // Accordion
-    TextStyle? accordionTitleTextStyle,
-    TextStyle? accordionBodyTextStyle,
-    Color? accordionBackgroundColor,
-
-    // Modal
-    Color? modalBackgroundColor,
-    TextStyle? modalTitleTextStyle,
-
-    // Select
-    TextStyle? selectLabelTextStyle,
-    TextStyle? selectLabelTextStyleDisabled,
-
-    // Toast
-    TextStyle? toastTextStyle,
-    Color? toastBackgroundColor,
-
-    // Tab Bar
-    TextStyle? tabBarTextStyle,
-  }) {
-    this.brightness = brightness ?? Brightness.light;
-
-    themeValue<T>(T lightThemeValue, T darkThemeValue) => this.brightness == Brightness.light ? lightThemeValue : darkThemeValue;
-
-    this.primaryColor = primaryColor ?? SBBColors.red;
-    this.primaryColorDark = primaryColorDark ?? SBBColors.red125;
-    this.primarySwatch = primarySwatch ??
-        MaterialColor(
-          this.primaryColor.value,
-          <int, Color>{
-            50: this.primaryColor,
-            100: this.primaryColor,
-            200: this.primaryColor,
-            300: this.primaryColor,
-            400: this.primaryColor,
-            500: this.primaryColor,
-            600: this.primaryColor,
-            700: this.primaryColor,
-            800: this.primaryColor,
-            900: this.primaryColor,
-          },
-        );
-    this.backgroundColor = backgroundColor ?? themeValue(SBBColors.milk, SBBColors.black);
-    this.fontFamily = fontFamily ?? defaultTextStyle?.fontFamily ?? SBBWebFont;
-    this.defaultTextColor = defaultTextColor ?? defaultTextStyle?.color ?? themeValue(SBBColors.black, SBBColors.white);
-    this.defaultTextStyle =
-        (defaultTextStyle ?? SBBTextStyles.mediumLight).copyWith(fontFamily: defaultTextStyle?.fontFamily ?? this.fontFamily, color: defaultTextStyle?.color ?? this.defaultTextColor);
-    this.dividerColor = dividerColor ?? themeValue(SBBColors.cloud, const Color(0xFF2A2A2A));
-    this.defaultRootContainerPadding = defaultRootContainerPadding ?? sbbDefaultSpacing;
-
-    themedTextStyle({TextStyle? textStyle, Color? color}) => (textStyle ?? this.defaultTextStyle).copyWith(fontFamily: this.fontFamily, color: color ?? this.defaultTextColor);
-
-    // Icon
-    this.iconColor = iconColor ?? themeValue(SBBColors.black, SBBColors.white);
-
-    // Header
-    this.headerBackgroundColor = headerBackgroundColor ?? this.primaryColor;
-    this.headerButtonBackgroundColorHighlighted = headerButtonBackgroundColorHighlighted ?? this.primaryColorDark;
-    this.headerIconColor = headerIconColor ?? SBBColors.white;
-    this.headerTextStyle = headerTextStyle ?? themedTextStyle(textStyle: SBBTextStyles.largeLight, color: this.headerIconColor);
-
-    // PrimaryButton
-    this.primaryButtonBackgroundColor = primaryButtonBackgroundColor ?? this.primaryColor;
-    this.primaryButtonBackgroundColorHighlighted = primaryButtonBackgroundColorHighlighted ?? this.primaryColorDark;
-    this.primaryButtonBackgroundColorDisabled = primaryButtonBackgroundColorDisabled ?? themeValue(SBBColors.cement, SBBColors.iron);
-    this.primaryButtonBackgroundColorLoading = primaryButtonBackgroundColorLoading ?? this.primaryButtonBackgroundColorDisabled;
-    this.primaryButtonTextStyle = primaryButtonTextStyle ?? themedTextStyle(color: SBBColors.white);
-    this.primaryButtonTextStyleHighlighted = primaryButtonTextStyleHighlighted ?? this.primaryButtonTextStyle;
-    this.primaryButtonTextStyleDisabled = primaryButtonTextStyleDisabled ?? this.primaryButtonTextStyle;
-    this.primaryButtonTextStyleLoading = primaryButtonTextStyleLoading ?? this.primaryButtonTextStyleDisabled;
-
-    // PrimaryButtonNegative
-    this.primaryButtonNegativeBackgroundColor = primaryButtonNegativeBackgroundColor ?? SBBColors.transparent;
-    this.primaryButtonNegativeBackgroundColorHighlighted = primaryButtonNegativeBackgroundColorHighlighted ?? themeValue(SBBColors.black.withOpacity(0.2), SBBColors.white.withOpacity(0.2));
-    this.primaryButtonNegativeBackgroundColorDisabled = primaryButtonNegativeBackgroundColorDisabled ?? SBBColors.transparent;
-    this.primaryButtonNegativeBackgroundColorLoading = primaryButtonNegativeBackgroundColorLoading ?? this.primaryButtonNegativeBackgroundColorDisabled;
-    this.primaryButtonNegativeBorderColor = primaryButtonNegativeBorderColor ?? SBBColors.white;
-    this.primaryButtonNegativeBorderColorHighlighted = primaryButtonNegativeBorderColorHighlighted ?? this.primaryButtonNegativeBorderColor;
-    this.primaryButtonNegativeBorderColorDisabled = primaryButtonNegativeBorderColorDisabled ?? SBBColors.white.withOpacity(0.5);
-    this.primaryButtonNegativeBorderColorLoading = primaryButtonNegativeBorderColorLoading ?? this.primaryButtonNegativeBorderColorDisabled;
-    this.primaryButtonNegativeTextStyle = primaryButtonNegativeTextStyle ?? themedTextStyle(color: SBBColors.white);
-    this.primaryButtonNegativeTextStyleHighlighted = primaryButtonNegativeTextStyleHighlighted ?? this.primaryButtonNegativeTextStyle;
-    this.primaryButtonNegativeTextStyleDisabled = primaryButtonNegativeTextStyleDisabled ?? this.primaryButtonNegativeTextStyle;
-    this.primaryButtonNegativeTextStyleLoading = primaryButtonNegativeTextStyleLoading ?? this.primaryButtonNegativeTextStyleDisabled;
-
-    // SecondaryButton
-    this.secondaryButtonBackgroundColor = secondaryButtonBackgroundColor ?? SBBColors.transparent;
-    this.secondaryButtonBackgroundColorHighlighted = secondaryButtonBackgroundColorHighlighted ?? themeValue(SBBColors.milk, SBBColors.iron);
-    this.secondaryButtonBackgroundColorDisabled = secondaryButtonBackgroundColorDisabled ?? this.secondaryButtonBackgroundColor;
-    this.secondaryButtonBackgroundColorLoading = secondaryButtonBackgroundColorLoading ?? this.secondaryButtonBackgroundColorDisabled;
-    this.secondaryButtonBorderColor = secondaryButtonBorderColor ?? this.primaryColor;
-    this.secondaryButtonBorderColorHighlighted = secondaryButtonBorderColorHighlighted ?? this.primaryColorDark;
-    this.secondaryButtonBorderColorDisabled = secondaryButtonBorderColorDisabled ?? themeValue(SBBColors.cement, SBBColors.iron);
-    this.secondaryButtonBorderColorLoading = secondaryButtonBorderColorLoading ?? this.secondaryButtonBorderColorDisabled;
-    this.secondaryButtonTextStyle = secondaryButtonTextStyle ?? themedTextStyle(color: this.primaryColor);
-    this.secondaryButtonTextStyleHighlighted = secondaryButtonTextStyleHighlighted ?? themedTextStyle(color: this.primaryColorDark);
-    this.secondaryButtonTextStyleDisabled = secondaryButtonTextStyleDisabled ?? themedTextStyle(color: SBBColors.metal);
-    this.secondaryButtonTextStyleLoading = secondaryButtonTextStyleLoading ?? this.secondaryButtonTextStyleDisabled;
-
-    // TertiaryButtonLarge
-    this.tertiaryButtonLargeBackgroundColor = tertiaryButtonLargeBackgroundColor ?? themeValue(SBBColors.white, SBBColors.transparent);
-    this.tertiaryButtonLargeBackgroundColorHighlighted = tertiaryButtonLargeBackgroundColorHighlighted ?? themeValue(SBBColors.milk, SBBColors.iron);
-    this.tertiaryButtonLargeBackgroundColorDisabled = tertiaryButtonLargeBackgroundColorDisabled ?? themeValue(SBBColors.transparent, SBBColors.transparent);
-    this.tertiaryButtonLargeBorderColor = tertiaryButtonLargeBorderColor ?? SBBColors.smoke;
-    this.tertiaryButtonLargeBorderColorHighlighted = tertiaryButtonLargeBorderColorHighlighted ?? this.tertiaryButtonLargeBorderColor;
-    this.tertiaryButtonLargeBorderColorDisabled = tertiaryButtonLargeBorderColorDisabled ?? themeValue(SBBColors.cloud, SBBColors.iron);
-    this.tertiaryButtonLargeTextStyle = tertiaryButtonLargeTextStyle ?? themedTextStyle();
-    this.tertiaryButtonLargeTextStyleHighlighted = tertiaryButtonLargeTextStyleHighlighted ?? this.tertiaryButtonLargeTextStyle;
-    this.tertiaryButtonLargeTextStyleDisabled = tertiaryButtonLargeTextStyleDisabled ?? this.tertiaryButtonLargeTextStyle.copyWith(color: SBBColors.metal);
-
-    // TertiaryButtonSmall
-    this.tertiaryButtonSmallBackgroundColor = tertiaryButtonSmallBackgroundColor ?? this.tertiaryButtonLargeBackgroundColor;
-    this.tertiaryButtonSmallBackgroundColorHighlighted = tertiaryButtonSmallBackgroundColorHighlighted ?? this.tertiaryButtonLargeBackgroundColorHighlighted;
-    this.tertiaryButtonSmallBackgroundColorDisabled = tertiaryButtonSmallBackgroundColorDisabled ?? this.tertiaryButtonLargeBackgroundColorDisabled;
-    this.tertiaryButtonSmallBorderColor = tertiaryButtonSmallBorderColor ?? this.tertiaryButtonLargeBorderColor;
-    this.tertiaryButtonSmallBorderColorHighlighted = tertiaryButtonSmallBorderColorHighlighted ?? this.tertiaryButtonLargeBorderColorHighlighted;
-    this.tertiaryButtonSmallBorderColorDisabled = tertiaryButtonSmallBorderColorDisabled ?? this.tertiaryButtonLargeBorderColorDisabled;
-    this.tertiaryButtonSmallTextStyle = tertiaryButtonSmallTextStyle ?? themedTextStyle(textStyle: SBBTextStyles.smallLight);
-    this.tertiaryButtonSmallTextStyleHighlighted = tertiaryButtonSmallTextStyleHighlighted ?? this.tertiaryButtonSmallTextStyle;
-    this.tertiaryButtonSmallTextStyleDisabled = tertiaryButtonSmallTextStyleDisabled ?? this.tertiaryButtonSmallTextStyle.copyWith(color: this.tertiaryButtonLargeTextStyleDisabled.color);
-
-    // IconButtonLarge
-    this.iconButtonLargeBackgroundColor = iconButtonLargeBackgroundColor ?? this.tertiaryButtonLargeBackgroundColor;
-    this.iconButtonLargeBackgroundColorHighlighted = iconButtonLargeBackgroundColorHighlighted ?? this.tertiaryButtonLargeBackgroundColorHighlighted;
-    this.iconButtonLargeBackgroundColorDisabled = iconButtonLargeBackgroundColorDisabled ?? SBBColors.transparent;
-    this.iconButtonLargeBorderColor = iconButtonLargeBorderColor ?? this.tertiaryButtonLargeBorderColor;
-    this.iconButtonLargeBorderColorHighlighted = iconButtonLargeBorderColorHighlighted ?? this.tertiaryButtonLargeBorderColorHighlighted;
-    this.iconButtonLargeBorderColorDisabled = iconButtonLargeBorderColorDisabled ?? themeValue(SBBColors.cloud, SBBColors.iron);
-    this.iconButtonLargeIconColor = iconButtonLargeIconColor ?? this.iconColor;
-    this.iconButtonLargeIconColorHighlighted = iconButtonLargeIconColorHighlighted ?? this.iconButtonLargeIconColor;
-    this.iconButtonLargeIconColorDisabled = iconButtonLargeIconColorDisabled ?? this.iconButtonLargeBorderColorDisabled;
-
-    // IconButtonSmall
-    this.iconButtonSmallBackgroundColor = iconButtonSmallBackgroundColor ?? this.iconButtonLargeBackgroundColor;
-    this.iconButtonSmallBackgroundColorHighlighted = iconButtonSmallBackgroundColorHighlighted ?? this.iconButtonLargeBackgroundColorHighlighted;
-    this.iconButtonSmallBackgroundColorDisabled = iconButtonSmallBackgroundColorDisabled ?? this.iconButtonLargeBackgroundColorDisabled;
-    this.iconButtonSmallBorderColor = iconButtonSmallBorderColor ?? this.iconButtonLargeBorderColor;
-    this.iconButtonSmallBorderColorHighlighted = iconButtonSmallBorderColorHighlighted ?? this.iconButtonLargeBorderColorHighlighted;
-    this.iconButtonSmallBorderColorDisabled = iconButtonSmallBorderColorDisabled ?? this.iconButtonLargeBorderColorDisabled;
-    this.iconButtonSmallIconColor = iconButtonSmallIconColor ?? this.iconButtonLargeIconColor;
-    this.iconButtonSmallIconColorHighlighted = iconButtonSmallIconColorHighlighted ?? this.iconButtonLargeIconColorHighlighted;
-    this.iconButtonSmallIconColorDisabled = iconButtonSmallIconColorDisabled ?? this.iconButtonLargeIconColorDisabled;
-
-    // IconButtonSmallNegative
-    this.iconButtonSmallNegativeBackgroundColor = iconButtonSmallNegativeBackgroundColor ?? this.primaryButtonNegativeBackgroundColor;
-    this.iconButtonSmallNegativeBackgroundColorHighlighted = iconButtonSmallNegativeBackgroundColorHighlighted ?? this.primaryButtonNegativeBackgroundColorHighlighted;
-    this.iconButtonSmallNegativeBackgroundColorDisabled = iconButtonSmallNegativeBackgroundColorDisabled ?? this.primaryButtonNegativeBackgroundColorDisabled;
-    this.iconButtonSmallNegativeBorderColor = iconButtonSmallNegativeBorderColor ?? this.primaryButtonNegativeBorderColor;
-    this.iconButtonSmallNegativeBorderColorHighlighted = iconButtonSmallNegativeBorderColorHighlighted ?? this.primaryButtonNegativeBorderColorHighlighted;
-    this.iconButtonSmallNegativeBorderColorDisabled = iconButtonSmallNegativeBorderColorDisabled ?? this.primaryButtonNegativeBorderColorDisabled;
-    this.iconButtonSmallNegativeIconColor = iconButtonSmallNegativeIconColor ?? this.iconButtonSmallNegativeBorderColor;
-    this.iconButtonSmallNegativeIconColorHighlighted = iconButtonSmallNegativeIconColorHighlighted ?? this.iconButtonSmallNegativeBorderColorHighlighted;
-    this.iconButtonSmallNegativeIconColorDisabled = iconButtonSmallNegativeIconColorDisabled ?? this.iconButtonSmallNegativeBorderColorDisabled;
-
-    // IconButtonSmallBorderless
-    this.iconButtonSmallBorderlessBackgroundColor = iconButtonSmallBorderlessBackgroundColor ?? SBBColors.transparent;
-    this.iconButtonSmallBorderlessBackgroundColorHighlighted = iconButtonSmallBorderlessBackgroundColorHighlighted ?? SBBColors.transparent;
-    this.iconButtonSmallBorderlessBackgroundColorDisabled = iconButtonSmallBorderlessBackgroundColorDisabled ?? SBBColors.transparent;
-    this.iconButtonSmallBorderlessIconColor = iconButtonSmallBorderlessIconColor ?? this.iconButtonSmallIconColor;
-    this.iconButtonSmallBorderlessIconColorHighlighted = iconButtonSmallBorderlessIconColorHighlighted ?? themeValue(SBBColors.metal, SBBColors.aluminum);
-    this.iconButtonSmallBorderlessIconColorDisabled = iconButtonSmallBorderlessIconColorDisabled ?? this.iconButtonSmallIconColorDisabled;
-
-    // IconFormButton
-    this.iconFormButtonBackgroundColor = iconFormButtonBackgroundColor ?? this.iconButtonLargeBackgroundColor;
-    this.iconFormButtonBackgroundColorHighlighted = iconFormButtonBackgroundColorHighlighted ?? this.iconButtonLargeBackgroundColorHighlighted;
-    this.iconFormButtonBackgroundColorDisabled = iconFormButtonBackgroundColorDisabled ?? this.iconButtonLargeBackgroundColorDisabled;
-    this.iconFormButtonBorderColor = iconFormButtonBorderColor ?? this.iconButtonLargeBorderColor;
-    this.iconFormButtonBorderColorHighlighted = iconFormButtonBorderColorHighlighted ?? this.iconButtonLargeBorderColorHighlighted;
-    this.iconFormButtonBorderColorDisabled = iconFormButtonBorderColorDisabled ?? this.iconButtonLargeBorderColorDisabled;
-    this.iconFormButtonIconColor = iconFormButtonIconColor ?? this.iconButtonLargeIconColor;
-    this.iconFormButtonIconColorHighlighted = iconFormButtonIconColorHighlighted ?? this.iconButtonLargeIconColorHighlighted;
-    this.iconFormButtonIconColorDisabled = iconFormButtonIconColorDisabled ?? this.iconButtonLargeIconColorDisabled;
-
-    // IconTextButton
-    this.iconTextButtonBackgroundColor = iconTextButtonBackgroundColor ?? themeValue(SBBColors.white, SBBColors.charcoal);
-    this.iconTextButtonBackgroundColorHighlighted = iconTextButtonBackgroundColorHighlighted ?? themeValue(SBBColors.milk, SBBColors.iron);
-    this.iconTextButtonBackgroundColorDisabled = iconTextButtonBackgroundColorDisabled ?? this.iconTextButtonBackgroundColor;
-    this.iconTextButtonTextStyle = iconTextButtonTextStyle ?? this.tertiaryButtonSmallTextStyle;
-    this.iconTextButtonTextStyleHighlighted = iconTextButtonTextStyleHighlighted ?? this.tertiaryButtonSmallTextStyleHighlighted;
-    this.iconTextButtonTextStyleDisabled = iconTextButtonTextStyleDisabled ?? this.tertiaryButtonSmallTextStyleDisabled;
-    this.iconTextButtonIconColor = iconTextButtonIconColor ?? this.iconTextButtonTextStyle.color!;
-    this.iconTextButtonIconColorHighlighted = iconTextButtonIconColorHighlighted ?? this.iconTextButtonTextStyleHighlighted.color!;
-    this.iconTextButtonIconColorDisabled = iconTextButtonIconColorDisabled ?? this.iconTextButtonTextStyleDisabled.color!;
-
-    // Link
-    this.linkTextStyle = linkTextStyle ?? this.defaultTextStyle.copyWith(color: this.primaryColor);
-    this.linkTextStyleHighlighted = linkTextStyleHighlighted ?? this.linkTextStyle.copyWith(color: themeValue(this.primaryColorDark, SBBColors.white));
-
-    //ListHeader
-    this.listHeaderTextStyle = listHeaderTextStyle ?? themedTextStyle(textStyle: SBBTextStyles.smallLight);
-
-    // ListItem
-    this.listItemBackgroundColor = listItemBackgroundColor ?? SBBColors.transparent;
-    this.listItemBackgroundColorHighlighted = listItemBackgroundColorHighlighted ?? themeValue(SBBColors.milk, SBBColors.iron);
-    this.listItemTitleTextStyle = listItemTitleTextStyle ?? themedTextStyle();
-    this.listItemSubtitleTextStyle =
-        listItemSubtitleTextStyle ?? themedTextStyle(textStyle: SBBTextStyles.extraSmallLight.copyWith(height: 16.0 / 12.0), color: themeValue(SBBColors.metal, SBBColors.cement));
-
-    // Checkbox TODO define toggleable colors for checkbox and radiobutton?
-    this.checkboxColor = checkboxColor ?? this.primaryColor;
-    this.checkboxColorDisabled = checkboxColorDisabled ?? SBBColors.metal;
-    this.checkboxBackgroundColor = checkboxBackgroundColor ?? themeValue(SBBColors.white, SBBColors.transparent);
-    this.checkboxBackgroundColorHighlighted = checkboxBackgroundColorHighlighted ?? this.listItemBackgroundColorHighlighted;
-    this.checkboxBackgroundColorDisabled = checkboxBackgroundColorDisabled ?? SBBColors.transparent;
-    this.checkboxBorderColor = checkboxBorderColor ?? SBBColors.smoke;
-    this.checkboxBorderColorDisabled = checkboxBorderColorDisabled ?? themeValue(SBBColors.cloud, SBBColors.iron);
-    this.checkboxListItemBackgroundColor = checkboxListItemBackgroundColor ?? this.listItemBackgroundColor;
-    this.checkboxListItemBackgroundColorHighlighted = checkboxListItemBackgroundColorHighlighted ?? this.listItemBackgroundColorHighlighted;
-    this.checkboxListItemBackgroundColorDisabled = checkboxListItemBackgroundColorDisabled ?? this.checkboxListItemBackgroundColor;
-    this.checkboxListItemIconColor = checkboxListItemIconColor ?? this.iconColor;
-    this.checkboxListItemIconColorDisabled = checkboxListItemIconColorDisabled ?? SBBColors.metal;
-    this.checkboxListItemTextStyle = checkboxListItemTextStyle ?? this.listItemTitleTextStyle;
-    this.checkboxListItemTextStyleDisabled = checkboxListItemTextStyleDisabled ?? this.listItemTitleTextStyle.copyWith(color: SBBColors.metal);
-    this.checkboxListItemSecondaryTextStyle = checkboxListItemSecondaryTextStyle ?? this.listItemSubtitleTextStyle;
-    this.checkboxListItemSecondaryTextStyleDisabled = checkboxListItemSecondaryTextStyleDisabled ?? this.checkboxListItemSecondaryTextStyle.copyWith(color: SBBColors.metal);
-
-    // RadioButton TODO define toggleable colors for checkbox and radiobutton?
-    this.radioButtonColor = radioButtonColor ?? this.primaryColor;
-    this.radioButtonColorDisabled = radioButtonColorDisabled ?? SBBColors.metal;
-    this.radioButtonBackgroundColor = radioButtonBackgroundColor ?? themeValue(SBBColors.white, SBBColors.transparent);
-    this.radioButtonBackgroundColorHighlighted = radioButtonBackgroundColorHighlighted ?? this.listItemBackgroundColorHighlighted;
-    this.radioButtonBackgroundColorDisabled = radioButtonBackgroundColorDisabled ?? SBBColors.transparent;
-    this.radioButtonBorderColor = radioButtonBorderColor ?? SBBColors.smoke;
-    this.radioButtonBorderColorDisabled = radioButtonBorderColorDisabled ?? themeValue(SBBColors.cloud, SBBColors.iron);
-    this.radioButtonListItemBackgroundColor = radioButtonListItemBackgroundColor ?? this.listItemBackgroundColor;
-    this.radioButtonListItemBackgroundColorHighlighted = radioButtonListItemBackgroundColorHighlighted ?? this.listItemBackgroundColorHighlighted;
-    this.radioButtonListItemBackgroundColorDisabled = radioButtonListItemBackgroundColorDisabled ?? this.radioButtonListItemBackgroundColor;
-    this.radioButtonListItemIconColor = radioButtonListItemIconColor ?? this.iconColor;
-    this.radioButtonListItemIconColorDisabled = radioButtonListItemIconColorDisabled ?? SBBColors.metal;
-    this.radioButtonListItemTextStyle = radioButtonListItemTextStyle ?? this.listItemTitleTextStyle;
-    this.radioButtonListItemTextStyleDisabled = radioButtonListItemTextStyleDisabled ?? this.listItemTitleTextStyle.copyWith(color: SBBColors.metal);
-    this.radioButtonListItemSecondaryTextStyle = radioButtonListItemSecondaryTextStyle ?? this.listItemSubtitleTextStyle;
-    this.radioButtonListItemSecondaryTextStyleDisabled = radioButtonListItemSecondaryTextStyleDisabled ?? this.radioButtonListItemSecondaryTextStyle.copyWith(color: SBBColors.metal);
-
-    // SegmentedButton
-    this.segmentedButtonBackgroundColor = segmentedButtonBackgroundColor ?? themeValue(SBBColors.cloud, SBBColors.iron);
-    this.segmentedButtonSelectedColor = segmentedButtonSelectedColor ?? themeValue(SBBColors.white, SBBColors.black);
-    this.segmentedButtonTextStyle = segmentedButtonTextStyle ?? themedTextStyle();
-
-    // TextField
-    this.textFieldTextStyle = textFieldTextStyle ?? themedTextStyle();
-    this.textFieldTextStyleDisabled = textFieldTextStyleDisabled ?? this.textFieldTextStyle.copyWith(color: SBBColors.metal);
-    this.textFieldPlaceholderTextStyle = textFieldPlaceholderTextStyle ?? themedTextStyle(color: themeValue(SBBColors.metal, SBBColors.cement));
-    this.textFieldPlaceholderTextStyleDisabled =
-        textFieldPlaceholderTextStyleDisabled ?? themeValue(this.textFieldPlaceholderTextStyle, this.textFieldPlaceholderTextStyle.copyWith(color: SBBColors.metal));
-    this.textFieldErrorTextStyle = textFieldErrorTextStyle ?? themedTextStyle(textStyle: SBBTextStyles.helpersLabel, color: SBBColors.red150);
-    this.textFieldDividerColor = textFieldDividerColor ?? this.dividerColor;
-    this.textFieldDividerColorHighlighted = textFieldDividerColorHighlighted ?? themeValue(SBBColors.black, SBBColors.white);
-    this.textFieldDividerColorError = textFieldDividerColorError ?? SBBColors.red;
-    this.textFieldCursorColor = textFieldCursorColor ?? SBBColors.sky;
-    this.textFieldSelectionColor = textFieldSelectionColor ?? this.textFieldCursorColor.withOpacity(0.5);
-    this.textFieldSelectionHandleColor = textFieldSelectionHandleColor ?? this.textFieldCursorColor;
-    this.textFieldIconColor = textFieldIconColor ?? this.iconColor;
-    this.textFieldIconColorDisabled = textFieldIconColorDisabled ?? SBBColors.metal;
-
-    // Group
-    this.groupBackgroundColor = groupBackgroundColor ?? themeValue(SBBColors.white, SBBColors.charcoal);
-
-    // Accordion
-    this.accordionTitleTextStyle = accordionTitleTextStyle ?? themedTextStyle(textStyle: SBBTextStyles.largeLight);
-    this.accordionBodyTextStyle = accordionBodyTextStyle ?? themedTextStyle(textStyle: SBBTextStyles.smallLight);
-    this.accordionBackgroundColor = accordionBackgroundColor ?? this.groupBackgroundColor;
-
-    // Modal
-    this.modalBackgroundColor = modalBackgroundColor ?? themeValue(SBBColors.milk, SBBColors.midnight);
-    this.modalTitleTextStyle = modalTitleTextStyle ?? themedTextStyle(textStyle: SBBTextStyles.largeLight);
-
-    // Select
-    this.selectLabelTextStyle = selectLabelTextStyle ?? themedTextStyle(textStyle: SBBTextStyles.helpersLabel, color: this.textFieldPlaceholderTextStyle.color);
-    this.selectLabelTextStyleDisabled = selectLabelTextStyleDisabled ?? this.selectLabelTextStyle.copyWith(color: this.textFieldPlaceholderTextStyleDisabled.color);
-
-    // Toast
-    this.toastTextStyle = toastTextStyle ?? themedTextStyle(textStyle: SBBTextStyles.smallLight, color: SBBColors.white);
-    this.toastBackgroundColor = toastBackgroundColor ?? themeValue(SBBColors.black.withOpacity(0.5), SBBColors.white.withOpacity(0.3));
-
-    // Tab Bar
-    this.tabBarTextStyle = tabBarTextStyle ?? themedTextStyle(textStyle: SBBTextStyles.extraSmallLight.copyWith(fontWeight: FontWeight.w500));
-  }
-
   ThemeData createTheme() {
     final baseButtonStyle = ButtonStyle(
       overlayColor: SBBInternal.all(SBBColors.transparent),
@@ -2951,9 +1941,12 @@ class SBBThemeData {
     );
   }
 
-  double? _statusBarHeight;
-
-  double get statusBarHeight => _statusBarHeight ?? 24.0;
+  // used to get the statusBarHeight in various locations through _InheritedWidget (SBBTheme)
+  //
+  // workaround for modal bar & Onboarding in mobile
+  // refer to https://github.com/flutter/flutter/issues/39205
+  double _statusBarHeight = 24.0;
+  double get statusBarHeight => _statusBarHeight;
 
   updateStatusBarHeight(BuildContext context) {
     if (_statusBarHeight == null) {
