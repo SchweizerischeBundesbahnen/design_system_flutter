@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../design_system_flutter.dart';
 import '../sbb_internal.dart';
+import 'sbb_button_styles.dart';
 
 /// The SBB Primary Button. Use according to documentation.
 ///
@@ -31,11 +32,28 @@ class SBBPrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return _buildThemedButton(context);
+  }
+
+  Widget _buildThemedButton(BuildContext context) {
+    final SBBThemeData theme = SBBTheme.of(context);
+    switch (theme.hostPlatform) {
+      case HostPlatform.native:
+        return _buildPrimaryMobile(context);
+      case HostPlatform.web:
+        return _buildPrimaryWeb(context);
+      default:
+        return _buildPrimaryMobile(context);
+    }
+  }
+
+  ElevatedButton _buildPrimaryMobile(BuildContext context) {
+    final elevatedButtonTheme = Theme.of(context).elevatedButtonTheme;
     return ElevatedButton(
-      style: Theme.of(context).elevatedButtonTheme.style?.copyWith(
-            // workaround for web
-            padding: SBBInternal.all(EdgeInsets.zero),
-          ),
+      style: elevatedButtonTheme.style?.copyWith(
+        // workaround for web
+        padding: SBBInternal.all(EdgeInsets.zero),
+      ),
       onPressed: isLoading ? null : onPressed,
       focusNode: focusNode,
       child: Padding(
@@ -53,6 +71,28 @@ class SBBPrimaryButton extends StatelessWidget {
               ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+
+  ElevatedButton _buildPrimaryWeb(BuildContext context) {
+    final elevatedButtonTheme = Theme.of(context).elevatedButtonTheme;
+    return ElevatedButton(
+      style: elevatedButtonTheme.style?.copyWith(
+        shape: SBBInternal.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(2.0),
+          ),
+        ),
+      ),
+      onPressed: onPressed,
+      focusNode: focusNode,
+      child: Center(
+        child: Text(
+          label,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1,
         ),
       ),
     );
@@ -94,17 +134,21 @@ class SBBPrimaryButtonNegative extends StatelessWidget {
             padding: SBBInternal.all(EdgeInsets.zero),
             overlayColor: SBBInternal.resolveWith(
               defaultValue: sbbTheme.primaryButtonNegativeBackgroundColor,
-              pressedValue: sbbTheme.primaryButtonNegativeBackgroundColorHighlighted,
+              pressedValue:
+                  sbbTheme.primaryButtonNegativeBackgroundColorHighlighted,
             ),
             backgroundColor: SBBInternal.resolveWith(
               defaultValue: sbbTheme.primaryButtonNegativeBackgroundColor,
               pressedValue: sbbTheme.primaryButtonNegativeBackgroundColor,
-              disabledValue: sbbTheme.primaryButtonNegativeBackgroundColorDisabled,
+              disabledValue:
+                  sbbTheme.primaryButtonNegativeBackgroundColorDisabled,
             ),
             foregroundColor: SBBInternal.resolveWith(
               defaultValue: sbbTheme.primaryButtonNegativeTextStyle.color!,
-              pressedValue: sbbTheme.primaryButtonNegativeTextStyleHighlighted.color,
-              disabledValue: sbbTheme.primaryButtonNegativeTextStyleDisabled.color,
+              pressedValue:
+                  sbbTheme.primaryButtonNegativeTextStyleHighlighted.color,
+              disabledValue:
+                  sbbTheme.primaryButtonNegativeTextStyleDisabled.color,
             ),
             textStyle: SBBInternal.resolveWith(
               defaultValue: sbbTheme.primaryButtonNegativeTextStyle,
@@ -112,9 +156,12 @@ class SBBPrimaryButtonNegative extends StatelessWidget {
               disabledValue: sbbTheme.primaryButtonNegativeTextStyleDisabled,
             ),
             side: SBBInternal.resolveWith(
-              defaultValue: BorderSide(color: sbbTheme.primaryButtonNegativeBorderColor),
-              pressedValue: BorderSide(color: sbbTheme.primaryButtonNegativeBorderColorHighlighted),
-              disabledValue: BorderSide(color: sbbTheme.primaryButtonNegativeBorderColorDisabled),
+              defaultValue:
+                  BorderSide(color: sbbTheme.primaryButtonNegativeBorderColor),
+              pressedValue: BorderSide(
+                  color: sbbTheme.primaryButtonNegativeBorderColorHighlighted),
+              disabledValue: BorderSide(
+                  color: sbbTheme.primaryButtonNegativeBorderColorDisabled),
             ),
           ),
       onPressed: isLoading ? null : onPressed,
