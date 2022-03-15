@@ -21,7 +21,7 @@
 * `SBBIconButtonSmallBorderless`: Added field `focusNode`
 * `SBBIconFormButton`: Added field `focusNode`
 * `SBBIconTextButton`: Added field `focusNode`
-* `SBBModalSheet`: Added field `useRootNavigator`
+* `SBBModalSheet`: Added field `useRootNavigator` (with default value `true`)
 * `SBBModalSheet`: Added constructor `custom` for header customizing
 * `SBBToast`: Added field `bottom`
 ### Changed

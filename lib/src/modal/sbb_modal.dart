@@ -92,7 +92,7 @@ Future<T?> showSBBModalSheet<T>({
   required BuildContext context,
   required String title,
   required Widget child,
-  bool useRootNavigator = false,
+  bool useRootNavigator = true,
 }) {
   return showModalBottomSheet<T>(
     context: context,
@@ -113,7 +113,7 @@ Future<T?> showCustomSBBModalSheet<T>({
   required BuildContext context,
   required Widget header,
   required Widget child,
-  bool useRootNavigator = false,
+  bool useRootNavigator = true,
 }) {
   return showModalBottomSheet<T>(
     context: context,
