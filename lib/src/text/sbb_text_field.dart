@@ -73,12 +73,14 @@ class SBBTextField extends StatefulWidget {
 class _SBBTextField extends State<SBBTextField> {
   late FocusNode _focus;
   bool _hasFocus = false;
+  late TextEditingController controller;
 
   @override
   void initState() {
     super.initState();
     _focus = widget.focusNode ?? FocusNode();
     _focus.addListener(_onFocusChange);
+    controller = widget.controller ?? TextEditingController();
   }
 
   void _onFocusChange() {
@@ -120,6 +122,7 @@ class _SBBTextField extends State<SBBTextField> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
                       child: buildTextField(context),
@@ -148,11 +151,12 @@ class _SBBTextField extends State<SBBTextField> {
     // adjust floating label style to get desired sizes
     final floatingLabelStyle = labelStyle.copyWith(
       fontSize: SBBTextStyles.helpersLabel.fontSize! * 1.335,
-      height: 1.6,
+      height: 1.5,
     );
     final style = widget.enabled
         ? sbbTheme.textFieldTextStyle
         : sbbTheme.textFieldTextStyleDisabled;
+    final hasValueOrFocus = controller.text.isNotEmpty || _hasFocus;
     return TextField(
       focusNode: _focus,
       controller: widget.controller,
@@ -176,8 +180,12 @@ class _SBBTextField extends State<SBBTextField> {
         errorBorder: InputBorder.none,
         focusedErrorBorder: InputBorder.none,
         contentPadding: EdgeInsetsDirectional.only(
-          bottom: sbbDefaultSpacing / 2,
-          top: 2.0, // depends on the height of the label text
+          bottom: hasValueOrFocus
+              ? sbbDefaultSpacing / 2
+              : sbbDefaultSpacing / 2 + 5.0,
+          top: hasValueOrFocus
+              ? 3.0
+              : -2.0, // depends on the height of the label text
         ),
         floatingLabelStyle: floatingLabelStyle,
         labelStyle: labelStyle,
