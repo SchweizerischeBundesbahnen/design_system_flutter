@@ -20,8 +20,8 @@ import '../../design_system_flutter.dart';
 /// * <https://digital.sbb.ch/de/design-system-mobile-new/module/modal>
 Future<T?> showSBBModalPopup<T>({
   required BuildContext context,
-  required Widget child,
   required String title,
+  required Widget child,
   Clip clipBehavior = Clip.none,
 }) {
   return showDialog<T>(

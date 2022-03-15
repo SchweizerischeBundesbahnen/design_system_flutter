@@ -31,6 +31,8 @@
 * `SBBTextStyles`: Adjusted `fontSize` and `height` values to match the current specifications
 * `SBBListHeader`: Adjusted paddings to match the current specifications
 * `SBBTextField`: Adjusted paddings to match the current specifications
+* `SBBSelect`: Adjusted paddings to match the current specifications
+* `SBBMultiSelect`: Adjusted paddings to match the current specifications
 ### Deprecated
 ### Removed
 * `SBBListHeader`: Removed fields `icon` and `onCallToAction` to match the current specifications

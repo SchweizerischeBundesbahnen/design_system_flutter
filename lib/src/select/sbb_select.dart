@@ -139,7 +139,7 @@ class SBBSelect<T> extends StatelessWidget {
                 sbbDefaultSpacing,
                 sbbDefaultSpacing / 2,
                 sbbDefaultSpacing,
-                sbbDefaultSpacing * 2,
+                sbbDefaultSpacing,
               ),
               child: StatefulBuilder(
                 builder: (context, setState) {
@@ -249,7 +249,7 @@ class SBBMultiSelect<T> extends StatefulWidget {
                     sbbDefaultSpacing,
                     0.0,
                     sbbDefaultSpacing,
-                    sbbDefaultSpacing * 2,
+                    sbbDefaultSpacing,
                   ),
                   child: SBBPrimaryButton(
                     label: confirmButtonLabel ?? MaterialLocalizations.of(context).okButtonLabel,
