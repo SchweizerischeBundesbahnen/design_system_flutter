@@ -61,6 +61,7 @@ class _CheckboxPageState extends State<CheckboxPage> {
               SBBCheckboxListItem(
                 value: _listItemValue1,
                 label: 'Default',
+                allowMultilineLabel: true,
                 onChanged: (value) => setState(() => _listItemValue1 = value),
               ),
               SBBCheckboxListItem(
@@ -103,7 +104,10 @@ class _CheckboxPageState extends State<CheckboxPage> {
                 label: 'Custom trailing Widget',
                 onChanged: (value) => setState(() => _listItemValue6 = value),
                 trailingWidget: const Padding(
-                  padding: const EdgeInsets.only(right: sbbDefaultSpacing),
+                  padding: const EdgeInsetsDirectional.only(
+                    top: sbbDefaultSpacing / 4 * 3,
+                    end: sbbDefaultSpacing,
+                  ),
                   child: Text('CHF 0.99'),
                 ),
               ),
@@ -111,7 +115,8 @@ class _CheckboxPageState extends State<CheckboxPage> {
                 value: _listItemValue7,
                 label: 'Multiline Label with\nSecondary Label',
                 allowMultilineLabel: true,
-                secondaryLabel: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut convallis leo et metus semper hendrerit. Duis nec nunc a ligula cursus vulputate. Donec sed elit ultricies, euismod erat et, eleifend augue.',
+                secondaryLabel:
+                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut convallis leo et metus semper hendrerit. Duis nec nunc a ligula cursus vulputate. Donec sed elit ultricies, euismod erat et, eleifend augue.',
                 isLastElement: true,
                 onChanged: (value) => setState(() => _listItemValue7 = value),
               ),

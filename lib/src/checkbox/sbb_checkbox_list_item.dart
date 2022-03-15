@@ -1,7 +1,4 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 
 import '../../design_system_flutter.dart';
 
@@ -187,6 +184,7 @@ class SBBCheckboxListItem extends StatelessWidget {
                         child: Padding(
                           padding: const EdgeInsetsDirectional.only(
                             top: sbbDefaultSpacing / 4 * 3,
+                            bottom: sbbDefaultSpacing / 4 * 3,
                             end: sbbDefaultSpacing,
                           ),
                           child: Column(
@@ -207,7 +205,6 @@ class SBBCheckboxListItem extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsetsDirectional.only(
                                     top: sbbDefaultSpacing / 4,
-                                    bottom: sbbDefaultSpacing / 4 * 4,
                                   ),
                                   child: Text(
                                     secondaryLabel!,
