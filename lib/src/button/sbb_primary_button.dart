@@ -32,60 +32,41 @@ class SBBPrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return _buildThemedButton(context);
-  }
-
-  Widget _buildThemedButton(BuildContext context) {
     final SBBThemeData theme = SBBTheme.of(context);
     switch (theme.hostPlatform) {
       case HostPlatform.native:
-        return _buildPrimaryMobile(context);
+        return _buildThemedMobile(theme);
       case HostPlatform.web:
-        return _buildPrimaryWeb(context);
+        return _buildThemedWeb(theme);
       default:
-        return _buildPrimaryMobile(context);
+        return _buildThemedMobile(theme);
     }
   }
 
-  ElevatedButton _buildPrimaryMobile(BuildContext context) {
-    final elevatedButtonTheme = Theme.of(context).elevatedButtonTheme;
+  ElevatedButton _buildThemedMobile(SBBThemeData theme) {
     return ElevatedButton(
-      style: elevatedButtonTheme.style?.copyWith(
-        // workaround for web
-        padding: SBBInternal.all(EdgeInsets.zero),
-      ),
+      style: SBBButtonStyles.primaryMobile(theme: theme),
       onPressed: isLoading ? null : onPressed,
       focusNode: focusNode,
-      child: Padding(
-        // workaround for web
-        padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (isLoading) SBBLoadingIndicator.tinyCloud(),
-            Flexible(
-              child: Text(
-                label,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-              ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (isLoading) SBBLoadingIndicator.tinyCloud(),
+          Flexible(
+            child: Text(
+              label,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
 
-  ElevatedButton _buildPrimaryWeb(BuildContext context) {
-    final elevatedButtonTheme = Theme.of(context).elevatedButtonTheme;
+  ElevatedButton _buildThemedWeb(SBBThemeData theme) {
     return ElevatedButton(
-      style: elevatedButtonTheme.style?.copyWith(
-        shape: SBBInternal.all(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(2.0),
-          ),
-        ),
-      ),
+      style: SBBButtonStyles.primaryWebLean(theme: theme),
       onPressed: onPressed,
       focusNode: focusNode,
       child: Center(
@@ -127,61 +108,55 @@ class SBBPrimaryButtonNegative extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var sbbTheme = SBBTheme.of(context);
+    final SBBThemeData theme = SBBTheme.of(context);
+    switch (theme.hostPlatform) {
+      case HostPlatform.native:
+        return _buildThemedMobile(theme);
+      case HostPlatform.web:
+        return _buildThemedWeb(theme);
+      default:
+        return _buildThemedMobile(theme);
+    }
+  }
+
+  Widget _buildThemedMobile(SBBThemeData theme) {
     return ElevatedButton(
-      style: Theme.of(context).elevatedButtonTheme.style?.copyWith(
-            // workaround for web
-            padding: SBBInternal.all(EdgeInsets.zero),
-            overlayColor: SBBInternal.resolveWith(
-              defaultValue: sbbTheme.primaryButtonNegativeBackgroundColor,
-              pressedValue:
-                  sbbTheme.primaryButtonNegativeBackgroundColorHighlighted,
-            ),
-            backgroundColor: SBBInternal.resolveWith(
-              defaultValue: sbbTheme.primaryButtonNegativeBackgroundColor,
-              pressedValue: sbbTheme.primaryButtonNegativeBackgroundColor,
-              disabledValue:
-                  sbbTheme.primaryButtonNegativeBackgroundColorDisabled,
-            ),
-            foregroundColor: SBBInternal.resolveWith(
-              defaultValue: sbbTheme.primaryButtonNegativeTextStyle.color!,
-              pressedValue:
-                  sbbTheme.primaryButtonNegativeTextStyleHighlighted.color,
-              disabledValue:
-                  sbbTheme.primaryButtonNegativeTextStyleDisabled.color,
-            ),
-            textStyle: SBBInternal.resolveWith(
-              defaultValue: sbbTheme.primaryButtonNegativeTextStyle,
-              pressedValue: sbbTheme.primaryButtonNegativeTextStyleHighlighted,
-              disabledValue: sbbTheme.primaryButtonNegativeTextStyleDisabled,
-            ),
-            side: SBBInternal.resolveWith(
-              defaultValue:
-                  BorderSide(color: sbbTheme.primaryButtonNegativeBorderColor),
-              pressedValue: BorderSide(
-                  color: sbbTheme.primaryButtonNegativeBorderColorHighlighted),
-              disabledValue: BorderSide(
-                  color: sbbTheme.primaryButtonNegativeBorderColorDisabled),
-            ),
-          ),
+      style: SBBButtonStyles.primaryMobileNegative(theme: theme),
       onPressed: isLoading ? null : onPressed,
       focusNode: focusNode,
-      child: Padding(
-        // workaround for web
-        padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (isLoading) SBBLoadingIndicator.tinyCloud(),
-            Flexible(
-              child: Text(
-                label,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-              ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (isLoading) SBBLoadingIndicator.tinyCloud(),
+          Flexible(
+            child: Text(
+              label,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
             ),
-          ],
-        ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildThemedWeb(SBBThemeData theme) {
+    return ElevatedButton(
+      style: SBBButtonStyles.primaryWebNegative(theme: theme),
+      onPressed: isLoading ? null : onPressed,
+      focusNode: focusNode,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (isLoading) SBBLoadingIndicator.tinyCloud(),
+          Flexible(
+            child: Text(
+              label,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+            ),
+          ),
+        ],
       ),
     );
   }
