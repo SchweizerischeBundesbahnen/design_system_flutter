@@ -1,7 +1,13 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../../design_system_flutter.dart';
+
+/// Signature for custom selection validation to be used in [SBBMultiSelect] to
+/// determine whether the submit button is enabled or not.
+///
+/// The type `T` is the type of the value the entry represents. All the entries
+/// in a given menu must represent values with consistent types.
+typedef bool SelectionValidation<T>(List<T> oldSelection, List<T> newSelection);
 
 /// An item in a menu created by a [SBBSelect] or [SBBMultiSelect].
 ///
@@ -71,14 +77,19 @@ class SBBSelect<T> extends StatelessWidget {
                       ),
                       child: Icon(
                         icon,
-                        color: enabled ? sbbTheme.textFieldIconColor : sbbTheme.textFieldIconColorDisabled,
+                        color: enabled
+                            ? sbbTheme.textFieldIconColor
+                            : sbbTheme.textFieldIconColorDisabled,
                       ),
                     ),
                   Expanded(
                     child: value == null
                         ? Text(
                             label,
-                            style: enabled ? sbbTheme.textFieldPlaceholderTextStyle : sbbTheme.textFieldPlaceholderTextStyleDisabled,
+                            style: enabled
+                                ? sbbTheme.textFieldPlaceholderTextStyle
+                                : sbbTheme
+                                    .textFieldPlaceholderTextStyleDisabled,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           )
@@ -88,14 +99,21 @@ class SBBSelect<T> extends StatelessWidget {
                               const SizedBox(height: 5.0),
                               Text(
                                 label,
-                                style: enabled ? sbbTheme.selectLabelTextStyle : sbbTheme.selectLabelTextStyleDisabled,
+                                style: enabled
+                                    ? sbbTheme.selectLabelTextStyle
+                                    : sbbTheme.selectLabelTextStyleDisabled,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
                               const SizedBox(height: 3.0),
                               Text(
-                                items.firstWhere((element) => element.value == value).label,
-                                style: enabled ? sbbTheme.textFieldTextStyle : sbbTheme.textFieldTextStyleDisabled,
+                                items
+                                    .firstWhere(
+                                        (element) => element.value == value)
+                                    .label,
+                                style: enabled
+                                    ? sbbTheme.textFieldTextStyle
+                                    : sbbTheme.textFieldTextStyleDisabled,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -104,7 +122,9 @@ class SBBSelect<T> extends StatelessWidget {
                   ),
                   Icon(
                     SBBIcons.chevron_small_down_small,
-                    color: enabled ? sbbTheme.textFieldIconColor : sbbTheme.textFieldIconColorDisabled,
+                    color: enabled
+                        ? sbbTheme.textFieldIconColor
+                        : sbbTheme.textFieldIconColorDisabled,
                   ),
                   const SizedBox(width: sbbDefaultSpacing / 2),
                 ],
@@ -186,6 +206,7 @@ class SBBMultiSelect<T> extends StatefulWidget {
     required this.values,
     required this.items,
     required this.onChanged,
+    this.selectionValidation,
   }) : super(key: key);
 
   final String label;
@@ -196,6 +217,7 @@ class SBBMultiSelect<T> extends StatefulWidget {
   final List<T> values;
   final List<SelectMenuItem<T>> items;
   final ValueChanged<List<T>>? onChanged;
+  final SelectionValidation? selectionValidation;
 
   @override
   State<StatefulWidget> createState() => _SBBMultiSelectState<T>();
@@ -207,7 +229,9 @@ class SBBMultiSelect<T> extends StatefulWidget {
     required List<T> values,
     required List<SelectMenuItem<T>> items,
     required ValueChanged<List<T>> onChanged,
+    SelectionValidation<T>? selectionValidation,
   }) {
+    final isSelectionValid = selectionValidation ?? defaultSelectionValidation;
     var _selectedValues = values;
     showSBBModalSheet(
       context: context,
@@ -233,9 +257,11 @@ class SBBMultiSelect<T> extends StatefulWidget {
                         onChanged: (checked) {
                           setModalState(() {
                             if (checked == true) {
-                              _selectedValues = List.from(_selectedValues)..add(entry.value.value);
+                              _selectedValues = List.from(_selectedValues)
+                                ..add(entry.value.value);
                             } else {
-                              _selectedValues = List.from(_selectedValues)..remove(entry.value.value);
+                              _selectedValues = List.from(_selectedValues)
+                                ..remove(entry.value.value);
                             }
                           });
                         },
@@ -252,8 +278,9 @@ class SBBMultiSelect<T> extends StatefulWidget {
                     sbbDefaultSpacing,
                   ),
                   child: SBBPrimaryButton(
-                    label: confirmButtonLabel ?? MaterialLocalizations.of(context).okButtonLabel,
-                    onPressed: !listEquals(_selectedValues, values)
+                    label: confirmButtonLabel ??
+                        MaterialLocalizations.of(context).okButtonLabel,
+                    onPressed: isSelectionValid(values, _selectedValues)
                         ? () {
                             Navigator.of(context).pop();
                             onChanged(_selectedValues);
@@ -267,6 +294,16 @@ class SBBMultiSelect<T> extends StatefulWidget {
         },
       ),
     );
+  }
+
+  static bool defaultSelectionValidation<T>(
+    List<T> oldSelection,
+    List<T> newSelection,
+  ) {
+    if (oldSelection.length != newSelection.length) {
+      return true;
+    }
+    return oldSelection.map((e) => newSelection.contains(e)).contains(false);
   }
 }
 
@@ -286,6 +323,7 @@ class _SBBMultiSelectState<T> extends State<SBBMultiSelect<T>> {
                 values: widget.values,
                 items: widget.items,
                 onChanged: widget.onChanged!,
+                selectionValidation: widget.selectionValidation,
               );
             }
           : null,
@@ -305,14 +343,19 @@ class _SBBMultiSelectState<T> extends State<SBBMultiSelect<T>> {
                       ),
                       child: Icon(
                         widget.icon,
-                        color: enabled ? sbbTheme.textFieldIconColor : sbbTheme.textFieldIconColorDisabled,
+                        color: enabled
+                            ? sbbTheme.textFieldIconColor
+                            : sbbTheme.textFieldIconColorDisabled,
                       ),
                     ),
                   Expanded(
                     child: widget.values.isEmpty
                         ? Text(
                             widget.label,
-                            style: enabled ? sbbTheme.textFieldPlaceholderTextStyle : sbbTheme.textFieldPlaceholderTextStyleDisabled,
+                            style: enabled
+                                ? sbbTheme.textFieldPlaceholderTextStyle
+                                : sbbTheme
+                                    .textFieldPlaceholderTextStyleDisabled,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           )
@@ -322,14 +365,22 @@ class _SBBMultiSelectState<T> extends State<SBBMultiSelect<T>> {
                               const SizedBox(height: 5.0),
                               Text(
                                 widget.label,
-                                style: enabled ? sbbTheme.selectLabelTextStyle : sbbTheme.selectLabelTextStyleDisabled,
+                                style: enabled
+                                    ? sbbTheme.selectLabelTextStyle
+                                    : sbbTheme.selectLabelTextStyleDisabled,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
                               const SizedBox(height: 3.0),
                               Text(
-                                widget.items.where((element) => widget.values.contains(element.value)).map((element) => element.label).join(', '),
-                                style: enabled ? sbbTheme.textFieldTextStyle : sbbTheme.textFieldTextStyleDisabled,
+                                widget.items
+                                    .where((element) =>
+                                        widget.values.contains(element.value))
+                                    .map((element) => element.label)
+                                    .join(', '),
+                                style: enabled
+                                    ? sbbTheme.textFieldTextStyle
+                                    : sbbTheme.textFieldTextStyleDisabled,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -338,7 +389,9 @@ class _SBBMultiSelectState<T> extends State<SBBMultiSelect<T>> {
                   ),
                   Icon(
                     SBBIcons.chevron_small_down_small,
-                    color: enabled ? sbbTheme.textFieldIconColor : sbbTheme.textFieldIconColorDisabled,
+                    color: enabled
+                        ? sbbTheme.textFieldIconColor
+                        : sbbTheme.textFieldIconColorDisabled,
                   ),
                   const SizedBox(width: sbbDefaultSpacing / 2),
                 ],

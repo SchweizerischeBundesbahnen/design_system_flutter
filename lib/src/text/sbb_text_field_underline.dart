@@ -34,7 +34,6 @@ class SBBTextFieldUnderline extends StatelessWidget {
             ),
           ),
         Divider(
-          height: 1,
           color: errorText == null
               ? hasFocus
                   ? sbbTheme.textFieldDividerColorHighlighted
