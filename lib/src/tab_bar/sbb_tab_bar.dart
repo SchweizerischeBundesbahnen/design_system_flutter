@@ -70,8 +70,8 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
 
   @override
   void dispose() {
-    super.dispose();
     _controller.dispose();
+    super.dispose();
   }
 
   @override
