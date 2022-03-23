@@ -50,13 +50,19 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
     _controller = AnimationController(vsync: this, duration: kThemeAnimationDuration);
     _animation = Tween(begin: 0.0, end: 0.25).animate(_controller);
 
-    _controller.addListener(() => setState(() => {}));
+    _controller.addListener(() {
+      if (!mounted) return;
+      setState(() => {});
+    });
   }
 
   bool setPositionsAndSizes(_TabBarNotification n) {
     if (n.data != tabBarData) {
       WidgetsBinding.instance?.addPostFrameCallback(
-            (_) => setState(() => tabBarData = n.data),
+            (_) {
+              if (!mounted) return;
+              setState(() => tabBarData = n.data);
+            },
       );
     }
     return true;
@@ -176,10 +182,12 @@ class _IconLayer extends StatelessWidget {
           if (!portrait || e == selectedTab)
             LayoutId(
               id: '${e.id}_text',
-              child: Text(
-                e.translate(context),
-                style: SBBTheme.of(context).tabBarTextStyle,
-                textAlign: TextAlign.center,
+              child: Semantics(
+                child: Text(
+                  e.translate(context),
+                  style: SBBTheme.of(context).tabBarTextStyle,
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
         ],
