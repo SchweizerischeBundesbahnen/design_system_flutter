@@ -69,6 +69,12 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
   }
 
   @override
+  void dispose() {
+    super.dispose();
+    _controller.dispose();
+  }
+
+  @override
   Widget build(context) => NotificationListener<_TabBarNotification>(
     onNotification: setPositionsAndSizes,
     child: StreamBuilder<TabBarNavigationData>(
