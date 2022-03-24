@@ -29,7 +29,7 @@ class SelectMenuItem<T> {
 class SBBSelect<T> extends StatelessWidget {
   const SBBSelect({
     Key? key,
-    required this.label,
+    this.label,
     this.icon,
     this.title,
     this.allowMultilineLabel = false,
@@ -39,7 +39,7 @@ class SBBSelect<T> extends StatelessWidget {
     required this.onChanged,
   }) : super(key: key);
 
-  final String label;
+  final String? label;
   final IconData? icon;
   final String? title;
   final bool allowMultilineLabel;
@@ -57,7 +57,7 @@ class SBBSelect<T> extends StatelessWidget {
       onTap: enabled
           ? () => showMenu(
                 context: context,
-                title: title ?? label,
+                title: title ?? label ?? '',
                 value: value,
                 items: items,
                 onChanged: onChanged!,
@@ -88,7 +88,7 @@ class SBBSelect<T> extends StatelessWidget {
                   Expanded(
                     child: value == null
                         ? Text(
-                            label,
+                            label ?? '',
                             style: enabled
                                 ? sbbTheme.textFieldPlaceholderTextStyle
                                 : sbbTheme
@@ -98,17 +98,29 @@ class SBBSelect<T> extends StatelessWidget {
                           )
                         : Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: label != null
+                                ? MainAxisAlignment.start
+                                : MainAxisAlignment.center,
                             children: [
-                              const SizedBox(height: 5.0),
-                              Text(
-                                label,
-                                style: enabled
-                                    ? sbbTheme.selectLabelTextStyle
-                                    : sbbTheme.selectLabelTextStyleDisabled,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              const SizedBox(height: 3.0),
+                              if (label != null)
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    top: 5.0,
+                                    bottom: 2.0,
+                                  ),
+                                  child: Text(
+                                    label!,
+                                    style: enabled
+                                        ? sbbTheme.selectLabelTextStyle
+                                        : sbbTheme.selectLabelTextStyleDisabled,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              if (label == null)
+                                const SizedBox(
+                                  height: 0.0,
+                                ),
                               Text(
                                 items
                                     .firstWhere(
