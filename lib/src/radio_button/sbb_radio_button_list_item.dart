@@ -1,7 +1,4 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 
 import '../../design_system_flutter.dart';
 
@@ -107,9 +104,6 @@ class SBBRadioButtonListItem<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     final sbbTheme = SBBTheme.of(context);
     final enabled = onChanged != null;
-    final paddingTop = secondaryLabel != null && trailingWidget == null ? sbbDefaultSpacing * (3 / 4) : 0.0;
-    final spacingBetweenLabels = secondaryLabel != null && trailingWidget == null ? sbbDefaultSpacing / 4 : 0.0;
-    final paddingBottom = secondaryLabel != null ? sbbDefaultSpacing * (3 / 4) : 0.0;
     return Stack(
       alignment: Alignment.bottomCenter,
       children: [
@@ -123,71 +117,86 @@ class SBBRadioButtonListItem<T> extends StatelessWidget {
               focusColor: sbbTheme.radioButtonListItemBackgroundColorHighlighted,
               highlightColor: SBBColors.transparent,
               hoverColor: SBBColors.transparent,
-              child: Padding(
-                padding: EdgeInsets.only(top: paddingTop, bottom: paddingBottom),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Row(
-                      children: [
-                        const SizedBox(width: sbbDefaultSpacing),
-                        IgnorePointer(
-                          child: FocusScope(
-                            canRequestFocus: false,
-                            skipTraversal: true,
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.only(
-                                end: sbbDefaultSpacing / 2,
-                              ),
-                              child: SBBRadioButton(
-                                value: value,
-                                groupValue: groupValue,
-                                onChanged: onChanged,
-                                padding: EdgeInsets.zero,
-                              ),
-                            ),
-                          ),
-                        ),
-                        if (leadingIcon != null)
-                          Padding(
+              child: Column(
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(width: sbbDefaultSpacing),
+                      IgnorePointer(
+                        child: FocusScope(
+                          canRequestFocus: false,
+                          skipTraversal: true,
+                          child: Padding(
                             padding: const EdgeInsetsDirectional.only(
+                              top: sbbDefaultSpacing / 4 * 3,
                               end: sbbDefaultSpacing / 2,
                             ),
-                            child: Icon(
-                              leadingIcon,
-                              color: enabled ? sbbTheme.radioButtonListItemIconColor : sbbTheme.radioButtonListItemIconColorDisabled,
+                            child: SBBRadioButton(
+                              value: value,
+                              groupValue: groupValue,
+                              onChanged: onChanged,
+                              padding: EdgeInsets.zero,
                             ),
                           ),
-                        Expanded(
-                          child: Text(
-                            label,
-                            style: enabled ? sbbTheme.checkboxListItemTextStyle : sbbTheme.checkboxListItemTextStyleDisabled,
-                            maxLines: allowMultilineLabel ? null : 1,
-                            overflow: allowMultilineLabel ? null : TextOverflow.ellipsis,
-                          ),
-                        ),
-                        if (trailingWidget != null) trailingWidget!,
-                      ],
-                    ),
-                    if (secondaryLabel != null) ...[
-                      SizedBox(height: spacingBetweenLabels),
-                      Padding(
-                        padding: const EdgeInsets.only(right: sbbDefaultSpacing / 2),
-                        child: Row(
-                          children: [
-                            const SizedBox(width: sbbDefaultSpacing + (Checkbox.width + sbbDefaultSpacing / 4) + sbbDefaultSpacing / 2),
-                            Expanded(
-                              child: Text(
-                                secondaryLabel!,
-                                style: enabled ? sbbTheme.radioButtonListItemSecondaryTextStyle : sbbTheme.radioButtonListItemSecondaryTextStyleDisabled,
-                              ),
-                            ),
-                          ],
                         ),
                       ),
+                      if (leadingIcon != null)
+                        Padding(
+                          padding: const EdgeInsetsDirectional.only(
+                            top: 10.0,
+                            end: sbbDefaultSpacing / 2,
+                          ),
+                          child: Icon(
+                            leadingIcon,
+                            color: enabled
+                                ? sbbTheme.radioButtonListItemIconColor
+                                : sbbTheme.radioButtonListItemIconColorDisabled,
+                          ),
+                        ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsetsDirectional.only(
+                            top: sbbDefaultSpacing / 4 * 3,
+                            bottom: sbbDefaultSpacing / 4 * 3,
+                            end: sbbDefaultSpacing,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                label,
+                                style: enabled
+                                    ? sbbTheme.radioButtonListItemTextStyle
+                                    : sbbTheme
+                                    .radioButtonListItemTextStyleDisabled,
+                                maxLines: allowMultilineLabel ? null : 1,
+                                overflow: allowMultilineLabel
+                                    ? null
+                                    : TextOverflow.ellipsis,
+                              ),
+                              if (secondaryLabel != null)
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.only(
+                                    top: sbbDefaultSpacing / 4,
+                                  ),
+                                  child: Text(
+                                    secondaryLabel!,
+                                    style: enabled
+                                        ? sbbTheme
+                                        .radioButtonListItemSecondaryTextStyle
+                                        : sbbTheme
+                                        .radioButtonListItemSecondaryTextStyleDisabled,
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      if (trailingWidget != null) trailingWidget!,
                     ],
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),

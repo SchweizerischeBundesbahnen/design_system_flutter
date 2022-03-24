@@ -34,6 +34,7 @@
 * `SBBTextField`: Adjusted paddings to match the current specifications
 * `SBBSelect`: Adjusted paddings to match the current specifications
 * `SBBMultiSelect`: Adjusted paddings to match the current specifications
+* `SBBRadioButtonListItem`: Adjusted paddings to match the current specifications
 ### Deprecated
 ### Removed
 * `SBBListHeader`: Removed fields `icon` and `onCallToAction` to match the current specifications
