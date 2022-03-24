@@ -32,6 +32,7 @@ class SBBSelect<T> extends StatelessWidget {
     required this.label,
     this.icon,
     this.title,
+    this.allowMultilineLabel = false,
     this.isLastElement = false,
     required this.value,
     required this.items,
@@ -41,6 +42,7 @@ class SBBSelect<T> extends StatelessWidget {
   final String label;
   final IconData? icon;
   final String? title;
+  final bool allowMultilineLabel;
   final bool isLastElement;
   final T? value;
   final List<SelectMenuItem<T>> items;
@@ -59,6 +61,7 @@ class SBBSelect<T> extends StatelessWidget {
                 value: value,
                 items: items,
                 onChanged: onChanged!,
+                allowMultilineLabel: allowMultilineLabel,
               )
           : null,
       child: Container(
@@ -146,6 +149,7 @@ class SBBSelect<T> extends StatelessWidget {
     required T? value,
     required List<SelectMenuItem<T>> items,
     required ValueChanged<T?> onChanged,
+    bool allowMultilineLabel = false,
   }) {
     var selectedValue = value;
     showSBBModalSheet(
@@ -169,6 +173,7 @@ class SBBSelect<T> extends StatelessWidget {
                       return SBBRadioButtonListItem<T>(
                         value: entry.value.value,
                         groupValue: selectedValue,
+                        allowMultilineLabel: allowMultilineLabel,
                         label: entry.value.label,
                         onChanged: (value) {
                           setState(() => selectedValue = value);

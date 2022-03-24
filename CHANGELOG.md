@@ -25,6 +25,7 @@
 * `SBBModalSheet`: Added constructor `custom` for header customizing
 * `SBBToast`: Added field `bottom`
 * `SBBMultiSelect`: Added field `selectionValidation` and static function `defaultSelectionValidation` for custom selection validation
+* `SBBSelect`: Added field `allowMultilineLabel`
 ### Changed
 * `SBBHeader`: Renamed field `onPressedSBBSignet` to `onPressedLogo`
 * `SBBHeader`: Renamed field `sbbSignetTooltip` to `logoTooltip`
