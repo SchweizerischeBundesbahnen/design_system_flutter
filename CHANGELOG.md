@@ -7,6 +7,7 @@
 * Added `SBBLogo` (SBB Signet)
 * Added `SBBTabBar`
 * Added global function `showCustomSBBModalSheet`
+* `SBBIcons`: Added new icons
 * `SBBThemeData`: Added constructor `override` for easier targeted theme customizing
 * `SBBThemeData`: Added field `defaultRootContainerPadding`
 * `SBBTextField`: Added field `obscureText`
