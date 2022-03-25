@@ -29,18 +29,20 @@ class SelectMenuItem<T> {
 class SBBSelect<T> extends StatelessWidget {
   const SBBSelect({
     Key? key,
-    required this.label,
+    this.label,
     this.icon,
     this.title,
+    this.allowMultilineLabel = false,
     this.isLastElement = false,
     required this.value,
     required this.items,
     required this.onChanged,
   }) : super(key: key);
 
-  final String label;
+  final String? label;
   final IconData? icon;
   final String? title;
+  final bool allowMultilineLabel;
   final bool isLastElement;
   final T? value;
   final List<SelectMenuItem<T>> items;
@@ -55,10 +57,11 @@ class SBBSelect<T> extends StatelessWidget {
       onTap: enabled
           ? () => showMenu(
                 context: context,
-                title: title ?? label,
+                title: title ?? label ?? '',
                 value: value,
                 items: items,
                 onChanged: onChanged!,
+                allowMultilineLabel: allowMultilineLabel,
               )
           : null,
       child: Container(
@@ -85,7 +88,7 @@ class SBBSelect<T> extends StatelessWidget {
                   Expanded(
                     child: value == null
                         ? Text(
-                            label,
+                            label ?? '',
                             style: enabled
                                 ? sbbTheme.textFieldPlaceholderTextStyle
                                 : sbbTheme
@@ -95,17 +98,29 @@ class SBBSelect<T> extends StatelessWidget {
                           )
                         : Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: label != null
+                                ? MainAxisAlignment.start
+                                : MainAxisAlignment.center,
                             children: [
-                              const SizedBox(height: 5.0),
-                              Text(
-                                label,
-                                style: enabled
-                                    ? sbbTheme.selectLabelTextStyle
-                                    : sbbTheme.selectLabelTextStyleDisabled,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              const SizedBox(height: 3.0),
+                              if (label != null)
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    top: 5.0,
+                                    bottom: 2.0,
+                                  ),
+                                  child: Text(
+                                    label!,
+                                    style: enabled
+                                        ? sbbTheme.selectLabelTextStyle
+                                        : sbbTheme.selectLabelTextStyleDisabled,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              if (label == null)
+                                const SizedBox(
+                                  height: 0.0,
+                                ),
                               Text(
                                 items
                                     .firstWhere(
@@ -146,6 +161,7 @@ class SBBSelect<T> extends StatelessWidget {
     required T? value,
     required List<SelectMenuItem<T>> items,
     required ValueChanged<T?> onChanged,
+    bool allowMultilineLabel = false,
   }) {
     var selectedValue = value;
     showSBBModalSheet(
@@ -169,6 +185,7 @@ class SBBSelect<T> extends StatelessWidget {
                       return SBBRadioButtonListItem<T>(
                         value: entry.value.value,
                         groupValue: selectedValue,
+                        allowMultilineLabel: allowMultilineLabel,
                         label: entry.value.label,
                         onChanged: (value) {
                           setState(() => selectedValue = value);

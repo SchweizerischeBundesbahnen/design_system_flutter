@@ -7,6 +7,7 @@
 * Added `SBBLogo` (SBB Signet)
 * Added `SBBTabBar`
 * Added global function `showCustomSBBModalSheet`
+* `SBBIcons`: Added new icons
 * `SBBThemeData`: Added constructor `override` for easier targeted theme customizing
 * `SBBThemeData`: Added field `defaultRootContainerPadding`
 * `SBBTextField`: Added field `obscureText`
@@ -25,6 +26,7 @@
 * `SBBModalSheet`: Added constructor `custom` for header customizing
 * `SBBToast`: Added field `bottom`
 * `SBBMultiSelect`: Added field `selectionValidation` and static function `defaultSelectionValidation` for custom selection validation
+* `SBBSelect`: Added field `allowMultilineLabel`
 ### Changed
 * `SBBHeader`: Renamed field `onPressedSBBSignet` to `onPressedLogo`
 * `SBBHeader`: Renamed field `sbbSignetTooltip` to `logoTooltip`
@@ -34,6 +36,8 @@
 * `SBBTextField`: Adjusted paddings to match the current specifications
 * `SBBSelect`: Adjusted paddings to match the current specifications
 * `SBBMultiSelect`: Adjusted paddings to match the current specifications
+* `SBBRadioButtonListItem`: Adjusted paddings to match the current specifications
+* `SBBSelect`: Field `label` is now optional because there is now a variant without label
 ### Deprecated
 ### Removed
 * `SBBListHeader`: Removed fields `icon` and `onCallToAction` to match the current specifications

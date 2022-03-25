@@ -120,8 +120,11 @@ class _RadiobuttonPageState extends State<RadiobuttonPage> {
                   });
                 },
                 label: 'Custom trailing Widget',
-                trailingWidget: Padding(
-                  padding: const EdgeInsets.only(right: sbbDefaultSpacing),
+                trailingWidget: const Padding(
+                  padding: const EdgeInsetsDirectional.only(
+                    top: sbbDefaultSpacing / 4 * 3,
+                    end: sbbDefaultSpacing,
+                  ),
                   child: Text('CHF 0.99'),
                 ),
               ),
