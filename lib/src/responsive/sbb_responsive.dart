@@ -8,7 +8,22 @@ import 'package:flutter/material.dart';
 /// may be used for static bool usage or as a layout builder
 /// with mobile, tablet and desktop option
 class SBBResponsive extends StatelessWidget {
-  const SBBResponsive({Key? key}) : super(key: key);
+  const SBBResponsive({
+    Key? key,
+    required this.mobile,
+    required this.tablet,
+    required this.desktop,
+  }) : super(key: key);
+
+  /// the widget to build if screen size < [mobileBreakpoint].
+  final Widget mobile;
+
+  /// the widget to build if screen size < [tabletBreakpoint]
+  /// and >= [mobileBreakpoint].
+  final Widget tablet;
+
+  /// the widget to build if the screen size > [tabletBreakpoint].
+  final Widget desktop;
 
   static int mobileBreakpoint = 643;
   static int tabletBreakpoint = 1025;
@@ -30,8 +45,19 @@ class SBBResponsive extends StatelessWidget {
   /// returns whether given context size is greater than [tabletBreakpoint]
   static bool isDesktop(BuildContext context) =>
       MediaQuery.of(context).size.width >= tabletBreakpoint;
+
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        if (constraints.maxWidth >= tabletBreakpoint) {
+          return desktop;
+        } else if (constraints.maxWidth >= mobileBreakpoint) {
+          return tablet;
+        } else {
+          return mobile;
+        }
+      },
+    );
   }
 }
