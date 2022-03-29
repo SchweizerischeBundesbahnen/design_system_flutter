@@ -23,6 +23,7 @@ export 'src/onboarding/sbb_onboarding_card.dart';
 export 'src/onboarding/sbb_onboarding_notification.dart';
 export 'src/radio_button/sbb_radio_button.dart';
 export 'src/radio_button/sbb_radio_button_list_item.dart';
+export 'src/responsive/sbb_responsive.dart';
 export 'src/segmented_button/sbb_segmented_button.dart';
 export 'src/select/sbb_select.dart';
 export 'src/text/sbb_autocompletion.dart';
