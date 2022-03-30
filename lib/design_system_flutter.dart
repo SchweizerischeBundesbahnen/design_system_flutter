@@ -16,6 +16,7 @@ export 'src/list_header/sbb_list_header.dart';
 export 'src/list_item/sbb_list_item.dart';
 export 'src/loading_indicator/sbb_loading_indicator.dart';
 export 'src/logo/sbb_logo.dart';
+export 'src/menu/sbb_menu.dart';
 export 'src/modal/sbb_modal.dart';
 export 'src/onboarding/sbb_onboarding.dart';
 export 'src/onboarding/sbb_onboarding_builder_delegate.dart';
