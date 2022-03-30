@@ -326,6 +326,16 @@ class SBBThemeData {
 
     // Tab Bar
     TextStyle? tabBarTextStyle,
+
+    // Menu
+    Color? menuBackgroundColor,
+    Color? menuBorderColor,
+    Color? menuEntryColorDisabled,
+    TextStyle? menuEntryTextStyle,
+    Color? menuEntryColorHighlighted,
+    Color? menuEntryTextIconColorHighlighted,
+    Color? menuEntryIconColor,
+
   }) {
     // SET hard-coded default values HERE
 
@@ -590,6 +600,15 @@ class SBBThemeData {
     // Tab Bar
     tabBarTextStyle = tabBarTextStyle ?? themedTextStyle(textStyle: SBBTextStyles.extraSmallLight.copyWith(fontWeight: FontWeight.w500));
 
+    // Menu
+    menuBackgroundColor = menuBackgroundColor ?? SBBColors.white;
+    menuBorderColor = menuBorderColor ?? SBBColors.iron;
+    menuEntryColorDisabled = menuEntryColorDisabled ?? SBBColors.cement;
+    menuEntryTextStyle = menuEntryTextStyle ?? SBBLeanTextStyles.contextMenu;
+    menuEntryColorHighlighted = menuEntryColorHighlighted ?? SBBColors.milk;
+    menuEntryTextIconColorHighlighted = menuEntryTextIconColorHighlighted ?? SBBColors.red125;
+    menuEntryIconColor = menuEntryIconColor ?? SBBColors.iron;
+
     // pass them on to constructor that requires all
     return SBBThemeData.raw(
       brightness: brightness,
@@ -775,6 +794,13 @@ class SBBThemeData {
       toastTextStyle:    toastTextStyle,
       toastBackgroundColor:    toastBackgroundColor!,
       tabBarTextStyle:    tabBarTextStyle,
+      menuBackgroundColor : menuBackgroundColor,
+      menuBorderColor : menuBorderColor,
+      menuEntryDisabledColor: menuEntryColorDisabled,
+      menuEntryTextStyle: menuEntryTextStyle,
+      menuEntryColorHighlighted: menuEntryColorHighlighted,
+      menuEntryTextIconColorHighlighted: menuEntryTextIconColorHighlighted,
+      menuEntryIconColor: menuEntryIconColor,
     );
   }
 
@@ -962,6 +988,13 @@ class SBBThemeData {
     required this.toastTextStyle,
     required this.toastBackgroundColor,
     required this.tabBarTextStyle,
+    required this.menuBackgroundColor,
+    required this.menuBorderColor,
+    required this.menuEntryDisabledColor,
+    required this.menuEntryTextStyle,
+    required this.menuEntryColorHighlighted,
+    required this.menuEntryTextIconColorHighlighted,
+    required this.menuEntryIconColor,
   });
 
   /// Light Theme
@@ -1212,6 +1245,15 @@ class SBBThemeData {
   // Tab Bar
   final TextStyle tabBarTextStyle;
 
+  // Menu
+  final Color menuBackgroundColor;
+  final Color menuBorderColor;
+  final Color menuEntryDisabledColor;
+  final TextStyle menuEntryTextStyle;
+  final Color menuEntryColorHighlighted;
+  final Color menuEntryTextIconColorHighlighted;
+  final Color menuEntryIconColor;
+
   SBBThemeData copyWith({
     Brightness? brightness,
     Color? primaryColor,
@@ -1449,6 +1491,15 @@ class SBBThemeData {
 
     // Tab Bar
     TextStyle? tabBarTextStyle,
+
+    // Menu
+    Color? menuBackgroundColor,
+    Color? menuBorderColor,
+    Color? menuEntryDisabledColor,
+    TextStyle? menuEntryTextStyle,
+    Color? menuEntryColorHighlighted,
+    Color? menuEntryTextIconColorHighlighted,
+    Color? menuEntryIconColor,
   }) {
     final defaultTheme = SBBThemeData.fallback();
     return SBBThemeData(
@@ -1799,6 +1850,15 @@ class SBBThemeData {
 
       // Tab Bar
       tabBarTextStyle: tabBarTextStyle ?? (this.tabBarTextStyle == defaultTheme.tabBarTextStyle ? null : this.tabBarTextStyle),
+
+      // Menu
+      menuBackgroundColor: menuBackgroundColor ?? (this.menuBackgroundColor == defaultTheme.menuBackgroundColor ? null: this.menuBackgroundColor),
+      menuBorderColor: menuBorderColor ?? (this.menuBorderColor == defaultTheme.menuBorderColor ? null: this.menuBorderColor),
+      menuEntryColorDisabled: menuEntryDisabledColor ?? (this.menuEntryDisabledColor == defaultTheme.menuEntryDisabledColor ? null: this.menuEntryDisabledColor),
+      menuEntryTextStyle: menuEntryTextStyle ?? (this.menuEntryTextStyle == defaultTheme.menuEntryTextStyle ? null: this.menuEntryTextStyle),
+      menuEntryColorHighlighted: menuEntryColorHighlighted ?? (this.menuEntryColorHighlighted == defaultTheme.menuEntryColorHighlighted ? null: this.menuEntryColorHighlighted),
+      menuEntryTextIconColorHighlighted: menuEntryTextIconColorHighlighted ?? (this.menuEntryTextIconColorHighlighted == defaultTheme.menuEntryTextIconColorHighlighted ? null: this.menuEntryTextIconColorHighlighted),
+      menuEntryIconColor: menuEntryIconColor ?? (this.menuEntryIconColor == defaultTheme.menuEntryIconColor ? null: this.menuEntryIconColor),
     );
   }
 
