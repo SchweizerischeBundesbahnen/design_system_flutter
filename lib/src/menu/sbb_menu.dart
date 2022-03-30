@@ -321,8 +321,10 @@ class SBBMenuTileItemState<T, W extends SBBMenuTileItem<T>> extends State<W> {
     );
   }
 
-  Widget _buildChild() => Padding(
-        padding: widget.padding,
+  Widget _buildChild() => Container(
+    alignment: AlignmentDirectional.centerStart,
+    padding: widget.padding,
+    constraints: BoxConstraints(minHeight: widget.height),
         child: widget.icon != null ? _buildIconTile() : _buildText(),
       );
 
@@ -775,13 +777,13 @@ Future<T?> showSBBMenu<T>({
 /// dismissed.
 ///
 /// Used by [SBBMenuButton.onSelected].
-typedef SBBMenuItemSelected<T> = void Function(T value);
+typedef SBBMenuSelected<T> = void Function(T value);
 
 /// Signature for the callback invoked when a [SBBMenuButton] is dismissed
 /// without selecting an item.
 ///
 /// Used by [SBBMenuButton.onCanceled].
-typedef PopupMenuCanceled = void Function();
+typedef SBBMenuCanceled = void Function();
 
 /// Signature used by [SBBMenuButton] to lazily construct the items shown when
 /// the button is pressed.
@@ -797,50 +799,14 @@ typedef SBBMenuItemBuilder<T> = List<SBBMenuEntry<T>> Function(
 /// One of [child] or [icon] may be provided, but not both. If [icon] is provided,
 /// then [SBBMenuButton] behaves like an [IconButton].
 ///
-/// If both are null, then a standard overflow icon is created (depending on the
-/// platform).
-///
-/// {@tool snippet}
-///
-/// This example shows a menu with four items, selecting between an enum's
-/// values and setting a `_selection` field based on the selection.
-///
-/// ```dart
-/// // This is the type used by the popup menu below.
-/// enum WhyFarther { harder, smarter, selfStarter, tradingCharter }
-///
-/// // This menu button widget updates a _selection field (of type WhyFarther,
-/// // not shown here).
-/// PopupMenuButton<WhyFarther>(
-///   onSelected: (WhyFarther result) { setState(() { _selection = result; }); },
-///   itemBuilder: (BuildContext context) => <PopupMenuEntry<WhyFarther>>[
-///     const PopupMenuItem<WhyFarther>(
-///       value: WhyFarther.harder,
-///       child: Text('Working a lot harder'),
-///     ),
-///     const PopupMenuItem<WhyFarther>(
-///       value: WhyFarther.smarter,
-///       child: Text('Being a lot smarter'),
-///     ),
-///     const PopupMenuItem<WhyFarther>(
-///       value: WhyFarther.selfStarter,
-///       child: Text('Being a self-starter'),
-///     ),
-///     const PopupMenuItem<WhyFarther>(
-///       value: WhyFarther.tradingCharter,
-///       child: Text('Placed in charge of trading charter'),
-///     ),
-///   ],
-/// )
-/// ```
-/// {@end-tool}
+/// If both are null, then the [SBBIcons.context_menu_medium] is used.
 ///
 /// See also:
 ///
 ///  * [SBBMenuTileItem], a popup menu entry for a single value.
-///  * [PopupMenuDivider], a popup menu entry that is just a horizontal line.
-///  * [CheckedPopupMenuItem], a popup menu item with a checkmark.
+///  * [SBBMenuDivider], a popup menu entry that is just a horizontal line.
 ///  * [showSBBMenu], a method to dynamically show a popup menu at a given location.
+///  * [PopupMenuButton], on which this widget is based
 class SBBMenuButton<T> extends StatefulWidget {
   /// Creates a button that shows a popup menu.
   ///
@@ -854,7 +820,7 @@ class SBBMenuButton<T> extends StatefulWidget {
     this.buttonPadding = const EdgeInsets.all(8.0),
     this.child,
     this.icon,
-    this.iconSize,
+    this.iconSize = 24.0,
     this.offset = Offset.zero,
     this.enabled = true,
     this.backgroundColor,
@@ -874,12 +840,12 @@ class SBBMenuButton<T> extends StatefulWidget {
   ///
   /// If the menu is dismissed without selecting a value, [onCanceled] is
   /// called instead.
-  final SBBMenuItemSelected<T>? onSelected;
+  final SBBMenuSelected<T>? onSelected;
 
   /// Called when the user dismisses the menu without selecting an item.
   ///
   /// If the user selects a value, [onSelected] is called instead.
-  final PopupMenuCanceled? onCanceled;
+  final SBBMenuCanceled? onCanceled;
 
   /// Matches IconButton's 8 dps padding by default. In some cases, notably where
   /// this button appears as the trailing element of a list item, it's useful to be able
@@ -892,6 +858,9 @@ class SBBMenuButton<T> extends StatefulWidget {
 
   /// If provided, the [icon] is used for this button
   /// and the button will behave like an [IconButton].
+  /// 
+  /// If child and icon is null, the default is an [IconButton]
+  /// with [SBBIcons.context_menu_medium] as icon.
   final Widget? icon;
 
   /// The offset applied to the Menu Button.
@@ -920,10 +889,10 @@ class SBBMenuButton<T> extends StatefulWidget {
   /// which defaults to [SBBColors.white].
   final Color? backgroundColor;
 
-  /// If provided, the size of the [Icon].
+  /// The size of the [icon].
   ///
-  /// If this property is null, the default size is 24.0 pixels.
-  final double? iconSize;
+  /// Defaults to 24.0 x 24.0 pixels if this property is null.
+  final double iconSize;
 
   @override
   SBBMenuButtonState<T> createState() => SBBMenuButtonState<T>();
@@ -999,10 +968,13 @@ class SBBMenuButtonState<T> extends State<SBBMenuButton<T>> {
     }
 
     return IconButton(
-      icon: widget.icon ?? Icon(Icons.adaptive.more),
+      icon: widget.icon ?? Icon(SBBIcons.context_menu_medium),
       padding: widget.buttonPadding,
-      iconSize: widget.iconSize ?? 24.0,
+      iconSize: widget.iconSize,
       onPressed: widget.enabled ? showButtonMenu : null,
+      splashColor: SBBColors.transparent,
+      highlightColor: SBBColors.transparent,
+      hoverColor: SBBColors.transparent,
     );
   }
 }
