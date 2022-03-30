@@ -1000,12 +1000,12 @@ class SBBThemeData {
   /// Light Theme
   /// 
   /// used as fallback
-  factory SBBThemeData.light({required HostPlatform hostPlatform}) => SBBThemeData(brightness: Brightness.light, hostPlatform: hostPlatform);
+  factory SBBThemeData.light({HostPlatform hostPlatform = kIsWeb ? HostPlatform.web : HostPlatform.native}) => SBBThemeData(brightness: Brightness.light, hostPlatform: hostPlatform);
 
   /// Dark Theme
-  factory SBBThemeData.dark({required HostPlatform hostPlatform})  => SBBThemeData(brightness: Brightness.dark, hostPlatform: hostPlatform);
+  factory SBBThemeData.dark({HostPlatform hostPlatform = kIsWeb ? HostPlatform.web : HostPlatform.native})  => SBBThemeData(brightness: Brightness.dark, hostPlatform: hostPlatform);
 
-  factory SBBThemeData.fallback() => SBBThemeData.light(hostPlatform: HostPlatform.native);
+  factory SBBThemeData.fallback() => SBBThemeData.light(hostPlatform: kIsWeb ? HostPlatform.web : HostPlatform.native);
 
 
   final Brightness brightness;
