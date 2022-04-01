@@ -8,7 +8,9 @@ import '../../design_system_flutter.dart';
 ///
 /// * https://digital.sbb.ch/de/design-system-mobile-new/basics/brand
 class SBBLogo extends StatelessWidget {
-  const SBBLogo({Key? key, this.height, this.width, this.color = SBBColors.white}) : super(key: key);
+  const SBBLogo(
+      {Key? key, this.height, this.width, this.color = SBBColors.white})
+      : super(key: key);
 
   static const _defaultHeight = 14.0;
   static const _defaultWidth = 28.0;
@@ -84,6 +86,140 @@ class SBBLogo extends StatelessWidget {
           painter: _Painter(paint, path),
         );
       },
+    );
+  }
+}
+
+/// creates SBB Lean Logo
+///
+/// respects parent's size and scales accordingly
+class SBBLeanLogo extends StatelessWidget {
+  static const _defaultHeight = 20.0;
+  static const _defaultWidth = 59.0;
+  static const _defaultAspectRatio = _defaultWidth / _defaultHeight;
+
+  const SBBLeanLogo({
+    Key? key,
+    this.height,
+    this.width,
+    this.foregroundColor = SBBColors.white,
+    this.backgroundColor = SBBColors.red,
+  }) : super(key: key);
+
+  final double? height;
+  final double? width;
+  final Color foregroundColor;
+  final Color backgroundColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final Size targetSize = _determineTargetSize(
+          constraints,
+        );
+        return Center(
+          child: SizedBox.fromSize(
+            size: targetSize,
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                color: backgroundColor,
+              ),
+              child: _SBBSignetPaint(
+                color: foregroundColor,
+                size: targetSize,
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Size _determineTargetSize(BoxConstraints constraints) {
+    Size targetSize = _getUnconstrainedSize();
+    targetSize = _constrainSize(targetSize, constraints);
+    return targetSize;
+  }
+
+  Size _getUnconstrainedSize() {
+    if (height == null && width == null) {
+      return const Size(_defaultWidth, _defaultHeight);
+    } else if (height != null && width == null) {
+      return Size(height! * _defaultAspectRatio, height!);
+    } else if (width != null && height == null) {
+      return Size(width!, width! / _defaultAspectRatio);
+    } else {
+      return Size(width!, height!);
+    }
+  }
+
+  Size _constrainSize(Size size, BoxConstraints constraints) {
+    double targetHeight, targetWidth = 0.0;
+    targetWidth = _getConstrainedValue(
+      size.width,
+      constraints.maxWidth,
+    );
+    targetHeight = _getConstrainedValue(
+      size.height,
+      constraints.maxHeight,
+    );
+    final bool isWidthConstraining =
+        (targetHeight * _defaultAspectRatio) > targetWidth;
+
+    if (isWidthConstraining) {
+      targetHeight = targetWidth / _defaultAspectRatio;
+    } else {
+      targetWidth = targetHeight * _defaultAspectRatio;
+    }
+    return Size(targetWidth, targetHeight);
+  }
+
+  double _getConstrainedValue(double targetVal, double maxVal) =>
+      targetVal > maxVal ? maxVal : targetVal;
+}
+
+class _SBBSignetPaint extends StatelessWidget {
+  const _SBBSignetPaint({Key? key, required this.color, required this.size})
+      : super(key: key);
+  final Color color;
+  final Size size;
+
+  Path _sbbSignetPath(size) => Path()
+    ..moveTo(size.width * 0.6110400, size.height * 0.8332450)
+    ..lineTo(size.width * 0.6757517, size.height * 0.8332450)
+    ..lineTo(size.width * 0.5886667, size.height * 0.5771800)
+    ..lineTo(size.width * 0.6967433, size.height * 0.5771800)
+    ..lineTo(size.width * 0.6967433, size.height * 0.8332450)
+    ..lineTo(size.width * 0.7478233, size.height * 0.8332450)
+    ..lineTo(size.width * 0.7478233, size.height * 0.5771800)
+    ..lineTo(size.width * 0.8559067, size.height * 0.5771800)
+    ..lineTo(size.width * 0.7687983, size.height * 0.8332450)
+    ..lineTo(size.width * 0.8335200, size.height * 0.8332450)
+    ..lineTo(size.width * 0.9443783, size.height * 0.5005650)
+    ..lineTo(size.width * 0.8335200, size.height * 0.1668455)
+    ..lineTo(size.width * 0.7687983, size.height * 0.1668455)
+    ..lineTo(size.width * 0.8559067, size.height * 0.4239540)
+    ..lineTo(size.width * 0.7478233, size.height * 0.4239540)
+    ..lineTo(size.width * 0.7478233, size.height * 0.1668455)
+    ..lineTo(size.width * 0.6967433, size.height * 0.1668455)
+    ..lineTo(size.width * 0.6967433, size.height * 0.4239540)
+    ..lineTo(size.width * 0.5886667, size.height * 0.4239540)
+    ..lineTo(size.width * 0.6757517, size.height * 0.1668455)
+    ..lineTo(size.width * 0.6110400, size.height * 0.1668455)
+    ..lineTo(size.width * 0.5001717, size.height * 0.5005650)
+    ..lineTo(size.width * 0.6110400, size.height * 0.8332450)
+    ..close();
+
+  Paint _paint(color) => Paint()
+    ..style = PaintingStyle.fill
+    ..color = color;
+
+  @override
+  Widget build(BuildContext context) {
+    return CustomPaint(
+      size: size,
+      painter: _Painter(_paint(color), _sbbSignetPath(size)),
     );
   }
 }
