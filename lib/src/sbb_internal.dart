@@ -22,15 +22,23 @@ class SBBInternal {
   }
 
   /// Convenience method for easier use of [MaterialStateProperty.resolveWith].
-  static MaterialStateProperty<T?> resolveWith<T>({required T defaultValue, T? pressedValue, T? disabledValue}) {
+  static MaterialStateProperty<T?> resolveWith<T>(
+      {required T defaultValue,
+      T? pressedValue,
+      T? disabledValue,
+      T? hoveredValue}) {
     return MaterialStateProperty.resolveWith((states) {
       // disabled
-      if (states.contains(MaterialState.disabled) && disabledValue != null) return disabledValue;
+      if (states.contains(MaterialState.disabled) && disabledValue != null)
+        return disabledValue;
 
       // pressed / focused
       if (states.any({MaterialState.pressed, MaterialState.focused}.contains)) {
         return pressedValue;
       }
+      // hovered
+      if (states.contains(MaterialState.hovered) && hoveredValue != null)
+        return hoveredValue;
 
       // default
       return defaultValue;
