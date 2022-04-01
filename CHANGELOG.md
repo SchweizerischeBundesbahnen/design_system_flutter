@@ -27,6 +27,7 @@
 * `SBBToast`: Added field `bottom`
 * `SBBMultiSelect`: Added field `selectionValidation` and static function `defaultSelectionValidation` for custom selection validation
 * `SBBSelect`: Added field `allowMultilineLabel`
+* `SBBSelect`: Added field `hint`
 ### Changed
 * `SBBHeader`: Renamed field `onPressedSBBSignet` to `onPressedLogo`
 * `SBBHeader`: Renamed field `sbbSignetTooltip` to `logoTooltip`

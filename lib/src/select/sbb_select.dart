@@ -30,6 +30,7 @@ class SBBSelect<T> extends StatelessWidget {
   const SBBSelect({
     Key? key,
     this.label,
+    this.hint,
     this.icon,
     this.title,
     this.allowMultilineLabel = false,
@@ -40,6 +41,7 @@ class SBBSelect<T> extends StatelessWidget {
   }) : super(key: key);
 
   final String? label;
+  final String? hint;
   final IconData? icon;
   final String? title;
   final bool allowMultilineLabel;
@@ -88,7 +90,7 @@ class SBBSelect<T> extends StatelessWidget {
                   Expanded(
                     child: value == null
                         ? Text(
-                            label ?? '',
+                            label ?? hint ?? '',
                             style: enabled
                                 ? sbbTheme.textFieldPlaceholderTextStyle
                                 : sbbTheme
