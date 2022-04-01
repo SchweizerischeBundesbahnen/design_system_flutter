@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/foundation.dart';
+import '../sbb_internal.dart';
 
 import 'package:design_system_flutter/design_system_flutter.dart';
 
@@ -188,7 +189,7 @@ class _RenderMenuItem extends RenderShiftedBox {
 ///
 /// To show a SBB menu, use the [showSBBMenu] function. To create a button that
 /// shows a SBB menu, consider using [SBBMenuButton].
-/// 
+///
 /// Use [SBBThemeData.menuEntryColorHighlighted] to change background color onHover.
 /// Use [SBBThemeData.menuEntryTextIconColorHighlighted] to change text and icon color onHover.
 ///
@@ -217,6 +218,8 @@ class SBBMenuTileItem<T> extends SBBMenuEntry<T> {
     this.icon,
     this.textStyle,
     required this.title,
+    this.onHover,
+    this.hoverColor,
   })  : assert(enabled != null),
         assert(height != null),
         super(key: key);
@@ -260,6 +263,13 @@ class SBBMenuTileItem<T> extends SBBMenuEntry<T> {
   /// The label of the menu entry.
   final String title;
 
+  /// Called when the menu item is hovered over.
+  ///
+  /// Defaults to changing icon and text color.
+  final ValueChanged<bool>? onHover;
+
+  final Color? hoverColor;
+
   @override
   bool represents(T? value) => value == this.value;
 
@@ -281,6 +291,7 @@ class SBBMenuTileItem<T> extends SBBMenuEntry<T> {
 class SBBMenuTileItemState<T, W extends SBBMenuTileItem<T>> extends State<W> {
   // Changing the text and icon color when hovering.
   // uses [SBBTheme.menuEntryTextIconColorHighlighted]
+  //TODO: implement using [MaterialStateProperty]
   Color? _iconColor;
   Color? _textColor;
 
@@ -288,7 +299,7 @@ class SBBMenuTileItemState<T, W extends SBBMenuTileItem<T>> extends State<W> {
   ///
   /// Used by the [InkWell] inserted by the [build] method.
   ///
-  /// By default, uses [Navigator.pop] to return the [SBBMenuTileItem.value] from
+  /// By default, uses [Navigator.pop] to return the [SBBMenuItem.value] from
   /// the menu route.
   @protected
   void handleTap() {
@@ -300,7 +311,6 @@ class SBBMenuTileItemState<T, W extends SBBMenuTileItem<T>> extends State<W> {
   Widget build(BuildContext context) {
     _setIconTextColor();
     final MouseCursor effectiveMouseCursor = _getEffectiveMouseCursor();
-
     return MergeSemantics(
       child: Semantics(
         enabled: widget.enabled,
@@ -309,12 +319,14 @@ class SBBMenuTileItemState<T, W extends SBBMenuTileItem<T>> extends State<W> {
           onTap: widget.enabled ? handleTap : null,
           canRequestFocus: widget.enabled,
           mouseCursor: effectiveMouseCursor,
-          hoverColor: SBBTheme.of(context).menuEntryColorHighlighted,
-          onHover: widget.enabled
-              ? (isHovering) {
-                  _changeIconTextColor(isHovering);
-                }
-              : null,
+          hoverColor: widget.hoverColor ??
+              SBBTheme.of(context).menuEntryColorHighlighted,
+          onHover: widget.onHover ??
+              (widget.enabled
+                  ? (isHovering) {
+                      _changeIconTextColor(isHovering);
+                    }
+                  : null),
           child: _buildChild(),
         ),
       ),
@@ -322,9 +334,9 @@ class SBBMenuTileItemState<T, W extends SBBMenuTileItem<T>> extends State<W> {
   }
 
   Widget _buildChild() => Container(
-    alignment: AlignmentDirectional.centerStart,
-    padding: widget.padding,
-    constraints: BoxConstraints(minHeight: widget.height),
+        alignment: AlignmentDirectional.centerStart,
+        padding: widget.padding,
+        constraints: BoxConstraints(minHeight: widget.height),
         child: widget.icon != null ? _buildIconTile() : _buildText(),
       );
 
@@ -345,11 +357,11 @@ class SBBMenuTileItemState<T, W extends SBBMenuTileItem<T>> extends State<W> {
     SBBThemeData theme = SBBTheme.of(context);
     TextStyle style = widget.textStyle ?? theme.menuEntryTextStyle;
     return Text(
-        widget.title,
-        style: style.copyWith(
-          color: _textColor,
-        ),
-      );
+      widget.title,
+      style: style.copyWith(
+        color: _textColor,
+      ),
+    );
   }
 
   void _changeIconTextColor(bool isHovering) {
@@ -374,13 +386,13 @@ class SBBMenuTileItemState<T, W extends SBBMenuTileItem<T>> extends State<W> {
     }
   }
 
-  MouseCursor _getEffectiveMouseCursor() => 
-    MaterialStateProperty.resolveAs<MouseCursor>(
-      MaterialStateMouseCursor.clickable,
-      <MaterialState>{
-        if (!widget.enabled) MaterialState.disabled,
-      },
-    );
+  MouseCursor _getEffectiveMouseCursor() =>
+      MaterialStateProperty.resolveAs<MouseCursor>(
+        MaterialStateMouseCursor.clickable,
+        <MaterialState>{
+          if (!widget.enabled) MaterialState.disabled,
+        },
+      );
 }
 
 class _SBBMenu<T> extends StatelessWidget {
@@ -725,7 +737,7 @@ class _PopupMenuRoute<T> extends PopupRoute<T> {
 ///
 /// See also:
 ///
-///  * [SBBMenuTileItem], a popup menu entry for a single value.
+///  * [SBBMenuItem], a popup menu entry for a single value.
 ///  * [PopupMenuDivider], a popup menu entry that is just a horizontal line.
 ///  * [CheckedPopupMenuItem], a popup menu item with a checkmark.
 ///  * [SBBMenuButton], which provides an [IconButton] that shows a menu by
@@ -773,7 +785,7 @@ Future<T?> showSBBMenu<T>({
 }
 
 /// Signature for the callback invoked when a menu item is selected. The
-/// argument is the value of the [SBBMenuTileItem] that caused its menu to be
+/// argument is the value of the [SBBMenuItem] that caused its menu to be
 /// dismissed.
 ///
 /// Used by [SBBMenuButton.onSelected].
@@ -803,7 +815,7 @@ typedef SBBMenuItemBuilder<T> = List<SBBMenuEntry<T>> Function(
 ///
 /// See also:
 ///
-///  * [SBBMenuTileItem], a popup menu entry for a single value.
+///  * [SBBMenuItem], a popup menu entry for a single value.
 ///  * [SBBMenuDivider], a popup menu entry that is just a horizontal line.
 ///  * [showSBBMenu], a method to dynamically show a popup menu at a given location.
 ///  * [PopupMenuButton], on which this widget is based
@@ -858,7 +870,7 @@ class SBBMenuButton<T> extends StatefulWidget {
 
   /// If provided, the [icon] is used for this button
   /// and the button will behave like an [IconButton].
-  /// 
+  ///
   /// If child and icon is null, the default is an [IconButton]
   /// with [SBBIcons.context_menu_medium] as icon.
   final Widget? icon;
@@ -885,7 +897,7 @@ class SBBMenuButton<T> extends StatefulWidget {
 
   /// If provided, the background color used for the menu.
   ///
-  /// If this property is null, then [SBBThemeData.menuBackgroundColor] is used, 
+  /// If this property is null, then [SBBThemeData.menuBackgroundColor] is used,
   /// which defaults to [SBBColors.white].
   final Color? backgroundColor;
 
@@ -964,6 +976,10 @@ class SBBMenuButtonState<T> extends State<SBBMenuButton<T>> {
         onTap: widget.enabled ? showButtonMenu : null,
         canRequestFocus: _canRequestFocus,
         child: widget.child,
+        hoverColor: SBBColors.transparent,
+        splashColor: SBBColors.transparent,
+        overlayColor: SBBInternal.all(SBBColors.transparent),
+        highlightColor: SBBColors.transparent,
       );
     }
 
