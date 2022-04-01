@@ -336,6 +336,10 @@ class SBBThemeData {
     Color? menuEntryTextIconColorHighlighted,
     Color? menuEntryIconColor,
 
+    // UserMenu
+    TextStyle? userMenuTextStyle,
+    Color? userMenuHoverColor,
+
   }) {
     // SET hard-coded default values HERE
 
@@ -609,6 +613,10 @@ class SBBThemeData {
     menuEntryTextIconColorHighlighted = menuEntryTextIconColorHighlighted ?? SBBColors.red125;
     menuEntryIconColor = menuEntryIconColor ?? SBBColors.iron;
 
+    // UserMenu
+    userMenuTextStyle = userMenuTextStyle ?? SBBLeanTextStyles.contextMenu;
+    userMenuHoverColor = userMenuHoverColor ?? SBBColors.red125;
+
     // pass them on to constructor that requires all
     return SBBThemeData.raw(
       brightness: brightness,
@@ -801,6 +809,8 @@ class SBBThemeData {
       menuEntryColorHighlighted: menuEntryColorHighlighted,
       menuEntryTextIconColorHighlighted: menuEntryTextIconColorHighlighted,
       menuEntryIconColor: menuEntryIconColor,
+      userMenuTextStyle: userMenuTextStyle,
+      userMenuHoverColor: userMenuHoverColor,
     );
   }
 
@@ -995,6 +1005,8 @@ class SBBThemeData {
     required this.menuEntryColorHighlighted,
     required this.menuEntryTextIconColorHighlighted,
     required this.menuEntryIconColor,
+    required this.userMenuTextStyle,
+    required this.userMenuHoverColor,
   });
 
   /// Light Theme
@@ -1254,6 +1266,10 @@ class SBBThemeData {
   final Color menuEntryTextIconColorHighlighted;
   final Color menuEntryIconColor;
 
+  // UserMenu
+  final TextStyle userMenuTextStyle;
+  final Color userMenuHoverColor;
+
   SBBThemeData copyWith({
     Brightness? brightness,
     Color? primaryColor,
@@ -1500,6 +1516,11 @@ class SBBThemeData {
     Color? menuEntryColorHighlighted,
     Color? menuEntryTextIconColorHighlighted,
     Color? menuEntryIconColor,
+
+    //UserMenu
+    TextStyle? userMenuTextStyle,
+    Color? userMenuHoverColor,
+
   }) {
     final defaultTheme = SBBThemeData.fallback();
     return SBBThemeData(
@@ -1859,6 +1880,10 @@ class SBBThemeData {
       menuEntryColorHighlighted: menuEntryColorHighlighted ?? (this.menuEntryColorHighlighted == defaultTheme.menuEntryColorHighlighted ? null: this.menuEntryColorHighlighted),
       menuEntryTextIconColorHighlighted: menuEntryTextIconColorHighlighted ?? (this.menuEntryTextIconColorHighlighted == defaultTheme.menuEntryTextIconColorHighlighted ? null: this.menuEntryTextIconColorHighlighted),
       menuEntryIconColor: menuEntryIconColor ?? (this.menuEntryIconColor == defaultTheme.menuEntryIconColor ? null: this.menuEntryIconColor),
+
+      //User Menu
+      userMenuTextStyle: userMenuTextStyle ?? (this.userMenuTextStyle == defaultTheme.userMenuTextStyle ? null: this.userMenuTextStyle),
+      userMenuHoverColor: userMenuHoverColor ?? (this.userMenuHoverColor == defaultTheme.userMenuHoverColor ? null: this.userMenuHoverColor),
     );
   }
 
