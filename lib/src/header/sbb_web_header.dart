@@ -9,35 +9,44 @@ class SBBWebHeader extends StatelessWidget implements PreferredSizeWidget {
     this.logo = const SBBLeanLogo(),
     this.userMenu,
     this.leadingWidth = 54.0,
+    this.actions,
   }) : super(key: key);
 
   final String title;
 
   /// Optional subtitle in Header.
-  ///
-  /// This should only be used in a Web Header.
   final String subtitle;
 
   /// Optional logo to override default [SBBLeanLogo].
-  ///
-  /// Only considered when HostPlatform is web.
   final Widget logo;
+
+  /// The space left to the [title].
+  ///
+  /// Defaults to 54 logical pixels.
   final double leadingWidth;
 
   /// Optional User Menu in Header.
-  ///
-  /// Only considered when HostPlatform is web.
   final SBBUserMenu? userMenu;
+
+  final List<Widget>? actions;
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      titleSpacing: 0.0,
       centerTitle: false,
       toolbarHeight: leadingWidth,
       leadingWidth: leadingWidth,
+      leading: Container(),
       backgroundColor: SBBColors.white,
       title: _buildTitleWithSubtitle(),
+      shape: Border(
+        bottom: BorderSide(
+          color: SBBColors.silver,
+        ),
+      ),
       actions: [
+        ...?actions,
         if (userMenu != null && !(SBBResponsive.isMobile(context))) userMenu!,
         _insertLogo(
           right: SBBResponsive.isDesktop(context) ? leadingWidth : 15.0,
@@ -70,5 +79,3 @@ class SBBWebHeader extends StatelessWidget implements PreferredSizeWidget {
         ],
       );
 }
-
-class SBBWebHeaderItem {}
