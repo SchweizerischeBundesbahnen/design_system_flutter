@@ -183,9 +183,8 @@ class _RenderMenuItem extends RenderShiftedBox {
   }
 }
 
-/// A tile item in a SBB (context)menu.
+/// An item in a SBB menu.
 ///
-/// The tile item has a required [title] and an optional [icon].
 ///
 /// To show a SBB menu, use the [showSBBMenu] function. To create a button that
 /// shows a SBB menu, consider using [SBBMenuButton].
@@ -199,13 +198,13 @@ class _RenderMenuItem extends RenderShiftedBox {
 ///  * [showSBBMenu], a method to dynamically show a SBB menu at a given location.
 ///  * [SBBMenuButton], an [IconButton] that automatically shows a menu when
 ///    it is tapped.
-class SBBMenuTileItem<T> extends SBBMenuEntry<T> {
+class SBBMenuItem<T> extends SBBMenuEntry<T> {
   /// Creates an item for a SBB menu.
   ///
   /// By default, the item is [enabled].
   ///
   /// The `enabled` and `height` arguments must not be null.
-  const SBBMenuTileItem({
+  const SBBMenuItem({
     Key? key,
     this.value,
     this.onTap,
@@ -215,14 +214,31 @@ class SBBMenuTileItem<T> extends SBBMenuEntry<T> {
       horizontal: 8.0,
       vertical: 2.0,
     ),
-    this.icon,
     this.textStyle,
-    required this.title,
-    this.onHover,
-    this.hoverColor,
+    required this.child,
+    this.foregroundColor,
+    this.backgroundColor,
   })  : assert(enabled != null),
         assert(height != null),
         super(key: key);
+
+  /// Create a SBB Menu Tile with a required [title] and optional [icon].
+  ///
+  /// The icon and title are arranged in a row and padded by 8 logical pixels
+  /// at the ends, with an 8 pixel gap in between.
+  factory SBBMenuItem.tile({
+    Key? key,
+    T? value,
+    VoidCallback? onTap,
+    bool enabled,
+    double height,
+    EdgeInsets padding,
+    TextStyle? textStyle,
+    MaterialStateProperty<Color?>? foregroundColor,
+    MaterialStateProperty<Color?>? backgroundColor,
+    IconData? icon,
+    required String title,
+  }) = _SBBMenuTileItem;
 
   /// The value that will be returned by [showSBBMenu] if this entry is selected.
   final T? value;
@@ -251,50 +267,45 @@ class SBBMenuTileItem<T> extends SBBMenuEntry<T> {
   /// When null, the horizontal padding defaults to 8.0 on both sides and 2.0 vertical padding.
   final EdgeInsets padding;
 
-  /// The optional icon to display in the tile item.
-  final IconData? icon;
-
-  /// The text style of the popup menu item.
+  /// The text style of the sbb menu item.
   ///
   /// If null, [SBBThemeData.menuEntryTextStyle] is used, which defaults to
   /// [SBBLeanTextStyles.contextMenu].
   final TextStyle? textStyle;
 
-  /// The label of the menu entry.
-  final String title;
-
-  /// Called when the menu item is hovered over.
+  /// The widget below this widget in the tree.
   ///
-  /// Defaults to changing icon and text color.
-  final ValueChanged<bool>? onHover;
+  /// used by the build method
+  final Widget? child;
 
-  final Color? hoverColor;
+  /// The color for the tile's [Text] and [Icon] widget descendants.
+  ///
+  /// This color is typically used instead of the color of the [textStyle].
+  final MaterialStateProperty<Color?>? foregroundColor;
+
+  /// The color for the tile's background.
+  final MaterialStateProperty<Color?>? backgroundColor;
 
   @override
   bool represents(T? value) => value == this.value;
 
   @override
-  SBBMenuTileItemState<T, SBBMenuTileItem<T>> createState() =>
-      SBBMenuTileItemState<T, SBBMenuTileItem<T>>();
+  SBBMenuItemState<T, SBBMenuItem<T>> createState() =>
+      SBBMenuItemState<T, SBBMenuItem<T>>();
 }
 
-/// The [State] for [SBBMenuTileItem] subclasses.
+/// The [State] for [SBBMenuItem] subclasses.
 ///
 /// The [handleTap] method can be overridden to adjust exactly what happens when
 /// the item is tapped. By default, it uses [Navigator.pop] to return the
-/// [SBBMenuTileItem.value] from the menu route.
+/// [SBBMenuItem.value] from the menu route.
 ///
 /// This class takes two type arguments. The second, `W`, is the exact type of
 /// the [Widget] that is using this [State]. It must be a subclass of
-/// [SBBMenuTileItem]. The first, `T`, must match the type argument of that widget
+/// [SBBMenuItem]. The first, `T`, must match the type argument of that widget
 /// class, and is the type of values returned from this menu.
-class SBBMenuTileItemState<T, W extends SBBMenuTileItem<T>> extends State<W> {
-  // Changing the text and icon color when hovering.
-  // uses [SBBTheme.menuEntryTextIconColorHighlighted]
-  //TODO: implement using [MaterialStateProperty]
-  Color? _iconColor;
-  Color? _textColor;
-
+class SBBMenuItemState<T, W extends SBBMenuItem<T>> extends State<W>
+    with MaterialStateMixin {
   /// The handler for when the user selects the item.
   ///
   /// Used by the [InkWell] inserted by the [build] method.
@@ -303,13 +314,15 @@ class SBBMenuTileItemState<T, W extends SBBMenuTileItem<T>> extends State<W> {
   /// the menu route.
   @protected
   void handleTap() {
+    updateMaterialState(
+      MaterialState.pressed,
+    );
     widget.onTap?.call();
     Navigator.pop<T>(context, widget.value);
   }
 
   @override
   Widget build(BuildContext context) {
-    _setIconTextColor();
     final MouseCursor effectiveMouseCursor = _getEffectiveMouseCursor();
     return MergeSemantics(
       child: Semantics(
@@ -319,71 +332,41 @@ class SBBMenuTileItemState<T, W extends SBBMenuTileItem<T>> extends State<W> {
           onTap: widget.enabled ? handleTap : null,
           canRequestFocus: widget.enabled,
           mouseCursor: effectiveMouseCursor,
-          hoverColor: widget.hoverColor ??
-              SBBTheme.of(context).menuEntryColorHighlighted,
-          onHover: widget.onHover ??
-              (widget.enabled
-                  ? (isHovering) {
-                      _changeIconTextColor(isHovering);
-                    }
-                  : null),
+          onHover: widget.enabled
+              ? updateMaterialState(
+                  MaterialState.hovered,
+                )
+              : null,
           child: _buildChild(),
         ),
       ),
     );
   }
 
-  Widget _buildChild() => Container(
-        alignment: AlignmentDirectional.centerStart,
-        padding: widget.padding,
-        constraints: BoxConstraints(minHeight: widget.height),
-        child: widget.icon != null ? _buildIconTile() : _buildText(),
-      );
-
-  Widget _buildIconTile() => Row(
-        children: [
-          Icon(
-            widget.icon,
-            color: _iconColor,
-          ),
-          const SizedBox(
-            width: 8.0,
-          ),
-          _buildText()
-        ],
-      );
-
-  Widget _buildText() {
-    SBBThemeData theme = SBBTheme.of(context);
-    TextStyle style = widget.textStyle ?? theme.menuEntryTextStyle;
-    return Text(
-      widget.title,
-      style: style.copyWith(
-        color: _textColor,
+  Widget _buildChild() {
+    final SBBThemeData theme = SBBTheme.of(context);
+    final TextStyle style = widget.textStyle ?? theme.menuEntryTextStyle;
+    final Color? resolvedBackgroundColor =
+        (widget.backgroundColor ?? theme.menuEntryBackgroundColor)
+            .resolve(materialStates);
+    final Color? resolvedForegroundColor =
+        (widget.foregroundColor ?? theme.menuEntryForegroundColor)
+            .resolve(materialStates);
+    return Container(
+      color: resolvedBackgroundColor,
+      alignment: AlignmentDirectional.centerStart,
+      padding: widget.padding,
+      constraints: BoxConstraints(minHeight: widget.height),
+      child: DefaultTextStyle(
+        style: style.copyWith(
+          color: resolvedForegroundColor,
+        ),
+        child: IconTheme.merge(
+          data: IconThemeData(color: resolvedForegroundColor),
+          child: widget.child!,
+        ),
       ),
     );
-  }
-
-  void _changeIconTextColor(bool isHovering) {
-    final theme = SBBTheme.of(context);
-    setState(() {
-      if (isHovering) {
-        _iconColor = _textColor = theme.menuEntryTextIconColorHighlighted;
-      } else {
-        _iconColor = theme.menuEntryIconColor;
-        _textColor = theme.menuEntryTextStyle.color ?? SBBColors.iron;
-      }
-    });
-  }
-
-  void _setIconTextColor() {
-    final SBBThemeData sbbTheme = SBBTheme.of(context);
-    TextStyle style = widget.textStyle ?? sbbTheme.menuEntryTextStyle;
-    _iconColor ??= sbbTheme.menuEntryIconColor;
-    _textColor ??= style.color ?? SBBColors.iron;
-    if (!widget.enabled) {
-      _textColor = _iconColor = sbbTheme.menuEntryDisabledColor;
-    }
   }
 
   MouseCursor _getEffectiveMouseCursor() =>
@@ -423,7 +406,7 @@ class _SBBMenu<T> extends StatelessWidget {
       if (route.initialValue != null &&
           route.items[i].represents(route.initialValue)) {
         item = Container(
-          color: SBBTheme.of(context).menuEntryColorHighlighted,
+          color: SBBColors.milk,
           child: item,
         );
       }
@@ -897,7 +880,7 @@ class SBBMenuButton<T> extends StatefulWidget {
 
   /// If provided, the background color used for the menu.
   ///
-  /// If this property is null, then [SBBThemeData.menuBackgroundColor] is used,
+  /// If this property is null, then [SBBThemeData.menuEntryBackgroundColor] is used,
   /// which defaults to [SBBColors.white].
   final Color? backgroundColor;
 
@@ -991,6 +974,66 @@ class SBBMenuButtonState<T> extends State<SBBMenuButton<T>> {
       splashColor: SBBColors.transparent,
       highlightColor: SBBColors.transparent,
       hoverColor: SBBColors.transparent,
+    );
+  }
+}
+
+class _SBBMenuTileItem<T> extends SBBMenuItem<T> {
+  _SBBMenuTileItem({
+    Key? key,
+    T? value,
+    VoidCallback? onTap,
+    bool enabled = true,
+    double height = 24.0,
+    EdgeInsets padding = const EdgeInsets.symmetric(
+      horizontal: 8.0,
+      vertical: 2.0,
+    ),
+    TextStyle? textStyle,
+    MaterialStateProperty<Color?>? foregroundColor,
+    MaterialStateProperty<Color?>? backgroundColor,
+    IconData? icon,
+    required String title,
+  }) : super(
+          key: key,
+          value: value,
+          onTap: onTap,
+          enabled: enabled,
+          height: height,
+          textStyle: textStyle,
+          padding: padding,
+          foregroundColor: foregroundColor,
+          backgroundColor: backgroundColor,
+          child: _SBBMenuItemWithTileChild(
+            icon: icon,
+            title: title,
+          ),
+        );
+}
+
+class _SBBMenuItemWithTileChild extends StatelessWidget {
+  const _SBBMenuItemWithTileChild({
+    Key? key,
+    required this.title,
+    this.icon,
+  }) : super(key: key);
+
+  final String title;
+  final IconData? icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        if (icon != null) Icon(icon),
+        SizedBox(width: 8.0),
+        Flexible(
+          child: Text(
+            title,
+          ),
+        ),
+      ],
     );
   }
 }
