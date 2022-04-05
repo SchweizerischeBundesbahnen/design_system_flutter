@@ -100,16 +100,7 @@ class SBBUserMenu<T> extends StatelessWidget {
         initialValue: initialValue,
         child: Row(
           children: [
-            leading != null
-                ? leading!
-                : CircleAvatar(
-                    backgroundColor: leading == null ? SBBColors.cloud : null,
-                    child: Text(
-                      _getInitials(displayName ?? ''),
-                      style: SBBLeanTextStyles.userMenuInitials,
-                    ),
-                    radius: 12.0,
-                  ),
+            leading != null ? leading! : _buildAvatar(),
             SizedBox(
               width: _kHorizontalSpacing,
             ),
@@ -139,13 +130,9 @@ class SBBUserMenu<T> extends StatelessWidget {
         textStyle: SBBInternal.all(
           theme.userMenuTextStyle,
         ),
-        foregroundColor: SBBInternal.resolveWith(
-          defaultValue: theme.userMenuTextStyle.color!,
-          pressedValue: theme.userMenuHoverColor,
-          hoveredValue: theme.userMenuHoverColor,
-        ),
+        foregroundColor: theme.userMenuForegroundColor,
         backgroundColor: SBBInternal.all(
-          SBBColors.white,
+          SBBColors.transparent,
         ),
         overlayColor: SBBInternal.all(
           SBBColors.transparent,
@@ -167,18 +154,38 @@ class SBBUserMenu<T> extends StatelessWidget {
   SBBMenuItemBuilder<T> _addHeaderToItemBuilder(BuildContext context) {
     final List<SBBMenuEntry<T>> items = itemBuilder(context);
     return (BuildContext context) => <SBBMenuEntry<T>>[
-          _buildHeader(context),
+          header != null ? header! : _buildHeader(context),
           SBBMenuDivider(),
           ...items,
         ];
   }
 
   SBBMenuEntry<T> _buildHeader(BuildContext context) {
-    return SBBMenuTileItem(
-      onHover: (value) => {},
-      hoverColor: SBBColors.transparent,
-      title: displayName!,
-      enabled: false,
+    final SBBThemeData theme = SBBTheme.of(context);
+    return SBBMenuItem(
+      foregroundColor: SBBInternal.all(SBBColors.iron),
+      backgroundColor: SBBInternal.all(SBBColors.white),
+      textStyle: theme.userMenuTextStyle,
+      child: Row(
+        children: [
+          _buildAvatar(),
+          SizedBox(
+            width: _kHorizontalSpacing,
+          ),
+          Text(
+            displayName!,
+          )
+        ],
+      ),
     );
   }
+
+  CircleAvatar _buildAvatar() => CircleAvatar(
+        backgroundColor: SBBColors.cloud,
+        child: Text(
+          _getInitials(displayName ?? ''),
+          style: SBBLeanTextStyles.userMenuInitials,
+        ),
+        radius: 12.0,
+      );
 }
