@@ -7,7 +7,21 @@ import '../sbb_internal.dart';
 
 const double _kHorizontalSpacing = 8.0;
 
+/// The SBB user menu for enabling login and an expandable SBBMenu, i.e. for logout.
+///
+/// If a [displayName] is given, the itemBuilder is called to create a SBB menu.
+/// The header is added to the itemBuilder at the top.
 class SBBUserMenu<T> extends StatelessWidget {
+  /// Creates an SBBUserMenu with loggedIn = [displayName] != null.
+  ///
+  /// When loggedIn, the menu is a SBBMenuButton to build [itemBuilder].
+  /// When not loggedIn, the menu is a flat TextButton with [leading] and
+  /// loginTitle.
+  ///
+  /// The [onSelected] is called, when an entry from the expanded menu is called with
+  /// the specified value as a return.
+  ///
+  /// To act upon a login request, use [onLoginRequest].
   const SBBUserMenu({
     required this.itemBuilder,
     this.initialValue,
@@ -46,7 +60,6 @@ class SBBUserMenu<T> extends StatelessWidget {
   /// defaults to a CircleAvatar with initials of [displayName].
   ///
   /// When not logged in:
-  /// displays left of [loginTitle] in collapsed view.
   /// Defaults to [SBBIcons.user_medium].
   final Widget? leading;
 
@@ -63,6 +76,7 @@ class SBBUserMenu<T> extends StatelessWidget {
   /// The title to display when [displayName] is null.
   ///
   /// User is "not logged in".
+  /// defaults to "Login"
   final String loginTitle;
 
   bool get _isLoggedIn => displayName != null;
@@ -163,6 +177,7 @@ class SBBUserMenu<T> extends StatelessWidget {
   SBBMenuEntry<T> _buildHeader(BuildContext context) {
     final SBBThemeData theme = SBBTheme.of(context);
     return SBBMenuItem(
+      enabled: false,
       foregroundColor: SBBInternal.all(SBBColors.iron),
       backgroundColor: SBBInternal.all(SBBColors.white),
       textStyle: theme.userMenuTextStyle,
