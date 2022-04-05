@@ -85,7 +85,6 @@ class SBBLeanTextStyles {
 
   static const TextStyle headerTitle = TextStyle(
     fontSize: 15.0,
-    height: 23.0 / 15.0,
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w400,
     fontFamily: SBBWebFont,
@@ -94,7 +93,6 @@ class SBBLeanTextStyles {
 
   static const TextStyle headerSubtitle = TextStyle(
     fontSize: 13.0,
-    height: 16.0 / 13.0,
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w300,
     fontFamily: SBBWebFont,
@@ -103,7 +101,6 @@ class SBBLeanTextStyles {
 
   static const TextStyle contextMenu = TextStyle(
     fontSize: 15.0,
-    height: 23.0 / 15.0,
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w400,
     fontFamily: SBBWebFont,
@@ -112,7 +109,6 @@ class SBBLeanTextStyles {
 
   static const TextStyle userMenuInitials = TextStyle(
     fontSize: 10.0,
-    height: 1.0,
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w700,
     fontFamily: SBBWebFont,
