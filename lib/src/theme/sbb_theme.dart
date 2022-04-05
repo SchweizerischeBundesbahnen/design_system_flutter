@@ -330,15 +330,15 @@ class SBBThemeData {
     // Menu
     Color? menuBackgroundColor,
     Color? menuBorderColor,
-    Color? menuEntryColorDisabled,
+
+    // Menu Entry
+    MaterialStateProperty<Color?>? menuEntryForegroundColor,
+    MaterialStateProperty<Color?>? menuEntryBackgroundColor,
     TextStyle? menuEntryTextStyle,
-    Color? menuEntryColorHighlighted,
-    Color? menuEntryTextIconColorHighlighted,
-    Color? menuEntryIconColor,
 
     // UserMenu
     TextStyle? userMenuTextStyle,
-    Color? userMenuHoverColor,
+    MaterialStateProperty<Color?>? userMenuForegroundColor,
 
   }) {
     // SET hard-coded default values HERE
@@ -607,15 +607,15 @@ class SBBThemeData {
     // Menu
     menuBackgroundColor = menuBackgroundColor ?? SBBColors.white;
     menuBorderColor = menuBorderColor ?? SBBColors.iron;
-    menuEntryColorDisabled = menuEntryColorDisabled ?? SBBColors.cement;
+
+    // Menu entry
+    menuEntryBackgroundColor = menuEntryBackgroundColor ?? SBBInternal.resolveWith(defaultValue: SBBColors.white, disabledValue: SBBColors.white, hoveredValue: SBBColors.milk, pressedValue: SBBColors.milk);
+    menuEntryForegroundColor = menuEntryForegroundColor ?? SBBInternal.resolveWith(defaultValue: SBBColors.iron, disabledValue: SBBColors.iron, hoveredValue: SBBColors.red125, pressedValue: SBBColors.red125);
     menuEntryTextStyle = menuEntryTextStyle ?? SBBLeanTextStyles.contextMenu;
-    menuEntryColorHighlighted = menuEntryColorHighlighted ?? SBBColors.milk;
-    menuEntryTextIconColorHighlighted = menuEntryTextIconColorHighlighted ?? SBBColors.red125;
-    menuEntryIconColor = menuEntryIconColor ?? SBBColors.iron;
 
     // UserMenu
-    userMenuTextStyle = userMenuTextStyle ?? SBBLeanTextStyles.contextMenu;
-    userMenuHoverColor = userMenuHoverColor ?? SBBColors.red125;
+    userMenuTextStyle = userMenuTextStyle ?? menuEntryTextStyle;
+    userMenuForegroundColor = userMenuForegroundColor ?? SBBInternal.resolveWith(defaultValue: SBBColors.iron, hoveredValue: SBBColors.red125, pressedValue: SBBColors.red125, disabledValue: SBBColors.iron);
 
     // pass them on to constructor that requires all
     return SBBThemeData.raw(
@@ -804,13 +804,11 @@ class SBBThemeData {
       tabBarTextStyle:    tabBarTextStyle,
       menuBackgroundColor : menuBackgroundColor,
       menuBorderColor : menuBorderColor,
-      menuEntryDisabledColor: menuEntryColorDisabled,
-      menuEntryTextStyle: menuEntryTextStyle,
-      menuEntryColorHighlighted: menuEntryColorHighlighted,
-      menuEntryTextIconColorHighlighted: menuEntryTextIconColorHighlighted,
-      menuEntryIconColor: menuEntryIconColor,
+      menuEntryForegroundColor: menuEntryForegroundColor,
+      menuEntryBackgroundColor: menuEntryBackgroundColor,
+      menuEntryTextStyle: menuEntryTextStyle,      
       userMenuTextStyle: userMenuTextStyle,
-      userMenuHoverColor: userMenuHoverColor,
+      userMenuForegroundColor: userMenuForegroundColor,
     );
   }
 
@@ -1000,13 +998,11 @@ class SBBThemeData {
     required this.tabBarTextStyle,
     required this.menuBackgroundColor,
     required this.menuBorderColor,
-    required this.menuEntryDisabledColor,
+    required this.menuEntryBackgroundColor,
+    required this.menuEntryForegroundColor,
     required this.menuEntryTextStyle,
-    required this.menuEntryColorHighlighted,
-    required this.menuEntryTextIconColorHighlighted,
-    required this.menuEntryIconColor,
     required this.userMenuTextStyle,
-    required this.userMenuHoverColor,
+    required this.userMenuForegroundColor,
   });
 
   /// Light Theme
@@ -1260,15 +1256,15 @@ class SBBThemeData {
   // Menu
   final Color menuBackgroundColor;
   final Color menuBorderColor;
-  final Color menuEntryDisabledColor;
+
+  // Menu Entry
+  final MaterialStateProperty<Color?> menuEntryBackgroundColor;
+  final MaterialStateProperty<Color?> menuEntryForegroundColor;
   final TextStyle menuEntryTextStyle;
-  final Color menuEntryColorHighlighted;
-  final Color menuEntryTextIconColorHighlighted;
-  final Color menuEntryIconColor;
 
   // UserMenu
   final TextStyle userMenuTextStyle;
-  final Color userMenuHoverColor;
+  final MaterialStateProperty<Color?> userMenuForegroundColor;
 
   SBBThemeData copyWith({
     Brightness? brightness,
@@ -1511,15 +1507,17 @@ class SBBThemeData {
     // Menu
     Color? menuBackgroundColor,
     Color? menuBorderColor,
-    Color? menuEntryDisabledColor,
+
+    //Menu Entry
     TextStyle? menuEntryTextStyle,
-    Color? menuEntryColorHighlighted,
-    Color? menuEntryTextIconColorHighlighted,
-    Color? menuEntryIconColor,
+    MaterialStateProperty<Color?>? menuEntryBackgroundColor,
+    MaterialStateProperty<Color?>? menuEntryForegroundColor,
+    
+
 
     //UserMenu
     TextStyle? userMenuTextStyle,
-    Color? userMenuHoverColor,
+    MaterialStateProperty<Color?>? userMenuForegroundColor,
 
   }) {
     final defaultTheme = SBBThemeData.fallback();
@@ -1875,15 +1873,16 @@ class SBBThemeData {
       // Menu
       menuBackgroundColor: menuBackgroundColor ?? (this.menuBackgroundColor == defaultTheme.menuBackgroundColor ? null: this.menuBackgroundColor),
       menuBorderColor: menuBorderColor ?? (this.menuBorderColor == defaultTheme.menuBorderColor ? null: this.menuBorderColor),
-      menuEntryColorDisabled: menuEntryDisabledColor ?? (this.menuEntryDisabledColor == defaultTheme.menuEntryDisabledColor ? null: this.menuEntryDisabledColor),
-      menuEntryTextStyle: menuEntryTextStyle ?? (this.menuEntryTextStyle == defaultTheme.menuEntryTextStyle ? null: this.menuEntryTextStyle),
-      menuEntryColorHighlighted: menuEntryColorHighlighted ?? (this.menuEntryColorHighlighted == defaultTheme.menuEntryColorHighlighted ? null: this.menuEntryColorHighlighted),
-      menuEntryTextIconColorHighlighted: menuEntryTextIconColorHighlighted ?? (this.menuEntryTextIconColorHighlighted == defaultTheme.menuEntryTextIconColorHighlighted ? null: this.menuEntryTextIconColorHighlighted),
-      menuEntryIconColor: menuEntryIconColor ?? (this.menuEntryIconColor == defaultTheme.menuEntryIconColor ? null: this.menuEntryIconColor),
 
+      // Menu Entry
+      menuEntryTextStyle: menuEntryTextStyle ?? (this.menuEntryTextStyle == defaultTheme.menuEntryTextStyle ? null: this.menuEntryTextStyle),
+      menuEntryBackgroundColor: menuEntryBackgroundColor ?? (this.menuEntryBackgroundColor == defaultTheme.menuEntryBackgroundColor ? null : this.menuEntryBackgroundColor),
+      menuEntryForegroundColor: menuEntryForegroundColor ?? (this.menuEntryForegroundColor == defaultTheme.menuEntryForegroundColor ? null : this.menuEntryForegroundColor),
+
+      
       //User Menu
       userMenuTextStyle: userMenuTextStyle ?? (this.userMenuTextStyle == defaultTheme.userMenuTextStyle ? null: this.userMenuTextStyle),
-      userMenuHoverColor: userMenuHoverColor ?? (this.userMenuHoverColor == defaultTheme.userMenuHoverColor ? null: this.userMenuHoverColor),
+      userMenuForegroundColor: userMenuForegroundColor ?? (this.userMenuForegroundColor == defaultTheme.userMenuForegroundColor ? null : this.userMenuForegroundColor),
     );
   }
 
