@@ -28,6 +28,8 @@
 * `SBBMultiSelect`: Added field `selectionValidation` and static function `defaultSelectionValidation` for custom selection validation
 * `SBBSelect`: Added field `allowMultilineLabel`
 * `SBBSelect`: Added field `hint`
+* `SBBAccordion`: Added field `titleMaxLines` (with default value `null`, meaning titles are now multiline by default)
+* `SBBAccordion`: Added constructor `single` for simpler usage when only one item is needed
 ### Changed
 * `SBBHeader`: Renamed field `onPressedSBBSignet` to `onPressedLogo`
 * `SBBHeader`: Renamed field `sbbSignetTooltip` to `logoTooltip`
@@ -39,6 +41,7 @@
 * `SBBMultiSelect`: Adjusted paddings to match the current specifications
 * `SBBRadioButtonListItem`: Adjusted paddings to match the current specifications
 * `SBBSelect`: Field `label` is now optional because there is now a variant without label
+* `SBBThemeData`: Default TextStyle for `accordionTitleTextStyle` is now `SBBTextStyles.mediumLight`
 ### Deprecated
 ### Removed
 * `SBBListHeader`: Removed fields `icon` and `onCallToAction` to match the current specifications

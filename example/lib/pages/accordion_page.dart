@@ -38,21 +38,16 @@ class _AccordionPageState extends State<AccordionPage> {
         const SizedBox(height: sbbDefaultSpacing),
         const SBBListHeader('Single item'),
         SBBGroup(
-          child: SBBAccordion(
-            accordionCallback: (int index, bool isExpanded) {
+          child: SBBAccordion.single(
+            title: 'Title text',
+            body: Text(
+                'The body is only visible when the Accordion item is expanded.'),
+            isExpanded: _singleAccordionExpanded,
+            singleAccordionCallback: (isExpanded) {
               setState(() {
                 _singleAccordionExpanded = !isExpanded;
               });
             },
-            children: [
-              SBBAccordionItem(
-                title: 'Title text',
-                body: Text(
-                  'The body is only visible when the Accordion item is expanded.',
-                ),
-                isExpanded: _singleAccordionExpanded,
-              ),
-            ],
           ),
         ),
         const SizedBox(height: sbbDefaultSpacing),
@@ -104,7 +99,9 @@ class _AccordionPageState extends State<AccordionPage> {
                       SBBTertiaryButtonLarge(
                           label: 'Button',
                           onPressed: () {
-                            sbbToast.show(message: 'This button does nothing...');
+                            sbbToast.show(
+                              message: 'This button does nothing...',
+                            );
                           }),
                     ],
                   ),

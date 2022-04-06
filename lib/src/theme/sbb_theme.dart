@@ -2792,7 +2792,7 @@ class SBBThemeData {
     this.groupBackgroundColor = groupBackgroundColor ?? themeValue(SBBColors.white, SBBColors.charcoal);
 
     // Accordion
-    this.accordionTitleTextStyle = accordionTitleTextStyle ?? themedTextStyle(textStyle: SBBTextStyles.largeLight);
+    this.accordionTitleTextStyle = accordionTitleTextStyle ?? themedTextStyle(textStyle: SBBTextStyles.mediumLight);
     this.accordionBodyTextStyle = accordionBodyTextStyle ?? themedTextStyle(textStyle: SBBTextStyles.smallLight);
     this.accordionBackgroundColor = accordionBackgroundColor ?? this.groupBackgroundColor;
 
