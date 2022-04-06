@@ -8,6 +8,9 @@ import '../../design_system_flutter.dart';
 /// The position of the item within an [SBBAccordion] is given by [index].
 typedef AccordionCallback = void Function(int index, bool isExpanded);
 
+/// Variant of [AccordionCallback] for constructor [SBBAccordion.single]
+typedef SingleAccordionCallback = void Function(bool isExpanded);
+
 /// The SBB Accordion item - heavily inspired be the material expansion panel.
 /// Use according to documentation.
 ///
@@ -82,6 +85,27 @@ class SBBAccordion extends StatefulWidget {
     this.titleMaxLines,
     this.accordionCallback,
   }) : super(key: key);
+
+  SBBAccordion.single({
+    required String title,
+    required Widget body,
+    bool isExpanded = false,
+    int? titleMaxLines,
+    SingleAccordionCallback? singleAccordionCallback,
+  }) : this(
+          children: [
+            SBBAccordionItem(
+              title: title,
+              body: body,
+              isExpanded: isExpanded,
+            ),
+          ],
+          titleMaxLines: titleMaxLines,
+          accordionCallback: (index, isExpanded) =>
+              singleAccordionCallback?.call(
+            isExpanded,
+          ),
+        );
 
   final List<SBBAccordionItem> children;
   final int? titleMaxLines;
