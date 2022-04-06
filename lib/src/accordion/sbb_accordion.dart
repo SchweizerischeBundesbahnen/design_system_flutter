@@ -232,7 +232,7 @@ class _ExpandIconState extends State<_ExpandIcon>
     _iconTurns = _controller.drive(
       Tween<double>(
         begin: 0.0,
-        end: 0.25,
+        end: 0.5,
       ).chain(
         CurveTween(
           curve: Curves.fastOutSlowIn,
@@ -251,7 +251,7 @@ class _ExpandIconState extends State<_ExpandIcon>
       child: RotationTransition(
         turns: _iconTurns,
         child: SBBIconButtonSmall(
-          icon: SBBIcons.chevron_small_right_small,
+          icon: SBBIcons.chevron_small_down_small,
           onPressed: () {},
         ),
       ),
