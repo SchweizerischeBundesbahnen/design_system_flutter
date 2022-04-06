@@ -41,7 +41,7 @@
 * `SBBMultiSelect`: Adjusted paddings to match the current specifications
 * `SBBRadioButtonListItem`: Adjusted paddings to match the current specifications
 * `SBBSelect`: Field `label` is now optional because there is now a variant without label
-* `SBBThemeData`: Default TextStyle for `accordionTitleTextStyle` is now `SBBTextStyles.mediumLight`
+* `SBBAccordion`: Adjusted paddings, text style and icon rotation to match the current specifications
 ### Deprecated
 ### Removed
 * `SBBListHeader`: Removed fields `icon` and `onCallToAction` to match the current specifications
