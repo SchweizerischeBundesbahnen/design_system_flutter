@@ -50,16 +50,28 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
     _controller = AnimationController(vsync: this, duration: kThemeAnimationDuration);
     _animation = Tween(begin: 0.0, end: 0.25).animate(_controller);
 
-    _controller.addListener(() => setState(() => {}));
+    _controller.addListener(() {
+      if (!mounted) return;
+      setState(() => {});
+    });
   }
 
   bool setPositionsAndSizes(_TabBarNotification n) {
     if (n.data != tabBarData) {
       WidgetsBinding.instance?.addPostFrameCallback(
-            (_) => setState(() => tabBarData = n.data),
+            (_) {
+              if (!mounted) return;
+              setState(() => tabBarData = n.data);
+            },
       );
     }
     return true;
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
@@ -73,11 +85,19 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
         final sbbTheme = SBBTheme.of(context);
         final topPadding = portrait ? 8.0 : 1.0;
         final snapshotData = snapshot.requireData;
+        final cardColor = Theme.of(context).cardTheme.color ?? Theme.of(context).scaffoldBackgroundColor;
         return SizedBox.fromSize(
           size: Size.fromHeight(TabBarFiller.calcHeight(context)),
           child: Container(
             decoration: BoxDecoration(
-              color: SBBColors.transparent,
+              gradient: LinearGradient(
+                colors: [
+                  cardColor.withOpacity(0.0),
+                  cardColor.withOpacity(1.0),
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
               boxShadow: SBBTheme.of(context).isDark
                   ? [
                 const BoxShadow(
@@ -176,10 +196,12 @@ class _IconLayer extends StatelessWidget {
           if (!portrait || e == selectedTab)
             LayoutId(
               id: '${e.id}_text',
-              child: Text(
-                e.translate(context),
-                style: SBBTheme.of(context).tabBarTextStyle,
-                textAlign: TextAlign.center,
+              child: ExcludeSemantics(
+                child: Text(
+                  e.translate(context),
+                  style: SBBTheme.of(context).tabBarTextStyle,
+                  textAlign: TextAlign.center,
+                ),
               ),
             ),
         ],
