@@ -12,10 +12,12 @@ class SBBListHeader extends StatelessWidget {
   const SBBListHeader(
     this.title, {
     Key? key,
+    this.maxLines,
     this.padding,
   }) : super(key: key);
 
   final String title;
+  final int? maxLines;
   final EdgeInsetsGeometry? padding;
 
   @override
@@ -31,8 +33,8 @@ class SBBListHeader extends StatelessWidget {
           Expanded(
             child: Text(
               title,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
+              maxLines: maxLines,
+              overflow: maxLines == null ? null : TextOverflow.ellipsis,
               style: SBBTheme.of(context).listHeaderTextStyle,
             ),
           ),
