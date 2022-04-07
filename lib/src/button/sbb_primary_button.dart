@@ -143,12 +143,11 @@ class SBBPrimaryButtonNegative extends StatelessWidget {
   Widget _buildThemedWeb(SBBThemeData theme) {
     return ElevatedButton(
       style: SBBButtonStyles.primaryWebNegative(theme: theme),
-      onPressed: isLoading ? null : onPressed,
+      onPressed: onPressed,
       focusNode: focusNode,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          if (isLoading) SBBLoadingIndicator.tinyCloud(),
           Flexible(
             child: Text(
               label,
