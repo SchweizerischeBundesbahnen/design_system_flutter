@@ -30,6 +30,7 @@
 * `SBBSelect`: Added field `hint`
 * `SBBAccordion`: Added field `titleMaxLines` (with default value `null`, meaning titles are now multiline by default)
 * `SBBAccordion`: Added constructor `single` for simpler usage when only one item is needed
+* `SBBListHeader`: Added field `maxLines` (with default value `null`, meaning list headers are now multiline by default)
 ### Changed
 * `SBBHeader`: Renamed field `onPressedSBBSignet` to `onPressedLogo`
 * `SBBHeader`: Renamed field `sbbSignetTooltip` to `logoTooltip`
