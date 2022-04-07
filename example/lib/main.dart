@@ -106,6 +106,16 @@ class MyWebApp extends StatelessWidget {
                         },
                       ),
                     ),
+                    Flexible(
+                      child: SBBBreadCrumb(
+                        breadCrumbItems: [
+                          SBBBreadCrumbItem(
+                            label: 'Level 1',
+                            onPressed: () {},
+                          )
+                        ],
+                      ),
+                    )
                   ],
                 ),
               ),

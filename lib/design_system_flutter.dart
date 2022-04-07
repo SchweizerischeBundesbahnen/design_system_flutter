@@ -1,6 +1,7 @@
 library design_system_flutter;
 
 export 'src/accordion/sbb_accordion.dart';
+export 'src/breadcrumb/sbb_breadcrumb.dart';
 export 'src/button/sbb_icon_button.dart';
 export 'src/button/sbb_icon_form_button.dart';
 export 'src/button/sbb_icon_text_button.dart';
