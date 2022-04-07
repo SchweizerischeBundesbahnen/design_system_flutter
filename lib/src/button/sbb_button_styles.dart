@@ -48,6 +48,15 @@ class SBBButtonStyles {
 
   static ButtonStyle primaryWebLean({required SBBThemeData theme}) =>
       primaryMobile(theme: theme).copyWith(
+        overlayColor: SBBInternal.all(
+          SBBColors.transparent,
+        ),
+        backgroundColor: SBBInternal.resolveWith(
+          defaultValue: theme.primaryButtonBackgroundColor,
+          pressedValue: SBBColors.red125,
+          hoveredValue: SBBColors.red125,
+          disabledValue: theme.primaryButtonBackgroundColorDisabled,
+        ),
         shape: SBBInternal.all(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(2.0),
@@ -87,6 +96,15 @@ class SBBButtonStyles {
       );
   static ButtonStyle primaryWebNegative({required SBBThemeData theme}) =>
       primaryMobileNegative(theme: theme).copyWith(
+        overlayColor: SBBInternal.all(
+          SBBColors.transparent,
+        ),
+        backgroundColor: SBBInternal.resolveWith(
+          defaultValue: SBBColors.granite,
+          hoveredValue: SBBColors.iron,
+          pressedValue: SBBColors.iron,
+          disabledValue: theme.primaryButtonNegativeBackgroundColorDisabled,
+        ),
         shape: SBBInternal.all(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(2.0),
