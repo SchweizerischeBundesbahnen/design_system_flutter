@@ -282,56 +282,6 @@ class _IconLayerDelegate extends MultiChildLayoutDelegate {
         onNotification(_TabBarNotification(TabBarDrawData(positions, sizes, spaceBetween)));
       }
     }
-
-    // double calculatedSize = width - iconSizes.values.map((e) => e.width).reduce((a, b) => a + b);
-    //
-    // if (!portrait) {
-    //   calculatedSize -= (sbbDefaultSpacing * iconSizes.length + textSizes.values.map((e) => e.width).reduce((a, b) => a + b));
-    // }
-    //
-    // final spaceBetween = calculatedSize / (items.length - 1);
-    //
-    // double left = sbbDefaultSpacing + padding.left;
-    // final tabTop = portrait ? 8.0 : 1.0;
-    //
-    // for (final tab in items) {
-    //   final pos = (width / items.length) * items.indexOf(tab);
-    //   final left = pos + iconSizes[tab]!.width / 2.0;
-    //
-    //   positionChild(tab, Offset(left, tabTop));
-    //   if (hasChild('${tab.id}_text')) {
-    //     if (portrait) {
-    //       final iconBottom = tabTop + TabItemWidget.portraitSize;
-    //       final top = iconBottom + (size.height - iconBottom) / 2.0 - textSizes[tab]!.height / 2.0;
-    //       positionChild('${tab.id}_text', Offset(pos + textSizes[tab]!.width / 2.0, top));
-    //     } else {
-    //       positionChild('${tab.id}_text', Offset.zero);
-    //     }
-    //   }
-    //   positions.putIfAbsent(tab, () => left);
-    //   sizes.putIfAbsent(tab, () => iconSizes[tab]!);
-    //
-    //   // positionChild(tab, Offset(left, tabTop));
-    //   // positions.putIfAbsent(tab, () => left);
-    //   // if (portrait) {
-    //   //   if (hasChild('${tab.id}_text')) {
-    //   //     final textLeft = left + iconSizes[tab]!.width / 2.0 - textSizes[tab]!.width / 2.0;
-    //   //     final maxLeft = size.width - sbbDefaultSpacing - textSizes[tab]!.width;
-    //   //     final iconBottom = tabTop + TabItemWidget.portraitSize;
-    //   //     final top = iconBottom + (size.height - iconBottom) / 2.0 - textSizes[tab]!.height / 2.0;
-    //   //     positionChild('${tab.id}_text', Offset(math.max(sbbDefaultSpacing, math.min(textLeft, maxLeft)), top));
-    //   //   }
-    //   //   left += spaceBetween + iconSizes[tab]!.width;
-    //   //
-    //   //   sizes.putIfAbsent(tab, () => iconSizes[tab]!);
-    //   // } else {
-    //   //   left += iconSizes[tab]!.width + sbbDefaultSpacing;
-    //   //   positionChild('${tab.id}_text', Offset(left, iconSizes[tab]!.height / 2.0 - textSizes[tab]!.height / 2.0));
-    //   //   left += spaceBetween + textSizes[tab]!.width;
-    //   //
-    //   //   sizes.putIfAbsent(tab, () => Size(iconSizes[tab]!.width + textSizes[tab]!.width + sbbDefaultSpacing, iconSizes[tab]!.height));
-    //   // }
-    // }
   }
 
   @override
