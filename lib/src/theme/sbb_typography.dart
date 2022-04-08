@@ -114,6 +114,13 @@ class SBBLeanTextStyles {
     fontFamily: SBBWebFont,
     color: SBBColors.metal,
   );
+
+  static const TextStyle breadcrumb = TextStyle(
+    fontSize: 13.0,
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w400,
+    fontFamily: SBBWebFont,
+  );
 }
 
 @Deprecated('Use SBBTextStyles instead. Migration Guide for SBBTextStyles.')

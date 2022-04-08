@@ -108,9 +108,10 @@ class MyWebApp extends StatelessWidget {
                     ),
                     Flexible(
                       child: SBBBreadCrumb(
+                        onLeadingPressed: null,
                         breadCrumbItems: [
                           SBBBreadCrumbItem(
-                            label: 'Level 1',
+                            child: Icon(SBBIcons.adult_kids_large),
                             onPressed: () {},
                           )
                         ],

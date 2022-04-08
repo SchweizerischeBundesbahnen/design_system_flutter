@@ -340,6 +340,10 @@ class SBBThemeData {
     TextStyle? userMenuTextStyle,
     MaterialStateProperty<Color?>? userMenuForegroundColor,
 
+    // Breadcrumb
+    TextStyle? breadcrumbTextStyle,
+    MaterialStateProperty<Color?>? breadcrumbForegroundColor,
+
   }) {
     // SET hard-coded default values HERE
 
@@ -617,6 +621,10 @@ class SBBThemeData {
     userMenuTextStyle = userMenuTextStyle ?? menuEntryTextStyle;
     userMenuForegroundColor = userMenuForegroundColor ?? SBBInternal.resolveWith(defaultValue: SBBColors.iron, hoveredValue: SBBColors.red125, pressedValue: SBBColors.red125, disabledValue: SBBColors.iron);
 
+    // Breadcrumb
+    breadcrumbTextStyle = breadcrumbTextStyle ?? SBBLeanTextStyles.breadcrumb;
+    breadcrumbForegroundColor = breadcrumbForegroundColor ?? SBBInternal.resolveWith(defaultValue: SBBColors.granite, disabledValue: SBBColors.black, hoveredValue: SBBColors.red125, pressedValue: SBBColors.red125);
+
     // pass them on to constructor that requires all
     return SBBThemeData.raw(
       brightness: brightness,
@@ -809,6 +817,8 @@ class SBBThemeData {
       menuEntryTextStyle: menuEntryTextStyle,      
       userMenuTextStyle: userMenuTextStyle,
       userMenuForegroundColor: userMenuForegroundColor,
+      breadcrumbTextStyle: breadcrumbTextStyle,
+      breadcrumbForegroundColor: breadcrumbForegroundColor,
     );
   }
 
@@ -1003,6 +1013,8 @@ class SBBThemeData {
     required this.menuEntryTextStyle,
     required this.userMenuTextStyle,
     required this.userMenuForegroundColor,
+    required this.breadcrumbTextStyle,
+    required this.breadcrumbForegroundColor,
   });
 
   /// Light Theme
@@ -1266,6 +1278,10 @@ class SBBThemeData {
   final TextStyle userMenuTextStyle;
   final MaterialStateProperty<Color?> userMenuForegroundColor;
 
+  // Breadcrumb
+  final TextStyle breadcrumbTextStyle;
+  final MaterialStateProperty<Color?> breadcrumbForegroundColor;
+
   SBBThemeData copyWith({
     Brightness? brightness,
     Color? primaryColor,
@@ -1518,6 +1534,10 @@ class SBBThemeData {
     //UserMenu
     TextStyle? userMenuTextStyle,
     MaterialStateProperty<Color?>? userMenuForegroundColor,
+
+    // Breadcrumb
+    TextStyle? breadcrumbTextStyle,
+    MaterialStateProperty<Color?>? breadcrumbForegroundColor,
 
   }) {
     final defaultTheme = SBBThemeData.fallback();
@@ -1883,6 +1903,10 @@ class SBBThemeData {
       //User Menu
       userMenuTextStyle: userMenuTextStyle ?? (this.userMenuTextStyle == defaultTheme.userMenuTextStyle ? null: this.userMenuTextStyle),
       userMenuForegroundColor: userMenuForegroundColor ?? (this.userMenuForegroundColor == defaultTheme.userMenuForegroundColor ? null : this.userMenuForegroundColor),
+
+      // Breadcrumb
+      breadcrumbTextStyle: breadcrumbTextStyle ?? (this.breadcrumbTextStyle == defaultTheme.breadcrumbTextStyle ? null: this.breadcrumbTextStyle),
+      breadcrumbForegroundColor: breadcrumbForegroundColor ?? (this.breadcrumbForegroundColor == defaultTheme.breadcrumbForegroundColor ? null : this.breadcrumbForegroundColor),
     );
   }
 
