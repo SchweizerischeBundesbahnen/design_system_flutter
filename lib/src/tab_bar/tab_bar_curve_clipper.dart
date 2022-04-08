@@ -44,13 +44,11 @@ class TabBarCurveClipper extends CustomClipper<Path> {
       hole,
       portrait,
       translateFrom == selectedOverride ? animation : percent,
-      data.paddingBetween / 2.0,
     );
     final shape2 = _HoleShape(
       nextHole,
       portrait,
       translateTo == selectedOverride ? animation : nextPercent,
-      data.paddingBetween / 2.0,
     );
 
     final path = Path()
@@ -58,7 +56,7 @@ class TabBarCurveClipper extends CustomClipper<Path> {
       ..quadraticBezierTo(shape1.cLeft.dx, shape1.cLeft.dy, shape1.pLeft.dx, shape1.pLeft.dy)
       ..cubicTo(shape1.cBottomLeft.dx, shape1.cBottomLeft.dy, shape1.cBottomRight.dx, shape1.cBottomRight.dy, shape1.pRight.dx, shape1.pRight.dy);
 
-    if ((nextPercent > 0.0 || selectedOverride != null) && isNeighbour && data.paddingBetween < 64.0) {
+    if (portrait && (nextPercent > 0.0 || selectedOverride != null) && isNeighbour && data.paddingBetween < 64.0) {
       final c = Tween(begin: shape1.pRight.dx, end: shape2.pLeft.dx).transform(nextPercent);
       path.quadraticBezierTo(c, 0.0, shape2.pLeft.dx, shape2.pLeft.dy);
     } else {
@@ -91,7 +89,7 @@ class TabBarCurveClipper extends CustomClipper<Path> {
 }
 
 class _HoleShape {
-  _HoleShape(double pos, bool portrait, this.percent, this.sizeBetween) {
+  _HoleShape(double pos, bool portrait, this.percent) {
     final radius = (portrait ? 44.0 : 36.0) / 2.0;
     final space = portrait ? 6.0 : 4.0;
     final bottomPadding = portrait ? 16.0 : 6.0;
@@ -117,7 +115,6 @@ class _HoleShape {
   }
 
   final double percent;
-  final double sizeBetween;
   late double center;
 
   late Offset _offset;

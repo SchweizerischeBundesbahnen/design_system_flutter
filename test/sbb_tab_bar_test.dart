@@ -8,9 +8,10 @@ import 'test_app.dart';
 void main() {
   testGoldens('Test TabBar', (WidgetTester tester) async {
     final icons = [SBBIcons.train_small, SBBIcons.station_small, SBBIcons.archive_box_small, SBBIcons.arrow_compass_small];
-    final items = Iterable.generate(4, (i) => _DemoItem('${i}_a', icons[i % icons.length])).toList();
-    final items2 = Iterable.generate(5, (i) => _DemoItem('${i}_b', icons[i % icons.length])).toList();
-    final items3 = Iterable.generate(8, (i) => _DemoItem('${i}_c', icons[i % icons.length])).toList();
+    final items = Iterable.generate(1, (i) => _DemoItem('${i}_a', icons[i % icons.length])).toList();
+    final items2 = Iterable.generate(2, (i) => _DemoItem('${i}_b', icons[i % icons.length])).toList();
+    final items3 = Iterable.generate(3, (i) => _DemoItem('${i}_c', icons[i % icons.length])).toList();
+    final items4 = Iterable.generate(4, (i) => _DemoItem('${i}_d', icons[i % icons.length])).toList();
     final builder = GoldenBuilder.column(wrap: (w) => TestApp.expanded(child: w))
       ..addScenario(
         'Test TabBar',
@@ -19,7 +20,7 @@ void main() {
             SBBTabBar(
               items: items,
               onTabChanged: (tab) => {},
-              navigationDataStream: Stream.value(TabBarNavigationData.simple(items, items.skip(1).first)),
+              navigationDataStream: Stream.value(TabBarNavigationData.simple(items, items.first)),
             ),
             SBBTabBar(
               items: items2,
@@ -29,7 +30,12 @@ void main() {
             SBBTabBar(
               items: items3,
               onTabChanged: (tab) => {},
-              navigationDataStream: Stream.value(TabBarNavigationData.simple(items3, items3.first)),
+              navigationDataStream: Stream.value(TabBarNavigationData.simple(items3, items3.skip(1).first)),
+            ),
+            SBBTabBar(
+              items: items4,
+              onTabChanged: (tab) => {},
+              navigationDataStream: Stream.value(TabBarNavigationData.simple(items4, items4.skip(2).first)),
             ),
           ],
         ),
