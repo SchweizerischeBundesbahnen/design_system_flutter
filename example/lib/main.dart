@@ -1,5 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:design_system_flutter/design_system_flutter.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -24,12 +25,7 @@ import 'pages/text_field_page.dart';
 import 'pages/toast_page.dart';
 import 'pages/typography_page.dart';
 
-void main() => runApp(
-      ChangeNotifierProvider<AppState>(
-        create: (BuildContext context) => AppState(),
-        child: MyApp(),
-      ),
-    );
+void main() => runApp(kIsWeb ? MyWebApp() : MyApp());
 
 class AppState extends ChangeNotifier {
   bool isDarkModeOn = false;
@@ -37,6 +33,98 @@ class AppState extends ChangeNotifier {
   void updateTheme(bool isDarkModeOn) {
     this.isDarkModeOn = isDarkModeOn;
     notifyListeners();
+  }
+}
+
+class MyWebApp extends StatelessWidget {
+  const MyWebApp({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SBBTheme(
+      builder: (context, theme, darkTheme) {
+        return MaterialApp(
+          theme: theme,
+          darkTheme: darkTheme,
+          home: Scaffold(
+            appBar: SBBWebHeader(
+              title: 'Example Web App',
+              subtitle: 'Version 0.1',
+              userMenu: SBBUserMenu(
+                displayName: "Eisen Bahner",
+                itemBuilder: (BuildContext context) => <SBBMenuEntry>[
+                  SBBMenuItem.tile(
+                    icon: SBBIcons.user_medium,
+                    title: 'Account',
+                  ),
+                ],
+                onLoginRequest: () {
+                  print('Login!');
+                },
+              ),
+            ),
+            body: Center(
+              child: Container(
+                width: 500.0,
+                child: Column(
+                  children: [
+                    Flexible(
+                      child: SBBPrimaryButton(
+                        label: 'Primary Button',
+                        onPressed: () {},
+                      ),
+                    ),
+                    Flexible(
+                      child: SBBPrimaryButtonNegative(
+                        label: 'Alternative Primary Button',
+                        onPressed: () {},
+                      ),
+                    ),
+                    SizedBox(
+                      height: 16.0,
+                    ),
+                    Flexible(
+                      child: GridView.builder(
+                        physics: PageScrollPhysics(),
+                        shrinkWrap: true,
+                        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                            maxCrossAxisExtent: 36.0 + sbbDefaultSpacing),
+                        itemCount: iconsMedium.length,
+                        itemBuilder: (BuildContext context, index) {
+                          final icon = iconsMedium[index];
+                          return IconButton(
+                            padding: EdgeInsets.zero,
+                            icon: Icon(
+                              icon['icon'] as IconData,
+                              size: 36.0,
+                            ),
+                            onPressed: () {
+                              SBBToast.of(context)
+                                  .show(message: icon['name'] as String);
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                    Flexible(
+                      child: SBBBreadCrumb(
+                        onLeadingPressed: null,
+                        breadCrumbItems: [
+                          SBBBreadCrumbItem(
+                            child: Icon(SBBIcons.adult_kids_large),
+                            onPressed: () {},
+                          )
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 }
 
