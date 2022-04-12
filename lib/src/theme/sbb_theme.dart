@@ -589,7 +589,7 @@ class SBBThemeData {
     groupBackgroundColor = groupBackgroundColor ?? themeValue(SBBColors.white, SBBColors.charcoal);
 
     // Accordion
-    accordionTitleTextStyle = accordionTitleTextStyle ?? themedTextStyle(textStyle: SBBTextStyles.largeLight);
+    accordionTitleTextStyle = accordionTitleTextStyle ?? themedTextStyle(textStyle: SBBTextStyles.mediumLight);
     accordionBodyTextStyle = accordionBodyTextStyle ?? themedTextStyle(textStyle: SBBTextStyles.smallLight);
     accordionBackgroundColor = accordionBackgroundColor ?? groupBackgroundColor;
 

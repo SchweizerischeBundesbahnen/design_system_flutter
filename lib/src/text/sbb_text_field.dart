@@ -144,7 +144,12 @@ class _SBBTextField extends State<SBBTextField> {
   }
 
   TextField buildTextField(BuildContext context) {
+    final textScaleFactor = MediaQuery.of(context).textScaleFactor;
     final sbbTheme = SBBTheme.of(context);
+
+    final style = widget.enabled
+        ? sbbTheme.textFieldTextStyle
+        : sbbTheme.textFieldTextStyleDisabled;
     final labelStyle = widget.enabled
         ? sbbTheme.textFieldPlaceholderTextStyle
         : sbbTheme.textFieldPlaceholderTextStyleDisabled;
@@ -153,18 +158,40 @@ class _SBBTextField extends State<SBBTextField> {
       fontSize: SBBTextStyles.helpersLabel.fontSize! * 1.335,
       height: 1.5,
     );
-    final style = widget.enabled
-        ? sbbTheme.textFieldTextStyle
-        : sbbTheme.textFieldTextStyleDisabled;
+
     final hasValueOrFocus = controller.text.isNotEmpty || _hasFocus;
+    final hasLabel = widget.labelText?.isNotEmpty ?? false;
+    final hasError = widget.errorText?.isNotEmpty ?? false;
+
+    var topPadding = 0.0;
+    var bottomPadding = 0.0;
+
+
+    if (hasLabel && hasValueOrFocus) {
+      topPadding = 5.0 + -2.0;
+
+      if (hasError) {
+        bottomPadding = 3.0;
+      } else {
+        bottomPadding = 9.0;
+      }
+    } else {
+      topPadding = 14.0;
+
+      if (hasError) {
+        bottomPadding = 8.0;
+      } else {
+        bottomPadding = 14.0;
+      }
+    }
     return TextField(
       focusNode: _focus,
-      controller: widget.controller,
+      controller: controller,
       obscureText: widget.obscureText,
       keyboardType: widget.keyboardType,
       maxLines: widget.maxLines,
       minLines: widget.minLines,
-      cursorHeight: 19.0,
+      cursorHeight: 22.0 * textScaleFactor,
       cursorRadius: const Radius.circular(2.0),
       enableInteractiveSelection: widget.enableInteractiveSelection,
       onChanged: widget.onChanged,
@@ -172,6 +199,7 @@ class _SBBTextField extends State<SBBTextField> {
       onSubmitted: widget.onSubmitted,
       enabled: widget.enabled,
       decoration: InputDecoration(
+        isCollapsed: !hasValueOrFocus,
         isDense: true,
         labelText: widget.labelText,
         focusedBorder: InputBorder.none,
@@ -180,14 +208,10 @@ class _SBBTextField extends State<SBBTextField> {
         errorBorder: InputBorder.none,
         focusedErrorBorder: InputBorder.none,
         contentPadding: EdgeInsetsDirectional.only(
-          bottom: hasValueOrFocus
-              ? sbbDefaultSpacing / 2
-              : sbbDefaultSpacing / 2 + 5.0,
-          top: hasValueOrFocus
-              ? 3.0
-              : -2.0, // depends on the height of the label text
+          top: topPadding * textScaleFactor,
+          bottom: bottomPadding * textScaleFactor,
         ),
-        floatingLabelStyle: floatingLabelStyle,
+        floatingLabelStyle: floatingLabelStyle.copyWith(),
         labelStyle: labelStyle,
         hintText: widget.hintText,
         hintStyle: labelStyle,

@@ -27,6 +27,10 @@
 * `SBBToast`: Added field `bottom`
 * `SBBMultiSelect`: Added field `selectionValidation` and static function `defaultSelectionValidation` for custom selection validation
 * `SBBSelect`: Added field `allowMultilineLabel`
+* `SBBSelect`: Added field `hint`
+* `SBBAccordion`: Added field `titleMaxLines` (with default value `null`, meaning titles are now multiline by default)
+* `SBBAccordion`: Added constructor `single` for simpler usage when only one item is needed
+* `SBBListHeader`: Added field `maxLines` (with default value `null`, meaning list headers are now multiline by default)
 ### Changed
 * `SBBHeader`: Renamed field `onPressedSBBSignet` to `onPressedLogo`
 * `SBBHeader`: Renamed field `sbbSignetTooltip` to `logoTooltip`
@@ -38,6 +42,7 @@
 * `SBBMultiSelect`: Adjusted paddings to match the current specifications
 * `SBBRadioButtonListItem`: Adjusted paddings to match the current specifications
 * `SBBSelect`: Field `label` is now optional because there is now a variant without label
+* `SBBAccordion`: Adjusted paddings, text style and icon rotation to match the current specifications
 ### Deprecated
 ### Removed
 * `SBBListHeader`: Removed fields `icon` and `onCallToAction` to match the current specifications

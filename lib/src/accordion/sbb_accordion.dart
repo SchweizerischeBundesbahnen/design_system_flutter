@@ -8,6 +8,9 @@ import '../../design_system_flutter.dart';
 /// The position of the item within an [SBBAccordion] is given by [index].
 typedef AccordionCallback = void Function(int index, bool isExpanded);
 
+/// Variant of [AccordionCallback] for constructor [SBBAccordion.single]
+typedef SingleAccordionCallback = void Function(bool isExpanded);
+
 /// The SBB Accordion item - heavily inspired be the material expansion panel.
 /// Use according to documentation.
 ///
@@ -79,11 +82,33 @@ class SBBAccordion extends StatefulWidget {
   const SBBAccordion({
     Key? key,
     this.children = const <SBBAccordionItem>[],
+    this.titleMaxLines,
     this.accordionCallback,
   }) : super(key: key);
 
-  final List<SBBAccordionItem> children;
+  SBBAccordion.single({
+    required String title,
+    required Widget body,
+    bool isExpanded = false,
+    int? titleMaxLines,
+    SingleAccordionCallback? singleAccordionCallback,
+  }) : this(
+          children: [
+            SBBAccordionItem(
+              title: title,
+              body: body,
+              isExpanded: isExpanded,
+            ),
+          ],
+          titleMaxLines: titleMaxLines,
+          accordionCallback: (index, isExpanded) =>
+              singleAccordionCallback?.call(
+            isExpanded,
+          ),
+        );
 
+  final List<SBBAccordionItem> children;
+  final int? titleMaxLines;
   final AccordionCallback? accordionCallback;
 
   @override
@@ -104,9 +129,7 @@ class _SBBAccordionState extends State<SBBAccordion> {
     // TODO use these: MaterialLocalizations.of(context).expandedIconTapHint; MaterialLocalizations.of(context).collapsedIconTapHint;
 
     final sbbTheme = SBBTheme.of(context);
-
     final List<Widget> items = <Widget>[];
-
     for (int i = 0; i < widget.children.length; i++) {
       final SBBAccordionItem child = widget.children[i];
       items.add(
@@ -120,20 +143,25 @@ class _SBBAccordionState extends State<SBBAccordion> {
                   children: <Widget>[
                     const SizedBox(width: sbbDefaultSpacing),
                     Expanded(
-                      child: Text(
-                        child.title,
-                        style: sbbTheme.accordionTitleTextStyle,
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 18.0),
+                        child: Text(
+                          child.title,
+                          style: sbbTheme.accordionTitleTextStyle,
+                          maxLines: widget.titleMaxLines,
+                          overflow: widget.titleMaxLines == null
+                              ? null
+                              : TextOverflow.ellipsis,
+                        ),
                       ),
                     ),
                     Padding(
                       padding: const EdgeInsetsDirectional.only(
-                        top: 2.0,
-                        end: 8.0,
-                        bottom: 2.0,
+                        end: sbbDefaultSpacing / 2,
                       ),
-                      child: _ExpandIcon(_isChildExpanded(i)),
+                      child: _ExpandIcon(
+                        _isChildExpanded(i),
+                      ),
                     ),
                   ],
                 ),
@@ -149,10 +177,20 @@ class _SBBAccordionState extends State<SBBAccordion> {
                   child: child.body,
                 ),
               ),
-              firstCurve: const Interval(0.0, 0.6, curve: Curves.fastOutSlowIn),
-              secondCurve: const Interval(0.4, 1.0, curve: Curves.fastOutSlowIn),
+              firstCurve: const Interval(
+                0.0,
+                0.6,
+                curve: Curves.fastOutSlowIn,
+              ),
+              secondCurve: const Interval(
+                0.4,
+                1.0,
+                curve: Curves.fastOutSlowIn,
+              ),
               sizeCurve: Curves.fastOutSlowIn,
-              crossFadeState: _isChildExpanded(i) ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+              crossFadeState: _isChildExpanded(i)
+                  ? CrossFadeState.showSecond
+                  : CrossFadeState.showFirst,
               duration: kThemeAnimationDuration,
             ),
             if (i < widget.children.length - 1) const Divider(),
@@ -163,7 +201,9 @@ class _SBBAccordionState extends State<SBBAccordion> {
 
     return Material(
       color: sbbTheme.accordionBackgroundColor,
-      child: Column(children: items),
+      child: Column(
+        children: items,
+      ),
     );
   }
 }
@@ -177,7 +217,8 @@ class _ExpandIcon extends StatefulWidget {
   _ExpandIconState createState() => _ExpandIconState();
 }
 
-class _ExpandIconState extends State<_ExpandIcon> with SingleTickerProviderStateMixin {
+class _ExpandIconState extends State<_ExpandIcon>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _iconTurns;
 
@@ -189,8 +230,13 @@ class _ExpandIconState extends State<_ExpandIcon> with SingleTickerProviderState
       vsync: this,
     );
     _iconTurns = _controller.drive(
-      Tween<double>(begin: 0.0, end: 0.25).chain(
-        CurveTween(curve: Curves.fastOutSlowIn),
+      Tween<double>(
+        begin: 0.0,
+        end: 0.5,
+      ).chain(
+        CurveTween(
+          curve: Curves.fastOutSlowIn,
+        ),
       ),
     );
     // If the widget is initially expanded, rotate the icon without animating it.
@@ -205,7 +251,7 @@ class _ExpandIconState extends State<_ExpandIcon> with SingleTickerProviderState
       child: RotationTransition(
         turns: _iconTurns,
         child: SBBIconButtonSmall(
-          icon: SBBIcons.chevron_small_right_small,
+          icon: SBBIcons.chevron_small_down_small,
           onPressed: () {},
         ),
       ),

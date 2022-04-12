@@ -18,6 +18,7 @@ class _TabBarPageState extends State<TabBarPage>
     _DemoItem('3', SBBIcons.archive_box_small),
     _DemoItem('4', SBBIcons.arrow_compass_small),
     _DemoItem('5', SBBIcons.arrow_compass_small),
+    _DemoItem('6', SBBIcons.arrow_compass_small),
   ];
 
   final _streamController = StreamController<TabBarNavigationData>();
