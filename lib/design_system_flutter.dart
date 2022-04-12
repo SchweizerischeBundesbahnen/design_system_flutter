@@ -30,6 +30,7 @@ export 'src/radio_button/sbb_radio_button_list_item.dart';
 export 'src/responsive/sbb_responsive.dart';
 export 'src/segmented_button/sbb_segmented_button.dart';
 export 'src/select/sbb_select.dart';
+export 'src/sidebar/sbb_sidebar.dart';
 export 'src/text/sbb_autocompletion.dart';
 export 'src/text/sbb_text_field.dart';
 export 'src/text/sbb_text_form_field.dart';
