@@ -1,7 +1,7 @@
 import 'package:design_system_flutter/design_system_flutter.dart';
 import 'package:flutter/material.dart';
 
-import '../main.dart';
+import '../native_app.dart';
 
 class TypographyPage extends StatelessWidget {
   @override
@@ -11,7 +11,8 @@ class TypographyPage extends StatelessWidget {
       children: <Widget>[
         const ThemeModeSegmentedButton(),
         const SizedBox(height: sbbDefaultSpacing),
-        const TypographyExample('Extra Large (Light)', SBBTextStyles.extraLargeLight),
+        const TypographyExample(
+            'Extra Large (Light)', SBBTextStyles.extraLargeLight),
         const SizedBox(height: sbbDefaultSpacing),
         const TypographyExample('Large (Light)', SBBTextStyles.largeLight),
         const SizedBox(height: sbbDefaultSpacing),
@@ -25,7 +26,8 @@ class TypographyPage extends StatelessWidget {
         const SizedBox(height: sbbDefaultSpacing),
         const TypographyExample('Small (Bold)', SBBTextStyles.smallBold),
         const SizedBox(height: sbbDefaultSpacing),
-        const TypographyExample('Extra Small (Light)', SBBTextStyles.extraSmallLight),
+        const TypographyExample(
+            'Extra Small (Light)', SBBTextStyles.extraSmallLight),
       ],
     );
   }
@@ -50,7 +52,8 @@ class TypographyExample extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(sbbDefaultSpacing),
-                  child: Text('The quick brown fox jumps over the lazy dog', style: style),
+                  child: Text('The quick brown fox jumps over the lazy dog',
+                      style: style),
                 ),
                 const Divider(),
                 Padding(

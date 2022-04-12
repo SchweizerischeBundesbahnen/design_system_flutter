@@ -1,7 +1,7 @@
 import 'package:design_system_flutter/design_system_flutter.dart';
 import 'package:flutter/material.dart';
 
-import '../main.dart';
+import '../native_app.dart';
 
 class AccordionPage extends StatefulWidget {
   @override
@@ -13,12 +13,15 @@ class _AccordionPageState extends State<AccordionPage> {
   final List<_Item> _items1 = [
     _Item(
       title: 'Initially expanded',
-      text: 'This Accordion Item was already initially expanded. If you close the page and open it again, this item will be initially expanded again.',
+      text:
+          'This Accordion Item was already initially expanded. If you close the page and open it again, this item will be initially expanded again.',
       isExpanded: true,
     ),
     _Item(
-      title: 'The title text has only 1 line. So make sure to keep the title short.',
-      text: 'The title text has only 1 line. So make sure to keep the title short.',
+      title:
+          'The title text has only 1 line. So make sure to keep the title short.',
+      text:
+          'The title text has only 1 line. So make sure to keep the title short.',
     ),
     _Item(
       title: 'Lorem ipsum',
@@ -104,7 +107,8 @@ class _AccordionPageState extends State<AccordionPage> {
                       SBBTertiaryButtonLarge(
                           label: 'Button',
                           onPressed: () {
-                            sbbToast.show(message: 'This button does nothing...');
+                            sbbToast.show(
+                                message: 'This button does nothing...');
                           }),
                     ],
                   ),

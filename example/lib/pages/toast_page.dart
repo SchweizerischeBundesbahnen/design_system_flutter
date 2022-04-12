@@ -1,7 +1,7 @@
 import 'package:design_system_flutter/design_system_flutter.dart';
 import 'package:flutter/material.dart';
 
-import '../main.dart';
+import '../native_app.dart';
 
 class ToastPage extends StatelessWidget {
   @override
@@ -26,7 +26,8 @@ class ToastPage extends StatelessWidget {
                         label: 'Show Toast - Short (Default)',
                         onPressed: () {
                           sbbToast.show(
-                            message: 'const SBBToast.durationShort: ${SBBToast.durationShort.inSeconds} seconds',
+                            message:
+                                'const SBBToast.durationShort: ${SBBToast.durationShort.inSeconds} seconds',
                           );
                         },
                       ),
@@ -41,7 +42,8 @@ class ToastPage extends StatelessWidget {
                         label: 'Show Toast - Long',
                         onPressed: () {
                           sbbToast.show(
-                            message: 'const SBBToast.durationLong: ${SBBToast.durationLong.inSeconds} seconds',
+                            message:
+                                'const SBBToast.durationLong: ${SBBToast.durationLong.inSeconds} seconds',
                             duration: SBBToast.durationLong,
                           );
                         },
@@ -57,7 +59,8 @@ class ToastPage extends StatelessWidget {
                         label: 'Show Toast - 5 Seconds',
                         onPressed: () {
                           sbbToast.show(
-                            message: 'This is a Toast with a duration of 5 seconds.',
+                            message:
+                                'This is a Toast with a duration of 5 seconds.',
                             duration: const Duration(seconds: 5),
                           );
                         },

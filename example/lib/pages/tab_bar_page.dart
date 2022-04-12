@@ -3,14 +3,15 @@ import 'dart:async';
 import 'package:design_system_flutter/design_system_flutter.dart';
 import 'package:flutter/material.dart';
 
-import '../main.dart';
+import '../native_app.dart';
 
 class TabBarPage extends StatefulWidget {
   @override
   State<TabBarPage> createState() => _TabBarPageState();
 }
 
-class _TabBarPageState extends State<TabBarPage> with SingleTickerProviderStateMixin {
+class _TabBarPageState extends State<TabBarPage>
+    with SingleTickerProviderStateMixin {
   final items = <TabBarItem>[
     _DemoItem('1', SBBIcons.train_small),
     _DemoItem('2', SBBIcons.station_small),
@@ -22,13 +23,18 @@ class _TabBarPageState extends State<TabBarPage> with SingleTickerProviderStateM
   final _streamController = StreamController<TabBarNavigationData>();
 
   late TabBarItem _selectedTab = items[0];
-  late AnimationController _animationController = AnimationController(vsync: this, duration: kThemeAnimationDuration);
-  late Animation<double> _animation = Tween(begin: 0.0, end: items.length.toDouble()).animate(_animationController);
+  late AnimationController _animationController =
+      AnimationController(vsync: this, duration: kThemeAnimationDuration);
+  late Animation<double> _animation =
+      Tween(begin: 0.0, end: items.length.toDouble())
+          .animate(_animationController);
 
   @override
   void initState() {
     super.initState();
-    _animationController.addListener(() => _streamController.add(TabBarNavigationData(_animation.value, _animation.value, _selectedTab)));
+    _animationController.addListener(() => _streamController.add(
+        TabBarNavigationData(
+            _animation.value, _animation.value, _selectedTab)));
   }
 
   @override
@@ -50,7 +56,8 @@ class _TabBarPageState extends State<TabBarPage> with SingleTickerProviderStateM
             items: items,
             onTabChanged: (t) {
               _selectedTab = t;
-              _animationController.animateTo(items.indexOf(t) / items.length, duration: kThemeAnimationDuration);
+              _animationController.animateTo(items.indexOf(t) / items.length,
+                  duration: kThemeAnimationDuration);
             },
           ),
           Expanded(child: Container()),
@@ -65,5 +72,6 @@ class _DemoItem extends TabBarItem {
   String translate(BuildContext context) => 'Item $id';
 
   @override
-  String translateSemantics(BuildContext context, int index, int length) => 'Element $index von $length';
+  String translateSemantics(BuildContext context, int index, int length) =>
+      'Element $index von $length';
 }

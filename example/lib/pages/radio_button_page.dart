@@ -1,7 +1,7 @@
 import 'package:design_system_flutter/design_system_flutter.dart';
 import 'package:flutter/material.dart';
 
-import '../main.dart';
+import '../native_app.dart';
 
 class RadiobuttonPage extends StatefulWidget {
   @override
@@ -138,7 +138,8 @@ class _RadiobuttonPageState extends State<RadiobuttonPage> {
                 },
                 label: 'Multiline Label with\nSecondary Label',
                 allowMultilineLabel: true,
-                secondaryLabel: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut convallis leo et metus semper hendrerit. Duis nec nunc a ligula cursus vulputate. Donec sed elit ultricies, euismod erat et, eleifend augue.',
+                secondaryLabel:
+                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut convallis leo et metus semper hendrerit. Duis nec nunc a ligula cursus vulputate. Donec sed elit ultricies, euismod erat et, eleifend augue.',
                 isLastElement: true,
               ),
             ],
