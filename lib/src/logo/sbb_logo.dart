@@ -104,15 +104,18 @@ class SBBLeanLogo extends StatelessWidget {
     this.width,
     this.foregroundColor = SBBColors.white,
     this.backgroundColor = SBBColors.red,
+    this.borderColor,
   }) : super(key: key);
 
   final double? height;
   final double? width;
   final Color foregroundColor;
   final Color backgroundColor;
+  final Color? borderColor;
 
   @override
   Widget build(BuildContext context) {
+    Color resolvedBordercolor = borderColor ?? backgroundColor;
     return LayoutBuilder(
       builder: (context, constraints) {
         final Size targetSize = _determineTargetSize(
@@ -124,6 +127,7 @@ class SBBLeanLogo extends StatelessWidget {
             child: DecoratedBox(
               decoration: BoxDecoration(
                 color: backgroundColor,
+                border: Border.all(color: resolvedBordercolor),
               ),
               child: _SBBSignetPaint(
                 color: foregroundColor,
