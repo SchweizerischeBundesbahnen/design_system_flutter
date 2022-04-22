@@ -4,6 +4,7 @@ import 'package:example/web_pages/breadcrumb_page.dart';
 import 'package:example/web_pages/button_page.dart';
 import 'package:example/web_pages/icon_page.dart';
 import 'package:example/web_pages/loading_page.dart';
+import 'package:example/web_pages/logo_page.dart';
 import '../web_pages/home_page.dart';
 
 @CustomAutoRouter(
@@ -14,10 +15,11 @@ import '../web_pages/home_page.dart';
         initial: true,
         path: '/home',
         children: <AutoRoute>[
-          AutoRoute(page: ButtonPage, path: 'buttons', initial: true),
+          AutoRoute(page: ButtonPage, path: 'buttons'),
           AutoRoute(page: IconPage, path: 'icons'),
           AutoRoute(page: BreadcrumbPage, path: 'breadcrumb'),
           AutoRoute(page: LoadingPage, path: 'loadingInd'),
+          AutoRoute(page: LogoPage, path: 'logo', initial: true),
         ])
   ],
   transitionsBuilder: TransitionsBuilders.noTransition,

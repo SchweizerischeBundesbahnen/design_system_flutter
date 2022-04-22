@@ -20,6 +20,13 @@ class HomePage extends StatelessWidget {
           body: AutoRouter(),
           items: [
             SBBSidebarItem(
+              title: 'Logo',
+              onTap: () {
+                context.router.replace(LogoRoute());
+              },
+              isSelected: false,
+            ),
+            SBBSidebarItem(
               title: 'Buttons',
               onTap: () {
                 context.router.replace(ButtonRoute());
