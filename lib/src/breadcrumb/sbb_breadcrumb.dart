@@ -48,14 +48,9 @@ class SBBBreadCrumb extends StatelessWidget {
 
   final List<SBBBreadCrumbItem> breadCrumbItems;
 
-  static const _defaultSpacingWidget = const Padding(
-    padding: EdgeInsets.symmetric(
-      horizontal: 4.0,
-    ),
-    child: Icon(
-      SBBIcons.chevron_right_small,
-      size: 16.0,
-    ),
+  static const _defaultSpacingWidget = Icon(
+    SBBIcons.chevron_right_small,
+    size: 16.0,
   );
 
   static const _defaultLeading = const Icon(SBBIcons.house_small);
@@ -66,7 +61,9 @@ class SBBBreadCrumb extends StatelessWidget {
     return _InheritedBreadCrumbStyle(
       textStyle: textStyle ?? theme.breadcrumbTextStyle,
       foregroundColor: foregroundColor ?? theme.breadcrumbForegroundColor,
-      child: Row(
+      child: Wrap(
+        spacing: 4.0,
+        crossAxisAlignment: WrapCrossAlignment.center,
         children: _buildBreadCrumbItemsWithSpacing(),
       ),
     );
@@ -74,7 +71,14 @@ class SBBBreadCrumb extends StatelessWidget {
 
   List<Widget> _buildBreadCrumbItemsWithSpacing() {
     final boxedBreadCrumbItems = breadCrumbItems
-        .map((breadCrumb) => SizedBox(child: breadCrumb))
+        .map((breadCrumb) => SizedBox(
+                child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                spacerWidget,
+                breadCrumb,
+              ],
+            )))
         .toList();
     boxedBreadCrumbItems.insert(
         0,
@@ -83,20 +87,7 @@ class SBBBreadCrumb extends StatelessWidget {
           child: leading ?? _defaultLeading,
           onPressed: onLeadingPressed,
         )));
-
-    // helper
-    Iterable<T> intersperse<T>(T element, Iterable<T> iterable) sync* {
-      final iterator = iterable.iterator;
-      if (iterator.moveNext()) {
-        yield iterator.current;
-        while (iterator.moveNext()) {
-          yield element;
-          yield iterator.current;
-        }
-      }
-    }
-
-    return intersperse(spacerWidget, boxedBreadCrumbItems).toList();
+    return boxedBreadCrumbItems;
   }
 }
 

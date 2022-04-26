@@ -50,7 +50,7 @@ class BreadcrumbPage extends StatelessWidget {
                     onPressed: () {},
                   ),
                   SBBBreadCrumbItem(
-                    child: Row(children: [
+                    child: Row(mainAxisSize: MainAxisSize.min, children: [
                       Text('Level 3 with Icon'),
                       Icon(SBBIcons.cup_hot_medium)
                     ]),
