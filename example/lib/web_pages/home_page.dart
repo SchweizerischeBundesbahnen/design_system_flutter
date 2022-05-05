@@ -15,7 +15,7 @@ class HomePage extends StatelessWidget {
           subtitle: 'Version 0.1',
           userMenu: _exampleUserMenu,
         ),
-        body: SBBSideBar(
+        body: SBBSidebar(
           body: AutoRouter(),
           items: [
             SBBSidebarItem(
