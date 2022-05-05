@@ -48,6 +48,7 @@ General instructions on _how_ to contribute can be found under [Contributing](Co
 
 * **Tran Hoang**
 * **Mosberger Dominik**
+* **Nicolas Vidoni**
 * **Schmucki Dominik**
 * **Raab Ulrich**
 * **Müller Patrice**
