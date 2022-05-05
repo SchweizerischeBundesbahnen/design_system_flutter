@@ -635,8 +635,8 @@ class SBBThemeData {
     //Sidebar
     sidebarBackgroundColor = sidebarBackgroundColor ?? SBBColors.white;
     sidebarBorderColor = sidebarBorderColor ?? SBBColors.silver;
-    sidebarItemBackgroundColor = sidebarItemBackgroundColor ?? resolveStatesWith(defaultValue: SBBColors.transparent, hoveredValue: SBBColors.milk);
-    sidebarItemForegroundColor = sidebarItemForegroundColor ?? resolveStatesWith(defaultValue: SBBColors.iron, hoveredValue: SBBColors.red125, pressedValue: SBBColors.red125);
+    sidebarItemBackgroundColor = sidebarItemBackgroundColor ?? resolveStatesWith(defaultValue: SBBColors.transparent, hoveredValue: SBBColors.milk, selectedValue: SBBColors.cloud);
+    sidebarItemForegroundColor = sidebarItemForegroundColor ?? resolveStatesWith(defaultValue: SBBColors.iron, hoveredValue: SBBColors.red125, pressedValue: SBBColors.red125, selectedValue: SBBColors.black);
     sidebarItemTextStyle = sidebarItemTextStyle ?? SBBLeanTextStyles.contextMenu;
 
     // pass them on to constructor that requires all
@@ -2118,7 +2118,8 @@ class SBBThemeData {
       {required T defaultValue,
         T? pressedValue,
         T? disabledValue,
-        T? hoveredValue}) {
+        T? hoveredValue,
+        T? selectedValue}) {
     return MaterialStateProperty.resolveWith((states) {
       // disabled
       if (states.contains(MaterialState.disabled) && disabledValue != null)
@@ -2131,6 +2132,10 @@ class SBBThemeData {
       // hovered
       if (states.contains(MaterialState.hovered) && hoveredValue != null)
         return hoveredValue;
+      
+      // selected
+      if (states.contains(MaterialState.selected) && hoveredValue != null)
+        return selectedValue;
 
       // default
       return defaultValue;
