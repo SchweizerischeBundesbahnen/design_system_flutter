@@ -84,10 +84,25 @@ class SBBSidebarItem extends StatefulWidget {
     this.trailing,
   });
 
+  /// Required title of the item.
   final String title;
+
+  /// Optional leading widget.
   final Widget? leading;
-  final Function()? onTap;
+
+  /// Callback to handle taps.
+  final VoidCallback? onTap;
+
+  /// Optional trailing widget.
+  ///
+  /// defaults to an Icon with [SBBIcons.arrow_right_small].
   final Widget? trailing;
+
+  /// Marks this item as selected inside the [SBBSidebar] parent.
+  ///
+  /// This field must be updated with navigation and once the user
+  /// clicks on the item.
+  /// Defaults to false.
   final bool isSelected;
 
   @override
