@@ -5,11 +5,22 @@
 ## [Unreleased]
 ### Added
 * Added `SBBLogo` (SBB Signet)
+* Added `SBBLeanLogo` (for web)
 * Added `SBBTabBar`
+* Added `SBBBreadcrumb` (for web)
+* Added `SBBWebHeader` (for web)
+* Added `SBBResponsive` (for web)
+* Added `SBBSideBar` (for web)
+* Added `SBBMenuButton` (for web)
+* Added `SBBUserMenu` (for web)
 * Added global function `showCustomSBBModalSheet`
+* `SBBPrimaryButton`: Added different theme based on hostType (for web)
+* `SBBTheme`:Added field `hostType`
 * `SBBIcons`: Added new icons
 * `SBBThemeData`: Added constructor `override` for easier targeted theme customizing
 * `SBBThemeData`: Added field `defaultRootContainerPadding`
+* `SBBThemeData`: Added function `allStates`
+* `SBBThemeData`: Added function `resolveStateWith`
 * `SBBTextField`: Added field `obscureText`
 * `SBBPrimaryButton`: Added field `focusNode`
 * `SBBPrimaryButtonNegative`: Added field `focusNode`
