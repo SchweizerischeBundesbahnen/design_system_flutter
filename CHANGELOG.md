@@ -32,6 +32,7 @@
 * `SBBAccordion`: Added constructor `single` for simpler usage when only one item is needed
 * `SBBListHeader`: Added field `maxLines` (with default value `null`, meaning list headers are now multiline by default)
 ### Changed
+* `SBBThemeData`: Adjusted some colors to match the current specifications
 * `SBBHeader`: Renamed field `onPressedSBBSignet` to `onPressedLogo`
 * `SBBHeader`: Renamed field `sbbSignetTooltip` to `logoTooltip`
 * `SBBOnboarding`: Padding now defined by `SBBThemeData.defaultRootContainerPadding` 

@@ -64,12 +64,15 @@ class SBBModalPopup extends StatelessWidget {
       ),
       clipBehavior: clipBehavior,
       backgroundColor: sbbTheme.modalBackgroundColor,
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _ModalHeader(title),
-          child,
-        ],
+      child: Semantics(
+        explicitChildNodes: true,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _ModalHeader(title),
+            child,
+          ],
+        ),
       ),
     );
   }
@@ -183,13 +186,15 @@ class SBBModalSheet extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        GestureDetector(
-          onTap: () {
-            Navigator.of(context).pop();
-          },
-          child: Container(
-            height: sbbTheme.statusBarHeight + sbbDefaultSpacing,
-            color: SBBColors.transparent,
+        ExcludeSemantics(
+          child: GestureDetector(
+            onTap: () {
+              Navigator.of(context).pop();
+            },
+            child: Container(
+              height: sbbTheme.statusBarHeight + sbbDefaultSpacing,
+              color: SBBColors.transparent,
+            ),
           ),
         ),
         Flexible(
@@ -210,15 +215,7 @@ class SBBModalSheet extends StatelessWidget {
                     Expanded(
                       child: headerBuilder.call(context),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.all(6.0),
-                      child: SBBIconButtonSmall(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        icon: SBBIcons.cross_small,
-                      ),
-                    ),
+                    _CloseButton(),
                   ],
                 ),
                 Flexible(
@@ -254,7 +251,19 @@ class _ModalHeader extends StatelessWidget {
             child: Text(title, style: SBBTheme.of(context).modalTitleTextStyle),
           ),
         ),
-        Padding(
+        _CloseButton(),
+      ],
+    );
+  }
+}
+
+class _CloseButton extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) => Semantics(
+        label: MaterialLocalizations.of(context).closeButtonTooltip,
+        excludeSemantics: true,
+        button: true,
+        child: Padding(
           padding: const EdgeInsets.all(6.0),
           child: SBBIconButtonSmall(
             onPressed: () {
@@ -263,7 +272,5 @@ class _ModalHeader extends StatelessWidget {
             icon: SBBIcons.cross_small,
           ),
         ),
-      ],
-    );
-  }
+      );
 }

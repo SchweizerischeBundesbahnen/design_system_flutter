@@ -533,8 +533,7 @@ class SBBThemeData {
     listItemBackgroundColor = listItemBackgroundColor ?? SBBColors.transparent;
     listItemBackgroundColorHighlighted = listItemBackgroundColorHighlighted ?? themeValue(SBBColors.milk, SBBColors.iron);
     listItemTitleTextStyle = listItemTitleTextStyle ?? themedTextStyle();
-    listItemSubtitleTextStyle =
-        listItemSubtitleTextStyle ?? themedTextStyle(textStyle: SBBTextStyles.extraSmallLight.copyWith(height: 16.0 / 12.0), color: themeValue(SBBColors.metal, SBBColors.cement));
+    listItemSubtitleTextStyle = listItemSubtitleTextStyle ?? themedTextStyle(textStyle: SBBTextStyles.smallLight, color: themeValue(SBBColors.metal, SBBColors.smoke));
 
     // Checkbox TODO define toggleable colors for checkbox and radiobutton?
     checkboxColor = checkboxColor ?? primaryColor;
@@ -611,7 +610,7 @@ class SBBThemeData {
 
     // Toast
     toastTextStyle = toastTextStyle ?? themedTextStyle(textStyle: SBBTextStyles.smallLight, color: SBBColors.white);
-    toastBackgroundColor = toastBackgroundColor ?? themeValue(SBBColors.black.withOpacity(0.5), SBBColors.white.withOpacity(0.3));
+    toastBackgroundColor = toastBackgroundColor ?? themeValue(SBBColors.metal, SBBColors.smoke);
 
     // Tab Bar
     tabBarTextStyle = tabBarTextStyle ?? themedTextStyle(textStyle: SBBTextStyles.extraSmallLight.copyWith(fontWeight: FontWeight.w500));
