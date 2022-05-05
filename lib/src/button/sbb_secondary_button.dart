@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../design_system_flutter.dart';
-import '../sbb_internal.dart';
 
 /// The SBB Secondary Button. Use according to documentation.
 ///
@@ -34,7 +33,7 @@ class SBBSecondaryButton extends StatelessWidget {
     return OutlinedButton(
       style: Theme.of(context).outlinedButtonTheme.style?.copyWith(
             // workaround for web
-            padding: SBBInternal.all(EdgeInsets.zero),
+            padding: SBBThemeData.allStates(EdgeInsets.zero),
           ),
       onPressed: isLoading ? null : onPressed,
       focusNode: focusNode,

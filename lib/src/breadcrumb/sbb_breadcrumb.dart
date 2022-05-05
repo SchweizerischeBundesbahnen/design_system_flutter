@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 
 import '../../design_system_flutter.dart';
-import '../sbb_internal.dart';
 
 /// The SBB Breadcrumb. Use according to:
 /// https://digital.sbb.ch/de/webapps/components/breadcrumb
 ///
 ///
-class SBBBreadCrumb extends StatelessWidget {
-  const SBBBreadCrumb({
+class SBBBreadcrumb extends StatelessWidget {
+  const SBBBreadcrumb({
     Key? key,
     this.leading,
     this.spacerWidget = _defaultSpacingWidget,
-    required this.breadCrumbItems,
+    required this.breadcrumbItems,
     this.onLeadingPressed,
     this.textStyle,
     this.foregroundColor,
@@ -28,23 +27,23 @@ class SBBBreadCrumb extends StatelessWidget {
   /// The default will have the [SBBThemeData.breadcrumbForegroundColor]
   final Widget? leading;
 
-  /// Separating widget between BreadCrumb items.
+  /// Separating widget between Breadcrumb items.
   ///
   /// Defaults to [SBBIcons.chevron_right_small]
   /// with 4px horizontal padding.
   final Widget spacerWidget;
 
-  /// The color for Text and Icons descendants below [SBBBreadCrumb].
+  /// The color for Text and Icons descendants below [SBBBreadcrumb].
   ///
   /// Defaults to [SBBTheme.breadcrumbForegroundColor].
   final MaterialStateProperty<Color?>? foregroundColor;
 
-  /// The text style for text descendants below [SBBBreadCrumb].
+  /// The text style for text descendants below [SBBBreadcrumb].
   ///
   /// Defaults to [SBBTheme.breadcrumbTextStyle].
   final TextStyle? textStyle;
 
-  final List<SBBBreadCrumbItem> breadCrumbItems;
+  final List<SBBBreadcrumbItem> breadcrumbItems;
 
   static const _defaultSpacingWidget = Icon(
     SBBIcons.chevron_right_small,
@@ -56,41 +55,41 @@ class SBBBreadCrumb extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final SBBThemeData theme = SBBTheme.of(context);
-    return _InheritedBreadCrumbStyle(
+    return _InheritedBreadcrumbStyle(
       textStyle: textStyle ?? theme.breadcrumbTextStyle,
       foregroundColor: foregroundColor ?? theme.breadcrumbForegroundColor,
       child: Wrap(
         spacing: 4.0,
         crossAxisAlignment: WrapCrossAlignment.center,
-        children: _buildBreadCrumbItemsWithSpacing(),
+        children: _buildBreadcrumbItemsWithSpacing(),
       ),
     );
   }
 
-  List<Widget> _buildBreadCrumbItemsWithSpacing() {
-    final boxedBreadCrumbItems = breadCrumbItems
-        .map((breadCrumb) => SizedBox(
+  List<Widget> _buildBreadcrumbItemsWithSpacing() {
+    final boxedBreadcrumbItems = breadcrumbItems
+        .map((breadcrumb) => SizedBox(
                 child: Row(
               mainAxisSize: MainAxisSize.min,
               children: [
                 spacerWidget,
-                breadCrumb,
+                breadcrumb,
               ],
             )))
         .toList();
-    boxedBreadCrumbItems.insert(
+    boxedBreadcrumbItems.insert(
         0,
         SizedBox(
-            child: SBBBreadCrumbItem(
+            child: SBBBreadcrumbItem(
           child: leading ?? _defaultLeading,
           onPressed: onLeadingPressed,
         )));
-    return boxedBreadCrumbItems;
+    return boxedBreadcrumbItems;
   }
 }
 
-class _InheritedBreadCrumbStyle extends InheritedWidget {
-  const _InheritedBreadCrumbStyle({
+class _InheritedBreadcrumbStyle extends InheritedWidget {
+  const _InheritedBreadcrumbStyle({
     Key? key,
     required this.foregroundColor,
     required this.textStyle,
@@ -100,21 +99,21 @@ class _InheritedBreadCrumbStyle extends InheritedWidget {
   final MaterialStateProperty<Color?> foregroundColor;
   final TextStyle textStyle;
 
-  static _InheritedBreadCrumbStyle of(BuildContext context) {
-    final _InheritedBreadCrumbStyle? result =
-        context.dependOnInheritedWidgetOfExactType<_InheritedBreadCrumbStyle>();
-    assert(result != null, 'No InheritedBreadCrumbStyle found in context');
+  static _InheritedBreadcrumbStyle of(BuildContext context) {
+    final _InheritedBreadcrumbStyle? result =
+        context.dependOnInheritedWidgetOfExactType<_InheritedBreadcrumbStyle>();
+    assert(result != null, 'No InheritedBreadcrumbStyle found in context');
     return result!;
   }
 
   @override
-  bool updateShouldNotify(_InheritedBreadCrumbStyle old) {
+  bool updateShouldNotify(_InheritedBreadcrumbStyle old) {
     return old.foregroundColor != foregroundColor || old.textStyle != textStyle;
   }
 }
 
-class SBBBreadCrumbItem extends StatefulWidget {
-  const SBBBreadCrumbItem({
+class SBBBreadcrumbItem extends StatefulWidget {
+  const SBBBreadcrumbItem({
     Key? key,
     required this.child,
     required this.onPressed,
@@ -125,25 +124,25 @@ class SBBBreadCrumbItem extends StatefulWidget {
   /// Commonly a Text or Icon.
   final Widget child;
 
-  /// The function called when the BreadCrumb is pressed. Used for redirecting
+  /// The function called when the Breadcrumb is pressed. Used for redirecting
   /// navigation.
   final VoidCallback? onPressed;
 
   bool get _enabled => onPressed != null;
 
   @override
-  State<SBBBreadCrumbItem> createState() => _SBBBreadCrumbItemState();
+  State<SBBBreadcrumbItem> createState() => _SBBBreadcrumbItemState();
 }
 
-class _SBBBreadCrumbItemState extends State<SBBBreadCrumbItem>
+class _SBBBreadcrumbItemState extends State<SBBBreadcrumbItem>
     with MaterialStateMixin {
   @override
   Widget build(BuildContext context) {
-    Color resolvedForegroundColor = _InheritedBreadCrumbStyle.of(context)
+    Color resolvedForegroundColor = _InheritedBreadcrumbStyle.of(context)
         .foregroundColor
         .resolve(materialStates)!;
     TextStyle resolvedTextStyle =
-        _InheritedBreadCrumbStyle.of(context).textStyle;
+        _InheritedBreadcrumbStyle.of(context).textStyle;
     if (!widget._enabled) {
       resolvedForegroundColor = SBBColors.black;
     }
@@ -156,7 +155,7 @@ class _SBBBreadCrumbItemState extends State<SBBBreadCrumbItem>
         }
       },
       splashColor: SBBColors.transparent,
-      overlayColor: SBBInternal.all(SBBColors.transparent),
+      overlayColor: SBBThemeData.allStates(SBBColors.transparent),
       highlightColor: SBBColors.transparent,
       mouseCursor: _getEffectiveMouseCursor(),
       onHover:

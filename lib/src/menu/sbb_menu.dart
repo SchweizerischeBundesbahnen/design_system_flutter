@@ -1,9 +1,7 @@
+import 'package:design_system_flutter/design_system_flutter.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/foundation.dart';
-import '../sbb_internal.dart';
-
-import 'package:design_system_flutter/design_system_flutter.dart';
 
 const Duration _kMenuDuration = Duration(milliseconds: 300);
 const double _kMenuCloseIntervalEnd = 2.0 / 3.0;
@@ -961,7 +959,7 @@ class SBBMenuButtonState<T> extends State<SBBMenuButton<T>> {
         child: widget.child,
         hoverColor: SBBColors.transparent,
         splashColor: SBBColors.transparent,
-        overlayColor: SBBInternal.all(SBBColors.transparent),
+        overlayColor: SBBThemeData.allStates(SBBColors.transparent),
         highlightColor: SBBColors.transparent,
       );
     }

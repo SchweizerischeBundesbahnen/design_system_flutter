@@ -38,18 +38,18 @@ class BreadcrumbPage extends StatelessWidget {
                       .copyWith(fontSize: 18, color: SBBColors.black),
                 ),
               ),
-              SBBBreadCrumb(
+              SBBBreadcrumb(
                 onLeadingPressed: () {},
-                breadCrumbItems: [
-                  SBBBreadCrumbItem(
+                breadcrumbItems: [
+                  SBBBreadcrumbItem(
                     child: Text('Level 1'),
                     onPressed: () {},
                   ),
-                  SBBBreadCrumbItem(
+                  SBBBreadcrumbItem(
                     child: Text('Level 2'),
                     onPressed: () {},
                   ),
-                  SBBBreadCrumbItem(
+                  SBBBreadcrumbItem(
                     child: Row(mainAxisSize: MainAxisSize.min, children: [
                       Text('Level 3 with Icon'),
                       Icon(SBBIcons.cup_hot_medium)

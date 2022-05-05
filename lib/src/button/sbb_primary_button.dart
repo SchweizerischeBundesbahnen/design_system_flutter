@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../design_system_flutter.dart';
-import '../sbb_internal.dart';
 import 'sbb_button_styles.dart';
 
 /// The SBB Primary Button. Use according to documentation.

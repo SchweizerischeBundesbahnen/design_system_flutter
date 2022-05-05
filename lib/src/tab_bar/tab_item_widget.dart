@@ -1,5 +1,6 @@
-import '../../design_system_flutter.dart';
 import 'package:flutter/material.dart';
+
+import '../../design_system_flutter.dart';
 
 class TabItemWidget extends StatelessWidget {
   const TabItemWidget(this.tab, this.selected, {Key? key}) : super(key: key);

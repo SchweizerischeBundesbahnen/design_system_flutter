@@ -1,8 +1,8 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 
 import '../../design_system_flutter.dart';
 import '../sbb_internal.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 
 typedef ThemedWidgetBuilder = Widget Function(BuildContext context, ThemeData theme, ThemeData darkTheme);
 
@@ -66,7 +66,7 @@ class SBBTheme extends StatelessWidget {
 
   static SBBThemeData of(BuildContext context) {
     final inheritedTheme = context.dependOnInheritedWidgetOfExactType<_InheritedTheme>();
-    final defaultHostPlatform = kIsWeb ? HostPlatform.web : HostPlatform.native;
+    const defaultHostPlatform = kIsWeb ? HostPlatform.web : HostPlatform.native;
     return Theme.of(context).brightness == Brightness.dark ? inheritedTheme?.darkTheme ?? SBBThemeData.dark(hostPlatform: inheritedTheme?.darkTheme.hostPlatform ?? defaultHostPlatform) : inheritedTheme?.theme ?? SBBThemeData.light(hostPlatform: inheritedTheme?.theme.hostPlatform ?? defaultHostPlatform);
   }
 }
@@ -620,23 +620,23 @@ class SBBThemeData {
     menuBorderColor = menuBorderColor ?? SBBColors.iron;
 
     // Menu entry
-    menuEntryBackgroundColor = menuEntryBackgroundColor ?? SBBInternal.resolveWith(defaultValue: SBBColors.white, disabledValue: SBBColors.white, hoveredValue: SBBColors.milk, pressedValue: SBBColors.milk);
-    menuEntryForegroundColor = menuEntryForegroundColor ?? SBBInternal.resolveWith(defaultValue: SBBColors.iron, disabledValue: SBBColors.iron, hoveredValue: SBBColors.red125, pressedValue: SBBColors.red125);
+    menuEntryBackgroundColor = menuEntryBackgroundColor ?? resolveStatesWith(defaultValue: SBBColors.white, disabledValue: SBBColors.white, hoveredValue: SBBColors.milk, pressedValue: SBBColors.milk);
+    menuEntryForegroundColor = menuEntryForegroundColor ?? resolveStatesWith(defaultValue: SBBColors.iron, disabledValue: SBBColors.iron, hoveredValue: SBBColors.red125, pressedValue: SBBColors.red125);
     menuEntryTextStyle = menuEntryTextStyle ?? SBBLeanTextStyles.contextMenu;
 
     // UserMenu
     userMenuTextStyle = userMenuTextStyle ?? menuEntryTextStyle;
-    userMenuForegroundColor = userMenuForegroundColor ?? SBBInternal.resolveWith(defaultValue: SBBColors.iron, hoveredValue: SBBColors.red125, pressedValue: SBBColors.red125, disabledValue: SBBColors.iron);
+    userMenuForegroundColor = userMenuForegroundColor ?? resolveStatesWith(defaultValue: SBBColors.iron, hoveredValue: SBBColors.red125, pressedValue: SBBColors.red125, disabledValue: SBBColors.iron);
 
     // Breadcrumb
     breadcrumbTextStyle = breadcrumbTextStyle ?? SBBLeanTextStyles.breadcrumb;
-    breadcrumbForegroundColor = breadcrumbForegroundColor ?? SBBInternal.resolveWith(defaultValue: SBBColors.granite, disabledValue: SBBColors.black, hoveredValue: SBBColors.red125, pressedValue: SBBColors.red125);
+    breadcrumbForegroundColor = breadcrumbForegroundColor ?? resolveStatesWith(defaultValue: SBBColors.granite, disabledValue: SBBColors.black, hoveredValue: SBBColors.red125, pressedValue: SBBColors.red125);
 
     //Sidebar
     sidebarBackgroundColor = sidebarBackgroundColor ?? SBBColors.white;
     sidebarBorderColor = sidebarBorderColor ?? SBBColors.silver;
-    sidebarItemBackgroundColor = sidebarItemBackgroundColor ?? SBBInternal.resolveWith(defaultValue: SBBColors.transparent, hoveredValue: SBBColors.milk);
-    sidebarItemForegroundColor = sidebarItemForegroundColor ?? SBBInternal.resolveWith(defaultValue: SBBColors.iron, hoveredValue: SBBColors.red125, pressedValue: SBBColors.red125);
+    sidebarItemBackgroundColor = sidebarItemBackgroundColor ?? resolveStatesWith(defaultValue: SBBColors.transparent, hoveredValue: SBBColors.milk);
+    sidebarItemForegroundColor = sidebarItemForegroundColor ?? resolveStatesWith(defaultValue: SBBColors.iron, hoveredValue: SBBColors.red125, pressedValue: SBBColors.red125);
     sidebarItemTextStyle = sidebarItemTextStyle ?? SBBLeanTextStyles.contextMenu;
 
     // pass them on to constructor that requires all
@@ -1956,11 +1956,11 @@ class SBBThemeData {
 
   ThemeData createTheme() {
     final baseButtonStyle = ButtonStyle(
-      overlayColor: SBBInternal.all(SBBColors.transparent),
-      shape: SBBInternal.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(SBBInternal.defaultButtonHeight / 2))),
-      fixedSize: SBBInternal.all(const Size.fromHeight(SBBInternal.defaultButtonHeight)),
-      padding: SBBInternal.all(EdgeInsets.symmetric(horizontal: sbbDefaultSpacing)),
-      elevation: SBBInternal.all(0),
+      overlayColor: allStates(SBBColors.transparent),
+      shape: allStates(RoundedRectangleBorder(borderRadius: BorderRadius.circular(SBBInternal.defaultButtonHeight / 2))),
+      fixedSize: allStates(const Size.fromHeight(SBBInternal.defaultButtonHeight)),
+      padding: allStates(EdgeInsets.symmetric(horizontal: sbbDefaultSpacing)),
+      elevation: allStates(0),
       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
       mouseCursor: MaterialStateMouseCursor.clickable,
     );
@@ -1990,21 +1990,21 @@ class SBBThemeData {
       ),
       elevatedButtonTheme: ElevatedButtonThemeData(
         style: baseButtonStyle.copyWith(
-          overlayColor: SBBInternal.resolveWith(
+          overlayColor: resolveStatesWith(
             defaultValue: primaryButtonBackgroundColor,
             pressedValue: primaryButtonBackgroundColorHighlighted,
           ),
-          backgroundColor: SBBInternal.resolveWith(
+          backgroundColor: resolveStatesWith(
             defaultValue: primaryButtonBackgroundColor,
             pressedValue: primaryButtonBackgroundColor,
             disabledValue: primaryButtonBackgroundColorDisabled,
           ),
-          foregroundColor: SBBInternal.resolveWith(
+          foregroundColor: resolveStatesWith(
             defaultValue: primaryButtonTextStyle.color!,
             pressedValue: primaryButtonTextStyleHighlighted.color,
             disabledValue: primaryButtonTextStyleDisabled.color,
           ),
-          textStyle: SBBInternal.resolveWith(
+          textStyle: resolveStatesWith(
             defaultValue: primaryButtonTextStyle,
             pressedValue: primaryButtonTextStyleHighlighted,
             disabledValue: primaryButtonTextStyleDisabled,
@@ -2013,26 +2013,26 @@ class SBBThemeData {
       ),
       outlinedButtonTheme: OutlinedButtonThemeData(
         style: baseButtonStyle.copyWith(
-          overlayColor: SBBInternal.resolveWith(
+          overlayColor: resolveStatesWith(
             defaultValue: secondaryButtonBackgroundColor,
             pressedValue: secondaryButtonBackgroundColorHighlighted,
           ),
-          backgroundColor: SBBInternal.resolveWith(
+          backgroundColor: resolveStatesWith(
             defaultValue: secondaryButtonBackgroundColor,
             pressedValue: secondaryButtonBackgroundColor,
             disabledValue: secondaryButtonBackgroundColorDisabled,
           ),
-          foregroundColor: SBBInternal.resolveWith(
+          foregroundColor: resolveStatesWith(
             defaultValue: secondaryButtonTextStyle.color!,
             pressedValue: secondaryButtonTextStyleHighlighted.color,
             disabledValue: secondaryButtonTextStyleDisabled.color,
           ),
-          textStyle: SBBInternal.resolveWith(
+          textStyle: resolveStatesWith(
             defaultValue: secondaryButtonTextStyle,
             pressedValue: secondaryButtonTextStyleHighlighted,
             disabledValue: secondaryButtonTextStyleDisabled,
           ),
-          side: SBBInternal.resolveWith(
+          side: resolveStatesWith(
             defaultValue: BorderSide(color: secondaryButtonBorderColor),
             pressedValue: BorderSide(color: secondaryButtonBorderColorHighlighted),
             disabledValue: BorderSide(color: secondaryButtonBorderColorDisabled),
@@ -2041,26 +2041,26 @@ class SBBThemeData {
       ),
       textButtonTheme: TextButtonThemeData(
         style: baseButtonStyle.copyWith(
-          overlayColor: SBBInternal.resolveWith(
+          overlayColor: resolveStatesWith(
             defaultValue: tertiaryButtonLargeBackgroundColor,
             pressedValue: tertiaryButtonLargeBackgroundColorHighlighted,
           ),
-          backgroundColor: SBBInternal.resolveWith(
+          backgroundColor: resolveStatesWith(
             defaultValue: tertiaryButtonLargeBackgroundColor,
             pressedValue: tertiaryButtonLargeBackgroundColor,
             disabledValue: tertiaryButtonLargeBackgroundColorDisabled,
           ),
-          foregroundColor: SBBInternal.resolveWith(
+          foregroundColor: resolveStatesWith(
             defaultValue: tertiaryButtonLargeTextStyle.color!,
             pressedValue: tertiaryButtonLargeTextStyleHighlighted.color,
             disabledValue: tertiaryButtonLargeTextStyleDisabled.color,
           ),
-          textStyle: SBBInternal.resolveWith(
+          textStyle: resolveStatesWith(
             defaultValue: tertiaryButtonLargeTextStyle,
             pressedValue: tertiaryButtonLargeTextStyleHighlighted,
             disabledValue: tertiaryButtonLargeTextStyleDisabled,
           ),
-          side: SBBInternal.resolveWith(
+          side: resolveStatesWith(
             defaultValue: BorderSide(color: tertiaryButtonLargeBorderColor),
             pressedValue: BorderSide(color: tertiaryButtonLargeBorderColorHighlighted),
             disabledValue: BorderSide(color: tertiaryButtonLargeBorderColorDisabled),
@@ -2107,4 +2107,33 @@ class SBBThemeData {
   }
 
   bool get isDark => brightness == Brightness.dark;
+
+  /// Convenience method for easier use of [MaterialStateProperty.all].
+  static MaterialStateProperty<T> allStates<T>(T value) {
+    return MaterialStateProperty.all(value);
+  }
+
+  /// Convenience method for easier use of [MaterialStateProperty.resolveWith].
+  static MaterialStateProperty<T?> resolveStatesWith<T>(
+      {required T defaultValue,
+        T? pressedValue,
+        T? disabledValue,
+        T? hoveredValue}) {
+    return MaterialStateProperty.resolveWith((states) {
+      // disabled
+      if (states.contains(MaterialState.disabled) && disabledValue != null)
+        return disabledValue;
+
+      // pressed / focused
+      if (states.any({MaterialState.pressed, MaterialState.focused}.contains)) {
+        return pressedValue;
+      }
+      // hovered
+      if (states.contains(MaterialState.hovered) && hoveredValue != null)
+        return hoveredValue;
+
+      // default
+      return defaultValue;
+    });
+  }
 }

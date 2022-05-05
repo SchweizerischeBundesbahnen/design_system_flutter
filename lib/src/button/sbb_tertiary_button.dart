@@ -36,7 +36,7 @@ class SBBTertiaryButtonLarge extends StatelessWidget {
     return TextButton(
       style: Theme.of(context).textButtonTheme.style?.copyWith(
             // workaround for web
-            padding: SBBInternal.all(EdgeInsets.zero),
+            padding: SBBThemeData.allStates(EdgeInsets.zero),
           ),
       onPressed: isLoading ? null : onPressed,
       focusNode: focusNode,
@@ -100,31 +100,31 @@ class SBBTertiaryButtonSmall extends StatelessWidget {
     final sbbTheme = SBBTheme.of(context);
     return TextButton(
       style: Theme.of(context).textButtonTheme.style?.copyWith(
-            fixedSize: SBBInternal.all(
+            fixedSize: SBBThemeData.allStates(
               const Size.fromHeight(SBBInternal.defaultButtonHeightSmall),
             ),
             // workaround for web
-            padding: SBBInternal.all(EdgeInsets.zero),
-            overlayColor: SBBInternal.resolveWith(
+            padding: SBBThemeData.allStates(EdgeInsets.zero),
+            overlayColor: SBBThemeData.resolveStatesWith(
               defaultValue: sbbTheme.tertiaryButtonSmallBackgroundColor,
               pressedValue: sbbTheme.tertiaryButtonSmallBackgroundColorHighlighted,
             ),
-            backgroundColor: SBBInternal.resolveWith(
+            backgroundColor: SBBThemeData.resolveStatesWith(
               defaultValue: sbbTheme.tertiaryButtonSmallBackgroundColor,
               pressedValue: sbbTheme.tertiaryButtonSmallBackgroundColor,
               disabledValue: sbbTheme.tertiaryButtonSmallBackgroundColorDisabled,
             ),
-            foregroundColor: SBBInternal.resolveWith(
+            foregroundColor: SBBThemeData.resolveStatesWith(
               defaultValue: sbbTheme.tertiaryButtonSmallTextStyle.color!,
               pressedValue: sbbTheme.tertiaryButtonSmallTextStyleHighlighted.color,
               disabledValue: sbbTheme.tertiaryButtonSmallTextStyleDisabled.color,
             ),
-            textStyle: SBBInternal.resolveWith(
+            textStyle: SBBThemeData.resolveStatesWith(
               defaultValue: sbbTheme.tertiaryButtonSmallTextStyle,
               pressedValue: sbbTheme.tertiaryButtonSmallTextStyleHighlighted,
               disabledValue: sbbTheme.tertiaryButtonSmallTextStyleDisabled,
             ),
-            side: SBBInternal.resolveWith(
+            side: SBBThemeData.resolveStatesWith(
               defaultValue: BorderSide(color: sbbTheme.tertiaryButtonSmallBorderColor),
               pressedValue: BorderSide(color: sbbTheme.tertiaryButtonSmallBorderColorHighlighted),
               disabledValue: BorderSide(color: sbbTheme.tertiaryButtonSmallBorderColorDisabled),

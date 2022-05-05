@@ -1,9 +1,8 @@
-import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
-import 'package:design_system_flutter/design_system_flutter.dart';
+import 'package:flutter/material.dart';
 
-import '../sbb_internal.dart';
+import '../../design_system_flutter.dart';
 
 const double _kHorizontalSpacing = 8.0;
 
@@ -141,28 +140,28 @@ class SBBUserMenu<T> extends StatelessWidget {
       : '';
 
   ButtonStyle _getThemedUserMenuButtonStyle(SBBThemeData theme) => ButtonStyle(
-        textStyle: SBBInternal.all(
+        textStyle: SBBThemeData.allStates(
           theme.userMenuTextStyle,
         ),
         foregroundColor: theme.userMenuForegroundColor,
-        backgroundColor: SBBInternal.all(
+        backgroundColor: SBBThemeData.allStates(
           SBBColors.transparent,
         ),
-        overlayColor: SBBInternal.all(
+        overlayColor: SBBThemeData.allStates(
           SBBColors.transparent,
         ),
-        padding: SBBInternal.all(
+        padding: SBBThemeData.allStates(
           EdgeInsets.symmetric(
             vertical: 6.0,
             horizontal: _kHorizontalSpacing,
           ),
         ),
-        shape: SBBInternal.all(
+        shape: SBBThemeData.allStates(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.zero,
           ),
         ),
-        side: SBBInternal.all(BorderSide.none),
+        side: SBBThemeData.allStates(BorderSide.none),
       );
 
   SBBMenuItemBuilder<T> _addHeaderToItemBuilder(BuildContext context) {
@@ -178,8 +177,8 @@ class SBBUserMenu<T> extends StatelessWidget {
     final SBBThemeData theme = SBBTheme.of(context);
     return SBBMenuItem(
       enabled: false,
-      foregroundColor: SBBInternal.all(SBBColors.iron),
-      backgroundColor: SBBInternal.all(SBBColors.white),
+      foregroundColor: SBBThemeData.allStates(SBBColors.iron),
+      backgroundColor: SBBThemeData.allStates(SBBColors.white),
       textStyle: theme.userMenuTextStyle,
       child: Row(
         children: [

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../design_system_flutter.dart';
-import '../sbb_internal.dart';
 
 class SBBSideBar extends StatelessWidget {
   const SBBSideBar({
@@ -22,10 +21,10 @@ class SBBSideBar extends StatelessWidget {
   /// plain [SBBSidebarItem].
   final List<Widget> items;
 
-  /// the backgroundcolor of this sidebar
+  /// the background color of this sidebar
   final Color? backgroundColor;
 
-  /// the bordercolor of this sidebar
+  /// the border color of this sidebar
   final Color? borderColor;
 
   /// the width of this sidebar
@@ -103,7 +102,7 @@ class _SBBSidebarItemState extends State<SBBSidebarItem>
           child: InkWell(
             splashColor: SBBColors.transparent,
             highlightColor: SBBColors.transparent,
-            overlayColor: SBBInternal.all(SBBColors.transparent),
+            overlayColor: SBBThemeData.allStates(SBBColors.transparent),
             onTap: widget.isSelected ? null : widget.onTap,
             onHover: updateMaterialState(MaterialState.hovered),
             child: DefaultTextStyle(

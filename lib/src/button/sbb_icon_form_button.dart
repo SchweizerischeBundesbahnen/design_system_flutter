@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../design_system_flutter.dart';
-import '../sbb_internal.dart';
 
 /// The SBB Icon Form Button. Use according to documentation.
 ///
@@ -32,25 +31,25 @@ class SBBIconFormButton extends StatelessWidget {
     final sbbTheme = SBBTheme.of(context);
     return TextButton(
       style: Theme.of(context).textButtonTheme.style?.copyWith(
-            minimumSize: SBBInternal.all(const Size(_buttonSize, _buttonSize)),
-            fixedSize: SBBInternal.all(const Size(_buttonSize, _buttonSize)),
-            padding: SBBInternal.all(EdgeInsets.zero),
-            shape: SBBInternal.all(RoundedRectangleBorder()),
-            overlayColor: SBBInternal.resolveWith(
+            minimumSize: SBBThemeData.allStates(const Size(_buttonSize, _buttonSize)),
+            fixedSize: SBBThemeData.allStates(const Size(_buttonSize, _buttonSize)),
+            padding: SBBThemeData.allStates(EdgeInsets.zero),
+            shape: SBBThemeData.allStates(RoundedRectangleBorder()),
+            overlayColor: SBBThemeData.resolveStatesWith(
               defaultValue: sbbTheme.iconFormButtonBackgroundColor,
               pressedValue: sbbTheme.iconFormButtonBackgroundColorHighlighted,
             ),
-            backgroundColor: SBBInternal.resolveWith(
+            backgroundColor: SBBThemeData.resolveStatesWith(
               defaultValue: sbbTheme.iconFormButtonBackgroundColor,
               pressedValue: sbbTheme.iconFormButtonBackgroundColor,
               disabledValue: sbbTheme.iconFormButtonBackgroundColorDisabled,
             ),
-            foregroundColor: SBBInternal.resolveWith(
+            foregroundColor: SBBThemeData.resolveStatesWith(
               defaultValue: sbbTheme.iconFormButtonIconColor,
               pressedValue: sbbTheme.iconFormButtonIconColorHighlighted,
               disabledValue: sbbTheme.iconFormButtonIconColorDisabled,
             ),
-            side: SBBInternal.resolveWith(
+            side: SBBThemeData.resolveStatesWith(
               defaultValue: BorderSide(color: sbbTheme.iconFormButtonBorderColor),
               pressedValue: BorderSide(color: sbbTheme.iconFormButtonBorderColorHighlighted),
               disabledValue: BorderSide(color: sbbTheme.iconFormButtonBorderColorDisabled),
