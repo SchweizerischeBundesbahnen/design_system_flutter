@@ -113,20 +113,17 @@ class _SBBSidebarItemState extends State<SBBSidebarItem>
     with MaterialStateMixin {
   @override
   Widget build(BuildContext context) {
-    if (widget.isSelected) updateMaterialState(MaterialState.selected);
+    if (widget.isSelected) setMaterialState(MaterialState.selected, true);
 
     final SBBControlStyles style = SBBControlStyles.of(context);
 
     Color? resolvedForegroundColor =
-    style.sidebarItemForegroundColor!.resolve(materialStates);
-
+        style.sidebarItemForegroundColor!.resolve(materialStates);
     Color? resolvedBackgroundColor =
-    style.sidebarItemBackgroundColor!.resolve(materialStates);
+        style.sidebarItemBackgroundColor!.resolve(materialStates);
+    TextStyle resolvedTextStyle =
+        style.sidebarItemTextStyle!.copyWith(color: resolvedForegroundColor);
 
-    if (widget.isSelected) {
-      resolvedBackgroundColor = SBBColors.cloud;
-      resolvedForegroundColor = SBBColors.black;
-    }
     return MergeSemantics(
       child: Semantics(
         selected: widget.isSelected,
@@ -139,39 +136,49 @@ class _SBBSidebarItemState extends State<SBBSidebarItem>
             overlayColor: SBBTheme.allStates(SBBColors.transparent),
             onTap: widget.isSelected ? null : widget.onTap,
             onHover: updateMaterialState(MaterialState.hovered),
-            child: DefaultTextStyle(
-              style: style.sidebarItemTextStyle!.copyWith(color: resolvedForegroundColor),
-              child: IconTheme.merge(
-                data: IconThemeData(color: resolvedForegroundColor),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Expanded(
-                        flex: 10,
-                        child: Text(
-                          widget.title,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      Expanded(
-                        child: widget.trailing ??
-                            const Icon(
-                              SBBIcons.arrow_right_medium,
-                            ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
+            child: IconTheme.merge(
+              data: IconThemeData(color: resolvedForegroundColor),
+              child: _innerTile(resolvedTextStyle),
             ),
           ),
         ),
       ),
     );
+  }
+
+  _innerTile(TextStyle resolvedTextStyle) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          if (widget.leading != null) Expanded(child: widget.leading!),
+          Expanded(
+            flex: 10,
+            child: _themedSingleLineOverflowingText(
+              resolvedTextStyle,
+            ),
+          ),
+          Expanded(child: _trailingWidget())
+        ],
+      ),
+    );
+  }
+
+  Text _themedSingleLineOverflowingText(TextStyle resolvedTextStyle) {
+    return Text(
+      widget.title,
+      style: resolvedTextStyle,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+    );
+  }
+
+  Widget _trailingWidget() {
+    return widget.trailing ??
+        const Icon(
+          SBBIcons.arrow_right_medium,
+        );
   }
 }
