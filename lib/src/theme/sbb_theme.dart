@@ -114,6 +114,7 @@ class SBBTheme {
     T? disabledValue,
     T? hoveredValue,
     String? parent,
+    T? selectedValue
   }) {
     return MaterialStateProperty.resolveWith((states) {
       // disabled
@@ -126,6 +127,9 @@ class SBBTheme {
       // hovered
       if (states.contains(MaterialState.hovered) && hoveredValue != null) return hoveredValue;
 
+      // selected
+      if (states.contains(MaterialState.selected) && hoveredValue != null)
+        return selectedValue;
       // default
       return defaultValue;
     });
