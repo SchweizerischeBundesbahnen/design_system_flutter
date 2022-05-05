@@ -97,3 +97,5 @@ android/app/.settings/
 /fastlane/report.xml
 /ios/fastlane/report.xml
 /.flutter-plugins-dependencies
+example/analysis_options.yaml
+example/.metadata
