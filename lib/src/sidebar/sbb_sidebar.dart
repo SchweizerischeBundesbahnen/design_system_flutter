@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../../design_system_flutter.dart';
 
-class SBBSideBar extends StatelessWidget {
-  const SBBSideBar({
+/// The SBB Sidebar. Use according to documentation.
+///
+/// See: https://digital.sbb.ch/de/webapps/modules/sidebar
+class SBBSidebar extends StatelessWidget {
+  const SBBSidebar({
     Key? key,
     required this.body,
     required this.items,
@@ -12,7 +15,7 @@ class SBBSideBar extends StatelessWidget {
     this.width = 300.0,
   }) : super(key: key);
 
-  /// The content displayed right of the [SBBSideBar].
+  /// The content displayed right of the [SBBSidebar].
   final Widget body;
 
   /// The items displayed in the sidebar.
@@ -21,39 +24,53 @@ class SBBSideBar extends StatelessWidget {
   /// plain [SBBSidebarItem].
   final List<Widget> items;
 
-  /// the background color of this sidebar
+  /// The backgroundcolor of this sidebar.
+  ///
+  /// defaults to [SBBThemeData.sidebarBackgroundColor]
   final Color? backgroundColor;
 
-  /// the border color of this sidebar
+  /// The bordercolor of this sidebar.
+  ///
+  /// defaults to [SBBThemeData.sidebarBorderColor]
   final Color? borderColor;
 
-  /// the width of this sidebar
+  /// The width of this sidebar.
+  ///
+  /// Defaults to 300.0 px.
   final double width;
 
   @override
   Widget build(BuildContext context) {
-    final style = SBBControlStyles.of(context);
     return Row(
       mainAxisSize: MainAxisSize.max,
       children: [
-        SizedBox(
-          width: width,
-          child: DecoratedBox(
-            decoration: ShapeDecoration(
-              color: backgroundColor ?? style.sidebarBackgroundColor,
-              shape: Border(
-                right: BorderSide(
-                  color: borderColor ?? style.sidebarBorderColor!,
-                ),
-              ),
-            ),
-            child: ListView(
-              children: items,
-            ),
-          ),
-        ),
+        _buildSizedBoxWithListViewItems(context),
         Expanded(child: body),
       ],
+    );
+  }
+
+  SizedBox _buildSizedBoxWithListViewItems(BuildContext context) {
+    final SBBControlStyles style = SBBControlStyles.of(context);
+    return SizedBox(
+      width: width,
+      child: DecoratedBox(
+        decoration: _createThemedShapeDecoration(style),
+        child: ListView(
+          children: items,
+        ),
+      ),
+    );
+  }
+
+  ShapeDecoration _createThemedShapeDecoration(SBBControlStyles style) {
+    return ShapeDecoration(
+      color: backgroundColor ?? style.sidebarBackgroundColor,
+      shape: Border(
+        right: BorderSide(
+          color: borderColor ?? style.sidebarBorderColor!,
+        ),
+      ),
     );
   }
 }
@@ -81,13 +98,16 @@ class _SBBSidebarItemState extends State<SBBSidebarItem>
     with MaterialStateMixin {
   @override
   Widget build(BuildContext context) {
-    final style = SBBControlStyles.of(context);
+    if (widget.isSelected) updateMaterialState(MaterialState.selected);
+
+    final SBBControlStyles style = SBBControlStyles.of(context);
 
     Color? resolvedForegroundColor =
-        style.sidebarItemForegroundColor!.resolve(materialStates);
+    style.sidebarItemForegroundColor!.resolve(materialStates);
 
     Color? resolvedBackgroundColor =
-        style.sidebarItemBackgroundColor!.resolve(materialStates);
+    style.sidebarItemBackgroundColor!.resolve(materialStates);
+
     if (widget.isSelected) {
       resolvedBackgroundColor = SBBColors.cloud;
       resolvedForegroundColor = SBBColors.black;
