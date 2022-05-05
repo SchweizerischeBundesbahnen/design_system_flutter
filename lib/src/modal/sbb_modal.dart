@@ -2,8 +2,8 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-import '../sbb_internal.dart';
 import '../../design_system_flutter.dart';
+import '../sbb_internal.dart';
 
 /// Shows a SBB Modal Popup. Use according to documentation.
 ///

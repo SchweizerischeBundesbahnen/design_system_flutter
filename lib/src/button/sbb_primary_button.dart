@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../design_system_flutter.dart';
-import '../sbb_internal.dart';
+import 'sbb_button_styles.dart';
 
 /// The SBB Primary Button. Use according to documentation.
 ///
@@ -31,28 +31,48 @@ class SBBPrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final SBBThemeData theme = SBBTheme.of(context);
+    switch (theme.hostPlatform) {
+      case HostPlatform.native:
+        return _buildThemedMobile(theme);
+      case HostPlatform.web:
+        return _buildThemedWeb(theme);
+      default:
+        return _buildThemedMobile(theme);
+    }
+  }
+
+  ElevatedButton _buildThemedMobile(SBBThemeData theme) {
     return ElevatedButton(
-      style: Theme.of(context).elevatedButtonTheme.style?.copyWith(
-            // workaround for web
-            padding: SBBInternal.all(EdgeInsets.zero),
-          ),
+      style: SBBButtonStyles.primaryMobile(theme: theme),
       onPressed: isLoading ? null : onPressed,
       focusNode: focusNode,
-      child: Padding(
-        // workaround for web
-        padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (isLoading) SBBLoadingIndicator.tinyCloud(),
-            Flexible(
-              child: Text(
-                label,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-              ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (isLoading) SBBLoadingIndicator.tinyCloud(),
+          Flexible(
+            child: Text(
+              label,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
             ),
-          ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  ElevatedButton _buildThemedWeb(SBBThemeData theme) {
+    return ElevatedButton(
+      style: SBBButtonStyles.primaryWebLean(theme: theme),
+      onPressed: onPressed,
+      focusNode: focusNode,
+      child: Center(
+        child: Text(
+          label,
+          overflow: TextOverflow.ellipsis,
+          maxLines: 1,
         ),
       ),
     );
@@ -87,54 +107,54 @@ class SBBPrimaryButtonNegative extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var sbbTheme = SBBTheme.of(context);
+    final SBBThemeData theme = SBBTheme.of(context);
+    switch (theme.hostPlatform) {
+      case HostPlatform.native:
+        return _buildThemedMobile(theme);
+      case HostPlatform.web:
+        return _buildThemedWeb(theme);
+      default:
+        return _buildThemedMobile(theme);
+    }
+  }
+
+  Widget _buildThemedMobile(SBBThemeData theme) {
     return ElevatedButton(
-      style: Theme.of(context).elevatedButtonTheme.style?.copyWith(
-            // workaround for web
-            padding: SBBInternal.all(EdgeInsets.zero),
-            overlayColor: SBBInternal.resolveWith(
-              defaultValue: sbbTheme.primaryButtonNegativeBackgroundColor,
-              pressedValue: sbbTheme.primaryButtonNegativeBackgroundColorHighlighted,
-            ),
-            backgroundColor: SBBInternal.resolveWith(
-              defaultValue: sbbTheme.primaryButtonNegativeBackgroundColor,
-              pressedValue: sbbTheme.primaryButtonNegativeBackgroundColor,
-              disabledValue: sbbTheme.primaryButtonNegativeBackgroundColorDisabled,
-            ),
-            foregroundColor: SBBInternal.resolveWith(
-              defaultValue: sbbTheme.primaryButtonNegativeTextStyle.color!,
-              pressedValue: sbbTheme.primaryButtonNegativeTextStyleHighlighted.color,
-              disabledValue: sbbTheme.primaryButtonNegativeTextStyleDisabled.color,
-            ),
-            textStyle: SBBInternal.resolveWith(
-              defaultValue: sbbTheme.primaryButtonNegativeTextStyle,
-              pressedValue: sbbTheme.primaryButtonNegativeTextStyleHighlighted,
-              disabledValue: sbbTheme.primaryButtonNegativeTextStyleDisabled,
-            ),
-            side: SBBInternal.resolveWith(
-              defaultValue: BorderSide(color: sbbTheme.primaryButtonNegativeBorderColor),
-              pressedValue: BorderSide(color: sbbTheme.primaryButtonNegativeBorderColorHighlighted),
-              disabledValue: BorderSide(color: sbbTheme.primaryButtonNegativeBorderColorDisabled),
-            ),
-          ),
+      style: SBBButtonStyles.primaryMobileNegative(theme: theme),
       onPressed: isLoading ? null : onPressed,
       focusNode: focusNode,
-      child: Padding(
-        // workaround for web
-        padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (isLoading) SBBLoadingIndicator.tinyCloud(),
-            Flexible(
-              child: Text(
-                label,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-              ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (isLoading) SBBLoadingIndicator.tinyCloud(),
+          Flexible(
+            child: Text(
+              label,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
             ),
-          ],
-        ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildThemedWeb(SBBThemeData theme) {
+    return ElevatedButton(
+      style: SBBButtonStyles.primaryWebNegative(theme: theme),
+      onPressed: onPressed,
+      focusNode: focusNode,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Flexible(
+            child: Text(
+              label,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+            ),
+          ),
+        ],
       ),
     );
   }

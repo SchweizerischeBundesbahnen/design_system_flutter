@@ -1,7 +1,7 @@
 import 'package:design_system_flutter/design_system_flutter.dart';
 import 'package:flutter/material.dart';
 
-import '../main.dart';
+import '../native_app.dart';
 
 class ButtonPage extends StatelessWidget {
   @override
@@ -44,7 +44,9 @@ class ButtonPage extends StatelessWidget {
           SBBGroup(
             child: Container(
               padding: const EdgeInsets.all(sbbDefaultSpacing),
-              color: SBBTheme.of(context).isDark ? SBBColors.transparent : SBBColors.red,
+              color: SBBTheme.of(context).isDark
+                  ? SBBColors.transparent
+                  : SBBColors.red,
               child: Column(
                 children: [
                   SBBPrimaryButtonNegative(
@@ -244,7 +246,9 @@ class ButtonPage extends StatelessWidget {
           SBBGroup(
             child: Container(
               padding: const EdgeInsets.all(sbbDefaultSpacing),
-              color: SBBTheme.of(context).isDark ? SBBColors.transparent : SBBColors.red,
+              color: SBBTheme.of(context).isDark
+                  ? SBBColors.transparent
+                  : SBBColors.red,
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

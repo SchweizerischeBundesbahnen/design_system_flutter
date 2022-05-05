@@ -1,7 +1,7 @@
 import 'package:design_system_flutter/design_system_flutter.dart';
 import 'package:flutter/material.dart';
 
-import '../main.dart';
+import '../native_app.dart';
 
 class OnboardingPage extends StatelessWidget {
   @override
@@ -51,7 +51,8 @@ class _OnboardingPage extends StatelessWidget {
   }
 }
 
-class _PreferredSizeWidget extends StatelessWidget implements PreferredSizeWidget {
+class _PreferredSizeWidget extends StatelessWidget
+    implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     var sbbTheme = SBBTheme.of(context);
@@ -69,7 +70,12 @@ class DemoOnboardingBuilderDelegate extends SBBOnboardingBuilderDelegate {
   late Future<bool> Function() onPop;
 
   @override
-  Widget buildStartPage(BuildContext context, double widgetWidth, double widgetHeight, VoidCallback onStartOnboarding, VoidCallback onFinish) {
+  Widget buildStartPage(
+      BuildContext context,
+      double widgetWidth,
+      double widgetHeight,
+      VoidCallback onStartOnboarding,
+      VoidCallback onFinish) {
     final sbbTheme = SBBTheme.of(context);
     return Container(
       width: widgetWidth,
@@ -107,7 +113,8 @@ class DemoOnboardingBuilderDelegate extends SBBOnboardingBuilderDelegate {
   }
 
   @override
-  Widget buildEndPage(BuildContext context, double widgetWidth, double widgetHeight, VoidCallback onFinish) {
+  Widget buildEndPage(BuildContext context, double widgetWidth,
+      double widgetHeight, VoidCallback onFinish) {
     final sbbTheme = SBBTheme.of(context);
     return Container(
       width: widgetWidth,

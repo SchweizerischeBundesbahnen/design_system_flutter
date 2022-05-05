@@ -1,7 +1,7 @@
 import 'package:design_system_flutter/design_system_flutter.dart';
 import 'package:flutter/material.dart';
 
-import '../main.dart';
+import '../native_app.dart';
 
 class SelectPage extends StatefulWidget {
   @override
