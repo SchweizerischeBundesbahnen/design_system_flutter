@@ -8,6 +8,9 @@ class SBBSideBar extends StatelessWidget {
     Key? key,
     required this.body,
     required this.items,
+    this.backgroundColor,
+    this.borderColor,
+    this.width = 300.0,
   }) : super(key: key);
 
   /// The content displayed right of the [SBBSideBar].
@@ -19,19 +22,30 @@ class SBBSideBar extends StatelessWidget {
   /// plain [SBBSidebarItem].
   final List<Widget> items;
 
+  /// the backgroundcolor of this sidebar
+  final Color? backgroundColor;
+
+  /// the bordercolor of this sidebar
+  final Color? borderColor;
+
+  /// the width of this sidebar
+  final double width;
+
   @override
   Widget build(BuildContext context) {
+    final SBBThemeData theme = SBBTheme.of(context);
+
     return Row(
       mainAxisSize: MainAxisSize.max,
       children: [
         SizedBox(
-          width: 300.0,
+          width: width,
           child: DecoratedBox(
             decoration: ShapeDecoration(
-              color: Colors.white,
+              color: backgroundColor ?? theme.sidebarBackgroundColor,
               shape: Border(
                 right: BorderSide(
-                  color: SBBColors.silver,
+                  color: borderColor ?? theme.sidebarBorderColor,
                 ),
               ),
             ),
@@ -69,18 +83,13 @@ class _SBBSidebarItemState extends State<SBBSidebarItem>
     with MaterialStateMixin {
   @override
   Widget build(BuildContext context) {
-    final MaterialStateProperty<Color?> backColor = SBBInternal.resolveWith(
-      defaultValue: SBBColors.transparent,
-      hoveredValue: SBBColors.milk,
-    );
+    final SBBThemeData theme = SBBTheme.of(context);
 
-    Color? resolvedForegroundColor = SBBInternal.resolveWith(
-      defaultValue: SBBColors.iron,
-      hoveredValue: SBBColors.red125,
-      pressedValue: SBBColors.red125,
-    ).resolve(materialStates);
+    Color? resolvedForegroundColor =
+        theme.sidebarItemForegroundColor.resolve(materialStates);
 
-    Color? resolvedBackgroundColor = backColor.resolve(materialStates);
+    Color? resolvedBackgroundColor =
+        theme.sidebarItemBackgroundColor.resolve(materialStates);
     if (widget.isSelected) {
       resolvedBackgroundColor = SBBColors.cloud;
       resolvedForegroundColor = SBBColors.black;
@@ -98,7 +107,7 @@ class _SBBSidebarItemState extends State<SBBSidebarItem>
             onTap: widget.isSelected ? null : widget.onTap,
             onHover: updateMaterialState(MaterialState.hovered),
             child: DefaultTextStyle(
-              style: SBBLeanTextStyles.contextMenu
+              style: theme.sidebarItemTextStyle
                   .copyWith(color: resolvedForegroundColor),
               child: IconTheme.merge(
                 data: IconThemeData(color: resolvedForegroundColor),

@@ -344,6 +344,14 @@ class SBBThemeData {
     TextStyle? breadcrumbTextStyle,
     MaterialStateProperty<Color?>? breadcrumbForegroundColor,
 
+    //Sidebar
+    Color? sidebarBackgroundColor,
+    Color? sidebarBorderColor,
+    MaterialStateProperty<Color?>? sidebarItemBackgroundColor,
+    MaterialStateProperty<Color?>? sidebarItemForegroundColor,
+    TextStyle? sidebarItemTextStyle,
+    
+
   }) {
     // SET hard-coded default values HERE
 
@@ -625,6 +633,13 @@ class SBBThemeData {
     breadcrumbTextStyle = breadcrumbTextStyle ?? SBBLeanTextStyles.breadcrumb;
     breadcrumbForegroundColor = breadcrumbForegroundColor ?? SBBInternal.resolveWith(defaultValue: SBBColors.granite, disabledValue: SBBColors.black, hoveredValue: SBBColors.red125, pressedValue: SBBColors.red125);
 
+    //Sidebar
+    sidebarBackgroundColor = sidebarBackgroundColor ?? SBBColors.white;
+    sidebarBorderColor = sidebarBorderColor ?? SBBColors.silver;
+    sidebarItemBackgroundColor = sidebarItemBackgroundColor ?? SBBInternal.resolveWith(defaultValue: SBBColors.transparent, hoveredValue: SBBColors.milk);
+    sidebarItemForegroundColor = sidebarItemForegroundColor ?? SBBInternal.resolveWith(defaultValue: SBBColors.iron, hoveredValue: SBBColors.red125, pressedValue: SBBColors.red125);
+    sidebarItemTextStyle = sidebarItemTextStyle ?? SBBLeanTextStyles.contextMenu;
+
     // pass them on to constructor that requires all
     return SBBThemeData.raw(
       brightness: brightness,
@@ -819,6 +834,11 @@ class SBBThemeData {
       userMenuForegroundColor: userMenuForegroundColor,
       breadcrumbTextStyle: breadcrumbTextStyle,
       breadcrumbForegroundColor: breadcrumbForegroundColor,
+      sidebarBackgroundColor: sidebarBackgroundColor,
+      sidebarBorderColor: sidebarBorderColor,
+      sidebarItemBackgroundColor: sidebarItemBackgroundColor,
+      sidebarItemForegroundColor: sidebarItemForegroundColor,
+      sidebarItemTextStyle: sidebarItemTextStyle,
     );
   }
 
@@ -1015,6 +1035,11 @@ class SBBThemeData {
     required this.userMenuForegroundColor,
     required this.breadcrumbTextStyle,
     required this.breadcrumbForegroundColor,
+    required this.sidebarBackgroundColor,
+    required this.sidebarBorderColor,
+    required this.sidebarItemBackgroundColor,
+    required this.sidebarItemForegroundColor,
+    required this.sidebarItemTextStyle,
   });
 
   /// Light Theme
@@ -1281,6 +1306,13 @@ class SBBThemeData {
   // Breadcrumb
   final TextStyle breadcrumbTextStyle;
   final MaterialStateProperty<Color?> breadcrumbForegroundColor;
+  
+  //Sidebar
+  final Color sidebarBackgroundColor;
+  final Color sidebarBorderColor;
+  final MaterialStateProperty<Color?> sidebarItemBackgroundColor;
+  final MaterialStateProperty<Color?> sidebarItemForegroundColor;
+  final TextStyle sidebarItemTextStyle;
 
   SBBThemeData copyWith({
     Brightness? brightness,
@@ -1539,6 +1571,12 @@ class SBBThemeData {
     TextStyle? breadcrumbTextStyle,
     MaterialStateProperty<Color?>? breadcrumbForegroundColor,
 
+    //Sidebar
+    Color? sidebarBackgroundColor,
+    Color? sidebarBorderColor,
+    MaterialStateProperty<Color?>? sidebarItemBackgroundColor,
+    MaterialStateProperty<Color?>? sidebarItemForegroundColor,
+    TextStyle? sidebarItemTextStyle,
   }) {
     final defaultTheme = SBBThemeData.fallback();
     return SBBThemeData(
@@ -1907,6 +1945,13 @@ class SBBThemeData {
       // Breadcrumb
       breadcrumbTextStyle: breadcrumbTextStyle ?? (this.breadcrumbTextStyle == defaultTheme.breadcrumbTextStyle ? null: this.breadcrumbTextStyle),
       breadcrumbForegroundColor: breadcrumbForegroundColor ?? (this.breadcrumbForegroundColor == defaultTheme.breadcrumbForegroundColor ? null : this.breadcrumbForegroundColor),
+
+      //Sidebar
+      sidebarBackgroundColor: sidebarBackgroundColor ?? (this.sidebarBackgroundColor == defaultTheme.sidebarBackgroundColor ? null : this.sidebarBackgroundColor),
+      sidebarBorderColor: sidebarBorderColor ?? (this.sidebarBorderColor == defaultTheme.sidebarBorderColor ? null : this.sidebarBorderColor),
+      sidebarItemBackgroundColor: sidebarItemBackgroundColor ?? (this.sidebarItemBackgroundColor == defaultTheme.sidebarItemBackgroundColor ? null : this.sidebarItemBackgroundColor),
+      sidebarItemForegroundColor: sidebarItemForegroundColor ?? (this.sidebarItemForegroundColor == defaultTheme.sidebarItemForegroundColor ? null : this.sidebarItemForegroundColor),
+      sidebarItemTextStyle: sidebarItemTextStyle ?? (this.sidebarItemTextStyle == defaultTheme.sidebarItemTextStyle ? null : this.sidebarItemTextStyle),
     );
   }
 
