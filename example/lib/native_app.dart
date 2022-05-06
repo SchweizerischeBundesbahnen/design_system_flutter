@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
     return Consumer<AppState>(
         builder: (BuildContext context, AppState appState, _) {
       return SBBTheme(
-        hostType: HostPlatform.web,
+        hostType: HostPlatform.native,
         builder: (context, theme, darkTheme) {
           return MaterialApp(
             theme: theme,
