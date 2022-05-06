@@ -22,6 +22,8 @@
 * `SBBThemeData`: Added function `allStates`
 * `SBBThemeData`: Added function `resolveStateWith`
 * `SBBTextField`: Added field `obscureText`
+* `SBBTextField`: Added field `autofocus`
+* `SBBTextFormField`: Added field `autofocus`
 * `SBBPrimaryButton`: Added field `focusNode`
 * `SBBPrimaryButtonNegative`: Added field `focusNode`
 * `SBBSecondaryButton`: Added field `focusNode`
@@ -102,8 +104,6 @@
 * `SBBCheckboxListItem`: Added field `allowMultilineLabel`
 * `SBBCheckboxListItem`: Added field `secondaryLabel`
 * `SBBTextField`: Added field `hintMaxLines`
-* `SBBTextField`: Added field `autofocus`
-* `SBBTextFormField`: Added field `autofocus`
 * `SBBSelect`: Added class `SelectMenuItem<T>>` that is now to be used for the items list to match semantics of `DropdownButton`
 * `SBBSelect`: Added static method `showMenu<T>()` that can now be used to directly show the SBBSelect menu without building the widget
 * `SBBModalPopup`: Added field `clipBehavior` for clipping possibilities if popup content overflows.
