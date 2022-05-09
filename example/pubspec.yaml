@@ -9,8 +9,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  
-  auto_route: ^3.2.4
 
   # https://pub.dev/packages/provider
   provider: ^6.0.2
@@ -24,5 +22,3 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  auto_route_generator: ^3.2.3
-  build_runner: ^2.1.8
