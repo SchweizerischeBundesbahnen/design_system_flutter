@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../design_system_flutter.dart';
+import '../sbb_internal.dart';
 import 'sbb_button_styles.dart';
 
 /// The SBB Primary Button. Use according to documentation.
@@ -51,13 +52,7 @@ class SBBPrimaryButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           if (isLoading) SBBLoadingIndicator.tinyCloud(),
-          Flexible(
-            child: Text(
-              label,
-              overflow: TextOverflow.ellipsis,
-              maxLines: 1,
-            ),
-          ),
+          SBBButtonContent(label: label)
         ],
       ),
     );
@@ -65,17 +60,15 @@ class SBBPrimaryButton extends StatelessWidget {
 
   ElevatedButton _buildThemedWeb(SBBThemeData theme) {
     return ElevatedButton(
-      style: SBBButtonStyles.primaryWebLean(theme: theme),
-      onPressed: onPressed,
-      focusNode: focusNode,
-      child: Center(
-        child: Text(
-          label,
-          overflow: TextOverflow.ellipsis,
-          maxLines: 1,
-        ),
-      ),
-    );
+        style: SBBButtonStyles.primaryWebLean(theme: theme),
+        onPressed: onPressed,
+        focusNode: focusNode,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SBBButtonContent(label: label),
+          ],
+        ));
   }
 }
 
@@ -127,13 +120,7 @@ class SBBPrimaryButtonNegative extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           if (isLoading) SBBLoadingIndicator.tinyCloud(),
-          Flexible(
-            child: Text(
-              label,
-              overflow: TextOverflow.ellipsis,
-              maxLines: 1,
-            ),
-          ),
+          SBBButtonContent(label: label)
         ],
       ),
     );
@@ -146,15 +133,7 @@ class SBBPrimaryButtonNegative extends StatelessWidget {
       focusNode: focusNode,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Flexible(
-            child: Text(
-              label,
-              overflow: TextOverflow.ellipsis,
-              maxLines: 1,
-            ),
-          ),
-        ],
+        children: [SBBButtonContent(label: label)],
       ),
     );
   }
