@@ -52,6 +52,7 @@ General instructions on _how_ to contribute can be found under [Contributing](Co
 * **Schmucki Dominik**
 * **Raab Ulrich**
 * **Müller Patrice**
+* **Michael Moor**
 
 ## License
 

@@ -33,6 +33,7 @@ class SBBTextField extends StatefulWidget {
     this.focusNode,
     this.suffixIcon,
     this.obscureText = false,
+    this.autofocus = false,
   }) : super(key: key);
 
   final TextEditingController? controller;
@@ -65,6 +66,7 @@ class SBBTextField extends StatefulWidget {
   final Widget? suffixIcon;
 
   final bool obscureText;
+  final bool autofocus;
 
   @override
   State<StatefulWidget> createState() => _SBBTextField();
@@ -147,12 +149,9 @@ class _SBBTextField extends State<SBBTextField> {
     final textScaleFactor = MediaQuery.of(context).textScaleFactor;
     final sbbTheme = SBBTheme.of(context);
 
-    final style = widget.enabled
-        ? sbbTheme.textFieldTextStyle
-        : sbbTheme.textFieldTextStyleDisabled;
-    final labelStyle = widget.enabled
-        ? sbbTheme.textFieldPlaceholderTextStyle
-        : sbbTheme.textFieldPlaceholderTextStyleDisabled;
+    final style = widget.enabled ? sbbTheme.textFieldTextStyle : sbbTheme.textFieldTextStyleDisabled;
+    final labelStyle =
+        widget.enabled ? sbbTheme.textFieldPlaceholderTextStyle : sbbTheme.textFieldPlaceholderTextStyleDisabled;
     // adjust floating label style to get desired sizes
     final floatingLabelStyle = labelStyle.copyWith(
       fontSize: SBBTextStyles.helpersLabel.fontSize! * 1.335,
@@ -165,7 +164,6 @@ class _SBBTextField extends State<SBBTextField> {
 
     var topPadding = 0.0;
     var bottomPadding = 0.0;
-
 
     if (hasLabel && hasValueOrFocus) {
       topPadding = 5.0 + -2.0;
@@ -185,6 +183,7 @@ class _SBBTextField extends State<SBBTextField> {
       }
     }
     return TextField(
+      autofocus: widget.autofocus,
       focusNode: _focus,
       controller: controller,
       obscureText: widget.obscureText,

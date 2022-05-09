@@ -22,6 +22,8 @@
 * `SBBThemeData`: Added function `allStates`
 * `SBBThemeData`: Added function `resolveStateWith`
 * `SBBTextField`: Added field `obscureText`
+* `SBBTextField`: Added field `autofocus`
+* `SBBTextFormField`: Added field `autofocus`
 * `SBBPrimaryButton`: Added field `focusNode`
 * `SBBPrimaryButtonNegative`: Added field `focusNode`
 * `SBBSecondaryButton`: Added field `focusNode`
