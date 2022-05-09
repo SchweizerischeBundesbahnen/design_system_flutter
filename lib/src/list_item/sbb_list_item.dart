@@ -14,11 +14,13 @@ class SBBListItem extends StatelessWidget {
     required this.title,
     this.subtitle,
     this.isLastElement = false,
+    this.titleMaxLines,
+    this.subtitleMaxLines,
     this.leadingIcon,
     this.trailingIcon,
     this.onCallToAction,
     required this.onPressed,
-  })   : assert(onCallToAction == null || trailingIcon != null),
+  })  : assert(onCallToAction == null || trailingIcon != null),
         super(key: key);
 
   final String title;
@@ -26,6 +28,9 @@ class SBBListItem extends StatelessWidget {
   final bool isLastElement;
   final IconData? leadingIcon;
   final IconData? trailingIcon;
+
+  final int? titleMaxLines;
+  final int? subtitleMaxLines;
 
   /// Redirects to [onPressed] if null
   final VoidCallback? onCallToAction;
@@ -78,7 +83,7 @@ class SBBListItem extends StatelessWidget {
                                     child: Text(
                                       title,
                                       style: sbbTheme.listItemTitleTextStyle,
-                                      maxLines: 1,
+                                      maxLines: titleMaxLines,
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
@@ -93,7 +98,7 @@ class SBBListItem extends StatelessWidget {
                                 child: Text(
                                   subtitle!,
                                   style: sbbTheme.listItemSubtitleTextStyle,
-                                  maxLines: 1,
+                                  maxLines: subtitleMaxLines,
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               )
