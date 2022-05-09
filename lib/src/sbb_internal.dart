@@ -37,3 +37,20 @@ class SBBInternal {
     ),
   ];
 }
+
+class SBBButtonContent extends StatelessWidget {
+  const SBBButtonContent({ Key? key, required this.label }) : super(key: key);
+  
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Flexible(
+      child: Text(
+        label,
+        overflow: TextOverflow.ellipsis,
+        maxLines: 1,
+      ),
+    );
+  }
+}
