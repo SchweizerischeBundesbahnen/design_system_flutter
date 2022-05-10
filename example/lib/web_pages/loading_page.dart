@@ -18,7 +18,7 @@ class LoadingPage extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 16.0),
                 child: Text(
                   'Loading Indicator',
-                  style: SBBLeanTextStyles.headerTitle
+                  style: SBBWebTextStyles.headerTitle
                       .copyWith(fontSize: 25, color: SBBColors.red),
                 ),
               ),
@@ -26,7 +26,7 @@ class LoadingPage extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 16.0),
                 child: Text(
                   'Ausprägungen',
-                  style: SBBLeanTextStyles.headerTitle
+                  style: SBBWebTextStyles.headerTitle
                       .copyWith(fontSize: 20, color: SBBColors.black),
                 ),
               ),
@@ -34,7 +34,7 @@ class LoadingPage extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 16.0),
                 child: Text(
                   '- Medium',
-                  style: SBBLeanTextStyles.headerTitle
+                  style: SBBWebTextStyles.headerTitle
                       .copyWith(fontSize: 18, color: SBBColors.black),
                 ),
               ),
@@ -43,7 +43,7 @@ class LoadingPage extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 16.0),
                 child: Text(
                   '- Tiny',
-                  style: SBBLeanTextStyles.headerTitle
+                  style: SBBWebTextStyles.headerTitle
                       .copyWith(fontSize: 18, color: SBBColors.black),
                 ),
               ),

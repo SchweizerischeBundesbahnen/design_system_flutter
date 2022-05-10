@@ -119,7 +119,7 @@ class SBBUserMenu<T> extends StatelessWidget {
             ),
             Text(
               displayName!,
-              style: SBBLeanTextStyles.contextMenu,
+              style: SBBWebTextStyles.contextMenu,
             ),
             SizedBox(
               width: _kHorizontalSpacing,
@@ -198,7 +198,7 @@ class SBBUserMenu<T> extends StatelessWidget {
         backgroundColor: SBBColors.cloud,
         child: Text(
           _getInitials(displayName ?? ''),
-          style: SBBLeanTextStyles.userMenuInitials,
+          style: SBBWebTextStyles.userMenuInitials,
         ),
         radius: 12.0,
       );

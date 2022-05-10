@@ -6,7 +6,7 @@ class SBBWebHeader extends StatelessWidget implements PreferredSizeWidget {
     Key? key,
     this.title = '',
     this.subtitle = '',
-    this.logo = const SBBLeanLogo(),
+    this.logo = const SBBWebLogo(),
     this.userMenu,
     this.leadingWidth = 54.0,
     this.actions,
@@ -17,7 +17,7 @@ class SBBWebHeader extends StatelessWidget implements PreferredSizeWidget {
   /// Optional subtitle in Header.
   final String subtitle;
 
-  /// Optional logo to override default [SBBLeanLogo].
+  /// Optional logo to override default [SBBWebLogo].
   final Widget logo;
 
   /// The space left to the [title].
@@ -69,12 +69,12 @@ class SBBWebHeader extends StatelessWidget implements PreferredSizeWidget {
         children: [
           Text(
             title,
-            style: SBBLeanTextStyles.headerTitle,
+            style: SBBWebTextStyles.headerTitle,
           ),
           if (subtitle.isNotEmpty)
             Text(
               subtitle,
-              style: SBBLeanTextStyles.headerSubtitle,
+              style: SBBWebTextStyles.headerSubtitle,
             ),
         ],
       );

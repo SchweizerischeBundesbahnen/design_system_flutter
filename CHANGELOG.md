@@ -5,7 +5,7 @@
 ## [Unreleased]
 ### Added
 * Added `SBBLogo` (SBB Signet)
-* Added `SBBLeanLogo` (for web)
+* Added `SBBWebLogo` (for web)
 * Added `SBBTabBar`
 * Added `SBBBreadcrumb` (for web)
 * Added `SBBWebHeader` (for web)

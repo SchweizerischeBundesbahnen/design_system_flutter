@@ -1,3 +1,4 @@
+import 'package:design_system_flutter/src/sbb_internal.dart';
 import 'package:flutter/material.dart';
 
 import '../../design_system_flutter.dart';
@@ -56,13 +57,7 @@ class SBBSecondaryButton extends StatelessWidget {
               theme.isDark
                   ? const SBBLoadingIndicator.tinyCement()
                   : const SBBLoadingIndicator.tinySmoke(),
-            Flexible(
-              child: Text(
-                label,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-              ),
-            ),
+            SBBButtonContent(label: label)
           ],
         ),
       ),
@@ -71,7 +66,7 @@ class SBBSecondaryButton extends StatelessWidget {
 
   Widget _buildThemedWeb(SBBThemeData theme) {
     return OutlinedButton(
-      style: SBBButtonStyles.secondaryWebLean(theme: theme),
+      style: SBBButtonStyles.secondaryWeb(theme: theme),
       onPressed: isLoading ? null : onPressed,
       focusNode: focusNode,
       child: Padding(
@@ -79,19 +74,7 @@ class SBBSecondaryButton extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (isLoading)
-              theme.isDark
-                  ? const SBBLoadingIndicator.tinyCement()
-                  : const SBBLoadingIndicator.tinySmoke(),
-            Flexible(
-              child: Text(
-                label,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-              ),
-            ),
-          ],
+          children: [SBBButtonContent(label: label)],
         ),
       ),
     );
@@ -132,15 +115,7 @@ class SBBGhostButton extends StatelessWidget {
       focusNode: focusNode,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Flexible(
-            child: Text(
-              label,
-              overflow: TextOverflow.ellipsis,
-              maxLines: 1,
-            ),
-          ),
-        ],
+        children: [SBBButtonContent(label: label)],
       ),
     );
   }

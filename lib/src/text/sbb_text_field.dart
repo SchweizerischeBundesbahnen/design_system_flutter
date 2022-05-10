@@ -149,9 +149,12 @@ class _SBBTextField extends State<SBBTextField> {
     final textScaleFactor = MediaQuery.of(context).textScaleFactor;
     final sbbTheme = SBBTheme.of(context);
 
-    final style = widget.enabled ? sbbTheme.textFieldTextStyle : sbbTheme.textFieldTextStyleDisabled;
-    final labelStyle =
-        widget.enabled ? sbbTheme.textFieldPlaceholderTextStyle : sbbTheme.textFieldPlaceholderTextStyleDisabled;
+    final style = widget.enabled
+        ? sbbTheme.textFieldTextStyle
+        : sbbTheme.textFieldTextStyleDisabled;
+    final labelStyle = widget.enabled
+        ? sbbTheme.textFieldPlaceholderTextStyle
+        : sbbTheme.textFieldPlaceholderTextStyleDisabled;
     // adjust floating label style to get desired sizes
     final floatingLabelStyle = labelStyle.copyWith(
       fontSize: SBBTextStyles.helpersLabel.fontSize! * 1.335,

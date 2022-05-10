@@ -60,7 +60,7 @@ class SBBPrimaryButton extends StatelessWidget {
 
   ElevatedButton _buildThemedWeb(SBBThemeData theme) {
     return ElevatedButton(
-        style: SBBButtonStyles.primaryWebLean(theme: theme),
+        style: SBBButtonStyles.primaryWeb(theme: theme),
         onPressed: onPressed,
         focusNode: focusNode,
         child: Row(
