@@ -30,6 +30,18 @@ class SBBSecondaryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = SBBBaseStyle.of(context);
+    final theme = SBBTheme.of(context);
+    switch (theme.hostPlatform) {
+      case HostPlatform.native:
+        return _buildThemedMobile(theme);
+      case HostPlatform.web:
+        return _buildThemedWeb(theme);
+      default:
+        return _buildThemedMobile(theme);
+    }
+  }
+
+  Widget _buildThemedMobile(SBBThemeData theme) {
     return OutlinedButton(
       style: Theme.of(context).outlinedButtonTheme.style?.copyWith(
             // workaround for web
@@ -57,6 +69,54 @@ class SBBSecondaryButton extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class SBBGhostButton extends StatelessWidget {
+  const SBBGhostButton({
+    Key? key,
+    required this.label,
+    required this.onPressed,
+    this.focusNode,
+  }) : super(key: key);
+
+  final String label;
+  final VoidCallback? onPressed;
+  final FocusNode? focusNode;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = SBBTheme.of(context);
+    switch (theme.hostPlatform) {
+      case HostPlatform.native:
+        debugPrint(
+            'WARNING: Ghost button should only be used for web platform.');
+        return _buildThemedWeb(theme);
+      case HostPlatform.web:
+        return _buildThemedWeb(theme);
+      default:
+        return _buildThemedWeb(theme);
+    }
+  }
+
+  Widget _buildThemedWeb(SBBThemeData theme) {
+    return OutlinedButton(
+      style: SBBButtonStyles.webGhost(theme: theme),
+      onPressed: onPressed,
+      focusNode: focusNode,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Flexible(
+            child: Text(
+              label,
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+            ),
+          ),
+        ],
       ),
     );
   }
