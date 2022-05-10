@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 
 import '../../design_system_flutter.dart';
 import '../sbb_internal.dart';
+import 'sbb_button_styles.dart';
 
 /// Large variant of the SBB Icon Button. Use according to documentation.
 ///
@@ -33,8 +34,12 @@ class SBBIconButtonLarge extends StatelessWidget {
     final sbbTheme = SBBTheme.of(context);
     return TextButton(
       style: Theme.of(context).textButtonTheme.style?.copyWith(
-            minimumSize: SBBThemeData.allStates(const Size(SBBInternal.defaultButtonHeight, SBBInternal.defaultButtonHeight)),
-            fixedSize: SBBThemeData.allStates(const Size(SBBInternal.defaultButtonHeight, SBBInternal.defaultButtonHeight)),
+            minimumSize: SBBThemeData.allStates(const Size(
+                SBBInternal.defaultButtonHeight,
+                SBBInternal.defaultButtonHeight)),
+            fixedSize: SBBThemeData.allStates(const Size(
+                SBBInternal.defaultButtonHeight,
+                SBBInternal.defaultButtonHeight)),
             padding: SBBThemeData.allStates(EdgeInsets.zero),
             overlayColor: SBBThemeData.resolveStatesWith(
               defaultValue: sbbTheme.iconButtonLargeBackgroundColor,
@@ -51,11 +56,81 @@ class SBBIconButtonLarge extends StatelessWidget {
               disabledValue: sbbTheme.iconButtonLargeIconColorDisabled,
             ),
             side: SBBThemeData.resolveStatesWith(
-              defaultValue: BorderSide(color: sbbTheme.iconButtonLargeBorderColor),
-              pressedValue: BorderSide(color: sbbTheme.iconButtonLargeBorderColorHighlighted),
-              disabledValue: BorderSide(color: sbbTheme.iconButtonLargeBorderColorDisabled),
+              defaultValue:
+                  BorderSide(color: sbbTheme.iconButtonLargeBorderColor),
+              pressedValue: BorderSide(
+                  color: sbbTheme.iconButtonLargeBorderColorHighlighted),
+              disabledValue: BorderSide(
+                  color: sbbTheme.iconButtonLargeBorderColorDisabled),
             ),
           ),
+      onPressed: onPressed,
+      focusNode: focusNode,
+      child: Icon(icon, size: sbbIconSizeSmall),
+    );
+  }
+}
+
+typedef ButtonStyle themeButtonStyleFunction({required SBBThemeData theme});
+
+class SBBIconButtonWeb extends StatelessWidget {
+  const SBBIconButtonWeb.primary({
+    Key? key,
+    required this.icon,
+    required this.onPressed,
+    this.tooltipMessage,
+    this.buttonStyle = SBBButtonStyles.iconPrimaryWeb,
+    this.focusNode,
+  }) : super(key: key);
+
+  const SBBIconButtonWeb.alternate({
+    Key? key,
+    required this.icon,
+    required this.onPressed,
+    this.tooltipMessage,
+    this.buttonStyle = SBBButtonStyles.iconPrimaryWebNegative,
+    this.focusNode,
+  }) : super(key: key);
+
+  const SBBIconButtonWeb.secondary({
+    Key? key,
+    required this.icon,
+    required this.onPressed,
+    this.tooltipMessage,
+    this.buttonStyle = SBBButtonStyles.iconSecondaryWeb,
+    this.focusNode,
+  }) : super(key: key);
+
+  const SBBIconButtonWeb.ghost({
+    Key? key,
+    required this.icon,
+    required this.onPressed,
+    this.tooltipMessage,
+    this.buttonStyle = SBBButtonStyles.iconGhostWeb,
+    this.focusNode,
+  }) : super(key: key);
+
+  final String? tooltipMessage;
+  final themeButtonStyleFunction buttonStyle;
+  final IconData icon;
+  final VoidCallback? onPressed;
+  final FocusNode? focusNode;
+
+  @override
+  Widget build(BuildContext context) {
+    final sbbTheme = SBBTheme.of(context);
+    if (tooltipMessage == null) {
+      return _iconButton(sbbTheme);
+    }
+    return Tooltip(
+      message: tooltipMessage,
+      child: _iconButton(sbbTheme),
+    );
+  }
+
+  TextButton _iconButton(SBBThemeData theme) {
+    return TextButton(
+      style: buttonStyle(theme: theme),
       onPressed: onPressed,
       focusNode: focusNode,
       child: Icon(icon, size: sbbIconSizeSmall),
@@ -108,8 +183,10 @@ class SBBIconButtonSmall extends StatelessWidget {
       ),
       side: SBBThemeData.resolveStatesWith(
         defaultValue: BorderSide(color: sbbTheme.iconButtonSmallBorderColor),
-        pressedValue: BorderSide(color: sbbTheme.iconButtonSmallBorderColorHighlighted),
-        disabledValue: BorderSide(color: sbbTheme.iconButtonSmallBorderColorDisabled),
+        pressedValue:
+            BorderSide(color: sbbTheme.iconButtonSmallBorderColorHighlighted),
+        disabledValue:
+            BorderSide(color: sbbTheme.iconButtonSmallBorderColorDisabled),
       ),
       focusNode: focusNode,
     );
@@ -148,7 +225,8 @@ class SBBIconButtonSmallNegative extends StatelessWidget {
       onPressed: onPressed,
       overlayColor: SBBThemeData.resolveStatesWith(
         defaultValue: sbbTheme.iconButtonSmallNegativeBackgroundColor,
-        pressedValue: sbbTheme.iconButtonSmallNegativeBackgroundColorHighlighted,
+        pressedValue:
+            sbbTheme.iconButtonSmallNegativeBackgroundColorHighlighted,
       ),
       backgroundColor: SBBThemeData.resolveStatesWith(
         defaultValue: sbbTheme.iconButtonSmallNegativeBackgroundColor,
@@ -161,9 +239,12 @@ class SBBIconButtonSmallNegative extends StatelessWidget {
         disabledValue: sbbTheme.iconButtonSmallNegativeIconColorDisabled,
       ),
       side: SBBThemeData.resolveStatesWith(
-        defaultValue: BorderSide(color: sbbTheme.iconButtonSmallNegativeBorderColor),
-        pressedValue: BorderSide(color: sbbTheme.iconButtonSmallNegativeBorderColorHighlighted),
-        disabledValue: BorderSide(color: sbbTheme.iconButtonSmallNegativeBorderColorDisabled),
+        defaultValue:
+            BorderSide(color: sbbTheme.iconButtonSmallNegativeBorderColor),
+        pressedValue: BorderSide(
+            color: sbbTheme.iconButtonSmallNegativeBorderColorHighlighted),
+        disabledValue: BorderSide(
+            color: sbbTheme.iconButtonSmallNegativeBorderColorDisabled),
       ),
       focusNode: focusNode,
     );
@@ -202,12 +283,14 @@ class SBBIconButtonSmallBorderless extends StatelessWidget {
       onPressed: onPressed,
       overlayColor: SBBThemeData.resolveStatesWith(
         defaultValue: sbbTheme.iconButtonSmallBorderlessBackgroundColor,
-        pressedValue: sbbTheme.iconButtonSmallBorderlessBackgroundColorHighlighted,
+        pressedValue:
+            sbbTheme.iconButtonSmallBorderlessBackgroundColorHighlighted,
       ),
       backgroundColor: SBBThemeData.resolveStatesWith(
         defaultValue: sbbTheme.iconButtonSmallBorderlessBackgroundColor,
         pressedValue: sbbTheme.iconButtonSmallBorderlessBackgroundColor,
-        disabledValue: sbbTheme.iconButtonSmallBorderlessBackgroundColorDisabled,
+        disabledValue:
+            sbbTheme.iconButtonSmallBorderlessBackgroundColorDisabled,
       ),
       foregroundColor: SBBThemeData.resolveStatesWith(
         defaultValue: sbbTheme.iconButtonSmallBorderlessIconColor,
@@ -307,7 +390,8 @@ class _InputPadding extends SingleChildRenderObjectWidget {
   }
 
   @override
-  void updateRenderObject(BuildContext context, covariant _RenderInputPadding renderObject) {
+  void updateRenderObject(
+      BuildContext context, covariant _RenderInputPadding renderObject) {
     renderObject.minSize = minSize;
   }
 }
@@ -326,29 +410,35 @@ class _RenderInputPadding extends RenderShiftedBox {
 
   @override
   double computeMinIntrinsicWidth(double height) {
-    if (child != null) return math.max(child!.getMinIntrinsicWidth(height), minSize.width);
+    if (child != null)
+      return math.max(child!.getMinIntrinsicWidth(height), minSize.width);
     return 0.0;
   }
 
   @override
   double computeMinIntrinsicHeight(double width) {
-    if (child != null) return math.max(child!.getMinIntrinsicHeight(width), minSize.height);
+    if (child != null)
+      return math.max(child!.getMinIntrinsicHeight(width), minSize.height);
     return 0.0;
   }
 
   @override
   double computeMaxIntrinsicWidth(double height) {
-    if (child != null) return math.max(child!.getMaxIntrinsicWidth(height), minSize.width);
+    if (child != null)
+      return math.max(child!.getMaxIntrinsicWidth(height), minSize.width);
     return 0.0;
   }
 
   @override
   double computeMaxIntrinsicHeight(double width) {
-    if (child != null) return math.max(child!.getMaxIntrinsicHeight(width), minSize.height);
+    if (child != null)
+      return math.max(child!.getMaxIntrinsicHeight(width), minSize.height);
     return 0.0;
   }
 
-  Size _computeSize({required BoxConstraints constraints, required ChildLayouter layoutChild}) {
+  Size _computeSize(
+      {required BoxConstraints constraints,
+      required ChildLayouter layoutChild}) {
     if (child != null) {
       final Size childSize = layoutChild(child!, constraints);
       final double height = math.max(childSize.width, minSize.width);
@@ -374,7 +464,8 @@ class _RenderInputPadding extends RenderShiftedBox {
     );
     if (child != null) {
       final BoxParentData childParentData = child!.parentData! as BoxParentData;
-      childParentData.offset = Alignment.center.alongOffset(size - child!.size as Offset);
+      childParentData.offset =
+          Alignment.center.alongOffset(size - child!.size as Offset);
     }
   }
 

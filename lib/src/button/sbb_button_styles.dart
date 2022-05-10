@@ -70,8 +70,12 @@ class SBBButtonStyles {
         ),
       );
 
-  static ButtonStyle primaryWebLean({required SBBThemeData theme}) =>
+  static ButtonStyle primaryWeb({required SBBThemeData theme}) =>
       primaryMobile(theme: theme).copyWith(
+        minimumSize: SBBThemeData.allStates(Size(SBBInternal.webMinButtonWidth,
+            SBBInternal.defaultButtonHeightSmall)),
+        maximumSize: SBBThemeData.allStates(Size(
+            SBBInternal.webMaxButtonWidth, SBBInternal.defaultButtonHeight)),
         overlayColor: SBBThemeData.allStates(
           SBBColors.transparent,
         ),
@@ -79,7 +83,7 @@ class SBBButtonStyles {
           defaultValue: theme.primaryButtonBackgroundColor,
           pressedValue: theme.primaryButtonBackgroundColorHighlighted,
           hoveredValue: theme.primaryButtonBackgroundColorHighlighted,
-          disabledValue: theme.primaryButtonBackgroundColorDisabled,
+          disabledValue: SBBColors.red.withOpacity(0.4),
         ),
         shape: SBBThemeData.allStates(
           RoundedRectangleBorder(
@@ -88,8 +92,56 @@ class SBBButtonStyles {
         ),
       );
 
-  static ButtonStyle secondaryWebLean({required SBBThemeData theme}) =>
+  static ButtonStyle iconPrimaryWeb({required SBBThemeData theme}) =>
+      primaryWeb(theme: theme).copyWith(
+        minimumSize: SBBThemeData.allStates(const Size(
+            SBBInternal.defaultButtonHeightSmall,
+            SBBInternal.defaultButtonHeightSmall)),
+        fixedSize: SBBThemeData.allStates(const Size(
+            SBBInternal.defaultButtonHeightSmall,
+            SBBInternal.defaultButtonHeightSmall)),
+        padding: SBBThemeData.allStates(EdgeInsets.zero),
+      );
+
+  static ButtonStyle iconPrimaryWebNegative({required SBBThemeData theme}) =>
+      primaryWebNegative(theme: theme).copyWith(
+        minimumSize: SBBThemeData.allStates(const Size(
+            SBBInternal.defaultButtonHeightSmall,
+            SBBInternal.defaultButtonHeightSmall)),
+        fixedSize: SBBThemeData.allStates(const Size(
+            SBBInternal.defaultButtonHeightSmall,
+            SBBInternal.defaultButtonHeightSmall)),
+        padding: SBBThemeData.allStates(EdgeInsets.zero),
+      );
+
+  static ButtonStyle iconSecondaryWeb({required SBBThemeData theme}) =>
+      secondaryWeb(theme: theme).copyWith(
+        minimumSize: SBBThemeData.allStates(const Size(
+            SBBInternal.defaultButtonHeightSmall,
+            SBBInternal.defaultButtonHeightSmall)),
+        fixedSize: SBBThemeData.allStates(const Size(
+            SBBInternal.defaultButtonHeightSmall,
+            SBBInternal.defaultButtonHeightSmall)),
+        padding: SBBThemeData.allStates(EdgeInsets.zero),
+      );
+
+  static ButtonStyle iconGhostWeb({required SBBThemeData theme}) =>
+      webGhost(theme: theme).copyWith(
+        minimumSize: SBBThemeData.allStates(const Size(
+            SBBInternal.defaultButtonHeightSmall,
+            SBBInternal.defaultButtonHeightSmall)),
+        fixedSize: SBBThemeData.allStates(const Size(
+            SBBInternal.defaultButtonHeightSmall,
+            SBBInternal.defaultButtonHeightSmall)),
+        padding: SBBThemeData.allStates(EdgeInsets.zero),
+      );
+
+  static ButtonStyle secondaryWeb({required SBBThemeData theme}) =>
       secondaryMobile(theme: theme).copyWith(
+        minimumSize: SBBThemeData.allStates(Size(SBBInternal.webMinButtonWidth,
+            SBBInternal.defaultButtonHeightSmall)),
+        maximumSize: SBBThemeData.allStates(Size(
+            SBBInternal.webMaxButtonWidth, SBBInternal.defaultButtonHeight)),
         overlayColor: SBBThemeData.allStates(
           SBBColors.transparent,
         ),
@@ -149,6 +201,10 @@ class SBBButtonStyles {
       );
   static ButtonStyle primaryWebNegative({required SBBThemeData theme}) =>
       primaryMobileNegative(theme: theme).copyWith(
+        minimumSize: SBBThemeData.allStates(Size(SBBInternal.webMinButtonWidth,
+            SBBInternal.defaultButtonHeightSmall)),
+        maximumSize: SBBThemeData.allStates(Size(
+            SBBInternal.webMaxButtonWidth, SBBInternal.defaultButtonHeight)),
         overlayColor: SBBThemeData.allStates(
           SBBColors.transparent,
         ),
@@ -166,6 +222,11 @@ class SBBButtonStyles {
       );
   static ButtonStyle webGhost({required SBBThemeData theme}) =>
       _baseButtonStyle.copyWith(
+          minimumSize: SBBThemeData.allStates(Size(
+              SBBInternal.webMinButtonWidth,
+              SBBInternal.defaultButtonHeightSmall)),
+          maximumSize: SBBThemeData.allStates(Size(
+              SBBInternal.webMaxButtonWidth, SBBInternal.defaultButtonHeight)),
           overlayColor: SBBThemeData.resolveStatesWith(
             defaultValue: theme.primaryButtonNegativeBackgroundColor,
             pressedValue: theme.primaryButtonNegativeBackgroundColorHighlighted,
