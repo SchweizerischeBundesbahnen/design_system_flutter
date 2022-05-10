@@ -17,8 +17,8 @@ class LogoPage extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(bottom: 16.0),
                 child: Text(
-                  'SBB Lean Logo',
-                  style: SBBLeanTextStyles.headerTitle
+                  'SBB  Logo',
+                  style: SBBWebTextStyles.headerTitle
                       .copyWith(fontSize: 25, color: SBBColors.red),
                 ),
               ),
@@ -26,7 +26,7 @@ class LogoPage extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 16.0),
                 child: Text(
                   'Ausprägungen',
-                  style: SBBLeanTextStyles.headerTitle
+                  style: SBBWebTextStyles.headerTitle
                       .copyWith(fontSize: 20, color: SBBColors.black),
                 ),
               ),
@@ -34,20 +34,20 @@ class LogoPage extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 16.0),
                 child: Text(
                   '- Signet',
-                  style: SBBLeanTextStyles.headerTitle
+                  style: SBBWebTextStyles.headerTitle
                       .copyWith(fontSize: 18, color: SBBColors.black),
                 ),
               ),
               SizedBox(
                   width: 100,
-                  child: SBBLeanLogo(
+                  child: SBBWebLogo(
                     width: 100,
                   )),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: Text(
                   '- With text',
-                  style: SBBLeanTextStyles.headerTitle
+                  style: SBBWebTextStyles.headerTitle
                       .copyWith(fontSize: 18, color: SBBColors.black),
                 ),
               ),
@@ -55,13 +55,13 @@ class LogoPage extends StatelessWidget {
                 children: [
                   SizedBox(
                       width: 100,
-                      child: SBBLeanLogo(
+                      child: SBBWebLogo(
                         width: 100,
                       )),
                   SizedBox(width: sbbDefaultSpacing),
                   Text(
                     'SBB CFF FFS',
-                    style: SBBLeanTextStyles.headerTitle.copyWith(
+                    style: SBBWebTextStyles.headerTitle.copyWith(
                       fontSize: 32,
                       color: SBBColors.black,
                       fontWeight: FontWeight.bold,
@@ -73,13 +73,13 @@ class LogoPage extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: Text(
                   '- Black on White',
-                  style: SBBLeanTextStyles.headerTitle
+                  style: SBBWebTextStyles.headerTitle
                       .copyWith(fontSize: 18, color: SBBColors.black),
                 ),
               ),
               SizedBox(
                 width: 100,
-                child: SBBLeanLogo(
+                child: SBBWebLogo(
                   width: 100,
                   foregroundColor: SBBColors.white,
                   backgroundColor: SBBColors.black,
@@ -89,7 +89,7 @@ class LogoPage extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: Text(
                   '- On Red',
-                  style: SBBLeanTextStyles.headerTitle
+                  style: SBBWebTextStyles.headerTitle
                       .copyWith(fontSize: 18, color: SBBColors.black),
                 ),
               ),
@@ -98,7 +98,7 @@ class LogoPage extends StatelessWidget {
                 width: 300,
                 child: DecoratedBox(
                   decoration: BoxDecoration(color: SBBColors.red),
-                  child: SBBLeanLogo(
+                  child: SBBWebLogo(
                     width: 100,
                     borderColor: SBBColors.white,
                   ),

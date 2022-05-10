@@ -90,8 +90,8 @@ class SBBTextStyles {
   );
 }
 
-class SBBLeanTextStyles {
-  SBBLeanTextStyles._();
+class SBBWebTextStyles {
+  SBBWebTextStyles._();
 
   static const TextStyle headerTitle = TextStyle(
     fontSize: 15.0,

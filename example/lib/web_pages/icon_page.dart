@@ -18,7 +18,7 @@ class IconPage extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 16.0),
                 child: Text(
                   'Icons',
-                  style: SBBLeanTextStyles.headerTitle
+                  style: SBBWebTextStyles.headerTitle
                       .copyWith(fontSize: 25, color: SBBColors.red),
                 ),
               ),
@@ -26,7 +26,7 @@ class IconPage extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 16.0),
                 child: Text(
                   'Ausprägungen',
-                  style: SBBLeanTextStyles.headerTitle
+                  style: SBBWebTextStyles.headerTitle
                       .copyWith(fontSize: 20, color: SBBColors.black),
                 ),
               ),
@@ -34,7 +34,7 @@ class IconPage extends StatelessWidget {
                 padding: const EdgeInsets.only(bottom: 16.0),
                 child: Text(
                   '- Tiny',
-                  style: SBBLeanTextStyles.headerTitle
+                  style: SBBWebTextStyles.headerTitle
                       .copyWith(fontSize: 18, color: SBBColors.black),
                 ),
               ),
@@ -70,7 +70,7 @@ class IconPage extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: Text(
                   '- Medium',
-                  style: SBBLeanTextStyles.headerTitle
+                  style: SBBWebTextStyles.headerTitle
                       .copyWith(fontSize: 18, color: SBBColors.black),
                 ),
               ),
@@ -106,7 +106,7 @@ class IconPage extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 16.0),
                 child: Text(
                   '- Large',
-                  style: SBBLeanTextStyles.headerTitle
+                  style: SBBWebTextStyles.headerTitle
                       .copyWith(fontSize: 18, color: SBBColors.black),
                 ),
               ),
