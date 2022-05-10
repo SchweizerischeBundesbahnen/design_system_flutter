@@ -15,10 +15,10 @@ class SBBButtonStyles {
         ),
       ),
     ),
-    fixedSize:
-        SBBThemeData.allStates(const Size.fromHeight(SBBInternal.defaultButtonHeight)),
-    padding:
-        SBBThemeData.allStates(EdgeInsets.symmetric(horizontal: sbbDefaultSpacing)),
+    fixedSize: SBBThemeData.allStates(
+        const Size.fromHeight(SBBInternal.defaultButtonHeight)),
+    padding: SBBThemeData.allStates(
+        EdgeInsets.symmetric(horizontal: sbbDefaultSpacing)),
     elevation: SBBThemeData.allStates(0),
     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
     mouseCursor: MaterialStateMouseCursor.clickable,
@@ -47,6 +47,29 @@ class SBBButtonStyles {
         ),
       );
 
+  static ButtonStyle secondaryMobile({required SBBThemeData theme}) =>
+      _baseButtonStyle.copyWith(
+        overlayColor: SBBThemeData.resolveStatesWith(
+          defaultValue: theme.secondaryButtonBackgroundColor,
+          pressedValue: theme.secondaryButtonBackgroundColorHighlighted,
+        ),
+        backgroundColor: SBBThemeData.resolveStatesWith(
+          defaultValue: theme.secondaryButtonBackgroundColor,
+          pressedValue: theme.secondaryButtonBackgroundColor,
+          disabledValue: theme.secondaryButtonBackgroundColorDisabled,
+        ),
+        foregroundColor: SBBThemeData.resolveStatesWith(
+          defaultValue: theme.secondaryButtonTextStyle.color!,
+          pressedValue: theme.secondaryButtonTextStyleHighlighted.color,
+          disabledValue: theme.secondaryButtonTextStyleDisabled.color,
+        ),
+        textStyle: SBBThemeData.resolveStatesWith(
+          defaultValue: theme.secondaryButtonTextStyle,
+          pressedValue: theme.secondaryButtonTextStyleHighlighted,
+          disabledValue: theme.secondaryButtonTextStyleDisabled,
+        ),
+      );
+
   static ButtonStyle primaryWebLean({required SBBThemeData theme}) =>
       primaryMobile(theme: theme).copyWith(
         overlayColor: SBBThemeData.allStates(
@@ -54,14 +77,43 @@ class SBBButtonStyles {
         ),
         backgroundColor: SBBThemeData.resolveStatesWith(
           defaultValue: theme.primaryButtonBackgroundColor,
-          pressedValue: SBBColors.red125,
-          hoveredValue: SBBColors.red125,
+          pressedValue: theme.primaryButtonBackgroundColorHighlighted,
+          hoveredValue: theme.primaryButtonBackgroundColorHighlighted,
           disabledValue: theme.primaryButtonBackgroundColorDisabled,
         ),
         shape: SBBThemeData.allStates(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(2.0),
           ),
+        ),
+      );
+
+  static ButtonStyle secondaryWebLean({required SBBThemeData theme}) =>
+      secondaryMobile(theme: theme).copyWith(
+        overlayColor: SBBThemeData.allStates(
+          SBBColors.transparent,
+        ),
+        backgroundColor: SBBThemeData.resolveStatesWith(
+          defaultValue: SBBColors.silver,
+          pressedValue: SBBColors.cement,
+          hoveredValue: SBBColors.cement,
+          disabledValue: SBBColors.silver,
+        ),
+        shape: SBBThemeData.allStates(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(2.0),
+          ),
+        ),
+        foregroundColor: SBBThemeData.resolveStatesWith(
+          defaultValue: SBBColors.iron,
+          pressedValue: SBBColors.iron,
+          disabledValue: SBBColors.iron.withOpacity(0.5),
+        ),
+        side: SBBThemeData.resolveStatesWith(
+          defaultValue: BorderSide(color: SBBColors.silver),
+          pressedValue: BorderSide(color: SBBColors.cement),
+          hoveredValue: BorderSide(color: SBBColors.cement),
+          disabledValue: BorderSide(color: SBBColors.silver),
         ),
       );
 
@@ -104,7 +156,7 @@ class SBBButtonStyles {
           defaultValue: SBBColors.granite,
           hoveredValue: SBBColors.iron,
           pressedValue: SBBColors.iron,
-          disabledValue: theme.primaryButtonNegativeBackgroundColorDisabled,
+          disabledValue: SBBColors.granite.withOpacity(0.4),
         ),
         shape: SBBThemeData.allStates(
           RoundedRectangleBorder(
@@ -112,4 +164,34 @@ class SBBButtonStyles {
           ),
         ),
       );
+  static ButtonStyle webGhost({required SBBThemeData theme}) =>
+      _baseButtonStyle.copyWith(
+          overlayColor: SBBThemeData.resolveStatesWith(
+            defaultValue: theme.primaryButtonNegativeBackgroundColor,
+            pressedValue: theme.primaryButtonNegativeBackgroundColorHighlighted,
+          ),
+          backgroundColor: SBBThemeData.allStates(SBBColors.transparent),
+          foregroundColor: SBBThemeData.resolveStatesWith(
+            defaultValue: SBBColors.granite,
+            pressedValue: SBBColors.iron,
+            hoveredValue: SBBColors.iron,
+            selectedValue: SBBColors.iron,
+            disabledValue: SBBColors.granite.withOpacity(0.5),
+          ),
+          textStyle: SBBThemeData.resolveStatesWith(
+            defaultValue: theme.primaryButtonNegativeTextStyle,
+            pressedValue: theme.primaryButtonNegativeTextStyleHighlighted,
+            disabledValue: theme.primaryButtonNegativeTextStyleDisabled,
+          ),
+          side: SBBThemeData.resolveStatesWith(
+            defaultValue: BorderSide(color: SBBColors.granite),
+            pressedValue: BorderSide(color: SBBColors.iron),
+            disabledValue:
+                BorderSide(color: SBBColors.granite.withOpacity(0.4)),
+          ),
+          shape: SBBThemeData.allStates(
+            RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(2.0),
+            ),
+          ));
 }

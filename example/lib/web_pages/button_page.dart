@@ -11,52 +11,84 @@ class ButtonPage extends StatelessWidget {
         decoration: BoxDecoration(color: SBBColors.white),
         child: Padding(
           padding: EdgeInsets.symmetric(vertical: 24.0, horizontal: 48.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16.0),
-                child: Text(
-                  'Buttons',
-                  style: SBBLeanTextStyles.headerTitle
-                      .copyWith(fontSize: 25, color: SBBColors.red),
-                ),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16.0),
+              child: Text(
+                'Buttons',
+                style: SBBLeanTextStyles.headerTitle
+                    .copyWith(fontSize: 25, color: SBBColors.red),
               ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16.0),
-                child: Text(
-                  'Ausprägungen',
-                  style: SBBLeanTextStyles.headerTitle
-                      .copyWith(fontSize: 20, color: SBBColors.black),
-                ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 16.0),
+              child: Text(
+                'Ausprägungen',
+                style: SBBLeanTextStyles.headerTitle
+                    .copyWith(fontSize: 20, color: SBBColors.black),
               ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16.0),
-                child: Text(
-                  '- Primary Button',
-                  style: SBBLeanTextStyles.headerTitle
-                      .copyWith(fontSize: 18, color: SBBColors.black),
-                ),
-              ),
-              SizedBox(
-                  width: 200,
-                  child: SBBPrimaryButton(label: 'Label', onPressed: () {})),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: Text(
-                  '- Alternate Primary Button',
-                  style: SBBLeanTextStyles.headerTitle
-                      .copyWith(fontSize: 18, color: SBBColors.black),
-                ),
-              ),
-              SizedBox(
-                  width: 200,
-                  child: SBBPrimaryButtonNegative(
-                      label: 'Label', onPressed: () {})),
-            ],
-          ),
+            ),
+            ButtonExpression(
+              label: '- Primary Button',
+              button: SBBPrimaryButton(label: 'Label', onPressed: () {}),
+              buttonDisabled: SBBPrimaryButton(label: 'Label', onPressed: null),
+            ),
+            ButtonExpression(
+              label: '- Alternate Button',
+              button:
+                  SBBPrimaryButtonNegative(label: 'Label', onPressed: () {}),
+              buttonDisabled:
+                  SBBPrimaryButtonNegative(label: 'Label', onPressed: null),
+            ),
+            ButtonExpression(
+              label: '- Secondary Button',
+              button: SBBSecondaryButton(label: 'Label', onPressed: () {}),
+              buttonDisabled:
+                  SBBSecondaryButton(label: 'Label', onPressed: null),
+            ),
+            ButtonExpression(
+              label: '- Ghost Button',
+              button: SBBGhostButton(label: 'Label', onPressed: () {}),
+              buttonDisabled: SBBGhostButton(label: 'Label', onPressed: null),
+            )
+          ]),
         ),
       ),
+    );
+  }
+}
+
+class ButtonExpression extends StatelessWidget {
+  const ButtonExpression(
+      {Key? key,
+      required this.label,
+      required this.button,
+      required this.buttonDisabled})
+      : super(key: key);
+  final String label;
+  final Widget button;
+  final Widget buttonDisabled;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16.0),
+          child: Text(
+            label,
+            style: SBBLeanTextStyles.headerTitle
+                .copyWith(fontSize: 18, color: SBBColors.black),
+          ),
+        ),
+        Row(children: [
+          SizedBox(width: 200, child: button),
+          SizedBox(width: sbbDefaultSpacing),
+          SizedBox(width: 200, child: buttonDisabled),
+        ]),
+      ],
     );
   }
 }
