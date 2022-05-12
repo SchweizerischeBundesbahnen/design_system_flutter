@@ -56,32 +56,50 @@ class ButtonPage extends StatelessWidget {
               ),
               ButtonExpression(
                 label: '- Icon Button Primary',
-                button: SBBIconButtonWeb.primary(
+                button: SBBIconButton.large(
                     icon: SBBIcons.pen_small, onPressed: () {}),
-                buttonDisabled: SBBIconButtonWeb.primary(
+                buttonDisabled: SBBIconButton.large(
                     icon: SBBIcons.pen_small, onPressed: null),
               ),
               ButtonExpression(
                 label: '- Icon Button Alternate',
-                button: SBBIconButtonWeb.alternate(
-                    icon: SBBIcons.pen_small, onPressed: () {}),
-                buttonDisabled: SBBIconButtonWeb.alternate(
-                    icon: SBBIcons.pen_small, onPressed: null),
+                button: SBBIconButton.large(
+                  icon: SBBIcons.pen_small,
+                  onPressed: () {},
+                  buttonStyle: SBBButtonStyles.iconAlternateWeb,
+                ),
+                buttonDisabled: SBBIconButton.large(
+                  icon: SBBIcons.pen_small,
+                  onPressed: null,
+                  buttonStyle: SBBButtonStyles.iconAlternateWeb,
+                ),
               ),
               ButtonExpression(
                 label: '- Icon Button Secondary',
-                button: SBBIconButtonWeb.secondary(
-                    icon: SBBIcons.pen_small, onPressed: () {}),
-                buttonDisabled: SBBIconButtonWeb.secondary(
-                    icon: SBBIcons.pen_small, onPressed: null),
+                button: SBBIconButton.large(
+                  icon: SBBIcons.pen_small,
+                  onPressed: () {},
+                  buttonStyle: SBBButtonStyles.iconSecondaryWeb,
+                ),
+                buttonDisabled: SBBIconButton.large(
+                  icon: SBBIcons.pen_small,
+                  onPressed: null,
+                  buttonStyle: SBBButtonStyles.iconSecondaryWeb,
+                ),
               ),
               ButtonExpression(
                 label: '- Icon Button Ghost',
-                button: SBBIconButtonWeb.ghost(
-                    icon: SBBIcons.pen_small, onPressed: () {}),
-                buttonDisabled: SBBIconButtonWeb.ghost(
-                    icon: SBBIcons.pen_small, onPressed: null),
-              )
+                button: SBBIconButton.large(
+                  icon: SBBIcons.pen_small,
+                  onPressed: () {},
+                  buttonStyle: SBBButtonStyles.iconGhostWeb,
+                ),
+                buttonDisabled: SBBIconButton.large(
+                  icon: SBBIcons.pen_small,
+                  onPressed: null,
+                  buttonStyle: SBBButtonStyles.iconGhostWeb,
+                ),
+              ),
             ]),
           ),
         ),
