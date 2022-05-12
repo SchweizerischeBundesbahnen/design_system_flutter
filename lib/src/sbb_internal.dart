@@ -6,7 +6,7 @@ class SBBInternal {
 
   static const defaultButtonHeight = 44.0;
   static const defaultButtonHeightSmall = 32.0;
-  static const webMinButtonWidth = 100.0;
+  static const webMinButtonWidth = 60.0;
   static const webMaxButtonWidth = 300.0;
 
   static const barrierColor = Color(0x80000000);
