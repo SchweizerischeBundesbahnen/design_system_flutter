@@ -33,46 +33,28 @@ class SBBPrimaryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final SBBThemeData theme = SBBTheme.of(context);
-    switch (theme.hostPlatform) {
-      case HostPlatform.native:
-        return _buildThemedMobile(theme);
-      case HostPlatform.web:
-        return _buildThemedWeb(theme);
-      default:
-        return _buildThemedMobile(theme);
-    }
-  }
+    final bool _isLoadingAndNative =
+        (isLoading) && (theme.hostPlatform == HostPlatform.native);
 
-  ElevatedButton _buildThemedMobile(SBBThemeData theme) {
     return ElevatedButton(
-      style: SBBButtonStyles.primaryMobile(theme: theme),
-      onPressed: isLoading ? null : onPressed,
+      style: SBBButtonStyles.primaryButtonStyle(theme),
+      onPressed: _isLoadingAndNative ? null : onPressed,
       focusNode: focusNode,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          if (isLoading) SBBLoadingIndicator.tinyCloud(),
+          if (_isLoadingAndNative) SBBLoadingIndicator.tinyCloud(),
           SBBButtonContent(label: label)
         ],
       ),
     );
   }
-
-  ElevatedButton _buildThemedWeb(SBBThemeData theme) {
-    return ElevatedButton(
-        style: SBBButtonStyles.primaryWeb(theme: theme),
-        onPressed: onPressed,
-        focusNode: focusNode,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SBBButtonContent(label: label),
-          ],
-        ));
-  }
 }
 
 /// Negative variant of the SBB Primary Button. Use according to documentation.
+///
+/// This widget turns to the Alternative Primary Button
+/// in the Web Lean specification in [HostPlatform.web].
 ///
 /// The [label] parameter must not be null.
 ///
@@ -80,6 +62,7 @@ class SBBPrimaryButton extends StatelessWidget {
 /// inside the button and the [onPressed] callback will be ignored.
 ///
 /// If [onPressed] callback is null, then the button will be disabled.
+///
 ///
 /// See also:
 ///
@@ -101,39 +84,19 @@ class SBBPrimaryButtonNegative extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final SBBThemeData theme = SBBTheme.of(context);
-    switch (theme.hostPlatform) {
-      case HostPlatform.native:
-        return _buildThemedMobile(theme);
-      case HostPlatform.web:
-        return _buildThemedWeb(theme);
-      default:
-        return _buildThemedMobile(theme);
-    }
-  }
+    final bool _isLoadingAndNative =
+        (isLoading) && (theme.hostPlatform == HostPlatform.native);
 
-  Widget _buildThemedMobile(SBBThemeData theme) {
     return ElevatedButton(
-      style: SBBButtonStyles.primaryMobileNegative(theme: theme),
-      onPressed: isLoading ? null : onPressed,
+      style: SBBButtonStyles.primaryNegativeButtonStyle(theme),
+      onPressed: _isLoadingAndNative ? null : onPressed,
       focusNode: focusNode,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          if (isLoading) SBBLoadingIndicator.tinyCloud(),
+          if (_isLoadingAndNative) SBBLoadingIndicator.tinyCloud(),
           SBBButtonContent(label: label)
         ],
-      ),
-    );
-  }
-
-  Widget _buildThemedWeb(SBBThemeData theme) {
-    return ElevatedButton(
-      style: SBBButtonStyles.primaryWebNegative(theme: theme),
-      onPressed: onPressed,
-      focusNode: focusNode,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [SBBButtonContent(label: label)],
       ),
     );
   }
