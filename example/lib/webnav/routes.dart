@@ -1,10 +1,10 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:example/web_pages/breadcrumb_page.dart';
+import '../web_pages/breadcrumb_page.dart';
 
-import 'package:example/web_pages/button_page.dart';
-import 'package:example/web_pages/icon_page.dart';
-import 'package:example/web_pages/loading_page.dart';
-import 'package:example/web_pages/logo_page.dart';
+import '../web_pages/button_page.dart';
+import '../web_pages/icon_page.dart';
+import '../web_pages/loading_page.dart';
+import '../web_pages/logo_page.dart';
 import '../web_pages/home_page.dart';
 
 @CustomAutoRouter(
