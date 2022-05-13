@@ -9,6 +9,7 @@ const _pages = {
   'Icons': IconPage(),
   'Breadcrumb': BreadcrumbPage(),
   'Loading Indicator': LoadingPage(),
+  'Typographie': TypographyPage(),
 };
 
 String _nameToRoute(String name) =>
