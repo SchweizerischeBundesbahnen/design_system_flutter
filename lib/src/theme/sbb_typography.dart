@@ -128,6 +128,15 @@ class SBBWebTextStyles {
     color: SBBColors.black,
   );
 
+  static const TextStyle _running = TextStyle(
+    fontSize: 15.0,
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w400,
+    fontFamily: SBBWebFont,
+    height: 23.0 / 15.0,
+    color: SBBColors.black,
+  );
+
   static const TextStyle headerTitle = TextStyle(
     fontSize: 15.0,
     fontStyle: FontStyle.normal,
@@ -184,6 +193,7 @@ class SBBWebText extends StatelessWidget {
     this.style = SBBWebTextStyles._headerOne,
     this.padding = const EdgeInsets.only(
         top: SBBWebDivider.big, bottom: SBBWebDivider.medium),
+    this.selectable = false,
   }) : super(key: key);
 
   const SBBWebText.headerTwo(
@@ -193,6 +203,7 @@ class SBBWebText extends StatelessWidget {
     this.style = SBBWebTextStyles._headerTwo,
     this.padding = const EdgeInsets.only(
         top: SBBWebDivider.medium, bottom: SBBWebDivider.small),
+    this.selectable = false,
   }) : super(key: key);
 
   const SBBWebText.headerThree(
@@ -202,6 +213,7 @@ class SBBWebText extends StatelessWidget {
     this.style = SBBWebTextStyles._headerThree,
     this.padding = const EdgeInsets.only(
         top: SBBWebDivider.small, bottom: SBBWebDivider.thin),
+    this.selectable = false,
   }) : super(key: key);
 
   const SBBWebText.headerFour(
@@ -211,18 +223,32 @@ class SBBWebText extends StatelessWidget {
     this.style = SBBWebTextStyles._headerFour,
     this.padding = const EdgeInsets.only(
         top: SBBWebDivider.small, bottom: SBBWebDivider.thin),
+    this.selectable = false,
+  }) : super(key: key);
+
+  const SBBWebText.running(
+    this.data, {
+    Key? key,
+    this.color,
+    this.style = SBBWebTextStyles._running,
+    this.padding = const EdgeInsets.only(
+        top: SBBWebDivider.thin, bottom: SBBWebDivider.thin),
+    this.selectable = false,
   }) : super(key: key);
 
   final String data;
   final Color? color;
   final TextStyle style;
   final EdgeInsetsGeometry padding;
+  final bool selectable;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: padding,
-      child: Text(data, style: style.copyWith(color: color)),
+      child: selectable
+          ? SelectableText(data, style: style.copyWith(color: color))
+          : Text(data, style: style.copyWith(color: color)),
     );
   }
 }
