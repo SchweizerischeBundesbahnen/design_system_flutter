@@ -1,6 +1,5 @@
 import 'package:animations/animations.dart';
 import 'package:design_system_flutter/design_system_flutter.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -37,91 +36,94 @@ class AppState extends ChangeNotifier {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<AppState>(
-        builder: (BuildContext context, AppState appState, _) {
-      return SBBTheme(
-        hostType: HostPlatform.web,
-        builder: (context, theme, darkTheme) {
-          return MaterialApp(
-            theme: theme,
-            darkTheme: darkTheme,
-            themeMode: appState.isDarkModeOn ? ThemeMode.dark : ThemeMode.light,
-            home: Scaffold(
-              appBar: SBBHeader(title: 'Design System Mobile'),
-              body: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: sbbDefaultSpacing,
-                  ),
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: sbbDefaultSpacing,
+    return ChangeNotifierProvider(
+      create: (context) => AppState(),
+      child: Consumer<AppState>(
+          builder: (BuildContext context, AppState appState, _) {
+        return SBBTheme(
+          hostType: HostPlatform.web,
+          builder: (context, theme, darkTheme) {
+            return MaterialApp(
+              theme: theme,
+              darkTheme: darkTheme,
+              themeMode: appState.isDarkModeOn ? ThemeMode.dark : ThemeMode.light,
+              home: Scaffold(
+                appBar: SBBHeader(title: 'Design System Mobile'),
+                body: SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: sbbDefaultSpacing,
+                    ),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            vertical: sbbDefaultSpacing,
+                          ),
+                          child: ThemeModeSegmentedButton(),
                         ),
-                        child: ThemeModeSegmentedButton(),
-                      ),
-                      const SBBListHeader('Basics'),
-                      SBBGroup(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            _DemoEntry('Icon', IconsPage()),
-                            _DemoEntry('Typography', TypographyPage(),
-                                isLastElement: true),
-                          ],
+                        const SBBListHeader('Basics'),
+                        SBBGroup(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              _DemoEntry('Icon', IconsPage()),
+                              _DemoEntry('Typography', TypographyPage(),
+                                  isLastElement: true),
+                            ],
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: sbbDefaultSpacing),
-                      const SBBListHeader('Elements'),
-                      SBBGroup(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            _DemoEntry('Button', ButtonPage()),
-                            _DemoEntry('Checkbox', CheckboxPage()),
-                            _DemoEntry('Link', LinkPage()),
-                            _DemoEntry('List Header', ListHeaderPage()),
-                            _DemoEntry('List Item', ListItemPage()),
-                            _DemoEntry(
-                                'Loading Indicator', LoadingIndicatorPage()),
-                            _DemoEntry('Radio Button', RadiobuttonPage()),
-                            _DemoEntry(
-                                'Segmented Button', SegmentedButtonPage()),
-                            _DemoEntry('Select', SelectPage()),
-                            _DemoEntry('Textfield / Textarea', TextFieldPage(),
-                                isLastElement: true),
-                          ],
+                        const SizedBox(height: sbbDefaultSpacing),
+                        const SBBListHeader('Elements'),
+                        SBBGroup(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              _DemoEntry('Button', ButtonPage()),
+                              _DemoEntry('Checkbox', CheckboxPage()),
+                              _DemoEntry('Link', LinkPage()),
+                              _DemoEntry('List Header', ListHeaderPage()),
+                              _DemoEntry('List Item', ListItemPage()),
+                              _DemoEntry(
+                                  'Loading Indicator', LoadingIndicatorPage()),
+                              _DemoEntry('Radio Button', RadiobuttonPage()),
+                              _DemoEntry(
+                                  'Segmented Button', SegmentedButtonPage()),
+                              _DemoEntry('Select', SelectPage()),
+                              _DemoEntry('Textfield / Textarea', TextFieldPage(),
+                                  isLastElement: true),
+                            ],
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: sbbDefaultSpacing),
-                      const SBBListHeader('Modules'),
-                      SBBGroup(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            _DemoEntry('Accordion', AccordionPage()),
-                            _DemoEntry('Autocompletion', AutocompletionPage()),
-                            _DemoEntry('Group', GroupPage()),
-                            _DemoEntry('Header', HeaderPage()),
-                            _DemoEntry('Modal', ModalPage()),
-                            _DemoEntry('Toast', ToastPage()),
-                            _DemoEntry('Onboarding', OnboardingPage()),
-                            _DemoEntry('Tab Bar', TabBarPage(),
-                                isLastElement: true),
-                          ],
+                        const SizedBox(height: sbbDefaultSpacing),
+                        const SBBListHeader('Modules'),
+                        SBBGroup(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              _DemoEntry('Accordion', AccordionPage()),
+                              _DemoEntry('Autocompletion', AutocompletionPage()),
+                              _DemoEntry('Group', GroupPage()),
+                              _DemoEntry('Header', HeaderPage()),
+                              _DemoEntry('Modal', ModalPage()),
+                              _DemoEntry('Toast', ToastPage()),
+                              _DemoEntry('Onboarding', OnboardingPage()),
+                              _DemoEntry('Tab Bar', TabBarPage(),
+                                  isLastElement: true),
+                            ],
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: sbbDefaultSpacing),
-                    ],
+                        const SizedBox(height: sbbDefaultSpacing),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          );
-        },
-      );
-    });
+            );
+          },
+        );
+      }),
+    );
   }
 }
 

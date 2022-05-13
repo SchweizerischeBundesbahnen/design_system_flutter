@@ -5,9 +5,6 @@ import 'package:flutter/scheduler.dart';
 
 import '../../design_system_flutter.dart';
 import '../sbb_internal.dart';
-import 'sbb_onboarding_builder_delegate.dart';
-import 'sbb_onboarding_card.dart';
-import 'sbb_onboarding_notification.dart';
 
 /// The SBB Onboarding. Use according to documentation.
 ///
@@ -91,7 +88,7 @@ class _SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProvider
   @override
   void initState() {
     super.initState();
-    SchedulerBinding.instance!.addPostFrameCallback((_) {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
       final context = globalKey.currentContext;
       if (context == null) return;
 

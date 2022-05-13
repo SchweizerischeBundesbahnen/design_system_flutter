@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:design_system_flutter/design_system_flutter.dart';
-import 'package:example/web_pages/button_page.dart';
 import 'package:flutter/material.dart';
 
 import '../webnav/nav.dart';
