@@ -11,25 +11,11 @@ class ButtonPage extends StatelessWidget {
         child: DecoratedBox(
           decoration: BoxDecoration(color: SBBColors.white),
           child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 24.0, horizontal: 48.0),
+            padding: EdgeInsets.symmetric(horizontal: 48.0),
             child:
                 Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16.0),
-                child: Text(
-                  'Buttons',
-                  style: SBBWebTextStyles.headerTitle
-                      .copyWith(fontSize: 25, color: SBBColors.red),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16.0),
-                child: Text(
-                  'Ausprägungen',
-                  style: SBBWebTextStyles.headerTitle
-                      .copyWith(fontSize: 20, color: SBBColors.black),
-                ),
-              ),
+              SBBWebText.headerOne('Buttons', color: SBBColors.red),
+              SBBWebText.headerTwo('Ausprägungen'),
               ButtonExpression(
                 label: '- Primary Button',
                 button: SBBPrimaryButton(label: 'Label', onPressed: () {}),
@@ -126,11 +112,7 @@ class ButtonExpression extends StatelessWidget {
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 16.0),
-          child: Text(
-            label,
-            style: SBBWebTextStyles.headerTitle
-                .copyWith(fontSize: 18, color: SBBColors.black),
-          ),
+          child: SBBWebText.headerThree(label),
         ),
         Row(children: [
           Flexible(child: button),
