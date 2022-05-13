@@ -14,7 +14,7 @@ class TypographyPage extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SBBWebText.headerOne('SBB  Logo', color: SBBColors.red),
+              SBBWebText.headerOne('Typographie', color: SBBColors.red),
               SBBWebText.headerTwo('Stile'),
               SBBWebText.headerThree('Header H1'),
               SBBWebText.headerOne(_sampleTextShort),
