@@ -93,7 +93,9 @@ class SBBIconButton extends StatelessWidget {
 
   TextButton _styledTextButtonWithIcon(SBBThemeData theme) {
     return TextButton(
-      style: buttonStyle(theme),
+      style: isSmallIconButton
+          ? SBBButtonStyles.makeSmallIconButton(buttonStyle(theme))
+          : SBBButtonStyles.makeLargeIconButton(buttonStyle(theme)),
       onPressed: onPressed,
       focusNode: focusNode,
       child: Icon(icon, size: sbbIconSizeSmall),
