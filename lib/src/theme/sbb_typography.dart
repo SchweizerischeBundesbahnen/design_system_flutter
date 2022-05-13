@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
+import '../sbb_internal.dart';
 import 'sbb_colors.dart';
 
 const String SBBWebFont = 'packages/design_system_flutter/SBBWeb';
@@ -93,6 +95,39 @@ class SBBTextStyles {
 class SBBWebTextStyles {
   SBBWebTextStyles._();
 
+  static const TextStyle _headerOne = TextStyle(
+    fontSize: 28.0,
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w300,
+    fontFamily: SBBWebFont,
+    height: 34.0 / 28.0,
+    color: SBBColors.black,
+  );
+  static const TextStyle _headerTwo = TextStyle(
+    fontSize: 21.0,
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w300,
+    fontFamily: SBBWebFont,
+    height: 25.0 / 21.0,
+    color: SBBColors.black,
+  );
+  static const TextStyle _headerThree = TextStyle(
+    fontSize: 18.0,
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w300,
+    fontFamily: SBBWebFont,
+    height: 22.0 / 18.0,
+    color: SBBColors.black,
+  );
+  static const TextStyle _headerFour = TextStyle(
+    fontSize: 16.0,
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w700,
+    fontFamily: SBBWebFont,
+    height: 19.0 / 16.0,
+    color: SBBColors.black,
+  );
+
   static const TextStyle headerTitle = TextStyle(
     fontSize: 15.0,
     fontStyle: FontStyle.normal,
@@ -139,6 +174,57 @@ class SBBWebTextStyles {
     fontFamily: SBBWebFont,
     color: SBBColors.granite,
   );
+}
+
+class SBBWebText extends StatelessWidget {
+  const SBBWebText.headerOne(
+    this.data, {
+    Key? key,
+    this.color,
+    this.style = SBBWebTextStyles._headerOne,
+    this.padding = const EdgeInsets.only(
+        top: SBBWebDivider.big, bottom: SBBWebDivider.medium),
+  }) : super(key: key);
+
+  const SBBWebText.headerTwo(
+    this.data, {
+    Key? key,
+    this.color,
+    this.style = SBBWebTextStyles._headerTwo,
+    this.padding = const EdgeInsets.only(
+        top: SBBWebDivider.medium, bottom: SBBWebDivider.small),
+  }) : super(key: key);
+
+  const SBBWebText.headerThree(
+    this.data, {
+    Key? key,
+    this.color,
+    this.style = SBBWebTextStyles._headerThree,
+    this.padding = const EdgeInsets.only(
+        top: SBBWebDivider.small, bottom: SBBWebDivider.thin),
+  }) : super(key: key);
+
+  const SBBWebText.headerFour(
+    this.data, {
+    Key? key,
+    this.color,
+    this.style = SBBWebTextStyles._headerFour,
+    this.padding = const EdgeInsets.only(
+        top: SBBWebDivider.small, bottom: SBBWebDivider.thin),
+  }) : super(key: key);
+
+  final String data;
+  final Color? color;
+  final TextStyle style;
+  final EdgeInsetsGeometry padding;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: padding,
+      child: Text(data, style: style.copyWith(color: color)),
+    );
+  }
 }
 
 @Deprecated('Use SBBTextStyles instead. Migration Guide for SBBTextStyles.')
