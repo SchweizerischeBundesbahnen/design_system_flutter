@@ -229,12 +229,12 @@ class SBBButtonStyles {
         ),
       );
     else
-      return _makeLargeIconButton(primaryButtonStyle(theme));
+      return makeLargeIconButton(primaryButtonStyle(theme));
   }
 
   static ButtonStyle iconSmall(SBBThemeData theme) {
     if (theme.hostPlatform == HostPlatform.native)
-      return _makeSmallIconButton(_baseButtonStyle.copyWith(
+      return makeSmallIconButton(_baseButtonStyle.copyWith(
         overlayColor: SBBThemeData.resolveStatesWith(
           defaultValue: theme.iconButtonSmallBackgroundColor,
           pressedValue: theme.iconButtonSmallBackgroundColorHighlighted,
@@ -258,12 +258,12 @@ class SBBButtonStyles {
         ),
       ));
     else
-      return _makeSmallIconButton(primaryButtonStyle(theme));
+      return makeSmallIconButton(primaryButtonStyle(theme));
   }
 
   static ButtonStyle iconSmallNegative(SBBThemeData theme) {
     if (theme.hostPlatform == HostPlatform.native)
-      return _makeSmallIconButton(_baseButtonStyle.copyWith(
+      return makeSmallIconButton(_baseButtonStyle.copyWith(
           overlayColor: SBBThemeData.resolveStatesWith(
             defaultValue: theme.iconButtonSmallNegativeBackgroundColor,
             pressedValue:
@@ -288,12 +288,12 @@ class SBBButtonStyles {
                 color: theme.iconButtonSmallNegativeBorderColorDisabled),
           )));
     else
-      return _makeSmallIconButton(primaryButtonStyle(theme));
+      return makeSmallIconButton(primaryButtonStyle(theme));
   }
 
   static ButtonStyle iconSmallBorderless(SBBThemeData theme) {
     if (theme.hostPlatform == HostPlatform.native)
-      return _makeSmallIconButton(_baseButtonStyle.copyWith(
+      return makeSmallIconButton(_baseButtonStyle.copyWith(
         overlayColor: SBBThemeData.resolveStatesWith(
           defaultValue: theme.iconButtonSmallBorderlessBackgroundColor,
           pressedValue:
@@ -312,19 +312,19 @@ class SBBButtonStyles {
         side: SBBThemeData.allStates(BorderSide(style: BorderStyle.none)),
       ));
     else
-      return _makeSmallIconButton(primaryButtonStyle(theme));
+      return makeSmallIconButton(primaryButtonStyle(theme));
   }
 
   static ButtonStyle iconAlternateWeb(SBBThemeData theme) =>
-      _makeLargeIconButton(primaryNegativeButtonStyle(theme));
+      makeLargeIconButton(primaryNegativeButtonStyle(theme));
 
   static ButtonStyle iconSecondaryWeb(SBBThemeData theme) =>
-      _makeLargeIconButton(secondaryButtonStyle(theme));
+      makeLargeIconButton(secondaryButtonStyle(theme));
 
   static ButtonStyle iconGhostWeb(SBBThemeData theme) =>
-      _makeLargeIconButton(ghostButtonStyle(theme));
+      makeLargeIconButton(ghostButtonStyle(theme));
 
-  static _makeSmallIconButton(ButtonStyle baseButtonStyle) =>
+  static ButtonStyle makeSmallIconButton(ButtonStyle baseButtonStyle) =>
       baseButtonStyle.copyWith(
           minimumSize: SBBThemeData.allStates(const Size(
               SBBInternal.defaultButtonHeightSmall,
@@ -334,7 +334,7 @@ class SBBButtonStyles {
               SBBInternal.defaultButtonHeightSmall)),
           padding: SBBThemeData.allStates(EdgeInsets.zero));
 
-  static _makeLargeIconButton(ButtonStyle baseButtonStyle) =>
+  static ButtonStyle makeLargeIconButton(ButtonStyle baseButtonStyle) =>
       baseButtonStyle.copyWith(
           minimumSize: SBBThemeData.allStates(const Size(
               SBBInternal.defaultButtonHeight,
