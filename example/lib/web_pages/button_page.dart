@@ -18,71 +18,50 @@ class ButtonPage extends StatelessWidget {
               SBBWebText.headerTwo('Ausprägungen'),
               ButtonExpression(
                 label: '- Primary Button',
-                button: SBBPrimaryButton(label: 'Label', onPressed: () {}),
-                buttonDisabled:
-                    SBBPrimaryButton(label: 'Label', onPressed: null),
+                buttonBuilder: (label, onPressed) =>
+                    SBBPrimaryButton(label: label, onPressed: onPressed),
               ),
               ButtonExpression(
                 label: '- Alternate Button',
-                button:
-                    SBBPrimaryButtonNegative(label: 'Label', onPressed: () {}),
-                buttonDisabled:
-                    SBBPrimaryButtonNegative(label: 'Label', onPressed: null),
+                buttonBuilder: (label, onPressed) => SBBPrimaryButtonNegative(
+                    label: label, onPressed: onPressed),
               ),
               ButtonExpression(
                 label: '- Secondary Button',
-                button: SBBSecondaryButton(label: 'Label', onPressed: () {}),
-                buttonDisabled:
-                    SBBSecondaryButton(label: 'Label', onPressed: null),
+                buttonBuilder: (label, onPressed) =>
+                    SBBSecondaryButton(label: label, onPressed: onPressed),
               ),
               ButtonExpression(
                 label: '- Ghost Button',
-                button: SBBGhostButton(label: 'Label', onPressed: () {}),
-                buttonDisabled: SBBGhostButton(label: 'Label', onPressed: null),
+                buttonBuilder: (label, onPressed) =>
+                    SBBGhostButton(label: label, onPressed: onPressed),
               ),
               ButtonExpression(
                 label: '- Icon Button Primary',
-                button: SBBIconButton.large(
-                    icon: SBBIcons.pen_small, onPressed: () {}),
-                buttonDisabled: SBBIconButton.large(
-                    icon: SBBIcons.pen_small, onPressed: null),
+                buttonBuilder: (label, onPressed) => SBBIconButton.large(
+                    icon: SBBIcons.pen_small, onPressed: onPressed),
               ),
               ButtonExpression(
                 label: '- Icon Button Alternate',
-                button: SBBIconButton.large(
+                buttonBuilder: (label, onPressed) => SBBIconButton.large(
                   icon: SBBIcons.pen_small,
-                  onPressed: () {},
-                  buttonStyle: SBBButtonStyles.iconAlternateWeb,
-                ),
-                buttonDisabled: SBBIconButton.large(
-                  icon: SBBIcons.pen_small,
-                  onPressed: null,
+                  onPressed: onPressed,
                   buttonStyle: SBBButtonStyles.iconAlternateWeb,
                 ),
               ),
               ButtonExpression(
                 label: '- Icon Button Secondary',
-                button: SBBIconButton.large(
+                buttonBuilder: (label, onPressed) => SBBIconButton.large(
                   icon: SBBIcons.pen_small,
-                  onPressed: () {},
-                  buttonStyle: SBBButtonStyles.iconSecondaryWeb,
-                ),
-                buttonDisabled: SBBIconButton.large(
-                  icon: SBBIcons.pen_small,
-                  onPressed: null,
+                  onPressed: onPressed,
                   buttonStyle: SBBButtonStyles.iconSecondaryWeb,
                 ),
               ),
               ButtonExpression(
                 label: '- Icon Button Ghost',
-                button: SBBIconButton.large(
+                buttonBuilder: (label, onPressed) => SBBIconButton.large(
                   icon: SBBIcons.pen_small,
-                  onPressed: () {},
-                  buttonStyle: SBBButtonStyles.iconGhostWeb,
-                ),
-                buttonDisabled: SBBIconButton.large(
-                  icon: SBBIcons.pen_small,
-                  onPressed: null,
+                  onPressed: onPressed,
                   buttonStyle: SBBButtonStyles.iconGhostWeb,
                 ),
               ),
@@ -96,28 +75,21 @@ class ButtonPage extends StatelessWidget {
 
 class ButtonExpression extends StatelessWidget {
   const ButtonExpression(
-      {Key? key,
-      required this.label,
-      required this.button,
-      required this.buttonDisabled})
+      {Key? key, required this.label, required this.buttonBuilder})
       : super(key: key);
   final String label;
-  final Widget button;
-  final Widget buttonDisabled;
+  final Widget Function(String label, VoidCallback? onPressed) buttonBuilder;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16.0),
-          child: SBBWebText.headerThree(label),
-        ),
+        SBBWebText.headerThree(label),
         Row(children: [
-          Flexible(child: button),
+          Flexible(child: buttonBuilder('Label', () {})),
           SizedBox(width: sbbDefaultSpacing),
-          Flexible(child: buttonDisabled),
+          Flexible(child: buttonBuilder('Label', null)),
         ]),
       ],
     );

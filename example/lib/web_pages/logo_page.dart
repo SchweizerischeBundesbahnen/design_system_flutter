@@ -10,47 +10,15 @@ class LogoPage extends StatelessWidget {
       child: DecoratedBox(
         decoration: BoxDecoration(color: SBBColors.white),
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 24.0, horizontal: 48.0),
+          padding: EdgeInsets.symmetric(horizontal: 48.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16.0),
-                child: Text(
-                  'SBB  Logo',
-                  style: SBBWebTextStyles.headerTitle
-                      .copyWith(fontSize: 25, color: SBBColors.red),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16.0),
-                child: Text(
-                  'Ausprägungen',
-                  style: SBBWebTextStyles.headerTitle
-                      .copyWith(fontSize: 20, color: SBBColors.black),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16.0),
-                child: Text(
-                  '- Signet',
-                  style: SBBWebTextStyles.headerTitle
-                      .copyWith(fontSize: 18, color: SBBColors.black),
-                ),
-              ),
-              SizedBox(
-                  width: 100,
-                  child: SBBWebLogo(
-                    width: 100,
-                  )),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: Text(
-                  '- With text',
-                  style: SBBWebTextStyles.headerTitle
-                      .copyWith(fontSize: 18, color: SBBColors.black),
-                ),
-              ),
+              SBBWebText.headerOne('SBB  Logo', color: SBBColors.red),
+              SBBWebText.headerTwo('Ausprägungen'),
+              SBBWebText.headerThree('- Signet'),
+              SizedBox(width: 100, child: SBBWebLogo(width: 100)),
+              SBBWebText.headerThree('- With Text'),
               Row(
                 children: [
                   SizedBox(
@@ -69,33 +37,18 @@ class LogoPage extends StatelessWidget {
                   )
                 ],
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: Text(
-                  '- Black on White',
-                  style: SBBWebTextStyles.headerTitle
-                      .copyWith(fontSize: 18, color: SBBColors.black),
-                ),
-              ),
+              SBBWebText.headerThree('- Black on White'),
               SizedBox(
                 width: 100,
                 child: SBBWebLogo(
-                  width: 100,
-                  foregroundColor: SBBColors.white,
-                  backgroundColor: SBBColors.black,
-                ),
+                    width: 100,
+                    foregroundColor: SBBColors.white,
+                    backgroundColor: SBBColors.black),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: Text(
-                  '- On Red',
-                  style: SBBWebTextStyles.headerTitle
-                      .copyWith(fontSize: 18, color: SBBColors.black),
-                ),
-              ),
+              SBBWebText.headerThree('- On Red'),
               SizedBox(
-                height: 100,
-                width: 300,
+                height: 60,
+                width: 150,
                 child: DecoratedBox(
                   decoration: BoxDecoration(color: SBBColors.red),
                   child: SBBWebLogo(
