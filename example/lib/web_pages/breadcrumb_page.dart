@@ -23,9 +23,17 @@ class BreadcrumbPage extends StatelessWidget {
     return SizedBox.expand(
       child: DecoratedBox(
         decoration: BoxDecoration(color: SBBColors.white),
-        child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 48.0),
-            child: _StatefulContent()),
+        child: SingleChildScrollView(
+          primary: false,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Container(
+              child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 48.0),
+                  child: _StatefulContent()),
+            ),
+          ),
+        ),
       ),
     );
   }
