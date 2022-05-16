@@ -12,6 +12,7 @@ const _pages = {
   'Typographie': TypographyPage(),
   'Select (Dropdown)': SelectPage(),
   'Checkbox': CheckboxPage(),
+  'Link': LinkPage(),
 };
 
 String _nameToRoute(String name) =>
