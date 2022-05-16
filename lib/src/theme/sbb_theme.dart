@@ -726,15 +726,14 @@ class SBBThemeData {
     checkboxListItemIconColor = checkboxListItemIconColor ?? iconColor;
     checkboxListItemIconColorDisabled =
         checkboxListItemIconColorDisabled ?? SBBColors.metal;
-    checkboxListItemTextStyle =
-        checkboxListItemTextStyle ?? listItemTitleTextStyle;
+    checkboxListItemTextStyle = checkboxListItemTextStyle ?? 
+        (hostPlatform == HostPlatform.web ? SBBWebTextStyles.checkboxListItem : listItemTitleTextStyle);
     checkboxListItemTextStyleDisabled = checkboxListItemTextStyleDisabled ??
-        listItemTitleTextStyle.copyWith(color: SBBColors.metal);
-    checkboxListItemSecondaryTextStyle =
-        checkboxListItemSecondaryTextStyle ?? listItemSubtitleTextStyle;
-    checkboxListItemSecondaryTextStyleDisabled =
-        checkboxListItemSecondaryTextStyleDisabled ??
-            checkboxListItemSecondaryTextStyle.copyWith(color: SBBColors.metal);
+        (hostPlatform == HostPlatform.web ? checkboxListItemTextStyle.copyWith(color: SBBColors.metal) : listItemTitleTextStyle.copyWith(color: SBBColors.metal));
+    checkboxListItemSecondaryTextStyle = checkboxListItemSecondaryTextStyle ?? 
+        (hostPlatform == HostPlatform.web ? SBBWebTextStyles.checkboxListItemSecondary : listItemSubtitleTextStyle);
+    checkboxListItemSecondaryTextStyleDisabled = checkboxListItemSecondaryTextStyleDisabled ??
+        checkboxListItemSecondaryTextStyle.copyWith(color: SBBColors.metal);
 
     // RadioButton TODO define toggleable colors for checkbox and radiobutton?
     radioButtonColor = radioButtonColor ?? primaryColor;

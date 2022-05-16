@@ -10,6 +10,7 @@ const _pages = {
   'Breadcrumb': BreadcrumbPage(),
   'Loading Indicator': LoadingPage(),
   'Typographie': TypographyPage(),
+  'Checkbox': CheckboxPage(),
 };
 
 String _nameToRoute(String name) =>
