@@ -10,7 +10,8 @@ const _pages = {
   'Breadcrumb': BreadcrumbPage(),
   'Loading Indicator': LoadingPage(),
   'Typographie': TypographyPage(),
-  'Select (Dropdown)': SelectPage()
+  'Select (Dropdown)': SelectPage(),
+  'Checkbox': CheckboxPage(),
 };
 
 String _nameToRoute(String name) =>

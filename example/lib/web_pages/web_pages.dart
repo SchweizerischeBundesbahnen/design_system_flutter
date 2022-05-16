@@ -5,3 +5,4 @@ export 'loading_page.dart';
 export 'logo_page.dart';
 export 'select_page.dart';
 export 'typography_page.dart';
+export 'checkbox_page.dart';

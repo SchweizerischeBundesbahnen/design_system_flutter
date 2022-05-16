@@ -183,6 +183,22 @@ class SBBWebTextStyles {
     fontFamily: SBBWebFont,
     color: SBBColors.granite,
   );
+
+  static const TextStyle checkboxListItem = TextStyle(
+    fontSize: 15.0,
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w400,
+    fontFamily: SBBWebFont,
+    color: SBBColors.iron
+  );
+
+  static const TextStyle checkboxListItemSecondary = TextStyle(
+    fontSize: 14.0,
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w300,
+    fontFamily: SBBWebFont,
+    color: SBBColors.metal
+  );
 }
 
 class SBBWebText extends StatelessWidget {
