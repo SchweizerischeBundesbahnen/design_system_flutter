@@ -11,6 +11,7 @@ const _pages = {
   'Loading Indicator': LoadingPage(),
   'Typographie': TypographyPage(),
   'Checkbox': CheckboxPage(),
+  'Link': LinkPage(),
 };
 
 String _nameToRoute(String name) =>
