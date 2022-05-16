@@ -9,26 +9,29 @@ class TypographyPage extends StatelessWidget {
     return SizedBox.expand(
       child: DecoratedBox(
         decoration: BoxDecoration(color: SBBColors.white),
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 48.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SBBWebText.headerOne('Typographie', color: SBBColors.red),
-              SBBWebText.headerTwo('Stile'),
-              SBBWebText.headerThree('Header H1'),
-              SBBWebText.headerOne(_sampleTextShort),
-              SBBWebText.headerThree('Header H2'),
-              SBBWebText.headerTwo(_sampleTextShort),
-              SBBWebText.headerThree('Header H3'),
-              SBBWebText.headerThree(_sampleTextShort),
-              SBBWebText.headerThree('Header H4'),
-              SBBWebText.headerFour(_sampleTextShort),
-              SBBWebText.headerThree('Fliesstext'),
-              SBBWebText.running(_sampleTextLong),
-              SBBWebText.headerThree('Fliesstext selektierbar'),
-              SBBWebText.running(_sampleTextLong, selectable: true),
-            ],
+        child: SingleChildScrollView(
+          primary: false,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 48.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SBBWebText.headerOne('Typographie', color: SBBColors.red),
+                SBBWebText.headerTwo('Stile'),
+                SBBWebText.headerThree('Header H1'),
+                SBBWebText.headerOne(_sampleTextShort),
+                SBBWebText.headerThree('Header H2'),
+                SBBWebText.headerTwo(_sampleTextShort),
+                SBBWebText.headerThree('Header H3'),
+                SBBWebText.headerThree(_sampleTextShort),
+                SBBWebText.headerThree('Header H4'),
+                SBBWebText.headerFour(_sampleTextShort),
+                SBBWebText.headerThree('Fliesstext'),
+                SBBWebText.running(_sampleTextLong),
+                SBBWebText.headerThree('Fliesstext selektierbar'),
+                SBBWebText.running(_sampleTextLong, selectable: true),
+              ],
+            ),
           ),
         ),
       ),

@@ -9,18 +9,24 @@ class LoadingPage extends StatelessWidget {
     return SizedBox.expand(
       child: DecoratedBox(
         decoration: BoxDecoration(color: SBBColors.white),
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 48.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SBBWebText.headerOne('Loading Indicator', color: SBBColors.red),
-              SBBWebText.headerTwo('Ausprägungen'),
-              SBBWebText.headerThree('- Medium'),
-              const SBBLoadingIndicator.medium(),
-              SBBWebText.headerThree('- Tiny'),
-              const SBBLoadingIndicator.tiny()
-            ],
+        child: SingleChildScrollView(
+          primary: false,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 48.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SBBWebText.headerOne('Loading Indicator', color: SBBColors.red),
+                  SBBWebText.headerTwo('Ausprägungen'),
+                  SBBWebText.headerThree('- Medium'),
+                  const SBBLoadingIndicator.medium(),
+                  SBBWebText.headerThree('- Tiny'),
+                  const SBBLoadingIndicator.tiny()
+                ],
+              ),
+            ),
           ),
         ),
       ),
