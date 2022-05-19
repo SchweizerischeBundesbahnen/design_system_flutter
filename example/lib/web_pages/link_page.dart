@@ -13,18 +13,13 @@ class LinkPage extends StatelessWidget {
             child: SingleChildScrollView(
                 primary: false,
                 child: Padding(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 24.0, horizontal: 48.0),
+                    padding: EdgeInsets.symmetric(horizontal: 48.0),
                     child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 16.0),
-                            child: Text(
-                              'Link',
-                              style: SBBWebTextStyles.headerTitle
-                                  .copyWith(fontSize: 25, color: SBBColors.red),
-                            ),
+                          SBBWebText.headerOne(
+                            'Link',
+                            color: SBBColors.red,
                           ),
                           SBBLinkText(
                             text:
