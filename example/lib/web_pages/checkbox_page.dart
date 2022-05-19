@@ -37,17 +37,13 @@ class __ContentState extends State<_Content> {
           child: SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 24.0, horizontal: 48.0),
+              padding: EdgeInsets.symmetric(horizontal: 48.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 16.0),
-                    child: Text(
-                      'Checkboxes',
-                      style: SBBWebTextStyles.headerTitle
-                          .copyWith(fontSize: 25, color: SBBColors.red),
-                    ),
+                  SBBWebText.headerOne(
+                    'Checkboxes',
+                    color: SBBColors.red,
                   ),
                   SBBGroup(
                     padding: const EdgeInsets.all(sbbDefaultSpacing / 2),
@@ -101,7 +97,8 @@ class __ContentState extends State<_Content> {
                             label: 'Call to Action',
                             onChanged: (value) =>
                                 setState(() => _listItemValue3 = value),
-                            trailingIcon: SBBIcons.circle_information_small_small,
+                            trailingIcon:
+                                SBBIcons.circle_information_small_small,
                             onCallToAction: () {},
                           ),
                           SBBCheckboxListItem(
@@ -117,7 +114,8 @@ class __ContentState extends State<_Content> {
                             onChanged: (value) =>
                                 setState(() => _listItemValue5 = value),
                             leadingIcon: SBBIcons.alarm_clock_small,
-                            trailingIcon: SBBIcons.circle_information_small_small,
+                            trailingIcon:
+                                SBBIcons.circle_information_small_small,
                             onCallToAction: () {
                               {}
                             },
@@ -127,7 +125,8 @@ class __ContentState extends State<_Content> {
                             label: 'Disabled, Icon, Call to Action',
                             onChanged: null,
                             leadingIcon: SBBIcons.alarm_clock_small,
-                            trailingIcon: SBBIcons.circle_information_small_small,
+                            trailingIcon:
+                                SBBIcons.circle_information_small_small,
                             onCallToAction: () {},
                           ),
                           SBBCheckboxListItem.custom(
