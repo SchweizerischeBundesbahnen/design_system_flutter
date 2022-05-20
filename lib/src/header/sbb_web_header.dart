@@ -69,12 +69,12 @@ class SBBWebHeader extends StatelessWidget implements PreferredSizeWidget {
         children: [
           Text(
             title,
-            style: SBBWebTextStyles.headerTitle,
+            style: SBBWebTextStyles.medium,
           ),
           if (subtitle.isNotEmpty)
             Text(
               subtitle,
-              style: SBBWebTextStyles.headerSubtitle,
+              style: SBBWebTextStyles.small.copyWith(color: SBBColors.metal),
             ),
         ],
       );

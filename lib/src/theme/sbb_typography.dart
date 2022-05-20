@@ -127,59 +127,33 @@ class SBBWebTextStyles {
     color: SBBColors.black,
   );
 
-  static const TextStyle headerTitle = TextStyle(
+  static const TextStyle medium = TextStyle(
     fontSize: 15.0,
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w400,
     fontFamily: SBBWebFont,
-    color: SBBColors.black,
   );
 
-  static const TextStyle headerSubtitle = TextStyle(
+  static const TextStyle small = TextStyle(
     fontSize: 13.0,
-    fontStyle: FontStyle.normal,
-    fontWeight: FontWeight.w300,
-    fontFamily: SBBWebFont,
-    color: SBBColors.metal,
-  );
-
-  static const TextStyle contextMenu = TextStyle(
-    fontSize: 15.0,
+    height: 13.0,
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w400,
     fontFamily: SBBWebFont,
-    color: SBBColors.iron,
   );
 
-  static const TextStyle userMenuInitials = TextStyle(
+  static const TextStyle extraSmallBold = TextStyle(
     fontSize: 10.0,
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w700,
     fontFamily: SBBWebFont,
-    color: SBBColors.metal,
   );
 
-  static const TextStyle breadcrumb = TextStyle(
-    fontSize: 13.0,
-    fontStyle: FontStyle.normal,
-    fontWeight: FontWeight.w400,
-    fontFamily: SBBWebFont,
-  );
-
-  static const TextStyle checkboxListItem = TextStyle(
+  static const TextStyle mediumLight = TextStyle(
     fontSize: 15.0,
-    fontStyle: FontStyle.normal,
-    fontWeight: FontWeight.w400,
-    fontFamily: SBBWebFont,
-    color: SBBColors.iron
-  );
-
-  static const TextStyle checkboxListItemSecondary = TextStyle(
-    fontSize: 14.0,
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w300,
     fontFamily: SBBWebFont,
-    color: SBBColors.metal
   );
 }
 

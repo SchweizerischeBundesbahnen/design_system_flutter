@@ -268,7 +268,7 @@ class SBBMenuItem<T> extends SBBMenuEntry<T> {
   /// The text style of the sbb menu item.
   ///
   /// If null, [SBBThemeData.menuEntryTextStyle] is used, which defaults to
-  /// [SBBWebTextStyles.contextMenu].
+  /// [SBBWebTextStyles.medium].
   final TextStyle? textStyle;
 
   /// The widget below this widget in the tree.

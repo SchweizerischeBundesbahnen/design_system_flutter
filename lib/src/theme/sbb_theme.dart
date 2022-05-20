@@ -726,14 +726,21 @@ class SBBThemeData {
     checkboxListItemIconColor = checkboxListItemIconColor ?? iconColor;
     checkboxListItemIconColorDisabled =
         checkboxListItemIconColorDisabled ?? SBBColors.metal;
-    checkboxListItemTextStyle = checkboxListItemTextStyle ?? 
-        (hostPlatform == HostPlatform.web ? SBBWebTextStyles.checkboxListItem : listItemTitleTextStyle);
+    checkboxListItemTextStyle = checkboxListItemTextStyle ??
+        (hostPlatform == HostPlatform.web
+            ? SBBWebTextStyles.medium.copyWith(color: SBBColors.iron)
+            : listItemTitleTextStyle);
     checkboxListItemTextStyleDisabled = checkboxListItemTextStyleDisabled ??
-        (hostPlatform == HostPlatform.web ? checkboxListItemTextStyle.copyWith(color: SBBColors.metal) : listItemTitleTextStyle.copyWith(color: SBBColors.metal));
-    checkboxListItemSecondaryTextStyle = checkboxListItemSecondaryTextStyle ?? 
-        (hostPlatform == HostPlatform.web ? SBBWebTextStyles.checkboxListItemSecondary : listItemSubtitleTextStyle);
-    checkboxListItemSecondaryTextStyleDisabled = checkboxListItemSecondaryTextStyleDisabled ??
-        checkboxListItemSecondaryTextStyle.copyWith(color: SBBColors.metal);
+        (hostPlatform == HostPlatform.web
+            ? checkboxListItemTextStyle.copyWith(color: SBBColors.metal)
+            : listItemTitleTextStyle.copyWith(color: SBBColors.metal));
+    checkboxListItemSecondaryTextStyle = checkboxListItemSecondaryTextStyle ??
+        (hostPlatform == HostPlatform.web
+            ? SBBWebTextStyles.mediumLight.copyWith(color: SBBColors.metal)
+            : listItemSubtitleTextStyle);
+    checkboxListItemSecondaryTextStyleDisabled =
+        checkboxListItemSecondaryTextStyleDisabled ??
+            checkboxListItemSecondaryTextStyle.copyWith(color: SBBColors.metal);
 
     // RadioButton TODO define toggleable colors for checkbox and radiobutton?
     radioButtonColor = radioButtonColor ?? primaryColor;
@@ -859,7 +866,8 @@ class SBBThemeData {
             disabledValue: SBBColors.iron,
             hoveredValue: SBBColors.red125,
             pressedValue: SBBColors.red125);
-    menuEntryTextStyle = menuEntryTextStyle ?? SBBWebTextStyles.contextMenu;
+    menuEntryTextStyle = menuEntryTextStyle ??
+        SBBWebTextStyles.medium.copyWith(color: SBBColors.iron);
 
     // UserMenu
     userMenuTextStyle = userMenuTextStyle ?? menuEntryTextStyle;
@@ -871,7 +879,7 @@ class SBBThemeData {
             disabledValue: SBBColors.iron);
 
     // Breadcrumb
-    breadcrumbTextStyle = breadcrumbTextStyle ?? SBBWebTextStyles.breadcrumb;
+    breadcrumbTextStyle = breadcrumbTextStyle ?? SBBWebTextStyles.small;
     breadcrumbForegroundColor = breadcrumbForegroundColor ??
         resolveStatesWith(
             defaultValue: SBBColors.granite,
@@ -893,7 +901,8 @@ class SBBThemeData {
             hoveredValue: SBBColors.red125,
             pressedValue: SBBColors.red125,
             selectedValue: SBBColors.black);
-    sidebarItemTextStyle = sidebarItemTextStyle ?? SBBWebTextStyles.contextMenu;
+    sidebarItemTextStyle = sidebarItemTextStyle ??
+        SBBWebTextStyles.medium.copyWith(color: SBBColors.iron);
 
     // pass them on to constructor that requires all
     return SBBThemeData.raw(
