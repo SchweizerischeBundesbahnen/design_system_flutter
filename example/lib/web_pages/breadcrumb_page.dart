@@ -131,7 +131,7 @@ class _leveledBreadcrumb extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: sbbDefaultSpacing),
       child: SBBBreadcrumb(
-        textStyle: SBBWebTextStyles.breadcrumb.copyWith(fontSize: 15),
+        textStyle: SBBWebTextStyles.medium,
         onLeadingPressed: () => callback(0),
         breadcrumbItems: items,
       ),

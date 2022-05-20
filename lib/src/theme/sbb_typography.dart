@@ -137,6 +137,27 @@ class SBBWebTextStyles {
     color: SBBColors.black,
   );
 
+  static const TextStyle medium = TextStyle(
+    fontSize: 15.0,
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w400,
+    fontFamily: SBBWebFont,
+  );
+
+  static const TextStyle small = TextStyle(
+    fontSize: 13.0,
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w400,
+    fontFamily: SBBWebFont,
+  );
+
+  static const TextStyle extraSmallBold = TextStyle(
+    fontSize: 10.0,
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w700,
+    fontFamily: SBBWebFont,
+  );
+
   static const TextStyle headerTitle = TextStyle(
     fontSize: 15.0,
     fontStyle: FontStyle.normal,

@@ -33,7 +33,7 @@ class LogoPage extends StatelessWidget {
                       SizedBox(width: sbbDefaultSpacing),
                       Text(
                         'SBB CFF FFS',
-                        style: SBBWebTextStyles.headerTitle.copyWith(
+                        style: SBBWebTextStyles.medium.copyWith(
                           fontSize: 32,
                           color: SBBColors.black,
                           fontWeight: FontWeight.bold,
