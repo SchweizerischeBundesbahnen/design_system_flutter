@@ -549,9 +549,8 @@ class _DropdownRoutePage<T> extends StatelessWidget {
       borderRadius: borderRadius,
     );
 
-    final calculatedPadding = selectedIndex > 0
-        ? _kMenuItemHeight * 2 + _kLabelHeight
-        : _kMenuItemHeight + _kLabelHeight;
+    final calculatedPadding =
+        _kMenuItemHeight * (1 + selectedIndex) + _kLabelHeight;
 
     return MediaQuery.removePadding(
       context: context,
@@ -562,8 +561,7 @@ class _DropdownRoutePage<T> extends StatelessWidget {
       child: Builder(
         builder: (BuildContext context) {
           return Padding(
-            padding: EdgeInsets.only(
-                top: calculatedPadding), // added this to move menu down
+            padding: EdgeInsets.only(top: calculatedPadding),
             child: CustomSingleChildLayout(
               delegate: _DropdownMenuRouteLayout<T>(
                 buttonRect: buttonRect,
