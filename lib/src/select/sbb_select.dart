@@ -35,6 +35,7 @@ class SBBSelect<T> extends StatelessWidget {
     this.title,
     this.allowMultilineLabel = false,
     this.isLastElement = false,
+    this.errorText,
     required this.value,
     required this.items,
     required this.onChanged,
@@ -49,8 +50,21 @@ class SBBSelect<T> extends StatelessWidget {
   final T? value;
   final List<SelectMenuItem<T>> items;
   final ValueChanged<T?>? onChanged;
+  /// only usable in web.
+  final String? errorText;
 
   Widget build(BuildContext context) {
+    switch (SBBBaseStyle.of(context).hostPlatform) {
+      case HostPlatform.native:
+        return _buildThemedMobile(context);
+      case HostPlatform.web:
+        return _buildThemedWeb(context);
+      default:
+        return _buildThemedMobile(context);
+    }
+  }
+
+  Widget _buildThemedMobile(BuildContext context) {
     final style = SBBControlStyles.of(context);
     final enabled = onChanged != null;
     return InkWell(
@@ -139,6 +153,24 @@ class SBBSelect<T> extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _buildThemedWeb(BuildContext context) {
+    return SBBDropdownButton<T>(
+      key: key,
+      value: value,
+      items: items
+          .map((e) => SBBDropdownMenuItem<T>(
+                child: Text(e.label),
+                value: e.value,
+                onTap: onChanged != null ? () => onChanged!(e.value) : null,
+              ))
+          .toList(),
+      label: label ?? hint ?? '',
+      hint: hint != null ? Text(hint!) : null,
+      onChanged: onChanged,
+      errorText: errorText
+    ); // TODO build dropdown here and throw warning to use dropdown on web
   }
 
   static showMenu<T>({

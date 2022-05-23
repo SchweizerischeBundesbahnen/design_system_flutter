@@ -131,6 +131,14 @@ class SBBLeanTextStyles {
     fontWeight: FontWeight.w400,
     fontFamily: SBBWebFont,
   );
+
+  static const TextStyle dropdownLabel = TextStyle(
+    fontSize: 13.0,
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w400,
+    fontFamily: SBBWebFont,
+    color: SBBColors.granite,
+  );
 }
 
 @Deprecated('Use SBBTextStyles instead. Migration Guide for SBBTextStyles.')

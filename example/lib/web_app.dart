@@ -9,6 +9,7 @@ const _pages = {
   'Icons': IconPage(),
   'Breadcrumb': BreadcrumbPage(),
   'Loading Indicator': LoadingPage(),
+  'Select (Dropdown)': SelectPage()
 };
 
 String _nameToRoute(String name) =>

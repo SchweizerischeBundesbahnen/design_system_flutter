@@ -121,14 +121,14 @@ class SBBTheme {
       if (states.contains(MaterialState.disabled) && disabledValue != null) return disabledValue;
 
       // pressed / focused
-      if (states.any({MaterialState.pressed, MaterialState.focused}.contains)) {
+      if (states.any({MaterialState.pressed, MaterialState.focused}.contains) && pressedValue != null) {
         return pressedValue;
       }
       // hovered
       if (states.contains(MaterialState.hovered) && hoveredValue != null) return hoveredValue;
 
       // selected
-      if (states.contains(MaterialState.selected) && hoveredValue != null)
+      if (states.contains(MaterialState.selected) && selectedValue != null)
         return selectedValue;
       // default
       return defaultValue;
