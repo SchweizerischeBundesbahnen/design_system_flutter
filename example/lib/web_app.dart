@@ -71,6 +71,13 @@ class _SidePanelPage extends StatelessWidget {
         title: 'Example Web App',
         subtitle: 'Version 0.1',
         userMenu: _exampleUserMenu,
+        navItems: [
+          SBBWebHeaderNavItem(
+              title: 'Example Widgets', onTap: () {}, selected: true),
+          SBBWebHeaderNavItem(title: 'Navigation 2', onTap: () {}),
+          SBBWebHeaderNavItem(title: 'Navigation 3', onTap: () {}),
+          SBBWebHeaderNavItem(title: 'Navigation 4', onTap: () {}),
+        ],
       ),
       body: SBBSidebar(
         body: page,

@@ -136,7 +136,6 @@ class SBBWebTextStyles {
 
   static const TextStyle small = TextStyle(
     fontSize: 13.0,
-    height: 13.0,
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w400,
     fontFamily: SBBWebFont,

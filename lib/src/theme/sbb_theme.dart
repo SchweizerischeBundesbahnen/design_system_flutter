@@ -119,6 +119,7 @@ class SBBThemeData {
     Color? headerButtonBackgroundColorHighlighted,
     Color? headerIconColor,
     TextStyle? headerTextStyle,
+    MaterialStateProperty<Color?>? headerNavItemForegroundColor,
 
     // PrimaryButton
     Color? primaryButtonBackgroundColor,
@@ -416,6 +417,12 @@ class SBBThemeData {
     headerTextStyle = headerTextStyle ??
         themedTextStyle(
             textStyle: SBBTextStyles.largeLight, color: headerIconColor);
+    
+    headerNavItemForegroundColor = headerNavItemForegroundColor ?? resolveStatesWith(
+            defaultValue: SBBColors.black,
+            disabledValue: SBBColors.black,
+            hoveredValue: SBBColors.red125,
+            pressedValue: SBBColors.red125);
 
     // PrimaryButton
     primaryButtonBackgroundColor = primaryButtonBackgroundColor ?? primaryColor;
@@ -923,6 +930,7 @@ class SBBThemeData {
           headerButtonBackgroundColorHighlighted,
       headerIconColor: headerIconColor,
       headerTextStyle: headerTextStyle,
+      headerNavItemForegroundColor: headerNavItemForegroundColor,
       primaryButtonBackgroundColor: primaryButtonBackgroundColor,
       primaryButtonBackgroundColorHighlighted:
           primaryButtonBackgroundColorHighlighted,
@@ -1186,6 +1194,7 @@ class SBBThemeData {
     required this.headerButtonBackgroundColorHighlighted,
     required this.headerIconColor,
     required this.headerTextStyle,
+    required this.headerNavItemForegroundColor,
     required this.primaryButtonBackgroundColor,
     required this.primaryButtonBackgroundColorHighlighted,
     required this.primaryButtonBackgroundColorDisabled,
@@ -1407,6 +1416,7 @@ class SBBThemeData {
   final Color headerButtonBackgroundColorHighlighted;
   final Color headerIconColor;
   final TextStyle headerTextStyle;
+  final MaterialStateProperty<Color?> headerNavItemForegroundColor;
 
   // PrimaryButton
   final Color primaryButtonBackgroundColor;
@@ -1668,6 +1678,7 @@ class SBBThemeData {
     Color? headerButtonBackgroundColorHighlighted,
     Color? headerIconColor,
     TextStyle? headerTextStyle,
+    MaterialStateProperty<Color?>? headerNavItemForegroundColor,
 
     // PrimaryButton
     Color? primaryButtonBackgroundColor,
@@ -1973,6 +1984,8 @@ class SBBThemeData {
           (this.headerTextStyle == defaultTheme.headerTextStyle
               ? null
               : this.headerTextStyle),
+      
+      headerNavItemForegroundColor: headerNavItemForegroundColor ?? (this.headerNavItemForegroundColor == defaultTheme.headerNavItemForegroundColor ? null: this.headerNavItemForegroundColor),
 
       // PrimaryButton
       primaryButtonBackgroundColor: primaryButtonBackgroundColor ??

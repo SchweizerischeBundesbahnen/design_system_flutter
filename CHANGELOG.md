@@ -15,6 +15,7 @@
 - Added `SBBSideBar` (for web)
 - Added `SBBMenuButton` (for web)
 - Added `SBBUserMenu` (for web)
+- Added `SBBWebHeaderNavItem` (for web)
 - Added web support for `SBBIconButton`
 - Added global function `showCustomSBBModalSheet`
 - `SBBPrimaryButton`: Added different theme based on hostType (for web)
