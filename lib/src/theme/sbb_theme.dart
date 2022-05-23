@@ -2114,7 +2114,7 @@ class SBBThemeData {
   }
 
   /// Convenience method for easier use of [MaterialStateProperty.resolveWith].
-  static MaterialStateProperty<T?> resolveStatesWith<T>(
+  static MaterialStateProperty<T> resolveStatesWith<T>(
       {required T defaultValue,
         T? pressedValue,
         T? disabledValue,
@@ -2126,7 +2126,7 @@ class SBBThemeData {
         return disabledValue;
 
       // pressed / focused
-      if (states.any({MaterialState.pressed, MaterialState.focused}.contains)) {
+      if (states.any({MaterialState.pressed, MaterialState.focused}.contains) && pressedValue != null) {
         return pressedValue;
       }
       // hovered
@@ -2134,7 +2134,7 @@ class SBBThemeData {
         return hoveredValue;
       
       // selected
-      if (states.contains(MaterialState.selected) && hoveredValue != null)
+      if (states.contains(MaterialState.selected) && selectedValue != null)
         return selectedValue;
 
       // default
