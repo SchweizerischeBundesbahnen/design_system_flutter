@@ -17,34 +17,13 @@ class _SelectPageState extends State<SelectPage> {
       child: DecoratedBox(
         decoration: BoxDecoration(color: SBBColors.white),
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 24.0, horizontal: 48.0),
+          padding: EdgeInsets.symmetric(horizontal: 48.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16.0),
-                child: Text(
-                  'Select (Dropdown)',
-                  style: SBBLeanTextStyles.headerTitle
-                      .copyWith(fontSize: 25, color: SBBColors.red),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16.0),
-                child: Text(
-                  'Ausprägungen',
-                  style: SBBLeanTextStyles.headerTitle
-                      .copyWith(fontSize: 20, color: SBBColors.black),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: Text(
-                  '- Default',
-                  style: SBBLeanTextStyles.headerTitle
-                      .copyWith(fontSize: 18, color: SBBColors.black),
-                ),
-              ),
+              SBBWebText.headerOne('Select (Dropdown)', color: SBBColors.red),
+              SBBWebText.headerTwo('Ausprägungen'),
+              SBBWebText.headerThree('- Default'),
               Padding(
                 padding: const EdgeInsets.only(bottom: 16.0),
                 child: SBBSelect<String>(
@@ -63,14 +42,7 @@ class _SelectPageState extends State<SelectPage> {
                       });
                     }),
               ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: Text(
-                  '- Disabled',
-                  style: SBBLeanTextStyles.headerTitle
-                      .copyWith(fontSize: 18, color: SBBColors.black),
-                ),
-              ),
+              SBBWebText.headerThree('- Disabled'),
               Padding(
                 padding: const EdgeInsets.only(bottom: 16.0),
                 child: SBBSelect<String>(
@@ -85,14 +57,7 @@ class _SelectPageState extends State<SelectPage> {
                     hint: 'Please choose...',
                     onChanged: null),
               ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: Text(
-                  '- Error',
-                  style: SBBLeanTextStyles.headerTitle
-                      .copyWith(fontSize: 18, color: SBBColors.black),
-                ),
-              ),
+              SBBWebText.headerThree('- Error'),
               Padding(
                 padding: const EdgeInsets.only(bottom: 16.0),
                 child: SBBSelect<String>(
@@ -113,14 +78,7 @@ class _SelectPageState extends State<SelectPage> {
                   errorText: 'Some error occured',
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 8.0),
-                child: Text(
-                  '- DropDownFormField',
-                  style: SBBLeanTextStyles.headerTitle
-                      .copyWith(fontSize: 18, color: SBBColors.black),
-                ),
-              ),
+              SBBWebText.headerThree('- DropDownFormField'),
               Padding(
                 padding: const EdgeInsets.only(bottom: 16.0),
                 child: SBBDropdownButtonFormField<String>(
