@@ -134,7 +134,11 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
       final ModalRoute<dynamic>? parentRoute = ModalRoute.of(context);
       useMenuButton = Scaffold.of(context).hasDrawer;
       useBackButton = parentRoute?.canPop ?? false;
-      useCloseButton = useCloseButton || automaticallyImplyLeading && useBackButton && parentRoute is PageRoute<dynamic> && parentRoute.fullscreenDialog;
+      useCloseButton = useCloseButton ||
+          automaticallyImplyLeading &&
+              useBackButton &&
+              parentRoute is PageRoute<dynamic> &&
+              parentRoute.fullscreenDialog;
     }
 
     if (useMenuButton) {
@@ -195,10 +199,11 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
                   height: kToolbarHeight,
                   width: customLeadingWidth ? leadingWidth : kToolbarHeight,
                   child: IconButton(
-                    icon: SBBLogo(),
+                    icon: SBBWebLogo(),
                     onPressed: onPressedLogo,
                     tooltip: logoTooltip,
-                    splashColor: sbbTheme.headerButtonBackgroundColorHighlighted,
+                    splashColor:
+                        sbbTheme.headerButtonBackgroundColorHighlighted,
                     focusColor: sbbTheme.headerButtonBackgroundColorHighlighted,
                     hoverColor: SBBColors.transparent,
                     highlightColor: SBBColors.transparent,

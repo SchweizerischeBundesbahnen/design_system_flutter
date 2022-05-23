@@ -90,15 +90,15 @@ class SBBLogo extends StatelessWidget {
   }
 }
 
-/// creates SBB Lean Logo
+/// creates SBB  Logo
 ///
 /// respects parent's size and scales accordingly
-class SBBLeanLogo extends StatelessWidget {
+class SBBWebLogo extends StatelessWidget {
   static const _defaultHeight = 20.0;
   static const _defaultWidth = 59.0;
   static const _defaultAspectRatio = _defaultWidth / _defaultHeight;
 
-  const SBBLeanLogo({
+  const SBBWebLogo({
     Key? key,
     this.height,
     this.width,

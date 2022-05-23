@@ -119,7 +119,7 @@ class SBBUserMenu<T> extends StatelessWidget {
             ),
             Text(
               displayName!,
-              style: SBBLeanTextStyles.contextMenu,
+              style: SBBWebTextStyles.medium.copyWith(color: SBBColors.iron),
             ),
             SizedBox(
               width: _kHorizontalSpacing,
@@ -198,7 +198,8 @@ class SBBUserMenu<T> extends StatelessWidget {
         backgroundColor: SBBColors.cloud,
         child: Text(
           _getInitials(displayName ?? ''),
-          style: SBBLeanTextStyles.userMenuInitials,
+          style:
+              SBBWebTextStyles.extraSmallBold.copyWith(color: SBBColors.metal),
         ),
         radius: 12.0,
       );

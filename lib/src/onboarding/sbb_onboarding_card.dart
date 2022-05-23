@@ -10,7 +10,12 @@ class SBBOnboardingCard extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  SBBOnboardingCard.basic({required Widget embeddedChild, required String title, required String content, VoidCallback? onDismissed, Key? key})
+  SBBOnboardingCard.basic(
+      {required Widget embeddedChild,
+      required String title,
+      required String content,
+      VoidCallback? onDismissed,
+      Key? key})
       : this.extended(
           embeddedChild: embeddedChild,
           title: title,
@@ -21,7 +26,12 @@ class SBBOnboardingCard extends StatelessWidget {
         );
 
   SBBOnboardingCard.extended(
-      {required Widget embeddedChild, required String title, required String content, required Widget? customContent, VoidCallback? onDismissed, Key? key})
+      {required Widget embeddedChild,
+      required String title,
+      required String content,
+      required Widget? customContent,
+      VoidCallback? onDismissed,
+      Key? key})
       : this(
           key: key,
           onDismissed: onDismissed,
@@ -44,7 +54,9 @@ class SBBOnboardingCard extends StatelessWidget {
                         title,
                         style: SBBTextStyles.largeBold.copyWith(
                           height: 22.0 / 18.0,
-                          color: SBBTheme.of(context).isDark ? SBBColors.white : SBBColors.black,
+                          color: SBBTheme.of(context).isDark
+                              ? SBBColors.white
+                              : SBBColors.black,
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -54,7 +66,9 @@ class SBBOnboardingCard extends StatelessWidget {
                       child: Text(
                         content,
                         style: SBBTextStyles.mediumLight.copyWith(
-                          color: SBBTheme.of(context).isDark ? SBBColors.white : SBBColors.black,
+                          color: SBBTheme.of(context).isDark
+                              ? SBBColors.white
+                              : SBBColors.black,
                         ),
                         textAlign: TextAlign.center,
                       ),

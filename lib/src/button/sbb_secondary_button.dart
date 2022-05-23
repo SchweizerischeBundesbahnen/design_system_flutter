@@ -1,6 +1,8 @@
+import 'package:design_system_flutter/src/sbb_internal.dart';
 import 'package:flutter/material.dart';
 
 import '../../design_system_flutter.dart';
+import 'sbb_button_styles.dart';
 
 /// The SBB Secondary Button. Use according to documentation.
 ///
@@ -29,30 +31,52 @@ class SBBSecondaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sbbTheme = SBBTheme.of(context);
+    final theme = SBBTheme.of(context);
+    final bool _isLoadingAndNative =
+        (isLoading) && (theme.hostPlatform == HostPlatform.native);
+
     return OutlinedButton(
-      style: Theme.of(context).outlinedButtonTheme.style?.copyWith(
-            // workaround for web
-            padding: SBBThemeData.allStates(EdgeInsets.zero),
-          ),
-      onPressed: isLoading ? null : onPressed,
+      style: SBBButtonStyles.secondaryButtonStyle(theme),
+      onPressed: _isLoadingAndNative ? null : onPressed,
       focusNode: focusNode,
-      child: Padding(
-        // workaround for web
-        padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (isLoading) sbbTheme.isDark ? const SBBLoadingIndicator.tinyCement() : const SBBLoadingIndicator.tinySmoke(),
-            Flexible(
-              child: Text(
-                label,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-              ),
-            ),
-          ],
-        ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (_isLoadingAndNative)
+            theme.isDark
+                ? const SBBLoadingIndicator.tinyCement()
+                : const SBBLoadingIndicator.tinySmoke(),
+          SBBButtonContent(label: label)
+        ],
+      ),
+    );
+  }
+}
+
+class SBBGhostButton extends StatelessWidget {
+  const SBBGhostButton({
+    Key? key,
+    required this.label,
+    required this.onPressed,
+    this.focusNode,
+  }) : super(key: key);
+
+  final String label;
+  final VoidCallback? onPressed;
+  final FocusNode? focusNode;
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = SBBTheme.of(context);
+    if (theme.hostPlatform == HostPlatform.native)
+      debugPrint('WARNING: Ghost button should only be used for web platform.');
+    return OutlinedButton(
+      style: SBBButtonStyles.ghostButtonStyle(theme),
+      onPressed: onPressed,
+      focusNode: focusNode,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [SBBButtonContent(label: label)],
       ),
     );
   }

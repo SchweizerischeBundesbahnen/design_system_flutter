@@ -33,6 +33,7 @@ class SBBTextField extends StatefulWidget {
     this.focusNode,
     this.suffixIcon,
     this.obscureText = false,
+    this.autofocus = false,
   }) : super(key: key);
 
   final TextEditingController? controller;
@@ -65,6 +66,7 @@ class SBBTextField extends StatefulWidget {
   final Widget? suffixIcon;
 
   final bool obscureText;
+  final bool autofocus;
 
   @override
   State<StatefulWidget> createState() => _SBBTextField();
@@ -166,7 +168,6 @@ class _SBBTextField extends State<SBBTextField> {
     var topPadding = 0.0;
     var bottomPadding = 0.0;
 
-
     if (hasLabel && hasValueOrFocus) {
       topPadding = 5.0 + -2.0;
 
@@ -185,6 +186,7 @@ class _SBBTextField extends State<SBBTextField> {
       }
     }
     return TextField(
+      autofocus: widget.autofocus,
       focusNode: _focus,
       controller: controller,
       obscureText: widget.obscureText,

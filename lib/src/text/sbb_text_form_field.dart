@@ -32,6 +32,7 @@ class SBBTextFormField extends StatefulWidget {
     this.suffixIcon,
     this.validator,
     this.obscureText = false,
+    this.autofocus = false,
     this.initialValue,
     this.onSaved,
     this.onEditingComplete,
@@ -67,6 +68,7 @@ class SBBTextFormField extends StatefulWidget {
   /// Takes field value and returns error message or `null`
   final String? Function(String?)? validator;
   final bool obscureText;
+  final bool autofocus;
   final String? initialValue;
   final ValueChanged<String?>? onSaved;
   final VoidCallback? onEditingComplete;
@@ -120,9 +122,7 @@ class _SBBTextField extends State<SBBTextFormField> {
               child: Icon(
                 widget.icon,
                 size: 24,
-                color: SBBTheme.of(context).isDark
-                    ? SBBColors.white
-                    : SBBColors.black,
+                color: SBBTheme.of(context).isDark ? SBBColors.white : SBBColors.black,
               ),
             ),
           Expanded(
@@ -171,6 +171,7 @@ class _SBBTextField extends State<SBBTextFormField> {
       onEditingComplete: widget.onEditingComplete,
       onFieldSubmitted: widget.onFieldSubmitted,
       focusNode: _focus,
+      autofocus: widget.autofocus,
       controller: widget.controller,
       keyboardType: widget.keyboardType,
       maxLines: widget.maxLines,
@@ -191,9 +192,7 @@ class _SBBTextField extends State<SBBTextFormField> {
         errorStyle: const TextStyle(fontSize: 0, height: 0),
         errorText: errorText,
         focusedErrorBorder: InputBorder.none,
-        contentPadding: widget.maxLines == 1
-            ? const EdgeInsets.only(bottom: 2.0)
-            : const EdgeInsets.only(bottom: 8.0),
+        contentPadding: widget.maxLines == 1 ? const EdgeInsets.only(bottom: 2.0) : const EdgeInsets.only(bottom: 8.0),
         labelStyle: _resolveTextStyle(
           SBBBaseTextStyles.formLightPlaceholder,
           SBBBaseTextStyles.formDarkPlaceholder,
@@ -220,8 +219,8 @@ class _SBBTextField extends State<SBBTextFormField> {
     );
   }
 
-  TextStyle _resolveTextStyle(TextStyle lightEnabled, TextStyle darkEnabled,
-      TextStyle lightDisabled, TextStyle darkDisabled) {
+  TextStyle _resolveTextStyle(
+      TextStyle lightEnabled, TextStyle darkEnabled, TextStyle lightDisabled, TextStyle darkDisabled) {
     if (widget.enabled) {
       if (SBBTheme.of(context).isDark) {
         return darkEnabled;
