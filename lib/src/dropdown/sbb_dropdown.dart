@@ -1128,7 +1128,8 @@ class _SBBDropdownButtonState<T> extends State<SBBDropdownButton<T>>
     }
   }
 
-  TextStyle? get _textStyle => widget.style ?? SBBLeanTextStyles.contextMenu;
+  TextStyle? get _textStyle =>
+      widget.style ?? SBBWebTextStyles.medium.copyWith(color: SBBColors.black);
 
   Color get _borderColor {
     if (widget.errorText != null) return SBBColors.red;
@@ -1316,7 +1317,7 @@ class _SBBDropdownButtonState<T> extends State<SBBDropdownButton<T>>
       children: [
         Text(
           widget.label,
-          style: SBBLeanTextStyles.dropdownLabel,
+          style: SBBWebTextStyles.dropdownLabel,
         ),
         Container(
           decoration: _showHighlight
@@ -1346,7 +1347,7 @@ class _SBBDropdownButtonState<T> extends State<SBBDropdownButton<T>>
           Text(
             widget.errorText!,
             style:
-                SBBLeanTextStyles.dropdownLabel.copyWith(color: SBBColors.red),
+                SBBWebTextStyles.dropdownLabel.copyWith(color: SBBColors.red),
           ),
       ],
     );
