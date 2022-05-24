@@ -110,7 +110,6 @@ class _SBBTextField extends State<SBBTextFormField> {
   Widget build(BuildContext context) {
     final style = SBBBaseStyle.of(context);
     final bool isWeb = SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
-    double iconTopPadding = isWeb ? 20 : 12;
     return Padding(
       padding: const EdgeInsets.only(
         left: 16.0,
@@ -121,7 +120,7 @@ class _SBBTextField extends State<SBBTextFormField> {
         children: [
           if (widget.icon != null)
             Padding(
-              padding: EdgeInsets.only(top: iconTopPadding, right: 8.0),
+              padding: EdgeInsets.only(top: isWeb ? 20 : 12, right: 8.0),
               child: Icon(
                 widget.icon,
                 size: 24,
@@ -143,7 +142,7 @@ class _SBBTextField extends State<SBBTextFormField> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            _buildInputGroup(context),
+            _buildTextFormField(),
             SBBTextFieldUnderline(
               errorText: errorText,
               hasFocus: _hasFocus,
@@ -162,6 +161,7 @@ class _SBBTextField extends State<SBBTextFormField> {
   }
 
   Widget _buildTextFormFieldWeb() {
+    final hasLabel = widget.labelText?.isNotEmpty ?? false;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -169,7 +169,18 @@ class _SBBTextField extends State<SBBTextFormField> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              child: _buildInputGroup(context),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (hasLabel)
+                    Text(
+                      '${widget.labelText}',
+                      style: SBBWebTextStyles.small
+                          .copyWith(color: SBBColors.granite),
+                    ),
+                  _buildTextFormField(),
+                ],
+              ),
             ),
             if (widget.suffixIcon != null)
               Padding(
@@ -187,30 +198,9 @@ class _SBBTextField extends State<SBBTextFormField> {
     );
   }
 
-  Widget _buildInputGroup(BuildContext context) {
-    final textScaleFactor = MediaQuery.of(context).textScaleFactor;
-    final bool isWeb = SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
-    final hasLabel = widget.labelText?.isNotEmpty ?? false;
-
-    if (isWeb) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (hasLabel)
-            Text(
-              '${widget.labelText}',
-              style: SBBWebTextStyles.small.copyWith(color: SBBColors.granite),
-            ),
-          _buildTextFormField(isWeb),
-        ],
-      );
-    }
-
-    return _buildTextFormField(isWeb);
-  }
-
-  TextFormField _buildTextFormField(bool isWeb) {
+  TextFormField _buildTextFormField() {
     final hasError = errorText?.isNotEmpty ?? false;
+    final bool isWeb = SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
 
     return TextFormField(
       validator: (value) {
