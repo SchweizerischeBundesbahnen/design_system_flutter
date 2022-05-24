@@ -110,7 +110,6 @@ class _SBBTextField extends State<SBBTextFormField> {
   Widget build(BuildContext context) {
     final sbbTheme = SBBTheme.of(context);
     final bool isWeb = sbbTheme.hostPlatform == HostPlatform.web;
-    double iconTopPadding = isWeb ? 20 : 12;
     return Padding(
       padding: const EdgeInsets.only(
         left: 16.0,
@@ -121,7 +120,7 @@ class _SBBTextField extends State<SBBTextFormField> {
         children: [
           if (widget.icon != null)
             Padding(
-              padding: EdgeInsets.only(top: iconTopPadding, right: 8.0),
+              padding: EdgeInsets.only(top: isWeb ? 20 : 12, right: 8.0),
               child: Icon(
                 widget.icon,
                 size: 24,
@@ -145,7 +144,7 @@ class _SBBTextField extends State<SBBTextFormField> {
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            _buildInputGroup(context),
+            _buildTextFormField(),
             SBBTextFieldUnderline(
               errorText: errorText,
               hasFocus: _hasFocus,
@@ -164,6 +163,7 @@ class _SBBTextField extends State<SBBTextFormField> {
   }
 
   Widget _buildTextFormFieldWeb() {
+    final hasLabel = widget.labelText?.isNotEmpty ?? false;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
@@ -171,7 +171,18 @@ class _SBBTextField extends State<SBBTextFormField> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              child: _buildInputGroup(context),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (hasLabel)
+                    Text(
+                      '${widget.labelText}',
+                      style: SBBWebTextStyles.small
+                          .copyWith(color: SBBColors.granite),
+                    ),
+                  _buildTextFormField(),
+                ],
+              ),
             ),
             if (widget.suffixIcon != null)
               Padding(
@@ -189,31 +200,10 @@ class _SBBTextField extends State<SBBTextFormField> {
     );
   }
 
-  Widget _buildInputGroup(BuildContext context) {
-    final textScaleFactor = MediaQuery.of(context).textScaleFactor;
+  TextFormField _buildTextFormField() {
     final sbbTheme = SBBTheme.of(context);
-    final bool isWeb = sbbTheme.hostPlatform == HostPlatform.web;
-    final hasLabel = widget.labelText?.isNotEmpty ?? false;
-
-    if (isWeb) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (hasLabel)
-            Text(
-              '${widget.labelText}',
-              style: SBBWebTextStyles.small.copyWith(color: SBBColors.granite),
-            ),
-          _buildTextFormField(sbbTheme, isWeb),
-        ],
-      );
-    }
-
-    return _buildTextFormField(sbbTheme, isWeb);
-  }
-
-  TextFormField _buildTextFormField(SBBThemeData sbbTheme, bool isWeb) {
     final hasError = errorText?.isNotEmpty ?? false;
+    final bool isWeb = sbbTheme.hostPlatform == HostPlatform.web;
 
     return TextFormField(
       validator: (value) {
@@ -245,7 +235,7 @@ class _SBBTextField extends State<SBBTextFormField> {
       enabled: widget.enabled,
       decoration: isWeb ? _inputDecorationWeb() : _inputDecorationNative(),
       style: isWeb
-          ? valueTextStyleWeb(sbbTheme, hasError)
+          ? _valueTextStyleWeb(sbbTheme, hasError)
           : _resolveTextStyle(
               SBBBaseTextStyles.formLightDefault,
               SBBBaseTextStyles.formDarkDefault,
@@ -256,16 +246,6 @@ class _SBBTextField extends State<SBBTextFormField> {
       textCapitalization: widget.textCapitalization,
       textInputAction: widget.textInputAction,
     );
-  }
-
-  TextStyle valueTextStyleWeb(SBBThemeData sbbTheme, bool hasError) {
-    final style = widget.enabled
-        ? hasError
-            ? sbbTheme.textFieldTextStyle.copyWith(color: SBBColors.red)
-            : sbbTheme.textFieldTextStyle
-        : sbbTheme.textFieldTextStyleDisabled
-            .copyWith(color: SBBColors.granite);
-    return style;
   }
 
   InputDecoration _inputDecorationWeb() {
@@ -348,5 +328,15 @@ class _SBBTextField extends State<SBBTextFormField> {
         return lightDisabled;
       }
     }
+  }
+
+  TextStyle _valueTextStyleWeb(SBBThemeData sbbTheme, bool hasError) {
+    final style = widget.enabled
+        ? hasError
+            ? sbbTheme.textFieldTextStyle.copyWith(color: SBBColors.red)
+            : sbbTheme.textFieldTextStyle
+        : sbbTheme.textFieldTextStyleDisabled
+            .copyWith(color: SBBColors.granite);
+    return style;
   }
 }
