@@ -70,6 +70,19 @@ class TextFieldPage extends StatelessWidget {
                     SizedBox(
                       width: 250,
                       child: SBBTextField(
+                        labelText: 'With suffix icon',
+                        hintText: 'Hint',
+                        controller: TextEditingController()
+                          ..value = TextEditingValue(text: 'Suffix Icon'),
+                        suffixIcon: Icon(SBBIcons.route_circle_start_small),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    SizedBox(
+                      width: 250,
+                      child: SBBTextField(
                         labelText: 'Multiline',
                         maxLines: 3,
                         controller: TextEditingController()
@@ -114,6 +127,20 @@ class TextFieldPage extends StatelessWidget {
                     ),
                     SizedBox(
                       height: 20,
+                    ),
+                    SizedBox(
+                      width: 250,
+                      child: Form(
+                        autovalidateMode: AutovalidateMode.always,
+                        child: SBBTextFormField(
+                          labelText: 'Label',
+                          hintText: 'Minimum of 8 characters',
+                          controller: TextEditingController(),
+                          validator: (value) => (value?.length ?? 0) > 7
+                              ? null
+                              : 'Minimum of 8 characters required',
+                        ),
+                      ),
                     ),
                   ]),
             ),
