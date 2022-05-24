@@ -131,7 +131,8 @@ class _SBBTextField extends State<SBBTextField> {
                     Expanded(
                       child: _buildInputGroup(context),
                     ),
-                    if (widget.suffixIcon != null) widget.suffixIcon!,
+                    if (widget.suffixIcon != null)
+                      _buildSuffixIcon(widget.suffixIcon!, isWeb),
                   ],
                 ),
                 isWeb
@@ -147,6 +148,16 @@ class _SBBTextField extends State<SBBTextField> {
         ],
       ),
     );
+  }
+
+  Widget _buildSuffixIcon(Widget suffixIcon, bool isWeb) {
+    if (isWeb) {
+      return Padding(
+        padding: EdgeInsetsDirectional.only(top: 20, start: 8),
+        child: suffixIcon,
+      );
+    }
+    return suffixIcon;
   }
 
   Column _errorTextWeb(String? errorText) {
