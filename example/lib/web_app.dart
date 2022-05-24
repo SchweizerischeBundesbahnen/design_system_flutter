@@ -9,11 +9,12 @@ final _pages = {
   'Icons': IconPage(),
   'Breadcrumb': BreadcrumbPage(),
   'Loading Indicator': LoadingPage(),
-  'Typographie': TypographyPage(),
   'Select (Dropdown)': SelectPage(),
+  'Typographie': TypographyPage(),
   'Checkbox': CheckboxPage(),
   'Link': LinkPage(),
-  'Notification': NotificationPage()
+  'Notification': NotificationPage(),
+  'Textfields': TextFieldPage(),
 };
 
 String _nameToRoute(String name) =>

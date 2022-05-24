@@ -103,6 +103,8 @@ class _SBBTextField extends State<SBBTextField> {
 
   @override
   Widget build(BuildContext context) {
+    final bool isWeb = SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
+    double iconTopPadding = isWeb ? 20 : 12;
     return Padding(
       padding: const EdgeInsetsDirectional.only(
         start: sbbDefaultSpacing,
@@ -113,8 +115,8 @@ class _SBBTextField extends State<SBBTextField> {
         children: [
           if (widget.icon != null)
             Padding(
-              padding: const EdgeInsetsDirectional.only(
-                top: 12.0,
+              padding: EdgeInsetsDirectional.only(
+                top: iconTopPadding,
                 end: 8.0,
               ),
               child: Icon(widget.icon),
@@ -127,16 +129,18 @@ class _SBBTextField extends State<SBBTextField> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
-                      child: buildTextField(context),
+                      child: _buildInputGroup(context),
                     ),
                     if (widget.suffixIcon != null) widget.suffixIcon!,
                   ],
                 ),
-                SBBTextFieldUnderline(
-                  errorText: widget.errorText,
-                  hasFocus: _hasFocus,
-                  isLastElement: widget.isLastElement,
-                )
+                isWeb
+                    ? _errorTextWeb(widget.errorText)
+                    : SBBTextFieldUnderline(
+                        errorText: widget.errorText,
+                        hasFocus: _hasFocus,
+                        isLastElement: widget.isLastElement,
+                      )
               ],
             ),
           ),
@@ -145,18 +149,103 @@ class _SBBTextField extends State<SBBTextField> {
     );
   }
 
-  TextField buildTextField(BuildContext context) {
-    final textScaleFactor = MediaQuery.of(context).textScaleFactor;
-    final style = SBBControlStyles.of(context).textField;
+  Column _errorTextWeb(String? errorText) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (errorText != null)
+          Text(
+            errorText,
+            style: SBBWebTextStyles.small.copyWith(color: SBBColors.red),
+          ),
+      ],
+    );
+  }
 
-    final textStyle = widget.enabled ? style?.textStyle : style?.textStyleDisabled;
-    final labelStyle = widget.enabled ? style?.placeholderTextStyle : style?.placeholderTextStyleDisabled;
+  Widget _buildInputGroup(BuildContext context) {
+    final textScaleFactor = MediaQuery.of(context).textScaleFactor;
+    final bool isWeb = SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
+    final hasLabel = widget.labelText?.isNotEmpty ?? false;
+
+    if (isWeb) {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (hasLabel)
+            Text(
+              '${widget.labelText}',
+              style: SBBWebTextStyles.small.copyWith(color: SBBColors.granite),
+            ),
+          _buildTextField(context, textScaleFactor, isWeb),
+        ],
+      );
+    }
+
+    return _buildTextField(context, textScaleFactor, isWeb);
+  }
+
+  TextField _buildTextField(
+      BuildContext context, double textScaleFactor, bool isWeb) {
+    final controlStyle = SBBControlStyles.of(context).textField;
+    final hasError = widget.errorText?.isNotEmpty ?? false;
+    final textStyle = isWeb
+        ? _valueTextStyleWeb(widget.enabled, hasError, context)
+        : _valueTextStyleNative(widget.enabled, context);
+    final labelStyle = widget.enabled
+        ? controlStyle!.placeholderTextStyle
+        : controlStyle!.placeholderTextStyleDisabled;
     // adjust floating label style to get desired sizes
     final floatingLabelStyle = labelStyle?.copyWith(
       fontSize: SBBTextStyles.helpersLabel.fontSize! * 1.335,
       height: 1.5,
     );
 
+    return TextField(
+      autofocus: widget.autofocus,
+      focusNode: _focus,
+      controller: controller,
+      obscureText: widget.obscureText,
+      keyboardType: widget.keyboardType,
+      maxLines: widget.maxLines,
+      minLines: widget.minLines,
+      cursorHeight: 22.0 * textScaleFactor,
+      cursorRadius: const Radius.circular(2.0),
+      enableInteractiveSelection: widget.enableInteractiveSelection,
+      onChanged: widget.onChanged,
+      onTap: widget.onTap,
+      onSubmitted: widget.onSubmitted,
+      enabled: widget.enabled,
+      decoration: isWeb
+          ? _textFieldDecorationWeb(hasError, 12, 12, 12, textScaleFactor,
+              labelStyle!, floatingLabelStyle!)
+          : _textFieldInputDecorationNative(
+              textScaleFactor, labelStyle!, floatingLabelStyle!),
+      style: hasError ? textStyle.copyWith(color: SBBColors.red) : textStyle,
+      inputFormatters: widget.inputFormatters,
+      textCapitalization: widget.textCapitalization,
+      textInputAction: widget.textInputAction,
+    );
+  }
+
+  TextStyle _valueTextStyleNative(bool enabled, BuildContext context) {
+    final style = SBBControlStyles.of(context).textField;
+    return (widget.enabled
+        ? style?.textStyle
+        : style?.textStyleDisabled)!;
+  }
+
+  TextStyle _valueTextStyleWeb(
+      bool enabled, bool hasError, BuildContext context) {
+    final style = SBBControlStyles.of(context).textField;
+    return (widget.enabled
+        ? hasError
+            ? style?.textStyle!.copyWith(color: SBBColors.red)
+            : style?.textStyle
+        : style?.textStyleDisabled!.copyWith(color: SBBColors.granite))!;
+  }
+
+  InputDecoration _textFieldInputDecorationNative(double textScaleFactor,
+      TextStyle labelStyle, TextStyle floatingLabelStyle) {
     final hasValueOrFocus = controller.text.isNotEmpty || _hasFocus;
     final hasLabel = widget.labelText?.isNotEmpty ?? false;
     final hasError = widget.errorText?.isNotEmpty ?? false;
@@ -181,45 +270,61 @@ class _SBBTextField extends State<SBBTextField> {
         bottomPadding = 14.0;
       }
     }
-    return TextField(
-      autofocus: widget.autofocus,
-      focusNode: _focus,
-      controller: controller,
-      obscureText: widget.obscureText,
-      keyboardType: widget.keyboardType,
-      maxLines: widget.maxLines,
-      minLines: widget.minLines,
-      cursorHeight: 22.0 * textScaleFactor,
-      cursorRadius: const Radius.circular(2.0),
-      enableInteractiveSelection: widget.enableInteractiveSelection,
-      onChanged: widget.onChanged,
-      onTap: widget.onTap,
-      onSubmitted: widget.onSubmitted,
-      enabled: widget.enabled,
-      decoration: InputDecoration(
-        isCollapsed: !hasValueOrFocus,
-        isDense: true,
-        labelText: widget.labelText,
-        focusedBorder: InputBorder.none,
-        enabledBorder: InputBorder.none,
-        disabledBorder: InputBorder.none,
-        errorBorder: InputBorder.none,
-        focusedErrorBorder: InputBorder.none,
-        contentPadding: EdgeInsetsDirectional.only(
-          top: topPadding * textScaleFactor,
-          bottom: bottomPadding * textScaleFactor,
-        ),
-        floatingLabelStyle: floatingLabelStyle?.copyWith(),
-        labelStyle: labelStyle,
-        hintText: widget.hintText,
-        hintStyle: labelStyle,
-        hintMaxLines: widget.hintMaxLines,
-        alignLabelWithHint: true,
+    return InputDecoration(
+      isCollapsed: !hasValueOrFocus,
+      isDense: true,
+      labelText: widget.labelText,
+      focusedBorder: InputBorder.none,
+      enabledBorder: InputBorder.none,
+      disabledBorder: InputBorder.none,
+      errorBorder: InputBorder.none,
+      focusedErrorBorder: InputBorder.none,
+      contentPadding: EdgeInsetsDirectional.only(
+        top: topPadding * textScaleFactor,
+        bottom: bottomPadding * textScaleFactor,
       ),
-      style: textStyle,
-      inputFormatters: widget.inputFormatters,
-      textCapitalization: widget.textCapitalization,
-      textInputAction: widget.textInputAction,
+      floatingLabelStyle: floatingLabelStyle,
+      labelStyle: labelStyle,
+      hintText: widget.hintText,
+      hintStyle: labelStyle,
+      hintMaxLines: widget.hintMaxLines,
+      alignLabelWithHint: true,
+    );
+  }
+
+  InputDecoration _textFieldDecorationWeb(
+      bool hasError,
+      double topPadding,
+      double bottomPadding,
+      double startPadding,
+      double textScaleFactor,
+      TextStyle labelStyle,
+      TextStyle floatingLabelStyle) {
+    return InputDecoration(
+      isDense: true,
+      fillColor: widget.enabled ? SBBColors.white : SBBColors.milk,
+      focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(2.0)),
+          borderSide: BorderSide(
+              color: hasError ? SBBColors.red : SBBColors.iron, width: 1.0)),
+      enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(2.0)),
+          borderSide: BorderSide(
+              color: hasError ? SBBColors.red : SBBColors.graphite,
+              width: 1.0)),
+      disabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(2.0)),
+          borderSide: BorderSide(color: SBBColors.aluminum, width: 1.0)),
+      contentPadding: EdgeInsetsDirectional.only(
+        top: topPadding * textScaleFactor,
+        bottom: bottomPadding * textScaleFactor,
+        start: startPadding * textScaleFactor,
+      ),
+      floatingLabelStyle: floatingLabelStyle.copyWith(color: SBBColors.storm),
+      labelStyle: labelStyle,
+      hintText: widget.hintText,
+      hintStyle: labelStyle,
+      hintMaxLines: widget.hintMaxLines,
     );
   }
 }
