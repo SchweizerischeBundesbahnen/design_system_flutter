@@ -13,6 +13,7 @@ const _pages = {
   'Typographie': TypographyPage(),
   'Checkbox': CheckboxPage(),
   'Link': LinkPage(),
+  'Textfields': TextFieldPage(),
 };
 
 String _nameToRoute(String name) =>

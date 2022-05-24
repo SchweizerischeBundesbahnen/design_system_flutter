@@ -391,7 +391,7 @@ class SBBThemeData {
     defaultTextColor = defaultTextColor ??
         defaultTextStyle?.color ??
         themeValue(SBBColors.black, SBBColors.white);
-    defaultTextStyle = (defaultTextStyle ?? SBBTextStyles.mediumLight).copyWith(
+    defaultTextStyle = (defaultTextStyle ?? (hostPlatform == HostPlatform.web ? SBBWebTextStyles.medium : SBBTextStyles.mediumLight)).copyWith(
         fontFamily: defaultTextStyle?.fontFamily ?? fontFamily,
         color: defaultTextStyle?.color ?? defaultTextColor);
     dividerColor =
