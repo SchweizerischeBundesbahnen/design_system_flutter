@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'web_pages/web_pages.dart';
 
-const _pages = {
+final _pages = {
   'Logo': LogoPage(),
   'Buttons': ButtonPage(),
   'Icons': IconPage(),
@@ -13,6 +13,7 @@ const _pages = {
   'Typographie': TypographyPage(),
   'Checkbox': CheckboxPage(),
   'Link': LinkPage(),
+  'Notification': NotificationPage()
 };
 
 String _nameToRoute(String name) =>
