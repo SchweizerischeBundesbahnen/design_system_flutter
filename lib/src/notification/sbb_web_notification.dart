@@ -1,16 +1,14 @@
 import 'package:flutter/material.dart';
 
-import '../theme/sbb_colors.dart';
-import '../theme/sbb_icons.dart';
-import '../theme/sbb_typography.dart';
+import '../../design_system_flutter.dart';
 
 const _kBorderRadius = 2.0;
 const _kVerticalPadding = 12.0;
 const _kHorizontalPadding = 16.0;
 const _kScrollingDuration = Duration(milliseconds: 600);
 
-class SBBNotificaitonWeb extends StatefulWidget {
-  const SBBNotificaitonWeb.confirmation(
+class SBBWebNotification extends StatefulWidget {
+  const SBBWebNotification.confirmation(
     this.text, {
     Key? key,
     this.textColor = SBBColors.green,
@@ -21,7 +19,7 @@ class SBBNotificaitonWeb extends StatefulWidget {
     this.expand = false,
   }) : super(key: key);
 
-  const SBBNotificaitonWeb.hint(
+  const SBBWebNotification.hint(
     this.text, {
     Key? key,
     this.textColor = SBBColors.granite,
@@ -32,18 +30,18 @@ class SBBNotificaitonWeb extends StatefulWidget {
     this.expand = false,
   }) : super(key: key);
 
-  const SBBNotificaitonWeb.warning(
+  const SBBWebNotification.warning(
     this.text, {
     Key? key,
     this.textColor = SBBColors.white,
     this.borderColor,
-    this.backgroundColor = const Color.fromARGB(255, 242, 125, 0),
+    this.backgroundColor = SBBColors.orange,
     this.icon = SBBIcons.sign_x_medium,
     this.jumpMarks,
     this.expand = false,
   }) : super(key: key);
 
-  const SBBNotificaitonWeb.error(
+  const SBBWebNotification.error(
     this.text, {
     Key? key,
     this.textColor = SBBColors.white,
@@ -63,10 +61,10 @@ class SBBNotificaitonWeb extends StatefulWidget {
   final bool expand;
 
   @override
-  State<SBBNotificaitonWeb> createState() => _SBBNotificaitonWebState();
+  State<SBBWebNotification> createState() => _SBBWebNotificationState();
 }
 
-class _SBBNotificaitonWebState extends State<SBBNotificaitonWeb>
+class _SBBWebNotificationState extends State<SBBWebNotification>
     with SingleTickerProviderStateMixin {
   late AnimationController expandController;
   late Animation<double> animation;
@@ -96,7 +94,7 @@ class _SBBNotificaitonWebState extends State<SBBNotificaitonWeb>
   }
 
   @override
-  void didUpdateWidget(SBBNotificaitonWeb oldWidget) {
+  void didUpdateWidget(SBBWebNotification oldWidget) {
     super.didUpdateWidget(oldWidget);
     _runExpandCheck();
   }
@@ -154,7 +152,7 @@ class _SBBNotificaitonWebState extends State<SBBNotificaitonWeb>
                 ),
               ),
               Align(
-                alignment: Alignment.centerRight,
+                alignment: Alignment.topRight,
                 child: GestureDetector(
                   child: Icon(SBBIcons.cross_medium, color: widget.textColor),
                   onTap: () {
@@ -189,6 +187,9 @@ class SBBJumpMark extends StatelessWidget {
     if (keyToScrollTo.currentContext == null) return;
     Scrollable.ensureVisible(keyToScrollTo.currentContext!,
         duration: _kScrollingDuration);
+
+    // For highlighting
+    //keyToScrollTo.currentState?._highlightChild();
   }
 
   @override
@@ -204,3 +205,46 @@ class SBBJumpMark extends StatelessWidget {
     );
   }
 }
+
+/*class SBBJumpable extends StatefulWidget {
+  const SBBJumpable(
+      {required Key key,
+      required this.child,
+      this.highlightColor = SBBColors.peach})
+      : super(key: key);
+
+  final Widget child;
+  final Color highlightColor;
+
+  @override
+  State<SBBJumpable> createState() => SBBJumpableState();
+}
+
+class SBBJumpableState extends State<SBBJumpable> {
+  bool _highlight = false;
+
+  void _highlightChild() {
+    setState(() {
+      _highlight = true;
+    });
+  }
+
+  void _endHighlighting() {
+    setState(() {
+      _highlight = false;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedContainer(
+        color: _highlight
+            ? widget.highlightColor
+            : widget.highlightColor.withOpacity(
+                0), // setting the opacity to 0 ist better in animation.
+        duration: _kScrollingDuration * 2,
+        onEnd: () => _endHighlighting(),
+        curve: Curves.easeInOut,
+        child: widget.child);
+  }
+}*/

@@ -64,27 +64,27 @@ class _NotificationPageState extends State<NotificationPage> {
                 SBBWebText.headerThree('Bestätigung'),
                 Padding(
                     padding: const EdgeInsets.only(bottom: 16.0),
-                    child: SBBNotificaitonWeb.confirmation('Meldungstext',
+                    child: SBBWebNotification.confirmation('Meldungstext',
                         expand: expandConfirmation)),
                 SBBWebText.headerThree('Hinweis'),
                 Padding(
                     padding: const EdgeInsets.only(bottom: 16.0),
-                    child: SBBNotificaitonWeb.hint('Meldungstext',
+                    child: SBBWebNotification.hint('Meldungstext',
                         expand: expandHint)),
                 SBBWebText.headerThree('Warnung'),
                 Padding(
                     padding: const EdgeInsets.only(bottom: 16.0),
-                    child: SBBNotificaitonWeb.warning('Meldungstext',
+                    child: SBBWebNotification.warning('Meldungstext',
                         expand: expandWarning)),
                 SBBWebText.headerThree('Fehler'),
                 Padding(
                     padding: const EdgeInsets.only(bottom: 16.0),
-                    child: SBBNotificaitonWeb.error('Meldungstext',
+                    child: SBBWebNotification.error('Meldungstext',
                         expand: expandError)),
                 SBBWebText.headerThree('Fehler mit Sprungmarke'),
                 Padding(
                     padding: const EdgeInsets.only(bottom: 16.0),
-                    child: SBBNotificaitonWeb.error(
+                    child: SBBWebNotification.error(
                       'Korrigieren Sie bitte folgende Eingaben:',
                       expand: expandErrorWithJumpMark,
                       jumpMarks: [
