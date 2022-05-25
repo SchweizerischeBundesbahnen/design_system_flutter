@@ -43,10 +43,10 @@ class _NotificationPageState extends State<NotificationPage> {
     return SizedBox.expand(
       child: DecoratedBox(
         decoration: BoxDecoration(color: SBBColors.white),
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 48.0),
-          child: SingleChildScrollView(
-            controller: ScrollController(),
+        child: SingleChildScrollView(
+          controller: ScrollController(),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 48.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
