@@ -108,6 +108,8 @@ class _SBBTextField extends State<SBBTextFormField> {
 
   @override
   Widget build(BuildContext context) {
+    final sbbTheme = SBBTheme.of(context);
+    final bool isWeb = sbbTheme.hostPlatform == HostPlatform.web;
     return Padding(
       padding: const EdgeInsets.only(
         left: 16.0,
@@ -118,42 +120,91 @@ class _SBBTextField extends State<SBBTextFormField> {
         children: [
           if (widget.icon != null)
             Padding(
-              padding: const EdgeInsets.only(top: 12.0, right: 8.0),
+              padding: EdgeInsets.only(top: isWeb ? 20 : 12, right: 8.0),
               child: Icon(
                 widget.icon,
                 size: 24,
-                color: SBBTheme.of(context).isDark ? SBBColors.white : SBBColors.black,
+                color: SBBTheme.of(context).isDark
+                    ? SBBColors.white
+                    : SBBColors.black,
               ),
             ),
           Expanded(
-            child: Stack(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    buildTextFormField(context),
-                    SBBTextFieldUnderline(
-                      errorText: errorText,
-                      hasFocus: _hasFocus,
-                      isLastElement: widget.isLastElement,
-                    )
-                  ],
-                ),
-                if (widget.suffixIcon != null)
-                  Positioned(
-                    top: -4.0,
-                    right: 0.0,
-                    child: widget.suffixIcon!,
-                  )
-              ],
-            ),
+            child:
+                isWeb ? _buildTextFormFieldWeb() : _buildTextFormFieldNative(),
           ),
         ],
       ),
     );
   }
 
-  TextFormField buildTextFormField(BuildContext context) {
+  Widget _buildTextFormFieldNative() {
+    return Stack(
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            _buildTextFormField(),
+            SBBTextFieldUnderline(
+              errorText: errorText,
+              hasFocus: _hasFocus,
+              isLastElement: widget.isLastElement,
+            )
+          ],
+        ),
+        if (widget.suffixIcon != null)
+          Positioned(
+            top: -4.0,
+            right: 0.0,
+            child: widget.suffixIcon!,
+          )
+      ],
+    );
+  }
+
+  Widget _buildTextFormFieldWeb() {
+    final hasLabel = widget.labelText?.isNotEmpty ?? false;
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  if (hasLabel)
+                    Text(
+                      '${widget.labelText}',
+                      style: SBBWebTextStyles.small
+                          .copyWith(color: SBBColors.granite),
+                    ),
+                  _buildTextFormField(),
+                ],
+              ),
+            ),
+            if (widget.suffixIcon != null)
+              Padding(
+                padding: EdgeInsetsDirectional.only(top: 20, start: 8),
+                child: widget.suffixIcon,
+              ),
+          ],
+        ),
+        if (errorText != null)
+          Text(
+            errorText!,
+            style: SBBWebTextStyles.small.copyWith(color: SBBColors.red),
+          )
+      ],
+    );
+  }
+
+  TextFormField _buildTextFormField() {
+    final sbbTheme = SBBTheme.of(context);
+    final hasError = errorText?.isNotEmpty ?? false;
+    final bool isWeb = sbbTheme.hostPlatform == HostPlatform.web;
+
     return TextFormField(
       validator: (value) {
         if (widget.validator != null) {
@@ -182,45 +233,88 @@ class _SBBTextField extends State<SBBTextFormField> {
       onChanged: widget.onChanged,
       onTap: widget.onTap,
       enabled: widget.enabled,
-      decoration: InputDecoration(
-        labelText: widget.labelText,
-        focusedBorder: InputBorder.none,
-        enabledBorder: InputBorder.none,
-        disabledBorder: InputBorder.none,
-        errorBorder: InputBorder.none,
-        // Hide default error since we have our own
-        errorStyle: const TextStyle(fontSize: 0, height: 0),
-        errorText: errorText,
-        focusedErrorBorder: InputBorder.none,
-        contentPadding: widget.maxLines == 1 ? const EdgeInsets.only(bottom: 2.0) : const EdgeInsets.only(bottom: 8.0),
-        labelStyle: _resolveTextStyle(
-          SBBBaseTextStyles.formLightPlaceholder,
-          SBBBaseTextStyles.formDarkPlaceholder,
-          SBBBaseTextStyles.formLightDisabledPlaceholder,
-          SBBBaseTextStyles.formDarkDisabledPlaceholder,
-        ),
-        hintText: widget.hintText,
-        hintStyle: _resolveTextStyle(
-          SBBBaseTextStyles.formLightPlaceholder,
-          SBBBaseTextStyles.formDarkPlaceholder,
-          SBBBaseTextStyles.formLightDisabledPlaceholder,
-          SBBBaseTextStyles.formDarkDisabledPlaceholder,
-        ),
-      ),
-      style: _resolveTextStyle(
-        SBBBaseTextStyles.formLightDefault,
-        SBBBaseTextStyles.formDarkDefault,
-        SBBBaseTextStyles.formLightDisabledDefault,
-        SBBBaseTextStyles.formDarkDisabledDefault,
-      ),
+      decoration: isWeb ? _inputDecorationWeb() : _inputDecorationNative(),
+      style: isWeb
+          ? _valueTextStyleWeb(sbbTheme, hasError)
+          : _resolveTextStyle(
+              SBBBaseTextStyles.formLightDefault,
+              SBBBaseTextStyles.formDarkDefault,
+              SBBBaseTextStyles.formLightDisabledDefault,
+              SBBBaseTextStyles.formDarkDisabledDefault,
+            ),
       inputFormatters: widget.inputFormatters,
       textCapitalization: widget.textCapitalization,
       textInputAction: widget.textInputAction,
     );
   }
 
-  TextStyle _resolveTextStyle(
-      TextStyle lightEnabled, TextStyle darkEnabled, TextStyle lightDisabled, TextStyle darkDisabled) {
+  InputDecoration _inputDecorationWeb() {
+    return InputDecoration(
+      isDense: true,
+      border: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(2.0)),
+          borderSide: BorderSide(color: SBBColors.graphite, width: 1.0)),
+      focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(2.0)),
+          borderSide: BorderSide(color: SBBColors.iron, width: 1.0)),
+      enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(2.0)),
+          borderSide: BorderSide(color: SBBColors.graphite, width: 1.0)),
+      disabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(2.0)),
+          borderSide: BorderSide(color: SBBColors.aluminum, width: 1.0)),
+      errorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(2.0)),
+          borderSide: BorderSide(color: SBBColors.red, width: 1.0)),
+      focusedErrorBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(2.0)),
+          borderSide: BorderSide(color: SBBColors.red, width: 1.0)),
+      // Hide default error since we have our own
+      errorStyle: const TextStyle(fontSize: 0, height: 0),
+      errorText: errorText,
+      contentPadding: EdgeInsetsDirectional.only(
+        top: 12,
+        bottom: 12,
+        start: 12,
+      ),
+      labelStyle: SBBWebTextStyles.small.copyWith(color: SBBColors.granite),
+      hintText: widget.hintText,
+      hintStyle: SBBWebTextStyles.medium.copyWith(color: SBBColors.storm),
+    );
+  }
+
+  InputDecoration _inputDecorationNative() {
+    return InputDecoration(
+      labelText: widget.labelText,
+      focusedBorder: InputBorder.none,
+      enabledBorder: InputBorder.none,
+      disabledBorder: InputBorder.none,
+      errorBorder: InputBorder.none,
+      // Hide default error since we have our own
+      errorStyle: const TextStyle(fontSize: 0, height: 0),
+      errorText: errorText,
+      focusedErrorBorder: InputBorder.none,
+      contentPadding: widget.maxLines == 1
+          ? const EdgeInsets.only(bottom: 2.0)
+          : const EdgeInsets.only(bottom: 8.0),
+      labelStyle: _resolveTextStyle(
+        SBBBaseTextStyles.formLightPlaceholder,
+        SBBBaseTextStyles.formDarkPlaceholder,
+        SBBBaseTextStyles.formLightDisabledPlaceholder,
+        SBBBaseTextStyles.formDarkDisabledPlaceholder,
+      ),
+      hintText: widget.hintText,
+      hintStyle: _resolveTextStyle(
+        SBBBaseTextStyles.formLightPlaceholder,
+        SBBBaseTextStyles.formDarkPlaceholder,
+        SBBBaseTextStyles.formLightDisabledPlaceholder,
+        SBBBaseTextStyles.formDarkDisabledPlaceholder,
+      ),
+    );
+  }
+
+  TextStyle _resolveTextStyle(TextStyle lightEnabled, TextStyle darkEnabled,
+      TextStyle lightDisabled, TextStyle darkDisabled) {
     if (widget.enabled) {
       if (SBBTheme.of(context).isDark) {
         return darkEnabled;
@@ -234,5 +328,15 @@ class _SBBTextField extends State<SBBTextFormField> {
         return lightDisabled;
       }
     }
+  }
+
+  TextStyle _valueTextStyleWeb(SBBThemeData sbbTheme, bool hasError) {
+    final style = widget.enabled
+        ? hasError
+            ? sbbTheme.textFieldTextStyle.copyWith(color: SBBColors.red)
+            : sbbTheme.textFieldTextStyle
+        : sbbTheme.textFieldTextStyleDisabled
+            .copyWith(color: SBBColors.granite);
+    return style;
   }
 }

@@ -13,7 +13,8 @@ final _pages = {
   'Typographie': TypographyPage(),
   'Checkbox': CheckboxPage(),
   'Link': LinkPage(),
-  'Notification': NotificationPage()
+  'Notification': NotificationPage(),
+  'Textfields': TextFieldPage(),
 };
 
 String _nameToRoute(String name) =>
