@@ -68,6 +68,7 @@ class _SidePanelPage extends StatelessWidget {
       appBar: SBBWebHeader(
         title: 'Example Web App',
         subtitle: 'Version 0.1',
+        leading: SizedBox.expand(),
         userMenu: _exampleUserMenu,
         navItems: [
           SBBWebHeaderNavItem(

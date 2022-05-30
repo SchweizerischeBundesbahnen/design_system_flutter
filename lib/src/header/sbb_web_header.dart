@@ -12,6 +12,7 @@ class SBBWebHeader extends StatelessWidget implements PreferredSizeWidget {
     this.height = 54.0,
     this.actions,
     this.navItems,
+    this.leading,
   }) : super(key: key);
 
   final String title;
@@ -22,8 +23,9 @@ class SBBWebHeader extends StatelessWidget implements PreferredSizeWidget {
   /// Optional logo to override default [SBBWebLogo].
   final Widget logo;
 
-  /// The space left to the [title].
+  /// Defines the width of [leading] widget.
   ///
+  /// Only applies if [leading] is not null.
   /// Defaults to 54 logical pixels.
   final double leadingWidth;
 
@@ -43,12 +45,18 @@ class SBBWebHeader extends StatelessWidget implements PreferredSizeWidget {
   /// the [actions] widgets.
   final List<SBBWebHeaderNavItem>? navItems;
 
+  /// The optional leading widget left of the title.
+  ///
+  /// In case of a null leading widget,
+  /// the middle/title widget will stretch to start.
+  final Widget? leading;
+
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      titleSpacing: 0.0,
       centerTitle: false,
       toolbarHeight: height,
+      leading: leading,
       leadingWidth: leadingWidth,
       backgroundColor: SBBColors.white,
       title: _buildTitleWithNavItems(), // middle section
@@ -64,6 +72,7 @@ class SBBWebHeader extends StatelessWidget implements PreferredSizeWidget {
           right: SBBResponsive.isDesktop(context) ? leadingWidth : 15.0,
         ),
       ],
+      automaticallyImplyLeading: false,
     );
   }
 
