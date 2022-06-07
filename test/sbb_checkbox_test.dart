@@ -8,14 +8,16 @@ import 'test_app.dart';
 void main() {
   void generateTest(String name, bool v1, bool? v2, bool v3) {
     testGoldens(name, (WidgetTester tester) async {
-      final builder = GoldenBuilder.column(wrap: (w) => TestApp.expanded(child: w))
-        ..addScenario(
-          'checkbox tests',
-          CheckboxTest(value1: v1, value2: v2, value3: v3),
-        );
+      final builder =
+          GoldenBuilder.column(wrap: (w) => TestApp.expanded(child: w))
+            ..addScenario(
+              'checkbox tests',
+              CheckboxTest(value1: v1, value2: v2, value3: v3),
+            );
 
       await tester.pumpWidgetBuilder(builder.build());
-      await multiScreenGolden(tester, '${name}_initial', devices: TestApp.devices);
+      await multiScreenGolden(tester, '${name}_initial',
+          devices: TestApp.native_devices);
     });
   }
 
@@ -25,7 +27,9 @@ void main() {
 }
 
 class CheckboxTest extends StatelessWidget {
-  const CheckboxTest({Key? key, required this.value1, this.value2, required this.value3}) : super(key: key);
+  const CheckboxTest(
+      {Key? key, required this.value1, this.value2, required this.value3})
+      : super(key: key);
 
   final bool value1;
   final bool? value2;
