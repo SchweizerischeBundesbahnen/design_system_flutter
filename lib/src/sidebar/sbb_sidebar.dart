@@ -113,7 +113,10 @@ class _SBBSidebarItemState extends State<SBBSidebarItem>
     with MaterialStateMixin {
   @override
   Widget build(BuildContext context) {
-    if (widget.isSelected) setMaterialState(MaterialState.selected, true);
+    if (widget.isSelected)
+      setMaterialState(MaterialState.selected, true);
+    else
+      setMaterialState(MaterialState.selected, false);
 
     final SBBControlStyles style = SBBControlStyles.of(context);
 
