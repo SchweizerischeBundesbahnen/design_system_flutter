@@ -15,6 +15,7 @@ final _pages = {
   'Link': LinkPage(),
   'Notification': NotificationPage(),
   'Textfields': TextFieldPage(),
+  'Accordion': AccordionPage(),
 };
 
 String _nameToRoute(String name) =>
@@ -57,7 +58,7 @@ Widget _sidePanelPageByName(String name) {
   );
 }
 
-class _SidePanelPage extends StatelessWidget {
+class _SidePanelPage extends StatefulWidget {
   const _SidePanelPage({
     Key? key,
     required this.name,
@@ -66,9 +67,17 @@ class _SidePanelPage extends StatelessWidget {
 
   final String name;
   final Widget page;
+  @override
+  State<StatefulWidget> createState() => _SidePanelPageState();
+}
+
+class _SidePanelPageState extends State<_SidePanelPage> {
+  bool _singleAccordionExpanded = true;
 
   @override
   Widget build(BuildContext context) {
+    List<Widget> sidebarItems = _buildSidebarItems();
+
     return Scaffold(
       appBar: SBBWebHeader(
         title: 'Example Web App',
@@ -83,16 +92,55 @@ class _SidePanelPage extends StatelessWidget {
           SBBWebHeaderNavItem(title: 'Navigation 4', onTap: () {}),
         ],
       ),
-      body: SBBSidebar(
-        body: page,
-        items: _pages.keys
-            .map((name) => _buildSidebarItem(context, name))
-            .toList(),
-      ),
+      body: SBBSidebar(body: widget.page, items: sidebarItems),
     );
   }
 
-  Widget _buildSidebarItem(BuildContext context, String name) {
+  List<Widget> _buildSidebarItems() {
+    List<Widget> sidebarItems =
+        _pages.keys.map((name) => _buildSidebarItem(name)).toList();
+    sidebarItems.add(SizedBox(
+      height: 100,
+    ));
+    sidebarItems.add(_buildAccordionNavItem());
+    sidebarItems.add(SBBMenuDivider());
+    return sidebarItems;
+  }
+
+  SBBAccordion _buildAccordionNavItem() {
+    return SBBAccordion.single(
+      title: 'Accordion Navigation',
+      backgroundColor: SBBColors.transparent,
+      borderColor: SBBColors.transparent,
+      body: Column(
+        children: [
+          SBBSidebarItem(
+            title: 'Navigation Item 1',
+            onTap: () {},
+            isSelected: false,
+          ),
+          SBBSidebarItem(
+            title: 'Navigation Item 2',
+            onTap: () {},
+            isSelected: true,
+          ),
+          SBBSidebarItem(
+            title: 'Navigation Item 3',
+            onTap: () {},
+            isSelected: false,
+          )
+        ],
+      ),
+      isExpanded: _singleAccordionExpanded,
+      singleAccordionCallback: (isExpanded) {
+        setState(() {
+          _singleAccordionExpanded = !isExpanded;
+        });
+      },
+    );
+  }
+
+  Widget _buildSidebarItem(String name) {
     final route = _nameToRoute(name);
     return SBBSidebarItem(
       title: name,

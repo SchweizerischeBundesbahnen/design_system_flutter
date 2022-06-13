@@ -162,6 +162,14 @@ class SBBWebTextStyles {
     fontFamily: SBBWebFont,
     color: SBBColors.granite,
   );
+
+  static const TextStyle accordionHeader = TextStyle(
+    fontSize: 21.0,
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w300,
+    fontFamily: SBBWebFont,
+    color: SBBColors.black,
+  );
 }
 
 class SBBWebText extends StatelessWidget {
