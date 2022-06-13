@@ -92,6 +92,49 @@ class SBBTextStyles {
   );
 }
 
+class SBBLeanTextStyles {
+  SBBLeanTextStyles._();
+
+  static const TextStyle headerTitle = TextStyle(
+    fontSize: 15.0,
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w400,
+    fontFamily: SBBWebFont,
+    color: SBBColors.black,
+  );
+
+  static const TextStyle headerSubtitle = TextStyle(
+    fontSize: 13.0,
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w300,
+    fontFamily: SBBWebFont,
+    color: SBBColors.metal,
+  );
+
+  static const TextStyle contextMenu = TextStyle(
+    fontSize: 15.0,
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w400,
+    fontFamily: SBBWebFont,
+    color: SBBColors.iron,
+  );
+
+  static const TextStyle userMenuInitials = TextStyle(
+    fontSize: 10.0,
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w700,
+    fontFamily: SBBWebFont,
+    color: SBBColors.metal,
+  );
+
+  static const TextStyle breadcrumb = TextStyle(
+    fontSize: 13.0,
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.w400,
+    fontFamily: SBBWebFont,
+  );
+}
+
 class SBBWebTextStyles {
   SBBWebTextStyles._();
 
@@ -158,42 +201,10 @@ class SBBWebTextStyles {
     fontFamily: SBBWebFont,
   );
 
-  static const TextStyle headerTitle = TextStyle(
+  static const TextStyle mediumLight = TextStyle(
     fontSize: 15.0,
-    fontStyle: FontStyle.normal,
-    fontWeight: FontWeight.w400,
-    fontFamily: SBBWebFont,
-    color: SBBColors.black,
-  );
-
-  static const TextStyle headerSubtitle = TextStyle(
-    fontSize: 13.0,
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w300,
-    fontFamily: SBBWebFont,
-    color: SBBColors.metal,
-  );
-
-  static const TextStyle contextMenu = TextStyle(
-    fontSize: 15.0,
-    fontStyle: FontStyle.normal,
-    fontWeight: FontWeight.w400,
-    fontFamily: SBBWebFont,
-    color: SBBColors.iron,
-  );
-
-  static const TextStyle userMenuInitials = TextStyle(
-    fontSize: 10.0,
-    fontStyle: FontStyle.normal,
-    fontWeight: FontWeight.w700,
-    fontFamily: SBBWebFont,
-    color: SBBColors.metal,
-  );
-
-  static const TextStyle breadcrumb = TextStyle(
-    fontSize: 13.0,
-    fontStyle: FontStyle.normal,
-    fontWeight: FontWeight.w400,
     fontFamily: SBBWebFont,
   );
 
@@ -205,20 +216,12 @@ class SBBWebTextStyles {
     color: SBBColors.granite,
   );
 
-  static const TextStyle checkboxListItem = TextStyle(
-    fontSize: 15.0,
-    fontStyle: FontStyle.normal,
-    fontWeight: FontWeight.w400,
-    fontFamily: SBBWebFont,
-    color: SBBColors.iron
-  );
-
-  static const TextStyle checkboxListItemSecondary = TextStyle(
-    fontSize: 14.0,
+  static const TextStyle accordionHeader = TextStyle(
+    fontSize: 21.0,
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w300,
     fontFamily: SBBWebFont,
-    color: SBBColors.metal
+    color: SBBColors.black,
   );
 }
 
