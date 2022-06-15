@@ -1,6 +1,6 @@
 import 'package:design_system_flutter/design_system_flutter.dart';
 import 'package:flutter/material.dart';
-import 'dart:html' as html;
+import 'link_page_stub.dart' if (dart.library.html) 'dart:html' as html;
 
 class LinkPage extends StatelessWidget {
   const LinkPage({Key? key}) : super(key: key);
