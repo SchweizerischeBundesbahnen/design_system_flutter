@@ -152,7 +152,7 @@ class _SBBWebHeaderNavItemState extends State<SBBWebHeaderNavItem>
         child: InkWell(
             splashColor: SBBColors.transparent,
             overlayColor: SBBThemeData.allStates(SBBColors.transparent),
-            onTap: widget.selected! ? null : widget.onTap,
+            onTap: widget.onTap,
             onHover: widget.selected!
                 ? null
                 : updateMaterialState(MaterialState.hovered),
