@@ -99,3 +99,6 @@ android/app/.settings/
 /.flutter-plugins-dependencies
 example/analysis_options.yaml
 example/.metadata
+
+# icon set generator
+*.issproj
