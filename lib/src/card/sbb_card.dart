@@ -85,34 +85,51 @@ class _SBBCardState extends State<SBBCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: InkWell(
-        splashColor: SBBColors.transparent,
-        highlightColor: SBBColors.transparent,
-        overlayColor: SBBThemeData.allStates(SBBColors.transparent),
-        onHover: (hovering) {
-          setState(() => _changeScale(hovering));
-        },
-        onTap: widget.onTap,
-        child: AnimatedScale(
-          scale: scale,
-          duration: const Duration(milliseconds: 200),
-          child: Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: widget.backgroundColor ?? SBBColors.white,
-                border: Border.all(
-                    color: widget.borderColor ?? SBBColors.graphite)),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if (widget.head != null) _buildHead(),
-                if (widget.icon != null) _buildIcon(),
-                _buildBody()
-              ],
-            ),
-          ),
-        ),
+    return InkWell(
+      splashColor: SBBColors.transparent,
+      highlightColor: SBBColors.transparent,
+      overlayColor: SBBThemeData.allStates(SBBColors.transparent),
+      onHover: (hovering) {
+        setState(() => _changeScale(hovering));
+      },
+      onTap: widget.onTap,
+      child: AnimatedScale(
+        scale: scale,
+        duration: const Duration(milliseconds: 200),
+        child: (widget.height != null && widget.width != null)
+            ? _buildSizedCard()
+            : _buildCard(),
+      ),
+    );
+  }
+
+  Widget _buildSizedCard() {
+    return Container(
+      width: widget.width,
+      height: widget.height,
+      child: _buildCard(),
+    );
+  }
+
+  Widget _buildCard() {
+    return Container(
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          color: widget.backgroundColor ?? SBBColors.white,
+          border: Border.all(color: widget.borderColor ?? SBBColors.graphite)),
+      child: Column(
+        crossAxisAlignment: widget.icon != null
+            ? CrossAxisAlignment.center
+            : CrossAxisAlignment.start,
+        mainAxisAlignment: widget.icon != null
+            ? MainAxisAlignment.center
+            : MainAxisAlignment.start,
+        children: [
+          if (widget.head != null) _buildHead(),
+          if (widget.icon != null) Icon(widget.icon, size: 36),
+          if (widget.title != null) _buildTitle(),
+          _buildBody()
+        ],
       ),
     );
   }
@@ -124,40 +141,20 @@ class _SBBCardState extends State<SBBCard> {
         child: widget.head!);
   }
 
-  Widget _buildIcon() {
+  Widget _buildTitle() {
     return Padding(
-      padding: const EdgeInsets.only(top: 10),
-      child: Center(child: Icon(widget.icon, size: 36)),
+      padding: const EdgeInsets.all(12),
+      child: Text(
+        widget.title!,
+        style: SBBWebTextStyles.medium.copyWith(fontWeight: FontWeight.bold),
+      ),
     );
   }
 
   Widget _buildBody() {
     return Padding(
-      padding: const EdgeInsets.all(12.0),
-      child: (widget.height != null && widget.width != null)
-          ? Container(
-              width: widget.width,
-              height: widget.height,
-              child: _buildBodyContent())
-          : _buildBodyContent(),
-    );
-  }
-
-  Column _buildBodyContent() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        if (widget.title != null)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 12),
-            child: Text(
-              widget.title!,
-              style:
-                  SBBWebTextStyles.medium.copyWith(fontWeight: FontWeight.bold),
-            ),
-          ),
-        widget.body
-      ],
+      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+      child: widget.body,
     );
   }
 }
