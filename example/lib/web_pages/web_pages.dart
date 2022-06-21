@@ -10,3 +10,4 @@ export 'link_page.dart';
 export 'notification_page.dart';
 export 'text_field_page.dart';
 export 'accordion_page.dart';
+export 'card_page.dart';
