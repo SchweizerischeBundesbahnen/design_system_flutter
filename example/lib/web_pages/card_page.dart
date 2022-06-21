@@ -1,6 +1,6 @@
 import 'package:design_system_flutter/design_system_flutter.dart';
 import 'package:flutter/material.dart';
-import 'dart:html' as html;
+import 'link_page_stub.dart' if (dart.library.html) 'dart:html' as html;
 
 class CardPage extends StatelessWidget {
   const CardPage({Key? key}) : super(key: key);
@@ -40,7 +40,7 @@ class CardPage extends StatelessWidget {
                         ),
                         SBBWebText.headerThree('- Sized Card'),
                         SBBCard.sized(
-                            width: 400,
+                            width: 420,
                             height: 200,
                             title: 'Long Text Example',
                             body: Text(
@@ -57,6 +57,7 @@ class CardPage extends StatelessWidget {
                           width: 150,
                           height: 150,
                           child: SBBCard.icon(
+                            title: 'Home',
                             icon: SBBIcons.house_medium,
                             body: SBBWebText.running('Take me Home'),
                           ),
@@ -66,13 +67,13 @@ class CardPage extends StatelessWidget {
                         ),
                         SBBWebText.headerThree('- Image with onTap callback'),
                         SizedBox(
-                          width: 400,
-                          height: 400,
+                          width: 300,
+                          height: 350,
                           child: SBBCard.image(
                             head: Image.asset('assets/images/sbbtrain.jpg'),
                             title: 'Image Example',
                             body: SBBWebText.running(
-                                'You are able add an image as head in card item'),
+                                'You can add an image as header.'),
                             onTap: () {
                               html.window.open('https://www.sbb.ch', '_blank');
                             },
