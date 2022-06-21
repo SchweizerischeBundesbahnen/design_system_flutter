@@ -16,6 +16,7 @@ final _pages = {
   'Notification': NotificationPage(),
   'Textfields': TextFieldPage(),
   'Accordion': AccordionPage(),
+  'Card': CardPage(),
 };
 
 String _nameToRoute(String name) =>
