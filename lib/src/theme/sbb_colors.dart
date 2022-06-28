@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 /// The colors as defined in https://digital.sbb.ch/de/brand_elemente/farben

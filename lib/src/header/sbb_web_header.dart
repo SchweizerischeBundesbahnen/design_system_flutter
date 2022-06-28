@@ -1,4 +1,4 @@
-import 'package:design_system_flutter/design_system_flutter.dart';
+import '../../design_system_flutter.dart';
 import 'package:flutter/material.dart';
 
 class SBBWebHeader extends StatelessWidget implements PreferredSizeWidget {

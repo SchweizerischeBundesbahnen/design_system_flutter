@@ -1,4 +1,4 @@
-import 'package:design_system_flutter/design_system_flutter.dart';
+import '../../design_system_flutter.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -135,8 +135,7 @@ class _MenuItem extends SingleChildRenderObjectWidget {
     Key? key,
     required this.onLayout,
     required Widget? child,
-  })  : assert(onLayout != null),
-        super(key: key, child: child);
+  })  : super(key: key, child: child);
 
   final ValueChanged<Size> onLayout;
 
@@ -154,8 +153,7 @@ class _MenuItem extends SingleChildRenderObjectWidget {
 
 class _RenderMenuItem extends RenderShiftedBox {
   _RenderMenuItem(this.onLayout, [RenderBox? child])
-      : assert(onLayout != null),
-        super(child);
+      : super(child);
 
   ValueChanged<Size> onLayout;
 
@@ -216,9 +214,7 @@ class SBBMenuItem<T> extends SBBMenuEntry<T> {
     required this.child,
     this.foregroundColor,
     this.backgroundColor,
-  })  : assert(enabled != null),
-        assert(height != null),
-        super(key: key);
+  })  : super(key: key);
 
   /// Create a SBB Menu Tile with a required [title] and optional [icon].
   ///
@@ -532,7 +528,7 @@ class _PopupMenuRouteLayout extends SingleChildLayoutDelegate {
     final double buttonHeight = size.height - position.top - position.bottom;
     // Find the ideal vertical position.
     double y = position.top;
-    if (selectedItemIndex != null && itemSizes != null) {
+    if (selectedItemIndex != null) {
       double selectedItemOffset = _kMenuVerticalPadding;
       for (int index = 0; index < selectedItemIndex!; index += 1)
         selectedItemOffset += itemSizes[index]!.height;
@@ -550,7 +546,6 @@ class _PopupMenuRouteLayout extends SingleChildLayoutDelegate {
       x = position.left;
     } else {
       // Menu button is equidistant from both edges, so grow in reading direction.
-      assert(textDirection != null);
       switch (textDirection) {
         case TextDirection.rtl:
           x = size.width - position.right - childSize.width;
@@ -734,10 +729,7 @@ Future<T?> showSBBMenu<T>({
   Color? backgroundColor,
   bool useRootNavigator = false,
 }) {
-  assert(context != null);
-  assert(position != null);
-  assert(useRootNavigator != null);
-  assert(items != null && items.isNotEmpty);
+  assert(items.isNotEmpty);
   assert(debugCheckHasMaterialLocalizations(context));
 
   switch (Theme.of(context).platform) {

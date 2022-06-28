@@ -94,10 +94,6 @@ class SBBLogo extends StatelessWidget {
 ///
 /// respects parent's size and scales accordingly
 class SBBWebLogo extends StatelessWidget {
-  static const _defaultHeight = 20.0;
-  static const _defaultWidth = 59.0;
-  static const _defaultAspectRatio = _defaultWidth / _defaultHeight;
-
   const SBBWebLogo({
     Key? key,
     this.height,
@@ -106,6 +102,9 @@ class SBBWebLogo extends StatelessWidget {
     this.backgroundColor = SBBColors.red,
     this.borderColor,
   }) : super(key: key);
+  static const _defaultHeight = 20.0;
+  static const _defaultWidth = 59.0;
+  static const _defaultAspectRatio = _defaultWidth / _defaultHeight;
 
   final double? height;
   final double? width;

@@ -57,7 +57,7 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
 
   bool setPositionsAndSizes(_TabBarNotification n) {
     if (n.data != tabBarData) {
-      WidgetsBinding.instance?.addPostFrameCallback(
+      WidgetsBinding.instance.addPostFrameCallback(
         (_) {
           if (!mounted) return;
           setState(() => tabBarData = n.data);

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import '../../design_system_flutter.dart';
 import '../sbb_internal.dart';
