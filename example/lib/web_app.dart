@@ -15,6 +15,7 @@ final _pages = {
   'Link': LinkPage(),
   'Notification': NotificationPage(),
   'Textfields': TextFieldPage(),
+  'Autocomplete': AutocompletePage(),
   'Accordion': AccordionPage(),
   'Card': CardPage(),
 };
