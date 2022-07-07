@@ -144,10 +144,4 @@ class _HoleShape {
   Offset get cBottomRight => Tween(begin: _pTopCenter, end: _pBottomRight).transform(percent);
 
   Offset get cBottomLeft => Tween(begin: _pTopCenter, end: _pBottomLeft).transform(percent);
-
-  String print1() => 'CurveLeft:  ${printOffset(pCurveLeft)}, Left:  ${printOffset(pLeft)}';
-
-  String print2() => 'CurveRight: ${printOffset(pCurveRight)}, Right: ${printOffset(pRight)}';
-
-  String printOffset(Offset o) => '(${o.dx.toInt()}, ${o.dy.toInt()})';
 }

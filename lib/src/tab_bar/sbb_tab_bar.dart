@@ -19,11 +19,16 @@ class SBBTabBar extends StatefulWidget {
     required this.onTabChanged,
     required this.navigationDataStream,
     Key? key,
-  }) : super(key: key);
+    this.showWarning = false,
+    int? warningIndex,
+  })  : this.warningIndex = warningIndex ?? items.length - 1,
+        super(key: key);
 
   final List<TabBarItem> items;
   final void Function(TabBarItem tab) onTabChanged;
   final Stream<TabBarNavigationData> navigationDataStream;
+  final bool showWarning;
+  final int warningIndex;
 
   @override
   State<SBBTabBar> createState() => _SBBTabBarState();
@@ -112,7 +117,7 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
                       (e) => Positioned(
                         top: topPadding,
                         left: tabBarData.positions[e],
-                        child: TabItemWidget(e, true),
+                        child: TabItemWidget.fromTabBarItem(e, true),
                       ),
                     ),
                     ClipPath(
@@ -130,6 +135,12 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
                         _selectedOverride,
                       ),
                     ),
+                    if (widget.showWarning)
+                      Positioned(
+                        top: topPadding,
+                        left: tabBarData.positions[widget.items[widget.warningIndex]],
+                        child: TabItemWidget.warning(),
+                      ),
                     ...widget.items.map(
                       (tab) => Positioned(
                         top: topPadding,
@@ -191,7 +202,7 @@ class _IconLayer extends StatelessWidget {
       children: items
           .expand(
             (e) => [
-              LayoutId(id: e, child: TabItemWidget(e, false)),
+              LayoutId(id: e, child: TabItemWidget.fromTabBarItem(e, false)),
               if (!portrait || e == selectedTab)
                 LayoutId(
                   id: '${e.id}_text',
