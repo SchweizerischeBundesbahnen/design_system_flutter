@@ -286,8 +286,10 @@ class SBBThemeData {
 
     // SegmentedButton
     Color? segmentedButtonBackgroundColor,
+    Color? segmentedButtonBorderColor,
     Color? segmentedButtonSelectedColor,
     TextStyle? segmentedButtonTextStyle,
+    List<BoxShadow>? segmentedButtonBoxShadow,
 
     // TextField
     TextStyle? textFieldTextStyle,
@@ -572,9 +574,11 @@ class SBBThemeData {
     radioButtonListItemSecondaryTextStyleDisabled = radioButtonListItemSecondaryTextStyleDisabled ?? radioButtonListItemSecondaryTextStyle.copyWith(color: SBBColors.metal);
 
     // SegmentedButton
-    segmentedButtonBackgroundColor = segmentedButtonBackgroundColor ?? themeValue(SBBColors.cloud, SBBColors.iron);
-    segmentedButtonSelectedColor = segmentedButtonSelectedColor ?? themeValue(SBBColors.white, SBBColors.black);
+    segmentedButtonBackgroundColor = segmentedButtonBackgroundColor ?? themeValue(SBBColors.cloud, SBBColors.charcoal);
+    segmentedButtonBorderColor = segmentedButtonBorderColor ?? themeValue(SBBColors.transparent, SBBColors.iron);
+    segmentedButtonSelectedColor = segmentedButtonSelectedColor ?? themeValue(SBBColors.white, SBBColors.iron);
     segmentedButtonTextStyle = segmentedButtonTextStyle ?? themedTextStyle();
+    segmentedButtonBoxShadow = themeValue(SBBInternal.defaultBoxShadow, SBBInternal.defaultDarkBoxShadow);
 
     // TextField
     textFieldTextStyle = textFieldTextStyle ?? themedTextStyle();
@@ -798,8 +802,10 @@ class SBBThemeData {
       radioButtonListItemSecondaryTextStyle:    radioButtonListItemSecondaryTextStyle,
       radioButtonListItemSecondaryTextStyleDisabled:    radioButtonListItemSecondaryTextStyleDisabled,
       segmentedButtonBackgroundColor:    segmentedButtonBackgroundColor!,
+      segmentedButtonBorderColor:    segmentedButtonBorderColor!,
       segmentedButtonSelectedColor:    segmentedButtonSelectedColor!,
       segmentedButtonTextStyle:    segmentedButtonTextStyle,
+      segmentedButtonBoxShadow:    segmentedButtonBoxShadow!,
       textFieldTextStyle:    textFieldTextStyle,
       textFieldTextStyleDisabled:    textFieldTextStyleDisabled,
       textFieldPlaceholderTextStyle:    textFieldPlaceholderTextStyle,
@@ -999,8 +1005,10 @@ class SBBThemeData {
     required this.radioButtonListItemSecondaryTextStyle,
     required this.radioButtonListItemSecondaryTextStyleDisabled,
     required this.segmentedButtonBackgroundColor,
+    required this.segmentedButtonBorderColor,
     required this.segmentedButtonSelectedColor,
     required this.segmentedButtonTextStyle,
+    required this.segmentedButtonBoxShadow,
     required this.textFieldTextStyle,
     required this.textFieldTextStyleDisabled,
     required this.textFieldPlaceholderTextStyle,
@@ -1248,8 +1256,10 @@ class SBBThemeData {
 
   // SegmentedButton
   final Color segmentedButtonBackgroundColor;
+  final Color segmentedButtonBorderColor;
   final Color segmentedButtonSelectedColor;
   final TextStyle segmentedButtonTextStyle;
+  final List<BoxShadow> segmentedButtonBoxShadow;
 
   // TextField
   final TextStyle textFieldTextStyle;
@@ -1510,8 +1520,10 @@ class SBBThemeData {
 
     // SegmentedButton
     Color? segmentedButtonBackgroundColor,
+    Color? segmentedButtonBorderColor,
     Color? segmentedButtonSelectedColor,
     TextStyle? segmentedButtonTextStyle,
+    List<BoxShadow>? segmentedButtonBoxShadow,
 
     // TextField
     TextStyle? textFieldTextStyle,
@@ -1884,8 +1896,11 @@ class SBBThemeData {
       // SegmentedButton
       segmentedButtonBackgroundColor:
           segmentedButtonBackgroundColor ?? (this.segmentedButtonBackgroundColor == defaultTheme.segmentedButtonBackgroundColor ? null : this.segmentedButtonBackgroundColor),
+      segmentedButtonBorderColor:
+          segmentedButtonBorderColor ?? (this.segmentedButtonBorderColor == defaultTheme.segmentedButtonBorderColor ? null : this.segmentedButtonBorderColor),
       segmentedButtonSelectedColor: segmentedButtonSelectedColor ?? (this.segmentedButtonSelectedColor == defaultTheme.segmentedButtonSelectedColor ? null : this.segmentedButtonSelectedColor),
       segmentedButtonTextStyle: segmentedButtonTextStyle ?? (this.segmentedButtonTextStyle == defaultTheme.segmentedButtonTextStyle ? null : this.segmentedButtonTextStyle),
+      segmentedButtonBoxShadow: segmentedButtonBoxShadow ?? (this.segmentedButtonBoxShadow == defaultTheme.segmentedButtonBoxShadow ? null : this.segmentedButtonBoxShadow),
 
       // TextField
       textFieldTextStyle: textFieldTextStyle ?? (this.textFieldTextStyle == defaultTheme.textFieldTextStyle ? null : this.textFieldTextStyle),

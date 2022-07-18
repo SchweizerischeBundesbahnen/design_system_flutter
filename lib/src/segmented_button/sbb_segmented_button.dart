@@ -62,6 +62,8 @@ class SBBSegmentedButton extends StatefulWidget {
           backgroundColor: const Color(0xFFD30000),
           selectedColor: SBBColors.red,
           textColor: SBBColors.white,
+          borderColor: SBBColors.transparent,
+          boxShadow: SBBInternal.defaultRedBoxShadow,
           selectedIndexChanged: selectedIndexChanged,
         );
 
@@ -77,6 +79,8 @@ class SBBSegmentedButton extends StatefulWidget {
           backgroundColor: const Color(0xFFD30000),
           selectedColor: SBBColors.red,
           iconColor: SBBColors.white,
+          borderColor: SBBColors.transparent,
+          boxShadow: SBBInternal.defaultRedBoxShadow,
           selectedIndexChanged: selectedIndexChanged,
         );
 
@@ -87,6 +91,8 @@ class SBBSegmentedButton extends StatefulWidget {
     Color? backgroundColor,
     Color? selectedColor,
     Color? textColor,
+    Color? borderColor,
+    List<BoxShadow>? boxShadow,
     required ValueChanged<int> selectedIndexChanged,
   }) : this.custom(
           key: key,
@@ -105,6 +111,8 @@ class SBBSegmentedButton extends StatefulWidget {
           selectedStateIndex: selectedStateIndex,
           backgroundColor: backgroundColor,
           selectedColor: selectedColor,
+          borderColor: borderColor,
+          boxShadow: boxShadow,
           selectedIndexChanged: selectedIndexChanged,
         );
 
@@ -115,6 +123,8 @@ class SBBSegmentedButton extends StatefulWidget {
     Color? backgroundColor,
     Color? selectedColor,
     Color? iconColor,
+    Color? borderColor,
+    List<BoxShadow>? boxShadow,
     required ValueChanged<int> selectedIndexChanged,
   }) : this.custom(
           key: key,
@@ -127,6 +137,8 @@ class SBBSegmentedButton extends StatefulWidget {
           selectedStateIndex: selectedStateIndex,
           backgroundColor: backgroundColor,
           selectedColor: selectedColor,
+          borderColor: borderColor,
+          boxShadow: boxShadow,
           selectedIndexChanged: selectedIndexChanged,
         );
 
@@ -136,14 +148,18 @@ class SBBSegmentedButton extends StatefulWidget {
     required this.selectedStateIndex,
     this.backgroundColor,
     this.selectedColor,
+    this.borderColor,
+    this.boxShadow,
     required this.selectedIndexChanged,
-  })   : assert(widgetBuilders.length > 1),
+  })  : assert(widgetBuilders.length > 1),
         super(key: key);
 
   final List<WidgetBuilder> widgetBuilders;
   final int selectedStateIndex;
   final Color? backgroundColor;
   final Color? selectedColor;
+  final Color? borderColor;
+  final List<BoxShadow>? boxShadow;
   final ValueChanged<int> selectedIndexChanged;
 
   @override
@@ -161,6 +177,7 @@ class _SegmentedButton extends State<SBBSegmentedButton> {
       child: Container(
         decoration: BoxDecoration(
           color: widget.backgroundColor ?? sbbTheme.segmentedButtonBackgroundColor,
+          border: Border.all(color: widget.borderColor ?? sbbTheme.segmentedButtonBorderColor),
           borderRadius: _borderRadius,
         ),
         child: Padding(
@@ -218,7 +235,7 @@ class _SegmentedButton extends State<SBBSegmentedButton> {
                   width: constraints.maxWidth / widget.widgetBuilders.length - 2,
                   decoration: BoxDecoration(
                     borderRadius: _borderRadius,
-                    boxShadow: SBBInternal.defaultBoxShadow,
+                    boxShadow: widget.boxShadow ?? sbbTheme.segmentedButtonBoxShadow,
                   ),
                   child: Material(
                     borderRadius: _borderRadius,
