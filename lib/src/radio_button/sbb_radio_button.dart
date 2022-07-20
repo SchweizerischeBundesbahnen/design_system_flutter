@@ -100,7 +100,8 @@ class SBBRadioButton<T> extends StatefulWidget {
   _SBBRadioButtonState<T> createState() => _SBBRadioButtonState<T>();
 }
 
-class _SBBRadioButtonState<T> extends State<SBBRadioButton<T>> with SingleTickerProviderStateMixin {
+class _SBBRadioButtonState<T> extends State<SBBRadioButton<T>>
+    with SingleTickerProviderStateMixin {
   static const _outerCircleSize = 20.0;
   static const _innerCircleSize = 8.0;
 
@@ -154,6 +155,8 @@ class _SBBRadioButtonState<T> extends State<SBBRadioButton<T>> with SingleTicker
   @override
   Widget build(BuildContext context) {
     final sbbTheme = SBBTheme.of(context);
+    final bool isWeb = sbbTheme.hostPlatform == HostPlatform.web;
+    if (isWeb) _controller.duration = Duration.zero;
     final enabled = widget.onChanged != null;
     // TODO add semantics
     return Material(
@@ -167,29 +170,72 @@ class _SBBRadioButtonState<T> extends State<SBBRadioButton<T>> with SingleTicker
         hoverColor: SBBColors.transparent,
         onTap: enabled ? () => widget.onChanged?.call(widget.value) : null,
         child: Center(
-          child: Container(
-            height: _outerCircleSize,
-            width: _outerCircleSize,
-            margin: widget.padding ?? const EdgeInsets.all(sbbDefaultSpacing / 2),
-            decoration: BoxDecoration(
-              color: enabled ? sbbTheme.radioButtonBackgroundColor : sbbTheme.radioButtonBackgroundColorDisabled,
-              shape: BoxShape.circle,
-              border: Border.fromBorderSide(
-                BorderSide(
-                  color: enabled ? sbbTheme.radioButtonBorderColor : sbbTheme.radioButtonBorderColorDisabled,
-                ),
-              ),
-            ),
-            child: Center(
-              child: Container(
-                height: _animation.value,
-                width: _animation.value,
-                decoration: BoxDecoration(
-                  color: enabled ? sbbTheme.radioButtonColor : sbbTheme.radioButtonColorDisabled,
-                  shape: BoxShape.circle,
-                ),
-              ),
-            ),
+          child: isWeb
+              ? radiobuttonWeb(enabled, sbbTheme)
+              : radiobuttonNative(enabled, sbbTheme),
+        ),
+      ),
+    );
+  }
+
+  Container radiobuttonNative(bool enabled, SBBThemeData sbbTheme) {
+    return Container(
+      height: _outerCircleSize,
+      width: _outerCircleSize,
+      margin: widget.padding ?? const EdgeInsets.all(sbbDefaultSpacing / 2),
+      decoration: BoxDecoration(
+        color: enabled
+            ? sbbTheme.radioButtonBackgroundColor
+            : sbbTheme.radioButtonBackgroundColorDisabled,
+        shape: BoxShape.circle,
+        border: Border.fromBorderSide(
+          BorderSide(
+            color: enabled
+                ? sbbTheme.radioButtonBorderColor
+                : sbbTheme.radioButtonBorderColorDisabled,
+          ),
+        ),
+      ),
+      child: Center(
+        child: Container(
+          height: _animation.value,
+          width: _animation.value,
+          decoration: BoxDecoration(
+            color: enabled
+                ? sbbTheme.radioButtonColor
+                : sbbTheme.radioButtonColorDisabled,
+            shape: BoxShape.circle,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Container radiobuttonWeb(bool enabled, SBBThemeData sbbTheme) {
+    return Container(
+      height: _outerCircleSize,
+      width: _outerCircleSize,
+      margin: widget.padding ?? const EdgeInsets.all(sbbDefaultSpacing / 2),
+      decoration: BoxDecoration(
+        color: enabled
+            ? sbbTheme.radioButtonBackgroundColor
+            : sbbTheme.radioButtonBackgroundColorDisabled,
+        shape: BoxShape.circle,
+        border: Border.fromBorderSide(
+          BorderSide(
+            color: enabled
+                ? sbbTheme.radioButtonBorderColor
+                : sbbTheme.radioButtonBorderColorDisabled,
+          ),
+        ),
+      ),
+      child: Center(
+        child: Container(
+          height: _animation.value,
+          width: _animation.value,
+          decoration: BoxDecoration(
+            color: SBBColors.iron,
+            shape: BoxShape.circle,
           ),
         ),
       ),

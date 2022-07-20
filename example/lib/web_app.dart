@@ -12,6 +12,7 @@ final _pages = {
   'Select (Dropdown)': SelectPage(),
   'Typographie': TypographyPage(),
   'Checkbox': CheckboxPage(),
+  'Radiobutton': RadiobuttonPage(),
   'Link': LinkPage(),
   'Notification': NotificationPage(),
   'Textfields': TextFieldPage(),
