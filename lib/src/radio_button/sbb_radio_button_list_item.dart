@@ -103,6 +103,7 @@ class SBBRadioButtonListItem<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = SBBControlStyles.of(context).radioButton;
+    final bool isWeb = SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
     final enabled = onChanged != null;
     return Stack(
       alignment: Alignment.bottomCenter,
@@ -113,8 +114,8 @@ class SBBRadioButtonListItem<T> extends StatelessWidget {
             constraints: const BoxConstraints(minHeight: 48.0),
             child: InkWell(
               onTap: enabled ? () => onChanged!(value) : null,
-              splashColor: style?.listItem?.backgroundColorHighlighted,
-              focusColor: style?.listItem?.backgroundColorHighlighted,
+              splashColor: isWeb ? SBBColors.transparent : style?.listItem?.backgroundColorHighlighted,
+              focusColor: isWeb ? SBBColors.transparent : style?.listItem?.backgroundColorHighlighted,
               highlightColor: SBBColors.transparent,
               hoverColor: SBBColors.transparent,
               child: Column(
