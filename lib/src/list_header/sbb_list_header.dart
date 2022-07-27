@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import '../../design_system_flutter.dart';
 
@@ -22,6 +21,7 @@ class SBBListHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final style = SBBControlStyles.of(context);
     return Padding(
       padding: padding ??
           EdgeInsets.symmetric(
@@ -35,7 +35,7 @@ class SBBListHeader extends StatelessWidget {
               title,
               maxLines: maxLines,
               overflow: maxLines == null ? null : TextOverflow.ellipsis,
-              style: SBBTheme.of(context).listHeaderTextStyle,
+              style: style.listHeaderTextStyle,
             ),
           ),
         ],

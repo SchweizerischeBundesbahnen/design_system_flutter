@@ -51,11 +51,11 @@ class SBBSelect<T> extends StatelessWidget {
   final ValueChanged<T?>? onChanged;
 
   Widget build(BuildContext context) {
-    final sbbTheme = SBBTheme.of(context);
+    final style = SBBControlStyles.of(context);
     final enabled = onChanged != null;
     return InkWell(
-      focusColor: sbbTheme.listItemBackgroundColorHighlighted,
-      hoverColor: sbbTheme.listItemBackgroundColorHighlighted,
+      focusColor: style.listItem?.backgroundColorHighlighted,
+      hoverColor: style.listItem?.backgroundColorHighlighted,
       onTap: enabled
           ? () => showMenu(
                 context: context,
@@ -82,27 +82,20 @@ class SBBSelect<T> extends StatelessWidget {
                       ),
                       child: Icon(
                         icon,
-                        color: enabled
-                            ? sbbTheme.textFieldIconColor
-                            : sbbTheme.textFieldIconColorDisabled,
+                        color: enabled ? style.textField?.iconColor : style.textField?.iconColorDisabled,
                       ),
                     ),
                   Expanded(
                     child: value == null
                         ? Text(
                             label ?? hint ?? '',
-                            style: enabled
-                                ? sbbTheme.textFieldPlaceholderTextStyle
-                                : sbbTheme
-                                    .textFieldPlaceholderTextStyleDisabled,
+                            style: enabled ? style.textField?.placeholderTextStyle : style.textField?.placeholderTextStyleDisabled,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           )
                         : Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: label != null
-                                ? MainAxisAlignment.start
-                                : MainAxisAlignment.center,
+                            mainAxisAlignment: label != null ? MainAxisAlignment.start : MainAxisAlignment.center,
                             children: [
                               if (label != null)
                                 Padding(
@@ -112,9 +105,7 @@ class SBBSelect<T> extends StatelessWidget {
                                   ),
                                   child: Text(
                                     label!,
-                                    style: enabled
-                                        ? sbbTheme.selectLabelTextStyle
-                                        : sbbTheme.selectLabelTextStyleDisabled,
+                                    style: enabled ? style.selectLabel?.textStyle : style.selectLabel?.textStyleDisabled,
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -124,13 +115,8 @@ class SBBSelect<T> extends StatelessWidget {
                                   height: 0.0,
                                 ),
                               Text(
-                                items
-                                    .firstWhere(
-                                        (element) => element.value == value)
-                                    .label,
-                                style: enabled
-                                    ? sbbTheme.textFieldTextStyle
-                                    : sbbTheme.textFieldTextStyleDisabled,
+                                items.firstWhere((element) => element.value == value).label,
+                                style: enabled ? style.textField?.textStyle : style.textField?.textStyleDisabled,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -139,9 +125,7 @@ class SBBSelect<T> extends StatelessWidget {
                   ),
                   Icon(
                     SBBIcons.chevron_small_down_small,
-                    color: enabled
-                        ? sbbTheme.textFieldIconColor
-                        : sbbTheme.textFieldIconColorDisabled,
+                    color: enabled ? style.textField?.iconColor : style.textField?.iconColorDisabled,
                   ),
                   const SizedBox(width: sbbDefaultSpacing / 2),
                 ],
@@ -276,11 +260,9 @@ class SBBMultiSelect<T> extends StatefulWidget {
                         onChanged: (checked) {
                           setModalState(() {
                             if (checked == true) {
-                              _selectedValues = List.from(_selectedValues)
-                                ..add(entry.value.value);
+                              _selectedValues = List.from(_selectedValues)..add(entry.value.value);
                             } else {
-                              _selectedValues = List.from(_selectedValues)
-                                ..remove(entry.value.value);
+                              _selectedValues = List.from(_selectedValues)..remove(entry.value.value);
                             }
                           });
                         },
@@ -297,8 +279,7 @@ class SBBMultiSelect<T> extends StatefulWidget {
                     sbbDefaultSpacing,
                   ),
                   child: SBBPrimaryButton(
-                    label: confirmButtonLabel ??
-                        MaterialLocalizations.of(context).okButtonLabel,
+                    label: confirmButtonLabel ?? MaterialLocalizations.of(context).okButtonLabel,
                     onPressed: isSelectionValid(values, _selectedValues)
                         ? () {
                             Navigator.of(context).pop();
@@ -327,13 +308,14 @@ class SBBMultiSelect<T> extends StatefulWidget {
 }
 
 class _SBBMultiSelectState<T> extends State<SBBMultiSelect<T>> {
+  SBBControlStyles get style => Theme.of(context).extension()!;
+
   @override
   Widget build(BuildContext context) {
-    final sbbTheme = SBBTheme.of(context);
     final enabled = widget.onChanged != null;
     return InkWell(
-      focusColor: sbbTheme.listItemBackgroundColorHighlighted,
-      hoverColor: sbbTheme.listItemBackgroundColorHighlighted,
+      focusColor: style.listItem?.backgroundColorHighlighted,
+      hoverColor: style.listItem?.backgroundColorHighlighted,
       onTap: enabled
           ? () {
               SBBMultiSelect.showMenu<T>(
@@ -362,19 +344,14 @@ class _SBBMultiSelectState<T> extends State<SBBMultiSelect<T>> {
                       ),
                       child: Icon(
                         widget.icon,
-                        color: enabled
-                            ? sbbTheme.textFieldIconColor
-                            : sbbTheme.textFieldIconColorDisabled,
+                        color: enabled ? style.textField?.iconColor : style.textField?.iconColorDisabled,
                       ),
                     ),
                   Expanded(
                     child: widget.values.isEmpty
                         ? Text(
                             widget.label,
-                            style: enabled
-                                ? sbbTheme.textFieldPlaceholderTextStyle
-                                : sbbTheme
-                                    .textFieldPlaceholderTextStyleDisabled,
+                            style: enabled ? style.textField?.placeholderTextStyle : style.textField?.placeholderTextStyleDisabled,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           )
@@ -384,22 +361,14 @@ class _SBBMultiSelectState<T> extends State<SBBMultiSelect<T>> {
                               const SizedBox(height: 5.0),
                               Text(
                                 widget.label,
-                                style: enabled
-                                    ? sbbTheme.selectLabelTextStyle
-                                    : sbbTheme.selectLabelTextStyleDisabled,
+                                style: enabled ? style.selectLabel?.textStyle : style.selectLabel?.textStyleDisabled,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
                               const SizedBox(height: 3.0),
                               Text(
-                                widget.items
-                                    .where((element) =>
-                                        widget.values.contains(element.value))
-                                    .map((element) => element.label)
-                                    .join(', '),
-                                style: enabled
-                                    ? sbbTheme.textFieldTextStyle
-                                    : sbbTheme.textFieldTextStyleDisabled,
+                                widget.items.where((element) => widget.values.contains(element.value)).map((element) => element.label).join(', '),
+                                style: enabled ? style.textField?.textStyle : style.textField?.textStyleDisabled,
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -408,9 +377,7 @@ class _SBBMultiSelectState<T> extends State<SBBMultiSelect<T>> {
                   ),
                   Icon(
                     SBBIcons.chevron_small_down_small,
-                    color: enabled
-                        ? sbbTheme.textFieldIconColor
-                        : sbbTheme.textFieldIconColorDisabled,
+                    color: enabled ? style.textField?.iconColor : style.textField?.iconColorDisabled,
                   ),
                   const SizedBox(width: sbbDefaultSpacing / 2),
                 ],

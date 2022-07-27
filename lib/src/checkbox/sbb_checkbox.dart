@@ -181,7 +181,7 @@ class _SBBCheckboxState extends State<SBBCheckbox> with SingleTickerProviderStat
 
   @override
   Widget build(BuildContext context) {
-    final sbbTheme = SBBTheme.of(context);
+    final style = SBBControlStyles.of(context).checkbox;
     final enabled = widget.onChanged != null;
 
     // TODO add semantics
@@ -190,8 +190,8 @@ class _SBBCheckboxState extends State<SBBCheckbox> with SingleTickerProviderStat
       child: InkWell(
         splashFactory: InkRipple.splashFactory,
         customBorder: CircleBorder(),
-        splashColor: sbbTheme.checkboxBackgroundColorHighlighted,
-        focusColor: sbbTheme.checkboxBackgroundColorHighlighted,
+        splashColor: style?.basic?.backgroundColorHighlighted,
+        focusColor: style?.basic?.backgroundColorHighlighted,
         highlightColor: SBBColors.transparent,
         hoverColor: SBBColors.transparent,
         onTap: enabled
@@ -211,10 +211,10 @@ class _SBBCheckboxState extends State<SBBCheckbox> with SingleTickerProviderStat
             width: _outerSquareSize,
             margin: widget.padding ?? const EdgeInsets.all(sbbDefaultSpacing / 2),
             decoration: BoxDecoration(
-              color: enabled ? sbbTheme.checkboxBackgroundColor : sbbTheme.checkboxBackgroundColorDisabled,
+              color: enabled ? style?.basic?.backgroundColor : style?.basic?.backgroundColorDisabled,
               border: Border.fromBorderSide(
                 BorderSide(
-                  color: enabled ? sbbTheme.checkboxBorderColor : sbbTheme.checkboxBorderColorDisabled,
+                  color: (enabled ? style?.basic?.borderColor : style?.basic?.borderColorDisabled)!,
                 ),
               ),
               borderRadius: BorderRadius.all(Radius.circular(_outerSquareBorderRadius)),
@@ -238,7 +238,7 @@ class _SBBCheckboxState extends State<SBBCheckbox> with SingleTickerProviderStat
                                 height: _checkShortLineAnimationValue * _checkShortLineHeight,
                                 width: _checkShortLineWidth,
                                 decoration: BoxDecoration(
-                                  color: enabled ? sbbTheme.checkboxColor : sbbTheme.checkboxColorDisabled,
+                                  color: enabled ? style?.color : style?.colorDisabled,
                                   borderRadius: BorderRadius.all(Radius.circular(_checkBorderRadius)),
                                 ),
                               ),
@@ -250,7 +250,7 @@ class _SBBCheckboxState extends State<SBBCheckbox> with SingleTickerProviderStat
                                 height: _checkLongLineHeight,
                                 width: _checkLongLineAnimationValue * _checkLongLineWidth,
                                 decoration: BoxDecoration(
-                                  color: enabled ? sbbTheme.checkboxColor : sbbTheme.checkboxColorDisabled,
+                                  color: enabled ? style?.color : style?.colorDisabled,
                                   borderRadius: BorderRadius.all(Radius.circular(_checkBorderRadius)),
                                 ),
                               ),
@@ -266,7 +266,7 @@ class _SBBCheckboxState extends State<SBBCheckbox> with SingleTickerProviderStat
                     height: _tristateHeight,
                     width: _tristateAnimationValue * _tristateWidth,
                     decoration: BoxDecoration(
-                      color: enabled ? sbbTheme.checkboxColor : sbbTheme.checkboxColorDisabled,
+                      color: enabled ? style?.color : style?.colorDisabled,
                       borderRadius: BorderRadius.all(Radius.circular(_tristateBorderRadius)),
                     ),
                   ),

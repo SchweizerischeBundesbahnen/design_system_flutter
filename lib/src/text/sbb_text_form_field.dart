@@ -108,6 +108,7 @@ class _SBBTextField extends State<SBBTextFormField> {
 
   @override
   Widget build(BuildContext context) {
+    final style = SBBBaseStyle.of(context);
     return Padding(
       padding: const EdgeInsets.only(
         left: 16.0,
@@ -122,7 +123,7 @@ class _SBBTextField extends State<SBBTextFormField> {
               child: Icon(
                 widget.icon,
                 size: 24,
-                color: SBBTheme.of(context).isDark ? SBBColors.white : SBBColors.black,
+                color: style.themeValue(SBBColors.black, SBBColors.white),
               ),
             ),
           Expanded(
@@ -221,18 +222,11 @@ class _SBBTextField extends State<SBBTextFormField> {
 
   TextStyle _resolveTextStyle(
       TextStyle lightEnabled, TextStyle darkEnabled, TextStyle lightDisabled, TextStyle darkDisabled) {
+    final style = SBBBaseStyle.of(context);
     if (widget.enabled) {
-      if (SBBTheme.of(context).isDark) {
-        return darkEnabled;
-      } else {
-        return lightEnabled;
-      }
+      return style.themeValue(lightEnabled, darkEnabled);
     } else {
-      if (SBBTheme.of(context).isDark) {
-        return darkDisabled;
-      } else {
-        return lightDisabled;
-      }
+      return style.themeValue(lightDisabled, darkDisabled);
     }
   }
 }

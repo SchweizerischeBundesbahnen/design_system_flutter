@@ -128,7 +128,7 @@ class _SBBAccordionState extends State<SBBAccordion> {
   Widget build(BuildContext context) {
     // TODO use these: MaterialLocalizations.of(context).expandedIconTapHint; MaterialLocalizations.of(context).collapsedIconTapHint;
 
-    final sbbTheme = SBBTheme.of(context);
+    final style = SBBControlStyles.of(context);
     final List<Widget> items = <Widget>[];
     for (int i = 0; i < widget.children.length; i++) {
       final SBBAccordionItem child = widget.children[i];
@@ -147,7 +147,7 @@ class _SBBAccordionState extends State<SBBAccordion> {
                         padding: const EdgeInsets.symmetric(vertical: 18.0),
                         child: Text(
                           child.title,
-                          style: sbbTheme.accordionTitleTextStyle,
+                          style: style.accordionTitleTextStyle,
                           maxLines: widget.titleMaxLines,
                           overflow: widget.titleMaxLines == null
                               ? null
@@ -173,7 +173,7 @@ class _SBBAccordionState extends State<SBBAccordion> {
                 width: double.infinity,
                 padding: child.padding,
                 child: DefaultTextStyle(
-                  style: sbbTheme.accordionBodyTextStyle,
+                  style: style.accordionBodyTextStyle!,
                   child: child.body,
                 ),
               ),
@@ -200,7 +200,7 @@ class _SBBAccordionState extends State<SBBAccordion> {
     }
 
     return Material(
-      color: sbbTheme.accordionBackgroundColor,
+      color: style.accordionBackgroundColor,
       child: Column(
         children: items,
       ),

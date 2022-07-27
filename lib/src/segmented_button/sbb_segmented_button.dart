@@ -98,12 +98,12 @@ class SBBSegmentedButton extends StatefulWidget {
           key: key,
           widgetBuilders: values
               .map((value) => (BuildContext context) {
-                    final sbbTheme = SBBTheme.of(context);
+                    final style = SBBControlStyles.of(context).segmentedButton;
                     return Text(
                       // AutoSizeText
                       value,
                       maxLines: 1,
-                      style: textColor == null ? sbbTheme.segmentedButtonTextStyle : sbbTheme.segmentedButtonTextStyle.copyWith(color: textColor),
+                      style: textColor == null ? style?.textStyle : style?.textStyle?.copyWith(color: textColor),
                       //minFontSize: 1,
                     );
                   })
@@ -169,15 +169,16 @@ class SBBSegmentedButton extends StatefulWidget {
 class _SegmentedButton extends State<SBBSegmentedButton> {
   static const _borderRadius = const BorderRadius.all(Radius.circular(22));
 
+  SBBSegmentedButtonStyle? get style => SBBControlStyles.of(context).segmentedButton;
+
   @override
   Widget build(BuildContext context) {
-    final sbbTheme = SBBTheme.of(context);
     return SizedBox(
       height: SBBInternal.defaultButtonHeight,
       child: Container(
         decoration: BoxDecoration(
-          color: widget.backgroundColor ?? sbbTheme.segmentedButtonBackgroundColor,
-          border: Border.all(color: widget.borderColor ?? sbbTheme.segmentedButtonBorderColor),
+          color: widget.backgroundColor ?? style?.backgroundColor,
+          border: Border.all(color: (widget.borderColor ?? style?.borderColor)!),
           borderRadius: _borderRadius,
         ),
         child: Padding(
@@ -218,7 +219,6 @@ class _SegmentedButton extends State<SBBSegmentedButton> {
   }
 
   Widget _buildIndicatorLayer() {
-    final sbbTheme = SBBTheme.of(context);
     return ExcludeSemantics(
       child: LayoutBuilder(
         builder: (_, constraints) {
@@ -235,11 +235,11 @@ class _SegmentedButton extends State<SBBSegmentedButton> {
                   width: constraints.maxWidth / widget.widgetBuilders.length - 2,
                   decoration: BoxDecoration(
                     borderRadius: _borderRadius,
-                    boxShadow: widget.boxShadow ?? sbbTheme.segmentedButtonBoxShadow,
+                    boxShadow: widget.boxShadow ?? style?.boxShadow,
                   ),
                   child: Material(
                     borderRadius: _borderRadius,
-                    color: widget.selectedColor ?? sbbTheme.segmentedButtonSelectedColor,
+                    color: widget.selectedColor ?? style?.selectedColor,
                     child: InkWell(
                       borderRadius: _borderRadius,
                       onTap: () => widget.selectedIndexChanged(widget.selectedStateIndex),

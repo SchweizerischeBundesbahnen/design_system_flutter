@@ -38,17 +38,17 @@ class _SBBIconTextButtonState extends State<SBBIconTextButton> {
 
   @override
   Widget build(BuildContext context) {
-    final sbbTheme = SBBTheme.of(context);
+    final style = SBBButtonStyles.of(context).iconTextStyle;
     final isEnabled = widget.onPressed != null;
     return Semantics(
       button: true,
       child: SBBGroup(
         useShadow: true,
         child: Material(
-          color: isEnabled ? sbbTheme.iconTextButtonBackgroundColor : sbbTheme.iconTextButtonBackgroundColorDisabled,
+          color: isEnabled ? style?.backgroundColor : style?.backgroundColorDisabled,
           child: InkWell(
-            splashColor: sbbTheme.iconTextButtonBackgroundColorHighlighted,
-            focusColor: sbbTheme.iconTextButtonBackgroundColorHighlighted,
+            splashColor: style?.backgroundColorHighlighted,
+            focusColor: style?.backgroundColorHighlighted,
             highlightColor: SBBColors.transparent,
             hoverColor: SBBColors.transparent,
             onFocusChange: (hasFocus) => setState(() => _hasFocus = hasFocus),
@@ -77,10 +77,10 @@ class _SBBIconTextButtonState extends State<SBBIconTextButton> {
                     widget.icon,
                     size: sbbIconSizeLarge,
                     color: _isPressed || _hasFocus
-                        ? sbbTheme.iconTextButtonIconColorHighlighted
+                        ? style?.iconColorHighlighted
                         : isEnabled
-                            ? sbbTheme.iconTextButtonIconColor
-                            : sbbTheme.iconTextButtonIconColorDisabled,
+                            ? style?.iconColor
+                            : style?.iconColorDisabled,
                   ),
                   const SizedBox(height: 4.0),
                   Text(
@@ -88,10 +88,10 @@ class _SBBIconTextButtonState extends State<SBBIconTextButton> {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: _isPressed || _hasFocus
-                        ? sbbTheme.iconTextButtonTextStyleHighlighted
+                        ? style?.textStyleHighlighted
                         : isEnabled
-                            ? sbbTheme.iconTextButtonTextStyle
-                            : sbbTheme.iconTextButtonTextStyleDisabled,
+                            ? style?.textStyle
+                            : style?.textStyleDisabled,
                   ),
                 ],
               ),

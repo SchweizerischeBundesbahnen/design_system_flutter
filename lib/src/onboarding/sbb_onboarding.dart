@@ -79,6 +79,9 @@ class _SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProvider
 
   double get animationValueReversed => 1 - animation.value;
 
+  SBBBaseStyle get style => Theme.of(context).extension()!;
+  SBBControlStyles get controlStyle => Theme.of(context).extension()!;
+
   @override
   void setState(VoidCallback fn) {
     super.setState(fn);
@@ -93,8 +96,8 @@ class _SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProvider
       if (context == null) return;
 
       colorTween = ColorTween(
-        begin: SBBTheme.of(context).isDark ? SBBColors.anthracite : SBBColors.smoke,
-        end: SBBTheme.of(context).isDark ? SBBColors.white : SBBColors.black,
+        begin: style.themeValue(SBBColors.smoke, SBBColors.anthracite),
+        end: style.themeValue(SBBColors.black, SBBColors.white),
       );
 
       setState(() {
@@ -126,7 +129,7 @@ class _SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProvider
   @override
   void didChangeDependencies() {
     if (parentPadding == -1) {
-      parentPadding = SBBTheme.of(context).defaultRootContainerPadding;
+      parentPadding = style.defaultRootContainerPadding!;
       frontCardPadding = EdgeInsets.only(left: parentPadding, right: parentPadding, bottom: parentPadding, top: visibleBackCardsCount * parentPadding + parentPadding);
     }
     super.didChangeDependencies();
@@ -152,14 +155,14 @@ class _SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProvider
       children: <Widget>[
         Container(
           key: globalKey,
-          color: SBBTheme.of(context).isDark ? SBBColors.black : SBBColors.milk,
+          color: style.themeValue(SBBColors.milk, SBBColors.black),
           child: Column(
             children: <Widget>[
               Expanded(
                 child: Container(
                     width: double.infinity,
                     decoration: BoxDecoration(
-                      color: SBBTheme.of(context).headerBackgroundColor,
+                      color: controlStyle.headerBackgroundColor,
                       borderRadius: BorderRadius.vertical(
                         bottom: Radius.circular(sbbDefaultSpacing),
                       ),
@@ -273,7 +276,7 @@ class _SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProvider
       );
 
   Widget buildStepIndicator(int index) {
-    Color? color = SBBTheme.of(context).isDark ? SBBColors.anthracite : SBBColors.smoke;
+    Color? color = style.themeValue(SBBColors.smoke, SBBColors.anthracite);
     var sizeAdjustment = 0.0;
     var marginAdjustment = 2.0;
     if (isAnimating && !isShowingStartPage && !isShowingEndPage) {
@@ -299,7 +302,7 @@ class _SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProvider
         }
       }
     } else if (currentStepIndex == index) {
-      color = SBBTheme.of(context).isDark ? SBBColors.white : SBBColors.black;
+      color = style.themeValue(SBBColors.black, SBBColors.white);
       sizeAdjustment = 4.0;
       marginAdjustment = 0.0;
     }
@@ -371,7 +374,7 @@ class _SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProvider
     const opacityMultiplier = 1.0 / (visibleBackCardsCount + 1);
     return ExcludeSemantics(
       child: Container(
-        color: SBBTheme.of(context).headerBackgroundColor,
+        color: controlStyle.headerBackgroundColor,
         margin: EdgeInsets.only(
           top: max(0.0, visibleBackCardsCount * parentPadding - layerIndex * parentPadding + parentPadding * resizeValue + parentPadding),
         ),
@@ -390,7 +393,7 @@ class _SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProvider
   Widget buildCard(int index, {bool isBackCard = false}) => ClipRRect(
         borderRadius: const BorderRadius.all(Radius.circular(sbbDefaultSpacing)),
         child: Container(
-          color: SBBTheme.of(context).isDark ? SBBColors.charcoal : SBBColors.white,
+          color: style.themeValue(SBBColors.white, SBBColors.charcoal),
           width: cardWidth,
           height: cardHeight,
           child: SingleChildScrollView(

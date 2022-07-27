@@ -88,10 +88,10 @@ class SBBUserMenu<T> extends StatelessWidget {
   }
 
   TextButton _buildLogInButton(BuildContext context) {
-    SBBThemeData theme = SBBTheme.of(context);
+    final style = SBBControlStyles.of(context);
     return TextButton(
       onPressed: onLoginRequest,
-      style: _getThemedUserMenuButtonStyle(theme),
+      style: _getThemedUserMenuButtonStyle(style),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -139,29 +139,29 @@ class SBBUserMenu<T> extends StatelessWidget {
       ? name.trim().split(' ').map((l) => l[0].toUpperCase()).take(2).join()
       : '';
 
-  ButtonStyle _getThemedUserMenuButtonStyle(SBBThemeData theme) => ButtonStyle(
-        textStyle: SBBThemeData.allStates(
-          theme.userMenuTextStyle,
+  ButtonStyle _getThemedUserMenuButtonStyle(SBBControlStyles style) => ButtonStyle(
+        textStyle: SBBTheme.allStates(
+          style.userMenuTextStyle,
         ),
-        foregroundColor: theme.userMenuForegroundColor,
-        backgroundColor: SBBThemeData.allStates(
+        foregroundColor: style.userMenuForegroundColor,
+        backgroundColor: SBBTheme.allStates(
           SBBColors.transparent,
         ),
-        overlayColor: SBBThemeData.allStates(
+        overlayColor: SBBTheme.allStates(
           SBBColors.transparent,
         ),
-        padding: SBBThemeData.allStates(
+        padding: SBBTheme.allStates(
           EdgeInsets.symmetric(
             vertical: 6.0,
             horizontal: _kHorizontalSpacing,
           ),
         ),
-        shape: SBBThemeData.allStates(
+        shape: SBBTheme.allStates(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.zero,
           ),
         ),
-        side: SBBThemeData.allStates(BorderSide.none),
+        side: SBBTheme.allStates(BorderSide.none),
       );
 
   SBBMenuItemBuilder<T> _addHeaderToItemBuilder(BuildContext context) {
@@ -174,12 +174,12 @@ class SBBUserMenu<T> extends StatelessWidget {
   }
 
   SBBMenuEntry<T> _buildHeader(BuildContext context) {
-    final SBBThemeData theme = SBBTheme.of(context);
+    final style = SBBControlStyles.of(context);
     return SBBMenuItem(
       enabled: false,
-      foregroundColor: SBBThemeData.allStates(SBBColors.iron),
-      backgroundColor: SBBThemeData.allStates(SBBColors.white),
-      textStyle: theme.userMenuTextStyle,
+      foregroundColor: SBBTheme.allStates(SBBColors.iron),
+      backgroundColor: SBBTheme.allStates(SBBColors.white),
+      textStyle: style.userMenuTextStyle,
       child: Row(
         children: [
           _buildAvatar(),

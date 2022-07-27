@@ -34,12 +34,12 @@ class TabItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = SBBTheme.of(context).isDark;
+    final style = SBBBaseStyle.of(context);
     final portrait = MediaQuery.of(context).orientation == Orientation.portrait;
     final size = portrait ? portraitSize : landscapeSize;
 
-    final foregroundColor = isDark ? SBBColors.black : SBBColors.white;
-    final backgroundColor = isDark ? SBBColors.white : SBBColors.black;
+    final foregroundColor = style.themeValue(SBBColors.white, SBBColors.black);
+    final backgroundColor = style.themeValue(SBBColors.black, SBBColors.white);
     Color iconColor = selected ? foregroundColor : backgroundColor;
 
     BoxDecoration? decoration;
@@ -60,14 +60,19 @@ class TabItemWidget extends StatelessWidget {
       containerColor = null;
     }
 
+    final iconWidget = Icon(icon, color: iconColor);
+    Widget child = warning
+        ? Padding(
+            padding: const EdgeInsets.only(left: 1.0, bottom: 4.0),
+            child: iconWidget,
+          )
+        : iconWidget;
+
     return Container(
       width: size,
       height: size,
       margin: const EdgeInsets.only(bottom: 8.0),
-      child: Icon(
-        icon,
-        color: iconColor,
-      ),
+      child: child,
       color: containerColor,
       decoration: decoration,
     );

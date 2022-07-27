@@ -44,9 +44,10 @@ class _AutocompletionPageState extends State<AutocompletionPage> {
 
   @override
   Widget build(BuildContext context) {
+    final style = SBBBaseStyle.of(context);
     return SingleChildScrollView(
       child: Container(
-        color: SBBTheme.of(context).isDark ? SBBColors.black : SBBColors.white,
+        color: style.themeValue(SBBColors.white, SBBColors.black),
         child: _autocompletion,
       ),
     );

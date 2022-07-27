@@ -86,10 +86,10 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
           initialData: TabBarNavigationData(0.0, 0.0, widget.items.first),
           builder: (context, snapshot) {
             final portrait = MediaQuery.of(context).orientation == Orientation.portrait;
-            final sbbTheme = SBBTheme.of(context);
             final topPadding = portrait ? 8.0 : 1.0;
             final snapshotData = snapshot.requireData;
             final cardColor = Theme.of(context).cardTheme.color ?? Theme.of(context).scaffoldBackgroundColor;
+            final style = SBBBaseStyle.of(context);
             return SizedBox.fromSize(
               size: Size.fromHeight(TabBarFiller.calcHeight(context)),
               child: Container(
@@ -102,14 +102,7 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                   ),
-                  boxShadow: SBBTheme.of(context).isDark
-                      ? [
-                          const BoxShadow(
-                            color: SBBInternal.barrierColor,
-                            blurRadius: 15,
-                          ),
-                        ]
-                      : SBBInternal.defaultBoxShadow,
+                  boxShadow: style.themeValue(SBBInternal.defaultBoxShadow, SBBInternal.barrierBoxShadow),
                 ),
                 child: Stack(
                   children: [
@@ -122,7 +115,7 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
                     ),
                     ClipPath(
                       child: Container(
-                        color: sbbTheme.isDark ? SBBColors.charcoal : SBBColors.white,
+                        color: style.themeValue(SBBColors.white, SBBColors.charcoal),
                         child: _IconLayer(widget.items, snapshotData.selectedTab),
                       ),
                       clipper: TabBarCurveClipper(
@@ -192,6 +185,7 @@ class _IconLayer extends StatelessWidget {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     final portrait = mediaQuery.orientation == Orientation.portrait;
+    final style = SBBControlStyles.of(context);
     return CustomMultiChildLayout(
       delegate: _IconLayerDelegate(
         items,
@@ -209,7 +203,7 @@ class _IconLayer extends StatelessWidget {
                   child: ExcludeSemantics(
                     child: Text(
                       e.translate(context),
-                      style: SBBTheme.of(context).tabBarTextStyle,
+                      style: style.tabBarTextStyle,
                       textAlign: TextAlign.center,
                     ),
                   ),

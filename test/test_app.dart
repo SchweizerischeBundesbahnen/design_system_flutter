@@ -27,13 +27,11 @@ class TestApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final widget = SBBTheme(
-      builder: (context, theme, darkTheme) => MaterialApp(
-        theme: theme,
-        darkTheme: darkTheme,
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(body: child),
-      ),
+    final widget = MaterialApp(
+      theme: SBBTheme.light(),
+      darkTheme: SBBTheme.dark(),
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(body: child),
     );
 
     if (!expanded) {
