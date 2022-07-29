@@ -2,7 +2,6 @@ import 'dart:math' as math;
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import '../../design_system_flutter.dart';
 
@@ -47,11 +46,12 @@ class _SBBLinkTextState extends State<SBBLinkText> {
   }
 
   List<TextSpan> _textSpans() {
-    final sbbTheme = SBBTheme.of(context);
+    final style = SBBBaseStyle.of(context);
+    final controlStyle = SBBControlStyles.of(context);
     final hasCustomStyle = widget.style != null;
-    final textStyle = hasCustomStyle ? widget.style!.copyWith(color: widget.style!.color ?? sbbTheme.defaultTextStyle.color) : sbbTheme.defaultTextStyle;
-    final linkStyle = hasCustomStyle ? textStyle.copyWith(color: sbbTheme.linkTextStyle.color) : sbbTheme.linkTextStyle;
-    final linkStylePressed = hasCustomStyle ? textStyle.copyWith(color: sbbTheme.linkTextStyleHighlighted.color) : sbbTheme.linkTextStyleHighlighted;
+    final textStyle = hasCustomStyle ? widget.style!.copyWith(color: widget.style!.color ?? style.defaultTextStyle!.color) : style.defaultTextStyle;
+    final linkStyle = hasCustomStyle ? textStyle!.copyWith(color: controlStyle.linkTextStyle!.color) : controlStyle.linkTextStyle;
+    final linkStylePressed = hasCustomStyle ? textStyle!.copyWith(color: controlStyle.linkTextStyleHighlighted!.color) : controlStyle.linkTextStyleHighlighted;
 
     final texts = widget.text.split(_regExpMarkDownLink);
     final links = _regExpMarkDownLink.allMatches(widget.text).toList();

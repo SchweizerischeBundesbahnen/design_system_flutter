@@ -55,6 +55,7 @@ class _TabBarPageState extends State<TabBarPage>
           SBBTabBar(
             navigationDataStream: _streamController.stream,
             items: items,
+            showWarning: true,
             onTabChanged: (t) {
               _selectedTab = t;
               _animationController.animateTo(items.indexOf(t) / items.length,

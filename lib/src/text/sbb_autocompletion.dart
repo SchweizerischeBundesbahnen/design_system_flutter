@@ -255,6 +255,9 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>>
         final overlayHeight = MediaQuery.of(context).size.height -
             textFieldGlobalPosition.dy -
             _bottomInset;
+
+        final style = SBBBaseStyle.of(context);
+
         listSuggestionsEntry = OverlayEntry(
           builder: (BuildContext context) {
             return Positioned(
@@ -275,9 +278,7 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>>
                     children: [
                       if (widget.favorites.isNotEmpty && widget.enableFavorites)
                         Container(
-                          color: SBBTheme.of(context).isDark
-                              ? SBBColors.black
-                              : SBBColors.milk,
+                          color: style.themeValue(SBBColors.milk, SBBColors.black),
                           height: 16.0,
                         ),
                       if (widget.favorites.isNotEmpty && widget.enableFavorites)
@@ -316,9 +317,7 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>>
                           },
                         ),
                       Container(
-                        color: SBBTheme.of(context).isDark
-                            ? SBBColors.black
-                            : SBBColors.milk,
+                        color: style.themeValue(SBBColors.milk, SBBColors.black),
                         height: 16.0,
                       ),
                       ...filteredSuggestions.map(

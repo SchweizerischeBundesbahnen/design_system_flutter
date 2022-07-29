@@ -29,11 +29,11 @@ class SBBSecondaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sbbTheme = SBBTheme.of(context);
+    final style = SBBBaseStyle.of(context);
     return OutlinedButton(
       style: Theme.of(context).outlinedButtonTheme.style?.copyWith(
             // workaround for web
-            padding: SBBThemeData.allStates(EdgeInsets.zero),
+            padding: SBBTheme.allStates(EdgeInsets.zero),
           ),
       onPressed: isLoading ? null : onPressed,
       focusNode: focusNode,
@@ -43,7 +43,11 @@ class SBBSecondaryButton extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            if (isLoading) sbbTheme.isDark ? const SBBLoadingIndicator.tinyCement() : const SBBLoadingIndicator.tinySmoke(),
+            if (isLoading)
+              style.themeValue(
+                const SBBLoadingIndicator.tinySmoke(),
+                const SBBLoadingIndicator.tinyCement(),
+              ),
             Flexible(
               child: Text(
                 label,

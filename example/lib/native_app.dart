@@ -39,90 +39,81 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => AppState(),
       child: Consumer<AppState>(
-          builder: (BuildContext context, AppState appState, _) {
-        return SBBTheme(
-          hostType: HostPlatform.web,
-          builder: (context, theme, darkTheme) {
-            return MaterialApp(
-              theme: theme,
-              darkTheme: darkTheme,
-              themeMode: appState.isDarkModeOn ? ThemeMode.dark : ThemeMode.light,
-              home: Scaffold(
-                appBar: SBBHeader(title: 'Design System Mobile'),
-                body: SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: sbbDefaultSpacing,
-                    ),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: sbbDefaultSpacing,
-                          ),
-                          child: ThemeModeSegmentedButton(),
+        builder: (BuildContext context, AppState appState, _) {
+          return MaterialApp(
+            theme: SBBTheme.light(),
+            darkTheme: SBBTheme.dark(),
+            themeMode: appState.isDarkModeOn ? ThemeMode.dark : ThemeMode.light,
+            home: Scaffold(
+              appBar: SBBHeader(title: 'Design System Mobile'),
+              body: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: sbbDefaultSpacing,
+                  ),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.symmetric(
+                          vertical: sbbDefaultSpacing,
                         ),
-                        const SBBListHeader('Basics'),
-                        SBBGroup(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              _DemoEntry('Icon', IconsPage()),
-                              _DemoEntry('Typography', TypographyPage(),
-                                  isLastElement: true),
-                            ],
-                          ),
+                        child: ThemeModeSegmentedButton(),
+                      ),
+                      const SBBListHeader('Basics'),
+                      SBBGroup(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            _DemoEntry('Icon', IconsPage()),
+                            _DemoEntry('Typography', TypographyPage(), isLastElement: true),
+                          ],
                         ),
-                        const SizedBox(height: sbbDefaultSpacing),
-                        const SBBListHeader('Elements'),
-                        SBBGroup(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              _DemoEntry('Button', ButtonPage()),
-                              _DemoEntry('Checkbox', CheckboxPage()),
-                              _DemoEntry('Link', LinkPage()),
-                              _DemoEntry('List Header', ListHeaderPage()),
-                              _DemoEntry('List Item', ListItemPage()),
-                              _DemoEntry(
-                                  'Loading Indicator', LoadingIndicatorPage()),
-                              _DemoEntry('Radio Button', RadiobuttonPage()),
-                              _DemoEntry(
-                                  'Segmented Button', SegmentedButtonPage()),
-                              _DemoEntry('Select', SelectPage()),
-                              _DemoEntry('Textfield / Textarea', TextFieldPage(),
-                                  isLastElement: true),
-                            ],
-                          ),
+                      ),
+                      const SizedBox(height: sbbDefaultSpacing),
+                      const SBBListHeader('Elements'),
+                      SBBGroup(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            _DemoEntry('Button', ButtonPage()),
+                            _DemoEntry('Checkbox', CheckboxPage()),
+                            _DemoEntry('Link', LinkPage()),
+                            _DemoEntry('List Header', ListHeaderPage()),
+                            _DemoEntry('List Item', ListItemPage()),
+                            _DemoEntry('Loading Indicator', LoadingIndicatorPage()),
+                            _DemoEntry('Radio Button', RadiobuttonPage()),
+                            _DemoEntry('Segmented Button', SegmentedButtonPage()),
+                            _DemoEntry('Select', SelectPage()),
+                            _DemoEntry('Textfield / Textarea', TextFieldPage(), isLastElement: true),
+                          ],
                         ),
-                        const SizedBox(height: sbbDefaultSpacing),
-                        const SBBListHeader('Modules'),
-                        SBBGroup(
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              _DemoEntry('Accordion', AccordionPage()),
-                              _DemoEntry('Autocompletion', AutocompletionPage()),
-                              _DemoEntry('Group', GroupPage()),
-                              _DemoEntry('Header', HeaderPage()),
-                              _DemoEntry('Modal', ModalPage()),
-                              _DemoEntry('Toast', ToastPage()),
-                              _DemoEntry('Onboarding', OnboardingPage()),
-                              _DemoEntry('Tab Bar', TabBarPage(),
-                                  isLastElement: true),
-                            ],
-                          ),
+                      ),
+                      const SizedBox(height: sbbDefaultSpacing),
+                      const SBBListHeader('Modules'),
+                      SBBGroup(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            _DemoEntry('Accordion', AccordionPage()),
+                            _DemoEntry('Autocompletion', AutocompletionPage()),
+                            _DemoEntry('Group', GroupPage()),
+                            _DemoEntry('Header', HeaderPage()),
+                            _DemoEntry('Modal', ModalPage()),
+                            _DemoEntry('Toast', ToastPage()),
+                            _DemoEntry('Onboarding', OnboardingPage()),
+                            _DemoEntry('Tab Bar', TabBarPage(), isLastElement: true),
+                          ],
                         ),
-                        const SizedBox(height: sbbDefaultSpacing),
-                      ],
-                    ),
+                      ),
+                      const SizedBox(height: sbbDefaultSpacing),
+                    ],
                   ),
                 ),
               ),
-            );
-          },
-        );
-      }),
+            ),
+          );
+        },
+      ),
     );
   }
 }
@@ -136,6 +127,7 @@ class _DemoEntry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final style = SBBControlStyles.of(context);
     return OpenContainer(
       closedElevation: 0.0,
       openElevation: 0.0,
@@ -145,7 +137,7 @@ class _DemoEntry extends StatelessWidget {
       openShape: const RoundedRectangleBorder(),
       closedBuilder: (context, action) {
         return Container(
-          color: SBBTheme.of(context).groupBackgroundColor,
+          color: style.groupBackgroundColor,
           child: SBBListItem(
             title: title,
             trailingIcon: SBBIcons.chevron_small_right_small,

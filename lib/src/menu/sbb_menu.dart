@@ -185,8 +185,8 @@ class _RenderMenuItem extends RenderShiftedBox {
 /// To show a SBB menu, use the [showSBBMenu] function. To create a button that
 /// shows a SBB menu, consider using [SBBMenuButton].
 ///
-/// Use [SBBThemeData.menuEntryColorHighlighted] to change background color onHover.
-/// Use [SBBThemeData.menuEntryTextIconColorHighlighted] to change text and icon color onHover.
+/// Use [SBBTheme.menuEntryColorHighlighted] to change background color onHover.
+/// Use [SBBTheme.menuEntryTextIconColorHighlighted] to change text and icon color onHover.
 ///
 /// See also:
 ///
@@ -263,7 +263,7 @@ class SBBMenuItem<T> extends SBBMenuEntry<T> {
 
   /// The text style of the sbb menu item.
   ///
-  /// If null, [SBBThemeData.menuEntryTextStyle] is used, which defaults to
+  /// If null, [SBBTheme.menuEntryTextStyle] is used, which defaults to
   /// [SBBLeanTextStyles.contextMenu].
   final TextStyle? textStyle;
 
@@ -338,13 +338,13 @@ class SBBMenuItemState<T, W extends SBBMenuItem<T>> extends State<W>
   }
 
   Widget _buildChild() {
-    final SBBThemeData theme = SBBTheme.of(context);
-    final TextStyle style = widget.textStyle ?? theme.menuEntryTextStyle;
+    final style = SBBControlStyles.of(context);
+    final TextStyle textStyle = widget.textStyle ?? style.menuEntryTextStyle!;
     final Color? resolvedBackgroundColor =
-        (widget.backgroundColor ?? theme.menuEntryBackgroundColor)
+        (widget.backgroundColor ?? style.menuEntryBackgroundColor!)
             .resolve(materialStates);
     final Color? resolvedForegroundColor =
-        (widget.foregroundColor ?? theme.menuEntryForegroundColor)
+        (widget.foregroundColor ?? style.menuEntryForegroundColor!)
             .resolve(materialStates);
     return Container(
       color: resolvedBackgroundColor,
@@ -352,7 +352,7 @@ class SBBMenuItemState<T, W extends SBBMenuItem<T>> extends State<W>
       padding: widget.padding,
       constraints: BoxConstraints(minHeight: widget.height),
       child: DefaultTextStyle(
-        style: style.copyWith(
+        style: textStyle.copyWith(
           color: resolvedForegroundColor,
         ),
         child: IconTheme.merge(
@@ -445,7 +445,7 @@ class _SBBMenu<T> extends StatelessWidget {
       ),
     );
 
-    final SBBThemeData theme = SBBTheme.of(context);
+    final style = SBBControlStyles.of(context);
     return AnimatedBuilder(
       animation: route.animation!,
       builder: (BuildContext context, Widget? child) {
@@ -459,10 +459,10 @@ class _SBBMenu<T> extends StatelessWidget {
                 ),
               ),
               side: BorderSide(
-                color: theme.menuBorderColor,
+                color: style.menuBorderColor!,
               ),
             ),
-            color: route.backgroundColor ?? theme.menuBackgroundColor,
+            color: route.backgroundColor ?? style.menuBackgroundColor,
             type: MaterialType.card,
             elevation: 0,
             child: Align(
@@ -870,7 +870,7 @@ class SBBMenuButton<T> extends StatefulWidget {
 
   /// If provided, the background color used for the menu.
   ///
-  /// If this property is null, then [SBBThemeData.menuEntryBackgroundColor] is used,
+  /// If this property is null, then [SBBTheme.menuEntryBackgroundColor] is used,
   /// which defaults to [SBBColors.white].
   final Color? backgroundColor;
 
@@ -951,7 +951,7 @@ class SBBMenuButtonState<T> extends State<SBBMenuButton<T>> {
         child: widget.child,
         hoverColor: SBBColors.transparent,
         splashColor: SBBColors.transparent,
-        overlayColor: SBBThemeData.allStates(SBBColors.transparent),
+        overlayColor: SBBTheme.allStates(SBBColors.transparent),
         highlightColor: SBBColors.transparent,
       );
     }

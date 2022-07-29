@@ -7,6 +7,7 @@ class ButtonPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final sbbToast = SBBToast.of(context);
+    final style = SBBBaseStyle.of(context);
     return SingleChildScrollView(
       padding: const EdgeInsets.all(sbbDefaultSpacing),
       child: Column(
@@ -44,9 +45,7 @@ class ButtonPage extends StatelessWidget {
           SBBGroup(
             child: Container(
               padding: const EdgeInsets.all(sbbDefaultSpacing),
-              color: SBBTheme.of(context).isDark
-                  ? SBBColors.transparent
-                  : SBBColors.red,
+              color: style.themeValue(SBBColors.red, SBBColors.transparent),
               child: Column(
                 children: [
                   SBBPrimaryButtonNegative(
@@ -246,9 +245,7 @@ class ButtonPage extends StatelessWidget {
           SBBGroup(
             child: Container(
               padding: const EdgeInsets.all(sbbDefaultSpacing),
-              color: SBBTheme.of(context).isDark
-                  ? SBBColors.transparent
-                  : SBBColors.red,
+              color: style.themeValue(SBBColors.red, SBBColors.transparent),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

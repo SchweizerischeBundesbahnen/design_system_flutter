@@ -1,3 +1,5 @@
+import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 
 import '../../design_system_flutter.dart';
@@ -55,13 +57,13 @@ class SBBModalPopup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var sbbTheme = SBBTheme.of(context);
+    final style = SBBControlStyles.of(context);
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(sbbDefaultSpacing),
       ),
       clipBehavior: clipBehavior,
-      backgroundColor: sbbTheme.modalBackgroundColor,
+      backgroundColor: style.modalBackgroundColor,
       child: Semantics(
         explicitChildNodes: true,
         child: Column(
@@ -153,7 +155,7 @@ class SBBModalSheet extends StatelessWidget {
             ),
             child: Text(
               title,
-              style: SBBTheme.of(context).modalTitleTextStyle,
+              style: SBBControlStyles.of(context).modalTitleTextStyle,
             ),
           ),
           child: child,
@@ -180,7 +182,9 @@ class SBBModalSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sbbTheme = SBBTheme.of(context);
+    final style = SBBControlStyles.of(context);
+    final padding = MediaQueryData.fromWindow(ui.window).padding;
+    final statusBarHeight = padding.top;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -190,7 +194,7 @@ class SBBModalSheet extends StatelessWidget {
               Navigator.of(context).pop();
             },
             child: Container(
-              height: sbbTheme.statusBarHeight + sbbDefaultSpacing,
+              height: statusBarHeight + sbbDefaultSpacing / 2.0,
               color: SBBColors.transparent,
             ),
           ),
@@ -198,7 +202,7 @@ class SBBModalSheet extends StatelessWidget {
         Flexible(
           child: Container(
             decoration: BoxDecoration(
-              color: sbbTheme.modalBackgroundColor,
+              color: style.modalBackgroundColor,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(sbbDefaultSpacing),
                 topRight: Radius.circular(sbbDefaultSpacing),
@@ -235,6 +239,7 @@ class _ModalHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final style = SBBControlStyles.of(context);
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -246,7 +251,7 @@ class _ModalHeader extends StatelessWidget {
               0.0,
               sbbDefaultSpacing,
             ),
-            child: Text(title, style: SBBTheme.of(context).modalTitleTextStyle),
+            child: Text(title, style: style.modalTitleTextStyle),
           ),
         ),
         _CloseButton(),

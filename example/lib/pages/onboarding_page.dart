@@ -55,10 +55,11 @@ class _PreferredSizeWidget extends StatelessWidget
     implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
-    var sbbTheme = SBBTheme.of(context);
+    final style = SBBControlStyles.of(context);
+    final statusBarHeight = MediaQuery.of(context).padding.top;
     return Container(
-      height: sbbTheme.statusBarHeight,
-      color: sbbTheme.headerBackgroundColor,
+      height: statusBarHeight,
+      color: style.headerBackgroundColor,
     );
   }
 
@@ -76,14 +77,15 @@ class DemoOnboardingBuilderDelegate extends SBBOnboardingBuilderDelegate {
       double widgetHeight,
       VoidCallback onStartOnboarding,
       VoidCallback onFinish) {
-    final sbbTheme = SBBTheme.of(context);
+    final style = SBBBaseStyle.of(context);
+    final controlStyle = SBBControlStyles.of(context);
     return Container(
       width: widgetWidth,
       height: widgetHeight,
-      color: sbbTheme.headerBackgroundColor,
+      color: controlStyle.headerBackgroundColor,
       child: Padding(
         padding: EdgeInsets.all(
-          sbbTheme.defaultRootContainerPadding,
+          style.defaultRootContainerPadding!,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -92,7 +94,7 @@ class DemoOnboardingBuilderDelegate extends SBBOnboardingBuilderDelegate {
             Text(
               'Welcome to the Onboarding',
               style: SBBTextStyles.extraLargeLight.copyWith(
-                color: sbbTheme.headerTextStyle.color,
+                color: controlStyle.headerTextStyle!.color,
               ),
               textAlign: TextAlign.center,
             ),
@@ -115,14 +117,15 @@ class DemoOnboardingBuilderDelegate extends SBBOnboardingBuilderDelegate {
   @override
   Widget buildEndPage(BuildContext context, double widgetWidth,
       double widgetHeight, VoidCallback onFinish) {
-    final sbbTheme = SBBTheme.of(context);
+    final style = SBBBaseStyle.of(context);
+    final controlStyle = SBBControlStyles.of(context);
     return Container(
       width: widgetWidth,
       height: widgetHeight,
-      color: sbbTheme.headerBackgroundColor,
+      color: controlStyle.headerBackgroundColor,
       child: Padding(
         padding: EdgeInsets.all(
-          sbbTheme.defaultRootContainerPadding,
+          style.defaultRootContainerPadding!,
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -131,7 +134,7 @@ class DemoOnboardingBuilderDelegate extends SBBOnboardingBuilderDelegate {
             Text(
               'Thank you! Bye Bye!',
               style: SBBTextStyles.extraLargeLight.copyWith(
-                color: sbbTheme.headerTextStyle.color,
+                color: controlStyle.headerTextStyle!.color,
               ),
               textAlign: TextAlign.center,
             ),
@@ -147,10 +150,12 @@ class DemoOnboardingBuilderDelegate extends SBBOnboardingBuilderDelegate {
   }
 
   @override
-  List<SBBOnboardingCard> buildCards(BuildContext context) => [
+  List<SBBOnboardingCard> buildCards(BuildContext context) {
+    final style = SBBBaseStyle.of(context);
+    return [
         SBBOnboardingCard.basic(
           embeddedChild: Container(
-            color: SBBTheme.of(context).backgroundColor,
+            color: style.backgroundColor,
             child: Center(
               child: Text(
                 'Page 1',
@@ -163,7 +168,7 @@ class DemoOnboardingBuilderDelegate extends SBBOnboardingBuilderDelegate {
         ),
         SBBOnboardingCard.basic(
           embeddedChild: Container(
-            color: SBBTheme.of(context).backgroundColor,
+            color: style.backgroundColor,
             child: Center(
               child: Text(
                 'Page 2',
@@ -176,7 +181,7 @@ class DemoOnboardingBuilderDelegate extends SBBOnboardingBuilderDelegate {
         ),
         SBBOnboardingCard.basic(
           embeddedChild: Container(
-            color: SBBTheme.of(context).backgroundColor,
+            color: style.backgroundColor,
             child: Center(
               child: Text(
                 'Page 3',
@@ -189,7 +194,7 @@ class DemoOnboardingBuilderDelegate extends SBBOnboardingBuilderDelegate {
         ),
         SBBOnboardingCard.basic(
           embeddedChild: Container(
-            color: SBBTheme.of(context).backgroundColor,
+            color: style.backgroundColor,
             child: Center(
               child: Text(
                 'Page 4',
@@ -202,7 +207,7 @@ class DemoOnboardingBuilderDelegate extends SBBOnboardingBuilderDelegate {
         ),
         SBBOnboardingCard.basic(
           embeddedChild: Container(
-            color: SBBTheme.of(context).backgroundColor,
+            color: style.backgroundColor,
             child: Center(
               child: Text(
                 'Page 5',
@@ -215,7 +220,7 @@ class DemoOnboardingBuilderDelegate extends SBBOnboardingBuilderDelegate {
         ),
         SBBOnboardingCard.basic(
           embeddedChild: Container(
-            color: SBBTheme.of(context).backgroundColor,
+            color: style.backgroundColor,
             child: Center(
               child: Text(
                 'Page 6',
@@ -227,6 +232,7 @@ class DemoOnboardingBuilderDelegate extends SBBOnboardingBuilderDelegate {
           content: 'Page 6',
         ),
       ];
+  }
 
   @override
   void setPopCallback(Future<bool> Function() callback) => onPop = callback;

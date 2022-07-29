@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../design_system_flutter.dart';
-import 'sbb_button_styles.dart';
+import 'sbb_button_style_extensions.dart';
 
 /// The SBB Primary Button. Use according to documentation.
 ///
@@ -31,20 +31,19 @@ class SBBPrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SBBThemeData theme = SBBTheme.of(context);
-    switch (theme.hostPlatform) {
+    switch (SBBBaseStyle.of(context).hostPlatform) {
       case HostPlatform.native:
-        return _buildThemedMobile(theme);
+        return _buildThemedMobile(context);
       case HostPlatform.web:
-        return _buildThemedWeb(theme);
+        return _buildThemedWeb(context);
       default:
-        return _buildThemedMobile(theme);
+        return _buildThemedMobile(context);
     }
   }
 
-  ElevatedButton _buildThemedMobile(SBBThemeData theme) {
+  ElevatedButton _buildThemedMobile(BuildContext context) {
     return ElevatedButton(
-      style: SBBButtonStyles.primaryMobile(theme: theme),
+      style: SBBButtonStyles.of(context).primaryMobile,
       onPressed: isLoading ? null : onPressed,
       focusNode: focusNode,
       child: Row(
@@ -63,9 +62,9 @@ class SBBPrimaryButton extends StatelessWidget {
     );
   }
 
-  ElevatedButton _buildThemedWeb(SBBThemeData theme) {
+  ElevatedButton _buildThemedWeb(BuildContext context) {
     return ElevatedButton(
-      style: SBBButtonStyles.primaryWebLean(theme: theme),
+      style: SBBButtonStyles.of(context).primaryWebLean,
       onPressed: onPressed,
       focusNode: focusNode,
       child: Center(
@@ -107,8 +106,8 @@ class SBBPrimaryButtonNegative extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SBBThemeData theme = SBBTheme.of(context);
-    switch (theme.hostPlatform) {
+    final theme = Theme.of(context);
+    switch (SBBBaseStyle.of(context).hostPlatform) {
       case HostPlatform.native:
         return _buildThemedMobile(theme);
       case HostPlatform.web:
@@ -118,9 +117,9 @@ class SBBPrimaryButtonNegative extends StatelessWidget {
     }
   }
 
-  Widget _buildThemedMobile(SBBThemeData theme) {
+  Widget _buildThemedMobile(ThemeData theme) {
     return ElevatedButton(
-      style: SBBButtonStyles.primaryMobileNegative(theme: theme),
+      style: theme.extension<SBBButtonStyles>()?.primaryMobileNegative,
       onPressed: isLoading ? null : onPressed,
       focusNode: focusNode,
       child: Row(
@@ -139,9 +138,9 @@ class SBBPrimaryButtonNegative extends StatelessWidget {
     );
   }
 
-  Widget _buildThemedWeb(SBBThemeData theme) {
+  Widget _buildThemedWeb(ThemeData theme) {
     return ElevatedButton(
-      style: SBBButtonStyles.primaryWebNegative(theme: theme),
+      style: theme.extension<SBBButtonStyles>()?.primaryWebNegative,
       onPressed: onPressed,
       focusNode: focusNode,
       child: Row(

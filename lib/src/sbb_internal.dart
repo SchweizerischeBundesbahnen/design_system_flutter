@@ -15,4 +15,25 @@ class SBBInternal {
       blurRadius: 15,
     )
   ];
+
+  static const defaultDarkBoxShadow = <BoxShadow>[
+    BoxShadow(
+      color: Color(0xCC000000),
+      blurRadius: 2,
+    )
+  ];
+
+  static const defaultRedBoxShadow = <BoxShadow>[
+    BoxShadow(
+      color: Color(0x33000000),
+      blurRadius: 2,
+    )
+  ];
+
+  static const barrierBoxShadow = <BoxShadow>[
+    const BoxShadow(
+      color: SBBInternal.barrierColor,
+      blurRadius: 15,
+    ),
+  ];
 }

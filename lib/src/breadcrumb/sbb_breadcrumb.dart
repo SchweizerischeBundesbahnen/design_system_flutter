@@ -24,7 +24,7 @@ class SBBBreadcrumb extends StatelessWidget {
   ///
   /// Defaults to [InkWell] with [SBBIcons.house_medium]
   /// with onLeadingPressed as callback.
-  /// The default will have the [SBBThemeData.breadcrumbForegroundColor]
+  /// The default will have the [SBBTheme.breadcrumbForegroundColor]
   final Widget? leading;
 
   /// Separating widget between Breadcrumb items.
@@ -54,10 +54,10 @@ class SBBBreadcrumb extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SBBThemeData theme = SBBTheme.of(context);
+    final style = SBBControlStyles.of(context);
     return _InheritedBreadcrumbStyle(
-      textStyle: textStyle ?? theme.breadcrumbTextStyle,
-      foregroundColor: foregroundColor ?? theme.breadcrumbForegroundColor,
+      textStyle: textStyle ?? style.breadcrumbTextStyle!,
+      foregroundColor: foregroundColor ?? style.breadcrumbForegroundColor!,
       child: Wrap(
         spacing: 4.0,
         crossAxisAlignment: WrapCrossAlignment.center,
@@ -155,7 +155,7 @@ class _SBBBreadcrumbItemState extends State<SBBBreadcrumbItem>
         }
       },
       splashColor: SBBColors.transparent,
-      overlayColor: SBBThemeData.allStates(SBBColors.transparent),
+      overlayColor: SBBTheme.allStates(SBBColors.transparent),
       highlightColor: SBBColors.transparent,
       mouseCursor: _getEffectiveMouseCursor(),
       onHover:

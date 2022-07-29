@@ -114,13 +114,13 @@ class SBBCheckboxListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sbbTheme = SBBTheme.of(context);
+    final style = SBBControlStyles.of(context).checkbox;
     final enabled = onChanged != null;
     return Stack(
       alignment: Alignment.bottomCenter,
       children: [
         Material(
-          color: sbbTheme.checkboxListItemBackgroundColor,
+          color: style?.listItem?.backgroundColor,
           child: ConstrainedBox(
             constraints: const BoxConstraints(minHeight: 48.0),
             child: InkWell(
@@ -139,8 +139,8 @@ class SBBCheckboxListItem extends StatelessWidget {
                       }
                     }
                   : null,
-              splashColor: sbbTheme.checkboxListItemBackgroundColorHighlighted,
-              focusColor: sbbTheme.checkboxListItemBackgroundColorHighlighted,
+              splashColor: style?.listItem?.backgroundColorHighlighted,
+              focusColor: style?.listItem?.backgroundColorHighlighted,
               highlightColor: SBBColors.transparent,
               hoverColor: SBBColors.transparent,
               child: Column(
@@ -176,8 +176,8 @@ class SBBCheckboxListItem extends StatelessWidget {
                           child: Icon(
                             leadingIcon,
                             color: enabled
-                                ? sbbTheme.checkboxListItemIconColor
-                                : sbbTheme.checkboxListItemIconColorDisabled,
+                                ? style?.listItem?.iconColor
+                                : style?.listItem?.iconColorDisabled,
                           ),
                         ),
                       Expanded(
@@ -193,9 +193,8 @@ class SBBCheckboxListItem extends StatelessWidget {
                               Text(
                                 label,
                                 style: enabled
-                                    ? sbbTheme.checkboxListItemTextStyle
-                                    : sbbTheme
-                                        .checkboxListItemTextStyleDisabled,
+                                    ? style?.listItem?.textStyle
+                                    : style?.listItem?.textStyleDisabled,
                                 maxLines: allowMultilineLabel ? null : 1,
                                 overflow: allowMultilineLabel
                                     ? null
@@ -209,10 +208,8 @@ class SBBCheckboxListItem extends StatelessWidget {
                                   child: Text(
                                     secondaryLabel!,
                                     style: enabled
-                                        ? sbbTheme
-                                            .checkboxListItemSecondaryTextStyle
-                                        : sbbTheme
-                                            .checkboxListItemSecondaryTextStyleDisabled,
+                                        ? style?.listItem?.secondaryTextStyle
+                                        : style?.listItem?.secondaryTextStyleDisabled,
                                   ),
                                 ),
                             ],

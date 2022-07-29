@@ -32,11 +32,11 @@ class SBBTertiaryButtonLarge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sbbTheme = SBBTheme.of(context);
+    final style = SBBBaseStyle.of(context);
     return TextButton(
       style: Theme.of(context).textButtonTheme.style?.copyWith(
             // workaround for web
-            padding: SBBThemeData.allStates(EdgeInsets.zero),
+            padding: SBBTheme.allStates(EdgeInsets.zero),
           ),
       onPressed: isLoading ? null : onPressed,
       focusNode: focusNode,
@@ -47,7 +47,7 @@ class SBBTertiaryButtonLarge extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             if (isLoading)
-              sbbTheme.isDark ? const SBBLoadingIndicator.tinyCement() : const SBBLoadingIndicator.tinySmoke()
+              style.themeValue(const SBBLoadingIndicator.tinySmoke(), const SBBLoadingIndicator.tinyCement())
             else if (icon != null)
               Padding(
                 padding: const EdgeInsetsDirectional.only(end: 4.0),
@@ -58,7 +58,6 @@ class SBBTertiaryButtonLarge extends StatelessWidget {
                 label,
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
-                style: sbbTheme.tertiaryButtonLargeTextStyle,
               ),
             ),
           ],
@@ -97,39 +96,17 @@ class SBBTertiaryButtonSmall extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sbbTheme = SBBTheme.of(context);
-    return TextButton(
-      style: Theme.of(context).textButtonTheme.style?.copyWith(
-            fixedSize: SBBThemeData.allStates(
-              const Size.fromHeight(SBBInternal.defaultButtonHeightSmall),
-            ),
-            // workaround for web
-            padding: SBBThemeData.allStates(EdgeInsets.zero),
-            overlayColor: SBBThemeData.resolveStatesWith(
-              defaultValue: sbbTheme.tertiaryButtonSmallBackgroundColor,
-              pressedValue: sbbTheme.tertiaryButtonSmallBackgroundColorHighlighted,
-            ),
-            backgroundColor: SBBThemeData.resolveStatesWith(
-              defaultValue: sbbTheme.tertiaryButtonSmallBackgroundColor,
-              pressedValue: sbbTheme.tertiaryButtonSmallBackgroundColor,
-              disabledValue: sbbTheme.tertiaryButtonSmallBackgroundColorDisabled,
-            ),
-            foregroundColor: SBBThemeData.resolveStatesWith(
-              defaultValue: sbbTheme.tertiaryButtonSmallTextStyle.color!,
-              pressedValue: sbbTheme.tertiaryButtonSmallTextStyleHighlighted.color,
-              disabledValue: sbbTheme.tertiaryButtonSmallTextStyleDisabled.color,
-            ),
-            textStyle: SBBThemeData.resolveStatesWith(
-              defaultValue: sbbTheme.tertiaryButtonSmallTextStyle,
-              pressedValue: sbbTheme.tertiaryButtonSmallTextStyleHighlighted,
-              disabledValue: sbbTheme.tertiaryButtonSmallTextStyleDisabled,
-            ),
-            side: SBBThemeData.resolveStatesWith(
-              defaultValue: BorderSide(color: sbbTheme.tertiaryButtonSmallBorderColor),
-              pressedValue: BorderSide(color: sbbTheme.tertiaryButtonSmallBorderColorHighlighted),
-              disabledValue: BorderSide(color: sbbTheme.tertiaryButtonSmallBorderColorDisabled),
-            ),
+    final baseStyle = Theme.of(context).textButtonTheme.style?.copyWith(
+          fixedSize: SBBTheme.allStates(
+            const Size.fromHeight(SBBInternal.defaultButtonHeightSmall),
           ),
+          // workaround for web
+          padding: SBBTheme.allStates(EdgeInsets.zero),
+        );
+    final style = SBBBaseStyle.of(context);
+    final buttonStyle = SBBButtonStyles.of(context);
+    return TextButton(
+      style: buttonStyle.tertiarySmallStyle?.overrideButtonStyle(baseStyle),
       onPressed: onPressed,
       focusNode: focusNode,
       child: Padding(
@@ -139,7 +116,7 @@ class SBBTertiaryButtonSmall extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             if (isLoading)
-              sbbTheme.isDark ? const SBBLoadingIndicator.tinyCement() : const SBBLoadingIndicator.tinySmoke()
+              style.themeValue(const SBBLoadingIndicator.tinyCement(), const SBBLoadingIndicator.tinySmoke())
             else if (icon != null)
               Padding(
                 padding: const EdgeInsetsDirectional.only(end: 4.0),

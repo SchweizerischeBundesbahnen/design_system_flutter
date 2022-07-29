@@ -30,32 +30,13 @@ class SBBIconButtonLarge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sbbTheme = SBBTheme.of(context);
+    final baseStyle = Theme.of(context).textButtonTheme.style?.copyWith(
+        minimumSize: SBBTheme.allStates(const Size(SBBInternal.defaultButtonHeight, SBBInternal.defaultButtonHeight)),
+        fixedSize: SBBTheme.allStates(const Size(SBBInternal.defaultButtonHeight, SBBInternal.defaultButtonHeight)),
+        padding: SBBTheme.allStates(EdgeInsets.zero),
+    );
     return TextButton(
-      style: Theme.of(context).textButtonTheme.style?.copyWith(
-            minimumSize: SBBThemeData.allStates(const Size(SBBInternal.defaultButtonHeight, SBBInternal.defaultButtonHeight)),
-            fixedSize: SBBThemeData.allStates(const Size(SBBInternal.defaultButtonHeight, SBBInternal.defaultButtonHeight)),
-            padding: SBBThemeData.allStates(EdgeInsets.zero),
-            overlayColor: SBBThemeData.resolveStatesWith(
-              defaultValue: sbbTheme.iconButtonLargeBackgroundColor,
-              pressedValue: sbbTheme.iconButtonLargeBackgroundColorHighlighted,
-            ),
-            backgroundColor: SBBThemeData.resolveStatesWith(
-              defaultValue: sbbTheme.iconButtonLargeBackgroundColor,
-              pressedValue: sbbTheme.iconButtonLargeBackgroundColor,
-              disabledValue: sbbTheme.iconButtonLargeBackgroundColorDisabled,
-            ),
-            foregroundColor: SBBThemeData.resolveStatesWith(
-              defaultValue: sbbTheme.iconButtonLargeIconColor,
-              pressedValue: sbbTheme.iconButtonLargeIconColorHighlighted,
-              disabledValue: sbbTheme.iconButtonLargeIconColorDisabled,
-            ),
-            side: SBBThemeData.resolveStatesWith(
-              defaultValue: BorderSide(color: sbbTheme.iconButtonLargeBorderColor),
-              pressedValue: BorderSide(color: sbbTheme.iconButtonLargeBorderColorHighlighted),
-              disabledValue: BorderSide(color: sbbTheme.iconButtonLargeBorderColorDisabled),
-            ),
-          ),
+      style: SBBButtonStyles.of(context).iconLargeStyle?.overrideButtonStyle(baseStyle),
       onPressed: onPressed,
       focusNode: focusNode,
       child: Icon(icon, size: sbbIconSizeSmall),
@@ -87,30 +68,11 @@ class SBBIconButtonSmall extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sbbTheme = SBBTheme.of(context);
     return _SBBIconButtonSmallRaw(
       key: key,
       icon: icon,
       onPressed: onPressed,
-      overlayColor: SBBThemeData.resolveStatesWith(
-        defaultValue: sbbTheme.iconButtonSmallBackgroundColor,
-        pressedValue: sbbTheme.iconButtonSmallBackgroundColorHighlighted,
-      ),
-      backgroundColor: SBBThemeData.resolveStatesWith(
-        defaultValue: sbbTheme.iconButtonSmallBackgroundColor,
-        pressedValue: sbbTheme.iconButtonSmallBackgroundColor,
-        disabledValue: sbbTheme.iconButtonSmallBackgroundColorDisabled,
-      ),
-      foregroundColor: SBBThemeData.resolveStatesWith(
-        defaultValue: sbbTheme.iconButtonSmallIconColor,
-        pressedValue: sbbTheme.iconButtonSmallIconColorHighlighted,
-        disabledValue: sbbTheme.iconButtonSmallIconColorDisabled,
-      ),
-      side: SBBThemeData.resolveStatesWith(
-        defaultValue: BorderSide(color: sbbTheme.iconButtonSmallBorderColor),
-        pressedValue: BorderSide(color: sbbTheme.iconButtonSmallBorderColorHighlighted),
-        disabledValue: BorderSide(color: sbbTheme.iconButtonSmallBorderColorDisabled),
-      ),
+      style: SBBButtonStyles.of(context).iconSmallStyle,
       focusNode: focusNode,
     );
   }
@@ -141,30 +103,11 @@ class SBBIconButtonSmallNegative extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sbbTheme = SBBTheme.of(context);
     return _SBBIconButtonSmallRaw(
       key: key,
       icon: icon,
       onPressed: onPressed,
-      overlayColor: SBBThemeData.resolveStatesWith(
-        defaultValue: sbbTheme.iconButtonSmallNegativeBackgroundColor,
-        pressedValue: sbbTheme.iconButtonSmallNegativeBackgroundColorHighlighted,
-      ),
-      backgroundColor: SBBThemeData.resolveStatesWith(
-        defaultValue: sbbTheme.iconButtonSmallNegativeBackgroundColor,
-        pressedValue: sbbTheme.iconButtonSmallNegativeBackgroundColor,
-        disabledValue: sbbTheme.iconButtonSmallNegativeBackgroundColorDisabled,
-      ),
-      foregroundColor: SBBThemeData.resolveStatesWith(
-        defaultValue: sbbTheme.iconButtonSmallNegativeIconColor,
-        pressedValue: sbbTheme.iconButtonSmallNegativeIconColorHighlighted,
-        disabledValue: sbbTheme.iconButtonSmallNegativeIconColorDisabled,
-      ),
-      side: SBBThemeData.resolveStatesWith(
-        defaultValue: BorderSide(color: sbbTheme.iconButtonSmallNegativeBorderColor),
-        pressedValue: BorderSide(color: sbbTheme.iconButtonSmallNegativeBorderColorHighlighted),
-        disabledValue: BorderSide(color: sbbTheme.iconButtonSmallNegativeBorderColorDisabled),
-      ),
+      style: SBBButtonStyles.of(context).iconSmallNegativeStyle,
       focusNode: focusNode,
     );
   }
@@ -195,26 +138,11 @@ class SBBIconButtonSmallBorderless extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sbbTheme = SBBTheme.of(context);
     return _SBBIconButtonSmallRaw(
       key: key,
       icon: icon,
       onPressed: onPressed,
-      overlayColor: SBBThemeData.resolveStatesWith(
-        defaultValue: sbbTheme.iconButtonSmallBorderlessBackgroundColor,
-        pressedValue: sbbTheme.iconButtonSmallBorderlessBackgroundColorHighlighted,
-      ),
-      backgroundColor: SBBThemeData.resolveStatesWith(
-        defaultValue: sbbTheme.iconButtonSmallBorderlessBackgroundColor,
-        pressedValue: sbbTheme.iconButtonSmallBorderlessBackgroundColor,
-        disabledValue: sbbTheme.iconButtonSmallBorderlessBackgroundColorDisabled,
-      ),
-      foregroundColor: SBBThemeData.resolveStatesWith(
-        defaultValue: sbbTheme.iconButtonSmallBorderlessIconColor,
-        pressedValue: sbbTheme.iconButtonSmallBorderlessIconColorHighlighted,
-        disabledValue: sbbTheme.iconButtonSmallBorderlessIconColorDisabled,
-      ),
-      side: SBBThemeData.allStates(BorderSide(style: BorderStyle.none)),
+      style: SBBButtonStyles.of(context).iconSmallBorderlessStyle,
       focusNode: focusNode,
     );
   }
@@ -227,23 +155,33 @@ class _SBBIconButtonSmallRaw extends StatelessWidget {
     Key? key,
     required this.icon,
     required this.onPressed,
-    required this.backgroundColor,
-    required this.foregroundColor,
-    required this.overlayColor,
-    required this.side,
+    required this.style,
     this.focusNode,
   }) : super(key: key);
 
   final IconData icon;
   final VoidCallback? onPressed;
-  final MaterialStateProperty<Color?> backgroundColor;
-  final MaterialStateProperty<Color?> foregroundColor;
-  final MaterialStateProperty<Color?> overlayColor;
-  final MaterialStateProperty<BorderSide?> side;
+  final SBBButtonStyle? style;
   final FocusNode? focusNode;
 
   @override
   Widget build(BuildContext context) {
+    final baseStyle = Theme.of(context).textButtonTheme.style?.copyWith(
+        minimumSize: SBBTheme.allStates(
+          const Size(
+            SBBInternal.defaultButtonHeightSmall,
+            SBBInternal.defaultButtonHeightSmall,
+          ),
+        ),
+        fixedSize: SBBTheme.allStates(
+          const Size(
+            SBBInternal.defaultButtonHeightSmall,
+            SBBInternal.defaultButtonHeightSmall,
+          ),
+        ),
+        padding: SBBTheme.allStates(EdgeInsets.zero),
+        side: SBBTheme.allStates(BorderSide(style: BorderStyle.none)),
+    );
     return Semantics(
       container: true,
       button: true,
@@ -255,25 +193,7 @@ class _SBBIconButtonSmallRaw extends StatelessWidget {
           minSize: Size.square(SBBInternal.defaultButtonHeight),
           child: Center(
             child: TextButton(
-              style: Theme.of(context).textButtonTheme.style?.copyWith(
-                    minimumSize: SBBThemeData.allStates(
-                      const Size(
-                        SBBInternal.defaultButtonHeightSmall,
-                        SBBInternal.defaultButtonHeightSmall,
-                      ),
-                    ),
-                    fixedSize: SBBThemeData.allStates(
-                      const Size(
-                        SBBInternal.defaultButtonHeightSmall,
-                        SBBInternal.defaultButtonHeightSmall,
-                      ),
-                    ),
-                    padding: SBBThemeData.allStates(EdgeInsets.zero),
-                    backgroundColor: backgroundColor,
-                    foregroundColor: foregroundColor,
-                    overlayColor: overlayColor,
-                    side: side,
-                  ),
+              style: style?.overrideButtonStyle(baseStyle),
               onPressed: onPressed,
               focusNode: focusNode,
               child: Icon(icon, size: sbbIconSizeSmall),

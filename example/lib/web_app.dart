@@ -10,15 +10,11 @@ class WebApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SBBTheme(
-      builder: (context, theme, darkTheme) {
-        return MaterialApp.router(
-          routerDelegate: _appRouter.delegate(),
-          routeInformationParser: _appRouter.defaultRouteParser(),
-          theme: theme,
-          darkTheme: darkTheme,
-        );
-      },
+    return MaterialApp.router(
+      routerDelegate: _appRouter.delegate(),
+      routeInformationParser: _appRouter.defaultRouteParser(),
+      theme: SBBTheme.light(),
+      darkTheme: SBBTheme.dark(),
     );
   }
 }

@@ -21,26 +21,26 @@ class SBBTextFieldUnderline extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sbbTheme = SBBTheme.of(context);
+    final style = SBBControlStyles.of(context).textField;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (errorText != null)
-          Padding (
+          Padding(
             padding: const EdgeInsets.only(bottom: 9.0),
             child: Text(
               errorText!,
-              style: sbbTheme.textFieldErrorTextStyle,
+              style: style?.errorTextStyle,
             ),
           ),
         Divider(
           color: errorText == null
               ? hasFocus
-                  ? sbbTheme.textFieldDividerColorHighlighted
+                  ? style?.dividerColorHighlighted
                   : isLastElement
                       ? SBBColors.transparent
-                      : sbbTheme.textFieldDividerColor
-              : sbbTheme.textFieldDividerColorError,
+                      : style?.dividerColor
+              : style?.dividerColorError,
         )
       ],
     );

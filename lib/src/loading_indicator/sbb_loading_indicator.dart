@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 
 import '../../design_system_flutter.dart';
 
@@ -102,23 +102,22 @@ class SBBLoadingIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SBBThemeData theme = SBBTheme.of(context);
-
-    switch (theme.hostPlatform) {
+    final hostPlatform = SBBBaseStyle.of(context).hostPlatform!;
+    switch (hostPlatform) {
       case HostPlatform.native:
-        return _buildThemedNative(theme);
+        return _buildThemedNative();
       case HostPlatform.web:
-        return _buildThemedWeb(theme);
+        return _buildThemedWeb();
       default:
-        return _buildThemedNative(theme);
+        return _buildThemedNative();
     }
   }
 
-  Widget _buildThemedNative(SBBThemeData theme) => Padding(
+  Widget _buildThemedNative() => Padding(
       padding: EdgeInsets.only(top: padding, bottom: padding),
       child: _buildTransform());
 
-  Widget _buildThemedWeb(SBBThemeData theme) => Container(
+  Widget _buildThemedWeb() => Container(
         color: SBBColors.white.withOpacity(0.9),
         padding: EdgeInsets.symmetric(vertical: padding),
         child: _buildTransform(),

@@ -150,7 +150,7 @@ class _SBBRadioButtonState<T> extends State<SBBRadioButton<T>> with SingleTicker
 
   @override
   Widget build(BuildContext context) {
-    final sbbTheme = SBBTheme.of(context);
+    final style = SBBControlStyles.of(context).radioButton;
     final enabled = widget.onChanged != null;
     // TODO add semantics
     return Material(
@@ -158,8 +158,8 @@ class _SBBRadioButtonState<T> extends State<SBBRadioButton<T>> with SingleTicker
       child: InkWell(
         splashFactory: InkRipple.splashFactory,
         customBorder: CircleBorder(),
-        splashColor: sbbTheme.radioButtonBackgroundColorHighlighted,
-        focusColor: sbbTheme.radioButtonBackgroundColorHighlighted,
+        splashColor: style?.basic?.backgroundColorHighlighted,
+        focusColor: style?.basic?.backgroundColorHighlighted,
         highlightColor: SBBColors.transparent,
         hoverColor: SBBColors.transparent,
         onTap: enabled ? () => widget.onChanged?.call(widget.value) : null,
@@ -169,11 +169,11 @@ class _SBBRadioButtonState<T> extends State<SBBRadioButton<T>> with SingleTicker
             width: _outerCircleSize,
             margin: widget.padding ?? const EdgeInsets.all(sbbDefaultSpacing / 2),
             decoration: BoxDecoration(
-              color: enabled ? sbbTheme.radioButtonBackgroundColor : sbbTheme.radioButtonBackgroundColorDisabled,
+              color: enabled ? style?.basic?.backgroundColor : style?.basic?.backgroundColorDisabled,
               shape: BoxShape.circle,
               border: Border.fromBorderSide(
                 BorderSide(
-                  color: enabled ? sbbTheme.radioButtonBorderColor : sbbTheme.radioButtonBorderColorDisabled,
+                  color: (enabled ? style?.basic?.borderColor : style?.basic?.borderColorDisabled)!,
                 ),
               ),
             ),
@@ -182,7 +182,7 @@ class _SBBRadioButtonState<T> extends State<SBBRadioButton<T>> with SingleTicker
                 height: _animation.value,
                 width: _animation.value,
                 decoration: BoxDecoration(
-                  color: enabled ? sbbTheme.radioButtonColor : sbbTheme.radioButtonColorDisabled,
+                  color: enabled ? style?.color : style?.colorDisabled,
                   shape: BoxShape.circle,
                 ),
               ),

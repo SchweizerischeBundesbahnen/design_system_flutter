@@ -31,12 +31,17 @@ class SBBGroup extends StatelessWidget {
     final shape = cardTheme.shape;
     final borderRadius = shape is RoundedRectangleBorder ? shape.borderRadius : null;
     final backgroundColor = cardTheme.color;
+    final style = SBBBaseStyle.of(context);
     return Container(
       margin: margin ?? cardTheme.margin,
       decoration: BoxDecoration(
         color: backgroundColor,
         borderRadius: borderRadius,
-        boxShadow: useShadow && !SBBTheme.of(context).isDark ? SBBInternal.defaultBoxShadow : null,
+        boxShadow: SBBBaseStyle.resolve(
+          useShadow && style.brightness == Brightness.light,
+          SBBInternal.defaultBoxShadow,
+          null,
+        ),
       ),
       child: Card(
         color: SBBColors.transparent,

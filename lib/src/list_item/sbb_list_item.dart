@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 import '../../design_system_flutter.dart';
 
@@ -38,13 +37,13 @@ class SBBListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sbbTheme = SBBTheme.of(context);
+    final style = SBBControlStyles.of(context).listItem;
     return MergeSemantics(
       child: Material(
-        color: sbbTheme.listItemBackgroundColor,
+        color: style?.backgroundColor,
         child: InkWell(
-          splashColor: sbbTheme.listItemBackgroundColorHighlighted,
-          focusColor: sbbTheme.listItemBackgroundColorHighlighted,
+          splashColor: style?.backgroundColorHighlighted,
+          focusColor: style?.backgroundColorHighlighted,
           highlightColor: SBBColors.transparent,
           hoverColor: SBBColors.transparent,
           onTap: onPressed,
@@ -82,7 +81,7 @@ class SBBListItem extends StatelessWidget {
                                   Expanded(
                                     child: Text(
                                       title,
-                                      style: sbbTheme.listItemTitleTextStyle,
+                                      style: style?.textStyle,
                                       maxLines: titleMaxLines,
                                       overflow: TextOverflow.ellipsis,
                                     ),
@@ -97,7 +96,7 @@ class SBBListItem extends StatelessWidget {
                                 ),
                                 child: Text(
                                   subtitle!,
-                                  style: sbbTheme.listItemSubtitleTextStyle,
+                                  style: style?.secondaryTextStyle,
                                   maxLines: subtitleMaxLines,
                                   overflow: TextOverflow.ellipsis,
                                 ),
