@@ -1,4 +1,4 @@
-import 'dart:math';
+import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 
@@ -183,7 +183,8 @@ class SBBModalSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = SBBControlStyles.of(context);
-    final statusBarHeight = min(24.0, MediaQuery.of(context).padding.top);
+    final padding = MediaQueryData.fromWindow(ui.window).padding;
+    final statusBarHeight = padding.top;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -193,7 +194,7 @@ class SBBModalSheet extends StatelessWidget {
               Navigator.of(context).pop();
             },
             child: Container(
-              height: statusBarHeight + sbbDefaultSpacing,
+              height: statusBarHeight + sbbDefaultSpacing / 2.0,
               color: SBBColors.transparent,
             ),
           ),
