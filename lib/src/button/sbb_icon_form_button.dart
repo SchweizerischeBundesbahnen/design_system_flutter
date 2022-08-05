@@ -28,33 +28,15 @@ class SBBIconFormButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sbbTheme = SBBTheme.of(context);
+    final theme = Theme.of(context);
+    final baseStyle = theme.textButtonTheme.style?.copyWith(
+        minimumSize: SBBTheme.allStates(const Size(_buttonSize, _buttonSize)),
+        fixedSize: SBBTheme.allStates(const Size(_buttonSize, _buttonSize)),
+        padding: SBBTheme.allStates(EdgeInsets.zero),
+        shape: SBBTheme.allStates(RoundedRectangleBorder()),
+    );
     return TextButton(
-      style: Theme.of(context).textButtonTheme.style?.copyWith(
-            minimumSize: SBBThemeData.allStates(const Size(_buttonSize, _buttonSize)),
-            fixedSize: SBBThemeData.allStates(const Size(_buttonSize, _buttonSize)),
-            padding: SBBThemeData.allStates(EdgeInsets.zero),
-            shape: SBBThemeData.allStates(RoundedRectangleBorder()),
-            overlayColor: SBBThemeData.resolveStatesWith(
-              defaultValue: sbbTheme.iconFormButtonBackgroundColor,
-              pressedValue: sbbTheme.iconFormButtonBackgroundColorHighlighted,
-            ),
-            backgroundColor: SBBThemeData.resolveStatesWith(
-              defaultValue: sbbTheme.iconFormButtonBackgroundColor,
-              pressedValue: sbbTheme.iconFormButtonBackgroundColor,
-              disabledValue: sbbTheme.iconFormButtonBackgroundColorDisabled,
-            ),
-            foregroundColor: SBBThemeData.resolveStatesWith(
-              defaultValue: sbbTheme.iconFormButtonIconColor,
-              pressedValue: sbbTheme.iconFormButtonIconColorHighlighted,
-              disabledValue: sbbTheme.iconFormButtonIconColorDisabled,
-            ),
-            side: SBBThemeData.resolveStatesWith(
-              defaultValue: BorderSide(color: sbbTheme.iconFormButtonBorderColor),
-              pressedValue: BorderSide(color: sbbTheme.iconFormButtonBorderColorHighlighted),
-              disabledValue: BorderSide(color: sbbTheme.iconFormButtonBorderColorDisabled),
-            ),
-          ),
+      style: SBBButtonStyles.of(context).iconFormStyle?.overrideButtonStyle(baseStyle),
       onPressed: onPressed,
       focusNode: focusNode,
       child: Icon(icon, size: sbbIconSizeSmall),

@@ -7,6 +7,15 @@ const String SBBWebFont = 'packages/design_system_flutter/SBBWeb';
 class SBBTextStyles {
   SBBTextStyles._();
 
+  static const double largeFontSize = 18.0;
+  static const double mediumFontSize = 16.0;
+  static const double smallFontSize = 14.0;
+
+  static const double largeFontHeight = 24.0 / largeFontSize;
+  static const double mediumFontHeight = 20.0 / mediumFontSize;
+  static const double smallFontHeight = 20.0 / smallFontSize;
+
+  @Deprecated('Use largeLight.')
   static const TextStyle extraLargeLight = TextStyle(
     fontSize: 30.0,
     height: 32.0 / 30.0,
@@ -16,53 +25,54 @@ class SBBTextStyles {
   );
 
   static const TextStyle largeLight = TextStyle(
-    fontSize: 18.0,
-    height: 24.0 / 18.0,
+    fontSize: largeFontSize,
+    height: largeFontHeight,
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w300,
     fontFamily: SBBWebFont,
   );
 
   static const TextStyle largeBold = TextStyle(
-    fontSize: 18.0,
-    height: 24.0 / 18.0,
+    fontSize: largeFontSize,
+    height: largeFontHeight,
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w700,
     fontFamily: SBBWebFont,
   );
 
   static const TextStyle mediumLight = TextStyle(
-    fontSize: 16.0,
-    height: 20.0 / 16.0,
+    fontSize: mediumFontSize,
+    height: mediumFontHeight,
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w300,
     fontFamily: SBBWebFont,
   );
 
   static const TextStyle mediumBold = TextStyle(
-    fontSize: 16.0,
-    height: 20.0 / 16.0,
+    fontSize: mediumFontSize,
+    height: mediumFontHeight,
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w700,
     fontFamily: SBBWebFont,
   );
 
   static const TextStyle smallLight = TextStyle(
-    fontSize: 14.0,
-    height: 20.0 / 14.0,
+    fontSize: smallFontSize,
+    height: smallFontHeight,
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w300,
     fontFamily: SBBWebFont,
   );
 
   static const TextStyle smallBold = TextStyle(
-    fontSize: 14.0,
-    height: 20.0 / 14.0,
+    fontSize: smallFontSize,
+    height: smallFontHeight,
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w700,
     fontFamily: SBBWebFont,
   );
 
+  @Deprecated('Use smallLight.')
   static const TextStyle extraSmallLight = TextStyle(
     fontSize: 12.0,
     height: 16.0 / 12.0,

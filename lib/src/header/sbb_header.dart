@@ -117,11 +117,6 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sbbTheme = SBBTheme.of(context);
-
-    // TODO find better solution
-    sbbTheme.updateStatusBarHeight(context);
-
     if (leadingWidget != null) {
       return _build(context, leadingWidget!, leadingWidth ?? kToolbarHeight);
     }
@@ -165,7 +160,7 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
 
   Widget _build(BuildContext context, Widget leading, double leadingWidth) {
     final customLeadingWidth = leadingWidth > kToolbarHeight;
-    final sbbTheme = SBBTheme.of(context);
+    final style = SBBControlStyles.of(context);
     return AppBar(
       brightness: Brightness.dark,
       titleSpacing: 0.0,
@@ -181,7 +176,7 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
       automaticallyImplyLeading: automaticallyImplyLeading,
       title: Semantics(
         header: true,
-        child: Text(title, style: sbbTheme.headerTextStyle),
+        child: Text(title, style: style.headerTextStyle),
       ),
       actions: actions != null && actions!.isNotEmpty
           ? actions
@@ -197,8 +192,8 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
                     icon: SBBLogo(),
                     onPressed: onPressedLogo,
                     tooltip: logoTooltip,
-                    splashColor: sbbTheme.headerButtonBackgroundColorHighlighted,
-                    focusColor: sbbTheme.headerButtonBackgroundColorHighlighted,
+                    splashColor: style.headerButtonBackgroundColorHighlighted,
+                    focusColor: style.headerButtonBackgroundColorHighlighted,
                     hoverColor: SBBColors.transparent,
                     highlightColor: SBBColors.transparent,
                   ),
@@ -272,12 +267,12 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
     String tooltip,
     VoidCallback? onPressed,
   ) {
-    final sbbTheme = SBBTheme.of(context);
+    final style = SBBControlStyles.of(context);
     final paint = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 2.0
       ..strokeCap = StrokeCap.butt
-      ..color = sbbTheme.headerIconColor;
+      ..color = style.headerIconColor!;
     return IconButton(
       padding: EdgeInsets.symmetric(horizontal: padding),
       icon: CustomPaint(
@@ -286,8 +281,8 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
       ),
       tooltip: tooltip,
       onPressed: onPressed,
-      splashColor: sbbTheme.headerButtonBackgroundColorHighlighted,
-      focusColor: sbbTheme.headerButtonBackgroundColorHighlighted,
+      splashColor: style.headerButtonBackgroundColorHighlighted,
+      focusColor: style.headerButtonBackgroundColorHighlighted,
       hoverColor: SBBColors.transparent,
       highlightColor: SBBColors.transparent,
     );

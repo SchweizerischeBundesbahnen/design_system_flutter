@@ -43,7 +43,7 @@ class SBBOnboardingCard extends StatelessWidget {
                         title,
                         style: SBBTextStyles.largeBold.copyWith(
                           height: 22.0 / 18.0,
-                          color: SBBTheme.of(context).isDark ? SBBColors.white : SBBColors.black,
+                          color: SBBBaseStyle.of(context).themeValue(SBBColors.black, SBBColors.white),
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -53,7 +53,7 @@ class SBBOnboardingCard extends StatelessWidget {
                       child: Text(
                         content,
                         style: SBBTextStyles.mediumLight.copyWith(
-                          color: SBBTheme.of(context).isDark ? SBBColors.white : SBBColors.black,
+                          color: SBBBaseStyle.of(context).themeValue(SBBColors.black, SBBColors.white),
                         ),
                         textAlign: TextAlign.center,
                       ),

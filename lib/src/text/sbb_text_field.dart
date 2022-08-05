@@ -147,13 +147,12 @@ class _SBBTextField extends State<SBBTextField> {
 
   TextField buildTextField(BuildContext context) {
     final textScaleFactor = MediaQuery.of(context).textScaleFactor;
-    final sbbTheme = SBBTheme.of(context);
+    final style = SBBControlStyles.of(context).textField;
 
-    final style = widget.enabled ? sbbTheme.textFieldTextStyle : sbbTheme.textFieldTextStyleDisabled;
-    final labelStyle =
-        widget.enabled ? sbbTheme.textFieldPlaceholderTextStyle : sbbTheme.textFieldPlaceholderTextStyleDisabled;
+    final textStyle = widget.enabled ? style?.textStyle : style?.textStyleDisabled;
+    final labelStyle = widget.enabled ? style?.placeholderTextStyle : style?.placeholderTextStyleDisabled;
     // adjust floating label style to get desired sizes
-    final floatingLabelStyle = labelStyle.copyWith(
+    final floatingLabelStyle = labelStyle?.copyWith(
       fontSize: SBBTextStyles.helpersLabel.fontSize! * 1.335,
       height: 1.5,
     );
@@ -210,14 +209,14 @@ class _SBBTextField extends State<SBBTextField> {
           top: topPadding * textScaleFactor,
           bottom: bottomPadding * textScaleFactor,
         ),
-        floatingLabelStyle: floatingLabelStyle.copyWith(),
+        floatingLabelStyle: floatingLabelStyle?.copyWith(),
         labelStyle: labelStyle,
         hintText: widget.hintText,
         hintStyle: labelStyle,
         hintMaxLines: widget.hintMaxLines,
         alignLabelWithHint: true,
       ),
-      style: style,
+      style: textStyle,
       inputFormatters: widget.inputFormatters,
       textCapitalization: widget.textCapitalization,
       textInputAction: widget.textInputAction,

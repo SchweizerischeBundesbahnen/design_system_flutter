@@ -32,8 +32,7 @@ class SBBSideBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SBBThemeData theme = SBBTheme.of(context);
-
+    final style = SBBControlStyles.of(context);
     return Row(
       mainAxisSize: MainAxisSize.max,
       children: [
@@ -41,10 +40,10 @@ class SBBSideBar extends StatelessWidget {
           width: width,
           child: DecoratedBox(
             decoration: ShapeDecoration(
-              color: backgroundColor ?? theme.sidebarBackgroundColor,
+              color: backgroundColor ?? style.sidebarBackgroundColor,
               shape: Border(
                 right: BorderSide(
-                  color: borderColor ?? theme.sidebarBorderColor,
+                  color: borderColor ?? style.sidebarBorderColor!,
                 ),
               ),
             ),
@@ -82,13 +81,13 @@ class _SBBSidebarItemState extends State<SBBSidebarItem>
     with MaterialStateMixin {
   @override
   Widget build(BuildContext context) {
-    final SBBThemeData theme = SBBTheme.of(context);
+    final style = SBBControlStyles.of(context);
 
     Color? resolvedForegroundColor =
-        theme.sidebarItemForegroundColor.resolve(materialStates);
+        style.sidebarItemForegroundColor!.resolve(materialStates);
 
     Color? resolvedBackgroundColor =
-        theme.sidebarItemBackgroundColor.resolve(materialStates);
+        style.sidebarItemBackgroundColor!.resolve(materialStates);
     if (widget.isSelected) {
       resolvedBackgroundColor = SBBColors.cloud;
       resolvedForegroundColor = SBBColors.black;
@@ -102,12 +101,11 @@ class _SBBSidebarItemState extends State<SBBSidebarItem>
           child: InkWell(
             splashColor: SBBColors.transparent,
             highlightColor: SBBColors.transparent,
-            overlayColor: SBBThemeData.allStates(SBBColors.transparent),
+            overlayColor: SBBTheme.allStates(SBBColors.transparent),
             onTap: widget.isSelected ? null : widget.onTap,
             onHover: updateMaterialState(MaterialState.hovered),
             child: DefaultTextStyle(
-              style: theme.sidebarItemTextStyle
-                  .copyWith(color: resolvedForegroundColor),
+              style: style.sidebarItemTextStyle!.copyWith(color: resolvedForegroundColor),
               child: IconTheme.merge(
                 data: IconThemeData(color: resolvedForegroundColor),
                 child: Padding(

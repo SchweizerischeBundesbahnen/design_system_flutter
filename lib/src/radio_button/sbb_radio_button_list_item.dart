@@ -102,19 +102,19 @@ class SBBRadioButtonListItem<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final sbbTheme = SBBTheme.of(context);
+    final style = SBBControlStyles.of(context).radioButton;
     final enabled = onChanged != null;
     return Stack(
       alignment: Alignment.bottomCenter,
       children: [
         Material(
-          color: sbbTheme.radioButtonListItemBackgroundColor,
+          color: style?.listItem?.backgroundColor,
           child: ConstrainedBox(
             constraints: const BoxConstraints(minHeight: 48.0),
             child: InkWell(
               onTap: enabled ? () => onChanged!(value) : null,
-              splashColor: sbbTheme.radioButtonListItemBackgroundColorHighlighted,
-              focusColor: sbbTheme.radioButtonListItemBackgroundColorHighlighted,
+              splashColor: style?.listItem?.backgroundColorHighlighted,
+              focusColor: style?.listItem?.backgroundColorHighlighted,
               highlightColor: SBBColors.transparent,
               hoverColor: SBBColors.transparent,
               child: Column(
@@ -150,8 +150,8 @@ class SBBRadioButtonListItem<T> extends StatelessWidget {
                           child: Icon(
                             leadingIcon,
                             color: enabled
-                                ? sbbTheme.radioButtonListItemIconColor
-                                : sbbTheme.radioButtonListItemIconColorDisabled,
+                                ? style?.listItem?.iconColor
+                                : style?.listItem?.iconColorDisabled,
                           ),
                         ),
                       Expanded(
@@ -167,9 +167,8 @@ class SBBRadioButtonListItem<T> extends StatelessWidget {
                               Text(
                                 label,
                                 style: enabled
-                                    ? sbbTheme.radioButtonListItemTextStyle
-                                    : sbbTheme
-                                    .radioButtonListItemTextStyleDisabled,
+                                    ? style?.listItem?.textStyle
+                                    : style?.listItem?.textStyleDisabled,
                                 maxLines: allowMultilineLabel ? null : 1,
                                 overflow: allowMultilineLabel
                                     ? null
@@ -183,10 +182,8 @@ class SBBRadioButtonListItem<T> extends StatelessWidget {
                                   child: Text(
                                     secondaryLabel!,
                                     style: enabled
-                                        ? sbbTheme
-                                        .radioButtonListItemSecondaryTextStyle
-                                        : sbbTheme
-                                        .radioButtonListItemSecondaryTextStyleDisabled,
+                                        ? style?.listItem?.secondaryTextStyle
+                                        : style?.listItem?.secondaryTextStyleDisabled,
                                   ),
                                 ),
                             ],

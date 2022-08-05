@@ -43,3 +43,4 @@ export 'src/tab_bar/sbb_tab_bar.dart';
 export 'src/tab_bar/tab_bar_filler.dart';
 export 'src/tab_bar/tab_bar_item.dart';
 export 'src/tab_bar/tab_bar_navigation_data.dart';
+export 'src/theme/styles/sbb_styles.dart';
