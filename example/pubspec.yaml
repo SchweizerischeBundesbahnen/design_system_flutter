@@ -10,11 +10,13 @@ dependencies:
   flutter:
     sdk: flutter
 
+  auto_route: ^4.0.1
+
   # https://pub.dev/packages/provider
   provider: ^6.0.2
 
   # https://pub.dev/packages/animations
-  animations: ^2.0.0
+  animations: ^2.0.2
 
   design_system_flutter:
     path: ../
@@ -22,6 +24,9 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  auto_route_generator: ^4.0.0
+  build_runner: ^2.1.10
 
 flutter:
   assets:

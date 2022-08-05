@@ -35,7 +35,8 @@ class _TabBarNotification extends Notification {
   final TabBarDrawData data;
 }
 
-class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMixin {
+class _SBBTabBarState extends State<SBBTabBar>
+    with SingleTickerProviderStateMixin {
   late TabBarDrawData tabBarData = TabBarDrawData.empty(widget.items);
 
   late AnimationController _controller;
@@ -46,7 +47,8 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this, duration: kThemeAnimationDuration);
+    _controller =
+        AnimationController(vsync: this, duration: kThemeAnimationDuration);
     _animation = Tween(begin: 0.0, end: 0.25).animate(_controller);
 
     _controller.addListener(() {
@@ -57,7 +59,7 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
 
   bool setPositionsAndSizes(_TabBarNotification n) {
     if (n.data != tabBarData) {
-      WidgetsBinding.instance?.addPostFrameCallback(
+      WidgetsBinding.instance!.addPostFrameCallback(
         (_) {
           if (!mounted) return;
           setState(() => tabBarData = n.data);
@@ -80,11 +82,13 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
           stream: widget.navigationDataStream,
           initialData: TabBarNavigationData(0.0, 0.0, widget.items.first),
           builder: (context, snapshot) {
-            final portrait = MediaQuery.of(context).orientation == Orientation.portrait;
+            final portrait =
+                MediaQuery.of(context).orientation == Orientation.portrait;
             final sbbTheme = SBBTheme.of(context);
             final topPadding = portrait ? 8.0 : 1.0;
             final snapshotData = snapshot.requireData;
-            final cardColor = Theme.of(context).cardTheme.color ?? Theme.of(context).scaffoldBackgroundColor;
+            final cardColor = Theme.of(context).cardTheme.color ??
+                Theme.of(context).scaffoldBackgroundColor;
             return SizedBox.fromSize(
               size: Size.fromHeight(TabBarFiller.calcHeight(context)),
               child: Container(
@@ -117,8 +121,11 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
                     ),
                     ClipPath(
                       child: Container(
-                        color: sbbTheme.isDark ? SBBColors.charcoal : SBBColors.white,
-                        child: _IconLayer(widget.items, snapshotData.selectedTab),
+                        color: sbbTheme.isDark
+                            ? SBBColors.charcoal
+                            : SBBColors.white,
+                        child:
+                            _IconLayer(widget.items, snapshotData.selectedTab),
                       ),
                       clipper: TabBarCurveClipper(
                         snapshotData.currentPage,
@@ -139,7 +146,10 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
                         child: Semantics(
                           selected: snapshotData.selectedTab == tab,
                           value: tab.translate(context),
-                          hint: tab.translateSemantics(context, widget.items.indexOf(tab) + 1, widget.items.length),
+                          hint: tab.translateSemantics(
+                              context,
+                              widget.items.indexOf(tab) + 1,
+                              widget.items.length),
                           child: Container(
                             color: SBBColors.transparent,
                             child: GestureDetector(
@@ -151,8 +161,10 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
                                 _controller.forward();
                                 _selectedOverride = widget.items.indexOf(tab);
                               },
-                              onTapUp: (_) => setState(() => _selectedOverride = null),
-                              onTapCancel: () => setState(() => _selectedOverride = null),
+                              onTapUp: (_) =>
+                                  setState(() => _selectedOverride = null),
+                              onTapCancel: () =>
+                                  setState(() => _selectedOverride = null),
                             ),
                           ),
                         ),
@@ -211,7 +223,8 @@ class _IconLayer extends StatelessWidget {
 }
 
 class _IconLayerDelegate extends MultiChildLayoutDelegate {
-  _IconLayerDelegate(this.items, this.onNotification, this.padding, this.portrait);
+  _IconLayerDelegate(
+      this.items, this.onNotification, this.padding, this.portrait);
 
   final List<TabBarItem> items;
   final void Function(_TabBarNotification notification) onNotification;
@@ -230,7 +243,8 @@ class _IconLayerDelegate extends MultiChildLayoutDelegate {
       iconSizes.putIfAbsent(tab, () => iconSize);
 
       if (hasChild('${tab.id}_text')) {
-        final textSize = layoutChild('${tab.id}_text', BoxConstraints.loose(size));
+        final textSize =
+            layoutChild('${tab.id}_text', BoxConstraints.loose(size));
         textSizes.putIfAbsent(tab, () => textSize);
       }
     }
@@ -247,10 +261,16 @@ class _IconLayerDelegate extends MultiChildLayoutDelegate {
         positionChild(tab, Offset(iconLeft, tabTop));
         if (hasChild('${tab.id}_text')) {
           final textLeft = center - textSizes[tab]!.width / 2.0;
-          final maxLeft = size.width - sbbDefaultSpacing - textSizes[tab]!.width;
+          final maxLeft =
+              size.width - sbbDefaultSpacing - textSizes[tab]!.width;
           final iconBottom = tabTop + TabItemWidget.portraitSize;
-          final top = iconBottom + (size.height - iconBottom) / 2.0 - textSizes[tab]!.height / 2.0;
-          positionChild('${tab.id}_text', Offset(math.max(sbbDefaultSpacing, math.min(textLeft, maxLeft)), top));
+          final top = iconBottom +
+              (size.height - iconBottom) / 2.0 -
+              textSizes[tab]!.height / 2.0;
+          positionChild(
+              '${tab.id}_text',
+              Offset(math.max(sbbDefaultSpacing, math.min(textLeft, maxLeft)),
+                  top));
         }
         positions.putIfAbsent(tab, () => iconLeft);
         sizes.putIfAbsent(tab, () => iconSizes[tab]!);
@@ -261,15 +281,26 @@ class _IconLayerDelegate extends MultiChildLayoutDelegate {
         spaceBetween = positions.values.first * 2;
       }
 
-      onNotification(_TabBarNotification(TabBarDrawData(positions, sizes, spaceBetween)));
+      onNotification(
+          _TabBarNotification(TabBarDrawData(positions, sizes, spaceBetween)));
     } else {
-      final spaceBetween = (width - items.map((e) => iconSizes[e]!.width + textSizes[e]!.width + sbbDefaultSpacing).sum) / (items.length + 1);
+      final spaceBetween = (width -
+              items
+                  .map((e) =>
+                      iconSizes[e]!.width +
+                      textSizes[e]!.width +
+                      sbbDefaultSpacing)
+                  .sum) /
+          (items.length + 1);
 
       double iconLeft = spaceBetween;
       for (final tab in items) {
-        final elementSize = Size(iconSizes[tab]!.width + textSizes[tab]!.width + sbbDefaultSpacing, iconSizes[tab]!.height);
+        final elementSize = Size(
+            iconSizes[tab]!.width + textSizes[tab]!.width + sbbDefaultSpacing,
+            iconSizes[tab]!.height);
         final textLeft = iconLeft + sbbDefaultSpacing + iconSizes[tab]!.width;
-        final textTop = iconSizes[tab]!.height / 2.0 - textSizes[tab]!.height / 2.0;
+        final textTop =
+            iconSizes[tab]!.height / 2.0 - textSizes[tab]!.height / 2.0;
 
         positionChild(tab, Offset(iconLeft, tabTop));
         positionChild('${tab.id}_text', Offset(textLeft, textTop));
@@ -278,12 +309,15 @@ class _IconLayerDelegate extends MultiChildLayoutDelegate {
 
         iconLeft += spaceBetween + elementSize.width;
 
-        onNotification(_TabBarNotification(TabBarDrawData(positions, sizes, spaceBetween)));
+        onNotification(_TabBarNotification(
+            TabBarDrawData(positions, sizes, spaceBetween)));
       }
     }
   }
 
   @override
   bool shouldRelayout(_IconLayerDelegate oldDelegate) =>
-      padding != oldDelegate.padding || portrait != oldDelegate.portrait || const ListEquality().equals(items, oldDelegate.items);
+      padding != oldDelegate.padding ||
+      portrait != oldDelegate.portrait ||
+      const ListEquality().equals(items, oldDelegate.items);
 }

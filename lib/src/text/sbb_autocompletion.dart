@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 
 import '../../design_system_flutter.dart';
 
@@ -149,7 +148,7 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>>
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance?.addObserver(this);
+    WidgetsBinding.instance!.addObserver(this);
     _textField = SBBTextField(
       controller: widget.controller ?? TextEditingController(),
       enabled: widget.enabled,
@@ -198,10 +197,8 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>>
 
   @override
   void didChangeMetrics() {
-    if (WidgetsBinding.instance != null) {
-      _bottomInset = WidgetsBinding.instance!.window.viewInsets.bottom /
-          MediaQuery.of(context).devicePixelRatio;
-    }
+    _bottomInset = WidgetsBinding.instance!.window.viewInsets.bottom /
+        MediaQuery.of(context).devicePixelRatio;
     _metricsChanged = true;
     _updateOverlay(query: _currentText);
   }
@@ -591,7 +588,7 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>>
 
   @override
   void dispose() {
-    WidgetsBinding.instance?.removeObserver(this);
+    WidgetsBinding.instance!.removeObserver(this);
     // if we created our own focus node and controller, dispose of them
     // otherwise, let the caller dispose of their own instances
     if (widget.focusNode == null) {
