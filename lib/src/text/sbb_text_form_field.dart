@@ -191,11 +191,6 @@ class _SBBTextField extends State<SBBTextFormField> {
               ),
           ],
         ),
-        if (errorText != null)
-          Text(
-            errorText!,
-            style: SBBWebTextStyles.small.copyWith(color: SBBColors.red),
-          )
       ],
     );
   }
@@ -270,7 +265,7 @@ class _SBBTextField extends State<SBBTextFormField> {
           borderRadius: BorderRadius.all(Radius.circular(2.0)),
           borderSide: BorderSide(color: SBBColors.red, width: 1.0)),
       // Hide default error since we have our own
-      errorStyle: const TextStyle(fontSize: 0, height: 0),
+      errorStyle: SBBWebTextStyles.small,
       errorText: errorText,
       contentPadding: EdgeInsetsDirectional.only(
         top: 12,
