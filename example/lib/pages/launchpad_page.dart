@@ -112,6 +112,7 @@ class _DemoEntry extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final style = SBBControlStyles.of(context);
     return OpenContainer(
       closedElevation: 0.0,
       openElevation: 0.0,
@@ -121,7 +122,7 @@ class _DemoEntry extends StatelessWidget {
       openShape: const RoundedRectangleBorder(),
       closedBuilder: (context, action) {
         return Container(
-          color: SBBTheme.of(context).groupBackgroundColor,
+          color: style.groupBackgroundColor,
           child: SBBListItem(
             title: title,
             trailingIcon: SBBIcons.chevron_small_right_small,

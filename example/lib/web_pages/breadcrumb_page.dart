@@ -89,13 +89,11 @@ class _IndexButtons extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        SBBIconButton.small(
-            buttonStyle: SBBButtonStyles.iconSecondaryWeb,
+        SBBIconButtonSmall(
             icon: SBBIcons.minus_small,
             onPressed: () => callback(_restrictIndexToZero())),
         SizedBox(width: sbbDefaultSpacing),
-        SBBIconButton.small(
-            buttonStyle: SBBButtonStyles.iconSecondaryWeb,
+        SBBIconButtonSmall(
             icon: SBBIcons.plus_small,
             onPressed: () => callback(_restrictToLevelLength())),
       ],

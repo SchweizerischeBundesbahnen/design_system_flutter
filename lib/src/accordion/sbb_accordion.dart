@@ -361,7 +361,7 @@ class _ExpandIconState extends State<_ExpandIcon>
   }
 
   Widget _iconNative() {
-    return SBBIconButton.small(
+    return SBBIconButtonSmall(
       icon: SBBIcons.chevron_small_down_small,
       onPressed: () {},
     );

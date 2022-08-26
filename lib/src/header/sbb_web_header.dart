@@ -140,7 +140,7 @@ class _SBBWebHeaderNavItemState extends State<SBBWebHeaderNavItem>
     with MaterialStateMixin {
   @override
   Widget build(BuildContext context) {
-    final SBBThemeData theme = SBBTheme.of(context);
+    final style = SBBControlStyles.of(context).headerNavItemForegroundColor;
     if (widget.selected!) setMaterialState(MaterialState.pressed, true);
     return Semantics(
       link: true,
@@ -148,10 +148,10 @@ class _SBBWebHeaderNavItemState extends State<SBBWebHeaderNavItem>
       child: Material(
         color: SBBColors.white,
         textStyle: SBBWebTextStyles.medium.copyWith(
-            color: theme.headerNavItemForegroundColor.resolve(materialStates)),
+            color: style!.resolve(materialStates)),
         child: InkWell(
             splashColor: SBBColors.transparent,
-            overlayColor: SBBThemeData.allStates(SBBColors.transparent),
+            overlayColor: SBBTheme.allStates(SBBColors.transparent),
             onTap: widget.onTap,
             onHover: widget.selected!
                 ? null

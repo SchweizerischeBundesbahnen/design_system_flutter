@@ -43,31 +43,32 @@ class ButtonPage extends StatelessWidget {
                     ),
                     ButtonExpression(
                       label: '- Icon Button Primary',
-                      buttonBuilder: (label, onPressed) => SBBIconButton.large(
+                      buttonBuilder: (label, onPressed) => SBBIconButtonLarge(
+                          buttonStyle: SBBButtonStyles.of(context).primaryIconWebLean,
                           icon: SBBIcons.pen_small, onPressed: onPressed),
                     ),
                     ButtonExpression(
                       label: '- Icon Button Alternate',
-                      buttonBuilder: (label, onPressed) => SBBIconButton.large(
+                      buttonBuilder: (label, onPressed) => SBBIconButtonLarge(
                         icon: SBBIcons.pen_small,
                         onPressed: onPressed,
-                        buttonStyle: SBBButtonStyles.iconAlternateWeb,
+                        buttonStyle: SBBButtonStyles.of(context).primaryNegativeIconWebLean,
                       ),
                     ),
                     ButtonExpression(
                       label: '- Icon Button Secondary',
-                      buttonBuilder: (label, onPressed) => SBBIconButton.large(
+                      buttonBuilder: (label, onPressed) => SBBIconButtonLarge(
                         icon: SBBIcons.pen_small,
                         onPressed: onPressed,
-                        buttonStyle: SBBButtonStyles.iconSecondaryWeb,
+                        buttonStyle: SBBButtonStyles.of(context).secondaryIconWebLean,
                       ),
                     ),
                     ButtonExpression(
                       label: '- Icon Button Ghost',
-                      buttonBuilder: (label, onPressed) => SBBIconButton.large(
+                      buttonBuilder: (label, onPressed) => SBBIconButtonLarge(
                         icon: SBBIcons.pen_small,
                         onPressed: onPressed,
-                        buttonStyle: SBBButtonStyles.iconGhostWeb,
+                        buttonStyle: SBBButtonStyles.of(context).ghostIconWebLean,
                       ),
                     ),
                   ]),

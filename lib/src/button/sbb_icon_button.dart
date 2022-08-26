@@ -5,105 +5,206 @@ import 'package:flutter/rendering.dart';
 
 import '../../design_system_flutter.dart';
 import '../sbb_internal.dart';
-import 'sbb_button_styles.dart';
 
-typedef ButtonStyle themedSBBIconButtonStyle(SBBTheme theme);
-
-class SBBIconButton extends StatelessWidget {
-  const SBBIconButton.large({
+/// Large variant of the SBB Icon Button. Use according to documentation.
+///
+/// The [icon] parameter must not be null. Make sure to use small icons
+/// ([sbbIconSizeSmall] - 24x24).
+///
+/// If [onPressed] callback is null, then the button will be disabled.
+///
+/// See also:
+///
+/// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/button>
+class SBBIconButtonLarge extends StatelessWidget {
+  const SBBIconButtonLarge({
     Key? key,
     required this.icon,
     required this.onPressed,
-    this.tooltipMessage,
-    this.buttonStyle = SBBButtonStyles.of(context).iconLargeStyle,
     this.focusNode,
-    this.isSmallIconButton = false,
+    this.buttonStyle,
   }) : super(key: key);
 
-  const SBBIconButton.small({
-    Key? key,
-    required this.icon,
-    required this.onPressed,
-    this.tooltipMessage,
-    this.buttonStyle = SBBButtonStyles.of(context).iconSmallStyle,
-    this.focusNode,
-    this.isSmallIconButton = true,
-  }) : super(key: key);
-
-  const SBBIconButton.smallNegative({
-    Key? key,
-    required this.icon,
-    required this.onPressed,
-    this.tooltipMessage,
-    this.buttonStyle = SBBButtonStyles.of(context).iconSmallNegativeStyle,
-    this.focusNode,
-    this.isSmallIconButton = true,
-  }) : super(key: key);
-
-  const SBBIconButton.smallBorderless({
-    Key? key,
-    required this.icon,
-    required this.onPressed,
-    this.tooltipMessage,
-    this.buttonStyle = SBBButtonStyles.of(context).iconSmallBorderlessStyle,
-    this.focusNode,
-    this.isSmallIconButton = true,
-  }) : super(key: key);
-
-  final String? tooltipMessage;
-  final themedSBBIconButtonStyle buttonStyle;
   final IconData icon;
   final VoidCallback? onPressed;
   final FocusNode? focusNode;
-  final bool isSmallIconButton;
+  final ButtonStyle? buttonStyle;
 
   @override
   Widget build(BuildContext context) {
-    final style = SBBBaseStyle.of(context);
-    return Semantics(
-        container: true,
-        button: true,
-        enabled: onPressed != null,
-        child: (tooltipMessage == null)
-            ? _iconButton(style)
-            : Tooltip(
-                message: tooltipMessage,
-                child: _iconButton(style),
-              ));
-  }
-
-  Widget _iconButton(SBBBaseStyle style) {
-    if (_buttonNeedsSurroundingTapMaterial(style)) {
-      return _surroundWithContainerAndPadding(style);
-    } else {
-      return _styledTextButtonWithIcon(style);
-    }
-  }
-
-  Container _surroundWithContainerAndPadding(SBBBaseStyle style) {
-    return Container(
-      height: SBBInternal.defaultButtonHeight,
-      width: SBBInternal.defaultButtonHeight,
-      child: _InputPadding(
-        minSize: Size.square(SBBInternal.defaultButtonHeight),
-        child: Center(child: _styledTextButtonWithIcon(style)),
-      ),
+    final baseStyle = Theme.of(context).textButtonTheme.style?.copyWith(
+      minimumSize: SBBTheme.allStates(const Size(SBBInternal.defaultButtonHeight, SBBInternal.defaultButtonHeight)),
+      fixedSize: SBBTheme.allStates(const Size(SBBInternal.defaultButtonHeight, SBBInternal.defaultButtonHeight)),
+      padding: SBBTheme.allStates(EdgeInsets.zero),
     );
-  }
-
-  TextButton _styledTextButtonWithIcon(SBBBaseStyle style) {
     return TextButton(
-      style: isSmallIconButton
-          ? SBBButtonStyles.makeSmallIconButton(buttonStyle(style))
-          : SBBButtonStyles.makeLargeIconButton(buttonStyle(style)),
+      style: buttonStyle ?? SBBButtonStyles.of(context).iconLargeStyle?.overrideButtonStyle(baseStyle),
       onPressed: onPressed,
       focusNode: focusNode,
       child: Icon(icon, size: sbbIconSizeSmall),
     );
   }
+}
 
-  bool _buttonNeedsSurroundingTapMaterial(SBBTheme theme) =>
-      isSmallIconButton && theme.hostPlatform == HostPlatform.native;
+/// Small variant of the SBB Icon Button. Use according to documentation.
+///
+/// The [icon] parameter must not be null. Make sure to use small icons
+/// ([sbbIconSizeSmall] - 24x24).
+///
+/// If [onPressed] callback is null, then the button will be disabled.
+///
+/// See also:
+///
+/// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/button>
+class SBBIconButtonSmall extends StatelessWidget {
+  const SBBIconButtonSmall({
+    Key? key,
+    required this.icon,
+    required this.onPressed,
+    this.focusNode,
+  }) : super(key: key);
+
+  final IconData icon;
+  final VoidCallback? onPressed;
+  final FocusNode? focusNode;
+
+  @override
+  Widget build(BuildContext context) {
+    return _SBBIconButtonSmallRaw(
+      key: key,
+      icon: icon,
+      onPressed: onPressed,
+      style: SBBButtonStyles.of(context).iconSmallStyle,
+      focusNode: focusNode,
+    );
+  }
+}
+
+/// Small negative variant of the SBB Icon Button. Use according to
+/// documentation.
+///
+/// The [icon] parameter must not be null. Make sure to use small icons
+/// ([sbbIconSizeSmall] - 24x24).
+///
+/// If [onPressed] callback is null, then the button will be disabled.
+///
+/// See also:
+///
+/// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/button>
+class SBBIconButtonSmallNegative extends StatelessWidget {
+  const SBBIconButtonSmallNegative({
+    Key? key,
+    required this.icon,
+    required this.onPressed,
+    this.focusNode,
+  }) : super(key: key);
+
+  final IconData icon;
+  final VoidCallback? onPressed;
+  final FocusNode? focusNode;
+
+  @override
+  Widget build(BuildContext context) {
+    return _SBBIconButtonSmallRaw(
+      key: key,
+      icon: icon,
+      onPressed: onPressed,
+      style: SBBButtonStyles.of(context).iconSmallNegativeStyle,
+      focusNode: focusNode,
+    );
+  }
+}
+
+/// Small borderless variant of the SBB Icon Button. Use according to
+/// documentation.
+///
+/// The [icon] parameter must not be null. Make sure to use small icons
+/// ([sbbIconSizeSmall] - 24x24).
+///
+/// If [onPressed] callback is null, then the button will be disabled.
+///
+/// See also:
+///
+/// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/button>
+class SBBIconButtonSmallBorderless extends StatelessWidget {
+  const SBBIconButtonSmallBorderless({
+    Key? key,
+    required this.icon,
+    required this.onPressed,
+    this.focusNode,
+  }) : super(key: key);
+
+  final IconData icon;
+  final VoidCallback? onPressed;
+  final FocusNode? focusNode;
+
+  @override
+  Widget build(BuildContext context) {
+    return _SBBIconButtonSmallRaw(
+      key: key,
+      icon: icon,
+      onPressed: onPressed,
+      style: SBBButtonStyles.of(context).iconSmallBorderlessStyle,
+      focusNode: focusNode,
+    );
+  }
+}
+
+/// Base widget for [SBBIconButtonSmall], [SBBIconButtonSmallNegative] and
+/// [SBBIconButtonSmallBorderless].
+class _SBBIconButtonSmallRaw extends StatelessWidget {
+  const _SBBIconButtonSmallRaw({
+    Key? key,
+    required this.icon,
+    required this.onPressed,
+    required this.style,
+    this.focusNode,
+  }) : super(key: key);
+
+  final IconData icon;
+  final VoidCallback? onPressed;
+  final SBBButtonStyle? style;
+  final FocusNode? focusNode;
+
+  @override
+  Widget build(BuildContext context) {
+    final baseStyle = Theme.of(context).textButtonTheme.style?.copyWith(
+      minimumSize: SBBTheme.allStates(
+        const Size(
+          SBBInternal.defaultButtonHeightSmall,
+          SBBInternal.defaultButtonHeightSmall,
+        ),
+      ),
+      fixedSize: SBBTheme.allStates(
+        const Size(
+          SBBInternal.defaultButtonHeightSmall,
+          SBBInternal.defaultButtonHeightSmall,
+        ),
+      ),
+      padding: SBBTheme.allStates(EdgeInsets.zero),
+      side: SBBTheme.allStates(BorderSide(style: BorderStyle.none)),
+    );
+    return Semantics(
+      container: true,
+      button: true,
+      enabled: onPressed != null,
+      child: Container(
+        height: SBBInternal.defaultButtonHeight,
+        width: SBBInternal.defaultButtonHeight,
+        child: _InputPadding(
+          minSize: Size.square(SBBInternal.defaultButtonHeight),
+          child: Center(
+            child: TextButton(
+              style: style?.overrideButtonStyle(baseStyle),
+              onPressed: onPressed,
+              focusNode: focusNode,
+              child: Icon(icon, size: sbbIconSizeSmall),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
 }
 
 /// Copied from [ButtonStyleButton]

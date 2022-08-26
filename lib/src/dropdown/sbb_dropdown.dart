@@ -84,15 +84,15 @@ class _DropdownMenuItemButtonState<T> extends State<_DropdownMenuItemButton<T>>
         widget.route.items[widget.itemIndex].item!;
 
     //TODO: solve with material state
-    final MaterialStateProperty<Color> leftBorderColor =
-        SBBThemeData.resolveStatesWith(
+    final MaterialStateProperty<Color?> leftBorderColor =
+        SBBTheme.resolveStatesWith(
             defaultValue: SBBColors.transparent, hoveredValue: SBBColors.red);
 
     Widget child = Container(
       decoration: BoxDecoration(
           border: Border(
               left:
-                  BorderSide(color: leftBorderColor.resolve(materialStates)))),
+                  BorderSide(color: leftBorderColor.resolve(materialStates)!))),
       padding: widget.padding,
       height: widget.route.itemHeight,
       child: widget.route.items[widget.itemIndex],

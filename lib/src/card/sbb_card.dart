@@ -88,7 +88,7 @@ class _SBBCardState extends State<SBBCard> {
     return InkWell(
       splashColor: SBBColors.transparent,
       highlightColor: SBBColors.transparent,
-      overlayColor: SBBThemeData.allStates(SBBColors.transparent),
+      overlayColor: SBBTheme.allStates(SBBColors.transparent),
       onHover: (hovering) {
         setState(() => _changeScale(hovering));
       },

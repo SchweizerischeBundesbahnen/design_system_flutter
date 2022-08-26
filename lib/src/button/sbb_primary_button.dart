@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../design_system_flutter.dart';
+import '../sbb_internal.dart';
 import 'sbb_button_style_extensions.dart';
 
 /// The SBB Primary Button. Use according to documentation.
@@ -50,13 +51,7 @@ class SBBPrimaryButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           if (isLoading) SBBLoadingIndicator.tinyCloud(),
-          Flexible(
-            child: Text(
-              label,
-              overflow: TextOverflow.ellipsis,
-              maxLines: 1,
-            ),
-          ),
+          SBBButtonContent(label: label)
         ],
       ),
     );
@@ -67,12 +62,11 @@ class SBBPrimaryButton extends StatelessWidget {
       style: SBBButtonStyles.of(context).primaryWebLean,
       onPressed: onPressed,
       focusNode: focusNode,
-      child: Center(
-        child: Text(
-          label,
-          overflow: TextOverflow.ellipsis,
-          maxLines: 1,
-        ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SBBButtonContent(label: label)
+        ],
       ),
     );
   }

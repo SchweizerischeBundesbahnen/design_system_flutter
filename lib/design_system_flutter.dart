@@ -2,13 +2,13 @@ library design_system_flutter;
 
 export 'src/accordion/sbb_accordion.dart';
 export 'src/breadcrumb/sbb_breadcrumb.dart';
-export 'src/button/sbb_button_styles.dart';
 export 'src/button/sbb_icon_button.dart';
 export 'src/button/sbb_icon_form_button.dart';
 export 'src/button/sbb_icon_text_button.dart';
 export 'src/button/sbb_primary_button.dart';
 export 'src/button/sbb_secondary_button.dart';
 export 'src/button/sbb_tertiary_button.dart';
+export 'src/button/sbb_button_style_extensions.dart';
 export 'src/card/sbb_card.dart';
 export 'src/checkbox/sbb_checkbox.dart';
 export 'src/checkbox/sbb_checkbox_list_item.dart';

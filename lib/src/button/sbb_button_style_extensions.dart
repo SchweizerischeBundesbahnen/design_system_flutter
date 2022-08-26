@@ -25,6 +25,10 @@ extension SBBButtonStylesExtension on SBBButtonStyles {
   ButtonStyle get primaryMobile => primaryStyle!.overrideButtonStyle(_baseButtonStyle);
 
   ButtonStyle get primaryWebLean => primaryMobile.copyWith(
+        minimumSize: SBBTheme.allStates(Size(SBBInternal.webMinButtonWidth,
+          SBBInternal.defaultButtonHeightSmall)),
+        maximumSize: SBBTheme.allStates(Size(
+          SBBInternal.webMaxButtonWidth, SBBInternal.defaultButtonHeight)),
         overlayColor: SBBTheme.allStates(
           SBBColors.transparent,
         ),
@@ -32,18 +36,28 @@ extension SBBButtonStylesExtension on SBBButtonStyles {
           defaultValue: primaryStyle!.backgroundColor!,
           pressedValue: SBBColors.red125,
           hoveredValue: SBBColors.red125,
-          disabledValue: primaryStyle?.backgroundColorDisabled,
+          disabledValue: primaryStyle!.backgroundColor!.withOpacity(0.4),
         ),
         shape: SBBTheme.allStates(
           RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(2.0),
           ),
         ),
+        side: SBBTheme.resolveStatesWith(
+          defaultValue: BorderSide(color: primaryStyle!.backgroundColor!),
+          pressedValue: BorderSide(color: SBBColors.red125),
+          hoveredValue: BorderSide(color: SBBColors.red125),
+          disabledValue: BorderSide(color: SBBColors.transparent),
+    ),
       );
 
   ButtonStyle get primaryMobileNegative => primaryNegativeStyle!.overrideButtonStyle(_baseButtonStyle);
 
   ButtonStyle get primaryWebNegative => primaryMobileNegative.copyWith(
+        minimumSize: SBBTheme.allStates(Size(SBBInternal.webMinButtonWidth,
+            SBBInternal.defaultButtonHeightSmall)),
+        maximumSize: SBBTheme.allStates(Size(
+            SBBInternal.webMaxButtonWidth, SBBInternal.defaultButtonHeight)),
         overlayColor: SBBTheme.allStates(
           SBBColors.transparent,
         ),
@@ -51,7 +65,7 @@ extension SBBButtonStylesExtension on SBBButtonStyles {
           defaultValue: SBBColors.granite,
           hoveredValue: SBBColors.iron,
           pressedValue: SBBColors.iron,
-          disabledValue: primaryNegativeStyle?.backgroundColorDisabled,
+          disabledValue: SBBColors.granite.withOpacity(0.4),
         ),
         shape: SBBTheme.allStates(
           RoundedRectangleBorder(
@@ -59,4 +73,56 @@ extension SBBButtonStylesExtension on SBBButtonStyles {
           ),
         ),
       );
+  ButtonStyle get secondaryWebLean => primaryWebLean.copyWith(
+      backgroundColor: SBBTheme.resolveStatesWith(
+        defaultValue: SBBColors.silver,
+        pressedValue: SBBColors.cement,
+        hoveredValue: SBBColors.cement,
+        disabledValue: SBBColors.silver,
+      ),
+      foregroundColor: SBBTheme.resolveStatesWith(
+        defaultValue: SBBColors.iron,
+        pressedValue: SBBColors.iron,
+        hoveredValue: SBBColors.iron,
+        disabledValue: SBBColors.iron.withOpacity(0.5),
+      ),
+      side: SBBTheme.resolveStatesWith(
+        defaultValue: BorderSide(color: SBBColors.silver),
+        pressedValue: BorderSide(color: SBBColors.cement),
+        hoveredValue: BorderSide(color: SBBColors.cement),
+        disabledValue: BorderSide(color: SBBColors.silver),
+      ),
+  );
+
+  ButtonStyle get ghostWebLean => primaryWebLean.copyWith(
+    backgroundColor: SBBTheme.allStates(SBBColors.transparent),
+    foregroundColor: SBBTheme.resolveStatesWith(
+      defaultValue: SBBColors.granite,
+      pressedValue: SBBColors.iron,
+      hoveredValue: SBBColors.iron,
+      selectedValue: SBBColors.iron,
+      disabledValue: SBBColors.granite.withOpacity(0.5),
+    ),
+    side: SBBTheme.resolveStatesWith(
+      defaultValue: BorderSide(color: SBBColors.granite),
+      pressedValue: BorderSide(color: SBBColors.iron),
+      disabledValue: BorderSide(color: SBBColors.granite.withOpacity(0.4)),
+    ),
+  );
+
+  ButtonStyle get primaryIconWebLean => makeLargeIconButton(primaryWebLean);
+  ButtonStyle get primaryNegativeIconWebLean => makeLargeIconButton(primaryWebNegative);
+  ButtonStyle get secondaryIconWebLean => makeLargeIconButton(secondaryWebLean);
+  ButtonStyle get ghostIconWebLean => makeLargeIconButton(ghostWebLean);
+
+  static ButtonStyle makeLargeIconButton(ButtonStyle baseButtonStyle) =>
+      baseButtonStyle.copyWith(
+          minimumSize: SBBTheme.allStates(const Size(
+              SBBInternal.defaultButtonHeight,
+              SBBInternal.defaultButtonHeight)),
+          fixedSize: SBBTheme.allStates(const Size(
+              SBBInternal.defaultButtonHeight,
+              SBBInternal.defaultButtonHeight)),
+          padding: SBBTheme.allStates(EdgeInsets.zero));
+
 }

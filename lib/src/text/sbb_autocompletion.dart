@@ -232,8 +232,7 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>>
   }
 
   void _updateWebOverlay({String? query, bool metricsChanged = false}) {
-    final sbbTheme = SBBTheme.of(context);
-    final bool isWeb = sbbTheme.hostPlatform == HostPlatform.web;
+    final bool isWeb = SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
 
     filteredSuggestions = getSuggestions(
       widget.suggestions,
@@ -542,8 +541,7 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>>
   }
 
   void _updateOverlay({String? query, bool metricsChanged = false}) {
-    final sbbTheme = SBBTheme.of(context);
-    final bool isWeb = sbbTheme.hostPlatform == HostPlatform.web;
+    final bool isWeb = SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
     if (isWeb) {
       _updateWebOverlay(query: query, metricsChanged: metricsChanged);
     } else {
