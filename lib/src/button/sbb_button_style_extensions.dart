@@ -110,19 +110,25 @@ extension SBBButtonStylesExtension on SBBButtonStyles {
     ),
   );
 
-  ButtonStyle get primaryIconWebLean => makeLargeIconButton(primaryWebLean);
-  ButtonStyle get primaryNegativeIconWebLean => makeLargeIconButton(primaryWebNegative);
-  ButtonStyle get secondaryIconWebLean => makeLargeIconButton(secondaryWebLean);
-  ButtonStyle get ghostIconWebLean => makeLargeIconButton(ghostWebLean);
+  ButtonStyle get iconLargeWebLean => ButtonStyle(
+    minimumSize: SBBTheme.allStates(const Size(SBBInternal.defaultButtonHeight, SBBInternal.defaultButtonHeight)),
+    fixedSize: SBBTheme.allStates(const Size(SBBInternal.defaultButtonHeight, SBBInternal.defaultButtonHeight)),
+    padding: SBBTheme.allStates(EdgeInsets.zero),
+    shape: SBBTheme.allStates(
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(2.0),
+      ),
+    ),
+  );
 
-  static ButtonStyle makeLargeIconButton(ButtonStyle baseButtonStyle) =>
-      baseButtonStyle.copyWith(
-          minimumSize: SBBTheme.allStates(const Size(
-              SBBInternal.defaultButtonHeight,
-              SBBInternal.defaultButtonHeight)),
-          fixedSize: SBBTheme.allStates(const Size(
-              SBBInternal.defaultButtonHeight,
-              SBBInternal.defaultButtonHeight)),
-          padding: SBBTheme.allStates(EdgeInsets.zero));
-
+  ButtonStyle get iconSmallWebLean => ButtonStyle(
+    minimumSize: SBBTheme.allStates(const Size(SBBInternal.defaultButtonHeightSmall, SBBInternal.defaultButtonHeightSmall)),
+    fixedSize: SBBTheme.allStates(const Size(SBBInternal.defaultButtonHeightSmall, SBBInternal.defaultButtonHeightSmall)),
+    padding: SBBTheme.allStates(EdgeInsets.zero),
+    shape: SBBTheme.allStates(
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(2.0),
+      ),
+    ),
+  );
 }

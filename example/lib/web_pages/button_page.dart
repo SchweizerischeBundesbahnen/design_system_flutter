@@ -44,7 +44,7 @@ class ButtonPage extends StatelessWidget {
                     ButtonExpression(
                       label: '- Icon Button Primary',
                       buttonBuilder: (label, onPressed) => SBBIconButtonLarge(
-                          buttonStyle: SBBButtonStyles.of(context).primaryIconWebLean,
+                          buttonStyle: SBBButtonStyles.of(context).primaryWebLean,
                           icon: SBBIcons.pen_small, onPressed: onPressed),
                     ),
                     ButtonExpression(
@@ -52,7 +52,7 @@ class ButtonPage extends StatelessWidget {
                       buttonBuilder: (label, onPressed) => SBBIconButtonLarge(
                         icon: SBBIcons.pen_small,
                         onPressed: onPressed,
-                        buttonStyle: SBBButtonStyles.of(context).primaryNegativeIconWebLean,
+                        buttonStyle: SBBButtonStyles.of(context).primaryWebNegative,
                       ),
                     ),
                     ButtonExpression(
@@ -60,7 +60,7 @@ class ButtonPage extends StatelessWidget {
                       buttonBuilder: (label, onPressed) => SBBIconButtonLarge(
                         icon: SBBIcons.pen_small,
                         onPressed: onPressed,
-                        buttonStyle: SBBButtonStyles.of(context).secondaryIconWebLean,
+                        buttonStyle: SBBButtonStyles.of(context).secondaryWebLean,
                       ),
                     ),
                     ButtonExpression(
@@ -68,7 +68,7 @@ class ButtonPage extends StatelessWidget {
                       buttonBuilder: (label, onPressed) => SBBIconButtonLarge(
                         icon: SBBIcons.pen_small,
                         onPressed: onPressed,
-                        buttonStyle: SBBButtonStyles.of(context).ghostIconWebLean,
+                        buttonStyle: SBBButtonStyles.of(context).ghostWebLean,
                       ),
                     ),
                   ]),

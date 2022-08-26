@@ -35,8 +35,8 @@ class TestApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final widget = MaterialApp(
-      theme: SBBTheme.light(),
-      darkTheme: SBBTheme.dark(),
+      theme: SBBTheme.light(hostPlatform: hostType),
+      darkTheme: SBBTheme.dark(hostPlatform: hostType),
       debugShowCheckedModeBanner: false,
       home: Scaffold(body: child),
     );
