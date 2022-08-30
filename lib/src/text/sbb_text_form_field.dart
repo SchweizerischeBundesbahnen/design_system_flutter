@@ -155,6 +155,7 @@ class _SBBTextField extends State<SBBTextFormField> {
   }
 
   TextFormField buildTextFormField(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return TextFormField(
       validator: (value) {
         if (widget.validator != null) {
@@ -194,39 +195,14 @@ class _SBBTextField extends State<SBBTextFormField> {
         errorText: errorText,
         focusedErrorBorder: InputBorder.none,
         contentPadding: widget.maxLines == 1 ? const EdgeInsets.only(bottom: 2.0) : const EdgeInsets.only(bottom: 8.0),
-        labelStyle: _resolveTextStyle(
-          SBBBaseTextStyles.formLightPlaceholder,
-          SBBBaseTextStyles.formDarkPlaceholder,
-          SBBBaseTextStyles.formLightDisabledPlaceholder,
-          SBBBaseTextStyles.formDarkDisabledPlaceholder,
-        ),
+        labelStyle: textTheme.labelLarge,
         hintText: widget.hintText,
-        hintStyle: _resolveTextStyle(
-          SBBBaseTextStyles.formLightPlaceholder,
-          SBBBaseTextStyles.formDarkPlaceholder,
-          SBBBaseTextStyles.formLightDisabledPlaceholder,
-          SBBBaseTextStyles.formDarkDisabledPlaceholder,
-        ),
+        hintStyle: textTheme.labelLarge,
       ),
-      style: _resolveTextStyle(
-        SBBBaseTextStyles.formLightDefault,
-        SBBBaseTextStyles.formDarkDefault,
-        SBBBaseTextStyles.formLightDisabledDefault,
-        SBBBaseTextStyles.formDarkDisabledDefault,
-      ),
+      style: textTheme.labelLarge,
       inputFormatters: widget.inputFormatters,
       textCapitalization: widget.textCapitalization,
       textInputAction: widget.textInputAction,
     );
-  }
-
-  TextStyle _resolveTextStyle(
-      TextStyle lightEnabled, TextStyle darkEnabled, TextStyle lightDisabled, TextStyle darkDisabled) {
-    final style = SBBBaseStyle.of(context);
-    if (widget.enabled) {
-      return style.themeValue(lightEnabled, darkEnabled);
-    } else {
-      return style.themeValue(lightDisabled, darkDisabled);
-    }
   }
 }

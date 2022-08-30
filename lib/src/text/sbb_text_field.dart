@@ -209,7 +209,7 @@ class _SBBTextField extends State<SBBTextField> {
           top: topPadding * textScaleFactor,
           bottom: bottomPadding * textScaleFactor,
         ),
-        floatingLabelStyle: floatingLabelStyle?.copyWith(),
+        floatingLabelStyle: floatingLabelStyle,
         labelStyle: labelStyle,
         hintText: widget.hintText,
         hintStyle: labelStyle,

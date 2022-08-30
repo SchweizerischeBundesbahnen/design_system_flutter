@@ -21,9 +21,9 @@ class SBBTextFieldStyle {
 
   factory SBBTextFieldStyle.$default({required SBBBaseStyle baseStyle}) => SBBTextFieldStyle(
         textStyle: baseStyle.themedTextStyle(),
-        textStyleDisabled: baseStyle.themedTextStyle(color: SBBColors.metal),
-        placeholderTextStyle: baseStyle.themedTextStyle(color: baseStyle.themeValue(SBBColors.metal, SBBColors.cement)),
-        placeholderTextStyleDisabled: baseStyle.themedTextStyle(color: SBBColors.metal),
+        textStyleDisabled: baseStyle.themedTextStyle(color: baseStyle.labelColor),
+        placeholderTextStyle: baseStyle.themedTextStyle(color: baseStyle.labelColor),
+        placeholderTextStyleDisabled: baseStyle.themedTextStyle(color: baseStyle.labelColor),
         errorTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.helpersLabel, color: SBBColors.red150),
         dividerColor: baseStyle.dividerColor,
         dividerColorHighlighted: baseStyle.themeValue(SBBColors.black, SBBColors.white),
@@ -32,7 +32,7 @@ class SBBTextFieldStyle {
         selectionColor: SBBColors.sky.withOpacity(0.5),
         selectionHandleColor: SBBColors.sky,
         iconColor: baseStyle.iconColor,
-        iconColorDisabled: SBBColors.metal,
+        iconColorDisabled: baseStyle.labelColor,
       );
 
   final TextStyle? textStyle;
