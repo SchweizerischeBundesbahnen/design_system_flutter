@@ -161,13 +161,13 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>>
       onChanged: (newText) {
         _currentText = newText;
         showOverlay = true;
-        updateOverlay(query: newText);
+        _updateOverlay(query: newText);
 
         _textChanged?.call(newText);
       },
       onTap: () {
         showOverlay = true;
-        updateOverlay(query: _currentText);
+        _updateOverlay(query: _currentText);
       },
       onSubmitted: (submittedText) {
         triggerSubmitted(submittedText);
@@ -183,10 +183,10 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>>
       if (!_textField.focusNode!.hasFocus) {
         filteredSuggestions = [];
         showOverlay = false;
-        updateOverlay();
+        _updateOverlay();
       } else if (_currentText.isNotEmpty) {
         showOverlay = true;
-        updateOverlay(query: _currentText);
+        _updateOverlay(query: _currentText);
       }
     });
 
@@ -200,7 +200,7 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>>
     _bottomInset = WidgetsBinding.instance.window.viewInsets.bottom /
         MediaQuery.of(context).devicePixelRatio;
     _metricsChanged = true;
-    updateOverlay(query: _currentText);
+    _updateOverlay(query: _currentText);
   }
 
   void triggerSubmitted(String submittedText) {
@@ -214,24 +214,182 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>>
   void clear() {
     _textField.controller?.clear();
     _currentText = '';
-    updateOverlay();
+    _updateOverlay();
   }
 
   void addFavorite(T favorite) {
     if (!widget.favorites.contains(favorite)) {
       widget.favorites.add(favorite);
       widget.favorites.sort(widget.itemSorter);
-      updateOverlay(query: _currentText);
+      _updateOverlay(query: _currentText);
     }
   }
 
   void removeFavorite(T favorite) {
     widget.favorites.remove(favorite);
     widget.favorites.sort(widget.itemSorter);
-    updateOverlay(query: _currentText);
+    _updateOverlay(query: _currentText);
   }
 
-  void updateOverlay({String? query, bool metricsChanged = false}) {
+  void _updateWebOverlay({String? query, bool metricsChanged = false}) {
+    final bool isWeb = SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
+
+    filteredSuggestions = getSuggestions(
+      widget.suggestions,
+      widget.itemSorter,
+      widget.itemFilter,
+      widget.suggestionsAmount,
+      query,
+    );
+
+    const double maxOverlayHeight = 400;
+    final double entryHeight =
+        (widget.enableFavorites || (widget.suggestionIcon != null)) ? 45 : 30;
+
+    final double paddingLeft =
+        widget.icon == null ? sbbDefaultSpacing : (sbbDefaultSpacing * 1.5);
+
+    final double overlayHeight =
+        (widget.favorites.isNotEmpty && widget.enableFavorites)
+            ? (widget.favorites.length * entryHeight) +
+                (filteredSuggestions.length * entryHeight) +
+                32
+            : (filteredSuggestions.length * entryHeight) + 16;
+
+    final double dxOffset =
+        widget.icon == null ? paddingLeft : paddingLeft + sbbIconSizeSmall;
+
+    if (showOverlay) {
+      if (listSuggestionsEntry != null) {
+        listSuggestionsEntry!.remove();
+        listSuggestionsEntry = null;
+      }
+      if (_metricsChanged) {
+        _metricsChanged = false;
+      }
+      final Size textFieldSize = (context.findRenderObject() as RenderBox).size;
+      final height = textFieldSize.height;
+      listSuggestionsEntry = OverlayEntry(
+        builder: (BuildContext context) {
+          return Positioned(
+            width: textFieldSize.width - dxOffset,
+            height: overlayHeight > maxOverlayHeight
+                ? maxOverlayHeight
+                : overlayHeight,
+            child: CompositedTransformFollower(
+              link: _layerLink,
+              showWhenUnlinked: false,
+              offset: Offset(dxOffset, height),
+              child: Container(
+                decoration: BoxDecoration(
+                  color: SBBColors.white,
+                  border: Border(
+                      left: BorderSide(),
+                      right: BorderSide(),
+                      bottom: BorderSide()),
+                ),
+                child: ListView(
+                  padding: EdgeInsets.zero,
+                  shrinkWrap: true,
+                  children: [
+                    if (widget.favorites.isNotEmpty && widget.enableFavorites)
+                      Container(
+                        color: SBBColors.white,
+                        height: 16.0,
+                      ),
+                    if (widget.favorites.isNotEmpty && widget.enableFavorites)
+                      ...widget.favorites.map(
+                        (T favorite) {
+                          return Row(
+                            children: [
+                              Expanded(
+                                child: _createListItem(
+                                  item: favorite,
+                                  onPressed: () {
+                                    setState(
+                                      () {
+                                        final String newText =
+                                            favorite.toString();
+                                        _textField.controller?.text = newText;
+                                        if (widget.submitOnSuggestionTap) {
+                                          _textField.focusNode?.unfocus();
+                                          widget.itemSubmitted(favorite);
+                                          if (widget.clearOnSubmit) {
+                                            clear();
+                                          }
+                                        } else {
+                                          _textChanged?.call(newText);
+                                        }
+                                      },
+                                    );
+                                  },
+                                  onCallToAction: () {
+                                    widget.itemRemovedFromFavorites(favorite);
+                                  },
+                                ),
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                    Container(
+                      color: SBBColors.white,
+                      height: 16.0,
+                    ),
+                    ...filteredSuggestions.map(
+                      (T suggestion) {
+                        return Row(
+                          children: [
+                            Expanded(
+                              child: _createListItem(
+                                item: suggestion,
+                                onPressed: () {
+                                  setState(() {
+                                    final String newText =
+                                        suggestion.toString();
+                                    _textField.controller?.text = newText;
+                                    if (widget.submitOnSuggestionTap) {
+                                      _textField.focusNode?.unfocus();
+                                      widget.itemSubmitted(suggestion);
+                                      if (widget.clearOnSubmit) {
+                                        clear();
+                                      }
+                                    } else {
+                                      _textChanged?.call(newText);
+                                    }
+                                  });
+                                },
+                                onCallToAction: () {
+                                  widget.itemAddedToFavorites(suggestion);
+                                },
+                              ),
+                            )
+                          ],
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      );
+
+      if (listSuggestionsEntry != null) {
+        Overlay.of(context)?.insert(listSuggestionsEntry!);
+      }
+    } else {
+      if (listSuggestionsEntry != null) {
+        listSuggestionsEntry!.remove();
+        listSuggestionsEntry = null;
+      }
+    }
+
+    listSuggestionsEntry?.markNeedsBuild();
+  }
+
+  void _updateNativeOverlay({String? query, bool metricsChanged = false}) {
     if (showOverlay) {
       if (listSuggestionsEntry == null || _metricsChanged) {
         if (listSuggestionsEntry != null) {
@@ -362,7 +520,6 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>>
 
         if (listSuggestionsEntry != null) {
           Overlay.of(context)?.insert(listSuggestionsEntry!);
-
         }
       }
     } else {
@@ -381,6 +538,15 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>>
     );
 
     listSuggestionsEntry?.markNeedsBuild();
+  }
+
+  void _updateOverlay({String? query, bool metricsChanged = false}) {
+    final bool isWeb = SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
+    if (isWeb) {
+      _updateWebOverlay(query: query, metricsChanged: metricsChanged);
+    } else {
+      _updateNativeOverlay(query: query, metricsChanged: metricsChanged);
+    }
   }
 
   Widget _createListItem({

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../design_system_flutter.dart';
+import '../sbb_internal.dart';
+import 'sbb_button_style_extensions.dart';
 
 /// The SBB Secondary Button. Use according to documentation.
 ///
@@ -29,12 +31,13 @@ class SBBSecondaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isWeb = SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
     final style = SBBBaseStyle.of(context);
     return OutlinedButton(
-      style: Theme.of(context).outlinedButtonTheme.style?.copyWith(
-            // workaround for web
-            padding: SBBTheme.allStates(EdgeInsets.zero),
-          ),
+      style: isWeb ? Theme.of(context).extension<SBBButtonStyles>()?.secondaryWebLean : Theme.of(context).outlinedButtonTheme.style?.copyWith(
+        // workaround for web
+        padding: SBBTheme.allStates(EdgeInsets.zero),
+      ),
       onPressed: isLoading ? null : onPressed,
       focusNode: focusNode,
       child: Padding(
@@ -48,15 +51,37 @@ class SBBSecondaryButton extends StatelessWidget {
                 const SBBLoadingIndicator.tinySmoke(),
                 const SBBLoadingIndicator.tinyCement(),
               ),
-            Flexible(
-              child: Text(
-                label,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-              ),
-            ),
+            SBBButtonContent(label: label)
           ],
         ),
+      ),
+    );
+  }
+}
+
+class SBBGhostButton extends StatelessWidget {
+  const SBBGhostButton({
+    Key? key,
+    required this.label,
+    required this.onPressed,
+    this.focusNode,
+  }) : super(key: key);
+
+  final String label;
+  final VoidCallback? onPressed;
+  final FocusNode? focusNode;
+
+  @override
+  Widget build(BuildContext context) {
+    if (SBBBaseStyle.of(context).hostPlatform == HostPlatform.native)
+      debugPrint('WARNING: Ghost button should only be used for web platform.');
+    return OutlinedButton(
+      style: Theme.of(context).extension<SBBButtonStyles>()?.ghostWebLean,
+      onPressed: onPressed,
+      focusNode: focusNode,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [SBBButtonContent(label: label)],
       ),
     );
   }

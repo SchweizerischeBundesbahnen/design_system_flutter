@@ -22,21 +22,30 @@ class SBBIconButtonLarge extends StatelessWidget {
     required this.icon,
     required this.onPressed,
     this.focusNode,
+    this.buttonStyle,
   }) : super(key: key);
 
   final IconData icon;
   final VoidCallback? onPressed;
   final FocusNode? focusNode;
+  final ButtonStyle? buttonStyle;
 
   @override
   Widget build(BuildContext context) {
+    final isWeb = SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
     final baseStyle = Theme.of(context).textButtonTheme.style?.copyWith(
-        minimumSize: SBBTheme.allStates(const Size(SBBInternal.defaultButtonHeight, SBBInternal.defaultButtonHeight)),
-        fixedSize: SBBTheme.allStates(const Size(SBBInternal.defaultButtonHeight, SBBInternal.defaultButtonHeight)),
-        padding: SBBTheme.allStates(EdgeInsets.zero),
+      minimumSize: SBBTheme.allStates(const Size(SBBInternal.defaultButtonHeight, SBBInternal.defaultButtonHeight)),
+      fixedSize: SBBTheme.allStates(const Size(SBBInternal.defaultButtonHeight, SBBInternal.defaultButtonHeight)),
+      padding: SBBTheme.allStates(EdgeInsets.zero),
     );
+    final style;
+    if(isWeb) {
+      style = buttonStyle != null ? SBBButtonStyles.of(context).iconLargeWebLean.merge(buttonStyle) : SBBButtonStyles.of(context).iconLargeWebLean;
+    }else {
+      style = buttonStyle != null ? buttonStyle!.merge(baseStyle) : SBBButtonStyles.of(context).iconLargeStyle?.overrideButtonStyle(baseStyle);
+    }
     return TextButton(
-      style: SBBButtonStyles.of(context).iconLargeStyle?.overrideButtonStyle(baseStyle),
+      style: style,
       onPressed: onPressed,
       focusNode: focusNode,
       child: Icon(icon, size: sbbIconSizeSmall),
@@ -166,21 +175,22 @@ class _SBBIconButtonSmallRaw extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isWeb = SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
     final baseStyle = Theme.of(context).textButtonTheme.style?.copyWith(
-        minimumSize: SBBTheme.allStates(
-          const Size(
-            SBBInternal.defaultButtonHeightSmall,
-            SBBInternal.defaultButtonHeightSmall,
-          ),
+      minimumSize: SBBTheme.allStates(
+        const Size(
+          SBBInternal.defaultButtonHeightSmall,
+          SBBInternal.defaultButtonHeightSmall,
         ),
-        fixedSize: SBBTheme.allStates(
-          const Size(
-            SBBInternal.defaultButtonHeightSmall,
-            SBBInternal.defaultButtonHeightSmall,
-          ),
+      ),
+      fixedSize: SBBTheme.allStates(
+        const Size(
+          SBBInternal.defaultButtonHeightSmall,
+          SBBInternal.defaultButtonHeightSmall,
         ),
-        padding: SBBTheme.allStates(EdgeInsets.zero),
-        side: SBBTheme.allStates(BorderSide(style: BorderStyle.none)),
+      ),
+      padding: SBBTheme.allStates(EdgeInsets.zero),
+      side: SBBTheme.allStates(BorderSide(style: BorderStyle.none)),
     );
     return Semantics(
       container: true,
@@ -193,7 +203,7 @@ class _SBBIconButtonSmallRaw extends StatelessWidget {
           minSize: Size.square(SBBInternal.defaultButtonHeight),
           child: Center(
             child: TextButton(
-              style: style?.overrideButtonStyle(baseStyle),
+              style: isWeb ? SBBButtonStyles.of(context).iconSmallWebLean : style?.overrideButtonStyle(baseStyle),
               onPressed: onPressed,
               focusNode: focusNode,
               child: Icon(icon, size: sbbIconSizeSmall),

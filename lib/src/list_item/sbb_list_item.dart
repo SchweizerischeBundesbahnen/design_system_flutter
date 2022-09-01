@@ -7,7 +7,7 @@ import '../../design_system_flutter.dart';
 /// See also:
 ///
 /// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/list-item>
-class SBBListItem extends StatelessWidget {
+class SBBListItem extends StatefulWidget {
   const SBBListItem({
     Key? key,
     required this.title,
@@ -19,8 +19,7 @@ class SBBListItem extends StatelessWidget {
     this.trailingIcon,
     this.onCallToAction,
     required this.onPressed,
-  })  : assert(onCallToAction == null || trailingIcon != null),
-        super(key: key);
+  }) : super(key: key);
 
   final String title;
   final String? subtitle;
@@ -36,7 +35,13 @@ class SBBListItem extends StatelessWidget {
   final VoidCallback? onPressed;
 
   @override
-  Widget build(BuildContext context) {
+  State<SBBListItem> createState() => _SBBListItemState();
+}
+
+class _SBBListItemState extends State<SBBListItem> {
+  bool isHovering = false;
+
+  Widget _buildNative(BuildContext context) {
     final style = SBBControlStyles.of(context).listItem;
     return MergeSemantics(
       child: Material(
@@ -46,7 +51,7 @@ class SBBListItem extends StatelessWidget {
           focusColor: style?.backgroundColorHighlighted,
           highlightColor: SBBColors.transparent,
           hoverColor: SBBColors.transparent,
-          onTap: onPressed,
+          onTap: widget.onPressed,
           child: Column(
             children: [
               Padding(
@@ -71,33 +76,33 @@ class SBBListItem extends StatelessWidget {
                               constraints: BoxConstraints(minHeight: sbbIconSizeSmall),
                               child: Row(
                                 children: [
-                                  if (leadingIcon != null)
+                                  if (widget.leadingIcon != null)
                                     Padding(
                                       padding: const EdgeInsetsDirectional.only(
                                         end: sbbDefaultSpacing / 2,
                                       ),
-                                      child: Icon(leadingIcon),
+                                      child: Icon(widget.leadingIcon),
                                     ),
                                   Expanded(
                                     child: Text(
-                                      title,
+                                      widget.title,
                                       style: style?.textStyle,
-                                      maxLines: titleMaxLines,
+                                      maxLines: widget.titleMaxLines,
                                       overflow: TextOverflow.ellipsis,
                                     ),
                                   ),
                                 ],
                               ),
                             ),
-                            if (subtitle != null)
+                            if (widget.subtitle != null)
                               Padding(
                                 padding: const EdgeInsetsDirectional.only(
                                   bottom: 5.0,
                                 ),
                                 child: Text(
-                                  subtitle!,
+                                  widget.subtitle!,
                                   style: style?.secondaryTextStyle,
-                                  maxLines: subtitleMaxLines,
+                                  maxLines: widget.subtitleMaxLines,
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               )
@@ -105,19 +110,20 @@ class SBBListItem extends StatelessWidget {
                         ),
                       ),
                     ),
-                    if (trailingIcon != null)
+                    if (widget.trailingIcon != null)
                       ExcludeFocus(
-                        excluding: onCallToAction == null,
+                        excluding: widget.onCallToAction == null,
                         child: Padding(
                           padding: const EdgeInsetsDirectional.only(
                             end: sbbDefaultSpacing / 2,
                           ),
                           child: IgnorePointer(
-                            ignoring: onCallToAction == null,
-                            ignoringSemantics: onCallToAction == null,
+                            ignoring: widget.onCallToAction == null,
+                            ignoringSemantics: widget.onCallToAction == null,
                             child: SBBIconButtonSmall(
-                              icon: trailingIcon!,
-                              onPressed: onCallToAction ?? onPressed,
+                              icon: widget.trailingIcon!,
+                              onPressed:
+                                  widget.onCallToAction ?? widget.onPressed,
                             ),
                           ),
                         ),
@@ -127,11 +133,140 @@ class SBBListItem extends StatelessWidget {
                   ],
                 ),
               ),
-              if (!isLastElement) const Divider()
+              if (!widget.isLastElement) const Divider()
             ],
           ),
         ),
       ),
     );
+  }
+
+  Widget _buildWeb(BuildContext context) {
+    final style = SBBControlStyles.of(context).listItem;
+    return MergeSemantics(
+      child: Material(
+        color: style?.backgroundColor,
+        child: InkWell(
+          splashColor: style?.backgroundColorHighlighted,
+          focusColor: style?.backgroundColorHighlighted,
+          highlightColor: SBBColors.transparent,
+          hoverColor: SBBColors.milk,
+          onTap: widget.onPressed,
+          onHover: (hovering) {
+            setState(() => this.isHovering = hovering);
+          },
+          child: Container(
+            decoration: BoxDecoration(
+                border: Border(
+                    left: BorderSide(
+                        color: isHovering
+                            ? SBBColors.red125
+                            : SBBColors.transparent))),
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsetsDirectional.only(
+                    start: sbbDefaultSpacing,
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsetsDirectional.only(
+                            top: 2,
+                            bottom: 2,
+                            end: sbbDefaultSpacing / 2,
+                          ),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ConstrainedBox(
+                                constraints:
+                                    BoxConstraints(minHeight: sbbIconSizeSmall),
+                                child: Row(
+                                  children: [
+                                    if (widget.leadingIcon != null)
+                                      Padding(
+                                        padding:
+                                            const EdgeInsetsDirectional.only(
+                                          end: sbbDefaultSpacing / 2,
+                                        ),
+                                        child: Icon(widget.leadingIcon,
+                                            color: isHovering
+                                                ? SBBColors.red125
+                                                : SBBColors.black),
+                                      ),
+                                    Expanded(
+                                      child: Text(
+                                        widget.title,
+                                        style: isHovering
+                                            ? style?.textStyle!
+                                                .copyWith(
+                                                    color: SBBColors.red125)
+                                            : style?.textStyle,
+                                        maxLines: widget.titleMaxLines,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              if (widget.subtitle != null)
+                                Padding(
+                                  padding: const EdgeInsetsDirectional.only(
+                                    bottom: 5.0,
+                                  ),
+                                  child: Text(
+                                    widget.subtitle!,
+                                    style: isHovering
+                                        ? style?.secondaryTextStyle!
+                                            .copyWith(color: SBBColors.red125)
+                                        : style?.secondaryTextStyle,
+                                    maxLines: widget.subtitleMaxLines,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                )
+                            ],
+                          ),
+                        ),
+                      ),
+                      if (widget.trailingIcon != null)
+                        ExcludeFocus(
+                          excluding: widget.onCallToAction == null,
+                          child: Padding(
+                            padding: const EdgeInsetsDirectional.only(
+                              end: sbbDefaultSpacing / 2,
+                            ),
+                            child: IgnorePointer(
+                              ignoring: widget.onCallToAction == null,
+                              ignoringSemantics: widget.onCallToAction == null,
+                              child: SBBIconButtonSmall(
+                                icon: widget.trailingIcon!,
+                                onPressed:
+                                    widget.onCallToAction ?? widget.onPressed,
+                              ),
+                            ),
+                          ),
+                        )
+                      else
+                        SizedBox(width: sbbDefaultSpacing / 2),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final bool isWeb = SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
+    if (isWeb) return _buildWeb(context);
+    return _buildNative(context);
   }
 }

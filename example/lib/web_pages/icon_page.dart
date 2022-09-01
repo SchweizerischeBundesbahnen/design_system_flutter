@@ -10,136 +10,59 @@ class IconPage extends StatelessWidget {
       child: DecoratedBox(
         decoration: BoxDecoration(color: SBBColors.white),
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 24.0, horizontal: 48.0),
+          padding: EdgeInsets.symmetric(horizontal: 48.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16.0),
-                child: Text(
-                  'Icons',
-                  style: SBBLeanTextStyles.headerTitle
-                      .copyWith(fontSize: 25, color: SBBColors.red),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16.0),
-                child: Text(
-                  'Ausprägungen',
-                  style: SBBLeanTextStyles.headerTitle
-                      .copyWith(fontSize: 20, color: SBBColors.black),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(bottom: 16.0),
-                child: Text(
-                  '- Tiny',
-                  style: SBBLeanTextStyles.headerTitle
-                      .copyWith(fontSize: 18, color: SBBColors.black),
-                ),
-              ),
-              Flexible(
-                child: SizedBox(
-                  height: 200.0,
-                  child: GridView.builder(
-                    controller: ScrollController(),
-                    physics: PageScrollPhysics(),
-                    shrinkWrap: true,
-                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 24.0 + sbbDefaultSpacing,
-                    ),
-                    itemCount: iconsSmall.length,
-                    itemBuilder: (BuildContext context, index) {
-                      final icon = iconsSmall[index];
-                      return IconButton(
-                        padding: EdgeInsets.zero,
-                        icon: Icon(
-                          icon['icon'] as IconData,
-                          size: 24.0,
-                        ),
-                        onPressed: () {
-                          SBBToast.of(context)
-                              .show(message: icon['name'] as String);
-                        },
-                      );
-                    },
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: Text(
-                  '- Medium',
-                  style: SBBLeanTextStyles.headerTitle
-                      .copyWith(fontSize: 18, color: SBBColors.black),
-                ),
-              ),
-              Flexible(
-                child: SizedBox(
-                  height: 200.0,
-                  child: GridView.builder(
-                    controller: ScrollController(),
-                    physics: PageScrollPhysics(),
-                    shrinkWrap: true,
-                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 36.0 + sbbDefaultSpacing,
-                    ),
-                    itemCount: iconsMedium.length,
-                    itemBuilder: (BuildContext context, index) {
-                      final icon = iconsMedium[index];
-                      return IconButton(
-                        padding: EdgeInsets.zero,
-                        icon: Icon(
-                          icon['icon'] as IconData,
-                          size: 36.0,
-                        ),
-                        onPressed: () {
-                          SBBToast.of(context)
-                              .show(message: icon['name'] as String);
-                        },
-                      );
-                    },
-                  ),
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0),
-                child: Text(
-                  '- Large',
-                  style: SBBLeanTextStyles.headerTitle
-                      .copyWith(fontSize: 18, color: SBBColors.black),
-                ),
-              ),
-              Flexible(
-                child: SizedBox(
-                  height: 200.0,
-                  child: GridView.builder(
-                    controller: ScrollController(),
-                    physics: PageScrollPhysics(),
-                    shrinkWrap: true,
-                    gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
-                      maxCrossAxisExtent: 48.0 + sbbDefaultSpacing,
-                    ),
-                    itemCount: iconsLarge.length,
-                    itemBuilder: (BuildContext context, index) {
-                      final icon = iconsLarge[index];
-                      return IconButton(
-                        padding: EdgeInsets.zero,
-                        icon: Icon(
-                          icon['icon'] as IconData,
-                          size: 48.0,
-                        ),
-                        onPressed: () {
-                          SBBToast.of(context)
-                              .show(message: icon['name'] as String);
-                        },
-                      );
-                    },
-                  ),
-                ),
-              ),
+              SBBWebText.headerOne('Icons', color: SBBColors.red),
+              SBBWebText.headerTwo('Ausprägungen'),
+              SBBWebText.headerThree('- Small'),
+              _IconGriedView(iconSize: 24.0, icons: iconsSmall),
+              SBBWebText.headerThree('- Medium'),
+              _IconGriedView(iconSize: 36.0, icons: iconsMedium),
+              SBBWebText.headerThree('- Large'),
+              _IconGriedView(iconSize: 48.0, icons: iconsLarge),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class _IconGriedView extends StatelessWidget {
+  const _IconGriedView({Key? key, required this.iconSize, required this.icons})
+      : super(key: key);
+
+  final double iconSize;
+  final List<Map<String, Object>> icons;
+
+  @override
+  Widget build(BuildContext context) {
+    return Flexible(
+      child: SizedBox(
+        height: 200.0,
+        child: GridView.builder(
+          controller: ScrollController(),
+          physics: PageScrollPhysics(),
+          shrinkWrap: true,
+          gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+            maxCrossAxisExtent: iconSize + sbbDefaultSpacing,
+          ),
+          itemCount: icons.length,
+          itemBuilder: (BuildContext context, index) {
+            final icon = icons[index];
+            return IconButton(
+              padding: EdgeInsets.zero,
+              icon: Icon(
+                icon['icon'] as IconData,
+                size: iconSize,
+              ),
+              onPressed: () {
+                SBBToast.of(context).show(message: icon['name'] as String);
+              },
+            );
+          },
         ),
       ),
     );
