@@ -196,7 +196,7 @@ class _SBBTextField extends State<SBBTextFormField> {
   TextFormField _buildTextFormField() {
     final hasError = errorText?.isNotEmpty ?? false;
     final bool isWeb = SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
-    final textTheme = Theme.of(context).textTheme;
+    final textField = SBBControlStyles.of(context).textField!;
 
     return TextFormField(
       validator: (value) {
@@ -228,8 +228,8 @@ class _SBBTextField extends State<SBBTextFormField> {
       enabled: widget.enabled,
       decoration: isWeb ? _inputDecorationWeb() : _inputDecorationNative(),
       style: isWeb && hasError
-          ? textTheme.labelLarge?.copyWith(color: SBBColors.red)
-          : textTheme.labelLarge,
+          ? textField.errorTextStyle
+          : textField.textStyle,
       inputFormatters: widget.inputFormatters,
       textCapitalization: widget.textCapitalization,
       textInputAction: widget.textInputAction,
@@ -272,7 +272,7 @@ class _SBBTextField extends State<SBBTextFormField> {
   }
 
   InputDecoration _inputDecorationNative() {
-    final textTheme = Theme.of(context).textTheme;
+    final textField = SBBControlStyles.of(context).textField!;
     return InputDecoration(
       labelText: widget.labelText,
       focusedBorder: InputBorder.none,
@@ -286,9 +286,10 @@ class _SBBTextField extends State<SBBTextFormField> {
       contentPadding: widget.maxLines == 1
           ? const EdgeInsets.only(bottom: 2.0)
           : const EdgeInsets.only(bottom: 8.0),
-      labelStyle: textTheme.labelLarge,
+      labelStyle: textField.placeholderTextStyle,
       hintText: widget.hintText,
-      hintStyle: textTheme.labelLarge,
+      hintStyle: textField.placeholderTextStyle,
+      floatingLabelStyle: textField.placeholderTextStyle,
     );
   }
 }

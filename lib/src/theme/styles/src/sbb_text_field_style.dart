@@ -24,7 +24,7 @@ class SBBTextFieldStyle {
         textStyleDisabled: baseStyle.themedTextStyle(color: baseStyle.labelColor),
         placeholderTextStyle: baseStyle.themedTextStyle(color: baseStyle.labelColor),
         placeholderTextStyleDisabled: baseStyle.themedTextStyle(color: baseStyle.labelColor),
-        errorTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.helpersLabel, color: SBBColors.red150),
+        errorTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.helpersLabel, color: SBBColors.red),
         dividerColor: baseStyle.dividerColor,
         dividerColorHighlighted: baseStyle.themeValue(SBBColors.black, SBBColors.white),
         dividerColorError: SBBColors.red,
