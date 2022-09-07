@@ -41,6 +41,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     this.sidebarItemBackgroundColor,
     this.sidebarItemForegroundColor,
     this.sidebarItemTextStyle,
+    this.headerNavItemForegroundColor,
   });
 
   factory SBBControlStyles.$default({required SBBBaseStyle baseStyle}) => SBBControlStyles(
@@ -105,9 +106,10 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
         ),
         sidebarBackgroundColor: SBBColors.white,
         sidebarBorderColor: SBBColors.silver,
-        sidebarItemBackgroundColor: SBBTheme.resolveStatesWith(defaultValue: SBBColors.transparent, hoveredValue: SBBColors.milk),
+        sidebarItemBackgroundColor: SBBTheme.resolveStatesWith(defaultValue: SBBColors.transparent, hoveredValue: SBBColors.milk, selectedValue: SBBColors.cloud),
         sidebarItemForegroundColor: SBBTheme.resolveStatesWith(defaultValue: SBBColors.iron, hoveredValue: SBBColors.red125, pressedValue: SBBColors.red125),
         sidebarItemTextStyle: SBBLeanTextStyles.contextMenu,
+        headerNavItemForegroundColor: SBBTheme.resolveStatesWith(defaultValue: SBBColors.black, disabledValue: SBBColors.black, hoveredValue: SBBColors.red125, pressedValue: SBBColors.red125),
       );
 
   final SBBControlStyle? checkbox;
@@ -147,6 +149,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   final MaterialStateProperty<Color?>? sidebarItemBackgroundColor;
   final MaterialStateProperty<Color?>? sidebarItemForegroundColor;
   final TextStyle? sidebarItemTextStyle;
+  final MaterialStateProperty<Color?>? headerNavItemForegroundColor;
 
   static SBBControlStyles of(BuildContext context) => Theme.of(context).extension<SBBControlStyles>()!;
 
@@ -223,6 +226,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     MaterialStateProperty<Color?>? sidebarItemBackgroundColor,
     MaterialStateProperty<Color?>? sidebarItemForegroundColor,
     TextStyle? sidebarItemTextStyle,
+    MaterialStateProperty<Color?>? headerNavItemForegroundColor,
   }) =>
       SBBControlStyles(
         checkbox: checkbox ?? this.checkbox,
@@ -261,6 +265,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
         sidebarItemBackgroundColor: sidebarItemBackgroundColor ?? this.sidebarItemBackgroundColor,
         sidebarItemForegroundColor: sidebarItemForegroundColor ?? this.sidebarItemForegroundColor,
         sidebarItemTextStyle: sidebarItemTextStyle ?? this.sidebarItemTextStyle,
+        headerNavItemForegroundColor: headerNavItemForegroundColor ?? this.headerNavItemForegroundColor,
       );
 
   @override
@@ -303,6 +308,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
       menuEntryBackgroundColor: other.menuEntryBackgroundColor,
       sidebarItemBackgroundColor: other.sidebarItemBackgroundColor,
       sidebarItemForegroundColor: other.sidebarItemForegroundColor,
+      headerNavItemForegroundColor: other.headerNavItemForegroundColor,
     );
   }
 }
@@ -347,6 +353,7 @@ extension SBBControlStylesExtension on SBBControlStyles? {
       sidebarItemBackgroundColor: this!.sidebarItemBackgroundColor ?? other?.sidebarItemBackgroundColor,
       sidebarItemForegroundColor: this!.sidebarItemForegroundColor ?? other?.sidebarItemForegroundColor,
       sidebarItemTextStyle: this!.sidebarItemTextStyle ?? other?.sidebarItemTextStyle,
+      headerNavItemForegroundColor: this!.headerNavItemForegroundColor ?? other?.headerNavItemForegroundColor,
     ) as SBBControlStyles;
   }
 }

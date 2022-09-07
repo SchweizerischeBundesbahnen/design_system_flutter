@@ -7,23 +7,29 @@ import 'test_app.dart';
 
 void main() {
   testGoldens('onboarding', (WidgetTester tester) async {
-    final builder = GoldenBuilder.column(wrap: (w) => SizedBox(height: 543.0, width: double.infinity, child: TestApp(child: w)))
+    final builder = GoldenBuilder.column(
+        wrap: (w) => SizedBox(
+            height: 543.0, width: double.infinity, child: TestApp(child: w)))
       ..addScenario(
         'onboarding tests',
         OnboardingTest(),
       );
 
     await tester.pumpWidgetBuilder(builder.build());
-    await multiScreenGolden(tester, 'onboarding_startpage', devices: TestApp.devices);
+    await multiScreenGolden(tester, 'onboarding_startpage',
+        devices: TestApp.native_devices);
 
     await tester.tap(find.byKey(Key('start')));
-    await multiScreenGolden(tester, 'onboarding_card1', devices: TestApp.devices);
+    await multiScreenGolden(tester, 'onboarding_card1',
+        devices: TestApp.native_devices);
 
     await tester.tap(find.bySemanticsLabel('Nächste Seite'));
-    await multiScreenGolden(tester, 'onboarding_card2', devices: TestApp.devices);
+    await multiScreenGolden(tester, 'onboarding_card2',
+        devices: TestApp.native_devices);
 
     await tester.tap(find.bySemanticsLabel('Nächste Seite'));
-    await multiScreenGolden(tester, 'onboarding_endpage', devices: TestApp.devices);
+    await multiScreenGolden(tester, 'onboarding_endpage',
+        devices: TestApp.native_devices);
   });
 }
 
@@ -40,15 +46,29 @@ class OnboardingTest extends StatelessWidget {
 
 class TestOnboardingBuilderDelegate extends SBBOnboardingBuilderDelegate {
   @override
-  Widget buildStartPage(BuildContext context, double widgetWidth, double widgetHeight, VoidCallback onStartOnboarding, VoidCallback onFinish) => Container(
+  Widget buildStartPage(
+          BuildContext context,
+          double widgetWidth,
+          double widgetHeight,
+          VoidCallback onStartOnboarding,
+          VoidCallback onFinish) =>
+      Container(
         color: SBBColors.red,
-        child: Center(child: SBBTertiaryButtonLarge(key: Key('start'), label: 'Onboarding starten', onPressed: onStartOnboarding)),
+        child: Center(
+            child: SBBTertiaryButtonLarge(
+                key: Key('start'),
+                label: 'Onboarding starten',
+                onPressed: onStartOnboarding)),
       );
 
   @override
-  Widget buildEndPage(BuildContext context, double widgetWidth, double widgetHeight, VoidCallback onFinish) => Container(
+  Widget buildEndPage(BuildContext context, double widgetWidth,
+          double widgetHeight, VoidCallback onFinish) =>
+      Container(
         color: SBBColors.red,
-        child: Center(child: SBBTertiaryButtonLarge(label: 'Onboarding beenden', onPressed: onFinish)),
+        child: Center(
+            child: SBBTertiaryButtonLarge(
+                label: 'Onboarding beenden', onPressed: onFinish)),
       );
 
   @override

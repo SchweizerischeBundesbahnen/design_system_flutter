@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 
 import '../../design_system_flutter.dart';
 
-class SBBSideBar extends StatelessWidget {
-  const SBBSideBar({
+/// The SBB Sidebar. Use according to documentation.
+///
+/// See: https://digital.sbb.ch/de/webapps/modules/sidebar
+class SBBSidebar extends StatelessWidget {
+  const SBBSidebar({
     Key? key,
     required this.body,
     required this.items,
@@ -12,7 +15,7 @@ class SBBSideBar extends StatelessWidget {
     this.width = 300.0,
   }) : super(key: key);
 
-  /// The content displayed right of the [SBBSideBar].
+  /// The content displayed right of the [SBBSidebar].
   final Widget body;
 
   /// The items displayed in the sidebar.
@@ -21,39 +24,53 @@ class SBBSideBar extends StatelessWidget {
   /// plain [SBBSidebarItem].
   final List<Widget> items;
 
-  /// the background color of this sidebar
+  /// The backgroundcolor of this sidebar.
+  ///
+  /// defaults to [SBBThemeData.sidebarBackgroundColor]
   final Color? backgroundColor;
 
-  /// the border color of this sidebar
+  /// The bordercolor of this sidebar.
+  ///
+  /// defaults to [SBBThemeData.sidebarBorderColor]
   final Color? borderColor;
 
-  /// the width of this sidebar
+  /// The width of this sidebar.
+  ///
+  /// Defaults to 300.0 px.
   final double width;
 
   @override
   Widget build(BuildContext context) {
-    final style = SBBControlStyles.of(context);
     return Row(
       mainAxisSize: MainAxisSize.max,
       children: [
-        SizedBox(
-          width: width,
-          child: DecoratedBox(
-            decoration: ShapeDecoration(
-              color: backgroundColor ?? style.sidebarBackgroundColor,
-              shape: Border(
-                right: BorderSide(
-                  color: borderColor ?? style.sidebarBorderColor!,
-                ),
-              ),
-            ),
-            child: ListView(
-              children: items,
-            ),
-          ),
-        ),
+        _buildSizedBoxWithListViewItems(context),
         Expanded(child: body),
       ],
+    );
+  }
+
+  SizedBox _buildSizedBoxWithListViewItems(BuildContext context) {
+    final SBBControlStyles style = SBBControlStyles.of(context);
+    return SizedBox(
+      width: width,
+      child: DecoratedBox(
+        decoration: _createThemedShapeDecoration(style),
+        child: ListView(
+          children: items,
+        ),
+      ),
+    );
+  }
+
+  ShapeDecoration _createThemedShapeDecoration(SBBControlStyles style) {
+    return ShapeDecoration(
+      color: backgroundColor ?? style.sidebarBackgroundColor,
+      shape: Border(
+        right: BorderSide(
+          color: borderColor ?? style.sidebarBorderColor!,
+        ),
+      ),
     );
   }
 }
@@ -67,10 +84,25 @@ class SBBSidebarItem extends StatefulWidget {
     this.trailing,
   });
 
+  /// Required title of the item.
   final String title;
+
+  /// Optional leading widget.
   final Widget? leading;
-  final Function()? onTap;
+
+  /// Callback to handle taps.
+  final VoidCallback? onTap;
+
+  /// Optional trailing widget.
+  ///
+  /// defaults to an Icon with [SBBIcons.arrow_right_small].
   final Widget? trailing;
+
+  /// Marks this item as selected inside the [SBBSidebar] parent.
+  ///
+  /// This field must be updated with navigation and once the user
+  /// clicks on the item.
+  /// Defaults to false.
   final bool isSelected;
 
   @override
@@ -81,17 +113,20 @@ class _SBBSidebarItemState extends State<SBBSidebarItem>
     with MaterialStateMixin {
   @override
   Widget build(BuildContext context) {
-    final style = SBBControlStyles.of(context);
+    if (widget.isSelected)
+      setMaterialState(MaterialState.selected, true);
+    else
+      setMaterialState(MaterialState.selected, false);
+
+    final SBBControlStyles style = SBBControlStyles.of(context);
 
     Color? resolvedForegroundColor =
         style.sidebarItemForegroundColor!.resolve(materialStates);
-
     Color? resolvedBackgroundColor =
         style.sidebarItemBackgroundColor!.resolve(materialStates);
-    if (widget.isSelected) {
-      resolvedBackgroundColor = SBBColors.cloud;
-      resolvedForegroundColor = SBBColors.black;
-    }
+    TextStyle resolvedTextStyle =
+        style.sidebarItemTextStyle!.copyWith(color: resolvedForegroundColor);
+
     return MergeSemantics(
       child: Semantics(
         selected: widget.isSelected,
@@ -104,39 +139,49 @@ class _SBBSidebarItemState extends State<SBBSidebarItem>
             overlayColor: SBBTheme.allStates(SBBColors.transparent),
             onTap: widget.isSelected ? null : widget.onTap,
             onHover: updateMaterialState(MaterialState.hovered),
-            child: DefaultTextStyle(
-              style: style.sidebarItemTextStyle!.copyWith(color: resolvedForegroundColor),
-              child: IconTheme.merge(
-                data: IconThemeData(color: resolvedForegroundColor),
-                child: Padding(
-                  padding:
-                      const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      Expanded(
-                        flex: 10,
-                        child: Text(
-                          widget.title,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      Expanded(
-                        child: widget.trailing ??
-                            const Icon(
-                              SBBIcons.arrow_right_medium,
-                            ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
+            child: IconTheme.merge(
+              data: IconThemeData(color: resolvedForegroundColor),
+              child: _innerTile(resolvedTextStyle),
             ),
           ),
         ),
       ),
     );
+  }
+
+  _innerTile(TextStyle resolvedTextStyle) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 16),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          if (widget.leading != null) Expanded(child: widget.leading!),
+          Expanded(
+            flex: 10,
+            child: _themedSingleLineOverflowingText(
+              resolvedTextStyle,
+            ),
+          ),
+          Expanded(child: _trailingWidget())
+        ],
+      ),
+    );
+  }
+
+  Text _themedSingleLineOverflowingText(TextStyle resolvedTextStyle) {
+    return Text(
+      widget.title,
+      style: resolvedTextStyle,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+    );
+  }
+
+  Widget _trailingWidget() {
+    return widget.trailing ??
+        const Icon(
+          SBBIcons.arrow_right_medium,
+        );
   }
 }

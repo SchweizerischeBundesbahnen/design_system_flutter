@@ -151,6 +151,8 @@ class _SBBRadioButtonState<T> extends State<SBBRadioButton<T>> with SingleTicker
   @override
   Widget build(BuildContext context) {
     final style = SBBControlStyles.of(context).radioButton;
+    final bool isWeb = SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
+    if (isWeb) _controller.duration = Duration.zero;
     final enabled = widget.onChanged != null;
     // TODO add semantics
     return Material(
@@ -164,29 +166,74 @@ class _SBBRadioButtonState<T> extends State<SBBRadioButton<T>> with SingleTicker
         hoverColor: SBBColors.transparent,
         onTap: enabled ? () => widget.onChanged?.call(widget.value) : null,
         child: Center(
-          child: Container(
-            height: _outerCircleSize,
-            width: _outerCircleSize,
-            margin: widget.padding ?? const EdgeInsets.all(sbbDefaultSpacing / 2),
-            decoration: BoxDecoration(
-              color: enabled ? style?.basic?.backgroundColor : style?.basic?.backgroundColorDisabled,
-              shape: BoxShape.circle,
-              border: Border.fromBorderSide(
-                BorderSide(
-                  color: (enabled ? style?.basic?.borderColor : style?.basic?.borderColorDisabled)!,
-                ),
-              ),
-            ),
-            child: Center(
-              child: Container(
-                height: _animation.value,
-                width: _animation.value,
-                decoration: BoxDecoration(
-                  color: enabled ? style?.color : style?.colorDisabled,
-                  shape: BoxShape.circle,
-                ),
-              ),
-            ),
+          child: isWeb
+              ? radiobuttonWeb(enabled, context)
+              : radiobuttonNative(enabled, context),
+        ),
+      ),
+    );
+  }
+
+  Container radiobuttonNative(bool enabled, BuildContext context) {
+    final style = SBBControlStyles.of(context).radioButton;
+    return Container(
+      height: _outerCircleSize,
+      width: _outerCircleSize,
+      margin: widget.padding ?? const EdgeInsets.all(sbbDefaultSpacing / 2),
+      decoration: BoxDecoration(
+        color: enabled
+            ? style?.basic?.backgroundColor
+            : style?.basic?.backgroundColorDisabled,
+        shape: BoxShape.circle,
+        border: Border.fromBorderSide(
+          BorderSide(
+            color: (enabled
+                ? style?.basic?.borderColor
+                : style?.basic?.borderColorDisabled)!,
+          ),
+        ),
+      ),
+      child: Center(
+        child: Container(
+          height: _animation.value,
+          width: _animation.value,
+          decoration: BoxDecoration(
+            color: enabled
+                ? style?.color
+                : style?.colorDisabled,
+            shape: BoxShape.circle,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Container radiobuttonWeb(bool enabled, BuildContext context) {
+    final style = SBBControlStyles.of(context).radioButton;
+    return Container(
+      height: _outerCircleSize,
+      width: _outerCircleSize,
+      margin: widget.padding ?? const EdgeInsets.all(sbbDefaultSpacing / 2),
+      decoration: BoxDecoration(
+        color: enabled
+            ? style?.basic?.backgroundColor
+            : style?.basic?.backgroundColorDisabled,
+        shape: BoxShape.circle,
+        border: Border.fromBorderSide(
+          BorderSide(
+            color: (enabled
+                ? style?.basic?.borderColor
+                : style?.basic?.borderColorDisabled)!,
+          ),
+        ),
+      ),
+      child: Center(
+        child: Container(
+          height: _animation.value,
+          width: _animation.value,
+          decoration: BoxDecoration(
+            color: SBBColors.iron,
+            shape: BoxShape.circle,
           ),
         ),
       ),

@@ -8,14 +8,16 @@ import 'test_app.dart';
 void main() {
   void generateTest(String name, int? v1, int? v2) {
     testGoldens(name, (WidgetTester tester) async {
-      final builder = GoldenBuilder.column(wrap: (w) => TestApp.expanded(child: w))
-        ..addScenario(
-          'radio tests',
-          RadioTest(groupValue: v1, listItemGroupValue: v2),
-        );
+      final builder =
+          GoldenBuilder.column(wrap: (w) => TestApp.expanded(child: w))
+            ..addScenario(
+              'radio tests',
+              RadioTest(groupValue: v1, listItemGroupValue: v2),
+            );
 
       await tester.pumpWidgetBuilder(builder.build());
-      await multiScreenGolden(tester, '${name}_initial', devices: TestApp.devices);
+      await multiScreenGolden(tester, '${name}_initial',
+          devices: TestApp.native_devices);
     });
   }
 
@@ -25,7 +27,9 @@ void main() {
 }
 
 class RadioTest extends StatelessWidget {
-  const RadioTest({Key? key, required this.groupValue, required this.listItemGroupValue}) : super(key: key);
+  const RadioTest(
+      {Key? key, required this.groupValue, required this.listItemGroupValue})
+      : super(key: key);
 
   final int? groupValue;
   final int? listItemGroupValue;

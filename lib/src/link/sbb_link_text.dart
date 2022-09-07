@@ -35,6 +35,7 @@ class _SBBLinkTextState extends State<SBBLinkText> {
       r'(?:\[([^\]]+)\]\((https?:\/\/[^"\)]+)\))|(?:<(https?:\/\/[^>]+)>)|((?:http(?:s)?:\/\/.)(?:www\.)?[-a-zA-ZäöüÄÖÜ0-9@:%._\+~#=$]{2,256}\.[a-z]{2,6}\b(?:[-a-zA-ZäöüÄÖÜ0-9@:%_\+.~#?&//=$]*))');
 
   final _isPressedValues = [];
+  final _isHoveredValues = [];
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +49,7 @@ class _SBBLinkTextState extends State<SBBLinkText> {
   List<TextSpan> _textSpans() {
     final style = SBBBaseStyle.of(context);
     final controlStyle = SBBControlStyles.of(context);
+    bool isWeb = SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
     final hasCustomStyle = widget.style != null;
     final textStyle = hasCustomStyle ? widget.style!.copyWith(color: widget.style!.color ?? style.defaultTextStyle!.color) : style.defaultTextStyle;
     final linkStyle = hasCustomStyle ? textStyle!.copyWith(color: controlStyle.linkTextStyle!.color) : controlStyle.linkTextStyle;
@@ -73,6 +75,7 @@ class _SBBLinkTextState extends State<SBBLinkText> {
         final text = link.group(1);
 
         _isPressedValues.add(false);
+        _isHoveredValues.add(false);
 
         final tapGestureRecognizer = TapGestureRecognizer();
         tapGestureRecognizer.onTapDown = (TapDownDetails details) => setState(() => _isPressedValues[i] = true);
@@ -83,13 +86,35 @@ class _SBBLinkTextState extends State<SBBLinkText> {
         };
         _inlineSpans.add(
           TextSpan(
+            onEnter: (_) => setState(() {
+              _isHoveredValues[i] = true;
+            }),
+            onExit: (_) => setState(() {
+              _isHoveredValues[i] = false;
+            }),
             text: text ?? url,
-            style: _isPressedValues[i] ? linkStylePressed : linkStyle,
+            style: _linkTextStyle(isWeb, _isPressedValues[i] == true, _isHoveredValues[i] == true),
             recognizer: tapGestureRecognizer,
           ),
         );
       }
     }
     return _inlineSpans;
+  }
+
+  TextStyle _linkTextStyle(bool isWeb, bool isPressed, bool isHovered) {
+    final style = SBBBaseStyle.of(context);
+    final controlStyle = SBBControlStyles.of(context);
+    final hasCustomStyle = widget.style != null;
+    final textStyle = hasCustomStyle ? widget.style!.copyWith(color: widget.style!.color ?? style.defaultTextStyle!.color) : style.defaultTextStyle;
+    final linkStyle = hasCustomStyle ? textStyle!.copyWith(color: controlStyle.linkTextStyle!.color) :
+      isWeb ? controlStyle.linkTextStyle!.copyWith(color: SBBColors.black, decoration: TextDecoration.underline) : controlStyle.linkTextStyle;
+    final linkStylePressed = hasCustomStyle ? textStyle!.copyWith(color: controlStyle.linkTextStyleHighlighted!.color) :
+      isWeb ? controlStyle.linkTextStyleHighlighted!.copyWith(color: SBBColors.red125, decoration: TextDecoration.underline) : controlStyle.linkTextStyleHighlighted;
+
+    if(isWeb) {
+      return (isPressed ? linkStylePressed : isHovered ? linkStylePressed : linkStyle)!;
+    }
+    return (isPressed ? linkStylePressed : linkStyle)!;
   }
 }
