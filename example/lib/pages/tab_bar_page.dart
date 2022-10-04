@@ -15,7 +15,6 @@ class _TabBarPageState extends State<TabBarPage> {
     _DemoItem('3', SBBIcons.archive_box_small),
     _DemoItem('4', SBBIcons.arrow_compass_small),
     _DemoItem('5', SBBIcons.arrow_compass_small),
-    _DemoItem('6', SBBIcons.arrow_compass_small),
   ];
 
   bool visible = true;
@@ -33,7 +32,7 @@ class _TabBarPageState extends State<TabBarPage> {
             SBBTabBar(
               items: items,
               showWarning: true,
-              onTabChanged: (task) async => print((await task).id),
+              onTabChanged: (task) async {},
               controller: controller,
             ),
           Expanded(child: Container()),
@@ -50,7 +49,4 @@ class _DemoItem extends TabBarItem {
 
   @override
   String translate(BuildContext context) => 'Item $id';
-
-  @override
-  String translateSemantics(BuildContext context, int index, int length) => 'Element $index von $length';
 }

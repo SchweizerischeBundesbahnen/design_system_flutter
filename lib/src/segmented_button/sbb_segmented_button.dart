@@ -264,6 +264,10 @@ class _SegmentedButton extends State<SBBSegmentedButton> {
               focusable: true,
               selected: element.key == widget.selectedStateIndex,
               button: element.key != widget.selectedStateIndex,
+              hint: Localizations.of(context, MaterialLocalizations).tabLabel(
+                tabIndex: element.key + 1,
+                tabCount: widget.widgetBuilders.length,
+              ),
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 4),
                 alignment: Alignment.center,

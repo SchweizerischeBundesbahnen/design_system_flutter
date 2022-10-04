@@ -129,7 +129,11 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
                         child: Semantics(
                           selected: snapshotData.selectedTab == tab,
                           value: tab.translate(context),
-                          hint: tab.translateSemantics(context, widget.items.indexOf(tab) + 1, widget.items.length),
+                          hint: Localizations.of(context, MaterialLocalizations).tabLabel(
+                            tabIndex: widget.items.indexOf(tab) + 1,
+                            tabCount: widget.items.length,
+                          ),
+                          button: true,
                           child: Container(
                             color: SBBColors.transparent,
                             child: GestureDetector(

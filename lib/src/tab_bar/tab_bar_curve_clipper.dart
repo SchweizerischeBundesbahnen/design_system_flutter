@@ -52,18 +52,33 @@ class TabBarCurveClipper extends CustomClipper<Path> {
     var path;
 
     if (smallVersion) {
-      path = Path()
-        ..moveTo(leftShape.pCurveLeft.dx, leftShape.pCurveLeft.dy)
-        ..quadraticBezierTo(leftShape.cLeft.dx, leftShape.cLeft.dy, leftShape.pLeft.dx, leftShape.pLeft.dy)
-        ..quadraticBezierTo(leftShape.cBottomLeft.dx, leftShape.cBottomLeft.dy, leftShape.pBottom.dx, leftShape.pBottom.dy)
-        ..quadraticBezierTo(leftShape.cBottomRight.dx, leftShape.cBottomRight.dy, leftShape.pRight.dx, leftShape.pRight.dy)
+      if (_fromLeft) {
+        path = Path()
+          ..moveTo(leftShape.pCurveLeft.dx, leftShape.pCurveLeft.dy)
+          ..quadraticBezierTo(leftShape.cLeft.dx, leftShape.cLeft.dy, leftShape.pLeft.dx, leftShape.pLeft.dy)
+          ..quadraticBezierTo(leftShape.cBottomLeft.dx, leftShape.cBottomLeft.dy, leftShape.pBottom.dx, leftShape.pBottom.dy)
+          ..quadraticBezierTo(leftShape.cBottomRight.dx, leftShape.cBottomRight.dy, leftShape.pRight.dx, leftShape.pRight.dy)
 
-        ..quadraticBezierTo(rightShape.cLeft.dx, rightShape.cLeft.dy, rightShape.pLeft.dx, rightShape.pLeft.dy)
+          ..quadraticBezierTo(rightShape.cLeft.dx, rightShape.cLeft.dy, rightShape.pLeft.dx, rightShape.pLeft.dy)
 
-        ..quadraticBezierTo(rightShape.cBottomLeft.dx, rightShape.cBottomLeft.dy, rightShape.pBottom.dx, rightShape.pBottom.dy)
-        ..quadraticBezierTo(rightShape.cBottomRight.dx, rightShape.cBottomRight.dy, rightShape.pRight.dx, rightShape.pRight.dy)
-        ..quadraticBezierTo(rightShape.cRight.dx, rightShape.cRight.dy, rightShape.pCurveRight.dx, rightShape.pCurveRight.dy)
-        ..close();
+          ..quadraticBezierTo(rightShape.cBottomLeft.dx, rightShape.cBottomLeft.dy, rightShape.pBottom.dx, rightShape.pBottom.dy)
+          ..quadraticBezierTo(rightShape.cBottomRight.dx, rightShape.cBottomRight.dy, rightShape.pRight.dx, rightShape.pRight.dy)
+          ..quadraticBezierTo(rightShape.cRight.dx, rightShape.cRight.dy, rightShape.pCurveRight.dx, rightShape.pCurveRight.dy)
+          ..close();
+      } else {
+        path = Path()
+          ..moveTo(leftShape.pCurveLeft.dx, leftShape.pCurveLeft.dy)
+          ..quadraticBezierTo(leftShape.cLeft.dx, leftShape.cLeft.dy, leftShape.pLeft.dx, leftShape.pLeft.dy)
+          ..quadraticBezierTo(leftShape.cBottomLeft.dx, leftShape.cBottomLeft.dy, leftShape.pBottom.dx, leftShape.pBottom.dy)
+          ..quadraticBezierTo(leftShape.cBottomRight.dx, leftShape.cBottomRight.dy, leftShape.pRight.dx, leftShape.pRight.dy)
+
+          ..quadraticBezierTo(rightShape.cLeft.dx, rightShape.cLeft.dy, rightShape.pLeft.dx, rightShape.pLeft.dy)
+
+          ..quadraticBezierTo(rightShape.cBottomLeft.dx, rightShape.cBottomLeft.dy, rightShape.pBottom.dx, rightShape.pBottom.dy)
+          ..quadraticBezierTo(rightShape.cBottomRight.dx, rightShape.cBottomRight.dy, rightShape.pRight.dx, rightShape.pRight.dy)
+          ..quadraticBezierTo(rightShape.cRight.dx, rightShape.cRight.dy, rightShape.pCurveRight.dx, rightShape.pCurveRight.dy)
+          ..close();
+      }
     } else {
       path = Path()
         ..moveTo(leftShape.pCurveLeft.dx, leftShape.pCurveLeft.dy)
