@@ -153,9 +153,12 @@ class SBBModalSheet extends StatelessWidget {
               0.0,
               sbbDefaultSpacing,
             ),
-            child: Text(
-              title,
-              style: SBBControlStyles.of(context).modalTitleTextStyle,
+            child: Semantics(
+              header: true,
+              child: Text(
+                title,
+                style: SBBControlStyles.of(context).modalTitleTextStyle,
+              ),
             ),
           ),
           child: child,
@@ -251,7 +254,10 @@ class _ModalHeader extends StatelessWidget {
               0.0,
               sbbDefaultSpacing,
             ),
-            child: Text(title, style: style.modalTitleTextStyle),
+            child: Semantics(
+              header: true,
+              child: Text(title, style: style.modalTitleTextStyle),
+            ),
           ),
         ),
         _CloseButton(),
