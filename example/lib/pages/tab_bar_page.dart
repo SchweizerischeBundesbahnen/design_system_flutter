@@ -34,6 +34,7 @@ class _TabBarPageState extends State<TabBarPage> {
               showWarning: true,
               onTabChanged: (task) async {},
               controller: controller,
+              warningSemantics: 'Warning',
             ),
           Expanded(child: Container()),
           SBBPrimaryButton(

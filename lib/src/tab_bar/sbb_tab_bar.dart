@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 
 import '../../design_system_flutter.dart';
 import '../sbb_internal.dart';
-import 'sbb_tab_bar_controller.dart';
 import 'tab_bar_curve_clipper.dart';
 import 'tab_bar_draw_data.dart';
 import 'tab_item_widget.dart';
@@ -20,6 +19,7 @@ class SBBTabBar extends StatefulWidget {
     Key? key,
     this.controller,
     this.initialItem,
+    this.warningSemantics,
     this.showWarning = false,
     int? warningIndex,
   })  : this.warningIndex = warningIndex ?? items.length - 1,
@@ -29,6 +29,7 @@ class SBBTabBar extends StatefulWidget {
   final Future<void> Function(Future<TabBarItem> tabTask) onTabChanged;
   final TabBarController? controller;
   final TabBarItem? initialItem;
+  final String? warningSemantics;
   final bool showWarning;
   final int warningIndex;
 
@@ -120,15 +121,16 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
                         left: tabBarData.positions[widget.items[widget.warningIndex]],
                         child: TabItemWidget.warning(),
                       ),
-                    ...widget.items.map(
-                      (tab) => Positioned(
+                    ...widget.items.mapIndexed(
+                      (i, tab) => Positioned(
                         top: topPadding,
                         left: tabBarData.positions[tab]! - 8.0,
                         width: tabBarData.sizes[tab]!.width + 16.0,
                         height: tabBarData.sizes[tab]!.height,
                         child: Semantics(
                           selected: snapshotData.selectedTab == tab,
-                          value: tab.translate(context),
+                          value: widget.showWarning && widget.warningIndex == i ? widget.warningSemantics : null,
+                          label: tab.translate(context),
                           hint: Localizations.of(context, MaterialLocalizations).tabLabel(
                             tabIndex: widget.items.indexOf(tab) + 1,
                             tabCount: widget.items.length,
