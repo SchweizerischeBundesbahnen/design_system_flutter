@@ -17,6 +17,7 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
     this.hostPlatform,
     this.brightness,
     this.boldFont = false,
+    this.labelColor,
   });
 
   factory SBBBaseStyle.$default({
@@ -55,6 +56,7 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
       hostPlatform: hostPlatform ?? HostPlatform.native,
       brightness: brightness,
       boldFont: boldFont,
+      labelColor: SBBBaseStyle.resolve(isLight, SBBColors.granite, SBBColors.graphite),
     );
   }
 
@@ -75,6 +77,7 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
   final HostPlatform? hostPlatform;
   final Brightness? brightness;
   final bool boldFont;
+  final Color? labelColor;
 
   @override
   ThemeExtension<SBBBaseStyle> copyWith({
@@ -91,6 +94,7 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
     HostPlatform? hostPlatform,
     Brightness? brightness,
     bool? boldFont,
+    Color? labelColor,
   }) =>
       SBBBaseStyle(
         primaryColor: primaryColor ?? this.primaryColor,
@@ -106,6 +110,7 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
         hostPlatform: hostPlatform ?? this.hostPlatform,
         brightness: brightness ?? this.brightness,
         boldFont: boldFont ?? this.boldFont,
+        labelColor: labelColor ?? this.labelColor,
       );
 
   @override
@@ -125,6 +130,7 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
       primarySwatch: other.primarySwatch,
       defaultRootContainerPadding: other.defaultRootContainerPadding,
       boldFont: other.boldFont,
+      labelColor: Color.lerp(labelColor, other.labelColor, t),
     );
   }
 
@@ -147,7 +153,6 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
           color: color ?? defaultTextColor,
           textBaseline: TextBaseline.alphabetic,
         );
-    final labelColor = themeValue(SBBColors.granite, SBBColors.cement);
     return TextTheme(
       bodySmall: value(SBBTextStyles.smallFontSize, SBBTextStyles.smallFontHeight, FontWeight.w300),
       bodyMedium: value(SBBTextStyles.mediumFontSize, SBBTextStyles.mediumFontHeight, FontWeight.w300),

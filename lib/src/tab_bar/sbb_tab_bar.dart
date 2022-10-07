@@ -12,21 +12,24 @@ import 'tab_item_widget.dart';
 /// The TabBar for SBB themed apps with multiple tabs.
 /// Items is a list of all tabs that should be shown in the TabBar.
 /// OnTabChanged defines what happens when a tab is selected.
-/// NavigationDataStream is the current state. A [Stream] of [TabBarNavigationData]
 class SBBTabBar extends StatefulWidget {
   const SBBTabBar({
     required this.items,
     required this.onTabChanged,
-    required this.navigationDataStream,
     Key? key,
+    this.controller,
+    this.initialItem,
+    this.warningSemantics,
     this.showWarning = false,
     int? warningIndex,
   })  : this.warningIndex = warningIndex ?? items.length - 1,
         super(key: key);
 
   final List<TabBarItem> items;
-  final void Function(TabBarItem tab) onTabChanged;
-  final Stream<TabBarNavigationData> navigationDataStream;
+  final Future<void> Function(Future<TabBarItem> tabTask) onTabChanged;
+  final TabBarController? controller;
+  final TabBarItem? initialItem;
+  final String? warningSemantics;
   final bool showWarning;
   final int warningIndex;
 
@@ -42,22 +45,13 @@ class _TabBarNotification extends Notification {
 
 class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMixin {
   late TabBarDrawData tabBarData = TabBarDrawData.empty(widget.items);
-
-  late AnimationController _controller;
-  late Animation<double> _animation;
-
-  int? _selectedOverride;
+  late TabBarController _controller;
 
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this, duration: kThemeAnimationDuration);
-    _animation = Tween(begin: 0.0, end: 0.25).animate(_controller);
-
-    _controller.addListener(() {
-      if (!mounted) return;
-      setState(() => {});
-    });
+    _controller = widget.controller ?? TabBarController(widget.initialItem ?? widget.items.first);
+    _controller.initialize(this);
   }
 
   bool setPositionsAndSizes(_TabBarNotification n) {
@@ -73,17 +67,11 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
   }
 
   @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(context) => NotificationListener<_TabBarNotification>(
         onNotification: setPositionsAndSizes,
         child: StreamBuilder<TabBarNavigationData>(
-          stream: widget.navigationDataStream,
-          initialData: TabBarNavigationData(0.0, 0.0, widget.items.first),
+          stream: _controller.navigationStream,
+          initialData: _controller.currentData,
           builder: (context, snapshot) {
             final portrait = MediaQuery.of(context).orientation == Orientation.portrait;
             final topPadding = portrait ? 8.0 : 1.0;
@@ -119,13 +107,12 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
                         child: _IconLayer(widget.items, snapshotData.selectedTab),
                       ),
                       clipper: TabBarCurveClipper(
-                        snapshotData.currentPage,
-                        snapshotData.previousPage,
                         widget.items.indexOf(snapshotData.selectedTab),
+                        widget.items.indexOf(snapshotData.nextTab),
                         portrait,
                         tabBarData,
-                        _animation.value,
-                        _selectedOverride,
+                        snapshotData.animation,
+                        snapshotData.hover,
                       ),
                     ),
                     if (widget.showWarning)
@@ -134,29 +121,34 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
                         left: tabBarData.positions[widget.items[widget.warningIndex]],
                         child: TabItemWidget.warning(),
                       ),
-                    ...widget.items.map(
-                      (tab) => Positioned(
+                    ...widget.items.mapIndexed(
+                      (i, tab) => Positioned(
                         top: topPadding,
                         left: tabBarData.positions[tab]! - 8.0,
                         width: tabBarData.sizes[tab]!.width + 16.0,
                         height: tabBarData.sizes[tab]!.height,
                         child: Semantics(
                           selected: snapshotData.selectedTab == tab,
-                          value: tab.translate(context),
-                          hint: tab.translateSemantics(context, widget.items.indexOf(tab) + 1, widget.items.length),
+                          value: widget.showWarning && widget.warningIndex == i ? widget.warningSemantics : null,
+                          label: tab.translate(context),
+                          hint: Localizations.of(context, MaterialLocalizations).tabLabel(
+                            tabIndex: widget.items.indexOf(tab) + 1,
+                            tabCount: widget.items.length,
+                          ),
+                          button: true,
                           child: Container(
                             color: SBBColors.transparent,
                             child: GestureDetector(
                               key: Key('${tab.id}_button'),
-                              onTap: () => widget.onTabChanged(tab),
+                              onTap: () {
+                                if (snapshotData.selectedTab == tab) return;
+                                widget.onTabChanged(_controller.selectTab(tab));
+                              },
                               onTapDown: (_) {
                                 if (snapshotData.selectedTab == tab) return;
-                                _controller.reset();
-                                _controller.forward();
-                                _selectedOverride = widget.items.indexOf(tab);
+                                _controller.hoverTab(tab);
                               },
-                              onTapUp: (_) => setState(() => _selectedOverride = null),
-                              onTapCancel: () => setState(() => _selectedOverride = null),
+                              onTapCancel: () => _controller.cancelHover(),
                             ),
                           ),
                         ),

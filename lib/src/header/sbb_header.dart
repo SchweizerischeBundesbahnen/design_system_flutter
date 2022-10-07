@@ -18,6 +18,7 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
     List<Widget>? actions,
     VoidCallback? onPressedLogo,
     String? logoTooltip,
+    bool? blockSemantics,
   }) : this._(
           key: key,
           title: title,
@@ -27,6 +28,7 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
           actions: actions,
           onPressedLogo: onPressedLogo,
           logoTooltip: logoTooltip,
+          blockSemantics: blockSemantics,
         );
 
   const SBBHeader.menu({
@@ -35,6 +37,7 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
     VoidCallback? onPressed,
     VoidCallback? onPressedLogo,
     String? logoTooltip,
+    bool? blockSemantics,
   }) : this._(
           key: key,
           title: title,
@@ -43,6 +46,7 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
           onPressed: onPressed,
           onPressedLogo: onPressedLogo,
           logoTooltip: logoTooltip,
+          blockSemantics: blockSemantics,
         );
 
   const SBBHeader.back({
@@ -51,6 +55,7 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
     VoidCallback? onPressed,
     VoidCallback? onPressedLogo,
     String? logoTooltip,
+    bool? blockSemantics,
   }) : this._(
           key: key,
           title: title,
@@ -59,6 +64,7 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
           onPressed: onPressed,
           onPressedLogo: onPressedLogo,
           logoTooltip: logoTooltip,
+          blockSemantics: blockSemantics,
         );
 
   const SBBHeader.close({
@@ -67,6 +73,7 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
     VoidCallback? onPressed,
     VoidCallback? onPressedLogo,
     String? logoTooltip,
+    bool? blockSemantics,
   }) : this._(
           key: key,
           title: title,
@@ -75,6 +82,7 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
           onPressed: onPressed,
           onPressedLogo: onPressedLogo,
           logoTooltip: logoTooltip,
+          blockSemantics: blockSemantics,
         );
 
   const SBBHeader._({
@@ -90,6 +98,7 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
     required this.onPressedLogo,
     required this.logoTooltip,
     this.actions,
+    this.blockSemantics,
   })  : assert(actions == null || onPressedLogo == null),
         super(key: key);
 
@@ -104,6 +113,7 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
   final VoidCallback? onPressedLogo;
   final String? logoTooltip;
   final List<Widget>? actions;
+  final bool? blockSemantics;
 
   static const _menuButtonIconWidth = 20.718;
   static const _menuButtonIconHeight = 16.0;
@@ -161,45 +171,51 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
   Widget _build(BuildContext context, Widget leading, double leadingWidth) {
     final customLeadingWidth = leadingWidth > kToolbarHeight;
     final style = SBBControlStyles.of(context);
-    return AppBar(
-      brightness: Brightness.dark,
-      titleSpacing: 0.0,
-      leading: Container(
-        child: leading,
-        padding: customLeadingWidth
-            ? EdgeInsets.zero
-            : EdgeInsets.only(
-                right: kToolbarHeight - leadingWidth,
-              ),
-      ),
-      leadingWidth: customLeadingWidth ? leadingWidth : kToolbarHeight,
-      automaticallyImplyLeading: automaticallyImplyLeading,
-      title: Semantics(
-        header: true,
-        child: Text(title, style: style.headerTextStyle),
-      ),
-      actions: actions != null && actions!.isNotEmpty
-          ? actions
-          : [
-              ExcludeSemantics(
-                excluding: onPressedLogo == null,
-                child: Container(
-                  alignment: Alignment.centerRight,
-                  padding: const EdgeInsets.only(right: sbbDefaultSpacing / 2),
-                  height: kToolbarHeight,
-                  width: customLeadingWidth ? leadingWidth : kToolbarHeight,
-                  child: IconButton(
-                    icon: SBBWebLogo(),
-                    onPressed: onPressedLogo,
-                    tooltip: logoTooltip,
-                    splashColor: style.headerButtonBackgroundColorHighlighted,
-                    focusColor: style.headerButtonBackgroundColorHighlighted,
-                    hoverColor: SBBColors.transparent,
-                    highlightColor: SBBColors.transparent,
+    return BlockSemantics(
+      blocking: blockSemantics ?? false,
+      child: AppBar(
+        brightness: Brightness.dark,
+        titleSpacing: 0.0,
+        leading: Container(
+          child: leading,
+          padding: customLeadingWidth
+              ? EdgeInsets.zero
+              : EdgeInsets.only(
+                  right: kToolbarHeight - leadingWidth,
+                ),
+        ),
+        leadingWidth: customLeadingWidth ? leadingWidth : kToolbarHeight,
+        automaticallyImplyLeading: automaticallyImplyLeading,
+        title: BlockSemantics(
+          blocking: blockSemantics ?? false,
+          child: Semantics(
+            header: true,
+            child: Text(title, style: style.headerTextStyle),
+          ),
+        ),
+        actions: actions != null && actions!.isNotEmpty
+            ? actions
+            : [
+                ExcludeSemantics(
+                  excluding: onPressedLogo == null,
+                  child: Container(
+                    alignment: Alignment.centerRight,
+                    padding: const EdgeInsets.only(right: sbbDefaultSpacing / 2),
+                    height: kToolbarHeight,
+                    width: customLeadingWidth ? leadingWidth : kToolbarHeight,
+                    child: IconButton(
+                      icon: SBBLogo(),
+                      onPressed: onPressedLogo,
+                      tooltip: logoTooltip,
+                      splashColor: style.headerButtonBackgroundColorHighlighted,
+                      focusColor: style.headerButtonBackgroundColorHighlighted,
+                      hoverColor: SBBColors.transparent,
+                      highlightColor: SBBColors.transparent,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+      ),
     );
   }
 

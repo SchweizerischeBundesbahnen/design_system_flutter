@@ -6,69 +6,95 @@ import 'tab_bar_draw_data.dart';
 
 class TabBarCurveClipper extends CustomClipper<Path> {
   TabBarCurveClipper(
-    this.position,
-    this.previousPosition,
-    this.selected,
+    int from,
+    int to,
     this.portrait,
     this.data,
-    this.animation,
-    this.selectedOverride,
-  ) : _radius = (portrait ? 44.0 : 36.0) / 2.0;
+    double animation,
+    bool hover,
+  )   : _left = math.min(from, to),
+        _right = math.max(from, to),
+        _fromLeft = from < to,
+        _radius = (portrait ? 44.0 : 36.0) / 2.0 {
+    _leftPercentage = from > to ? animation : (hover ? 1 : 1 - animation);
+    _rightPercentage = from > to ? (hover ? 1 : 1 - animation) : animation;
+  }
 
-  final double position;
-  final double previousPosition;
-  final int selected;
+  final int _left;
+  final int _right;
+  final bool _fromLeft;
+  late double _leftPercentage;
+  late double _rightPercentage;
   final bool portrait;
   final TabBarDrawData data;
-  final double animation;
-  final int? selectedOverride;
 
   final double _radius;
 
   @override
   Path getClip(Size size) {
-    final pos = position.toInt();
-    final next = selectedOverride ?? math.min(pos + 1, data.positions.length - 1);
+    final hole = data.positions.values.elementAt(_left) + _radius;
+    final nextHole = data.positions.values.elementAt(_right) + _radius;
 
-    final translateFrom = math.min(pos, next);
-    final translateTo = math.max(pos, next);
-
-    final hole = data.positions.values.elementAt(translateFrom) + _radius;
-    final nextHole = data.positions.values.elementAt(translateTo) + _radius;
-    final isNeighbour = translateTo == translateFrom + 1;
-
-    final nextPercent = pos < next ? position % 1 : 1 - (position % 1);
-    final percent = 1 - nextPercent;
-
-    final shape1 = _HoleShape(
+    final leftShape = _HoleShape(
       hole,
       portrait,
-      translateFrom == selectedOverride ? animation : percent,
+      _leftPercentage,
     );
-    final shape2 = _HoleShape(
+    final rightShape = _HoleShape(
       nextHole,
       portrait,
-      translateTo == selectedOverride ? animation : nextPercent,
+      _rightPercentage,
     );
 
-    final path = Path()
-      ..moveTo(shape1.pCurveLeft.dx, shape1.pCurveLeft.dy)
-      ..quadraticBezierTo(shape1.cLeft.dx, shape1.cLeft.dy, shape1.pLeft.dx, shape1.pLeft.dy)
-      ..cubicTo(shape1.cBottomLeft.dx, shape1.cBottomLeft.dy, shape1.cBottomRight.dx, shape1.cBottomRight.dy, shape1.pRight.dx, shape1.pRight.dy);
+    final isNeighbour = _right == _left + 1;
+    final smallVersion = portrait && isNeighbour && rightShape.pCurveLeft.dx < leftShape.pCurveRight.dx;
 
-    if (portrait && (nextPercent > 0.0 || selectedOverride != null) && isNeighbour && data.paddingBetween < 64.0) {
-      final c = Tween(begin: shape1.pRight.dx, end: shape2.pLeft.dx).transform(nextPercent);
-      path.quadraticBezierTo(c, 0.0, shape2.pLeft.dx, shape2.pLeft.dy);
+    var path;
+
+    if (smallVersion) {
+      if (_fromLeft) {
+        path = Path()
+          ..moveTo(leftShape.pCurveLeft.dx, leftShape.pCurveLeft.dy)
+          ..quadraticBezierTo(leftShape.cLeft.dx, leftShape.cLeft.dy, leftShape.pLeft.dx, leftShape.pLeft.dy)
+          ..quadraticBezierTo(leftShape.cBottomLeft.dx, leftShape.cBottomLeft.dy, leftShape.pBottom.dx, leftShape.pBottom.dy)
+          ..quadraticBezierTo(leftShape.cBottomRight.dx, leftShape.cBottomRight.dy, leftShape.pRight.dx, leftShape.pRight.dy)
+
+          ..quadraticBezierTo(rightShape.cLeft.dx, rightShape.cLeft.dy, rightShape.pLeft.dx, rightShape.pLeft.dy)
+
+          ..quadraticBezierTo(rightShape.cBottomLeft.dx, rightShape.cBottomLeft.dy, rightShape.pBottom.dx, rightShape.pBottom.dy)
+          ..quadraticBezierTo(rightShape.cBottomRight.dx, rightShape.cBottomRight.dy, rightShape.pRight.dx, rightShape.pRight.dy)
+          ..quadraticBezierTo(rightShape.cRight.dx, rightShape.cRight.dy, rightShape.pCurveRight.dx, rightShape.pCurveRight.dy)
+          ..close();
+      } else {
+        path = Path()
+          ..moveTo(leftShape.pCurveLeft.dx, leftShape.pCurveLeft.dy)
+          ..quadraticBezierTo(leftShape.cLeft.dx, leftShape.cLeft.dy, leftShape.pLeft.dx, leftShape.pLeft.dy)
+          ..quadraticBezierTo(leftShape.cBottomLeft.dx, leftShape.cBottomLeft.dy, leftShape.pBottom.dx, leftShape.pBottom.dy)
+          ..quadraticBezierTo(leftShape.cBottomRight.dx, leftShape.cBottomRight.dy, leftShape.pRight.dx, leftShape.pRight.dy)
+
+          ..quadraticBezierTo(rightShape.cLeft.dx, rightShape.cLeft.dy, rightShape.pLeft.dx, rightShape.pLeft.dy)
+
+          ..quadraticBezierTo(rightShape.cBottomLeft.dx, rightShape.cBottomLeft.dy, rightShape.pBottom.dx, rightShape.pBottom.dy)
+          ..quadraticBezierTo(rightShape.cBottomRight.dx, rightShape.cBottomRight.dy, rightShape.pRight.dx, rightShape.pRight.dy)
+          ..quadraticBezierTo(rightShape.cRight.dx, rightShape.cRight.dy, rightShape.pCurveRight.dx, rightShape.pCurveRight.dy)
+          ..close();
+      }
     } else {
-      path
-        ..quadraticBezierTo(shape1.cRight.dx, shape1.cRight.dy, shape1.pCurveRight.dx, shape1.pCurveRight.dy)
-        ..moveTo(shape2.pCurveLeft.dx, shape2.pCurveLeft.dy)
-        ..quadraticBezierTo(shape2.cLeft.dx, shape2.cLeft.dy, shape2.pLeft.dx, shape2.pLeft.dy);
-    }
+      path = Path()
+        ..moveTo(leftShape.pCurveLeft.dx, leftShape.pCurveLeft.dy)
+        ..quadraticBezierTo(leftShape.cLeft.dx, leftShape.cLeft.dy, leftShape.pLeft.dx, leftShape.pLeft.dy)
+        ..quadraticBezierTo(leftShape.cBottomLeft.dx, leftShape.cBottomLeft.dy, leftShape.pBottom.dx, leftShape.pBottom.dy)
+        ..quadraticBezierTo(leftShape.cBottomRight.dx, leftShape.cBottomRight.dy, leftShape.pRight.dx, leftShape.pRight.dy)
+        ..quadraticBezierTo(leftShape.cRight.dx, leftShape.cRight.dy, leftShape.pCurveRight.dx, leftShape.pCurveRight.dy)
 
-    path
-      ..cubicTo(shape2.cBottomLeft.dx, shape2.cBottomLeft.dy, shape2.cBottomRight.dx, shape2.cBottomRight.dy, shape2.pRight.dx, shape2.pRight.dy)
-      ..quadraticBezierTo(shape2.cRight.dx, shape2.cRight.dy, shape2.pCurveRight.dx, shape2.pCurveRight.dy);
+        ..lineTo(rightShape.pCurveLeft.dx, rightShape.pCurveLeft.dy)
+
+        ..quadraticBezierTo(rightShape.cLeft.dx, rightShape.cLeft.dy, rightShape.pLeft.dx, rightShape.pLeft.dy)
+        ..quadraticBezierTo(rightShape.cBottomLeft.dx, rightShape.cBottomLeft.dy, rightShape.pBottom.dx, rightShape.pBottom.dy)
+        ..quadraticBezierTo(rightShape.cBottomRight.dx, rightShape.cBottomRight.dy, rightShape.pRight.dx, rightShape.pRight.dy)
+        ..quadraticBezierTo(rightShape.cRight.dx, rightShape.cRight.dy, rightShape.pCurveRight.dx, rightShape.pCurveRight.dy)
+        ..close();
+    }
 
     return Path()
       ..addPath(path, Offset.zero)
@@ -79,69 +105,81 @@ class TabBarCurveClipper extends CustomClipper<Path> {
 
   @override
   bool shouldReclip(TabBarCurveClipper oldClipper) =>
-      oldClipper.position != position ||
-      oldClipper.previousPosition != previousPosition ||
-      oldClipper.selected != selected ||
+      oldClipper._left != _left ||
+      oldClipper._right != _right ||
       oldClipper.portrait != portrait ||
-      oldClipper.animation != animation ||
-      oldClipper.selectedOverride != selectedOverride ||
-      oldClipper.data != data;
+      oldClipper.data != data ||
+      oldClipper._leftPercentage != _leftPercentage ||
+      oldClipper._rightPercentage != _rightPercentage;
 }
 
 class _HoleShape {
-  _HoleShape(double pos, bool portrait, this.percent) {
+  _HoleShape(this.pos, bool portrait, this.percent) {
     final radius = (portrait ? 44.0 : 36.0) / 2.0;
-    final space = portrait ? 6.0 : 4.0;
-    final bottomPadding = portrait ? 16.0 : 6.0;
+    final tabTop = portrait ? 8.0 : 1.0;
+    final space = portrait ? 4.0 : 2.0;
 
     const top = 0.0;
-    center = radius + space;
-    final bottom = center + radius + bottomPadding;
+    final bottom = radius + radius;
 
-    final right = pos + center;
-    final left = pos - center;
+    left = pos - radius - space;
+    right = pos + radius + space;
+    vCenter = radius + tabTop;
 
     _offset = const Offset(32.0, top);
     _controlOffset = const Offset(16.0, top);
-    _pTopCenter = Offset(pos, top);
     _pTopLeft = Offset(left, top);
     _pTopRight = Offset(right, top);
-    _pCurveRight = _pTopRight + _offset;
+    _pTopCenter = Offset(pos, top);
     _pCurveLeft = _pTopLeft - _offset;
-    _pCenterLeft = Offset(left, center);
-    _pCenterRight = Offset(right, center);
-    _pBottomLeft = Offset(left, bottom);
-    _pBottomRight = Offset(right, bottom);
+    _pCurveRight = _pTopRight + _offset;
+    _pCenterLeft = Offset(left, vCenter);
+    _pCenterRight = Offset(right, vCenter);
+    _pBottomLeft = Offset(left + space, bottom + tabTop + space);
+    _pBottomRight = Offset(right - space, bottom + tabTop + space);
+    _pBottomCenter = Offset(pos, bottom + tabTop + space);
   }
 
   final double percent;
-  late double center;
+  final double pos;
 
+  late double right;
+  late double left;
+  late double vCenter;
   late Offset _offset;
   late Offset _controlOffset;
-  late Offset _pTopCenter;
   late Offset _pTopLeft;
   late Offset _pTopRight;
+  late Offset _pTopCenter;
   late Offset _pCurveLeft;
   late Offset _pCurveRight;
   late Offset _pCenterLeft;
   late Offset _pCenterRight;
   late Offset _pBottomLeft;
   late Offset _pBottomRight;
-
-  Offset get pCurveRight => _pCurveRight;
+  late Offset _pBottomCenter;
 
   Offset get pCurveLeft => _pCurveLeft;
 
-  Offset get pRight => Tween(begin: _pTopRight, end: _pCenterRight).transform(percent);
+  Offset get pCurveRight => _pCurveRight;
 
   Offset get pLeft => Tween(begin: _pTopLeft, end: _pCenterLeft).transform(percent);
 
-  Offset get cRight => Tween(begin: _pTopRight + _controlOffset, end: _pTopRight).transform(percent);
+  Offset get pRight => Tween(begin: _pTopRight, end: _pCenterRight).transform(percent);
+
+  Offset get pCenterLeft => Tween(begin: _pCenterLeft - _controlOffset, end: _pCenterLeft).transform(percent);
+
+  Offset get pCenterRight => Tween(begin: _pCenterRight + _controlOffset, end: _pCenterRight).transform(percent);
 
   Offset get cLeft => Tween(begin: _pTopLeft - _controlOffset, end: _pTopLeft).transform(percent);
 
-  Offset get cBottomRight => Tween(begin: _pTopCenter, end: _pBottomRight).transform(percent);
+  Offset get cRight => Tween(begin: _pTopRight + _controlOffset, end: _pTopRight).transform(percent);
 
-  Offset get cBottomLeft => Tween(begin: _pTopCenter, end: _pBottomLeft).transform(percent);
+  Offset get cBottomCenter => Tween(begin: _pTopCenter, end: _pBottomCenter).transform(percent);
+
+  Offset get cBottomLeft => Tween(begin: _pTopCenter - _controlOffset, end: _pBottomLeft).transform(percent);
+
+  Offset get cBottomRight => Tween(begin: _pTopCenter + _controlOffset, end: _pBottomRight).transform(percent);
+
+  Offset get pBottom => Tween(begin: _pTopCenter, end: _pBottomCenter).transform(percent);
 }

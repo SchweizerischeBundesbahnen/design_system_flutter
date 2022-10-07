@@ -196,6 +196,7 @@ class _SBBTextField extends State<SBBTextFormField> {
   TextFormField _buildTextFormField() {
     final hasError = errorText?.isNotEmpty ?? false;
     final bool isWeb = SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
+    final textField = SBBControlStyles.of(context).textField!;
 
     return TextFormField(
       validator: (value) {
@@ -226,28 +227,13 @@ class _SBBTextField extends State<SBBTextFormField> {
       onTap: widget.onTap,
       enabled: widget.enabled,
       decoration: isWeb ? _inputDecorationWeb() : _inputDecorationNative(),
-      style: isWeb
-          ? valueTextStyleWeb(hasError)
-          : _resolveTextStyle(
-              SBBBaseTextStyles.formLightDefault,
-              SBBBaseTextStyles.formDarkDefault,
-              SBBBaseTextStyles.formLightDisabledDefault,
-              SBBBaseTextStyles.formDarkDisabledDefault,
-            ),
+      style: isWeb && hasError
+          ? textField.errorTextStyle
+          : textField.textStyle,
       inputFormatters: widget.inputFormatters,
       textCapitalization: widget.textCapitalization,
       textInputAction: widget.textInputAction,
     );
-  }
-
-  TextStyle valueTextStyleWeb(bool hasError) {
-    final style = widget.enabled
-        ? hasError
-            ? SBBBaseTextStyles.formLightDefault.copyWith(color: SBBColors.red)
-            : SBBBaseTextStyles.formLightDefault
-        : SBBBaseTextStyles.formLightDisabledDefault
-            .copyWith(color: SBBColors.granite);
-    return style;
   }
 
   InputDecoration _inputDecorationWeb() {
@@ -286,6 +272,7 @@ class _SBBTextField extends State<SBBTextFormField> {
   }
 
   InputDecoration _inputDecorationNative() {
+    final textField = SBBControlStyles.of(context).textField!;
     return InputDecoration(
       labelText: widget.labelText,
       focusedBorder: InputBorder.none,
@@ -299,29 +286,10 @@ class _SBBTextField extends State<SBBTextFormField> {
       contentPadding: widget.maxLines == 1
           ? const EdgeInsets.only(bottom: 2.0)
           : const EdgeInsets.only(bottom: 8.0),
-      labelStyle: _resolveTextStyle(
-        SBBBaseTextStyles.formLightPlaceholder,
-        SBBBaseTextStyles.formDarkPlaceholder,
-        SBBBaseTextStyles.formLightDisabledPlaceholder,
-        SBBBaseTextStyles.formDarkDisabledPlaceholder,
-      ),
+      labelStyle: textField.placeholderTextStyle,
       hintText: widget.hintText,
-      hintStyle: _resolveTextStyle(
-        SBBBaseTextStyles.formLightPlaceholder,
-        SBBBaseTextStyles.formDarkPlaceholder,
-        SBBBaseTextStyles.formLightDisabledPlaceholder,
-        SBBBaseTextStyles.formDarkDisabledPlaceholder,
-      ),
+      hintStyle: textField.placeholderTextStyle,
+      floatingLabelStyle: textField.placeholderTextStyle,
     );
-  }
-
-  TextStyle _resolveTextStyle(TextStyle lightEnabled, TextStyle darkEnabled,
-      TextStyle lightDisabled, TextStyle darkDisabled) {
-    final style = SBBBaseStyle.of(context);
-    if (widget.enabled) {
-      return style.themeValue(lightEnabled, darkEnabled);
-    } else {
-      return style.themeValue(lightDisabled, darkDisabled);
-    }
   }
 }

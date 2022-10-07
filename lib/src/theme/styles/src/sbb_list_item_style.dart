@@ -25,11 +25,11 @@ class SBBListItemStyle {
         textStyleDisabled: baseStyle.themedTextStyle(color: SBBColors.metal),
         secondaryTextStyle: baseStyle.themedTextStyle(
           textStyle: SBBTextStyles.smallLight,
-          color: baseStyle.themeValue(SBBColors.granite, SBBColors.cement),
+          color: baseStyle.labelColor,
         ),
         secondaryTextStyleDisabled: baseStyle.themedTextStyle(
           textStyle: SBBTextStyles.smallLight,
-          color: baseStyle.themeValue(SBBColors.metal, SBBColors.smoke),
+          color: baseStyle.labelColor,
         ),
       );
 

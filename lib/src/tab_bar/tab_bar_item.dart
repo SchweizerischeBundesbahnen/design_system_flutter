@@ -11,7 +11,4 @@ abstract class TabBarItem {
   final IconData icon;
 
   String translate(BuildContext context);
-
-  /// An addition for the semantics to the [TabBarItem] name. e.g. Element 1 of 4
-  String translateSemantics(BuildContext context, int index, int length);
 }
