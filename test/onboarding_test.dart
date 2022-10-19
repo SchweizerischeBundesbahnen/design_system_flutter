@@ -8,9 +8,14 @@ import 'test_app.dart';
 void main() {
   testGoldens('onboarding', (WidgetTester tester) async {
     final builder = GoldenBuilder.column(
-        wrap: (w) => SizedBox(
-            height: 543.0, width: double.infinity, child: TestApp(child: w)))
-      ..addScenario(
+      wrap: (w) => SizedBox(
+        height: 543.0,
+        width: double.infinity,
+        child: TestApp(
+          child: w,
+        ),
+      ),
+    )..addScenario(
         'onboarding tests',
         OnboardingTest(),
       );
@@ -47,39 +52,43 @@ class OnboardingTest extends StatelessWidget {
 class TestOnboardingBuilderDelegate extends SBBOnboardingBuilderDelegate {
   @override
   Widget buildStartPage(
-          BuildContext context,
-          double widgetWidth,
-          double widgetHeight,
-          VoidCallback onStartOnboarding,
-          VoidCallback onFinish) =>
+    BuildContext context,
+    VoidCallback onStartOnboarding,
+    VoidCallback onFinish,
+  ) =>
       Container(
         color: SBBColors.red,
         child: Center(
-            child: SBBTertiaryButtonLarge(
-                key: Key('start'),
-                label: 'Onboarding starten',
-                onPressed: onStartOnboarding)),
+          child: SBBTertiaryButtonLarge(
+            key: Key('start'),
+            label: 'Onboarding starten',
+            onPressed: onStartOnboarding,
+          ),
+        ),
       );
 
   @override
-  Widget buildEndPage(BuildContext context, double widgetWidth,
-          double widgetHeight, VoidCallback onFinish) =>
+  Widget buildEndPage(
+    BuildContext context,
+    VoidCallback onFinish,
+  ) =>
       Container(
         color: SBBColors.red,
         child: Center(
-            child: SBBTertiaryButtonLarge(
-                label: 'Onboarding beenden', onPressed: onFinish)),
+          child: SBBTertiaryButtonLarge(
+            label: 'Onboarding beenden',
+            onPressed: onFinish,
+          ),
+        ),
       );
 
   @override
   List<SBBOnboardingCard> buildCards(BuildContext context) => [
         SBBOnboardingCard.basic(
-          embeddedChild: Container(),
           title: 'Page 1',
           content: 'Page 1',
         ),
         SBBOnboardingCard.basic(
-          embeddedChild: Container(),
           title: 'Page 2',
           content: 'Page 2',
         ),

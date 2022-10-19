@@ -9,9 +9,12 @@ class SBBOnboardingCard extends StatelessWidget {
     Key? key,
   }) : super(key: key);
 
-  SBBOnboardingCard.basic({required Widget embeddedChild, required String title, required String content, VoidCallback? onDismissed, Key? key})
-      : this.extended(
-          embeddedChild: embeddedChild,
+  SBBOnboardingCard.basic({
+    required String title,
+    required String content,
+    VoidCallback? onDismissed,
+    Key? key,
+  }) : this.extended(
           title: title,
           content: content,
           customContent: null,
@@ -19,56 +22,172 @@ class SBBOnboardingCard extends StatelessWidget {
           key: key,
         );
 
-  SBBOnboardingCard.extended(
-      {required Widget embeddedChild, required String title, required String content, required Widget? customContent, VoidCallback? onDismissed, Key? key})
-      : this(
+  SBBOnboardingCard.extended({
+    required String title,
+    required String content,
+    Widget? embeddedChild,
+    Widget? customContent,
+    VoidCallback? onDismissed,
+    Key? key,
+  }) : this(
           key: key,
           onDismissed: onDismissed,
-          widgetBuilder: (BuildContext context) => Column(
-            children: <Widget>[
-              Expanded(
-                child: SizedBox(
-                  height: 200,
-                  width: double.infinity,
-                  child: embeddedChild,
-                ),
-              ),
-              const SizedBox(height: 16.0),
-              MergeSemantics(
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                      child: Text(
-                        title,
-                        style: SBBTextStyles.largeBold.copyWith(
-                          height: 22.0 / 18.0,
-                          color: SBBBaseStyle.of(context).themeValue(SBBColors.black, SBBColors.white),
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Text(
-                        content,
-                        style: SBBTextStyles.mediumLight.copyWith(
-                          color: SBBBaseStyle.of(context).themeValue(SBBColors.black, SBBColors.white),
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              if (customContent != null) customContent,
-            ],
-          ),
+          widgetBuilder: (BuildContext context, Orientation orientation) {
+            switch (orientation) {
+              case Orientation.portrait:
+                return _VerticalCard(
+                  embeddedChild: embeddedChild,
+                  title: title,
+                  content: content,
+                  customContent: customContent,
+                );
+              case Orientation.landscape:
+                return _HorizontalCard(
+                  embeddedChild: embeddedChild,
+                  title: title,
+                  content: content,
+                  customContent: customContent,
+                );
+            }
+          },
         );
 
-  final WidgetBuilder widgetBuilder;
+  final OrientationWidgetBuilder widgetBuilder;
   final VoidCallback? onDismissed;
 
   @override
-  Widget build(BuildContext context) => widgetBuilder(context);
+  Widget build(BuildContext context) => widgetBuilder(
+        context,
+        MediaQuery.of(context).orientation,
+      );
+}
+
+class _VerticalCard extends StatelessWidget {
+  const _VerticalCard({
+    required this.title,
+    required this.content,
+    Key? key,
+    this.embeddedChild,
+    this.customContent,
+  }) : super(key: key);
+
+  final String title;
+  final String content;
+  final Widget? embeddedChild;
+  final Widget? customContent;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Expanded(
+          child: SizedBox(
+            height: 200,
+            width: double.infinity,
+            child: embeddedChild,
+          ),
+        ),
+        const SizedBox(height: 16.0),
+        MergeSemantics(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                child: Text(
+                  title,
+                  style: SBBTextStyles.largeBold.copyWith(
+                    height: 22.0 / 18.0,
+                    color: SBBBaseStyle.of(context).themeValue(
+                      SBBColors.black,
+                      SBBColors.white,
+                    ),
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Text(
+                  content,
+                  style: SBBTextStyles.mediumLight.copyWith(
+                    color: SBBBaseStyle.of(context).themeValue(
+                      SBBColors.black,
+                      SBBColors.white,
+                    ),
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            ],
+          ),
+        ),
+        if (customContent != null) customContent!,
+      ],
+    );
+  }
+}
+
+class _HorizontalCard extends StatelessWidget {
+  const _HorizontalCard({
+    required this.title,
+    required this.content,
+    this.embeddedChild,
+    this.customContent,
+    Key? key,
+  }) : super(key: key);
+
+  final String title;
+  final String content;
+  final Widget? embeddedChild;
+  final Widget? customContent;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: <Widget>[
+        if (embeddedChild != null)
+          Flexible(
+            child: embeddedChild!,
+          ),
+        Flexible(
+          child: MergeSemantics(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: Text(
+                    title,
+                    style: SBBTextStyles.largeBold.copyWith(
+                      height: 22.0 / 18.0,
+                      color: SBBBaseStyle.of(context).themeValue(
+                        SBBColors.black,
+                        SBBColors.white,
+                      ),
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    content,
+                    style: SBBTextStyles.mediumLight.copyWith(
+                      color: SBBBaseStyle.of(context).themeValue(
+                        SBBColors.black,
+                        SBBColors.white,
+                      ),
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                if (customContent != null) customContent!,
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
 }
