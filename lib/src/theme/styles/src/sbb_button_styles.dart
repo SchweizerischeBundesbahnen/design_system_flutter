@@ -11,6 +11,7 @@ class SBBButtonStyles extends ThemeExtension<SBBButtonStyles> {
     this.tertiarySmallStyle,
     this.tertiaryLargeStyle,
     this.iconLargeStyle,
+    this.iconLargeNegativeStyle,
     this.iconSmallStyle,
     this.iconSmallNegativeStyle,
     this.iconSmallBorderlessStyle,
@@ -90,6 +91,17 @@ class SBBButtonStyles extends ThemeExtension<SBBButtonStyles> {
           iconColorHighlighted: baseStyle.iconColor,
           iconColorDisabled: baseStyle.themeValue(SBBColors.cloud, SBBColors.iron),
         ),
+        iconLargeNegativeStyle: SBBButtonStyle(
+          backgroundColor: SBBColors.transparent,
+          backgroundColorHighlighted: baseStyle.themeValue(SBBColors.black.withOpacity(0.2), SBBColors.white.withOpacity(0.2)),
+          backgroundColorDisabled: SBBColors.transparent,
+          borderColor: SBBColors.white,
+          borderColorHighlighted: SBBColors.white,
+          borderColorDisabled: SBBColors.white.withOpacity(0.5),
+          iconColor: SBBColors.white,
+          iconColorHighlighted: SBBColors.white,
+          iconColorDisabled: SBBColors.white.withOpacity(0.5),
+        ),
         iconSmallStyle: SBBButtonStyle(
           backgroundColor: baseStyle.themeValue(SBBColors.white, SBBColors.transparent),
           backgroundColorHighlighted: baseStyle.themeValue(SBBColors.milk, SBBColors.iron),
@@ -150,6 +162,7 @@ class SBBButtonStyles extends ThemeExtension<SBBButtonStyles> {
   final SBBButtonStyle? tertiarySmallStyle;
   final SBBButtonStyle? tertiaryLargeStyle;
   final SBBButtonStyle? iconLargeStyle;
+  final SBBButtonStyle? iconLargeNegativeStyle;
   final SBBButtonStyle? iconSmallStyle;
   final SBBButtonStyle? iconSmallNegativeStyle;
   final SBBButtonStyle? iconSmallBorderlessStyle;
@@ -192,6 +205,7 @@ class SBBButtonStyles extends ThemeExtension<SBBButtonStyles> {
     SBBButtonStyle? tertiarySmallStyle,
     SBBButtonStyle? tertiaryLargeStyle,
     SBBButtonStyle? iconLargeStyle,
+    SBBButtonStyle? iconLargeNegativeStyle,
     SBBButtonStyle? iconSmallStyle,
     SBBButtonStyle? iconSmallNegativeStyle,
     SBBButtonStyle? iconSmallBorderlessStyle,
@@ -205,6 +219,7 @@ class SBBButtonStyles extends ThemeExtension<SBBButtonStyles> {
         tertiarySmallStyle: tertiarySmallStyle ?? this.tertiarySmallStyle,
         tertiaryLargeStyle: tertiaryLargeStyle ?? this.tertiaryLargeStyle,
         iconLargeStyle: iconLargeStyle ?? this.iconLargeStyle,
+        iconLargeNegativeStyle: iconLargeNegativeStyle ?? this.iconLargeNegativeStyle,
         iconSmallStyle: iconSmallStyle ?? this.iconSmallStyle,
         iconSmallNegativeStyle: iconSmallNegativeStyle ?? this.iconSmallNegativeStyle,
         iconSmallBorderlessStyle: iconSmallBorderlessStyle ?? this.iconSmallBorderlessStyle,
@@ -222,6 +237,7 @@ class SBBButtonStyles extends ThemeExtension<SBBButtonStyles> {
       tertiarySmallStyle: tertiarySmallStyle?.lerp(other.tertiarySmallStyle, t),
       tertiaryLargeStyle: tertiaryLargeStyle?.lerp(other.tertiaryLargeStyle, t),
       iconLargeStyle: iconLargeStyle?.lerp(other.iconLargeStyle, t),
+      iconLargeNegativeStyle: iconLargeNegativeStyle?.lerp(other.iconLargeNegativeStyle, t),
       iconSmallStyle: iconSmallStyle?.lerp(other.iconSmallStyle, t),
       iconSmallNegativeStyle: iconSmallNegativeStyle?.lerp(other.iconSmallNegativeStyle, t),
       iconSmallBorderlessStyle: iconSmallBorderlessStyle?.lerp(other.iconSmallBorderlessStyle, t),
@@ -241,6 +257,7 @@ extension ButtonStylesExtension on SBBButtonStyles? {
       tertiarySmallStyle: this!.tertiarySmallStyle.merge(other?.tertiarySmallStyle),
       tertiaryLargeStyle: this!.tertiaryLargeStyle.merge(other?.tertiaryLargeStyle),
       iconLargeStyle: this!.iconLargeStyle.merge(other?.iconLargeStyle),
+      iconLargeNegativeStyle: this!.iconLargeNegativeStyle.merge(other?.iconLargeNegativeStyle),
       iconSmallStyle: this!.iconSmallStyle.merge(other?.iconSmallStyle),
       iconSmallNegativeStyle: this!.iconSmallNegativeStyle.merge(other?.iconSmallNegativeStyle),
       iconSmallBorderlessStyle: this!.iconSmallBorderlessStyle.merge(other?.iconSmallBorderlessStyle),

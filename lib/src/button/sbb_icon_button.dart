@@ -23,12 +23,14 @@ class SBBIconButtonLarge extends StatelessWidget {
     required this.onPressed,
     this.focusNode,
     this.buttonStyle,
+    this.semantics,
   }) : super(key: key);
 
   final IconData icon;
   final VoidCallback? onPressed;
   final FocusNode? focusNode;
   final ButtonStyle? buttonStyle;
+  final String? semantics;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +50,10 @@ class SBBIconButtonLarge extends StatelessWidget {
       style: style,
       onPressed: onPressed,
       focusNode: focusNode,
-      child: Icon(icon, size: sbbIconSizeSmall),
+      child: Semantics(
+        label: semantics,
+        child: Icon(icon, size: sbbIconSizeSmall),
+      ),
     );
   }
 }
