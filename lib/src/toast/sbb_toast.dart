@@ -36,7 +36,7 @@ class SBBToast {
         message,
         duration,
         bottom,
-        (stream) => _Toast.confirmation(
+        (stream) => Toast.confirmation(
             message: message, duration: duration, stream: stream));
   }
 
@@ -49,7 +49,7 @@ class SBBToast {
         message,
         duration,
         bottom,
-        (stream) => _Toast.warning(
+        (stream) => Toast.warning(
             message: message, duration: duration, stream: stream));
   }
 
@@ -63,7 +63,7 @@ class SBBToast {
         duration,
         bottom,
         (stream) =>
-            _Toast.error(message: message, duration: duration, stream: stream));
+            Toast.error(message: message, duration: duration, stream: stream));
   }
 
   void show({
@@ -76,7 +76,7 @@ class SBBToast {
         duration,
         bottom,
         (stream) =>
-            _Toast(message: message, duration: duration, stream: stream));
+            Toast(message: message, duration: duration, stream: stream));
   }
 
   void buildToast(
@@ -146,8 +146,9 @@ class SBBToast {
   }
 }
 
-class _Toast extends StatefulWidget {
-  _Toast.confirmation({
+@visibleForTesting
+class Toast extends StatefulWidget {
+  Toast.confirmation({
     required this.message,
     required this.duration,
     required this.stream,
@@ -158,7 +159,7 @@ class _Toast extends StatefulWidget {
     this.icon = SBBIcons.tick_medium;
   }
 
-  _Toast.warning({
+  Toast.warning({
     required this.message,
     required this.duration,
     required this.stream,
@@ -168,7 +169,7 @@ class _Toast extends StatefulWidget {
     this.icon = SBBIcons.sign_x_medium;
   }
 
-  _Toast.error({
+  Toast.error({
     required this.message,
     required this.duration,
     required this.stream,
@@ -178,7 +179,7 @@ class _Toast extends StatefulWidget {
     this.icon = SBBIcons.sign_x_medium;
   }
 
-  _Toast({
+  Toast({
     required this.message,
     required this.duration,
     required this.stream,
@@ -200,7 +201,7 @@ class _Toast extends StatefulWidget {
   _ToastState createState() => _ToastState();
 }
 
-class _ToastState extends State<_Toast> {
+class _ToastState extends State<Toast> {
   static const _borderRadiusWeb = 2.0;
   static const _borderRadiusMobile = 4.0;
   bool _visible = false;
