@@ -53,6 +53,7 @@ General instructions on _how_ to contribute can be found under [Contributing](Co
 * **Raab Ulrich**
 * **Müller Patrice**
 * **Michael Moor**
+* **Loris Sorace**
 
 ## License
 

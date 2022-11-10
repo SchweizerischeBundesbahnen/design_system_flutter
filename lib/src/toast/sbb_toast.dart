@@ -203,7 +203,6 @@ class Toast extends StatefulWidget {
 
 class _ToastState extends State<Toast> {
   static const _borderRadiusWeb = 2.0;
-  static const _borderRadiusMobile = 4.0;
   bool _visible = false;
 
   @override
@@ -216,15 +215,17 @@ class _ToastState extends State<Toast> {
   Widget build(BuildContext context) {
     final bool isWeb =
         SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
-    final decoration = BoxDecoration(
+
+    final decorationWeb = BoxDecoration(
         color: widget.backgroundColor,
-        borderRadius: BorderRadius.all(
-            Radius.circular(isWeb ? _borderRadiusWeb : _borderRadiusMobile)),
+        borderRadius: BorderRadius.all(Radius.circular(_borderRadiusWeb)),
         border: widget.borderColor != null
             ? Border.all(color: widget.borderColor!)
             : null);
-    final tooltipTheme =
-        Theme.of(context).tooltipTheme.copyWith(decoration: decoration);
+    final tooltipTheme = isWeb
+        ? Theme.of(context).tooltipTheme.copyWith(decoration: decorationWeb)
+        : Theme.of(context).tooltipTheme;
+
     return AnimatedOpacity(
       opacity: _visible ? 1.0 : 0.0,
       duration: kThemeAnimationDuration,
@@ -234,10 +235,11 @@ class _ToastState extends State<Toast> {
         padding: tooltipTheme.padding,
         child: Wrap(
           children: [
-            Icon(
-              widget.icon,
-              color: widget.textColor,
-            ),
+            if (isWeb)
+              Icon(
+                widget.icon,
+                color: widget.textColor,
+              ),
             Padding(
               padding: const EdgeInsets.only(left: 8.0),
               child: Text(
