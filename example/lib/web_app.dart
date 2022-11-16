@@ -19,6 +19,7 @@ final _pages = {
   'Autocomplete': AutocompletePage(),
   'Accordion': AccordionPage(),
   'Card': CardPage(),
+  'Toast': ToastPage(),
 };
 
 String _nameToRoute(String name) =>

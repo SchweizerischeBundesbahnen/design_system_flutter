@@ -6,51 +6,7 @@
 
 ### Added
 
-- Added `SBBLogo` (SBB Signet)
-- Added `SBBLeanLogo` (for web)
-- Added `SBBTabBar`
-- Added `SBBBreadcrumb` (for web)
-- Added `SBBWebHeader` (for web)
-- Added `SBBResponsive` (for web)
-- Added `SBBSideBar` (for web)
-- Added `SBBMenuButton` (for web)
-- Added `SBBUserMenu` (for web)
-- Added `SBBWebHeaderNavItem` (for web)
-- Added web support for `SBBIconButton`
-- Added global function `showCustomSBBModalSheet`
-- `SBBPrimaryButton`: Added different theme based on hostType (for web)
-- `SBBTheme`:Added field `hostType`
-- `SBBIcons`: Added new icons
-- `SBBThemeData`: Added constructor `override` for easier targeted theme customizing
-- `SBBThemeData`: Added field `defaultRootContainerPadding`
-- `SBBThemeData`: Added function `allStates`
-- `SBBThemeData`: Added function `resolveStateWith`
-- `SBBTextField`: Added field `obscureText`
-- `SBBTextField`: Added field `autofocus`
-- `SBBTextFormField`: Added field `autofocus`
-- `SBBPrimaryButton`: Added field `focusNode`
-- `SBBPrimaryButtonNegative`: Added field `focusNode`
-- `SBBSecondaryButton`: Added field `focusNode`
-- `SBBTertiaryButtonLarge`: Added field `focusNode`
-- `SBBTertiaryButtonSmall`: Added field `focusNode`
-- `SBBIconButtonLarge`: Added field `focusNode`
-- `SBBIconButtonSmall`: Added field `focusNode`
-- `SBBIconButtonSmallNegative`: Added field `focusNode`
-- `SBBIconButtonSmallBorderless`: Added field `focusNode`
-- `SBBIconFormButton`: Added field `focusNode`
-- `SBBIconTextButton`: Added field `focusNode`
-- `SBBModalSheet`: Added field `useRootNavigator` (with default value `true`)
-- `SBBModalSheet`: Added constructor `custom` for header customizing
-- `SBBToast`: Added field `bottom`
-- `SBBMultiSelect`: Added field `selectionValidation` and static function `defaultSelectionValidation` for custom selection validation
-- `SBBSelect`: Added field `allowMultilineLabel`
-- `SBBSelect`: Added field `hint`
-- `SBBAccordion`: Added field `titleMaxLines` (with default value `null`, meaning titles are now multiline by default)
-- `SBBAccordion`: Added constructor `single` for simpler usage when only one item is needed
-- `SBBListHeader`: Added field `maxLines` (with default value `null`, meaning list headers are now multiline by default)
-- `SBBListItem`: Added field `titleMaxLines` (with default value `null`, meaning titles are now multiline by default)
-- `SBBListItem`: Added field `subtitleMaxLines` (with default value `null`, meaning subtitles are now multiline by default)
-
+* Added `SBBToast` (for web)
 * Added `SBBLogo` (SBB Signet)
 * Added `SBBWebLogo` (for web)
 * Added `SBBTabBar`
