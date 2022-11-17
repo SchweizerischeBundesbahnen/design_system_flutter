@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 
 import '../../design_system_flutter.dart';
@@ -240,38 +241,41 @@ class _SBBOnboardingState extends State<SBBOnboarding>
                     ),
                   ),
                   if (orientation == Orientation.portrait)
-                    Column(
-                      children: [
-                        const SizedBox(height: navigationAreaVerticalPadding),
-                        Row(
-                          children: <Widget>[
-                            SizedBox(width: parentPadding),
-                            SBBIconButtonLarge(
-                              semantics: widget.backSemanticsLabel,
-                              onPressed: () => changeStep(goToNextStep: false),
-                              icon: SBBIcons.chevron_small_left_small,
-                            ),
-                            const Spacer(),
-                            ...stepIndicators,
-                            const Spacer(),
-                            SBBIconButtonLarge(
-                              semantics: widget.forwardSemanticsLabel,
-                              onPressed: () => changeStep(goToNextStep: true),
-                              icon: SBBIcons.chevron_small_right_small,
-                            ),
-                            SizedBox(width: parentPadding),
-                          ],
-                        ),
-                        const SizedBox(height: sbbDefaultSpacing),
-                        SizedBox(
-                          height: SBBInternal.defaultButtonHeightSmall,
-                          child: SBBTertiaryButtonSmall(
-                            onPressed: widget.onFinish,
-                            label: widget.cancelLabel,
+                    Semantics(
+                      sortKey: OrdinalSortKey(2),
+                      child: Column(
+                        children: [
+                          const SizedBox(height: navigationAreaVerticalPadding),
+                          Row(
+                            children: <Widget>[
+                              SizedBox(width: parentPadding),
+                              SBBIconButtonLarge(
+                                semantics: widget.backSemanticsLabel,
+                                onPressed: () => changeStep(goToNextStep: false),
+                                icon: SBBIcons.chevron_small_left_small,
+                              ),
+                              const Spacer(),
+                              ...stepIndicators,
+                              const Spacer(),
+                              SBBIconButtonLarge(
+                                semantics: widget.forwardSemanticsLabel,
+                                onPressed: () => changeStep(goToNextStep: true),
+                                icon: SBBIcons.chevron_small_right_small,
+                              ),
+                              SizedBox(width: parentPadding),
+                            ],
                           ),
-                        ),
-                        const SizedBox(height: navigationAreaVerticalPadding),
-                      ],
+                          const SizedBox(height: sbbDefaultSpacing),
+                          SizedBox(
+                            height: SBBInternal.defaultButtonHeightSmall,
+                            child: SBBTertiaryButtonSmall(
+                              onPressed: widget.onFinish,
+                              label: widget.cancelLabel,
+                            ),
+                          ),
+                          const SizedBox(height: navigationAreaVerticalPadding),
+                        ],
+                      ),
                     ),
                 ],
               ),
@@ -314,42 +318,51 @@ class _SBBOnboardingState extends State<SBBOnboarding>
                 ),
               ),
             if (orientation == Orientation.landscape) ...[
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Padding(
-                  padding: EdgeInsets.only(left: frontCardPadding.top),
-                  child: SBBIconButtonLarge(
-                    semantics: widget.backSemanticsLabel,
-                    onPressed: () => changeStep(goToNextStep: false),
-                    icon: SBBIcons.chevron_small_left_small,
-                    buttonStyle: negativeButtonStyle,
+              Semantics(
+                sortKey: OrdinalSortKey(0),
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Padding(
+                    padding: EdgeInsets.only(left: frontCardPadding.top),
+                    child: SBBIconButtonLarge(
+                      semantics: widget.backSemanticsLabel,
+                      onPressed: () => changeStep(goToNextStep: false),
+                      icon: SBBIcons.chevron_small_left_small,
+                      buttonStyle: negativeButtonStyle,
+                    ),
                   ),
                 ),
               ),
-              Align(
-                alignment: Alignment.topRight,
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    top: frontCardPadding.top,
-                    right: frontCardPadding.top,
-                  ),
-                  child: SBBIconButtonLarge(
-                    semantics: widget.cancelLabel,
-                    onPressed: widget.onFinish,
-                    icon: SBBIcons.cross_small,
-                    buttonStyle: negativeButtonStyle,
+              Semantics(
+                sortKey: OrdinalSortKey(3),
+                child: Align(
+                  alignment: Alignment.topRight,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                      top: frontCardPadding.top,
+                      right: frontCardPadding.top,
+                    ),
+                    child: SBBIconButtonLarge(
+                      semantics: widget.cancelLabel,
+                      onPressed: widget.onFinish,
+                      icon: SBBIcons.cross_small,
+                      buttonStyle: negativeButtonStyle,
+                    ),
                   ),
                 ),
               ),
-              Align(
-                alignment: Alignment.centerRight,
-                child: Padding(
-                  padding: EdgeInsets.only(right: frontCardPadding.top),
-                  child: SBBIconButtonLarge(
-                    semantics: widget.forwardSemanticsLabel,
-                    onPressed: () => changeStep(goToNextStep: true),
-                    icon: SBBIcons.chevron_small_right_small,
-                    buttonStyle: negativeButtonStyle,
+              Semantics(
+                sortKey: OrdinalSortKey(2),
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: Padding(
+                    padding: EdgeInsets.only(right: frontCardPadding.top),
+                    child: SBBIconButtonLarge(
+                      semantics: widget.forwardSemanticsLabel,
+                      onPressed: () => changeStep(goToNextStep: true),
+                      icon: SBBIcons.chevron_small_right_small,
+                      buttonStyle: negativeButtonStyle,
+                    ),
                   ),
                 ),
               ),
@@ -482,45 +495,48 @@ class _SBBOnboardingState extends State<SBBOnboarding>
                 : isDraggingToNext && !isAnimating && !isShowingEndPage
                     ? cardLeftValue
                     : null,
-        child: GestureDetector(
-          onHorizontalDragUpdate: (details) => setState(() {
-            if (cardLeftValue == null) {
-              setState(() => dragStartPosition = details.globalPosition.dx);
-            }
-            dragEndPosition = details.globalPosition.dx;
-            final newLeftValue = dragEndPosition! - dragStartPosition;
-            if (isNotDragging) {
-              dragState = newLeftValue == 0
-                  ? 0
-                  : newLeftValue < 0
-                      ? 1
-                      : 2;
-              backScrollController = ScrollController(
-                initialScrollOffset: scrollController.offset,
-              );
-              if (isDraggingToPrevious && currentStepIndex == 0) {
-                setState(() => isShowingStartPage = true);
-              } else if (isDraggingToNext &&
-                  currentStepIndex == _cards.length - 1) {
-                setState(() => isShowingEndPage = true);
+        child: Semantics(
+          sortKey: OrdinalSortKey(1),
+          child: GestureDetector(
+            onHorizontalDragUpdate: (details) => setState(() {
+              if (cardLeftValue == null) {
+                setState(() => dragStartPosition = details.globalPosition.dx);
               }
-            }
-            setState(() => cardLeftValue = isDraggingToNext
-                ? min(0, newLeftValue)
-                : min(0, newLeftValue - cardWidth));
-          }),
-          onHorizontalDragEnd: (details) {
-            if (dragEndPosition != null) {
-              setState(() => changeStep(goToNextStep: isDraggingToNext));
-            }
-          },
-          child: Container(
-            color: SBBColors.transparent,
-            padding: frontCardPadding,
-            child: Opacity(
-              opacity: isAnimating && !goToNextStep! ? 0 : 1,
-              child: Container(
-                child: buildCard(currentStepIndex),
+              dragEndPosition = details.globalPosition.dx;
+              final newLeftValue = dragEndPosition! - dragStartPosition;
+              if (isNotDragging) {
+                dragState = newLeftValue == 0
+                    ? 0
+                    : newLeftValue < 0
+                        ? 1
+                        : 2;
+                backScrollController = ScrollController(
+                  initialScrollOffset: scrollController.offset,
+                );
+                if (isDraggingToPrevious && currentStepIndex == 0) {
+                  setState(() => isShowingStartPage = true);
+                } else if (isDraggingToNext &&
+                    currentStepIndex == _cards.length - 1) {
+                  setState(() => isShowingEndPage = true);
+                }
+              }
+              setState(() => cardLeftValue = isDraggingToNext
+                  ? min(0, newLeftValue)
+                  : min(0, newLeftValue - cardWidth));
+            }),
+            onHorizontalDragEnd: (details) {
+              if (dragEndPosition != null) {
+                setState(() => changeStep(goToNextStep: isDraggingToNext));
+              }
+            },
+            child: Container(
+              color: SBBColors.transparent,
+              padding: frontCardPadding,
+              child: Opacity(
+                opacity: isAnimating && !goToNextStep! ? 0 : 1,
+                child: Container(
+                  child: buildCard(currentStepIndex),
+                ),
               ),
             ),
           ),

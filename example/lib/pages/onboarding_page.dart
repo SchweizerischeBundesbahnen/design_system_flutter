@@ -124,6 +124,13 @@ class DemoOnboardingBuilderDelegate extends SBBOnboardingBuilderDelegate {
         ),
         title: 'Page 1',
         content: 'Page 1',
+        customContent: Padding(
+          padding: const EdgeInsets.all(sbbDefaultSpacing),
+          child: SBBSecondaryButton(
+            label: 'Custom Action',
+            onPressed: () {},
+          ),
+        ),
       ),
       SBBOnboardingCard.extended(
         embeddedChild: _IllustrationWidget(),
