@@ -150,41 +150,45 @@ class _HorizontalCard extends StatelessWidget {
             child: embeddedChild!,
           ),
         Flexible(
-          child: MergeSemantics(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Text(
-                    title,
-                    style: SBBTextStyles.largeBold.copyWith(
-                      height: 22.0 / 18.0,
-                      color: SBBBaseStyle.of(context).themeValue(
-                        SBBColors.black,
-                        SBBColors.white,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              MergeSemantics(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      child: Text(
+                        title,
+                        style: SBBTextStyles.largeBold.copyWith(
+                          height: 22.0 / 18.0,
+                          color: SBBBaseStyle.of(context).themeValue(
+                            SBBColors.black,
+                            SBBColors.white,
+                          ),
+                        ),
+                        textAlign: TextAlign.center,
                       ),
                     ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Text(
-                    content,
-                    style: SBBTextStyles.mediumLight.copyWith(
-                      color: SBBBaseStyle.of(context).themeValue(
-                        SBBColors.black,
-                        SBBColors.white,
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Text(
+                        content,
+                        style: SBBTextStyles.mediumLight.copyWith(
+                          color: SBBBaseStyle.of(context).themeValue(
+                            SBBColors.black,
+                            SBBColors.white,
+                          ),
+                        ),
+                        textAlign: TextAlign.center,
                       ),
                     ),
-                    textAlign: TextAlign.center,
-                  ),
+                  ],
                 ),
-                if (customContent != null) customContent!,
-              ],
-            ),
+              ),
+              if (customContent != null) customContent!,
+            ],
           ),
         ),
       ],
