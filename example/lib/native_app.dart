@@ -41,8 +41,12 @@ class MyApp extends StatelessWidget {
       child: Consumer<AppState>(
         builder: (BuildContext context, AppState appState, _) {
           return MaterialApp(
-            theme: SBBTheme.light(),
-            darkTheme: SBBTheme.dark(),
+            theme: SBBTheme.light(
+              hostPlatform: HostPlatform.native,
+            ),
+            darkTheme: SBBTheme.dark(
+              hostPlatform: HostPlatform.native,
+            ),
             themeMode: appState.isDarkModeOn ? ThemeMode.dark : ThemeMode.light,
             home: Scaffold(
               appBar: SBBHeader(title: 'Design System Mobile'),
@@ -65,7 +69,8 @@ class MyApp extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             _DemoEntry('Icon', IconsPage()),
-                            _DemoEntry('Typography', TypographyPage(), isLastElement: true),
+                            _DemoEntry('Typography', TypographyPage(),
+                                isLastElement: true),
                           ],
                         ),
                       ),
@@ -80,11 +85,14 @@ class MyApp extends StatelessWidget {
                             _DemoEntry('Link', LinkPage()),
                             _DemoEntry('List Header', ListHeaderPage()),
                             _DemoEntry('List Item', ListItemPage()),
-                            _DemoEntry('Loading Indicator', LoadingIndicatorPage()),
+                            _DemoEntry(
+                                'Loading Indicator', LoadingIndicatorPage()),
                             _DemoEntry('Radio Button', RadiobuttonPage()),
-                            _DemoEntry('Segmented Button', SegmentedButtonPage()),
+                            _DemoEntry(
+                                'Segmented Button', SegmentedButtonPage()),
                             _DemoEntry('Select', SelectPage()),
-                            _DemoEntry('Textfield / Textarea', TextFieldPage(), isLastElement: true),
+                            _DemoEntry('Textfield / Textarea', TextFieldPage(),
+                                isLastElement: true),
                           ],
                         ),
                       ),
@@ -101,7 +109,8 @@ class MyApp extends StatelessWidget {
                             _DemoEntry('Modal', ModalPage()),
                             _DemoEntry('Toast', ToastPage()),
                             _DemoEntry('Onboarding', OnboardingPage()),
-                            _DemoEntry('Tab Bar', TabBarPage(), isLastElement: true),
+                            _DemoEntry('Tab Bar', TabBarPage(),
+                                isLastElement: true),
                           ],
                         ),
                       ),
