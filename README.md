@@ -46,13 +46,13 @@ General instructions on _how_ to contribute can be found under [Contributing](Co
 
 ## Authors
 
-* **Tran Hoang**
-* **Mosberger Dominik**
+* **Hoang Tran**
+* **Dominik Mosberger**
 * **Nicolas Vidoni**
-* **Schmucki Dominik**
-* **Raab Ulrich**
-* **Müller Patrice**
-* **Michael Moor**
+* **Dominik Schmucki**
+* **Ulrich Raab**
+* **Patrice Müller**
+* **Moor Michael**
 * **Loris Sorace**
 
 ## License
