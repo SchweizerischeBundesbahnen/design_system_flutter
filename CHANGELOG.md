@@ -74,6 +74,7 @@
 - `SBBHeader`: SBB Logo now excluded from semantics if `onPressedLogo` is `null`
 - `SBBModalSheet`: Fine line that sometimes was visible below the header is now gone
 - `SBBCheckboxListItem`: Added missing bottom padding for multi line without secondary label
+- `SBBIconTextButton`: Button is not clickable anymore when disabled
 
 ---
 
