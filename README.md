@@ -54,6 +54,7 @@ General instructions on _how_ to contribute can be found under [Contributing](Co
 * **Patrice Müller**
 * **Moor Michael**
 * **Loris Sorace**
+* **Cyrill Meyer**
 
 ## License
 

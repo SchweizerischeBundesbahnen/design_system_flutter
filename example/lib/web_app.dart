@@ -20,6 +20,7 @@ final _pages = {
   'Accordion': AccordionPage(),
   'Card': CardPage(),
   'Toast': ToastPage(),
+  'Status': StatusPage(),
 };
 
 String _nameToRoute(String name) =>

@@ -6,6 +6,7 @@
 
 ### Added
 
+* Added `SBBStatus` (for web)
 * Added `SBBToast` (for web)
 * Added `SBBLogo` (SBB Signet)
 * Added `SBBWebLogo` (for web)
