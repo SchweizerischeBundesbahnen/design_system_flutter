@@ -52,7 +52,7 @@ class _SBBIconTextButtonState extends State<SBBIconTextButton> {
             highlightColor: SBBColors.transparent,
             hoverColor: SBBColors.transparent,
             onFocusChange: (hasFocus) => setState(() => _hasFocus = hasFocus),
-            onTapDown: (details) => setState(() => _isPressed = true),
+            onTapDown: isEnabled ? (details) => setState(() => _isPressed = true) : null,
             onTap: isEnabled
                 ? () {
                     setState(() => _isPressed = false);
