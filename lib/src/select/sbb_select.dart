@@ -50,6 +50,7 @@ class SBBSelect<T> extends StatelessWidget {
   final T? value;
   final List<SelectMenuItem<T>> items;
   final ValueChanged<T?>? onChanged;
+
   /// only usable in web.
   final String? errorText;
 
@@ -80,97 +81,112 @@ class SBBSelect<T> extends StatelessWidget {
                 allowMultilineLabel: allowMultilineLabel,
               )
           : null,
-      child: Container(
-        height: 48.0,
-        color: SBBColors.transparent,
-        child: Column(
-          children: [
-            Expanded(
-              child: Row(
-                children: [
-                  SizedBox(width: sbbDefaultSpacing),
-                  if (icon != null)
-                    Padding(
-                      padding: const EdgeInsetsDirectional.only(
-                        end: sbbDefaultSpacing / 2,
-                      ),
-                      child: Icon(
-                        icon,
-                        color: enabled ? style.textField?.iconColor : style.textField?.iconColorDisabled,
-                      ),
-                    ),
-                  Expanded(
-                    child: value == null
-                        ? Text(
-                            label ?? hint ?? '',
-                            style: enabled ? style.textField?.placeholderTextStyle : style.textField?.placeholderTextStyleDisabled,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          )
-                        : Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: label != null ? MainAxisAlignment.start : MainAxisAlignment.center,
-                            children: [
-                              if (label != null)
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                    top: 5.0,
-                                    bottom: 2.0,
-                                  ),
-                                  child: Text(
-                                    label!,
-                                    style: enabled ? style.selectLabel?.textStyle : style.selectLabel?.textStyleDisabled,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                ),
-                              if (label == null)
-                                const SizedBox(
-                                  height: 0.0,
-                                ),
-                              Text(
-                                items.firstWhere((element) => element.value == value).label,
-                                style: enabled ? style.textField?.textStyle : style.textField?.textStyleDisabled,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ],
-                          ),
-                  ),
-                  Icon(
-                    SBBIcons.chevron_small_down_small,
-                    color: enabled ? style.textField?.iconColor : style.textField?.iconColorDisabled,
-                  ),
-                  const SizedBox(width: sbbDefaultSpacing / 2),
-                ],
-              ),
+      child: Column(
+        children: [
+          Container(
+            constraints: BoxConstraints(
+              minHeight: 48.0,
             ),
-            if (!isLastElement)
-              Divider(
-                indent: icon == null ? sbbDefaultSpacing : 48.0,
-              ),
-          ],
-        ),
+            color: SBBColors.transparent,
+            child: Row(
+              children: [
+                SizedBox(width: sbbDefaultSpacing),
+                if (icon != null)
+                  Padding(
+                    padding: const EdgeInsetsDirectional.only(
+                      end: sbbDefaultSpacing / 2,
+                    ),
+                    child: Icon(
+                      icon,
+                      color: enabled
+                          ? style.textField?.iconColor
+                          : style.textField?.iconColorDisabled,
+                    ),
+                  ),
+                Expanded(
+                  child: value == null
+                      ? Text(
+                          label ?? hint ?? '',
+                          style: enabled
+                              ? style.textField?.placeholderTextStyle
+                              : style.textField?.placeholderTextStyleDisabled,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        )
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: label != null
+                              ? MainAxisAlignment.start
+                              : MainAxisAlignment.center,
+                          children: [
+                            if (label != null)
+                              Padding(
+                                padding: const EdgeInsets.only(
+                                  top: 5.0,
+                                  bottom: 2.0,
+                                ),
+                                child: Text(
+                                  label!,
+                                  style: enabled
+                                      ? style.selectLabel?.textStyle
+                                      : style.selectLabel?.textStyleDisabled,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            if (label == null)
+                              const SizedBox(
+                                height: 0.0,
+                              ),
+                            Text(
+                              items
+                                  .firstWhere(
+                                      (element) => element.value == value)
+                                  .label,
+                              style: enabled
+                                  ? style.textField?.textStyle
+                                  : style.textField?.textStyleDisabled,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
+                ),
+                Icon(
+                  SBBIcons.chevron_small_down_small,
+                  color: enabled
+                      ? style.textField?.iconColor
+                      : style.textField?.iconColorDisabled,
+                ),
+                const SizedBox(width: sbbDefaultSpacing / 2),
+              ],
+            ),
+          ),
+          if (!isLastElement)
+            Divider(
+              indent: icon == null ? sbbDefaultSpacing : 48.0,
+            ),
+        ],
       ),
     );
   }
 
   Widget _buildThemedWeb(BuildContext context) {
     return SBBDropdownButton<T>(
-      key: key,
-      value: value,
-      items: items
-          .map((e) => SBBDropdownMenuItem<T>(
-                child: Text(e.label),
-                value: e.value,
-                onTap: onChanged != null ? () => onChanged!(e.value) : null,
-              ))
-          .toList(),
-      label: label ?? hint ?? '',
-      hint: hint != null ? Text(hint!) : null,
-      onChanged: onChanged,
-      errorText: errorText
-    ); // TODO build dropdown here and throw warning to use dropdown on web
+        key: key,
+        value: value,
+        items: items
+            .map((e) => SBBDropdownMenuItem<T>(
+                  child: Text(e.label),
+                  value: e.value,
+                  onTap: onChanged != null ? () => onChanged!(e.value) : null,
+                ))
+            .toList(),
+        label: label ?? hint ?? '',
+        hint: hint != null ? Text(hint!) : null,
+        onChanged: onChanged,
+        errorText:
+            errorText); // TODO build dropdown here and throw warning to use dropdown on web
   }
 
   static showMenu<T>({
@@ -292,9 +308,11 @@ class SBBMultiSelect<T> extends StatefulWidget {
                         onChanged: (checked) {
                           setModalState(() {
                             if (checked == true) {
-                              _selectedValues = List.from(_selectedValues)..add(entry.value.value);
+                              _selectedValues = List.from(_selectedValues)
+                                ..add(entry.value.value);
                             } else {
-                              _selectedValues = List.from(_selectedValues)..remove(entry.value.value);
+                              _selectedValues = List.from(_selectedValues)
+                                ..remove(entry.value.value);
                             }
                           });
                         },
@@ -311,7 +329,8 @@ class SBBMultiSelect<T> extends StatefulWidget {
                     sbbDefaultSpacing,
                   ),
                   child: SBBPrimaryButton(
-                    label: confirmButtonLabel ?? MaterialLocalizations.of(context).okButtonLabel,
+                    label: confirmButtonLabel ??
+                        MaterialLocalizations.of(context).okButtonLabel,
                     onPressed: isSelectionValid(values, _selectedValues)
                         ? () {
                             Navigator.of(context).pop();
@@ -360,67 +379,81 @@ class _SBBMultiSelectState<T> extends State<SBBMultiSelect<T>> {
               );
             }
           : null,
-      child: Container(
-        height: 48.0,
-        color: SBBColors.transparent,
-        child: Column(
-          children: [
-            Expanded(
-              child: Row(
-                children: [
-                  const SizedBox(width: sbbDefaultSpacing),
-                  if (widget.icon != null)
-                    Padding(
-                      padding: const EdgeInsetsDirectional.only(
-                        end: sbbDefaultSpacing / 2,
-                      ),
-                      child: Icon(
-                        widget.icon,
-                        color: enabled ? style.textField?.iconColor : style.textField?.iconColorDisabled,
-                      ),
-                    ),
-                  Expanded(
-                    child: widget.values.isEmpty
-                        ? Text(
-                            widget.label,
-                            style: enabled ? style.textField?.placeholderTextStyle : style.textField?.placeholderTextStyleDisabled,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          )
-                        : Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const SizedBox(height: 5.0),
-                              Text(
-                                widget.label,
-                                style: enabled ? style.selectLabel?.textStyle : style.selectLabel?.textStyleDisabled,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              const SizedBox(height: 3.0),
-                              Text(
-                                widget.items.where((element) => widget.values.contains(element.value)).map((element) => element.label).join(', '),
-                                style: enabled ? style.textField?.textStyle : style.textField?.textStyleDisabled,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ],
-                          ),
-                  ),
-                  Icon(
-                    SBBIcons.chevron_small_down_small,
-                    color: enabled ? style.textField?.iconColor : style.textField?.iconColorDisabled,
-                  ),
-                  const SizedBox(width: sbbDefaultSpacing / 2),
-                ],
-              ),
+      child: Column(
+        children: [
+          Container(
+            constraints: BoxConstraints(
+              minHeight: 48.0,
             ),
-            if (!widget.isLastElement)
-              Divider(
-                indent: widget.icon == null ? sbbDefaultSpacing : 48.0,
-              ),
-          ],
-        ),
+            color: SBBColors.transparent,
+            child: Row(
+              children: [
+                const SizedBox(width: sbbDefaultSpacing),
+                if (widget.icon != null)
+                  Padding(
+                    padding: const EdgeInsetsDirectional.only(
+                      end: sbbDefaultSpacing / 2,
+                    ),
+                    child: Icon(
+                      widget.icon,
+                      color: enabled
+                          ? style.textField?.iconColor
+                          : style.textField?.iconColorDisabled,
+                    ),
+                  ),
+                Expanded(
+                  child: widget.values.isEmpty
+                      ? Text(
+                          widget.label,
+                          style: enabled
+                              ? style.textField?.placeholderTextStyle
+                              : style.textField?.placeholderTextStyleDisabled,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        )
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 5.0),
+                            Text(
+                              widget.label,
+                              style: enabled
+                                  ? style.selectLabel?.textStyle
+                                  : style.selectLabel?.textStyleDisabled,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            const SizedBox(height: 3.0),
+                            Text(
+                              widget.items
+                                  .where((element) =>
+                                      widget.values.contains(element.value))
+                                  .map((element) => element.label)
+                                  .join(', '),
+                              style: enabled
+                                  ? style.textField?.textStyle
+                                  : style.textField?.textStyleDisabled,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
+                ),
+                Icon(
+                  SBBIcons.chevron_small_down_small,
+                  color: enabled
+                      ? style.textField?.iconColor
+                      : style.textField?.iconColorDisabled,
+                ),
+                const SizedBox(width: sbbDefaultSpacing / 2),
+              ],
+            ),
+          ),
+          if (!widget.isLastElement)
+            Divider(
+              indent: widget.icon == null ? sbbDefaultSpacing : 48.0,
+            ),
+        ],
       ),
     );
   }
