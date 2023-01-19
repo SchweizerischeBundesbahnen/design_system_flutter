@@ -232,7 +232,8 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>>
   }
 
   void _updateWebOverlay({String? query, bool metricsChanged = false}) {
-    final bool isWeb = SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
+    final bool isWeb =
+        SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
 
     filteredSuggestions = getSuggestions(
       widget.suggestions,
@@ -436,9 +437,14 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>>
                     children: [
                       if (widget.favorites.isNotEmpty && widget.enableFavorites)
                         Container(
-                          color: style.themeValue(SBBColors.milk, SBBColors.black),
+                          color: style.themeValue(
+                            SBBColors.milk,
+                            SBBColors.black,
+                          ),
                           height: 16.0,
                         ),
+                      if (widget.favorites.isNotEmpty && widget.enableFavorites)
+                        const Divider(),
                       if (widget.favorites.isNotEmpty && widget.enableFavorites)
                         ...widget.favorites.map(
                           (T favorite) {
@@ -475,9 +481,13 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>>
                           },
                         ),
                       Container(
-                        color: style.themeValue(SBBColors.milk, SBBColors.black),
+                        color: style.themeValue(
+                          SBBColors.milk,
+                          SBBColors.black,
+                        ),
                         height: 16.0,
                       ),
+                      if (filteredSuggestions.isNotEmpty) const Divider(),
                       ...filteredSuggestions.map(
                         (T suggestion) {
                           return Row(
@@ -541,7 +551,8 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>>
   }
 
   void _updateOverlay({String? query, bool metricsChanged = false}) {
-    final bool isWeb = SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
+    final bool isWeb =
+        SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
     if (isWeb) {
       _updateWebOverlay(query: query, metricsChanged: metricsChanged);
     } else {
@@ -554,12 +565,15 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>>
     required VoidCallback onPressed,
     required VoidCallback onCallToAction,
   }) {
-    return SBBListItem(
-      title: item.toString(),
-      leadingIcon: widget.suggestionIcon,
-      trailingIcon: widget.enableFavorites ? SBBIcons.star_small : null,
-      onPressed: onPressed,
-      onCallToAction: onCallToAction,
+    return Container(
+      color: SBBColors.white,
+      child: SBBListItem(
+        title: item.toString(),
+        leadingIcon: widget.suggestionIcon,
+        trailingIcon: widget.enableFavorites ? SBBIcons.star_small : null,
+        onPressed: onPressed,
+        onCallToAction: onCallToAction,
+      ),
     );
   }
 

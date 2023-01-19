@@ -26,7 +26,19 @@ class _AutocompletionPageState extends State<AutocompletionPage> {
       itemSubmitted: (String submitted) {
         debugPrint('Item submitted: $submitted');
       },
-      suggestions: ['aaa', 'aaa1', 'aaa2', 'aaa3', 'aaa4', 'aabb', 'bbb', 'bbcc', 'ccc', 'ccdd', 'eee'],
+      suggestions: [
+        'aaa',
+        'aaa1',
+        'aaa2',
+        'aaa3',
+        'aaa4',
+        'aabb',
+        'bbb',
+        'bbcc',
+        'ccc',
+        'ccdd',
+        'eee',
+      ],
       suggestionIcon: SBBIcons.train_station_small,
       enableFavorites: true,
       itemAddedToFavorites: (String item) {
