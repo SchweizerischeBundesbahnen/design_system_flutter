@@ -419,6 +419,14 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>>
 
         listSuggestionsEntry = OverlayEntry(
           builder: (BuildContext context) {
+            final backgroundColor = style.themeValue(
+              SBBColors.milk,
+              SBBColors.black,
+            );
+            final optionColor = style.themeValue(
+              SBBColors.white,
+              SBBColors.charcoal,
+            );
             return Positioned(
               width: MediaQuery.of(context).size.width,
               height: overlayHeight,
@@ -430,17 +438,14 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>>
                   padding: EdgeInsets.symmetric(
                     horizontal: textFieldGlobalPosition.dx,
                   ),
-                  color: SBBColors.milk,
+                  color: backgroundColor,
                   child: ListView(
                     padding: EdgeInsets.zero,
                     shrinkWrap: true,
                     children: [
                       if (widget.favorites.isNotEmpty && widget.enableFavorites)
                         Container(
-                          color: style.themeValue(
-                            SBBColors.milk,
-                            SBBColors.black,
-                          ),
+                          color: backgroundColor,
                           height: 16.0,
                         ),
                       if (widget.favorites.isNotEmpty && widget.enableFavorites)
@@ -448,75 +453,65 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>>
                       if (widget.favorites.isNotEmpty && widget.enableFavorites)
                         ...widget.favorites.map(
                           (T favorite) {
-                            return Row(
-                              children: [
-                                Expanded(
-                                  child: _createListItem(
-                                    item: favorite,
-                                    onPressed: () {
-                                      setState(
-                                        () {
-                                          final String newText =
-                                              favorite.toString();
-                                          _textField.controller?.text = newText;
-                                          if (widget.submitOnSuggestionTap) {
-                                            _textField.focusNode?.unfocus();
-                                            widget.itemSubmitted(favorite);
-                                            if (widget.clearOnSubmit) {
-                                              clear();
-                                            }
-                                          } else {
-                                            _textChanged?.call(newText);
-                                          }
-                                        },
-                                      );
-                                    },
-                                    onCallToAction: () {
-                                      widget.itemRemovedFromFavorites(favorite);
-                                    },
-                                  ),
-                                ),
-                              ],
-                            );
-                          },
-                        ),
-                      Container(
-                        color: style.themeValue(
-                          SBBColors.milk,
-                          SBBColors.black,
-                        ),
-                        height: 16.0,
-                      ),
-                      if (filteredSuggestions.isNotEmpty) const Divider(),
-                      ...filteredSuggestions.map(
-                        (T suggestion) {
-                          return Row(
-                            children: [
-                              Expanded(
-                                child: _createListItem(
-                                  item: suggestion,
-                                  onPressed: () {
-                                    setState(() {
+                            return Container(
+                              color: optionColor,
+                              child: _createListItem(
+                                item: favorite,
+                                onPressed: () {
+                                  setState(
+                                    () {
                                       final String newText =
-                                          suggestion.toString();
+                                          favorite.toString();
                                       _textField.controller?.text = newText;
                                       if (widget.submitOnSuggestionTap) {
                                         _textField.focusNode?.unfocus();
-                                        widget.itemSubmitted(suggestion);
+                                        widget.itemSubmitted(favorite);
                                         if (widget.clearOnSubmit) {
                                           clear();
                                         }
                                       } else {
                                         _textChanged?.call(newText);
                                       }
-                                    });
-                                  },
-                                  onCallToAction: () {
-                                    widget.itemAddedToFavorites(suggestion);
-                                  },
-                                ),
-                              )
-                            ],
+                                    },
+                                  );
+                                },
+                                onCallToAction: () {
+                                  widget.itemRemovedFromFavorites(favorite);
+                                },
+                              ),
+                            );
+                          },
+                        ),
+                      Container(
+                        color: backgroundColor,
+                        height: 16.0,
+                      ),
+                      if (filteredSuggestions.isNotEmpty) const Divider(),
+                      ...filteredSuggestions.map(
+                        (T suggestion) {
+                          return Container(
+                            color: optionColor,
+                            child: _createListItem(
+                              item: suggestion,
+                              onPressed: () {
+                                setState(() {
+                                  final String newText = suggestion.toString();
+                                  _textField.controller?.text = newText;
+                                  if (widget.submitOnSuggestionTap) {
+                                    _textField.focusNode?.unfocus();
+                                    widget.itemSubmitted(suggestion);
+                                    if (widget.clearOnSubmit) {
+                                      clear();
+                                    }
+                                  } else {
+                                    _textChanged?.call(newText);
+                                  }
+                                });
+                              },
+                              onCallToAction: () {
+                                widget.itemAddedToFavorites(suggestion);
+                              },
+                            ),
                           );
                         },
                       ),
@@ -565,15 +560,12 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>>
     required VoidCallback onPressed,
     required VoidCallback onCallToAction,
   }) {
-    return Container(
-      color: SBBColors.white,
-      child: SBBListItem(
-        title: item.toString(),
-        leadingIcon: widget.suggestionIcon,
-        trailingIcon: widget.enableFavorites ? SBBIcons.star_small : null,
-        onPressed: onPressed,
-        onCallToAction: onCallToAction,
-      ),
+    return SBBListItem(
+      title: item.toString(),
+      leadingIcon: widget.suggestionIcon,
+      trailingIcon: widget.enableFavorites ? SBBIcons.star_small : null,
+      onPressed: onPressed,
+      onCallToAction: onCallToAction,
     );
   }
 

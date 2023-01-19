@@ -59,7 +59,10 @@ class _AutocompletionPageState extends State<AutocompletionPage> {
     final style = SBBBaseStyle.of(context);
     return SingleChildScrollView(
       child: Container(
-        color: style.themeValue(SBBColors.white, SBBColors.black),
+        color: style.themeValue(
+          SBBColors.white,
+          SBBColors.charcoal,
+        ),
         child: _autocompletion,
       ),
     );
