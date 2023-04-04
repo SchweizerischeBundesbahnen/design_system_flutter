@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:collection/collection.dart';
 
 import '../../design_system_flutter.dart';
 import '../sbb_internal.dart';
@@ -61,6 +62,7 @@ class SBBSegmentedButton extends StatefulWidget {
           selectedStateIndex: selectedStateIndex,
           backgroundColor: const Color(0xFFD30000),
           selectedColor: SBBColors.red,
+          selectedBorderColor: SBBColors.red150,
           textColor: SBBColors.white,
           borderColor: SBBColors.transparent,
           boxShadow: SBBInternal.defaultRedBoxShadow,
@@ -78,6 +80,7 @@ class SBBSegmentedButton extends StatefulWidget {
           selectedStateIndex: selectedStateIndex,
           backgroundColor: const Color(0xFFD30000),
           selectedColor: SBBColors.red,
+          selectedBorderColor: SBBColors.red150,
           iconColor: SBBColors.white,
           borderColor: SBBColors.transparent,
           boxShadow: SBBInternal.defaultRedBoxShadow,
@@ -90,6 +93,7 @@ class SBBSegmentedButton extends StatefulWidget {
     required int selectedStateIndex,
     Color? backgroundColor,
     Color? selectedColor,
+    Color? selectedBorderColor,
     Color? textColor,
     Color? borderColor,
     List<BoxShadow>? boxShadow,
@@ -97,20 +101,25 @@ class SBBSegmentedButton extends StatefulWidget {
   }) : this.custom(
           key: key,
           widgetBuilders: values
-              .map((value) => (BuildContext context) {
-                    final style = SBBControlStyles.of(context).segmentedButton;
-                    return Text(
-                      // AutoSizeText
-                      value,
-                      maxLines: 1,
-                      style: textColor == null ? style?.textStyle : style?.textStyle?.copyWith(color: textColor),
-                      //minFontSize: 1,
-                    );
-                  })
+              .map(
+                (value) => (BuildContext context) {
+                  final style = SBBControlStyles.of(context).segmentedButton;
+                  return Text(
+                    // AutoSizeText
+                    value,
+                    maxLines: 1,
+                    style: textColor == null
+                        ? style?.textStyle
+                        : style?.textStyle?.copyWith(color: textColor),
+                    //minFontSize: 1,
+                  );
+                },
+              )
               .toList(),
           selectedStateIndex: selectedStateIndex,
           backgroundColor: backgroundColor,
           selectedColor: selectedColor,
+          selectedBorderColor: selectedBorderColor,
           borderColor: borderColor,
           boxShadow: boxShadow,
           selectedIndexChanged: selectedIndexChanged,
@@ -122,6 +131,7 @@ class SBBSegmentedButton extends StatefulWidget {
     required int selectedStateIndex,
     Color? backgroundColor,
     Color? selectedColor,
+    Color? selectedBorderColor,
     Color? iconColor,
     Color? borderColor,
     List<BoxShadow>? boxShadow,
@@ -137,6 +147,7 @@ class SBBSegmentedButton extends StatefulWidget {
           selectedStateIndex: selectedStateIndex,
           backgroundColor: backgroundColor,
           selectedColor: selectedColor,
+          selectedBorderColor: selectedBorderColor,
           borderColor: borderColor,
           boxShadow: boxShadow,
           selectedIndexChanged: selectedIndexChanged,
@@ -148,6 +159,7 @@ class SBBSegmentedButton extends StatefulWidget {
     required this.selectedStateIndex,
     this.backgroundColor,
     this.selectedColor,
+    this.selectedBorderColor,
     this.borderColor,
     this.boxShadow,
     required this.selectedIndexChanged,
@@ -158,6 +170,7 @@ class SBBSegmentedButton extends StatefulWidget {
   final int selectedStateIndex;
   final Color? backgroundColor;
   final Color? selectedColor;
+  final Color? selectedBorderColor;
   final Color? borderColor;
   final List<BoxShadow>? boxShadow;
   final ValueChanged<int> selectedIndexChanged;
@@ -169,28 +182,19 @@ class SBBSegmentedButton extends StatefulWidget {
 class _SegmentedButton extends State<SBBSegmentedButton> {
   static const _borderRadius = const BorderRadius.all(Radius.circular(22));
 
-  SBBSegmentedButtonStyle? get style => SBBControlStyles.of(context).segmentedButton;
+  SBBSegmentedButtonStyle? get style =>
+      SBBControlStyles.of(context).segmentedButton;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: SBBInternal.defaultButtonHeight,
-      child: Container(
-        decoration: BoxDecoration(
-          color: widget.backgroundColor ?? style?.backgroundColor,
-          border: Border.all(color: (widget.borderColor ?? style?.borderColor)!),
-          borderRadius: _borderRadius,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(1.0),
-          child: Stack(
-            children: [
-              _buildBackgroundLayer(),
-              _buildIndicatorLayer(),
-              _buildForegroundLayer(),
-            ],
-          ),
-        ),
+      child: Stack(
+        children: [
+          _buildBackgroundLayer(),
+          _buildIndicatorLayer(),
+          _buildForegroundLayer(),
+        ],
       ),
     );
   }
@@ -200,22 +204,37 @@ class _SegmentedButton extends State<SBBSegmentedButton> {
     for (var i = 0; i < widget.widgetBuilders.length; i++) {
       children.add(
         Expanded(
-          child: Padding(
-            padding: const EdgeInsets.all(1.0),
-            child: Material(
-              color: SBBColors.transparent,
-              child: InkWell(
-                customBorder: const RoundedRectangleBorder(
-                  borderRadius: _borderRadius,
-                ),
-                onTap: i != widget.selectedStateIndex ? () => widget.selectedIndexChanged(i) : null,
+          child: Material(
+            color: SBBColors.transparent,
+            child: InkWell(
+              customBorder: const RoundedRectangleBorder(
+                borderRadius: _borderRadius,
               ),
+              onTap: i != widget.selectedStateIndex
+                  ? () => widget.selectedIndexChanged(i)
+                  : null,
             ),
           ),
         ),
       );
     }
-    return ExcludeSemantics(child: Row(children: children));
+    return ExcludeSemantics(
+      child: Stack(
+        children: [
+          Container(
+            margin: const EdgeInsets.all(1.0),
+            decoration: BoxDecoration(
+              color: widget.backgroundColor ?? style?.backgroundColor,
+              border: Border.all(
+                color: (widget.borderColor ?? style?.borderColor)!,
+              ),
+              borderRadius: _borderRadius,
+            ),
+          ),
+          Row(children: children),
+        ],
+      ),
+    );
   }
 
   Widget _buildIndicatorLayer() {
@@ -227,23 +246,28 @@ class _SegmentedButton extends State<SBBSegmentedButton> {
               AnimatedContainer(
                 duration: kThemeAnimationDuration,
                 curve: Curves.easeInOut,
-                width: constraints.maxWidth / widget.widgetBuilders.length * widget.selectedStateIndex + 1,
+                width: constraints.maxWidth /
+                    widget.widgetBuilders.length *
+                    widget.selectedStateIndex,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 1.0),
-                child: Container(
-                  width: constraints.maxWidth / widget.widgetBuilders.length - 2,
-                  decoration: BoxDecoration(
-                    borderRadius: _borderRadius,
-                    boxShadow: widget.boxShadow ?? style?.boxShadow,
+              Container(
+                width: constraints.maxWidth / widget.widgetBuilders.length,
+                decoration: BoxDecoration(
+                  borderRadius: _borderRadius,
+                  boxShadow: widget.boxShadow ?? style?.boxShadow,
+                  border: Border.all(
+                    color: (widget.selectedBorderColor ??
+                        style?.selectedBorderColor)!,
                   ),
-                  child: Material(
+                ),
+                child: Material(
+                  borderRadius: _borderRadius,
+                  color: widget.selectedColor ?? style?.selectedColor,
+                  child: InkWell(
                     borderRadius: _borderRadius,
-                    color: widget.selectedColor ?? style?.selectedColor,
-                    child: InkWell(
-                      borderRadius: _borderRadius,
-                      onTap: () => widget.selectedIndexChanged(widget.selectedStateIndex),
-                    ),
+                    onTap: () {
+                      widget.selectedIndexChanged(widget.selectedStateIndex);
+                    },
                   ),
                 ),
               ),
@@ -255,23 +279,24 @@ class _SegmentedButton extends State<SBBSegmentedButton> {
   }
 
   Widget _buildForegroundLayer() {
+    final loc = Localizations.of(context, MaterialLocalizations);
     return IgnorePointer(
       ignoringSemantics: false,
       child: Row(
-        children: widget.widgetBuilders.asMap().entries.map((element) {
+        children: widget.widgetBuilders.mapIndexed((i, element) {
           return Expanded(
             child: Semantics(
               focusable: true,
-              selected: element.key == widget.selectedStateIndex,
-              button: element.key != widget.selectedStateIndex,
-              hint: Localizations.of(context, MaterialLocalizations).tabLabel(
-                tabIndex: element.key + 1,
+              selected: i == widget.selectedStateIndex,
+              button: i != widget.selectedStateIndex,
+              hint: loc.tabLabel(
+                tabIndex: i + 1,
                 tabCount: widget.widgetBuilders.length,
               ),
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 4),
                 alignment: Alignment.center,
-                child: element.value(context),
+                child: element(context),
               ),
             ),
           );
