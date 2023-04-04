@@ -52,8 +52,9 @@ General instructions on _how_ to contribute can be found under [Contributing](Co
 * **Dominik Schmucki**
 * **Ulrich Raab**
 * **Patrice Müller**
-* **Moor Michael**
+* **Michael Moor**
 * **Loris Sorace**
+* **Cyrill Meyer**
 
 ## License
 
