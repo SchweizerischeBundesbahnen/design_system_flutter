@@ -20,6 +20,7 @@ class SBBOnboarding extends StatefulWidget {
     required this.backSemanticsLabel,
     required this.forwardSemanticsLabel,
     Key? key,
+    this.blocking = false,
   }) : super(key: key);
 
   final SBBOnboardingBuilderDelegate builderDelegate;
@@ -27,6 +28,7 @@ class SBBOnboarding extends StatefulWidget {
   final String cancelLabel;
   final String backSemanticsLabel;
   final String forwardSemanticsLabel;
+  final bool blocking;
 
   @override
   _SBBOnboardingState createState() => _SBBOnboardingState();
@@ -90,6 +92,9 @@ class _SBBOnboardingState extends State<SBBOnboarding>
   SBBControlStyles get controlStyle => Theme.of(context).extension()!;
 
   Orientation get orientation => MediaQuery.of(context).orientation;
+
+  bool get isBlocking =>
+      widget.blocking && !isShowingStartPage && !isShowingEndPage;
 
   @override
   void setState(VoidCallback fn) {
@@ -251,7 +256,9 @@ class _SBBOnboardingState extends State<SBBOnboarding>
                               SizedBox(width: parentPadding),
                               SBBIconButtonLarge(
                                 semantics: widget.backSemanticsLabel,
-                                onPressed: () => changeStep(goToNextStep: false),
+                                onPressed: () {
+                                  changeStep(goToNextStep: false);
+                                },
                                 icon: SBBIcons.chevron_small_left_small,
                               ),
                               const Spacer(),
@@ -319,21 +326,6 @@ class _SBBOnboardingState extends State<SBBOnboarding>
               ),
             if (orientation == Orientation.landscape) ...[
               Semantics(
-                sortKey: OrdinalSortKey(0),
-                child: Align(
-                  alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: EdgeInsets.only(left: frontCardPadding.top),
-                    child: SBBIconButtonLarge(
-                      semantics: widget.backSemanticsLabel,
-                      onPressed: () => changeStep(goToNextStep: false),
-                      icon: SBBIcons.chevron_small_left_small,
-                      buttonStyle: negativeButtonStyle,
-                    ),
-                  ),
-                ),
-              ),
-              Semantics(
                 sortKey: OrdinalSortKey(3),
                 child: Align(
                   alignment: Alignment.topRight,
@@ -362,6 +354,24 @@ class _SBBOnboardingState extends State<SBBOnboarding>
                       onPressed: () => changeStep(goToNextStep: true),
                       icon: SBBIcons.chevron_small_right_small,
                       buttonStyle: negativeButtonStyle,
+                    ),
+                  ),
+                ),
+              ),
+              BlockSemantics(
+                blocking: isBlocking,
+                child: Semantics(
+                  sortKey: OrdinalSortKey(0),
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: Padding(
+                      padding: EdgeInsets.only(left: frontCardPadding.top),
+                      child: SBBIconButtonLarge(
+                        semantics: widget.backSemanticsLabel,
+                        onPressed: () => changeStep(goToNextStep: false),
+                        icon: SBBIcons.chevron_small_left_small,
+                        buttonStyle: negativeButtonStyle,
+                      ),
                     ),
                   ),
                 ),
@@ -495,47 +505,50 @@ class _SBBOnboardingState extends State<SBBOnboarding>
                 : isDraggingToNext && !isAnimating && !isShowingEndPage
                     ? cardLeftValue
                     : null,
-        child: Semantics(
-          sortKey: OrdinalSortKey(1),
-          child: GestureDetector(
-            onHorizontalDragUpdate: (details) => setState(() {
-              if (cardLeftValue == null) {
-                setState(() => dragStartPosition = details.globalPosition.dx);
-              }
-              dragEndPosition = details.globalPosition.dx;
-              final newLeftValue = dragEndPosition! - dragStartPosition;
-              if (isNotDragging) {
-                dragState = newLeftValue == 0
-                    ? 0
-                    : newLeftValue < 0
-                        ? 1
-                        : 2;
-                backScrollController = ScrollController(
-                  initialScrollOffset: scrollController.offset,
-                );
-                if (isDraggingToPrevious && currentStepIndex == 0) {
-                  setState(() => isShowingStartPage = true);
-                } else if (isDraggingToNext &&
-                    currentStepIndex == _cards.length - 1) {
-                  setState(() => isShowingEndPage = true);
+        child: BlockSemantics(
+          blocking: isBlocking && orientation == Orientation.portrait,
+          child: Semantics(
+            sortKey: OrdinalSortKey(1),
+            child: GestureDetector(
+              onHorizontalDragUpdate: (details) => setState(() {
+                if (cardLeftValue == null) {
+                  setState(() => dragStartPosition = details.globalPosition.dx);
                 }
-              }
-              setState(() => cardLeftValue = isDraggingToNext
-                  ? min(0, newLeftValue)
-                  : min(0, newLeftValue - cardWidth));
-            }),
-            onHorizontalDragEnd: (details) {
-              if (dragEndPosition != null) {
-                setState(() => changeStep(goToNextStep: isDraggingToNext));
-              }
-            },
-            child: Container(
-              color: SBBColors.transparent,
-              padding: frontCardPadding,
-              child: Opacity(
-                opacity: isAnimating && !goToNextStep! ? 0 : 1,
-                child: Container(
-                  child: buildCard(currentStepIndex),
+                dragEndPosition = details.globalPosition.dx;
+                final newLeftValue = dragEndPosition! - dragStartPosition;
+                if (isNotDragging) {
+                  dragState = newLeftValue == 0
+                      ? 0
+                      : newLeftValue < 0
+                          ? 1
+                          : 2;
+                  backScrollController = ScrollController(
+                    initialScrollOffset: scrollController.offset,
+                  );
+                  if (isDraggingToPrevious && currentStepIndex == 0) {
+                    setState(() => isShowingStartPage = true);
+                  } else if (isDraggingToNext &&
+                      currentStepIndex == _cards.length - 1) {
+                    setState(() => isShowingEndPage = true);
+                  }
+                }
+                setState(() => cardLeftValue = isDraggingToNext
+                    ? min(0, newLeftValue)
+                    : min(0, newLeftValue - cardWidth));
+              }),
+              onHorizontalDragEnd: (details) {
+                if (dragEndPosition != null) {
+                  setState(() => changeStep(goToNextStep: isDraggingToNext));
+                }
+              },
+              child: Container(
+                color: SBBColors.transparent,
+                padding: frontCardPadding,
+                child: Opacity(
+                  opacity: isAnimating && !goToNextStep! ? 0 : 1,
+                  child: Container(
+                    child: buildCard(currentStepIndex),
+                  ),
                 ),
               ),
             ),
