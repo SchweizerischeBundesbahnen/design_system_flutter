@@ -9,6 +9,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     this.radioButton,
     this.textField,
     this.segmentedButton,
+    this.redSegmentedButton,
     this.listItem,
     this.selectLabel,
     this.headerBackgroundColor,
@@ -52,6 +53,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
         radioButton: SBBControlStyle.$default(baseStyle: baseStyle),
         textField: SBBTextFieldStyle.$default(baseStyle: baseStyle),
         segmentedButton: SBBSegmentedButtonStyle.$default(baseStyle: baseStyle),
+        redSegmentedButton: SBBSegmentedButtonStyle.red(baseStyle: baseStyle),
         selectLabel: SBBTextStyle(
           textStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.helpersLabel, color: baseStyle.themeValue(SBBColors.metal, SBBColors.cement)),
           textStyleDisabled: baseStyle.themedTextStyle(textStyle: SBBTextStyles.helpersLabel, color: SBBColors.metal),
@@ -116,6 +118,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   final SBBControlStyle? radioButton;
   final SBBTextFieldStyle? textField;
   final SBBSegmentedButtonStyle? segmentedButton;
+  final SBBSegmentedButtonStyle? redSegmentedButton;
   final SBBListItemStyle? listItem;
   final SBBTextStyle? selectLabel;
 
@@ -194,6 +197,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     SBBControlStyle? radioButton,
     SBBTextFieldStyle? textField,
     SBBSegmentedButtonStyle? segmentedButton,
+    SBBSegmentedButtonStyle? redSegmentedButton,
     SBBListItemStyle? listItem,
     SBBTextStyle? selectLabel,
     Color? headerBackgroundColor,
@@ -233,6 +237,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
         radioButton: radioButton ?? this.radioButton,
         textField: textField ?? this.textField,
         segmentedButton: segmentedButton ?? this.segmentedButton,
+        redSegmentedButton: redSegmentedButton ?? this.redSegmentedButton,
         listItem: listItem ?? this.listItem,
         selectLabel: selectLabel ?? this.selectLabel,
         headerBackgroundColor: headerBackgroundColor ?? this.headerBackgroundColor,
@@ -276,6 +281,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
       radioButton: radioButton?.lerp(other.radioButton, t),
       textField: textField?.lerp(other.textField, t),
       segmentedButton: segmentedButton?.lerp(other.segmentedButton, t),
+      redSegmentedButton: redSegmentedButton?.lerp(other.redSegmentedButton, t),
       listItem: listItem?.lerp(other.listItem, t),
       selectLabel: selectLabel?.lerp(other.selectLabel, t),
       headerBackgroundColor: Color.lerp(headerBackgroundColor, other.headerBackgroundColor, t),
@@ -321,6 +327,7 @@ extension SBBControlStylesExtension on SBBControlStyles? {
       radioButton: this!.radioButton.merge(other?.radioButton),
       textField: this!.textField.merge(other?.textField),
       segmentedButton: this!.segmentedButton.merge(other?.segmentedButton),
+      redSegmentedButton: this!.redSegmentedButton.merge(other?.redSegmentedButton),
       listItem: this!.listItem.merge(other?.listItem),
       selectLabel: this!.selectLabel.merge(other?.selectLabel),
       headerBackgroundColor: this!.headerBackgroundColor ?? other?.headerBackgroundColor,

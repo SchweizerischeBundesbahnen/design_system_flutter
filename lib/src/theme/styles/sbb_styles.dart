@@ -8,6 +8,7 @@ export 'src/sbb_control_style.dart';
 export 'src/sbb_control_styles.dart';
 export 'src/sbb_list_item_style.dart';
 export 'src/sbb_segmented_button_style.dart';
+export 'src/sbb_segmented_button_inner_style.dart';
 export 'src/sbb_text_field_style.dart';
 export 'src/sbb_text_style.dart';
 
