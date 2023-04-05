@@ -4,6 +4,13 @@ import 'package:collection/collection.dart';
 import '../../design_system_flutter.dart';
 import '../sbb_internal.dart';
 
+typedef TextStyleWidgetBuilder = Widget Function(
+  BuildContext context,
+  TextStyle? textStyle,
+);
+
+enum SelectedButtonColorType { white, red }
+
 /// SBB Segmented Button. Use according to documentation.
 ///
 /// See also:
@@ -25,6 +32,7 @@ class SBBSegmentedButton extends StatefulWidget {
           values: values,
           selectedStateIndex: selectedStateIndex,
           selectedIndexChanged: selectedIndexChanged,
+          colorType: SelectedButtonColorType.white,
         );
 
   SBBSegmentedButton.text({
@@ -37,6 +45,7 @@ class SBBSegmentedButton extends StatefulWidget {
           values: values,
           selectedStateIndex: selectedStateIndex,
           selectedIndexChanged: selectedIndexChanged,
+          colorType: SelectedButtonColorType.white,
         );
 
   SBBSegmentedButton.icon({
@@ -44,11 +53,14 @@ class SBBSegmentedButton extends StatefulWidget {
     required Map<IconData, String> icons,
     required int selectedStateIndex,
     required ValueChanged<int> selectedIndexChanged,
+    bool withText = false,
   }) : this.iconCustom(
           key: key,
           icons: icons,
           selectedStateIndex: selectedStateIndex,
           selectedIndexChanged: selectedIndexChanged,
+          withText: withText,
+          colorType: SelectedButtonColorType.white,
         );
 
   SBBSegmentedButton.redText({
@@ -63,10 +75,10 @@ class SBBSegmentedButton extends StatefulWidget {
           backgroundColor: const Color(0xFFD30000),
           selectedColor: SBBColors.red,
           selectedBorderColor: SBBColors.red150,
-          textColor: SBBColors.white,
           borderColor: SBBColors.transparent,
           boxShadow: SBBInternal.defaultRedBoxShadow,
           selectedIndexChanged: selectedIndexChanged,
+          colorType: SelectedButtonColorType.red,
         );
 
   SBBSegmentedButton.redIcon({
@@ -74,10 +86,12 @@ class SBBSegmentedButton extends StatefulWidget {
     required Map<IconData, String> icons,
     required int selectedStateIndex,
     required ValueChanged<int> selectedIndexChanged,
+    bool withText = false,
   }) : this.iconCustom(
           key: key,
           icons: icons,
           selectedStateIndex: selectedStateIndex,
+          withText: withText,
           backgroundColor: const Color(0xFFD30000),
           selectedColor: SBBColors.red,
           selectedBorderColor: SBBColors.red150,
@@ -85,6 +99,7 @@ class SBBSegmentedButton extends StatefulWidget {
           borderColor: SBBColors.transparent,
           boxShadow: SBBInternal.defaultRedBoxShadow,
           selectedIndexChanged: selectedIndexChanged,
+          colorType: SelectedButtonColorType.red,
         );
 
   SBBSegmentedButton.textCustom({
@@ -94,26 +109,19 @@ class SBBSegmentedButton extends StatefulWidget {
     Color? backgroundColor,
     Color? selectedColor,
     Color? selectedBorderColor,
-    Color? textColor,
     Color? borderColor,
     List<BoxShadow>? boxShadow,
     required ValueChanged<int> selectedIndexChanged,
+    required SelectedButtonColorType colorType,
   }) : this.custom(
           key: key,
           widgetBuilders: values
-              .map(
-                (value) => (BuildContext context) {
-                  final style = SBBControlStyles.of(context).segmentedButton;
-                  return Text(
-                    // AutoSizeText
-                    value,
-                    maxLines: 1,
-                    style: textColor == null
-                        ? style?.textStyle
-                        : style?.textStyle?.copyWith(color: textColor),
-                    //minFontSize: 1,
-                  );
-                },
+              .mapIndexed(
+                (i, value) => (BuildContext context, textStyle) => Text(
+                      value,
+                      maxLines: 1,
+                      style: textStyle,
+                    ),
               )
               .toList(),
           selectedStateIndex: selectedStateIndex,
@@ -123,12 +131,14 @@ class SBBSegmentedButton extends StatefulWidget {
           borderColor: borderColor,
           boxShadow: boxShadow,
           selectedIndexChanged: selectedIndexChanged,
+          colorType: colorType,
         );
 
   SBBSegmentedButton.iconCustom({
     Key? key,
     required Map<IconData, String> icons,
     required int selectedStateIndex,
+    bool withText = false,
     Color? backgroundColor,
     Color? selectedColor,
     Color? selectedBorderColor,
@@ -136,12 +146,27 @@ class SBBSegmentedButton extends StatefulWidget {
     Color? borderColor,
     List<BoxShadow>? boxShadow,
     required ValueChanged<int> selectedIndexChanged,
+    required SelectedButtonColorType colorType,
   }) : this.custom(
           key: key,
           widgetBuilders: icons.entries
-              .map((icon) => (BuildContext context) => Semantics(
+              .map((icon) => (BuildContext context, textStyle) => Semantics(
                     label: icon.value,
-                    child: Icon(icon.key, color: iconColor),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(icon.key, color: iconColor),
+                        if (withText) ...[
+                          const SizedBox(width: 4.0),
+                          ExcludeSemantics(
+                            child: Text(
+                              icon.value,
+                              style: textStyle,
+                            ),
+                          ),
+                        ],
+                      ],
+                    ),
                   ))
               .toList(),
           selectedStateIndex: selectedStateIndex,
@@ -151,6 +176,7 @@ class SBBSegmentedButton extends StatefulWidget {
           borderColor: borderColor,
           boxShadow: boxShadow,
           selectedIndexChanged: selectedIndexChanged,
+          colorType: colorType,
         );
 
   const SBBSegmentedButton.custom({
@@ -163,10 +189,11 @@ class SBBSegmentedButton extends StatefulWidget {
     this.borderColor,
     this.boxShadow,
     required this.selectedIndexChanged,
+    required this.colorType,
   })  : assert(widgetBuilders.length > 1),
         super(key: key);
 
-  final List<WidgetBuilder> widgetBuilders;
+  final List<TextStyleWidgetBuilder> widgetBuilders;
   final int selectedStateIndex;
   final Color? backgroundColor;
   final Color? selectedColor;
@@ -174,6 +201,7 @@ class SBBSegmentedButton extends StatefulWidget {
   final Color? borderColor;
   final List<BoxShadow>? boxShadow;
   final ValueChanged<int> selectedIndexChanged;
+  final SelectedButtonColorType colorType;
 
   @override
   _SegmentedButton createState() => _SegmentedButton();
@@ -184,6 +212,8 @@ class _SegmentedButton extends State<SBBSegmentedButton> {
 
   SBBSegmentedButtonStyle? get style =>
       SBBControlStyles.of(context).segmentedButton;
+
+  bool get isRed => widget.colorType == SelectedButtonColorType.red;
 
   @override
   Widget build(BuildContext context) {
@@ -284,11 +314,13 @@ class _SegmentedButton extends State<SBBSegmentedButton> {
       ignoringSemantics: false,
       child: Row(
         children: widget.widgetBuilders.mapIndexed((i, element) {
+          final selected = i == widget.selectedStateIndex;
+          final textStyle = style?.getTextStyle(selected, isRed);
           return Expanded(
             child: Semantics(
               focusable: true,
-              selected: i == widget.selectedStateIndex,
-              button: i != widget.selectedStateIndex,
+              selected: selected,
+              button: !selected,
               hint: loc.tabLabel(
                 tabIndex: i + 1,
                 tabCount: widget.widgetBuilders.length,
@@ -296,7 +328,7 @@ class _SegmentedButton extends State<SBBSegmentedButton> {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 4),
                 alignment: Alignment.center,
-                child: element(context),
+                child: element(context, textStyle),
               ),
             ),
           );
