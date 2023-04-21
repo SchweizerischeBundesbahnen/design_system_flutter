@@ -5,53 +5,61 @@ import '../sbb_styles.dart';
 
 class SBBSegmentedButtonStyle {
   SBBSegmentedButtonStyle({
-    this.backgroundColor,
-    this.borderColor,
-    this.selectedColor,
-    this.selectedBorderColor,
-    this.textStyle,
+    this.defaultStyle,
+    this.selectedStyle,
+    this.iconColor,
     this.boxShadow,
   });
 
-  factory SBBSegmentedButtonStyle.$default({required SBBBaseStyle baseStyle}) => SBBSegmentedButtonStyle(
-        backgroundColor: baseStyle.themeValue(SBBColors.cloud, SBBColors.charcoal),
-        borderColor: baseStyle.themeValue(SBBColors.transparent, SBBColors.iron),
-        selectedColor: baseStyle.themeValue(SBBColors.white, SBBColors.iron),
-        selectedBorderColor: baseStyle.themeValue(SBBColors.black, SBBColors.graphite),
-        textStyle: baseStyle.themedTextStyle(),
-        boxShadow: baseStyle.themeValue(SBBInternal.defaultBoxShadow, SBBInternal.defaultDarkBoxShadow),
+  factory SBBSegmentedButtonStyle.$default({required SBBBaseStyle baseStyle}) =>
+      SBBSegmentedButtonStyle(
+        defaultStyle: SBBSegmentedButtonInnerStyle.$default(
+          baseStyle: baseStyle,
+        ),
+        selectedStyle: SBBSegmentedButtonInnerStyle.selected(
+          baseStyle: baseStyle,
+        ),
+        boxShadow: baseStyle.themeValue(
+          SBBInternal.defaultBoxShadow,
+          SBBInternal.defaultDarkBoxShadow,
+        ),
       );
 
-  final Color? backgroundColor;
-  final Color? borderColor;
-  final Color? selectedColor;
-  final Color? selectedBorderColor;
-  final TextStyle? textStyle;
+  factory SBBSegmentedButtonStyle.red({required SBBBaseStyle baseStyle}) =>
+      SBBSegmentedButtonStyle(
+        defaultStyle: SBBSegmentedButtonInnerStyle.red(
+          baseStyle: baseStyle,
+        ),
+        selectedStyle: SBBSegmentedButtonInnerStyle.redSelected(
+          baseStyle: baseStyle,
+        ),
+        iconColor: SBBColors.white,
+        boxShadow: SBBInternal.defaultRedBoxShadow,
+      );
+
+  final SBBSegmentedButtonInnerStyle? defaultStyle;
+  final SBBSegmentedButtonInnerStyle? selectedStyle;
+  final Color? iconColor;
   final List<BoxShadow>? boxShadow;
 
   SBBSegmentedButtonStyle copyWith({
-    Color? backgroundColor,
-    Color? borderColor,
-    Color? selectedColor,
-    Color? selectedBorderColor,
-    TextStyle? textStyle,
+    SBBSegmentedButtonInnerStyle? defaultStyle,
+    SBBSegmentedButtonInnerStyle? selectedStyle,
+    Color? iconColor,
     List<BoxShadow>? boxShadow,
   }) =>
       SBBSegmentedButtonStyle(
-        backgroundColor: backgroundColor ?? this.backgroundColor,
-        borderColor: borderColor ?? this.borderColor,
-        selectedColor: selectedColor ?? this.selectedColor,
-        selectedBorderColor: selectedBorderColor ?? this.selectedBorderColor,
-        textStyle: textStyle ?? this.textStyle,
+        defaultStyle: defaultStyle ?? this.defaultStyle,
+        selectedStyle: selectedStyle ?? this.selectedStyle,
+        iconColor: iconColor ?? this.iconColor,
         boxShadow: boxShadow ?? this.boxShadow,
       );
 
-  SBBSegmentedButtonStyle lerp(SBBSegmentedButtonStyle? other, double t) => SBBSegmentedButtonStyle(
-        backgroundColor: Color.lerp(backgroundColor, other?.backgroundColor, t),
-        borderColor: Color.lerp(borderColor, other?.borderColor, t),
-        selectedColor: Color.lerp(selectedColor, other?.selectedColor, t),
-        selectedBorderColor: Color.lerp(selectedBorderColor, other?.selectedBorderColor, t),
-        textStyle: TextStyle.lerp(textStyle, other?.textStyle, t),
+  SBBSegmentedButtonStyle lerp(SBBSegmentedButtonStyle? other, double t) =>
+      SBBSegmentedButtonStyle(
+        defaultStyle: defaultStyle?.lerp(other?.defaultStyle, t),
+        selectedStyle: selectedStyle?.lerp(other?.selectedStyle, t),
+        iconColor: Color.lerp(iconColor, other?.iconColor, t),
         boxShadow: BoxShadow.lerpList(boxShadow, other?.boxShadow, t),
       );
 }
@@ -60,12 +68,15 @@ extension SBBSegmentedButtonStyleExtension on SBBSegmentedButtonStyle? {
   SBBSegmentedButtonStyle merge(SBBSegmentedButtonStyle? other) {
     if (this == null) return other ?? SBBSegmentedButtonStyle();
     return this!.copyWith(
-      backgroundColor: this!.backgroundColor ?? other?.backgroundColor,
-      borderColor: this!.borderColor ?? other?.borderColor,
-      selectedColor: this!.selectedColor ?? other?.selectedColor,
-      selectedBorderColor: this!.selectedBorderColor ?? other?.selectedBorderColor,
-      textStyle: this!.textStyle ?? other?.textStyle,
+      defaultStyle: this!.defaultStyle.merge(other?.defaultStyle),
+      selectedStyle: this!.selectedStyle.merge(other?.selectedStyle),
+      iconColor: this!.iconColor ?? other?.iconColor,
       boxShadow: this!.boxShadow ?? other?.boxShadow,
     );
+  }
+
+  TextStyle? getTextStyle(bool selected) {
+    if (this == null) return null;
+    return (selected ? this!.selectedStyle : this!.defaultStyle)?.textStyle;
   }
 }

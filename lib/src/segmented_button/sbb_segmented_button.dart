@@ -4,6 +4,8 @@ import 'package:collection/collection.dart';
 import '../../design_system_flutter.dart';
 import '../sbb_internal.dart';
 
+part 'sbb_segmented_button.typedefs.dart';
+
 /// SBB Segmented Button. Use according to documentation.
 ///
 /// See also:
@@ -20,7 +22,7 @@ class SBBSegmentedButton extends StatefulWidget {
     required List<String> values,
     required int selectedStateIndex,
     required ValueChanged<int> selectedIndexChanged,
-  }) : this.textCustom(
+  }) : this.text(
           key: key,
           values: values,
           selectedStateIndex: selectedStateIndex,
@@ -44,11 +46,13 @@ class SBBSegmentedButton extends StatefulWidget {
     required Map<IconData, String> icons,
     required int selectedStateIndex,
     required ValueChanged<int> selectedIndexChanged,
+    bool withText = false,
   }) : this.iconCustom(
           key: key,
           icons: icons,
           selectedStateIndex: selectedStateIndex,
           selectedIndexChanged: selectedIndexChanged,
+          withText: withText,
         );
 
   SBBSegmentedButton.redText({
@@ -59,13 +63,8 @@ class SBBSegmentedButton extends StatefulWidget {
   }) : this.textCustom(
           key: key,
           values: values,
+          styleSelector: (style) => style.redSegmentedButton,
           selectedStateIndex: selectedStateIndex,
-          backgroundColor: const Color(0xFFD30000),
-          selectedColor: SBBColors.red,
-          selectedBorderColor: SBBColors.red150,
-          textColor: SBBColors.white,
-          borderColor: SBBColors.transparent,
-          boxShadow: SBBInternal.defaultRedBoxShadow,
           selectedIndexChanged: selectedIndexChanged,
         );
 
@@ -74,16 +73,13 @@ class SBBSegmentedButton extends StatefulWidget {
     required Map<IconData, String> icons,
     required int selectedStateIndex,
     required ValueChanged<int> selectedIndexChanged,
+    bool withText = false,
   }) : this.iconCustom(
           key: key,
           icons: icons,
+          styleSelector: (style) => style.redSegmentedButton,
           selectedStateIndex: selectedStateIndex,
-          backgroundColor: const Color(0xFFD30000),
-          selectedColor: SBBColors.red,
-          selectedBorderColor: SBBColors.red150,
-          iconColor: SBBColors.white,
-          borderColor: SBBColors.transparent,
-          boxShadow: SBBInternal.defaultRedBoxShadow,
+          withText: withText,
           selectedIndexChanged: selectedIndexChanged,
         );
 
@@ -91,37 +87,21 @@ class SBBSegmentedButton extends StatefulWidget {
     Key? key,
     required List<String> values,
     required int selectedStateIndex,
-    Color? backgroundColor,
-    Color? selectedColor,
-    Color? selectedBorderColor,
-    Color? textColor,
-    Color? borderColor,
-    List<BoxShadow>? boxShadow,
     required ValueChanged<int> selectedIndexChanged,
+    SBBControlStyleSelector<SBBSegmentedButtonStyle>? styleSelector,
   }) : this.custom(
           key: key,
-          widgetBuilders: values
-              .map(
-                (value) => (BuildContext context) {
-                  final style = SBBControlStyles.of(context).segmentedButton;
-                  return Text(
-                    // AutoSizeText
-                    value,
-                    maxLines: 1,
-                    style: textColor == null
-                        ? style?.textStyle
-                        : style?.textStyle?.copyWith(color: textColor),
-                    //minFontSize: 1,
-                  );
-                },
-              )
-              .toList(),
+          widgetBuilders: values.mapIndexed((i, value) {
+            return (SBBSegmentedButtonStyle? style, bool selected) {
+              return Text(
+                value,
+                maxLines: 1,
+                style: style.getTextStyle(selected),
+              );
+            };
+          }).toList(),
+          styleSelector: styleSelector,
           selectedStateIndex: selectedStateIndex,
-          backgroundColor: backgroundColor,
-          selectedColor: selectedColor,
-          selectedBorderColor: selectedBorderColor,
-          borderColor: borderColor,
-          boxShadow: boxShadow,
           selectedIndexChanged: selectedIndexChanged,
         );
 
@@ -129,27 +109,35 @@ class SBBSegmentedButton extends StatefulWidget {
     Key? key,
     required Map<IconData, String> icons,
     required int selectedStateIndex,
-    Color? backgroundColor,
-    Color? selectedColor,
-    Color? selectedBorderColor,
-    Color? iconColor,
-    Color? borderColor,
-    List<BoxShadow>? boxShadow,
     required ValueChanged<int> selectedIndexChanged,
+    bool withText = false,
+    SBBControlStyleSelector<SBBSegmentedButtonStyle>? styleSelector,
   }) : this.custom(
           key: key,
-          widgetBuilders: icons.entries
-              .map((icon) => (BuildContext context) => Semantics(
-                    label: icon.value,
-                    child: Icon(icon.key, color: iconColor),
-                  ))
-              .toList(),
+          widgetBuilders: icons.entries.map((icon) {
+            return (SBBSegmentedButtonStyle? style, bool selected) {
+              return Semantics(
+                label: icon.value,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(icon.key, color: style?.iconColor),
+                    if (withText) ...[
+                      const SizedBox(width: 4.0),
+                      ExcludeSemantics(
+                        child: Text(
+                          icon.value,
+                          style: style.getTextStyle(selected),
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+              );
+            };
+          }).toList(),
+          styleSelector: styleSelector,
           selectedStateIndex: selectedStateIndex,
-          backgroundColor: backgroundColor,
-          selectedColor: selectedColor,
-          selectedBorderColor: selectedBorderColor,
-          borderColor: borderColor,
-          boxShadow: boxShadow,
           selectedIndexChanged: selectedIndexChanged,
         );
 
@@ -157,22 +145,14 @@ class SBBSegmentedButton extends StatefulWidget {
     Key? key,
     required this.widgetBuilders,
     required this.selectedStateIndex,
-    this.backgroundColor,
-    this.selectedColor,
-    this.selectedBorderColor,
-    this.borderColor,
-    this.boxShadow,
     required this.selectedIndexChanged,
+    this.styleSelector,
   })  : assert(widgetBuilders.length > 1),
         super(key: key);
 
-  final List<WidgetBuilder> widgetBuilders;
+  final List<SegmentedButtonWidgetBuilder> widgetBuilders;
   final int selectedStateIndex;
-  final Color? backgroundColor;
-  final Color? selectedColor;
-  final Color? selectedBorderColor;
-  final Color? borderColor;
-  final List<BoxShadow>? boxShadow;
+  final SBBControlStyleSelector<SBBSegmentedButtonStyle>? styleSelector;
   final ValueChanged<int> selectedIndexChanged;
 
   @override
@@ -182,8 +162,20 @@ class SBBSegmentedButton extends StatefulWidget {
 class _SegmentedButton extends State<SBBSegmentedButton> {
   static const _borderRadius = const BorderRadius.all(Radius.circular(22));
 
-  SBBSegmentedButtonStyle? get style =>
-      SBBControlStyles.of(context).segmentedButton;
+  late SBBSegmentedButtonStyle? style;
+
+  Color get borderColor =>
+      style?.defaultStyle?.borderColor ?? SBBColors.transparent;
+
+  Color get selectedBorderColor =>
+      style?.selectedStyle?.borderColor ?? SBBColors.transparent;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final styles = SBBControlStyles.of(context);
+    style = widget.styleSelector?.call(styles) ?? styles.segmentedButton;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -224,10 +216,8 @@ class _SegmentedButton extends State<SBBSegmentedButton> {
           Container(
             margin: const EdgeInsets.all(1.0),
             decoration: BoxDecoration(
-              color: widget.backgroundColor ?? style?.backgroundColor,
-              border: Border.all(
-                color: (widget.borderColor ?? style?.borderColor)!,
-              ),
+              color: style?.defaultStyle?.backgroundColor,
+              border: Border.all(color: borderColor),
               borderRadius: _borderRadius,
             ),
           ),
@@ -254,15 +244,12 @@ class _SegmentedButton extends State<SBBSegmentedButton> {
                 width: constraints.maxWidth / widget.widgetBuilders.length,
                 decoration: BoxDecoration(
                   borderRadius: _borderRadius,
-                  boxShadow: widget.boxShadow ?? style?.boxShadow,
-                  border: Border.all(
-                    color: (widget.selectedBorderColor ??
-                        style?.selectedBorderColor)!,
-                  ),
+                  boxShadow: style?.boxShadow,
+                  border: Border.all(color: selectedBorderColor),
                 ),
                 child: Material(
                   borderRadius: _borderRadius,
-                  color: widget.selectedColor ?? style?.selectedColor,
+                  color: style?.selectedStyle?.backgroundColor,
                   child: InkWell(
                     borderRadius: _borderRadius,
                     onTap: () {
@@ -284,11 +271,12 @@ class _SegmentedButton extends State<SBBSegmentedButton> {
       ignoringSemantics: false,
       child: Row(
         children: widget.widgetBuilders.mapIndexed((i, element) {
+          final selected = i == widget.selectedStateIndex;
           return Expanded(
             child: Semantics(
               focusable: true,
-              selected: i == widget.selectedStateIndex,
-              button: i != widget.selectedStateIndex,
+              selected: selected,
+              button: !selected,
               hint: loc.tabLabel(
                 tabIndex: i + 1,
                 tabCount: widget.widgetBuilders.length,
@@ -296,7 +284,7 @@ class _SegmentedButton extends State<SBBSegmentedButton> {
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 4),
                 alignment: Alignment.center,
-                child: element(context),
+                child: element(style, selected),
               ),
             ),
           );
