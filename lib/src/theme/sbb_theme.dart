@@ -79,7 +79,6 @@ class SBBTheme {
         primaryColor: baseStyle.primaryColor,
         primarySwatch: baseStyle.primarySwatch,
         primaryColorDark: baseStyle.primaryColor,
-        accentColor: baseStyle.primaryColor,
         toggleableActiveColor: baseStyle.primaryColor,
         backgroundColor: baseStyle.backgroundColor,
         scaffoldBackgroundColor: baseStyle.backgroundColor,
