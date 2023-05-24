@@ -7,7 +7,7 @@ class SBBColors {
   static const Color red = Color(0xFFEB0000);
   static const Color red125 = Color(0xFFC60018);
   static const Color red150 = Color(0xFFA20013);
-
+  static const Color redDarkMode = Color(0xFFFF3838);
   static const Color white = Color(0xFFFFFFFF);
   static const Color milk = Color(0xFFF6F6F6);
   static const Color cloud = Color(0xFFE5E5E5);
