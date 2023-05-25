@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 import '../sbb_internal.dart';
 import 'sbb_colors.dart';
@@ -17,7 +16,6 @@ class SBBTextStyles {
   static const double mediumFontHeight = 20.0 / mediumFontSize;
   static const double smallFontHeight = 20.0 / smallFontSize;
 
-  @Deprecated('Use largeLight.')
   static const TextStyle extraLargeLight = TextStyle(
     fontSize: 30.0,
     height: 32.0 / 30.0,
@@ -74,7 +72,6 @@ class SBBTextStyles {
     fontFamily: SBBWebFont,
   );
 
-  @Deprecated('Use smallLight.')
   static const TextStyle extraSmallLight = TextStyle(
     fontSize: 12.0,
     height: 16.0 / 12.0,

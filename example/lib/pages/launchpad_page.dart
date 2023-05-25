@@ -10,7 +10,7 @@ import 'button_page.dart';
 import 'checkbox_page.dart';
 import 'group_page.dart';
 import 'header_page.dart';
-import 'icons_page.dart';
+import 'icon_page.dart';
 import 'link_page.dart';
 import 'list_header_page.dart';
 import 'list_item_page.dart';
@@ -51,7 +51,7 @@ class LaunchpadPage extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    _DemoEntry('Icon', IconsPage()),
+                    _DemoEntry('Icon', IconPage()),
                     _DemoEntry('Typography', TypographyPage(),
                         isLastElement: true),
                   ],

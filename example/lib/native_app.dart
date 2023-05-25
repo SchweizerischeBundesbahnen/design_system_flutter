@@ -7,9 +7,10 @@ import 'pages/accordion_page.dart';
 import 'pages/autocompletion_page.dart';
 import 'pages/button_page.dart';
 import 'pages/checkbox_page.dart';
+import 'pages/color_page.dart';
 import 'pages/group_page.dart';
 import 'pages/header_page.dart';
-import 'pages/icons_page.dart';
+import 'pages/icon_page.dart';
 import 'pages/link_page.dart';
 import 'pages/list_header_page.dart';
 import 'pages/list_item_page.dart';
@@ -69,9 +70,19 @@ class MyApp extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            _DemoEntry('Icon', IconsPage()),
-                            _DemoEntry('Typography', TypographyPage(),
-                                isLastElement: true),
+                            _DemoEntry(
+                              'Icon',
+                              IconPage(),
+                            ),
+                            _DemoEntry(
+                              'Typography',
+                              TypographyPage(),
+                            ),
+                            _DemoEntry(
+                              'Color',
+                              ColorPage(),
+                              isLastElement: true,
+                            ),
                           ],
                         ),
                       ),
@@ -81,20 +92,51 @@ class MyApp extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            _DemoEntry('Button', ButtonPage()),
-                            _DemoEntry('Checkbox', CheckboxPage()),
-                            _DemoEntry('Link', LinkPage()),
-                            _DemoEntry('List Header', ListHeaderPage()),
-                            _DemoEntry('List Item', ListItemPage()),
                             _DemoEntry(
-                                'Loading Indicator', LoadingIndicatorPage()),
-                            _DemoEntry('Picker', PickerPage()),
-                            _DemoEntry('Radio Button', RadiobuttonPage()),
+                              'Button',
+                              ButtonPage(),
+                            ),
                             _DemoEntry(
-                                'Segmented Button', SegmentedButtonPage()),
-                            _DemoEntry('Select', SelectPage()),
-                            _DemoEntry('Textfield / Textarea', TextFieldPage(),
-                                isLastElement: true),
+                              'Checkbox',
+                              CheckboxPage(),
+                            ),
+                            _DemoEntry(
+                              'Link',
+                              LinkPage(),
+                            ),
+                            _DemoEntry(
+                              'List Header',
+                              ListHeaderPage(),
+                            ),
+                            _DemoEntry(
+                              'List Item',
+                              ListItemPage(),
+                            ),
+                            _DemoEntry(
+                              'Loading Indicator',
+                              LoadingIndicatorPage(),
+                            ),
+                            _DemoEntry(
+                              'Picker',
+                              PickerPage(),
+                            ),
+                            _DemoEntry(
+                              'Radio Button',
+                              RadiobuttonPage(),
+                            ),
+                            _DemoEntry(
+                              'Segmented Button',
+                              SegmentedButtonPage(),
+                            ),
+                            _DemoEntry(
+                              'Select',
+                              SelectPage(),
+                            ),
+                            _DemoEntry(
+                              'Textfield / Textarea',
+                              TextFieldPage(),
+                              isLastElement: true,
+                            ),
                           ],
                         ),
                       ),
@@ -104,15 +146,39 @@ class MyApp extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            _DemoEntry('Accordion', AccordionPage()),
-                            _DemoEntry('Autocompletion', AutocompletionPage()),
-                            _DemoEntry('Group', GroupPage()),
-                            _DemoEntry('Header', HeaderPage()),
-                            _DemoEntry('Modal', ModalPage()),
-                            _DemoEntry('Toast', ToastPage()),
-                            _DemoEntry('Onboarding', OnboardingPage()),
-                            _DemoEntry('Tab Bar', TabBarPage(),
-                                isLastElement: true),
+                            _DemoEntry(
+                              'Accordion',
+                              AccordionPage(),
+                            ),
+                            _DemoEntry(
+                              'Autocompletion',
+                              AutocompletionPage(),
+                            ),
+                            _DemoEntry(
+                              'Group',
+                              GroupPage(),
+                            ),
+                            _DemoEntry(
+                              'Header',
+                              HeaderPage(),
+                            ),
+                            _DemoEntry(
+                              'Modal',
+                              ModalPage(),
+                            ),
+                            _DemoEntry(
+                              'Toast',
+                              ToastPage(),
+                            ),
+                            _DemoEntry(
+                              'Onboarding',
+                              OnboardingPage(),
+                            ),
+                            _DemoEntry(
+                              'Tab Bar',
+                              TabBarPage(),
+                              isLastElement: true,
+                            ),
                           ],
                         ),
                       ),

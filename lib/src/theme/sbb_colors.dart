@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 class SBBColors {
   SBBColors._();
 
+  // colors
   static const Color red = Color(0xFFEB0000);
   static const Color red125 = Color(0xFFC60018);
   static const Color red150 = Color(0xFFA20013);
-
+  static const Color redDarkMode = Color(0xFFFF3838);
   static const Color white = Color(0xFFFFFFFF);
   static const Color milk = Color(0xFFF6F6F6);
   static const Color cloud = Color(0xFFE5E5E5);
@@ -25,35 +26,24 @@ class SBBColors {
   static const Color charcoal = Color(0xFF212121);
   static const Color midnight = Color(0xFF151515);
   static const Color black = Color(0xFF000000);
-
   static const Color blue = Color(0xFF2D327D);
+  static const Color transparent = Color(0x00000000);
 
+  // functional colors
   static const Color sky = Color(0xFF0079C7);
   static const Color night = Color(0xFF143A85);
   static const Color violet = Color(0xFF6F2282);
-
+  static const Color pink = Color(0xFFCF4082);
   static const Color autumn = Color(0xFFE84E10);
   static const Color orange = Color(0xFFF27E00);
   static const Color peach = Color(0xFFFCBB00);
   static const Color lemon = Color(0xFFFFDE15);
+  static const Color brown = Color(0xFFB76000);
+  static const Color green = Color(0xFF008A36);
+  static const Color turquoise = Color(0xFF00a59b);
 
-  static const Color green = Color(0xFF00973B);
-
-  static const Color transparent = Color(0x00000000);
-
-  static const MaterialColor materialRed = MaterialColor(
-    0xFFEB0000,
-    <int, Color>{
-      50: Color(0xFFEB0000),
-      100: Color(0xFFEB0000),
-      200: Color(0xFFEB0000),
-      300: Color(0xFFEB0000),
-      400: Color(0xFFEB0000),
-      500: Color(0xFFEB0000),
-      600: Color(0xFFEB0000),
-      700: Color(0xFFEB0000),
-      800: Color(0xFFEB0000),
-      900: Color(0xFFEB0000),
-    },
-  );
+  // off brand colors
+  static const Color royal = Color(0xFF06348B);
+  static const Color royal125 = Color(0xFF032668);
+  static const Color royal150 = Color(0xFF021C4E);
 }

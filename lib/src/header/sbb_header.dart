@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import '../../design_system_flutter.dart';
 
@@ -174,7 +175,6 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
     return BlockSemantics(
       blocking: blockSemantics ?? false,
       child: AppBar(
-        brightness: Brightness.dark,
         titleSpacing: 0.0,
         leading: Container(
           child: leading,
