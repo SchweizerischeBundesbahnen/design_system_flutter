@@ -51,13 +51,18 @@ class SBBTheme {
     SBBControlStyles? controlStyles,
   }) {
     // SET hard-coded default values HERE
-    final defaultBaseStyle = SBBBaseStyle.$default(brightness: brightness, hostPlatform: hostPlatform, boldFont: boldFont);
+    final defaultBaseStyle = SBBBaseStyle.$default(
+      brightness: brightness,
+      hostPlatform: hostPlatform,
+      boldFont: boldFont,
+    );
     final _baseStyle = baseStyle.merge(defaultBaseStyle);
 
     final defaultButtonStyles = SBBButtonStyles.$default(baseStyle: _baseStyle);
     final _buttonStyles = buttonStyles.merge(defaultButtonStyles);
 
-    final defaultControlStyles = SBBControlStyles.$default(baseStyle: _baseStyle);
+    final defaultControlStyles =
+        SBBControlStyles.$default(baseStyle: _baseStyle);
     final _controlStyles = defaultControlStyles.merge(controlStyles);
 
     return raw(
@@ -75,15 +80,25 @@ class SBBTheme {
     required SBBControlStyles controlStyles,
   }) =>
       ThemeData(
-        brightness: brightness,
-        primaryColor: baseStyle.primaryColor,
-        primarySwatch: baseStyle.primarySwatch,
-        primaryColorDark: baseStyle.primaryColor,
-        toggleableActiveColor: baseStyle.primaryColor,
-        backgroundColor: baseStyle.backgroundColor,
+        colorScheme: ColorScheme.fromSwatch(
+          primarySwatch: baseStyle.primarySwatch!,
+          primaryColorDark: baseStyle.primaryColorDark,
+          accentColor: baseStyle.primaryColor,
+          cardColor: controlStyles.groupBackgroundColor,
+          backgroundColor: baseStyle.backgroundColor,
+          errorColor: controlStyles.textField?.dividerColorError,
+          brightness: brightness,
+        ),
         scaffoldBackgroundColor: baseStyle.backgroundColor,
-        iconTheme: IconThemeData(color: baseStyle.iconColor, size: sbbIconSizeSmall),
-        dividerTheme: DividerThemeData(thickness: 1.0, space: 0.0, color: baseStyle.dividerColor),
+        iconTheme: IconThemeData(
+          color: baseStyle.iconColor,
+          size: sbbIconSizeSmall,
+        ),
+        dividerTheme: DividerThemeData(
+          thickness: 1.0,
+          space: 0.0,
+          color: baseStyle.dividerColor,
+        ),
         fontFamily: baseStyle.defaultFontFamily,
         textTheme: baseStyle.createTextTheme(),
         appBarTheme: controlStyles.appBarTheme,
@@ -113,18 +128,21 @@ class SBBTheme {
     T? disabledValue,
     T? hoveredValue,
     String? parent,
-    T? selectedValue
+    T? selectedValue,
   }) {
     return MaterialStateProperty.resolveWith((states) {
       // disabled
-      if (states.contains(MaterialState.disabled) && disabledValue != null) return disabledValue;
+      if (states.contains(MaterialState.disabled) && disabledValue != null)
+        return disabledValue;
 
       // pressed / focused
-      if (states.any({MaterialState.pressed, MaterialState.focused}.contains) && pressedValue != null) {
+      if (states.any({MaterialState.pressed, MaterialState.focused}.contains) &&
+          pressedValue != null) {
         return pressedValue;
       }
       // hovered
-      if (states.contains(MaterialState.hovered) && hoveredValue != null) return hoveredValue;
+      if (states.contains(MaterialState.hovered) && hoveredValue != null)
+        return hoveredValue;
 
       // selected
       if (states.contains(MaterialState.selected) && selectedValue != null)

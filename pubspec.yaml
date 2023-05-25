@@ -15,10 +15,10 @@ dev_dependencies:
     sdk: flutter
 
   # https://pub.dev/packages/lint
-  lint: ^1.5.3
+  lint: ^2.1.2
 
   # https://pub.dev/packages/golden_toolkit
-  golden_toolkit: ^0.9.0
+  golden_toolkit: ^0.15.0
 
 flutter:
   assets:
