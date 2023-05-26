@@ -79,6 +79,7 @@ class _PickerPageState extends State<PickerPage> {
               onDateTimeChanged: _onDateTimeChanged,
             ),
           ),
+          Text('${dateTime.toString()}'),
           SBBListHeader('SBBDateTimePicker DateAndTime'),
           SBBGroup(
             child: SBBDateTimePicker(
@@ -89,46 +90,58 @@ class _PickerPageState extends State<PickerPage> {
           ),
           SBBListHeader('dateAndTime'),
           SBBGroup(
-            child: SBBPicker.dateAndTime(
-              // initialDateTime: dateTime,
-              minuteInterval: 15,
-              onDateTimeChanged: (DateTime dateTime) {
-                debugPrint(
-                    'Selected: ${localizations.formatCompactDate(dateTime)} - ${localizations.formatTimeOfDay(TimeOfDay.fromDateTime(dateTime))}');
-              },
+            child: Container(
+              height: 200,
+              child: CupertinoDatePicker(
+                minimumDate: DateTime.now(),
+                mode: CupertinoDatePickerMode.date,
+                onDateTimeChanged: (date) {
+                  debugPrint('DATE: $date');
+                },
+              ),
             ),
           ),
-          SBBListHeader('Time'),
-          SBBGroup(
-            child: SBBPicker.time(
-              onDateTimeChanged: (DateTime dateTime) {
-                debugPrint(
-                    'Selected: ${localizations.formatTimeOfDay(TimeOfDay.fromDateTime(dateTime))}');
-              },
-            ),
-          ),
-          const SizedBox(
-            height: sbbDefaultSpacing,
-          ),
-          SBBListHeader('Time (15 minute interval)'),
-          SBBGroup(
-            child: SBBPicker.time(
-              minuteInterval: 15,
-              onDateTimeChanged: (DateTime dateTime) {
-                debugPrint(
-                    'Selected: ${localizations.formatTimeOfDay(TimeOfDay.fromDateTime(dateTime))}');
-              },
-            ),
-          ),
-          SBBListHeader('Date'),
-          SBBGroup(
-            child: SBBPicker.date(
-              onDateTimeChanged: (DateTime dateTime) {
-                debugPrint(
-                    'Selected: ${localizations.formatShortDate(dateTime)}');
-              },
-            ),
-          ),
+          // SBBGroup(
+          //   child: SBBPicker.dateAndTime(
+          //     // initialDateTime: dateTime,
+          //     minuteInterval: 15,
+          //     onDateTimeChanged: (DateTime dateTime) {
+          //       debugPrint(
+          //           'Selected: ${localizations.formatCompactDate(dateTime)} - ${localizations.formatTimeOfDay(TimeOfDay.fromDateTime(dateTime))}');
+          //     },
+          //   ),
+          // ),
+          // SBBListHeader('Time'),
+          // SBBGroup(
+          //   child: SBBPicker.time(
+          //     onDateTimeChanged: (DateTime dateTime) {
+          //       debugPrint(
+          //           'Selected: ${localizations.formatTimeOfDay(TimeOfDay.fromDateTime(dateTime))}');
+          //     },
+          //   ),
+          // ),
+          // const SizedBox(
+          //   height: sbbDefaultSpacing,
+          // ),
+          // SBBListHeader('Time (15 minute interval)'),
+          // SBBGroup(
+          //   child: SBBPicker.time(
+          //     minuteInterval: 15,
+          //     onDateTimeChanged: (DateTime dateTime) {
+          //       debugPrint(
+          //           'Selected: ${localizations.formatTimeOfDay(TimeOfDay.fromDateTime(dateTime))}');
+          //     },
+          //   ),
+          // ),
+          // SBBListHeader('Date'),
+          // SBBGroup(
+          //   child: SBBPicker.date(
+          //     onDateTimeChanged: (DateTime dateTime) {
+          //       debugPrint(
+          //           'Selected: ${localizations.formatShortDate(dateTime)}');
+          //     },
+          //   ),
+          // ),
           const SizedBox(
             height: sbbDefaultSpacing,
           ),
@@ -147,6 +160,10 @@ class _PickerPageState extends State<PickerPage> {
   }
 
   void _onDateTimeChanged(DateTime dateTime) {
-    debugPrint('Selected: ${dateTime.day.toString().padLeft(2, '0')}.${dateTime.month.toString().padLeft(2, '0')}.${dateTime.year.toString().padLeft(4, '0')} - ${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}');
+    debugPrint(
+        'Selected: ${dateTime.day.toString().padLeft(2, '0')}.${dateTime.month.toString().padLeft(2, '0')}.${dateTime.year.toString().padLeft(4, '0')} - ${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}');
+    setState(() {
+      this.dateTime = dateTime;
+    });
   }
 }
