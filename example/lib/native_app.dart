@@ -17,7 +17,6 @@ import 'pages/list_item_page.dart';
 import 'pages/loading_indicator_page.dart';
 import 'pages/modal_page.dart';
 import 'pages/onboarding_page.dart';
-import 'pages/picker_page.dart';
 import 'pages/radio_button_page.dart';
 import 'pages/segmented_button_page.dart';
 import 'pages/select_page.dart';
