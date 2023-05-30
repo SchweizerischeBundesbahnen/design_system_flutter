@@ -1,10 +1,10 @@
 name: design_system_flutter
 description: Design System Mobile for Flutter
-version: 0.2.0
+version: 1.0.0
 homepage: https://mob.sbb.ch
 
 environment:
-  sdk: '>=2.17.0 <3.0.0'
+  sdk: '>=3.0.0 <4.0.0'
 
 dependencies:
   flutter:
@@ -15,10 +15,10 @@ dev_dependencies:
     sdk: flutter
 
   # https://pub.dev/packages/lint
-  lint: ^1.5.3
+  lint: ^2.1.2
 
   # https://pub.dev/packages/golden_toolkit
-  golden_toolkit: ^0.9.0
+  golden_toolkit: ^0.15.0
 
 flutter:
   assets:
