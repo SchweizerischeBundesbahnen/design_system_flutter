@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../native_app.dart';
 
-class IconsPage extends StatelessWidget {
+class IconPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final sbbToast = SBBToast.of(context);
