@@ -15,10 +15,10 @@ class TabBarController {
 
   late TabBarItem selectedTab;
   late TickerProvider vsync;
-  late TabBarItem _nextTab;
+  TabBarItem? nextTab;
   late AnimationController _animationController;
   late Animation<double> _animation;
-  late bool _hover;
+  bool _hover = false;
   late TabBarNavigationData currentData;
 
   static const _duration = Duration(milliseconds: 100);
@@ -31,7 +31,7 @@ class TabBarController {
         () {
           currentData = TabBarNavigationData(
             selectedTab,
-            _nextTab,
+            nextTab,
             _animation.value,
             _hover,
           );
@@ -43,7 +43,7 @@ class TabBarController {
 
   Future<TabBarItem> selectTab(TabBarItem tab) async {
     if (selectedTab == tab) return tab;
-    _nextTab = tab;
+    nextTab = tab;
     _hover = false;
     await _animationController.animateTo(1.0, duration: _duration);
     selectedTab = tab;
@@ -52,7 +52,8 @@ class TabBarController {
   }
 
   Future<void> hoverTab(TabBarItem tab) async {
-    _nextTab = tab;
+    if (nextTab == tab) return;
+    nextTab = tab;
     _hover = true;
     await _animationController.animateTo(0.25, duration: _duration);
   }
@@ -60,7 +61,14 @@ class TabBarController {
   Future<void> cancelHover() async {
     await _animationController.animateTo(0, duration: _duration);
     _hover = false;
-    _nextTab = selectedTab;
+    nextTab = selectedTab;
     _animationController.reset();
+  }
+
+  void reset() => _animationController.reset();
+
+  void selectNextTab() {
+    if (nextTab == null) return;
+    selectTab(nextTab!);
   }
 }

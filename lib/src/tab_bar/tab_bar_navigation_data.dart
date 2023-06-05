@@ -10,7 +10,7 @@ class TabBarNavigationData {
   );
 
   final TabBarItem selectedTab;
-  final TabBarItem nextTab;
+  final TabBarItem? nextTab;
   final double animation;
   final bool hover;
 }
