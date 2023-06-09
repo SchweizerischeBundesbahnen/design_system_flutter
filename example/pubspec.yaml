@@ -26,9 +26,6 @@ dependencies:
   # https://pub.dev/packages/intl
   intl: ^0.18.0
 
-  # https://pub.dev/packages/intl
-  intl: ^0.17.0
-
   design_system_flutter:
     path: ../
 
