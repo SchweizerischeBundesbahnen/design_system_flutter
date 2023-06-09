@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 
 import '../../design_system_flutter.dart';
 
+// TODO whole return value nullable not only widget
 typedef SBBPickerScrollViewItemBuilder = (bool isEnabled, Widget? widget)
     Function(BuildContext context, int index);
 
@@ -46,7 +47,7 @@ class SBBPicker extends StatelessWidget {
     required SBBPickerScrollViewItemBuilder itemBuilder,
     bool looping = true,
     bool isLastElement = true,
-  }) : this._(
+  }) : this.custom(
           key: key,
           label: label,
           child: SBBPickerScrollView(
@@ -55,21 +56,18 @@ class SBBPicker extends StatelessWidget {
             itemBuilder: itemBuilder,
             looping: looping,
           ),
-          looping: looping,
           isLastElement: isLastElement,
         );
 
-  const SBBPicker._({
+  const SBBPicker.custom({
     super.key,
     this.label,
     required this.child,
-    this.looping = true,
     this.isLastElement = true,
   });
 
   final String? label;
   final Widget child;
-  final bool looping;
   final bool isLastElement;
 
   @override
@@ -341,7 +339,7 @@ class _SBBDateTimePickerDateState extends State<SBBDateTimePicker> {
       'minute interval is not a positive integer factor of 60',
     );
 
-    return SBBPicker._(
+    return SBBPicker.custom(
       label: widget.label,
       isLastElement: widget.isLastElement,
       child: _dateBody(context),
@@ -793,7 +791,7 @@ class _SBBDateTimePickerState extends State<SBBDateTimePicker> {
       'minute interval is not a positive integer factor of 60',
     );
 
-    return SBBPicker._(
+    return SBBPicker.custom(
       label: widget.label,
       isLastElement: widget.isLastElement,
       child: widget.mode == SBBDateTimePickerMode.time
@@ -1319,7 +1317,7 @@ class _SBBPickerScrollViewState extends State<SBBPickerScrollView> {
     super.initState();
     if (widget.controller == null) {
       _fallbackController = SBBPickerScrollController(
-        initialItem: widget.initialSelectedIndex + _loopingListIndexAdjustment,
+        initialItem: widget.initialSelectedIndex,
       );
     }
     _scrollOffsetValueNotifier = ValueNotifier(
@@ -1340,6 +1338,37 @@ class _SBBPickerScrollViewState extends State<SBBPickerScrollView> {
     _controller.addListener(() {
       _scrollOffsetValueNotifier.value = _controller.offset;
     });
+    _controller._scrollingStateNotifier.addListener(() {
+      final idle = !_controller._scrollingStateNotifier.value;
+      if (!idle) {
+        return;
+      }
+      Future.delayed(Duration.zero, () {
+        // check for idle scroll controller with Future.delayed to prevent
+        // this getting triggered by a new drag action while the view was
+        // already in an scroll animation
+        final delayedIdle = !_controller._scrollingStateNotifier.value;
+        if (delayedIdle) {
+          // ensure scroll position snaps to the nearest item after controller
+          // is done scrolling
+          final currentScrollPosition = _controller.position.pixels;
+          final targetScrollPosition =
+              SBBPickerScrollController._calculateTargetScrollPosition(
+            currentScrollPosition,
+          );
+
+          // Due to the workaround in the target scroll position calculation, the
+          // calculated position may be slightly inaccurate. As a result, if the
+          // difference between the current and calculated positions is minor, the
+          // snap to item scroll will be skipped.
+          final difference =
+              (currentScrollPosition - targetScrollPosition).abs();
+          if (difference > 0.01) {
+            _controller.animateToScrollOffset(targetScrollPosition);
+          }
+        }
+      });
+    });
   }
 
   @override
@@ -1356,7 +1385,7 @@ class _SBBPickerScrollViewState extends State<SBBPickerScrollView> {
       height: _scrollAreaHeight,
       child: Scrollable(
         controller: _controller,
-        physics: _PickerScrollPhysics(),
+        // physics: _SBBPickerScrollPhysics(),
         viewportBuilder: (
           BuildContext context,
           ViewportOffset offset,
@@ -1366,24 +1395,22 @@ class _SBBPickerScrollViewState extends State<SBBPickerScrollView> {
             center: _listCenterKey,
             slivers: [
               // negative list (index < 0)
-              if (widget.looping)
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (BuildContext context, int index) {
-                      // adjust index so it goes negative from -1 instead of
-                      // positive from 0
-                      final adjustedIndex = -1 * index - 1;
-                      return _buildListItem(adjustedIndex);
-                    },
-                  ),
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (BuildContext context, int index) {
+                    // adjust index so it goes negative from -1 instead of
+                    // positive from 0
+                    final adjustedIndex = -1 * index - 1;
+                    return _buildListItem(adjustedIndex);
+                  },
                 ),
+              ),
               // positive list (index >= 0)
               SliverList(
                 key: _listCenterKey,
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
-                    final adjustedIndex = index - _loopingListIndexAdjustment;
-                    return _buildListItem(adjustedIndex);
+                    return _buildListItem(index);
                   },
                 ),
               ),
@@ -1395,7 +1422,7 @@ class _SBBPickerScrollViewState extends State<SBBPickerScrollView> {
   }
 
   Widget? _buildListItem(int index) {
-    int? scrollTarget = index + _loopingListIndexAdjustment;
+    int? scrollTarget = index;
     bool listItemEnabled;
     Widget? listItemWidget;
     final listItem = widget.itemBuilder(
@@ -1409,7 +1436,7 @@ class _SBBPickerScrollViewState extends State<SBBPickerScrollView> {
       // checking for spacer list items in non looping scroll views
       if (index < 0 && index >= -_firstIndexPreItemsCount) {
         // scroll to first item for tapping top spacer items
-        scrollTarget = _firstIndexPreItemsCount;
+        scrollTarget = 0;
         listItemWidget = SizedBox.shrink();
       } else if (widget
               .itemBuilder(
@@ -1437,9 +1464,9 @@ class _SBBPickerScrollViewState extends State<SBBPickerScrollView> {
         final itemsOfBothListsVisible =
             offset < 0 && offset > -_scrollAreaHeight;
         if (itemsOfBothListsVisible) {
-          // Because of the workaround used in _PickerScrollPhysics, it's
-          // necessary to adjust the offset to ensure that item heights are
-          // accurately calculated.
+          // Because of the target scroll position calculation workaround used
+          // in SBBPickerScrollController, it's necessary to adjust the offset
+          // to ensure that item heights are accurately calculated.
           var threshold = 0.0;
           for (var i = 0; i < _visibleItemCount; i++) {
             threshold -= _visibleItemHeights[i];
@@ -1456,12 +1483,12 @@ class _SBBPickerScrollViewState extends State<SBBPickerScrollView> {
         // includes items that are only partly visible when scrolling
         final visibleItemIndex =
             ((offset - index * _defaultItemHeight) * -1 / _defaultItemHeight)
-                    .ceil() +
-                _loopingListIndexAdjustment;
+                .ceil();
 
         if (visibleItemIndex < 0 || visibleItemIndex > _visibleItemCount) {
           // return sized boxes with default height for out of sight items
-          return const SizedBox(
+          return Container(
+            color: SBBColors.violet,
             height: _defaultItemHeight,
           );
         }
@@ -1546,10 +1573,6 @@ class _SBBPickerScrollViewState extends State<SBBPickerScrollView> {
     return _visibleItemTextColors[index].withOpacity(enabled ? 1.0 : 0.35);
   }
 
-  int get _loopingListIndexAdjustment {
-    return widget.looping ? 0 : _firstIndexPreItemsCount;
-  }
-
   SBBPickerScrollController get _controller {
     return widget.controller ?? _fallbackController!;
   }
@@ -1571,6 +1594,8 @@ class SBBPickerScrollController extends ScrollController {
             initialItem,
           ),
         );
+
+  ValueNotifier<bool> _scrollingStateNotifier = ValueNotifier(false);
 
   int get selectedItem {
     return (offset / _defaultItemHeight).round() + _firstIndexPreItemsCount;
@@ -1644,46 +1669,21 @@ class SBBPickerScrollController extends ScrollController {
     jumpTo(targetItemScrollOffset);
   }
 
+  @override
+  void attach(ScrollPosition position) {
+    super.attach(position);
+    position.isScrollingNotifier.addListener(() {
+      final scrollingValue = position.isScrollingNotifier.value;
+      _scrollingStateNotifier.value = scrollingValue;
+    });
+  }
+
   static double _getItemScrollOffset(int index) {
     final targetItemScrollOffset =
         (index - _firstIndexPreItemsCount) * _defaultItemHeight;
-    return _PickerScrollPhysics._calculateTargetScrollPosition(
+    return _calculateTargetScrollPosition(
       targetItemScrollOffset,
     );
-  }
-}
-
-/// Scroll physics used by a [SBBPickerScrollView].
-///
-/// These physics cause the SBB picker scroll view to snap to items.
-class _PickerScrollPhysics extends ScrollPhysics {
-  const _PickerScrollPhysics({ScrollPhysics? parent}) : super(parent: parent);
-
-  @override
-  _PickerScrollPhysics applyTo(ScrollPhysics? ancestor) {
-    return _PickerScrollPhysics(parent: buildParent(ancestor));
-  }
-
-  @override
-  Simulation? createBallisticSimulation(
-    ScrollMetrics position,
-    double velocity,
-  ) {
-    if (velocity == 0.0) {
-      final scrollPosition = position.pixels;
-      final target = _calculateTargetScrollPosition(scrollPosition);
-      if (target != scrollPosition) {
-        return ScrollSpringSimulation(
-          spring,
-          scrollPosition,
-          target,
-          velocity,
-          tolerance: toleranceFor(position),
-        );
-      }
-    }
-
-    return parent!.createBallisticSimulation(position, velocity);
   }
 
   static double _calculateTargetScrollPosition(double scrollPosition) {
@@ -1710,7 +1710,69 @@ class _PickerScrollPhysics extends ScrollPhysics {
 
     return (scrollPosition / _defaultItemHeight).round() * _defaultItemHeight;
   }
-
-  @override
-  bool get allowImplicitScrolling => false;
 }
+
+// /// Scroll physics used by a [SBBPickerScrollView].
+// ///
+// /// These physics cause the SBB picker scroll view to snap to items.
+// class _SBBPickerScrollPhysics extends ScrollPhysics {
+//   const _SBBPickerScrollPhysics({ScrollPhysics? parent})
+//       : super(parent: parent);
+//
+//   @override
+//   _SBBPickerScrollPhysics applyTo(ScrollPhysics? ancestor) {
+//     return _SBBPickerScrollPhysics(parent: buildParent(ancestor));
+//   }
+//
+//   @override
+//   Simulation? createBallisticSimulation(
+//     ScrollMetrics position,
+//     double velocity,
+//   ) {
+//     if (velocity == 0.0) {
+//       final scrollPosition = position.pixels;
+//       final target = _calculateTargetScrollPosition(scrollPosition);
+//       if (target != scrollPosition) {
+//         debugPrint('DEBUG2 ===== ScrollSpringSimulation');
+//         return ScrollSpringSimulation(
+//           spring,
+//           scrollPosition,
+//           target,
+//           velocity,
+//           tolerance: toleranceFor(position),
+//         );
+//       }
+//     }
+//
+//     debugPrint('DEBUG2 ===== createBallisticSimulation');
+//     return parent!.createBallisticSimulation(position, velocity);
+//   }
+//
+//   static double _calculateTargetScrollPosition(double scrollPosition) {
+//     final itemsOfBothListsVisible =
+//         scrollPosition < 0 && scrollPosition > -_scrollAreaHeight;
+//     if (itemsOfBothListsVisible) {
+//       // Because the heights of list items vary depending on their positions,
+//       // it's necessary to handle the area where items from both the positive
+//       // and negative lists are visible differently. This is because the
+//       // calculation for the target scroll position isn't accurate when both
+//       // lists are scrolling simultaneously. Therefore, the calculation for the
+//       // target scroll position must be adjusted.
+//       for (var i = 0; i < _visibleItemCount; i++) {
+//         var threshold = 0.0;
+//         for (var j = 0; j < i; j++) {
+//           threshold -= _visibleItemHeights[j];
+//         }
+//         threshold -= _visibleItemHeights[i] * 0.5;
+//         if (scrollPosition > threshold) {
+//           return threshold + _visibleItemHeights[i] * 0.5;
+//         }
+//       }
+//     }
+//
+//     return (scrollPosition / _defaultItemHeight).round() * _defaultItemHeight;
+//   }
+//
+//   @override
+//   bool get allowImplicitScrolling => false;
+// }
