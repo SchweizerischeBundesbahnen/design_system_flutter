@@ -102,3 +102,6 @@ example/.metadata
 
 # icon set generator
 *.issproj
+
+# failed golden tests
+test/failures

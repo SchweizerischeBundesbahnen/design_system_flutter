@@ -24,6 +24,7 @@ import 'pages/tab_bar_page.dart';
 import 'pages/text_field_page.dart';
 import 'pages/toast_page.dart';
 import 'pages/typography_page.dart';
+import 'pages/typography_red_page.dart';
 
 class AppState extends ChangeNotifier {
   bool isDarkModeOn = false;
@@ -76,6 +77,10 @@ class MyApp extends StatelessWidget {
                             _DemoEntry(
                               'Typography',
                               TypographyPage(),
+                            ),
+                            _DemoEntry(
+                              'Typography Red',
+                              TypographyRedPage(),
                             ),
                             _DemoEntry(
                               'Color',
