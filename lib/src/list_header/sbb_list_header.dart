@@ -13,11 +13,13 @@ class SBBListHeader extends StatelessWidget {
     Key? key,
     this.maxLines,
     this.padding,
+    this.textStyle,
   }) : super(key: key);
 
   final String title;
   final int? maxLines;
   final EdgeInsetsGeometry? padding;
+  final TextStyle? textStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,7 @@ class SBBListHeader extends StatelessWidget {
               title,
               maxLines: maxLines,
               overflow: maxLines == null ? null : TextOverflow.ellipsis,
-              style: style.listHeaderTextStyle,
+              style: textStyle ?? style.listHeaderTextStyle,
             ),
           ),
         ],

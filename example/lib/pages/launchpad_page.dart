@@ -24,6 +24,7 @@ import 'tab_bar_page.dart';
 import 'text_field_page.dart';
 import 'toast_page.dart';
 import 'typography_page.dart';
+import 'typography_red_page.dart';
 
 class LaunchpadPage extends StatelessWidget {
   const LaunchpadPage({Key? key}) : super(key: key);
@@ -52,7 +53,8 @@ class LaunchpadPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
                     _DemoEntry('Icon', IconPage()),
-                    _DemoEntry('Typography', TypographyPage(),
+                    _DemoEntry('Typography', TypographyPage()),
+                    _DemoEntry('Typography Red', TypographyRedPage(),
                         isLastElement: true),
                   ],
                 ),
