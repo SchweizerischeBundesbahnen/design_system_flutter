@@ -7,6 +7,7 @@ import 'pages/accordion_page.dart';
 import 'pages/autocompletion_page.dart';
 import 'pages/button_page.dart';
 import 'pages/checkbox_page.dart';
+import 'pages/chip_page.dart';
 import 'pages/color_page.dart';
 import 'pages/group_page.dart';
 import 'pages/header_page.dart';
@@ -135,6 +136,10 @@ class MyApp extends StatelessWidget {
                             _DemoEntry(
                               'Textfield / Textarea',
                               TextFieldPage(),
+                            ),
+                            _DemoEntry(
+                              'Chip',
+                              ChipPage(),
                               isLastElement: true,
                             ),
                           ],
