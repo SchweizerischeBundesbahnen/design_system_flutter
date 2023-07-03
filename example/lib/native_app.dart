@@ -15,6 +15,7 @@ import 'pages/link_page.dart';
 import 'pages/list_header_page.dart';
 import 'pages/list_item_page.dart';
 import 'pages/loading_indicator_page.dart';
+import 'pages/message_page.dart';
 import 'pages/modal_page.dart';
 import 'pages/onboarding_page.dart';
 import 'pages/radio_button_page.dart';
@@ -177,6 +178,10 @@ class MyApp extends StatelessWidget {
                             _DemoEntry(
                               'Tab Bar',
                               TabBarPage(),
+                            ),
+                            _DemoEntry(
+                              'Message',
+                              MessagePage(),
                               isLastElement: true,
                             ),
                           ],
