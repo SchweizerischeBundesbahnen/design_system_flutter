@@ -8,6 +8,7 @@ class SBBControlStyle {
     this.colorDisabled,
     this.basic,
     this.listItem,
+    this.switchToggle,
   });
 
   factory SBBControlStyle.$default({required SBBBaseStyle baseStyle}) => SBBControlStyle(
@@ -15,12 +16,14 @@ class SBBControlStyle {
         colorDisabled: SBBColors.metal,
         basic: SBBBasicControlStyle.$default(baseStyle: baseStyle),
         listItem: SBBListItemStyle.$default(baseStyle: baseStyle),
+        switchToggle: SBBSwitchStyle.$default(baseStyle: baseStyle),
       );
 
   final Color? color;
   final Color? colorDisabled;
   final SBBBasicControlStyle? basic;
   final SBBListItemStyle? listItem;
+  final SBBSwitchStyle? switchToggle;
 
   SBBControlStyle copyWith({
     Color? color,

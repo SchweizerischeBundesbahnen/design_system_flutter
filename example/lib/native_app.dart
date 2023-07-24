@@ -20,6 +20,7 @@ import 'pages/onboarding_page.dart';
 import 'pages/radio_button_page.dart';
 import 'pages/segmented_button_page.dart';
 import 'pages/select_page.dart';
+import 'pages/switch_page.dart';
 import 'pages/tab_bar_page.dart';
 import 'pages/text_field_page.dart';
 import 'pages/toast_page.dart';
@@ -131,6 +132,10 @@ class MyApp extends StatelessWidget {
                             _DemoEntry(
                               'Select',
                               SelectPage(),
+                            ),
+                            _DemoEntry(
+                              'Switch',
+                              SwitchPage(),
                             ),
                             _DemoEntry(
                               'Textfield / Textarea',
