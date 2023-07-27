@@ -10,11 +10,14 @@ class SBBSwitchStyle {
     this.activeColorDisabled,
   });
 
-  factory SBBSwitchStyle.$default({required SBBBaseStyle baseStyle}) => SBBSwitchStyle(
+  factory SBBSwitchStyle.$default({required SBBBaseStyle baseStyle}) =>
+      SBBSwitchStyle(
         trackColor: baseStyle.themeValue(SBBColors.smoke, SBBColors.metal),
-        trackColorDisabled: baseStyle.themeValue(SBBColors.smoke.withOpacity(0.5), SBBColors.metal.withOpacity(0.5)),
+        trackColorDisabled: baseStyle.themeValue(
+            SBBColors.smoke.withOpacity(0.5), SBBColors.metal),
         activeColor: baseStyle.themeValue(SBBColors.red, SBBColors.redDarkMode),
-        activeColorDisabled: baseStyle.themeValue(SBBColors.red.withOpacity(0.5), SBBColors.redDarkMode.withOpacity(0.5)),
+        activeColorDisabled: baseStyle.themeValue(
+            SBBColors.red.withOpacity(0.5), SBBColors.redDarkMode),
       );
 
   final Color? trackColor;
@@ -37,9 +40,11 @@ class SBBSwitchStyle {
 
   SBBSwitchStyle lerp(SBBSwitchStyle? other, double t) => SBBSwitchStyle(
         trackColor: Color.lerp(trackColor, other?.trackColor, t),
-        trackColorDisabled: Color.lerp(trackColorDisabled, other?.trackColorDisabled, t),
+        trackColorDisabled:
+            Color.lerp(trackColorDisabled, other?.trackColorDisabled, t),
         activeColor: Color.lerp(activeColor, other?.activeColor, t),
-        activeColorDisabled: Color.lerp(activeColorDisabled, other?.activeColorDisabled, t),
+        activeColorDisabled:
+            Color.lerp(activeColorDisabled, other?.activeColorDisabled, t),
       );
 }
 
@@ -50,7 +55,8 @@ extension SBBSwitchControlStyleExtension on SBBSwitchStyle? {
       trackColor: this!.trackColor ?? other?.trackColor,
       trackColorDisabled: this!.trackColorDisabled ?? other?.trackColorDisabled,
       activeColor: this!.activeColor ?? other?.activeColor,
-      activeColorDisabled: this!.activeColorDisabled ?? other?.activeColorDisabled,
+      activeColorDisabled:
+          this!.activeColorDisabled ?? other?.activeColorDisabled,
     );
   }
 }

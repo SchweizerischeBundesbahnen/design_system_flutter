@@ -36,10 +36,9 @@ class SBBSwitch extends StatefulWidget {
     Key? key,
     required this.value,
     required this.onChanged,
-    this.padding,
   }) : super(key: key);
 
-  final bool? value;
+  final bool value;
 
   /// Called when the value of the Switch should change.
   ///
@@ -52,9 +51,7 @@ class SBBSwitch extends StatefulWidget {
   ///
   /// The callback provided to [onChanged] should update the state of the parent
 
-  final ValueChanged<bool?>? onChanged;
-
-  final EdgeInsetsGeometry? padding;
+  final ValueChanged<bool>? onChanged;
 
   @override
   _SBBSwitchState createState() => _SBBSwitchState();
@@ -86,7 +83,7 @@ class _SBBSwitchState extends State<SBBSwitch> {
   Widget build(BuildContext context) {
     final style = SBBControlStyles.of(context).switchToggle;
     final enabled = widget.onChanged != null;
-    var _currentValue = widget.value ?? false;
+    var _currentValue = widget.value;
     return CupertinoSwitch(
       value: _currentValue,
       onChanged: enabled
