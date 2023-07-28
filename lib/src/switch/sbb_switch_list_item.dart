@@ -21,9 +21,8 @@ class SBBSwitchListItem extends StatelessWidget {
     bool isLastElement = false,
     IconData? leadingIcon,
     String? linkText,
-    Widget? linkWidget,
     IconData? trailingIcon,
-    VoidCallback? onPressed,
+    VoidCallback? onLinkPressed,
   }) : this.custom(
           key: key,
           value: value,
@@ -33,19 +32,15 @@ class SBBSwitchListItem extends StatelessWidget {
           onChanged: onChanged,
           isLastElement: isLastElement,
           leadingIcon: leadingIcon,
-          linkText: linkText,
-          linkWidget: linkWidget != null
-              ? linkWidget
-              : linkText != null
-                  ? SBBSwitchLink(
-                      text: linkText,
-                      onPressed: onPressed,
-                      isLastElement: isLastElement,
-                      enabled: value,
-                      trailingIcon:
-                          trailingIcon ?? SBBIcons.chevron_right_small,
-                    )
-                  : null,
+          linkWidget: linkText != null
+              ? SBBSwitchLink(
+                  text: linkText,
+                  onPressed: onLinkPressed,
+                  isLastElement: isLastElement,
+                  enabled: onLinkPressed != null && onChanged != null,
+                  trailingIcon: trailingIcon ?? SBBIcons.chevron_right_small,
+                )
+              : null,
         );
 
   const SBBSwitchListItem.custom({
@@ -57,7 +52,6 @@ class SBBSwitchListItem extends StatelessWidget {
     required this.onChanged,
     this.isLastElement = true,
     this.leadingIcon,
-    this.linkText,
     this.linkWidget,
   }) : super(key: key);
 
@@ -75,7 +69,6 @@ class SBBSwitchListItem extends StatelessWidget {
   /// [label], [allowMultilineLabel], [subText], [isLastElement], [leadingIcon]
   /// Will work same like [SBBListItem]
 
-  final String? linkText;
   final Widget? linkWidget;
 
   /// When [linkText] is not null and [value] is true,
@@ -160,7 +153,10 @@ class SBBSwitchListItem extends StatelessWidget {
                     ],
                   ),
                 ),
-                if (linkWidget != null) const Divider(),
+                if (linkWidget != null)
+                  const Divider(
+                    indent: sbbDefaultSpacing,
+                  ),
                 if (linkWidget != null) linkWidget!,
               ],
             ),
