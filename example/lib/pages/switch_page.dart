@@ -1,6 +1,7 @@
 import 'package:design_system_flutter/design_system_flutter.dart';
-import 'package:example/native_app.dart';
 import 'package:flutter/material.dart';
+
+import '../native_app.dart';
 
 class SwitchPage extends StatefulWidget {
   const SwitchPage({super.key});
@@ -25,6 +26,7 @@ class _SwitchPageState extends State<SwitchPage> {
   bool _value13 = false;
 
   bool? _listItemValue = false;
+
   @override
   Widget build(BuildContext context) {
     final sbbToast = SBBToast.of(context);
@@ -35,12 +37,16 @@ class _SwitchPageState extends State<SwitchPage> {
         const SizedBox(height: sbbDefaultSpacing),
         const SBBListHeader('Switch'),
         SBBGroup(
-          padding: const EdgeInsets.all(sbbDefaultSpacing / 2),
+          padding: const EdgeInsets.all(sbbDefaultSpacing),
           child: Row(
             children: [
               SBBSwitch(
-                  value: _value1,
-                  onChanged: (value) => setState(() => _value1 = value)),
+                value: _value1,
+                onChanged: (value) => setState(() => _value1 = value),
+              ),
+              const SizedBox(
+                width: sbbDefaultSpacing,
+              ),
               SBBSwitch(
                 value: _value1,
                 onChanged: null,
@@ -86,9 +92,14 @@ class _SwitchPageState extends State<SwitchPage> {
               value: _value6,
               label: 'Mit Link',
               onChanged: (value) => setState(() => _value6 = value),
-              linkText: 'Link text',
-              onLinkPressed: () =>
-                  sbbToast.show(message: 'SBB Switch ListItem with link'),
+              links: [
+                SBBSwitchLink(
+                  text: 'Link Text',
+                  onPressed: () => sbbToast.show(
+                    message: 'SBB Switch-Item Boxed, mit Link',
+                  ),
+                )
+              ],
               isLastElement: true,
             ),
           ],
@@ -128,9 +139,14 @@ class _SwitchPageState extends State<SwitchPage> {
             value: _value10,
             label: 'Mit Link',
             onChanged: (value) => setState(() => _value10 = value),
-            linkText: 'Link Text',
-            onLinkPressed: () =>
-                sbbToast.show(message: 'SBB Switch-Item Boxed, mit Link'),
+            links: [
+              SBBSwitchLink(
+                text: 'Link Text',
+                onPressed: () => sbbToast.show(
+                  message: 'SBB Switch-Item Boxed, mit Link',
+                ),
+              )
+            ],
             isLastElement: true,
           ),
         ),
@@ -140,9 +156,14 @@ class _SwitchPageState extends State<SwitchPage> {
             value: _value11,
             label: 'Switch ist deaktiviert',
             onChanged: null,
-            linkText: 'Link ist deaktiviert',
-            onLinkPressed: () =>
-                sbbToast.show(message: 'SBB Switch-Item Boxed, mit Link'),
+            links: [
+              SBBSwitchLink(
+                text: 'Link ist deaktiviert',
+                onPressed: () => sbbToast.show(
+                  message: 'SBB Switch-Item Boxed, mit Link',
+                ),
+              )
+            ],
             isLastElement: true,
           ),
         ),
@@ -152,8 +173,12 @@ class _SwitchPageState extends State<SwitchPage> {
             value: _value12,
             label: 'Label',
             onChanged: (value) => setState(() => _value12 = value),
-            linkText: 'Nur Link ist deaktiviert',
-            onLinkPressed: null,
+            links: [
+              SBBSwitchLink(
+                text: 'Nur Link ist deaktiviert',
+                onPressed: null,
+              ),
+            ],
             isLastElement: true,
           ),
         ),
@@ -163,15 +188,17 @@ class _SwitchPageState extends State<SwitchPage> {
             value: _value13,
             label: 'Custom LinkWidget',
             onChanged: (value) => setState(() => _value13 = value),
-            linkWidget: SBBCheckboxListItem(
-              value: _listItemValue,
-              label: 'Text',
-              allowMultilineLabel: true,
-              secondaryLabel:
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla.',
-              isLastElement: true,
-              onChanged: (value) => setState(() => _listItemValue = value),
-            ),
+            linksWidgets: [
+              SBBCheckboxListItem(
+                value: _listItemValue,
+                label: 'Text',
+                allowMultilineLabel: true,
+                secondaryLabel:
+                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla.',
+                isLastElement: true,
+                onChanged: (value) => setState(() => _listItemValue = value),
+              )
+            ],
             isLastElement: true,
           ),
         ),

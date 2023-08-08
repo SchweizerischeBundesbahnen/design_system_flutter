@@ -16,7 +16,6 @@ class SBBSwitchLink extends StatelessWidget {
     this.child,
     this.trailingIcon,
     this.isLastElement = false,
-    this.enabled = false,
     this.onPressed,
     Key? key,
   }) : super(key: key);
@@ -25,7 +24,6 @@ class SBBSwitchLink extends StatelessWidget {
   final Widget? child;
   final IconData? trailingIcon;
   final bool isLastElement;
-  final bool enabled;
   final VoidCallback? onPressed;
 
   @override
@@ -33,7 +31,7 @@ class SBBSwitchLink extends StatelessWidget {
     final style = SBBControlStyles.of(context).listItem;
     return MergeSemantics(
       child: Semantics(
-        button: onPressed != null,
+        button: isEnabled,
         child: Material(
           color: style?.backgroundColor,
           child: InkWell(
@@ -41,7 +39,7 @@ class SBBSwitchLink extends StatelessWidget {
             focusColor: style?.backgroundColorHighlighted,
             highlightColor: SBBColors.transparent,
             hoverColor: SBBColors.transparent,
-            onTap: enabled ? onPressed : null,
+            onTap: onPressed,
             child: ConstrainedBox(
               constraints: const BoxConstraints(minHeight: 48.0),
               child: Column(
@@ -62,7 +60,7 @@ class SBBSwitchLink extends StatelessWidget {
                                 if (text != null)
                                   Text(
                                     text!,
-                                    style: enabled
+                                    style: isEnabled
                                         ? style?.textStyle
                                         : style?.textStyleDisabled,
                                     overflow: TextOverflow.ellipsis,
@@ -78,7 +76,7 @@ class SBBSwitchLink extends StatelessWidget {
                               child: Icon(
                                 trailingIcon!,
                                 size: sbbIconSizeSmall / 2,
-                                color: enabled
+                                color: isEnabled
                                     ? style?.iconColor
                                     : style?.iconColorDisabled,
                               ),
@@ -96,4 +94,6 @@ class SBBSwitchLink extends StatelessWidget {
       ),
     );
   }
+
+  bool get isEnabled => onPressed != null;
 }

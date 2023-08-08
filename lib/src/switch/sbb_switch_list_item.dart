@@ -10,7 +10,7 @@ import '../../design_system_flutter.dart';
 /// * [SBBSwitchListItem], a widget with semantics similar to [SBBListItem].
 /// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/switch>
 class SBBSwitchListItem extends StatelessWidget {
-  SBBSwitchListItem({
+  const SBBSwitchListItem({
     Key? key,
     required bool value,
     required String label,
@@ -20,9 +20,8 @@ class SBBSwitchListItem extends StatelessWidget {
     required ValueChanged<bool>? onChanged,
     bool isLastElement = false,
     IconData? leadingIcon,
-    String? linkText,
     IconData? trailingIcon,
-    VoidCallback? onLinkPressed,
+    List<SBBSwitchLink>? links,
   }) : this.custom(
           key: key,
           value: value,
@@ -32,15 +31,7 @@ class SBBSwitchListItem extends StatelessWidget {
           onChanged: onChanged,
           isLastElement: isLastElement,
           leadingIcon: leadingIcon,
-          linkWidget: linkText != null
-              ? SBBSwitchLink(
-                  text: linkText,
-                  onPressed: onLinkPressed,
-                  isLastElement: isLastElement,
-                  enabled: onLinkPressed != null && onChanged != null,
-                  trailingIcon: trailingIcon ?? SBBIcons.chevron_right_small,
-                )
-              : null,
+          linksWidgets: links,
         );
 
   const SBBSwitchListItem.custom({
@@ -52,7 +43,7 @@ class SBBSwitchListItem extends StatelessWidget {
     required this.onChanged,
     this.isLastElement = true,
     this.leadingIcon,
-    this.linkWidget,
+    this.linksWidgets,
   }) : super(key: key);
 
   final bool value;
@@ -69,12 +60,12 @@ class SBBSwitchListItem extends StatelessWidget {
   /// [label], [allowMultilineLabel], [subText], [isLastElement], [leadingIcon]
   /// Will work same like [SBBListItem]
 
-  final Widget? linkWidget;
+  final List<Widget>? linksWidgets;
 
   /// When [linkText] is not null and [value] is true,
   /// [SBBSwitchLink] will be shown.
   ///
-  /// [linkWidget] can be customized, but the widget must have been created
+  /// [linksWidgets] can be customized, but the widget must have been created
   /// by following SBB Design System Principles.
   ///
 
@@ -88,7 +79,7 @@ class SBBSwitchListItem extends StatelessWidget {
         Material(
           color: style?.backgroundColor,
           child: ConstrainedBox(
-            constraints: const BoxConstraints(minHeight: 48.0),
+            constraints: const BoxConstraints(minHeight: 44.0),
             child: Column(
               children: [
                 Padding(
@@ -153,11 +144,11 @@ class SBBSwitchListItem extends StatelessWidget {
                     ],
                   ),
                 ),
-                if (linkWidget != null)
+                if (linksWidgets != null && linksWidgets!.isNotEmpty)
                   const Divider(
                     indent: sbbDefaultSpacing,
                   ),
-                if (linkWidget != null) linkWidget!,
+                if (linksWidgets != null && linksWidgets!.isNotEmpty) linksWidgets!.first,
               ],
             ),
           ),
@@ -166,4 +157,8 @@ class SBBSwitchListItem extends StatelessWidget {
       ],
     );
   }
+}
+
+class SBBSwitchListItemLink {
+
 }

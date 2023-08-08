@@ -48,9 +48,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
 
   factory SBBControlStyles.$default({required SBBBaseStyle baseStyle}) => SBBControlStyles(
         listItem: SBBListItemStyle.$default(baseStyle: baseStyle),
-        // Checkbox TODO define toggleable colors for checkbox and radiobutton?
         checkbox: SBBControlStyle.$default(baseStyle: baseStyle),
-        // RadioButton TODO define toggleable colors for checkbox and radiobutton?
         radioButton: SBBControlStyle.$default(baseStyle: baseStyle),
         textField: SBBTextFieldStyle.$default(baseStyle: baseStyle),
         segmentedButton: SBBSegmentedButtonStyle.$default(baseStyle: baseStyle),
