@@ -8,23 +8,19 @@ class SBBSliderStyle {
     this.inactiveTrackColor,
     this.thumbColor,
     this.thumbBorderColor,
-    this.disabledActiveTrackColor,
-    this.disabledInactiveTrackColor,
-    this.disabledThumbColor,
-    this.disabledThumbBorderColor,
+    this.iconColor,
+    this.disabledIconColor,
   });
 
   factory SBBSliderStyle.$default({required SBBBaseStyle baseStyle}) {
-    final thumbColor = baseStyle.brightness == Brightness.light ? SBBColors.white : SBBColors.iron;
+    final isDarkTheme = baseStyle.brightness == Brightness.dark;
     return SBBSliderStyle(
       activeTrackColor: baseStyle.primaryColor,
-      inactiveTrackColor: SBBColors.smoke,
-      thumbColor: thumbColor,
+      inactiveTrackColor: isDarkTheme ? SBBColors.metal : SBBColors.smoke,
+      thumbColor: isDarkTheme ? SBBColors.iron : SBBColors.white,
       thumbBorderColor: baseStyle.primaryColor,
-      disabledActiveTrackColor: baseStyle.primaryColor!.withOpacity(0.5),
-      disabledInactiveTrackColor: SBBColors.smoke.withOpacity(0.5),
-      disabledThumbColor: Color.alphaBlend(thumbColor.withOpacity(0.5), baseStyle.backgroundColor!),
-      disabledThumbBorderColor: Color.alphaBlend(baseStyle.primaryColor!.withOpacity(0.5), baseStyle.backgroundColor!),
+      iconColor: isDarkTheme ? SBBColors.white : SBBColors.black,
+      disabledIconColor: isDarkTheme ? SBBColors.graphite : SBBColors.granite,
     );
   }
 
@@ -32,11 +28,8 @@ class SBBSliderStyle {
   final Color? inactiveTrackColor;
   final Color? thumbColor;
   final Color? thumbBorderColor;
-
-  final Color? disabledActiveTrackColor;
-  final Color? disabledInactiveTrackColor;
-  final Color? disabledThumbColor;
-  final Color? disabledThumbBorderColor;
+  final Color? iconColor;
+  final Color? disabledIconColor;
 
   SBBSliderStyle copyWith({
     Color? activeTrackColor,
@@ -44,20 +37,16 @@ class SBBSliderStyle {
     Color? thumbColor,
     Color? thumbBorderColor,
     Color? thumbBackgroundColor,
-    Color? disabledActiveTrackColor,
-    Color? disabledInactiveTrackColor,
-    Color? disabledThumbColor,
-    Color? disabledThumbBorderColor,
+    Color? iconColor,
+    Color? disabledIconColor,
   }) =>
       SBBSliderStyle(
         activeTrackColor: activeTrackColor ?? this.activeTrackColor,
         inactiveTrackColor: inactiveTrackColor ?? this.inactiveTrackColor,
         thumbColor: thumbColor ?? this.thumbColor,
         thumbBorderColor: thumbBorderColor ?? this.thumbBorderColor,
-        disabledActiveTrackColor: disabledActiveTrackColor ?? this.disabledActiveTrackColor,
-        disabledInactiveTrackColor: disabledInactiveTrackColor ?? this.disabledInactiveTrackColor,
-        disabledThumbColor: disabledThumbColor ?? this.disabledThumbColor,
-        disabledThumbBorderColor: disabledThumbBorderColor ?? this.disabledThumbBorderColor,
+        iconColor: iconColor ?? this.iconColor,
+        disabledIconColor: disabledIconColor ?? this.disabledIconColor,
       );
 
   SBBSliderStyle lerp(SBBSliderStyle? other, double t) => SBBSliderStyle(
@@ -65,10 +54,8 @@ class SBBSliderStyle {
         inactiveTrackColor: Color.lerp(inactiveTrackColor, other?.inactiveTrackColor, t),
         thumbColor: Color.lerp(thumbColor, other?.thumbColor, t),
         thumbBorderColor: Color.lerp(thumbBorderColor, other?.thumbBorderColor, t),
-        disabledActiveTrackColor: Color.lerp(disabledActiveTrackColor, other?.disabledActiveTrackColor, t),
-        disabledInactiveTrackColor: Color.lerp(disabledInactiveTrackColor, other?.disabledInactiveTrackColor, t),
-        disabledThumbColor: Color.lerp(disabledThumbColor, other?.disabledThumbColor, t),
-        disabledThumbBorderColor: Color.lerp(disabledThumbBorderColor, other?.disabledThumbBorderColor, t),
+        iconColor: Color.lerp(iconColor, other?.iconColor, t),
+        disabledIconColor: Color.lerp(disabledIconColor, other?.disabledIconColor, t),
       );
 }
 
@@ -80,10 +67,8 @@ extension SBBSliderStyleExtension on SBBSliderStyle? {
       inactiveTrackColor: this!.inactiveTrackColor ?? other?.inactiveTrackColor,
       thumbColor: this!.thumbColor ?? other?.thumbColor,
       thumbBorderColor: this!.thumbBorderColor ?? other?.thumbBorderColor,
-      disabledActiveTrackColor: this!.disabledActiveTrackColor ?? other?.disabledActiveTrackColor,
-      disabledInactiveTrackColor: this!.disabledInactiveTrackColor ?? other?.disabledInactiveTrackColor,
-      disabledThumbColor: this!.disabledThumbColor ?? other?.disabledThumbColor,
-      disabledThumbBorderColor: this!.disabledThumbBorderColor ?? other?.disabledThumbBorderColor,
+      iconColor: this!.iconColor ?? other?.iconColor,
+      disabledIconColor: this!.disabledIconColor ?? other?.disabledIconColor,
     );
   }
 }

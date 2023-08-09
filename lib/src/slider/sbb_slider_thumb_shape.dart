@@ -2,6 +2,19 @@ import 'package:flutter/material.dart';
 
 import '../theme/sbb_colors.dart';
 
+const _thumbBoxShadows = <BoxShadow>[
+  BoxShadow(
+    color: Color(0x338D8D8D),
+    offset: Offset(0, 1),
+    blurRadius: 8.0,
+  ),
+  BoxShadow(
+    color: Color(0x1A8D8D8D),
+    offset: Offset(0, 4),
+    blurRadius: 32.0,
+  ),
+];
+
 /// Custom circle thumb shape with border for the [SBBSlider].
 class CircleBorderThumbShape extends SliderComponentShape {
   const CircleBorderThumbShape({
@@ -38,16 +51,25 @@ class CircleBorderThumbShape extends SliderComponentShape {
   }) {
     final Canvas canvas = context.canvas;
 
+    // drop shadows
+    final thumbRect = Rect.fromCircle(center: center, radius: radius);
+    for (final BoxShadow shadow in _thumbBoxShadows) {
+      final shadowRect = thumbRect.shift(shadow.offset);
+      final shadowPaint = shadow.toPaint();
+      canvas.drawOval(shadowRect, shadowPaint);
+    }
+
+    // thumb background
     final fillPaint = Paint()
       ..color = color ?? sliderTheme.thumbColor ?? Colors.white
       ..style = PaintingStyle.fill;
+    canvas.drawCircle(center, radius, fillPaint);
 
+    // thumb border
     final borderPaint = Paint()
       ..color = borderColor ?? sliderTheme.activeTrackColor ?? SBBColors.red
       ..strokeWidth = borderWidth
       ..style = PaintingStyle.stroke;
-
-    canvas.drawCircle(center, radius, fillPaint);
-    canvas.drawCircle(center, radius, borderPaint);
+    canvas.drawCircle(center, radius - (borderWidth / 2), borderPaint);
   }
 }
