@@ -15,3 +15,5 @@ export 'src/sbb_text_style.dart';
 export '../sbb_theme.dart';
 export '../sbb_colors.dart';
 export '../sbb_typography.dart';
+
+export '../../promotion_box/promotion_box.dart';

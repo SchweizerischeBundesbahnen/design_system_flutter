@@ -17,6 +17,7 @@ import 'list_item_page.dart';
 import 'loading_indicator_page.dart';
 import 'modal_page.dart';
 import 'onboarding_page.dart';
+import 'promotion_box_page.dart';
 import 'radio_button_page.dart';
 import 'segmented_button_page.dart';
 import 'select_page.dart';
@@ -92,7 +93,8 @@ class LaunchpadPage extends StatelessWidget {
                     _DemoEntry('Modal', ModalPage()),
                     _DemoEntry('Toast', ToastPage()),
                     _DemoEntry('Onboarding', OnboardingPage()),
-                    _DemoEntry('Tab Bar', TabBarPage(), isLastElement: true),
+                    _DemoEntry('Tab Bar', TabBarPage()),
+                    _DemoEntry('Promotion Box', PromotionBoxPage(), isLastElement: true),
                   ],
                 ),
               ),
