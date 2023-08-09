@@ -51,3 +51,5 @@ export 'src/theme/styles/sbb_styles.dart';
 export 'src/dropdown/sbb_dropdown.dart';
 export 'src/notification/sbb_web_notification.dart';
 export 'src/slider/sbb_slider.dart';
+export 'src/switch/sbb_switch.dart';
+export 'src/switch/sbb_switch_list_item.dart';
