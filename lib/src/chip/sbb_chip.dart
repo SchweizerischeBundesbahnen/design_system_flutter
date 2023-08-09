@@ -3,13 +3,15 @@ import 'package:flutter/material.dart';
 import '../theme/sbb_icons.dart';
 import '../theme/styles/sbb_styles.dart';
 
+const _kChipMargin = 4.0;
+
 /// The SBB Chip. Use according to documentation.
 ///
 /// Use [SBBChipStyle] to customize the chip theme.
 ///
 /// See also:
 ///
-/// * <https://digital.sbb.ch/de/design-system/mobile/components/slider>
+/// * <https://digital.sbb.ch/de/design-system/mobile/components/chip>
 class SBBChip extends StatelessWidget {
   const SBBChip({
     super.key,
@@ -39,10 +41,11 @@ class SBBChip extends StatelessWidget {
     return GestureDetector(
       onTap: _disabled ? null : () => _changeSelection(true),
       child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16.0),
-          border: Border.all(
-            color: _disabled ? style.disabledBorderColor! : style.borderColor!,
+        decoration: ShapeDecoration(
+          shape: StadiumBorder(
+            side: BorderSide(
+              color: _disabled ? style.disabledBorderColor! : style.borderColor!,
+            ),
           ),
         ),
         child: Row(
@@ -51,8 +54,8 @@ class SBBChip extends StatelessWidget {
             Flexible(
               child: _label(),
             ),
-            if (selected) _unselectButton(style),
-            if (badgeLabel != null && !selected) _badge(style),
+            if (_showUnselectButton) _unselectButton(style),
+            if (_showBadgeLabel) _badge(style),
           ],
         ),
       ),
@@ -62,8 +65,10 @@ class SBBChip extends StatelessWidget {
   Padding _label() {
     return Padding(
       padding: const EdgeInsets.symmetric(
-        horizontal: 12.0,
         vertical: 6.0,
+        horizontal: 12.0,
+      ).subtract(
+        EdgeInsets.only(right: _showBadgeLabel || _showUnselectButton ? _kChipMargin : 0),
       ),
       child: Text(
         label,
@@ -73,10 +78,11 @@ class SBBChip extends StatelessWidget {
   }
 
   Widget _badge(SBBChipStyle style) {
+    final badgeTextColor = _disabled ? style.disabledBadgeTextColor : style.badgeTextColor;
     return _roundedContainer(
       child: Text(
         badgeLabel ?? '',
-        style: SBBTextStyles.smallBold.copyWith(color: style.badgeTextColor),
+        style: SBBTextStyles.smallBold.copyWith(color: badgeTextColor),
       ),
       color: _disabled ? style.disabledBadgeColor! : style.badgeColor!,
       padding: EdgeInsets.symmetric(horizontal: 4.0),
@@ -88,8 +94,11 @@ class SBBChip extends StatelessWidget {
       onTap: _disabled ? null : () => _changeSelection(false),
       customBorder: CircleBorder(),
       child: _roundedContainer(
-        child: Icon(SBBIcons.cross_small),
-        color: style.unselectButtonColor!,
+        child: Icon(
+          SBBIcons.cross_small,
+          color: _disabled ? style.disabledUnselectButtonIconColor! : style.unselectButtonIconColor!,
+        ),
+        color: _disabled ? style.disabledUnselectButtonColor! : style.unselectButtonColor!,
         width: 24.0,
       ),
     );
@@ -102,7 +111,7 @@ class SBBChip extends StatelessWidget {
     EdgeInsetsGeometry? padding,
   }) {
     return Container(
-      margin: EdgeInsets.all(4.0).copyWith(left: 0),
+      margin: EdgeInsets.all(_kChipMargin),
       padding: padding,
       constraints: BoxConstraints(minWidth: 24.0),
       height: 24.0,
@@ -118,6 +127,10 @@ class SBBChip extends StatelessWidget {
   }
 
   bool get _disabled => onSelection == null;
+
+  bool get _showBadgeLabel => badgeLabel != null && !selected;
+
+  bool get _showUnselectButton => selected;
 
   _changeSelection(bool selected) {
     if (onSelection != null) {
