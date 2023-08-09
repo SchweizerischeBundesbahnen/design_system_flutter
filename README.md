@@ -56,7 +56,7 @@ General instructions on _how_ to contribute can be found under [Contributing](Co
 * **Loris Sorace**
 * **Cyrill Meyer**
 * **Ralf Winkelmann**
-* **Yoon Joo Lee**
+* **Yoonjoo Lee**
 
 ## License
 
