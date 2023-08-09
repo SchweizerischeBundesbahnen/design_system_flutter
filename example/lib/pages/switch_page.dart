@@ -1,4 +1,5 @@
 import 'package:design_system_flutter/design_system_flutter.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../native_app.dart';
@@ -21,9 +22,6 @@ class _SwitchPageState extends State<SwitchPage> {
   bool _value8 = false;
   bool _value9 = false;
   bool _value10 = false;
-  bool _value11 = false;
-  bool _value12 = false;
-  bool _value13 = false;
 
   bool? _listItemValue = false;
 
@@ -54,62 +52,100 @@ class _SwitchPageState extends State<SwitchPage> {
             ],
           ),
         ),
-        const SBBListHeader('Switch ListItem'),
+        const SizedBox(height: sbbDefaultSpacing),
+        const SBBListHeader('SwitchListItem'),
         SBBGroup(
-            child: Column(
-          children: [
-            SBBSwitchListItem(
-              value: _value2,
-              label: 'Default',
-              onChanged: (value) => setState(() => _value2 = value),
-            ),
-            SBBSwitchListItem(
-              value: _value2,
-              label: 'Disabled',
-              onChanged: null,
-            ),
-            SBBSwitchListItem(
-              value: _value3,
-              label: 'Icon',
-              leadingIcon: SBBIcons.dog_small,
-              onChanged: (value) => setState(() => _value3 = value),
-            ),
-            SBBSwitchListItem(
-              value: _value4,
-              label: 'Label',
-              subText: 'subText',
-              onChanged: (value) => setState(() => _value4 = value),
-            ),
-            SBBSwitchListItem(
-              value: _value5,
-              label: 'Multiline Label mit\nLong SubText',
-              allowMultilineLabel: true,
-              subText:
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla.',
-              onChanged: (value) => setState(() => _value5 = value),
-            ),
-            SBBSwitchListItem(
-              value: _value6,
-              label: 'Mit Link',
-              onChanged: (value) => setState(() => _value6 = value),
-              links: [
-                SBBSwitchLink(
-                  text: 'Link Text',
-                  onPressed: () => sbbToast.show(
-                    message: 'SBB Switch-Item Boxed, mit Link',
+          child: SBBSwitchListItem(
+            value: _value2,
+            title: 'Default',
+            onChanged: (value) => setState(() => _value2 = value),
+            isLastElement: true,
+          ),
+        ),
+        SizedBox(height: sbbDefaultSpacing),
+        SBBGroup(
+          child: SBBSwitchListItem(
+            value: _value3,
+            title: 'Icon',
+            leadingIcon: SBBIcons.dog_small,
+            onChanged: (value) => setState(() => _value3 = value),
+            isLastElement: true,
+          ),
+        ),
+        SizedBox(height: sbbDefaultSpacing),
+        SBBGroup(
+          child: SBBSwitchListItem(
+            value: _value4,
+            title: 'Label',
+            subtitle: 'Subtitle',
+            onChanged: (value) => setState(() => _value4 = value),
+            isLastElement: true,
+          ),
+        ),
+        SizedBox(height: sbbDefaultSpacing),
+        SBBGroup(
+          child: SBBSwitchListItem(
+            value: _value5,
+            title: 'With Link',
+            onChanged: (value) => setState(() => _value5 = value),
+            links: [
+              SBBSwitchListItemLink(
+                text: 'Link Text',
+                onPressed: () => sbbToast.show(
+                  message: 'Link',
+                ),
+              )
+            ],
+            isLastElement: true,
+          ),
+        ),
+        SizedBox(height: sbbDefaultSpacing),
+        SBBGroup(
+          child: Column(
+            children: [
+              SBBSwitchListItem(
+                value: _value6,
+                title: 'With 3 Links',
+                onChanged: (value) => setState(() => _value6 = value),
+                links: [
+                  SBBSwitchListItemLink(
+                    text: 'Link Text 1',
+                    onPressed: () => sbbToast.show(
+                      message: 'Link 1',
+                    ),
                   ),
-                )
-              ],
-              isLastElement: true,
-            ),
-          ],
-        )),
-        const SBBListHeader('Switch ListItem Boxed'),
+                  SBBSwitchListItemLink(
+                    text: 'Link Text 2',
+                    onPressed: () => sbbToast.show(
+                      message: 'Link 2',
+                    ),
+                  ),
+                  SBBSwitchListItemLink(
+                    text: 'Link Text 3',
+                    onPressed: () => sbbToast.show(
+                      message: 'Link 3',
+                    ),
+                  ),
+                ],
+                isLastElement: true,
+              ),
+            ],
+          ),
+        ),
+        SizedBox(height: sbbDefaultSpacing),
         SBBGroup(
           child: SBBSwitchListItem(
             value: _value7,
-            label: 'Default',
-            onChanged: (value) => setState(() => _value7 = value),
+            title: 'Disabled, Link enabled',
+            onChanged: null,
+            links: [
+              SBBSwitchListItemLink(
+                text: 'Link still enabled',
+                onPressed: () => sbbToast.show(
+                  message: 'Link still enabled',
+                ),
+              )
+            ],
             isLastElement: true,
           ),
         ),
@@ -117,9 +153,14 @@ class _SwitchPageState extends State<SwitchPage> {
         SBBGroup(
           child: SBBSwitchListItem(
             value: _value8,
-            label: 'Icon',
-            leadingIcon: SBBIcons.dog_small,
+            title: 'Only Link disabled',
             onChanged: (value) => setState(() => _value8 = value),
+            links: [
+              SBBSwitchListItemLink(
+                text: 'Link disabled',
+                onPressed: null,
+              ),
+            ],
             isLastElement: true,
           ),
         ),
@@ -127,55 +168,11 @@ class _SwitchPageState extends State<SwitchPage> {
         SBBGroup(
           child: SBBSwitchListItem(
             value: _value9,
-            label: 'Label',
-            subText: 'subText',
-            onChanged: (value) => setState(() => _value9 = value),
-            isLastElement: true,
-          ),
-        ),
-        SizedBox(height: sbbDefaultSpacing),
-        SBBGroup(
-          child: SBBSwitchListItem(
-            value: _value10,
-            label: 'Mit Link',
-            onChanged: (value) => setState(() => _value10 = value),
-            links: [
-              SBBSwitchLink(
-                text: 'Link Text',
-                onPressed: () => sbbToast.show(
-                  message: 'SBB Switch-Item Boxed, mit Link',
-                ),
-              )
-            ],
-            isLastElement: true,
-          ),
-        ),
-        SizedBox(height: sbbDefaultSpacing),
-        SBBGroup(
-          child: SBBSwitchListItem(
-            value: _value11,
-            label: 'Switch ist deaktiviert',
+            title: 'Only Link disabled',
             onChanged: null,
             links: [
-              SBBSwitchLink(
-                text: 'Link ist deaktiviert',
-                onPressed: () => sbbToast.show(
-                  message: 'SBB Switch-Item Boxed, mit Link',
-                ),
-              )
-            ],
-            isLastElement: true,
-          ),
-        ),
-        SizedBox(height: sbbDefaultSpacing),
-        SBBGroup(
-          child: SBBSwitchListItem(
-            value: _value12,
-            label: 'Label',
-            onChanged: (value) => setState(() => _value12 = value),
-            links: [
-              SBBSwitchLink(
-                text: 'Nur Link ist deaktiviert',
+              SBBSwitchListItemLink(
+                text: 'Link disabled',
                 onPressed: null,
               ),
             ],
@@ -185,9 +182,9 @@ class _SwitchPageState extends State<SwitchPage> {
         SizedBox(height: sbbDefaultSpacing),
         SBBGroup(
           child: SBBSwitchListItem.custom(
-            value: _value13,
-            label: 'Custom LinkWidget',
-            onChanged: (value) => setState(() => _value13 = value),
+            value: _value10,
+            title: 'Custom LinkWidget',
+            onChanged: (value) => setState(() => _value10 = value),
             linksWidgets: [
               SBBCheckboxListItem(
                 value: _listItemValue,

@@ -14,7 +14,8 @@ const _trackInnerEnd = _trackWidth - _trackInnerStart;
 const _trackInnerLength = _trackInnerEnd - _trackInnerStart;
 const _switchDisabledOpacity = 0.5;
 const _thumbRadius = 27.0 * 0.5;
-const _thumbBoxShadows = <BoxShadow>[
+const _thumbPressedExtension = 7.0;
+const _thumbBoxShadows = [
   BoxShadow(
     color: Color(0x14000000),
     offset: Offset(0, 4),
@@ -39,25 +40,17 @@ const _thumbBoxShadows = <BoxShadow>[
   ),
 ];
 
-/// The SBB Switch. Use according to documentation.
-///
-/// The Switch itself does not maintain any state. Instead, when the state of
-/// the Switch changes, the widget calls the [onChanged] callback. Most
-/// widgets that use a Switch will listen for the [onChanged] callback and
-/// rebuild the Switch with a new [value] to update the visual appearance of
-/// the Switch.
-///
-/// The Switch can optionally display two values - true or false
+/// The SBB Switch.
+/// Use according to [documentation](https://digital.sbb.ch/en/design-system/mobile/components/switch/)
 ///
 /// See also:
 ///
 /// * [SBBSwitchListItem], which builds this Widget as a part of a List Item
-/// so that you can give the Switch a label, a subtext, a leading icon and a
+/// so that you can give the Switch a title, a subtitle, a leading icon and a
 /// link Widget.
 /// * [SBBCheckbox], a widget with semantics similar to [SBBSwitch].
-/// * [SBBRadioButton], for selecting among a set of explicit values.
-/// * [SBBSegmentedButton], for selecting among a set of explicit values.
-/// * <https://digital.sbb.ch/en/design-system/mobile/components/switch>
+/// * [SBBRadioButton] and [SBBSegmentedButton], for selecting among a set of
+/// explicit values.
 class SBBSwitch extends StatefulWidget {
   const SBBSwitch({
     super.key,
@@ -77,28 +70,26 @@ class _SBBSwitchState extends State<SBBSwitch> with TickerProviderStateMixin {
   late HorizontalDragGestureRecognizer _drag;
 
   late AnimationController _positionController;
-  late CurvedAnimation position;
+  late CurvedAnimation _position;
 
-  late bool isFocused;
+  late AnimationController _reactionController;
+  late Animation<double> _reaction;
 
   bool get isEnabled => widget.onChanged != null;
 
-  late final Map<Type, Action<Intent>> _actionMap = <Type, Action<Intent>>{
-    ActivateIntent: CallbackAction<ActivateIntent>(onInvoke: _handleTap),
-  };
-
-  // A non-null boolean value that changes to true at the end of a drag if the
-  // switch must be animated to the position indicated by the widget's value.
-  bool needsPositionAnimation = false;
+  bool _needsPositionAnimation = false;
 
   @override
   void initState() {
     super.initState();
 
-    isFocused = false;
-
-    _tap = TapGestureRecognizer()..onTap = _handleTap;
+    _tap = TapGestureRecognizer()
+      ..onTapDown = _handleTapDown
+      ..onTapUp = _handleTapUp
+      ..onTap = _handleTap
+      ..onTapCancel = _handleTapCancel;
     _drag = HorizontalDragGestureRecognizer()
+      ..onStart = _handleDragStart
       ..onUpdate = _handleDragUpdate
       ..onEnd = _handleDragEnd;
 
@@ -107,23 +98,31 @@ class _SBBSwitchState extends State<SBBSwitch> with TickerProviderStateMixin {
       value: widget.value ? 1.0 : 0.0,
       vsync: this,
     );
-    position = CurvedAnimation(
+    _position = CurvedAnimation(
       parent: _positionController,
       curve: Curves.linear,
+    );
+    _reactionController = AnimationController(
+      duration: kThemeAnimationDuration,
+      vsync: this,
+    );
+    _reaction = CurvedAnimation(
+      parent: _reactionController,
+      curve: Curves.ease,
     );
   }
 
   @override
   void didUpdateWidget(SBBSwitch oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (needsPositionAnimation || oldWidget.value != widget.value) {
-      _resumePositionAnimation(isLinear: needsPositionAnimation);
+    if (_needsPositionAnimation || oldWidget.value != widget.value) {
+      _resumePositionAnimation(isLinear: _needsPositionAnimation);
     }
   }
 
   void _resumePositionAnimation({bool isLinear = true}) {
-    needsPositionAnimation = false;
-    position
+    _needsPositionAnimation = false;
+    _position
       ..curve = isLinear ? Curves.linear : Curves.ease
       ..reverseCurve = isLinear ? Curves.linear : Curves.ease.flipped;
     if (widget.value) {
@@ -133,35 +132,57 @@ class _SBBSwitchState extends State<SBBSwitch> with TickerProviderStateMixin {
     }
   }
 
+  void _handleTapDown(TapDownDetails details) {
+    if (isEnabled) {
+      _needsPositionAnimation = false;
+    }
+    _reactionController.forward();
+  }
+
   void _handleTap([Intent? _]) {
     if (isEnabled) {
       widget.onChanged!(!widget.value);
     }
   }
 
+  void _handleTapUp(TapUpDetails details) {
+    if (isEnabled) {
+      _needsPositionAnimation = false;
+      _reactionController.reverse();
+    }
+  }
+
+  void _handleTapCancel() {
+    if (isEnabled) {
+      _reactionController.reverse();
+    }
+  }
+
+  void _handleDragStart(DragStartDetails details) {
+    if (isEnabled) {
+      _needsPositionAnimation = false;
+      _reactionController.forward();
+    }
+  }
+
   void _handleDragUpdate(DragUpdateDetails details) {
     if (isEnabled) {
-      position
+      _position
         ..curve = Curves.linear
         ..reverseCurve = Curves.linear;
-      final double delta = details.primaryDelta! / _trackInnerLength;
+      final delta = details.primaryDelta! / _trackInnerLength;
       _positionController.value += delta;
     }
   }
 
   void _handleDragEnd(DragEndDetails details) {
     setState(() {
-      needsPositionAnimation = true;
+      _needsPositionAnimation = true;
     });
-    if (position.value >= 0.5 != widget.value) {
+    if (_position.value >= 0.5 != widget.value) {
       widget.onChanged!(!widget.value);
     }
-  }
-
-  void _onShowFocusHighlight(bool showHighlight) {
-    setState(() {
-      isFocused = showHighlight;
-    });
+    _reactionController.reverse();
   }
 
   @override
@@ -175,26 +196,18 @@ class _SBBSwitchState extends State<SBBSwitch> with TickerProviderStateMixin {
         isEnabled ? style.activeColor! : style.activeColorDisabled!;
     final trackColor =
         isEnabled ? style.trackColor! : style.trackColorDisabled!;
-    final focusColor = activeColor.withOpacity(_switchDisabledOpacity);
-    if (needsPositionAnimation) {
+    if (_needsPositionAnimation) {
       _resumePositionAnimation();
     }
     return Opacity(
       opacity: opacity,
-      child: FocusableActionDetector(
-        onShowFocusHighlight: _onShowFocusHighlight,
-        actions: _actionMap,
-        enabled: isEnabled,
-        child: _SBBSwitchRenderObjectWidget(
-          value: widget.value,
-          thumbColor: thumbColor,
-          activeColor: activeColor,
-          trackColor: trackColor,
-          focusColor: focusColor,
-          onChanged: widget.onChanged,
-          isFocused: isFocused,
-          state: this,
-        ),
+      child: _SBBSwitchRenderObjectWidget(
+        value: widget.value,
+        thumbColor: thumbColor,
+        activeColor: activeColor,
+        trackColor: trackColor,
+        onChanged: widget.onChanged,
+        state: this,
       ),
     );
   }
@@ -204,6 +217,7 @@ class _SBBSwitchState extends State<SBBSwitch> with TickerProviderStateMixin {
     _tap.dispose();
     _drag.dispose();
     _positionController.dispose();
+    _reactionController.dispose();
     super.dispose();
   }
 }
@@ -214,9 +228,7 @@ class _SBBSwitchRenderObjectWidget extends LeafRenderObjectWidget {
     required this.thumbColor,
     required this.activeColor,
     required this.trackColor,
-    required this.focusColor,
     required this.onChanged,
-    required this.isFocused,
     required this.state,
   });
 
@@ -224,10 +236,8 @@ class _SBBSwitchRenderObjectWidget extends LeafRenderObjectWidget {
   final Color thumbColor;
   final Color activeColor;
   final Color trackColor;
-  final Color focusColor;
   final ValueChanged<bool>? onChanged;
   final _SBBSwitchState state;
-  final bool isFocused;
 
   @override
   _SBBRenderSwitch createRenderObject(BuildContext context) {
@@ -236,9 +246,7 @@ class _SBBSwitchRenderObjectWidget extends LeafRenderObjectWidget {
       thumbColor: thumbColor,
       activeColor: activeColor,
       trackColor: trackColor,
-      focusColor: focusColor,
       onChanged: onChanged,
-      isFocused: isFocused,
       state: state,
     );
   }
@@ -251,9 +259,7 @@ class _SBBSwitchRenderObjectWidget extends LeafRenderObjectWidget {
       ..thumbColor = thumbColor
       ..activeColor = activeColor
       ..trackColor = trackColor
-      ..focusColor = focusColor
-      ..onChanged = onChanged
-      ..isFocused = isFocused;
+      ..onChanged = onChanged;
   }
 }
 
@@ -263,17 +269,13 @@ class _SBBRenderSwitch extends RenderConstrainedBox {
     required Color thumbColor,
     required Color activeColor,
     required Color trackColor,
-    required Color focusColor,
     ValueChanged<bool>? onChanged,
-    required bool isFocused,
     required _SBBSwitchState state,
   })  : _value = value,
         _thumbColor = thumbColor,
         _activeColor = activeColor,
         _trackColor = trackColor,
-        _focusColor = focusColor,
         _onChanged = onChanged,
-        _isFocused = isFocused,
         _state = state,
         super(
           additionalConstraints: const BoxConstraints.tightFor(
@@ -281,7 +283,8 @@ class _SBBRenderSwitch extends RenderConstrainedBox {
             height: _trackHeight,
           ),
         ) {
-    state.position.addListener(markNeedsPaint);
+    state._position.addListener(markNeedsPaint);
+    state._reaction.addListener(markNeedsPaint);
   }
 
   final _SBBSwitchState _state;
@@ -330,17 +333,6 @@ class _SBBRenderSwitch extends RenderConstrainedBox {
     markNeedsPaint();
   }
 
-  Color get focusColor => _focusColor;
-  Color _focusColor;
-
-  set focusColor(Color value) {
-    if (value == _focusColor) {
-      return;
-    }
-    _focusColor = value;
-    markNeedsPaint();
-  }
-
   ValueChanged<bool>? get onChanged => _onChanged;
   ValueChanged<bool>? _onChanged;
 
@@ -348,23 +340,12 @@ class _SBBRenderSwitch extends RenderConstrainedBox {
     if (value == _onChanged) {
       return;
     }
-    final bool wasInteractive = isEnabled;
+    final wasEnabled = isEnabled;
     _onChanged = value;
-    if (wasInteractive != isEnabled) {
+    if (wasEnabled != isEnabled) {
       markNeedsPaint();
       markNeedsSemanticsUpdate();
     }
-  }
-
-  bool get isFocused => _isFocused;
-  bool _isFocused;
-
-  set isFocused(bool value) {
-    if (value == _isFocused) {
-      return;
-    }
-    _isFocused = value;
-    markNeedsPaint();
   }
 
   bool get isEnabled => onChanged != null;
@@ -397,7 +378,8 @@ class _SBBRenderSwitch extends RenderConstrainedBox {
   void paint(PaintingContext context, Offset offset) {
     final canvas = context.canvas;
 
-    final currentValue = _state.position.value;
+    final currentValue = _state._position.value;
+    final currentReactionValue = _state._reaction.value;
 
     final trackRRect = RRect.fromLTRBR(
       0.0,
@@ -414,34 +396,35 @@ class _SBBRenderSwitch extends RenderConstrainedBox {
     final trackPaint = Paint()..color = currentTrackColor;
     canvas.drawRRect(trackRRect, trackPaint);
 
-    if (_isFocused) {
-      // Paints a border around the switch in the focus color.
-      final RRect borderTrackRRect = trackRRect.inflate(1.75);
-      final Paint borderPaint = Paint()
-        ..color = focusColor
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 3.5;
-      canvas.drawRRect(borderTrackRRect, borderPaint);
-    }
-
-    final thumbCenterX = lerpDouble(
-      _trackInnerStart,
-      _trackInnerEnd,
+    final currentThumbExtension = _thumbPressedExtension * currentReactionValue;
+    final thumbLeft = lerpDouble(
+      trackRRect.left + _trackInnerStart - _thumbRadius,
+      trackRRect.left + _trackInnerEnd - _thumbRadius - currentThumbExtension,
       currentValue,
     )!;
-    const thumbCenterY = _trackHeight * 0.5;
-    final thumbRect = Rect.fromCircle(
-      center: Offset(thumbCenterX, thumbCenterY),
-      radius: _thumbRadius,
+    final thumbRight = lerpDouble(
+      trackRRect.left + _trackInnerStart + _thumbRadius + currentThumbExtension,
+      trackRRect.left + _trackInnerEnd + _thumbRadius,
+      currentValue,
+    )!;
+    const thumbTop = _trackHeight * 0.5 - _thumbRadius;
+    const thumbBottom = _trackHeight * 0.5 + _thumbRadius;
+
+    final thumbRRect = RRect.fromLTRBR(
+      thumbLeft,
+      thumbTop,
+      thumbRight,
+      thumbBottom,
+      Radius.circular(_thumbRadius),
     );
 
-    for (final BoxShadow shadow in _thumbBoxShadows) {
-      final shadowRect = thumbRect.shift(shadow.offset);
+    for (final shadow in _thumbBoxShadows) {
+      final shadowRRect = thumbRRect.shift(shadow.offset);
       final shadowPaint = shadow.toPaint();
-      canvas.drawOval(shadowRect, shadowPaint);
+      canvas.drawRRect(shadowRRect, shadowPaint);
     }
 
     final thumbPaint = Paint()..color = thumbColor;
-    canvas.drawOval(thumbRect, thumbPaint);
+    canvas.drawRRect(thumbRRect, thumbPaint);
   }
 }
