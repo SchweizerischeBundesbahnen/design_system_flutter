@@ -15,14 +15,26 @@ class SBBListItemStyle {
     this.secondaryTextStyleDisabled,
   });
 
-  factory SBBListItemStyle.$default({required SBBBaseStyle baseStyle}) => SBBListItemStyle(
+  factory SBBListItemStyle.$default({required SBBBaseStyle baseStyle}) =>
+      SBBListItemStyle(
         backgroundColor: SBBColors.transparent,
-        backgroundColorHighlighted: baseStyle.themeValue(SBBColors.milk, SBBColors.iron),
+        backgroundColorHighlighted: baseStyle.themeValue(
+          SBBColors.platinum,
+          SBBColors.midnight,
+        ),
         backgroundColorDisabled: SBBColors.transparent,
         iconColor: baseStyle.iconColor,
-        iconColorDisabled: SBBColors.metal,
+        iconColorDisabled: baseStyle.themeValue(
+          SBBColors.granite,
+          SBBColors.graphite,
+        ),
         textStyle: baseStyle.themedTextStyle(),
-        textStyleDisabled: baseStyle.themedTextStyle(color: SBBColors.metal),
+        textStyleDisabled: baseStyle.themedTextStyle(
+          color: baseStyle.themeValue(
+            SBBColors.granite,
+            SBBColors.graphite,
+          ),
+        ),
         secondaryTextStyle: baseStyle.themedTextStyle(
           textStyle: SBBTextStyles.smallLight,
           color: baseStyle.labelColor,
