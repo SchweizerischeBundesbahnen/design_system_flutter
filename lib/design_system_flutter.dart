@@ -52,4 +52,3 @@ export 'src/dropdown/sbb_dropdown.dart';
 export 'src/notification/sbb_web_notification.dart';
 export 'src/switch/sbb_switch.dart';
 export 'src/switch/sbb_switch_list_item.dart';
-export 'src/switch/sbb_switch_link.dart';
