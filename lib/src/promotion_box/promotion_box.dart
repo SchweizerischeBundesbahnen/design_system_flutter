@@ -170,11 +170,11 @@ class _PromotionBoxState extends State<PromotionBox>
                               ),
                             ),
                             if (widget.isClosable)
-                              SizedBox(width: sbbIconSizeSmall),
-                            SizedBox(width: 8.0),
+                              const SizedBox(width: sbbIconSizeSmall),
+                            const SizedBox(width: 8.0),
                           ],
                         ),
-                        SizedBox(height: 4.0),
+                        const SizedBox(height: 4.0),
                         Row(
                           children: [
                             Expanded(
@@ -183,16 +183,16 @@ class _PromotionBoxState extends State<PromotionBox>
                                 style: textTheme.bodyMedium,
                               ),
                             ),
-                            SizedBox(
-                              width: sbbIconSizeSmall,
-                              child: widget.onTap == null
-                                  ? null
-                                  : Icon(
-                                      SBBIcons.chevron_small_right_small,
-                                      color: crossColor,
-                                      size: sbbIconSizeSmall,
-                                    ),
-                            ),
+                            if (widget.onTap != null)
+                              Icon(
+                                SBBIcons.chevron_small_right_small,
+                                color: crossColor,
+                                size: sbbIconSizeSmall,
+                              )
+                            else
+                              const SizedBox(
+                                width: sbbDefaultSpacing * 0.5,
+                              ),
                           ],
                         ),
                       ],
