@@ -25,7 +25,9 @@ class _PickerPageState extends State<PickerPage> {
     'Last',
   ];
 
-  DateTime dateTime = DateTime.now();
+  DateTime initialDateTime =
+      DateTime.now().copyWith(day: 31, month: 7, year: 2026);
+  late DateTime dateTime = initialDateTime;
   final controller = SBBPickerScrollController(initialItem: 4);
 
   @override
@@ -42,6 +44,16 @@ class _PickerPageState extends State<PickerPage> {
           ThemeModeSegmentedButton(),
           const SizedBox(
             height: sbbDefaultSpacing,
+          ),
+          SBBListHeader('SBBDateTimePicker Date'),
+          SBBGroup(
+            child: SBBDateTimePicker(
+              mode: SBBDateTimePickerMode.time,
+              minuteInterval: 15,
+              onDateTimeChanged: _onDateTimeChanged,
+              minimumDate: DateTime.now().subtract(Duration(hours: 10)),
+              maximumDate: DateTime.now().add(Duration(hours: 5)),
+            ),
           ),
           SBBListHeader('TEST'),
           // SBBGroup(
@@ -127,12 +139,13 @@ class _PickerPageState extends State<PickerPage> {
                         Text(_fruitNames[index]),
                       );
                     },
-                    initialSelectedIndex: 4,
+                    initialSelectedIndex: 5,
                     looping: false,
                   ),
                 ),
                 Expanded(
                   child: SBBPicker(
+                    initialSelectedIndex: 5,
                     onSelectedItemChanged: (int index) {
                       debugPrint(
                           'Selected: ${_fruitNames[index % _fruitNames.length]}');
@@ -161,8 +174,8 @@ class _PickerPageState extends State<PickerPage> {
           //       debugPrint(
           //           'Selected: ${localizations.formatCompactDate(dateTime)} - ${localizations.formatTimeOfDay(TimeOfDay.fromDateTime(dateTime))}');
           //     },
-          //     initialDateTime: DateTime(1, 1, 1),
-          //     // minimumDate: DateTime.now(),
+          //     // initialDateTime: DateTime(1, 1, 1),
+          //     minimumDate: DateTime.now().subtract(Duration(days: 31)),
           //     maximumDate: DateTime.now().add(Duration(days: 360)),
           //   ),
           // ),
@@ -186,14 +199,16 @@ class _PickerPageState extends State<PickerPage> {
           // //     onDateTimeChanged: _onDateTimeChanged,
           // //   ),
           // // ),
-          SBBListHeader('SBBDateTimePicker Date'),
+          SBBListHeader(
+              'SBBDateTimePicker Date ${dateTime.day.toString().padLeft(2, '0')}.${dateTime.month.toString().padLeft(2, '0')}.${dateTime.year.toString().padLeft(4, '0')}'),
           SBBGroup(
             child: SBBDateTimePicker(
               mode: SBBDateTimePickerMode.date,
               minuteInterval: 15,
               onDateTimeChanged: _onDateTimeChanged,
-              minimumDate: DateTime.now(),
-              maximumDate: DateTime.now().add(Duration(days: 360)),
+              initialDateTime: initialDateTime,
+              minimumDate: initialDateTime.copyWith(year: 2020),
+              maximumDate: initialDateTime.copyWith(year: 2029),
             ),
           ),
           // Text('${dateTime.toString()}'),

@@ -435,46 +435,55 @@ class _SBBDateTimePickerTimeState extends State<SBBDateTimePicker> {
 }
 
 class _SBBDateTimePickerDateState extends State<SBBDateTimePicker> {
-  late int _startYear;
   late DateTime selectedDateTime;
   late SBBPickerScrollController dayController;
   late SBBPickerScrollController monthController;
   late SBBPickerScrollController yearController;
 
+  /// This is used to prevent notifying the callback with the same value
+  late DateTime lastReportedDateTime;
+
+  /// This is used as a workaround to prevent unintentional changes in the day
+  /// value, which may occur when scrolling between months. For instance, when
+  /// scrolling from 31.05.2023 to 31.07.2023 via month scrolling, the month
+  /// scrollview will scroll over June where there is no 31st day of. Therefore,
+  /// the day value will automatically be corrected downwards to 30, resulting
+  /// in 30.07.2023 instead of the intended 31.07.2023.
+  int? targetSelectedDay;
+
   @override
   void initState() {
     super.initState();
-    final startDate = DateTime.now();
-    _startYear = startDate.year;
-    selectedDateTime = (widget.initialDateTime ?? startDate).copyWith(
+    selectedDateTime = widget.initialDateTime.copyWith(
       hour: 0,
       minute: 0,
       second: 0,
       millisecond: 0,
     );
+    lastReportedDateTime = selectedDateTime;
 
-    final initialDayIndex = selectedDateTime.day - 1;
     dayController = SBBPickerScrollController(
-      initialItem: initialDayIndex,
+      initialItem: _dayToIndex(selectedDateTime.day),
     );
     dayController._scrollingStateNotifier.addListener(() {
-      _onControllerIdle(dayController);
+      _onScrollingStateChanged();
     });
 
-    final initialMonthIndex = selectedDateTime.month - 1;
     monthController = SBBPickerScrollController(
-      initialItem: initialMonthIndex,
+      initialItem: _monthToIndex(selectedDateTime.month),
     );
     monthController._scrollingStateNotifier.addListener(() {
-      _onControllerIdle(monthController);
+      if (targetSelectedDay == null) {
+        targetSelectedDay = _indexToDay(dayController.selectedItem);
+      }
+      _onScrollingStateChanged();
     });
 
-    final initialYearIndex = selectedDateTime.year - _startYear;
     yearController = SBBPickerScrollController(
-      initialItem: initialYearIndex,
+      initialItem: _yearToIndex(selectedDateTime.year),
     );
     yearController._scrollingStateNotifier.addListener(() {
-      _onControllerIdle(yearController);
+      _onScrollingStateChanged();
     });
   }
 
@@ -486,16 +495,14 @@ class _SBBDateTimePickerDateState extends State<SBBDateTimePicker> {
       child: Row(
         children: [
           Container(
-            // TODO check bigger fonts
-            // TODO evaluate more generic approach than hardcoded numbers
-            width: 40.0 + 24.0 + 12.0,
+            width: sbbDefaultSpacing * 4.75,
             child: _buildDayPickerScrollView(context),
           ),
           Expanded(
             child: _buildMonthPickerScrollView(context),
           ),
           Container(
-            width: 64.0 + 12.0 + 24.0,
+            width: sbbDefaultSpacing * 6.25,
             child: _buildYearPickerScrollView(context),
           ),
         ],
@@ -507,7 +514,7 @@ class _SBBDateTimePickerDateState extends State<SBBDateTimePicker> {
     return SBBPickerScrollView(
       controller: dayController,
       onSelectedItemChanged: (int index) {
-        final selectedDay = _selectedDay(index);
+        final selectedDay = _indexToDay(index);
         _onDateTimeSelected(
           day: selectedDay,
         );
@@ -518,8 +525,8 @@ class _SBBDateTimePickerDateState extends State<SBBDateTimePicker> {
           selectedDateTime.year,
           selectedDateTime.month,
         );
-        final monthDay = _selectedDay(index);
-        final monthDayIndex = monthDay - 1;
+        final monthDay = _indexToDay(index);
+        final monthDayIndex = _dayToIndex(monthDay);
         var dayEnabled = monthDayIndex < monthDaysCount;
 
         // check if date is before minimum date
@@ -545,8 +552,8 @@ class _SBBDateTimePickerDateState extends State<SBBDateTimePicker> {
           dayEnabled,
           Container(
             padding: EdgeInsets.only(
-              left: 24.0,
-              right: 12.0,
+              left: sbbDefaultSpacing * 1.5,
+              right: sbbDefaultSpacing * 0.75,
             ),
             alignment: Alignment.centerRight,
             child: Text(
@@ -561,21 +568,21 @@ class _SBBDateTimePickerDateState extends State<SBBDateTimePicker> {
   }
 
   Widget _buildMonthPickerScrollView(BuildContext context) {
+    final cupertinoLocalizations = Localizations.of(
+      context,
+      CupertinoLocalizations,
+    );
     return SBBPickerScrollView(
       controller: monthController,
       onSelectedItemChanged: (int index) {
-        final selectedMonth = _selectedMonth(index);
+        final selectedMonth = _indexToMonth(index);
         _onDateTimeSelected(
           month: selectedMonth,
         );
       },
       itemBuilder: (BuildContext context, int index) {
-        final cupertinoLocalizations = Localizations.of(
-          context,
-          CupertinoLocalizations,
-        );
-        final selectedMonth = _selectedMonth(index);
-        final selectedYear = _selectedYear(yearController.selectedItem);
+        final selectedMonth = _indexToMonth(index);
+        final selectedYear = _indexToYear(yearController.selectedItem);
 
         var monthEnabled = true;
         // check if selected date is before min date
@@ -609,8 +616,8 @@ class _SBBDateTimePickerDateState extends State<SBBDateTimePicker> {
           monthEnabled,
           Container(
             padding: EdgeInsets.only(
-              left: 12.0,
-              right: 12.0,
+              left: sbbDefaultSpacing * 0.75,
+              right: sbbDefaultSpacing * 0.75,
             ),
             alignment: Alignment.centerLeft,
             child: Text(
@@ -629,13 +636,13 @@ class _SBBDateTimePickerDateState extends State<SBBDateTimePicker> {
     return SBBPickerScrollView(
       controller: yearController,
       onSelectedItemChanged: (int index) {
-        final selectedYear = _selectedYear(index);
+        final selectedYear = _indexToYear(index);
         _onDateTimeSelected(
           year: selectedYear,
         );
       },
       itemBuilder: (BuildContext context, int index) {
-        final selectedYear = _selectedYear(index);
+        final selectedYear = _indexToYear(index);
 
         var yearEnabled = true;
         // check if selected date is before min date
@@ -653,13 +660,13 @@ class _SBBDateTimePickerDateState extends State<SBBDateTimePicker> {
           }
         }
 
-        final listItemLabel = _selectedYear(index).toString();
+        final listItemLabel = _indexToYear(index).toString();
         return (
           yearEnabled,
           Container(
             margin: EdgeInsets.only(
-              left: 12.0,
-              right: 24.0,
+              left: sbbDefaultSpacing * 0.75,
+              right: sbbDefaultSpacing * 1.5,
             ),
             child: Text(
               listItemLabel,
@@ -672,68 +679,166 @@ class _SBBDateTimePickerDateState extends State<SBBDateTimePicker> {
     );
   }
 
-  void _onControllerIdle(SBBPickerScrollController controller) {
-    if (controller._scrollingStateNotifier.value) {
-      // do nothing if controller still scrolling
+  void _onDateTimeSelected({
+    int? year,
+    int? month,
+    int? day,
+    int? hour,
+    int? minute,
+  }) {
+    // TODO remove hour and minute?
+    final selectedYear = year ?? selectedDateTime.year;
+    final selectedMonth = month ?? selectedDateTime.month;
+    var selectedDay = day ?? selectedDateTime.day;
+    final selectedHour = hour ?? selectedDateTime.hour;
+    final selectedMinute = minute ?? selectedDateTime.minute;
+
+    final currentMonthDays = _monthDaysCount(
+      selectedYear,
+      selectedMonth,
+    );
+    if (selectedDay > currentMonthDays) {
+      selectedDay = currentMonthDays;
+    }
+
+    selectedDateTime = DateTime(
+      selectedYear,
+      selectedMonth,
+      selectedDay,
+      selectedHour,
+      selectedMinute,
+    );
+  }
+
+  void _onScrollingStateChanged() {
+    if (yearController._scrollingStateNotifier.value ||
+        monthController._scrollingStateNotifier.value ||
+        dayController._scrollingStateNotifier.value) {
+      // do nothing if any controller still scrolling
       return;
+    }
+
+    // check if selected day value needs to be changed to target day value
+    if (targetSelectedDay != null) {
+      var selectedDay = selectedDateTime.day;
+      if (selectedDay != targetSelectedDay) {
+        final selectedMonthDaysCount = _monthDaysCount(
+          selectedDateTime.year,
+          selectedDateTime.month,
+        );
+        if (targetSelectedDay! > selectedMonthDaysCount) {
+          // set selected day value to max day value of current month since target day value is too high
+          selectedDay = selectedMonthDaysCount;
+        } else {
+          // set selected day value to target day value
+          selectedDay = targetSelectedDay!;
+        }
+      }
+      targetSelectedDay = null;
+      selectedDateTime = selectedDateTime.copyWith(day: selectedDay);
     }
 
     // check if selected date is before min date
     final minDate = _minDate;
     if (minDate != null && minDate.isAfter(selectedDateTime)) {
       // change selected date to min date
-      final correctedYearIndex = minDate.year - _startYear;
-      final correctedMonthIndex = minDate.month - 1;
-      final correctedDayIndex = minDate.day - 1;
-      yearController.animateToItem(correctedYearIndex);
-      monthController.animateToItem(correctedMonthIndex);
-      dayController.animateToItem(correctedDayIndex);
-      debugPrint(
-          'correct to min date: $correctedDayIndex $correctedMonthIndex $correctedYearIndex');
-      return;
+      final correctedYearIndex = _yearToIndex(minDate.year);
+      final correctedMonthIndex = _monthToIndex(minDate.month);
+      final correctedDayIndex = _dayToIndex(minDate.day);
+      final isYearWrong = yearController.selectedItem != correctedYearIndex;
+      final isMonthWrong = monthController.selectedItem != correctedMonthIndex;
+      final isDayWrong = dayController.selectedItem != correctedDayIndex;
+      if (isYearWrong) {
+        yearController.animateToItem(correctedYearIndex);
+      }
+      if (isMonthWrong) {
+        monthController.animateToItem(correctedMonthIndex);
+      }
+      if (isDayWrong) {
+        targetSelectedDay = _indexToDay(correctedDayIndex);
+        dayController.animateToItem(correctedDayIndex);
+      }
+      if (isYearWrong || isMonthWrong || isDayWrong) {
+        return;
+      }
     }
 
     // check if selected date is after max date
     final maxDate = _maxDate;
     if (maxDate != null && maxDate.isBefore(selectedDateTime)) {
       // change selected date to max date
-      final correctedYearIndex = maxDate.year - _startYear;
-      final correctedMonthIndex = maxDate.month - 1;
-      final correctedDayIndex = maxDate.day - 1;
-      yearController.animateToItem(correctedYearIndex);
-      monthController.animateToItem(correctedMonthIndex);
-      dayController.animateToItem(correctedDayIndex);
-      return;
+      final correctedYearIndex = maxDate.year - widget.initialDateTime.year;
+      final correctedMonthIndex = _monthToIndex(maxDate.month);
+      final correctedDayIndex = _dayToIndex(maxDate.day);
+      final isYearWrong = yearController.selectedItem != correctedYearIndex;
+      final isMonthWrong = monthController.selectedItem != correctedMonthIndex;
+      final isDayWrong = dayController.selectedItem != correctedDayIndex;
+      if (isYearWrong) {
+        yearController.animateToItem(correctedYearIndex);
+      }
+      if (isMonthWrong) {
+        monthController.animateToItem(correctedMonthIndex);
+      }
+      if (isDayWrong) {
+        targetSelectedDay = _indexToDay(correctedDayIndex);
+        dayController.animateToItem(correctedDayIndex);
+      }
+
+      if (isYearWrong || isMonthWrong || isDayWrong) {
+        return;
+      }
     }
 
     // check if selected day value is higher than valid for current month
-    final selectedDay = _selectedDay(dayController.selectedItem);
+    final selectedDay = _indexToDay(dayController.selectedItem);
     final selectedMonthDaysCount = _monthDaysCount(
       selectedDateTime.year,
       selectedDateTime.month,
     );
-    final monthDayIndex = selectedDay - 1;
+    final monthDayIndex = _dayToIndex(selectedDay);
     if (monthDayIndex >= selectedMonthDaysCount) {
       // correction to max day value in current month
       final difference = selectedDay - selectedMonthDaysCount;
       final correctedDayIndex = dayController.selectedItem - difference;
-      dayController.animateToItem(correctedDayIndex);
-      debugPrint(
-          'correct to valid date: $correctedDayIndex ${selectedDateTime.toIso8601String()}');
+      final isDayWrong = dayController.selectedItem != correctedDayIndex;
+      if (isDayWrong) {
+        targetSelectedDay = _indexToDay(correctedDayIndex);
+        dayController.animateToItem(correctedDayIndex);
+        return;
+      }
+    }
+
+    // controller is idle and date is valid
+    if (lastReportedDateTime == selectedDateTime) {
+      // don't notify callback if date did not change
       return;
     }
+    lastReportedDateTime = selectedDateTime;
+    widget.onDateTimeChanged(selectedDateTime);
   }
 
-  int _selectedDay(int selectedItemIndex) {
+  int _indexToDay(int selectedItemIndex) {
     return selectedItemIndex % 31 + 1;
   }
 
-  int _selectedMonth(int selectedItemIndex) {
+  int _dayToIndex(int selectedDay) {
+    return selectedDay - 1;
+  }
+
+  int _indexToMonth(int selectedItemIndex) {
     return selectedItemIndex % 12 + 1;
   }
 
-  int _selectedYear(int selectedItemIndex) {
-    return _startYear + selectedItemIndex;
+  int _monthToIndex(int selectedMonth) {
+    return selectedMonth - 1;
+  }
+
+  int _indexToYear(int selectedItemIndex) {
+    return widget.initialDateTime.year + selectedItemIndex;
+  }
+
+  int _yearToIndex(int selectedYear) {
+    return selectedYear - widget.initialDateTime.year;
   }
 
   DateTime? get _minDate {
@@ -754,101 +859,6 @@ class _SBBDateTimePickerDateState extends State<SBBDateTimePicker> {
       millisecond: 999,
       microsecond: 999,
     );
-  }
-
-  void _onDateTimeSelected({
-    int? year,
-    int? month,
-    int? day,
-    int? hour,
-    int? minute,
-  }) {
-    final selectedYear = year ?? selectedDateTime.year;
-    final selectedMonth = month ?? selectedDateTime.month;
-    var selectedDay = day ?? selectedDateTime.day;
-    final selectedHour = hour ?? selectedDateTime.hour;
-    final selectedMinute = minute ?? selectedDateTime.minute;
-    var notifyCallback = true;
-
-    if (widget.mode == SBBDateTimePickerMode.date) {
-      // final isDayChanging = day != null;
-      final isMonthChanging = month != null;
-      final isYearChanging = year != null;
-
-      final currentMonthDays = _monthDaysCount(
-        isYearChanging ? selectedYear : selectedDateTime.year,
-        isMonthChanging ? selectedMonth : selectedDateTime.month,
-      );
-      if (selectedDay > currentMonthDays) {
-        notifyCallback = false;
-        selectedDay = currentMonthDays;
-      }
-
-      // final isMonthOrYearChanging = day == null;
-      // if (isMonthOrYearChanging) {
-      //   final isDayControllerIdle =
-      //       !dayController.position.isScrollingNotifier.value;
-      //   final isMonthControllerIdle =
-      //       !monthController.position.isScrollingNotifier.value;
-      //   final isYearControllerIdle =
-      //       !yearController.position.isScrollingNotifier.value;
-      //   if (isDayControllerIdle &&
-      //       isMonthControllerIdle &&
-      //       isYearControllerIdle) {
-      //     final prevMonthDays = _monthDaysCount(
-      //       selectedDateTime.year,
-      //       selectedDateTime.month,
-      //     );
-      //     if (dayController.selectedItem < 0) {
-      //       notifyCallback = false;
-      //     } else if (dayController.selectedItem > prevMonthDays - 1) {
-      //       notifyCallback = false;
-      //     }
-      //
-      //     final monthDays = _monthDaysCount(
-      //       selectedYear,
-      //       selectedMonth,
-      //     );
-      //     final dayValueOverflow = selectedDay > monthDays;
-      //
-      //     if (dayValueOverflow) {
-      //       selectedDay = monthDays;
-      //       notifyCallback = false;
-      //     }
-      //   }
-      // }
-    }
-
-    _onDateTimeChanged(
-      selectedYear,
-      selectedMonth,
-      selectedDay,
-      selectedHour,
-      selectedMinute,
-      notifyCallback,
-    );
-  }
-
-  void _onDateTimeChanged(
-    int year,
-    int month,
-    int day,
-    int hour,
-    int minute,
-    bool notifyCallback,
-  ) {
-    setState(() {
-      selectedDateTime = DateTime(
-        year,
-        month,
-        day,
-        hour,
-        minute,
-      );
-    });
-    if (notifyCallback) {
-      widget.onDateTimeChanged(selectedDateTime);
-    }
   }
 
   int _monthDaysCount(int year, int month) {
