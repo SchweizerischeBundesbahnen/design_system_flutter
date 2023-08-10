@@ -16,18 +16,19 @@ class PromotionBadge extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: 8.0,
-        vertical: 3.0,
+        vertical: 1.0,
       ),
       decoration: BoxDecoration(
         border: Border.all(color: style.borderColor!),
         borderRadius: BorderRadius.all(
-          Radius.circular(sbbDefaultSpacing),
+          Radius.circular(20.0),
         ),
         color: style.badgeColor,
       ),
       child: Text(
         text,
         style: style.badgeTextStyle,
+        maxLines: 1,
       ),
     );
   }

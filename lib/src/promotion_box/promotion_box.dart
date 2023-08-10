@@ -84,7 +84,7 @@ class _PromotionBoxState extends State<PromotionBox>
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final crossColor = SBBBaseStyle.of(context).defaultTextColor;
+    final crossColor = SBBBaseStyle.of(context).iconColor;
     final style = SBBControlStyles.of(context).promotionBox!;
     final iconStyle = SBBButtonStyles.of(context).iconTextStyle;
     final paddingTop = _badgeSize.height / 2.0;
@@ -132,6 +132,12 @@ class _PromotionBoxState extends State<PromotionBox>
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: style.gradientColors!,
+                  stops: [
+                    0.0,
+                    0.406,
+                    0.672,
+                    1.0,
+                  ],
                 ),
               ),
               child: Material(
