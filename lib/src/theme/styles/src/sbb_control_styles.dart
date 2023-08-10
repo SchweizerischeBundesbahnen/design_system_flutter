@@ -45,6 +45,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     this.sidebarItemForegroundColor,
     this.sidebarItemTextStyle,
     this.headerNavItemForegroundColor,
+    this.promotionBox,
   });
 
   factory SBBControlStyles.$default({required SBBBaseStyle baseStyle}) => SBBControlStyles(
@@ -113,6 +114,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
         sidebarItemForegroundColor: SBBTheme.resolveStatesWith(defaultValue: SBBColors.iron, hoveredValue: SBBColors.red125, pressedValue: SBBColors.red125),
         sidebarItemTextStyle: SBBLeanTextStyles.contextMenu,
         headerNavItemForegroundColor: SBBTheme.resolveStatesWith(defaultValue: SBBColors.black, disabledValue: SBBColors.black, hoveredValue: SBBColors.red125, pressedValue: SBBColors.red125),
+        promotionBox: PromotionBoxStyle.$default(baseStyle: baseStyle),
       );
 
   final SBBControlStyle? checkbox;
@@ -156,6 +158,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   final MaterialStateProperty<Color?>? sidebarItemForegroundColor;
   final TextStyle? sidebarItemTextStyle;
   final MaterialStateProperty<Color?>? headerNavItemForegroundColor;
+  final PromotionBoxStyle? promotionBox;
 
   static SBBControlStyles of(BuildContext context) => Theme.of(context).extension<SBBControlStyles>()!;
 
@@ -236,6 +239,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     MaterialStateProperty<Color?>? sidebarItemForegroundColor,
     TextStyle? sidebarItemTextStyle,
     MaterialStateProperty<Color?>? headerNavItemForegroundColor,
+    PromotionBoxStyle? promotionBox,
   }) =>
       SBBControlStyles(
         checkbox: checkbox ?? this.checkbox,
@@ -278,6 +282,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
         sidebarItemForegroundColor: sidebarItemForegroundColor ?? this.sidebarItemForegroundColor,
         sidebarItemTextStyle: sidebarItemTextStyle ?? this.sidebarItemTextStyle,
         headerNavItemForegroundColor: headerNavItemForegroundColor ?? this.headerNavItemForegroundColor,
+        promotionBox: promotionBox ?? this.promotionBox,
       );
 
   @override
@@ -324,6 +329,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
       sidebarItemBackgroundColor: other.sidebarItemBackgroundColor,
       sidebarItemForegroundColor: other.sidebarItemForegroundColor,
       headerNavItemForegroundColor: other.headerNavItemForegroundColor,
+      promotionBox: PromotionBoxStyle.lerp(promotionBox, other.promotionBox, t),
     );
   }
 }
@@ -372,6 +378,7 @@ extension SBBControlStylesExtension on SBBControlStyles? {
       sidebarItemForegroundColor: this!.sidebarItemForegroundColor ?? other?.sidebarItemForegroundColor,
       sidebarItemTextStyle: this!.sidebarItemTextStyle ?? other?.sidebarItemTextStyle,
       headerNavItemForegroundColor: this!.headerNavItemForegroundColor ?? other?.headerNavItemForegroundColor,
+      promotionBox: this!.promotionBox ?? other?.promotionBox,
     ) as SBBControlStyles;
   }
 }

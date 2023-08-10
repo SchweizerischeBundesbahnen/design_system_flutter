@@ -17,6 +17,7 @@ import 'pages/list_item_page.dart';
 import 'pages/loading_indicator_page.dart';
 import 'pages/modal_page.dart';
 import 'pages/onboarding_page.dart';
+import 'pages/promotion_box_page.dart';
 import 'pages/radio_button_page.dart';
 import 'pages/segmented_button_page.dart';
 import 'pages/select_page.dart';
@@ -187,6 +188,10 @@ class MyApp extends StatelessWidget {
                             _DemoEntry(
                               'Tab Bar',
                               TabBarPage(),
+                            ),
+                            _DemoEntry(
+                              'Promotion Box',
+                              PromotionBoxPage(),
                               isLastElement: true,
                             ),
                           ],
