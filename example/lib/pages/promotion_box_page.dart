@@ -12,6 +12,7 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
   late PromotionBoxController defaultController;
   late PromotionBoxController closableController;
   late PromotionBoxController clickableController;
+  late PromotionBoxController extraController;
 
   static const _title = 'Bessere Übersicht.';
   static const _description = 'Erkennen Sie nun schneller, auf welchen Perrons Durchsagen vorhanden sind.';
@@ -55,7 +56,7 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
                     badgeText: 'With way too long title and badge text',
                     title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
                     description: _description,
-                    onControllerCreated: (c) => defaultController = c,
+                    onControllerCreated: (c) => extraController = c,
                   ),
                   SizedBox(height: sbbDefaultSpacing),
                 ],
@@ -68,6 +69,7 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
               defaultController.show();
               closableController.show();
               clickableController.show();
+              extraController.show();
             },
           ),
           SizedBox(height: 8.0),
@@ -77,6 +79,7 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
               defaultController.hide();
               closableController.hide();
               clickableController.hide();
+              extraController.hide();
             },
           ),
         ],
