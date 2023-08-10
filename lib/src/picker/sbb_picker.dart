@@ -50,10 +50,8 @@ class SBBPicker extends StatelessWidget {
           key: key,
           label: label,
           child: SBBPickerScrollView(
-            // initialSelectedIndex: initialSelectedIndex,
-            // TODO not working
             controller: SBBPickerScrollController(
-              initialItem: 5,
+              initialItem: initialSelectedIndex,
             ),
             onSelectedItemChanged: onSelectedItemChanged,
             itemBuilder: itemBuilder,
@@ -181,22 +179,66 @@ class SBBPicker extends StatelessWidget {
 }
 
 class SBBDateTimePicker extends StatefulWidget {
-  const SBBDateTimePicker({
+  SBBDateTimePicker({
     super.key,
     this.label,
     this.mode = SBBDateTimePickerMode.dateAndTime,
     required this.onDateTimeChanged,
-    this.initialDateTime,
+    DateTime? initialDateTime,
     this.minimumDate,
     this.maximumDate,
     this.isLastElement = true,
     this.minuteInterval = 1,
-  });
+  })  : initialDateTime = initialDateTime ?? DateTime.now(),
+        assert(
+          minuteInterval > 0 && 60 % minuteInterval == 0,
+          'minute interval is not a positive integer factor of 60',
+        ) {
+    assert(
+      mode != SBBDateTimePickerMode.dateAndTime ||
+          minimumDate == null ||
+          !this.initialDateTime.isBefore(minimumDate!),
+      'initial date is before minimum date',
+    );
+    assert(
+      mode != SBBDateTimePickerMode.dateAndTime ||
+          maximumDate == null ||
+          !this.initialDateTime.isAfter(maximumDate!),
+      'initial date is after maximum date',
+    );
+    // assert(
+    //   mode != SBBDateTimePickerMode.date ||
+    //       (minimumYear >= 1 && this.initialDateTime.year >= minimumYear),
+    //   'initial year is not greater than minimum year, or minimum year is not positive',
+    // );
+    // assert(
+    //   mode != SBBDateTimePickerMode.date ||
+    //       maximumYear == null ||
+    //       this.initialDateTime.year <= maximumYear!,
+    //   'initial year is not smaller than maximum year',
+    // );
+    // assert(
+    //   mode != SBBDateTimePickerMode.date ||
+    //       minimumDate == null ||
+    //       !minimumDate!.isAfter(this.initialDateTime),
+    //   'initial date ${this.initialDateTime} is not greater than or equal to minimumDate $minimumDate',
+    // );
+    // assert(
+    //   mode != SBBDateTimePickerMode.date ||
+    //       maximumDate == null ||
+    //       !maximumDate!.isBefore(this.initialDateTime),
+    //   'initial date ${this.initialDateTime} is not less than or equal to maximumDate $maximumDate',
+    // );
+    // assert(
+    //   this.initialDateTime.minute % minuteInterval == 0,
+    //   'initial minute is not divisible by minute interval',
+    // );
+  }
 
   final String? label;
   final SBBDateTimePickerMode mode;
   final ValueChanged<DateTime> onDateTimeChanged;
-  final DateTime? initialDateTime;
+  final DateTime initialDateTime;
   final DateTime? minimumDate;
   final DateTime? maximumDate;
   final int minuteInterval;
@@ -207,300 +249,510 @@ class SBBDateTimePicker extends StatefulWidget {
     if (mode == SBBDateTimePickerMode.date) {
       return _SBBDateTimePickerDateState();
     }
+    if (mode == SBBDateTimePickerMode.time) {
+      return _SBBDateTimePickerTimeState();
+    }
     // return _SBBDateTimePickerState();
     return _SBBDateTimePickerDateState();
   }
 }
 
-class _SBBDateTimePickerDateState extends State<SBBDateTimePicker> {
-  final maxDaysInMonth = 31;
-
-  final startDateTime = DateTime.now();
-  late DateTime selectedDateTime = widget.initialDateTime ?? startDateTime;
-  late int initialHourIndex = selectedDateTime.hour;
-  late int initialMinuteIndex =
-      (selectedDateTime.minute / widget.minuteInterval).ceil();
-
-  late int initialDayIndex = selectedDateTime.day - 1;
-  late int initialMonthIndex = selectedDateTime.month - 1;
-  late int initialYearIndex = selectedDateTime.year - startDateTime.year;
-
-  late SBBPickerScrollController dayController = SBBPickerScrollController(
-    initialItem: initialDayIndex,
-  );
-  late SBBPickerScrollController monthController = SBBPickerScrollController(
-    initialItem: initialMonthIndex,
-  );
-  late SBBPickerScrollController yearController = SBBPickerScrollController(
-    initialItem: initialYearIndex,
-  );
-
-  var dayScrollingNotifierListenerRegistered = false;
-  var monthScrollingNotifierListenerRegistered = false;
-  var yearScrollingNotifierListenerRegistered = false;
+class _SBBDateTimePickerTimeState extends State<SBBDateTimePicker> {
+  late DateTime selectedDateTime;
+  late SBBPickerScrollController hourController;
+  late SBBPickerScrollController minuteController;
 
   @override
   void initState() {
-    selectedDateTime = selectedDateTime.copyWith(
-      minute: _minuteByIndex(initialMinuteIndex),
-    );
-
-    if (widget.mode == SBBDateTimePickerMode.date) {
-      dayController.addListener(() {
-        if (!dayScrollingNotifierListenerRegistered) {
-          dayScrollingNotifierListenerRegistered = true;
-          dayController.position.isScrollingNotifier.addListener(
-            () {
-              final controllerIdle =
-                  !dayController.position.isScrollingNotifier.value;
-              if (controllerIdle) {
-                final currentMonthDays = _monthDaysCount(
-                  selectedDateTime.year,
-                  selectedDateTime.month,
-                );
-                final selectedDay =
-                    dayController.selectedItem % maxDaysInMonth + 1;
-                final overflowedDaysCount = selectedDay - currentMonthDays;
-                if (selectedDay > currentMonthDays) {
-                  dayController.animateToItem(
-                    dayController.selectedItem - overflowedDaysCount,
-                  );
-                }
-              }
-            },
-          );
-        }
-      });
-      monthController.addListener(() {
-        if (!monthScrollingNotifierListenerRegistered) {
-          monthScrollingNotifierListenerRegistered = true;
-          monthController.position.isScrollingNotifier.addListener(
-            () {
-              final controllerIdle =
-                  !monthController.position.isScrollingNotifier.value;
-              if (controllerIdle) {
-                final selectedMonth = monthController.selectedItem + 1;
-                final currentMonthDays = _monthDaysCount(
-                  selectedDateTime.year,
-                  selectedMonth,
-                );
-
-                final selectedDay =
-                    dayController.selectedItem % maxDaysInMonth + 1;
-                final overflowedDaysCount = selectedDay - currentMonthDays;
-                if (selectedDay > currentMonthDays) {
-                  debugPrint('DEBUG month scrolling: ${currentMonthDays}');
-                  dayController.animateToItem(
-                    dayController.selectedItem - overflowedDaysCount,
-                  );
-                  debugPrint(
-                      'IDLE2 ${dayController.selectedItem} $overflowedDaysCount');
-                }
-              }
-            },
-          );
-        }
-      });
-      yearController.addListener(() {
-        if (!yearScrollingNotifierListenerRegistered) {
-          yearScrollingNotifierListenerRegistered = true;
-          yearController.position.isScrollingNotifier.addListener(
-            () {
-              final controllerIdle =
-                  !yearController.position.isScrollingNotifier.value;
-              if (controllerIdle) {
-                final selectedYear =
-                    yearController.selectedItem + startDateTime.year;
-                final currentMonthDays = _monthDaysCount(
-                  selectedYear,
-                  selectedDateTime.month,
-                );
-
-                final selectedDay =
-                    dayController.selectedItem % maxDaysInMonth + 1;
-                final overflowedDaysCount = selectedDay - currentMonthDays;
-                if (selectedDay > currentMonthDays) {
-                  debugPrint('DEBUG month scrolling: ${currentMonthDays}');
-                  dayController.animateToItem(
-                    dayController.selectedItem - overflowedDaysCount,
-                  );
-                  debugPrint(
-                      'IDLE2 ${dayController.selectedItem} $overflowedDaysCount');
-                }
-              }
-            },
-          );
-        }
-      });
-    }
     super.initState();
+    hourController = SBBPickerScrollController(
+      initialItem: 0,
+    );
+    minuteController = SBBPickerScrollController(
+      initialItem: 0,
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    assert(
-      widget.minuteInterval > 0 && 60 % widget.minuteInterval == 0,
-      'minute interval is not a positive integer factor of 60',
-    );
-
     return SBBPicker.custom(
       label: widget.label,
       isLastElement: widget.isLastElement,
-      child: _dateBody(context),
+      child: Row(
+        children: [
+          Expanded(
+            child: _buildHourPickerScrollView(context),
+          ),
+          Expanded(
+            child: _buildMinutePickerScrollView(context),
+          ),
+        ],
+      ),
     );
   }
 
-  bool _isDateValid(int year, int month, int day) {
-    final monthDaysCount = _monthDaysCount(
+  Widget _buildHourPickerScrollView(BuildContext context) {
+    return SBBPickerScrollView(
+      // controller: minuteController,
+      onSelectedItemChanged: (int index) {
+        // final selectedMonth = _selectedMonth(index);
+        // _onDateTimeSelected(
+        //   month: selectedMonth,
+        // );
+      },
+      itemBuilder: (BuildContext context, int index) {
+        final selectedMinute =
+            widget.minuteInterval * index % 60; //_selectedMonth(index);
+        final selectedHour =
+            index % 24; //_selectedYear(yearController.selectedItem);
+
+        var hourEnabled = true;
+        // check if selected time is before min time
+        final minTime = _minTime;
+        if (minTime != null) {
+          if (minTime.hour > selectedHour) {
+            hourEnabled = false;
+          }
+        }
+        // check if selected time is after max time
+        final maxTime = _maxTime;
+        if (maxTime != null) {
+          if (maxTime.hour < selectedHour) {
+            hourEnabled = false;
+          }
+        }
+
+        final listItemLabel = selectedHour.toString().padLeft(2, '0');
+
+        return (
+          hourEnabled,
+          Container(
+            padding: EdgeInsets.only(
+              left: 12.0,
+              right: 12.0,
+            ),
+            alignment: Alignment.centerRight,
+            child: Text(
+              listItemLabel,
+              textAlign: TextAlign.left,
+              overflow: TextOverflow.ellipsis,
+              softWrap: false,
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildMinutePickerScrollView(BuildContext context) {
+    return SBBPickerScrollView(
+      // controller: minuteController,
+      onSelectedItemChanged: (int index) {
+        // final selectedMonth = _selectedMonth(index);
+        // _onDateTimeSelected(
+        //   month: selectedMonth,
+        // );
+      },
+      itemBuilder: (BuildContext context, int index) {
+        final selectedMinute = _selectedMinute(index);
+        final selectedHour = _selectedHour(hourController.selectedItem);
+
+        var minuteEnabled = true;
+        // check if selected date is before min date
+        final minTime = _minTime;
+        if (minTime != null) {
+          if (minTime.hour == selectedHour) {
+            if (minTime.minute > selectedMinute) {
+              minuteEnabled = false;
+            }
+          } else if (minTime.hour > selectedHour) {
+            minuteEnabled = false;
+          }
+        }
+        // // check if selected date is after max date
+        // final maxDate = _maxDate;
+        // if (maxDate != null) {
+        //   if (maxDate.year == selectedHour) {
+        //     if (maxDate.month < selectedMinute) {
+        //       minuteEnabled = false;
+        //     }
+        //   } else if (maxDate.year < selectedHour) {
+        //     minuteEnabled = false;
+        //   }
+        // }
+
+        final listItemLabel = selectedMinute.toString().padLeft(2, '0');
+
+        return (
+          minuteEnabled,
+          Container(
+            padding: EdgeInsets.only(
+              left: 12.0,
+              right: 12.0,
+            ),
+            alignment: Alignment.centerLeft,
+            child: Text(
+              listItemLabel,
+              textAlign: TextAlign.left,
+              overflow: TextOverflow.ellipsis,
+              softWrap: false,
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  int _selectedHour(int selectedItemIndex) {
+    return selectedItemIndex % 24;
+  }
+
+  int _selectedMinute(int selectedItemIndex) {
+    return selectedItemIndex * widget.minuteInterval % 60;
+  }
+
+  DateTime? get _minTime {
+    return widget.minimumDate?.copyWith(
+      year: widget.initialDateTime.year,
+      month: widget.initialDateTime.month,
+      day: widget.initialDateTime.day,
+      second: 0,
+      millisecond: 0,
+      microsecond: 0,
+    );
+  }
+
+  DateTime? get _maxTime {
+    return widget.maximumDate?.copyWith(
+      year: widget.initialDateTime.year,
+      month: widget.initialDateTime.month,
+      day: widget.initialDateTime.day,
+      second: 59,
+      millisecond: 999,
+      microsecond: 999,
+    );
+  }
+}
+
+class _SBBDateTimePickerDateState extends State<SBBDateTimePicker> {
+  late int _startYear;
+  late DateTime selectedDateTime;
+  late SBBPickerScrollController dayController;
+  late SBBPickerScrollController monthController;
+  late SBBPickerScrollController yearController;
+
+  @override
+  void initState() {
+    super.initState();
+    final startDate = DateTime.now();
+    _startYear = startDate.year;
+    selectedDateTime = (widget.initialDateTime ?? startDate).copyWith(
+      hour: 0,
+      minute: 0,
+      second: 0,
+      millisecond: 0,
+    );
+
+    final initialDayIndex = selectedDateTime.day - 1;
+    dayController = SBBPickerScrollController(
+      initialItem: initialDayIndex,
+    );
+    dayController._scrollingStateNotifier.addListener(() {
+      _onControllerIdle(dayController);
+    });
+
+    final initialMonthIndex = selectedDateTime.month - 1;
+    monthController = SBBPickerScrollController(
+      initialItem: initialMonthIndex,
+    );
+    monthController._scrollingStateNotifier.addListener(() {
+      _onControllerIdle(monthController);
+    });
+
+    final initialYearIndex = selectedDateTime.year - _startYear;
+    yearController = SBBPickerScrollController(
+      initialItem: initialYearIndex,
+    );
+    yearController._scrollingStateNotifier.addListener(() {
+      _onControllerIdle(yearController);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SBBPicker.custom(
+      label: widget.label,
+      isLastElement: widget.isLastElement,
+      child: Row(
+        children: [
+          Container(
+            // TODO check bigger fonts
+            // TODO evaluate more generic approach than hardcoded numbers
+            width: 40.0 + 24.0 + 12.0,
+            child: _buildDayPickerScrollView(context),
+          ),
+          Expanded(
+            child: _buildMonthPickerScrollView(context),
+          ),
+          Container(
+            width: 64.0 + 12.0 + 24.0,
+            child: _buildYearPickerScrollView(context),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDayPickerScrollView(BuildContext context) {
+    return SBBPickerScrollView(
+      controller: dayController,
+      onSelectedItemChanged: (int index) {
+        final selectedDay = _selectedDay(index);
+        _onDateTimeSelected(
+          day: selectedDay,
+        );
+      },
+      itemBuilder: (BuildContext context, int index) {
+        // check if day is within max month days constraints
+        final monthDaysCount = _monthDaysCount(
+          selectedDateTime.year,
+          selectedDateTime.month,
+        );
+        final monthDay = _selectedDay(index);
+        final monthDayIndex = monthDay - 1;
+        var dayEnabled = monthDayIndex < monthDaysCount;
+
+        // check if date is before minimum date
+        final minDate = _minDate;
+        if (dayEnabled && minDate != null) {
+          dayEnabled &= !minDate.isAfter(
+            selectedDateTime.copyWith(
+              day: monthDay,
+            ),
+          );
+        }
+        // check if date is after maximum date
+        final maxDate = _maxDate;
+        if (dayEnabled && maxDate != null) {
+          dayEnabled &= !maxDate.isBefore(
+            selectedDateTime.copyWith(
+              day: monthDay,
+            ),
+          );
+        }
+        final listItemLabel = '$monthDay.';
+        return (
+          dayEnabled,
+          Container(
+            padding: EdgeInsets.only(
+              left: 24.0,
+              right: 12.0,
+            ),
+            alignment: Alignment.centerRight,
+            child: Text(
+              listItemLabel,
+              overflow: TextOverflow.ellipsis,
+              softWrap: false,
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildMonthPickerScrollView(BuildContext context) {
+    return SBBPickerScrollView(
+      controller: monthController,
+      onSelectedItemChanged: (int index) {
+        final selectedMonth = _selectedMonth(index);
+        _onDateTimeSelected(
+          month: selectedMonth,
+        );
+      },
+      itemBuilder: (BuildContext context, int index) {
+        final cupertinoLocalizations = Localizations.of(
+          context,
+          CupertinoLocalizations,
+        );
+        final selectedMonth = _selectedMonth(index);
+        final selectedYear = _selectedYear(yearController.selectedItem);
+
+        var monthEnabled = true;
+        // check if selected date is before min date
+        final minDate = _minDate;
+        if (minDate != null) {
+          if (minDate.year == selectedYear) {
+            if (minDate.month > selectedMonth) {
+              monthEnabled = false;
+            }
+          } else if (minDate.year > selectedYear) {
+            monthEnabled = false;
+          }
+        }
+        // check if selected date is after max date
+        final maxDate = _maxDate;
+        if (maxDate != null) {
+          if (maxDate.year == selectedYear) {
+            if (maxDate.month < selectedMonth) {
+              monthEnabled = false;
+            }
+          } else if (maxDate.year < selectedYear) {
+            monthEnabled = false;
+          }
+        }
+
+        final listItemLabel = cupertinoLocalizations.datePickerMonth(
+          selectedMonth,
+        );
+
+        return (
+          monthEnabled,
+          Container(
+            padding: EdgeInsets.only(
+              left: 12.0,
+              right: 12.0,
+            ),
+            alignment: Alignment.centerLeft,
+            child: Text(
+              listItemLabel,
+              textAlign: TextAlign.left,
+              overflow: TextOverflow.ellipsis,
+              softWrap: false,
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _buildYearPickerScrollView(BuildContext context) {
+    return SBBPickerScrollView(
+      controller: yearController,
+      onSelectedItemChanged: (int index) {
+        final selectedYear = _selectedYear(index);
+        _onDateTimeSelected(
+          year: selectedYear,
+        );
+      },
+      itemBuilder: (BuildContext context, int index) {
+        final selectedYear = _selectedYear(index);
+
+        var yearEnabled = true;
+        // check if selected date is before min date
+        final minDate = _minDate;
+        if (minDate != null) {
+          if (minDate.year > selectedYear) {
+            yearEnabled = false;
+          }
+        }
+        // check if selected date is after max date
+        final maxDate = _maxDate;
+        if (maxDate != null) {
+          if (maxDate.year < selectedYear) {
+            yearEnabled = false;
+          }
+        }
+
+        final listItemLabel = _selectedYear(index).toString();
+        return (
+          yearEnabled,
+          Container(
+            margin: EdgeInsets.only(
+              left: 12.0,
+              right: 24.0,
+            ),
+            child: Text(
+              listItemLabel,
+              overflow: TextOverflow.ellipsis,
+              softWrap: false,
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _onControllerIdle(SBBPickerScrollController controller) {
+    if (controller._scrollingStateNotifier.value) {
+      // do nothing if controller still scrolling
+      return;
+    }
+
+    // check if selected date is before min date
+    final minDate = _minDate;
+    if (minDate != null && minDate.isAfter(selectedDateTime)) {
+      // change selected date to min date
+      final correctedYearIndex = minDate.year - _startYear;
+      final correctedMonthIndex = minDate.month - 1;
+      final correctedDayIndex = minDate.day - 1;
+      yearController.animateToItem(correctedYearIndex);
+      monthController.animateToItem(correctedMonthIndex);
+      dayController.animateToItem(correctedDayIndex);
+      debugPrint(
+          'correct to min date: $correctedDayIndex $correctedMonthIndex $correctedYearIndex');
+      return;
+    }
+
+    // check if selected date is after max date
+    final maxDate = _maxDate;
+    if (maxDate != null && maxDate.isBefore(selectedDateTime)) {
+      // change selected date to max date
+      final correctedYearIndex = maxDate.year - _startYear;
+      final correctedMonthIndex = maxDate.month - 1;
+      final correctedDayIndex = maxDate.day - 1;
+      yearController.animateToItem(correctedYearIndex);
+      monthController.animateToItem(correctedMonthIndex);
+      dayController.animateToItem(correctedDayIndex);
+      return;
+    }
+
+    // check if selected day value is higher than valid for current month
+    final selectedDay = _selectedDay(dayController.selectedItem);
+    final selectedMonthDaysCount = _monthDaysCount(
       selectedDateTime.year,
       selectedDateTime.month,
     );
-    final dayInMonthIndex = (day - 1) % maxDaysInMonth;
-    final monthDay = dayInMonthIndex + 1;
-    if (dayInMonthIndex >= monthDaysCount) {
-      // day out of month days bounds
-      return false;
+    final monthDayIndex = selectedDay - 1;
+    if (monthDayIndex >= selectedMonthDaysCount) {
+      // correction to max day value in current month
+      final difference = selectedDay - selectedMonthDaysCount;
+      final correctedDayIndex = dayController.selectedItem - difference;
+      dayController.animateToItem(correctedDayIndex);
+      debugPrint(
+          'correct to valid date: $correctedDayIndex ${selectedDateTime.toIso8601String()}');
+      return;
     }
-    // check if date is before minimum date
-    final dateToValidate = DateTime(year, month, day);
-    final minDate = widget.minimumDate?.copyWith(
-        hour: 0, minute: 0, second: 0, millisecond: 0, microsecond: 0);
-    if (minDate != null) {
-      if (dateToValidate.isBefore(minDate)) {
-        // date before min date
-        return false;
-      }
-    }
-    final maxDate = widget.maximumDate?.copyWith(
-        hour: 23, minute: 59, second: 59, millisecond: 999, microsecond: 999);
-    if (minDate != null) {
-      if (dateToValidate.isBefore(minDate)) {
-        // date before min date
-        return false;
-      }
-    }
-    return true;
   }
 
-  // bool get _isCurrentDateValid {
-  //   // The current date selection represents a range [minSelectedData, maxSelectDate].
-  //   final DateTime minSelectedDate = DateTime(selectedYear, selectedMonth, selectedDay);
-  //   final DateTime maxSelectedDate = DateTime(selectedYear, selectedMonth, selectedDay + 1);
-  //
-  //   final bool minCheck = widget.minimumDate?.isBefore(maxSelectedDate) ?? true;
-  //   final bool maxCheck = widget.maximumDate?.isBefore(minSelectedDate) ?? false;
-  //
-  //   return minCheck && !maxCheck && minSelectedDate.day == selectedDay;
-  // }
+  int _selectedDay(int selectedItemIndex) {
+    return selectedItemIndex % 31 + 1;
+  }
 
-  Widget _dateBody(BuildContext context) {
-    return Row(
-      children: [
-        Container(
-          width: 40.0 + 24.0 + 12.0,
-          child: SBBPickerScrollView(
-            controller: dayController,
-            onSelectedItemChanged: (int index) {
-              final selectedDay = index % maxDaysInMonth + 1;
-              _onDateTimeSelected(
-                day: selectedDay,
-              );
-            },
-            itemBuilder: (BuildContext context, int index) {
-              // check if day is within month days constraints
-              final monthDaysCount = _monthDaysCount(
-                selectedDateTime.year,
-                selectedDateTime.month,
-              );
-              final dayInMonthIndex = index % maxDaysInMonth;
-              final monthDay = dayInMonthIndex + 1;
-              var dayEnabled = dayInMonthIndex < monthDaysCount;
-              // check if date is before minimum date
-              final minDate = widget.minimumDate;
-              if (dayEnabled && minDate != null) {
-                dayEnabled &=
-                    minDate.isBefore(selectedDateTime.copyWith(day: monthDay));
-              }
-              return (
-                dayEnabled,
-                Container(
-                  padding: EdgeInsets.only(
-                    left: 24.0,
-                    right: 12.0,
-                  ),
-                  alignment: Alignment.centerRight,
-                  child: Text(
-                    '$monthDay.',
-                    overflow: TextOverflow.ellipsis,
-                    softWrap: false,
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
-        Expanded(
-          child: SBBPickerScrollView(
-            controller: monthController,
-            onSelectedItemChanged: (int index) {
-              final selectedMonth = index % 12 + 1;
-              _onDateTimeSelected(
-                month: selectedMonth,
-              );
-            },
-            itemBuilder: (BuildContext context, int index) {
-              final cupertinoLocalizations = Localizations.of(
-                context,
-                CupertinoLocalizations,
-              );
-              return (
-                true,
-                Container(
-                  padding: EdgeInsets.only(
-                    left: 12.0,
-                    right: 12.0,
-                  ),
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    cupertinoLocalizations.datePickerMonth(index % 12 + 1),
-                    textAlign: TextAlign.left,
-                    overflow: TextOverflow.ellipsis,
-                    softWrap: false,
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
-        Container(
-          width: 64.0 + 12.0 + 24.0,
-          child: SBBPickerScrollView(
-            controller: yearController,
-            onSelectedItemChanged: (int index) {
-              final selectedYear = startDateTime.year + index;
-              _onDateTimeSelected(
-                year: selectedYear,
-              );
-            },
-            itemBuilder: (BuildContext context, int index) {
-              return (
-                true,
-                Container(
-                  margin: EdgeInsets.only(
-                    left: 12.0,
-                    right: 24.0,
-                  ),
-                  child: Text(
-                    (startDateTime.year + index).toString(),
-                    overflow: TextOverflow.ellipsis,
-                    softWrap: false,
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
-      ],
+  int _selectedMonth(int selectedItemIndex) {
+    return selectedItemIndex % 12 + 1;
+  }
+
+  int _selectedYear(int selectedItemIndex) {
+    return _startYear + selectedItemIndex;
+  }
+
+  DateTime? get _minDate {
+    return widget.minimumDate?.copyWith(
+      hour: 0,
+      minute: 0,
+      second: 0,
+      millisecond: 0,
+      microsecond: 0,
+    );
+  }
+
+  DateTime? get _maxDate {
+    return widget.maximumDate?.copyWith(
+      hour: 23,
+      minute: 59,
+      second: 59,
+      millisecond: 999,
+      microsecond: 999,
     );
   }
 
@@ -519,7 +771,7 @@ class _SBBDateTimePickerDateState extends State<SBBDateTimePicker> {
     var notifyCallback = true;
 
     if (widget.mode == SBBDateTimePickerMode.date) {
-      final isDayChanging = day != null;
+      // final isDayChanging = day != null;
       final isMonthChanging = month != null;
       final isYearChanging = year != null;
 
@@ -531,89 +783,40 @@ class _SBBDateTimePickerDateState extends State<SBBDateTimePicker> {
         notifyCallback = false;
         selectedDay = currentMonthDays;
       }
-      // if (isDayChanging) {
-      //   // dayController.position.isScrollingNotifier.addListener(() {
-      //   //   debugPrint(
-      //   //       'addPostFrameCallback:\n${dayController}\n${dayController.position}\n${dayController.position.isScrollingNotifier}');
-      //   // });
-      //   final currentMonthDays = _monthDaysCount(
-      //     selectedDateTime.year,
-      //     selectedDateTime.month,
-      //   );
-      //   if (selectedDay > currentMonthDays) {
-      //     notifyCallback = false;
-      //     selectedDay = currentMonthDays;
-      //     // _computeWhenTrue(
-      //     //   () => !dayController.position.isScrollingNotifier.value,
-      //     //   () => dayController.animateToItem(
-      //     //     selectedDay - 1,
-      //     //     duration: kThemeAnimationDuration,
-      //     //     curve: Curves.fastOutSlowIn,
-      //     //   ),
-      //     // );
-      //     // dayController.animateToItem(
-      //     //   selectedDay - 1,
-      //     //   duration: kThemeAnimationDuration,
-      //     //   curve: Curves.fastOutSlowIn,
-      //     // );
+
+      // final isMonthOrYearChanging = day == null;
+      // if (isMonthOrYearChanging) {
+      //   final isDayControllerIdle =
+      //       !dayController.position.isScrollingNotifier.value;
+      //   final isMonthControllerIdle =
+      //       !monthController.position.isScrollingNotifier.value;
+      //   final isYearControllerIdle =
+      //       !yearController.position.isScrollingNotifier.value;
+      //   if (isDayControllerIdle &&
+      //       isMonthControllerIdle &&
+      //       isYearControllerIdle) {
+      //     final prevMonthDays = _monthDaysCount(
+      //       selectedDateTime.year,
+      //       selectedDateTime.month,
+      //     );
+      //     if (dayController.selectedItem < 0) {
+      //       notifyCallback = false;
+      //     } else if (dayController.selectedItem > prevMonthDays - 1) {
+      //       notifyCallback = false;
+      //     }
+      //
+      //     final monthDays = _monthDaysCount(
+      //       selectedYear,
+      //       selectedMonth,
+      //     );
+      //     final dayValueOverflow = selectedDay > monthDays;
+      //
+      //     if (dayValueOverflow) {
+      //       selectedDay = monthDays;
+      //       notifyCallback = false;
+      //     }
       //   }
       // }
-
-      final isMonthOrYearChanging = day == null;
-      if (isMonthOrYearChanging) {
-        final isDayControllerIdle =
-            !dayController.position.isScrollingNotifier.value;
-        final isMonthControllerIdle =
-            !monthController.position.isScrollingNotifier.value;
-        final isYearControllerIdle =
-            !yearController.position.isScrollingNotifier.value;
-        debugPrint(
-            '$selectedDay.$selectedMonth.$selectedYear : ${dayController.position.isScrollingNotifier.value}');
-        if (isDayControllerIdle &&
-            isMonthControllerIdle &&
-            isYearControllerIdle) {
-          final prevMonthDays = _monthDaysCount(
-            selectedDateTime.year,
-            selectedDateTime.month,
-          );
-          if (dayController.selectedItem < 0) {
-            notifyCallback = false;
-            while (dayController.selectedItem < 0) {
-              // dayController.jumpToItem(
-              //   dayController.selectedItem + prevMonthDays,
-              // );
-            }
-          } else if (dayController.selectedItem > prevMonthDays - 1) {
-            notifyCallback = false;
-            while (dayController.selectedItem > prevMonthDays - 1) {
-              // dayController.jumpToItem(
-              //   dayController.selectedItem - prevMonthDays,
-              // );
-            }
-          }
-
-          final monthDays = _monthDaysCount(
-            selectedYear,
-            selectedMonth,
-          );
-          final dayValueOverflow = selectedDay > monthDays;
-
-          if (dayValueOverflow) {
-            // TODO add scrollcontroller for motnh and year and check those => check with cupertino
-            debugPrint(
-                'OVERFLOW $selectedDay.$selectedMonth.$selectedYear : ${dayController.positions.length} ${dayController.position.isScrollingNotifier.value}');
-
-            selectedDay = monthDays;
-            notifyCallback = false;
-            // TODO prevent jumpToItem while animating
-            // dayController.animateToItem(
-            //   selectedDay - 1,
-            //   duration: kThemeAnimationDuration,
-            //   curve: Curves.fastOutSlowIn,
-            // );
-          }
-        }
-      }
     }
 
     _onDateTimeChanged(
@@ -646,10 +849,6 @@ class _SBBDateTimePickerDateState extends State<SBBDateTimePicker> {
     if (notifyCallback) {
       widget.onDateTimeChanged(selectedDateTime);
     }
-  }
-
-  int _minuteByIndex(int minuteIndex) {
-    return minuteIndex * widget.minuteInterval % 60;
   }
 
   int _monthDaysCount(int year, int month) {
@@ -1322,39 +1521,39 @@ class _SBBPickerScrollViewState extends State<SBBPickerScrollView> {
     _controller.addListener(() {
       _scrollOffsetValueNotifier.value = _controller.offset;
     });
-    _controller._scrollingStateNotifier.addListener(() {
-      if (!_controller._scrollingStateNotifier.value) {
-        // do nothing because controller is not idle
-        return;
-      }
-      Future.microtask(() {
-        // check for idle scroll controller with Future.microtask to prevent
-        // this getting triggered by a new drag action while the view was
-        // already in an scroll animation
-        if (!_controller._scrollingStateNotifier.value) {
-          // ensure scroll position snaps to the nearest item after controller
-          // is done scrolling
-          final currentScrollPosition = _controller.position.pixels;
-          final targetScrollPosition =
-              SBBPickerScrollController._calculateTargetScrollPosition(
-            currentScrollPosition,
-          );
-
-          // Due to the workaround in the target scroll position calculation, the
-          // calculated position may be slightly inaccurate. As a result, if the
-          // difference between the current and calculated positions is minor, the
-          // snap to item scroll will be skipped.
-          final difference =
-              (currentScrollPosition - targetScrollPosition).abs();
-          if (difference > 0.01) {
-            _controller.animateToScrollOffset(
-              targetScrollPosition,
-              curve: Curves.easeInOut,
-            );
-          }
-        }
-      });
-    });
+    // _controller._scrollingStateNotifier.addListener(() {
+    //   if (_controller._scrollingStateNotifier.value) {
+    //     // do nothing because controller is not idle
+    //     return;
+    //   }
+    //   Future.microtask(() {
+    //     // check for idle scroll controller with Future.microtask to prevent
+    //     // this getting triggered by a new drag action while the view was
+    //     // already in an scroll animation
+    //     if (!_controller._scrollingStateNotifier.value) {
+    //       // ensure scroll position snaps to the nearest item after controller
+    //       // is done scrolling
+    //       final currentScrollPosition = _controller.position.pixels;
+    //       final targetScrollPosition =
+    //           SBBPickerScrollController._calculateTargetScrollPosition(
+    //         currentScrollPosition,
+    //       );
+    //
+    //       // Due to the workaround in the target scroll position calculation, the
+    //       // calculated position may be slightly inaccurate. As a result, if the
+    //       // difference between the current and calculated positions is minor, the
+    //       // snap to item scroll will be skipped.
+    //       final difference =
+    //           (currentScrollPosition - targetScrollPosition).abs();
+    //       if (difference > 0.01) {
+    //         _controller.animateToScrollOffset(
+    //           targetScrollPosition,
+    //           curve: Curves.easeInOut,
+    //         );
+    //       }
+    //     }
+    //   });
+    // });
   }
 
   @override
@@ -1589,7 +1788,7 @@ class _SBBPickerScrollViewState extends State<SBBPickerScrollView> {
 
   SBBPickerScrollController get _controller {
     // return testController;
-    return widget.controller!;
+    // return widget.controller!;
     return widget.controller ?? _fallbackController!;
   }
 }
@@ -1692,7 +1891,48 @@ class SBBPickerScrollController extends ScrollController {
     super.attach(position);
     position.isScrollingNotifier.addListener(() {
       final scrollingValue = position.isScrollingNotifier.value;
-      _scrollingStateNotifier.value = scrollingValue;
+      if (scrollingValue) {
+        // only update scrolling value because controller is not idle
+        _scrollingStateNotifier.value = scrollingValue;
+        return;
+      }
+
+      // check for idle scroll controller with Future.microtask to prevent
+      // this getting triggered by a new drag action while the view was
+      // already in an scroll animation
+      Future.microtask(() {
+        final scrollingValue = position.isScrollingNotifier.value;
+        if (scrollingValue) {
+          // only update scrolling value because controller is not idle
+          _scrollingStateNotifier.value = scrollingValue;
+          return;
+        }
+
+        // ensure scroll position snaps to the nearest item after controller
+        // is done scrolling
+        final currentScrollPosition = position.pixels;
+        final targetScrollPosition =
+            SBBPickerScrollController._calculateTargetScrollPosition(
+          currentScrollPosition,
+        );
+
+        // Due to the workaround in the target scroll position calculation, the
+        // calculated position may be slightly inaccurate. As a result, if the
+        // difference between the current and calculated positions is minor, the
+        // snap to item scroll will be skipped.
+        final difference = (currentScrollPosition - targetScrollPosition).abs();
+        if (difference > 0.01) {
+          animateToScrollOffset(
+            targetScrollPosition,
+            curve: Curves.easeInOut,
+          ).whenComplete(() {
+            // update scrolling value after animation is complete
+            _scrollingStateNotifier.value = position.isScrollingNotifier.value;
+          });
+        } else {
+          _scrollingStateNotifier.value = scrollingValue;
+        }
+      });
     });
   }
 
