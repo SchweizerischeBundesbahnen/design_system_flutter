@@ -23,36 +23,38 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
       child: Column(
         children: [
           ThemeModeSegmentedButton(),
-          Spacer(),
-          SingleChildScrollView(
-            child: Column(
-              children: [
-                PromotionBox(
-                  badgeText: 'Default',
-                  title: _title,
-                  description: _description,
-                  onControllerCreated: (c) => defaultController = c,
-                ),
-                SizedBox(height: 8.0),
-                PromotionBox(
-                  badgeText: 'Is Closable = false',
-                  title: _title,
-                  description: _description,
-                  onControllerCreated: (c) => closableController = c,
-                  isClosable: false,
-                ),
-                SizedBox(height: 8.0),
-                PromotionBox(
-                  badgeText: 'Clickable',
-                  title: _title,
-                  description: _description,
-                  onControllerCreated: (c) => clickableController = c,
-                  onTap: () {},
-                ),
-              ],
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  SizedBox(height: sbbDefaultSpacing),
+                  PromotionBox(
+                    badgeText: 'Default',
+                    title: _title,
+                    description: _description,
+                    onControllerCreated: (c) => defaultController = c,
+                  ),
+                  SizedBox(height: 8.0),
+                  PromotionBox(
+                    badgeText: 'Is Closable = false',
+                    title: _title,
+                    description: _description,
+                    onControllerCreated: (c) => closableController = c,
+                    isClosable: false,
+                  ),
+                  SizedBox(height: 8.0),
+                  PromotionBox(
+                    badgeText: 'Clickable',
+                    title: _title,
+                    description: _description,
+                    onControllerCreated: (c) => clickableController = c,
+                    onTap: () {},
+                  ),
+                  SizedBox(height: sbbDefaultSpacing),
+                ],
+              ),
             ),
           ),
-          Spacer(),
           SBBPrimaryButton(
             label: 'Show',
             onPressed: () {

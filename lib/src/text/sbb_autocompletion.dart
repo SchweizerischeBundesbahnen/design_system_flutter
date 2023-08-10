@@ -560,12 +560,12 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>>
     required VoidCallback onPressed,
     required VoidCallback onCallToAction,
   }) {
-    return SBBListItem(
+    return SBBListItem.button(
       title: item.toString(),
       leadingIcon: widget.suggestionIcon,
-      trailingIcon: widget.enableFavorites ? SBBIcons.star_small : null,
+      buttonIcon: SBBIcons.star_small,
+      onPressedButton: onCallToAction,
       onPressed: onPressed,
-      onCallToAction: onCallToAction,
     );
   }
 
