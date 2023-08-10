@@ -6,6 +6,9 @@ import 'package:golden_toolkit/golden_toolkit.dart';
 import 'test_app.dart';
 
 void main() {
+  const _title = 'Bessere Übersicht.';
+  const _description = 'Erkennen Sie nun schneller, auf welchen Perrons Durchsagen vorhanden sind.';
+
   testGoldens('promotion box test', (WidgetTester tester) async {
     final builder = GoldenBuilder.column(
         wrap: (w) => TestApp.expanded(child: w, hostType: HostPlatform.native))
@@ -13,11 +16,24 @@ void main() {
           'Promotion Box',
           Column(children: [
             PromotionBox(
-              badgeText: 'Neu',
-              title: 'Bessere Übersicht.',
-              description:
-                  'Erkennen Sie nun schneller, auf welchen Perrons Durchsagen vorhanden sind.',
+              badgeText: 'Default',
+              title: _title,
+              description: _description,
             ),
+            SizedBox(height: 8.0),
+            PromotionBox(
+              badgeText: 'Is Closable = false',
+              title: _title,
+              description: _description,
+              isClosable: false,
+            ),
+            SizedBox(height: 8.0),
+            PromotionBox(
+              badgeText: 'Clickable',
+              title: _title,
+              description: _description,
+              onTap: () {},
+            )
           ]));
 
     await tester.pumpWidgetBuilder(builder.build());
@@ -25,4 +41,3 @@ void main() {
         devices: TestApp.native_devices);
   });
 }
-

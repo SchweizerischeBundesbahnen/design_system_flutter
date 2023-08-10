@@ -17,13 +17,17 @@ class PromotionBox extends StatefulWidget {
     required this.description,
     required this.badgeText,
     super.key,
+    this.isClosable = true,
     this.onControllerCreated,
+    this.onTap,
   });
 
   final String title;
   final String description;
   final String badgeText;
+  final bool isClosable;
   final Function(PromotionBoxController controller)? onControllerCreated;
+  final GestureTapCallback? onTap;
 
   @override
   State<PromotionBox> createState() => _PromotionBoxState();
@@ -112,7 +116,6 @@ class _PromotionBoxState extends State<PromotionBox>
               ),
             ),
             Container(
-              padding: const EdgeInsets.all(sbbDefaultSpacing),
               margin: EdgeInsets.only(top: paddingTop),
               decoration: BoxDecoration(
                 border: Border.all(color: style.borderColor!),
@@ -131,15 +134,52 @@ class _PromotionBoxState extends State<PromotionBox>
                   colors: style.gradientColors!,
                 ),
               ),
-              child: Padding(
-                padding: const EdgeInsets.only(right: sbbDefaultSpacing),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    Text(widget.title, style: textTheme.titleMedium),
-                    SizedBox(height: 4.0),
-                    Text(widget.description, style: textTheme.bodyMedium),
-                  ],
+              child: Material(
+                color: SBBColors.transparent,
+                child: InkWell(
+                  focusColor: iconStyle?.backgroundColorHighlighted,
+                  hoverColor: iconStyle?.backgroundColorHighlighted,
+                  customBorder: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(sbbDefaultSpacing),
+                    ),
+                  ),
+                  onTap: widget.onTap,
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(
+                      sbbDefaultSpacing,
+                      sbbDefaultSpacing,
+                      8.0,
+                      sbbDefaultSpacing,
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Text(widget.title, style: textTheme.titleMedium),
+                        SizedBox(height: 4.0),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                widget.description,
+                                style: textTheme.bodyMedium,
+                              ),
+                            ),
+                            SizedBox(
+                              width: 24.0,
+                              child: widget.onTap == null
+                                  ? null
+                                  : Icon(
+                                      SBBIcons.chevron_small_right_small,
+                                      color: crossColor,
+                                      size: sbbIconSizeSmall,
+                                    ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
               ),
             ),
@@ -150,32 +190,35 @@ class _PromotionBoxState extends State<PromotionBox>
                 text: widget.badgeText,
               ),
             ),
-            Align(
-              alignment: Alignment.topRight,
-              child: Material(
-                color: SBBColors.transparent,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 14.0),
-                  child: Semantics(
-                    label: MaterialLocalizations.of(context).closeButtonTooltip,
-                    button: true,
-                    child: InkWell(
-                      focusColor: iconStyle?.backgroundColorHighlighted,
-                      hoverColor: iconStyle?.backgroundColorHighlighted,
-                      customBorder: CircleBorder(),
-                      onTap: () => _controller.hide(),
-                      child: Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Icon(
-                          SBBIcons.cross_small,
-                          color: crossColor,
+            if (widget.isClosable)
+              Align(
+                alignment: Alignment.topRight,
+                child: Material(
+                  color: SBBColors.transparent,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 14.0),
+                    child: Semantics(
+                      label:
+                          MaterialLocalizations.of(context).closeButtonTooltip,
+                      button: true,
+                      child: InkWell(
+                        focusColor: iconStyle?.backgroundColorHighlighted,
+                        hoverColor: iconStyle?.backgroundColorHighlighted,
+                        customBorder: CircleBorder(),
+                        onTap: () => _controller.hide(),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Icon(
+                            SBBIcons.cross_small,
+                            color: crossColor,
+                            size: sbbIconSizeSmall,
+                          ),
                         ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
           ],
         ),
       ),

@@ -9,7 +9,12 @@ class PromotionBoxPage extends StatefulWidget {
 }
 
 class _PromotionBoxPageState extends State<PromotionBoxPage> {
-  late PromotionBoxController controller;
+  late PromotionBoxController defaultController;
+  late PromotionBoxController closableController;
+  late PromotionBoxController clickableController;
+
+  static const _title = 'Bessere Übersicht.';
+  static const _description = 'Erkennen Sie nun schneller, auf welchen Perrons Durchsagen vorhanden sind.';
 
   @override
   Widget build(BuildContext context) {
@@ -19,22 +24,51 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
         children: [
           ThemeModeSegmentedButton(),
           Spacer(),
-          PromotionBox(
-            badgeText: 'Neu',
-            title: 'Bessere Übersicht.',
-            description:
-                'Erkennen Sie nun schneller, auf welchen Perrons Durchsagen vorhanden sind.',
-            onControllerCreated: (controller) => this.controller = controller,
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                PromotionBox(
+                  badgeText: 'Default',
+                  title: _title,
+                  description: _description,
+                  onControllerCreated: (c) => defaultController = c,
+                ),
+                SizedBox(height: 8.0),
+                PromotionBox(
+                  badgeText: 'Is Closable = false',
+                  title: _title,
+                  description: _description,
+                  onControllerCreated: (c) => closableController = c,
+                  isClosable: false,
+                ),
+                SizedBox(height: 8.0),
+                PromotionBox(
+                  badgeText: 'Clickable',
+                  title: _title,
+                  description: _description,
+                  onControllerCreated: (c) => clickableController = c,
+                  onTap: () {},
+                ),
+              ],
+            ),
           ),
           Spacer(),
           SBBPrimaryButton(
             label: 'Show',
-            onPressed: () => controller.show(),
+            onPressed: () {
+              defaultController.show();
+              closableController.show();
+              clickableController.show();
+            },
           ),
           SizedBox(height: 8.0),
           SBBSecondaryButton(
             label: 'Hide',
-            onPressed: () => controller.hide(),
+            onPressed: () {
+              defaultController.hide();
+              closableController.hide();
+              clickableController.hide();
+            },
           ),
         ],
       ),
