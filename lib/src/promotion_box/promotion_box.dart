@@ -171,6 +171,7 @@ class _PromotionBoxState extends State<PromotionBox>
                             ),
                             if (widget.isClosable)
                               SizedBox(width: sbbIconSizeSmall),
+                            SizedBox(width: 8.0),
                           ],
                         ),
                         SizedBox(height: 4.0),
@@ -183,7 +184,7 @@ class _PromotionBoxState extends State<PromotionBox>
                               ),
                             ),
                             SizedBox(
-                              width: 24.0,
+                              width: sbbIconSizeSmall,
                               child: widget.onTap == null
                                   ? null
                                   : Icon(
