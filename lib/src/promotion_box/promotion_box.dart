@@ -155,7 +155,18 @@ class _PromotionBoxState extends State<PromotionBox>
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        Text(widget.title, style: textTheme.titleMedium),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Text(
+                                widget.title,
+                                style: textTheme.titleMedium,
+                              ),
+                            ),
+                            if (widget.isClosable)
+                              SizedBox(width: sbbIconSizeSmall),
+                          ],
+                        ),
                         SizedBox(height: 4.0),
                         Row(
                           children: [

@@ -33,6 +33,13 @@ void main() {
               title: _title,
               description: _description,
               onTap: () {},
+            ),
+            SizedBox(height: 8.0),
+            PromotionBox(
+              badgeText: 'With way too long title and badge text',
+              title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
+              description: _description,
+              onTap: () {},
             )
           ]));
 

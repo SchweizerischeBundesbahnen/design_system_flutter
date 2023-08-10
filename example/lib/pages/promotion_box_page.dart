@@ -50,6 +50,13 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
                     onControllerCreated: (c) => clickableController = c,
                     onTap: () {},
                   ),
+                  SizedBox(height: 8.0),
+                  PromotionBox(
+                    badgeText: 'With way too long title and badge text',
+                    title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
+                    description: _description,
+                    onControllerCreated: (c) => defaultController = c,
+                  ),
                   SizedBox(height: sbbDefaultSpacing),
                 ],
               ),
