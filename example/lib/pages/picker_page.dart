@@ -25,8 +25,7 @@ class _PickerPageState extends State<PickerPage> {
     'Last',
   ];
 
-  DateTime initialDateTime =
-      DateTime.now().copyWith(day: 31, month: 7, year: 2026);
+  DateTime initialDateTime = DateTime.now();
   late DateTime dateTime = initialDateTime;
   final controller = SBBPickerScrollController(initialItem: 4);
 
@@ -45,247 +44,96 @@ class _PickerPageState extends State<PickerPage> {
           const SizedBox(
             height: sbbDefaultSpacing,
           ),
-          SBBListHeader('SBBDateTimePicker Date'),
+          SBBListHeader('SBBPicker (looping)'),
+          SBBGroup(
+            child: SBBPicker(
+              isLastElement: true,
+              onSelectedItemChanged: (int index) {
+                debugPrint(
+                    'Selected: ${_fruitNames[index % _fruitNames.length]}');
+              },
+              itemBuilder: (BuildContext context, int index) {
+                return (
+                  true,
+                  Text(_fruitNames[index % _fruitNames.length]),
+                );
+              },
+            ),
+          ),
+          const SizedBox(
+            height: sbbDefaultSpacing,
+          ),
+          SBBListHeader('SBBPicker (non looping)'),
+          SBBGroup(
+            child: SBBPicker(
+              looping: false,
+              isLastElement: true,
+              onSelectedItemChanged: (int index) {
+                debugPrint('Selected: ${_fruitNames[index]}');
+              },
+              itemBuilder: (BuildContext context, int index) {
+                if (index < 0 || index >= _fruitNames.length) {
+                  return null;
+                }
+                return (
+                  true,
+                  Text(_fruitNames[index]),
+                );
+              },
+            ),
+          ),
+          const SizedBox(
+            height: sbbDefaultSpacing,
+          ),
+          SBBListHeader('SBBDateTimePicker (dateAndTime)'),
           SBBGroup(
             child: SBBDateTimePicker(
-              mode: SBBDateTimePickerMode.time,
+              mode: SBBDateTimePickerMode.dateAndTime,
               minuteInterval: 15,
               onDateTimeChanged: _onDateTimeChanged,
-              minimumDate: DateTime.now().subtract(Duration(hours: 10)),
-              maximumDate: DateTime.now().add(Duration(hours: 5)),
+              initialDateTime: initialDateTime,
             ),
           ),
-          SBBListHeader('TEST'),
-          // SBBGroup(
-          //   child: SBBPicker.custom(
-          //     child: SBBPickerScrollView(
-          //       // controller: controller,
-          //       onSelectedItemChanged: (int index) {
-          //         debugPrint('Selected: ${_fruitNames[index]}');
-          //       },
-          //       itemBuilder: (BuildContext context, int index) {
-          //         if (index < 0 || index >= _fruitNames.length) {
-          //           return (false, null);
-          //         }
-          //         return (
-          //           true,
-          //           Text(_fruitNames[index]),
-          //         );
-          //       },
-          //       looping: false,
-          //     ),
-          //   ),
-          // ),
-          // SBBGroup(
-          //   child: SBBPicker.custom(
-          //     child: SBBPickerScrollView(
-          //       looping: false,
-          //       controller: controller,
-          //       onSelectedItemChanged: (int index) {
-          //         debugPrint(
-          //             'Selected: ${_fruitNames[index % _fruitNames.length]}');
-          //       },
-          //       itemBuilder: (BuildContext context, int index) {
-          //         if (index < 0 || index >= _fruitNames.length) {
-          //           return null;
-          //         }
-          //         return (
-          //           true,
-          //           Text('$index ${_fruitNames[index % _fruitNames.length]}'),
-          //         );
-          //       },
-          //     ),
-          //   ),
-          // ),
-          // SBBPrimaryButton(
-          //   label: 'test',
-          //   onPressed: () {
-          //     controller.animateToItem(4);
-          //   },
-          // ),
-          // SBBGroup(
-          //   child: SBBPicker.custom(
-          //     child: SBBPickerScrollView(
-          //       looping: true,
-          //       controller: SBBPickerScrollController(initialItem: 0),
-          //       onSelectedItemChanged: (int index) {
-          //         debugPrint(
-          //             'Selected: ${_fruitNames[index % _fruitNames.length]}');
-          //       },
-          //       itemBuilder: (BuildContext context, int index) {
-          //         return (
-          //           true,
-          //           Text('$index ${_fruitNames[index % _fruitNames.length]}'),
-          //         );
-          //       },
-          //     ),
-          //   ),
-          // ),
-          SBBListHeader('Default Picker (custom values)'),
+          const SizedBox(
+            height: sbbDefaultSpacing,
+          ),
+          Container(
+            height: 200,
+            child: CupertinoDatePicker(
+              mode: CupertinoDatePickerMode.time,
+              onDateTimeChanged: _onDateTimeChanged,
+              initialDateTime: initialDateTime,
+            ),
+          ),
+          SBBListHeader('SBBDateTimePicker (dateAndTime + min & max date ${((56 / 6).round() * 6).toInt()})'),
           SBBGroup(
-            child: Row(
-              children: [
-                Expanded(
-                  child: SBBPicker(
-                    onSelectedItemChanged: (int index) {
-                      debugPrint('Selected: ${_fruitNames[index]}');
-                    },
-                    itemBuilder: (BuildContext context, int index) {
-                      if (index < 0 || index >= _fruitNames.length) {
-                        return null;
-                      }
-                      return (
-                        true,
-                        Text(_fruitNames[index]),
-                      );
-                    },
-                    initialSelectedIndex: 5,
-                    looping: false,
-                  ),
-                ),
-                Expanded(
-                  child: SBBPicker(
-                    initialSelectedIndex: 5,
-                    onSelectedItemChanged: (int index) {
-                      debugPrint(
-                          'Selected: ${_fruitNames[index % _fruitNames.length]}');
-                    },
-                    itemBuilder: (BuildContext context, int index) {
-                      return (
-                        true,
-                        Text(_fruitNames[index % _fruitNames.length]),
-                      );
-                    },
-                  ),
-                ),
-              ],
+            child: SBBDateTimePicker(
+              mode: SBBDateTimePickerMode.dateAndTime,
+              minuteInterval: 4,
+              onDateTimeChanged: _onDateTimeChanged,
+              initialDateTime: initialDateTime,
+              minimumDateTime: initialDateTime.subtract(Duration(days: 2)),
+              maximumDateTime: initialDateTime.add(Duration(days: 2)).copyWith(minute: 58),
             ),
           ),
-          // const SizedBox(
-          //   height: sbbDefaultSpacing,
-          // ),
-          // SBBListHeader('CupertinoDatePicker'),
-          // Container(
-          //   height: 200,
-          //   child: CupertinoDatePicker(
-          //     mode: CupertinoDatePickerMode.date,
-          //     minuteInterval: 1,
-          //     onDateTimeChanged: (DateTime value) {
-          //       debugPrint(
-          //           'Selected: ${localizations.formatCompactDate(dateTime)} - ${localizations.formatTimeOfDay(TimeOfDay.fromDateTime(dateTime))}');
-          //     },
-          //     // initialDateTime: DateTime(1, 1, 1),
-          //     minimumDate: DateTime.now().subtract(Duration(days: 31)),
-          //     maximumDate: DateTime.now().add(Duration(days: 360)),
-          //   ),
-          // ),
-          // // Container(
-          // //   height: 200,
-          // //   child: CupertinoDatePicker(
-          // //     mode: CupertinoDatePickerMode.time,
-          // //     onDateTimeChanged: (DateTime value) {
-          // //       debugPrint(
-          // //           'Selected: ${localizations.formatCompactDate(dateTime)} - ${localizations.formatTimeOfDay(TimeOfDay.fromDateTime(dateTime))}');
-          // //     },
-          // //     minimumDate: DateTime.now().subtract(Duration(hours: 24)),
-          // //     use24hFormat: true,
-          // //   ),
-          // // ),
-          // // SBBListHeader('SBBDateTimePicker Time'),
-          // // SBBGroup(
-          // //   child: SBBDateTimePicker(
-          // //     mode: SBBDateTimePickerMode.time,
-          // //     minuteInterval: 15,
-          // //     onDateTimeChanged: _onDateTimeChanged,
-          // //   ),
-          // // ),
-          SBBListHeader(
-              'SBBDateTimePicker Date ${dateTime.day.toString().padLeft(2, '0')}.${dateTime.month.toString().padLeft(2, '0')}.${dateTime.year.toString().padLeft(4, '0')}'),
+          const SizedBox(
+            height: sbbDefaultSpacing,
+          ),
+          SBBListHeader('SBBDateTimePicker (date - with min and max date)'),
           SBBGroup(
             child: SBBDateTimePicker(
               mode: SBBDateTimePickerMode.date,
               minuteInterval: 15,
               onDateTimeChanged: _onDateTimeChanged,
               initialDateTime: initialDateTime,
-              minimumDate: initialDateTime.copyWith(year: 2020),
-              maximumDate: initialDateTime.copyWith(year: 2029),
+              minimumDateTime: initialDateTime.copyWith(
+                year: initialDateTime.year - 1,
+              ),
+              maximumDateTime: initialDateTime.copyWith(
+                year: initialDateTime.year + 1,
+              ),
             ),
           ),
-          // Text('${dateTime.toString()}'),
-          // SBBListHeader('SBBDateTimePicker DateAndTime'),
-          // SBBGroup(
-          //   child: SBBDateTimePicker(
-          //     // initialDateTime: dateTime,
-          //     minuteInterval: 15,
-          //     onDateTimeChanged: _onDateTimeChanged,
-          //   ),
-          // ),
-          // SBBListHeader('dateAndTime'),
-          // SBBGroup(
-          //   child: Container(
-          //     height: 200,
-          //     child: CupertinoDatePicker(
-          //       minimumDate: DateTime.now(),
-          //       mode: CupertinoDatePickerMode.date,
-          //       onDateTimeChanged: (date) {
-          //         debugPrint('DATE: $date');
-          //       },
-          //     ),
-          //   ),
-          // ),
-          // // SBBGroup(
-          // //   child: SBBPicker.dateAndTime(
-          // //     // initialDateTime: dateTime,
-          // //     minuteInterval: 15,
-          // //     onDateTimeChanged: (DateTime dateTime) {
-          // //       debugPrint(
-          // //           'Selected: ${localizations.formatCompactDate(dateTime)} - ${localizations.formatTimeOfDay(TimeOfDay.fromDateTime(dateTime))}');
-          // //     },
-          // //   ),
-          // // ),
-          // // SBBListHeader('Time'),
-          // // SBBGroup(
-          // //   child: SBBPicker.time(
-          // //     onDateTimeChanged: (DateTime dateTime) {
-          // //       debugPrint(
-          // //           'Selected: ${localizations.formatTimeOfDay(TimeOfDay.fromDateTime(dateTime))}');
-          // //     },
-          // //   ),
-          // // ),
-          // // const SizedBox(
-          // //   height: sbbDefaultSpacing,
-          // // ),
-          // // SBBListHeader('Time (15 minute interval)'),
-          // // SBBGroup(
-          // //   child: SBBPicker.time(
-          // //     minuteInterval: 15,
-          // //     onDateTimeChanged: (DateTime dateTime) {
-          // //       debugPrint(
-          // //           'Selected: ${localizations.formatTimeOfDay(TimeOfDay.fromDateTime(dateTime))}');
-          // //     },
-          // //   ),
-          // // ),
-          // // SBBListHeader('Date'),
-          // // SBBGroup(
-          // //   child: SBBPicker.date(
-          // //     onDateTimeChanged: (DateTime dateTime) {
-          // //       debugPrint(
-          // //           'Selected: ${localizations.formatShortDate(dateTime)}');
-          // //     },
-          // //   ),
-          // // ),
-          // const SizedBox(
-          //   height: sbbDefaultSpacing,
-          // ),
-          // SBBListHeader('SBBDateAndTimePicker'),
-          // SBBGroup(
-          //   child: SBBDateTimePicker(
-          //     onDateTimeChanged: (DateTime dateTime) {
-          //       debugPrint(
-          //           'Selected: ${localizations.formatCompactDate(dateTime)} - ${localizations.formatTimeOfDay(TimeOfDay.fromDateTime(dateTime))}');
-          //     },
-          //   ),
-          // ),
         ],
       ),
     );
