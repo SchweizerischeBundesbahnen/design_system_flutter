@@ -17,7 +17,7 @@ import '../sbb_internal.dart';
 ///
 /// * [SBBModalPopup], which will be displayed.
 /// * [showDialog], which is used to display the modal.
-/// * <https://digital.sbb.ch/de/design-system-mobile-new/module/modal>
+/// * <https://digital.sbb.ch/de/mobile/elemente/modal-view>
 Future<T?> showSBBModalPopup<T>({
   required BuildContext context,
   required String title,

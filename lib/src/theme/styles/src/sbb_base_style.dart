@@ -18,7 +18,11 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
     this.brightness,
     this.boldFont = false,
     this.labelColor,
-  });
+    TextTheme? redTextTheme,
+  }) {
+    final redColor = $resolve(SBBColors.red, SBBColors.redDarkMode);
+    this.redTextTheme = redTextTheme ?? createTextTheme(colorOverride: redColor);
+  }
 
   factory SBBBaseStyle.$default({
     required Brightness brightness,
@@ -45,19 +49,24 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
         },
       ),
       defaultFontFamily: SBBWebFont,
-      defaultTextColor: SBBBaseStyle.resolve(isLight, SBBColors.black, SBBColors.white),
+      defaultTextColor: resolve(isLight, SBBColors.black, SBBColors.white),
       defaultTextStyle: SBBTextStyles.mediumLight.copyWith(
-        color: SBBBaseStyle.resolve(isLight, SBBColors.black, SBBColors.white),
+        color: resolve(isLight, SBBColors.black, SBBColors.white),
       ),
-      backgroundColor: SBBBaseStyle.resolve(isLight, SBBColors.milk, SBBColors.black),
-      dividerColor: SBBBaseStyle.resolve(isLight, SBBColors.cloud, SBBColors.iron),
+      backgroundColor: resolve(isLight, SBBColors.milk, SBBColors.black),
+      dividerColor: resolve(isLight, SBBColors.cloud, SBBColors.iron),
       defaultRootContainerPadding: sbbDefaultSpacing,
-      iconColor: SBBBaseStyle.resolve(isLight, SBBColors.black, SBBColors.white),
+      iconColor: resolve(isLight, SBBColors.black, SBBColors.white),
       hostPlatform: hostPlatform ?? HostPlatform.native,
       brightness: brightness,
       boldFont: boldFont,
-      labelColor: SBBBaseStyle.resolve(isLight, SBBColors.granite, SBBColors.graphite),
+      labelColor: resolve(isLight, SBBColors.granite, SBBColors.graphite),
     );
+  }
+
+  T $resolve<T>(T lightThemeValue, T darkThemeValue) {
+    final isLight = brightness == Brightness.light;
+    return SBBBaseStyle.resolve(isLight, lightThemeValue, darkThemeValue);
   }
 
   static T resolve<T>(bool isLight, T lightThemeValue, T darkThemeValue) => isLight ? lightThemeValue : darkThemeValue;
@@ -78,6 +87,7 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
   final Brightness? brightness;
   final bool boldFont;
   final Color? labelColor;
+  late final TextTheme redTextTheme;
 
   @override
   ThemeExtension<SBBBaseStyle> copyWith({
@@ -95,6 +105,7 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
     Brightness? brightness,
     bool? boldFont,
     Color? labelColor,
+    TextTheme? redTextTheme,
   }) =>
       SBBBaseStyle(
         primaryColor: primaryColor ?? this.primaryColor,
@@ -111,6 +122,7 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
         brightness: brightness ?? this.brightness,
         boldFont: boldFont ?? this.boldFont,
         labelColor: labelColor ?? this.labelColor,
+        redTextTheme: redTextTheme ?? this.redTextTheme,
       );
 
   @override
@@ -131,6 +143,7 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
       defaultRootContainerPadding: other.defaultRootContainerPadding,
       boldFont: other.boldFont,
       labelColor: Color.lerp(labelColor, other.labelColor, t),
+      redTextTheme: TextTheme.lerp(redTextTheme, other.redTextTheme, t),
     );
   }
 
@@ -142,7 +155,7 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
         fontWeight: this.boldFont || boldFont ? FontWeight.bold : null,
       );
 
-  TextTheme createTextTheme() {
+  TextTheme createTextTheme({Color? colorOverride}) {
     value(double size, double height, FontWeight weight, {Color? color}) => TextStyle(
           inherit: false,
           fontSize: size,
@@ -150,7 +163,7 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
           fontStyle: FontStyle.normal,
           fontWeight: boldFont ? FontWeight.bold : weight,
           fontFamily: defaultFontFamily,
-          color: color ?? defaultTextColor,
+          color: colorOverride ?? color ?? defaultTextColor,
           textBaseline: TextBaseline.alphabetic,
         );
     return TextTheme(
@@ -183,6 +196,7 @@ extension StyleExtension on SBBBaseStyle? {
       iconColor: this!.iconColor ?? other?.iconColor,
       hostPlatform: this!.hostPlatform ?? other?.hostPlatform,
       brightness: this!.brightness ?? other?.brightness,
+      redTextTheme: this!.redTextTheme ?? other?.redTextTheme,
     ) as SBBBaseStyle;
   }
 }

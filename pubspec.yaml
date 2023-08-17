@@ -23,6 +23,7 @@ dev_dependencies:
 flutter:
   assets:
     - lib/fonts/
+    - lib/assets/
   fonts:
     - family: SBBWeb
       fonts:

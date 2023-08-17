@@ -6,12 +6,14 @@ import '../sbb_styles.dart';
 class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   SBBControlStyles({
     this.checkbox,
+    this.slider,
     this.radioButton,
     this.textField,
     this.segmentedButton,
     this.redSegmentedButton,
     this.listItem,
     this.selectLabel,
+    this.switchToggle,
     this.headerBackgroundColor,
     this.headerButtonBackgroundColorHighlighted,
     this.headerIconColor,
@@ -43,13 +45,13 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     this.sidebarItemForegroundColor,
     this.sidebarItemTextStyle,
     this.headerNavItemForegroundColor,
+    this.promotionBox,
   });
 
   factory SBBControlStyles.$default({required SBBBaseStyle baseStyle}) => SBBControlStyles(
         listItem: SBBListItemStyle.$default(baseStyle: baseStyle),
-        // Checkbox TODO define toggleable colors for checkbox and radiobutton?
+        slider: SBBSliderStyle.$default(baseStyle: baseStyle),
         checkbox: SBBControlStyle.$default(baseStyle: baseStyle),
-        // RadioButton TODO define toggleable colors for checkbox and radiobutton?
         radioButton: SBBControlStyle.$default(baseStyle: baseStyle),
         textField: SBBTextFieldStyle.$default(baseStyle: baseStyle),
         segmentedButton: SBBSegmentedButtonStyle.$default(baseStyle: baseStyle),
@@ -58,7 +60,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
           textStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.helpersLabel, color: baseStyle.themeValue(SBBColors.metal, SBBColors.cement)),
           textStyleDisabled: baseStyle.themedTextStyle(textStyle: SBBTextStyles.helpersLabel, color: SBBColors.metal),
         ),
-
+        switchToggle: SBBSwitchStyle.$default(baseStyle: baseStyle),
         headerBackgroundColor: baseStyle.primaryColor,
         headerButtonBackgroundColorHighlighted: baseStyle.primaryColorDark,
         headerIconColor: SBBColors.white,
@@ -112,15 +114,18 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
         sidebarItemForegroundColor: SBBTheme.resolveStatesWith(defaultValue: SBBColors.iron, hoveredValue: SBBColors.red125, pressedValue: SBBColors.red125),
         sidebarItemTextStyle: SBBLeanTextStyles.contextMenu,
         headerNavItemForegroundColor: SBBTheme.resolveStatesWith(defaultValue: SBBColors.black, disabledValue: SBBColors.black, hoveredValue: SBBColors.red125, pressedValue: SBBColors.red125),
+        promotionBox: PromotionBoxStyle.$default(baseStyle: baseStyle),
       );
 
   final SBBControlStyle? checkbox;
+  final SBBSwitchStyle? switchToggle;
   final SBBControlStyle? radioButton;
   final SBBTextFieldStyle? textField;
   final SBBSegmentedButtonStyle? segmentedButton;
   final SBBSegmentedButtonStyle? redSegmentedButton;
   final SBBListItemStyle? listItem;
   final SBBTextStyle? selectLabel;
+  final SBBSliderStyle? slider;
 
   final Color? headerBackgroundColor;
   final Color? headerButtonBackgroundColorHighlighted;
@@ -153,6 +158,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   final MaterialStateProperty<Color?>? sidebarItemForegroundColor;
   final TextStyle? sidebarItemTextStyle;
   final MaterialStateProperty<Color?>? headerNavItemForegroundColor;
+  final PromotionBoxStyle? promotionBox;
 
   static SBBControlStyles of(BuildContext context) => Theme.of(context).extension<SBBControlStyles>()!;
 
@@ -194,12 +200,14 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   @override
   ThemeExtension<SBBControlStyles> copyWith({
     SBBControlStyle? checkbox,
+    SBBSliderStyle? slider,
     SBBControlStyle? radioButton,
     SBBTextFieldStyle? textField,
     SBBSegmentedButtonStyle? segmentedButton,
     SBBSegmentedButtonStyle? redSegmentedButton,
     SBBListItemStyle? listItem,
     SBBTextStyle? selectLabel,
+    SBBSwitchStyle? switchToggle,
     Color? headerBackgroundColor,
     Color? headerButtonBackgroundColorHighlighted,
     Color? headerIconColor,
@@ -231,15 +239,18 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     MaterialStateProperty<Color?>? sidebarItemForegroundColor,
     TextStyle? sidebarItemTextStyle,
     MaterialStateProperty<Color?>? headerNavItemForegroundColor,
+    PromotionBoxStyle? promotionBox,
   }) =>
       SBBControlStyles(
         checkbox: checkbox ?? this.checkbox,
+        slider: slider ?? this.slider,
         radioButton: radioButton ?? this.radioButton,
         textField: textField ?? this.textField,
         segmentedButton: segmentedButton ?? this.segmentedButton,
         redSegmentedButton: redSegmentedButton ?? this.redSegmentedButton,
         listItem: listItem ?? this.listItem,
         selectLabel: selectLabel ?? this.selectLabel,
+        switchToggle: switchToggle ?? this.switchToggle,
         headerBackgroundColor: headerBackgroundColor ?? this.headerBackgroundColor,
         headerButtonBackgroundColorHighlighted: headerButtonBackgroundColorHighlighted ?? this.headerButtonBackgroundColorHighlighted,
         headerIconColor: headerIconColor ?? this.headerIconColor,
@@ -271,6 +282,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
         sidebarItemForegroundColor: sidebarItemForegroundColor ?? this.sidebarItemForegroundColor,
         sidebarItemTextStyle: sidebarItemTextStyle ?? this.sidebarItemTextStyle,
         headerNavItemForegroundColor: headerNavItemForegroundColor ?? this.headerNavItemForegroundColor,
+        promotionBox: promotionBox ?? this.promotionBox,
       );
 
   @override
@@ -278,12 +290,14 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     if (other is! SBBControlStyles) return this;
     return SBBControlStyles(
       checkbox: checkbox?.lerp(other.checkbox, t),
+      slider: slider?.lerp(other.slider, t),
       radioButton: radioButton?.lerp(other.radioButton, t),
       textField: textField?.lerp(other.textField, t),
       segmentedButton: segmentedButton?.lerp(other.segmentedButton, t),
       redSegmentedButton: redSegmentedButton?.lerp(other.redSegmentedButton, t),
       listItem: listItem?.lerp(other.listItem, t),
       selectLabel: selectLabel?.lerp(other.selectLabel, t),
+      switchToggle: switchToggle?.lerp(other.switchToggle, t),
       headerBackgroundColor: Color.lerp(headerBackgroundColor, other.headerBackgroundColor, t),
       headerButtonBackgroundColorHighlighted: Color.lerp(headerButtonBackgroundColorHighlighted, other.headerButtonBackgroundColorHighlighted, t),
       headerIconColor: Color.lerp(headerIconColor, other.headerIconColor, t),
@@ -315,6 +329,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
       sidebarItemBackgroundColor: other.sidebarItemBackgroundColor,
       sidebarItemForegroundColor: other.sidebarItemForegroundColor,
       headerNavItemForegroundColor: other.headerNavItemForegroundColor,
+      promotionBox: PromotionBoxStyle.lerp(promotionBox, other.promotionBox, t),
     );
   }
 }
@@ -324,12 +339,14 @@ extension SBBControlStylesExtension on SBBControlStyles? {
     if (this == null) return other ?? SBBControlStyles();
     return this!.copyWith(
       checkbox: this!.checkbox.merge(other?.checkbox),
+      slider: this!.slider.merge(other?.slider),
       radioButton: this!.radioButton.merge(other?.radioButton),
       textField: this!.textField.merge(other?.textField),
       segmentedButton: this!.segmentedButton.merge(other?.segmentedButton),
       redSegmentedButton: this!.redSegmentedButton.merge(other?.redSegmentedButton),
       listItem: this!.listItem.merge(other?.listItem),
       selectLabel: this!.selectLabel.merge(other?.selectLabel),
+      switchToggle: this!.switchToggle.merge(other?.switchToggle),
       headerBackgroundColor: this!.headerBackgroundColor ?? other?.headerBackgroundColor,
       headerButtonBackgroundColorHighlighted: this!.headerButtonBackgroundColorHighlighted ?? other?.headerButtonBackgroundColorHighlighted,
       headerIconColor: this!.headerIconColor ?? other?.headerIconColor,
@@ -361,6 +378,7 @@ extension SBBControlStylesExtension on SBBControlStyles? {
       sidebarItemForegroundColor: this!.sidebarItemForegroundColor ?? other?.sidebarItemForegroundColor,
       sidebarItemTextStyle: this!.sidebarItemTextStyle ?? other?.sidebarItemTextStyle,
       headerNavItemForegroundColor: this!.headerNavItemForegroundColor ?? other?.headerNavItemForegroundColor,
+      promotionBox: this!.promotionBox ?? other?.promotionBox,
     ) as SBBControlStyles;
   }
 }

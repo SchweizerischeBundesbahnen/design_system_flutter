@@ -2,37 +2,119 @@ import 'package:flutter/material.dart';
 
 import '../../design_system_flutter.dart';
 
-/// SBB List Item. Use according to documentation.
-///
-/// See also:
-///
-/// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/list-item>
+/// SBB List Item.
+/// Use according to [documentation](https://digital.sbb.ch/en/design-system/mobile/components/list-item/).
 class SBBListItem extends StatefulWidget {
-  const SBBListItem({
+  SBBListItem({
     Key? key,
+    IconData? leadingIcon,
+    required String title,
+    String? subtitle,
+    IconData? trailingIcon,
+    int? titleMaxLines,
+    int? subtitleMaxLines,
+    bool isLastElement = false,
+    required VoidCallback? onPressed,
+    @Deprecated('Use constructor `SBBListItem.button` instead.')
+    VoidCallback? onCallToAction,
+  }) : this.custom(
+          key: key,
+          leadingIcon: leadingIcon,
+          title: title,
+          subtitle: subtitle,
+          titleMaxLines: titleMaxLines,
+          subtitleMaxLines: subtitleMaxLines,
+          isLastElement: isLastElement,
+          trailingWidget: trailingIcon != null
+              ? Builder(
+                  builder: (BuildContext context) {
+                    final style = SBBControlStyles.of(context).listItem!;
+                    final isEnabled = onPressed != null;
+
+                    if (onCallToAction != null) {
+                      return Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: sbbDefaultSpacing * 0.5,
+                        ),
+                        child: SBBIconButtonSmall(
+                          icon: trailingIcon,
+                          onPressed: onCallToAction,
+                        ),
+                      );
+                    }
+
+                    return Padding(
+                      padding: EdgeInsetsDirectional.only(
+                        end: sbbDefaultSpacing,
+                      ),
+                      child: Icon(
+                        trailingIcon,
+                        color: isEnabled
+                            ? style.iconColor
+                            : style.iconColorDisabled,
+                      ),
+                    );
+                  },
+                )
+              : null,
+          onPressed: onPressed,
+        );
+
+  SBBListItem.button({
+    Key? key,
+    IconData? leadingIcon,
+    required String title,
+    String? subtitle,
+    int? titleMaxLines,
+    int? subtitleMaxLines,
+    bool isLastElement = false,
+    required VoidCallback? onPressed,
+    required IconData buttonIcon,
+    required VoidCallback? onPressedButton,
+  }) : this.custom(
+          key: key,
+          leadingIcon: leadingIcon,
+          title: title,
+          subtitle: subtitle,
+          titleMaxLines: titleMaxLines,
+          subtitleMaxLines: subtitleMaxLines,
+          isLastElement: isLastElement,
+          onPressed: onPressed,
+          trailingWidget: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: sbbDefaultSpacing * 0.5,
+            ),
+            child: Container(
+              child: SBBIconButtonSmall(
+                icon: buttonIcon,
+                onPressed: onPressed != null ? onPressedButton : null,
+              ),
+            ),
+          ),
+        );
+
+  const SBBListItem.custom({
+    Key? key,
+    this.leadingIcon,
     required this.title,
     this.subtitle,
-    this.isLastElement = false,
     this.titleMaxLines,
     this.subtitleMaxLines,
-    this.leadingIcon,
-    this.trailingIcon,
-    this.onCallToAction,
+    this.enabled,
+    this.isLastElement = false,
     required this.onPressed,
+    required this.trailingWidget,
   }) : super(key: key);
 
+  final IconData? leadingIcon;
   final String title;
   final String? subtitle;
-  final bool isLastElement;
-  final IconData? leadingIcon;
-  final IconData? trailingIcon;
-
   final int? titleMaxLines;
   final int? subtitleMaxLines;
-
-  /// Redirects to [onPressed] if null
-  final VoidCallback? onCallToAction;
+  final bool? enabled;
+  final bool isLastElement;
   final VoidCallback? onPressed;
+  final Widget? trailingWidget;
 
   @override
   State<SBBListItem> createState() => _SBBListItemState();
@@ -42,15 +124,17 @@ class _SBBListItemState extends State<SBBListItem> {
   bool isHovering = false;
 
   Widget _buildNative(BuildContext context) {
-    final style = SBBControlStyles.of(context).listItem;
+    final style = SBBControlStyles.of(context).listItem!;
+    final isEnabled = widget.enabled ?? widget.onPressed != null;
     return MergeSemantics(
       child: Semantics(
-        button: widget.onPressed != null,
+        button: isEnabled,
         child: Material(
-          color: style?.backgroundColor,
+          color:
+              isEnabled ? style.backgroundColor : style.backgroundColorDisabled,
           child: InkWell(
-            splashColor: style?.backgroundColorHighlighted,
-            focusColor: style?.backgroundColorHighlighted,
+            splashColor: style.backgroundColorHighlighted,
+            focusColor: style.backgroundColorHighlighted,
             highlightColor: SBBColors.transparent,
             hoverColor: SBBColors.transparent,
             onTap: widget.onPressed,
@@ -65,30 +149,38 @@ class _SBBListItemState extends State<SBBListItem> {
                     children: [
                       Expanded(
                         child: Padding(
-                          padding: const EdgeInsetsDirectional.only(
-                            top: 10,
-                            bottom: 10,
-                            end: sbbDefaultSpacing / 2,
+                          padding: const EdgeInsets.symmetric(
+                            vertical: 10.0,
                           ),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               ConstrainedBox(
-                                constraints: BoxConstraints(minHeight: sbbIconSizeSmall),
+                                constraints: BoxConstraints(
+                                  minHeight: sbbIconSizeSmall,
+                                ),
                                 child: Row(
                                   children: [
                                     if (widget.leadingIcon != null)
                                       Padding(
-                                        padding: const EdgeInsetsDirectional.only(
-                                          end: sbbDefaultSpacing / 2,
+                                        padding:
+                                            const EdgeInsetsDirectional.only(
+                                          end: sbbDefaultSpacing * 0.5,
                                         ),
-                                        child: Icon(widget.leadingIcon),
+                                        child: Icon(
+                                          widget.leadingIcon,
+                                          color: isEnabled
+                                              ? style.iconColor
+                                              : style.iconColorDisabled,
+                                        ),
                                       ),
                                     Expanded(
                                       child: Text(
                                         widget.title,
-                                        style: style?.textStyle,
+                                        style: isEnabled
+                                            ? style.textStyle
+                                            : style.textStyleDisabled,
                                         maxLines: widget.titleMaxLines,
                                         overflow: TextOverflow.ellipsis,
                                       ),
@@ -103,7 +195,9 @@ class _SBBListItemState extends State<SBBListItem> {
                                   ),
                                   child: Text(
                                     widget.subtitle!,
-                                    style: style?.secondaryTextStyle,
+                                    style: isEnabled
+                                        ? style.secondaryTextStyle
+                                        : style.secondaryTextStyleDisabled,
                                     maxLines: widget.subtitleMaxLines,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -112,26 +206,12 @@ class _SBBListItemState extends State<SBBListItem> {
                           ),
                         ),
                       ),
-                      if (widget.trailingIcon != null)
-                        ExcludeFocus(
-                          excluding: widget.onCallToAction == null,
-                          child: Padding(
-                            padding: const EdgeInsetsDirectional.only(
-                              end: sbbDefaultSpacing / 2,
-                            ),
-                            child: IgnorePointer(
-                              ignoring: widget.onCallToAction == null,
-                              ignoringSemantics: widget.onCallToAction == null,
-                              child: SBBIconButtonSmall(
-                                icon: widget.trailingIcon!,
-                                onPressed:
-                                    widget.onCallToAction ?? widget.onPressed,
-                              ),
-                            ),
-                          ),
-                        )
+                      if (widget.trailingWidget != null)
+                        widget.trailingWidget!
                       else
-                        SizedBox(width: sbbDefaultSpacing / 2),
+                        const SizedBox(
+                          width: sbbDefaultSpacing,
+                        ),
                     ],
                   ),
                 ),
@@ -188,8 +268,8 @@ class _SBBListItemState extends State<SBBListItem> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 ConstrainedBox(
-                                  constraints:
-                                      BoxConstraints(minHeight: sbbIconSizeSmall),
+                                  constraints: BoxConstraints(
+                                      minHeight: sbbIconSizeSmall),
                                   child: Row(
                                     children: [
                                       if (widget.leadingIcon != null)
@@ -207,9 +287,8 @@ class _SBBListItemState extends State<SBBListItem> {
                                         child: Text(
                                           widget.title,
                                           style: isHovering
-                                              ? style?.textStyle!
-                                                  .copyWith(
-                                                      color: SBBColors.red125)
+                                              ? style?.textStyle!.copyWith(
+                                                  color: SBBColors.red125)
                                               : style?.textStyle,
                                           maxLines: widget.titleMaxLines,
                                           overflow: TextOverflow.ellipsis,
@@ -237,26 +316,10 @@ class _SBBListItemState extends State<SBBListItem> {
                             ),
                           ),
                         ),
-                        if (widget.trailingIcon != null)
-                          ExcludeFocus(
-                            excluding: widget.onCallToAction == null,
-                            child: Padding(
-                              padding: const EdgeInsetsDirectional.only(
-                                end: sbbDefaultSpacing / 2,
-                              ),
-                              child: IgnorePointer(
-                                ignoring: widget.onCallToAction == null,
-                                ignoringSemantics: widget.onCallToAction == null,
-                                child: SBBIconButtonSmall(
-                                  icon: widget.trailingIcon!,
-                                  onPressed:
-                                      widget.onCallToAction ?? widget.onPressed,
-                                ),
-                              ),
-                            ),
-                          )
+                        if (widget.trailingWidget != null)
+                          widget.trailingWidget!
                         else
-                          SizedBox(width: sbbDefaultSpacing / 2),
+                          const SizedBox(width: sbbDefaultSpacing * 0.5),
                       ],
                     ),
                   ),
@@ -271,7 +334,8 @@ class _SBBListItemState extends State<SBBListItem> {
 
   @override
   Widget build(BuildContext context) {
-    final bool isWeb = SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
+    final bool isWeb =
+        SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
     if (isWeb) return _buildWeb(context);
     return _buildNative(context);
   }

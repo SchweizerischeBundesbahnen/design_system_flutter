@@ -17,14 +17,18 @@ import 'pages/list_item_page.dart';
 import 'pages/loading_indicator_page.dart';
 import 'pages/modal_page.dart';
 import 'pages/onboarding_page.dart';
+import 'pages/promotion_box_page.dart';
 import 'pages/picker_page.dart';
 import 'pages/radio_button_page.dart';
 import 'pages/segmented_button_page.dart';
 import 'pages/select_page.dart';
+import 'pages/slider_page.dart';
+import 'pages/switch_page.dart';
 import 'pages/tab_bar_page.dart';
 import 'pages/text_field_page.dart';
 import 'pages/toast_page.dart';
 import 'pages/typography_page.dart';
+import 'pages/typography_red_page.dart';
 
 class AppState extends ChangeNotifier {
   bool isDarkModeOn = false;
@@ -77,6 +81,10 @@ class MyApp extends StatelessWidget {
                             _DemoEntry(
                               'Typography',
                               TypographyPage(),
+                            ),
+                            _DemoEntry(
+                              'Typography Red',
+                              TypographyRedPage(),
                             ),
                             _DemoEntry(
                               'Color',
@@ -133,8 +141,16 @@ class MyApp extends StatelessWidget {
                               SelectPage(),
                             ),
                             _DemoEntry(
+                              'Switch',
+                              SwitchPage(),
+                            ),
+                            _DemoEntry(
                               'Textfield / Textarea',
                               TextFieldPage(),
+                            ),
+                            _DemoEntry(
+                              'Slider',
+                              SliderPage(),
                               isLastElement: true,
                             ),
                           ],
@@ -177,6 +193,10 @@ class MyApp extends StatelessWidget {
                             _DemoEntry(
                               'Tab Bar',
                               TabBarPage(),
+                            ),
+                            _DemoEntry(
+                              'Promotion Box',
+                              PromotionBoxPage(),
                               isLastElement: true,
                             ),
                           ],
