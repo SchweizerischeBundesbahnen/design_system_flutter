@@ -60,7 +60,7 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
       hostPlatform: hostPlatform ?? HostPlatform.native,
       brightness: brightness,
       boldFont: boldFont,
-      labelColor: resolve(isLight, SBBColors.anthracite, SBBColors.cement),
+      labelColor: resolve(isLight, SBBColors.granite, SBBColors.graphite),
     );
   }
 
