@@ -8,8 +8,8 @@ class SBBChipStyle {
     this.disabledBorderColor,
     this.badgeColor,
     this.disabledBadgeColor,
-    this.badgeTextColor,
-    this.disabledBadgeTextColor,
+    this.badgeTextStyle,
+    this.labelTextStyle,
     this.unselectButtonColor,
     this.disabledUnselectButtonColor,
     this.unselectButtonIconColor,
@@ -23,8 +23,14 @@ class SBBChipStyle {
       disabledBorderColor: isDarkTheme ? SBBColors.iron : SBBColors.cloud,
       badgeColor: baseStyle.primaryColor,
       disabledBadgeColor: isDarkTheme ? SBBColors.iron : SBBColors.graphite,
-      badgeTextColor: SBBColors.white,
-      disabledBadgeTextColor: SBBColors.white,
+      badgeTextStyle: SBBTextStyle(
+        textStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallBold, color: SBBColors.white),
+        textStyleDisabled: baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallBold, color: SBBColors.white),
+      ),
+      labelTextStyle: SBBTextStyle(
+        textStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.mediumLight, color: isDarkTheme ? SBBColors.white : SBBColors.black),
+        textStyleDisabled: baseStyle.themedTextStyle(textStyle: SBBTextStyles.mediumLight, color: isDarkTheme ? SBBColors.graphite : SBBColors.granite),
+      ),
       unselectButtonColor: isDarkTheme ? SBBColors.iron : SBBColors.milk,
       disabledUnselectButtonColor: isDarkTheme ? SBBColors.iron : SBBColors.milk,
       unselectButtonIconColor: isDarkTheme ? SBBColors.white : SBBColors.black,
@@ -36,8 +42,8 @@ class SBBChipStyle {
   final Color? disabledBorderColor;
   final Color? badgeColor;
   final Color? disabledBadgeColor;
-  final Color? badgeTextColor;
-  final Color? disabledBadgeTextColor;
+  final SBBTextStyle? badgeTextStyle;
+  final SBBTextStyle? labelTextStyle;
   final Color? unselectButtonColor;
   final Color? disabledUnselectButtonColor;
   final Color? unselectButtonIconColor;
@@ -48,8 +54,8 @@ class SBBChipStyle {
     Color? disabledBorderColor,
     Color? badgeColor,
     Color? disabledBadgeColor,
-    Color? badgeTextColor,
-    Color? disabledBadgeTextColor,
+    SBBTextStyle? badgeTextStyle,
+    SBBTextStyle? labelTextStyle,
     Color? unselectButtonColor,
     Color? disabledUnselectButtonColor,
     Color? unselectButtonIconColor,
@@ -60,8 +66,8 @@ class SBBChipStyle {
         disabledBorderColor: disabledBorderColor ?? this.disabledBorderColor,
         badgeColor: badgeColor ?? this.badgeColor,
         disabledBadgeColor: disabledBadgeColor ?? this.disabledBadgeColor,
-        badgeTextColor: badgeTextColor ?? this.badgeTextColor,
-        disabledBadgeTextColor: disabledBadgeTextColor ?? this.disabledBadgeTextColor,
+        badgeTextStyle: badgeTextStyle ?? this.badgeTextStyle,
+        labelTextStyle: labelTextStyle ?? this.labelTextStyle,
         unselectButtonColor: unselectButtonColor ?? this.unselectButtonColor,
         disabledUnselectButtonColor: disabledUnselectButtonColor ?? this.disabledUnselectButtonColor,
         unselectButtonIconColor: unselectButtonIconColor ?? this.unselectButtonIconColor,
@@ -73,8 +79,8 @@ class SBBChipStyle {
         disabledBorderColor: Color.lerp(disabledBorderColor, other?.disabledBorderColor, t),
         badgeColor: Color.lerp(badgeColor, other?.badgeColor, t),
         disabledBadgeColor: Color.lerp(disabledBadgeColor, other?.disabledBadgeColor, t),
-        badgeTextColor: Color.lerp(badgeTextColor, other?.badgeTextColor, t),
-        disabledBadgeTextColor: Color.lerp(disabledBadgeTextColor, other?.disabledBadgeTextColor, t),
+        badgeTextStyle: badgeTextStyle?.lerp(other?.badgeTextStyle, t),
+        labelTextStyle: labelTextStyle?.lerp(other?.labelTextStyle, t),
         unselectButtonColor: Color.lerp(unselectButtonColor, other?.unselectButtonColor, t),
         disabledUnselectButtonColor: Color.lerp(disabledUnselectButtonColor, other?.disabledUnselectButtonColor, t),
         unselectButtonIconColor: Color.lerp(unselectButtonIconColor, other?.unselectButtonIconColor, t),
@@ -90,8 +96,8 @@ extension SBBSliderStyleExtension on SBBChipStyle? {
       disabledBorderColor: this!.disabledBorderColor ?? other?.disabledBorderColor,
       badgeColor: this!.badgeColor ?? other?.badgeColor,
       disabledBadgeColor: this!.disabledBadgeColor ?? other?.disabledBadgeColor,
-      badgeTextColor: this!.badgeTextColor ?? other?.badgeTextColor,
-      disabledBadgeTextColor: this!.disabledBadgeTextColor ?? other?.disabledBadgeTextColor,
+      badgeTextStyle: this!.badgeTextStyle ?? other?.badgeTextStyle,
+      labelTextStyle: this!.labelTextStyle ?? other?.labelTextStyle,
       unselectButtonColor: this!.unselectButtonColor ?? other?.unselectButtonColor,
       disabledUnselectButtonColor: this!.disabledUnselectButtonColor ?? other?.disabledUnselectButtonColor,
       unselectButtonIconColor: this!.unselectButtonIconColor ?? other?.unselectButtonIconColor,

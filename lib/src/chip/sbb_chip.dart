@@ -52,7 +52,7 @@ class SBBChip extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Flexible(
-              child: _label(),
+              child: _label(style),
             ),
             if (_showUnselectButton) _unselectButton(style),
             if (_showBadgeLabel) _badge(style),
@@ -62,7 +62,8 @@ class SBBChip extends StatelessWidget {
     );
   }
 
-  Padding _label() {
+  Padding _label(SBBChipStyle style) {
+    final labelTextStyle = _disabled ? style.labelTextStyle!.textStyleDisabled : style.labelTextStyle!.textStyle;
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: 6.0,
@@ -73,16 +74,17 @@ class SBBChip extends StatelessWidget {
       child: Text(
         label,
         overflow: TextOverflow.ellipsis,
+        style: labelTextStyle,
       ),
     );
   }
 
   Widget _badge(SBBChipStyle style) {
-    final badgeTextColor = _disabled ? style.disabledBadgeTextColor : style.badgeTextColor;
+    final badgeTextStyle = _disabled ? style.badgeTextStyle!.textStyleDisabled : style.badgeTextStyle!.textStyle;
     return _roundedContainer(
       child: Text(
         badgeLabel ?? '',
-        style: SBBTextStyles.smallBold.copyWith(color: badgeTextColor),
+        style: badgeTextStyle,
       ),
       color: _disabled ? style.disabledBadgeColor! : style.badgeColor!,
       padding: EdgeInsets.symmetric(horizontal: 4.0),
