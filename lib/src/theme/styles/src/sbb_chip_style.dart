@@ -88,7 +88,7 @@ class SBBChipStyle {
       );
 }
 
-extension SBBSliderStyleExtension on SBBChipStyle? {
+extension SBBChipStyleExtension on SBBChipStyle? {
   SBBChipStyle merge(SBBChipStyle? other) {
     if (this == null) return other ?? SBBChipStyle();
     return this!.copyWith(
