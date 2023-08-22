@@ -6,6 +6,7 @@ import '../sbb_styles.dart';
 class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   SBBControlStyles({
     this.checkbox,
+    this.chip,
     this.slider,
     this.radioButton,
     this.textField,
@@ -52,6 +53,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
         listItem: SBBListItemStyle.$default(baseStyle: baseStyle),
         slider: SBBSliderStyle.$default(baseStyle: baseStyle),
         checkbox: SBBControlStyle.$default(baseStyle: baseStyle),
+        chip: SBBChipStyle.$default(baseStyle: baseStyle),
         radioButton: SBBControlStyle.$default(baseStyle: baseStyle),
         textField: SBBTextFieldStyle.$default(baseStyle: baseStyle),
         segmentedButton: SBBSegmentedButtonStyle.$default(baseStyle: baseStyle),
@@ -126,6 +128,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   final SBBListItemStyle? listItem;
   final SBBTextStyle? selectLabel;
   final SBBSliderStyle? slider;
+  final SBBChipStyle? chip;
 
   final Color? headerBackgroundColor;
   final Color? headerButtonBackgroundColorHighlighted;
@@ -201,6 +204,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   ThemeExtension<SBBControlStyles> copyWith({
     SBBControlStyle? checkbox,
     SBBSliderStyle? slider,
+    SBBChipStyle? chip,
     SBBControlStyle? radioButton,
     SBBTextFieldStyle? textField,
     SBBSegmentedButtonStyle? segmentedButton,
@@ -244,6 +248,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
       SBBControlStyles(
         checkbox: checkbox ?? this.checkbox,
         slider: slider ?? this.slider,
+        chip: chip ?? this.chip,
         radioButton: radioButton ?? this.radioButton,
         textField: textField ?? this.textField,
         segmentedButton: segmentedButton ?? this.segmentedButton,
@@ -291,6 +296,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     return SBBControlStyles(
       checkbox: checkbox?.lerp(other.checkbox, t),
       slider: slider?.lerp(other.slider, t),
+      chip: chip?.lerp(other.chip, t),
       radioButton: radioButton?.lerp(other.radioButton, t),
       textField: textField?.lerp(other.textField, t),
       segmentedButton: segmentedButton?.lerp(other.segmentedButton, t),
@@ -340,6 +346,7 @@ extension SBBControlStylesExtension on SBBControlStyles? {
     return this!.copyWith(
       checkbox: this!.checkbox.merge(other?.checkbox),
       slider: this!.slider.merge(other?.slider),
+      chip: this!.chip.merge(other?.chip),
       radioButton: this!.radioButton.merge(other?.radioButton),
       textField: this!.textField.merge(other?.textField),
       segmentedButton: this!.segmentedButton.merge(other?.segmentedButton),

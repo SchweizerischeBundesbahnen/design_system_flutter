@@ -82,7 +82,6 @@ class SBBTheme {
       ThemeData(
         colorScheme: ColorScheme.fromSwatch(
           primarySwatch: baseStyle.primarySwatch!,
-          primaryColorDark: baseStyle.primaryColorDark,
           accentColor: baseStyle.primaryColor,
           cardColor: controlStyles.groupBackgroundColor,
           backgroundColor: baseStyle.backgroundColor,
