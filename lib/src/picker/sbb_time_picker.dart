@@ -1,97 +1,82 @@
 part of 'sbb_picker.dart';
 
-class SBBDateTimePicker extends StatefulWidget {
-  SBBDateTimePicker({
+class SBBTimePicker extends StatefulWidget {
+  SBBTimePicker({
     super.key,
     this.label,
-    required this.onDateTimeChanged,
-    DateTime? initialDateTime,
-    DateTime? minimumDateTime,
-    DateTime? maximumDateTime,
+    required this.onTimeChanged,
+    TimeOfDay? initialTime,
+    TimeOfDay? minimumTime,
+    TimeOfDay? maximumTime,
     this.isLastElement = true,
     this.minuteInterval = 1,
-  })  : initialDateTime = _initialDateTime(
-          initialDateTime,
-          minuteInterval,
-        ),
-        minimumDateTime = _minimumDateTime(
-          minimumDateTime,
-          initialDateTime,
-          minuteInterval,
-        ),
-        maximumDateTime = _maximumDateTime(
-          maximumDateTime,
-          initialDateTime,
-          minuteInterval,
-        ),
+  })  : initialTime = _initialTime(initialTime),
+        minimumDateTime = _minimumDateTime(minimumTime, minuteInterval),
+        maximumDateTime = _maximumDateTime(maximumTime, minuteInterval),
         assert(
-          minuteInterval > 0 && 60 % minuteInterval == 0,
+          minuteInterval > 0 && TimeOfDay.minutesPerHour % minuteInterval == 0,
           'minute interval is not a positive integer factor of 60',
         ) {
     assert(
-      this.initialDateTime.minute % minuteInterval == 0,
-      'initial minute (${this.initialDateTime.minute}) is not divisible by minute interval ($minuteInterval)',
+      this.initialTime.minute % minuteInterval == 0,
+      'initial time (${this.initialTime.minute}) is not divisible by minute interval ($minuteInterval)',
+    );
+    debugPrint(
+      'initial time (${this.initialTime}) is before minimum time (${this.minimumDateTime})',
     );
     assert(
       this.minimumDateTime == null ||
-          !this.initialDateTime.isBefore(this.minimumDateTime!),
-      'initial date (${this.initialDateTime}) is before minimum date (${this.minimumDateTime})',
+          !(this.initialTime.hour < this.minimumDateTime!.hour ||
+              (this.initialTime.hour == this.minimumDateTime!.hour &&
+                  this.initialTime.minute < this.minimumDateTime!.minute)),
+      'initial time (${this.initialTime}) is before minimum time (${this.minimumDateTime})',
     );
     assert(
       this.maximumDateTime == null ||
-          !this.initialDateTime.isAfter(this.maximumDateTime!),
-      'initial date (${this.initialDateTime}) is after maximum date (${this.maximumDateTime})',
+          !(this.initialTime.hour > this.maximumDateTime!.hour ||
+              (this.initialTime.hour == this.maximumDateTime!.hour &&
+                  this.initialTime.minute > this.maximumDateTime!.minute)),
+      'initial time (${this.initialTime}) is after maximum time (${this.maximumDateTime})',
     );
   }
 
   final String? label;
-  final ValueChanged<DateTime> onDateTimeChanged;
-  final DateTime initialDateTime;
-  final DateTime? minimumDateTime;
-  final DateTime? maximumDateTime;
+  final ValueChanged<TimeOfDay> onTimeChanged;
+  final TimeOfDay initialTime;
+  final TimeOfDay? minimumDateTime;
+  final TimeOfDay? maximumDateTime;
   final int minuteInterval;
   final bool isLastElement;
 
   @override
-  State<SBBDateTimePicker> createState() {
-    return _SBBDateTimePickerState();
+  State<SBBTimePicker> createState() {
+    return _SBBTimePickerTimeState();
   }
 
-  static DateTime _initialDateTime(
-    DateTime? initialDateTime,
-    int minuteInterval,
-  ) {
-    final dateTime = initialDateTime ?? DateTime.now();
-
-    return _cleanDateTime(dateTime);
+  static TimeOfDay _initialTime(TimeOfDay? time) {
+    if (time == null) {
+      TimeOfDay.now();
+    }
+    return time!.replacing(hour: time.hour, minute: time.minute);
   }
 
-  static DateTime? _minimumDateTime(
-    DateTime? minimumDateTime,
-    DateTime? initialDateTime,
-    int minuteInterval,
-  ) {
-    if (minimumDateTime == null) {
+  static TimeOfDay? _minimumDateTime(TimeOfDay? time, int minuteInterval) {
+    if (time == null) {
       return null;
     }
-
-    return ceilToInterval(minimumDateTime, minuteInterval);
+    return ceilToInterval(time, minuteInterval);
   }
 
-  static DateTime? _maximumDateTime(
-    DateTime? maximumDateTime,
-    DateTime? initialDateTime,
-    int minuteInterval,
-  ) {
-    if (maximumDateTime == null) {
+  static TimeOfDay? _maximumDateTime(TimeOfDay? time, int minuteInterval) {
+    if (time == null) {
       return null;
     }
-
-    return floorToInterval(maximumDateTime, minuteInterval);
+    return floorToInterval(time, minuteInterval);
   }
 
-  static DateTime _cleanDateTime(DateTime dateTime, {int? minute}) {
+  static DateTime _cleanDateTime(DateTime dateTime, {int? hour, int? minute}) {
     return dateTime.copyWith(
+      hour: hour,
       minute: minute,
       second: 0,
       millisecond: 0,
@@ -99,8 +84,8 @@ class SBBDateTimePicker extends StatefulWidget {
     );
   }
 
-  /// Creates copy of [dateTime] with the minute value rounded to the closest
-  /// minute value that is divisible by [minuteInterval].
+  /// Creates copy of [time] with the minute value rounded to the closest minute
+  /// value that is divisible by [minuteInterval].
   ///
   /// ```
   /// Examples with minuteInterval: 15
@@ -110,16 +95,17 @@ class SBBDateTimePicker extends StatefulWidget {
   /// 17:52 -> 17:45
   /// 17:53 -> 18:00 (hour value also affected)
   /// ```
-  static DateTime roundToInterval(DateTime dateTime, int minuteInterval) {
-    final roundedMinute =
-        ((dateTime.minute / minuteInterval).round() * minuteInterval);
-    return _cleanDateTime(
-      dateTime,
-      minute: roundedMinute,
-    );
+  static TimeOfDay roundToInterval(TimeOfDay time, int minuteInterval) {
+    var roundedMinute =
+        ((time.minute / minuteInterval).round() * minuteInterval);
+    final roundedHour =
+        (time.hour + roundedMinute ~/ TimeOfDay.minutesPerHour) %
+            TimeOfDay.hoursPerDay;
+    roundedMinute %= TimeOfDay.minutesPerHour;
+    return time.replacing(hour: roundedHour, minute: roundedMinute);
   }
 
-  /// Creates copy of [dateTime] with the minute value rounded to the greatest
+  /// Creates copy of [time] with the minute value rounded to the greatest
   /// minute value that is divisible by [minuteInterval] but no greater than the
   /// current minute value.
   ///
@@ -129,17 +115,16 @@ class SBBDateTimePicker extends StatefulWidget {
   /// 17:14 -> 17:00
   /// 17:29 -> 17:15
   /// ```
-  static DateTime floorToInterval(DateTime dateTime, int minuteInterval) {
+  static TimeOfDay floorToInterval(TimeOfDay time, int minuteInterval) {
+    final roundedHour = time.hour + time.minute ~/ TimeOfDay.minutesPerHour;
     final roundedMinute =
-        ((dateTime.minute / minuteInterval).floor() * minuteInterval);
-    return _cleanDateTime(
-      dateTime,
-      minute: roundedMinute,
-    );
+        ((time.minute / minuteInterval).floor() * minuteInterval) %
+            TimeOfDay.minutesPerHour;
+    return time.replacing(hour: roundedHour, minute: roundedMinute);
   }
 
-  /// Creates copy of [dateTime] with the minute value rounded to the least
-  /// minute value that is divisible by [minuteInterval] but is not smaller than
+  /// Creates copy of [time] with the minute value rounded to the least minute
+  /// value that is divisible by [minuteInterval] but is not smaller than
   /// current minute value.
   ///
   /// ```
@@ -149,37 +134,28 @@ class SBBDateTimePicker extends StatefulWidget {
   /// 17:01 -> 17:15
   /// 17:46 -> 18:00 (hour value also affected)
   /// ```
-  static DateTime ceilToInterval(DateTime dateTime, int minuteInterval) {
-    final roundedMinute =
-        ((dateTime.minute / minuteInterval).ceil() * minuteInterval);
-    return _cleanDateTime(
-      dateTime,
-      minute: roundedMinute,
-    );
+  static TimeOfDay ceilToInterval(TimeOfDay time, int minuteInterval) {
+    var roundedMinute =
+        ((time.minute / minuteInterval).ceil() * minuteInterval);
+    final roundedHour = time.hour + roundedMinute ~/ TimeOfDay.minutesPerHour;
+    roundedMinute %= TimeOfDay.minutesPerHour;
+    return time.replacing(hour: roundedHour, minute: roundedMinute);
   }
 }
 
-class _SBBDateTimePickerState extends State<SBBDateTimePicker> {
-  late DateTime selectedDateTime;
-  late SBBPickerScrollController dateController;
+class _SBBTimePickerTimeState extends State<SBBTimePicker> {
+  late TimeOfDay selectedDateTime;
   late SBBPickerScrollController minuteController;
   late SBBPickerScrollController hourController;
 
   /// This is used to prevent notifying the callback with the same value
-  late DateTime lastReportedDateTime;
+  late TimeOfDay lastReportedDateTime;
 
   @override
   void initState() {
     super.initState();
-    selectedDateTime = widget.initialDateTime;
+    selectedDateTime = widget.initialTime;
     lastReportedDateTime = selectedDateTime;
-
-    dateController = SBBPickerScrollController(
-      initialItem: _dateToIndex(selectedDateTime),
-    );
-    dateController._scrollingStateNotifier.addListener(() {
-      _onScrollingStateChanged();
-    });
 
     minuteController = SBBPickerScrollController(
       initialItem: _minuteToIndex(selectedDateTime.minute),
@@ -204,87 +180,13 @@ class _SBBDateTimePickerState extends State<SBBDateTimePicker> {
       child: Row(
         children: [
           Expanded(
-            child: _buildDatePickerScrollView(context),
-          ),
-          Container(
-            width: 48.0 + 12.0 + 12.0,
             child: _buildHourPickerScrollView(context),
           ),
-          Container(
-            width: 48.0 + 12.0 + 24.0,
+          Expanded(
             child: _buildMinutePickerScrollView(context),
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildDatePickerScrollView(BuildContext context) {
-    final materialLocalizations = Localizations.of<MaterialLocalizations>(
-      context,
-      MaterialLocalizations,
-    )!;
-    final now = DateTime.now();
-    return SBBPickerScrollView(
-      controller: dateController,
-      onSelectedItemChanged: (int index) {
-        final selectedDate = _indexToDate(index);
-        _onDateTimeSelected(
-          year: selectedDate.year,
-          month: selectedDate.month,
-          day: selectedDate.day,
-        );
-      },
-      itemBuilder: (BuildContext context, int index) {
-        final selectedDate = _indexToDate(index);
-
-        var dateEnabled = true;
-        // check if selected date is before min date
-        final minimumDateTime = widget.minimumDateTime;
-        if (minimumDateTime != null) {
-          if (selectedDate.isBefore(minimumDateTime)) {
-            dateEnabled = false;
-          }
-        }
-        // check if selected date is after max date
-        final maximumDateTime = widget.maximumDateTime;
-        if (maximumDateTime != null) {
-          if (selectedDate.isAfter(maximumDateTime)) {
-            dateEnabled = false;
-          }
-        }
-
-        late String listItemLabel;
-        final isToday = _sameDay(selectedDate, now);
-        if (isToday) {
-          // show today label
-          listItemLabel = materialLocalizations.currentDateLabel;
-        } else {
-          // show date label
-          listItemLabel = materialLocalizations
-              .formatMediumDate(selectedDate)
-              .replaceFirst('.,', '.'); // TODO better way?
-        }
-
-        return (
-          dateEnabled,
-          Container(
-            alignment: Alignment.centerRight,
-            padding: EdgeInsets.only(
-              left: 24.0,
-              right: 12.0,
-            ),
-            child: SizedBox(
-              child: Text(
-                listItemLabel,
-                textAlign: TextAlign.right,
-                overflow: TextOverflow.ellipsis,
-                softWrap: false,
-              ),
-            ),
-          ),
-        );
-      },
     );
   }
 
@@ -301,30 +203,17 @@ class _SBBDateTimePickerState extends State<SBBDateTimePicker> {
         final selectedHour = _indexToHour(index);
 
         var hourEnabled = true;
-
         // check if selected time is before min time
         final minimumDateTime = widget.minimumDateTime;
         if (minimumDateTime != null) {
-          final dateTimeToCompare = selectedDateTime.copyWith(
-            hour: selectedHour,
-            minute: minimumDateTime.minute,
-            millisecond: minimumDateTime.millisecond,
-            microsecond: minimumDateTime.microsecond,
-          );
-          if (dateTimeToCompare.isBefore(minimumDateTime)) {
+          if (minimumDateTime.hour > selectedHour) {
             hourEnabled = false;
           }
         }
         // check if selected time is after max time
         final maximumDateTime = widget.maximumDateTime;
         if (maximumDateTime != null) {
-          final dateTimeToCompare = selectedDateTime.copyWith(
-            hour: selectedHour,
-            minute: maximumDateTime.minute,
-            millisecond: maximumDateTime.millisecond,
-            microsecond: maximumDateTime.microsecond,
-          );
-          if (dateTimeToCompare.isAfter(maximumDateTime)) {
+          if (maximumDateTime.hour < selectedHour) {
             hourEnabled = false;
           }
         }
@@ -335,8 +224,8 @@ class _SBBDateTimePickerState extends State<SBBDateTimePicker> {
           Container(
             alignment: Alignment.centerRight,
             padding: EdgeInsets.only(
-              left: 12.0,
               right: 12.0,
+              // right: sbbDefaultSpacing * 0.75,
             ),
             child: SizedBox(
               width: 48.0,
@@ -370,21 +259,13 @@ class _SBBDateTimePickerState extends State<SBBDateTimePicker> {
         // check if selected time is before min time
         final minimumDateTime = widget.minimumDateTime;
         if (minimumDateTime != null) {
-          final dateTimeToCompare = selectedDateTime.copyWith(
-            minute: selectedMinute,
-            millisecond: minimumDateTime.millisecond,
-            microsecond: minimumDateTime.microsecond,
-          );
-          if (dateTimeToCompare.isBefore(minimumDateTime)) {
+          if (minimumDateTime.hour == selectedHour) {
+            if (minimumDateTime.minute > selectedMinute) {
+              minuteEnabled = false;
+            }
+          } else if (minimumDateTime.hour > selectedHour) {
             minuteEnabled = false;
           }
-          // if (minimumDateTime.hour == selectedHour) {
-          //   if (minimumDateTime.minute > selectedMinute) {
-          //     minuteEnabled = false;
-          //   }
-          // } else if (minimumDateTime.hour > selectedHour) {
-          //   minuteEnabled = false;
-          // }
         }
         // check if selected time is after max time
         final maximumDateTime = widget.maximumDateTime;
@@ -406,7 +287,7 @@ class _SBBDateTimePickerState extends State<SBBDateTimePicker> {
             alignment: Alignment.centerLeft,
             padding: EdgeInsets.only(
               left: 12.0,
-              right: 24.0,
+              // right: sbbDefaultSpacing * 0.75,
             ),
             child: SizedBox(
               width: 48.0,
@@ -424,24 +305,15 @@ class _SBBDateTimePickerState extends State<SBBDateTimePicker> {
   }
 
   void _onDateTimeSelected({
-    int? year,
-    int? month,
-    int? day,
     int? hour,
     int? minute,
   }) {
-    final selectedYear = year ?? selectedDateTime.year;
-    final selectedMonth = month ?? selectedDateTime.month;
-    final selectedDay = day ?? selectedDateTime.day;
     final selectedHour = hour ?? selectedDateTime.hour;
     final selectedMinute = minute ?? selectedDateTime.minute;
 
-    selectedDateTime = DateTime(
-      selectedYear,
-      selectedMonth,
-      selectedDay,
-      selectedHour,
-      selectedMinute,
+    selectedDateTime = TimeOfDay(
+      hour: selectedHour,
+      minute: selectedMinute,
     );
   }
 
@@ -476,12 +348,16 @@ class _SBBDateTimePickerState extends State<SBBDateTimePicker> {
 
     // notify callback with new selected time
     lastReportedDateTime = selectedDateTime;
-    widget.onDateTimeChanged(selectedDateTime);
+    widget.onTimeChanged(selectedDateTime);
   }
 
   bool _ensureMinTime() {
+    // check if selected time is before min time
     final minimumDateTime = widget.minimumDateTime;
-    if (minimumDateTime == null || minimumDateTime.isBefore(selectedDateTime)) {
+    if (minimumDateTime == null ||
+        (minimumDateTime.hour < selectedDateTime.hour ||
+            (minimumDateTime.hour == selectedDateTime.hour &&
+                minimumDateTime.minute < selectedDateTime.minute))) {
       // no correction needed
       return false;
     }
@@ -507,8 +383,12 @@ class _SBBDateTimePickerState extends State<SBBDateTimePicker> {
   }
 
   bool _ensureMaxTime() {
+    // check if selected time is after max time
     final maximumDateTime = widget.maximumDateTime;
-    if (maximumDateTime == null || maximumDateTime.isAfter(selectedDateTime)) {
+    if (maximumDateTime == null ||
+        (maximumDateTime.hour > selectedDateTime.hour ||
+            (maximumDateTime.hour == selectedDateTime.hour &&
+                maximumDateTime.minute > selectedDateTime.minute))) {
       // no correction needed
       return false;
     }
@@ -540,16 +420,6 @@ class _SBBDateTimePickerState extends State<SBBDateTimePicker> {
     minuteController.jumpToItem(minuteItemIndex);
   }
 
-  DateTime _indexToDate(int selectedItemIndex) {
-    return widget.initialDateTime.add(
-      Duration(days: selectedItemIndex),
-    );
-  }
-
-  int _dateToIndex(DateTime selectedValue) {
-    return selectedValue.difference(widget.initialDateTime).inDays;
-  }
-
   int _indexToMinute(int selectedItemIndex) {
     return selectedItemIndex * widget.minuteInterval % TimeOfDay.minutesPerHour;
   }
@@ -564,11 +434,5 @@ class _SBBDateTimePickerState extends State<SBBDateTimePicker> {
 
   int _hourToIndex(int selectedValue) {
     return selectedValue;
-  }
-
-  bool _sameDay(DateTime dateTimeA, DateTime dateTimeB) {
-    return dateTimeA.year == dateTimeB.year &&
-        dateTimeA.month == dateTimeB.month &&
-        dateTimeA.day == dateTimeB.day;
   }
 }

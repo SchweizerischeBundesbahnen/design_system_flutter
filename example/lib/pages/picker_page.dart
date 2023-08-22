@@ -88,14 +88,39 @@ class _PickerPageState extends State<PickerPage> {
           // const SizedBox(
           //   height: sbbDefaultSpacing,
           // ),
+          Text('${120 ~/ 60}'),
+          SBBTimePicker(
+            onTimeChanged: (time) {
+              debugPrint('CHANGE: $time');
+            },
+            minuteInterval: 15,
+            initialTime: SBBTimePicker.roundToInterval(
+                TimeOfDay(hour: 17, minute: 34), 15),
+            minimumTime: SBBTimePicker.roundToInterval(
+                TimeOfDay(hour: 12, minute: 30), 15),
+            maximumTime: SBBTimePicker.roundToInterval(
+                TimeOfDay(hour: 20, minute: 45), 15),
+          ),
+          SBBGroup(
+            child: SBBDatePicker(
+              onDateChanged: _onDateTimeChanged,
+              initialDate: initialDateTime,
+              minimumDate:
+                  initialDateTime.copyWith(year: initialDateTime.year - 2),
+              maximumDate:
+                  initialDateTime.copyWith(year: initialDateTime.year + 2),
+              // maximumDateTime: initialDateTime,
+            ),
+          ),
           SBBListHeader('DateTimePicker (time - with min and max date)'),
           SBBGroup(
             child: SBBDateTimePicker(
-              mode: SBBDateTimePickerMode.time,
               minuteInterval: 15,
               onDateTimeChanged: _onDateTimeChanged,
-              initialDateTime: SBBDateTimePicker.roundToInterval(initialDateTime, 15),
-              minimumDateTime: initialDateTime,
+              initialDateTime:
+                  SBBDateTimePicker.roundToInterval(initialDateTime, 15),
+              minimumDateTime:
+                  SBBDateTimePicker.roundToInterval(initialDateTime, 15),
               maximumDateTime: initialDateTime.add(Duration(hours: 2)),
               // maximumDateTime: initialDateTime,
             ),
@@ -113,8 +138,8 @@ class _PickerPageState extends State<PickerPage> {
               },
               itemBuilder: (BuildContext context, int index) {
                 return (
-                true,
-                Text(_fruitNames[index % _fruitNames.length]),
+                  true,
+                  Text(_fruitNames[index % _fruitNames.length]),
                 );
               },
             ),
@@ -135,8 +160,8 @@ class _PickerPageState extends State<PickerPage> {
                   return null;
                 }
                 return (
-                true,
-                Text(_fruitNames[index]),
+                  true,
+                  Text(_fruitNames[index]),
                 );
               },
             ),
