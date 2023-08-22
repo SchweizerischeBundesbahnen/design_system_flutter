@@ -1,6 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:design_system_flutter/design_system_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
 import 'pages/accordion_page.dart';
@@ -17,8 +18,8 @@ import 'pages/list_item_page.dart';
 import 'pages/loading_indicator_page.dart';
 import 'pages/modal_page.dart';
 import 'pages/onboarding_page.dart';
-import 'pages/promotion_box_page.dart';
 import 'pages/picker_page.dart';
+import 'pages/promotion_box_page.dart';
 import 'pages/radio_button_page.dart';
 import 'pages/segmented_button_page.dart';
 import 'pages/select_page.dart';
@@ -53,6 +54,18 @@ class MyApp extends StatelessWidget {
             darkTheme: SBBTheme.dark(
               hostPlatform: HostPlatform.native,
             ),
+            localizationsDelegates: <LocalizationsDelegate<Object>>[
+              // ... app-specific localization delegate(s) here
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: <Locale>[
+              Locale('en', 'US'), // English
+              Locale('de', 'CH'), // Hebrew
+              Locale('de', 'DE'), // Hebrew
+              // ... other locales the app supports
+            ],
             themeMode: appState.isDarkModeOn ? ThemeMode.dark : ThemeMode.light,
             home: Scaffold(
               appBar: SBBHeader(title: 'Design System Mobile'),

@@ -31,8 +31,6 @@ class _PickerPageState extends State<PickerPage> {
 
   @override
   Widget build(BuildContext context) {
-    final localizations = MaterialLocalizations.of(
-        context); //Localizations.of(context, MaterialLocalizations);
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(
         vertical: sbbDefaultSpacing,
@@ -41,6 +39,67 @@ class _PickerPageState extends State<PickerPage> {
       child: Column(
         children: <Widget>[
           ThemeModeSegmentedButton(),
+          // const SizedBox(
+          //   height: sbbDefaultSpacing,
+          // ),
+          // SBBListHeader('DateTimePicker (date & time)'),
+          // SBBGroup(
+          //   child: SBBDateTimePicker(
+          //     mode: SBBDateTimePickerMode.dateAndTime,
+          //     minuteInterval: 15,
+          //     onDateTimeChanged: _onDateTimeChanged,
+          //     initialDateTime: initialDateTime,
+          //   ),
+          // ),
+          // const SizedBox(
+          //   height: sbbDefaultSpacing,
+          // ),
+          // SBBListHeader(
+          //     'DateTimePicker (date & time - min date, max date)'),
+          // SBBGroup(
+          //   child: SBBDateTimePicker(
+          //     mode: SBBDateTimePickerMode.dateAndTime,
+          //     minuteInterval: 4,
+          //     onDateTimeChanged: _onDateTimeChanged,
+          //     initialDateTime: initialDateTime,
+          //     minimumDateTime: initialDateTime.subtract(Duration(days: 2)),
+          //     maximumDateTime:
+          //         initialDateTime.add(Duration(days: 2)).copyWith(minute: 58),
+          //   ),
+          // ),
+          // const SizedBox(
+          //   height: sbbDefaultSpacing,
+          // ),
+          // SBBListHeader('DateTimePicker (date - with min and max date)'),
+          // SBBGroup(
+          //   child: SBBDateTimePicker(
+          //     mode: SBBDateTimePickerMode.date,
+          //     minuteInterval: 15,
+          //     onDateTimeChanged: _onDateTimeChanged,
+          //     initialDateTime: initialDateTime,
+          //     minimumDateTime: initialDateTime.copyWith(
+          //       year: initialDateTime.year - 1,
+          //     ),
+          //     maximumDateTime: initialDateTime.copyWith(
+          //       year: initialDateTime.year + 1,
+          //     ),
+          //   ),
+          // ),
+          // const SizedBox(
+          //   height: sbbDefaultSpacing,
+          // ),
+          SBBListHeader('DateTimePicker (time - with min and max date)'),
+          SBBGroup(
+            child: SBBDateTimePicker(
+              mode: SBBDateTimePickerMode.time,
+              minuteInterval: 15,
+              onDateTimeChanged: _onDateTimeChanged,
+              initialDateTime: SBBDateTimePicker.roundToInterval(initialDateTime, 15),
+              minimumDateTime: initialDateTime,
+              maximumDateTime: initialDateTime.add(Duration(hours: 2)),
+              // maximumDateTime: initialDateTime,
+            ),
+          ),
           const SizedBox(
             height: sbbDefaultSpacing,
           ),
@@ -54,8 +113,8 @@ class _PickerPageState extends State<PickerPage> {
               },
               itemBuilder: (BuildContext context, int index) {
                 return (
-                  true,
-                  Text(_fruitNames[index % _fruitNames.length]),
+                true,
+                Text(_fruitNames[index % _fruitNames.length]),
                 );
               },
             ),
@@ -76,62 +135,10 @@ class _PickerPageState extends State<PickerPage> {
                   return null;
                 }
                 return (
-                  true,
-                  Text(_fruitNames[index]),
+                true,
+                Text(_fruitNames[index]),
                 );
               },
-            ),
-          ),
-          const SizedBox(
-            height: sbbDefaultSpacing,
-          ),
-          SBBListHeader('SBBDateTimePicker (dateAndTime)'),
-          SBBGroup(
-            child: SBBDateTimePicker(
-              mode: SBBDateTimePickerMode.dateAndTime,
-              minuteInterval: 15,
-              onDateTimeChanged: _onDateTimeChanged,
-              initialDateTime: initialDateTime,
-            ),
-          ),
-          const SizedBox(
-            height: sbbDefaultSpacing,
-          ),
-          Container(
-            height: 200,
-            child: CupertinoDatePicker(
-              mode: CupertinoDatePickerMode.time,
-              onDateTimeChanged: _onDateTimeChanged,
-              initialDateTime: initialDateTime,
-            ),
-          ),
-          SBBListHeader('SBBDateTimePicker (dateAndTime + min & max date ${((56 / 6).round() * 6).toInt()})'),
-          SBBGroup(
-            child: SBBDateTimePicker(
-              mode: SBBDateTimePickerMode.dateAndTime,
-              minuteInterval: 4,
-              onDateTimeChanged: _onDateTimeChanged,
-              initialDateTime: initialDateTime,
-              minimumDateTime: initialDateTime.subtract(Duration(days: 2)),
-              maximumDateTime: initialDateTime.add(Duration(days: 2)).copyWith(minute: 58),
-            ),
-          ),
-          const SizedBox(
-            height: sbbDefaultSpacing,
-          ),
-          SBBListHeader('SBBDateTimePicker (date - with min and max date)'),
-          SBBGroup(
-            child: SBBDateTimePicker(
-              mode: SBBDateTimePickerMode.date,
-              minuteInterval: 15,
-              onDateTimeChanged: _onDateTimeChanged,
-              initialDateTime: initialDateTime,
-              minimumDateTime: initialDateTime.copyWith(
-                year: initialDateTime.year - 1,
-              ),
-              maximumDateTime: initialDateTime.copyWith(
-                year: initialDateTime.year + 1,
-              ),
             ),
           ),
         ],
