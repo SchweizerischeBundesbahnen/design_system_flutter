@@ -11,8 +11,8 @@ part 'promotion_box.controller.dart';
 
 part 'promotion_box.style.dart';
 
-class PromotionBox extends StatefulWidget {
-  const PromotionBox({
+class SBBPromotionBox extends StatefulWidget {
+  const SBBPromotionBox({
     required this.title,
     required this.description,
     required this.badgeText,
@@ -30,10 +30,10 @@ class PromotionBox extends StatefulWidget {
   final GestureTapCallback? onTap;
 
   @override
-  State<PromotionBox> createState() => _PromotionBoxState();
+  State<SBBPromotionBox> createState() => _SBBPromotionBoxState();
 }
 
-class _PromotionBoxState extends State<PromotionBox>
+class _SBBPromotionBoxState extends State<SBBPromotionBox>
     with SingleTickerProviderStateMixin {
   final _badgeKey = GlobalKey();
   late PromotionBoxController _controller = PromotionBoxController(this);
