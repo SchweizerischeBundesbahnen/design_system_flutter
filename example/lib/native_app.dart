@@ -18,6 +18,7 @@ import 'pages/list_item_page.dart';
 import 'pages/loading_indicator_page.dart';
 import 'pages/modal_page.dart';
 import 'pages/onboarding_page.dart';
+import 'pages/pagination_page.dart';
 import 'pages/promotion_box_page.dart';
 import 'pages/radio_button_page.dart';
 import 'pages/segmented_button_page.dart';
@@ -147,6 +148,10 @@ class MyApp extends StatelessWidget {
                             _DemoEntry(
                               'Chip',
                               ChipPage(),
+                            ),
+                            _DemoEntry(
+                              'Pagination',
+                              PaginationPage(),
                             ),
                             _DemoEntry(
                               'Slider',
