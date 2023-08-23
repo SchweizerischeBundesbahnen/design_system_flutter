@@ -30,6 +30,7 @@ export 'src/onboarding/sbb_onboarding.dart';
 export 'src/onboarding/sbb_onboarding_builder_delegate.dart';
 export 'src/onboarding/sbb_onboarding_card.dart';
 export 'src/onboarding/sbb_onboarding_notification.dart';
+export 'src/pagination/sbb_pagination.dart';
 export 'src/promotion_box/promotion_box.dart';
 export 'src/radio_button/sbb_radio_button.dart';
 export 'src/radio_button/sbb_radio_button_list_item.dart';
