@@ -47,23 +47,23 @@ class TabBarCurveClipper extends CustomClipper<Path> {
     );
 
     final isNeighbour = _right == _left + 1;
-    final smallVersion = portrait && isNeighbour && rightShape.pCurveLeft.dx < leftShape.pCurveRight.dx;
+    final smallVersion = portrait && isNeighbour;
 
     var path;
 
     if (smallVersion) {
       if (_fromLeft) {
         path = Path()
-          ..moveTo(leftShape.pCurveLeft.dx, leftShape.pCurveLeft.dy)
-          ..quadraticBezierTo(leftShape.cLeft.dx, leftShape.cLeft.dy, leftShape.pLeft.dx, leftShape.pLeft.dy)
-          ..quadraticBezierTo(leftShape.cBottomLeft.dx, leftShape.cBottomLeft.dy, leftShape.pBottom.dx, leftShape.pBottom.dy)
-          ..quadraticBezierTo(leftShape.cBottomRight.dx, leftShape.cBottomRight.dy, leftShape.pRight.dx, leftShape.pRight.dy)
+        ..moveTo(rightShape.pCurveRight.dx, rightShape.pCurveRight.dy)
+          ..quadraticBezierTo(rightShape.cRight.dx, rightShape.cRight.dy, rightShape.pRight.dx, rightShape.pRight.dy)
+          ..quadraticBezierTo(rightShape.cBottomRight.dx, rightShape.cBottomRight.dy, rightShape.pBottom.dx, rightShape.pBottom.dy)
+          ..quadraticBezierTo(rightShape.cBottomLeft.dx, rightShape.cBottomRight.dy, rightShape.pLeft.dx, rightShape.pLeft.dy)
 
-          ..quadraticBezierTo(rightShape.cLeft.dx, rightShape.cLeft.dy, rightShape.pLeft.dx, rightShape.pLeft.dy)
+          ..quadraticBezierTo(leftShape.cRight.dx, leftShape.cRight.dy, leftShape.pRight.dx, leftShape.pRight.dy)
 
-          ..quadraticBezierTo(rightShape.cBottomLeft.dx, rightShape.cBottomLeft.dy, rightShape.pBottom.dx, rightShape.pBottom.dy)
-          ..quadraticBezierTo(rightShape.cBottomRight.dx, rightShape.cBottomRight.dy, rightShape.pRight.dx, rightShape.pRight.dy)
-          ..quadraticBezierTo(rightShape.cRight.dx, rightShape.cRight.dy, rightShape.pCurveRight.dx, rightShape.pCurveRight.dy)
+          ..quadraticBezierTo(leftShape.cBottomRight.dx, leftShape.cBottomRight.dy, leftShape.pBottom.dx, leftShape.pBottom.dy)
+          ..quadraticBezierTo(leftShape.cBottomLeft.dx, leftShape.cBottomLeft.dy, leftShape.pLeft.dx, leftShape.pLeft.dy)
+          ..quadraticBezierTo(leftShape.cLeft.dx, leftShape.cLeft.dy, leftShape.pCurveLeft.dx, leftShape.pCurveLeft.dy)
           ..close();
       } else {
         path = Path()

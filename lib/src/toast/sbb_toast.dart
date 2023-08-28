@@ -234,19 +234,20 @@ class _ToastState extends State<Toast> {
         margin: tooltipTheme.margin,
         padding: tooltipTheme.padding,
         child: Wrap(
+          crossAxisAlignment: WrapCrossAlignment.center,
           children: [
             if (isWeb)
-              Icon(
+              ...[
+                Icon(
                 widget.icon,
                 color: widget.textColor,
               ),
-            Padding(
-              padding: const EdgeInsets.only(left: 8.0),
-              child: Text(
-                widget.message,
-                style: tooltipTheme.textStyle?.copyWith(
-                    decoration: TextDecoration.none, color: widget.textColor),
-              ),
+                SizedBox(width: sbbDefaultSpacing / 2),
+              ],
+            Text(
+              widget.message,
+              style: tooltipTheme.textStyle?.copyWith(
+                  decoration: TextDecoration.none, color: widget.textColor),
             ),
           ],
         ),
