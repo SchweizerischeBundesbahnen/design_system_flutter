@@ -1,6 +1,6 @@
 name: design_system_flutter
 description: Design System Mobile for Flutter
-version: 1.0.0
+version: 1.1.0
 homepage: https://mob.sbb.ch
 
 environment:
@@ -23,6 +23,7 @@ dev_dependencies:
 flutter:
   assets:
     - lib/fonts/
+    - lib/assets/
     - lib/images/dark/
     - lib/images/light/
   fonts:

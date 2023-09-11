@@ -7,6 +7,7 @@ import 'pages/accordion_page.dart';
 import 'pages/autocompletion_page.dart';
 import 'pages/button_page.dart';
 import 'pages/checkbox_page.dart';
+import 'pages/chip_page.dart';
 import 'pages/color_page.dart';
 import 'pages/group_page.dart';
 import 'pages/header_page.dart';
@@ -18,9 +19,13 @@ import 'pages/loading_indicator_page.dart';
 import 'pages/message_page.dart';
 import 'pages/modal_page.dart';
 import 'pages/onboarding_page.dart';
+import 'pages/pagination_page.dart';
+import 'pages/promotion_box_page.dart';
 import 'pages/radio_button_page.dart';
 import 'pages/segmented_button_page.dart';
 import 'pages/select_page.dart';
+import 'pages/slider_page.dart';
+import 'pages/switch_page.dart';
 import 'pages/tab_bar_page.dart';
 import 'pages/text_field_page.dart';
 import 'pages/toast_page.dart';
@@ -134,8 +139,24 @@ class MyApp extends StatelessWidget {
                               SelectPage(),
                             ),
                             _DemoEntry(
+                              'Switch',
+                              SwitchPage(),
+                            ),
+                            _DemoEntry(
                               'Textfield / Textarea',
                               TextFieldPage(),
+                            ),
+                            _DemoEntry(
+                              'Chip',
+                              ChipPage(),
+                            ),
+                            _DemoEntry(
+                              'Pagination',
+                              PaginationPage(),
+                            ),
+                            _DemoEntry(
+                              'Slider',
+                              SliderPage(),
                               isLastElement: true,
                             ),
                           ],
@@ -176,12 +197,16 @@ class MyApp extends StatelessWidget {
                               OnboardingPage(),
                             ),
                             _DemoEntry(
+                              'Message',
+                              MessagePage(),
+                            ),
+                            _DemoEntry(
                               'Tab Bar',
                               TabBarPage(),
                             ),
                             _DemoEntry(
-                              'Message',
-                              MessagePage(),
+                              'Promotion Box',
+                              PromotionBoxPage(),
                               isLastElement: true,
                             ),
                           ],
