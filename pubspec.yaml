@@ -24,8 +24,8 @@ flutter:
   assets:
     - lib/fonts/
     - lib/assets/
-    - lib/images/dark/
-    - lib/images/light/
+    - lib/assets/illustrations/dark/
+    - lib/assets/illustrations/light/
   fonts:
     - family: SBBWeb
       fonts:

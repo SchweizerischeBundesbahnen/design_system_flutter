@@ -8,11 +8,12 @@ import 'test_app.dart';
 void main() {
   void generateTest(String name, SBBMessage message) {
     testGoldens(name, (WidgetTester tester) async {
-      final builder = GoldenBuilder.column(wrap: (w) => TestApp.expanded(child: w))
-        ..addScenario(
-          'message tests',
-          MessageTest(sbbMessage: message),
-        );
+      final builder =
+          GoldenBuilder.column(wrap: (w) => TestApp.expanded(child: w))
+            ..addScenario(
+              'message tests',
+              MessageTest(sbbMessage: message),
+            );
 
       await tester.pumpWidgetBuilder(builder.build());
       await multiScreenGolden(tester, name, devices: TestApp.native_devices);
@@ -21,29 +22,31 @@ void main() {
 
   generateTest(
     'message_test_1',
-    SBBMessage.info(
-      title: 'Info',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
-      messageCode: 'Error-Code: XYZ-9999',
+    SBBMessage(
+      title: 'Default',
+      description:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
       onInteraction: () {},
     ),
   );
 
   generateTest(
     'message_test_2',
-    SBBMessage.warning(
-      title: 'Warning, no messageCode',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
-      onInteraction: () {},
+    SBBMessage(
+      title: 'No Interaction',
+      description:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
     ),
   );
 
   generateTest(
     'message_test_3',
-    SBBMessage.success(
-      title: 'Success',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
+    SBBMessage(
+      title: 'Default, custom icon',
+      description:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
       onInteraction: () {},
+      interactionIcon: SBBIcons.train_medium,
     ),
   );
 
@@ -51,17 +54,10 @@ void main() {
     'message_test_4',
     SBBMessage.error(
       title: 'Error, no interaction',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
-    ),
-  );
-
-  generateTest(
-    'message_test_5',
-    SBBMessage.hint(
-      title: 'Hint, custom icon',
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
+      description:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
+      messageCode: 'Fehlercode: XYZ-9999',
       onInteraction: () {},
-      interactionIcon: SBBIcons.train_medium,
     ),
   );
 }

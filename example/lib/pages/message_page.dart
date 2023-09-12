@@ -10,7 +10,6 @@ class MessagePage extends StatefulWidget {
 
 class _MessagePageState extends State<MessagePage> {
   bool? _showInteractionButton = true;
-  bool? _showMessageCode = true;
   bool? _isLoading = false;
 
   @override
@@ -27,48 +26,19 @@ class _MessagePageState extends State<MessagePage> {
           onChanged: (value) => setState(() => _showInteractionButton = value),
         ),
         SBBCheckboxListItem(
-          value: _showMessageCode,
-          label: 'Show message code',
-          onChanged: (value) => setState(() => _showMessageCode = value),
-        ),
-        SBBCheckboxListItem(
           value: _isLoading,
           label: 'Is loading',
           onChanged: (value) => setState(() => _isLoading = value),
         ),
         const SizedBox(height: sbbDefaultSpacing),
-        const SBBListHeader('Info'),
+        const SBBListHeader('Default'),
         SBBGroup(
           margin: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
           padding: const EdgeInsets.all(sbbDefaultSpacing),
-          child: SBBMessage.info(
+          child: SBBMessage(
             title: 'Title, single line if possible',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
-            messageCode: _messageCode,
-            isLoading: _isLoading ?? false,
-            onInteraction: _onInteractionCallback(),
-          ),
-        ),
-        const SBBListHeader('Hint'),
-        SBBGroup(
-          margin: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
-          padding: const EdgeInsets.all(sbbDefaultSpacing),
-          child: SBBMessage.hint(
-            title: 'Title, single line if possible',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
-            messageCode: _messageCode,
-            isLoading: _isLoading ?? false,
-            onInteraction: _onInteractionCallback(),
-          ),
-        ),
-        const SBBListHeader('Warning'),
-        SBBGroup(
-          margin: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
-          padding: const EdgeInsets.all(sbbDefaultSpacing),
-          child: SBBMessage.warning(
-            title: 'Title, single line if possible',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
-            messageCode: _messageCode,
+            description:
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
             isLoading: _isLoading ?? false,
             onInteraction: _onInteractionCallback(),
           ),
@@ -79,20 +49,9 @@ class _MessagePageState extends State<MessagePage> {
           padding: const EdgeInsets.all(sbbDefaultSpacing),
           child: SBBMessage.error(
             title: 'Title, single line if possible',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
-            messageCode: _messageCode,
-            isLoading: _isLoading ?? false,
-            onInteraction: _onInteractionCallback(),
-          ),
-        ),
-        const SBBListHeader('Success'),
-        SBBGroup(
-          margin: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
-          padding: const EdgeInsets.all(sbbDefaultSpacing),
-          child: SBBMessage.success(
-            title: 'Title, single line if possible',
-            description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
-            messageCode: _messageCode,
+            description:
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
+            messageCode: 'Error Code: XYZ-999',
             isLoading: _isLoading ?? false,
             onInteraction: _onInteractionCallback(),
           ),
@@ -101,7 +60,6 @@ class _MessagePageState extends State<MessagePage> {
     );
   }
 
-  String? get _messageCode => (_showMessageCode ?? false) ? 'Code: XYZ-999' : null;
-
-  VoidCallback? _onInteractionCallback() => (_showInteractionButton ?? false) ? () {} : null;
+  VoidCallback? _onInteractionCallback() =>
+      (_showInteractionButton ?? false) ? () {} : null;
 }
