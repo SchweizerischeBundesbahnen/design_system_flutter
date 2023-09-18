@@ -16,6 +16,7 @@ import 'pages/link_page.dart';
 import 'pages/list_header_page.dart';
 import 'pages/list_item_page.dart';
 import 'pages/loading_indicator_page.dart';
+import 'pages/message_page.dart';
 import 'pages/modal_page.dart';
 import 'pages/onboarding_page.dart';
 import 'pages/pagination_page.dart';
@@ -194,6 +195,10 @@ class MyApp extends StatelessWidget {
                             _DemoEntry(
                               'Onboarding',
                               OnboardingPage(),
+                            ),
+                            _DemoEntry(
+                              'Message',
+                              MessagePage(),
                             ),
                             _DemoEntry(
                               'Tab Bar',

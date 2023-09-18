@@ -56,3 +56,4 @@ export 'src/theme/sbb_theme.dart';
 export 'src/theme/sbb_typography.dart';
 export 'src/theme/styles/sbb_styles.dart';
 export 'src/toast/sbb_toast.dart';
+export 'src/message/sbb_message.dart';
