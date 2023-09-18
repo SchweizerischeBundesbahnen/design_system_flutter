@@ -15,6 +15,14 @@ enum MessageIllustration {
   const MessageIllustration(this.fileName);
 
   final String fileName;
+
+  static String parent = 'lib/assets/illustrations';
+  static String package = 'design_system_flutter';
+
+  AssetImage asset(Brightness brightness) {
+    final path = '$parent/${brightness.name}/$fileName';
+    return AssetImage(path, package: package);
+  }
 }
 
 /// The SBB Message. Use according to documentation.
@@ -126,8 +134,7 @@ class SBBMessage extends StatelessWidget {
     final brightness = Theme.of(context).brightness;
     return Container(
       constraints: BoxConstraints(maxHeight: _kIllustrationMaxHeight),
-      child: Image.asset(
-          'packages/design_system_flutter/lib/assets/illustrations/${brightness.name}/${illustration.fileName}'),
+      child: Image(image: illustration.asset(brightness)),
     );
   }
 

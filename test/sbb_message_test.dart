@@ -68,17 +68,22 @@ class MessageTest extends StatelessWidget {
   final SBBMessage sbbMessage;
 
   @override
-  Widget build(BuildContext context) => Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const SBBListHeader('SBBMessage'),
-          Container(
-            width: 400.0,
-            child: SBBGroup(
-              padding: const EdgeInsets.all(sbbDefaultSpacing / 2),
-              child: sbbMessage,
-            ),
+  Widget build(BuildContext context) {
+    MessageIllustration.values.expand(
+      (i) => Brightness.values.map((b) => precacheImage(i.asset(b), context)),
+    ).toList();
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        const SBBListHeader('SBBMessage'),
+        Container(
+          width: 400.0,
+          child: SBBGroup(
+            padding: const EdgeInsets.all(sbbDefaultSpacing / 2),
+            child: sbbMessage,
           ),
-        ],
-      );
+        ),
+      ],
+    );
+  }
 }
