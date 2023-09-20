@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../design_system_flutter.dart';
 
-const _kDefaultInteractionIcon = SBBIcons.arrow_circle_medium;
+const _kDefaultInteractionIcon = SBBIcons.arrows_circle_medium;
 
 const _kIllustrationMaxHeight = 145.0;
 const _kTextBoxSpacing = 24.0;
@@ -77,6 +77,7 @@ class SBBMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return Padding(
       padding: const EdgeInsets.all(sbbDefaultSpacing),
       child: Column(
@@ -84,12 +85,12 @@ class SBBMessage extends StatelessWidget {
           if (isLoading) _loadingIndicator(context),
           if (!isLoading) customIllustration ?? _defaultIllustration(context),
           SizedBox(height: _kTextBoxSpacing),
-          _title(),
+          _title(textTheme),
           SizedBox(height: sbbDefaultSpacing),
-          _description(),
+          _description(textTheme),
           if (messageCode != null) ...[
             SizedBox(height: sbbDefaultSpacing),
-            _errorCode(),
+            _errorCode(textTheme),
           ],
           if (_showInteractionButton) ...[
             SizedBox(height: _kTextBoxSpacing),
@@ -107,21 +108,21 @@ class SBBMessage extends StatelessWidget {
         : SBBLoadingIndicator.medium();
   }
 
-  Text _title() => Text(
+  Text _title(TextTheme textTheme) => Text(
         title,
-        style: SBBTextStyles.mediumLight,
+        style: textTheme.bodyMedium,
         textAlign: TextAlign.center,
       );
 
-  Text _description() => Text(
+  Text _description(TextTheme textTheme) => Text(
         description,
-        style: SBBTextStyles.smallLight,
+        style: textTheme.labelSmall,
         textAlign: TextAlign.center,
       );
 
-  Text _errorCode() => Text(
+  Text _errorCode(TextTheme textTheme) => Text(
         messageCode!,
-        style: SBBTextStyles.smallLight.copyWith(fontSize: 12.0),
+        style: textTheme.labelSmall?.copyWith(fontSize: 12.0),
         textAlign: TextAlign.center,
       );
 
