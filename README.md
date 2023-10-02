@@ -2,7 +2,7 @@
 ![GitHub](https://img.shields.io/github/license/SchweizerischeBundesbahnen/design_system_flutter)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/SchweizerischeBundesbahnen/design_system_flutter/Flutter%20CI)
 
-[Design System Mobile](https://designsystems.app.sbb.ch/) in Flutter (yes, it could be that easy...).
+[Design System Mobile](https://digital.sbb.ch/en/design-system/mobile/overview/) in Flutter.
 
 This framework contains SBB (Swiss Federal Railways) UI elements for Flutter Apps. It allows an easy integration of SBB theming to your app (or a custom color theming of your choice). All elements are optimized for dynamic TextSizes, VoiceOver, light & dark mode as well as for different SizeClasses.
 
@@ -30,9 +30,9 @@ After that simply use the provided fonts, styles, colors, widgets...
 ### SBB internal documentation
 
 A the moment, the following documents are only available to people internal to SBB:
-* [SBB Design System Mobile documentation](https://digital.sbb.ch/de/design-system-mobile-new "Design System Mobile documentation") (new version since 2021)
+* [SBB Design System Mobile documentation](https://digital.sbb.ch/en/design-system/mobile/overview/ "Design System Mobile documentation")
+* [Figma](https://www.figma.com/file/WOtLIam1xwrqcgnAITsEhV/Design-System-Mobile "Figma library")
 * [AppBakery libraries](https://sbb.sharepoint.com/sites/app-bakery/SitePages/Mobile-Libraries.aspx "AppBakery libraries")
-* [Figma](https://www.figma.com/file/56woOj0p1qEOrZiTzi4mJ7/SBB-Mobile-Library-%28draft%29 "Figma library")
 
 ## Getting help
 
