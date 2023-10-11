@@ -1,5 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="ch.sbb.mds.example.example">
+    package="ch.sbb.fdsm.example">
+
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <!-- io.flutter.app.FlutterApplication is an android.app.Application that
          calls FlutterMain.startInitialization(this); in its onCreate method.
@@ -8,7 +10,8 @@
          FlutterApplication and put your custom class here. -->
     <application
         android:name="${applicationName}"
-        android:label="example"
+        android:label="Flutter DSM"
+        android:roundIcon="@mipmap/round_launcher"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

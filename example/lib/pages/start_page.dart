@@ -1,6 +1,7 @@
 import 'package:design_system_flutter/design_system_flutter.dart';
-import 'package:example/pages/launchpad_page.dart';
 import 'package:flutter/material.dart';
+
+import 'launchpad_page.dart';
 
 class StartPage extends StatelessWidget {
   const StartPage({Key? key}) : super(key: key);

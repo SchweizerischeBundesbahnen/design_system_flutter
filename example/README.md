@@ -1,16 +1,19 @@
-# example
+# Showcase App - Flutter DSM
 
-A new Flutter project.
+This showcase app illustrates the components of the design_system_flutter package.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+* Install `fvm`, following the instructions [here](https://fvm.app/docs/getting_started/installation).
+* For running this application locally, run the following command from your shell:
 
-A few resources to get you started if this is your first Flutter project:
+    ```shell
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+    fvm flutter run
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+    ```
+    This will install all the necessary dependencies and run the application on your local emulator.
+
+## Deployment
+
+This app is built and deployed using github actions. Check the `android_release.yml` inside `./.github/workflows`. The necessary secrets are set within the repository. They are also securely stored by the SBB AppBakery Team.
