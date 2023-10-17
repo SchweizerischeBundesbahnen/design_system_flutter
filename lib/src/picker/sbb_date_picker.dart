@@ -3,7 +3,6 @@ part of 'sbb_picker.dart';
 class SBBDatePicker extends StatefulWidget {
   SBBDatePicker({
     super.key,
-    this.label,
     required this.onDateChanged,
     DateTime? initialDate,
     DateTime? minimumDate,
@@ -22,7 +21,6 @@ class SBBDatePicker extends StatefulWidget {
     );
   }
 
-  final String? label;
   final ValueChanged<DateTime> onDateChanged;
   final DateTime initialDate;
   final DateTime? minimumDate;
@@ -147,7 +145,6 @@ class _SBBDatePickerState extends State<SBBDatePicker> {
   @override
   Widget build(BuildContext context) {
     return SBBPicker.custom(
-      label: widget.label,
       isLastElement: widget.isLastElement,
       child: Row(
         children: [

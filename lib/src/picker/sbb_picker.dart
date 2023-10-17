@@ -8,7 +8,6 @@ part 'sbb_date_picker.dart';
 part 'sbb_date_time_picker.dart';
 part 'sbb_picker_scroll_view.dart';
 part 'sbb_time_picker.dart';
-part 'sbb_time_range_picker.dart';
 
 const _highlightedAreaHeight = 34.0;
 
@@ -23,7 +22,6 @@ class SBBPicker extends StatelessWidget {
     bool isLastElement = false,
   }) : this.custom(
           key: key,
-          label: label,
           child: SBBPickerScrollView(
             controller: SBBPickerScrollController(
               initialItem: initialSelectedIndex,
@@ -37,13 +35,10 @@ class SBBPicker extends StatelessWidget {
 
   const SBBPicker.custom({
     super.key,
-    this.label,
     required this.child,
     this.isLastElement = true,
   });
 
-  // TODO to be removed?
-  final String? label;
   final Widget child;
   final bool isLastElement;
 
@@ -51,25 +46,6 @@ class SBBPicker extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        if (label != null)
-          Padding(
-            padding: EdgeInsets.only(
-              top: 5.0,
-              bottom: 8.0,
-            ),
-            child: Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    label!,
-                    softWrap: false,
-                    overflow: TextOverflow.ellipsis,
-                    style: SBBTextStyles.helpersLabel,
-                  ),
-                ),
-              ],
-            ),
-          ),
         Container(
           height: 224,
           child: Stack(
@@ -90,10 +66,6 @@ class SBBPicker extends StatelessWidget {
             ],
           ),
         ),
-        if (label != null && !isLastElement)
-          SizedBox(
-            height: sbbDefaultSpacing * 0.5,
-          ),
         if (!isLastElement) Divider(),
       ],
     );

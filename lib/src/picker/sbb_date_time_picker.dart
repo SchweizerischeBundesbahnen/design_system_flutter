@@ -3,27 +3,15 @@ part of 'sbb_picker.dart';
 class SBBDateTimePicker extends StatefulWidget {
   SBBDateTimePicker({
     super.key,
-    this.label,
     required this.onDateTimeChanged,
     DateTime? initialDateTime,
     DateTime? minimumDateTime,
     DateTime? maximumDateTime,
     this.isLastElement = true,
     this.minuteInterval = 1,
-  })  : initialDateTime = _initialDateTime(
-          initialDateTime,
-          minuteInterval,
-        ),
-        minimumDateTime = _minimumDateTime(
-          minimumDateTime,
-          initialDateTime,
-          minuteInterval,
-        ),
-        maximumDateTime = _maximumDateTime(
-          maximumDateTime,
-          initialDateTime,
-          minuteInterval,
-        ),
+  })  : initialDateTime = _initialDateTime(initialDateTime, minuteInterval),
+        minimumDateTime = _minimumDateTime(minimumDateTime, minuteInterval),
+        maximumDateTime = _maximumDateTime(maximumDateTime, minuteInterval),
         assert(
           minuteInterval > 0 && 60 % minuteInterval == 0,
           'minute interval is not a positive integer factor of 60',
@@ -44,7 +32,6 @@ class SBBDateTimePicker extends StatefulWidget {
     );
   }
 
-  final String? label;
   final ValueChanged<DateTime> onDateTimeChanged;
   final DateTime initialDateTime;
   final DateTime? minimumDateTime;
@@ -68,7 +55,6 @@ class SBBDateTimePicker extends StatefulWidget {
 
   static DateTime? _minimumDateTime(
     DateTime? minimumDateTime,
-    DateTime? initialDateTime,
     int minuteInterval,
   ) {
     if (minimumDateTime == null) {
@@ -80,7 +66,6 @@ class SBBDateTimePicker extends StatefulWidget {
 
   static DateTime? _maximumDateTime(
     DateTime? maximumDateTime,
-    DateTime? initialDateTime,
     int minuteInterval,
   ) {
     if (maximumDateTime == null) {
@@ -199,7 +184,6 @@ class _SBBDateTimePickerState extends State<SBBDateTimePicker> {
   @override
   Widget build(BuildContext context) {
     return SBBPicker.custom(
-      label: widget.label,
       isLastElement: widget.isLastElement,
       child: Row(
         children: [

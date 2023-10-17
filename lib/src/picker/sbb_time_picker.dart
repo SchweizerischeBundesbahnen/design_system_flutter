@@ -3,7 +3,6 @@ part of 'sbb_picker.dart';
 class SBBTimePicker extends StatefulWidget {
   SBBTimePicker({
     super.key,
-    this.label,
     required this.onTimeChanged,
     TimeOfDay? initialTime,
     TimeOfDay? minimumTime,
@@ -40,7 +39,6 @@ class SBBTimePicker extends StatefulWidget {
     );
   }
 
-  final String? label;
   final ValueChanged<TimeOfDay> onTimeChanged;
   final TimeOfDay initialTime;
   final TimeOfDay? minimumDateTime;
@@ -175,7 +173,6 @@ class _SBBTimePickerTimeState extends State<SBBTimePicker> {
   @override
   Widget build(BuildContext context) {
     return SBBPicker.custom(
-      label: widget.label,
       isLastElement: widget.isLastElement,
       child: Row(
         children: [

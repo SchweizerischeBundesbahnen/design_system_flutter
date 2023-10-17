@@ -119,9 +119,9 @@ class _PickerPageState extends State<PickerPage> {
               onDateTimeChanged: _onDateTimeChanged,
               initialDateTime:
                   SBBDateTimePicker.roundToInterval(initialDateTime, 15),
-              minimumDateTime:
-                  SBBDateTimePicker.roundToInterval(initialDateTime, 15),
-              maximumDateTime: initialDateTime.add(Duration(hours: 2)),
+              // minimumDateTime:
+              //     SBBDateTimePicker.roundToInterval(initialDateTime, 15),
+              // maximumDateTime: initialDateTime.add(Duration(hours: 2)),
               // maximumDateTime: initialDateTime,
             ),
           ),
