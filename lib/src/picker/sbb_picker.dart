@@ -14,6 +14,7 @@ const _highlightedAreaHeight = 34.0;
 class SBBPicker extends StatelessWidget {
   SBBPicker({
     Key? key,
+    SBBPickerScrollController? controller,
     String? label,
     int initialSelectedIndex = 0,
     required ValueChanged<int>? onSelectedItemChanged,
@@ -23,7 +24,7 @@ class SBBPicker extends StatelessWidget {
   }) : this.custom(
           key: key,
           child: SBBPickerScrollView(
-            controller: SBBPickerScrollController(
+            controller: controller ?? SBBPickerScrollController(
               initialItem: initialSelectedIndex,
             ),
             onSelectedItemChanged: onSelectedItemChanged,
