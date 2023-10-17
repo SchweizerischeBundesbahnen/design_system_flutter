@@ -17,8 +17,10 @@ import 'pages/link_page.dart';
 import 'pages/list_header_page.dart';
 import 'pages/list_item_page.dart';
 import 'pages/loading_indicator_page.dart';
+import 'pages/message_page.dart';
 import 'pages/modal_page.dart';
 import 'pages/onboarding_page.dart';
+import 'pages/pagination_page.dart';
 import 'pages/picker_page.dart';
 import 'pages/promotion_box_page.dart';
 import 'pages/radio_button_page.dart';
@@ -55,18 +57,18 @@ class MyApp extends StatelessWidget {
             darkTheme: SBBTheme.dark(
               hostPlatform: HostPlatform.native,
             ),
-            localizationsDelegates: <LocalizationsDelegate<Object>>[
-              // ... app-specific localization delegate(s) here
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            supportedLocales: <Locale>[
-              Locale('en', 'US'), // English
-              Locale('de', 'CH'), // Hebrew
-              Locale('de', 'DE'), // Hebrew
-              // ... other locales the app supports
-            ],
+            // localizationsDelegates: <LocalizationsDelegate<Object>>[
+            //   // ... app-specific localization delegate(s) here
+            //   GlobalMaterialLocalizations.delegate,
+            //   GlobalWidgetsLocalizations.delegate,
+            //   GlobalCupertinoLocalizations.delegate,
+            // ],
+            // supportedLocales: <Locale>[
+            //   Locale('en', 'US'), // English
+            //   Locale('de', 'CH'), // Hebrew
+            //   Locale('de', 'DE'), // Hebrew
+            //   // ... other locales the app supports
+            // ],
             themeMode: appState.isDarkModeOn ? ThemeMode.dark : ThemeMode.light,
             home: Scaffold(
               appBar: SBBHeader(title: 'Design System Mobile'),
@@ -167,6 +169,10 @@ class MyApp extends StatelessWidget {
                               ChipPage(),
                             ),
                             _DemoEntry(
+                              'Pagination',
+                              PaginationPage(),
+                            ),
+                            _DemoEntry(
                               'Slider',
                               SliderPage(),
                               isLastElement: true,
@@ -207,6 +213,10 @@ class MyApp extends StatelessWidget {
                             _DemoEntry(
                               'Onboarding',
                               OnboardingPage(),
+                            ),
+                            _DemoEntry(
+                              'Message',
+                              MessagePage(),
                             ),
                             _DemoEntry(
                               'Tab Bar',

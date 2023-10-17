@@ -9,6 +9,7 @@ export 'src/sbb_basic_control_style.dart';
 export 'src/sbb_button_style.dart';
 export 'src/sbb_button_styles.dart';
 export 'src/sbb_chip_style.dart';
+export 'src/sbb_pagination_style.dart';
 export 'src/sbb_control_style.dart';
 export 'src/sbb_control_styles.dart';
 export 'src/sbb_list_item_style.dart';

@@ -15,27 +15,27 @@ void main() {
       ..addScenario(
           'Promotion Box',
           Column(children: [
-            PromotionBox(
+            SBBPromotionBox(
               badgeText: 'Default',
               title: _title,
               description: _description,
             ),
             SizedBox(height: 8.0),
-            PromotionBox(
+            SBBPromotionBox(
               badgeText: 'Is Closable = false',
               title: _title,
               description: _description,
               isClosable: false,
             ),
             SizedBox(height: 8.0),
-            PromotionBox(
+            SBBPromotionBox(
               badgeText: 'Clickable',
               title: _title,
               description: _description,
               onTap: () {},
             ),
             SizedBox(height: 8.0),
-            PromotionBox(
+            SBBPromotionBox(
               badgeText: 'With way too long title and badge text',
               title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
               description: _description,
