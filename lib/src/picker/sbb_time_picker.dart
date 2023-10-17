@@ -53,9 +53,9 @@ class SBBTimePicker extends StatefulWidget {
 
   static TimeOfDay _initialTime(TimeOfDay? time) {
     if (time == null) {
-      TimeOfDay.now();
+      return TimeOfDay.now();
     }
-    return time!.replacing(hour: time.hour, minute: time.minute);
+    return time.replacing(hour: time.hour, minute: time.minute);
   }
 
   static TimeOfDay? _minimumDateTime(TimeOfDay? time, int minuteInterval) {
