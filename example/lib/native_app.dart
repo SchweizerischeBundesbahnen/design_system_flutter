@@ -57,18 +57,6 @@ class MyApp extends StatelessWidget {
             darkTheme: SBBTheme.dark(
               hostPlatform: HostPlatform.native,
             ),
-            // localizationsDelegates: <LocalizationsDelegate<Object>>[
-            //   // ... app-specific localization delegate(s) here
-            //   GlobalMaterialLocalizations.delegate,
-            //   GlobalWidgetsLocalizations.delegate,
-            //   GlobalCupertinoLocalizations.delegate,
-            // ],
-            // supportedLocales: <Locale>[
-            //   Locale('en', 'US'), // English
-            //   Locale('de', 'CH'), // Hebrew
-            //   Locale('de', 'DE'), // Hebrew
-            //   // ... other locales the app supports
-            // ],
             themeMode: appState.isDarkModeOn ? ThemeMode.dark : ThemeMode.light,
             home: Scaffold(
               appBar: SBBHeader(title: 'Design System Mobile'),
