@@ -313,6 +313,7 @@ class SBBPickerScrollController extends ScrollController {
         );
 
   ValueNotifier<bool> _scrollingStateNotifier = ValueNotifier(false);
+  late VoidCallback isScrollingListener;
 
   int get selectedItem {
     final currentOffset = positions.isEmpty ? initialScrollOffset : offset;
@@ -391,7 +392,7 @@ class SBBPickerScrollController extends ScrollController {
   @override
   void attach(ScrollPosition position) {
     super.attach(position);
-    position.isScrollingNotifier.addListener(() {
+    isScrollingListener = () {
       final scrollingValue = position.isScrollingNotifier.value;
       if (scrollingValue) {
         // only update scrolling value because controller is not idle
@@ -435,7 +436,14 @@ class SBBPickerScrollController extends ScrollController {
           _scrollingStateNotifier.value = scrollingValue;
         }
       });
-    });
+    };
+    position.isScrollingNotifier.addListener(isScrollingListener);
+  }
+
+  @override
+  void detach(ScrollPosition position) {
+    position.isScrollingNotifier.removeListener(isScrollingListener);
+    super.detach(position);
   }
 
   static double _getItemScrollOffset(int index) {
