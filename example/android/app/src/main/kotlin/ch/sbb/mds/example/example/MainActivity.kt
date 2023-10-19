@@ -1,4 +1,4 @@
-package ch.sbb.mds.example.example
+package ch.sbb.fdsm.example
 
 import androidx.annotation.NonNull
 

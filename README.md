@@ -44,6 +44,10 @@ Generally speaking, we are welcoming contributions improving existing UI element
 
 General instructions on _how_ to contribute can be found under [Contributing](Contributing.md).
 
+### Github Actions
+
+This project is built and tested using [Github Actions](https://docs.github.com/en/actions). On every push to any branch, a `test` workflow is triggered, running all tests in the `.\test\` dir. Failed golden tests will be uploaded to the job artifacts. The tests run on a _macos_ runner.
+
 ## Authors
 
 * **Hoang Tran**
