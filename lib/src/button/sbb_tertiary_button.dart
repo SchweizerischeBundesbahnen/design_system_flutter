@@ -16,15 +16,17 @@ import '../sbb_internal.dart';
 /// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/button>
 class SBBTertiaryButtonLarge extends StatelessWidget {
   const SBBTertiaryButtonLarge({
-    Key? key,
-    required this.label,
+    super.key,
+    this.label,
+    this.child,
     this.icon,
     this.isLoading = false,
     required this.onPressed,
     this.focusNode,
-  }) : super(key: key);
+  }) : assert(label != null && child == null || label == null && child != null);
 
-  final String label;
+  final String? label;
+  final Widget? child;
   final IconData? icon;
   final bool isLoading;
   final VoidCallback? onPressed;
@@ -47,19 +49,16 @@ class SBBTertiaryButtonLarge extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             if (isLoading)
-              style.themeValue(const SBBLoadingIndicator.tinySmoke(), const SBBLoadingIndicator.tinyCement())
+              style.themeValue(
+                const SBBLoadingIndicator.tinySmoke(),
+                const SBBLoadingIndicator.tinyCement(),
+              )
             else if (icon != null)
               Padding(
                 padding: const EdgeInsetsDirectional.only(end: 4.0),
                 child: Icon(icon, size: sbbIconSizeSmall),
               ),
-            Flexible(
-              child: Text(
-                label,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-              ),
-            ),
+            if (label == null) child! else SBBButtonContent(label: label!),
           ],
         ),
       ),
@@ -116,7 +115,10 @@ class SBBTertiaryButtonSmall extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             if (isLoading)
-              style.themeValue(const SBBLoadingIndicator.tinyCement(), const SBBLoadingIndicator.tinySmoke())
+              style.themeValue(
+                const SBBLoadingIndicator.tinyCement(),
+                const SBBLoadingIndicator.tinySmoke(),
+              )
             else if (icon != null)
               Padding(
                 padding: const EdgeInsetsDirectional.only(end: 4.0),
