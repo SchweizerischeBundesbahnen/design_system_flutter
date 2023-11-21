@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../design_system_flutter.dart';
 import '../sbb_internal.dart';
-import 'sbb_button_style_extensions.dart';
 
 /// The SBB Secondary Button. Use according to documentation.
 ///
@@ -17,14 +16,16 @@ import 'sbb_button_style_extensions.dart';
 /// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/button>
 class SBBSecondaryButton extends StatelessWidget {
   const SBBSecondaryButton({
-    Key? key,
-    required this.label,
+    super. key,
+    this.label,
+    this.child,
     this.isLoading = false,
     required this.onPressed,
     this.focusNode,
-  }) : super(key: key);
+  }) : assert(label != null && child == null || label == null && child != null);
 
-  final String label;
+  final String? label;
+  final Widget? child;
   final bool isLoading;
   final VoidCallback? onPressed;
   final FocusNode? focusNode;
@@ -34,10 +35,12 @@ class SBBSecondaryButton extends StatelessWidget {
     final isWeb = SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
     final style = SBBBaseStyle.of(context);
     return OutlinedButton(
-      style: isWeb ? Theme.of(context).extension<SBBButtonStyles>()?.secondaryWebLean : Theme.of(context).outlinedButtonTheme.style?.copyWith(
-        // workaround for web
-        padding: SBBTheme.allStates(EdgeInsets.zero),
-      ),
+      style: isWeb
+          ? Theme.of(context).extension<SBBButtonStyles>()?.secondaryWebLean
+          : Theme.of(context).outlinedButtonTheme.style?.copyWith(
+                // workaround for web
+                padding: SBBTheme.allStates(EdgeInsets.zero),
+              ),
       onPressed: isLoading ? null : onPressed,
       focusNode: focusNode,
       child: Padding(
@@ -51,7 +54,7 @@ class SBBSecondaryButton extends StatelessWidget {
                 const SBBLoadingIndicator.tinySmoke(),
                 const SBBLoadingIndicator.tinyCement(),
               ),
-            SBBButtonContent(label: label)
+            if (label == null) child! else SBBButtonContent(label: label!),
           ],
         ),
       ),
