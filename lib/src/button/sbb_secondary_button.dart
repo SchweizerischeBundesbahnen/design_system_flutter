@@ -17,26 +17,25 @@ import '../sbb_internal.dart';
 class SBBSecondaryButton extends StatelessWidget {
   const SBBSecondaryButton({
     super. key,
-    this.label,
-    this.child,
+    required this.label,
     this.isLoading = false,
     required this.onPressed,
     this.focusNode,
-  }) : assert(label != null && child == null || label == null && child != null);
+  });
 
-  final String? label;
-  final Widget? child;
+  final String label;
   final bool isLoading;
   final VoidCallback? onPressed;
   final FocusNode? focusNode;
 
   @override
   Widget build(BuildContext context) {
-    final isWeb = SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
     final style = SBBBaseStyle.of(context);
+    final isWeb = style.hostPlatform == HostPlatform.web;
+    final buttonStyles = SBBButtonStyles.of(context);
     return OutlinedButton(
       style: isWeb
-          ? Theme.of(context).extension<SBBButtonStyles>()?.secondaryWebLean
+          ? buttonStyles.secondaryWebLean
           : Theme.of(context).outlinedButtonTheme.style?.copyWith(
                 // workaround for web
                 padding: SBBTheme.allStates(EdgeInsets.zero),
@@ -54,7 +53,7 @@ class SBBSecondaryButton extends StatelessWidget {
                 const SBBLoadingIndicator.tinySmoke(),
                 const SBBLoadingIndicator.tinyCement(),
               ),
-            if (label == null) child! else SBBButtonContent(label: label!),
+            buttonStyles.buttonLabelBuilder(context, label),
           ],
         ),
       ),
@@ -78,13 +77,16 @@ class SBBGhostButton extends StatelessWidget {
   Widget build(BuildContext context) {
     if (SBBBaseStyle.of(context).hostPlatform == HostPlatform.native)
       debugPrint('WARNING: Ghost button should only be used for web platform.');
+    final styles = SBBButtonStyles.of(context);
     return OutlinedButton(
-      style: Theme.of(context).extension<SBBButtonStyles>()?.ghostWebLean,
+      style: styles.ghostWebLean,
       onPressed: onPressed,
       focusNode: focusNode,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [SBBButtonContent(label: label)],
+        children: [
+          styles.buttonLabelBuilder(context, label),
+        ],
       ),
     );
   }

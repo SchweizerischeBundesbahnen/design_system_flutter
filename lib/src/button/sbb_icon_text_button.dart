@@ -38,8 +38,14 @@ class _SBBIconTextButtonState extends State<SBBIconTextButton> {
 
   @override
   Widget build(BuildContext context) {
-    final style = SBBButtonStyles.of(context).iconTextStyle;
+    final buttonStyle = SBBButtonStyles.of(context);
+    final style = buttonStyle.iconTextStyle;
     final isEnabled = widget.onPressed != null;
+    final textStyle = _isPressed || _hasFocus
+        ? style?.textStyleHighlighted
+        : isEnabled
+            ? style?.textStyle
+            : style?.textStyleDisabled;
     return Semantics(
       button: true,
       child: SBBGroup(
@@ -83,15 +89,10 @@ class _SBBIconTextButtonState extends State<SBBIconTextButton> {
                             : style?.iconColorDisabled,
                   ),
                   const SizedBox(height: 4.0),
-                  Text(
+                  buttonStyle.buttonLabelBuilder(
+                    context,
                     widget.label,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: _isPressed || _hasFocus
-                        ? style?.textStyleHighlighted
-                        : isEnabled
-                            ? style?.textStyle
-                            : style?.textStyleDisabled,
+                    style: textStyle,
                   ),
                 ],
               ),

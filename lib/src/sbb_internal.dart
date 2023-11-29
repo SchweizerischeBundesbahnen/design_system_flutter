@@ -41,9 +41,11 @@ class SBBInternal {
 }
 
 class SBBButtonContent extends StatelessWidget {
-  const SBBButtonContent({Key? key, required this.label}) : super(key: key);
+  const SBBButtonContent({Key? key, required this.label, this.style})
+      : super(key: key);
 
   final String label;
+  final TextStyle? style;
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +54,7 @@ class SBBButtonContent extends StatelessWidget {
         label,
         overflow: TextOverflow.ellipsis,
         maxLines: 1,
+        style: style,
       ),
     );
   }

@@ -3,6 +3,12 @@ import 'package:flutter/material.dart';
 import '../../../sbb_internal.dart';
 import '../sbb_styles.dart';
 
+typedef ButtonLabelBuilder = Widget Function(
+    BuildContext context,
+    String label, {
+    TextStyle? style,
+  });
+
 class SBBButtonStyles extends ThemeExtension<SBBButtonStyles> {
   SBBButtonStyles({
     this.primaryStyle,
@@ -17,6 +23,7 @@ class SBBButtonStyles extends ThemeExtension<SBBButtonStyles> {
     this.iconSmallBorderlessStyle,
     this.iconFormStyle,
     this.iconTextStyle,
+    required this.buttonLabelBuilder,
   });
 
   factory SBBButtonStyles.$default({required SBBBaseStyle baseStyle}) => SBBButtonStyles(
@@ -154,7 +161,12 @@ class SBBButtonStyles extends ThemeExtension<SBBButtonStyles> {
           iconColorHighlighted: baseStyle.defaultTextColor,
           iconColorDisabled: SBBColors.metal,
         ),
+        buttonLabelBuilder: defaultButtonLabelBuilder,
       );
+
+  static ButtonLabelBuilder defaultButtonLabelBuilder = (_, String label, { TextStyle? style }) {
+    return SBBButtonContent(label: label, style: style);
+  };
 
   final SBBButtonStyle? primaryStyle;
   final SBBButtonStyle? primaryNegativeStyle;
@@ -168,6 +180,7 @@ class SBBButtonStyles extends ThemeExtension<SBBButtonStyles> {
   final SBBButtonStyle? iconSmallBorderlessStyle;
   final SBBButtonStyle? iconFormStyle;
   final SBBButtonStyle? iconTextStyle;
+  final ButtonLabelBuilder buttonLabelBuilder;
 
   static SBBButtonStyles of(BuildContext context) => Theme.of(context).extension<SBBButtonStyles>()!;
 
@@ -211,6 +224,7 @@ class SBBButtonStyles extends ThemeExtension<SBBButtonStyles> {
     SBBButtonStyle? iconSmallBorderlessStyle,
     SBBButtonStyle? iconFormStyle,
     SBBButtonStyle? iconTextStyle,
+    ButtonLabelBuilder? buttonLabelBuilder,
   }) =>
       SBBButtonStyles(
         primaryStyle: primaryStyle ?? this.primaryStyle,
@@ -225,6 +239,7 @@ class SBBButtonStyles extends ThemeExtension<SBBButtonStyles> {
         iconSmallBorderlessStyle: iconSmallBorderlessStyle ?? this.iconSmallBorderlessStyle,
         iconFormStyle: iconFormStyle ?? this.iconFormStyle,
         iconTextStyle: iconTextStyle ?? this.iconTextStyle,
+        buttonLabelBuilder: buttonLabelBuilder ?? this.buttonLabelBuilder,
       );
 
   @override
@@ -243,13 +258,16 @@ class SBBButtonStyles extends ThemeExtension<SBBButtonStyles> {
       iconSmallBorderlessStyle: iconSmallBorderlessStyle?.lerp(other.iconSmallBorderlessStyle, t),
       iconFormStyle: iconFormStyle?.lerp(other.iconFormStyle, t),
       iconTextStyle: iconTextStyle?.lerp(other.iconTextStyle, t),
+      buttonLabelBuilder: other.buttonLabelBuilder,
     );
   }
 }
 
 extension ButtonStylesExtension on SBBButtonStyles? {
   SBBButtonStyles merge(SBBButtonStyles? other) {
-    if (this == null) return other ?? SBBButtonStyles();
+    if (this == null) return other ?? SBBButtonStyles(
+      buttonLabelBuilder: SBBButtonStyles.defaultButtonLabelBuilder,
+    );
     return this!.copyWith(
       primaryStyle: this!.primaryStyle.merge(other?.primaryStyle),
       primaryNegativeStyle: this!.primaryNegativeStyle.merge(other?.primaryNegativeStyle),
@@ -263,6 +281,7 @@ extension ButtonStylesExtension on SBBButtonStyles? {
       iconSmallBorderlessStyle: this!.iconSmallBorderlessStyle.merge(other?.iconSmallBorderlessStyle),
       iconFormStyle: this!.iconFormStyle.merge(other?.iconFormStyle),
       iconTextStyle: this!.iconTextStyle.merge(other?.iconTextStyle),
+      buttonLabelBuilder: other?.buttonLabelBuilder ?? this!.buttonLabelBuilder,
     ) as SBBButtonStyles;
   }
 }
