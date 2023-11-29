@@ -48,12 +48,9 @@ class _SBBLinkTextState extends State<SBBLinkText> {
 
   List<TextSpan> _textSpans() {
     final style = SBBBaseStyle.of(context);
-    final controlStyle = SBBControlStyles.of(context);
     bool isWeb = SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
     final hasCustomStyle = widget.style != null;
     final textStyle = hasCustomStyle ? widget.style!.copyWith(color: widget.style!.color ?? style.defaultTextStyle!.color) : style.defaultTextStyle;
-    final linkStyle = hasCustomStyle ? textStyle!.copyWith(color: controlStyle.linkTextStyle!.color) : controlStyle.linkTextStyle;
-    final linkStylePressed = hasCustomStyle ? textStyle!.copyWith(color: controlStyle.linkTextStyleHighlighted!.color) : controlStyle.linkTextStyleHighlighted;
 
     final texts = widget.text.split(_regExpMarkDownLink);
     final links = _regExpMarkDownLink.allMatches(widget.text).toList();

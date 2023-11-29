@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../design_system_flutter.dart';
-import '../sbb_internal.dart';
 
 /// The SBB Primary Button. Use according to documentation.
 ///
@@ -51,7 +50,7 @@ class SBBPrimaryButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           if (isLoading) SBBLoadingIndicator.tinyCloud(),
-          styles.buttonLabelBuilder(context, label),
+          styles.buttonLabelBuilder!(context, label),
         ],
       ),
     );
@@ -66,7 +65,7 @@ class SBBPrimaryButton extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          styles.buttonLabelBuilder(context, label),
+          styles.buttonLabelBuilder!(context, label),
         ],
       ),
     );
@@ -121,7 +120,7 @@ class SBBPrimaryButtonNegative extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           if (isLoading) SBBLoadingIndicator.tinyCloud(),
-          styles.buttonLabelBuilder(context, label),
+          styles.buttonLabelBuilder!(context, label),
         ],
       ),
     );
@@ -136,7 +135,7 @@ class SBBPrimaryButtonNegative extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          styles.buttonLabelBuilder(context, label),
+          styles.buttonLabelBuilder!(context, label),
         ],
       ),
     );

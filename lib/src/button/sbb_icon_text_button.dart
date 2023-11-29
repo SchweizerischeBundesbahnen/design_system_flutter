@@ -14,6 +14,7 @@ import '../../design_system_flutter.dart';
 /// See also:
 ///
 /// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/button>
+@Deprecated('IconTextButton is not part of the design system and will be removed.')
 class SBBIconTextButton extends StatefulWidget {
   const SBBIconTextButton({
     Key? key,
@@ -89,10 +90,15 @@ class _SBBIconTextButtonState extends State<SBBIconTextButton> {
                             : style?.iconColorDisabled,
                   ),
                   const SizedBox(height: 4.0),
-                  buttonStyle.buttonLabelBuilder(
-                    context,
+                  Text(
                     widget.label,
-                    style: textStyle,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: _isPressed || _hasFocus
+                        ? style?.textStyleHighlighted
+                        : isEnabled
+                            ? style?.textStyle
+                            : style?.textStyleDisabled,
                   ),
                 ],
               ),

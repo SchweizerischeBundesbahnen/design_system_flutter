@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../design_system_flutter.dart';
-import '../sbb_internal.dart';
 
 /// The SBB Secondary Button. Use according to documentation.
 ///
@@ -53,7 +52,7 @@ class SBBSecondaryButton extends StatelessWidget {
                 const SBBLoadingIndicator.tinySmoke(),
                 const SBBLoadingIndicator.tinyCement(),
               ),
-            buttonStyles.buttonLabelBuilder(context, label),
+            buttonStyles.buttonLabelBuilder!(context, label),
           ],
         ),
       ),
@@ -85,7 +84,7 @@ class SBBGhostButton extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          styles.buttonLabelBuilder(context, label),
+          styles.buttonLabelBuilder!(context, label),
         ],
       ),
     );

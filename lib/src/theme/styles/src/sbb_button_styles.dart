@@ -3,11 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../sbb_internal.dart';
 import '../sbb_styles.dart';
 
-typedef ButtonLabelBuilder = Widget Function(
-    BuildContext context,
-    String label, {
-    TextStyle? style,
-  });
+typedef ButtonLabelBuilder = Widget Function(BuildContext context, String label);
 
 class SBBButtonStyles extends ThemeExtension<SBBButtonStyles> {
   SBBButtonStyles({
@@ -23,7 +19,7 @@ class SBBButtonStyles extends ThemeExtension<SBBButtonStyles> {
     this.iconSmallBorderlessStyle,
     this.iconFormStyle,
     this.iconTextStyle,
-    required this.buttonLabelBuilder,
+    this.buttonLabelBuilder,
   });
 
   factory SBBButtonStyles.$default({required SBBBaseStyle baseStyle}) => SBBButtonStyles(
@@ -164,9 +160,8 @@ class SBBButtonStyles extends ThemeExtension<SBBButtonStyles> {
         buttonLabelBuilder: defaultButtonLabelBuilder,
       );
 
-  static ButtonLabelBuilder defaultButtonLabelBuilder = (_, String label, { TextStyle? style }) {
-    return SBBButtonContent(label: label, style: style);
-  };
+  static ButtonLabelBuilder defaultButtonLabelBuilder =
+      (_, String label) => SBBButtonContent(label: label);
 
   final SBBButtonStyle? primaryStyle;
   final SBBButtonStyle? primaryNegativeStyle;
@@ -180,7 +175,7 @@ class SBBButtonStyles extends ThemeExtension<SBBButtonStyles> {
   final SBBButtonStyle? iconSmallBorderlessStyle;
   final SBBButtonStyle? iconFormStyle;
   final SBBButtonStyle? iconTextStyle;
-  final ButtonLabelBuilder buttonLabelBuilder;
+  final ButtonLabelBuilder? buttonLabelBuilder;
 
   static SBBButtonStyles of(BuildContext context) => Theme.of(context).extension<SBBButtonStyles>()!;
 
@@ -265,9 +260,7 @@ class SBBButtonStyles extends ThemeExtension<SBBButtonStyles> {
 
 extension ButtonStylesExtension on SBBButtonStyles? {
   SBBButtonStyles merge(SBBButtonStyles? other) {
-    if (this == null) return other ?? SBBButtonStyles(
-      buttonLabelBuilder: SBBButtonStyles.defaultButtonLabelBuilder,
-    );
+    if (this == null) return other ?? SBBButtonStyles();
     return this!.copyWith(
       primaryStyle: this!.primaryStyle.merge(other?.primaryStyle),
       primaryNegativeStyle: this!.primaryNegativeStyle.merge(other?.primaryNegativeStyle),
@@ -281,7 +274,7 @@ extension ButtonStylesExtension on SBBButtonStyles? {
       iconSmallBorderlessStyle: this!.iconSmallBorderlessStyle.merge(other?.iconSmallBorderlessStyle),
       iconFormStyle: this!.iconFormStyle.merge(other?.iconFormStyle),
       iconTextStyle: this!.iconTextStyle.merge(other?.iconTextStyle),
-      buttonLabelBuilder: other?.buttonLabelBuilder ?? this!.buttonLabelBuilder,
+      buttonLabelBuilder: this!.buttonLabelBuilder ?? other?.buttonLabelBuilder,
     ) as SBBButtonStyles;
   }
 }
