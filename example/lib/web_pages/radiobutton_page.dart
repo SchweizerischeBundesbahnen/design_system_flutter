@@ -91,7 +91,7 @@ class __ContentState extends State<_Content> {
                             });
                           },
                           label: 'Call to Action',
-                          trailingIcon: SBBIcons.circle_information_small_small,
+                          trailingIcon: SBBIconsSmall.circle_information_small_small,
                           onCallToAction: (){},
                         ),
                         SBBRadioButtonListItem<int>(
@@ -103,7 +103,7 @@ class __ContentState extends State<_Content> {
                             });
                           },
                           label: 'Icon',
-                          leadingIcon: SBBIcons.alarm_clock_small,
+                          leadingIcon: SBBIconsSmall.alarm_clock_small,
                         ),
                         SBBRadioButtonListItem<int>(
                           value: 4,
@@ -114,8 +114,8 @@ class __ContentState extends State<_Content> {
                             });
                           },
                           label: 'Icon, Call to Action',
-                          leadingIcon: SBBIcons.alarm_clock_small,
-                          trailingIcon: SBBIcons.circle_information_small_small,
+                          leadingIcon: SBBIconsSmall.alarm_clock_small,
+                          trailingIcon: SBBIconsSmall.circle_information_small_small,
                           onCallToAction: (){},
                         ),
                         SBBRadioButtonListItem<int>(
@@ -123,8 +123,8 @@ class __ContentState extends State<_Content> {
                           groupValue: _listItemGroupValue,
                           onChanged: null,
                           label: 'Disabled, Icon, Call to Action',
-                          leadingIcon: SBBIcons.alarm_clock_small,
-                          trailingIcon: SBBIcons.circle_information_small_small,
+                          leadingIcon: SBBIconsSmall.alarm_clock_small,
+                          trailingIcon: SBBIconsSmall.circle_information_small_small,
                           onCallToAction: (){},
                         ),
                         SBBRadioButtonListItem<int>.custom(

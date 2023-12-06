@@ -16,7 +16,7 @@ class _AutocompletionPageState extends State<AutocompletionPage> {
     super.initState();
     _autocompletion = SBBAutocompletion<String>(
       key: GlobalKey(debugLabel: 'bla'),
-      icon: SBBIcons.route_circle_start_small,
+      icon: SBBIconsSmall.route_circle_start_small,
       itemFilter: (String item, String query) {
         return item.toLowerCase().startsWith(query.toLowerCase());
       },
@@ -39,7 +39,7 @@ class _AutocompletionPageState extends State<AutocompletionPage> {
         'ccdd',
         'eee',
       ],
-      suggestionIcon: SBBIcons.train_station_small,
+      suggestionIcon: SBBIconsSmall.train_station_small,
       enableFavorites: true,
       itemAddedToFavorites: (String item) {
         _autocompletion.addFavorite(item);

@@ -278,7 +278,7 @@ class _CloseButton extends StatelessWidget {
             onPressed: () {
               Navigator.of(context).pop();
             },
-            icon: SBBIcons.cross_small,
+            icon: SBBIconsSmall.cross_small,
           ),
         ),
       );

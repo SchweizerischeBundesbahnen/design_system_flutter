@@ -44,10 +44,10 @@ flutter:
           weight: 100
     - family: SBBIconsSmall
       fonts:
-        - asset: packages/design_system_flutter/fonts/font-sbb-icons-small.ttf
+        - asset: packages/design_system_flutter/fonts/sbb_icons_small.ttf
     - family: SBBIconsMedium
       fonts:
-        - asset: packages/design_system_flutter/fonts/font-sbb-icons-medium.ttf
+        - asset: packages/design_system_flutter/fonts/sbb_icons_medium.ttf
     - family: SBBIconsLarge
       fonts:
-        - asset: packages/design_system_flutter/fonts/font-sbb-icons-large.ttf
+        - asset: packages/design_system_flutter/fonts/sbb_icons_large.ttf

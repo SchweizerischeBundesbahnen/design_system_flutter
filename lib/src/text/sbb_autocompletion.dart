@@ -560,7 +560,7 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>>
     return SBBListItem.button(
       title: item.toString(),
       leadingIcon: widget.suggestionIcon,
-      buttonIcon: SBBIcons.star_small,
+      buttonIcon: SBBIconsSmall.star_small,
       onPressedButton: onCallToAction,
       onPressed: onPressed,
     );

@@ -98,7 +98,7 @@ class __ContentState extends State<_Content> {
                             onChanged: (value) =>
                                 setState(() => _listItemValue3 = value),
                             trailingIcon:
-                                SBBIcons.circle_information_small_small,
+                            SBBIconsSmall.circle_information_small_small,
                             onCallToAction: () {},
                           ),
                           SBBCheckboxListItem(
@@ -106,16 +106,16 @@ class __ContentState extends State<_Content> {
                             label: 'Icon',
                             onChanged: (value) =>
                                 setState(() => _listItemValue4 = value),
-                            leadingIcon: SBBIcons.alarm_clock_small,
+                            leadingIcon: SBBIconsSmall.alarm_clock_small,
                           ),
                           SBBCheckboxListItem(
                             value: _listItemValue5,
                             label: 'Icon, Call to Action',
                             onChanged: (value) =>
                                 setState(() => _listItemValue5 = value),
-                            leadingIcon: SBBIcons.alarm_clock_small,
+                            leadingIcon: SBBIconsSmall.alarm_clock_small,
                             trailingIcon:
-                                SBBIcons.circle_information_small_small,
+                              SBBIconsSmall.circle_information_small_small,
                             onCallToAction: () {
                               {}
                             },
@@ -124,9 +124,9 @@ class __ContentState extends State<_Content> {
                             value: _listItemValue5,
                             label: 'Disabled, Icon, Call to Action',
                             onChanged: null,
-                            leadingIcon: SBBIcons.alarm_clock_small,
+                            leadingIcon: SBBIconsSmall.alarm_clock_small,
                             trailingIcon:
-                                SBBIcons.circle_information_small_small,
+                              SBBIconsSmall.circle_information_small_small,
                             onCallToAction: () {},
                           ),
                           SBBCheckboxListItem.custom(

@@ -957,7 +957,7 @@ class SBBMenuButtonState<T> extends State<SBBMenuButton<T>> {
     }
 
     return IconButton(
-      icon: widget.icon ?? Icon(SBBIcons.context_menu_medium),
+      icon: widget.icon ?? Icon(SBBIconsMedium.context_menu_medium),
       padding: widget.buttonPadding,
       iconSize: widget.iconSize,
       onPressed: widget.enabled ? showButtonMenu : null,

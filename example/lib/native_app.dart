@@ -247,7 +247,7 @@ class _DemoEntry extends StatelessWidget {
           color: style.groupBackgroundColor,
           child: SBBListItem(
             title: title,
-            trailingIcon: SBBIcons.chevron_small_right_small,
+            trailingIcon: SBBIconsSmall.chevron_small_right_small,
             onPressed: action,
             isLastElement: isLastElement,
           ),
@@ -286,8 +286,8 @@ class ThemeModeSegmentedButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SBBSegmentedButton.icon(
       icons: {
-        SBBIcons.sunshine_small: 'Light theme',
-        SBBIcons.moon_small: 'Dark theme',
+        SBBIconsSmall.sunshine_small: 'Light theme',
+        SBBIconsSmall.moon_small: 'Dark theme',
       },
       selectedIndexChanged: (value) {
         Provider.of<AppState>(

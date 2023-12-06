@@ -46,11 +46,11 @@ class SBBBreadcrumb extends StatelessWidget {
   final List<SBBBreadcrumbItem> breadcrumbItems;
 
   static const _defaultSpacingWidget = Icon(
-    SBBIcons.chevron_right_small,
+    SBBIconsSmall.chevron_right_small,
     size: 16.0,
   );
 
-  static const _defaultLeading = const Icon(SBBIcons.house_small);
+  static const _defaultLeading = const Icon(SBBIconsSmall.house_small);
 
   @override
   Widget build(BuildContext context) {

@@ -45,12 +45,12 @@ class ButtonPage extends StatelessWidget {
                       label: '- Icon Button Primary',
                       buttonBuilder: (label, onPressed) => SBBIconButtonLarge(
                           buttonStyle: SBBButtonStyles.of(context).primaryWebLean,
-                          icon: SBBIcons.pen_small, onPressed: onPressed),
+                          icon: SBBIconsSmall.pen_small, onPressed: onPressed),
                     ),
                     ButtonExpression(
                       label: '- Icon Button Alternate',
                       buttonBuilder: (label, onPressed) => SBBIconButtonLarge(
-                        icon: SBBIcons.pen_small,
+                        icon: SBBIconsSmall.pen_small,
                         onPressed: onPressed,
                         buttonStyle: SBBButtonStyles.of(context).primaryWebNegative,
                       ),
@@ -58,7 +58,7 @@ class ButtonPage extends StatelessWidget {
                     ButtonExpression(
                       label: '- Icon Button Secondary',
                       buttonBuilder: (label, onPressed) => SBBIconButtonLarge(
-                        icon: SBBIcons.pen_small,
+                        icon: SBBIconsSmall.pen_small,
                         onPressed: onPressed,
                         buttonStyle: SBBButtonStyles.of(context).secondaryWebLean,
                       ),
@@ -66,7 +66,7 @@ class ButtonPage extends StatelessWidget {
                     ButtonExpression(
                       label: '- Icon Button Ghost',
                       buttonBuilder: (label, onPressed) => SBBIconButtonLarge(
-                        icon: SBBIcons.pen_small,
+                        icon: SBBIconsSmall.pen_small,
                         onPressed: onPressed,
                         buttonStyle: SBBButtonStyles.of(context).ghostWebLean,
                       ),

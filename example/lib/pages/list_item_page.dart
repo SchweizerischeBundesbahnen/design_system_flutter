@@ -27,40 +27,40 @@ class ListItemPage extends StatelessWidget {
               ),
               SBBListItem(
                 title: 'Icon',
-                leadingIcon: SBBIcons.clock_small,
+                leadingIcon: SBBIconsSmall.clock_small,
                 onPressed: () => sbbToast.show(message: 'ListItem with Icon'),
               ),
               SBBListItem(
                 title: 'Trailing Icon',
-                trailingIcon: SBBIcons.chevron_small_right_small,
+                trailingIcon: SBBIconsSmall.chevron_small_right_small,
                 onPressed: () => sbbToast.show(message: 'ListItem with Icon'),
               ),
               SBBListItem.button(
                 title: 'Button',
                 onPressed: () =>
                     sbbToast.show(message: 'ListItem with Button'),
-                buttonIcon: SBBIcons.chevron_small_right_small,
+                buttonIcon: SBBIconsSmall.chevron_small_right_small,
                 onPressedButton: () => sbbToast.show(message: 'Button'),
               ),
               SBBListItem.button(
                 title: 'Subtitle, Button',
                 subtitle: 'This is the Subtitle',
-                buttonIcon: SBBIcons.chevron_small_right_small,
+                buttonIcon: SBBIconsSmall.chevron_small_right_small,
                 onPressedButton: () => sbbToast.show(message: 'Button'),
                 onPressed: () => sbbToast.show(
                     message: 'ListItem with Subtitle and Button'),
               ),
               SBBListItem.button(
                 title: 'Icon, Button',
-                leadingIcon: SBBIcons.clock_small,
-                buttonIcon: SBBIcons.chevron_small_right_small,
+                leadingIcon: SBBIconsSmall.clock_small,
+                buttonIcon: SBBIconsSmall.chevron_small_right_small,
                 onPressedButton: () => sbbToast.show(message: 'Button'),
                 onPressed: () => sbbToast.show(
                     message: 'ListItem with Icon and Button'),
               ),
               SBBListItem(
                 title: 'Icon, Subtitle',
-                leadingIcon: SBBIcons.clock_small,
+                leadingIcon: SBBIconsSmall.clock_small,
                 subtitle: 'This is the Subtitle',
                 onPressed: () =>
                     sbbToast.show(message: 'ListItem with Icon and Subtitle'),
@@ -68,8 +68,8 @@ class ListItemPage extends StatelessWidget {
               SBBListItem.button(
                 title: 'Icon, Subtitle, Button',
                 subtitle: 'This is the Subtitle',
-                leadingIcon: SBBIcons.clock_small,
-                buttonIcon: SBBIcons.chevron_small_right_small,
+                leadingIcon: SBBIconsSmall.clock_small,
+                buttonIcon: SBBIconsSmall.chevron_small_right_small,
                 onPressedButton: () => sbbToast.show(message: 'Button'),
                 onPressed: () => sbbToast.show(
                     message: 'ListItem with Icon, Subtitle and Button'),
@@ -78,9 +78,9 @@ class ListItemPage extends StatelessWidget {
                 title: 'Disabled, Icon, Subtitle, Button',
                 subtitle: 'This is the Subtitle',
                 isLastElement: true,
-                leadingIcon: SBBIcons.clock_small,
+                leadingIcon: SBBIconsSmall.clock_small,
                 onPressed: null,
-                buttonIcon: SBBIcons.chevron_small_right_small,
+                buttonIcon: SBBIconsSmall.chevron_small_right_small,
                 onPressedButton: () => sbbToast.show(message: 'Button'),
               ),
             ],

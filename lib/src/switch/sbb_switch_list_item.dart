@@ -35,7 +35,7 @@ class SBBSwitchListItem extends StatelessWidget {
                   title: linkItem.text,
                   onPressed: linkItem.onPressed,
                   isLastElement: true,
-                  trailingIcon: SBBIcons.chevron_small_right_small,
+                  trailingIcon: SBBIconsSmall.chevron_small_right_small,
                 ),
               )
               .toList(),

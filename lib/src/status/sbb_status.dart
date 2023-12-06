@@ -7,7 +7,7 @@ class SBBStatus extends StatelessWidget {
   const SBBStatus.valid({
     Key? key,
     this.text,
-    this.icon = SBBIcons.tick_medium,
+    this.icon = SBBIconsMedium.tick_medium,
     this.showIcon = true,
     this.backgroundColor = SBBColors.green,
     this.textColor = SBBColors.white,
@@ -17,7 +17,7 @@ class SBBStatus extends StatelessWidget {
     Key? key,
     this.text,
     this.showIcon = true,
-    this.icon = SBBIcons.exclamation_point_medium,
+    this.icon = SBBIconsMedium.exclamation_point_medium,
     this.backgroundColor = SBBColors.orange,
     this.textColor = SBBColors.white,
   });
@@ -25,7 +25,7 @@ class SBBStatus extends StatelessWidget {
   const SBBStatus.invalid({
     Key? key,
     this.text,
-    this.icon = SBBIcons.cross_medium,
+    this.icon = SBBIconsMedium.cross_medium,
     this.showIcon = true,
     this.backgroundColor = SBBColors.red,
     this.textColor = SBBColors.white,
@@ -34,7 +34,7 @@ class SBBStatus extends StatelessWidget {
   const SBBStatus.inProgress({
     Key? key,
     this.text,
-    this.icon = SBBIcons.arrows_circle_medium,
+    this.icon = SBBIconsMedium.arrows_circle_medium,
     this.showIcon = true,
     this.backgroundColor = SBBColors.granite,
     this.textColor = SBBColors.white,
@@ -43,7 +43,7 @@ class SBBStatus extends StatelessWidget {
   const SBBStatus.inactive({
     Key? key,
     this.text,
-    this.icon = SBBIcons.wifi_disabled_medium,
+    this.icon = SBBIconsMedium.wifi_disabled_medium,
     this.showIcon = true,
     this.backgroundColor = SBBColors.milk,
     this.textColor = SBBColors.black,

@@ -36,9 +36,9 @@ class _SegmentedButtonPageState extends State<SegmentedButtonPage> {
           padding: const EdgeInsets.all(sbbDefaultSpacing),
           child: SBBSegmentedButton.icon(
             icons: {
-              SBBIcons.microscooter_profile_small: 'Microscooter',
-              SBBIcons.bicycle_small: 'Bicycle',
-              SBBIcons.scooter_profile_small: 'Scooter',
+              SBBIconsSmall.microscooter_profile_small: 'Microscooter',
+              SBBIconsSmall.bicycle_small: 'Bicycle',
+              SBBIconsSmall.scooter_profile_small: 'Scooter',
             },
             selectedIndexChanged: (value) =>
                 setState(() => _selectedStateIndex2 = value),
@@ -59,9 +59,9 @@ class _SegmentedButtonPageState extends State<SegmentedButtonPage> {
           padding: const EdgeInsets.all(sbbDefaultSpacing),
           child: SBBSegmentedButton.redIcon(
             icons: {
-              SBBIcons.microscooter_profile_small: 'Microscooter',
-              SBBIcons.bicycle_small: 'Bicycle',
-              SBBIcons.scooter_profile_small: 'Scooter',
+              SBBIconsSmall.microscooter_profile_small: 'Microscooter',
+              SBBIconsSmall.bicycle_small: 'Bicycle',
+              SBBIconsSmall.scooter_profile_small: 'Scooter',
             },
             selectedIndexChanged: (value) =>
                 setState(() => _selectedStateIndex4 = value),

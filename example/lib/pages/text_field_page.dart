@@ -33,7 +33,7 @@ class TextFieldPage extends StatelessWidget {
                 hintText: 'Hint',
                 controller: TextEditingController()
                   ..value = TextEditingValue(text: 'Icon'),
-                icon: SBBIcons.route_circle_start_small,
+                icon: SBBIconsSmall.route_circle_start_small,
               ),
               SBBTextField(
                 labelText: 'Multiline',

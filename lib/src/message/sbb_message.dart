@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../design_system_flutter.dart';
 
-const _kDefaultInteractionIcon = SBBIcons.arrows_circle_medium;
+const _kDefaultInteractionIcon = SBBIconsSmall.arrows_circle_small;
 
 const _kIllustrationMaxHeight = 145.0;
 const _kTextBoxSpacing = 24.0;

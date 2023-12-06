@@ -75,7 +75,7 @@ class _RadiobuttonPageState extends State<RadiobuttonPage> {
                   });
                 },
                 label: 'Call to Action',
-                trailingIcon: SBBIcons.circle_information_small_small,
+                trailingIcon: SBBIconsSmall.circle_information_small_small,
                 onCallToAction: () => sbbToast.show(message: 'Call to Action'),
               ),
               SBBRadioButtonListItem<int>(
@@ -87,7 +87,7 @@ class _RadiobuttonPageState extends State<RadiobuttonPage> {
                   });
                 },
                 label: 'Icon',
-                leadingIcon: SBBIcons.alarm_clock_small,
+                leadingIcon: SBBIconsSmall.alarm_clock_small,
               ),
               SBBRadioButtonListItem<int>(
                 value: 4,
@@ -98,8 +98,8 @@ class _RadiobuttonPageState extends State<RadiobuttonPage> {
                   });
                 },
                 label: 'Icon, Call to Action',
-                leadingIcon: SBBIcons.alarm_clock_small,
-                trailingIcon: SBBIcons.circle_information_small_small,
+                leadingIcon: SBBIconsSmall.alarm_clock_small,
+                trailingIcon: SBBIconsSmall.circle_information_small_small,
                 onCallToAction: () => sbbToast.show(message: 'Call to Action'),
               ),
               SBBRadioButtonListItem<int>(
@@ -107,8 +107,8 @@ class _RadiobuttonPageState extends State<RadiobuttonPage> {
                 groupValue: _listItemGroupValue,
                 onChanged: null,
                 label: 'Disabled, Icon, Call to Action',
-                leadingIcon: SBBIcons.alarm_clock_small,
-                trailingIcon: SBBIcons.circle_information_small_small,
+                leadingIcon: SBBIconsSmall.alarm_clock_small,
+                trailingIcon: SBBIconsSmall.circle_information_small_small,
                 onCallToAction: () => sbbToast.show(message: 'Call to Action'),
               ),
               SBBRadioButtonListItem<int>.custom(

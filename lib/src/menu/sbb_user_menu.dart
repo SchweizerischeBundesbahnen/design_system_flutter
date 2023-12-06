@@ -98,7 +98,7 @@ class SBBUserMenu<T> extends StatelessWidget {
           leading != null
               ? leading!
               : Icon(
-                  SBBIcons.user_small,
+            SBBIconsSmall.user_small,
                 ),
           SizedBox(width: _kHorizontalSpacing),
           Text(loginTitle, maxLines: 1),
@@ -127,7 +127,7 @@ class SBBUserMenu<T> extends StatelessWidget {
             Transform.rotate(
               angle: 90.0 * math.pi / 180,
               child: Icon(
-                SBBIcons.chevron_right_small,
+                SBBIconsSmall.chevron_right_small,
                 color: SBBColors.iron,
               ),
             ),

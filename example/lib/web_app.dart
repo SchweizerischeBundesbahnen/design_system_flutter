@@ -156,20 +156,20 @@ final SBBUserMenu _exampleUserMenu = SBBUserMenu(
   displayName: "Eisen Bahner",
   itemBuilder: (BuildContext context) => <SBBMenuEntry>[
     SBBMenuItem.tile(
-      icon: SBBIcons.user_medium,
+      icon: SBBIconsMedium.user_medium,
       title: 'Benutzer',
     ),
     SBBMenuItem.tile(
-      icon: SBBIcons.app_icon_medium,
+      icon: SBBIconsMedium.app_icon_medium,
       title: 'Über',
     ),
     SBBMenuItem.tile(
-      icon: SBBIcons.gears_medium,
+      icon: SBBIconsMedium.gears_medium,
       title: 'Einstellungen',
     ),
     SBBMenuDivider(),
     SBBMenuItem.tile(
-      icon: SBBIcons.exit_medium,
+      icon: SBBIconsMedium.exit_medium,
       title: 'Logout',
     ),
   ],

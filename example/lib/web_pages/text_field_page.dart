@@ -61,7 +61,7 @@ class TextFieldPage extends StatelessWidget {
                         hintText: 'Hint',
                         controller: TextEditingController()
                           ..value = TextEditingValue(text: 'Icon'),
-                        icon: SBBIcons.route_circle_start_small,
+                        icon: SBBIconsSmall.route_circle_start_small,
                       ),
                     ),
                     SizedBox(
@@ -74,7 +74,7 @@ class TextFieldPage extends StatelessWidget {
                         hintText: 'Hint',
                         controller: TextEditingController()
                           ..value = TextEditingValue(text: 'Suffix Icon'),
-                        suffixIcon: Icon(SBBIcons.route_circle_start_small),
+                        suffixIcon: Icon(SBBIconsSmall.route_circle_start_small),
                       ),
                     ),
                     SizedBox(

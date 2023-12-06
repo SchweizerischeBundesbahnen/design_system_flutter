@@ -181,7 +181,7 @@ class _SBBSidebarItemState extends State<SBBSidebarItem>
   Widget _trailingWidget() {
     return widget.trailing ??
         const Icon(
-          SBBIcons.arrow_right_medium,
+          SBBIconsMedium.arrow_right_medium,
         );
   }
 }

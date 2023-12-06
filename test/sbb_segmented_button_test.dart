@@ -26,9 +26,9 @@ void main() {
                     const SizedBox(height: sbbDefaultSpacing),
                     SBBSegmentedButton.icon(
                       icons: {
-                        SBBIcons.microscooter_profile_small: 'Microscooter',
-                        SBBIcons.bicycle_small: 'Bicycle',
-                        SBBIcons.scooter_profile_small: 'Scooter',
+                        SBBIconsSmall.microscooter_profile_small: 'Microscooter',
+                        SBBIconsSmall.bicycle_small: 'Bicycle',
+                        SBBIconsSmall.scooter_profile_small: 'Scooter',
                       },
                       selectedStateIndex: 1,
                       selectedIndexChanged: (_) {},
@@ -36,9 +36,9 @@ void main() {
                     const SizedBox(height: sbbDefaultSpacing),
                     SBBSegmentedButton.icon(
                       icons: {
-                        SBBIcons.microscooter_profile_small: 'Microscooter',
-                        SBBIcons.bicycle_small: 'Bicycle',
-                        SBBIcons.scooter_profile_small: 'Scooter',
+                        SBBIconsSmall.microscooter_profile_small: 'Microscooter',
+                        SBBIconsSmall.bicycle_small: 'Bicycle',
+                        SBBIconsSmall.scooter_profile_small: 'Scooter',
                       },
                       selectedStateIndex: 2,
                       selectedIndexChanged: (_) {},
@@ -53,9 +53,9 @@ void main() {
                     const SizedBox(height: sbbDefaultSpacing),
                     SBBSegmentedButton.redIcon(
                       icons: {
-                        SBBIcons.microscooter_profile_small: 'Microscooter',
-                        SBBIcons.bicycle_small: 'Bicycle',
-                        SBBIcons.scooter_profile_small: 'Scooter',
+                        SBBIconsSmall.microscooter_profile_small: 'Microscooter',
+                        SBBIconsSmall.bicycle_small: 'Bicycle',
+                        SBBIconsSmall.scooter_profile_small: 'Scooter',
                       },
                       selectedStateIndex: 1,
                       selectedIndexChanged: (_) {},
@@ -63,9 +63,9 @@ void main() {
                     const SizedBox(height: sbbDefaultSpacing),
                     SBBSegmentedButton.redIcon(
                       icons: {
-                        SBBIcons.microscooter_profile_small: 'Microscooter',
-                        SBBIcons.bicycle_small: 'Bicycle',
-                        SBBIcons.scooter_profile_small: 'Scooter',
+                        SBBIconsSmall.microscooter_profile_small: 'Microscooter',
+                        SBBIconsSmall.bicycle_small: 'Bicycle',
+                        SBBIconsSmall.scooter_profile_small: 'Scooter',
                       },
                       selectedStateIndex: 0,
                       selectedIndexChanged: (_) {},
