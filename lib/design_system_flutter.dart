@@ -42,6 +42,7 @@ export 'src/shared/closeable_box_controller.dart';
 export 'src/sidebar/sbb_sidebar.dart';
 export 'src/slider/sbb_slider.dart';
 export 'src/status/sbb_status.dart';
+export 'src/status/sbb_status_mobile.dart';
 export 'src/switch/sbb_switch.dart';
 export 'src/switch/sbb_switch_list_item.dart';
 export 'src/tab_bar/sbb_tab_bar.dart';
