@@ -16,6 +16,7 @@ import 'list_header_page.dart';
 import 'list_item_page.dart';
 import 'loading_indicator_page.dart';
 import 'modal_page.dart';
+import 'notification_box_page.dart';
 import 'onboarding_page.dart';
 import 'promotion_box_page.dart';
 import 'radio_button_page.dart';
@@ -75,8 +76,9 @@ class LaunchpadPage extends StatelessWidget {
                     _DemoEntry('Radio Button', RadiobuttonPage()),
                     _DemoEntry('Segmented Button', SegmentedButtonPage()),
                     _DemoEntry('Select', SelectPage()),
-                    _DemoEntry('Textfield / Textarea', TextFieldPage(),
-                        isLastElement: true),
+                    _DemoEntry('Textfield / Textarea', TextFieldPage()),
+                    _DemoEntry('Promotion Box', PromotionBoxPage()),
+                    _DemoEntry('Notification Box', NotificationBoxPage(), isLastElement: true),
                   ],
                 ),
               ),
@@ -93,8 +95,7 @@ class LaunchpadPage extends StatelessWidget {
                     _DemoEntry('Modal', ModalPage()),
                     _DemoEntry('Toast', ToastPage()),
                     _DemoEntry('Onboarding', OnboardingPage()),
-                    _DemoEntry('Tab Bar', TabBarPage()),
-                    _DemoEntry('Promotion Box', PromotionBoxPage(), isLastElement: true),
+                    _DemoEntry('Tab Bar', TabBarPage(), isLastElement: true),
                   ],
                 ),
               ),

@@ -18,6 +18,7 @@ import 'pages/list_item_page.dart';
 import 'pages/loading_indicator_page.dart';
 import 'pages/message_page.dart';
 import 'pages/modal_page.dart';
+import 'pages/notification_box_page.dart';
 import 'pages/onboarding_page.dart';
 import 'pages/pagination_page.dart';
 import 'pages/promotion_box_page.dart';
@@ -157,6 +158,14 @@ class MyApp extends StatelessWidget {
                             _DemoEntry(
                               'Slider',
                               SliderPage(),
+                            ),
+                            _DemoEntry(
+                              'Promotion Box',
+                              PromotionBoxPage(),
+                            ),
+                            _DemoEntry(
+                              'Notification Box',
+                              NotificationBoxPage(),
                               isLastElement: true,
                             ),
                           ],
@@ -203,10 +212,6 @@ class MyApp extends StatelessWidget {
                             _DemoEntry(
                               'Tab Bar',
                               TabBarPage(),
-                            ),
-                            _DemoEntry(
-                              'Promotion Box',
-                              PromotionBoxPage(),
                               isLastElement: true,
                             ),
                           ],
