@@ -37,7 +37,7 @@ class SBBNotificationBoxTitleContent extends StatelessWidget {
           children: [
             Expanded(child: Text(text)),
             SizedBox(width: 8.0),
-            if (hasDetails) Icon(SBBIconsSmall.chevron_small_right_small),
+            if (hasDetails) Icon(SBBIcons.chevron_small_right_small),
           ],
         ),
       ],

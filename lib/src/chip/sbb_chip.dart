@@ -96,7 +96,7 @@ class SBBChip extends StatelessWidget {
       customBorder: CircleBorder(),
       child: _roundedContainer(
         child: Icon(
-          SBBIconsSmall.cross_small,
+          SBBIcons.cross_small,
           color: _disabled ? style.disabledUnselectButtonIconColor! : style.unselectButtonIconColor!,
         ),
         color: _disabled ? style.disabledUnselectButtonColor! : style.unselectButtonColor!,

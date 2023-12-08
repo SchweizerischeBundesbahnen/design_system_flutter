@@ -186,7 +186,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox>
                             ),
                             if (widget.onTap != null)
                               Icon(
-                                SBBIconsSmall.chevron_small_right_small,
+                                SBBIcons.chevron_small_right_small,
                                 color: crossColor,
                                 size: sbbIconSizeSmall,
                               )

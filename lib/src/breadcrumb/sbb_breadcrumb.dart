@@ -22,14 +22,14 @@ class SBBBreadcrumb extends StatelessWidget {
 
   /// The leftmost widget displayed in the breadcrumb.
   ///
-  /// Defaults to [InkWell] with [SBBIcons.house_medium]
+  /// Defaults to [InkWell] with [SBBIconswip.house_medium]
   /// with onLeadingPressed as callback.
   /// The default will have the [SBBTheme.breadcrumbForegroundColor]
   final Widget? leading;
 
   /// Separating widget between Breadcrumb items.
   ///
-  /// Defaults to [SBBIcons.chevron_right_small]
+  /// Defaults to [SBBIconswip.chevron_right_small]
   /// with 4px horizontal padding.
   final Widget spacerWidget;
 
@@ -46,11 +46,11 @@ class SBBBreadcrumb extends StatelessWidget {
   final List<SBBBreadcrumbItem> breadcrumbItems;
 
   static const _defaultSpacingWidget = Icon(
-    SBBIconsSmall.chevron_right_small,
+    SBBIcons.chevron_right_small,
     size: 16.0,
   );
 
-  static const _defaultLeading = const Icon(SBBIconsSmall.house_small);
+  static const _defaultLeading = const Icon(SBBIcons.house_small);
 
   @override
   Widget build(BuildContext context) {

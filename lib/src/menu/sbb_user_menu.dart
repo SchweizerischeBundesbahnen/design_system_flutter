@@ -59,7 +59,7 @@ class SBBUserMenu<T> extends StatelessWidget {
   /// defaults to a CircleAvatar with initials of [displayName].
   ///
   /// When not logged in:
-  /// Defaults to [SBBIcons.user_medium].
+  /// Defaults to [SBBIconswip.user_medium].
   final Widget? leading;
 
   /// Callback for handling login request.
@@ -98,7 +98,7 @@ class SBBUserMenu<T> extends StatelessWidget {
           leading != null
               ? leading!
               : Icon(
-            SBBIconsSmall.user_small,
+            SBBIcons.user_small,
                 ),
           SizedBox(width: _kHorizontalSpacing),
           Text(loginTitle, maxLines: 1),
@@ -127,7 +127,7 @@ class SBBUserMenu<T> extends StatelessWidget {
             Transform.rotate(
               angle: 90.0 * math.pi / 180,
               child: Icon(
-                SBBIconsSmall.chevron_right_small,
+                SBBIcons.chevron_right_small,
                 color: SBBColors.iron,
               ),
             ),

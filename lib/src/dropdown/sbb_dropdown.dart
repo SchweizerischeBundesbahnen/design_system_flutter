@@ -1291,7 +1291,7 @@ class _SBBDropdownButtonState<T> extends State<SBBDropdownButton<T>>
       );
     }
 
-    const Icon defaultIcon = Icon(SBBIconsSmall.chevron_small_down_small);
+    const Icon defaultIcon = Icon(SBBIcons.chevron_small_down_small);
 
     BoxDecoration decoration = BoxDecoration(
       color: _enabled ? SBBColors.white : SBBColors.milk,

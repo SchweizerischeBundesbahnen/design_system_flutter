@@ -156,7 +156,7 @@ class Toast extends StatefulWidget {
     this.backgroundColor = SBBColors.white;
     this.textColor = SBBColors.green;
     this.borderColor = SBBColors.green;
-    this.icon = SBBIconsMedium.tick_medium;
+    this.icon = SBBIcons.tick_medium;
   }
 
   Toast.warning({
@@ -166,7 +166,7 @@ class Toast extends StatefulWidget {
   }) {
     this.backgroundColor = SBBColors.orange;
     this.textColor = SBBColors.white;
-    this.icon = SBBIconsMedium.sign_x_medium;
+    this.icon = SBBIcons.sign_x_medium;
   }
 
   Toast.error({
@@ -176,7 +176,7 @@ class Toast extends StatefulWidget {
   }) {
     this.backgroundColor = SBBColors.red;
     this.textColor = SBBColors.white;
-    this.icon = SBBIconsMedium.sign_x_medium;
+    this.icon = SBBIcons.sign_x_medium;
   }
 
   Toast({
@@ -186,7 +186,7 @@ class Toast extends StatefulWidget {
   }) {
     this.backgroundColor = SBBColors.metal;
     this.textColor = SBBColors.white;
-    this.icon = SBBIconsSmall.circle_information_small;
+    this.icon = SBBIcons.circle_information_small;
   }
 
   Color? backgroundColor;

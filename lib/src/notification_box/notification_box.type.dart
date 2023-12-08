@@ -5,25 +5,25 @@ enum SBBNotificationBoxType {
     SBBColors.red,
     SBBColors.red,
     SBBColors.red,
-    SBBIconsSmall.circle_cross_small,
+    SBBIcons.circle_cross_small,
   ),
   warning(
     SBBColors.peach,
     SBBColors.black,
     SBBColors.peach,
-    SBBIconsSmall.circle_exclamation_point_small,
+    SBBIcons.circle_exclamation_point_small,
   ),
   success(
     SBBColors.green,
     SBBColors.green,
     SBBColors.green,
-    SBBIconsSmall.circle_tick_small,
+    SBBIcons.circle_tick_small,
   ),
   information(
     SBBColors.smoke,
     SBBColors.black,
     SBBColors.white,
-    SBBIconsSmall.circle_information_small,
+    SBBIcons.circle_information_small,
   );
 
   const SBBNotificationBoxType(

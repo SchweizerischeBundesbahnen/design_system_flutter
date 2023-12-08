@@ -7,7 +7,7 @@ import 'test_app.dart';
 
 void main() {
   testGoldens('Test TabBar', (WidgetTester tester) async {
-    final icons = [SBBIconsSmall.train_small, SBBIconsSmall.station_small, SBBIconsSmall.archive_box_small, SBBIconsSmall.arrow_compass_small];
+    final icons = [SBBIcons.train_small, SBBIcons.station_small, SBBIcons.archive_box_small, SBBIcons.arrow_compass_small];
     final items = Iterable.generate(1, (i) => _DemoItem('${i}_a', icons[i % icons.length])).toList();
     final items2 = Iterable.generate(2, (i) => _DemoItem('${i}_b', icons[i % icons.length])).toList();
     final items3 = Iterable.generate(3, (i) => _DemoItem('${i}_c', icons[i % icons.length])).toList();

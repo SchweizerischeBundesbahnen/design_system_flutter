@@ -76,7 +76,7 @@ class _SelectPageState extends State<SelectPage> {
               ),
               SBBSelect<int>(
                 label: 'Icon',
-                icon: SBBIconsSmall.route_circle_start_small,
+                icon: SBBIcons.route_circle_start_small,
                 value: _selectedValue4,
                 items: _items,
                 onChanged: (value) {
@@ -86,7 +86,7 @@ class _SelectPageState extends State<SelectPage> {
               ),
               SBBSelect<int>(
                 label: 'Disabled',
-                icon: SBBIconsSmall.route_circle_start_small,
+                icon: SBBIcons.route_circle_start_small,
                 value: _selectedValue4,
                 items: _items,
                 onChanged: null,
@@ -145,7 +145,7 @@ class _SelectPageState extends State<SelectPage> {
               ),
               SBBMultiSelect<int>(
                 label: 'Icon',
-                icon: SBBIconsSmall.route_circle_start_small,
+                icon: SBBIcons.route_circle_start_small,
                 values: _multiSelectValues4,
                 items: _multiSelectItems,
                 onChanged: (value) {
@@ -154,7 +154,7 @@ class _SelectPageState extends State<SelectPage> {
               ),
               SBBMultiSelect<int>(
                 label: 'Disabled',
-                icon: SBBIconsSmall.route_circle_start_small,
+                icon: SBBIcons.route_circle_start_small,
                 values: _multiSelectValues4,
                 items: _multiSelectItems,
                 onChanged: null,

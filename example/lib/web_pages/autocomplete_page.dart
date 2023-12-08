@@ -43,7 +43,7 @@ class _AutocompletePageState extends State<AutocompletePage> {
         'ccdd',
         'eee'
       ],
-      suggestionIcon: SBBIconsSmall.train_station_small,
+      suggestionIcon: SBBIcons.train_station_small,
       enableFavorites: true,
       itemAddedToFavorites: (String item) {
         _autocompletion.addFavorite(item);
@@ -58,7 +58,7 @@ class _AutocompletePageState extends State<AutocompletePage> {
     );
     _autocompletion2 = SBBAutocompletion<String>(
       key: GlobalKey(debugLabel: 'bla'),
-      icon: SBBIconsSmall.route_circle_start_small,
+      icon: SBBIcons.route_circle_start_small,
       itemFilter: (String item, String query) {
         return item.toLowerCase().startsWith(query.toLowerCase());
       },

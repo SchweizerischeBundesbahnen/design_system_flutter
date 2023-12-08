@@ -361,14 +361,14 @@ class _ExpandIconState extends State<_ExpandIcon>
 
   Widget _iconNative() {
     return SBBIconButtonSmall(
-      icon: SBBIconsSmall.chevron_small_down_small,
+      icon: SBBIcons.chevron_small_down_small,
       onPressed: () {},
     );
   }
 
   Widget _iconWeb() {
     return Icon(
-      SBBIconsMedium.chevron_small_down_medium,
+      SBBIcons.chevron_small_down_medium,
       size: 36,
     );
   }

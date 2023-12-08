@@ -95,7 +95,7 @@ class SBBSidebarItem extends StatefulWidget {
 
   /// Optional trailing widget.
   ///
-  /// defaults to an Icon with [SBBIcons.arrow_right_small].
+  /// defaults to an Icon with [SBBIconswip.arrow_right_small].
   final Widget? trailing;
 
   /// Marks this item as selected inside the [SBBSidebar] parent.
@@ -181,7 +181,7 @@ class _SBBSidebarItemState extends State<SBBSidebarItem>
   Widget _trailingWidget() {
     return widget.trailing ??
         const Icon(
-          SBBIconsMedium.arrow_right_medium,
+          SBBIcons.arrow_right_medium,
         );
   }
 }

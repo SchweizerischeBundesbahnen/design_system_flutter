@@ -4,22 +4,22 @@ enum SBBStatusMobileType {
   alert(
     SBBColors.red,
     SBBColors.white,
-    SBBIconsSmall.circle_cross_small,
+    SBBIcons.circle_cross_small,
   ),
   warning(
     SBBColors.peach,
     SBBColors.black,
-    SBBIconsSmall.circle_exclamation_point_small,
+    SBBIcons.circle_exclamation_point_small,
   ),
   success(
     SBBColors.green,
     SBBColors.white,
-    SBBIconsSmall.circle_tick_small,
+    SBBIcons.circle_tick_small,
   ),
   information(
     SBBColors.smoke,
     SBBColors.white,
-    SBBIconsSmall.circle_information_small,
+    SBBIcons.circle_information_small,
   );
 
   const SBBStatusMobileType(this.backgroundColor, this.iconColor, this.icon);

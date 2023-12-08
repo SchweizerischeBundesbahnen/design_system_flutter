@@ -58,7 +58,7 @@ class CardPage extends StatelessWidget {
                           height: 150,
                           child: SBBCard.icon(
                             title: 'Home',
-                            icon: SBBIconsMedium.house_medium,
+                            icon: SBBIcons.house_medium,
                             body: SBBWebText.running('Take me Home'),
                           ),
                         ),

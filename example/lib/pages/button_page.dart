@@ -124,7 +124,7 @@ class ButtonPage extends StatelessWidget {
                   const SizedBox(height: sbbDefaultSpacing),
                   SBBTertiaryButtonLarge(
                     label: 'Tertiary Button Large Icon',
-                    icon: SBBIconsSmall.plus_small,
+                    icon: SBBIcons.plus_small,
                     onPressed: () {
                       sbbToast.show(message: 'SBBTertiaryButtonLarge');
                     },
@@ -132,13 +132,13 @@ class ButtonPage extends StatelessWidget {
                   const SizedBox(height: sbbDefaultSpacing),
                   SBBTertiaryButtonLarge(
                     label: 'Tertiary Button Large Icon Disabled',
-                    icon: SBBIconsSmall.plus_small,
+                    icon: SBBIcons.plus_small,
                     onPressed: null,
                   ),
                   const SizedBox(height: sbbDefaultSpacing),
                   SBBTertiaryButtonLarge(
                     label: 'Tertiary Button Large Icon Loading',
-                    icon: SBBIconsSmall.plus_small,
+                    icon: SBBIcons.plus_small,
                     onPressed: () {},
                     isLoading: true,
                   ),
@@ -175,7 +175,7 @@ class ButtonPage extends StatelessWidget {
                   const SizedBox(height: sbbDefaultSpacing),
                   SBBTertiaryButtonSmall(
                     label: 'Tertiary Button Small Icon',
-                    icon: SBBIconsSmall.plus_small,
+                    icon: SBBIcons.plus_small,
                     onPressed: () {
                       sbbToast.show(message: 'SBBTertiaryButtonSmall');
                     },
@@ -183,13 +183,13 @@ class ButtonPage extends StatelessWidget {
                   const SizedBox(height: sbbDefaultSpacing),
                   const SBBTertiaryButtonSmall(
                     label: 'Tertiary Button Small Icon Disabled',
-                    icon: SBBIconsSmall.plus_small,
+                    icon: SBBIcons.plus_small,
                     onPressed: null,
                   ),
                   const SizedBox(height: sbbDefaultSpacing),
                   const SBBTertiaryButtonSmall(
                     label: 'Tertiary Button Small Icon Loading',
-                    icon: SBBIconsSmall.plus_small,
+                    icon: SBBIcons.plus_small,
                     onPressed: null,
                     isLoading: true,
                   ),
@@ -208,12 +208,12 @@ class ButtonPage extends StatelessWidget {
                   onPressed: () {
                     sbbToast.show(message: 'SBBIconButtonLarge');
                   },
-                  icon: SBBIconsSmall.pen_small,
+                  icon: SBBIcons.pen_small,
                 ),
                 const SizedBox(width: sbbDefaultSpacing),
                 const SBBIconButtonLarge(
                   onPressed: null,
-                  icon: SBBIconsSmall.pen_small,
+                  icon: SBBIcons.pen_small,
                 ),
               ],
             ),
@@ -229,12 +229,12 @@ class ButtonPage extends StatelessWidget {
                   onPressed: () {
                     sbbToast.show(message: 'SBBIconButtonSmall');
                   },
-                  icon: SBBIconsSmall.circle_information_small_small,
+                  icon: SBBIcons.circle_information_small_small,
                 ),
                 const SizedBox(width: sbbDefaultSpacing),
                 const SBBIconButtonSmall(
                   onPressed: null,
-                  icon: SBBIconsSmall.circle_information_small_small,
+                  icon: SBBIcons.circle_information_small_small,
                 ),
                 const SizedBox(width: sbbDefaultSpacing),
               ],
@@ -253,12 +253,12 @@ class ButtonPage extends StatelessWidget {
                     onPressed: () {
                       sbbToast.show(message: 'SBBIconButtonSmallNegative');
                     },
-                    icon: SBBIconsSmall.circle_information_small_small,
+                    icon: SBBIcons.circle_information_small_small,
                   ),
                   const SizedBox(width: sbbDefaultSpacing),
                   const SBBIconButtonSmallNegative(
                     onPressed: null,
-                    icon: SBBIconsSmall.circle_information_small_small,
+                    icon: SBBIcons.circle_information_small_small,
                   ),
                   const SizedBox(width: sbbDefaultSpacing),
                 ],
@@ -276,12 +276,12 @@ class ButtonPage extends StatelessWidget {
                   onPressed: () {
                     sbbToast.show(message: 'SBBIconButtonSmallBorderless');
                   },
-                  icon: SBBIconsSmall.drag_small,
+                  icon: SBBIcons.drag_small,
                 ),
                 const SizedBox(width: sbbDefaultSpacing),
                 const SBBIconButtonSmallBorderless(
                   onPressed: null,
-                  icon: SBBIconsSmall.drag_small,
+                  icon: SBBIcons.drag_small,
                 ),
                 const SizedBox(width: sbbDefaultSpacing),
               ],
@@ -298,12 +298,12 @@ class ButtonPage extends StatelessWidget {
                   onPressed: () {
                     sbbToast.show(message: 'SBBIconFormButton');
                   },
-                  icon: SBBIconsSmall.pen_small,
+                  icon: SBBIcons.pen_small,
                 ),
                 const SizedBox(width: sbbDefaultSpacing),
                 const SBBIconFormButton(
                   onPressed: null,
-                  icon: SBBIconsSmall.pen_small,
+                  icon: SBBIcons.pen_small,
                 ),
               ],
             ),
@@ -317,13 +317,13 @@ class ButtonPage extends StatelessWidget {
                 onPressed: () {
                   sbbToast.show(message: 'SBBIconTextButton');
                 },
-                icon: SBBIconsLarge.station_large,
+                icon: SBBIcons.station_large,
                 label: 'Default',
               ),
               const SizedBox(width: sbbDefaultSpacing),
               const SBBIconTextButton(
                 onPressed: null,
-                icon: SBBIconsLarge.station_large,
+                icon: SBBIcons.station_large,
                 label: 'Disabled',
               ),
             ],

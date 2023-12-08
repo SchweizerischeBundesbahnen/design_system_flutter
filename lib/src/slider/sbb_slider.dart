@@ -27,8 +27,8 @@ class SBBSlider extends StatelessWidget {
     required this.value,
     this.min = 0.0,
     this.max = 1.0,
-    this.startIcon = SBBIconsSmall.walk_slow_small,
-    this.endIcon = SBBIconsSmall.walk_fast_small,
+    this.startIcon = SBBIcons.walk_slow_small,
+    this.endIcon = SBBIcons.walk_fast_small,
   });
 
   final ValueChanged<double>? onChanged;

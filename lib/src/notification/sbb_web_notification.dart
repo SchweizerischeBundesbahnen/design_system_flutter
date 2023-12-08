@@ -14,7 +14,7 @@ class SBBWebNotification extends StatefulWidget {
     this.textColor = SBBColors.green,
     this.borderColor = SBBColors.green,
     this.backgroundColor = SBBColors.white,
-    this.icon = SBBIconsMedium.tick_medium,
+    this.icon = SBBIcons.tick_medium,
     this.jumpMarks,
     this.expand = false,
   }) : super(key: key);
@@ -25,7 +25,7 @@ class SBBWebNotification extends StatefulWidget {
     this.textColor = SBBColors.granite,
     this.borderColor = SBBColors.granite,
     this.backgroundColor = SBBColors.white,
-    this.icon = SBBIconsMedium.circle_information_medium,
+    this.icon = SBBIcons.circle_information_medium,
     this.jumpMarks,
     this.expand = false,
   }) : super(key: key);
@@ -36,7 +36,7 @@ class SBBWebNotification extends StatefulWidget {
     this.textColor = SBBColors.white,
     this.borderColor,
     this.backgroundColor = SBBColors.orange,
-    this.icon = SBBIconsMedium.sign_x_medium,
+    this.icon = SBBIcons.sign_x_medium,
     this.jumpMarks,
     this.expand = false,
   }) : super(key: key);
@@ -47,7 +47,7 @@ class SBBWebNotification extends StatefulWidget {
     this.textColor = SBBColors.white,
     this.borderColor,
     this.backgroundColor = SBBColors.red,
-    this.icon = SBBIconsMedium.sign_x_medium,
+    this.icon = SBBIcons.sign_x_medium,
     this.jumpMarks,
     this.expand = false,
   }) : super(key: key);
@@ -154,7 +154,7 @@ class _SBBWebNotificationState extends State<SBBWebNotification>
               Align(
                 alignment: Alignment.topRight,
                 child: GestureDetector(
-                  child: Icon(SBBIconsMedium.cross_medium, color: widget.textColor),
+                  child: Icon(SBBIcons.cross_medium, color: widget.textColor),
                   onTap: () {
                     setState(() {
                       expandController.reverse();

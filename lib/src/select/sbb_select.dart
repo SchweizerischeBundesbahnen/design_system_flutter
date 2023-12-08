@@ -153,7 +153,7 @@ class SBBSelect<T> extends StatelessWidget {
                         ),
                 ),
                 Icon(
-                  SBBIconsSmall.chevron_small_down_small,
+                  SBBIcons.chevron_small_down_small,
                   color: enabled
                       ? style.textField?.iconColor
                       : style.textField?.iconColorDisabled,
@@ -440,7 +440,7 @@ class _SBBMultiSelectState<T> extends State<SBBMultiSelect<T>> {
                         ),
                 ),
                 Icon(
-                  SBBIconsSmall.chevron_small_down_small,
+                  SBBIcons.chevron_small_down_small,
                   color: enabled
                       ? style.textField?.iconColor
                       : style.textField?.iconColorDisabled,

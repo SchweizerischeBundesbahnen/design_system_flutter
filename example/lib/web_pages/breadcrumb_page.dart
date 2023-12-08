@@ -6,7 +6,7 @@ List<Widget> _levels = [
   Text('Level 2'),
   Row(mainAxisSize: MainAxisSize.min, children: [
     Text('Level 3 with Icon'),
-    Icon(SBBIconsMedium.cup_hot_medium),
+    Icon(SBBIcons.cup_hot_medium),
   ]),
   Text('Level 4'),
   Text('Level 5'),
@@ -87,11 +87,11 @@ class _IndexButtons extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         SBBIconButtonSmall(
-            icon: SBBIconsSmall.minus_small,
+            icon: SBBIcons.minus_small,
             onPressed: () => callback(_restrictIndexToZero())),
         SizedBox(width: sbbDefaultSpacing),
         SBBIconButtonSmall(
-            icon: SBBIconsSmall.plus_small,
+            icon: SBBIcons.plus_small,
             onPressed: () => callback(_restrictToLevelLength())),
       ],
     );

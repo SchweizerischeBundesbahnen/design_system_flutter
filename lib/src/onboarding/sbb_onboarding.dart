@@ -259,7 +259,7 @@ class _SBBOnboardingState extends State<SBBOnboarding>
                                 onPressed: () {
                                   changeStep(goToNextStep: false);
                                 },
-                                icon: SBBIconsSmall.chevron_small_left_small,
+                                icon: SBBIcons.chevron_small_left_small,
                               ),
                               const Spacer(),
                               ...stepIndicators,
@@ -267,7 +267,7 @@ class _SBBOnboardingState extends State<SBBOnboarding>
                               SBBIconButtonLarge(
                                 semantics: widget.forwardSemanticsLabel,
                                 onPressed: () => changeStep(goToNextStep: true),
-                                icon: SBBIconsSmall.chevron_small_right_small,
+                                icon: SBBIcons.chevron_small_right_small,
                               ),
                               SizedBox(width: parentPadding),
                             ],
@@ -337,7 +337,7 @@ class _SBBOnboardingState extends State<SBBOnboarding>
                     child: SBBIconButtonLarge(
                       semantics: widget.cancelLabel,
                       onPressed: widget.onFinish,
-                      icon: SBBIconsSmall.cross_small,
+                      icon: SBBIcons.cross_small,
                       buttonStyle: negativeButtonStyle,
                     ),
                   ),
@@ -352,7 +352,7 @@ class _SBBOnboardingState extends State<SBBOnboarding>
                     child: SBBIconButtonLarge(
                       semantics: widget.forwardSemanticsLabel,
                       onPressed: () => changeStep(goToNextStep: true),
-                      icon: SBBIconsSmall.chevron_small_right_small,
+                      icon: SBBIcons.chevron_small_right_small,
                       buttonStyle: negativeButtonStyle,
                     ),
                   ),
@@ -369,7 +369,7 @@ class _SBBOnboardingState extends State<SBBOnboarding>
                       child: SBBIconButtonLarge(
                         semantics: widget.backSemanticsLabel,
                         onPressed: () => changeStep(goToNextStep: false),
-                        icon: SBBIconsSmall.chevron_small_left_small,
+                        icon: SBBIcons.chevron_small_left_small,
                         buttonStyle: negativeButtonStyle,
                       ),
                     ),

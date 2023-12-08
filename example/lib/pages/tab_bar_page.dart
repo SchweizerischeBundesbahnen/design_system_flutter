@@ -10,11 +10,11 @@ class TabBarPage extends StatefulWidget {
 
 class _TabBarPageState extends State<TabBarPage> {
   final items = <TabBarItem>[
-    _DemoItem('1', SBBIconsSmall.train_small),
-    _DemoItem('2', SBBIconsSmall.station_small),
-    _DemoItem('3', SBBIconsSmall.archive_box_small),
-    _DemoItem('4', SBBIconsSmall.arrow_compass_small),
-    _DemoItem('5', SBBIconsSmall.arrow_compass_small),
+    _DemoItem('1', SBBIcons.train_small),
+    _DemoItem('2', SBBIcons.station_small),
+    _DemoItem('3', SBBIcons.archive_box_small),
+    _DemoItem('4', SBBIcons.arrow_compass_small),
+    _DemoItem('5', SBBIcons.arrow_compass_small),
   ];
 
   bool visible = true;

@@ -20,7 +20,7 @@ class TabItemWidget extends StatelessWidget {
       );
 
   factory TabItemWidget.warning() => TabItemWidget(
-        SBBIconsSmall.sign_exclamation_point_small,
+        SBBIcons.sign_exclamation_point_small,
         false,
         warning: true,
       );

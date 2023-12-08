@@ -130,7 +130,7 @@ class _DemoEntry extends StatelessWidget {
           color: style.groupBackgroundColor,
           child: SBBListItem(
             title: title,
-            trailingIcon: SBBIconsSmall.chevron_small_right_small,
+            trailingIcon: SBBIcons.chevron_small_right_small,
             onPressed: action,
             isLastElement: isLastElement,
           ),

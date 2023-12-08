@@ -67,7 +67,7 @@ class _SwitchPageState extends State<SwitchPage> {
           child: SBBSwitchListItem(
             value: _value3,
             title: 'Icon',
-            leadingIcon: SBBIconsSmall.dog_small,
+            leadingIcon: SBBIcons.dog_small,
             onChanged: (value) => setState(() => _value3 = value),
             isLastElement: true,
           ),
