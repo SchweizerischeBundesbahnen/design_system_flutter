@@ -14,6 +14,7 @@ import '../../design_system_flutter.dart';
 /// See also:
 ///
 /// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/button>
+@Deprecated('IconTextButton is not part of the design system and will be removed.')
 class SBBIconTextButton extends StatefulWidget {
   const SBBIconTextButton({
     Key? key,
@@ -38,8 +39,14 @@ class _SBBIconTextButtonState extends State<SBBIconTextButton> {
 
   @override
   Widget build(BuildContext context) {
-    final style = SBBButtonStyles.of(context).iconTextStyle;
+    final buttonStyle = SBBButtonStyles.of(context);
+    final style = buttonStyle.iconTextStyle;
     final isEnabled = widget.onPressed != null;
+    final textStyle = _isPressed || _hasFocus
+        ? style?.textStyleHighlighted
+        : isEnabled
+            ? style?.textStyle
+            : style?.textStyleDisabled;
     return Semantics(
       button: true,
       child: SBBGroup(

@@ -17,6 +17,8 @@
 * Added `SBBSideBar` (for web)
 * Added `SBBMenuButton` (for web)
 * Added `SBBUserMenu` (for web)
+* Added `SBBNotificationBox`
+* Added `SBBStatusMobile`
 * Added global function `showCustomSBBModalSheet`
 * `SBBPrimaryButton`: Added different theme based on hostType (for web)
 * `SBBTheme`:Added field `hostType`
@@ -62,6 +64,7 @@
 - `SBBRadioButtonListItem`: Adjusted paddings to match the current specifications
 - `SBBSelect`: Field `label` is now optional because there is now a variant without label
 - `SBBAccordion`: Adjusted paddings, text style and icon rotation to match the current specifications
+- `SBBIcons`: Imported version 0.1.61 from https://icons.app.sbb.ch/.
 
 ### Deprecated
 

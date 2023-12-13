@@ -9,7 +9,7 @@ void main() {
   testGoldens('onboarding', (WidgetTester tester) async {
     final builder = GoldenBuilder.column(
       wrap: (w) => SizedBox(
-        height: 543.0,
+        height: 538.0,
         width: double.infinity,
         child: TestApp(
           child: w,

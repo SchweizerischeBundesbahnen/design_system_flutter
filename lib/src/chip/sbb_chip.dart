@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../theme/sbb_icons.dart';
-import '../theme/styles/sbb_styles.dart';
+import '../../design_system_flutter.dart';
 
 const _kChipMargin = 4.0;
 

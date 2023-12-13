@@ -784,7 +784,7 @@ typedef SBBMenuItemBuilder<T> = List<SBBMenuEntry<T>> Function(
 /// One of [child] or [icon] may be provided, but not both. If [icon] is provided,
 /// then [SBBMenuButton] behaves like an [IconButton].
 ///
-/// If both are null, then the [SBBIcons.context_menu_medium] is used.
+/// If both are null, then the [SBBIconswip.context_menu_medium] is used.
 ///
 /// See also:
 ///
@@ -845,7 +845,7 @@ class SBBMenuButton<T> extends StatefulWidget {
   /// and the button will behave like an [IconButton].
   ///
   /// If child and icon is null, the default is an [IconButton]
-  /// with [SBBIcons.context_menu_medium] as icon.
+  /// with [SBBIconswip.context_menu_medium] as icon.
   final Widget? icon;
 
   /// The offset applied to the Menu Button.

@@ -41,7 +41,8 @@ class SBBInternal {
 }
 
 class SBBButtonContent extends StatelessWidget {
-  const SBBButtonContent({Key? key, required this.label}) : super(key: key);
+  const SBBButtonContent({Key? key, required this.label})
+      : super(key: key);
 
   final String label;
 

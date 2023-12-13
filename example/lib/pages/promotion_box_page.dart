@@ -9,10 +9,10 @@ class PromotionBoxPage extends StatefulWidget {
 }
 
 class _PromotionBoxPageState extends State<PromotionBoxPage> {
-  late PromotionBoxController defaultController;
-  late PromotionBoxController closableController;
-  late PromotionBoxController clickableController;
-  late PromotionBoxController extraController;
+  late CloseableBoxController defaultController;
+  late CloseableBoxController closableController;
+  late CloseableBoxController clickableController;
+  late CloseableBoxController extraController;
 
   static const _title = 'Bessere Übersicht.';
   static const _description = 'Erkennen Sie nun schneller, auf welchen Perrons Durchsagen vorhanden sind.';
@@ -41,7 +41,7 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
                     title: _title,
                     description: _description,
                     onControllerCreated: (c) => closableController = c,
-                    isClosable: false,
+                    isCloseable: true,
                   ),
                   SizedBox(height: 8.0),
                   SBBPromotionBox(

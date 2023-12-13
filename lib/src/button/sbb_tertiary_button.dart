@@ -17,16 +17,14 @@ import '../sbb_internal.dart';
 class SBBTertiaryButtonLarge extends StatelessWidget {
   const SBBTertiaryButtonLarge({
     super.key,
-    this.label,
-    this.child,
+    required this.label,
     this.icon,
     this.isLoading = false,
     required this.onPressed,
     this.focusNode,
-  }) : assert(label != null && child == null || label == null && child != null);
+  });
 
-  final String? label;
-  final Widget? child;
+  final String label;
   final IconData? icon;
   final bool isLoading;
   final VoidCallback? onPressed;
@@ -35,6 +33,7 @@ class SBBTertiaryButtonLarge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = SBBBaseStyle.of(context);
+    final buttonStyles = SBBButtonStyles.of(context);
     return TextButton(
       style: Theme.of(context).textButtonTheme.style?.copyWith(
             // workaround for web
@@ -58,7 +57,7 @@ class SBBTertiaryButtonLarge extends StatelessWidget {
                 padding: const EdgeInsetsDirectional.only(end: 4.0),
                 child: Icon(icon, size: sbbIconSizeSmall),
               ),
-            if (label == null) child! else SBBButtonContent(label: label!),
+            buttonStyles.buttonLabelBuilder!(context, label),
           ],
         ),
       ),
@@ -124,11 +123,7 @@ class SBBTertiaryButtonSmall extends StatelessWidget {
                 padding: const EdgeInsetsDirectional.only(end: 4.0),
                 child: Icon(icon, size: sbbIconSizeSmall),
               ),
-            Text(
-              label,
-              overflow: TextOverflow.ellipsis,
-              maxLines: 1,
-            ),
+            buttonStyle.buttonLabelBuilder!(context, label),
           ],
         ),
       ),

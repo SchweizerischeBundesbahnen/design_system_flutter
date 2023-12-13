@@ -25,7 +25,6 @@ void main() {
               badgeText: 'Is Closable = false',
               title: _title,
               description: _description,
-              isClosable: false,
             ),
             SizedBox(height: 8.0),
             SBBPromotionBox(
