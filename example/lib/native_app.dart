@@ -1,5 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:design_system_flutter/design_system_flutter.dart';
+import 'pages/input_trigger_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -176,6 +177,10 @@ class MyApp extends StatelessWidget {
                             _DemoEntry(
                               'Status',
                               StatusPage(),
+                            ),
+                            _DemoEntry(
+                              'Input Trigger',
+                              InputTriggerPage(),
                               isLastElement: true,
                             ),
                           ],

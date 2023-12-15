@@ -17,6 +17,7 @@ export 'src/dropdown/sbb_dropdown.dart';
 export 'src/group/sbb_group.dart';
 export 'src/header/sbb_header.dart';
 export 'src/header/sbb_web_header.dart';
+export 'src/input_trigger/sbb_input_trigger.dart';
 export 'src/link/sbb_link_text.dart';
 export 'src/list_header/sbb_list_header.dart';
 export 'src/list_item/sbb_list_item.dart';
