@@ -5,8 +5,11 @@ import 'package:flutter/rendering.dart';
 import '../../design_system_flutter.dart';
 
 part 'sbb_date_picker.dart';
+
 part 'sbb_date_time_picker.dart';
+
 part 'sbb_picker_scroll_view.dart';
+
 part 'sbb_time_picker.dart';
 
 const _highlightedAreaHeight = 34.0;
@@ -15,7 +18,6 @@ class SBBPicker extends StatelessWidget {
   SBBPicker({
     Key? key,
     SBBPickerScrollController? controller,
-    String? label,
     int initialSelectedIndex = 0,
     required ValueChanged<int>? onSelectedItemChanged,
     required SBBPickerScrollViewItemBuilder itemBuilder,
@@ -24,9 +26,10 @@ class SBBPicker extends StatelessWidget {
   }) : this.custom(
           key: key,
           child: SBBPickerScrollView(
-            controller: controller ?? SBBPickerScrollController(
-              initialItem: initialSelectedIndex,
-            ),
+            controller: controller ??
+                SBBPickerScrollController(
+                  initialItem: initialSelectedIndex,
+                ),
             onSelectedItemChanged: onSelectedItemChanged,
             itemBuilder: itemBuilder,
             looping: looping,

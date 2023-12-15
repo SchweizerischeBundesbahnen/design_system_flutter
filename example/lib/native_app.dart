@@ -1,7 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:design_system_flutter/design_system_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
 import 'pages/accordion_page.dart';
