@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import '../../design_system_flutter.dart';
 
@@ -37,6 +36,7 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
     String title = '',
     VoidCallback? onPressed,
     VoidCallback? onPressedLogo,
+    List<Widget>? actions,
     String? logoTooltip,
     bool? blockSemantics,
   }) : this._(
@@ -46,6 +46,7 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
           useMenuButton: true,
           onPressed: onPressed,
           onPressedLogo: onPressedLogo,
+          actions: actions,
           logoTooltip: logoTooltip,
           blockSemantics: blockSemantics,
         );
@@ -55,6 +56,7 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
     String title = '',
     VoidCallback? onPressed,
     VoidCallback? onPressedLogo,
+    List<Widget>? actions,
     String? logoTooltip,
     bool? blockSemantics,
   }) : this._(
@@ -64,6 +66,7 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
           useBackButton: true,
           onPressed: onPressed,
           onPressedLogo: onPressedLogo,
+          actions: actions,
           logoTooltip: logoTooltip,
           blockSemantics: blockSemantics,
         );
@@ -73,6 +76,7 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
     String title = '',
     VoidCallback? onPressed,
     VoidCallback? onPressedLogo,
+    List<Widget>? actions,
     String? logoTooltip,
     bool? blockSemantics,
   }) : this._(
@@ -82,6 +86,7 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
           useCloseButton: true,
           onPressed: onPressed,
           onPressedLogo: onPressedLogo,
+          actions: actions,
           logoTooltip: logoTooltip,
           blockSemantics: blockSemantics,
         );
@@ -139,7 +144,11 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
       final ModalRoute<dynamic>? parentRoute = ModalRoute.of(context);
       useMenuButton = Scaffold.of(context).hasDrawer;
       useBackButton = parentRoute?.canPop ?? false;
-      useCloseButton = useCloseButton || automaticallyImplyLeading && useBackButton && parentRoute is PageRoute<dynamic> && parentRoute.fullscreenDialog;
+      useCloseButton = useCloseButton ||
+          automaticallyImplyLeading &&
+              useBackButton &&
+              parentRoute is PageRoute<dynamic> &&
+              parentRoute.fullscreenDialog;
     }
 
     if (useMenuButton) {
@@ -200,7 +209,8 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
                   excluding: onPressedLogo == null,
                   child: Container(
                     alignment: Alignment.centerRight,
-                    padding: const EdgeInsets.only(right: sbbDefaultSpacing / 2),
+                    padding:
+                        const EdgeInsets.only(right: sbbDefaultSpacing / 2),
                     height: kToolbarHeight,
                     width: customLeadingWidth ? leadingWidth : kToolbarHeight,
                     child: IconButton(
