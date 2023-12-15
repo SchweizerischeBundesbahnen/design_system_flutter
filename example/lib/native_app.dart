@@ -21,6 +21,7 @@ import 'pages/modal_page.dart';
 import 'pages/notification_box_page.dart';
 import 'pages/onboarding_page.dart';
 import 'pages/pagination_page.dart';
+import 'pages/picker_page.dart';
 import 'pages/promotion_box_page.dart';
 import 'pages/radio_button_page.dart';
 import 'pages/segmented_button_page.dart';
@@ -127,6 +128,10 @@ class MyApp extends StatelessWidget {
                             _DemoEntry(
                               'Loading Indicator',
                               LoadingIndicatorPage(),
+                            ),
+                            _DemoEntry(
+                              'Picker',
+                              PickerPage(),
                             ),
                             _DemoEntry(
                               'Radio Button',

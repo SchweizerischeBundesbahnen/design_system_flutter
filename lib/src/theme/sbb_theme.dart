@@ -87,6 +87,8 @@ class SBBTheme {
           backgroundColor: baseStyle.backgroundColor,
           errorColor: controlStyles.textField?.dividerColorError,
           brightness: brightness,
+        ).copyWith(
+          surfaceTint: SBBColors.transparent,
         ),
         scaffoldBackgroundColor: baseStyle.backgroundColor,
         iconTheme: IconThemeData(
