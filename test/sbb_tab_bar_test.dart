@@ -62,7 +62,4 @@ class _DemoItem extends TabBarItem {
 
   @override
   String translate(BuildContext context) => 'Item $id';
-
-  @override
-  String translateSemantics(BuildContext context, int index, int length) => 'Element $index von $length';
 }

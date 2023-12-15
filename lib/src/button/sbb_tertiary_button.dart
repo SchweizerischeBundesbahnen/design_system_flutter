@@ -16,13 +16,13 @@ import '../sbb_internal.dart';
 /// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/button>
 class SBBTertiaryButtonLarge extends StatelessWidget {
   const SBBTertiaryButtonLarge({
-    Key? key,
+    super.key,
     required this.label,
     this.icon,
     this.isLoading = false,
     required this.onPressed,
     this.focusNode,
-  }) : super(key: key);
+  });
 
   final String label;
   final IconData? icon;
@@ -33,6 +33,7 @@ class SBBTertiaryButtonLarge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = SBBBaseStyle.of(context);
+    final buttonStyles = SBBButtonStyles.of(context);
     return TextButton(
       style: Theme.of(context).textButtonTheme.style?.copyWith(
             // workaround for web
@@ -47,19 +48,16 @@ class SBBTertiaryButtonLarge extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             if (isLoading)
-              style.themeValue(const SBBLoadingIndicator.tinySmoke(), const SBBLoadingIndicator.tinyCement())
+              style.themeValue(
+                const SBBLoadingIndicator.tinySmoke(),
+                const SBBLoadingIndicator.tinyCement(),
+              )
             else if (icon != null)
               Padding(
                 padding: const EdgeInsetsDirectional.only(end: 4.0),
                 child: Icon(icon, size: sbbIconSizeSmall),
               ),
-            Flexible(
-              child: Text(
-                label,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-              ),
-            ),
+            buttonStyles.buttonLabelBuilder!(context, label),
           ],
         ),
       ),
@@ -116,17 +114,16 @@ class SBBTertiaryButtonSmall extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             if (isLoading)
-              style.themeValue(const SBBLoadingIndicator.tinyCement(), const SBBLoadingIndicator.tinySmoke())
+              style.themeValue(
+                const SBBLoadingIndicator.tinyCement(),
+                const SBBLoadingIndicator.tinySmoke(),
+              )
             else if (icon != null)
               Padding(
                 padding: const EdgeInsetsDirectional.only(end: 4.0),
                 child: Icon(icon, size: sbbIconSizeSmall),
               ),
-            Text(
-              label,
-              overflow: TextOverflow.ellipsis,
-              maxLines: 1,
-            ),
+            buttonStyle.buttonLabelBuilder!(context, label),
           ],
         ),
       ),

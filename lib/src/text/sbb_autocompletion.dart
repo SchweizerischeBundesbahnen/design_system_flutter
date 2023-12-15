@@ -232,9 +232,6 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>>
   }
 
   void _updateWebOverlay({String? query, bool metricsChanged = false}) {
-    final bool isWeb =
-        SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
-
     filteredSuggestions = getSuggestions(
       widget.suggestions,
       widget.itemSorter,
@@ -378,7 +375,7 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>>
       );
 
       if (listSuggestionsEntry != null) {
-        Overlay.of(context)?.insert(listSuggestionsEntry!);
+        Overlay.of(context).insert(listSuggestionsEntry!);
       }
     } else {
       if (listSuggestionsEntry != null) {
@@ -524,7 +521,7 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>>
         );
 
         if (listSuggestionsEntry != null) {
-          Overlay.of(context)?.insert(listSuggestionsEntry!);
+          Overlay.of(context).insert(listSuggestionsEntry!);
         }
       }
     } else {

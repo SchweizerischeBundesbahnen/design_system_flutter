@@ -1,0 +1,23 @@
+# Workflow evaluates the score on pub.dev.
+# Runs on each push to main.
+
+name: pubdev_score
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  scoring:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Clone repository.
+        uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Evaluate Score
+        uses: axel-op/dart-package-analyzer@v3
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}

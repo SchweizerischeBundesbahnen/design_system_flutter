@@ -1,7 +1,4 @@
-import 'dart:ui';
-
 import 'package:design_system_flutter/design_system_flutter.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 List<Widget> _levels = [

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../design_system_flutter.dart';
-import '../sbb_internal.dart';
-import 'sbb_button_style_extensions.dart';
 
 /// The SBB Primary Button. Use according to documentation.
 ///
@@ -18,12 +16,12 @@ import 'sbb_button_style_extensions.dart';
 /// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/button>
 class SBBPrimaryButton extends StatelessWidget {
   const SBBPrimaryButton({
-    Key? key,
+    super.key,
     required this.label,
     this.isLoading = false,
     required this.onPressed,
     this.focusNode,
-  }) : super(key: key);
+  });
 
   final String label;
   final bool isLoading;
@@ -43,29 +41,31 @@ class SBBPrimaryButton extends StatelessWidget {
   }
 
   ElevatedButton _buildThemedMobile(BuildContext context) {
+    final styles = SBBButtonStyles.of(context);
     return ElevatedButton(
-      style: SBBButtonStyles.of(context).primaryMobile,
+      style: styles.primaryMobile,
       onPressed: isLoading ? null : onPressed,
       focusNode: focusNode,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           if (isLoading) SBBLoadingIndicator.tinyCloud(),
-          SBBButtonContent(label: label)
+          styles.buttonLabelBuilder!(context, label),
         ],
       ),
     );
   }
 
   ElevatedButton _buildThemedWeb(BuildContext context) {
+    final styles = SBBButtonStyles.of(context);
     return ElevatedButton(
-      style: SBBButtonStyles.of(context).primaryWebLean,
+      style: styles.primaryWebLean,
       onPressed: onPressed,
       focusNode: focusNode,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SBBButtonContent(label: label)
+          styles.buttonLabelBuilder!(context, label),
         ],
       ),
     );
@@ -100,53 +100,42 @@ class SBBPrimaryButtonNegative extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     switch (SBBBaseStyle.of(context).hostPlatform) {
       case HostPlatform.native:
-        return _buildThemedMobile(theme);
+        return _buildThemedMobile(context);
       case HostPlatform.web:
-        return _buildThemedWeb(theme);
+        return _buildThemedWeb(context);
       default:
-        return _buildThemedMobile(theme);
+        return _buildThemedMobile(context);
     }
   }
 
-  Widget _buildThemedMobile(ThemeData theme) {
+  Widget _buildThemedMobile(BuildContext context) {
+    final styles = SBBButtonStyles.of(context);
     return ElevatedButton(
-      style: theme.extension<SBBButtonStyles>()?.primaryMobileNegative,
+      style: styles.primaryMobileNegative,
       onPressed: isLoading ? null : onPressed,
       focusNode: focusNode,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           if (isLoading) SBBLoadingIndicator.tinyCloud(),
-          Flexible(
-            child: Text(
-              label,
-              overflow: TextOverflow.ellipsis,
-              maxLines: 1,
-            ),
-          ),
+          styles.buttonLabelBuilder!(context, label),
         ],
       ),
     );
   }
 
-  Widget _buildThemedWeb(ThemeData theme) {
+  Widget _buildThemedWeb(BuildContext context) {
+    final styles = SBBButtonStyles.of(context);
     return ElevatedButton(
-      style: theme.extension<SBBButtonStyles>()?.primaryWebNegative,
+      style: styles.primaryWebNegative,
       onPressed: onPressed,
       focusNode: focusNode,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Flexible(
-            child: Text(
-              label,
-              overflow: TextOverflow.ellipsis,
-              maxLines: 1,
-            ),
-          ),
+          styles.buttonLabelBuilder!(context, label),
         ],
       ),
     );

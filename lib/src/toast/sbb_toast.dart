@@ -24,7 +24,7 @@ class SBBToast {
   Timer? _removeTimer;
 
   static SBBToast of(BuildContext context) {
-    return SBBToast._(Overlay.of(context, rootOverlay: true)!);
+    return SBBToast._(Overlay.of(context, rootOverlay: true));
   }
 
   void confirmation({

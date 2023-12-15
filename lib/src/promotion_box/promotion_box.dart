@@ -3,11 +3,10 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 import '../../design_system_flutter.dart';
+import '../shared/close_button.dart';
 import 'promotion_badge.dart';
 
 part 'promotion_box.assets.dart';
-
-part 'promotion_box.controller.dart';
 
 part 'promotion_box.style.dart';
 
@@ -17,17 +16,19 @@ class SBBPromotionBox extends StatefulWidget {
     required this.description,
     required this.badgeText,
     super.key,
-    this.isClosable = true,
     this.onControllerCreated,
     this.onTap,
+    this.isCloseable = true,
+    this.onClose,
   });
 
   final String title;
   final String description;
   final String badgeText;
-  final bool isClosable;
-  final Function(PromotionBoxController controller)? onControllerCreated;
+  final Function(CloseableBoxController controller)? onControllerCreated;
   final GestureTapCallback? onTap;
+  final bool isCloseable;
+  final GestureTapCallback? onClose;
 
   @override
   State<SBBPromotionBox> createState() => _SBBPromotionBoxState();
@@ -36,7 +37,7 @@ class SBBPromotionBox extends StatefulWidget {
 class _SBBPromotionBoxState extends State<SBBPromotionBox>
     with SingleTickerProviderStateMixin {
   final _badgeKey = GlobalKey();
-  late PromotionBoxController _controller = PromotionBoxController(this);
+  late CloseableBoxController _controller = CloseableBoxController(this);
 
   Size _badgeSize = Size.zero;
 
@@ -89,7 +90,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox>
     final iconStyle = SBBButtonStyles.of(context).iconTextStyle;
     final paddingTop = _badgeSize.height / 2.0;
     return _animationBuilder(
-      animation: _controller._animation,
+      animation: _controller.animation,
       child: Padding(
         padding: const EdgeInsets.only(top: 10.0),
         child: Stack(
@@ -169,7 +170,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox>
                                 style: textTheme.titleMedium,
                               ),
                             ),
-                            if (widget.isClosable)
+                            if (widget.isCloseable)
                               const SizedBox(width: sbbIconSizeSmall),
                             const SizedBox(width: 8.0),
                           ],
@@ -208,32 +209,16 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox>
                 text: widget.badgeText,
               ),
             ),
-            if (widget.isClosable)
+            if (widget.isCloseable)
               Align(
                 alignment: Alignment.topRight,
-                child: Material(
-                  color: SBBColors.transparent,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 14.0),
-                    child: Semantics(
-                      label:
-                          MaterialLocalizations.of(context).closeButtonTooltip,
-                      button: true,
-                      child: InkWell(
-                        focusColor: iconStyle?.backgroundColorHighlighted,
-                        hoverColor: iconStyle?.backgroundColorHighlighted,
-                        customBorder: CircleBorder(),
-                        onTap: () => _controller.hide(),
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Icon(
-                            SBBIcons.cross_small,
-                            color: crossColor,
-                            size: sbbIconSizeSmall,
-                          ),
-                        ),
-                      ),
-                    ),
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 14.0),
+                  child: SBBCloseButton(
+                    onTap: () async {
+                      await _controller.hide();
+                      widget.onClose?.call();
+                    },
                   ),
                 ),
               ),

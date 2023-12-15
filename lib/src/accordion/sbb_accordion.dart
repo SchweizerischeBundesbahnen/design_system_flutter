@@ -228,7 +228,6 @@ class _SBBAccordionState extends State<SBBAccordion> {
   }
 
   Widget _buildAccordionWeb(BuildContext context, SBBAccordionItem child, int i) {
-    final style = SBBControlStyles.of(context);
     return Container(
       decoration: BoxDecoration(
           color: widget.backgroundColor ??

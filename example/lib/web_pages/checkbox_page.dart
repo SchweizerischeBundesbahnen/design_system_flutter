@@ -98,7 +98,7 @@ class __ContentState extends State<_Content> {
                             onChanged: (value) =>
                                 setState(() => _listItemValue3 = value),
                             trailingIcon:
-                                SBBIcons.circle_information_small_small,
+                            SBBIcons.circle_information_small_small,
                             onCallToAction: () {},
                           ),
                           SBBCheckboxListItem(
@@ -115,7 +115,7 @@ class __ContentState extends State<_Content> {
                                 setState(() => _listItemValue5 = value),
                             leadingIcon: SBBIcons.alarm_clock_small,
                             trailingIcon:
-                                SBBIcons.circle_information_small_small,
+                              SBBIcons.circle_information_small_small,
                             onCallToAction: () {
                               {}
                             },
@@ -126,7 +126,7 @@ class __ContentState extends State<_Content> {
                             onChanged: null,
                             leadingIcon: SBBIcons.alarm_clock_small,
                             trailingIcon:
-                                SBBIcons.circle_information_small_small,
+                              SBBIcons.circle_information_small_small,
                             onCallToAction: () {},
                           ),
                           SBBCheckboxListItem.custom(

@@ -1,0 +1,43 @@
+# Runs flutter test on every push.
+# Failed goldens are uploaded and can be seen in the artifact summary of the job.
+
+name: test
+
+on:
+  push:
+
+jobs:
+  test:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout design_system_flutter code.
+        uses: actions/checkout@v4
+        
+      - name: Parse flutter version and channel specified in .fvm into env vars.
+        uses: kuhnroyal/flutter-fvm-config-action@v1
+        
+      - name: Clone flutter version specified in .fvm.
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ steps.fvm-config-action.outputs.FLUTTER_VERSION }}
+          channel: ${{ steps.fvm-config-action.outputs.FLUTTER_CHANNEL }}
+
+      - name: Run flutter doctor.
+        run: flutter doctor -v
+
+      - name: Install dependencies.
+        run: flutter pub get
+
+      - name: Run flutter test.
+        id: test
+        run: flutter test
+        
+      - name: Upload goldens if tests fail.
+        uses: actions/upload-artifact@v3
+        if: ${{ failure() && steps.test.conclusion == 'failure' }}
+        with:
+          name: goldens
+          path: test/failures/
+        
+      
