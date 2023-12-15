@@ -12,6 +12,8 @@ part 'sbb_picker_scroll_view.dart';
 
 part 'sbb_time_picker.dart';
 
+part 'sbb_date_input.dart';
+
 const _highlightedAreaHeight = 34.0;
 
 class SBBPicker extends StatelessWidget {
