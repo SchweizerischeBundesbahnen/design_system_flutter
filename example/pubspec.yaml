@@ -1,6 +1,6 @@
 name: "flutter_design_system_mobile_example"
 description: A showcase app for the flutter design system mobile from SBB.
-version: 1.2.0
+version: 1.2.0+20010200
 publish_to: "none"
 
 environment:
