@@ -50,6 +50,8 @@
 * `SBBAccordion`: Added field `titleMaxLines` (with default value `null`, meaning titles are now multiline by default)
 * `SBBAccordion`: Added constructor `single` for simpler usage when only one item is needed
 * `SBBListHeader`: Added field `maxLines` (with default value `null`, meaning list headers are now multiline by default)
+* `SBBTabBar`: Added field `onTap`, which allows for reacting to subsequent taps on the selected tab item.
+
 ### Changed
 
 - `SBBThemeData`: Adjusted some colors to match the current specifications
