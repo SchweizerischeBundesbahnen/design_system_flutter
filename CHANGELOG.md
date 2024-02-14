@@ -20,6 +20,7 @@
 * Added `SBBNotificationBox`
 * Added `SBBStatusMobile`
 * Added global function `showCustomSBBModalSheet`
+* Added `SBBTextStyles.extraSmallBold` to match current specifications
 * `SBBPrimaryButton`: Added different theme based on hostType (for web)
 * `SBBTheme`:Added field `hostType`
 * `SBBIcons`: Added new icons
