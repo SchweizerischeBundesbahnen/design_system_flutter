@@ -28,6 +28,9 @@ class TypographyPage extends StatelessWidget {
         const SizedBox(height: sbbDefaultSpacing),
         const TypographyExample(
             'Extra Small (Light)', SBBTextStyles.extraSmallLight),
+        const SizedBox(height: sbbDefaultSpacing),
+        const TypographyExample(
+            'Extra Small (Bold)', SBBTextStyles.extraSmallBold),
       ],
     );
   }
