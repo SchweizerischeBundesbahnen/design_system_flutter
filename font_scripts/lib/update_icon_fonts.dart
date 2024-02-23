@@ -43,7 +43,7 @@ Future<void> main() async {
   await Directory('icons/medium').create(recursive: true);
   await Directory('icons/large').create(recursive: true);
 
-  progress.desc = 'Preparing icons';
+  progress.desc = 'Preparing ttf files';
   await Process.run('npm', ['install'], runInShell: true);
   progress.increment();
   await Process.run('npm', ['run', 'fix'], runInShell: true);
@@ -55,6 +55,15 @@ Future<void> main() async {
   progress.increment();
 
   await File('icons/.version').writeAsString(newVersion);
+  await Directory('icons/small').delete(recursive: true);
+  await Directory('icons/small-tmp').delete(recursive: true);
+  await Directory('icons/medium').delete(recursive: true);
+  await Directory('icons/medium-tmp').delete(recursive: true);
+  await Directory('icons/large').delete(recursive: true);
+  await Directory('icons/large-tmp').delete(recursive: true);
+  await File('icons/sbb_icons_small.json').delete();
+  await File('icons/sbb_icons_medium.json').delete();
+  await File('icons/sbb_icons_large.json').delete();
 }
 
 Uri makeUrlUri(String path) {
@@ -138,7 +147,7 @@ Future<void> createFlutterFontMap() async {
 }
 
 Future<Map<String, String>> getMap(String type) async {
-  final name = 'SBBIcons$type';
+  final name = 'sbb_icons_$type';
   final fontFamily = '${type}FontFamily';
   final uri = Uri.parse('icons/$name.json');
   final file = File.fromUri(uri);

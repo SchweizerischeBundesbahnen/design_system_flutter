@@ -14,3 +14,9 @@ fvm flutter pub get
 ```shell
 dart lib/update_icon_fonts.dart
 ```
+
+### generated files
+
+* **.ttf files**: move these to lib/fonts/
+* **sbb_icons.dart**: move this lib/src/theme/sbb_icons/
+* **sbb_icons_index.dart**: move this example/lib/
