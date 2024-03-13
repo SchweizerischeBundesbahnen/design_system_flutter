@@ -81,6 +81,7 @@ class SBBMessage extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(sbbDefaultSpacing),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           if (isLoading) _loadingIndicator(context),
           if (!isLoading) customIllustration ?? _defaultIllustration(context),
