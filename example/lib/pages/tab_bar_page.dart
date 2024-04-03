@@ -38,7 +38,7 @@ class _TabBarPageState extends State<TabBarPage> {
             controller: controller,
             warningSemantics: 'Warning',
             onTap: (tab) {
-              sbbToast.show(message: 'Tab: ${tab.id}');
+              sbbToast.show(message: 'Tab tapped: Item ${tab.id}');
             },
           ),
         Expanded(child: Container()),
