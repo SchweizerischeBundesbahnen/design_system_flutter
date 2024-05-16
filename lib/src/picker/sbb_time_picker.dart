@@ -139,7 +139,7 @@ class _SBBTimePickerTimeState extends State<SBBTimePicker> {
   late ValueNotifier<int> hourValueNotifier;
 
   /// This is used to prevent notifying the callback with the same value
-  late TimeOfDay lastReportedDateTime;
+  late TimeOfDay lastReportedTime;
 
   TimeOfDay get safeMinTime =>
       widget.minimumTime ?? TimeOfDay(hour: 0, minute: 0);
@@ -151,7 +151,7 @@ class _SBBTimePickerTimeState extends State<SBBTimePicker> {
   void initState() {
     super.initState();
     selectedTime = widget.initialTime;
-    lastReportedDateTime = selectedTime;
+    lastReportedTime = selectedTime;
     hourValueNotifier = ValueNotifier(selectedTime.hour);
 
     minuteController = SBBPickerScrollController(
@@ -191,7 +191,7 @@ class _SBBTimePickerTimeState extends State<SBBTimePicker> {
       controller: hourController,
       onSelectedItemChanged: (int index) {
         final selectedHour = _indexToHour(index);
-        _onDateTimeSelected(hour: selectedHour);
+        _onTimeSelected(hour: selectedHour);
       },
       itemBuilder: (BuildContext context, int index) {
         final itemHour = _indexToHour(index);
@@ -227,16 +227,12 @@ class _SBBTimePickerTimeState extends State<SBBTimePicker> {
   Widget _buildMinutePickerScrollView(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: hourValueNotifier,
-      builder: (
-        BuildContext context,
-        int selectedHour,
-        Widget? child,
-      ) {
+      builder: (BuildContext context, int selectedHour, _) {
         return SBBPickerScrollView(
           controller: minuteController,
           onSelectedItemChanged: (int index) {
             final selectedMinute = _indexToMinute(index);
-            _onDateTimeSelected(minute: selectedMinute);
+            _onTimeSelected(minute: selectedMinute);
           },
           itemBuilder: (BuildContext context, int index) {
             final itemMinute = _indexToMinute(index);
@@ -275,7 +271,7 @@ class _SBBTimePickerTimeState extends State<SBBTimePicker> {
     );
   }
 
-  void _onDateTimeSelected({int? hour, int? minute}) {
+  void _onTimeSelected({int? hour, int? minute}) {
     final selectedHour = hour ?? selectedTime.hour;
     final selectedMinute = minute ?? selectedTime.minute;
 
@@ -342,12 +338,12 @@ class _SBBTimePickerTimeState extends State<SBBTimePicker> {
     }
 
     // don't notify callback if time did not change
-    if (lastReportedDateTime == selectedTime) {
+    if (lastReportedTime == selectedTime) {
       return;
     }
 
     // notify callback with new selected time
-    lastReportedDateTime = selectedTime;
+    lastReportedTime = selectedTime;
     widget.onTimeChanged(selectedTime);
   }
 
