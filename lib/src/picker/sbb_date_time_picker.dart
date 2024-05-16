@@ -436,8 +436,8 @@ class _SBBDateTimePickerState extends State<SBBDateTimePicker> {
       return;
     }
 
-    // optimize list item positions
-    _ensureOptimizedIndexPosition();
+    // optimize scroll positions to prevent scrolling over multiple rounds
+    _ensureOptimizedScrollPosition();
 
     // min time
     final correctedToMinTime = _ensureMinTime();
@@ -517,7 +517,7 @@ class _SBBDateTimePickerState extends State<SBBDateTimePicker> {
     return hourIncorrect || minuteIncorrect;
   }
 
-  void _ensureOptimizedIndexPosition() {
+  void _ensureOptimizedScrollPosition() {
     final hourItemIndex = _hourToIndex(selectedDateTime.hour);
     hourController.jumpToItem(hourItemIndex);
     final minuteItemIndex = _minuteToIndex(selectedDateTime.minute);

@@ -370,8 +370,8 @@ class _SBBDatePickerState extends State<SBBDatePicker> {
     // check if selected day value needs to be changed to target day value
     _ensureTargetDay();
 
-    // optimize list item positions
-    _ensureOptimizedIndexPosition();
+    // optimize scroll positions to prevent scrolling over multiple rounds
+    _ensureOptimizedScrollPosition();
 
     // min date
     final correctedToMinDate = _ensureMinDate();
@@ -527,7 +527,7 @@ class _SBBDatePickerState extends State<SBBDatePicker> {
     return true;
   }
 
-  void _ensureOptimizedIndexPosition() {
+  void _ensureOptimizedScrollPosition() {
     final monthItemIndex = _monthToIndex(selectedDateTime.month);
     monthController.jumpToItem(monthItemIndex);
     final dayItemIndex = _dayToIndex(selectedDateTime.day);

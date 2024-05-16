@@ -10,8 +10,8 @@ class SBBTimePicker extends StatefulWidget {
     this.isLastElement = true,
     this.minuteInterval = 1,
   })  : initialTime = _initialTime(initialTime),
-        minimumDateTime = _minimumDateTime(minimumTime, minuteInterval),
-        maximumDateTime = _maximumDateTime(maximumTime, minuteInterval),
+        minimumTime = _minimumTime(minimumTime, minuteInterval),
+        maximumTime = _maximumTime(maximumTime, minuteInterval),
         assert(
           minuteInterval > 0 && TimeOfDay.minutesPerHour % minuteInterval == 0,
           'minute interval is not a positive integer factor of 60',
@@ -20,29 +20,30 @@ class SBBTimePicker extends StatefulWidget {
       this.initialTime.minute % minuteInterval == 0,
       'initial time (${this.initialTime.minute}) is not divisible by minute interval ($minuteInterval)',
     );
-    debugPrint(
-      'initial time (${this.initialTime}) is before minimum time (${this.minimumDateTime})',
-    );
-    assert(
-      this.minimumDateTime == null ||
-          !(this.initialTime.hour < this.minimumDateTime!.hour ||
-              (this.initialTime.hour == this.minimumDateTime!.hour &&
-                  this.initialTime.minute < this.minimumDateTime!.minute)),
-      'initial time (${this.initialTime}) is before minimum time (${this.minimumDateTime})',
-    );
-    assert(
-      this.maximumDateTime == null ||
-          !(this.initialTime.hour > this.maximumDateTime!.hour ||
-              (this.initialTime.hour == this.maximumDateTime!.hour &&
-                  this.initialTime.minute > this.maximumDateTime!.minute)),
-      'initial time (${this.initialTime}) is after maximum time (${this.maximumDateTime})',
-    );
+
+    if (this.minimumTime != null && this.maximumTime != null) {
+      assert(
+        this.initialTime.isBetween(this.minimumTime!, this.maximumTime!),
+        'initial time (${this.initialTime}) is not between minimum time (${this.minimumTime}) and maximum time (${this.maximumTime})',
+      );
+    } else {
+      assert(
+        this.minimumTime == null ||
+            !this.initialTime.isBefore(this.minimumTime!),
+        'initial time (${this.initialTime}) is before minimum time (${this.minimumTime})',
+      );
+      assert(
+        this.maximumTime == null ||
+            !(this.initialTime.isAfter(this.maximumTime!)),
+        'initial time (${this.initialTime}) is after maximum time (${this.maximumTime})',
+      );
+    }
   }
 
   final ValueChanged<TimeOfDay> onTimeChanged;
   final TimeOfDay initialTime;
-  final TimeOfDay? minimumDateTime;
-  final TimeOfDay? maximumDateTime;
+  final TimeOfDay? minimumTime;
+  final TimeOfDay? maximumTime;
   final int minuteInterval;
   final bool isLastElement;
 
@@ -58,28 +59,18 @@ class SBBTimePicker extends StatefulWidget {
     return time.replacing(hour: time.hour, minute: time.minute);
   }
 
-  static TimeOfDay? _minimumDateTime(TimeOfDay? time, int minuteInterval) {
+  static TimeOfDay? _minimumTime(TimeOfDay? time, int minuteInterval) {
     if (time == null) {
       return null;
     }
     return ceilToInterval(time, minuteInterval);
   }
 
-  static TimeOfDay? _maximumDateTime(TimeOfDay? time, int minuteInterval) {
+  static TimeOfDay? _maximumTime(TimeOfDay? time, int minuteInterval) {
     if (time == null) {
       return null;
     }
     return floorToInterval(time, minuteInterval);
-  }
-
-  static DateTime _cleanDateTime(DateTime dateTime, {int? hour, int? minute}) {
-    return dateTime.copyWith(
-      hour: hour,
-      minute: minute,
-      second: 0,
-      millisecond: 0,
-      microsecond: 0,
-    );
   }
 
   /// Creates copy of [time] with the minute value rounded to the closest minute
@@ -142,28 +133,36 @@ class SBBTimePicker extends StatefulWidget {
 }
 
 class _SBBTimePickerTimeState extends State<SBBTimePicker> {
-  late TimeOfDay selectedDateTime;
+  late TimeOfDay selectedTime;
   late SBBPickerScrollController minuteController;
   late SBBPickerScrollController hourController;
+  late ValueNotifier<int> hourValueNotifier;
 
   /// This is used to prevent notifying the callback with the same value
   late TimeOfDay lastReportedDateTime;
 
+  TimeOfDay get safeMinTime =>
+      widget.minimumTime ?? TimeOfDay(hour: 0, minute: 0);
+
+  TimeOfDay get safeMaxTime =>
+      widget.maximumTime ?? TimeOfDay(hour: 23, minute: 59);
+
   @override
   void initState() {
     super.initState();
-    selectedDateTime = widget.initialTime;
-    lastReportedDateTime = selectedDateTime;
+    selectedTime = widget.initialTime;
+    lastReportedDateTime = selectedTime;
+    hourValueNotifier = ValueNotifier(selectedTime.hour);
 
     minuteController = SBBPickerScrollController(
-      initialItem: _minuteToIndex(selectedDateTime.minute),
+      initialItem: _minuteToIndex(selectedTime.minute),
     );
     minuteController._scrollingStateNotifier.addListener(() {
       _onScrollingStateChanged();
     });
 
     hourController = SBBPickerScrollController(
-      initialItem: _hourToIndex(selectedDateTime.hour),
+      initialItem: _hourToIndex(selectedTime.hour),
     );
     hourController._scrollingStateNotifier.addListener(() {
       _onScrollingStateChanged();
@@ -192,37 +191,23 @@ class _SBBTimePickerTimeState extends State<SBBTimePicker> {
       controller: hourController,
       onSelectedItemChanged: (int index) {
         final selectedHour = _indexToHour(index);
-        _onDateTimeSelected(
-          hour: selectedHour,
-        );
+        _onDateTimeSelected(hour: selectedHour);
       },
       itemBuilder: (BuildContext context, int index) {
-        final selectedHour = _indexToHour(index);
+        final itemHour = _indexToHour(index);
+        final itemHourTime = TimeOfDay(hour: itemHour, minute: 0);
+        final itemEnabled = itemHourTime.isBetween(
+          safeMinTime.floor(),
+          safeMaxTime.ceil(),
+        );
 
-        var hourEnabled = true;
-        // check if selected time is before min time
-        final minimumDateTime = widget.minimumDateTime;
-        if (minimumDateTime != null) {
-          if (minimumDateTime.hour > selectedHour) {
-            hourEnabled = false;
-          }
-        }
-        // check if selected time is after max time
-        final maximumDateTime = widget.maximumDateTime;
-        if (maximumDateTime != null) {
-          if (maximumDateTime.hour < selectedHour) {
-            hourEnabled = false;
-          }
-        }
-
-        final listItemLabel = selectedHour.toString().padLeft(2, '0');
+        final listItemLabel = itemHour.toString().padLeft(2, '0');
         return (
-          hourEnabled,
+          itemEnabled,
           Container(
             alignment: Alignment.centerRight,
             padding: EdgeInsets.only(
               right: 12.0,
-              // right: sbbDefaultSpacing * 0.75,
             ),
             child: SizedBox(
               width: 48.0,
@@ -240,78 +225,100 @@ class _SBBTimePickerTimeState extends State<SBBTimePicker> {
   }
 
   Widget _buildMinutePickerScrollView(BuildContext context) {
-    return SBBPickerScrollView(
-      controller: minuteController,
-      onSelectedItemChanged: (int index) {
-        final selectedMinute = _indexToMinute(index);
-        _onDateTimeSelected(
-          minute: selectedMinute,
-        );
-      },
-      itemBuilder: (BuildContext context, int index) {
-        final selectedMinute = _indexToMinute(index);
-        final selectedHour = _indexToHour(hourController.selectedItem);
+    return ValueListenableBuilder(
+      valueListenable: hourValueNotifier,
+      builder: (
+        BuildContext context,
+        int selectedHour,
+        Widget? child,
+      ) {
+        return SBBPickerScrollView(
+          controller: minuteController,
+          onSelectedItemChanged: (int index) {
+            final selectedMinute = _indexToMinute(index);
+            _onDateTimeSelected(minute: selectedMinute);
+          },
+          itemBuilder: (BuildContext context, int index) {
+            final itemMinute = _indexToMinute(index);
+            final itemTime = TimeOfDay(
+              hour: selectedHour,
+              minute: itemMinute,
+            );
 
-        var minuteEnabled = true;
-        // check if selected time is before min time
-        final minimumDateTime = widget.minimumDateTime;
-        if (minimumDateTime != null) {
-          if (minimumDateTime.hour == selectedHour) {
-            if (minimumDateTime.minute > selectedMinute) {
-              minuteEnabled = false;
-            }
-          } else if (minimumDateTime.hour > selectedHour) {
-            minuteEnabled = false;
-          }
-        }
-        // check if selected time is after max time
-        final maximumDateTime = widget.maximumDateTime;
-        if (maximumDateTime != null) {
-          if (maximumDateTime.hour == selectedHour) {
-            if (maximumDateTime.minute < selectedMinute) {
-              minuteEnabled = false;
-            }
-          } else if (maximumDateTime.hour < selectedHour) {
-            minuteEnabled = false;
-          }
-        }
+            final itemEnabled = itemTime.isBetween(
+              safeMinTime,
+              safeMaxTime,
+            );
 
-        final listItemLabel = selectedMinute.toString().padLeft(2, '0');
-
-        return (
-          minuteEnabled,
-          Container(
-            alignment: Alignment.centerLeft,
-            padding: EdgeInsets.only(
-              left: 12.0,
-              // right: sbbDefaultSpacing * 0.75,
-            ),
-            child: SizedBox(
-              width: 48.0,
-              child: Text(
-                listItemLabel,
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-                softWrap: false,
+            final listItemLabel = itemMinute.toString().padLeft(2, '0');
+            return (
+              itemEnabled,
+              Container(
+                alignment: Alignment.centerLeft,
+                padding: EdgeInsets.only(
+                  left: 12.0,
+                ),
+                child: SizedBox(
+                  width: 48.0,
+                  child: Text(
+                    listItemLabel,
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                    softWrap: false,
+                  ),
+                ),
               ),
-            ),
-          ),
+            );
+          },
         );
       },
     );
   }
 
-  void _onDateTimeSelected({
-    int? hour,
-    int? minute,
-  }) {
-    final selectedHour = hour ?? selectedDateTime.hour;
-    final selectedMinute = minute ?? selectedDateTime.minute;
+  void _onDateTimeSelected({int? hour, int? minute}) {
+    final selectedHour = hour ?? selectedTime.hour;
+    final selectedMinute = minute ?? selectedTime.minute;
 
-    selectedDateTime = TimeOfDay(
+    selectedTime = TimeOfDay(
       hour: selectedHour,
       minute: selectedMinute,
     );
+
+    // update hour ValueNotifier to trigger rebuilding minute scrollview
+    // if the selected time is outside the valid time range, the hour value of
+    // the closest valid time should be used to prevent showing all minute items
+    // disabled while scrolling back to valid time
+    hourValueNotifier.value = _getClosestValidHour();
+  }
+
+  int _getClosestValidHour() {
+    final selectedHour = selectedTime.hour;
+
+    // just return selected hour if selected time is already in valid range
+    final isTimeInRange = selectedTime.isBetween(safeMinTime, safeMaxTime);
+    if (isTimeInRange) {
+      return selectedHour;
+    }
+
+    final minHour = safeMinTime.hour;
+    final maxHour = safeMaxTime.hour;
+
+    // day offset is used to check if there is a smaller diff trough midnight
+    const dayOffset = TimeOfDay.hoursPerDay;
+
+    final minTimeDiff = (selectedHour - minHour).abs();
+    final minTimeOffsetDiff = (selectedHour - dayOffset - minHour).abs();
+    final maxTimeDiff = (selectedHour - maxHour).abs();
+    final maxTimeOffsetDiff = (selectedHour + dayOffset - maxHour).abs();
+
+    final smallerMinTimeDiff = min(minTimeDiff, minTimeOffsetDiff);
+    final smallerMaxTimeDiff = min(maxTimeDiff, maxTimeOffsetDiff);
+
+    if (smallerMinTimeDiff < smallerMaxTimeDiff) {
+      return minHour;
+    } else {
+      return maxHour;
+    }
   }
 
   void _onScrollingStateChanged() {
@@ -321,99 +328,72 @@ class _SBBTimePickerTimeState extends State<SBBTimePicker> {
       return;
     }
 
-    // optimize list item positions
-    _ensureOptimizedIndexPosition();
+    // optimize scroll positions to prevent scrolling over multiple rounds
+    _ensureOptimizedScrollPosition();
 
-    // min time
-    final correctedToMinTime = _ensureMinTime();
-    if (correctedToMinTime) {
-      // early return because of correction to min time
+    // check if selected time in valid range
+    final isTimeInRange = selectedTime.isBetween(safeMinTime, safeMaxTime);
+    if (!isTimeInRange) {
+      // correct to closest valid time value
+      _animateToClosestValidTime();
+
+      // early return because of time correction
       return;
     }
 
-    // max time
-    final correctToMaxTime = _ensureMaxTime();
-    if (correctToMaxTime) {
-      // early return because of correction to max time
-      return;
-    }
-
-    if (lastReportedDateTime == selectedDateTime) {
-      // don't notify callback if time did not change
+    // don't notify callback if time did not change
+    if (lastReportedDateTime == selectedTime) {
       return;
     }
 
     // notify callback with new selected time
-    lastReportedDateTime = selectedDateTime;
-    widget.onTimeChanged(selectedDateTime);
+    lastReportedDateTime = selectedTime;
+    widget.onTimeChanged(selectedTime);
   }
 
-  bool _ensureMinTime() {
-    // check if selected time is before min time
-    final minimumDateTime = widget.minimumDateTime;
-    if (minimumDateTime == null ||
-        (minimumDateTime.hour < selectedDateTime.hour ||
-            (minimumDateTime.hour == selectedDateTime.hour &&
-                minimumDateTime.minute < selectedDateTime.minute))) {
-      // no correction needed
-      return false;
+  void _animateToClosestValidTime() {
+    final animateToMinTime = hourValueNotifier.value == safeMinTime.hour;
+    if (animateToMinTime) {
+      if (selectedTime.hour > safeMinTime.hour) {
+        // set index dayOffset to scroll over midnight
+        _ensureOptimizedScrollPosition(offset: -TimeOfDay.hoursPerDay);
+      }
+      _animateToMinTime();
+    } else {
+      if (selectedTime.hour < safeMaxTime.hour) {
+        // set index dayOffset to scroll over midnight
+        _ensureOptimizedScrollPosition(offset: TimeOfDay.hoursPerDay);
+      }
+      _animateToMaxTime();
     }
+  }
 
-    // get index values of min time values
-    final minTimeHourIndex = _hourToIndex(minimumDateTime.hour);
-    final minTimeMinuteIndex = _minuteToIndex(minimumDateTime.minute);
+  void _animateToMinTime() => _animateToTime(safeMinTime);
+
+  void _animateToMaxTime() => _animateToTime(safeMaxTime);
+
+  void _animateToTime(TimeOfDay time) {
+    // get index values of time values
+    final hourIndex = _hourToIndex(time.hour);
+    final minuteIndex = _minuteToIndex(time.minute);
 
     // check if any time values needs to be corrected
-    final hourIncorrect = hourController.selectedItem != minTimeHourIndex;
-    final minuteIncorrect = minuteController.selectedItem != minTimeMinuteIndex;
+    final hourIncorrect = hourController.selectedItem != hourIndex;
+    final minuteIncorrect = minuteController.selectedItem != minuteIndex;
 
     // correct incorrect time values
     if (hourIncorrect) {
-      hourController.animateToItem(minTimeHourIndex);
+      hourController.animateToItem(hourIndex);
     }
     if (minuteIncorrect) {
-      minuteController.animateToItem(minTimeMinuteIndex);
+      minuteController.animateToItem(minuteIndex);
     }
-
-    // return if any values has been corrected
-    return hourIncorrect || minuteIncorrect;
   }
 
-  bool _ensureMaxTime() {
-    // check if selected time is after max time
-    final maximumDateTime = widget.maximumDateTime;
-    if (maximumDateTime == null ||
-        (maximumDateTime.hour > selectedDateTime.hour ||
-            (maximumDateTime.hour == selectedDateTime.hour &&
-                maximumDateTime.minute > selectedDateTime.minute))) {
-      // no correction needed
-      return false;
-    }
-
-    // get index values of max time values
-    final maxTimeHourIndex = _hourToIndex(maximumDateTime.hour);
-    final maxTimeMinuteIndex = _minuteToIndex(maximumDateTime.minute);
-
-    // check if any time values needs to be corrected
-    final hourIncorrect = hourController.selectedItem != maxTimeHourIndex;
-    final minuteIncorrect = minuteController.selectedItem != maxTimeMinuteIndex;
-
-    // correct incorrect time values
-    if (hourIncorrect) {
-      hourController.animateToItem(maxTimeHourIndex);
-    }
-    if (minuteIncorrect) {
-      minuteController.animateToItem(maxTimeMinuteIndex);
-    }
-
-    // return if any values has been corrected
-    return hourIncorrect || minuteIncorrect;
-  }
-
-  void _ensureOptimizedIndexPosition() {
-    final hourItemIndex = _hourToIndex(selectedDateTime.hour);
+  void _ensureOptimizedScrollPosition({int offset = 0}) {
+    final hourItemIndex = _hourToIndex(selectedTime.hour) + offset;
+    final minuteItemIndex = _minuteToIndex(selectedTime.minute);
     hourController.jumpToItem(hourItemIndex);
-    final minuteItemIndex = _minuteToIndex(selectedDateTime.minute);
     minuteController.jumpToItem(minuteItemIndex);
   }
 
@@ -432,4 +412,38 @@ class _SBBTimePickerTimeState extends State<SBBTimePicker> {
   int _hourToIndex(int selectedValue) {
     return selectedValue;
   }
+}
+
+extension TimeOfDayX on TimeOfDay {
+  bool isBefore(TimeOfDay timeOfDay) {
+    if (this.hour == timeOfDay.hour) {
+      return this.minute < timeOfDay.minute;
+    }
+    return this.hour < timeOfDay.hour;
+  }
+
+  bool isAfter(TimeOfDay timeOfDay) {
+    if (this.hour == timeOfDay.hour) {
+      return this.minute > timeOfDay.minute;
+    }
+    return this.hour > timeOfDay.hour;
+  }
+
+  bool isBetween(TimeOfDay minTime, TimeOfDay maxTime) {
+    final startOfDay = TimeOfDay(hour: 0, minute: 0);
+    final endOfDay = TimeOfDay(hour: 23, minute: 59);
+
+    if (minTime.isBefore(maxTime)) {
+      return !this.isBefore(minTime) && !this.isAfter(maxTime);
+    }
+
+    // range over midnight
+    final isBetweenMinTimeAndMidnight = this.isBetween(minTime, endOfDay);
+    final isBetweenMidnightAndMaxTime = this.isBetween(startOfDay, maxTime);
+    return isBetweenMinTimeAndMidnight || isBetweenMidnightAndMaxTime;
+  }
+
+  TimeOfDay floor() => this.replacing(minute: 0);
+
+  TimeOfDay ceil() => this.replacing(minute: 59);
 }

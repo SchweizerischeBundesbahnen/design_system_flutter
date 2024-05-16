@@ -176,9 +176,9 @@ class _SBBPickerScrollViewState extends State<SBBPickerScrollView> {
         final itemsOfBothListsVisible =
             offset < 0 && offset > -_scrollAreaHeight;
         if (itemsOfBothListsVisible) {
-          // Because of the target scroll position calculation workaround used
+          // because of the target scroll position calculation workaround used
           // in SBBPickerScrollController, it's necessary to adjust the offset
-          // to ensure that item heights are accurately calculated.
+          // to ensure that item heights are accurately calculated
           var threshold = 0.0;
           for (var i = 0; i < _visibleItemCount; i++) {
             threshold -= _visibleItemHeights[i];
@@ -200,7 +200,6 @@ class _SBBPickerScrollViewState extends State<SBBPickerScrollView> {
         if (visibleItemIndex < 0 || visibleItemIndex > _visibleItemCount) {
           // return sized boxes with default height for out of sight items
           return Container(
-            color: SBBColors.violet,
             height: _defaultItemHeight,
             child: Text('$visibleItemIndex'),
           );
@@ -289,8 +288,6 @@ class _SBBPickerScrollViewState extends State<SBBPickerScrollView> {
   final testController = SBBPickerScrollController(initialItem: 1);
 
   SBBPickerScrollController get _controller {
-    // return testController;
-    // return widget.controller!;
     return widget.controller ?? _fallbackController!;
   }
 }
