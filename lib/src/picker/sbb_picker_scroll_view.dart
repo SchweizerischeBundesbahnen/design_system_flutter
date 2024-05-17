@@ -199,9 +199,8 @@ class _SBBPickerScrollViewState extends State<SBBPickerScrollView> {
 
         if (visibleItemIndex < 0 || visibleItemIndex > _visibleItemCount) {
           // return sized boxes with default height for out of sight items
-          return Container(
+          return SizedBox(
             height: _defaultItemHeight,
-            child: Text('$visibleItemIndex'),
           );
         }
 
@@ -240,9 +239,10 @@ class _SBBPickerScrollViewState extends State<SBBPickerScrollView> {
         return GestureDetector(
           onTap: () {
             if (scrollTarget != null) {
+              _controller.onTargetItemSelected?.call(scrollTarget);
               _controller.animateToItem(scrollTarget);
             } else {
-              // scroll to bottom
+              // scroll to bottom because tap was on bottom spacer item
               _controller.animateToScrollOffset(
                 _controller.position.maxScrollExtent,
               );
@@ -303,6 +303,7 @@ class _SBBPickerScrollViewState extends State<SBBPickerScrollView> {
 class SBBPickerScrollController extends ScrollController {
   SBBPickerScrollController({
     int initialItem = 0,
+    this.onTargetItemSelected,
   }) : super(
           initialScrollOffset: _getItemScrollOffset(
             initialItem,
@@ -311,6 +312,7 @@ class SBBPickerScrollController extends ScrollController {
 
   ValueNotifier<bool> _scrollingStateNotifier = ValueNotifier(false);
   late VoidCallback isScrollingListener;
+  final ValueChanged<int>? onTargetItemSelected;
 
   int get selectedItem {
     final currentOffset = positions.isEmpty ? initialScrollOffset : offset;
@@ -422,6 +424,7 @@ class SBBPickerScrollController extends ScrollController {
         // snap to item scroll will be skipped.
         final difference = (currentScrollPosition - targetScrollPosition).abs();
         if (difference > 0.01) {
+          onTargetItemSelected?.call(selectedItem);
           animateToScrollOffset(
             targetScrollPosition,
             curve: Curves.easeInOut,
