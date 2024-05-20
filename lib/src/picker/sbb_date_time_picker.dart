@@ -13,7 +13,7 @@ class SBBDateTimePicker extends StatefulWidget {
         minimumDateTime = _minimumDateTime(minimumDateTime, minuteInterval),
         maximumDateTime = _maximumDateTime(maximumDateTime, minuteInterval),
         assert(
-          minuteInterval > 0 && 60 % minuteInterval == 0,
+          minuteInterval > 0 && TimeOfDay.minutesPerHour % minuteInterval == 0,
           'minute interval is not a positive integer factor of 60',
         ) {
     assert(

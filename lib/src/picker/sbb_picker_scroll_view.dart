@@ -171,7 +171,7 @@ class _SBBPickerScrollViewState extends State<SBBPickerScrollView> {
       builder: (
         BuildContext context,
         double offset,
-        Widget? _,
+        Widget? child,
       ) {
         final itemsOfBothListsVisible =
             offset < 0 && offset > -_scrollAreaHeight;
@@ -260,11 +260,12 @@ class _SBBPickerScrollViewState extends State<SBBPickerScrollView> {
                 height: 26.0 / 24.0,
                 color: textColor,
               ),
-              child: listItemWidget!,
+              child: child!,
             ),
           ),
         );
       },
+      child: listItemWidget!,
     );
   }
 

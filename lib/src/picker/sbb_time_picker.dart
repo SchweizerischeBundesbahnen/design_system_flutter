@@ -1,5 +1,14 @@
 part of 'sbb_picker.dart';
 
+const _lastMinuteOfHour = TimeOfDay.minutesPerHour - 1;
+
+const _startOfDay = TimeOfDay(hour: 0, minute: 0);
+
+const _endOfDay = const TimeOfDay(
+  hour: TimeOfDay.hoursPerDay - 1,
+  minute: _lastMinuteOfHour,
+);
+
 class SBBTimePicker extends StatefulWidget {
   SBBTimePicker({
     super.key,
@@ -141,11 +150,9 @@ class _SBBTimePickerTimeState extends State<SBBTimePicker> {
   /// This is used to prevent notifying the callback with the same value
   late TimeOfDay lastReportedTime;
 
-  TimeOfDay get safeMinTime =>
-      widget.minimumTime ?? TimeOfDay(hour: 0, minute: 0);
+  TimeOfDay get safeMinTime => widget.minimumTime ?? _startOfDay;
 
-  TimeOfDay get safeMaxTime =>
-      widget.maximumTime ?? TimeOfDay(hour: 23, minute: 59);
+  TimeOfDay get safeMaxTime => widget.maximumTime ?? _endOfDay;
 
   @override
   void initState() {
@@ -426,20 +433,17 @@ extension TimeOfDayX on TimeOfDay {
   }
 
   bool isBetween(TimeOfDay minTime, TimeOfDay maxTime) {
-    final startOfDay = TimeOfDay(hour: 0, minute: 0);
-    final endOfDay = TimeOfDay(hour: 23, minute: 59);
-
     if (minTime.isBefore(maxTime)) {
       return !this.isBefore(minTime) && !this.isAfter(maxTime);
     }
 
     // range over midnight
-    final isBetweenMinTimeAndMidnight = this.isBetween(minTime, endOfDay);
-    final isBetweenMidnightAndMaxTime = this.isBetween(startOfDay, maxTime);
+    final isBetweenMinTimeAndMidnight = this.isBetween(minTime, _endOfDay);
+    final isBetweenMidnightAndMaxTime = this.isBetween(_startOfDay, maxTime);
     return isBetweenMinTimeAndMidnight || isBetweenMidnightAndMaxTime;
   }
 
   TimeOfDay floor() => this.replacing(minute: 0);
 
-  TimeOfDay ceil() => this.replacing(minute: 59);
+  TimeOfDay ceil() => this.replacing(minute: _lastMinuteOfHour);
 }
