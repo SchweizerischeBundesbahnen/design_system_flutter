@@ -117,13 +117,13 @@ class SBBTheme {
         ],
       );
 
-  /// Convenience method for easier use of [MaterialStateProperty.all].
-  static MaterialStateProperty<T> allStates<T>(T value) {
-    return MaterialStateProperty.all(value);
+  /// Convenience method for easier use of [WidgetStateProperty.all].
+  static WidgetStateProperty<T> allStates<T>(T value) {
+    return WidgetStateProperty.all(value);
   }
 
-  /// Convenience method for easier use of [MaterialStateProperty.resolveWith].
-  static MaterialStateProperty<T?> resolveStatesWith<T>({
+  /// Convenience method for easier use of [WidgetStateProperty.resolveWith].
+  static WidgetStateProperty<T?> resolveStatesWith<T>({
     required T defaultValue,
     T? pressedValue,
     T? disabledValue,
@@ -131,22 +131,22 @@ class SBBTheme {
     String? parent,
     T? selectedValue,
   }) {
-    return MaterialStateProperty.resolveWith((states) {
+    return WidgetStateProperty.resolveWith((states) {
       // disabled
-      if (states.contains(MaterialState.disabled) && disabledValue != null)
+      if (states.contains(WidgetState.disabled) && disabledValue != null)
         return disabledValue;
 
       // pressed / focused
-      if (states.any({MaterialState.pressed, MaterialState.focused}.contains) &&
+      if (states.any({WidgetState.pressed, WidgetState.focused}.contains) &&
           pressedValue != null) {
         return pressedValue;
       }
       // hovered
-      if (states.contains(MaterialState.hovered) && hoveredValue != null)
+      if (states.contains(WidgetState.hovered) && hoveredValue != null)
         return hoveredValue;
 
       // selected
-      if (states.contains(MaterialState.selected) && selectedValue != null)
+      if (states.contains(WidgetState.selected) && selectedValue != null)
         return selectedValue;
       // default
       return defaultValue;

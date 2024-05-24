@@ -188,7 +188,7 @@ class _SBBTextField extends State<SBBTextField> {
   }
 
   TextField _buildTextField() {
-    final textScaleFactor = MediaQuery.of(context).textScaleFactor;
+    final textScaler = MediaQuery.of(context).textScaler;
     final bool isWeb = SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
     final style = SBBControlStyles.of(context).textField!;
     final hasError = widget.errorText?.isNotEmpty ?? false;
@@ -208,7 +208,7 @@ class _SBBTextField extends State<SBBTextField> {
       keyboardType: widget.keyboardType,
       maxLines: widget.maxLines,
       minLines: widget.minLines,
-      cursorHeight: 22.0 * textScaleFactor,
+      cursorHeight: textScaler.scale(22.0),
       cursorRadius: const Radius.circular(2.0),
       enableInteractiveSelection: widget.enableInteractiveSelection,
       onChanged: widget.onChanged,
@@ -216,8 +216,8 @@ class _SBBTextField extends State<SBBTextField> {
       onSubmitted: widget.onSubmitted,
       enabled: widget.enabled,
       decoration: isWeb
-          ? _textFieldDecorationWeb(hasError, textScaleFactor, labelStyle, floatingLabelStyle)
-          : _textFieldDecorationNative(textScaleFactor, labelStyle, floatingLabelStyle),
+          ? _textFieldDecorationWeb(hasError, textScaler, labelStyle, floatingLabelStyle)
+          : _textFieldDecorationNative(textScaler, labelStyle, floatingLabelStyle),
       style: hasError ? textStyle.copyWith(color: SBBColors.red) : textStyle,
       inputFormatters: widget.inputFormatters,
       textCapitalization: widget.textCapitalization,
@@ -240,7 +240,7 @@ class _SBBTextField extends State<SBBTextField> {
   }
 
   InputDecoration _textFieldDecorationNative(
-    double textScaleFactor,
+    TextScaler textScaler,
     TextStyle labelStyle,
     TextStyle floatingLabelStyle,
   ) {
@@ -278,8 +278,8 @@ class _SBBTextField extends State<SBBTextField> {
       errorBorder: InputBorder.none,
       focusedErrorBorder: InputBorder.none,
       contentPadding: EdgeInsetsDirectional.only(
-        top: topPadding * textScaleFactor,
-        bottom: bottomPadding * textScaleFactor,
+        top: textScaler.scale(topPadding),
+        bottom: textScaler.scale(bottomPadding),
       ),
       floatingLabelStyle: floatingLabelStyle,
       labelStyle: labelStyle,
@@ -292,7 +292,7 @@ class _SBBTextField extends State<SBBTextField> {
 
   InputDecoration _textFieldDecorationWeb(
     bool hasError,
-    double textScaleFactor,
+    TextScaler textScaler,
     TextStyle labelStyle,
     TextStyle floatingLabelStyle,
   ) {
@@ -324,9 +324,9 @@ class _SBBTextField extends State<SBBTextField> {
         ),
       ),
       contentPadding: EdgeInsetsDirectional.only(
-        top: topPadding * textScaleFactor,
-        bottom: bottomPadding * textScaleFactor,
-        start: startPadding * textScaleFactor,
+        top: textScaler.scale(topPadding),
+        bottom: textScaler.scale(bottomPadding),
+        start: textScaler.scale(startPadding),
       ),
       floatingLabelStyle: floatingLabelStyle.copyWith(color: SBBColors.storm),
       labelStyle: labelStyle,

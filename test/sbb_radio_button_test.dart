@@ -1,23 +1,21 @@
 import 'package:design_system_flutter/design_system_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:golden_toolkit/golden_toolkit.dart';
 
 import 'test_app.dart';
 
 void main() {
   void generateTest(String name, int? v1, int? v2) {
-    testGoldens(name, (WidgetTester tester) async {
-      final builder =
-          GoldenBuilder.column(wrap: (w) => TestApp.expanded(child: w))
-            ..addScenario(
-              'radio tests',
-              RadioTest(groupValue: v1, listItemGroupValue: v2),
-            );
+    testWidgets(name, (WidgetTester tester) async {
+      final widget = RadioTest(groupValue: v1, listItemGroupValue: v2);
 
-      await tester.pumpWidgetBuilder(builder.build());
-      await multiScreenGolden(tester, '${name}_initial',
-          devices: TestApp.native_devices);
+      await Specs.run(
+        Specs.mobileSpecs,
+        widget,
+        tester,
+        '${name}_initial',
+        find.byType(RadioTest),
+      );
     });
   }
 
