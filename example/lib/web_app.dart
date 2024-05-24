@@ -153,7 +153,7 @@ class _SidePanelPageState extends State<_SidePanelPage> {
 }
 
 final SBBUserMenu _exampleUserMenu = SBBUserMenu(
-  displayName: "Eisen Bahner",
+  displayName: 'Eisen Bahner',
   itemBuilder: (BuildContext context) => <SBBMenuEntry>[
     SBBMenuItem.tile(
       icon: SBBIcons.user_medium,

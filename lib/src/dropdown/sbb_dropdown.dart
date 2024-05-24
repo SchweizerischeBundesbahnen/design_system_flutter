@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 import 'dart:math' as math;
-import 'dart:ui' show window;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -84,7 +83,7 @@ class _DropdownMenuItemButtonState<T> extends State<_DropdownMenuItemButton<T>>
         widget.route.items[widget.itemIndex].item!;
 
     //TODO: solve with material state
-    final MaterialStateProperty<Color?> leftBorderColor =
+    final WidgetStateProperty<Color?> leftBorderColor =
         SBBTheme.resolveStatesWith(
             defaultValue: SBBColors.transparent, hoveredValue: SBBColors.red);
 
@@ -104,7 +103,7 @@ class _DropdownMenuItemButtonState<T> extends State<_DropdownMenuItemButton<T>>
         autofocus: widget.itemIndex == widget.route.selectedIndex,
         enableFeedback: widget.enableFeedback,
         onTap: _handleOnTap,
-        onHover: updateMaterialState(MaterialState.hovered),
+        onHover: updateMaterialState(WidgetState.hovered),
         borderRadius: _forLastItemOnly(),
         child: child,
       );
@@ -1213,7 +1212,7 @@ class _SBBDropdownButtonState<T> extends State<SBBDropdownButton<T>>
     if (result == null) {
       // If there's no MediaQuery, then use the window aspect to determine
       // orientation.
-      final Size size = window.physicalSize;
+      final Size size = View.of(context).physicalSize;
       result = size.width > size.height
           ? Orientation.landscape
           : Orientation.portrait;
@@ -1261,8 +1260,9 @@ class _SBBDropdownButtonState<T> extends State<SBBDropdownButton<T>>
       items.add(DefaultTextStyle(
         style: _textStyle!.copyWith(color: _hintColor),
         child: IgnorePointer(
-          ignoringSemantics: false,
-          child: displayedHint,
+          child: ExcludeSemantics(
+            child: displayedHint,
+          ),
         ),
       ));
     }
@@ -1340,10 +1340,10 @@ class _SBBDropdownButtonState<T> extends State<SBBDropdownButton<T>>
     );
 
     final MouseCursor effectiveMouseCursor =
-        MaterialStateProperty.resolveAs<MouseCursor>(
-      MaterialStateMouseCursor.clickable,
-      <MaterialState>{
-        if (!_enabled) MaterialState.disabled,
+        WidgetStateProperty.resolveAs<MouseCursor>(
+      WidgetStateMouseCursor.clickable,
+      <WidgetState>{
+        if (!_enabled) WidgetState.disabled,
       },
     );
 

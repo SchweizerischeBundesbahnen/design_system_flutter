@@ -1,30 +1,40 @@
 import 'package:design_system_flutter/design_system_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:golden_toolkit/golden_toolkit.dart';
 
 import 'test_app.dart';
 
 void main() {
-  testGoldens('multiline checkbox', (WidgetTester tester) async {
-    final builder =
-        GoldenBuilder.column(wrap: (w) => TestApp.expanded(child: w))
-          ..addScenario(
-            'checkbox tests',
-            MultilineCheckboxText(),
-          );
+  testWidgets('multiline checkbox', (WidgetTester tester) async {
+    final widget = MultilineCheckboxText();
 
-    await tester.pumpWidgetBuilder(builder.build());
-    await multiScreenGolden(tester, 'multiline_checkbox_checked',
-        devices: TestApp.native_devices);
-
-    await tester.tap(find.byKey(Key('checkbox')));
-    await multiScreenGolden(tester, 'multiline_checkbox_null',
-        devices: TestApp.native_devices);
+    await Specs.run(
+      Specs.mobileSpecs,
+      widget,
+      tester,
+      'multiline_checkbox_checked',
+      find.byType(MultilineCheckboxText),
+    );
 
     await tester.tap(find.byKey(Key('checkbox')));
-    await multiScreenGolden(tester, 'multiline_checkbox_unchecked',
-        devices: TestApp.native_devices);
+
+    await Specs.run(
+      Specs.mobileSpecs,
+      widget,
+      tester,
+      'multiline_checkbox_null',
+      find.byType(MultilineCheckboxText),
+    );
+
+    await tester.tap(find.byKey(Key('checkbox')));
+
+    await Specs.run(
+      Specs.mobileSpecs,
+      widget,
+      tester,
+      'multiline_checkbox_unchecked',
+      find.byType(MultilineCheckboxText),
+    );
   });
 }
 

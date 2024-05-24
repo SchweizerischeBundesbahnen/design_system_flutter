@@ -4,7 +4,7 @@ version: 1.2.0
 homepage: https://digital.sbb.ch/de/design-system/mobile/overview/
 
 environment:
-  sdk: '>=3.0.0 <4.0.0'
+  sdk: '>=3.4.0 <4.0.0'
 
 dependencies:
   flutter:
@@ -15,10 +15,7 @@ dev_dependencies:
     sdk: flutter
 
   # https://pub.dev/packages/lint
-  lint: ^2.2.0
-
-  # https://pub.dev/packages/golden_toolkit
-  golden_toolkit: ^0.15.0
+  lint: ^2.3.0
 
 flutter:
   assets:

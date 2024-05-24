@@ -141,7 +141,7 @@ class _SBBWebHeaderNavItemState extends State<SBBWebHeaderNavItem>
   @override
   Widget build(BuildContext context) {
     final style = SBBControlStyles.of(context).headerNavItemForegroundColor;
-    if (widget.selected!) setMaterialState(MaterialState.pressed, true);
+    if (widget.selected!) setMaterialState(WidgetState.pressed, true);
     return Semantics(
       link: true,
       onTap: widget.onTap,
@@ -155,7 +155,7 @@ class _SBBWebHeaderNavItemState extends State<SBBWebHeaderNavItem>
             onTap: widget.onTap,
             onHover: widget.selected!
                 ? null
-                : updateMaterialState(MaterialState.hovered),
+                : updateMaterialState(WidgetState.hovered),
             child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Text(widget.title))),

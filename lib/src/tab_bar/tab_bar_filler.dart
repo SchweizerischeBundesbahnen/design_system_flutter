@@ -14,11 +14,12 @@ class TabBarFiller extends StatelessWidget {
         child: TabBarFiller(key: key),
       );
 
-  /// Returns the calculated size of the [SBBTabBar] according to [Orientation] and [MediaQueryData.textScaleFactor]
+  /// Returns the calculated size of the [SBBTabBar] according to [Orientation] and [MediaQueryData.textScaler]
   static double calcHeight(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
+    final textScaler = mediaQuery.textScaler;
     final portrait = mediaQuery.orientation == Orientation.portrait;
-    return portrait ? 64.0 + 20.0 * mediaQuery.textScaleFactor : 52.0;
+    return portrait ? 64.0 +  textScaler.scale(20.0) : 52.0;
   }
 
   @override

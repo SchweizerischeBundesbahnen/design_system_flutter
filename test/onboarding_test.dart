@@ -1,40 +1,50 @@
 import 'package:design_system_flutter/design_system_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:golden_toolkit/golden_toolkit.dart';
 
 import 'test_app.dart';
 
 void main() {
-  testGoldens('onboarding', (WidgetTester tester) async {
-    final builder = GoldenBuilder.column(
-      wrap: (w) => SizedBox(
-        height: 538.0,
-        width: double.infinity,
-        child: TestApp(
-          child: w,
-        ),
-      ),
-    )..addScenario(
-        'onboarding tests',
-        OnboardingTest(),
-      );
+  testWidgets('onboarding', (WidgetTester tester) async {
+    final widget = OnboardingTest();
 
-    await tester.pumpWidgetBuilder(builder.build());
-    await multiScreenGolden(tester, 'onboarding_startpage',
-        devices: TestApp.native_devices);
+    await Specs.run(
+      Specs.mobileSpecs,
+      widget,
+      tester,
+      'onboarding_startpage',
+      find.byType(OnboardingTest),
+    );
 
     await tester.tap(find.byKey(Key('start')));
-    await multiScreenGolden(tester, 'onboarding_card1',
-        devices: TestApp.native_devices);
+
+    await Specs.run(
+      Specs.mobileSpecs,
+      widget,
+      tester,
+      'onboarding_card1',
+      find.byType(OnboardingTest),
+    );
 
     await tester.tap(find.bySemanticsLabel('Nächste Seite'));
-    await multiScreenGolden(tester, 'onboarding_card2',
-        devices: TestApp.native_devices);
+
+    await Specs.run(
+      Specs.mobileSpecs,
+      widget,
+      tester,
+      'onboarding_card2',
+      find.byType(OnboardingTest),
+    );
 
     await tester.tap(find.bySemanticsLabel('Nächste Seite'));
-    await multiScreenGolden(tester, 'onboarding_endpage',
-        devices: TestApp.native_devices);
+
+    await Specs.run(
+      Specs.mobileSpecs,
+      widget,
+      tester,
+      'onboarding_endpage',
+      find.byType(OnboardingTest),
+    );
   });
 }
 
