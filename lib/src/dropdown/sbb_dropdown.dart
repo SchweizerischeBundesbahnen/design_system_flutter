@@ -1195,7 +1195,7 @@ class _SBBDropdownButtonState<T> extends State<SBBDropdownButton<T>>
   // would be clipped.
   double get _denseButtonHeight {
     final double fontSize = _textStyle!.fontSize ??
-        Theme.of(context).textTheme.subtitle1!.fontSize!;
+        Theme.of(context).textTheme.titleMedium!.fontSize!;
     return math.max(fontSize, math.max(widget.iconSize, _kDenseButtonHeight));
   }
 
