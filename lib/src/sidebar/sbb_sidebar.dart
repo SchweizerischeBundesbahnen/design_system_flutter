@@ -114,9 +114,9 @@ class _SBBSidebarItemState extends State<SBBSidebarItem>
   @override
   Widget build(BuildContext context) {
     if (widget.isSelected)
-      setMaterialState(MaterialState.selected, true);
+      setMaterialState(WidgetState.selected, true);
     else
-      setMaterialState(MaterialState.selected, false);
+      setMaterialState(WidgetState.selected, false);
 
     final SBBControlStyles style = SBBControlStyles.of(context);
 
@@ -138,7 +138,7 @@ class _SBBSidebarItemState extends State<SBBSidebarItem>
             highlightColor: SBBColors.transparent,
             overlayColor: SBBTheme.allStates(SBBColors.transparent),
             onTap: widget.isSelected ? null : widget.onTap,
-            onHover: updateMaterialState(MaterialState.hovered),
+            onHover: updateMaterialState(WidgetState.hovered),
             child: IconTheme.merge(
               data: IconThemeData(color: resolvedForegroundColor),
               child: _innerTile(resolvedTextStyle),

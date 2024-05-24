@@ -44,35 +44,35 @@ class StatusPage extends StatelessWidget {
                         SBBWebText.headerThree('- Text'),
                         SBBStatus.valid(
                           showIcon: false,
-                          text: "Success",
+                          text: 'Success',
                         ),
                         SizedBox(
                           height: 10,
                         ),
                         SBBStatus.warning(
                           showIcon: false,
-                          text: "Warning",
+                          text: 'Warning',
                         ),
                         SizedBox(
                           height: 10,
                         ),
                         SBBStatus.invalid(
                           showIcon: false,
-                          text: "Failure",
+                          text: 'Failure',
                         ),
                         SizedBox(
                           height: 10,
                         ),
                         SBBStatus.inProgress(
                           showIcon: false,
-                          text: "In Progress",
+                          text: 'In Progress',
                         ),
                         SizedBox(
                           height: 10,
                         ),
                         SBBStatus.inactive(
                           showIcon: false,
-                          text: "Offline",
+                          text: 'Offline',
                         ),
                         SizedBox(
                           height: 20,
@@ -83,31 +83,31 @@ class StatusPage extends StatelessWidget {
                         ),
                         SBBWebText.headerThree('- Extended'),
                         SBBStatus.valid(
-                          text: "Everything is valid",
+                          text: 'Everything is valid',
                         ),
                         SizedBox(
                           height: 10,
                         ),
                         SBBStatus.warning(
-                          text: "There is a potential problem",
+                          text: 'There is a potential problem',
                         ),
                         SizedBox(
                           height: 10,
                         ),
                         SBBStatus.invalid(
-                          text: "Somethign needs to be corrected",
+                          text: 'Somethign needs to be corrected',
                         ),
                         SizedBox(
                           height: 10,
                         ),
                         SBBStatus.inProgress(
-                          text: "Process is in progress",
+                          text: 'Process is in progress',
                         ),
                         SizedBox(
                           height: 10,
                         ),
                         SBBStatus.inactive(
-                          text: "Application is offline",
+                          text: 'Application is offline',
                         ),
                         SizedBox(
                           height: 20,

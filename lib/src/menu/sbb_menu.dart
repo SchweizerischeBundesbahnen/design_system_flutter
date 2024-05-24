@@ -228,8 +228,8 @@ class SBBMenuItem<T> extends SBBMenuEntry<T> {
     double height,
     EdgeInsets padding,
     TextStyle? textStyle,
-    MaterialStateProperty<Color?>? foregroundColor,
-    MaterialStateProperty<Color?>? backgroundColor,
+    WidgetStateProperty<Color?>? foregroundColor,
+    WidgetStateProperty<Color?>? backgroundColor,
     IconData? icon,
     required String title,
   }) = _SBBMenuTileItem;
@@ -275,10 +275,10 @@ class SBBMenuItem<T> extends SBBMenuEntry<T> {
   /// The color for the tile's [Text] and [Icon] widget descendants.
   ///
   /// This color is typically used instead of the color of the [textStyle].
-  final MaterialStateProperty<Color?>? foregroundColor;
+  final WidgetStateProperty<Color?>? foregroundColor;
 
   /// The color for the tile's background.
-  final MaterialStateProperty<Color?>? backgroundColor;
+  final WidgetStateProperty<Color?>? backgroundColor;
 
   @override
   bool represents(T? value) => value == this.value;
@@ -309,7 +309,7 @@ class SBBMenuItemState<T, W extends SBBMenuItem<T>> extends State<W>
   @protected
   void handleTap() {
     updateMaterialState(
-      MaterialState.pressed,
+      WidgetState.pressed,
     );
     widget.onTap?.call();
     Navigator.pop<T>(context, widget.value);
@@ -328,7 +328,7 @@ class SBBMenuItemState<T, W extends SBBMenuItem<T>> extends State<W>
           mouseCursor: effectiveMouseCursor,
           onHover: widget.enabled
               ? updateMaterialState(
-                  MaterialState.hovered,
+                  WidgetState.hovered,
                 )
               : null,
           child: _buildChild(),
@@ -364,10 +364,10 @@ class SBBMenuItemState<T, W extends SBBMenuItem<T>> extends State<W>
   }
 
   MouseCursor _getEffectiveMouseCursor() =>
-      MaterialStateProperty.resolveAs<MouseCursor>(
-        MaterialStateMouseCursor.clickable,
-        <MaterialState>{
-          if (!widget.enabled) MaterialState.disabled,
+      WidgetStateProperty.resolveAs<MouseCursor>(
+        WidgetStateMouseCursor.clickable,
+        <WidgetState>{
+          if (!widget.enabled) WidgetState.disabled,
         },
       );
 }
@@ -980,8 +980,8 @@ class _SBBMenuTileItem<T> extends SBBMenuItem<T> {
       vertical: 2.0,
     ),
     TextStyle? textStyle,
-    MaterialStateProperty<Color?>? foregroundColor,
-    MaterialStateProperty<Color?>? backgroundColor,
+    WidgetStateProperty<Color?>? foregroundColor,
+    WidgetStateProperty<Color?>? backgroundColor,
     IconData? icon,
     required String title,
   }) : super(
