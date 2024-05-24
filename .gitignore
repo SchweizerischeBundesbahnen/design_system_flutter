@@ -32,7 +32,7 @@
 *.g.dart
 
 # FVM related
-.fvm/flutter_sdk
+.fvm/
 
 # Android related
 **/android/**/gradle-wrapper.jar
@@ -108,3 +108,6 @@ example/.metadata
 
 # failed golden tests
 test/failures
+
+# FVM Version Cache
+.fvm/

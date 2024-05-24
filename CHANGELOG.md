@@ -66,6 +66,7 @@
 - `SBBSelect`: Field `label` is now optional because there is now a variant without label
 - `SBBAccordion`: Adjusted paddings, text style and icon rotation to match the current specifications
 - `SBBIcons`: Imported version 0.1.61 from https://icons.app.sbb.ch/.
+- `DropdownButton`: Replace deprecated usage of TextTheme.subtitle with TextTheme.titleMedium
 
 ### Deprecated
 
