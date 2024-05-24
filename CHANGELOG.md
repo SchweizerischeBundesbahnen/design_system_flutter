@@ -20,6 +20,7 @@
 * Added `SBBNotificationBox`
 * Added `SBBStatusMobile`
 * Added global function `showCustomSBBModalSheet`
+* Added `SBBTextStyles.extraSmallBold` to match current specifications
 * `SBBPrimaryButton`: Added different theme based on hostType (for web)
 * `SBBTheme`:Added field `hostType`
 * `SBBIcons`: Added new icons
@@ -65,6 +66,7 @@
 - `SBBSelect`: Field `label` is now optional because there is now a variant without label
 - `SBBAccordion`: Adjusted paddings, text style and icon rotation to match the current specifications
 - `SBBIcons`: Imported version 0.1.61 from https://icons.app.sbb.ch/.
+- `DropdownButton`: Replace deprecated usage of TextTheme.subtitle with TextTheme.titleMedium
 
 ### Deprecated
 

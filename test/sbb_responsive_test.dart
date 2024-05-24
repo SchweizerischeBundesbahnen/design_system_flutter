@@ -51,7 +51,6 @@ void testMediaQueryBreakpoint(
         ),
       ),
       child: MaterialApp(
-        useInheritedMediaQuery: true,
         home: Scaffold(
           body: Builder(builder: (BuildContext context) {
             expect(func(context), true);

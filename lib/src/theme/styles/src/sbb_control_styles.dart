@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../../toast/sbb_toast.dart';
 import '../sbb_styles.dart';
-import 'sbb_pagination_style.dart';
 
 class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   SBBControlStyles({
@@ -152,19 +151,19 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   final TextStyle? tabBarTextStyle;
   final Color? menuBackgroundColor;
   final Color? menuBorderColor;
-  final MaterialStateProperty<Color?>? menuEntryForegroundColor;
-  final MaterialStateProperty<Color?>? menuEntryBackgroundColor;
+  final WidgetStateProperty<Color?>? menuEntryForegroundColor;
+  final WidgetStateProperty<Color?>? menuEntryBackgroundColor;
   final TextStyle? menuEntryTextStyle;
   final TextStyle? userMenuTextStyle;
-  final MaterialStateProperty<Color?>? userMenuForegroundColor;
+  final WidgetStateProperty<Color?>? userMenuForegroundColor;
   final TextStyle? breadcrumbTextStyle;
-  final MaterialStateProperty<Color?>? breadcrumbForegroundColor;
+  final WidgetStateProperty<Color?>? breadcrumbForegroundColor;
   final Color? sidebarBackgroundColor;
   final Color? sidebarBorderColor;
-  final MaterialStateProperty<Color?>? sidebarItemBackgroundColor;
-  final MaterialStateProperty<Color?>? sidebarItemForegroundColor;
+  final WidgetStateProperty<Color?>? sidebarItemBackgroundColor;
+  final WidgetStateProperty<Color?>? sidebarItemForegroundColor;
   final TextStyle? sidebarItemTextStyle;
-  final MaterialStateProperty<Color?>? headerNavItemForegroundColor;
+  final WidgetStateProperty<Color?>? headerNavItemForegroundColor;
   final PromotionBoxStyle? promotionBox;
 
   static SBBControlStyles of(BuildContext context) => Theme.of(context).extension<SBBControlStyles>()!;
@@ -235,19 +234,19 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     TextStyle? tabBarTextStyle,
     Color? menuBackgroundColor,
     Color? menuBorderColor,
-    MaterialStateProperty<Color?>? menuEntryForegroundColor,
-    MaterialStateProperty<Color?>? menuEntryBackgroundColor,
+    WidgetStateProperty<Color?>? menuEntryForegroundColor,
+    WidgetStateProperty<Color?>? menuEntryBackgroundColor,
     TextStyle? menuEntryTextStyle,
     TextStyle? userMenuTextStyle,
-    MaterialStateProperty<Color?>? userMenuForegroundColor,
+    WidgetStateProperty<Color?>? userMenuForegroundColor,
     TextStyle? breadcrumbTextStyle,
-    MaterialStateProperty<Color?>? breadcrumbForegroundColor,
+    WidgetStateProperty<Color?>? breadcrumbForegroundColor,
     Color? sidebarBackgroundColor,
     Color? sidebarBorderColor,
-    MaterialStateProperty<Color?>? sidebarItemBackgroundColor,
-    MaterialStateProperty<Color?>? sidebarItemForegroundColor,
+    WidgetStateProperty<Color?>? sidebarItemBackgroundColor,
+    WidgetStateProperty<Color?>? sidebarItemForegroundColor,
     TextStyle? sidebarItemTextStyle,
-    MaterialStateProperty<Color?>? headerNavItemForegroundColor,
+    WidgetStateProperty<Color?>? headerNavItemForegroundColor,
     PromotionBoxStyle? promotionBox,
   }) =>
       SBBControlStyles(
