@@ -86,10 +86,6 @@ jobs:
       - name: Build appbundle.
         run: flutter build appbundle --profile --no-pub
 
-      - name: Create Signing Report.
-        run: ./gradlew signingReport
-        working-directory: example/android
-
       - name: Upload appbundle as artifact.
         uses: actions/upload-artifact@v3
         if: ${{ matrix.sdk == '' }}
