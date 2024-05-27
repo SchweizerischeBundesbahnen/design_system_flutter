@@ -73,14 +73,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Write Keystore from base64 encoded secret.
-        id: write_keystore
-        uses: timheuer/base64-to-file@v1.2
-        with:
-          fileName: "fdsm_keystore.jks"
-          fileDir: "./example/android/app/keys"
-          encodedString: ${{ secrets.KEYSTORE_64 }}
-
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ matrix.sdk }}
@@ -92,11 +84,7 @@ jobs:
           cache: "gradle"
       - run: flutter pub get
       - name: Build appbundle.
-        run: flutter build appbundle --no-pub
-        env:
-          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-          KEY_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
-          SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
+        run: flutter build appbundle --profile --no-pub
 
       - name: Create Signing Report.
         run: ./gradlew signingReport
@@ -106,8 +94,8 @@ jobs:
         uses: actions/upload-artifact@v3
         if: ${{ matrix.sdk == '' }}
         with:
-          name: app-release.aab
-          path: example/build/app/outputs/bundle/release/
+          name: app-profile.aab
+          path: example/build/app/outputs/bundle/profile/
           retention-days: 5
 
   build-iOS:
