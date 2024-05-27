@@ -72,6 +72,15 @@ jobs:
         sdk: ["3.16.9", ""]
     steps:
       - uses: actions/checkout@v4
+
+      - name: Write Keystore from base64 encoded secret.
+        id: write_keystore
+        uses: timheuer/base64-to-file@v1.2
+        with:
+          fileName: "fdsm_keystore.jks"
+          fileDir: "./example/android/app/keys"
+          encodedString: ${{ secrets.KEYSTORE_64 }}
+
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ matrix.sdk }}
@@ -82,14 +91,24 @@ jobs:
           distribution: "temurin"
           cache: "gradle"
       - run: flutter pub get
-      - name: Build example APK
-        run: flutter build apk
-      - name: Upload apk as artifact
-        uses: actions/upload-artifact@v4
+      - name: Build appbundle.
+        run: flutter build appbundle --no-pub
+        env:
+          KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          KEY_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
+
+      - name: Create Signing Report.
+        run: ./gradlew signingReport
+        working-directory: example/android
+
+      - name: Upload appbundle as artifact.
+        uses: actions/upload-artifact@v3
         if: ${{ matrix.sdk == '' }}
         with:
-          name: fdsm-example.apk
-          path: example/build/app/outputs/flutter-apk/app-release.apk
+          name: app-release.aab
+          path: example/build/app/outputs/bundle/release/
+          retention-days: 5
 
   build-iOS:
     name: Build iOS package
@@ -108,9 +127,6 @@ jobs:
         with:
           flutter-version: ${{ matrix.sdk }}
           cache: true
-      - uses: maxim-lobanov/setup-cocoapods@v1
-        with:
-          podfile-path: example/ios/Podfile.lock
       - run: flutter pub get
       - name: Build iOS package
         run: flutter build ios --simulator
@@ -120,3 +136,4 @@ jobs:
         with:
           name: fdsm-example.app
           path: example/build/ios/iphonesimulator
+          retention-days: 5
