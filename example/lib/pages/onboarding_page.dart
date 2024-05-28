@@ -34,10 +34,8 @@ class _OnboardingPage extends StatelessWidget {
     final builderDelegate = DemoOnboardingBuilderDelegate();
     return Scaffold(
       appBar: _PreferredSizeWidget(),
-      body: WillPopScope(
-        onWillPop: () {
-          return builderDelegate.onPop();
-        },
+      body: PopScope(
+        onPopInvoked: (didPop) => builderDelegate.onPop(),
         child: SBBOnboarding(
           builderDelegate: builderDelegate,
           onFinish: () => Navigator.of(context).pop(),

@@ -197,7 +197,7 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>>
 
   @override
   void didChangeMetrics() {
-    _bottomInset = WidgetsBinding.instance.window.viewInsets.bottom /
+    _bottomInset = View.of(context).viewInsets.bottom /
         MediaQuery.of(context).devicePixelRatio;
     _metricsChanged = true;
     _updateOverlay(query: _currentText);

@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 import 'dart:math' as math;
-import 'dart:ui' show window;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -340,7 +339,7 @@ class _DropdownRoute<T> extends PopupRoute<_DropdownRouteResult<T>> {
     this.menuMaxHeight,
     required this.enableFeedback,
     this.borderRadius,
-  })  : itemHeights =
+  }) : itemHeights =
             List<double>.filled(items.length, itemHeight ?? _kMenuItemHeight);
 
   final List<_MenuItem<T>> items;
@@ -585,7 +584,7 @@ class _MenuItem<T> extends SingleChildRenderObjectWidget {
     Key? key,
     required this.onLayout,
     required this.item,
-  })  : super(key: key, child: item);
+  }) : super(key: key, child: item);
 
   final ValueChanged<Size> onLayout;
   final SBBDropdownMenuItem<T>? item;
@@ -603,8 +602,7 @@ class _MenuItem<T> extends SingleChildRenderObjectWidget {
 }
 
 class _RenderMenuItem extends RenderProxyBox {
-  _RenderMenuItem(this.onLayout, [RenderBox? child])
-      : super(child);
+  _RenderMenuItem(this.onLayout, [RenderBox? child]) : super(child);
 
   ValueChanged<Size> onLayout;
 
@@ -626,7 +624,7 @@ class _DropdownMenuItemContainer extends StatelessWidget {
     Key? key,
     this.alignment = AlignmentDirectional.centerStart,
     required this.child,
-  })  : super(key: key);
+  }) : super(key: key);
 
   /// The widget below this widget in the tree.
   ///
@@ -670,7 +668,7 @@ class SBBDropdownMenuItem<T> extends _DropdownMenuItemContainer {
     this.enabled = true,
     AlignmentGeometry alignment = AlignmentDirectional.centerStart,
     required Widget child,
-  })  : super(key: key, alignment: alignment, child: child);
+  }) : super(key: key, alignment: alignment, child: child);
 
   /// Called when the dropdown menu item is tapped.
   final VoidCallback? onTap;
@@ -1213,7 +1211,7 @@ class _SBBDropdownButtonState<T> extends State<SBBDropdownButton<T>>
     if (result == null) {
       // If there's no MediaQuery, then use the window aspect to determine
       // orientation.
-      final Size size = window.physicalSize;
+      final Size size = View.of(context).physicalSize;
       result = size.width > size.height
           ? Orientation.landscape
           : Orientation.portrait;
@@ -1261,8 +1259,9 @@ class _SBBDropdownButtonState<T> extends State<SBBDropdownButton<T>>
       items.add(DefaultTextStyle(
         style: _textStyle!.copyWith(color: _hintColor),
         child: IgnorePointer(
-          ignoringSemantics: false,
-          child: displayedHint,
+          child: ExcludeSemantics(
+            child: displayedHint,
+          ),
         ),
       ));
     }
