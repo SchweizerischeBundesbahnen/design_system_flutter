@@ -36,7 +36,7 @@ class SBBBreadcrumb extends StatelessWidget {
   /// The color for Text and Icons descendants below [SBBBreadcrumb].
   ///
   /// Defaults to [SBBTheme.breadcrumbForegroundColor].
-  final WidgetStateProperty<Color?>? foregroundColor;
+  final MaterialStateProperty<Color?>? foregroundColor;
 
   /// The text style for text descendants below [SBBBreadcrumb].
   ///
@@ -96,7 +96,7 @@ class _InheritedBreadcrumbStyle extends InheritedWidget {
     required Widget child,
   }) : super(key: key, child: child);
 
-  final WidgetStateProperty<Color?> foregroundColor;
+  final MaterialStateProperty<Color?> foregroundColor;
   final TextStyle textStyle;
 
   static _InheritedBreadcrumbStyle of(BuildContext context) {
@@ -150,7 +150,7 @@ class _SBBBreadcrumbItemState extends State<SBBBreadcrumbItem>
     return InkWell(
       onTap: () {
         if (widget._enabled) {
-          updateMaterialState(WidgetState.pressed);
+          updateMaterialState(MaterialState.pressed);
           widget.onPressed!();
         }
       },
@@ -159,7 +159,7 @@ class _SBBBreadcrumbItemState extends State<SBBBreadcrumbItem>
       highlightColor: SBBColors.transparent,
       mouseCursor: _getEffectiveMouseCursor(),
       onHover:
-          widget._enabled ? updateMaterialState(WidgetState.hovered) : null,
+          widget._enabled ? updateMaterialState(MaterialState.hovered) : null,
       child: DefaultTextStyle(
         style: resolvedTextStyle.copyWith(color: resolvedForegroundColor),
         child: IconTheme.merge(
@@ -171,10 +171,10 @@ class _SBBBreadcrumbItemState extends State<SBBBreadcrumbItem>
   }
 
   MouseCursor _getEffectiveMouseCursor() =>
-      WidgetStateProperty.resolveAs<MouseCursor>(
-        WidgetStateMouseCursor.clickable,
-        <WidgetState>{
-          if (!widget._enabled) WidgetState.disabled,
+      MaterialStateProperty.resolveAs<MouseCursor>(
+        MaterialStateMouseCursor.clickable,
+        <MaterialState>{
+          if (!widget._enabled) MaterialState.disabled,
         },
       );
 }

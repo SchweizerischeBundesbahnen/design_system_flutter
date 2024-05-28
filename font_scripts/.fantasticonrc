@@ -1,0 +1,8 @@
+module.exports = {
+    formatOptions: {
+        svg: {
+            centerHorizontally: true,
+            centerVertically: true
+        }
+    }
+};
