@@ -135,7 +135,7 @@ class _MenuItem extends SingleChildRenderObjectWidget {
     Key? key,
     required this.onLayout,
     required Widget? child,
-  })  : super(key: key, child: child);
+  }) : super(key: key, child: child);
 
   final ValueChanged<Size> onLayout;
 
@@ -152,8 +152,7 @@ class _MenuItem extends SingleChildRenderObjectWidget {
 }
 
 class _RenderMenuItem extends RenderShiftedBox {
-  _RenderMenuItem(this.onLayout, [RenderBox? child])
-      : super(child);
+  _RenderMenuItem(this.onLayout, [RenderBox? child]) : super(child);
 
   ValueChanged<Size> onLayout;
 
@@ -214,7 +213,7 @@ class SBBMenuItem<T> extends SBBMenuEntry<T> {
     required this.child,
     this.foregroundColor,
     this.backgroundColor,
-  })  : super(key: key);
+  }) : super(key: key);
 
   /// Create a SBB Menu Tile with a required [title] and optional [icon].
   ///
@@ -228,8 +227,8 @@ class SBBMenuItem<T> extends SBBMenuEntry<T> {
     double height,
     EdgeInsets padding,
     TextStyle? textStyle,
-    WidgetStateProperty<Color?>? foregroundColor,
-    WidgetStateProperty<Color?>? backgroundColor,
+    MaterialStateProperty<Color?>? foregroundColor,
+    MaterialStateProperty<Color?>? backgroundColor,
     IconData? icon,
     required String title,
   }) = _SBBMenuTileItem;
@@ -275,10 +274,10 @@ class SBBMenuItem<T> extends SBBMenuEntry<T> {
   /// The color for the tile's [Text] and [Icon] widget descendants.
   ///
   /// This color is typically used instead of the color of the [textStyle].
-  final WidgetStateProperty<Color?>? foregroundColor;
+  final MaterialStateProperty<Color?>? foregroundColor;
 
   /// The color for the tile's background.
-  final WidgetStateProperty<Color?>? backgroundColor;
+  final MaterialStateProperty<Color?>? backgroundColor;
 
   @override
   bool represents(T? value) => value == this.value;
@@ -309,7 +308,7 @@ class SBBMenuItemState<T, W extends SBBMenuItem<T>> extends State<W>
   @protected
   void handleTap() {
     updateMaterialState(
-      WidgetState.pressed,
+      MaterialState.pressed,
     );
     widget.onTap?.call();
     Navigator.pop<T>(context, widget.value);
@@ -328,7 +327,7 @@ class SBBMenuItemState<T, W extends SBBMenuItem<T>> extends State<W>
           mouseCursor: effectiveMouseCursor,
           onHover: widget.enabled
               ? updateMaterialState(
-                  WidgetState.hovered,
+                  MaterialState.hovered,
                 )
               : null,
           child: _buildChild(),
@@ -364,10 +363,10 @@ class SBBMenuItemState<T, W extends SBBMenuItem<T>> extends State<W>
   }
 
   MouseCursor _getEffectiveMouseCursor() =>
-      WidgetStateProperty.resolveAs<MouseCursor>(
-        WidgetStateMouseCursor.clickable,
-        <WidgetState>{
-          if (!widget.enabled) WidgetState.disabled,
+      MaterialStateProperty.resolveAs<MouseCursor>(
+        MaterialStateMouseCursor.clickable,
+        <MaterialState>{
+          if (!widget.enabled) MaterialState.disabled,
         },
       );
 }
@@ -980,8 +979,8 @@ class _SBBMenuTileItem<T> extends SBBMenuItem<T> {
       vertical: 2.0,
     ),
     TextStyle? textStyle,
-    WidgetStateProperty<Color?>? foregroundColor,
-    WidgetStateProperty<Color?>? backgroundColor,
+    MaterialStateProperty<Color?>? foregroundColor,
+    MaterialStateProperty<Color?>? backgroundColor,
     IconData? icon,
     required String title,
   }) : super(

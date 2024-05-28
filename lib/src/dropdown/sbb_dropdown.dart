@@ -83,7 +83,7 @@ class _DropdownMenuItemButtonState<T> extends State<_DropdownMenuItemButton<T>>
         widget.route.items[widget.itemIndex].item!;
 
     //TODO: solve with material state
-    final WidgetStateProperty<Color?> leftBorderColor =
+    final MaterialStateProperty<Color?> leftBorderColor =
         SBBTheme.resolveStatesWith(
             defaultValue: SBBColors.transparent, hoveredValue: SBBColors.red);
 
@@ -103,7 +103,7 @@ class _DropdownMenuItemButtonState<T> extends State<_DropdownMenuItemButton<T>>
         autofocus: widget.itemIndex == widget.route.selectedIndex,
         enableFeedback: widget.enableFeedback,
         onTap: _handleOnTap,
-        onHover: updateMaterialState(WidgetState.hovered),
+        onHover: updateMaterialState(MaterialState.hovered),
         borderRadius: _forLastItemOnly(),
         child: child,
       );
@@ -339,7 +339,7 @@ class _DropdownRoute<T> extends PopupRoute<_DropdownRouteResult<T>> {
     this.menuMaxHeight,
     required this.enableFeedback,
     this.borderRadius,
-  })  : itemHeights =
+  }) : itemHeights =
             List<double>.filled(items.length, itemHeight ?? _kMenuItemHeight);
 
   final List<_MenuItem<T>> items;
@@ -584,7 +584,7 @@ class _MenuItem<T> extends SingleChildRenderObjectWidget {
     Key? key,
     required this.onLayout,
     required this.item,
-  })  : super(key: key, child: item);
+  }) : super(key: key, child: item);
 
   final ValueChanged<Size> onLayout;
   final SBBDropdownMenuItem<T>? item;
@@ -602,8 +602,7 @@ class _MenuItem<T> extends SingleChildRenderObjectWidget {
 }
 
 class _RenderMenuItem extends RenderProxyBox {
-  _RenderMenuItem(this.onLayout, [RenderBox? child])
-      : super(child);
+  _RenderMenuItem(this.onLayout, [RenderBox? child]) : super(child);
 
   ValueChanged<Size> onLayout;
 
@@ -625,7 +624,7 @@ class _DropdownMenuItemContainer extends StatelessWidget {
     Key? key,
     this.alignment = AlignmentDirectional.centerStart,
     required this.child,
-  })  : super(key: key);
+  }) : super(key: key);
 
   /// The widget below this widget in the tree.
   ///
@@ -669,7 +668,7 @@ class SBBDropdownMenuItem<T> extends _DropdownMenuItemContainer {
     this.enabled = true,
     AlignmentGeometry alignment = AlignmentDirectional.centerStart,
     required Widget child,
-  })  : super(key: key, alignment: alignment, child: child);
+  }) : super(key: key, alignment: alignment, child: child);
 
   /// Called when the dropdown menu item is tapped.
   final VoidCallback? onTap;
@@ -1340,10 +1339,10 @@ class _SBBDropdownButtonState<T> extends State<SBBDropdownButton<T>>
     );
 
     final MouseCursor effectiveMouseCursor =
-        WidgetStateProperty.resolveAs<MouseCursor>(
-      WidgetStateMouseCursor.clickable,
-      <WidgetState>{
-        if (!_enabled) WidgetState.disabled,
+        MaterialStateProperty.resolveAs<MouseCursor>(
+      MaterialStateMouseCursor.clickable,
+      <MaterialState>{
+        if (!_enabled) MaterialState.disabled,
       },
     );
 
