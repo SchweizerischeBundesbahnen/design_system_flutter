@@ -13,15 +13,17 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 - Added the release github actions workflow.
 - (#110) Match typography specifications from [design.sbb.ch](design.sbb.ch) by adding extraSmallFont.
+- (#107) `SBBTabBar`: Added field `onTap`, which allows for reacting to taps on tab items.
+- (#106) `FontScripts`: Added utils to update the SBB Icon fonts with a script.
 
 ### Changed
 
-- Changed the test flow to include CHANGELOG.md validation.
+- (#118) Changed the test flow to include CHANGELOG.md validation.
 
 ### Fixed
 
 - (#115) Golden Tests by replacing golden_toolkit package.
-- Support Flutter 3.22 by replacing `TextTheme.subtitle` getter.
+- (#114) Support Flutter 3.22 by replacing `TextTheme.subtitle` getter.
 
 ## [1.2.0] - 2023-12-19
 
