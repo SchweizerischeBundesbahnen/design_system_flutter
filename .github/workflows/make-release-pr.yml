@@ -48,6 +48,7 @@ jobs:
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v6.0.5
         with:
+          git-token: ${{secrets.RELEASE_PR_PAT}}
           commit-message: ${{ format('Prepare Release for version {0}', steps.update-changelog.outputs.version) }}
           branch: ${{ format('release/{0}', steps.update-changelog.outputs.version) }}
           title: ${{ format('Release {0}', steps.update-changelog.outputs.version) }}
