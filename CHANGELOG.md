@@ -9,6 +9,8 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+## [1.3.0] - 2024-05-30
+
 ### Added
 
 - Added the release github actions workflow.
@@ -23,7 +25,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ### Fixed
 
-- (#115) Golden Tests by replacing golden_toolkit package.
+- (#115) Golden Tests by replacing golden\_toolkit package.
 - (#114) Support Flutter 3.22 by replacing `TextTheme.subtitle` getter.
 
 ## [1.2.0] - 2023-12-19
@@ -294,7 +296,9 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Initial project setup
 - Added some widgets
 
-[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/1.2.0...HEAD
+[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/1.3.0...HEAD
+
+[1.3.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/1.2.0...1.3.0
 
 [1.2.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/1.1.0...1.2.0
 
