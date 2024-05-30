@@ -4,7 +4,6 @@ on:
 
 jobs:
   create-tag:
-    if: ${{ github.event.pull_request.label == 'release' && startsWith( github.event.pull_request.title , 'Release' ) && contains( github.event.pull_request.user.login, 'bot' ) }}
     runs-on: ubuntu-latest
     permissions:
       contents: write
