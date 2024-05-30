@@ -19,6 +19,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 ### Changed
 
 - (#118) Changed the test flow to include CHANGELOG.md validation.
+- (#111) `SBBMessage`: Make `SBBMessage` only as big as needed to prevent content being pushed on top.
 
 ### Fixed
 
