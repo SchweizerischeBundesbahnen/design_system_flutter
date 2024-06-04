@@ -39,11 +39,12 @@ jobs:
         run: flutter test
 
       - name: Upload goldens if tests fail.
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: ${{ failure() && steps.test.conclusion == 'failure' }}
         with:
           name: goldens
           path: test/failures/
+          retention-days: 3
 
   changelog-test:
     runs-on: ubuntu-latest
@@ -84,12 +85,12 @@ jobs:
         run: flutter build appbundle --profile --no-pub
 
       - name: Upload appbundle as artifact.
-        uses: actions/upload-artifact@v3
-        if: ${{ matrix.sdk == '' }}
+        uses: actions/upload-artifact@v4
+        if: ${{ matrix.sdk == '' && github.event_name == 'pull_request' }}
         with:
           name: app-profile.aab
           path: example/build/app/outputs/bundle/profile/
-          retention-days: 5
+          retention-days: 3
 
   build-iOS:
     name: Build iOS package
@@ -112,9 +113,9 @@ jobs:
       - name: Build iOS package
         run: flutter build ios --simulator
       - name: Upload Runner.app as artifact
-        if: ${{ matrix.sdk == '' }}
+        if: ${{ matrix.sdk == '' && github.event_name == 'pull_request' }}
         uses: actions/upload-artifact@v4
         with:
           name: fdsm-example.app
           path: example/build/ios/iphonesimulator
-          retention-days: 5
+          retention-days: 3
