@@ -3,11 +3,7 @@
 
 name: Validate
 
-on:
-  pull_request:
-    # For the main branch only.
-    branches:
-      - main
+on: [push, pull_request, workflow_dispatch]
 
 # Ensure that new pushes/updates cancel running jobs
 concurrency:
@@ -76,10 +72,12 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ matrix.sdk }}
+          cache: true
       - uses: actions/setup-java@v4
         with:
           java-version: "17"
           distribution: "temurin"
+          cache: 'gradle'
       - run: flutter pub get
       - name: Build appbundle.
         run: flutter build appbundle --profile --no-pub
@@ -108,6 +106,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ matrix.sdk }}
+          cache: true
       - run: flutter pub get
       - name: Build iOS package
         run: flutter build ios --simulator
