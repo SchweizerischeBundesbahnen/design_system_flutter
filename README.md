@@ -47,17 +47,19 @@ General instructions on _how_ to contribute can be found under [Contributing](Co
 ### Github Actions
 
 #### Testing
-This project is built and tested using [Github Actions](https://docs.github.com/en/actions). On every PR request, a `test` workflow is triggered, running all tests in the `.\test\` dir. Failed golden tests will be uploaded to the job artifacts. The tests run on a _macos_ runner.
+This project is built and tested using [Github Actions](https://docs.github.com/en/actions). On every PR request, a `test` workflow is triggered, which does the following:
 
-Furthermore, on every PR request, the CHANGELOG.md file will be parsed and compared against the [Keep A Changelog](https://keepachangelog.com/en/1.1.0/) schema. This allows for automatic release notes from our Changelog.
+* running all tests in the `.\test\` dir. Failed golden tests will be uploaded to the job artifacts. The tests run on a _macos_ runner.
+* parse the `CHANGELOG.md` file and compare against the [Keep A Changelog](https://keepachangelog.com/en/1.1.0/) schema. This allows for automatic release notes from our Changelog.
+* Build the example app in `example` for the minimum and latest supported Flutter SDK for both iOS and Android.
 
 #### Releasing
 The maintainers of this library can create a release by triggering the `Design System Flutter Release` workflow with the _patch_, _minor_ or _major_ option. This does several things:
 
 1. Update the `pubspec.yaml` to reflect the new version.
 2. Update the `CHANGELOG.md` to reflect the new version.
-3. Commit and Tag these changes in a new commit by the `@github-action[bot]`.
-4. Create a GitHub release with the notes from the top `CHANGELOG.md` section.
+3. Commit and tag these changes in a new commit by the `@github-action[bot]`.
+4. Create a GitHub release with the notes from the top `CHANGELOG.md` section (from the `github-release.yml` workflow).
 
 ## Authors
 
