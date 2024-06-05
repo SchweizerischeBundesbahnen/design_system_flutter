@@ -3,11 +3,7 @@
 
 name: Validate
 
-on:
-  pull_request:
-    # For the main branch only.
-    branches:
-      - main
+on: [push, pull_request, workflow_dispatch]
 
 # Ensure that new pushes/updates cancel running jobs
 concurrency:
@@ -30,6 +26,7 @@ jobs:
         with:
           flutter-version: ${{ steps.fvm-config-action.outputs.FLUTTER_VERSION }}
           channel: ${{ steps.fvm-config-action.outputs.FLUTTER_CHANNEL }}
+          cache: true
 
       - name: Run flutter doctor.
         run: flutter doctor -v
@@ -42,11 +39,12 @@ jobs:
         run: flutter test
 
       - name: Upload goldens if tests fail.
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: ${{ failure() && steps.test.conclusion == 'failure' }}
         with:
           name: goldens
           path: test/failures/
+          retention-days: 3
 
   changelog-test:
     runs-on: ubuntu-latest
@@ -76,21 +74,23 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ matrix.sdk }}
+          cache: true
       - uses: actions/setup-java@v4
         with:
           java-version: "17"
           distribution: "temurin"
+          cache: 'gradle'
       - run: flutter pub get
       - name: Build appbundle.
         run: flutter build appbundle --profile --no-pub
 
       - name: Upload appbundle as artifact.
-        uses: actions/upload-artifact@v3
-        if: ${{ matrix.sdk == '' }}
+        uses: actions/upload-artifact@v4
+        if: ${{ matrix.sdk == '' && github.event_name == 'pull_request' }}
         with:
           name: app-profile.aab
           path: example/build/app/outputs/bundle/profile/
-          retention-days: 5
+          retention-days: 3
 
   build-iOS:
     name: Build iOS package
@@ -108,13 +108,14 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ matrix.sdk }}
+          cache: true
       - run: flutter pub get
       - name: Build iOS package
         run: flutter build ios --simulator
       - name: Upload Runner.app as artifact
-        if: ${{ matrix.sdk == '' }}
+        if: ${{ matrix.sdk == '' && github.event_name == 'pull_request' }}
         uses: actions/upload-artifact@v4
         with:
           name: fdsm-example.app
           path: example/build/ios/iphonesimulator
-          retention-days: 5
+          retention-days: 3
