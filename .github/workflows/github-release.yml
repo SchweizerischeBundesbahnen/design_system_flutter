@@ -10,10 +10,20 @@ jobs:
 
     outputs:
       tag_name: ${{ steps.read-changelog.outputs.version }}
+      token: ${{ steps.app-token.outputs.token }}
     
     steps:
+      - name: Generate token from github app.
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ vars.APPBAKERYGITHUBAPP_APPID }}
+          private-key: ${{ secrets.APPBAKERYGITHUBAPP_PRIVATEKEY }}
+
       - name: Clone Repository
         uses: actions/checkout@v4
+        with: 
+          token: ${{ steps.app-token.outputs.token }}
 
       - name: Changelog Reader
         id: read-changelog
@@ -22,7 +32,7 @@ jobs:
       - name: Create tag
         uses: actions4git/setup-git@v1.0.3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ steps.app-token.outputs.token }}
       - run: git tag -a ${{ steps.read-changelog.outputs.version }} -m "Version Release ${{ steps.read-changelog.outputs.version }} on ${{ steps.read-changelog.outputs.date }}"
       - run: git push --follow-tags
 
@@ -33,12 +43,13 @@ jobs:
       - name: Clone Repository
         uses: actions/checkout@v4
         with:
+          token: ${{ needs.create-tag.outputs.token }}
           ref: refs/tags/${{ needs.create-tag.outputs.tag_name }}
           
       
       - name: Create GitHub Releases based on changelog
         uses: taiki-e/create-gh-release-action@v1.8.2
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
+          token: ${{ needs.create-tag.outputs.token }}
           ref: refs/tags/${{ needs.create-tag.outputs.tag_name }}
           changelog: ./CHANGELOG.md
