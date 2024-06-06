@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../design_system_flutter.dart';
+import 'sbb_stepper_colors.dart';
 
 typedef OnStepPressedCallback = void Function(SBBStepperItem item, int index);
 
@@ -8,55 +9,82 @@ typedef OnStepPressedCallback = void Function(SBBStepperItem item, int index);
 class SBBStepper extends StatelessWidget {
   const SBBStepper({
     super.key,
-    required this.steps,
-    required this.activeStep,
-    required this.onStepPressed,
-  });
+    required List<SBBStepperItem> steps,
+    required int activeStep,
+    required OnStepPressedCallback onStepPressed,
+  })  : _steps = steps,
+        _activeStep = activeStep,
+        _onStepPressed = onStepPressed,
+        _colors = null;
+
+  /// This variant of the SSB Stepper should be used on a red background.
+  const SBBStepper.red({
+    super.key,
+    required List<SBBStepperItem> steps,
+    required int activeStep,
+    required OnStepPressedCallback onStepPressed,
+  })  : _steps = steps,
+        _activeStep = activeStep,
+        _onStepPressed = onStepPressed,
+        _colors = SBBStepperColors.red;
 
   /// The list of steps.
-  final List<SBBStepperItem> steps;
+  final List<SBBStepperItem> _steps;
 
   /// The index of the active step.
-  final int activeStep;
+  final int _activeStep;
 
   /// Called when the user has pressed a step.
-  final OnStepPressedCallback onStepPressed;
+  final OnStepPressedCallback _onStepPressed;
+
+  /// The colors of this stepper.
+  final SBBStepperColors? _colors;
 
   @override
   Widget build(BuildContext context) {
+    var colors = SBBStepperColors.light;
+    if (_colors != null) {
+      colors = _colors;
+    } else if (Theme.of(context).brightness == Brightness.dark) {
+      colors = SBBStepperColors.dark;
+    }
     return LayoutBuilder(
       builder: (context, constraints) {
         final width = constraints.maxWidth;
-        final lineWidth = (width - steps.length * 32) / (steps.length - 1);
+        final lineWidth = (width - _steps.length * 32) / (_steps.length - 1);
         final widgets = <Widget>[];
-        for (int i = 0; i < steps.length; i++) {
-          final step = steps[i];
+        for (int i = 0; i < _steps.length; i++) {
+          final step = _steps[i];
           final x = (i * 32) + (i * lineWidth);
           // Create step circle widget.
           final circle = PositionedDirectional(
             start: x,
             top: 0,
             child: _Circle(
+              colors: colors,
               index: i,
-              active: i == activeStep,
+              active: i == _activeStep,
               icon: step.icon,
-              onPressed: () => onStepPressed(step, i),
+              onPressed: () => _onStepPressed(step, i),
             ),
           );
           widgets.add(circle);
           // If the current step is not the last step create a connector line.
-          if (i <= steps.length - 1) {
+          if (i <= _steps.length - 1) {
             final line = PositionedDirectional(
               start: x + 32,
               top: 16,
-              child: _Line(width: lineWidth),
+              child: _Line(
+                colors: colors,
+                width: lineWidth,
+              ),
             );
             widgets.add(line);
           }
           // If this is the active step add the label below the circle. If the
           // active step is the first or last step make sure that the label
           // does not exceed the edge of the stepper.
-          if (i == activeStep) {
+          if (i == _activeStep) {
             final size = _measureLabel(context, step.label, width);
             var start = (x + 16) - (size.width / 2);
             var end = start + size.width;
@@ -72,7 +100,7 @@ class SBBStepper extends StatelessWidget {
             var textAlign = TextAlign.center;
             if (i == 0) {
               textAlign = TextAlign.start;
-            } else if (i >= steps.length - 1) {
+            } else if (i >= _steps.length - 1) {
               textAlign = TextAlign.end;
             }
             final label = PositionedDirectional(
@@ -84,6 +112,7 @@ class SBBStepper extends StatelessWidget {
                 step.label,
                 style: baseStyle.themedTextStyle(
                   textStyle: SBBTextStyles.smallLight,
+                  color: colors.label,
                 ),
                 textAlign: textAlign,
                 overflow: TextOverflow.ellipsis,
@@ -116,12 +145,14 @@ class SBBStepper extends StatelessWidget {
 
 class _Circle extends StatelessWidget {
   const _Circle({
+    required this.colors,
     required this.index,
     required this.active,
     this.icon,
     this.onPressed,
   });
 
+  final SBBStepperColors colors;
   final int index;
   final bool active;
   final IconData? icon;
@@ -133,7 +164,7 @@ class _Circle extends StatelessWidget {
       dimension: 32,
       child: Material(
         clipBehavior: Clip.antiAlias,
-        color: _backgroundColor(context),
+        color: colors.circleBackground(active),
         shape: _shape(context),
         child: InkWell(
           onTap: onPressed,
@@ -145,29 +176,16 @@ class _Circle extends StatelessWidget {
     );
   }
 
-  Color _backgroundColor(BuildContext context) {
-    final theme = Theme.of(context);
-    if (theme.brightness == Brightness.dark) {
-      return active ? SBBColors.white : SBBColors.charcoal;
-    } else {
-      return active ? SBBColors.red : SBBColors.white;
-    }
-  }
-
   ShapeBorder _shape(BuildContext context) {
     if (active) {
       return const CircleBorder();
     }
-    final theme = Theme.of(context);
-    if (theme.brightness == Brightness.dark) {
-      return const CircleBorder(
-        side: BorderSide(color: SBBColors.white, width: 1),
-      );
-    } else {
-      return const CircleBorder(
-        side: BorderSide(color: SBBColors.smoke, width: 1),
-      );
-    }
+    return CircleBorder(
+      side: BorderSide(
+        color: colors.circleBorder(active),
+        width: 1,
+      ),
+    );
   }
 
   Widget _iconOrNumber(BuildContext context) {
@@ -175,7 +193,7 @@ class _Circle extends StatelessWidget {
       return Icon(
         icon,
         size: 24,
-        color: _iconColor(context),
+        color: colors.circleContent(active),
       );
     } else {
       final baseStyle = SBBBaseStyle.of(context);
@@ -184,36 +202,20 @@ class _Circle extends StatelessWidget {
         number.toString(),
         style: baseStyle.themedTextStyle(
           textStyle: SBBTextStyles.mediumLight,
-          color: _numberColor(context),
+          color: colors.circleContent(active),
         ),
       );
-    }
-  }
-
-  Color _iconColor(BuildContext context) {
-    final theme = Theme.of(context);
-    if (theme.brightness == Brightness.dark) {
-      return active ? SBBColors.black : SBBColors.white;
-    } else {
-      return active ? SBBColors.black : SBBColors.red;
-    }
-  }
-
-  Color _numberColor(BuildContext context) {
-    final theme = Theme.of(context);
-    if (theme.brightness == Brightness.dark) {
-      return active ? SBBColors.black : SBBColors.white;
-    } else {
-      return active ? SBBColors.white : SBBColors.black;
     }
   }
 }
 
 class _Line extends StatelessWidget {
   const _Line({
+    required this.colors,
     required this.width,
   });
 
+  final SBBStepperColors colors;
   final double width;
 
   @override
@@ -225,16 +227,7 @@ class _Line extends StatelessWidget {
       width: width - 4,
       height: 1,
       margin: const EdgeInsetsDirectional.fromSTEB(2, 0, 2, 0),
-      color: _color(context),
+      color: colors.line,
     );
-  }
-
-  Color _color(BuildContext context) {
-    final theme = Theme.of(context);
-    if (theme.brightness == Brightness.dark) {
-      return SBBColors.white;
-    } else {
-      return SBBColors.smoke;
-    }
   }
 }

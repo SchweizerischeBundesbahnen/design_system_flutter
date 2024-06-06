@@ -11,21 +11,53 @@ class _StepperPageState extends State<StepperPage> {
     SBBStepperItem(label: 'Step 1'),
     SBBStepperItem(label: 'Step 2'),
     SBBStepperItem(label: 'Step 3'),
-    SBBStepperItem(label: 'Step 4', icon: SBBIcons.train_small),
+    SBBStepperItem(label: 'Step 4'),
     SBBStepperItem(label: 'Step 5', icon: SBBIcons.tick_small),
   ];
   var activeStep = 0;
+  var red = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: EdgeInsetsDirectional.all(24),
-        child: SBBStepper(
-          steps: steps,
-          activeStep: activeStep,
-          onStepPressed: _onStepPressed,
-        ),
+      body: _stepper(context),
+      bottomNavigationBar: _footer(context),
+    );
+  }
+
+  Widget _stepper(BuildContext context) {
+    late final Widget stepper;
+    if (red) {
+      stepper = SBBStepper.red(
+        steps: steps,
+        activeStep: activeStep,
+        onStepPressed: _onStepPressed,
+      );
+    } else {
+      stepper = SBBStepper(
+        steps: steps,
+        activeStep: activeStep,
+        onStepPressed: _onStepPressed,
+      );
+    }
+    return Container(
+      padding: EdgeInsetsDirectional.all(24),
+      color: red ? SBBColors.red : null,
+      child: stepper,
+    );
+  }
+
+  Widget _footer(BuildContext context) {
+    return Container(
+      padding: EdgeInsetsDirectional.all(16),
+      child: Row(
+        children: [
+          Expanded(child: Text('RED')),
+          SBBSwitch(
+            value: red,
+            onChanged: (value) => setState(() => red = value),
+          ),
+        ],
       ),
     );
   }
