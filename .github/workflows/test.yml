@@ -13,10 +13,7 @@ concurrency:
 jobs:
   test:
     runs-on: macos-latest
-
-    outputs:
-      token: ${{ steps.app-token.outputs.token }}
-
+    
     steps:
       - name: Generate Token
         id: app-token
@@ -24,6 +21,7 @@ jobs:
         with:
           app-id: ${{ vars.APPBAKERYGITHUBAPP_APPID }}
           private-key: ${{ secrets.APPBAKERYGITHUBAPP_PRIVATEKEY }}
+
 
       - name: Checkout design_system_flutter code.
         uses: actions/checkout@v4
@@ -57,6 +55,7 @@ jobs:
           name: goldens
           path: test/failures/
           retention-days: 3
+          token: ${{ steps.app-token.outputs.token }}
 
   changelog-test:
     runs-on: ubuntu-latest
@@ -67,12 +66,12 @@ jobs:
         with:
           app-id: ${{ vars.APPBAKERYGITHUBAPP_APPID }}
           private-key: ${{ secrets.APPBAKERYGITHUBAPP_PRIVATEKEY }}
-          
+
+
       - name: Clone Repository.
         uses: actions/checkout@v4
         with:
           token: ${{ steps.app-token.outputs.token }}
-
       - name: Read Changelog and validate.
         uses: mindsers/changelog-reader-action@v2.2.3
         with:
@@ -90,9 +89,17 @@ jobs:
       matrix:
         sdk: ["3.16.9", ""]
     steps:
+      - name: Generate Token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ vars.APPBAKERYGITHUBAPP_APPID }}
+          private-key: ${{ secrets.APPBAKERYGITHUBAPP_PRIVATEKEY }}
+
+
       - uses: actions/checkout@v4
         with:  
-          token: ${{ needs.test.outputs.token }}
+          token: ${{ steps.app-token.outputs.token }}
 
       - uses: subosito/flutter-action@v2
         with:
@@ -114,7 +121,7 @@ jobs:
           name: app-profile.aab
           path: example/build/app/outputs/bundle/profile/
           retention-days: 3
-          token: ${{ needs.test.outputs.token }}
+          token: ${{ steps.app-token.outputs.token }}
 
   build-iOS:
     name: Build iOS package
@@ -128,9 +135,17 @@ jobs:
       matrix:
         sdk: ["3.16.9", ""]
     steps:
+      - name: Generate Token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ vars.APPBAKERYGITHUBAPP_APPID }}
+          private-key: ${{ secrets.APPBAKERYGITHUBAPP_PRIVATEKEY }}
+
+          
       - uses: actions/checkout@v4
         with:  
-          token: ${{ needs.test.outputs.token }}
+          token: ${{ steps.app-token.outputs.token }}
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ matrix.sdk }}
@@ -145,4 +160,4 @@ jobs:
           name: fdsm-example.app
           path: example/build/ios/iphonesimulator
           retention-days: 3
-          token: ${{ needs.test.outputs.token }}
+          token: ${{ steps.app-token.outputs.token }}
