@@ -60,12 +60,18 @@ class SBBStepper extends StatelessWidget {
           final circle = PositionedDirectional(
             start: x,
             top: 0,
-            child: _Circle(
-              colors: colors,
-              index: i,
-              active: i == _activeStep,
-              icon: step.icon,
-              onPressed: () => _onStepPressed(step, i),
+            child: Semantics(
+              button: true,
+              selected: i == _activeStep,
+              label: step.label,
+              excludeSemantics: true,
+              child: _Circle(
+                colors: colors,
+                index: i,
+                active: i == _activeStep,
+                icon: step.icon,
+                onPressed: () => _onStepPressed(step, i),
+              ),
             ),
           );
           widgets.add(circle);
