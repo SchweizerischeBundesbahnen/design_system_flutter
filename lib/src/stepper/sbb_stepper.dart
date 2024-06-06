@@ -114,14 +114,16 @@ class SBBStepper extends StatelessWidget {
               top: 56 - size.height,
               width: end - start,
               height: size.height,
-              child: Text(
-                step.label,
-                style: baseStyle.themedTextStyle(
-                  textStyle: SBBTextStyles.smallLight,
-                  color: colors.label,
+              child: ExcludeSemantics(
+                child: Text(
+                  step.label,
+                  style: baseStyle.themedTextStyle(
+                    textStyle: SBBTextStyles.smallLight,
+                    color: colors.label,
+                  ),
+                  textAlign: textAlign,
+                  overflow: TextOverflow.ellipsis,
                 ),
-                textAlign: textAlign,
-                overflow: TextOverflow.ellipsis,
               ),
             );
             widgets.add(label);
