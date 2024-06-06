@@ -9,9 +9,9 @@ on:
         default: 'patch'
         type: choice
         options:
-        - patch
-        - minor
-        - major
+          - patch
+          - minor
+          - major
 
 jobs:
   pull-request-creation:
@@ -57,10 +57,12 @@ jobs:
           token: ${{ steps.app-token.outputs.token }}
           commit-message: ${{ format('Prepare Release for version {0}', steps.update-changelog.outputs.version) }}
           branch: ${{ format('release/{0}', steps.update-changelog.outputs.version) }}
-          title: ${{ format('Release {0}', steps.update-changelog.outputs.version) }}
+          title: ${{ format('Auto Release Pull Request {0}', steps.update-changelog.outputs.version) }}
           body: |
             Make changes for release.
             - Update pubspec
             - Update CHANGELOG.md
+
+            **Merging this PR will trigger a github release using the corresponding workflow.**
           labels: |
-            release
+            autorelease
