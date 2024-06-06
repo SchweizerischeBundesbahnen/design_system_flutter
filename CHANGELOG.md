@@ -9,6 +9,8 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+## [1.3.1] - 2024-06-06
+
 ## [1.3.0] - 2024-05-30
 
 ### Added
@@ -297,7 +299,9 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Initial project setup
 - Added some widgets
 
-[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/1.3.0...HEAD
+[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/1.3.1...HEAD
+
+[1.3.1]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/1.3.0...1.3.1
 
 [1.3.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/1.2.0...1.3.0
 
