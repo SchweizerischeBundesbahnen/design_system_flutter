@@ -9,6 +9,15 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+### Added
+
+- (#133) Added the `SBBStepper` [digital.sbb.ch#figma](https://www.figma.com/design/tZnqGkmyGDColC9D176MEu/DSM-Beta-Components?node-id=12302-13869&t=8jZ7c63YUMMZAe8y-0)
+
+### Changed
+
+- (#130) using icons from CDN version `0.1.81`
+- (#137) use [flutter_lints](https://pub.dev/packages/flutter_lints) instead of outdated dart linter
+
 ## [1.3.0] - 2024-05-30
 
 ### Added
@@ -22,7 +31,6 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 - (#118) Changed the test flow to include CHANGELOG.md validation.
 - (#111) `SBBMessage`: Make `SBBMessage` only as big as needed to prevent content being pushed on top.
-- using icons from CDN version `0.1.81`
 
 ### Fixed
 
