@@ -1,7 +1,8 @@
 {
   "dependencies": {
-    "fantasticon": "^2.0.0",
-    "oslllo-svg-fixer": "^3.0.0"
+    "fantasticon": "^3.0.0",
+    "oslllo-svg-fixer": "^4.0.1",
+    "parse-bmfont-xml": "^1.1.6"
   },
   "scripts": {
     "fix-small": "node_modules/.bin/oslllo-svg-fixer -s icons/small-tmp -d icons/small",
