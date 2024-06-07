@@ -20,19 +20,15 @@ concurrency:
 jobs:
   test:
     runs-on: macos-latest
-    
+
     steps:
       - name: Checkout design_system_flutter code.
         uses: actions/checkout@v4
 
-      - name: Parse flutter version and channel specified in .fvm into env vars.
-        uses: kuhnroyal/flutter-fvm-config-action@v2
-
       - name: Clone flutter version specified in .fvm.
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: ${{ steps.fvm-config-action.outputs.FLUTTER_VERSION }}
-          channel: ${{ steps.fvm-config-action.outputs.FLUTTER_CHANNEL }}
+          channel: stable
           cache: true
 
       - name: Run flutter doctor.
@@ -85,7 +81,7 @@ jobs:
         with:
           java-version: "17"
           distribution: "temurin"
-          cache: 'gradle'
+          cache: "gradle"
       - run: flutter pub get
       - name: Build appbundle.
         run: flutter build appbundle --profile --no-pub
