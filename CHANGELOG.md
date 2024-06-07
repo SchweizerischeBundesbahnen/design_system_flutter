@@ -9,14 +9,16 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+## [1.4.0] - 2024-06-07
+
 ### Added
 
-- (#133) Added the `SBBStepper` [digital.sbb.ch#figma](https://www.figma.com/design/tZnqGkmyGDColC9D176MEu/DSM-Beta-Components?node-id=12302-13869&t=8jZ7c63YUMMZAe8y-0)
+- (#133) Added the `SBBStepper` [digital.sbb.ch#figma](https://www.figma.com/design/tZnqGkmyGDColC9D176MEu/DSM-Beta-Components?node-id=12302-13869\&t=8jZ7c63YUMMZAe8y-0)
 
 ### Changed
 
 - (#130) using icons from CDN version `0.1.81`
-- (#137) use [flutter_lints](https://pub.dev/packages/flutter_lints) instead of outdated dart linter
+- (#137) use [flutter\_lints](https://pub.dev/packages/flutter_lints) instead of outdated dart linter
 
 ## [1.3.0] - 2024-05-30
 
@@ -305,7 +307,9 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Initial project setup
 - Added some widgets
 
-[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/1.3.0...HEAD
+[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/1.4.0...HEAD
+
+[1.4.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/1.3.0...1.4.0
 
 [1.3.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/1.2.0...1.3.0
 
