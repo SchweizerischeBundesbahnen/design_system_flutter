@@ -19,4 +19,17 @@ Use the issue tracker to find ways to contribute. Find a bug or a feature, menti
 
 ## Changing the code-base
 
-Generally speaking, you should fork this repository, make changes in your own fork, and then submit a pull request. All new code should have associated unit tests (Snapshot Tests for UI elements) that validate implemented features and the presence or lack of defects. Additionally, the code should follow any stylistic and architectural guidelines prescribed by the project. In the absence of such guidelines, mimic the styles and patterns in the existing code-base. Please also update the ReleaseNotes accordingly.
+Generally speaking, you should *fork* this repository, make changes in your own fork, and then submit a pull request.
+
+All new code should have associated unit tests ([Golden Tests] for UI elements) that validate implemented features and the presence or lack of defects.
+
+Additionally, the code should follow any stylistic and architectural guidelines prescribed by the project. In the absence of such guidelines, mimic the styles and patterns in the existing code-base.
+
+Please also update the CHANGELOG.md accordingly respecting the [Keep A Changelog] format. If possible, stick to [Semantic Commit Messages].
+
+
+[Golden Tests]: (https://api.flutter.dev/flutter/flutter_test/matchesGoldenFile.html)
+
+[Keep A Changelog]: (https://keepachangelog.com/en/1.1.0/)
+
+[Semantic Commit Messages]: (https://sparkbox.com/foundry/semantic_commit_messages)
