@@ -30,9 +30,11 @@
 .pub/
 /build/
 *.g.dart
+pubspec.lock
 
 # FVM related
 .fvm/
+.fvmrc
 
 # Android related
 **/android/**/gradle-wrapper.jar
@@ -108,6 +110,3 @@ example/.metadata
 
 # failed golden tests
 test/failures
-
-# FVM Version Cache
-.fvm/
