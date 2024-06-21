@@ -9,6 +9,16 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+### Deprecated
+
+- (#142) Deprecated Web Components:
+  - `SBBStatus`
+  - `SBBWebLogo`
+  - `SBBLeanTextStyles`
+  - `SBBWebText`
+  - `SBBWebTextStyles`
+  - `SBBBreadcrumb`
+
 ## [1.4.0] - 2024-06-07
 
 ### Added
