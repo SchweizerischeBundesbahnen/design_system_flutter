@@ -6,7 +6,9 @@ import '../../design_system_flutter.dart';
 /// https://digital.sbb.ch/de/webapps/components/breadcrumb
 ///
 ///
+@Deprecated('FlutterWeb will not be supported from the next major release.')
 class SBBBreadcrumb extends StatelessWidget {
+  @Deprecated('FlutterWeb will not be supported from the next major release.')
   const SBBBreadcrumb({
     Key? key,
     this.leading,
@@ -112,7 +114,9 @@ class _InheritedBreadcrumbStyle extends InheritedWidget {
   }
 }
 
+@Deprecated('FlutterWeb will not be supported from the next major release.')
 class SBBBreadcrumbItem extends StatefulWidget {
+  @Deprecated('FlutterWeb will not be supported from the next major release.')
   const SBBBreadcrumbItem({
     Key? key,
     required this.child,

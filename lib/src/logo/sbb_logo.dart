@@ -93,6 +93,7 @@ class SBBLogo extends StatelessWidget {
 /// creates SBB  Logo
 ///
 /// respects parent's size and scales accordingly
+@Deprecated('FlutterWeb will not be supported from the next major release.')
 class SBBWebLogo extends StatelessWidget {
   const SBBWebLogo({
     Key? key,
