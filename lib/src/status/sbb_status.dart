@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 const _kBorderRadius = 2.0;
 
-@Deprecated('will soon be moved to the web package')
+@Deprecated('FlutterWeb will not be supported from the next major release.')
 class SBBStatus extends StatelessWidget {
   const SBBStatus.valid({
     Key? key,
