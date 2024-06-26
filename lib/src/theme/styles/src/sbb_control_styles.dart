@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../../toast/sbb_toast.dart';
 import '../sbb_styles.dart';
-import 'sbb_pagination_style.dart';
 
 class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   SBBControlStyles({
@@ -49,9 +48,11 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     this.sidebarItemTextStyle,
     this.headerNavItemForegroundColor,
     this.promotionBox,
+    this.picker,
   });
 
-  factory SBBControlStyles.$default({required SBBBaseStyle baseStyle}) => SBBControlStyles(
+  factory SBBControlStyles.$default({required SBBBaseStyle baseStyle}) =>
+      SBBControlStyles(
         listItem: SBBListItemStyle.$default(baseStyle: baseStyle),
         slider: SBBSliderStyle.$default(baseStyle: baseStyle),
         checkbox: SBBControlStyle.$default(baseStyle: baseStyle),
@@ -62,28 +63,44 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
         segmentedButton: SBBSegmentedButtonStyle.$default(baseStyle: baseStyle),
         redSegmentedButton: SBBSegmentedButtonStyle.red(baseStyle: baseStyle),
         selectLabel: SBBTextStyle(
-          textStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.helpersLabel, color: baseStyle.themeValue(SBBColors.metal, SBBColors.cement)),
-          textStyleDisabled: baseStyle.themedTextStyle(textStyle: SBBTextStyles.helpersLabel, color: SBBColors.metal),
+          textStyle: baseStyle.themedTextStyle(
+              textStyle: SBBTextStyles.helpersLabel,
+              color: baseStyle.themeValue(SBBColors.metal, SBBColors.cement)),
+          textStyleDisabled: baseStyle.themedTextStyle(
+              textStyle: SBBTextStyles.helpersLabel, color: SBBColors.metal),
         ),
         switchToggle: SBBSwitchStyle.$default(baseStyle: baseStyle),
         headerBackgroundColor: baseStyle.primaryColor,
         headerButtonBackgroundColorHighlighted: baseStyle.primaryColorDark,
         headerIconColor: SBBColors.white,
-        headerTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.largeLight, color: SBBColors.white),
-        linkTextStyle: baseStyle.defaultTextStyle?.copyWith(color: baseStyle.primaryColor),
+        headerTextStyle: baseStyle.themedTextStyle(
+            textStyle: SBBTextStyles.largeLight, color: SBBColors.white),
+        linkTextStyle:
+            baseStyle.defaultTextStyle?.copyWith(color: baseStyle.primaryColor),
         linkTextStyleHighlighted: baseStyle.defaultTextStyle?.copyWith(
-          color: baseStyle.themeValue(baseStyle.primaryColorDark, SBBColors.white),
+          color:
+              baseStyle.themeValue(baseStyle.primaryColorDark, SBBColors.white),
         ),
-        listHeaderTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallLight),
-        groupBackgroundColor: baseStyle.themeValue(SBBColors.white, SBBColors.charcoal),
-        accordionTitleTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.mediumLight),
-        accordionBodyTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallLight),
-        accordionBackgroundColor: baseStyle.themeValue(SBBColors.white, SBBColors.charcoal),
-        modalBackgroundColor: baseStyle.themeValue(SBBColors.milk, SBBColors.midnight),
-        modalTitleTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.largeLight),
-        toastTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallLight, color: SBBColors.white),
-        toastBackgroundColor: baseStyle.themeValue(SBBColors.metal, SBBColors.smoke),
-        tabBarTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallLight),
+        listHeaderTextStyle:
+            baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallLight),
+        groupBackgroundColor:
+            baseStyle.themeValue(SBBColors.white, SBBColors.charcoal),
+        accordionTitleTextStyle:
+            baseStyle.themedTextStyle(textStyle: SBBTextStyles.mediumLight),
+        accordionBodyTextStyle:
+            baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallLight),
+        accordionBackgroundColor:
+            baseStyle.themeValue(SBBColors.white, SBBColors.charcoal),
+        modalBackgroundColor:
+            baseStyle.themeValue(SBBColors.milk, SBBColors.midnight),
+        modalTitleTextStyle:
+            baseStyle.themedTextStyle(textStyle: SBBTextStyles.largeLight),
+        toastTextStyle: baseStyle.themedTextStyle(
+            textStyle: SBBTextStyles.smallLight, color: SBBColors.white),
+        toastBackgroundColor:
+            baseStyle.themeValue(SBBColors.metal, SBBColors.smoke),
+        tabBarTextStyle:
+            baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallLight),
         menuBackgroundColor: SBBColors.white,
         menuBorderColor: SBBColors.iron,
         menuEntryBackgroundColor: SBBTheme.resolveStatesWith(
@@ -115,11 +132,22 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
         ),
         sidebarBackgroundColor: SBBColors.white,
         sidebarBorderColor: SBBColors.silver,
-        sidebarItemBackgroundColor: SBBTheme.resolveStatesWith(defaultValue: SBBColors.transparent, hoveredValue: SBBColors.milk, selectedValue: SBBColors.cloud),
-        sidebarItemForegroundColor: SBBTheme.resolveStatesWith(defaultValue: SBBColors.iron, hoveredValue: SBBColors.red125, pressedValue: SBBColors.red125),
+        sidebarItemBackgroundColor: SBBTheme.resolveStatesWith(
+            defaultValue: SBBColors.transparent,
+            hoveredValue: SBBColors.milk,
+            selectedValue: SBBColors.cloud),
+        sidebarItemForegroundColor: SBBTheme.resolveStatesWith(
+            defaultValue: SBBColors.iron,
+            hoveredValue: SBBColors.red125,
+            pressedValue: SBBColors.red125),
         sidebarItemTextStyle: SBBLeanTextStyles.contextMenu,
-        headerNavItemForegroundColor: SBBTheme.resolveStatesWith(defaultValue: SBBColors.black, disabledValue: SBBColors.black, hoveredValue: SBBColors.red125, pressedValue: SBBColors.red125),
+        headerNavItemForegroundColor: SBBTheme.resolveStatesWith(
+            defaultValue: SBBColors.black,
+            disabledValue: SBBColors.black,
+            hoveredValue: SBBColors.red125,
+            pressedValue: SBBColors.red125),
         promotionBox: PromotionBoxStyle.$default(baseStyle: baseStyle),
+        picker: SBBPickerStyle.$default(baseStyle: baseStyle),
       );
 
   final SBBControlStyle? checkbox;
@@ -166,8 +194,10 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   final TextStyle? sidebarItemTextStyle;
   final MaterialStateProperty<Color?>? headerNavItemForegroundColor;
   final PromotionBoxStyle? promotionBox;
+  final SBBPickerStyle? picker;
 
-  static SBBControlStyles of(BuildContext context) => Theme.of(context).extension<SBBControlStyles>()!;
+  static SBBControlStyles of(BuildContext context) =>
+      Theme.of(context).extension<SBBControlStyles>()!;
 
   AppBarTheme get appBarTheme => AppBarTheme(
         color: headerBackgroundColor,
@@ -249,6 +279,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     TextStyle? sidebarItemTextStyle,
     MaterialStateProperty<Color?>? headerNavItemForegroundColor,
     PromotionBoxStyle? promotionBox,
+    SBBPickerStyle? picker,
   }) =>
       SBBControlStyles(
         checkbox: checkbox ?? this.checkbox,
@@ -262,17 +293,24 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
         listItem: listItem ?? this.listItem,
         selectLabel: selectLabel ?? this.selectLabel,
         switchToggle: switchToggle ?? this.switchToggle,
-        headerBackgroundColor: headerBackgroundColor ?? this.headerBackgroundColor,
-        headerButtonBackgroundColorHighlighted: headerButtonBackgroundColorHighlighted ?? this.headerButtonBackgroundColorHighlighted,
+        headerBackgroundColor:
+            headerBackgroundColor ?? this.headerBackgroundColor,
+        headerButtonBackgroundColorHighlighted:
+            headerButtonBackgroundColorHighlighted ??
+                this.headerButtonBackgroundColorHighlighted,
         headerIconColor: headerIconColor ?? this.headerIconColor,
         headerTextStyle: headerTextStyle ?? this.headerTextStyle,
         linkTextStyle: linkTextStyle ?? this.linkTextStyle,
-        linkTextStyleHighlighted: linkTextStyleHighlighted ?? this.linkTextStyleHighlighted,
+        linkTextStyleHighlighted:
+            linkTextStyleHighlighted ?? this.linkTextStyleHighlighted,
         listHeaderTextStyle: listHeaderTextStyle ?? this.listHeaderTextStyle,
         groupBackgroundColor: groupBackgroundColor ?? this.groupBackgroundColor,
-        accordionTitleTextStyle: accordionTitleTextStyle ?? this.accordionTitleTextStyle,
-        accordionBodyTextStyle: accordionBodyTextStyle ?? this.accordionBodyTextStyle,
-        accordionBackgroundColor: accordionBackgroundColor ?? this.accordionBackgroundColor,
+        accordionTitleTextStyle:
+            accordionTitleTextStyle ?? this.accordionTitleTextStyle,
+        accordionBodyTextStyle:
+            accordionBodyTextStyle ?? this.accordionBodyTextStyle,
+        accordionBackgroundColor:
+            accordionBackgroundColor ?? this.accordionBackgroundColor,
         modalBackgroundColor: modalBackgroundColor ?? this.modalBackgroundColor,
         modalTitleTextStyle: modalTitleTextStyle ?? this.modalTitleTextStyle,
         toastTextStyle: toastTextStyle ?? this.toastTextStyle,
@@ -280,24 +318,34 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
         tabBarTextStyle: tabBarTextStyle ?? this.tabBarTextStyle,
         menuBackgroundColor: menuBackgroundColor ?? this.menuBackgroundColor,
         menuBorderColor: menuBorderColor ?? this.menuBorderColor,
-        menuEntryForegroundColor: menuEntryForegroundColor ?? this.menuEntryForegroundColor,
-        menuEntryBackgroundColor: menuEntryBackgroundColor ?? this.menuEntryBackgroundColor,
+        menuEntryForegroundColor:
+            menuEntryForegroundColor ?? this.menuEntryForegroundColor,
+        menuEntryBackgroundColor:
+            menuEntryBackgroundColor ?? this.menuEntryBackgroundColor,
         menuEntryTextStyle: menuEntryTextStyle ?? this.menuEntryTextStyle,
         userMenuTextStyle: userMenuTextStyle ?? this.userMenuTextStyle,
-        userMenuForegroundColor: userMenuForegroundColor ?? this.userMenuForegroundColor,
+        userMenuForegroundColor:
+            userMenuForegroundColor ?? this.userMenuForegroundColor,
         breadcrumbTextStyle: breadcrumbTextStyle ?? this.breadcrumbTextStyle,
-        breadcrumbForegroundColor: breadcrumbForegroundColor ?? this.breadcrumbForegroundColor,
-        sidebarBackgroundColor: sidebarBackgroundColor ?? this.sidebarBackgroundColor,
+        breadcrumbForegroundColor:
+            breadcrumbForegroundColor ?? this.breadcrumbForegroundColor,
+        sidebarBackgroundColor:
+            sidebarBackgroundColor ?? this.sidebarBackgroundColor,
         sidebarBorderColor: sidebarBorderColor ?? this.sidebarBorderColor,
-        sidebarItemBackgroundColor: sidebarItemBackgroundColor ?? this.sidebarItemBackgroundColor,
-        sidebarItemForegroundColor: sidebarItemForegroundColor ?? this.sidebarItemForegroundColor,
+        sidebarItemBackgroundColor:
+            sidebarItemBackgroundColor ?? this.sidebarItemBackgroundColor,
+        sidebarItemForegroundColor:
+            sidebarItemForegroundColor ?? this.sidebarItemForegroundColor,
         sidebarItemTextStyle: sidebarItemTextStyle ?? this.sidebarItemTextStyle,
-        headerNavItemForegroundColor: headerNavItemForegroundColor ?? this.headerNavItemForegroundColor,
+        headerNavItemForegroundColor:
+            headerNavItemForegroundColor ?? this.headerNavItemForegroundColor,
         promotionBox: promotionBox ?? this.promotionBox,
+        picker: picker ?? this.picker,
       );
 
   @override
-  ThemeExtension<SBBControlStyles> lerp(ThemeExtension<SBBControlStyles>? other, double t) {
+  ThemeExtension<SBBControlStyles> lerp(
+      ThemeExtension<SBBControlStyles>? other, double t) {
     if (other is! SBBControlStyles) return this;
     return SBBControlStyles(
       checkbox: checkbox?.lerp(other.checkbox, t),
@@ -311,38 +359,61 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
       listItem: listItem?.lerp(other.listItem, t),
       selectLabel: selectLabel?.lerp(other.selectLabel, t),
       switchToggle: switchToggle?.lerp(other.switchToggle, t),
-      headerBackgroundColor: Color.lerp(headerBackgroundColor, other.headerBackgroundColor, t),
-      headerButtonBackgroundColorHighlighted: Color.lerp(headerButtonBackgroundColorHighlighted, other.headerButtonBackgroundColorHighlighted, t),
+      headerBackgroundColor:
+          Color.lerp(headerBackgroundColor, other.headerBackgroundColor, t),
+      headerButtonBackgroundColorHighlighted: Color.lerp(
+          headerButtonBackgroundColorHighlighted,
+          other.headerButtonBackgroundColorHighlighted,
+          t),
       headerIconColor: Color.lerp(headerIconColor, other.headerIconColor, t),
-      headerTextStyle: TextStyle.lerp(headerTextStyle, other.headerTextStyle, t),
+      headerTextStyle:
+          TextStyle.lerp(headerTextStyle, other.headerTextStyle, t),
       linkTextStyle: TextStyle.lerp(linkTextStyle, other.linkTextStyle, t),
-      linkTextStyleHighlighted: TextStyle.lerp(linkTextStyleHighlighted, other.linkTextStyleHighlighted, t),
-      listHeaderTextStyle: TextStyle.lerp(listHeaderTextStyle, other.listHeaderTextStyle, t),
-      groupBackgroundColor: Color.lerp(groupBackgroundColor, other.groupBackgroundColor, t),
-      accordionTitleTextStyle: TextStyle.lerp(accordionTitleTextStyle, other.accordionTitleTextStyle, t),
-      accordionBodyTextStyle: TextStyle.lerp(accordionBodyTextStyle, other.accordionBodyTextStyle, t),
-      accordionBackgroundColor: Color.lerp(accordionBackgroundColor, other.accordionBackgroundColor, t),
-      modalBackgroundColor: Color.lerp(modalBackgroundColor, other.modalBackgroundColor, t),
-      modalTitleTextStyle: TextStyle.lerp(modalTitleTextStyle, other.modalTitleTextStyle, t),
+      linkTextStyleHighlighted: TextStyle.lerp(
+          linkTextStyleHighlighted, other.linkTextStyleHighlighted, t),
+      listHeaderTextStyle:
+          TextStyle.lerp(listHeaderTextStyle, other.listHeaderTextStyle, t),
+      groupBackgroundColor:
+          Color.lerp(groupBackgroundColor, other.groupBackgroundColor, t),
+      accordionTitleTextStyle: TextStyle.lerp(
+          accordionTitleTextStyle, other.accordionTitleTextStyle, t),
+      accordionBodyTextStyle: TextStyle.lerp(
+          accordionBodyTextStyle, other.accordionBodyTextStyle, t),
+      accordionBackgroundColor: Color.lerp(
+          accordionBackgroundColor, other.accordionBackgroundColor, t),
+      modalBackgroundColor:
+          Color.lerp(modalBackgroundColor, other.modalBackgroundColor, t),
+      modalTitleTextStyle:
+          TextStyle.lerp(modalTitleTextStyle, other.modalTitleTextStyle, t),
       toastTextStyle: TextStyle.lerp(toastTextStyle, other.toastTextStyle, t),
-      toastBackgroundColor: Color.lerp(toastBackgroundColor, other.toastBackgroundColor, t),
-      tabBarTextStyle: TextStyle.lerp(tabBarTextStyle, other.tabBarTextStyle, t),
-      menuBackgroundColor: Color.lerp(menuBackgroundColor, other.menuBackgroundColor, t),
+      toastBackgroundColor:
+          Color.lerp(toastBackgroundColor, other.toastBackgroundColor, t),
+      tabBarTextStyle:
+          TextStyle.lerp(tabBarTextStyle, other.tabBarTextStyle, t),
+      menuBackgroundColor:
+          Color.lerp(menuBackgroundColor, other.menuBackgroundColor, t),
       menuBorderColor: Color.lerp(menuBorderColor, other.menuBorderColor, t),
-      menuEntryTextStyle: TextStyle.lerp(menuEntryTextStyle, other.menuEntryTextStyle, t),
-      userMenuTextStyle: TextStyle.lerp(userMenuTextStyle, other.userMenuTextStyle, t),
+      menuEntryTextStyle:
+          TextStyle.lerp(menuEntryTextStyle, other.menuEntryTextStyle, t),
+      userMenuTextStyle:
+          TextStyle.lerp(userMenuTextStyle, other.userMenuTextStyle, t),
       userMenuForegroundColor: other.userMenuForegroundColor,
-      breadcrumbTextStyle: TextStyle.lerp(breadcrumbTextStyle, other.breadcrumbTextStyle, t),
+      breadcrumbTextStyle:
+          TextStyle.lerp(breadcrumbTextStyle, other.breadcrumbTextStyle, t),
       breadcrumbForegroundColor: breadcrumbForegroundColor,
-      sidebarBackgroundColor: Color.lerp(sidebarBackgroundColor, other.sidebarBackgroundColor, t),
-      sidebarBorderColor: Color.lerp(sidebarBorderColor, other.sidebarBorderColor, t),
-      sidebarItemTextStyle: TextStyle.lerp(sidebarItemTextStyle, other.sidebarItemTextStyle, t),
+      sidebarBackgroundColor:
+          Color.lerp(sidebarBackgroundColor, other.sidebarBackgroundColor, t),
+      sidebarBorderColor:
+          Color.lerp(sidebarBorderColor, other.sidebarBorderColor, t),
+      sidebarItemTextStyle:
+          TextStyle.lerp(sidebarItemTextStyle, other.sidebarItemTextStyle, t),
       menuEntryForegroundColor: other.menuEntryForegroundColor,
       menuEntryBackgroundColor: other.menuEntryBackgroundColor,
       sidebarItemBackgroundColor: other.sidebarItemBackgroundColor,
       sidebarItemForegroundColor: other.sidebarItemForegroundColor,
       headerNavItemForegroundColor: other.headerNavItemForegroundColor,
       promotionBox: PromotionBoxStyle.lerp(promotionBox, other.promotionBox, t),
+      picker: picker?.lerp(other.picker, t),
     );
   }
 }
@@ -358,41 +429,66 @@ extension SBBControlStylesExtension on SBBControlStyles? {
       radioButton: this!.radioButton.merge(other?.radioButton),
       textField: this!.textField.merge(other?.textField),
       segmentedButton: this!.segmentedButton.merge(other?.segmentedButton),
-      redSegmentedButton: this!.redSegmentedButton.merge(other?.redSegmentedButton),
+      redSegmentedButton:
+          this!.redSegmentedButton.merge(other?.redSegmentedButton),
       listItem: this!.listItem.merge(other?.listItem),
       selectLabel: this!.selectLabel.merge(other?.selectLabel),
       switchToggle: this!.switchToggle.merge(other?.switchToggle),
-      headerBackgroundColor: this!.headerBackgroundColor ?? other?.headerBackgroundColor,
-      headerButtonBackgroundColorHighlighted: this!.headerButtonBackgroundColorHighlighted ?? other?.headerButtonBackgroundColorHighlighted,
+      picker: this!.picker.merge(other?.picker),
+      headerBackgroundColor:
+          this!.headerBackgroundColor ?? other?.headerBackgroundColor,
+      headerButtonBackgroundColorHighlighted:
+          this!.headerButtonBackgroundColorHighlighted ??
+              other?.headerButtonBackgroundColorHighlighted,
       headerIconColor: this!.headerIconColor ?? other?.headerIconColor,
       headerTextStyle: this!.headerTextStyle ?? other?.headerTextStyle,
       linkTextStyle: this!.linkTextStyle ?? other?.linkTextStyle,
-      linkTextStyleHighlighted: this!.linkTextStyleHighlighted ?? other?.linkTextStyleHighlighted,
-      listHeaderTextStyle: this!.listHeaderTextStyle ?? other?.listHeaderTextStyle,
-      groupBackgroundColor: this!.groupBackgroundColor ?? other?.groupBackgroundColor,
-      accordionTitleTextStyle: this!.accordionTitleTextStyle ?? other?.accordionTitleTextStyle,
-      accordionBodyTextStyle: this!.accordionBodyTextStyle ?? other?.accordionBodyTextStyle,
-      accordionBackgroundColor: this!.accordionBackgroundColor ?? other?.accordionBackgroundColor,
-      modalBackgroundColor: this!.modalBackgroundColor ?? other?.modalBackgroundColor,
-      modalTitleTextStyle: this!.modalTitleTextStyle ?? other?.modalTitleTextStyle,
+      linkTextStyleHighlighted:
+          this!.linkTextStyleHighlighted ?? other?.linkTextStyleHighlighted,
+      listHeaderTextStyle:
+          this!.listHeaderTextStyle ?? other?.listHeaderTextStyle,
+      groupBackgroundColor:
+          this!.groupBackgroundColor ?? other?.groupBackgroundColor,
+      accordionTitleTextStyle:
+          this!.accordionTitleTextStyle ?? other?.accordionTitleTextStyle,
+      accordionBodyTextStyle:
+          this!.accordionBodyTextStyle ?? other?.accordionBodyTextStyle,
+      accordionBackgroundColor:
+          this!.accordionBackgroundColor ?? other?.accordionBackgroundColor,
+      modalBackgroundColor:
+          this!.modalBackgroundColor ?? other?.modalBackgroundColor,
+      modalTitleTextStyle:
+          this!.modalTitleTextStyle ?? other?.modalTitleTextStyle,
       toastTextStyle: this!.toastTextStyle ?? other?.toastTextStyle,
-      toastBackgroundColor: this!.toastBackgroundColor ?? other?.toastBackgroundColor,
+      toastBackgroundColor:
+          this!.toastBackgroundColor ?? other?.toastBackgroundColor,
       tabBarTextStyle: this!.tabBarTextStyle ?? other?.tabBarTextStyle,
-      menuBackgroundColor: this!.menuBackgroundColor ?? other?.menuBackgroundColor,
+      menuBackgroundColor:
+          this!.menuBackgroundColor ?? other?.menuBackgroundColor,
       menuBorderColor: this!.menuBorderColor ?? other?.menuBorderColor,
-      menuEntryForegroundColor: this!.menuEntryForegroundColor ?? other?.menuEntryForegroundColor,
-      menuEntryBackgroundColor: this!.menuEntryBackgroundColor ?? other?.menuEntryBackgroundColor,
+      menuEntryForegroundColor:
+          this!.menuEntryForegroundColor ?? other?.menuEntryForegroundColor,
+      menuEntryBackgroundColor:
+          this!.menuEntryBackgroundColor ?? other?.menuEntryBackgroundColor,
       menuEntryTextStyle: this!.menuEntryTextStyle ?? other?.menuEntryTextStyle,
       userMenuTextStyle: this!.userMenuTextStyle ?? other?.userMenuTextStyle,
-      userMenuForegroundColor: this!.userMenuForegroundColor ?? other?.userMenuForegroundColor,
-      breadcrumbTextStyle: this!.breadcrumbTextStyle ?? other?.breadcrumbTextStyle,
-      breadcrumbForegroundColor: this!.breadcrumbForegroundColor ?? other?.breadcrumbForegroundColor,
-      sidebarBackgroundColor: this!.sidebarBackgroundColor ?? other?.sidebarBackgroundColor,
+      userMenuForegroundColor:
+          this!.userMenuForegroundColor ?? other?.userMenuForegroundColor,
+      breadcrumbTextStyle:
+          this!.breadcrumbTextStyle ?? other?.breadcrumbTextStyle,
+      breadcrumbForegroundColor:
+          this!.breadcrumbForegroundColor ?? other?.breadcrumbForegroundColor,
+      sidebarBackgroundColor:
+          this!.sidebarBackgroundColor ?? other?.sidebarBackgroundColor,
       sidebarBorderColor: this!.sidebarBorderColor ?? other?.sidebarBorderColor,
-      sidebarItemBackgroundColor: this!.sidebarItemBackgroundColor ?? other?.sidebarItemBackgroundColor,
-      sidebarItemForegroundColor: this!.sidebarItemForegroundColor ?? other?.sidebarItemForegroundColor,
-      sidebarItemTextStyle: this!.sidebarItemTextStyle ?? other?.sidebarItemTextStyle,
-      headerNavItemForegroundColor: this!.headerNavItemForegroundColor ?? other?.headerNavItemForegroundColor,
+      sidebarItemBackgroundColor:
+          this!.sidebarItemBackgroundColor ?? other?.sidebarItemBackgroundColor,
+      sidebarItemForegroundColor:
+          this!.sidebarItemForegroundColor ?? other?.sidebarItemForegroundColor,
+      sidebarItemTextStyle:
+          this!.sidebarItemTextStyle ?? other?.sidebarItemTextStyle,
+      headerNavItemForegroundColor: this!.headerNavItemForegroundColor ??
+          other?.headerNavItemForegroundColor,
       promotionBox: this!.promotionBox ?? other?.promotionBox,
     ) as SBBControlStyles;
   }

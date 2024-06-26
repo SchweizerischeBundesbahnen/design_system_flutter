@@ -1,7 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:design_system_flutter/design_system_flutter.dart';
-import 'pages/input_trigger_page.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
 import 'pages/accordion_page.dart';
@@ -60,6 +60,18 @@ class MyApp extends StatelessWidget {
               hostPlatform: HostPlatform.native,
             ),
             themeMode: appState.isDarkModeOn ? ThemeMode.dark : ThemeMode.light,
+            localizationsDelegates: [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: [
+              Locale('en'),
+              Locale('de'),
+              Locale('fr'),
+              Locale('it'),
+            ],
+            locale: Locale('de'),
             home: Scaffold(
               appBar: SBBHeader(title: 'Design System Mobile'),
               body: SingleChildScrollView(

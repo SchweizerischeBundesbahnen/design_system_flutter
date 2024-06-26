@@ -20,13 +20,7 @@ class _PickerPageState extends State<PickerPage> {
     'Mango',
     'Banana',
     'Orange',
-    'Last',
   ];
-
-  DateTime initialDateTime = DateTime.now();
-  late DateTime dateTime = initialDateTime;
-  late TimeOfDay time = TimeOfDay.fromDateTime(initialDateTime);
-  final controller = SBBPickerScrollController(initialItem: 4);
 
   @override
   Widget build(BuildContext context) {
@@ -42,57 +36,51 @@ class _PickerPageState extends State<PickerPage> {
           SBBListHeader('DateTimePicker (date & time)'),
           SBBGroup(
             child: SBBDateTimePicker(
-              onDateTimeChanged: (DateTime dateTime) {},
+              onDateTimeChanged: (DateTime dateTime) {
+                debugPrint('selected date time: $dateTime');
+              },
             ),
           ),
           const SizedBox(height: sbbDefaultSpacing),
           SBBListHeader('DatePicker (date only)'),
           SBBGroup(
             child: SBBDatePicker(
-              onDateChanged: (DateTime date) {},
+              onDateChanged: (DateTime date) {
+                debugPrint('selected date: $date');
+              },
             ),
           ),
           const SizedBox(height: sbbDefaultSpacing),
           SBBListHeader('TimePicker (time only)'),
           SBBGroup(
             child: SBBTimePicker(
-              onTimeChanged: (TimeOfDay time) {},
+              onTimeChanged: (TimeOfDay time) {
+                debugPrint('selected time: $time');
+              },
             ),
           ),
-          const SizedBox(
-            height: sbbDefaultSpacing,
-          ),
+          const SizedBox(height: sbbDefaultSpacing),
           SBBListHeader('SBBPicker (looping)'),
           SBBGroup(
-            child: SBBPicker(
-              isLastElement: true,
-              onSelectedItemChanged: (int index) {},
-              itemBuilder: (BuildContext context, int index) {
-                return (
-                  true,
-                  Text(_fruitNames[index % _fruitNames.length]),
-                );
+            child: SBBPicker.list(
+              onSelectedItemChanged: (int index) {
+                final selectedItemIndex = index % _fruitNames.length;
+                final selectedItem = _fruitNames[selectedItemIndex];
+                debugPrint('selected item: $selectedItem');
               },
+              items: _fruitNames,
             ),
           ),
-          const SizedBox(
-            height: sbbDefaultSpacing,
-          ),
+          const SizedBox(height: sbbDefaultSpacing),
           SBBListHeader('SBBPicker (non looping)'),
           SBBGroup(
-            child: SBBPicker(
+            child: SBBPicker.list(
               looping: false,
-              isLastElement: true,
-              onSelectedItemChanged: (int index) {},
-              itemBuilder: (BuildContext context, int index) {
-                if (index < 0 || index >= _fruitNames.length) {
-                  return null;
-                }
-                return (
-                  true,
-                  Text(_fruitNames[index]),
-                );
+              onSelectedItemChanged: (int index) {
+                final selectedItem = _fruitNames[index];
+                debugPrint('selected item: $selectedItem');
               },
+              items: _fruitNames,
             ),
           ),
         ],

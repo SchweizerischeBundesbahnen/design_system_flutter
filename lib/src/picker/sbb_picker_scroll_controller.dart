@@ -1,33 +1,45 @@
 part of 'sbb_picker.dart';
 
-/// A controller for [SBBPickerScrollView].
+/// A scroll controller for [SBBPickerScrollView] that is used by [SBBPicker].
 ///
-/// A SBB picker scroll view controller lets you manipulate which item is
-/// selected in a [SBBPickerScrollView].
+/// An SBB picker scroll view controller lets you manipulate which item is
+/// selected in an [SBBPickerScrollView].
 ///
 /// See also:
 ///
 ///  * [SBBPickerScrollView], which is the widget this object controls.
 class SBBPickerScrollController extends ScrollController {
   SBBPickerScrollController({
-    int initialItem = 0,
+    this.initialItem = 0,
     this.onTargetItemSelected,
-  }) : super(
-          initialScrollOffset: _getItemScrollOffset(
-            initialItem,
-          ),
-        );
+  });
 
   ValueNotifier<bool> _scrollingStateNotifier = ValueNotifier(false);
   late VoidCallback _isScrollingListener;
+  ScrollControllerCallback? _onAttachListener;
+  int _indexOffset = 0;
 
-  /// TODO doc
+  /// The index of the initial item to be selected.
+  ///
+  /// Defaults to 0.
+  final int initialItem;
+
+  /// Listener to be called as soon as the selected item is determined without
+  /// waiting for any animations.
   final ValueChanged<int>? onTargetItemSelected;
 
+  /// The index of the currently selected item.
   int get selectedItem {
-    final currentOffset = positions.isEmpty ? initialScrollOffset : offset;
-    return (currentOffset / _defaultItemHeight).round() +
-        _firstIndexPreItemsCount;
+    final selectedItemIndex = _offsetToIndex(offset).round();
+    return selectedItemIndex;
+  }
+
+  /// The current scroll offset of the scrollable widget.
+  ///
+  /// Requires the controller to be controlling exactly one scrollable widget.
+  @override
+  double get offset {
+    return positions.isEmpty ? initialScrollOffset : super.offset;
   }
 
   /// Animates the controlled [SBBPickerScrollView] from the current item to
@@ -38,17 +50,14 @@ class SBBPickerScrollController extends ScrollController {
   /// The returned [Future] resolves when the animation completes.
   ///
   /// The duration must not be zero. To jump to a particular value without an
-  /// animation, use [jumpToItem].
-  ///
-  /// The `duration` and `curve` arguments must not be null.
+  /// animation, use [jumpToItem
   Future<void> animateToItem(
     int itemIndex, {
     Duration duration = kThemeAnimationDuration,
     Curve curve = Curves.fastOutSlowIn,
   }) async {
-    final targetItemScrollOffset = _getItemScrollOffset(itemIndex);
-    await animateToScrollOffset(
-      targetItemScrollOffset,
+    await animateTo(
+      itemIndex * _itemHeight,
       duration: duration,
       curve: curve,
     );
@@ -76,13 +85,15 @@ class SBBPickerScrollController extends ScrollController {
   ///
   /// The duration must not be zero. To jump to a particular value without an
   /// animation, use [jumpTo].
-  Future<void> animateToScrollOffset(
-    double scrollOffset, {
+  @override
+  Future<void> animateTo(
+    double offset, {
     Duration duration = kThemeAnimationDuration,
     Curve curve = Curves.fastOutSlowIn,
   }) async {
-    await animateTo(
-      scrollOffset,
+    final targetOffset = _targetOffset(offset);
+    return super.animateTo(
+      targetOffset,
       duration: duration,
       curve: curve,
     );
@@ -94,8 +105,35 @@ class SBBPickerScrollController extends ScrollController {
   /// Any active animation is canceled. If the user is currently scrolling, that
   /// action is canceled.
   void jumpToItem(int itemIndex) {
-    final targetItemScrollOffset = _getItemScrollOffset(itemIndex);
-    jumpTo(targetItemScrollOffset);
+    jumpTo(itemIndex * _itemHeight);
+  }
+
+  @override
+  void jumpTo(double value) {
+    final targetOffset = _targetOffset(value);
+    super.jumpTo(targetOffset);
+  }
+
+  /// Register a listener to be called when a [ScrollPosition] is attached to
+  /// the scroll controller.
+  void setOnAttachListener(ScrollControllerCallback onAttachListener) {
+    _onAttachListener = onAttachListener;
+  }
+
+  /// Register a listener to be called when the scrolling state changes.
+  void addScrollingStateListener(VoidCallback listener) {
+    _scrollingStateNotifier.addListener(listener);
+  }
+
+  /// Remove a previously registered listener from the list of listeners that
+  /// are notified when the scrolling state changes.
+  void removeScrollingStateListener(VoidCallback listener) {
+    _scrollingStateNotifier.removeListener(listener);
+  }
+
+  /// Whether the controller is currently scrolling or not.
+  bool isScrolling() {
+    return _scrollingStateNotifier.value;
   }
 
   @override
@@ -109,9 +147,9 @@ class SBBPickerScrollController extends ScrollController {
         return;
       }
 
-      // check for idle scroll controller with Future.microtask to prevent
-      // this getting triggered by a new drag action while the view was
-      // already in an scroll animation
+      // check for idle scroll controller with Future.microtask to prevent this
+      // getting triggered by a new drag action while the view was already in an
+      // scroll animation
       Future.microtask(() {
         final scrollingValue = position.isScrollingNotifier.value;
         if (scrollingValue) {
@@ -120,11 +158,10 @@ class SBBPickerScrollController extends ScrollController {
           return;
         }
 
-        // ensure scroll position snaps to the nearest item after controller
-        // is done scrolling
+        // ensure scroll position snaps to the nearest item after controller is
+        // done scrolling
         final currentScrollPosition = position.pixels;
-        final targetScrollPosition =
-            SBBPickerScrollController._calculateTargetScrollPosition(
+        final targetScrollPosition = _snappedScrollPosition(
           currentScrollPosition,
         );
 
@@ -135,8 +172,8 @@ class SBBPickerScrollController extends ScrollController {
         final difference = (currentScrollPosition - targetScrollPosition).abs();
         if (difference > 0.01) {
           onTargetItemSelected?.call(selectedItem);
-          animateToScrollOffset(
-            targetScrollPosition,
+          animateToItem(
+            selectedItem,
             curve: Curves.easeInOut,
           ).whenComplete(() {
             // update scrolling value after animation is complete
@@ -148,6 +185,7 @@ class SBBPickerScrollController extends ScrollController {
       });
     };
     position.isScrollingNotifier.addListener(_isScrollingListener);
+    _onAttachListener?.call(position);
   }
 
   @override
@@ -156,36 +194,24 @@ class SBBPickerScrollController extends ScrollController {
     super.detach(position);
   }
 
-  static double _getItemScrollOffset(int index) {
-    final targetItemScrollOffset =
-        (index - _firstIndexPreItemsCount) * _defaultItemHeight;
-    return _calculateTargetScrollPosition(
-      targetItemScrollOffset,
-    );
+  @override
+  void dispose() {
+    _scrollingStateNotifier.dispose();
+    _onAttachListener = null;
+    super.dispose();
   }
 
-  static double _calculateTargetScrollPosition(double scrollPosition) {
-    final itemsOfBothListsVisible =
-        scrollPosition < 0 && scrollPosition > -_scrollAreaHeight;
-    if (itemsOfBothListsVisible) {
-      // Because the heights of list items vary depending on their positions,
-      // it's necessary to handle the area where items from both the positive
-      // and negative lists are visible differently. This is because the
-      // calculation for the target scroll position isn't accurate when both
-      // lists are scrolling simultaneously. Therefore, the calculation for the
-      // target scroll position must be adjusted.
-      for (var i = 0; i < _visibleItemCount; i++) {
-        var threshold = 0.0;
-        for (var j = 0; j < i; j++) {
-          threshold -= _visibleItemHeights[j];
-        }
-        threshold -= _visibleItemHeights[i] * 0.5;
-        if (scrollPosition > threshold) {
-          return threshold + _visibleItemHeights[i] * 0.5;
-        }
-      }
-    }
+  double _targetOffset(double offset) {
+    final indexBasedPositionOffset =
+        (0 - initialItem - _indexOffset) * _itemHeight;
+    return offset + indexBasedPositionOffset;
+  }
 
-    return (scrollPosition / _defaultItemHeight).round() * _defaultItemHeight;
+  double _offsetToIndex(double offset) {
+    return offset / _itemHeight + initialItem + _indexOffset;
+  }
+
+  double _snappedScrollPosition(double offset) {
+    return (offset / _itemHeight).round() * _itemHeight;
   }
 }

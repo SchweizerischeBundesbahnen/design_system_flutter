@@ -73,7 +73,11 @@ class _DateInputModalContent extends StatefulWidget {
     this.minimumDate,
     this.maximumDate,
     this.onDateChanged,
-  }) : initialDate = SBBDatePicker._initialDate(initialDate);
+  }) : initialDate = SBBDatePicker._initialDate(
+          initialDate,
+          minimumDate,
+          maximumDate,
+        );
 
   final DateTime initialDate;
   final DateTime? minimumDate;
