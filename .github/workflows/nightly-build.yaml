@@ -1,0 +1,41 @@
+name: Nightly built.
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "20 2 * * *"   # 02:20 am every day
+
+jobs:
+  build-android:
+    name: Build Android
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: example
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - uses: actions/setup-java@v4
+        with:
+          java-version: "17"
+          distribution: "temurin"
+      - run: flutter pub get
+      - name: Build appbundle.
+        run: flutter build appbundle --profile --no-pub
+
+  build-iOS:
+    name: Build iOS
+    runs-on: macos-latest
+    defaults:
+      run:
+        working-directory: example
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - run: flutter pub get
+      - name: Build iOS package
+        run: flutter build ios --simulator
