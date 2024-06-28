@@ -99,9 +99,10 @@ class SBBTextStyles {
   );
 }
 
+@Deprecated('FlutterWeb will not be supported from the next major release.')
 class SBBLeanTextStyles {
   SBBLeanTextStyles._();
-
+  @Deprecated('FlutterWeb will not be supported from the next major release.')
   static const TextStyle headerTitle = TextStyle(
     fontSize: 15.0,
     fontStyle: FontStyle.normal,
@@ -109,7 +110,7 @@ class SBBLeanTextStyles {
     fontFamily: SBBWebFont,
     color: SBBColors.black,
   );
-
+  @Deprecated('FlutterWeb will not be supported from the next major release.')
   static const TextStyle headerSubtitle = TextStyle(
     fontSize: 13.0,
     fontStyle: FontStyle.normal,
@@ -117,7 +118,7 @@ class SBBLeanTextStyles {
     fontFamily: SBBWebFont,
     color: SBBColors.metal,
   );
-
+  @Deprecated('FlutterWeb will not be supported from the next major release.')
   static const TextStyle contextMenu = TextStyle(
     fontSize: 15.0,
     fontStyle: FontStyle.normal,
@@ -125,7 +126,7 @@ class SBBLeanTextStyles {
     fontFamily: SBBWebFont,
     color: SBBColors.iron,
   );
-
+  @Deprecated('FlutterWeb will not be supported from the next major release.')
   static const TextStyle userMenuInitials = TextStyle(
     fontSize: 10.0,
     fontStyle: FontStyle.normal,
@@ -133,7 +134,7 @@ class SBBLeanTextStyles {
     fontFamily: SBBWebFont,
     color: SBBColors.metal,
   );
-
+  @Deprecated('FlutterWeb will not be supported from the next major release.')
   static const TextStyle breadcrumb = TextStyle(
     fontSize: 13.0,
     fontStyle: FontStyle.normal,
@@ -142,6 +143,7 @@ class SBBLeanTextStyles {
   );
 }
 
+@Deprecated('FlutterWeb will not be supported from the next major release.')
 class SBBWebTextStyles {
   SBBWebTextStyles._();
 
@@ -177,7 +179,7 @@ class SBBWebTextStyles {
     height: 19.0 / 16.0,
     color: SBBColors.black,
   );
-
+  @Deprecated('FlutterWeb will not be supported from the next major release.')
   static const TextStyle _running = TextStyle(
     fontSize: 15.0,
     fontStyle: FontStyle.normal,
@@ -186,35 +188,35 @@ class SBBWebTextStyles {
     height: 23.0 / 15.0,
     color: SBBColors.black,
   );
-
+  @Deprecated('FlutterWeb will not be supported from the next major release.')
   static const TextStyle medium = TextStyle(
     fontSize: 15.0,
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w400,
     fontFamily: SBBWebFont,
   );
-
+  @Deprecated('FlutterWeb will not be supported from the next major release.')
   static const TextStyle small = TextStyle(
     fontSize: 13.0,
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w400,
     fontFamily: SBBWebFont,
   );
-
+  @Deprecated('FlutterWeb will not be supported from the next major release.')
   static const TextStyle extraSmallBold = TextStyle(
     fontSize: 10.0,
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w700,
     fontFamily: SBBWebFont,
   );
-
+  @Deprecated('FlutterWeb will not be supported from the next major release.')
   static const TextStyle mediumLight = TextStyle(
     fontSize: 15.0,
     fontStyle: FontStyle.normal,
     fontWeight: FontWeight.w300,
     fontFamily: SBBWebFont,
   );
-
+  @Deprecated('FlutterWeb will not be supported from the next major release.')
   static const TextStyle dropdownLabel = TextStyle(
     fontSize: 13.0,
     fontStyle: FontStyle.normal,
@@ -222,7 +224,7 @@ class SBBWebTextStyles {
     fontFamily: SBBWebFont,
     color: SBBColors.granite,
   );
-
+  @Deprecated('FlutterWeb will not be supported from the next major release.')
   static const TextStyle accordionHeader = TextStyle(
     fontSize: 21.0,
     fontStyle: FontStyle.normal,
@@ -232,7 +234,9 @@ class SBBWebTextStyles {
   );
 }
 
+@Deprecated('FlutterWeb will not be supported from the next major release.')
 class SBBWebText extends StatelessWidget {
+  @Deprecated('FlutterWeb will not be supported from the next major release.')
   const SBBWebText.headerOne(
     this.data, {
     Key? key,
@@ -242,7 +246,7 @@ class SBBWebText extends StatelessWidget {
         top: SBBWebDivider.big, bottom: SBBWebDivider.medium),
     this.selectable = false,
   }) : super(key: key);
-
+  @Deprecated('FlutterWeb will not be supported from the next major release.')
   const SBBWebText.headerTwo(
     this.data, {
     Key? key,
@@ -252,7 +256,7 @@ class SBBWebText extends StatelessWidget {
         top: SBBWebDivider.medium, bottom: SBBWebDivider.small),
     this.selectable = false,
   }) : super(key: key);
-
+  @Deprecated('FlutterWeb will not be supported from the next major release.')
   const SBBWebText.headerThree(
     this.data, {
     Key? key,
@@ -262,7 +266,7 @@ class SBBWebText extends StatelessWidget {
         top: SBBWebDivider.small, bottom: SBBWebDivider.thin),
     this.selectable = false,
   }) : super(key: key);
-
+  @Deprecated('FlutterWeb will not be supported from the next major release.')
   const SBBWebText.headerFour(
     this.data, {
     Key? key,
@@ -272,7 +276,7 @@ class SBBWebText extends StatelessWidget {
         top: SBBWebDivider.small, bottom: SBBWebDivider.thin),
     this.selectable = false,
   }) : super(key: key);
-
+  @Deprecated('FlutterWeb will not be supported from the next major release.')
   const SBBWebText.running(
     this.data, {
     Key? key,

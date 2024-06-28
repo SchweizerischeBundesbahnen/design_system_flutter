@@ -147,8 +147,8 @@ class _SBBWebHeaderNavItemState extends State<SBBWebHeaderNavItem>
       onTap: widget.onTap,
       child: Material(
         color: SBBColors.white,
-        textStyle: SBBWebTextStyles.medium.copyWith(
-            color: style!.resolve(materialStates)),
+        textStyle: SBBWebTextStyles.medium
+            .copyWith(color: style!.resolve(materialStates)),
         child: InkWell(
             splashColor: SBBColors.transparent,
             overlayColor: SBBTheme.allStates(SBBColors.transparent),

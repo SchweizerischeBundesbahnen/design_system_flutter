@@ -1,0 +1,17 @@
+{
+  "dependencies": {
+    "fantasticon": "^3.0.0",
+    "oslllo-svg-fixer": "^4.0.1",
+    "parse-bmfont-xml": "^1.1.6"
+  },
+  "scripts": {
+    "fix-small": "node_modules/.bin/oslllo-svg-fixer -s icons/small-tmp -d icons/small",
+    "fix-medium": "node_modules/.bin/oslllo-svg-fixer -s icons/medium-tmp -d icons/medium",
+    "fix-large": "node_modules/.bin/oslllo-svg-fixer -s icons/large-tmp -d icons/large",
+    "fix": "npm run fix-small & npm run fix-medium & npm run fix-large",
+    "generate-small": "node_modules/.bin/fantasticon icons/small -o icons -n sbb_icons_small -t ttf -g json",
+    "generate-medium": "node_modules/.bin/fantasticon icons/medium -o icons -n sbb_icons_medium -t ttf -g json",
+    "generate-large": "node_modules/.bin/fantasticon icons/large -o icons -n sbb_icons_large -t ttf -g json",
+    "generate": "npm run generate-small && npm run generate-medium && npm run generate-large"
+  }
+}

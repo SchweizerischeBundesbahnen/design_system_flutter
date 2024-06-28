@@ -30,9 +30,11 @@
 .pub/
 /build/
 *.g.dart
+pubspec.lock
 
 # FVM related
-.fvm/flutter_sdk
+.fvm/
+.fvmrc
 
 # Android related
 **/android/**/gradle-wrapper.jar

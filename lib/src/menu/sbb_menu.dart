@@ -135,7 +135,7 @@ class _MenuItem extends SingleChildRenderObjectWidget {
     Key? key,
     required this.onLayout,
     required Widget? child,
-  })  : super(key: key, child: child);
+  }) : super(key: key, child: child);
 
   final ValueChanged<Size> onLayout;
 
@@ -152,8 +152,7 @@ class _MenuItem extends SingleChildRenderObjectWidget {
 }
 
 class _RenderMenuItem extends RenderShiftedBox {
-  _RenderMenuItem(this.onLayout, [RenderBox? child])
-      : super(child);
+  _RenderMenuItem(this.onLayout, [RenderBox? child]) : super(child);
 
   ValueChanged<Size> onLayout;
 
@@ -214,7 +213,7 @@ class SBBMenuItem<T> extends SBBMenuEntry<T> {
     required this.child,
     this.foregroundColor,
     this.backgroundColor,
-  })  : super(key: key);
+  }) : super(key: key);
 
   /// Create a SBB Menu Tile with a required [title] and optional [icon].
   ///

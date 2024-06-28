@@ -7,7 +7,9 @@ const _kVerticalPadding = 12.0;
 const _kHorizontalPadding = 16.0;
 const _kScrollingDuration = Duration(milliseconds: 600);
 
+@Deprecated('FlutterWeb will not be supported from the next major release.')
 class SBBWebNotification extends StatefulWidget {
+  @Deprecated('FlutterWeb will not be supported from the next major release.')
   const SBBWebNotification.confirmation(
     this.text, {
     Key? key,
@@ -18,7 +20,7 @@ class SBBWebNotification extends StatefulWidget {
     this.jumpMarks,
     this.expand = false,
   }) : super(key: key);
-
+  @Deprecated('FlutterWeb will not be supported from the next major release.')
   const SBBWebNotification.hint(
     this.text, {
     Key? key,
@@ -29,7 +31,7 @@ class SBBWebNotification extends StatefulWidget {
     this.jumpMarks,
     this.expand = false,
   }) : super(key: key);
-
+  @Deprecated('FlutterWeb will not be supported from the next major release.')
   const SBBWebNotification.warning(
     this.text, {
     Key? key,
@@ -40,7 +42,7 @@ class SBBWebNotification extends StatefulWidget {
     this.jumpMarks,
     this.expand = false,
   }) : super(key: key);
-
+  @Deprecated('FlutterWeb will not be supported from the next major release.')
   const SBBWebNotification.error(
     this.text, {
     Key? key,
@@ -123,6 +125,13 @@ class _SBBWebNotificationState extends State<SBBWebNotification>
       axisAlignment: 1.0,
       sizeFactor: animation,
       child: Container(
+        decoration: BoxDecoration(
+            color: widget.backgroundColor,
+            borderRadius:
+                const BorderRadius.all(Radius.circular(_kBorderRadius)),
+            border: widget.borderColor != null
+                ? Border.all(color: widget.borderColor!)
+                : null),
         child: Padding(
           padding: const EdgeInsets.symmetric(
               horizontal: _kHorizontalPadding, vertical: _kVerticalPadding),
@@ -165,17 +174,12 @@ class _SBBWebNotificationState extends State<SBBWebNotification>
             ],
           ),
         ),
-        decoration: BoxDecoration(
-            color: widget.backgroundColor,
-            borderRadius: BorderRadius.all(Radius.circular(_kBorderRadius)),
-            border: widget.borderColor != null
-                ? Border.all(color: widget.borderColor!)
-                : null),
       ),
     );
   }
 }
 
+@Deprecated('FlutterWeb will not be supported from the next major release.')
 class SBBJumpMark extends StatelessWidget {
   const SBBJumpMark({Key? key, required this.text, required this.keyToScrollTo})
       : super(key: key);

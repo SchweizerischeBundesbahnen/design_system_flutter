@@ -1,0 +1,68 @@
+name: Make Release PR.
+
+on: 
+  workflow_dispatch:
+    inputs:
+      semantic-versioning:
+        description: Whether to increase major, minor or patch.
+        required: true
+        default: 'patch'
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+
+jobs:
+  pull-request-creation:
+    permissions:
+      pull-requests: write
+      contents: write
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Generate Token
+        id: app-token
+        uses: actions/create-github-app-token@v1
+        with:
+          app-id: ${{ vars.APPBAKERYGITHUBAPP_APPID }}
+          private-key: ${{ secrets.APPBAKERYGITHUBAPP_PRIVATEKEY }}
+          
+      - name: Clone Repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+
+      - name: Update Changelog
+        id: update-changelog
+        uses: release-flow/keep-a-changelog-action@v3
+        with:
+          command: bump
+          version: ${{ inputs.semantic-versioning }}
+          keep-unreleased-section: true
+          tag-prefix: ''
+
+      - name: Update Pubspec version
+        uses: Dbono-dev/yaml-action@v1.0.3
+        with:
+          changes: |
+            {
+              "version": "${{ steps.update-changelog.outputs.version }}"
+            }
+          commentOutDevDependencies: 'false'
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v6.0.5
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          commit-message: ${{ format('Prepare Release for version {0}', steps.update-changelog.outputs.version) }}
+          branch: ${{ format('release/{0}', steps.update-changelog.outputs.version) }}
+          title: ${{ format('Auto Release Pull Request {0}', steps.update-changelog.outputs.version) }}
+          body: |
+            Make changes for release.
+            - Update pubspec
+            - Update CHANGELOG.md
+
+            **Merging this PR will trigger a github release using the corresponding workflow.**
+          labels: |
+            autorelease

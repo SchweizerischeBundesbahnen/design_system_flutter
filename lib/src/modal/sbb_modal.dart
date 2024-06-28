@@ -1,5 +1,3 @@
-import 'dart:ui' as ui;
-
 import 'package:flutter/material.dart';
 
 import '../../design_system_flutter.dart';
@@ -186,7 +184,7 @@ class SBBModalSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = SBBControlStyles.of(context);
-    final padding = MediaQueryData.fromWindow(ui.window).padding;
+    final padding = View.of(context).viewInsets;
     final statusBarHeight = padding.top;
     return Column(
       mainAxisSize: MainAxisSize.min,

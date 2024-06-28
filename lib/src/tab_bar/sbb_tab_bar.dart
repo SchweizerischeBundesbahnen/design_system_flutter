@@ -12,11 +12,13 @@ import 'tab_item_widget.dart';
 /// The TabBar for SBB themed apps with multiple tabs.
 /// Items is a list of all tabs that should be shown in the TabBar.
 /// OnTabChanged defines what happens when a tab is selected.
+/// OnTap gets called when a tab is tapped.
 class SBBTabBar extends StatefulWidget {
   const SBBTabBar({
     required this.items,
     required this.onTabChanged,
     Key? key,
+    this.onTap,
     this.controller,
     this.initialItem,
     this.warningSemantics,
@@ -27,6 +29,7 @@ class SBBTabBar extends StatefulWidget {
 
   final List<TabBarItem> items;
   final Future<void> Function(Future<TabBarItem> tabTask) onTabChanged;
+  final void Function(TabBarItem tab)? onTap;
   final TabBarController? controller;
   final TabBarItem? initialItem;
   final String? warningSemantics;
@@ -141,6 +144,7 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
                             child: GestureDetector(
                               key: Key('${tab.id}_button'),
                               onTap: () {
+                                widget.onTap?.call(tab);
                                 if (snapshotData.selectedTab == tab) return;
                                 widget.onTabChanged(_controller.selectTab(tab));
                               },

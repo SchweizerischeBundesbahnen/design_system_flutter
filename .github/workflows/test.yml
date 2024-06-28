@@ -1,10 +1,21 @@
-# Runs flutter test on every push.
+# Runs flutter test and CHANGELOG.md validation on every PR to main.
 # Failed goldens are uploaded and can be seen in the artifact summary of the job.
 
-name: test
+name: Validate
 
 on:
   push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+# Ensure that new pushes/updates cancel running jobs
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
@@ -13,15 +24,12 @@ jobs:
     steps:
       - name: Checkout design_system_flutter code.
         uses: actions/checkout@v4
-        
-      - name: Parse flutter version and channel specified in .fvm into env vars.
-        uses: kuhnroyal/flutter-fvm-config-action@v1
-        
+
       - name: Clone flutter version specified in .fvm.
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: ${{ steps.fvm-config-action.outputs.FLUTTER_VERSION }}
-          channel: ${{ steps.fvm-config-action.outputs.FLUTTER_CHANNEL }}
+          channel: stable
+          cache: true
 
       - name: Run flutter doctor.
         run: flutter doctor -v
@@ -32,12 +40,84 @@ jobs:
       - name: Run flutter test.
         id: test
         run: flutter test
-        
+
       - name: Upload goldens if tests fail.
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: ${{ failure() && steps.test.conclusion == 'failure' }}
         with:
           name: goldens
           path: test/failures/
-        
-      
+          retention-days: 3
+
+  changelog-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone Repository.
+        uses: actions/checkout@v4
+
+      - name: Read Changelog and validate.
+        uses: mindsers/changelog-reader-action@v2.2.3
+        with:
+          validation_level: "error"
+
+  build-android:
+    name: "Build Android apk"
+    runs-on: ubuntu-latest
+    needs: [test, changelog-test]
+    defaults:
+      run:
+        working-directory: example
+    strategy:
+      fail-fast: false
+      matrix:
+        sdk: ["3.16.9", ""]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ matrix.sdk }}
+          cache: true
+      - uses: actions/setup-java@v4
+        with:
+          java-version: "17"
+          distribution: "temurin"
+          cache: "gradle"
+      - run: flutter pub get
+      - name: Build appbundle.
+        run: flutter build appbundle --profile --no-pub
+
+      - name: Upload appbundle as artifact.
+        uses: actions/upload-artifact@v4
+        if: ${{ matrix.sdk == '' && github.event_name == 'pull_request' }}
+        with:
+          name: app-profile.aab
+          path: example/build/app/outputs/bundle/profile/
+          retention-days: 3
+
+  build-iOS:
+    name: Build iOS package
+    runs-on: macos-latest
+    needs: [test, changelog-test]
+    defaults:
+      run:
+        working-directory: example
+    strategy:
+      fail-fast: false
+      matrix:
+        sdk: ["3.16.9", ""]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: ${{ matrix.sdk }}
+          cache: true
+      - run: flutter pub get
+      - name: Build iOS package
+        run: flutter build ios --simulator
+      - name: Upload Runner.app as artifact
+        if: ${{ matrix.sdk == '' && github.event_name == 'pull_request' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: fdsm-example.app
+          path: example/build/ios/iphonesimulator
+          retention-days: 3

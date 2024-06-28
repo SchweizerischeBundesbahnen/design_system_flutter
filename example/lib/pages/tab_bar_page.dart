@@ -21,28 +21,34 @@ class _TabBarPageState extends State<TabBarPage> {
   late TabBarController controller = TabBarController(items.first);
 
   @override
-  Widget build(BuildContext context) => Column(
-        children: [
-          const Padding(
-            padding: const EdgeInsets.all(sbbDefaultSpacing),
-            child: ThemeModeSegmentedButton(),
+  Widget build(BuildContext context) {
+    final sbbToast = SBBToast.of(context);
+    return Column(
+      children: [
+        const Padding(
+          padding: const EdgeInsets.all(sbbDefaultSpacing),
+          child: ThemeModeSegmentedButton(),
+        ),
+        Expanded(child: Container()),
+        if (visible)
+          SBBTabBar(
+            items: items,
+            showWarning: true,
+            onTabChanged: (task) async {},
+            controller: controller,
+            warningSemantics: 'Warning',
+            onTap: (tab) {
+              sbbToast.show(message: 'Tab tapped: Item ${tab.id}');
+            },
           ),
-          Expanded(child: Container()),
-          if (visible)
-            SBBTabBar(
-              items: items,
-              showWarning: true,
-              onTabChanged: (task) async {},
-              controller: controller,
-              warningSemantics: 'Warning',
-            ),
-          Expanded(child: Container()),
-          SBBPrimaryButton(
-            label: 'toggle',
-            onPressed: () => setState(() => visible = !visible),
-          ),
-        ],
-      );
+        Expanded(child: Container()),
+        SBBPrimaryButton(
+          label: 'toggle',
+          onPressed: () => setState(() => visible = !visible),
+        ),
+      ],
+    );
+  }
 }
 
 class _DemoItem extends TabBarItem {

@@ -29,6 +29,7 @@ import 'pages/segmented_button_page.dart';
 import 'pages/select_page.dart';
 import 'pages/slider_page.dart';
 import 'pages/status_page.dart';
+import 'pages/stepper_page.dart';
 import 'pages/switch_page.dart';
 import 'pages/tab_bar_page.dart';
 import 'pages/text_field_page.dart';
@@ -235,6 +236,10 @@ class MyApp extends StatelessWidget {
                             _DemoEntry(
                               'Message',
                               MessagePage(),
+                            ),
+                            _DemoEntry(
+                              'Stepper',
+                              StepperPage(),
                             ),
                             _DemoEntry(
                               'Tab Bar',
