@@ -9,6 +9,8 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+- (#148) Update SBB icons to version 1.0.0
+
 ### Deprecated
 
 - (#142) Deprecated Web Components:
