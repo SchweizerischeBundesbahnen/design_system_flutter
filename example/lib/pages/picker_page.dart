@@ -33,7 +33,7 @@ class _PickerPageState extends State<PickerPage> {
         children: <Widget>[
           ThemeModeSegmentedButton(),
           const SizedBox(height: sbbDefaultSpacing),
-          SBBListHeader('DateTimePicker (date & time)'),
+          SBBListHeader('SBBDateTimePicker (date & time)'),
           SBBGroup(
             child: SBBDateTimePicker(
               onDateTimeChanged: (DateTime dateTime) {
@@ -42,7 +42,7 @@ class _PickerPageState extends State<PickerPage> {
             ),
           ),
           const SizedBox(height: sbbDefaultSpacing),
-          SBBListHeader('DatePicker (date only)'),
+          SBBListHeader('SBBDatePicker (date only)'),
           SBBGroup(
             child: SBBDatePicker(
               onDateChanged: (DateTime date) {
@@ -51,7 +51,7 @@ class _PickerPageState extends State<PickerPage> {
             ),
           ),
           const SizedBox(height: sbbDefaultSpacing),
-          SBBListHeader('TimePicker (time only)'),
+          SBBListHeader('SBBTimePicker (time only)'),
           SBBGroup(
             child: SBBTimePicker(
               onTimeChanged: (TimeOfDay time) {

@@ -1,11 +1,9 @@
 part of 'sbb_picker.dart';
 
 // layout constants
-const _itemHeight = 30.0;
-const _visibleCenterItemIndex = 3;
+const _itemDefaultHeight = 30.0;
 const _longListMinItemCount = 4;
 const _visibleItemCount = 7;
-const _scrollAreaHeight = _itemHeight * _visibleItemCount;
 const _itemDefaultPadding = 12.0;
 const _itemMinPadding = 4.0;
 const _widgetHorizontalPadding = _itemDefaultPadding;
@@ -20,10 +18,45 @@ const _endOfDay = TimeOfDay(
   minute: _lastMinuteOfHour,
 );
 
+/// Abstract class extended by the Picker State classes that handles
+/// calculation of the item height.
+abstract class _PickerClassState<T extends StatefulWidget> extends State<T> {
+  late double _itemHeight = _calculateItemHeight();
+
+  double get _scrollAreaHeight => _itemHeight * _visibleItemCount;
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    // update item height because font settings might have changed
+    _itemHeight = _calculateItemHeight();
+  }
+
+  double _calculateItemHeight() {
+    final _singleCharacterHeight = _textSize('0').height;
+    return max(_singleCharacterHeight, _itemDefaultHeight);
+  }
+
+  Size _textSize(String text) {
+    final textStyle = SBBControlStyles.of(context).picker!.textStyle;
+    final textSpan = TextSpan(text: text, style: textStyle);
+    final textDirection = Directionality.of(context);
+    final textPainter = TextPainter(
+      text: textSpan,
+      maxLines: 1,
+      textScaler: MediaQuery.of(context).textScaler,
+      textDirection: textDirection,
+    );
+    textPainter.layout();
+    final textSize = textPainter.size;
+    return textSize;
+  }
+}
+
 /// Abstract class extended by the State classes of [SBBDatePicker],
 /// [SBBDateTimePicker] and [SBBTimePicker] that provides convenience methods.
 abstract class _TimeBasedPickerState<T extends StatefulWidget>
-    extends State<T> {
+    extends _PickerClassState<T> {
   late double _itemPadding;
 
   double get _timeItemTextMinWidth => _textSize('33').width;
@@ -54,20 +87,6 @@ abstract class _TimeBasedPickerState<T extends StatefulWidget>
         ),
       ),
     );
-  }
-
-  Size _textSize(String text) {
-    final textStyle = SBBControlStyles.of(context).picker!.textStyle;
-    final textSpan = TextSpan(text: text, style: textStyle);
-    final textDirection = Directionality.of(context);
-    final textPainter = TextPainter(
-      text: textSpan,
-      maxLines: 1,
-      textDirection: textDirection,
-    );
-    textPainter.layout();
-    final textSize = textPainter.size;
-    return textSize;
   }
 
   String _twoDigits(int n) {

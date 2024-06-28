@@ -399,7 +399,7 @@ class _SBBDateTimePickerState extends _TimeBasedPickerState<SBBDateTimePicker> {
   void _adjustItemSizes(double width) {
     // reset sizes to default values
     _itemPadding = _itemDefaultPadding;
-    _timeItemTextWidth = _timeItemTextDefaultWidth;
+    _timeItemTextWidth = max(_timeItemTextDefaultWidth, _timeItemTextMinWidth);
 
     // validate locale
     final localeObject = Localizations.maybeLocaleOf(context);

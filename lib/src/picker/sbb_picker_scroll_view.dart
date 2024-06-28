@@ -50,17 +50,7 @@ class SBBPickerScrollView extends StatefulWidget {
   State<SBBPickerScrollView> createState() => _SBBPickerScrollViewState();
 }
 
-const _visibleItemHeights = [
-  28.0,
-  29.0,
-  30.0,
-  36.0,
-  30.0,
-  29.0,
-  28.0,
-];
-
-class _SBBPickerScrollViewState extends State<SBBPickerScrollView> {
+class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
   static const _visibleItemTransformValues = [
     -1.0,
     -2.5,
@@ -71,11 +61,25 @@ class _SBBPickerScrollViewState extends State<SBBPickerScrollView> {
     1.0,
   ];
 
-  static const _listPaddingHeight = _visibleCenterItemIndex * _itemHeight;
+  static const _visibleItemHeightAdjustments = [
+    -2.0,
+    -1.0,
+    0.0,
+    6.0,
+    0.0,
+    -1.0,
+    -2.0,
+  ];
+
+  static const _visibleCenterItemIndex = 3;
+
+  List<double> get _visibleItemHeights => _visibleItemHeightAdjustments
+      .map((adjustment) => _itemHeight + adjustment)
+      .toList();
+
+  double get _listPaddingHeight => _visibleCenterItemIndex * _itemHeight;
 
   late ValueNotifier<double> _scrollOffsetValueNotifier;
-
-  /// index of the first item that is currently rendered int the scroll view
   late ValueNotifier<int> _firstVisibleItemIndexValueNotifier;
   late ValueNotifier<int> _selectedItemIndexValueNotifier;
 
@@ -116,6 +120,12 @@ class _SBBPickerScrollViewState extends State<SBBPickerScrollView> {
   }
 
   @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _controller._itemHeight = _itemHeight;
+  }
+
+  @override
   void didUpdateWidget(covariant SBBPickerScrollView oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.controller != _controller) {
@@ -133,7 +143,9 @@ class _SBBPickerScrollViewState extends State<SBBPickerScrollView> {
 
   @override
   Widget build(BuildContext context) {
-    final noScrollbarScrollBehaviour = ScrollConfiguration.of(context).copyWith(
+    // disable scroll bars because they don't work properly with the way the
+    // scroll view is built
+    final noScrollBarsBehaviour = ScrollConfiguration.of(context).copyWith(
       scrollbars: false,
     );
     return GestureDetector(
@@ -142,33 +154,36 @@ class _SBBPickerScrollViewState extends State<SBBPickerScrollView> {
         height: _scrollAreaHeight,
         child: Scrollable(
           controller: _controller,
-          scrollBehavior: noScrollbarScrollBehaviour,
-          viewportBuilder: (_, ViewportOffset offset) {
-            final listCenterKey = UniqueKey();
-            final isShortList = _itemCountDeficit > 0;
-            final positiveIndexListCenterKey =
-                !isShortList ? listCenterKey : null;
-            final topPaddingListCenterKey = isShortList ? listCenterKey : null;
-            return Viewport(
-              offset: offset,
-              center: listCenterKey,
-              slivers: [
-                if (!widget.looping)
-                  SliverToBoxAdapter(
-                    key: topPaddingListCenterKey,
-                    child: const SizedBox(height: _listPaddingHeight),
-                  ),
-                _buildNegativeIndexList(),
-                _buildPositiveIndexList(positiveIndexListCenterKey),
-                if (!widget.looping)
-                  const SliverToBoxAdapter(
-                    child: SizedBox(height: _listPaddingHeight),
-                  ),
-              ],
-            );
-          },
+          scrollBehavior: noScrollBarsBehaviour,
+          viewportBuilder: (_, ViewportOffset offset) => _buildViewPort(offset),
         ),
       ),
+    );
+  }
+
+  Widget _buildViewPort(ViewportOffset offset) {
+    // set list center key based on whether there is an item count deficit
+    final listCenterKey = UniqueKey();
+    final isShortList = _itemCountDeficit > 0;
+    final topPaddingListCenterKey = isShortList ? listCenterKey : null;
+    final positiveIndexListCenterKey = !isShortList ? listCenterKey : null;
+
+    return Viewport(
+      offset: offset,
+      center: listCenterKey,
+      slivers: [
+        if (!widget.looping)
+          SliverToBoxAdapter(
+            key: topPaddingListCenterKey,
+            child: SizedBox(height: _listPaddingHeight),
+          ),
+        _buildNegativeIndexList(),
+        _buildPositiveIndexList(positiveIndexListCenterKey),
+        if (!widget.looping)
+          SliverToBoxAdapter(
+            child: SizedBox(height: _listPaddingHeight),
+          ),
+      ],
     );
   }
 
@@ -207,7 +222,16 @@ class _SBBPickerScrollViewState extends State<SBBPickerScrollView> {
     final itemEnabled = item?.isEnabled ?? false;
     final itemWidget = item?.widget ?? const SizedBox.shrink();
 
-    const placeholderItem = SizedBox(height: _itemHeight);
+    return _firstVisibleItemIndexBasedItem(itemIndex, itemEnabled, itemWidget);
+  }
+
+  Widget _firstVisibleItemIndexBasedItem(
+    int itemIndex,
+    bool itemEnabled,
+    Widget itemWidget,
+  ) {
+    // placeholder item used for items that are currently not visible
+    final placeholderItem = SizedBox(height: _itemHeight);
 
     // use ValueListenableBuilder with first visible item index to prevent
     // rebuilding items too often
@@ -223,36 +247,51 @@ class _SBBPickerScrollViewState extends State<SBBPickerScrollView> {
         }
 
         // item style values are calculated based on the current scroll offset
-        return ValueListenableBuilder(
-          valueListenable: _scrollOffsetValueNotifier,
-          builder: (_, double offset, Widget? child) {
-            // calculate the current item index of the visible items, this also
-            // includes items that are only partly visible when scrolling
-            final visibleItemIndex = itemIndex - firstVisibleItemIndex;
-
-            // calculate transform translation offset based on scroll offset
-            final translationOffset = _itemOffset(visibleItemIndex, offset);
-
-            // text style based on whether item is enabled or not
-            final textStyle = _itemTextStyle(itemEnabled);
-
-            return SizedBox(
-              height: _itemHeight,
-              child: Center(
-                child: DefaultTextStyle(
-                  style: textStyle,
-                  child: Transform.translate(
-                    offset: translationOffset,
-                    child: child,
-                  ),
-                ),
-              ),
-            );
-          },
-          child: itemWidget,
+        return _buildScrollOffsetBasedItem(
+          firstVisibleItemIndex,
+          itemIndex,
+          itemEnabled,
+          itemWidget,
         );
       },
       child: placeholderItem,
+    );
+  }
+
+  Widget _buildScrollOffsetBasedItem(
+    int firstVisibleItemIndex,
+    int itemIndex,
+    bool itemEnabled,
+    Widget itemWidget,
+  ) {
+    // item style values are calculated based on the current scroll offset
+    return ValueListenableBuilder(
+      valueListenable: _scrollOffsetValueNotifier,
+      builder: (_, double offset, Widget? child) {
+        // calculate the current item index of the visible items, this also
+        // includes items that are only partly visible when scrolling
+        final visibleItemIndex = itemIndex - firstVisibleItemIndex;
+
+        // calculate transform translation offset based on scroll offset
+        final translationOffset = _itemOffset(visibleItemIndex, offset);
+
+        // text style based on whether item is enabled or not
+        final textStyle = _itemTextStyle(itemEnabled);
+
+        return SizedBox(
+          height: _itemHeight,
+          child: Center(
+            child: DefaultTextStyle(
+              style: textStyle,
+              child: Transform.translate(
+                offset: translationOffset,
+                child: child,
+              ),
+            ),
+          ),
+        );
+      },
+      child: itemWidget,
     );
   }
 

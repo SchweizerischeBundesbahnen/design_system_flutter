@@ -18,6 +18,7 @@ class SBBPickerScrollController extends ScrollController {
   late VoidCallback _isScrollingListener;
   ScrollControllerCallback? _onAttachListener;
   int _indexOffset = 0;
+  double _itemHeight = _itemDefaultHeight;
 
   /// The index of the initial item to be selected.
   ///

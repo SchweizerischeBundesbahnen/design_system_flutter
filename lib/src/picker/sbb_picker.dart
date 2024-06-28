@@ -23,7 +23,7 @@ part 'sbb_time_picker.dart';
 /// * [SBBDateTimePicker], variant for date time values
 /// * [SBBTimePicker], variant for time values
 /// * <https://digital.sbb.ch/en/design-system/mobile/components/picker/>
-class SBBPicker extends StatelessWidget {
+class SBBPicker extends StatefulWidget {
   /// Constructs an [SBBPicker] where the picker items can be customized.
   ///
   /// [controller] cas be used for programmatically reading or changing the
@@ -127,10 +127,16 @@ class SBBPicker extends StatelessWidget {
   static const _lightThemeGradientColorOpacities = [0.31, 0.61, 0.70];
   static const _darkThemeGradientColorOpacities = [0.38, 0.61, 0.76];
 
-  static const _highlightedAreaHeight = 34.0;
-  static double _widgetHeight = 226.0;
-
   final Widget child;
+
+  @override
+  State<SBBPicker> createState() => _SBBPickerState();
+}
+
+class _SBBPickerState extends _PickerClassState<SBBPicker> {
+  get _widgetHeight => _scrollAreaHeight + sbbDefaultSpacing * 2;
+
+  get _highlightedAreaHeight => _itemHeight + 4.0;
 
   @override
   Widget build(BuildContext context) {
@@ -142,9 +148,9 @@ class SBBPicker extends StatelessWidget {
           _buildHighlightedArea(context),
           ShaderMask(
             shaderCallback: (bounds) => _shaderCallback(context, bounds),
-            child: SizedBox(
+            child: Container(
               height: _scrollAreaHeight,
-              child: child,
+              child: widget.child,
             ),
           ),
         ],
@@ -178,23 +184,24 @@ class SBBPicker extends StatelessWidget {
   }
 
   List<double> _gradientStops() {
+    // stops are values from 0.0 to 1.0 (fractions along the gradient)
     const start = 0.0;
     const center = 0.5;
     const end = 1.0;
 
     // visible picker items
-    const itemHeight = _itemHeight / _scrollAreaHeight;
-    const endOfItem0 = itemHeight * 1;
-    const centerOfItem1 = itemHeight * 1.5;
-    const centerOfItem2 = itemHeight * 2.5;
-    const centerOfItem4 = itemHeight * 4.5;
-    const centerOfItem5 = itemHeight * 5.5;
-    const startOfItem6 = itemHeight * 6.0;
+    final itemHeight = _itemHeight / _scrollAreaHeight;
+    final endOfItem0 = itemHeight * 1;
+    final centerOfItem1 = itemHeight * 1.5;
+    final centerOfItem2 = itemHeight * 2.5;
+    final centerOfItem4 = itemHeight * 4.5;
+    final centerOfItem5 = itemHeight * 5.5;
+    final startOfItem6 = itemHeight * 6.0;
 
     // highlighted area
-    const highlightedAreaHeight = _highlightedAreaHeight / _scrollAreaHeight;
-    const highlightStart = center - highlightedAreaHeight * 0.5;
-    const highlightEnd = highlightStart + highlightedAreaHeight;
+    final highlightedAreaHeight = _highlightedAreaHeight / _scrollAreaHeight;
+    final highlightStart = center - highlightedAreaHeight * 0.5;
+    final highlightEnd = highlightStart + highlightedAreaHeight;
 
     return [
       start,
@@ -216,8 +223,8 @@ class SBBPicker extends StatelessWidget {
     // generate list of opacity values to be used in gradient
     final isLightTheme = Theme.of(context).brightness == Brightness.light;
     final themedOpacities = isLightTheme
-        ? _lightThemeGradientColorOpacities
-        : _darkThemeGradientColorOpacities;
+        ? SBBPicker._lightThemeGradientColorOpacities
+        : SBBPicker._darkThemeGradientColorOpacities;
 
     // start with opacity 0
     var opacities = [0.0];

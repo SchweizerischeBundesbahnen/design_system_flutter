@@ -315,7 +315,7 @@ class _SBBTimePickerTimeState extends _TimeBasedPickerState<SBBTimePicker> {
   void _adjustItemSizes(double width) {
     // reset sizes to default values
     _itemPadding = _itemDefaultPadding;
-    _timeItemTextWidth = _timeItemTextDefaultWidth;
+    _timeItemTextWidth = max(_timeItemTextDefaultWidth, _timeItemTextMinWidth);
 
     // check if enough space to display all texts by calculating width overflow
     final timeItemWidths = _timeItemWidth * _timeItemCount;
