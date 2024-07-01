@@ -33,8 +33,8 @@ abstract class _PickerClassState<T extends StatefulWidget> extends State<T> {
   }
 
   double _calculateItemHeight() {
-    final _singleCharacterHeight = _textSize('0').height;
-    return max(_singleCharacterHeight, _itemDefaultHeight);
+    final singleCharacterHeight = _textSize('0').height;
+    return max(singleCharacterHeight, _itemDefaultHeight);
   }
 
   Size _textSize(String text) {
@@ -214,18 +214,18 @@ extension DateTimeExtensions on DateTime {
 extension TimeOfDayExtensions on TimeOfDay {
   /// Returns true if [this] occurs before [other].
   bool isBefore(TimeOfDay other) {
-    if (this.hour == other.hour) {
-      return this.minute < other.minute;
+    if (hour == other.hour) {
+      return minute < other.minute;
     }
-    return this.hour < other.hour;
+    return hour < other.hour;
   }
 
   /// Returns true if [this] occurs after [other].
   bool isAfter(TimeOfDay other) {
-    if (this.hour == other.hour) {
-      return this.minute > other.minute;
+    if (hour == other.hour) {
+      return minute > other.minute;
     }
-    return this.hour > other.hour;
+    return hour > other.hour;
   }
 
   /// Returns true if [this] occurs in range [start]-[end].

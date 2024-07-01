@@ -14,9 +14,8 @@ class SBBPickerScrollController extends ScrollController {
     this.onTargetItemSelected,
   });
 
-  ValueNotifier<bool> _scrollingStateNotifier = ValueNotifier(false);
+  final ValueNotifier<bool> _scrollingStateNotifier = ValueNotifier(false);
   late VoidCallback _isScrollingListener;
-  ScrollControllerCallback? _onAttachListener;
   int _indexOffset = 0;
   double _itemHeight = _itemDefaultHeight;
 
@@ -33,6 +32,11 @@ class SBBPickerScrollController extends ScrollController {
   int get selectedItem {
     final selectedItemIndex = _offsetToIndex(offset).round();
     return selectedItemIndex;
+  }
+
+  @override
+  double get initialScrollOffset {
+    return _targetOffset(initialItem * _itemHeight);
   }
 
   /// The current scroll offset of the scrollable widget.
@@ -115,12 +119,6 @@ class SBBPickerScrollController extends ScrollController {
     super.jumpTo(targetOffset);
   }
 
-  /// Register a listener to be called when a [ScrollPosition] is attached to
-  /// the scroll controller.
-  void setOnAttachListener(ScrollControllerCallback onAttachListener) {
-    _onAttachListener = onAttachListener;
-  }
-
   /// Register a listener to be called when the scrolling state changes.
   void addScrollingStateListener(VoidCallback listener) {
     _scrollingStateNotifier.addListener(listener);
@@ -186,7 +184,6 @@ class SBBPickerScrollController extends ScrollController {
       });
     };
     position.isScrollingNotifier.addListener(_isScrollingListener);
-    _onAttachListener?.call(position);
   }
 
   @override
@@ -198,7 +195,6 @@ class SBBPickerScrollController extends ScrollController {
   @override
   void dispose() {
     _scrollingStateNotifier.dispose();
-    _onAttachListener = null;
     super.dispose();
   }
 

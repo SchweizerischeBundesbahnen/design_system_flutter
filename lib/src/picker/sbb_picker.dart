@@ -10,6 +10,7 @@ import '../../design_system_flutter.dart';
 part 'sbb_date_input.dart';
 part 'sbb_date_picker.dart';
 part 'sbb_date_time_picker.dart';
+part 'sbb_picker_item.dart';
 part 'sbb_picker_scroll_controller.dart';
 part 'sbb_picker_scroll_view.dart';
 part 'sbb_picker_utils.dart';
@@ -148,7 +149,7 @@ class _SBBPickerState extends _PickerClassState<SBBPicker> {
           _buildHighlightedArea(context),
           ShaderMask(
             shaderCallback: (bounds) => _shaderCallback(context, bounds),
-            child: Container(
+            child: SizedBox(
               height: _scrollAreaHeight,
               child: widget.child,
             ),
@@ -162,12 +163,12 @@ class _SBBPickerState extends _PickerClassState<SBBPicker> {
     final highlightColor = SBBControlStyles.of(context).picker!.highlightColor;
     return Container(
       height: _highlightedAreaHeight,
-      margin: EdgeInsets.symmetric(
+      margin: const EdgeInsets.symmetric(
         horizontal: sbbDefaultSpacing * 0.5,
       ),
       decoration: BoxDecoration(
         color: highlightColor,
-        borderRadius: BorderRadius.all(
+        borderRadius: const BorderRadius.all(
           Radius.circular(sbbDefaultSpacing * 0.5),
         ),
       ),
