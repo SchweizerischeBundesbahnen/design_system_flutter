@@ -20,6 +20,7 @@ class SBBPromotionBox extends StatefulWidget {
     this.onTap,
     this.isCloseable = true,
     this.onClose,
+    this.onTapSemanticsHint,
   });
 
   final String title;
@@ -29,6 +30,7 @@ class SBBPromotionBox extends StatefulWidget {
   final GestureTapCallback? onTap;
   final bool isCloseable;
   final GestureTapCallback? onClose;
+  final String? onTapSemanticsHint;
 
   @override
   State<SBBPromotionBox> createState() => _SBBPromotionBoxState();
@@ -143,60 +145,63 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox>
               ),
               child: Material(
                 color: SBBColors.transparent,
-                child: InkWell(
-                  focusColor: iconStyle?.backgroundColorHighlighted,
-                  hoverColor: iconStyle?.backgroundColorHighlighted,
-                  customBorder: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(sbbDefaultSpacing),
+                child: Semantics(
+                  hint: widget.onTapSemanticsHint,
+                  child: InkWell(
+                    focusColor: iconStyle?.backgroundColorHighlighted,
+                    hoverColor: iconStyle?.backgroundColorHighlighted,
+                    customBorder: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(sbbDefaultSpacing),
+                      ),
                     ),
-                  ),
-                  onTap: widget.onTap,
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(
-                      sbbDefaultSpacing,
-                      sbbDefaultSpacing,
-                      8.0,
-                      sbbDefaultSpacing,
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                widget.title,
-                                style: textTheme.titleMedium,
+                    onTap: widget.onTap,
+                    child: Padding(
+                      padding: const EdgeInsets.fromLTRB(
+                        sbbDefaultSpacing,
+                        sbbDefaultSpacing,
+                        8.0,
+                        sbbDefaultSpacing,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  widget.title,
+                                  style: textTheme.titleMedium,
+                                ),
                               ),
-                            ),
-                            if (widget.isCloseable)
-                              const SizedBox(width: sbbIconSizeSmall),
-                            const SizedBox(width: 8.0),
-                          ],
-                        ),
-                        const SizedBox(height: 4.0),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Text(
-                                widget.description,
-                                style: textTheme.bodyMedium,
+                              if (widget.isCloseable)
+                                const SizedBox(width: sbbIconSizeSmall),
+                              const SizedBox(width: 8.0),
+                            ],
+                          ),
+                          const SizedBox(height: 4.0),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  widget.description,
+                                  style: textTheme.bodyMedium,
+                                ),
                               ),
-                            ),
-                            if (widget.onTap != null)
-                              Icon(
-                                SBBIcons.chevron_small_right_small,
-                                color: crossColor,
-                                size: sbbIconSizeSmall,
-                              )
-                            else
-                              const SizedBox(
-                                width: sbbDefaultSpacing * 0.5,
-                              ),
-                          ],
-                        ),
-                      ],
+                              if (widget.onTap != null)
+                                Icon(
+                                  SBBIcons.chevron_small_right_small,
+                                  color: crossColor,
+                                  size: sbbIconSizeSmall,
+                                )
+                              else
+                                const SizedBox(
+                                  width: sbbDefaultSpacing * 0.5,
+                                ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
