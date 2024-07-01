@@ -368,25 +368,24 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
     // check if list edges available
     final preInitialCount = _itemsAroundInitialItem(true);
     final postInitialCount = _itemsAroundInitialItem(false);
-    final totalCount = preInitialCount + 1 + postInitialCount;
-
-    // check if enough items prior to initial item to work without index offset
-    if (preInitialCount < _visibleCenterItemIndex) {
-      // set index offset values based on item distribution
-      final itemIndexOffset = _visibleCenterItemIndex - preInitialCount;
-      _controller._indexOffset = itemIndexOffset;
-      _initialIndexOffset += itemIndexOffset;
+    final preInitialDeficit = preInitialCount < _visibleCenterItemIndex;
+    final postInitialDeficit = postInitialCount < _visibleCenterItemIndex;
+    if (preInitialDeficit) {
       _firstIndex = initialIndex - preInitialCount;
     }
-
-    if (postInitialCount < _visibleCenterItemIndex) {
+    if (postInitialDeficit) {
       _lastIndex = initialIndex + postInitialCount;
     }
+    if (preInitialDeficit || postInitialDeficit) {
+      final itemIndexOffset = _visibleCenterItemIndex - preInitialCount;
+      _controller._indexOffset = itemIndexOffset;
+      _initialIndexOffset = initialIndex + itemIndexOffset;
 
-    // check if enough items in total to work without index offset
-    if (totalCount < _longListMinItemCount) {
-      _controller._indexOffset = 0 - _visibleCenterItemIndex;
-      _isShortList = true;
+      final totalCount = preInitialCount + 1 + postInitialCount;
+      if (totalCount < _longListMinItemCount) {
+        _controller._indexOffset = itemIndexOffset - _visibleCenterItemIndex;
+        _isShortList = true;
+      }
     }
   }
 
