@@ -44,7 +44,7 @@ class SBBDatePicker extends StatefulWidget {
     );
   }
 
-  final ValueChanged<DateTime> onDateChanged;
+  final ValueChanged<DateTime>? onDateChanged;
   final DateTime initialDate;
   final DateTime? minimumDate;
   final DateTime? maximumDate;
@@ -115,9 +115,12 @@ class _SBBDatePickerState extends _TimeBasedPickerState<SBBDatePicker> {
     super.initState();
     _selectedDate = widget.initialDate;
     _selectedDateValueNotifier = ValueNotifier(_selectedDate);
-    _selectedDateValueNotifier.addListener(() {
-      widget.onDateChanged(_selectedDateValueNotifier.value);
-    });
+    final onDateChanged = widget.onDateChanged;
+    if (onDateChanged != null) {
+      _selectedDateValueNotifier.addListener(() {
+        onDateChanged(_selectedDateValueNotifier.value);
+      });
+    }
     _monthYearValueNotifier = ValueNotifier(_selectedDate);
     _yearValueNotifier = ValueNotifier(_selectedDate.year);
 

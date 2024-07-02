@@ -52,7 +52,7 @@ class SBBTimePicker extends StatefulWidget {
         minimumTime = _minimumTime(minimumTime, minuteInterval),
         maximumTime = _maximumTime(maximumTime, minuteInterval);
 
-  final ValueChanged<TimeOfDay> onTimeChanged;
+  final ValueChanged<TimeOfDay>? onTimeChanged;
   final TimeOfDay initialTime;
   final TimeOfDay? minimumTime;
   final TimeOfDay? maximumTime;
@@ -114,9 +114,12 @@ class _SBBTimePickerTimeState extends _TimeBasedPickerState<SBBTimePicker> {
     super.initState();
     _selectedTime = widget.initialTime;
     _selectedTimeValueNotifier = ValueNotifier(_selectedTime);
-    _selectedTimeValueNotifier.addListener(() {
-      widget.onTimeChanged(_selectedTimeValueNotifier.value);
-    });
+    final onTimeChanged = widget.onTimeChanged;
+    if (onTimeChanged != null) {
+      _selectedTimeValueNotifier.addListener(() {
+        onTimeChanged(_selectedTimeValueNotifier.value);
+      });
+    }
     _hourValueNotifier = ValueNotifier(_selectedTime.hour);
 
     _initHourController();
