@@ -39,7 +39,7 @@ class SBBDateTimePicker extends StatefulWidget {
     DateTime? initialDateTime,
     DateTime? minimumDateTime,
     DateTime? maximumDateTime,
-    this.minuteInterval = 1,
+    this.minuteInterval = _defaultMinuteInterval,
   })  : assert(
           minuteInterval > 0 && TimeOfDay.minutesPerHour % minuteInterval == 0,
           'minute interval is not a positive integer factor of 60',
@@ -66,22 +66,45 @@ class SBBDateTimePicker extends StatefulWidget {
   final DateTime? maximumDateTime;
   final int minuteInterval;
 
+  /// Shows an [SBBModalSheet] with an [SBBDateTimePicker] to select a
+  /// [DateTime].
+  /// Use according to documentation.
+  ///
+  /// See also:
+  ///
+  /// * [SBBDateTimePicker], which will be displayed.
+  /// * [showSBBModalSheet], which is used to display the modal.
+  /// * <https://digital.sbb.ch/en/design-system/mobile/components/picker/>
+  /// * <https://digital.sbb.ch/en/design-system/mobile/components/modal-view/>
   static void showModal({
     required BuildContext context,
     String? title,
     DateTime? initialDateTime,
     DateTime? minimumDateTime,
     DateTime? maximumDateTime,
+    int minuteInterval = _defaultMinuteInterval,
     ValueChanged<DateTime>? onDateTimeChanged,
   }) {
     final localizations = MaterialLocalizations.of(context);
-    final bottomSheetTitle = title ?? localizations.dateInputLabel;
+
+    final modalTitle = title ?? localizations.dateInputLabel;
+
+    final modalDateTime = _initialDateTime(
+      initialDateTime,
+      minimumDateTime,
+      maximumDateTime,
+      minuteInterval,
+    );
+
+    final acceptInitialSelection = initialDateTime == null;
+    final selectedButtonEnabled = ValueNotifier(acceptInitialSelection);
     final selectedButtonLabel = localizations.datePickerHelpText;
-    DateTime selectedDateTime = initialDateTime ?? DateTime.now();
+
+    var selectedDateTime = modalDateTime;
 
     showSBBModalSheet(
       context: context,
-      title: bottomSheetTitle,
+      title: modalTitle,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -94,19 +117,31 @@ class SBBDateTimePicker extends StatefulWidget {
                 initialDateTime: initialDateTime,
                 minimumDateTime: minimumDateTime,
                 maximumDateTime: maximumDateTime,
-                onDateTimeChanged: (DateTime date) {
-                  selectedDateTime = date;
+                minuteInterval: minuteInterval,
+                onDateTimeChanged: (dateTime) {
+                  selectedDateTime = dateTime;
+                  if (!acceptInitialSelection) {
+                    selectedButtonEnabled.value = dateTime != modalDateTime;
+                  }
                 },
               ),
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(sbbDefaultSpacing),
-            child: SBBPrimaryButton(
-                label: selectedButtonLabel,
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  onDateTimeChanged?.call(selectedDateTime);
+            child: ListenableBuilder(
+                listenable: selectedButtonEnabled,
+                builder: (context, _) {
+                  final onPressed = selectedButtonEnabled.value
+                      ? () {
+                          Navigator.of(context).pop();
+                          onDateTimeChanged?.call(selectedDateTime);
+                        }
+                      : null;
+                  return SBBPrimaryButton(
+                    label: selectedButtonLabel,
+                    onPressed: onPressed,
+                  );
                 }),
           ),
         ],

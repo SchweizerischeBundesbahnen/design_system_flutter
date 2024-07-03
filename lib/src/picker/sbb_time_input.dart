@@ -15,6 +15,7 @@ class SBBTimeInput extends StatefulWidget {
     this.value,
     this.minimumTime,
     this.maximumTime,
+    this.minuteInterval = _defaultMinuteInterval,
     this.dateFormat,
     this.labelText,
     this.hintText,
@@ -31,6 +32,7 @@ class SBBTimeInput extends StatefulWidget {
   final TimeOfDay? value;
   final TimeOfDay? minimumTime;
   final TimeOfDay? maximumTime;
+  final int minuteInterval;
   final DateFormat? dateFormat;
   final String? labelText;
   final String? hintText;
@@ -51,11 +53,25 @@ class SBBTimeInput extends StatefulWidget {
 }
 
 class _SBBTimeInputState extends State<SBBTimeInput> {
+  String get _valueText {
+    var value = widget.value;
+    if (value == null) {
+      return '';
+    }
+    value = SBBTimePicker._initialTime(
+      widget.value,
+      widget.minimumTime,
+      widget.maximumTime,
+      widget.minuteInterval,
+    );
+    return value.format(context);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SBBInputTrigger(
       key: widget.key,
-      value: widget.value?.format(context),
+      value: _valueText,
       labelText: widget.labelText,
       hintText: widget.hintText,
       errorText: widget.errorText,
@@ -72,6 +88,7 @@ class _SBBTimeInputState extends State<SBBTimeInput> {
           initialTime: widget.value,
           minimumTime: widget.minimumTime,
           maximumTime: widget.maximumTime,
+          minuteInterval: widget.minuteInterval,
           onTimeChanged: widget.onTimeChanged,
         );
       },

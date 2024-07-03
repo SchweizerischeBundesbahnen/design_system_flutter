@@ -17,6 +17,7 @@ const _endOfDay = TimeOfDay(
   hour: TimeOfDay.hoursPerDay - 1,
   minute: _lastMinuteOfHour,
 );
+const _defaultMinuteInterval = 1;
 
 /// Abstract class extended by the Picker State classes that handles
 /// calculation of the item height.

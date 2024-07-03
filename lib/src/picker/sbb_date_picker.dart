@@ -67,13 +67,20 @@ class SBBDatePicker extends StatefulWidget {
     ValueChanged<DateTime>? onDateChanged,
   }) {
     final localizations = MaterialLocalizations.of(context);
-    title ??= localizations.dateInputLabel;
+
+    final modalTitle = title ?? localizations.dateInputLabel;
+
+    final modalDate = _initialDate(initialDate, minimumDate, maximumDate);
+
+    final acceptInitialSelection = initialDate == null;
+    final selectedButtonEnabled = ValueNotifier(acceptInitialSelection);
     final selectedButtonLabel = localizations.datePickerHelpText;
-    DateTime selectedDate = initialDate ?? DateTime.now();
+
+    var selectedDate = modalDate;
 
     showSBBModalSheet(
       context: context,
-      title: title,
+      title: modalTitle,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -83,22 +90,33 @@ class SBBDatePicker extends StatefulWidget {
             ),
             child: SBBGroup(
               child: SBBDatePicker(
-                initialDate: initialDate,
+                initialDate: modalDate,
                 minimumDate: minimumDate,
                 maximumDate: maximumDate,
-                onDateChanged: (DateTime date) {
+                onDateChanged: (date) {
                   selectedDate = date;
+                  if (!acceptInitialSelection) {
+                    selectedButtonEnabled.value = date != modalDate;
+                  }
                 },
               ),
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(sbbDefaultSpacing),
-            child: SBBPrimaryButton(
-                label: selectedButtonLabel,
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  onDateChanged?.call(selectedDate);
+            child: ListenableBuilder(
+                listenable: selectedButtonEnabled,
+                builder: (context, _) {
+                  final onPressed = selectedButtonEnabled.value
+                      ? () {
+                          Navigator.of(context).pop();
+                          onDateChanged?.call(selectedDate);
+                        }
+                      : null;
+                  return SBBPrimaryButton(
+                    label: selectedButtonLabel,
+                    onPressed: onPressed,
+                  );
                 }),
           ),
         ],

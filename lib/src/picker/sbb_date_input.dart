@@ -56,11 +56,24 @@ class _SBBDateInputState extends State<SBBDateInput> {
         Localizations.maybeLocaleOf(context).toString(),
       );
 
+  String get _valueText {
+    var value = widget.value;
+    if (value == null) {
+      return '';
+    }
+    value = SBBDatePicker._initialDate(
+      widget.value,
+      widget.minimumDate,
+      widget.maximumDate,
+    );
+    return _dateFormat.format(value);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SBBInputTrigger(
       key: widget.key,
-      value: widget.value == null ? '' : _dateFormat.format(widget.value!),
+      value: _valueText,
       labelText: widget.labelText,
       hintText: widget.hintText,
       errorText: widget.errorText,

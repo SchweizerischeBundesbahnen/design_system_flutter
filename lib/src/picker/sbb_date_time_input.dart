@@ -15,6 +15,7 @@ class SBBDateTimeInput extends StatefulWidget {
     this.value,
     this.minimumDateTime,
     this.maximumDateTime,
+    this.minuteInterval = _defaultMinuteInterval,
     this.dateFormat,
     this.labelText,
     this.hintText,
@@ -31,6 +32,7 @@ class SBBDateTimeInput extends StatefulWidget {
   final DateTime? value;
   final DateTime? minimumDateTime;
   final DateTime? maximumDateTime;
+  final int minuteInterval;
   final DateFormat? dateFormat;
   final String? labelText;
   final String? hintText;
@@ -56,11 +58,25 @@ class _SBBDateTimeInputState extends State<SBBDateTimeInput> {
         Localizations.maybeLocaleOf(context).toString(),
       ).add_Hm();
 
+  String get _valueText {
+    var value = widget.value;
+    if (value == null) {
+      return '';
+    }
+    value = SBBDateTimePicker._initialDateTime(
+      widget.value,
+      widget.minimumDateTime,
+      widget.maximumDateTime,
+      widget.minuteInterval,
+    );
+    return _dateFormat.format(value);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SBBInputTrigger(
       key: widget.key,
-      value: widget.value == null ? '' : _dateFormat.format(widget.value!),
+      value: _valueText,
       labelText: widget.labelText,
       hintText: widget.hintText,
       errorText: widget.errorText,
@@ -77,6 +93,7 @@ class _SBBDateTimeInputState extends State<SBBDateTimeInput> {
           initialDateTime: widget.value,
           minimumDateTime: widget.minimumDateTime,
           maximumDateTime: widget.maximumDateTime,
+          minuteInterval: widget.minuteInterval,
           onDateTimeChanged: widget.onDateTimeChanged,
         );
       },

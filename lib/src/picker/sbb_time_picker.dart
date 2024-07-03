@@ -38,7 +38,7 @@ class SBBTimePicker extends StatefulWidget {
     TimeOfDay? initialTime,
     TimeOfDay? minimumTime,
     TimeOfDay? maximumTime,
-    this.minuteInterval = 1,
+    this.minuteInterval = _defaultMinuteInterval,
   })  : assert(
           minuteInterval > 0 && TimeOfDay.minutesPerHour % minuteInterval == 0,
           'minute interval is not a positive integer factor of 60',
@@ -58,22 +58,44 @@ class SBBTimePicker extends StatefulWidget {
   final TimeOfDay? maximumTime;
   final int minuteInterval;
 
+  /// Shows an [SBBModalSheet] with an [SBBTimePicker] to select a [TimeOfDay].
+  /// Use according to documentation.
+  ///
+  /// See also:
+  ///
+  /// * [SBBTimePicker], which will be displayed.
+  /// * [showSBBModalSheet], which is used to display the modal.
+  /// * <https://digital.sbb.ch/en/design-system/mobile/components/picker/>
+  /// * <https://digital.sbb.ch/en/design-system/mobile/components/modal-view/>
   static void showModal({
     required BuildContext context,
     String? title,
     TimeOfDay? initialTime,
     TimeOfDay? minimumTime,
     TimeOfDay? maximumTime,
+    int minuteInterval = _defaultMinuteInterval,
     ValueChanged<TimeOfDay>? onTimeChanged,
   }) {
     final localizations = MaterialLocalizations.of(context);
-    final bottomSheetTitle = title ?? localizations.timePickerInputHelpText;
+
+    final modalTitle = title ?? localizations.timePickerInputHelpText;
+
+    final modalTime = _initialTime(
+      initialTime,
+      minimumTime,
+      maximumTime,
+      minuteInterval,
+    );
+
+    final acceptInitialSelection = initialTime == null;
+    final selectedButtonEnabled = ValueNotifier(acceptInitialSelection);
     final selectedButtonLabel = localizations.timePickerDialHelpText;
-    TimeOfDay selectedTime = initialTime ?? TimeOfDay.now();
+
+    var selectedTime = modalTime;
 
     showSBBModalSheet(
       context: context,
-      title: bottomSheetTitle,
+      title: modalTitle,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -86,19 +108,31 @@ class SBBTimePicker extends StatefulWidget {
                 initialTime: initialTime,
                 minimumTime: minimumTime,
                 maximumTime: maximumTime,
-                onTimeChanged: (TimeOfDay time) {
+                minuteInterval: minuteInterval,
+                onTimeChanged: (time) {
                   selectedTime = time;
+                  if (!acceptInitialSelection) {
+                    selectedButtonEnabled.value = time != modalTime;
+                  }
                 },
               ),
             ),
           ),
           Padding(
             padding: const EdgeInsets.all(sbbDefaultSpacing),
-            child: SBBPrimaryButton(
-                label: selectedButtonLabel,
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  onTimeChanged?.call(selectedTime);
+            child: ListenableBuilder(
+                listenable: selectedButtonEnabled,
+                builder: (context, _) {
+                  final onPressed = selectedButtonEnabled.value
+                      ? () {
+                          Navigator.of(context).pop();
+                          onTimeChanged?.call(selectedTime);
+                        }
+                      : null;
+                  return SBBPrimaryButton(
+                    label: selectedButtonLabel,
+                    onPressed: onPressed,
+                  );
                 }),
           ),
         ],
