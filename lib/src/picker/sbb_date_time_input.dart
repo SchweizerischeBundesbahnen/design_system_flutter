@@ -1,20 +1,20 @@
 part of 'sbb_picker.dart';
 
-/// SBB Date Input Field. Use according to documentation.
+/// SBB Date Time Input Field. Use according to documentation.
 ///
 /// See also:
 ///
-/// * [SBBDateTimeInput], variant for date time values.
+/// * [SBBDateInput], variant for date values.
 /// * [SBBTimeInput], variant for time values.
-/// * [SBBDatePicker], picker for date values.
-/// * [SBBDatePicker.showModal], which is used to display the modal.
+/// * [SBBDateTimePicker], picker for date time values.
+/// * [SBBDateTimePicker.showModal], which is used to display the modal.
 /// * <https://digital.sbb.ch/en/design-system/mobile/components/picker/>
-class SBBDateInput extends StatefulWidget {
-  const SBBDateInput({
+class SBBDateTimeInput extends StatefulWidget {
+  const SBBDateTimeInput({
     super.key,
     this.value,
-    this.minimumDate,
-    this.maximumDate,
+    this.minimumDateTime,
+    this.maximumDateTime,
     this.dateFormat,
     this.labelText,
     this.hintText,
@@ -22,15 +22,15 @@ class SBBDateInput extends StatefulWidget {
     this.prefixIcon,
     this.suffixIcon,
     this.onSuffixPressed,
-    required this.onDateChanged,
+    required this.onDateTimeChanged,
     this.maxLines,
     this.enabled = true,
     this.isLastElement = false,
   });
 
   final DateTime? value;
-  final DateTime? minimumDate;
-  final DateTime? maximumDate;
+  final DateTime? minimumDateTime;
+  final DateTime? maximumDateTime;
   final DateFormat? dateFormat;
   final String? labelText;
   final String? hintText;
@@ -39,7 +39,7 @@ class SBBDateInput extends StatefulWidget {
   final IconData? suffixIcon;
   final VoidCallback? onSuffixPressed;
 
-  final ValueChanged<DateTime>? onDateChanged;
+  final ValueChanged<DateTime>? onDateTimeChanged;
 
   final int? maxLines;
 
@@ -47,14 +47,14 @@ class SBBDateInput extends StatefulWidget {
   final bool isLastElement;
 
   @override
-  State<SBBDateInput> createState() => _SBBDateInputState();
+  State<SBBDateTimeInput> createState() => _SBBDateTimeInputState();
 }
 
-class _SBBDateInputState extends State<SBBDateInput> {
+class _SBBDateTimeInputState extends State<SBBDateTimeInput> {
   late final DateFormat _dateFormat = widget.dateFormat ??
       DateFormat.yMMMMd(
         Localizations.maybeLocaleOf(context).toString(),
-      );
+      ).add_Hm();
 
   @override
   Widget build(BuildContext context) {
@@ -68,16 +68,16 @@ class _SBBDateInputState extends State<SBBDateInput> {
       suffixIcon: widget.suffixIcon,
       onSuffixPressed: widget.onSuffixPressed,
       maxLines: widget.maxLines,
-      enabled: widget.onDateChanged != null,
+      enabled: widget.onDateTimeChanged != null,
       isLastElement: widget.isLastElement,
       onPressed: () {
-        SBBDatePicker.showModal(
+        SBBDateTimePicker.showModal(
           context: context,
           title: widget.labelText,
-          initialDate: widget.value,
-          minimumDate: widget.minimumDate,
-          maximumDate: widget.maximumDate,
-          onDateChanged: widget.onDateChanged,
+          initialDateTime: widget.value,
+          minimumDateTime: widget.minimumDateTime,
+          maximumDateTime: widget.maximumDateTime,
+          onDateTimeChanged: widget.onDateTimeChanged,
         );
       },
     );

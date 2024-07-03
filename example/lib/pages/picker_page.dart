@@ -22,6 +22,10 @@ class _PickerPageState extends State<PickerPage> {
     'Orange',
   ];
 
+  DateTime _selectedDate = DateTime.now();
+  DateTime _selectedDateTime = DateTime.now();
+  TimeOfDay _selectedTime = TimeOfDay.now();
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -33,7 +37,46 @@ class _PickerPageState extends State<PickerPage> {
         children: <Widget>[
           ThemeModeSegmentedButton(),
           const SizedBox(height: sbbDefaultSpacing),
-          SBBListHeader('SBBDateTimePicker (date & time)'),
+          SBBListHeader('Picker input fields'),
+          SBBGroup(
+            child: Column(
+              children: [
+                SBBDateInput(
+                  value: _selectedDate,
+                  labelText: 'Date only',
+                  onDateChanged: (date) {
+                    debugPrint('selected date: $date');
+                    setState(() {
+                      _selectedDate = date;
+                    });
+                  },
+                ),
+                SBBDateTimeInput(
+                  value: _selectedDateTime,
+                  labelText: 'Date and time',
+                  onDateTimeChanged: (dateTime) {
+                    debugPrint('selected date time: $dateTime');
+                    setState(() {
+                      _selectedDateTime = dateTime;
+                    });
+                  },
+                ),
+                SBBTimeInput(
+                  value: _selectedTime,
+                  labelText: 'Time only',
+                  onTimeChanged: (time) {
+                    debugPrint('selected time: $time');
+                    setState(() {
+                      _selectedTime = time;
+                    });
+                  },
+                  isLastElement: true,
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: sbbDefaultSpacing),
+          SBBListHeader('Date Time Picker (date & time)'),
           SBBGroup(
             child: SBBDateTimePicker(
               onDateTimeChanged: (DateTime dateTime) {
@@ -42,7 +85,7 @@ class _PickerPageState extends State<PickerPage> {
             ),
           ),
           const SizedBox(height: sbbDefaultSpacing),
-          SBBListHeader('SBBDatePicker (date only)'),
+          SBBListHeader('Date Picker (date only)'),
           SBBGroup(
             child: SBBDatePicker(
               onDateChanged: (DateTime date) {
@@ -51,7 +94,7 @@ class _PickerPageState extends State<PickerPage> {
             ),
           ),
           const SizedBox(height: sbbDefaultSpacing),
-          SBBListHeader('SBBTimePicker (time only)'),
+          SBBListHeader('Time Picker (time only)'),
           SBBGroup(
             child: SBBTimePicker(
               onTimeChanged: (TimeOfDay time) {
@@ -60,7 +103,7 @@ class _PickerPageState extends State<PickerPage> {
             ),
           ),
           const SizedBox(height: sbbDefaultSpacing),
-          SBBListHeader('SBBPicker (looping)'),
+          SBBListHeader('Picker (looping)'),
           SBBGroup(
             child: SBBPicker.list(
               onSelectedItemChanged: (int index) {
@@ -72,7 +115,7 @@ class _PickerPageState extends State<PickerPage> {
             ),
           ),
           const SizedBox(height: sbbDefaultSpacing),
-          SBBListHeader('SBBPicker (non looping)'),
+          SBBListHeader('Picker (non looping)'),
           SBBGroup(
             child: SBBPicker.list(
               looping: false,

@@ -135,6 +135,7 @@ class _PickerPageState extends State<InputTriggerPage> {
                       this.showSuffixIcon = enabled;
                     });
                   },
+                  isLastElement: true,
                 ),
               ],
             ),
