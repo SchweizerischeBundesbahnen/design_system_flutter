@@ -2,7 +2,29 @@ import 'package:flutter/material.dart';
 
 import '../../design_system_flutter.dart';
 
+/// Widget that mimics the visuals of an [SBBTextField] but has an [onPressed]
+/// callback instead of the text field functionality.
+///
+/// Used by [SBBDateTimeInput], [SBBDateInput], [SBBTimeInput].
+///
+/// See also:
+///
+/// * <https://digital.sbb.ch/en/design-system/mobile/components/text-input/>
 class SBBInputTrigger extends StatelessWidget {
+  /// Constructs an [SBBInputTrigger].
+  ///
+  /// [onPressed] is the callback called when the input trigger is pressed.
+  ///
+  /// [prefixIcon] is the icon to be displayed as the prefix widget.
+  ///
+  /// [suffixIcon] is the icon to be displayed as the suffix widget.
+  ///
+  /// [onSuffixPressed] is the callback called when [suffixIcon] is pressed.
+  ///
+  /// See also:
+  ///
+  /// * [SBBInputTrigger.custom], constructor for SBB Input Trigger with custom
+  ///   prefix and suffix widgets.
   SBBInputTrigger({
     Key? key,
     String? value,
@@ -38,6 +60,12 @@ class SBBInputTrigger extends StatelessWidget {
           isLastElement: isLastElement,
         );
 
+  /// Constructs an [SBBInputTrigger] with custom prefix and suffix widgets.
+  ///
+  /// See also:
+  ///
+  /// * [SBBPicker.new], default constructor for SBB Input Trigger with optional
+  /// icons as prefix and suffix widgets.
   const SBBInputTrigger.custom({
     super.key,
     this.value,
@@ -152,6 +180,7 @@ class SBBInputTrigger extends StatelessWidget {
   double get _verticalPadding => _hasLabel ? 6.0 : 12.0;
 }
 
+/// Icon widget used by [SBBInputTrigger].
 class SBBInputTriggerIconWidget extends StatelessWidget {
   const SBBInputTriggerIconWidget({
     this.icon,
