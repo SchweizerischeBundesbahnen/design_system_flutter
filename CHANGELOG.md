@@ -9,7 +9,18 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+### Added
+
+- (#150) Added `SBBDateInput`
+- (#150) Added `SBBDateTimeInput`
+- (#150) Added `SBBTimeInput`
+- (#150) Added `SBBInputTrigger`
+
+### Changed
+
 - (#148) Update SBB icons to version 1.0.0
+- (#150) Added missing functionalities in picker widgets (`SBBPicker`, `SBBDatePicker`, `SBBDateTimePicker`, `SBBTimePicker`)
+  - Added function `showModal` in `SBBDatePicker`, `SBBDateTimePicker`, `SBBTimePicker`
 
 ### Deprecated
 
@@ -20,6 +31,10 @@ It is expected that you keep this format strictly, since we depend on it in our 
   - `SBBWebText`
   - `SBBWebTextStyles`
   - `SBBBreadcrumb`
+
+### Fixed
+
+- (#113) `SBBTimePicker`: Added support for time ranges that span over midnight.
 
 ## [1.4.0] - 2024-06-07
 
