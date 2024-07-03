@@ -4,9 +4,9 @@ part of 'sbb_picker.dart';
 ///
 /// See also:
 ///
-/// * [SBBPicker], variant for custom values
-/// * [SBBDatePicker], variant for date values
-/// * [SBBDateTimePicker], variant for date time values
+/// * [SBBPicker], variant for custom values.
+/// * [SBBDatePicker], variant for date values.
+/// * [SBBDateTimePicker], variant for date time values.
 /// * <https://digital.sbb.ch/en/design-system/mobile/components/picker/>
 class SBBTimePicker extends StatefulWidget {
   /// Constructs an [SBBDateTimePicker].
@@ -57,6 +57,54 @@ class SBBTimePicker extends StatefulWidget {
   final TimeOfDay? minimumTime;
   final TimeOfDay? maximumTime;
   final int minuteInterval;
+
+  static void showModal({
+    required BuildContext context,
+    String? title,
+    TimeOfDay? initialTime,
+    TimeOfDay? minimumTime,
+    TimeOfDay? maximumTime,
+    ValueChanged<TimeOfDay>? onTimeChanged,
+  }) {
+    final localizations = MaterialLocalizations.of(context);
+    final bottomSheetTitle = title ?? localizations.timePickerInputHelpText;
+    final selectedButtonLabel = localizations.timePickerDialHelpText;
+    TimeOfDay selectedTime = initialTime ?? TimeOfDay.now();
+
+    showSBBModalSheet(
+      context: context,
+      title: bottomSheetTitle,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: sbbDefaultSpacing,
+            ),
+            child: SBBGroup(
+              child: SBBTimePicker(
+                initialTime: initialTime,
+                minimumTime: minimumTime,
+                maximumTime: maximumTime,
+                onTimeChanged: (TimeOfDay time) {
+                  selectedTime = time;
+                },
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(sbbDefaultSpacing),
+            child: SBBPrimaryButton(
+                label: selectedButtonLabel,
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  onTimeChanged?.call(selectedTime);
+                }),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   State<SBBTimePicker> createState() {

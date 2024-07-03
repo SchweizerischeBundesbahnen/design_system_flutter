@@ -9,20 +9,22 @@ import '../../design_system_flutter.dart';
 
 part 'sbb_date_input.dart';
 part 'sbb_date_picker.dart';
+part 'sbb_date_time_input.dart';
 part 'sbb_date_time_picker.dart';
 part 'sbb_picker_item.dart';
 part 'sbb_picker_scroll_controller.dart';
 part 'sbb_picker_scroll_view.dart';
 part 'sbb_picker_utils.dart';
+part 'sbb_time_input.dart';
 part 'sbb_time_picker.dart';
 
 /// SBB Picker. Use according to documentation.
 ///
 /// See also:
 ///
-/// * [SBBDatePicker], variant for date values
-/// * [SBBDateTimePicker], variant for date time values
-/// * [SBBTimePicker], variant for time values
+/// * [SBBDatePicker], variant for date values.
+/// * [SBBDateTimePicker], variant for date time values.
+/// * [SBBTimePicker], variant for time values.
 /// * <https://digital.sbb.ch/en/design-system/mobile/components/picker/>
 class SBBPicker extends StatefulWidget {
   /// Constructs an [SBBPicker] where the picker items can be customized.
@@ -118,7 +120,8 @@ class SBBPicker extends StatefulWidget {
   ///
   /// See also:
   ///
-  /// * [SBBPicker.new], default constructor for SBB Picker with limited customization.
+  /// * [SBBPicker.new], default constructor for SBB Picker with limited
+  ///   customization.
   /// * [SBBPicker.list], constructor for basic SBB Picker.
   const SBBPicker.custom({
     super.key,

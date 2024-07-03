@@ -7,7 +7,7 @@ part of 'sbb_picker.dart';
 ///
 /// See also:
 ///
-///  * [SBBPickerScrollView], which is the widget this object controls.
+/// * [SBBPickerScrollView], which is the widget this object controls.
 class SBBPickerScrollController extends ScrollController {
   SBBPickerScrollController({
     this.initialItem = 0,

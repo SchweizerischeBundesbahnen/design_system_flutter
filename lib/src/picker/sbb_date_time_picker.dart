@@ -4,9 +4,9 @@ part of 'sbb_picker.dart';
 ///
 /// See also:
 ///
-/// * [SBBPicker], variant for custom values
-/// * [SBBDatePicker], variant for date values
-/// * [SBBTimePicker], variant for time values
+/// * [SBBPicker], variant for custom values.
+/// * [SBBDatePicker], variant for date values.
+/// * [SBBTimePicker], variant for time values.
 /// * <https://digital.sbb.ch/en/design-system/mobile/components/picker/>
 class SBBDateTimePicker extends StatefulWidget {
   /// Constructs an [SBBDateTimePicker].
@@ -65,6 +65,54 @@ class SBBDateTimePicker extends StatefulWidget {
   final DateTime? minimumDateTime;
   final DateTime? maximumDateTime;
   final int minuteInterval;
+
+  static void showModal({
+    required BuildContext context,
+    String? title,
+    DateTime? initialDateTime,
+    DateTime? minimumDateTime,
+    DateTime? maximumDateTime,
+    ValueChanged<DateTime>? onDateTimeChanged,
+  }) {
+    final localizations = MaterialLocalizations.of(context);
+    final bottomSheetTitle = title ?? localizations.dateInputLabel;
+    final selectedButtonLabel = localizations.datePickerHelpText;
+    DateTime selectedDateTime = initialDateTime ?? DateTime.now();
+
+    showSBBModalSheet(
+      context: context,
+      title: bottomSheetTitle,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: sbbDefaultSpacing,
+            ),
+            child: SBBGroup(
+              child: SBBDateTimePicker(
+                initialDateTime: initialDateTime,
+                minimumDateTime: minimumDateTime,
+                maximumDateTime: maximumDateTime,
+                onDateTimeChanged: (DateTime date) {
+                  selectedDateTime = date;
+                },
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(sbbDefaultSpacing),
+            child: SBBPrimaryButton(
+                label: selectedButtonLabel,
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  onDateTimeChanged?.call(selectedDateTime);
+                }),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   State<SBBDateTimePicker> createState() {
