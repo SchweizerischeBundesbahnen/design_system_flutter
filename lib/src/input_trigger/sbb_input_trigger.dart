@@ -95,74 +95,6 @@ class SBBInputTrigger extends StatelessWidget {
   final bool enabled;
   final bool isLastElement;
 
-  @override
-  Widget build(BuildContext context) {
-    final style = SBBControlStyles.of(context).textField!;
-    final dividerColor =
-        _hasError ? style.dividerColorError : style.dividerColor;
-    final valueTextStyle = !enabled
-        ? style.textStyleDisabled!
-        : (!_hasValue
-            ? style.placeholderTextStyle
-            : (_hasError ? style.textStyleError : style.textStyle));
-    return InkWell(
-      onTap: onPressed,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          prefixWidget,
-          Expanded(
-            child: Column(
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(height: _verticalPadding),
-                          if (_hasLabel)
-                            Text(_labelText, style: style.labelTextStyle!),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 2.0),
-                            child: Text(
-                              _valueText,
-                              style: valueTextStyle,
-                              maxLines: maxLines,
-                              overflow: maxLines != null
-                                  ? TextOverflow.ellipsis
-                                  : null,
-                            ),
-                          ),
-                          if (_hasError)
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 8.0),
-                              child: Text(
-                                _errorText,
-                                style: style.errorTextStyle,
-                              ),
-                            )
-                          else
-                            SizedBox(height: _verticalPadding),
-                        ],
-                      ),
-                    ),
-                    suffixWidget,
-                  ],
-                ),
-                if (!isLastElement)
-                  Divider(
-                    color: dividerColor,
-                  ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   bool get _hasValue => value?.isNotEmpty ?? false;
 
   bool get _hasLabel => labelText?.isNotEmpty ?? false;
@@ -178,11 +110,98 @@ class SBBInputTrigger extends StatelessWidget {
   String get _errorText => errorText ?? '';
 
   double get _verticalPadding => _hasLabel ? 6.0 : 12.0;
+
+  @override
+  Widget build(BuildContext context) {
+    final style = SBBControlStyles.of(context).textField!;
+    final dividerColor = _dividerColor(style);
+    return InkWell(
+      onTap: enabled ? onPressed : null,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          prefixWidget,
+          Expanded(
+            child: Column(
+              children: [
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: _buildInputContent(style),
+                    ),
+                    suffixWidget,
+                  ],
+                ),
+                if (!isLastElement) Divider(color: dividerColor),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildInputContent(SBBTextFieldStyle style) {
+    final valueTextStyle = _valueTextStyle(style);
+
+    // top padding
+    final verticalPaddingWidget = SizedBox(height: _verticalPadding);
+
+    // widget displaying the input label
+    final labelWidget = Text(_labelText, style: style.labelTextStyle!);
+
+    // widget displaying the input value
+    final valueWidget = Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2.0),
+      child: Text(
+        _valueText,
+        style: valueTextStyle,
+        maxLines: maxLines,
+        overflow: maxLines != null ? TextOverflow.ellipsis : null,
+      ),
+    );
+
+    // widget displaying error text or just bottom padding if there is no error
+    Widget bottomWidget = verticalPaddingWidget;
+    if (_hasError) {
+      bottomWidget = Padding(
+        padding: const EdgeInsets.only(bottom: sbbDefaultSpacing * 0.5),
+        child: Text(
+          _errorText,
+          style: style.errorTextStyle,
+        ),
+      );
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        verticalPaddingWidget,
+        if (_hasLabel) labelWidget,
+        valueWidget,
+        bottomWidget,
+      ],
+    );
+  }
+
+  Color _dividerColor(SBBTextFieldStyle style) {
+    return _hasError ? style.dividerColorError! : style.dividerColor!;
+  }
+
+  TextStyle _valueTextStyle(SBBTextFieldStyle style) {
+    return !enabled
+        ? style.textStyleDisabled!
+        : (!_hasValue
+            ? style.placeholderTextStyle
+            : (_hasError ? style.textStyleError : style.textStyle))!;
+  }
 }
 
 /// Icon widget used by [SBBInputTrigger].
 class SBBInputTriggerIconWidget extends StatelessWidget {
   const SBBInputTriggerIconWidget({
+    super.key,
     this.icon,
     this.enabled = true,
     this.error = false,
@@ -227,7 +246,7 @@ class SBBInputTriggerIconWidget extends StatelessWidget {
     // symmetric splash effect
     return Container(
       transform: Transform.translate(
-        offset: Offset(rightPadding, 0.0),
+        offset: const Offset(rightPadding, 0.0),
       ).transform,
       child: InkResponse(
         // splashRadius: 28.0,

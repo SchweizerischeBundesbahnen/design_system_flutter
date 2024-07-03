@@ -10,7 +10,42 @@ class InputTriggerPage extends StatefulWidget {
 }
 
 class _PickerPageState extends State<InputTriggerPage> {
-  DateTime? selectedDate;
+  bool enabled = true;
+  bool showPrefixIcon = true;
+  bool showSuffixIcon = true;
+  String inputValue = '';
+  String labelValue = '';
+  String hintValue = '';
+  String errorValue = '';
+  final valueController = TextEditingController();
+  final labelController = TextEditingController();
+  final hintController = TextEditingController();
+  final errorController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    valueController.addListener(() {
+      setState(() {
+        inputValue = valueController.text;
+      });
+    });
+    labelController.addListener(() {
+      setState(() {
+        labelValue = labelController.text;
+      });
+    });
+    hintController.addListener(() {
+      setState(() {
+        hintValue = hintController.text;
+      });
+    });
+    errorController.addListener(() {
+      setState(() {
+        errorValue = errorController.text;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +60,7 @@ class _PickerPageState extends State<InputTriggerPage> {
           const SizedBox(
             height: sbbDefaultSpacing,
           ),
+          SBBListHeader('Demo'),
           SBBGroup(
             child: Column(
               children: [
@@ -35,28 +71,17 @@ class _PickerPageState extends State<InputTriggerPage> {
                   hintText: hintValue,
                   errorText: errorValue,
                   onPressed: () {
-                    showSBBModalSheet(
-                      context: context,
-                      title: 'Date',
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          SBBDatePicker(onDateChanged: (DateTime date) {
-                            setState(() {
-                              selectedDate = date;
-                              valueController.text = date.toIso8601String();
-                            });
-                          }),
-                        ],
-                      ),
-                    );
+                    SBBToast.of(context).show(message: 'onPressed');
                   },
                   prefixIcon: showPrefixIcon ? SBBIcons.dog_small : null,
                   suffixIcon: showSuffixIcon
                       ? SBBIcons.circle_information_small_small
                       : null,
-                  onSuffixPressed: () {},
+                  onSuffixPressed: () {
+                    SBBToast.of(context).show(message: 'onSuffixPressed');
+                  },
                   enabled: enabled,
+                  isLastElement: true,
                 ),
               ],
             ),
@@ -64,6 +89,7 @@ class _PickerPageState extends State<InputTriggerPage> {
           const SizedBox(
             height: sbbDefaultSpacing,
           ),
+          SBBListHeader('Change properties'),
           SBBGroup(
             child: Column(
               children: [
@@ -116,42 +142,5 @@ class _PickerPageState extends State<InputTriggerPage> {
         ],
       ),
     );
-  }
-
-  bool enabled = true;
-  bool showPrefixIcon = true;
-  bool showSuffixIcon = true;
-  String inputValue = '';
-  String labelValue = '';
-  String hintValue = '';
-  String errorValue = '';
-  final valueController = TextEditingController();
-  final labelController = TextEditingController();
-  final hintController = TextEditingController();
-  final errorController = TextEditingController();
-
-  @override
-  void initState() {
-    super.initState();
-    valueController.addListener(() {
-      setState(() {
-        inputValue = valueController.text;
-      });
-    });
-    labelController.addListener(() {
-      setState(() {
-        labelValue = labelController.text;
-      });
-    });
-    hintController.addListener(() {
-      setState(() {
-        hintValue = hintController.text;
-      });
-    });
-    errorController.addListener(() {
-      setState(() {
-        errorValue = errorController.text;
-      });
-    });
   }
 }
