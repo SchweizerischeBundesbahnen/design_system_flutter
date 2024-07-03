@@ -149,7 +149,12 @@ class SBBInputTrigger extends StatelessWidget {
     final verticalPaddingWidget = SizedBox(height: _verticalPadding);
 
     // widget displaying the input label
-    final labelWidget = Text(_labelText, style: style.labelTextStyle!);
+    final labelWidget = Text(
+      _labelText,
+      style: style.labelTextStyle!,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+    );
 
     // widget displaying the input value
     final valueWidget = Padding(
@@ -170,6 +175,8 @@ class SBBInputTrigger extends StatelessWidget {
         child: Text(
           _errorText,
           style: style.errorTextStyle,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
         ),
       );
     }

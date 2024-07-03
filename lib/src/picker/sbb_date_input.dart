@@ -23,8 +23,7 @@ class SBBDateInput extends StatefulWidget {
     this.suffixIcon,
     this.onSuffixPressed,
     required this.onDateChanged,
-    this.maxLines,
-    this.enabled = true,
+    this.maxLines = 1,
     this.isLastElement = false,
   });
 
@@ -38,12 +37,8 @@ class SBBDateInput extends StatefulWidget {
   final IconData? prefixIcon;
   final IconData? suffixIcon;
   final VoidCallback? onSuffixPressed;
-
   final ValueChanged<DateTime>? onDateChanged;
-
   final int? maxLines;
-
-  final bool enabled;
   final bool isLastElement;
 
   @override

@@ -24,8 +24,7 @@ class SBBTimeInput extends StatefulWidget {
     this.suffixIcon,
     this.onSuffixPressed,
     required this.onTimeChanged,
-    this.maxLines,
-    this.enabled = true,
+    this.maxLines = 1,
     this.isLastElement = false,
   });
 
@@ -40,12 +39,8 @@ class SBBTimeInput extends StatefulWidget {
   final IconData? prefixIcon;
   final IconData? suffixIcon;
   final VoidCallback? onSuffixPressed;
-
   final ValueChanged<TimeOfDay>? onTimeChanged;
-
   final int? maxLines;
-
-  final bool enabled;
   final bool isLastElement;
 
   @override
