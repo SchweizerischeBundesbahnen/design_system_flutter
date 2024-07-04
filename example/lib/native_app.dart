@@ -13,6 +13,7 @@ import 'pages/color_page.dart';
 import 'pages/group_page.dart';
 import 'pages/header_page.dart';
 import 'pages/icon_page.dart';
+import 'pages/input_trigger_page.dart';
 import 'pages/link_page.dart';
 import 'pages/list_header_page.dart';
 import 'pages/list_item_page.dart';
