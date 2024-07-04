@@ -1,20 +1,19 @@
+import 'package:design_system_flutter/src/notification_box/notification_box_text_content.dart';
 import 'package:flutter/material.dart';
-
-import '../../design_system_flutter.dart';
 
 class SBBNotificationBoxTitleContent extends StatelessWidget {
   const SBBNotificationBoxTitleContent({
-    required this.icon,
     required this.title,
     required this.text,
-    required this.hasDetails,
     super.key,
+    this.icon,
+    this.detailsIcon,
   });
 
-  final Widget icon;
+  final Widget? icon;
   final String title;
   final String text;
-  final bool hasDetails;
+  final Widget? detailsIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -22,8 +21,10 @@ class SBBNotificationBoxTitleContent extends StatelessWidget {
       children: [
         Row(
           children: [
-            icon,
-            SizedBox(width: 8.0),
+            if (icon != null) ...[
+              icon!,
+              SizedBox(width: 8.0),
+            ],
             Expanded(
               child: Text(
                 title,
@@ -33,13 +34,7 @@ class SBBNotificationBoxTitleContent extends StatelessWidget {
           ],
         ),
         SizedBox(height: 8.0),
-        Row(
-          children: [
-            Expanded(child: Text(text)),
-            SizedBox(width: 8.0),
-            if (hasDetails) Icon(SBBIcons.chevron_small_right_small),
-          ],
-        ),
+        NotificationBoxTextContent(text: text, icon: detailsIcon),
       ],
     );
   }
