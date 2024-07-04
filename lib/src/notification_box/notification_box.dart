@@ -11,7 +11,7 @@ part 'notification_box.type.dart';
 
 class SBBNotificationBox extends StatefulWidget {
   const SBBNotificationBox({
-    required this.type,
+    required this.state,
     required this.text,
     super.key,
     this.title,
@@ -19,6 +19,8 @@ class SBBNotificationBox extends StatefulWidget {
     this.onTap,
     this.isCloseable = true,
     this.onClose,
+    this.hasIcon = true,
+    this.detailsIcon = SBBIcons.chevron_small_right_small,
   });
 
   factory SBBNotificationBox.alert({
@@ -28,15 +30,19 @@ class SBBNotificationBox extends StatefulWidget {
     GestureTapCallback? onTap,
     bool isCloseable = true,
     GestureTapCallback? onClose,
+    bool hasIcon = true,
+    IconData detailsIcon = SBBIcons.chevron_small_right_small,
   }) =>
       SBBNotificationBox(
-        type: SBBNotificationBoxType.alert,
+        state: SBBNotificationBoxState.alert,
         title: title,
         text: text,
         onControllerCreated: onControllerCreated,
         onTap: onTap,
         isCloseable: isCloseable,
         onClose: onClose,
+        hasIcon: hasIcon,
+        detailsIcon: detailsIcon,
       );
 
   factory SBBNotificationBox.warning({
@@ -46,15 +52,19 @@ class SBBNotificationBox extends StatefulWidget {
     GestureTapCallback? onTap,
     bool isCloseable = true,
     GestureTapCallback? onClose,
+    bool hasIcon = true,
+    IconData detailsIcon = SBBIcons.chevron_small_right_small,
   }) =>
       SBBNotificationBox(
-        type: SBBNotificationBoxType.warning,
+        state: SBBNotificationBoxState.warning,
         title: title,
         text: text,
         onControllerCreated: onControllerCreated,
         onTap: onTap,
         isCloseable: isCloseable,
         onClose: onClose,
+        hasIcon: hasIcon,
+        detailsIcon: detailsIcon,
       );
 
   factory SBBNotificationBox.success({
@@ -64,15 +74,19 @@ class SBBNotificationBox extends StatefulWidget {
     GestureTapCallback? onTap,
     bool isCloseable = true,
     GestureTapCallback? onClose,
+    bool hasIcon = true,
+    IconData detailsIcon = SBBIcons.chevron_small_right_small,
   }) =>
       SBBNotificationBox(
-        type: SBBNotificationBoxType.success,
+        state: SBBNotificationBoxState.success,
         title: title,
         text: text,
         onControllerCreated: onControllerCreated,
         onTap: onTap,
         isCloseable: isCloseable,
         onClose: onClose,
+        hasIcon: hasIcon,
+        detailsIcon: detailsIcon,
       );
 
   factory SBBNotificationBox.information({
@@ -82,24 +96,30 @@ class SBBNotificationBox extends StatefulWidget {
     GestureTapCallback? onTap,
     bool isCloseable = true,
     GestureTapCallback? onClose,
+    bool hasIcon = true,
+    IconData detailsIcon = SBBIcons.chevron_small_right_small,
   }) =>
       SBBNotificationBox(
-        type: SBBNotificationBoxType.information,
+        state: SBBNotificationBoxState.information,
         title: title,
         text: text,
         onControllerCreated: onControllerCreated,
         onTap: onTap,
         isCloseable: isCloseable,
         onClose: onClose,
+        hasIcon: hasIcon,
+        detailsIcon: detailsIcon,
       );
 
-  final SBBNotificationBoxType type;
+  final SBBNotificationBoxState state;
   final String? title;
   final String text;
   final Function(CloseableBoxController controller)? onControllerCreated;
   final GestureTapCallback? onTap;
   final bool isCloseable;
   final GestureTapCallback? onClose;
+  final bool hasIcon;
+  final IconData detailsIcon;
 
   @override
   State<SBBNotificationBox> createState() => _SBBNotificationBoxState();
@@ -132,13 +152,16 @@ class _SBBNotificationBoxState extends State<SBBNotificationBox>
   @override
   Widget build(BuildContext context) {
     final iconColor = SBBBaseStyle.of(context).themeValue(
-      widget.type.iconColor,
-      widget.type.iconColorDark,
+      widget.state.iconColor,
+      widget.state.iconColorDark,
     );
-    final icon = Icon(
-      widget.type.icon,
-      color: iconColor,
-    );
+    final icon = widget.hasIcon
+        ? Icon(
+            widget.state.icon,
+            color: iconColor,
+          )
+        : null;
+    final detailsIcon = widget.onTap != null ? Icon(widget.detailsIcon) : null;
     Widget child;
     switch (widget.title) {
       case null:
@@ -146,13 +169,14 @@ class _SBBNotificationBoxState extends State<SBBNotificationBox>
           icon: icon,
           text: widget.text,
           isCloseable: widget.isCloseable,
+          detailsIcon: detailsIcon,
         );
       default:
         child = SBBNotificationBoxTitleContent(
           icon: icon,
           title: widget.title!,
           text: widget.text,
-          hasDetails: widget.onTap != null,
+          detailsIcon: detailsIcon,
         );
     }
     return _animationBuilder(
@@ -165,7 +189,7 @@ class _SBBNotificationBoxState extends State<SBBNotificationBox>
               decoration: BoxDecoration(
                 border: Border(
                   left: BorderSide(
-                      color: widget.type.backgroundColor, width: 8.0),
+                      color: widget.state.backgroundColor, width: 8.0),
                 ),
                 borderRadius: BorderRadius.all(
                   Radius.circular(16.0),
@@ -173,14 +197,14 @@ class _SBBNotificationBoxState extends State<SBBNotificationBox>
               ),
               child: Container(
                 decoration: BoxDecoration(
-                  border: Border.all(color: widget.type.backgroundColor),
+                  border: Border.all(color: widget.state.backgroundColor),
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(8.0),
                     bottomLeft: Radius.circular(8.0),
                     topRight: Radius.circular(15.0),
                     bottomRight: Radius.circular(15.0),
                   ),
-                  color: widget.type.backgroundColor.withOpacity(.05),
+                  color: widget.state.backgroundColor.withOpacity(.05),
                 ),
                 padding: const EdgeInsets.all(sbbDefaultSpacing),
                 child: child,
