@@ -29,7 +29,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 ### Added
 
 - (#133) Added the `SBBStepper` [digital.sbb.ch#figma](https://www.figma.com/design/tZnqGkmyGDColC9D176MEu/DSM-Beta-Components?node-id=12302-13869\&t=8jZ7c63YUMMZAe8y-0)
-- (#152) `SBBModalSheet`: Added parameters `useSafeArea` and `enableDrag` to global functions `showSBBModalSheet` and `showCustomSBBModalSheet`
+- (#153) `SBBModalSheet`: Added parameters `useSafeArea` and `enableDrag` to global functions `showSBBModalSheet` and `showCustomSBBModalSheet`
 
 ### Changed
 
