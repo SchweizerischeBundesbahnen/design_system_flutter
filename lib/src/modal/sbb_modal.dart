@@ -15,7 +15,7 @@ import '../sbb_internal.dart';
 ///
 /// * [SBBModalPopup], which will be displayed.
 /// * [showDialog], which is used to display the modal.
-/// * <https://digital.sbb.ch/de/mobile/elemente/modal-view>
+/// * <https://digital.sbb.ch/en/design-system/mobile/components/modal-view/>
 Future<T?> showSBBModalPopup<T>({
   required BuildContext context,
   required String title,
@@ -27,8 +27,8 @@ Future<T?> showSBBModalPopup<T>({
     builder: (BuildContext context) {
       return SBBModalPopup(
         title: title,
-        child: child,
         clipBehavior: clipBehavior,
+        child: child,
       );
     },
     barrierColor: SBBInternal.barrierColor,
@@ -40,14 +40,14 @@ Future<T?> showSBBModalPopup<T>({
 /// See also:
 ///
 /// * [showSBBModalPopup], which is typically used to display this Widget.
-/// * <https://digital.sbb.ch/de/design-system-mobile-new/module/modal>
+/// * <https://digital.sbb.ch/en/design-system/mobile/components/modal-view/>
 class SBBModalPopup extends StatelessWidget {
   const SBBModalPopup({
-    Key? key,
+    super.key,
     required this.title,
     required this.child,
     this.clipBehavior = Clip.none,
-  }) : super(key: key);
+  });
 
   final String title;
   final Widget child;
@@ -76,7 +76,7 @@ class SBBModalPopup extends StatelessWidget {
   }
 }
 
-/// Shows a SBB Modal Sheet. Use according to documentation.
+/// Shows an SBB Modal Sheet. Use according to documentation.
 ///
 /// If you try to close the sheet but the underlying page is navigated back
 /// instead, try using the `rootNavigator` parameter of the `Navigator`:
@@ -86,20 +86,25 @@ class SBBModalPopup extends StatelessWidget {
 ///
 /// See also:
 ///
+/// * [showCustomSBBModalSheet], variant for custom modal sheet.
 /// * [SBBModalSheet], which will be displayed.
 /// * [showModalBottomSheet], which is used to display the modal.
-/// * <https://digital.sbb.ch/de/design-system-mobile-new/module/modal>
+/// * <https://digital.sbb.ch/en/design-system/mobile/components/modal-view/>
 Future<T?> showSBBModalSheet<T>({
   required BuildContext context,
   required String title,
   required Widget child,
   bool useRootNavigator = true,
+  bool useSafeArea = true,
+  bool enableDrag = true,
 }) {
   return showModalBottomSheet<T>(
     context: context,
     isScrollControlled: true,
     backgroundColor: SBBColors.transparent,
     useRootNavigator: useRootNavigator,
+    useSafeArea: useSafeArea,
+    enableDrag: enableDrag,
     builder: (BuildContext context) {
       return SBBModalSheet(
         title: title,
@@ -110,17 +115,35 @@ Future<T?> showSBBModalSheet<T>({
   );
 }
 
+/// Shows an SBB Modal Sheet. Use according to documentation.
+///
+/// If you try to close the sheet but the underlying page is navigated back
+/// instead, try using the `rootNavigator` parameter of the `Navigator`:
+/// ```dart
+/// Navigator.of(context, rootNavigator: true).pop(result)
+/// ```
+///
+/// See also:
+///
+/// * [showSBBModalSheet], which is used to display the modal.
+/// * [SBBModalSheet], which will be displayed.
+/// * [showModalBottomSheet], which is used to display the modal.
+/// * <https://digital.sbb.ch/en/design-system/mobile/components/modal-view/>
 Future<T?> showCustomSBBModalSheet<T>({
   required BuildContext context,
   required Widget header,
   required Widget child,
   bool useRootNavigator = true,
+  bool useSafeArea = true,
+  bool enableDrag = true,
 }) {
   return showModalBottomSheet<T>(
     context: context,
     isScrollControlled: true,
     backgroundColor: SBBColors.transparent,
     useRootNavigator: useRootNavigator,
+    useSafeArea: useSafeArea,
+    enableDrag: enableDrag,
     builder: (BuildContext context) {
       return SBBModalSheet.custom(
         header: header,
@@ -136,7 +159,7 @@ Future<T?> showCustomSBBModalSheet<T>({
 /// See also:
 ///
 /// * [showSBBModalSheet], which is typically used to display this Widget.
-/// * <https://digital.sbb.ch/de/design-system-mobile-new/module/modal>
+/// * <https://digital.sbb.ch/en/design-system/mobile/components/modal-view/>
 class SBBModalSheet extends StatelessWidget {
   SBBModalSheet({
     Key? key,
@@ -173,10 +196,10 @@ class SBBModalSheet extends StatelessWidget {
         );
 
   const SBBModalSheet._({
-    Key? key,
+    super.key,
     required this.headerBuilder,
     required this.child,
-  }) : super(key: key);
+  });
 
   final WidgetBuilder headerBuilder;
   final Widget child;
@@ -184,8 +207,6 @@ class SBBModalSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = SBBControlStyles.of(context);
-    final padding = View.of(context).viewInsets;
-    final statusBarHeight = padding.top;
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -195,7 +216,7 @@ class SBBModalSheet extends StatelessWidget {
               Navigator.of(context).pop();
             },
             child: Container(
-              height: statusBarHeight + sbbDefaultSpacing / 2.0,
+              height: sbbDefaultSpacing,
               color: SBBColors.transparent,
             ),
           ),
@@ -204,7 +225,7 @@ class SBBModalSheet extends StatelessWidget {
           child: Container(
             decoration: BoxDecoration(
               color: style.modalBackgroundColor,
-              borderRadius: BorderRadius.only(
+              borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(sbbDefaultSpacing),
                 topRight: Radius.circular(sbbDefaultSpacing),
               ),
