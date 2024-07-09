@@ -20,8 +20,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 - (#148) Update SBB icons to version 1.0.0
 - Implement all Notification Box Styles [Figma Link](https://www.figma.com/design/WOtLIam1xwrqcgnAITsEhV/Design-System-Mobile?m=auto&node-id=7271-28&t=gismRyaDdiCfaHBj-1)
-- (#150) Added missing functionalities in picker widgets (`SBBPicker`, `SBBDatePicker`, `SBBDateTimePicker`, `SBBTimePicker`)
-  - Added function `showModal` in `SBBDatePicker`, `SBBDateTimePicker`, `SBBTimePicker`
+- (#150) Added function `showModal` in `SBBDatePicker`, `SBBDateTimePicker`, `SBBTimePicker`
 
 ### Deprecated
 
@@ -35,13 +34,14 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ### Fixed
 
-- (#113) `SBBTimePicker`: Added support for time ranges that span over midnight.
+- (#113) `SBBTimePicker`: Added support for time ranges that span over midnight
 
 ## [1.4.0] - 2024-06-07
 
 ### Added
 
 - (#133) Added the `SBBStepper` [digital.sbb.ch#figma](https://www.figma.com/design/tZnqGkmyGDColC9D176MEu/DSM-Beta-Components?node-id=12302-13869\&t=8jZ7c63YUMMZAe8y-0)
+- (#153) `SBBModalSheet`: Added parameters `useSafeArea` and `enableDrag` to global functions `showSBBModalSheet` and `showCustomSBBModalSheet`
 
 ### Changed
 
@@ -53,7 +53,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 ### Added
 
 - Added the release github actions workflow.
-- (#110) Match typography specifications from [design.sbb.ch](design.sbb.ch) by adding extraSmallFont.
+- (#110) Match typography specifications from [design.sbb.ch](https://digital.sbb.ch/en/design-system/mobile/basics/typography/) by adding extraSmallFont.
 - (#107) `SBBTabBar`: Added field `onTap`, which allows for reacting to taps on tab items.
 - (#106) `FontScripts`: Added utils to update the SBB Icon fonts with a script.
 
