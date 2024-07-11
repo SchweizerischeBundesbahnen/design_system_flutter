@@ -9,6 +9,8 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+## [1.5.0] - 2024-07-11
+
 ### Added
 
 - (#150) Added `SBBDateInput`
@@ -19,7 +21,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 ### Changed
 
 - (#148) Update SBB icons to version 1.0.0
-- Implement all Notification Box Styles [Figma Link](https://www.figma.com/design/WOtLIam1xwrqcgnAITsEhV/Design-System-Mobile?m=auto&node-id=7271-28&t=gismRyaDdiCfaHBj-1)
+- Implement all Notification Box Styles [Figma Link](https://www.figma.com/design/WOtLIam1xwrqcgnAITsEhV/Design-System-Mobile?m=auto\&node-id=7271-28\&t=gismRyaDdiCfaHBj-1)
 - (#150) Added function `showModal` in `SBBDatePicker`, `SBBDateTimePicker`, `SBBTimePicker`
 
 ### Deprecated
@@ -335,7 +337,9 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Initial project setup
 - Added some widgets
 
-[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/1.4.0...HEAD
+[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/1.5.0...HEAD
+
+[1.5.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/1.4.0...1.5.0
 
 [1.4.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/1.3.0...1.4.0
 
