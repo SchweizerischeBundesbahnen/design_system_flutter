@@ -1,6 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:design_system_flutter/design_system_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
 import 'pages/accordion_page.dart';
@@ -12,6 +13,7 @@ import 'pages/color_page.dart';
 import 'pages/group_page.dart';
 import 'pages/header_page.dart';
 import 'pages/icon_page.dart';
+import 'pages/input_trigger_page.dart';
 import 'pages/link_page.dart';
 import 'pages/list_header_page.dart';
 import 'pages/list_item_page.dart';
@@ -60,6 +62,18 @@ class MyApp extends StatelessWidget {
               hostPlatform: HostPlatform.native,
             ),
             themeMode: appState.isDarkModeOn ? ThemeMode.dark : ThemeMode.light,
+            localizationsDelegates: [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: [
+              Locale('en'),
+              Locale('de'),
+              Locale('fr'),
+              Locale('it'),
+            ],
+            locale: Locale('de'),
             home: Scaffold(
               appBar: SBBHeader(title: 'Design System Mobile'),
               body: SingleChildScrollView(
@@ -177,6 +191,10 @@ class MyApp extends StatelessWidget {
                             _DemoEntry(
                               'Status',
                               StatusPage(),
+                            ),
+                            _DemoEntry(
+                              'Input Trigger',
+                              InputTriggerPage(),
                               isLastElement: true,
                             ),
                           ],

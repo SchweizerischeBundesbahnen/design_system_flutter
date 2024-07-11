@@ -6,6 +6,8 @@ class SBBTextFieldStyle {
   SBBTextFieldStyle({
     this.textStyle,
     this.textStyleDisabled,
+    this.textStyleError,
+    this.labelTextStyle,
     this.placeholderTextStyle,
     this.placeholderTextStyleDisabled,
     this.errorTextStyle,
@@ -17,14 +19,28 @@ class SBBTextFieldStyle {
     this.selectionHandleColor,
     this.iconColor,
     this.iconColorDisabled,
+    this.prefixIconColorError,
   });
 
   factory SBBTextFieldStyle.$default({required SBBBaseStyle baseStyle}) => SBBTextFieldStyle(
         textStyle: baseStyle.themedTextStyle(),
         textStyleDisabled: baseStyle.themedTextStyle(color: baseStyle.labelColor),
+        textStyleError: baseStyle.themedTextStyle(
+          color: baseStyle.themeValue(SBBColors.red, SBBColors.redDarkMode),
+        ),
+        labelTextStyle: baseStyle.themedTextStyle(
+          textStyle: SBBTextStyles.mediumLight.copyWith(
+            height: 12.0 / 10.0,
+            fontSize: 10.0,
+          ),
+          color: baseStyle.labelColor,
+        ),
         placeholderTextStyle: baseStyle.themedTextStyle(color: baseStyle.labelColor),
         placeholderTextStyleDisabled: baseStyle.themedTextStyle(color: baseStyle.labelColor),
-        errorTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.helpersLabel, color: SBBColors.red),
+        errorTextStyle: baseStyle.themedTextStyle(
+          textStyle: SBBTextStyles.helpersLabel,
+          color: baseStyle.themeValue(SBBColors.red, SBBColors.redDarkMode),
+        ),
         dividerColor: baseStyle.dividerColor,
         dividerColorHighlighted: baseStyle.themeValue(SBBColors.black, SBBColors.white),
         dividerColorError: SBBColors.red,
@@ -33,10 +49,13 @@ class SBBTextFieldStyle {
         selectionHandleColor: SBBColors.sky,
         iconColor: baseStyle.iconColor,
         iconColorDisabled: baseStyle.labelColor,
+        prefixIconColorError: SBBColors.red,
       );
 
   final TextStyle? textStyle;
   final TextStyle? textStyleDisabled;
+  final TextStyle? textStyleError;
+  final TextStyle? labelTextStyle;
   final TextStyle? placeholderTextStyle;
   final TextStyle? placeholderTextStyleDisabled;
   final TextStyle? errorTextStyle;
@@ -48,10 +67,13 @@ class SBBTextFieldStyle {
   final Color? selectionHandleColor;
   final Color? iconColor;
   final Color? iconColorDisabled;
+  final Color? prefixIconColorError;
 
   SBBTextFieldStyle copyWith({
     TextStyle? textStyle,
     TextStyle? textStyleDisabled,
+    TextStyle? textStyleError,
+    TextStyle? labelTextStyle,
     TextStyle? placeholderTextStyle,
     TextStyle? placeholderTextStyleDisabled,
     TextStyle? errorTextStyle,
@@ -63,10 +85,13 @@ class SBBTextFieldStyle {
     Color? selectionHandleColor,
     Color? iconColor,
     Color? iconColorDisabled,
+    Color? prefixIconColorError,
   }) =>
       SBBTextFieldStyle(
         textStyle: textStyle ?? this.textStyle,
         textStyleDisabled: textStyleDisabled ?? this.textStyleDisabled,
+        textStyleError: textStyleError ?? this.textStyleError,
+        labelTextStyle: labelTextStyle ?? this.labelTextStyle,
         placeholderTextStyle: placeholderTextStyle ?? this.placeholderTextStyle,
         placeholderTextStyleDisabled: placeholderTextStyleDisabled ?? this.placeholderTextStyleDisabled,
         errorTextStyle: errorTextStyle ?? this.errorTextStyle,
@@ -78,11 +103,14 @@ class SBBTextFieldStyle {
         selectionHandleColor: selectionHandleColor ?? this.selectionHandleColor,
         iconColor: iconColor ?? this.iconColor,
         iconColorDisabled: iconColorDisabled ?? this.iconColorDisabled,
+        prefixIconColorError: prefixIconColorError ?? this.prefixIconColorError,
       );
 
   SBBTextFieldStyle lerp(SBBTextFieldStyle? other, double t) => SBBTextFieldStyle(
         textStyle: TextStyle.lerp(textStyle, other?.textStyle, t),
         textStyleDisabled: TextStyle.lerp(textStyleDisabled, other?.textStyleDisabled, t),
+        textStyleError: TextStyle.lerp(textStyleError, other?.textStyleError, t),
+        labelTextStyle: TextStyle.lerp(labelTextStyle, other?.labelTextStyle, t),
         placeholderTextStyle: TextStyle.lerp(placeholderTextStyle, other?.placeholderTextStyle, t),
         placeholderTextStyleDisabled: TextStyle.lerp(placeholderTextStyleDisabled, other?.placeholderTextStyleDisabled, t),
         errorTextStyle: TextStyle.lerp(errorTextStyle, other?.errorTextStyle, t),
@@ -94,6 +122,7 @@ class SBBTextFieldStyle {
         selectionHandleColor: Color.lerp(selectionHandleColor, other?.selectionHandleColor, t),
         iconColor: Color.lerp(iconColor, other?.iconColor, t),
         iconColorDisabled: Color.lerp(iconColorDisabled, other?.iconColorDisabled, t),
+        prefixIconColorError: Color.lerp(prefixIconColorError, other?.prefixIconColorError, t),
       );
 }
 
@@ -103,6 +132,8 @@ extension SBBTextFieldStyleExtension on SBBTextFieldStyle? {
     return this!.copyWith(
       textStyle: this!.textStyle ?? other?.textStyle,
       textStyleDisabled: this!.textStyleDisabled ?? other?.textStyleDisabled,
+      textStyleError: this!.textStyleError ?? other?.textStyleError,
+      labelTextStyle: this!.labelTextStyle ?? other?.labelTextStyle,
       placeholderTextStyle: this!.placeholderTextStyle ?? other?.placeholderTextStyle,
       placeholderTextStyleDisabled: this!.placeholderTextStyleDisabled ?? other?.placeholderTextStyleDisabled,
       errorTextStyle: this!.errorTextStyle ?? other?.errorTextStyle,
@@ -114,6 +145,7 @@ extension SBBTextFieldStyleExtension on SBBTextFieldStyle? {
       selectionHandleColor: this!.selectionHandleColor ?? other?.selectionHandleColor,
       iconColor: this!.iconColor ?? other?.iconColor,
       iconColorDisabled: this!.iconColorDisabled ?? other?.iconColorDisabled,
+      prefixIconColorError: this!.prefixIconColorError ?? other?.prefixIconColorError,
     );
   }
 }

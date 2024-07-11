@@ -58,12 +58,15 @@ class SBBTheme {
     );
     final _baseStyle = baseStyle.merge(defaultBaseStyle);
 
-    final defaultButtonStyles = SBBButtonStyles.$default(baseStyle: _baseStyle);
+    final defaultButtonStyles = SBBButtonStyles.$default(
+      baseStyle: _baseStyle,
+    );
     final _buttonStyles = buttonStyles.merge(defaultButtonStyles);
 
-    final defaultControlStyles =
-        SBBControlStyles.$default(baseStyle: _baseStyle);
-    final _controlStyles = defaultControlStyles.merge(controlStyles);
+    final defaultControlStyles = SBBControlStyles.$default(
+      baseStyle: _baseStyle,
+    );
+    final _controlStyles = controlStyles.merge(defaultControlStyles);
 
     return raw(
       brightness: brightness,

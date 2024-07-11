@@ -1,32 +1,38 @@
 part of 'sbb_picker.dart';
 
-typedef SBBPickerScrollViewItemBuilder = (bool isEnabled, Widget widget)?
-    Function(BuildContext context, int index);
+/// Signature for a function that creates a [SBBPickerItem] for a given index,
+/// but may return null.
+///
+/// Used by [SBBPicker] and [SBBPickerScrollView].
+///
+/// Unlike most builders, this callback can return null, indicating the index
+/// is out of range.
+typedef SBBPickerScrollViewItemBuilder = SBBPickerItem? Function(
+  BuildContext context,
+  int index,
+);
 
-const _defaultItemHeight = 30.0;
-const _visibleItemCount = 7;
-const _firstIndexPreItemsCount = 3;
-const _scrollAreaHeight = _defaultItemHeight * _visibleItemCount;
-const _visibleItemHeights = [
-  28.0,
-  28.0,
-  30.0,
-  38.0,
-  30.0,
-  28.0,
-  28.0,
-];
-const _visibleItemTextColors = [
-  SBBColors.silver,
-  SBBColors.cement,
-  SBBColors.storm,
-  SBBColors.storm,
-  SBBColors.storm,
-  SBBColors.cement,
-  SBBColors.silver,
-];
-
+/// A box in which children on a wheel can be scrolled. Should only be used in
+/// combination with [SBBPicker.custom].
+///
+/// When the list is at the zero scroll offset, the first child is aligned with
+/// the middle of the viewport. When the list is at the final scroll offset,
+/// the last child is aligned with the middle of the viewport.
 class SBBPickerScrollView extends StatefulWidget {
+  /// Constructs an [SBBPickerScrollView].
+  ///
+  /// [onSelectedItemChanged] is the callback called when the selected value
+  /// changes.
+  ///
+  /// [itemBuilder] is the callback called when a picker item needs to be built.
+  ///
+  /// [controller] cas be used for programmatically reading or changing the
+  /// current picker index.
+  ///
+  /// [looping] decides whether the list loops and can be scrolled infinitely.
+  /// If set to true, scrolling past the end of the list will loop the list back
+  /// to the beginning. If set to false, the list will stop scrolling when you
+  /// reach the end or the beginning. Defaults to true.
   const SBBPickerScrollView({
     super.key,
     required this.onSelectedItemChanged,
@@ -44,39 +50,81 @@ class SBBPickerScrollView extends StatefulWidget {
   State<SBBPickerScrollView> createState() => _SBBPickerScrollViewState();
 }
 
-class _SBBPickerScrollViewState extends State<SBBPickerScrollView> {
+class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
+  static const _visibleItemTransformValues = [
+    -1.0,
+    -2.5,
+    -3.0,
+    0.0,
+    3.0,
+    2.5,
+    1.0,
+  ];
+
+  static const _visibleItemHeightAdjustments = [
+    -2.0,
+    -1.0,
+    0.0,
+    6.0,
+    0.0,
+    -1.0,
+    -2.0,
+  ];
+
+  static const _visibleCenterItemIndex = 3;
+
+  static const _disabledItemOpacity = 0.35;
+
+  List<double> get _visibleItemHeights => _visibleItemHeightAdjustments
+      .map((adjustment) => _itemHeight + adjustment)
+      .toList();
+
+  double get _listPaddingHeight => _visibleCenterItemIndex * _itemHeight;
+
   late ValueNotifier<double> _scrollOffsetValueNotifier;
+  late ValueNotifier<int> _firstVisibleItemIndexValueNotifier;
   late ValueNotifier<int> _selectedItemIndexValueNotifier;
+
+  late int _initialIndexOffset = _controller.initialItem;
+  bool _isShortList = false;
+  int? _firstIndex;
+  int? _lastIndex;
+
   SBBPickerScrollController? _fallbackController;
 
-  void _initController() {
-    if (widget.controller == null) {
-      _fallbackController = SBBPickerScrollController();
-    }
-    _controller.addListener(() {
-      _scrollOffsetValueNotifier.value = _controller.offset;
-    });
+  SBBPickerScrollController get _controller {
+    return widget.controller ?? _fallbackController!;
   }
 
   @override
   void initState() {
     super.initState();
     _initController();
-    _scrollOffsetValueNotifier = ValueNotifier(
-      _controller.initialScrollOffset,
+    _scrollOffsetValueNotifier = ValueNotifier(_controller.initialScrollOffset);
+    _firstVisibleItemIndexValueNotifier = ValueNotifier(
+      _controller.selectedItem - _visibleCenterItemIndex,
     );
     _selectedItemIndexValueNotifier = ValueNotifier(_controller.selectedItem);
+    final onSelectedItemChanged = widget.onSelectedItemChanged;
+    if (onSelectedItemChanged != null) {
+      _selectedItemIndexValueNotifier.addListener(() {
+        onSelectedItemChanged(_selectedItemIndexValueNotifier.value);
+      });
+    }
+  }
 
-    _selectedItemIndexValueNotifier.addListener(() {
-      final onSelectedItemChanged = widget.onSelectedItemChanged;
-      if (onSelectedItemChanged != null) {
-        // callback needs to be notified with Future.microtask to prevent
-        // notifying callback during build phase which result in an exception
-        Future.microtask(() {
-          onSelectedItemChanged(_selectedItemIndexValueNotifier.value);
-        });
-      }
-    });
+  void _initController() {
+    if (widget.controller == null) {
+      _fallbackController = SBBPickerScrollController();
+    }
+    _controller.addListener(_onScrolling);
+    _applyIndexOffset();
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _controller._itemHeight = _itemHeight;
   }
 
   @override
@@ -97,385 +145,308 @@ class _SBBPickerScrollViewState extends State<SBBPickerScrollView> {
 
   @override
   Widget build(BuildContext context) {
-    final _listCenterKey = UniqueKey();
-    return Container(
-      height: _scrollAreaHeight,
-      child: Scrollable(
-        controller: _controller,
-        viewportBuilder: (
-          BuildContext context,
-          ViewportOffset offset,
-        ) {
-          return Viewport(
-            offset: offset,
-            center: _listCenterKey,
-            slivers: [
-              // negative list (index < 0)
-              SliverList(
-                delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) {
-                    // adjust index so it goes negative from -1 instead of
-                    // positive from 0
-                    final adjustedIndex = -1 * index - 1;
-                    return _buildListItem(adjustedIndex);
-                  },
-                ),
-              ),
-              // positive list (index >= 0)
-              SliverList(
-                key: _listCenterKey,
-                delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) {
-                    return _buildListItem(index);
-                  },
-                ),
-              ),
-            ],
-          );
-        },
+    // disable scroll bars because they don't work properly with the way the
+    // scroll view is built
+    final noScrollBarsBehaviour = ScrollConfiguration.of(context).copyWith(
+      scrollbars: false,
+    );
+    return GestureDetector(
+      onTapUp: _onTapUp,
+      child: SizedBox(
+        height: _scrollAreaHeight,
+        child: Scrollable(
+          controller: _controller,
+          scrollBehavior: noScrollBarsBehaviour,
+          viewportBuilder: (_, ViewportOffset offset) => _buildViewPort(offset),
+        ),
       ),
     );
   }
 
-  Widget? _buildListItem(int index) {
-    int? scrollTarget = index;
-    (bool, Widget)? listItem = widget.itemBuilder(
-      context,
-      index,
-    );
-    var listItemEnabled = listItem?.$1 ?? false;
-    var listItemWidget = listItem?.$2;
+  Widget _buildViewPort(ViewportOffset offset) {
+    // set list center key based on whether there is an item count deficit
+    final listCenterKey = UniqueKey();
+    final topPaddingListCenterKey = _isShortList ? listCenterKey : null;
+    final positiveIndexListCenterKey = !_isShortList ? listCenterKey : null;
 
-    if (!widget.looping && listItem == null) {
-      // checking for spacer list items in non looping scroll views
-      if (index < 0 && index >= -_firstIndexPreItemsCount) {
-        // scroll to first item for tapping top spacer items
-        scrollTarget = 0;
-        listItemWidget = SizedBox.shrink();
-      } else if (widget.itemBuilder(
-            context,
-            index - _firstIndexPreItemsCount,
-          ) !=
-          null) {
-        // scroll to last item for tapping bottom spacer items
-        scrollTarget = null;
-        listItemWidget = SizedBox.shrink();
-      } else {
-        return null;
-      }
+    return Viewport(
+      offset: offset,
+      center: listCenterKey,
+      slivers: [
+        if (!widget.looping)
+          SliverToBoxAdapter(
+            key: topPaddingListCenterKey,
+            child: SizedBox(height: _listPaddingHeight),
+          ),
+        _buildNegativeIndexList(),
+        _buildPositiveIndexList(positiveIndexListCenterKey),
+        if (!widget.looping)
+          SliverToBoxAdapter(
+            child: SizedBox(height: _listPaddingHeight),
+          ),
+      ],
+    );
+  }
+
+  Widget _buildNegativeIndexList() {
+    return SliverList(
+      delegate: SliverChildBuilderDelegate((_, index) {
+        // adjust index so it goes negative from -1 instead of
+        // positive from 0
+        final adjustedIndex = -1 - index;
+        return _buildItem(adjustedIndex);
+      }),
+    );
+  }
+
+  Widget _buildPositiveIndexList(Key? listCenterKey) {
+    return SliverList(
+      key: listCenterKey,
+      delegate: SliverChildBuilderDelegate((_, index) {
+        return _buildItem(index);
+      }),
+    );
+  }
+
+  Widget? _buildItem(int index) {
+    final itemIndex = index + _initialIndexOffset - _visibleCenterItemIndex;
+    final item = widget.itemBuilder(context, itemIndex);
+    assert(
+      !widget.looping || widget.looping && item != null,
+      'Item builder returned null for index $itemIndex but looping was set to true',
+    );
+
+    if (!widget.looping && item == null) {
+      return null;
     }
 
+    final itemEnabled = item?.isEnabled ?? false;
+    final itemWidget = item?.widget ?? const SizedBox.shrink();
+
+    return _firstVisibleItemIndexBasedItem(itemIndex, itemEnabled, itemWidget);
+  }
+
+  Widget _firstVisibleItemIndexBasedItem(
+    int itemIndex,
+    bool itemEnabled,
+    Widget itemWidget,
+  ) {
+    // placeholder item used for items that are currently not visible
+    final placeholderItem = SizedBox(height: _itemHeight);
+
+    // use ValueListenableBuilder with first visible item index to prevent
+    // rebuilding items too often
+    return ValueListenableBuilder(
+      valueListenable: _firstVisibleItemIndexValueNotifier,
+      builder: (_, int firstVisibleItemIndex, placeholderItem) {
+        // check if item visible
+        final itemVisible = itemIndex >= firstVisibleItemIndex &&
+            itemIndex <= firstVisibleItemIndex + _visibleItemCount;
+        if (!itemVisible) {
+          // return placeholder item for out of sight items
+          return placeholderItem!;
+        }
+
+        // item style values are calculated based on the current scroll offset
+        return _buildScrollOffsetBasedItem(
+          firstVisibleItemIndex,
+          itemIndex,
+          itemEnabled,
+          itemWidget,
+        );
+      },
+      child: placeholderItem,
+    );
+  }
+
+  Widget _buildScrollOffsetBasedItem(
+    int firstVisibleItemIndex,
+    int itemIndex,
+    bool itemEnabled,
+    Widget itemWidget,
+  ) {
     // item style values are calculated based on the current scroll offset
     return ValueListenableBuilder(
       valueListenable: _scrollOffsetValueNotifier,
-      builder: (
-        BuildContext context,
-        double offset,
-        Widget? _,
-      ) {
-        final itemsOfBothListsVisible =
-            offset < 0 && offset > -_scrollAreaHeight;
-        if (itemsOfBothListsVisible) {
-          // Because of the target scroll position calculation workaround used
-          // in SBBPickerScrollController, it's necessary to adjust the offset
-          // to ensure that item heights are accurately calculated.
-          var threshold = 0.0;
-          for (var i = 0; i < _visibleItemCount; i++) {
-            threshold -= _visibleItemHeights[i];
-            if (threshold <= offset) {
-              final offsetPercentage = offset / threshold;
-              final maxCorrectedOffset = (-1 - i) * _defaultItemHeight;
-              offset = offsetPercentage * maxCorrectedOffset;
-              break;
-            }
-          }
-        }
-
+      builder: (_, double offset, Widget? child) {
         // calculate the current item index of the visible items, this also
         // includes items that are only partly visible when scrolling
-        final visibleItemIndex =
-            ((offset - index * _defaultItemHeight) * -1 / _defaultItemHeight)
-                .ceil();
+        final visibleItemIndex = itemIndex - firstVisibleItemIndex;
 
-        if (visibleItemIndex < 0 || visibleItemIndex > _visibleItemCount) {
-          // return sized boxes with default height for out of sight items
-          return Container(
-            color: SBBColors.violet,
-            height: _defaultItemHeight,
-            child: Text('$visibleItemIndex'),
-          );
-        }
+        // calculate transform translation offset based on scroll offset
+        final translationOffset = _itemOffset(visibleItemIndex, offset);
 
-        // notify selected item changed
-        final visibleAreaOffset = offset % _defaultItemHeight;
-        var selectedVisibleItemIndex =
-            visibleAreaOffset > _defaultItemHeight * 0.5
-                ? _firstIndexPreItemsCount + 1
-                : _firstIndexPreItemsCount;
-        final selectedItemIndex =
-            index + selectedVisibleItemIndex - visibleItemIndex;
-        _selectedItemIndexValueNotifier.value = selectedItemIndex;
+        // text style based on whether item is enabled or not
+        final textStyle = _itemTextStyle(itemEnabled);
 
-        // index values needed for following calculation of the item values
-        final indexA = visibleItemIndex - 1;
-        final indexB = visibleItemIndex;
-
-        // calculate weight values based on scroll position
-        final weightA = (offset % _defaultItemHeight) / _defaultItemHeight;
-        final weightB = 1 - weightA;
-
-        // calculate item height based on weight values
-        final heightA = _itemHeight(indexA);
-        final heightB = _itemHeight(indexB);
-        final itemHeight = weightA * heightA + weightB * heightB;
-
-        // calculate text color based on weight values
-        final textColorA = _itemTextColor(indexA, listItemEnabled);
-        final textColorB = _itemTextColor(indexB, listItemEnabled);
-        final textColor = Color.lerp(
-          textColorA,
-          textColorB,
-          weightB,
-        );
-
-        return GestureDetector(
-          onTap: () {
-            if (scrollTarget != null) {
-              _controller.animateToItem(scrollTarget);
-            } else {
-              // scroll to bottom
-              _controller.animateToScrollOffset(
-                _controller.position.maxScrollExtent,
-              );
-            }
-          },
-          // TODO to the theme
-          child: Container(
-            height: itemHeight,
-            color: SBBColors.transparent,
-            alignment: Alignment.center,
+        return SizedBox(
+          height: _itemHeight,
+          child: Center(
             child: DefaultTextStyle(
-              style: SBBTextStyles.mediumLight.copyWith(
-                fontWeight: FontWeight.w400,
-                fontSize: 24.0,
-                height: 26.0 / 24.0,
-                color: textColor,
+              style: textStyle,
+              child: Transform.translate(
+                offset: translationOffset,
+                child: child,
               ),
-              child: listItemWidget!,
             ),
           ),
         );
       },
+      child: itemWidget,
     );
   }
 
-  double _itemHeight(int index) {
-    if (index < 0 || index > _visibleItemCount - 1) {
-      return _defaultItemHeight;
-    }
-    return _visibleItemHeights[index];
+  void _onScrolling() {
+    final offset = _controller.offset;
+    final firstVisibleItemIndex =
+        _controller._offsetToIndex(offset).floor() - _visibleCenterItemIndex;
+    var selectedItemIndex = _controller.selectedItem;
+
+    // make sure calculated index is within list range
+    selectedItemIndex = _clampIndex(selectedItemIndex);
+
+    // update value notifiers
+    _scrollOffsetValueNotifier.value = offset;
+    _selectedItemIndexValueNotifier.value = selectedItemIndex;
+    _firstVisibleItemIndexValueNotifier.value = firstVisibleItemIndex;
   }
 
-  Color _itemTextColor(int index, bool enabled) {
-    if (index < 0) {
-      return _visibleItemTextColors.first.withOpacity(enabled ? 1.0 : 0.35);
-    }
-    if (index > _visibleItemCount - 1) {
-      return _visibleItemTextColors.last.withOpacity(enabled ? 1.0 : 0.35);
-    }
-    return _visibleItemTextColors[index].withOpacity(enabled ? 1.0 : 0.35);
-  }
+  void _onTapUp(TapUpDetails details) {
+    // calculate item index based on tap position
+    final tapPosition = details.localPosition.dy;
 
-  final testController = SBBPickerScrollController(initialItem: 1);
-
-  SBBPickerScrollController get _controller {
-    // return testController;
-    // return widget.controller!;
-    return widget.controller ?? _fallbackController!;
-  }
-}
-
-/// A controller for [SBBPickerScrollView].
-///
-/// A SBB picker scroll view controller lets you manipulate which item is
-/// selected in a [SBBPickerScrollView].
-///
-/// See also:
-///
-///  * [SBBPickerScrollView], which is the widget this object controls.
-class SBBPickerScrollController extends ScrollController {
-  SBBPickerScrollController({
-    int initialItem = 0,
-  }) : super(
-          initialScrollOffset: _getItemScrollOffset(
-            initialItem,
-          ),
-        );
-
-  ValueNotifier<bool> _scrollingStateNotifier = ValueNotifier(false);
-  late VoidCallback isScrollingListener;
-
-  int get selectedItem {
-    final currentOffset = positions.isEmpty ? initialScrollOffset : offset;
-    return (currentOffset / _defaultItemHeight).round() +
-        _firstIndexPreItemsCount;
-  }
-
-  /// Animates the controlled [SBBPickerScrollView] from the current item to
-  /// the item at the given index.
-  ///
-  /// The animation lasts for the given duration and follows the given curve or
-  /// uses default values.
-  /// The returned [Future] resolves when the animation completes.
-  ///
-  /// The duration must not be zero. To jump to a particular value without an
-  /// animation, use [jumpToItem].
-  ///
-  /// The `duration` and `curve` arguments must not be null.
-  Future<void> animateToItem(
-    int itemIndex, {
-    Duration duration = kThemeAnimationDuration,
-    Curve curve = Curves.fastOutSlowIn,
-  }) async {
-    final targetItemScrollOffset = _getItemScrollOffset(itemIndex);
-    await animateToScrollOffset(
-      targetItemScrollOffset,
-      duration: duration,
-      curve: curve,
-    );
-  }
-
-  /// Animates the position from its current offset to the given offset.
-  ///
-  /// Any active animation is canceled. If the user is currently scrolling, that
-  /// action is canceled.
-  ///
-  /// The returned [Future] will complete when the animation ends, whether it
-  /// completed successfully or whether it was interrupted prematurely.
-  ///
-  /// An animation will be interrupted whenever the user attempts to scroll
-  /// manually, or whenever another activity is started, or whenever the
-  /// animation reaches the edge of the viewport and attempts to overscroll in a
-  /// non looping [SBBPickerScrollView]. (If the [SBBPickerScrollView] is
-  /// looping, then going around the loop will not interrupt the animation.)
-  ///
-  /// The animation is indifferent to changes to the viewport or content
-  /// dimensions.
-  ///
-  /// Once the animation has completed, the scroll position will attempt to
-  /// begin a ballistic activity to snap to the nearest item.
-  ///
-  /// The duration must not be zero. To jump to a particular value without an
-  /// animation, use [jumpTo].
-  Future<void> animateToScrollOffset(
-    double scrollOffset, {
-    Duration duration = kThemeAnimationDuration,
-    Curve curve = Curves.fastOutSlowIn,
-  }) async {
-    await animateTo(
-      scrollOffset,
-      duration: duration,
-      curve: curve,
-    );
-  }
-
-  /// Jumps the scroll position from the current item to the item at the given
-  /// index, without animation.
-  ///
-  /// Any active animation is canceled. If the user is currently scrolling, that
-  /// action is canceled.
-  void jumpToItem(int itemIndex) {
-    final targetItemScrollOffset = _getItemScrollOffset(itemIndex);
-    jumpTo(targetItemScrollOffset);
-  }
-
-  @override
-  void attach(ScrollPosition position) {
-    super.attach(position);
-    isScrollingListener = () {
-      final scrollingValue = position.isScrollingNotifier.value;
-      if (scrollingValue) {
-        // only update scrolling value because controller is not idle
-        _scrollingStateNotifier.value = scrollingValue;
-        return;
+    // determine which of the rendered items has been tapped
+    var tappedVisibleItemIndex = 0;
+    var totalVisibleItemHeightSoFar = 0.0;
+    for (final visibleItemHeight in _visibleItemHeights) {
+      totalVisibleItemHeightSoFar += visibleItemHeight;
+      if (totalVisibleItemHeightSoFar > tapPosition) {
+        break;
       }
+      tappedVisibleItemIndex++;
+    }
 
-      // check for idle scroll controller with Future.microtask to prevent
-      // this getting triggered by a new drag action while the view was
-      // already in an scroll animation
-      Future.microtask(() {
-        final scrollingValue = position.isScrollingNotifier.value;
-        if (scrollingValue) {
-          // only update scrolling value because controller is not idle
-          _scrollingStateNotifier.value = scrollingValue;
-          return;
-        }
+    // convert calculated index of the tapped item of the visible items to the
+    // position index of the item in the list
+    final firstVisibleItemIndex = _firstVisibleItemIndexValueNotifier.value;
+    var itemIndex = firstVisibleItemIndex + tappedVisibleItemIndex;
 
-        // ensure scroll position snaps to the nearest item after controller
-        // is done scrolling
-        final currentScrollPosition = position.pixels;
-        final targetScrollPosition =
-            SBBPickerScrollController._calculateTargetScrollPosition(
-          currentScrollPosition,
-        );
-
-        // Due to the workaround in the target scroll position calculation, the
-        // calculated position may be slightly inaccurate. As a result, if the
-        // difference between the current and calculated positions is minor, the
-        // snap to item scroll will be skipped.
-        final difference = (currentScrollPosition - targetScrollPosition).abs();
-        if (difference > 0.01) {
-          animateToScrollOffset(
-            targetScrollPosition,
-            curve: Curves.easeInOut,
-          ).whenComplete(() {
-            // update scrolling value after animation is complete
-            _scrollingStateNotifier.value = position.isScrollingNotifier.value;
-          });
-        } else {
-          _scrollingStateNotifier.value = scrollingValue;
-        }
-      });
-    };
-    position.isScrollingNotifier.addListener(isScrollingListener);
+    // clamp index to prevent scrolling to an item out of range
+    itemIndex = _clampIndex(itemIndex);
+    _onTapItem(itemIndex);
   }
 
-  @override
-  void detach(ScrollPosition position) {
-    position.isScrollingNotifier.removeListener(isScrollingListener);
-    super.detach(position);
+  void _onTapItem(int index) {
+    _controller.onTargetItemSelected?.call(index);
+    _controller.animateToItem(index);
   }
 
-  static double _getItemScrollOffset(int index) {
-    final targetItemScrollOffset =
-        (index - _firstIndexPreItemsCount) * _defaultItemHeight;
-    return _calculateTargetScrollPosition(
-      targetItemScrollOffset,
+  /// Ensures proper display and scrolling behavior of the list by checking item
+  /// widgets around the initial item. If the number of non-null items before or
+  /// around the initial item is insufficient, it calculates and applies an
+  /// index offset to maintain proper functionality.
+  void _applyIndexOffset() {
+    // reset values
+    final initialIndex = _controller.initialItem;
+    _initialIndexOffset = initialIndex;
+    _isShortList = false;
+    _firstIndex = null;
+    _lastIndex = null;
+
+    if (widget.looping) {
+      // no need to check for looping lists
+      return;
+    }
+
+    // check if item at initial item index is available
+    final initialIndexItem = widget.itemBuilder(context, initialIndex);
+    assert(
+      initialIndexItem != null,
+      'Item builder returned null for initial item index $initialIndex.',
     );
+
+    // check if list edges available
+    final preInitialCount = _itemsAroundInitialItem(true);
+    final postInitialCount = _itemsAroundInitialItem(false);
+    final preInitialDeficit = preInitialCount < _visibleCenterItemIndex;
+    final postInitialDeficit = postInitialCount < _visibleCenterItemIndex;
+    if (preInitialDeficit) {
+      _firstIndex = initialIndex - preInitialCount;
+    }
+    if (postInitialDeficit) {
+      _lastIndex = initialIndex + postInitialCount;
+    }
+    if (preInitialDeficit || postInitialDeficit) {
+      final itemIndexOffset = _visibleCenterItemIndex - preInitialCount;
+      _controller._indexOffset = itemIndexOffset;
+      _initialIndexOffset = initialIndex + itemIndexOffset;
+
+      final totalCount = preInitialCount + 1 + postInitialCount;
+      if (totalCount < _longListMinItemCount) {
+        _controller._indexOffset = itemIndexOffset - _visibleCenterItemIndex;
+        _isShortList = true;
+      }
+    }
   }
 
-  static double _calculateTargetScrollPosition(double scrollPosition) {
-    final itemsOfBothListsVisible =
-        scrollPosition < 0 && scrollPosition > -_scrollAreaHeight;
-    if (itemsOfBothListsVisible) {
-      // Because the heights of list items vary depending on their positions,
-      // it's necessary to handle the area where items from both the positive
-      // and negative lists are visible differently. This is because the
-      // calculation for the target scroll position isn't accurate when both
-      // lists are scrolling simultaneously. Therefore, the calculation for the
-      // target scroll position must be adjusted.
-      for (var i = 0; i < _visibleItemCount; i++) {
-        var threshold = 0.0;
-        for (var j = 0; j < i; j++) {
-          threshold -= _visibleItemHeights[j];
+  int _itemsAroundInitialItem(bool checkPrevious) {
+    final directionFactor = checkPrevious ? -1 : 1;
+    final initialIndex = _controller.initialItem;
+    for (var i = 0; i < _visibleCenterItemIndex; i++) {
+      final indexToCheck = initialIndex + (i + 1) * directionFactor;
+      final itemToCheck = widget.itemBuilder(context, indexToCheck);
+      if (itemToCheck == null) {
+        return i;
+      }
+    }
+    return _visibleCenterItemIndex;
+  }
+
+  int _clampIndex(int index) {
+    if (_firstIndex != null && index < _firstIndex!) {
+      return _firstIndex!;
+    }
+    if (_lastIndex != null && index > _lastIndex!) {
+      return _lastIndex!;
+    }
+
+    final scrollPosition = _controller.position;
+    if (scrollPosition.hasContentDimensions) {
+      final minScrollExtent = scrollPosition.minScrollExtent;
+      if (minScrollExtent.isFinite) {
+        final firstIndex = _controller._offsetToIndex(minScrollExtent).toInt();
+        _firstIndex = firstIndex;
+        if (index < firstIndex) {
+          return firstIndex;
         }
-        threshold -= _visibleItemHeights[i] * 0.5;
-        if (scrollPosition > threshold) {
-          return threshold + _visibleItemHeights[i] * 0.5;
+      }
+      final maxScrollExtent = scrollPosition.maxScrollExtent;
+      if (maxScrollExtent.isFinite) {
+        final lastIndex = _controller._offsetToIndex(maxScrollExtent).toInt();
+        _lastIndex = lastIndex;
+        if (index > lastIndex) {
+          return lastIndex;
         }
       }
     }
+    return index;
+  }
 
-    return (scrollPosition / _defaultItemHeight).round() * _defaultItemHeight;
+  Offset _itemOffset(int visibleItemIndex, double offset) {
+    final indexA = max(visibleItemIndex - 1, 0);
+    final indexB = min(visibleItemIndex, _visibleItemCount - 1);
+    final lerpFactor = 1 - offset % _itemHeight / _itemHeight;
+    final transformA = _visibleItemTransformValues[indexA];
+    final transformB = _visibleItemTransformValues[indexB];
+    final transformY = lerpDouble(transformA, transformB, lerpFactor)!;
+    return Offset(0, transformY);
+  }
+
+  TextStyle _itemTextStyle(bool itemEnabled) {
+    final style = SBBControlStyles.of(context).picker!;
+    final colorOpacity = itemEnabled ? 1.0 : _disabledItemOpacity;
+    final textColor = SBBColors.white.withOpacity(colorOpacity);
+    final textStyle = style.textStyle!.copyWith(color: textColor);
+    return textStyle;
   }
 }

@@ -1,435 +1,463 @@
 part of 'sbb_picker.dart';
 
+/// SBB Time Picker. Use according to documentation.
+///
+/// See also:
+///
+/// * [SBBPicker], variant for custom values.
+/// * [SBBDatePicker], variant for date values.
+/// * [SBBDateTimePicker], variant for date time values.
+/// * <https://digital.sbb.ch/en/design-system/mobile/components/picker/>
 class SBBTimePicker extends StatefulWidget {
+  /// Constructs an [SBBDateTimePicker].
+  ///
+  /// [onTimeChanged] is the callback called when the selected time changes.
+  ///
+  /// [initialTime] is the initially selected time of the picker. Defaults to
+  /// the present time. Will be rounded to conform [minuteInterval]. If the
+  /// initial time is outside the range defined by [minimumTime] and
+  /// [maximumTime], it will be automatically adjusted to the closest valid time
+  /// within the range.
+  ///
+  /// [minimumTime] is the minimum selectable time of the picker. If provided,
+  /// times before this minimum time will be disabled. If not provided, there
+  /// will be no restriction on the minimum time that can be picked.
+  ///
+  /// [maximumTime] is the maximum selectable time of the picker. If provided,
+  /// times after this maximum time will be disabled. If not provided, there
+  /// will be no restriction on the maximum time that can be picked.
+  ///
+  /// [minuteInterval] is the granularity of the minute spinner. Must be a
+  /// positive integer factor of 60. Defaults to 1.
+  ///
+  /// [maximumTime] can be before [minimumTime] to represent a time range over
+  /// midnight, such as 22:00-02:00.
   SBBTimePicker({
     super.key,
     required this.onTimeChanged,
     TimeOfDay? initialTime,
     TimeOfDay? minimumTime,
     TimeOfDay? maximumTime,
-    this.isLastElement = true,
-    this.minuteInterval = 1,
-  })  : initialTime = _initialTime(initialTime),
-        minimumDateTime = _minimumDateTime(minimumTime, minuteInterval),
-        maximumDateTime = _maximumDateTime(maximumTime, minuteInterval),
-        assert(
+    this.minuteInterval = _defaultMinuteInterval,
+  })  : assert(
           minuteInterval > 0 && TimeOfDay.minutesPerHour % minuteInterval == 0,
           'minute interval is not a positive integer factor of 60',
-        ) {
-    assert(
-      this.initialTime.minute % minuteInterval == 0,
-      'initial time (${this.initialTime.minute}) is not divisible by minute interval ($minuteInterval)',
-    );
-    debugPrint(
-      'initial time (${this.initialTime}) is before minimum time (${this.minimumDateTime})',
-    );
-    assert(
-      this.minimumDateTime == null ||
-          !(this.initialTime.hour < this.minimumDateTime!.hour ||
-              (this.initialTime.hour == this.minimumDateTime!.hour &&
-                  this.initialTime.minute < this.minimumDateTime!.minute)),
-      'initial time (${this.initialTime}) is before minimum time (${this.minimumDateTime})',
-    );
-    assert(
-      this.maximumDateTime == null ||
-          !(this.initialTime.hour > this.maximumDateTime!.hour ||
-              (this.initialTime.hour == this.maximumDateTime!.hour &&
-                  this.initialTime.minute > this.maximumDateTime!.minute)),
-      'initial time (${this.initialTime}) is after maximum time (${this.maximumDateTime})',
-    );
-  }
+        ),
+        initialTime = _initialTime(
+          initialTime,
+          minimumTime,
+          maximumTime,
+          minuteInterval,
+        ),
+        minimumTime = _minimumTime(minimumTime, minuteInterval),
+        maximumTime = _maximumTime(maximumTime, minuteInterval);
 
-  final ValueChanged<TimeOfDay> onTimeChanged;
+  final ValueChanged<TimeOfDay>? onTimeChanged;
   final TimeOfDay initialTime;
-  final TimeOfDay? minimumDateTime;
-  final TimeOfDay? maximumDateTime;
+  final TimeOfDay? minimumTime;
+  final TimeOfDay? maximumTime;
   final int minuteInterval;
-  final bool isLastElement;
 
-  @override
-  State<SBBTimePicker> createState() {
-    return _SBBTimePickerTimeState();
-  }
-
-  static TimeOfDay _initialTime(TimeOfDay? time) {
-    if (time == null) {
-      return TimeOfDay.now();
-    }
-    return time.replacing(hour: time.hour, minute: time.minute);
-  }
-
-  static TimeOfDay? _minimumDateTime(TimeOfDay? time, int minuteInterval) {
-    if (time == null) {
-      return null;
-    }
-    return ceilToInterval(time, minuteInterval);
-  }
-
-  static TimeOfDay? _maximumDateTime(TimeOfDay? time, int minuteInterval) {
-    if (time == null) {
-      return null;
-    }
-    return floorToInterval(time, minuteInterval);
-  }
-
-  static DateTime _cleanDateTime(DateTime dateTime, {int? hour, int? minute}) {
-    return dateTime.copyWith(
-      hour: hour,
-      minute: minute,
-      second: 0,
-      millisecond: 0,
-      microsecond: 0,
-    );
-  }
-
-  /// Creates copy of [time] with the minute value rounded to the closest minute
-  /// value that is divisible by [minuteInterval].
+  /// Shows an [SBBModalSheet] with an [SBBTimePicker] to select a [TimeOfDay].
+  /// Use according to documentation.
   ///
-  /// ```
-  /// Examples with minuteInterval: 15
-  /// 17:15 -> 17:15
-  /// 17:08 -> 17:15
-  /// 17:07 -> 17:00
-  /// 17:52 -> 17:45
-  /// 17:53 -> 18:00 (hour value also affected)
-  /// ```
-  static TimeOfDay roundToInterval(TimeOfDay time, int minuteInterval) {
-    var roundedMinute =
-        ((time.minute / minuteInterval).round() * minuteInterval);
-    final roundedHour =
-        (time.hour + roundedMinute ~/ TimeOfDay.minutesPerHour) %
-            TimeOfDay.hoursPerDay;
-    roundedMinute %= TimeOfDay.minutesPerHour;
-    return time.replacing(hour: roundedHour, minute: roundedMinute);
-  }
-
-  /// Creates copy of [time] with the minute value rounded to the greatest
-  /// minute value that is divisible by [minuteInterval] but no greater than the
-  /// current minute value.
+  /// See also:
   ///
-  /// ```
-  /// Examples with minuteInterval: 15
-  /// 17:15 -> 17:15
-  /// 17:14 -> 17:00
-  /// 17:29 -> 17:15
-  /// ```
-  static TimeOfDay floorToInterval(TimeOfDay time, int minuteInterval) {
-    final roundedHour = time.hour + time.minute ~/ TimeOfDay.minutesPerHour;
-    final roundedMinute =
-        ((time.minute / minuteInterval).floor() * minuteInterval) %
-            TimeOfDay.minutesPerHour;
-    return time.replacing(hour: roundedHour, minute: roundedMinute);
-  }
+  /// * [SBBTimePicker], which will be displayed.
+  /// * [showSBBModalSheet], which is used to display the modal.
+  /// * <https://digital.sbb.ch/en/design-system/mobile/components/picker/>
+  /// * <https://digital.sbb.ch/en/design-system/mobile/components/modal-view/>
+  static void showModal({
+    required BuildContext context,
+    String? title,
+    TimeOfDay? initialTime,
+    TimeOfDay? minimumTime,
+    TimeOfDay? maximumTime,
+    int minuteInterval = _defaultMinuteInterval,
+    ValueChanged<TimeOfDay>? onTimeChanged,
+  }) {
+    final localizations = MaterialLocalizations.of(context);
 
-  /// Creates copy of [time] with the minute value rounded to the least minute
-  /// value that is divisible by [minuteInterval] but is not smaller than
-  /// current minute value.
-  ///
-  /// ```
-  /// Examples with minuteInterval: 15
-  /// 17:15 -> 17:15
-  /// 17:16 -> 17:30
-  /// 17:01 -> 17:15
-  /// 17:46 -> 18:00 (hour value also affected)
-  /// ```
-  static TimeOfDay ceilToInterval(TimeOfDay time, int minuteInterval) {
-    var roundedMinute =
-        ((time.minute / minuteInterval).ceil() * minuteInterval);
-    final roundedHour = time.hour + roundedMinute ~/ TimeOfDay.minutesPerHour;
-    roundedMinute %= TimeOfDay.minutesPerHour;
-    return time.replacing(hour: roundedHour, minute: roundedMinute);
-  }
-}
+    final modalTitle = title ?? localizations.timePickerInputHelpText;
 
-class _SBBTimePickerTimeState extends State<SBBTimePicker> {
-  late TimeOfDay selectedDateTime;
-  late SBBPickerScrollController minuteController;
-  late SBBPickerScrollController hourController;
-
-  /// This is used to prevent notifying the callback with the same value
-  late TimeOfDay lastReportedDateTime;
-
-  @override
-  void initState() {
-    super.initState();
-    selectedDateTime = widget.initialTime;
-    lastReportedDateTime = selectedDateTime;
-
-    minuteController = SBBPickerScrollController(
-      initialItem: _minuteToIndex(selectedDateTime.minute),
+    final modalTime = _initialTime(
+      initialTime,
+      minimumTime,
+      maximumTime,
+      minuteInterval,
     );
-    minuteController._scrollingStateNotifier.addListener(() {
-      _onScrollingStateChanged();
-    });
 
-    hourController = SBBPickerScrollController(
-      initialItem: _hourToIndex(selectedDateTime.hour),
-    );
-    hourController._scrollingStateNotifier.addListener(() {
-      _onScrollingStateChanged();
-    });
-  }
+    final acceptInitialSelection = initialTime == null;
+    final selectedButtonEnabled = ValueNotifier(acceptInitialSelection);
+    final selectedButtonLabel = localizations.timePickerDialHelpText;
 
-  @override
-  Widget build(BuildContext context) {
-    return SBBPicker.custom(
-      isLastElement: widget.isLastElement,
-      child: Row(
+    var selectedTime = modalTime;
+
+    showSBBModalSheet(
+      context: context,
+      title: modalTitle,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
-          Expanded(
-            child: _buildHourPickerScrollView(context),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: sbbDefaultSpacing,
+            ),
+            child: SBBGroup(
+              child: SBBTimePicker(
+                initialTime: initialTime,
+                minimumTime: minimumTime,
+                maximumTime: maximumTime,
+                minuteInterval: minuteInterval,
+                onTimeChanged: (time) {
+                  selectedTime = time;
+                  if (!acceptInitialSelection) {
+                    selectedButtonEnabled.value = time != modalTime;
+                  }
+                },
+              ),
+            ),
           ),
-          Expanded(
-            child: _buildMinutePickerScrollView(context),
+          Padding(
+            padding: const EdgeInsets.all(sbbDefaultSpacing),
+            child: ListenableBuilder(
+                listenable: selectedButtonEnabled,
+                builder: (context, _) {
+                  final onPressed = selectedButtonEnabled.value
+                      ? () {
+                          Navigator.of(context).pop();
+                          onTimeChanged?.call(selectedTime);
+                        }
+                      : null;
+                  return SBBPrimaryButton(
+                    label: selectedButtonLabel,
+                    onPressed: onPressed,
+                  );
+                }),
           ),
         ],
       ),
     );
   }
 
+  @override
+  State<SBBTimePicker> createState() {
+    return _SBBTimePickerTimeState();
+  }
+
+  static TimeOfDay _initialTime(
+    TimeOfDay? initialTime,
+    TimeOfDay? minimumTime,
+    TimeOfDay? maximumTime,
+    int minuteInterval,
+  ) {
+    final minTime = _minimumTime(minimumTime, minuteInterval);
+    final maxTime = _maximumTime(maximumTime, minuteInterval);
+    var time = initialTime ?? TimeOfDay.now();
+    time = time.roundToInterval(minuteInterval);
+    time = time.clamp(minTime, maxTime);
+    return time;
+  }
+
+  static TimeOfDay? _minimumTime(TimeOfDay? minimumTime, int minuteInterval) {
+    return minimumTime?.ceilToInterval(minuteInterval);
+  }
+
+  static TimeOfDay? _maximumTime(TimeOfDay? maximumTime, int minuteInterval) {
+    return maximumTime?.floorToInterval(minuteInterval);
+  }
+}
+
+class _SBBTimePickerTimeState extends _TimeBasedPickerState<SBBTimePicker> {
+  static const _horizontalPaddingCount = 4;
+
+  late TimeOfDay _selectedTime;
+  late ValueNotifier<TimeOfDay> _selectedTimeValueNotifier;
+
+  late ValueNotifier<int> _hourValueNotifier;
+
+  late SBBPickerScrollController _hourController;
+  late SBBPickerScrollController _minuteController;
+
+  late double _timeItemTextWidth;
+
+  TimeOfDay get _safeMinTime => widget.minimumTime ?? _startOfDay;
+
+  TimeOfDay get _safeMaxTime => widget.maximumTime ?? _endOfDay;
+
+  double get _timeItemWidth =>
+      _itemPadding +
+      _timeItemTextWidth +
+      _itemPadding +
+      _widgetHorizontalPadding;
+
+  @override
+  void initState() {
+    super.initState();
+    _selectedTime = widget.initialTime;
+    _selectedTimeValueNotifier = ValueNotifier(_selectedTime);
+    final onTimeChanged = widget.onTimeChanged;
+    if (onTimeChanged != null) {
+      _selectedTimeValueNotifier.addListener(() {
+        onTimeChanged(_selectedTimeValueNotifier.value);
+      });
+    }
+    _hourValueNotifier = ValueNotifier(_selectedTime.hour);
+
+    _initHourController();
+    _initMinuteController();
+  }
+
+  void _initHourController() {
+    _hourController = SBBPickerScrollController(
+        initialItem: _hourToIndex(_selectedTime.hour),
+        onTargetItemSelected: (int index) {
+          final closestValidHour = _getClosestValidTime(hourIndex: index);
+          _hourValueNotifier.value = closestValidHour.hour;
+        });
+    _hourController.addScrollingStateListener(_onScrollingStateChanged);
+  }
+
+  void _initMinuteController() {
+    _minuteController = SBBPickerScrollController(
+      initialItem: _minuteToIndex(_selectedTime.minute),
+    );
+    _minuteController.addScrollingStateListener(_onScrollingStateChanged);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return LayoutBuilder(builder: (_, constraints) {
+      _adjustItemSizes(constraints.maxWidth);
+
+      return SBBPicker.custom(
+        child: Row(
+          children: [
+            Expanded(
+              child: _buildHourPickerScrollView(context),
+            ),
+            Expanded(
+              child: _buildMinutePickerScrollView(context),
+            ),
+          ],
+        ),
+      );
+    });
+  }
+
+  @override
+  void dispose() {
+    _hourController.dispose();
+    _minuteController.dispose();
+    _hourValueNotifier.dispose();
+    super.dispose();
+  }
+
   Widget _buildHourPickerScrollView(BuildContext context) {
     return SBBPickerScrollView(
-      controller: hourController,
-      onSelectedItemChanged: (int index) {
-        final selectedHour = _indexToHour(index);
-        _onDateTimeSelected(
-          hour: selectedHour,
-        );
-      },
-      itemBuilder: (BuildContext context, int index) {
-        final selectedHour = _indexToHour(index);
-
-        var hourEnabled = true;
-        // check if selected time is before min time
-        final minimumDateTime = widget.minimumDateTime;
-        if (minimumDateTime != null) {
-          if (minimumDateTime.hour > selectedHour) {
-            hourEnabled = false;
-          }
-        }
-        // check if selected time is after max time
-        final maximumDateTime = widget.maximumDateTime;
-        if (maximumDateTime != null) {
-          if (maximumDateTime.hour < selectedHour) {
-            hourEnabled = false;
-          }
-        }
-
-        final listItemLabel = selectedHour.toString().padLeft(2, '0');
-        return (
-          hourEnabled,
-          Container(
-            alignment: Alignment.centerRight,
-            padding: EdgeInsets.only(
-              right: 12.0,
-              // right: sbbDefaultSpacing * 0.75,
-            ),
-            child: SizedBox(
-              width: 48.0,
-              child: Text(
-                listItemLabel,
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-                softWrap: false,
-              ),
-            ),
-          ),
-        );
-      },
+      controller: _hourController,
+      onSelectedItemChanged: _onSelectedHourItemChanged,
+      itemBuilder: (_, index) => _buildHourItem(index),
     );
   }
 
   Widget _buildMinutePickerScrollView(BuildContext context) {
-    return SBBPickerScrollView(
-      controller: minuteController,
-      onSelectedItemChanged: (int index) {
-        final selectedMinute = _indexToMinute(index);
-        _onDateTimeSelected(
-          minute: selectedMinute,
-        );
-      },
-      itemBuilder: (BuildContext context, int index) {
-        final selectedMinute = _indexToMinute(index);
-        final selectedHour = _indexToHour(hourController.selectedItem);
-
-        var minuteEnabled = true;
-        // check if selected time is before min time
-        final minimumDateTime = widget.minimumDateTime;
-        if (minimumDateTime != null) {
-          if (minimumDateTime.hour == selectedHour) {
-            if (minimumDateTime.minute > selectedMinute) {
-              minuteEnabled = false;
-            }
-          } else if (minimumDateTime.hour > selectedHour) {
-            minuteEnabled = false;
-          }
-        }
-        // check if selected time is after max time
-        final maximumDateTime = widget.maximumDateTime;
-        if (maximumDateTime != null) {
-          if (maximumDateTime.hour == selectedHour) {
-            if (maximumDateTime.minute < selectedMinute) {
-              minuteEnabled = false;
-            }
-          } else if (maximumDateTime.hour < selectedHour) {
-            minuteEnabled = false;
-          }
-        }
-
-        final listItemLabel = selectedMinute.toString().padLeft(2, '0');
-
-        return (
-          minuteEnabled,
-          Container(
-            alignment: Alignment.centerLeft,
-            padding: EdgeInsets.only(
-              left: 12.0,
-              // right: sbbDefaultSpacing * 0.75,
-            ),
-            child: SizedBox(
-              width: 48.0,
-              child: Text(
-                listItemLabel,
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-                softWrap: false,
-              ),
-            ),
-          ),
+    return ValueListenableBuilder(
+      valueListenable: _hourValueNotifier,
+      builder: (BuildContext context, int selectedHour, _) {
+        return SBBPickerScrollView(
+          controller: _minuteController,
+          onSelectedItemChanged: _onSelectedMinuteItemChanged,
+          itemBuilder: (_, index) => _buildMinuteItem(index, selectedHour),
         );
       },
     );
   }
 
-  void _onDateTimeSelected({
-    int? hour,
-    int? minute,
-  }) {
-    final selectedHour = hour ?? selectedDateTime.hour;
-    final selectedMinute = minute ?? selectedDateTime.minute;
+  void _onSelectedHourItemChanged(int index) {
+    final selectedHour = _indexToHour(index);
+    _onTimeSelected(hour: selectedHour);
+  }
 
-    selectedDateTime = TimeOfDay(
+  void _onSelectedMinuteItemChanged(int index) {
+    final selectedMinute = _indexToMinute(index);
+    _onTimeSelected(minute: selectedMinute);
+  }
+
+  SBBPickerItem _buildHourItem(int index) {
+    final itemHour = _indexToHour(index);
+    final itemTime = TimeOfDay(hour: itemHour, minute: 0);
+    final minTime = _safeMinTime.floor();
+    final maxTime = _safeMaxTime.ceil();
+    final isEnabled = itemTime.isInRange(minTime, maxTime);
+    final label = _twoDigits(itemHour);
+
+    return _buildPickerItem(
+      isEnabled: isEnabled,
+      label: label,
+      alignment: Alignment.centerRight,
+      textWidth: _timeItemTextWidth,
+      isFirstColumn: true,
+    );
+  }
+
+  SBBPickerItem _buildMinuteItem(int index, int selectedHour) {
+    final itemMinute = _indexToMinute(index);
+    final itemTime = TimeOfDay(hour: selectedHour, minute: itemMinute);
+    final minTime = _safeMinTime;
+    final maxTime = _safeMaxTime;
+    final isEnabled = itemTime.isInRange(minTime, maxTime);
+    final label = _twoDigits(itemMinute);
+
+    return _buildPickerItem(
+      isEnabled: isEnabled,
+      label: label,
+      alignment: Alignment.centerLeft,
+      textWidth: _timeItemTextWidth,
+      isLastColumn: true,
+    );
+  }
+
+  void _onTimeSelected({int? hour, int? minute}) {
+    final selectedHour = hour ?? _selectedTime.hour;
+    final selectedMinute = minute ?? _selectedTime.minute;
+
+    _selectedTime = TimeOfDay(
       hour: selectedHour,
       minute: selectedMinute,
+    );
+
+    _selectedTimeValueNotifier.value = _getClosestValidTime(
+      hourIndex: selectedHour,
     );
   }
 
   void _onScrollingStateChanged() {
-    if (hourController._scrollingStateNotifier.value ||
-        minuteController._scrollingStateNotifier.value) {
+    if (_hourController.isScrolling() || _minuteController.isScrolling()) {
       // do nothing if any controller still scrolling
       return;
     }
 
-    // optimize list item positions
-    _ensureOptimizedIndexPosition();
-
-    // min time
-    final correctedToMinTime = _ensureMinTime();
-    if (correctedToMinTime) {
-      // early return because of correction to min time
-      return;
-    }
-
-    // max time
-    final correctToMaxTime = _ensureMaxTime();
-    if (correctToMaxTime) {
-      // early return because of correction to max time
-      return;
-    }
-
-    if (lastReportedDateTime == selectedDateTime) {
-      // don't notify callback if time did not change
-      return;
-    }
-
-    // notify callback with new selected time
-    lastReportedDateTime = selectedDateTime;
-    widget.onTimeChanged(selectedDateTime);
+    // ensure valid time
+    _ensureValidTime();
   }
 
-  bool _ensureMinTime() {
-    // check if selected time is before min time
-    final minimumDateTime = widget.minimumDateTime;
-    if (minimumDateTime == null ||
-        (minimumDateTime.hour < selectedDateTime.hour ||
-            (minimumDateTime.hour == selectedDateTime.hour &&
-                minimumDateTime.minute < selectedDateTime.minute))) {
+  void _ensureValidTime() {
+    final minTime = _safeMinTime;
+    final maxTime = _safeMaxTime;
+    final isTimeInRange = _selectedTime.isInRange(minTime, maxTime);
+    if (isTimeInRange) {
       // no correction needed
-      return false;
+      return;
     }
 
-    // get index values of min time values
-    final minTimeHourIndex = _hourToIndex(minimumDateTime.hour);
-    final minTimeMinuteIndex = _minuteToIndex(minimumDateTime.minute);
+    // optimize scroll positions to prevent scrolling over multiple rounds
+    _ensureOptimizedScrollPosition();
+
+    final correctToMinTime = _hourValueNotifier.value == minTime.hour;
+    final correctedTime = correctToMinTime ? minTime : maxTime;
+
+    // check if scroll position needs to be optimized for scroll over midnight
+    if (correctToMinTime && _selectedTime.hour > minTime.hour) {
+      // set index dayOffset to scroll over midnight
+      _ensureOptimizedScrollPosition(offset: -TimeOfDay.hoursPerDay);
+    } else if (!correctToMinTime && _selectedTime.hour < maxTime.hour) {
+      // set index dayOffset to scroll over midnight
+      _ensureOptimizedScrollPosition(offset: TimeOfDay.hoursPerDay);
+    }
+
+    // get index values of time values
+    final hourIndex = _hourToIndex(correctedTime.hour);
+    final minuteIndex = _minuteToIndex(correctedTime.minute);
 
     // check if any time values needs to be corrected
-    final hourIncorrect = hourController.selectedItem != minTimeHourIndex;
-    final minuteIncorrect = minuteController.selectedItem != minTimeMinuteIndex;
+    final hourIncorrect = _hourController.selectedItem != hourIndex;
+    final minuteIncorrect = _minuteController.selectedItem != minuteIndex;
 
     // correct incorrect time values
     if (hourIncorrect) {
-      hourController.animateToItem(minTimeHourIndex);
+      _hourController.animateToItem(hourIndex);
     }
     if (minuteIncorrect) {
-      minuteController.animateToItem(minTimeMinuteIndex);
+      _minuteController.animateToItem(minuteIndex);
+    }
+  }
+
+  void _ensureOptimizedScrollPosition({int offset = 0}) {
+    final hourIndex = _hourToIndex(_selectedTime.hour) + offset;
+    final minuteIndex = _minuteToIndex(_selectedTime.minute);
+    _hourController.jumpToItem(hourIndex);
+    _minuteController.jumpToItem(minuteIndex);
+  }
+
+  TimeOfDay _getClosestValidTime({required int hourIndex}) {
+    final hour = _indexToHour(hourIndex);
+    final time = _selectedTime.replacing(hour: hour);
+    final closestValidTime = time.clamp(_safeMinTime, _safeMaxTime);
+    return closestValidTime;
+  }
+
+  void _adjustItemSizes(double width) {
+    // reset sizes to default values
+    _itemPadding = _itemDefaultPadding;
+    _timeItemTextWidth = max(_timeItemTextDefaultWidth, _timeItemTextMinWidth);
+
+    // check if enough space to display all texts by calculating width overflow
+    final timeItemWidths = _timeItemWidth * _timeItemCount;
+    var widthOverflow = timeItemWidths - width;
+
+    // check if time items text width needs to be reduced
+    if (widthOverflow > 0) {
+      // calculate time items text widths based on width overflow
+      final minWidths = _timeItemTextMinWidth * _timeItemCount;
+      const defaultWidths = _timeItemTextDefaultWidth * _timeItemCount;
+      final flexibleWidths = defaultWidths - minWidths;
+      final widthReductions = min(flexibleWidths, widthOverflow);
+      final reducedWidths = defaultWidths - widthReductions;
+      final reducedWidth = reducedWidths / _timeItemCount;
+
+      // set reduced time item text widths
+      _timeItemTextWidth = reducedWidth;
+
+      // recalculate width overflow
+      final availableTimeItemTextWidths = _availableTimeItemTextWidths(width);
+      widthOverflow = minWidths - availableTimeItemTextWidths;
     }
 
-    // return if any values has been corrected
-    return hourIncorrect || minuteIncorrect;
-  }
+    // check if item paddings need to be reduced
+    if (widthOverflow > 0) {
+      // calculate item paddings based on width overflow
+      const minPaddings = _itemMinPadding * _horizontalPaddingCount;
+      const defaultPaddings = _itemDefaultPadding * _horizontalPaddingCount;
+      const flexiblePaddings = defaultPaddings - minPaddings;
+      final paddingReductions = min(flexiblePaddings, widthOverflow);
+      final reducedPaddings = defaultPaddings - paddingReductions;
+      final reducedPadding = reducedPaddings / _horizontalPaddingCount;
 
-  bool _ensureMaxTime() {
-    // check if selected time is after max time
-    final maximumDateTime = widget.maximumDateTime;
-    if (maximumDateTime == null ||
-        (maximumDateTime.hour > selectedDateTime.hour ||
-            (maximumDateTime.hour == selectedDateTime.hour &&
-                maximumDateTime.minute > selectedDateTime.minute))) {
-      // no correction needed
-      return false;
+      // set reduced paddings
+      _itemPadding = reducedPadding;
     }
-
-    // get index values of max time values
-    final maxTimeHourIndex = _hourToIndex(maximumDateTime.hour);
-    final maxTimeMinuteIndex = _minuteToIndex(maximumDateTime.minute);
-
-    // check if any time values needs to be corrected
-    final hourIncorrect = hourController.selectedItem != maxTimeHourIndex;
-    final minuteIncorrect = minuteController.selectedItem != maxTimeMinuteIndex;
-
-    // correct incorrect time values
-    if (hourIncorrect) {
-      hourController.animateToItem(maxTimeHourIndex);
-    }
-    if (minuteIncorrect) {
-      minuteController.animateToItem(maxTimeMinuteIndex);
-    }
-
-    // return if any values has been corrected
-    return hourIncorrect || minuteIncorrect;
   }
 
-  void _ensureOptimizedIndexPosition() {
-    final hourItemIndex = _hourToIndex(selectedDateTime.hour);
-    hourController.jumpToItem(hourItemIndex);
-    final minuteItemIndex = _minuteToIndex(selectedDateTime.minute);
-    minuteController.jumpToItem(minuteItemIndex);
+  double _availableTimeItemTextWidths(double widgetWidth) {
+    return widgetWidth -
+        _widgetHorizontalPadding * 2 -
+        _itemPadding * _horizontalPaddingCount;
   }
 
-  int _indexToMinute(int selectedItemIndex) {
-    return selectedItemIndex * widget.minuteInterval % TimeOfDay.minutesPerHour;
+  int _indexToMinute(int minuteIndex) {
+    return minuteIndex * widget.minuteInterval % TimeOfDay.minutesPerHour;
   }
 
-  int _minuteToIndex(int selectedValue) {
-    return selectedValue ~/ widget.minuteInterval;
+  int _minuteToIndex(int minute) {
+    return minute ~/ widget.minuteInterval;
   }
 
-  int _indexToHour(int selectedItemIndex) {
-    return selectedItemIndex % TimeOfDay.hoursPerDay;
+  int _indexToHour(int hourIndex) {
+    return hourIndex % TimeOfDay.hoursPerDay;
   }
 
-  int _hourToIndex(int selectedValue) {
-    return selectedValue;
+  int _hourToIndex(int hour) {
+    return hour;
   }
 }

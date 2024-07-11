@@ -48,6 +48,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     this.sidebarItemTextStyle,
     this.headerNavItemForegroundColor,
     this.promotionBox,
+    this.picker,
   });
 
   factory SBBControlStyles.$default({required SBBBaseStyle baseStyle}) =>
@@ -146,6 +147,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
             hoveredValue: SBBColors.red125,
             pressedValue: SBBColors.red125),
         promotionBox: PromotionBoxStyle.$default(baseStyle: baseStyle),
+        picker: SBBPickerStyle.$default(baseStyle: baseStyle),
       );
 
   final SBBControlStyle? checkbox;
@@ -192,6 +194,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   final TextStyle? sidebarItemTextStyle;
   final MaterialStateProperty<Color?>? headerNavItemForegroundColor;
   final PromotionBoxStyle? promotionBox;
+  final SBBPickerStyle? picker;
 
   static SBBControlStyles of(BuildContext context) =>
       Theme.of(context).extension<SBBControlStyles>()!;
@@ -276,6 +279,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     TextStyle? sidebarItemTextStyle,
     MaterialStateProperty<Color?>? headerNavItemForegroundColor,
     PromotionBoxStyle? promotionBox,
+    SBBPickerStyle? picker,
   }) =>
       SBBControlStyles(
         checkbox: checkbox ?? this.checkbox,
@@ -336,6 +340,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
         headerNavItemForegroundColor:
             headerNavItemForegroundColor ?? this.headerNavItemForegroundColor,
         promotionBox: promotionBox ?? this.promotionBox,
+        picker: picker ?? this.picker,
       );
 
   @override
@@ -408,6 +413,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
       sidebarItemForegroundColor: other.sidebarItemForegroundColor,
       headerNavItemForegroundColor: other.headerNavItemForegroundColor,
       promotionBox: PromotionBoxStyle.lerp(promotionBox, other.promotionBox, t),
+      picker: picker?.lerp(other.picker, t),
     );
   }
 }
@@ -428,6 +434,7 @@ extension SBBControlStylesExtension on SBBControlStyles? {
       listItem: this!.listItem.merge(other?.listItem),
       selectLabel: this!.selectLabel.merge(other?.selectLabel),
       switchToggle: this!.switchToggle.merge(other?.switchToggle),
+      picker: this!.picker.merge(other?.picker),
       headerBackgroundColor:
           this!.headerBackgroundColor ?? other?.headerBackgroundColor,
       headerButtonBackgroundColorHighlighted:
