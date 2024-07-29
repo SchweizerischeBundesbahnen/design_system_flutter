@@ -268,28 +268,26 @@ class _SegmentedButton extends State<SBBSegmentedButton> {
   Widget _buildForegroundLayer() {
     final loc = Localizations.of(context, MaterialLocalizations);
     return IgnorePointer(
-      child: ExcludeSemantics(
-        child: Row(
-          children: widget.widgetBuilders.mapIndexed((i, element) {
-            final selected = i == widget.selectedStateIndex;
-            return Expanded(
-              child: Semantics(
-                focusable: true,
-                selected: selected,
-                button: !selected,
-                hint: loc.tabLabel(
-                  tabIndex: i + 1,
-                  tabCount: widget.widgetBuilders.length,
-                ),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 4),
-                  alignment: Alignment.center,
-                  child: element(style, selected),
-                ),
+      child: Row(
+        children: widget.widgetBuilders.mapIndexed((i, element) {
+          final selected = i == widget.selectedStateIndex;
+          return Expanded(
+            child: Semantics(
+              focusable: true,
+              selected: selected,
+              button: !selected,
+              hint: loc.tabLabel(
+                tabIndex: i + 1,
+                tabCount: widget.widgetBuilders.length,
               ),
-            );
-          }).toList(),
-        ),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                alignment: Alignment.center,
+                child: element(style, selected),
+              ),
+            ),
+          );
+        }).toList(),
       ),
     );
   }
