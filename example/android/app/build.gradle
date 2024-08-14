@@ -42,6 +42,11 @@ android {
         disable 'InvalidPackage'
     }
 
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
     defaultConfig {
         applicationId "ch.sbb.fdsm.example"
         minSdkVersion flutter.minSdkVersion
