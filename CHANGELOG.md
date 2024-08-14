@@ -23,6 +23,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - (#148) Update SBB icons to version 1.0.0
 - Implement all Notification Box Styles [Figma Link](https://www.figma.com/design/WOtLIam1xwrqcgnAITsEhV/Design-System-Mobile?m=auto\&node-id=7271-28\&t=gismRyaDdiCfaHBj-1)
 - (#150) Added function `showModal` in `SBBDatePicker`, `SBBDateTimePicker`, `SBBTimePicker`
+- Minimum supported dart sdk is 3.3.0.
 
 ### Deprecated
 
