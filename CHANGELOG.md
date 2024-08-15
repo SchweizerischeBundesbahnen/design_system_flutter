@@ -9,6 +9,8 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+## [1.5.0] - 2024-08-15
+
 ### Added
 
 - (#150) Added `SBBDateInput`
