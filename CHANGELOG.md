@@ -9,6 +9,17 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+### Deprecated
+
+- (#161) Deprecated Web Widgets:
+  - `SBBResponsive`
+  - `SBBWebHeader`
+  - `SBBMenu`
+  - `SBBUserMenu`
+  - `SBBCard`
+  - `SBBSidebar`
+
+
 ## [1.5.0] - 2024-08-15
 
 ### Added

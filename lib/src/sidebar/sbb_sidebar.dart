@@ -5,6 +5,7 @@ import '../../design_system_flutter.dart';
 /// The SBB Sidebar. Use according to documentation.
 ///
 /// See: https://digital.sbb.ch/de/webapps/modules/sidebar
+@Deprecated('FlutterWeb will not be supported from the next major release.')
 class SBBSidebar extends StatelessWidget {
   const SBBSidebar({
     Key? key,
@@ -75,6 +76,7 @@ class SBBSidebar extends StatelessWidget {
   }
 }
 
+@Deprecated('FlutterWeb will not be supported from the next major release.')
 class SBBSidebarItem extends StatefulWidget {
   const SBBSidebarItem({
     required this.title,
