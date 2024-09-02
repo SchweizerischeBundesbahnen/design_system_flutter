@@ -11,7 +11,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ### Deprecated
 
-- (#161) Deprecated Web Widgets:
+- (#162) Deprecated Web Widgets:
   - `SBBResponsive`
   - `SBBWebHeader`
   - `SBBMenu`
