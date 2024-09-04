@@ -1,6 +1,7 @@
 import '../../design_system_flutter.dart';
 import 'package:flutter/material.dart';
 
+@Deprecated('FlutterWeb will not be supported from the next major release.')
 class SBBWebHeader extends StatelessWidget implements PreferredSizeWidget {
   const SBBWebHeader({
     Key? key,
@@ -112,6 +113,7 @@ class SBBWebHeader extends StatelessWidget implements PreferredSizeWidget {
       );
 }
 
+@Deprecated('FlutterWeb will not be supported from the next major release.')
 class SBBWebHeaderNavItem extends StatefulWidget {
   const SBBWebHeaderNavItem({
     Key? key,

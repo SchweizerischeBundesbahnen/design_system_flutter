@@ -10,6 +10,7 @@ const double _kHorizontalSpacing = 8.0;
 ///
 /// If a [displayName] is given, the itemBuilder is called to create a SBB menu.
 /// The header is added to the itemBuilder at the top.
+@Deprecated('FlutterWeb will not be supported from the next major release.')
 class SBBUserMenu<T> extends StatelessWidget {
   /// Creates an SBBUserMenu with loggedIn = [displayName] != null.
   ///
@@ -21,6 +22,7 @@ class SBBUserMenu<T> extends StatelessWidget {
   /// the specified value as a return.
   ///
   /// To act upon a login request, use [onLoginRequest].
+  @Deprecated('FlutterWeb will not be supported from the next major release.')
   const SBBUserMenu({
     required this.itemBuilder,
     this.initialValue,
@@ -98,7 +100,7 @@ class SBBUserMenu<T> extends StatelessWidget {
           leading != null
               ? leading!
               : Icon(
-            SBBIcons.user_small,
+                  SBBIcons.user_small,
                 ),
           SizedBox(width: _kHorizontalSpacing),
           Text(loginTitle, maxLines: 1),
@@ -139,7 +141,8 @@ class SBBUserMenu<T> extends StatelessWidget {
       ? name.trim().split(' ').map((l) => l[0].toUpperCase()).take(2).join()
       : '';
 
-  ButtonStyle _getThemedUserMenuButtonStyle(SBBControlStyles style) => ButtonStyle(
+  ButtonStyle _getThemedUserMenuButtonStyle(SBBControlStyles style) =>
+      ButtonStyle(
         textStyle: SBBTheme.allStates(
           style.userMenuTextStyle,
         ),

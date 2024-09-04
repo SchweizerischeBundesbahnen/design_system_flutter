@@ -1,6 +1,7 @@
 import '../../design_system_flutter.dart';
 import 'package:flutter/material.dart';
 
+@Deprecated('FlutterWeb will not be supported from the next major release.')
 class SBBCard extends StatefulWidget {
   const SBBCard(
       {Key? key,

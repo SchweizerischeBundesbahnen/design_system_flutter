@@ -16,6 +16,7 @@ const double _kMenuScreenPadding = 8.0;
 ///
 /// See also
 /// * [PopupMenuEntry], on which this class is based.
+@Deprecated('FlutterWeb will not be supported from the next major release.')
 abstract class SBBMenuEntry<T> extends StatefulWidget {
   /// Abstract const constructor. This constructor enables subclasses to provide
   /// const constructors so that they can be used in const expressions.
@@ -49,6 +50,7 @@ abstract class SBBMenuEntry<T> extends StatefulWidget {
 ///
 /// see also:
 /// * [PopupMenuDivider] on which this class is based.
+@Deprecated('FlutterWeb will not be supported from the next major release.')
 class SBBMenuDivider extends SBBMenuEntry<Never> {
   /// Creates a horizontal divider for a sbb menu.
   ///
@@ -95,6 +97,7 @@ class _SBBMenuDividerState extends State<SBBMenuDivider> {
 /// A text entry to mark groupings in SBB menus
 ///
 /// Adapts SizedBox to work in SBB menus
+@Deprecated('FlutterWeb will not be supported from the next major release.')
 class SBBMenuText extends SBBMenuEntry<Never> {
   /// Creates a horizontal text entry for a sbb menu.
   ///
@@ -193,6 +196,7 @@ class _RenderMenuItem extends RenderShiftedBox {
 ///  * [showSBBMenu], a method to dynamically show a SBB menu at a given location.
 ///  * [SBBMenuButton], an [IconButton] that automatically shows a menu when
 ///    it is tapped.
+@Deprecated('FlutterWeb will not be supported from the next major release.')
 class SBBMenuItem<T> extends SBBMenuEntry<T> {
   /// Creates an item for a SBB menu.
   ///
@@ -719,6 +723,7 @@ class _PopupMenuRoute<T> extends PopupRoute<T> {
 ///    calling this method automatically.
 ///  * [SemanticsConfiguration.namesRoute], for a description of edge triggered
 ///    semantics.
+@Deprecated('FlutterWeb will not be supported from the next major release.')
 Future<T?> showSBBMenu<T>({
   required BuildContext context,
   required RelativeRect position,
@@ -791,6 +796,7 @@ typedef SBBMenuItemBuilder<T> = List<SBBMenuEntry<T>> Function(
 ///  * [SBBMenuDivider], a popup menu entry that is just a horizontal line.
 ///  * [showSBBMenu], a method to dynamically show a popup menu at a given location.
 ///  * [PopupMenuButton], on which this widget is based
+@Deprecated('FlutterWeb will not be supported from the next major release.')
 class SBBMenuButton<T> extends StatefulWidget {
   /// Creates a button that shows a popup menu.
   ///

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 ///
 /// may be used for static bool usage or as a layout builder
 /// with mobile, tablet and desktop option
+@Deprecated('FlutterWeb will not be supported from the next major release.')
 class SBBResponsive extends StatelessWidget {
   const SBBResponsive({
     Key? key,
