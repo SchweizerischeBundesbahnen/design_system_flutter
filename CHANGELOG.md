@@ -9,6 +9,10 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+### Changed
+
+- Renamed `SBBStatusMobile` to `SBBStatus`
+
 ### Removed
 
 - Removed web widgets:
@@ -20,6 +24,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
   - `SBBWebNotification`
   - `SBBResponsive`
   - `SBBSidebar`
+  - `SBBStatus` (is now mobile default)
 
 - Removed web mode of the following widgets:
   - `SBBAccordion`

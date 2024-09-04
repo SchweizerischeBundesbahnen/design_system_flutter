@@ -1,6 +1,6 @@
-part of 'sbb_status_mobile.dart';
+part of 'sbb_status.dart';
 
-enum SBBStatusMobileType {
+enum SBBStatusType {
   alert(
     SBBColors.red,
     SBBColors.white,
@@ -22,7 +22,7 @@ enum SBBStatusMobileType {
     SBBIcons.circle_information_small,
   );
 
-  const SBBStatusMobileType(this.backgroundColor, this.iconColor, this.icon);
+  const SBBStatusType(this.backgroundColor, this.iconColor, this.icon);
 
   final Color backgroundColor;
   final Color iconColor;

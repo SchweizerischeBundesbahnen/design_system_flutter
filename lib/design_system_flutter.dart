@@ -37,7 +37,6 @@ export 'src/select/sbb_select.dart';
 export 'src/shared/closeable_box_controller.dart';
 export 'src/slider/sbb_slider.dart';
 export 'src/status/sbb_status.dart';
-export 'src/status/sbb_status_mobile.dart';
 export 'src/stepper/sbb_stepper.dart';
 export 'src/stepper/sbb_stepper_item.dart';
 export 'src/switch/sbb_switch.dart';

@@ -13,5 +13,4 @@ final _pages = {
   'Autocomplete': AutocompletePage(),
   'Accordion': AccordionPage(),
   'Toast': ToastPage(),
-  'Status': StatusPage(),
 };
