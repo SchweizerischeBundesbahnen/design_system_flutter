@@ -10,7 +10,6 @@ final _pages = {
   'Radiobutton': RadiobuttonPage(),
   'Link': LinkPage(),
   'Textfields': TextFieldPage(),
-  'Autocomplete': AutocompletePage(),
   'Accordion': AccordionPage(),
   'Toast': ToastPage(),
 };
