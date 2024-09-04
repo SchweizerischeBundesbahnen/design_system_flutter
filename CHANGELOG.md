@@ -9,6 +9,23 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+### Removed
+
+- Removed web widgets:
+  - `SBBBreadcrumb`
+  - `SBBCard`
+  - `SBBWebHeader`
+  - `SBBMenu`
+  - `SBBUserMenu`
+  - `SBBWebNotification`
+  - `SBBResponsive`
+  - `SBBSidebar`
+
+- Removed web mode of the following widgets:
+  - `SBBAccordion`
+
+- Removed web mode in example app
+
 ## [1.6.0] - 2024-09-04
 
 ### Changed

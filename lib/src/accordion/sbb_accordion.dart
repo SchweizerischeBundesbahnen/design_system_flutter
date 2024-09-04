@@ -80,13 +80,13 @@ class SBBAccordionItem {
 /// * <https://digital.sbb.ch/de/design-system-mobile-new/module/accordion>
 class SBBAccordion extends StatefulWidget {
   const SBBAccordion({
-    Key? key,
+    super.key,
     this.children = const <SBBAccordionItem>[],
     this.titleMaxLines,
     this.accordionCallback,
     this.backgroundColor,
     this.borderColor,
-  }) : super(key: key);
+  });
 
   SBBAccordion.single({
     required String title,
@@ -135,16 +135,11 @@ class _SBBAccordionState extends State<SBBAccordion> {
   @override
   Widget build(BuildContext context) {
     // TODO use these: MaterialLocalizations.of(context).expandedIconTapHint; MaterialLocalizations.of(context).collapsedIconTapHint;
-    final bool isWeb = SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
     final style = SBBControlStyles.of(context);
     final List<Widget> items = <Widget>[];
     for (int i = 0; i < widget.children.length; i++) {
       final SBBAccordionItem child = widget.children[i];
-      items.add(
-        isWeb
-            ? _buildAccordionWeb(context, child, i)
-            : _buildAccordionNative(context, child, i),
-      );
+      items.add(_buildAccordionChildren(context, child, i));
     }
 
     return Material(
@@ -155,7 +150,8 @@ class _SBBAccordionState extends State<SBBAccordion> {
     );
   }
 
-  Container _buildAccordionNative(BuildContext context, SBBAccordionItem child, int i) {
+  Container _buildAccordionChildren(
+      BuildContext context, SBBAccordionItem child, int i) {
     final style = SBBControlStyles.of(context);
     return Container(
       decoration: BoxDecoration(
@@ -226,89 +222,6 @@ class _SBBAccordionState extends State<SBBAccordion> {
       ),
     );
   }
-
-  Widget _buildAccordionWeb(BuildContext context, SBBAccordionItem child, int i) {
-    return Container(
-      decoration: BoxDecoration(
-          color: widget.backgroundColor ??
-              (_isChildExpanded(i) ? SBBColors.white : SBBColors.milk),
-          border: Border.all(
-              color: widget.borderColor ??
-                  (_isChildExpanded(i) ? SBBColors.graphite : SBBColors.milk))),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          MergeSemantics(
-            child: InkWell(
-              highlightColor: SBBColors.transparent,
-              splashColor: SBBColors.transparent,
-              hoverColor: SBBColors.transparent,
-              onTap: () => _handlePressed(_isChildExpanded(i), i),
-              child: Row(
-                children: <Widget>[
-                  const SizedBox(width: sbbDefaultSpacing),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 12.0),
-                      child: Text(
-                        child.title,
-                        style: SBBWebTextStyles.accordionHeader,
-                        maxLines: widget.titleMaxLines,
-                        overflow: widget.titleMaxLines == null
-                            ? null
-                            : TextOverflow.ellipsis,
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsetsDirectional.only(
-                      end: sbbDefaultSpacing / 2,
-                    ),
-                    child: _ExpandIcon(
-                      _isChildExpanded(i),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          if (_isChildExpanded(i))
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: const SBBMenuDivider(),
-            ),
-          AnimatedCrossFade(
-            firstChild: Container(height: 0.0),
-            secondChild: Container(
-              width: double.infinity,
-              padding: child.padding,
-              child: DefaultTextStyle(
-                style: SBBWebTextStyles.medium.copyWith(color: SBBColors.black),
-                child: child.body,
-              ),
-            ),
-            firstCurve: const Interval(
-              0.0,
-              0.6,
-              curve: Curves.fastOutSlowIn,
-            ),
-            secondCurve: const Interval(
-              0.4,
-              1.0,
-              curve: Curves.fastOutSlowIn,
-            ),
-            sizeCurve: Curves.fastOutSlowIn,
-            crossFadeState: _isChildExpanded(i)
-                ? CrossFadeState.showSecond
-                : CrossFadeState.showFirst,
-            duration: kThemeAnimationDuration,
-          ),
-          if ((i < widget.children.length - 1) && !_isChildExpanded(i))
-            const Divider(),
-        ],
-      ),
-    );
-  }
 }
 
 class _ExpandIcon extends StatefulWidget {
@@ -350,26 +263,14 @@ class _ExpandIconState extends State<_ExpandIcon>
 
   @override
   Widget build(BuildContext context) {
-    final bool isWeb = SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
     return IgnorePointer(
       child: RotationTransition(
         turns: _iconTurns,
-        child: isWeb ? _iconWeb() : _iconNative(),
+        child: SBBIconButtonSmall(
+          icon: SBBIcons.chevron_small_down_small,
+          onPressed: () {},
+        ),
       ),
-    );
-  }
-
-  Widget _iconNative() {
-    return SBBIconButtonSmall(
-      icon: SBBIcons.chevron_small_down_small,
-      onPressed: () {},
-    );
-  }
-
-  Widget _iconWeb() {
-    return Icon(
-      SBBIcons.chevron_small_down_medium,
-      size: 36,
     );
   }
 
