@@ -9,6 +9,10 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+### Changed
+
+- (#164) Updated icon version to `1.0.3` (was `1.0.0`).
+
 ### Deprecated
 
 - (#162) Deprecated Web Widgets:
