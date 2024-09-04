@@ -11,7 +11,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ### Changed
 
-- (#163) Updated icon version to `1.0.3` (was `1.0.0`).
+- (#164) Updated icon version to `1.0.3` (was `1.0.0`).
 
 ### Deprecated
 
