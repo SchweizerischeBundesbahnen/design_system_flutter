@@ -29,6 +29,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Removed web mode from the following widgets:
   - `SBBAccordion`
   - `SBBAutocompletion`
+  - `SBBLoadingIndicator`
   - `SBBSelect`
 
 - Removed web mode in example app
