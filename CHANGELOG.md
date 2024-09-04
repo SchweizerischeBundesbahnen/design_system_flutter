@@ -26,9 +26,10 @@ It is expected that you keep this format strictly, since we depend on it in our 
   - `SBBSidebar`
   - `SBBStatus` (is now mobile default)
 
-- Removed web mode of the following widgets:
+- Removed web mode from the following widgets:
   - `SBBAccordion`
   - `SBBAutocompletion`
+  - `SBBSelect`
 
 - Removed web mode in example app
 
