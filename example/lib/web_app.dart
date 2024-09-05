@@ -6,5 +6,4 @@ final _pages = {
   'Typographie': TypographyPage(),
   'Radiobutton': RadiobuttonPage(),
   'Link': LinkPage(),
-  'Textfields': TextFieldPage(),
 };

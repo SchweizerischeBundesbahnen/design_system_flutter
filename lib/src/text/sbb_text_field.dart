@@ -103,7 +103,6 @@ class _SBBTextField extends State<SBBTextField> {
 
   @override
   Widget build(BuildContext context) {
-    final bool isWeb = SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
     return Padding(
       padding: const EdgeInsetsDirectional.only(
         start: sbbDefaultSpacing,
@@ -114,85 +113,40 @@ class _SBBTextField extends State<SBBTextField> {
         children: [
           if (widget.icon != null)
             Padding(
-              padding: EdgeInsetsDirectional.only(
-                top: isWeb ? 20 : 12,
-                end: 8.0,
-              ),
+              padding: const EdgeInsetsDirectional.only(top: 12, end: 8.0),
               child: Icon(widget.icon),
             ),
           Expanded(
-            child: isWeb ? _buildTextFieldWeb() : _buildTextFieldNative(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Expanded(
+                      child: _buildTextField(),
+                    ),
+                    if (widget.suffixIcon != null) widget.suffixIcon!,
+                  ],
+                ),
+                SBBTextFieldUnderline(
+                  errorText: widget.errorText,
+                  hasFocus: _hasFocus,
+                  isLastElement: widget.isLastElement,
+                )
+              ],
+            ),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildTextFieldNative() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: _buildTextField(),
-            ),
-            if (widget.suffixIcon != null) widget.suffixIcon!,
-          ],
-        ),
-        SBBTextFieldUnderline(
-          errorText: widget.errorText,
-          hasFocus: _hasFocus,
-          isLastElement: widget.isLastElement,
-        )
-      ],
-    );
-  }
-
-  Widget _buildTextFieldWeb() {
-    final hasLabel = widget.labelText?.isNotEmpty ?? false;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  if (hasLabel)
-                    Text(
-                      '${widget.labelText}',
-                      style: SBBWebTextStyles.small.copyWith(color: SBBColors.granite),
-                    ),
-                  _buildTextField(),
-                ],
-              ),
-            ),
-            if (widget.suffixIcon != null)
-              Padding(
-                padding: EdgeInsetsDirectional.only(top: 20, start: 8),
-                child: widget.suffixIcon,
-              ),
-          ],
-        ),
-        if (widget.errorText != null)
-          Text(
-            widget.errorText!,
-            style: SBBWebTextStyles.small.copyWith(color: SBBColors.red),
-          )
-      ],
-    );
-  }
-
   TextField _buildTextField() {
     final textScaler = MediaQuery.of(context).textScaler;
-    final bool isWeb = SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
     final style = SBBControlStyles.of(context).textField!;
     final hasError = widget.errorText?.isNotEmpty ?? false;
-    final textStyle = isWeb ? _valueTextStyleWeb(widget.enabled, hasError, context) : _valueTextStyleNative(widget.enabled, context);
+    final textStyle = _textStyle(widget.enabled, context);
     final labelStyle = style.placeholderTextStyle!;
     // adjust floating label style to get desired sizes
     final floatingLabelStyle = labelStyle.copyWith(
@@ -215,9 +169,7 @@ class _SBBTextField extends State<SBBTextField> {
       onTap: widget.onTap,
       onSubmitted: widget.onSubmitted,
       enabled: widget.enabled,
-      decoration: isWeb
-          ? _textFieldDecorationWeb(hasError, textScaler, labelStyle, floatingLabelStyle)
-          : _textFieldDecorationNative(textScaler, labelStyle, floatingLabelStyle),
+      decoration: _decoration(textScaler, labelStyle, floatingLabelStyle),
       style: hasError ? textStyle.copyWith(color: SBBColors.red) : textStyle,
       inputFormatters: widget.inputFormatters,
       textCapitalization: widget.textCapitalization,
@@ -225,21 +177,12 @@ class _SBBTextField extends State<SBBTextField> {
     );
   }
 
-  TextStyle _valueTextStyleNative(bool enabled, BuildContext context) {
+  TextStyle _textStyle(bool enabled, BuildContext context) {
     final style = SBBControlStyles.of(context).textField;
     return (widget.enabled ? style?.textStyle : style?.textStyleDisabled)!;
   }
 
-  TextStyle _valueTextStyleWeb(bool enabled, bool hasError, BuildContext context) {
-    final style = SBBControlStyles.of(context).textField;
-    return (widget.enabled
-        ? hasError
-            ? style?.textStyle!.copyWith(color: SBBColors.red)
-            : style?.textStyle
-        : style?.textStyleDisabled!.copyWith(color: SBBColors.granite))!;
-  }
-
-  InputDecoration _textFieldDecorationNative(
+  InputDecoration _decoration(
     TextScaler textScaler,
     TextStyle labelStyle,
     TextStyle floatingLabelStyle,
@@ -287,52 +230,6 @@ class _SBBTextField extends State<SBBTextField> {
       hintStyle: labelStyle,
       hintMaxLines: widget.hintMaxLines,
       alignLabelWithHint: true,
-    );
-  }
-
-  InputDecoration _textFieldDecorationWeb(
-    bool hasError,
-    TextScaler textScaler,
-    TextStyle labelStyle,
-    TextStyle floatingLabelStyle,
-  ) {
-    const double topPadding = 12;
-    const double bottomPadding = 12;
-    const double startPadding = 12;
-    return InputDecoration(
-      isDense: true,
-      fillColor: widget.enabled ? SBBColors.white : SBBColors.milk,
-      focusedBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(2.0)),
-        borderSide: BorderSide(
-          color: hasError ? SBBColors.red : SBBColors.iron,
-          width: 1.0,
-        ),
-      ),
-      enabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(2.0)),
-        borderSide: BorderSide(
-          color: hasError ? SBBColors.red : SBBColors.graphite,
-          width: 1.0,
-        ),
-      ),
-      disabledBorder: OutlineInputBorder(
-        borderRadius: BorderRadius.all(Radius.circular(2.0)),
-        borderSide: BorderSide(
-          color: SBBColors.aluminum,
-          width: 1.0,
-        ),
-      ),
-      contentPadding: EdgeInsetsDirectional.only(
-        top: textScaler.scale(topPadding),
-        bottom: textScaler.scale(bottomPadding),
-        start: textScaler.scale(startPadding),
-      ),
-      floatingLabelStyle: floatingLabelStyle.copyWith(color: SBBColors.storm),
-      labelStyle: labelStyle,
-      hintText: widget.hintText,
-      hintStyle: labelStyle,
-      hintMaxLines: widget.hintMaxLines,
     );
   }
 }

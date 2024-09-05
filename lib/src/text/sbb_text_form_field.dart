@@ -12,7 +12,7 @@ import 'sbb_text_field_underline.dart';
 /// * <https://digital.sbb.ch/de/design-system-mobile-new/seitentypen/form>
 class SBBTextFormField extends StatefulWidget {
   const SBBTextFormField({
-    Key? key,
+    super.key,
     this.controller,
     this.enabled = true,
     this.enableInteractiveSelection = true,
@@ -37,7 +37,7 @@ class SBBTextFormField extends StatefulWidget {
     this.onSaved,
     this.onEditingComplete,
     this.onFieldSubmitted,
-  }) : super(key: key);
+  });
 
   final TextEditingController? controller;
   final bool enabled;
@@ -109,7 +109,6 @@ class _SBBTextField extends State<SBBTextFormField> {
   @override
   Widget build(BuildContext context) {
     final style = SBBBaseStyle.of(context);
-    final bool isWeb = SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
     return Padding(
       padding: const EdgeInsets.only(
         left: 16.0,
@@ -120,7 +119,7 @@ class _SBBTextField extends State<SBBTextFormField> {
         children: [
           if (widget.icon != null)
             Padding(
-              padding: EdgeInsets.only(top: isWeb ? 20 : 12, right: 8.0),
+              padding: const EdgeInsets.only(top: 12, right: 8.0),
               child: Icon(
                 widget.icon,
                 size: 24,
@@ -128,74 +127,34 @@ class _SBBTextField extends State<SBBTextFormField> {
               ),
             ),
           Expanded(
-            child:
-                isWeb ? _buildTextFormFieldWeb() : _buildTextFormFieldNative(),
+            child: Stack(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    _buildTextFormField(),
+                    SBBTextFieldUnderline(
+                      errorText: errorText,
+                      hasFocus: _hasFocus,
+                      isLastElement: widget.isLastElement,
+                    )
+                  ],
+                ),
+                if (widget.suffixIcon != null)
+                  Positioned(
+                    top: -4.0,
+                    right: 0.0,
+                    child: widget.suffixIcon!,
+                  )
+              ],
+            ),
           ),
         ],
       ),
     );
   }
 
-  Widget _buildTextFormFieldNative() {
-    return Stack(
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            _buildTextFormField(),
-            SBBTextFieldUnderline(
-              errorText: errorText,
-              hasFocus: _hasFocus,
-              isLastElement: widget.isLastElement,
-            )
-          ],
-        ),
-        if (widget.suffixIcon != null)
-          Positioned(
-            top: -4.0,
-            right: 0.0,
-            child: widget.suffixIcon!,
-          )
-      ],
-    );
-  }
-
-  Widget _buildTextFormFieldWeb() {
-    final hasLabel = widget.labelText?.isNotEmpty ?? false;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  if (hasLabel)
-                    Text(
-                      '${widget.labelText}',
-                      style: SBBWebTextStyles.small
-                          .copyWith(color: SBBColors.granite),
-                    ),
-                  _buildTextFormField(),
-                ],
-              ),
-            ),
-            if (widget.suffixIcon != null)
-              Padding(
-                padding: EdgeInsetsDirectional.only(top: 20, start: 8),
-                child: widget.suffixIcon,
-              ),
-          ],
-        ),
-      ],
-    );
-  }
-
   TextFormField _buildTextFormField() {
-    final hasError = errorText?.isNotEmpty ?? false;
-    final bool isWeb = SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
     final textField = SBBControlStyles.of(context).textField!;
 
     return TextFormField(
@@ -226,52 +185,15 @@ class _SBBTextField extends State<SBBTextFormField> {
       onChanged: widget.onChanged,
       onTap: widget.onTap,
       enabled: widget.enabled,
-      decoration: isWeb ? _inputDecorationWeb() : _inputDecorationNative(),
-      style: isWeb && hasError
-          ? textField.errorTextStyle
-          : textField.textStyle,
+      decoration: _inputDecoration(),
+      style: textField.textStyle,
       inputFormatters: widget.inputFormatters,
       textCapitalization: widget.textCapitalization,
       textInputAction: widget.textInputAction,
     );
   }
 
-  InputDecoration _inputDecorationWeb() {
-    return InputDecoration(
-      isDense: true,
-      border: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(2.0)),
-          borderSide: BorderSide(color: SBBColors.graphite, width: 1.0)),
-      focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(2.0)),
-          borderSide: BorderSide(color: SBBColors.iron, width: 1.0)),
-      enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(2.0)),
-          borderSide: BorderSide(color: SBBColors.graphite, width: 1.0)),
-      disabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(2.0)),
-          borderSide: BorderSide(color: SBBColors.aluminum, width: 1.0)),
-      errorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(2.0)),
-          borderSide: BorderSide(color: SBBColors.red, width: 1.0)),
-      focusedErrorBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.all(Radius.circular(2.0)),
-          borderSide: BorderSide(color: SBBColors.red, width: 1.0)),
-      // Hide default error since we have our own
-      errorStyle: SBBWebTextStyles.small,
-      errorText: errorText,
-      contentPadding: EdgeInsetsDirectional.only(
-        top: 12,
-        bottom: 12,
-        start: 12,
-      ),
-      labelStyle: SBBWebTextStyles.small.copyWith(color: SBBColors.granite),
-      hintText: widget.hintText,
-      hintStyle: SBBWebTextStyles.medium.copyWith(color: SBBColors.storm),
-    );
-  }
-
-  InputDecoration _inputDecorationNative() {
+  InputDecoration _inputDecoration() {
     final textField = SBBControlStyles.of(context).textField!;
     return InputDecoration(
       labelText: widget.labelText,
