@@ -47,7 +47,7 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
           900: SBBColors.red,
         },
       ),
-      defaultFontFamily: SBBWebFont,
+      defaultFontFamily: sbbWebFont,
       defaultTextColor: resolve(isLight, SBBColors.black, SBBColors.white),
       defaultTextStyle: SBBTextStyles.mediumLight.copyWith(
         color: resolve(isLight, SBBColors.black, SBBColors.white),
