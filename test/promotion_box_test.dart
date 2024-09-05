@@ -39,8 +39,8 @@ void main() {
       )
     ]);
 
-    await Specs.run(
-      Specs.mobileSpecs,
+    await TestSpecs.run(
+      TestSpecs.themedSpecs,
       widget,
       tester,
       'promotion_box',

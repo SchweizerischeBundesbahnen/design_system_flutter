@@ -5,46 +5,36 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-class Specs {
-  const Specs._({
+class TestSpecs {
+  const TestSpecs._({
     required this.size,
     required this.brightness,
   });
 
-  factory Specs.mobile() => Specs._(
-        size: _mobileSize,
+  factory TestSpecs.light() => const TestSpecs._(
+        size: _size,
         brightness: Brightness.light,
       );
 
-  factory Specs.web() => Specs._(
-        size: _webSize,
-        brightness: Brightness.light,
-      );
-
-  Specs dark() => Specs._(
-        size: size,
+  factory TestSpecs.dark() => const TestSpecs._(
+        size: _size,
         brightness: Brightness.dark,
       );
 
-  static const _mobileSize = Size(600, 1000);
-  static const _webSize = Size(1600, 900);
+  static const _size = Size(600, 1000);
 
   final Size size;
   final Brightness brightness;
 
-  static List<Specs> mobileSpecs = [
-    Specs.mobile(),
-    Specs.mobile().dark(),
-  ];
-
-  static List<Specs> webSpecs = [
-    Specs.web(),
+  static List<TestSpecs> themedSpecs = [
+    TestSpecs.light(),
+    TestSpecs.dark(),
   ];
 
   String get name => brightness.name;
 
   static Future<void> run(
-    List<Specs> specs,
+    List<TestSpecs> specs,
     Widget widget,
     WidgetTester tester,
     String name,

@@ -9,8 +9,8 @@ void main() {
     testWidgets(name, (WidgetTester tester) async {
       final widget = CheckboxTest(value1: v1, value2: v2, value3: v3);
 
-      await Specs.run(
-        Specs.mobileSpecs,
+      await TestSpecs.run(
+        TestSpecs.themedSpecs,
         widget,
         tester,
         '${name}_initial',
