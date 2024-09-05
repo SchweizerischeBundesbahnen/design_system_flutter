@@ -4,5 +4,4 @@ final _pages = {
   'Buttons': ButtonPage(),
   'Icons': IconPage(),
   'Typographie': TypographyPage(),
-  'Link': LinkPage(),
 };
