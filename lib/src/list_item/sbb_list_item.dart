@@ -123,7 +123,8 @@ class SBBListItem extends StatefulWidget {
 class _SBBListItemState extends State<SBBListItem> {
   bool isHovering = false;
 
-  Widget _buildNative(BuildContext context) {
+  @override
+  Widget build(BuildContext context) {
     final style = SBBControlStyles.of(context).listItem!;
     final isEnabled = widget.enabled ?? widget.onPressed != null;
     return MergeSemantics(
@@ -222,121 +223,5 @@ class _SBBListItemState extends State<SBBListItem> {
         ),
       ),
     );
-  }
-
-  Widget _buildWeb(BuildContext context) {
-    final style = SBBControlStyles.of(context).listItem;
-    return MergeSemantics(
-      child: Semantics(
-        button: widget.onPressed != null,
-        child: Material(
-          color: style?.backgroundColor,
-          child: InkWell(
-            splashColor: style?.backgroundColorHighlighted,
-            focusColor: style?.backgroundColorHighlighted,
-            highlightColor: SBBColors.transparent,
-            hoverColor: SBBColors.milk,
-            onTap: widget.onPressed,
-            onHover: (hovering) {
-              setState(() => this.isHovering = hovering);
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                  border: Border(
-                      left: BorderSide(
-                          color: isHovering
-                              ? SBBColors.red125
-                              : SBBColors.transparent))),
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsetsDirectional.only(
-                      start: sbbDefaultSpacing,
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsetsDirectional.only(
-                              top: 2,
-                              bottom: 2,
-                              end: sbbDefaultSpacing / 2,
-                            ),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ConstrainedBox(
-                                  constraints: BoxConstraints(
-                                      minHeight: sbbIconSizeSmall),
-                                  child: Row(
-                                    children: [
-                                      if (widget.leadingIcon != null)
-                                        Padding(
-                                          padding:
-                                              const EdgeInsetsDirectional.only(
-                                            end: sbbDefaultSpacing / 2,
-                                          ),
-                                          child: Icon(widget.leadingIcon,
-                                              color: isHovering
-                                                  ? SBBColors.red125
-                                                  : SBBColors.black),
-                                        ),
-                                      Expanded(
-                                        child: Text(
-                                          widget.title,
-                                          style: isHovering
-                                              ? style?.textStyle!.copyWith(
-                                                  color: SBBColors.red125)
-                                              : style?.textStyle,
-                                          maxLines: widget.titleMaxLines,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                if (widget.subtitle != null)
-                                  Padding(
-                                    padding: const EdgeInsetsDirectional.only(
-                                      bottom: 5.0,
-                                    ),
-                                    child: Text(
-                                      widget.subtitle!,
-                                      style: isHovering
-                                          ? style?.secondaryTextStyle!
-                                              .copyWith(color: SBBColors.red125)
-                                          : style?.secondaryTextStyle,
-                                      maxLines: widget.subtitleMaxLines,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  )
-                              ],
-                            ),
-                          ),
-                        ),
-                        if (widget.trailingWidget != null)
-                          widget.trailingWidget!
-                        else
-                          const SizedBox(width: sbbDefaultSpacing * 0.5),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final bool isWeb =
-        SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
-    if (isWeb) return _buildWeb(context);
-    return _buildNative(context);
   }
 }

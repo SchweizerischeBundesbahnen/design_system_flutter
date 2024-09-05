@@ -21,6 +21,11 @@ dev_dependencies:
   # https://pub.dev/packages/flutter_lints
   flutter_lints: ^4.0.0
 
+# https://dart.dev/tools/pub/pubspec#platforms
+platforms:
+  android:
+  ios:
+
 flutter:
   assets:
     - lib/fonts/

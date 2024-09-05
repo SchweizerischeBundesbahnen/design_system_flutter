@@ -9,6 +9,53 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+### Changed
+
+- Renamed `SBBStatusMobile` to `SBBStatus`
+
+### Removed
+
+- Removed web widgets:
+  - `SBBBreadcrumb`
+  - `SBBCard`
+  - `SBBDropdown`
+  - `SBBGhostButton`
+  - `SBBMenu`
+  - `SBBResponsive`
+  - `SBBSidebar`
+  - `SBBStatus` (is now mobile default)
+  - `SBBUserMenu`
+  - `SBBWebHeader`
+  - `SBBWebNotification`
+
+- Removed web typography:
+  - `SBBLeanTextStyles`
+  - `SBBWebText`
+  - `SBBWebTextStyles`
+
+- Removed web mode from the following widgets:
+  - `SBBAccordion`
+  - `SBBAutocompletion`
+  - `SBBCheckbox`
+  - `SBBCheckboxListItem`
+  - `SBBIconButton` (all variants)
+  - `SBBLinkText` (including refactoring)
+  - `SBBListItem`
+  - `SBBLoadingIndicator`
+  - `SBBPrimaryButton`
+  - `SBBRadioButton`
+  - `SBBRadioButtonListItem`
+  - `SBBSelect`
+  - `SBBSecondaryButton`
+  - `SBBTextField`
+  - `SBBTextFormField`
+  - `SBBToast`
+
+- Removed `HostPlatform` from `SBBTheme`
+- Removed and cleaned web parts in `SBBControlStyles`
+- Removed web parts in `SBBButtonStyles`
+- Removed web mode in example app
+
 ## [1.6.0] - 2024-09-04
 
 ### Changed

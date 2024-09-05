@@ -8,8 +8,8 @@ void main() {
   testWidgets('multiline checkbox', (WidgetTester tester) async {
     final widget = MultilineCheckboxText();
 
-    await Specs.run(
-      Specs.mobileSpecs,
+    await TestSpecs.run(
+      TestSpecs.themedSpecs,
       widget,
       tester,
       'multiline_checkbox_checked',
@@ -18,8 +18,8 @@ void main() {
 
     await tester.tap(find.byKey(Key('checkbox')));
 
-    await Specs.run(
-      Specs.mobileSpecs,
+    await TestSpecs.run(
+      TestSpecs.themedSpecs,
       widget,
       tester,
       'multiline_checkbox_null',
@@ -28,8 +28,8 @@ void main() {
 
     await tester.tap(find.byKey(Key('checkbox')));
 
-    await Specs.run(
-      Specs.mobileSpecs,
+    await TestSpecs.run(
+      TestSpecs.themedSpecs,
       widget,
       tester,
       'multiline_checkbox_unchecked',

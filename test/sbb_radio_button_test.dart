@@ -9,8 +9,8 @@ void main() {
     testWidgets(name, (WidgetTester tester) async {
       final widget = RadioTest(groupValue: v1, listItemGroupValue: v2);
 
-      await Specs.run(
-        Specs.mobileSpecs,
+      await TestSpecs.run(
+        TestSpecs.themedSpecs,
         widget,
         tester,
         '${name}_initial',

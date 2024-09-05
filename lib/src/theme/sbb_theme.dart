@@ -1,17 +1,13 @@
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 
 import '../../design_system_flutter.dart';
 
 const sbbDefaultSpacing = 16.0;
 
-enum HostPlatform { web, native }
-
 class SBBTheme {
   SBBTheme._();
 
   static ThemeData light({
-    HostPlatform hostPlatform = kIsWeb ? HostPlatform.web : HostPlatform.native,
     bool boldFont = false,
     SBBBaseStyle? baseStyle,
     SBBButtonStyles? buttonStyles,
@@ -20,14 +16,12 @@ class SBBTheme {
       createTheme(
         brightness: Brightness.light,
         boldFont: boldFont,
-        hostPlatform: hostPlatform,
         baseStyle: baseStyle,
         buttonStyles: buttonStyles,
         controlStyles: controlStyles,
       );
 
   static ThemeData dark({
-    HostPlatform hostPlatform = kIsWeb ? HostPlatform.web : HostPlatform.native,
     bool boldFont = false,
     SBBBaseStyle? baseStyle,
     SBBButtonStyles? buttonStyles,
@@ -36,7 +30,6 @@ class SBBTheme {
       createTheme(
         brightness: Brightness.dark,
         boldFont: boldFont,
-        hostPlatform: hostPlatform,
         baseStyle: baseStyle,
         buttonStyles: buttonStyles,
         controlStyles: controlStyles,
@@ -44,7 +37,6 @@ class SBBTheme {
 
   static ThemeData createTheme({
     required Brightness brightness,
-    HostPlatform hostPlatform = kIsWeb ? HostPlatform.web : HostPlatform.native,
     bool boldFont = false,
     SBBBaseStyle? baseStyle,
     SBBButtonStyles? buttonStyles,
@@ -53,7 +45,6 @@ class SBBTheme {
     // SET hard-coded default values HERE
     final defaultBaseStyle = SBBBaseStyle.$default(
       brightness: brightness,
-      hostPlatform: hostPlatform,
       boldFont: boldFont,
     );
     final _baseStyle = baseStyle.merge(defaultBaseStyle);
