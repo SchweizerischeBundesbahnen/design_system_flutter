@@ -51,9 +51,9 @@ It is expected that you keep this format strictly, since we depend on it in our 
   - `SBBTextFormField`
   - `SBBToast`
 
+- Removed `HostPlatform` from `SBBTheme`
 - Removed and cleaned web parts in `SBBControlStyles`
 - Removed web parts in `SBBButtonStyles`
-
 - Removed web mode in example app
 
 ## [1.6.0] - 2024-09-04

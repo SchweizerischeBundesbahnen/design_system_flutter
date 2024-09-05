@@ -40,7 +40,6 @@ class TestSpecs {
     String name,
     Finder finder, {
     Function(Widget w)? wrap,
-    HostPlatform hostType = HostPlatform.native,
   }) async {
     for (final spec in specs) {
       await tester.binding.setSurfaceSize(spec.size);
@@ -49,7 +48,7 @@ class TestSpecs {
       tester.platformDispatcher.platformBrightnessTestValue = spec.brightness;
 
       await tester.pumpWidget(
-        wrap?.call(widget) ?? TestApp(child: widget, hostType: hostType),
+        wrap?.call(widget) ?? TestApp(child: widget),
       );
       await tester.pumpAndSettle();
       await tester.runAsync(() => tester.pumpAndSettle());
@@ -64,9 +63,7 @@ class TestSpecs {
 }
 
 class TestApp extends StatelessWidget {
-  const TestApp(
-      {Key? key, required this.child, this.hostType = HostPlatform.native})
-      : super(key: key);
+  const TestApp({Key? key, required this.child}) : super(key: key);
 
   static Future<void> setupAll() async => await _loadFonts();
 
@@ -86,14 +83,13 @@ class TestApp extends StatelessWidget {
     }
   }
 
-  final HostPlatform hostType;
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: SBBTheme.light(hostPlatform: hostType),
-      darkTheme: SBBTheme.dark(hostPlatform: hostType),
+      theme: SBBTheme.light(),
+      darkTheme: SBBTheme.dark(),
       debugShowCheckedModeBanner: false,
       builder: (_, __) => Scaffold(body: child),
     );
