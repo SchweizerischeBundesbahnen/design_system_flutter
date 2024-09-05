@@ -11,7 +11,6 @@ export 'src/button/sbb_tertiary_button.dart';
 export 'src/checkbox/sbb_checkbox.dart';
 export 'src/checkbox/sbb_checkbox_list_item.dart';
 export 'src/chip/sbb_chip.dart';
-export 'src/dropdown/sbb_dropdown.dart';
 export 'src/group/sbb_group.dart';
 export 'src/header/sbb_header.dart';
 export 'src/input_trigger/sbb_input_trigger.dart';

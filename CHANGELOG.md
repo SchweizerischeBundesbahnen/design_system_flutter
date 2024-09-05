@@ -18,6 +18,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Removed web widgets:
   - `SBBBreadcrumb`
   - `SBBCard`
+  - `SBBDropdown`
   - `SBBWebHeader`
   - `SBBMenu`
   - `SBBUserMenu`
@@ -25,6 +26,11 @@ It is expected that you keep this format strictly, since we depend on it in our 
   - `SBBResponsive`
   - `SBBSidebar`
   - `SBBStatus` (is now mobile default)
+
+- Removed web typography:
+  - `SBBLeanTextStyles`
+  - `SBBWebText`
+  - `SBBWebTextStyles`
 
 - Removed web mode from the following widgets:
   - `SBBAccordion`
@@ -40,6 +46,8 @@ It is expected that you keep this format strictly, since we depend on it in our 
   - `SBBTextField`
   - `SBBTextFormField`
   - `SBBToast`
+
+- Removed and cleaned web parts in `SBBControlStyles`
 
 - Removed web mode in example app
 
