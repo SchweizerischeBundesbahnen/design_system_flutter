@@ -31,6 +31,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
   - `SBBAutocompletion`
   - `SBBCheckbox`
   - `SBBCheckboxListItem`
+  - `SBBListItem`
   - `SBBLoadingIndicator`
   - `SBBRadioButton`
   - `SBBRadioButtonListItem`
