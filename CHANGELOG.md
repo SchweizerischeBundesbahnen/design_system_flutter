@@ -32,6 +32,8 @@ It is expected that you keep this format strictly, since we depend on it in our 
   - `SBBCheckbox`
   - `SBBCheckboxListItem`
   - `SBBLoadingIndicator`
+  - `SBBRadioButton`
+  - `SBBRadioButtonListItem`
   - `SBBSelect`
   - `SBBTextField`
   - `SBBTextFormField`
