@@ -7,5 +7,4 @@ final _pages = {
   'Radiobutton': RadiobuttonPage(),
   'Link': LinkPage(),
   'Textfields': TextFieldPage(),
-  'Toast': ToastPage(),
 };

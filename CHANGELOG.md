@@ -33,6 +33,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
   - `SBBCheckboxListItem`
   - `SBBLoadingIndicator`
   - `SBBSelect`
+  - `SBBToast`
 
 - Removed web mode in example app
 
