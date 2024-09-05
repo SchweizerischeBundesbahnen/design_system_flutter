@@ -28,6 +28,8 @@ It is expected that you keep this format strictly, since we depend on it in our 
   - `SBBWebHeader`
   - `SBBWebNotification`
 
+- Remove deprecated `SBBBaseTextStyles`
+
 - Removed web typography:
   - `SBBLeanTextStyles`
   - `SBBWebText`
