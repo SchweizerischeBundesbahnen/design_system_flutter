@@ -33,13 +33,11 @@ class SBBSecondaryButton extends StatelessWidget {
     final buttonStyles = SBBButtonStyles.of(context);
     return OutlinedButton(
       style: Theme.of(context).outlinedButtonTheme.style?.copyWith(
-            // workaround for web
             padding: SBBTheme.allStates(EdgeInsets.zero),
           ),
       onPressed: isLoading ? null : onPressed,
       focusNode: focusNode,
       child: Padding(
-        // workaround for web
         padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

@@ -6,8 +6,6 @@ class SBBInternal {
 
   static const defaultButtonHeight = 44.0;
   static const defaultButtonHeightSmall = 32.0;
-  static const webMinButtonWidth = 60.0;
-  static const webMaxButtonWidth = 300.0;
 
   static const barrierColor = Color(0x80000000);
 
@@ -41,8 +39,7 @@ class SBBInternal {
 }
 
 class SBBButtonContent extends StatelessWidget {
-  const SBBButtonContent({Key? key, required this.label})
-      : super(key: key);
+  const SBBButtonContent({Key? key, required this.label}) : super(key: key);
 
   final String label;
 
@@ -56,13 +53,4 @@ class SBBButtonContent extends StatelessWidget {
       ),
     );
   }
-}
-
-class SBBWebDivider {
-  SBBWebDivider._();
-
-  static const double big = 32.0;
-  static const double medium = 16.0;
-  static const double small = 8.0;
-  static const double thin = 4.0;
 }
