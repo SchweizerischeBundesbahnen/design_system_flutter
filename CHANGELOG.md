@@ -61,6 +61,8 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Removed and cleaned web parts in `SBBControlStyles`
 - Removed web parts in `SBBButtonStyles`
 - Removed web mode in example app
+- Removed deprecated `onCallToAction` from SBBListItem
+- Removed deprecated `SBBIconTextButton`
 
 ## [1.6.0] - 2024-09-04
 

@@ -309,25 +309,6 @@ class ButtonPage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: sbbDefaultSpacing),
-          const SBBListHeader('Icon Text Button'),
-          Row(
-            children: [
-              const SizedBox(height: sbbDefaultSpacing),
-              SBBIconTextButton(
-                onPressed: () {
-                  sbbToast.show(message: 'SBBIconTextButton');
-                },
-                icon: SBBIcons.station_large,
-                label: 'Default',
-              ),
-              const SizedBox(width: sbbDefaultSpacing),
-              const SBBIconTextButton(
-                onPressed: null,
-                icon: SBBIcons.station_large,
-                label: 'Disabled',
-              ),
-            ],
-          ),
         ],
       ),
     );
