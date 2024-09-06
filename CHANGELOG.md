@@ -13,6 +13,10 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 - Renamed `SBBStatusMobile` to `SBBStatus`
 
+### Fixed
+
+- Bugfix for semantics in `SBBSegmentedButton`
+
 ### Removed
 
 - Removed web widgets:
