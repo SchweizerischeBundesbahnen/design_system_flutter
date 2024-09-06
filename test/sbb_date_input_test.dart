@@ -8,8 +8,8 @@ import 'test_app.dart';
 void main() {
   void generateTest(String name) {
     testWidgets(name, (WidgetTester tester) async {
-      await Specs.run(
-        Specs.mobileSpecs,
+      await TestSpecs.run(
+        TestSpecs.themedSpecs,
         const DatePickerTest(),
         tester,
         name,

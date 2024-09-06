@@ -17,8 +17,8 @@ void main() {
       maximumTime: maximumTime,
     );
     testWidgets(name, (WidgetTester tester) async {
-      await Specs.run(
-        Specs.mobileSpecs,
+      await TestSpecs.run(
+        TestSpecs.themedSpecs,
         widget,
         tester,
         name,

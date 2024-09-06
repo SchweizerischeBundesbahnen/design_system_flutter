@@ -9,8 +9,8 @@ void main() {
     testWidgets(name, (WidgetTester tester) async {
       final widget = MessageTest(sbbMessage: message);
 
-      await Specs.run(
-        Specs.mobileSpecs,
+      await TestSpecs.run(
+        TestSpecs.themedSpecs,
         widget,
         tester,
         name,

@@ -14,7 +14,6 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
     this.dividerColor,
     this.defaultRootContainerPadding,
     this.iconColor,
-    this.hostPlatform,
     this.brightness,
     this.boldFont = false,
     this.labelColor,
@@ -27,7 +26,6 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
 
   factory SBBBaseStyle.$default({
     required Brightness brightness,
-    HostPlatform? hostPlatform,
     bool boldFont = false,
   }) {
     final isLight = brightness == Brightness.light;
@@ -49,7 +47,7 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
           900: SBBColors.red,
         },
       ),
-      defaultFontFamily: SBBWebFont,
+      defaultFontFamily: sbbWebFont,
       defaultTextColor: resolve(isLight, SBBColors.black, SBBColors.white),
       defaultTextStyle: SBBTextStyles.mediumLight.copyWith(
         color: resolve(isLight, SBBColors.black, SBBColors.white),
@@ -58,7 +56,6 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
       dividerColor: resolve(isLight, SBBColors.cloud, SBBColors.iron),
       defaultRootContainerPadding: sbbDefaultSpacing,
       iconColor: resolve(isLight, SBBColors.black, SBBColors.white),
-      hostPlatform: hostPlatform ?? HostPlatform.native,
       brightness: brightness,
       boldFont: boldFont,
       labelColor: resolve(isLight, SBBColors.granite, SBBColors.graphite),
@@ -86,7 +83,6 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
   final Color? dividerColor;
   final double? defaultRootContainerPadding;
   final Color? iconColor;
-  final HostPlatform? hostPlatform;
   final Brightness? brightness;
   final bool boldFont;
   final Color? labelColor;
@@ -104,7 +100,6 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
     Color? dividerColor,
     double? defaultRootContainerPadding,
     Color? iconColor,
-    HostPlatform? hostPlatform,
     Brightness? brightness,
     bool? boldFont,
     Color? labelColor,
@@ -122,7 +117,6 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
         defaultRootContainerPadding:
             defaultRootContainerPadding ?? this.defaultRootContainerPadding,
         iconColor: iconColor ?? this.iconColor,
-        hostPlatform: hostPlatform ?? this.hostPlatform,
         brightness: brightness ?? this.brightness,
         boldFont: boldFont ?? this.boldFont,
         labelColor: labelColor ?? this.labelColor,
@@ -143,7 +137,6 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
       dividerColor: Color.lerp(dividerColor, other.dividerColor, t),
       iconColor: Color.lerp(iconColor, other.iconColor, t),
       defaultFontFamily: other.defaultFontFamily,
-      hostPlatform: other.hostPlatform,
       brightness: other.brightness,
       primarySwatch: other.primarySwatch,
       defaultRootContainerPadding: other.defaultRootContainerPadding,
@@ -217,7 +210,6 @@ extension StyleExtension on SBBBaseStyle? {
       defaultRootContainerPadding: this!.defaultRootContainerPadding ??
           other?.defaultRootContainerPadding,
       iconColor: this!.iconColor ?? other?.iconColor,
-      hostPlatform: this!.hostPlatform ?? other?.hostPlatform,
       brightness: this!.brightness ?? other?.brightness,
       redTextTheme: this!.redTextTheme ?? other?.redTextTheme,
     ) as SBBBaseStyle;

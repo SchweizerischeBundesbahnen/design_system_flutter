@@ -1,7 +1,7 @@
 {
   "dependencies": {
     "fantasticon": "^3.0.0",
-    "oslllo-svg-fixer": "^4.0.1",
+    "oslllo-svg-fixer": "^5.0.0",
     "parse-bmfont-xml": "^1.1.6"
   },
   "scripts": {
