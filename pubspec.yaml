@@ -1,6 +1,6 @@
 name: design_system_flutter
 description: Design System Mobile for Flutter
-version: 1.6.0
+version: 2.0.0
 homepage: https://digital.sbb.ch/de/design-system/mobile/overview/
 
 environment:
@@ -25,6 +25,7 @@ dev_dependencies:
 platforms:
   android:
   ios:
+
 
 flutter:
   assets:

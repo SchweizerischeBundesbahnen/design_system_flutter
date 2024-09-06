@@ -9,6 +9,8 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+## [2.0.0] - 2024-09-06
+
 ### Changed
 
 - Renamed `SBBStatusMobile` to `SBBStatus`
@@ -58,10 +60,15 @@ It is expected that you keep this format strictly, since we depend on it in our 
   - `SBBToast`
 
 - Removed `HostPlatform` from `SBBTheme`
+
 - Removed and cleaned web parts in `SBBControlStyles`
+
 - Removed web parts in `SBBButtonStyles`
+
 - Removed web mode in example app
+
 - Removed deprecated `onCallToAction` from SBBListItem
+
 - Removed deprecated `SBBIconTextButton`
 
 ## [1.6.0] - 2024-09-04
@@ -409,7 +416,9 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Initial project setup
 - Added some widgets
 
-[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/1.6.0...HEAD
+[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/2.0.0...HEAD
+
+[2.0.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/1.6.0...2.0.0
 
 [1.6.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/1.5.0...1.6.0
 
