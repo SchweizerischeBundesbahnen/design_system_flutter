@@ -15,8 +15,6 @@ class SBBListItem extends StatefulWidget {
     int? subtitleMaxLines,
     bool isLastElement = false,
     required VoidCallback? onPressed,
-    @Deprecated('Use constructor `SBBListItem.button` instead.')
-    VoidCallback? onCallToAction,
   }) : this.custom(
           key: key,
           leadingIcon: leadingIcon,
@@ -30,19 +28,6 @@ class SBBListItem extends StatefulWidget {
                   builder: (BuildContext context) {
                     final style = SBBControlStyles.of(context).listItem!;
                     final isEnabled = onPressed != null;
-
-                    if (onCallToAction != null) {
-                      return Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: sbbDefaultSpacing * 0.5,
-                        ),
-                        child: SBBIconButtonSmall(
-                          icon: trailingIcon,
-                          onPressed: onCallToAction,
-                        ),
-                      );
-                    }
-
                     return Padding(
                       padding: EdgeInsetsDirectional.only(
                         end: sbbDefaultSpacing,
