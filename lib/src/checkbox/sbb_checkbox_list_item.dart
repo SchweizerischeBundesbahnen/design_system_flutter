@@ -115,7 +115,6 @@ class SBBCheckboxListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = SBBControlStyles.of(context).checkbox;
-    final bool isWeb = SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
     final enabled = onChanged != null;
     return Stack(
       alignment: Alignment.bottomCenter,
@@ -140,12 +139,8 @@ class SBBCheckboxListItem extends StatelessWidget {
                       }
                     }
                   : null,
-              splashColor: isWeb
-                  ? SBBColors.transparent
-                  : style?.listItem?.backgroundColorHighlighted,
-              focusColor: isWeb
-                  ? SBBColors.transparent
-                  : style?.listItem?.backgroundColorHighlighted,
+              splashColor: style?.listItem?.backgroundColorHighlighted,
+              focusColor: style?.listItem?.backgroundColorHighlighted,
               highlightColor: SBBColors.transparent,
               hoverColor: SBBColors.transparent,
               child: Column(
@@ -214,7 +209,8 @@ class SBBCheckboxListItem extends StatelessWidget {
                                     secondaryLabel!,
                                     style: enabled
                                         ? style?.listItem?.secondaryTextStyle
-                                        : style?.listItem?.secondaryTextStyleDisabled,
+                                        : style?.listItem
+                                            ?.secondaryTextStyleDisabled,
                                   ),
                                 ),
                             ],

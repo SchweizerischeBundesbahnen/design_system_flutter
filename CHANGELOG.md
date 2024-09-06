@@ -9,6 +9,61 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+### Changed
+
+- Renamed `SBBStatusMobile` to `SBBStatus`
+
+### Removed
+
+- Removed web widgets:
+  - `SBBBreadcrumb`
+  - `SBBCard`
+  - `SBBDropdown`
+  - `SBBGhostButton`
+  - `SBBMenu`
+  - `SBBResponsive`
+  - `SBBSidebar`
+  - `SBBStatus` (is now mobile default)
+  - `SBBUserMenu`
+  - `SBBWebHeader`
+  - `SBBWebNotification`
+
+- Remove deprecated `SBBBaseTextStyles`
+
+- Removed web typography:
+  - `SBBLeanTextStyles`
+  - `SBBWebText`
+  - `SBBWebTextStyles`
+
+- Removed web mode from the following widgets:
+  - `SBBAccordion`
+  - `SBBAutocompletion`
+  - `SBBCheckbox`
+  - `SBBCheckboxListItem`
+  - `SBBIconButton` (all variants)
+  - `SBBLinkText` (including refactoring)
+  - `SBBListItem`
+  - `SBBLoadingIndicator`
+  - `SBBPrimaryButton`
+  - `SBBRadioButton`
+  - `SBBRadioButtonListItem`
+  - `SBBSelect`
+  - `SBBSecondaryButton`
+  - `SBBTextField`
+  - `SBBTextFormField`
+  - `SBBToast`
+
+- Removed `HostPlatform` from `SBBTheme`
+- Removed and cleaned web parts in `SBBControlStyles`
+- Removed web parts in `SBBButtonStyles`
+- Removed web mode in example app
+
+## [1.6.0] - 2024-09-04
+
+### Changed
+
+- (#164) Updated icon version to `1.0.3` (was `1.0.0`).
+
 ### Deprecated
 
 - (#162) Deprecated Web Widgets:
@@ -18,7 +73,6 @@ It is expected that you keep this format strictly, since we depend on it in our 
   - `SBBUserMenu`
   - `SBBCard`
   - `SBBSidebar`
-
 
 ## [1.5.0] - 2024-08-15
 
@@ -349,7 +403,9 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Initial project setup
 - Added some widgets
 
-[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/1.5.0...HEAD
+[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/1.6.0...HEAD
+
+[1.6.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/1.5.0...1.6.0
 
 [1.5.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/1.4.0...1.5.0
 

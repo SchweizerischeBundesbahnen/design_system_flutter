@@ -5,52 +5,41 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-class Specs {
-  const Specs._({
+class TestSpecs {
+  const TestSpecs._({
     required this.size,
     required this.brightness,
   });
 
-  factory Specs.mobile() => Specs._(
-        size: _mobileSize,
+  factory TestSpecs.light() => const TestSpecs._(
+        size: _size,
         brightness: Brightness.light,
       );
 
-  factory Specs.web() => Specs._(
-        size: _webSize,
-        brightness: Brightness.light,
-      );
-
-  Specs dark() => Specs._(
-        size: size,
+  factory TestSpecs.dark() => const TestSpecs._(
+        size: _size,
         brightness: Brightness.dark,
       );
 
-  static const _mobileSize = Size(600, 1000);
-  static const _webSize = Size(1600, 900);
+  static const _size = Size(600, 1000);
 
   final Size size;
   final Brightness brightness;
 
-  static List<Specs> mobileSpecs = [
-    Specs.mobile(),
-    Specs.mobile().dark(),
-  ];
-
-  static List<Specs> webSpecs = [
-    Specs.web(),
+  static List<TestSpecs> themedSpecs = [
+    TestSpecs.light(),
+    TestSpecs.dark(),
   ];
 
   String get name => brightness.name;
 
   static Future<void> run(
-    List<Specs> specs,
+    List<TestSpecs> specs,
     Widget widget,
     WidgetTester tester,
     String name,
     Finder finder, {
     Function(Widget w)? wrap,
-    HostPlatform hostType = HostPlatform.native,
   }) async {
     for (final spec in specs) {
       await tester.binding.setSurfaceSize(spec.size);
@@ -59,7 +48,7 @@ class Specs {
       tester.platformDispatcher.platformBrightnessTestValue = spec.brightness;
 
       await tester.pumpWidget(
-        wrap?.call(widget) ?? TestApp(child: widget, hostType: hostType),
+        wrap?.call(widget) ?? TestApp(child: widget),
       );
       await tester.pumpAndSettle();
       await tester.runAsync(() => tester.pumpAndSettle());
@@ -74,9 +63,7 @@ class Specs {
 }
 
 class TestApp extends StatelessWidget {
-  const TestApp(
-      {Key? key, required this.child, this.hostType = HostPlatform.native})
-      : super(key: key);
+  const TestApp({Key? key, required this.child}) : super(key: key);
 
   static Future<void> setupAll() async => await _loadFonts();
 
@@ -96,14 +83,13 @@ class TestApp extends StatelessWidget {
     }
   }
 
-  final HostPlatform hostType;
   final Widget child;
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: SBBTheme.light(hostPlatform: hostType),
-      darkTheme: SBBTheme.dark(hostPlatform: hostType),
+      theme: SBBTheme.light(),
+      darkTheme: SBBTheme.dark(),
       debugShowCheckedModeBanner: false,
       builder: (_, __) => Scaffold(body: child),
     );

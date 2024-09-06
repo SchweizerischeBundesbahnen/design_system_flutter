@@ -32,4 +32,7 @@ build/
 node_modules
 
 # generated icons
-icons
+icons/*
+
+# except the .version file
+!icons/.version

@@ -18,13 +18,13 @@ import '../sbb_internal.dart';
 /// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/button>
 class SBBIconButtonLarge extends StatelessWidget {
   const SBBIconButtonLarge({
-    Key? key,
+    super.key,
     required this.icon,
     required this.onPressed,
     this.focusNode,
     this.buttonStyle,
     this.semantics,
-  }) : super(key: key);
+  });
 
   final IconData icon;
   final VoidCallback? onPressed;
@@ -34,18 +34,12 @@ class SBBIconButtonLarge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isWeb = SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
     final baseStyle = Theme.of(context).textButtonTheme.style?.copyWith(
       minimumSize: SBBTheme.allStates(const Size(SBBInternal.defaultButtonHeight, SBBInternal.defaultButtonHeight)),
       fixedSize: SBBTheme.allStates(const Size(SBBInternal.defaultButtonHeight, SBBInternal.defaultButtonHeight)),
       padding: SBBTheme.allStates(EdgeInsets.zero),
     );
-    final style;
-    if(isWeb) {
-      style = buttonStyle != null ? SBBButtonStyles.of(context).iconLargeWebLean.merge(buttonStyle) : SBBButtonStyles.of(context).iconLargeWebLean;
-    }else {
-      style = buttonStyle != null ? buttonStyle!.merge(baseStyle) : SBBButtonStyles.of(context).iconLargeStyle?.overrideButtonStyle(baseStyle);
-    }
+    final style = buttonStyle != null ? buttonStyle!.merge(baseStyle) : SBBButtonStyles.of(context).iconLargeStyle?.overrideButtonStyle(baseStyle);
     return TextButton(
       style: style,
       onPressed: onPressed,
@@ -180,7 +174,6 @@ class _SBBIconButtonSmallRaw extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isWeb = SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
     final baseStyle = Theme.of(context).textButtonTheme.style?.copyWith(
       minimumSize: SBBTheme.allStates(
         const Size(
@@ -208,7 +201,7 @@ class _SBBIconButtonSmallRaw extends StatelessWidget {
           minSize: Size.square(SBBInternal.defaultButtonHeight),
           child: Center(
             child: TextButton(
-              style: isWeb ? SBBButtonStyles.of(context).iconSmallWebLean : style?.overrideButtonStyle(baseStyle),
+              style: style?.overrideButtonStyle(baseStyle),
               onPressed: onPressed,
               focusNode: focusNode,
               child: Icon(icon, size: sbbIconSizeSmall),

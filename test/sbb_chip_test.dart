@@ -20,7 +20,8 @@ void main() {
         ),
         SizedBox(height: sbbDefaultSpacing),
         SBBChip(
-          label: 'This is a very long text with a longer badge label, that should not be longer than one line.',
+          label:
+              'This is a very long text with a longer badge label, that should not be longer than one line.',
           badgeLabel: 'Production',
           onSelection: (selected) {},
         ),
@@ -51,8 +52,8 @@ void main() {
       ],
     );
 
-    await Specs.run(
-      Specs.mobileSpecs,
+    await TestSpecs.run(
+      TestSpecs.themedSpecs,
       widget,
       tester,
       'chip_1',

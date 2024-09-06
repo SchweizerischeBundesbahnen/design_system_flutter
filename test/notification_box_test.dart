@@ -18,8 +18,8 @@ void main() {
       ],
     );
 
-    await Specs.run(
-      Specs.mobileSpecs,
+    await TestSpecs.run(
+      TestSpecs.themedSpecs,
       widget,
       tester,
       'notification_box_alert',
@@ -36,8 +36,8 @@ void main() {
       ],
     );
 
-    await Specs.run(
-      Specs.mobileSpecs,
+    await TestSpecs.run(
+      TestSpecs.themedSpecs,
       widget,
       tester,
       'notification_box_warning',
@@ -54,8 +54,8 @@ void main() {
       ],
     );
 
-    await Specs.run(
-      Specs.mobileSpecs,
+    await TestSpecs.run(
+      TestSpecs.themedSpecs,
       widget,
       tester,
       'notification_box_success',
@@ -72,8 +72,8 @@ void main() {
       ],
     );
 
-    await Specs.run(
-      Specs.mobileSpecs,
+    await TestSpecs.run(
+      TestSpecs.themedSpecs,
       widget,
       tester,
       'notification_box_information',

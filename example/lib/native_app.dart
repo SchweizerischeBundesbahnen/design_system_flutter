@@ -55,12 +55,8 @@ class MyApp extends StatelessWidget {
       child: Consumer<AppState>(
         builder: (BuildContext context, AppState appState, _) {
           return MaterialApp(
-            theme: SBBTheme.light(
-              hostPlatform: HostPlatform.native,
-            ),
-            darkTheme: SBBTheme.dark(
-              hostPlatform: HostPlatform.native,
-            ),
+            theme: SBBTheme.light(),
+            darkTheme: SBBTheme.dark(),
             themeMode: appState.isDarkModeOn ? ThemeMode.dark : ThemeMode.light,
             localizationsDelegates: [
               GlobalMaterialLocalizations.delegate,
