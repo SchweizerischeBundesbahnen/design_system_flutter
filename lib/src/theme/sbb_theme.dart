@@ -111,13 +111,13 @@ class SBBTheme {
         ],
       );
 
-  /// Convenience method for easier use of [MaterialStateProperty.all].
-  static MaterialStateProperty<T> allStates<T>(T value) {
-    return MaterialStateProperty.all(value);
+  /// Convenience method for easier use of [WidgetStateProperty.all].
+  static WidgetStateProperty<T> allStates<T>(T value) {
+    return WidgetStateProperty.all(value);
   }
 
-  /// Convenience method for easier use of [MaterialStateProperty.resolveWith].
-  static MaterialStateProperty<T?> resolveStatesWith<T>({
+  /// Convenience method for easier use of [WidgetStateProperty.resolveWith].
+  static WidgetStateProperty<T?> resolveStatesWith<T>({
     required T defaultValue,
     T? pressedValue,
     T? disabledValue,
@@ -125,7 +125,7 @@ class SBBTheme {
     String? parent,
     T? selectedValue,
   }) {
-    return MaterialStateProperty.resolveWith((states) {
+    return WidgetStateProperty.resolveWith((states) {
       // disabled
       if (states.contains(MaterialState.disabled) && disabledValue != null)
         return disabledValue;
