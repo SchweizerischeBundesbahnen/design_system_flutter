@@ -11,7 +11,7 @@ const mediumFontFamily = 'packages/design_system_flutter/SBBIconsMedium';
 const largeFontFamily = 'packages/design_system_flutter/SBBIconsLarge';
 
 // The names are given by digital.sbb.ch
-// ignore_for_file: prefer_final_fields
+// ignore_for_file: constant_identifier_names
 sealed class SBBIcons {
   static const wine_cheese_small = IconData(0xf101, fontFamily: smallFontFamily);
   static const wifi_small = IconData(0xf102, fontFamily: smallFontFamily);
