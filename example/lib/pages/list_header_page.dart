@@ -7,7 +7,7 @@ class ListHeaderPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: EdgeInsets.all(sbbDefaultSpacing),
+      padding: const EdgeInsets.all(sbbDefaultSpacing),
       children: [
         const ThemeModeSegmentedButton(),
         const SizedBox(height: sbbDefaultSpacing),

@@ -85,16 +85,16 @@ class SBBMessage extends StatelessWidget {
         children: [
           if (isLoading) _loadingIndicator(context),
           if (!isLoading) customIllustration ?? _defaultIllustration(context),
-          SizedBox(height: _kTextBoxSpacing),
+          const SizedBox(height: _kTextBoxSpacing),
           _title(textTheme),
-          SizedBox(height: sbbDefaultSpacing),
+          const SizedBox(height: sbbDefaultSpacing),
           _description(textTheme),
           if (messageCode != null) ...[
-            SizedBox(height: sbbDefaultSpacing),
+            const SizedBox(height: sbbDefaultSpacing),
             _errorCode(textTheme),
           ],
           if (_showInteractionButton) ...[
-            SizedBox(height: _kTextBoxSpacing),
+            const SizedBox(height: _kTextBoxSpacing),
             _interactionButton(),
           ],
         ],
@@ -105,8 +105,8 @@ class SBBMessage extends StatelessWidget {
   SBBLoadingIndicator _loadingIndicator(BuildContext context) {
     final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
     return isDarkTheme
-        ? SBBLoadingIndicator.mediumCloud()
-        : SBBLoadingIndicator.medium();
+        ? const SBBLoadingIndicator.mediumCloud()
+        : const SBBLoadingIndicator.medium();
   }
 
   Text _title(TextTheme textTheme) => Text(
@@ -135,7 +135,7 @@ class SBBMessage extends StatelessWidget {
   Widget _defaultIllustration(BuildContext context) {
     final brightness = Theme.of(context).brightness;
     return Container(
-      constraints: BoxConstraints(maxHeight: _kIllustrationMaxHeight),
+      constraints: const BoxConstraints(maxHeight: _kIllustrationMaxHeight),
       child: Image(image: illustration.asset(brightness)),
     );
   }

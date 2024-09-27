@@ -6,16 +6,16 @@ import '../native_app.dart';
 class LoadingIndicatorPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    return const SingleChildScrollView(
       child: Column(
         children: <Widget>[
-          const Padding(
-            padding: const EdgeInsets.all(sbbDefaultSpacing),
+          Padding(
+            padding: EdgeInsets.all(sbbDefaultSpacing),
             child: ThemeModeSegmentedButton(),
           ),
-          const SBBLoadingIndicator.tiny(),
-          const SBBLoadingIndicator.tinyCloud(),
-          const SBBLoadingIndicator.medium(),
+          SBBLoadingIndicator.tiny(),
+          SBBLoadingIndicator.tinyCloud(),
+          SBBLoadingIndicator.medium(),
         ],
       ),
     );

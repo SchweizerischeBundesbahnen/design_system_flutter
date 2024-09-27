@@ -234,7 +234,7 @@ class _SBBOnboardingState extends State<SBBOnboarding>
                       decoration: BoxDecoration(
                         color: controlStyle.headerBackgroundColor,
                         borderRadius: orientation == Orientation.portrait
-                            ? BorderRadius.vertical(
+                            ? const BorderRadius.vertical(
                                 bottom: Radius.circular(sbbDefaultSpacing),
                               )
                             : null,
@@ -247,7 +247,7 @@ class _SBBOnboardingState extends State<SBBOnboarding>
                   ),
                   if (orientation == Orientation.portrait)
                     Semantics(
-                      sortKey: OrdinalSortKey(2),
+                      sortKey: const OrdinalSortKey(2),
                       child: Column(
                         children: [
                           const SizedBox(height: navigationAreaVerticalPadding),
@@ -326,7 +326,7 @@ class _SBBOnboardingState extends State<SBBOnboarding>
               ),
             if (orientation == Orientation.landscape) ...[
               Semantics(
-                sortKey: OrdinalSortKey(3),
+                sortKey: const OrdinalSortKey(3),
                 child: Align(
                   alignment: Alignment.topRight,
                   child: Padding(
@@ -344,7 +344,7 @@ class _SBBOnboardingState extends State<SBBOnboarding>
                 ),
               ),
               Semantics(
-                sortKey: OrdinalSortKey(2),
+                sortKey: const OrdinalSortKey(2),
                 child: Align(
                   alignment: Alignment.centerRight,
                   child: Padding(
@@ -361,7 +361,7 @@ class _SBBOnboardingState extends State<SBBOnboarding>
               BlockSemantics(
                 blocking: isBlocking,
                 child: Semantics(
-                  sortKey: OrdinalSortKey(0),
+                  sortKey: const OrdinalSortKey(0),
                   child: Align(
                     alignment: Alignment.centerLeft,
                     child: Padding(
@@ -508,7 +508,7 @@ class _SBBOnboardingState extends State<SBBOnboarding>
         child: BlockSemantics(
           blocking: isBlocking && orientation == Orientation.portrait,
           child: Semantics(
-            sortKey: OrdinalSortKey(1),
+            sortKey: const OrdinalSortKey(1),
             child: GestureDetector(
               onHorizontalDragUpdate: (details) => setState(() {
                 if (cardLeftValue == null) {

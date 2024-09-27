@@ -8,11 +8,11 @@ class StepperPage extends StatefulWidget {
 
 class _StepperPageState extends State<StepperPage> {
   final steps = [
-    SBBStepperItem(label: 'Step 1'),
-    SBBStepperItem(label: 'Step 2'),
-    SBBStepperItem(label: 'Step 3'),
-    SBBStepperItem(label: 'Step 4'),
-    SBBStepperItem(label: 'Step 5', icon: SBBIcons.tick_small),
+    const SBBStepperItem(label: 'Step 1'),
+    const SBBStepperItem(label: 'Step 2'),
+    const SBBStepperItem(label: 'Step 3'),
+    const SBBStepperItem(label: 'Step 4'),
+    const SBBStepperItem(label: 'Step 5', icon: SBBIcons.tick_small),
   ];
   var activeStep = 0;
   var red = false;
@@ -41,7 +41,7 @@ class _StepperPageState extends State<StepperPage> {
       );
     }
     return Container(
-      padding: EdgeInsetsDirectional.all(24),
+      padding: const EdgeInsetsDirectional.all(24),
       color: red ? SBBColors.red : null,
       child: stepper,
     );
@@ -49,10 +49,10 @@ class _StepperPageState extends State<StepperPage> {
 
   Widget _footer(BuildContext context) {
     return Container(
-      padding: EdgeInsetsDirectional.all(16),
+      padding: const EdgeInsetsDirectional.all(16),
       child: Row(
         children: [
-          Expanded(child: Text('RED')),
+          const Expanded(child: Text('RED')),
           SBBSwitch(
             value: red,
             onChanged: (value) => setState(() => red = value),

@@ -415,7 +415,7 @@ class _SBBRenderSwitch extends RenderConstrainedBox {
       thumbTop,
       thumbRight,
       thumbBottom,
-      Radius.circular(_thumbRadius),
+      const Radius.circular(_thumbRadius),
     );
 
     for (final shadow in _thumbBoxShadows) {

@@ -13,7 +13,7 @@ void main() {
     final widget = Column(
       children: [
         SBBNotificationBox.alert(title: title, text: text, onTap: () {}),
-        SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: sbbDefaultSpacing),
         SBBNotificationBox.alert(text: text),
       ],
     );
@@ -31,7 +31,7 @@ void main() {
     final widget = Column(
       children: [
         SBBNotificationBox.warning(title: title, text: text, onTap: () {}),
-        SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: sbbDefaultSpacing),
         SBBNotificationBox.warning(text: text),
       ],
     );
@@ -49,7 +49,7 @@ void main() {
     final widget = Column(
       children: [
         SBBNotificationBox.success(title: title, text: text, onTap: () {}),
-        SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: sbbDefaultSpacing),
         SBBNotificationBox.success(text: text),
       ],
     );
@@ -67,7 +67,7 @@ void main() {
     final widget = Column(
       children: [
         SBBNotificationBox.information(title: title, text: text, onTap: () {}),
-        SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: sbbDefaultSpacing),
         SBBNotificationBox.information(text: text),
       ],
     );

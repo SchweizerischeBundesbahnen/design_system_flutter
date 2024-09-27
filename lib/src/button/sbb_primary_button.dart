@@ -38,7 +38,7 @@ class SBBPrimaryButton extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          if (isLoading) SBBLoadingIndicator.tinyCloud(),
+          if (isLoading) const SBBLoadingIndicator.tinyCloud(),
           styles.buttonLabelBuilder!(context, label),
         ],
       ),

@@ -29,7 +29,7 @@ class _SwitchPageState extends State<SwitchPage> {
   Widget build(BuildContext context) {
     final sbbToast = SBBToast.of(context);
     return ListView(
-      padding: EdgeInsets.all(sbbDefaultSpacing),
+      padding: const EdgeInsets.all(sbbDefaultSpacing),
       children: [
         const ThemeModeSegmentedButton(),
         const SizedBox(height: sbbDefaultSpacing),
@@ -62,7 +62,7 @@ class _SwitchPageState extends State<SwitchPage> {
             isLastElement: true,
           ),
         ),
-        SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: sbbDefaultSpacing),
         SBBGroup(
           child: SBBSwitchListItem(
             value: _value3,
@@ -72,7 +72,7 @@ class _SwitchPageState extends State<SwitchPage> {
             isLastElement: true,
           ),
         ),
-        SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: sbbDefaultSpacing),
         SBBGroup(
           child: SBBSwitchListItem(
             value: _value4,
@@ -82,7 +82,7 @@ class _SwitchPageState extends State<SwitchPage> {
             isLastElement: true,
           ),
         ),
-        SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: sbbDefaultSpacing),
         SBBGroup(
           child: SBBSwitchListItem(
             value: _value5,
@@ -99,7 +99,7 @@ class _SwitchPageState extends State<SwitchPage> {
             isLastElement: true,
           ),
         ),
-        SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: sbbDefaultSpacing),
         SBBGroup(
           child: Column(
             children: [
@@ -132,7 +132,7 @@ class _SwitchPageState extends State<SwitchPage> {
             ],
           ),
         ),
-        SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: sbbDefaultSpacing),
         SBBGroup(
           child: SBBSwitchListItem(
             value: _value7,
@@ -149,7 +149,7 @@ class _SwitchPageState extends State<SwitchPage> {
             isLastElement: true,
           ),
         ),
-        SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: sbbDefaultSpacing),
         SBBGroup(
           child: SBBSwitchListItem(
             value: _value8,
@@ -164,7 +164,7 @@ class _SwitchPageState extends State<SwitchPage> {
             isLastElement: true,
           ),
         ),
-        SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: sbbDefaultSpacing),
         SBBGroup(
           child: SBBSwitchListItem(
             value: _value9,
@@ -179,7 +179,7 @@ class _SwitchPageState extends State<SwitchPage> {
             isLastElement: true,
           ),
         ),
-        SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: sbbDefaultSpacing),
         SBBGroup(
           child: SBBSwitchListItem.custom(
             value: _value10,

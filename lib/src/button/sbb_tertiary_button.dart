@@ -105,7 +105,7 @@ class SBBTertiaryButtonSmall extends StatelessWidget {
       onPressed: onPressed,
       focusNode: focusNode,
       child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
+        padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [

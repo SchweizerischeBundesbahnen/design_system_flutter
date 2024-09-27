@@ -30,13 +30,15 @@ class SBBIconFormButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final baseStyle = theme.textButtonTheme.style?.copyWith(
-        minimumSize: SBBTheme.allStates(const Size(_buttonSize, _buttonSize)),
-        fixedSize: SBBTheme.allStates(const Size(_buttonSize, _buttonSize)),
-        padding: SBBTheme.allStates(EdgeInsets.zero),
-        shape: SBBTheme.allStates(RoundedRectangleBorder()),
+      minimumSize: SBBTheme.allStates(const Size(_buttonSize, _buttonSize)),
+      fixedSize: SBBTheme.allStates(const Size(_buttonSize, _buttonSize)),
+      padding: SBBTheme.allStates(EdgeInsets.zero),
+      shape: SBBTheme.allStates(const RoundedRectangleBorder()),
     );
     return TextButton(
-      style: SBBButtonStyles.of(context).iconFormStyle?.overrideButtonStyle(baseStyle),
+      style: SBBButtonStyles.of(context)
+          .iconFormStyle
+          ?.overrideButtonStyle(baseStyle),
       onPressed: onPressed,
       focusNode: focusNode,
       child: Icon(icon, size: sbbIconSizeSmall),

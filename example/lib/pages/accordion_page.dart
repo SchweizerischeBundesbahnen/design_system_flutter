@@ -37,13 +37,13 @@ class _AccordionPageState extends State<AccordionPage> {
     return ListView(
       padding: const EdgeInsets.all(sbbDefaultSpacing),
       children: [
-        ThemeModeSegmentedButton(),
+        const ThemeModeSegmentedButton(),
         const SizedBox(height: sbbDefaultSpacing),
         const SBBListHeader('Single item'),
         SBBGroup(
           child: SBBAccordion.single(
             title: 'Title text',
-            body: Text(
+            body: const Text(
                 'The body is only visible when the Accordion item is expanded.'),
             isExpanded: _singleAccordionExpanded,
             singleAccordionCallback: (isExpanded) {
@@ -94,7 +94,7 @@ class _AccordionPageState extends State<AccordionPage> {
                   color: SBBColors.cloud,
                   child: Column(
                     children: [
-                      Text(
+                      const Text(
                           'This item was created with the default constructor where the complete body widget has to be defined. But as you can see by the body background color, there is still a default padding around the body if no custom padding is specified.'),
                       const SizedBox(
                         height: sbbDefaultSpacing,
@@ -114,7 +114,7 @@ class _AccordionPageState extends State<AccordionPage> {
                 title: 'Custom content, custom padding',
                 body: Container(
                   color: SBBColors.cloud,
-                  child: Text(
+                  child: const Text(
                     'As you can see by the body background color, there is no padding around this body.',
                     style: SBBTextStyles.extraLargeLight,
                   ),

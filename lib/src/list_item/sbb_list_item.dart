@@ -29,7 +29,7 @@ class SBBListItem extends StatefulWidget {
                     final style = SBBControlStyles.of(context).listItem!;
                     final isEnabled = onPressed != null;
                     return Padding(
-                      padding: EdgeInsetsDirectional.only(
+                      padding: const EdgeInsetsDirectional.only(
                         end: sbbDefaultSpacing,
                       ),
                       child: Icon(
@@ -66,7 +66,7 @@ class SBBListItem extends StatefulWidget {
           isLastElement: isLastElement,
           onPressed: onPressed,
           trailingWidget: Padding(
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
               horizontal: sbbDefaultSpacing * 0.5,
             ),
             child: Container(
@@ -143,7 +143,7 @@ class _SBBListItemState extends State<SBBListItem> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               ConstrainedBox(
-                                constraints: BoxConstraints(
+                                constraints: const BoxConstraints(
                                   minHeight: sbbIconSizeSmall,
                                 ),
                                 child: Row(

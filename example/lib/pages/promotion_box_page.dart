@@ -15,7 +15,8 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
   late CloseableBoxController extraController;
 
   static const _title = 'Bessere Übersicht.';
-  static const _description = 'Erkennen Sie nun schneller, auf welchen Perrons Durchsagen vorhanden sind.';
+  static const _description =
+      'Erkennen Sie nun schneller, auf welchen Perrons Durchsagen vorhanden sind.';
 
   @override
   Widget build(BuildContext context) {
@@ -23,19 +24,19 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
       padding: const EdgeInsets.all(sbbDefaultSpacing),
       child: Column(
         children: [
-          ThemeModeSegmentedButton(),
+          const ThemeModeSegmentedButton(),
           Expanded(
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  SizedBox(height: sbbDefaultSpacing),
+                  const SizedBox(height: sbbDefaultSpacing),
                   SBBPromotionBox(
                     badgeText: 'Default',
                     title: _title,
                     description: _description,
                     onControllerCreated: (c) => defaultController = c,
                   ),
-                  SizedBox(height: 8.0),
+                  const SizedBox(height: 8.0),
                   SBBPromotionBox(
                     badgeText: 'Is Closable = false',
                     title: _title,
@@ -43,7 +44,7 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
                     onControllerCreated: (c) => closableController = c,
                     isCloseable: true,
                   ),
-                  SizedBox(height: 8.0),
+                  const SizedBox(height: 8.0),
                   SBBPromotionBox(
                     badgeText: 'Clickable',
                     title: _title,
@@ -51,14 +52,15 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
                     onControllerCreated: (c) => clickableController = c,
                     onTap: () {},
                   ),
-                  SizedBox(height: 8.0),
+                  const SizedBox(height: 8.0),
                   SBBPromotionBox(
                     badgeText: 'With way too long title and badge text',
-                    title: 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
+                    title:
+                        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
                     description: _description,
                     onControllerCreated: (c) => extraController = c,
                   ),
-                  SizedBox(height: sbbDefaultSpacing),
+                  const SizedBox(height: sbbDefaultSpacing),
                 ],
               ),
             ),
@@ -72,7 +74,7 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
               extraController.show();
             },
           ),
-          SizedBox(height: 8.0),
+          const SizedBox(height: 8.0),
           SBBSecondaryButton(
             label: 'Hide',
             onPressed: () {

@@ -13,38 +13,38 @@ void main() {
           badgeLabel: '9',
           onSelection: (selected) {},
         ),
-        SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: sbbDefaultSpacing),
         SBBChip(
           label: 'Default & No Badge',
           onSelection: (selected) {},
         ),
-        SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: sbbDefaultSpacing),
         SBBChip(
           label:
               'This is a very long text with a longer badge label, that should not be longer than one line.',
           badgeLabel: 'Production',
           onSelection: (selected) {},
         ),
-        SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: sbbDefaultSpacing),
         SBBChip(
           label: 'Selected',
           badgeLabel: '3',
           selected: true,
           onSelection: (selected) {},
         ),
-        SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: sbbDefaultSpacing),
         SBBChip(
           label: 'Selected & No Badge',
           selected: true,
           onSelection: (selected) {},
         ),
-        SizedBox(height: sbbDefaultSpacing),
-        SBBChip(
+        const SizedBox(height: sbbDefaultSpacing),
+        const SBBChip(
           label: 'Disabled',
           onSelection: null,
         ),
-        SizedBox(height: sbbDefaultSpacing),
-        SBBChip(
+        const SizedBox(height: sbbDefaultSpacing),
+        const SBBChip(
           label: 'Disabled & Selected',
           selected: true,
           onSelection: null,

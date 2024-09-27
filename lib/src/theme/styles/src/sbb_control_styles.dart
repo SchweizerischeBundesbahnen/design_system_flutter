@@ -145,7 +145,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   TooltipThemeData get tooltipTheme => TooltipThemeData(
         decoration: BoxDecoration(
           color: toastBackgroundColor,
-          borderRadius: new BorderRadius.all(const Radius.circular(19.0)),
+          borderRadius: const BorderRadius.all(Radius.circular(19.0)),
         ),
         textStyle: toastTextStyle,
         showDuration: SBBToast.durationShort,

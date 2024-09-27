@@ -22,7 +22,7 @@ void main() {
           endIcon: null,
         ),
         const SizedBox(height: sbbDefaultSpacing),
-        SBBSlider(
+        const SBBSlider(
           onChanged: null,
           value: 75,
           max: 100,

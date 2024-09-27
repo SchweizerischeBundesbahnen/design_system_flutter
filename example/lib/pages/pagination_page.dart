@@ -10,10 +10,10 @@ class PaginationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(sbbDefaultSpacing),
+    return const Padding(
+      padding: EdgeInsets.all(sbbDefaultSpacing),
       child: Column(children: <Widget>[
-        const ThemeModeSegmentedButton(),
+        ThemeModeSegmentedButton(),
         PaginationView(),
       ]),
     );
@@ -100,7 +100,7 @@ class _LabeledSBBPagination extends StatelessWidget {
           label,
           style: SBBTextStyles.extraSmallLight,
         ),
-        SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: sbbDefaultSpacing),
         SBBPagination(
           currentPage: currentPage,
           numberPages: _kNumberPages,

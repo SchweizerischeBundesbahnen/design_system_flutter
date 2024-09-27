@@ -70,13 +70,13 @@ class SBBSelect<T> extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            constraints: BoxConstraints(
+            constraints: const BoxConstraints(
               minHeight: 48.0,
             ),
             color: SBBColors.transparent,
             child: Row(
               children: [
-                SizedBox(width: sbbDefaultSpacing),
+                const SizedBox(width: sbbDefaultSpacing),
                 if (icon != null)
                   Padding(
                     padding: const EdgeInsetsDirectional.only(
@@ -350,7 +350,7 @@ class _SBBMultiSelectState<T> extends State<SBBMultiSelect<T>> {
       child: Column(
         children: [
           Container(
-            constraints: BoxConstraints(
+            constraints: const BoxConstraints(
               minHeight: 48.0,
             ),
             color: SBBColors.transparent,

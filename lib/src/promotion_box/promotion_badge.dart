@@ -20,7 +20,7 @@ class PromotionBadge extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         border: Border.all(color: style.borderColor!),
-        borderRadius: BorderRadius.all(
+        borderRadius: const BorderRadius.all(
           Radius.circular(20.0),
         ),
         color: style.badgeColor,

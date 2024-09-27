@@ -17,8 +17,8 @@ extension SBBButtonStylesExtension on SBBButtonStyles {
     ),
     fixedSize: SBBTheme.allStates(
         const Size.fromHeight(SBBInternal.defaultButtonHeight)),
-    padding:
-        SBBTheme.allStates(EdgeInsets.symmetric(horizontal: sbbDefaultSpacing)),
+    padding: SBBTheme.allStates(
+        const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing)),
     elevation: SBBTheme.allStates(0),
     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
     mouseCursor: MaterialStateMouseCursor.clickable,

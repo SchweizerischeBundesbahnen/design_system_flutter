@@ -11,7 +11,7 @@ void main() {
   final Stream<bool> _stream1 = (StreamController<bool>()..add(true)).stream;
   final Stream<bool> _stream2 = (StreamController<bool>()..add(true)).stream;
   final Stream<bool> _stream3 = (StreamController<bool>()..add(true)).stream;
-  final Duration _duration = Duration(milliseconds: 0);
+  final Duration _duration = const Duration(milliseconds: 0);
   testWidgets('toast basic test', (WidgetTester tester) async {
     final widget = Column(
       children: [

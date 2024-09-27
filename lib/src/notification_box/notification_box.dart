@@ -191,14 +191,14 @@ class _SBBNotificationBoxState extends State<SBBNotificationBox>
                   left: BorderSide(
                       color: widget.state.backgroundColor, width: 8.0),
                 ),
-                borderRadius: BorderRadius.all(
+                borderRadius: const BorderRadius.all(
                   Radius.circular(16.0),
                 ),
               ),
               child: Container(
                 decoration: BoxDecoration(
                   border: Border.all(color: widget.state.backgroundColor),
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(8.0),
                     bottomLeft: Radius.circular(8.0),
                     topRight: Radius.circular(15.0),

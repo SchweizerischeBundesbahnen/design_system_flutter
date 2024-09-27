@@ -60,7 +60,7 @@ class RadioTest extends StatelessWidget {
             ),
           ),
           const SizedBox(height: sbbDefaultSpacing),
-          SBBListHeader('RadioButtonListItem'),
+          const SBBListHeader('RadioButtonListItem'),
           SBBGroup(
             child: Column(
               children: [
@@ -105,8 +105,8 @@ class RadioTest extends StatelessWidget {
                   groupValue: listItemGroupValue,
                   onChanged: (newValue) {},
                   label: 'Custom trailing Widget',
-                  trailingWidget: Padding(
-                    padding: const EdgeInsets.only(right: 16),
+                  trailingWidget: const Padding(
+                    padding: EdgeInsets.only(right: 16),
                     child: Text('CHF 0.99'),
                   ),
                 ),

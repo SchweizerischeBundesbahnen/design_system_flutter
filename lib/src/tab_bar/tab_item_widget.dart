@@ -19,7 +19,7 @@ class TabItemWidget extends StatelessWidget {
         selected,
       );
 
-  factory TabItemWidget.warning() => TabItemWidget(
+  factory TabItemWidget.warning() => const TabItemWidget(
         SBBIcons.sign_exclamation_point_small,
         false,
         warning: true,
@@ -46,7 +46,7 @@ class TabItemWidget extends StatelessWidget {
     Color? containerColor = SBBColors.transparent;
 
     if (warning) {
-      decoration = BoxDecoration(
+      decoration = const BoxDecoration(
         color: SBBColors.red,
         shape: BoxShape.circle,
       );

@@ -9,16 +9,16 @@ class GroupPage extends StatelessWidget {
     const childPlaceholder = SizedBox(height: 125.0, width: double.infinity);
     return ListView(
       padding: const EdgeInsets.all(sbbDefaultSpacing),
-      children: <Widget>[
+      children: const <Widget>[
         ThemeModeSegmentedButton(),
-        const SizedBox(height: sbbDefaultSpacing),
-        const SBBListHeader('Without Shadow (Default)'),
-        const SBBGroup(
+        SizedBox(height: sbbDefaultSpacing),
+        SBBListHeader('Without Shadow (Default)'),
+        SBBGroup(
           child: childPlaceholder,
         ),
-        const SizedBox(height: sbbDefaultSpacing),
-        const SBBListHeader('With Shadow (ignored in Dark Mode)'),
-        const SBBGroup(
+        SizedBox(height: sbbDefaultSpacing),
+        SBBListHeader('With Shadow (ignored in Dark Mode)'),
+        SBBGroup(
           useShadow: true,
           child: childPlaceholder,
         ),
