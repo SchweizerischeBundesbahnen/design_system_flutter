@@ -23,7 +23,7 @@ class SBBNotificationBoxTitleContent extends StatelessWidget {
           children: [
             if (icon != null) ...[
               icon!,
-              SizedBox(width: 8.0),
+              const SizedBox(width: 8.0),
             ],
             Expanded(
               child: Text(
@@ -33,7 +33,7 @@ class SBBNotificationBoxTitleContent extends StatelessWidget {
             ),
           ],
         ),
-        SizedBox(height: 8.0),
+        const SizedBox(height: 8.0),
         NotificationBoxTextContent(text: text, icon: detailsIcon),
       ],
     );

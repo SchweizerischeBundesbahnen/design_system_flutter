@@ -10,7 +10,7 @@ class ListItemPage extends StatelessWidget {
     return ListView(
       padding: const EdgeInsets.all(sbbDefaultSpacing),
       children: [
-        ThemeModeSegmentedButton(),
+        const ThemeModeSegmentedButton(),
         const SizedBox(height: sbbDefaultSpacing),
         SBBGroup(
           child: Column(
@@ -37,8 +37,7 @@ class ListItemPage extends StatelessWidget {
               ),
               SBBListItem.button(
                 title: 'Button',
-                onPressed: () =>
-                    sbbToast.show(message: 'ListItem with Button'),
+                onPressed: () => sbbToast.show(message: 'ListItem with Button'),
                 buttonIcon: SBBIcons.chevron_small_right_small,
                 onPressedButton: () => sbbToast.show(message: 'Button'),
               ),
@@ -47,16 +46,16 @@ class ListItemPage extends StatelessWidget {
                 subtitle: 'This is the Subtitle',
                 buttonIcon: SBBIcons.chevron_small_right_small,
                 onPressedButton: () => sbbToast.show(message: 'Button'),
-                onPressed: () => sbbToast.show(
-                    message: 'ListItem with Subtitle and Button'),
+                onPressed: () =>
+                    sbbToast.show(message: 'ListItem with Subtitle and Button'),
               ),
               SBBListItem.button(
                 title: 'Icon, Button',
                 leadingIcon: SBBIcons.clock_small,
                 buttonIcon: SBBIcons.chevron_small_right_small,
                 onPressedButton: () => sbbToast.show(message: 'Button'),
-                onPressed: () => sbbToast.show(
-                    message: 'ListItem with Icon and Button'),
+                onPressed: () =>
+                    sbbToast.show(message: 'ListItem with Icon and Button'),
               ),
               SBBListItem(
                 title: 'Icon, Subtitle',

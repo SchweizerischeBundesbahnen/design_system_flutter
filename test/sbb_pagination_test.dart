@@ -8,34 +8,34 @@ void main() {
   testWidgets('pagination', (WidgetTester tester) async {
     final widget = Column(
       children: [
-        SBBPagination(numberPages: 1, currentPage: 0),
-        SizedBox(height: sbbDefaultSpacing),
-        SBBPagination(numberPages: 2, currentPage: 0),
-        SizedBox(height: sbbDefaultSpacing),
-        SBBPagination(numberPages: 5, currentPage: 4),
-        SizedBox(height: sbbDefaultSpacing),
+        const SBBPagination(numberPages: 1, currentPage: 0),
+        const SizedBox(height: sbbDefaultSpacing),
+        const SBBPagination(numberPages: 2, currentPage: 0),
+        const SizedBox(height: sbbDefaultSpacing),
+        const SBBPagination(numberPages: 5, currentPage: 4),
+        const SizedBox(height: sbbDefaultSpacing),
         // floating
-        SBBPagination(
+        const SBBPagination(
           numberPages: 1,
           currentPage: 0,
           isFloating: true,
         ),
-        SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: sbbDefaultSpacing),
         // add containter to see the shadow and floating box
         Container(
           color: SBBColors.white,
           padding: const EdgeInsets.all(sbbDefaultSpacing),
-          child: SBBPagination(
+          child: const SBBPagination(
             numberPages: 2,
             currentPage: 0,
             isFloating: true,
           ),
         ),
-        SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: sbbDefaultSpacing),
         Container(
           color: SBBColors.white,
           padding: const EdgeInsets.all(sbbDefaultSpacing),
-          child: SBBPagination(
+          child: const SBBPagination(
             numberPages: 5,
             currentPage: 4,
             isFloating: true,

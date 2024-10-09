@@ -23,7 +23,7 @@ class NotificationBoxTextContent extends StatelessWidget {
             overflow: clip ? TextOverflow.ellipsis : null,
           ),
         ),
-        SizedBox(width: 8.0),
+        const SizedBox(width: 8.0),
         if (icon != null) icon!,
       ],
     );

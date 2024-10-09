@@ -35,9 +35,9 @@ class _PickerPageState extends State<PickerPage> {
       ),
       child: Column(
         children: <Widget>[
-          ThemeModeSegmentedButton(),
+          const ThemeModeSegmentedButton(),
           const SizedBox(height: sbbDefaultSpacing),
-          SBBListHeader('Picker input fields'),
+          const SBBListHeader('Picker input fields'),
           SBBGroup(
             child: Column(
               children: [
@@ -76,7 +76,7 @@ class _PickerPageState extends State<PickerPage> {
             ),
           ),
           const SizedBox(height: sbbDefaultSpacing),
-          SBBListHeader('Date Time Picker (date & time)'),
+          const SBBListHeader('Date Time Picker (date & time)'),
           SBBGroup(
             child: SBBDateTimePicker(
               onDateTimeChanged: (DateTime dateTime) {
@@ -85,7 +85,7 @@ class _PickerPageState extends State<PickerPage> {
             ),
           ),
           const SizedBox(height: sbbDefaultSpacing),
-          SBBListHeader('Date Picker (date only)'),
+          const SBBListHeader('Date Picker (date only)'),
           SBBGroup(
             child: SBBDatePicker(
               onDateChanged: (DateTime date) {
@@ -94,7 +94,7 @@ class _PickerPageState extends State<PickerPage> {
             ),
           ),
           const SizedBox(height: sbbDefaultSpacing),
-          SBBListHeader('Time Picker (time only)'),
+          const SBBListHeader('Time Picker (time only)'),
           SBBGroup(
             child: SBBTimePicker(
               onTimeChanged: (TimeOfDay time) {
@@ -103,7 +103,7 @@ class _PickerPageState extends State<PickerPage> {
             ),
           ),
           const SizedBox(height: sbbDefaultSpacing),
-          SBBListHeader('Picker (looping)'),
+          const SBBListHeader('Picker (looping)'),
           SBBGroup(
             child: SBBPicker.list(
               onSelectedItemChanged: (int index) {
@@ -115,7 +115,7 @@ class _PickerPageState extends State<PickerPage> {
             ),
           ),
           const SizedBox(height: sbbDefaultSpacing),
-          SBBListHeader('Picker (non looping)'),
+          const SBBListHeader('Picker (non looping)'),
           SBBGroup(
             child: SBBPicker.list(
               looping: false,

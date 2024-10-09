@@ -36,7 +36,7 @@ class _ChipPageState extends State<ChipPage> {
                   })
                 },
               ),
-              SizedBox(height: sbbDefaultSpacing),
+              const SizedBox(height: sbbDefaultSpacing),
               SBBChip(
                 label: 'No badge label',
                 selected: _selected2,
@@ -46,7 +46,7 @@ class _ChipPageState extends State<ChipPage> {
                   })
                 },
               ),
-              SizedBox(height: sbbDefaultSpacing),
+              const SizedBox(height: sbbDefaultSpacing),
               SBBChip(
                 label: 'Selected',
                 badgeLabel: 'Label',
@@ -71,8 +71,8 @@ class _ChipPageState extends State<ChipPage> {
                 badgeLabel: 3.toString(),
                 onSelection: null,
               ),
-              SizedBox(height: sbbDefaultSpacing),
-              SBBChip(
+              const SizedBox(height: sbbDefaultSpacing),
+              const SBBChip(
                 label: 'Selected',
                 onSelection: null,
                 selected: true,

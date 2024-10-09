@@ -16,7 +16,7 @@ void main() {
       find.byType(OnboardingTest),
     );
 
-    await tester.tap(find.byKey(Key('start')));
+    await tester.tap(find.byKey(const Key('start')));
 
     await TestSpecs.run(
       TestSpecs.themedSpecs,
@@ -70,7 +70,7 @@ class TestOnboardingBuilderDelegate extends SBBOnboardingBuilderDelegate {
         color: SBBColors.red,
         child: Center(
           child: SBBTertiaryButtonLarge(
-            key: Key('start'),
+            key: const Key('start'),
             label: 'Onboarding starten',
             onPressed: onStartOnboarding,
           ),

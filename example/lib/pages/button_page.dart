@@ -27,7 +27,7 @@ class ButtonPage extends StatelessWidget {
                   },
                 ),
                 const SizedBox(height: sbbDefaultSpacing),
-                SBBPrimaryButton(
+                const SBBPrimaryButton(
                   label: 'Primary Button Disabled',
                   onPressed: null,
                 ),
@@ -82,7 +82,7 @@ class ButtonPage extends StatelessWidget {
                   },
                 ),
                 const SizedBox(height: sbbDefaultSpacing),
-                SBBSecondaryButton(
+                const SBBSecondaryButton(
                   label: 'Secondary Button Disabled',
                   onPressed: null,
                 ),
@@ -111,7 +111,7 @@ class ButtonPage extends StatelessWidget {
                     },
                   ),
                   const SizedBox(height: sbbDefaultSpacing),
-                  SBBTertiaryButtonLarge(
+                  const SBBTertiaryButtonLarge(
                     label: 'Tertiary Button Large Disabled',
                     onPressed: null,
                   ),
@@ -130,7 +130,7 @@ class ButtonPage extends StatelessWidget {
                     },
                   ),
                   const SizedBox(height: sbbDefaultSpacing),
-                  SBBTertiaryButtonLarge(
+                  const SBBTertiaryButtonLarge(
                     label: 'Tertiary Button Large Icon Disabled',
                     icon: SBBIcons.plus_small,
                     onPressed: null,

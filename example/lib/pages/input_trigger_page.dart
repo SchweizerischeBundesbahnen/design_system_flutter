@@ -56,11 +56,11 @@ class _PickerPageState extends State<InputTriggerPage> {
       ),
       child: Column(
         children: <Widget>[
-          ThemeModeSegmentedButton(),
+          const ThemeModeSegmentedButton(),
           const SizedBox(
             height: sbbDefaultSpacing,
           ),
-          SBBListHeader('Demo'),
+          const SBBListHeader('Demo'),
           SBBGroup(
             child: Column(
               children: [
@@ -89,7 +89,7 @@ class _PickerPageState extends State<InputTriggerPage> {
           const SizedBox(
             height: sbbDefaultSpacing,
           ),
-          SBBListHeader('Change properties'),
+          const SBBListHeader('Change properties'),
           SBBGroup(
             child: Column(
               children: [

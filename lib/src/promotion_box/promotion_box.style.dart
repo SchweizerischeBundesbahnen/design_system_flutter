@@ -30,17 +30,17 @@ class PromotionBoxStyle {
   }
 
   static List<Color> lightGradient = [
-    Color(0xFFD8ECED),
-    Color(0xFFE8F3F7),
-    Color(0xFFE3EFF3),
-    Color(0xFFD6ECED),
+    const Color(0xFFD8ECED),
+    const Color(0xFFE8F3F7),
+    const Color(0xFFE3EFF3),
+    const Color(0xFFD6ECED),
   ];
 
   static List<Color> darkGradient = [
-    Color(0xFF2E3847),
-    Color(0xFF3B4557),
-    Color(0xFF3B4557),
-    Color(0xFF202936),
+    const Color(0xFF2E3847),
+    const Color(0xFF3B4557),
+    const Color(0xFF3B4557),
+    const Color(0xFF202936),
   ];
 
   final Color? borderColor;

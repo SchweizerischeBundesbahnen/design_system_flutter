@@ -43,7 +43,8 @@ class SBBChip extends StatelessWidget {
         decoration: ShapeDecoration(
           shape: StadiumBorder(
             side: BorderSide(
-              color: _disabled ? style.disabledBorderColor! : style.borderColor!,
+              color:
+                  _disabled ? style.disabledBorderColor! : style.borderColor!,
             ),
           ),
         ),
@@ -62,13 +63,16 @@ class SBBChip extends StatelessWidget {
   }
 
   Padding _label(SBBChipStyle style) {
-    final labelTextStyle = _disabled ? style.labelTextStyle!.textStyleDisabled : style.labelTextStyle!.textStyle;
+    final labelTextStyle = _disabled
+        ? style.labelTextStyle!.textStyleDisabled
+        : style.labelTextStyle!.textStyle;
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: 6.0,
         horizontal: 12.0,
       ).subtract(
-        EdgeInsets.only(right: _showBadgeLabel || _showUnselectButton ? _kChipMargin : 0),
+        EdgeInsets.only(
+            right: _showBadgeLabel || _showUnselectButton ? _kChipMargin : 0),
       ),
       child: Text(
         label,
@@ -79,27 +83,33 @@ class SBBChip extends StatelessWidget {
   }
 
   Widget _badge(SBBChipStyle style) {
-    final badgeTextStyle = _disabled ? style.badgeTextStyle!.textStyleDisabled : style.badgeTextStyle!.textStyle;
+    final badgeTextStyle = _disabled
+        ? style.badgeTextStyle!.textStyleDisabled
+        : style.badgeTextStyle!.textStyle;
     return _roundedContainer(
       child: Text(
         badgeLabel ?? '',
         style: badgeTextStyle,
       ),
       color: _disabled ? style.disabledBadgeColor! : style.badgeColor!,
-      padding: EdgeInsets.symmetric(horizontal: 4.0),
+      padding: const EdgeInsets.symmetric(horizontal: 4.0),
     );
   }
 
   Widget _unselectButton(SBBChipStyle style) {
     return InkWell(
       onTap: _disabled ? null : () => _changeSelection(false),
-      customBorder: CircleBorder(),
+      customBorder: const CircleBorder(),
       child: _roundedContainer(
         child: Icon(
           SBBIcons.cross_small,
-          color: _disabled ? style.disabledUnselectButtonIconColor! : style.unselectButtonIconColor!,
+          color: _disabled
+              ? style.disabledUnselectButtonIconColor!
+              : style.unselectButtonIconColor!,
         ),
-        color: _disabled ? style.disabledUnselectButtonColor! : style.unselectButtonColor!,
+        color: _disabled
+            ? style.disabledUnselectButtonColor!
+            : style.unselectButtonColor!,
         width: 24.0,
       ),
     );
@@ -112,9 +122,9 @@ class SBBChip extends StatelessWidget {
     EdgeInsetsGeometry? padding,
   }) {
     return Container(
-      margin: EdgeInsets.all(_kChipMargin),
+      margin: const EdgeInsets.all(_kChipMargin),
       padding: padding,
-      constraints: BoxConstraints(minWidth: 24.0),
+      constraints: const BoxConstraints(minWidth: 24.0),
       height: 24.0,
       width: width,
       decoration: BoxDecoration(

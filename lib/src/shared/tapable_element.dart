@@ -10,7 +10,7 @@ class TapableElement extends StatelessWidget {
   }) {
     return TapableElement(
       key: key,
-      customBorder: RoundedRectangleBorder(
+      customBorder: const RoundedRectangleBorder(
         borderRadius: BorderRadius.all(
           Radius.circular(sbbDefaultSpacing),
         ),
@@ -27,7 +27,7 @@ class TapableElement extends StatelessWidget {
   }) {
     return TapableElement(
       key: key,
-      customBorder: CircleBorder(),
+      customBorder: const CircleBorder(),
       onTap: onTap,
       child: child,
     );

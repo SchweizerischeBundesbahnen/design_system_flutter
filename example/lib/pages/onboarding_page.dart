@@ -61,7 +61,7 @@ class _PreferredSizeWidget extends StatelessWidget
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(24.0);
+  Size get preferredSize => const Size.fromHeight(24.0);
 }
 
 class DemoOnboardingBuilderDelegate extends SBBOnboardingBuilderDelegate {
@@ -113,7 +113,7 @@ class DemoOnboardingBuilderDelegate extends SBBOnboardingBuilderDelegate {
       SBBOnboardingCard.extended(
         embeddedChild: Container(
           color: style.backgroundColor,
-          child: Center(
+          child: const Center(
             child: Text(
               'Page 1',
               style: SBBTextStyles.extraLargeLight,
@@ -186,7 +186,7 @@ class _VerticalEndPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Spacer(),
+            const Spacer(),
             Text(
               'Thank you! Bye Bye!',
               style: SBBTextStyles.extraLargeLight.copyWith(
@@ -227,7 +227,7 @@ class _HorizontalEndPage extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Spacer(),
+            const Spacer(),
             Flexible(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -278,7 +278,7 @@ class _VerticalStartPage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Spacer(),
+            const Spacer(),
             Text(
               'Welcome to the Onboarding',
               style: SBBTextStyles.extraLargeLight.copyWith(
@@ -326,7 +326,7 @@ class _HorizontalStartPage extends StatelessWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Spacer(),
+            const Spacer(),
             Flexible(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
