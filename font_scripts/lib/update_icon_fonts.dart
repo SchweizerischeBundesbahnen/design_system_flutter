@@ -118,7 +118,7 @@ Future<void> createFlutterFontMap() async {
   sb.writeln('const largeFontFamily = \'packages/design_system_flutter/SBBIconsLarge\';');
   sb.writeln();
   sb.writeln('// The names are given by digital.sbb.ch');
-  sb.writeln('// ignore_for_file: prefer_final_fields');
+  sb.writeln('// ignore_for_file: constant_identifier_names');
   sb.writeln('sealed class SBBIcons {');
   small.entries.forEach((e) => mapFont(e.key, e.value));
   medium.entries.forEach((e) => mapFont(e.key, e.value));
