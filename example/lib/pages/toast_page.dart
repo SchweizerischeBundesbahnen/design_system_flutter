@@ -14,7 +14,7 @@ class ToastPage extends StatelessWidget {
         children: <Widget>[
           const ThemeModeSegmentedButton(),
           const SizedBox(height: sbbDefaultSpacing),
-          SBBListHeader('Show Toast'),
+          const SBBListHeader('Show Toast'),
           SBBGroup(
             padding: const EdgeInsets.all(sbbDefaultSpacing),
             child: Column(
@@ -72,7 +72,7 @@ class ToastPage extends StatelessWidget {
             ),
           ),
           const SizedBox(height: sbbDefaultSpacing),
-          SBBListHeader('Additional Toast actions'),
+          const SBBListHeader('Additional Toast actions'),
           SBBGroup(
             padding: const EdgeInsets.all(sbbDefaultSpacing),
             child: Column(

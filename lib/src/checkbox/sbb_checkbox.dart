@@ -109,10 +109,10 @@ class SBBCheckbox extends StatefulWidget {
   _SBBCheckboxState createState() => _SBBCheckboxState();
 }
 
-class _SBBCheckboxState extends State<SBBCheckbox> with SingleTickerProviderStateMixin {
+class _SBBCheckboxState extends State<SBBCheckbox>
+    with SingleTickerProviderStateMixin {
   static const _outerSquareSize = 20.0;
   static const _outerSquareBorderRadius = 6.0;
-  static const _outerSquareBorderRadiusWeb = 2.0;
 
   static const _checkLongLineHeight = 2.2;
   static const _checkLongLineWidth = 7.8;
@@ -120,14 +120,15 @@ class _SBBCheckboxState extends State<SBBCheckbox> with SingleTickerProviderStat
   static const _checkShortLineHeight = 5.3;
   static const _checkShortLineWidth = 2.2;
   static const _checkBorderRadius = 0.3;
-  static const _checkBottomPadding = 2.192; // result of math.sqrt(math.pow(_checkShortHeight - _checkLongHeight, 2) / 2);
-  static const _checkAnimationThreshold = 1.0 / (_checkLongLineWidth + _checkLongLineLeftMargin + _checkShortLineHeight) * _checkShortLineHeight;
+  static const _checkBottomPadding =
+      2.192; // result of math.sqrt(math.pow(_checkShortHeight - _checkLongHeight, 2) / 2);
+  static const _checkAnimationThreshold = 1.0 /
+      (_checkLongLineWidth + _checkLongLineLeftMargin + _checkShortLineHeight) *
+      _checkShortLineHeight;
 
   static const _tristateHeight = 3.0;
   static const _tristateWidth = 11.0;
   static const _tristateBorderRadius = 0.5;
-
-  static const _tickWidthWeb = 1.0;
 
   late Animation<double> _animation;
   late AnimationController _controller;
@@ -186,20 +187,14 @@ class _SBBCheckboxState extends State<SBBCheckbox> with SingleTickerProviderStat
   Widget build(BuildContext context) {
     final style = SBBControlStyles.of(context).checkbox;
     final enabled = widget.onChanged != null;
-    final bool isWeb = SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
-    if (isWeb) _controller.duration = Duration.zero;
     // TODO add semantics
     return Material(
       color: SBBColors.transparent,
       child: InkWell(
         splashFactory: InkRipple.splashFactory,
-        customBorder: CircleBorder(),
-        splashColor: isWeb
-            ? SBBColors.transparent
-            : style?.basic?.backgroundColorHighlighted,
-        focusColor: isWeb
-            ? SBBColors.transparent
-            : style?.basic?.backgroundColorHighlighted,
+        customBorder: const CircleBorder(),
+        splashColor: style?.basic?.backgroundColorHighlighted,
+        focusColor: style?.basic?.backgroundColorHighlighted,
         highlightColor: SBBColors.transparent,
         hoverColor: SBBColors.transparent,
         onTap: enabled
@@ -217,10 +212,9 @@ class _SBBCheckboxState extends State<SBBCheckbox> with SingleTickerProviderStat
           child: Container(
             height: _outerSquareSize,
             width: _outerSquareSize,
-            margin: widget.padding ?? const EdgeInsets.all(sbbDefaultSpacing / 2),
-            decoration: isWeb
-                ? outerBoxDecorationWeb(context, enabled)
-                : outerBoxDecorationNative(context, enabled),
+            margin:
+                widget.padding ?? const EdgeInsets.all(sbbDefaultSpacing / 2),
+            decoration: outerBoxDecoration(context, enabled),
             child: Stack(
               children: [
                 Center(
@@ -237,22 +231,20 @@ class _SBBCheckboxState extends State<SBBCheckbox> with SingleTickerProviderStat
                               left: 0,
                               top: 0,
                               child: Container(
-                                height: _checkShortLineAnimationValue * _checkShortLineHeight,
+                                height: _checkShortLineAnimationValue *
+                                    _checkShortLineHeight,
                                 width: _checkShortLineWidth,
-                                decoration: isWeb
-                                    ? shortLineBoxDecorationWeb()
-                                    : tickBoxDecorationNative(context, enabled),
+                                decoration: tickBoxDecoration(context, enabled),
                               ),
                             ),
                             Positioned(
-                              left: isWeb ? 1.0 : _checkLongLineLeftMargin,
+                              left: _checkLongLineLeftMargin,
                               bottom: 0,
                               child: Container(
                                 height: _checkLongLineHeight,
-                                width: _checkLongLineAnimationValue * _checkLongLineWidth,
-                                decoration: isWeb
-                                    ? longLineBoxDecorationWeb()
-                                    : tickBoxDecorationNative(context, enabled),
+                                width: _checkLongLineAnimationValue *
+                                    _checkLongLineWidth,
+                                decoration: tickBoxDecoration(context, enabled),
                               ),
                             ),
                           ],
@@ -265,15 +257,12 @@ class _SBBCheckboxState extends State<SBBCheckbox> with SingleTickerProviderStat
                   child: Container(
                     height: _tristateHeight,
                     width: _tristateAnimationValue * _tristateWidth,
-                    decoration: isWeb
-                      ? longLineBoxDecorationWeb()
-                      : BoxDecoration(
-                        color: enabled
-                          ? style?.color
-                          : style?.colorDisabled,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(_tristateBorderRadius)),
+                    decoration: BoxDecoration(
+                      color: enabled ? style?.color : style?.colorDisabled,
+                      borderRadius: const BorderRadius.all(
+                        Radius.circular(_tristateBorderRadius),
                       ),
+                    ),
                   ),
                 )
               ],
@@ -284,52 +273,30 @@ class _SBBCheckboxState extends State<SBBCheckbox> with SingleTickerProviderStat
     );
   }
 
-  BoxDecoration shortLineBoxDecorationWeb() {
-    return BoxDecoration(
-      border: Border(left: BorderSide(width: _tickWidthWeb, color: SBBColors.black)),
-    );
-  }
-
-  BoxDecoration longLineBoxDecorationWeb() {
-    return BoxDecoration(
-      border: Border(bottom: BorderSide(width: _tickWidthWeb, color: SBBColors.black)),
-    );
-  }
-
-  BoxDecoration tickBoxDecorationNative(BuildContext context, bool enabled) {
+  BoxDecoration tickBoxDecoration(BuildContext context, bool enabled) {
     final style = SBBControlStyles.of(context).checkbox;
     return BoxDecoration(
       color: enabled ? style?.color : style?.colorDisabled,
-      borderRadius: BorderRadius.all(Radius.circular(_checkBorderRadius)),
+      borderRadius: const BorderRadius.all(Radius.circular(_checkBorderRadius)),
     );
   }
 
-  BoxDecoration outerBoxDecorationNative(BuildContext context, bool enabled) {
+  BoxDecoration outerBoxDecoration(BuildContext context, bool enabled) {
     final style = SBBControlStyles.of(context).checkbox;
     return BoxDecoration(
-        color: enabled
-            ? style?.basic?.backgroundColor
-            : style?.basic?.backgroundColorDisabled,
-        border: Border.fromBorderSide(
-          BorderSide(
-            color: (enabled
-                ? style?.basic?.borderColor
-                : style?.basic?.borderColorDisabled)!,
-          ),
+      color: enabled
+          ? style?.basic?.backgroundColor
+          : style?.basic?.backgroundColorDisabled,
+      border: Border.fromBorderSide(
+        BorderSide(
+          color: (enabled
+              ? style?.basic?.borderColor
+              : style?.basic?.borderColorDisabled)!,
         ),
-        borderRadius: BorderRadius.all(Radius.circular(_outerSquareBorderRadius)));
-  }
-
-  BoxDecoration outerBoxDecorationWeb(BuildContext context, bool enabled) {
-    final style = SBBControlStyles.of(context).checkbox;
-    return BoxDecoration(
-        color: enabled ? style?.basic?.backgroundColor : SBBColors.milk,
-        border: Border.fromBorderSide(
-          BorderSide(
-            color: enabled ? SBBColors.graphite : SBBColors.aluminum,
-          ),
-        ),
-        borderRadius: BorderRadius.all(Radius.circular(_outerSquareBorderRadiusWeb)));
+      ),
+      borderRadius:
+          const BorderRadius.all(Radius.circular(_outerSquareBorderRadius)),
+    );
   }
 
   void _calculateAnimationValues() {
@@ -356,7 +323,11 @@ class _SBBCheckboxState extends State<SBBCheckbox> with SingleTickerProviderStat
       checkAnimationValue = _animation.value;
     }
 
-    _checkShortLineAnimationValue = math.min(1.0, checkAnimationValue / _checkAnimationThreshold);
-    _checkLongLineAnimationValue = math.max(0.0, (checkAnimationValue - _checkAnimationThreshold) / (1.0 - _checkAnimationThreshold));
+    _checkShortLineAnimationValue =
+        math.min(1.0, checkAnimationValue / _checkAnimationThreshold);
+    _checkLongLineAnimationValue = math.max(
+        0.0,
+        (checkAnimationValue - _checkAnimationThreshold) /
+            (1.0 - _checkAnimationThreshold));
   }
 }

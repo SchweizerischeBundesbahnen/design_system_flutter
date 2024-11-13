@@ -102,28 +102,9 @@ class SBBLoadingIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final hostPlatform = SBBBaseStyle.of(context).hostPlatform!;
-    switch (hostPlatform) {
-      case HostPlatform.native:
-        return _buildThemedNative();
-      case HostPlatform.web:
-        return _buildThemedWeb();
-      default:
-        return _buildThemedNative();
-    }
-  }
-
-  Widget _buildThemedNative() => Padding(
+    return Padding(
       padding: EdgeInsets.only(top: padding, bottom: padding),
-      child: _buildTransform());
-
-  Widget _buildThemedWeb() => Container(
-        color: SBBColors.white.withOpacity(0.9),
-        padding: EdgeInsets.symmetric(vertical: padding),
-        child: _buildTransform(),
-      );
-
-  _buildTransform() => Transform(
+      child: Transform(
         transform: Matrix4.identity()
           ..setEntry(3, 2, translationZ)
           ..rotateY(rotationY),
@@ -134,7 +115,9 @@ class SBBLoadingIndicator extends StatelessWidget {
           squareSpacing: squareSpacing,
           color: color,
         ),
-      );
+      ),
+    );
+  }
 }
 
 class LoadingAnimation extends StatefulWidget {

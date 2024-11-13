@@ -18,13 +18,13 @@ import '../sbb_internal.dart';
 /// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/button>
 class SBBIconButtonLarge extends StatelessWidget {
   const SBBIconButtonLarge({
-    Key? key,
+    super.key,
     required this.icon,
     required this.onPressed,
     this.focusNode,
     this.buttonStyle,
     this.semantics,
-  }) : super(key: key);
+  });
 
   final IconData icon;
   final VoidCallback? onPressed;
@@ -34,18 +34,20 @@ class SBBIconButtonLarge extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isWeb = SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
     final baseStyle = Theme.of(context).textButtonTheme.style?.copyWith(
-      minimumSize: SBBTheme.allStates(const Size(SBBInternal.defaultButtonHeight, SBBInternal.defaultButtonHeight)),
-      fixedSize: SBBTheme.allStates(const Size(SBBInternal.defaultButtonHeight, SBBInternal.defaultButtonHeight)),
-      padding: SBBTheme.allStates(EdgeInsets.zero),
-    );
-    final style;
-    if(isWeb) {
-      style = buttonStyle != null ? SBBButtonStyles.of(context).iconLargeWebLean.merge(buttonStyle) : SBBButtonStyles.of(context).iconLargeWebLean;
-    }else {
-      style = buttonStyle != null ? buttonStyle!.merge(baseStyle) : SBBButtonStyles.of(context).iconLargeStyle?.overrideButtonStyle(baseStyle);
-    }
+          minimumSize: SBBTheme.allStates(const Size(
+              SBBInternal.defaultButtonHeight,
+              SBBInternal.defaultButtonHeight)),
+          fixedSize: SBBTheme.allStates(const Size(
+              SBBInternal.defaultButtonHeight,
+              SBBInternal.defaultButtonHeight)),
+          padding: SBBTheme.allStates(EdgeInsets.zero),
+        );
+    final style = buttonStyle != null
+        ? buttonStyle!.merge(baseStyle)
+        : SBBButtonStyles.of(context)
+            .iconLargeStyle
+            ?.overrideButtonStyle(baseStyle);
     return TextButton(
       style: style,
       onPressed: onPressed,
@@ -180,23 +182,22 @@ class _SBBIconButtonSmallRaw extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isWeb = SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
     final baseStyle = Theme.of(context).textButtonTheme.style?.copyWith(
-      minimumSize: SBBTheme.allStates(
-        const Size(
-          SBBInternal.defaultButtonHeightSmall,
-          SBBInternal.defaultButtonHeightSmall,
-        ),
-      ),
-      fixedSize: SBBTheme.allStates(
-        const Size(
-          SBBInternal.defaultButtonHeightSmall,
-          SBBInternal.defaultButtonHeightSmall,
-        ),
-      ),
-      padding: SBBTheme.allStates(EdgeInsets.zero),
-      side: SBBTheme.allStates(BorderSide(style: BorderStyle.none)),
-    );
+          minimumSize: SBBTheme.allStates(
+            const Size(
+              SBBInternal.defaultButtonHeightSmall,
+              SBBInternal.defaultButtonHeightSmall,
+            ),
+          ),
+          fixedSize: SBBTheme.allStates(
+            const Size(
+              SBBInternal.defaultButtonHeightSmall,
+              SBBInternal.defaultButtonHeightSmall,
+            ),
+          ),
+          padding: SBBTheme.allStates(EdgeInsets.zero),
+          side: SBBTheme.allStates(const BorderSide(style: BorderStyle.none)),
+        );
     return Semantics(
       container: true,
       button: true,
@@ -205,10 +206,10 @@ class _SBBIconButtonSmallRaw extends StatelessWidget {
         height: SBBInternal.defaultButtonHeight,
         width: SBBInternal.defaultButtonHeight,
         child: _InputPadding(
-          minSize: Size.square(SBBInternal.defaultButtonHeight),
+          minSize: const Size.square(SBBInternal.defaultButtonHeight),
           child: Center(
             child: TextButton(
-              style: isWeb ? SBBButtonStyles.of(context).iconSmallWebLean : style?.overrideButtonStyle(baseStyle),
+              style: style?.overrideButtonStyle(baseStyle),
               onPressed: onPressed,
               focusNode: focusNode,
               child: Icon(icon, size: sbbIconSizeSmall),
@@ -242,7 +243,8 @@ class _InputPadding extends SingleChildRenderObjectWidget {
   }
 
   @override
-  void updateRenderObject(BuildContext context, covariant _RenderInputPadding renderObject) {
+  void updateRenderObject(
+      BuildContext context, covariant _RenderInputPadding renderObject) {
     renderObject.minSize = minSize;
   }
 }
@@ -261,29 +263,35 @@ class _RenderInputPadding extends RenderShiftedBox {
 
   @override
   double computeMinIntrinsicWidth(double height) {
-    if (child != null) return math.max(child!.getMinIntrinsicWidth(height), minSize.width);
+    if (child != null)
+      return math.max(child!.getMinIntrinsicWidth(height), minSize.width);
     return 0.0;
   }
 
   @override
   double computeMinIntrinsicHeight(double width) {
-    if (child != null) return math.max(child!.getMinIntrinsicHeight(width), minSize.height);
+    if (child != null)
+      return math.max(child!.getMinIntrinsicHeight(width), minSize.height);
     return 0.0;
   }
 
   @override
   double computeMaxIntrinsicWidth(double height) {
-    if (child != null) return math.max(child!.getMaxIntrinsicWidth(height), minSize.width);
+    if (child != null)
+      return math.max(child!.getMaxIntrinsicWidth(height), minSize.width);
     return 0.0;
   }
 
   @override
   double computeMaxIntrinsicHeight(double width) {
-    if (child != null) return math.max(child!.getMaxIntrinsicHeight(width), minSize.height);
+    if (child != null)
+      return math.max(child!.getMaxIntrinsicHeight(width), minSize.height);
     return 0.0;
   }
 
-  Size _computeSize({required BoxConstraints constraints, required ChildLayouter layoutChild}) {
+  Size _computeSize(
+      {required BoxConstraints constraints,
+      required ChildLayouter layoutChild}) {
     if (child != null) {
       final Size childSize = layoutChild(child!, constraints);
       final double height = math.max(childSize.width, minSize.width);
@@ -309,7 +317,8 @@ class _RenderInputPadding extends RenderShiftedBox {
     );
     if (child != null) {
       final BoxParentData childParentData = child!.parentData! as BoxParentData;
-      childParentData.offset = Alignment.center.alongOffset(size - child!.size as Offset);
+      childParentData.offset =
+          Alignment.center.alongOffset(size - child!.size as Offset);
     }
   }
 

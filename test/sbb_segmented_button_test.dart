@@ -70,8 +70,8 @@ void main() {
       ),
     );
 
-    await Specs.run(
-      Specs.mobileSpecs,
+    await TestSpecs.run(
+      TestSpecs.themedSpecs,
       widget,
       tester,
       'segmented_button_1',

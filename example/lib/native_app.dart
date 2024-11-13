@@ -55,27 +55,23 @@ class MyApp extends StatelessWidget {
       child: Consumer<AppState>(
         builder: (BuildContext context, AppState appState, _) {
           return MaterialApp(
-            theme: SBBTheme.light(
-              hostPlatform: HostPlatform.native,
-            ),
-            darkTheme: SBBTheme.dark(
-              hostPlatform: HostPlatform.native,
-            ),
+            theme: SBBTheme.light(),
+            darkTheme: SBBTheme.dark(),
             themeMode: appState.isDarkModeOn ? ThemeMode.dark : ThemeMode.light,
-            localizationsDelegates: [
+            localizationsDelegates: const [
               GlobalMaterialLocalizations.delegate,
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
-            supportedLocales: [
+            supportedLocales: const [
               Locale('en'),
               Locale('de'),
               Locale('fr'),
               Locale('it'),
             ],
-            locale: Locale('de'),
+            locale: const Locale('de'),
             home: Scaffold(
-              appBar: SBBHeader(title: 'Design System Mobile'),
+              appBar: const SBBHeader(title: 'Design System Mobile'),
               body: SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
@@ -83,8 +79,8 @@ class MyApp extends StatelessWidget {
                   ),
                   child: Column(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
+                      const Padding(
+                        padding: EdgeInsets.symmetric(
                           vertical: sbbDefaultSpacing,
                         ),
                         child: ThemeModeSegmentedButton(),
@@ -160,7 +156,7 @@ class MyApp extends StatelessWidget {
                               'Select',
                               SelectPage(),
                             ),
-                            _DemoEntry(
+                            const _DemoEntry(
                               'Switch',
                               SwitchPage(),
                             ),
@@ -172,7 +168,7 @@ class MyApp extends StatelessWidget {
                               'Chip',
                               ChipPage(),
                             ),
-                            _DemoEntry(
+                            const _DemoEntry(
                               'Pagination',
                               PaginationPage(),
                             ),

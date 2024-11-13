@@ -36,13 +36,11 @@ class SBBTertiaryButtonLarge extends StatelessWidget {
     final buttonStyles = SBBButtonStyles.of(context);
     return TextButton(
       style: Theme.of(context).textButtonTheme.style?.copyWith(
-            // workaround for web
             padding: SBBTheme.allStates(EdgeInsets.zero),
           ),
       onPressed: isLoading ? null : onPressed,
       focusNode: focusNode,
       child: Padding(
-        // workaround for web
         padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -98,7 +96,6 @@ class SBBTertiaryButtonSmall extends StatelessWidget {
           fixedSize: SBBTheme.allStates(
             const Size.fromHeight(SBBInternal.defaultButtonHeightSmall),
           ),
-          // workaround for web
           padding: SBBTheme.allStates(EdgeInsets.zero),
         );
     final style = SBBBaseStyle.of(context);
@@ -108,8 +105,7 @@ class SBBTertiaryButtonSmall extends StatelessWidget {
       onPressed: onPressed,
       focusNode: focusNode,
       child: Padding(
-        // workaround for web
-        padding: EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
+        padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [

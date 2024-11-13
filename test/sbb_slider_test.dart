@@ -22,7 +22,7 @@ void main() {
           endIcon: null,
         ),
         const SizedBox(height: sbbDefaultSpacing),
-        SBBSlider(
+        const SBBSlider(
           onChanged: null,
           value: 75,
           max: 100,
@@ -30,8 +30,8 @@ void main() {
       ],
     );
 
-    await Specs.run(
-      Specs.mobileSpecs,
+    await TestSpecs.run(
+      TestSpecs.themedSpecs,
       widget,
       tester,
       'slider_1',

@@ -15,11 +15,11 @@ class _SelectPageState extends State<SelectPage> {
   int? _selectedValue4;
   int? _selectedValue5;
   final _items = [
-    SelectMenuItem(value: 1, label: 'Item 1'),
-    SelectMenuItem(value: 2, label: 'Item 2'),
-    SelectMenuItem(value: 3, label: 'Item 3'),
-    SelectMenuItem(value: 4, label: 'Item 4'),
-    SelectMenuItem(value: 5, label: 'Item 5'),
+    const SelectMenuItem(value: 1, label: 'Item 1'),
+    const SelectMenuItem(value: 2, label: 'Item 2'),
+    const SelectMenuItem(value: 3, label: 'Item 3'),
+    const SelectMenuItem(value: 4, label: 'Item 4'),
+    const SelectMenuItem(value: 5, label: 'Item 5'),
   ];
 
   List<int> _multiSelectValues1 = [];
@@ -28,11 +28,11 @@ class _SelectPageState extends State<SelectPage> {
   List<int> _multiSelectValues4 = [];
   List<int> _multiSelectValues5 = [];
   final _multiSelectItems = [
-    SelectMenuItem(value: 1, label: 'Item 1'),
-    SelectMenuItem(value: 2, label: 'Item 2'),
-    SelectMenuItem(value: 3, label: 'Item 3'),
-    SelectMenuItem(value: 4, label: 'Item 4'),
-    SelectMenuItem(value: 5, label: 'Item 5'),
+    const SelectMenuItem(value: 1, label: 'Item 1'),
+    const SelectMenuItem(value: 2, label: 'Item 2'),
+    const SelectMenuItem(value: 3, label: 'Item 3'),
+    const SelectMenuItem(value: 4, label: 'Item 4'),
+    const SelectMenuItem(value: 5, label: 'Item 5'),
   ];
 
   @override

@@ -30,11 +30,11 @@ class _NotificationBoxPage extends State<NotificationBoxPage> {
                 text: text,
                 onTap: () {},
               ),
-              SizedBox(height: sbbDefaultSpacing),
+              const SizedBox(height: sbbDefaultSpacing),
               SBBNotificationBox.alert(
                 text: text,
               ),
-              SizedBox(height: sbbDefaultSpacing),
+              const SizedBox(height: sbbDefaultSpacing),
               SBBNotificationBox.alert(
                 title: title,
                 text: text,
@@ -43,7 +43,7 @@ class _NotificationBoxPage extends State<NotificationBoxPage> {
                 isCloseable: false,
                 detailsIcon: SBBIcons.arrows_circle_small,
               ),
-              SizedBox(height: sbbDefaultSpacing),
+              const SizedBox(height: sbbDefaultSpacing),
               SBBNotificationBox.alert(
                 text: text,
                 onTap: () {},
@@ -51,7 +51,7 @@ class _NotificationBoxPage extends State<NotificationBoxPage> {
                 isCloseable: false,
                 detailsIcon: SBBIcons.arrows_circle_small,
               ),
-              SizedBox(height: sbbDefaultSpacing),
+              const SizedBox(height: sbbDefaultSpacing),
             ],
           ),
         ),
@@ -65,11 +65,11 @@ class _NotificationBoxPage extends State<NotificationBoxPage> {
                 text: text,
                 onTap: () {},
               ),
-              SizedBox(height: sbbDefaultSpacing),
+              const SizedBox(height: sbbDefaultSpacing),
               SBBNotificationBox.warning(
                 text: text,
               ),
-              SizedBox(height: sbbDefaultSpacing),
+              const SizedBox(height: sbbDefaultSpacing),
               SBBNotificationBox.warning(
                 title: title,
                 text: text,
@@ -78,7 +78,7 @@ class _NotificationBoxPage extends State<NotificationBoxPage> {
                 isCloseable: false,
                 detailsIcon: SBBIcons.arrows_circle_small,
               ),
-              SizedBox(height: sbbDefaultSpacing),
+              const SizedBox(height: sbbDefaultSpacing),
               SBBNotificationBox.warning(
                 text: text,
                 onTap: () {},
@@ -99,11 +99,11 @@ class _NotificationBoxPage extends State<NotificationBoxPage> {
                 text: text,
                 onTap: () {},
               ),
-              SizedBox(height: sbbDefaultSpacing),
+              const SizedBox(height: sbbDefaultSpacing),
               SBBNotificationBox.success(
                 text: text,
               ),
-              SizedBox(height: sbbDefaultSpacing),
+              const SizedBox(height: sbbDefaultSpacing),
               SBBNotificationBox.success(
                 title: title,
                 text: text,
@@ -112,7 +112,7 @@ class _NotificationBoxPage extends State<NotificationBoxPage> {
                 isCloseable: false,
                 detailsIcon: SBBIcons.arrows_circle_small,
               ),
-              SizedBox(height: sbbDefaultSpacing),
+              const SizedBox(height: sbbDefaultSpacing),
               SBBNotificationBox.success(
                 text: text,
                 onTap: () {},
@@ -133,11 +133,11 @@ class _NotificationBoxPage extends State<NotificationBoxPage> {
                 onTap: () {},
                 text: text,
               ),
-              SizedBox(height: sbbDefaultSpacing),
+              const SizedBox(height: sbbDefaultSpacing),
               SBBNotificationBox.information(
                 text: text,
               ),
-              SizedBox(height: sbbDefaultSpacing),
+              const SizedBox(height: sbbDefaultSpacing),
               SBBNotificationBox.information(
                 title: title,
                 text: text,
@@ -146,7 +146,7 @@ class _NotificationBoxPage extends State<NotificationBoxPage> {
                 isCloseable: false,
                 detailsIcon: SBBIcons.arrows_circle_small,
               ),
-              SizedBox(height: sbbDefaultSpacing),
+              const SizedBox(height: sbbDefaultSpacing),
               SBBNotificationBox.information(
                 text: text,
                 onTap: () {},

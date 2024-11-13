@@ -105,7 +105,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox>
                     width: 0.0,
                     color: SBBColors.transparent,
                   ),
-                  borderRadius: BorderRadius.all(
+                  borderRadius: const BorderRadius.all(
                     Radius.circular(sbbDefaultSpacing + 5.0),
                   ),
                   boxShadow: [
@@ -122,11 +122,11 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox>
               margin: EdgeInsets.only(top: paddingTop),
               decoration: BoxDecoration(
                 border: Border.all(color: style.borderColor!),
-                borderRadius: BorderRadius.all(
+                borderRadius: const BorderRadius.all(
                   Radius.circular(sbbDefaultSpacing),
                 ),
                 image: DecorationImage(
-                  image: AssetImage(_PromotionBoxAssets.noise),
+                  image: const AssetImage(_PromotionBoxAssets.noise),
                   repeat: ImageRepeat.repeat,
                   fit: BoxFit.none,
                   opacity: style.textureOpacity!,
@@ -150,7 +150,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox>
                   child: InkWell(
                     focusColor: iconStyle?.backgroundColorHighlighted,
                     hoverColor: iconStyle?.backgroundColorHighlighted,
-                    customBorder: RoundedRectangleBorder(
+                    customBorder: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(
                         Radius.circular(sbbDefaultSpacing),
                       ),

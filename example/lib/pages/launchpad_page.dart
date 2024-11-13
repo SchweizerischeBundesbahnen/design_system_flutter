@@ -34,7 +34,7 @@ class LaunchpadPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SBBHeader(
+      appBar: const SBBHeader(
           title: 'Design System Mobile', automaticallyImplyLeading: false),
       body: SingleChildScrollView(
         child: Padding(
@@ -43,8 +43,8 @@ class LaunchpadPage extends StatelessWidget {
           ),
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(
+              const Padding(
+                padding: EdgeInsets.symmetric(
                   vertical: sbbDefaultSpacing,
                 ),
                 child: ThemeModeSegmentedButton(),
@@ -78,7 +78,8 @@ class LaunchpadPage extends StatelessWidget {
                     _DemoEntry('Select', SelectPage()),
                     _DemoEntry('Textfield / Textarea', TextFieldPage()),
                     _DemoEntry('Promotion Box', PromotionBoxPage()),
-                    _DemoEntry('Notification Box', NotificationBoxPage(), isLastElement: true),
+                    _DemoEntry('Notification Box', NotificationBoxPage(),
+                        isLastElement: true),
                   ],
                 ),
               ),

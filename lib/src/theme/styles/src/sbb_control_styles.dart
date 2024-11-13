@@ -32,21 +32,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     this.toastTextStyle,
     this.toastBackgroundColor,
     this.tabBarTextStyle,
-    this.menuBackgroundColor,
-    this.menuBorderColor,
-    this.menuEntryForegroundColor,
-    this.menuEntryBackgroundColor,
-    this.menuEntryTextStyle,
-    this.userMenuTextStyle,
-    this.userMenuForegroundColor,
-    this.breadcrumbTextStyle,
-    this.breadcrumbForegroundColor,
-    this.sidebarBackgroundColor,
-    this.sidebarBorderColor,
-    this.sidebarItemBackgroundColor,
-    this.sidebarItemForegroundColor,
-    this.sidebarItemTextStyle,
-    this.headerNavItemForegroundColor,
     this.promotionBox,
     this.picker,
   });
@@ -101,51 +86,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
             baseStyle.themeValue(SBBColors.metal, SBBColors.smoke),
         tabBarTextStyle:
             baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallLight),
-        menuBackgroundColor: SBBColors.white,
-        menuBorderColor: SBBColors.iron,
-        menuEntryBackgroundColor: SBBTheme.resolveStatesWith(
-          defaultValue: SBBColors.white,
-          disabledValue: SBBColors.white,
-          hoveredValue: SBBColors.milk,
-          pressedValue: SBBColors.milk,
-        ),
-        menuEntryForegroundColor: SBBTheme.resolveStatesWith(
-          defaultValue: SBBColors.iron,
-          disabledValue: SBBColors.iron,
-          hoveredValue: SBBColors.red125,
-          pressedValue: SBBColors.red125,
-        ),
-        menuEntryTextStyle: SBBLeanTextStyles.contextMenu,
-        userMenuTextStyle: SBBLeanTextStyles.contextMenu,
-        userMenuForegroundColor: SBBTheme.resolveStatesWith(
-          defaultValue: SBBColors.iron,
-          hoveredValue: SBBColors.red125,
-          pressedValue: SBBColors.red125,
-          disabledValue: SBBColors.iron,
-        ),
-        breadcrumbTextStyle: SBBLeanTextStyles.breadcrumb,
-        breadcrumbForegroundColor: SBBTheme.resolveStatesWith(
-          defaultValue: SBBColors.granite,
-          disabledValue: SBBColors.black,
-          hoveredValue: SBBColors.red125,
-          pressedValue: SBBColors.red125,
-        ),
-        sidebarBackgroundColor: SBBColors.white,
-        sidebarBorderColor: SBBColors.silver,
-        sidebarItemBackgroundColor: SBBTheme.resolveStatesWith(
-            defaultValue: SBBColors.transparent,
-            hoveredValue: SBBColors.milk,
-            selectedValue: SBBColors.cloud),
-        sidebarItemForegroundColor: SBBTheme.resolveStatesWith(
-            defaultValue: SBBColors.iron,
-            hoveredValue: SBBColors.red125,
-            pressedValue: SBBColors.red125),
-        sidebarItemTextStyle: SBBLeanTextStyles.contextMenu,
-        headerNavItemForegroundColor: SBBTheme.resolveStatesWith(
-            defaultValue: SBBColors.black,
-            disabledValue: SBBColors.black,
-            hoveredValue: SBBColors.red125,
-            pressedValue: SBBColors.red125),
         promotionBox: PromotionBoxStyle.$default(baseStyle: baseStyle),
         picker: SBBPickerStyle.$default(baseStyle: baseStyle),
       );
@@ -178,21 +118,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   final TextStyle? toastTextStyle;
   final Color? toastBackgroundColor;
   final TextStyle? tabBarTextStyle;
-  final Color? menuBackgroundColor;
-  final Color? menuBorderColor;
-  final MaterialStateProperty<Color?>? menuEntryForegroundColor;
-  final MaterialStateProperty<Color?>? menuEntryBackgroundColor;
-  final TextStyle? menuEntryTextStyle;
-  final TextStyle? userMenuTextStyle;
-  final MaterialStateProperty<Color?>? userMenuForegroundColor;
-  final TextStyle? breadcrumbTextStyle;
-  final MaterialStateProperty<Color?>? breadcrumbForegroundColor;
-  final Color? sidebarBackgroundColor;
-  final Color? sidebarBorderColor;
-  final MaterialStateProperty<Color?>? sidebarItemBackgroundColor;
-  final MaterialStateProperty<Color?>? sidebarItemForegroundColor;
-  final TextStyle? sidebarItemTextStyle;
-  final MaterialStateProperty<Color?>? headerNavItemForegroundColor;
   final PromotionBoxStyle? promotionBox;
   final SBBPickerStyle? picker;
 
@@ -220,7 +145,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   TooltipThemeData get tooltipTheme => TooltipThemeData(
         decoration: BoxDecoration(
           color: toastBackgroundColor,
-          borderRadius: new BorderRadius.all(const Radius.circular(19.0)),
+          borderRadius: const BorderRadius.all(Radius.circular(19.0)),
         ),
         textStyle: toastTextStyle,
         showDuration: SBBToast.durationShort,
@@ -263,21 +188,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     TextStyle? toastTextStyle,
     Color? toastBackgroundColor,
     TextStyle? tabBarTextStyle,
-    Color? menuBackgroundColor,
-    Color? menuBorderColor,
-    MaterialStateProperty<Color?>? menuEntryForegroundColor,
-    MaterialStateProperty<Color?>? menuEntryBackgroundColor,
-    TextStyle? menuEntryTextStyle,
-    TextStyle? userMenuTextStyle,
-    MaterialStateProperty<Color?>? userMenuForegroundColor,
-    TextStyle? breadcrumbTextStyle,
-    MaterialStateProperty<Color?>? breadcrumbForegroundColor,
-    Color? sidebarBackgroundColor,
-    Color? sidebarBorderColor,
-    MaterialStateProperty<Color?>? sidebarItemBackgroundColor,
-    MaterialStateProperty<Color?>? sidebarItemForegroundColor,
-    TextStyle? sidebarItemTextStyle,
-    MaterialStateProperty<Color?>? headerNavItemForegroundColor,
     PromotionBoxStyle? promotionBox,
     SBBPickerStyle? picker,
   }) =>
@@ -316,29 +226,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
         toastTextStyle: toastTextStyle ?? this.toastTextStyle,
         toastBackgroundColor: toastBackgroundColor ?? this.toastBackgroundColor,
         tabBarTextStyle: tabBarTextStyle ?? this.tabBarTextStyle,
-        menuBackgroundColor: menuBackgroundColor ?? this.menuBackgroundColor,
-        menuBorderColor: menuBorderColor ?? this.menuBorderColor,
-        menuEntryForegroundColor:
-            menuEntryForegroundColor ?? this.menuEntryForegroundColor,
-        menuEntryBackgroundColor:
-            menuEntryBackgroundColor ?? this.menuEntryBackgroundColor,
-        menuEntryTextStyle: menuEntryTextStyle ?? this.menuEntryTextStyle,
-        userMenuTextStyle: userMenuTextStyle ?? this.userMenuTextStyle,
-        userMenuForegroundColor:
-            userMenuForegroundColor ?? this.userMenuForegroundColor,
-        breadcrumbTextStyle: breadcrumbTextStyle ?? this.breadcrumbTextStyle,
-        breadcrumbForegroundColor:
-            breadcrumbForegroundColor ?? this.breadcrumbForegroundColor,
-        sidebarBackgroundColor:
-            sidebarBackgroundColor ?? this.sidebarBackgroundColor,
-        sidebarBorderColor: sidebarBorderColor ?? this.sidebarBorderColor,
-        sidebarItemBackgroundColor:
-            sidebarItemBackgroundColor ?? this.sidebarItemBackgroundColor,
-        sidebarItemForegroundColor:
-            sidebarItemForegroundColor ?? this.sidebarItemForegroundColor,
-        sidebarItemTextStyle: sidebarItemTextStyle ?? this.sidebarItemTextStyle,
-        headerNavItemForegroundColor:
-            headerNavItemForegroundColor ?? this.headerNavItemForegroundColor,
         promotionBox: promotionBox ?? this.promotionBox,
         picker: picker ?? this.picker,
       );
@@ -390,28 +277,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
           Color.lerp(toastBackgroundColor, other.toastBackgroundColor, t),
       tabBarTextStyle:
           TextStyle.lerp(tabBarTextStyle, other.tabBarTextStyle, t),
-      menuBackgroundColor:
-          Color.lerp(menuBackgroundColor, other.menuBackgroundColor, t),
-      menuBorderColor: Color.lerp(menuBorderColor, other.menuBorderColor, t),
-      menuEntryTextStyle:
-          TextStyle.lerp(menuEntryTextStyle, other.menuEntryTextStyle, t),
-      userMenuTextStyle:
-          TextStyle.lerp(userMenuTextStyle, other.userMenuTextStyle, t),
-      userMenuForegroundColor: other.userMenuForegroundColor,
-      breadcrumbTextStyle:
-          TextStyle.lerp(breadcrumbTextStyle, other.breadcrumbTextStyle, t),
-      breadcrumbForegroundColor: breadcrumbForegroundColor,
-      sidebarBackgroundColor:
-          Color.lerp(sidebarBackgroundColor, other.sidebarBackgroundColor, t),
-      sidebarBorderColor:
-          Color.lerp(sidebarBorderColor, other.sidebarBorderColor, t),
-      sidebarItemTextStyle:
-          TextStyle.lerp(sidebarItemTextStyle, other.sidebarItemTextStyle, t),
-      menuEntryForegroundColor: other.menuEntryForegroundColor,
-      menuEntryBackgroundColor: other.menuEntryBackgroundColor,
-      sidebarItemBackgroundColor: other.sidebarItemBackgroundColor,
-      sidebarItemForegroundColor: other.sidebarItemForegroundColor,
-      headerNavItemForegroundColor: other.headerNavItemForegroundColor,
       promotionBox: PromotionBoxStyle.lerp(promotionBox, other.promotionBox, t),
       picker: picker?.lerp(other.picker, t),
     );
@@ -463,32 +328,6 @@ extension SBBControlStylesExtension on SBBControlStyles? {
       toastBackgroundColor:
           this!.toastBackgroundColor ?? other?.toastBackgroundColor,
       tabBarTextStyle: this!.tabBarTextStyle ?? other?.tabBarTextStyle,
-      menuBackgroundColor:
-          this!.menuBackgroundColor ?? other?.menuBackgroundColor,
-      menuBorderColor: this!.menuBorderColor ?? other?.menuBorderColor,
-      menuEntryForegroundColor:
-          this!.menuEntryForegroundColor ?? other?.menuEntryForegroundColor,
-      menuEntryBackgroundColor:
-          this!.menuEntryBackgroundColor ?? other?.menuEntryBackgroundColor,
-      menuEntryTextStyle: this!.menuEntryTextStyle ?? other?.menuEntryTextStyle,
-      userMenuTextStyle: this!.userMenuTextStyle ?? other?.userMenuTextStyle,
-      userMenuForegroundColor:
-          this!.userMenuForegroundColor ?? other?.userMenuForegroundColor,
-      breadcrumbTextStyle:
-          this!.breadcrumbTextStyle ?? other?.breadcrumbTextStyle,
-      breadcrumbForegroundColor:
-          this!.breadcrumbForegroundColor ?? other?.breadcrumbForegroundColor,
-      sidebarBackgroundColor:
-          this!.sidebarBackgroundColor ?? other?.sidebarBackgroundColor,
-      sidebarBorderColor: this!.sidebarBorderColor ?? other?.sidebarBorderColor,
-      sidebarItemBackgroundColor:
-          this!.sidebarItemBackgroundColor ?? other?.sidebarItemBackgroundColor,
-      sidebarItemForegroundColor:
-          this!.sidebarItemForegroundColor ?? other?.sidebarItemForegroundColor,
-      sidebarItemTextStyle:
-          this!.sidebarItemTextStyle ?? other?.sidebarItemTextStyle,
-      headerNavItemForegroundColor: this!.headerNavItemForegroundColor ??
-          other?.headerNavItemForegroundColor,
       promotionBox: this!.promotionBox ?? other?.promotionBox,
     ) as SBBControlStyles;
   }

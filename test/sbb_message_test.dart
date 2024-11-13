@@ -9,8 +9,8 @@ void main() {
     testWidgets(name, (WidgetTester tester) async {
       final widget = MessageTest(sbbMessage: message);
 
-      await Specs.run(
-        Specs.mobileSpecs,
+      await TestSpecs.run(
+        TestSpecs.themedSpecs,
         widget,
         tester,
         name,
@@ -31,7 +31,7 @@ void main() {
 
   generateTest(
     'message_test_2',
-    SBBMessage(
+    const SBBMessage(
       title: 'No Interaction',
       description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',

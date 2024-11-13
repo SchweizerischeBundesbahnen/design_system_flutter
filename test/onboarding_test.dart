@@ -8,18 +8,18 @@ void main() {
   testWidgets('onboarding', (WidgetTester tester) async {
     final widget = OnboardingTest();
 
-    await Specs.run(
-      Specs.mobileSpecs,
+    await TestSpecs.run(
+      TestSpecs.themedSpecs,
       widget,
       tester,
       'onboarding_startpage',
       find.byType(OnboardingTest),
     );
 
-    await tester.tap(find.byKey(Key('start')));
+    await tester.tap(find.byKey(const Key('start')));
 
-    await Specs.run(
-      Specs.mobileSpecs,
+    await TestSpecs.run(
+      TestSpecs.themedSpecs,
       widget,
       tester,
       'onboarding_card1',
@@ -28,8 +28,8 @@ void main() {
 
     await tester.tap(find.bySemanticsLabel('Nächste Seite'));
 
-    await Specs.run(
-      Specs.mobileSpecs,
+    await TestSpecs.run(
+      TestSpecs.themedSpecs,
       widget,
       tester,
       'onboarding_card2',
@@ -38,8 +38,8 @@ void main() {
 
     await tester.tap(find.bySemanticsLabel('Nächste Seite'));
 
-    await Specs.run(
-      Specs.mobileSpecs,
+    await TestSpecs.run(
+      TestSpecs.themedSpecs,
       widget,
       tester,
       'onboarding_endpage',
@@ -70,7 +70,7 @@ class TestOnboardingBuilderDelegate extends SBBOnboardingBuilderDelegate {
         color: SBBColors.red,
         child: Center(
           child: SBBTertiaryButtonLarge(
-            key: Key('start'),
+            key: const Key('start'),
             label: 'Onboarding starten',
             onPressed: onStartOnboarding,
           ),

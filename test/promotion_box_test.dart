@@ -11,25 +11,25 @@ void main() {
 
   testWidgets('promotion box test', (WidgetTester tester) async {
     final widget = Column(children: [
-      SBBPromotionBox(
+      const SBBPromotionBox(
         badgeText: 'Default',
         title: _title,
         description: _description,
       ),
-      SizedBox(height: 8.0),
-      SBBPromotionBox(
+      const SizedBox(height: 8.0),
+      const SBBPromotionBox(
         badgeText: 'Is Closable = false',
         title: _title,
         description: _description,
       ),
-      SizedBox(height: 8.0),
+      const SizedBox(height: 8.0),
       SBBPromotionBox(
         badgeText: 'Clickable',
         title: _title,
         description: _description,
         onTap: () {},
       ),
-      SizedBox(height: 8.0),
+      const SizedBox(height: 8.0),
       SBBPromotionBox(
         badgeText: 'With way too long title and badge text',
         title:
@@ -39,8 +39,8 @@ void main() {
       )
     ]);
 
-    await Specs.run(
-      Specs.mobileSpecs,
+    await TestSpecs.run(
+      TestSpecs.themedSpecs,
       widget,
       tester,
       'promotion_box',

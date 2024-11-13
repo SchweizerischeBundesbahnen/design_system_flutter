@@ -13,13 +13,13 @@ void main() {
     final widget = Column(
       children: [
         SBBNotificationBox.alert(title: title, text: text, onTap: () {}),
-        SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: sbbDefaultSpacing),
         SBBNotificationBox.alert(text: text),
       ],
     );
 
-    await Specs.run(
-      Specs.mobileSpecs,
+    await TestSpecs.run(
+      TestSpecs.themedSpecs,
       widget,
       tester,
       'notification_box_alert',
@@ -31,13 +31,13 @@ void main() {
     final widget = Column(
       children: [
         SBBNotificationBox.warning(title: title, text: text, onTap: () {}),
-        SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: sbbDefaultSpacing),
         SBBNotificationBox.warning(text: text),
       ],
     );
 
-    await Specs.run(
-      Specs.mobileSpecs,
+    await TestSpecs.run(
+      TestSpecs.themedSpecs,
       widget,
       tester,
       'notification_box_warning',
@@ -49,13 +49,13 @@ void main() {
     final widget = Column(
       children: [
         SBBNotificationBox.success(title: title, text: text, onTap: () {}),
-        SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: sbbDefaultSpacing),
         SBBNotificationBox.success(text: text),
       ],
     );
 
-    await Specs.run(
-      Specs.mobileSpecs,
+    await TestSpecs.run(
+      TestSpecs.themedSpecs,
       widget,
       tester,
       'notification_box_success',
@@ -67,13 +67,13 @@ void main() {
     final widget = Column(
       children: [
         SBBNotificationBox.information(title: title, text: text, onTap: () {}),
-        SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: sbbDefaultSpacing),
         SBBNotificationBox.information(text: text),
       ],
     );
 
-    await Specs.run(
-      Specs.mobileSpecs,
+    await TestSpecs.run(
+      TestSpecs.themedSpecs,
       widget,
       tester,
       'notification_box_information',

@@ -8,28 +8,28 @@ void main() {
   testWidgets('multiline checkbox', (WidgetTester tester) async {
     final widget = MultilineCheckboxText();
 
-    await Specs.run(
-      Specs.mobileSpecs,
+    await TestSpecs.run(
+      TestSpecs.themedSpecs,
       widget,
       tester,
       'multiline_checkbox_checked',
       find.byType(MultilineCheckboxText),
     );
 
-    await tester.tap(find.byKey(Key('checkbox')));
+    await tester.tap(find.byKey(const Key('checkbox')));
 
-    await Specs.run(
-      Specs.mobileSpecs,
+    await TestSpecs.run(
+      TestSpecs.themedSpecs,
       widget,
       tester,
       'multiline_checkbox_null',
       find.byType(MultilineCheckboxText),
     );
 
-    await tester.tap(find.byKey(Key('checkbox')));
+    await tester.tap(find.byKey(const Key('checkbox')));
 
-    await Specs.run(
-      Specs.mobileSpecs,
+    await TestSpecs.run(
+      TestSpecs.themedSpecs,
       widget,
       tester,
       'multiline_checkbox_unchecked',
@@ -52,7 +52,7 @@ class _MultilineCheckboxTextState extends State<MultilineCheckboxText> {
         children: [
           SBBGroup(
             child: SBBCheckboxListItem(
-              key: Key('checkbox'),
+              key: const Key('checkbox'),
               value: _listItemValue,
               label: 'Multiline Label with\nSecondary Label',
               allowMultilineLabel: true,

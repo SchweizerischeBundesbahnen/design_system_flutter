@@ -214,7 +214,7 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
                     height: kToolbarHeight,
                     width: customLeadingWidth ? leadingWidth : kToolbarHeight,
                     child: IconButton(
-                      icon: SBBLogo(),
+                      icon: const SBBLogo(),
                       onPressed: onPressedLogo,
                       tooltip: logoTooltip,
                       splashColor: style.headerButtonBackgroundColorHighlighted,

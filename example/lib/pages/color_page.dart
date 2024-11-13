@@ -7,15 +7,15 @@ class ColorPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      children: <Widget>[
+      children: const <Widget>[
         Padding(
-          padding: const EdgeInsetsDirectional.fromSTEB(
+          padding: EdgeInsetsDirectional.fromSTEB(
             sbbDefaultSpacing,
             sbbDefaultSpacing,
             sbbDefaultSpacing,
             sbbDefaultSpacing * 0.5,
           ),
-          child: const ThemeModeSegmentedButton(),
+          child: ThemeModeSegmentedButton(),
         ),
         _ColorShowcase(
           title: 'Colors',
@@ -64,7 +64,7 @@ class _ColorShowcase extends StatelessWidget {
           GridView.builder(
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
               maxCrossAxisExtent: sbbDefaultSpacing * 10,
             ),
             itemCount: colorEntries.length,
@@ -101,7 +101,7 @@ class _ColorShowcaseCard extends StatelessWidget {
     );
     return SBBGroup(
       useShadow: true,
-      margin: EdgeInsets.all(
+      margin: const EdgeInsets.all(
         sbbDefaultSpacing * 0.5,
       ),
       child: Column(
@@ -114,7 +114,7 @@ class _ColorShowcaseCard extends StatelessWidget {
           ),
           // Divider(),
           Container(
-            padding: EdgeInsets.all(
+            padding: const EdgeInsets.all(
               sbbDefaultSpacing * 0.5,
             ),
             child: Column(

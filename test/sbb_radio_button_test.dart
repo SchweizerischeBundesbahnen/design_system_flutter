@@ -9,8 +9,8 @@ void main() {
     testWidgets(name, (WidgetTester tester) async {
       final widget = RadioTest(groupValue: v1, listItemGroupValue: v2);
 
-      await Specs.run(
-        Specs.mobileSpecs,
+      await TestSpecs.run(
+        TestSpecs.themedSpecs,
         widget,
         tester,
         '${name}_initial',
@@ -60,7 +60,7 @@ class RadioTest extends StatelessWidget {
             ),
           ),
           const SizedBox(height: sbbDefaultSpacing),
-          SBBListHeader('RadioButtonListItem'),
+          const SBBListHeader('RadioButtonListItem'),
           SBBGroup(
             child: Column(
               children: [
@@ -105,8 +105,8 @@ class RadioTest extends StatelessWidget {
                   groupValue: listItemGroupValue,
                   onChanged: (newValue) {},
                   label: 'Custom trailing Widget',
-                  trailingWidget: Padding(
-                    padding: const EdgeInsets.only(right: 16),
+                  trailingWidget: const Padding(
+                    padding: EdgeInsets.only(right: 16),
                     child: Text('CHF 0.99'),
                   ),
                 ),

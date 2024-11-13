@@ -9,8 +9,8 @@ class StartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SBBHeader(title: 'Design System Mobile'),
-      backgroundColor: Color.fromRGBO(241, 241, 241, 1),
+      appBar: const SBBHeader(title: 'Design System Mobile'),
+      backgroundColor: const Color.fromRGBO(241, 241, 241, 1),
       body: Center(
           child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
@@ -19,19 +19,19 @@ class StartPage extends StatelessWidget {
           children: [
             Image.network(
                 'https://digital.sbb.ch/media/pages/home/b9ba24085b-1570784080/mobile.jpg'),
-            SizedBox(height: sbbDefaultSpacing),
-            Text('SBB Mobile Design System',
+            const SizedBox(height: sbbDefaultSpacing),
+            const Text('SBB Mobile Design System',
                 style: SBBTextStyles.extraLargeLight),
-            SizedBox(height: sbbDefaultSpacing),
-            Text(
+            const SizedBox(height: sbbDefaultSpacing),
+            const Text(
                 'Design System für native, mobile Anwendungen auf Mobile und Tablets.',
                 style: SBBTextStyles.largeLight),
-            SizedBox(height: sbbDefaultSpacing * 3),
+            const SizedBox(height: sbbDefaultSpacing * 3),
             SBBPrimaryButton(
                 label: 'Entdecken',
                 onPressed: () {
                   Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => LaunchpadPage(),
+                    builder: (context) => const LaunchpadPage(),
                   ));
                 })
           ],

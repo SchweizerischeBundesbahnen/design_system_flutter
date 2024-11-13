@@ -8,23 +8,23 @@ class TextFieldPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        Padding(
-          padding: const EdgeInsets.all(16.0),
+        const Padding(
+          padding: EdgeInsets.all(16.0),
           child: ThemeModeSegmentedButton(),
         ),
         SBBGroup(
           margin: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Column(
             children: <Widget>[
-              SBBTextField(
+              const SBBTextField(
                 labelText: 'Label, no Value',
               ),
               SBBTextField(
                 labelText: 'Label, Value',
                 controller: TextEditingController()
-                  ..value = TextEditingValue(text: 'Value'),
+                  ..value = const TextEditingValue(text: 'Value'),
               ),
-              SBBTextField(
+              const SBBTextField(
                 labelText: 'Label, Hint, no Value',
                 hintText: 'Hint Value',
               ),
@@ -32,31 +32,31 @@ class TextFieldPage extends StatelessWidget {
                 labelText: 'With icon',
                 hintText: 'Hint',
                 controller: TextEditingController()
-                  ..value = TextEditingValue(text: 'Icon'),
+                  ..value = const TextEditingValue(text: 'Icon'),
                 icon: SBBIcons.route_circle_start_small,
               ),
               SBBTextField(
                 labelText: 'Multiline',
                 maxLines: 3,
                 controller: TextEditingController()
-                  ..value = TextEditingValue(text: "I'm\nmulti\nline"),
+                  ..value = const TextEditingValue(text: "I'm\nmulti\nline"),
               ),
               SBBTextField(
                 labelText: 'Error Message',
                 controller: TextEditingController()
-                  ..value = TextEditingValue(text: 'Value'),
+                  ..value = const TextEditingValue(text: 'Value'),
                 errorText: 'Error',
               ),
               SBBTextField(
                 labelText: 'Disabled',
                 controller: TextEditingController()
-                  ..value = TextEditingValue(text: 'Value'),
+                  ..value = const TextEditingValue(text: 'Value'),
                 enabled: false,
               ),
               SBBTextField(
                 labelText: 'Last Element (Without Divider)',
                 controller: TextEditingController()
-                  ..value = TextEditingValue(text: 'Value'),
+                  ..value = const TextEditingValue(text: 'Value'),
                 isLastElement: true,
               ),
             ],

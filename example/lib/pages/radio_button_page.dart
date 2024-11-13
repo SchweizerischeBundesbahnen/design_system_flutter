@@ -52,6 +52,7 @@ class _RadiobuttonPageState extends State<RadiobuttonPage> {
           ),
         ),
         const SizedBox(height: sbbDefaultSpacing),
+        // ignore: prefer_const_constructors
         SBBListHeader('RadioButtonListItem'),
         SBBGroup(
           child: Column(

@@ -46,7 +46,7 @@ class SBBPagination extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (numberPages <= 1) {
-      return SizedBox.shrink();
+      return const SizedBox.shrink();
     }
     return Semantics(
       label: semanticsLabel,

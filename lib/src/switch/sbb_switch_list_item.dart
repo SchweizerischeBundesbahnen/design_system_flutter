@@ -79,7 +79,7 @@ class SBBSwitchListItem extends StatelessWidget {
               onPressed: enabled ? () => onChanged?.call(!value) : null,
               isLastElement: true,
               trailingWidget: Padding(
-                padding: EdgeInsets.only(
+                padding: const EdgeInsets.only(
                   left: sbbDefaultSpacing * 0.5,
                   right: sbbDefaultSpacing,
                 ),

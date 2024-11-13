@@ -14,11 +14,11 @@ typedef OnLaunchCallback = void Function(String link);
 /// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/link>
 class SBBLinkText extends StatefulWidget {
   const SBBLinkText({
-    Key? key,
+    super.key,
     required this.text,
     required this.onLaunch,
     this.style,
-  }) : super(key: key);
+  });
 
   final String text;
   final OnLaunchCallback onLaunch;
@@ -29,10 +29,16 @@ class SBBLinkText extends StatefulWidget {
 }
 
 class _SBBLinkTextState extends State<SBBLinkText> {
-  // TODO support for link title needed?
-  // Regex for inline-style link with text and title: (?:\[([^\]]+)\]\((https?:\/\/[^"\)]+) "(.+?)"\))
-  final RegExp _regExpMarkDownLink = RegExp(
-      r'(?:\[([^\]]+)\]\((https?:\/\/[^"\)]+)\))|(?:<(https?:\/\/[^>]+)>)|((?:http(?:s)?:\/\/.)(?:www\.)?[-a-zA-ZäöüÄÖÜ0-9@:%._\+~#=$]{2,256}\.[a-z]{2,6}\b(?:[-a-zA-ZäöüÄÖÜ0-9@:%_\+.~#?&//=$]*))');
+  static const inlineLinkPattern = r'(?:\[([^\]]+)\]\((https?:\/\/[^"\)]+)\))';
+  static const angleBracketsPattern = r'(?:<(https?:\/\/[^>]+)>)';
+  static const plainLinkPattern =
+      r'((?:http(?:s)?:\/\/.)(?:www\.)?[-a-zA-ZäöüÄÖÜ0-9@:%._\+~#=$]{2,256}\.[a-z]{2,6}\b(?:[-a-zA-ZäöüÄÖÜ0-9@:%_\+.~#?&//=$]*))';
+
+  final combinedPattern = RegExp([
+    inlineLinkPattern,
+    angleBracketsPattern,
+    plainLinkPattern,
+  ].join(r'|'));
 
   final _isPressedValues = [];
   final _isHoveredValues = [];
@@ -48,24 +54,24 @@ class _SBBLinkTextState extends State<SBBLinkText> {
 
   List<TextSpan> _textSpans() {
     final style = SBBBaseStyle.of(context);
-    bool isWeb = SBBBaseStyle.of(context).hostPlatform == HostPlatform.web;
-    final hasCustomStyle = widget.style != null;
-    final textStyle = hasCustomStyle ? widget.style!.copyWith(color: widget.style!.color ?? style.defaultTextStyle!.color) : style.defaultTextStyle;
+    TextStyle? textStyle = _resolveTextStyle(style);
 
-    final texts = widget.text.split(_regExpMarkDownLink);
-    final links = _regExpMarkDownLink.allMatches(widget.text).toList();
-    final List<TextSpan> _inlineSpans = [];
-    for (var i = 0; i < math.max(texts.length, links.length); i++) {
-      if (i < texts.length) {
-        _inlineSpans.add(
+    final plainTextSections = widget.text.split(combinedPattern);
+    final linkSections = combinedPattern.allMatches(widget.text).toList();
+    final List<TextSpan> inlineSpans = [];
+    for (var i = 0;
+        i < math.max(plainTextSections.length, linkSections.length);
+        i++) {
+      if (i < plainTextSections.length) {
+        inlineSpans.add(
           TextSpan(
-            text: texts[i],
+            text: plainTextSections[i],
             style: textStyle,
           ),
         );
       }
-      if (i < links.length) {
-        final link = links[i];
+      if (i < linkSections.length) {
+        final link = linkSections[i];
 
         // 4: plain url; 3: url in angle brackets; 2: inline-style link
         final url = link.group(4) ?? link.group(3) ?? link.group(2) ?? '';
@@ -75,13 +81,15 @@ class _SBBLinkTextState extends State<SBBLinkText> {
         _isHoveredValues.add(false);
 
         final tapGestureRecognizer = TapGestureRecognizer();
-        tapGestureRecognizer.onTapDown = (TapDownDetails details) => setState(() => _isPressedValues[i] = true);
-        tapGestureRecognizer.onTapCancel = () => setState(() => _isPressedValues[i] = false);
+        tapGestureRecognizer.onTapDown = (TapDownDetails details) =>
+            setState(() => _isPressedValues[i] = true);
+        tapGestureRecognizer.onTapCancel =
+            () => setState(() => _isPressedValues[i] = false);
         tapGestureRecognizer.onTap = () {
           widget.onLaunch(url);
           setState(() => _isPressedValues[i] = false);
         };
-        _inlineSpans.add(
+        inlineSpans.add(
           TextSpan(
             onEnter: (_) => setState(() {
               _isHoveredValues[i] = true;
@@ -90,28 +98,41 @@ class _SBBLinkTextState extends State<SBBLinkText> {
               _isHoveredValues[i] = false;
             }),
             text: text ?? url,
-            style: _linkTextStyle(isWeb, _isPressedValues[i] == true, _isHoveredValues[i] == true),
+            style: _linkTextStyle(
+                _isPressedValues[i] == true, _isHoveredValues[i] == true),
             recognizer: tapGestureRecognizer,
           ),
         );
       }
     }
-    return _inlineSpans;
+    return inlineSpans;
   }
 
-  TextStyle _linkTextStyle(bool isWeb, bool isPressed, bool isHovered) {
+  TextStyle? _resolveTextStyle(SBBBaseStyle style) {
+    final hasCustomStyle = widget.style != null;
+    final textStyle = hasCustomStyle
+        ? widget.style!.copyWith(
+            color: widget.style!.color ?? style.defaultTextStyle!.color)
+        : style.defaultTextStyle;
+    return textStyle;
+  }
+
+  TextStyle _linkTextStyle(bool isPressed, bool isHovered) {
     final style = SBBBaseStyle.of(context);
     final controlStyle = SBBControlStyles.of(context);
     final hasCustomStyle = widget.style != null;
-    final textStyle = hasCustomStyle ? widget.style!.copyWith(color: widget.style!.color ?? style.defaultTextStyle!.color) : style.defaultTextStyle;
-    final linkStyle = hasCustomStyle ? textStyle!.copyWith(color: controlStyle.linkTextStyle!.color) :
-      isWeb ? controlStyle.linkTextStyle!.copyWith(color: SBBColors.black, decoration: TextDecoration.underline) : controlStyle.linkTextStyle;
-    final linkStylePressed = hasCustomStyle ? textStyle!.copyWith(color: controlStyle.linkTextStyleHighlighted!.color) :
-      isWeb ? controlStyle.linkTextStyleHighlighted!.copyWith(color: SBBColors.red125, decoration: TextDecoration.underline) : controlStyle.linkTextStyleHighlighted;
+    final textStyle = hasCustomStyle
+        ? widget.style!.copyWith(
+            color: widget.style!.color ?? style.defaultTextStyle!.color)
+        : style.defaultTextStyle;
+    final linkStyle = hasCustomStyle
+        ? textStyle!.copyWith(color: controlStyle.linkTextStyle!.color)
+        : controlStyle.linkTextStyle;
+    final linkStylePressed = hasCustomStyle
+        ? textStyle!
+            .copyWith(color: controlStyle.linkTextStyleHighlighted!.color)
+        : controlStyle.linkTextStyleHighlighted;
 
-    if(isWeb) {
-      return (isPressed ? linkStylePressed : isHovered ? linkStylePressed : linkStyle)!;
-    }
     return (isPressed ? linkStylePressed : linkStyle)!;
   }
 }

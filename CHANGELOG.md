@@ -9,7 +9,85 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
-## [1.5.0] - 2024-07-11
+## [2.0.0] - 2024-09-06
+
+### Changed
+
+- Renamed `SBBStatusMobile` to `SBBStatus`
+
+### Fixed
+
+- Bugfix for semantics in `SBBSegmentedButton`
+
+### Removed
+
+- Removed web widgets:
+  - `SBBBreadcrumb`
+  - `SBBCard`
+  - `SBBDropdown`
+  - `SBBGhostButton`
+  - `SBBMenu`
+  - `SBBResponsive`
+  - `SBBSidebar`
+  - `SBBStatus` (is now mobile default)
+  - `SBBUserMenu`
+  - `SBBWebHeader`
+  - `SBBWebNotification`
+
+- Remove deprecated `SBBBaseTextStyles`
+
+- Removed web typography:
+  - `SBBLeanTextStyles`
+  - `SBBWebText`
+  - `SBBWebTextStyles`
+
+- Removed web mode from the following widgets:
+  - `SBBAccordion`
+  - `SBBAutocompletion`
+  - `SBBCheckbox`
+  - `SBBCheckboxListItem`
+  - `SBBIconButton` (all variants)
+  - `SBBLinkText` (including refactoring)
+  - `SBBListItem`
+  - `SBBLoadingIndicator`
+  - `SBBPrimaryButton`
+  - `SBBRadioButton`
+  - `SBBRadioButtonListItem`
+  - `SBBSelect`
+  - `SBBSecondaryButton`
+  - `SBBTextField`
+  - `SBBTextFormField`
+  - `SBBToast`
+
+- Removed `HostPlatform` from `SBBTheme`
+
+- Removed and cleaned web parts in `SBBControlStyles`
+
+- Removed web parts in `SBBButtonStyles`
+
+- Removed web mode in example app
+
+- Removed deprecated `onCallToAction` from SBBListItem
+
+- Removed deprecated `SBBIconTextButton`
+
+## [1.6.0] - 2024-09-04
+
+### Changed
+
+- (#164) Updated icon version to `1.0.3` (was `1.0.0`).
+
+### Deprecated
+
+- (#162) Deprecated Web Widgets:
+  - `SBBResponsive`
+  - `SBBWebHeader`
+  - `SBBMenu`
+  - `SBBUserMenu`
+  - `SBBCard`
+  - `SBBSidebar`
+
+## [1.5.0] - 2024-08-15
 
 ### Added
 
@@ -23,6 +101,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - (#148) Update SBB icons to version 1.0.0
 - Implement all Notification Box Styles [Figma Link](https://www.figma.com/design/WOtLIam1xwrqcgnAITsEhV/Design-System-Mobile?m=auto\&node-id=7271-28\&t=gismRyaDdiCfaHBj-1)
 - (#150) Added function `showModal` in `SBBDatePicker`, `SBBDateTimePicker`, `SBBTimePicker`
+- Minimum supported dart sdk is 3.3.0.
 
 ### Deprecated
 
@@ -337,7 +416,11 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Initial project setup
 - Added some widgets
 
-[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/1.5.0...HEAD
+[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/2.0.0...HEAD
+
+[2.0.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/1.6.0...2.0.0
+
+[1.6.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/1.5.0...1.6.0
 
 [1.5.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/1.4.0...1.5.0
 
