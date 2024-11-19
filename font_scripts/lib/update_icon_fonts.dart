@@ -103,7 +103,7 @@ Future<void> createFlutterFontMap() async {
   final medium = await getMap('medium');
   final large = await getMap('large');
   mapFont(String name, String value) =>
-      sb.writeln('  static const ${name} = $value;');
+      sb.writeln('  static const $name = $value;');
 
   sb.writeln('library sbb_icons;');
   sb.writeln();

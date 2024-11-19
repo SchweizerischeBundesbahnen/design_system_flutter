@@ -69,11 +69,9 @@ class SBBListItem extends StatefulWidget {
             padding: const EdgeInsets.symmetric(
               horizontal: sbbDefaultSpacing * 0.5,
             ),
-            child: Container(
-              child: SBBIconButtonSmall(
-                icon: buttonIcon,
-                onPressed: onPressed != null ? onPressedButton : null,
-              ),
+            child: SBBIconButtonSmall(
+              icon: buttonIcon,
+              onPressed: onPressed != null ? onPressedButton : null,
             ),
           ),
         );

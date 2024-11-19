@@ -110,7 +110,7 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
         primaryColorDark: primaryColorDark ?? this.primaryColorDark,
         primarySwatch: primarySwatch ?? this.primarySwatch,
         backgroundColor: backgroundColor ?? this.backgroundColor,
-        defaultFontFamily: fontFamily ?? this.defaultFontFamily,
+        defaultFontFamily: fontFamily ?? defaultFontFamily,
         defaultTextColor: defaultTextColor ?? this.defaultTextColor,
         defaultTextStyle: defaultTextStyle ?? this.defaultTextStyle,
         dividerColor: dividerColor ?? this.dividerColor,

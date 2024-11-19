@@ -111,7 +111,7 @@ class CheckboxTest extends StatelessWidget {
                   isLastElement: true,
                   onChanged: (value) {},
                   trailingWidget: const Padding(
-                    padding: const EdgeInsets.only(right: sbbDefaultSpacing),
+                    padding: EdgeInsets.only(right: sbbDefaultSpacing),
                     child: Text('CHF 0.99'),
                   ),
                 ),

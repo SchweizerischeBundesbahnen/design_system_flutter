@@ -24,7 +24,7 @@ class SBBTabBar extends StatefulWidget {
     this.warningSemantics,
     this.showWarning = false,
     int? warningIndex,
-  })  : this.warningIndex = warningIndex ?? items.length - 1,
+  })  : warningIndex = warningIndex ?? items.length - 1,
         super(key: key);
 
   final List<TabBarItem> items;

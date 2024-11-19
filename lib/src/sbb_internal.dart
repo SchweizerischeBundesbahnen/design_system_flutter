@@ -31,7 +31,7 @@ class SBBInternal {
   ];
 
   static const barrierBoxShadow = <BoxShadow>[
-    const BoxShadow(
+    BoxShadow(
       color: SBBInternal.barrierColor,
       blurRadius: 15,
     ),

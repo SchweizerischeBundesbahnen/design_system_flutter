@@ -12,8 +12,8 @@ import '../../design_system_flutter.dart';
 class SBBToast {
   SBBToast._(this._overlayState);
 
-  static const durationShort = const Duration(milliseconds: 2000);
-  static const durationLong = const Duration(milliseconds: 3500);
+  static const durationShort = Duration(milliseconds: 2000);
+  static const durationLong = Duration(milliseconds: 3500);
   static const defaultBottom = 30.0;
 
   final OverlayState _overlayState;
@@ -32,12 +32,8 @@ class SBBToast {
     Duration duration = durationShort,
     double bottom = defaultBottom,
   }) {
-    buildToast(
-        message,
-        duration,
-        bottom,
-        (stream) => Toast.confirmation(
-            message: message, duration: duration, stream: stream));
+    buildToast(message, duration, bottom,
+        (stream) => Toast.confirmation(message: message, duration: duration, stream: stream));
   }
 
   void warning({
@@ -46,11 +42,7 @@ class SBBToast {
     double bottom = defaultBottom,
   }) {
     buildToast(
-        message,
-        duration,
-        bottom,
-        (stream) => Toast.warning(
-            message: message, duration: duration, stream: stream));
+        message, duration, bottom, (stream) => Toast.warning(message: message, duration: duration, stream: stream));
   }
 
   void error({
@@ -59,11 +51,7 @@ class SBBToast {
     double bottom = defaultBottom,
   }) {
     buildToast(
-        message,
-        duration,
-        bottom,
-        (stream) =>
-            Toast.error(message: message, duration: duration, stream: stream));
+        message, duration, bottom, (stream) => Toast.error(message: message, duration: duration, stream: stream));
   }
 
   void show({
@@ -71,12 +59,7 @@ class SBBToast {
     Duration duration = durationShort,
     double bottom = defaultBottom,
   }) {
-    buildToast(
-        message,
-        duration,
-        bottom,
-        (stream) =>
-            Toast(message: message, duration: duration, stream: stream));
+    buildToast(message, duration, bottom, (stream) => Toast(message: message, duration: duration, stream: stream));
   }
 
   void buildToast(
@@ -90,11 +73,7 @@ class SBBToast {
       _streamController = StreamController<bool>();
       _streamController!.add(true);
       _overlayEntry = _buildToastOverlayEntry(
-          message,
-          duration,
-          _streamController!.stream,
-          bottom,
-          toastBuilder(_streamController!.stream));
+          message, duration, _streamController!.stream, bottom, toastBuilder(_streamController!.stream));
       _overlayState.insert(_overlayEntry!);
       _fadeOutTimer = Timer(duration + kThemeAnimationDuration * 2, () {
         _streamController?.add(false);
@@ -128,8 +107,8 @@ class SBBToast {
     _streamController = null;
   }
 
-  OverlayEntry _buildToastOverlayEntry(String message, Duration duration,
-      Stream<bool> stream, double bottom, Widget toast) {
+  OverlayEntry _buildToastOverlayEntry(
+      String message, Duration duration, Stream<bool> stream, double bottom, Widget toast) {
     return OverlayEntry(builder: (context) {
       return Positioned(
         left: 0.0,
@@ -153,10 +132,10 @@ class Toast extends StatefulWidget {
     required this.duration,
     required this.stream,
   }) {
-    this.backgroundColor = SBBColors.white;
-    this.textColor = SBBColors.green;
-    this.borderColor = SBBColors.green;
-    this.icon = SBBIcons.tick_medium;
+    backgroundColor = SBBColors.white;
+    textColor = SBBColors.green;
+    borderColor = SBBColors.green;
+    icon = SBBIcons.tick_medium;
   }
 
   Toast.warning({
@@ -164,9 +143,9 @@ class Toast extends StatefulWidget {
     required this.duration,
     required this.stream,
   }) {
-    this.backgroundColor = SBBColors.orange;
-    this.textColor = SBBColors.white;
-    this.icon = SBBIcons.sign_x_medium;
+    backgroundColor = SBBColors.orange;
+    textColor = SBBColors.white;
+    icon = SBBIcons.sign_x_medium;
   }
 
   Toast.error({
@@ -174,9 +153,9 @@ class Toast extends StatefulWidget {
     required this.duration,
     required this.stream,
   }) {
-    this.backgroundColor = SBBColors.red;
-    this.textColor = SBBColors.white;
-    this.icon = SBBIcons.sign_x_medium;
+    backgroundColor = SBBColors.red;
+    textColor = SBBColors.white;
+    icon = SBBIcons.sign_x_medium;
   }
 
   Toast({
@@ -184,9 +163,9 @@ class Toast extends StatefulWidget {
     required this.duration,
     required this.stream,
   }) {
-    this.backgroundColor = SBBColors.metal;
-    this.textColor = SBBColors.white;
-    this.icon = SBBIcons.circle_information_small;
+    backgroundColor = SBBColors.metal;
+    textColor = SBBColors.white;
+    icon = SBBIcons.circle_information_small;
   }
 
   Color? backgroundColor;
@@ -226,8 +205,7 @@ class _ToastState extends State<Toast> {
           children: [
             Text(
               widget.message,
-              style: tooltipTheme.textStyle?.copyWith(
-                  decoration: TextDecoration.none, color: widget.textColor),
+              style: tooltipTheme.textStyle?.copyWith(decoration: TextDecoration.none, color: widget.textColor),
             ),
           ],
         ),
