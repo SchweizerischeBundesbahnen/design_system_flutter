@@ -62,7 +62,10 @@ void main() {
 }
 
 class MessageTest extends StatelessWidget {
-  const MessageTest({Key? key, required this.sbbMessage}) : super(key: key);
+  const MessageTest({
+    super.key,
+    required this.sbbMessage,
+  });
 
   final SBBMessage sbbMessage;
 
@@ -78,7 +81,7 @@ class MessageTest extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         const SBBListHeader('SBBMessage'),
-        Container(
+        SizedBox(
           width: 400.0,
           child: SBBGroup(
             padding: const EdgeInsets.all(sbbDefaultSpacing / 2),

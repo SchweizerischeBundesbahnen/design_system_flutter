@@ -10,11 +10,11 @@ import '../../design_system_flutter.dart';
 class SBBListHeader extends StatelessWidget {
   const SBBListHeader(
     this.title, {
-    Key? key,
+    super.key,
     this.maxLines,
     this.padding,
     this.textStyle,
-  }) : super(key: key);
+  });
 
   final String title;
   final int? maxLines;

@@ -31,7 +31,7 @@ class SBBInternal {
   ];
 
   static const barrierBoxShadow = <BoxShadow>[
-    const BoxShadow(
+    BoxShadow(
       color: SBBInternal.barrierColor,
       blurRadius: 15,
     ),
@@ -39,7 +39,7 @@ class SBBInternal {
 }
 
 class SBBButtonContent extends StatelessWidget {
-  const SBBButtonContent({Key? key, required this.label}) : super(key: key);
+  const SBBButtonContent({super.key, required this.label});
 
   final String label;
 

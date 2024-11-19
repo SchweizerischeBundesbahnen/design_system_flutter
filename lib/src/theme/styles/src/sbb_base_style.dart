@@ -34,7 +34,7 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
       primaryColorDark: SBBColors.red125,
       primarySwatch: MaterialColor(
         SBBColors.red.value,
-        <int, Color>{
+        const <int, Color>{
           50: SBBColors.red,
           100: SBBColors.red,
           200: SBBColors.red,
@@ -110,7 +110,7 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
         primaryColorDark: primaryColorDark ?? this.primaryColorDark,
         primarySwatch: primarySwatch ?? this.primarySwatch,
         backgroundColor: backgroundColor ?? this.backgroundColor,
-        defaultFontFamily: fontFamily ?? this.defaultFontFamily,
+        defaultFontFamily: fontFamily ?? defaultFontFamily,
         defaultTextColor: defaultTextColor ?? this.defaultTextColor,
         defaultTextStyle: defaultTextStyle ?? this.defaultTextStyle,
         dividerColor: dividerColor ?? this.dividerColor,
@@ -211,7 +211,7 @@ extension StyleExtension on SBBBaseStyle? {
           other?.defaultRootContainerPadding,
       iconColor: this!.iconColor ?? other?.iconColor,
       brightness: this!.brightness ?? other?.brightness,
-      redTextTheme: this!.redTextTheme ?? other?.redTextTheme,
+      redTextTheme: this?.redTextTheme ?? other?.redTextTheme,
     ) as SBBBaseStyle;
   }
 }

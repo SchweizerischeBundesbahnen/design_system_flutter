@@ -76,13 +76,13 @@ class SBBTertiaryButtonLarge extends StatelessWidget {
 /// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/button>
 class SBBTertiaryButtonSmall extends StatelessWidget {
   const SBBTertiaryButtonSmall({
-    Key? key,
+    super.key,
     required this.label,
     this.icon,
     this.isLoading = false,
     required this.onPressed,
     this.focusNode,
-  }) : super(key: key);
+  });
 
   final String label;
   final IconData? icon;

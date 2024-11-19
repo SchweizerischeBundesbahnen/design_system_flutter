@@ -48,13 +48,12 @@ class SBBCheckbox extends StatefulWidget {
   ///
   /// The values of [tristate] and [autofocus] must not be null.
   const SBBCheckbox({
-    Key? key,
+    super.key,
     required this.value,
     this.tristate = false,
     required this.onChanged,
     this.padding,
-  })  : assert(tristate || value != null),
-        super(key: key);
+  })  : assert(tristate || value != null);
 
   /// Whether this checkbox is checked.
   ///
@@ -106,10 +105,10 @@ class SBBCheckbox extends StatefulWidget {
   final EdgeInsetsGeometry? padding;
 
   @override
-  _SBBCheckboxState createState() => _SBBCheckboxState();
+  SBBCheckboxState createState() => SBBCheckboxState();
 }
 
-class _SBBCheckboxState extends State<SBBCheckbox>
+class SBBCheckboxState extends State<SBBCheckbox>
     with SingleTickerProviderStateMixin {
   static const _outerSquareSize = 20.0;
   static const _outerSquareBorderRadius = 6.0;
@@ -222,7 +221,7 @@ class _SBBCheckboxState extends State<SBBCheckbox>
                     padding: const EdgeInsets.only(bottom: _checkBottomPadding),
                     child: Transform.rotate(
                       angle: -math.pi / 4,
-                      child: Container(
+                      child: SizedBox(
                         height: _checkShortLineHeight,
                         width: _checkLongLineWidth + _checkLongLineLeftMargin,
                         child: Stack(

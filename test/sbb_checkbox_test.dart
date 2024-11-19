@@ -25,9 +25,12 @@ void main() {
 }
 
 class CheckboxTest extends StatelessWidget {
-  const CheckboxTest(
-      {Key? key, required this.value1, this.value2, required this.value3})
-      : super(key: key);
+  const CheckboxTest({
+    super.key,
+    required this.value1,
+    this.value2,
+    required this.value3,
+  });
 
   final bool value1;
   final bool? value2;
@@ -111,7 +114,7 @@ class CheckboxTest extends StatelessWidget {
                   isLastElement: true,
                   onChanged: (value) {},
                   trailingWidget: const Padding(
-                    padding: const EdgeInsets.only(right: sbbDefaultSpacing),
+                    padding: EdgeInsets.only(right: sbbDefaultSpacing),
                     child: Text('CHF 0.99'),
                   ),
                 ),

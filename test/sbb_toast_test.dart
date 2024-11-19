@@ -7,28 +7,28 @@ import 'package:flutter_test/flutter_test.dart';
 import 'test_app.dart';
 
 void main() {
-  const String _message = 'Toast';
-  final Stream<bool> _stream1 = (StreamController<bool>()..add(true)).stream;
-  final Stream<bool> _stream2 = (StreamController<bool>()..add(true)).stream;
-  final Stream<bool> _stream3 = (StreamController<bool>()..add(true)).stream;
-  final Duration _duration = const Duration(milliseconds: 0);
+  const String message = 'Toast';
+  final Stream<bool> stream1 = (StreamController<bool>()..add(true)).stream;
+  final Stream<bool> stream2 = (StreamController<bool>()..add(true)).stream;
+  final Stream<bool> stream3 = (StreamController<bool>()..add(true)).stream;
+  const Duration duration = Duration(milliseconds: 0);
   testWidgets('toast basic test', (WidgetTester tester) async {
     final widget = Column(
       children: [
         Toast.confirmation(
-          message: _message,
-          duration: _duration,
-          stream: _stream1,
+          message: message,
+          duration: duration,
+          stream: stream1,
         ),
         Toast.warning(
-          message: _message,
-          duration: _duration,
-          stream: _stream2,
+          message: message,
+          duration: duration,
+          stream: stream2,
         ),
         Toast.error(
-          message: _message,
-          duration: _duration,
-          stream: _stream3,
+          message: message,
+          duration: duration,
+          stream: stream3,
         ),
       ],
     );

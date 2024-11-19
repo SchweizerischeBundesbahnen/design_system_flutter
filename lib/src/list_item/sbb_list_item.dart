@@ -69,17 +69,15 @@ class SBBListItem extends StatefulWidget {
             padding: const EdgeInsets.symmetric(
               horizontal: sbbDefaultSpacing * 0.5,
             ),
-            child: Container(
-              child: SBBIconButtonSmall(
-                icon: buttonIcon,
-                onPressed: onPressed != null ? onPressedButton : null,
-              ),
+            child: SBBIconButtonSmall(
+              icon: buttonIcon,
+              onPressed: onPressed != null ? onPressedButton : null,
             ),
           ),
         );
 
   const SBBListItem.custom({
-    Key? key,
+    super.key,
     this.leadingIcon,
     required this.title,
     this.subtitle,
@@ -89,7 +87,7 @@ class SBBListItem extends StatefulWidget {
     this.isLastElement = false,
     required this.onPressed,
     required this.trailingWidget,
-  }) : super(key: key);
+  });
 
   final IconData? leadingIcon;
   final String title;

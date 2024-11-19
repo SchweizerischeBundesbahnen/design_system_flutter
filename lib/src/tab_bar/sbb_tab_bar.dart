@@ -17,15 +17,14 @@ class SBBTabBar extends StatefulWidget {
   const SBBTabBar({
     required this.items,
     required this.onTabChanged,
-    Key? key,
+    super.key,
     this.onTap,
     this.controller,
     this.initialItem,
     this.warningSemantics,
     this.showWarning = false,
     int? warningIndex,
-  })  : this.warningIndex = warningIndex ?? items.length - 1,
-        super(key: key);
+  })  : warningIndex = warningIndex ?? items.length - 1;
 
   final List<TabBarItem> items;
   final Future<void> Function(Future<TabBarItem> tabTask) onTabChanged;
@@ -170,9 +169,8 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
 class _IconLayer extends StatelessWidget {
   const _IconLayer(
     this.items,
-    this.selectedTab, {
-    Key? key,
-  }) : super(key: key);
+    this.selectedTab,
+    );
 
   final List<TabBarItem> items;
   final TabBarItem selectedTab;

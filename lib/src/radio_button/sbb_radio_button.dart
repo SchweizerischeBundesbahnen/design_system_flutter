@@ -45,12 +45,12 @@ class SBBRadioButton<T> extends StatefulWidget {
   ///   selected.
   /// * [onChanged] is called when the user selects this radio button.
   const SBBRadioButton({
-    Key? key,
+    super.key,
     required this.value,
     required this.groupValue,
     required this.onChanged,
     this.padding,
-  }) : super(key: key);
+  });
 
   /// The value represented by this radio button.
   final T value;
@@ -94,10 +94,10 @@ class SBBRadioButton<T> extends StatefulWidget {
   bool get _selected => value == groupValue;
 
   @override
-  _SBBRadioButtonState<T> createState() => _SBBRadioButtonState<T>();
+  SBBRadioButtonState<T> createState() => SBBRadioButtonState<T>();
 }
 
-class _SBBRadioButtonState<T> extends State<SBBRadioButton<T>>
+class SBBRadioButtonState<T> extends State<SBBRadioButton<T>>
     with SingleTickerProviderStateMixin {
   static const _outerCircleSize = 20.0;
   static const _innerCircleSize = 8.0;

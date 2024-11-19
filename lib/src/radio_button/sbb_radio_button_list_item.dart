@@ -44,7 +44,7 @@ class SBBRadioButtonListItem<T> extends StatelessWidget {
         );
 
   const SBBRadioButtonListItem.custom({
-    Key? key,
+    super.key,
     required this.value,
     required this.groupValue,
     required this.label,
@@ -54,7 +54,7 @@ class SBBRadioButtonListItem<T> extends StatelessWidget {
     this.isLastElement = false,
     this.leadingIcon,
     this.trailingWidget,
-  }) : super(key: key);
+  });
 
   /// The value represented by this radio button.
   final T value;
