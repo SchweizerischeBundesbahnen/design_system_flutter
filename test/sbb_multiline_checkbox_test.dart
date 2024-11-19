@@ -42,10 +42,10 @@ class MultilineCheckboxText extends StatefulWidget {
   const MultilineCheckboxText({super.key});
 
   @override
-  _MultilineCheckboxTextState createState() => _MultilineCheckboxTextState();
+  MultilineCheckboxTextState createState() => MultilineCheckboxTextState();
 }
 
-class _MultilineCheckboxTextState extends State<MultilineCheckboxText> {
+class MultilineCheckboxTextState extends State<MultilineCheckboxText> {
   bool? _listItemValue = true;
 
   @override

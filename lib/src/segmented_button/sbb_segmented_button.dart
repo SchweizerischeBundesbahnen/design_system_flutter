@@ -155,10 +155,10 @@ class SBBSegmentedButton extends StatefulWidget {
   final ValueChanged<int> selectedIndexChanged;
 
   @override
-  _SegmentedButton createState() => _SegmentedButton();
+  SegmentedButtonState createState() => SegmentedButtonState();
 }
 
-class _SegmentedButton extends State<SBBSegmentedButton> {
+class SegmentedButtonState extends State<SBBSegmentedButton> {
   static const _borderRadius = BorderRadius.all(Radius.circular(22));
 
   late SBBSegmentedButtonStyle? style;

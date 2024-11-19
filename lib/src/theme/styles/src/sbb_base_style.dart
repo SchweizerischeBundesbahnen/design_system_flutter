@@ -211,7 +211,7 @@ extension StyleExtension on SBBBaseStyle? {
           other?.defaultRootContainerPadding,
       iconColor: this!.iconColor ?? other?.iconColor,
       brightness: this!.brightness ?? other?.brightness,
-      redTextTheme: this!.redTextTheme ?? other?.redTextTheme,
+      redTextTheme: this?.redTextTheme ?? other?.redTextTheme,
     ) as SBBBaseStyle;
   }
 }

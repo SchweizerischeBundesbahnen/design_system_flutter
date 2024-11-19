@@ -72,9 +72,9 @@ class TabItemWidget extends StatelessWidget {
       width: size,
       height: size,
       margin: const EdgeInsets.only(bottom: 8.0),
-      child: child,
       color: containerColor,
       decoration: decoration,
+      child: child,
     );
   }
 }

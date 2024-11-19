@@ -68,7 +68,7 @@ class SBBToast {
     double bottom,
     Widget Function(Stream<bool> stream) toastBuilder,
   ) {
-    final showToastMessage = () {
+    showToastMessage() {
       remove();
       _streamController = StreamController<bool>();
       _streamController!.add(true);
@@ -79,7 +79,7 @@ class SBBToast {
         _streamController?.add(false);
         _removeTimer = Timer(kThemeAnimationDuration, () => remove());
       });
-    };
+    }
 
     if (_overlayEntry != null && _removeTimer == null) {
       _removeTimer?.cancel();
@@ -127,64 +127,73 @@ class SBBToast {
 
 @visibleForTesting
 class Toast extends StatefulWidget {
-  Toast.confirmation({
-    super.key, 
+  const Toast.confirmation({
+    Key? key,
+    required String message,
+    required Duration duration,
+    required Stream<bool> stream,
+  }) : this(
+          key: key,
+          duration: duration,
+          message: message,
+          stream: stream,
+          backgroundColor: SBBColors.white,
+          textColor: SBBColors.green,
+          icon: SBBIcons.tick_medium,
+        );
+
+  const Toast.warning({
+    Key? key,
+    required String message,
+    required Duration duration,
+    required Stream<bool> stream,
+  }) : this(
+          key: key,
+          duration: duration,
+          message: message,
+          stream: stream,
+          backgroundColor: SBBColors.orange,
+          textColor: SBBColors.white,
+          icon: SBBIcons.sign_x_medium,
+        );
+
+  const Toast.error({
+    Key? key,
+    required String message,
+    required Duration duration,
+    required Stream<bool> stream,
+  }) : this(
+          key: key,
+          duration: duration,
+          message: message,
+          stream: stream,
+          backgroundColor: SBBColors.red,
+          textColor: SBBColors.white,
+          icon: SBBIcons.sign_x_medium,
+        );
+
+  const Toast({
+    super.key,
     required this.message,
     required this.duration,
     required this.stream,
-  }) {
-    backgroundColor = SBBColors.white;
-    textColor = SBBColors.green;
-    borderColor = SBBColors.green;
-    icon = SBBIcons.tick_medium;
-  }
+    this.backgroundColor = SBBColors.metal,
+    this.textColor = SBBColors.white,
+    this.icon = SBBIcons.circle_information_small,
+  });
 
-  Toast.warning({
-    super.key, 
-    required this.message,
-    required this.duration,
-    required this.stream,
-  }) {
-    backgroundColor = SBBColors.orange;
-    textColor = SBBColors.white;
-    icon = SBBIcons.sign_x_medium;
-  }
-
-  Toast.error({
-    super.key, 
-    required this.message,
-    required this.duration,
-    required this.stream,
-  }) {
-    backgroundColor = SBBColors.red;
-    textColor = SBBColors.white;
-    icon = SBBIcons.sign_x_medium;
-  }
-
-  Toast({
-    super.key, 
-    required this.message,
-    required this.duration,
-    required this.stream,
-  }) {
-    backgroundColor = SBBColors.metal;
-    textColor = SBBColors.white;
-    icon = SBBIcons.circle_information_small;
-  }
-
-  Color? backgroundColor;
-  Color? textColor;
-  Color? borderColor;
-  IconData? icon;
+  final Color backgroundColor;
+  final Color textColor;
+  final IconData icon;
   final String message;
   final Duration duration;
   final Stream<bool> stream;
 
   @override
-  _ToastState createState() => _ToastState();
+  ToastState createState() => ToastState();
 }
 
-class _ToastState extends State<Toast> {
+class ToastState extends State<Toast> {
   bool _visible = false;
 
   @override
@@ -209,7 +218,10 @@ class _ToastState extends State<Toast> {
           children: [
             Text(
               widget.message,
-              style: tooltipTheme.textStyle?.copyWith(decoration: TextDecoration.none, color: widget.textColor),
+              style: tooltipTheme.textStyle?.copyWith(
+                decoration: TextDecoration.none,
+                color: widget.textColor,
+              ),
             ),
           ],
         ),

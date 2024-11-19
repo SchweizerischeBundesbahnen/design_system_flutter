@@ -105,10 +105,10 @@ class SBBCheckbox extends StatefulWidget {
   final EdgeInsetsGeometry? padding;
 
   @override
-  _SBBCheckboxState createState() => _SBBCheckboxState();
+  SBBCheckboxState createState() => SBBCheckboxState();
 }
 
-class _SBBCheckboxState extends State<SBBCheckbox>
+class SBBCheckboxState extends State<SBBCheckbox>
     with SingleTickerProviderStateMixin {
   static const _outerSquareSize = 20.0;
   static const _outerSquareBorderRadius = 6.0;

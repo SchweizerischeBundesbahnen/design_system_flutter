@@ -49,7 +49,7 @@ class TabBarCurveClipper extends CustomClipper<Path> {
     final isNeighbour = _right == _left + 1;
     final smallVersion = portrait && isNeighbour;
 
-    var path;
+    Path path;
 
     if (smallVersion) {
       if (_fromLeft) {

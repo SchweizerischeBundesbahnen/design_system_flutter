@@ -231,7 +231,7 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>>
     _updateOverlay(query: _currentText);
   }
 
-  void _updateOverlay({String? query, bool metricsChanged = false}) {
+  void _updateOverlay({String? query}) {
     if (showOverlay) {
       if (listSuggestionsEntry == null || _metricsChanged) {
         if (listSuggestionsEntry != null) {

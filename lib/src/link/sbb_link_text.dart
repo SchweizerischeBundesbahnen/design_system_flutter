@@ -25,10 +25,10 @@ class SBBLinkText extends StatefulWidget {
   final TextStyle? style;
 
   @override
-  _SBBLinkTextState createState() => _SBBLinkTextState();
+  SBBLinkTextState createState() => SBBLinkTextState();
 }
 
-class _SBBLinkTextState extends State<SBBLinkText> {
+class SBBLinkTextState extends State<SBBLinkText> {
   static const inlineLinkPattern = r'(?:\[([^\]]+)\]\((https?:\/\/[^"\)]+)\))';
   static const angleBracketsPattern = r'(?:<(https?:\/\/[^>]+)>)';
   static const plainLinkPattern =

@@ -31,10 +31,10 @@ class SBBOnboarding extends StatefulWidget {
   final bool blocking;
 
   @override
-  _SBBOnboardingState createState() => _SBBOnboardingState();
+  SBBOnboardingState createState() => SBBOnboardingState();
 }
 
-class _SBBOnboardingState extends State<SBBOnboarding>
+class SBBOnboardingState extends State<SBBOnboarding>
     with SingleTickerProviderStateMixin {
   static const navigationAreaVerticalPadding = 24.0;
   static const navigationAreaHeight = navigationAreaVerticalPadding +
@@ -620,8 +620,9 @@ class _SBBOnboardingState extends State<SBBOnboarding>
 
   void changeStep({bool? goToNextStep}) {
     if (isAnimating ||
-        !isAnimating && isNotDragging && isShowingStartPage && !goToNextStep!)
+        !isAnimating && isNotDragging && isShowingStartPage && !goToNextStep!) {
       return;
+    }
     setState(() {
       this.goToNextStep = goToNextStep;
       isShowingStartPage = !goToNextStep! && currentStepIndex == 0;

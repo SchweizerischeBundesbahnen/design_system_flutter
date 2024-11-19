@@ -39,7 +39,7 @@ class SBBPromotionBox extends StatefulWidget {
 class _SBBPromotionBoxState extends State<SBBPromotionBox>
     with SingleTickerProviderStateMixin {
   final _badgeKey = GlobalKey();
-  late CloseableBoxController _controller = CloseableBoxController(this);
+  late final CloseableBoxController _controller = CloseableBoxController(this);
 
   Size _badgeSize = Size.zero;
 

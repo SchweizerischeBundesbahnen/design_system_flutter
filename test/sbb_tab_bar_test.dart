@@ -69,7 +69,7 @@ void main() {
 }
 
 class _DemoItem extends TabBarItem {
-  _DemoItem(String id, IconData icon) : super(id, icon);
+  _DemoItem(super.id, super.icon);
 
   @override
   String translate(BuildContext context) => 'Item $id';

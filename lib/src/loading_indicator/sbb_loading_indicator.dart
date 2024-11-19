@@ -135,10 +135,10 @@ class LoadingAnimation extends StatefulWidget {
   final Color color;
 
   @override
-  _LoadingAnimationState createState() => _LoadingAnimationState();
+  LoadingAnimationState createState() => LoadingAnimationState();
 }
 
-class _LoadingAnimationState extends State<LoadingAnimation>
+class LoadingAnimationState extends State<LoadingAnimation>
     with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _loadingSquareOne;

@@ -7,7 +7,7 @@ import '../../design_system_flutter.dart';
 ///
 /// The type `T` is the type of the value the entry represents. All the entries
 /// in a given menu must represent values with consistent types.
-typedef bool SelectionValidation<T>(List<T> oldSelection, List<T> newSelection);
+typedef SelectionValidation<T> = bool Function(List<T> oldSelection, List<T> newSelection);
 
 /// An item in a menu created by a [SBBSelect] or [SBBMultiSelect].
 ///
