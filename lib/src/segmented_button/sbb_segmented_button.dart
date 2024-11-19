@@ -142,13 +142,12 @@ class SBBSegmentedButton extends StatefulWidget {
         );
 
   const SBBSegmentedButton.custom({
-    Key? key,
+    super.key,
     required this.widgetBuilders,
     required this.selectedStateIndex,
     required this.selectedIndexChanged,
     this.styleSelector,
-  })  : assert(widgetBuilders.length > 1),
-        super(key: key);
+  })  : assert(widgetBuilders.length > 1);
 
   final List<SegmentedButtonWidgetBuilder> widgetBuilders;
   final int selectedStateIndex;

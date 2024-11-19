@@ -92,7 +92,7 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
         );
 
   const SBBHeader._({
-    Key? key,
+    super.key,
     required this.title,
     this.leadingWidget,
     this.leadingWidth,
@@ -105,8 +105,7 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
     required this.logoTooltip,
     this.actions,
     this.blockSemantics,
-  })  : assert(actions == null || onPressedLogo == null),
-        super(key: key);
+  })  : assert(actions == null || onPressedLogo == null);
 
   final String title;
   final Widget? leadingWidget;

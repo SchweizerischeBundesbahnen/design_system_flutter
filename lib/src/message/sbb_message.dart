@@ -35,6 +35,7 @@ enum MessageIllustration {
 /// * <https://digital.sbb.ch/de/design-system/mobile/components/message>
 class SBBMessage extends StatelessWidget {
   const SBBMessage({
+    super.key, 
     required this.title,
     required this.description,
     this.illustration = MessageIllustration.Woman,
@@ -46,6 +47,7 @@ class SBBMessage extends StatelessWidget {
   });
 
   const SBBMessage.error({
+    super.key, 
     required this.title,
     required this.description,
     this.illustration = MessageIllustration.Display,

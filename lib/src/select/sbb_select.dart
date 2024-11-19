@@ -28,7 +28,7 @@ class SelectMenuItem<T> {
 /// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/select>
 class SBBSelect<T> extends StatelessWidget {
   const SBBSelect({
-    Key? key,
+    super.key,
     this.label,
     this.hint,
     this.icon,
@@ -38,7 +38,7 @@ class SBBSelect<T> extends StatelessWidget {
     required this.value,
     required this.items,
     required this.onChanged,
-  }) : super(key: key);
+  });
 
   final String? label;
   final String? hint;
@@ -216,7 +216,7 @@ class SBBSelect<T> extends StatelessWidget {
 /// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/select>
 class SBBMultiSelect<T> extends StatefulWidget {
   const SBBMultiSelect({
-    Key? key,
+    super.key,
     required this.label,
     this.icon,
     this.title,
@@ -226,7 +226,7 @@ class SBBMultiSelect<T> extends StatefulWidget {
     required this.items,
     required this.onChanged,
     this.selectionValidation,
-  }) : super(key: key);
+  });
 
   final String label;
   final IconData? icon;

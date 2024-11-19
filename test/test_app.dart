@@ -63,7 +63,7 @@ class TestSpecs {
 }
 
 class TestApp extends StatelessWidget {
-  const TestApp({Key? key, required this.child}) : super(key: key);
+  const TestApp({super.key, required this.child});
 
   static Future<void> setupAll() async => await _loadFonts();
 

@@ -72,11 +72,11 @@ class SBBIconButtonLarge extends StatelessWidget {
 /// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/button>
 class SBBIconButtonSmall extends StatelessWidget {
   const SBBIconButtonSmall({
-    Key? key,
+    super.key,
     required this.icon,
     required this.onPressed,
     this.focusNode,
-  }) : super(key: key);
+  });
 
   final IconData icon;
   final VoidCallback? onPressed;
@@ -107,11 +107,11 @@ class SBBIconButtonSmall extends StatelessWidget {
 /// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/button>
 class SBBIconButtonSmallNegative extends StatelessWidget {
   const SBBIconButtonSmallNegative({
-    Key? key,
+    super.key,
     required this.icon,
     required this.onPressed,
     this.focusNode,
-  }) : super(key: key);
+  });
 
   final IconData icon;
   final VoidCallback? onPressed;
@@ -142,11 +142,11 @@ class SBBIconButtonSmallNegative extends StatelessWidget {
 /// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/button>
 class SBBIconButtonSmallBorderless extends StatelessWidget {
   const SBBIconButtonSmallBorderless({
-    Key? key,
+    super.key,
     required this.icon,
     required this.onPressed,
     this.focusNode,
-  }) : super(key: key);
+  });
 
   final IconData icon;
   final VoidCallback? onPressed;
@@ -168,12 +168,12 @@ class SBBIconButtonSmallBorderless extends StatelessWidget {
 /// [SBBIconButtonSmallBorderless].
 class _SBBIconButtonSmallRaw extends StatelessWidget {
   const _SBBIconButtonSmallRaw({
-    Key? key,
+    super.key,
     required this.icon,
     required this.onPressed,
     required this.style,
     this.focusNode,
-  }) : super(key: key);
+  });
 
   final IconData icon;
   final VoidCallback? onPressed;
@@ -230,10 +230,9 @@ class _SBBIconButtonSmallRaw extends StatelessWidget {
 /// "tap target", but not its material or its ink splashes.
 class _InputPadding extends SingleChildRenderObjectWidget {
   const _InputPadding({
-    Key? key,
-    Widget? child,
+    super.child,
     required this.minSize,
-  }) : super(key: key, child: child);
+  });
 
   final Size minSize;
 

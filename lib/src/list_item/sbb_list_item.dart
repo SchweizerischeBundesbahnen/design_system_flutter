@@ -77,7 +77,7 @@ class SBBListItem extends StatefulWidget {
         );
 
   const SBBListItem.custom({
-    Key? key,
+    super.key,
     this.leadingIcon,
     required this.title,
     this.subtitle,
@@ -87,7 +87,7 @@ class SBBListItem extends StatefulWidget {
     this.isLastElement = false,
     required this.onPressed,
     required this.trailingWidget,
-  }) : super(key: key);
+  });
 
   final IconData? leadingIcon;
   final String title;

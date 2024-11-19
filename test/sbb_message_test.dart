@@ -62,7 +62,10 @@ void main() {
 }
 
 class MessageTest extends StatelessWidget {
-  const MessageTest({Key? key, required this.sbbMessage}) : super(key: key);
+  const MessageTest({
+    super.key,
+    required this.sbbMessage,
+  });
 
   final SBBMessage sbbMessage;
 

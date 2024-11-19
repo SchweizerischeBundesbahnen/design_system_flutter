@@ -89,6 +89,7 @@ class SBBAccordion extends StatefulWidget {
   });
 
   SBBAccordion.single({
+    Key? key, 
     required String title,
     required Widget body,
     bool isExpanded = false,
@@ -97,6 +98,7 @@ class SBBAccordion extends StatefulWidget {
     backgroundColor,
     borderColor,
   }) : this(
+          key: key,
           children: [
             SBBAccordionItem(
               title: title,

@@ -14,14 +14,14 @@ import '../sbb_internal.dart';
 /// * https://digital.sbb.ch/de/design-system-mobile-new/seitentypen/onboarding
 class SBBOnboarding extends StatefulWidget {
   const SBBOnboarding({
+    super.key,
     required this.builderDelegate,
     required this.onFinish,
     required this.cancelLabel,
     required this.backSemanticsLabel,
     required this.forwardSemanticsLabel,
-    Key? key,
     this.blocking = false,
-  }) : super(key: key);
+  });
 
   final SBBOnboardingBuilderDelegate builderDelegate;
   final VoidCallback onFinish;

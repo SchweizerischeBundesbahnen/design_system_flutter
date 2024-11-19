@@ -6,8 +6,8 @@ import '../../design_system_flutter.dart';
 /// Add [TabBarFiller] as the last element to make all element in a [ScrollView] visible.
 class TabBarFiller extends StatelessWidget {
   const TabBarFiller({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   /// Usage with [CustomScrollView]. Returns the [TabBarFiller] as a Sliver
   static Widget asSliver({Key? key}) => SliverToBoxAdapter(

@@ -26,8 +26,7 @@ void main() {
 
 class RadioTest extends StatelessWidget {
   const RadioTest(
-      {Key? key, required this.groupValue, required this.listItemGroupValue})
-      : super(key: key);
+      {super.key, required this.groupValue, required this.listItemGroupValue});
 
   final int? groupValue;
   final int? listItemGroupValue;

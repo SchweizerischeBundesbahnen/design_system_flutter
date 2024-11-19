@@ -60,12 +60,12 @@ class SBBPrimaryButton extends StatelessWidget {
 /// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/button>
 class SBBPrimaryButtonNegative extends StatelessWidget {
   const SBBPrimaryButtonNegative({
-    Key? key,
+    super.key,
     required this.label,
     this.isLoading = false,
     required this.onPressed,
     this.focusNode,
-  }) : super(key: key);
+  });
 
   final String label;
   final bool isLoading;

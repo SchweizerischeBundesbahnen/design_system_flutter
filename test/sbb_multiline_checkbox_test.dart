@@ -6,7 +6,7 @@ import 'test_app.dart';
 
 void main() {
   testWidgets('multiline checkbox', (WidgetTester tester) async {
-    final widget = MultilineCheckboxText();
+    const widget = MultilineCheckboxText();
 
     await TestSpecs.run(
       TestSpecs.themedSpecs,
@@ -39,6 +39,8 @@ void main() {
 }
 
 class MultilineCheckboxText extends StatefulWidget {
+  const MultilineCheckboxText({super.key});
+
   @override
   _MultilineCheckboxTextState createState() => _MultilineCheckboxTextState();
 }

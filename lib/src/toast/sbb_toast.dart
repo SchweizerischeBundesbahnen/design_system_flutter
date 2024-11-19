@@ -128,6 +128,7 @@ class SBBToast {
 @visibleForTesting
 class Toast extends StatefulWidget {
   Toast.confirmation({
+    super.key, 
     required this.message,
     required this.duration,
     required this.stream,
@@ -139,6 +140,7 @@ class Toast extends StatefulWidget {
   }
 
   Toast.warning({
+    super.key, 
     required this.message,
     required this.duration,
     required this.stream,
@@ -149,6 +151,7 @@ class Toast extends StatefulWidget {
   }
 
   Toast.error({
+    super.key, 
     required this.message,
     required this.duration,
     required this.stream,
@@ -159,6 +162,7 @@ class Toast extends StatefulWidget {
   }
 
   Toast({
+    super.key, 
     required this.message,
     required this.duration,
     required this.stream,

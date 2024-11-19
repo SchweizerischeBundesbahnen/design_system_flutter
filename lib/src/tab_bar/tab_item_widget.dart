@@ -6,9 +6,9 @@ class TabItemWidget extends StatelessWidget {
   const TabItemWidget(
     this.icon,
     this.selected, {
-    Key? key,
+    super.key,
     this.warning = false,
-  }) : super(key: key);
+  });
 
   factory TabItemWidget.fromTabBarItem(
     TabBarItem item,

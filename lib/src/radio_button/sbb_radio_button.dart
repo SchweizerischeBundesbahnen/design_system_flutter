@@ -45,12 +45,12 @@ class SBBRadioButton<T> extends StatefulWidget {
   ///   selected.
   /// * [onChanged] is called when the user selects this radio button.
   const SBBRadioButton({
-    Key? key,
+    super.key,
     required this.value,
     required this.groupValue,
     required this.onChanged,
     this.padding,
-  }) : super(key: key);
+  });
 
   /// The value represented by this radio button.
   final T value;

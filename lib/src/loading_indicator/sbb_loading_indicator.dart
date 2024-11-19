@@ -13,7 +13,7 @@ class SBBLoadingIndicator extends StatelessWidget {
 
   /// Creates a custom loading indicator.
   const SBBLoadingIndicator.custom({
-    Key? key,
+    super.key,
     required this.squareWidth,
     required this.squareHeight,
     required this.squareSpacing,
@@ -21,7 +21,7 @@ class SBBLoadingIndicator extends StatelessWidget {
     required this.rotationY,
     required this.padding,
     required this.color,
-  }) : super(key: key);
+  });
 
   /// A tiny loading indicator.
   const SBBLoadingIndicator.tiny({Key? key, Color color = SBBColors.red})
@@ -122,6 +122,7 @@ class SBBLoadingIndicator extends StatelessWidget {
 
 class LoadingAnimation extends StatefulWidget {
   const LoadingAnimation({
+    super.key, 
     required this.squareWidth,
     required this.squareHeight,
     required this.squareSpacing,
@@ -254,13 +255,12 @@ class _LoadingAnimationState extends State<LoadingAnimation>
 
 class _Square extends StatelessWidget {
   const _Square({
-    Key? key,
     this.width = 29,
     this.height = 18,
     this.spacing = 4.5,
     this.opacity = 1,
     this.color = SBBColors.red,
-  }) : super(key: key);
+  });
 
   final double width;
   final double height;

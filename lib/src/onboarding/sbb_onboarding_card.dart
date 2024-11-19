@@ -4,10 +4,10 @@ import '../../design_system_flutter.dart';
 
 class SBBOnboardingCard extends StatelessWidget {
   const SBBOnboardingCard({
+    super.key,
     required this.widgetBuilder,
     this.onDismissed,
-    Key? key,
-  }) : super(key: key);
+  });
 
   SBBOnboardingCard.basic({
     required String title,
@@ -66,10 +66,9 @@ class _VerticalCard extends StatelessWidget {
   const _VerticalCard({
     required this.title,
     required this.content,
-    Key? key,
     this.embeddedChild,
     this.customContent,
-  }) : super(key: key);
+  });
 
   final String title;
   final String content;
@@ -133,8 +132,7 @@ class _HorizontalCard extends StatelessWidget {
     required this.content,
     this.embeddedChild,
     this.customContent,
-    Key? key,
-  }) : super(key: key);
+  });
 
   final String title;
   final String content;

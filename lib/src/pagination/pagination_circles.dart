@@ -5,6 +5,7 @@ import 'pagination_circle.dart';
 
 class PaginationCircles extends StatelessWidget {
   const PaginationCircles({
+    super.key, 
     required this.numberCircles,
     required this.selectedCircle,
   });

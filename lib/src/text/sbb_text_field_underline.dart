@@ -12,8 +12,8 @@ class SBBTextFieldUnderline extends StatelessWidget {
     this.errorText,
     required this.hasFocus,
     this.isLastElement = false,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String? errorText;
   final bool hasFocus;

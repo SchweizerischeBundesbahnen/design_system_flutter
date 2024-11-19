@@ -10,12 +10,12 @@ import '../sbb_internal.dart';
 /// * <https://digital.sbb.ch/de/design-system-mobile-new/module/form_group>
 class SBBGroup extends StatelessWidget {
   const SBBGroup({
-    Key? key,
+    super.key,
     this.margin,
     this.padding,
     this.useShadow = false,
     required this.child,
-  }) : super(key: key);
+  });
 
   final EdgeInsetsGeometry? margin;
   final EdgeInsetsGeometry? padding;

@@ -48,13 +48,12 @@ class SBBCheckbox extends StatefulWidget {
   ///
   /// The values of [tristate] and [autofocus] must not be null.
   const SBBCheckbox({
-    Key? key,
+    super.key,
     required this.value,
     this.tristate = false,
     required this.onChanged,
     this.padding,
-  })  : assert(tristate || value != null),
-        super(key: key);
+  })  : assert(tristate || value != null);
 
   /// Whether this checkbox is checked.
   ///
