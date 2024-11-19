@@ -202,7 +202,7 @@ class _SBBIconButtonSmallRaw extends StatelessWidget {
       container: true,
       button: true,
       enabled: onPressed != null,
-      child: Container(
+      child: SizedBox(
         height: SBBInternal.defaultButtonHeight,
         width: SBBInternal.defaultButtonHeight,
         child: _InputPadding(

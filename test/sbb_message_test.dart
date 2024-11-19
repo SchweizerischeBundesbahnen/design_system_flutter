@@ -81,7 +81,7 @@ class MessageTest extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         const SBBListHeader('SBBMessage'),
-        Container(
+        SizedBox(
           width: 400.0,
           child: SBBGroup(
             padding: const EdgeInsets.all(sbbDefaultSpacing / 2),

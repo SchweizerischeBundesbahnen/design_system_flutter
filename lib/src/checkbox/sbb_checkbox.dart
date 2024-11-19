@@ -221,7 +221,7 @@ class _SBBCheckboxState extends State<SBBCheckbox>
                     padding: const EdgeInsets.only(bottom: _checkBottomPadding),
                     child: Transform.rotate(
                       angle: -math.pi / 4,
-                      child: Container(
+                      child: SizedBox(
                         height: _checkShortLineHeight,
                         width: _checkLongLineWidth + _checkLongLineLeftMargin,
                         child: Stack(
