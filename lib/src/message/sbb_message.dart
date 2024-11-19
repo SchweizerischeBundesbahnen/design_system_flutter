@@ -8,8 +8,11 @@ const _kIllustrationMaxHeight = 145.0;
 const _kTextBoxSpacing = 24.0;
 
 enum MessageIllustration {
+  // ignore: constant_identifier_names
   Man('man.png'),
+  // ignore: constant_identifier_names
   Woman('woman.png'),
+  // ignore: constant_identifier_names
   Display('display.png');
 
   const MessageIllustration(this.fileName);

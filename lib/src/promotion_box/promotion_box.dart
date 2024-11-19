@@ -135,7 +135,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox>
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: style.gradientColors!,
-                  stops: [
+                  stops: const [
                     0.0,
                     0.406,
                     0.672,

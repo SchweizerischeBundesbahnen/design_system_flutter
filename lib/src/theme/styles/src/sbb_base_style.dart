@@ -34,7 +34,7 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
       primaryColorDark: SBBColors.red125,
       primarySwatch: MaterialColor(
         SBBColors.red.value,
-        <int, Color>{
+        const <int, Color>{
           50: SBBColors.red,
           100: SBBColors.red,
           200: SBBColors.red,
