@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../design_system_flutter.dart';
+import '../../sbb_design_system_mobile.dart';
 
 /// SBB List Item.
 /// Use according to [documentation](https://digital.sbb.ch/en/design-system/mobile/components/list-item/).

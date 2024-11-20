@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../design_system_flutter.dart';
+import '../../sbb_design_system_mobile.dart';
 
 /// Signature for the callback that's called when an [SBBAccordionItem] is
 /// expanded or collapsed.

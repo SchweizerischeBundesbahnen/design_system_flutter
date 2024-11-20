@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../design_system_flutter.dart';
+import '../../sbb_design_system_mobile.dart';
 
 /// A filler item for the usage of [SBBTabBar] together with a [ScrollView] and a [Stack] to achieve a scroll behind the Tab Bar effect.
 /// Add [TabBarFiller] as the last element to make all element in a [ScrollView] visible.

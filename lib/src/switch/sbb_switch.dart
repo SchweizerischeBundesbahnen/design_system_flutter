@@ -4,7 +4,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-import '../../design_system_flutter.dart';
+import '../../sbb_design_system_mobile.dart';
 
 const _trackWidth = 50.0;
 const _trackHeight = 31.0;
@@ -190,12 +190,9 @@ class _SBBSwitchState extends State<SBBSwitch> with TickerProviderStateMixin {
     final style = SBBControlStyles.of(context).switchToggle!;
 
     final opacity = isEnabled ? 1.0 : _switchDisabledOpacity;
-    final thumbColor =
-        isEnabled ? style.thumbColor! : style.thumbColorDisabled!;
-    final activeColor =
-        isEnabled ? style.activeColor! : style.activeColorDisabled!;
-    final trackColor =
-        isEnabled ? style.trackColor! : style.trackColorDisabled!;
+    final thumbColor = isEnabled ? style.thumbColor! : style.thumbColorDisabled!;
+    final activeColor = isEnabled ? style.activeColor! : style.activeColorDisabled!;
+    final trackColor = isEnabled ? style.trackColor! : style.trackColorDisabled!;
     if (_needsPositionAnimation) {
       _resumePositionAnimation();
     }

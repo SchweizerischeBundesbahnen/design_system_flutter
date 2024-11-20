@@ -1,5 +1,5 @@
 import 'package:animations/animations.dart';
-import 'package:design_system_flutter/design_system_flutter.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';

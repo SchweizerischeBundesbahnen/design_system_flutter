@@ -43,7 +43,7 @@ Elements are optimized for dynamic TextSizes, VoiceOver, light & dark mode.
 In order for the Theming to work, you need to add the `SBBTheme.light` / `SBBTheme.dark` to your app root. For a `MaterialApp`:
 
 ```Dart
-import 'package:design_system_flutter/design_system_flutter.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 void main() {
   runApp(const MyApp());

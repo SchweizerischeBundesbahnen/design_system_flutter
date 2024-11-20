@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../design_system_flutter.dart';
+import '../../sbb_design_system_mobile.dart';
 
 /// Signature for custom selection validation to be used in [SBBMultiSelect] to
 /// determine whether the submit button is enabled or not.

@@ -1,5 +1,5 @@
 import 'package:animations/animations.dart';
-import 'package:design_system_flutter/design_system_flutter.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import 'package:flutter/material.dart';
 
@@ -34,8 +34,7 @@ class LaunchpadPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const SBBHeader(
-          title: 'Design System Mobile', automaticallyImplyLeading: false),
+      appBar: const SBBHeader(title: 'Design System Mobile', automaticallyImplyLeading: false),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(
@@ -56,8 +55,7 @@ class LaunchpadPage extends StatelessWidget {
                   children: <Widget>[
                     _DemoEntry('Icon', IconPage()),
                     _DemoEntry('Typography', TypographyPage()),
-                    _DemoEntry('Typography Red', TypographyRedPage(),
-                        isLastElement: true),
+                    _DemoEntry('Typography Red', TypographyRedPage(), isLastElement: true),
                   ],
                 ),
               ),
@@ -78,8 +76,7 @@ class LaunchpadPage extends StatelessWidget {
                     _DemoEntry('Select', SelectPage()),
                     _DemoEntry('Textfield / Textarea', TextFieldPage()),
                     _DemoEntry('Promotion Box', PromotionBoxPage()),
-                    _DemoEntry('Notification Box', NotificationBoxPage(),
-                        isLastElement: true),
+                    _DemoEntry('Notification Box', NotificationBoxPage(), isLastElement: true),
                   ],
                 ),
               ),

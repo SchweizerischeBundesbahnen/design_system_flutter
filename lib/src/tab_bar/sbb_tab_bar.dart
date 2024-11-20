@@ -3,7 +3,7 @@ import 'dart:math' as math;
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
-import '../../design_system_flutter.dart';
+import '../../sbb_design_system_mobile.dart';
 import '../sbb_internal.dart';
 import 'tab_bar_curve_clipper.dart';
 import 'tab_bar_draw_data.dart';

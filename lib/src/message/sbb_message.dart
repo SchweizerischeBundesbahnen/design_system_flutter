@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../design_system_flutter.dart';
+import '../../sbb_design_system_mobile.dart';
 
 const _kDefaultInteractionIcon = SBBIcons.arrows_circle_small;
 

@@ -1,4 +1,4 @@
-library design_system_flutter;
+library sbb_design_system_mobile;
 
 export 'src/accordion/sbb_accordion.dart';
 export 'src/button/sbb_button_style_extensions.dart';

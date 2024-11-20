@@ -1,4 +1,4 @@
-import 'package:design_system_flutter/design_system_flutter.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
 
 class AutocompletionPage extends StatefulWidget {
@@ -49,8 +49,7 @@ class _AutocompletionPageState extends State<AutocompletionPage> {
       },
       favorites: _favorites,
       labelText: 'Autocompletion',
-      controller: TextEditingController()
-        ..value = const TextEditingValue(text: ''),
+      controller: TextEditingController()..value = const TextEditingValue(text: ''),
       clearOnSubmit: false,
     );
   }

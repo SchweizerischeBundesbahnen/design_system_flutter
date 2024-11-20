@@ -1,4 +1,4 @@
-import 'package:design_system_flutter/design_system_flutter.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
 
 import '../native_app.dart';
@@ -11,8 +11,7 @@ class TypographyPage extends StatelessWidget {
       children: <Widget>[
         const ThemeModeSegmentedButton(),
         const SizedBox(height: sbbDefaultSpacing),
-        const TypographyExample(
-            'Extra Large (Light)', SBBTextStyles.extraLargeLight),
+        const TypographyExample('Extra Large (Light)', SBBTextStyles.extraLargeLight),
         const SizedBox(height: sbbDefaultSpacing),
         const TypographyExample('Large (Light)', SBBTextStyles.largeLight),
         const SizedBox(height: sbbDefaultSpacing),
@@ -26,11 +25,9 @@ class TypographyPage extends StatelessWidget {
         const SizedBox(height: sbbDefaultSpacing),
         const TypographyExample('Small (Bold)', SBBTextStyles.smallBold),
         const SizedBox(height: sbbDefaultSpacing),
-        const TypographyExample(
-            'Extra Small (Light)', SBBTextStyles.extraSmallLight),
+        const TypographyExample('Extra Small (Light)', SBBTextStyles.extraSmallLight),
         const SizedBox(height: sbbDefaultSpacing),
-        const TypographyExample(
-            'Extra Small (Bold)', SBBTextStyles.extraSmallBold),
+        const TypographyExample('Extra Small (Bold)', SBBTextStyles.extraSmallBold),
       ],
     );
   }
@@ -55,8 +52,7 @@ class TypographyExample extends StatelessWidget {
               children: [
                 Padding(
                   padding: const EdgeInsets.all(sbbDefaultSpacing),
-                  child: Text('The quick brown fox jumps over the lazy dog',
-                      style: style),
+                  child: Text('The quick brown fox jumps over the lazy dog', style: style),
                 ),
                 const Divider(),
                 Padding(
