@@ -35,7 +35,7 @@ class _OnboardingPage extends StatelessWidget {
     return Scaffold(
       appBar: _PreferredSizeWidget(),
       body: PopScope(
-        onPopInvokedWithResult: (didPop, result) => builderDelegate.onPop(),
+        onPopInvoked: (didPop) => builderDelegate.onPop(),
         child: SBBOnboarding(
           builderDelegate: builderDelegate,
           onFinish: () => Navigator.of(context).pop(),
@@ -48,8 +48,7 @@ class _OnboardingPage extends StatelessWidget {
   }
 }
 
-class _PreferredSizeWidget extends StatelessWidget
-    implements PreferredSizeWidget {
+class _PreferredSizeWidget extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final style = SBBControlStyles.of(context);
@@ -363,9 +362,7 @@ class _IllustrationWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
-    final double height = mediaQuery.orientation == Orientation.portrait
-        ? 200
-        : mediaQuery.size.height;
+    final double height = mediaQuery.orientation == Orientation.portrait ? 200 : mediaQuery.size.height;
     return SizedBox(
       height: height,
       child: SvgPicture.asset(
