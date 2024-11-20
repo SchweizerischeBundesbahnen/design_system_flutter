@@ -186,7 +186,6 @@ class SBBCheckboxState extends State<SBBCheckbox>
   Widget build(BuildContext context) {
     final style = SBBControlStyles.of(context).checkbox;
     final enabled = widget.onChanged != null;
-    // TODO add semantics
     return Material(
       color: SBBColors.transparent,
       child: InkWell(

@@ -185,12 +185,12 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
       child: AppBar(
         titleSpacing: 0.0,
         leading: Container(
-          child: leading,
           padding: customLeadingWidth
               ? EdgeInsets.zero
               : EdgeInsets.only(
                   right: kToolbarHeight - leadingWidth,
                 ),
+          child: leading,
         ),
         leadingWidth: customLeadingWidth ? leadingWidth : kToolbarHeight,
         automaticallyImplyLeading: automaticallyImplyLeading,

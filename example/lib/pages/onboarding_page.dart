@@ -35,7 +35,7 @@ class _OnboardingPage extends StatelessWidget {
     return Scaffold(
       appBar: _PreferredSizeWidget(),
       body: PopScope(
-        onPopInvoked: (didPop) => builderDelegate.onPop(),
+        onPopInvokedWithResult: (didPop, result) => builderDelegate.onPop(),
         child: SBBOnboarding(
           builderDelegate: builderDelegate,
           onFinish: () => Navigator.of(context).pop(),

@@ -153,7 +153,6 @@ class SBBRadioButtonState<T> extends State<SBBRadioButton<T>>
   Widget build(BuildContext context) {
     final style = SBBControlStyles.of(context).radioButton;
     final enabled = widget.onChanged != null;
-    // TODO add semantics
     return Material(
       color: SBBColors.transparent,
       child: InkWell(

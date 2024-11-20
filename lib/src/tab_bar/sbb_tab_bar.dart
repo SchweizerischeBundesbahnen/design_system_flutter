@@ -104,10 +104,6 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
                       ),
                     ),
                     ClipPath(
-                      child: Container(
-                        color: style.themeValue(SBBColors.white, SBBColors.charcoal),
-                        child: _IconLayer(widget.items, snapshotData.selectedTab),
-                      ),
                       clipper: TabBarCurveClipper(
                         widget.items.indexOf(snapshotData.selectedTab),
                         widget.items.indexOf(snapshotData.nextTab),
@@ -115,6 +111,10 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
                         tabBarData,
                         snapshotData.animation,
                         snapshotData.hover,
+                      ),
+                      child: Container(
+                        color: style.themeValue(SBBColors.white, SBBColors.charcoal),
+                        child: _IconLayer(widget.items, snapshotData.selectedTab),
                       ),
                     ),
                     if (widget.showWarning)

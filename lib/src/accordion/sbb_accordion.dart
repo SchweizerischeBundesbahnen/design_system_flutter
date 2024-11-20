@@ -136,7 +136,6 @@ class _SBBAccordionState extends State<SBBAccordion> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO use these: MaterialLocalizations.of(context).expandedIconTapHint; MaterialLocalizations.of(context).collapsedIconTapHint;
     final style = SBBControlStyles.of(context);
     final List<Widget> items = <Widget>[];
     for (int i = 0; i < widget.children.length; i++) {
