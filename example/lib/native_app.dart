@@ -55,6 +55,7 @@ class MyApp extends StatelessWidget {
       child: Consumer<AppState>(
         builder: (BuildContext context, AppState appState, _) {
           return MaterialApp(
+            debugShowCheckedModeBanner: false,
             theme: SBBTheme.light(),
             darkTheme: SBBTheme.dark(),
             themeMode: appState.isDarkModeOn ? ThemeMode.dark : ThemeMode.light,

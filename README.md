@@ -69,7 +69,7 @@ class MyApp extends StatelessWidget {
 
 The **Flutter DSM** demo application is currently only available in the SBB Enterprise Playstore (Android).
 
-<p align="left"><img src="https://raw.githubusercontent.com/SchweizerischeBundesbahnen/design_system_flutter/main/example/gallery/app_icon/icon.webp" alt="Icon of the example app" width="5%"></p>
+<p align="left"><img src="https://raw.githubusercontent.com/SchweizerischeBundesbahnen/design_system_flutter/main/example/gallery/example_app_icon.webp" alt="Icon of the example app" width="5%"></p>
 
 <a id="Documentation"></a>
 
