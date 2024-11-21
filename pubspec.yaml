@@ -3,7 +3,7 @@ description: The official SBB design system mobile for Flutter.
 homepage: https://digital.sbb.ch/de/design-system/mobile/overview/
 repository: https://github.com/SchweizerischeBundesbahnen/design_system_flutter
 issue_tracker: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/issues
-topics: [icons, theme, design, icons, design-system]
+topics: [icons, theme, design, design-system]
 
 # set by Github Action
 version: 2.0.0
