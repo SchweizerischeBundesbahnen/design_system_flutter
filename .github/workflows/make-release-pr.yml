@@ -43,7 +43,7 @@ jobs:
           tag-prefix: ''
 
       - name: Update Pubspec version
-        uses: Dbono-dev/yaml-action@v1.0.3
+        uses: Dbono-dev/yaml-action@v1.0.4
         with:
           changes: |
             {
