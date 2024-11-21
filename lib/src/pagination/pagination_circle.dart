@@ -1,4 +1,4 @@
-import '../../design_system_flutter.dart';
+import '../../sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
 
 const double _kCircleBorderWidth = 1.0;

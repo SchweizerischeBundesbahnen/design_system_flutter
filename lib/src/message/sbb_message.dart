@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../design_system_flutter.dart';
+import '../../sbb_design_system_mobile.dart';
 
 const _kDefaultInteractionIcon = SBBIcons.arrows_circle_small;
 
@@ -20,7 +20,7 @@ enum MessageIllustration {
   final String fileName;
 
   static String parent = 'lib/assets/illustrations';
-  static String package = 'design_system_flutter';
+  static String package = 'sbb_design_system_mobile';
 
   AssetImage asset(Brightness brightness) {
     final path = '$parent/${brightness.name}/$fileName';
@@ -35,7 +35,7 @@ enum MessageIllustration {
 /// * <https://digital.sbb.ch/de/design-system/mobile/components/message>
 class SBBMessage extends StatelessWidget {
   const SBBMessage({
-    super.key, 
+    super.key,
     required this.title,
     required this.description,
     this.illustration = MessageIllustration.Woman,
@@ -47,7 +47,7 @@ class SBBMessage extends StatelessWidget {
   });
 
   const SBBMessage.error({
-    super.key, 
+    super.key,
     required this.title,
     required this.description,
     this.illustration = MessageIllustration.Display,
@@ -109,9 +109,7 @@ class SBBMessage extends StatelessWidget {
 
   SBBLoadingIndicator _loadingIndicator(BuildContext context) {
     final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
-    return isDarkTheme
-        ? const SBBLoadingIndicator.mediumCloud()
-        : const SBBLoadingIndicator.medium();
+    return isDarkTheme ? const SBBLoadingIndicator.mediumCloud() : const SBBLoadingIndicator.medium();
   }
 
   Text _title(TextTheme textTheme) => Text(

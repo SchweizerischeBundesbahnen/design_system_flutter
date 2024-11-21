@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../design_system_flutter.dart';
+import '../../sbb_design_system_mobile.dart';
 import 'sbb_text_field_underline.dart';
 
 /// The SBB TextField. Use according to documentation.

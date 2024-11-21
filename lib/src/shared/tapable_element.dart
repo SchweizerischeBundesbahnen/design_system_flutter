@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../design_system_flutter.dart';
+import '../../sbb_design_system_mobile.dart';
 
 class TapableElement extends StatelessWidget {
   factory TapableElement.roundedBox({

@@ -4,7 +4,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../../design_system_flutter.dart';
+import '../../sbb_design_system_mobile.dart';
 
 /// The SBB Radio Button. Use according to documentation.
 ///
@@ -153,7 +153,6 @@ class SBBRadioButtonState<T> extends State<SBBRadioButton<T>>
   Widget build(BuildContext context) {
     final style = SBBControlStyles.of(context).radioButton;
     final enabled = widget.onChanged != null;
-    // TODO add semantics
     return Material(
       color: SBBColors.transparent,
       child: InkWell(

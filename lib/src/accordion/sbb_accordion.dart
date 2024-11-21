@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../design_system_flutter.dart';
+import '../../sbb_design_system_mobile.dart';
 
 /// Signature for the callback that's called when an [SBBAccordionItem] is
 /// expanded or collapsed.
@@ -136,7 +136,6 @@ class _SBBAccordionState extends State<SBBAccordion> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO use these: MaterialLocalizations.of(context).expandedIconTapHint; MaterialLocalizations.of(context).collapsedIconTapHint;
     final style = SBBControlStyles.of(context);
     final List<Widget> items = <Widget>[];
     for (int i = 0; i < widget.children.length; i++) {

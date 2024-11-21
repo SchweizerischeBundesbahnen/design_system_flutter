@@ -89,8 +89,6 @@ android/app/.classpath
 android/app/.project
 android/app/.settings/
 
-**/ch/
-
 **/fastlane-build.sh
 **/ios/*.mobileprovision
 **/appstore/**

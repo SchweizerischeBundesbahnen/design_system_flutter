@@ -1,7 +1,12 @@
-name: design_system_flutter
-description: Design System Mobile for Flutter
-version: 2.0.0
+name: sbb_design_system_mobile
+description: The official SBB design system mobile for Flutter.
 homepage: https://digital.sbb.ch/de/design-system/mobile/overview/
+repository: https://github.com/SchweizerischeBundesbahnen/design_system_flutter
+issue_tracker: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/issues
+topics: [icons, theme, design, icons, design-system]
+
+# set by Github Action
+version: 2.0.0
 
 environment:
   sdk: ">=3.3.0 <4.0.0"
@@ -12,7 +17,9 @@ dependencies:
     sdk: flutter
 
   # https://pub.dev/packages/intl
-  intl: ">=0.18.0"
+  intl: ">=0.18.0 <=0.20.0"
+  # https://pub.dev/packages/collection
+  collection: ^1.18.0
 
 dev_dependencies:
   flutter_test:
@@ -26,7 +33,6 @@ platforms:
   android:
   ios:
 
-
 flutter:
   assets:
     - lib/fonts/
@@ -36,25 +42,25 @@ flutter:
   fonts:
     - family: SBBWeb
       fonts:
-        - asset: packages/design_system_flutter/fonts/SBBWeb-Bold.ttf
+        - asset: packages/sbb_design_system_mobile/fonts/SBBWeb-Bold.ttf
           weight: 700
-        - asset: packages/design_system_flutter/fonts/SBBWeb-Roman.ttf
+        - asset: packages/sbb_design_system_mobile/fonts/SBBWeb-Roman.ttf
           weight: 400
-        - asset: packages/design_system_flutter/fonts/SBBWeb-Italic.ttf
+        - asset: packages/sbb_design_system_mobile/fonts/SBBWeb-Italic.ttf
           weight: 400
           style: italic
-        - asset: packages/design_system_flutter/fonts/SBBWeb-Light.ttf
+        - asset: packages/sbb_design_system_mobile/fonts/SBBWeb-Light.ttf
           weight: 300
-        - asset: packages/design_system_flutter/fonts/SBBWeb-Thin.ttf
+        - asset: packages/sbb_design_system_mobile/fonts/SBBWeb-Thin.ttf
           weight: 200
-        - asset: packages/design_system_flutter/fonts/SBBWeb-Ultra-Light.ttf
+        - asset: packages/sbb_design_system_mobile/fonts/SBBWeb-Ultra-Light.ttf
           weight: 100
     - family: SBBIconsSmall
       fonts:
-        - asset: packages/design_system_flutter/fonts/sbb_icons_small.ttf
+        - asset: packages/sbb_design_system_mobile/fonts/sbb_icons_small.ttf
     - family: SBBIconsMedium
       fonts:
-        - asset: packages/design_system_flutter/fonts/sbb_icons_medium.ttf
+        - asset: packages/sbb_design_system_mobile/fonts/sbb_icons_medium.ttf
     - family: SBBIconsLarge
       fonts:
-        - asset: packages/design_system_flutter/fonts/sbb_icons_large.ttf
+        - asset: packages/sbb_design_system_mobile/fonts/sbb_icons_large.ttf
