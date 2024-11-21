@@ -148,4 +148,4 @@ See [Release.md](Release.md).
 * **Ralf Winkelmann**
 * **Yoonjoo Lee**
 
-[Design System Mobile]: (https://digital.sbb.ch/en/design-system/mobile/overview/)
+[Design System Mobile]: https://digital.sbb.ch/en/design-system/mobile/overview/
