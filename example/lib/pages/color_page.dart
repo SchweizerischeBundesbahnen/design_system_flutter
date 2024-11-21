@@ -1,4 +1,4 @@
-import 'package:design_system_flutter/design_system_flutter.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
 
 import '../native_app.dart';
@@ -91,8 +91,7 @@ class _ColorShowcaseCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final valueString =
-        colorEntry.color.value.toRadixString(16).padLeft(8, '0').toUpperCase();
+    final valueString = colorEntry.color.value.toRadixString(16).padLeft(8, '0').toUpperCase();
     final hexString = valueString.substring(2);
     final opacityString = valueString.substring(0, 2);
     const colorValueTextStyle = SBBTextStyles.helpersLabel;

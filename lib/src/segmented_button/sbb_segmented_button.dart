@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
 
-import '../../design_system_flutter.dart';
+import '../../sbb_design_system_mobile.dart';
 import '../sbb_internal.dart';
 
 part 'sbb_segmented_button.typedefs.dart';

@@ -3,7 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-import '../../design_system_flutter.dart';
+import '../../sbb_design_system_mobile.dart';
 import '../sbb_internal.dart';
 
 /// Large variant of the SBB Icon Button. Use according to documentation.
@@ -262,29 +262,33 @@ class _RenderInputPadding extends RenderShiftedBox {
 
   @override
   double computeMinIntrinsicWidth(double height) {
-    if (child != null)
+    if (child != null) {
       return math.max(child!.getMinIntrinsicWidth(height), minSize.width);
+    }
     return 0.0;
   }
 
   @override
   double computeMinIntrinsicHeight(double width) {
-    if (child != null)
+    if (child != null) {
       return math.max(child!.getMinIntrinsicHeight(width), minSize.height);
+    }
     return 0.0;
   }
 
   @override
   double computeMaxIntrinsicWidth(double height) {
-    if (child != null)
+    if (child != null) {
       return math.max(child!.getMaxIntrinsicWidth(height), minSize.width);
+    }
     return 0.0;
   }
 
   @override
   double computeMaxIntrinsicHeight(double width) {
-    if (child != null)
+    if (child != null) {
       return math.max(child!.getMaxIntrinsicHeight(width), minSize.height);
+    }
     return 0.0;
   }
 

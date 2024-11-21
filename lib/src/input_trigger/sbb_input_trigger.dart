@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../design_system_flutter.dart';
+import '../../sbb_design_system_mobile.dart';
 
 /// Widget that mimics the visuals of an [SBBTextField] but has an [onPressed]
 /// callback instead of the text field functionality.

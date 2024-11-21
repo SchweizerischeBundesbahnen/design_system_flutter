@@ -1,4 +1,4 @@
-import 'package:design_system_flutter/design_system_flutter.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -93,8 +93,7 @@ class PickerTest extends StatelessWidget {
                     initialSelectedIndex: initialItem,
                     itemBuilder: (BuildContext context, int index) {
                       final isEnabled =
-                          (minItem == null || index >= minItem!) &&
-                              (maxItem == null || index <= maxItem!);
+                          (minItem == null || index >= minItem!) && (maxItem == null || index <= maxItem!);
                       final item = _fruitNames[index % _fruitNames.length];
                       return SBBPickerItem(item, isEnabled: isEnabled);
                     },
@@ -109,14 +108,12 @@ class PickerTest extends StatelessWidget {
                     looping: false,
                     initialSelectedIndex: initialItem,
                     itemBuilder: (BuildContext context, int index) {
-                      final isInRange =
-                          (index >= 0) && (index < _fruitNames.length);
+                      final isInRange = (index >= 0) && (index < _fruitNames.length);
                       if (!isInRange) {
                         return null;
                       }
                       final isEnabled =
-                          (minItem == null || index >= minItem!) &&
-                              (maxItem == null || index <= maxItem!);
+                          (minItem == null || index >= minItem!) && (maxItem == null || index <= maxItem!);
                       final item = _fruitNames[index];
                       return SBBPickerItem(item, isEnabled: isEnabled);
                     },
@@ -132,8 +129,7 @@ class PickerTest extends StatelessWidget {
                     initialSelectedIndex: initialItem,
                     itemBuilder: (BuildContext context, int index) {
                       final isInRange =
-                          (minItem == null || index >= minItem!) &&
-                              (maxItem == null || index <= maxItem!);
+                          (minItem == null || index >= minItem!) && (maxItem == null || index <= maxItem!);
                       if (!isInRange) {
                         return null;
                       }

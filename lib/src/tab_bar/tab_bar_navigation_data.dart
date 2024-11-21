@@ -1,4 +1,4 @@
-import '../../design_system_flutter.dart';
+import '../../sbb_design_system_mobile.dart';
 
 /// The data of the current state of the [SBBTabBar]
 class TabBarNavigationData {
