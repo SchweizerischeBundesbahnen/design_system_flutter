@@ -1,4 +1,4 @@
-import 'package:design_system_flutter/design_system_flutter.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -48,8 +48,7 @@ class _OnboardingPage extends StatelessWidget {
   }
 }
 
-class _PreferredSizeWidget extends StatelessWidget
-    implements PreferredSizeWidget {
+class _PreferredSizeWidget extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final style = SBBControlStyles.of(context);
@@ -363,9 +362,7 @@ class _IllustrationWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
-    final double height = mediaQuery.orientation == Orientation.portrait
-        ? 200
-        : mediaQuery.size.height;
+    final double height = mediaQuery.orientation == Orientation.portrait ? 200 : mediaQuery.size.height;
     return SizedBox(
       height: height,
       child: SvgPicture.asset(

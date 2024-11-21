@@ -1,4 +1,4 @@
-import 'package:design_system_flutter/design_system_flutter.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
 
 import '../native_app.dart';
@@ -18,10 +18,8 @@ class _AccordionPageState extends State<AccordionPage> {
       isExpanded: true,
     ),
     _Item(
-      title:
-          'The title text has only 1 line. So make sure to keep the title short.',
-      text:
-          'The title text has only 1 line. So make sure to keep the title short.',
+      title: 'The title text has only 1 line. So make sure to keep the title short.',
+      text: 'The title text has only 1 line. So make sure to keep the title short.',
     ),
     _Item(
       title: 'Lorem ipsum',
@@ -43,8 +41,7 @@ class _AccordionPageState extends State<AccordionPage> {
         SBBGroup(
           child: SBBAccordion.single(
             title: 'Title text',
-            body: const Text(
-                'The body is only visible when the Accordion item is expanded.'),
+            body: const Text('The body is only visible when the Accordion item is expanded.'),
             isExpanded: _singleAccordionExpanded,
             singleAccordionCallback: (isExpanded) {
               setState(() {

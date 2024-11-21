@@ -22,7 +22,7 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - name: Checkout design_system_flutter code.
+      - name: Checkout sbb_design_system_mobile code.
         uses: actions/checkout@v4
 
       - name: Clone flutter version specified in .fvm.

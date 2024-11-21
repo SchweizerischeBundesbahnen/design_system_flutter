@@ -2,7 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 
-import '../../design_system_flutter.dart';
+import '../../sbb_design_system_mobile.dart';
 
 /// The SBB Checkbox. Use according to documentation.
 ///
@@ -186,7 +186,6 @@ class SBBCheckboxState extends State<SBBCheckbox>
   Widget build(BuildContext context) {
     final style = SBBControlStyles.of(context).checkbox;
     final enabled = widget.onChanged != null;
-    // TODO add semantics
     return Material(
       color: SBBColors.transparent,
       child: InkWell(

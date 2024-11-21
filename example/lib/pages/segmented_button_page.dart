@@ -1,4 +1,4 @@
-import 'package:design_system_flutter/design_system_flutter.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/widgets.dart';
 
 import '../native_app.dart';
@@ -27,8 +27,7 @@ class _SegmentedButtonPageState extends State<SegmentedButtonPage> {
           padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
           child: SBBSegmentedButton(
             values: ['Option 1', 'Option 2', 'Option 3'],
-            selectedIndexChanged: (value) =>
-                setState(() => _selectedStateIndex1 = value),
+            selectedIndexChanged: (value) => setState(() => _selectedStateIndex1 = value),
             selectedStateIndex: _selectedStateIndex1,
           ),
         ),
@@ -40,8 +39,7 @@ class _SegmentedButtonPageState extends State<SegmentedButtonPage> {
               SBBIcons.bicycle_small: 'Bicycle',
               SBBIcons.scooter_profile_small: 'Scooter',
             },
-            selectedIndexChanged: (value) =>
-                setState(() => _selectedStateIndex2 = value),
+            selectedIndexChanged: (value) => setState(() => _selectedStateIndex2 = value),
             selectedStateIndex: _selectedStateIndex2,
           ),
         ),
@@ -50,8 +48,7 @@ class _SegmentedButtonPageState extends State<SegmentedButtonPage> {
           padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
           child: SBBSegmentedButton.redText(
             values: ['Option 1', 'Option 2', 'Option 3'],
-            selectedIndexChanged: (value) =>
-                setState(() => _selectedStateIndex3 = value),
+            selectedIndexChanged: (value) => setState(() => _selectedStateIndex3 = value),
             selectedStateIndex: _selectedStateIndex3,
           ),
         ),
@@ -63,8 +60,7 @@ class _SegmentedButtonPageState extends State<SegmentedButtonPage> {
               SBBIcons.bicycle_small: 'Bicycle',
               SBBIcons.scooter_profile_small: 'Scooter',
             },
-            selectedIndexChanged: (value) =>
-                setState(() => _selectedStateIndex4 = value),
+            selectedIndexChanged: (value) => setState(() => _selectedStateIndex4 = value),
             selectedStateIndex: _selectedStateIndex4,
           ),
         ),

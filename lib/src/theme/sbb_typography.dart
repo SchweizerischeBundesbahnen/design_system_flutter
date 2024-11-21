@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-const String sbbWebFont = 'packages/design_system_flutter/SBBWeb';
+const String sbbWebFont = 'packages/sbb_design_system_mobile/SBBWeb';
 
 class SBBTextStyles {
   SBBTextStyles._();

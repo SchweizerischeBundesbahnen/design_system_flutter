@@ -1,4 +1,4 @@
-import 'package:design_system_flutter/design_system_flutter.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
 
 import '../native_app.dart';
@@ -15,8 +15,7 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
   late CloseableBoxController extraController;
 
   static const _title = 'Bessere Übersicht.';
-  static const _description =
-      'Erkennen Sie nun schneller, auf welchen Perrons Durchsagen vorhanden sind.';
+  static const _description = 'Erkennen Sie nun schneller, auf welchen Perrons Durchsagen vorhanden sind.';
 
   @override
   Widget build(BuildContext context) {

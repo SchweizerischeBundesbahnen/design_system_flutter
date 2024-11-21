@@ -1,4 +1,4 @@
-import 'package:design_system_flutter/design_system_flutter.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
 
 import '../native_app.dart';
@@ -22,8 +22,7 @@ class ListItemPage extends StatelessWidget {
               SBBListItem(
                 title: 'Subtitle',
                 subtitle: 'This is the Subtitle',
-                onPressed: () =>
-                    sbbToast.show(message: 'ListItem with Subtitle'),
+                onPressed: () => sbbToast.show(message: 'ListItem with Subtitle'),
               ),
               SBBListItem(
                 title: 'Icon',
@@ -46,23 +45,20 @@ class ListItemPage extends StatelessWidget {
                 subtitle: 'This is the Subtitle',
                 buttonIcon: SBBIcons.chevron_small_right_small,
                 onPressedButton: () => sbbToast.show(message: 'Button'),
-                onPressed: () =>
-                    sbbToast.show(message: 'ListItem with Subtitle and Button'),
+                onPressed: () => sbbToast.show(message: 'ListItem with Subtitle and Button'),
               ),
               SBBListItem.button(
                 title: 'Icon, Button',
                 leadingIcon: SBBIcons.clock_small,
                 buttonIcon: SBBIcons.chevron_small_right_small,
                 onPressedButton: () => sbbToast.show(message: 'Button'),
-                onPressed: () =>
-                    sbbToast.show(message: 'ListItem with Icon and Button'),
+                onPressed: () => sbbToast.show(message: 'ListItem with Icon and Button'),
               ),
               SBBListItem(
                 title: 'Icon, Subtitle',
                 leadingIcon: SBBIcons.clock_small,
                 subtitle: 'This is the Subtitle',
-                onPressed: () =>
-                    sbbToast.show(message: 'ListItem with Icon and Subtitle'),
+                onPressed: () => sbbToast.show(message: 'ListItem with Icon and Subtitle'),
               ),
               SBBListItem.button(
                 title: 'Icon, Subtitle, Button',
@@ -70,8 +66,7 @@ class ListItemPage extends StatelessWidget {
                 leadingIcon: SBBIcons.clock_small,
                 buttonIcon: SBBIcons.chevron_small_right_small,
                 onPressedButton: () => sbbToast.show(message: 'Button'),
-                onPressed: () => sbbToast.show(
-                    message: 'ListItem with Icon, Subtitle and Button'),
+                onPressed: () => sbbToast.show(message: 'ListItem with Icon, Subtitle and Button'),
               ),
               SBBListItem.button(
                 title: 'Disabled, Icon, Subtitle, Button',

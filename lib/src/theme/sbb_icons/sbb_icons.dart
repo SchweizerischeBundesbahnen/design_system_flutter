@@ -6,9 +6,9 @@ const sbbIconSizeSmall = 24.0;
 const sbbIconSizeMedium = 36.0;
 const sbbIconSizeLarge = 48.0;
 
-const smallFontFamily = 'packages/design_system_flutter/SBBIconsSmall';
-const mediumFontFamily = 'packages/design_system_flutter/SBBIconsMedium';
-const largeFontFamily = 'packages/design_system_flutter/SBBIconsLarge';
+const smallFontFamily = 'packages/sbb_design_system_mobile/SBBIconsSmall';
+const mediumFontFamily = 'packages/sbb_design_system_mobile/SBBIconsMedium';
+const largeFontFamily = 'packages/sbb_design_system_mobile/SBBIconsLarge';
 
 // The names are given by digital.sbb.ch
 // ignore_for_file: constant_identifier_names

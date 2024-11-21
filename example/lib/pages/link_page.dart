@@ -1,4 +1,4 @@
-import 'package:design_system_flutter/design_system_flutter.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
 
 import '../native_app.dart';
@@ -15,8 +15,7 @@ class LinkPage extends StatelessWidget {
         SBBGroup(
           padding: const EdgeInsets.all(sbbDefaultSpacing),
           child: SBBLinkText(
-            text:
-                '''We are using a subset of the Markdown syntax for recognizing links in a text:
+            text: '''We are using a subset of the Markdown syntax for recognizing links in a text:
 
 Inline-style link - [text](url)
 [AppBakery SharePoint](https://sbb.sharepoint.com/sites/app-bakery)
