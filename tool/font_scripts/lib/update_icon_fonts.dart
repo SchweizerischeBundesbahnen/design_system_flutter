@@ -115,9 +115,9 @@ Future<void> createFlutterFontMap() async {
   sb.writeln('const sbbIconSizeMedium = 36.0;');
   sb.writeln('const sbbIconSizeLarge = 48.0;');
   sb.writeln();
-  sb.writeln('const smallFontFamily = \'packages/design_system_flutter/SBBIconsSmall\';');
-  sb.writeln('const mediumFontFamily = \'packages/design_system_flutter/SBBIconsMedium\';');
-  sb.writeln('const largeFontFamily = \'packages/design_system_flutter/SBBIconsLarge\';');
+  sb.writeln('const smallFontFamily = \'packages/sbb_design_system_mobile/SBBIconsSmall\';');
+  sb.writeln('const mediumFontFamily = \'packages/sbb_design_system_mobile/SBBIconsMedium\';');
+  sb.writeln('const largeFontFamily = \'packages/sbb_design_system_mobile/SBBIconsLarge\';');
   sb.writeln();
   sb.writeln('// The names are given by digital.sbb.ch');
   sb.writeln('// ignore_for_file: constant_identifier_names');
@@ -133,7 +133,7 @@ Future<void> createFlutterFontMap() async {
       sb.writeln('    {\'icon\': SBBIcons.$name, \'name\': \'$name\'},');
 
   sb.clear();
-  sb.writeln('import \'package:design_system_flutter/design_system_flutter.dart\';');
+  sb.writeln('import \'package:sbb_design_system_mobile/sbb_design_system_mobile.dart\';');
   sb.writeln();
   sb.writeln('sealed class SBBIconsIndex {');
   sb.writeln('  static const iconsSmall = [');

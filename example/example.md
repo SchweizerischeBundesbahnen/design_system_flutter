@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
 You may then use any widgets, colors and fonts available.
 
 ```Dart
-import 'package:design_system_flutter/design_system_flutter.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key});
