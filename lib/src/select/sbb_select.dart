@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-import '../../design_system_flutter.dart';
+import '../../sbb_design_system_mobile.dart';
 
 /// Signature for custom selection validation to be used in [SBBMultiSelect] to
 /// determine whether the submit button is enabled or not.
 ///
 /// The type `T` is the type of the value the entry represents. All the entries
 /// in a given menu must represent values with consistent types.
-typedef bool SelectionValidation<T>(List<T> oldSelection, List<T> newSelection);
+typedef SelectionValidation<T> = bool Function(List<T> oldSelection, List<T> newSelection);
 
 /// An item in a menu created by a [SBBSelect] or [SBBMultiSelect].
 ///
@@ -28,7 +28,7 @@ class SelectMenuItem<T> {
 /// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/select>
 class SBBSelect<T> extends StatelessWidget {
   const SBBSelect({
-    Key? key,
+    super.key,
     this.label,
     this.hint,
     this.icon,
@@ -38,7 +38,7 @@ class SBBSelect<T> extends StatelessWidget {
     required this.value,
     required this.items,
     required this.onChanged,
-  }) : super(key: key);
+  });
 
   final String? label;
   final String? hint;
@@ -216,7 +216,7 @@ class SBBSelect<T> extends StatelessWidget {
 /// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/select>
 class SBBMultiSelect<T> extends StatefulWidget {
   const SBBMultiSelect({
-    Key? key,
+    super.key,
     required this.label,
     this.icon,
     this.title,
@@ -226,7 +226,7 @@ class SBBMultiSelect<T> extends StatefulWidget {
     required this.items,
     required this.onChanged,
     this.selectionValidation,
-  }) : super(key: key);
+  });
 
   final String label;
   final IconData? icon;
@@ -251,7 +251,7 @@ class SBBMultiSelect<T> extends StatefulWidget {
     SelectionValidation<T>? selectionValidation,
   }) {
     final isSelectionValid = selectionValidation ?? defaultSelectionValidation;
-    var _selectedValues = values;
+    var selectedValues = values;
     showSBBModalSheet(
       context: context,
       title: title,
@@ -271,15 +271,15 @@ class SBBMultiSelect<T> extends StatefulWidget {
                     children: items.asMap().entries.map((entry) {
                       final isLastElement = entry.key == items.length - 1;
                       return SBBCheckboxListItem(
-                        value: _selectedValues.contains(entry.value.value),
+                        value: selectedValues.contains(entry.value.value),
                         label: entry.value.label,
                         onChanged: (checked) {
                           setModalState(() {
                             if (checked == true) {
-                              _selectedValues = List.from(_selectedValues)
+                              selectedValues = List.from(selectedValues)
                                 ..add(entry.value.value);
                             } else {
-                              _selectedValues = List.from(_selectedValues)
+                              selectedValues = List.from(selectedValues)
                                 ..remove(entry.value.value);
                             }
                           });
@@ -299,10 +299,10 @@ class SBBMultiSelect<T> extends StatefulWidget {
                   child: SBBPrimaryButton(
                     label: confirmButtonLabel ??
                         MaterialLocalizations.of(context).okButtonLabel,
-                    onPressed: isSelectionValid(values, _selectedValues)
+                    onPressed: isSelectionValid(values, selectedValues)
                         ? () {
                             Navigator.of(context).pop();
-                            onChanged(_selectedValues);
+                            onChanged(selectedValues);
                           }
                         : null,
                   ),

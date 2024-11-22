@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import '../../design_system_flutter.dart';
+import '../../sbb_design_system_mobile.dart';
 
 /// The SBB Logo also known as the SBB Signet. Use according to documentation.
 ///
@@ -8,9 +8,12 @@ import '../../design_system_flutter.dart';
 ///
 /// * https://digital.sbb.ch/de/design-system-mobile-new/basics/brand
 class SBBLogo extends StatelessWidget {
-  const SBBLogo(
-      {Key? key, this.height, this.width, this.color = SBBColors.white})
-      : super(key: key);
+  const SBBLogo({
+    super.key,
+    this.height,
+    this.width,
+    this.color = SBBColors.white,
+  });
 
   static const _defaultHeight = 14.0;
   static const _defaultWidth = 28.0;

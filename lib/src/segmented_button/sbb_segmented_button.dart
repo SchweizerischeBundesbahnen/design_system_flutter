@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
 
-import '../../design_system_flutter.dart';
+import '../../sbb_design_system_mobile.dart';
 import '../sbb_internal.dart';
 
 part 'sbb_segmented_button.typedefs.dart';
@@ -142,13 +142,12 @@ class SBBSegmentedButton extends StatefulWidget {
         );
 
   const SBBSegmentedButton.custom({
-    Key? key,
+    super.key,
     required this.widgetBuilders,
     required this.selectedStateIndex,
     required this.selectedIndexChanged,
     this.styleSelector,
-  })  : assert(widgetBuilders.length > 1),
-        super(key: key);
+  })  : assert(widgetBuilders.length > 1);
 
   final List<SegmentedButtonWidgetBuilder> widgetBuilders;
   final int selectedStateIndex;
@@ -156,11 +155,11 @@ class SBBSegmentedButton extends StatefulWidget {
   final ValueChanged<int> selectedIndexChanged;
 
   @override
-  _SegmentedButton createState() => _SegmentedButton();
+  SegmentedButtonState createState() => SegmentedButtonState();
 }
 
-class _SegmentedButton extends State<SBBSegmentedButton> {
-  static const _borderRadius = const BorderRadius.all(Radius.circular(22));
+class SegmentedButtonState extends State<SBBSegmentedButton> {
+  static const _borderRadius = BorderRadius.all(Radius.circular(22));
 
   late SBBSegmentedButtonStyle? style;
 

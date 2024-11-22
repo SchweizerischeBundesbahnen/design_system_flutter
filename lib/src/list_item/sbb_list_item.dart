@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../design_system_flutter.dart';
+import '../../sbb_design_system_mobile.dart';
 
 /// SBB List Item.
 /// Use according to [documentation](https://digital.sbb.ch/en/design-system/mobile/components/list-item/).
@@ -69,17 +69,15 @@ class SBBListItem extends StatefulWidget {
             padding: const EdgeInsets.symmetric(
               horizontal: sbbDefaultSpacing * 0.5,
             ),
-            child: Container(
-              child: SBBIconButtonSmall(
-                icon: buttonIcon,
-                onPressed: onPressed != null ? onPressedButton : null,
-              ),
+            child: SBBIconButtonSmall(
+              icon: buttonIcon,
+              onPressed: onPressed != null ? onPressedButton : null,
             ),
           ),
         );
 
   const SBBListItem.custom({
-    Key? key,
+    super.key,
     this.leadingIcon,
     required this.title,
     this.subtitle,
@@ -89,7 +87,7 @@ class SBBListItem extends StatefulWidget {
     this.isLastElement = false,
     required this.onPressed,
     required this.trailingWidget,
-  }) : super(key: key);
+  });
 
   final IconData? leadingIcon;
   final String title;

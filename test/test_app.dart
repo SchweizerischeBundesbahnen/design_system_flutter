@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:design_system_flutter/design_system_flutter.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -63,7 +63,7 @@ class TestSpecs {
 }
 
 class TestApp extends StatelessWidget {
-  const TestApp({Key? key, required this.child}) : super(key: key);
+  const TestApp({super.key, required this.child});
 
   static Future<void> setupAll() async => await _loadFonts();
 
@@ -74,7 +74,7 @@ class TestApp extends StatelessWidget {
       (s) async => json.decode(s),
     );
     for (final font in fontManifest) {
-      final fontName = 'packages/design_system_flutter/${font['family']}';
+      final fontName = 'packages/sbb_design_system_mobile/${font['family']}';
       final fontLoader = FontLoader(fontName);
       for (final Map<String, dynamic> fontType in font['fonts']) {
         fontLoader.addFont(rootBundle.load(fontType['asset']));

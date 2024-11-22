@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
-import '../../design_system_flutter.dart';
+import '../../sbb_design_system_mobile.dart';
 
 class TabItemWidget extends StatelessWidget {
   const TabItemWidget(
     this.icon,
     this.selected, {
-    Key? key,
+    super.key,
     this.warning = false,
-  }) : super(key: key);
+  });
 
   factory TabItemWidget.fromTabBarItem(
     TabBarItem item,
@@ -72,9 +72,9 @@ class TabItemWidget extends StatelessWidget {
       width: size,
       height: size,
       margin: const EdgeInsets.only(bottom: 8.0),
-      child: child,
       color: containerColor,
       decoration: decoration,
+      child: child,
     );
   }
 }

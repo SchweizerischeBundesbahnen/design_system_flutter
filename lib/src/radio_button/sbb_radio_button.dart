@@ -4,7 +4,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../../design_system_flutter.dart';
+import '../../sbb_design_system_mobile.dart';
 
 /// The SBB Radio Button. Use according to documentation.
 ///
@@ -45,12 +45,12 @@ class SBBRadioButton<T> extends StatefulWidget {
   ///   selected.
   /// * [onChanged] is called when the user selects this radio button.
   const SBBRadioButton({
-    Key? key,
+    super.key,
     required this.value,
     required this.groupValue,
     required this.onChanged,
     this.padding,
-  }) : super(key: key);
+  });
 
   /// The value represented by this radio button.
   final T value;
@@ -94,10 +94,10 @@ class SBBRadioButton<T> extends StatefulWidget {
   bool get _selected => value == groupValue;
 
   @override
-  _SBBRadioButtonState<T> createState() => _SBBRadioButtonState<T>();
+  SBBRadioButtonState<T> createState() => SBBRadioButtonState<T>();
 }
 
-class _SBBRadioButtonState<T> extends State<SBBRadioButton<T>>
+class SBBRadioButtonState<T> extends State<SBBRadioButton<T>>
     with SingleTickerProviderStateMixin {
   static const _outerCircleSize = 20.0;
   static const _innerCircleSize = 8.0;
@@ -153,7 +153,6 @@ class _SBBRadioButtonState<T> extends State<SBBRadioButton<T>>
   Widget build(BuildContext context) {
     final style = SBBControlStyles.of(context).radioButton;
     final enabled = widget.onChanged != null;
-    // TODO add semantics
     return Material(
       color: SBBColors.transparent,
       child: InkWell(

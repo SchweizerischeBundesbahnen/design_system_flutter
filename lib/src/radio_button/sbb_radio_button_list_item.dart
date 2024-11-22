@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../design_system_flutter.dart';
+import '../../sbb_design_system_mobile.dart';
 
 /// SBB Radio Button List Item. Use according to documentation.
 ///
@@ -44,7 +44,7 @@ class SBBRadioButtonListItem<T> extends StatelessWidget {
         );
 
   const SBBRadioButtonListItem.custom({
-    Key? key,
+    super.key,
     required this.value,
     required this.groupValue,
     required this.label,
@@ -54,7 +54,7 @@ class SBBRadioButtonListItem<T> extends StatelessWidget {
     this.isLastElement = false,
     this.leadingIcon,
     this.trailingWidget,
-  }) : super(key: key);
+  });
 
   /// The value represented by this radio button.
   final T value;

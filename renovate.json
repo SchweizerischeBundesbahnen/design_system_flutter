@@ -1,0 +1,11 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": ["config:recommended"],
+  "packageRules": [
+    {
+      "matchManagers": ["pub"],
+      "groupName": "auto_route",
+      "matchPackagePrefixes": ["auto_route", "auto_route_generator"]
+    }
+  ]
+}

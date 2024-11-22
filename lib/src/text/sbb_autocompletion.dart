@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../design_system_flutter.dart';
+import '../../sbb_design_system_mobile.dart';
 
 typedef StringCallback = Function(String data);
 
@@ -231,7 +231,7 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>>
     _updateOverlay(query: _currentText);
   }
 
-  void _updateOverlay({String? query, bool metricsChanged = false}) {
+  void _updateOverlay({String? query}) {
     if (showOverlay) {
       if (listSuggestionsEntry == null || _metricsChanged) {
         if (listSuggestionsEntry != null) {

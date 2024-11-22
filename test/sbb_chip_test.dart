@@ -1,4 +1,4 @@
-import 'package:design_system_flutter/design_system_flutter.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -20,8 +20,7 @@ void main() {
         ),
         const SizedBox(height: sbbDefaultSpacing),
         SBBChip(
-          label:
-              'This is a very long text with a longer badge label, that should not be longer than one line.',
+          label: 'This is a very long text with a longer badge label, that should not be longer than one line.',
           badgeLabel: 'Production',
           onSelection: (selected) {},
         ),

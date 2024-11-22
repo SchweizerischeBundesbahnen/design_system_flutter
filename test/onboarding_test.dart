@@ -1,4 +1,4 @@
-import 'package:design_system_flutter/design_system_flutter.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -6,7 +6,7 @@ import 'test_app.dart';
 
 void main() {
   testWidgets('onboarding', (WidgetTester tester) async {
-    final widget = OnboardingTest();
+    const widget = OnboardingTest();
 
     await TestSpecs.run(
       TestSpecs.themedSpecs,
@@ -49,6 +49,8 @@ void main() {
 }
 
 class OnboardingTest extends StatelessWidget {
+  const OnboardingTest({super.key});
+
   @override
   Widget build(BuildContext context) => SBBOnboarding(
         builderDelegate: TestOnboardingBuilderDelegate(),

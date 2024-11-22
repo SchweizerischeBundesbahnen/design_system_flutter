@@ -1,4 +1,4 @@
-import 'package:design_system_flutter/design_system_flutter.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -6,7 +6,7 @@ import 'test_app.dart';
 
 void main() {
   testWidgets('multiline checkbox', (WidgetTester tester) async {
-    final widget = MultilineCheckboxText();
+    const widget = MultilineCheckboxText();
 
     await TestSpecs.run(
       TestSpecs.themedSpecs,
@@ -39,11 +39,13 @@ void main() {
 }
 
 class MultilineCheckboxText extends StatefulWidget {
+  const MultilineCheckboxText({super.key});
+
   @override
-  _MultilineCheckboxTextState createState() => _MultilineCheckboxTextState();
+  MultilineCheckboxTextState createState() => MultilineCheckboxTextState();
 }
 
-class _MultilineCheckboxTextState extends State<MultilineCheckboxText> {
+class MultilineCheckboxTextState extends State<MultilineCheckboxText> {
   bool? _listItemValue = true;
 
   @override

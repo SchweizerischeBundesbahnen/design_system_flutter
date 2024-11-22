@@ -119,7 +119,7 @@ class SBBButtonStyle {
       defaultValue: textStyle!,
       pressedValue: textStyleHighlighted,
       disabledValue: textStyleDisabled,
-      parent: this.runtimeType.toString(),
+      parent: runtimeType.toString(),
     ),
     side: borderColor == null
         ? null

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../design_system_flutter.dart';
+import '../../sbb_design_system_mobile.dart';
 import '../sbb_internal.dart';
 
 /// Large variant of the SBB Tertiary Button. Use according to documentation.
@@ -76,13 +76,13 @@ class SBBTertiaryButtonLarge extends StatelessWidget {
 /// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/button>
 class SBBTertiaryButtonSmall extends StatelessWidget {
   const SBBTertiaryButtonSmall({
-    Key? key,
+    super.key,
     required this.label,
     this.icon,
     this.isLoading = false,
     required this.onPressed,
     this.focusNode,
-  }) : super(key: key);
+  });
 
   final String label;
   final IconData? icon;

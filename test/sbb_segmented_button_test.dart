@@ -1,4 +1,4 @@
-import 'package:design_system_flutter/design_system_flutter.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -13,7 +13,7 @@ void main() {
         child: Column(
           children: [
             SBBSegmentedButton(
-              values: ['Option 1', 'Option 2', 'Option 3'],
+              values: const ['Option 1', 'Option 2', 'Option 3'],
               selectedStateIndex: 0,
               selectedIndexChanged: (_) {},
             ),
@@ -40,7 +40,7 @@ void main() {
             ),
             const SizedBox(height: sbbDefaultSpacing),
             SBBSegmentedButton.redText(
-              values: ['Option 1', 'Option 2', 'Option 3'],
+              values: const ['Option 1', 'Option 2', 'Option 3'],
               selectedStateIndex: 2,
               selectedIndexChanged: (_) {},
             ),

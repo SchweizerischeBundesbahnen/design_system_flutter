@@ -1,7 +1,7 @@
-import 'package:design_system_flutter/src/notification_box/notification_box_text_content.dart';
 import 'package:flutter/material.dart';
 
-import '../../design_system_flutter.dart';
+import '../../sbb_design_system_mobile.dart';
+import 'notification_box_text_content.dart';
 
 class SBBNotificationBoxContent extends StatelessWidget {
   const SBBNotificationBoxContent({

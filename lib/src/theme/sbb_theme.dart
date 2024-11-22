@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../design_system_flutter.dart';
+import '../../sbb_design_system_mobile.dart';
 
 const sbbDefaultSpacing = 16.0;
 
@@ -47,23 +47,23 @@ class SBBTheme {
       brightness: brightness,
       boldFont: boldFont,
     );
-    final _baseStyle = baseStyle.merge(defaultBaseStyle);
+    final mergedBaseStyle = baseStyle.merge(defaultBaseStyle);
 
     final defaultButtonStyles = SBBButtonStyles.$default(
-      baseStyle: _baseStyle,
+      baseStyle: mergedBaseStyle,
     );
-    final _buttonStyles = buttonStyles.merge(defaultButtonStyles);
+    final mergedButtonStyles = buttonStyles.merge(defaultButtonStyles);
 
     final defaultControlStyles = SBBControlStyles.$default(
-      baseStyle: _baseStyle,
+      baseStyle: mergedBaseStyle,
     );
-    final _controlStyles = controlStyles.merge(defaultControlStyles);
+    final mergedControlStyles = controlStyles.merge(defaultControlStyles);
 
     return raw(
       brightness: brightness,
-      baseStyle: _baseStyle,
-      buttonStyles: _buttonStyles,
-      controlStyles: _controlStyles,
+      baseStyle: mergedBaseStyle,
+      buttonStyles: mergedButtonStyles,
+      controlStyles: mergedControlStyles,
     );
   }
 
@@ -127,8 +127,9 @@ class SBBTheme {
   }) {
     return MaterialStateProperty.resolveWith((states) {
       // disabled
-      if (states.contains(MaterialState.disabled) && disabledValue != null)
+      if (states.contains(MaterialState.disabled) && disabledValue != null) {
         return disabledValue;
+      }
 
       // pressed / focused
       if (states.any({MaterialState.pressed, MaterialState.focused}.contains) &&
@@ -136,12 +137,14 @@ class SBBTheme {
         return pressedValue;
       }
       // hovered
-      if (states.contains(MaterialState.hovered) && hoveredValue != null)
+      if (states.contains(MaterialState.hovered) && hoveredValue != null) {
         return hoveredValue;
+      }
 
       // selected
-      if (states.contains(MaterialState.selected) && selectedValue != null)
+      if (states.contains(MaterialState.selected) && selectedValue != null) {
         return selectedValue;
+      }
       // default
       return defaultValue;
     });

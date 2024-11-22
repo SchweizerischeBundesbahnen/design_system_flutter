@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../design_system_flutter.dart';
+import '../../sbb_design_system_mobile.dart';
 
 /// SBB Checkbox List Item. Use according to documentation.
 ///
@@ -44,7 +44,7 @@ class SBBCheckboxListItem extends StatelessWidget {
         );
 
   const SBBCheckboxListItem.custom({
-    Key? key,
+    super.key,
     required this.value,
     required this.label,
     this.allowMultilineLabel = false,
@@ -54,8 +54,7 @@ class SBBCheckboxListItem extends StatelessWidget {
     this.isLastElement = false,
     this.leadingIcon,
     this.trailingWidget,
-  })  : assert(tristate || value != null),
-        super(key: key);
+  })  : assert(tristate || value != null);
 
   /// Whether this checkbox is checked.
   ///

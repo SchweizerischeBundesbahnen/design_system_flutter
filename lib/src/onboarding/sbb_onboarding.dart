@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 
-import '../../design_system_flutter.dart';
+import '../../sbb_design_system_mobile.dart';
 import '../sbb_internal.dart';
 
 /// The SBB Onboarding. Use according to documentation.
@@ -14,14 +14,14 @@ import '../sbb_internal.dart';
 /// * https://digital.sbb.ch/de/design-system-mobile-new/seitentypen/onboarding
 class SBBOnboarding extends StatefulWidget {
   const SBBOnboarding({
+    super.key,
     required this.builderDelegate,
     required this.onFinish,
     required this.cancelLabel,
     required this.backSemanticsLabel,
     required this.forwardSemanticsLabel,
-    Key? key,
     this.blocking = false,
-  }) : super(key: key);
+  });
 
   final SBBOnboardingBuilderDelegate builderDelegate;
   final VoidCallback onFinish;
@@ -31,10 +31,10 @@ class SBBOnboarding extends StatefulWidget {
   final bool blocking;
 
   @override
-  _SBBOnboardingState createState() => _SBBOnboardingState();
+  SBBOnboardingState createState() => SBBOnboardingState();
 }
 
-class _SBBOnboardingState extends State<SBBOnboarding>
+class SBBOnboardingState extends State<SBBOnboarding>
     with SingleTickerProviderStateMixin {
   static const navigationAreaVerticalPadding = 24.0;
   static const navigationAreaHeight = navigationAreaVerticalPadding +
@@ -620,8 +620,9 @@ class _SBBOnboardingState extends State<SBBOnboarding>
 
   void changeStep({bool? goToNextStep}) {
     if (isAnimating ||
-        !isAnimating && isNotDragging && isShowingStartPage && !goToNextStep!)
+        !isAnimating && isNotDragging && isShowingStartPage && !goToNextStep!) {
       return;
+    }
     setState(() {
       this.goToNextStep = goToNextStep;
       isShowingStartPage = !goToNextStep! && currentStepIndex == 0;

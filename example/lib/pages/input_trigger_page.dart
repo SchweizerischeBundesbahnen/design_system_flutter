@@ -1,4 +1,4 @@
-import 'package:design_system_flutter/design_system_flutter.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -74,9 +74,7 @@ class _PickerPageState extends State<InputTriggerPage> {
                     SBBToast.of(context).show(message: 'onPressed');
                   },
                   prefixIcon: showPrefixIcon ? SBBIcons.dog_small : null,
-                  suffixIcon: showSuffixIcon
-                      ? SBBIcons.circle_information_small_small
-                      : null,
+                  suffixIcon: showSuffixIcon ? SBBIcons.circle_information_small_small : null,
                   onSuffixPressed: () {
                     SBBToast.of(context).show(message: 'onSuffixPressed');
                   },

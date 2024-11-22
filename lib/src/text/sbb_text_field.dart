@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../design_system_flutter.dart';
+import '../../sbb_design_system_mobile.dart';
 import 'sbb_text_field_underline.dart';
 
 /// The SBB TextField. Use according to documentation.
@@ -11,7 +11,7 @@ import 'sbb_text_field_underline.dart';
 /// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/textfield>
 class SBBTextField extends StatefulWidget {
   const SBBTextField({
-    Key? key,
+    super.key,
     this.controller,
     this.enabled = true,
     this.enableInteractiveSelection = true,
@@ -34,7 +34,7 @@ class SBBTextField extends StatefulWidget {
     this.suffixIcon,
     this.obscureText = false,
     this.autofocus = false,
-  }) : super(key: key);
+  });
 
   final TextEditingController? controller;
   final bool enabled;

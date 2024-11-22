@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../design_system_flutter.dart';
+import '../../sbb_design_system_mobile.dart';
 
 /// The SBB Switch List Item.
 /// Use according to [documentation](https://digital.sbb.ch/en/design-system/mobile/components/switch/)
@@ -42,7 +42,7 @@ class SBBSwitchListItem extends StatelessWidget {
         );
 
   const SBBSwitchListItem.custom({
-    Key? key,
+    super.key,
     required this.value,
     required this.title,
     this.allowMultilineLabel = false,
@@ -51,7 +51,7 @@ class SBBSwitchListItem extends StatelessWidget {
     this.isLastElement = true,
     this.leadingIcon,
     this.linksWidgets,
-  }) : super(key: key);
+  });
 
   final bool value;
   final ValueChanged<bool>? onChanged;

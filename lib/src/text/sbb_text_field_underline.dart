@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../design_system_flutter.dart';
+import '../../sbb_design_system_mobile.dart';
 
 /// The underline + error message for SBB TextField and TextFormField.
 ///
@@ -12,8 +12,8 @@ class SBBTextFieldUnderline extends StatelessWidget {
     this.errorText,
     required this.hasFocus,
     this.isLastElement = false,
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   final String? errorText;
   final bool hasFocus;

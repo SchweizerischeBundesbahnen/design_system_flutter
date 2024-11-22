@@ -43,7 +43,7 @@ jobs:
           tag-prefix: ''
 
       - name: Update Pubspec version
-        uses: Dbono-dev/yaml-action@v1.0.3
+        uses: Dbono-dev/yaml-action@v1.0.4
         with:
           changes: |
             {
@@ -52,7 +52,7 @@ jobs:
           commentOutDevDependencies: 'false'
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v6.0.5
+        uses: peter-evans/create-pull-request@v7.0.5
         with:
           token: ${{ steps.app-token.outputs.token }}
           commit-message: ${{ format('Prepare Release for version {0}', steps.update-changelog.outputs.version) }}

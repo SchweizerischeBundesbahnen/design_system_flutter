@@ -3,7 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-import '../../design_system_flutter.dart';
+import '../../sbb_design_system_mobile.dart';
 import '../sbb_internal.dart';
 
 /// Large variant of the SBB Icon Button. Use according to documentation.
@@ -72,11 +72,11 @@ class SBBIconButtonLarge extends StatelessWidget {
 /// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/button>
 class SBBIconButtonSmall extends StatelessWidget {
   const SBBIconButtonSmall({
-    Key? key,
+    super.key,
     required this.icon,
     required this.onPressed,
     this.focusNode,
-  }) : super(key: key);
+  });
 
   final IconData icon;
   final VoidCallback? onPressed;
@@ -107,11 +107,11 @@ class SBBIconButtonSmall extends StatelessWidget {
 /// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/button>
 class SBBIconButtonSmallNegative extends StatelessWidget {
   const SBBIconButtonSmallNegative({
-    Key? key,
+    super.key,
     required this.icon,
     required this.onPressed,
     this.focusNode,
-  }) : super(key: key);
+  });
 
   final IconData icon;
   final VoidCallback? onPressed;
@@ -142,11 +142,11 @@ class SBBIconButtonSmallNegative extends StatelessWidget {
 /// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/button>
 class SBBIconButtonSmallBorderless extends StatelessWidget {
   const SBBIconButtonSmallBorderless({
-    Key? key,
+    super.key,
     required this.icon,
     required this.onPressed,
     this.focusNode,
-  }) : super(key: key);
+  });
 
   final IconData icon;
   final VoidCallback? onPressed;
@@ -168,12 +168,12 @@ class SBBIconButtonSmallBorderless extends StatelessWidget {
 /// [SBBIconButtonSmallBorderless].
 class _SBBIconButtonSmallRaw extends StatelessWidget {
   const _SBBIconButtonSmallRaw({
-    Key? key,
+    super.key,
     required this.icon,
     required this.onPressed,
     required this.style,
     this.focusNode,
-  }) : super(key: key);
+  });
 
   final IconData icon;
   final VoidCallback? onPressed;
@@ -202,7 +202,7 @@ class _SBBIconButtonSmallRaw extends StatelessWidget {
       container: true,
       button: true,
       enabled: onPressed != null,
-      child: Container(
+      child: SizedBox(
         height: SBBInternal.defaultButtonHeight,
         width: SBBInternal.defaultButtonHeight,
         child: _InputPadding(
@@ -230,10 +230,9 @@ class _SBBIconButtonSmallRaw extends StatelessWidget {
 /// "tap target", but not its material or its ink splashes.
 class _InputPadding extends SingleChildRenderObjectWidget {
   const _InputPadding({
-    Key? key,
-    Widget? child,
+    super.child,
     required this.minSize,
-  }) : super(key: key, child: child);
+  });
 
   final Size minSize;
 
@@ -263,29 +262,33 @@ class _RenderInputPadding extends RenderShiftedBox {
 
   @override
   double computeMinIntrinsicWidth(double height) {
-    if (child != null)
+    if (child != null) {
       return math.max(child!.getMinIntrinsicWidth(height), minSize.width);
+    }
     return 0.0;
   }
 
   @override
   double computeMinIntrinsicHeight(double width) {
-    if (child != null)
+    if (child != null) {
       return math.max(child!.getMinIntrinsicHeight(width), minSize.height);
+    }
     return 0.0;
   }
 
   @override
   double computeMaxIntrinsicWidth(double height) {
-    if (child != null)
+    if (child != null) {
       return math.max(child!.getMaxIntrinsicWidth(height), minSize.width);
+    }
     return 0.0;
   }
 
   @override
   double computeMaxIntrinsicHeight(double width) {
-    if (child != null)
+    if (child != null) {
       return math.max(child!.getMaxIntrinsicHeight(width), minSize.height);
+    }
     return 0.0;
   }
 

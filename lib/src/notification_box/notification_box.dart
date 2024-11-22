@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../design_system_flutter.dart';
+import '../../sbb_design_system_mobile.dart';
 
 import '../shared/close_button.dart';
 import '../shared/tapable_element.dart';
@@ -127,7 +127,7 @@ class SBBNotificationBox extends StatefulWidget {
 
 class _SBBNotificationBoxState extends State<SBBNotificationBox>
     with SingleTickerProviderStateMixin {
-  late CloseableBoxController _controller = CloseableBoxController(this);
+  late final CloseableBoxController _controller = CloseableBoxController(this);
 
   Widget _animationBuilder({
     required Animation<double> animation,

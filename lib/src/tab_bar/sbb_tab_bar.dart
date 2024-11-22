@@ -3,7 +3,7 @@ import 'dart:math' as math;
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
-import '../../design_system_flutter.dart';
+import '../../sbb_design_system_mobile.dart';
 import '../sbb_internal.dart';
 import 'tab_bar_curve_clipper.dart';
 import 'tab_bar_draw_data.dart';
@@ -17,15 +17,14 @@ class SBBTabBar extends StatefulWidget {
   const SBBTabBar({
     required this.items,
     required this.onTabChanged,
-    Key? key,
+    super.key,
     this.onTap,
     this.controller,
     this.initialItem,
     this.warningSemantics,
     this.showWarning = false,
     int? warningIndex,
-  })  : this.warningIndex = warningIndex ?? items.length - 1,
-        super(key: key);
+  })  : warningIndex = warningIndex ?? items.length - 1;
 
   final List<TabBarItem> items;
   final Future<void> Function(Future<TabBarItem> tabTask) onTabChanged;
@@ -105,10 +104,6 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
                       ),
                     ),
                     ClipPath(
-                      child: Container(
-                        color: style.themeValue(SBBColors.white, SBBColors.charcoal),
-                        child: _IconLayer(widget.items, snapshotData.selectedTab),
-                      ),
                       clipper: TabBarCurveClipper(
                         widget.items.indexOf(snapshotData.selectedTab),
                         widget.items.indexOf(snapshotData.nextTab),
@@ -116,6 +111,10 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
                         tabBarData,
                         snapshotData.animation,
                         snapshotData.hover,
+                      ),
+                      child: Container(
+                        color: style.themeValue(SBBColors.white, SBBColors.charcoal),
+                        child: _IconLayer(widget.items, snapshotData.selectedTab),
                       ),
                     ),
                     if (widget.showWarning)
@@ -170,9 +169,8 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
 class _IconLayer extends StatelessWidget {
   const _IconLayer(
     this.items,
-    this.selectedTab, {
-    Key? key,
-  }) : super(key: key);
+    this.selectedTab,
+    );
 
   final List<TabBarItem> items;
   final TabBarItem selectedTab;
