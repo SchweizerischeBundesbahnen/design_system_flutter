@@ -254,7 +254,7 @@ class SBBButtonStyles extends ThemeExtension<SBBButtonStyles> {
         mouseCursor: MaterialStateMouseCursor.clickable,
       );
 
-  ElevatedButtonThemeData get elevatedButtonTheme => ElevatedButtonThemeData(
+  FilledButtonThemeData get filledButtonTheme => FilledButtonThemeData(
         style: primaryStyle?.overrideButtonStyle(baseButtonStyle),
       );
 
