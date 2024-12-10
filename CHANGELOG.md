@@ -9,6 +9,14 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+### Fixed
+- correct height for `SBBTertiaryButtonSmall` (40px => 32px)
+- coloring of:
+  - `SBBSecondaryButton` (onHighlighted)
+  - `SBBTertiaryButton` (darkMode)
+  - `SBBIconButtonSmall`
+  - `SBBIconButtonLarge`
+
 ## [2.0.0] - 2024-09-06
 
 ### Changed
