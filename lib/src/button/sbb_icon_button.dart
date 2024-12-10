@@ -220,9 +220,9 @@ class _SBBIconButtonSmallRaw extends StatelessWidget {
   }
 }
 
-/// Copied from [ButtonStyleButton]
+/// Copied from [ButtonStyleButton] in version Flutter SDK 3.24.5
 ///
-/// A widget to pad the area around a [MaterialButton]'s inner [Material].
+/// A widget to pad the area around a [ButtonStyleButton]'s inner [Material].
 ///
 /// Redirect taps that occur in the padded area around the child to the center
 /// of the child. This increases the size of the button and the button's
@@ -241,8 +241,7 @@ class _InputPadding extends SingleChildRenderObjectWidget {
   }
 
   @override
-  void updateRenderObject(
-      BuildContext context, covariant _RenderInputPadding renderObject) {
+  void updateRenderObject(BuildContext context, covariant _RenderInputPadding renderObject) {
     renderObject.minSize = minSize;
   }
 }
@@ -252,7 +251,6 @@ class _RenderInputPadding extends RenderShiftedBox {
 
   Size get minSize => _minSize;
   Size _minSize;
-
   set minSize(Size value) {
     if (_minSize == value) return;
     _minSize = value;
@@ -291,9 +289,7 @@ class _RenderInputPadding extends RenderShiftedBox {
     return 0.0;
   }
 
-  Size _computeSize(
-      {required BoxConstraints constraints,
-      required ChildLayouter layoutChild}) {
+  Size _computeSize({required BoxConstraints constraints, required ChildLayouter layoutChild}) {
     if (child != null) {
       final Size childSize = layoutChild(child!, constraints);
       final double height = math.max(childSize.width, minSize.width);
@@ -312,6 +308,20 @@ class _RenderInputPadding extends RenderShiftedBox {
   }
 
   @override
+  double? computeDryBaseline(covariant BoxConstraints constraints, TextBaseline baseline) {
+    final RenderBox? child = this.child;
+    if (child == null) {
+      return null;
+    }
+    final double? result = child.getDryBaseline(constraints, baseline);
+    if (result == null) {
+      return null;
+    }
+    final Size childSize = child.getDryLayout(constraints);
+    return result + Alignment.center.alongOffset(getDryLayout(constraints) - childSize as Offset).dy;
+  }
+
+  @override
   void performLayout() {
     size = _computeSize(
       constraints: constraints,
@@ -319,13 +329,12 @@ class _RenderInputPadding extends RenderShiftedBox {
     );
     if (child != null) {
       final BoxParentData childParentData = child!.parentData! as BoxParentData;
-      childParentData.offset =
-          Alignment.center.alongOffset(size - child!.size as Offset);
+      childParentData.offset = Alignment.center.alongOffset(size - child!.size as Offset);
     }
   }
 
   @override
-  bool hitTest(BoxHitTestResult result, {required Offset position}) {
+  bool hitTest(BoxHitTestResult result, { required Offset position }) {
     if (super.hitTest(result, position: position)) {
       return true;
     }
@@ -333,7 +342,7 @@ class _RenderInputPadding extends RenderShiftedBox {
     return result.addWithRawTransform(
       transform: MatrixUtils.forceToPoint(center),
       position: center,
-      hitTest: (BoxHitTestResult result, Offset? position) {
+      hitTest: (BoxHitTestResult result, Offset position) {
         assert(position == center);
         return child!.hitTest(result, position: center);
       },
