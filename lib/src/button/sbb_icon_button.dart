@@ -6,10 +6,9 @@ import 'package:flutter/rendering.dart';
 import '../../sbb_design_system_mobile.dart';
 import '../sbb_internal.dart';
 
-/// Large variant of the SBB Icon Button. Use according to documentation.
+/// SBBIconButtonLarge. Use this as [SBBTertiaryButtonLarge] without label.
 ///
-/// The [icon] parameter must not be null. Make sure to use small icons
-/// ([sbbIconSizeSmall] - 24x24).
+/// The [icon] parameter must not be null. Make sure to use small or medium icons.
 ///
 /// If [onPressed] callback is null, then the button will be disabled.
 ///
@@ -60,7 +59,7 @@ class SBBIconButtonLarge extends StatelessWidget {
   }
 }
 
-/// Small variant of the SBB Icon Button. Use according to documentation.
+/// SBBIconButtonSmall. Use this as [SBBTertiaryButtonSmall] without label.
 ///
 /// The [icon] parameter must not be null. Make sure to use small icons
 /// ([sbbIconSizeSmall] - 24x24).
@@ -69,7 +68,7 @@ class SBBIconButtonLarge extends StatelessWidget {
 ///
 /// See also:
 ///
-/// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/button>
+/// * <https://digital.sbb.ch/en/design-system/mobile/components/button/>
 class SBBIconButtonSmall extends StatelessWidget {
   const SBBIconButtonSmall({
     super.key,

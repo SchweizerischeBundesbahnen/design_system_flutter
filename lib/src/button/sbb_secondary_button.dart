@@ -6,13 +6,14 @@ import '../../sbb_design_system_mobile.dart';
 ///
 /// The [label] parameter must not be null.
 ///
-/// If [isLoading] is true, then the [SBBLoadingIndicator] will be displayed inside the button and the [onPressed] callback will be ignored.
+/// If [isLoading] is true, then the [SBBLoadingIndicator] will be displayed
+/// inside the button and the [onPressed] callback will be ignored.
 ///
 /// If [onPressed] callback is null, then the button will be disabled.
 ///
 /// See also:
 ///
-/// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/button>
+/// * <https://digital.sbb.ch/en/design-system/mobile/components/button/>
 class SBBSecondaryButton extends StatelessWidget {
   const SBBSecondaryButton({
     super.key,

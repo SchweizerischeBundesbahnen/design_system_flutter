@@ -5,15 +5,17 @@ import '../sbb_internal.dart';
 
 /// Large variant of the SBB Tertiary Button. Use according to documentation.
 ///
-/// The [label] parameter must not be null.
+/// The [label] parameter must not be null.. In case you want to show a variant of this button
+/// without a label, use the [SBBIconButtonLarge].
 ///
-/// If [isLoading] is true, then the [SBBLoadingIndicator] will be displayed inside the button and the [onPressed] callback will be ignored.
+/// If [isLoading] is true, then the [SBBLoadingIndicator] will be displayed
+/// inside the button and the [onPressed] callback will be ignored.
 ///
 /// If [onPressed] callback is null, then the button will be disabled.
 ///
 /// See also:
 ///
-/// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/button>
+/// * <https://digital.sbb.ch/en/design-system/mobile/components/button/>
 class SBBTertiaryButtonLarge extends StatelessWidget {
   const SBBTertiaryButtonLarge({
     super.key,
@@ -65,7 +67,8 @@ class SBBTertiaryButtonLarge extends StatelessWidget {
 
 /// Small variant of the SBB Tertiary Button. Use according to documentation.
 ///
-/// The [label] parameter must not be null.
+/// The [label] parameter must not be null. In case you want to show a variant of this button
+/// without a label, use the [SBBIconButtonSmall].
 ///
 /// If [isLoading] is true, then the [SBBLoadingIndicator] will be displayed inside the button and the [onPressed] callback will be ignored.
 ///
@@ -73,7 +76,7 @@ class SBBTertiaryButtonLarge extends StatelessWidget {
 ///
 /// See also:
 ///
-/// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/button>
+/// * <https://digital.sbb.ch/en/design-system/mobile/components/button/>
 class SBBTertiaryButtonSmall extends StatelessWidget {
   const SBBTertiaryButtonSmall({
     super.key,

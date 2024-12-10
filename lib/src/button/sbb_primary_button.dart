@@ -11,9 +11,9 @@ import '../../sbb_design_system_mobile.dart';
 ///
 /// If [onPressed] callback is null, then the button will be disabled.
 ///
-/// See also:
+/// For specifications see:
 ///
-/// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/button>
+/// * <https://digital.sbb.ch/en/design-system/mobile/components/button/>
 class SBBPrimaryButton extends StatelessWidget {
   const SBBPrimaryButton({
     super.key,
