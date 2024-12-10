@@ -23,10 +23,4 @@ extension SBBButtonStylesExtension on SBBButtonStyles {
     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
     mouseCursor: MaterialStateMouseCursor.clickable,
   );
-
-  ButtonStyle get primaryMobile =>
-      primaryStyle!.overrideButtonStyle(_baseButtonStyle);
-
-  ButtonStyle get primaryMobileNegative =>
-      primaryNegativeStyle!.overrideButtonStyle(_baseButtonStyle);
 }

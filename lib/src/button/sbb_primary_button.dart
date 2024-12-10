@@ -31,8 +31,7 @@ class SBBPrimaryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final styles = SBBButtonStyles.of(context);
-    return ElevatedButton(
-      style: styles.primaryMobile,
+    return FilledButton(
       onPressed: isLoading ? null : onPressed,
       focusNode: focusNode,
       child: Row(
@@ -75,8 +74,7 @@ class SBBPrimaryButtonNegative extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final styles = SBBButtonStyles.of(context);
-    return ElevatedButton(
-      style: styles.primaryMobileNegative,
+    return FilledButton(
       onPressed: isLoading ? null : onPressed,
       focusNode: focusNode,
       child: Row(
