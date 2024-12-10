@@ -63,7 +63,6 @@ class SBBIconButtonLarge extends StatelessWidget {
 ///
 /// The [icon] parameter must not be null. Make sure to use small icons
 /// ([sbbIconSizeSmall] - 24x24).
-///
 /// If [onPressed] callback is null, then the button will be disabled.
 ///
 /// See also:
@@ -93,17 +92,14 @@ class SBBIconButtonSmall extends StatelessWidget {
   }
 }
 
-/// Small negative variant of the SBB Icon Button. Use according to
-/// documentation.
+/// Negative variant of the [SBBIconButtonSmall].
+///
+/// THIS IS NOT IN THE MOBILE DESIGN SPECS. Can be removed in a future version.
 ///
 /// The [icon] parameter must not be null. Make sure to use small icons
 /// ([sbbIconSizeSmall] - 24x24).
 ///
 /// If [onPressed] callback is null, then the button will be disabled.
-///
-/// See also:
-///
-/// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/button>
 class SBBIconButtonSmallNegative extends StatelessWidget {
   const SBBIconButtonSmallNegative({
     super.key,
@@ -128,17 +124,14 @@ class SBBIconButtonSmallNegative extends StatelessWidget {
   }
 }
 
-/// Small borderless variant of the SBB Icon Button. Use according to
-/// documentation.
+/// Borderless variant of the [SBBIconButtonSmall].
+///
+/// THIS IS NOT IN THE MOBILE DESIGN SPECS. Can be removed in a future version.
 ///
 /// The [icon] parameter must not be null. Make sure to use small icons
 /// ([sbbIconSizeSmall] - 24x24).
 ///
 /// If [onPressed] callback is null, then the button will be disabled.
-///
-/// See also:
-///
-/// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/button>
 class SBBIconButtonSmallBorderless extends StatelessWidget {
   const SBBIconButtonSmallBorderless({
     super.key,

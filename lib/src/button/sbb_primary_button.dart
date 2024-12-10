@@ -45,7 +45,9 @@ class SBBPrimaryButton extends StatelessWidget {
   }
 }
 
-/// Negative variant of the SBB Primary Button. Use according to documentation.
+/// Negative variant of the [SBBPrimaryButton].
+///
+/// THIS IS NOT IN THE MOBILE DESIGN SPECS. Can be removed in a future version.
 ///
 /// The [label] parameter must not be null.
 ///
@@ -53,10 +55,6 @@ class SBBPrimaryButton extends StatelessWidget {
 /// inside the button and the [onPressed] callback will be ignored.
 ///
 /// If [onPressed] callback is null, then the button will be disabled.
-///
-/// See also:
-///
-/// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/button>
 class SBBPrimaryButtonNegative extends StatelessWidget {
   const SBBPrimaryButtonNegative({
     super.key,

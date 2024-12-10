@@ -2,16 +2,14 @@ import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
-/// The SBB Icon Form Button. Use according to documentation.
+/// The SBB Icon Form Button.
+///
+/// THIS IS NOT IN THE MOBILE DESIGN SPECS. Can be removed in a future version.
 ///
 /// The [icon] parameter must not be null. Make sure to use small icons
 /// ([sbbIconSizeSmall] - 24x24).
 ///
 /// If [onPressed] callback is null, then the button will be disabled.
-///
-/// See also:
-///
-/// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/button>
 class SBBIconFormButton extends StatelessWidget {
   const SBBIconFormButton({
     super.key,
