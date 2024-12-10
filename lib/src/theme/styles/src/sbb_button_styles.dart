@@ -59,64 +59,68 @@ class SBBButtonStyles extends ThemeExtension<SBBButtonStyles> {
           backgroundColor:
               baseStyle.themeValue(SBBColors.white, SBBColors.iron),
           backgroundColorHighlighted:
-              baseStyle.themeValue(SBBColors.milk, SBBColors.smoke),
+              baseStyle.themeValue(SBBColors.graphite, SBBColors.charcoal),
           backgroundColorDisabled: SBBColors.transparent,
           backgroundColorLoading: SBBColors.transparent,
           borderColor:
-              baseStyle.themeValue(baseStyle.primaryColor, SBBColors.white),
+              baseStyle.themeValue(baseStyle.primaryColor, SBBColors.smoke),
           borderColorHighlighted:
-              baseStyle.themeValue(baseStyle.primaryColorDark, SBBColors.white),
+              baseStyle.themeValue(baseStyle.primaryColor, SBBColors.smoke),
           borderColorDisabled:
-              baseStyle.themeValue(SBBColors.cement, SBBColors.iron),
+              baseStyle.themeValue(SBBColors.graphite, SBBColors.smoke),
           borderColorLoading:
-              baseStyle.themeValue(SBBColors.cement, SBBColors.iron),
+              baseStyle.themeValue(SBBColors.graphite, SBBColors.smoke),
           textStyle: baseStyle.themedTextStyle(
               color: baseStyle.themeValue(
                   baseStyle.primaryColor, SBBColors.white)),
           textStyleHighlighted: baseStyle.themedTextStyle(
               color: baseStyle.themeValue(
                   baseStyle.primaryColorDark, SBBColors.white)),
-          textStyleDisabled: baseStyle.themedTextStyle(color: SBBColors.metal),
-          textStyleLoading: baseStyle.themedTextStyle(color: SBBColors.metal),
+          textStyleDisabled: baseStyle.themedTextStyle(color: baseStyle.themeValue(
+              SBBColors.graphite, SBBColors.smoke)),
+          textStyleLoading: baseStyle.themedTextStyle(color: baseStyle.themeValue(
+              SBBColors.graphite, SBBColors.smoke)),
         ),
         tertiarySmallStyle: SBBButtonStyle(
           backgroundColor:
-              baseStyle.themeValue(SBBColors.white, SBBColors.transparent),
+              baseStyle.themeValue(SBBColors.white, SBBColors.charcoal),
           backgroundColorHighlighted:
-              baseStyle.themeValue(SBBColors.milk, SBBColors.iron),
-          backgroundColorDisabled: baseStyle.themeValue(
-              SBBColors.transparent, SBBColors.transparent),
+              baseStyle.themeValue(SBBColors.graphite, SBBColors.black),
+          backgroundColorDisabled: SBBColors.transparent,
           borderColor: SBBColors.smoke,
           borderColorHighlighted: SBBColors.smoke,
           borderColorDisabled:
               baseStyle.themeValue(SBBColors.cloud, SBBColors.iron),
           textStyle:
-              baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallLight),
+              baseStyle.themedTextStyle(textStyle: SBBTextStyles.mediumLight),
           textStyleHighlighted:
-              baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallLight),
+              baseStyle.themedTextStyle(textStyle: SBBTextStyles.mediumLight),
           textStyleDisabled: baseStyle.themedTextStyle(
-              textStyle: SBBTextStyles.smallLight, color: SBBColors.metal),
+              textStyle: SBBTextStyles.mediumLight,
+              color: baseStyle.themeValue(SBBColors.graphite, SBBColors.smoke),
+          ),
         ),
         tertiaryLargeStyle: SBBButtonStyle(
-          backgroundColor:
-              baseStyle.themeValue(SBBColors.white, SBBColors.transparent),
+            backgroundColor:
+            baseStyle.themeValue(SBBColors.white, SBBColors.charcoal),
           backgroundColorHighlighted:
-              baseStyle.themeValue(SBBColors.milk, SBBColors.iron),
-          backgroundColorDisabled: baseStyle.themeValue(
-              SBBColors.transparent, SBBColors.transparent),
+          baseStyle.themeValue(SBBColors.graphite, SBBColors.black),
+          backgroundColorDisabled: SBBColors.transparent,
           borderColor: SBBColors.smoke,
           borderColorHighlighted: SBBColors.smoke,
           borderColorDisabled:
               baseStyle.themeValue(SBBColors.cloud, SBBColors.iron),
           textStyle: baseStyle.themedTextStyle(),
           textStyleHighlighted: baseStyle.themedTextStyle(),
-          textStyleDisabled: baseStyle.themedTextStyle(color: SBBColors.metal),
+          textStyleDisabled: baseStyle.themedTextStyle(
+              color: baseStyle.themeValue(SBBColors.graphite, SBBColors.smoke),
+          ),
         ),
         iconLargeStyle: SBBButtonStyle(
           backgroundColor:
-              baseStyle.themeValue(SBBColors.white, SBBColors.transparent),
+              baseStyle.themeValue(SBBColors.white, SBBColors.charcoal),
           backgroundColorHighlighted:
-              baseStyle.themeValue(SBBColors.milk, SBBColors.iron),
+              baseStyle.themeValue(SBBColors.graphite, SBBColors.black),
           backgroundColorDisabled: SBBColors.transparent,
           borderColor: SBBColors.smoke,
           borderColorHighlighted: SBBColors.smoke,
@@ -125,7 +129,7 @@ class SBBButtonStyles extends ThemeExtension<SBBButtonStyles> {
           iconColor: baseStyle.iconColor,
           iconColorHighlighted: baseStyle.iconColor,
           iconColorDisabled:
-              baseStyle.themeValue(SBBColors.cloud, SBBColors.iron),
+              baseStyle.themeValue(SBBColors.graphite, SBBColors.smoke),
         ),
         iconLargeNegativeStyle: SBBButtonStyle(
           backgroundColor: SBBColors.transparent,
@@ -142,9 +146,9 @@ class SBBButtonStyles extends ThemeExtension<SBBButtonStyles> {
         ),
         iconSmallStyle: SBBButtonStyle(
           backgroundColor:
-              baseStyle.themeValue(SBBColors.white, SBBColors.transparent),
+              baseStyle.themeValue(SBBColors.white, SBBColors.charcoal),
           backgroundColorHighlighted:
-              baseStyle.themeValue(SBBColors.milk, SBBColors.iron),
+              baseStyle.themeValue(SBBColors.graphite, SBBColors.black),
           backgroundColorDisabled: SBBColors.transparent,
           borderColor: SBBColors.smoke,
           borderColorHighlighted: SBBColors.smoke,
@@ -153,7 +157,7 @@ class SBBButtonStyles extends ThemeExtension<SBBButtonStyles> {
           iconColor: baseStyle.iconColor,
           iconColorHighlighted: baseStyle.iconColor,
           iconColorDisabled:
-              baseStyle.themeValue(SBBColors.cloud, SBBColors.iron),
+              baseStyle.themeValue(SBBColors.graphite, SBBColors.smoke),
         ),
         iconSmallNegativeStyle: SBBButtonStyle(
           backgroundColor: SBBColors.transparent,
