@@ -99,6 +99,9 @@ class SBBTertiaryButtonSmall extends StatelessWidget {
           fixedSize: SBBTheme.allStates(
             const Size.fromHeight(SBBInternal.defaultButtonHeightSmall),
           ),
+          minimumSize: SBBTheme.allStates(
+            const Size(0, SBBInternal.defaultButtonHeightSmall),
+          ),
           padding: SBBTheme.allStates(EdgeInsets.zero),
         );
     final style = SBBBaseStyle.of(context);
