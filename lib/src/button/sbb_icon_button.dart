@@ -34,19 +34,13 @@ class SBBIconButtonLarge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final baseStyle = Theme.of(context).textButtonTheme.style?.copyWith(
-          minimumSize: SBBTheme.allStates(const Size(
-              SBBInternal.defaultButtonHeight,
-              SBBInternal.defaultButtonHeight)),
-          fixedSize: SBBTheme.allStates(const Size(
-              SBBInternal.defaultButtonHeight,
-              SBBInternal.defaultButtonHeight)),
+          minimumSize: SBBTheme.allStates(const Size(SBBInternal.defaultButtonHeight, SBBInternal.defaultButtonHeight)),
+          fixedSize: SBBTheme.allStates(const Size(SBBInternal.defaultButtonHeight, SBBInternal.defaultButtonHeight)),
           padding: SBBTheme.allStates(EdgeInsets.zero),
         );
     final style = buttonStyle != null
         ? buttonStyle!.merge(baseStyle)
-        : SBBButtonStyles.of(context)
-            .iconLargeStyle
-            ?.overrideButtonStyle(baseStyle);
+        : SBBButtonStyles.of(context).iconLargeStyle?.overrideButtonStyle(baseStyle);
     return TextButton(
       style: style,
       onPressed: onPressed,
@@ -245,6 +239,7 @@ class _RenderInputPadding extends RenderShiftedBox {
 
   Size get minSize => _minSize;
   Size _minSize;
+
   set minSize(Size value) {
     if (_minSize == value) return;
     _minSize = value;
@@ -301,19 +296,20 @@ class _RenderInputPadding extends RenderShiftedBox {
     );
   }
 
-  @override
-  double? computeDryBaseline(covariant BoxConstraints constraints, TextBaseline baseline) {
-    final RenderBox? child = this.child;
-    if (child == null) {
-      return null;
-    }
-    final double? result = child.getDryBaseline(constraints, baseline);
-    if (result == null) {
-      return null;
-    }
-    final Size childSize = child.getDryLayout(constraints);
-    return result + Alignment.center.alongOffset(getDryLayout(constraints) - childSize as Offset).dy;
-  }
+  // add this method as soon as 3.19.6 is removed
+  // @override
+  // double? computeDryBaseline(covariant BoxConstraints constraints, TextBaseline baseline) {
+  //   final RenderBox? child = this.child;
+  //   if (child == null) {
+  //     return null;
+  //   }
+  //   final double? result = child.getDryBaseline(constraints, baseline);
+  //   if (result == null) {
+  //     return null;
+  //   }
+  //   final Size childSize = child.getDryLayout(constraints);
+  //   return result + Alignment.center.alongOffset(getDryLayout(constraints) - childSize as Offset).dy;
+  // }
 
   @override
   void performLayout() {
@@ -328,7 +324,7 @@ class _RenderInputPadding extends RenderShiftedBox {
   }
 
   @override
-  bool hitTest(BoxHitTestResult result, { required Offset position }) {
+  bool hitTest(BoxHitTestResult result, {required Offset position}) {
     if (super.hitTest(result, position: position)) {
       return true;
     }
