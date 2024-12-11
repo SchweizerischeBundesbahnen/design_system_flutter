@@ -37,29 +37,23 @@ class SBBTertiaryButtonLarge extends StatelessWidget {
     final style = SBBBaseStyle.of(context);
     final buttonStyles = SBBButtonStyles.of(context);
     return TextButton(
-      style: Theme.of(context).textButtonTheme.style?.copyWith(
-            padding: SBBTheme.allStates(EdgeInsets.zero),
-          ),
       onPressed: isLoading ? null : onPressed,
       focusNode: focusNode,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (isLoading)
-              style.themeValue(
-                const SBBLoadingIndicator.tinySmoke(),
-                const SBBLoadingIndicator.tinyCement(),
-              )
-            else if (icon != null)
-              Padding(
-                padding: const EdgeInsetsDirectional.only(end: 4.0),
-                child: Icon(icon, size: sbbIconSizeSmall),
-              ),
-            buttonStyles.buttonLabelBuilder!(context, label),
-          ],
-        ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (isLoading)
+            style.themeValue(
+              const SBBLoadingIndicator.tinySmoke(),
+              const SBBLoadingIndicator.tinyCement(),
+            )
+          else if (icon != null)
+            Padding(
+              padding: const EdgeInsetsDirectional.only(end: 4.0),
+              child: Icon(icon, size: sbbIconSizeSmall),
+            ),
+          buttonStyles.buttonLabelBuilder!(context, label),
+        ],
       ),
     );
   }
@@ -95,39 +89,39 @@ class SBBTertiaryButtonSmall extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final baseStyle = Theme.of(context).textButtonTheme.style?.copyWith(
-          fixedSize: SBBTheme.allStates(
-            const Size.fromHeight(SBBInternal.defaultButtonHeightSmall),
-          ),
-          minimumSize: SBBTheme.allStates(
-            const Size(0, SBBInternal.defaultButtonHeightSmall),
-          ),
-          padding: SBBTheme.allStates(EdgeInsets.zero),
-        );
+    final smallButtonStyle = _baseButtonStyleWithSmallerHeight(context);
     final style = SBBBaseStyle.of(context);
     final buttonStyle = SBBButtonStyles.of(context);
     return TextButton(
-      style: buttonStyle.tertiarySmallStyle?.overrideButtonStyle(baseStyle),
+      style: buttonStyle.tertiarySmallStyle?.overrideButtonStyle(smallButtonStyle),
       onPressed: onPressed,
       focusNode: focusNode,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (isLoading)
-              style.themeValue(
-                const SBBLoadingIndicator.tinyCement(),
-                const SBBLoadingIndicator.tinySmoke(),
-              )
-            else if (icon != null)
-              Padding(
-                padding: const EdgeInsetsDirectional.only(end: 4.0),
-                child: Icon(icon, size: sbbIconSizeSmall),
-              ),
-            buttonStyle.buttonLabelBuilder!(context, label),
-          ],
-        ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (isLoading)
+            style.themeValue(
+              const SBBLoadingIndicator.tinyCement(),
+              const SBBLoadingIndicator.tinySmoke(),
+            )
+          else if (icon != null)
+            ...[
+              Icon(icon, size: sbbIconSizeSmall),
+              SizedBox(width: 4.0)
+            ],
+          buttonStyle.buttonLabelBuilder!(context, label),
+        ],
+      ),
+    );
+  }
+
+  ButtonStyle? _baseButtonStyleWithSmallerHeight(BuildContext context) {
+    return Theme.of(context).textButtonTheme.style?.copyWith(
+      fixedSize: SBBTheme.allStates(
+        const Size.fromHeight(SBBInternal.defaultButtonHeightSmall),
+      ),
+      minimumSize: SBBTheme.allStates(
+        const Size(0, SBBInternal.defaultButtonHeightSmall),
       ),
     );
   }

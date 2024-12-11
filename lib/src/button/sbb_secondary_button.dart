@@ -33,24 +33,18 @@ class SBBSecondaryButton extends StatelessWidget {
     final style = SBBBaseStyle.of(context);
     final buttonStyles = SBBButtonStyles.of(context);
     return OutlinedButton(
-      style: Theme.of(context).outlinedButtonTheme.style?.copyWith(
-            padding: SBBTheme.allStates(EdgeInsets.zero),
-          ),
       onPressed: isLoading ? null : onPressed,
       focusNode: focusNode,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            if (isLoading)
-              style.themeValue(
-                const SBBLoadingIndicator.tinySmoke(),
-                const SBBLoadingIndicator.tinyCement(),
-              ),
-            buttonStyles.buttonLabelBuilder!(context, label),
-          ],
-        ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (isLoading)
+            style.themeValue(
+              const SBBLoadingIndicator.tinySmoke(),
+              const SBBLoadingIndicator.tinyCement(),
+            ),
+          buttonStyles.buttonLabelBuilder!(context, label),
+        ],
       ),
     );
   }
