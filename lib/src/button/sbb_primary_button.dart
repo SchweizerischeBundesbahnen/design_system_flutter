@@ -55,6 +55,7 @@ class SBBPrimaryButton extends StatelessWidget {
 /// inside the button and the [onPressed] callback will be ignored.
 ///
 /// If [onPressed] callback is null, then the button will be disabled.
+@Deprecated("This component is not in the design specs and will be removed in the next major version.")
 class SBBPrimaryButtonNegative extends StatelessWidget {
   const SBBPrimaryButtonNegative({
     super.key,

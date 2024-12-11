@@ -132,6 +132,7 @@ class SBBIconButtonSmallNegative extends StatelessWidget {
 /// ([sbbIconSizeSmall] - 24x24).
 ///
 /// If [onPressed] callback is null, then the button will be disabled.
+@Deprecated("This component is not in the design specs and will be removed in the next major version.")
 class SBBIconButtonSmallBorderless extends StatelessWidget {
   const SBBIconButtonSmallBorderless({
     super.key,

@@ -17,6 +17,11 @@ It is expected that you keep this format strictly, since we depend on it in our 
   - `SBBIconButtonSmall`
   - `SBBIconButtonLarge`
 
+### Deprecated
+- `SBBIconFormButton`
+- `SBBIconButtonSmallBorderless`
+- `SBBPrimaryButtonNegative`
+
 ## [2.0.0] - 2024-09-06
 
 ### Changed

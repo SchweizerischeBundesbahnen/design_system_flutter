@@ -5,7 +5,7 @@ import '../sbb_internal.dart';
 
 /// Large variant of the SBB Tertiary Button. Use according to documentation.
 ///
-/// The [label] parameter must not be null.. In case you want to show a variant of this button
+/// The [label] parameter must not be null. In case you want to show a variant of this button
 /// without a label, use the [SBBIconButtonLarge].
 ///
 /// If [isLoading] is true, then the [SBBLoadingIndicator] will be displayed
@@ -47,11 +47,7 @@ class SBBTertiaryButtonLarge extends StatelessWidget {
               const SBBLoadingIndicator.tinySmoke(),
               const SBBLoadingIndicator.tinyCement(),
             )
-          else if (icon != null)
-            Padding(
-              padding: const EdgeInsetsDirectional.only(end: 4.0),
-              child: Icon(icon, size: sbbIconSizeSmall),
-            ),
+          else if (icon != null) ...[Icon(icon, size: sbbIconSizeSmall), SizedBox(width: 4.0)],
           buttonStyles.buttonLabelBuilder!(context, label),
         ],
       ),
@@ -93,7 +89,7 @@ class SBBTertiaryButtonSmall extends StatelessWidget {
     final style = SBBBaseStyle.of(context);
     final buttonStyle = SBBButtonStyles.of(context);
     return TextButton(
-      style: buttonStyle.tertiarySmallStyle?.overrideButtonStyle(smallButtonStyle),
+      style: smallButtonStyle,
       onPressed: onPressed,
       focusNode: focusNode,
       child: Row(
@@ -104,11 +100,7 @@ class SBBTertiaryButtonSmall extends StatelessWidget {
               const SBBLoadingIndicator.tinyCement(),
               const SBBLoadingIndicator.tinySmoke(),
             )
-          else if (icon != null)
-            ...[
-              Icon(icon, size: sbbIconSizeSmall),
-              SizedBox(width: 4.0)
-            ],
+          else if (icon != null) ...[Icon(icon, size: sbbIconSizeSmall), SizedBox(width: 4.0)],
           buttonStyle.buttonLabelBuilder!(context, label),
         ],
       ),
@@ -116,13 +108,17 @@ class SBBTertiaryButtonSmall extends StatelessWidget {
   }
 
   ButtonStyle? _baseButtonStyleWithSmallerHeight(BuildContext context) {
-    return Theme.of(context).textButtonTheme.style?.copyWith(
-      fixedSize: SBBTheme.allStates(
-        const Size.fromHeight(SBBInternal.defaultButtonHeightSmall),
-      ),
-      minimumSize: SBBTheme.allStates(
-        const Size(0, SBBInternal.defaultButtonHeightSmall),
-      ),
+    final buttonStyle = SBBButtonStyles.of(context);
+
+    return buttonStyle.tertiarySmallStyle?.overrideButtonStyle(
+      Theme.of(context).textButtonTheme.style?.copyWith(
+            fixedSize: SBBTheme.allStates(
+              const Size.fromHeight(SBBInternal.defaultButtonHeightSmall),
+            ),
+            minimumSize: SBBTheme.allStates(
+              const Size(0, SBBInternal.defaultButtonHeightSmall),
+            ),
+          ),
     );
   }
 }
