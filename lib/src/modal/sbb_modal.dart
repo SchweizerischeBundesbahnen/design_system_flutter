@@ -97,6 +97,7 @@ Future<T?> showSBBModalSheet<T>({
   bool useRootNavigator = true,
   bool useSafeArea = true,
   bool enableDrag = true,
+  BoxConstraints? constraints,
 }) {
   return showModalBottomSheet<T>(
     context: context,
@@ -105,6 +106,7 @@ Future<T?> showSBBModalSheet<T>({
     useRootNavigator: useRootNavigator,
     useSafeArea: useSafeArea,
     enableDrag: enableDrag,
+    constraints: constraints,
     builder: (BuildContext context) {
       return SBBModalSheet(
         title: title,
@@ -136,6 +138,7 @@ Future<T?> showCustomSBBModalSheet<T>({
   bool useRootNavigator = true,
   bool useSafeArea = true,
   bool enableDrag = true,
+  BoxConstraints? constraints,
 }) {
   return showModalBottomSheet<T>(
     context: context,
@@ -144,6 +147,7 @@ Future<T?> showCustomSBBModalSheet<T>({
     useRootNavigator: useRootNavigator,
     useSafeArea: useSafeArea,
     enableDrag: enableDrag,
+    constraints: constraints,
     builder: (BuildContext context) {
       return SBBModalSheet.custom(
         header: header,
