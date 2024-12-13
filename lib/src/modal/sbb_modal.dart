@@ -108,10 +108,9 @@ Future<T?> showSBBModalSheet<T>({
     enableDrag: enableDrag,
     constraints: constraints,
     builder: (BuildContext context) {
-      return SBBModalSheet(
-        title: title,
-        child: child,
-      );
+      return useSafeArea
+          ? _wrapWithBottomSafeArea(SBBModalSheet(title: title, child: child))
+          : SBBModalSheet(title: title, child: child);
     },
     barrierColor: SBBInternal.barrierColor,
   );
@@ -149,10 +148,9 @@ Future<T?> showCustomSBBModalSheet<T>({
     enableDrag: enableDrag,
     constraints: constraints,
     builder: (BuildContext context) {
-      return SBBModalSheet.custom(
-        header: header,
-        child: child,
-      );
+      return useSafeArea
+          ? _wrapWithBottomSafeArea(SBBModalSheet.custom(header: header, child: child))
+          : SBBModalSheet.custom(header: header, child: child);
     },
     barrierColor: SBBInternal.barrierColor,
   );
@@ -305,4 +303,13 @@ class _CloseButton extends StatelessWidget {
           ),
         ),
       );
+}
+
+Widget _wrapWithBottomSafeArea(Widget child) {
+  return SafeArea(
+    top: false,
+    left: false,
+    right: false,
+    child: child,
+  );
 }

@@ -14,6 +14,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ### Changed
 - Dropped support for `Flutter SDK 3.19.6`: minimum supported version is 3.22.3
+- `showSBBModalSheet` & `showCustomSBBModalSheet`: add bottom safe area of content if `useSafeArea` is true
 
 ### Deprecated
 - `SBBIconFormButton`
