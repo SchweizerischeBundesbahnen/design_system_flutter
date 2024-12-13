@@ -36,10 +36,12 @@ jobs:
         id: read-changelog
         uses: mindsers/changelog-reader-action@v2.2.3
 
-      - run: git config --global user.email "914587+sbb-app-bakery[bot]@users.noreply.github.com"
-      - run: git config --global user.name "sbb-app-bakery[bot]"
-      - run: git tag -a ${{ steps.read-changelog.outputs.version }} -m "Version Release ${{ steps.read-changelog.outputs.version }} on ${{ steps.read-changelog.outputs.date }}"
-      - run: git push --follow-tags
+      - name: Create release tag
+        uses: rickstaa/action-create-tag@v1.7.2
+        with:
+          github_token: ${{ steps.app-token.outputs.token }}
+          tag: ${{ steps.read-changelog.outputs.version }}
+          message: "Version Release ${{ steps.read-changelog.outputs.version }} on ${{ steps.read-changelog.outputs.date }}"
 
   create-github-release:
     runs-on: ubuntu-latest
