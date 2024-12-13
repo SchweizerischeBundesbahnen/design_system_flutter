@@ -99,6 +99,9 @@ class SBBButtonStyles extends ThemeExtension<SBBButtonStyles> {
               textStyle: SBBTextStyles.mediumLight,
               color: baseStyle.themeValue(SBBColors.graphite, SBBColors.smoke),
           ),
+          iconColor: baseStyle.iconColor,
+          iconColorHighlighted: baseStyle.iconColor,
+          iconColorDisabled: baseStyle.themeValue(SBBColors.graphite, SBBColors.smoke),
         ),
         tertiaryLargeStyle: SBBButtonStyle(
             backgroundColor:
@@ -115,6 +118,9 @@ class SBBButtonStyles extends ThemeExtension<SBBButtonStyles> {
           textStyleDisabled: baseStyle.themedTextStyle(
               color: baseStyle.themeValue(SBBColors.graphite, SBBColors.smoke),
           ),
+          iconColor: baseStyle.iconColor,
+          iconColorHighlighted: baseStyle.iconColor,
+          iconColorDisabled: baseStyle.themeValue(SBBColors.graphite, SBBColors.smoke),
         ),
         iconLargeStyle: SBBButtonStyle(
           backgroundColor:
