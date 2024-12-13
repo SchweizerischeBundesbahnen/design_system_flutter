@@ -9,19 +9,25 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+## [2.1.0] - 2024-12-13
+
 ### Added
+
 - added `constraints` to `showSBBModalSheet` to allow varying screen sizes (tablet)
 
 ### Changed
+
 - Dropped support for `Flutter SDK 3.19.6`: minimum supported version is 3.22.3
 - `showSBBModalSheet` & `showCustomSBBModalSheet`: add bottom safe area of content if `useSafeArea` is true
 
 ### Deprecated
+
 - `SBBIconFormButton`
 - `SBBIconButtonSmallBorderless`
 - `SBBPrimaryButtonNegative`
 
 ### Fixed
+
 - correct height for `SBBTertiaryButtonSmall` (40px => 32px)
 - coloring of:
   - `SBBSecondaryButton` (onHighlighted)
@@ -437,7 +443,9 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Initial project setup
 - Added some widgets
 
-[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/2.0.0...HEAD
+[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/2.1.0...HEAD
+
+[2.1.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/2.0.0...2.1.0
 
 [2.0.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/1.6.0...2.0.0
 
