@@ -12,6 +12,8 @@ It is expected that you keep this format strictly, since we depend on it in our 
 ### Added
 - added `constraints` to `showSBBModalSheet` to allow varying screen sizes (tablet)
 
+### Changed
+- Dropped support for `Flutter SDK 3.19.6`: minimum supported version is 3.22.3
 
 ### Deprecated
 - `SBBIconFormButton`

@@ -257,7 +257,7 @@ class SBBButtonStyles extends ThemeExtension<SBBButtonStyles> {
             const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing)),
         elevation: SBBTheme.allStates(0),
         tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-        mouseCursor: MaterialStateMouseCursor.clickable,
+        mouseCursor: WidgetStateMouseCursor.clickable,
       );
 
   FilledButtonThemeData get filledButtonTheme => FilledButtonThemeData(
