@@ -10,7 +10,7 @@ on:
 jobs:
   create-tag:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.merged && contains( github.event.pull_request.labels.*.name, 'autorelease')
+    if: (github.event.pull_request.merged && contains( github.event.pull_request.labels.*.name, 'autorelease')) || (github.event_name == 'workflow_dispatch')
     permissions:
       contents: write
 
@@ -36,12 +36,8 @@ jobs:
         id: read-changelog
         uses: mindsers/changelog-reader-action@v2.2.3
 
-      - name: Create tag
-        uses: actions4git/setup-git@v1.0.3
-        with:
-          github-token: ${{ steps.app-token.outputs.token }}
-          user-name: sbb-app-bakery[bot]
-          user-email: 914587+sbb-app-bakery[bot]@users.noreply.github.com
+      - run: git config --global user.email "914587+sbb-app-bakery[bot]@users.noreply.github.com"
+      - run: git config --global user.name "sbb-app-bakery[bot]"
       - run: git tag -a ${{ steps.read-changelog.outputs.version }} -m "Version Release ${{ steps.read-changelog.outputs.version }} on ${{ steps.read-changelog.outputs.date }}"
       - run: git push --follow-tags
 
