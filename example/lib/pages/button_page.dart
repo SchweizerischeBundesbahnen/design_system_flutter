@@ -179,12 +179,12 @@ class ButtonPage extends StatelessWidget {
                   onPressed: () {
                     sbbToast.show(message: 'SBBIconButtonLarge');
                   },
-                  icon: SBBIcons.glass_cocktail_medium,
+                  icon: SBBIcons.glass_cocktail_small,
                 ),
                 const SizedBox(width: sbbDefaultSpacing),
                 const SBBIconButtonLarge(
                   onPressed: null,
-                  icon: SBBIcons.glass_cocktail_medium,
+                  icon: SBBIcons.glass_cocktail_small,
                 ),
               ],
             ),

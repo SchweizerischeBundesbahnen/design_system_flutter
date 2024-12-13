@@ -11,9 +11,9 @@ void main() {
       child: Column(
         children: [
           const SizedBox(height: sbbDefaultSpacing),
-          SBBIconButtonLarge(onPressed: () {}, icon: SBBIcons.glass_cocktail_medium),
+          SBBIconButtonLarge(onPressed: () {}, icon: SBBIcons.glass_cocktail_small),
           const SizedBox(height: sbbDefaultSpacing),
-          SBBIconButtonLarge(onPressed: null, icon: SBBIcons.glass_cocktail_medium),
+          SBBIconButtonLarge(onPressed: null, icon: SBBIcons.glass_cocktail_small),
           const SizedBox(height: sbbDefaultSpacing),
           SBBIconButtonSmall(onPressed: () {}, icon: SBBIcons.glass_cocktail_small),
           const SizedBox(height: sbbDefaultSpacing),

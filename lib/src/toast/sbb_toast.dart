@@ -139,7 +139,7 @@ class Toast extends StatefulWidget {
           stream: stream,
           backgroundColor: SBBColors.white,
           textColor: SBBColors.green,
-          icon: SBBIcons.tick_medium,
+          icon: SBBIcons.tick_small,
         );
 
   const Toast.warning({
@@ -154,7 +154,7 @@ class Toast extends StatefulWidget {
           stream: stream,
           backgroundColor: SBBColors.orange,
           textColor: SBBColors.white,
-          icon: SBBIcons.sign_x_medium,
+          icon: SBBIcons.sign_x_small,
         );
 
   const Toast.error({
@@ -169,7 +169,7 @@ class Toast extends StatefulWidget {
           stream: stream,
           backgroundColor: SBBColors.red,
           textColor: SBBColors.white,
-          icon: SBBIcons.sign_x_medium,
+          icon: SBBIcons.sign_x_small,
         );
 
   const Toast({
