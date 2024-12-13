@@ -9,6 +9,12 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+### Added
+- added `constraints` to `showSBBModalSheet` to allow varying screen sizes (tablet)
+
+### Fixed
+- `iconColor` in `SBBButtonStyle` is correctly overriden to support Flutter SDK >=3.27.0
+
 ## [2.0.0] - 2024-09-06
 
 ### Changed
