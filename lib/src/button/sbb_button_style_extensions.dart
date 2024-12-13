@@ -21,7 +21,7 @@ extension SBBButtonStylesExtension on SBBButtonStyles {
         const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing)),
     elevation: SBBTheme.allStates(0),
     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-    mouseCursor: MaterialStateMouseCursor.clickable,
+    mouseCursor: WidgetStateMouseCursor.clickable,
   );
 
   ButtonStyle get primaryMobile =>
