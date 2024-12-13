@@ -12,7 +12,19 @@ It is expected that you keep this format strictly, since we depend on it in our 
 ### Added
 - added `constraints` to `showSBBModalSheet` to allow varying screen sizes (tablet)
 
+
+### Deprecated
+- `SBBIconFormButton`
+- `SBBIconButtonSmallBorderless`
+- `SBBPrimaryButtonNegative`
+
 ### Fixed
+- correct height for `SBBTertiaryButtonSmall` (40px => 32px)
+- coloring of:
+  - `SBBSecondaryButton` (onHighlighted)
+  - `SBBTertiaryButton` (darkMode)
+  - `SBBIconButtonSmall`
+  - `SBBIconButtonLarge`
 - `iconColor` in `SBBButtonStyle` is correctly overriden to support Flutter SDK >=3.27.0
 
 ## [2.0.0] - 2024-09-06

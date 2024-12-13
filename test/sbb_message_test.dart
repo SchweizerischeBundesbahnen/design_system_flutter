@@ -45,7 +45,7 @@ void main() {
       description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
       onInteraction: () {},
-      interactionIcon: SBBIcons.train_medium,
+      interactionIcon: SBBIcons.train_small,
     ),
   );
 

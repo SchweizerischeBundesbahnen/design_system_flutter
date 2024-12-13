@@ -194,7 +194,7 @@ class _VerticalEndPage extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 67),
-            SBBPrimaryButtonNegative(
+            SBBPrimaryButton(
               label: 'Close Onboarding',
               onPressed: onFinish,
             ),
@@ -240,7 +240,7 @@ class _HorizontalEndPage extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 67),
-                  SBBPrimaryButtonNegative(
+                  SBBPrimaryButton(
                     label: 'Close Onboarding',
                     onPressed: onFinish,
                   ),
@@ -285,16 +285,24 @@ class _VerticalStartPage extends StatelessWidget {
               ),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 67),
-            SBBPrimaryButtonNegative(
-              label: 'Start Onboarding',
-              onPressed: onStartOnboarding,
-            ),
-            const SizedBox(height: sbbDefaultSpacing),
-            SBBPrimaryButton(
-              label: 'Skip Onboarding',
-              onPressed: onFinish,
-            ),
+            const SizedBox(height: sbbDefaultSpacing * 9),
+            SBBGroup(
+              padding: EdgeInsets.symmetric(horizontal: sbbDefaultSpacing / 2, vertical: sbbDefaultSpacing),
+                child:
+                Column(
+                  children: [
+                    SBBPrimaryButton(
+                      label: 'Start Onboarding',
+                      onPressed: onStartOnboarding,
+                    ),
+                    const SizedBox(height: sbbDefaultSpacing),
+                    SBBSecondaryButton(
+                      label: 'Skip Onboarding',
+                      onPressed: onFinish,
+                    ),
+                  ],
+                )
+            )
           ],
         ),
       ),
@@ -339,15 +347,23 @@ class _HorizontalStartPage extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 67),
-                  SBBPrimaryButtonNegative(
-                    label: 'Start Onboarding',
-                    onPressed: onStartOnboarding,
-                  ),
-                  const SizedBox(height: sbbDefaultSpacing),
-                  SBBPrimaryButton(
-                    label: 'Skip Onboarding',
-                    onPressed: onFinish,
-                  ),
+                  SBBGroup(
+                      padding: EdgeInsets.symmetric(horizontal: sbbDefaultSpacing / 2, vertical: sbbDefaultSpacing),
+                      child:
+                      Column(
+                        children: [
+                          SBBPrimaryButton(
+                            label: 'Start Onboarding',
+                            onPressed: onStartOnboarding,
+                          ),
+                          const SizedBox(height: sbbDefaultSpacing),
+                          SBBSecondaryButton(
+                            label: 'Skip Onboarding',
+                            onPressed: onFinish,
+                          ),
+                        ],
+                      )
+                  )
                 ],
               ),
             ),

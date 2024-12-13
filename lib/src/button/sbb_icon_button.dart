@@ -6,10 +6,9 @@ import 'package:flutter/rendering.dart';
 import '../../sbb_design_system_mobile.dart';
 import '../sbb_internal.dart';
 
-/// Large variant of the SBB Icon Button. Use according to documentation.
+/// SBBIconButtonLarge. Use this as [SBBTertiaryButtonLarge] without label.
 ///
-/// The [icon] parameter must not be null. Make sure to use small icons
-/// ([sbbIconSizeSmall] - 24x24).
+/// The [icon] parameter must not be null. Make sure to use small or medium icons.
 ///
 /// If [onPressed] callback is null, then the button will be disabled.
 ///
@@ -35,19 +34,13 @@ class SBBIconButtonLarge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final baseStyle = Theme.of(context).textButtonTheme.style?.copyWith(
-          minimumSize: SBBTheme.allStates(const Size(
-              SBBInternal.defaultButtonHeight,
-              SBBInternal.defaultButtonHeight)),
-          fixedSize: SBBTheme.allStates(const Size(
-              SBBInternal.defaultButtonHeight,
-              SBBInternal.defaultButtonHeight)),
+          minimumSize: SBBTheme.allStates(const Size(SBBInternal.defaultButtonHeight, SBBInternal.defaultButtonHeight)),
+          fixedSize: SBBTheme.allStates(const Size(SBBInternal.defaultButtonHeight, SBBInternal.defaultButtonHeight)),
           padding: SBBTheme.allStates(EdgeInsets.zero),
         );
     final style = buttonStyle != null
         ? buttonStyle!.merge(baseStyle)
-        : SBBButtonStyles.of(context)
-            .iconLargeStyle
-            ?.overrideButtonStyle(baseStyle);
+        : SBBButtonStyles.of(context).iconLargeStyle?.overrideButtonStyle(baseStyle);
     return TextButton(
       style: style,
       onPressed: onPressed,
@@ -60,16 +53,15 @@ class SBBIconButtonLarge extends StatelessWidget {
   }
 }
 
-/// Small variant of the SBB Icon Button. Use according to documentation.
+/// SBBIconButtonSmall. Use this as [SBBTertiaryButtonSmall] without label.
 ///
 /// The [icon] parameter must not be null. Make sure to use small icons
 /// ([sbbIconSizeSmall] - 24x24).
-///
 /// If [onPressed] callback is null, then the button will be disabled.
 ///
 /// See also:
 ///
-/// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/button>
+/// * <https://digital.sbb.ch/en/design-system/mobile/components/button/>
 class SBBIconButtonSmall extends StatelessWidget {
   const SBBIconButtonSmall({
     super.key,
@@ -94,17 +86,14 @@ class SBBIconButtonSmall extends StatelessWidget {
   }
 }
 
-/// Small negative variant of the SBB Icon Button. Use according to
-/// documentation.
+/// Negative variant of the [SBBIconButtonSmall].
+///
+/// THIS IS NOT IN THE MOBILE DESIGN SPECS. Can be removed in a future version.
 ///
 /// The [icon] parameter must not be null. Make sure to use small icons
 /// ([sbbIconSizeSmall] - 24x24).
 ///
 /// If [onPressed] callback is null, then the button will be disabled.
-///
-/// See also:
-///
-/// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/button>
 class SBBIconButtonSmallNegative extends StatelessWidget {
   const SBBIconButtonSmallNegative({
     super.key,
@@ -129,17 +118,15 @@ class SBBIconButtonSmallNegative extends StatelessWidget {
   }
 }
 
-/// Small borderless variant of the SBB Icon Button. Use according to
-/// documentation.
+/// Borderless variant of the [SBBIconButtonSmall].
+///
+/// THIS IS NOT IN THE MOBILE DESIGN SPECS. Can be removed in a future version.
 ///
 /// The [icon] parameter must not be null. Make sure to use small icons
 /// ([sbbIconSizeSmall] - 24x24).
 ///
 /// If [onPressed] callback is null, then the button will be disabled.
-///
-/// See also:
-///
-/// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/button>
+@Deprecated("This component is not in the design specs and will be removed in the next major version.")
 class SBBIconButtonSmallBorderless extends StatelessWidget {
   const SBBIconButtonSmallBorderless({
     super.key,
@@ -221,9 +208,9 @@ class _SBBIconButtonSmallRaw extends StatelessWidget {
   }
 }
 
-/// Copied from [ButtonStyleButton]
+/// Copied from [ButtonStyleButton] in version Flutter SDK 3.24.5
 ///
-/// A widget to pad the area around a [MaterialButton]'s inner [Material].
+/// A widget to pad the area around a [ButtonStyleButton]'s inner [Material].
 ///
 /// Redirect taps that occur in the padded area around the child to the center
 /// of the child. This increases the size of the button and the button's
@@ -242,8 +229,7 @@ class _InputPadding extends SingleChildRenderObjectWidget {
   }
 
   @override
-  void updateRenderObject(
-      BuildContext context, covariant _RenderInputPadding renderObject) {
+  void updateRenderObject(BuildContext context, covariant _RenderInputPadding renderObject) {
     renderObject.minSize = minSize;
   }
 }
@@ -292,9 +278,7 @@ class _RenderInputPadding extends RenderShiftedBox {
     return 0.0;
   }
 
-  Size _computeSize(
-      {required BoxConstraints constraints,
-      required ChildLayouter layoutChild}) {
+  Size _computeSize({required BoxConstraints constraints, required ChildLayouter layoutChild}) {
     if (child != null) {
       final Size childSize = layoutChild(child!, constraints);
       final double height = math.max(childSize.width, minSize.width);
@@ -312,6 +296,21 @@ class _RenderInputPadding extends RenderShiftedBox {
     );
   }
 
+  // add this method as soon as 3.19.6 is removed
+  // @override
+  // double? computeDryBaseline(covariant BoxConstraints constraints, TextBaseline baseline) {
+  //   final RenderBox? child = this.child;
+  //   if (child == null) {
+  //     return null;
+  //   }
+  //   final double? result = child.getDryBaseline(constraints, baseline);
+  //   if (result == null) {
+  //     return null;
+  //   }
+  //   final Size childSize = child.getDryLayout(constraints);
+  //   return result + Alignment.center.alongOffset(getDryLayout(constraints) - childSize as Offset).dy;
+  // }
+
   @override
   void performLayout() {
     size = _computeSize(
@@ -320,8 +319,7 @@ class _RenderInputPadding extends RenderShiftedBox {
     );
     if (child != null) {
       final BoxParentData childParentData = child!.parentData! as BoxParentData;
-      childParentData.offset =
-          Alignment.center.alongOffset(size - child!.size as Offset);
+      childParentData.offset = Alignment.center.alongOffset(size - child!.size as Offset);
     }
   }
 
@@ -334,7 +332,7 @@ class _RenderInputPadding extends RenderShiftedBox {
     return result.addWithRawTransform(
       transform: MatrixUtils.forceToPoint(center),
       position: center,
-      hitTest: (BoxHitTestResult result, Offset? position) {
+      hitTest: (BoxHitTestResult result, Offset position) {
         assert(position == center);
         return child!.hitTest(result, position: center);
       },
