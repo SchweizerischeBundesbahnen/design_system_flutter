@@ -5,15 +5,17 @@ import '../sbb_internal.dart';
 
 /// Large variant of the SBB Tertiary Button. Use according to documentation.
 ///
-/// The [label] parameter must not be null.
+/// The [label] parameter must not be null. In case you want to show a variant of this button
+/// without a label, use the [SBBIconButtonLarge].
 ///
-/// If [isLoading] is true, then the [SBBLoadingIndicator] will be displayed inside the button and the [onPressed] callback will be ignored.
+/// If [isLoading] is true, then the [SBBLoadingIndicator] will be displayed
+/// inside the button and the [onPressed] callback will be ignored.
 ///
 /// If [onPressed] callback is null, then the button will be disabled.
 ///
 /// See also:
 ///
-/// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/button>
+/// * <https://digital.sbb.ch/en/design-system/mobile/components/button/>
 class SBBTertiaryButtonLarge extends StatelessWidget {
   const SBBTertiaryButtonLarge({
     super.key,
@@ -35,29 +37,19 @@ class SBBTertiaryButtonLarge extends StatelessWidget {
     final style = SBBBaseStyle.of(context);
     final buttonStyles = SBBButtonStyles.of(context);
     return TextButton(
-      style: Theme.of(context).textButtonTheme.style?.copyWith(
-            padding: SBBTheme.allStates(EdgeInsets.zero),
-          ),
       onPressed: isLoading ? null : onPressed,
       focusNode: focusNode,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (isLoading)
-              style.themeValue(
-                const SBBLoadingIndicator.tinySmoke(),
-                const SBBLoadingIndicator.tinyCement(),
-              )
-            else if (icon != null)
-              Padding(
-                padding: const EdgeInsetsDirectional.only(end: 4.0),
-                child: Icon(icon, size: sbbIconSizeSmall),
-              ),
-            buttonStyles.buttonLabelBuilder!(context, label),
-          ],
-        ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (isLoading)
+            style.themeValue(
+              const SBBLoadingIndicator.tinySmoke(),
+              const SBBLoadingIndicator.tinyCement(),
+            )
+          else if (icon != null) ...[Icon(icon, size: sbbIconSizeSmall), SizedBox(width: 4.0)],
+          buttonStyles.buttonLabelBuilder!(context, label),
+        ],
       ),
     );
   }
@@ -65,7 +57,8 @@ class SBBTertiaryButtonLarge extends StatelessWidget {
 
 /// Small variant of the SBB Tertiary Button. Use according to documentation.
 ///
-/// The [label] parameter must not be null.
+/// The [label] parameter must not be null. In case you want to show a variant of this button
+/// without a label, use the [SBBIconButtonSmall].
 ///
 /// If [isLoading] is true, then the [SBBLoadingIndicator] will be displayed inside the button and the [onPressed] callback will be ignored.
 ///
@@ -73,7 +66,7 @@ class SBBTertiaryButtonLarge extends StatelessWidget {
 ///
 /// See also:
 ///
-/// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/button>
+/// * <https://digital.sbb.ch/en/design-system/mobile/components/button/>
 class SBBTertiaryButtonSmall extends StatelessWidget {
   const SBBTertiaryButtonSmall({
     super.key,
@@ -92,37 +85,40 @@ class SBBTertiaryButtonSmall extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final baseStyle = Theme.of(context).textButtonTheme.style?.copyWith(
-          fixedSize: SBBTheme.allStates(
-            const Size.fromHeight(SBBInternal.defaultButtonHeightSmall),
-          ),
-          padding: SBBTheme.allStates(EdgeInsets.zero),
-        );
+    final smallButtonStyle = _baseButtonStyleWithSmallerHeight(context);
     final style = SBBBaseStyle.of(context);
     final buttonStyle = SBBButtonStyles.of(context);
     return TextButton(
-      style: buttonStyle.tertiarySmallStyle?.overrideButtonStyle(baseStyle),
+      style: smallButtonStyle,
       onPressed: onPressed,
       focusNode: focusNode,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            if (isLoading)
-              style.themeValue(
-                const SBBLoadingIndicator.tinyCement(),
-                const SBBLoadingIndicator.tinySmoke(),
-              )
-            else if (icon != null)
-              Padding(
-                padding: const EdgeInsetsDirectional.only(end: 4.0),
-                child: Icon(icon, size: sbbIconSizeSmall),
-              ),
-            buttonStyle.buttonLabelBuilder!(context, label),
-          ],
-        ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (isLoading)
+            style.themeValue(
+              const SBBLoadingIndicator.tinyCement(),
+              const SBBLoadingIndicator.tinySmoke(),
+            )
+          else if (icon != null) ...[Icon(icon, size: sbbIconSizeSmall), SizedBox(width: 4.0)],
+          buttonStyle.buttonLabelBuilder!(context, label),
+        ],
       ),
+    );
+  }
+
+  ButtonStyle? _baseButtonStyleWithSmallerHeight(BuildContext context) {
+    final buttonStyle = SBBButtonStyles.of(context);
+
+    return buttonStyle.tertiarySmallStyle?.overrideButtonStyle(
+      Theme.of(context).textButtonTheme.style?.copyWith(
+            fixedSize: SBBTheme.allStates(
+              const Size.fromHeight(SBBInternal.defaultButtonHeightSmall),
+            ),
+            minimumSize: SBBTheme.allStates(
+              const Size(0, SBBInternal.defaultButtonHeightSmall),
+            ),
+          ),
     );
   }
 }

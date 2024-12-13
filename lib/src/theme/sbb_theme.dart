@@ -97,7 +97,7 @@ class SBBTheme {
         fontFamily: baseStyle.defaultFontFamily,
         textTheme: baseStyle.createTextTheme(),
         appBarTheme: controlStyles.appBarTheme,
-        elevatedButtonTheme: buttonStyles.elevatedButtonTheme,
+        filledButtonTheme: buttonStyles.filledButtonTheme,
         outlinedButtonTheme: buttonStyles.outlinedButtonTheme,
         textButtonTheme: buttonStyles.textButtonTheme,
         cardTheme: controlStyles.cardTheme,

@@ -1,7 +1,6 @@
 library sbb_design_system_mobile;
 
 export 'src/accordion/sbb_accordion.dart';
-export 'src/button/sbb_button_style_extensions.dart';
 export 'src/button/sbb_icon_button.dart';
 export 'src/button/sbb_icon_form_button.dart';
 export 'src/button/sbb_primary_button.dart';
