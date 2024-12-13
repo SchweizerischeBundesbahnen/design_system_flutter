@@ -5,20 +5,8 @@ on:
     tags:
       - "[0-9]+.[0-9]+.[0-9]+" # tag pattern on pub.dev: '{{version}}'
 
-# Publish using custom workflow
 jobs:
   publish:
     permissions:
-      id-token: write # Required for authentication using OIDC
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: stable
-          cache: true
-      - run: flutter doctor -v
-      - run: flutter pub get
-      - run: dart run build_runner build --delete-conflicting-outputs
-      - run: flutter pub publish --force
+      id-token: write
+    uses: dart-lang/setup-dart/.github/workflows/publish.yml@v1

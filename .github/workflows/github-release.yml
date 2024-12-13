@@ -16,7 +16,6 @@ jobs:
 
     outputs:
       tag_name: ${{ steps.read-changelog.outputs.version }}
-      github-app-token: ${{ steps.app-token.outputs.token }}
 
     steps:
       - name: Generate Token for sbb-app-bakery GH App
@@ -50,13 +49,10 @@ jobs:
       - name: Clone Repository
         uses: actions/checkout@v4
         with:
-          token: ${{ needs.create-tag.outputs.github-app-token }}
           ref: refs/tags/${{ needs.create-tag.outputs.tag_name }}
-          persist-credentials: false
 
       - name: Create GitHub Releases based on changelog
         uses: taiki-e/create-gh-release-action@v1.8.2
         with:
-          token: ${{ needs.create-tag.outputs.github-app-token }}
           ref: refs/tags/${{ needs.create-tag.outputs.tag_name }}
           changelog: ./CHANGELOG.md
