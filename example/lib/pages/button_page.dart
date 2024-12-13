@@ -16,7 +16,6 @@ class ButtonPage extends StatelessWidget {
           const ThemeModeSegmentedButton(),
           const SizedBox(height: sbbDefaultSpacing),
           const SBBListHeader('Primary Button'),
-          // const SBBListHeader('Default | Disabled | Loading', textStyle: SBBTextStyles.extraSmallLight),
           SBBGroup(
             padding: const EdgeInsets.all(sbbDefaultSpacing),
             child: Column(
@@ -96,7 +95,7 @@ class ButtonPage extends StatelessWidget {
                   const SizedBox(height: sbbDefaultSpacing),
                   SBBTertiaryButtonLarge(
                     label: 'Icon',
-                    icon: SBBIcons.dog_medium,
+                    icon: SBBIcons.dog_small,
                     onPressed: () {
                       sbbToast.show(message: 'SBBTertiaryButtonLarge');
                     },
@@ -104,13 +103,13 @@ class ButtonPage extends StatelessWidget {
                   const SizedBox(height: sbbDefaultSpacing),
                   const SBBTertiaryButtonLarge(
                     label: 'Icon Disabled',
-                    icon: SBBIcons.dog_medium,
+                    icon: SBBIcons.dog_small,
                     onPressed: null,
                   ),
                   const SizedBox(height: sbbDefaultSpacing),
                   SBBTertiaryButtonLarge(
                     label: 'Icon Loading',
-                    icon: SBBIcons.dog_medium,
+                    icon: SBBIcons.dog_small,
                     onPressed: () {},
                     isLoading: true,
                   ),
