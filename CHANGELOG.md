@@ -9,6 +9,10 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+### Fixed
+
+- `SafeArea` is applied to content of `showSBBModalSheet` - not to the sheet itself
+
 ## [2.1.0] - 2024-12-13
 
 ### Added
