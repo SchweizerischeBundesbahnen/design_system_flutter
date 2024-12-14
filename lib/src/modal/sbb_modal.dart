@@ -108,9 +108,10 @@ Future<T?> showSBBModalSheet<T>({
     enableDrag: enableDrag,
     constraints: constraints,
     builder: (BuildContext context) {
-      return useSafeArea
-          ? _wrapWithBottomSafeArea(SBBModalSheet(title: title, child: child))
-          : SBBModalSheet(title: title, child: child);
+      return SBBModalSheet(
+        title: title,
+        child: useSafeArea ? _wrapWithBottomSafeArea(child) : child,
+      );
     },
     barrierColor: SBBInternal.barrierColor,
   );
@@ -148,9 +149,10 @@ Future<T?> showCustomSBBModalSheet<T>({
     enableDrag: enableDrag,
     constraints: constraints,
     builder: (BuildContext context) {
-      return useSafeArea
-          ? _wrapWithBottomSafeArea(SBBModalSheet.custom(header: header, child: child))
-          : SBBModalSheet.custom(header: header, child: child);
+      return SBBModalSheet.custom(
+        header: header,
+        child: useSafeArea ? _wrapWithBottomSafeArea(child) : child,
+      );
     },
     barrierColor: SBBInternal.barrierColor,
   );
