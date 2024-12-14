@@ -9,6 +9,8 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+## [2.1.1] - 2024-12-14
+
 ### Fixed
 
 - `SafeArea` is applied to content of `showSBBModalSheet` - not to the sheet itself
@@ -447,7 +449,9 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Initial project setup
 - Added some widgets
 
-[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/2.1.0...HEAD
+[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/2.1.1...HEAD
+
+[2.1.1]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/2.1.0...2.1.1
 
 [2.1.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/2.0.0...2.1.0
 
