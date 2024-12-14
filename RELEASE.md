@@ -19,5 +19,5 @@ Merging a pull request with the `autorelease` label will trigger the `github-rel
 
 ##### Pub Dev release
 
-The creation of a tag in the `github-release` workflow triggers the `pubdev-release` workflow. This workflow simply
-pushes the latest version to pub dev.
+Since the creation of pubdev releases is not currently possible from Github Actions with workflows triggered by
+other bots, the release is done manually by one of the maintainers.
