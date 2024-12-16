@@ -5,12 +5,11 @@ on:
       - main
     types:
       - closed
-  workflow_dispatch:
 
 jobs:
   create-tag:
     runs-on: ubuntu-latest
-    if: (github.event.pull_request.merged && contains( github.event.pull_request.labels.*.name, 'autorelease')) || (github.event_name == 'workflow_dispatch')
+    if: (github.event.pull_request.merged && contains( github.event.pull_request.labels.*.name, 'autorelease'))
     permissions:
       contents: write
 
