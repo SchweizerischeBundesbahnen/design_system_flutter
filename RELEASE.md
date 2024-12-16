@@ -21,3 +21,13 @@ Merging a pull request with the `autorelease` label will trigger the `github-rel
 
 The creation of a tag in the `github-release` workflow triggers the `pubdev-release` workflow that will complete
 all necessary steps for publishing the package to pubdev.
+
+##### Example App release
+
+Merging a pull request with the `autorelease` label will trigger the `android-release` workflow that
+
+1. Builds the app
+2. Signs the app
+3. Publishes the app to the enterprise app store in the `alpha` channel
+
+
