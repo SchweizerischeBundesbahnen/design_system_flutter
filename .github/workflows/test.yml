@@ -1,7 +1,7 @@
 # Runs flutter test and CHANGELOG.md validation on every PR to main.
 # Failed goldens are uploaded and can be seen in the artifact summary of the job.
 
-name: Validate
+name: Test
 
 on:
   push:
@@ -22,22 +22,21 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - name: Checkout sbb_design_system_mobile code.
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Clone flutter version specified in .fvm.
-        uses: subosito/flutter-action@v2
+      - uses: subosito/flutter-action@v2
         with:
           channel: stable
+          flutter-version: 3.27.x
           cache: true
 
-      - name: Run flutter doctor.
+      - name: Flutter doctor
         run: flutter doctor -v
 
-      - name: Install dependencies.
+      - name: Install dependencies
         run: flutter pub get
 
-      - name: Run flutter test.
+      - name: Run Flutter test
         id: test
         run: flutter test
 
@@ -70,29 +69,27 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        sdk: ["3.22.3", ""]
+        sdk: ["3.22.3", "3.27.x"]
     steps:
       - uses: actions/checkout@v4
-      - uses: subosito/flutter-action@v2
-        with:
-          flutter-version: ${{ matrix.sdk }}
-          cache: true
+
       - uses: actions/setup-java@v4
         with:
           java-version: "17"
           distribution: "temurin"
           cache: "gradle"
-      - run: flutter pub get
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: ${{ matrix.sdk }}
+          cache: true
+
+      - name: Install dependencies
+        run: flutter pub get
+
       - name: Build appbundle.
         run: flutter build appbundle --profile --no-pub
-
-      - name: Upload appbundle as artifact.
-        uses: actions/upload-artifact@v4
-        if: ${{ matrix.sdk == '' && github.event_name == 'pull_request' }}
-        with:
-          name: app-profile.aab
-          path: example/build/app/outputs/bundle/profile/
-          retention-days: 3
 
   build-iOS:
     name: Build iOS package
@@ -104,20 +101,18 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        sdk: ["3.22.3", ""]
+        sdk: ["3.22.3", "3.27.x"]
     steps:
       - uses: actions/checkout@v4
+
       - uses: subosito/flutter-action@v2
         with:
+          channel: stable
           flutter-version: ${{ matrix.sdk }}
           cache: true
-      - run: flutter pub get
+
+      - name: Install dependencies
+        run: flutter pub get
+
       - name: Build iOS package
-        run: flutter build ios --simulator
-      - name: Upload Runner.app as artifact
-        if: ${{ matrix.sdk == '' && github.event_name == 'pull_request' }}
-        uses: actions/upload-artifact@v4
-        with:
-          name: fdsm-example.app
-          path: example/build/ios/iphonesimulator
-          retention-days: 3
+        run: flutter build ios --no-codesign
