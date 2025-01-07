@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
+import 'bottom_loading_indicator.dart';
 
 const double _iconTopPadding = 10.0;
 const double _boxedListTileRadius = 16.0;
@@ -21,50 +22,52 @@ class SBBCheckboxListItem extends StatelessWidget {
     Key? key,
     required bool? value,
     required String label,
+    required ValueChanged<bool?>? onChanged,
+    bool tristate = false,
+    bool isLastElement = false,
     bool allowMultilineLabel = false,
     String? secondaryLabel,
-    bool tristate = false,
-    required ValueChanged<bool?>? onChanged,
-    bool isLastElement = false,
     IconData? leadingIcon,
     IconData? trailingIcon,
     VoidCallback? onCallToAction,
+    bool isLoading = false,
   }) : this.custom(
           key: key,
           value: value,
           label: label,
+          onChanged: onChanged,
+          tristate: tristate,
+          isLastElement: isLastElement,
           allowMultilineLabel: allowMultilineLabel,
           secondaryLabel: secondaryLabel,
-          tristate: tristate,
-          onChanged: onChanged,
-          isLastElement: isLastElement,
           leadingIcon: leadingIcon,
           trailingWidget: _buttonedTrailingIcon(trailingIcon, onCallToAction, onChanged),
+          isLoading: isLoading,
         );
 
   SBBCheckboxListItem.boxed({
     Key? key,
     required bool? value,
     required String label,
+    required ValueChanged<bool?>? onChanged,
+    bool tristate = false,
     bool allowMultilineLabel = false,
     String? secondaryLabel,
-    bool tristate = false,
-    required ValueChanged<bool?>? onChanged,
-    bool isLastElement = false,
     IconData? leadingIcon,
     IconData? trailingIcon,
     VoidCallback? onCallToAction,
+    bool isLoading = false,
   }) : this.custom(
           key: key,
           value: value,
           label: label,
+          onChanged: onChanged,
+          tristate: tristate,
           allowMultilineLabel: allowMultilineLabel,
           secondaryLabel: secondaryLabel,
-          tristate: tristate,
-          onChanged: onChanged,
-          isLastElement: isLastElement,
           leadingIcon: leadingIcon,
           trailingWidget: _buttonedTrailingIcon(trailingIcon, onCallToAction, onChanged),
+          isLoading: isLoading,
           isBoxed: true,
         );
 
@@ -79,6 +82,7 @@ class SBBCheckboxListItem extends StatelessWidget {
     this.isLastElement = false,
     this.leadingIcon,
     this.trailingWidget,
+    this.isLoading = false,
     this.isBoxed = false,
   }) : assert(tristate || value != null);
 
@@ -137,6 +141,8 @@ class SBBCheckboxListItem extends StatelessWidget {
   final IconData? leadingIcon;
   final Widget? trailingWidget;
 
+  final bool isLoading;
+
   final bool isBoxed;
 
   /// Whether [value] of this control can be changed by user interaction.
@@ -175,45 +181,49 @@ class SBBCheckboxListItem extends StatelessWidget {
     return Material(
       color: resolvedBackgroundColor,
       shape: isBoxed ? RoundedRectangleBorder(borderRadius: BorderRadius.circular(_boxedListTileRadius)) : null,
-      child: Column(
-        children: [
-          ConstrainedBox(
-            constraints: const BoxConstraints(minHeight: _minListTileHeight),
-            child: InkWell(
-              onTap: _isInteractive ? _handleTap : null,
-              splashColor: style?.listItem?.backgroundColorHighlighted,
-              focusColor: style?.listItem?.backgroundColorHighlighted,
-              highlightColor: SBBColors.transparent,
-              hoverColor: SBBColors.transparent,
-              borderRadius: isBoxed ? BorderRadius.circular(_boxedListTileRadius) : null,
-              child: IconTheme.merge(
-                data: IconThemeData(
-                    color: _isInteractive ? style?.listItem?.iconColor : style?.listItem?.iconColorDisabled),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(width: sbbDefaultSpacing),
-                    _NonHittableCheckbox(value: value, tristate: tristate, onChanged: onChanged),
-                    const SizedBox(width: sbbDefaultSpacing * 0.5),
-                    if (leadingIcon != null) _LeadingIcon(leadingIcon: leadingIcon),
-                    Expanded(
-                      child: _TextBody(
-                        label: label,
-                        isInteractive: _isInteractive,
-                        style: style,
-                        allowMultilineLabel: allowMultilineLabel,
-                        secondaryLabel: secondaryLabel,
+      child: Column(children: [
+        Stack(
+          alignment: AlignmentDirectional.bottomStart,
+          children: [
+            ConstrainedBox(
+              constraints: const BoxConstraints(minHeight: _minListTileHeight),
+              child: InkWell(
+                onTap: _isInteractive ? _handleTap : null,
+                splashColor: style?.listItem?.backgroundColorHighlighted,
+                focusColor: style?.listItem?.backgroundColorHighlighted,
+                highlightColor: SBBColors.transparent,
+                hoverColor: SBBColors.transparent,
+                borderRadius: isBoxed ? BorderRadius.circular(_boxedListTileRadius) : null,
+                child: IconTheme.merge(
+                  data: IconThemeData(
+                      color: _isInteractive ? style?.listItem?.iconColor : style?.listItem?.iconColorDisabled),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(width: sbbDefaultSpacing),
+                      _NonHittableCheckbox(value: value, tristate: tristate, onChanged: onChanged),
+                      const SizedBox(width: sbbDefaultSpacing * 0.5),
+                      if (leadingIcon != null) _LeadingIcon(leadingIcon: leadingIcon),
+                      Expanded(
+                        child: _TextBody(
+                          label: label,
+                          isInteractive: _isInteractive,
+                          style: style,
+                          allowMultilineLabel: allowMultilineLabel,
+                          secondaryLabel: secondaryLabel,
+                        ),
                       ),
-                    ),
-                    if (trailingWidget != null) trailingWidget!,
-                  ],
+                      if (trailingWidget != null) trailingWidget!,
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          if (!isLastElement && !isBoxed) const Divider(),
-        ],
-      ),
+            if (isLoading) BottomLoadingIndicator(borderRadius: isBoxed ? _boxedListTileRadius : 0.0)
+          ],
+        ),
+        if (!isLastElement && !isBoxed) const Divider(),
+      ]),
     );
   }
 

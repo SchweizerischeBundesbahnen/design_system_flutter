@@ -20,6 +20,7 @@ class CheckboxPageState extends State<CheckboxPage> {
   bool? _listItemValue5 = false;
   bool? _listItemValue6 = false;
   bool? _listItemValue7 = false;
+  bool _listItemValue8 = false;
 
   int _enabledIndex = 0;
 
@@ -119,8 +120,15 @@ class CheckboxPageState extends State<CheckboxPage> {
                 allowMultilineLabel: true,
                 secondaryLabel:
                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut convallis leo et metus semper hendrerit. Duis nec nunc a ligula cursus vulputate. Donec sed elit ultricies, euismod erat et, eleifend augue.',
-                isLastElement: true,
                 onChanged: _isEnabled ? (value) => setState(() => _listItemValue7 = value) : null,
+              ),
+              SBBCheckboxListItem(
+                value: _listItemValue8,
+                label: 'Loading',
+                secondaryLabel: 'This will stop loading if selected.',
+                onChanged: _isEnabled ? (value) => setState(() => _listItemValue8 = value!) : null,
+                isLoading: !_listItemValue8,
+                isLastElement: true,
               ),
             ],
           ),
@@ -185,8 +193,14 @@ class CheckboxPageState extends State<CheckboxPage> {
               secondaryLabel:
                   'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut convallis leo et metus semper hendrerit. '
                   'Duis nec nunc a ligula cursus vulputate. Donec sed elit ultricies, euismod erat et, eleifend augue.',
-              isLastElement: true,
               onChanged: _isEnabled ? (value) => setState(() => _listItemValue7 = value) : null,
+            ),
+            SBBCheckboxListItem.boxed(
+              value: _listItemValue8,
+              label: 'Loading',
+              secondaryLabel: 'This will not stop.',
+              onChanged: _isEnabled ? (value) => setState(() => _listItemValue8 = value!) : null,
+              isLoading: true,
             ),
           ],
         ),
