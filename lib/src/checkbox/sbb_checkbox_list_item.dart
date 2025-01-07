@@ -9,6 +9,8 @@ const double _minListTileHeight = 44.0;
 
 /// SBB Checkbox Item. Use according to documentation.
 ///
+/// Use [SBBControlStyle].listItem to manipulate the style of this widget.
+///
 /// See also:
 ///
 /// * [SBBCheckbox], which is a part of this widget.
@@ -18,6 +20,34 @@ const double _minListTileHeight = 44.0;
 /// * [SBBSlider], for selecting a value in a range.
 /// * <https://digital.sbb.ch/de/design-system/mobile/components/checkbox/>
 class SBBCheckboxListItem extends StatelessWidget {
+  /// Creates a combination of a tile and a [SBBCheckbox].
+  ///
+  /// The [SBBCheckboxListItem] itself does not maintain any state. Instead, when the
+  /// state of the checkbox changes, the widget calls the [onChanged] callback.
+  /// Most widgets that use a checkbox will listen for the [onChanged] callback
+  /// and rebuild the checkbox tile with a new [value] to update the visual
+  /// appearance of the checkbox.
+  ///
+  /// The following arguments are required:
+  ///
+  /// * [value], which determines whether the checkbox is checked. The [value]
+  ///   can only be null if [tristate] is true.
+  /// * [label], the primary text written on [SBBCheckboxListItem].
+  /// * [onChanged], which is called when the value of the checkbox should
+  ///   change. It can be set to null to disable the checkbox.
+  ///
+  /// Set the [isLastElement] true for the last item in a list to not show any Divider.
+  ///
+  /// The trailing widget of this widget is determined in the following way:
+  ///
+  /// * if no [trailingIcon] is given, no trailing Widget will be shown.
+  /// * if [onCallToAction] is not given, the trailingIcon will be shown as 24px sized [Icon].
+  /// * if [onCallToAction] is given, the trailingIcon will be wrapped in a [SBBIconButtonSmall].
+  ///
+  ///
+  /// If [isLoading] is true, a bottom loading indicator will be displayed.
+  ///
+  /// Check the [SBBCheckboxListItem.custom] constructor for a complete customization.
   SBBCheckboxListItem({
     Key? key,
     required bool? value,
@@ -45,6 +75,7 @@ class SBBCheckboxListItem extends StatelessWidget {
           isLoading: isLoading,
         );
 
+  /// Create a boxed variant of the [SBBCheckboxListItem]. There is no margin added.
   SBBCheckboxListItem.boxed({
     Key? key,
     required bool? value,
@@ -134,15 +165,28 @@ class SBBCheckboxListItem extends StatelessWidget {
   /// If tristate is false (the default), [value] must not be null.
   final bool tristate;
 
+  /// The primary label on the tile.
   final String label;
+
+  /// Whether the [label] can wrap to a second line.
   final bool allowMultilineLabel;
+
+  /// The subtext displayed below the [label] over multiple lines.
   final String? secondaryLabel;
+
+  /// Whether to draw a [Divider] below the [SBBCheckboxListItem].
   final bool isLastElement;
+
+  /// The icon displayed in between the [SBBCheckbox] and the [label].
   final IconData? leadingIcon;
+
+  /// The widget displayed at the end of the tile.
   final Widget? trailingWidget;
 
+  /// Whether to display a BottomLoadingIndicator on the [SBBCheckboxListItem].
   final bool isLoading;
 
+  /// Whether this ListItem should be drawn as boxed variant.
   final bool isBoxed;
 
   /// Whether [value] of this control can be changed by user interaction.
