@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
+const double _iconTopPadding = 10.0;
+const double _boxedListTileRadius = 16.0;
+const double _minListTileHeight = 44.0;
+
 /// SBB Checkbox Item. Use according to documentation.
 ///
 /// See also:
@@ -35,12 +39,7 @@ class SBBCheckboxListItem extends StatelessWidget {
           onChanged: onChanged,
           isLastElement: isLastElement,
           leadingIcon: leadingIcon,
-          trailingWidget: trailingIcon != null && onChanged != null
-              ? SBBIconButtonSmall(
-                  icon: trailingIcon,
-                  onPressed: onCallToAction ?? () => onChanged(value),
-                )
-              : null,
+          trailingWidget: _buttonedTrailingIcon(trailingIcon, onCallToAction, onChanged),
         );
 
   SBBCheckboxListItem.boxed({
@@ -65,12 +64,7 @@ class SBBCheckboxListItem extends StatelessWidget {
           onChanged: onChanged,
           isLastElement: isLastElement,
           leadingIcon: leadingIcon,
-          trailingWidget: trailingIcon != null && onChanged != null
-              ? SBBIconButtonSmall(
-                  icon: trailingIcon,
-                  onPressed: onCallToAction ?? () => onChanged(value),
-                )
-              : null,
+          trailingWidget: _buttonedTrailingIcon(trailingIcon, onCallToAction, onChanged),
           isBoxed: true,
         );
 
@@ -153,43 +147,67 @@ class SBBCheckboxListItem extends StatelessWidget {
   /// grey color and its value cannot be changed.
   bool get _isInteractive => onChanged != null;
 
+  static Widget? _buttonedTrailingIcon(
+    IconData? trailingIcon,
+    VoidCallback? onCallToAction,
+    ValueChanged<bool?>? onChanged,
+  ) {
+    return trailingIcon == null
+        ? null
+        : onCallToAction == null
+            ? Padding(
+                padding: const EdgeInsets.only(top: _iconTopPadding, right: sbbDefaultSpacing),
+                child: Icon(trailingIcon, size: 24.0),
+              )
+            : Padding(
+                padding: const EdgeInsets.only(right: sbbDefaultSpacing),
+                child: SBBIconButtonSmall(
+                  icon: trailingIcon,
+                  onPressed: onChanged != null ? onCallToAction : null,
+                ),
+              );
+  }
+
   @override
   Widget build(BuildContext context) {
     final style = SBBControlStyles.of(context).checkbox;
     final Color? resolvedBackgroundColor = _resolveBackgroundColor(style);
     return Material(
       color: resolvedBackgroundColor,
-      shape: isBoxed ? RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)) : null,
+      shape: isBoxed ? RoundedRectangleBorder(borderRadius: BorderRadius.circular(_boxedListTileRadius)) : null,
       child: Column(
         children: [
           ConstrainedBox(
-            constraints: const BoxConstraints(minHeight: 44.0),
+            constraints: const BoxConstraints(minHeight: _minListTileHeight),
             child: InkWell(
               onTap: _isInteractive ? _handleTap : null,
               splashColor: style?.listItem?.backgroundColorHighlighted,
               focusColor: style?.listItem?.backgroundColorHighlighted,
               highlightColor: SBBColors.transparent,
               hoverColor: SBBColors.transparent,
-              borderRadius: isBoxed ? BorderRadius.circular(16.0) : null,
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(width: sbbDefaultSpacing),
-                  _NonHittableCheckbox(value: value, tristate: tristate, onChanged: onChanged),
-                  const SizedBox(width: sbbDefaultSpacing * 0.5),
-                  if (leadingIcon != null)
-                    _LeadingIcon(leadingIcon: leadingIcon, isInteractive: _isInteractive, style: style),
-                  Expanded(
-                    child: _TextBody(
-                      label: label,
-                      isInteractive: _isInteractive,
-                      style: style,
-                      allowMultilineLabel: allowMultilineLabel,
-                      secondaryLabel: secondaryLabel,
+              borderRadius: isBoxed ? BorderRadius.circular(_boxedListTileRadius) : null,
+              child: IconTheme.merge(
+                data: IconThemeData(
+                    color: _isInteractive ? style?.listItem?.iconColor : style?.listItem?.iconColorDisabled),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(width: sbbDefaultSpacing),
+                    _NonHittableCheckbox(value: value, tristate: tristate, onChanged: onChanged),
+                    const SizedBox(width: sbbDefaultSpacing * 0.5),
+                    if (leadingIcon != null) _LeadingIcon(leadingIcon: leadingIcon),
+                    Expanded(
+                      child: _TextBody(
+                        label: label,
+                        isInteractive: _isInteractive,
+                        style: style,
+                        allowMultilineLabel: allowMultilineLabel,
+                        secondaryLabel: secondaryLabel,
+                      ),
                     ),
-                  ),
-                  if (trailingWidget != null) trailingWidget!,
-                ],
+                    if (trailingWidget != null) trailingWidget!,
+                  ],
+                ),
               ),
             ),
           ),
@@ -272,27 +290,15 @@ class _TextBody extends StatelessWidget {
 }
 
 class _LeadingIcon extends StatelessWidget {
-  const _LeadingIcon({
-    required this.leadingIcon,
-    required bool isInteractive,
-    required this.style,
-  }) : _isInteractive = isInteractive;
+  const _LeadingIcon({required this.leadingIcon});
 
   final IconData? leadingIcon;
-  final bool _isInteractive;
-  final SBBControlStyle? style;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsetsDirectional.only(
-        top: 10.0,
-        end: sbbDefaultSpacing * 0.5,
-      ),
-      child: Icon(
-        leadingIcon,
-        color: _isInteractive ? style?.listItem?.iconColor : style?.listItem?.iconColorDisabled,
-      ),
+      padding: const EdgeInsetsDirectional.only(top: _iconTopPadding, end: sbbDefaultSpacing * .5),
+      child: Icon(leadingIcon),
     );
   }
 }
