@@ -54,7 +54,7 @@ class _CheckboxPageState extends State<CheckboxPage> {
           ),
         ),
         const SizedBox(height: sbbDefaultSpacing),
-        const SBBListHeader('CheckboxListItem'),
+        const SBBListHeader('Checkbox Item\nList'),
         SBBGroup(
           child: Column(
             children: [
@@ -72,39 +72,37 @@ class _CheckboxPageState extends State<CheckboxPage> {
               ),
               SBBCheckboxListItem(
                 value: _listItemValue3,
-                label: 'Call to Action',
+                label: 'Button',
                 onChanged: (value) => setState(() => _listItemValue3 = value),
                 trailingIcon: SBBIcons.circle_information_small_small,
-                onCallToAction: () => sbbToast.show(message: 'Call to Action'),
+                onCallToAction: () => sbbToast.show(message: 'Button pressed'),
               ),
               SBBCheckboxListItem(
                 value: _listItemValue4,
-                label: 'Icon',
+                label: 'Leading Icon',
                 onChanged: (value) => setState(() => _listItemValue4 = value),
                 leadingIcon: SBBIcons.alarm_clock_small,
               ),
               SBBCheckboxListItem(
                 value: _listItemValue5,
-                label: 'Icon, Call to Action',
+                label: 'Leading and Trailing Icon',
                 onChanged: (value) => setState(() => _listItemValue5 = value),
                 leadingIcon: SBBIcons.alarm_clock_small,
                 trailingIcon: SBBIcons.circle_information_small_small,
-                onCallToAction: () => sbbToast.show(message: 'Call to Action'),
               ),
               SBBCheckboxListItem(
                 value: _listItemValue5,
-                label: 'Disabled, Icon, Call to Action',
+                label: 'Disabled, Leading and Trailing Icon',
                 onChanged: null,
                 leadingIcon: SBBIcons.alarm_clock_small,
                 trailingIcon: SBBIcons.circle_information_small_small,
-                onCallToAction: () => sbbToast.show(message: 'Call to Action'),
               ),
               SBBCheckboxListItem.custom(
                 value: _listItemValue6,
                 label: 'Custom trailing Widget',
                 onChanged: (value) => setState(() => _listItemValue6 = value),
                 trailingWidget: const Padding(
-                  padding: const EdgeInsetsDirectional.only(
+                  padding: EdgeInsetsDirectional.only(
                     top: sbbDefaultSpacing / 4 * 3,
                     end: sbbDefaultSpacing,
                   ),
@@ -122,6 +120,76 @@ class _CheckboxPageState extends State<CheckboxPage> {
               ),
             ],
           ),
+        ),
+        const SBBListHeader('Checkbox Item\nBoxed'),
+        const SizedBox(height: sbbDefaultSpacing),
+        Column(
+          spacing: sbbDefaultSpacing * .5,
+          children: [
+            SBBCheckboxListItem.boxed(
+              value: _listItemValue1,
+              label: 'Default',
+              allowMultilineLabel: true,
+              onChanged: (value) => setState(() => _listItemValue1 = value),
+            ),
+            SBBCheckboxListItem.boxed(
+              value: _listItemValue2,
+              label: 'Tristate',
+              tristate: true,
+              onChanged: (value) => setState(() => _listItemValue2 = value),
+            ),
+            SBBCheckboxListItem.boxed(
+              value: _listItemValue3,
+              label: 'Button',
+              onChanged: (value) => setState(() => _listItemValue3 = value),
+              trailingIcon: SBBIcons.circle_information_small_small,
+              onCallToAction: () => sbbToast.show(message: 'Button pressed'),
+            ),
+            SBBCheckboxListItem.boxed(
+              value: _listItemValue4,
+              label: 'Icon',
+              onChanged: (value) => setState(() => _listItemValue4 = value),
+              leadingIcon: SBBIcons.alarm_clock_small,
+            ),
+            SBBCheckboxListItem.boxed(
+              value: _listItemValue5,
+              label: 'Icon, Call to Action',
+              onChanged: (value) => setState(() => _listItemValue5 = value),
+              leadingIcon: SBBIcons.alarm_clock_small,
+              trailingIcon: SBBIcons.circle_information_small_small,
+              onCallToAction: () => sbbToast.show(message: 'Call to Action'),
+            ),
+            SBBCheckboxListItem.boxed(
+              value: _listItemValue5,
+              label: 'Disabled, Icon, Call to Action',
+              onChanged: null,
+              leadingIcon: SBBIcons.alarm_clock_small,
+              trailingIcon: SBBIcons.circle_information_small_small,
+              onCallToAction: () => sbbToast.show(message: 'Call to Action'),
+            ),
+            SBBCheckboxListItem.custom(
+              value: _listItemValue6,
+              label: 'Custom trailing Widget',
+              onChanged: (value) => setState(() => _listItemValue6 = value),
+              trailingWidget: const Padding(
+                padding: EdgeInsetsDirectional.only(
+                  top: sbbDefaultSpacing / 4 * 3,
+                  end: sbbDefaultSpacing,
+                ),
+                child: Text('CHF 0.99'),
+              ),
+              isBoxed: true,
+            ),
+            SBBCheckboxListItem.boxed(
+              value: _listItemValue7,
+              label: 'Multiline Label with\nSecondary Label',
+              allowMultilineLabel: true,
+              secondaryLabel:
+                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut convallis leo et metus semper hendrerit. Duis nec nunc a ligula cursus vulputate. Donec sed elit ultricies, euismod erat et, eleifend augue.',
+              isLastElement: true,
+              onChanged: (value) => setState(() => _listItemValue7 = value),
+            ),
+          ],
         ),
       ],
     );
