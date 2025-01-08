@@ -61,6 +61,7 @@ class SBBCheckboxListItem extends StatelessWidget {
     IconData? trailingIcon,
     VoidCallback? onCallToAction,
     bool isLoading = false,
+    String? checkboxSemanticLabel,
   }) : this.custom(
           key: key,
           value: value,
@@ -71,8 +72,9 @@ class SBBCheckboxListItem extends StatelessWidget {
           allowMultilineLabel: allowMultilineLabel,
           secondaryLabel: secondaryLabel,
           leadingIcon: leadingIcon,
-          trailingWidget: _buttonedTrailingIcon(trailingIcon, onCallToAction, onChanged),
+          trailingWidget: _optionallyButtonedTrailingIcon(trailingIcon, onCallToAction, onChanged),
           isLoading: isLoading,
+          checkboxSemanticLabel: checkboxSemanticLabel,
         );
 
   /// Create a boxed variant of the [SBBCheckboxListItem]. There is no margin added.
@@ -88,6 +90,7 @@ class SBBCheckboxListItem extends StatelessWidget {
     IconData? trailingIcon,
     VoidCallback? onCallToAction,
     bool isLoading = false,
+    String? checkboxSemanticLabel,
   }) : this.custom(
           key: key,
           value: value,
@@ -97,9 +100,10 @@ class SBBCheckboxListItem extends StatelessWidget {
           allowMultilineLabel: allowMultilineLabel,
           secondaryLabel: secondaryLabel,
           leadingIcon: leadingIcon,
-          trailingWidget: _buttonedTrailingIcon(trailingIcon, onCallToAction, onChanged),
+          trailingWidget: _optionallyButtonedTrailingIcon(trailingIcon, onCallToAction, onChanged),
           isLoading: isLoading,
           isBoxed: true,
+          checkboxSemanticLabel: checkboxSemanticLabel,
         );
 
   const SBBCheckboxListItem.custom({
@@ -115,6 +119,7 @@ class SBBCheckboxListItem extends StatelessWidget {
     this.trailingWidget,
     this.isLoading = false,
     this.isBoxed = false,
+    this.checkboxSemanticLabel,
   }) : assert(tristate || value != null);
 
   /// Whether this checkbox is checked.
@@ -189,6 +194,13 @@ class SBBCheckboxListItem extends StatelessWidget {
   /// Whether this ListItem should be drawn as boxed variant.
   final bool isBoxed;
 
+  /// The semantic label for the checkbox that will be announced by screen readers.
+  ///
+  /// This is announced by assistive technologies (e.g TalkBack/VoiceOver).
+  ///
+  /// This label does not show in the UI.
+  final String? checkboxSemanticLabel;
+
   /// Whether [value] of this control can be changed by user interaction.
   ///
   /// The control is considered interactive if the [onChanged] callback is
@@ -197,7 +209,7 @@ class SBBCheckboxListItem extends StatelessWidget {
   /// grey color and its value cannot be changed.
   bool get _isInteractive => onChanged != null;
 
-  static Widget? _buttonedTrailingIcon(
+  static Widget? _optionallyButtonedTrailingIcon(
     IconData? trailingIcon,
     VoidCallback? onCallToAction,
     ValueChanged<bool?>? onChanged,
@@ -222,52 +234,66 @@ class SBBCheckboxListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = SBBControlStyles.of(context).checkbox;
     final Color? resolvedBackgroundColor = _resolveBackgroundColor(style);
-    return Material(
-      color: resolvedBackgroundColor,
-      shape: isBoxed ? RoundedRectangleBorder(borderRadius: BorderRadius.circular(_boxedListTileRadius)) : null,
-      child: Column(children: [
-        Stack(
-          alignment: AlignmentDirectional.bottomStart,
-          children: [
-            ConstrainedBox(
-              constraints: const BoxConstraints(minHeight: _minListTileHeight),
-              child: InkWell(
-                onTap: _isInteractive ? _handleTap : null,
-                splashColor: style?.listItem?.backgroundColorHighlighted,
-                focusColor: style?.listItem?.backgroundColorHighlighted,
-                highlightColor: SBBColors.transparent,
-                hoverColor: SBBColors.transparent,
-                borderRadius: isBoxed ? BorderRadius.circular(_boxedListTileRadius) : null,
-                child: IconTheme.merge(
-                  data: IconThemeData(
-                      color: _isInteractive ? style?.listItem?.iconColor : style?.listItem?.iconColorDisabled),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(width: sbbDefaultSpacing),
-                      _NonHittableCheckbox(value: value, tristate: tristate, onChanged: onChanged),
-                      const SizedBox(width: sbbDefaultSpacing * 0.5),
-                      if (leadingIcon != null) _LeadingIcon(leadingIcon: leadingIcon),
-                      Expanded(
-                        child: _TextBody(
-                          label: label,
-                          isInteractive: _isInteractive,
-                          style: style,
-                          allowMultilineLabel: allowMultilineLabel,
-                          secondaryLabel: secondaryLabel,
-                        ),
-                      ),
-                      if (trailingWidget != null) trailingWidget!,
-                    ],
+    final Color? resolvedIconColor = _resolveIconColor(style);
+    return MergeSemantics(
+      child: Material(
+        color: resolvedBackgroundColor,
+        shape: isBoxed ? RoundedRectangleBorder(borderRadius: BorderRadius.circular(_boxedListTileRadius)) : null,
+        child: Column(children: [
+          Stack(
+            alignment: AlignmentDirectional.bottomStart,
+            children: [
+              ConstrainedBox(
+                constraints: const BoxConstraints(minHeight: _minListTileHeight),
+                child: InkWell(
+                  onTap: _isInteractive ? _handleTap : null,
+                  splashColor: style?.listItem?.backgroundColorHighlighted,
+                  focusColor: style?.listItem?.backgroundColorHighlighted,
+                  highlightColor: SBBColors.transparent,
+                  hoverColor: SBBColors.transparent,
+                  borderRadius: isBoxed ? BorderRadius.circular(_boxedListTileRadius) : null,
+                  child: Semantics(
+                    enabled: _isInteractive,
+                    child: IconTheme.merge(
+                      data: IconThemeData(color: resolvedIconColor),
+                      child: _checkboxBody(style),
+                    ),
                   ),
                 ),
               ),
-            ),
-            if (isLoading) BottomLoadingIndicator(borderRadius: isBoxed ? _boxedListTileRadius : 0.0)
-          ],
+              if (isLoading) BottomLoadingIndicator(borderRadius: isBoxed ? _boxedListTileRadius : 0.0)
+            ],
+          ),
+          if (!isLastElement && !isBoxed) const Divider(),
+        ]),
+      ),
+    );
+  }
+
+  Row _checkboxBody(SBBControlStyle? style) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const SizedBox(width: sbbDefaultSpacing),
+        _NonHittableCheckbox(
+          value: value,
+          tristate: tristate,
+          onChanged: onChanged,
+          semanticLabel: checkboxSemanticLabel,
         ),
-        if (!isLastElement && !isBoxed) const Divider(),
-      ]),
+        const SizedBox(width: sbbDefaultSpacing * 0.5),
+        if (leadingIcon != null) _LeadingIcon(leadingIcon: leadingIcon),
+        Expanded(
+          child: _TextBody(
+            label: label,
+            isInteractive: _isInteractive,
+            style: style,
+            allowMultilineLabel: allowMultilineLabel,
+            secondaryLabel: secondaryLabel,
+          ),
+        ),
+        if (trailingWidget != null) trailingWidget!,
+      ],
     );
   }
 
@@ -291,6 +317,10 @@ class SBBCheckboxListItem extends StatelessWidget {
     } else {
       return _isInteractive ? style?.listItem?.backgroundColor : style?.listItem?.backgroundColorDisabled;
     }
+  }
+
+  _resolveIconColor(SBBControlStyle? style) {
+    return _isInteractive ? style?.listItem?.iconColor : style?.listItem?.iconColorDisabled;
   }
 }
 
@@ -362,18 +392,18 @@ class _NonHittableCheckbox extends StatelessWidget {
     required this.value,
     required this.tristate,
     required this.onChanged,
+    this.semanticLabel,
   });
 
   final bool? value;
   final bool tristate;
   final ValueChanged<bool?>? onChanged;
+  final String? semanticLabel;
 
   @override
   Widget build(BuildContext context) {
     return IgnorePointer(
-      child: FocusScope(
-        canRequestFocus: false,
-        skipTraversal: true,
+      child: ExcludeFocus(
         child: Padding(
           padding: const EdgeInsetsDirectional.only(
             top: sbbDefaultSpacing * 0.75,
@@ -383,6 +413,7 @@ class _NonHittableCheckbox extends StatelessWidget {
             tristate: tristate,
             onChanged: onChanged,
             padding: EdgeInsets.zero,
+            semanticLabel: semanticLabel,
           ),
         ),
       ),

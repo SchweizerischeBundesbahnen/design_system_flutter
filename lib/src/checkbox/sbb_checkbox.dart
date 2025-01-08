@@ -60,6 +60,7 @@ class SBBCheckbox extends StatefulWidget {
     this.tristate = false,
     required this.onChanged,
     this.padding = const EdgeInsets.all(sbbDefaultSpacing * 0.5),
+    this.semanticLabel,
   }) : assert(tristate || value != null);
 
   /// Whether this checkbox is checked.
@@ -126,6 +127,13 @@ class SBBCheckbox extends StatefulWidget {
   /// with [padding] equal to [EdgeInsets.zero].
   static const double width = 20.0;
 
+  /// The semantic label for the [SBBCheckbox] that will be announced by screen readers.
+  ///
+  /// This is announced by assistive technologies (e.g TalkBack/VoiceOver).
+  ///
+  /// This label does not show in the UI.
+  final String? semanticLabel;
+
   @override
   State<SBBCheckbox> createState() => _SBBCheckboxState();
 }
@@ -167,17 +175,22 @@ class _SBBCheckboxState extends State<SBBCheckbox> with TickerProviderStateMixin
     return Material(
       color: resolvedBackgroundColor,
       borderRadius: BorderRadius.circular(_kCheckboxRadius),
-      child: SizedBox.fromSize(
-        size: resolvedSize,
-        child: buildToggleable(
+      child: Semantics(
+        label: widget.semanticLabel,
+        checked: widget.value ?? false,
+        mixed: widget.tristate ? widget.value == null : null,
+        child: SizedBox.fromSize(
           size: resolvedSize,
-          painter: _painter
-            ..position = position
-            ..reaction = reaction
-            ..value = value
-            ..previousValue = _previousValue
-            ..checkColor = resolvedCheckColor
-            ..boxBorderColor = resolvedBorderColor,
+          child: buildToggleable(
+            size: resolvedSize,
+            painter: _painter
+              ..position = position
+              ..reaction = reaction
+              ..value = value
+              ..previousValue = _previousValue
+              ..checkColor = resolvedCheckColor
+              ..boxBorderColor = resolvedBorderColor,
+          ),
         ),
       ),
     );
