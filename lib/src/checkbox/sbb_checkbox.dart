@@ -167,6 +167,8 @@ class _SBBCheckboxState extends State<SBBCheckbox> with TickerProviderStateMixin
   Widget build(BuildContext context) {
     Size resolvedSize = _addPaddingToDefaultWidth(widget.padding);
 
+    final Checkbox ks;
+
     final style = SBBControlStyles.of(context).checkbox!;
     Color? resolvedBackgroundColor = _resolveBackgroundColor(style);
     Color resolvedCheckColor = _resolveTickColor(style);
@@ -182,6 +184,7 @@ class _SBBCheckboxState extends State<SBBCheckbox> with TickerProviderStateMixin
         child: SizedBox.fromSize(
           size: resolvedSize,
           child: buildToggleable(
+            mouseCursor: WidgetStateMouseCursor.clickable,
             size: resolvedSize,
             painter: _painter
               ..position = position
