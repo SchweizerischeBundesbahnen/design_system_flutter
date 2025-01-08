@@ -160,7 +160,7 @@ class SBBCheckboxListItem extends StatelessWidget {
 
   /// If true the checkbox's [value] can be true, false, or null.
   ///
-  /// SBBCheckbox displays a dash when its value is null.
+  /// [SBBCheckbox] displays a dash when its value is null.
   ///
   /// When a tri-state checkbox ([tristate] is true) is tapped, its [onChanged]
   /// callback will be applied to true if the current value is false, to null if
@@ -234,11 +234,14 @@ class SBBCheckboxListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = SBBControlStyles.of(context).checkbox;
     final Color? resolvedBackgroundColor = _resolveBackgroundColor(style);
-    final Color? resolvedIconColor = _resolveIconColor(style);
+
+    final ShapeBorder? resolvedTileShapeBorder = _resolveTileShapeBorder(isBoxed);
+    final BorderRadius? resolvedTileBorderRadius = _resolveTileBorderRadius(isBoxed);
+
     return MergeSemantics(
       child: Material(
         color: resolvedBackgroundColor,
-        shape: isBoxed ? RoundedRectangleBorder(borderRadius: BorderRadius.circular(_boxedListTileRadius)) : null,
+        shape: resolvedTileShapeBorder,
         child: Column(children: [
           Stack(
             alignment: AlignmentDirectional.bottomStart,
@@ -251,17 +254,14 @@ class SBBCheckboxListItem extends StatelessWidget {
                   focusColor: style?.listItem?.backgroundColorHighlighted,
                   highlightColor: SBBColors.transparent,
                   hoverColor: SBBColors.transparent,
-                  borderRadius: isBoxed ? BorderRadius.circular(_boxedListTileRadius) : null,
+                  borderRadius: resolvedTileBorderRadius,
                   child: Semantics(
                     enabled: _isInteractive,
-                    child: IconTheme.merge(
-                      data: IconThemeData(color: resolvedIconColor),
-                      child: _checkboxBody(style),
-                    ),
+                    child: _checkboxBody(style),
                   ),
                 ),
               ),
-              if (isLoading) BottomLoadingIndicator(borderRadius: isBoxed ? _boxedListTileRadius : 0.0)
+              if (isLoading) BottomLoadingIndicator(circularBorderRadius: isBoxed ? _boxedListTileRadius : 0.0)
             ],
           ),
           if (!isLastElement && !isBoxed) const Divider(),
@@ -270,30 +270,35 @@ class SBBCheckboxListItem extends StatelessWidget {
     );
   }
 
-  Row _checkboxBody(SBBControlStyle? style) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SizedBox(width: sbbDefaultSpacing),
-        _NonHittableCheckbox(
-          value: value,
-          tristate: tristate,
-          onChanged: onChanged,
-          semanticLabel: checkboxSemanticLabel,
-        ),
-        const SizedBox(width: sbbDefaultSpacing * 0.5),
-        if (leadingIcon != null) _LeadingIcon(leadingIcon: leadingIcon),
-        Expanded(
-          child: _TextBody(
-            label: label,
-            isInteractive: _isInteractive,
-            style: style,
-            allowMultilineLabel: allowMultilineLabel,
-            secondaryLabel: secondaryLabel,
+  Widget _checkboxBody(SBBControlStyle? style) {
+    final Color? resolvedIconColor = _resolveIconColor(style);
+
+    return IconTheme.merge(
+      data: IconThemeData(color: resolvedIconColor),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const SizedBox(width: sbbDefaultSpacing),
+          _NonHittableCheckbox(
+            value: value,
+            tristate: tristate,
+            onChanged: onChanged,
+            semanticLabel: checkboxSemanticLabel,
           ),
-        ),
-        if (trailingWidget != null) trailingWidget!,
-      ],
+          const SizedBox(width: sbbDefaultSpacing * 0.5),
+          if (leadingIcon != null) _LeadingIcon(leadingIcon: leadingIcon),
+          Expanded(
+            child: _TextBody(
+              label: label,
+              isInteractive: _isInteractive,
+              style: style,
+              allowMultilineLabel: allowMultilineLabel,
+              secondaryLabel: secondaryLabel,
+            ),
+          ),
+          if (trailingWidget != null) trailingWidget!,
+        ],
+      ),
     );
   }
 
@@ -311,7 +316,7 @@ class SBBCheckboxListItem extends StatelessWidget {
     }
   }
 
-  _resolveBackgroundColor(SBBControlStyle? style) {
+  Color? _resolveBackgroundColor(SBBControlStyle? style) {
     if (isBoxed) {
       return _isInteractive ? style?.listItem?.boxedBackgroundColor : style?.listItem?.boxedBackgroundColorDisabled;
     } else {
@@ -319,9 +324,14 @@ class SBBCheckboxListItem extends StatelessWidget {
     }
   }
 
-  _resolveIconColor(SBBControlStyle? style) {
+  Color? _resolveIconColor(SBBControlStyle? style) {
     return _isInteractive ? style?.listItem?.iconColor : style?.listItem?.iconColorDisabled;
   }
+
+  ShapeBorder? _resolveTileShapeBorder(bool isBoxed) =>
+      isBoxed ? RoundedRectangleBorder(borderRadius: BorderRadius.circular(_boxedListTileRadius)) : null;
+
+  BorderRadius? _resolveTileBorderRadius(bool isBoxed) => isBoxed ? BorderRadius.circular(_boxedListTileRadius) : null;
 }
 
 class _TextBody extends StatelessWidget {

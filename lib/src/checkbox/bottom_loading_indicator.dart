@@ -5,7 +5,7 @@ import '../../sbb_design_system_mobile.dart';
 class BottomLoadingIndicator extends StatefulWidget {
   const BottomLoadingIndicator({
     super.key,
-    this.borderRadius = 0.0,
+    this.circularBorderRadius = 0.0,
     this.height = 3.0,
     this.widthRatio = 0.3,
     this.duration = const Duration(seconds: 3),
@@ -14,13 +14,13 @@ class BottomLoadingIndicator extends StatefulWidget {
   /// The BorderRadius to correct the clipping of the loading bar.
   ///
   /// If you use this [BottomLoadingIndicator] on a widget with rounded borders,
-  /// make sure to set the [borderRadius] equal to that rounding.
+  /// make sure to set the [circularBorderRadius] equal to that rounding.
   ///
   /// This will round the bottomLeft and bottomRight corners of the [ClipRRect]
   /// to correctly clip the loading bar.
   ///
   /// Defaults to 0.
-  final double borderRadius;
+  final double circularBorderRadius;
 
   /// The height of the [BottomLoadingIndicator] in absolute pixels.
   ///
@@ -77,7 +77,7 @@ class _BottomLoadingIndicatorState extends State<BottomLoadingIndicator> with Si
         // clamping the values in borderRadius
         child: SizedBox(
           width: double.infinity,
-          height: widget.borderRadius > 0 ? widget.borderRadius : widget.height,
+          height: widget.circularBorderRadius > 0 ? widget.circularBorderRadius : widget.height,
           child: Align(
             alignment: Alignment.bottomCenter,
             child: SizedBox(
@@ -99,10 +99,10 @@ class _BottomLoadingIndicatorState extends State<BottomLoadingIndicator> with Si
   }
 
   BorderRadius _resolveBorderRadius() {
-    return widget.borderRadius > 0
+    return widget.circularBorderRadius > 0
         ? BorderRadius.only(
-            bottomLeft: Radius.circular(widget.borderRadius),
-            bottomRight: Radius.circular(widget.borderRadius),
+            bottomLeft: Radius.circular(widget.circularBorderRadius),
+            bottomRight: Radius.circular(widget.circularBorderRadius),
           )
         : BorderRadius.zero;
   }
