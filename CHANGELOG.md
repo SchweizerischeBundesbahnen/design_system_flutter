@@ -9,6 +9,21 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+### Changed
+
+- corrected layout of `SBBCheckbox`
+- changed the behavior of the `SBBCheckboxListItem` trailing widget and icon
+
+### Added
+
+- added `isLoading` to `SBBCheckboxListItem` for an animated bottom loading indicator
+- added `boxed` variant of the `SBBCheckboxListItem` via redirecting constructor
+- added `semanticLabel` and `checkboxSemanticLabel` to the `SBBCheckbox` and `SBBCheckboxListItem` respectively
+
+### Fixed
+
+- correct color usage of the `SBBCheckboxListItem`
+
 ## [2.1.1] - 2024-12-14
 
 ### Fixed
