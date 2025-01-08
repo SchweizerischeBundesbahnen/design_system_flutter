@@ -136,7 +136,8 @@ class CheckboxPageState extends State<CheckboxPage> {
         const SizedBox(height: sbbDefaultSpacing),
         const SBBListHeader('Checkbox Item - Boxed'),
         Column(
-          spacing: sbbDefaultSpacing * 0.5,
+          // spacing: sbbDefaultSpacing * 0.5,  add once support for Flutter SDK 3.24.5 removed
+          // and remove SizedBoxes below
           children: [
             SBBCheckboxListItem.boxed(
               value: _listItemValue1,
@@ -144,18 +145,21 @@ class CheckboxPageState extends State<CheckboxPage> {
               allowMultilineLabel: true,
               onChanged: _isEnabled ? (value) => setState(() => _listItemValue1 = value) : null,
             ),
+            SizedBox(height: sbbDefaultSpacing * .5),
             SBBCheckboxListItem.boxed(
               value: _listItemValue2,
               label: 'Tristate',
               tristate: true,
               onChanged: _isEnabled ? (value) => setState(() => _listItemValue2 = value) : null,
             ),
+            SizedBox(height: sbbDefaultSpacing * .5),
             SBBCheckboxListItem.boxed(
               value: _listItemValue4,
               label: 'Leading Icon',
               onChanged: _isEnabled ? (value) => setState(() => _listItemValue4 = value) : null,
               leadingIcon: SBBIcons.alarm_clock_small,
             ),
+            SizedBox(height: sbbDefaultSpacing * .5),
             SBBCheckboxListItem.boxed(
               value: _listItemValue5,
               label: 'Leading and Trailing Icon',
@@ -163,6 +167,7 @@ class CheckboxPageState extends State<CheckboxPage> {
               leadingIcon: SBBIcons.alarm_clock_small,
               trailingIcon: SBBIcons.dog_small,
             ),
+            SizedBox(height: sbbDefaultSpacing * .5),
             SBBCheckboxListItem.boxed(
               value: _listItemValue3,
               label: 'Button',
@@ -170,6 +175,7 @@ class CheckboxPageState extends State<CheckboxPage> {
               trailingIcon: SBBIcons.circle_information_small_small,
               onCallToAction: () => sbbToast.show(message: 'Button pressed'),
             ),
+            SizedBox(height: sbbDefaultSpacing * .5),
             SBBCheckboxListItem.custom(
               value: _listItemValue6,
               label: 'Custom trailing Widget',
@@ -186,6 +192,7 @@ class CheckboxPageState extends State<CheckboxPage> {
               ),
               isBoxed: true,
             ),
+            SizedBox(height: sbbDefaultSpacing * .5),
             SBBCheckboxListItem.boxed(
               value: _listItemValue7,
               label: 'Multiline Label with\nSecondary Label',
@@ -195,6 +202,7 @@ class CheckboxPageState extends State<CheckboxPage> {
                   'Duis nec nunc a ligula cursus vulputate. Donec sed elit ultricies, euismod erat et, eleifend augue.',
               onChanged: _isEnabled ? (value) => setState(() => _listItemValue7 = value) : null,
             ),
+            SizedBox(height: sbbDefaultSpacing * .5),
             SBBCheckboxListItem.boxed(
               value: _listItemValue8,
               label: 'Loading',
