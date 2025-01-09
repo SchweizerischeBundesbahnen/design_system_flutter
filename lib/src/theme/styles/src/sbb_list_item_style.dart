@@ -7,8 +7,6 @@ class SBBListItemStyle {
     this.backgroundColor,
     this.backgroundColorHighlighted,
     this.backgroundColorDisabled,
-    this.boxedBackgroundColor,
-    this.boxedBackgroundColorDisabled,
     this.iconColor,
     this.iconColorDisabled,
     this.textStyle,
@@ -24,14 +22,6 @@ class SBBListItemStyle {
           SBBColors.midnight,
         ),
         backgroundColorDisabled: SBBColors.transparent,
-        boxedBackgroundColor: baseStyle.themeValue(
-          SBBColors.white,
-          SBBColors.charcoal,
-        ),
-        boxedBackgroundColorDisabled: baseStyle.themeValue(
-          SBBColors.white,
-          SBBColors.charcoal,
-        ),
         iconColor: baseStyle.iconColor,
         iconColorDisabled: baseStyle.themeValue(
           SBBColors.granite,
@@ -57,8 +47,6 @@ class SBBListItemStyle {
   final Color? backgroundColor;
   final Color? backgroundColorHighlighted;
   final Color? backgroundColorDisabled;
-  final Color? boxedBackgroundColor;
-  final Color? boxedBackgroundColorDisabled;
   final Color? iconColor;
   final Color? iconColorDisabled;
   final TextStyle? textStyle;
@@ -70,8 +58,6 @@ class SBBListItemStyle {
     Color? backgroundColor,
     Color? backgroundColorHighlighted,
     Color? backgroundColorDisabled,
-    Color? boxedBackgroundColor,
-    Color? boxedBackgroundColorDisabled,
     Color? iconColor,
     Color? iconColorDisabled,
     TextStyle? textStyle,
@@ -83,8 +69,6 @@ class SBBListItemStyle {
         backgroundColor: backgroundColor ?? this.backgroundColor,
         backgroundColorHighlighted: backgroundColorHighlighted ?? this.backgroundColorHighlighted,
         backgroundColorDisabled: backgroundColorDisabled ?? this.backgroundColorDisabled,
-        boxedBackgroundColor: boxedBackgroundColor ?? this.boxedBackgroundColor,
-        boxedBackgroundColorDisabled: boxedBackgroundColorDisabled ?? this.boxedBackgroundColorDisabled,
         iconColor: iconColor ?? this.iconColor,
         iconColorDisabled: iconColorDisabled ?? this.iconColorDisabled,
         textStyle: textStyle ?? this.textStyle,
@@ -97,8 +81,6 @@ class SBBListItemStyle {
         backgroundColor: Color.lerp(backgroundColor, other?.backgroundColor, t),
         backgroundColorHighlighted: Color.lerp(backgroundColorHighlighted, other?.backgroundColorHighlighted, t),
         backgroundColorDisabled: Color.lerp(backgroundColorDisabled, other?.backgroundColorDisabled, t),
-        boxedBackgroundColor: Color.lerp(boxedBackgroundColor, other?.boxedBackgroundColor, t),
-        boxedBackgroundColorDisabled: Color.lerp(boxedBackgroundColorDisabled, other?.boxedBackgroundColorDisabled, t),
         iconColor: Color.lerp(iconColor, other?.iconColor, t),
         iconColorDisabled: Color.lerp(iconColorDisabled, other?.iconColorDisabled, t),
         textStyle: TextStyle.lerp(textStyle, other?.textStyle, t),
@@ -115,8 +97,6 @@ extension SBBListItemControlStyleExtension on SBBListItemStyle? {
       backgroundColor: this!.backgroundColor ?? other?.backgroundColor,
       backgroundColorHighlighted: this!.backgroundColorHighlighted ?? other?.backgroundColorHighlighted,
       backgroundColorDisabled: this!.backgroundColorDisabled ?? other?.backgroundColorDisabled,
-      boxedBackgroundColor: this!.boxedBackgroundColor ?? other?.boxedBackgroundColor,
-      boxedBackgroundColorDisabled: this!.boxedBackgroundColorDisabled ?? other?.boxedBackgroundColorDisabled,
       iconColor: this!.iconColor ?? other?.iconColor,
       iconColorDisabled: this!.iconColorDisabled ?? other?.iconColorDisabled,
       textStyle: this!.textStyle ?? other?.textStyle,

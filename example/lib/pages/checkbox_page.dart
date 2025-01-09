@@ -139,76 +139,88 @@ class CheckboxPageState extends State<CheckboxPage> {
           // spacing: sbbDefaultSpacing * 0.5,  add once support for Flutter SDK 3.24.5 removed
           // and remove SizedBoxes below
           children: [
-            SBBCheckboxListItem.boxed(
-              value: _listItemValue1,
-              label: 'Label',
-              allowMultilineLabel: true,
-              onChanged: _isEnabled ? (value) => setState(() => _listItemValue1 = value) : null,
+            SBBGroup(
+              child: SBBCheckboxListItem.boxed(
+                value: _listItemValue1,
+                label: 'Label',
+                allowMultilineLabel: true,
+                onChanged: _isEnabled ? (value) => setState(() => _listItemValue1 = value) : null,
+              ),
             ),
             SizedBox(height: sbbDefaultSpacing * .5),
-            SBBCheckboxListItem.boxed(
-              value: _listItemValue2,
-              label: 'Tristate',
-              tristate: true,
-              onChanged: _isEnabled ? (value) => setState(() => _listItemValue2 = value) : null,
+            SBBGroup(
+              child: SBBCheckboxListItem.boxed(
+                value: _listItemValue2,
+                label: 'Tristate',
+                tristate: true,
+                onChanged: _isEnabled ? (value) => setState(() => _listItemValue2 = value) : null,
+              ),
             ),
             SizedBox(height: sbbDefaultSpacing * .5),
-            SBBCheckboxListItem.boxed(
-              value: _listItemValue4,
-              label: 'Leading Icon',
-              onChanged: _isEnabled ? (value) => setState(() => _listItemValue4 = value) : null,
-              leadingIcon: SBBIcons.alarm_clock_small,
+            SBBGroup(
+              child: SBBCheckboxListItem.boxed(
+                value: _listItemValue4,
+                label: 'Leading Icon',
+                onChanged: _isEnabled ? (value) => setState(() => _listItemValue4 = value) : null,
+                leadingIcon: SBBIcons.alarm_clock_small,
+              ),
             ),
             SizedBox(height: sbbDefaultSpacing * .5),
-            SBBCheckboxListItem.boxed(
-              value: _listItemValue5,
-              label: 'Leading and Trailing Icon',
-              onChanged: _isEnabled ? (value) => setState(() => _listItemValue5 = value) : null,
-              leadingIcon: SBBIcons.alarm_clock_small,
-              trailingIcon: SBBIcons.dog_small,
+            SBBGroup(
+              child: SBBCheckboxListItem.boxed(
+                value: _listItemValue5,
+                label: 'Leading and Trailing Icon',
+                onChanged: _isEnabled ? (value) => setState(() => _listItemValue5 = value) : null,
+                leadingIcon: SBBIcons.alarm_clock_small,
+                trailingIcon: SBBIcons.dog_small,
+              ),
             ),
             SizedBox(height: sbbDefaultSpacing * .5),
-            SBBCheckboxListItem.boxed(
-              value: _listItemValue3,
-              label: 'Button',
-              onChanged: _isEnabled ? (value) => setState(() => _listItemValue3 = value) : null,
-              trailingIcon: SBBIcons.circle_information_small_small,
-              onCallToAction: () => sbbToast.show(message: 'Button pressed'),
+            SBBGroup(
+              child: SBBCheckboxListItem.boxed(
+                value: _listItemValue3,
+                label: 'Button',
+                onChanged: _isEnabled ? (value) => setState(() => _listItemValue3 = value) : null,
+                trailingIcon: SBBIcons.circle_information_small_small,
+                onCallToAction: () => sbbToast.show(message: 'Button pressed'),
+              ),
             ),
             SizedBox(height: sbbDefaultSpacing * .5),
-            SBBCheckboxListItem.custom(
-              value: _listItemValue6,
-              label: 'Custom trailing Widget',
-              onChanged: _isEnabled ? (value) => setState(() => _listItemValue6 = value) : null,
-              trailingWidget: Padding(
-                padding: EdgeInsetsDirectional.only(
-                  top: sbbDefaultSpacing / 4 * 3,
-                  end: sbbDefaultSpacing,
-                ),
-                child: Text(
-                  'CHF 0.99',
-                  style: TextStyle(color: _isEnabled ? SBBColors.black : SBBColors.granite),
+            SBBGroup(
+              child: SBBCheckboxListItem.custom(
+                value: _listItemValue6,
+                label: 'Custom trailing Widget',
+                onChanged: _isEnabled ? (value) => setState(() => _listItemValue6 = value) : null,
+                trailingWidget: Padding(
+                  padding: EdgeInsetsDirectional.only(
+                    top: sbbDefaultSpacing / 4 * 3,
+                    end: sbbDefaultSpacing,
+                  ),
+                  child: Text('CHF 0.99'),
                 ),
               ),
-              isBoxed: true,
             ),
             SizedBox(height: sbbDefaultSpacing * .5),
-            SBBCheckboxListItem.boxed(
-              value: _listItemValue7,
-              label: 'Multiline Label with\nSecondary Label',
-              allowMultilineLabel: true,
-              secondaryLabel:
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut convallis leo et metus semper hendrerit. '
-                  'Duis nec nunc a ligula cursus vulputate. Donec sed elit ultricies, euismod erat et, eleifend augue.',
-              onChanged: _isEnabled ? (value) => setState(() => _listItemValue7 = value) : null,
+            SBBGroup(
+              child: SBBCheckboxListItem.boxed(
+                value: _listItemValue7,
+                label: 'Multiline Label with\nSecondary Label',
+                allowMultilineLabel: true,
+                secondaryLabel:
+                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut convallis leo et metus semper hendrerit. '
+                    'Duis nec nunc a ligula cursus vulputate. Donec sed elit ultricies, euismod erat et, eleifend augue.',
+                onChanged: _isEnabled ? (value) => setState(() => _listItemValue7 = value) : null,
+              ),
             ),
             SizedBox(height: sbbDefaultSpacing * .5),
-            SBBCheckboxListItem.boxed(
-              value: _listItemValue8,
-              label: 'Loading',
-              secondaryLabel: 'This will not stop.',
-              onChanged: _isEnabled ? (value) => setState(() => _listItemValue8 = value!) : null,
-              isLoading: true,
+            SBBGroup(
+              child: SBBCheckboxListItem.boxed(
+                value: _listItemValue8,
+                label: 'Loading',
+                secondaryLabel: 'This will not stop.',
+                onChanged: _isEnabled ? (value) => setState(() => _listItemValue8 = value!) : null,
+                isLoading: true,
+              ),
             ),
           ],
         ),

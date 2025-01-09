@@ -149,35 +149,42 @@ class CheckboxTest extends StatelessWidget {
           Column(
             spacing: sbbDefaultSpacing * .5,
             children: [
-              SBBCheckboxListItem.boxed(
-                value: value1,
-                label: 'Default',
-                onChanged: (value) {},
-              ),
-              SBBCheckboxListItem.boxed(
-                value: value2,
-                label: 'Tristate',
-                tristate: true,
-                onChanged: (value) {},
-              ),
-              SBBCheckboxListItem.boxed(
-                value: value3,
-                label: 'Leading Icon, Button (Disabled)',
-                onChanged: null,
-                onCallToAction: () {},
-                leadingIcon: SBBIcons.alarm_clock_small,
-                trailingIcon: SBBIcons.circle_information_small_small,
-              ),
-              SBBCheckboxListItem.custom(
-                value: false,
-                label: 'Custom trailing Widget',
-                isLastElement: true,
-                onChanged: (value) {},
-                trailingWidget: const Padding(
-                  padding: EdgeInsets.only(top: sbbDefaultSpacing * 0.75, right: sbbDefaultSpacing),
-                  child: Text('CHF 0.99'),
+              SBBGroup(
+                child: SBBCheckboxListItem.boxed(
+                  value: value1,
+                  label: 'Default',
+                  onChanged: (value) {},
                 ),
-                isBoxed: true,
+              ),
+              SBBGroup(
+                child: SBBCheckboxListItem.boxed(
+                  value: value2,
+                  label: 'Tristate',
+                  tristate: true,
+                  onChanged: (value) {},
+                ),
+              ),
+              SBBGroup(
+                child: SBBCheckboxListItem.boxed(
+                  value: value3,
+                  label: 'Leading Icon, Button (Disabled)',
+                  onChanged: null,
+                  onCallToAction: () {},
+                  leadingIcon: SBBIcons.alarm_clock_small,
+                  trailingIcon: SBBIcons.circle_information_small_small,
+                ),
+              ),
+              SBBGroup(
+                child: SBBCheckboxListItem.custom(
+                  value: false,
+                  label: 'Custom trailing Widget',
+                  isLastElement: true,
+                  onChanged: (value) {},
+                  trailingWidget: const Padding(
+                    padding: EdgeInsets.only(top: sbbDefaultSpacing * 0.75, right: sbbDefaultSpacing),
+                    child: Text('CHF 0.99'),
+                  ),
+                ),
               ),
             ],
           ),

@@ -4,7 +4,6 @@ import '../../sbb_design_system_mobile.dart';
 import 'bottom_loading_indicator.dart';
 
 const double _iconTopPadding = 10.0;
-const double _boxedListTileRadius = 16.0;
 const double _minListTileHeight = 44.0;
 
 /// SBB Checkbox Item. Use according to documentation.
@@ -77,7 +76,23 @@ class SBBCheckboxListItem extends StatelessWidget {
           checkboxSemanticLabel: checkboxSemanticLabel,
         );
 
-  /// Create a boxed variant of the [SBBCheckboxListItem]. There is no margin added.
+  /// Use this in combination with a [SBBGroup] to create a boxed variant of the [SBBCheckboxListItem].
+  ///
+  /// ```dart
+  /// SBBGroup(
+  ///   child: SBBCheckboxListItem(
+  ///     value: _throwShotAway,
+  ///     onChanged: (bool newValue) {
+  ///       setState(() {
+  ///         _throwShotAway = newValue;
+  ///       });
+  ///     },
+  ///     label: 'Example',
+  ///   )
+  /// )
+  ///
+  /// ```
+  ///
   SBBCheckboxListItem.boxed({
     Key? key,
     required bool? value,
@@ -102,10 +117,13 @@ class SBBCheckboxListItem extends StatelessWidget {
           leadingIcon: leadingIcon,
           trailingWidget: _optionallyButtonedTrailingIcon(trailingIcon, onCallToAction, onChanged),
           isLoading: isLoading,
-          isBoxed: true,
+          isLastElement: true,
           checkboxSemanticLabel: checkboxSemanticLabel,
         );
 
+  /// Full custom [SBBCheckboxListItem].
+  ///
+  /// When using [isBoxed], wrap this widget with a SBBGroup to achieve the desired outcome.
   const SBBCheckboxListItem.custom({
     super.key,
     required this.value,
@@ -118,7 +136,6 @@ class SBBCheckboxListItem extends StatelessWidget {
     this.leadingIcon,
     this.trailingWidget,
     this.isLoading = false,
-    this.isBoxed = false,
     this.checkboxSemanticLabel,
   }) : assert(tristate || value != null);
 
@@ -191,9 +208,6 @@ class SBBCheckboxListItem extends StatelessWidget {
   /// Whether to display a BottomLoadingIndicator on the [SBBCheckboxListItem].
   final bool isLoading;
 
-  /// Whether this ListItem should be drawn as boxed variant.
-  final bool isBoxed;
-
   /// The semantic label for the checkbox that will be announced by screen readers.
   ///
   /// This is announced by assistive technologies (e.g TalkBack/VoiceOver).
@@ -235,13 +249,9 @@ class SBBCheckboxListItem extends StatelessWidget {
     final style = SBBControlStyles.of(context).checkbox;
     final Color? resolvedBackgroundColor = _resolveBackgroundColor(style);
 
-    final ShapeBorder? resolvedTileShapeBorder = _resolveTileShapeBorder(isBoxed);
-    final BorderRadius? resolvedTileBorderRadius = _resolveTileBorderRadius(isBoxed);
-
     return MergeSemantics(
       child: Material(
         color: resolvedBackgroundColor,
-        shape: resolvedTileShapeBorder,
         child: Column(children: [
           Stack(
             alignment: AlignmentDirectional.bottomStart,
@@ -254,17 +264,16 @@ class SBBCheckboxListItem extends StatelessWidget {
                   focusColor: style?.listItem?.backgroundColorHighlighted,
                   highlightColor: SBBColors.transparent,
                   hoverColor: SBBColors.transparent,
-                  borderRadius: resolvedTileBorderRadius,
                   child: Semantics(
                     enabled: _isInteractive,
                     child: _checkboxBody(style),
                   ),
                 ),
               ),
-              if (isLoading) BottomLoadingIndicator(circularBorderRadius: isBoxed ? _boxedListTileRadius : 0.0)
+              if (isLoading) BottomLoadingIndicator()
             ],
           ),
-          if (!isLastElement && !isBoxed) const Divider(),
+          if (!isLastElement) const Divider(),
         ]),
       ),
     );
@@ -317,21 +326,12 @@ class SBBCheckboxListItem extends StatelessWidget {
   }
 
   Color? _resolveBackgroundColor(SBBControlStyle? style) {
-    if (isBoxed) {
-      return _isInteractive ? style?.listItem?.boxedBackgroundColor : style?.listItem?.boxedBackgroundColorDisabled;
-    } else {
-      return _isInteractive ? style?.listItem?.backgroundColor : style?.listItem?.backgroundColorDisabled;
-    }
+    return _isInteractive ? style?.listItem?.backgroundColor : style?.listItem?.backgroundColorDisabled;
   }
 
   Color? _resolveIconColor(SBBControlStyle? style) {
     return _isInteractive ? style?.listItem?.iconColor : style?.listItem?.iconColorDisabled;
   }
-
-  ShapeBorder? _resolveTileShapeBorder(bool isBoxed) =>
-      isBoxed ? RoundedRectangleBorder(borderRadius: BorderRadius.circular(_boxedListTileRadius)) : null;
-
-  BorderRadius? _resolveTileBorderRadius(bool isBoxed) => isBoxed ? BorderRadius.circular(_boxedListTileRadius) : null;
 }
 
 class _TextBody extends StatelessWidget {
