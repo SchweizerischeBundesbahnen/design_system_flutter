@@ -222,7 +222,7 @@ class SBBCheckboxListItem extends StatelessWidget {
                 child: Icon(trailingIcon, size: 24.0),
               )
             : Padding(
-                padding: const EdgeInsets.only(right: sbbDefaultSpacing),
+                padding: const EdgeInsets.only(right: sbbDefaultSpacing * .5),
                 child: SBBIconButtonSmall(
                   icon: trailingIcon,
                   onPressed: onChanged != null ? onCallToAction : null,
