@@ -40,13 +40,16 @@ class SBBRadioButton<T> extends StatelessWidget {
   /// * [value] and [groupValue] together determine whether the radio button is
   ///   selected.
   /// * [onChanged] is called when the user selects this radio button.
-  /// * the [padding] enlarges the hittable area for the radio button.
+  ///
+  ///
+  /// The [padding] enlarges the hittable area for the radio button.
   const SBBRadioButton({
     super.key,
     required this.value,
     required this.groupValue,
     required this.onChanged,
     this.padding,
+    this.semanticLabel,
   });
 
   /// The value represented by this radio button.
@@ -89,6 +92,13 @@ class SBBRadioButton<T> extends StatelessWidget {
   /// Enlarges the hittable area around the [SBBRadioButton].
   final EdgeInsetsGeometry? padding;
 
+  /// The semantic label for the [SBBRadioButton] that will be announced by screen readers.
+  ///
+  /// This is announced by assistive technologies (e.g TalkBack/VoiceOver).
+  ///
+  /// This label does not show in the UI.
+  final String? semanticLabel;
+
   bool get _selected => value == groupValue;
 
   static const _outerCircleSize = 20.0;
@@ -100,37 +110,41 @@ class SBBRadioButton<T> extends StatelessWidget {
     final enabled = onChanged != null;
     return Material(
       color: SBBColors.transparent,
-      child: InkWell(
-        splashFactory: InkRipple.splashFactory,
-        customBorder: const CircleBorder(),
-        splashColor: style?.basic?.backgroundColorHighlighted,
-        focusColor: style?.basic?.backgroundColorHighlighted,
-        highlightColor: SBBColors.transparent,
-        hoverColor: SBBColors.transparent,
-        onTap: enabled ? () => onChanged?.call(value) : null,
-        child: Center(
-          child: Container(
-            height: _outerCircleSize,
-            width: _outerCircleSize,
-            margin: padding ?? const EdgeInsets.all(sbbDefaultSpacing / 2),
-            decoration: BoxDecoration(
-              color: enabled ? style?.basic?.backgroundColor : style?.basic?.backgroundColorDisabled,
-              shape: BoxShape.circle,
-              border: Border.fromBorderSide(
-                BorderSide(
-                  color: (enabled ? style?.basic?.borderColor : style?.basic?.borderColorDisabled)!,
+      child: Semantics(
+        label: semanticLabel,
+        selected: _selected,
+        child: InkWell(
+          splashFactory: InkRipple.splashFactory,
+          customBorder: const CircleBorder(),
+          splashColor: style?.basic?.backgroundColorHighlighted,
+          focusColor: style?.basic?.backgroundColorHighlighted,
+          highlightColor: SBBColors.transparent,
+          hoverColor: SBBColors.transparent,
+          onTap: enabled ? () => onChanged?.call(value) : null,
+          child: Center(
+            child: Container(
+              height: _outerCircleSize,
+              width: _outerCircleSize,
+              margin: padding ?? const EdgeInsets.all(sbbDefaultSpacing / 2),
+              decoration: BoxDecoration(
+                color: enabled ? style?.basic?.backgroundColor : style?.basic?.backgroundColorDisabled,
+                shape: BoxShape.circle,
+                border: Border.fromBorderSide(
+                  BorderSide(
+                    color: (enabled ? style?.basic?.borderColor : style?.basic?.borderColorDisabled)!,
+                  ),
                 ),
               ),
-            ),
-            child: Center(
-              child: AnimatedContainer(
-                duration: kThemeAnimationDuration,
-                curve: Curves.easeInOut,
-                height: _selected ? _innerCircleSize : 0,
-                width: _selected ? _innerCircleSize : 0,
-                decoration: BoxDecoration(
-                  color: enabled ? style?.color : style?.colorDisabled,
-                  shape: BoxShape.circle,
+              child: Center(
+                child: AnimatedContainer(
+                  duration: kThemeAnimationDuration,
+                  curve: Curves.easeInOut,
+                  height: _selected ? _innerCircleSize : 0,
+                  width: _selected ? _innerCircleSize : 0,
+                  decoration: BoxDecoration(
+                    color: enabled ? style?.color : style?.colorDisabled,
+                    shape: BoxShape.circle,
+                  ),
                 ),
               ),
             ),
