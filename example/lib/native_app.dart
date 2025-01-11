@@ -11,6 +11,7 @@ import 'pages/checkbox_page.dart';
 import 'pages/chip_page.dart';
 import 'pages/color_page.dart';
 import 'pages/group_page.dart';
+import 'pages/header_box_page.dart';
 import 'pages/header_page.dart';
 import 'pages/icon_page.dart';
 import 'pages/input_trigger_page.dart';
@@ -91,6 +92,10 @@ class MyApp extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
+                            _DemoEntry(
+                              'HeaderBox',
+                              HeaderBoxPage(),
+                            ),
                             _DemoEntry(
                               'Icon',
                               IconPage(),

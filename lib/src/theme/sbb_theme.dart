@@ -12,6 +12,7 @@ class SBBTheme {
     SBBBaseStyle? baseStyle,
     SBBButtonStyles? buttonStyles,
     SBBControlStyles? controlStyles,
+    SBBHeaderBoxStyle? headerBoxStyle,
   }) =>
       createTheme(
         brightness: Brightness.light,
@@ -19,6 +20,7 @@ class SBBTheme {
         baseStyle: baseStyle,
         buttonStyles: buttonStyles,
         controlStyles: controlStyles,
+        headerBoxStyle: headerBoxStyle,
       );
 
   static ThemeData dark({
@@ -26,6 +28,7 @@ class SBBTheme {
     SBBBaseStyle? baseStyle,
     SBBButtonStyles? buttonStyles,
     SBBControlStyles? controlStyles,
+    SBBHeaderBoxStyle? headerBoxStyle,
   }) =>
       createTheme(
         brightness: Brightness.dark,
@@ -33,6 +36,7 @@ class SBBTheme {
         baseStyle: baseStyle,
         buttonStyles: buttonStyles,
         controlStyles: controlStyles,
+        headerBoxStyle: headerBoxStyle,
       );
 
   static ThemeData createTheme({
@@ -41,6 +45,7 @@ class SBBTheme {
     SBBBaseStyle? baseStyle,
     SBBButtonStyles? buttonStyles,
     SBBControlStyles? controlStyles,
+    SBBHeaderBoxStyle? headerBoxStyle,
   }) {
     // SET hard-coded default values HERE
     final defaultBaseStyle = SBBBaseStyle.$default(
@@ -59,11 +64,17 @@ class SBBTheme {
     );
     final mergedControlStyles = controlStyles.merge(defaultControlStyles);
 
+    final defaultHeaderBoxStyle = SBBHeaderBoxStyle.$default(
+      baseStyle: mergedBaseStyle,
+    );
+    final mergedHeaderBoxStyle = headerBoxStyle.merge(defaultHeaderBoxStyle);
+
     return raw(
       brightness: brightness,
       baseStyle: mergedBaseStyle,
       buttonStyles: mergedButtonStyles,
       controlStyles: mergedControlStyles,
+      headerBoxStyle: mergedHeaderBoxStyle,
     );
   }
 
@@ -72,6 +83,7 @@ class SBBTheme {
     required SBBBaseStyle baseStyle,
     required SBBButtonStyles buttonStyles,
     required SBBControlStyles controlStyles,
+    required SBBHeaderBoxStyle headerBoxStyle,
   }) =>
       ThemeData(
         colorScheme: ColorScheme.fromSwatch(
@@ -108,6 +120,7 @@ class SBBTheme {
           baseStyle,
           buttonStyles,
           controlStyles,
+          headerBoxStyle,
         ],
       );
 
