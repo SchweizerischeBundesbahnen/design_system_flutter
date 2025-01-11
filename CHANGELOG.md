@@ -23,6 +23,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 ### Fixed
 
 - correct color usage of the `SBBCheckboxListItem`
+- simplified `SBBPagination` and added animation
 
 ## [2.1.1] - 2024-12-14
 
