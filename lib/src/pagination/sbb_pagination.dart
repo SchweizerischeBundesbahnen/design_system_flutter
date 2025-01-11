@@ -9,8 +9,11 @@ const double _kFloatingShadowBlurRadius = 8.0;
 
 /// The SBB Pagination.
 ///
-/// Use according to documentation at https://digital.sbb.ch/de/design-system/mobile/components/pagination/
-/// The semantics value will be the current page + 1 and are marked as readonly.
+/// Use according to [documentation](https://digital.sbb.ch/de/design-system/mobile/components/pagination/).
+///
+/// For the floating variant, set [isFloating] to true.
+///
+/// The semantics value will be the [currentpage] + 1. The semantics is marked as readonly.
 class SBBPagination extends StatelessWidget {
   const SBBPagination({
     super.key,
@@ -18,8 +21,7 @@ class SBBPagination extends StatelessWidget {
     required this.currentPage,
     this.isFloating = false,
     this.semanticsLabel = 'Pagination',
-  })  : assert(numberPages > 0,
-            'numberPages: $numberPages must be greater than 0'),
+  })  : assert(numberPages > 0, 'numberPages: $numberPages must be greater than 0'),
         assert(currentPage >= 0 && currentPage < numberPages,
             'currentPage: $currentPage must be between 0 and numberPages - 1');
 
@@ -68,7 +70,7 @@ class SBBPagination extends StatelessWidget {
         );
 }
 
-/// The default pagination.
+/// The default (non-floating) pagination.
 class _DefaultSBBPagination extends StatelessWidget {
   const _DefaultSBBPagination({
     required this.numberPages,
@@ -112,8 +114,7 @@ class _FloatingSBBPagination extends StatelessWidget {
     );
   }
 
-  BoxDecoration _createBoxDecorationWith(SBBPaginationStyle style) =>
-      BoxDecoration(
+  BoxDecoration _createBoxDecorationWith(SBBPaginationStyle style) => BoxDecoration(
         borderRadius: BorderRadius.circular(_kFloatingPaddingHeight * 2),
         color: style.floatingBackgroundColor,
         boxShadow: [
