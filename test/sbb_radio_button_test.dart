@@ -81,6 +81,7 @@ class RadioTest extends StatelessWidget {
                   groupValue: listItemGroupValue,
                   onChanged: (newValue) {},
                   label: 'Leading and Button',
+                  leadingIcon: SBBIcons.alarm_clock_small,
                   trailingIcon: SBBIcons.circle_information_small_small,
                   onCallToAction: () {},
                 ),
