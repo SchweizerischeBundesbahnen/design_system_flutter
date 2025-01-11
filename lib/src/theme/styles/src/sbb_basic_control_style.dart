@@ -12,10 +12,10 @@ class SBBBasicControlStyle {
   });
 
   factory SBBBasicControlStyle.$default({required SBBBaseStyle baseStyle}) => SBBBasicControlStyle(
-        backgroundColor: baseStyle.themeValue(SBBColors.white, SBBColors.transparent),
+        backgroundColor: SBBColors.transparent,
         backgroundColorHighlighted: SBBColors.transparent,
         backgroundColorDisabled: SBBColors.transparent,
-        borderColor: SBBColors.smoke,
+        borderColor: baseStyle.themeValue(SBBColors.granite, SBBColors.cement),
         borderColorDisabled: baseStyle.themeValue(SBBColors.cloud, SBBColors.iron),
       );
 
