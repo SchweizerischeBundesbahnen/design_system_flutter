@@ -1,12 +1,9 @@
-// Copyright 2014 The Flutter Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
-
 import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
-/// The SBB Radio Button. Use according to documentation.
+/// The SBB Radio Button.
+/// Use according to [documentation](https://digital.sbb.ch/de/design-system/mobile/components/radiobutton/).
 ///
 /// Consider using [SBBRadioButtonListItem] instead of this Widget.
 ///
@@ -29,8 +26,7 @@ import '../../sbb_design_system_mobile.dart';
 /// * [SBBSegmentedButton], a widget with semantics similar to [SBBRadioButton].
 /// * [SBBSlider], for selecting a value in a range.
 /// * [SBBCheckbox] and [SBBSwitch], for toggling a particular value on or off.
-/// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/radiobutton>
-class SBBRadioButton<T> extends StatefulWidget {
+class SBBRadioButton<T> extends StatelessWidget {
   /// Creates a SBB Radio Button.
   ///
   /// The radio button itself does not maintain any state. Instead, when the
@@ -44,6 +40,7 @@ class SBBRadioButton<T> extends StatefulWidget {
   /// * [value] and [groupValue] together determine whether the radio button is
   ///   selected.
   /// * [onChanged] is called when the user selects this radio button.
+  /// * the [padding] enlarges the hittable area for the radio button.
   const SBBRadioButton({
     super.key,
     required this.value,
@@ -89,70 +86,18 @@ class SBBRadioButton<T> extends StatefulWidget {
   /// ```
   final ValueChanged<T?>? onChanged;
 
+  /// Enlarges the hittable area around the [SBBRadioButton].
   final EdgeInsetsGeometry? padding;
 
   bool get _selected => value == groupValue;
 
-  @override
-  SBBRadioButtonState<T> createState() => SBBRadioButtonState<T>();
-}
-
-class SBBRadioButtonState<T> extends State<SBBRadioButton<T>>
-    with SingleTickerProviderStateMixin {
   static const _outerCircleSize = 20.0;
   static const _innerCircleSize = 8.0;
-
-  late Animation<double> _animation;
-  late AnimationController _controller;
-
-  @override
-  void initState() {
-    _controller = AnimationController(
-      duration: kThemeAnimationDuration,
-      vsync: this,
-    );
-    _animation = Tween<double>(
-      begin: 0.0,
-      end: _innerCircleSize,
-    ).animate(
-      CurvedAnimation(
-        parent: _controller,
-        curve: Curves.easeIn,
-        reverseCurve: Curves.easeOut,
-      ),
-    )..addListener(() {
-        setState(() {
-          // trigger update
-        });
-      });
-    if (widget._selected) {
-      _controller.value = _controller.upperBound;
-    }
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  void didUpdateWidget(SBBRadioButton<T> oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (widget._selected != oldWidget._selected) {
-      if (widget._selected) {
-        _controller.forward();
-      } else {
-        _controller.reverse();
-      }
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
     final style = SBBControlStyles.of(context).radioButton;
-    final enabled = widget.onChanged != null;
+    final enabled = onChanged != null;
     return Material(
       color: SBBColors.transparent,
       child: InkWell(
@@ -162,30 +107,27 @@ class SBBRadioButtonState<T> extends State<SBBRadioButton<T>>
         focusColor: style?.basic?.backgroundColorHighlighted,
         highlightColor: SBBColors.transparent,
         hoverColor: SBBColors.transparent,
-        onTap: enabled ? () => widget.onChanged?.call(widget.value) : null,
+        onTap: enabled ? () => onChanged?.call(value) : null,
         child: Center(
           child: Container(
             height: _outerCircleSize,
             width: _outerCircleSize,
-            margin:
-                widget.padding ?? const EdgeInsets.all(sbbDefaultSpacing / 2),
+            margin: padding ?? const EdgeInsets.all(sbbDefaultSpacing / 2),
             decoration: BoxDecoration(
-              color: enabled
-                  ? style?.basic?.backgroundColor
-                  : style?.basic?.backgroundColorDisabled,
+              color: enabled ? style?.basic?.backgroundColor : style?.basic?.backgroundColorDisabled,
               shape: BoxShape.circle,
               border: Border.fromBorderSide(
                 BorderSide(
-                  color: (enabled
-                      ? style?.basic?.borderColor
-                      : style?.basic?.borderColorDisabled)!,
+                  color: (enabled ? style?.basic?.borderColor : style?.basic?.borderColorDisabled)!,
                 ),
               ),
             ),
             child: Center(
-              child: Container(
-                height: _animation.value,
-                width: _animation.value,
+              child: AnimatedContainer(
+                duration: kThemeAnimationDuration,
+                curve: Curves.easeInOut,
+                height: _selected ? _innerCircleSize : 0,
+                width: _selected ? _innerCircleSize : 0,
                 decoration: BoxDecoration(
                   color: enabled ? style?.color : style?.colorDisabled,
                   shape: BoxShape.circle,
