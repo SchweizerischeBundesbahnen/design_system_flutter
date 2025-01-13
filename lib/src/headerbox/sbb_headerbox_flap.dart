@@ -72,6 +72,7 @@ class SBBHeaderboxFlap extends StatelessWidget {
             title,
             maxLines: allowMultilineLabel ? null : 1,
             overflow: allowMultilineLabel ? null : TextOverflow.ellipsis,
+            style: SBBTextStyles.smallLight,
           ),
         ),
         if (trailingIcon != null) ...[

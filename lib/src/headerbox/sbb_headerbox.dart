@@ -9,6 +9,69 @@ const _headerBoxRadius = Radius.circular(sbbDefaultSpacing);
 const _headerBoxFlapTopMargin = 8.0;
 
 class SBBHeaderbox extends StatelessWidget {
+  SBBHeaderbox({
+    Key? key,
+    required String title,
+    IconData? leadingIcon,
+    String? secondaryLabel,
+    Widget? trailingWidget,
+    SBBHeaderboxFlap? flap,
+  }) : this.custom(
+          key: key,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        if (leadingIcon != null) ...[Icon(leadingIcon), SizedBox(width: sbbDefaultSpacing * .5)],
+                        Expanded(child: Text(title, style: SBBTextStyles.mediumBold, overflow: TextOverflow.ellipsis)),
+                      ],
+                    ),
+                    if (secondaryLabel != null)
+                      Text(secondaryLabel, style: SBBTextStyles.smallLight.copyWith(color: SBBColors.granite))
+                  ],
+                ),
+              ),
+              SizedBox(width: sbbDefaultSpacing * .5),
+              if (trailingWidget != null) trailingWidget,
+            ],
+          ),
+          flap: flap,
+        );
+
+  SBBHeaderbox.large({
+    Key? key,
+    required String title,
+    IconData? leadingIcon,
+    String? secondaryLabel,
+    Widget? trailingWidget,
+    SBBHeaderboxFlap? flap,
+  }) : this.custom(
+          key: key,
+          child: Row(
+            children: [
+              if (leadingIcon != null) ...[Icon(leadingIcon, size: 36), SizedBox(width: sbbDefaultSpacing * .5)],
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(title, style: SBBTextStyles.mediumBold, overflow: TextOverflow.ellipsis),
+                    SizedBox(height: sbbDefaultSpacing * .25),
+                    if (secondaryLabel != null) Text(secondaryLabel, style: SBBTextStyles.mediumLight)
+                  ],
+                ),
+              ),
+              SizedBox(width: sbbDefaultSpacing * .5),
+              if (trailingWidget != null) trailingWidget,
+            ],
+          ),
+          flap: flap,
+        );
+
   const SBBHeaderbox.custom({
     super.key,
     this.margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
@@ -75,10 +138,7 @@ class _HeaderBoxTop extends StatelessWidget {
       ),
       constraints: BoxConstraints(minHeight: _headerBoxMinHeight, minWidth: double.infinity),
       padding: padding,
-      child: Card(
-        color: SBBColors.transparent,
-        child: child,
-      ),
+      child: child,
     );
   }
 
