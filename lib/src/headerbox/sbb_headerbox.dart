@@ -8,7 +8,37 @@ const _headerBoxNavBarExtensionHeight = 24.0;
 const _headerBoxRadius = Radius.circular(sbbDefaultSpacing);
 const _headerBoxFlapTopMargin = 8.0;
 
+/// The SBB Headerbox.
+/// Use according to [documentation](https://digital.sbb.ch/de/design-system/mobile/components/container/)
+///
+/// To place over non scrollable screen content, place this Widget in a [Stack] with the content underneath.
+///
+/// ```dart
+/// @override
+/// Widget build(BuildContext context) {
+///   return Stack(
+///     children: [
+///       _AllTheContentWidget(),
+///       SBBHeaderbox(
+///         title: 'Awesome Headerbox'
+///       ),
+///     ],
+///   );
+/// }
+/// ```
+///
+/// This will lead to the expected behavior of the Headerbox.
+///
+/// See [SBBSliverHeaderbox] for a headerbox that behaves as expected in scrollable content.
 class SBBHeaderbox extends StatelessWidget {
+  /// The default [SBBHeaderbox].
+  ///
+  /// The required argument [title] will be ellipsed if too long. The [secondaryLabel] is the subtext
+  /// displayed below and will wrap to multiple lines.
+  ///
+  /// The trailing widget usually is an action button, e.g. a [SBBTertiaryButtonSmall] with a label and an icon.
+  ///
+  /// For a complete customization of the Headerbox, see the [SBBHeaderbox.custom] constructor.
   SBBHeaderbox({
     Key? key,
     required String title,
@@ -16,33 +46,27 @@ class SBBHeaderbox extends StatelessWidget {
     String? secondaryLabel,
     Widget? trailingWidget,
     SBBHeaderboxFlap? flap,
+    EdgeInsets margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
   }) : this.custom(
           key: key,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      children: [
-                        if (leadingIcon != null) ...[Icon(leadingIcon), SizedBox(width: sbbDefaultSpacing * .5)],
-                        Expanded(child: Text(title, style: SBBTextStyles.mediumBold, overflow: TextOverflow.ellipsis)),
-                      ],
-                    ),
-                    if (secondaryLabel != null)
-                      Text(secondaryLabel, style: SBBTextStyles.smallLight.copyWith(color: SBBColors.granite))
-                  ],
-                ),
-              ),
-              SizedBox(width: sbbDefaultSpacing * .5),
-              if (trailingWidget != null) trailingWidget,
-            ],
+          child: _DefaultHeaderBoxContent(
+            title: title,
+            leadingIcon: leadingIcon,
+            secondaryLabel: secondaryLabel,
+            trailingWidget: trailingWidget,
           ),
+          margin: margin,
           flap: flap,
         );
 
+  /// The large [SBBHeaderbox].
+  ///
+  /// The required argument [title] will be ellipsed if too long. The [secondaryLabel] is the subtext
+  /// displayed below and will wrap to multiple lines.
+  ///
+  /// The trailing widget usually is an action button, e.g. a [SBBIconButtonLarge].
+  ///
+  /// For a complete customization of the Headerbox, see the [SBBHeaderbox.custom] constructor.
   SBBHeaderbox.large({
     Key? key,
     required String title,
@@ -50,28 +74,20 @@ class SBBHeaderbox extends StatelessWidget {
     String? secondaryLabel,
     Widget? trailingWidget,
     SBBHeaderboxFlap? flap,
+    EdgeInsets margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
   }) : this.custom(
           key: key,
-          child: Row(
-            children: [
-              if (leadingIcon != null) ...[Icon(leadingIcon, size: 36), SizedBox(width: sbbDefaultSpacing * .5)],
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(title, style: SBBTextStyles.mediumBold, overflow: TextOverflow.ellipsis),
-                    SizedBox(height: sbbDefaultSpacing * .25),
-                    if (secondaryLabel != null) Text(secondaryLabel, style: SBBTextStyles.mediumLight)
-                  ],
-                ),
-              ),
-              SizedBox(width: sbbDefaultSpacing * .5),
-              if (trailingWidget != null) trailingWidget,
-            ],
-          ),
           flap: flap,
+          margin: margin,
+          child: _LargeHeaderBoxContent(
+            title: title,
+            leadingIcon: leadingIcon,
+            secondaryLabel: secondaryLabel,
+            trailingWidget: trailingWidget,
+          ),
         );
 
+  /// Allows complete customization of the [SBBHeaderbox].
   const SBBHeaderbox.custom({
     super.key,
     this.margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
@@ -80,9 +96,15 @@ class SBBHeaderbox extends StatelessWidget {
     this.flap,
   });
 
+  /// The margin around the [SBBHeaderbox].
+  ///
+  /// Defaults to EdgeInsets.symmetric(horizonal: 8.0).
   final EdgeInsets margin;
+
   final Widget child;
   final EdgeInsets padding;
+
+  /// The flap to display below the [SBBHeaderbox].
   final SBBHeaderboxFlap? flap;
 
   @override
@@ -171,6 +193,92 @@ class _HeaderBoxBackgroundBar extends StatelessWidget {
         color: headerColorPrimary,
         height: _headerBoxNavBarExtensionHeight,
       ),
+    );
+  }
+}
+
+class _DefaultHeaderBoxContent extends StatelessWidget {
+  const _DefaultHeaderBoxContent({
+    required this.title,
+    this.leadingIcon,
+    this.secondaryLabel,
+    this.trailingWidget,
+  });
+
+  final String title;
+  final IconData? leadingIcon;
+  final String? secondaryLabel;
+  final Widget? trailingWidget;
+
+  @override
+  Widget build(BuildContext context) {
+    final style = SBBHeaderBoxStyle.of(context);
+    final secondaryTextStyle = SBBTextStyles.smallLight.copyWith(color: style.secondaryLabelColor);
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  if (leadingIcon != null) ...[
+                    Icon(leadingIcon, size: sbbIconSizeSmall),
+                    SizedBox(width: sbbDefaultSpacing * .5)
+                  ],
+                  Expanded(child: Text(title, style: style.titleTextStyle)),
+                ],
+              ),
+              if (secondaryLabel != null) Text(secondaryLabel!, style: secondaryTextStyle)
+            ],
+          ),
+        ),
+        SizedBox(width: sbbDefaultSpacing * .5),
+        if (trailingWidget != null) trailingWidget!,
+      ],
+    );
+  }
+}
+
+class _LargeHeaderBoxContent extends StatelessWidget {
+  const _LargeHeaderBoxContent({
+    required this.title,
+    this.leadingIcon,
+    this.secondaryLabel,
+    this.trailingWidget,
+  });
+
+  final String title;
+  final IconData? leadingIcon;
+  final String? secondaryLabel;
+  final Widget? trailingWidget;
+
+  @override
+  Widget build(BuildContext context) {
+    final style = SBBHeaderBoxStyle.of(context);
+    final secondaryTextStyle = SBBTextStyles.mediumLight.copyWith(color: style.largeSecondaryLabelColor);
+
+    return Row(
+      children: [
+        if (leadingIcon != null) ...[
+          Icon(leadingIcon, size: sbbIconSizeMedium),
+          SizedBox(width: sbbDefaultSpacing * .5)
+        ],
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(title, style: style.titleTextStyle),
+              SizedBox(height: sbbDefaultSpacing * .25),
+              if (secondaryLabel != null) Text(secondaryLabel!, style: secondaryTextStyle)
+            ],
+          ),
+        ),
+        SizedBox(width: sbbDefaultSpacing * .5),
+        if (trailingWidget != null) trailingWidget!,
+      ],
     );
   }
 }

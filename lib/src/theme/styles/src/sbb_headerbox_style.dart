@@ -4,17 +4,26 @@ import '../../../../sbb_design_system_mobile.dart';
 
 class SBBHeaderBoxStyle extends ThemeExtension<SBBHeaderBoxStyle> {
   SBBHeaderBoxStyle({
+    this.titleTextStyle,
+    this.secondaryLabelColor,
+    this.largeSecondaryLabelColor,
     this.backgroundColor,
     this.flapBackgroundColor,
   });
 
   factory SBBHeaderBoxStyle.$default({required SBBBaseStyle baseStyle}) => SBBHeaderBoxStyle(
+        titleTextStyle: SBBTextStyles.mediumBold.copyWith(overflow: TextOverflow.ellipsis),
+        secondaryLabelColor: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
+        largeSecondaryLabelColor: baseStyle.defaultTextColor,
         backgroundColor: baseStyle.themeValue(SBBColors.white, SBBColors.charcoal),
         flapBackgroundColor: baseStyle.themeValue(SBBColors.cloud, SBBColors.midnight),
       );
 
   static SBBHeaderBoxStyle of(BuildContext context) => Theme.of(context).extension<SBBHeaderBoxStyle>()!;
 
+  final TextStyle? titleTextStyle;
+  final Color? secondaryLabelColor;
+  final Color? largeSecondaryLabelColor;
   final Color? backgroundColor;
   final Color? flapBackgroundColor;
 
