@@ -9,6 +9,8 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+## [2.2.0] - 2025-01-14
+
 ### Changed
 
 - changed behavior of the trailing widget and icon of the following widgets:
@@ -488,7 +490,9 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Initial project setup
 - Added some widgets
 
-[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/2.1.1...HEAD
+[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/2.2.0...HEAD
+
+[2.2.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/2.1.1...2.2.0
 
 [2.1.1]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/2.1.0...2.1.1
 
