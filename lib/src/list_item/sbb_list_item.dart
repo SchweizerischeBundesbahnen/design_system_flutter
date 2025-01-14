@@ -110,6 +110,9 @@ class _SBBListItemState extends State<SBBListItem> {
   Widget build(BuildContext context) {
     final style = SBBControlStyles.of(context).listItem!;
     final isEnabled = widget.enabled ?? widget.onPressed != null;
+    final wrapTitle = widget.titleMaxLines == null;
+    final wrapSubtitleTitle = widget.subtitleMaxLines == null;
+
     return MergeSemantics(
       child: Semantics(
         button: isEnabled,
@@ -166,7 +169,7 @@ class _SBBListItemState extends State<SBBListItem> {
                                             ? style.textStyle
                                             : style.textStyleDisabled,
                                         maxLines: widget.titleMaxLines,
-                                        overflow: TextOverflow.ellipsis,
+                                        overflow: wrapTitle ? TextOverflow.clip : TextOverflow.ellipsis,
                                       ),
                                     ),
                                   ],
@@ -183,7 +186,7 @@ class _SBBListItemState extends State<SBBListItem> {
                                         ? style.secondaryTextStyle
                                         : style.secondaryTextStyleDisabled,
                                     maxLines: widget.subtitleMaxLines,
-                                    overflow: TextOverflow.ellipsis,
+                                    overflow: wrapSubtitleTitle ? TextOverflow.clip : TextOverflow.ellipsis,
                                   ),
                                 )
                             ],
