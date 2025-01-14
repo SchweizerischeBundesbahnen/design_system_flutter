@@ -18,7 +18,7 @@ const _headerBoxFlapTopMargin = 8.0;
 /// Widget build(BuildContext context) {
 ///   return Stack(
 ///     children: [
-///       _AllTheContentWidget(),
+///       _PageContentWidget(),
 ///       SBBHeaderbox(
 ///         title: 'Awesome Headerbox'
 ///       ),
@@ -36,7 +36,10 @@ class SBBHeaderbox extends StatelessWidget {
   /// The required argument [title] will be ellipsed if too long. The [secondaryLabel] is the subtext
   /// displayed below and will wrap to multiple lines.
   ///
-  /// The trailing widget usually is an action button, e.g. a [SBBTertiaryButtonSmall] with a label and an icon.
+  /// The design guidelines specify an action button for the [trailingWidget],
+  /// i.e. a [SBBTertiaryButtonSmall] with a label and an icon.
+  ///
+  /// Use the [margin] to adjust space around the Headerbox - the default is horizontal margin of 8px.
   ///
   /// For a complete customization of the Headerbox, see the [SBBHeaderbox.custom] constructor.
   SBBHeaderbox({
@@ -64,7 +67,10 @@ class SBBHeaderbox extends StatelessWidget {
   /// The required argument [title] will be ellipsed if too long. The [secondaryLabel] is the subtext
   /// displayed below and will wrap to multiple lines.
   ///
-  /// The trailing widget usually is an action button, e.g. a [SBBIconButtonLarge].
+  /// The design guidelines specify an action button for the [trailingWidget],
+  /// i.e. a [SBBIconButtonLarge].
+  ///
+  /// Use the [margin] to adjust space around the Headerbox - the default is horizontal margin of 8px.
   ///
   /// For a complete customization of the Headerbox, see the [SBBHeaderbox.custom] constructor.
   SBBHeaderbox.large({
@@ -102,6 +108,8 @@ class SBBHeaderbox extends StatelessWidget {
   final EdgeInsets margin;
 
   final Widget child;
+
+  /// The space around [child].
   final EdgeInsets padding;
 
   /// The flap to display below the [SBBHeaderbox].
@@ -112,14 +120,14 @@ class SBBHeaderbox extends StatelessWidget {
     return Stack(
       children: [
         _HeaderBoxBackgroundBar(),
-        Padding(padding: margin, child: _HeaderBoxTop(padding: padding, flap: flap, child: child)),
+        Padding(padding: margin, child: _HeaderBoxForeground(padding: padding, flap: flap, child: child)),
       ],
     );
   }
 }
 
-class _HeaderBoxTop extends StatelessWidget {
-  const _HeaderBoxTop({
+class _HeaderBoxForeground extends StatelessWidget {
+  const _HeaderBoxForeground({
     required this.child,
     required this.padding,
     this.flap,

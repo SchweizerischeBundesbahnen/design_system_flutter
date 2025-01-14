@@ -93,10 +93,6 @@ class MyApp extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             _DemoEntry(
-                              'HeaderBox',
-                              HeaderBoxPage(),
-                            ),
-                            _DemoEntry(
                               'Icon',
                               IconPage(),
                             ),
@@ -223,6 +219,10 @@ class MyApp extends StatelessWidget {
                             _DemoEntry(
                               'Header',
                               HeaderPage(),
+                            ),
+                            _DemoEntry(
+                              'Headerbox',
+                              HeaderBoxPage(),
                             ),
                             _DemoEntry(
                               'Modal',

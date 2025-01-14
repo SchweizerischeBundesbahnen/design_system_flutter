@@ -36,17 +36,16 @@ class _HeaderBoxPageState extends State<HeaderBoxPage> {
     return Column(
       children: [
         Expanded(
-            child: PageView(
-          physics: NeverScrollableScrollPhysics(),
-          controller: _pageViewController,
-          children: <Widget>[
-            DesignGuidelinePage(),
-            StaticPage(),
-            Center(
-              child: Text('Third Page'),
-            ),
-          ],
-        )),
+          child: PageView(
+            physics: NeverScrollableScrollPhysics(),
+            controller: _pageViewController,
+            children: <Widget>[
+              DesignGuidelinePage(),
+              StaticPage(),
+              ScrollablePage(),
+            ],
+          ),
+        ),
         SBBTabBar(
           items: items,
           onTabChanged: (task) async {
@@ -75,6 +74,7 @@ class DesignGuidelinePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final sbbToast = SBBToast.of(context);
     return Column(
       children: [
         const SizedBox(height: sbbDefaultSpacing),
@@ -88,7 +88,11 @@ class DesignGuidelinePage extends StatelessWidget {
             leadingIcon: SBBIcons.sign_exclamation_point_small,
             trailingIcon: SBBIcons.circle_information_small_small,
           ),
-          trailingWidget: SBBTertiaryButtonSmall(label: 'Label', icon: SBBIcons.dog_small, onPressed: () {}),
+          trailingWidget: SBBTertiaryButtonSmall(
+            label: 'Label',
+            icon: SBBIcons.dog_small,
+            onPressed: () => sbbToast.show(message: 'Default pressed', bottom: sbbDefaultSpacing * 6),
+          ),
         ),
         const SizedBox(height: sbbDefaultSpacing),
         const SBBListHeader('Large'),
@@ -96,7 +100,10 @@ class DesignGuidelinePage extends StatelessWidget {
           title: 'Title',
           leadingIcon: SBBIcons.dog_medium,
           secondaryLabel: 'Subtext',
-          trailingWidget: SBBIconButtonLarge(icon: SBBIcons.dog_small, onPressed: () {}),
+          trailingWidget: SBBIconButtonLarge(
+            icon: SBBIcons.dog_small,
+            onPressed: () => sbbToast.show(message: 'Large pressed', bottom: sbbDefaultSpacing * 6),
+          ),
         ),
         const SizedBox(height: sbbDefaultSpacing),
         const SBBListHeader('Custom'),
@@ -168,8 +175,67 @@ class _StaticPageState extends State<StaticPage> {
     return Center(
       child: SBBMessage(
         title: 'Cover me!',
-        description: 'This screen is non scrollable.\nUsing a stack, the Headerbox will simply lay on top of it.',
+        description: 'This screen is non scrollable.\nUsing a Stack, the Headerbox will simply lay on top of it.',
       ),
+    );
+  }
+}
+
+class ScrollablePage extends StatefulWidget {
+  const ScrollablePage({super.key});
+
+  @override
+  State<ScrollablePage> createState() => _ScrollablePageState();
+}
+
+class _ScrollablePageState extends State<ScrollablePage> {
+  bool _headerBoxExpanded = false;
+  final _expandedHeight = 300.0;
+  final _collapsedHeight = 0.0;
+  @override
+  Widget build(BuildContext context) {
+    final sbbToast = SBBToast.of(context);
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    return CustomScrollView(
+      slivers: [
+        SBBSliverHeaderbox.custom(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Scrollable Screen', style: SBBTextStyles.mediumBold),
+                      Text(
+                        'Click to expand Headerbox.',
+                        style:
+                            SBBTextStyles.smallLight.copyWith(color: isDark ? SBBColors.graphite : SBBColors.granite),
+                      )
+                    ],
+                  ),
+                  SBBTertiaryButtonSmall(
+                      label: 'Expand', onPressed: () => setState(() => _headerBoxExpanded = !_headerBoxExpanded)),
+                ],
+              ),
+              AnimatedContainer(
+                curve: Curves.easeInOut,
+                height: _headerBoxExpanded ? _expandedHeight : _collapsedHeight,
+                duration: Durations.long4,
+              ),
+            ],
+          ),
+        ),
+        SliverList.builder(
+          itemCount: 60,
+          itemBuilder: (context, index) => SBBListItem(
+            title: 'Item $index',
+            onPressed: () => sbbToast.show(message: 'Pressed Item $index', bottom: sbbDefaultSpacing * 6),
+          ),
+        )
+      ],
     );
   }
 }
