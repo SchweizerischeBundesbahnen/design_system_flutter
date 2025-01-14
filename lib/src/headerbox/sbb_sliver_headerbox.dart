@@ -50,6 +50,7 @@ class SBBSliverHeaderbox extends SingleChildRenderObjectWidget {
     Widget? trailingWidget,
     SBBHeaderboxFlap? flap,
     EdgeInsets margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
+    String? semanticsLabel,
   }) : super(
           child: SBBHeaderbox(
             title: title,
@@ -58,6 +59,7 @@ class SBBSliverHeaderbox extends SingleChildRenderObjectWidget {
             trailingWidget: trailingWidget,
             margin: margin,
             flap: flap,
+            semanticsLabel: semanticsLabel,
           ),
         );
 
@@ -80,6 +82,7 @@ class SBBSliverHeaderbox extends SingleChildRenderObjectWidget {
     Widget? trailingWidget,
     SBBHeaderboxFlap? flap,
     EdgeInsets margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
+    String? semanticsLabel,
   }) : super(
           child: SBBHeaderbox.large(
             title: title,
@@ -88,6 +91,7 @@ class SBBSliverHeaderbox extends SingleChildRenderObjectWidget {
             trailingWidget: trailingWidget,
             margin: margin,
             flap: flap,
+            semanticsLabel: semanticsLabel,
           ),
         );
 
@@ -98,11 +102,13 @@ class SBBSliverHeaderbox extends SingleChildRenderObjectWidget {
     EdgeInsets margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
     EdgeInsets padding = const EdgeInsets.all(sbbDefaultSpacing),
     SBBHeaderboxFlap? flap,
+    String? semanticsLabel,
   }) : super(
           child: SBBHeaderbox.custom(
             margin: margin,
             padding: padding,
             flap: flap,
+            semanticsLabel: semanticsLabel,
             child: child,
           ),
         );

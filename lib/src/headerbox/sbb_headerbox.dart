@@ -50,6 +50,7 @@ class SBBHeaderbox extends StatelessWidget {
     Widget? trailingWidget,
     SBBHeaderboxFlap? flap,
     EdgeInsets margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
+    String? semanticsLabel,
   }) : this.custom(
           key: key,
           child: _DefaultHeaderBoxContent(
@@ -60,6 +61,7 @@ class SBBHeaderbox extends StatelessWidget {
           ),
           margin: margin,
           flap: flap,
+          semanticsLabel: semanticsLabel,
         );
 
   /// The large [SBBHeaderbox].
@@ -81,6 +83,7 @@ class SBBHeaderbox extends StatelessWidget {
     Widget? trailingWidget,
     SBBHeaderboxFlap? flap,
     EdgeInsets margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
+    String? semanticsLabel,
   }) : this.custom(
           key: key,
           flap: flap,
@@ -91,15 +94,17 @@ class SBBHeaderbox extends StatelessWidget {
             secondaryLabel: secondaryLabel,
             trailingWidget: trailingWidget,
           ),
+          semanticsLabel: semanticsLabel,
         );
 
   /// Allows complete customization of the [SBBHeaderbox].
   const SBBHeaderbox.custom({
     super.key,
-    this.margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
     required this.child,
+    this.margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
     this.padding = const EdgeInsets.all(sbbDefaultSpacing),
     this.flap,
+    this.semanticsLabel,
   });
 
   /// The margin around the [SBBHeaderbox].
@@ -115,12 +120,27 @@ class SBBHeaderbox extends StatelessWidget {
   /// The flap to display below the [SBBHeaderbox].
   final SBBHeaderboxFlap? flap;
 
+  /// The semantic label for the Headerbox that will be announced by screen readers.
+  ///
+  /// This is announced by assistive technologies (e.g TalkBack/VoiceOver).
+  ///
+  /// This label does not show in the UI.
+  final String? semanticsLabel;
+
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         _HeaderBoxBackgroundBar(),
-        Padding(padding: margin, child: _HeaderBoxForeground(padding: padding, flap: flap, child: child)),
+        Padding(
+          padding: margin,
+          child: _HeaderBoxForeground(
+            padding: padding,
+            flap: flap,
+            semanticsLabel: semanticsLabel,
+            child: child,
+          ),
+        ),
       ],
     );
   }
@@ -130,16 +150,24 @@ class _HeaderBoxForeground extends StatelessWidget {
   const _HeaderBoxForeground({
     required this.child,
     required this.padding,
+    this.semanticsLabel,
     this.flap,
   });
 
   final EdgeInsets padding;
   final Widget child;
+  final String? semanticsLabel;
   final Widget? flap;
 
   @override
   Widget build(BuildContext context) {
-    return flap != null ? _flappedHeaderBox(context) : _headerBox(context);
+    return MergeSemantics(
+      child: Semantics(
+        header: true,
+        label: semanticsLabel,
+        child: flap != null ? _flappedHeaderBox(context) : _headerBox(context),
+      ),
+    );
   }
 
   Widget _flappedHeaderBox(BuildContext context) {
