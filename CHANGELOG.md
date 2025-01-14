@@ -13,12 +13,14 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 - corrected layout of `SBBCheckbox`
 - changed the behavior of the `SBBCheckboxListItem` trailing widget and icon
+- updated the SBB Icons version to 1.2.0
 
 ### Added
 
 - added `isLoading` to `SBBCheckboxListItem` for an animated bottom loading indicator
 - added `boxed` variant of the `SBBCheckboxListItem` via redirecting constructor
 - added `semanticLabel` and `checkboxSemanticLabel` to the `SBBCheckbox` and `SBBCheckboxListItem` respectively
+- added the `SBBIconsIndex` allowing String to IconData mapping
 
 ### Fixed
 
