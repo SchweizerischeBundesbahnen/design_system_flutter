@@ -32,8 +32,7 @@ Future<void> main() async {
   final icons = responseJson['icons'] as List<dynamic>;
   final total = icons
       .cast<Map<String, dynamic>>()
-      .where((e) =>
-          (e['tags'] as List).cast<String>().any((t) => t.contains('Size=')))
+      .where((e) => (e['tags'] as List).cast<String>().any((t) => t.contains('Size=')))
       .length;
   progress = FillingBar(total: total + 4, width: 10, desc: 'Downloading icons');
 
@@ -76,20 +75,16 @@ Uri makeUrlUri(String path) {
 Future<void> prepareIcons(String type, List<dynamic> icons) async {
   final filter = icons.where((e) => e['tags'].contains('Size=$type'));
   final dir = await Directory('icons/$type-tmp').create(recursive: true);
-  final downloads = <Future<void>>[];
   for (final icon in filter) {
     final name = icon['name'];
     final fileName = '$name.svg';
     final svgUri = makeUrlUri(fileName);
-    final download = downloadSvg(
+    await downloadSvg(
       svgUri,
       fileName.replaceAll('-', '_'),
       dir.path,
     );
-    downloads.add(download);
   }
-
-  await Future.wait(downloads);
 }
 
 Future<void> downloadSvg(Uri uri, String fileName, String path) async {
@@ -104,8 +99,7 @@ Future<void> createFlutterFontMap() async {
   final small = await getMap('small');
   final medium = await getMap('medium');
   final large = await getMap('large');
-  mapFont(String name, String value) =>
-      sb.writeln('  static const $name = $value;');
+  mapFont(String name, String value) => sb.writeln('  static const $name = $value;');
 
   sb.writeln('library sbb_icons;');
   sb.writeln();
@@ -129,8 +123,7 @@ Future<void> createFlutterFontMap() async {
 
   await File('icons/sbb_icons.dart').writeAsString(sb.toString());
 
-  mapFont2(String name) =>
-      sb.writeln('    {\'icon\': SBBIcons.$name, \'name\': \'$name\'},');
+  mapFont2(String name) => sb.writeln('    {\'icon\': SBBIcons.$name, \'name\': \'$name\'},');
 
   sb.clear();
   sb.writeln('import \'package:sbb_design_system_mobile/sbb_design_system_mobile.dart\';');

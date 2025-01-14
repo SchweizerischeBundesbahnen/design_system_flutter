@@ -5,12 +5,12 @@ import '../../sbb_design_system_mobile.dart';
 /// The SBB Radio Button.
 /// Use according to [documentation](https://digital.sbb.ch/de/design-system/mobile/components/radiobutton/).
 ///
-/// Consider using [SBBRadioButtonListItem] instead of this Widget.
+/// Consider using [SBBRadioListItem] instead of this Widget.
 ///
 /// Used to select between a number of mutually exclusive values. When one radio
 /// button in a group is selected, the other radio buttons in the group cease to
 /// be selected. The values are of type `T`, the type parameter of the
-/// [SBBRadioButton] class. Enums are commonly used for this purpose.
+/// [SBBRadio] class. Enums are commonly used for this purpose.
 ///
 /// The radio button itself does not maintain any state. Instead, selecting the
 /// radio invokes the [onChanged] callback, passing [value] as a parameter. If
@@ -20,14 +20,13 @@ import '../../sbb_design_system_mobile.dart';
 ///
 /// See also:
 ///
-/// * [SBBRadioButtonListItem], which builds this widget as a part of a List
+/// * [SBBRadioListItem], which builds this widget as a part of a List
 /// Item so that you can give the checkbox a label, a leading icon and a
 /// trailing Widget.
 /// * [SBBSegmentedButton], a widget with semantics similar to [SBBRadio].
 /// * [SBBSlider], for selecting a value in a range.
 /// * [SBBCheckbox] and [SBBSwitch], for toggling a particular value on or off.
-@Deprecated('Use SBBRadio instead.')
-class SBBRadioButton<T> extends StatelessWidget {
+class SBBRadio<T> extends StatelessWidget {
   /// Creates a SBB Radio Button.
   ///
   /// The radio button itself does not maintain any state. Instead, when the
@@ -44,8 +43,7 @@ class SBBRadioButton<T> extends StatelessWidget {
   ///
   ///
   /// The [padding] enlarges the hittable area for the radio button.
-  @Deprecated('Use SBBRadio instead.')
-  const SBBRadioButton({
+  const SBBRadio({
     super.key,
     required this.value,
     required this.groupValue,
@@ -101,15 +99,58 @@ class SBBRadioButton<T> extends StatelessWidget {
   /// This label does not show in the UI.
   final String? semanticLabel;
 
+  bool get _selected => value == groupValue;
+
+  static const _outerCircleSize = 20.0;
+  static const _innerCircleSize = 8.0;
+
   @override
   Widget build(BuildContext context) {
-    return SBBRadio(
-      key: key,
-      value: value,
-      groupValue: groupValue,
-      onChanged: onChanged,
-      padding: padding,
-      semanticLabel: semanticLabel,
+    final style = SBBControlStyles.of(context).radioButton;
+    final enabled = onChanged != null;
+    return Material(
+      color: SBBColors.transparent,
+      child: Semantics(
+        label: semanticLabel,
+        selected: _selected,
+        child: InkWell(
+          splashFactory: InkRipple.splashFactory,
+          customBorder: const CircleBorder(),
+          splashColor: style?.basic?.backgroundColorHighlighted,
+          focusColor: style?.basic?.backgroundColorHighlighted,
+          highlightColor: SBBColors.transparent,
+          hoverColor: SBBColors.transparent,
+          onTap: enabled ? () => onChanged?.call(value) : null,
+          child: Center(
+            child: Container(
+              height: _outerCircleSize,
+              width: _outerCircleSize,
+              margin: padding ?? const EdgeInsets.all(sbbDefaultSpacing / 2),
+              decoration: BoxDecoration(
+                color: enabled ? style?.basic?.backgroundColor : style?.basic?.backgroundColorDisabled,
+                shape: BoxShape.circle,
+                border: Border.fromBorderSide(
+                  BorderSide(
+                    color: (enabled ? style?.basic?.borderColor : style?.basic?.borderColorDisabled)!,
+                  ),
+                ),
+              ),
+              child: Center(
+                child: AnimatedContainer(
+                  duration: kThemeAnimationDuration,
+                  curve: Curves.easeInOut,
+                  height: _selected ? _innerCircleSize : 0,
+                  width: _selected ? _innerCircleSize : 0,
+                  decoration: BoxDecoration(
+                    color: enabled ? style?.color : style?.colorDisabled,
+                    shape: BoxShape.circle,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }

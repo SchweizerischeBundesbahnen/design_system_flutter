@@ -33,7 +33,7 @@ const _kCheckboxRadius = _kInnerEdgeLength / 3.0;
 /// so that you can give the checkbox a label, a leading icon and a trailing
 /// Widget.
 /// * [SBBSwitch], a widget with semantics similar to [SBBCheckbox].
-/// * [SBBRadioButton], for selecting among a set of explicit values.
+/// * [SBBRadio], for selecting among a set of explicit values.
 /// * [SBBSegmentedButton], for selecting among a set of explicit values.
 /// * [SBBSlider], for selecting a value in a range.
 /// * <https://digital.sbb.ch/de/design-system/mobile/components/checkbox/>
