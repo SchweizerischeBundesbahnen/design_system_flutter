@@ -76,7 +76,8 @@ class _SwitchPageState extends State<SwitchPage> {
         SBBGroup(
           child: SBBSwitchListItem(
             value: _value4,
-            title: 'Label',
+            title: 'Very Looooooooooooooooooooooong Multiline Label With Subtitle',
+            allowMultilineLabel: true,
             subtitle: 'Subtitle',
             onChanged: (value) => setState(() => _value4 = value),
             isLastElement: true,
@@ -168,7 +169,7 @@ class _SwitchPageState extends State<SwitchPage> {
         SBBGroup(
           child: SBBSwitchListItem(
             value: _value9,
-            title: 'Only Link disabled',
+            title: 'All disabled',
             onChanged: null,
             links: [
               SBBSwitchListItemLink(

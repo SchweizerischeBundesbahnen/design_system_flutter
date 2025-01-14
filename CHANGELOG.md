@@ -24,6 +24,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 - correct color usage of the `SBBCheckboxListItem`
 - simplified `SBBPagination` and added animation
+- `allowMultilineLabel` of `SBBSwitchListItem` is respected
 
 ## [2.1.1] - 2024-12-14
 
