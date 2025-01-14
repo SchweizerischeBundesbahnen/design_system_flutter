@@ -19,6 +19,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - added `isLoading` to `SBBCheckboxListItem` for an animated bottom loading indicator
 - added `boxed` variant of the `SBBCheckboxListItem` via redirecting constructor
 - added `semanticLabel` and `checkboxSemanticLabel` to the `SBBCheckbox` and `SBBCheckboxListItem` respectively
+- added `boxed` variant of the `SBBSwitchListItem` via redirecting constructor
 
 ### Fixed
 

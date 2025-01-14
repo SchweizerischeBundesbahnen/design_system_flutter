@@ -68,6 +68,53 @@ class SBBSwitchListItem extends StatelessWidget {
               .toList(),
         );
 
+  /// Use this in combination with a [SBBGroup] to create a boxed variant of the [SBBSwitchListItem].
+  ///
+  /// ```dart
+  /// SBBGroup(
+  ///   child: SBBSwitchListItem(
+  ///     value: _throwShotAway,
+  ///     onChanged: (bool newValue) {
+  ///       setState(() {
+  ///         _throwShotAway = newValue;
+  ///       });
+  ///     },
+  ///     title: 'Example',
+  ///   )
+  /// )
+  ///
+  /// ```
+  ///
+  SBBSwitchListItem.boxed({
+    Key? key,
+    IconData? leadingIcon,
+    required String title,
+    String? subtitle,
+    bool allowMultilineLabel = false,
+    required bool value,
+    required ValueChanged<bool>? onChanged,
+    List<SBBSwitchListItemLink>? links,
+  }) : this.custom(
+          key: key,
+          leadingIcon: leadingIcon,
+          title: title,
+          subtitle: subtitle,
+          allowMultilineLabel: allowMultilineLabel,
+          isLastElement: true,
+          value: value,
+          onChanged: onChanged,
+          linksWidgets: links
+              ?.map(
+                (linkItem) => SBBListItem(
+                  title: linkItem.text,
+                  onPressed: linkItem.onPressed,
+                  isLastElement: true,
+                  trailingIcon: SBBIcons.chevron_small_right_small,
+                ),
+              )
+              .toList(),
+        );
+
   /// Allows complete customization of the [SBBSwitchListItem].
   const SBBSwitchListItem.custom({
     super.key,
@@ -140,9 +187,7 @@ class SBBSwitchListItem extends StatelessWidget {
             ),
             if (linksWidgets != null && linksWidgets!.isNotEmpty)
               ...linksWidgets!.expand((element) => [
-                    const Divider(
-                      indent: sbbDefaultSpacing,
-                    ),
+                    const Divider(),
                     element,
                   ]),
             if (!isLastElement) const Divider(),

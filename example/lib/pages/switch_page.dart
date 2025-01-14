@@ -34,7 +34,7 @@ class _SwitchPageState extends State<SwitchPage> {
         const ThemeModeSegmentedButton(),
         const SizedBox(height: sbbDefaultSpacing),
         const SBBListHeader('Switch'),
-        SBBGroup(
+        Padding(
           padding: const EdgeInsets.all(sbbDefaultSpacing),
           child: Row(
             children: [
@@ -53,57 +53,41 @@ class _SwitchPageState extends State<SwitchPage> {
           ),
         ),
         const SizedBox(height: sbbDefaultSpacing),
-        const SBBListHeader('SwitchListItem'),
-        SBBGroup(
-          child: SBBSwitchListItem(
-            value: _value2,
-            title: 'Default',
-            onChanged: (value) => setState(() => _value2 = value),
-            isLastElement: true,
-          ),
-        ),
-        const SizedBox(height: sbbDefaultSpacing),
-        SBBGroup(
-          child: SBBSwitchListItem(
-            value: _value3,
-            title: 'Icon',
-            leadingIcon: SBBIcons.dog_small,
-            onChanged: (value) => setState(() => _value3 = value),
-            isLastElement: true,
-          ),
-        ),
-        const SizedBox(height: sbbDefaultSpacing),
-        SBBGroup(
-          child: SBBSwitchListItem(
-            value: _value4,
-            title: 'Very Looooooooooooooooooooooong Multiline Label With Subtitle',
-            allowMultilineLabel: true,
-            subtitle: 'Subtitle',
-            onChanged: (value) => setState(() => _value4 = value),
-            isLastElement: true,
-          ),
-        ),
-        const SizedBox(height: sbbDefaultSpacing),
-        SBBGroup(
-          child: SBBSwitchListItem(
-            value: _value5,
-            title: 'With Link',
-            onChanged: (value) => setState(() => _value5 = value),
-            links: [
-              SBBSwitchListItemLink(
-                text: 'Link Text',
-                onPressed: () => sbbToast.show(
-                  message: 'Link',
-                ),
-              )
-            ],
-            isLastElement: true,
-          ),
-        ),
-        const SizedBox(height: sbbDefaultSpacing),
+        const SBBListHeader('SwitchItem - List'),
         SBBGroup(
           child: Column(
             children: [
+              SBBSwitchListItem(
+                value: _value2,
+                title: 'Default',
+                onChanged: (value) => setState(() => _value2 = value),
+              ),
+              SBBSwitchListItem(
+                value: _value3,
+                title: 'Icon',
+                leadingIcon: SBBIcons.dog_small,
+                onChanged: (value) => setState(() => _value3 = value),
+              ),
+              SBBSwitchListItem(
+                value: _value4,
+                title: 'Very Looooooooooooooooooooooong Multiline Label With Subtitle',
+                allowMultilineLabel: true,
+                subtitle: 'Subtitle',
+                onChanged: (value) => setState(() => _value4 = value),
+              ),
+              SBBSwitchListItem(
+                value: _value5,
+                title: 'With Link',
+                onChanged: (value) => setState(() => _value5 = value),
+                links: [
+                  SBBSwitchListItemLink(
+                    text: 'Link Text',
+                    onPressed: () => sbbToast.show(
+                      message: 'Link',
+                    ),
+                  )
+                ],
+              ),
               SBBSwitchListItem(
                 value: _value6,
                 title: 'With 3 Links',
@@ -128,14 +112,136 @@ class _SwitchPageState extends State<SwitchPage> {
                     ),
                   ),
                 ],
-                isLastElement: true,
+              ),
+              SBBSwitchListItem(
+                value: _value7,
+                title: 'Disabled, Link enabled',
+                onChanged: null,
+                links: [
+                  SBBSwitchListItemLink(
+                    text: 'Link still enabled',
+                    onPressed: () => sbbToast.show(
+                      message: 'Link still enabled',
+                    ),
+                  )
+                ],
+              ),
+              SBBSwitchListItem(
+                value: _value8,
+                title: 'Only Link disabled',
+                onChanged: (value) => setState(() => _value8 = value),
+                links: [
+                  SBBSwitchListItemLink(
+                    text: 'Link disabled',
+                    onPressed: null,
+                  ),
+                ],
+              ),
+              SBBSwitchListItem(
+                value: _value9,
+                title: 'All disabled',
+                onChanged: null,
+                links: [
+                  SBBSwitchListItemLink(
+                    text: 'Link disabled',
+                    onPressed: null,
+                  ),
+                ],
+              ),
+              SBBSwitchListItem.custom(
+                value: _value10,
+                title: 'Custom LinkWidget',
+                onChanged: (value) => setState(() => _value10 = value),
+                linksWidgets: [
+                  SBBCheckboxListItem(
+                    value: _listItemValue,
+                    label: 'Text',
+                    allowMultilineLabel: true,
+                    secondaryLabel:
+                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla.',
+                    isLastElement: true,
+                    onChanged: (value) => setState(() => _listItemValue = value),
+                  )
+                ],
               ),
             ],
           ),
         ),
-        const SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: sbbDefaultSpacing * 2),
+        const SBBListHeader('SwitchItem - Boxed'),
         SBBGroup(
-          child: SBBSwitchListItem(
+          child: SBBSwitchListItem.boxed(
+            value: _value2,
+            title: 'Default',
+            onChanged: (value) => setState(() => _value2 = value),
+          ),
+        ),
+        const SizedBox(height: sbbDefaultSpacing * .5),
+        SBBGroup(
+          child: SBBSwitchListItem.boxed(
+            value: _value3,
+            title: 'Icon',
+            leadingIcon: SBBIcons.dog_small,
+            onChanged: (value) => setState(() => _value3 = value),
+          ),
+        ),
+        const SizedBox(height: sbbDefaultSpacing * .5),
+        SBBGroup(
+          child: SBBSwitchListItem.boxed(
+            value: _value4,
+            title: 'Very Looooooooooooooooooooooong Multiline Label With Subtitle',
+            allowMultilineLabel: true,
+            subtitle: 'Subtitle',
+            onChanged: (value) => setState(() => _value4 = value),
+          ),
+        ),
+        const SizedBox(height: sbbDefaultSpacing * .5),
+        SBBGroup(
+          child: SBBSwitchListItem.boxed(
+            value: _value5,
+            title: 'With Link',
+            onChanged: (value) => setState(() => _value5 = value),
+            links: [
+              SBBSwitchListItemLink(
+                text: 'Link Text',
+                onPressed: () => sbbToast.show(
+                  message: 'Link',
+                ),
+              )
+            ],
+          ),
+        ),
+        const SizedBox(height: sbbDefaultSpacing * .5),
+        SBBGroup(
+          child: SBBSwitchListItem.boxed(
+            value: _value6,
+            title: 'With 3 Links',
+            onChanged: (value) => setState(() => _value6 = value),
+            links: [
+              SBBSwitchListItemLink(
+                text: 'Link Text 1',
+                onPressed: () => sbbToast.show(
+                  message: 'Link 1',
+                ),
+              ),
+              SBBSwitchListItemLink(
+                text: 'Link Text 2',
+                onPressed: () => sbbToast.show(
+                  message: 'Link 2',
+                ),
+              ),
+              SBBSwitchListItemLink(
+                text: 'Link Text 3',
+                onPressed: () => sbbToast.show(
+                  message: 'Link 3',
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: sbbDefaultSpacing * .5),
+        SBBGroup(
+          child: SBBSwitchListItem.boxed(
             value: _value7,
             title: 'Disabled, Link enabled',
             onChanged: null,
@@ -147,12 +253,11 @@ class _SwitchPageState extends State<SwitchPage> {
                 ),
               )
             ],
-            isLastElement: true,
           ),
         ),
-        const SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: sbbDefaultSpacing * .5),
         SBBGroup(
-          child: SBBSwitchListItem(
+          child: SBBSwitchListItem.boxed(
             value: _value8,
             title: 'Only Link disabled',
             onChanged: (value) => setState(() => _value8 = value),
@@ -162,12 +267,11 @@ class _SwitchPageState extends State<SwitchPage> {
                 onPressed: null,
               ),
             ],
-            isLastElement: true,
           ),
         ),
-        const SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: sbbDefaultSpacing * .5),
         SBBGroup(
-          child: SBBSwitchListItem(
+          child: SBBSwitchListItem.boxed(
             value: _value9,
             title: 'All disabled',
             onChanged: null,
@@ -177,10 +281,9 @@ class _SwitchPageState extends State<SwitchPage> {
                 onPressed: null,
               ),
             ],
-            isLastElement: true,
           ),
         ),
-        const SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: sbbDefaultSpacing * .5),
         SBBGroup(
           child: SBBSwitchListItem.custom(
             value: _value10,
