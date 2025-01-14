@@ -23,10 +23,12 @@ It is expected that you keep this format strictly, since we depend on it in our 
   - `SBBCheckboxListItem`
   - `SBBRadioButtonListItem`
   - `SBBRadioListItem`
+  - `SBBSwitchListItem`
 - added `boxed` variant via redirecting constructor to these widgets:
   - `SBBCheckboxListItem`
   - `SBBRadioButtonListItem`
   - `SBBRadioListItem`
+  - `SBBSwitchListItem`
 - added Semantics to the following widgets:
   - `SBBCheckboxListItem`
   - `SBBRadioButtonListItem`
@@ -38,6 +40,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 - correct layout of `SBBCheckbox`
 - correct color usage of the `SBBCheckboxListItem`
+- `allowMultilineLabel` of `SBBSwitchListItem` is respected
 
 ### Deprecated
 
