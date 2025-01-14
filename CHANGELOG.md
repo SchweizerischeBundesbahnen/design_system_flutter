@@ -14,24 +14,33 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - changed behavior of the trailing widget and icon of the following widgets:
   - `SBBCheckboxListItem`
   - `SBBRadioButtonListItem`
+  - `SBBRadioListItem`
 
 ### Added
 
 - added an animated bottom loading indicator with a `isLoading` parameter to these widgets:
   - `SBBCheckboxListItem`
   - `SBBRadioButtonListItem`
+  - `SBBRadioListItem`
 - added `boxed` variant via redirecting constructor to these widgets:
   - `SBBCheckboxListItem`
   - `SBBRadioButtonListItem`
+  - `SBBRadioListItem`
 - added Semantics to the following widgets:
   - `SBBCheckboxListItem`
   - `SBBRadioButtonListItem`
+  - `SBBRadioListItem`
 - added animation to `SBBPagination`
 
 ### Fixed
 
 - correct layout of `SBBCheckbox`
 - correct color usage of the `SBBCheckboxListItem`
+
+### Deprecated
+
+- Deprecated `SBBRadioButton` in favor of `SBBRadio`
+- Deprecated `SBBRadioButtonListItem` in favor of `SBBRadioListItem`
 
 ## [2.1.1] - 2024-12-14
 
