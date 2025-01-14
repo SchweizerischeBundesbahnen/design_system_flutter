@@ -39,17 +39,17 @@ class RadioTest extends StatelessWidget {
             padding: const EdgeInsets.all(sbbDefaultSpacing * .5),
             child: Row(
               children: [
-                SBBRadioButton<int>(
+                SBBRadio<int>(
                   groupValue: groupValue,
                   onChanged: (newValue) {},
                   value: 1,
                 ),
-                SBBRadioButton<int>(
+                SBBRadio<int>(
                   groupValue: groupValue,
                   onChanged: null,
                   value: 2,
                 ),
-                SBBRadioButton<int>(
+                SBBRadio<int>(
                   groupValue: groupValue,
                   onChanged: (newValue) {},
                   value: 2,
@@ -62,13 +62,13 @@ class RadioTest extends StatelessWidget {
           SBBGroup(
             child: Column(
               children: [
-                SBBRadioButtonListItem<int>(
+                SBBRadioListItem<int>(
                   value: 1,
                   groupValue: listItemGroupValue,
                   onChanged: (newValue) {},
                   label: 'Label',
                 ),
-                SBBRadioButtonListItem<int>(
+                SBBRadioListItem<int>(
                   value: 2,
                   groupValue: listItemGroupValue,
                   onChanged: (newValue) {},
@@ -76,7 +76,7 @@ class RadioTest extends StatelessWidget {
                   trailingIcon: SBBIcons.circle_information_small_small,
                   onCallToAction: () {},
                 ),
-                SBBRadioButtonListItem<int>(
+                SBBRadioListItem<int>(
                   value: 3,
                   groupValue: listItemGroupValue,
                   onChanged: (newValue) {},
@@ -85,7 +85,7 @@ class RadioTest extends StatelessWidget {
                   trailingIcon: SBBIcons.circle_information_small_small,
                   onCallToAction: () {},
                 ),
-                SBBRadioButtonListItem<int>(
+                SBBRadioListItem<int>(
                   value: 4,
                   groupValue: listItemGroupValue,
                   onChanged: null,
@@ -94,14 +94,14 @@ class RadioTest extends StatelessWidget {
                   trailingIcon: SBBIcons.circle_information_small_small,
                   onCallToAction: () {},
                 ),
-                SBBRadioButtonListItem<int>(
+                SBBRadioListItem<int>(
                   value: 5,
                   groupValue: listItemGroupValue,
                   onChanged: (newValue) {},
                   label: 'Leading Icon',
                   leadingIcon: SBBIcons.alarm_clock_small,
                 ),
-                SBBRadioButtonListItem<int>(
+                SBBRadioListItem<int>(
                   value: 6,
                   groupValue: listItemGroupValue,
                   onChanged: (newValue) {},
@@ -109,7 +109,7 @@ class RadioTest extends StatelessWidget {
                   leadingIcon: SBBIcons.alarm_clock_small,
                   trailingIcon: SBBIcons.circle_information_small_small,
                 ),
-                SBBRadioButtonListItem<int>(
+                SBBRadioListItem<int>(
                   value: 7,
                   groupValue: listItemGroupValue,
                   onChanged: null,
@@ -117,7 +117,7 @@ class RadioTest extends StatelessWidget {
                   leadingIcon: SBBIcons.alarm_clock_small,
                   trailingIcon: SBBIcons.circle_information_small_small,
                 ),
-                SBBRadioButtonListItem<int>.custom(
+                SBBRadioListItem<int>.custom(
                   value: 8,
                   groupValue: listItemGroupValue,
                   onChanged: (newValue) {},
@@ -130,7 +130,7 @@ class RadioTest extends StatelessWidget {
                     child: Text('CHF 0.99'),
                   ),
                 ),
-                SBBRadioButtonListItem<int>(
+                SBBRadioListItem<int>(
                   value: 9,
                   groupValue: listItemGroupValue,
                   onChanged: (newValue) {},
@@ -149,7 +149,7 @@ class RadioTest extends StatelessWidget {
             // and remove SizedBoxes below
             children: [
               SBBGroup(
-                child: SBBRadioButtonListItem<int>.boxed(
+                child: SBBRadioListItem<int>.boxed(
                   value: 1,
                   groupValue: listItemGroupValue,
                   onChanged: (newValue) {},
@@ -158,7 +158,7 @@ class RadioTest extends StatelessWidget {
               ),
               SizedBox(height: sbbDefaultSpacing * .5),
               SBBGroup(
-                child: SBBRadioButtonListItem<int>.boxed(
+                child: SBBRadioListItem<int>.boxed(
                   value: 2,
                   groupValue: listItemGroupValue,
                   onChanged: (newValue) {},
@@ -169,7 +169,7 @@ class RadioTest extends StatelessWidget {
               ),
               SizedBox(height: sbbDefaultSpacing * .5),
               SBBGroup(
-                child: SBBRadioButtonListItem<int>.boxed(
+                child: SBBRadioListItem<int>.boxed(
                   value: 3,
                   groupValue: listItemGroupValue,
                   onChanged: (newValue) {},
@@ -180,7 +180,7 @@ class RadioTest extends StatelessWidget {
               ),
               SizedBox(height: sbbDefaultSpacing * .5),
               SBBGroup(
-                child: SBBRadioButtonListItem<int>.custom(
+                child: SBBRadioListItem<int>.custom(
                   value: 4,
                   groupValue: listItemGroupValue,
                   onChanged: (newValue) {},

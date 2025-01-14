@@ -23,7 +23,7 @@ import '../../sbb_design_system_mobile.dart';
 /// * [SBBRadioButtonListItem], which builds this widget as a part of a List
 /// Item so that you can give the checkbox a label, a leading icon and a
 /// trailing Widget.
-/// * [SBBSegmentedButton], a widget with semantics similar to [SBBRadioButton].
+/// * [SBBSegmentedButton], a widget with semantics similar to [SBBRadio].
 /// * [SBBSlider], for selecting a value in a range.
 /// * [SBBCheckbox] and [SBBSwitch], for toggling a particular value on or off.
 @Deprecated('Use SBBRadio instead.')
@@ -91,10 +91,10 @@ class SBBRadioButton<T> extends StatelessWidget {
   /// ```
   final ValueChanged<T?>? onChanged;
 
-  /// Enlarges the hittable area around the [SBBRadioButton].
+  /// Enlarges the hittable area around the [SBBRadio].
   final EdgeInsetsGeometry? padding;
 
-  /// The semantic label for the [SBBRadioButton] that will be announced by screen readers.
+  /// The semantic label for the [SBBRadio] that will be announced by screen readers.
   ///
   /// This is announced by assistive technologies (e.g TalkBack/VoiceOver).
   ///

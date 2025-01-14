@@ -12,15 +12,15 @@ const double _minListTileHeight = 44.0;
 ///
 /// See also:
 ///
-/// * [SBBRadioButton], which is a part of this widget.
-/// * [SBBSegmentedButton], a widget with semantics similar to [SBBRadioButton].
+/// * [SBBRadio], which is a part of this widget.
+/// * [SBBSegmentedButton], a widget with semantics similar to [SBBRadio].
 /// * [SBBSlider], for selecting a value in a range.
 /// * [SBBCheckboxListItem], [SBBCheckbox] and [SBBSwitch], for toggling a
 /// particular value on or off.
 /// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/radiobutton>
 @Deprecated('Use SBBRadioListItem instead')
 class SBBRadioButtonListItem<T> extends StatelessWidget {
-  /// Creates a combination of a tile and a [SBBRadioButton].
+  /// Creates a combination of a tile and a [SBBRadio].
   ///
   /// The [SBBRadioButtonListItem] itself does not maintain any state. Instead, when the
   /// state of the checkbox changes, the widget calls the [onChanged] callback.

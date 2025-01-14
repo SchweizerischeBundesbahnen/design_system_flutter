@@ -14,7 +14,7 @@ const double _minListTileHeight = 44.0;
 ///
 /// * [SBBCheckbox], which is a part of this widget.
 /// * [SBBSwitch], a widget with semantics similar to [SBBCheckbox].
-/// * [SBBRadioButtonListItem] and [SBBRadioButton], for selecting among a set
+/// * [SBBRadioListItem] and [SBBRadio], for selecting among a set
 /// of explicit values.
 /// * [SBBSlider], for selecting a value in a range.
 /// * <https://digital.sbb.ch/de/design-system/mobile/components/checkbox/>

@@ -10,7 +10,7 @@ part 'sbb_segmented_button.typedefs.dart';
 ///
 /// See also:
 ///
-/// * [SBBRadioButtonListItem] and [SBBRadioButton], a widget with semantics
+/// * [SBBRadioListItem] and [SBBRadio], a widget with semantics
 /// similar to [SBBSegmentedButton].
 /// * [SBBSlider], for selecting a value in a range.
 /// * [SBBCheckboxListItem], [SBBCheckbox] and [SBBSwitch], for toggling a
@@ -147,7 +147,7 @@ class SBBSegmentedButton extends StatefulWidget {
     required this.selectedStateIndex,
     required this.selectedIndexChanged,
     this.styleSelector,
-  })  : assert(widgetBuilders.length > 1);
+  }) : assert(widgetBuilders.length > 1);
 
   final List<SegmentedButtonWidgetBuilder> widgetBuilders;
   final int selectedStateIndex;
@@ -163,11 +163,9 @@ class SegmentedButtonState extends State<SBBSegmentedButton> {
 
   late SBBSegmentedButtonStyle? style;
 
-  Color get borderColor =>
-      style?.defaultStyle?.borderColor ?? SBBColors.transparent;
+  Color get borderColor => style?.defaultStyle?.borderColor ?? SBBColors.transparent;
 
-  Color get selectedBorderColor =>
-      style?.selectedStyle?.borderColor ?? SBBColors.transparent;
+  Color get selectedBorderColor => style?.selectedStyle?.borderColor ?? SBBColors.transparent;
 
   @override
   void didChangeDependencies() {
@@ -201,9 +199,7 @@ class SegmentedButtonState extends State<SBBSegmentedButton> {
               customBorder: const RoundedRectangleBorder(
                 borderRadius: _borderRadius,
               ),
-              onTap: i != widget.selectedStateIndex
-                  ? () => widget.selectedIndexChanged(i)
-                  : null,
+              onTap: i != widget.selectedStateIndex ? () => widget.selectedIndexChanged(i) : null,
             ),
           ),
         ),
@@ -235,9 +231,7 @@ class SegmentedButtonState extends State<SBBSegmentedButton> {
               AnimatedContainer(
                 duration: kThemeAnimationDuration,
                 curve: Curves.easeInOut,
-                width: constraints.maxWidth /
-                    widget.widgetBuilders.length *
-                    widget.selectedStateIndex,
+                width: constraints.maxWidth / widget.widgetBuilders.length * widget.selectedStateIndex,
               ),
               Container(
                 width: constraints.maxWidth / widget.widgetBuilders.length,
