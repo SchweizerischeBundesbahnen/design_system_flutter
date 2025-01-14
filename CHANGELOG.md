@@ -15,6 +15,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
   - `SBBCheckboxListItem`
   - `SBBRadioButtonListItem`
   - `SBBRadioListItem`
+- updated the SBB Icons version to 1.2.0
 
 ### Added
 
@@ -31,6 +32,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
   - `SBBRadioButtonListItem`
   - `SBBRadioListItem`
 - added animation to `SBBPagination`
+- added the `SBBIconsIndex` allowing String to IconData mapping
 
 ### Fixed
 

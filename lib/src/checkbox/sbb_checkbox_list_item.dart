@@ -252,29 +252,27 @@ class SBBCheckboxListItem extends StatelessWidget {
     return MergeSemantics(
       child: Material(
         color: resolvedBackgroundColor,
-        child: Column(children: [
-          Stack(
-            alignment: AlignmentDirectional.bottomStart,
-            children: [
-              ConstrainedBox(
-                constraints: const BoxConstraints(minHeight: _minListTileHeight),
-                child: InkWell(
-                  onTap: _isInteractive ? _handleTap : null,
-                  splashColor: style?.listItem?.backgroundColorHighlighted,
-                  focusColor: style?.listItem?.backgroundColorHighlighted,
-                  highlightColor: SBBColors.transparent,
-                  hoverColor: SBBColors.transparent,
-                  child: Semantics(
-                    enabled: _isInteractive,
-                    child: _checkboxBody(style),
-                  ),
+        child: Stack(
+          alignment: AlignmentDirectional.bottomStart,
+          children: [
+            ConstrainedBox(
+              constraints: const BoxConstraints(minHeight: _minListTileHeight),
+              child: InkWell(
+                onTap: _isInteractive ? _handleTap : null,
+                splashColor: style?.listItem?.backgroundColorHighlighted,
+                focusColor: style?.listItem?.backgroundColorHighlighted,
+                highlightColor: SBBColors.transparent,
+                hoverColor: SBBColors.transparent,
+                child: Semantics(
+                  enabled: _isInteractive,
+                  child: _checkboxBody(style),
                 ),
               ),
-              if (isLoading) BottomLoadingIndicator()
-            ],
-          ),
-          if (!isLastElement) const Divider(),
-        ]),
+            ),
+            if (!isLastElement) const Divider(),
+            if (isLoading) BottomLoadingIndicator()
+          ],
+        ),
       ),
     );
   }

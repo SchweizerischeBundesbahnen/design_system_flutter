@@ -2,7 +2,6 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
 
 import '../native_app.dart';
-import '../sbb_icons_index.dart';
 
 class IconPage extends StatelessWidget {
   @override

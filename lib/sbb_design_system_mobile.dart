@@ -48,6 +48,7 @@ export 'src/text/sbb_text_field.dart';
 export 'src/text/sbb_text_form_field.dart';
 export 'src/theme/sbb_colors.dart';
 export 'src/theme/sbb_icons/sbb_icons.dart';
+export 'src/theme/sbb_icons/sbb_icons_index.dart';
 export 'src/theme/sbb_theme.dart';
 export 'src/theme/sbb_typography.dart';
 export 'src/theme/styles/sbb_styles.dart';
