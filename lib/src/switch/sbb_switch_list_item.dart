@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/src/checkbox/bottom_loading_indicator.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
@@ -47,6 +48,7 @@ class SBBSwitchListItem extends StatelessWidget {
     required bool value,
     required ValueChanged<bool>? onChanged,
     List<SBBSwitchListItemLink>? links,
+    bool isLoading = false,
   }) : this.custom(
           key: key,
           leadingIcon: leadingIcon,
@@ -56,6 +58,7 @@ class SBBSwitchListItem extends StatelessWidget {
           isLastElement: isLastElement,
           value: value,
           onChanged: onChanged,
+          isLoading: isLoading,
           linksWidgets: links
               ?.map(
                 (linkItem) => SBBListItem(
@@ -94,6 +97,7 @@ class SBBSwitchListItem extends StatelessWidget {
     required bool value,
     required ValueChanged<bool>? onChanged,
     List<SBBSwitchListItemLink>? links,
+    bool isLoading = false,
   }) : this.custom(
           key: key,
           leadingIcon: leadingIcon,
@@ -103,6 +107,7 @@ class SBBSwitchListItem extends StatelessWidget {
           isLastElement: true,
           value: value,
           onChanged: onChanged,
+          isLoading: isLoading,
           linksWidgets: links
               ?.map(
                 (linkItem) => SBBListItem(
@@ -126,6 +131,7 @@ class SBBSwitchListItem extends StatelessWidget {
     this.isLastElement = true,
     this.leadingIcon,
     this.linksWidgets,
+    this.isLoading = false,
   });
 
   /// Whether this switch is on or off.
@@ -138,7 +144,7 @@ class SBBSwitchListItem extends StatelessWidget {
   /// value.
   final ValueChanged<bool>? onChanged;
 
-  /// The primary text displayed on the [SBBListItem].
+  /// The primary text displayed on the [SBBSwitchListItem].
   final String title;
 
   /// Whether the primary text can stretch over multiple lines.
@@ -153,8 +159,11 @@ class SBBSwitchListItem extends StatelessWidget {
   /// The icon displayed left of the [title].
   final IconData? leadingIcon;
 
-  /// The widgets displayed below the primary [SBBListItem].
+  /// The widgets displayed below the primary [SBBSwitchListItem].
   final List<Widget>? linksWidgets;
+
+  /// Whether to display a BottomLoadingIndicator on the [SBBSwitchListItem].
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
@@ -164,33 +173,39 @@ class SBBSwitchListItem extends StatelessWidget {
       color: style?.backgroundColor,
       child: ConstrainedBox(
         constraints: const BoxConstraints(minHeight: 44.0),
-        child: Column(
+        child: Stack(
+          alignment: Alignment.bottomCenter,
           children: [
-            SBBListItem.custom(
-              leadingIcon: leadingIcon,
-              title: title,
-              titleMaxLines: allowMultilineLabel ? null : 1,
-              subtitle: subtitle,
-              subtitleMaxLines: null,
-              onPressed: enabled ? () => onChanged?.call(!value) : null,
-              isLastElement: true,
-              trailingWidget: Padding(
-                padding: const EdgeInsets.only(
-                  left: sbbDefaultSpacing * 0.5,
-                  right: sbbDefaultSpacing,
+            Column(
+              children: [
+                SBBListItem.custom(
+                  leadingIcon: leadingIcon,
+                  title: title,
+                  titleMaxLines: allowMultilineLabel ? null : 1,
+                  subtitle: subtitle,
+                  subtitleMaxLines: null,
+                  onPressed: enabled ? () => onChanged?.call(!value) : null,
+                  isLastElement: true,
+                  trailingWidget: Padding(
+                    padding: const EdgeInsets.only(
+                      left: sbbDefaultSpacing * 0.5,
+                      right: sbbDefaultSpacing,
+                    ),
+                    child: SBBSwitch(
+                      value: value,
+                      onChanged: onChanged,
+                    ),
+                  ),
                 ),
-                child: SBBSwitch(
-                  value: value,
-                  onChanged: onChanged,
-                ),
-              ),
+                if (linksWidgets != null && linksWidgets!.isNotEmpty)
+                  ...linksWidgets!.expand((element) => [
+                        const Divider(),
+                        element,
+                      ]),
+              ],
             ),
-            if (linksWidgets != null && linksWidgets!.isNotEmpty)
-              ...linksWidgets!.expand((element) => [
-                    const Divider(),
-                    element,
-                  ]),
             if (!isLastElement) const Divider(),
+            if (isLoading) const BottomLoadingIndicator(),
           ],
         ),
       ),

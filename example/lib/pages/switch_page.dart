@@ -22,6 +22,7 @@ class _SwitchPageState extends State<SwitchPage> {
   bool _value8 = false;
   bool _value9 = false;
   bool _value10 = false;
+  bool _value11 = false;
 
   bool? _listItemValue = false;
 
@@ -159,10 +160,17 @@ class _SwitchPageState extends State<SwitchPage> {
                     allowMultilineLabel: true,
                     secondaryLabel:
                         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla.',
-                    isLastElement: true,
                     onChanged: (value) => setState(() => _listItemValue = value),
                   )
                 ],
+              ),
+              SBBSwitchListItem(
+                value: _value11,
+                title: 'Loading',
+                subtitle: 'This will stop loading if selected',
+                onChanged: (value) => setState(() => _value11 = value),
+                isLastElement: true,
+                isLoading: !_value11,
               ),
             ],
           ),
@@ -301,6 +309,17 @@ class _SwitchPageState extends State<SwitchPage> {
               )
             ],
             isLastElement: true,
+          ),
+        ),
+        const SizedBox(height: sbbDefaultSpacing * .5),
+        SBBGroup(
+          child: SBBSwitchListItem(
+            value: _value11,
+            title: 'Loading',
+            subtitle: 'This will not stop.',
+            onChanged: (value) => setState(() => _value11 = value),
+            isLastElement: true,
+            isLoading: true,
           ),
         ),
       ],
