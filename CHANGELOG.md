@@ -11,21 +11,38 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ### Changed
 
-- corrected layout of `SBBCheckbox`
-- changed the behavior of the `SBBCheckboxListItem` trailing widget and icon
+- changed behavior of the trailing widget and icon of the following widgets:
+  - `SBBCheckboxListItem`
+  - `SBBRadioButtonListItem`
+  - `SBBRadioListItem`
 - updated the SBB Icons version to 1.2.0
 
 ### Added
 
-- added `isLoading` to `SBBCheckboxListItem` for an animated bottom loading indicator
-- added `boxed` variant of the `SBBCheckboxListItem` via redirecting constructor
-- added `semanticLabel` and `checkboxSemanticLabel` to the `SBBCheckbox` and `SBBCheckboxListItem` respectively
+- added an animated bottom loading indicator with a `isLoading` parameter to these widgets:
+  - `SBBCheckboxListItem`
+  - `SBBRadioButtonListItem`
+  - `SBBRadioListItem`
+- added `boxed` variant via redirecting constructor to these widgets:
+  - `SBBCheckboxListItem`
+  - `SBBRadioButtonListItem`
+  - `SBBRadioListItem`
+- added Semantics to the following widgets:
+  - `SBBCheckboxListItem`
+  - `SBBRadioButtonListItem`
+  - `SBBRadioListItem`
+- added animation to `SBBPagination`
 - added the `SBBIconsIndex` allowing String to IconData mapping
 
 ### Fixed
 
+- correct layout of `SBBCheckbox`
 - correct color usage of the `SBBCheckboxListItem`
-- simplified `SBBPagination` and added animation
+
+### Deprecated
+
+- Deprecated `SBBRadioButton` in favor of `SBBRadio`
+- Deprecated `SBBRadioButtonListItem` in favor of `SBBRadioListItem`
 
 ## [2.1.1] - 2024-12-14
 
