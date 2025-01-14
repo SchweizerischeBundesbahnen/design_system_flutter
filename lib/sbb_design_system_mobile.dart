@@ -10,6 +10,7 @@ export 'src/checkbox/checkbox.dart';
 export 'src/chip/sbb_chip.dart';
 export 'src/group/sbb_group.dart';
 export 'src/header/sbb_header.dart';
+export 'src/headerbox/headerbox.dart';
 export 'src/input_trigger/sbb_input_trigger.dart';
 export 'src/link/sbb_link_text.dart';
 export 'src/list_header/sbb_list_header.dart';

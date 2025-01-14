@@ -19,6 +19,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ### Added
 
+- added the `SBBHeaderBox` and `SBBSliverHeaderbox`
 - added an animated bottom loading indicator with a `isLoading` parameter to these widgets:
   - `SBBCheckboxListItem`
   - `SBBRadioButtonListItem`
