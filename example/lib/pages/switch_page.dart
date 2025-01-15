@@ -18,9 +18,9 @@ class _SwitchPageState extends State<SwitchPage> {
   bool _value4 = false;
   bool _value5 = false;
   bool _value6 = false;
-  bool _value7 = false;
+  final bool _value7 = false;
   bool _value8 = false;
-  bool _value9 = false;
+  final bool _value9 = false;
   bool _value10 = false;
   bool _value11 = false;
 

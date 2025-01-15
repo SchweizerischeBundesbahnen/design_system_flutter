@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/src/checkbox/bottom_loading_indicator.dart';
 
 import '../../sbb_design_system_mobile.dart';
+import '../shared/bottom_loading_indicator.dart';
 
 /// The SBB Switch List Item.
 /// Use according to [documentation](https://digital.sbb.ch/en/design-system/mobile/components/switch/)
@@ -10,7 +10,7 @@ import '../../sbb_design_system_mobile.dart';
 ///
 /// * [SBBSwitch], which is a part of this widget.
 /// * [SBBListItem], a widget with semantics similar to [SBBSwitchListItem].
-/// * [SBBRadioButton], for selecting among a set of explicit values.
+/// * [SBBRadio], for selecting among a set of explicit values.
 /// * [SBBSegmentedButton], for selecting among a set of explicit values.
 /// * [SBBSlider], for selecting a value in a range.
 ///

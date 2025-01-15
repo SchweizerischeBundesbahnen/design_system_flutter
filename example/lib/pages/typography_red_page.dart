@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import '../native_app.dart';
 
 class TypographyRedPage extends StatelessWidget {
+  const TypographyRedPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     final textTheme = SBBBaseStyle.of(context).redTextTheme;

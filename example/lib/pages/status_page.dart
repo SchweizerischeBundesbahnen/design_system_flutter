@@ -6,6 +6,8 @@ import '../native_app.dart';
 const String text = 'Lorem ipsum sit dolor';
 
 class StatusPage extends StatelessWidget {
+  const StatusPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ListView(

@@ -8,6 +8,8 @@ const text =
     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magn…';
 
 class NotificationBoxPage extends StatefulWidget {
+  const NotificationBoxPage({super.key});
+
   @override
   State<NotificationBoxPage> createState() => _NotificationBoxPage();
 }

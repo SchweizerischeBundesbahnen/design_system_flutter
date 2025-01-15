@@ -2,11 +2,13 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
 
 class AutocompletionPage extends StatefulWidget {
+  const AutocompletionPage({super.key});
+
   @override
-  _AutocompletionPageState createState() => _AutocompletionPageState();
+  AutocompletionPageState createState() => AutocompletionPageState();
 }
 
-class _AutocompletionPageState extends State<AutocompletionPage> {
+class AutocompletionPageState extends State<AutocompletionPage> {
   final List<String> _favorites = ['123', '234', '345'];
 
   late final SBBAutocompletion<String> _autocompletion;

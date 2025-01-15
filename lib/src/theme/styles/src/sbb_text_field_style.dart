@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../sbb_styles.dart';
+import '../../theme.dart';
 
 class SBBTextFieldStyle {
   SBBTextFieldStyle({
@@ -112,7 +112,8 @@ class SBBTextFieldStyle {
         textStyleError: TextStyle.lerp(textStyleError, other?.textStyleError, t),
         labelTextStyle: TextStyle.lerp(labelTextStyle, other?.labelTextStyle, t),
         placeholderTextStyle: TextStyle.lerp(placeholderTextStyle, other?.placeholderTextStyle, t),
-        placeholderTextStyleDisabled: TextStyle.lerp(placeholderTextStyleDisabled, other?.placeholderTextStyleDisabled, t),
+        placeholderTextStyleDisabled:
+            TextStyle.lerp(placeholderTextStyleDisabled, other?.placeholderTextStyleDisabled, t),
         errorTextStyle: TextStyle.lerp(errorTextStyle, other?.errorTextStyle, t),
         dividerColor: Color.lerp(dividerColor, other?.dividerColor, t),
         dividerColorHighlighted: Color.lerp(dividerColorHighlighted, other?.dividerColorHighlighted, t),

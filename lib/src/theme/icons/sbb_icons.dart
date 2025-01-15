@@ -1,5 +1,3 @@
-library sbb_icons;
-
 import 'package:flutter/material.dart';
 
 const sbbIconSizeSmall = 24.0;

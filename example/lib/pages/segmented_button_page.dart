@@ -4,11 +4,13 @@ import 'package:flutter/widgets.dart';
 import '../native_app.dart';
 
 class SegmentedButtonPage extends StatefulWidget {
+  const SegmentedButtonPage({super.key});
+
   @override
-  _SegmentedButtonPageState createState() => _SegmentedButtonPageState();
+  SegmentedButtonPageState createState() => SegmentedButtonPageState();
 }
 
-class _SegmentedButtonPageState extends State<SegmentedButtonPage> {
+class SegmentedButtonPageState extends State<SegmentedButtonPage> {
   int _selectedStateIndex1 = 0;
   int _selectedStateIndex2 = 0;
   int _selectedStateIndex3 = 0;
@@ -19,7 +21,7 @@ class _SegmentedButtonPageState extends State<SegmentedButtonPage> {
     return ListView(
       children: <Widget>[
         const Padding(
-          padding: const EdgeInsets.all(sbbDefaultSpacing),
+          padding: EdgeInsets.all(sbbDefaultSpacing),
           child: ThemeModeSegmentedButton(),
         ),
         const SBBListHeader('Default (colors based on theme)'),

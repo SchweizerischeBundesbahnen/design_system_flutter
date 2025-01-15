@@ -2,6 +2,8 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
 
 class StepperPage extends StatefulWidget {
+  const StepperPage({super.key});
+
   @override
   State<StepperPage> createState() => _StepperPageState();
 }

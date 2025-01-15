@@ -151,8 +151,7 @@ class SBBIconButtonSmallBorderless extends StatelessWidget {
   }
 }
 
-/// Base widget for [SBBIconButtonSmall], [SBBIconButtonSmallNegative] and
-/// [SBBIconButtonSmallBorderless].
+/// Base widget for [SBBIconButtonSmall] and [SBBIconButtonSmallNegative].
 class _SBBIconButtonSmallRaw extends StatelessWidget {
   const _SBBIconButtonSmallRaw({
     super.key,

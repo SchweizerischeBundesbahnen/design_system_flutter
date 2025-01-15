@@ -75,9 +75,8 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
 
   static const _disabledItemOpacity = 0.35;
 
-  List<double> get _visibleItemHeights => _visibleItemHeightAdjustments
-      .map((adjustment) => _itemHeight + adjustment)
-      .toList();
+  List<double> get _visibleItemHeights =>
+      _visibleItemHeightAdjustments.map((adjustment) => _itemHeight + adjustment).toList();
 
   double get _listPaddingHeight => _visibleCenterItemIndex * _itemHeight;
 
@@ -240,8 +239,8 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
       valueListenable: _firstVisibleItemIndexValueNotifier,
       builder: (_, int firstVisibleItemIndex, placeholderItem) {
         // check if item visible
-        final itemVisible = itemIndex >= firstVisibleItemIndex &&
-            itemIndex <= firstVisibleItemIndex + _visibleItemCount;
+        final itemVisible =
+            itemIndex >= firstVisibleItemIndex && itemIndex <= firstVisibleItemIndex + _visibleItemCount;
         if (!itemVisible) {
           // return placeholder item for out of sight items
           return placeholderItem!;
@@ -298,8 +297,7 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
 
   void _onScrolling() {
     final offset = _controller.offset;
-    final firstVisibleItemIndex =
-        _controller._offsetToIndex(offset).floor() - _visibleCenterItemIndex;
+    final firstVisibleItemIndex = _controller._offsetToIndex(offset).floor() - _visibleCenterItemIndex;
     var selectedItemIndex = _controller.selectedItem;
 
     // make sure calculated index is within list range

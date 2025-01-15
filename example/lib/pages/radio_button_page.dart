@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import '../native_app.dart';
 
 class RadiobuttonPage extends StatefulWidget {
+  const RadiobuttonPage({super.key});
+
   @override
-  _RadiobuttonPageState createState() => _RadiobuttonPageState();
+  RadiobuttonPageState createState() => RadiobuttonPageState();
 }
 
-class _RadiobuttonPageState extends State<RadiobuttonPage> {
+class RadiobuttonPageState extends State<RadiobuttonPage> {
   int? _groupValue = 1;
   int? _listItemGroupValue;
 

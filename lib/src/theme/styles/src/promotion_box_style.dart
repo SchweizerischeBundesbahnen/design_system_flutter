@@ -1,4 +1,8 @@
-part of 'promotion_box.dart';
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
+
+import '../../theme.dart';
 
 class PromotionBoxStyle {
   const PromotionBoxStyle({
@@ -57,14 +61,11 @@ class PromotionBoxStyle {
   ) {
     return PromotionBoxStyle(
       borderColor: Color.lerp($this?.borderColor, other?.borderColor, t),
-      badgeShadowColor:
-          Color.lerp($this?.badgeShadowColor, other?.badgeShadowColor, t),
+      badgeShadowColor: Color.lerp($this?.badgeShadowColor, other?.badgeShadowColor, t),
       badgeColor: Color.lerp($this?.badgeColor, other?.badgeColor, t),
-      badgeTextStyle:
-          TextStyle.lerp($this?.badgeTextStyle, other?.badgeTextStyle, t),
+      badgeTextStyle: TextStyle.lerp($this?.badgeTextStyle, other?.badgeTextStyle, t),
       gradientColors: other?.gradientColors,
-      textureOpacity:
-          lerpDouble($this?.textureOpacity, other?.textureOpacity, t),
+      textureOpacity: lerpDouble($this?.textureOpacity, other?.textureOpacity, t),
     );
   }
 }

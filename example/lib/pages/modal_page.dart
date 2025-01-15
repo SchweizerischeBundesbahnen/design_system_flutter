@@ -4,12 +4,14 @@ import 'package:flutter/material.dart';
 import '../native_app.dart';
 
 class ModalPage extends StatelessWidget {
+  const ModalPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
         const Padding(
-          padding: const EdgeInsets.all(sbbDefaultSpacing),
+          padding: EdgeInsets.all(sbbDefaultSpacing),
           child: ThemeModeSegmentedButton(),
         ),
         SBBTertiaryButtonLarge(

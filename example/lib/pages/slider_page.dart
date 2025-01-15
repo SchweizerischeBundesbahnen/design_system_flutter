@@ -6,14 +6,16 @@ import '../native_app.dart';
 const _sliderMaxValue = 100.0;
 
 class SliderPage extends StatefulWidget {
+  const SliderPage({super.key});
+
   @override
-  State<SliderPage> createState() => _SliderPageState();
+  State<SliderPage> createState() => SliderPageState();
 }
 
-class _SliderPageState extends State<SliderPage> {
+class SliderPageState extends State<SliderPage> {
   double _defaultSliderValue = 50.0;
   double _iconlessSliderValue = 50.0;
-  double _disabledSliderValue = 50.0;
+  final double _disabledSliderValue = 50.0;
 
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
@@ -7,8 +5,6 @@ import '../shared/close_button.dart';
 import 'promotion_badge.dart';
 
 part 'promotion_box.assets.dart';
-
-part 'promotion_box.style.dart';
 
 class SBBPromotionBox extends StatefulWidget {
   const SBBPromotionBox({
@@ -36,8 +32,7 @@ class SBBPromotionBox extends StatefulWidget {
   State<SBBPromotionBox> createState() => _SBBPromotionBoxState();
 }
 
-class _SBBPromotionBoxState extends State<SBBPromotionBox>
-    with SingleTickerProviderStateMixin {
+class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProviderStateMixin {
   final _badgeKey = GlobalKey();
   late final CloseableBoxController _controller = CloseableBoxController(this);
 
@@ -174,8 +169,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox>
                                   style: textTheme.titleMedium,
                                 ),
                               ),
-                              if (widget.isCloseable)
-                                const SizedBox(width: sbbIconSizeSmall),
+                              if (widget.isCloseable) const SizedBox(width: sbbIconSizeSmall),
                               const SizedBox(width: 8.0),
                             ],
                           ),

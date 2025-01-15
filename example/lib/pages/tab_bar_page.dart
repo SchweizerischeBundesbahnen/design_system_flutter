@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import '../native_app.dart';
 
 class TabBarPage extends StatefulWidget {
+  const TabBarPage({super.key});
+
   @override
-  State<TabBarPage> createState() => _TabBarPageState();
+  State<TabBarPage> createState() => TabBarPageState();
 }
 
-class _TabBarPageState extends State<TabBarPage> {
+class TabBarPageState extends State<TabBarPage> {
   final items = <TabBarItem>[
     _DemoItem('1', SBBIcons.train_small),
     _DemoItem('2', SBBIcons.station_small),
@@ -26,7 +28,7 @@ class _TabBarPageState extends State<TabBarPage> {
     return Column(
       children: [
         const Padding(
-          padding: const EdgeInsets.all(sbbDefaultSpacing),
+          padding: EdgeInsets.all(sbbDefaultSpacing),
           child: ThemeModeSegmentedButton(),
         ),
         Expanded(child: Container()),
@@ -52,7 +54,7 @@ class _TabBarPageState extends State<TabBarPage> {
 }
 
 class _DemoItem extends TabBarItem {
-  _DemoItem(String id, IconData icon) : super(id, icon);
+  _DemoItem(super.id, super.icon);
 
   @override
   String translate(BuildContext context) => 'Item $id';

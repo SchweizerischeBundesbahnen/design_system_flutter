@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import '../native_app.dart';
 
 class ButtonPage extends StatelessWidget {
+  const ButtonPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     final sbbToast = SBBToast.of(context);
-    final style = SBBBaseStyle.of(context);
     return SingleChildScrollView(
       padding: const EdgeInsets.all(sbbDefaultSpacing),
       child: Column(
@@ -70,7 +71,7 @@ class ButtonPage extends StatelessWidget {
           const SBBListHeader('Tertiary Button Large'),
           SBBGroup(
             padding: const EdgeInsets.all(sbbDefaultSpacing),
-            child: Container(
+            child: SizedBox(
               width: double.infinity,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -121,7 +122,7 @@ class ButtonPage extends StatelessWidget {
           const SBBListHeader('Tertiary Button Small'),
           SBBGroup(
             padding: const EdgeInsets.all(sbbDefaultSpacing),
-            child: Container(
+            child: SizedBox(
               width: double.infinity,
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
