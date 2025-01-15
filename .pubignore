@@ -112,3 +112,6 @@ example/.metadata
 
 # failed golden tests
 test/failures
+
+# font tool
+tool/font_scripts/**
