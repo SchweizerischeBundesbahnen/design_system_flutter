@@ -105,7 +105,7 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
     required this.logoTooltip,
     this.actions,
     this.blockSemantics,
-  })  : assert(actions == null || onPressedLogo == null);
+  }) : assert(actions == null || onPressedLogo == null);
 
   final String title;
   final Widget? leadingWidget;
@@ -208,8 +208,7 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
                   excluding: onPressedLogo == null,
                   child: Container(
                     alignment: Alignment.centerRight,
-                    padding:
-                        const EdgeInsets.only(right: sbbDefaultSpacing / 2),
+                    padding: const EdgeInsets.only(right: sbbDefaultSpacing / 2),
                     height: kToolbarHeight,
                     width: customLeadingWidth ? leadingWidth : kToolbarHeight,
                     child: IconButton(

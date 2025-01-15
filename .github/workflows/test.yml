@@ -36,6 +36,9 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      - name: Format check
+        run: dart format -l 120 -o none --set-exit-if-changed .
+
       - name: Run Flutter test
         id: test
         run: flutter test

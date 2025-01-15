@@ -37,9 +37,7 @@ class SBBDatePicker extends StatefulWidget {
         minimumDate = _minimumDate(minimumDate),
         maximumDate = _maximumDate(maximumDate) {
     assert(
-      this.minimumDate == null ||
-          this.maximumDate == null ||
-          this.minimumDate!.isBefore(this.maximumDate!),
+      this.minimumDate == null || this.maximumDate == null || this.minimumDate!.isBefore(this.maximumDate!),
       'minimum date (${this.minimumDate}) is not before maximum date (${this.maximumDate})',
     );
   }
@@ -169,17 +167,9 @@ class _SBBDatePickerState extends _TimeBasedPickerState<SBBDatePicker> {
   late double _dayItemTextWidth;
   late double _yearItemTextWidth;
 
-  double get _dayItemWidth =>
-      _widgetHorizontalPadding +
-      _itemPadding +
-      _dayItemTextWidth +
-      _itemPadding;
+  double get _dayItemWidth => _widgetHorizontalPadding + _itemPadding + _dayItemTextWidth + _itemPadding;
 
-  double get _yearItemWidth =>
-      _itemPadding +
-      _yearItemTextWidth +
-      _itemPadding +
-      _widgetHorizontalPadding;
+  double get _yearItemWidth => _itemPadding + _yearItemTextWidth + _itemPadding + _widgetHorizontalPadding;
 
   double get _dayItemTextMinWidth => _textSize('33.').width;
 
@@ -335,9 +325,7 @@ class _SBBDatePickerState extends _TimeBasedPickerState<SBBDatePicker> {
     final itemDate = selectedMonthYear.copyWith(day: itemDay);
     final minDate = widget.minimumDate;
     // set max date to last valid day in month if current day value too high
-    final maxDate = dayOverflow
-        ? selectedMonthYear.copyWith(day: daysInMonth)
-        : widget.maximumDate;
+    final maxDate = dayOverflow ? selectedMonthYear.copyWith(day: daysInMonth) : widget.maximumDate;
     final isEnabled = itemDate.isInRange(minDate, maxDate);
     final label = '$itemDay.';
 
@@ -410,9 +398,7 @@ class _SBBDatePickerState extends _TimeBasedPickerState<SBBDatePicker> {
   }
 
   void _onScrollingStateChanged() {
-    if (_yearController.isScrolling() ||
-        _monthController.isScrolling() ||
-        _dayController.isScrolling()) {
+    if (_yearController.isScrolling() || _monthController.isScrolling() || _dayController.isScrolling()) {
       // do nothing if any controller still scrolling
       return;
     }
@@ -531,17 +517,13 @@ class _SBBDatePickerState extends _TimeBasedPickerState<SBBDatePicker> {
     // check if items text width needs to be reduced
     if (widthOverflow > 0) {
       // calculate items text widths based on width overflow
-      final dayItemFlexibleWidth =
-          _dayItemTextDefaultWidth - _dayItemTextMinWidth;
-      final yearItemFlexibleWidth =
-          _yearItemTextDefaultWidth - _yearItemTextMinWidth;
+      final dayItemFlexibleWidth = _dayItemTextDefaultWidth - _dayItemTextMinWidth;
+      final yearItemFlexibleWidth = _yearItemTextDefaultWidth - _yearItemTextMinWidth;
       final flexibleWidths = dayItemFlexibleWidth + yearItemFlexibleWidth;
       final widthReductions = min(flexibleWidths, widthOverflow);
       final widthReductionRatio = widthReductions / flexibleWidths;
-      final dayItemReducedWidth =
-          _dayItemTextDefaultWidth - dayItemFlexibleWidth * widthReductionRatio;
-      final yearItemReducedWidth = _yearItemTextDefaultWidth -
-          yearItemFlexibleWidth * widthReductionRatio;
+      final dayItemReducedWidth = _dayItemTextDefaultWidth - dayItemFlexibleWidth * widthReductionRatio;
+      final yearItemReducedWidth = _yearItemTextDefaultWidth - yearItemFlexibleWidth * widthReductionRatio;
 
       // set reduced item text widths
       _dayItemTextWidth = dayItemReducedWidth;

@@ -185,11 +185,7 @@ class _SBBTimePickerTimeState extends _TimeBasedPickerState<SBBTimePicker> {
 
   TimeOfDay get _safeMaxTime => widget.maximumTime ?? _endOfDay;
 
-  double get _timeItemWidth =>
-      _itemPadding +
-      _timeItemTextWidth +
-      _itemPadding +
-      _widgetHorizontalPadding;
+  double get _timeItemWidth => _itemPadding + _timeItemTextWidth + _itemPadding + _widgetHorizontalPadding;
 
   @override
   void initState() {
@@ -440,9 +436,7 @@ class _SBBTimePickerTimeState extends _TimeBasedPickerState<SBBTimePicker> {
   }
 
   double _availableTimeItemTextWidths(double widgetWidth) {
-    return widgetWidth -
-        _widgetHorizontalPadding * 2 -
-        _itemPadding * _horizontalPaddingCount;
+    return widgetWidth - _widgetHorizontalPadding * 2 - _itemPadding * _horizontalPaddingCount;
   }
 
   int _indexToMinute(int minuteIndex) {
