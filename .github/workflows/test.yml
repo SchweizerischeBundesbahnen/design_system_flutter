@@ -48,6 +48,9 @@ jobs:
           path: test/failures/
           retention-days: 3
 
+      - name: Check publishable to pub.dev
+        run: flutter pub publish --dry-run
+
   changelog-test:
     runs-on: ubuntu-latest
     steps:
