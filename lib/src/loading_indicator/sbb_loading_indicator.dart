@@ -122,7 +122,7 @@ class SBBLoadingIndicator extends StatelessWidget {
 
 class LoadingAnimation extends StatefulWidget {
   const LoadingAnimation({
-    super.key, 
+    super.key,
     required this.squareWidth,
     required this.squareHeight,
     required this.squareSpacing,
@@ -138,8 +138,7 @@ class LoadingAnimation extends StatefulWidget {
   LoadingAnimationState createState() => LoadingAnimationState();
 }
 
-class LoadingAnimationState extends State<LoadingAnimation>
-    with SingleTickerProviderStateMixin {
+class LoadingAnimationState extends State<LoadingAnimation> with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _loadingSquareOne;
   late Animation<double> _loadingSquareTwo;
@@ -185,8 +184,7 @@ class LoadingAnimationState extends State<LoadingAnimation>
         curve: Curves.linear,
       ),
     );
-    _container =
-        Tween<Offset>(begin: Offset.zero, end: const Offset(-0.2, 0.0)).animate(
+    _container = Tween<Offset>(begin: Offset.zero, end: const Offset(-0.2, 0.0)).animate(
       CurvedAnimation(
         parent: _animationController,
         curve: Curves.linear,

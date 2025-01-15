@@ -8,7 +8,6 @@ void main() {
   testWidgets('secondary_button', (WidgetTester tester) async {
     final widget = Padding(
       padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing / 2),
-
       child: Column(
         children: [
           const SizedBox(height: sbbDefaultSpacing),

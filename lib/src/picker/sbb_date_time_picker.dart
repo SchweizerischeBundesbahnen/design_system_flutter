@@ -408,9 +408,7 @@ class _SBBDateTimePickerState extends _TimeBasedPickerState<SBBDateTimePicker> {
   }
 
   void _onScrollingStateChanged() {
-    if (_dateController.isScrolling() ||
-        _hourController.isScrolling() ||
-        _minuteController.isScrolling()) {
+    if (_dateController.isScrolling() || _hourController.isScrolling() || _minuteController.isScrolling()) {
       // do nothing if any controller still scrolling
       return;
     }

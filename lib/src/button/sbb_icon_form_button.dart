@@ -35,9 +35,7 @@ class SBBIconFormButton extends StatelessWidget {
       shape: SBBTheme.allStates(const RoundedRectangleBorder()),
     );
     return TextButton(
-      style: SBBButtonStyles.of(context)
-          .iconFormStyle
-          ?.overrideButtonStyle(baseStyle),
+      style: SBBButtonStyles.of(context).iconFormStyle?.overrideButtonStyle(baseStyle),
       onPressed: onPressed,
       focusNode: focusNode,
       child: Icon(icon, size: sbbIconSizeSmall),

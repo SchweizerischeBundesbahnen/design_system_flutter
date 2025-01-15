@@ -59,9 +59,7 @@ class SBBLinkTextState extends State<SBBLinkText> {
     final plainTextSections = widget.text.split(combinedPattern);
     final linkSections = combinedPattern.allMatches(widget.text).toList();
     final List<TextSpan> inlineSpans = [];
-    for (var i = 0;
-        i < math.max(plainTextSections.length, linkSections.length);
-        i++) {
+    for (var i = 0; i < math.max(plainTextSections.length, linkSections.length); i++) {
       if (i < plainTextSections.length) {
         inlineSpans.add(
           TextSpan(
@@ -81,10 +79,8 @@ class SBBLinkTextState extends State<SBBLinkText> {
         _isHoveredValues.add(false);
 
         final tapGestureRecognizer = TapGestureRecognizer();
-        tapGestureRecognizer.onTapDown = (TapDownDetails details) =>
-            setState(() => _isPressedValues[i] = true);
-        tapGestureRecognizer.onTapCancel =
-            () => setState(() => _isPressedValues[i] = false);
+        tapGestureRecognizer.onTapDown = (TapDownDetails details) => setState(() => _isPressedValues[i] = true);
+        tapGestureRecognizer.onTapCancel = () => setState(() => _isPressedValues[i] = false);
         tapGestureRecognizer.onTap = () {
           widget.onLaunch(url);
           setState(() => _isPressedValues[i] = false);
@@ -98,8 +94,7 @@ class SBBLinkTextState extends State<SBBLinkText> {
               _isHoveredValues[i] = false;
             }),
             text: text ?? url,
-            style: _linkTextStyle(
-                _isPressedValues[i] == true, _isHoveredValues[i] == true),
+            style: _linkTextStyle(_isPressedValues[i] == true, _isHoveredValues[i] == true),
             recognizer: tapGestureRecognizer,
           ),
         );
@@ -111,8 +106,7 @@ class SBBLinkTextState extends State<SBBLinkText> {
   TextStyle? _resolveTextStyle(SBBBaseStyle style) {
     final hasCustomStyle = widget.style != null;
     final textStyle = hasCustomStyle
-        ? widget.style!.copyWith(
-            color: widget.style!.color ?? style.defaultTextStyle!.color)
+        ? widget.style!.copyWith(color: widget.style!.color ?? style.defaultTextStyle!.color)
         : style.defaultTextStyle;
     return textStyle;
   }
@@ -122,15 +116,12 @@ class SBBLinkTextState extends State<SBBLinkText> {
     final controlStyle = SBBControlStyles.of(context);
     final hasCustomStyle = widget.style != null;
     final textStyle = hasCustomStyle
-        ? widget.style!.copyWith(
-            color: widget.style!.color ?? style.defaultTextStyle!.color)
+        ? widget.style!.copyWith(color: widget.style!.color ?? style.defaultTextStyle!.color)
         : style.defaultTextStyle;
-    final linkStyle = hasCustomStyle
-        ? textStyle!.copyWith(color: controlStyle.linkTextStyle!.color)
-        : controlStyle.linkTextStyle;
+    final linkStyle =
+        hasCustomStyle ? textStyle!.copyWith(color: controlStyle.linkTextStyle!.color) : controlStyle.linkTextStyle;
     final linkStylePressed = hasCustomStyle
-        ? textStyle!
-            .copyWith(color: controlStyle.linkTextStyleHighlighted!.color)
+        ? textStyle!.copyWith(color: controlStyle.linkTextStyleHighlighted!.color)
         : controlStyle.linkTextStyleHighlighted;
 
     return (isPressed ? linkStylePressed : linkStyle)!;

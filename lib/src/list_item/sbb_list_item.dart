@@ -34,9 +34,7 @@ class SBBListItem extends StatefulWidget {
                       ),
                       child: Icon(
                         trailingIcon,
-                        color: isEnabled
-                            ? style.iconColor
-                            : style.iconColorDisabled,
+                        color: isEnabled ? style.iconColor : style.iconColorDisabled,
                       ),
                     );
                   },
@@ -117,8 +115,7 @@ class _SBBListItemState extends State<SBBListItem> {
       child: Semantics(
         button: isEnabled,
         child: Material(
-          color:
-              isEnabled ? style.backgroundColor : style.backgroundColorDisabled,
+          color: isEnabled ? style.backgroundColor : style.backgroundColorDisabled,
           child: InkWell(
             splashColor: style.backgroundColorHighlighted,
             focusColor: style.backgroundColorHighlighted,
@@ -151,23 +148,18 @@ class _SBBListItemState extends State<SBBListItem> {
                                   children: [
                                     if (widget.leadingIcon != null)
                                       Padding(
-                                        padding:
-                                            const EdgeInsetsDirectional.only(
+                                        padding: const EdgeInsetsDirectional.only(
                                           end: sbbDefaultSpacing * 0.5,
                                         ),
                                         child: Icon(
                                           widget.leadingIcon,
-                                          color: isEnabled
-                                              ? style.iconColor
-                                              : style.iconColorDisabled,
+                                          color: isEnabled ? style.iconColor : style.iconColorDisabled,
                                         ),
                                       ),
                                     Expanded(
                                       child: Text(
                                         widget.title,
-                                        style: isEnabled
-                                            ? style.textStyle
-                                            : style.textStyleDisabled,
+                                        style: isEnabled ? style.textStyle : style.textStyleDisabled,
                                         maxLines: widget.titleMaxLines,
                                         overflow: wrapTitle ? TextOverflow.clip : TextOverflow.ellipsis,
                                       ),
@@ -182,9 +174,7 @@ class _SBBListItemState extends State<SBBListItem> {
                                   ),
                                   child: Text(
                                     widget.subtitle!,
-                                    style: isEnabled
-                                        ? style.secondaryTextStyle
-                                        : style.secondaryTextStyleDisabled,
+                                    style: isEnabled ? style.secondaryTextStyle : style.secondaryTextStyleDisabled,
                                     maxLines: widget.subtitleMaxLines,
                                     overflow: wrapSubtitleTitle ? TextOverflow.clip : TextOverflow.ellipsis,
                                   ),
