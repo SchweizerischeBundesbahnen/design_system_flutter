@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import '../native_app.dart';
 
 class ToastPage extends StatelessWidget {
+  const ToastPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     final sbbToast = SBBToast.of(context);

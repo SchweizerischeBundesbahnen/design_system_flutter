@@ -29,7 +29,7 @@ import 'typography_page.dart';
 import 'typography_red_page.dart';
 
 class LaunchpadPage extends StatelessWidget {
-  const LaunchpadPage({Key? key}) : super(key: key);
+  const LaunchpadPage({super.key});
 
   @override
   Widget build(BuildContext context) {

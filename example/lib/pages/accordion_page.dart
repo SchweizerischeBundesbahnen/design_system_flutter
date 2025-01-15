@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import '../native_app.dart';
 
 class AccordionPage extends StatefulWidget {
+  const AccordionPage({super.key});
+
   @override
-  _AccordionPageState createState() => _AccordionPageState();
+  AccordionPageState createState() => AccordionPageState();
 }
 
-class _AccordionPageState extends State<AccordionPage> {
+class AccordionPageState extends State<AccordionPage> {
   bool _singleAccordionExpanded = false;
   final List<_Item> _items1 = [
     _Item(

@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import '../native_app.dart';
 
 class PickerPage extends StatefulWidget {
+  const PickerPage({super.key});
+
   @override
   State<PickerPage> createState() => _PickerPageState();
 }

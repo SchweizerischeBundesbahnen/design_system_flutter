@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import '../native_app.dart';
 
 class IconPage extends StatelessWidget {
+  const IconPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     final sbbToast = SBBToast.of(context);
@@ -41,11 +43,10 @@ class IconPage extends StatelessWidget {
 
 class _IconShowCase extends StatelessWidget {
   const _IconShowCase({
-    Key? key,
     required this.icons,
     required this.iconSize,
     required this.sbbToast,
-  }) : super(key: key);
+  });
 
   final List<Map<String, Object>> icons;
   final double iconSize;

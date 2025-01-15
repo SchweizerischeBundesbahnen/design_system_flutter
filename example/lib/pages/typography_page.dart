@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import '../native_app.dart';
 
 class TypographyPage extends StatelessWidget {
+  const TypographyPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -34,10 +36,7 @@ class TypographyPage extends StatelessWidget {
 }
 
 class TypographyExample extends StatelessWidget {
-  const TypographyExample(
-    this.name,
-    this.style,
-  );
+  const TypographyExample(this.name, this.style, {super.key});
 
   final String name;
   final TextStyle style;

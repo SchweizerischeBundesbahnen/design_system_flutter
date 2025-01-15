@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 import '../native_app.dart';
 
 class SelectPage extends StatefulWidget {
+  const SelectPage({super.key});
+
   @override
-  _SelectPageState createState() => _SelectPageState();
+  SelectPageState createState() => SelectPageState();
 }
 
-class _SelectPageState extends State<SelectPage> {
+class SelectPageState extends State<SelectPage> {
   int? _selectedValue1;
   int? _selectedValue2 = 1;
   int? _selectedValue3;

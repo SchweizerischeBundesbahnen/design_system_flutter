@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import '../native_app.dart';
 
 class PromotionBoxPage extends StatefulWidget {
+  const PromotionBoxPage({super.key});
+
   @override
   State<PromotionBoxPage> createState() => _PromotionBoxPageState();
 }

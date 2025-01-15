@@ -49,6 +49,8 @@ class AppState extends ChangeNotifier {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -320,7 +322,7 @@ class _DemoPage extends StatelessWidget {
 }
 
 class ThemeModeSegmentedButton extends StatelessWidget {
-  const ThemeModeSegmentedButton();
+  const ThemeModeSegmentedButton({super.key});
 
   @override
   Widget build(BuildContext context) {

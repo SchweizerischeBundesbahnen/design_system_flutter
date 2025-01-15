@@ -125,8 +125,7 @@ class SBBNotificationBox extends StatefulWidget {
   State<SBBNotificationBox> createState() => _SBBNotificationBoxState();
 }
 
-class _SBBNotificationBoxState extends State<SBBNotificationBox>
-    with SingleTickerProviderStateMixin {
+class _SBBNotificationBoxState extends State<SBBNotificationBox> with SingleTickerProviderStateMixin {
   late final CloseableBoxController _controller = CloseableBoxController(this);
 
   Widget _animationBuilder({
@@ -188,8 +187,7 @@ class _SBBNotificationBoxState extends State<SBBNotificationBox>
             child: Container(
               decoration: BoxDecoration(
                 border: Border(
-                  left: BorderSide(
-                      color: widget.state.backgroundColor, width: 8.0),
+                  left: BorderSide(color: widget.state.backgroundColor, width: 8.0),
                 ),
                 borderRadius: const BorderRadius.all(
                   Radius.circular(16.0),

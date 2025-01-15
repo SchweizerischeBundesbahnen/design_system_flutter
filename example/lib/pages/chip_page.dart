@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import '../native_app.dart';
 
 class ChipPage extends StatefulWidget {
+  const ChipPage({super.key});
+
   @override
   State<ChipPage> createState() => _ChipPageState();
 }

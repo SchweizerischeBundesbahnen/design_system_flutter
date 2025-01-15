@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import '../native_app.dart';
 
 class InputTriggerPage extends StatefulWidget {
+  const InputTriggerPage({super.key});
+
   @override
   State<InputTriggerPage> createState() => _PickerPageState();
 }
@@ -121,7 +123,7 @@ class _PickerPageState extends State<InputTriggerPage> {
                   value: showPrefixIcon,
                   onChanged: (enabled) {
                     setState(() {
-                      this.showPrefixIcon = enabled;
+                      showPrefixIcon = enabled;
                     });
                   },
                 ),
@@ -130,7 +132,7 @@ class _PickerPageState extends State<InputTriggerPage> {
                   value: showSuffixIcon,
                   onChanged: (enabled) {
                     setState(() {
-                      this.showSuffixIcon = enabled;
+                      showSuffixIcon = enabled;
                     });
                   },
                   isLastElement: true,

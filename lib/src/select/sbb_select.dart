@@ -84,9 +84,7 @@ class SBBSelect<T> extends StatelessWidget {
                     ),
                     child: Icon(
                       icon,
-                      color: enabled
-                          ? style.textField?.iconColor
-                          : style.textField?.iconColorDisabled,
+                      color: enabled ? style.textField?.iconColor : style.textField?.iconColorDisabled,
                     ),
                   ),
                 Expanded(
@@ -101,9 +99,7 @@ class SBBSelect<T> extends StatelessWidget {
                         )
                       : Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: label != null
-                              ? MainAxisAlignment.start
-                              : MainAxisAlignment.center,
+                          mainAxisAlignment: label != null ? MainAxisAlignment.start : MainAxisAlignment.center,
                           children: [
                             if (label != null)
                               Padding(
@@ -113,9 +109,7 @@ class SBBSelect<T> extends StatelessWidget {
                                 ),
                                 child: Text(
                                   label!,
-                                  style: enabled
-                                      ? style.selectLabel?.textStyle
-                                      : style.selectLabel?.textStyleDisabled,
+                                  style: enabled ? style.selectLabel?.textStyle : style.selectLabel?.textStyleDisabled,
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                 ),
@@ -125,13 +119,8 @@ class SBBSelect<T> extends StatelessWidget {
                                 height: 0.0,
                               ),
                             Text(
-                              items
-                                  .firstWhere(
-                                      (element) => element.value == value)
-                                  .label,
-                              style: enabled
-                                  ? style.textField?.textStyle
-                                  : style.textField?.textStyleDisabled,
+                              items.firstWhere((element) => element.value == value).label,
+                              style: enabled ? style.textField?.textStyle : style.textField?.textStyleDisabled,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -140,9 +129,7 @@ class SBBSelect<T> extends StatelessWidget {
                 ),
                 Icon(
                   SBBIcons.chevron_small_down_small,
-                  color: enabled
-                      ? style.textField?.iconColor
-                      : style.textField?.iconColorDisabled,
+                  color: enabled ? style.textField?.iconColor : style.textField?.iconColorDisabled,
                 ),
                 const SizedBox(width: sbbDefaultSpacing / 2),
               ],
@@ -184,7 +171,7 @@ class SBBSelect<T> extends StatelessWidget {
                   return Column(
                     children: items.asMap().entries.map((entry) {
                       final isLastElement = entry.key == items.length - 1;
-                      return SBBRadioButtonListItem<T>(
+                      return SBBRadioListItem<T>(
                         value: entry.value.value,
                         groupValue: selectedValue,
                         allowMultilineLabel: allowMultilineLabel,
@@ -276,11 +263,9 @@ class SBBMultiSelect<T> extends StatefulWidget {
                         onChanged: (checked) {
                           setModalState(() {
                             if (checked == true) {
-                              selectedValues = List.from(selectedValues)
-                                ..add(entry.value.value);
+                              selectedValues = List.from(selectedValues)..add(entry.value.value);
                             } else {
-                              selectedValues = List.from(selectedValues)
-                                ..remove(entry.value.value);
+                              selectedValues = List.from(selectedValues)..remove(entry.value.value);
                             }
                           });
                         },
@@ -297,8 +282,7 @@ class SBBMultiSelect<T> extends StatefulWidget {
                     sbbDefaultSpacing,
                   ),
                   child: SBBPrimaryButton(
-                    label: confirmButtonLabel ??
-                        MaterialLocalizations.of(context).okButtonLabel,
+                    label: confirmButtonLabel ?? MaterialLocalizations.of(context).okButtonLabel,
                     onPressed: isSelectionValid(values, selectedValues)
                         ? () {
                             Navigator.of(context).pop();
@@ -364,9 +348,7 @@ class _SBBMultiSelectState<T> extends State<SBBMultiSelect<T>> {
                     ),
                     child: Icon(
                       widget.icon,
-                      color: enabled
-                          ? style.textField?.iconColor
-                          : style.textField?.iconColorDisabled,
+                      color: enabled ? style.textField?.iconColor : style.textField?.iconColorDisabled,
                     ),
                   ),
                 Expanded(
@@ -385,22 +367,17 @@ class _SBBMultiSelectState<T> extends State<SBBMultiSelect<T>> {
                             const SizedBox(height: 5.0),
                             Text(
                               widget.label,
-                              style: enabled
-                                  ? style.selectLabel?.textStyle
-                                  : style.selectLabel?.textStyleDisabled,
+                              style: enabled ? style.selectLabel?.textStyle : style.selectLabel?.textStyleDisabled,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
                             const SizedBox(height: 3.0),
                             Text(
                               widget.items
-                                  .where((element) =>
-                                      widget.values.contains(element.value))
+                                  .where((element) => widget.values.contains(element.value))
                                   .map((element) => element.label)
                                   .join(', '),
-                              style: enabled
-                                  ? style.textField?.textStyle
-                                  : style.textField?.textStyleDisabled,
+                              style: enabled ? style.textField?.textStyle : style.textField?.textStyleDisabled,
                               maxLines: 1,
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -409,9 +386,7 @@ class _SBBMultiSelectState<T> extends State<SBBMultiSelect<T>> {
                 ),
                 Icon(
                   SBBIcons.chevron_small_down_small,
-                  color: enabled
-                      ? style.textField?.iconColor
-                      : style.textField?.iconColorDisabled,
+                  color: enabled ? style.textField?.iconColor : style.textField?.iconColorDisabled,
                 ),
                 const SizedBox(width: sbbDefaultSpacing / 2),
               ],
