@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../sbb_styles.dart';
+import '../../theme.dart';
 
 class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
   SBBBaseStyle({
@@ -20,8 +20,7 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
     TextTheme? redTextTheme,
   }) {
     final redColor = $resolve(SBBColors.red, SBBColors.redDarkMode);
-    this.redTextTheme =
-        redTextTheme ?? createTextTheme(colorOverride: redColor);
+    this.redTextTheme = redTextTheme ?? createTextTheme(colorOverride: redColor);
   }
 
   factory SBBBaseStyle.$default({
@@ -67,11 +66,9 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
     return SBBBaseStyle.resolve(isLight, lightThemeValue, darkThemeValue);
   }
 
-  static T resolve<T>(bool isLight, T lightThemeValue, T darkThemeValue) =>
-      isLight ? lightThemeValue : darkThemeValue;
+  static T resolve<T>(bool isLight, T lightThemeValue, T darkThemeValue) => isLight ? lightThemeValue : darkThemeValue;
 
-  static SBBBaseStyle of(BuildContext context) =>
-      Theme.of(context).extension<SBBBaseStyle>()!;
+  static SBBBaseStyle of(BuildContext context) => Theme.of(context).extension<SBBBaseStyle>()!;
 
   final Color? primaryColor;
   final Color? primaryColorDark;
@@ -114,8 +111,7 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
         defaultTextColor: defaultTextColor ?? this.defaultTextColor,
         defaultTextStyle: defaultTextStyle ?? this.defaultTextStyle,
         dividerColor: dividerColor ?? this.dividerColor,
-        defaultRootContainerPadding:
-            defaultRootContainerPadding ?? this.defaultRootContainerPadding,
+        defaultRootContainerPadding: defaultRootContainerPadding ?? this.defaultRootContainerPadding,
         iconColor: iconColor ?? this.iconColor,
         brightness: brightness ?? this.brightness,
         boldFont: boldFont ?? this.boldFont,
@@ -124,16 +120,14 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
       );
 
   @override
-  ThemeExtension<SBBBaseStyle> lerp(
-      ThemeExtension<SBBBaseStyle>? other, double t) {
+  ThemeExtension<SBBBaseStyle> lerp(ThemeExtension<SBBBaseStyle>? other, double t) {
     if (other is! SBBBaseStyle) return this;
     return SBBBaseStyle(
       primaryColor: Color.lerp(primaryColor, other.primaryColor, t),
       primaryColorDark: Color.lerp(primaryColorDark, other.primaryColorDark, t),
       backgroundColor: Color.lerp(backgroundColor, other.backgroundColor, t),
       defaultTextColor: Color.lerp(defaultTextColor, other.defaultTextColor, t),
-      defaultTextStyle:
-          TextStyle.lerp(defaultTextStyle, other.defaultTextStyle, t),
+      defaultTextStyle: TextStyle.lerp(defaultTextStyle, other.defaultTextStyle, t),
       dividerColor: Color.lerp(dividerColor, other.dividerColor, t),
       iconColor: Color.lerp(iconColor, other.iconColor, t),
       defaultFontFamily: other.defaultFontFamily,
@@ -149,8 +143,7 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
   T themeValue<T>(T lightThemeValue, T darkThemeValue) =>
       resolve(brightness == Brightness.light, lightThemeValue, darkThemeValue);
 
-  TextStyle themedTextStyle(
-          {TextStyle? textStyle, Color? color, bool boldFont = false}) =>
+  TextStyle themedTextStyle({TextStyle? textStyle, Color? color, bool boldFont = false}) =>
       (textStyle ?? defaultTextStyle)!.copyWith(
         fontFamily: defaultFontFamily,
         color: color ?? defaultTextColor,
@@ -158,8 +151,7 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
       );
 
   TextTheme createTextTheme({Color? colorOverride}) {
-    value(double size, double height, FontWeight weight, {Color? color}) =>
-        TextStyle(
+    value(double size, double height, FontWeight weight, {Color? color}) => TextStyle(
           inherit: false,
           fontSize: size,
           height: height,
@@ -170,27 +162,16 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
           textBaseline: TextBaseline.alphabetic,
         );
     return TextTheme(
-      bodySmall: value(SBBTextStyles.smallFontSize,
-          SBBTextStyles.smallFontHeight, FontWeight.w300),
-      bodyMedium: value(SBBTextStyles.mediumFontSize,
-          SBBTextStyles.mediumFontHeight, FontWeight.w300),
-      bodyLarge: value(SBBTextStyles.largeFontSize,
-          SBBTextStyles.largeFontHeight, FontWeight.w300),
-      labelSmall: value(SBBTextStyles.smallFontSize,
-          SBBTextStyles.smallFontHeight, FontWeight.w300,
-          color: labelColor),
-      labelMedium: value(SBBTextStyles.mediumFontSize,
-          SBBTextStyles.mediumFontHeight, FontWeight.w300,
-          color: labelColor),
-      labelLarge: value(SBBTextStyles.largeFontSize,
-          SBBTextStyles.largeFontHeight, FontWeight.w300,
-          color: labelColor),
-      titleSmall: value(SBBTextStyles.smallFontSize,
-          SBBTextStyles.smallFontHeight, FontWeight.w700),
-      titleMedium: value(SBBTextStyles.mediumFontSize,
-          SBBTextStyles.mediumFontHeight, FontWeight.w700),
-      titleLarge: value(SBBTextStyles.largeFontSize,
-          SBBTextStyles.largeFontHeight, FontWeight.w700),
+      bodySmall: value(SBBTextStyles.smallFontSize, SBBTextStyles.smallFontHeight, FontWeight.w300),
+      bodyMedium: value(SBBTextStyles.mediumFontSize, SBBTextStyles.mediumFontHeight, FontWeight.w300),
+      bodyLarge: value(SBBTextStyles.largeFontSize, SBBTextStyles.largeFontHeight, FontWeight.w300),
+      labelSmall: value(SBBTextStyles.smallFontSize, SBBTextStyles.smallFontHeight, FontWeight.w300, color: labelColor),
+      labelMedium:
+          value(SBBTextStyles.mediumFontSize, SBBTextStyles.mediumFontHeight, FontWeight.w300, color: labelColor),
+      labelLarge: value(SBBTextStyles.largeFontSize, SBBTextStyles.largeFontHeight, FontWeight.w300, color: labelColor),
+      titleSmall: value(SBBTextStyles.smallFontSize, SBBTextStyles.smallFontHeight, FontWeight.w700),
+      titleMedium: value(SBBTextStyles.mediumFontSize, SBBTextStyles.mediumFontHeight, FontWeight.w700),
+      titleLarge: value(SBBTextStyles.largeFontSize, SBBTextStyles.largeFontHeight, FontWeight.w700),
     );
   }
 }
@@ -207,8 +188,7 @@ extension StyleExtension on SBBBaseStyle? {
       defaultTextColor: this!.defaultTextColor ?? other?.defaultTextColor,
       defaultTextStyle: this!.defaultTextStyle ?? other?.defaultTextStyle,
       dividerColor: this!.dividerColor ?? other?.dividerColor,
-      defaultRootContainerPadding: this!.defaultRootContainerPadding ??
-          other?.defaultRootContainerPadding,
+      defaultRootContainerPadding: this!.defaultRootContainerPadding ?? other?.defaultRootContainerPadding,
       iconColor: this!.iconColor ?? other?.iconColor,
       brightness: this!.brightness ?? other?.brightness,
       redTextTheme: this?.redTextTheme ?? other?.redTextTheme,

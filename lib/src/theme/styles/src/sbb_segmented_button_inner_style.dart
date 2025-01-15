@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../sbb_styles.dart';
+import '../../theme.dart';
 
 class SBBSegmentedButtonInnerStyle {
   SBBSegmentedButtonInnerStyle({
@@ -86,8 +86,7 @@ class SBBSegmentedButtonInnerStyle {
       );
 }
 
-extension SBBSegmentedButtonInnerStyleExtension
-    on SBBSegmentedButtonInnerStyle? {
+extension SBBSegmentedButtonInnerStyleExtension on SBBSegmentedButtonInnerStyle? {
   SBBSegmentedButtonInnerStyle merge(SBBSegmentedButtonInnerStyle? other) {
     if (this == null) return other ?? SBBSegmentedButtonInnerStyle();
     return this!.copyWith(

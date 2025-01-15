@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../sbb_styles.dart';
+import '../../theme.dart';
 
 class SBBChipStyle {
   SBBChipStyle({
@@ -28,8 +28,10 @@ class SBBChipStyle {
         textStyleDisabled: baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallBold, color: SBBColors.white),
       ),
       labelTextStyle: SBBTextStyle(
-        textStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.mediumLight, color: isDarkTheme ? SBBColors.white : SBBColors.black),
-        textStyleDisabled: baseStyle.themedTextStyle(textStyle: SBBTextStyles.mediumLight, color: isDarkTheme ? SBBColors.graphite : SBBColors.granite),
+        textStyle: baseStyle.themedTextStyle(
+            textStyle: SBBTextStyles.mediumLight, color: isDarkTheme ? SBBColors.white : SBBColors.black),
+        textStyleDisabled: baseStyle.themedTextStyle(
+            textStyle: SBBTextStyles.mediumLight, color: isDarkTheme ? SBBColors.graphite : SBBColors.granite),
       ),
       unselectButtonColor: isDarkTheme ? SBBColors.iron : SBBColors.milk,
       disabledUnselectButtonColor: isDarkTheme ? SBBColors.iron : SBBColors.milk,
@@ -84,7 +86,8 @@ class SBBChipStyle {
         unselectButtonColor: Color.lerp(unselectButtonColor, other?.unselectButtonColor, t),
         disabledUnselectButtonColor: Color.lerp(disabledUnselectButtonColor, other?.disabledUnselectButtonColor, t),
         unselectButtonIconColor: Color.lerp(unselectButtonIconColor, other?.unselectButtonIconColor, t),
-        disabledUnselectButtonIconColor: Color.lerp(disabledUnselectButtonIconColor, other?.disabledUnselectButtonIconColor, t),
+        disabledUnselectButtonIconColor:
+            Color.lerp(disabledUnselectButtonIconColor, other?.disabledUnselectButtonIconColor, t),
       );
 }
 

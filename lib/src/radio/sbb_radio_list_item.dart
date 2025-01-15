@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/src/checkbox/bottom_loading_indicator.dart';
 
 import '../../sbb_design_system_mobile.dart';
+import '../shared/bottom_loading_indicator.dart';
 
 const double _iconTopPadding = 10.0;
 const double _minListTileHeight = 44.0;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../sbb_internal.dart';
-import '../sbb_styles.dart';
+import '../../theme.dart';
 
 class SBBSegmentedButtonStyle {
   SBBSegmentedButtonStyle({
@@ -11,8 +11,7 @@ class SBBSegmentedButtonStyle {
     this.boxShadow,
   });
 
-  factory SBBSegmentedButtonStyle.$default({required SBBBaseStyle baseStyle}) =>
-      SBBSegmentedButtonStyle(
+  factory SBBSegmentedButtonStyle.$default({required SBBBaseStyle baseStyle}) => SBBSegmentedButtonStyle(
         defaultStyle: SBBSegmentedButtonInnerStyle.$default(
           baseStyle: baseStyle,
         ),
@@ -25,8 +24,7 @@ class SBBSegmentedButtonStyle {
         ),
       );
 
-  factory SBBSegmentedButtonStyle.red({required SBBBaseStyle baseStyle}) =>
-      SBBSegmentedButtonStyle(
+  factory SBBSegmentedButtonStyle.red({required SBBBaseStyle baseStyle}) => SBBSegmentedButtonStyle(
         defaultStyle: SBBSegmentedButtonInnerStyle.red(
           baseStyle: baseStyle,
         ),
@@ -55,8 +53,7 @@ class SBBSegmentedButtonStyle {
         boxShadow: boxShadow ?? this.boxShadow,
       );
 
-  SBBSegmentedButtonStyle lerp(SBBSegmentedButtonStyle? other, double t) =>
-      SBBSegmentedButtonStyle(
+  SBBSegmentedButtonStyle lerp(SBBSegmentedButtonStyle? other, double t) => SBBSegmentedButtonStyle(
         defaultStyle: defaultStyle?.lerp(other?.defaultStyle, t),
         selectedStyle: selectedStyle?.lerp(other?.selectedStyle, t),
         iconColor: Color.lerp(iconColor, other?.iconColor, t),

@@ -1,9 +1,4 @@
-library sbb_styles;
-
-export '../../promotion_box/promotion_box.dart';
-export '../sbb_colors.dart';
-export '../sbb_theme.dart';
-export '../sbb_typography.dart';
+export 'src/promotion_box_style.dart';
 export 'src/sbb_base_style.dart';
 export 'src/sbb_basic_control_style.dart';
 export 'src/sbb_button_style.dart';

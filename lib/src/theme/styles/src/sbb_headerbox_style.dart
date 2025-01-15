@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../../sbb_design_system_mobile.dart';
+import '../../theme.dart';
 
 class SBBHeaderBoxStyle extends ThemeExtension<SBBHeaderBoxStyle> {
   SBBHeaderBoxStyle({

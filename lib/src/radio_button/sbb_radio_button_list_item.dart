@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/src/checkbox/bottom_loading_indicator.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
 const double _iconTopPadding = 10.0;
-const double _minListTileHeight = 44.0;
 
 /// SBB Radio Button List Item. Use according to documentation.
 ///
