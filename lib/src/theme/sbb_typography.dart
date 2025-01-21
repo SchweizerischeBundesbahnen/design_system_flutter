@@ -3,14 +3,19 @@ import 'package:flutter/material.dart';
 /// Global constant for default SBB font family
 const String sbbWebFont = SBBTextStyles.sbbWebFontLight;
 
-/// Global constant for default SBB text style for easier use of extensions methods defined in [TextStylesExtensions]
+/// Global constant for default SBB text style for easier use of extension methods defined in [TextStylesExtensions]
 const TextStyle sbbTextStyle = SBBTextStyles.mediumLight;
 
 /// Provides constants for all text styles defined in the SBB design system mobile.
 ///
-/// When in need of a more custom text style, consider using the extension methods defined in [TextStylesExtensions]:
+/// When in need of a more custom text style, consider using the extension methods defined in [TextStylesExtensions].
+/// The intended way to use this is to start with [sbbTextStyle] and use the corresponding methods to achieve the
+/// desired [TextStyle]:
 /// ```dart
-///   Text('This text is roman, extra large and italic', style: sbbTextStyle.romanStyle.xLarge.italic);
+/// const Text(
+///   'This text is roman, extra large and italic',
+///   style: sbbTextStyle.romanStyle.xLarge.italic,
+/// );
 /// ```
 ///
 /// * <https://digital.sbb.ch/en/design-system/mobile/basics/typography/>
