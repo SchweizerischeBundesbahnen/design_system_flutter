@@ -41,21 +41,27 @@ flutter:
     - lib/assets/illustrations/dark/
     - lib/assets/illustrations/light/
   fonts:
-    - family: SBBWeb
+    - family: SBBWebUltraLight
+      fonts:
+        - asset: packages/sbb_design_system_mobile/fonts/SBBWeb-UltraLight.ttf
+    - family: SBBWebThin
+      fonts:
+        - asset: packages/sbb_design_system_mobile/fonts/SBBWeb-Thin.ttf
+    - family: SBBWebLight
+      fonts:
+        - asset: packages/sbb_design_system_mobile/fonts/SBBWeb-Light.ttf
+    - family: SBBWebRoman
+      fonts:
+        - asset: packages/sbb_design_system_mobile/fonts/SBBWeb-Roman.ttf
+    - family: SBBWebBold
       fonts:
         - asset: packages/sbb_design_system_mobile/fonts/SBBWeb-Bold.ttf
-          weight: 700
-        - asset: packages/sbb_design_system_mobile/fonts/SBBWeb-Roman.ttf
-          weight: 400
-        - asset: packages/sbb_design_system_mobile/fonts/SBBWeb-Italic.ttf
-          weight: 400
-          style: italic
-        - asset: packages/sbb_design_system_mobile/fonts/SBBWeb-Light.ttf
-          weight: 300
-        - asset: packages/sbb_design_system_mobile/fonts/SBBWeb-Thin.ttf
-          weight: 200
-        - asset: packages/sbb_design_system_mobile/fonts/SBBWeb-Ultra-Light.ttf
-          weight: 100
+    - family: SBBWebCondensedBold
+      fonts:
+        - asset: packages/sbb_design_system_mobile/fonts/SBBWeb-Condensed-Bold.ttf
+    - family: SBBWebCondensedHeavy
+      fonts:
+        - asset: packages/sbb_design_system_mobile/fonts/SBBWeb-Condensed-Heavy.ttf
     - family: SBBIconsSmall
       fonts:
         - asset: packages/sbb_design_system_mobile/fonts/sbb_icons_small.ttf

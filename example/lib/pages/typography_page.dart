@@ -13,7 +13,13 @@ class TypographyPage extends StatelessWidget {
       children: <Widget>[
         const ThemeModeSegmentedButton(),
         const SizedBox(height: sbbDefaultSpacing),
+        const TypographyExample('Extra Extra Large (Light)', SBBTextStyles.extraExtraLargeLight),
+        const SizedBox(height: sbbDefaultSpacing),
+        const TypographyExample('Extra Extra Large (Bold)', SBBTextStyles.extraExtraLargeBold),
+        const SizedBox(height: sbbDefaultSpacing),
         const TypographyExample('Extra Large (Light)', SBBTextStyles.extraLargeLight),
+        const SizedBox(height: sbbDefaultSpacing),
+        const TypographyExample('Extra Large (Bold)', SBBTextStyles.extraLargeBold),
         const SizedBox(height: sbbDefaultSpacing),
         const TypographyExample('Large (Light)', SBBTextStyles.largeLight),
         const SizedBox(height: sbbDefaultSpacing),
@@ -57,6 +63,7 @@ class TypographyExample extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(sbbDefaultSpacing),
                   child: Text(
+                    'FontFamily: ${style.fontFamily?.split('/').last}\n'
                     'FontSize: ${style.fontSize}\n'
                     'Height: ${style.height?.toStringAsFixed(2)}\n'
                     'FontWeight: ${style.fontWeight}',
