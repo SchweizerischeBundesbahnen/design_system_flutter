@@ -11,7 +11,7 @@ class SBBPickerStyle {
   factory SBBPickerStyle.$default({required SBBBaseStyle baseStyle}) => SBBPickerStyle(
         highlightColor: baseStyle.themeValue(SBBColors.cloud, SBBColors.iron),
         textStyle: baseStyle.defaultTextStyle?.copyWith(
-          fontWeight: FontWeight.w400,
+          fontFamily: SBBTextStyles.sbbFontRoman,
           fontSize: 24.0,
           height: 26.0 / 24.0,
         ),
