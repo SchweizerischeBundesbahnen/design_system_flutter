@@ -60,40 +60,6 @@ class TypographyPage extends StatelessWidget {
   }
 }
 
-class _TypographyExample extends StatelessWidget {
-  const _TypographyExample(this.name, this.style);
-
-  final String name;
-  final TextStyle style;
-
-  @override
-  Widget build(BuildContext context) => Column(
-        children: <Widget>[
-          SBBListHeader(name),
-          SBBGroup(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(sbbDefaultSpacing),
-                  child: Text('The quick brown fox jumps over the lazy dog', style: style),
-                ),
-                const Divider(),
-                Padding(
-                  padding: const EdgeInsets.all(sbbDefaultSpacing),
-                  child: Text(
-                    'FontFamily: ${style.fontFamily?.split('/').last}\n'
-                    'FontSize: ${style.fontSize}\n'
-                    'Height: ${style.height?.toStringAsFixed(2)}',
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      );
-}
-
 class _TypographyShowcase extends StatelessWidget {
   const _TypographyShowcase(this.name, this.style, {this.isLastElement = false});
 
@@ -111,46 +77,32 @@ class _TypographyShowcase extends StatelessWidget {
           height: sbbDefaultSpacing,
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
-          child: Text(
-            'The quick brown fox jumps over the lazy dog',
-            style: style,
+          padding: const EdgeInsets.symmetric(
+            horizontal: sbbDefaultSpacing,
           ),
+          child: Text('The quick brown fox jumps over the lazy dog', style: style),
         ),
-        const SizedBox(
-          height: sbbDefaultSpacing * 0.5,
-        ),
+        const SizedBox(height: sbbDefaultSpacing * 0.5),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
+          padding: const EdgeInsets.symmetric(
+            horizontal: sbbDefaultSpacing,
+          ),
           child: Text(
             '$name',
             style: sbbTextStyle.xSmall.romanStyle.copyWith(color: labelColor),
           ),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
+          padding: const EdgeInsets.symmetric(
+            horizontal: sbbDefaultSpacing,
+          ),
           child: Text(
             'FontFamily: ${style.fontFamily?.split('/').last}, '
-                'FontSize: ${style.fontSize}, '
-                'Height: ${style.height?.toStringAsFixed(2)}',
+            'FontSize: ${style.fontSize}, '
+            'Height: ${style.height?.toStringAsFixed(2)}',
             style: sbbTextStyle.xSmall.copyWith(color: labelColor),
           ),
         ),
-        // Padding(
-        //   padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
-        //   child: RichText(
-        //     text: TextSpan(
-        //       style: sbbTextStyle.xSmall.copyWith(color: SBBBaseStyle.of(context).labelColor),
-        //       children: <TextSpan>[
-        //         // TextSpan(text: 'sbbTextStyle: '),
-        //         TextSpan(text: name, style: sbbTextStyle.xSmall.romanStyle),
-        //         TextSpan(
-        //           text: '\nFontSize: ${style.fontSize}, Height: ${style.height?.toStringAsFixed(2)}',
-        //         ),
-        //       ],
-        //     ),
-        //   ),
-        // ),
         const SizedBox(
           height: sbbDefaultSpacing,
         ),
