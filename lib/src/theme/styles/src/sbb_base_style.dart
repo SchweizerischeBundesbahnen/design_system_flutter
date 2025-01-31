@@ -143,9 +143,9 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
   T themeValue<T>(T lightThemeValue, T darkThemeValue) =>
       resolve(brightness == Brightness.light, lightThemeValue, darkThemeValue);
 
-  TextStyle themedTextStyle({TextStyle? textStyle, Color? color, bool boldFont = false}) =>
+  TextStyle themedTextStyle({TextStyle? textStyle, Color? color, String? fontFamily}) =>
       (textStyle ?? defaultTextStyle)!.copyWith(
-        fontFamily: this.boldFont || boldFont ? SBBTextStyles.sbbFontBold : defaultFontFamily,
+        fontFamily: fontFamily ?? textStyle?.fontFamily ?? defaultFontFamily,
         color: color ?? defaultTextColor,
       );
 

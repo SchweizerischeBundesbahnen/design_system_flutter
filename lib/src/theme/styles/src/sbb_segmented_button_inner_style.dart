@@ -56,7 +56,7 @@ class SBBSegmentedButtonInnerStyle {
         borderColor: SBBColors.red150,
         textStyle: baseStyle.themedTextStyle(
           color: SBBColors.white,
-          boldFont: true,
+          fontFamily: SBBTextStyles.sbbFontBold,
         ),
       );
 
