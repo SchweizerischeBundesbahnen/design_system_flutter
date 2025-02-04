@@ -46,7 +46,7 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
           900: SBBColors.red,
         },
       ),
-      defaultFontFamily: sbbWebFont,
+      defaultFontFamily: sbbFont,
       defaultTextColor: resolve(isLight, SBBColors.black, SBBColors.white),
       defaultTextStyle: SBBTextStyles.mediumLight.copyWith(
         color: resolve(isLight, SBBColors.black, SBBColors.white),
@@ -143,35 +143,44 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
   T themeValue<T>(T lightThemeValue, T darkThemeValue) =>
       resolve(brightness == Brightness.light, lightThemeValue, darkThemeValue);
 
-  TextStyle themedTextStyle({TextStyle? textStyle, Color? color, bool boldFont = false}) =>
+  TextStyle themedTextStyle({TextStyle? textStyle, Color? color, String? fontFamily}) =>
       (textStyle ?? defaultTextStyle)!.copyWith(
-        fontFamily: defaultFontFamily,
+        fontFamily: fontFamily ?? textStyle?.fontFamily ?? defaultFontFamily,
         color: color ?? defaultTextColor,
-        fontWeight: this.boldFont || boldFont ? FontWeight.bold : null,
       );
 
   TextTheme createTextTheme({Color? colorOverride}) {
-    value(double size, double height, FontWeight weight, {Color? color}) => TextStyle(
+    value(double size, double height, {Color? color, String? fontFamily}) => TextStyle(
           inherit: false,
           fontSize: size,
           height: height,
           fontStyle: FontStyle.normal,
-          fontWeight: boldFont ? FontWeight.bold : weight,
-          fontFamily: defaultFontFamily,
+          fontFamily: fontFamily ?? defaultFontFamily,
           color: colorOverride ?? color ?? defaultTextColor,
           textBaseline: TextBaseline.alphabetic,
         );
     return TextTheme(
-      bodySmall: value(SBBTextStyles.smallFontSize, SBBTextStyles.smallFontHeight, FontWeight.w300),
-      bodyMedium: value(SBBTextStyles.mediumFontSize, SBBTextStyles.mediumFontHeight, FontWeight.w300),
-      bodyLarge: value(SBBTextStyles.largeFontSize, SBBTextStyles.largeFontHeight, FontWeight.w300),
-      labelSmall: value(SBBTextStyles.smallFontSize, SBBTextStyles.smallFontHeight, FontWeight.w300, color: labelColor),
-      labelMedium:
-          value(SBBTextStyles.mediumFontSize, SBBTextStyles.mediumFontHeight, FontWeight.w300, color: labelColor),
-      labelLarge: value(SBBTextStyles.largeFontSize, SBBTextStyles.largeFontHeight, FontWeight.w300, color: labelColor),
-      titleSmall: value(SBBTextStyles.smallFontSize, SBBTextStyles.smallFontHeight, FontWeight.w700),
-      titleMedium: value(SBBTextStyles.mediumFontSize, SBBTextStyles.mediumFontHeight, FontWeight.w700),
-      titleLarge: value(SBBTextStyles.largeFontSize, SBBTextStyles.largeFontHeight, FontWeight.w700),
+      bodySmall: value(SBBTextStyles.smallFontSize, SBBTextStyles.smallFontHeight),
+      bodyMedium: value(SBBTextStyles.mediumFontSize, SBBTextStyles.mediumFontHeight),
+      bodyLarge: value(SBBTextStyles.largeFontSize, SBBTextStyles.largeFontHeight),
+      labelSmall: value(SBBTextStyles.smallFontSize, SBBTextStyles.smallFontHeight, color: labelColor),
+      labelMedium: value(SBBTextStyles.mediumFontSize, SBBTextStyles.mediumFontHeight, color: labelColor),
+      labelLarge: value(SBBTextStyles.largeFontSize, SBBTextStyles.largeFontHeight, color: labelColor),
+      titleSmall: value(
+        SBBTextStyles.smallFontSize,
+        SBBTextStyles.smallFontHeight,
+        fontFamily: SBBFontFamily.sbbFontBold,
+      ),
+      titleMedium: value(
+        SBBTextStyles.mediumFontSize,
+        SBBTextStyles.mediumFontHeight,
+        fontFamily: SBBFontFamily.sbbFontBold,
+      ),
+      titleLarge: value(
+        SBBTextStyles.largeFontSize,
+        SBBTextStyles.largeFontHeight,
+        fontFamily: SBBFontFamily.sbbFontBold,
+      ),
     );
   }
 }
