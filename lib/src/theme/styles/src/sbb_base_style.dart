@@ -169,17 +169,17 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
       titleSmall: value(
         SBBTextStyles.smallFontSize,
         SBBTextStyles.smallFontHeight,
-        fontFamily: SBBTextStyles.sbbFontBold,
+        fontFamily: SBBFontFamily.sbbFontBold,
       ),
       titleMedium: value(
         SBBTextStyles.mediumFontSize,
         SBBTextStyles.mediumFontHeight,
-        fontFamily: SBBTextStyles.sbbFontBold,
+        fontFamily: SBBFontFamily.sbbFontBold,
       ),
       titleLarge: value(
         SBBTextStyles.largeFontSize,
         SBBTextStyles.largeFontHeight,
-        fontFamily: SBBTextStyles.sbbFontBold,
+        fontFamily: SBBFontFamily.sbbFontBold,
       ),
     );
   }

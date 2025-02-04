@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../theme.dart';
+import 'package:sbb_design_system_mobile/src/theme/theme.dart';
 
 class SBBPickerStyle {
   SBBPickerStyle({
@@ -11,7 +10,7 @@ class SBBPickerStyle {
   factory SBBPickerStyle.$default({required SBBBaseStyle baseStyle}) => SBBPickerStyle(
         highlightColor: baseStyle.themeValue(SBBColors.cloud, SBBColors.iron),
         textStyle: baseStyle.defaultTextStyle?.copyWith(
-          fontFamily: SBBTextStyles.sbbFontRoman,
+          fontFamily: SBBFontFamily.sbbFontRoman,
           fontSize: 24.0,
           height: 26.0 / 24.0,
         ),

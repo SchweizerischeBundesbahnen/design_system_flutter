@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 /// Use [sbbFont] instead.
 @Deprecated('Use sbbFont instead')
 @Deprecated(
-  'Use of sbbWebFont was deprecated and replaced by sbbFont for a clearer and more consistent naming convention '
+  'Use of sbbWebFont was deprecated and replaced by sbbFont for a clearer and more consistent naming convention.'
   'This feature was deprecated after v2.2.0.',
 )
 const String sbbWebFont = sbbFont;
 
-/// Global constant for default SBB font family [SBBTextStyles.sbbFontLight].
+/// Global constant for default SBB font family [SBBFontFamily.sbbFontLight].
 ///
 /// See also:
 ///
-/// * [SBBTextStyles], which contains the constants for all SBB font families.
-const String sbbFont = SBBTextStyles.sbbFontLight;
+/// * [SBBFontFamily], which contains the constants for all SBB font families.
+const String sbbFont = SBBFontFamily.sbbFontLight;
 
 /// Global constant for default SBB text style for easier use of extension methods defined in [TextStylesExtensions].
 const TextStyle sbbTextStyle = SBBTextStyles.mediumLight;
@@ -30,18 +30,10 @@ const TextStyle sbbTextStyle = SBBTextStyles.mediumLight;
 /// );
 /// ```
 ///
+/// * [SBBFontFamily], which contains the constants for all SBB font families.
 /// * <https://digital.sbb.ch/en/design-system/mobile/basics/typography/>
 class SBBTextStyles {
   SBBTextStyles._();
-
-  // Font families
-  static const String sbbFontUltraLight = 'packages/sbb_design_system_mobile/SBBWebUltraLight';
-  static const String sbbFontThin = 'packages/sbb_design_system_mobile/SBBWebThin';
-  static const String sbbFontLight = 'packages/sbb_design_system_mobile/SBBWebLight';
-  static const String sbbFontRoman = 'packages/sbb_design_system_mobile/SBBWebRoman';
-  static const String sbbFontBold = 'packages/sbb_design_system_mobile/SBBWebBold';
-  static const String sbbFontCondensedBold = 'packages/sbb_design_system_mobile/SBBWebCondensedBold';
-  static const String sbbFontCondensedHeavy = 'packages/sbb_design_system_mobile/SBBWebCondensedHeavy';
 
   // Font sizes
   static const double xxLargeFontSize = 30.0;
@@ -61,7 +53,7 @@ class SBBTextStyles {
 
   // Text styles
   static const TextStyle extraExtraLargeLight = TextStyle(
-    fontFamily: sbbFontLight,
+    fontFamily: SBBFontFamily.sbbFontLight,
     fontSize: xxLargeFontSize,
     height: xxLargeFontHeight,
     fontStyle: FontStyle.normal,
@@ -69,7 +61,7 @@ class SBBTextStyles {
   );
 
   static const TextStyle extraExtraLargeBold = TextStyle(
-    fontFamily: sbbFontBold,
+    fontFamily: SBBFontFamily.sbbFontBold,
     fontSize: xxLargeFontSize,
     height: xxLargeFontHeight,
     fontStyle: FontStyle.normal,
@@ -77,7 +69,7 @@ class SBBTextStyles {
   );
 
   static const TextStyle extraLargeLight = TextStyle(
-    fontFamily: sbbFontLight,
+    fontFamily: SBBFontFamily.sbbFontLight,
     fontSize: xLargeFontSize,
     height: xLargeFontHeight,
     fontStyle: FontStyle.normal,
@@ -85,7 +77,7 @@ class SBBTextStyles {
   );
 
   static const TextStyle extraLargeBold = TextStyle(
-    fontFamily: sbbFontBold,
+    fontFamily: SBBFontFamily.sbbFontBold,
     fontSize: xLargeFontSize,
     height: xLargeFontHeight,
     fontStyle: FontStyle.normal,
@@ -93,7 +85,7 @@ class SBBTextStyles {
   );
 
   static const TextStyle largeLight = TextStyle(
-    fontFamily: sbbFontLight,
+    fontFamily: SBBFontFamily.sbbFontLight,
     fontSize: largeFontSize,
     height: largeFontHeight,
     fontStyle: FontStyle.normal,
@@ -101,7 +93,7 @@ class SBBTextStyles {
   );
 
   static const TextStyle largeBold = TextStyle(
-    fontFamily: sbbFontBold,
+    fontFamily: SBBFontFamily.sbbFontBold,
     fontSize: largeFontSize,
     height: largeFontHeight,
     fontStyle: FontStyle.normal,
@@ -109,7 +101,7 @@ class SBBTextStyles {
   );
 
   static const TextStyle mediumLight = TextStyle(
-    fontFamily: sbbFontLight,
+    fontFamily: SBBFontFamily.sbbFontLight,
     fontSize: mediumFontSize,
     height: mediumFontHeight,
     fontStyle: FontStyle.normal,
@@ -117,7 +109,7 @@ class SBBTextStyles {
   );
 
   static const TextStyle mediumBold = TextStyle(
-    fontFamily: sbbFontBold,
+    fontFamily: SBBFontFamily.sbbFontBold,
     fontSize: mediumFontSize,
     height: mediumFontHeight,
     fontStyle: FontStyle.normal,
@@ -125,7 +117,7 @@ class SBBTextStyles {
   );
 
   static const TextStyle smallLight = TextStyle(
-    fontFamily: sbbFontLight,
+    fontFamily: SBBFontFamily.sbbFontLight,
     fontSize: smallFontSize,
     height: smallFontHeight,
     fontStyle: FontStyle.normal,
@@ -133,7 +125,7 @@ class SBBTextStyles {
   );
 
   static const TextStyle smallBold = TextStyle(
-    fontFamily: sbbFontBold,
+    fontFamily: SBBFontFamily.sbbFontBold,
     fontSize: smallFontSize,
     height: smallFontHeight,
     fontStyle: FontStyle.normal,
@@ -141,7 +133,7 @@ class SBBTextStyles {
   );
 
   static const TextStyle extraSmallLight = TextStyle(
-    fontFamily: sbbFontLight,
+    fontFamily: SBBFontFamily.sbbFontLight,
     fontSize: xSmallFontSize,
     height: xSmallFontHeight,
     fontStyle: FontStyle.normal,
@@ -149,7 +141,7 @@ class SBBTextStyles {
   );
 
   static const TextStyle extraSmallBold = TextStyle(
-    fontFamily: sbbFontBold,
+    fontFamily: SBBFontFamily.sbbFontBold,
     fontSize: xSmallFontSize,
     height: xSmallFontHeight,
     fontStyle: FontStyle.normal,
@@ -157,7 +149,7 @@ class SBBTextStyles {
   );
 
   static const TextStyle helpersLabel = TextStyle(
-    fontFamily: sbbFontLight,
+    fontFamily: SBBFontFamily.sbbFontLight,
     fontSize: 10.0,
     height: 12.0 / 10.0,
     fontStyle: FontStyle.normal,
@@ -165,29 +157,46 @@ class SBBTextStyles {
   );
 }
 
+/// Provides constants for all font families defined in the SBB design system mobile.
+///
+/// * [SBBTextStyles], which contains constants for text styles defined in the SBB design system mobile.
+/// * <https://digital.sbb.ch/en/design-system/mobile/basics/typography/>
+class SBBFontFamily {
+  SBBFontFamily._();
+
+  // Font families
+  static const String sbbFontUltraLight = 'packages/sbb_design_system_mobile/SBBWebUltraLight';
+  static const String sbbFontThin = 'packages/sbb_design_system_mobile/SBBWebThin';
+  static const String sbbFontLight = 'packages/sbb_design_system_mobile/SBBWebLight';
+  static const String sbbFontRoman = 'packages/sbb_design_system_mobile/SBBWebRoman';
+  static const String sbbFontBold = 'packages/sbb_design_system_mobile/SBBWebBold';
+  static const String sbbFontCondensedBold = 'packages/sbb_design_system_mobile/SBBWebCondensedBold';
+  static const String sbbFontCondensedHeavy = 'packages/sbb_design_system_mobile/SBBWebCondensedHeavy';
+}
+
 extension TextStylesExtensions on TextStyle {
   // Font families
 
   /// Returns an ultra light ([fontFamily]) copy of this text style
-  TextStyle get ultraLightStyle => copyWith(fontFamily: SBBTextStyles.sbbFontUltraLight);
+  TextStyle get ultraLightStyle => copyWith(fontFamily: SBBFontFamily.sbbFontUltraLight);
 
   /// Returns a thin ([fontFamily]) copy of this text style
-  TextStyle get thinStyle => copyWith(fontFamily: SBBTextStyles.sbbFontThin);
+  TextStyle get thinStyle => copyWith(fontFamily: SBBFontFamily.sbbFontThin);
 
   /// Returns a light ([fontFamily]) copy of this text style
-  TextStyle get lightStyle => copyWith(fontFamily: SBBTextStyles.sbbFontLight);
+  TextStyle get lightStyle => copyWith(fontFamily: SBBFontFamily.sbbFontLight);
 
   /// Returns a roman ([fontFamily]) copy of this text style
-  TextStyle get romanStyle => copyWith(fontFamily: SBBTextStyles.sbbFontRoman);
+  TextStyle get romanStyle => copyWith(fontFamily: SBBFontFamily.sbbFontRoman);
 
   /// Returns a bold ([fontFamily]) copy of this text style
-  TextStyle get boldStyle => copyWith(fontFamily: SBBTextStyles.sbbFontBold);
+  TextStyle get boldStyle => copyWith(fontFamily: SBBFontFamily.sbbFontBold);
 
   /// Returns a condensed bold ([fontFamily]) copy of this text style
-  TextStyle get condensedBoldStyle => copyWith(fontFamily: SBBTextStyles.sbbFontCondensedBold);
+  TextStyle get condensedBoldStyle => copyWith(fontFamily: SBBFontFamily.sbbFontCondensedBold);
 
   /// Returns a condensed heavy ([fontFamily]) copy of this text style
-  TextStyle get condensedHeavyStyle => copyWith(fontFamily: SBBTextStyles.sbbFontCondensedHeavy);
+  TextStyle get condensedHeavyStyle => copyWith(fontFamily: SBBFontFamily.sbbFontCondensedHeavy);
 
   // Text sizes (fontSize, height)
 
