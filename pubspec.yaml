@@ -10,14 +10,14 @@ version: 2.2.0 # automatically set by GH Action
 
 environment:
   sdk: ">=3.4.0 <4.0.0"
-  flutter: ">=3.22.0"
+  flutter: ">=3.24.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
   # https://pub.dev/packages/intl
-  intl: ">=0.18.0 <=0.21.0"
+  intl: '>=0.19.0'
   # https://pub.dev/packages/collection
   collection: ^1.18.0
 
