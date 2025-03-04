@@ -27,7 +27,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
-          flutter-version: 3.27.x
+          flutter-version: 3.29.x
           cache: true
 
       - name: Flutter doctor
@@ -68,14 +68,14 @@ jobs:
   build-android:
     name: "Build Android apk"
     runs-on: ubuntu-latest
-    needs: [test, changelog-test]
+    needs: [ test, changelog-test ]
     defaults:
       run:
         working-directory: example
     strategy:
       fail-fast: false
       matrix:
-        sdk: ["3.22.3", "3.27.x"]
+        sdk: [ "3.24.5", "3.29.x" ]
     steps:
       - uses: actions/checkout@v4
 
@@ -100,14 +100,14 @@ jobs:
   build-iOS:
     name: Build iOS package
     runs-on: macos-latest
-    needs: [test, changelog-test]
+    needs: [ test, changelog-test ]
     defaults:
       run:
         working-directory: example
     strategy:
       fail-fast: false
       matrix:
-        sdk: ["3.22.3", "3.27.x"]
+        sdk: [ "3.24.5", "3.29.x" ]
     steps:
       - uses: actions/checkout@v4
 

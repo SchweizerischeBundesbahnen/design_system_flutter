@@ -17,6 +17,10 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - added `extraExtraLargeBold` and `extraExtraLargeLight` to `SBBTextStyles`
 - added `SBBFontFamily` to access all font families in `SBB Design System Mobile`
 
+### Changed
+
+- Dropped support for `Flutter SDK 3.22.x`: minimum supported version is 3.24.0
+
 ### Deprecated
 
 - deprecated `sbbWebFont` in favor of `sbbFont` for clearer naming convention
