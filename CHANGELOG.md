@@ -409,10 +409,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 ### Added
 
 - Added actual content to CHANGELOG.md
--
-
-Added [TEXTSTYLES-MIGRATION-GUIDE.md](https://code.sbb.ch/projects/KD_FLUTTER/repos/design_system_flutter/browse/TEXTSTYLES-MIGRATION-GUIDE.md)
-
+- Added [TEXTSTYLES-MIGRATION-GUIDE.md](https://code.sbb.ch/projects/KD_FLUTTER/repos/design_system_flutter/browse/TEXTSTYLES-MIGRATION-GUIDE.md)
 - Added `SBBToast`
 - Added `SBBAccordion`
 - Added `SBBMultiSelect`
