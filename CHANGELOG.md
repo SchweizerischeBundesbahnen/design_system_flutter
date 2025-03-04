@@ -9,9 +9,25 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+### Added
+
+- added customization to `SBBTextStyles` via `TextStylesExtensions` - refer to documentation in `SBBTextStyles`
+- added `sbbTextStyle` for easier use of extension methods in `TextStylesExtensions`
+- added `xxLargeFontSize` and `xLargeFontSize` to `SBBTextStyles`
+- added `extraExtraLargeBold` and `extraExtraLargeLight` to `SBBTextStyles`
+- added `SBBFontFamily` to access all font families in `SBB Design System Mobile`
+
 ### Changed
 
 - Dropped support for `Flutter SDK 3.22.x`: minimum supported version is 3.24.0
+
+### Deprecated
+
+- deprecated `sbbWebFont` in favor of `sbbFont` for clearer naming convention
+
+### Fixed
+
+- fixed all wrong font weights of existing textStyles in `SBBTextStyles` via switching font family
 
 ## [2.2.0] - 2025-01-14
 
