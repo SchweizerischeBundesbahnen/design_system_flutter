@@ -65,7 +65,7 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
                   SBBPromotionBox.custom(
                     content: Text(
                       'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
-                      style: SBBTextStyles.mediumLight,
+                      style: SBBTextStyles.mediumLight.copyWith(color: SBBColors.black),
                     ),
                     badgeText: 'Custom with different color',
                     badgeColor: SBBColors.royal,
@@ -86,7 +86,7 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
                   SBBPromotionBox.custom(
                     content: Text(
                       'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
-                      style: SBBTextStyles.mediumLight,
+                      style: SBBTextStyles.mediumLight.copyWith(color: SBBColors.black),
                     ),
                     onTap: () {},
                     badgeText: 'Custom with on tap',
