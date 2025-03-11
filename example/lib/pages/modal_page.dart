@@ -98,9 +98,9 @@ class _ModalPageState extends State<ModalPage> {
           header: const Padding(
             padding: EdgeInsets.all(sbbDefaultSpacing),
             child: Row(
-              spacing: sbbDefaultSpacing,
               children: [
                 Icon(SBBIcons.app_icon_small),
+                SizedBox(width: sbbDefaultSpacing),
                 Text('Custom'),
               ],
             ),

@@ -12,6 +12,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 ### Added
 - added .custom constructor to `PromotionBox` to allow for dynamic content
 - added missing copyWith to `PromotionBoxStyle`
+- added `showCloseButton` and `backgroundColor` to `SBBModalPopup` and `SBBModalSheet` and their show methods
 
 ## [2.3.0] - 2025-03-04
 
