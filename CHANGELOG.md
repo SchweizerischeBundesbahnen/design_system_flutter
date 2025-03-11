@@ -10,8 +10,13 @@ It is expected that you keep this format strictly, since we depend on it in our 
 ## [Unreleased]
 
 ### Added
-- added .custom constructor to `PromotionBox` to allow for dynamic content
-- added missing copyWith to `PromotionBoxStyle`
+
+- added `custom` constructor to `SBBPromotionBox` to allow for complete control over the content
+- added `copyWith` to `PromotionBoxStyle`
+
+### Changed
+
+- BREAKING: default constructor of `SBBPromotionBox` is not `const`
 
 ## [2.3.0] - 2025-03-04
 
