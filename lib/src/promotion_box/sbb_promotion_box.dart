@@ -14,77 +14,17 @@ class SBBPromotionBox extends StatefulWidget {
     Key? key,
     Function(CloseableBoxController controller)? onControllerCreated,
     GestureTapCallback? onTap,
-    bool isCloseable = true,
     GestureTapCallback? onClose,
     String? onTapSemanticsHint,
   }) : this._base(
-          content: Builder(builder: (BuildContext context) {
-            final textTheme = Theme.of(context).textTheme;
-            final crossColor = SBBBaseStyle.of(context).iconColor;
-
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        title,
-                        style: textTheme.titleMedium,
-                      ),
-                    ),
-                    if (isCloseable) const SizedBox(width: sbbIconSizeSmall),
-                    const SizedBox(width: 8.0),
-                  ],
-                ),
-                const SizedBox(height: 4.0),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        description,
-                        style: textTheme.bodyMedium,
-                      ),
-                    ),
-                    if (onTap != null)
-                      Icon(
-                        SBBIcons.chevron_small_right_small,
-                        color: crossColor,
-                        size: sbbIconSizeSmall,
-                      )
-                    else
-                      const SizedBox(
-                        width: sbbDefaultSpacing * 0.5,
-                      ),
-                  ],
-                ),
-              ],
-            );
-          }),
-          badgeText: badgeText,
-          isClosable: isCloseable,
-          onClose: onClose,
+          content: _DefaultContent(title: title, description: description, onTap: onTap, onClose: onClose),
           key: key,
+          badgeText: badgeText,
           onControllerCreated: onControllerCreated,
           onTap: onTap,
+          onClose: onClose,
           onTapSemanticsHint: onTapSemanticsHint,
         );
-
-  const SBBPromotionBox._base({
-    required this.content,
-    required this.badgeText,
-    super.key,
-    this.onControllerCreated,
-    this.onTap,
-    this.onTapSemanticsHint,
-    this.isClosable = false,
-    this.onClose,
-    this.leading,
-    this.trailing,
-    this.badgeColor,
-    this.badgeShadowColor,
-    this.gradientColors,
-  });
 
   const SBBPromotionBox.custom({
     required Widget content,
@@ -105,7 +45,6 @@ class SBBPromotionBox extends StatefulWidget {
           onControllerCreated: onControllerCreated,
           onTap: onTap,
           onTapSemanticsHint: onTapSemanticsHint,
-          isClosable: false,
           onClose: null,
           leading: leading,
           trailing: trailing,
@@ -114,10 +53,24 @@ class SBBPromotionBox extends StatefulWidget {
           gradientColors: gradientColors,
         );
 
+  const SBBPromotionBox._base({
+    required this.content,
+    required this.badgeText,
+    super.key,
+    this.onControllerCreated,
+    this.onTap,
+    this.onTapSemanticsHint,
+    this.onClose,
+    this.leading,
+    this.trailing,
+    this.badgeColor,
+    this.badgeShadowColor,
+    this.gradientColors,
+  });
+
   final Widget content;
   final String badgeText;
   final Function(CloseableBoxController controller)? onControllerCreated;
-  final bool isClosable;
   final GestureTapCallback? onTap;
   final GestureTapCallback? onClose;
   final String? onTapSemanticsHint;
@@ -287,7 +240,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
                 badgeColor: widget.badgeColor,
               ),
             ),
-            if (widget.isClosable)
+            if (widget.onClose != null)
               Align(
                 alignment: Alignment.topRight,
                 child: Padding(
@@ -295,7 +248,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
                   child: SBBCloseButton(
                     onTap: () async {
                       await _controller.hide();
-                      widget.onClose?.call();
+                      widget.onClose!.call();
                     },
                   ),
                 ),
@@ -303,6 +256,65 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
           ],
         ),
       ),
+    );
+  }
+}
+
+class _DefaultContent extends StatelessWidget {
+  const _DefaultContent({
+    required this.title,
+    required this.description,
+    this.onTap,
+    this.onClose,
+  });
+
+  final String title;
+  final String description;
+  final GestureTapCallback? onTap;
+  final GestureTapCallback? onClose;
+
+  @override
+  Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
+    final crossColor = SBBBaseStyle.of(context).iconColor;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        Row(
+          children: [
+            Expanded(
+              child: Text(
+                title,
+                style: textTheme.titleMedium,
+              ),
+            ),
+            if (onClose != null) const SizedBox(width: sbbIconSizeSmall),
+            const SizedBox(width: 8.0),
+          ],
+        ),
+        const SizedBox(height: 4.0),
+        Row(
+          children: [
+            Expanded(
+              child: Text(
+                description,
+                style: textTheme.bodyMedium,
+              ),
+            ),
+            if (onTap != null)
+              Icon(
+                SBBIcons.chevron_small_right_small,
+                color: crossColor,
+                size: sbbIconSizeSmall,
+              )
+            else
+              const SizedBox(
+                width: sbbDefaultSpacing * 0.5,
+              ),
+          ],
+        ),
+      ],
     );
   }
 }

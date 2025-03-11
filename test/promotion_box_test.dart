@@ -14,13 +14,14 @@ void main() {
         badgeText: 'Default',
         title: title,
         description: description,
+        onClose: () {},
       ),
       const SizedBox(height: 8.0),
       SBBPromotionBox(
-        badgeText: 'Is Closable = false',
+        badgeText: 'onClose null',
         title: title,
         description: description,
-        isCloseable: false,
+        onClose: null,
       ),
       const SizedBox(height: 8.0),
       SBBPromotionBox(
@@ -28,6 +29,7 @@ void main() {
         title: title,
         description: description,
         onTap: () {},
+        onClose: () {},
       ),
       const SizedBox(height: 8.0),
       SBBPromotionBox(
@@ -36,6 +38,7 @@ void main() {
             'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
         description: description,
         onTap: () {},
+        onClose: () {},
       ),
       const SizedBox(height: 8.0),
       SBBPromotionBox.custom(

@@ -17,6 +17,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 ### Changed
 
 - BREAKING: default constructor of `SBBPromotionBox` is not `const`
+- BREAKING: removed `isCloseable` in `SBBPromotionBox` - merge behavior with `onClose`
 
 ## [2.3.0] - 2025-03-04
 
