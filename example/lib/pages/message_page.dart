@@ -30,6 +30,7 @@ class _MessagePageState extends State<MessagePage> {
         SBBCheckboxListItem(
           value: _isLoading,
           label: 'Is loading',
+          isLastElement: true,
           onChanged: (value) => setState(() => _isLoading = value),
         ),
         const SizedBox(height: sbbDefaultSpacing),

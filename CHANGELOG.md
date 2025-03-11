@@ -13,13 +13,15 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 - added `custom` constructor to `SBBPromotionBox` to allow for complete control over the content
 - added `copyWith` to `PromotionBoxStyle`
+- added `showCloseButton` and `backgroundColor` to `SBBModalPopup` and `SBBModalSheet` and their show methods
 
 ### Changed
 
-- BREAKING: default constructor of `SBBPromotionBox` is not `const`
+- BREAKING: default constructor of `SBBPromotionBox` is not compile constant
 - BREAKING: removed `isCloseable` in `SBBPromotionBox` - merge behavior with nullable `onClose`
 - BREAKING: changed `description` to `subtitle` in `SBBPromotionBox` for more consistency with other Widgets
 - BREAKING: renamed `CloseableBoxController` to `ClosableBoxController`
+
 
 ## [2.3.0] - 2025-03-04
 
