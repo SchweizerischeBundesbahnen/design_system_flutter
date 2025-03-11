@@ -261,7 +261,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
                         children: [
                           if (widget.leading != null)
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 0, 8.0, 0),
+                              padding: const EdgeInsets.only(right: 8.0),
                               child: widget.leading!,
                             ),
                           Expanded(
@@ -269,7 +269,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
                           ),
                           if (widget.trailing != null)
                             Padding(
-                              padding: const EdgeInsets.fromLTRB(8.0, 0, 8.0, 0),
+                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
                               child: widget.trailing!,
                             ),
                         ],
@@ -290,18 +290,14 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
             if (widget.isClosable)
               Align(
                 alignment: Alignment.topRight,
-                child: Column(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: 14.0),
-                      child: SBBCloseButton(
-                        onTap: () async {
-                          await _controller.hide();
-                          widget.onClose?.call();
-                        },
-                      ),
-                    ),
-                  ],
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 14.0),
+                  child: SBBCloseButton(
+                    onTap: () async {
+                      await _controller.hide();
+                      widget.onClose?.call();
+                    },
+                  ),
                 ),
               ),
           ],

@@ -9,6 +9,10 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+### Added
+- added .custom constructor to `PromotionBox` to allow for dynamic content
+- added missing copyWith to `PromotionBoxStyle`
+
 ## [2.3.0] - 2025-03-04
 
 ### Added
