@@ -13,21 +13,21 @@ void main() {
       SBBPromotionBox(
         badgeText: 'Default',
         title: title,
-        description: description,
+        subtitle: description,
         onClose: () {},
       ),
       const SizedBox(height: 8.0),
       SBBPromotionBox(
         badgeText: 'onClose null',
         title: title,
-        description: description,
+        subtitle: description,
         onClose: null,
       ),
       const SizedBox(height: 8.0),
       SBBPromotionBox(
         badgeText: 'Clickable',
         title: title,
-        description: description,
+        subtitle: description,
         onTap: () {},
         onClose: () {},
       ),
@@ -36,7 +36,7 @@ void main() {
         badgeText: 'With way too long title and badge text',
         title:
             'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
-        description: description,
+        subtitle: description,
         onTap: () {},
         onClose: () {},
       ),

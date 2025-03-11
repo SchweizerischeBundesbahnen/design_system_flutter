@@ -11,10 +11,10 @@ class PromotionBoxPage extends StatefulWidget {
 }
 
 class _PromotionBoxPageState extends State<PromotionBoxPage> {
-  late CloseableBoxController defaultController;
-  late CloseableBoxController closableController;
-  late CloseableBoxController clickableController;
-  late CloseableBoxController extraController;
+  late ClosableBoxController defaultController;
+  late ClosableBoxController closableController;
+  late ClosableBoxController clickableController;
+  late ClosableBoxController extraController;
 
   static const _title = 'Bessere Übersicht.';
   static const _description = 'Erkennen Sie nun schneller, auf welchen Perrons Durchsagen vorhanden sind.';
@@ -34,7 +34,7 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
                   SBBPromotionBox(
                     badgeText: 'Default',
                     title: _title,
-                    description: _description,
+                    subtitle: _description,
                     onControllerCreated: (c) => defaultController = c,
                     onClose: () {},
                   ),
@@ -42,14 +42,14 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
                   SBBPromotionBox(
                     badgeText: 'onClose null',
                     title: _title,
-                    description: _description,
+                    subtitle: _description,
                     onControllerCreated: (c) => closableController = c,
                   ),
                   const SizedBox(height: 8.0),
                   SBBPromotionBox(
                       badgeText: 'Clickable',
                       title: _title,
-                      description: _description,
+                      subtitle: _description,
                       onControllerCreated: (c) => clickableController = c,
                       onTap: () {},
                       onClose: () {}),
@@ -57,8 +57,8 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
                   SBBPromotionBox(
                     badgeText: 'With way too long title and badge text',
                     title:
-                        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
-                    description: _description,
+                        'Lorem ipsum dolor sit amet, hellomaa consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
+                    subtitle: _description,
                     onControllerCreated: (c) => extraController = c,
                     onClose: () {},
                   ),
