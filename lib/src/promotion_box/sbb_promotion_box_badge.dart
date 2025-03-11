@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
-class PromotionBadge extends StatelessWidget {
-  const PromotionBadge({
+/// Only used within the [SBBPromotionBox].
+class SBBPromotionBoxBadge extends StatelessWidget {
+  const SBBPromotionBoxBadge({
     required this.text,
     this.badgeColor,
     super.key,
@@ -15,6 +16,7 @@ class PromotionBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = SBBControlStyles.of(context).promotionBox!;
+    final resolvedBadgeColor = badgeColor ?? style.badgeColor;
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: 8.0,
@@ -22,16 +24,10 @@ class PromotionBadge extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         border: Border.all(color: style.borderColor!),
-        borderRadius: const BorderRadius.all(
-          Radius.circular(20.0),
-        ),
-        color: badgeColor ?? style.badgeColor,
+        borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+        color: resolvedBadgeColor,
       ),
-      child: Text(
-        text,
-        style: style.badgeTextStyle,
-        maxLines: 1,
-      ),
+      child: Text(text, style: style.badgeTextStyle, maxLines: 1),
     );
   }
 }
