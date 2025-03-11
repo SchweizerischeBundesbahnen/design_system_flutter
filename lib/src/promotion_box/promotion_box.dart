@@ -7,26 +7,125 @@ import 'promotion_badge.dart';
 part 'promotion_box.assets.dart';
 
 class SBBPromotionBox extends StatefulWidget {
-  const SBBPromotionBox({
-    required this.title,
-    required this.description,
+  SBBPromotionBox({
+    required String title,
+    required String description,
+    required String badgeText,
+    Key? key,
+    Function(CloseableBoxController controller)? onControllerCreated,
+    GestureTapCallback? onTap,
+    bool isCloseable = true,
+    GestureTapCallback? onClose,
+    String? onTapSemanticsHint,
+  }) : this._base(
+          content: Builder(builder: (BuildContext context) {
+            final textTheme = Theme.of(context).textTheme;
+            final crossColor = SBBBaseStyle.of(context).iconColor;
+
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        title,
+                        style: textTheme.titleMedium,
+                      ),
+                    ),
+                    if (isCloseable) const SizedBox(width: sbbIconSizeSmall),
+                    const SizedBox(width: 8.0),
+                  ],
+                ),
+                const SizedBox(height: 4.0),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        description,
+                        style: textTheme.bodyMedium,
+                      ),
+                    ),
+                    if (onTap != null)
+                      Icon(
+                        SBBIcons.chevron_small_right_small,
+                        color: crossColor,
+                        size: sbbIconSizeSmall,
+                      )
+                    else
+                      const SizedBox(
+                        width: sbbDefaultSpacing * 0.5,
+                      ),
+                  ],
+                ),
+              ],
+            );
+          }),
+          badgeText: badgeText,
+          isClosable: isCloseable,
+          onClose: onClose,
+          key: key,
+          onControllerCreated: onControllerCreated,
+          onTap: onTap,
+          onTapSemanticsHint: onTapSemanticsHint,
+        );
+
+  const SBBPromotionBox._base({
+    required this.content,
     required this.badgeText,
     super.key,
     this.onControllerCreated,
     this.onTap,
-    this.isCloseable = true,
-    this.onClose,
     this.onTapSemanticsHint,
+    this.isClosable = false,
+    this.onClose,
+    this.leading,
+    this.trailing,
+    this.badgeColor,
+    this.badgeShadowColor,
+    this.gradientColors,
   });
 
-  final String title;
-  final String description;
+  const SBBPromotionBox.custom({
+    required Widget content,
+    required String badgeText,
+    Key? key,
+    Function(CloseableBoxController controller)? onControllerCreated,
+    GestureTapCallback? onTap,
+    String? onTapSemanticsHint,
+    Widget? leading,
+    Widget? trailing,
+    Color? badgeColor,
+    Color? badgeShadowColor,
+    List<Color>? gradientColors,
+  }) : this._base(
+          content: content,
+          badgeText: badgeText,
+          key: key,
+          onControllerCreated: onControllerCreated,
+          onTap: onTap,
+          onTapSemanticsHint: onTapSemanticsHint,
+          isClosable: false,
+          onClose: null,
+          leading: leading,
+          trailing: trailing,
+          badgeColor: badgeColor,
+          badgeShadowColor: badgeShadowColor,
+          gradientColors: gradientColors,
+        );
+
+  final Widget content;
   final String badgeText;
   final Function(CloseableBoxController controller)? onControllerCreated;
+  final bool isClosable;
   final GestureTapCallback? onTap;
-  final bool isCloseable;
   final GestureTapCallback? onClose;
   final String? onTapSemanticsHint;
+  final Widget? leading;
+  final Widget? trailing;
+  final Color? badgeColor;
+  final Color? badgeShadowColor;
+  final List<Color>? gradientColors;
 
   @override
   State<SBBPromotionBox> createState() => _SBBPromotionBoxState();
@@ -81,8 +180,6 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
-    final crossColor = SBBBaseStyle.of(context).iconColor;
     final style = SBBControlStyles.of(context).promotionBox!;
     final iconStyle = SBBButtonStyles.of(context).iconTextStyle;
     final paddingTop = _badgeSize.height / 2.0;
@@ -105,7 +202,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: style.badgeShadowColor!,
+                      color: widget.badgeShadowColor ?? style.badgeShadowColor!,
                       spreadRadius: 10.0,
                     ),
                   ],
@@ -129,7 +226,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: style.gradientColors!,
+                  colors: widget.gradientColors ?? style.gradientColors!,
                   stops: const [
                     0.0,
                     0.406,
@@ -158,42 +255,23 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
                         8.0,
                         sbbDefaultSpacing,
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  widget.title,
-                                  style: textTheme.titleMedium,
-                                ),
-                              ),
-                              if (widget.isCloseable) const SizedBox(width: sbbIconSizeSmall),
-                              const SizedBox(width: 8.0),
-                            ],
+                          if (widget.leading != null)
+                            Padding(
+                              padding: const EdgeInsets.only(right: 8.0),
+                              child: widget.leading!,
+                            ),
+                          Expanded(
+                            child: widget.content,
                           ),
-                          const SizedBox(height: 4.0),
-                          Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  widget.description,
-                                  style: textTheme.bodyMedium,
-                                ),
-                              ),
-                              if (widget.onTap != null)
-                                Icon(
-                                  SBBIcons.chevron_small_right_small,
-                                  color: crossColor,
-                                  size: sbbIconSizeSmall,
-                                )
-                              else
-                                const SizedBox(
-                                  width: sbbDefaultSpacing * 0.5,
-                                ),
-                            ],
-                          ),
+                          if (widget.trailing != null)
+                            Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: widget.trailing!,
+                            ),
                         ],
                       ),
                     ),
@@ -206,9 +284,10 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
               child: PromotionBadge(
                 key: _badgeKey,
                 text: widget.badgeText,
+                badgeColor: widget.badgeColor,
               ),
             ),
-            if (widget.isCloseable)
+            if (widget.isClosable)
               Align(
                 alignment: Alignment.topRight,
                 child: Padding(

@@ -54,6 +54,24 @@ class PromotionBoxStyle {
   final List<Color>? gradientColors;
   final double? textureOpacity;
 
+  PromotionBoxStyle copyWith({
+    Color? borderColor,
+    Color? badgeShadowColor,
+    Color? badgeColor,
+    TextStyle? badgeTextStyle,
+    List<Color>? gradientColors,
+    double? textureOpacity,
+  }) {
+    return PromotionBoxStyle(
+      borderColor: borderColor ?? this.borderColor,
+      badgeShadowColor: badgeShadowColor ?? this.badgeShadowColor,
+      badgeColor: badgeColor ?? this.badgeColor,
+      badgeTextStyle: badgeTextStyle ?? this.badgeTextStyle,
+      gradientColors: gradientColors ?? this.gradientColors,
+      textureOpacity: textureOpacity ?? this.textureOpacity,
+    );
+  }
+
   static PromotionBoxStyle lerp(
     PromotionBoxStyle? $this,
     PromotionBoxStyle? other,

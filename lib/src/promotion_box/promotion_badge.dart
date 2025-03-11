@@ -5,10 +5,12 @@ import '../../sbb_design_system_mobile.dart';
 class PromotionBadge extends StatelessWidget {
   const PromotionBadge({
     required this.text,
+    this.badgeColor,
     super.key,
   });
 
   final String text;
+  final Color? badgeColor;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,7 @@ class PromotionBadge extends StatelessWidget {
         borderRadius: const BorderRadius.all(
           Radius.circular(20.0),
         ),
-        color: style.badgeColor,
+        color: badgeColor ?? style.badgeColor,
       ),
       child: Text(
         text,

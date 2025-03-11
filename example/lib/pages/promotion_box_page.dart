@@ -1,5 +1,5 @@
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import '../native_app.dart';
 
@@ -43,7 +43,7 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
                     title: _title,
                     description: _description,
                     onControllerCreated: (c) => closableController = c,
-                    isCloseable: true,
+                    isCloseable: false,
                   ),
                   const SizedBox(height: 8.0),
                   SBBPromotionBox(
@@ -62,6 +62,40 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
                     onControllerCreated: (c) => extraController = c,
                   ),
                   const SizedBox(height: sbbDefaultSpacing),
+                  SBBPromotionBox.custom(
+                    content: Text(
+                      'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
+                      style: SBBTextStyles.mediumLight.copyWith(color: SBBColors.black),
+                    ),
+                    badgeText: 'Custom with different color',
+                    badgeColor: SBBColors.royal,
+                    badgeShadowColor: SBBColors.royal.withAlpha((255.0 * 0.2).round()),
+                    gradientColors: [SBBColors.cloud, SBBColors.milk, SBBColors.milk, SBBColors.cloud],
+                  ),
+                  const SizedBox(height: sbbDefaultSpacing),
+                  SBBPromotionBox.custom(
+                    content: Text(
+                      'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
+                      style: SBBTextStyles.mediumLight,
+                    ),
+                    badgeText: 'Custom leading and trailing widget',
+                    leading: Icon(SBBIcons.train_large),
+                    trailing: SBBTertiaryButtonSmall(label: 'Trailing Button', onPressed: () {}),
+                  ),
+                  const SizedBox(height: sbbDefaultSpacing),
+                  SBBPromotionBox.custom(
+                    content: Text(
+                      'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
+                      style: SBBTextStyles.mediumLight.copyWith(color: SBBColors.black),
+                    ),
+                    onTap: () {},
+                    badgeText: 'Custom with on tap',
+                    leading: Icon(SBBIcons.train_large),
+                    trailing: SBBTertiaryButtonSmall(label: 'Trailing Button', onPressed: () {}),
+                    badgeColor: SBBColors.royal,
+                    badgeShadowColor: SBBColors.royal.withAlpha((255.0 * 0.2).round()),
+                    gradientColors: [SBBColors.cloud, SBBColors.milk, SBBColors.milk, SBBColors.cloud],
+                  )
                 ],
               ),
             ),
