@@ -6,10 +6,10 @@ import 'sbb_promotion_box_badge.dart';
 
 part 'promotion_box.assets.dart';
 
-const _gradientStops = const [0.0, 0.406, 0.672, 1.0];
+const _gradientStops = [0.0, 0.406, 0.672, 1.0];
 
 /// The SBB Promotion Box.
-/// Use according to [documentation](https://digital.sbb.ch/de/design-system/mobile/components/promotion-box/)
+/// Use according to [documentation](https://digital.sbb.ch/en/design-system/mobile/components/promotion-box/)
 ///
 /// The default constructor creates the Promotion Box as specified in the design guidelines.
 /// For complete customization, use the `custom` constructor.

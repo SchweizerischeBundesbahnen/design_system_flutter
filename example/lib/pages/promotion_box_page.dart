@@ -57,7 +57,7 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
                   SBBPromotionBox(
                     badgeText: 'With way too long title and badge text',
                     title:
-                        'Lorem ipsum dolor sit amet, hellomaa consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
+                        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
                     subtitle: _description,
                     onControllerCreated: (c) => extraController = c,
                     onClose: () {},
