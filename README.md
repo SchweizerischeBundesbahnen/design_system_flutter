@@ -131,7 +131,7 @@ See [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
 
 ### Releasing
 
-See [Release.md](Release.md).
+See [RELEASE.md](RELEASE.md).
 
 <a id="Contributing"></a>
 
