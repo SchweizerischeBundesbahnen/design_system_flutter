@@ -17,6 +17,12 @@ const _iconPadding = 4.0;
 ///
 /// Use [SBBSliderStyle] to customize the slider theme.
 ///
+/// [onChangeStart] is called when the user starts to select a new value for
+/// the slider.
+///
+/// [onChangeEnd] is called when the user is done selecting a new value for
+/// the slider.
+///
 /// See also:
 ///
 /// * <https://digital.sbb.ch/de/design-system/mobile/components/slider>
@@ -29,9 +35,13 @@ class SBBSlider extends StatelessWidget {
     this.max = 1.0,
     this.startIcon = SBBIcons.walk_slow_small,
     this.endIcon = SBBIcons.walk_fast_small,
+    this.onChangeStart,
+    this.onChangeEnd,
   });
 
   final ValueChanged<double>? onChanged;
+  final ValueChanged<double>? onChangeStart;
+  final ValueChanged<double>? onChangeEnd;
   final double value;
   final double min;
   final double max;
@@ -96,6 +106,8 @@ class SBBSlider extends StatelessWidget {
           min: min,
           max: max,
           onChanged: onChanged,
+          onChangeStart: onChangeStart,
+          onChangeEnd: onChangeEnd,
         ),
       ),
     );
