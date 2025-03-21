@@ -14,6 +14,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - added `custom` constructor to `SBBPromotionBox` to allow for complete control over the content
 - added `copyWith` to `PromotionBoxStyle`
 - added `showCloseButton` and `backgroundColor` to `SBBModalPopup` and `SBBModalSheet` and their show methods
+- added `onChangeStart` and `onChangeEnd` to `SBBSlider`
 
 ### Changed
 
