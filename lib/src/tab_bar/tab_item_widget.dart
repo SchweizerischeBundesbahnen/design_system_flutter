@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
-class TabItemWidget extends StatelessWidget {
+class TabItemWidget extends StatelessWidget implements PreferredSizeWidget {
   const TabItemWidget(
+    this.size,
     this.icon,
     this.selected, {
     super.key,
@@ -12,22 +13,25 @@ class TabItemWidget extends StatelessWidget {
 
   factory TabItemWidget.fromTabBarItem(
     TabBarItem item,
+    Size? size,
     bool selected,
   ) =>
       TabItemWidget(
+        size,
         item.icon,
         selected,
       );
 
-  factory TabItemWidget.warning() => const TabItemWidget(
-        SBBIcons.sign_exclamation_point_small,
-        false,
-        warning: true,
-      );
+  // factory TabItemWidget.warning() => const TabItemWidget(
+  //       SBBIcons.sign_exclamation_point_small,
+  //       false,
+  //       warning: true,
+  //     );
 
-  static const portraitSize = 44.0;
-  static const landscapeSize = 36.0;
+  static const portraitSize = Size(44.0, 44.0);
+  static const landscapeSize = Size(36.0, 36.0);
 
+  final Size? size;
   final IconData icon;
   final bool selected;
   final bool warning;
@@ -36,7 +40,7 @@ class TabItemWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = SBBBaseStyle.of(context);
     final portrait = MediaQuery.of(context).orientation == Orientation.portrait;
-    final size = portrait ? portraitSize : landscapeSize;
+    final resolvedSize = size ?? (portrait ? portraitSize : landscapeSize);
 
     final foregroundColor = style.themeValue(SBBColors.white, SBBColors.black);
     final backgroundColor = style.themeValue(SBBColors.black, SBBColors.white);
@@ -69,12 +73,16 @@ class TabItemWidget extends StatelessWidget {
         : iconWidget;
 
     return Container(
-      width: size,
-      height: size,
+      width: resolvedSize.width,
+      height: resolvedSize.height,
       margin: const EdgeInsets.only(bottom: 8.0),
       color: containerColor,
       decoration: decoration,
       child: child,
     );
   }
+
+  @override
+  // TODO: implement preferredSize
+  Size get preferredSize => Size(44.0, 44.0);
 }

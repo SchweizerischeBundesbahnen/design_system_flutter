@@ -16,13 +16,11 @@ class _HeaderBoxPageState extends State<HeaderBoxPage> {
   ];
 
   late PageController _pageViewController;
-  late TabBarController _tabBarController;
 
   @override
   void initState() {
     super.initState();
     _pageViewController = PageController();
-    _tabBarController = TabBarController(items.first);
   }
 
   @override
@@ -51,7 +49,6 @@ class _HeaderBoxPageState extends State<HeaderBoxPage> {
           onTabChanged: (task) async {
             task.then((value) => _handlePageViewChanged(int.parse(value.id)));
           },
-          controller: _tabBarController,
           onTap: (tab) {},
         )
       ],
@@ -192,6 +189,7 @@ class _ScrollablePageState extends State<ScrollablePage> {
   bool _headerBoxExpanded = false;
   final _expandedHeight = 300.0;
   final _collapsedHeight = 0.0;
+
   @override
   Widget build(BuildContext context) {
     final sbbToast = SBBToast.of(context);
