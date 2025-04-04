@@ -23,6 +23,14 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - BREAKING: changed `description` to `subtitle` in `SBBPromotionBox` for more consistency with other Widgets
 - BREAKING: renamed `CloseableBoxController` to `ClosableBoxController`
 
+### Removed
+
+- removed deprecated `SBBIconFormButton`
+- removed deprecated `SBBRadioButton` in favor of `SBBRadio`
+- removed deprecated `SBBRadioButtonListItem` in favor of `SBBRadioListItem`
+- removed deprecated `sbbWebFont` in favor of `sbbFont`
+- removed deprecated `SBBPrimaryButtonNegative`
+- removed deprecated `SBBIconButtonSmallBorderless`
 
 ## [2.3.0] - 2025-03-04
 
