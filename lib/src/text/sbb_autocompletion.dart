@@ -191,6 +191,8 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>> with Widgets
     if (widget.controller?.text != null) {
       _currentText = widget.controller!.text;
     }
+
+    _textChanged = (value) => widget.onChanged?.call(value);
   }
 
   @override
@@ -295,14 +297,13 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>> with Widgets
                                     () {
                                       final String newText = favorite.toString();
                                       _textField.controller?.text = newText;
+                                      _textChanged?.call(newText);
                                       if (widget.submitOnSuggestionTap) {
                                         _textField.focusNode?.unfocus();
                                         widget.itemSubmitted(favorite);
                                         if (widget.clearOnSubmit) {
                                           clear();
                                         }
-                                      } else {
-                                        _textChanged?.call(newText);
                                       }
                                     },
                                   );
@@ -329,14 +330,13 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>> with Widgets
                                 setState(() {
                                   final String newText = suggestion.toString();
                                   _textField.controller?.text = newText;
+                                  _textChanged?.call(newText);
                                   if (widget.submitOnSuggestionTap) {
                                     _textField.focusNode?.unfocus();
                                     widget.itemSubmitted(suggestion);
                                     if (widget.clearOnSubmit) {
                                       clear();
                                     }
-                                  } else {
-                                    _textChanged?.call(newText);
                                   }
                                 });
                               },
