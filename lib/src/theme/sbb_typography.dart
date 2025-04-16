@@ -1,13 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Use [sbbFont] instead.
-@Deprecated('Use sbbFont instead')
-@Deprecated(
-  'Use of sbbWebFont was deprecated and replaced by sbbFont for a clearer and more consistent naming convention.'
-  'This feature was deprecated after v2.2.0.',
-)
-const String sbbWebFont = sbbFont;
-
 /// Global constant for default SBB font family [SBBFontFamily.sbbFontLight].
 ///
 /// See also:

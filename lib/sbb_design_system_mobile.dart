@@ -19,7 +19,6 @@ export 'src/pagination/sbb_pagination.dart';
 export 'src/picker/sbb_picker.dart';
 export 'src/promotion_box/promotion_box.dart';
 export 'src/radio/radio.dart';
-export 'src/radio_button/radio_button.dart';
 export 'src/segmented_button/sbb_segmented_button.dart';
 export 'src/select/sbb_select.dart';
 export 'src/shared/shared.dart';

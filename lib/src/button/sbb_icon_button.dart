@@ -118,39 +118,6 @@ class SBBIconButtonSmallNegative extends StatelessWidget {
   }
 }
 
-/// Borderless variant of the [SBBIconButtonSmall].
-///
-/// THIS IS NOT IN THE MOBILE DESIGN SPECS. Can be removed in a future version.
-///
-/// The [icon] parameter must not be null. Make sure to use small icons
-/// ([sbbIconSizeSmall] - 24x24).
-///
-/// If [onPressed] callback is null, then the button will be disabled.
-@Deprecated("This component is not in the design specs and will be removed in the next major version.")
-class SBBIconButtonSmallBorderless extends StatelessWidget {
-  const SBBIconButtonSmallBorderless({
-    super.key,
-    required this.icon,
-    required this.onPressed,
-    this.focusNode,
-  });
-
-  final IconData icon;
-  final VoidCallback? onPressed;
-  final FocusNode? focusNode;
-
-  @override
-  Widget build(BuildContext context) {
-    return _SBBIconButtonSmallRaw(
-      key: key,
-      icon: icon,
-      onPressed: onPressed,
-      style: SBBButtonStyles.of(context).iconSmallBorderlessStyle,
-      focusNode: focusNode,
-    );
-  }
-}
-
 /// Base widget for [SBBIconButtonSmall] and [SBBIconButtonSmallNegative].
 class _SBBIconButtonSmallRaw extends StatelessWidget {
   const _SBBIconButtonSmallRaw({
