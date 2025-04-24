@@ -6,7 +6,7 @@ issue_tracker: https://github.com/SchweizerischeBundesbahnen/design_system_flutt
 topics: [ icons, theme, design, design-system ]
 
 # set by Github Action
-version: 2.3.0 # automatically set by GH Action 
+version: 3.0.0 # automatically set by GH Action 
 
 environment:
   sdk: ">=3.4.0 <4.0.0"
