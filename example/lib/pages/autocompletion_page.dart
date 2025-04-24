@@ -28,6 +28,9 @@ class AutocompletionPageState extends State<AutocompletionPage> {
       itemSubmitted: (String submitted) {
         debugPrint('Item submitted: $submitted');
       },
+      onChanged: (value) {
+        debugPrint('onChanged: $value');
+      },
       suggestions: [
         'aaa',
         'aaa1',
