@@ -32,6 +32,10 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - removed deprecated `SBBPrimaryButtonNegative`
 - removed deprecated `SBBIconButtonSmallBorderless`
 
+### Fixed
+
+- fixed `onChanged` of `SBBAutocompletion` (#304)
+
 ## [2.3.0] - 2025-03-04
 
 ### Added
