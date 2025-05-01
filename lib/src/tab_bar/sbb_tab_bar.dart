@@ -24,7 +24,7 @@ class SBBTabBar extends StatefulWidget {
     this.warningSemantics,
     this.showWarning = false,
     int? warningIndex,
-  })  : warningIndex = warningIndex ?? items.length - 1;
+  }) : warningIndex = warningIndex ?? items.length - 1;
 
   final List<TabBarItem> items;
   final Future<void> Function(Future<TabBarItem> tabTask) onTabChanged;
@@ -170,7 +170,7 @@ class _IconLayer extends StatelessWidget {
   const _IconLayer(
     this.items,
     this.selectedTab,
-    );
+  );
 
   final List<TabBarItem> items;
   final TabBarItem selectedTab;
@@ -262,11 +262,14 @@ class _IconLayerDelegate extends MultiChildLayoutDelegate {
 
       onNotification(_TabBarNotification(TabBarDrawData(positions, sizes, spaceBetween)));
     } else {
-      final spaceBetween = (width - items.map((e) => iconSizes[e]!.width + textSizes[e]!.width + sbbDefaultSpacing).sum) / (items.length + 1);
+      final spaceBetween =
+          (width - items.map((e) => iconSizes[e]!.width + textSizes[e]!.width + sbbDefaultSpacing).sum) /
+              (items.length + 1);
 
       double iconLeft = spaceBetween;
       for (final tab in items) {
-        final elementSize = Size(iconSizes[tab]!.width + textSizes[tab]!.width + sbbDefaultSpacing, iconSizes[tab]!.height);
+        final elementSize =
+            Size(iconSizes[tab]!.width + textSizes[tab]!.width + sbbDefaultSpacing, iconSizes[tab]!.height);
         final textLeft = iconLeft + sbbDefaultSpacing + iconSizes[tab]!.width;
         final textTop = iconSizes[tab]!.height / 2.0 - textSizes[tab]!.height / 2.0;
 
@@ -284,5 +287,7 @@ class _IconLayerDelegate extends MultiChildLayoutDelegate {
 
   @override
   bool shouldRelayout(_IconLayerDelegate oldDelegate) =>
-      padding != oldDelegate.padding || portrait != oldDelegate.portrait || const ListEquality().equals(items, oldDelegate.items);
+      padding != oldDelegate.padding ||
+      portrait != oldDelegate.portrait ||
+      const ListEquality().equals(items, oldDelegate.items);
 }

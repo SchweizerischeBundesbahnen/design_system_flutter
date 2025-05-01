@@ -5,12 +5,11 @@ on:
       - main
     types:
       - closed
-  workflow_dispatch:
 
 jobs:
   create-tag:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.merged && contains( github.event.pull_request.labels.*.name, 'autorelease')
+    if: (github.event.pull_request.merged && contains( github.event.pull_request.labels.*.name, 'autorelease'))
     permissions:
       contents: write
 
@@ -18,30 +17,33 @@ jobs:
       tag_name: ${{ steps.read-changelog.outputs.version }}
 
     steps:
+      - name: Generate Token for sbb-app-bakery GH App
+        id: app-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ vars.APPBAKERYGITHUBAPP_APPID }}
+          private-key: ${{ secrets.APPBAKERYGITHUBAPP_PRIVATEKEY }}
+
       - name: Clone Repository
         uses: actions/checkout@v4
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          persist-credentials: false
 
       - name: Changelog Reader
         id: read-changelog
         uses: mindsers/changelog-reader-action@v2.2.3
 
-      - name: Create tag
-        uses: actions4git/setup-git@v1.0.3
-      - run: git tag -a ${{ steps.read-changelog.outputs.version }} -m "Version Release ${{ steps.read-changelog.outputs.version }} on ${{ steps.read-changelog.outputs.date }}"
-      - run: git push --follow-tags
-
-  create-github-release:
-    runs-on: ubuntu-latest
-    needs: create-tag
-    steps:
-      - name: Clone Repository
-        uses: actions/checkout@v4
+      - name: Create release tag
+        uses: rickstaa/action-create-tag@v1.7.2
         with:
-          ref: refs/tags/${{ needs.create-tag.outputs.tag_name }}
+          github_token: ${{ steps.app-token.outputs.token }}
+          tag: ${{ steps.read-changelog.outputs.version }}
+          message: "Version Release ${{ steps.read-changelog.outputs.version }} on ${{ steps.read-changelog.outputs.date }}"
 
       - name: Create GitHub Releases based on changelog
-        uses: taiki-e/create-gh-release-action@v1.8.2
+        uses: taiki-e/create-gh-release-action@v1.9.1
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          ref: refs/tags/${{ needs.create-tag.outputs.tag_name }}
+          token: ${{ steps.app-token.outputs.token }}
+          ref: refs/tags/${{ steps.read-changelog.outputs.version }}
           changelog: ./CHANGELOG.md

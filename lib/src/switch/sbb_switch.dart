@@ -49,7 +49,7 @@ const _thumbBoxShadows = [
 /// so that you can give the Switch a title, a subtitle, a leading icon and a
 /// link Widget.
 /// * [SBBCheckbox], a widget with semantics similar to [SBBSwitch].
-/// * [SBBRadioButton] and [SBBSegmentedButton], for selecting among a set of
+/// * [SBBRadio] and [SBBSegmentedButton], for selecting among a set of
 /// explicit values.
 class SBBSwitch extends StatefulWidget {
   const SBBSwitch({

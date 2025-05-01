@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import '../native_app.dart';
 
 class ColorPage extends StatelessWidget {
+  const ColorPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -36,10 +38,9 @@ class ColorPage extends StatelessWidget {
 
 class _ColorShowcase extends StatelessWidget {
   const _ColorShowcase({
-    Key? key,
     required this.title,
     required this.colorEntries,
-  }) : super(key: key);
+  });
 
   final String title;
   final List<_ColorEntry> colorEntries;
@@ -83,9 +84,8 @@ class _ColorShowcase extends StatelessWidget {
 
 class _ColorShowcaseCard extends StatelessWidget {
   const _ColorShowcaseCard({
-    Key? key,
     required this.colorEntry,
-  }) : super(key: key);
+  });
 
   final _ColorEntry colorEntry;
 

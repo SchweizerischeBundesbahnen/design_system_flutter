@@ -3,21 +3,21 @@ description: The official SBB design system mobile for Flutter.
 homepage: https://digital.sbb.ch/de/design-system/mobile/overview/
 repository: https://github.com/SchweizerischeBundesbahnen/design_system_flutter
 issue_tracker: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/issues
-topics: [icons, theme, design, design-system]
+topics: [ icons, theme, design, design-system ]
 
 # set by Github Action
-version: 2.0.0
+version: 3.0.0 # automatically set by GH Action 
 
 environment:
-  sdk: ">=3.3.0 <4.0.0"
-  flutter: ">=3.19.0"
+  sdk: ">=3.4.0 <4.0.0"
+  flutter: ">=3.24.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
   # https://pub.dev/packages/intl
-  intl: ">=0.18.0 <=0.20.0"
+  intl: '>=0.19.0 <0.21.0'
   # https://pub.dev/packages/collection
   collection: ^1.18.0
 
@@ -26,12 +26,13 @@ dev_dependencies:
     sdk: flutter
 
   # https://pub.dev/packages/flutter_lints
-  flutter_lints: ^4.0.0
+  flutter_lints: ^5.0.0
 
 # https://dart.dev/tools/pub/pubspec#platforms
 platforms:
   android:
   ios:
+
 
 flutter:
   assets:
@@ -40,21 +41,27 @@ flutter:
     - lib/assets/illustrations/dark/
     - lib/assets/illustrations/light/
   fonts:
-    - family: SBBWeb
+    - family: SBBWebUltraLight
+      fonts:
+        - asset: packages/sbb_design_system_mobile/fonts/SBBWeb-UltraLight.ttf
+    - family: SBBWebThin
+      fonts:
+        - asset: packages/sbb_design_system_mobile/fonts/SBBWeb-Thin.ttf
+    - family: SBBWebLight
+      fonts:
+        - asset: packages/sbb_design_system_mobile/fonts/SBBWeb-Light.ttf
+    - family: SBBWebRoman
+      fonts:
+        - asset: packages/sbb_design_system_mobile/fonts/SBBWeb-Roman.ttf
+    - family: SBBWebBold
       fonts:
         - asset: packages/sbb_design_system_mobile/fonts/SBBWeb-Bold.ttf
-          weight: 700
-        - asset: packages/sbb_design_system_mobile/fonts/SBBWeb-Roman.ttf
-          weight: 400
-        - asset: packages/sbb_design_system_mobile/fonts/SBBWeb-Italic.ttf
-          weight: 400
-          style: italic
-        - asset: packages/sbb_design_system_mobile/fonts/SBBWeb-Light.ttf
-          weight: 300
-        - asset: packages/sbb_design_system_mobile/fonts/SBBWeb-Thin.ttf
-          weight: 200
-        - asset: packages/sbb_design_system_mobile/fonts/SBBWeb-Ultra-Light.ttf
-          weight: 100
+    - family: SBBWebCondensedBold
+      fonts:
+        - asset: packages/sbb_design_system_mobile/fonts/SBBWeb-Condensed-Bold.ttf
+    - family: SBBWebCondensedHeavy
+      fonts:
+        - asset: packages/sbb_design_system_mobile/fonts/SBBWeb-Condensed-Heavy.ttf
     - family: SBBIconsSmall
       fonts:
         - asset: packages/sbb_design_system_mobile/fonts/sbb_icons_small.ttf

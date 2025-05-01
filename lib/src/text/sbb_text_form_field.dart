@@ -205,9 +205,7 @@ class _SBBTextField extends State<SBBTextFormField> {
       errorStyle: const TextStyle(fontSize: 0, height: 0),
       errorText: errorText,
       focusedErrorBorder: InputBorder.none,
-      contentPadding: widget.maxLines == 1
-          ? const EdgeInsets.only(bottom: 2.0)
-          : const EdgeInsets.only(bottom: 8.0),
+      contentPadding: widget.maxLines == 1 ? const EdgeInsets.only(bottom: 2.0) : const EdgeInsets.only(bottom: 8.0),
       labelStyle: textField.placeholderTextStyle,
       hintText: widget.hintText,
       hintStyle: textField.placeholderTextStyle,

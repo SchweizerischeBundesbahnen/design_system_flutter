@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../sbb_styles.dart';
+import '../../theme.dart';
 
 class SBBButtonStyle {
   SBBButtonStyle({
@@ -73,62 +73,71 @@ class SBBButtonStyle {
       );
 
   SBBButtonStyle lerp(SBBButtonStyle? other, double t) => SBBButtonStyle(
-    backgroundColor: Color.lerp(backgroundColor, other?.backgroundColor, t)!,
-    backgroundColorHighlighted: Color.lerp(backgroundColorHighlighted, other?.backgroundColorHighlighted, t),
-    backgroundColorDisabled: Color.lerp(backgroundColorDisabled, other?.backgroundColorDisabled, t),
-    backgroundColorLoading: Color.lerp(backgroundColorLoading, other?.backgroundColorLoading, t),
-    borderColor: Color.lerp(borderColor, other?.borderColor, t),
-    borderColorHighlighted: Color.lerp(borderColorHighlighted, other?.borderColorHighlighted, t),
-    borderColorDisabled: Color.lerp(borderColorDisabled, other?.borderColorDisabled, t),
-    borderColorLoading: Color.lerp(borderColorLoading, other?.borderColorLoading, t),
-    textStyle: TextStyle.lerp(textStyle, other?.textStyle, t),
-    textStyleHighlighted: TextStyle.lerp(textStyleHighlighted, other?.textStyleHighlighted, t),
-    textStyleDisabled: TextStyle.lerp(textStyleDisabled, other?.textStyleDisabled, t),
-    textStyleLoading: TextStyle.lerp(textStyleLoading, other?.textStyleLoading, t),
-    iconColor: Color.lerp(iconColor, other?.iconColor, t),
-    iconColorHighlighted: Color.lerp(iconColorHighlighted, other?.iconColorHighlighted, t),
-    iconColorDisabled: Color.lerp(iconColorDisabled, other?.iconColorDisabled, t),
-  );
+        backgroundColor: Color.lerp(backgroundColor, other?.backgroundColor, t)!,
+        backgroundColorHighlighted: Color.lerp(backgroundColorHighlighted, other?.backgroundColorHighlighted, t),
+        backgroundColorDisabled: Color.lerp(backgroundColorDisabled, other?.backgroundColorDisabled, t),
+        backgroundColorLoading: Color.lerp(backgroundColorLoading, other?.backgroundColorLoading, t),
+        borderColor: Color.lerp(borderColor, other?.borderColor, t),
+        borderColorHighlighted: Color.lerp(borderColorHighlighted, other?.borderColorHighlighted, t),
+        borderColorDisabled: Color.lerp(borderColorDisabled, other?.borderColorDisabled, t),
+        borderColorLoading: Color.lerp(borderColorLoading, other?.borderColorLoading, t),
+        textStyle: TextStyle.lerp(textStyle, other?.textStyle, t),
+        textStyleHighlighted: TextStyle.lerp(textStyleHighlighted, other?.textStyleHighlighted, t),
+        textStyleDisabled: TextStyle.lerp(textStyleDisabled, other?.textStyleDisabled, t),
+        textStyleLoading: TextStyle.lerp(textStyleLoading, other?.textStyleLoading, t),
+        iconColor: Color.lerp(iconColor, other?.iconColor, t),
+        iconColorHighlighted: Color.lerp(iconColorHighlighted, other?.iconColorHighlighted, t),
+        iconColorDisabled: Color.lerp(iconColorDisabled, other?.iconColorDisabled, t),
+      );
 
   ButtonStyle toButtonStyle() => ButtonStyle(
-    overlayColor: SBBTheme.resolveStatesWith(
-      defaultValue: backgroundColor!,
-      pressedValue: backgroundColorHighlighted,
-    ),
-    backgroundColor: SBBTheme.resolveStatesWith(
-      defaultValue: backgroundColor!,
-      pressedValue: backgroundColor,
-      disabledValue: backgroundColorDisabled,
-    ),
-    foregroundColor: textStyle == null
-        ? iconColor == null
-        ? null
-        : SBBTheme.resolveStatesWith(
-      defaultValue: iconColor!,
-      pressedValue: iconColorHighlighted,
-      disabledValue: iconColorDisabled,
-    )
-        : SBBTheme.resolveStatesWith(
-      defaultValue: textStyle!.color!,
-      pressedValue: textStyleHighlighted?.color,
-      disabledValue: textStyleDisabled?.color,
-    ),
-    textStyle: textStyle == null
-        ? null
-        : SBBTheme.resolveStatesWith(
-      defaultValue: textStyle!,
-      pressedValue: textStyleHighlighted,
-      disabledValue: textStyleDisabled,
-      parent: runtimeType.toString(),
-    ),
-    side: borderColor == null
-        ? null
-        : SBBTheme.resolveStatesWith(
-      defaultValue: BorderSide(color: borderColor!),
-      pressedValue: borderColorHighlighted == null ? null : BorderSide(color: borderColorHighlighted!),
-      disabledValue: borderColorDisabled == null ? null : BorderSide(color: borderColorDisabled!),
-    ),
-  );
+        overlayColor: SBBTheme.resolveStatesWith(
+          defaultValue: backgroundColor!,
+          pressedValue: backgroundColorHighlighted,
+        ),
+        backgroundColor: SBBTheme.resolveStatesWith(
+          defaultValue: backgroundColor!,
+          pressedValue: backgroundColor,
+          disabledValue: backgroundColorDisabled,
+        ),
+        // icon color workaround can be removed as soon as support for 3.24.5 is dropped
+        // see https://github.com/flutter/flutter/pull/143501
+        foregroundColor: textStyle == null
+            ? iconColor == null
+                ? null
+                : SBBTheme.resolveStatesWith(
+                    defaultValue: iconColor!,
+                    pressedValue: iconColorHighlighted,
+                    disabledValue: iconColorDisabled,
+                  )
+            : SBBTheme.resolveStatesWith(
+                defaultValue: textStyle!.color!,
+                pressedValue: textStyleHighlighted?.color,
+                disabledValue: textStyleDisabled?.color,
+              ),
+        textStyle: textStyle == null
+            ? null
+            : SBBTheme.resolveStatesWith(
+                defaultValue: textStyle!,
+                pressedValue: textStyleHighlighted,
+                disabledValue: textStyleDisabled,
+                parent: runtimeType.toString(),
+              ),
+        side: borderColor == null
+            ? null
+            : SBBTheme.resolveStatesWith(
+                defaultValue: BorderSide(color: borderColor!),
+                pressedValue: borderColorHighlighted == null ? null : BorderSide(color: borderColorHighlighted!),
+                disabledValue: borderColorDisabled == null ? null : BorderSide(color: borderColorDisabled!),
+              ),
+        iconColor: iconColor != null
+            ? SBBTheme.resolveStatesWith(
+                defaultValue: iconColor!,
+                pressedValue: iconColorHighlighted,
+                disabledValue: iconColorDisabled,
+              )
+            : null,
+      );
 
   ButtonStyle overrideButtonStyle(ButtonStyle? baseButtonStyle) => toButtonStyle().merge(baseButtonStyle);
 }

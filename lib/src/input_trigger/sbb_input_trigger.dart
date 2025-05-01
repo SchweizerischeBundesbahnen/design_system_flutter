@@ -199,9 +199,7 @@ class SBBInputTrigger extends StatelessWidget {
   TextStyle _valueTextStyle(SBBTextFieldStyle style) {
     return !enabled
         ? style.textStyleDisabled!
-        : (!_hasValue
-            ? style.placeholderTextStyle
-            : (_hasError ? style.textStyleError : style.textStyle))!;
+        : (!_hasValue ? style.placeholderTextStyle : (_hasError ? style.textStyleError : style.textStyle))!;
   }
 }
 
@@ -233,9 +231,7 @@ class SBBInputTriggerIconWidget extends StatelessWidget {
     }
 
     final style = SBBControlStyles.of(context).textField!;
-    final iconColor = enabled
-        ? (error ? style.prefixIconColorError : style.iconColor)
-        : style.iconColorDisabled;
+    final iconColor = enabled ? (error ? style.prefixIconColorError : style.iconColor) : style.iconColorDisabled;
 
     if (onPressed == null) {
       return Padding(

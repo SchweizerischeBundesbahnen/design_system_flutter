@@ -19,7 +19,7 @@ class TabBarFiller extends StatelessWidget {
     final mediaQuery = MediaQuery.of(context);
     final textScaler = mediaQuery.textScaler;
     final portrait = mediaQuery.orientation == Orientation.portrait;
-    return portrait ? 64.0 +  textScaler.scale(20.0) : 52.0;
+    return portrait ? 64.0 + textScaler.scale(20.0) : 52.0;
   }
 
   @override

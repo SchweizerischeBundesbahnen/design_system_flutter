@@ -34,8 +34,7 @@ class SBBOnboarding extends StatefulWidget {
   SBBOnboardingState createState() => SBBOnboardingState();
 }
 
-class SBBOnboardingState extends State<SBBOnboarding>
-    with SingleTickerProviderStateMixin {
+class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderStateMixin {
   static const navigationAreaVerticalPadding = 24.0;
   static const navigationAreaHeight = navigationAreaVerticalPadding +
       SBBInternal.defaultButtonHeight +
@@ -93,8 +92,7 @@ class SBBOnboardingState extends State<SBBOnboarding>
 
   Orientation get orientation => MediaQuery.of(context).orientation;
 
-  bool get isBlocking =>
-      widget.blocking && !isShowingStartPage && !isShowingEndPage;
+  bool get isBlocking => widget.blocking && !isShowingStartPage && !isShowingEndPage;
 
   @override
   void setState(VoidCallback fn) {
@@ -119,18 +117,14 @@ class SBBOnboardingState extends State<SBBOnboarding>
       duration: kThemeAnimationDuration,
     )..addListener(() {
         if (isAnimating) {
-          if (backScrollController.hasClients &&
-              backScrollController.offset > 0 &&
-              !isBackScrollControllerAnimating) {
+          if (backScrollController.hasClients && backScrollController.offset > 0 && !isBackScrollControllerAnimating) {
             isBackScrollControllerAnimating = true;
             backScrollController.animateTo(
               0,
               duration: kThemeAnimationDuration,
               curve: Curves.easeInOut,
             );
-          } else if (scrollController.hasClients &&
-              scrollController.offset > 0 &&
-              !isScrollControllerAnimating) {
+          } else if (scrollController.hasClients && scrollController.offset > 0 && !isScrollControllerAnimating) {
             isScrollControllerAnimating = true;
             scrollController.animateTo(
               0,
@@ -160,8 +154,7 @@ class SBBOnboardingState extends State<SBBOnboarding>
         cardWidth = widgetWidth - frontCardPadding.horizontal;
         switch (orientation) {
           case Orientation.portrait:
-            cardHeight =
-                widgetHeight - navigationAreaHeight - frontCardPadding.vertical;
+            cardHeight = widgetHeight - navigationAreaHeight - frontCardPadding.vertical;
             break;
           case Orientation.landscape:
             cardHeight = widgetHeight - frontCardPadding.vertical;
@@ -288,35 +281,23 @@ class SBBOnboardingState extends State<SBBOnboarding>
               ),
             ),
             if (cardHeightCalculated) ...backCards.reversed,
-            if (cardHeightCalculated &&
-                ((isAnimating && !goToNextStep!) || isDraggingToPrevious))
-              buildBackCard(0),
+            if (cardHeightCalculated && ((isAnimating && !goToNextStep!) || isDraggingToPrevious)) buildBackCard(0),
             if (cardHeightCalculated) buildFrontCard(),
-            if (cardHeightCalculated &&
-                currentStepIndex > 0 &&
-                currentStepIndex < _cards.length &&
-                !isShowingEndPage)
+            if (cardHeightCalculated && currentStepIndex > 0 && currentStepIndex < _cards.length && !isShowingEndPage)
               Positioned(
                 left: isDraggingToPrevious && isAnimating
                     ? min(
                         0,
-                        (dragEndPosition! -
-                                dragStartPosition -
-                                frontCardPadding.left -
-                                cardWidth) *
+                        (dragEndPosition! - dragStartPosition - frontCardPadding.left - cardWidth) *
                             animationValueReversed)
                     : isDraggingToPrevious && !isAnimating
                         ? cardLeftValue! - frontCardPadding.left
                         : goToNextStep!
                             ? -cardWidth * animationValue
-                            : -(cardWidth + frontCardPadding.left) *
-                                animationValueReversed,
+                            : -(cardWidth + frontCardPadding.left) * animationValueReversed,
                 child: IgnorePointer(
                   child: Opacity(
-                    opacity:
-                        isDraggingToPrevious || isAnimating && !goToNextStep!
-                            ? 1
-                            : 0,
+                    opacity: isDraggingToPrevious || isAnimating && !goToNextStep! ? 1 : 0,
                     child: Padding(
                       padding: frontCardPadding,
                       child: buildCard(currentStepIndex - 1),
@@ -388,9 +369,7 @@ class SBBOnboardingState extends State<SBBOnboarding>
   Widget buildStartPage() => Positioned(
         left: isShowingStartPage && isAnimating
             ? isDraggingToPrevious
-                ? dragEndPosition! -
-                    widgetWidth +
-                    (widgetWidth - dragEndPosition!) * animationValue
+                ? dragEndPosition! - widgetWidth + (widgetWidth - dragEndPosition!) * animationValue
                 : goToNextStep!
                     ? -widgetWidth * animationValue
                     : -widgetWidth + widgetWidth * animationValue
@@ -423,8 +402,7 @@ class SBBOnboardingState extends State<SBBOnboarding>
                 ? dragEndPosition! * animationValueReversed
                 : cardLeftValue! + widgetWidth
             : isShowingEndPage && isAnimating
-                ? widgetWidth *
-                    (goToNextStep! ? animationValueReversed : animationValue)
+                ? widgetWidth * (goToNextStep! ? animationValueReversed : animationValue)
                 : null,
         child: SizedBox(
           width: widgetWidth,
@@ -486,22 +464,14 @@ class SBBOnboardingState extends State<SBBOnboarding>
   }
 
   Widget buildFrontCard() => Positioned(
-        left: isNotDragging &&
-                isAnimating &&
-                goToNextStep! &&
-                !isShowingStartPage &&
-                !isShowingEndPage
+        left: isNotDragging && isAnimating && goToNextStep! && !isShowingStartPage && !isShowingEndPage
             ? -(cardWidth + frontCardPadding.left) * animationValue
             : isDraggingToNext && isAnimating && !isShowingEndPage
                 ? min(
                     0,
                     dragEndPosition! -
                         dragStartPosition -
-                        (cardWidth +
-                                frontCardPadding.left +
-                                dragEndPosition! -
-                                dragStartPosition) *
-                            animationValue)
+                        (cardWidth + frontCardPadding.left + dragEndPosition! - dragStartPosition) * animationValue)
                 : isDraggingToNext && !isAnimating && !isShowingEndPage
                     ? cardLeftValue
                     : null,
@@ -527,14 +497,12 @@ class SBBOnboardingState extends State<SBBOnboarding>
                   );
                   if (isDraggingToPrevious && currentStepIndex == 0) {
                     setState(() => isShowingStartPage = true);
-                  } else if (isDraggingToNext &&
-                      currentStepIndex == _cards.length - 1) {
+                  } else if (isDraggingToNext && currentStepIndex == _cards.length - 1) {
                     setState(() => isShowingEndPage = true);
                   }
                 }
-                setState(() => cardLeftValue = isDraggingToNext
-                    ? min(0, newLeftValue)
-                    : min(0, newLeftValue - cardWidth));
+                setState(
+                    () => cardLeftValue = isDraggingToNext ? min(0, newLeftValue) : min(0, newLeftValue - cardWidth));
               }),
               onHorizontalDragEnd: (details) {
                 if (dragEndPosition != null) {
@@ -577,11 +545,7 @@ class SBBOnboardingState extends State<SBBOnboarding>
                   parentPadding),
         ),
         child: Opacity(
-          opacity: max(
-              0.0,
-              1.0 -
-                  layerIndex * opacityMultiplier +
-                  resizeValue * opacityMultiplier),
+          opacity: max(0.0, 1.0 - layerIndex * opacityMultiplier + resizeValue * opacityMultiplier),
           child: Transform.scale(
             scale: 1.0 - 0.1 * layerIndex + 0.1 * resizeValue,
             alignment: Alignment.topCenter,
@@ -619,8 +583,7 @@ class SBBOnboardingState extends State<SBBOnboarding>
       );
 
   void changeStep({bool? goToNextStep}) {
-    if (isAnimating ||
-        !isAnimating && isNotDragging && isShowingStartPage && !goToNextStep!) {
+    if (isAnimating || !isAnimating && isNotDragging && isShowingStartPage && !goToNextStep!) {
       return;
     }
     setState(() {

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../sbb_styles.dart';
+import '../../theme.dart';
 
 class SBBControlStyle {
   SBBControlStyle({
@@ -12,7 +12,7 @@ class SBBControlStyle {
 
   factory SBBControlStyle.$default({required SBBBaseStyle baseStyle}) => SBBControlStyle(
         color: baseStyle.primaryColor,
-        colorDisabled: SBBColors.metal,
+        colorDisabled: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
         basic: SBBBasicControlStyle.$default(baseStyle: baseStyle),
         listItem: SBBListItemStyle.$default(baseStyle: baseStyle),
       );

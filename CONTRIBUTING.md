@@ -27,9 +27,10 @@ Additionally, the code should follow any stylistic and architectural guidelines 
 
 Please also update the CHANGELOG.md accordingly respecting the [Keep A Changelog] format. If possible, stick to [Semantic Commit Messages].
 
+The naming of the Widgets should follow the Material equivalent Widgets. However, the component names within the [Design Specs] and links should be provided to the english [Design Specs] should be findable in the codebase.
+
 
 [Golden Tests]: (https://api.flutter.dev/flutter/flutter_test/matchesGoldenFile.html)
-
 [Keep A Changelog]: (https://keepachangelog.com/en/1.1.0/)
-
 [Semantic Commit Messages]: (https://sparkbox.com/foundry/semantic_commit_messages)
+[Design Specs]: (https://digital.sbb.ch/de/design-system/mobile/overview/)

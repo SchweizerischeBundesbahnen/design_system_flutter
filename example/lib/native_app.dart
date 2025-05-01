@@ -1,8 +1,8 @@
 import 'package:animations/animations.dart';
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import 'pages/accordion_page.dart';
 import 'pages/autocompletion_page.dart';
@@ -11,6 +11,7 @@ import 'pages/checkbox_page.dart';
 import 'pages/chip_page.dart';
 import 'pages/color_page.dart';
 import 'pages/group_page.dart';
+import 'pages/header_box_page.dart';
 import 'pages/header_page.dart';
 import 'pages/icon_page.dart';
 import 'pages/input_trigger_page.dart';
@@ -36,7 +37,6 @@ import 'pages/tab_bar_page.dart';
 import 'pages/text_field_page.dart';
 import 'pages/toast_page.dart';
 import 'pages/typography_page.dart';
-import 'pages/typography_red_page.dart';
 
 class AppState extends ChangeNotifier {
   bool isDarkModeOn = false;
@@ -48,6 +48,8 @@ class AppState extends ChangeNotifier {
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
@@ -98,10 +100,6 @@ class MyApp extends StatelessWidget {
                             _DemoEntry(
                               'Typography',
                               TypographyPage(),
-                            ),
-                            _DemoEntry(
-                              'Typography Red',
-                              TypographyRedPage(),
                             ),
                             _DemoEntry(
                               'Color',
@@ -220,6 +218,10 @@ class MyApp extends StatelessWidget {
                               HeaderPage(),
                             ),
                             _DemoEntry(
+                              'Headerbox',
+                              HeaderBoxPage(),
+                            ),
+                            _DemoEntry(
                               'Modal',
                               ModalPage(),
                             ),
@@ -315,7 +317,7 @@ class _DemoPage extends StatelessWidget {
 }
 
 class ThemeModeSegmentedButton extends StatelessWidget {
-  const ThemeModeSegmentedButton();
+  const ThemeModeSegmentedButton({super.key});
 
   @override
   Widget build(BuildContext context) {

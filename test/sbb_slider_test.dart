@@ -20,6 +20,8 @@ void main() {
           max: 100,
           startIcon: null,
           endIcon: null,
+          onChangeStart: (value) {},
+          onChangeEnd: (value) {},
         ),
         const SizedBox(height: sbbDefaultSpacing),
         const SBBSlider(

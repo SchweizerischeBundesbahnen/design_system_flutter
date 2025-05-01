@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import '../native_app.dart';
 
 class ListItemPage extends StatelessWidget {
+  const ListItemPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     final sbbToast = SBBToast.of(context);

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../sbb_styles.dart';
+import '../../theme.dart';
 
 class SBBListItemStyle {
   SBBListItemStyle({
@@ -15,8 +15,7 @@ class SBBListItemStyle {
     this.secondaryTextStyleDisabled,
   });
 
-  factory SBBListItemStyle.$default({required SBBBaseStyle baseStyle}) =>
-      SBBListItemStyle(
+  factory SBBListItemStyle.$default({required SBBBaseStyle baseStyle}) => SBBListItemStyle(
         backgroundColor: SBBColors.transparent,
         backgroundColorHighlighted: baseStyle.themeValue(
           SBBColors.platinum,

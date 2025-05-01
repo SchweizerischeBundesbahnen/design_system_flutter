@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import '../native_app.dart';
 
 class GroupPage extends StatelessWidget {
+  const GroupPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     const childPlaceholder = SizedBox(height: 125.0, width: double.infinity);

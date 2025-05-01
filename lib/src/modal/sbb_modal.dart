@@ -21,6 +21,8 @@ Future<T?> showSBBModalPopup<T>({
   required String title,
   required Widget child,
   Clip clipBehavior = Clip.none,
+  bool showCloseButton = true,
+  Color? backgroundColor,
 }) {
   return showDialog<T>(
     context: context,
@@ -28,6 +30,8 @@ Future<T?> showSBBModalPopup<T>({
       return SBBModalPopup(
         title: title,
         clipBehavior: clipBehavior,
+        showCloseButton: showCloseButton,
+        backgroundColor: backgroundColor,
         child: child,
       );
     },
@@ -47,11 +51,15 @@ class SBBModalPopup extends StatelessWidget {
     required this.title,
     required this.child,
     this.clipBehavior = Clip.none,
+    this.showCloseButton = true,
+    this.backgroundColor,
   });
 
   final String title;
   final Widget child;
   final Clip clipBehavior;
+  final bool showCloseButton;
+  final Color? backgroundColor;
 
   @override
   Widget build(BuildContext context) {
@@ -61,13 +69,13 @@ class SBBModalPopup extends StatelessWidget {
         borderRadius: BorderRadius.circular(sbbDefaultSpacing),
       ),
       clipBehavior: clipBehavior,
-      backgroundColor: style.modalBackgroundColor,
+      backgroundColor: backgroundColor ?? style.modalBackgroundColor,
       child: Semantics(
         explicitChildNodes: true,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            _ModalHeader(title),
+            _ModalHeader(title, showCloseButton: showCloseButton),
             child,
           ],
         ),
@@ -97,6 +105,9 @@ Future<T?> showSBBModalSheet<T>({
   bool useRootNavigator = true,
   bool useSafeArea = true,
   bool enableDrag = true,
+  bool showCloseButton = true,
+  BoxConstraints? constraints,
+  Color? backgroundColor,
 }) {
   return showModalBottomSheet<T>(
     context: context,
@@ -105,10 +116,13 @@ Future<T?> showSBBModalSheet<T>({
     useRootNavigator: useRootNavigator,
     useSafeArea: useSafeArea,
     enableDrag: enableDrag,
+    constraints: constraints,
     builder: (BuildContext context) {
       return SBBModalSheet(
         title: title,
-        child: child,
+        showCloseButton: showCloseButton,
+        backgroundColor: backgroundColor,
+        child: useSafeArea ? _wrapWithBottomSafeArea(child) : child,
       );
     },
     barrierColor: SBBInternal.barrierColor,
@@ -136,6 +150,9 @@ Future<T?> showCustomSBBModalSheet<T>({
   bool useRootNavigator = true,
   bool useSafeArea = true,
   bool enableDrag = true,
+  bool showCloseButton = true,
+  Color? backgroundColor,
+  BoxConstraints? constraints,
 }) {
   return showModalBottomSheet<T>(
     context: context,
@@ -144,10 +161,13 @@ Future<T?> showCustomSBBModalSheet<T>({
     useRootNavigator: useRootNavigator,
     useSafeArea: useSafeArea,
     enableDrag: enableDrag,
+    constraints: constraints,
     builder: (BuildContext context) {
       return SBBModalSheet.custom(
         header: header,
-        child: child,
+        showCloseButton: showCloseButton,
+        backgroundColor: backgroundColor,
+        child: useSafeArea ? _wrapWithBottomSafeArea(child) : child,
       );
     },
     barrierColor: SBBInternal.barrierColor,
@@ -165,6 +185,8 @@ class SBBModalSheet extends StatelessWidget {
     Key? key,
     required String title,
     required Widget child,
+    bool showCloseButton = true,
+    Color? backgroundColor,
   }) : this._(
           key: key,
           headerBuilder: (BuildContext context) => Padding(
@@ -182,6 +204,8 @@ class SBBModalSheet extends StatelessWidget {
               ),
             ),
           ),
+          showCloseButton: showCloseButton,
+          backgroundColor: backgroundColor,
           child: child,
         );
 
@@ -189,9 +213,13 @@ class SBBModalSheet extends StatelessWidget {
     Key? key,
     required Widget header,
     required Widget child,
+    bool showCloseButton = true,
+    Color? backgroundColor,
   }) : this._(
           key: key,
           headerBuilder: (BuildContext context) => header,
+          showCloseButton: showCloseButton,
+          backgroundColor: backgroundColor,
           child: child,
         );
 
@@ -199,10 +227,14 @@ class SBBModalSheet extends StatelessWidget {
     super.key,
     required this.headerBuilder,
     required this.child,
+    required this.showCloseButton,
+    this.backgroundColor,
   });
 
   final WidgetBuilder headerBuilder;
   final Widget child;
+  final bool showCloseButton;
+  final Color? backgroundColor;
 
   @override
   Widget build(BuildContext context) {
@@ -212,9 +244,7 @@ class SBBModalSheet extends StatelessWidget {
       children: [
         ExcludeSemantics(
           child: GestureDetector(
-            onTap: () {
-              Navigator.of(context).pop();
-            },
+            onTap: () => Navigator.of(context).pop(),
             child: Container(
               height: sbbDefaultSpacing,
               color: SBBColors.transparent,
@@ -224,7 +254,7 @@ class SBBModalSheet extends StatelessWidget {
         Flexible(
           child: Container(
             decoration: BoxDecoration(
-              color: style.modalBackgroundColor,
+              color: backgroundColor ?? style.modalBackgroundColor,
               borderRadius: const BorderRadius.only(
                 topLeft: Radius.circular(sbbDefaultSpacing),
                 topRight: Radius.circular(sbbDefaultSpacing),
@@ -237,9 +267,9 @@ class SBBModalSheet extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Expanded(
-                      child: headerBuilder.call(context),
+                      child: headerBuilder(context),
                     ),
-                    _CloseButton(),
+                    if (showCloseButton) _CloseButton(),
                   ],
                 ),
                 Flexible(
@@ -255,9 +285,10 @@ class SBBModalSheet extends StatelessWidget {
 }
 
 class _ModalHeader extends StatelessWidget {
-  const _ModalHeader(this.title);
+  const _ModalHeader(this.title, {this.showCloseButton = true});
 
   final String title;
+  final bool showCloseButton;
 
   @override
   Widget build(BuildContext context) {
@@ -279,7 +310,7 @@ class _ModalHeader extends StatelessWidget {
             ),
           ),
         ),
-        _CloseButton(),
+        if (showCloseButton) _CloseButton(),
       ],
     );
   }
@@ -294,11 +325,18 @@ class _CloseButton extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(6.0),
           child: SBBIconButtonSmall(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
+            onPressed: () => Navigator.of(context).pop(),
             icon: SBBIcons.cross_small,
           ),
         ),
       );
+}
+
+Widget _wrapWithBottomSafeArea(Widget child) {
+  return SafeArea(
+    top: false,
+    left: false,
+    right: false,
+    child: child,
+  );
 }

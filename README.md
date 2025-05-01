@@ -22,7 +22,8 @@ Elements are optimized for dynamic TextSizes, VoiceOver, light & dark mode.
   - [Coding Standards](#coding-standards)
   - [Code of Conduct](#code-of-conduct)
   - [Releasing](#releasing)
-- [Authors](#authors)
+- [Maintainer](#maintainer)
+- [Credits](#credits)
 
 
 </details>
@@ -130,22 +131,20 @@ See [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
 
 ### Releasing
 
-See [Release.md](Release.md).
+See [RELEASE.md](RELEASE.md).
 
 <a id="Contributing"></a>
 
-## Authors
+## Maintainer
 
-* **Hoang Tran** (Maintainer)
-* **Dominik Mosberger**
-* **Nicolas Vidoni**
-* **Dominik Schmucki**
-* **Ulrich Raab**
-* **Patrice Müller**
-* **Michael Moor**
-* **Loris Sorace**
-* **Cyrill Meyer**
-* **Ralf Winkelmann**
-* **Yoonjoo Lee**
+* [Hoang Tran](https://github.com/VanHoangTran)
+* [Nico Vidoni](https://github.com/smallTrogdor)
+
+## Credits
+
+In addition to the contributors on GitHub, we thank the following authors for their previous work:
+*  Patrice Müller
+*  Dominik Schmucki
+
 
 [Design System Mobile]: https://digital.sbb.ch/en/design-system/mobile/overview/

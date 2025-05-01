@@ -1,12 +1,12 @@
-name: Make Release PR.
+name: Make Release PR
 
-on: 
+on:
   workflow_dispatch:
     inputs:
       semantic-versioning:
         description: Whether to increase major, minor or patch.
         required: true
-        default: 'patch'
+        default: "patch"
         type: choice
         options:
           - patch
@@ -23,15 +23,16 @@ jobs:
     steps:
       - name: Generate Token
         id: app-token
-        uses: actions/create-github-app-token@v1
+        uses: actions/create-github-app-token@v2
         with:
           app-id: ${{ vars.APPBAKERYGITHUBAPP_APPID }}
           private-key: ${{ secrets.APPBAKERYGITHUBAPP_PRIVATEKEY }}
-          
+
       - name: Clone Repository
         uses: actions/checkout@v4
         with:
           token: ${{ steps.app-token.outputs.token }}
+          persist-credentials: false
 
       - name: Update Changelog
         id: update-changelog
@@ -40,29 +41,39 @@ jobs:
           command: bump
           version: ${{ inputs.semantic-versioning }}
           keep-unreleased-section: true
-          tag-prefix: ''
+          tag-prefix: ""
 
-      - name: Update Pubspec version
-        uses: Dbono-dev/yaml-action@v1.0.4
-        with:
-          changes: |
-            {
-              "version": "${{ steps.update-changelog.outputs.version }}"
-            }
-          commentOutDevDependencies: 'false'
+      - name: Update root pubspec
+        run: |
+          sed -i "s/^version:.*/version: ${{ steps.update-changelog.outputs.version }} # automatically set by GH Action /" pubspec.yaml
+
+      - name: Read and bump build number of example app
+        id: read_build_number
+        run: |
+          version=$(grep '^version:' example/pubspec.yaml | awk '{print $2}')
+          echo "Example version found: $version"
+          IFS='+' read -r build_name build_number <<< "$version"
+          new_build_number=$((build_number + 1))
+          echo "pubspec_build_number=$new_build_number" >> $GITHUB_OUTPUT
+
+      - name: Update example app pubspec
+        run: |
+          sed -i "s/^version:.*/version: ${{ steps.update-changelog.outputs.version }}+${{ steps.read_build_number.outputs.pubspec_build_number }} # automatically set by GH Action /" example/pubspec.yaml
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v7.0.5
+        uses: peter-evans/create-pull-request@v7.0.8
         with:
           token: ${{ steps.app-token.outputs.token }}
+          committer: sbb-app-bakery[bot] <914587+sbb-app-bakery[bot]@users.noreply.github.com>
           commit-message: ${{ format('Prepare Release for version {0}', steps.update-changelog.outputs.version) }}
           branch: ${{ format('release/{0}', steps.update-changelog.outputs.version) }}
           title: ${{ format('Auto Release Pull Request {0}', steps.update-changelog.outputs.version) }}
           body: |
             Make changes for release.
-            - Update pubspec
+            - Update pubspec.yaml
             - Update CHANGELOG.md
+            - Update example/pubspec.yaml
 
-            **Merging this PR will trigger a github release using the corresponding workflow.**
+            **Merging this PR will trigger a github, pub dev and example app release using the corresponding workflows.**
           labels: |
             autorelease

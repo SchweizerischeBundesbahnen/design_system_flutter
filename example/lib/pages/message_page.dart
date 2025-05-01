@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import '../native_app.dart';
 
 class MessagePage extends StatefulWidget {
+  const MessagePage({super.key});
+
   @override
   State<MessagePage> createState() => _MessagePageState();
 }
@@ -28,6 +30,7 @@ class _MessagePageState extends State<MessagePage> {
         SBBCheckboxListItem(
           value: _isLoading,
           label: 'Is loading',
+          isLastElement: true,
           onChanged: (value) => setState(() => _isLoading = value),
         ),
         const SizedBox(height: sbbDefaultSpacing),

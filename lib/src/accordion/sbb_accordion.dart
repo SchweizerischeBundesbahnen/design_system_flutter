@@ -89,7 +89,7 @@ class SBBAccordion extends StatefulWidget {
   });
 
   SBBAccordion.single({
-    Key? key, 
+    Key? key,
     required String title,
     required Widget body,
     bool isExpanded = false,
@@ -107,8 +107,7 @@ class SBBAccordion extends StatefulWidget {
             ),
           ],
           titleMaxLines: titleMaxLines,
-          accordionCallback: (index, isExpanded) =>
-              singleAccordionCallback?.call(
+          accordionCallback: (index, isExpanded) => singleAccordionCallback?.call(
             isExpanded,
           ),
           backgroundColor: backgroundColor,
@@ -151,13 +150,10 @@ class _SBBAccordionState extends State<SBBAccordion> {
     );
   }
 
-  Container _buildAccordionChildren(
-      BuildContext context, SBBAccordionItem child, int i) {
+  Container _buildAccordionChildren(BuildContext context, SBBAccordionItem child, int i) {
     final style = SBBControlStyles.of(context);
     return Container(
-      decoration: BoxDecoration(
-          border:
-              Border.all(color: widget.borderColor ?? SBBColors.transparent)),
+      decoration: BoxDecoration(border: Border.all(color: widget.borderColor ?? SBBColors.transparent)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -174,9 +170,7 @@ class _SBBAccordionState extends State<SBBAccordion> {
                         child.title,
                         style: style.accordionTitleTextStyle,
                         maxLines: widget.titleMaxLines,
-                        overflow: widget.titleMaxLines == null
-                            ? null
-                            : TextOverflow.ellipsis,
+                        overflow: widget.titleMaxLines == null ? null : TextOverflow.ellipsis,
                       ),
                     ),
                   ),
@@ -213,9 +207,7 @@ class _SBBAccordionState extends State<SBBAccordion> {
               curve: Curves.fastOutSlowIn,
             ),
             sizeCurve: Curves.fastOutSlowIn,
-            crossFadeState: _isChildExpanded(i)
-                ? CrossFadeState.showSecond
-                : CrossFadeState.showFirst,
+            crossFadeState: _isChildExpanded(i) ? CrossFadeState.showSecond : CrossFadeState.showFirst,
             duration: kThemeAnimationDuration,
           ),
           if (i < widget.children.length - 1) const Divider(),
@@ -234,8 +226,7 @@ class _ExpandIcon extends StatefulWidget {
   _ExpandIconState createState() => _ExpandIconState();
 }
 
-class _ExpandIconState extends State<_ExpandIcon>
-    with SingleTickerProviderStateMixin {
+class _ExpandIconState extends State<_ExpandIcon> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _iconTurns;
 

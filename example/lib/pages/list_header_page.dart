@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import '../native_app.dart';
 
 class ListHeaderPage extends StatelessWidget {
+  const ListHeaderPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return ListView(

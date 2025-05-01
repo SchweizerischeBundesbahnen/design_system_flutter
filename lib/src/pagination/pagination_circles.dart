@@ -5,7 +5,7 @@ import 'pagination_circle.dart';
 
 class PaginationCircles extends StatelessWidget {
   const PaginationCircles({
-    super.key, 
+    super.key,
     required this.numberCircles,
     required this.selectedCircle,
   });
@@ -26,7 +26,7 @@ class PaginationCircles extends StatelessWidget {
     for (var i = 0; i < numberCircles; i++) {
       result.add(PaginationCircle(isSelected: i == selectedCircle));
       if (_shouldAddSpacing(i)) {
-        result.add(const SizedBox(width: sbbDefaultSpacing / 2));
+        result.add(const SizedBox(width: sbbDefaultSpacing * .5));
       }
     }
     return result;

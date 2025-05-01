@@ -3,12 +3,44 @@ name: Nightly built.
 on:
   workflow_dispatch:
   schedule:
-    - cron: "20 2 * * *"   # 02:20 am every day
+    - cron: "20 2 * * *" # 02:20 am every day
 
 jobs:
+  test:
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout sbb_design_system_mobile code.
+        uses: actions/checkout@v4
+
+      - name: Clone flutter version specified in .fvm.
+        uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+
+      - name: Run flutter doctor.
+        run: flutter doctor -v
+
+      - name: Install dependencies.
+        run: flutter pub get
+
+      - name: Run flutter test.
+        id: test
+        run: flutter test
+
+      - name: Upload goldens if tests fail.
+        uses: actions/upload-artifact@v4
+        if: ${{ failure() && steps.test.conclusion == 'failure' }}
+        with:
+          name: goldens
+          path: test/failures/
+          retention-days: 1
+
   build-android:
     name: Build Android
     runs-on: ubuntu-latest
+    needs: [test]
     defaults:
       run:
         working-directory: example
@@ -27,6 +59,7 @@ jobs:
 
   build-iOS:
     name: Build iOS
+    needs: [test]
     runs-on: macos-latest
     defaults:
       run:

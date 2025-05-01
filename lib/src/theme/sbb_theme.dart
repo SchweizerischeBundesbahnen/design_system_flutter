@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../sbb_design_system_mobile.dart';
+import 'theme.dart';
 
 const sbbDefaultSpacing = 16.0;
 
@@ -12,6 +12,7 @@ class SBBTheme {
     SBBBaseStyle? baseStyle,
     SBBButtonStyles? buttonStyles,
     SBBControlStyles? controlStyles,
+    SBBHeaderBoxStyle? headerBoxStyle,
   }) =>
       createTheme(
         brightness: Brightness.light,
@@ -19,6 +20,7 @@ class SBBTheme {
         baseStyle: baseStyle,
         buttonStyles: buttonStyles,
         controlStyles: controlStyles,
+        headerBoxStyle: headerBoxStyle,
       );
 
   static ThemeData dark({
@@ -26,6 +28,7 @@ class SBBTheme {
     SBBBaseStyle? baseStyle,
     SBBButtonStyles? buttonStyles,
     SBBControlStyles? controlStyles,
+    SBBHeaderBoxStyle? headerBoxStyle,
   }) =>
       createTheme(
         brightness: Brightness.dark,
@@ -33,6 +36,7 @@ class SBBTheme {
         baseStyle: baseStyle,
         buttonStyles: buttonStyles,
         controlStyles: controlStyles,
+        headerBoxStyle: headerBoxStyle,
       );
 
   static ThemeData createTheme({
@@ -41,6 +45,7 @@ class SBBTheme {
     SBBBaseStyle? baseStyle,
     SBBButtonStyles? buttonStyles,
     SBBControlStyles? controlStyles,
+    SBBHeaderBoxStyle? headerBoxStyle,
   }) {
     // SET hard-coded default values HERE
     final defaultBaseStyle = SBBBaseStyle.$default(
@@ -59,11 +64,17 @@ class SBBTheme {
     );
     final mergedControlStyles = controlStyles.merge(defaultControlStyles);
 
+    final defaultHeaderBoxStyle = SBBHeaderBoxStyle.$default(
+      baseStyle: mergedBaseStyle,
+    );
+    final mergedHeaderBoxStyle = headerBoxStyle.merge(defaultHeaderBoxStyle);
+
     return raw(
       brightness: brightness,
       baseStyle: mergedBaseStyle,
       buttonStyles: mergedButtonStyles,
       controlStyles: mergedControlStyles,
+      headerBoxStyle: mergedHeaderBoxStyle,
     );
   }
 
@@ -72,6 +83,7 @@ class SBBTheme {
     required SBBBaseStyle baseStyle,
     required SBBButtonStyles buttonStyles,
     required SBBControlStyles controlStyles,
+    required SBBHeaderBoxStyle headerBoxStyle,
   }) =>
       ThemeData(
         colorScheme: ColorScheme.fromSwatch(
@@ -97,7 +109,7 @@ class SBBTheme {
         fontFamily: baseStyle.defaultFontFamily,
         textTheme: baseStyle.createTextTheme(),
         appBarTheme: controlStyles.appBarTheme,
-        elevatedButtonTheme: buttonStyles.elevatedButtonTheme,
+        filledButtonTheme: buttonStyles.filledButtonTheme,
         outlinedButtonTheme: buttonStyles.outlinedButtonTheme,
         textButtonTheme: buttonStyles.textButtonTheme,
         cardTheme: controlStyles.cardTheme,
@@ -108,16 +120,17 @@ class SBBTheme {
           baseStyle,
           buttonStyles,
           controlStyles,
+          headerBoxStyle,
         ],
       );
 
-  /// Convenience method for easier use of [MaterialStateProperty.all].
-  static MaterialStateProperty<T> allStates<T>(T value) {
-    return MaterialStateProperty.all(value);
+  /// Convenience method for easier use of [WidgetStateProperty.all].
+  static WidgetStateProperty<T> allStates<T>(T value) {
+    return WidgetStateProperty.all(value);
   }
 
-  /// Convenience method for easier use of [MaterialStateProperty.resolveWith].
-  static MaterialStateProperty<T?> resolveStatesWith<T>({
+  /// Convenience method for easier use of [WidgetStateProperty.resolveWith].
+  static WidgetStateProperty<T?> resolveStatesWith<T>({
     required T defaultValue,
     T? pressedValue,
     T? disabledValue,
@@ -125,24 +138,23 @@ class SBBTheme {
     String? parent,
     T? selectedValue,
   }) {
-    return MaterialStateProperty.resolveWith((states) {
+    return WidgetStateProperty.resolveWith((states) {
       // disabled
-      if (states.contains(MaterialState.disabled) && disabledValue != null) {
+      if (states.contains(WidgetState.disabled) && disabledValue != null) {
         return disabledValue;
       }
 
       // pressed / focused
-      if (states.any({MaterialState.pressed, MaterialState.focused}.contains) &&
-          pressedValue != null) {
+      if (states.any({WidgetState.pressed, WidgetState.focused}.contains) && pressedValue != null) {
         return pressedValue;
       }
       // hovered
-      if (states.contains(MaterialState.hovered) && hoveredValue != null) {
+      if (states.contains(WidgetState.hovered) && hoveredValue != null) {
         return hoveredValue;
       }
 
       // selected
-      if (states.contains(MaterialState.selected) && selectedValue != null) {
+      if (states.contains(WidgetState.selected) && selectedValue != null) {
         return selectedValue;
       }
       // default

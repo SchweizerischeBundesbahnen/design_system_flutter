@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
-
 import '../shared/close_button.dart';
 import '../shared/tapable_element.dart';
 import 'notification_box_content.dart';
@@ -26,7 +25,7 @@ class SBBNotificationBox extends StatefulWidget {
   factory SBBNotificationBox.alert({
     String? title,
     required String text,
-    Function(CloseableBoxController controller)? onControllerCreated,
+    Function(ClosableBoxController controller)? onControllerCreated,
     GestureTapCallback? onTap,
     bool isCloseable = true,
     GestureTapCallback? onClose,
@@ -48,7 +47,7 @@ class SBBNotificationBox extends StatefulWidget {
   factory SBBNotificationBox.warning({
     String? title,
     required String text,
-    Function(CloseableBoxController controller)? onControllerCreated,
+    Function(ClosableBoxController controller)? onControllerCreated,
     GestureTapCallback? onTap,
     bool isCloseable = true,
     GestureTapCallback? onClose,
@@ -70,7 +69,7 @@ class SBBNotificationBox extends StatefulWidget {
   factory SBBNotificationBox.success({
     String? title,
     required String text,
-    Function(CloseableBoxController controller)? onControllerCreated,
+    Function(ClosableBoxController controller)? onControllerCreated,
     GestureTapCallback? onTap,
     bool isCloseable = true,
     GestureTapCallback? onClose,
@@ -92,7 +91,7 @@ class SBBNotificationBox extends StatefulWidget {
   factory SBBNotificationBox.information({
     String? title,
     required String text,
-    Function(CloseableBoxController controller)? onControllerCreated,
+    Function(ClosableBoxController controller)? onControllerCreated,
     GestureTapCallback? onTap,
     bool isCloseable = true,
     GestureTapCallback? onClose,
@@ -114,7 +113,7 @@ class SBBNotificationBox extends StatefulWidget {
   final SBBNotificationBoxState state;
   final String? title;
   final String text;
-  final Function(CloseableBoxController controller)? onControllerCreated;
+  final Function(ClosableBoxController controller)? onControllerCreated;
   final GestureTapCallback? onTap;
   final bool isCloseable;
   final GestureTapCallback? onClose;
@@ -125,9 +124,8 @@ class SBBNotificationBox extends StatefulWidget {
   State<SBBNotificationBox> createState() => _SBBNotificationBoxState();
 }
 
-class _SBBNotificationBoxState extends State<SBBNotificationBox>
-    with SingleTickerProviderStateMixin {
-  late final CloseableBoxController _controller = CloseableBoxController(this);
+class _SBBNotificationBoxState extends State<SBBNotificationBox> with SingleTickerProviderStateMixin {
+  late final ClosableBoxController _controller = ClosableBoxController(this);
 
   Widget _animationBuilder({
     required Animation<double> animation,
@@ -188,8 +186,7 @@ class _SBBNotificationBoxState extends State<SBBNotificationBox>
             child: Container(
               decoration: BoxDecoration(
                 border: Border(
-                  left: BorderSide(
-                      color: widget.state.backgroundColor, width: 8.0),
+                  left: BorderSide(color: widget.state.backgroundColor, width: 8.0),
                 ),
                 borderRadius: const BorderRadius.all(
                   Radius.circular(16.0),
