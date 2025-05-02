@@ -9,6 +9,10 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+### Changed
+
+- updated the SBB Icons version to 1.6.2
+
 ## [3.0.0] - 2025-04-24
 
 ### Added
