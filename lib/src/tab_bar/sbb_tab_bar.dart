@@ -1,12 +1,10 @@
-import 'dart:math' as math;
-
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 import '../../sbb_design_system_mobile.dart';
 import '../sbb_internal.dart';
 import 'tab_bar_curve_clipper.dart';
-import 'tab_bar_draw_data.dart';
+
 import 'tab_item_widget.dart';
 
 /// The TabBar for SBB themed apps with multiple tabs.
@@ -21,273 +19,174 @@ class SBBTabBar extends StatefulWidget {
     this.onTap,
     this.controller,
     this.initialItem,
-    this.warningSemantics,
-    this.showWarning = false,
-    int? warningIndex,
-  }) : warningIndex = warningIndex ?? items.length - 1;
+  });
 
   final List<TabBarItem> items;
   final Future<void> Function(Future<TabBarItem> tabTask) onTabChanged;
   final void Function(TabBarItem tab)? onTap;
   final TabBarController? controller;
   final TabBarItem? initialItem;
-  final String? warningSemantics;
-  final bool showWarning;
-  final int warningIndex;
 
   @override
   State<SBBTabBar> createState() => _SBBTabBarState();
 }
 
-class _TabBarNotification extends Notification {
-  _TabBarNotification(this.data);
-
-  final TabBarDrawData data;
-}
-
-class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMixin {
-  late TabBarDrawData tabBarData = TabBarDrawData.empty(widget.items);
+class _SBBTabBarState extends State<SBBTabBar>
+    with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   late TabBarController _controller;
+  late final _keys = Map.fromEntries(
+    widget.items.map((e) => MapEntry(e, GlobalKey())),
+  );
+
+  late List<double> positions = widget.items.map((_) => -100.0).toList();
+
+  final _rowKey = GlobalKey();
+  double height = 0.0;
 
   @override
   void initState() {
     super.initState();
-    _controller = widget.controller ?? TabBarController(widget.initialItem ?? widget.items.first);
+    WidgetsBinding.instance.addObserver(this);
+    _controller = widget.controller ??
+        TabBarController(widget.initialItem ?? widget.items.first);
     _controller.initialize(this);
-  }
-
-  bool setPositionsAndSizes(_TabBarNotification n) {
-    if (n.data != tabBarData) {
-      WidgetsBinding.instance.addPostFrameCallback(
-        (_) {
-          if (!mounted) return;
-          setState(() => tabBarData = n.data);
-        },
-      );
-    }
-    return true;
+    _updatePositions();
   }
 
   @override
-  Widget build(context) => NotificationListener<_TabBarNotification>(
-        onNotification: setPositionsAndSizes,
-        child: StreamBuilder<TabBarNavigationData>(
-          stream: _controller.navigationStream,
-          initialData: _controller.currentData,
-          builder: (context, snapshot) {
-            final portrait = MediaQuery.of(context).orientation == Orientation.portrait;
-            final topPadding = portrait ? 8.0 : 1.0;
-            final snapshotData = snapshot.requireData;
-            final cardColor = Theme.of(context).cardTheme.color ?? Theme.of(context).scaffoldBackgroundColor;
-            final style = SBBBaseStyle.of(context);
-            return SizedBox.fromSize(
-              size: Size.fromHeight(TabBarFiller.calcHeight(context)),
-              child: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      cardColor.withOpacity(0.0),
-                      cardColor.withOpacity(1.0),
-                    ],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                  ),
-                  boxShadow: style.themeValue(SBBInternal.defaultBoxShadow, SBBInternal.barrierBoxShadow),
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeMetrics() {
+    super.didChangeMetrics();
+    _updatePositions();
+  }
+
+  void _updatePositions() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final positions = _keys.values.map((e) {
+        final parentData = e.currentContext?.findRenderObject()?.parentData;
+        return (parentData as FlexParentData?)?.offset.dx ?? -100.0;
+      });
+      height = _rowKey.currentContext?.size?.height ?? 0.0;
+      setState(() => this.positions = positions.toList());
+    });
+  }
+
+  @override
+  Widget build(context) {
+    return StreamBuilder<TabBarNavigationData>(
+      stream: _controller.navigationStream,
+      initialData: _controller.currentData,
+      builder: (context, snapshot) {
+        final mediaQuery = MediaQuery.of(context);
+        final portrait = mediaQuery.orientation == Orientation.portrait;
+        final viewPaddingBottom = mediaQuery.viewPadding.bottom;
+        final topPadding = portrait ? 8.0 : 1.0;
+        final snapshotData = snapshot.requireData;
+        final theme = Theme.of(context);
+        final cardColor =
+            theme.cardTheme.color ?? theme.scaffoldBackgroundColor;
+        final style = SBBBaseStyle.of(context);
+        return Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                cardColor.withValues(alpha: 0.0),
+                cardColor.withValues(alpha: 1.0),
+              ],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+            boxShadow: style.themeValue(
+              SBBInternal.defaultBoxShadow,
+              SBBInternal.barrierBoxShadow,
+            ),
+          ),
+          child: Stack(
+            children: [
+              ClipPath(
+                clipper: TabBarCurveClipper(
+                  widget.items.indexOf(snapshotData.selectedTab),
+                  widget.items.indexOf(snapshotData.nextTab),
+                  portrait,
+                  snapshotData.animation,
+                  snapshotData.hover,
+                  positions,
                 ),
-                child: Stack(
-                  children: [
-                    ...widget.items.map(
-                      (e) => Positioned(
-                        top: topPadding,
-                        left: tabBarData.positions[e],
-                        child: TabItemWidget.fromTabBarItem(e, true),
-                      ),
-                    ),
-                    ClipPath(
-                      clipper: TabBarCurveClipper(
-                        widget.items.indexOf(snapshotData.selectedTab),
-                        widget.items.indexOf(snapshotData.nextTab),
-                        portrait,
-                        tabBarData,
-                        snapshotData.animation,
-                        snapshotData.hover,
-                      ),
-                      child: Container(
-                        color: style.themeValue(SBBColors.white, SBBColors.charcoal),
-                        child: _IconLayer(widget.items, snapshotData.selectedTab),
-                      ),
-                    ),
-                    if (widget.showWarning)
-                      Positioned(
-                        top: topPadding,
-                        left: tabBarData.positions[widget.items[widget.warningIndex]],
-                        child: TabItemWidget.warning(),
-                      ),
-                    ...widget.items.mapIndexed(
-                      (i, tab) => Positioned(
-                        top: topPadding,
-                        left: tabBarData.positions[tab]! - 8.0,
-                        width: tabBarData.sizes[tab]!.width + 16.0,
-                        height: tabBarData.sizes[tab]!.height,
-                        child: Semantics(
-                          selected: snapshotData.selectedTab == tab,
-                          value: widget.showWarning && widget.warningIndex == i ? widget.warningSemantics : null,
-                          label: tab.translate(context),
-                          hint: Localizations.of(context, MaterialLocalizations).tabLabel(
-                            tabIndex: widget.items.indexOf(tab) + 1,
-                            tabCount: widget.items.length,
-                          ),
-                          button: true,
-                          child: Container(
-                            color: SBBColors.transparent,
-                            child: GestureDetector(
-                              key: Key('${tab.id}_button'),
-                              onTap: () {
-                                widget.onTap?.call(tab);
-                                if (snapshotData.selectedTab == tab) return;
-                                widget.onTabChanged(_controller.selectTab(tab));
-                              },
-                              onTapDown: (_) {
-                                if (snapshotData.selectedTab == tab) return;
-                                _controller.hoverTab(tab);
-                              },
-                              onTapCancel: () => _controller.cancelHover(),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+                child: Container(
+                  color: style.themeValue(
+                    SBBColors.white,
+                    SBBColors.charcoal,
+                  ),
+                  height: height + viewPaddingBottom,
                 ),
               ),
-            );
-          },
-        ),
-      );
-}
-
-class _IconLayer extends StatelessWidget {
-  const _IconLayer(
-    this.items,
-    this.selectedTab,
-  );
-
-  final List<TabBarItem> items;
-  final TabBarItem selectedTab;
-
-  @override
-  Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
-    final portrait = mediaQuery.orientation == Orientation.portrait;
-    final style = SBBControlStyles.of(context);
-    return CustomMultiChildLayout(
-      delegate: _IconLayerDelegate(
-        items,
-        (notification) => notification.dispatch(context),
-        mediaQuery.padding,
-        portrait,
-      ),
-      children: items
-          .expand(
-            (e) => [
-              LayoutId(id: e, child: TabItemWidget.fromTabBarItem(e, false)),
-              if (!portrait || e == selectedTab)
-                LayoutId(
-                  id: '${e.id}_text',
-                  child: ExcludeSemantics(
-                    child: Text(
-                      e.translate(context),
-                      style: style.tabBarTextStyle,
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
+              Padding(
+                padding: EdgeInsets.only(
+                  top: topPadding,
+                  bottom: viewPaddingBottom,
                 ),
+                child: Row(
+                  key: _rowKey,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: widget.items.map(
+                    (e) {
+                      final selected = snapshotData.selectedTab == e;
+                      final style = SBBControlStyles.of(context);
+                      final label = e.translate(context);
+                      final children = [
+                        TabItemWidget.fromTabBarItem(e, selected),
+                        if (!portrait) SizedBox(width: 8.0),
+                        if (selected || !portrait)
+                          Text(
+                            label,
+                            style: style.tabBarTextStyle,
+                            textAlign: TextAlign.center,
+                          ),
+                      ];
+                      final semanticsHint = Localizations.of(
+                        context,
+                        MaterialLocalizations,
+                      ).tabLabel(
+                        tabIndex: widget.items.indexOf(e) + 1,
+                        tabCount: widget.items.length,
+                      );
+                      return Semantics(
+                        key: _keys[e],
+                        selected: selected,
+                        label: label,
+                        hint: semanticsHint,
+                        button: true,
+                        excludeSemantics: true,
+                        child: GestureDetector(
+                          onTap: () {
+                            widget.onTap?.call(e);
+                            if (selected) return;
+                            widget.onTabChanged(_controller.selectTab(e));
+                          },
+                          onTapDown: (_) {
+                            if (selected) return;
+                            _controller.hoverTab(e);
+                          },
+                          onTapCancel: () => _controller.cancelHover(),
+                          child: portrait
+                              ? Column(children: children)
+                              : Row(children: children),
+                        ),
+                      );
+                    },
+                  ).toList(),
+                ),
+              ),
             ],
-          )
-          .toList(),
+          ),
+        );
+      },
     );
   }
-}
-
-class _IconLayerDelegate extends MultiChildLayoutDelegate {
-  _IconLayerDelegate(this.items, this.onNotification, this.padding, this.portrait);
-
-  final List<TabBarItem> items;
-  final void Function(_TabBarNotification notification) onNotification;
-  final EdgeInsets padding;
-  final bool portrait;
-
-  @override
-  void performLayout(Size size) {
-    final sizes = <TabBarItem, Size>{};
-    final iconSizes = <TabBarItem, Size>{};
-    final textSizes = <TabBarItem, Size>{};
-    final positions = <TabBarItem, double>{};
-
-    for (final tab in items) {
-      final iconSize = layoutChild(tab, BoxConstraints.loose(size));
-      iconSizes.putIfAbsent(tab, () => iconSize);
-
-      if (hasChild('${tab.id}_text')) {
-        final textSize = layoutChild('${tab.id}_text', BoxConstraints.loose(size));
-        textSizes.putIfAbsent(tab, () => textSize);
-      }
-    }
-
-    final tabTop = portrait ? 8.0 : 1.0;
-    double width = size.width - padding.left - padding.right;
-
-    if (portrait) {
-      double elementWidth = width / items.length;
-
-      for (final tab in items) {
-        final center = elementWidth * items.indexOf(tab) + elementWidth / 2.0;
-        final iconLeft = center - iconSizes[tab]!.width / 2.0;
-        positionChild(tab, Offset(iconLeft, tabTop));
-        if (hasChild('${tab.id}_text')) {
-          final textLeft = center - textSizes[tab]!.width / 2.0;
-          final maxLeft = size.width - sbbDefaultSpacing - textSizes[tab]!.width;
-          final iconBottom = tabTop + TabItemWidget.portraitSize;
-          final top = iconBottom + (size.height - iconBottom) / 2.0 - textSizes[tab]!.height / 2.0;
-          positionChild('${tab.id}_text', Offset(math.max(sbbDefaultSpacing, math.min(textLeft, maxLeft)), top));
-        }
-        positions.putIfAbsent(tab, () => iconLeft);
-        sizes.putIfAbsent(tab, () => iconSizes[tab]!);
-      }
-
-      double spaceBetween = 0.0;
-      if (positions.values.length > 1) {
-        spaceBetween = positions.values.first * 2;
-      }
-
-      onNotification(_TabBarNotification(TabBarDrawData(positions, sizes, spaceBetween)));
-    } else {
-      final spaceBetween =
-          (width - items.map((e) => iconSizes[e]!.width + textSizes[e]!.width + sbbDefaultSpacing).sum) /
-              (items.length + 1);
-
-      double iconLeft = spaceBetween;
-      for (final tab in items) {
-        final elementSize =
-            Size(iconSizes[tab]!.width + textSizes[tab]!.width + sbbDefaultSpacing, iconSizes[tab]!.height);
-        final textLeft = iconLeft + sbbDefaultSpacing + iconSizes[tab]!.width;
-        final textTop = iconSizes[tab]!.height / 2.0 - textSizes[tab]!.height / 2.0;
-
-        positionChild(tab, Offset(iconLeft, tabTop));
-        positionChild('${tab.id}_text', Offset(textLeft, textTop));
-        positions.putIfAbsent(tab, () => iconLeft);
-        sizes.putIfAbsent(tab, () => elementSize);
-
-        iconLeft += spaceBetween + elementSize.width;
-
-        onNotification(_TabBarNotification(TabBarDrawData(positions, sizes, spaceBetween)));
-      }
-    }
-  }
-
-  @override
-  bool shouldRelayout(_IconLayerDelegate oldDelegate) =>
-      padding != oldDelegate.padding ||
-      portrait != oldDelegate.portrait ||
-      const ListEquality().equals(items, oldDelegate.items);
 }

@@ -32,22 +32,25 @@ class TabBarPageState extends State<TabBarPage> {
           child: ThemeModeSegmentedButton(),
         ),
         Expanded(child: Container()),
+        Padding(
+          padding: const EdgeInsets.symmetric(
+            vertical: sbbDefaultSpacing,
+            horizontal: 8.0,
+          ),
+          child: SBBPrimaryButton(
+            label: 'toggle',
+            onPressed: () => setState(() => visible = !visible),
+          ),
+        ),
         if (visible)
           SBBTabBar(
             items: items,
-            showWarning: true,
             onTabChanged: (task) async {},
             controller: controller,
-            warningSemantics: 'Warning',
             onTap: (tab) {
               sbbToast.show(message: 'Tab tapped: Item ${tab.id}');
             },
           ),
-        Expanded(child: Container()),
-        SBBPrimaryButton(
-          label: 'toggle',
-          onPressed: () => setState(() => visible = !visible),
-        ),
       ],
     );
   }
