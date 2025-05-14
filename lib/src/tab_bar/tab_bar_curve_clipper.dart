@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 
 class TabBarCurveClipper extends CustomClipper<Path> {
   TabBarCurveClipper(
-      int from,
-      int to,
-      this.portrait,
-      double animation,
-      bool hover,
-      this.positions,
-      )   : _left = math.min(from, to),
+    int from,
+    int to,
+    this.portrait,
+    double animation,
+    bool hover,
+    this.positions,
+  )   : _left = math.min(from, to),
         _right = math.max(from, to),
         _fromLeft = from < to,
         _radius = (portrait ? 44.0 : 36.0) / 2.0 {
@@ -22,7 +22,7 @@ class TabBarCurveClipper extends CustomClipper<Path> {
   final int _right;
   final bool _fromLeft;
   final bool portrait;
-  final List<double> positions;
+  final List<Offset> positions;
   final double _radius;
 
   late double _leftPercentage;
@@ -47,7 +47,7 @@ class TabBarCurveClipper extends CustomClipper<Path> {
   }
 
   double _getHolePosition(int index) {
-    return positions.elementAt(index) + _radius;
+    return positions.elementAt(index).dx + _radius;
   }
 
   Path _createFinalPath(Path path, Size size) {
@@ -67,90 +67,151 @@ class TabBarCurveClipper extends CustomClipper<Path> {
   Path _buildPathFromLeft(_HoleShape leftShape, _HoleShape rightShape) {
     return Path()
       ..moveTo(rightShape.pCurveRight.dx, rightShape.pCurveRight.dy)
-      ..quadraticBezierTo(rightShape.cRight.dx, rightShape.cRight.dy,
-          rightShape.pRight.dx, rightShape.pRight.dy)
       ..quadraticBezierTo(
-          rightShape.cBottomRight.dx,
-          rightShape.cBottomRight.dy,
-          rightShape.pBottom.dx,
-          rightShape.pBottom.dy)
+        rightShape.cRight.dx,
+        rightShape.cRight.dy,
+        rightShape.pRight.dx,
+        rightShape.pRight.dy,
+      )
       ..quadraticBezierTo(
-          rightShape.cBottomLeft.dx,
-          rightShape.cBottomLeft.dy,
-          rightShape.pLeft.dx,
-          rightShape.pLeft.dy)
-      ..quadraticBezierTo(leftShape.cRight.dx, leftShape.cRight.dy,
-          leftShape.pRight.dx, leftShape.pRight.dy)
+        rightShape.cBottomRight.dx,
+        rightShape.cBottomRight.dy,
+        rightShape.pBottom.dx,
+        rightShape.pBottom.dy,
+      )
       ..quadraticBezierTo(
-          leftShape.cBottomRight.dx,
-          leftShape.cBottomRight.dy,
-          leftShape.pBottom.dx,
-          leftShape.pBottom.dy)
-      ..quadraticBezierTo(leftShape.cBottomLeft.dx,
-          leftShape.cBottomLeft.dy, leftShape.pLeft.dx, leftShape.pLeft.dy)
-      ..quadraticBezierTo(leftShape.cLeft.dx, leftShape.cLeft.dy,
-          leftShape.pCurveLeft.dx, leftShape.pCurveLeft.dy)
+        rightShape.cBottomLeft.dx,
+        rightShape.cBottomLeft.dy,
+        rightShape.pLeft.dx,
+        rightShape.pLeft.dy,
+      )
+      ..quadraticBezierTo(
+        leftShape.cRight.dx,
+        leftShape.cRight.dy,
+        leftShape.pRight.dx,
+        leftShape.pRight.dy,
+      )
+      ..quadraticBezierTo(
+        leftShape.cBottomRight.dx,
+        leftShape.cBottomRight.dy,
+        leftShape.pBottom.dx,
+        leftShape.pBottom.dy,
+      )
+      ..quadraticBezierTo(
+        leftShape.cBottomLeft.dx,
+        leftShape.cBottomLeft.dy,
+        leftShape.pLeft.dx,
+        leftShape.pLeft.dy,
+      )
+      ..quadraticBezierTo(
+        leftShape.cLeft.dx,
+        leftShape.cLeft.dy,
+        leftShape.pCurveLeft.dx,
+        leftShape.pCurveLeft.dy,
+      )
       ..close();
   }
 
   Path _buildPathFromRight(_HoleShape leftShape, _HoleShape rightShape) {
     return Path()
       ..moveTo(leftShape.pCurveLeft.dx, leftShape.pCurveLeft.dy)
-      ..quadraticBezierTo(leftShape.cLeft.dx, leftShape.cLeft.dy,
-          leftShape.pLeft.dx, leftShape.pLeft.dy)
       ..quadraticBezierTo(
-          leftShape.cBottomLeft.dx,
-          leftShape.cBottomLeft.dy,
-          leftShape.pBottom.dx,
-          leftShape.pBottom.dy)
+        leftShape.cLeft.dx,
+        leftShape.cLeft.dy,
+        leftShape.pLeft.dx,
+        leftShape.pLeft.dy,
+      )
       ..quadraticBezierTo(
-          leftShape.cBottomRight.dx,
-          leftShape.cBottomRight.dy,
-          leftShape.pRight.dx,
-          leftShape.pRight.dy)
-      ..quadraticBezierTo(rightShape.cLeft.dx, rightShape.cLeft.dy,
-          rightShape.pLeft.dx, rightShape.pLeft.dy)
+        leftShape.cBottomLeft.dx,
+        leftShape.cBottomLeft.dy,
+        leftShape.pBottom.dx,
+        leftShape.pBottom.dy,
+      )
       ..quadraticBezierTo(
-          rightShape.cBottomLeft.dx,
-          rightShape.cBottomLeft.dy,
-          rightShape.pBottom.dx,
-          rightShape.pBottom.dy)
+        leftShape.cBottomRight.dx,
+        leftShape.cBottomRight.dy,
+        leftShape.pRight.dx,
+        leftShape.pRight.dy,
+      )
       ..quadraticBezierTo(
-          rightShape.cBottomRight.dx,
-          rightShape.cBottomRight.dy,
-          rightShape.pRight.dx,
-          rightShape.pRight.dy)
-      ..quadraticBezierTo(rightShape.cRight.dx, rightShape.cRight.dy,
-          rightShape.pCurveRight.dx, rightShape.pCurveRight.dy)
+        rightShape.cLeft.dx,
+        rightShape.cLeft.dy,
+        rightShape.pLeft.dx,
+        rightShape.pLeft.dy,
+      )
+      ..quadraticBezierTo(
+        rightShape.cBottomLeft.dx,
+        rightShape.cBottomLeft.dy,
+        rightShape.pBottom.dx,
+        rightShape.pBottom.dy,
+      )
+      ..quadraticBezierTo(
+        rightShape.cBottomRight.dx,
+        rightShape.cBottomRight.dy,
+        rightShape.pRight.dx,
+        rightShape.pRight.dy,
+      )
+      ..quadraticBezierTo(
+        rightShape.cRight.dx,
+        rightShape.cRight.dy,
+        rightShape.pCurveRight.dx,
+        rightShape.pCurveRight.dy,
+      )
       ..close();
   }
 
   Path _buildNormalVersionPath(_HoleShape leftShape, _HoleShape rightShape) {
     return Path()
       ..moveTo(leftShape.pCurveLeft.dx, leftShape.pCurveLeft.dy)
-      ..quadraticBezierTo(leftShape.cLeft.dx, leftShape.cLeft.dy,
-          leftShape.pLeft.dx, leftShape.pLeft.dy)
-      ..quadraticBezierTo(leftShape.cBottomLeft.dx, leftShape.cBottomLeft.dy,
-          leftShape.pBottom.dx, leftShape.pBottom.dy)
-      ..quadraticBezierTo(leftShape.cBottomRight.dx,
-          leftShape.cBottomRight.dy, leftShape.pRight.dx, leftShape.pRight.dy)
-      ..quadraticBezierTo(leftShape.cRight.dx, leftShape.cRight.dy,
-          leftShape.pCurveRight.dx, leftShape.pCurveRight.dy)
+      ..quadraticBezierTo(
+        leftShape.cLeft.dx,
+        leftShape.cLeft.dy,
+        leftShape.pLeft.dx,
+        leftShape.pLeft.dy,
+      )
+      ..quadraticBezierTo(
+        leftShape.cBottomLeft.dx,
+        leftShape.cBottomLeft.dy,
+        leftShape.pBottom.dx,
+        leftShape.pBottom.dy,
+      )
+      ..quadraticBezierTo(
+        leftShape.cBottomRight.dx,
+        leftShape.cBottomRight.dy,
+        leftShape.pRight.dx,
+        leftShape.pRight.dy,
+      )
+      ..quadraticBezierTo(
+        leftShape.cRight.dx,
+        leftShape.cRight.dy,
+        leftShape.pCurveRight.dx,
+        leftShape.pCurveRight.dy,
+      )
       ..lineTo(rightShape.pCurveLeft.dx, rightShape.pCurveLeft.dy)
-      ..quadraticBezierTo(rightShape.cLeft.dx, rightShape.cLeft.dy,
-          rightShape.pLeft.dx, rightShape.pLeft.dy)
       ..quadraticBezierTo(
-          rightShape.cBottomLeft.dx,
-          rightShape.cBottomLeft.dy,
-          rightShape.pBottom.dx,
-          rightShape.pBottom.dy)
+        rightShape.cLeft.dx,
+        rightShape.cLeft.dy,
+        rightShape.pLeft.dx,
+        rightShape.pLeft.dy,
+      )
       ..quadraticBezierTo(
-          rightShape.cBottomRight.dx,
-          rightShape.cBottomRight.dy,
-          rightShape.pRight.dx,
-          rightShape.pRight.dy)
-      ..quadraticBezierTo(rightShape.cRight.dx, rightShape.cRight.dy,
-          rightShape.pCurveRight.dx, rightShape.pCurveRight.dy)
+        rightShape.cBottomLeft.dx,
+        rightShape.cBottomLeft.dy,
+        rightShape.pBottom.dx,
+        rightShape.pBottom.dy,
+      )
+      ..quadraticBezierTo(
+        rightShape.cBottomRight.dx,
+        rightShape.cBottomRight.dy,
+        rightShape.pRight.dx,
+        rightShape.pRight.dy,
+      )
+      ..quadraticBezierTo(
+        rightShape.cRight.dx,
+        rightShape.cRight.dy,
+        rightShape.pCurveRight.dx,
+        rightShape.pCurveRight.dy,
+      )
       ..close();
   }
 
@@ -177,7 +238,8 @@ class _HoleShape {
     vCenter = radius + tabTop;
 
     _offset = const Offset(32.0, 0.0);
-    _controlOffset = const Offset(16.0, 0.0); // Adjust control offset for smoother curves
+    _controlOffset =
+        const Offset(16.0, 0.0); // Adjust control offset for smoother curves
 
     // Initialize the points for the hole shape
     _initializePoints(radius, tabTop, space);
@@ -204,6 +266,7 @@ class _HoleShape {
   late Offset _pBottomCenter;
 
   Offset get pCurveLeft => _pCurveLeft;
+
   Offset get pCurveRight => _pCurveRight;
 
   void _initializePoints(double radius, double tabTop, double space) {
@@ -223,15 +286,27 @@ class _HoleShape {
   }
 
   Offset get pLeft => _interpolate(_pTopLeft, _pCenterLeft);
+
   Offset get pRight => _interpolate(_pTopRight, _pCenterRight);
-  Offset get pCenterLeft => _interpolate(_pCenterLeft - _controlOffset, _pCenterLeft);
-  Offset get pCenterRight => _interpolate(_pCenterRight + _controlOffset, _pCenterRight);
+
+  Offset get pCenterLeft =>
+      _interpolate(_pCenterLeft - _controlOffset, _pCenterLeft);
+
+  Offset get pCenterRight =>
+      _interpolate(_pCenterRight + _controlOffset, _pCenterRight);
 
   Offset get cLeft => _interpolate(_pTopLeft - _controlOffset, _pTopLeft);
+
   Offset get cRight => _interpolate(_pTopRight + _controlOffset, _pTopRight);
+
   Offset get cBottomCenter => _interpolate(_pTopCenter, _pBottomCenter);
-  Offset get cBottomLeft => _interpolate(_pTopCenter - _controlOffset, _pBottomLeft);
-  Offset get cBottomRight => _interpolate(_pTopCenter + _controlOffset, _pBottomRight);
+
+  Offset get cBottomLeft =>
+      _interpolate(_pTopCenter - _controlOffset, _pBottomLeft);
+
+  Offset get cBottomRight =>
+      _interpolate(_pTopCenter + _controlOffset, _pBottomRight);
+
   Offset get pBottom => _interpolate(_pTopCenter, _pBottomCenter);
 
   Offset _interpolate(Offset begin, Offset end) {

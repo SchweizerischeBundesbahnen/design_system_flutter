@@ -1,18 +1,25 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/src/tab_bar/tab_bar_layout_data.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
 class TabBarController {
-  TabBarController(this.selectedTab) {
+  TabBarController(this.tabs, this.selectedTab) {
     currentData = TabBarNavigationData(selectedTab, selectedTab, 0.0, false);
   }
 
-  final _navigationController = StreamController<TabBarNavigationData>.broadcast();
+  final _navigationController =
+      StreamController<TabBarNavigationData>.broadcast();
+  final _layoutController = StreamController<TabBarLayoutData>.broadcast();
 
-  Stream<TabBarNavigationData> get navigationStream => _navigationController.stream;
+  Stream<TabBarNavigationData> get navigationStream =>
+      _navigationController.stream;
 
+  Stream<TabBarLayoutData> get layoutStream => _layoutController.stream;
+
+  final List<TabBarItem> tabs;
   late TabBarItem selectedTab;
   late TickerProvider vsync;
   late TabBarItem _nextTab;
@@ -20,6 +27,8 @@ class TabBarController {
   late Animation<double> _animation;
   late bool _hover;
   late TabBarNavigationData currentData;
+  late TabBarLayoutData currentLayoutData =
+      TabBarLayoutData(0.0, tabs.map((_) => Offset(-100.0, 0.0)).toList());
 
   static const _duration = Duration(milliseconds: 100);
 
@@ -62,5 +71,10 @@ class TabBarController {
     _hover = false;
     _nextTab = selectedTab;
     _animationController.reset();
+  }
+
+  void onLayout(List<Offset> positions, double height) {
+    currentLayoutData = TabBarLayoutData(height, positions);
+    _layoutController.add(currentLayoutData);
   }
 }

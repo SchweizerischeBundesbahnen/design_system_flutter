@@ -6,7 +6,6 @@ class TabItemWidget extends StatelessWidget {
   const TabItemWidget(
     this.icon,
     this.selected, {
-    super.key,
     this.warning = false,
   });
 
@@ -14,10 +13,7 @@ class TabItemWidget extends StatelessWidget {
     TabBarItem item,
     bool selected,
   ) =>
-      TabItemWidget(
-        item.icon,
-        selected,
-      );
+      TabItemWidget(item.icon, selected);
 
   factory TabItemWidget.warning() => const TabItemWidget(
         SBBIcons.sign_exclamation_point_small,
@@ -37,6 +33,7 @@ class TabItemWidget extends StatelessWidget {
     final style = SBBBaseStyle.of(context);
     final portrait = MediaQuery.of(context).orientation == Orientation.portrait;
     final size = portrait ? portraitSize : landscapeSize;
+    final topPadding = portrait ? 8.0 : 1.0;
 
     final foregroundColor = style.themeValue(SBBColors.white, SBBColors.black);
     final backgroundColor = style.themeValue(SBBColors.black, SBBColors.white);
@@ -71,7 +68,7 @@ class TabItemWidget extends StatelessWidget {
     return Container(
       width: size,
       height: size,
-      margin: const EdgeInsets.only(bottom: 8.0),
+      margin: EdgeInsets.only(top: topPadding),
       color: containerColor,
       decoration: decoration,
       child: child,
