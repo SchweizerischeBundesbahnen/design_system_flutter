@@ -136,8 +136,7 @@ class CheckboxPageState extends State<CheckboxPage> {
         const SizedBox(height: sbbDefaultSpacing),
         const SBBListHeader('Checkbox Item - Boxed'),
         Column(
-          // spacing: sbbDefaultSpacing * 0.5,  add once support for Flutter SDK 3.24.5 removed
-          // and remove SizedBoxes below
+          spacing: sbbDefaultSpacing * 0.5,
           children: [
             SBBGroup(
               child: SBBCheckboxListItem.boxed(
@@ -147,7 +146,6 @@ class CheckboxPageState extends State<CheckboxPage> {
                 onChanged: _isEnabled ? (value) => setState(() => _listItemValue1 = value) : null,
               ),
             ),
-            SizedBox(height: sbbDefaultSpacing * .5),
             SBBGroup(
               child: SBBCheckboxListItem.boxed(
                 value: _listItemValue2,
@@ -156,7 +154,6 @@ class CheckboxPageState extends State<CheckboxPage> {
                 onChanged: _isEnabled ? (value) => setState(() => _listItemValue2 = value) : null,
               ),
             ),
-            SizedBox(height: sbbDefaultSpacing * .5),
             SBBGroup(
               child: SBBCheckboxListItem.boxed(
                 value: _listItemValue4,
@@ -165,7 +162,6 @@ class CheckboxPageState extends State<CheckboxPage> {
                 leadingIcon: SBBIcons.alarm_clock_small,
               ),
             ),
-            SizedBox(height: sbbDefaultSpacing * .5),
             SBBGroup(
               child: SBBCheckboxListItem.boxed(
                 value: _listItemValue5,
@@ -175,7 +171,6 @@ class CheckboxPageState extends State<CheckboxPage> {
                 trailingIcon: SBBIcons.dog_small,
               ),
             ),
-            SizedBox(height: sbbDefaultSpacing * .5),
             SBBGroup(
               child: SBBCheckboxListItem.boxed(
                 value: _listItemValue3,
@@ -185,7 +180,6 @@ class CheckboxPageState extends State<CheckboxPage> {
                 onCallToAction: () => sbbToast.show(message: 'Button pressed'),
               ),
             ),
-            SizedBox(height: sbbDefaultSpacing * .5),
             SBBGroup(
               child: SBBCheckboxListItem.custom(
                 value: _listItemValue6,
@@ -200,7 +194,6 @@ class CheckboxPageState extends State<CheckboxPage> {
                 ),
               ),
             ),
-            SizedBox(height: sbbDefaultSpacing * .5),
             SBBGroup(
               child: SBBCheckboxListItem.boxed(
                 value: _listItemValue7,
@@ -212,7 +205,6 @@ class CheckboxPageState extends State<CheckboxPage> {
                 onChanged: _isEnabled ? (value) => setState(() => _listItemValue7 = value) : null,
               ),
             ),
-            SizedBox(height: sbbDefaultSpacing * .5),
             SBBGroup(
               child: SBBCheckboxListItem.boxed(
                 value: _listItemValue8,

@@ -115,7 +115,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
         centerTitle: true,
       );
 
-  CardTheme get cardTheme => CardTheme(
+  CardThemeData get cardTheme => CardThemeData(
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(sbbDefaultSpacing)),
         ),

@@ -40,35 +40,43 @@ jobs:
   build-android:
     name: Build Android
     runs-on: ubuntu-latest
-    needs: [test]
+    needs: [ test ]
     defaults:
       run:
         working-directory: example
     steps:
       - uses: actions/checkout@v4
+
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
+
       - uses: actions/setup-java@v4
         with:
-          java-version: "17"
+          java-version: "21"
           distribution: "temurin"
+          cache: "gradle"
+
       - run: flutter pub get
+
       - name: Build appbundle.
         run: flutter build appbundle --profile --no-pub
 
   build-iOS:
     name: Build iOS
-    needs: [test]
+    needs: [ test ]
     runs-on: macos-latest
     defaults:
       run:
         working-directory: example
     steps:
       - uses: actions/checkout@v4
+
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
+
       - run: flutter pub get
+
       - name: Build iOS package
         run: flutter build ios --simulator

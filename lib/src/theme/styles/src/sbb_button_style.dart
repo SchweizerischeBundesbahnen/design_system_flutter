@@ -100,16 +100,8 @@ class SBBButtonStyle {
           pressedValue: backgroundColor,
           disabledValue: backgroundColorDisabled,
         ),
-        // icon color workaround can be removed as soon as support for 3.24.5 is dropped
-        // see https://github.com/flutter/flutter/pull/143501
         foregroundColor: textStyle == null
-            ? iconColor == null
-                ? null
-                : SBBTheme.resolveStatesWith(
-                    defaultValue: iconColor!,
-                    pressedValue: iconColorHighlighted,
-                    disabledValue: iconColorDisabled,
-                  )
+            ? null
             : SBBTheme.resolveStatesWith(
                 defaultValue: textStyle!.color!,
                 pressedValue: textStyleHighlighted?.color,

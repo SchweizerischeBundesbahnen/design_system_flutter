@@ -145,8 +145,7 @@ class RadioTest extends StatelessWidget {
           const SizedBox(height: sbbDefaultSpacing),
           const SBBListHeader('RadioButton Item - List'),
           Column(
-            // spacing: sbbDefaultSpacing * 0.5,  add once support for Flutter SDK 3.24.5 removed
-            // and remove SizedBoxes below
+            spacing: sbbDefaultSpacing * 0.5,
             children: [
               SBBGroup(
                 child: SBBRadioListItem<int>.boxed(
@@ -156,7 +155,6 @@ class RadioTest extends StatelessWidget {
                   label: 'Label',
                 ),
               ),
-              SizedBox(height: sbbDefaultSpacing * .5),
               SBBGroup(
                 child: SBBRadioListItem<int>.boxed(
                   value: 2,
@@ -167,7 +165,6 @@ class RadioTest extends StatelessWidget {
                   trailingIcon: SBBIcons.dog_small,
                 ),
               ),
-              SizedBox(height: sbbDefaultSpacing * .5),
               SBBGroup(
                 child: SBBRadioListItem<int>.boxed(
                   value: 3,
@@ -178,7 +175,6 @@ class RadioTest extends StatelessWidget {
                   onCallToAction: () => {},
                 ),
               ),
-              SizedBox(height: sbbDefaultSpacing * .5),
               SBBGroup(
                 child: SBBRadioListItem<int>.custom(
                   value: 4,
