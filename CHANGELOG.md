@@ -12,6 +12,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 ### Changed
 
 - updated the SBB Icons version to 1.6.2
+- Dropped support for `Flutter SDK 3.24.5`: minimum supported version is 3.27.0
 
 ## [3.0.0] - 2025-04-24
 

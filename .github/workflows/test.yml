@@ -27,7 +27,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
-          flutter-version: 3.29.x
+          flutter-version: 3.32.x
           cache: true
 
       - name: Flutter doctor
@@ -75,13 +75,13 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        sdk: [ "3.24.5", "3.29.x" ]
+        sdk: [ "3.27.0", "3.32.x" ]
     steps:
       - uses: actions/checkout@v4
 
       - uses: actions/setup-java@v4
         with:
-          java-version: "17"
+          java-version: "21"
           distribution: "temurin"
           cache: "gradle"
 
@@ -107,7 +107,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        sdk: [ "3.24.5", "3.29.x" ]
+        sdk: [ "3.27.0", "3.32.x" ]
     steps:
       - uses: actions/checkout@v4
 
