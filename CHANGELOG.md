@@ -9,6 +9,15 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+### Added
+
+- added `style` to `SBBPromotionBox.custom` constructor
+
+### Deprecated
+
+- deprecated `badgeColor`, `badgeShadowColor` and `gradientColors` of `SBBPromotionBox.custom` constructor in favor of
+  `style`
+
 ## [3.1.0] - 2025-05-22
 
 ### Changed
