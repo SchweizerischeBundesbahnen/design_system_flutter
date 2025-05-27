@@ -22,7 +22,7 @@ class _HeaderBoxPageState extends State<HeaderBoxPage> {
   void initState() {
     super.initState();
     _pageViewController = PageController();
-    _tabBarController = TabBarController(items.first);
+    _tabBarController = TabBarController(items, items.first);
   }
 
   @override
