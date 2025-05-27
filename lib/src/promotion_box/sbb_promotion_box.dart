@@ -52,9 +52,11 @@ class SBBPromotionBox extends StatefulWidget {
     String? onTapSemanticsHint,
     Widget? leading,
     Widget? trailing,
-    Color? badgeColor,
-    Color? badgeShadowColor,
+    @Deprecated('Deprecated. Will be removed in the next major release. Use [style] instead') Color? badgeColor,
+    @Deprecated('Deprecated. Will be removed in the next major release. Use [style] instead') Color? badgeShadowColor,
+    @Deprecated('Deprecated. Will be removed in the next major release. Use [style] instead')
     List<Color>? gradientColors,
+    PromotionBoxStyle? style,
   }) : this._base(
           content: content,
           badgeText: badgeText,
@@ -68,6 +70,7 @@ class SBBPromotionBox extends StatefulWidget {
           badgeColor: badgeColor,
           badgeShadowColor: badgeShadowColor,
           gradientColors: gradientColors,
+          style: style,
         );
 
   const SBBPromotionBox._base({
@@ -83,7 +86,9 @@ class SBBPromotionBox extends StatefulWidget {
     this.badgeColor,
     this.badgeShadowColor,
     this.gradientColors,
-  });
+    this.style,
+  }) : assert(!(style != null && (badgeColor != null || badgeShadowColor != null || gradientColors != null)),
+            'Cannot set PromotionBoxStyle in combination with badgeColor, badgeShadowColor or gradientColors.');
 
   /// The content between the [leading] and [trailing] Widgets.
   final Widget content;
@@ -118,20 +123,36 @@ class SBBPromotionBox extends StatefulWidget {
 
   /// The color of the badge used to override the one defined in the [PromotionBoxStyle].
   ///
+  /// Cannot be used if [style] is set.
+  ///
   /// If null, the one defined in the style will be taken.
+  @Deprecated('Deprecated. Will be removed in the next major release. Use [style] instead')
   final Color? badgeColor;
 
   /// The shadow color of the badge used to override the one defined in the [PromotionBoxStyle].
   ///
+  /// Cannot be used if [style] is set.
+  ///
   /// If null, the one defined in the style will be taken.
+  @Deprecated('Deprecated. Will be removed in the next major release. Use [style] instead')
   final Color? badgeShadowColor;
 
   /// The gradient colors of the [SBBPromotionBox] used to override the one defined in the [PromotionBoxStyle].
   ///
   /// If null, the one defined in the style will be taken.
   ///
+  /// Cannot be used if [style] is set.
+  ///
   /// Use this to override the background color of the [SBBPromotionBox].
+  @Deprecated('Deprecated. Will be removed in the next major release. Use [style] instead')
   final List<Color>? gradientColors;
+
+  /// Use to override style of single SBBPromotionBox in custom constructor.
+  ///
+  /// Cannot be used if [gradientColors], [badgeShadowColor] or [badgeColor] are set.
+  ///
+  /// This is [PromotionBoxStyle.merge] with the theme's [PromotionBoxStyle] to create the final one.
+  final PromotionBoxStyle? style;
 
   @override
   State<SBBPromotionBox> createState() => _SBBPromotionBoxState();
@@ -186,9 +207,11 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
 
   @override
   Widget build(BuildContext context) {
-    final style = SBBControlStyles.of(context).promotionBox!;
     final iconStyle = SBBButtonStyles.of(context).iconTextStyle;
     final paddingTop = _badgeSize.height / 2.0;
+
+    final style = SBBControlStyles.of(context).promotionBox!;
+    final resolvedStyle = widget.style != null ? style.merge(widget.style!) : style;
 
     return _animationBuilder(
       animation: _controller.animation,
@@ -198,12 +221,15 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
           children: [
             Align(
               alignment: Alignment.topCenter,
-              child: SBBPromotionBoxBadgeShadow(badgeSize: _badgeSize, shadowColor: widget.badgeShadowColor),
+              child: SBBPromotionBoxBadgeShadow(
+                badgeSize: _badgeSize,
+                shadowColor: widget.badgeShadowColor ?? resolvedStyle.badgeShadowColor!,
+              ),
             ),
             Container(
               margin: EdgeInsets.only(top: paddingTop),
               decoration: BoxDecoration(
-                border: Border.all(color: style.borderColor!),
+                border: Border.all(color: resolvedStyle.borderColor!),
                 borderRadius: const BorderRadius.all(
                   Radius.circular(sbbDefaultSpacing),
                 ),
@@ -211,12 +237,12 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
                   image: const AssetImage(_PromotionBoxAssets.noise),
                   repeat: ImageRepeat.repeat,
                   fit: BoxFit.none,
-                  opacity: style.textureOpacity!,
+                  opacity: resolvedStyle.textureOpacity!,
                 ),
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: widget.gradientColors ?? style.gradientColors!,
+                  colors: widget.gradientColors ?? resolvedStyle.gradientColors!,
                   stops: _gradientStops,
                 ),
               ),
@@ -269,7 +295,9 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
               child: SBBPromotionBoxBadge(
                 key: _badgeKey,
                 text: widget.badgeText,
-                badgeColor: widget.badgeColor,
+                badgeColor: widget.badgeColor ?? resolvedStyle.badgeColor!,
+                badgeBorderColor: resolvedStyle.badgeBorderColor!,
+                badgeTextStyle: resolvedStyle.badgeTextStyle!,
               ),
             ),
             if (widget.onClose != null)

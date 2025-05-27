@@ -9,6 +9,7 @@ class PromotionBoxStyle {
     required this.borderColor,
     required this.badgeShadowColor,
     required this.badgeColor,
+    required this.badgeBorderColor,
     required this.badgeTextStyle,
     required this.gradientColors,
     required this.textureOpacity,
@@ -18,10 +19,11 @@ class PromotionBoxStyle {
     return PromotionBoxStyle(
       borderColor: baseStyle.themeValue(SBBColors.white, SBBColors.charcoal),
       badgeShadowColor: baseStyle.themeValue(
-        SBBColors.red.withOpacity(0.2),
-        SBBColors.redDarkMode.withOpacity(0.6),
+        SBBColors.red.withValues(alpha: 0.2),
+        SBBColors.redDarkMode.withValues(alpha: 0.6),
       ),
       badgeColor: SBBColors.red,
+      badgeBorderColor: baseStyle.themeValue(SBBColors.white, SBBColors.charcoal),
       badgeTextStyle: SBBTextStyles.smallBold.copyWith(
         color: SBBColors.white,
       ),
@@ -50,6 +52,7 @@ class PromotionBoxStyle {
   final Color? borderColor;
   final Color? badgeShadowColor;
   final Color? badgeColor;
+  final Color? badgeBorderColor;
   final TextStyle? badgeTextStyle;
   final List<Color>? gradientColors;
   final double? textureOpacity;
@@ -58,6 +61,7 @@ class PromotionBoxStyle {
     Color? borderColor,
     Color? badgeShadowColor,
     Color? badgeColor,
+    Color? badgeBorderColor,
     TextStyle? badgeTextStyle,
     List<Color>? gradientColors,
     double? textureOpacity,
@@ -66,6 +70,7 @@ class PromotionBoxStyle {
       borderColor: borderColor ?? this.borderColor,
       badgeShadowColor: badgeShadowColor ?? this.badgeShadowColor,
       badgeColor: badgeColor ?? this.badgeColor,
+      badgeBorderColor: badgeBorderColor ?? this.badgeBorderColor,
       badgeTextStyle: badgeTextStyle ?? this.badgeTextStyle,
       gradientColors: gradientColors ?? this.gradientColors,
       textureOpacity: textureOpacity ?? this.textureOpacity,
@@ -81,9 +86,29 @@ class PromotionBoxStyle {
       borderColor: Color.lerp($this?.borderColor, other?.borderColor, t),
       badgeShadowColor: Color.lerp($this?.badgeShadowColor, other?.badgeShadowColor, t),
       badgeColor: Color.lerp($this?.badgeColor, other?.badgeColor, t),
+      badgeBorderColor: Color.lerp($this?.badgeBorderColor, other?.badgeBorderColor, t),
       badgeTextStyle: TextStyle.lerp($this?.badgeTextStyle, other?.badgeTextStyle, t),
       gradientColors: other?.gradientColors,
       textureOpacity: lerpDouble($this?.textureOpacity, other?.textureOpacity, t),
+    );
+  }
+
+  /// The given [other] null properties its null properties
+  /// are replaced with the non-null properties of this text style.
+  /// Another way to think of it is that the "missing" properties of the [other] style
+  /// are _filled_ by the properties of this style.
+  PromotionBoxStyle merge(PromotionBoxStyle? other) {
+    if (other == null) {
+      return this;
+    }
+    return copyWith(
+      borderColor: other.borderColor,
+      badgeShadowColor: other.badgeShadowColor,
+      badgeColor: other.badgeColor,
+      badgeBorderColor: other.badgeBorderColor,
+      badgeTextStyle: other.badgeTextStyle,
+      gradientColors: other.gradientColors,
+      textureOpacity: other.textureOpacity,
     );
   }
 }

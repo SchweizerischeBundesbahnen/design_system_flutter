@@ -10,38 +10,39 @@ const _padding = EdgeInsets.symmetric(horizontal: 8.0, vertical: 1.0);
 class SBBPromotionBoxBadge extends StatelessWidget {
   const SBBPromotionBoxBadge({
     required this.text,
-    this.badgeColor,
+    required this.badgeColor,
+    required this.badgeBorderColor,
+    required this.badgeTextStyle,
     super.key,
   });
 
   final String text;
-  final Color? badgeColor;
+  final Color badgeColor;
+  final Color badgeBorderColor;
+  final TextStyle badgeTextStyle;
 
   @override
   Widget build(BuildContext context) {
-    final style = SBBControlStyles.of(context).promotionBox!;
-    final resolvedBadgeColor = badgeColor ?? style.badgeColor;
     return Container(
       padding: _padding,
       decoration: BoxDecoration(
-        border: Border.all(color: style.borderColor!),
+        border: Border.all(color: badgeBorderColor),
         borderRadius: BorderRadius.circular(_borderRadius),
-        color: resolvedBadgeColor,
+        color: badgeColor,
       ),
-      child: Text(text, style: style.badgeTextStyle, maxLines: 1),
+      child: Text(text, style: badgeTextStyle, maxLines: 1),
     );
   }
 }
 
 class SBBPromotionBoxBadgeShadow extends StatelessWidget {
-  const SBBPromotionBoxBadgeShadow({required this.badgeSize, this.shadowColor});
+  const SBBPromotionBoxBadgeShadow({super.key, required this.badgeSize, required this.shadowColor});
 
   final Size badgeSize;
-  final Color? shadowColor;
+  final Color shadowColor;
 
   @override
   Widget build(BuildContext context) {
-    final style = SBBControlStyles.of(context).promotionBox!;
     return Container(
       decoration: BoxDecoration(
         border: Border.all(
@@ -51,7 +52,7 @@ class SBBPromotionBoxBadgeShadow extends StatelessWidget {
         borderRadius: BorderRadius.circular(_borderRadius),
         boxShadow: [
           BoxShadow(
-            color: shadowColor ?? style.badgeShadowColor!,
+            color: shadowColor,
             spreadRadius: _shadowSpreadRadius,
           ),
         ],
