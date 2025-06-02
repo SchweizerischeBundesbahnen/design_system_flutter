@@ -1,9 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/src/tab_bar/tab_bar_layout_data.dart';
 
-import '../../sbb_design_system_mobile.dart';
+import 'tab_bar.dart';
 
 class TabBarController {
   TabBarController(this.tabs, this.selectedTab) {
@@ -13,11 +12,16 @@ class TabBarController {
   final _navigationController =
       StreamController<TabBarNavigationData>.broadcast();
   final _layoutController = StreamController<TabBarLayoutData>.broadcast();
+  final _warningController =
+      StreamController<List<TabBarWarningSetting>>.broadcast();
 
   Stream<TabBarNavigationData> get navigationStream =>
       _navigationController.stream;
 
   Stream<TabBarLayoutData> get layoutStream => _layoutController.stream;
+
+  Stream<List<TabBarWarningSetting>> get warningStream =>
+      _warningController.stream;
 
   final List<TabBarItem> tabs;
   late TabBarItem selectedTab;
@@ -25,10 +29,11 @@ class TabBarController {
   late TabBarItem _nextTab;
   late AnimationController _animationController;
   late Animation<double> _animation;
-  late bool _hover;
+  bool hover = false;
   late TabBarNavigationData currentData;
   late TabBarLayoutData currentLayoutData =
       TabBarLayoutData(0.0, tabs.map((_) => Offset(-100.0, 0.0)).toList());
+  late List<TabBarWarningSetting> currentWarnings = [];
 
   static const _duration = Duration(milliseconds: 100);
 
@@ -42,7 +47,7 @@ class TabBarController {
             selectedTab,
             _nextTab,
             _animation.value,
-            _hover,
+            hover,
           );
           _navigationController.add(currentData);
         },
@@ -50,10 +55,27 @@ class TabBarController {
     _animation = Tween(begin: 0.0, end: 1.0).animate(_animationController);
   }
 
+  void setWarnings(List<TabBarWarningSetting> warnings) {
+    _updateWarnings(warnings);
+  }
+
+  void _setWarningShown(String id) {
+    final warnings = currentWarnings
+        .map((w) => w.id == id ? w.copyWith(shown: true) : w)
+        .toList();
+    _updateWarnings(warnings);
+  }
+
+  void _updateWarnings(List<TabBarWarningSetting> warnings) {
+    currentWarnings = warnings;
+    _warningController.add(warnings);
+  }
+
   Future<TabBarItem> selectTab(TabBarItem tab) async {
+    _setWarningShown(tab.id);
     if (selectedTab == tab) return tab;
     _nextTab = tab;
-    _hover = false;
+    hover = false;
     await _animationController.animateTo(1.0, duration: _duration);
     selectedTab = tab;
     _animationController.reset();
@@ -62,13 +84,13 @@ class TabBarController {
 
   Future<void> hoverTab(TabBarItem tab) async {
     _nextTab = tab;
-    _hover = true;
+    hover = true;
     await _animationController.animateTo(0.25, duration: _duration);
   }
 
   Future<void> cancelHover() async {
     await _animationController.animateTo(0, duration: _duration);
-    _hover = false;
+    hover = false;
     _nextTab = selectedTab;
     _animationController.reset();
   }

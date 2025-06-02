@@ -21,12 +21,15 @@ class TabBarPageState extends State<TabBarPage> {
   ];
 
   bool visible = true;
-  late TabBarController controller = TabBarController(items, items.first);
+  late TabBarController controller = TabBarController(items, items.first)
+    ..setWarnings([
+      TabBarWarningSetting(id: '3', semantics: '', shown: false),
+      TabBarWarningSetting(id: '2', semantics: '', shown: false),
+    ]);
 
   @override
   Widget build(BuildContext context) {
     final sbbToast = SBBToast.of(context);
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.edgeToEdge, overlays: SystemUiOverlay.values);
     return Scaffold(
       body: Column(
         children: [
@@ -40,9 +43,22 @@ class TabBarPageState extends State<TabBarPage> {
               vertical: sbbDefaultSpacing,
               horizontal: 8.0,
             ),
-            child: SBBPrimaryButton(
-              label: 'toggle',
-              onPressed: () => setState(() => visible = !visible),
+            child: Row(
+              spacing: 8.0,
+              children: [
+                Expanded(
+                  child: SBBPrimaryButton(
+                    label: 'toggle visibility',
+                    onPressed: () => setState(() => visible = !visible),
+                  ),
+                ),
+                Expanded(
+                  child: SBBPrimaryButton(
+                    label: 'move warning',
+                    onPressed: () => {},
+                  ),
+                ),
+              ],
             ),
           ),
           Visibility(
@@ -66,5 +82,5 @@ class _DemoItem extends TabBarItem {
   _DemoItem(super.id, super.icon);
 
   @override
-  String translate(BuildContext context) => 'Item $id';
+  String translate(BuildContext context) => 'ItemEINSTELLUNGEN $id';
 }

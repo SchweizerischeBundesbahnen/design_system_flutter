@@ -2,13 +2,20 @@ import 'dart:math';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/src/tab_bar/tab_bar_layout_data.dart';
+import 'package:sbb_design_system_mobile/src/tab_bar/tab_curve_painter.dart';
+import 'package:sbb_design_system_mobile/src/tab_bar/tab_curves.dart';
 
 import '../../sbb_design_system_mobile.dart';
 import '../sbb_internal.dart';
-import 'tab_bar_curve_clipper.dart';
-
 import 'tab_item_widget.dart';
+
+part 'sbb_tab_bar.icon.dart';
+
+part 'sbb_tab_bar.icon_delegate.dart';
+
+part 'sbb_tab_bar.label.dart';
+
+part 'sbb_tab_bar.layout.dart';
 
 /// The TabBar for SBB themed apps with multiple tabs.
 /// Items is a list of all tabs that should be shown in the TabBar.
@@ -64,277 +71,102 @@ class _SBBTabBarState extends State<SBBTabBar>
   Widget build(context) {
     return StreamBuilder<TabBarLayoutData>(
       stream: _controller.layoutStream,
+      initialData: _controller.currentLayoutData,
       builder: (context, snapshot) {
-        final layoutData = snapshot.data ?? _controller.currentLayoutData;
+        final layoutData = snapshot.requireData;
+        final media = MediaQuery.of(context);
+        final portrait = media.orientation == Orientation.portrait;
+        final curves = layoutData.curves(portrait);
         return StreamBuilder<TabBarNavigationData>(
           stream: _controller.navigationStream,
           initialData: _controller.currentData,
           builder: (context, snapshot) {
-            final portrait =
-                MediaQuery.of(context).orientation == Orientation.portrait;
             final snapshotData = snapshot.requireData;
-            final theme = Theme.of(context);
-            final cardColor =
-                theme.cardTheme.color ?? theme.scaffoldBackgroundColor;
-            final style = SBBBaseStyle.of(context);
-            return Container(
-              height: layoutData.height,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    cardColor.withValues(alpha: 0.0),
-                    cardColor.withValues(alpha: 1.0),
-                  ],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                ),
-                boxShadow: style.themeValue(
-                  SBBInternal.defaultBoxShadow,
-                  SBBInternal.barrierBoxShadow,
-                ),
-              ),
-              child: Stack(
-                children: [
-                  ClipPath(
-                    clipper: TabBarCurveClipper(
-                      widget.items.indexOf(snapshotData.selectedTab),
-                      widget.items.indexOf(snapshotData.nextTab),
-                      portrait,
-                      snapshotData.animation,
-                      snapshotData.hover,
-                      layoutData.positions,
+            return StreamBuilder<List<TabBarWarningSetting>>(
+              stream: _controller.warningStream,
+              initialData: _controller.currentWarnings,
+              builder: (context, snapshot) {
+                final warnings = snapshot.requireData;
+                final theme = Theme.of(context);
+                final cardColor =
+                    theme.cardTheme.color ?? theme.scaffoldBackgroundColor;
+                final style = SBBBaseStyle.of(context);
+
+                final from = widget.items.indexOf(snapshotData.selectedTab);
+                final to = widget.items.indexOf(snapshotData.nextTab);
+                final animation = snapshotData.animation;
+                final pos = layoutData.positions;
+                final tabStates = pos.mapIndexed((i, p) {
+                  return from == i
+                      ? 1 - (_controller.hover ? 0.0 : animation)
+                      : to == i
+                          ? animation
+                          : 0.0;
+                }).toList();
+                curves.mapIndexed((index, p) {
+                  final double leftProgress =
+                      (index == 0) ? 0.0 : tabStates[index - 1];
+                  final double rightProgress =
+                      (index == pos.length - 1) ? 0.0 : tabStates[index + 1];
+
+                  final double leftMidX = (index == 0)
+                      ? curves[0].midX - (curves[1].midX - curves[0].midX)
+                      : curves[index - 1].midX;
+
+                  final double rightMidX = (index == curves.length - 1)
+                      ? 0.0 // Changed from 0 to 0.0 to match potential double type for midX
+                      : curves[index + 1].midX;
+
+                  p.setProgress(tabStates[index], leftProgress, leftMidX,
+                      rightProgress, rightMidX);
+                }).toList();
+
+                return Container(
+                  height: layoutData.height,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        cardColor.withValues(alpha: 0.0),
+                        cardColor.withValues(alpha: 1.0),
+                      ],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
                     ),
-                    child: Container(
-                      color: style.themeValue(
-                        SBBColors.white,
-                        SBBColors.charcoal,
-                      ),
+                    boxShadow: style.themeValue(
+                      SBBInternal.defaultBoxShadow,
+                      SBBInternal.barrierBoxShadow,
                     ),
                   ),
-                  _TabLayout(
-                    items: widget.items,
-                    selectedTab: snapshotData.selectedTab,
-                    portrait: portrait,
-                    onPositioned: _controller.onLayout,
-                    onTap: (e) {
-                      widget.onTap?.call(e);
-                      if (snapshotData.selectedTab == e) return;
-                      widget.onTabChanged(_controller.selectTab(e));
-                    },
-                    onTapDown: (e) {
-                      if (snapshotData.selectedTab == e) return;
-                      _controller.hoverTab(e);
-                    },
-                    onTapCancel: (e) => _controller.cancelHover(),
+                  child: CustomPaint(
+                    painter: TabCurvePainter(
+                      curves,
+                      cardColor,
+                      theme.shadowColor,
+                    ),
+                    child: _TabLayout(
+                      items: widget.items,
+                      selectedTab: snapshotData.selectedTab,
+                      warnings: warnings,
+                      portrait: portrait,
+                      onPositioned: _controller.onLayout,
+                      onTap: (e) {
+                        widget.onTap?.call(e);
+                        if (snapshotData.selectedTab == e) return;
+                        widget.onTabChanged(_controller.selectTab(e));
+                      },
+                      onTapDown: (e) {
+                        if (snapshotData.selectedTab == e) return;
+                        _controller.hoverTab(e);
+                      },
+                      onTapCancel: (e) => _controller.cancelHover(),
+                    ),
                   ),
-                ],
-              ),
+                );
+              },
             );
           },
         );
       },
-    );
-  }
-}
-
-class _TabLayout extends StatelessWidget {
-  const _TabLayout({
-    super.key,
-    required this.items,
-    required this.selectedTab,
-    required this.portrait,
-    required this.onPositioned,
-    required this.onTap,
-    required this.onTapDown,
-    required this.onTapCancel,
-  });
-
-  final List<TabBarItem> items;
-  final TabBarItem selectedTab;
-  final bool portrait;
-  final Function(List<Offset> positions, double height) onPositioned;
-  final Function(TabBarItem) onTap;
-  final Function(TabBarItem) onTapDown;
-  final Function(TabBarItem) onTapCancel;
-
-  @override
-  Widget build(BuildContext context) {
-    return CustomMultiChildLayout(
-      delegate: _TabIconDelegate(items, selectedTab, portrait, onPositioned),
-      children: items
-          .mapIndexed(
-            (i, e) => _TabIcon(
-              item: e,
-              selected: e == selectedTab,
-              portrait: portrait,
-              tabIndex: i,
-              tabCount: items.length,
-              onTap: () => onTap(e),
-              onTapDown: (_) => onTapDown(e),
-              onTapCancel: () => onTapCancel(e),
-            ),
-          )
-          .cast<Widget>()
-          .followedBy(
-            items.map(
-              (e) => _TabLabel(
-                item: e,
-                visible: e == selectedTab && portrait,
-              ),
-            ),
-          )
-          .toList(),
-    );
-  }
-}
-
-class _TabIconDelegate extends MultiChildLayoutDelegate {
-  _TabIconDelegate(
-      this.items, this.selectedTab, this.portrait, this.onPositioned);
-
-  final List<TabBarItem> items;
-  final TabBarItem selectedTab;
-  final bool portrait;
-  final Function(List<Offset> positions, double height) onPositioned;
-
-  @override
-  void performLayout(Size size) {
-    final estimatedSize = Size(size.width, 100);
-    final constraints = BoxConstraints.loose(estimatedSize);
-    final tabSizes =
-        items.map((e) => layoutChild('${e.id}_tab', constraints)).toList();
-    final textSizes =
-        items.map((e) => layoutChild('${e.id}_label', constraints)).toList();
-
-    final itemWidth = tabSizes.map((e) => e.width).max;
-    final itemHeight =
-        tabSizes.map((e) => e.height).max + textSizes.map((e) => e.height).max;
-    final maxItemWidth = size.width / tabSizes.length;
-
-    final tabPositions = items.mapIndexed((i, e) {
-      final position = Offset(maxItemWidth * (i + 0.5) - itemWidth * 0.5, 0);
-      positionChild('${e.id}_tab', position);
-      return position;
-    }).toList();
-
-    final labelPositions = items.mapIndexed((i, e) {
-      final tabPosition = tabPositions[i];
-      final position = Offset(
-        maxItemWidth * (i + 0.5) - textSizes[i].width * 0.5,
-        tabPosition.dy + tabSizes[i].height,
-      );
-      positionChild('${e.id}_label', position);
-      return position;
-    }).toList();
-
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => onPositioned(tabPositions, itemHeight));
-  }
-
-  @override
-  bool shouldRelayout(_TabIconDelegate oldDelegate) {
-    return selectedTab != oldDelegate.selectedTab || portrait != portrait;
-  }
-}
-
-class _TabIcon extends StatelessWidget {
-  const _TabIcon({
-    super.key,
-    required this.item,
-    required this.selected,
-    required this.portrait,
-    required this.onTap,
-    required this.onTapDown,
-    required this.onTapCancel,
-    required this.tabIndex,
-    required this.tabCount,
-  });
-
-  final TabBarItem item;
-  final bool selected;
-  final bool portrait;
-  final GestureTapCallback onTap;
-  final GestureTapDownCallback onTapDown;
-  final GestureTapCancelCallback onTapCancel;
-  final int tabIndex;
-  final int tabCount;
-
-  @override
-  Widget build(BuildContext context) {
-    final label = item.translate(context);
-    final semanticsHint = Localizations.of(
-      context,
-      MaterialLocalizations,
-    ).tabLabel(
-      tabIndex: tabIndex + 1,
-      tabCount: tabCount,
-    );
-    final viewPaddingBottom = MediaQuery.of(context).viewPadding.bottom;
-    final bottomPadding = portrait ? 0.0 : max(viewPaddingBottom, 8.0);
-    return LayoutId(
-      id: '${item.id}_tab',
-      child: Semantics(
-        selected: selected,
-        label: label,
-        hint: semanticsHint,
-        button: true,
-        excludeSemantics: true,
-        child: Container(
-          padding: EdgeInsets.only(bottom: bottomPadding),
-          color: SBBColors.transparent,
-          child: GestureDetector(
-            onTap: onTap,
-            onTapDown: onTapDown,
-            onTapCancel: onTapCancel,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              spacing: 8.0,
-              children: [
-                TabItemWidget.fromTabBarItem(item, selected),
-                if (!portrait)
-                  Text(
-                    item.translate(context),
-                    style: SBBControlStyles.of(context).tabBarTextStyle,
-                    textAlign: TextAlign.center,
-                  ),
-              ],
-            ),
-          ),
-        ),
-      ),
-    );
-  }
-}
-
-class _TabLabel extends StatelessWidget {
-  const _TabLabel({
-    super.key,
-    required this.item,
-    required this.visible,
-  });
-
-  final TabBarItem item;
-  final bool visible;
-
-  @override
-  Widget build(BuildContext context) {
-    final viewPaddingBottom = MediaQuery.of(context).viewPadding.bottom;
-    final bottomPadding = max(viewPaddingBottom, 8.0);
-    return LayoutId(
-      id: '${item.id}_label',
-      child: Visibility(
-        visible: visible,
-        child: ExcludeSemantics(
-          child: Padding(
-            padding: EdgeInsets.only(top: 4.0, bottom: bottomPadding),
-            child: Text(
-              item.translate(context),
-              style: SBBControlStyles.of(context).tabBarTextStyle,
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ),
-      ),
     );
   }
 }
