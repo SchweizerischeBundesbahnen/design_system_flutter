@@ -69,9 +69,7 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
                       style: SBBTextStyles.mediumLight.copyWith(color: SBBColors.black),
                     ),
                     badgeText: 'Custom with different color',
-                    badgeColor: SBBColors.royal,
-                    badgeShadowColor: SBBColors.royal.withAlpha((255.0 * 0.2).round()),
-                    gradientColors: [SBBColors.cloud, SBBColors.milk, SBBColors.milk, SBBColors.cloud],
+                    style: _customBoxStyle(context),
                   ),
                   const SizedBox(height: sbbDefaultSpacing),
                   SBBPromotionBox.custom(
@@ -93,9 +91,7 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
                     badgeText: 'Custom with on tap',
                     leading: Icon(SBBIcons.train_large),
                     trailing: SBBTertiaryButtonSmall(label: 'Trailing Button', onPressed: () {}),
-                    badgeColor: SBBColors.royal,
-                    badgeShadowColor: SBBColors.royal.withAlpha((255.0 * 0.2).round()),
-                    gradientColors: [SBBColors.cloud, SBBColors.milk, SBBColors.milk, SBBColors.cloud],
+                    style: _customBoxStyle(context),
                   )
                 ],
               ),
@@ -125,3 +121,10 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
     );
   }
 }
+
+PromotionBoxStyle _customBoxStyle(BuildContext context) =>
+    PromotionBoxStyle.$default(baseStyle: SBBBaseStyle.of(context)).copyWith(
+      badgeColor: SBBColors.royal,
+      badgeShadowColor: SBBColors.royal.withAlpha((255.0 * 0.2).round()),
+      gradientColors: [SBBColors.cloud, SBBColors.milk, SBBColors.milk, SBBColors.cloud],
+    );
