@@ -13,6 +13,10 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 - added `style` to `SBBPromotionBox.custom` constructor
 
+### Changed
+
+- New design for `SBBSwitch`
+
 ### Deprecated
 
 - deprecated `badgeColor`, `badgeShadowColor` and `gradientColors` of `SBBPromotionBox.custom` constructor in favor of

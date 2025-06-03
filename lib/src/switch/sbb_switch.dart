@@ -6,9 +6,9 @@ import 'package:flutter/rendering.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
-const _trackWidth = 50.0;
-const _trackHeight = 31.0;
-const _trackRadius = _trackHeight * 0.5;
+const _trackWidth = 52.0;
+const _trackHeight = 20.0;
+const _trackRadius = 28.0;
 const _trackInnerStart = _trackHeight * 0.5;
 const _trackInnerEnd = _trackWidth - _trackInnerStart;
 const _trackInnerLength = _trackInnerEnd - _trackInnerStart;
@@ -193,6 +193,7 @@ class _SBBSwitchState extends State<SBBSwitch> with TickerProviderStateMixin {
     final thumbColor = isEnabled ? style.thumbColor! : style.thumbColorDisabled!;
     final activeColor = isEnabled ? style.activeColor! : style.activeColorDisabled!;
     final trackColor = isEnabled ? style.trackColor! : style.trackColorDisabled!;
+    final borderKnobColor = style.borderKnobColor!;
     if (_needsPositionAnimation) {
       _resumePositionAnimation();
     }
@@ -203,6 +204,7 @@ class _SBBSwitchState extends State<SBBSwitch> with TickerProviderStateMixin {
         thumbColor: thumbColor,
         activeColor: activeColor,
         trackColor: trackColor,
+        borderKnobColor: borderKnobColor,
         onChanged: widget.onChanged,
         state: this,
       ),
@@ -225,6 +227,7 @@ class _SBBSwitchRenderObjectWidget extends LeafRenderObjectWidget {
     required this.thumbColor,
     required this.activeColor,
     required this.trackColor,
+    required this.borderKnobColor,
     required this.onChanged,
     required this.state,
   });
@@ -233,6 +236,7 @@ class _SBBSwitchRenderObjectWidget extends LeafRenderObjectWidget {
   final Color thumbColor;
   final Color activeColor;
   final Color trackColor;
+  final Color borderKnobColor;
   final ValueChanged<bool>? onChanged;
   final _SBBSwitchState state;
 
@@ -243,6 +247,7 @@ class _SBBSwitchRenderObjectWidget extends LeafRenderObjectWidget {
       thumbColor: thumbColor,
       activeColor: activeColor,
       trackColor: trackColor,
+      borderKnobColor: borderKnobColor,
       onChanged: onChanged,
       state: state,
     );
@@ -256,6 +261,7 @@ class _SBBSwitchRenderObjectWidget extends LeafRenderObjectWidget {
       ..thumbColor = thumbColor
       ..activeColor = activeColor
       ..trackColor = trackColor
+      ..borderKnobColor = borderKnobColor
       ..onChanged = onChanged;
   }
 }
@@ -266,12 +272,14 @@ class _SBBRenderSwitch extends RenderConstrainedBox {
     required Color thumbColor,
     required Color activeColor,
     required Color trackColor,
+    required Color borderKnobColor,
     ValueChanged<bool>? onChanged,
     required _SBBSwitchState state,
   })  : _value = value,
         _thumbColor = thumbColor,
         _activeColor = activeColor,
         _trackColor = trackColor,
+        _borderKnobColor = borderKnobColor,
         _onChanged = onChanged,
         _state = state,
         super(
@@ -327,6 +335,17 @@ class _SBBRenderSwitch extends RenderConstrainedBox {
       return;
     }
     _trackColor = value;
+    markNeedsPaint();
+  }
+
+  Color get borderKnobColor => _borderKnobColor;
+  Color _borderKnobColor;
+
+  set borderKnobColor(Color value) {
+    if (value == _borderKnobColor) {
+      return;
+    }
+    _borderKnobColor = value;
     markNeedsPaint();
   }
 
@@ -390,6 +409,11 @@ class _SBBRenderSwitch extends RenderConstrainedBox {
       activeColor,
       currentValue,
     )!;
+    final currentBorderKnobColor = Color.lerp(
+      borderKnobColor,
+      activeColor,
+      currentValue,
+    )!;
     final trackPaint = Paint()..color = currentTrackColor;
     canvas.drawRRect(trackRRect, trackPaint);
 
@@ -423,5 +447,32 @@ class _SBBRenderSwitch extends RenderConstrainedBox {
 
     final thumbPaint = Paint()..color = thumbColor;
     canvas.drawRRect(thumbRRect, thumbPaint);
+    final thumbStrokePaint = Paint()
+      ..color = currentBorderKnobColor
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.0;
+    canvas.drawRRect(thumbRRect, thumbStrokePaint);
+
+    _drawTick(canvas, thumbRRect);
+  }
+
+  void _drawTick(Canvas canvas, RRect thumbRRect) {
+    final value = _state._position.value;
+    final painter = TextPainter(textDirection: TextDirection.ltr);
+    final icon = SBBIcons.tick_small;
+    final alpha = lerpDouble(0, 255, value)!.toInt();
+    final textColor = activeColor.withAlpha(alpha);
+    final iconSize = Size.square(sbbIconSizeSmall);
+    final iconPosition = thumbRRect.center - iconSize.center(Offset.zero);
+    painter.text = TextSpan(
+      text: String.fromCharCode(icon.codePoint),
+      style: TextStyle(
+        fontFamily: icon.fontFamily,
+        color: textColor,
+        fontSize: iconSize.height,
+      ),
+    );
+    painter.layout();
+    painter.paint(canvas, iconPosition);
   }
 }
