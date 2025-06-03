@@ -9,6 +9,11 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+### Changed
+
+- Simpler implementation of the `SBBTabBar`.
+- `SBBTabBar` now respects the `SafeArea` for the `systemNavigationBar`.
+
 ## [3.1.0] - 2025-05-22
 
 ### Changed
