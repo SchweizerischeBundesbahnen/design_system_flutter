@@ -154,12 +154,10 @@ class TabCurves {
     // Determine if the curves are "tight" due to proximity to other tabs.
     // This happens if p0 (leftmost point) is too close to the right side of the left tab
     // or if p4 (rightmost point) is too close to the left side of the right tab.
-    _tight = (leftMidX != 0 && p0.dx < leftWaveEnd) ||
-        (rightMidX != 0 && p4.dx > beforeRightWave);
+    _tight = (leftMidX != 0 && p0.dx < leftWaveEnd) || (rightMidX != 0 && p4.dx > beforeRightWave);
 
     // Calculate the vertical movement for p2 (center point of the wave).
-    p2 = Offset(_startP[2].dx,
-        _startP[2].dy + progress * (_endP[2].dy - _startP[2].dy));
+    p2 = Offset(_startP[2].dx, _startP[2].dy + progress * (_endP[2].dy - _startP[2].dy));
 
     // Adjust p2's horizontal position if "tight" to avoid collision.
     if (_tight) {
@@ -171,11 +169,7 @@ class TabCurves {
       }
 
       if (rightProgress > progress) {
-        p2 = Offset(
-          p2.dx +
-              (rightProgress - progress) * (beforeRightWave - _startP[2].dx),
-          p2.dy,
-        );
+        p2 = Offset(p2.dx + (rightProgress - progress) * (beforeRightWave - _startP[2].dx), p2.dy);
       }
     }
 

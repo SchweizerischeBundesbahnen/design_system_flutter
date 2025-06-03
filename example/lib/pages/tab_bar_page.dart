@@ -1,4 +1,3 @@
-import 'package:flutter/services.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
 
@@ -12,7 +11,7 @@ class TabBarPage extends StatefulWidget {
 }
 
 class TabBarPageState extends State<TabBarPage> {
-  final items = <TabBarItem>[
+  final items = <SBBTabBarItem>[
     _DemoItem('1', SBBIcons.train_small),
     _DemoItem('2', SBBIcons.station_small),
     _DemoItem('3', SBBIcons.archive_box_small),
@@ -21,10 +20,10 @@ class TabBarPageState extends State<TabBarPage> {
   ];
 
   bool visible = true;
-  late TabBarController controller = TabBarController(items, items.first)
+  late SBBTabBarController controller = SBBTabBarController(items, items.first)
     ..setWarnings([
-      TabBarWarningSetting(id: '3', semantics: '', shown: false),
-      TabBarWarningSetting(id: '2', semantics: '', shown: false),
+      SBBTabBarWarningSetting(id: '3', semantics: '', shown: false),
+      SBBTabBarWarningSetting(id: '2', semantics: '', shown: false),
     ]);
 
   @override
@@ -43,28 +42,14 @@ class TabBarPageState extends State<TabBarPage> {
               vertical: sbbDefaultSpacing,
               horizontal: 8.0,
             ),
-            child: Row(
-              spacing: 8.0,
-              children: [
-                Expanded(
-                  child: SBBPrimaryButton(
-                    label: 'toggle visibility',
-                    onPressed: () => setState(() => visible = !visible),
-                  ),
-                ),
-                Expanded(
-                  child: SBBPrimaryButton(
-                    label: 'move warning',
-                    onPressed: () => {},
-                  ),
-                ),
-              ],
+            child: SBBPrimaryButton(
+              label: 'toggle visibility',
+              onPressed: () => setState(() => visible = !visible),
             ),
           ),
           Visibility(
             visible: visible,
-            child: SBBTabBar(
-              items: items,
+            child: SBBTabBar.controller(
               onTabChanged: (task) async {},
               controller: controller,
               onTap: (tab) {
@@ -78,7 +63,7 @@ class TabBarPageState extends State<TabBarPage> {
   }
 }
 
-class _DemoItem extends TabBarItem {
+class _DemoItem extends SBBTabBarItem {
   _DemoItem(super.id, super.icon);
 
   @override

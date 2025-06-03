@@ -4,9 +4,9 @@ import 'package:sbb_design_system_mobile/src/tab_bar/tab_curves.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
-/// The data of the current state of the [SBBTabBar]
-class TabBarLayoutData {
-  TabBarLayoutData(
+/// Represents the positions of a [SBBTabBarItem] in [SBBTabBar]
+class SBBTabBarLayoutData {
+  SBBTabBarLayoutData(
     this.height,
     this.positions,
   );

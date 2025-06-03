@@ -16,7 +16,7 @@ class TabItemWidget extends StatelessWidget {
 
   final IconData icon;
   final bool selected;
-  final TabBarWarningSetting? warning;
+  final SBBTabBarWarningSetting? warning;
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +31,7 @@ class TabItemWidget extends StatelessWidget {
 
     BoxDecoration? decoration;
     Color? containerColor = SBBColors.transparent;
+    IconData resolvedIcon = icon;
 
     if (warning != null && !warning!.shown) {
       decoration = const BoxDecoration(
@@ -39,6 +40,7 @@ class TabItemWidget extends StatelessWidget {
       );
       containerColor = null;
       iconColor = SBBColors.white;
+      resolvedIcon = SBBIcons.sign_exclamation_point_small;
     } else if (selected) {
       decoration = BoxDecoration(
         color: backgroundColor,
@@ -55,7 +57,7 @@ class TabItemWidget extends StatelessWidget {
         margin: EdgeInsets.only(top: topPadding),
         color: containerColor,
         decoration: decoration,
-        child: Icon(icon, color: iconColor),
+        child: Icon(resolvedIcon, color: iconColor),
       ),
     );
   }

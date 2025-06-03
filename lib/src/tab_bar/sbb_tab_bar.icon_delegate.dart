@@ -8,8 +8,8 @@ class _TabIconDelegate extends MultiChildLayoutDelegate {
     this.onPositioned,
   );
 
-  final List<TabBarItem> items;
-  final TabBarItem selectedTab;
+  final List<SBBTabBarItem> items;
+  final SBBTabBarItem selectedTab;
   final bool portrait;
   final Function(List<Offset> positions, double height) onPositioned;
 
@@ -17,14 +17,11 @@ class _TabIconDelegate extends MultiChildLayoutDelegate {
   void performLayout(Size size) {
     final estimatedSize = Size(size.width, 100);
     final constraints = BoxConstraints.loose(estimatedSize);
-    final tabSizes =
-        items.map((e) => layoutChild('${e.id}_tab', constraints)).toList();
-    final textSizes =
-        items.map((e) => layoutChild('${e.id}_label', constraints)).toList();
+    final tabSizes = items.map((e) => layoutChild('${e.id}_tab', constraints)).toList();
+    final textSizes = items.map((e) => layoutChild('${e.id}_label', constraints)).toList();
 
     final itemWidth = tabSizes.map((e) => e.width).max;
-    final itemHeight =
-        tabSizes.map((e) => e.height).max + textSizes.map((e) => e.height).max;
+    final itemHeight = tabSizes.map((e) => e.height).max + textSizes.map((e) => e.height).max;
     final maxItemWidth = size.width / tabSizes.length;
 
     final tabPositions = items.mapIndexed((i, e) {
@@ -47,8 +44,7 @@ class _TabIconDelegate extends MultiChildLayoutDelegate {
       return position;
     }).toList();
 
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => onPositioned(tabPositions, itemHeight));
+    WidgetsBinding.instance.addPostFrameCallback((_) => onPositioned(tabPositions, itemHeight));
   }
 
   @override

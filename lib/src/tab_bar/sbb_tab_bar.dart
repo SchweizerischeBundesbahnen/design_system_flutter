@@ -2,12 +2,10 @@ import 'dart:math';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/src/tab_bar/tab_curve_painter.dart';
-import 'package:sbb_design_system_mobile/src/tab_bar/tab_curves.dart';
 
 import '../../sbb_design_system_mobile.dart';
-import '../sbb_internal.dart';
 import 'tab_item_widget.dart';
+import 'tab_curve_painter.dart';
 
 part 'sbb_tab_bar.icon.dart';
 
@@ -22,36 +20,59 @@ part 'sbb_tab_bar.layout.dart';
 /// OnTabChanged defines what happens when a tab is selected.
 /// OnTap gets called when a tab is tapped.
 class SBBTabBar extends StatefulWidget {
-  const SBBTabBar({
-    required this.items,
+  const SBBTabBar._({
+    required this.controller,
     required this.onTabChanged,
+    required this.onTap,
     super.key,
-    this.onTap,
-    this.controller,
-    this.initialItem,
   });
 
-  final List<TabBarItem> items;
-  final Future<void> Function(Future<TabBarItem> tabTask) onTabChanged;
-  final void Function(TabBarItem tab)? onTap;
-  final TabBarController? controller;
-  final TabBarItem? initialItem;
+  factory SBBTabBar.items({
+    required List<SBBTabBarItem> items,
+    required Future<void> Function(Future<SBBTabBarItem> tabTask) onTabChanged,
+    required void Function(SBBTabBarItem tab) onTap,
+    Key? key,
+    SBBTabBarItem? initialItem,
+  }) =>
+      SBBTabBar._(
+        key: key,
+        controller: SBBTabBarController(items, initialItem ?? items.first),
+        onTabChanged: onTabChanged,
+        onTap: onTap,
+      );
+
+  factory SBBTabBar.controller({
+    required SBBTabBarController controller,
+    required Future<void> Function(Future<SBBTabBarItem> tabTask) onTabChanged,
+    required void Function(SBBTabBarItem tab) onTap,
+    Key? key,
+  }) =>
+      SBBTabBar._(
+        key: key,
+        controller: controller,
+        onTabChanged: onTabChanged,
+        onTap: onTap,
+      );
+
+  final Future<void> Function(Future<SBBTabBarItem> tabTask) onTabChanged;
+  final void Function(SBBTabBarItem tab) onTap;
+  final SBBTabBarController controller;
 
   @override
   State<SBBTabBar> createState() => _SBBTabBarState();
 }
 
-class _SBBTabBarState extends State<SBBTabBar>
-    with SingleTickerProviderStateMixin, WidgetsBindingObserver {
-  late TabBarController _controller;
+class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMixin, WidgetsBindingObserver {
+  SBBTabBarController get _controller => widget.controller;
+
+  List<SBBTabBarItem> get _tabs => _controller.tabs;
+
+  bool get portrait => MediaQuery.of(context).orientation == Orientation.portrait;
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    _controller = widget.controller ??
-        TabBarController(
-            widget.items, widget.initialItem ?? widget.items.first);
     _controller.initialize(this);
   }
 
@@ -69,58 +90,25 @@ class _SBBTabBarState extends State<SBBTabBar>
 
   @override
   Widget build(context) {
-    return StreamBuilder<TabBarLayoutData>(
+    return StreamBuilder<SBBTabBarLayoutData>(
       stream: _controller.layoutStream,
       initialData: _controller.currentLayoutData,
       builder: (context, snapshot) {
         final layoutData = snapshot.requireData;
-        final media = MediaQuery.of(context);
-        final portrait = media.orientation == Orientation.portrait;
-        final curves = layoutData.curves(portrait);
-        return StreamBuilder<TabBarNavigationData>(
+        return StreamBuilder<SBBTabBarNavigationData>(
           stream: _controller.navigationStream,
           initialData: _controller.currentData,
           builder: (context, snapshot) {
-            final snapshotData = snapshot.requireData;
-            return StreamBuilder<List<TabBarWarningSetting>>(
+            final navData = snapshot.requireData;
+            return StreamBuilder<List<SBBTabBarWarningSetting>>(
               stream: _controller.warningStream,
               initialData: _controller.currentWarnings,
               builder: (context, snapshot) {
                 final warnings = snapshot.requireData;
                 final theme = Theme.of(context);
-                final cardColor =
-                    theme.cardTheme.color ?? theme.scaffoldBackgroundColor;
-                final style = SBBBaseStyle.of(context);
-
-                final from = widget.items.indexOf(snapshotData.selectedTab);
-                final to = widget.items.indexOf(snapshotData.nextTab);
-                final animation = snapshotData.animation;
-                final pos = layoutData.positions;
-                final tabStates = pos.mapIndexed((i, p) {
-                  return from == i
-                      ? 1 - (_controller.hover ? 0.0 : animation)
-                      : to == i
-                          ? animation
-                          : 0.0;
-                }).toList();
-                curves.mapIndexed((index, p) {
-                  final double leftProgress =
-                      (index == 0) ? 0.0 : tabStates[index - 1];
-                  final double rightProgress =
-                      (index == pos.length - 1) ? 0.0 : tabStates[index + 1];
-
-                  final double leftMidX = (index == 0)
-                      ? curves[0].midX - (curves[1].midX - curves[0].midX)
-                      : curves[index - 1].midX;
-
-                  final double rightMidX = (index == curves.length - 1)
-                      ? 0.0 // Changed from 0 to 0.0 to match potential double type for midX
-                      : curves[index + 1].midX;
-
-                  p.setProgress(tabStates[index], leftProgress, leftMidX,
-                      rightProgress, rightMidX);
-                }).toList();
-
+                final cardColor = theme.cardTheme.color ?? theme.scaffoldBackgroundColor;
+                _controller.changeOrientation(portrait);
+                _controller.updateCurveAnimation();
                 return Container(
                   height: layoutData.height,
                   decoration: BoxDecoration(
@@ -132,30 +120,26 @@ class _SBBTabBarState extends State<SBBTabBar>
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                     ),
-                    boxShadow: style.themeValue(
-                      SBBInternal.defaultBoxShadow,
-                      SBBInternal.barrierBoxShadow,
-                    ),
                   ),
                   child: CustomPaint(
                     painter: TabCurvePainter(
-                      curves,
+                      _controller.curves,
                       cardColor,
                       theme.shadowColor,
                     ),
                     child: _TabLayout(
-                      items: widget.items,
-                      selectedTab: snapshotData.selectedTab,
+                      items: _tabs,
+                      selectedTab: navData.selectedTab,
                       warnings: warnings,
                       portrait: portrait,
                       onPositioned: _controller.onLayout,
                       onTap: (e) {
-                        widget.onTap?.call(e);
-                        if (snapshotData.selectedTab == e) return;
+                        widget.onTap.call(e);
+                        if (navData.selectedTab == e) return;
                         widget.onTabChanged(_controller.selectTab(e));
                       },
                       onTapDown: (e) {
-                        if (snapshotData.selectedTab == e) return;
+                        if (navData.selectedTab == e) return;
                         _controller.hoverTab(e);
                       },
                       onTapCancel: (e) => _controller.cancelHover(),

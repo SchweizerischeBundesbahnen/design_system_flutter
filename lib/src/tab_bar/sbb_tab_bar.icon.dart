@@ -2,7 +2,6 @@ part of 'sbb_tab_bar.dart';
 
 class _TabIcon extends StatelessWidget {
   const _TabIcon({
-    super.key,
     required this.item,
     required this.selected,
     required this.warning,
@@ -14,9 +13,9 @@ class _TabIcon extends StatelessWidget {
     required this.tabCount,
   });
 
-  final TabBarItem item;
+  final SBBTabBarItem item;
   final bool selected;
-  final TabBarWarningSetting? warning;
+  final SBBTabBarWarningSetting? warning;
   final bool portrait;
   final GestureTapCallback onTap;
   final GestureTapDownCallback onTapDown;

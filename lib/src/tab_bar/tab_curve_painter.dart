@@ -12,21 +12,22 @@ class TabCurvePainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final wavePath = Path();
 
-    // Start drawing the wave from a known point, often off-screen to the left
+    // Moving to the first tab
     wavePath.moveTo(0, 0);
     wavePath.lineTo(curves.first.p0.dx, 0);
 
-    // Call the draw method from your BezierCurves class
-    for (var c in curves) {
+    // Drawing the tabs (according to the current state of the animation)
+    for (final c in curves) {
       c.draw(wavePath);
     }
 
-    // Close the path to form a shape (e.g., for a filled tab)
+    // Closing the path
     wavePath.lineTo(size.width, 0);
     wavePath.lineTo(size.width, size.height);
     wavePath.lineTo(0, size.height);
     wavePath.close();
 
+    // Additional shadow
     final waveShadow = Paint()
       ..color = shadowColor.withAlpha(64)
       ..maskFilter = MaskFilter.blur(BlurStyle.normal, 3.0);
@@ -39,7 +40,5 @@ class TabCurvePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(TabCurvePainter oldDelegate) {
-    return true;
-  }
+  bool shouldRepaint(TabCurvePainter oldDelegate) => true;
 }

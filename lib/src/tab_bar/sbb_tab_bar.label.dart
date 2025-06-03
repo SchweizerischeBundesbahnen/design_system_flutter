@@ -2,12 +2,11 @@ part of 'sbb_tab_bar.dart';
 
 class _TabLabel extends StatelessWidget {
   const _TabLabel({
-    super.key,
     required this.item,
     required this.visible,
   });
 
-  final TabBarItem item;
+  final SBBTabBarItem item;
   final bool visible;
 
   @override
