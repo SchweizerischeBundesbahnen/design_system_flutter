@@ -40,11 +40,12 @@ class _TabIcon extends StatelessWidget {
       child: Semantics(
         selected: selected,
         label: label,
-        hint: warning?.semantics,
+        hint: warning?.shown == false ? warning?.semantics : null,
         button: true,
         child: Semantics(
           hint: semanticsHint,
           excludeSemantics: true,
+          onTap: onTap,
           child: Container(
             padding: EdgeInsets.only(bottom: bottomPadding),
             color: SBBColors.transparent,

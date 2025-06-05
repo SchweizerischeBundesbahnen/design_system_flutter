@@ -22,8 +22,8 @@ class TabBarPageState extends State<TabBarPage> {
   bool visible = true;
   late SBBTabBarController controller = SBBTabBarController(items, items.first)
     ..setWarnings([
-      SBBTabBarWarningSetting(id: '3', semantics: '', shown: false),
-      SBBTabBarWarningSetting(id: '2', semantics: '', shown: false),
+      SBBTabBarWarningSetting(id: '3', semantics: 'Warning 2', shown: false),
+      SBBTabBarWarningSetting(id: '2', semantics: 'Warning 1', shown: false),
     ]);
 
   @override
@@ -67,5 +67,5 @@ class _DemoItem extends SBBTabBarItem {
   _DemoItem(super.id, super.icon);
 
   @override
-  String translate(BuildContext context) => 'ItemEINSTELLUNGEN $id';
+  String translate(BuildContext context) => 'Item $id';
 }

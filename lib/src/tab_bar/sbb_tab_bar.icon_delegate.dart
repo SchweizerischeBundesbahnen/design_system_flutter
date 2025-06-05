@@ -32,10 +32,11 @@ class _TabIconDelegate extends MultiChildLayoutDelegate {
 
     items.mapIndexed((i, e) {
       final tabPosition = tabPositions[i];
+      final positionX = maxItemWidth * (i + 0.5) - textSizes[i].width * 0.5;
       final labelX = switch (i) {
-        0 => tabPosition.dx,
+        0 => max(tabPosition.dx, positionX),
         _ => min(
-            maxItemWidth * (i + 0.5) - textSizes[i].width * 0.5,
+            positionX,
             tabPositions.last.dx + tabSizes.last.width - textSizes[i].width,
           ),
       };
