@@ -1,42 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/src/tab_bar/sbb_tab_bar_warning_setting.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
 class TabItemWidget extends StatelessWidget {
   const TabItemWidget(
-    this.icon,
-    this.selected, {
+    this.icon, {
     super.key,
-    this.warning = false,
+    this.selected = false,
+    this.warning,
   });
-
-  factory TabItemWidget.fromTabBarItem(
-    TabBarItem item,
-    bool selected,
-  ) =>
-      TabItemWidget(
-        item.icon,
-        selected,
-      );
-
-  factory TabItemWidget.warning() => const TabItemWidget(
-        SBBIcons.sign_exclamation_point_small,
-        false,
-        warning: true,
-      );
 
   static const portraitSize = 44.0;
   static const landscapeSize = 36.0;
 
   final IconData icon;
   final bool selected;
-  final bool warning;
+  final SBBTabBarWarningSetting? warning;
 
   @override
   Widget build(BuildContext context) {
     final style = SBBBaseStyle.of(context);
     final portrait = MediaQuery.of(context).orientation == Orientation.portrait;
     final size = portrait ? portraitSize : landscapeSize;
+    final topPadding = portrait ? 4.0 : 1.0;
 
     final foregroundColor = style.themeValue(SBBColors.white, SBBColors.black);
     final backgroundColor = style.themeValue(SBBColors.black, SBBColors.white);
@@ -44,14 +31,16 @@ class TabItemWidget extends StatelessWidget {
 
     BoxDecoration? decoration;
     Color? containerColor = SBBColors.transparent;
+    IconData resolvedIcon = icon;
 
-    if (warning) {
+    if (warning != null && !warning!.shown) {
       decoration = const BoxDecoration(
         color: SBBColors.red,
         shape: BoxShape.circle,
       );
       containerColor = null;
       iconColor = SBBColors.white;
+      resolvedIcon = SBBIcons.sign_exclamation_point_small;
     } else if (selected) {
       decoration = BoxDecoration(
         color: backgroundColor,
@@ -60,21 +49,16 @@ class TabItemWidget extends StatelessWidget {
       containerColor = null;
     }
 
-    final iconWidget = Icon(icon, color: iconColor);
-    Widget child = warning
-        ? Padding(
-            padding: const EdgeInsets.only(left: 1.0, bottom: 4.0),
-            child: iconWidget,
-          )
-        : iconWidget;
-
-    return Container(
-      width: size,
-      height: size,
-      margin: const EdgeInsets.only(bottom: 8.0),
-      color: containerColor,
-      decoration: decoration,
-      child: child,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 4.0),
+      child: Container(
+        width: size,
+        height: size,
+        margin: EdgeInsets.only(top: topPadding),
+        color: containerColor,
+        decoration: decoration,
+        child: Icon(resolvedIcon, color: iconColor),
+      ),
     );
   }
 }
