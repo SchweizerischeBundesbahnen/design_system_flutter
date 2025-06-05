@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/src/tab_bar/tab_curves.dart';
 
@@ -40,5 +41,9 @@ class TabCurvePainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(TabCurvePainter oldDelegate) => true;
+  bool shouldRepaint(TabCurvePainter oldDelegate) =>
+      oldDelegate.color != color ||
+      oldDelegate.shadowColor != shadowColor ||
+      oldDelegate.curves.length != curves.length ||
+      oldDelegate.curves.mapIndexed((i, c) => c != curves[i]).any((c) => c);
 }
