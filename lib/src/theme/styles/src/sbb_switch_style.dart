@@ -10,6 +10,7 @@ class SBBSwitchStyle {
     this.trackColorDisabled,
     this.activeColor,
     this.activeColorDisabled,
+    this.borderKnobColor,
   });
 
   factory SBBSwitchStyle.$default({required SBBBaseStyle baseStyle}) => SBBSwitchStyle(
@@ -19,6 +20,7 @@ class SBBSwitchStyle {
         trackColorDisabled: baseStyle.themeValue(SBBColors.smoke, SBBColors.metal),
         activeColor: baseStyle.primaryColor,
         activeColorDisabled: baseStyle.primaryColor,
+        borderKnobColor: SBBColors.granite,
       );
 
   final Color? thumbColor;
@@ -27,6 +29,7 @@ class SBBSwitchStyle {
   final Color? trackColorDisabled;
   final Color? activeColor;
   final Color? activeColorDisabled;
+  final Color? borderKnobColor;
 
   SBBSwitchStyle copyWith({
     Color? thumbColor,
@@ -35,6 +38,8 @@ class SBBSwitchStyle {
     Color? trackColorDisabled,
     Color? activeColor,
     Color? activeColorDisabled,
+    Color? borderKnobColor,
+    Color? borderKnobColorSelected,
   }) =>
       SBBSwitchStyle(
         thumbColor: thumbColor ?? this.thumbColor,
@@ -43,6 +48,7 @@ class SBBSwitchStyle {
         trackColorDisabled: trackColorDisabled ?? this.trackColorDisabled,
         activeColor: activeColor ?? this.activeColor,
         activeColorDisabled: activeColorDisabled ?? this.activeColorDisabled,
+        borderKnobColor: borderKnobColor ?? this.borderKnobColor,
       );
 
   SBBSwitchStyle lerp(SBBSwitchStyle? other, double t) => SBBSwitchStyle(
@@ -52,6 +58,7 @@ class SBBSwitchStyle {
         trackColorDisabled: Color.lerp(trackColorDisabled, other?.trackColorDisabled, t),
         activeColor: Color.lerp(activeColor, other?.activeColor, t),
         activeColorDisabled: Color.lerp(activeColorDisabled, other?.activeColorDisabled, t),
+        borderKnobColor: Color.lerp(borderKnobColor, other?.borderKnobColor, t),
       );
 }
 
@@ -65,6 +72,7 @@ extension SBBSwitchControlStyleExtension on SBBSwitchStyle? {
       trackColorDisabled: this!.trackColorDisabled ?? other?.trackColorDisabled,
       activeColor: this!.activeColor ?? other?.activeColor,
       activeColorDisabled: this!.activeColorDisabled ?? other?.activeColorDisabled,
+      borderKnobColor: this!.borderKnobColor ?? other?.borderKnobColor,
     );
   }
 }
