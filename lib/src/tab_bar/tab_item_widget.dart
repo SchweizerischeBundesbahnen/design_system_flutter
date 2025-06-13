@@ -23,7 +23,7 @@ class TabItemWidget extends StatelessWidget {
     final style = SBBBaseStyle.of(context);
     final portrait = MediaQuery.of(context).orientation == Orientation.portrait;
     final size = portrait ? portraitSize : landscapeSize;
-    final topPadding = portrait ? 4.0 : 1.0;
+    final topPadding = portrait ? 8.0 : 2.0;
 
     final foregroundColor = style.themeValue(SBBColors.white, SBBColors.black);
     final backgroundColor = style.themeValue(SBBColors.black, SBBColors.white);

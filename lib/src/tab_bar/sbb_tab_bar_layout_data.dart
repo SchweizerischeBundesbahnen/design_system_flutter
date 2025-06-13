@@ -20,7 +20,7 @@ class SBBTabBarLayoutData {
     return positions.map((p) {
       return TabCurves(
         midX: p.dx + radius + 4.0,
-        waveRadius: radius + (portrait ? 4.0 : 2.0),
+        waveRadius: radius + (portrait ? 8.0 : 2.0),
       );
     }).toList();
   }

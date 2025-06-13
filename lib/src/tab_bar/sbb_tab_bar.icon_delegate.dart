@@ -6,33 +6,36 @@ class _TabIconDelegate extends MultiChildLayoutDelegate {
     this.selectedTab,
     this.portrait,
     this.onPositioned,
+    this.gestureInsets,
   );
 
   final List<SBBTabBarItem> items;
   final SBBTabBarItem selectedTab;
   final bool portrait;
   final Function(List<Offset> positions, double height) onPositioned;
+  final EdgeInsets gestureInsets;
 
   @override
   void performLayout(Size size) {
-    final estimatedSize = Size(size.width, 100);
+    final widthWithPadding = size.width - gestureInsets.left - gestureInsets.right;
+    final estimatedSize = Size(widthWithPadding, 100);
     final constraints = BoxConstraints.loose(estimatedSize);
     final tabSizes = items.map((e) => layoutChild('${e.id}_tab', constraints)).toList();
     final textSizes = items.map((e) => layoutChild('${e.id}_label', constraints)).toList();
 
     final itemWidth = tabSizes.map((e) => e.width).max;
     final itemHeight = tabSizes.map((e) => e.height).max + textSizes.map((e) => e.height).max;
-    final maxItemWidth = size.width / tabSizes.length;
+    final maxItemWidth = widthWithPadding / tabSizes.length;
 
     final tabPositions = items.mapIndexed((i, e) {
-      final position = Offset(maxItemWidth * (i + 0.5) - itemWidth * 0.5, 0);
+      final position = Offset(gestureInsets.left + maxItemWidth * (i + 0.5) - itemWidth * 0.5, 0);
       positionChild('${e.id}_tab', position);
       return position;
     }).toList();
 
     items.mapIndexed((i, e) {
       final tabPosition = tabPositions[i];
-      final positionX = maxItemWidth * (i + 0.5) - textSizes[i].width * 0.5;
+      final positionX = gestureInsets.left + maxItemWidth * (i + 0.5) - textSizes[i].width * 0.5;
       final labelX = switch (i) {
         0 => max(tabPosition.dx, positionX),
         _ => min(
@@ -50,6 +53,8 @@ class _TabIconDelegate extends MultiChildLayoutDelegate {
 
   @override
   bool shouldRelayout(_TabIconDelegate oldDelegate) {
-    return selectedTab != oldDelegate.selectedTab || portrait != portrait;
+    return selectedTab != oldDelegate.selectedTab ||
+        portrait != oldDelegate.portrait ||
+        gestureInsets != oldDelegate.gestureInsets;
   }
 }

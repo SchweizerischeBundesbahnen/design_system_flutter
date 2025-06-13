@@ -23,8 +23,9 @@ class _TabLayout extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final gestureInsets = MediaQuery.of(context).systemGestureInsets;
     return CustomMultiChildLayout(
-      delegate: _TabIconDelegate(items, selectedTab, portrait, onPositioned),
+      delegate: _TabIconDelegate(items, selectedTab, portrait, onPositioned, gestureInsets),
       children: items
           .mapIndexed((i, e) {
             return _TabIcon(
