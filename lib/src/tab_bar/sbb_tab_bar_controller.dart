@@ -38,7 +38,7 @@ class SBBTabBarController {
   bool hover = false;
   List<TabCurves> curves = [];
 
-  static const _duration = Duration(milliseconds: 100);
+  static const _duration = Duration(milliseconds: 200);
 
   /// Index of the currently selected Tab
   int get from => tabs.indexOf(currentData.selectedTab);
@@ -116,7 +116,7 @@ class SBBTabBarController {
     if (selectedTab == tab) return tab;
     _nextTab = tab;
     hover = false;
-    await _animationController.animateTo(1.0, duration: _duration);
+    await _animationController.animateTo(1.0, duration: _duration, curve: Curves.easeInOut);
     selectedTab = tab;
     _animationController.reset();
     return tab;
@@ -125,11 +125,11 @@ class SBBTabBarController {
   Future<void> hoverTab(SBBTabBarItem tab) async {
     _nextTab = tab;
     hover = true;
-    await _animationController.animateTo(0.25, duration: _duration);
+    await _animationController.animateTo(0.25, duration: _duration, curve: Curves.easeInOut);
   }
 
   Future<void> cancelHover() async {
-    await _animationController.animateTo(0, duration: _duration);
+    await _animationController.animateTo(0, duration: _duration, curve: Curves.easeInOut);
     hover = false;
     _nextTab = selectedTab;
     _animationController.reset();

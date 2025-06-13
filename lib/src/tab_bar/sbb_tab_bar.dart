@@ -90,6 +90,7 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
 
   @override
   Widget build(context) {
+    final gestures = MediaQuery.of(context).systemGestureInsets;
     return StreamBuilder<SBBTabBarLayoutData>(
       stream: _controller.layoutStream,
       initialData: _controller.currentLayoutData,
@@ -127,22 +128,25 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
                       cardColor,
                       theme.shadowColor,
                     ),
-                    child: _TabLayout(
-                      items: _tabs,
-                      selectedTab: navData.selectedTab,
-                      warnings: warnings,
-                      portrait: portrait,
-                      onPositioned: _controller.onLayout,
-                      onTap: (e) {
-                        widget.onTap.call(e);
-                        if (navData.selectedTab == e) return;
-                        widget.onTabChanged(_controller.selectTab(e));
-                      },
-                      onTapDown: (e) {
-                        if (navData.selectedTab == e) return;
-                        _controller.hoverTab(e);
-                      },
-                      onTapCancel: (e) => _controller.cancelHover(),
+                    child: Padding(
+                      padding: EdgeInsets.only(left: gestures.left, right: gestures.right),
+                      child: _TabLayout(
+                        items: _tabs,
+                        selectedTab: navData.selectedTab,
+                        warnings: warnings,
+                        portrait: portrait,
+                        onPositioned: _controller.onLayout,
+                        onTap: (e) {
+                          widget.onTap.call(e);
+                          if (navData.selectedTab == e) return;
+                          widget.onTabChanged(_controller.selectTab(e));
+                        },
+                        onTapDown: (e) {
+                          if (navData.selectedTab == e) return;
+                          _controller.hoverTab(e);
+                        },
+                        onTapCancel: (e) => _controller.cancelHover(),
+                      ),
                     ),
                   ),
                 );

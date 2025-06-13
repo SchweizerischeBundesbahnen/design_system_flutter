@@ -71,7 +71,7 @@ class TabCurves {
   TabCurves({
     required this.midX,
     required this.waveRadius,
-  })  : _circleWaveRadius = 0.5 * waveRadius,
+  })  : _circleWaveRadius = 0.552284749831 * waveRadius,
         _twoWaveRadius = waveRadius.toDouble() * 2 {
     // Define the relative starting positions for the anchor points.
     final startPos = [

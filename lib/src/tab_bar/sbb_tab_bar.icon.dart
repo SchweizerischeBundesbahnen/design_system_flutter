@@ -34,7 +34,7 @@ class _TabIcon extends StatelessWidget {
       tabCount: tabCount,
     );
     final viewPaddingBottom = MediaQuery.of(context).viewPadding.bottom;
-    final bottomPadding = portrait ? 0.0 : max(viewPaddingBottom, 8.0);
+    final bottomPadding = portrait ? 0.0 : max(viewPaddingBottom + 8.0, 8.0);
     return LayoutId(
       id: '${item.id}_tab',
       child: Semantics(
