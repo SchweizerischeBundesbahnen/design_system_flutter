@@ -16,6 +16,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 ### Changed
 
 - New design for `SBBSwitch`
+- `SBBSegmentedButton`: Accepts `values` / `icons` with single item in `List` / `Map`
 
 ### Deprecated
 

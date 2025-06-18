@@ -1,6 +1,6 @@
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import 'test_app.dart';
 
@@ -60,6 +60,21 @@ void main() {
                 SBBIcons.microscooter_profile_small: 'Micro',
                 SBBIcons.bicycle_small: 'Bicycle',
                 SBBIcons.scooter_profile_small: 'Scooter',
+              },
+              selectedStateIndex: 0,
+              selectedIndexChanged: (_) {},
+              withText: true,
+            ),
+            const SizedBox(height: sbbDefaultSpacing),
+            SBBSegmentedButton(
+              values: const ['Single Option'],
+              selectedStateIndex: 0,
+              selectedIndexChanged: (_) {},
+            ),
+            const SizedBox(height: sbbDefaultSpacing),
+            SBBSegmentedButton.icon(
+              icons: {
+                SBBIcons.user_small: 'Single',
               },
               selectedStateIndex: 0,
               selectedIndexChanged: (_) {},
