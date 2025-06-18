@@ -9,7 +9,7 @@ import '../../sbb_design_system_mobile.dart';
 const _trackWidth = 52.0;
 const _trackHeight = 20.0;
 const _trackRadius = 28.0;
-const _trackInnerStart = _trackHeight * 0.5;
+const _trackInnerStart = _trackRadius * 0.5;
 const _trackInnerEnd = _trackWidth - _trackInnerStart;
 const _trackInnerLength = _trackInnerEnd - _trackInnerStart;
 const _switchDisabledOpacity = 0.5;
@@ -193,7 +193,7 @@ class _SBBSwitchState extends State<SBBSwitch> with TickerProviderStateMixin {
     final thumbColor = isEnabled ? style.thumbColor! : style.thumbColorDisabled!;
     final activeColor = isEnabled ? style.activeColor! : style.activeColorDisabled!;
     final trackColor = isEnabled ? style.trackColor! : style.trackColorDisabled!;
-    final borderKnobColor = style.borderKnobColor!;
+    final knobColor = style.knobColor!;
     if (_needsPositionAnimation) {
       _resumePositionAnimation();
     }
@@ -204,7 +204,7 @@ class _SBBSwitchState extends State<SBBSwitch> with TickerProviderStateMixin {
         thumbColor: thumbColor,
         activeColor: activeColor,
         trackColor: trackColor,
-        borderKnobColor: borderKnobColor,
+        knobColor: knobColor,
         onChanged: widget.onChanged,
         state: this,
       ),
@@ -227,7 +227,7 @@ class _SBBSwitchRenderObjectWidget extends LeafRenderObjectWidget {
     required this.thumbColor,
     required this.activeColor,
     required this.trackColor,
-    required this.borderKnobColor,
+    required this.knobColor,
     required this.onChanged,
     required this.state,
   });
@@ -236,7 +236,7 @@ class _SBBSwitchRenderObjectWidget extends LeafRenderObjectWidget {
   final Color thumbColor;
   final Color activeColor;
   final Color trackColor;
-  final Color borderKnobColor;
+  final Color knobColor;
   final ValueChanged<bool>? onChanged;
   final _SBBSwitchState state;
 
@@ -247,7 +247,7 @@ class _SBBSwitchRenderObjectWidget extends LeafRenderObjectWidget {
       thumbColor: thumbColor,
       activeColor: activeColor,
       trackColor: trackColor,
-      borderKnobColor: borderKnobColor,
+      knobColor: knobColor,
       onChanged: onChanged,
       state: state,
     );
@@ -261,7 +261,7 @@ class _SBBSwitchRenderObjectWidget extends LeafRenderObjectWidget {
       ..thumbColor = thumbColor
       ..activeColor = activeColor
       ..trackColor = trackColor
-      ..borderKnobColor = borderKnobColor
+      ..knobColor = knobColor
       ..onChanged = onChanged;
   }
 }
@@ -272,14 +272,14 @@ class _SBBRenderSwitch extends RenderConstrainedBox {
     required Color thumbColor,
     required Color activeColor,
     required Color trackColor,
-    required Color borderKnobColor,
+    required Color knobColor,
     ValueChanged<bool>? onChanged,
     required _SBBSwitchState state,
   })  : _value = value,
         _thumbColor = thumbColor,
         _activeColor = activeColor,
         _trackColor = trackColor,
-        _borderKnobColor = borderKnobColor,
+        _knobColor = knobColor,
         _onChanged = onChanged,
         _state = state,
         super(
@@ -338,14 +338,14 @@ class _SBBRenderSwitch extends RenderConstrainedBox {
     markNeedsPaint();
   }
 
-  Color get borderKnobColor => _borderKnobColor;
-  Color _borderKnobColor;
+  Color get knobColor => _knobColor;
+  Color _knobColor;
 
-  set borderKnobColor(Color value) {
-    if (value == _borderKnobColor) {
+  set knobColor(Color value) {
+    if (value == _knobColor) {
       return;
     }
-    _borderKnobColor = value;
+    _knobColor = value;
     markNeedsPaint();
   }
 
@@ -409,8 +409,8 @@ class _SBBRenderSwitch extends RenderConstrainedBox {
       activeColor,
       currentValue,
     )!;
-    final currentBorderKnobColor = Color.lerp(
-      borderKnobColor,
+    final currentKnobColor = Color.lerp(
+      knobColor,
       activeColor,
       currentValue,
     )!;
@@ -448,7 +448,7 @@ class _SBBRenderSwitch extends RenderConstrainedBox {
     final thumbPaint = Paint()..color = thumbColor;
     canvas.drawRRect(thumbRRect, thumbPaint);
     final thumbStrokePaint = Paint()
-      ..color = currentBorderKnobColor
+      ..color = currentKnobColor
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1.0;
     canvas.drawRRect(thumbRRect, thumbStrokePaint);
