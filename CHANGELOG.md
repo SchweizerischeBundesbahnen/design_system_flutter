@@ -9,6 +9,8 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+## [3.2.0] - 2025-06-23
+
 ### Added
 
 - added `style` to `SBBPromotionBox.custom` constructor
@@ -583,7 +585,9 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Initial project setup
 - Added some widgets
 
-[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/3.1.0...HEAD
+[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/3.2.0...HEAD
+
+[3.2.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/3.1.0...3.2.0
 
 [3.1.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/3.0.0...3.1.0
 
