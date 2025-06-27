@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
-import '../theme/styles/src/sbb_contentbox_style.dart';
+import '../theme/styles/src/sbb_group_style.dart';
 
 /// SBBContentBox. Use to structure content.
 ///
@@ -24,19 +24,19 @@ class SBBContentbox extends StatelessWidget {
 
   /// The empty space that surrounds the [SBBContentbox].
   ///
-  /// If this property is null then [SBBContentboxStyle.margin] is used, which defaults to
+  /// If this property is null then [SBBGroupStyle.margin] is used, which defaults to
   /// [EdgeInsets.all(sbbDefaultSpacing)].
   final EdgeInsets? margin;
 
   /// The empty space that separates the [child] and the edge of [SBBContentbox].
   ///
-  /// If this property is null then [SBBContentboxStyle.padding] is used, which defaults to
+  /// If this property is null then [SBBGroupStyle.padding] is used, which defaults to
   /// [EdgeInsets.zero].
   final EdgeInsets? padding;
 
   /// The box's background color.
   ///
-  /// If this property is null then the ambient [SBBContentboxStyle.color] is used, which is
+  /// If this property is null then the ambient [SBBGroupStyle.color] is used, which is
   /// by default:
   /// * [SBBColors.white] in light mode
   /// * [SBBColors.charcoal] in dark mode
@@ -44,7 +44,7 @@ class SBBContentbox extends StatelessWidget {
 
   /// {@macro flutter.material.Material.clipBehavior}
   ///
-  /// If this property is null then [SBBContentboxStyle.clipBehavior] is used, which is by
+  /// If this property is null then [SBBGroupStyle.clipBehavior] is used, which is by
   /// default [Clip.hardEdge].
   final Clip? clipBehavior;
 
@@ -66,7 +66,7 @@ class SBBContentbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SBBContentboxStyle style = SBBContentboxStyle.of(context);
+    final SBBGroupStyle style = SBBGroupStyle.of(context);
 
     return Semantics(
       container: isSemanticContainer,

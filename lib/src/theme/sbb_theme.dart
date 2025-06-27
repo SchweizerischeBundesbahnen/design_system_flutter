@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'styles/src/sbb_contentbox_style.dart';
+import 'styles/src/sbb_group_style.dart';
 import 'theme.dart';
 
 const sbbDefaultSpacing = 16.0;
@@ -14,6 +14,7 @@ class SBBTheme {
     SBBButtonStyles? buttonStyles,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
+    SBBGroupStyle? groupStyle,
   }) =>
       createTheme(
         brightness: Brightness.light,
@@ -22,6 +23,7 @@ class SBBTheme {
         buttonStyles: buttonStyles,
         controlStyles: controlStyles,
         headerBoxStyle: headerBoxStyle,
+        groupStyle: groupStyle,
       );
 
   static ThemeData dark({
@@ -30,6 +32,7 @@ class SBBTheme {
     SBBButtonStyles? buttonStyles,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
+    SBBGroupStyle? groupStyle,
   }) =>
       createTheme(
         brightness: Brightness.dark,
@@ -38,6 +41,7 @@ class SBBTheme {
         buttonStyles: buttonStyles,
         controlStyles: controlStyles,
         headerBoxStyle: headerBoxStyle,
+        groupStyle: groupStyle,
       );
 
   static ThemeData createTheme({
@@ -47,7 +51,7 @@ class SBBTheme {
     SBBButtonStyles? buttonStyles,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
-    SBBContentboxStyle? contentBoxStyle,
+    SBBGroupStyle? groupStyle,
   }) {
     // SET hard-coded default values HERE
     final defaultBaseStyle = SBBBaseStyle.$default(
@@ -71,10 +75,10 @@ class SBBTheme {
     );
     final mergedHeaderBoxStyle = headerBoxStyle.merge(defaultHeaderBoxStyle);
 
-    final defaultContentBoxStyle = SBBContentboxStyle.$default(
+    final defaultGroupStyle = SBBGroupStyle.$default(
       baseStyle: mergedBaseStyle,
     );
-    final mergedContentBoxStyle = contentBoxStyle.merge(defaultContentBoxStyle);
+    final mergedGroupStyle = groupStyle.merge(defaultGroupStyle);
 
     return raw(
       brightness: brightness,
@@ -82,7 +86,7 @@ class SBBTheme {
       buttonStyles: mergedButtonStyles,
       controlStyles: mergedControlStyles,
       headerBoxStyle: mergedHeaderBoxStyle,
-      contentBoxStyle: mergedContentBoxStyle,
+      groupStyle: mergedGroupStyle,
     );
   }
 
@@ -92,7 +96,7 @@ class SBBTheme {
     required SBBButtonStyles buttonStyles,
     required SBBControlStyles controlStyles,
     required SBBHeaderBoxStyle headerBoxStyle,
-    required SBBContentboxStyle contentBoxStyle,
+    required SBBGroupStyle groupStyle,
   }) =>
       ThemeData(
         colorScheme: ColorScheme.fromSwatch(
@@ -130,7 +134,7 @@ class SBBTheme {
           buttonStyles,
           controlStyles,
           headerBoxStyle,
-          contentBoxStyle,
+          groupStyle,
         ],
       );
 

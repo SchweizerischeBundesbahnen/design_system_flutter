@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../theme.dart';
 
-class SBBContentboxStyle extends ThemeExtension<SBBContentboxStyle> {
-  SBBContentboxStyle({
+class SBBGroupStyle extends ThemeExtension<SBBGroupStyle> {
+  SBBGroupStyle({
     this.margin,
     this.padding,
     this.color,
@@ -12,8 +12,8 @@ class SBBContentboxStyle extends ThemeExtension<SBBContentboxStyle> {
     this.clipBehavior,
   });
 
-  factory SBBContentboxStyle.$default({required SBBBaseStyle baseStyle}) => SBBContentboxStyle(
-        margin: EdgeInsets.all(sbbDefaultSpacing),
+  factory SBBGroupStyle.$default({required SBBBaseStyle baseStyle}) => SBBGroupStyle(
+        margin: EdgeInsets.zero,
         padding: EdgeInsets.zero,
         color: baseStyle.themeValue(SBBColors.white, SBBColors.charcoal),
         shadowColor: SBBColors.transparent,
@@ -21,25 +21,25 @@ class SBBContentboxStyle extends ThemeExtension<SBBContentboxStyle> {
         clipBehavior: Clip.hardEdge,
       );
 
-  static SBBContentboxStyle of(BuildContext context) => Theme.of(context).extension<SBBContentboxStyle>()!;
+  static SBBGroupStyle of(BuildContext context) => Theme.of(context).extension<SBBGroupStyle>()!;
 
-  final EdgeInsets? margin;
-  final EdgeInsets? padding;
+  final EdgeInsetsGeometry? margin;
+  final EdgeInsetsGeometry? padding;
   final Color? color;
   final Color? shadowColor;
   final ShapeBorder? shape;
   final Clip? clipBehavior;
 
   @override
-  SBBContentboxStyle copyWith({
-    EdgeInsets? margin,
-    EdgeInsets? padding,
+  SBBGroupStyle copyWith({
+    EdgeInsetsGeometry? margin,
+    EdgeInsetsGeometry? padding,
     Color? color,
     Color? shadowColor,
     ShapeBorder? shape,
     Clip? clipBehavior,
   }) =>
-      SBBContentboxStyle(
+      SBBGroupStyle(
         margin: margin ?? this.margin,
         padding: padding ?? this.padding,
         color: color ?? this.color,
@@ -49,9 +49,9 @@ class SBBContentboxStyle extends ThemeExtension<SBBContentboxStyle> {
       );
 
   @override
-  SBBContentboxStyle lerp(ThemeExtension<SBBContentboxStyle>? other, double t) {
-    if (other is! SBBContentboxStyle) return this;
-    return SBBContentboxStyle(
+  SBBGroupStyle lerp(ThemeExtension<SBBGroupStyle>? other, double t) {
+    if (other is! SBBGroupStyle) return this;
+    return SBBGroupStyle(
       margin: EdgeInsetsGeometry.lerp(margin, other.margin, t) as EdgeInsets?,
       padding: EdgeInsetsGeometry.lerp(padding, other.padding, t) as EdgeInsets?,
       color: Color.lerp(color, other.color, t),
@@ -62,9 +62,9 @@ class SBBContentboxStyle extends ThemeExtension<SBBContentboxStyle> {
   }
 }
 
-extension SBBContentboxStyleExtension on SBBContentboxStyle? {
-  SBBContentboxStyle merge(SBBContentboxStyle? other) {
-    if (this == null) return other ?? SBBContentboxStyle();
+extension SBBGroupStyleExtension on SBBGroupStyle? {
+  SBBGroupStyle merge(SBBGroupStyle? other) {
+    if (this == null) return other ?? SBBGroupStyle();
     return this!.copyWith(
       margin: this!.margin ?? other?.margin,
       padding: this!.padding ?? other?.padding,
