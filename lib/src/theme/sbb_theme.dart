@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'styles/src/sbb_contentbox_style.dart';
 import 'theme.dart';
 
 const sbbDefaultSpacing = 16.0;
@@ -46,6 +47,7 @@ class SBBTheme {
     SBBButtonStyles? buttonStyles,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
+    SBBContentboxStyle? contentBoxStyle,
   }) {
     // SET hard-coded default values HERE
     final defaultBaseStyle = SBBBaseStyle.$default(
@@ -69,12 +71,18 @@ class SBBTheme {
     );
     final mergedHeaderBoxStyle = headerBoxStyle.merge(defaultHeaderBoxStyle);
 
+    final defaultContentBoxStyle = SBBContentboxStyle.$default(
+      baseStyle: mergedBaseStyle,
+    );
+    final mergedContentBoxStyle = contentBoxStyle.merge(defaultContentBoxStyle);
+
     return raw(
       brightness: brightness,
       baseStyle: mergedBaseStyle,
       buttonStyles: mergedButtonStyles,
       controlStyles: mergedControlStyles,
       headerBoxStyle: mergedHeaderBoxStyle,
+      contentBoxStyle: mergedContentBoxStyle,
     );
   }
 
@@ -84,6 +92,7 @@ class SBBTheme {
     required SBBButtonStyles buttonStyles,
     required SBBControlStyles controlStyles,
     required SBBHeaderBoxStyle headerBoxStyle,
+    required SBBContentboxStyle contentBoxStyle,
   }) =>
       ThemeData(
         colorScheme: ColorScheme.fromSwatch(
@@ -121,6 +130,7 @@ class SBBTheme {
           buttonStyles,
           controlStyles,
           headerBoxStyle,
+          contentBoxStyle,
         ],
       );
 
