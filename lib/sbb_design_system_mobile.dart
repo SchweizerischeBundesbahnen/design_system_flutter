@@ -2,6 +2,7 @@ export 'src/accordion/sbb_accordion.dart';
 export 'src/button/button.dart';
 export 'src/checkbox/checkbox.dart';
 export 'src/chip/sbb_chip.dart';
+export 'src/contentbox/contentbox.dart';
 export 'src/group/sbb_group.dart';
 export 'src/header/sbb_header.dart';
 export 'src/headerbox/headerbox.dart';
