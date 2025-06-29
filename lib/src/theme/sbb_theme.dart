@@ -13,6 +13,7 @@ class SBBTheme {
     SBBButtonStyles? buttonStyles,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
+    SBBGroupStyle? groupStyle,
   }) =>
       createTheme(
         brightness: Brightness.light,
@@ -21,6 +22,7 @@ class SBBTheme {
         buttonStyles: buttonStyles,
         controlStyles: controlStyles,
         headerBoxStyle: headerBoxStyle,
+        groupStyle: groupStyle,
       );
 
   static ThemeData dark({
@@ -29,6 +31,7 @@ class SBBTheme {
     SBBButtonStyles? buttonStyles,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
+    SBBGroupStyle? groupStyle,
   }) =>
       createTheme(
         brightness: Brightness.dark,
@@ -37,6 +40,7 @@ class SBBTheme {
         buttonStyles: buttonStyles,
         controlStyles: controlStyles,
         headerBoxStyle: headerBoxStyle,
+        groupStyle: groupStyle,
       );
 
   static ThemeData createTheme({
@@ -46,6 +50,7 @@ class SBBTheme {
     SBBButtonStyles? buttonStyles,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
+    SBBGroupStyle? groupStyle,
   }) {
     // SET hard-coded default values HERE
     final defaultBaseStyle = SBBBaseStyle.$default(
@@ -69,12 +74,18 @@ class SBBTheme {
     );
     final mergedHeaderBoxStyle = headerBoxStyle.merge(defaultHeaderBoxStyle);
 
+    final defaultGroupStyle = SBBGroupStyle.$default(
+      baseStyle: mergedBaseStyle,
+    );
+    final mergedGroupStyle = groupStyle.merge(defaultGroupStyle);
+
     return raw(
       brightness: brightness,
       baseStyle: mergedBaseStyle,
       buttonStyles: mergedButtonStyles,
       controlStyles: mergedControlStyles,
       headerBoxStyle: mergedHeaderBoxStyle,
+      groupStyle: mergedGroupStyle,
     );
   }
 
@@ -84,12 +95,12 @@ class SBBTheme {
     required SBBButtonStyles buttonStyles,
     required SBBControlStyles controlStyles,
     required SBBHeaderBoxStyle headerBoxStyle,
+    required SBBGroupStyle groupStyle,
   }) =>
       ThemeData(
         colorScheme: ColorScheme.fromSwatch(
           primarySwatch: baseStyle.primarySwatch!,
           accentColor: baseStyle.primaryColor,
-          cardColor: controlStyles.groupBackgroundColor,
           backgroundColor: baseStyle.backgroundColor,
           errorColor: controlStyles.textField?.dividerColorError,
           brightness: brightness,
@@ -112,7 +123,6 @@ class SBBTheme {
         filledButtonTheme: buttonStyles.filledButtonTheme,
         outlinedButtonTheme: buttonStyles.outlinedButtonTheme,
         textButtonTheme: buttonStyles.textButtonTheme,
-        cardTheme: controlStyles.cardTheme,
         materialTapTargetSize: MaterialTapTargetSize.padded,
         textSelectionTheme: controlStyles.textSelectionTheme,
         tooltipTheme: controlStyles.tooltipTheme,
@@ -121,6 +131,7 @@ class SBBTheme {
           buttonStyles,
           controlStyles,
           headerBoxStyle,
+          groupStyle,
         ],
       );
 

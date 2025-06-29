@@ -1,5 +1,5 @@
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import '../native_app.dart';
 
@@ -91,7 +91,7 @@ class _ColorShowcaseCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final valueString = colorEntry.color.value.toRadixString(16).padLeft(8, '0').toUpperCase();
+    final valueString = colorEntry.color.toARGB32().toRadixString(16).padLeft(8, '0').toUpperCase();
     final hexString = valueString.substring(2);
     final opacityString = valueString.substring(0, 2);
     const colorValueTextStyle = SBBTextStyles.helpersLabel;
@@ -99,7 +99,6 @@ class _ColorShowcaseCard extends StatelessWidget {
       color: SBBControlStyles.of(context).selectLabel?.textStyleDisabled?.color,
     );
     return SBBGroup(
-      useShadow: true,
       margin: const EdgeInsets.all(
         sbbDefaultSpacing * 0.5,
       ),
