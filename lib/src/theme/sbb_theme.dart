@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'styles/src/sbb_group_style.dart';
 import 'theme.dart';
 
 const sbbDefaultSpacing = 16.0;
