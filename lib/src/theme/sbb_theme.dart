@@ -101,7 +101,6 @@ class SBBTheme {
         colorScheme: ColorScheme.fromSwatch(
           primarySwatch: baseStyle.primarySwatch!,
           accentColor: baseStyle.primaryColor,
-          cardColor: controlStyles.groupBackgroundColor,
           backgroundColor: baseStyle.backgroundColor,
           errorColor: controlStyles.textField?.dividerColorError,
           brightness: brightness,
@@ -124,7 +123,6 @@ class SBBTheme {
         filledButtonTheme: buttonStyles.filledButtonTheme,
         outlinedButtonTheme: buttonStyles.outlinedButtonTheme,
         textButtonTheme: buttonStyles.textButtonTheme,
-        cardTheme: controlStyles.cardTheme,
         materialTapTargetSize: MaterialTapTargetSize.padded,
         textSelectionTheme: controlStyles.textSelectionTheme,
         tooltipTheme: controlStyles.tooltipTheme,
