@@ -17,7 +17,6 @@ class SBBGroup extends StatelessWidget {
     this.margin,
     this.padding,
     this.color,
-    this.shadowColor,
     this.isSemanticContainer = true,
     this.clipBehavior,
     required this.child,
@@ -42,14 +41,6 @@ class SBBGroup extends StatelessWidget {
   /// * [SBBColors.white] in light mode
   /// * [SBBColors.charcoal] in dark mode
   final Color? color;
-
-  /// The box's shadow color.
-  ///
-  /// If this property is null then the ambient [SBBGroupStyle.shadowColor] is used, which is
-  /// by default:
-  /// * [SBBColors.transparent] in light mode
-  /// * [SBBColors.transparent] in dark mode
-  final Color? shadowColor;
 
   /// {@macro flutter.material.Material.clipBehavior}
   ///
@@ -76,7 +67,6 @@ class SBBGroup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final SBBGroupStyle style = SBBGroupStyle.of(context);
-    final resolvedShadowColor = shadowColor ?? style.shadowColor;
 
     return Semantics(
       container: isSemanticContainer,
@@ -86,15 +76,13 @@ class SBBGroup extends StatelessWidget {
           key: key,
           type: MaterialType.card,
           color: color ?? style.color,
-          shadowColor: resolvedShadowColor,
-          elevation: resolvedShadowColor != SBBColors.transparent ? 2.0 : 0.0,
           shape: style.shape!,
-          clipBehavior: clipBehavior ?? style.clipBehavior!,
+          clipBehavior: Clip.none,
           child: Padding(
             padding: padding ?? style.padding!,
             child: Semantics(
               explicitChildNodes: !isSemanticContainer,
-              child: child,
+              child: Container(child: child),
             ),
           ),
         ),
