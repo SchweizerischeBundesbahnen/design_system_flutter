@@ -9,6 +9,10 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+### Changed
+
+- updated icon lib to version 1.7.1
+
 ## [3.2.0] - 2025-06-23
 
 ### Added
