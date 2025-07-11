@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 import '../../theme.dart';
@@ -5,6 +7,8 @@ import '../../theme.dart';
 class SBBToastStyle extends ThemeExtension<SBBToastStyle> {
   SBBToastStyle({
     this.titleTextStyle,
+    this.actionTextStyle,
+    this.actionOverflowThreshold,
     this.decoration,
     this.titleMaxLines,
     this.margin,
@@ -13,17 +17,22 @@ class SBBToastStyle extends ThemeExtension<SBBToastStyle> {
 
   factory SBBToastStyle.$default({required SBBBaseStyle baseStyle}) => SBBToastStyle(
         titleTextStyle: SBBTextStyles.smallLight.copyWith(decoration: TextDecoration.none, color: SBBColors.white),
-        decoration:
-            ShapeDecoration(shape: StadiumBorder(), color: baseStyle.themeValue(SBBColors.metal, SBBColors.smoke)),
+        actionTextStyle: SBBTextStyles.smallBold.copyWith(decoration: TextDecoration.none, color: SBBColors.white),
+        actionOverflowThreshold: 0.25,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(sbbDefaultSpacing),
+            color: baseStyle.themeValue(SBBColors.metal, SBBColors.smoke)),
         titleMaxLines: 2,
         margin: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
-        padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 24.0),
+        padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: sbbDefaultSpacing),
       );
 
   static SBBToastStyle of(BuildContext context) => Theme.of(context).extension<SBBToastStyle>()!;
 
   final TextStyle? titleTextStyle;
-  final ShapeDecoration? decoration;
+  final TextStyle? actionTextStyle;
+  final double? actionOverflowThreshold;
+  final BoxDecoration? decoration;
   final int? titleMaxLines;
   final EdgeInsetsGeometry? margin;
   final EdgeInsetsGeometry? padding;
@@ -31,13 +40,17 @@ class SBBToastStyle extends ThemeExtension<SBBToastStyle> {
   @override
   SBBToastStyle copyWith({
     TextStyle? titleTextStyle,
-    ShapeDecoration? decoration,
+    TextStyle? actionTextStyle,
+    double? actionOverflowThreshold,
+    BoxDecoration? decoration,
     int? titleMaxLines,
     EdgeInsetsGeometry? margin,
     EdgeInsetsGeometry? padding,
   }) =>
       SBBToastStyle(
         titleTextStyle: titleTextStyle ?? this.titleTextStyle,
+        actionTextStyle: actionTextStyle ?? this.actionTextStyle,
+        actionOverflowThreshold: actionOverflowThreshold ?? this.actionOverflowThreshold,
         decoration: decoration ?? this.decoration,
         titleMaxLines: titleMaxLines ?? this.titleMaxLines,
         margin: margin ?? this.margin,
@@ -47,7 +60,9 @@ class SBBToastStyle extends ThemeExtension<SBBToastStyle> {
   @override
   SBBToastStyle lerp(SBBToastStyle? other, double t) => SBBToastStyle(
         titleTextStyle: TextStyle.lerp(titleTextStyle, other?.titleTextStyle, t),
-        decoration: ShapeDecoration.lerp(decoration, other?.decoration, t),
+        actionTextStyle: TextStyle.lerp(actionTextStyle, other?.actionTextStyle, t),
+        actionOverflowThreshold: lerpDouble(actionOverflowThreshold, other?.actionOverflowThreshold, t),
+        decoration: BoxDecoration.lerp(decoration, other?.decoration, t),
         titleMaxLines: t < 0.5 ? titleMaxLines : other?.titleMaxLines,
         padding: EdgeInsetsGeometry.lerp(padding, other?.padding, t),
         margin: EdgeInsetsGeometry.lerp(margin, other?.margin, t),
@@ -59,6 +74,8 @@ extension SBBToastStyleExtension on SBBToastStyle? {
     if (this == null) return other ?? SBBToastStyle();
     return this!.copyWith(
       titleTextStyle: this!.titleTextStyle ?? other?.titleTextStyle,
+      actionTextStyle: this!.actionTextStyle ?? other?.actionTextStyle,
+      actionOverflowThreshold: this!.actionOverflowThreshold ?? other?.actionOverflowThreshold,
       decoration: this!.decoration ?? other?.decoration,
       titleMaxLines: this!.titleMaxLines ?? other?.titleMaxLines,
       padding: this!.padding ?? other?.padding,

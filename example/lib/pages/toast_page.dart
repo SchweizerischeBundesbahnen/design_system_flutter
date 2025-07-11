@@ -27,7 +27,9 @@ class ToastPage extends StatelessWidget {
                     label: 'Show Toast - Short (Default)',
                     onPressed: () {
                       sbbToast.show(
-                        title: 'const SBBToast.durationShort: ${SBBToast.durationShort.inSeconds} seconds',
+                        title:
+                            'const seconds Maecenas a pretium ipsum, ut pellentesque quam. Vivamus ac lorem elementum, consequat metus at, lobortis lacus. Maecenas in velit ut sem tempus rutrum auctor tincidunt ipsum. Aliquam rutrum fringilla arcu non fringilla. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Fusce in posuere dolor. Pellentesque dui leo, hendrerit sed est vel, aliquam ultrices eros. Phasellus pulvinar sem id dui sagittis euismod. Morbi lacinia ultrices nisi eu feugiat.',
+                        action: SBBToastAction(onPressed: () {}, title: 'Action with long title'),
                       );
                     },
                   ),
@@ -39,9 +41,9 @@ class ToastPage extends StatelessWidget {
                     label: 'Show Toast - Long',
                     onPressed: () {
                       sbbToast.show(
-                        title: 'const SBBToast.durationLong: ${SBBToast.durationLong.inSeconds} seconds',
-                        duration: SBBToast.durationLong,
-                      );
+                          title: 'const SBBToast.durationLong: ${SBBToast.durationLong.inSeconds} seconds',
+                          duration: SBBToast.durationLong,
+                          action: SBBToastAction(onPressed: () {}, title: 'Action'));
                     },
                   ),
                 ),

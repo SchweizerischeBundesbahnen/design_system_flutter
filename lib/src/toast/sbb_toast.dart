@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/src/toast/default_toast_body.dart';
 
 import '../../sbb_design_system_mobile.dart';
+import 'sbb_toast_action_body.dart';
 
 /// SBB Toast. Use according to documentation.
 ///
@@ -32,6 +33,7 @@ class SBBToast {
     required String title,
     Duration duration = durationShort,
     double bottom = defaultBottom,
+    SBBToastAction? action,
     SBBToastStyle? style,
   }) {
     builder(
@@ -40,8 +42,10 @@ class SBBToast {
       builder: (stream) => DefaultToastBody(
         title: title,
         duration: duration,
-        style: style,
         stream: stream,
+        style: style,
+        action:
+            action != null ? SBBToastActionBody(onPressed: action.onPressed, title: action.title, toast: this) : null,
       ),
     );
   }
@@ -97,7 +101,7 @@ class SBBToast {
           bottom: bottom,
           child: Align(
             alignment: Alignment.center,
-            child: IgnorePointer(child: toast),
+            child: toast,
           ),
         ),
       );
