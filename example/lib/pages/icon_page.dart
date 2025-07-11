@@ -1,5 +1,5 @@
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import '../native_app.dart';
 
@@ -70,7 +70,7 @@ class _IconShowCase extends StatelessWidget {
               size: iconSize,
             ),
             onPressed: () {
-              sbbToast.show(message: icon['name'] as String);
+              sbbToast.show(title: icon['name'] as String);
             },
           );
         },

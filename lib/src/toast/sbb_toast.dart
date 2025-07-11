@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/src/toast/toast_body.dart';
+import 'package:sbb_design_system_mobile/src/toast/default_toast_body.dart';
+
+import '../../sbb_design_system_mobile.dart';
 
 /// SBB Toast. Use according to documentation.
 ///
@@ -27,27 +29,34 @@ class SBBToast {
   }
 
   void show({
-    required String message,
+    required String title,
     Duration duration = durationShort,
     double bottom = defaultBottom,
+    SBBToastStyle? style,
   }) {
-    buildToast(
-      duration,
-      bottom,
-      (stream) => ToastBody(title: message, duration: duration, stream: stream),
+    builder(
+      duration: duration,
+      bottom: bottom,
+      builder: (stream) => DefaultToastBody(
+        title: title,
+        duration: duration,
+        style: style,
+        stream: stream,
+      ),
     );
   }
 
-  void buildToast(
-    Duration duration,
-    double bottom,
-    Widget Function(Stream<bool> stream) toastBuilder,
-  ) {
+  /// Use this to show a complete custom toast body.
+  void builder({
+    required Widget Function(Stream<bool> stream) builder,
+    double bottom = defaultBottom,
+    Duration duration = durationShort,
+  }) {
     showToastMessage() {
       remove();
       _streamController = StreamController<bool>();
       _streamController!.add(true);
-      _overlayEntry = _buildToastOverlayEntry(bottom, toastBuilder(_streamController!.stream));
+      _overlayEntry = _buildToastOverlayEntry(bottom, builder(_streamController!.stream));
       _overlayState.insert(_overlayEntry!);
       _fadeOutTimer = Timer(duration + kThemeAnimationDuration * 2, () {
         _streamController?.add(false);

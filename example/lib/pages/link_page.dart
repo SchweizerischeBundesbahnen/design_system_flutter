@@ -1,5 +1,5 @@
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import '../native_app.dart';
 
@@ -28,7 +28,7 @@ URL in angle brackets - <url>
 Just the plain URL - url
 https://sbb.sharepoint.com/sites/app-bakery''',
             onLaunch: (link) {
-              sbbToast.show(message: link);
+              sbbToast.show(title: link);
             },
           ),
         ),

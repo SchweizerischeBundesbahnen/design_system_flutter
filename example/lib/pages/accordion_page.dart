@@ -102,7 +102,7 @@ class AccordionPageState extends State<AccordionPage> {
                           label: 'Button',
                           onPressed: () {
                             sbbToast.show(
-                              message: 'This button does nothing...',
+                              title: 'This button does nothing...',
                             );
                           }),
                     ],

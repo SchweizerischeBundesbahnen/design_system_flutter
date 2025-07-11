@@ -27,7 +27,7 @@ class ToastPage extends StatelessWidget {
                     label: 'Show Toast - Short (Default)',
                     onPressed: () {
                       sbbToast.show(
-                        message: 'const SBBToast.durationShort: ${SBBToast.durationShort.inSeconds} seconds',
+                        title: 'const SBBToast.durationShort: ${SBBToast.durationShort.inSeconds} seconds',
                       );
                     },
                   ),
@@ -39,7 +39,7 @@ class ToastPage extends StatelessWidget {
                     label: 'Show Toast - Long',
                     onPressed: () {
                       sbbToast.show(
-                        message: 'const SBBToast.durationLong: ${SBBToast.durationLong.inSeconds} seconds',
+                        title: 'const SBBToast.durationLong: ${SBBToast.durationLong.inSeconds} seconds',
                         duration: SBBToast.durationLong,
                       );
                     },
@@ -52,7 +52,7 @@ class ToastPage extends StatelessWidget {
                     label: 'Show Toast - 5 Seconds',
                     onPressed: () {
                       sbbToast.show(
-                        message: 'This is a Toast with a duration of 5 seconds.',
+                        title: 'This is a Toast with a duration of 5 seconds.',
                         duration: const Duration(seconds: 5),
                       );
                     },

@@ -1,6 +1,6 @@
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import '../native_app.dart';
 
@@ -84,7 +84,7 @@ class _SwitchPageState extends State<SwitchPage> {
                   SBBSwitchListItemLink(
                     text: 'Link Text',
                     onPressed: () => sbbToast.show(
-                      message: 'Link',
+                      title: 'Link',
                     ),
                   )
                 ],
@@ -97,19 +97,19 @@ class _SwitchPageState extends State<SwitchPage> {
                   SBBSwitchListItemLink(
                     text: 'Link Text 1',
                     onPressed: () => sbbToast.show(
-                      message: 'Link 1',
+                      title: 'Link 1',
                     ),
                   ),
                   SBBSwitchListItemLink(
                     text: 'Link Text 2',
                     onPressed: () => sbbToast.show(
-                      message: 'Link 2',
+                      title: 'Link 2',
                     ),
                   ),
                   SBBSwitchListItemLink(
                     text: 'Link Text 3',
                     onPressed: () => sbbToast.show(
-                      message: 'Link 3',
+                      title: 'Link 3',
                     ),
                   ),
                 ],
@@ -122,7 +122,7 @@ class _SwitchPageState extends State<SwitchPage> {
                   SBBSwitchListItemLink(
                     text: 'Link still enabled',
                     onPressed: () => sbbToast.show(
-                      message: 'Link still enabled',
+                      title: 'Link still enabled',
                     ),
                   )
                 ],
@@ -213,7 +213,7 @@ class _SwitchPageState extends State<SwitchPage> {
               SBBSwitchListItemLink(
                 text: 'Link Text',
                 onPressed: () => sbbToast.show(
-                  message: 'Link',
+                  title: 'Link',
                 ),
               )
             ],
@@ -229,19 +229,19 @@ class _SwitchPageState extends State<SwitchPage> {
               SBBSwitchListItemLink(
                 text: 'Link Text 1',
                 onPressed: () => sbbToast.show(
-                  message: 'Link 1',
+                  title: 'Link 1',
                 ),
               ),
               SBBSwitchListItemLink(
                 text: 'Link Text 2',
                 onPressed: () => sbbToast.show(
-                  message: 'Link 2',
+                  title: 'Link 2',
                 ),
               ),
               SBBSwitchListItemLink(
                 text: 'Link Text 3',
                 onPressed: () => sbbToast.show(
-                  message: 'Link 3',
+                  title: 'Link 3',
                 ),
               ),
             ],
@@ -257,7 +257,7 @@ class _SwitchPageState extends State<SwitchPage> {
               SBBSwitchListItemLink(
                 text: 'Link still enabled',
                 onPressed: () => sbbToast.show(
-                  message: 'Link still enabled',
+                  title: 'Link still enabled',
                 ),
               )
             ],

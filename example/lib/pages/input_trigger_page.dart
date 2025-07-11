@@ -1,6 +1,6 @@
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import '../native_app.dart';
 
@@ -73,12 +73,12 @@ class _PickerPageState extends State<InputTriggerPage> {
                   hintText: hintValue,
                   errorText: errorValue,
                   onPressed: () {
-                    SBBToast.of(context).show(message: 'onPressed');
+                    SBBToast.of(context).show(title: 'onPressed');
                   },
                   prefixIcon: showPrefixIcon ? SBBIcons.dog_small : null,
                   suffixIcon: showSuffixIcon ? SBBIcons.circle_information_small_small : null,
                   onSuffixPressed: () {
-                    SBBToast.of(context).show(message: 'onSuffixPressed');
+                    SBBToast.of(context).show(title: 'onSuffixPressed');
                   },
                   enabled: enabled,
                   isLastElement: true,

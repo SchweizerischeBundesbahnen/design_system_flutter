@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sbb_design_system_mobile/src/toast/toast_body.dart';
+import 'package:sbb_design_system_mobile/src/toast/default_toast_body.dart';
 
 import 'test_app.dart';
 
@@ -13,7 +13,7 @@ void main() {
   testWidgets('toast basic test', (WidgetTester tester) async {
     final widget = Column(
       children: [
-        ToastBody(
+        DefaultToastBody(
           title: title,
           duration: duration,
           stream: stream1,
