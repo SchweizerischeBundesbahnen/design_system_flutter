@@ -1,4 +1,3 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
@@ -31,8 +30,11 @@ class _SBBToastActionBodyState extends State<SBBToastActionBody> {
   }
 
   @override
-  Widget build(BuildContext context) => Text.rich(
-        TextSpan(text: widget.title, recognizer: TapGestureRecognizer()..onTap = _handlePressed),
-        style: SBBTextStyles.smallBold.copyWith(color: SBBColors.white, decoration: TextDecoration.none),
+  Widget build(BuildContext context) => GestureDetector(
+        onTap: _isActionBeenTriggered ? null : _handlePressed,
+        child: Text(
+          widget.title,
+          style: SBBTextStyles.smallBold.copyWith(color: SBBColors.white, decoration: TextDecoration.none),
+        ),
       );
 }
