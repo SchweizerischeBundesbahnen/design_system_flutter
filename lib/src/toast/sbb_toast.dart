@@ -9,7 +9,7 @@ import '../../sbb_design_system_mobile.dart';
 ///
 /// See also:
 ///
-/// * <https://digital.sbb.ch/de/design-system-mobile-new/module/toast>
+/// * <https://digital.sbb.ch/de/design-system/mobile/components/toast/>
 class SBBToast {
   SBBToast._(this._overlayState);
 
@@ -90,17 +90,15 @@ class SBBToast {
     _streamController = null;
   }
 
-  OverlayEntry _buildToastOverlayEntry(double bottom, Widget toast) {
-    return OverlayEntry(builder: (context) {
-      return Positioned(
-        left: 0.0,
-        right: 0.0,
-        bottom: bottom,
-        child: Align(
-          alignment: Alignment.center,
-          child: IgnorePointer(child: toast),
+  OverlayEntry _buildToastOverlayEntry(double bottom, Widget toast) => OverlayEntry(
+        builder: (context) => Positioned(
+          left: 0.0,
+          right: 0.0,
+          bottom: bottom,
+          child: Align(
+            alignment: Alignment.center,
+            child: IgnorePointer(child: toast),
+          ),
         ),
       );
-    });
-  }
 }

@@ -31,12 +31,7 @@ class DefaultToastBody extends StatelessWidget {
             decoration: resolvedStyle.decoration,
             margin: resolvedStyle.margin,
             padding: resolvedStyle.padding,
-            child: Wrap(
-              crossAxisAlignment: WrapCrossAlignment.center,
-              children: [
-                Text(title, style: resolvedStyle.titleTextStyle),
-              ],
-            ),
+            child: Text(title, style: resolvedStyle.titleTextStyle, maxLines: resolvedStyle.titleMaxLines),
           ),
         );
       },
