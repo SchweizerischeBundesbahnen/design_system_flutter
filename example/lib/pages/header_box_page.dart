@@ -9,20 +9,20 @@ class HeaderBoxPage extends StatefulWidget {
 }
 
 class _HeaderBoxPageState extends State<HeaderBoxPage> {
-  final items = <TabBarItem>[
+  final items = <SBBTabBarItem>[
     _DemoItem(0, SBBIcons.paragraph_small),
     _DemoItem(1, SBBIcons.lock_closed_small),
     _DemoItem(2, SBBIcons.arrows_up_down_small),
   ];
 
   late PageController _pageViewController;
-  late TabBarController _tabBarController;
+  late SBBTabBarController _tabBarController;
 
   @override
   void initState() {
     super.initState();
     _pageViewController = PageController();
-    _tabBarController = TabBarController(items.first);
+    _tabBarController = SBBTabBarController(items, items.first);
   }
 
   @override
@@ -46,8 +46,7 @@ class _HeaderBoxPageState extends State<HeaderBoxPage> {
             ],
           ),
         ),
-        SBBTabBar(
-          items: items,
+        SBBTabBar.controller(
           onTabChanged: (task) async {
             task.then((value) => _handlePageViewChanged(int.parse(value.id)));
           },
@@ -240,7 +239,7 @@ class _ScrollablePageState extends State<ScrollablePage> {
   }
 }
 
-class _DemoItem extends TabBarItem {
+class _DemoItem extends SBBTabBarItem {
   _DemoItem(int id, IconData icon) : super(id.toString(), icon);
 
   @override
