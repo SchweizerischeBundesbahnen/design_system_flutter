@@ -1,6 +1,6 @@
 name: "flutter_design_system_mobile_example"
 description: A showcase app for the flutter design system mobile from SBB.
-version: 3.1.0+20010404 # automatically set by GH Action 
+version: 3.2.0+20010405 # automatically set by GH Action 
 publish_to: "none"
 
 environment:

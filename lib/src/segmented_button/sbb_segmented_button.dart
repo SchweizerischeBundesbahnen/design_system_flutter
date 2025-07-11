@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:collection/collection.dart';
+import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
 import '../sbb_internal.dart';
@@ -147,7 +147,7 @@ class SBBSegmentedButton extends StatefulWidget {
     required this.selectedStateIndex,
     required this.selectedIndexChanged,
     this.styleSelector,
-  }) : assert(widgetBuilders.length > 1);
+  }) : assert(widgetBuilders.length > 0, 'At least one widget builder must be provided.');
 
   final List<SegmentedButtonWidgetBuilder> widgetBuilders;
   final int selectedStateIndex;

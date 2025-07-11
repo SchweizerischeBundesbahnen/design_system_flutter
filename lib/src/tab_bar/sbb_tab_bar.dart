@@ -121,29 +121,37 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
                       end: Alignment.bottomCenter,
                     ),
                   ),
-                  child: CustomPaint(
-                    painter: TabCurvePainter(
-                      _controller.curves,
-                      cardColor,
-                      theme.shadowColor,
-                    ),
-                    child: _TabLayout(
-                      items: _tabs,
-                      selectedTab: navData.selectedTab,
-                      warnings: warnings,
-                      portrait: portrait,
-                      onPositioned: _controller.onLayout,
-                      onTap: (e) {
-                        widget.onTap.call(e);
-                        if (navData.selectedTab == e) return;
-                        widget.onTabChanged(_controller.selectTab(e));
-                      },
-                      onTapDown: (e) {
-                        if (navData.selectedTab == e) return;
-                        _controller.hoverTab(e);
-                      },
-                      onTapCancel: (e) => _controller.cancelHover(),
-                    ),
+                  child: Stack(
+                    children: [
+                      ..._tabs.mapIndexed((i, e) => Positioned(
+                            left: layoutData.positions[i].dx,
+                            child: TabItemWidget(e.icon, selected: true),
+                          )),
+                      CustomPaint(
+                        painter: TabCurvePainter(
+                          _controller.curves,
+                          cardColor,
+                          theme.shadowColor,
+                        ),
+                        child: _TabLayout(
+                          items: _tabs,
+                          selectedTab: navData.selectedTab,
+                          warnings: warnings,
+                          portrait: portrait,
+                          onPositioned: _controller.onLayout,
+                          onTap: (e) {
+                            widget.onTap.call(e);
+                            if (navData.selectedTab == e) return;
+                            widget.onTabChanged(_controller.selectTab(e));
+                          },
+                          onTapDown: (e) {
+                            if (navData.selectedTab == e) return;
+                            _controller.hoverTab(e);
+                          },
+                          onTapCancel: (e) => _controller.cancelHover(),
+                        ),
+                      ),
+                    ],
                   ),
                 );
               },

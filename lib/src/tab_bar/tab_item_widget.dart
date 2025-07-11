@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/src/tab_bar/sbb_tab_bar_warning_setting.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
@@ -14,6 +13,10 @@ class TabItemWidget extends StatelessWidget {
   static const portraitSize = 44.0;
   static const landscapeSize = 36.0;
 
+  static const portraitCirclePadding = 6.0;
+  static const landscapeCirclePadding = 2.0;
+  static const horizontalCirclePadding = 4.0;
+
   final IconData icon;
   final bool selected;
   final SBBTabBarWarningSetting? warning;
@@ -23,7 +26,7 @@ class TabItemWidget extends StatelessWidget {
     final style = SBBBaseStyle.of(context);
     final portrait = MediaQuery.of(context).orientation == Orientation.portrait;
     final size = portrait ? portraitSize : landscapeSize;
-    final topPadding = portrait ? 8.0 : 2.0;
+    final topPadding = portrait ? portraitCirclePadding : landscapeCirclePadding;
 
     final foregroundColor = style.themeValue(SBBColors.white, SBBColors.black);
     final backgroundColor = style.themeValue(SBBColors.black, SBBColors.white);
@@ -49,16 +52,13 @@ class TabItemWidget extends StatelessWidget {
       containerColor = null;
     }
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 4.0),
-      child: Container(
-        width: size,
-        height: size,
-        margin: EdgeInsets.only(top: topPadding),
-        color: containerColor,
-        decoration: decoration,
-        child: Icon(resolvedIcon, color: iconColor),
-      ),
+    return Container(
+      width: size,
+      height: size,
+      margin: EdgeInsets.only(top: topPadding, left: horizontalCirclePadding, right: horizontalCirclePadding),
+      color: containerColor,
+      decoration: decoration,
+      child: Icon(resolvedIcon, color: iconColor),
     );
   }
 }
