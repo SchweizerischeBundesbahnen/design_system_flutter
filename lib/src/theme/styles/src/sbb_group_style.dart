@@ -10,6 +10,7 @@ class SBBGroupStyle extends ThemeExtension<SBBGroupStyle> {
     this.shadowColor,
     this.shape,
     this.clipBehavior,
+    this.isSemanticContainer,
   });
 
   factory SBBGroupStyle.$default({required SBBBaseStyle baseStyle}) => SBBGroupStyle(
@@ -19,6 +20,7 @@ class SBBGroupStyle extends ThemeExtension<SBBGroupStyle> {
         shadowColor: SBBColors.transparent,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(sbbDefaultSpacing))),
         clipBehavior: Clip.hardEdge,
+        isSemanticContainer: true,
       );
 
   static SBBGroupStyle of(BuildContext context) => Theme.of(context).extension<SBBGroupStyle>()!;
@@ -29,6 +31,7 @@ class SBBGroupStyle extends ThemeExtension<SBBGroupStyle> {
   final Color? shadowColor;
   final ShapeBorder? shape;
   final Clip? clipBehavior;
+  final bool? isSemanticContainer;
 
   @override
   SBBGroupStyle copyWith({
@@ -38,6 +41,7 @@ class SBBGroupStyle extends ThemeExtension<SBBGroupStyle> {
     Color? shadowColor,
     ShapeBorder? shape,
     Clip? clipBehavior,
+    bool? isSemanticContainer,
   }) =>
       SBBGroupStyle(
         margin: margin ?? this.margin,
@@ -46,6 +50,7 @@ class SBBGroupStyle extends ThemeExtension<SBBGroupStyle> {
         shadowColor: shadowColor ?? this.shadowColor,
         shape: shape ?? this.shape,
         clipBehavior: clipBehavior ?? this.clipBehavior,
+        isSemanticContainer: isSemanticContainer ?? this.isSemanticContainer,
       );
 
   @override
@@ -58,6 +63,7 @@ class SBBGroupStyle extends ThemeExtension<SBBGroupStyle> {
       shadowColor: Color.lerp(shadowColor, other.shadowColor, t),
       shape: ShapeBorder.lerp(shape, other.shape, t),
       clipBehavior: t < 0.5 ? clipBehavior : other.clipBehavior,
+      isSemanticContainer: t < 0.5 ? isSemanticContainer : other.isSemanticContainer,
     );
   }
 }
@@ -72,6 +78,7 @@ extension SBBGroupStyleExtension on SBBGroupStyle? {
       shadowColor: this!.shadowColor ?? other?.shadowColor,
       shape: this!.shape ?? other?.shape,
       clipBehavior: this!.clipBehavior ?? other?.clipBehavior,
+      isSemanticContainer: this!.isSemanticContainer ?? other?.isSemanticContainer,
     );
   }
 }

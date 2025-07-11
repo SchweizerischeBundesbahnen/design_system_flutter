@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
-import '../theme/styles/src/sbb_group_style.dart';
 
 /// SBBGroup. Use to structure content.
 ///
@@ -17,7 +16,7 @@ class SBBGroup extends StatelessWidget {
     this.margin,
     this.padding,
     this.color,
-    this.isSemanticContainer = true,
+    this.isSemanticContainer,
     this.clipBehavior,
     required this.child,
   });
@@ -51,7 +50,8 @@ class SBBGroup extends StatelessWidget {
   /// Whether this widget represents a single semantic container, or if false
   /// a collection of individual semantic nodes.
   ///
-  /// Defaults to true.
+  /// If null, will use the value of [SBBGroupStyle.isSemanticContainer], which is by default
+  /// true.
   ///
   /// Setting this flag to true will attempt to merge all child semantics into
   /// this node. Setting this flag to false will force all child semantic nodes
@@ -59,7 +59,7 @@ class SBBGroup extends StatelessWidget {
   ///
   /// This flag should be false if the card contains multiple different types
   /// of content.
-  final bool isSemanticContainer;
+  final bool? isSemanticContainer;
 
   /// The widget below this widget in the tree.
   final Widget child;
@@ -69,7 +69,7 @@ class SBBGroup extends StatelessWidget {
     final SBBGroupStyle style = SBBGroupStyle.of(context);
 
     return Semantics(
-      container: isSemanticContainer,
+      container: isSemanticContainer ?? style.isSemanticContainer!,
       child: Padding(
         padding: margin ?? style.margin!,
         child: Material(
@@ -81,7 +81,7 @@ class SBBGroup extends StatelessWidget {
           child: Padding(
             padding: padding ?? style.padding!,
             child: Semantics(
-              explicitChildNodes: !isSemanticContainer,
+              explicitChildNodes: !(isSemanticContainer ?? style.isSemanticContainer!),
               child: Container(child: child),
             ),
           ),
