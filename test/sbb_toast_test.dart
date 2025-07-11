@@ -1,34 +1,22 @@
 import 'dart:async';
 
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:sbb_design_system_mobile/src/toast/toast_body.dart';
 
 import 'test_app.dart';
 
 void main() {
-  const String message = 'Toast';
+  const String title = 'Toast';
   final Stream<bool> stream1 = (StreamController<bool>()..add(true)).stream;
-  final Stream<bool> stream2 = (StreamController<bool>()..add(true)).stream;
-  final Stream<bool> stream3 = (StreamController<bool>()..add(true)).stream;
   const Duration duration = Duration(milliseconds: 0);
   testWidgets('toast basic test', (WidgetTester tester) async {
     final widget = Column(
       children: [
-        Toast.confirmation(
-          message: message,
+        ToastBody(
+          title: title,
           duration: duration,
           stream: stream1,
-        ),
-        Toast.warning(
-          message: message,
-          duration: duration,
-          stream: stream2,
-        ),
-        Toast.error(
-          message: message,
-          duration: duration,
-          stream: stream3,
         ),
       ],
     );
