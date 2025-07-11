@@ -125,8 +125,7 @@ class SBBToast {
   }
 }
 
-@visibleForTesting
-class Toast extends StatefulWidget {
+class Toast extends StatelessWidget {
   const Toast.confirmation({
     Key? key,
     required String message,
@@ -190,42 +189,34 @@ class Toast extends StatefulWidget {
   final Stream<bool> stream;
 
   @override
-  ToastState createState() => ToastState();
-}
-
-class ToastState extends State<Toast> {
-  bool _visible = false;
-
-  @override
-  void initState() {
-    widget.stream.listen((visible) => setState(() => _visible = visible));
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final tooltipTheme = Theme.of(context).tooltipTheme;
 
-    return AnimatedOpacity(
-      opacity: _visible ? 1.0 : 0.0,
-      duration: kThemeAnimationDuration,
-      child: Container(
-        decoration: tooltipTheme.decoration,
-        margin: tooltipTheme.margin,
-        padding: tooltipTheme.padding,
-        child: Wrap(
-          crossAxisAlignment: WrapCrossAlignment.center,
-          children: [
-            Text(
-              widget.message,
-              style: tooltipTheme.textStyle?.copyWith(
-                decoration: TextDecoration.none,
-                color: widget.textColor,
+    return StreamBuilder<bool>(
+        stream: stream,
+        builder: (context, snapshot) {
+          final isVisible = snapshot.data ?? false;
+          return AnimatedOpacity(
+            opacity: isVisible ? 1.0 : 0.0,
+            duration: kThemeAnimationDuration,
+            child: Container(
+              decoration: (tooltipTheme.decoration! as BoxDecoration).copyWith(color: backgroundColor),
+              margin: tooltipTheme.margin,
+              padding: tooltipTheme.padding,
+              child: Wrap(
+                crossAxisAlignment: WrapCrossAlignment.center,
+                children: [
+                  Text(
+                    message,
+                    style: tooltipTheme.textStyle?.copyWith(
+                      decoration: TextDecoration.none,
+                      color: textColor,
+                    ),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
-      ),
-    );
+          );
+        });
   }
 }

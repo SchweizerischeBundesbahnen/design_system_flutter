@@ -1,5 +1,5 @@
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import '../native_app.dart';
 
@@ -21,51 +21,42 @@ class ToastPage extends StatelessWidget {
             padding: const EdgeInsets.all(sbbDefaultSpacing),
             child: Column(
               children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: SBBTertiaryButtonLarge(
-                        label: 'Show Toast - Short (Default)',
-                        onPressed: () {
-                          sbbToast.show(
-                            message: 'const SBBToast.durationShort: ${SBBToast.durationShort.inSeconds} seconds',
-                          );
-                        },
-                      ),
-                    ),
-                  ],
+                SizedBox(
+                  width: double.infinity,
+                  child: SBBTertiaryButtonLarge(
+                    label: 'Show Toast - Short (Default)',
+                    onPressed: () {
+                      sbbToast.warning(
+                        message: 'const SBBToast.durationShort: ${SBBToast.durationShort.inSeconds} seconds',
+                      );
+                    },
+                  ),
                 ),
                 const SizedBox(height: sbbDefaultSpacing),
-                Row(
-                  children: [
-                    Expanded(
-                      child: SBBTertiaryButtonLarge(
-                        label: 'Show Toast - Long',
-                        onPressed: () {
-                          sbbToast.show(
-                            message: 'const SBBToast.durationLong: ${SBBToast.durationLong.inSeconds} seconds',
-                            duration: SBBToast.durationLong,
-                          );
-                        },
-                      ),
-                    ),
-                  ],
+                SizedBox(
+                  width: double.infinity,
+                  child: SBBTertiaryButtonLarge(
+                    label: 'Show Toast - Long',
+                    onPressed: () {
+                      sbbToast.show(
+                        message: 'const SBBToast.durationLong: ${SBBToast.durationLong.inSeconds} seconds',
+                        duration: SBBToast.durationLong,
+                      );
+                    },
+                  ),
                 ),
                 const SizedBox(height: sbbDefaultSpacing),
-                Row(
-                  children: [
-                    Expanded(
-                      child: SBBTertiaryButtonLarge(
-                        label: 'Show Toast - 5 Seconds',
-                        onPressed: () {
-                          sbbToast.show(
-                            message: 'This is a Toast with a duration of 5 seconds.',
-                            duration: const Duration(seconds: 5),
-                          );
-                        },
-                      ),
-                    ),
-                  ],
+                SizedBox(
+                  width: double.infinity,
+                  child: SBBTertiaryButtonLarge(
+                    label: 'Show Toast - 5 Seconds',
+                    onPressed: () {
+                      sbbToast.error(
+                        message: 'This is a Toast with a duration of 5 seconds.',
+                        duration: const Duration(seconds: 5),
+                      );
+                    },
+                  ),
                 ),
               ],
             ),
@@ -76,30 +67,24 @@ class ToastPage extends StatelessWidget {
             padding: const EdgeInsets.all(sbbDefaultSpacing),
             child: Column(
               children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: SBBTertiaryButtonLarge(
-                        label: 'Hide (with exit animation)',
-                        onPressed: () {
-                          sbbToast.hide();
-                        },
-                      ),
-                    ),
-                  ],
+                SizedBox(
+                  width: double.infinity,
+                  child: SBBTertiaryButtonLarge(
+                    label: 'Hide (with exit animation)',
+                    onPressed: () {
+                      sbbToast.hide();
+                    },
+                  ),
                 ),
                 const SizedBox(height: sbbDefaultSpacing),
-                Row(
-                  children: [
-                    Expanded(
-                      child: SBBTertiaryButtonLarge(
-                        label: 'Remove (without exit animation)',
-                        onPressed: () {
-                          sbbToast.remove();
-                        },
-                      ),
-                    ),
-                  ],
+                SizedBox(
+                  width: double.infinity,
+                  child: SBBTertiaryButtonLarge(
+                    label: 'Remove (without exit animation)',
+                    onPressed: () {
+                      sbbToast.remove();
+                    },
+                  ),
                 ),
               ],
             ),
