@@ -59,7 +59,7 @@ class SBBToast {
     Duration duration = durationShort,
     double bottom = defaultBottom,
   }) {
-    buildToast(message, duration, bottom, (stream) => Toast(message: message, duration: duration, stream: stream));
+    buildToast(message, duration, bottom, (stream) => Toast(title: message, duration: duration, stream: stream));
   }
 
   void buildToast(
@@ -134,7 +134,7 @@ class Toast extends StatelessWidget {
   }) : this(
           key: key,
           duration: duration,
-          message: message,
+          title: message,
           stream: stream,
           backgroundColor: SBBColors.white,
           textColor: SBBColors.green,
@@ -149,7 +149,7 @@ class Toast extends StatelessWidget {
   }) : this(
           key: key,
           duration: duration,
-          message: message,
+          title: message,
           stream: stream,
           backgroundColor: SBBColors.orange,
           textColor: SBBColors.white,
@@ -164,7 +164,7 @@ class Toast extends StatelessWidget {
   }) : this(
           key: key,
           duration: duration,
-          message: message,
+          title: message,
           stream: stream,
           backgroundColor: SBBColors.red,
           textColor: SBBColors.white,
@@ -173,7 +173,7 @@ class Toast extends StatelessWidget {
 
   const Toast({
     super.key,
-    required this.message,
+    required this.title,
     required this.duration,
     required this.stream,
     this.backgroundColor = SBBColors.metal,
@@ -184,13 +184,13 @@ class Toast extends StatelessWidget {
   final Color backgroundColor;
   final Color textColor;
   final IconData icon;
-  final String message;
+  final String title;
   final Duration duration;
   final Stream<bool> stream;
 
   @override
   Widget build(BuildContext context) {
-    final tooltipTheme = Theme.of(context).tooltipTheme;
+    final toastStyle = SBBToastStyle.of(context);
 
     return StreamBuilder<bool>(
         stream: stream,
@@ -200,19 +200,13 @@ class Toast extends StatelessWidget {
             opacity: isVisible ? 1.0 : 0.0,
             duration: kThemeAnimationDuration,
             child: Container(
-              decoration: (tooltipTheme.decoration! as BoxDecoration).copyWith(color: backgroundColor),
-              margin: tooltipTheme.margin,
-              padding: tooltipTheme.padding,
+              decoration: toastStyle.decoration,
+              margin: toastStyle.margin,
+              padding: toastStyle.padding,
               child: Wrap(
                 crossAxisAlignment: WrapCrossAlignment.center,
                 children: [
-                  Text(
-                    message,
-                    style: tooltipTheme.textStyle?.copyWith(
-                      decoration: TextDecoration.none,
-                      color: textColor,
-                    ),
-                  ),
+                  Text(title, style: toastStyle.titleTextStyle),
                 ],
               ),
             ),

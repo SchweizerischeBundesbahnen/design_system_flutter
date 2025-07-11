@@ -13,6 +13,7 @@ class SBBTheme {
     SBBButtonStyles? buttonStyles,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
+    SBBToastStyle? toastStyle,
   }) =>
       createTheme(
         brightness: Brightness.light,
@@ -21,6 +22,7 @@ class SBBTheme {
         buttonStyles: buttonStyles,
         controlStyles: controlStyles,
         headerBoxStyle: headerBoxStyle,
+        toastStyle: toastStyle,
       );
 
   static ThemeData dark({
@@ -29,6 +31,7 @@ class SBBTheme {
     SBBButtonStyles? buttonStyles,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
+    SBBToastStyle? toastStyle,
   }) =>
       createTheme(
         brightness: Brightness.dark,
@@ -37,6 +40,7 @@ class SBBTheme {
         buttonStyles: buttonStyles,
         controlStyles: controlStyles,
         headerBoxStyle: headerBoxStyle,
+        toastStyle: toastStyle,
       );
 
   static ThemeData createTheme({
@@ -46,6 +50,7 @@ class SBBTheme {
     SBBButtonStyles? buttonStyles,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
+    SBBToastStyle? toastStyle,
   }) {
     // SET hard-coded default values HERE
     final defaultBaseStyle = SBBBaseStyle.$default(
@@ -69,12 +74,18 @@ class SBBTheme {
     );
     final mergedHeaderBoxStyle = headerBoxStyle.merge(defaultHeaderBoxStyle);
 
+    final defaultToastStyle = SBBToastStyle.$default(
+      baseStyle: mergedBaseStyle,
+    );
+    final mergedToastStyle = defaultToastStyle.merge(defaultToastStyle);
+
     return raw(
       brightness: brightness,
       baseStyle: mergedBaseStyle,
       buttonStyles: mergedButtonStyles,
       controlStyles: mergedControlStyles,
       headerBoxStyle: mergedHeaderBoxStyle,
+      toastStyle: mergedToastStyle,
     );
   }
 
@@ -84,6 +95,7 @@ class SBBTheme {
     required SBBButtonStyles buttonStyles,
     required SBBControlStyles controlStyles,
     required SBBHeaderBoxStyle headerBoxStyle,
+    required SBBToastStyle toastStyle,
   }) =>
       ThemeData(
         colorScheme: ColorScheme.fromSwatch(
@@ -121,6 +133,7 @@ class SBBTheme {
           buttonStyles,
           controlStyles,
           headerBoxStyle,
+          toastStyle,
         ],
       );
 
