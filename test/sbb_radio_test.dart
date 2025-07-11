@@ -1,6 +1,6 @@
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import 'test_app.dart';
 
@@ -188,7 +188,7 @@ class RadioTest extends StatelessWidget {
                     ),
                     child: Text('CHF 0.99'),
                   ),
-                  isLastElement: false,
+                  isLastElement: true,
                 ),
               ),
             ],

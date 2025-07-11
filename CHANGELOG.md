@@ -9,6 +9,18 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+### Changed
+
+- BREAKING: `SBBGroup` does not have a shadow anymore
+
+### Added
+
+- `SBBGroupStyle` is used to style `SBBGroup` in a theme like manner
+
+### Removed
+
+- removed `groupBackgroundColor` from `SBBControlStyles`
+
 ## [3.2.0] - 2025-06-23
 
 ### Added
