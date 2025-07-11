@@ -3,12 +3,16 @@ description: "Util scripts."
 version: 0.0.1
 
 environment:
-  sdk: ">=3.2.0 <4.0.0"
+  sdk: ">=3.6.0 <4.0.0"
 
 dependencies:
-  http: ^1.1.2
+  # https://pub.dev/packages/http
+  http: ^1.4.0
+  # https://pub.dev/packages/console_bars
   console_bars: ^1.2.0
-  dart_style: ^3.0.0
+  # https://pub.dev/packages/dart_style
+  dart_style: ^3.1.0
+  # https://pub.dev/packages/version
   version: ^3.0.2
 
 dev_dependencies:
