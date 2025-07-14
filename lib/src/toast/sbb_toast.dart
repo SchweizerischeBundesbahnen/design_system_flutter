@@ -121,7 +121,10 @@ class SBBToast {
             left: 0.0,
             right: 0.0,
             bottom: bottom,
-            child: Align(alignment: Alignment.center, child: toast),
+            child: Align(
+              alignment: Alignment.center,
+              child: Semantics(container: true, liveRegion: true, child: toast),
+            ),
           ),
         ),
       );

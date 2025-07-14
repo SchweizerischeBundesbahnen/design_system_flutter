@@ -24,6 +24,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - `SBBToastStyle` is used to style `SBBToast` in a theme extension like manner
 - `SBBGroup` has `isSemanticContainer` flag for accessibility
 - `SBBToastAction` to display an action with a callback in `SBBToast`
+- add _semantics_ to `SBBToast` (liveRegion and container)
 
 ### Removed
 
