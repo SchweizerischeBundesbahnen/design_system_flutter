@@ -1,5 +1,5 @@
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import '../native_app.dart';
 
@@ -24,7 +24,7 @@ class ButtonPage extends StatelessWidget {
                 SBBPrimaryButton(
                   label: 'Default',
                   onPressed: () {
-                    sbbToast.show(message: 'SBBPrimaryButton');
+                    sbbToast.show(title: 'SBBPrimaryButton');
                   },
                 ),
                 const SizedBox(height: sbbDefaultSpacing),
@@ -50,7 +50,7 @@ class ButtonPage extends StatelessWidget {
                 SBBSecondaryButton(
                   label: 'Default',
                   onPressed: () {
-                    sbbToast.show(message: 'SBBSecondaryButton');
+                    sbbToast.show(title: 'SBBSecondaryButton');
                   },
                 ),
                 const SizedBox(height: sbbDefaultSpacing),
@@ -79,7 +79,7 @@ class ButtonPage extends StatelessWidget {
                   SBBTertiaryButtonLarge(
                     label: 'Default',
                     onPressed: () {
-                      sbbToast.show(message: 'SBBTertiaryButtonLarge');
+                      sbbToast.show(title: 'SBBTertiaryButtonLarge');
                     },
                   ),
                   const SizedBox(height: sbbDefaultSpacing),
@@ -98,7 +98,7 @@ class ButtonPage extends StatelessWidget {
                     label: 'Icon',
                     icon: SBBIcons.dog_small,
                     onPressed: () {
-                      sbbToast.show(message: 'SBBTertiaryButtonLarge');
+                      sbbToast.show(title: 'SBBTertiaryButtonLarge');
                     },
                   ),
                   const SizedBox(height: sbbDefaultSpacing),
@@ -130,7 +130,7 @@ class ButtonPage extends StatelessWidget {
                   SBBTertiaryButtonSmall(
                     label: 'Default',
                     onPressed: () {
-                      sbbToast.show(message: 'SBBTertiaryButtonSmall');
+                      sbbToast.show(title: 'SBBTertiaryButtonSmall');
                     },
                   ),
                   const SizedBox(height: sbbDefaultSpacing),
@@ -149,7 +149,7 @@ class ButtonPage extends StatelessWidget {
                     label: 'Icon',
                     icon: SBBIcons.dog_small,
                     onPressed: () {
-                      sbbToast.show(message: 'SBBTertiaryButtonSmall');
+                      sbbToast.show(title: 'SBBTertiaryButtonSmall');
                     },
                   ),
                   const SizedBox(height: sbbDefaultSpacing),
@@ -178,7 +178,7 @@ class ButtonPage extends StatelessWidget {
               children: [
                 SBBIconButtonLarge(
                   onPressed: () {
-                    sbbToast.show(message: 'SBBIconButtonLarge');
+                    sbbToast.show(title: 'SBBIconButtonLarge');
                   },
                   icon: SBBIcons.glass_cocktail_small,
                 ),
@@ -199,7 +199,7 @@ class ButtonPage extends StatelessWidget {
               children: [
                 SBBIconButtonSmall(
                   onPressed: () {
-                    sbbToast.show(message: 'SBBIconButtonSmall');
+                    sbbToast.show(title: 'SBBIconButtonSmall');
                   },
                   icon: SBBIcons.glass_cocktail_small,
                 ),

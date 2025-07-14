@@ -1,5 +1,5 @@
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import '../native_app.dart';
 
@@ -86,7 +86,7 @@ class RadiobuttonPageState extends State<RadiobuttonPage> {
                 onChanged: _isEnabled ? (newValue) => setState(() => _listItemGroupValue = newValue) : null,
                 label: 'Button',
                 trailingIcon: SBBIcons.circle_information_small_small,
-                onCallToAction: () => sbbToast.show(message: 'Button'),
+                onCallToAction: () => sbbToast.show(title: 'Button'),
               ),
               SBBRadioListItem<int>.custom(
                 value: 5,
@@ -165,7 +165,7 @@ class RadiobuttonPageState extends State<RadiobuttonPage> {
                 onChanged: _isEnabled ? (newValue) => setState(() => _listItemGroupValue = newValue) : null,
                 label: 'Button',
                 trailingIcon: SBBIcons.circle_information_small_small,
-                onCallToAction: () => sbbToast.show(message: 'Button'),
+                onCallToAction: () => sbbToast.show(title: 'Button'),
               ),
             ),
             SizedBox(height: sbbDefaultSpacing * .5),

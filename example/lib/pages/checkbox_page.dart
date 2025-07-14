@@ -1,5 +1,5 @@
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import '../native_app.dart';
 
@@ -100,7 +100,7 @@ class CheckboxPageState extends State<CheckboxPage> {
                 label: 'Button',
                 onChanged: _isEnabled ? (value) => setState(() => _listItemValue3 = value) : null,
                 trailingIcon: SBBIcons.circle_information_small_small,
-                onCallToAction: () => sbbToast.show(message: 'Button pressed'),
+                onCallToAction: () => sbbToast.show(title: 'Button pressed'),
               ),
               SBBCheckboxListItem.custom(
                 value: _listItemValue6,
@@ -177,7 +177,7 @@ class CheckboxPageState extends State<CheckboxPage> {
                 label: 'Button',
                 onChanged: _isEnabled ? (value) => setState(() => _listItemValue3 = value) : null,
                 trailingIcon: SBBIcons.circle_information_small_small,
-                onCallToAction: () => sbbToast.show(message: 'Button pressed'),
+                onCallToAction: () => sbbToast.show(title: 'Button pressed'),
               ),
             ),
             SBBGroup(

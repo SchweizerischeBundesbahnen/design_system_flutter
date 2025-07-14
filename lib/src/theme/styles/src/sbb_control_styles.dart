@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../toast/sbb_toast.dart';
 import '../../theme.dart';
 
 class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
@@ -28,8 +27,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     this.accordionBackgroundColor,
     this.modalBackgroundColor,
     this.modalTitleTextStyle,
-    this.toastTextStyle,
-    this.toastBackgroundColor,
     this.tabBarTextStyle,
     this.promotionBox,
     this.picker,
@@ -65,8 +62,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
         accordionBackgroundColor: baseStyle.themeValue(SBBColors.white, SBBColors.charcoal),
         modalBackgroundColor: baseStyle.themeValue(SBBColors.milk, SBBColors.midnight),
         modalTitleTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.largeLight),
-        toastTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallLight, color: SBBColors.white),
-        toastBackgroundColor: baseStyle.themeValue(SBBColors.metal, SBBColors.smoke),
         tabBarTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallLight),
         promotionBox: PromotionBoxStyle.$default(baseStyle: baseStyle),
         picker: SBBPickerStyle.$default(baseStyle: baseStyle),
@@ -96,8 +91,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   final Color? accordionBackgroundColor;
   final Color? modalBackgroundColor;
   final TextStyle? modalTitleTextStyle;
-  final TextStyle? toastTextStyle;
-  final Color? toastBackgroundColor;
   final TextStyle? tabBarTextStyle;
   final PromotionBoxStyle? promotionBox;
   final SBBPickerStyle? picker;
@@ -110,17 +103,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
         actionsIconTheme: IconThemeData(color: headerIconColor),
         elevation: 0.0,
         centerTitle: true,
-      );
-
-  TooltipThemeData get tooltipTheme => TooltipThemeData(
-        decoration: BoxDecoration(
-          color: toastBackgroundColor,
-          borderRadius: const BorderRadius.all(Radius.circular(19.0)),
-        ),
-        textStyle: toastTextStyle,
-        showDuration: SBBToast.durationShort,
-        margin: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
-        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
       );
 
   TextSelectionThemeData get textSelectionTheme => TextSelectionThemeData(
@@ -155,8 +137,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     Color? accordionBackgroundColor,
     Color? modalBackgroundColor,
     TextStyle? modalTitleTextStyle,
-    TextStyle? toastTextStyle,
-    Color? toastBackgroundColor,
     TextStyle? tabBarTextStyle,
     PromotionBoxStyle? promotionBox,
     SBBPickerStyle? picker,
@@ -186,8 +166,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
         accordionBackgroundColor: accordionBackgroundColor ?? this.accordionBackgroundColor,
         modalBackgroundColor: modalBackgroundColor ?? this.modalBackgroundColor,
         modalTitleTextStyle: modalTitleTextStyle ?? this.modalTitleTextStyle,
-        toastTextStyle: toastTextStyle ?? this.toastTextStyle,
-        toastBackgroundColor: toastBackgroundColor ?? this.toastBackgroundColor,
         tabBarTextStyle: tabBarTextStyle ?? this.tabBarTextStyle,
         promotionBox: promotionBox ?? this.promotionBox,
         picker: picker ?? this.picker,
@@ -221,8 +199,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
       accordionBackgroundColor: Color.lerp(accordionBackgroundColor, other.accordionBackgroundColor, t),
       modalBackgroundColor: Color.lerp(modalBackgroundColor, other.modalBackgroundColor, t),
       modalTitleTextStyle: TextStyle.lerp(modalTitleTextStyle, other.modalTitleTextStyle, t),
-      toastTextStyle: TextStyle.lerp(toastTextStyle, other.toastTextStyle, t),
-      toastBackgroundColor: Color.lerp(toastBackgroundColor, other.toastBackgroundColor, t),
       tabBarTextStyle: TextStyle.lerp(tabBarTextStyle, other.tabBarTextStyle, t),
       promotionBox: PromotionBoxStyle.lerp(promotionBox, other.promotionBox, t),
       picker: picker?.lerp(other.picker, t),
@@ -259,8 +235,6 @@ extension SBBControlStylesExtension on SBBControlStyles? {
       accordionBackgroundColor: this!.accordionBackgroundColor ?? other?.accordionBackgroundColor,
       modalBackgroundColor: this!.modalBackgroundColor ?? other?.modalBackgroundColor,
       modalTitleTextStyle: this!.modalTitleTextStyle ?? other?.modalTitleTextStyle,
-      toastTextStyle: this!.toastTextStyle ?? other?.toastTextStyle,
-      toastBackgroundColor: this!.toastBackgroundColor ?? other?.toastBackgroundColor,
       tabBarTextStyle: this!.tabBarTextStyle ?? other?.tabBarTextStyle,
       promotionBox: this!.promotionBox ?? other?.promotionBox,
     ) as SBBControlStyles;

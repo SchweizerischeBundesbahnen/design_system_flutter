@@ -90,7 +90,7 @@ class DesignGuidelinePage extends StatelessWidget {
           trailingWidget: SBBTertiaryButtonSmall(
             label: 'Label',
             icon: SBBIcons.dog_small,
-            onPressed: () => sbbToast.show(message: 'Default pressed', bottom: sbbDefaultSpacing * 6),
+            onPressed: () => sbbToast.show(title: 'Default pressed', bottom: sbbDefaultSpacing * 6),
           ),
         ),
         const SizedBox(height: sbbDefaultSpacing),
@@ -101,7 +101,7 @@ class DesignGuidelinePage extends StatelessWidget {
           secondaryLabel: 'Subtext',
           trailingWidget: SBBIconButtonLarge(
             icon: SBBIcons.dog_small,
-            onPressed: () => sbbToast.show(message: 'Large pressed', bottom: sbbDefaultSpacing * 6),
+            onPressed: () => sbbToast.show(title: 'Large pressed', bottom: sbbDefaultSpacing * 6),
           ),
         ),
         const SizedBox(height: sbbDefaultSpacing),
@@ -191,6 +191,7 @@ class _ScrollablePageState extends State<ScrollablePage> {
   bool _headerBoxExpanded = false;
   final _expandedHeight = 300.0;
   final _collapsedHeight = 0.0;
+
   @override
   Widget build(BuildContext context) {
     final sbbToast = SBBToast.of(context);
@@ -231,7 +232,7 @@ class _ScrollablePageState extends State<ScrollablePage> {
           itemCount: 60,
           itemBuilder: (context, index) => SBBListItem(
             title: 'Item $index',
-            onPressed: () => sbbToast.show(message: 'Pressed Item $index', bottom: sbbDefaultSpacing * 6),
+            onPressed: () => sbbToast.show(title: 'Pressed Item $index', bottom: sbbDefaultSpacing * 6),
           ),
         )
       ],

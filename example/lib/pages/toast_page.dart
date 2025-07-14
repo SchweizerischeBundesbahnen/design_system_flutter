@@ -1,10 +1,18 @@
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import '../native_app.dart';
 
-class ToastPage extends StatelessWidget {
+class ToastPage extends StatefulWidget {
   const ToastPage({super.key});
+
+  @override
+  State<ToastPage> createState() => _ToastPageState();
+}
+
+class _ToastPageState extends State<ToastPage> {
+  final titleController = TextEditingController(text: 'This is a short title.');
+  final actionController = TextEditingController(text: 'Hide');
 
   @override
   Widget build(BuildContext context) {
@@ -24,27 +32,29 @@ class ToastPage extends StatelessWidget {
                 Row(
                   children: [
                     Expanded(
-                      child: SBBTertiaryButtonLarge(
-                        label: 'Show Toast - Short (Default)',
+                      child: SBBSecondaryButton(
+                        label: 'Short (Default)',
                         onPressed: () {
                           sbbToast.show(
-                            message: 'const SBBToast.durationShort: ${SBBToast.durationShort.inSeconds} seconds',
+                            title: titleController.text,
+                            action: actionController.text.isNotEmpty
+                                ? SBBToastAction(onPressed: () {}, title: actionController.text)
+                                : null,
                           );
                         },
                       ),
                     ),
-                  ],
-                ),
-                const SizedBox(height: sbbDefaultSpacing),
-                Row(
-                  children: [
+                    const SizedBox(width: sbbDefaultSpacing),
                     Expanded(
                       child: SBBTertiaryButtonLarge(
-                        label: 'Show Toast - Long',
+                        label: 'Long',
                         onPressed: () {
                           sbbToast.show(
-                            message: 'const SBBToast.durationLong: ${SBBToast.durationLong.inSeconds} seconds',
+                            title: titleController.text,
                             duration: SBBToast.durationLong,
+                            action: actionController.text.isNotEmpty
+                                ? SBBToastAction(onPressed: () {}, title: actionController.text)
+                                : null,
                           );
                         },
                       ),
@@ -52,60 +62,87 @@ class ToastPage extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: sbbDefaultSpacing),
-                Row(
-                  children: [
-                    Expanded(
-                      child: SBBTertiaryButtonLarge(
-                        label: 'Show Toast - 5 Seconds',
-                        onPressed: () {
-                          sbbToast.show(
-                            message: 'This is a Toast with a duration of 5 seconds.',
-                            duration: const Duration(seconds: 5),
-                          );
-                        },
-                      ),
-                    ),
-                  ],
+                SizedBox(
+                  width: double.infinity,
+                  child: SBBTertiaryButtonLarge(
+                    label: 'Custom Bottom and Duration',
+                    onPressed: () {
+                      sbbToast.show(
+                        title: titleController.text,
+                        duration: const Duration(seconds: 5),
+                        action: actionController.text.isNotEmpty
+                            ? SBBToastAction(onPressed: () {}, title: actionController.text)
+                            : null,
+                        bottom: 128,
+                      );
+                    },
+                  ),
+                ),
+                const SizedBox(height: sbbDefaultSpacing),
+                SizedBox(
+                  width: double.infinity,
+                  child: SBBTertiaryButtonLarge(
+                    label: 'Custom Toast',
+                    onPressed: () {
+                      sbbToast.builder(builder: (showToast) => _customToast(showToast));
+                    },
+                  ),
                 ),
               ],
             ),
           ),
-          const SizedBox(height: sbbDefaultSpacing),
           const SBBListHeader('Additional Toast actions'),
+          SBBGroup(
+            padding: const EdgeInsets.all(sbbDefaultSpacing),
+            child: Row(
+              children: [
+                Expanded(
+                  child: SBBSecondaryButton(
+                    label: 'Hide',
+                    onPressed: () {
+                      sbbToast.hide();
+                    },
+                  ),
+                ),
+                const SizedBox(width: sbbDefaultSpacing),
+                Expanded(
+                  child: SBBTertiaryButtonLarge(
+                    label: 'Remove',
+                    onPressed: () {
+                      sbbToast.remove();
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: sbbDefaultSpacing * 2),
+          const SBBListHeader('Edit Toast Content'),
           SBBGroup(
             padding: const EdgeInsets.all(sbbDefaultSpacing),
             child: Column(
               children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: SBBTertiaryButtonLarge(
-                        label: 'Hide (with exit animation)',
-                        onPressed: () {
-                          sbbToast.hide();
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: sbbDefaultSpacing),
-                Row(
-                  children: [
-                    Expanded(
-                      child: SBBTertiaryButtonLarge(
-                        label: 'Remove (without exit animation)',
-                        onPressed: () {
-                          sbbToast.remove();
-                        },
-                      ),
-                    ),
-                  ],
-                ),
+                SBBTextField(labelText: 'Toast Title', controller: titleController),
+                SBBTextField(labelText: 'Toast Action (empty action will hide action)', controller: actionController)
               ],
             ),
           ),
         ],
       ),
+    );
+  }
+
+  StreamBuilder<bool> _customToast(Stream<bool> showToast) {
+    return StreamBuilder(
+      stream: showToast,
+      builder: (context, snap) => snap.data ?? false
+          ? DecoratedBox(
+              decoration: ShapeDecoration(shape: CircleBorder(), color: SBBColors.red),
+              child: SizedBox.fromSize(
+                size: Size(100, 100),
+              ),
+            )
+          : SizedBox.shrink(),
     );
   }
 }

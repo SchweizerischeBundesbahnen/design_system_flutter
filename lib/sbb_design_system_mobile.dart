@@ -29,4 +29,4 @@ export 'src/switch/switch.dart';
 export 'src/tab_bar/tab_bar.dart';
 export 'src/text/text.dart';
 export 'src/theme/theme.dart';
-export 'src/toast/sbb_toast.dart';
+export 'src/toast/toast.dart';

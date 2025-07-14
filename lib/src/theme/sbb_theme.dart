@@ -14,6 +14,7 @@ class SBBTheme {
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBGroupStyle? groupStyle,
+    SBBToastStyle? toastStyle,
   }) =>
       createTheme(
         brightness: Brightness.light,
@@ -23,6 +24,7 @@ class SBBTheme {
         controlStyles: controlStyles,
         headerBoxStyle: headerBoxStyle,
         groupStyle: groupStyle,
+        toastStyle: toastStyle,
       );
 
   static ThemeData dark({
@@ -32,6 +34,7 @@ class SBBTheme {
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBGroupStyle? groupStyle,
+    SBBToastStyle? toastStyle,
   }) =>
       createTheme(
         brightness: Brightness.dark,
@@ -41,6 +44,7 @@ class SBBTheme {
         controlStyles: controlStyles,
         headerBoxStyle: headerBoxStyle,
         groupStyle: groupStyle,
+        toastStyle: toastStyle,
       );
 
   static ThemeData createTheme({
@@ -51,6 +55,7 @@ class SBBTheme {
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBGroupStyle? groupStyle,
+    SBBToastStyle? toastStyle,
   }) {
     // SET hard-coded default values HERE
     final defaultBaseStyle = SBBBaseStyle.$default(
@@ -79,6 +84,11 @@ class SBBTheme {
     );
     final mergedGroupStyle = groupStyle.merge(defaultGroupStyle);
 
+    final defaultToastStyle = SBBToastStyle.$default(
+      baseStyle: mergedBaseStyle,
+    );
+    final mergedToastStyle = defaultToastStyle.merge(defaultToastStyle);
+
     return raw(
       brightness: brightness,
       baseStyle: mergedBaseStyle,
@@ -86,6 +96,7 @@ class SBBTheme {
       controlStyles: mergedControlStyles,
       headerBoxStyle: mergedHeaderBoxStyle,
       groupStyle: mergedGroupStyle,
+      toastStyle: mergedToastStyle,
     );
   }
 
@@ -96,6 +107,7 @@ class SBBTheme {
     required SBBControlStyles controlStyles,
     required SBBHeaderBoxStyle headerBoxStyle,
     required SBBGroupStyle groupStyle,
+    required SBBToastStyle toastStyle,
   }) =>
       ThemeData(
         colorScheme: ColorScheme.fromSwatch(
@@ -125,13 +137,13 @@ class SBBTheme {
         textButtonTheme: buttonStyles.textButtonTheme,
         materialTapTargetSize: MaterialTapTargetSize.padded,
         textSelectionTheme: controlStyles.textSelectionTheme,
-        tooltipTheme: controlStyles.tooltipTheme,
         extensions: [
           baseStyle,
           buttonStyles,
           controlStyles,
           headerBoxStyle,
           groupStyle,
+          toastStyle,
         ],
       );
 

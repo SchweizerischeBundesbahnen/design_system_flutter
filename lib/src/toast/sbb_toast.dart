@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/src/toast/default_toast_body.dart';
+import 'package:sbb_design_system_mobile/src/toast/toast_container.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
@@ -8,7 +10,16 @@ import '../../sbb_design_system_mobile.dart';
 ///
 /// See also:
 ///
-/// * <https://digital.sbb.ch/de/design-system-mobile-new/module/toast>
+/// * <https://digital.sbb.ch/de/design-system/mobile/components/toast/>
+///
+/// ```dart
+/// SBBPrimaryButton(
+///   label: 'Show Toast',
+///   onPressed: () {
+///     SBBToast.of(context).show(title: 'Hello from SBBToast!');
+///   },
+/// )
+/// ```
 class SBBToast {
   SBBToast._(this._overlayState);
 
@@ -27,53 +38,48 @@ class SBBToast {
     return SBBToast._(Overlay.of(context, rootOverlay: true));
   }
 
-  void confirmation({
-    required String message,
-    Duration duration = durationShort,
-    double bottom = defaultBottom,
-  }) {
-    buildToast(message, duration, bottom,
-        (stream) => Toast.confirmation(message: message, duration: duration, stream: stream));
-  }
-
-  void warning({
-    required String message,
-    Duration duration = durationShort,
-    double bottom = defaultBottom,
-  }) {
-    buildToast(
-        message, duration, bottom, (stream) => Toast.warning(message: message, duration: duration, stream: stream));
-  }
-
-  void error({
-    required String message,
-    Duration duration = durationShort,
-    double bottom = defaultBottom,
-  }) {
-    buildToast(
-        message, duration, bottom, (stream) => Toast.error(message: message, duration: duration, stream: stream));
-  }
-
+  /// Shows a [SBBToast] with a default body.
+  ///
+  /// [title] is the main text displayed in the toast.
+  /// [duration] specifies how long the toast will be visible (default: [durationShort]).
+  /// [bottom] sets the distance from the bottom of the screen (default: [defaultBottom]).
+  /// [action] optionally provides an action button for the toast.
+  /// [style] optionally customizes the toast's appearance. Check [SBBToastStyle] for more arguments.
   void show({
-    required String message,
+    required String title,
     Duration duration = durationShort,
     double bottom = defaultBottom,
+    SBBToastAction? action,
+    SBBToastStyle? style,
   }) {
-    buildToast(message, duration, bottom, (stream) => Toast(message: message, duration: duration, stream: stream));
+    builder(
+      duration: duration,
+      bottom: bottom,
+      builder: (stream) => DefaultToastBody(
+        title: title,
+        duration: duration,
+        style: style,
+        action: action,
+      ),
+    );
   }
 
-  void buildToast(
-    String message,
-    Duration duration,
-    double bottom,
-    Widget Function(Stream<bool> stream) toastBuilder,
-  ) {
+  /// Shows a toast with a custom body.
+  ///
+  /// [builder] is a function that returns the widget to display, given a [Stream<bool>] that
+  /// indicates the toast's visibility state (true = visible, false = fading out).
+  /// [bottom] sets the distance from the bottom of the screen (default: [defaultBottom]).
+  /// [duration] specifies how long the toast will be visible (default: [durationShort]).
+  void builder({
+    required Widget Function(Stream<bool> stream) builder,
+    double bottom = defaultBottom,
+    Duration duration = durationShort,
+  }) {
     showToastMessage() {
       remove();
       _streamController = StreamController<bool>();
       _streamController!.add(true);
-      _overlayEntry = _buildToastOverlayEntry(
-          message, duration, _streamController!.stream, bottom, toastBuilder(_streamController!.stream));
+      _overlayEntry = _buildToastOverlayEntry(bottom, builder(_streamController!.stream), _streamController!.stream);
       _overlayState.insert(_overlayEntry!);
       _fadeOutTimer = Timer(duration + kThemeAnimationDuration * 2, () {
         _streamController?.add(false);
@@ -107,125 +113,19 @@ class SBBToast {
     _streamController = null;
   }
 
-  OverlayEntry _buildToastOverlayEntry(
-      String message, Duration duration, Stream<bool> stream, double bottom, Widget toast) {
-    return OverlayEntry(builder: (context) {
-      return Positioned(
-        left: 0.0,
-        right: 0.0,
-        bottom: bottom,
-        child: Align(
-          alignment: Alignment.center,
-          child: IgnorePointer(
-            child: toast,
+  OverlayEntry _buildToastOverlayEntry(double bottom, Widget toast, Stream<bool> stream) => OverlayEntry(
+        builder: (context) => ToastContainer(
+          stream: stream,
+          toast: this,
+          child: Positioned(
+            left: 0.0,
+            right: 0.0,
+            bottom: bottom,
+            child: Align(
+              alignment: Alignment.center,
+              child: Semantics(container: true, liveRegion: true, child: toast),
+            ),
           ),
         ),
       );
-    });
-  }
-}
-
-@visibleForTesting
-class Toast extends StatefulWidget {
-  const Toast.confirmation({
-    Key? key,
-    required String message,
-    required Duration duration,
-    required Stream<bool> stream,
-  }) : this(
-          key: key,
-          duration: duration,
-          message: message,
-          stream: stream,
-          backgroundColor: SBBColors.white,
-          textColor: SBBColors.green,
-          icon: SBBIcons.tick_small,
-        );
-
-  const Toast.warning({
-    Key? key,
-    required String message,
-    required Duration duration,
-    required Stream<bool> stream,
-  }) : this(
-          key: key,
-          duration: duration,
-          message: message,
-          stream: stream,
-          backgroundColor: SBBColors.orange,
-          textColor: SBBColors.white,
-          icon: SBBIcons.sign_x_small,
-        );
-
-  const Toast.error({
-    Key? key,
-    required String message,
-    required Duration duration,
-    required Stream<bool> stream,
-  }) : this(
-          key: key,
-          duration: duration,
-          message: message,
-          stream: stream,
-          backgroundColor: SBBColors.red,
-          textColor: SBBColors.white,
-          icon: SBBIcons.sign_x_small,
-        );
-
-  const Toast({
-    super.key,
-    required this.message,
-    required this.duration,
-    required this.stream,
-    this.backgroundColor = SBBColors.metal,
-    this.textColor = SBBColors.white,
-    this.icon = SBBIcons.circle_information_small,
-  });
-
-  final Color backgroundColor;
-  final Color textColor;
-  final IconData icon;
-  final String message;
-  final Duration duration;
-  final Stream<bool> stream;
-
-  @override
-  ToastState createState() => ToastState();
-}
-
-class ToastState extends State<Toast> {
-  bool _visible = false;
-
-  @override
-  void initState() {
-    widget.stream.listen((visible) => setState(() => _visible = visible));
-    super.initState();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final tooltipTheme = Theme.of(context).tooltipTheme;
-
-    return AnimatedOpacity(
-      opacity: _visible ? 1.0 : 0.0,
-      duration: kThemeAnimationDuration,
-      child: Container(
-        decoration: tooltipTheme.decoration,
-        margin: tooltipTheme.margin,
-        padding: tooltipTheme.padding,
-        child: Wrap(
-          crossAxisAlignment: WrapCrossAlignment.center,
-          children: [
-            Text(
-              widget.message,
-              style: tooltipTheme.textStyle?.copyWith(
-                decoration: TextDecoration.none,
-                color: widget.textColor,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }

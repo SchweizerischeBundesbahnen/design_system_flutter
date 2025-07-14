@@ -1,5 +1,5 @@
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import '../native_app.dart';
 
@@ -53,7 +53,7 @@ class TabBarPageState extends State<TabBarPage> {
               onTabChanged: (task) async {},
               controller: controller,
               onTap: (tab) {
-                sbbToast.show(message: 'Tab tapped: Item ${tab.id}');
+                sbbToast.show(title: 'Tab tapped: Item ${tab.id}');
               },
             ),
           ),
