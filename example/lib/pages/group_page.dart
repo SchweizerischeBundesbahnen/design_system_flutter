@@ -1,5 +1,5 @@
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import '../native_app.dart';
 
@@ -8,22 +8,20 @@ class GroupPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const childPlaceholder = SizedBox(height: 125.0, width: double.infinity);
+    content(String text) =>
+        SizedBox(height: sbbDefaultSpacing * 2, width: double.infinity, child: Center(child: Text(text)));
     return ListView(
       padding: const EdgeInsets.all(sbbDefaultSpacing),
-      children: const <Widget>[
+      children: <Widget>[
         ThemeModeSegmentedButton(),
+        SizedBox(height: sbbDefaultSpacing * 2),
+        SBBGroup(child: content('Default')),
         SizedBox(height: sbbDefaultSpacing),
-        SBBListHeader('Without Shadow (Default)'),
-        SBBGroup(
-          child: childPlaceholder,
-        ),
+        SBBGroup(color: SBBColors.royal, child: content('Different Color')),
         SizedBox(height: sbbDefaultSpacing),
-        SBBListHeader('With Shadow (ignored in Dark Mode)'),
-        SBBGroup(
-          useShadow: true,
-          child: childPlaceholder,
-        ),
+        SBBGroup(padding: EdgeInsets.symmetric(vertical: sbbDefaultSpacing), child: content('Extra padding')),
+        SizedBox(height: sbbDefaultSpacing),
+        SBBGroup(margin: EdgeInsets.all(sbbDefaultSpacing * 4), child: content('Extra margin')),
       ],
     );
   }

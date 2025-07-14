@@ -106,7 +106,7 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
               builder: (context, snapshot) {
                 final warnings = snapshot.requireData;
                 final theme = Theme.of(context);
-                final cardColor = theme.cardTheme.color ?? theme.scaffoldBackgroundColor;
+                final cardColor = SBBGroupStyle.of(context).color ?? theme.scaffoldBackgroundColor;
                 _controller.changeOrientation(portrait);
                 _controller.updateCurveAnimation();
                 return Container(
