@@ -1,5 +1,5 @@
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import '../native_app.dart';
 
@@ -99,7 +99,6 @@ class _ColorShowcaseCard extends StatelessWidget {
       color: SBBControlStyles.of(context).selectLabel?.textStyleDisabled?.color,
     );
     return SBBGroup(
-      useShadow: true,
       margin: const EdgeInsets.all(
         sbbDefaultSpacing * 0.5,
       ),

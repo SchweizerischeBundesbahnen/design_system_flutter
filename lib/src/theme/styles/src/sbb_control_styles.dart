@@ -23,7 +23,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     this.linkTextStyle,
     this.linkTextStyleHighlighted,
     this.listHeaderTextStyle,
-    this.groupBackgroundColor,
     this.accordionTitleTextStyle,
     this.accordionBodyTextStyle,
     this.accordionBackgroundColor,
@@ -61,7 +60,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
           color: baseStyle.themeValue(baseStyle.primaryColorDark, SBBColors.white),
         ),
         listHeaderTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallLight),
-        groupBackgroundColor: baseStyle.themeValue(SBBColors.white, SBBColors.charcoal),
         accordionTitleTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.mediumLight),
         accordionBodyTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallLight),
         accordionBackgroundColor: baseStyle.themeValue(SBBColors.white, SBBColors.charcoal),
@@ -93,7 +91,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   final TextStyle? linkTextStyle;
   final TextStyle? linkTextStyleHighlighted;
   final TextStyle? listHeaderTextStyle;
-  final Color? groupBackgroundColor;
   final TextStyle? accordionTitleTextStyle;
   final TextStyle? accordionBodyTextStyle;
   final Color? accordionBackgroundColor;
@@ -113,16 +110,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
         actionsIconTheme: IconThemeData(color: headerIconColor),
         elevation: 0.0,
         centerTitle: true,
-      );
-
-  CardThemeData get cardTheme => CardThemeData(
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(sbbDefaultSpacing)),
-        ),
-        margin: EdgeInsets.zero,
-        color: groupBackgroundColor,
-        clipBehavior: Clip.hardEdge,
-        elevation: 0,
       );
 
   TooltipThemeData get tooltipTheme => TooltipThemeData(
@@ -194,7 +181,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
         linkTextStyle: linkTextStyle ?? this.linkTextStyle,
         linkTextStyleHighlighted: linkTextStyleHighlighted ?? this.linkTextStyleHighlighted,
         listHeaderTextStyle: listHeaderTextStyle ?? this.listHeaderTextStyle,
-        groupBackgroundColor: groupBackgroundColor ?? this.groupBackgroundColor,
         accordionTitleTextStyle: accordionTitleTextStyle ?? this.accordionTitleTextStyle,
         accordionBodyTextStyle: accordionBodyTextStyle ?? this.accordionBodyTextStyle,
         accordionBackgroundColor: accordionBackgroundColor ?? this.accordionBackgroundColor,
@@ -230,7 +216,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
       linkTextStyle: TextStyle.lerp(linkTextStyle, other.linkTextStyle, t),
       linkTextStyleHighlighted: TextStyle.lerp(linkTextStyleHighlighted, other.linkTextStyleHighlighted, t),
       listHeaderTextStyle: TextStyle.lerp(listHeaderTextStyle, other.listHeaderTextStyle, t),
-      groupBackgroundColor: Color.lerp(groupBackgroundColor, other.groupBackgroundColor, t),
       accordionTitleTextStyle: TextStyle.lerp(accordionTitleTextStyle, other.accordionTitleTextStyle, t),
       accordionBodyTextStyle: TextStyle.lerp(accordionBodyTextStyle, other.accordionBodyTextStyle, t),
       accordionBackgroundColor: Color.lerp(accordionBackgroundColor, other.accordionBackgroundColor, t),
@@ -269,7 +254,6 @@ extension SBBControlStylesExtension on SBBControlStyles? {
       linkTextStyle: this!.linkTextStyle ?? other?.linkTextStyle,
       linkTextStyleHighlighted: this!.linkTextStyleHighlighted ?? other?.linkTextStyleHighlighted,
       listHeaderTextStyle: this!.listHeaderTextStyle ?? other?.listHeaderTextStyle,
-      groupBackgroundColor: this!.groupBackgroundColor ?? other?.groupBackgroundColor,
       accordionTitleTextStyle: this!.accordionTitleTextStyle ?? other?.accordionTitleTextStyle,
       accordionBodyTextStyle: this!.accordionBodyTextStyle ?? other?.accordionBodyTextStyle,
       accordionBackgroundColor: this!.accordionBackgroundColor ?? other?.accordionBackgroundColor,
