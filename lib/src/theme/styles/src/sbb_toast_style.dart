@@ -5,7 +5,33 @@ import 'package:flutter/material.dart';
 import '../../theme.dart';
 
 class SBBToastStyle extends ThemeExtension<SBBToastStyle> {
-  SBBToastStyle({
+  /// Creates a style for [SBBToast].
+  ///
+  /// The [titleTextStyle] defines the text style for the toast title.
+  /// By default, uses [SBBTextStyles.smallLight] with [TextDecoration.none] and [SBBColors.white].
+  ///
+  /// The [actionTextStyle] defines the text style for the toast action button.
+  /// By default, uses [SBBTextStyles.smallBold] with [TextDecoration.none] and [SBBColors.white].
+  ///
+  /// The [actionOverflowThreshold] is the threshold (as a fraction of toast width) at which
+  /// the action wraps to a new line. Default value is 0.25 (25% of the toast width).
+  ///
+  /// The [actionPadding] is the padding applied to the action widget.
+  /// By default, applies [EdgeInsets.only(left: sbbDefaultSpacing)].
+  ///
+  /// The [decoration] is the decoration for the toast container.
+  /// By default, uses [BoxDecoration] with rounded corners and a background color
+  /// based on the theme (dark: [SBBColors.metal], light: [SBBColors.smoke]).
+  ///
+  /// The [titleMaxLines] is the maximum number of lines for the toast title.
+  /// Default value is 2.
+  ///
+  /// The [margin] is the margin around the toast.
+  /// By default, applies [EdgeInsets.symmetric(horizontal: sbbDefaultSpacing)].
+  ///
+  /// The [padding] is the padding inside the toast.
+  /// By default, applies [EdgeInsets.symmetric(vertical: 6.0, horizontal: sbbDefaultSpacing)].
+  const SBBToastStyle({
     this.titleTextStyle,
     this.actionTextStyle,
     this.actionOverflowThreshold,

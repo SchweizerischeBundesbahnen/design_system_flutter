@@ -11,6 +11,15 @@ import '../../sbb_design_system_mobile.dart';
 /// See also:
 ///
 /// * <https://digital.sbb.ch/de/design-system/mobile/components/toast/>
+///
+/// ```dart
+/// SBBPrimaryButton(
+///   label: 'Show Toast',
+///   onPressed: () {
+///     SBBToast.of(context).show(title: 'Hello from SBBToast!');
+///   },
+/// )
+/// ```
 class SBBToast {
   SBBToast._(this._overlayState);
 
@@ -29,6 +38,13 @@ class SBBToast {
     return SBBToast._(Overlay.of(context, rootOverlay: true));
   }
 
+  /// Shows a [SBBToast] with a default body.
+  ///
+  /// [title] is the main text displayed in the toast.
+  /// [duration] specifies how long the toast will be visible (default: [durationShort]).
+  /// [bottom] sets the distance from the bottom of the screen (default: [defaultBottom]).
+  /// [action] optionally provides an action button for the toast.
+  /// [style] optionally customizes the toast's appearance. Check [SBBToastStyle] for more arguments.
   void show({
     required String title,
     Duration duration = durationShort,
@@ -48,7 +64,12 @@ class SBBToast {
     );
   }
 
-  /// Use this to show a complete custom toast body.
+  /// Shows a toast with a custom body.
+  ///
+  /// [builder] is a function that returns the widget to display, given a [Stream<bool>] that
+  /// indicates the toast's visibility state (true = visible, false = fading out).
+  /// [bottom] sets the distance from the bottom of the screen (default: [defaultBottom]).
+  /// [duration] specifies how long the toast will be visible (default: [durationShort]).
   void builder({
     required Widget Function(Stream<bool> stream) builder,
     double bottom = defaultBottom,
