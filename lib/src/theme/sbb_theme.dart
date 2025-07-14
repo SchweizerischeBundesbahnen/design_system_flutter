@@ -137,7 +137,6 @@ class SBBTheme {
         textButtonTheme: buttonStyles.textButtonTheme,
         materialTapTargetSize: MaterialTapTargetSize.padded,
         textSelectionTheme: controlStyles.textSelectionTheme,
-        tooltipTheme: controlStyles.tooltipTheme,
         extensions: [
           baseStyle,
           buttonStyles,

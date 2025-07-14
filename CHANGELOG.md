@@ -11,17 +11,26 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ### Changed
 
-- BREAKING: `SBBGroup` does not have a shadow anymore
+- BREAKING: `SBBToast`: `message` becomes `title`
+- BREAKING: `TabBarItem` becomes `SBBTabBarItem`
+- BREAKING: `TabBarController` becomes `SBBTabBarController`
+- Simpler implementation of the `SBBTabBar`
+- `SBBTabBar` now respects the `SafeArea` for the `systemNavigationBar`
 - updated icon lib to version 1.7.1
-- Simpler implementation of the `SBBTabBar`.
-- `SBBTabBar` now respects the `SafeArea` for the `systemNavigationBar`.
 
 ### Added
 
 - `SBBGroupStyle` is used to style `SBBGroup` in a theme extension like manner
+- `SBBToastStyle` is used to style `SBBToast` in a theme extension like manner
+- `SBBGroup` has `isSemanticContainer` flag for accessibility
+- `SBBToastAction` to display an action with a callback in `SBBToast`
 
 ### Removed
 
+- `SBBGroup` does not have a shadow anymore (removed `useShadow` flag)
+- `SBBToast` does not have `confirmation`, `error` or `warning` methods any more
+- removed `toastBackgroundColor` from `SBBControlStyles` in favor of `SBBToastStyle`
+- removed `toastTextStyle` from `SBBControlStyles` in favor of `SBBToastStyle`
 - removed `groupBackgroundColor` from `SBBControlStyles`
 
 ## [3.2.0] - 2025-06-23
