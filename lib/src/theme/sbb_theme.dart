@@ -13,6 +13,7 @@ class SBBTheme {
     SBBButtonStyles? buttonStyles,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
+    SBBGroupStyle? groupStyle,
     SBBToastStyle? toastStyle,
   }) =>
       createTheme(
@@ -22,6 +23,7 @@ class SBBTheme {
         buttonStyles: buttonStyles,
         controlStyles: controlStyles,
         headerBoxStyle: headerBoxStyle,
+        groupStyle: groupStyle,
         toastStyle: toastStyle,
       );
 
@@ -31,6 +33,7 @@ class SBBTheme {
     SBBButtonStyles? buttonStyles,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
+    SBBGroupStyle? groupStyle,
     SBBToastStyle? toastStyle,
   }) =>
       createTheme(
@@ -40,6 +43,7 @@ class SBBTheme {
         buttonStyles: buttonStyles,
         controlStyles: controlStyles,
         headerBoxStyle: headerBoxStyle,
+        groupStyle: groupStyle,
         toastStyle: toastStyle,
       );
 
@@ -50,6 +54,7 @@ class SBBTheme {
     SBBButtonStyles? buttonStyles,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
+    SBBGroupStyle? groupStyle,
     SBBToastStyle? toastStyle,
   }) {
     // SET hard-coded default values HERE
@@ -74,6 +79,11 @@ class SBBTheme {
     );
     final mergedHeaderBoxStyle = headerBoxStyle.merge(defaultHeaderBoxStyle);
 
+    final defaultGroupStyle = SBBGroupStyle.$default(
+      baseStyle: mergedBaseStyle,
+    );
+    final mergedGroupStyle = groupStyle.merge(defaultGroupStyle);
+
     final defaultToastStyle = SBBToastStyle.$default(
       baseStyle: mergedBaseStyle,
     );
@@ -85,6 +95,7 @@ class SBBTheme {
       buttonStyles: mergedButtonStyles,
       controlStyles: mergedControlStyles,
       headerBoxStyle: mergedHeaderBoxStyle,
+      groupStyle: mergedGroupStyle,
       toastStyle: mergedToastStyle,
     );
   }
@@ -95,13 +106,13 @@ class SBBTheme {
     required SBBButtonStyles buttonStyles,
     required SBBControlStyles controlStyles,
     required SBBHeaderBoxStyle headerBoxStyle,
+    required SBBGroupStyle groupStyle,
     required SBBToastStyle toastStyle,
   }) =>
       ThemeData(
         colorScheme: ColorScheme.fromSwatch(
           primarySwatch: baseStyle.primarySwatch!,
           accentColor: baseStyle.primaryColor,
-          cardColor: controlStyles.groupBackgroundColor,
           backgroundColor: baseStyle.backgroundColor,
           errorColor: controlStyles.textField?.dividerColorError,
           brightness: brightness,
@@ -124,7 +135,6 @@ class SBBTheme {
         filledButtonTheme: buttonStyles.filledButtonTheme,
         outlinedButtonTheme: buttonStyles.outlinedButtonTheme,
         textButtonTheme: buttonStyles.textButtonTheme,
-        cardTheme: controlStyles.cardTheme,
         materialTapTargetSize: MaterialTapTargetSize.padded,
         textSelectionTheme: controlStyles.textSelectionTheme,
         tooltipTheme: controlStyles.tooltipTheme,
@@ -133,6 +143,7 @@ class SBBTheme {
           buttonStyles,
           controlStyles,
           headerBoxStyle,
+          groupStyle,
           toastStyle,
         ],
       );
