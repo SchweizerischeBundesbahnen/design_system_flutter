@@ -7,12 +7,14 @@ class SBBToastActionBody extends StatefulWidget {
     required this.onPressed,
     required this.title,
     required this.toast,
+    required this.style,
     super.key,
   });
 
   final VoidCallback onPressed;
-  final SBBToast toast;
   final String title;
+  final SBBToast toast;
+  final SBBToastStyle style;
 
   @override
   State<SBBToastActionBody> createState() => _SBBToastActionBodyState();
@@ -34,7 +36,7 @@ class _SBBToastActionBodyState extends State<SBBToastActionBody> {
         onTap: _isActionBeenTriggered ? null : _handlePressed,
         child: Text(
           widget.title,
-          style: SBBTextStyles.smallBold.copyWith(color: SBBColors.white, decoration: TextDecoration.none),
+          style: widget.style.actionTextStyle,
         ),
       );
 }

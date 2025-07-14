@@ -9,6 +9,7 @@ class SBBToastStyle extends ThemeExtension<SBBToastStyle> {
     this.titleTextStyle,
     this.actionTextStyle,
     this.actionOverflowThreshold,
+    this.actionPadding,
     this.decoration,
     this.titleMaxLines,
     this.margin,
@@ -19,6 +20,7 @@ class SBBToastStyle extends ThemeExtension<SBBToastStyle> {
         titleTextStyle: SBBTextStyles.smallLight.copyWith(decoration: TextDecoration.none, color: SBBColors.white),
         actionTextStyle: SBBTextStyles.smallBold.copyWith(decoration: TextDecoration.none, color: SBBColors.white),
         actionOverflowThreshold: 0.25,
+        actionPadding: const EdgeInsets.only(left: sbbDefaultSpacing),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(sbbDefaultSpacing),
             color: baseStyle.themeValue(SBBColors.metal, SBBColors.smoke)),
@@ -32,6 +34,7 @@ class SBBToastStyle extends ThemeExtension<SBBToastStyle> {
   final TextStyle? titleTextStyle;
   final TextStyle? actionTextStyle;
   final double? actionOverflowThreshold;
+  final EdgeInsetsGeometry? actionPadding;
   final BoxDecoration? decoration;
   final int? titleMaxLines;
   final EdgeInsetsGeometry? margin;
@@ -42,6 +45,7 @@ class SBBToastStyle extends ThemeExtension<SBBToastStyle> {
     TextStyle? titleTextStyle,
     TextStyle? actionTextStyle,
     double? actionOverflowThreshold,
+    EdgeInsetsGeometry? actionPadding,
     BoxDecoration? decoration,
     int? titleMaxLines,
     EdgeInsetsGeometry? margin,
@@ -51,6 +55,7 @@ class SBBToastStyle extends ThemeExtension<SBBToastStyle> {
         titleTextStyle: titleTextStyle ?? this.titleTextStyle,
         actionTextStyle: actionTextStyle ?? this.actionTextStyle,
         actionOverflowThreshold: actionOverflowThreshold ?? this.actionOverflowThreshold,
+        actionPadding: actionPadding ?? this.actionPadding,
         decoration: decoration ?? this.decoration,
         titleMaxLines: titleMaxLines ?? this.titleMaxLines,
         margin: margin ?? this.margin,
@@ -62,6 +67,7 @@ class SBBToastStyle extends ThemeExtension<SBBToastStyle> {
         titleTextStyle: TextStyle.lerp(titleTextStyle, other?.titleTextStyle, t),
         actionTextStyle: TextStyle.lerp(actionTextStyle, other?.actionTextStyle, t),
         actionOverflowThreshold: lerpDouble(actionOverflowThreshold, other?.actionOverflowThreshold, t),
+        actionPadding: EdgeInsetsGeometry.lerp(actionPadding, other?.actionPadding, t),
         decoration: BoxDecoration.lerp(decoration, other?.decoration, t),
         titleMaxLines: t < 0.5 ? titleMaxLines : other?.titleMaxLines,
         padding: EdgeInsetsGeometry.lerp(padding, other?.padding, t),
@@ -76,6 +82,7 @@ extension SBBToastStyleExtension on SBBToastStyle? {
       titleTextStyle: this!.titleTextStyle ?? other?.titleTextStyle,
       actionTextStyle: this!.actionTextStyle ?? other?.actionTextStyle,
       actionOverflowThreshold: this!.actionOverflowThreshold ?? other?.actionOverflowThreshold,
+      actionPadding: this!.actionPadding ?? other?.actionPadding,
       decoration: this!.decoration ?? other?.decoration,
       titleMaxLines: this!.titleMaxLines ?? other?.titleMaxLines,
       padding: this!.padding ?? other?.padding,

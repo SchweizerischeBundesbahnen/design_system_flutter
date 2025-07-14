@@ -9,6 +9,7 @@ class DefaultToastBody extends StatelessWidget {
     required this.title,
     required this.duration,
     required this.stream,
+    required this.toast,
     this.action,
     this.style,
   });
@@ -16,14 +17,13 @@ class DefaultToastBody extends StatelessWidget {
   final String title;
   final Duration duration;
   final Stream<bool> stream;
-  final SBBToastActionBody? action;
+  final SBBToastAction? action;
+  final SBBToast toast;
   final SBBToastStyle? style;
 
   @override
   Widget build(BuildContext context) {
     final resolvedStyle = style.merge(SBBToastStyle.of(context));
-
-    final child = _bodyWithTextAndAction(resolvedStyle, context);
 
     return StreamBuilder<bool>(
       stream: stream,
@@ -36,42 +36,45 @@ class DefaultToastBody extends StatelessWidget {
             decoration: resolvedStyle.decoration,
             margin: resolvedStyle.margin,
             padding: resolvedStyle.padding,
-            child: child,
+            child: _bodyWithTextAndAction(resolvedStyle, context),
           ),
         );
       },
     );
   }
 
-  Widget _bodyWithText(SBBToastStyle resolvedStyle) =>
-      Text(title, style: resolvedStyle.titleTextStyle, maxLines: resolvedStyle.titleMaxLines);
-
   Widget _bodyWithTextAndAction(SBBToastStyle resolvedStyle, BuildContext context) {
     if (action == null) return _bodyWithText(resolvedStyle);
 
+    final builtAction = SBBToastActionBody(
+      onPressed: action!.onPressed,
+      title: action!.title,
+      style: resolvedStyle,
+      toast: toast,
+    );
+
     double actionAndMarginWidth = _actionAndMarginWidth(resolvedStyle.actionTextStyle);
 
-    final snackBarWidth = MediaQuery.sizeOf(context).width - resolvedStyle.margin!.vertical;
+    final toastWidth = MediaQuery.sizeOf(context).width - resolvedStyle.margin!.vertical;
 
-    final bool willActionOverflow = actionAndMarginWidth / snackBarWidth > resolvedStyle.actionOverflowThreshold!;
+    final bool willActionOverflow = actionAndMarginWidth / toastWidth > resolvedStyle.actionOverflowThreshold!;
 
     return Wrap(
       children: [
         Row(
           children: [
             Expanded(child: _bodyWithText(resolvedStyle)),
-            if (!willActionOverflow) Padding(padding: EdgeInsets.only(left: sbbDefaultSpacing), child: action),
-            if (willActionOverflow) SizedBox(width: snackBarWidth * 0.3),
+            if (!willActionOverflow) Padding(padding: resolvedStyle.actionPadding!, child: builtAction),
+            if (willActionOverflow) SizedBox(width: toastWidth * 0.3),
           ],
         ),
-        if (willActionOverflow)
-          Align(
-            alignment: Alignment.bottomRight,
-            child: Padding(padding: EdgeInsets.only(bottom: 6.0), child: action),
-          ),
+        if (willActionOverflow) Align(alignment: Alignment.bottomRight, child: builtAction),
       ],
     );
   }
+
+  Widget _bodyWithText(SBBToastStyle resolvedStyle) =>
+      Text(title, style: resolvedStyle.titleTextStyle, maxLines: resolvedStyle.titleMaxLines);
 
   double _actionAndMarginWidth(TextStyle? style) {
     final actionTextPainter = TextPainter(
