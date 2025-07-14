@@ -13,6 +13,8 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 - BREAKING: `SBBGroup` does not have a shadow anymore
 - updated icon lib to version 1.7.1
+- Simpler implementation of the `SBBTabBar`.
+- `SBBTabBar` now respects the `SafeArea` for the `systemNavigationBar`.
 
 ### Added
 

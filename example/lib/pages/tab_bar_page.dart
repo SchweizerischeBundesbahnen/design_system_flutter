@@ -11,7 +11,7 @@ class TabBarPage extends StatefulWidget {
 }
 
 class TabBarPageState extends State<TabBarPage> {
-  final items = <TabBarItem>[
+  final items = <SBBTabBarItem>[
     _DemoItem('1', SBBIcons.train_small),
     _DemoItem('2', SBBIcons.station_small),
     _DemoItem('3', SBBIcons.archive_box_small),
@@ -20,40 +20,50 @@ class TabBarPageState extends State<TabBarPage> {
   ];
 
   bool visible = true;
-  late TabBarController controller = TabBarController(items.first);
+  late SBBTabBarController controller = SBBTabBarController(items, items.first)
+    ..setWarnings([
+      SBBTabBarWarningSetting(id: '3', semantics: 'Warning 2', shown: false),
+      SBBTabBarWarningSetting(id: '2', semantics: 'Warning 1', shown: false),
+    ]);
 
   @override
   Widget build(BuildContext context) {
     final sbbToast = SBBToast.of(context);
-    return Column(
-      children: [
-        const Padding(
-          padding: EdgeInsets.all(sbbDefaultSpacing),
-          child: ThemeModeSegmentedButton(),
-        ),
-        Expanded(child: Container()),
-        if (visible)
-          SBBTabBar(
-            items: items,
-            showWarning: true,
-            onTabChanged: (task) async {},
-            controller: controller,
-            warningSemantics: 'Warning',
-            onTap: (tab) {
-              sbbToast.show(message: 'Tab tapped: Item ${tab.id}');
-            },
+    return Scaffold(
+      body: Column(
+        children: [
+          const Padding(
+            padding: EdgeInsets.all(sbbDefaultSpacing),
+            child: ThemeModeSegmentedButton(),
           ),
-        Expanded(child: Container()),
-        SBBPrimaryButton(
-          label: 'toggle',
-          onPressed: () => setState(() => visible = !visible),
-        ),
-      ],
+          Spacer(),
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: sbbDefaultSpacing,
+              horizontal: 8.0,
+            ),
+            child: SBBPrimaryButton(
+              label: 'toggle visibility',
+              onPressed: () => setState(() => visible = !visible),
+            ),
+          ),
+          Visibility(
+            visible: visible,
+            child: SBBTabBar.controller(
+              onTabChanged: (task) async {},
+              controller: controller,
+              onTap: (tab) {
+                sbbToast.show(message: 'Tab tapped: Item ${tab.id}');
+              },
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
 
-class _DemoItem extends TabBarItem {
+class _DemoItem extends SBBTabBarItem {
   _DemoItem(super.id, super.icon);
 
   @override

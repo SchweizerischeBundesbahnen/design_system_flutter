@@ -20,34 +20,40 @@ void main() {
     final items6 = Iterable.generate(6, (i) => _DemoItem('${i}_f', icons[i % icons.length])).toList();
     final widget = Column(
       children: [
-        SBBTabBar(
+        SBBTabBar.items(
           items: items,
           onTabChanged: (tab) async {},
+          onTap: (tab) {},
         ),
-        SBBTabBar(
+        SBBTabBar.items(
           items: items2,
           onTabChanged: (tab) async {},
           initialItem: items2.last,
+          onTap: (tab) {},
         ),
-        SBBTabBar(
+        SBBTabBar.items(
           items: items3,
           onTabChanged: (tab) async {},
           initialItem: items3.skip(1).first,
+          onTap: (tab) {},
         ),
-        SBBTabBar(
+        SBBTabBar.items(
           items: items4,
           onTabChanged: (tab) async {},
           initialItem: items4.skip(2).first,
+          onTap: (tab) {},
         ),
-        SBBTabBar(
+        SBBTabBar.items(
           items: items5,
           onTabChanged: (tab) async {},
           initialItem: items5.skip(2).first,
+          onTap: (tab) {},
         ),
-        SBBTabBar(
+        SBBTabBar.items(
           items: items6,
           onTabChanged: (tab) async {},
           initialItem: items6.skip(2).first,
+          onTap: (tab) {},
         ),
       ],
     );
@@ -62,7 +68,7 @@ void main() {
   });
 }
 
-class _DemoItem extends TabBarItem {
+class _DemoItem extends SBBTabBarItem {
   _DemoItem(super.id, super.icon);
 
   @override
