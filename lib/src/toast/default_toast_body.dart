@@ -1,32 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/src/toast/toast_container.dart';
 
 import '../../sbb_design_system_mobile.dart';
-import 'sbb_toast_action_body.dart';
+import 'toast_action_body.dart';
 
 class DefaultToastBody extends StatelessWidget {
   const DefaultToastBody({
     super.key,
     required this.title,
     required this.duration,
-    required this.stream,
-    required this.toast,
     this.action,
     this.style,
   });
 
   final String title;
   final Duration duration;
-  final Stream<bool> stream;
   final SBBToastAction? action;
-  final SBBToast toast;
   final SBBToastStyle? style;
 
   @override
   Widget build(BuildContext context) {
     final resolvedStyle = style.merge(SBBToastStyle.of(context));
+    final toastContainer = ToastContainer.of(context);
 
     return StreamBuilder<bool>(
-      stream: stream,
+      stream: toastContainer.stream,
       builder: (context, snapshot) {
         final isVisible = snapshot.data ?? false;
         return AnimatedOpacity(
@@ -46,11 +44,10 @@ class DefaultToastBody extends StatelessWidget {
   Widget _bodyWithTextAndAction(SBBToastStyle resolvedStyle, BuildContext context) {
     if (action == null) return _bodyWithText(resolvedStyle);
 
-    final builtAction = SBBToastActionBody(
+    final builtAction = ToastActionBody(
       onPressed: action!.onPressed,
       title: action!.title,
       style: resolvedStyle,
-      toast: toast,
     );
 
     double actionAndMarginWidth = _actionAndMarginWidth(resolvedStyle.actionTextStyle);

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/src/toast/default_toast_body.dart';
+import 'package:sbb_design_system_mobile/src/toast/toast_container.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
@@ -41,10 +42,8 @@ class SBBToast {
       builder: (stream) => DefaultToastBody(
         title: title,
         duration: duration,
-        stream: stream,
         style: style,
         action: action,
-        toast: this,
       ),
     );
   }
@@ -59,7 +58,7 @@ class SBBToast {
       remove();
       _streamController = StreamController<bool>();
       _streamController!.add(true);
-      _overlayEntry = _buildToastOverlayEntry(bottom, builder(_streamController!.stream));
+      _overlayEntry = _buildToastOverlayEntry(bottom, builder(_streamController!.stream), _streamController!.stream);
       _overlayState.insert(_overlayEntry!);
       _fadeOutTimer = Timer(duration + kThemeAnimationDuration * 2, () {
         _streamController?.add(false);
@@ -93,12 +92,16 @@ class SBBToast {
     _streamController = null;
   }
 
-  OverlayEntry _buildToastOverlayEntry(double bottom, Widget toast) => OverlayEntry(
-        builder: (context) => Positioned(
-          left: 0.0,
-          right: 0.0,
-          bottom: bottom,
-          child: Align(alignment: Alignment.center, child: toast),
+  OverlayEntry _buildToastOverlayEntry(double bottom, Widget toast, Stream<bool> stream) => OverlayEntry(
+        builder: (context) => ToastContainer(
+          stream: stream,
+          toast: this,
+          child: Positioned(
+            left: 0.0,
+            right: 0.0,
+            bottom: bottom,
+            child: Align(alignment: Alignment.center, child: toast),
+          ),
         ),
       );
 }

@@ -97,7 +97,7 @@ class _ToastPageState extends State<ToastPage> {
             child: Row(
               children: [
                 Expanded(
-                  child: SBBTertiaryButtonLarge(
+                  child: SBBSecondaryButton(
                     label: 'Hide',
                     onPressed: () {
                       sbbToast.hide();
