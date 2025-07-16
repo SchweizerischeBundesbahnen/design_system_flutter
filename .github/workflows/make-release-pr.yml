@@ -51,9 +51,9 @@ jobs:
         run: |
           version=$(grep '^version:' example/pubspec.yaml | awk '{print $2}')
           echo "Example version found: $version"
-          IFS='+' read -r build_name build_number <<< "$version"
+          IFS='+' read -r _ build_number <<< "$version"
           new_build_number=$((build_number + 1))
-          echo "pubspec_build_number=$new_build_number" >> $GITHUB_OUTPUT
+          echo "pubspec_build_number=$new_build_number" >> "$GITHUB_OUTPUT"
 
       - name: Update example app pubspec
         run: |
