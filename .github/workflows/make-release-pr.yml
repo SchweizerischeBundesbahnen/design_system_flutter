@@ -1,4 +1,4 @@
-name: Make Release PR
+name: make_release_pr
 
 on:
   workflow_dispatch:
@@ -28,8 +28,7 @@ jobs:
           app-id: ${{ vars.APPBAKERYGITHUBAPP_APPID }}
           private-key: ${{ secrets.APPBAKERYGITHUBAPP_PRIVATEKEY }}
 
-      - name: Clone Repository
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
         with:
           token: ${{ steps.app-token.outputs.token }}
           persist-credentials: false
@@ -65,9 +64,9 @@ jobs:
         with:
           token: ${{ steps.app-token.outputs.token }}
           committer: sbb-app-bakery[bot] <914587+sbb-app-bakery[bot]@users.noreply.github.com>
-          commit-message: ${{ format('Prepare Release for version {0}', steps.update-changelog.outputs.version) }}
+          commit-message: ${{ format('chore{0} prepare version {1}', ':',steps.update-changelog.outputs.version) }}
           branch: ${{ format('release/{0}', steps.update-changelog.outputs.version) }}
-          title: ${{ format('Auto Release Pull Request {0}', steps.update-changelog.outputs.version) }}
+          title: ${{ format("chore{0} release {1}", ':', steps.update-changelog.outputs.version) }}
           body: |
             Make changes for release.
             - Update pubspec.yaml

@@ -1,7 +1,7 @@
 # Runs flutter test and CHANGELOG.md validation on every PR to main.
 # Failed goldens are uploaded and can be seen in the artifact summary of the job.
 
-name: Test
+name: test
 
 on:
   push:
@@ -10,7 +10,6 @@ on:
   pull_request:
     branches:
       - main
-  workflow_dispatch:
 
 # Ensure that new pushes/updates cancel running jobs
 concurrency:
@@ -66,7 +65,7 @@ jobs:
           validation_level: "error"
 
   build-android:
-    name: "Build Android apk"
+    name: "Build Android aab"
     runs-on: ubuntu-latest
     needs: [ test, changelog-test ]
     defaults:

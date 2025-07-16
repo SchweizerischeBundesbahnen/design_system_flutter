@@ -1,4 +1,4 @@
-name: Nightly built.
+name: nightly_build
 
 on:
   workflow_dispatch:
@@ -10,32 +10,31 @@ jobs:
     runs-on: macos-latest
 
     steps:
-      - name: Checkout sbb_design_system_mobile code.
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Clone flutter version specified in .fvm.
-        uses: subosito/flutter-action@v2
+      - uses: subosito/flutter-action@v2
         with:
           channel: stable
           cache: true
 
-      - name: Run flutter doctor.
+      - name: Run flutter doctor
         run: flutter doctor -v
 
-      - name: Install dependencies.
+      - name: Install dependencies
         run: flutter pub get
 
-      - name: Run flutter test.
+      - name: Flutter test
         id: test
         run: flutter test
 
-      - name: Upload goldens if tests fail.
+      - name: Upload goldens if tests fail
         uses: actions/upload-artifact@v4
         if: ${{ failure() && steps.test.conclusion == 'failure' }}
         with:
           name: goldens
           path: test/failures/
           retention-days: 1
+
 
   build-android:
     name: Build Android
@@ -59,8 +58,9 @@ jobs:
 
       - run: flutter pub get
 
-      - name: Build appbundle.
+      - name: Build appbundle
         run: flutter build appbundle --profile --no-pub
+
 
   build-iOS:
     name: Build iOS
