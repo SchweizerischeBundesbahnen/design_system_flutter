@@ -1,0 +1,19 @@
+# Calculates the PANA score of the package and makes it available after the action has run.
+
+name: pubdev_score
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  scoring:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: axel-op/dart-package-analyzer@v3
+        with:
+          githubToken: ${{ secrets.GITHUB_TOKEN }}
