@@ -1,7 +1,3 @@
-# pubdev related
-example/gallery/
-
-
 # Miscellaneous
 *.class
 *.log
@@ -12,9 +8,7 @@ example/gallery/
 .buildlog/
 .history
 .svn/
-
-# no keystores
-*.jks
+migrate_working_dir/
 
 # IntelliJ related
 *.iml
@@ -22,90 +16,23 @@ example/gallery/
 *.iws
 .idea/
 
-# Visual Studio Code related
+# The .vscode folder contains launch configuration and tasks you configure in
+# VS Code which you may wish to be included in version control, so this line
+# is commented out by default.
 .vscode/
 
 # Flutter/Dart/Pub related
+# Libraries should not include pubspec.lock, per https://dart.dev/guides/libraries/private-files#pubspeclock.
+/pubspec.lock
 **/doc/api/
 .dart_tool/
 .flutter-plugins
-.packages
-.pub-cache/
-.pub/
-/build/
-*.g.dart
-pubspec.lock
+.flutter-plugins-dependencies
+build/
 
-# FVM related
-.fvm/
+# fvm
 .fvmrc
-
-# Android related
-**/android/**/gradle-wrapper.jar
-**/android/.gradle
-**/android/captures/
-**/android/gradlew
-**/android/gradlew.bat
-**/android/local.properties
-**/android/**/GeneratedPluginRegistrant.java
-
-# iOS/XCode related
-**/ios/environment.txt
-
-**/ios/**/*.mode1v3
-**/ios/**/*.mode2v3
-**/ios/**/*.moved-aside
-**/ios/**/*.pbxuser
-**/ios/**/*.perspectivev3
-**/ios/**/*sync/
-**/ios/**/.sconsign.dblite
-**/ios/**/.tags*
-**/ios/**/.vagrant/
-**/ios/**/DerivedData/
-**/ios/**/Icon?
-**/ios/**/Pods/
-**/ios/**/.symlinks/
-**/ios/**/profile
-**/ios/**/xcuserdata
-**/ios/.generated/
-**/ios/Flutter/App.framework
-**/ios/Flutter/Flutter.framework
-**/ios/Flutter/Generated.xcconfig
-**/ios/Flutter/app.flx
-**/ios/Flutter/app.zip
-**/ios/Flutter/flutter_assets/
-**/ios/ServiceDefinitions.json
-**/ios/Runner/GeneratedPluginRegistrant.*
-**/ios/build/
-
-# Exceptions to above rules.
-!**/ios/**/default.mode1v3
-!**/ios/**/default.mode2v3
-!**/ios/**/default.pbxuser
-!**/ios/**/default.perspectivev3
-!/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
-
-**/ios/Runner/GoogleService-Info.plist
-
-android/.project
-android/.settings/
-android/app/.classpath
-android/app/.project
-android/app/.settings/
-
-**/fastlane-build.sh
-**/ios/*.mobileprovision
-**/appstore/**
-
-/ios/Flutter/Flutter.podspec
-/ios/Flutter/flutter_export_environment.sh
-/fastlane/README.md
-/ios/fastlane/README.md
-/fastlane/report.xml
-/ios/fastlane/report.xml
-/.flutter-plugins-dependencies
-example/analysis_options.yaml
-example/.metadata
+.fvm/
 
 # icon set generator
 *.issproj
@@ -113,5 +40,55 @@ example/.metadata
 # failed golden tests
 test/failures
 
-# font tool
-tool/font_scripts/**
+# ============== TOOLS
+tool/**
+
+# ============== FROM EXAMPLE APP
+
+# Miscellaneous
+example/.swiftpm/
+example/migrate_working_dir/
+
+# IDE
+*.iws
+example/.idea/
+example/.vscode/
+
+# Flutter/Dart/Pub related
+example/**/doc/api/
+example/**/ios/Flutter/.last_build_id
+example/.dart_tool/
+example/.flutter-plugins
+example/.flutter-plugins-dependencies
+example/.pub-cache/
+example/.pub/
+example/build/
+
+# Symbolication related
+example/app.*.symbols
+
+# Obfuscation related
+example/app.*.map.json
+
+# Android Studio will place build artifacts here
+example/android/app/debug
+example/android/app/profile
+example/android/app/release
+example/android/app/.cxx/
+example/android/.gradle/
+example/ios/Flutter/flutter_export_environment.sh
+example/ios/Flutter/ephemeral/flutter_lldb_helper.py
+example/ios/Flutter/ephemeral/flutter_lldbinit
+**/ios/Flutter/.last_build_id
+
+example/pubspec.lock
+
+# generated files
+example/ios/Flutter/Generated.xcconfig
+example/ios/Runner/GeneratedPluginRegistrant.h
+example/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java
+example/ios/Runner/GeneratedPluginRegistrant.m
+example/android/local.properties
+
+# is done by root lvl analysis file
+example/analysis_options.yaml
