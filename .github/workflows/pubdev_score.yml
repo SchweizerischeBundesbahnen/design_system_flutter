@@ -1,6 +1,3 @@
-# Workflow evaluates the score on pub.dev.
-# Runs on each push to main.
-
 name: pubdev_score
 
 on:

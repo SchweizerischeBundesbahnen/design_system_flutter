@@ -1,4 +1,4 @@
-name: Github Release
+name: github_release
 on:
   pull_request:
     branches:
