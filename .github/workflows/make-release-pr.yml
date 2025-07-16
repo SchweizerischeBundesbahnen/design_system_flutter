@@ -51,9 +51,9 @@ jobs:
         run: |
           version=$(grep '^version:' example/pubspec.yaml | awk '{print $2}')
           echo "Example version found: $version"
-          IFS='+' read -r build_name build_number <<< "$version"
+          IFS='+' read -r _ build_number <<< "$version"
           new_build_number=$((build_number + 1))
-          echo "pubspec_build_number=$new_build_number" >> $GITHUB_OUTPUT
+          echo "pubspec_build_number=$new_build_number" >> "$GITHUB_OUTPUT"
 
       - name: Update example app pubspec
         run: |
@@ -66,7 +66,7 @@ jobs:
           committer: sbb-app-bakery[bot] <914587+sbb-app-bakery[bot]@users.noreply.github.com>
           commit-message: ${{ format('chore{0} prepare version {1}', ':',steps.update-changelog.outputs.version) }}
           branch: ${{ format('release/{0}', steps.update-changelog.outputs.version) }}
-          title: ${{ format("chore{0} release {1}", ':', steps.update-changelog.outputs.version) }}
+          title: ${{ format('chore{0} release {1}', ':', steps.update-changelog.outputs.version) }}
           body: |
             Make changes for release.
             - Update pubspec.yaml
