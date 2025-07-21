@@ -1,6 +1,6 @@
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import 'test_app.dart';
 
@@ -21,8 +21,27 @@ void main() {
 
   generateTest(
     'message_test_1',
-    SBBMessage(
+    const SBBMessage(
       title: 'Default',
+      description:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
+    ),
+  );
+
+  generateTest(
+    'message_test_2',
+    const SBBMessage(
+      title: 'With illustration',
+      description:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
+      illustration: MessageIllustration.Woman,
+    ),
+  );
+
+  generateTest(
+    'message_test_3',
+    SBBMessage(
+      title: 'With interaction',
       description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
       onInteraction: () {},
@@ -30,16 +49,18 @@ void main() {
   );
 
   generateTest(
-    'message_test_2',
-    const SBBMessage(
-      title: 'No Interaction',
+    'message_test_4',
+    SBBMessage(
+      title: 'With interaction and illustration',
       description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
+      illustration: MessageIllustration.Man,
+      onInteraction: () {},
     ),
   );
 
   generateTest(
-    'message_test_3',
+    'message_test_5',
     SBBMessage(
       title: 'Default, custom icon',
       description:
@@ -50,13 +71,34 @@ void main() {
   );
 
   generateTest(
-    'message_test_4',
+    'message_test_5',
     SBBMessage.error(
       title: 'Error, no interaction',
       description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
       messageCode: 'Fehlercode: XYZ-9999',
+    ),
+  );
+
+  generateTest(
+    'message_test_6',
+    SBBMessage.error(
+      title: 'Error, with illustration and interaction',
+      description:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
+      messageCode: 'Fehlercode: XYZ-9999',
+      illustration: MessageIllustration.Display,
       onInteraction: () {},
+    ),
+  );
+
+  generateTest(
+    'message_test_7',
+    SBBMessage(
+      title: 'Custom Illustration',
+      description:
+          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
+      customIllustration: Container(alignment: Alignment.center, width: 100, height: 100, color: SBBColors.red),
     ),
   );
 }

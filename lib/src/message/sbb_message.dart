@@ -38,7 +38,7 @@ class SBBMessage extends StatelessWidget {
     super.key,
     required this.title,
     required this.description,
-    this.illustration = MessageIllustration.Woman,
+    this.illustration,
     this.isLoading = false,
     this.messageCode,
     this.onInteraction,
@@ -50,7 +50,7 @@ class SBBMessage extends StatelessWidget {
     super.key,
     required this.title,
     required this.description,
-    this.illustration = MessageIllustration.Display,
+    this.illustration,
     this.isLoading = false,
     this.messageCode,
     this.onInteraction,
@@ -62,7 +62,7 @@ class SBBMessage extends StatelessWidget {
   final String description;
 
   /// Enum with illustrations provided by the library
-  final MessageIllustration illustration;
+  final MessageIllustration? illustration;
 
   /// If set, is shown below the description. For example: 'Error-Code: XYZ-9999'
   final String? messageCode;
@@ -88,9 +88,11 @@ class SBBMessage extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (isLoading) _loadingIndicator(context),
-          if (!isLoading) customIllustration ?? _defaultIllustration(context),
-          const SizedBox(height: _kTextBoxSpacing),
+          if (_showIllustration) ...[
+            if (isLoading) _loadingIndicator(context),
+            if (!isLoading) customIllustration ?? _defaultIllustration(context),
+            const SizedBox(height: _kTextBoxSpacing),
+          ],
           _title(textTheme),
           const SizedBox(height: sbbDefaultSpacing),
           _description(textTheme),
@@ -139,9 +141,11 @@ class SBBMessage extends StatelessWidget {
     final brightness = Theme.of(context).brightness;
     return Container(
       constraints: const BoxConstraints(maxHeight: _kIllustrationMaxHeight),
-      child: Image(image: illustration.asset(brightness)),
+      child: Image(image: illustration!.asset(brightness)),
     );
   }
 
   bool get _showInteractionButton => onInteraction != null && !isLoading;
+
+  bool get _showIllustration => isLoading || illustration != null || customIllustration != null;
 }
