@@ -35,6 +35,12 @@ enum MessageIllustration {
 ///
 /// * <https://digital.sbb.ch/en/design-system/mobile/components/message/>
 class SBBMessage extends StatelessWidget {
+  /// Use the required [title] and [description] to display a message to the user.
+  ///
+  /// If [illustration] and [customIllustration] is null, will not display anything above the [title], unless
+  /// [isLoading] is true.
+  ///
+  /// The [messageCode] is typically used only within an error message. See [SBBMessage.error].
   const SBBMessage({
     super.key,
     required this.title,
@@ -47,11 +53,14 @@ class SBBMessage extends StatelessWidget {
     this.customIllustration,
   });
 
+  /// Used to display an error in form of a [SBBMessage] to the user.
+  ///
+  /// The [illustration] will default to [MessageIllustration.Display].
   const SBBMessage.error({
     super.key,
     required this.title,
     required this.description,
-    this.illustration,
+    this.illustration = MessageIllustration.Display,
     this.isLoading = false,
     this.messageCode,
     this.onInteraction,

@@ -71,7 +71,7 @@ void main() {
   );
 
   generateTest(
-    'message_test_5',
+    'message_test_6',
     SBBMessage.error(
       title: 'Error, no interaction',
       description:
@@ -81,9 +81,9 @@ void main() {
   );
 
   generateTest(
-    'message_test_6',
+    'message_test_7',
     SBBMessage.error(
-      title: 'Error, with illustration and interaction',
+      title: 'Error, with interaction',
       description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
       messageCode: 'Fehlercode: XYZ-9999',
@@ -93,7 +93,7 @@ void main() {
   );
 
   generateTest(
-    'message_test_7',
+    'message_test_8',
     SBBMessage(
       title: 'Custom Illustration',
       description:
