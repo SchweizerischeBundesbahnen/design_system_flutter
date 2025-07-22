@@ -4,9 +4,12 @@ import '../../sbb_design_system_mobile.dart';
 
 const _kDefaultInteractionIcon = SBBIcons.arrows_circle_small;
 
-const _kIllustrationMaxHeight = 145.0;
-const _kTextBoxSpacing = 24.0;
+const _illustrationMaxHeight = 145.0;
+const _messageSpacing = 24.0;
 
+/// The illustrations that ship with this package.
+///
+/// The [Display] is typically used for error messages.
 enum MessageIllustration {
   // ignore: constant_identifier_names
   Man('man.png'),
@@ -77,9 +80,13 @@ class SBBMessage extends StatelessWidget {
   /// Enum with illustrations provided by the library.
   ///
   /// See [MessageIllustration] for explanation.
+  ///
+  /// The illustration image is excluded from semantics.
   final MessageIllustration? illustration;
 
   /// Optional text displayed below the [description]. Usually depicts an error code.
+  ///
+  /// This text is excluded from semantics.
   ///
   /// Example: 'Error-Code: XYZ-9999'
   final String? messageCode;
@@ -117,7 +124,7 @@ class SBBMessage extends StatelessWidget {
           if (_showLeading) ...[
             if (isLoading) _loadingIndicator(context),
             if (!isLoading) customIllustration ?? _illustration(context),
-            const SizedBox(height: _kTextBoxSpacing),
+            const SizedBox(height: _messageSpacing),
           ],
           _title(textTheme),
           const SizedBox(height: sbbDefaultSpacing),
@@ -127,7 +134,7 @@ class SBBMessage extends StatelessWidget {
             _errorCode(textTheme),
           ],
           if (_showInteractionButton) ...[
-            const SizedBox(height: _kTextBoxSpacing),
+            const SizedBox(height: _messageSpacing),
             _interactionButton(),
           ],
         ],
@@ -152,10 +159,12 @@ class SBBMessage extends StatelessWidget {
         textAlign: TextAlign.center,
       );
 
-  Text _errorCode(TextTheme textTheme) => Text(
-        messageCode!,
-        style: textTheme.labelSmall?.copyWith(fontSize: 12.0),
-        textAlign: TextAlign.center,
+  Widget _errorCode(TextTheme textTheme) => ExcludeSemantics(
+        child: Text(
+          messageCode!,
+          style: textTheme.labelSmall?.copyWith(fontSize: 12.0),
+          textAlign: TextAlign.center,
+        ),
       );
 
   SBBIconButtonLarge _interactionButton() => SBBIconButtonLarge(icon: interactionIcon, onPressed: onInteraction);
@@ -163,8 +172,8 @@ class SBBMessage extends StatelessWidget {
   Widget _illustration(BuildContext context) {
     final brightness = Theme.of(context).brightness;
     return Container(
-      constraints: const BoxConstraints(maxHeight: _kIllustrationMaxHeight),
-      child: Image(image: illustration!.asset(brightness)),
+      constraints: const BoxConstraints(maxHeight: _illustrationMaxHeight),
+      child: Image(image: illustration!.asset(brightness), excludeFromSemantics: true),
     );
   }
 
