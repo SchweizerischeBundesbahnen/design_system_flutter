@@ -4,9 +4,12 @@ import '../../sbb_design_system_mobile.dart';
 
 const _kDefaultInteractionIcon = SBBIcons.arrows_circle_small;
 
-const _kIllustrationMaxHeight = 145.0;
-const _kTextBoxSpacing = 24.0;
+const _illustrationMaxHeight = 145.0;
+const _messageSpacing = 24.0;
 
+/// The illustrations that ship with this package.
+///
+/// The [Display] is typically used for error messages.
 enum MessageIllustration {
   // ignore: constant_identifier_names
   Man('man.png'),
@@ -28,17 +31,24 @@ enum MessageIllustration {
   }
 }
 
-/// The SBB Message. Use according to documentation.
+/// The SBB Message. This widget allows displaying messages to the user, e.g. for Error messages.
+///
 ///
 /// See also:
 ///
-/// * <https://digital.sbb.ch/de/design-system/mobile/components/message>
+/// * <https://digital.sbb.ch/en/design-system/mobile/components/message/>
 class SBBMessage extends StatelessWidget {
+  /// Use the required [title] and [description] to display a message to the user.
+  ///
+  /// If [illustration] and [customIllustration] is null, will not display anything above the [title], unless
+  /// [isLoading] is true.
+  ///
+  /// The [messageCode] is typically used only within an error message. See [SBBMessage.error].
   const SBBMessage({
     super.key,
     required this.title,
     required this.description,
-    this.illustration = MessageIllustration.Woman,
+    this.illustration,
     this.isLoading = false,
     this.messageCode,
     this.onInteraction,
@@ -46,6 +56,9 @@ class SBBMessage extends StatelessWidget {
     this.customIllustration,
   });
 
+  /// Used to display an error in form of a [SBBMessage] to the user.
+  ///
+  /// The [illustration] will default to [MessageIllustration.Display].
   const SBBMessage.error({
     super.key,
     required this.title,
@@ -58,26 +71,46 @@ class SBBMessage extends StatelessWidget {
     this.customIllustration,
   });
 
+  /// The title of the message displayed directly below the [illustration] or [customIllustration].
   final String title;
+
+  /// The body of the message. Used to give a longer explanation of what has happened.
   final String description;
 
-  /// Enum with illustrations provided by the library
-  final MessageIllustration illustration;
+  /// Enum with illustrations provided by the library.
+  ///
+  /// See [MessageIllustration] for explanation.
+  ///
+  /// The illustration image is excluded from semantics.
+  final MessageIllustration? illustration;
 
-  /// If set, is shown below the description. For example: 'Error-Code: XYZ-9999'
+  /// Optional text displayed below the [description]. Usually depicts an error code.
+  ///
+  /// This text is excluded from semantics.
+  ///
+  /// Example: 'Error-Code: XYZ-9999'
   final String? messageCode;
 
-  /// if [isLoading] is true, a loading indicator is shown at the position of the interaction button.
+  /// If [isLoading] is true, a [SBBLoadingIndicator] is shown instead of the [illustration] or [customIllustration].
+  ///
+  /// Defaults to false.
   final bool isLoading;
 
-  /// Illustration shown above title of message
-  /// if [customIllustration] is null, default illustrations will be used.
+  /// Used to display a complete custom illustration instead of [illustration].
+  ///
+  /// If is null and [illustration] is non null, displays [illustration].
+  ///
+  /// Overriden by [isLoading] to show a [SBBLoadingIndicator].
   final Widget? customIllustration;
 
-  /// Callback for interaction with button.
-  /// if [onInteraction] is null, no button will be shown.
+  /// Callback for interaction with a [SBBIconButtonLarge] at the bottom of the message.
+  ///
+  /// If null, no button will be shown.
   final VoidCallback? onInteraction;
 
+  /// Allows the customization of the icon displayed in the [SBBIconButtonLarge] displayed at the bottom of the message.
+  ///
+  /// Defaults to [SBBIcons.arrows_circle_small]
   final IconData interactionIcon;
 
   @override
@@ -88,9 +121,11 @@ class SBBMessage extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          if (isLoading) _loadingIndicator(context),
-          if (!isLoading) customIllustration ?? _defaultIllustration(context),
-          const SizedBox(height: _kTextBoxSpacing),
+          if (_showLeading) ...[
+            if (isLoading) _loadingIndicator(context),
+            if (!isLoading) customIllustration ?? _illustration(context),
+            const SizedBox(height: _messageSpacing),
+          ],
           _title(textTheme),
           const SizedBox(height: sbbDefaultSpacing),
           _description(textTheme),
@@ -99,7 +134,7 @@ class SBBMessage extends StatelessWidget {
             _errorCode(textTheme),
           ],
           if (_showInteractionButton) ...[
-            const SizedBox(height: _kTextBoxSpacing),
+            const SizedBox(height: _messageSpacing),
             _interactionButton(),
           ],
         ],
@@ -124,24 +159,25 @@ class SBBMessage extends StatelessWidget {
         textAlign: TextAlign.center,
       );
 
-  Text _errorCode(TextTheme textTheme) => Text(
-        messageCode!,
-        style: textTheme.labelSmall?.copyWith(fontSize: 12.0),
-        textAlign: TextAlign.center,
+  Widget _errorCode(TextTheme textTheme) => ExcludeSemantics(
+        child: Text(
+          messageCode!,
+          style: textTheme.labelSmall?.copyWith(fontSize: 12.0),
+          textAlign: TextAlign.center,
+        ),
       );
 
-  SBBIconButtonLarge _interactionButton() => SBBIconButtonLarge(
-        icon: interactionIcon,
-        onPressed: onInteraction,
-      );
+  SBBIconButtonLarge _interactionButton() => SBBIconButtonLarge(icon: interactionIcon, onPressed: onInteraction);
 
-  Widget _defaultIllustration(BuildContext context) {
+  Widget _illustration(BuildContext context) {
     final brightness = Theme.of(context).brightness;
     return Container(
-      constraints: const BoxConstraints(maxHeight: _kIllustrationMaxHeight),
-      child: Image(image: illustration.asset(brightness)),
+      constraints: const BoxConstraints(maxHeight: _illustrationMaxHeight),
+      child: Image(image: illustration!.asset(brightness), excludeFromSemantics: true),
     );
   }
 
   bool get _showInteractionButton => onInteraction != null && !isLoading;
+
+  bool get _showLeading => isLoading || illustration != null || customIllustration != null;
 }
