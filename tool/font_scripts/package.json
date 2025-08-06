@@ -5,9 +5,9 @@
     "parse-bmfont-xml": "^1.1.6"
   },
   "scripts": {
-    "fix-small": "node_modules/.bin/oslllo-svg-fixer -s icons/small-tmp -d icons/small",
-    "fix-medium": "node_modules/.bin/oslllo-svg-fixer -s icons/medium-tmp -d icons/medium",
-    "fix-large": "node_modules/.bin/oslllo-svg-fixer -s icons/large-tmp -d icons/large",
+    "fix-small": "node_modules/.bin/oslllo-svg-fixer -s icons/small -d icons/small",
+    "fix-medium": "node_modules/.bin/oslllo-svg-fixer -s icons/medium -d icons/medium",
+    "fix-large": "node_modules/.bin/oslllo-svg-fixer -s icons/large -d icons/large",
     "fix": "npm run fix-small & npm run fix-medium & npm run fix-large",
     "generate-small": "node_modules/.bin/fantasticon icons/small -o icons -n sbb_icons_small -t ttf -g json",
     "generate-medium": "node_modules/.bin/fantasticon icons/medium -o icons -n sbb_icons_medium -t ttf -g json",

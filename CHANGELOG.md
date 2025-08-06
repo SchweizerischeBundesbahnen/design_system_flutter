@@ -13,6 +13,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 - `SBBMessage`: default constructor does not include illustration
 - `SBBMessage`: messageCode and illustration are excluded from semantics
+- updated icon lib to version 1.8.0
 
 ## [4.0.0] - 2025-07-14
 
