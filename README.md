@@ -137,7 +137,7 @@ See [RELEASE.md](RELEASE.md).
 
 ## Maintainer
 
-* [Ralf Winkelmann](https://github.com/rawi-coding))
+* [Ralf Winkelmann](https://github.com/rawi-coding)
 * [Nico Vidoni](https://github.com/smallTrogdor)
 
 ## Credits
