@@ -18,9 +18,14 @@ concurrency:
 
 jobs:
   test:
-    runs-on: macos-latest
+    runs-on: macos-15
 
     steps:
+
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: 16.4
+
       - uses: actions/checkout@v4
 
       - uses: subosito/flutter-action@v2
@@ -98,7 +103,7 @@ jobs:
 
   build-iOS:
     name: Build iOS package
-    runs-on: macos-latest
+    runs-on: macos-15
     needs: [ test, changelog-test ]
     defaults:
       run:
@@ -108,6 +113,11 @@ jobs:
       matrix:
         sdk: [ "3.27.0", "3.32.x" ]
     steps:
+
+      - uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: 16.4
+
       - uses: actions/checkout@v4
 
       - uses: subosito/flutter-action@v2
