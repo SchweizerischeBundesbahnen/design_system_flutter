@@ -13,6 +13,7 @@ class _HeaderBoxPageState extends State<HeaderBoxPage> {
     _DemoItem(0, SBBIcons.paragraph_small),
     _DemoItem(1, SBBIcons.lock_closed_small),
     _DemoItem(2, SBBIcons.arrows_up_down_small),
+    _DemoItem(3, SBBIcons.merge_small),
   ];
 
   late PageController _pageViewController;
@@ -43,6 +44,7 @@ class _HeaderBoxPageState extends State<HeaderBoxPage> {
               DesignGuidelinePage(),
               StaticPage(),
               ScrollablePage(),
+              FloatingPage(),
             ],
           ),
         ),
@@ -242,6 +244,153 @@ class _ScrollablePageState extends State<ScrollablePage> {
     );
   }
 }
+
+
+
+class FloatingPage extends StatefulWidget {
+  const FloatingPage({super.key});
+
+  @override
+  State<FloatingPage> createState() => _FloatingPageState();
+}
+
+class _FloatingPageState extends State<FloatingPage> {
+  @override
+  Widget build(BuildContext context) {
+    final sbbToast = SBBToast.of(context);
+    final style = SBBBaseStyle.of(context);
+    return CustomScrollView(
+      slivers: [
+        SBBSliverHeaderbox.custom(
+          floating: true,
+          padding: EdgeInsets.zero,
+          child: SBBStackedColumn(
+            children: [
+              SBBStackedItem.crossfade(
+                firstChild: Padding(
+                  padding: const EdgeInsets.all(sbbDefaultSpacing),
+                  child: Text(
+                    "Bern → Bern Wankdorf",
+                    style: SBBTextStyles.mediumBold,
+                  ),
+                ),
+                secondChild: Padding(
+                  padding:
+                  const EdgeInsets.all(sbbDefaultSpacing).copyWith(right: 0),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Flexible(
+                        fit: FlexFit.tight,
+                        child: Row(
+                          children: [
+                            _circle(context),
+                            SizedBox(width: sbbDefaultSpacing),
+                            Text('Bern')
+                          ],
+                        ),
+                      ),
+                      Flexible(
+                        fit: FlexFit.tight,
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 1,
+                              height: sbbDefaultSpacing * 1.5,
+                              color: style.labelColor,
+                              margin: EdgeInsets.only(left: 8.0),
+                            ),
+                            SizedBox(
+                              width: 24,
+                            ),
+                            Expanded(
+                              child: SizedBox(
+                                height: 1.0,
+                                child: ColoredBox(color: style.dividerColor!),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Flexible(
+                        fit: FlexFit.tight,
+                        child: Row(
+                          children: [
+                            _circle(context),
+                            SizedBox(width: sbbDefaultSpacing),
+                            Text('Bern Wankdorf')
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SBBStackedItem.aligned(
+                child: SizedBox(
+                  height: 1,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 48.0),
+                    child: ColoredBox(color: style.dividerColor!),
+                  ),
+                ),
+              ),
+              SBBStackedItem.aligned(
+                alignment: Alignment.bottomLeft,
+                clipBehavior: Clip.hardEdge,
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 48.0,
+                        top: 12.0,
+                        right: 12.0,
+                        bottom: 12.0,
+                      ),
+                      child: Text("Blubber"),
+                    ),
+                    Spacer(),
+                    Container(
+                      decoration: BoxDecoration(
+                        border: BorderDirectional(
+                          start: BorderSide(color: style.dividerColor!),
+                        ),
+                      ),
+                      padding: EdgeInsets.all(12.0),
+                      margin: EdgeInsets.zero,
+                      child: Icon(SBBIcons.controls_small),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+        SliverList.builder(
+          itemCount: 60,
+          itemBuilder: (context, index) => SBBListItem(
+            title: 'Item $index',
+            onPressed: () => sbbToast.show(title: 'Pressed Item $index', bottom: sbbDefaultSpacing * 6),
+          ),
+        )
+      ],
+    );
+  }
+
+  Container _circle(BuildContext context) {
+    final theme = Theme.of(context);
+    return Container(
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        border: Border.all()
+      ),
+      width: 16,
+      height: 16,
+    );
+  }
+}
+
 
 class _DemoItem extends SBBTabBarItem {
   _DemoItem(int id, IconData icon) : super(id.toString(), icon);

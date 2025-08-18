@@ -189,6 +189,7 @@ class _HeaderBoxForeground extends StatelessWidget {
   Widget _headerBox(BuildContext context) {
     final SBBHeaderBoxStyle style = SBBHeaderBoxStyle.of(context);
     return Container(
+      clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         color: style.backgroundColor,
         borderRadius: BorderRadius.all(_headerBoxRadius),

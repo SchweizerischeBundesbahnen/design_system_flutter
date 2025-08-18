@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/src/headerbox/sbb_sliver_floating_headerbox.dart';
+import 'package:sbb_design_system_mobile/src/headerbox/sbb_sliver_static_headerbox.dart';
 
 import '../../sbb_design_system_mobile.dart';
-import 'render_sliver_pin_header.dart';
 
 /// The SBB Sliver Headerbox.
 /// Use according to [documentation](https://digital.sbb.ch/de/design-system/mobile/components/container/)
@@ -30,7 +31,7 @@ import 'render_sliver_pin_header.dart';
 /// This will lead to the expected behavior of the SBB Headerbox.
 ///
 /// See [SBBHeaderbox] for a headerbox that behaves as expected in non scrollable content.
-class SBBSliverHeaderbox extends SingleChildRenderObjectWidget {
+class SBBSliverHeaderbox extends StatelessWidget {
   /// The default [SBBSliverHeaderbox].
   ///
   /// The required argument [title] will be ellipsed if too long. The [secondaryLabel] is the subtext
@@ -49,19 +50,29 @@ class SBBSliverHeaderbox extends SingleChildRenderObjectWidget {
     String? secondaryLabel,
     Widget? trailingWidget,
     SBBHeaderboxFlap? flap,
-    EdgeInsets margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
+    EdgeInsets margin =
+        const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
     String? semanticsLabel,
-  }) : super(
-         child: SBBHeaderbox(
-           title: title,
-           leadingIcon: leadingIcon,
-           secondaryLabel: secondaryLabel,
-           trailingWidget: trailingWidget,
-           margin: margin,
-           flap: flap,
-           semanticsLabel: semanticsLabel,
-         ),
-       );
+    bool floating = false,
+  }) : child = floating
+            ? SBBSliverFloatingHeaderbox(
+                title: title,
+                leadingIcon: leadingIcon,
+                secondaryLabel: secondaryLabel,
+                trailingWidget: trailingWidget,
+                margin: margin,
+                flap: flap,
+                semanticsLabel: semanticsLabel,
+              )
+            : SBBSliverStaticHeaderbox(
+                title: title,
+                leadingIcon: leadingIcon,
+                secondaryLabel: secondaryLabel,
+                trailingWidget: trailingWidget,
+                margin: margin,
+                flap: flap,
+                semanticsLabel: semanticsLabel,
+              );
 
   /// The large [SBBSliverHeaderbox].
   ///
@@ -81,40 +92,60 @@ class SBBSliverHeaderbox extends SingleChildRenderObjectWidget {
     String? secondaryLabel,
     Widget? trailingWidget,
     SBBHeaderboxFlap? flap,
-    EdgeInsets margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
+    EdgeInsets margin =
+        const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
     String? semanticsLabel,
-  }) : super(
-         child: SBBHeaderbox.large(
-           title: title,
-           leadingIcon: leadingIcon,
-           secondaryLabel: secondaryLabel,
-           trailingWidget: trailingWidget,
-           margin: margin,
-           flap: flap,
-           semanticsLabel: semanticsLabel,
-         ),
-       );
+    bool floating = false,
+  }) : child = floating
+            ? SBBSliverFloatingHeaderbox.large(
+                title: title,
+                leadingIcon: leadingIcon,
+                secondaryLabel: secondaryLabel,
+                trailingWidget: trailingWidget,
+                margin: margin,
+                flap: flap,
+                semanticsLabel: semanticsLabel,
+              )
+            : SBBSliverStaticHeaderbox.large(
+                title: title,
+                leadingIcon: leadingIcon,
+                secondaryLabel: secondaryLabel,
+                trailingWidget: trailingWidget,
+                margin: margin,
+                flap: flap,
+                semanticsLabel: semanticsLabel,
+              );
 
   /// Allows complete customization of the [SBBSliverHeaderbox].
   SBBSliverHeaderbox.custom({
     super.key,
     required Widget child,
-    EdgeInsets margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
+    EdgeInsets margin =
+        const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
     EdgeInsets padding = const EdgeInsets.all(sbbDefaultSpacing),
     SBBHeaderboxFlap? flap,
     String? semanticsLabel,
-  }) : super(
-         child: SBBHeaderbox.custom(
-           margin: margin,
-           padding: padding,
-           flap: flap,
-           semanticsLabel: semanticsLabel,
-           child: child,
-         ),
-       );
+    bool floating = false,
+  }) : child = floating
+            ? SBBSliverFloatingHeaderbox.custom(
+                margin: margin,
+                padding: padding,
+                flap: flap,
+                semanticsLabel: semanticsLabel,
+                child: child,
+              )
+            : SBBSliverStaticHeaderbox.custom(
+                margin: margin,
+                padding: padding,
+                flap: flap,
+                semanticsLabel: semanticsLabel,
+                child: child,
+              );
+
+  final Widget child;
 
   @override
-  RenderSliverPinHeader createRenderObject(BuildContext context) {
-    return RenderSliverPinHeader();
+  Widget build(BuildContext context) {
+    return child;
   }
 }
