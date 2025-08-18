@@ -7,11 +7,11 @@ import 'package:flutter/scheduler.dart';
 
 import 'intrinsics_override.dart';
 
-typedef SBBCollapseBuilder = Widget Function(
-    BuildContext context,
-    CollapseState progress,
-    Widget? child,
-    );
+typedef SBBStackedBuilder = Widget Function(
+  BuildContext context,
+  ExpansionState state,
+  Widget? child,
+);
 
 class SBBStackedColumn extends MultiChildRenderObjectWidget {
   const SBBStackedColumn({
@@ -24,7 +24,6 @@ class SBBStackedColumn extends MultiChildRenderObjectWidget {
     return _RenderStackedColumn();
   }
 }
-
 
 class SBBStackedItem extends StatelessWidget {
   SBBStackedItem({
@@ -46,10 +45,10 @@ class SBBStackedItem extends StatelessWidget {
         clipBehavior: Clip.none,
         alignment: Alignment.centerLeft,
         children: [
-          Opacity(opacity: 1.0 - progress.local, child: firstChild),
+          Opacity(opacity: 1.0 - progress.localExpansionRate, child: firstChild),
           OverrideIntrinsics(
             minHeight: 0.0,
-            child: Opacity(opacity: progress.local, child: secondChild),
+            child: Opacity(opacity: progress.localExpansionRate, child: secondChild),
           ),
         ],
       ),
@@ -62,7 +61,7 @@ class SBBStackedItem extends StatelessWidget {
     Clip clipBehavior = Clip.none,
     double minHeight = 0,
     double? maxHeight,
-    SBBCollapseBuilder? builder,
+    SBBStackedBuilder? builder,
     Widget? child,
   }) {
     return SBBStackedItem(
@@ -99,9 +98,9 @@ class SBBStackedItem extends StatelessWidget {
   final double? minHeight;
   final double? maxHeight;
 
-  final SBBCollapseBuilder? builder;
+  final SBBStackedBuilder? builder;
   final Widget? child;
-  final notifier = ValueNotifier<CollapseState>(CollapseState.of(1.0, 1.0));
+  final notifier = ValueNotifier<ExpansionState>(ExpansionState.of(1.0, 1.0));
 
   @override
   Widget build(BuildContext context) {
@@ -111,7 +110,7 @@ class SBBStackedItem extends StatelessWidget {
         child: OverrideIntrinsics(
           minHeight: minHeight,
           maxHeight: maxHeight,
-          child: ValueListenableBuilder<CollapseState>(
+          child: ValueListenableBuilder<ExpansionState>(
             valueListenable: notifier,
             builder: builder!,
             child: child,
@@ -137,7 +136,7 @@ class _SBBStackedItem extends ParentDataWidget<StackedColumnParentData> {
     this.progressNotifier,
   });
 
-  final ValueNotifier<CollapseState>? progressNotifier;
+  final ValueNotifier<ExpansionState>? progressNotifier;
 
   @override
   void applyParentData(RenderObject renderObject) {
@@ -189,24 +188,19 @@ class _RenderStackedColumn extends RenderBox
   }
 
   _measureDesiredHeight() {
-    final width =
-        constraints.maxWidth > 1.0 ? constraints.maxWidth : double.infinity;
+    final width = constraints.maxWidth > 1.0 ? constraints.maxWidth : double.infinity;
 
     shrunkHeight = max(getMinIntrinsicHeight(width), constraints.minHeight);
     desiredHeight = getMaxIntrinsicHeight(width);
   }
 
   (double, double) _getMinMax(RenderBox child) {
-    final width =
-        constraints.maxWidth > 1.0 ? constraints.maxWidth : double.infinity;
+    final width = constraints.maxWidth > 1.0 ? constraints.maxWidth : double.infinity;
 
-    return (
-      child.getMinIntrinsicHeight(width),
-      child.getMaxIntrinsicHeight(width)
-    );
+    return (child.getMinIntrinsicHeight(width), child.getMaxIntrinsicHeight(width));
   }
 
-  void _queueProgressUpdate(StackedColumnParentData pd, CollapseState state) {
+  void _queueProgressUpdate(StackedColumnParentData pd, ExpansionState state) {
     final n = pd.progressNotifier;
 
     if (n == null || n.value == state) return;
@@ -246,9 +240,7 @@ class _RenderStackedColumn extends RenderBox
     var totalWidth = 0.0;
 
     final totalRange = desiredHeight - shrunkHeight;
-    final totalProgress = totalRange <= 0.0
-        ? 1.0
-        : (totalHeight - shrunkHeight) / (desiredHeight - shrunkHeight);
+    final totalProgress = totalRange <= 0.0 ? 1.0 : (totalHeight - shrunkHeight) / (desiredHeight - shrunkHeight);
 
     // First pass to determine sizes
     while (child != null) {
@@ -292,7 +284,7 @@ class _RenderStackedColumn extends RenderBox
 
       _queueProgressUpdate(
         parentData,
-        CollapseState(local: progress, global: totalProgress),
+        ExpansionState(localExpansionRate: progress, globalExpansionRate: totalProgress),
       );
 
       child = parentData.previousSibling;
@@ -348,43 +340,41 @@ class _RenderStackedColumn extends RenderBox
 }
 
 class StackedColumnParentData extends ContainerBoxParentData<RenderBox> {
-  ValueNotifier<CollapseState>? progressNotifier;
+  ValueNotifier<ExpansionState>? progressNotifier;
 }
 
 @immutable
-final class CollapseState {
-  const CollapseState({
-    required this.local,
-    required this.global,
+final class ExpansionState {
+  const ExpansionState({
+    required this.localExpansionRate,
+    required this.globalExpansionRate,
   });
 
-  const CollapseState.of(double local, double global)
-      : this(local: local, global: global);
+  const ExpansionState.of(double local, double global) : this(localExpansionRate: local, globalExpansionRate: global);
 
-  final double local;
-  final double global;
+  final double localExpansionRate;
+  final double globalExpansionRate;
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is CollapseState &&
+      other is ExpansionState &&
           runtimeType == other.runtimeType &&
-          local == other.local &&
-          global == other.global;
+          localExpansionRate == other.localExpansionRate &&
+          globalExpansionRate == other.globalExpansionRate;
 
   @override
-  int get hashCode => local.hashCode ^ global.hashCode;
+  int get hashCode => localExpansionRate.hashCode ^ globalExpansionRate.hashCode;
 }
 
 class _ProgressUpdate {
   _ProgressUpdate(this.notifier, this.value);
 
-  final ValueNotifier<CollapseState> notifier;
-  final CollapseState value;
+  final ValueNotifier<ExpansionState> notifier;
+  final ExpansionState value;
 
   @override
-  bool operator ==(Object other) =>
-      other is _ProgressUpdate && other.notifier == notifier;
+  bool operator ==(Object other) => other is _ProgressUpdate && other.notifier == notifier;
 
   @override
   int get hashCode => notifier.hashCode;

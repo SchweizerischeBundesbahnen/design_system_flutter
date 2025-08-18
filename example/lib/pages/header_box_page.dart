@@ -330,8 +330,12 @@ class _FloatingPageState extends State<FloatingPage> {
                 ),
               ),
               SBBStackedItem.aligned(
-                alignment: Alignment.bottomLeft,
+                alignment: AlignmentDirectional.bottomStart,
                 clipBehavior: Clip.hardEdge,
+                builder: (context, state, child) => Opacity(
+                  opacity: state.localExpansionRate,
+                  child: child,
+                ),
                 child: Row(
                   children: [
                     Padding(
