@@ -108,8 +108,6 @@ class _SnapTrigger extends StatefulWidget {
 class _SnapTriggerState extends State<_SnapTrigger> {
   ScrollPosition? position;
 
-  int eventCounter = 0;
-
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
