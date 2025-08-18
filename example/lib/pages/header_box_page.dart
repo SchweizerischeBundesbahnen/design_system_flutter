@@ -277,7 +277,7 @@ class _FloatingPageState extends State<FloatingPage> {
                   ),
                 ),
                 secondChild: Padding(
-                  padding: const EdgeInsets.all(sbbDefaultSpacing).copyWith(right: 0, bottom: 0),
+                  padding: const EdgeInsets.only(left: sbbDefaultSpacing, top: sbbDefaultSpacing * 0.5),
                   child: Row(
                     children: [
                       Stack(
@@ -344,25 +344,23 @@ class _FloatingPageState extends State<FloatingPage> {
                 ),
                 child: Row(
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        left: 48.0,
-                        top: 12.0,
-                        right: 12.0,
-                        bottom: 12.0,
-                      ),
-                      child: Text("Blubber"),
-                    ),
+                    SizedBox(width: 48),
+                    Center(child: Text("Blubber")),
                     Spacer(),
-                    Container(
-                      decoration: BoxDecoration(
-                        border: BorderDirectional(
-                          start: BorderSide(color: style.dividerColor!),
+                    Material(
+                      child: InkWell(
+                        onTap: () => sbbToast.show(title: 'Show options'),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: BorderDirectional(
+                              start: BorderSide(color: style.dividerColor!),
+                            ),
+                          ),
+                          padding: EdgeInsets.all(12.0),
+                          margin: EdgeInsets.zero,
+                          child: Icon(SBBIcons.controls_small),
                         ),
                       ),
-                      padding: EdgeInsets.all(12.0),
-                      margin: EdgeInsets.zero,
-                      child: Icon(SBBIcons.controls_small),
                     ),
                   ],
                 ),
@@ -383,15 +381,20 @@ class _FloatingPageState extends State<FloatingPage> {
 
   Container _circle(BuildContext context) {
     final theme = Theme.of(context);
-    return Container(
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(
-          color: theme.colorScheme.onSurface,
-        ),
+    var decoration = BoxDecoration(
+      shape: BoxShape.circle,
+      border: Border.all(
+        color: theme.colorScheme.onSurface,
       ),
+    );
+    return Container(
+      decoration: decoration,
       width: sbbDefaultSpacing,
       height: sbbDefaultSpacing,
+      child: Container(
+        decoration: decoration,
+        margin: EdgeInsets.all(3),
+      ),
     );
   }
 }
