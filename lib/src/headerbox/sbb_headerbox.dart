@@ -157,7 +157,7 @@ class _HeaderBoxForeground extends StatelessWidget {
   final EdgeInsets padding;
   final Widget child;
   final String? semanticsLabel;
-  final Widget? flap;
+  final SBBHeaderboxFlap? flap;
 
   @override
   Widget build(BuildContext context) {
@@ -171,19 +171,41 @@ class _HeaderBoxForeground extends StatelessWidget {
   }
 
   Widget _flappedHeaderBox(BuildContext context) {
-    return Container(
-      decoration: _flappedBackgroundDecoration(context),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Padding(
-            padding: EdgeInsets.only(bottom: _headerBoxFlapTopMargin),
-            child: _headerBox(context),
-          ),
-          flap!,
-        ],
-      ),
-    );
+    final flap = this.flap!;
+
+    if (flap.allowFloating) {
+      return Container(
+        decoration: _flappedBackgroundDecoration(context),
+        child: SBBStackedColumn(
+          children: [
+            Padding(
+              padding: EdgeInsets.only(bottom: _headerBoxFlapTopMargin),
+              child: _headerBox(context),
+            ),
+            SBBStackedItem.aligned(
+              alignment: Alignment.bottomLeft,
+              child: flap,
+            ),
+          ],
+        ),
+      );
+    } else {
+      return Container(
+        decoration: _flappedBackgroundDecoration(context),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Flexible(
+              child: Padding(
+                padding: EdgeInsets.only(bottom: _headerBoxFlapTopMargin),
+                child: _headerBox(context),
+              ),
+            ),
+            flap,
+          ],
+        ),
+      );
+    }
   }
 
   Widget _headerBox(BuildContext context) {

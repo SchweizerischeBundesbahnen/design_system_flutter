@@ -18,14 +18,25 @@ class SBBHeaderboxFlap extends StatelessWidget {
     Key? key,
     required String title,
     bool allowMultilineLabel = true,
+    bool allowFloating = false,
     IconData? leadingIcon,
     IconData? trailingIcon,
-  }) : this.custom(key: key, child: _buildDefaultFlap(title, allowMultilineLabel, leadingIcon, trailingIcon));
+  }) : this.custom(
+          key: key,
+          allowFloating: allowFloating,
+          child: _buildDefaultFlap(
+            title,
+            allowMultilineLabel,
+            leadingIcon,
+            trailingIcon,
+          ),
+        );
 
   /// Allows complete customization of the content of the [SBBHeaderboxFlap].
   const SBBHeaderboxFlap.custom({
     super.key,
     required this.child,
+    this.allowFloating = false,
     this.padding = const EdgeInsets.fromLTRB(
       sbbDefaultSpacing,
       0.0, // margin from [SBBHeaderBox] to allow shadow
@@ -36,6 +47,7 @@ class SBBHeaderboxFlap extends StatelessWidget {
 
   /// The padding for the content of the [SBBHeaderboxFlap].
   final EdgeInsets padding;
+  final bool allowFloating;
 
   final Widget child;
 

@@ -245,8 +245,6 @@ class _ScrollablePageState extends State<ScrollablePage> {
   }
 }
 
-
-
 class FloatingPage extends StatefulWidget {
   const FloatingPage({super.key});
 
@@ -264,19 +262,22 @@ class _FloatingPageState extends State<FloatingPage> {
         SBBSliverHeaderbox.custom(
           floating: true,
           padding: EdgeInsets.zero,
+          flap: SBBHeaderboxFlap(
+            title: 'Donnerstag, 31.01.2025',
+            allowFloating: true,
+          ),
           child: SBBStackedColumn(
             children: [
               SBBStackedItem.crossfade(
                 firstChild: Padding(
                   padding: const EdgeInsets.all(sbbDefaultSpacing),
                   child: Text(
-                    "Bern → Bern Wankdorf",
+                    'Bern → Bern Wankdorf',
                     style: SBBTextStyles.mediumBold,
                   ),
                 ),
                 secondChild: Padding(
-                  padding:
-                  const EdgeInsets.all(sbbDefaultSpacing).copyWith(right: 0),
+                  padding: const EdgeInsets.all(sbbDefaultSpacing).copyWith(right: 0),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -284,11 +285,7 @@ class _FloatingPageState extends State<FloatingPage> {
                       Flexible(
                         fit: FlexFit.tight,
                         child: Row(
-                          children: [
-                            _circle(context),
-                            SizedBox(width: sbbDefaultSpacing),
-                            Text('Bern')
-                          ],
+                          children: [_circle(context), SizedBox(width: sbbDefaultSpacing), Text('Bern')],
                         ),
                       ),
                       Flexible(
@@ -316,11 +313,7 @@ class _FloatingPageState extends State<FloatingPage> {
                       Flexible(
                         fit: FlexFit.tight,
                         child: Row(
-                          children: [
-                            _circle(context),
-                            SizedBox(width: sbbDefaultSpacing),
-                            Text('Bern Wankdorf')
-                          ],
+                          children: [_circle(context), SizedBox(width: sbbDefaultSpacing), Text('Bern Wankdorf')],
                         ),
                       ),
                     ],
@@ -383,14 +376,15 @@ class _FloatingPageState extends State<FloatingPage> {
     return Container(
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        border: Border.all()
+        border: Border.all(
+          color: theme.colorScheme.onSurface,
+        ),
       ),
       width: 16,
       height: 16,
     );
   }
 }
-
 
 class _DemoItem extends SBBTabBarItem {
   _DemoItem(int id, IconData icon) : super(id.toString(), icon);
