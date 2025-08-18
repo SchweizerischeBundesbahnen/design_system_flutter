@@ -187,7 +187,7 @@ class _RenderStackedColumn extends RenderBox
     return max(minExtent, acc);
   }
 
-  _measureDesiredHeight() {
+  void _measureDesiredHeight() {
     final width = constraints.maxWidth > 1.0 ? constraints.maxWidth : double.infinity;
 
     shrunkHeight = max(getMinIntrinsicHeight(width), constraints.minHeight);

@@ -119,10 +119,7 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
         );
 
     child!.layout(
-      constraints.asBoxConstraints().copyWith(
-            minHeight: childSize,
-            maxHeight: childSize,
-          ),
+      constraints.asBoxConstraints().copyWith(minHeight: childSize, maxHeight: childSize),
       parentUsesSize: true,
     );
 

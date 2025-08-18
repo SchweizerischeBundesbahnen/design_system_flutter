@@ -277,55 +277,61 @@ class _FloatingPageState extends State<FloatingPage> {
                   ),
                 ),
                 secondChild: Padding(
-                  padding: const EdgeInsets.all(sbbDefaultSpacing).copyWith(right: 0),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  padding: const EdgeInsets.all(sbbDefaultSpacing).copyWith(right: 0, bottom: 0),
+                  child: Row(
                     children: [
-                      Flexible(
-                        fit: FlexFit.tight,
-                        child: Row(
-                          children: [_circle(context), SizedBox(width: sbbDefaultSpacing), Text('Bern')],
-                        ),
-                      ),
-                      Flexible(
-                        fit: FlexFit.tight,
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 1,
-                              height: sbbDefaultSpacing * 1.5,
+                      Stack(
+                        children: [
+                          Align(
+                            alignment: Alignment.topCenter,
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: sbbDefaultSpacing),
+                              child: _circle(context),
+                            ),
+                          ),
+                          Positioned(
+                            top: sbbDefaultSpacing * 2,
+                            bottom: sbbDefaultSpacing * 2,
+                            left: sbbDefaultSpacing * 0.5 - 0.5,
+                            child: Container(
                               color: style.labelColor,
-                              margin: EdgeInsets.only(left: 8.0),
+                              width: 1,
                             ),
-                            SizedBox(
-                              width: 24,
+                          ),
+                          Align(
+                            alignment: Alignment.bottomCenter,
+                            child: Padding(
+                              padding: const EdgeInsets.only(bottom: sbbDefaultSpacing),
+                              child: _circle(context),
                             ),
-                            Expanded(
-                              child: SizedBox(
-                                height: 1.0,
-                                child: ColoredBox(color: style.dividerColor!),
+                          ),
+                        ],
+                      ),
+                      Expanded(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Flexible(
+                              child: OverflowBox(
+                                maxHeight: double.infinity,
+                                child: SBBTextField(
+                                  labelText: 'Abfahrtsort',
+                                ),
+                              ),
+                            ),
+                            Flexible(
+                              child: OverflowBox(
+                                maxHeight: double.infinity,
+                                child: SBBTextField(
+                                  labelText: 'Zielort',
+                                ),
                               ),
                             ),
                           ],
                         ),
                       ),
-                      Flexible(
-                        fit: FlexFit.tight,
-                        child: Row(
-                          children: [_circle(context), SizedBox(width: sbbDefaultSpacing), Text('Bern Wankdorf')],
-                        ),
-                      ),
                     ],
-                  ),
-                ),
-              ),
-              SBBStackedItem.aligned(
-                child: SizedBox(
-                  height: 1,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 48.0),
-                    child: ColoredBox(color: style.dividerColor!),
                   ),
                 ),
               ),
@@ -384,8 +390,8 @@ class _FloatingPageState extends State<FloatingPage> {
           color: theme.colorScheme.onSurface,
         ),
       ),
-      width: 16,
-      height: 16,
+      width: sbbDefaultSpacing,
+      height: sbbDefaultSpacing,
     );
   }
 }
