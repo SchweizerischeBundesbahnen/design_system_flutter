@@ -253,6 +253,8 @@ class FloatingPage extends StatefulWidget {
 }
 
 class _FloatingPageState extends State<FloatingPage> {
+  bool pushMode = true;
+
   @override
   Widget build(BuildContext context) {
     final sbbToast = SBBToast.of(context);
@@ -267,106 +269,7 @@ class _FloatingPageState extends State<FloatingPage> {
             allowFloating: true,
           ),
           child: SBBStackedColumn(
-            children: [
-              SBBStackedItem.crossfade(
-                firstChild: Padding(
-                  padding: const EdgeInsets.all(sbbDefaultSpacing),
-                  child: Text(
-                    'Bern → Bern Wankdorf',
-                    style: SBBTextStyles.mediumBold,
-                  ),
-                ),
-                secondChild: Padding(
-                  padding: const EdgeInsets.only(left: sbbDefaultSpacing, top: sbbDefaultSpacing * 0.5),
-                  child: Row(
-                    children: [
-                      Stack(
-                        children: [
-                          Align(
-                            alignment: Alignment.topCenter,
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: sbbDefaultSpacing),
-                              child: _circle(context),
-                            ),
-                          ),
-                          Positioned(
-                            top: sbbDefaultSpacing * 2,
-                            bottom: sbbDefaultSpacing * 2,
-                            left: sbbDefaultSpacing * 0.5 - 0.5,
-                            child: Container(
-                              color: style.labelColor,
-                              width: 1,
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.bottomCenter,
-                            child: Padding(
-                              padding: const EdgeInsets.only(bottom: sbbDefaultSpacing),
-                              child: _circle(context),
-                            ),
-                          ),
-                        ],
-                      ),
-                      Expanded(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Flexible(
-                              child: OverflowBox(
-                                maxHeight: double.infinity,
-                                child: SBBTextField(
-                                  labelText: 'Origin',
-                                ),
-                              ),
-                            ),
-                            Flexible(
-                              child: OverflowBox(
-                                maxHeight: double.infinity,
-                                child: SBBTextField(
-                                  labelText: 'Destination',
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              SBBStackedItem.aligned(
-                alignment: AlignmentDirectional.bottomStart,
-                clipBehavior: Clip.hardEdge,
-                builder: (context, state, child) => Opacity(
-                  opacity: state.localExpansionRate,
-                  child: child,
-                ),
-                child: Row(
-                  children: [
-                    SizedBox(width: 48),
-                    Center(child: Text("Footer that gets pushed up")),
-                    Spacer(),
-                    Material(
-                      color: SBBColors.transparent,
-                      child: InkWell(
-                        onTap: () => sbbToast.show(title: 'Show options', bottom: sbbDefaultSpacing * 6),
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: BorderDirectional(
-                              start: BorderSide(color: style.dividerColor!),
-                            ),
-                          ),
-                          padding: EdgeInsets.all(12.0),
-                          margin: EdgeInsets.zero,
-                          child: Icon(SBBIcons.controls_small),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              )
-            ],
+            children: [_upperRow(context, style), _bottomRow(sbbToast, style)],
           ),
         ),
         SliverList.builder(
@@ -377,6 +280,117 @@ class _FloatingPageState extends State<FloatingPage> {
           ),
         )
       ],
+    );
+  }
+
+  SBBStackedItem _upperRow(BuildContext context, SBBBaseStyle style) {
+    return SBBStackedItem.crossfade(
+      firstChild: Padding(
+        padding: const EdgeInsets.all(sbbDefaultSpacing),
+        child: Text(
+          'Bern → Bern Wankdorf',
+          style: SBBTextStyles.mediumBold,
+        ),
+      ),
+      secondChild: Padding(
+        padding: const EdgeInsets.only(left: sbbDefaultSpacing, top: sbbDefaultSpacing * 0.5),
+        child: Row(
+          children: [
+            Stack(
+              children: [
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: sbbDefaultSpacing),
+                    child: _circle(context),
+                  ),
+                ),
+                Positioned(
+                  top: sbbDefaultSpacing * 2,
+                  bottom: sbbDefaultSpacing * 2,
+                  left: sbbDefaultSpacing * 0.5 - 0.5,
+                  child: Container(
+                    color: style.labelColor,
+                    width: 1,
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.only(bottom: sbbDefaultSpacing),
+                    child: _circle(context),
+                  ),
+                ),
+              ],
+            ),
+            Expanded(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Flexible(
+                    child: OverflowBox(
+                      maxHeight: double.infinity,
+                      child: SBBTextField(
+                        labelText: 'Origin',
+                      ),
+                    ),
+                  ),
+                  Flexible(
+                    child: OverflowBox(
+                      maxHeight: double.infinity,
+                      child: SBBTextField(
+                        labelText: 'Destination',
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  SBBStackedItem _bottomRow(SBBToast sbbToast, SBBBaseStyle style) {
+    final alignment = pushMode ? Alignment.bottomLeft : Alignment.topLeft;
+
+    return SBBStackedItem.aligned(
+      alignment: alignment,
+      clipBehavior: Clip.hardEdge,
+      builder: (context, state, child) => Opacity(
+        opacity: state.localExpansionRate,
+        child: child,
+      ),
+      child: Row(
+        children: [
+          SizedBox(width: 48),
+          Center(child: pushMode ? Text('Footer that gets pushed up') : Text('Footer that gets pushed over')),
+          Spacer(),
+          Material(
+            color: SBBColors.transparent,
+            child: InkWell(
+              onTap: () {
+                setState(() {
+                  pushMode = !pushMode;
+                });
+                sbbToast.show(title: 'Toggled mode', bottom: sbbDefaultSpacing * 6);
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  border: BorderDirectional(
+                    start: BorderSide(color: style.dividerColor!),
+                  ),
+                ),
+                padding: EdgeInsets.all(12.0),
+                margin: EdgeInsets.zero,
+                child: Icon(SBBIcons.controls_small),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
