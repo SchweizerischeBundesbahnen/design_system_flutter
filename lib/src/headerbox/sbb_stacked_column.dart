@@ -367,6 +367,9 @@ final class ExpansionState {
   final double localExpansionRate;
   final double globalExpansionRate;
 
+  double get localCollapseRate => 1.0 - localExpansionRate;
+  double get globalCollapseRate => 1.0 - globalExpansionRate;
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||

@@ -277,15 +277,20 @@ class _FloatingPageState extends State<FloatingPage> {
                 allowFloating: true,
                 child: Row(
                   children: [
-                    Text('Thursday, 01/31/2025'),
+                    Text('Thursday, 01/31/2025', style: SBBTextStyles.smallLight),
                     Spacer(),
-                    SBBIconButtonSmall(
+                    SizedOverflowBox(
+                      size: Size(54, 24),
+                      alignment: Alignment.centerRight,
+                      child: SBBIconButtonSmall(
                         icon: showAll ? SBBIcons.arrow_up_small : SBBIcons.arrow_down_small,
                         onPressed: () {
                           setState(() {
                             showAll = !showAll;
                           });
-                        }),
+                        },
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -448,8 +453,14 @@ class _FloatingPageState extends State<FloatingPage> {
     return [
       SBBListItem(title: 'Static', onPressed: null),
       SBBStackedItem(
-        builder: (context, state, _) => SBBListItem(
-            title: 'Global expansion rate: ${state.globalExpansionRate.toStringAsFixed(2)}', onPressed: null),
+        builder: (context, state, _) => FractionallySizedBox(
+          widthFactor: state.globalCollapseRate,
+          alignment: Alignment.topLeft,
+          child: Container(
+            height: 5,
+            color: SBBColors.red,
+          ),
+        ),
       ),
       SBBStackedItem.aligned(
         alignment: Alignment.center,
