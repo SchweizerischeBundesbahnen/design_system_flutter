@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
@@ -139,21 +140,20 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
       parentUsesSize: true,
     );
 
-    // To keep all subsequent widgets consistent in position, we must not change the layout height once the full header
-    // has been shown (scrollOffset > extent)
-    final layoutExtent = scrollOffset > extent ? minExtent : maxExtent - scrollOffset;
+    final layoutExtent = max(0.0, maxExtent - scrollOffset);
 
-    final double paintedChildSize = layoutExtent;
+    final double paintedChildSize = max(layoutExtent, extent);
     final double cacheExtent = maxExtent;
 
     assert(paintedChildSize.isFinite);
     assert(paintedChildSize >= 0.0);
     geometry = SliverGeometry(
+      layoutExtent: layoutExtent,
       scrollExtent: extent,
       paintExtent: paintedChildSize,
       cacheExtent: cacheExtent,
-      maxPaintExtent: layoutExtent,
-      hitTestExtent: minExtent + extent,
+      maxPaintExtent: maxExtent,
+      hitTestExtent: maxExtent,
       hasVisualOverflow: layoutExtent > constraints.remainingPaintExtent || constraints.scrollOffset > 0.0,
       scrollOffsetCorrection: scrollOffsetCorrection.abs() > 0.5 ? scrollOffsetCorrection : null,
     );

@@ -89,7 +89,7 @@ class _SBBSliverFloatingHeaderboxState extends State<SBBSliverFloatingHeaderbox>
     return SliverPinnedFloatingWidget(
       vsync: this,
       animationStyle: widget.snapStyle,
-      snapMode: FloatingHeaderSnapMode.overlay,
+      snapMode: FloatingHeaderSnapMode.scroll,
       child: _SnapTrigger(
         widget.child,
       ),
