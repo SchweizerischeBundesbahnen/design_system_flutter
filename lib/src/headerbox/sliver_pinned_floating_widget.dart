@@ -10,16 +10,19 @@ class SliverPinnedFloatingWidget extends SingleChildRenderObjectWidget {
     required super.child,
     required this.vsync,
     required this.animationStyle,
+    required this.snapMode,
   });
 
   final TickerProvider vsync;
   final AnimationStyle animationStyle;
+  final FloatingHeaderSnapMode snapMode;
 
   @override
   RenderObject createRenderObject(BuildContext context) {
     return RenderSliverPinnedFloatingWidget(
       vsync: vsync,
       animationStyle: animationStyle,
+      snapMode: snapMode,
     );
   }
 
@@ -27,7 +30,8 @@ class SliverPinnedFloatingWidget extends SingleChildRenderObjectWidget {
   void updateRenderObject(BuildContext context, RenderSliverPinnedFloatingWidget renderObject) {
     renderObject
       ..vsync = vsync
-      ..animationStyle = animationStyle;
+      ..animationStyle = animationStyle
+      ..snapMode = snapMode;
   }
 }
 
@@ -36,6 +40,7 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
   RenderSliverPinnedFloatingWidget({
     required this.animationStyle,
     TickerProvider? vsync,
+    this.snapMode = FloatingHeaderSnapMode.scroll,
     super.child,
   }) : _vsync = vsync;
 
@@ -59,6 +64,7 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
   }
 
   AnimationStyle? animationStyle;
+  FloatingHeaderSnapMode snapMode;
 
   double _previousScrollOffset = 0.0;
   double _internalScrollOffset = 0.0;
@@ -100,20 +106,30 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
       return;
     }
 
+    // Measure children
     _updateExtent();
 
     final scrollOffset = this.constraints.scrollOffset;
-    // We keep track an internal scroll offset that ranges from 0..extent
-    _internalScrollOffset = (_internalScrollOffset + (scrollOffset - _previousScrollOffset)).clamp(0, extent);
 
+    // We keep track an internal scroll offset that ranges from 0..extent.
+    // This is what is used to immediately hide or show the widget at hand.
+    _internalScrollOffset = (_internalScrollOffset + (scrollOffset - _previousScrollOffset)).clamp(0, extent);
     _previousScrollOffset = scrollOffset;
 
-    final scrollOffsetCorrection =
-        snapController?.isAnimating == true || _wasAnimating ? _virtualScroll - _internalScrollOffset : 0.0;
-
+    final snapping = snapController?.isAnimating == true || _wasAnimating;
+    var scrollOffsetCorrection = 0.0;
+    if (snapping) {
+      if (snapMode == FloatingHeaderSnapMode.scroll || scrollOffset < extent) {
+        // With this option, we can tell the layout algorithm that we want to scroll in a direction.
+        // We use this to scroll the view in a natural way.
+        scrollOffsetCorrection = _virtualScroll - _internalScrollOffset;
+      } else {
+        _internalScrollOffset = _virtualScroll;
+      }
+    }
     _wasAnimating = snapController?.isAnimating == true;
 
-    // Make it so that it looks to us like we are scrolled only by the internal value
+    // Make it so that it looks to the child like we are scrolled only by the internal value
     final SliverConstraints constraints = this.constraints.copyWith(
           scrollOffset: 0,
         );
@@ -123,7 +139,8 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
       parentUsesSize: true,
     );
 
-    // To keep all following elements consistent, we must not change the layout height when displaying the floating header
+    // To keep all subsequent widgets consistent in position, we must not change the layout height once the full header
+    // has been shown (scrollOffset > extent)
     final layoutExtent = scrollOffset > extent ? minExtent : maxExtent - scrollOffset;
 
     final double paintedChildSize = layoutExtent;

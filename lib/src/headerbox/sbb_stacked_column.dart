@@ -45,10 +45,22 @@ class SBBStackedItem extends StatelessWidget {
         clipBehavior: Clip.none,
         alignment: Alignment.centerLeft,
         children: [
-          Opacity(opacity: 1.0 - progress.localExpansionRate, child: firstChild),
+          IgnorePointer(
+            ignoring: progress.localExpansionRate > 0.1,
+            child: Opacity(
+              opacity: 1.0 - progress.localExpansionRate,
+              child: firstChild,
+            ),
+          ),
           OverrideIntrinsics(
             minHeight: 0.0,
-            child: Opacity(opacity: progress.localExpansionRate, child: secondChild),
+            child: IgnorePointer(
+              ignoring: progress.localExpansionRate < 0.9,
+              child: Opacity(
+                opacity: progress.localExpansionRate,
+                child: secondChild,
+              ),
+            ),
           ),
         ],
       ),

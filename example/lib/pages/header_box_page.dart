@@ -263,7 +263,7 @@ class _FloatingPageState extends State<FloatingPage> {
           floating: true,
           padding: EdgeInsets.zero,
           flap: SBBHeaderboxFlap(
-            title: 'Donnerstag, 31.01.2025',
+            title: 'Thursday, 01/31/2025',
             allowFloating: true,
           ),
           child: SBBStackedColumn(
@@ -316,7 +316,7 @@ class _FloatingPageState extends State<FloatingPage> {
                               child: OverflowBox(
                                 maxHeight: double.infinity,
                                 child: SBBTextField(
-                                  labelText: 'Abfahrtsort',
+                                  labelText: 'Origin',
                                 ),
                               ),
                             ),
@@ -324,7 +324,7 @@ class _FloatingPageState extends State<FloatingPage> {
                               child: OverflowBox(
                                 maxHeight: double.infinity,
                                 child: SBBTextField(
-                                  labelText: 'Zielort',
+                                  labelText: 'Destination',
                                 ),
                               ),
                             ),
@@ -345,11 +345,12 @@ class _FloatingPageState extends State<FloatingPage> {
                 child: Row(
                   children: [
                     SizedBox(width: 48),
-                    Center(child: Text("Blubber")),
+                    Center(child: Text("Footer that gets pushed up")),
                     Spacer(),
                     Material(
+                      color: SBBColors.transparent,
                       child: InkWell(
-                        onTap: () => sbbToast.show(title: 'Show options'),
+                        onTap: () => sbbToast.show(title: 'Show options', bottom: sbbDefaultSpacing * 6),
                         child: Container(
                           decoration: BoxDecoration(
                             border: BorderDirectional(
