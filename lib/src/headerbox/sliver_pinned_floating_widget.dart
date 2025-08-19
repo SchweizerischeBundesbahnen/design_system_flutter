@@ -220,6 +220,18 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
   }
 
   @override
+  void showOnScreen({
+    RenderObject? descendant,
+    Rect? rect,
+    Duration duration = Duration.zero,
+    Curve curve = Curves.ease,
+  }) {
+    // The widget is always on screen by definition.
+    // We could extend it to `maxExtent` here, but this might cause issues if the developer expects
+    // it to stay small.
+  }
+
+  @override
   bool hitTestChildren(
     SliverHitTestResult result, {
     required double mainAxisPosition,
