@@ -11,14 +11,14 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
     String? secondaryLabel,
     Widget? trailingWidget,
     SBBHeaderboxFlap? flap,
-    EdgeInsets margin =
-        const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
+    EdgeInsets margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
     String? semanticsLabel,
     this.snapStyle = const AnimationStyle(
       duration: Duration(milliseconds: 200),
       curve: Curves.easeInOutCubic,
     ),
-  }) : child = SBBHeaderbox(
+  })  : floating = true,
+        child = SBBHeaderbox(
           title: title,
           leadingIcon: leadingIcon,
           secondaryLabel: secondaryLabel,
@@ -35,14 +35,14 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
     String? secondaryLabel,
     Widget? trailingWidget,
     SBBHeaderboxFlap? flap,
-    EdgeInsets margin =
-        const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
+    EdgeInsets margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
     String? semanticsLabel,
     this.snapStyle = const AnimationStyle(
       duration: Duration(milliseconds: 200),
       curve: Curves.easeInOutCubic,
     ),
-  }) : child = SBBHeaderbox.large(
+  })  : floating = true,
+        child = SBBHeaderbox.large(
           title: title,
           leadingIcon: leadingIcon,
           secondaryLabel: secondaryLabel,
@@ -56,12 +56,11 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
   SBBSliverFloatingHeaderbox.custom({
     super.key,
     required Widget child,
-    EdgeInsets margin =
-        const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
+    EdgeInsets margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
     EdgeInsets padding = const EdgeInsets.all(sbbDefaultSpacing),
     SBBHeaderboxFlap? flap,
     String? semanticsLabel,
-    bool floating = false,
+    this.floating = false,
     this.snapStyle = const AnimationStyle(
       duration: Duration(milliseconds: 200),
       curve: Curves.easeInOutCubic,
@@ -76,20 +75,20 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
 
   final Widget child;
   final AnimationStyle snapStyle;
+  final bool floating;
 
   @override
-  State<SBBSliverFloatingHeaderbox> createState() =>
-      _SBBSliverFloatingHeaderboxState();
+  State<SBBSliverFloatingHeaderbox> createState() => _SBBSliverFloatingHeaderboxState();
 }
 
-class _SBBSliverFloatingHeaderboxState extends State<SBBSliverFloatingHeaderbox>
-    with SingleTickerProviderStateMixin {
+class _SBBSliverFloatingHeaderboxState extends State<SBBSliverFloatingHeaderbox> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return SliverPinnedFloatingWidget(
       vsync: this,
       animationStyle: widget.snapStyle,
       snapMode: FloatingHeaderSnapMode.scroll,
+      floating: widget.floating,
       child: _SnapTrigger(
         widget.child,
       ),
@@ -132,8 +131,8 @@ class _SnapTriggerState extends State<_SnapTrigger> {
   // Called when the sliver starts or ends scrolling.
   void isScrollingListener() {
     assert(position != null);
-    final RenderSliverPinnedFloatingWidget? renderer = context
-        .findAncestorRenderObjectOfType<RenderSliverPinnedFloatingWidget>();
+    final RenderSliverPinnedFloatingWidget? renderer =
+        context.findAncestorRenderObjectOfType<RenderSliverPinnedFloatingWidget>();
     renderer?.isScrollingUpdate(position!);
   }
 

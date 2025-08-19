@@ -11,12 +11,14 @@ class SliverPinnedFloatingWidget extends SingleChildRenderObjectWidget {
     required super.child,
     required this.vsync,
     required this.animationStyle,
-    required this.snapMode,
+    this.snapMode = FloatingHeaderSnapMode.scroll,
+    this.floating = false,
   });
 
   final TickerProvider vsync;
   final AnimationStyle animationStyle;
   final FloatingHeaderSnapMode snapMode;
+  final bool floating;
 
   @override
   RenderObject createRenderObject(BuildContext context) {
@@ -24,6 +26,7 @@ class SliverPinnedFloatingWidget extends SingleChildRenderObjectWidget {
       vsync: vsync,
       animationStyle: animationStyle,
       snapMode: snapMode,
+      floating: floating,
     );
   }
 
@@ -32,7 +35,8 @@ class SliverPinnedFloatingWidget extends SingleChildRenderObjectWidget {
     renderObject
       ..vsync = vsync
       ..animationStyle = animationStyle
-      ..snapMode = snapMode;
+      ..snapMode = snapMode
+      ..floating = floating;
   }
 }
 
@@ -42,6 +46,7 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
     required this.animationStyle,
     TickerProvider? vsync,
     this.snapMode = FloatingHeaderSnapMode.scroll,
+    this.floating = true,
     super.child,
   }) : _vsync = vsync;
 
@@ -66,6 +71,7 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
 
   AnimationStyle? animationStyle;
   FloatingHeaderSnapMode snapMode;
+  bool floating = true;
 
   double _previousScrollOffset = 0.0;
   double _internalScrollOffset = 0.0;
@@ -80,7 +86,7 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
 
   // Amount that can be scrolled
   double get extent {
-    if (child == null) {
+    if (child == null || !floating) {
       return 0.0;
     }
     return maxExtent - minExtent;
@@ -90,14 +96,19 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
     if (child == null) {
       return 0.0;
     }
+
+    if(!floating) {
+      return maxExtent;
+    }
+
     return lerpDouble(maxExtent, minExtent, _internalScrollOffset / extent)!;
   }
 
   void _updateExtent() {
     final crossAxisExtent = constraints.crossAxisExtent > 1.0 ? constraints.crossAxisExtent : double.infinity;
 
-    minExtent = child!.getMinIntrinsicHeight(crossAxisExtent);
     maxExtent = child!.getMaxIntrinsicHeight(crossAxisExtent);
+    minExtent = child!.getMinIntrinsicHeight(crossAxisExtent);
   }
 
   @override
@@ -142,14 +153,14 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
 
     final layoutExtent = max(0.0, maxExtent - scrollOffset);
 
-    final double paintedChildSize = max(layoutExtent, extent);
+    final double paintedChildSize = max(layoutExtent, maxExtent);
     final double cacheExtent = maxExtent;
 
     assert(paintedChildSize.isFinite);
     assert(paintedChildSize >= 0.0);
     geometry = SliverGeometry(
       layoutExtent: layoutExtent,
-      scrollExtent: extent,
+      scrollExtent: maxExtent - minExtent, // do not use `extent`
       paintExtent: paintedChildSize,
       cacheExtent: cacheExtent,
       maxPaintExtent: maxExtent,

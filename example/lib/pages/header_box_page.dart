@@ -60,6 +60,7 @@ class _HeaderBoxPageState extends State<HeaderBoxPage> {
   }
 
   void _handlePageViewChanged(int newPageIndex) {
+    FocusManager.instance.primaryFocus?.unfocus();
     _pageViewController.animateToPage(
       newPageIndex,
       duration: const Duration(milliseconds: 400),
@@ -254,32 +255,61 @@ class FloatingPage extends StatefulWidget {
 
 class _FloatingPageState extends State<FloatingPage> {
   bool pushMode = true;
+  bool floating = true;
+  bool showAll = false;
 
   @override
   Widget build(BuildContext context) {
     final sbbToast = SBBToast.of(context);
     final style = SBBBaseStyle.of(context);
-    return CustomScrollView(
-      slivers: [
-        SBBSliverHeaderbox.custom(
-          floating: true,
-          padding: EdgeInsets.zero,
-          flap: SBBHeaderboxFlap(
-            title: 'Thursday, 01/31/2025',
-            allowFloating: true,
-          ),
-          child: SBBStackedColumn(
-            children: [_upperRow(context, style), _bottomRow(sbbToast, style)],
-          ),
+    return FocusScope(
+      onFocusChange: (focused) => setState(() {
+        floating = !focused;
+      }),
+      child: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: CustomScrollView(
+          slivers: [
+            SBBSliverFloatingHeaderbox.custom(
+              floating: floating,
+              padding: EdgeInsets.zero,
+              flap: SBBHeaderboxFlap.custom(
+                allowFloating: true,
+                child: Row(
+                  children: [
+                    Text('Thursday, 01/31/2025'),
+                    Spacer(),
+                    SBBIconButtonSmall(
+                        icon: showAll ? SBBIcons.arrow_up_small : SBBIcons.arrow_down_small,
+                        onPressed: () {
+                          setState(() {
+                            showAll = !showAll;
+                          });
+                        }),
+                  ],
+                ),
+              ),
+              child: SBBStackedColumn(
+                children: [
+                  _upperRow(context, style),
+                  if (showAll) ..._additionalRows(context),
+                  _bottomRow(sbbToast, style),
+                ],
+              ),
+            ),
+            SliverList.builder(
+              itemCount: 60,
+              itemBuilder: (context, index) => SBBListItem(
+                title: 'Item $index',
+                onPressed: () {
+                  FocusScope.of(context).unfocus();
+                  sbbToast.show(title: 'Pressed Item $index', bottom: sbbDefaultSpacing * 6);
+                },
+              ),
+            )
+          ],
         ),
-        SliverList.builder(
-          itemCount: 60,
-          itemBuilder: (context, index) => SBBListItem(
-            title: 'Item $index',
-            onPressed: () => sbbToast.show(title: 'Pressed Item $index', bottom: sbbDefaultSpacing * 6),
-          ),
-        )
-      ],
+      ),
     );
   }
 
@@ -374,6 +404,7 @@ class _FloatingPageState extends State<FloatingPage> {
               onTap: () {
                 setState(() {
                   pushMode = !pushMode;
+                  FocusScope.of(context).unfocus();
                 });
                 sbbToast.show(title: 'Toggled mode', bottom: sbbDefaultSpacing * 6);
               },
@@ -411,6 +442,29 @@ class _FloatingPageState extends State<FloatingPage> {
         margin: EdgeInsets.all(3),
       ),
     );
+  }
+
+  List<Widget> _additionalRows(BuildContext context) {
+    return [
+      SBBListItem(title: 'Static', onPressed: null),
+      SBBStackedItem(
+        builder: (context, state, _) => SBBListItem(
+            title: 'Global expansion rate: ${state.globalExpansionRate.toStringAsFixed(2)}', onPressed: null),
+      ),
+      SBBStackedItem.aligned(
+        alignment: Alignment.center,
+        clipBehavior: Clip.hardEdge,
+        child: SBBListItem(title: 'Shrink', onPressed: null),
+      ),
+      SBBStackedItem.aligned(
+        alignment: Alignment.topLeft,
+        builder: (context, state, child) => Transform.translate(
+          offset: Offset((1.0 - state.localExpansionRate) * 30, 0.0),
+          child: child,
+        ),
+        child: SBBListItem(title: 'Collapse with overlap with builder', onPressed: null),
+      ),
+    ];
   }
 }
 

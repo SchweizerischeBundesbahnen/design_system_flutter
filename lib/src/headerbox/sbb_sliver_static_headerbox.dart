@@ -52,16 +52,16 @@ class SBBSliverStaticHeaderbox extends SingleChildRenderObjectWidget {
     EdgeInsets margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
     String? semanticsLabel,
   }) : super(
-    child: SBBHeaderbox(
-      title: title,
-      leadingIcon: leadingIcon,
-      secondaryLabel: secondaryLabel,
-      trailingWidget: trailingWidget,
-      margin: margin,
-      flap: flap,
-      semanticsLabel: semanticsLabel,
-    ),
-  );
+          child: SBBHeaderbox(
+            title: title,
+            leadingIcon: leadingIcon,
+            secondaryLabel: secondaryLabel,
+            trailingWidget: trailingWidget,
+            margin: margin,
+            flap: flap,
+            semanticsLabel: semanticsLabel,
+          ),
+        );
 
   /// The large [SBBSliverStaticHeaderbox].
   ///
@@ -84,16 +84,16 @@ class SBBSliverStaticHeaderbox extends SingleChildRenderObjectWidget {
     EdgeInsets margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
     String? semanticsLabel,
   }) : super(
-    child: SBBHeaderbox.large(
-      title: title,
-      leadingIcon: leadingIcon,
-      secondaryLabel: secondaryLabel,
-      trailingWidget: trailingWidget,
-      margin: margin,
-      flap: flap,
-      semanticsLabel: semanticsLabel,
-    ),
-  );
+          child: SBBHeaderbox.large(
+            title: title,
+            leadingIcon: leadingIcon,
+            secondaryLabel: secondaryLabel,
+            trailingWidget: trailingWidget,
+            margin: margin,
+            flap: flap,
+            semanticsLabel: semanticsLabel,
+          ),
+        );
 
   /// Allows complete customization of the [SBBSliverStaticHeaderbox].
   SBBSliverStaticHeaderbox.custom({
@@ -103,16 +103,15 @@ class SBBSliverStaticHeaderbox extends SingleChildRenderObjectWidget {
     EdgeInsets padding = const EdgeInsets.all(sbbDefaultSpacing),
     SBBHeaderboxFlap? flap,
     String? semanticsLabel,
-    bool floating = false,
   }) : super(
-    child: SBBHeaderbox.custom(
-      margin: margin,
-      padding: padding,
-      flap: flap,
-      semanticsLabel: semanticsLabel,
-      child: child,
-    ),
-  );
+          child: SBBHeaderbox.custom(
+            margin: margin,
+            padding: padding,
+            flap: flap,
+            semanticsLabel: semanticsLabel,
+            child: child,
+          ),
+        );
 
   @override
   RenderSliverPinHeader createRenderObject(BuildContext context) {
