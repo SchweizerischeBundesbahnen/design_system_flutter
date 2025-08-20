@@ -14,6 +14,13 @@ class OverrideIntrinsics extends SingleChildRenderObjectWidget {
     super.child,
   });
 
+  const OverrideIntrinsics.ignore({Key? key})
+      : this(
+          key: key,
+          minHeight: 0.0,
+          maxHeight: 0.0,
+        );
+
   final double? minHeight;
   final double? maxHeight;
   final double? minWidth;
