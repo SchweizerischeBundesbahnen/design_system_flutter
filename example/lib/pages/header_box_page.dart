@@ -317,12 +317,23 @@ class _FloatingPageState extends State<FloatingPage> {
   }
 
   SBBStackedItem _upperRow(BuildContext context, SBBBaseStyle style) {
+    final key = GlobalKey();
     return SBBStackedItem.crossfade(
-      firstChild: Padding(
-        padding: const EdgeInsets.all(sbbDefaultSpacing),
-        child: Text(
-          'Bern → Bern Wankdorf',
-          style: SBBTextStyles.mediumBold,
+      firstChild: Material(
+        color: SBBColors.transparent,
+        child: InkWell(
+          key: key,
+          onTap: () {
+            SBBSliverFloatingHeaderbox.expand(key.currentContext!);
+          },
+          child: Container(
+            constraints: BoxConstraints(minWidth: double.infinity),
+            padding: const EdgeInsets.all(sbbDefaultSpacing),
+            child: Text(
+              'Bern → Bern Wankdorf',
+              style: SBBTextStyles.mediumBold,
+            ),
+          ),
         ),
       ),
       secondChild: Padding(

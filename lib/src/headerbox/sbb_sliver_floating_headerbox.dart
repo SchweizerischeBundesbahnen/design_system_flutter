@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:sbb_design_system_mobile/src/headerbox/sbb_headerbox_content.dart';
 
 import '../../sbb_design_system_mobile.dart';
@@ -84,12 +85,12 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
     SBBHeaderboxFlap? flap,
     EdgeInsets margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
     String? semanticsLabel,
-    Widget? collapsingWidget,
+    Widget? contractingWidget,
     bool floating = true,
     AnimationStyle snapStyle = defaultAnimationStyle,
   }) : this.custom(
           key: key,
-          child: collapsingWidget == null
+          child: contractingWidget == null
               ? LargeHeaderBoxContent(
                   title: title,
                   leadingIcon: leadingIcon,
@@ -105,7 +106,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
                       trailingWidget: trailingWidget,
                     ),
                     SBBStackedItem.aligned(
-                      child: collapsingWidget,
+                      child: contractingWidget,
                     )
                   ],
                 ),
@@ -183,6 +184,18 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
 
   @override
   State<SBBSliverFloatingHeaderbox> createState() => _SBBSliverFloatingHeaderboxState();
+
+  /// Allows you to expand the header box.
+  /// [context] is expected to be a descendant of the header box.
+  static Future<void> expand(BuildContext context) async {
+    await context.findAncestorStateOfType<_SnapTriggerState>()?.onSnapRequested(true);
+  }
+
+  /// Allows you to contract the header box.
+  /// [context] is expected to be a descendant of the header box.
+  static Future<void> contract(BuildContext context) async {
+    await context.findAncestorStateOfType<_SnapTriggerState>()?.onSnapRequested(false);
+  }
 }
 
 class _SBBSliverFloatingHeaderboxState extends State<SBBSliverFloatingHeaderbox> with TickerProviderStateMixin {
@@ -194,14 +207,17 @@ class _SBBSliverFloatingHeaderboxState extends State<SBBSliverFloatingHeaderbox>
       snapMode: FloatingHeaderSnapMode.scroll,
       floating: widget.floating,
       child: _SnapTrigger(
-        widget.child,
+        child: widget.child,
       ),
     );
   }
 }
 
 class _SnapTrigger extends StatefulWidget {
-  const _SnapTrigger(this.child);
+  const _SnapTrigger({
+    super.key,
+    required this.child,
+  });
 
   final Widget child;
 
@@ -238,6 +254,13 @@ class _SnapTriggerState extends State<_SnapTrigger> {
     final RenderSliverPinnedFloatingWidget? renderer =
         context.findAncestorRenderObjectOfType<RenderSliverPinnedFloatingWidget>();
     renderer?.isScrollingUpdate(position!);
+  }
+
+  Future<void> onSnapRequested(bool expand) async {
+    final RenderSliverPinnedFloatingWidget? renderer =
+        context.findAncestorRenderObjectOfType<RenderSliverPinnedFloatingWidget>();
+
+    await renderer?.snap(expand ? ScrollDirection.forward : ScrollDirection.reverse);
   }
 
   @override

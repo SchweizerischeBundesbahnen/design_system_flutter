@@ -172,6 +172,46 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
     setChildParentData(child!, constraints, geometry!);
   }
 
+  Future<void> snap(ScrollDirection direction) {
+    final bool headerIsPartiallyVisible = switch (direction) {
+      ScrollDirection.forward when _internalScrollOffset <= 0 => false, // completely visible
+      ScrollDirection.reverse when _internalScrollOffset >= extent => false, // not visible
+      _ => true,
+    };
+    if (headerIsPartiallyVisible) {
+      snapController ??= AnimationController(vsync: vsync!)
+        ..addListener(() {
+          if (_virtualScroll != snapAnimation.value) {
+            _virtualScroll = snapAnimation.value;
+            markNeedsLayout();
+          }
+        });
+      snapController!.duration = switch (direction) {
+        ScrollDirection.forward => animationStyle?.duration ?? const Duration(milliseconds: 300),
+        _ => animationStyle?.reverseDuration ?? const Duration(milliseconds: 300),
+      };
+      snapAnimation = snapController!.drive(
+        Tween<double>(
+          begin: _internalScrollOffset,
+          end: switch (direction) {
+            ScrollDirection.forward => 0,
+            _ => extent,
+          },
+        ).chain(
+          CurveTween(
+            curve: switch (direction) {
+              ScrollDirection.forward => animationStyle?.curve ?? Curves.easeInOut,
+              _ => animationStyle?.reverseCurve ?? Curves.easeInOut,
+            },
+          ),
+        ),
+      );
+      return snapController!.forward(from: 0.0);
+    }
+
+    return Future.value();
+  }
+
   void isScrollingUpdate(ScrollPosition position) {
     if (kIsWeb) return;
 
@@ -193,41 +233,8 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
               ? ScrollDirection.forward
               : ScrollDirection.reverse;
 
-      final bool headerIsPartiallyVisible = switch (direction) {
-        ScrollDirection.forward when _internalScrollOffset <= 0 => false, // completely visible
-        ScrollDirection.reverse when _internalScrollOffset >= extent => false, // not visible
-        _ => true,
-      };
-      if (headerIsPartiallyVisible) {
-        snapController ??= AnimationController(vsync: vsync!)
-          ..addListener(() {
-            if (_virtualScroll != snapAnimation.value) {
-              _virtualScroll = snapAnimation.value;
-              markNeedsLayout();
-            }
-          });
-        snapController!.duration = switch (direction) {
-          ScrollDirection.forward => animationStyle?.duration ?? const Duration(milliseconds: 300),
-          _ => animationStyle?.reverseDuration ?? const Duration(milliseconds: 300),
-        };
-        snapAnimation = snapController!.drive(
-          Tween<double>(
-            begin: _internalScrollOffset,
-            end: switch (direction) {
-              ScrollDirection.forward => 0,
-              _ => extent,
-            },
-          ).chain(
-            CurveTween(
-              curve: switch (direction) {
-                ScrollDirection.forward => animationStyle?.curve ?? Curves.easeInOut,
-                _ => animationStyle?.reverseCurve ?? Curves.easeInOut,
-              },
-            ),
-          ),
-        );
-        snapController!.forward(from: 0.0);
-      }
+
+      snap(direction);
     }
   }
 
