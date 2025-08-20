@@ -55,7 +55,6 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
   /// Allows complete customization of the [SBBSliverStaticHeaderbox].
   SBBSliverFloatingHeaderbox.custom({
     super.key,
-    required Widget child,
     EdgeInsets margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
     EdgeInsets padding = const EdgeInsets.all(sbbDefaultSpacing),
     SBBHeaderboxFlap? flap,
@@ -65,13 +64,28 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
       duration: Duration(milliseconds: 200),
       curve: Curves.easeInOutCubic,
     ),
-  }) : child = SBBHeaderbox.custom(
-          margin: margin,
-          padding: padding,
-          flap: flap,
-          semanticsLabel: semanticsLabel,
-          child: child,
-        );
+    Widget? leading,
+    required Widget child,
+  }) : child = leading != null
+            ? SBBStackedColumn(
+                children: [
+                  leading,
+                  SBBHeaderbox.custom(
+                    margin: margin,
+                    padding: padding,
+                    flap: flap,
+                    semanticsLabel: semanticsLabel,
+                    child: child,
+                  )
+                ],
+              )
+            : SBBHeaderbox.custom(
+                margin: margin,
+                padding: padding,
+                flap: flap,
+                semanticsLabel: semanticsLabel,
+                child: child,
+              );
 
   final Widget child;
   final AnimationStyle snapStyle;
