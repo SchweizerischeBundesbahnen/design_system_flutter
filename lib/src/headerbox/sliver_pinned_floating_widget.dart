@@ -153,7 +153,7 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
 
     final layoutExtent = max(0.0, maxExtent - scrollOffset);
 
-    final double paintedChildSize = max(layoutExtent, maxExtent);
+    final double paintedChildSize = max(layoutExtent, childSize);
     final double cacheExtent = maxExtent;
 
     assert(paintedChildSize.isFinite);

@@ -14,11 +14,12 @@ class OverrideIntrinsics extends SingleChildRenderObjectWidget {
     super.child,
   });
 
-  const OverrideIntrinsics.ignore({Key? key})
+  const OverrideIntrinsics.ignore({Key? key, required Widget child})
       : this(
           key: key,
           minHeight: 0.0,
           maxHeight: 0.0,
+          child: child,
         );
 
   final double? minHeight;
