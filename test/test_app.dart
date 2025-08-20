@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 class TestSpecs {
   const TestSpecs._({
@@ -91,7 +91,7 @@ class TestApp extends StatelessWidget {
       theme: SBBTheme.light(),
       darkTheme: SBBTheme.dark(),
       debugShowCheckedModeBanner: false,
-      builder: (_, __) => Scaffold(body: child),
+      builder: (_, __) => Overlay(initialEntries: [OverlayEntry(builder: (context) => Scaffold(body: child))]),
     );
   }
 }
