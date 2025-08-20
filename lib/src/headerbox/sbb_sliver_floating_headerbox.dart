@@ -5,7 +5,8 @@ import 'package:sbb_design_system_mobile/src/headerbox/sbb_headerbox_content.dar
 import '../../sbb_design_system_mobile.dart';
 import 'sliver_pinned_floating_widget.dart';
 
-const defaultAnimationStyle = AnimationStyle(
+// AnimationStyle was not `const` until recently.
+final defaultAnimationStyle = AnimationStyle(
   duration: Durations.short4,
   curve: Curves.easeInOutCubic,
 );
@@ -44,9 +45,10 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
     String? semanticsLabel,
     Widget? contractingWidget,
     bool floating = true,
-    AnimationStyle snapStyle = defaultAnimationStyle,
+    AnimationStyle? snapStyle,
   }) : this.custom(
           key: key,
+          snapStyle: snapStyle,
           child: contractingWidget == null
               ? DefaultHeaderBoxContent(
                   title: title,
@@ -87,9 +89,10 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
     String? semanticsLabel,
     Widget? contractingWidget,
     bool floating = true,
-    AnimationStyle snapStyle = defaultAnimationStyle,
+    AnimationStyle? snapStyle,
   }) : this.custom(
           key: key,
+          snapStyle: snapStyle,
           child: contractingWidget == null
               ? LargeHeaderBoxContent(
                   title: title,
@@ -122,7 +125,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
     SBBHeaderboxFlap? flap,
     String? semanticsLabel,
     this.floating = true,
-    this.snapStyle = defaultAnimationStyle,
+    this.snapStyle,
     Widget? leading,
     required List<Widget> children,
   }) : child = leading != null
@@ -154,7 +157,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
     SBBHeaderboxFlap? flap,
     String? semanticsLabel,
     this.floating = true,
-    this.snapStyle = defaultAnimationStyle,
+    this.snapStyle,
     Widget? leading,
     required Widget child,
   }) : child = leading != null
@@ -179,7 +182,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
               );
 
   final Widget child;
-  final AnimationStyle snapStyle;
+  final AnimationStyle? snapStyle;
   final bool floating;
 
   @override
@@ -203,7 +206,7 @@ class _SBBSliverFloatingHeaderboxState extends State<SBBSliverFloatingHeaderbox>
   Widget build(BuildContext context) {
     return SliverPinnedFloatingWidget(
       vsync: this,
-      animationStyle: widget.snapStyle,
+      animationStyle: widget.snapStyle ?? defaultAnimationStyle,
       snapMode: FloatingHeaderSnapMode.scroll,
       floating: widget.floating,
       child: _SnapTrigger(
