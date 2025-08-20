@@ -159,6 +159,7 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
     assert(paintedChildSize.isFinite);
     assert(paintedChildSize >= 0.0);
     geometry = SliverGeometry(
+      paintOrigin: constraints.overlap,
       layoutExtent: layoutExtent,
       scrollExtent: maxExtent - minExtent, // do not use `extent`
       paintExtent: paintedChildSize,

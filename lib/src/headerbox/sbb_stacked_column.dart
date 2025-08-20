@@ -13,6 +13,8 @@ typedef SBBStackedBuilder = Widget Function(
   Widget? child,
 );
 
+/// A widget that lays out its children the same way as a shrink-wrapped column,
+/// but contracts them one by one from bottom to top as it shrinks in size.
 class SBBStackedColumn extends MultiChildRenderObjectWidget {
   const SBBStackedColumn({
     super.key,
@@ -25,6 +27,8 @@ class SBBStackedColumn extends MultiChildRenderObjectWidget {
   }
 }
 
+/// A widget that lets you react to changes in expansion and contraction and provides
+/// several helper functions to achieve different effects.
 class SBBStackedItem extends StatelessWidget {
   SBBStackedItem({
     super.key,
@@ -46,18 +50,18 @@ class SBBStackedItem extends StatelessWidget {
         alignment: Alignment.centerLeft,
         children: [
           IgnorePointer(
-            ignoring: progress.localExpansionRate > 0.1,
+            ignoring: progress.expansionRate > 0.1,
             child: Opacity(
-              opacity: 1.0 - progress.localExpansionRate,
+              opacity: 1.0 - progress.expansionRate,
               child: firstChild,
             ),
           ),
           OverrideIntrinsics(
             minHeight: 0.0,
             child: IgnorePointer(
-              ignoring: progress.localExpansionRate < 0.9,
+              ignoring: progress.expansionRate < 0.9,
               child: Opacity(
-                opacity: progress.localExpansionRate,
+                opacity: progress.expansionRate,
                 child: secondChild,
               ),
             ),
@@ -296,7 +300,7 @@ class _RenderStackedColumn extends RenderBox
 
       _queueProgressUpdate(
         parentData,
-        ExpansionState(localExpansionRate: progress, globalExpansionRate: totalProgress),
+        ExpansionState(expansionRate: progress, totalExpansionRate: totalProgress),
       );
 
       child = parentData.previousSibling;
@@ -355,31 +359,34 @@ class StackedColumnParentData extends ContainerBoxParentData<RenderBox> {
   ValueNotifier<ExpansionState>? progressNotifier;
 }
 
+
+/// Stores the current state of expansion (and contraction).
 @immutable
 final class ExpansionState {
   const ExpansionState({
-    required this.localExpansionRate,
-    required this.globalExpansionRate,
+    required this.expansionRate,
+    required this.totalExpansionRate,
   });
 
-  const ExpansionState.of(double local, double global) : this(localExpansionRate: local, globalExpansionRate: global);
+  const ExpansionState.of(double local, double global) : this(expansionRate: local, totalExpansionRate: global);
 
-  final double localExpansionRate;
-  final double globalExpansionRate;
+  final double expansionRate;
+  final double totalExpansionRate;
 
-  double get localCollapseRate => 1.0 - localExpansionRate;
-  double get globalCollapseRate => 1.0 - globalExpansionRate;
+  double get contractionRate => 1.0 - expansionRate;
+
+  double get totalContractionRate => 1.0 - totalExpansionRate;
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is ExpansionState &&
           runtimeType == other.runtimeType &&
-          localExpansionRate == other.localExpansionRate &&
-          globalExpansionRate == other.globalExpansionRate;
+          expansionRate == other.expansionRate &&
+          totalExpansionRate == other.totalExpansionRate;
 
   @override
-  int get hashCode => localExpansionRate.hashCode ^ globalExpansionRate.hashCode;
+  int get hashCode => expansionRate.hashCode ^ totalExpansionRate.hashCode;
 }
 
 class _ProgressUpdate {

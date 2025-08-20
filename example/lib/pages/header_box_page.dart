@@ -270,7 +270,7 @@ class _FloatingPageState extends State<FloatingPage> {
         onTap: () => FocusScope.of(context).unfocus(),
         child: CustomScrollView(
           slivers: [
-            SBBSliverFloatingHeaderbox.custom(
+            SBBSliverFloatingHeaderbox.stacked(
               floating: floating,
               padding: EdgeInsets.zero,
               flap: SBBHeaderboxFlap.custom(
@@ -294,13 +294,11 @@ class _FloatingPageState extends State<FloatingPage> {
                   ],
                 ),
               ),
-              child: SBBStackedColumn(
-                children: [
-                  _upperRow(context, style),
-                  if (showAll) ..._additionalRows(context),
-                  _bottomRow(sbbToast, style),
-                ],
-              ),
+              children: [
+                _upperRow(context, style),
+                if (showAll) ..._additionalRows(context),
+                _bottomRow(sbbToast, style),
+              ],
             ),
             SliverList.builder(
               itemCount: 60,
@@ -395,7 +393,7 @@ class _FloatingPageState extends State<FloatingPage> {
       alignment: alignment,
       clipBehavior: Clip.hardEdge,
       builder: (context, state, child) => Opacity(
-        opacity: state.localExpansionRate,
+        opacity: state.expansionRate,
         child: child,
       ),
       child: Row(
@@ -454,7 +452,7 @@ class _FloatingPageState extends State<FloatingPage> {
       SBBListItem(title: 'Static', onPressed: null),
       SBBStackedItem(
         builder: (context, state, _) => FractionallySizedBox(
-          widthFactor: state.globalCollapseRate,
+          widthFactor: state.totalContractionRate,
           alignment: Alignment.topLeft,
           child: Container(
             height: 5,
@@ -470,7 +468,7 @@ class _FloatingPageState extends State<FloatingPage> {
       SBBStackedItem.aligned(
         alignment: Alignment.topLeft,
         builder: (context, state, child) => Transform.translate(
-          offset: Offset((1.0 - state.localExpansionRate) * 30, 0.0),
+          offset: Offset((1.0 - state.expansionRate) * 30, 0.0),
           child: child,
         ),
         child: SBBListItem(title: 'Collapse with overlap with builder', onPressed: null),

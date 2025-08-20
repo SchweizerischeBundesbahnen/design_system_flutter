@@ -1,11 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/src/headerbox/sbb_headerbox_content.dart';
 
 import '../../sbb_design_system_mobile.dart';
 import 'sliver_pinned_floating_widget.dart';
 
+const defaultAnimationStyle = AnimationStyle(
+  duration: Durations.short4,
+  curve: Curves.easeInOutCubic,
+);
+
+/// A floating, expanding, and contracting version of the SBB Sliver Headerbox.
+///
+/// This widget behaves the same as [SBBSliverHeaderbox] but allows you to include contracting children.
+/// To achieve this effect, the widget looks at the minimum and maximum intrinsic heights and transitions between them.
+///
+/// The most flexible way to use it is like so:
+///
+/// ```dart
+/// CustomScrollView(
+///   slivers: [
+///     SBBSliverFloatingHeaderbox.stacked(
+///       _StaticHeader(),
+///       SBBStackedItem.aligned(
+///         alignment: Alignment.bottomLeft,
+///         child: ...
+///       ).
+///     )
+///   ]
+/// )
+/// ```
+///
+/// See [SBBStackedColumn] and [SBBStackedItem] for ways to build contracting items.
 class SBBSliverFloatingHeaderbox extends StatefulWidget {
   SBBSliverFloatingHeaderbox({
-    super.key,
+    Key? key,
     required String title,
     IconData? leadingIcon,
     String? secondaryLabel,
@@ -13,23 +41,42 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
     SBBHeaderboxFlap? flap,
     EdgeInsets margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
     String? semanticsLabel,
-    this.snapStyle = const AnimationStyle(
-      duration: Duration(milliseconds: 200),
-      curve: Curves.easeInOutCubic,
-    ),
-  })  : floating = true,
-        child = SBBHeaderbox(
-          title: title,
-          leadingIcon: leadingIcon,
-          secondaryLabel: secondaryLabel,
-          trailingWidget: trailingWidget,
+    Widget? contractingWidget,
+    bool floating = true,
+    AnimationStyle snapStyle = defaultAnimationStyle,
+  }) : this.custom(
+          key: key,
+          child: contractingWidget == null
+              ? DefaultHeaderBoxContent(
+                  title: title,
+                  leadingIcon: leadingIcon,
+                  secondaryLabel: secondaryLabel,
+                  trailingWidget: trailingWidget,
+                )
+              : SBBStackedColumn(
+                  children: [
+                    DefaultHeaderBoxContent(
+                      title: title,
+                      leadingIcon: leadingIcon,
+                      secondaryLabel: secondaryLabel,
+                      trailingWidget: trailingWidget,
+                    ),
+                    SBBStackedItem.aligned(
+                      builder: (context, state, child) => Opacity(
+                        opacity: state.expansionRate,
+                        child: child,
+                      ),
+                      child: contractingWidget,
+                    )
+                  ],
+                ),
           margin: margin,
           flap: flap,
           semanticsLabel: semanticsLabel,
         );
 
   SBBSliverFloatingHeaderbox.large({
-    super.key,
+    Key? key,
     required String title,
     IconData? leadingIcon,
     String? secondaryLabel,
@@ -37,20 +84,66 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
     SBBHeaderboxFlap? flap,
     EdgeInsets margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
     String? semanticsLabel,
-    this.snapStyle = const AnimationStyle(
-      duration: Duration(milliseconds: 200),
-      curve: Curves.easeInOutCubic,
-    ),
-  })  : floating = true,
-        child = SBBHeaderbox.large(
-          title: title,
-          leadingIcon: leadingIcon,
-          secondaryLabel: secondaryLabel,
-          trailingWidget: trailingWidget,
+    Widget? collapsingWidget,
+    bool floating = true,
+    AnimationStyle snapStyle = defaultAnimationStyle,
+  }) : this.custom(
+          key: key,
+          child: collapsingWidget == null
+              ? LargeHeaderBoxContent(
+                  title: title,
+                  leadingIcon: leadingIcon,
+                  secondaryLabel: secondaryLabel,
+                  trailingWidget: trailingWidget,
+                )
+              : SBBStackedColumn(
+                  children: [
+                    LargeHeaderBoxContent(
+                      title: title,
+                      leadingIcon: leadingIcon,
+                      secondaryLabel: secondaryLabel,
+                      trailingWidget: trailingWidget,
+                    ),
+                    SBBStackedItem.aligned(
+                      child: collapsingWidget,
+                    )
+                  ],
+                ),
           margin: margin,
           flap: flap,
           semanticsLabel: semanticsLabel,
         );
+
+  SBBSliverFloatingHeaderbox.stacked({
+    super.key,
+    EdgeInsets margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
+    EdgeInsets padding = const EdgeInsets.all(sbbDefaultSpacing),
+    SBBHeaderboxFlap? flap,
+    String? semanticsLabel,
+    this.floating = true,
+    this.snapStyle = defaultAnimationStyle,
+    Widget? leading,
+    required List<Widget> children,
+  }) : child = leading != null
+            ? SBBStackedColumn(
+                children: [
+                  leading,
+                  SBBHeaderbox.custom(
+                    margin: margin,
+                    padding: padding,
+                    flap: flap,
+                    semanticsLabel: semanticsLabel,
+                    child: SBBStackedColumn(children: children),
+                  )
+                ],
+              )
+            : SBBHeaderbox.custom(
+                margin: margin,
+                padding: padding,
+                flap: flap,
+                semanticsLabel: semanticsLabel,
+                child: SBBStackedColumn(children: children),
+              );
 
   /// Allows complete customization of the [SBBSliverStaticHeaderbox].
   SBBSliverFloatingHeaderbox.custom({
@@ -59,11 +152,8 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
     EdgeInsets padding = const EdgeInsets.all(sbbDefaultSpacing),
     SBBHeaderboxFlap? flap,
     String? semanticsLabel,
-    this.floating = false,
-    this.snapStyle = const AnimationStyle(
-      duration: Duration(milliseconds: 200),
-      curve: Curves.easeInOutCubic,
-    ),
+    this.floating = true,
+    this.snapStyle = defaultAnimationStyle,
     Widget? leading,
     required Widget child,
   }) : child = leading != null
