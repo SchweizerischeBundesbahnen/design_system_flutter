@@ -296,7 +296,20 @@ class _FloatingPageState extends State<FloatingPage> {
               ),
               children: [
                 _upperRow(context, style),
-                if (showAll) ..._additionalRows(context),
+                AnimatedSwitcher(
+                  duration: Durations.long2,
+                  switchInCurve: Curves.easeInOutCubic,
+                  switchOutCurve: Curves.easeInOutCubic,
+                  transitionBuilder: (child, anim) => SizeTransition(
+                    sizeFactor: anim,
+                    child: child,
+                  ),
+                  child: showAll
+                      ? SBBStackedColumn(
+                          children: _additionalRows(context),
+                        )
+                      : SizedBox(),
+                ),
                 _bottomRow(sbbToast, style),
               ],
             ),
@@ -460,7 +473,7 @@ class _FloatingPageState extends State<FloatingPage> {
 
   List<Widget> _additionalRows(BuildContext context) {
     return [
-      SBBListItem(title: 'Static', onPressed: null),
+      SBBListItem(title: 'Static with progress bar', onPressed: null),
       SBBStackedItem(
         builder: (context, state, _) => FractionallySizedBox(
           widthFactor: state.totalContractionRate,
@@ -482,7 +495,7 @@ class _FloatingPageState extends State<FloatingPage> {
           offset: Offset((1.0 - state.expansionRate) * 30, 0.0),
           child: child,
         ),
-        child: SBBListItem(title: 'Collapse with overlap with builder', onPressed: null),
+        child: SBBListItem(title: 'React to progress', onPressed: null),
       ),
     ];
   }
