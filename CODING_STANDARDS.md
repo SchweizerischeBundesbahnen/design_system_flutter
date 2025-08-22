@@ -23,10 +23,10 @@ Your code should adhere to the effective [dart style](https://dart.dev/effective
 According to the above recommended style, we check our code for formatting with the `dart format` cli in our CI
 (before running src code generation, e.g. Mocks).
 The only deviation is a line length of
-`120` compared to the standard guide. If your code does not follow these standards,
+`100` compared to the standard guide. If your code does not follow these standards,
 the CI will fail. We run this step:
 
 ```yml
 - name: Format check
-  run: dart format --page-width 120 -o none --set-exit-if-changed .
+  run: dart format --page-width 100 -o none --set-exit-if-changed .
 ```
