@@ -1,3 +1,6 @@
+[![build](https://github.com/SchweizerischeBundesbahnen/design_system_flutter/actions/workflows/nightly-build.yaml/badge.svg)](https://github.com/SchweizerischeBundesbahnen/design_system_flutter/actions/workflows/nightly-build.yaml)
+[![pub package](https://img.shields.io/pub/v/sbb_design_system_mobile.svg)](https://pub.dev/packages/sbb_design_system_mobile)
+
 This Flutter package contains official UI elements of the SBB (Swiss Federal Railways) [Design System Mobile].
 It allows an easy integration of SBB theming to your Flutter app (with the possibility of a custom color theming).
 Elements are optimized for dynamic TextSizes, VoiceOver, light & dark mode.
@@ -101,7 +104,7 @@ A the moment, the following documents are only available to people internal to S
 
 ## License
 
-This project is licensed under [MIT](LICENSE.md).
+This project is licensed under [MIT](LICENSE).
 
 <a id="Contributing"></a>
 
@@ -109,7 +112,7 @@ This project is licensed under [MIT](LICENSE.md).
 
 Generally speaking, we are welcoming contributions improving existing UI elements or fixing certain bugs. We will also consider contributions introducing new design elements, but might reject them, if they do not reflect our vision of SBB Design System.
 
-General instructions on _how_ to contribute can be found under [Contributing](Contributing.md).
+General instructions on _how_ to contribute can be found under [Contributing](CONTRIBUTING.md).
 
 
 ### Testing
