@@ -71,17 +71,9 @@ class _ChipPageState extends State<ChipPage> {
           padding: const EdgeInsets.all(sbbDefaultSpacing),
           child: Column(
             children: [
-              SBBChip(
-                label: 'Default',
-                badgeLabel: 3.toString(),
-                onSelection: null,
-              ),
+              SBBChip(label: 'Default', badgeLabel: 3.toString(), onSelection: null),
               const SizedBox(height: sbbDefaultSpacing),
-              const SBBChip(
-                label: 'Selected',
-                onSelection: null,
-                selected: true,
-              ),
+              const SBBChip(label: 'Selected', onSelection: null, selected: true),
             ],
           ),
         ),

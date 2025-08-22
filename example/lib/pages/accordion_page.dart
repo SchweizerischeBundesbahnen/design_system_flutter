@@ -43,9 +43,7 @@ class AccordionPageState extends State<AccordionPage> {
         SBBGroup(
           child: SBBAccordion.single(
             title: 'Title text',
-            body: const Text(
-              'The body is only visible when the Accordion item is expanded.',
-            ),
+            body: const Text('The body is only visible when the Accordion item is expanded.'),
             isExpanded: _singleAccordionExpanded,
             singleAccordionCallback: (isExpanded) {
               setState(() {
@@ -65,11 +63,7 @@ class AccordionPageState extends State<AccordionPage> {
             },
             children:
                 _items1.map<SBBAccordionItem>((_Item item) {
-                  return SBBAccordionItem.text(
-                    title: item.title,
-                    text: item.text,
-                    isExpanded: item.isExpanded,
-                  );
+                  return SBBAccordionItem.text(title: item.title, text: item.text, isExpanded: item.isExpanded);
                 }).toList(),
           ),
         ),

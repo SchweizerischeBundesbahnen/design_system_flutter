@@ -12,9 +12,7 @@ class PaginationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Padding(
       padding: EdgeInsets.all(sbbDefaultSpacing),
-      child: Column(
-        children: <Widget>[ThemeModeSegmentedButton(), PaginationView()],
-      ),
+      child: Column(children: <Widget>[ThemeModeSegmentedButton(), PaginationView()]),
     );
   }
 }
@@ -39,10 +37,7 @@ class _PaginationViewState extends State<PaginationView> {
   Widget build(BuildContext context) {
     return Expanded(
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: sbbDefaultSpacing * 3,
-          horizontal: sbbDefaultSpacing,
-        ),
+        padding: const EdgeInsets.symmetric(vertical: sbbDefaultSpacing * 3, horizontal: sbbDefaultSpacing),
         child: Column(
           children: [
             _paginationHeader(),
@@ -50,10 +45,7 @@ class _PaginationViewState extends State<PaginationView> {
               flex: 10,
               child: PageView(
                 onPageChanged: _changeCurrentPage,
-                children: List<Widget>.generate(
-                  _kNumberPages,
-                  (int index) => _IndexedTextPage(pageIndex: index),
-                ),
+                children: List<Widget>.generate(_kNumberPages, (int index) => _IndexedTextPage(pageIndex: index)),
               ),
             ),
           ],
@@ -67,11 +59,7 @@ class _PaginationViewState extends State<PaginationView> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         _LabeledSBBPagination(label: 'Default', currentPage: currentPage),
-        _LabeledSBBPagination(
-          label: 'Floating',
-          currentPage: currentPage,
-          isFloating: true,
-        ),
+        _LabeledSBBPagination(label: 'Floating', currentPage: currentPage, isFloating: true),
       ],
     );
   }
@@ -82,11 +70,7 @@ class _PaginationViewState extends State<PaginationView> {
 }
 
 class _LabeledSBBPagination extends StatelessWidget {
-  const _LabeledSBBPagination({
-    required this.currentPage,
-    required this.label,
-    this.isFloating = false,
-  });
+  const _LabeledSBBPagination({required this.currentPage, required this.label, this.isFloating = false});
 
   final int currentPage;
   final String label;
@@ -98,11 +82,7 @@ class _LabeledSBBPagination extends StatelessWidget {
       children: [
         Text(label, style: SBBTextStyles.extraSmallLight),
         const SizedBox(height: sbbDefaultSpacing),
-        SBBPagination(
-          currentPage: currentPage,
-          numberPages: _kNumberPages,
-          isFloating: isFloating,
-        ),
+        SBBPagination(currentPage: currentPage, numberPages: _kNumberPages, isFloating: isFloating),
       ],
     );
   }

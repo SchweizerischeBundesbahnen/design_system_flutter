@@ -20,10 +20,7 @@ class SegmentedButtonPageState extends State<SegmentedButtonPage> {
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
-        const Padding(
-          padding: EdgeInsets.all(sbbDefaultSpacing),
-          child: ThemeModeSegmentedButton(),
-        ),
+        const Padding(padding: EdgeInsets.all(sbbDefaultSpacing), child: ThemeModeSegmentedButton()),
         const SBBListHeader('Default (colors based on theme)'),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),

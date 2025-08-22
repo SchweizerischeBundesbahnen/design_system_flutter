@@ -10,10 +10,7 @@ class TextFieldPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        const Padding(
-          padding: EdgeInsets.all(16.0),
-          child: ThemeModeSegmentedButton(),
-        ),
+        const Padding(padding: EdgeInsets.all(16.0), child: ThemeModeSegmentedButton()),
         SBBGroup(
           margin: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Column(
@@ -23,10 +20,7 @@ class TextFieldPage extends StatelessWidget {
                 labelText: 'Label, Value',
                 controller: TextEditingController()..value = const TextEditingValue(text: 'Value'),
               ),
-              const SBBTextField(
-                labelText: 'Label, Hint, no Value',
-                hintText: 'Hint Value',
-              ),
+              const SBBTextField(labelText: 'Label, Hint, no Value', hintText: 'Hint Value'),
               SBBTextField(
                 labelText: 'With icon',
                 hintText: 'Hint',
@@ -36,11 +30,7 @@ class TextFieldPage extends StatelessWidget {
               SBBTextField(
                 labelText: 'Multiline',
                 maxLines: 3,
-                controller:
-                    TextEditingController()
-                      ..value = const TextEditingValue(
-                        text: "I'm\nmulti\nline",
-                      ),
+                controller: TextEditingController()..value = const TextEditingValue(text: "I'm\nmulti\nline"),
               ),
               SBBTextField(
                 labelText: 'Error Message',

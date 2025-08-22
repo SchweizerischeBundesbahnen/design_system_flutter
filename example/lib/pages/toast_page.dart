@@ -39,10 +39,7 @@ class _ToastPageState extends State<ToastPage> {
                             title: titleController.text,
                             action:
                                 actionController.text.isNotEmpty
-                                    ? SBBToastAction(
-                                      onPressed: () {},
-                                      title: actionController.text,
-                                    )
+                                    ? SBBToastAction(onPressed: () {}, title: actionController.text)
                                     : null,
                           );
                         },
@@ -58,10 +55,7 @@ class _ToastPageState extends State<ToastPage> {
                             duration: SBBToast.durationLong,
                             action:
                                 actionController.text.isNotEmpty
-                                    ? SBBToastAction(
-                                      onPressed: () {},
-                                      title: actionController.text,
-                                    )
+                                    ? SBBToastAction(onPressed: () {}, title: actionController.text)
                                     : null,
                           );
                         },
@@ -80,10 +74,7 @@ class _ToastPageState extends State<ToastPage> {
                         duration: const Duration(seconds: 5),
                         action:
                             actionController.text.isNotEmpty
-                                ? SBBToastAction(
-                                  onPressed: () {},
-                                  title: actionController.text,
-                                )
+                                ? SBBToastAction(onPressed: () {}, title: actionController.text)
                                 : null,
                         bottom: 128,
                       );
@@ -95,11 +86,7 @@ class _ToastPageState extends State<ToastPage> {
                   width: double.infinity,
                   child: SBBTertiaryButtonLarge(
                     label: 'Custom Toast',
-                    onPressed: () {
-                      sbbToast.builder(
-                        builder: (showToast) => _customToast(showToast),
-                      );
-                    },
+                    onPressed: () => sbbToast.builder(builder: (showToast) => _customToast(showToast)),
                   ),
                 ),
               ],
@@ -136,14 +123,8 @@ class _ToastPageState extends State<ToastPage> {
             padding: const EdgeInsets.all(sbbDefaultSpacing),
             child: Column(
               children: [
-                SBBTextField(
-                  labelText: 'Toast Title',
-                  controller: titleController,
-                ),
-                SBBTextField(
-                  labelText: 'Toast Action (empty action will hide action)',
-                  controller: actionController,
-                ),
+                SBBTextField(labelText: 'Toast Title', controller: titleController),
+                SBBTextField(labelText: 'Toast Action (empty action will hide action)', controller: actionController),
               ],
             ),
           ),
@@ -159,10 +140,7 @@ class _ToastPageState extends State<ToastPage> {
           (context, snap) =>
               snap.data ?? false
                   ? DecoratedBox(
-                    decoration: ShapeDecoration(
-                      shape: CircleBorder(),
-                      color: SBBColors.red,
-                    ),
+                    decoration: ShapeDecoration(shape: CircleBorder(), color: SBBColors.red),
                     child: SizedBox.fromSize(size: Size(100, 100)),
                   )
                   : SizedBox.shrink(),

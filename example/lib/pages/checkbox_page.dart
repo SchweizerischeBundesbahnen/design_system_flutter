@@ -39,16 +39,9 @@ class CheckboxPageState extends State<CheckboxPage> {
           padding: const EdgeInsets.all(sbbDefaultSpacing * .5),
           child: Row(
             children: [
-              SBBCheckbox(
-                onChanged: (bool? value) => setState(() => _value1 = value),
-                value: _value1,
-              ),
+              SBBCheckbox(onChanged: (bool? value) => setState(() => _value1 = value), value: _value1),
               SBBCheckbox(onChanged: null, value: _value1),
-              SBBCheckbox(
-                onChanged: (bool? value) => setState(() => _value2 = value),
-                value: _value2,
-                tristate: true,
-              ),
+              SBBCheckbox(onChanged: (bool? value) => setState(() => _value2 = value), value: _value2, tristate: true),
               SBBCheckbox(onChanged: null, value: _value2, tristate: true),
             ],
           ),
@@ -100,10 +93,7 @@ class CheckboxPageState extends State<CheckboxPage> {
                 label: 'Custom trailing Widget',
                 onChanged: _isEnabled ? (value) => setState(() => _listItemValue6 = value) : null,
                 trailingWidget: Padding(
-                  padding: EdgeInsetsDirectional.only(
-                    top: sbbDefaultSpacing / 4 * 3,
-                    end: sbbDefaultSpacing,
-                  ),
+                  padding: EdgeInsetsDirectional.only(top: sbbDefaultSpacing / 4 * 3, end: sbbDefaultSpacing),
                   child: Text('CHF 0.99'),
                 ),
               ),
@@ -179,10 +169,7 @@ class CheckboxPageState extends State<CheckboxPage> {
                 label: 'Custom trailing Widget',
                 onChanged: _isEnabled ? (value) => setState(() => _listItemValue6 = value) : null,
                 trailingWidget: Padding(
-                  padding: EdgeInsetsDirectional.only(
-                    top: sbbDefaultSpacing / 4 * 3,
-                    end: sbbDefaultSpacing,
-                  ),
+                  padding: EdgeInsetsDirectional.only(top: sbbDefaultSpacing / 4 * 3, end: sbbDefaultSpacing),
                   child: Text('CHF 0.99'),
                 ),
               ),

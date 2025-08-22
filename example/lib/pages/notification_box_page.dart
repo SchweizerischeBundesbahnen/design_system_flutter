@@ -56,11 +56,7 @@ class _NotificationBoxPage extends State<NotificationBoxPage> {
           padding: const EdgeInsets.all(sbbDefaultSpacing),
           child: Column(
             children: [
-              SBBNotificationBox.warning(
-                title: title,
-                text: text,
-                onTap: () {},
-              ),
+              SBBNotificationBox.warning(title: title, text: text, onTap: () {}),
               const SizedBox(height: sbbDefaultSpacing),
               SBBNotificationBox.warning(text: text),
               const SizedBox(height: sbbDefaultSpacing),
@@ -88,11 +84,7 @@ class _NotificationBoxPage extends State<NotificationBoxPage> {
           padding: const EdgeInsets.all(sbbDefaultSpacing),
           child: Column(
             children: [
-              SBBNotificationBox.success(
-                title: title,
-                text: text,
-                onTap: () {},
-              ),
+              SBBNotificationBox.success(title: title, text: text, onTap: () {}),
               const SizedBox(height: sbbDefaultSpacing),
               SBBNotificationBox.success(text: text),
               const SizedBox(height: sbbDefaultSpacing),
@@ -120,11 +112,7 @@ class _NotificationBoxPage extends State<NotificationBoxPage> {
           padding: const EdgeInsets.all(sbbDefaultSpacing),
           child: Column(
             children: [
-              SBBNotificationBox.information(
-                title: title,
-                onTap: () {},
-                text: text,
-              ),
+              SBBNotificationBox.information(title: title, onTap: () {}, text: text),
               const SizedBox(height: sbbDefaultSpacing),
               SBBNotificationBox.information(text: text),
               const SizedBox(height: sbbDefaultSpacing),

@@ -20,14 +20,8 @@ class ColorPage extends StatelessWidget {
           child: ThemeModeSegmentedButton(),
         ),
         _ColorShowcase(title: 'Colors', colorEntries: _colors),
-        _ColorShowcase(
-          title: 'Functional colors',
-          colorEntries: _functionalColors,
-        ),
-        _ColorShowcase(
-          title: 'Off brand colors',
-          colorEntries: _offBrandColors,
-        ),
+        _ColorShowcase(title: 'Functional colors', colorEntries: _functionalColors),
+        _ColorShowcase(title: 'Off brand colors', colorEntries: _offBrandColors),
       ],
     );
   }
@@ -47,21 +41,14 @@ class _ColorShowcase extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsetsDirectional.symmetric(
-              horizontal: sbbDefaultSpacing * 0.5,
-            ),
-            child: Text(
-              title,
-              style: SBBControlStyles.of(context).listHeaderTextStyle,
-            ),
+            padding: const EdgeInsetsDirectional.symmetric(horizontal: sbbDefaultSpacing * 0.5),
+            child: Text(title, style: SBBControlStyles.of(context).listHeaderTextStyle),
           ),
           // const SBBListHeader('Small Icons'),
           GridView.builder(
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: sbbDefaultSpacing * 10,
-            ),
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: sbbDefaultSpacing * 10),
             itemCount: colorEntries.length,
             itemBuilder: (BuildContext context, index) {
               final colorEntry = colorEntries[index];
@@ -103,13 +90,8 @@ class _ColorShowcaseCard extends StatelessWidget {
                 Text(colorEntry.name),
                 Row(
                   children: [
-                    Text(
-                      '#$opacityString',
-                      style: colorValueSecondaryTextStyle,
-                    ),
-                    Expanded(
-                      child: Text(hexString, style: colorValueTextStyle),
-                    ),
+                    Text('#$opacityString', style: colorValueSecondaryTextStyle),
+                    Expanded(child: Text(hexString, style: colorValueTextStyle)),
                   ],
                 ),
                 // Text(alphaString),
