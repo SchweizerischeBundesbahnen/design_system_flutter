@@ -16,25 +16,13 @@ class IconPage extends StatelessWidget {
           const ThemeModeSegmentedButton(),
           const SizedBox(height: sbbDefaultSpacing),
           const SBBListHeader('Small Icons'),
-          _IconShowCase(
-            icons: SBBIconsIndex.iconsSmall,
-            iconSize: sbbIconSizeSmall,
-            sbbToast: sbbToast,
-          ),
+          _IconShowCase(icons: SBBIconsIndex.iconsSmall, iconSize: sbbIconSizeSmall, sbbToast: sbbToast),
           const SizedBox(height: sbbDefaultSpacing),
           const SBBListHeader('Medium Icons'),
-          _IconShowCase(
-            icons: SBBIconsIndex.iconsMedium,
-            iconSize: sbbIconSizeMedium,
-            sbbToast: sbbToast,
-          ),
+          _IconShowCase(icons: SBBIconsIndex.iconsMedium, iconSize: sbbIconSizeMedium, sbbToast: sbbToast),
           const SizedBox(height: sbbDefaultSpacing),
           const SBBListHeader('Large Icons'),
-          _IconShowCase(
-            icons: SBBIconsIndex.iconsLarge,
-            iconSize: sbbIconSizeLarge,
-            sbbToast: sbbToast,
-          ),
+          _IconShowCase(icons: SBBIconsIndex.iconsLarge, iconSize: sbbIconSizeLarge, sbbToast: sbbToast),
         ],
       ),
     );
@@ -42,11 +30,7 @@ class IconPage extends StatelessWidget {
 }
 
 class _IconShowCase extends StatelessWidget {
-  const _IconShowCase({
-    required this.icons,
-    required this.iconSize,
-    required this.sbbToast,
-  });
+  const _IconShowCase({required this.icons, required this.iconSize, required this.sbbToast});
 
   final List<Map<String, Object>> icons;
   final double iconSize;
@@ -65,10 +49,7 @@ class _IconShowCase extends StatelessWidget {
           final icon = icons[index];
           return IconButton(
             padding: EdgeInsets.zero,
-            icon: Icon(
-              icon['icon'] as IconData,
-              size: iconSize,
-            ),
+            icon: Icon(icon['icon'] as IconData, size: iconSize),
             onPressed: () {
               sbbToast.show(title: icon['name'] as String);
             },

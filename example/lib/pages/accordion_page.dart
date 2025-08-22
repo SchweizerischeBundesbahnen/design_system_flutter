@@ -61,13 +61,10 @@ class AccordionPageState extends State<AccordionPage> {
                 _items1[index].isExpanded = !isExpanded;
               });
             },
-            children: _items1.map<SBBAccordionItem>((_Item item) {
-              return SBBAccordionItem.text(
-                title: item.title,
-                text: item.text,
-                isExpanded: item.isExpanded,
-              );
-            }).toList(),
+            children:
+                _items1.map<SBBAccordionItem>((_Item item) {
+                  return SBBAccordionItem.text(title: item.title, text: item.text, isExpanded: item.isExpanded);
+                }).toList(),
           ),
         ),
         const SizedBox(height: sbbDefaultSpacing),
@@ -94,17 +91,15 @@ class AccordionPageState extends State<AccordionPage> {
                   child: Column(
                     children: [
                       const Text(
-                          'This item was created with the default constructor where the complete body widget has to be defined. But as you can see by the body background color, there is still a default padding around the body if no custom padding is specified.'),
-                      const SizedBox(
-                        height: sbbDefaultSpacing,
+                        'This item was created with the default constructor where the complete body widget has to be defined. But as you can see by the body background color, there is still a default padding around the body if no custom padding is specified.',
                       ),
+                      const SizedBox(height: sbbDefaultSpacing),
                       SBBTertiaryButtonLarge(
-                          label: 'Button',
-                          onPressed: () {
-                            sbbToast.show(
-                              title: 'This button does nothing...',
-                            );
-                          }),
+                        label: 'Button',
+                        onPressed: () {
+                          sbbToast.show(title: 'This button does nothing...');
+                        },
+                      ),
                     ],
                   ),
                 ),
@@ -130,11 +125,7 @@ class AccordionPageState extends State<AccordionPage> {
 }
 
 class _Item {
-  _Item({
-    required this.title,
-    required this.text,
-    this.isExpanded = false,
-  });
+  _Item({required this.title, required this.text, this.isExpanded = false});
 
   String title;
   String text;

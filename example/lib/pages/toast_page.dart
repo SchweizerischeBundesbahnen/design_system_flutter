@@ -37,9 +37,10 @@ class _ToastPageState extends State<ToastPage> {
                         onPressed: () {
                           sbbToast.show(
                             title: titleController.text,
-                            action: actionController.text.isNotEmpty
-                                ? SBBToastAction(onPressed: () {}, title: actionController.text)
-                                : null,
+                            action:
+                                actionController.text.isNotEmpty
+                                    ? SBBToastAction(onPressed: () {}, title: actionController.text)
+                                    : null,
                           );
                         },
                       ),
@@ -52,9 +53,10 @@ class _ToastPageState extends State<ToastPage> {
                           sbbToast.show(
                             title: titleController.text,
                             duration: SBBToast.durationLong,
-                            action: actionController.text.isNotEmpty
-                                ? SBBToastAction(onPressed: () {}, title: actionController.text)
-                                : null,
+                            action:
+                                actionController.text.isNotEmpty
+                                    ? SBBToastAction(onPressed: () {}, title: actionController.text)
+                                    : null,
                           );
                         },
                       ),
@@ -70,9 +72,10 @@ class _ToastPageState extends State<ToastPage> {
                       sbbToast.show(
                         title: titleController.text,
                         duration: const Duration(seconds: 5),
-                        action: actionController.text.isNotEmpty
-                            ? SBBToastAction(onPressed: () {}, title: actionController.text)
-                            : null,
+                        action:
+                            actionController.text.isNotEmpty
+                                ? SBBToastAction(onPressed: () {}, title: actionController.text)
+                                : null,
                         bottom: 128,
                       );
                     },
@@ -83,9 +86,7 @@ class _ToastPageState extends State<ToastPage> {
                   width: double.infinity,
                   child: SBBTertiaryButtonLarge(
                     label: 'Custom Toast',
-                    onPressed: () {
-                      sbbToast.builder(builder: (showToast) => _customToast(showToast));
-                    },
+                    onPressed: () => sbbToast.builder(builder: (showToast) => _customToast(showToast)),
                   ),
                 ),
               ],
@@ -123,7 +124,7 @@ class _ToastPageState extends State<ToastPage> {
             child: Column(
               children: [
                 SBBTextField(labelText: 'Toast Title', controller: titleController),
-                SBBTextField(labelText: 'Toast Action (empty action will hide action)', controller: actionController)
+                SBBTextField(labelText: 'Toast Action (empty action will hide action)', controller: actionController),
               ],
             ),
           ),
@@ -135,14 +136,14 @@ class _ToastPageState extends State<ToastPage> {
   StreamBuilder<bool> _customToast(Stream<bool> showToast) {
     return StreamBuilder(
       stream: showToast,
-      builder: (context, snap) => snap.data ?? false
-          ? DecoratedBox(
-              decoration: ShapeDecoration(shape: CircleBorder(), color: SBBColors.red),
-              child: SizedBox.fromSize(
-                size: Size(100, 100),
-              ),
-            )
-          : SizedBox.shrink(),
+      builder:
+          (context, snap) =>
+              snap.data ?? false
+                  ? DecoratedBox(
+                    decoration: ShapeDecoration(shape: CircleBorder(), color: SBBColors.red),
+                    child: SizedBox.fromSize(size: Size(100, 100)),
+                  )
+                  : SizedBox.shrink(),
     );
   }
 }

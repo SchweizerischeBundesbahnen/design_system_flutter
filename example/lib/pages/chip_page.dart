@@ -32,32 +32,35 @@ class _ChipPageState extends State<ChipPage> {
                 label: 'Default',
                 badgeLabel: 9.toString(),
                 selected: _selected1,
-                onSelection: (selected) => {
-                  setState(() {
-                    _selected1 = selected;
-                  })
-                },
+                onSelection:
+                    (selected) => {
+                      setState(() {
+                        _selected1 = selected;
+                      }),
+                    },
               ),
               const SizedBox(height: sbbDefaultSpacing),
               SBBChip(
                 label: 'No badge label',
                 selected: _selected2,
-                onSelection: (selected) => {
-                  setState(() {
-                    _selected2 = selected;
-                  })
-                },
+                onSelection:
+                    (selected) => {
+                      setState(() {
+                        _selected2 = selected;
+                      }),
+                    },
               ),
               const SizedBox(height: sbbDefaultSpacing),
               SBBChip(
                 label: 'Selected',
                 badgeLabel: 'Label',
                 selected: _selected3,
-                onSelection: (selected) => {
-                  setState(() {
-                    _selected3 = selected;
-                  })
-                },
+                onSelection:
+                    (selected) => {
+                      setState(() {
+                        _selected3 = selected;
+                      }),
+                    },
               ),
             ],
           ),
@@ -68,17 +71,9 @@ class _ChipPageState extends State<ChipPage> {
           padding: const EdgeInsets.all(sbbDefaultSpacing),
           child: Column(
             children: [
-              SBBChip(
-                label: 'Default',
-                badgeLabel: 3.toString(),
-                onSelection: null,
-              ),
+              SBBChip(label: 'Default', badgeLabel: 3.toString(), onSelection: null),
               const SizedBox(height: sbbDefaultSpacing),
-              const SBBChip(
-                label: 'Selected',
-                onSelection: null,
-                selected: true,
-              ),
+              const SBBChip(label: 'Selected', onSelection: null, selected: true),
             ],
           ),
         ),

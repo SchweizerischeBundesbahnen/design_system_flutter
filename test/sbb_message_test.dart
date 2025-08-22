@@ -9,13 +9,7 @@ void main() {
     testWidgets(name, (WidgetTester tester) async {
       final widget = MessageTest(sbbMessage: message);
 
-      await TestSpecs.run(
-        TestSpecs.themedSpecs,
-        widget,
-        tester,
-        name,
-        find.byType(MessageTest),
-      );
+      await TestSpecs.run(TestSpecs.themedSpecs, widget, tester, name, find.byType(MessageTest));
     });
   }
 
@@ -104,30 +98,20 @@ void main() {
 }
 
 class MessageTest extends StatelessWidget {
-  const MessageTest({
-    super.key,
-    required this.sbbMessage,
-  });
+  const MessageTest({super.key, required this.sbbMessage});
 
   final SBBMessage sbbMessage;
 
   @override
   Widget build(BuildContext context) {
-    MessageIllustration.values
-        .expand(
-          (i) => Brightness.values.map((b) => precacheImage(i.asset(b), context)),
-        )
-        .toList();
+    MessageIllustration.values.expand((i) => Brightness.values.map((b) => precacheImage(i.asset(b), context))).toList();
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         const SBBListHeader('SBBMessage'),
         SizedBox(
           width: 400.0,
-          child: SBBGroup(
-            padding: const EdgeInsets.all(sbbDefaultSpacing / 2),
-            child: sbbMessage,
-          ),
+          child: SBBGroup(padding: const EdgeInsets.all(sbbDefaultSpacing / 2), child: sbbMessage),
         ),
       ],
     );

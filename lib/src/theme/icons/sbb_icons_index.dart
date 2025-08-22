@@ -265,7 +265,7 @@ sealed class SBBIconsIndex {
     {'icon': SBBIcons.location_pin_surrounding_area_small, 'name': 'location_pin_surrounding_area_small'},
     {
       'icon': SBBIcons.location_pin_surrounding_area_power_plug_small,
-      'name': 'location_pin_surrounding_area_power_plug_small'
+      'name': 'location_pin_surrounding_area_power_plug_small',
     },
     {'icon': SBBIcons.location_pin_small, 'name': 'location_pin_small'},
     {'icon': SBBIcons.location_pin_pulse_surrounding_area_small, 'name': 'location_pin_pulse_surrounding_area_small'},
@@ -918,7 +918,7 @@ sealed class SBBIconsIndex {
     {'icon': SBBIcons.lock_closed_medium, 'name': 'lock_closed_medium'},
     {
       'icon': SBBIcons.location_pin_surrounding_area_power_plug_medium,
-      'name': 'location_pin_surrounding_area_power_plug_medium'
+      'name': 'location_pin_surrounding_area_power_plug_medium',
     },
     {'icon': SBBIcons.location_pin_surrounding_area_medium, 'name': 'location_pin_surrounding_area_medium'},
     {'icon': SBBIcons.location_pin_pulse_surrounding_area_medium, 'name': 'location_pin_pulse_surrounding_area_medium'},
@@ -1413,7 +1413,7 @@ sealed class SBBIconsIndex {
     {'icon': SBBIcons.lock_closed_large, 'name': 'lock_closed_large'},
     {
       'icon': SBBIcons.location_pin_surrounding_area_power_plug_large,
-      'name': 'location_pin_surrounding_area_power_plug_large'
+      'name': 'location_pin_surrounding_area_power_plug_large',
     },
     {'icon': SBBIcons.location_pin_surrounding_area_large, 'name': 'location_pin_surrounding_area_large'},
     {'icon': SBBIcons.location_pin_map_large, 'name': 'location_pin_map_large'},

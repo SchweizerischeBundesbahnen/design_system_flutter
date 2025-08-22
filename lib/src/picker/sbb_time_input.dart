@@ -53,12 +53,7 @@ class _SBBTimeInputState extends State<SBBTimeInput> {
     if (value == null) {
       return '';
     }
-    value = SBBTimePicker._initialTime(
-      widget.value,
-      widget.minimumTime,
-      widget.maximumTime,
-      widget.minuteInterval,
-    );
+    value = SBBTimePicker._initialTime(widget.value, widget.minimumTime, widget.maximumTime, widget.minuteInterval);
     return value.format(context);
   }
 

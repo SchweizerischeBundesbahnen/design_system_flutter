@@ -55,9 +55,7 @@ class SBBSlider extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       children: [
         if (startIcon != null) _startIcon(style),
-        Expanded(
-          child: _slider(style),
-        ),
+        Expanded(child: _slider(style)),
         if (endIcon != null) _endIcon(style),
       ],
     );
@@ -66,20 +64,14 @@ class SBBSlider extends StatelessWidget {
   Widget _endIcon(SBBSliderStyle style) {
     return Padding(
       padding: const EdgeInsets.only(left: _iconPadding),
-      child: Icon(
-        endIcon,
-        color: _isDisabled ? style.disabledIconColor : style.iconColor,
-      ),
+      child: Icon(endIcon, color: _isDisabled ? style.disabledIconColor : style.iconColor),
     );
   }
 
   Widget _startIcon(SBBSliderStyle style) {
     return Padding(
       padding: const EdgeInsets.only(right: _iconPadding),
-      child: Icon(
-        startIcon,
-        color: _isDisabled ? style.disabledIconColor : style.iconColor,
-      ),
+      child: Icon(startIcon, color: _isDisabled ? style.disabledIconColor : style.iconColor),
     );
   }
 

@@ -12,12 +12,12 @@ class SBBBasicControlStyle {
   });
 
   factory SBBBasicControlStyle.$default({required SBBBaseStyle baseStyle}) => SBBBasicControlStyle(
-        backgroundColor: SBBColors.transparent,
-        backgroundColorHighlighted: SBBColors.transparent,
-        backgroundColorDisabled: SBBColors.transparent,
-        borderColor: baseStyle.themeValue(SBBColors.granite, SBBColors.cement),
-        borderColorDisabled: baseStyle.themeValue(SBBColors.cloud, SBBColors.iron),
-      );
+    backgroundColor: SBBColors.transparent,
+    backgroundColorHighlighted: SBBColors.transparent,
+    backgroundColorDisabled: SBBColors.transparent,
+    borderColor: baseStyle.themeValue(SBBColors.granite, SBBColors.cement),
+    borderColorDisabled: baseStyle.themeValue(SBBColors.cloud, SBBColors.iron),
+  );
 
   final Color? backgroundColor;
   final Color? backgroundColorHighlighted;
@@ -31,22 +31,21 @@ class SBBBasicControlStyle {
     Color? backgroundColorDisabled,
     Color? borderColor,
     Color? borderColorDisabled,
-  }) =>
-      SBBBasicControlStyle(
-        backgroundColor: backgroundColor ?? this.backgroundColor,
-        backgroundColorHighlighted: backgroundColorHighlighted ?? this.backgroundColorHighlighted,
-        backgroundColorDisabled: backgroundColorDisabled ?? this.backgroundColorDisabled,
-        borderColor: borderColor ?? this.borderColor,
-        borderColorDisabled: borderColorDisabled ?? this.borderColorDisabled,
-      );
+  }) => SBBBasicControlStyle(
+    backgroundColor: backgroundColor ?? this.backgroundColor,
+    backgroundColorHighlighted: backgroundColorHighlighted ?? this.backgroundColorHighlighted,
+    backgroundColorDisabled: backgroundColorDisabled ?? this.backgroundColorDisabled,
+    borderColor: borderColor ?? this.borderColor,
+    borderColorDisabled: borderColorDisabled ?? this.borderColorDisabled,
+  );
 
   SBBBasicControlStyle lerp(SBBBasicControlStyle? other, double t) => SBBBasicControlStyle(
-        backgroundColor: Color.lerp(backgroundColor, other?.backgroundColor, t)!,
-        backgroundColorHighlighted: Color.lerp(backgroundColorHighlighted, other?.backgroundColorHighlighted, t),
-        backgroundColorDisabled: Color.lerp(backgroundColorDisabled, other?.backgroundColorDisabled, t)!,
-        borderColor: Color.lerp(borderColor, other?.borderColor, t)!,
-        borderColorDisabled: Color.lerp(borderColorDisabled, other?.borderColorDisabled, t)!,
-      );
+    backgroundColor: Color.lerp(backgroundColor, other?.backgroundColor, t)!,
+    backgroundColorHighlighted: Color.lerp(backgroundColorHighlighted, other?.backgroundColorHighlighted, t),
+    backgroundColorDisabled: Color.lerp(backgroundColorDisabled, other?.backgroundColorDisabled, t)!,
+    borderColor: Color.lerp(borderColor, other?.borderColor, t)!,
+    borderColorDisabled: Color.lerp(borderColorDisabled, other?.borderColorDisabled, t)!,
+  );
 }
 
 extension SBBBasicControlStyleExtension on SBBBasicControlStyle? {

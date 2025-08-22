@@ -29,10 +29,7 @@ class _TabIcon extends StatelessWidget {
     final semanticsHint = Localizations.of(
       context,
       MaterialLocalizations,
-    ).tabLabel(
-      tabIndex: tabIndex + 1,
-      tabCount: tabCount,
-    );
+    ).tabLabel(tabIndex: tabIndex + 1, tabCount: tabCount);
     final viewPaddingBottom = MediaQuery.of(context).viewPadding.bottom;
     final bottomPadding = portrait ? 0.0 : max(viewPaddingBottom + 8.0, 8.0);
     return LayoutId(
@@ -57,11 +54,7 @@ class _TabIcon extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 spacing: 8.0,
                 children: [
-                  TabItemWidget(
-                    item.icon,
-                    selected: selected,
-                    warning: warning,
-                  ),
+                  TabItemWidget(item.icon, selected: selected, warning: warning),
                   if (!portrait)
                     Text(
                       item.translate(context),

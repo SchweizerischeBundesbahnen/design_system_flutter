@@ -33,9 +33,9 @@ class SBBDatePicker extends StatefulWidget {
     DateTime? initialDate,
     DateTime? minimumDate,
     DateTime? maximumDate,
-  })  : initialDate = _initialDate(initialDate, minimumDate, maximumDate),
-        minimumDate = _minimumDate(minimumDate),
-        maximumDate = _maximumDate(maximumDate) {
+  }) : initialDate = _initialDate(initialDate, minimumDate, maximumDate),
+       minimumDate = _minimumDate(minimumDate),
+       maximumDate = _maximumDate(maximumDate) {
     assert(
       this.minimumDate == null || this.maximumDate == null || this.minimumDate!.isBefore(this.maximumDate!),
       'minimum date (${this.minimumDate}) is not before maximum date (${this.maximumDate})',
@@ -83,9 +83,7 @@ class SBBDatePicker extends StatefulWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: sbbDefaultSpacing,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
             child: SBBGroup(
               child: SBBDatePicker(
                 initialDate: modalDate,
@@ -103,19 +101,18 @@ class SBBDatePicker extends StatefulWidget {
           Padding(
             padding: const EdgeInsets.all(sbbDefaultSpacing),
             child: ListenableBuilder(
-                listenable: selectedButtonEnabled,
-                builder: (context, _) {
-                  final onPressed = selectedButtonEnabled.value
-                      ? () {
+              listenable: selectedButtonEnabled,
+              builder: (context, _) {
+                final onPressed =
+                    selectedButtonEnabled.value
+                        ? () {
                           Navigator.of(context).pop();
                           onDateChanged?.call(selectedDate);
                         }
-                      : null;
-                  return SBBPrimaryButton(
-                    label: selectedButtonLabel,
-                    onPressed: onPressed,
-                  );
-                }),
+                        : null;
+                return SBBPrimaryButton(label: selectedButtonLabel, onPressed: onPressed);
+              },
+            ),
           ),
         ],
       ),
@@ -127,11 +124,7 @@ class SBBDatePicker extends StatefulWidget {
     return _SBBDatePickerState();
   }
 
-  static DateTime _initialDate(
-    DateTime? initialDate,
-    DateTime? minimumDate,
-    DateTime? maximumDate,
-  ) {
+  static DateTime _initialDate(DateTime? initialDate, DateTime? minimumDate, DateTime? maximumDate) {
     var date = initialDate ?? DateTime.now();
     date = date.clamp(minimumDate, maximumDate);
     return date.date;
@@ -195,9 +188,7 @@ class _SBBDatePickerState extends _TimeBasedPickerState<SBBDatePicker> {
   }
 
   void _initDayController() {
-    _dayController = SBBPickerScrollController(
-      initialItem: _dayToIndex(_selectedDate.day),
-    );
+    _dayController = SBBPickerScrollController(initialItem: _dayToIndex(_selectedDate.day));
     _dayController.addScrollingStateListener(_onScrollingStateChanged);
   }
 
@@ -233,17 +224,9 @@ class _SBBDatePickerState extends _TimeBasedPickerState<SBBDatePicker> {
         return SBBPicker.custom(
           child: Row(
             children: [
-              SizedBox(
-                width: _dayItemWidth,
-                child: _buildDayPickerScrollView(context),
-              ),
-              Expanded(
-                child: _buildMonthPickerScrollView(context),
-              ),
-              SizedBox(
-                width: _yearItemWidth,
-                child: _buildYearPickerScrollView(context),
-              ),
+              SizedBox(width: _dayItemWidth, child: _buildDayPickerScrollView(context)),
+              Expanded(child: _buildMonthPickerScrollView(context)),
+              SizedBox(width: _yearItemWidth, child: _buildYearPickerScrollView(context)),
             ],
           ),
         );
@@ -297,29 +280,20 @@ class _SBBDatePickerState extends _TimeBasedPickerState<SBBDatePicker> {
   }
 
   void _onSelectedDayItemChanged(int index) {
-    _onDateSelected(
-      day: _indexToDay(index),
-    );
+    _onDateSelected(day: _indexToDay(index));
   }
 
   void _onSelectedMonthItemChanged(int index) {
-    _onDateSelected(
-      month: _indexToMonth(index),
-    );
+    _onDateSelected(month: _indexToMonth(index));
   }
 
   void _onSelectedYearItemChanged(int index) {
-    _onDateSelected(
-      year: _indexToYear(index),
-    );
+    _onDateSelected(year: _indexToYear(index));
   }
 
   SBBPickerItem _buildDayItem(int index, DateTime selectedMonthYear) {
     final itemDay = _indexToDay(index);
-    final daysInMonth = DateUtils.getDaysInMonth(
-      selectedMonthYear.year,
-      selectedMonthYear.month,
-    );
+    final daysInMonth = DateUtils.getDaysInMonth(selectedMonthYear.year, selectedMonthYear.month);
     final dayOverflow = itemDay > daysInMonth;
 
     final itemDate = selectedMonthYear.copyWith(day: itemDay);
@@ -329,12 +303,7 @@ class _SBBDatePickerState extends _TimeBasedPickerState<SBBDatePicker> {
     final isEnabled = itemDate.isInRange(minDate, maxDate);
     final label = '$itemDay.';
 
-    return _buildPickerItem(
-      isEnabled: isEnabled,
-      label: label,
-      alignment: Alignment.centerRight,
-      isFirstColumn: true,
-    );
+    return _buildPickerItem(isEnabled: isEnabled, label: label, alignment: Alignment.centerRight, isFirstColumn: true);
   }
 
   SBBPickerItem _buildMonthItem(int index, int selectedYear) {
@@ -345,11 +314,7 @@ class _SBBDatePickerState extends _TimeBasedPickerState<SBBDatePicker> {
     final isEnabled = itemDate.isInRange(minDate, maxDate);
     final label = _dateFormat.format(itemDate);
 
-    return _buildPickerItem(
-      isEnabled: isEnabled,
-      label: label,
-      alignment: Alignment.centerLeft,
-    );
+    return _buildPickerItem(isEnabled: isEnabled, label: label, alignment: Alignment.centerLeft);
   }
 
   SBBPickerItem _buildYearItem(int index) {
@@ -360,41 +325,23 @@ class _SBBDatePickerState extends _TimeBasedPickerState<SBBDatePicker> {
     final isEnabled = itemDate.isInRange(minDate, maxDate);
     final label = itemYear.toString();
 
-    return _buildPickerItem(
-      isEnabled: isEnabled,
-      label: label,
-      isLastColumn: true,
-    );
+    return _buildPickerItem(isEnabled: isEnabled, label: label, isLastColumn: true);
   }
 
-  void _onDateSelected({
-    int? year,
-    int? month,
-    int? day,
-  }) {
+  void _onDateSelected({int? year, int? month, int? day}) {
     final selectedYear = year ?? _selectedDate.year;
     final selectedMonth = month ?? _selectedDate.month;
     var selectedDay = day ?? _selectedDate.day;
 
     // correct day value to max month day value if necessary
-    final daysInMonth = DateUtils.getDaysInMonth(
-      selectedYear,
-      selectedMonth,
-    );
+    final daysInMonth = DateUtils.getDaysInMonth(selectedYear, selectedMonth);
     if (selectedDay > daysInMonth) {
       selectedDay = daysInMonth;
     }
 
-    _selectedDate = DateTime(
-      selectedYear,
-      selectedMonth,
-      selectedDay,
-    );
+    _selectedDate = DateTime(selectedYear, selectedMonth, selectedDay);
 
-    _selectedDateValueNotifier.value = _selectedDate.clamp(
-      widget.minimumDate,
-      widget.maximumDate,
-    );
+    _selectedDateValueNotifier.value = _selectedDate.clamp(widget.minimumDate, widget.maximumDate);
   }
 
   void _onScrollingStateChanged() {
@@ -411,20 +358,14 @@ class _SBBDatePickerState extends _TimeBasedPickerState<SBBDatePicker> {
     // optimize scroll positions to prevent scrolling over multiple rounds
     _ensureOptimizedScrollPosition();
 
-    final validDate = _selectedDate.clamp(
-      widget.minimumDate,
-      widget.maximumDate,
-    );
+    final validDate = _selectedDate.clamp(widget.minimumDate, widget.maximumDate);
 
     if (_selectedDate == validDate) {
       // check if selected day value is higher than valid for current month
       final selectedDay = _indexToDay(_dayController.selectedItem);
 
       // get max day value for currently selected month
-      final daysInMonth = DateUtils.getDaysInMonth(
-        validDate.year,
-        validDate.month,
-      );
+      final daysInMonth = DateUtils.getDaysInMonth(validDate.year, validDate.month);
 
       // check if day value needs to be corrected
       final dayOverflow = selectedDay > daysInMonth;

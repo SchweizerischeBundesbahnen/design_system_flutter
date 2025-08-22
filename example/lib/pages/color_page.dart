@@ -19,28 +19,16 @@ class ColorPage extends StatelessWidget {
           ),
           child: ThemeModeSegmentedButton(),
         ),
-        _ColorShowcase(
-          title: 'Colors',
-          colorEntries: _colors,
-        ),
-        _ColorShowcase(
-          title: 'Functional colors',
-          colorEntries: _functionalColors,
-        ),
-        _ColorShowcase(
-          title: 'Off brand colors',
-          colorEntries: _offBrandColors,
-        ),
+        _ColorShowcase(title: 'Colors', colorEntries: _colors),
+        _ColorShowcase(title: 'Functional colors', colorEntries: _functionalColors),
+        _ColorShowcase(title: 'Off brand colors', colorEntries: _offBrandColors),
       ],
     );
   }
 }
 
 class _ColorShowcase extends StatelessWidget {
-  const _ColorShowcase({
-    required this.title,
-    required this.colorEntries,
-  });
+  const _ColorShowcase({required this.title, required this.colorEntries});
 
   final String title;
   final List<_ColorEntry> colorEntries;
@@ -53,29 +41,20 @@ class _ColorShowcase extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsetsDirectional.symmetric(
-              horizontal: sbbDefaultSpacing * 0.5,
-            ),
-            child: Text(
-              title,
-              style: SBBControlStyles.of(context).listHeaderTextStyle,
-            ),
+            padding: const EdgeInsetsDirectional.symmetric(horizontal: sbbDefaultSpacing * 0.5),
+            child: Text(title, style: SBBControlStyles.of(context).listHeaderTextStyle),
           ),
           // const SBBListHeader('Small Icons'),
           GridView.builder(
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-              maxCrossAxisExtent: sbbDefaultSpacing * 10,
-            ),
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: sbbDefaultSpacing * 10),
             itemCount: colorEntries.length,
             itemBuilder: (BuildContext context, index) {
               final colorEntry = colorEntries[index];
-              return _ColorShowcaseCard(
-                colorEntry: colorEntry,
-              );
+              return _ColorShowcaseCard(colorEntry: colorEntry);
             },
-          )
+          ),
         ],
       ),
     );
@@ -83,9 +62,7 @@ class _ColorShowcase extends StatelessWidget {
 }
 
 class _ColorShowcaseCard extends StatelessWidget {
-  const _ColorShowcaseCard({
-    required this.colorEntry,
-  });
+  const _ColorShowcaseCard({required this.colorEntry});
 
   final _ColorEntry colorEntry;
 
@@ -99,38 +76,22 @@ class _ColorShowcaseCard extends StatelessWidget {
       color: SBBControlStyles.of(context).selectLabel?.textStyleDisabled?.color,
     );
     return SBBGroup(
-      margin: const EdgeInsets.all(
-        sbbDefaultSpacing * 0.5,
-      ),
+      margin: const EdgeInsets.all(sbbDefaultSpacing * 0.5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            child: Container(
-              color: colorEntry.color,
-            ),
-          ),
+          Expanded(child: Container(color: colorEntry.color)),
           // Divider(),
           Container(
-            padding: const EdgeInsets.all(
-              sbbDefaultSpacing * 0.5,
-            ),
+            padding: const EdgeInsets.all(sbbDefaultSpacing * 0.5),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(colorEntry.name),
                 Row(
                   children: [
-                    Text(
-                      '#$opacityString',
-                      style: colorValueSecondaryTextStyle,
-                    ),
-                    Expanded(
-                      child: Text(
-                        hexString,
-                        style: colorValueTextStyle,
-                      ),
-                    ),
+                    Text('#$opacityString', style: colorValueSecondaryTextStyle),
+                    Expanded(child: Text(hexString, style: colorValueTextStyle)),
                   ],
                 ),
                 // Text(alphaString),
@@ -144,10 +105,7 @@ class _ColorShowcaseCard extends StatelessWidget {
 }
 
 class _ColorEntry {
-  const _ColorEntry(
-    this.name,
-    this.color,
-  );
+  const _ColorEntry(this.name, this.color);
 
   final String name;
   final Color color;

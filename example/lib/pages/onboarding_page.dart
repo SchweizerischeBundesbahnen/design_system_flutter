@@ -1,6 +1,6 @@
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import '../native_app.dart';
 
@@ -11,19 +11,10 @@ class OnboardingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        const Padding(
-          padding: EdgeInsets.all(sbbDefaultSpacing),
-          child: ThemeModeSegmentedButton(),
-        ),
+        const Padding(padding: EdgeInsets.all(sbbDefaultSpacing), child: ThemeModeSegmentedButton()),
         SBBTertiaryButtonLarge(
           label: 'Show Onboarding',
-          onPressed: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => _OnboardingPage(),
-              ),
-            );
-          },
+          onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => _OnboardingPage())),
         ),
       ],
     );
@@ -55,10 +46,7 @@ class _PreferredSizeWidget extends StatelessWidget implements PreferredSizeWidge
   Widget build(BuildContext context) {
     final style = SBBControlStyles.of(context);
     final statusBarHeight = MediaQuery.of(context).padding.top;
-    return Container(
-      height: statusBarHeight,
-      color: style.headerBackgroundColor,
-    );
+    return Container(height: statusBarHeight, color: style.headerBackgroundColor);
   }
 
   @override
@@ -69,41 +57,24 @@ class DemoOnboardingBuilderDelegate extends SBBOnboardingBuilderDelegate {
   late Future<bool> Function() onPop;
 
   @override
-  Widget buildStartPage(
-    BuildContext context,
-    VoidCallback onStartOnboarding,
-    VoidCallback onFinish,
-  ) {
+  Widget buildStartPage(BuildContext context, VoidCallback onStartOnboarding, VoidCallback onFinish) {
     final orientation = MediaQuery.of(context).orientation;
     switch (orientation) {
       case Orientation.portrait:
-        return _VerticalStartPage(
-          onStartOnboarding: onStartOnboarding,
-          onFinish: onFinish,
-        );
+        return _VerticalStartPage(onStartOnboarding: onStartOnboarding, onFinish: onFinish);
       case Orientation.landscape:
-        return _HorizontalStartPage(
-          onStartOnboarding: onStartOnboarding,
-          onFinish: onFinish,
-        );
+        return _HorizontalStartPage(onStartOnboarding: onStartOnboarding, onFinish: onFinish);
     }
   }
 
   @override
-  Widget buildEndPage(
-    BuildContext context,
-    VoidCallback onFinish,
-  ) {
+  Widget buildEndPage(BuildContext context, VoidCallback onFinish) {
     final orientation = MediaQuery.of(context).orientation;
     switch (orientation) {
       case Orientation.portrait:
-        return _VerticalEndPage(
-          onFinish: onFinish,
-        );
+        return _VerticalEndPage(onFinish: onFinish);
       case Orientation.landscape:
-        return _HorizontalEndPage(
-          onFinish: onFinish,
-        );
+        return _HorizontalEndPage(onFinish: onFinish);
     }
   }
 
@@ -114,21 +85,13 @@ class DemoOnboardingBuilderDelegate extends SBBOnboardingBuilderDelegate {
       SBBOnboardingCard.extended(
         embeddedChild: Container(
           color: style.backgroundColor,
-          child: const Center(
-            child: Text(
-              'Page 1',
-              style: SBBTextStyles.extraLargeLight,
-            ),
-          ),
+          child: const Center(child: Text('Page 1', style: SBBTextStyles.extraLargeLight)),
         ),
         title: 'Page 1',
         content: 'Page 1',
         customContent: Padding(
           padding: const EdgeInsets.all(sbbDefaultSpacing),
-          child: SBBSecondaryButton(
-            label: 'Custom Action',
-            onPressed: () {},
-          ),
+          child: SBBSecondaryButton(label: 'Custom Action', onPressed: () {}),
         ),
       ),
       SBBOnboardingCard.extended(
@@ -137,28 +100,13 @@ class DemoOnboardingBuilderDelegate extends SBBOnboardingBuilderDelegate {
         content: 'Page 2',
         customContent: Padding(
           padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
-          child: SBBSecondaryButton(
-            label: 'Testbutton',
-            onPressed: () {},
-          ),
+          child: SBBSecondaryButton(label: 'Testbutton', onPressed: () {}),
         ),
       ),
-      SBBOnboardingCard.basic(
-        title: 'Page 3',
-        content: 'Page 3',
-      ),
-      SBBOnboardingCard.basic(
-        title: 'Page 4',
-        content: 'Page 4',
-      ),
-      SBBOnboardingCard.basic(
-        title: 'Page 5',
-        content: 'Page 5',
-      ),
-      SBBOnboardingCard.basic(
-        title: 'Page 6',
-        content: 'Page 6',
-      ),
+      SBBOnboardingCard.basic(title: 'Page 3', content: 'Page 3'),
+      SBBOnboardingCard.basic(title: 'Page 4', content: 'Page 4'),
+      SBBOnboardingCard.basic(title: 'Page 5', content: 'Page 5'),
+      SBBOnboardingCard.basic(title: 'Page 6', content: 'Page 6'),
     ];
   }
 
@@ -167,9 +115,7 @@ class DemoOnboardingBuilderDelegate extends SBBOnboardingBuilderDelegate {
 }
 
 class _VerticalEndPage extends StatelessWidget {
-  const _VerticalEndPage({
-    required this.onFinish,
-  });
+  const _VerticalEndPage({required this.onFinish});
 
   final VoidCallback onFinish;
 
@@ -180,25 +126,18 @@ class _VerticalEndPage extends StatelessWidget {
     return Container(
       color: controlStyle.headerBackgroundColor,
       child: Padding(
-        padding: EdgeInsets.all(
-          style.defaultRootContainerPadding!,
-        ),
+        padding: EdgeInsets.all(style.defaultRootContainerPadding!),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Spacer(),
             Text(
               'Thank you! Bye Bye!',
-              style: SBBTextStyles.extraLargeLight.copyWith(
-                color: controlStyle.headerTextStyle!.color,
-              ),
+              style: SBBTextStyles.extraLargeLight.copyWith(color: controlStyle.headerTextStyle!.color),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 67),
-            SBBPrimaryButton(
-              label: 'Close Onboarding',
-              onPressed: onFinish,
-            ),
+            SBBPrimaryButton(label: 'Close Onboarding', onPressed: onFinish),
           ],
         ),
       ),
@@ -207,9 +146,7 @@ class _VerticalEndPage extends StatelessWidget {
 }
 
 class _HorizontalEndPage extends StatelessWidget {
-  const _HorizontalEndPage({
-    required this.onFinish,
-  });
+  const _HorizontalEndPage({required this.onFinish});
 
   final VoidCallback onFinish;
 
@@ -220,9 +157,7 @@ class _HorizontalEndPage extends StatelessWidget {
     return Container(
       color: controlStyle.headerBackgroundColor,
       child: Padding(
-        padding: EdgeInsets.all(
-          style.defaultRootContainerPadding!,
-        ),
+        padding: EdgeInsets.all(style.defaultRootContainerPadding!),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -234,16 +169,11 @@ class _HorizontalEndPage extends StatelessWidget {
                 children: [
                   Text(
                     'Thank you! Bye Bye!',
-                    style: SBBTextStyles.extraLargeLight.copyWith(
-                      color: controlStyle.headerTextStyle!.color,
-                    ),
+                    style: SBBTextStyles.extraLargeLight.copyWith(color: controlStyle.headerTextStyle!.color),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 67),
-                  SBBPrimaryButton(
-                    label: 'Close Onboarding',
-                    onPressed: onFinish,
-                  ),
+                  SBBPrimaryButton(label: 'Close Onboarding', onPressed: onFinish),
                 ],
               ),
             ),
@@ -255,10 +185,7 @@ class _HorizontalEndPage extends StatelessWidget {
 }
 
 class _VerticalStartPage extends StatelessWidget {
-  const _VerticalStartPage({
-    required this.onStartOnboarding,
-    required this.onFinish,
-  });
+  const _VerticalStartPage({required this.onStartOnboarding, required this.onFinish});
 
   final VoidCallback onStartOnboarding;
   final VoidCallback onFinish;
@@ -270,36 +197,27 @@ class _VerticalStartPage extends StatelessWidget {
     return Container(
       color: controlStyle.headerBackgroundColor,
       child: Padding(
-        padding: EdgeInsets.all(
-          style.defaultRootContainerPadding!,
-        ),
+        padding: EdgeInsets.all(style.defaultRootContainerPadding!),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Spacer(),
             Text(
               'Welcome to the Onboarding',
-              style: SBBTextStyles.extraLargeLight.copyWith(
-                color: controlStyle.headerTextStyle!.color,
-              ),
+              style: SBBTextStyles.extraLargeLight.copyWith(color: controlStyle.headerTextStyle!.color),
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: sbbDefaultSpacing * 9),
             SBBGroup(
-                padding: EdgeInsets.symmetric(horizontal: sbbDefaultSpacing / 2, vertical: sbbDefaultSpacing),
-                child: Column(
-                  children: [
-                    SBBPrimaryButton(
-                      label: 'Start Onboarding',
-                      onPressed: onStartOnboarding,
-                    ),
-                    const SizedBox(height: sbbDefaultSpacing),
-                    SBBSecondaryButton(
-                      label: 'Skip Onboarding',
-                      onPressed: onFinish,
-                    ),
-                  ],
-                ))
+              padding: EdgeInsets.symmetric(horizontal: sbbDefaultSpacing / 2, vertical: sbbDefaultSpacing),
+              child: Column(
+                children: [
+                  SBBPrimaryButton(label: 'Start Onboarding', onPressed: onStartOnboarding),
+                  const SizedBox(height: sbbDefaultSpacing),
+                  SBBSecondaryButton(label: 'Skip Onboarding', onPressed: onFinish),
+                ],
+              ),
+            ),
           ],
         ),
       ),
@@ -308,10 +226,7 @@ class _VerticalStartPage extends StatelessWidget {
 }
 
 class _HorizontalStartPage extends StatelessWidget {
-  const _HorizontalStartPage({
-    required this.onStartOnboarding,
-    required this.onFinish,
-  });
+  const _HorizontalStartPage({required this.onStartOnboarding, required this.onFinish});
 
   final VoidCallback onStartOnboarding;
   final VoidCallback onFinish;
@@ -323,9 +238,7 @@ class _HorizontalStartPage extends StatelessWidget {
     return Container(
       color: controlStyle.headerBackgroundColor,
       child: Padding(
-        padding: EdgeInsets.all(
-          style.defaultRootContainerPadding!,
-        ),
+        padding: EdgeInsets.all(style.defaultRootContainerPadding!),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -337,27 +250,20 @@ class _HorizontalStartPage extends StatelessWidget {
                 children: [
                   Text(
                     'Welcome to the Onboarding',
-                    style: SBBTextStyles.extraLargeLight.copyWith(
-                      color: controlStyle.headerTextStyle!.color,
-                    ),
+                    style: SBBTextStyles.extraLargeLight.copyWith(color: controlStyle.headerTextStyle!.color),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 67),
                   SBBGroup(
-                      padding: EdgeInsets.symmetric(horizontal: sbbDefaultSpacing / 2, vertical: sbbDefaultSpacing),
-                      child: Column(
-                        children: [
-                          SBBPrimaryButton(
-                            label: 'Start Onboarding',
-                            onPressed: onStartOnboarding,
-                          ),
-                          const SizedBox(height: sbbDefaultSpacing),
-                          SBBSecondaryButton(
-                            label: 'Skip Onboarding',
-                            onPressed: onFinish,
-                          ),
-                        ],
-                      ))
+                    padding: EdgeInsets.symmetric(horizontal: sbbDefaultSpacing / 2, vertical: sbbDefaultSpacing),
+                    child: Column(
+                      children: [
+                        SBBPrimaryButton(label: 'Start Onboarding', onPressed: onStartOnboarding),
+                        const SizedBox(height: sbbDefaultSpacing),
+                        SBBSecondaryButton(label: 'Skip Onboarding', onPressed: onFinish),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -375,11 +281,7 @@ class _IllustrationWidget extends StatelessWidget {
     final double height = mediaQuery.orientation == Orientation.portrait ? 200 : mediaQuery.size.height;
     return SizedBox(
       height: height,
-      child: SvgPicture.asset(
-        'assets/images/szene-2.svg',
-        fit: BoxFit.cover,
-        excludeFromSemantics: true,
-      ),
+      child: SvgPicture.asset('assets/images/szene-2.svg', fit: BoxFit.cover, excludeFromSemantics: true),
     );
   }
 }

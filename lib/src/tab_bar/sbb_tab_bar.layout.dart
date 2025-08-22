@@ -26,28 +26,24 @@ class _TabLayout extends StatelessWidget {
     final gestureInsets = MediaQuery.of(context).systemGestureInsets;
     return CustomMultiChildLayout(
       delegate: _TabIconDelegate(items, selectedTab, portrait, onPositioned, gestureInsets),
-      children: items
-          .mapIndexed((i, e) {
-            return _TabIcon(
-              item: e,
-              selected: e == selectedTab,
-              warning: warnings.firstWhereOrNull((w) => w.id == e.id),
-              portrait: portrait,
-              tabIndex: i,
-              tabCount: items.length,
-              onTap: () => onTap(e),
-              onTapDown: (_) => onTapDown(e),
-              onTapCancel: () => onTapCancel(e),
-            );
-          })
-          .cast<Widget>()
-          .followedBy(items.map(
-            (e) => _TabLabel(
-              item: e,
-              visible: e == selectedTab && portrait,
-            ),
-          ))
-          .toList(),
+      children:
+          items
+              .mapIndexed((i, e) {
+                return _TabIcon(
+                  item: e,
+                  selected: e == selectedTab,
+                  warning: warnings.firstWhereOrNull((w) => w.id == e.id),
+                  portrait: portrait,
+                  tabIndex: i,
+                  tabCount: items.length,
+                  onTap: () => onTap(e),
+                  onTapDown: (_) => onTapDown(e),
+                  onTapCancel: () => onTapCancel(e),
+                );
+              })
+              .cast<Widget>()
+              .followedBy(items.map((e) => _TabLabel(item: e, visible: e == selectedTab && portrait)))
+              .toList(),
     );
   }
 }
