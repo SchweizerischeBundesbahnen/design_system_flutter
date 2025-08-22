@@ -12,9 +12,7 @@ class PaginationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Padding(
       padding: EdgeInsets.all(sbbDefaultSpacing),
-      child: Column(
-        children: <Widget>[ThemeModeSegmentedButton(), PaginationView()],
-      ),
+      child: Column(children: <Widget>[ThemeModeSegmentedButton(), PaginationView()]),
     );
   }
 }
@@ -67,11 +65,7 @@ class _PaginationViewState extends State<PaginationView> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         _LabeledSBBPagination(label: 'Default', currentPage: currentPage),
-        _LabeledSBBPagination(
-          label: 'Floating',
-          currentPage: currentPage,
-          isFloating: true,
-        ),
+        _LabeledSBBPagination(label: 'Floating', currentPage: currentPage, isFloating: true),
       ],
     );
   }
@@ -98,11 +92,7 @@ class _LabeledSBBPagination extends StatelessWidget {
       children: [
         Text(label, style: SBBTextStyles.extraSmallLight),
         const SizedBox(height: sbbDefaultSpacing),
-        SBBPagination(
-          currentPage: currentPage,
-          numberPages: _kNumberPages,
-          isFloating: isFloating,
-        ),
+        SBBPagination(currentPage: currentPage, numberPages: _kNumberPages, isFloating: isFloating),
       ],
     );
   }

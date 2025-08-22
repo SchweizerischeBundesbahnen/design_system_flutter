@@ -27,10 +27,7 @@ class GroupPage extends StatelessWidget {
           child: content('Extra padding'),
         ),
         SizedBox(height: sbbDefaultSpacing),
-        SBBGroup(
-          margin: EdgeInsets.all(sbbDefaultSpacing * 4),
-          child: content('Extra margin'),
-        ),
+        SBBGroup(margin: EdgeInsets.all(sbbDefaultSpacing * 4), child: content('Extra margin')),
       ],
     );
   }

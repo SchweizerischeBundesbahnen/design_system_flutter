@@ -39,11 +39,7 @@ class _HeaderBoxPageState extends State<HeaderBoxPage> {
           child: PageView(
             physics: NeverScrollableScrollPhysics(),
             controller: _pageViewController,
-            children: <Widget>[
-              DesignGuidelinePage(),
-              StaticPage(),
-              ScrollablePage(),
-            ],
+            children: <Widget>[DesignGuidelinePage(), StaticPage(), ScrollablePage()],
           ),
         ),
         SBBTabBar.controller(
@@ -88,11 +84,7 @@ class DesignGuidelinePage extends StatelessWidget {
           trailingWidget: SBBTertiaryButtonSmall(
             label: 'Label',
             icon: SBBIcons.dog_small,
-            onPressed:
-                () => sbbToast.show(
-                  title: 'Default pressed',
-                  bottom: sbbDefaultSpacing * 6,
-                ),
+            onPressed: () => sbbToast.show(title: 'Default pressed', bottom: sbbDefaultSpacing * 6),
           ),
         ),
         const SizedBox(height: sbbDefaultSpacing),
@@ -103,11 +95,7 @@ class DesignGuidelinePage extends StatelessWidget {
           secondaryLabel: 'Subtext',
           trailingWidget: SBBIconButtonLarge(
             icon: SBBIcons.dog_small,
-            onPressed:
-                () => sbbToast.show(
-                  title: 'Large pressed',
-                  bottom: sbbDefaultSpacing * 6,
-                ),
+            onPressed: () => sbbToast.show(title: 'Large pressed', bottom: sbbDefaultSpacing * 6),
           ),
         ),
         const SizedBox(height: sbbDefaultSpacing),
@@ -115,9 +103,7 @@ class DesignGuidelinePage extends StatelessWidget {
         const SBBHeaderbox.custom(
           padding: EdgeInsets.zero,
           flap: SBBHeaderboxFlap.custom(
-            child: Center(
-              child: Text('Choooooo!', style: SBBTextStyles.extraSmallBold),
-            ),
+            child: Center(child: Text('Choooooo!', style: SBBTextStyles.extraSmallBold)),
           ),
           child: Center(child: Text('🚂｡🚋｡🚋｡🚋｡🚋˙⊹⁺.')),
         ),
@@ -158,18 +144,14 @@ class _StaticPageState extends State<StaticPage> {
                       Text(
                         'Click to expand Headerbox.',
                         style: SBBTextStyles.smallLight.copyWith(
-                          color:
-                              isDark ? SBBColors.graphite : SBBColors.granite,
+                          color: isDark ? SBBColors.graphite : SBBColors.granite,
                         ),
                       ),
                     ],
                   ),
                   SBBTertiaryButtonSmall(
                     label: 'Expand',
-                    onPressed:
-                        () => setState(
-                          () => _headerBoxExpanded = !_headerBoxExpanded,
-                        ),
+                    onPressed: () => setState(() => _headerBoxExpanded = !_headerBoxExpanded),
                   ),
                 ],
               ),
@@ -224,25 +206,18 @@ class _ScrollablePageState extends State<ScrollablePage> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        'Scrollable Screen',
-                        style: SBBTextStyles.mediumBold,
-                      ),
+                      Text('Scrollable Screen', style: SBBTextStyles.mediumBold),
                       Text(
                         'Click to expand Headerbox.',
                         style: SBBTextStyles.smallLight.copyWith(
-                          color:
-                              isDark ? SBBColors.graphite : SBBColors.granite,
+                          color: isDark ? SBBColors.graphite : SBBColors.granite,
                         ),
                       ),
                     ],
                   ),
                   SBBTertiaryButtonSmall(
                     label: 'Expand',
-                    onPressed:
-                        () => setState(
-                          () => _headerBoxExpanded = !_headerBoxExpanded,
-                        ),
+                    onPressed: () => setState(() => _headerBoxExpanded = !_headerBoxExpanded),
                   ),
                 ],
               ),
@@ -260,10 +235,8 @@ class _ScrollablePageState extends State<ScrollablePage> {
               (context, index) => SBBListItem(
                 title: 'Item $index',
                 onPressed:
-                    () => sbbToast.show(
-                      title: 'Pressed Item $index',
-                      bottom: sbbDefaultSpacing * 6,
-                    ),
+                    () =>
+                        sbbToast.show(title: 'Pressed Item $index', bottom: sbbDefaultSpacing * 6),
               ),
         ),
       ],

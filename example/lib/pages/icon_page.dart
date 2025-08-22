@@ -42,11 +42,7 @@ class IconPage extends StatelessWidget {
 }
 
 class _IconShowCase extends StatelessWidget {
-  const _IconShowCase({
-    required this.icons,
-    required this.iconSize,
-    required this.sbbToast,
-  });
+  const _IconShowCase({required this.icons, required this.iconSize, required this.sbbToast});
 
   final List<Map<String, Object>> icons;
   final double iconSize;

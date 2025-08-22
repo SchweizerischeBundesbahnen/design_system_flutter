@@ -10,10 +10,7 @@ class TextFieldPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        const Padding(
-          padding: EdgeInsets.all(16.0),
-          child: ThemeModeSegmentedButton(),
-        ),
+        const Padding(padding: EdgeInsets.all(16.0), child: ThemeModeSegmentedButton()),
         SBBGroup(
           margin: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Column(
@@ -21,20 +18,13 @@ class TextFieldPage extends StatelessWidget {
               const SBBTextField(labelText: 'Label, no Value'),
               SBBTextField(
                 labelText: 'Label, Value',
-                controller:
-                    TextEditingController()
-                      ..value = const TextEditingValue(text: 'Value'),
+                controller: TextEditingController()..value = const TextEditingValue(text: 'Value'),
               ),
-              const SBBTextField(
-                labelText: 'Label, Hint, no Value',
-                hintText: 'Hint Value',
-              ),
+              const SBBTextField(labelText: 'Label, Hint, no Value', hintText: 'Hint Value'),
               SBBTextField(
                 labelText: 'With icon',
                 hintText: 'Hint',
-                controller:
-                    TextEditingController()
-                      ..value = const TextEditingValue(text: 'Icon'),
+                controller: TextEditingController()..value = const TextEditingValue(text: 'Icon'),
                 icon: SBBIcons.route_circle_start_small,
               ),
               SBBTextField(
@@ -42,29 +32,21 @@ class TextFieldPage extends StatelessWidget {
                 maxLines: 3,
                 controller:
                     TextEditingController()
-                      ..value = const TextEditingValue(
-                        text: "I'm\nmulti\nline",
-                      ),
+                      ..value = const TextEditingValue(text: "I'm\nmulti\nline"),
               ),
               SBBTextField(
                 labelText: 'Error Message',
-                controller:
-                    TextEditingController()
-                      ..value = const TextEditingValue(text: 'Value'),
+                controller: TextEditingController()..value = const TextEditingValue(text: 'Value'),
                 errorText: 'Error',
               ),
               SBBTextField(
                 labelText: 'Disabled',
-                controller:
-                    TextEditingController()
-                      ..value = const TextEditingValue(text: 'Value'),
+                controller: TextEditingController()..value = const TextEditingValue(text: 'Value'),
                 enabled: false,
               ),
               SBBTextField(
                 labelText: 'Last Element (Without Divider)',
-                controller:
-                    TextEditingController()
-                      ..value = const TextEditingValue(text: 'Value'),
+                controller: TextEditingController()..value = const TextEditingValue(text: 'Value'),
                 isLastElement: true,
               ),
             ],
@@ -82,9 +64,7 @@ class TextFieldPage extends StatelessWidget {
                   controller: TextEditingController(),
                   validator:
                       (value) =>
-                          (value?.length ?? 0) > 7
-                              ? null
-                              : 'Minimum of 8 characters required',
+                          (value?.length ?? 0) > 7 ? null : 'Minimum of 8 characters required',
                   isLastElement: true,
                 ),
               ),

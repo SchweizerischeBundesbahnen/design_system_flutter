@@ -21,26 +21,15 @@ class _StepperPageState extends State<StepperPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _stepper(context),
-      bottomNavigationBar: _footer(context),
-    );
+    return Scaffold(body: _stepper(context), bottomNavigationBar: _footer(context));
   }
 
   Widget _stepper(BuildContext context) {
     late final Widget stepper;
     if (red) {
-      stepper = SBBStepper.red(
-        steps: steps,
-        activeStep: activeStep,
-        onStepPressed: _onStepPressed,
-      );
+      stepper = SBBStepper.red(steps: steps, activeStep: activeStep, onStepPressed: _onStepPressed);
     } else {
-      stepper = SBBStepper(
-        steps: steps,
-        activeStep: activeStep,
-        onStepPressed: _onStepPressed,
-      );
+      stepper = SBBStepper(steps: steps, activeStep: activeStep, onStepPressed: _onStepPressed);
     }
     return Container(
       padding: const EdgeInsetsDirectional.all(24),
@@ -55,10 +44,7 @@ class _StepperPageState extends State<StepperPage> {
       child: Row(
         children: [
           const Expanded(child: Text('RED')),
-          SBBSwitch(
-            value: red,
-            onChanged: (value) => setState(() => red = value),
-          ),
+          SBBSwitch(value: red, onChanged: (value) => setState(() => red = value)),
         ],
       ),
     );

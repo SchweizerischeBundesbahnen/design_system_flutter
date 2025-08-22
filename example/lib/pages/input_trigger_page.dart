@@ -74,10 +74,7 @@ class _PickerPageState extends State<InputTriggerPage> {
                     SBBToast.of(context).show(title: 'onPressed');
                   },
                   prefixIcon: showPrefixIcon ? SBBIcons.dog_small : null,
-                  suffixIcon:
-                      showSuffixIcon
-                          ? SBBIcons.circle_information_small_small
-                          : null,
+                  suffixIcon: showSuffixIcon ? SBBIcons.circle_information_small_small : null,
                   onSuffixPressed: () {
                     SBBToast.of(context).show(title: 'onSuffixPressed');
                   },

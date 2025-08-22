@@ -64,8 +64,7 @@ class RadiobuttonPageState extends State<RadiobuttonPage> {
                 groupValue: _listItemGroupValue,
                 onChanged:
                     _isEnabled
-                        ? (newValue) =>
-                            setState(() => _listItemGroupValue = newValue)
+                        ? (newValue) => setState(() => _listItemGroupValue = newValue)
                         : null,
                 label: 'Label',
               ),
@@ -74,8 +73,7 @@ class RadiobuttonPageState extends State<RadiobuttonPage> {
                 groupValue: _listItemGroupValue,
                 onChanged:
                     _isEnabled
-                        ? (newValue) =>
-                            setState(() => _listItemGroupValue = newValue)
+                        ? (newValue) => setState(() => _listItemGroupValue = newValue)
                         : null,
                 label: 'Leading Icon',
                 leadingIcon: SBBIcons.alarm_clock_small,
@@ -85,8 +83,7 @@ class RadiobuttonPageState extends State<RadiobuttonPage> {
                 groupValue: _listItemGroupValue,
                 onChanged:
                     _isEnabled
-                        ? (newValue) =>
-                            setState(() => _listItemGroupValue = newValue)
+                        ? (newValue) => setState(() => _listItemGroupValue = newValue)
                         : null,
                 label: 'Leading and Trailing Icon',
                 leadingIcon: SBBIcons.alarm_clock_small,
@@ -97,8 +94,7 @@ class RadiobuttonPageState extends State<RadiobuttonPage> {
                 groupValue: _listItemGroupValue,
                 onChanged:
                     _isEnabled
-                        ? (newValue) =>
-                            setState(() => _listItemGroupValue = newValue)
+                        ? (newValue) => setState(() => _listItemGroupValue = newValue)
                         : null,
                 label: 'Button',
                 trailingIcon: SBBIcons.circle_information_small_small,
@@ -109,8 +105,7 @@ class RadiobuttonPageState extends State<RadiobuttonPage> {
                 groupValue: _listItemGroupValue,
                 onChanged:
                     _isEnabled
-                        ? (newValue) =>
-                            setState(() => _listItemGroupValue = newValue)
+                        ? (newValue) => setState(() => _listItemGroupValue = newValue)
                         : null,
                 label: 'Custom trailing Widget',
                 trailingWidget: const Padding(
@@ -126,8 +121,7 @@ class RadiobuttonPageState extends State<RadiobuttonPage> {
                 groupValue: _listItemGroupValue,
                 onChanged:
                     _isEnabled
-                        ? (newValue) =>
-                            setState(() => _listItemGroupValue = newValue)
+                        ? (newValue) => setState(() => _listItemGroupValue = newValue)
                         : null,
                 label: 'Multiline Label with\nSecondary Label',
                 allowMultilineLabel: true,
@@ -139,8 +133,7 @@ class RadiobuttonPageState extends State<RadiobuttonPage> {
                 groupValue: _listItemGroupValue,
                 onChanged:
                     _isEnabled
-                        ? (newValue) =>
-                            setState(() => _listItemGroupValue = newValue)
+                        ? (newValue) => setState(() => _listItemGroupValue = newValue)
                         : null,
                 label: 'Loading',
                 secondaryLabel: 'This will stop loading if selected.',
@@ -162,8 +155,7 @@ class RadiobuttonPageState extends State<RadiobuttonPage> {
                 groupValue: _listItemGroupValue,
                 onChanged:
                     _isEnabled
-                        ? (newValue) =>
-                            setState(() => _listItemGroupValue = newValue)
+                        ? (newValue) => setState(() => _listItemGroupValue = newValue)
                         : null,
                 label: 'Label',
               ),
@@ -175,8 +167,7 @@ class RadiobuttonPageState extends State<RadiobuttonPage> {
                 groupValue: _listItemGroupValue,
                 onChanged:
                     _isEnabled
-                        ? (newValue) =>
-                            setState(() => _listItemGroupValue = newValue)
+                        ? (newValue) => setState(() => _listItemGroupValue = newValue)
                         : null,
                 label: 'Leading Icon',
                 leadingIcon: SBBIcons.alarm_clock_small,
@@ -189,8 +180,7 @@ class RadiobuttonPageState extends State<RadiobuttonPage> {
                 groupValue: _listItemGroupValue,
                 onChanged:
                     _isEnabled
-                        ? (newValue) =>
-                            setState(() => _listItemGroupValue = newValue)
+                        ? (newValue) => setState(() => _listItemGroupValue = newValue)
                         : null,
                 label: 'Leading and Trailing Icon',
                 leadingIcon: SBBIcons.alarm_clock_small,
@@ -204,8 +194,7 @@ class RadiobuttonPageState extends State<RadiobuttonPage> {
                 groupValue: _listItemGroupValue,
                 onChanged:
                     _isEnabled
-                        ? (newValue) =>
-                            setState(() => _listItemGroupValue = newValue)
+                        ? (newValue) => setState(() => _listItemGroupValue = newValue)
                         : null,
                 label: 'Button',
                 trailingIcon: SBBIcons.circle_information_small_small,
@@ -219,8 +208,7 @@ class RadiobuttonPageState extends State<RadiobuttonPage> {
                 groupValue: _listItemGroupValue,
                 onChanged:
                     _isEnabled
-                        ? (newValue) =>
-                            setState(() => _listItemGroupValue = newValue)
+                        ? (newValue) => setState(() => _listItemGroupValue = newValue)
                         : null,
                 label: 'Custom trailing Widget',
                 trailingWidget: const Padding(
@@ -240,8 +228,7 @@ class RadiobuttonPageState extends State<RadiobuttonPage> {
                 groupValue: _listItemGroupValue,
                 onChanged:
                     _isEnabled
-                        ? (newValue) =>
-                            setState(() => _listItemGroupValue = newValue)
+                        ? (newValue) => setState(() => _listItemGroupValue = newValue)
                         : null,
                 label: 'Multiline Label with\nSecondary Label',
                 allowMultilineLabel: true,
@@ -256,8 +243,7 @@ class RadiobuttonPageState extends State<RadiobuttonPage> {
                 groupValue: _listItemGroupValue,
                 onChanged:
                     _isEnabled
-                        ? (newValue) =>
-                            setState(() => _listItemGroupValue = newValue)
+                        ? (newValue) => setState(() => _listItemGroupValue = newValue)
                         : null,
                 label: 'Loading',
                 secondaryLabel: 'This will not stop.',

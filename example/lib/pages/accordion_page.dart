@@ -20,10 +20,8 @@ class AccordionPageState extends State<AccordionPage> {
       isExpanded: true,
     ),
     _Item(
-      title:
-          'The title text has only 1 line. So make sure to keep the title short.',
-      text:
-          'The title text has only 1 line. So make sure to keep the title short.',
+      title: 'The title text has only 1 line. So make sure to keep the title short.',
+      text: 'The title text has only 1 line. So make sure to keep the title short.',
     ),
     _Item(
       title: 'Lorem ipsum',
@@ -45,9 +43,7 @@ class AccordionPageState extends State<AccordionPage> {
         SBBGroup(
           child: SBBAccordion.single(
             title: 'Title text',
-            body: const Text(
-              'The body is only visible when the Accordion item is expanded.',
-            ),
+            body: const Text('The body is only visible when the Accordion item is expanded.'),
             isExpanded: _singleAccordionExpanded,
             singleAccordionCallback: (isExpanded) {
               setState(() {

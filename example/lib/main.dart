@@ -5,9 +5,6 @@ import 'native_app.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider<AppState>(
-      create: (BuildContext context) => AppState(),
-      child: MyApp(),
-    ),
+    ChangeNotifierProvider<AppState>(create: (BuildContext context) => AppState(), child: MyApp()),
   );
 }
