@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 
 class ClosableBoxController {
   ClosableBoxController(TickerProvider vsync)
-      : animation = AnimationController(
-          vsync: vsync,
-          value: 1.0,
-          duration: kThemeAnimationDuration,
-        );
+    : animation = AnimationController(
+        vsync: vsync,
+        value: 1.0,
+        duration: kThemeAnimationDuration,
+      );
 
   final AnimationController animation;
 

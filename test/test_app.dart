@@ -12,14 +12,14 @@ class TestSpecs {
   });
 
   factory TestSpecs.light() => const TestSpecs._(
-        size: _size,
-        brightness: Brightness.light,
-      );
+    size: _size,
+    brightness: Brightness.light,
+  );
 
   factory TestSpecs.dark() => const TestSpecs._(
-        size: _size,
-        brightness: Brightness.dark,
-      );
+    size: _size,
+    brightness: Brightness.dark,
+  );
 
   static const _size = Size(600, 1000);
 
@@ -91,7 +91,12 @@ class TestApp extends StatelessWidget {
       theme: SBBTheme.light(),
       darkTheme: SBBTheme.dark(),
       debugShowCheckedModeBanner: false,
-      builder: (_, __) => Overlay(initialEntries: [OverlayEntry(builder: (context) => Scaffold(body: child))]),
+      builder:
+          (_, __) => Overlay(
+            initialEntries: [
+              OverlayEntry(builder: (context) => Scaffold(body: child)),
+            ],
+          ),
     );
   }
 }

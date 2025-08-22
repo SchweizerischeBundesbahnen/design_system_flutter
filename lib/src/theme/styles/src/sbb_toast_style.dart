@@ -42,20 +42,32 @@ class SBBToastStyle extends ThemeExtension<SBBToastStyle> {
     this.padding,
   });
 
-  factory SBBToastStyle.$default({required SBBBaseStyle baseStyle}) => SBBToastStyle(
-        titleTextStyle: SBBTextStyles.smallLight.copyWith(decoration: TextDecoration.none, color: SBBColors.white),
-        actionTextStyle: SBBTextStyles.smallBold.copyWith(decoration: TextDecoration.none, color: SBBColors.white),
+  factory SBBToastStyle.$default({required SBBBaseStyle baseStyle}) =>
+      SBBToastStyle(
+        titleTextStyle: SBBTextStyles.smallLight.copyWith(
+          decoration: TextDecoration.none,
+          color: SBBColors.white,
+        ),
+        actionTextStyle: SBBTextStyles.smallBold.copyWith(
+          decoration: TextDecoration.none,
+          color: SBBColors.white,
+        ),
         actionOverflowThreshold: 0.25,
         actionPadding: const EdgeInsets.only(left: sbbDefaultSpacing),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(sbbDefaultSpacing),
-            color: baseStyle.themeValue(SBBColors.metal, SBBColors.smoke)),
+          borderRadius: BorderRadius.circular(sbbDefaultSpacing),
+          color: baseStyle.themeValue(SBBColors.metal, SBBColors.smoke),
+        ),
         titleMaxLines: 2,
         margin: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
-        padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: sbbDefaultSpacing),
+        padding: const EdgeInsets.symmetric(
+          vertical: 6.0,
+          horizontal: sbbDefaultSpacing,
+        ),
       );
 
-  static SBBToastStyle of(BuildContext context) => Theme.of(context).extension<SBBToastStyle>()!;
+  static SBBToastStyle of(BuildContext context) =>
+      Theme.of(context).extension<SBBToastStyle>()!;
 
   final TextStyle? titleTextStyle;
   final TextStyle? actionTextStyle;
@@ -76,29 +88,37 @@ class SBBToastStyle extends ThemeExtension<SBBToastStyle> {
     int? titleMaxLines,
     EdgeInsetsGeometry? margin,
     EdgeInsetsGeometry? padding,
-  }) =>
-      SBBToastStyle(
-        titleTextStyle: titleTextStyle ?? this.titleTextStyle,
-        actionTextStyle: actionTextStyle ?? this.actionTextStyle,
-        actionOverflowThreshold: actionOverflowThreshold ?? this.actionOverflowThreshold,
-        actionPadding: actionPadding ?? this.actionPadding,
-        decoration: decoration ?? this.decoration,
-        titleMaxLines: titleMaxLines ?? this.titleMaxLines,
-        margin: margin ?? this.margin,
-        padding: padding ?? this.padding,
-      );
+  }) => SBBToastStyle(
+    titleTextStyle: titleTextStyle ?? this.titleTextStyle,
+    actionTextStyle: actionTextStyle ?? this.actionTextStyle,
+    actionOverflowThreshold:
+        actionOverflowThreshold ?? this.actionOverflowThreshold,
+    actionPadding: actionPadding ?? this.actionPadding,
+    decoration: decoration ?? this.decoration,
+    titleMaxLines: titleMaxLines ?? this.titleMaxLines,
+    margin: margin ?? this.margin,
+    padding: padding ?? this.padding,
+  );
 
   @override
   SBBToastStyle lerp(SBBToastStyle? other, double t) => SBBToastStyle(
-        titleTextStyle: TextStyle.lerp(titleTextStyle, other?.titleTextStyle, t),
-        actionTextStyle: TextStyle.lerp(actionTextStyle, other?.actionTextStyle, t),
-        actionOverflowThreshold: lerpDouble(actionOverflowThreshold, other?.actionOverflowThreshold, t),
-        actionPadding: EdgeInsetsGeometry.lerp(actionPadding, other?.actionPadding, t),
-        decoration: BoxDecoration.lerp(decoration, other?.decoration, t),
-        titleMaxLines: t < 0.5 ? titleMaxLines : other?.titleMaxLines,
-        padding: EdgeInsetsGeometry.lerp(padding, other?.padding, t),
-        margin: EdgeInsetsGeometry.lerp(margin, other?.margin, t),
-      );
+    titleTextStyle: TextStyle.lerp(titleTextStyle, other?.titleTextStyle, t),
+    actionTextStyle: TextStyle.lerp(actionTextStyle, other?.actionTextStyle, t),
+    actionOverflowThreshold: lerpDouble(
+      actionOverflowThreshold,
+      other?.actionOverflowThreshold,
+      t,
+    ),
+    actionPadding: EdgeInsetsGeometry.lerp(
+      actionPadding,
+      other?.actionPadding,
+      t,
+    ),
+    decoration: BoxDecoration.lerp(decoration, other?.decoration, t),
+    titleMaxLines: t < 0.5 ? titleMaxLines : other?.titleMaxLines,
+    padding: EdgeInsetsGeometry.lerp(padding, other?.padding, t),
+    margin: EdgeInsetsGeometry.lerp(margin, other?.margin, t),
+  );
 }
 
 extension SBBToastStyleExtension on SBBToastStyle? {
@@ -107,7 +127,8 @@ extension SBBToastStyleExtension on SBBToastStyle? {
     return this!.copyWith(
       titleTextStyle: this!.titleTextStyle ?? other?.titleTextStyle,
       actionTextStyle: this!.actionTextStyle ?? other?.actionTextStyle,
-      actionOverflowThreshold: this!.actionOverflowThreshold ?? other?.actionOverflowThreshold,
+      actionOverflowThreshold:
+          this!.actionOverflowThreshold ?? other?.actionOverflowThreshold,
       actionPadding: this!.actionPadding ?? other?.actionPadding,
       decoration: this!.decoration ?? other?.decoration,
       titleMaxLines: this!.titleMaxLines ?? other?.titleMaxLines,

@@ -35,7 +35,10 @@ class _ToastActionBodyState extends State<ToastActionBody> {
     final toastContainer = ToastContainer.of(context);
 
     return GestureDetector(
-      onTap: _isActionBeenTriggered ? null : () => _handlePressed(toastContainer.toast?.hide),
+      onTap:
+          _isActionBeenTriggered
+              ? null
+              : () => _handlePressed(toastContainer.toast?.hide),
       child: Text(
         widget.title,
         style: widget.style.actionTextStyle,

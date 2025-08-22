@@ -41,7 +41,10 @@ class DefaultToastBody extends StatelessWidget {
     );
   }
 
-  Widget _bodyWithTextAndAction(SBBToastStyle resolvedStyle, BuildContext context) {
+  Widget _bodyWithTextAndAction(
+    SBBToastStyle resolvedStyle,
+    BuildContext context,
+  ) {
     if (action == null) return _bodyWithText(resolvedStyle);
 
     final builtAction = ToastActionBody(
@@ -50,28 +53,41 @@ class DefaultToastBody extends StatelessWidget {
       style: resolvedStyle,
     );
 
-    double actionAndMarginWidth = _actionAndMarginWidth(resolvedStyle.actionTextStyle);
+    double actionAndMarginWidth = _actionAndMarginWidth(
+      resolvedStyle.actionTextStyle,
+    );
 
-    final toastWidth = MediaQuery.sizeOf(context).width - resolvedStyle.margin!.vertical;
+    final toastWidth =
+        MediaQuery.sizeOf(context).width - resolvedStyle.margin!.vertical;
 
-    final bool willActionOverflow = actionAndMarginWidth / toastWidth > resolvedStyle.actionOverflowThreshold!;
+    final bool willActionOverflow =
+        actionAndMarginWidth / toastWidth >
+        resolvedStyle.actionOverflowThreshold!;
 
     return Wrap(
       children: [
         Row(
           children: [
             Expanded(child: _bodyWithText(resolvedStyle)),
-            if (!willActionOverflow) Padding(padding: resolvedStyle.actionPadding!, child: builtAction),
+            if (!willActionOverflow)
+              Padding(
+                padding: resolvedStyle.actionPadding!,
+                child: builtAction,
+              ),
             if (willActionOverflow) SizedBox(width: toastWidth * 0.3),
           ],
         ),
-        if (willActionOverflow) Align(alignment: Alignment.bottomRight, child: builtAction),
+        if (willActionOverflow)
+          Align(alignment: Alignment.bottomRight, child: builtAction),
       ],
     );
   }
 
-  Widget _bodyWithText(SBBToastStyle resolvedStyle) =>
-      Text(title, style: resolvedStyle.titleTextStyle, maxLines: resolvedStyle.titleMaxLines);
+  Widget _bodyWithText(SBBToastStyle resolvedStyle) => Text(
+    title,
+    style: resolvedStyle.titleTextStyle,
+    maxLines: resolvedStyle.titleMaxLines,
+  );
 
   double _actionAndMarginWidth(TextStyle? style) {
     final actionTextPainter = TextPainter(

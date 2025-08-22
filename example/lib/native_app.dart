@@ -93,14 +93,8 @@ class MyApp extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            _DemoEntry(
-                              'Icon',
-                              IconPage(),
-                            ),
-                            _DemoEntry(
-                              'Typography',
-                              TypographyPage(),
-                            ),
+                            _DemoEntry('Icon', IconPage()),
+                            _DemoEntry('Typography', TypographyPage()),
                             _DemoEntry(
                               'Color',
                               ColorPage(),
@@ -115,78 +109,33 @@ class MyApp extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            _DemoEntry(
-                              'Button',
-                              ButtonPage(),
-                            ),
-                            _DemoEntry(
-                              'Checkbox',
-                              CheckboxPage(),
-                            ),
-                            _DemoEntry(
-                              'Link',
-                              LinkPage(),
-                            ),
-                            _DemoEntry(
-                              'List Header',
-                              ListHeaderPage(),
-                            ),
-                            _DemoEntry(
-                              'List Item',
-                              ListItemPage(),
-                            ),
+                            _DemoEntry('Button', ButtonPage()),
+                            _DemoEntry('Checkbox', CheckboxPage()),
+                            _DemoEntry('Link', LinkPage()),
+                            _DemoEntry('List Header', ListHeaderPage()),
+                            _DemoEntry('List Item', ListItemPage()),
                             _DemoEntry(
                               'Loading Indicator',
                               LoadingIndicatorPage(),
                             ),
-                            _DemoEntry(
-                              'Picker',
-                              PickerPage(),
-                            ),
-                            _DemoEntry(
-                              'Radio Button',
-                              RadiobuttonPage(),
-                            ),
+                            _DemoEntry('Picker', PickerPage()),
+                            _DemoEntry('Radio Button', RadiobuttonPage()),
                             _DemoEntry(
                               'Segmented Button',
                               SegmentedButtonPage(),
                             ),
-                            _DemoEntry(
-                              'Select',
-                              SelectPage(),
-                            ),
-                            const _DemoEntry(
-                              'Switch',
-                              SwitchPage(),
-                            ),
-                            _DemoEntry(
-                              'Textfield / Textarea',
-                              TextFieldPage(),
-                            ),
-                            _DemoEntry(
-                              'Chip',
-                              ChipPage(),
-                            ),
-                            const _DemoEntry(
-                              'Pagination',
-                              PaginationPage(),
-                            ),
-                            _DemoEntry(
-                              'Slider',
-                              SliderPage(),
-                            ),
-                            _DemoEntry(
-                              'Promotion Box',
-                              PromotionBoxPage(),
-                            ),
+                            _DemoEntry('Select', SelectPage()),
+                            const _DemoEntry('Switch', SwitchPage()),
+                            _DemoEntry('Textfield / Textarea', TextFieldPage()),
+                            _DemoEntry('Chip', ChipPage()),
+                            const _DemoEntry('Pagination', PaginationPage()),
+                            _DemoEntry('Slider', SliderPage()),
+                            _DemoEntry('Promotion Box', PromotionBoxPage()),
                             _DemoEntry(
                               'Notification Box',
                               NotificationBoxPage(),
                             ),
-                            _DemoEntry(
-                              'Status',
-                              StatusPage(),
-                            ),
+                            _DemoEntry('Status', StatusPage()),
                             _DemoEntry(
                               'Input Trigger',
                               InputTriggerPage(),
@@ -201,46 +150,16 @@ class MyApp extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            _DemoEntry(
-                              'Accordion',
-                              AccordionPage(),
-                            ),
-                            _DemoEntry(
-                              'Autocompletion',
-                              AutocompletionPage(),
-                            ),
-                            _DemoEntry(
-                              'Group',
-                              GroupPage(),
-                            ),
-                            _DemoEntry(
-                              'Header',
-                              HeaderPage(),
-                            ),
-                            _DemoEntry(
-                              'Headerbox',
-                              HeaderBoxPage(),
-                            ),
-                            _DemoEntry(
-                              'Modal',
-                              ModalPage(),
-                            ),
-                            _DemoEntry(
-                              'Toast',
-                              ToastPage(),
-                            ),
-                            _DemoEntry(
-                              'Onboarding',
-                              OnboardingPage(),
-                            ),
-                            _DemoEntry(
-                              'Message',
-                              MessagePage(),
-                            ),
-                            _DemoEntry(
-                              'Stepper',
-                              StepperPage(),
-                            ),
+                            _DemoEntry('Accordion', AccordionPage()),
+                            _DemoEntry('Autocompletion', AutocompletionPage()),
+                            _DemoEntry('Group', GroupPage()),
+                            _DemoEntry('Header', HeaderPage()),
+                            _DemoEntry('Headerbox', HeaderBoxPage()),
+                            _DemoEntry('Modal', ModalPage()),
+                            _DemoEntry('Toast', ToastPage()),
+                            _DemoEntry('Onboarding', OnboardingPage()),
+                            _DemoEntry('Message', MessagePage()),
+                            _DemoEntry('Stepper', StepperPage()),
                             _DemoEntry(
                               'Tab Bar',
                               TabBarPage(),
@@ -272,7 +191,11 @@ class _DemoEntry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isLight = Theme.of(context).brightness == Brightness.light;
-    final color = SBBBaseStyle.resolve(isLight, SBBColors.white, SBBColors.charcoal);
+    final color = SBBBaseStyle.resolve(
+      isLight,
+      SBBColors.white,
+      SBBColors.charcoal,
+    );
     return OpenContainer(
       closedElevation: 0.0,
       openElevation: 0.0,
@@ -328,10 +251,7 @@ class ThemeModeSegmentedButton extends StatelessWidget {
         SBBIcons.moon_small: 'Dark theme',
       },
       selectedIndexChanged: (value) {
-        Provider.of<AppState>(
-          context,
-          listen: false,
-        ).updateTheme(value == 1);
+        Provider.of<AppState>(context, listen: false).updateTheme(value == 1);
       },
       selectedStateIndex: Provider.of<AppState>(context).isDarkModeOn ? 1 : 0,
     );

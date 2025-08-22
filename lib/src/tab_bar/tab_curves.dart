@@ -71,15 +71,15 @@ class TabCurves {
   TabCurves({
     required this.midX,
     required this.waveRadius,
-  })  : _circleWaveRadius = 0.552284749831 * waveRadius,
-        _twoWaveRadius = waveRadius.toDouble() * 2 {
+  }) : _circleWaveRadius = 0.552284749831 * waveRadius,
+       _twoWaveRadius = waveRadius.toDouble() * 2 {
     // Define the relative starting positions for the anchor points.
     final startPos = [
       const Offset(-2.0, 0.0),
       const Offset(-1.0, 0.0),
       const Offset(0.0, 0.0),
       const Offset(1.0, 0.0),
-      const Offset(2.0, 0.0)
+      const Offset(2.0, 0.0),
     ];
 
     // Calculate the absolute starting positions for the anchor points
@@ -97,7 +97,7 @@ class TabCurves {
       const Offset(-1.0, 1.0),
       const Offset(0.0, 2.0),
       const Offset(1.0, 1.0),
-      const Offset(2.0, 0.0)
+      const Offset(2.0, 0.0),
     ];
 
     // Calculate the absolute ending positions for the anchor points.
@@ -154,10 +154,15 @@ class TabCurves {
     // Determine if the curves are "tight" due to proximity to other tabs.
     // This happens if p0 (leftmost point) is too close to the right side of the left tab
     // or if p4 (rightmost point) is too close to the left side of the right tab.
-    _tight = (leftMidX != 0 && p0.dx < leftWaveEnd) || (rightMidX != 0 && p4.dx > beforeRightWave);
+    _tight =
+        (leftMidX != 0 && p0.dx < leftWaveEnd) ||
+        (rightMidX != 0 && p4.dx > beforeRightWave);
 
     // Calculate the vertical movement for p2 (center point of the wave).
-    p2 = Offset(_startP[2].dx, _startP[2].dy + progress * (_endP[2].dy - _startP[2].dy));
+    p2 = Offset(
+      _startP[2].dx,
+      _startP[2].dy + progress * (_endP[2].dy - _startP[2].dy),
+    );
 
     // Adjust p2's horizontal position if "tight" to avoid collision.
     if (_tight) {
@@ -169,7 +174,11 @@ class TabCurves {
       }
 
       if (rightProgress > progress) {
-        p2 = Offset(p2.dx + (rightProgress - progress) * (beforeRightWave - _startP[2].dx), p2.dy);
+        p2 = Offset(
+          p2.dx +
+              (rightProgress - progress) * (beforeRightWave - _startP[2].dx),
+          p2.dy,
+        );
       }
     }
 

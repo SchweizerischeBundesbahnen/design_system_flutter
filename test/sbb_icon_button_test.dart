@@ -11,13 +11,25 @@ void main() {
       child: Column(
         children: [
           const SizedBox(height: sbbDefaultSpacing),
-          SBBIconButtonLarge(onPressed: () {}, icon: SBBIcons.glass_cocktail_small),
+          SBBIconButtonLarge(
+            onPressed: () {},
+            icon: SBBIcons.glass_cocktail_small,
+          ),
           const SizedBox(height: sbbDefaultSpacing),
-          SBBIconButtonLarge(onPressed: null, icon: SBBIcons.glass_cocktail_small),
+          SBBIconButtonLarge(
+            onPressed: null,
+            icon: SBBIcons.glass_cocktail_small,
+          ),
           const SizedBox(height: sbbDefaultSpacing),
-          SBBIconButtonSmall(onPressed: () {}, icon: SBBIcons.glass_cocktail_small),
+          SBBIconButtonSmall(
+            onPressed: () {},
+            icon: SBBIcons.glass_cocktail_small,
+          ),
           const SizedBox(height: sbbDefaultSpacing),
-          SBBIconButtonSmall(onPressed: null, icon: SBBIcons.glass_cocktail_small),
+          SBBIconButtonSmall(
+            onPressed: null,
+            icon: SBBIcons.glass_cocktail_small,
+          ),
         ],
       ),
     );

@@ -15,25 +15,16 @@ class HeaderPage extends StatelessWidget {
           child: ThemeModeSegmentedButton(),
         ),
         const SBBListHeader('No leading Widget'),
-        const SBBHeader(
-          title: 'Title',
-          automaticallyImplyLeading: false,
-        ),
+        const SBBHeader(title: 'Title', automaticallyImplyLeading: false),
         const SizedBox(height: sbbDefaultSpacing),
         const SBBListHeader('Menu'),
-        const SBBHeader.menu(
-          title: 'Title',
-        ),
+        const SBBHeader.menu(title: 'Title'),
         const SizedBox(height: sbbDefaultSpacing),
         const SBBListHeader('Back'),
-        const SBBHeader.back(
-          title: 'Title',
-        ),
+        const SBBHeader.back(title: 'Title'),
         const SizedBox(height: sbbDefaultSpacing),
         const SBBListHeader('Close'),
-        const SBBHeader.close(
-          title: 'Title',
-        ),
+        const SBBHeader.close(title: 'Title'),
         const SizedBox(height: sbbDefaultSpacing),
         const SBBListHeader('With Callback on SBB Signet'),
         SBBHeader(

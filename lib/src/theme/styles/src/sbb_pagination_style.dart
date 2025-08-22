@@ -26,17 +26,22 @@ class SBBPaginationStyle {
     Color? selectedColor,
     Color? borderColor,
     Color? floatingBackgroundColor,
-  }) =>
-      SBBPaginationStyle(
-        selectedColor: selectedColor ?? this.selectedColor,
-        borderColor: borderColor ?? this.borderColor,
-        floatingBackgroundColor: floatingBackgroundColor ?? this.floatingBackgroundColor,
-      );
+  }) => SBBPaginationStyle(
+    selectedColor: selectedColor ?? this.selectedColor,
+    borderColor: borderColor ?? this.borderColor,
+    floatingBackgroundColor:
+        floatingBackgroundColor ?? this.floatingBackgroundColor,
+  );
 
-  SBBPaginationStyle lerp(SBBPaginationStyle? other, double t) => SBBPaginationStyle(
+  SBBPaginationStyle lerp(SBBPaginationStyle? other, double t) =>
+      SBBPaginationStyle(
         selectedColor: Color.lerp(selectedColor, other?.selectedColor, t),
         borderColor: Color.lerp(borderColor, other?.borderColor, t),
-        floatingBackgroundColor: Color.lerp(floatingBackgroundColor, other?.floatingBackgroundColor, t),
+        floatingBackgroundColor: Color.lerp(
+          floatingBackgroundColor,
+          other?.floatingBackgroundColor,
+          t,
+        ),
       );
 }
 
@@ -46,7 +51,8 @@ extension SBBPaginationStyleExtension on SBBPaginationStyle? {
     return this!.copyWith(
       selectedColor: this!.selectedColor ?? other?.selectedColor,
       borderColor: this!.borderColor ?? other?.borderColor,
-      floatingBackgroundColor: this!.floatingBackgroundColor ?? other?.floatingBackgroundColor,
+      floatingBackgroundColor:
+          this!.floatingBackgroundColor ?? other?.floatingBackgroundColor,
     );
   }
 }

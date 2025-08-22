@@ -56,7 +56,8 @@ abstract class _PickerClassState<T extends StatefulWidget> extends State<T> {
 
 /// Abstract class extended by the State classes of [SBBDatePicker],
 /// [SBBDateTimePicker] and [SBBTimePicker] that provides convenience methods.
-abstract class _TimeBasedPickerState<T extends StatefulWidget> extends _PickerClassState<T> {
+abstract class _TimeBasedPickerState<T extends StatefulWidget>
+    extends _PickerClassState<T> {
   late double _itemPadding;
 
   double get _timeItemTextMinWidth => _textSize('33').width;
@@ -307,9 +308,11 @@ extension TimeOfDayExtensions on TimeOfDay {
     const dayOffsetMinutes = TimeOfDay.hoursPerDay * TimeOfDay.minutesPerHour;
 
     final minTimeDiff = (timeMinutes - minTimeMinutes).abs();
-    final minTimeOffsetDiff = (timeMinutes - dayOffsetMinutes - minTimeMinutes).abs();
+    final minTimeOffsetDiff =
+        (timeMinutes - dayOffsetMinutes - minTimeMinutes).abs();
     final maxTimeDiff = (timeMinutes - maxTimeMinutes).abs();
-    final maxTimeOffsetDiff = (timeMinutes + dayOffsetMinutes - maxTimeMinutes).abs();
+    final maxTimeOffsetDiff =
+        (timeMinutes + dayOffsetMinutes - maxTimeMinutes).abs();
 
     final smallerMinTimeDiff = min(minTimeDiff, minTimeOffsetDiff);
     final smallerMaxTimeDiff = min(maxTimeDiff, maxTimeOffsetDiff);
@@ -352,7 +355,9 @@ extension TimeOfDayExtensions on TimeOfDay {
   /// ```
   TimeOfDay roundToInterval(int minuteInterval) {
     var roundedMinute = ((minute / minuteInterval).round() * minuteInterval);
-    final roundedHour = (hour + roundedMinute ~/ TimeOfDay.minutesPerHour) % TimeOfDay.hoursPerDay;
+    final roundedHour =
+        (hour + roundedMinute ~/ TimeOfDay.minutesPerHour) %
+        TimeOfDay.hoursPerDay;
     roundedMinute %= TimeOfDay.minutesPerHour;
     return replacing(hour: roundedHour, minute: roundedMinute);
   }
@@ -369,7 +374,9 @@ extension TimeOfDayExtensions on TimeOfDay {
   /// ```
   TimeOfDay floorToInterval(int minuteInterval) {
     final roundedHour = hour + minute ~/ TimeOfDay.minutesPerHour;
-    final roundedMinute = ((minute / minuteInterval).floor() * minuteInterval) % TimeOfDay.minutesPerHour;
+    final roundedMinute =
+        ((minute / minuteInterval).floor() * minuteInterval) %
+        TimeOfDay.minutesPerHour;
     return replacing(hour: roundedHour, minute: roundedMinute);
   }
 

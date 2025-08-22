@@ -21,9 +21,14 @@ class SBBHeaderboxFlap extends StatelessWidget {
     IconData? leadingIcon,
     IconData? trailingIcon,
   }) : this.custom(
-          key: key,
-          child: _buildDefaultFlap(title, allowMultilineLabel, leadingIcon, trailingIcon),
-        );
+         key: key,
+         child: _buildDefaultFlap(
+           title,
+           allowMultilineLabel,
+           leadingIcon,
+           trailingIcon,
+         ),
+       );
 
   /// Allows complete customization of the content of the [SBBHeaderboxFlap].
   const SBBHeaderboxFlap.custom({
@@ -78,7 +83,7 @@ class SBBHeaderboxFlap extends StatelessWidget {
         if (trailingIcon != null) ...[
           SizedBox(width: sbbDefaultSpacing * .5),
           Icon(trailingIcon, size: _flapIconSize),
-        ]
+        ],
       ],
     );
   }

@@ -43,7 +43,8 @@ class SBBChip extends StatelessWidget {
         decoration: ShapeDecoration(
           shape: StadiumBorder(
             side: BorderSide(
-              color: _disabled ? style.disabledBorderColor! : style.borderColor!,
+              color:
+                  _disabled ? style.disabledBorderColor! : style.borderColor!,
             ),
           ),
         ),
@@ -62,13 +63,18 @@ class SBBChip extends StatelessWidget {
   }
 
   Padding _label(SBBChipStyle style) {
-    final labelTextStyle = _disabled ? style.labelTextStyle!.textStyleDisabled : style.labelTextStyle!.textStyle;
+    final labelTextStyle =
+        _disabled
+            ? style.labelTextStyle!.textStyleDisabled
+            : style.labelTextStyle!.textStyle;
     return Padding(
       padding: const EdgeInsets.symmetric(
         vertical: 6.0,
         horizontal: 12.0,
       ).subtract(
-        EdgeInsets.only(right: _showBadgeLabel || _showUnselectButton ? _kChipMargin : 0),
+        EdgeInsets.only(
+          right: _showBadgeLabel || _showUnselectButton ? _kChipMargin : 0,
+        ),
       ),
       child: Text(
         label,
@@ -79,7 +85,10 @@ class SBBChip extends StatelessWidget {
   }
 
   Widget _badge(SBBChipStyle style) {
-    final badgeTextStyle = _disabled ? style.badgeTextStyle!.textStyleDisabled : style.badgeTextStyle!.textStyle;
+    final badgeTextStyle =
+        _disabled
+            ? style.badgeTextStyle!.textStyleDisabled
+            : style.badgeTextStyle!.textStyle;
     return _roundedContainer(
       child: Text(
         badgeLabel ?? '',
@@ -97,9 +106,15 @@ class SBBChip extends StatelessWidget {
       child: _roundedContainer(
         child: Icon(
           SBBIcons.cross_small,
-          color: _disabled ? style.disabledUnselectButtonIconColor! : style.unselectButtonIconColor!,
+          color:
+              _disabled
+                  ? style.disabledUnselectButtonIconColor!
+                  : style.unselectButtonIconColor!,
         ),
-        color: _disabled ? style.disabledUnselectButtonColor! : style.unselectButtonColor!,
+        color:
+            _disabled
+                ? style.disabledUnselectButtonColor!
+                : style.unselectButtonColor!,
         width: 24.0,
       ),
     );

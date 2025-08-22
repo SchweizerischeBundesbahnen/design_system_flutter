@@ -23,11 +23,11 @@ class SBBSegmentedButton extends StatefulWidget {
     required int selectedStateIndex,
     required ValueChanged<int> selectedIndexChanged,
   }) : this.text(
-          key: key,
-          values: values,
-          selectedStateIndex: selectedStateIndex,
-          selectedIndexChanged: selectedIndexChanged,
-        );
+         key: key,
+         values: values,
+         selectedStateIndex: selectedStateIndex,
+         selectedIndexChanged: selectedIndexChanged,
+       );
 
   SBBSegmentedButton.text({
     Key? key,
@@ -35,11 +35,11 @@ class SBBSegmentedButton extends StatefulWidget {
     required int selectedStateIndex,
     required ValueChanged<int> selectedIndexChanged,
   }) : this.textCustom(
-          key: key,
-          values: values,
-          selectedStateIndex: selectedStateIndex,
-          selectedIndexChanged: selectedIndexChanged,
-        );
+         key: key,
+         values: values,
+         selectedStateIndex: selectedStateIndex,
+         selectedIndexChanged: selectedIndexChanged,
+       );
 
   SBBSegmentedButton.icon({
     Key? key,
@@ -48,12 +48,12 @@ class SBBSegmentedButton extends StatefulWidget {
     required ValueChanged<int> selectedIndexChanged,
     bool withText = false,
   }) : this.iconCustom(
-          key: key,
-          icons: icons,
-          selectedStateIndex: selectedStateIndex,
-          selectedIndexChanged: selectedIndexChanged,
-          withText: withText,
-        );
+         key: key,
+         icons: icons,
+         selectedStateIndex: selectedStateIndex,
+         selectedIndexChanged: selectedIndexChanged,
+         withText: withText,
+       );
 
   SBBSegmentedButton.redText({
     Key? key,
@@ -61,12 +61,12 @@ class SBBSegmentedButton extends StatefulWidget {
     required int selectedStateIndex,
     required ValueChanged<int> selectedIndexChanged,
   }) : this.textCustom(
-          key: key,
-          values: values,
-          styleSelector: (style) => style.redSegmentedButton,
-          selectedStateIndex: selectedStateIndex,
-          selectedIndexChanged: selectedIndexChanged,
-        );
+         key: key,
+         values: values,
+         styleSelector: (style) => style.redSegmentedButton,
+         selectedStateIndex: selectedStateIndex,
+         selectedIndexChanged: selectedIndexChanged,
+       );
 
   SBBSegmentedButton.redIcon({
     Key? key,
@@ -75,13 +75,13 @@ class SBBSegmentedButton extends StatefulWidget {
     required ValueChanged<int> selectedIndexChanged,
     bool withText = false,
   }) : this.iconCustom(
-          key: key,
-          icons: icons,
-          styleSelector: (style) => style.redSegmentedButton,
-          selectedStateIndex: selectedStateIndex,
-          withText: withText,
-          selectedIndexChanged: selectedIndexChanged,
-        );
+         key: key,
+         icons: icons,
+         styleSelector: (style) => style.redSegmentedButton,
+         selectedStateIndex: selectedStateIndex,
+         withText: withText,
+         selectedIndexChanged: selectedIndexChanged,
+       );
 
   SBBSegmentedButton.textCustom({
     Key? key,
@@ -90,20 +90,21 @@ class SBBSegmentedButton extends StatefulWidget {
     required ValueChanged<int> selectedIndexChanged,
     SBBControlStyleSelector<SBBSegmentedButtonStyle>? styleSelector,
   }) : this.custom(
-          key: key,
-          widgetBuilders: values.mapIndexed((i, value) {
-            return (SBBSegmentedButtonStyle? style, bool selected) {
-              return Text(
-                value,
-                maxLines: 1,
-                style: style.getTextStyle(selected),
-              );
-            };
-          }).toList(),
-          styleSelector: styleSelector,
-          selectedStateIndex: selectedStateIndex,
-          selectedIndexChanged: selectedIndexChanged,
-        );
+         key: key,
+         widgetBuilders:
+             values.mapIndexed((i, value) {
+               return (SBBSegmentedButtonStyle? style, bool selected) {
+                 return Text(
+                   value,
+                   maxLines: 1,
+                   style: style.getTextStyle(selected),
+                 );
+               };
+             }).toList(),
+         styleSelector: styleSelector,
+         selectedStateIndex: selectedStateIndex,
+         selectedIndexChanged: selectedIndexChanged,
+       );
 
   SBBSegmentedButton.iconCustom({
     Key? key,
@@ -113,33 +114,34 @@ class SBBSegmentedButton extends StatefulWidget {
     bool withText = false,
     SBBControlStyleSelector<SBBSegmentedButtonStyle>? styleSelector,
   }) : this.custom(
-          key: key,
-          widgetBuilders: icons.entries.map((icon) {
-            return (SBBSegmentedButtonStyle? style, bool selected) {
-              return Semantics(
-                label: icon.value,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(icon.key, color: style?.iconColor),
-                    if (withText) ...[
-                      const SizedBox(width: 4.0),
-                      ExcludeSemantics(
-                        child: Text(
-                          icon.value,
-                          style: style.getTextStyle(selected),
-                        ),
-                      ),
-                    ],
-                  ],
-                ),
-              );
-            };
-          }).toList(),
-          styleSelector: styleSelector,
-          selectedStateIndex: selectedStateIndex,
-          selectedIndexChanged: selectedIndexChanged,
-        );
+         key: key,
+         widgetBuilders:
+             icons.entries.map((icon) {
+               return (SBBSegmentedButtonStyle? style, bool selected) {
+                 return Semantics(
+                   label: icon.value,
+                   child: Row(
+                     mainAxisAlignment: MainAxisAlignment.center,
+                     children: [
+                       Icon(icon.key, color: style?.iconColor),
+                       if (withText) ...[
+                         const SizedBox(width: 4.0),
+                         ExcludeSemantics(
+                           child: Text(
+                             icon.value,
+                             style: style.getTextStyle(selected),
+                           ),
+                         ),
+                       ],
+                     ],
+                   ),
+                 );
+               };
+             }).toList(),
+         styleSelector: styleSelector,
+         selectedStateIndex: selectedStateIndex,
+         selectedIndexChanged: selectedIndexChanged,
+       );
 
   const SBBSegmentedButton.custom({
     super.key,
@@ -147,7 +149,10 @@ class SBBSegmentedButton extends StatefulWidget {
     required this.selectedStateIndex,
     required this.selectedIndexChanged,
     this.styleSelector,
-  }) : assert(widgetBuilders.length > 0, 'At least one widget builder must be provided.');
+  }) : assert(
+         widgetBuilders.length > 0,
+         'At least one widget builder must be provided.',
+       );
 
   final List<SegmentedButtonWidgetBuilder> widgetBuilders;
   final int selectedStateIndex;
@@ -163,9 +168,11 @@ class SegmentedButtonState extends State<SBBSegmentedButton> {
 
   late SBBSegmentedButtonStyle? style;
 
-  Color get borderColor => style?.defaultStyle?.borderColor ?? SBBColors.transparent;
+  Color get borderColor =>
+      style?.defaultStyle?.borderColor ?? SBBColors.transparent;
 
-  Color get selectedBorderColor => style?.selectedStyle?.borderColor ?? SBBColors.transparent;
+  Color get selectedBorderColor =>
+      style?.selectedStyle?.borderColor ?? SBBColors.transparent;
 
   @override
   void didChangeDependencies() {
@@ -199,7 +206,10 @@ class SegmentedButtonState extends State<SBBSegmentedButton> {
               customBorder: const RoundedRectangleBorder(
                 borderRadius: _borderRadius,
               ),
-              onTap: i != widget.selectedStateIndex ? () => widget.selectedIndexChanged(i) : null,
+              onTap:
+                  i != widget.selectedStateIndex
+                      ? () => widget.selectedIndexChanged(i)
+                      : null,
             ),
           ),
         ),
@@ -231,7 +241,10 @@ class SegmentedButtonState extends State<SBBSegmentedButton> {
               AnimatedContainer(
                 duration: kThemeAnimationDuration,
                 curve: Curves.easeInOut,
-                width: constraints.maxWidth / widget.widgetBuilders.length * widget.selectedStateIndex,
+                width:
+                    constraints.maxWidth /
+                    widget.widgetBuilders.length *
+                    widget.selectedStateIndex,
               ),
               Container(
                 width: constraints.maxWidth / widget.widgetBuilders.length,
@@ -262,25 +275,26 @@ class SegmentedButtonState extends State<SBBSegmentedButton> {
     final loc = Localizations.of(context, MaterialLocalizations);
     return IgnorePointer(
       child: Row(
-        children: widget.widgetBuilders.mapIndexed((i, element) {
-          final selected = i == widget.selectedStateIndex;
-          return Expanded(
-            child: Semantics(
-              focusable: true,
-              selected: selected,
-              button: !selected,
-              hint: loc.tabLabel(
-                tabIndex: i + 1,
-                tabCount: widget.widgetBuilders.length,
-              ),
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 4),
-                alignment: Alignment.center,
-                child: element(style, selected),
-              ),
-            ),
-          );
-        }).toList(),
+        children:
+            widget.widgetBuilders.mapIndexed((i, element) {
+              final selected = i == widget.selectedStateIndex;
+              return Expanded(
+                child: Semantics(
+                  focusable: true,
+                  selected: selected,
+                  button: !selected,
+                  hint: loc.tabLabel(
+                    tabIndex: i + 1,
+                    tabCount: widget.widgetBuilders.length,
+                  ),
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    alignment: Alignment.center,
+                    child: element(style, selected),
+                  ),
+                ),
+              );
+            }).toList(),
       ),
     );
   }

@@ -55,12 +55,13 @@ class SBBToast {
     builder(
       duration: duration,
       bottom: bottom,
-      builder: (stream) => DefaultToastBody(
-        title: title,
-        duration: duration,
-        style: style,
-        action: action,
-      ),
+      builder:
+          (stream) => DefaultToastBody(
+            title: title,
+            duration: duration,
+            style: style,
+            action: action,
+          ),
     );
   }
 
@@ -79,7 +80,11 @@ class SBBToast {
       remove();
       _streamController = StreamController<bool>();
       _streamController!.add(true);
-      _overlayEntry = _buildToastOverlayEntry(bottom, builder(_streamController!.stream), _streamController!.stream);
+      _overlayEntry = _buildToastOverlayEntry(
+        bottom,
+        builder(_streamController!.stream),
+        _streamController!.stream,
+      );
       _overlayState.insert(_overlayEntry!);
       _fadeOutTimer = Timer(duration + kThemeAnimationDuration * 2, () {
         _streamController?.add(false);
@@ -113,8 +118,13 @@ class SBBToast {
     _streamController = null;
   }
 
-  OverlayEntry _buildToastOverlayEntry(double bottom, Widget toast, Stream<bool> stream) => OverlayEntry(
-        builder: (context) => ToastContainer(
+  OverlayEntry _buildToastOverlayEntry(
+    double bottom,
+    Widget toast,
+    Stream<bool> stream,
+  ) => OverlayEntry(
+    builder:
+        (context) => ToastContainer(
           stream: stream,
           toast: this,
           child: Positioned(
@@ -127,5 +137,5 @@ class SBBToast {
             ),
           ),
         ),
-      );
+  );
 }

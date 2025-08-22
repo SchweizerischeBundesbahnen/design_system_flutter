@@ -36,7 +36,11 @@ class SBBPromotionBoxBadge extends StatelessWidget {
 }
 
 class SBBPromotionBoxBadgeShadow extends StatelessWidget {
-  const SBBPromotionBoxBadgeShadow({super.key, required this.badgeSize, required this.shadowColor});
+  const SBBPromotionBoxBadgeShadow({
+    super.key,
+    required this.badgeSize,
+    required this.shadowColor,
+  });
 
   final Size badgeSize;
   final Color shadowColor;

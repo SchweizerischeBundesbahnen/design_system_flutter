@@ -20,7 +20,8 @@ void main() {
         ),
         const SizedBox(height: sbbDefaultSpacing),
         SBBChip(
-          label: 'This is a very long text with a longer badge label, that should not be longer than one line.',
+          label:
+              'This is a very long text with a longer badge label, that should not be longer than one line.',
           badgeLabel: 'Production',
           onSelection: (selected) {},
         ),

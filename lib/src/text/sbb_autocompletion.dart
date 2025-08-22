@@ -9,7 +9,8 @@ typedef Filter<T> = bool Function(T suggestion, String query);
 
 typedef InputEventCallback<T> = Function(T data);
 
-typedef AutoCompleteOverlayItemBuilder<T> = Widget Function(BuildContext context, T suggestion);
+typedef AutoCompleteOverlayItemBuilder<T> =
+    Widget Function(BuildContext context, T suggestion);
 
 /// SBB Autocompletion, BETA!
 ///
@@ -129,7 +130,8 @@ class SBBAutocompletion<T> extends StatefulWidget {
   SBBAutocompletionState createState() => SBBAutocompletionState<T>();
 }
 
-class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>> with WidgetsBindingObserver {
+class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>>
+    with WidgetsBindingObserver {
   final LayerLink _layerLink = LayerLink();
   late SBBTextField _textField;
 
@@ -197,7 +199,9 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>> with Widgets
 
   @override
   void didChangeMetrics() {
-    _bottomInset = View.of(context).viewInsets.bottom / MediaQuery.of(context).devicePixelRatio;
+    _bottomInset =
+        View.of(context).viewInsets.bottom /
+        MediaQuery.of(context).devicePixelRatio;
     _metricsChanged = true;
     _updateOverlay(query: _currentText);
   }
@@ -240,16 +244,21 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>> with Widgets
         if (_metricsChanged) {
           _metricsChanged = false;
         }
-        final Size textFieldSize = (context.findRenderObject() as RenderBox).size;
+        final Size textFieldSize =
+            (context.findRenderObject() as RenderBox).size;
         final height = textFieldSize.height;
 
         /// to get the size of the suggestions area between the text field and
         /// the keyboard, do some calculations...
-        final Offset textFieldGlobalPosition =
-            (context.findRenderObject() as RenderBox).localToGlobal(Offset(0.0, height));
+        final Offset textFieldGlobalPosition = (context.findRenderObject()
+                as RenderBox)
+            .localToGlobal(Offset(0.0, height));
 
         /// screen size - textfield bottom y - keyboard height = area height
-        final overlayHeight = MediaQuery.of(context).size.height - textFieldGlobalPosition.dy - _bottomInset;
+        final overlayHeight =
+            MediaQuery.of(context).size.height -
+            textFieldGlobalPosition.dy -
+            _bottomInset;
 
         final style = SBBBaseStyle.of(context);
 
@@ -284,7 +293,8 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>> with Widgets
                           color: backgroundColor,
                           height: 16.0,
                         ),
-                      if (widget.favorites.isNotEmpty && widget.enableFavorites) const Divider(),
+                      if (widget.favorites.isNotEmpty && widget.enableFavorites)
+                        const Divider(),
                       if (widget.favorites.isNotEmpty && widget.enableFavorites)
                         ...widget.favorites.map(
                           (T favorite) {
@@ -295,7 +305,8 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>> with Widgets
                                 onPressed: () {
                                   setState(
                                     () {
-                                      final String newText = favorite.toString();
+                                      final String newText =
+                                          favorite.toString();
                                       _textField.controller?.text = newText;
                                       _textChanged?.call(newText);
                                       if (widget.submitOnSuggestionTap) {
@@ -402,7 +413,8 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>> with Widgets
       return [];
     }
 
-    final List<T> filteredSuggestions = suggestions.where((item) => filter(item, query)).toList();
+    final List<T> filteredSuggestions =
+        suggestions.where((item) => filter(item, query)).toList();
     filteredSuggestions.sort(sorter);
     if (filteredSuggestions.length > maxAmount) {
       return filteredSuggestions.sublist(0, maxAmount);

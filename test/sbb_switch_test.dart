@@ -82,7 +82,8 @@ class SwitchTest extends StatelessWidget {
         SBBGroup(
           child: SBBSwitchListItem(
             value: value3,
-            title: 'Very Looooooooooooooooooooooooooooooooooooooooooooooong Multiline Label With Subtitle',
+            title:
+                'Very Looooooooooooooooooooooooooooooooooooooooooooooong Multiline Label With Subtitle',
             allowMultilineLabel: true,
             subtitle: 'Subtitle',
             onChanged: (value) {},
@@ -99,7 +100,7 @@ class SwitchTest extends StatelessWidget {
               SBBSwitchListItemLink(
                 text: 'Link Text',
                 onPressed: () => {},
-              )
+              ),
             ],
             isLastElement: true,
           ),
@@ -137,7 +138,7 @@ class SwitchTest extends StatelessWidget {
               SBBSwitchListItemLink(
                 text: 'Link still enabled',
                 onPressed: () {},
-              )
+              ),
             ],
             isLastElement: true,
           ),
@@ -182,7 +183,7 @@ class SwitchTest extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: Text('My custom Link Widget'),
-              )
+              ),
             ],
             isLastElement: true,
           ),

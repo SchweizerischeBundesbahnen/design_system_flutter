@@ -11,190 +11,523 @@ const largeFontFamily = 'packages/sbb_design_system_mobile/SBBIconsLarge';
 // The names are given by digital.sbb.ch
 // ignore_for_file: constant_identifier_names
 sealed class SBBIcons {
-  static const wine_cheese_small = IconData(0xf101, fontFamily: smallFontFamily);
+  static const wine_cheese_small = IconData(
+    0xf101,
+    fontFamily: smallFontFamily,
+  );
   static const wifi_small = IconData(0xf102, fontFamily: smallFontFamily);
-  static const wifi_disabled_small = IconData(0xf103, fontFamily: smallFontFamily);
-  static const wheelchair_uncertain_small = IconData(0xf104, fontFamily: smallFontFamily);
-  static const wheelchair_substitute_transport_small = IconData(0xf105, fontFamily: smallFontFamily);
+  static const wifi_disabled_small = IconData(
+    0xf103,
+    fontFamily: smallFontFamily,
+  );
+  static const wheelchair_uncertain_small = IconData(
+    0xf104,
+    fontFamily: smallFontFamily,
+  );
+  static const wheelchair_substitute_transport_small = IconData(
+    0xf105,
+    fontFamily: smallFontFamily,
+  );
   static const wheelchair_small = IconData(0xf106, fontFamily: smallFontFamily);
-  static const wheelchair_sector_location_small = IconData(0xf107, fontFamily: smallFontFamily);
-  static const wheelchair_reservation_small = IconData(0xf108, fontFamily: smallFontFamily);
-  static const wheelchair_partially_small = IconData(0xf109, fontFamily: smallFontFamily);
-  static const wheelchair_inaccessible_small = IconData(0xf10a, fontFamily: smallFontFamily);
-  static const wheel_thermometer_small = IconData(0xf10b, fontFamily: smallFontFamily);
-  static const wheel_microphone_small = IconData(0xf10c, fontFamily: smallFontFamily);
-  static const weight_wheel_small = IconData(0xf10d, fontFamily: smallFontFamily);
+  static const wheelchair_sector_location_small = IconData(
+    0xf107,
+    fontFamily: smallFontFamily,
+  );
+  static const wheelchair_reservation_small = IconData(
+    0xf108,
+    fontFamily: smallFontFamily,
+  );
+  static const wheelchair_partially_small = IconData(
+    0xf109,
+    fontFamily: smallFontFamily,
+  );
+  static const wheelchair_inaccessible_small = IconData(
+    0xf10a,
+    fontFamily: smallFontFamily,
+  );
+  static const wheel_thermometer_small = IconData(
+    0xf10b,
+    fontFamily: smallFontFamily,
+  );
+  static const wheel_microphone_small = IconData(
+    0xf10c,
+    fontFamily: smallFontFamily,
+  );
+  static const weight_wheel_small = IconData(
+    0xf10d,
+    fontFamily: smallFontFamily,
+  );
   static const weight_small = IconData(0xf10e, fontFamily: smallFontFamily);
-  static const weather_unknown_small = IconData(0xf10f, fontFamily: smallFontFamily);
-  static const waves_ladder_small = IconData(0xf110, fontFamily: smallFontFamily);
-  static const washing_machine_small = IconData(0xf111, fontFamily: smallFontFamily);
-  static const warning_light_small = IconData(0xf112, fontFamily: smallFontFamily);
-  static const wara_warn_app_small = IconData(0xf113, fontFamily: smallFontFamily);
+  static const weather_unknown_small = IconData(
+    0xf10f,
+    fontFamily: smallFontFamily,
+  );
+  static const waves_ladder_small = IconData(
+    0xf110,
+    fontFamily: smallFontFamily,
+  );
+  static const washing_machine_small = IconData(
+    0xf111,
+    fontFamily: smallFontFamily,
+  );
+  static const warning_light_small = IconData(
+    0xf112,
+    fontFamily: smallFontFamily,
+  );
+  static const wara_warn_app_small = IconData(
+    0xf113,
+    fontFamily: smallFontFamily,
+  );
   static const wallet_small = IconData(0xf114, fontFamily: smallFontFamily);
-  static const walkie_talkie_small = IconData(0xf115, fontFamily: smallFontFamily);
+  static const walkie_talkie_small = IconData(
+    0xf115,
+    fontFamily: smallFontFamily,
+  );
   static const walk_small = IconData(0xf116, fontFamily: smallFontFamily);
   static const walk_slow_small = IconData(0xf117, fontFamily: smallFontFamily);
   static const walk_large_small = IconData(0xf118, fontFamily: smallFontFamily);
   static const walk_fast_small = IconData(0xf119, fontFamily: smallFontFamily);
-  static const waiting_room_small = IconData(0xf11a, fontFamily: smallFontFamily);
+  static const waiting_room_small = IconData(
+    0xf11a,
+    fontFamily: smallFontFamily,
+  );
   static const wagon_small = IconData(0xf11b, fontFamily: smallFontFamily);
-  static const wagon_coupling_dragging_equipment_small = IconData(0xf11c, fontFamily: smallFontFamily);
+  static const wagon_coupling_dragging_equipment_small = IconData(
+    0xf11c,
+    fontFamily: smallFontFamily,
+  );
   static const vegetarian_small = IconData(0xf11d, fontFamily: smallFontFamily);
   static const vegan_small = IconData(0xf11e, fontFamily: smallFontFamily);
   static const user_tie_small = IconData(0xf11f, fontFamily: smallFontFamily);
   static const user_small = IconData(0xf120, fontFamily: smallFontFamily);
   static const user_plus_small = IconData(0xf121, fontFamily: smallFontFamily);
   static const user_key_small = IconData(0xf122, fontFamily: smallFontFamily);
-  static const user_helmet_small = IconData(0xf123, fontFamily: smallFontFamily);
-  static const user_headset_small = IconData(0xf124, fontFamily: smallFontFamily);
-  static const user_headset_display_small = IconData(0xf125, fontFamily: smallFontFamily);
+  static const user_helmet_small = IconData(
+    0xf123,
+    fontFamily: smallFontFamily,
+  );
+  static const user_headset_small = IconData(
+    0xf124,
+    fontFamily: smallFontFamily,
+  );
+  static const user_headset_display_small = IconData(
+    0xf125,
+    fontFamily: smallFontFamily,
+  );
   static const user_hat_small = IconData(0xf126, fontFamily: smallFontFamily);
   static const user_group_small = IconData(0xf127, fontFamily: smallFontFamily);
-  static const user_group_row_small = IconData(0xf128, fontFamily: smallFontFamily);
-  static const user_group_round_table_small = IconData(0xf129, fontFamily: smallFontFamily);
-  static const user_change_small = IconData(0xf12a, fontFamily: smallFontFamily);
+  static const user_group_row_small = IconData(
+    0xf128,
+    fontFamily: smallFontFamily,
+  );
+  static const user_group_round_table_small = IconData(
+    0xf129,
+    fontFamily: smallFontFamily,
+  );
+  static const user_change_small = IconData(
+    0xf12a,
+    fontFamily: smallFontFamily,
+  );
   static const user_admin_small = IconData(0xf12b, fontFamily: smallFontFamily);
   static const upload_small = IconData(0xf12c, fontFamily: smallFontFamily);
   static const unicorn_small = IconData(0xf12d, fontFamily: smallFontFamily);
-  static const underground_vehicule_profile_small = IconData(0xf12e, fontFamily: smallFontFamily);
-  static const umbrella_glove_question_mark_small = IconData(0xf12f, fontFamily: smallFontFamily);
+  static const underground_vehicule_profile_small = IconData(
+    0xf12e,
+    fontFamily: smallFontFamily,
+  );
+  static const umbrella_glove_question_mark_small = IconData(
+    0xf12f,
+    fontFamily: smallFontFamily,
+  );
   static const two_users_small = IconData(0xf130, fontFamily: smallFontFamily);
-  static const two_speech_bubbles_small = IconData(0xf131, fontFamily: smallFontFamily);
-  static const two_speech_bubbles_rainbow_small = IconData(0xf132, fontFamily: smallFontFamily);
-  static const two_lines_diagonal_small = IconData(0xf133, fontFamily: smallFontFamily);
+  static const two_speech_bubbles_small = IconData(
+    0xf131,
+    fontFamily: smallFontFamily,
+  );
+  static const two_speech_bubbles_rainbow_small = IconData(
+    0xf132,
+    fontFamily: smallFontFamily,
+  );
+  static const two_lines_diagonal_small = IconData(
+    0xf133,
+    fontFamily: smallFontFamily,
+  );
   static const two_houses_small = IconData(0xf134, fontFamily: smallFontFamily);
-  static const two_folders_small = IconData(0xf135, fontFamily: smallFontFamily);
-  static const two_finger_tap_small = IconData(0xf136, fontFamily: smallFontFamily);
-  static const two_adults_kid_small = IconData(0xf137, fontFamily: smallFontFamily);
+  static const two_folders_small = IconData(
+    0xf135,
+    fontFamily: smallFontFamily,
+  );
+  static const two_finger_tap_small = IconData(
+    0xf136,
+    fontFamily: smallFontFamily,
+  );
+  static const two_adults_kid_small = IconData(
+    0xf137,
+    fontFamily: smallFontFamily,
+  );
   static const tunnel_small = IconData(0xf138, fontFamily: smallFontFamily);
-  static const tunnel_freight_wagon_shifted_small = IconData(0xf139, fontFamily: smallFontFamily);
+  static const tunnel_freight_wagon_shifted_small = IconData(
+    0xf139,
+    fontFamily: smallFontFamily,
+  );
   static const tree_small = IconData(0xf13a, fontFamily: smallFontFamily);
-  static const travel_backpack_small = IconData(0xf13b, fontFamily: smallFontFamily);
+  static const travel_backpack_small = IconData(
+    0xf13b,
+    fontFamily: smallFontFamily,
+  );
   static const trash_small = IconData(0xf13c, fontFamily: smallFontFamily);
   static const translate_small = IconData(0xf13d, fontFamily: smallFontFamily);
   static const tram_small = IconData(0xf13e, fontFamily: smallFontFamily);
-  static const tram_profile_small = IconData(0xf13f, fontFamily: smallFontFamily);
-  static const train_tracks_small = IconData(0xf140, fontFamily: smallFontFamily);
-  static const train_tracks_pen_small = IconData(0xf141, fontFamily: smallFontFamily);
-  static const train_tracks_horizontal_small = IconData(0xf142, fontFamily: smallFontFamily);
-  static const train_station_small = IconData(0xf143, fontFamily: smallFontFamily);
+  static const tram_profile_small = IconData(
+    0xf13f,
+    fontFamily: smallFontFamily,
+  );
+  static const train_tracks_small = IconData(
+    0xf140,
+    fontFamily: smallFontFamily,
+  );
+  static const train_tracks_pen_small = IconData(
+    0xf141,
+    fontFamily: smallFontFamily,
+  );
+  static const train_tracks_horizontal_small = IconData(
+    0xf142,
+    fontFamily: smallFontFamily,
+  );
+  static const train_station_small = IconData(
+    0xf143,
+    fontFamily: smallFontFamily,
+  );
   static const train_small = IconData(0xf144, fontFamily: smallFontFamily);
   static const train_ski_small = IconData(0xf145, fontFamily: smallFontFamily);
-  static const train_signal_small = IconData(0xf146, fontFamily: smallFontFamily);
-  static const train_profile_small = IconData(0xf147, fontFamily: smallFontFamily);
-  static const train_profile_signal_small = IconData(0xf148, fontFamily: smallFontFamily);
-  static const train_profile_sign_parking_small = IconData(0xf149, fontFamily: smallFontFamily);
-  static const traffic_jam_small = IconData(0xf14a, fontFamily: smallFontFamily);
+  static const train_signal_small = IconData(
+    0xf146,
+    fontFamily: smallFontFamily,
+  );
+  static const train_profile_small = IconData(
+    0xf147,
+    fontFamily: smallFontFamily,
+  );
+  static const train_profile_signal_small = IconData(
+    0xf148,
+    fontFamily: smallFontFamily,
+  );
+  static const train_profile_sign_parking_small = IconData(
+    0xf149,
+    fontFamily: smallFontFamily,
+  );
+  static const traffic_jam_small = IconData(
+    0xf14a,
+    fontFamily: smallFontFamily,
+  );
   static const torch_small = IconData(0xf14b, fontFamily: smallFontFamily);
   static const toilet_small = IconData(0xf14c, fontFamily: smallFontFamily);
   static const timetable_small = IconData(0xf14d, fontFamily: smallFontFamily);
-  static const timetable_arrows_circle_small = IconData(0xf14e, fontFamily: smallFontFamily);
-  static const tickets_class_small = IconData(0xf14f, fontFamily: smallFontFamily);
-  static const ticket_star_small = IconData(0xf150, fontFamily: smallFontFamily);
+  static const timetable_arrows_circle_small = IconData(
+    0xf14e,
+    fontFamily: smallFontFamily,
+  );
+  static const tickets_class_small = IconData(
+    0xf14f,
+    fontFamily: smallFontFamily,
+  );
+  static const ticket_star_small = IconData(
+    0xf150,
+    fontFamily: smallFontFamily,
+  );
   static const ticket_rv_small = IconData(0xf151, fontFamily: smallFontFamily);
-  static const ticket_route_small = IconData(0xf152, fontFamily: smallFontFamily);
-  static const ticket_percent_small = IconData(0xf153, fontFamily: smallFontFamily);
-  static const ticket_parking_small = IconData(0xf154, fontFamily: smallFontFamily);
-  static const ticket_moon_star_small = IconData(0xf155, fontFamily: smallFontFamily);
-  static const ticket_machine_ticket_small = IconData(0xf156, fontFamily: smallFontFamily);
-  static const ticket_machine_small = IconData(0xf157, fontFamily: smallFontFamily);
-  static const ticket_journey_small = IconData(0xf158, fontFamily: smallFontFamily);
+  static const ticket_route_small = IconData(
+    0xf152,
+    fontFamily: smallFontFamily,
+  );
+  static const ticket_percent_small = IconData(
+    0xf153,
+    fontFamily: smallFontFamily,
+  );
+  static const ticket_parking_small = IconData(
+    0xf154,
+    fontFamily: smallFontFamily,
+  );
+  static const ticket_moon_star_small = IconData(
+    0xf155,
+    fontFamily: smallFontFamily,
+  );
+  static const ticket_machine_ticket_small = IconData(
+    0xf156,
+    fontFamily: smallFontFamily,
+  );
+  static const ticket_machine_small = IconData(
+    0xf157,
+    fontFamily: smallFontFamily,
+  );
+  static const ticket_journey_small = IconData(
+    0xf158,
+    fontFamily: smallFontFamily,
+  );
   static const ticket_ipv_small = IconData(0xf159, fontFamily: smallFontFamily);
-  static const ticket_heart_small = IconData(0xf15a, fontFamily: smallFontFamily);
+  static const ticket_heart_small = IconData(
+    0xf15a,
+    fontFamily: smallFontFamily,
+  );
   static const ticket_fv_small = IconData(0xf15b, fontFamily: smallFontFamily);
-  static const ticket_disabled_small = IconData(0xf15c, fontFamily: smallFontFamily);
+  static const ticket_disabled_small = IconData(
+    0xf15c,
+    fontFamily: smallFontFamily,
+  );
   static const ticket_day_small = IconData(0xf15d, fontFamily: smallFontFamily);
   static const tick_small = IconData(0xf15e, fontFamily: smallFontFamily);
   static const thumb_up_small = IconData(0xf15f, fontFamily: smallFontFamily);
   static const thumb_down_small = IconData(0xf160, fontFamily: smallFontFamily);
-  static const three_gears_small = IconData(0xf161, fontFamily: smallFontFamily);
-  static const three_adults_small = IconData(0xf162, fontFamily: smallFontFamily);
-  static const thermometer_small = IconData(0xf163, fontFamily: smallFontFamily);
-  static const telephone_receiver_small = IconData(0xf164, fontFamily: smallFontFamily);
-  static const telephone_gsm_small = IconData(0xf165, fontFamily: smallFontFamily);
+  static const three_gears_small = IconData(
+    0xf161,
+    fontFamily: smallFontFamily,
+  );
+  static const three_adults_small = IconData(
+    0xf162,
+    fontFamily: smallFontFamily,
+  );
+  static const thermometer_small = IconData(
+    0xf163,
+    fontFamily: smallFontFamily,
+  );
+  static const telephone_receiver_small = IconData(
+    0xf164,
+    fontFamily: smallFontFamily,
+  );
+  static const telephone_gsm_small = IconData(
+    0xf165,
+    fontFamily: smallFontFamily,
+  );
   static const taxi_small = IconData(0xf166, fontFamily: smallFontFamily);
-  static const taxi_profile_small = IconData(0xf167, fontFamily: smallFontFamily);
+  static const taxi_profile_small = IconData(
+    0xf167,
+    fontFamily: smallFontFamily,
+  );
   static const target_small = IconData(0xf168, fontFamily: smallFontFamily);
   static const tag_small = IconData(0xf169, fontFamily: smallFontFamily);
-  static const tablet_smartphone_small = IconData(0xf16a, fontFamily: smallFontFamily);
+  static const tablet_smartphone_small = IconData(
+    0xf16a,
+    fontFamily: smallFontFamily,
+  );
   static const tablet_small = IconData(0xf16b, fontFamily: smallFontFamily);
-  static const switzerland_small = IconData(0xf16c, fontFamily: smallFontFamily);
-  static const switzerland_route_small = IconData(0xf16d, fontFamily: smallFontFamily);
-  static const swisspass_temporary_small = IconData(0xf16e, fontFamily: smallFontFamily);
+  static const switzerland_small = IconData(
+    0xf16c,
+    fontFamily: smallFontFamily,
+  );
+  static const switzerland_route_small = IconData(
+    0xf16d,
+    fontFamily: smallFontFamily,
+  );
+  static const swisspass_temporary_small = IconData(
+    0xf16e,
+    fontFamily: smallFontFamily,
+  );
   static const swisspass_small = IconData(0xf16f, fontFamily: smallFontFamily);
-  static const surveillance_cameras_train_small = IconData(0xf170, fontFamily: smallFontFamily);
+  static const surveillance_cameras_train_small = IconData(
+    0xf170,
+    fontFamily: smallFontFamily,
+  );
   static const sunshine_small = IconData(0xf171, fontFamily: smallFontFamily);
-  static const sunshade_sun_sand_small = IconData(0xf172, fontFamily: smallFontFamily);
+  static const sunshade_sun_sand_small = IconData(
+    0xf172,
+    fontFamily: smallFontFamily,
+  );
   static const sunrise_small = IconData(0xf173, fontFamily: smallFontFamily);
   static const sun_moon_small = IconData(0xf174, fontFamily: smallFontFamily);
   static const suitcase_small = IconData(0xf175, fontFamily: smallFontFamily);
-  static const suitcase_disabled_small = IconData(0xf176, fontFamily: smallFontFamily);
+  static const suitcase_disabled_small = IconData(
+    0xf176,
+    fontFamily: smallFontFamily,
+  );
   static const stroller_small = IconData(0xf177, fontFamily: smallFontFamily);
-  static const street_location_pin_small = IconData(0xf178, fontFamily: smallFontFamily);
+  static const street_location_pin_small = IconData(
+    0xf178,
+    fontFamily: smallFontFamily,
+  );
   static const stop_small = IconData(0xf179, fontFamily: smallFontFamily);
-  static const station_surrounding_area_small = IconData(0xf17a, fontFamily: smallFontFamily);
+  static const station_surrounding_area_small = IconData(
+    0xf17a,
+    fontFamily: smallFontFamily,
+  );
   static const station_small = IconData(0xf17b, fontFamily: smallFontFamily);
   static const star_small = IconData(0xf17c, fontFamily: smallFontFamily);
-  static const star_filled_small = IconData(0xf17d, fontFamily: smallFontFamily);
-  static const stairs_user_small = IconData(0xf17e, fontFamily: smallFontFamily);
+  static const star_filled_small = IconData(
+    0xf17d,
+    fontFamily: smallFontFamily,
+  );
+  static const stairs_user_small = IconData(
+    0xf17e,
+    fontFamily: smallFontFamily,
+  );
   static const split_small = IconData(0xf17f, fontFamily: smallFontFamily);
-  static const speech_bubble_small = IconData(0xf180, fontFamily: smallFontFamily);
-  static const speech_bubble_group_empty_small = IconData(0xf181, fontFamily: smallFontFamily);
-  static const speech_bubble_exclamation_point_small = IconData(0xf182, fontFamily: smallFontFamily);
-  static const speech_bubble_empty_small = IconData(0xf183, fontFamily: smallFontFamily);
+  static const speech_bubble_small = IconData(
+    0xf180,
+    fontFamily: smallFontFamily,
+  );
+  static const speech_bubble_group_empty_small = IconData(
+    0xf181,
+    fontFamily: smallFontFamily,
+  );
+  static const speech_bubble_exclamation_point_small = IconData(
+    0xf182,
+    fontFamily: smallFontFamily,
+  );
+  static const speech_bubble_empty_small = IconData(
+    0xf183,
+    fontFamily: smallFontFamily,
+  );
   static const speaker_small = IconData(0xf184, fontFamily: smallFontFamily);
   static const spanner_small = IconData(0xf185, fontFamily: smallFontFamily);
-  static const soccer_ball_small = IconData(0xf186, fontFamily: smallFontFamily);
+  static const soccer_ball_small = IconData(
+    0xf186,
+    fontFamily: smallFontFamily,
+  );
   static const smartwatch_small = IconData(0xf187, fontFamily: smallFontFamily);
   static const smartphone_small = IconData(0xf188, fontFamily: smallFontFamily);
-  static const smartphone_shaking_small = IconData(0xf189, fontFamily: smallFontFamily);
-  static const smartphone_disabled_small = IconData(0xf18a, fontFamily: smallFontFamily);
-  static const sledge_snowshoe_small = IconData(0xf18b, fontFamily: smallFontFamily);
-  static const skis_ski_poles_small = IconData(0xf18c, fontFamily: smallFontFamily);
+  static const smartphone_shaking_small = IconData(
+    0xf189,
+    fontFamily: smallFontFamily,
+  );
+  static const smartphone_disabled_small = IconData(
+    0xf18a,
+    fontFamily: smallFontFamily,
+  );
+  static const sledge_snowshoe_small = IconData(
+    0xf18b,
+    fontFamily: smallFontFamily,
+  );
+  static const skis_ski_poles_small = IconData(
+    0xf18c,
+    fontFamily: smallFontFamily,
+  );
   static const sign_x_small = IconData(0xf18d, fontFamily: smallFontFamily);
-  static const sign_parking_small = IconData(0xf18e, fontFamily: smallFontFamily);
-  static const sign_exclamation_point_small = IconData(0xf18f, fontFamily: smallFontFamily);
+  static const sign_parking_small = IconData(
+    0xf18e,
+    fontFamily: smallFontFamily,
+  );
+  static const sign_exclamation_point_small = IconData(
+    0xf18f,
+    fontFamily: smallFontFamily,
+  );
   static const shuttle_small = IconData(0xf190, fontFamily: smallFontFamily);
-  static const shopping_cart_small = IconData(0xf191, fontFamily: smallFontFamily);
-  static const shopping_bag_small = IconData(0xf192, fontFamily: smallFontFamily);
-  static const shopping_bag_fast_small = IconData(0xf193, fontFamily: smallFontFamily);
-  static const shopping_bag_coupon_small = IconData(0xf194, fontFamily: smallFontFamily);
+  static const shopping_cart_small = IconData(
+    0xf191,
+    fontFamily: smallFontFamily,
+  );
+  static const shopping_bag_small = IconData(
+    0xf192,
+    fontFamily: smallFontFamily,
+  );
+  static const shopping_bag_fast_small = IconData(
+    0xf193,
+    fontFamily: smallFontFamily,
+  );
+  static const shopping_bag_coupon_small = IconData(
+    0xf194,
+    fontFamily: smallFontFamily,
+  );
   static const shirt_shoe_small = IconData(0xf195, fontFamily: smallFontFamily);
-  static const ship_steering_wheel_small = IconData(0xf196, fontFamily: smallFontFamily);
+  static const ship_steering_wheel_small = IconData(
+    0xf196,
+    fontFamily: smallFontFamily,
+  );
   static const share_small = IconData(0xf197, fontFamily: smallFontFamily);
-  static const service_bell_small = IconData(0xf198, fontFamily: smallFontFamily);
-  static const seat_window_small = IconData(0xf199, fontFamily: smallFontFamily);
-  static const seat_window_reservation_small = IconData(0xf19a, fontFamily: smallFontFamily);
+  static const service_bell_small = IconData(
+    0xf198,
+    fontFamily: smallFontFamily,
+  );
+  static const seat_window_small = IconData(
+    0xf199,
+    fontFamily: smallFontFamily,
+  );
+  static const seat_window_reservation_small = IconData(
+    0xf19a,
+    fontFamily: smallFontFamily,
+  );
   static const seat_small = IconData(0xf19b, fontFamily: smallFontFamily);
-  static const seat_aisle_reservation_small = IconData(0xf19c, fontFamily: smallFontFamily);
-  static const screen_inside_train_small = IconData(0xf19d, fontFamily: smallFontFamily);
-  static const scooter_profile_small = IconData(0xf19e, fontFamily: smallFontFamily);
-  static const scooter_profile_power_plug_small = IconData(0xf19f, fontFamily: smallFontFamily);
+  static const seat_aisle_reservation_small = IconData(
+    0xf19c,
+    fontFamily: smallFontFamily,
+  );
+  static const screen_inside_train_small = IconData(
+    0xf19d,
+    fontFamily: smallFontFamily,
+  );
+  static const scooter_profile_small = IconData(
+    0xf19e,
+    fontFamily: smallFontFamily,
+  );
+  static const scooter_profile_power_plug_small = IconData(
+    0xf19f,
+    fontFamily: smallFontFamily,
+  );
   static const scanner_small = IconData(0xf1a0, fontFamily: smallFontFamily);
   static const sbb_signet_small = IconData(0xf1a1, fontFamily: smallFontFamily);
-  static const running_shoe_small = IconData(0xf1a2, fontFamily: smallFontFamily);
+  static const running_shoe_small = IconData(
+    0xf1a2,
+    fontFamily: smallFontFamily,
+  );
   static const run_small = IconData(0xf1a3, fontFamily: smallFontFamily);
   static const rss_small = IconData(0xf1a4, fontFamily: smallFontFamily);
-  static const route_circle_start_small = IconData(0xf1a5, fontFamily: smallFontFamily);
-  static const route_circle_end_small = IconData(0xf1a6, fontFamily: smallFontFamily);
+  static const route_circle_start_small = IconData(
+    0xf1a5,
+    fontFamily: smallFontFamily,
+  );
+  static const route_circle_end_small = IconData(
+    0xf1a6,
+    fontFamily: smallFontFamily,
+  );
   static const roof_bed_small = IconData(0xf1a7, fontFamily: smallFontFamily);
   static const rocket_small = IconData(0xf1a8, fontFamily: smallFontFamily);
   static const robot_small = IconData(0xf1a9, fontFamily: smallFontFamily);
   static const rewind_small = IconData(0xf1aa, fontFamily: smallFontFamily);
-  static const reduce_size_small = IconData(0xf1ab, fontFamily: smallFontFamily);
+  static const reduce_size_small = IconData(
+    0xf1ab,
+    fontFamily: smallFontFamily,
+  );
   static const record_small = IconData(0xf1ac, fontFamily: smallFontFamily);
   static const ramp_user_small = IconData(0xf1ad, fontFamily: smallFontFamily);
-  static const railway_switch_small = IconData(0xf1ae, fontFamily: smallFontFamily);
-  static const railway_switch_app_small = IconData(0xf1af, fontFamily: smallFontFamily);
-  static const railway_ship_small = IconData(0xf1b0, fontFamily: smallFontFamily);
-  static const rack_railaway_profile_small = IconData(0xf1b1, fontFamily: smallFontFamily);
-  static const question_mark_small = IconData(0xf1b2, fontFamily: smallFontFamily);
-  static const question_answer_small = IconData(0xf1b3, fontFamily: smallFontFamily);
-  static const qrcode_two_tickets_small = IconData(0xf1b4, fontFamily: smallFontFamily);
+  static const railway_switch_small = IconData(
+    0xf1ae,
+    fontFamily: smallFontFamily,
+  );
+  static const railway_switch_app_small = IconData(
+    0xf1af,
+    fontFamily: smallFontFamily,
+  );
+  static const railway_ship_small = IconData(
+    0xf1b0,
+    fontFamily: smallFontFamily,
+  );
+  static const rack_railaway_profile_small = IconData(
+    0xf1b1,
+    fontFamily: smallFontFamily,
+  );
+  static const question_mark_small = IconData(
+    0xf1b2,
+    fontFamily: smallFontFamily,
+  );
+  static const question_answer_small = IconData(
+    0xf1b3,
+    fontFamily: smallFontFamily,
+  );
+  static const qrcode_two_tickets_small = IconData(
+    0xf1b4,
+    fontFamily: smallFontFamily,
+  );
   static const qrcode_small = IconData(0xf1b5, fontFamily: smallFontFamily);
-  static const qrcode_disabled_two_tickets_small = IconData(0xf1b6, fontFamily: smallFontFamily);
-  static const qrcode_disabled_small = IconData(0xf1b7, fontFamily: smallFontFamily);
-  static const punctuality_small = IconData(0xf1b8, fontFamily: smallFontFamily);
+  static const qrcode_disabled_two_tickets_small = IconData(
+    0xf1b6,
+    fontFamily: smallFontFamily,
+  );
+  static const qrcode_disabled_small = IconData(
+    0xf1b7,
+    fontFamily: smallFontFamily,
+  );
+  static const punctuality_small = IconData(
+    0xf1b8,
+    fontFamily: smallFontFamily,
+  );
   static const pulse_small = IconData(0xf1b9, fontFamily: smallFontFamily);
   static const printer_small = IconData(0xf1ba, fontFamily: smallFontFamily);
   static const previous_small = IconData(0xf1bb, fontFamily: smallFontFamily);
@@ -203,240 +536,672 @@ sealed class SBBIcons {
   static const plus_small = IconData(0xf1be, fontFamily: smallFontFamily);
   static const play_small = IconData(0xf1bf, fontFamily: smallFontFamily);
   static const platform_small = IconData(0xf1c0, fontFamily: smallFontFamily);
-  static const platform_display_small = IconData(0xf1c1, fontFamily: smallFontFamily);
-  static const pizza_slice_small = IconData(0xf1c2, fontFamily: smallFontFamily);
+  static const platform_display_small = IconData(
+    0xf1c1,
+    fontFamily: smallFontFamily,
+  );
+  static const pizza_slice_small = IconData(
+    0xf1c2,
+    fontFamily: smallFontFamily,
+  );
   static const pin_small = IconData(0xf1c3, fontFamily: smallFontFamily);
   static const piggy_bank_small = IconData(0xf1c4, fontFamily: smallFontFamily);
   static const pie_small = IconData(0xf1c5, fontFamily: smallFontFamily);
   static const picture_small = IconData(0xf1c6, fontFamily: smallFontFamily);
-  static const petrol_station_small = IconData(0xf1c7, fontFamily: smallFontFamily);
-  static const percent_tag_small = IconData(0xf1c8, fontFamily: smallFontFamily);
+  static const petrol_station_small = IconData(
+    0xf1c7,
+    fontFamily: smallFontFamily,
+  );
+  static const percent_tag_small = IconData(
+    0xf1c8,
+    fontFamily: smallFontFamily,
+  );
   static const percent_small = IconData(0xf1c9, fontFamily: smallFontFamily);
   static const pen_small = IconData(0xf1ca, fontFamily: smallFontFamily);
   static const pause_small = IconData(0xf1cb, fontFamily: smallFontFamily);
   static const parliament_small = IconData(0xf1cc, fontFamily: smallFontFamily);
-  static const park_and_rail_small = IconData(0xf1cd, fontFamily: smallFontFamily);
+  static const park_and_rail_small = IconData(
+    0xf1cd,
+    fontFamily: smallFontFamily,
+  );
   static const paragraph_small = IconData(0xf1ce, fontFamily: smallFontFamily);
   static const paper_clip_small = IconData(0xf1cf, fontFamily: smallFontFamily);
-  static const paper_aeroplane_small = IconData(0xf1d0, fontFamily: smallFontFamily);
-  static const owner_user_group_small = IconData(0xf1d1, fontFamily: smallFontFamily);
+  static const paper_aeroplane_small = IconData(
+    0xf1d0,
+    fontFamily: smallFontFamily,
+  );
+  static const owner_user_group_small = IconData(
+    0xf1d1,
+    fontFamily: smallFontFamily,
+  );
   static const onboarding_small = IconData(0xf1d2, fontFamily: smallFontFamily);
-  static const office_chair_small = IconData(0xf1d3, fontFamily: smallFontFamily);
-  static const nine_squares_small = IconData(0xf1d4, fontFamily: smallFontFamily);
+  static const office_chair_small = IconData(
+    0xf1d3,
+    fontFamily: smallFontFamily,
+  );
+  static const nine_squares_small = IconData(
+    0xf1d4,
+    fontFamily: smallFontFamily,
+  );
   static const next_small = IconData(0xf1d5, fontFamily: smallFontFamily);
   static const newspaper_small = IconData(0xf1d6, fontFamily: smallFontFamily);
-  static const newspaper_sbb_small = IconData(0xf1d7, fontFamily: smallFontFamily);
+  static const newspaper_sbb_small = IconData(
+    0xf1d7,
+    fontFamily: smallFontFamily,
+  );
   static const network_small = IconData(0xf1d8, fontFamily: smallFontFamily);
   static const narcotic_small = IconData(0xf1d9, fontFamily: smallFontFamily);
-  static const music_rock_hand_gesture_small = IconData(0xf1da, fontFamily: smallFontFamily);
-  static const music_notes_small = IconData(0xf1db, fontFamily: smallFontFamily);
+  static const music_rock_hand_gesture_small = IconData(
+    0xf1da,
+    fontFamily: smallFontFamily,
+  );
+  static const music_notes_small = IconData(
+    0xf1db,
+    fontFamily: smallFontFamily,
+  );
   static const museum_small = IconData(0xf1dc, fontFamily: smallFontFamily);
   static const mug_hot_small = IconData(0xf1dd, fontFamily: smallFontFamily);
   static const moving_bus_small = IconData(0xf1de, fontFamily: smallFontFamily);
-  static const mountain_sun_small = IconData(0xf1df, fontFamily: smallFontFamily);
-  static const mountain_rock_transmitter_signal_small = IconData(0xf1e0, fontFamily: smallFontFamily);
-  static const mountain_plus_small = IconData(0xf1e1, fontFamily: smallFontFamily);
-  static const mountain_minus_small = IconData(0xf1e2, fontFamily: smallFontFamily);
-  static const mountain_lake_sun_small = IconData(0xf1e3, fontFamily: smallFontFamily);
+  static const mountain_sun_small = IconData(
+    0xf1df,
+    fontFamily: smallFontFamily,
+  );
+  static const mountain_rock_transmitter_signal_small = IconData(
+    0xf1e0,
+    fontFamily: smallFontFamily,
+  );
+  static const mountain_plus_small = IconData(
+    0xf1e1,
+    fontFamily: smallFontFamily,
+  );
+  static const mountain_minus_small = IconData(
+    0xf1e2,
+    fontFamily: smallFontFamily,
+  );
+  static const mountain_lake_sun_small = IconData(
+    0xf1e3,
+    fontFamily: smallFontFamily,
+  );
   static const moon_small = IconData(0xf1e4, fontFamily: smallFontFamily);
-  static const money_exchange_small = IconData(0xf1e5, fontFamily: smallFontFamily);
+  static const money_exchange_small = IconData(
+    0xf1e5,
+    fontFamily: smallFontFamily,
+  );
   static const minus_small = IconData(0xf1e6, fontFamily: smallFontFamily);
-  static const minimize_screen_small = IconData(0xf1e7, fontFamily: smallFontFamily);
-  static const milk_brick_disabled_small = IconData(0xf1e8, fontFamily: smallFontFamily);
-  static const microscooter_profile_small = IconData(0xf1e9, fontFamily: smallFontFamily);
-  static const microscooter_profile_power_plug_small = IconData(0xf1ea, fontFamily: smallFontFamily);
+  static const minimize_screen_small = IconData(
+    0xf1e7,
+    fontFamily: smallFontFamily,
+  );
+  static const milk_brick_disabled_small = IconData(
+    0xf1e8,
+    fontFamily: smallFontFamily,
+  );
+  static const microscooter_profile_small = IconData(
+    0xf1e9,
+    fontFamily: smallFontFamily,
+  );
+  static const microscooter_profile_power_plug_small = IconData(
+    0xf1ea,
+    fontFamily: smallFontFamily,
+  );
   static const microphone_small = IconData(0xf1eb, fontFamily: smallFontFamily);
-  static const microphone_disabled_small = IconData(0xf1ec, fontFamily: smallFontFamily);
+  static const microphone_disabled_small = IconData(
+    0xf1ec,
+    fontFamily: smallFontFamily,
+  );
   static const metadata_small = IconData(0xf1ed, fontFamily: smallFontFamily);
-  static const message_sms_small = IconData(0xf1ee, fontFamily: smallFontFamily);
+  static const message_sms_small = IconData(
+    0xf1ee,
+    fontFamily: smallFontFamily,
+  );
   static const merge_small = IconData(0xf1ef, fontFamily: smallFontFamily);
   static const megaphone_small = IconData(0xf1f0, fontFamily: smallFontFamily);
-  static const meeting_point_small = IconData(0xf1f1, fontFamily: smallFontFamily);
-  static const medical_facility_small = IconData(0xf1f2, fontFamily: smallFontFamily);
+  static const meeting_point_small = IconData(
+    0xf1f1,
+    fontFamily: smallFontFamily,
+  );
+  static const medical_facility_small = IconData(
+    0xf1f2,
+    fontFamily: smallFontFamily,
+  );
   static const medal_small = IconData(0xf1f3, fontFamily: smallFontFamily);
-  static const market_shopping_bag_small = IconData(0xf1f4, fontFamily: smallFontFamily);
-  static const magnifying_glass_small = IconData(0xf1f5, fontFamily: smallFontFamily);
-  static const magnifying_glass_plus_small = IconData(0xf1f6, fontFamily: smallFontFamily);
-  static const magnifying_glass_minus_small = IconData(0xf1f7, fontFamily: smallFontFamily);
+  static const market_shopping_bag_small = IconData(
+    0xf1f4,
+    fontFamily: smallFontFamily,
+  );
+  static const magnifying_glass_small = IconData(
+    0xf1f5,
+    fontFamily: smallFontFamily,
+  );
+  static const magnifying_glass_plus_small = IconData(
+    0xf1f6,
+    fontFamily: smallFontFamily,
+  );
+  static const magnifying_glass_minus_small = IconData(
+    0xf1f7,
+    fontFamily: smallFontFamily,
+  );
   static const magic_wand_small = IconData(0xf1f8, fontFamily: smallFontFamily);
-  static const machine_learning_small = IconData(0xf1f9, fontFamily: smallFontFamily);
-  static const lucerne_chapel_bridge_small = IconData(0xf1fa, fontFamily: smallFontFamily);
+  static const machine_learning_small = IconData(
+    0xf1f9,
+    fontFamily: smallFontFamily,
+  );
+  static const lucerne_chapel_bridge_small = IconData(
+    0xf1fa,
+    fontFamily: smallFontFamily,
+  );
   static const low_vision_small = IconData(0xf1fb, fontFamily: smallFontFamily);
   static const lotus_small = IconData(0xf1fc, fontFamily: smallFontFamily);
-  static const long_distance_coach_profile_small = IconData(0xf1fd, fontFamily: smallFontFamily);
-  static const locomotive_viaduct_small = IconData(0xf1fe, fontFamily: smallFontFamily);
+  static const long_distance_coach_profile_small = IconData(
+    0xf1fd,
+    fontFamily: smallFontFamily,
+  );
+  static const locomotive_viaduct_small = IconData(
+    0xf1fe,
+    fontFamily: smallFontFamily,
+  );
   static const locomotive_small = IconData(0xf1ff, fontFamily: smallFontFamily);
-  static const locomotive_profile_moon_small = IconData(0xf200, fontFamily: smallFontFamily);
-  static const locomotive_high_speed_small = IconData(0xf201, fontFamily: smallFontFamily);
+  static const locomotive_profile_moon_small = IconData(
+    0xf200,
+    fontFamily: smallFontFamily,
+  );
+  static const locomotive_high_speed_small = IconData(
+    0xf201,
+    fontFamily: smallFontFamily,
+  );
   static const locker_small = IconData(0xf202, fontFamily: smallFontFamily);
   static const lock_open_small = IconData(0xf203, fontFamily: smallFontFamily);
-  static const lock_closed_small = IconData(0xf204, fontFamily: smallFontFamily);
-  static const location_pin_surrounding_area_small = IconData(0xf205, fontFamily: smallFontFamily);
-  static const location_pin_surrounding_area_power_plug_small = IconData(0xf206, fontFamily: smallFontFamily);
-  static const location_pin_small = IconData(0xf207, fontFamily: smallFontFamily);
-  static const location_pin_pulse_surrounding_area_small = IconData(0xf208, fontFamily: smallFontFamily);
-  static const location_pin_map_small = IconData(0xf209, fontFamily: smallFontFamily);
-  static const location_pin_camera_small = IconData(0xf20a, fontFamily: smallFontFamily);
-  static const location_pin_b_small = IconData(0xf20b, fontFamily: smallFontFamily);
-  static const location_pin_a_small = IconData(0xf20c, fontFamily: smallFontFamily);
+  static const lock_closed_small = IconData(
+    0xf204,
+    fontFamily: smallFontFamily,
+  );
+  static const location_pin_surrounding_area_small = IconData(
+    0xf205,
+    fontFamily: smallFontFamily,
+  );
+  static const location_pin_surrounding_area_power_plug_small = IconData(
+    0xf206,
+    fontFamily: smallFontFamily,
+  );
+  static const location_pin_small = IconData(
+    0xf207,
+    fontFamily: smallFontFamily,
+  );
+  static const location_pin_pulse_surrounding_area_small = IconData(
+    0xf208,
+    fontFamily: smallFontFamily,
+  );
+  static const location_pin_map_small = IconData(
+    0xf209,
+    fontFamily: smallFontFamily,
+  );
+  static const location_pin_camera_small = IconData(
+    0xf20a,
+    fontFamily: smallFontFamily,
+  );
+  static const location_pin_b_small = IconData(
+    0xf20b,
+    fontFamily: smallFontFamily,
+  );
+  static const location_pin_a_small = IconData(
+    0xf20c,
+    fontFamily: smallFontFamily,
+  );
   static const list_small = IconData(0xf20d, fontFamily: smallFontFamily);
   static const list_plus_small = IconData(0xf20e, fontFamily: smallFontFamily);
-  static const list_arrow_right_small = IconData(0xf20f, fontFamily: smallFontFamily);
+  static const list_arrow_right_small = IconData(
+    0xf20f,
+    fontFamily: smallFontFamily,
+  );
   static const lips_hand_small = IconData(0xf210, fontFamily: smallFontFamily);
   static const link_small = IconData(0xf211, fontFamily: smallFontFamily);
-  static const link_external_small = IconData(0xf212, fontFamily: smallFontFamily);
+  static const link_external_small = IconData(
+    0xf212,
+    fontFamily: smallFontFamily,
+  );
   static const lighthouse_small = IconData(0xf213, fontFamily: smallFontFamily);
   static const lift_small = IconData(0xf214, fontFamily: smallFontFamily);
   static const leaf_small = IconData(0xf215, fontFamily: smallFontFamily);
-  static const layers_with_arrows_small = IconData(0xf216, fontFamily: smallFontFamily);
+  static const layers_with_arrows_small = IconData(
+    0xf216,
+    fontFamily: smallFontFamily,
+  );
   static const layers_small = IconData(0xf217, fontFamily: smallFontFamily);
-  static const laptop_smartphone_small = IconData(0xf218, fontFamily: smallFontFamily);
+  static const laptop_smartphone_small = IconData(
+    0xf218,
+    fontFamily: smallFontFamily,
+  );
   static const laptop_small = IconData(0xf219, fontFamily: smallFontFamily);
   static const keyboard_small = IconData(0xf21a, fontFamily: smallFontFamily);
   static const key_small = IconData(0xf21b, fontFamily: smallFontFamily);
   static const k_r_small = IconData(0xf21c, fontFamily: smallFontFamily);
-  static const jersey_shirt_small = IconData(0xf21d, fontFamily: smallFontFamily);
-  static const infinity_loop_small = IconData(0xf21e, fontFamily: smallFontFamily);
-  static const increase_size_small = IconData(0xf21f, fontFamily: smallFontFamily);
-  static const id_card_employee_small = IconData(0xf220, fontFamily: smallFontFamily);
+  static const jersey_shirt_small = IconData(
+    0xf21d,
+    fontFamily: smallFontFamily,
+  );
+  static const infinity_loop_small = IconData(
+    0xf21e,
+    fontFamily: smallFontFamily,
+  );
+  static const increase_size_small = IconData(
+    0xf21f,
+    fontFamily: smallFontFamily,
+  );
+  static const id_card_employee_small = IconData(
+    0xf220,
+    fontFamily: smallFontFamily,
+  );
   static const house_small = IconData(0xf221, fontFamily: smallFontFamily);
   static const hourglass_small = IconData(0xf222, fontFamily: smallFontFamily);
   static const hostel_small = IconData(0xf223, fontFamily: smallFontFamily);
-  static const home_power_plug_small = IconData(0xf224, fontFamily: smallFontFamily);
-  static const hiking_boot_small = IconData(0xf225, fontFamily: smallFontFamily);
-  static const highlighter_small = IconData(0xf226, fontFamily: smallFontFamily);
+  static const home_power_plug_small = IconData(
+    0xf224,
+    fontFamily: smallFontFamily,
+  );
+  static const hiking_boot_small = IconData(
+    0xf225,
+    fontFamily: smallFontFamily,
+  );
+  static const highlighter_small = IconData(
+    0xf226,
+    fontFamily: smallFontFamily,
+  );
   static const hierarchy_small = IconData(0xf227, fontFamily: smallFontFamily);
   static const heart_small = IconData(0xf228, fontFamily: smallFontFamily);
-  static const heart_filled_small = IconData(0xf229, fontFamily: smallFontFamily);
+  static const heart_filled_small = IconData(
+    0xf229,
+    fontFamily: smallFontFamily,
+  );
   static const handshake_small = IconData(0xf22a, fontFamily: smallFontFamily);
-  static const hand_with_service_bell_small = IconData(0xf22b, fontFamily: smallFontFamily);
+  static const hand_with_service_bell_small = IconData(
+    0xf22b,
+    fontFamily: smallFontFamily,
+  );
   static const hand_user_small = IconData(0xf22c, fontFamily: smallFontFamily);
   static const hand_small = IconData(0xf22d, fontFamily: smallFontFamily);
   static const hand_sbb_small = IconData(0xf22e, fontFamily: smallFontFamily);
-  static const hand_safety_shield_small = IconData(0xf22f, fontFamily: smallFontFamily);
-  static const hand_plus_circle_small = IconData(0xf230, fontFamily: smallFontFamily);
-  static const hand_motion_small = IconData(0xf231, fontFamily: smallFontFamily);
-  static const hand_locomotive_profile_small = IconData(0xf232, fontFamily: smallFontFamily);
+  static const hand_safety_shield_small = IconData(
+    0xf22f,
+    fontFamily: smallFontFamily,
+  );
+  static const hand_plus_circle_small = IconData(
+    0xf230,
+    fontFamily: smallFontFamily,
+  );
+  static const hand_motion_small = IconData(
+    0xf231,
+    fontFamily: smallFontFamily,
+  );
+  static const hand_locomotive_profile_small = IconData(
+    0xf232,
+    fontFamily: smallFontFamily,
+  );
   static const hand_heart_small = IconData(0xf233, fontFamily: smallFontFamily);
-  static const hand_graduation_cap_small = IconData(0xf234, fontFamily: smallFontFamily);
-  static const hand_fingers_snap_small = IconData(0xf235, fontFamily: smallFontFamily);
-  static const hand_cursor_small = IconData(0xf236, fontFamily: smallFontFamily);
+  static const hand_graduation_cap_small = IconData(
+    0xf234,
+    fontFamily: smallFontFamily,
+  );
+  static const hand_fingers_snap_small = IconData(
+    0xf235,
+    fontFamily: smallFontFamily,
+  );
+  static const hand_cursor_small = IconData(
+    0xf236,
+    fontFamily: smallFontFamily,
+  );
   static const hand_clock_small = IconData(0xf237, fontFamily: smallFontFamily);
-  static const hand_briefcase_small = IconData(0xf238, fontFamily: smallFontFamily);
-  static const hammer_wrench_small = IconData(0xf239, fontFamily: smallFontFamily);
-  static const hamburger_menu_small = IconData(0xf23a, fontFamily: smallFontFamily);
-  static const half_fare_card_small = IconData(0xf23b, fontFamily: smallFontFamily);
+  static const hand_briefcase_small = IconData(
+    0xf238,
+    fontFamily: smallFontFamily,
+  );
+  static const hammer_wrench_small = IconData(
+    0xf239,
+    fontFamily: smallFontFamily,
+  );
+  static const hamburger_menu_small = IconData(
+    0xf23a,
+    fontFamily: smallFontFamily,
+  );
+  static const half_fare_card_small = IconData(
+    0xf23b,
+    fontFamily: smallFontFamily,
+  );
   static const gun_small = IconData(0xf23c, fontFamily: smallFontFamily);
   static const gps_small = IconData(0xf23d, fontFamily: smallFontFamily);
-  static const gps_disabled_small = IconData(0xf23e, fontFamily: smallFontFamily);
-  static const gondola_profile_small = IconData(0xf23f, fontFamily: smallFontFamily);
+  static const gps_disabled_small = IconData(
+    0xf23e,
+    fontFamily: smallFontFamily,
+  );
+  static const gondola_profile_small = IconData(
+    0xf23f,
+    fontFamily: smallFontFamily,
+  );
   static const globe_small = IconData(0xf240, fontFamily: smallFontFamily);
-  static const globe_locomotive_small = IconData(0xf241, fontFamily: smallFontFamily);
-  static const globe_arrows_left_right_up_down_small = IconData(0xf242, fontFamily: smallFontFamily);
-  static const glass_cocktail_small = IconData(0xf243, fontFamily: smallFontFamily);
+  static const globe_locomotive_small = IconData(
+    0xf241,
+    fontFamily: smallFontFamily,
+  );
+  static const globe_arrows_left_right_up_down_small = IconData(
+    0xf242,
+    fontFamily: smallFontFamily,
+  );
+  static const glass_cocktail_small = IconData(
+    0xf243,
+    fontFamily: smallFontFamily,
+  );
   static const github_small = IconData(0xf244, fontFamily: smallFontFamily);
   static const gift_small = IconData(0xf245, fontFamily: smallFontFamily);
-  static const general_display_small = IconData(0xf246, fontFamily: smallFontFamily);
+  static const general_display_small = IconData(
+    0xf246,
+    fontFamily: smallFontFamily,
+  );
   static const gears_small = IconData(0xf247, fontFamily: smallFontFamily);
-  static const gear_changing_small = IconData(0xf248, fontFamily: smallFontFamily);
-  static const funicular_profile_small = IconData(0xf249, fontFamily: smallFontFamily);
+  static const gear_changing_small = IconData(
+    0xf248,
+    fontFamily: smallFontFamily,
+  );
+  static const funicular_profile_small = IconData(
+    0xf249,
+    fontFamily: smallFontFamily,
+  );
   static const fullscreen_small = IconData(0xf24a, fontFamily: smallFontFamily);
-  static const freight_wagon_weight_small = IconData(0xf24b, fontFamily: smallFontFamily);
-  static const freight_wagon_truck_container_small = IconData(0xf24c, fontFamily: smallFontFamily);
-  static const freight_wagon_tank_small = IconData(0xf24d, fontFamily: smallFontFamily);
-  static const freight_wagon_switzerland_small = IconData(0xf24e, fontFamily: smallFontFamily);
-  static const freight_wagon_small = IconData(0xf24f, fontFamily: smallFontFamily);
-  static const freight_wagon_globe_small = IconData(0xf250, fontFamily: smallFontFamily);
-  static const freight_wagon_container_wind_small = IconData(0xf251, fontFamily: smallFontFamily);
-  static const freight_wagon_container_small = IconData(0xf252, fontFamily: smallFontFamily);
-  static const freight_wagon_car_profile_small = IconData(0xf253, fontFamily: smallFontFamily);
-  static const four_squares_small = IconData(0xf254, fontFamily: smallFontFamily);
-  static const four_diamonds_small = IconData(0xf255, fontFamily: smallFontFamily);
+  static const freight_wagon_weight_small = IconData(
+    0xf24b,
+    fontFamily: smallFontFamily,
+  );
+  static const freight_wagon_truck_container_small = IconData(
+    0xf24c,
+    fontFamily: smallFontFamily,
+  );
+  static const freight_wagon_tank_small = IconData(
+    0xf24d,
+    fontFamily: smallFontFamily,
+  );
+  static const freight_wagon_switzerland_small = IconData(
+    0xf24e,
+    fontFamily: smallFontFamily,
+  );
+  static const freight_wagon_small = IconData(
+    0xf24f,
+    fontFamily: smallFontFamily,
+  );
+  static const freight_wagon_globe_small = IconData(
+    0xf250,
+    fontFamily: smallFontFamily,
+  );
+  static const freight_wagon_container_wind_small = IconData(
+    0xf251,
+    fontFamily: smallFontFamily,
+  );
+  static const freight_wagon_container_small = IconData(
+    0xf252,
+    fontFamily: smallFontFamily,
+  );
+  static const freight_wagon_car_profile_small = IconData(
+    0xf253,
+    fontFamily: smallFontFamily,
+  );
+  static const four_squares_small = IconData(
+    0xf254,
+    fontFamily: smallFontFamily,
+  );
+  static const four_diamonds_small = IconData(
+    0xf255,
+    fontFamily: smallFontFamily,
+  );
   static const form_small = IconData(0xf256, fontFamily: smallFontFamily);
   static const folder_small = IconData(0xf257, fontFamily: smallFontFamily);
-  static const folder_plus_small = IconData(0xf258, fontFamily: smallFontFamily);
-  static const folder_open_small = IconData(0xf259, fontFamily: smallFontFamily);
-  static const folder_open_arrow_small = IconData(0xf25a, fontFamily: smallFontFamily);
-  static const folder_lock_small = IconData(0xf25b, fontFamily: smallFontFamily);
-  static const folder_info_small = IconData(0xf25c, fontFamily: smallFontFamily);
+  static const folder_plus_small = IconData(
+    0xf258,
+    fontFamily: smallFontFamily,
+  );
+  static const folder_open_small = IconData(
+    0xf259,
+    fontFamily: smallFontFamily,
+  );
+  static const folder_open_arrow_small = IconData(
+    0xf25a,
+    fontFamily: smallFontFamily,
+  );
+  static const folder_lock_small = IconData(
+    0xf25b,
+    fontFamily: smallFontFamily,
+  );
+  static const folder_info_small = IconData(
+    0xf25c,
+    fontFamily: smallFontFamily,
+  );
   static const fog_small = IconData(0xf25d, fontFamily: smallFontFamily);
-  static const flashlight_on_small = IconData(0xf25e, fontFamily: smallFontFamily);
-  static const flashlight_off_small = IconData(0xf25f, fontFamily: smallFontFamily);
-  static const flame_warning_light_small = IconData(0xf260, fontFamily: smallFontFamily);
-  static const five_circles_interconnected_small = IconData(0xf261, fontFamily: smallFontFamily);
+  static const flashlight_on_small = IconData(
+    0xf25e,
+    fontFamily: smallFontFamily,
+  );
+  static const flashlight_off_small = IconData(
+    0xf25f,
+    fontFamily: smallFontFamily,
+  );
+  static const flame_warning_light_small = IconData(
+    0xf260,
+    fontFamily: smallFontFamily,
+  );
+  static const five_circles_interconnected_small = IconData(
+    0xf261,
+    fontFamily: smallFontFamily,
+  );
   static const fireplace_small = IconData(0xf262, fontFamily: smallFontFamily);
-  static const fingerprint_small = IconData(0xf263, fontFamily: smallFontFamily);
+  static const fingerprint_small = IconData(
+    0xf263,
+    fontFamily: smallFontFamily,
+  );
   static const filter_x_small = IconData(0xf264, fontFamily: smallFontFamily);
   static const filter_small = IconData(0xf265, fontFamily: smallFontFamily);
   static const figma_small = IconData(0xf266, fontFamily: smallFontFamily);
-  static const ferris_wheel_small = IconData(0xf267, fontFamily: smallFontFamily);
-  static const fast_forward_small = IconData(0xf268, fontFamily: smallFontFamily);
+  static const ferris_wheel_small = IconData(
+    0xf267,
+    fontFamily: smallFontFamily,
+  );
+  static const fast_forward_small = IconData(
+    0xf268,
+    fontFamily: smallFontFamily,
+  );
   static const factory_small = IconData(0xf269, fontFamily: smallFontFamily);
-  static const face_worker_small = IconData(0xf26a, fontFamily: smallFontFamily);
-  static const face_thinking_smiling_small = IconData(0xf26b, fontFamily: smallFontFamily);
-  static const face_thinking_small = IconData(0xf26c, fontFamily: smallFontFamily);
+  static const face_worker_small = IconData(
+    0xf26a,
+    fontFamily: smallFontFamily,
+  );
+  static const face_thinking_smiling_small = IconData(
+    0xf26b,
+    fontFamily: smallFontFamily,
+  );
+  static const face_thinking_small = IconData(
+    0xf26c,
+    fontFamily: smallFontFamily,
+  );
   static const face_tear_small = IconData(0xf26d, fontFamily: smallFontFamily);
-  static const face_smiling_small = IconData(0xf26e, fontFamily: smallFontFamily);
+  static const face_smiling_small = IconData(
+    0xf26e,
+    fontFamily: smallFontFamily,
+  );
   static const face_sad_small = IconData(0xf26f, fontFamily: smallFontFamily);
-  static const face_neutral_small = IconData(0xf270, fontFamily: smallFontFamily);
+  static const face_neutral_small = IconData(
+    0xf270,
+    fontFamily: smallFontFamily,
+  );
   static const face_king_small = IconData(0xf271, fontFamily: smallFontFamily);
-  static const face_grinning_small = IconData(0xf272, fontFamily: smallFontFamily);
-  static const face_disagree_small = IconData(0xf273, fontFamily: smallFontFamily);
+  static const face_grinning_small = IconData(
+    0xf272,
+    fontFamily: smallFontFamily,
+  );
+  static const face_disagree_small = IconData(
+    0xf273,
+    fontFamily: smallFontFamily,
+  );
   static const eye_small = IconData(0xf274, fontFamily: smallFontFamily);
-  static const eye_disabled_small = IconData(0xf275, fontFamily: smallFontFamily);
+  static const eye_disabled_small = IconData(
+    0xf275,
+    fontFamily: smallFontFamily,
+  );
   static const exit_small = IconData(0xf276, fontFamily: smallFontFamily);
-  static const exclamation_point_small = IconData(0xf277, fontFamily: smallFontFamily);
-  static const europe_flag_small = IconData(0xf278, fontFamily: smallFontFamily);
+  static const exclamation_point_small = IconData(
+    0xf277,
+    fontFamily: smallFontFamily,
+  );
+  static const europe_flag_small = IconData(
+    0xf278,
+    fontFamily: smallFontFamily,
+  );
   static const escalator_small = IconData(0xf279, fontFamily: smallFontFamily);
   static const envelope_small = IconData(0xf27a, fontFamily: smallFontFamily);
-  static const envelope_open_small = IconData(0xf27b, fontFamily: smallFontFamily);
+  static const envelope_open_small = IconData(
+    0xf27b,
+    fontFamily: smallFontFamily,
+  );
   static const entrance_small = IconData(0xf27c, fontFamily: smallFontFamily);
-  static const employees_sbb_small = IconData(0xf27d, fontFamily: smallFontFamily);
+  static const employees_sbb_small = IconData(
+    0xf27d,
+    fontFamily: smallFontFamily,
+  );
   static const elephant_small = IconData(0xf27e, fontFamily: smallFontFamily);
-  static const eiffel_tower_small = IconData(0xf27f, fontFamily: smallFontFamily);
+  static const eiffel_tower_small = IconData(
+    0xf27f,
+    fontFamily: smallFontFamily,
+  );
   static const earth_small = IconData(0xf280, fontFamily: smallFontFamily);
   static const ear_eye_small = IconData(0xf281, fontFamily: smallFontFamily);
-  static const driverless_bus_profile_small = IconData(0xf282, fontFamily: smallFontFamily);
+  static const driverless_bus_profile_small = IconData(
+    0xf282,
+    fontFamily: smallFontFamily,
+  );
   static const drag_small = IconData(0xf283, fontFamily: smallFontFamily);
-  static const download_small_data_small = IconData(0xf284, fontFamily: smallFontFamily);
+  static const download_small_data_small = IconData(
+    0xf284,
+    fontFamily: smallFontFamily,
+  );
   static const download_small = IconData(0xf285, fontFamily: smallFontFamily);
-  static const download_large_data_small = IconData(0xf286, fontFamily: smallFontFamily);
-  static const double_deck_wagon_small = IconData(0xf287, fontFamily: smallFontFamily);
-  static const double_chevron_small_right_small = IconData(0xf288, fontFamily: smallFontFamily);
-  static const double_chevron_small_left_small = IconData(0xf289, fontFamily: smallFontFamily);
-  static const doorbell_hand_small = IconData(0xf28a, fontFamily: smallFontFamily);
+  static const download_large_data_small = IconData(
+    0xf286,
+    fontFamily: smallFontFamily,
+  );
+  static const double_deck_wagon_small = IconData(
+    0xf287,
+    fontFamily: smallFontFamily,
+  );
+  static const double_chevron_small_right_small = IconData(
+    0xf288,
+    fontFamily: smallFontFamily,
+  );
+  static const double_chevron_small_left_small = IconData(
+    0xf289,
+    fontFamily: smallFontFamily,
+  );
+  static const doorbell_hand_small = IconData(
+    0xf28a,
+    fontFamily: smallFontFamily,
+  );
   static const door_small = IconData(0xf28b, fontFamily: smallFontFamily);
-  static const door_arrow_right_left_small = IconData(0xf28c, fontFamily: smallFontFamily);
+  static const door_arrow_right_left_small = IconData(
+    0xf28c,
+    fontFamily: smallFontFamily,
+  );
   static const dog_small = IconData(0xf28d, fontFamily: smallFontFamily);
-  static const document_zip_small = IconData(0xf28e, fontFamily: smallFontFamily);
-  static const document_xls_small = IconData(0xf28f, fontFamily: smallFontFamily);
-  static const document_video_small = IconData(0xf290, fontFamily: smallFontFamily);
-  static const document_text_small = IconData(0xf291, fontFamily: smallFontFamily);
-  static const document_standard_small = IconData(0xf292, fontFamily: smallFontFamily);
-  static const document_sound_small = IconData(0xf293, fontFamily: smallFontFamily);
-  static const document_signature_small = IconData(0xf294, fontFamily: smallFontFamily);
-  static const document_sbb_small = IconData(0xf295, fontFamily: smallFontFamily);
-  static const document_ppt_small = IconData(0xf296, fontFamily: smallFontFamily);
-  static const document_plus_small = IconData(0xf297, fontFamily: smallFontFamily);
-  static const document_pdf_small = IconData(0xf298, fontFamily: smallFontFamily);
-  static const document_lock_small = IconData(0xf299, fontFamily: smallFontFamily);
-  static const document_image_small = IconData(0xf29a, fontFamily: smallFontFamily);
-  static const document_doc_small = IconData(0xf29b, fontFamily: smallFontFamily);
-  static const document_check_small = IconData(0xf29c, fontFamily: smallFontFamily);
-  static const display_switzerland_warning_light_small = IconData(0xf29d, fontFamily: smallFontFamily);
+  static const document_zip_small = IconData(
+    0xf28e,
+    fontFamily: smallFontFamily,
+  );
+  static const document_xls_small = IconData(
+    0xf28f,
+    fontFamily: smallFontFamily,
+  );
+  static const document_video_small = IconData(
+    0xf290,
+    fontFamily: smallFontFamily,
+  );
+  static const document_text_small = IconData(
+    0xf291,
+    fontFamily: smallFontFamily,
+  );
+  static const document_standard_small = IconData(
+    0xf292,
+    fontFamily: smallFontFamily,
+  );
+  static const document_sound_small = IconData(
+    0xf293,
+    fontFamily: smallFontFamily,
+  );
+  static const document_signature_small = IconData(
+    0xf294,
+    fontFamily: smallFontFamily,
+  );
+  static const document_sbb_small = IconData(
+    0xf295,
+    fontFamily: smallFontFamily,
+  );
+  static const document_ppt_small = IconData(
+    0xf296,
+    fontFamily: smallFontFamily,
+  );
+  static const document_plus_small = IconData(
+    0xf297,
+    fontFamily: smallFontFamily,
+  );
+  static const document_pdf_small = IconData(
+    0xf298,
+    fontFamily: smallFontFamily,
+  );
+  static const document_lock_small = IconData(
+    0xf299,
+    fontFamily: smallFontFamily,
+  );
+  static const document_image_small = IconData(
+    0xf29a,
+    fontFamily: smallFontFamily,
+  );
+  static const document_doc_small = IconData(
+    0xf29b,
+    fontFamily: smallFontFamily,
+  );
+  static const document_check_small = IconData(
+    0xf29c,
+    fontFamily: smallFontFamily,
+  );
+  static const display_switzerland_warning_light_small = IconData(
+    0xf29d,
+    fontFamily: smallFontFamily,
+  );
   static const display_small = IconData(0xf29e, fontFamily: smallFontFamily);
-  static const display_gears_small = IconData(0xf29f, fontFamily: smallFontFamily);
-  static const display_binary_code_small = IconData(0xf2a0, fontFamily: smallFontFamily);
-  static const disc_floppy_small = IconData(0xf2a1, fontFamily: smallFontFamily);
+  static const display_gears_small = IconData(
+    0xf29f,
+    fontFamily: smallFontFamily,
+  );
+  static const display_binary_code_small = IconData(
+    0xf2a0,
+    fontFamily: smallFontFamily,
+  );
+  static const disc_floppy_small = IconData(
+    0xf2a1,
+    fontFamily: smallFontFamily,
+  );
   static const diamond_small = IconData(0xf2a2, fontFamily: smallFontFamily);
   static const desk_small = IconData(0xf2a3, fontFamily: smallFontFamily);
-  static const desk_adjustable_small = IconData(0xf2a4, fontFamily: smallFontFamily);
+  static const desk_adjustable_small = IconData(
+    0xf2a4,
+    fontFamily: smallFontFamily,
+  );
   static const database_small = IconData(0xf2a5, fontFamily: smallFontFamily);
   static const dash_small = IconData(0xf2a6, fontFamily: smallFontFamily);
   static const cutlery_small = IconData(0xf2a7, fontFamily: smallFontFamily);
-  static const cutlery_disabled_small = IconData(0xf2a8, fontFamily: smallFontFamily);
-  static const customer_assistance_sbb_small = IconData(0xf2a9, fontFamily: smallFontFamily);
-  static const curriculum_vitae_small = IconData(0xf2aa, fontFamily: smallFontFamily);
+  static const cutlery_disabled_small = IconData(
+    0xf2a8,
+    fontFamily: smallFontFamily,
+  );
+  static const customer_assistance_sbb_small = IconData(
+    0xf2a9,
+    fontFamily: smallFontFamily,
+  );
+  static const curriculum_vitae_small = IconData(
+    0xf2aa,
+    fontFamily: smallFontFamily,
+  );
   static const cup_hot_small = IconData(0xf2ab, fontFamily: smallFontFamily);
   static const cross_tiny_small = IconData(0xf2ac, fontFamily: smallFontFamily);
   static const cross_small = IconData(0xf2ad, fontFamily: smallFontFamily);
@@ -445,1107 +1210,3510 @@ sealed class SBBIcons {
   static const copy_small = IconData(0xf2b0, fontFamily: smallFontFamily);
   static const controls_x_small = IconData(0xf2b1, fontFamily: smallFontFamily);
   static const controls_small = IconData(0xf2b2, fontFamily: smallFontFamily);
-  static const context_menu_small = IconData(0xf2b3, fontFamily: smallFontFamily);
+  static const context_menu_small = IconData(
+    0xf2b3,
+    fontFamily: smallFontFamily,
+  );
   static const container_small = IconData(0xf2b4, fontFamily: smallFontFamily);
   static const contact_small = IconData(0xf2b5, fontFamily: smallFontFamily);
-  static const contact_line_arrow_train_small = IconData(0xf2b6, fontFamily: smallFontFamily);
-  static const construction_small = IconData(0xf2b7, fontFamily: smallFontFamily);
-  static const computer_chip_small = IconData(0xf2b8, fontFamily: smallFontFamily);
-  static const compass_localisation_small = IconData(0xf2b9, fontFamily: smallFontFamily);
-  static const combined_mobility_small = IconData(0xf2ba, fontFamily: smallFontFamily);
-  static const colour_palette_brush_small = IconData(0xf2bb, fontFamily: smallFontFamily);
+  static const contact_line_arrow_train_small = IconData(
+    0xf2b6,
+    fontFamily: smallFontFamily,
+  );
+  static const construction_small = IconData(
+    0xf2b7,
+    fontFamily: smallFontFamily,
+  );
+  static const computer_chip_small = IconData(
+    0xf2b8,
+    fontFamily: smallFontFamily,
+  );
+  static const compass_localisation_small = IconData(
+    0xf2b9,
+    fontFamily: smallFontFamily,
+  );
+  static const combined_mobility_small = IconData(
+    0xf2ba,
+    fontFamily: smallFontFamily,
+  );
+  static const colour_palette_brush_small = IconData(
+    0xf2bb,
+    fontFamily: smallFontFamily,
+  );
   static const coins_small = IconData(0xf2bc, fontFamily: smallFontFamily);
   static const coin_stack_small = IconData(0xf2bd, fontFamily: smallFontFamily);
-  static const coin_dollar_small = IconData(0xf2be, fontFamily: smallFontFamily);
-  static const coffee_machine_small = IconData(0xf2bf, fontFamily: smallFontFamily);
+  static const coin_dollar_small = IconData(
+    0xf2be,
+    fontFamily: smallFontFamily,
+  );
+  static const coffee_machine_small = IconData(
+    0xf2bf,
+    fontFamily: smallFontFamily,
+  );
   static const cloud_voc_small = IconData(0xf2c0, fontFamily: smallFontFamily);
-  static const cloud_sunshine_small = IconData(0xf2c1, fontFamily: smallFontFamily);
+  static const cloud_sunshine_small = IconData(
+    0xf2c1,
+    fontFamily: smallFontFamily,
+  );
   static const cloud_sun_small = IconData(0xf2c2, fontFamily: smallFontFamily);
-  static const cloud_strong_rain_sun_small = IconData(0xf2c3, fontFamily: smallFontFamily);
-  static const cloud_strong_rain_moon_small = IconData(0xf2c4, fontFamily: smallFontFamily);
-  static const cloud_snowflake_sun_small = IconData(0xf2c5, fontFamily: smallFontFamily);
-  static const cloud_snowflake_small = IconData(0xf2c6, fontFamily: smallFontFamily);
-  static const cloud_snow_sun_small = IconData(0xf2c7, fontFamily: smallFontFamily);
+  static const cloud_strong_rain_sun_small = IconData(
+    0xf2c3,
+    fontFamily: smallFontFamily,
+  );
+  static const cloud_strong_rain_moon_small = IconData(
+    0xf2c4,
+    fontFamily: smallFontFamily,
+  );
+  static const cloud_snowflake_sun_small = IconData(
+    0xf2c5,
+    fontFamily: smallFontFamily,
+  );
+  static const cloud_snowflake_small = IconData(
+    0xf2c6,
+    fontFamily: smallFontFamily,
+  );
+  static const cloud_snow_sun_small = IconData(
+    0xf2c7,
+    fontFamily: smallFontFamily,
+  );
   static const cloud_snow_small = IconData(0xf2c8, fontFamily: smallFontFamily);
-  static const cloud_snow_moon_small = IconData(0xf2c9, fontFamily: smallFontFamily);
-  static const cloud_snow_lightning_small = IconData(0xf2ca, fontFamily: smallFontFamily);
+  static const cloud_snow_moon_small = IconData(
+    0xf2c9,
+    fontFamily: smallFontFamily,
+  );
+  static const cloud_snow_lightning_small = IconData(
+    0xf2ca,
+    fontFamily: smallFontFamily,
+  );
   static const cloud_small = IconData(0xf2cb, fontFamily: smallFontFamily);
-  static const cloud_rain_sun_small = IconData(0xf2cc, fontFamily: smallFontFamily);
-  static const cloud_rain_snow_sun_small = IconData(0xf2cd, fontFamily: smallFontFamily);
-  static const cloud_rain_snow_small = IconData(0xf2ce, fontFamily: smallFontFamily);
-  static const cloud_rain_snow_moon_small = IconData(0xf2cf, fontFamily: smallFontFamily);
+  static const cloud_rain_sun_small = IconData(
+    0xf2cc,
+    fontFamily: smallFontFamily,
+  );
+  static const cloud_rain_snow_sun_small = IconData(
+    0xf2cd,
+    fontFamily: smallFontFamily,
+  );
+  static const cloud_rain_snow_small = IconData(
+    0xf2ce,
+    fontFamily: smallFontFamily,
+  );
+  static const cloud_rain_snow_moon_small = IconData(
+    0xf2cf,
+    fontFamily: smallFontFamily,
+  );
   static const cloud_rain_small = IconData(0xf2d0, fontFamily: smallFontFamily);
-  static const cloud_particles_small = IconData(0xf2d1, fontFamily: smallFontFamily);
+  static const cloud_particles_small = IconData(
+    0xf2d1,
+    fontFamily: smallFontFamily,
+  );
   static const cloud_moon_small = IconData(0xf2d2, fontFamily: smallFontFamily);
-  static const cloud_little_snow_sun_small = IconData(0xf2d3, fontFamily: smallFontFamily);
-  static const cloud_little_snow_moon_small = IconData(0xf2d4, fontFamily: smallFontFamily);
-  static const cloud_lightning_small = IconData(0xf2d5, fontFamily: smallFontFamily);
-  static const cloud_lightning_moon_small = IconData(0xf2d6, fontFamily: smallFontFamily);
+  static const cloud_little_snow_sun_small = IconData(
+    0xf2d3,
+    fontFamily: smallFontFamily,
+  );
+  static const cloud_little_snow_moon_small = IconData(
+    0xf2d4,
+    fontFamily: smallFontFamily,
+  );
+  static const cloud_lightning_small = IconData(
+    0xf2d5,
+    fontFamily: smallFontFamily,
+  );
+  static const cloud_lightning_moon_small = IconData(
+    0xf2d6,
+    fontFamily: smallFontFamily,
+  );
   static const cloud_ice_small = IconData(0xf2d7, fontFamily: smallFontFamily);
   static const cloud_fog_small = IconData(0xf2d8, fontFamily: smallFontFamily);
-  static const cloud_drops_small = IconData(0xf2d9, fontFamily: smallFontFamily);
-  static const cloud_drops_moon_small = IconData(0xf2da, fontFamily: smallFontFamily);
-  static const cloud_dense_fog_small = IconData(0xf2db, fontFamily: smallFontFamily);
+  static const cloud_drops_small = IconData(
+    0xf2d9,
+    fontFamily: smallFontFamily,
+  );
+  static const cloud_drops_moon_small = IconData(
+    0xf2da,
+    fontFamily: smallFontFamily,
+  );
+  static const cloud_dense_fog_small = IconData(
+    0xf2db,
+    fontFamily: smallFontFamily,
+  );
   static const cloud_co2_small = IconData(0xf2dc, fontFamily: smallFontFamily);
-  static const cloud_co2_arrow_down_small = IconData(0xf2dd, fontFamily: smallFontFamily);
+  static const cloud_co2_arrow_down_small = IconData(
+    0xf2dd,
+    fontFamily: smallFontFamily,
+  );
   static const clock_small = IconData(0xf2de, fontFamily: smallFontFamily);
-  static const clipboard_users_small = IconData(0xf2df, fontFamily: smallFontFamily);
-  static const clipboard_tick_small = IconData(0xf2e0, fontFamily: smallFontFamily);
-  static const clipboard_question_mark_small = IconData(0xf2e1, fontFamily: smallFontFamily);
-  static const clipboard_plus_small = IconData(0xf2e2, fontFamily: smallFontFamily);
-  static const clipboard_list_small = IconData(0xf2e3, fontFamily: smallFontFamily);
-  static const clipboard_empty_small = IconData(0xf2e4, fontFamily: smallFontFamily);
-  static const clipboard_cross_small = IconData(0xf2e5, fontFamily: smallFontFamily);
-  static const clapperboard_small = IconData(0xf2e6, fontFamily: smallFontFamily);
+  static const clipboard_users_small = IconData(
+    0xf2df,
+    fontFamily: smallFontFamily,
+  );
+  static const clipboard_tick_small = IconData(
+    0xf2e0,
+    fontFamily: smallFontFamily,
+  );
+  static const clipboard_question_mark_small = IconData(
+    0xf2e1,
+    fontFamily: smallFontFamily,
+  );
+  static const clipboard_plus_small = IconData(
+    0xf2e2,
+    fontFamily: smallFontFamily,
+  );
+  static const clipboard_list_small = IconData(
+    0xf2e3,
+    fontFamily: smallFontFamily,
+  );
+  static const clipboard_empty_small = IconData(
+    0xf2e4,
+    fontFamily: smallFontFamily,
+  );
+  static const clipboard_cross_small = IconData(
+    0xf2e5,
+    fontFamily: smallFontFamily,
+  );
+  static const clapperboard_small = IconData(
+    0xf2e6,
+    fontFamily: smallFontFamily,
+  );
   static const city_small = IconData(0xf2e7, fontFamily: smallFontFamily);
-  static const circle_triangle_square_small = IconData(0xf2e8, fontFamily: smallFontFamily);
-  static const circle_tick_small = IconData(0xf2e9, fontFamily: smallFontFamily);
-  static const circle_three_dots_small = IconData(0xf2ea, fontFamily: smallFontFamily);
-  static const circle_signal_noise_ratio_small = IconData(0xf2eb, fontFamily: smallFontFamily);
-  static const circle_question_mark_small = IconData(0xf2ec, fontFamily: smallFontFamily);
-  static const circle_plus_small = IconData(0xf2ed, fontFamily: smallFontFamily);
-  static const circle_play_small = IconData(0xf2ee, fontFamily: smallFontFamily);
+  static const circle_triangle_square_small = IconData(
+    0xf2e8,
+    fontFamily: smallFontFamily,
+  );
+  static const circle_tick_small = IconData(
+    0xf2e9,
+    fontFamily: smallFontFamily,
+  );
+  static const circle_three_dots_small = IconData(
+    0xf2ea,
+    fontFamily: smallFontFamily,
+  );
+  static const circle_signal_noise_ratio_small = IconData(
+    0xf2eb,
+    fontFamily: smallFontFamily,
+  );
+  static const circle_question_mark_small = IconData(
+    0xf2ec,
+    fontFamily: smallFontFamily,
+  );
+  static const circle_plus_small = IconData(
+    0xf2ed,
+    fontFamily: smallFontFamily,
+  );
+  static const circle_play_small = IconData(
+    0xf2ee,
+    fontFamily: smallFontFamily,
+  );
   static const circle_pen_small = IconData(0xf2ef, fontFamily: smallFontFamily);
-  static const circle_minus_small = IconData(0xf2f0, fontFamily: smallFontFamily);
-  static const circle_leaf_power_plug_small = IconData(0xf2f1, fontFamily: smallFontFamily);
-  static const circle_information_small_small = IconData(0xf2f2, fontFamily: smallFontFamily);
-  static const circle_information_small = IconData(0xf2f3, fontFamily: smallFontFamily);
-  static const circle_exclamation_point_small = IconData(0xf2f4, fontFamily: smallFontFamily);
-  static const circle_empty_small = IconData(0xf2f5, fontFamily: smallFontFamily);
-  static const circle_dotted_small = IconData(0xf2f6, fontFamily: smallFontFamily);
-  static const circle_dotted_part_x_small = IconData(0xf2f7, fontFamily: smallFontFamily);
-  static const circle_dotted_part_small = IconData(0xf2f8, fontFamily: smallFontFamily);
-  static const circle_cross_small = IconData(0xf2f9, fontFamily: smallFontFamily);
+  static const circle_minus_small = IconData(
+    0xf2f0,
+    fontFamily: smallFontFamily,
+  );
+  static const circle_leaf_power_plug_small = IconData(
+    0xf2f1,
+    fontFamily: smallFontFamily,
+  );
+  static const circle_information_small_small = IconData(
+    0xf2f2,
+    fontFamily: smallFontFamily,
+  );
+  static const circle_information_small = IconData(
+    0xf2f3,
+    fontFamily: smallFontFamily,
+  );
+  static const circle_exclamation_point_small = IconData(
+    0xf2f4,
+    fontFamily: smallFontFamily,
+  );
+  static const circle_empty_small = IconData(
+    0xf2f5,
+    fontFamily: smallFontFamily,
+  );
+  static const circle_dotted_small = IconData(
+    0xf2f6,
+    fontFamily: smallFontFamily,
+  );
+  static const circle_dotted_part_x_small = IconData(
+    0xf2f7,
+    fontFamily: smallFontFamily,
+  );
+  static const circle_dotted_part_small = IconData(
+    0xf2f8,
+    fontFamily: smallFontFamily,
+  );
+  static const circle_cross_small = IconData(
+    0xf2f9,
+    fontFamily: smallFontFamily,
+  );
   static const cigarette_small = IconData(0xf2fa, fontFamily: smallFontFamily);
-  static const cigarette_disabled_small = IconData(0xf2fb, fontFamily: smallFontFamily);
-  static const christmas_tree_shopping_bag_small = IconData(0xf2fc, fontFamily: smallFontFamily);
-  static const child_adult_small = IconData(0xf2fd, fontFamily: smallFontFamily);
+  static const cigarette_disabled_small = IconData(
+    0xf2fb,
+    fontFamily: smallFontFamily,
+  );
+  static const christmas_tree_shopping_bag_small = IconData(
+    0xf2fc,
+    fontFamily: smallFontFamily,
+  );
+  static const child_adult_small = IconData(
+    0xf2fd,
+    fontFamily: smallFontFamily,
+  );
   static const chevron_up_small = IconData(0xf2fe, fontFamily: smallFontFamily);
-  static const chevron_small_up_small = IconData(0xf2ff, fontFamily: smallFontFamily);
-  static const chevron_small_up_circle_small = IconData(0xf300, fontFamily: smallFontFamily);
-  static const chevron_small_right_small = IconData(0xf301, fontFamily: smallFontFamily);
-  static const chevron_small_right_circle_small = IconData(0xf302, fontFamily: smallFontFamily);
-  static const chevron_small_left_small = IconData(0xf303, fontFamily: smallFontFamily);
-  static const chevron_small_left_right_small = IconData(0xf304, fontFamily: smallFontFamily);
-  static const chevron_small_left_circle_small = IconData(0xf305, fontFamily: smallFontFamily);
-  static const chevron_small_end_right_small = IconData(0xf306, fontFamily: smallFontFamily);
-  static const chevron_small_end_left_small = IconData(0xf307, fontFamily: smallFontFamily);
-  static const chevron_small_down_small = IconData(0xf308, fontFamily: smallFontFamily);
-  static const chevron_small_down_flat_small = IconData(0xf309, fontFamily: smallFontFamily);
-  static const chevron_small_down_circle_small = IconData(0xf30a, fontFamily: smallFontFamily);
-  static const chevron_right_small = IconData(0xf30b, fontFamily: smallFontFamily);
-  static const chevron_left_small = IconData(0xf30c, fontFamily: smallFontFamily);
-  static const chevron_down_small = IconData(0xf30d, fontFamily: smallFontFamily);
-  static const checkpoints_small = IconData(0xf30e, fontFamily: smallFontFamily);
+  static const chevron_small_up_small = IconData(
+    0xf2ff,
+    fontFamily: smallFontFamily,
+  );
+  static const chevron_small_up_circle_small = IconData(
+    0xf300,
+    fontFamily: smallFontFamily,
+  );
+  static const chevron_small_right_small = IconData(
+    0xf301,
+    fontFamily: smallFontFamily,
+  );
+  static const chevron_small_right_circle_small = IconData(
+    0xf302,
+    fontFamily: smallFontFamily,
+  );
+  static const chevron_small_left_small = IconData(
+    0xf303,
+    fontFamily: smallFontFamily,
+  );
+  static const chevron_small_left_right_small = IconData(
+    0xf304,
+    fontFamily: smallFontFamily,
+  );
+  static const chevron_small_left_circle_small = IconData(
+    0xf305,
+    fontFamily: smallFontFamily,
+  );
+  static const chevron_small_end_right_small = IconData(
+    0xf306,
+    fontFamily: smallFontFamily,
+  );
+  static const chevron_small_end_left_small = IconData(
+    0xf307,
+    fontFamily: smallFontFamily,
+  );
+  static const chevron_small_down_small = IconData(
+    0xf308,
+    fontFamily: smallFontFamily,
+  );
+  static const chevron_small_down_flat_small = IconData(
+    0xf309,
+    fontFamily: smallFontFamily,
+  );
+  static const chevron_small_down_circle_small = IconData(
+    0xf30a,
+    fontFamily: smallFontFamily,
+  );
+  static const chevron_right_small = IconData(
+    0xf30b,
+    fontFamily: smallFontFamily,
+  );
+  static const chevron_left_small = IconData(
+    0xf30c,
+    fontFamily: smallFontFamily,
+  );
+  static const chevron_down_small = IconData(
+    0xf30d,
+    fontFamily: smallFontFamily,
+  );
+  static const checkpoints_small = IconData(
+    0xf30e,
+    fontFamily: smallFontFamily,
+  );
   static const chart_pie_small = IconData(0xf30f, fontFamily: smallFontFamily);
   static const chart_line_small = IconData(0xf310, fontFamily: smallFontFamily);
-  static const chart_column_trend_small = IconData(0xf311, fontFamily: smallFontFamily);
-  static const chart_column_small = IconData(0xf312, fontFamily: smallFontFamily);
-  static const charging_station_small = IconData(0xf313, fontFamily: smallFontFamily);
-  static const chairlift_profile_small = IconData(0xf314, fontFamily: smallFontFamily);
-  static const certificate_ribbon_tick_small = IconData(0xf315, fontFamily: smallFontFamily);
-  static const certificate_ribbon_small = IconData(0xf316, fontFamily: smallFontFamily);
-  static const cash_register_small = IconData(0xf317, fontFamily: smallFontFamily);
-  static const cargo_bike_trailer_small = IconData(0xf318, fontFamily: smallFontFamily);
+  static const chart_column_trend_small = IconData(
+    0xf311,
+    fontFamily: smallFontFamily,
+  );
+  static const chart_column_small = IconData(
+    0xf312,
+    fontFamily: smallFontFamily,
+  );
+  static const charging_station_small = IconData(
+    0xf313,
+    fontFamily: smallFontFamily,
+  );
+  static const chairlift_profile_small = IconData(
+    0xf314,
+    fontFamily: smallFontFamily,
+  );
+  static const certificate_ribbon_tick_small = IconData(
+    0xf315,
+    fontFamily: smallFontFamily,
+  );
+  static const certificate_ribbon_small = IconData(
+    0xf316,
+    fontFamily: smallFontFamily,
+  );
+  static const cash_register_small = IconData(
+    0xf317,
+    fontFamily: smallFontFamily,
+  );
+  static const cargo_bike_trailer_small = IconData(
+    0xf318,
+    fontFamily: smallFontFamily,
+  );
   static const cargo_bike_small = IconData(0xf319, fontFamily: smallFontFamily);
   static const car_small = IconData(0xf31a, fontFamily: smallFontFamily);
-  static const car_sign_parking_small = IconData(0xf31b, fontFamily: smallFontFamily);
-  static const car_profile_user_group_circle_small = IconData(0xf31c, fontFamily: smallFontFamily);
-  static const car_profile_small = IconData(0xf31d, fontFamily: smallFontFamily);
-  static const car_profile_sign_parking_small = IconData(0xf31e, fontFamily: smallFontFamily);
-  static const car_profile_power_plug_small = IconData(0xf31f, fontFamily: smallFontFamily);
-  static const car_power_plug_small = IconData(0xf320, fontFamily: smallFontFamily);
-  static const camera_two_stars_small = IconData(0xf321, fontFamily: smallFontFamily);
+  static const car_sign_parking_small = IconData(
+    0xf31b,
+    fontFamily: smallFontFamily,
+  );
+  static const car_profile_user_group_circle_small = IconData(
+    0xf31c,
+    fontFamily: smallFontFamily,
+  );
+  static const car_profile_small = IconData(
+    0xf31d,
+    fontFamily: smallFontFamily,
+  );
+  static const car_profile_sign_parking_small = IconData(
+    0xf31e,
+    fontFamily: smallFontFamily,
+  );
+  static const car_profile_power_plug_small = IconData(
+    0xf31f,
+    fontFamily: smallFontFamily,
+  );
+  static const car_power_plug_small = IconData(
+    0xf320,
+    fontFamily: smallFontFamily,
+  );
+  static const camera_two_stars_small = IconData(
+    0xf321,
+    fontFamily: smallFontFamily,
+  );
   static const camera_small = IconData(0xf322, fontFamily: smallFontFamily);
-  static const calendar_weekday_small = IconData(0xf323, fontFamily: smallFontFamily);
+  static const calendar_weekday_small = IconData(
+    0xf323,
+    fontFamily: smallFontFamily,
+  );
   static const calendar_small = IconData(0xf324, fontFamily: smallFontFamily);
-  static const calendar_one_day_small = IconData(0xf325, fontFamily: smallFontFamily);
+  static const calendar_one_day_small = IconData(
+    0xf325,
+    fontFamily: smallFontFamily,
+  );
   static const calculator_small = IconData(0xf326, fontFamily: smallFontFamily);
-  static const cable_car_profile_small = IconData(0xf327, fontFamily: smallFontFamily);
-  static const button_power_small = IconData(0xf328, fontFamily: smallFontFamily);
+  static const cable_car_profile_small = IconData(
+    0xf327,
+    fontFamily: smallFontFamily,
+  );
+  static const button_power_small = IconData(
+    0xf328,
+    fontFamily: smallFontFamily,
+  );
   static const butterfly_small = IconData(0xf329, fontFamily: smallFontFamily);
   static const bus_train_small = IconData(0xf32a, fontFamily: smallFontFamily);
-  static const bus_surrounding_area_small = IconData(0xf32b, fontFamily: smallFontFamily);
+  static const bus_surrounding_area_small = IconData(
+    0xf32b,
+    fontFamily: smallFontFamily,
+  );
   static const bus_stop_small = IconData(0xf32c, fontFamily: smallFontFamily);
   static const bus_small = IconData(0xf32d, fontFamily: smallFontFamily);
   static const bus_sbb_small = IconData(0xf32e, fontFamily: smallFontFamily);
-  static const bus_profile_small = IconData(0xf32f, fontFamily: smallFontFamily);
+  static const bus_profile_small = IconData(
+    0xf32f,
+    fontFamily: smallFontFamily,
+  );
   static const bulb_on_small = IconData(0xf330, fontFamily: smallFontFamily);
-  static const bulb_on_percentage_small = IconData(0xf331, fontFamily: smallFontFamily);
+  static const bulb_on_percentage_small = IconData(
+    0xf331,
+    fontFamily: smallFontFamily,
+  );
   static const bulb_off_small = IconData(0xf332, fontFamily: smallFontFamily);
-  static const bulb_off_percentage_signal_small = IconData(0xf333, fontFamily: smallFontFamily);
-  static const building_tree_small = IconData(0xf334, fontFamily: smallFontFamily);
-  static const bucket_foam_broom_small = IconData(0xf335, fontFamily: smallFontFamily);
+  static const bulb_off_percentage_signal_small = IconData(
+    0xf333,
+    fontFamily: smallFontFamily,
+  );
+  static const building_tree_small = IconData(
+    0xf334,
+    fontFamily: smallFontFamily,
+  );
+  static const bucket_foam_broom_small = IconData(
+    0xf335,
+    fontFamily: smallFontFamily,
+  );
   static const browser_small = IconData(0xf336, fontFamily: smallFontFamily);
   static const brochure_small = IconData(0xf337, fontFamily: smallFontFamily);
   static const briefcase_small = IconData(0xf338, fontFamily: smallFontFamily);
   static const bridge_small = IconData(0xf339, fontFamily: smallFontFamily);
-  static const bottle_apple_small = IconData(0xf33a, fontFamily: smallFontFamily);
+  static const bottle_apple_small = IconData(
+    0xf33a,
+    fontFamily: smallFontFamily,
+  );
   static const bookmark_small = IconData(0xf33b, fontFamily: smallFontFamily);
   static const book_small = IconData(0xf33c, fontFamily: smallFontFamily);
-  static const book_section_mark_small = IconData(0xf33d, fontFamily: smallFontFamily);
-  static const boat_profile_small = IconData(0xf33e, fontFamily: smallFontFamily);
+  static const book_section_mark_small = IconData(
+    0xf33d,
+    fontFamily: smallFontFamily,
+  );
+  static const boat_profile_small = IconData(
+    0xf33e,
+    fontFamily: smallFontFamily,
+  );
   static const bluetooth_small = IconData(0xf33f, fontFamily: smallFontFamily);
-  static const bluetooth_disabled_small = IconData(0xf340, fontFamily: smallFontFamily);
+  static const bluetooth_disabled_small = IconData(
+    0xf340,
+    fontFamily: smallFontFamily,
+  );
   static const binoculars_small = IconData(0xf341, fontFamily: smallFontFamily);
-  static const bike_trailer_small = IconData(0xf342, fontFamily: smallFontFamily);
-  static const bike_profile_sign_parking_small = IconData(0xf343, fontFamily: smallFontFamily);
-  static const bike_profile_power_plug_small = IconData(0xf344, fontFamily: smallFontFamily);
-  static const bicycle_tandem_small = IconData(0xf345, fontFamily: smallFontFamily);
+  static const bike_trailer_small = IconData(
+    0xf342,
+    fontFamily: smallFontFamily,
+  );
+  static const bike_profile_sign_parking_small = IconData(
+    0xf343,
+    fontFamily: smallFontFamily,
+  );
+  static const bike_profile_power_plug_small = IconData(
+    0xf344,
+    fontFamily: smallFontFamily,
+  );
+  static const bicycle_tandem_small = IconData(
+    0xf345,
+    fontFamily: smallFontFamily,
+  );
   static const bicycle_small = IconData(0xf346, fontFamily: smallFontFamily);
-  static const bicycle_roof_surveillance_camera_small = IconData(0xf347, fontFamily: smallFontFamily);
-  static const bicycle_roof_key_small = IconData(0xf348, fontFamily: smallFontFamily);
-  static const bicycle_reservation_small = IconData(0xf349, fontFamily: smallFontFamily);
-  static const bicycle_profile_user_group_circle_small = IconData(0xf34a, fontFamily: smallFontFamily);
+  static const bicycle_roof_surveillance_camera_small = IconData(
+    0xf347,
+    fontFamily: smallFontFamily,
+  );
+  static const bicycle_roof_key_small = IconData(
+    0xf348,
+    fontFamily: smallFontFamily,
+  );
+  static const bicycle_reservation_small = IconData(
+    0xf349,
+    fontFamily: smallFontFamily,
+  );
+  static const bicycle_profile_user_group_circle_small = IconData(
+    0xf34a,
+    fontFamily: smallFontFamily,
+  );
   static const bell_small = IconData(0xf34b, fontFamily: smallFontFamily);
-  static const bell_disabled_small = IconData(0xf34c, fontFamily: smallFontFamily);
-  static const battery_lightning_small = IconData(0xf34d, fontFamily: smallFontFamily);
-  static const battery_level_percentage_small = IconData(0xf34e, fontFamily: smallFontFamily);
-  static const battery_level_medium_small = IconData(0xf34f, fontFamily: smallFontFamily);
-  static const battery_level_low_small = IconData(0xf350, fontFamily: smallFontFamily);
-  static const battery_level_high_small = IconData(0xf351, fontFamily: smallFontFamily);
-  static const battery_level_empty_small = IconData(0xf352, fontFamily: smallFontFamily);
-  static const barrier_construction_small = IconData(0xf353, fontFamily: smallFontFamily);
-  static const banknotes_dollar_small = IconData(0xf354, fontFamily: smallFontFamily);
+  static const bell_disabled_small = IconData(
+    0xf34c,
+    fontFamily: smallFontFamily,
+  );
+  static const battery_lightning_small = IconData(
+    0xf34d,
+    fontFamily: smallFontFamily,
+  );
+  static const battery_level_percentage_small = IconData(
+    0xf34e,
+    fontFamily: smallFontFamily,
+  );
+  static const battery_level_medium_small = IconData(
+    0xf34f,
+    fontFamily: smallFontFamily,
+  );
+  static const battery_level_low_small = IconData(
+    0xf350,
+    fontFamily: smallFontFamily,
+  );
+  static const battery_level_high_small = IconData(
+    0xf351,
+    fontFamily: smallFontFamily,
+  );
+  static const battery_level_empty_small = IconData(
+    0xf352,
+    fontFamily: smallFontFamily,
+  );
+  static const barrier_construction_small = IconData(
+    0xf353,
+    fontFamily: smallFontFamily,
+  );
+  static const banknotes_dollar_small = IconData(
+    0xf354,
+    fontFamily: smallFontFamily,
+  );
   static const balloons_small = IconData(0xf355, fontFamily: smallFontFamily);
   static const backpack_small = IconData(0xf356, fontFamily: smallFontFamily);
-  static const avatar_train_staff_small = IconData(0xf357, fontFamily: smallFontFamily);
-  static const avatar_train_staff_disabled_small = IconData(0xf358, fontFamily: smallFontFamily);
-  static const avatar_police_small = IconData(0xf359, fontFamily: smallFontFamily);
-  static const arrows_up_down_small = IconData(0xf35a, fontFamily: smallFontFamily);
-  static const arrows_up_down_pressure_small = IconData(0xf35b, fontFamily: smallFontFamily);
-  static const arrows_right_left_small = IconData(0xf35c, fontFamily: smallFontFamily);
-  static const arrows_long_up_down_small = IconData(0xf35d, fontFamily: smallFontFamily);
-  static const arrows_long_right_left_small = IconData(0xf35e, fontFamily: smallFontFamily);
-  static const arrows_left_right_small = IconData(0xf35f, fontFamily: smallFontFamily);
-  static const arrows_left_right_down_up_small = IconData(0xf360, fontFamily: smallFontFamily);
-  static const arrows_left_right_dotted_small = IconData(0xf361, fontFamily: smallFontFamily);
-  static const arrows_circle_small = IconData(0xf362, fontFamily: smallFontFamily);
+  static const avatar_train_staff_small = IconData(
+    0xf357,
+    fontFamily: smallFontFamily,
+  );
+  static const avatar_train_staff_disabled_small = IconData(
+    0xf358,
+    fontFamily: smallFontFamily,
+  );
+  static const avatar_police_small = IconData(
+    0xf359,
+    fontFamily: smallFontFamily,
+  );
+  static const arrows_up_down_small = IconData(
+    0xf35a,
+    fontFamily: smallFontFamily,
+  );
+  static const arrows_up_down_pressure_small = IconData(
+    0xf35b,
+    fontFamily: smallFontFamily,
+  );
+  static const arrows_right_left_small = IconData(
+    0xf35c,
+    fontFamily: smallFontFamily,
+  );
+  static const arrows_long_up_down_small = IconData(
+    0xf35d,
+    fontFamily: smallFontFamily,
+  );
+  static const arrows_long_right_left_small = IconData(
+    0xf35e,
+    fontFamily: smallFontFamily,
+  );
+  static const arrows_left_right_small = IconData(
+    0xf35f,
+    fontFamily: smallFontFamily,
+  );
+  static const arrows_left_right_down_up_small = IconData(
+    0xf360,
+    fontFamily: smallFontFamily,
+  );
+  static const arrows_left_right_dotted_small = IconData(
+    0xf361,
+    fontFamily: smallFontFamily,
+  );
+  static const arrows_circle_small = IconData(
+    0xf362,
+    fontFamily: smallFontFamily,
+  );
   static const arrow_up_small = IconData(0xf363, fontFamily: smallFontFamily);
-  static const arrow_up_right_small = IconData(0xf364, fontFamily: smallFontFamily);
-  static const arrow_up_left_small = IconData(0xf365, fontFamily: smallFontFamily);
-  static const arrow_turn_up_small = IconData(0xf366, fontFamily: smallFontFamily);
-  static const arrow_turn_right_small = IconData(0xf367, fontFamily: smallFontFamily);
-  static const arrow_turn_down_small = IconData(0xf368, fontFamily: smallFontFamily);
-  static const arrow_start_right_small = IconData(0xf369, fontFamily: smallFontFamily);
-  static const arrow_start_left_small = IconData(0xf36a, fontFamily: smallFontFamily);
-  static const arrow_right_small = IconData(0xf36b, fontFamily: smallFontFamily);
-  static const arrow_long_up_small = IconData(0xf36c, fontFamily: smallFontFamily);
-  static const arrow_long_right_small = IconData(0xf36d, fontFamily: smallFontFamily);
-  static const arrow_long_left_small = IconData(0xf36e, fontFamily: smallFontFamily);
-  static const arrow_long_down_small = IconData(0xf36f, fontFamily: smallFontFamily);
+  static const arrow_up_right_small = IconData(
+    0xf364,
+    fontFamily: smallFontFamily,
+  );
+  static const arrow_up_left_small = IconData(
+    0xf365,
+    fontFamily: smallFontFamily,
+  );
+  static const arrow_turn_up_small = IconData(
+    0xf366,
+    fontFamily: smallFontFamily,
+  );
+  static const arrow_turn_right_small = IconData(
+    0xf367,
+    fontFamily: smallFontFamily,
+  );
+  static const arrow_turn_down_small = IconData(
+    0xf368,
+    fontFamily: smallFontFamily,
+  );
+  static const arrow_start_right_small = IconData(
+    0xf369,
+    fontFamily: smallFontFamily,
+  );
+  static const arrow_start_left_small = IconData(
+    0xf36a,
+    fontFamily: smallFontFamily,
+  );
+  static const arrow_right_small = IconData(
+    0xf36b,
+    fontFamily: smallFontFamily,
+  );
+  static const arrow_long_up_small = IconData(
+    0xf36c,
+    fontFamily: smallFontFamily,
+  );
+  static const arrow_long_right_small = IconData(
+    0xf36d,
+    fontFamily: smallFontFamily,
+  );
+  static const arrow_long_left_small = IconData(
+    0xf36e,
+    fontFamily: smallFontFamily,
+  );
+  static const arrow_long_down_small = IconData(
+    0xf36f,
+    fontFamily: smallFontFamily,
+  );
   static const arrow_left_small = IconData(0xf370, fontFamily: smallFontFamily);
-  static const arrow_end_right_small = IconData(0xf371, fontFamily: smallFontFamily);
+  static const arrow_end_right_small = IconData(
+    0xf371,
+    fontFamily: smallFontFamily,
+  );
   static const arrow_down_small = IconData(0xf372, fontFamily: smallFontFamily);
-  static const arrow_compass_small = IconData(0xf373, fontFamily: smallFontFamily);
-  static const arrow_compass_filled_small = IconData(0xf374, fontFamily: smallFontFamily);
-  static const arrow_circle_two_users_small = IconData(0xf375, fontFamily: smallFontFamily);
-  static const arrow_circle_train_tracks_small = IconData(0xf376, fontFamily: smallFontFamily);
-  static const arrow_circle_time_small = IconData(0xf377, fontFamily: smallFontFamily);
-  static const arrow_circle_switzerland_small = IconData(0xf378, fontFamily: smallFontFamily);
-  static const arrow_circle_small = IconData(0xf379, fontFamily: smallFontFamily);
-  static const arrow_circle_reset_small = IconData(0xf37a, fontFamily: smallFontFamily);
-  static const arrow_circle_lightning_small = IconData(0xf37b, fontFamily: smallFontFamily);
-  static const arrow_circle_eye_small = IconData(0xf37c, fontFamily: smallFontFamily);
-  static const arrow_change_small = IconData(0xf37d, fontFamily: smallFontFamily);
-  static const arrow_change_horizontal_small = IconData(0xf37e, fontFamily: smallFontFamily);
+  static const arrow_compass_small = IconData(
+    0xf373,
+    fontFamily: smallFontFamily,
+  );
+  static const arrow_compass_filled_small = IconData(
+    0xf374,
+    fontFamily: smallFontFamily,
+  );
+  static const arrow_circle_two_users_small = IconData(
+    0xf375,
+    fontFamily: smallFontFamily,
+  );
+  static const arrow_circle_train_tracks_small = IconData(
+    0xf376,
+    fontFamily: smallFontFamily,
+  );
+  static const arrow_circle_time_small = IconData(
+    0xf377,
+    fontFamily: smallFontFamily,
+  );
+  static const arrow_circle_switzerland_small = IconData(
+    0xf378,
+    fontFamily: smallFontFamily,
+  );
+  static const arrow_circle_small = IconData(
+    0xf379,
+    fontFamily: smallFontFamily,
+  );
+  static const arrow_circle_reset_small = IconData(
+    0xf37a,
+    fontFamily: smallFontFamily,
+  );
+  static const arrow_circle_lightning_small = IconData(
+    0xf37b,
+    fontFamily: smallFontFamily,
+  );
+  static const arrow_circle_eye_small = IconData(
+    0xf37c,
+    fontFamily: smallFontFamily,
+  );
+  static const arrow_change_small = IconData(
+    0xf37d,
+    fontFamily: smallFontFamily,
+  );
+  static const arrow_change_horizontal_small = IconData(
+    0xf37e,
+    fontFamily: smallFontFamily,
+  );
   static const armchair_small = IconData(0xf37f, fontFamily: smallFontFamily);
-  static const armchair_profile_user_small = IconData(0xf380, fontFamily: smallFontFamily);
-  static const archive_box_small = IconData(0xf381, fontFamily: smallFontFamily);
+  static const armchair_profile_user_small = IconData(
+    0xf380,
+    fontFamily: smallFontFamily,
+  );
+  static const archive_box_small = IconData(
+    0xf381,
+    fontFamily: smallFontFamily,
+  );
   static const apple_bag_small = IconData(0xf382, fontFamily: smallFontFamily);
   static const app_icon_small = IconData(0xf383, fontFamily: smallFontFamily);
   static const angular_small = IconData(0xf384, fontFamily: smallFontFamily);
-  static const alarm_clock_small = IconData(0xf385, fontFamily: smallFontFamily);
-  static const airplane_train_small = IconData(0xf386, fontFamily: smallFontFamily);
+  static const alarm_clock_small = IconData(
+    0xf385,
+    fontFamily: smallFontFamily,
+  );
+  static const airplane_train_small = IconData(
+    0xf386,
+    fontFamily: smallFontFamily,
+  );
   static const airplane_small = IconData(0xf387, fontFamily: smallFontFamily);
-  static const aerosol_can_small = IconData(0xf388, fontFamily: smallFontFamily);
+  static const aerosol_can_small = IconData(
+    0xf388,
+    fontFamily: smallFontFamily,
+  );
   static const adult_kids_small = IconData(0xf389, fontFamily: smallFontFamily);
-  static const wine_cheese_medium = IconData(0xf101, fontFamily: mediumFontFamily);
+  static const wine_cheese_medium = IconData(
+    0xf101,
+    fontFamily: mediumFontFamily,
+  );
   static const wifi_medium = IconData(0xf102, fontFamily: mediumFontFamily);
-  static const wifi_disabled_medium = IconData(0xf103, fontFamily: mediumFontFamily);
-  static const wheelchair_uncertain_medium = IconData(0xf104, fontFamily: mediumFontFamily);
-  static const wheelchair_substitute_transport_medium = IconData(0xf105, fontFamily: mediumFontFamily);
-  static const wheelchair_sector_location_medium = IconData(0xf106, fontFamily: mediumFontFamily);
-  static const wheelchair_reservation_medium = IconData(0xf107, fontFamily: mediumFontFamily);
-  static const wheelchair_partially_medium = IconData(0xf108, fontFamily: mediumFontFamily);
-  static const wheelchair_medium = IconData(0xf109, fontFamily: mediumFontFamily);
-  static const wheelchair_inaccessible_medium = IconData(0xf10a, fontFamily: mediumFontFamily);
-  static const wheel_thermometer_medium = IconData(0xf10b, fontFamily: mediumFontFamily);
-  static const wheel_microphone_medium = IconData(0xf10c, fontFamily: mediumFontFamily);
-  static const weight_wheel_medium = IconData(0xf10d, fontFamily: mediumFontFamily);
+  static const wifi_disabled_medium = IconData(
+    0xf103,
+    fontFamily: mediumFontFamily,
+  );
+  static const wheelchair_uncertain_medium = IconData(
+    0xf104,
+    fontFamily: mediumFontFamily,
+  );
+  static const wheelchair_substitute_transport_medium = IconData(
+    0xf105,
+    fontFamily: mediumFontFamily,
+  );
+  static const wheelchair_sector_location_medium = IconData(
+    0xf106,
+    fontFamily: mediumFontFamily,
+  );
+  static const wheelchair_reservation_medium = IconData(
+    0xf107,
+    fontFamily: mediumFontFamily,
+  );
+  static const wheelchair_partially_medium = IconData(
+    0xf108,
+    fontFamily: mediumFontFamily,
+  );
+  static const wheelchair_medium = IconData(
+    0xf109,
+    fontFamily: mediumFontFamily,
+  );
+  static const wheelchair_inaccessible_medium = IconData(
+    0xf10a,
+    fontFamily: mediumFontFamily,
+  );
+  static const wheel_thermometer_medium = IconData(
+    0xf10b,
+    fontFamily: mediumFontFamily,
+  );
+  static const wheel_microphone_medium = IconData(
+    0xf10c,
+    fontFamily: mediumFontFamily,
+  );
+  static const weight_wheel_medium = IconData(
+    0xf10d,
+    fontFamily: mediumFontFamily,
+  );
   static const weight_medium = IconData(0xf10e, fontFamily: mediumFontFamily);
-  static const weather_unknown_medium = IconData(0xf10f, fontFamily: mediumFontFamily);
-  static const waves_ladder_medium = IconData(0xf110, fontFamily: mediumFontFamily);
-  static const washing_machine_medium = IconData(0xf111, fontFamily: mediumFontFamily);
-  static const warning_light_medium = IconData(0xf112, fontFamily: mediumFontFamily);
-  static const wara_warn_app_medium = IconData(0xf113, fontFamily: mediumFontFamily);
+  static const weather_unknown_medium = IconData(
+    0xf10f,
+    fontFamily: mediumFontFamily,
+  );
+  static const waves_ladder_medium = IconData(
+    0xf110,
+    fontFamily: mediumFontFamily,
+  );
+  static const washing_machine_medium = IconData(
+    0xf111,
+    fontFamily: mediumFontFamily,
+  );
+  static const warning_light_medium = IconData(
+    0xf112,
+    fontFamily: mediumFontFamily,
+  );
+  static const wara_warn_app_medium = IconData(
+    0xf113,
+    fontFamily: mediumFontFamily,
+  );
   static const wallet_medium = IconData(0xf114, fontFamily: mediumFontFamily);
-  static const walkie_talkie_medium = IconData(0xf115, fontFamily: mediumFontFamily);
-  static const walk_slow_medium = IconData(0xf116, fontFamily: mediumFontFamily);
+  static const walkie_talkie_medium = IconData(
+    0xf115,
+    fontFamily: mediumFontFamily,
+  );
+  static const walk_slow_medium = IconData(
+    0xf116,
+    fontFamily: mediumFontFamily,
+  );
   static const walk_medium = IconData(0xf117, fontFamily: mediumFontFamily);
-  static const walk_large_medium = IconData(0xf118, fontFamily: mediumFontFamily);
-  static const walk_fast_medium = IconData(0xf119, fontFamily: mediumFontFamily);
-  static const waiting_room_medium = IconData(0xf11a, fontFamily: mediumFontFamily);
+  static const walk_large_medium = IconData(
+    0xf118,
+    fontFamily: mediumFontFamily,
+  );
+  static const walk_fast_medium = IconData(
+    0xf119,
+    fontFamily: mediumFontFamily,
+  );
+  static const waiting_room_medium = IconData(
+    0xf11a,
+    fontFamily: mediumFontFamily,
+  );
   static const wagon_medium = IconData(0xf11b, fontFamily: mediumFontFamily);
-  static const wagon_coupling_dragging_equipment_medium = IconData(0xf11c, fontFamily: mediumFontFamily);
-  static const vegetarian_medium = IconData(0xf11d, fontFamily: mediumFontFamily);
+  static const wagon_coupling_dragging_equipment_medium = IconData(
+    0xf11c,
+    fontFamily: mediumFontFamily,
+  );
+  static const vegetarian_medium = IconData(
+    0xf11d,
+    fontFamily: mediumFontFamily,
+  );
   static const vegan_medium = IconData(0xf11e, fontFamily: mediumFontFamily);
   static const user_tie_medium = IconData(0xf11f, fontFamily: mediumFontFamily);
-  static const user_plus_medium = IconData(0xf120, fontFamily: mediumFontFamily);
+  static const user_plus_medium = IconData(
+    0xf120,
+    fontFamily: mediumFontFamily,
+  );
   static const user_medium = IconData(0xf121, fontFamily: mediumFontFamily);
   static const user_key_medium = IconData(0xf122, fontFamily: mediumFontFamily);
-  static const user_helmet_medium = IconData(0xf123, fontFamily: mediumFontFamily);
-  static const user_headset_medium = IconData(0xf124, fontFamily: mediumFontFamily);
-  static const user_headset_display_medium = IconData(0xf125, fontFamily: mediumFontFamily);
+  static const user_helmet_medium = IconData(
+    0xf123,
+    fontFamily: mediumFontFamily,
+  );
+  static const user_headset_medium = IconData(
+    0xf124,
+    fontFamily: mediumFontFamily,
+  );
+  static const user_headset_display_medium = IconData(
+    0xf125,
+    fontFamily: mediumFontFamily,
+  );
   static const user_hat_medium = IconData(0xf126, fontFamily: mediumFontFamily);
-  static const user_group_row_medium = IconData(0xf127, fontFamily: mediumFontFamily);
-  static const user_group_round_table_medium = IconData(0xf128, fontFamily: mediumFontFamily);
-  static const user_group_medium = IconData(0xf129, fontFamily: mediumFontFamily);
-  static const user_change_medium = IconData(0xf12a, fontFamily: mediumFontFamily);
-  static const user_admin_medium = IconData(0xf12b, fontFamily: mediumFontFamily);
+  static const user_group_row_medium = IconData(
+    0xf127,
+    fontFamily: mediumFontFamily,
+  );
+  static const user_group_round_table_medium = IconData(
+    0xf128,
+    fontFamily: mediumFontFamily,
+  );
+  static const user_group_medium = IconData(
+    0xf129,
+    fontFamily: mediumFontFamily,
+  );
+  static const user_change_medium = IconData(
+    0xf12a,
+    fontFamily: mediumFontFamily,
+  );
+  static const user_admin_medium = IconData(
+    0xf12b,
+    fontFamily: mediumFontFamily,
+  );
   static const upload_medium = IconData(0xf12c, fontFamily: mediumFontFamily);
   static const unicorn_medium = IconData(0xf12d, fontFamily: mediumFontFamily);
-  static const underground_vehicule_profile_medium = IconData(0xf12e, fontFamily: mediumFontFamily);
-  static const umbrella_glove_question_mark_medium = IconData(0xf12f, fontFamily: mediumFontFamily);
-  static const two_users_medium = IconData(0xf130, fontFamily: mediumFontFamily);
-  static const two_speech_bubbles_rainbow_medium = IconData(0xf131, fontFamily: mediumFontFamily);
-  static const two_speech_bubbles_medium = IconData(0xf132, fontFamily: mediumFontFamily);
-  static const two_lines_diagonal_medium = IconData(0xf133, fontFamily: mediumFontFamily);
-  static const two_houses_medium = IconData(0xf134, fontFamily: mediumFontFamily);
-  static const two_folders_medium = IconData(0xf135, fontFamily: mediumFontFamily);
-  static const two_finger_tap_medium = IconData(0xf136, fontFamily: mediumFontFamily);
-  static const two_adults_kid_medium = IconData(0xf137, fontFamily: mediumFontFamily);
+  static const underground_vehicule_profile_medium = IconData(
+    0xf12e,
+    fontFamily: mediumFontFamily,
+  );
+  static const umbrella_glove_question_mark_medium = IconData(
+    0xf12f,
+    fontFamily: mediumFontFamily,
+  );
+  static const two_users_medium = IconData(
+    0xf130,
+    fontFamily: mediumFontFamily,
+  );
+  static const two_speech_bubbles_rainbow_medium = IconData(
+    0xf131,
+    fontFamily: mediumFontFamily,
+  );
+  static const two_speech_bubbles_medium = IconData(
+    0xf132,
+    fontFamily: mediumFontFamily,
+  );
+  static const two_lines_diagonal_medium = IconData(
+    0xf133,
+    fontFamily: mediumFontFamily,
+  );
+  static const two_houses_medium = IconData(
+    0xf134,
+    fontFamily: mediumFontFamily,
+  );
+  static const two_folders_medium = IconData(
+    0xf135,
+    fontFamily: mediumFontFamily,
+  );
+  static const two_finger_tap_medium = IconData(
+    0xf136,
+    fontFamily: mediumFontFamily,
+  );
+  static const two_adults_kid_medium = IconData(
+    0xf137,
+    fontFamily: mediumFontFamily,
+  );
   static const tunnel_medium = IconData(0xf138, fontFamily: mediumFontFamily);
-  static const tunnel_freight_wagon_shifted_medium = IconData(0xf139, fontFamily: mediumFontFamily);
+  static const tunnel_freight_wagon_shifted_medium = IconData(
+    0xf139,
+    fontFamily: mediumFontFamily,
+  );
   static const tree_medium = IconData(0xf13a, fontFamily: mediumFontFamily);
-  static const travel_backpack_medium = IconData(0xf13b, fontFamily: mediumFontFamily);
+  static const travel_backpack_medium = IconData(
+    0xf13b,
+    fontFamily: mediumFontFamily,
+  );
   static const trash_medium = IconData(0xf13c, fontFamily: mediumFontFamily);
-  static const translate_medium = IconData(0xf13d, fontFamily: mediumFontFamily);
-  static const tram_profile_medium = IconData(0xf13e, fontFamily: mediumFontFamily);
+  static const translate_medium = IconData(
+    0xf13d,
+    fontFamily: mediumFontFamily,
+  );
+  static const tram_profile_medium = IconData(
+    0xf13e,
+    fontFamily: mediumFontFamily,
+  );
   static const tram_medium = IconData(0xf13f, fontFamily: mediumFontFamily);
-  static const train_tracks_pen_medium = IconData(0xf140, fontFamily: mediumFontFamily);
-  static const train_tracks_medium = IconData(0xf141, fontFamily: mediumFontFamily);
-  static const train_tracks_horizontal_medium = IconData(0xf142, fontFamily: mediumFontFamily);
-  static const train_station_medium = IconData(0xf143, fontFamily: mediumFontFamily);
-  static const train_ski_medium = IconData(0xf144, fontFamily: mediumFontFamily);
-  static const train_signal_medium = IconData(0xf145, fontFamily: mediumFontFamily);
-  static const train_profile_signal_medium = IconData(0xf146, fontFamily: mediumFontFamily);
-  static const train_profile_sign_parking_medium = IconData(0xf147, fontFamily: mediumFontFamily);
-  static const train_profile_medium = IconData(0xf148, fontFamily: mediumFontFamily);
+  static const train_tracks_pen_medium = IconData(
+    0xf140,
+    fontFamily: mediumFontFamily,
+  );
+  static const train_tracks_medium = IconData(
+    0xf141,
+    fontFamily: mediumFontFamily,
+  );
+  static const train_tracks_horizontal_medium = IconData(
+    0xf142,
+    fontFamily: mediumFontFamily,
+  );
+  static const train_station_medium = IconData(
+    0xf143,
+    fontFamily: mediumFontFamily,
+  );
+  static const train_ski_medium = IconData(
+    0xf144,
+    fontFamily: mediumFontFamily,
+  );
+  static const train_signal_medium = IconData(
+    0xf145,
+    fontFamily: mediumFontFamily,
+  );
+  static const train_profile_signal_medium = IconData(
+    0xf146,
+    fontFamily: mediumFontFamily,
+  );
+  static const train_profile_sign_parking_medium = IconData(
+    0xf147,
+    fontFamily: mediumFontFamily,
+  );
+  static const train_profile_medium = IconData(
+    0xf148,
+    fontFamily: mediumFontFamily,
+  );
   static const train_medium = IconData(0xf149, fontFamily: mediumFontFamily);
-  static const traffic_jam_medium = IconData(0xf14a, fontFamily: mediumFontFamily);
+  static const traffic_jam_medium = IconData(
+    0xf14a,
+    fontFamily: mediumFontFamily,
+  );
   static const torch_medium = IconData(0xf14b, fontFamily: mediumFontFamily);
   static const toilet_medium = IconData(0xf14c, fontFamily: mediumFontFamily);
-  static const timetable_medium = IconData(0xf14d, fontFamily: mediumFontFamily);
-  static const timetable_arrows_circle_medium = IconData(0xf14e, fontFamily: mediumFontFamily);
-  static const tickets_class_medium = IconData(0xf14f, fontFamily: mediumFontFamily);
-  static const ticket_star_medium = IconData(0xf150, fontFamily: mediumFontFamily);
-  static const ticket_rv_medium = IconData(0xf151, fontFamily: mediumFontFamily);
-  static const ticket_route_medium = IconData(0xf152, fontFamily: mediumFontFamily);
-  static const ticket_percent_medium = IconData(0xf153, fontFamily: mediumFontFamily);
-  static const ticket_parking_medium = IconData(0xf154, fontFamily: mediumFontFamily);
-  static const ticket_moon_star_medium = IconData(0xf155, fontFamily: mediumFontFamily);
-  static const ticket_machine_ticket_medium = IconData(0xf156, fontFamily: mediumFontFamily);
-  static const ticket_machine_medium = IconData(0xf157, fontFamily: mediumFontFamily);
-  static const ticket_journey_medium = IconData(0xf158, fontFamily: mediumFontFamily);
-  static const ticket_ipv_medium = IconData(0xf159, fontFamily: mediumFontFamily);
-  static const ticket_heart_medium = IconData(0xf15a, fontFamily: mediumFontFamily);
-  static const ticket_fv_medium = IconData(0xf15b, fontFamily: mediumFontFamily);
-  static const ticket_disabled_medium = IconData(0xf15c, fontFamily: mediumFontFamily);
-  static const ticket_day_medium = IconData(0xf15d, fontFamily: mediumFontFamily);
+  static const timetable_medium = IconData(
+    0xf14d,
+    fontFamily: mediumFontFamily,
+  );
+  static const timetable_arrows_circle_medium = IconData(
+    0xf14e,
+    fontFamily: mediumFontFamily,
+  );
+  static const tickets_class_medium = IconData(
+    0xf14f,
+    fontFamily: mediumFontFamily,
+  );
+  static const ticket_star_medium = IconData(
+    0xf150,
+    fontFamily: mediumFontFamily,
+  );
+  static const ticket_rv_medium = IconData(
+    0xf151,
+    fontFamily: mediumFontFamily,
+  );
+  static const ticket_route_medium = IconData(
+    0xf152,
+    fontFamily: mediumFontFamily,
+  );
+  static const ticket_percent_medium = IconData(
+    0xf153,
+    fontFamily: mediumFontFamily,
+  );
+  static const ticket_parking_medium = IconData(
+    0xf154,
+    fontFamily: mediumFontFamily,
+  );
+  static const ticket_moon_star_medium = IconData(
+    0xf155,
+    fontFamily: mediumFontFamily,
+  );
+  static const ticket_machine_ticket_medium = IconData(
+    0xf156,
+    fontFamily: mediumFontFamily,
+  );
+  static const ticket_machine_medium = IconData(
+    0xf157,
+    fontFamily: mediumFontFamily,
+  );
+  static const ticket_journey_medium = IconData(
+    0xf158,
+    fontFamily: mediumFontFamily,
+  );
+  static const ticket_ipv_medium = IconData(
+    0xf159,
+    fontFamily: mediumFontFamily,
+  );
+  static const ticket_heart_medium = IconData(
+    0xf15a,
+    fontFamily: mediumFontFamily,
+  );
+  static const ticket_fv_medium = IconData(
+    0xf15b,
+    fontFamily: mediumFontFamily,
+  );
+  static const ticket_disabled_medium = IconData(
+    0xf15c,
+    fontFamily: mediumFontFamily,
+  );
+  static const ticket_day_medium = IconData(
+    0xf15d,
+    fontFamily: mediumFontFamily,
+  );
   static const tick_medium = IconData(0xf15e, fontFamily: mediumFontFamily);
   static const thumb_up_medium = IconData(0xf15f, fontFamily: mediumFontFamily);
-  static const thumb_down_medium = IconData(0xf160, fontFamily: mediumFontFamily);
-  static const three_gears_medium = IconData(0xf161, fontFamily: mediumFontFamily);
-  static const three_adults_medium = IconData(0xf162, fontFamily: mediumFontFamily);
-  static const thermometer_medium = IconData(0xf163, fontFamily: mediumFontFamily);
-  static const telephone_receiver_medium = IconData(0xf164, fontFamily: mediumFontFamily);
-  static const telephone_gsm_medium = IconData(0xf165, fontFamily: mediumFontFamily);
-  static const taxi_profile_medium = IconData(0xf166, fontFamily: mediumFontFamily);
+  static const thumb_down_medium = IconData(
+    0xf160,
+    fontFamily: mediumFontFamily,
+  );
+  static const three_gears_medium = IconData(
+    0xf161,
+    fontFamily: mediumFontFamily,
+  );
+  static const three_adults_medium = IconData(
+    0xf162,
+    fontFamily: mediumFontFamily,
+  );
+  static const thermometer_medium = IconData(
+    0xf163,
+    fontFamily: mediumFontFamily,
+  );
+  static const telephone_receiver_medium = IconData(
+    0xf164,
+    fontFamily: mediumFontFamily,
+  );
+  static const telephone_gsm_medium = IconData(
+    0xf165,
+    fontFamily: mediumFontFamily,
+  );
+  static const taxi_profile_medium = IconData(
+    0xf166,
+    fontFamily: mediumFontFamily,
+  );
   static const taxi_medium = IconData(0xf167, fontFamily: mediumFontFamily);
   static const target_medium = IconData(0xf168, fontFamily: mediumFontFamily);
   static const tag_medium = IconData(0xf169, fontFamily: mediumFontFamily);
-  static const tablet_smartphone_medium = IconData(0xf16a, fontFamily: mediumFontFamily);
+  static const tablet_smartphone_medium = IconData(
+    0xf16a,
+    fontFamily: mediumFontFamily,
+  );
   static const tablet_medium = IconData(0xf16b, fontFamily: mediumFontFamily);
-  static const switzerland_route_medium = IconData(0xf16c, fontFamily: mediumFontFamily);
-  static const switzerland_medium = IconData(0xf16d, fontFamily: mediumFontFamily);
-  static const swisspass_temporary_medium = IconData(0xf16e, fontFamily: mediumFontFamily);
-  static const swisspass_medium = IconData(0xf16f, fontFamily: mediumFontFamily);
-  static const surveillance_cameras_train_medium = IconData(0xf170, fontFamily: mediumFontFamily);
+  static const switzerland_route_medium = IconData(
+    0xf16c,
+    fontFamily: mediumFontFamily,
+  );
+  static const switzerland_medium = IconData(
+    0xf16d,
+    fontFamily: mediumFontFamily,
+  );
+  static const swisspass_temporary_medium = IconData(
+    0xf16e,
+    fontFamily: mediumFontFamily,
+  );
+  static const swisspass_medium = IconData(
+    0xf16f,
+    fontFamily: mediumFontFamily,
+  );
+  static const surveillance_cameras_train_medium = IconData(
+    0xf170,
+    fontFamily: mediumFontFamily,
+  );
   static const sunshine_medium = IconData(0xf171, fontFamily: mediumFontFamily);
-  static const sunshade_sun_sand_medium = IconData(0xf172, fontFamily: mediumFontFamily);
+  static const sunshade_sun_sand_medium = IconData(
+    0xf172,
+    fontFamily: mediumFontFamily,
+  );
   static const sunrise_medium = IconData(0xf173, fontFamily: mediumFontFamily);
   static const sun_moon_medium = IconData(0xf174, fontFamily: mediumFontFamily);
   static const suitcase_medium = IconData(0xf175, fontFamily: mediumFontFamily);
-  static const suitcase_disabled_medium = IconData(0xf176, fontFamily: mediumFontFamily);
+  static const suitcase_disabled_medium = IconData(
+    0xf176,
+    fontFamily: mediumFontFamily,
+  );
   static const stroller_medium = IconData(0xf177, fontFamily: mediumFontFamily);
-  static const street_location_pin_medium = IconData(0xf178, fontFamily: mediumFontFamily);
+  static const street_location_pin_medium = IconData(
+    0xf178,
+    fontFamily: mediumFontFamily,
+  );
   static const stop_medium = IconData(0xf179, fontFamily: mediumFontFamily);
-  static const station_surrounding_area_medium = IconData(0xf17a, fontFamily: mediumFontFamily);
+  static const station_surrounding_area_medium = IconData(
+    0xf17a,
+    fontFamily: mediumFontFamily,
+  );
   static const station_medium = IconData(0xf17b, fontFamily: mediumFontFamily);
   static const star_medium = IconData(0xf17c, fontFamily: mediumFontFamily);
-  static const star_filled_medium = IconData(0xf17d, fontFamily: mediumFontFamily);
-  static const stairs_user_medium = IconData(0xf17e, fontFamily: mediumFontFamily);
+  static const star_filled_medium = IconData(
+    0xf17d,
+    fontFamily: mediumFontFamily,
+  );
+  static const stairs_user_medium = IconData(
+    0xf17e,
+    fontFamily: mediumFontFamily,
+  );
   static const split_medium = IconData(0xf17f, fontFamily: mediumFontFamily);
-  static const speech_bubble_medium = IconData(0xf180, fontFamily: mediumFontFamily);
-  static const speech_bubble_group_empty_medium = IconData(0xf181, fontFamily: mediumFontFamily);
-  static const speech_bubble_exclamation_point_medium = IconData(0xf182, fontFamily: mediumFontFamily);
-  static const speech_bubble_empty_medium = IconData(0xf183, fontFamily: mediumFontFamily);
+  static const speech_bubble_medium = IconData(
+    0xf180,
+    fontFamily: mediumFontFamily,
+  );
+  static const speech_bubble_group_empty_medium = IconData(
+    0xf181,
+    fontFamily: mediumFontFamily,
+  );
+  static const speech_bubble_exclamation_point_medium = IconData(
+    0xf182,
+    fontFamily: mediumFontFamily,
+  );
+  static const speech_bubble_empty_medium = IconData(
+    0xf183,
+    fontFamily: mediumFontFamily,
+  );
   static const speaker_medium = IconData(0xf184, fontFamily: mediumFontFamily);
   static const spanner_medium = IconData(0xf185, fontFamily: mediumFontFamily);
-  static const soccer_ball_medium = IconData(0xf186, fontFamily: mediumFontFamily);
-  static const smartwatch_medium = IconData(0xf187, fontFamily: mediumFontFamily);
-  static const smartphone_shaking_medium = IconData(0xf188, fontFamily: mediumFontFamily);
-  static const smartphone_medium = IconData(0xf189, fontFamily: mediumFontFamily);
-  static const smartphone_disabled_medium = IconData(0xf18a, fontFamily: mediumFontFamily);
-  static const sledge_snowshoe_medium = IconData(0xf18b, fontFamily: mediumFontFamily);
-  static const skis_ski_poles_medium = IconData(0xf18c, fontFamily: mediumFontFamily);
+  static const soccer_ball_medium = IconData(
+    0xf186,
+    fontFamily: mediumFontFamily,
+  );
+  static const smartwatch_medium = IconData(
+    0xf187,
+    fontFamily: mediumFontFamily,
+  );
+  static const smartphone_shaking_medium = IconData(
+    0xf188,
+    fontFamily: mediumFontFamily,
+  );
+  static const smartphone_medium = IconData(
+    0xf189,
+    fontFamily: mediumFontFamily,
+  );
+  static const smartphone_disabled_medium = IconData(
+    0xf18a,
+    fontFamily: mediumFontFamily,
+  );
+  static const sledge_snowshoe_medium = IconData(
+    0xf18b,
+    fontFamily: mediumFontFamily,
+  );
+  static const skis_ski_poles_medium = IconData(
+    0xf18c,
+    fontFamily: mediumFontFamily,
+  );
   static const sign_x_medium = IconData(0xf18d, fontFamily: mediumFontFamily);
-  static const sign_parking_medium = IconData(0xf18e, fontFamily: mediumFontFamily);
-  static const sign_exclamation_point_medium = IconData(0xf18f, fontFamily: mediumFontFamily);
+  static const sign_parking_medium = IconData(
+    0xf18e,
+    fontFamily: mediumFontFamily,
+  );
+  static const sign_exclamation_point_medium = IconData(
+    0xf18f,
+    fontFamily: mediumFontFamily,
+  );
   static const shuttle_medium = IconData(0xf190, fontFamily: mediumFontFamily);
-  static const shopping_cart_medium = IconData(0xf191, fontFamily: mediumFontFamily);
-  static const shopping_bag_medium = IconData(0xf192, fontFamily: mediumFontFamily);
-  static const shopping_bag_fast_medium = IconData(0xf193, fontFamily: mediumFontFamily);
-  static const shopping_bag_coupon_medium = IconData(0xf194, fontFamily: mediumFontFamily);
-  static const shirt_shoe_medium = IconData(0xf195, fontFamily: mediumFontFamily);
-  static const ship_steering_wheel_medium = IconData(0xf196, fontFamily: mediumFontFamily);
+  static const shopping_cart_medium = IconData(
+    0xf191,
+    fontFamily: mediumFontFamily,
+  );
+  static const shopping_bag_medium = IconData(
+    0xf192,
+    fontFamily: mediumFontFamily,
+  );
+  static const shopping_bag_fast_medium = IconData(
+    0xf193,
+    fontFamily: mediumFontFamily,
+  );
+  static const shopping_bag_coupon_medium = IconData(
+    0xf194,
+    fontFamily: mediumFontFamily,
+  );
+  static const shirt_shoe_medium = IconData(
+    0xf195,
+    fontFamily: mediumFontFamily,
+  );
+  static const ship_steering_wheel_medium = IconData(
+    0xf196,
+    fontFamily: mediumFontFamily,
+  );
   static const share_medium = IconData(0xf197, fontFamily: mediumFontFamily);
-  static const service_bell_medium = IconData(0xf198, fontFamily: mediumFontFamily);
-  static const seat_window_reservation_medium = IconData(0xf199, fontFamily: mediumFontFamily);
-  static const seat_window_medium = IconData(0xf19a, fontFamily: mediumFontFamily);
+  static const service_bell_medium = IconData(
+    0xf198,
+    fontFamily: mediumFontFamily,
+  );
+  static const seat_window_reservation_medium = IconData(
+    0xf199,
+    fontFamily: mediumFontFamily,
+  );
+  static const seat_window_medium = IconData(
+    0xf19a,
+    fontFamily: mediumFontFamily,
+  );
   static const seat_medium = IconData(0xf19b, fontFamily: mediumFontFamily);
-  static const seat_aisle_reservation_medium = IconData(0xf19c, fontFamily: mediumFontFamily);
-  static const screen_inside_train_medium = IconData(0xf19d, fontFamily: mediumFontFamily);
-  static const scooter_profile_power_plug_medium = IconData(0xf19e, fontFamily: mediumFontFamily);
-  static const scooter_profile_medium = IconData(0xf19f, fontFamily: mediumFontFamily);
+  static const seat_aisle_reservation_medium = IconData(
+    0xf19c,
+    fontFamily: mediumFontFamily,
+  );
+  static const screen_inside_train_medium = IconData(
+    0xf19d,
+    fontFamily: mediumFontFamily,
+  );
+  static const scooter_profile_power_plug_medium = IconData(
+    0xf19e,
+    fontFamily: mediumFontFamily,
+  );
+  static const scooter_profile_medium = IconData(
+    0xf19f,
+    fontFamily: mediumFontFamily,
+  );
   static const scanner_medium = IconData(0xf1a0, fontFamily: mediumFontFamily);
-  static const sbb_signet_medium = IconData(0xf1a1, fontFamily: mediumFontFamily);
-  static const running_shoe_medium = IconData(0xf1a2, fontFamily: mediumFontFamily);
+  static const sbb_signet_medium = IconData(
+    0xf1a1,
+    fontFamily: mediumFontFamily,
+  );
+  static const running_shoe_medium = IconData(
+    0xf1a2,
+    fontFamily: mediumFontFamily,
+  );
   static const run_medium = IconData(0xf1a3, fontFamily: mediumFontFamily);
   static const rss_medium = IconData(0xf1a4, fontFamily: mediumFontFamily);
-  static const route_circle_start_medium = IconData(0xf1a5, fontFamily: mediumFontFamily);
-  static const route_circle_end_medium = IconData(0xf1a6, fontFamily: mediumFontFamily);
+  static const route_circle_start_medium = IconData(
+    0xf1a5,
+    fontFamily: mediumFontFamily,
+  );
+  static const route_circle_end_medium = IconData(
+    0xf1a6,
+    fontFamily: mediumFontFamily,
+  );
   static const roof_bed_medium = IconData(0xf1a7, fontFamily: mediumFontFamily);
   static const rocket_medium = IconData(0xf1a8, fontFamily: mediumFontFamily);
   static const robot_medium = IconData(0xf1a9, fontFamily: mediumFontFamily);
   static const rewind_medium = IconData(0xf1aa, fontFamily: mediumFontFamily);
-  static const reduce_size_medium = IconData(0xf1ab, fontFamily: mediumFontFamily);
+  static const reduce_size_medium = IconData(
+    0xf1ab,
+    fontFamily: mediumFontFamily,
+  );
   static const record_medium = IconData(0xf1ac, fontFamily: mediumFontFamily);
-  static const ramp_user_medium = IconData(0xf1ad, fontFamily: mediumFontFamily);
-  static const railway_switch_medium = IconData(0xf1ae, fontFamily: mediumFontFamily);
-  static const railway_switch_app_medium = IconData(0xf1af, fontFamily: mediumFontFamily);
-  static const railway_ship_medium = IconData(0xf1b0, fontFamily: mediumFontFamily);
-  static const rack_railaway_profile_medium = IconData(0xf1b1, fontFamily: mediumFontFamily);
-  static const question_mark_medium = IconData(0xf1b2, fontFamily: mediumFontFamily);
-  static const question_answer_medium = IconData(0xf1b3, fontFamily: mediumFontFamily);
-  static const qrcode_two_tickets_medium = IconData(0xf1b4, fontFamily: mediumFontFamily);
+  static const ramp_user_medium = IconData(
+    0xf1ad,
+    fontFamily: mediumFontFamily,
+  );
+  static const railway_switch_medium = IconData(
+    0xf1ae,
+    fontFamily: mediumFontFamily,
+  );
+  static const railway_switch_app_medium = IconData(
+    0xf1af,
+    fontFamily: mediumFontFamily,
+  );
+  static const railway_ship_medium = IconData(
+    0xf1b0,
+    fontFamily: mediumFontFamily,
+  );
+  static const rack_railaway_profile_medium = IconData(
+    0xf1b1,
+    fontFamily: mediumFontFamily,
+  );
+  static const question_mark_medium = IconData(
+    0xf1b2,
+    fontFamily: mediumFontFamily,
+  );
+  static const question_answer_medium = IconData(
+    0xf1b3,
+    fontFamily: mediumFontFamily,
+  );
+  static const qrcode_two_tickets_medium = IconData(
+    0xf1b4,
+    fontFamily: mediumFontFamily,
+  );
   static const qrcode_medium = IconData(0xf1b5, fontFamily: mediumFontFamily);
-  static const qrcode_disabled_two_tickets_medium = IconData(0xf1b6, fontFamily: mediumFontFamily);
-  static const qrcode_disabled_medium = IconData(0xf1b7, fontFamily: mediumFontFamily);
-  static const punctuality_medium = IconData(0xf1b8, fontFamily: mediumFontFamily);
+  static const qrcode_disabled_two_tickets_medium = IconData(
+    0xf1b6,
+    fontFamily: mediumFontFamily,
+  );
+  static const qrcode_disabled_medium = IconData(
+    0xf1b7,
+    fontFamily: mediumFontFamily,
+  );
+  static const punctuality_medium = IconData(
+    0xf1b8,
+    fontFamily: mediumFontFamily,
+  );
   static const pulse_medium = IconData(0xf1b9, fontFamily: mediumFontFamily);
   static const printer_medium = IconData(0xf1ba, fontFamily: mediumFontFamily);
   static const previous_medium = IconData(0xf1bb, fontFamily: mediumFontFamily);
   static const pretzel_medium = IconData(0xf1bc, fontFamily: mediumFontFamily);
-  static const power_plug_medium = IconData(0xf1bd, fontFamily: mediumFontFamily);
+  static const power_plug_medium = IconData(
+    0xf1bd,
+    fontFamily: mediumFontFamily,
+  );
   static const plus_medium = IconData(0xf1be, fontFamily: mediumFontFamily);
   static const play_medium = IconData(0xf1bf, fontFamily: mediumFontFamily);
   static const platform_medium = IconData(0xf1c0, fontFamily: mediumFontFamily);
-  static const platform_display_medium = IconData(0xf1c1, fontFamily: mediumFontFamily);
-  static const pizza_slice_medium = IconData(0xf1c2, fontFamily: mediumFontFamily);
+  static const platform_display_medium = IconData(
+    0xf1c1,
+    fontFamily: mediumFontFamily,
+  );
+  static const pizza_slice_medium = IconData(
+    0xf1c2,
+    fontFamily: mediumFontFamily,
+  );
   static const pin_medium = IconData(0xf1c3, fontFamily: mediumFontFamily);
-  static const piggy_bank_medium = IconData(0xf1c4, fontFamily: mediumFontFamily);
+  static const piggy_bank_medium = IconData(
+    0xf1c4,
+    fontFamily: mediumFontFamily,
+  );
   static const pie_medium = IconData(0xf1c5, fontFamily: mediumFontFamily);
   static const picture_medium = IconData(0xf1c6, fontFamily: mediumFontFamily);
-  static const petrol_station_medium = IconData(0xf1c7, fontFamily: mediumFontFamily);
-  static const percent_tag_medium = IconData(0xf1c8, fontFamily: mediumFontFamily);
+  static const petrol_station_medium = IconData(
+    0xf1c7,
+    fontFamily: mediumFontFamily,
+  );
+  static const percent_tag_medium = IconData(
+    0xf1c8,
+    fontFamily: mediumFontFamily,
+  );
   static const percent_medium = IconData(0xf1c9, fontFamily: mediumFontFamily);
   static const pen_medium = IconData(0xf1ca, fontFamily: mediumFontFamily);
   static const pause_medium = IconData(0xf1cb, fontFamily: mediumFontFamily);
-  static const parliament_medium = IconData(0xf1cc, fontFamily: mediumFontFamily);
-  static const park_and_rail_medium = IconData(0xf1cd, fontFamily: mediumFontFamily);
-  static const paragraph_medium = IconData(0xf1ce, fontFamily: mediumFontFamily);
-  static const paper_clip_medium = IconData(0xf1cf, fontFamily: mediumFontFamily);
-  static const paper_aeroplane_medium = IconData(0xf1d0, fontFamily: mediumFontFamily);
-  static const owner_user_group_medium = IconData(0xf1d1, fontFamily: mediumFontFamily);
-  static const onboarding_medium = IconData(0xf1d2, fontFamily: mediumFontFamily);
-  static const office_chair_medium = IconData(0xf1d3, fontFamily: mediumFontFamily);
-  static const nine_squares_medium = IconData(0xf1d4, fontFamily: mediumFontFamily);
+  static const parliament_medium = IconData(
+    0xf1cc,
+    fontFamily: mediumFontFamily,
+  );
+  static const park_and_rail_medium = IconData(
+    0xf1cd,
+    fontFamily: mediumFontFamily,
+  );
+  static const paragraph_medium = IconData(
+    0xf1ce,
+    fontFamily: mediumFontFamily,
+  );
+  static const paper_clip_medium = IconData(
+    0xf1cf,
+    fontFamily: mediumFontFamily,
+  );
+  static const paper_aeroplane_medium = IconData(
+    0xf1d0,
+    fontFamily: mediumFontFamily,
+  );
+  static const owner_user_group_medium = IconData(
+    0xf1d1,
+    fontFamily: mediumFontFamily,
+  );
+  static const onboarding_medium = IconData(
+    0xf1d2,
+    fontFamily: mediumFontFamily,
+  );
+  static const office_chair_medium = IconData(
+    0xf1d3,
+    fontFamily: mediumFontFamily,
+  );
+  static const nine_squares_medium = IconData(
+    0xf1d4,
+    fontFamily: mediumFontFamily,
+  );
   static const next_medium = IconData(0xf1d5, fontFamily: mediumFontFamily);
-  static const newspaper_sbb_medium = IconData(0xf1d6, fontFamily: mediumFontFamily);
-  static const newspaper_medium = IconData(0xf1d7, fontFamily: mediumFontFamily);
+  static const newspaper_sbb_medium = IconData(
+    0xf1d6,
+    fontFamily: mediumFontFamily,
+  );
+  static const newspaper_medium = IconData(
+    0xf1d7,
+    fontFamily: mediumFontFamily,
+  );
   static const network_medium = IconData(0xf1d8, fontFamily: mediumFontFamily);
   static const narcotic_medium = IconData(0xf1d9, fontFamily: mediumFontFamily);
-  static const music_rock_hand_gesture_medium = IconData(0xf1da, fontFamily: mediumFontFamily);
-  static const music_notes_medium = IconData(0xf1db, fontFamily: mediumFontFamily);
+  static const music_rock_hand_gesture_medium = IconData(
+    0xf1da,
+    fontFamily: mediumFontFamily,
+  );
+  static const music_notes_medium = IconData(
+    0xf1db,
+    fontFamily: mediumFontFamily,
+  );
   static const museum_medium = IconData(0xf1dc, fontFamily: mediumFontFamily);
   static const mug_hot_medium = IconData(0xf1dd, fontFamily: mediumFontFamily);
-  static const moving_bus_medium = IconData(0xf1de, fontFamily: mediumFontFamily);
-  static const mountain_sun_medium = IconData(0xf1df, fontFamily: mediumFontFamily);
-  static const mountain_rock_transmitter_signal_medium = IconData(0xf1e0, fontFamily: mediumFontFamily);
-  static const mountain_plus_medium = IconData(0xf1e1, fontFamily: mediumFontFamily);
-  static const mountain_minus_medium = IconData(0xf1e2, fontFamily: mediumFontFamily);
-  static const mountain_lake_sun_medium = IconData(0xf1e3, fontFamily: mediumFontFamily);
+  static const moving_bus_medium = IconData(
+    0xf1de,
+    fontFamily: mediumFontFamily,
+  );
+  static const mountain_sun_medium = IconData(
+    0xf1df,
+    fontFamily: mediumFontFamily,
+  );
+  static const mountain_rock_transmitter_signal_medium = IconData(
+    0xf1e0,
+    fontFamily: mediumFontFamily,
+  );
+  static const mountain_plus_medium = IconData(
+    0xf1e1,
+    fontFamily: mediumFontFamily,
+  );
+  static const mountain_minus_medium = IconData(
+    0xf1e2,
+    fontFamily: mediumFontFamily,
+  );
+  static const mountain_lake_sun_medium = IconData(
+    0xf1e3,
+    fontFamily: mediumFontFamily,
+  );
   static const moon_medium = IconData(0xf1e4, fontFamily: mediumFontFamily);
-  static const money_exchange_medium = IconData(0xf1e5, fontFamily: mediumFontFamily);
+  static const money_exchange_medium = IconData(
+    0xf1e5,
+    fontFamily: mediumFontFamily,
+  );
   static const minus_medium = IconData(0xf1e6, fontFamily: mediumFontFamily);
-  static const minimize_screen_medium = IconData(0xf1e7, fontFamily: mediumFontFamily);
-  static const milk_brick_disabled_medium = IconData(0xf1e8, fontFamily: mediumFontFamily);
-  static const microscooter_profile_power_plug_medium = IconData(0xf1e9, fontFamily: mediumFontFamily);
-  static const microscooter_profile_medium = IconData(0xf1ea, fontFamily: mediumFontFamily);
-  static const microphone_medium = IconData(0xf1eb, fontFamily: mediumFontFamily);
-  static const microphone_disabled_medium = IconData(0xf1ec, fontFamily: mediumFontFamily);
+  static const minimize_screen_medium = IconData(
+    0xf1e7,
+    fontFamily: mediumFontFamily,
+  );
+  static const milk_brick_disabled_medium = IconData(
+    0xf1e8,
+    fontFamily: mediumFontFamily,
+  );
+  static const microscooter_profile_power_plug_medium = IconData(
+    0xf1e9,
+    fontFamily: mediumFontFamily,
+  );
+  static const microscooter_profile_medium = IconData(
+    0xf1ea,
+    fontFamily: mediumFontFamily,
+  );
+  static const microphone_medium = IconData(
+    0xf1eb,
+    fontFamily: mediumFontFamily,
+  );
+  static const microphone_disabled_medium = IconData(
+    0xf1ec,
+    fontFamily: mediumFontFamily,
+  );
   static const metadata_medium = IconData(0xf1ed, fontFamily: mediumFontFamily);
-  static const message_sms_medium = IconData(0xf1ee, fontFamily: mediumFontFamily);
+  static const message_sms_medium = IconData(
+    0xf1ee,
+    fontFamily: mediumFontFamily,
+  );
   static const merge_medium = IconData(0xf1ef, fontFamily: mediumFontFamily);
-  static const megaphone_medium = IconData(0xf1f0, fontFamily: mediumFontFamily);
-  static const meeting_point_medium = IconData(0xf1f1, fontFamily: mediumFontFamily);
-  static const medical_facility_medium = IconData(0xf1f2, fontFamily: mediumFontFamily);
+  static const megaphone_medium = IconData(
+    0xf1f0,
+    fontFamily: mediumFontFamily,
+  );
+  static const meeting_point_medium = IconData(
+    0xf1f1,
+    fontFamily: mediumFontFamily,
+  );
+  static const medical_facility_medium = IconData(
+    0xf1f2,
+    fontFamily: mediumFontFamily,
+  );
   static const medal_medium = IconData(0xf1f3, fontFamily: mediumFontFamily);
-  static const market_shopping_bag_medium = IconData(0xf1f4, fontFamily: mediumFontFamily);
-  static const magnifying_glass_plus_medium = IconData(0xf1f5, fontFamily: mediumFontFamily);
-  static const magnifying_glass_minus_medium = IconData(0xf1f6, fontFamily: mediumFontFamily);
-  static const magnifying_glass_medium = IconData(0xf1f7, fontFamily: mediumFontFamily);
-  static const magic_wand_medium = IconData(0xf1f8, fontFamily: mediumFontFamily);
-  static const machine_learning_medium = IconData(0xf1f9, fontFamily: mediumFontFamily);
-  static const lucerne_chapel_bridge_medium = IconData(0xf1fa, fontFamily: mediumFontFamily);
-  static const low_vision_medium = IconData(0xf1fb, fontFamily: mediumFontFamily);
+  static const market_shopping_bag_medium = IconData(
+    0xf1f4,
+    fontFamily: mediumFontFamily,
+  );
+  static const magnifying_glass_plus_medium = IconData(
+    0xf1f5,
+    fontFamily: mediumFontFamily,
+  );
+  static const magnifying_glass_minus_medium = IconData(
+    0xf1f6,
+    fontFamily: mediumFontFamily,
+  );
+  static const magnifying_glass_medium = IconData(
+    0xf1f7,
+    fontFamily: mediumFontFamily,
+  );
+  static const magic_wand_medium = IconData(
+    0xf1f8,
+    fontFamily: mediumFontFamily,
+  );
+  static const machine_learning_medium = IconData(
+    0xf1f9,
+    fontFamily: mediumFontFamily,
+  );
+  static const lucerne_chapel_bridge_medium = IconData(
+    0xf1fa,
+    fontFamily: mediumFontFamily,
+  );
+  static const low_vision_medium = IconData(
+    0xf1fb,
+    fontFamily: mediumFontFamily,
+  );
   static const lotus_medium = IconData(0xf1fc, fontFamily: mediumFontFamily);
-  static const long_distance_coach_profile_medium = IconData(0xf1fd, fontFamily: mediumFontFamily);
-  static const locomotive_viaduct_medium = IconData(0xf1fe, fontFamily: mediumFontFamily);
-  static const locomotive_profile_moon_medium = IconData(0xf1ff, fontFamily: mediumFontFamily);
-  static const locomotive_medium = IconData(0xf200, fontFamily: mediumFontFamily);
-  static const locomotive_high_speed_medium = IconData(0xf201, fontFamily: mediumFontFamily);
+  static const long_distance_coach_profile_medium = IconData(
+    0xf1fd,
+    fontFamily: mediumFontFamily,
+  );
+  static const locomotive_viaduct_medium = IconData(
+    0xf1fe,
+    fontFamily: mediumFontFamily,
+  );
+  static const locomotive_profile_moon_medium = IconData(
+    0xf1ff,
+    fontFamily: mediumFontFamily,
+  );
+  static const locomotive_medium = IconData(
+    0xf200,
+    fontFamily: mediumFontFamily,
+  );
+  static const locomotive_high_speed_medium = IconData(
+    0xf201,
+    fontFamily: mediumFontFamily,
+  );
   static const locker_medium = IconData(0xf202, fontFamily: mediumFontFamily);
-  static const lock_open_medium = IconData(0xf203, fontFamily: mediumFontFamily);
-  static const lock_closed_medium = IconData(0xf204, fontFamily: mediumFontFamily);
-  static const location_pin_surrounding_area_power_plug_medium = IconData(0xf205, fontFamily: mediumFontFamily);
-  static const location_pin_surrounding_area_medium = IconData(0xf206, fontFamily: mediumFontFamily);
-  static const location_pin_pulse_surrounding_area_medium = IconData(0xf207, fontFamily: mediumFontFamily);
-  static const location_pin_medium = IconData(0xf208, fontFamily: mediumFontFamily);
-  static const location_pin_map_medium = IconData(0xf209, fontFamily: mediumFontFamily);
-  static const location_pin_camera_medium = IconData(0xf20a, fontFamily: mediumFontFamily);
-  static const location_pin_b_medium = IconData(0xf20b, fontFamily: mediumFontFamily);
-  static const location_pin_a_medium = IconData(0xf20c, fontFamily: mediumFontFamily);
-  static const list_plus_medium = IconData(0xf20d, fontFamily: mediumFontFamily);
+  static const lock_open_medium = IconData(
+    0xf203,
+    fontFamily: mediumFontFamily,
+  );
+  static const lock_closed_medium = IconData(
+    0xf204,
+    fontFamily: mediumFontFamily,
+  );
+  static const location_pin_surrounding_area_power_plug_medium = IconData(
+    0xf205,
+    fontFamily: mediumFontFamily,
+  );
+  static const location_pin_surrounding_area_medium = IconData(
+    0xf206,
+    fontFamily: mediumFontFamily,
+  );
+  static const location_pin_pulse_surrounding_area_medium = IconData(
+    0xf207,
+    fontFamily: mediumFontFamily,
+  );
+  static const location_pin_medium = IconData(
+    0xf208,
+    fontFamily: mediumFontFamily,
+  );
+  static const location_pin_map_medium = IconData(
+    0xf209,
+    fontFamily: mediumFontFamily,
+  );
+  static const location_pin_camera_medium = IconData(
+    0xf20a,
+    fontFamily: mediumFontFamily,
+  );
+  static const location_pin_b_medium = IconData(
+    0xf20b,
+    fontFamily: mediumFontFamily,
+  );
+  static const location_pin_a_medium = IconData(
+    0xf20c,
+    fontFamily: mediumFontFamily,
+  );
+  static const list_plus_medium = IconData(
+    0xf20d,
+    fontFamily: mediumFontFamily,
+  );
   static const list_medium = IconData(0xf20e, fontFamily: mediumFontFamily);
-  static const list_arrow_right_medium = IconData(0xf20f, fontFamily: mediumFontFamily);
-  static const lips_hand_medium = IconData(0xf210, fontFamily: mediumFontFamily);
+  static const list_arrow_right_medium = IconData(
+    0xf20f,
+    fontFamily: mediumFontFamily,
+  );
+  static const lips_hand_medium = IconData(
+    0xf210,
+    fontFamily: mediumFontFamily,
+  );
   static const link_medium = IconData(0xf211, fontFamily: mediumFontFamily);
-  static const link_external_medium = IconData(0xf212, fontFamily: mediumFontFamily);
-  static const lighthouse_medium = IconData(0xf213, fontFamily: mediumFontFamily);
+  static const link_external_medium = IconData(
+    0xf212,
+    fontFamily: mediumFontFamily,
+  );
+  static const lighthouse_medium = IconData(
+    0xf213,
+    fontFamily: mediumFontFamily,
+  );
   static const lift_medium = IconData(0xf214, fontFamily: mediumFontFamily);
   static const leaf_medium = IconData(0xf215, fontFamily: mediumFontFamily);
-  static const layers_with_arrows_medium = IconData(0xf216, fontFamily: mediumFontFamily);
+  static const layers_with_arrows_medium = IconData(
+    0xf216,
+    fontFamily: mediumFontFamily,
+  );
   static const layers_medium = IconData(0xf217, fontFamily: mediumFontFamily);
-  static const laptop_smartphone_medium = IconData(0xf218, fontFamily: mediumFontFamily);
+  static const laptop_smartphone_medium = IconData(
+    0xf218,
+    fontFamily: mediumFontFamily,
+  );
   static const laptop_medium = IconData(0xf219, fontFamily: mediumFontFamily);
   static const keyboard_medium = IconData(0xf21a, fontFamily: mediumFontFamily);
   static const key_medium = IconData(0xf21b, fontFamily: mediumFontFamily);
   static const k_r_medium = IconData(0xf21c, fontFamily: mediumFontFamily);
-  static const jersey_shirt_medium = IconData(0xf21d, fontFamily: mediumFontFamily);
-  static const infinity_loop_medium = IconData(0xf21e, fontFamily: mediumFontFamily);
-  static const increase_size_medium = IconData(0xf21f, fontFamily: mediumFontFamily);
-  static const id_card_employee_medium = IconData(0xf220, fontFamily: mediumFontFamily);
+  static const jersey_shirt_medium = IconData(
+    0xf21d,
+    fontFamily: mediumFontFamily,
+  );
+  static const infinity_loop_medium = IconData(
+    0xf21e,
+    fontFamily: mediumFontFamily,
+  );
+  static const increase_size_medium = IconData(
+    0xf21f,
+    fontFamily: mediumFontFamily,
+  );
+  static const id_card_employee_medium = IconData(
+    0xf220,
+    fontFamily: mediumFontFamily,
+  );
   static const house_medium = IconData(0xf221, fontFamily: mediumFontFamily);
-  static const hourglass_medium = IconData(0xf222, fontFamily: mediumFontFamily);
+  static const hourglass_medium = IconData(
+    0xf222,
+    fontFamily: mediumFontFamily,
+  );
   static const hostel_medium = IconData(0xf223, fontFamily: mediumFontFamily);
-  static const home_power_plug_medium = IconData(0xf224, fontFamily: mediumFontFamily);
-  static const hiking_boot_medium = IconData(0xf225, fontFamily: mediumFontFamily);
-  static const highlighter_medium = IconData(0xf226, fontFamily: mediumFontFamily);
-  static const hierarchy_medium = IconData(0xf227, fontFamily: mediumFontFamily);
+  static const home_power_plug_medium = IconData(
+    0xf224,
+    fontFamily: mediumFontFamily,
+  );
+  static const hiking_boot_medium = IconData(
+    0xf225,
+    fontFamily: mediumFontFamily,
+  );
+  static const highlighter_medium = IconData(
+    0xf226,
+    fontFamily: mediumFontFamily,
+  );
+  static const hierarchy_medium = IconData(
+    0xf227,
+    fontFamily: mediumFontFamily,
+  );
   static const heart_medium = IconData(0xf228, fontFamily: mediumFontFamily);
-  static const heart_filled_medium = IconData(0xf229, fontFamily: mediumFontFamily);
-  static const handshake_medium = IconData(0xf22a, fontFamily: mediumFontFamily);
-  static const hand_with_service_bell_medium = IconData(0xf22b, fontFamily: mediumFontFamily);
-  static const hand_user_medium = IconData(0xf22c, fontFamily: mediumFontFamily);
+  static const heart_filled_medium = IconData(
+    0xf229,
+    fontFamily: mediumFontFamily,
+  );
+  static const handshake_medium = IconData(
+    0xf22a,
+    fontFamily: mediumFontFamily,
+  );
+  static const hand_with_service_bell_medium = IconData(
+    0xf22b,
+    fontFamily: mediumFontFamily,
+  );
+  static const hand_user_medium = IconData(
+    0xf22c,
+    fontFamily: mediumFontFamily,
+  );
   static const hand_sbb_medium = IconData(0xf22d, fontFamily: mediumFontFamily);
-  static const hand_safety_shield_medium = IconData(0xf22e, fontFamily: mediumFontFamily);
-  static const hand_plus_circle_medium = IconData(0xf22f, fontFamily: mediumFontFamily);
-  static const hand_motion_medium = IconData(0xf230, fontFamily: mediumFontFamily);
+  static const hand_safety_shield_medium = IconData(
+    0xf22e,
+    fontFamily: mediumFontFamily,
+  );
+  static const hand_plus_circle_medium = IconData(
+    0xf22f,
+    fontFamily: mediumFontFamily,
+  );
+  static const hand_motion_medium = IconData(
+    0xf230,
+    fontFamily: mediumFontFamily,
+  );
   static const hand_medium = IconData(0xf231, fontFamily: mediumFontFamily);
-  static const hand_locomotive_profile_medium = IconData(0xf232, fontFamily: mediumFontFamily);
-  static const hand_heart_medium = IconData(0xf233, fontFamily: mediumFontFamily);
-  static const hand_graduation_cap_medium = IconData(0xf234, fontFamily: mediumFontFamily);
-  static const hand_fingers_snap_medium = IconData(0xf235, fontFamily: mediumFontFamily);
-  static const hand_cursor_medium = IconData(0xf236, fontFamily: mediumFontFamily);
-  static const hand_clock_medium = IconData(0xf237, fontFamily: mediumFontFamily);
-  static const hand_briefcase_medium = IconData(0xf238, fontFamily: mediumFontFamily);
-  static const hammer_wrench_medium = IconData(0xf239, fontFamily: mediumFontFamily);
-  static const hamburger_menu_medium = IconData(0xf23a, fontFamily: mediumFontFamily);
-  static const half_fare_card_medium = IconData(0xf23b, fontFamily: mediumFontFamily);
+  static const hand_locomotive_profile_medium = IconData(
+    0xf232,
+    fontFamily: mediumFontFamily,
+  );
+  static const hand_heart_medium = IconData(
+    0xf233,
+    fontFamily: mediumFontFamily,
+  );
+  static const hand_graduation_cap_medium = IconData(
+    0xf234,
+    fontFamily: mediumFontFamily,
+  );
+  static const hand_fingers_snap_medium = IconData(
+    0xf235,
+    fontFamily: mediumFontFamily,
+  );
+  static const hand_cursor_medium = IconData(
+    0xf236,
+    fontFamily: mediumFontFamily,
+  );
+  static const hand_clock_medium = IconData(
+    0xf237,
+    fontFamily: mediumFontFamily,
+  );
+  static const hand_briefcase_medium = IconData(
+    0xf238,
+    fontFamily: mediumFontFamily,
+  );
+  static const hammer_wrench_medium = IconData(
+    0xf239,
+    fontFamily: mediumFontFamily,
+  );
+  static const hamburger_menu_medium = IconData(
+    0xf23a,
+    fontFamily: mediumFontFamily,
+  );
+  static const half_fare_card_medium = IconData(
+    0xf23b,
+    fontFamily: mediumFontFamily,
+  );
   static const gun_medium = IconData(0xf23c, fontFamily: mediumFontFamily);
   static const gps_medium = IconData(0xf23d, fontFamily: mediumFontFamily);
-  static const gps_disabled_medium = IconData(0xf23e, fontFamily: mediumFontFamily);
-  static const gondola_profile_medium = IconData(0xf23f, fontFamily: mediumFontFamily);
+  static const gps_disabled_medium = IconData(
+    0xf23e,
+    fontFamily: mediumFontFamily,
+  );
+  static const gondola_profile_medium = IconData(
+    0xf23f,
+    fontFamily: mediumFontFamily,
+  );
   static const globe_medium = IconData(0xf240, fontFamily: mediumFontFamily);
-  static const globe_locomotive_medium = IconData(0xf241, fontFamily: mediumFontFamily);
-  static const globe_arrows_left_right_up_down_medium = IconData(0xf242, fontFamily: mediumFontFamily);
-  static const glass_cocktail_medium = IconData(0xf243, fontFamily: mediumFontFamily);
+  static const globe_locomotive_medium = IconData(
+    0xf241,
+    fontFamily: mediumFontFamily,
+  );
+  static const globe_arrows_left_right_up_down_medium = IconData(
+    0xf242,
+    fontFamily: mediumFontFamily,
+  );
+  static const glass_cocktail_medium = IconData(
+    0xf243,
+    fontFamily: mediumFontFamily,
+  );
   static const github_medium = IconData(0xf244, fontFamily: mediumFontFamily);
   static const gift_medium = IconData(0xf245, fontFamily: mediumFontFamily);
-  static const general_display_medium = IconData(0xf246, fontFamily: mediumFontFamily);
+  static const general_display_medium = IconData(
+    0xf246,
+    fontFamily: mediumFontFamily,
+  );
   static const gears_medium = IconData(0xf247, fontFamily: mediumFontFamily);
-  static const gear_changing_medium = IconData(0xf248, fontFamily: mediumFontFamily);
-  static const funicular_profile_medium = IconData(0xf249, fontFamily: mediumFontFamily);
-  static const fullscreen_medium = IconData(0xf24a, fontFamily: mediumFontFamily);
-  static const freight_wagon_weight_medium = IconData(0xf24b, fontFamily: mediumFontFamily);
-  static const freight_wagon_truck_container_medium = IconData(0xf24c, fontFamily: mediumFontFamily);
-  static const freight_wagon_tank_medium = IconData(0xf24d, fontFamily: mediumFontFamily);
-  static const freight_wagon_switzerland_medium = IconData(0xf24e, fontFamily: mediumFontFamily);
-  static const freight_wagon_medium = IconData(0xf24f, fontFamily: mediumFontFamily);
-  static const freight_wagon_globe_medium = IconData(0xf250, fontFamily: mediumFontFamily);
-  static const freight_wagon_container_wind_medium = IconData(0xf251, fontFamily: mediumFontFamily);
-  static const freight_wagon_container_medium = IconData(0xf252, fontFamily: mediumFontFamily);
-  static const freight_wagon_car_profile_medium = IconData(0xf253, fontFamily: mediumFontFamily);
-  static const four_squares_medium = IconData(0xf254, fontFamily: mediumFontFamily);
-  static const four_diamonds_medium = IconData(0xf255, fontFamily: mediumFontFamily);
+  static const gear_changing_medium = IconData(
+    0xf248,
+    fontFamily: mediumFontFamily,
+  );
+  static const funicular_profile_medium = IconData(
+    0xf249,
+    fontFamily: mediumFontFamily,
+  );
+  static const fullscreen_medium = IconData(
+    0xf24a,
+    fontFamily: mediumFontFamily,
+  );
+  static const freight_wagon_weight_medium = IconData(
+    0xf24b,
+    fontFamily: mediumFontFamily,
+  );
+  static const freight_wagon_truck_container_medium = IconData(
+    0xf24c,
+    fontFamily: mediumFontFamily,
+  );
+  static const freight_wagon_tank_medium = IconData(
+    0xf24d,
+    fontFamily: mediumFontFamily,
+  );
+  static const freight_wagon_switzerland_medium = IconData(
+    0xf24e,
+    fontFamily: mediumFontFamily,
+  );
+  static const freight_wagon_medium = IconData(
+    0xf24f,
+    fontFamily: mediumFontFamily,
+  );
+  static const freight_wagon_globe_medium = IconData(
+    0xf250,
+    fontFamily: mediumFontFamily,
+  );
+  static const freight_wagon_container_wind_medium = IconData(
+    0xf251,
+    fontFamily: mediumFontFamily,
+  );
+  static const freight_wagon_container_medium = IconData(
+    0xf252,
+    fontFamily: mediumFontFamily,
+  );
+  static const freight_wagon_car_profile_medium = IconData(
+    0xf253,
+    fontFamily: mediumFontFamily,
+  );
+  static const four_squares_medium = IconData(
+    0xf254,
+    fontFamily: mediumFontFamily,
+  );
+  static const four_diamonds_medium = IconData(
+    0xf255,
+    fontFamily: mediumFontFamily,
+  );
   static const form_medium = IconData(0xf256, fontFamily: mediumFontFamily);
-  static const folder_plus_medium = IconData(0xf257, fontFamily: mediumFontFamily);
-  static const folder_open_medium = IconData(0xf258, fontFamily: mediumFontFamily);
-  static const folder_open_arrow_medium = IconData(0xf259, fontFamily: mediumFontFamily);
+  static const folder_plus_medium = IconData(
+    0xf257,
+    fontFamily: mediumFontFamily,
+  );
+  static const folder_open_medium = IconData(
+    0xf258,
+    fontFamily: mediumFontFamily,
+  );
+  static const folder_open_arrow_medium = IconData(
+    0xf259,
+    fontFamily: mediumFontFamily,
+  );
   static const folder_medium = IconData(0xf25a, fontFamily: mediumFontFamily);
-  static const folder_lock_medium = IconData(0xf25b, fontFamily: mediumFontFamily);
-  static const folder_info_medium = IconData(0xf25c, fontFamily: mediumFontFamily);
+  static const folder_lock_medium = IconData(
+    0xf25b,
+    fontFamily: mediumFontFamily,
+  );
+  static const folder_info_medium = IconData(
+    0xf25c,
+    fontFamily: mediumFontFamily,
+  );
   static const fog_medium = IconData(0xf25d, fontFamily: mediumFontFamily);
-  static const flashlight_on_medium = IconData(0xf25e, fontFamily: mediumFontFamily);
-  static const flashlight_off_medium = IconData(0xf25f, fontFamily: mediumFontFamily);
-  static const flame_warning_light_medium = IconData(0xf260, fontFamily: mediumFontFamily);
-  static const five_circles_interconnected_medium = IconData(0xf261, fontFamily: mediumFontFamily);
-  static const fireplace_medium = IconData(0xf262, fontFamily: mediumFontFamily);
-  static const fingerprint_medium = IconData(0xf263, fontFamily: mediumFontFamily);
+  static const flashlight_on_medium = IconData(
+    0xf25e,
+    fontFamily: mediumFontFamily,
+  );
+  static const flashlight_off_medium = IconData(
+    0xf25f,
+    fontFamily: mediumFontFamily,
+  );
+  static const flame_warning_light_medium = IconData(
+    0xf260,
+    fontFamily: mediumFontFamily,
+  );
+  static const five_circles_interconnected_medium = IconData(
+    0xf261,
+    fontFamily: mediumFontFamily,
+  );
+  static const fireplace_medium = IconData(
+    0xf262,
+    fontFamily: mediumFontFamily,
+  );
+  static const fingerprint_medium = IconData(
+    0xf263,
+    fontFamily: mediumFontFamily,
+  );
   static const filter_x_medium = IconData(0xf264, fontFamily: mediumFontFamily);
   static const filter_medium = IconData(0xf265, fontFamily: mediumFontFamily);
   static const figma_medium = IconData(0xf266, fontFamily: mediumFontFamily);
-  static const ferris_wheel_medium = IconData(0xf267, fontFamily: mediumFontFamily);
-  static const fast_forward_medium = IconData(0xf268, fontFamily: mediumFontFamily);
+  static const ferris_wheel_medium = IconData(
+    0xf267,
+    fontFamily: mediumFontFamily,
+  );
+  static const fast_forward_medium = IconData(
+    0xf268,
+    fontFamily: mediumFontFamily,
+  );
   static const factory_medium = IconData(0xf269, fontFamily: mediumFontFamily);
-  static const face_worker_medium = IconData(0xf26a, fontFamily: mediumFontFamily);
-  static const face_thinking_smiling_medium = IconData(0xf26b, fontFamily: mediumFontFamily);
-  static const face_thinking_medium = IconData(0xf26c, fontFamily: mediumFontFamily);
-  static const face_tear_medium = IconData(0xf26d, fontFamily: mediumFontFamily);
-  static const face_smiling_medium = IconData(0xf26e, fontFamily: mediumFontFamily);
+  static const face_worker_medium = IconData(
+    0xf26a,
+    fontFamily: mediumFontFamily,
+  );
+  static const face_thinking_smiling_medium = IconData(
+    0xf26b,
+    fontFamily: mediumFontFamily,
+  );
+  static const face_thinking_medium = IconData(
+    0xf26c,
+    fontFamily: mediumFontFamily,
+  );
+  static const face_tear_medium = IconData(
+    0xf26d,
+    fontFamily: mediumFontFamily,
+  );
+  static const face_smiling_medium = IconData(
+    0xf26e,
+    fontFamily: mediumFontFamily,
+  );
   static const face_sad_medium = IconData(0xf26f, fontFamily: mediumFontFamily);
-  static const face_neutral_medium = IconData(0xf270, fontFamily: mediumFontFamily);
-  static const face_king_medium = IconData(0xf271, fontFamily: mediumFontFamily);
-  static const face_grinning_medium = IconData(0xf272, fontFamily: mediumFontFamily);
-  static const face_disagree_medium = IconData(0xf273, fontFamily: mediumFontFamily);
+  static const face_neutral_medium = IconData(
+    0xf270,
+    fontFamily: mediumFontFamily,
+  );
+  static const face_king_medium = IconData(
+    0xf271,
+    fontFamily: mediumFontFamily,
+  );
+  static const face_grinning_medium = IconData(
+    0xf272,
+    fontFamily: mediumFontFamily,
+  );
+  static const face_disagree_medium = IconData(
+    0xf273,
+    fontFamily: mediumFontFamily,
+  );
   static const eye_medium = IconData(0xf274, fontFamily: mediumFontFamily);
-  static const eye_disabled_medium = IconData(0xf275, fontFamily: mediumFontFamily);
+  static const eye_disabled_medium = IconData(
+    0xf275,
+    fontFamily: mediumFontFamily,
+  );
   static const exit_medium = IconData(0xf276, fontFamily: mediumFontFamily);
-  static const exclamation_point_medium = IconData(0xf277, fontFamily: mediumFontFamily);
-  static const europe_flag_medium = IconData(0xf278, fontFamily: mediumFontFamily);
-  static const escalator_medium = IconData(0xf279, fontFamily: mediumFontFamily);
-  static const envelope_open_medium = IconData(0xf27a, fontFamily: mediumFontFamily);
+  static const exclamation_point_medium = IconData(
+    0xf277,
+    fontFamily: mediumFontFamily,
+  );
+  static const europe_flag_medium = IconData(
+    0xf278,
+    fontFamily: mediumFontFamily,
+  );
+  static const escalator_medium = IconData(
+    0xf279,
+    fontFamily: mediumFontFamily,
+  );
+  static const envelope_open_medium = IconData(
+    0xf27a,
+    fontFamily: mediumFontFamily,
+  );
   static const envelope_medium = IconData(0xf27b, fontFamily: mediumFontFamily);
   static const entrance_medium = IconData(0xf27c, fontFamily: mediumFontFamily);
-  static const employees_sbb_medium = IconData(0xf27d, fontFamily: mediumFontFamily);
+  static const employees_sbb_medium = IconData(
+    0xf27d,
+    fontFamily: mediumFontFamily,
+  );
   static const elephant_medium = IconData(0xf27e, fontFamily: mediumFontFamily);
-  static const eiffel_tower_medium = IconData(0xf27f, fontFamily: mediumFontFamily);
+  static const eiffel_tower_medium = IconData(
+    0xf27f,
+    fontFamily: mediumFontFamily,
+  );
   static const earth_medium = IconData(0xf280, fontFamily: mediumFontFamily);
   static const ear_eye_medium = IconData(0xf281, fontFamily: mediumFontFamily);
-  static const driverless_bus_profile_medium = IconData(0xf282, fontFamily: mediumFontFamily);
+  static const driverless_bus_profile_medium = IconData(
+    0xf282,
+    fontFamily: mediumFontFamily,
+  );
   static const drag_medium = IconData(0xf283, fontFamily: mediumFontFamily);
-  static const download_small_data_medium = IconData(0xf284, fontFamily: mediumFontFamily);
+  static const download_small_data_medium = IconData(
+    0xf284,
+    fontFamily: mediumFontFamily,
+  );
   static const download_medium = IconData(0xf285, fontFamily: mediumFontFamily);
-  static const download_large_data_medium = IconData(0xf286, fontFamily: mediumFontFamily);
-  static const double_deck_wagon_medium = IconData(0xf287, fontFamily: mediumFontFamily);
-  static const double_chevron_small_right_medium = IconData(0xf288, fontFamily: mediumFontFamily);
-  static const double_chevron_small_left_medium = IconData(0xf289, fontFamily: mediumFontFamily);
-  static const doorbell_hand_medium = IconData(0xf28a, fontFamily: mediumFontFamily);
+  static const download_large_data_medium = IconData(
+    0xf286,
+    fontFamily: mediumFontFamily,
+  );
+  static const double_deck_wagon_medium = IconData(
+    0xf287,
+    fontFamily: mediumFontFamily,
+  );
+  static const double_chevron_small_right_medium = IconData(
+    0xf288,
+    fontFamily: mediumFontFamily,
+  );
+  static const double_chevron_small_left_medium = IconData(
+    0xf289,
+    fontFamily: mediumFontFamily,
+  );
+  static const doorbell_hand_medium = IconData(
+    0xf28a,
+    fontFamily: mediumFontFamily,
+  );
   static const door_medium = IconData(0xf28b, fontFamily: mediumFontFamily);
-  static const door_arrow_right_left_medium = IconData(0xf28c, fontFamily: mediumFontFamily);
+  static const door_arrow_right_left_medium = IconData(
+    0xf28c,
+    fontFamily: mediumFontFamily,
+  );
   static const dog_medium = IconData(0xf28d, fontFamily: mediumFontFamily);
-  static const document_zip_medium = IconData(0xf28e, fontFamily: mediumFontFamily);
-  static const document_xls_medium = IconData(0xf28f, fontFamily: mediumFontFamily);
-  static const document_video_medium = IconData(0xf290, fontFamily: mediumFontFamily);
-  static const document_text_medium = IconData(0xf291, fontFamily: mediumFontFamily);
-  static const document_standard_medium = IconData(0xf292, fontFamily: mediumFontFamily);
-  static const document_sound_medium = IconData(0xf293, fontFamily: mediumFontFamily);
-  static const document_signature_medium = IconData(0xf294, fontFamily: mediumFontFamily);
-  static const document_sbb_medium = IconData(0xf295, fontFamily: mediumFontFamily);
-  static const document_ppt_medium = IconData(0xf296, fontFamily: mediumFontFamily);
-  static const document_plus_medium = IconData(0xf297, fontFamily: mediumFontFamily);
-  static const document_pdf_medium = IconData(0xf298, fontFamily: mediumFontFamily);
-  static const document_lock_medium = IconData(0xf299, fontFamily: mediumFontFamily);
-  static const document_image_medium = IconData(0xf29a, fontFamily: mediumFontFamily);
-  static const document_doc_medium = IconData(0xf29b, fontFamily: mediumFontFamily);
-  static const document_check_medium = IconData(0xf29c, fontFamily: mediumFontFamily);
-  static const display_switzerland_warning_light_medium = IconData(0xf29d, fontFamily: mediumFontFamily);
+  static const document_zip_medium = IconData(
+    0xf28e,
+    fontFamily: mediumFontFamily,
+  );
+  static const document_xls_medium = IconData(
+    0xf28f,
+    fontFamily: mediumFontFamily,
+  );
+  static const document_video_medium = IconData(
+    0xf290,
+    fontFamily: mediumFontFamily,
+  );
+  static const document_text_medium = IconData(
+    0xf291,
+    fontFamily: mediumFontFamily,
+  );
+  static const document_standard_medium = IconData(
+    0xf292,
+    fontFamily: mediumFontFamily,
+  );
+  static const document_sound_medium = IconData(
+    0xf293,
+    fontFamily: mediumFontFamily,
+  );
+  static const document_signature_medium = IconData(
+    0xf294,
+    fontFamily: mediumFontFamily,
+  );
+  static const document_sbb_medium = IconData(
+    0xf295,
+    fontFamily: mediumFontFamily,
+  );
+  static const document_ppt_medium = IconData(
+    0xf296,
+    fontFamily: mediumFontFamily,
+  );
+  static const document_plus_medium = IconData(
+    0xf297,
+    fontFamily: mediumFontFamily,
+  );
+  static const document_pdf_medium = IconData(
+    0xf298,
+    fontFamily: mediumFontFamily,
+  );
+  static const document_lock_medium = IconData(
+    0xf299,
+    fontFamily: mediumFontFamily,
+  );
+  static const document_image_medium = IconData(
+    0xf29a,
+    fontFamily: mediumFontFamily,
+  );
+  static const document_doc_medium = IconData(
+    0xf29b,
+    fontFamily: mediumFontFamily,
+  );
+  static const document_check_medium = IconData(
+    0xf29c,
+    fontFamily: mediumFontFamily,
+  );
+  static const display_switzerland_warning_light_medium = IconData(
+    0xf29d,
+    fontFamily: mediumFontFamily,
+  );
   static const display_medium = IconData(0xf29e, fontFamily: mediumFontFamily);
-  static const display_gears_medium = IconData(0xf29f, fontFamily: mediumFontFamily);
-  static const display_binary_code_medium = IconData(0xf2a0, fontFamily: mediumFontFamily);
-  static const disc_floppy_medium = IconData(0xf2a1, fontFamily: mediumFontFamily);
+  static const display_gears_medium = IconData(
+    0xf29f,
+    fontFamily: mediumFontFamily,
+  );
+  static const display_binary_code_medium = IconData(
+    0xf2a0,
+    fontFamily: mediumFontFamily,
+  );
+  static const disc_floppy_medium = IconData(
+    0xf2a1,
+    fontFamily: mediumFontFamily,
+  );
   static const diamond_medium = IconData(0xf2a2, fontFamily: mediumFontFamily);
   static const desk_medium = IconData(0xf2a3, fontFamily: mediumFontFamily);
-  static const desk_adjustable_medium = IconData(0xf2a4, fontFamily: mediumFontFamily);
+  static const desk_adjustable_medium = IconData(
+    0xf2a4,
+    fontFamily: mediumFontFamily,
+  );
   static const database_medium = IconData(0xf2a5, fontFamily: mediumFontFamily);
   static const dash_medium = IconData(0xf2a6, fontFamily: mediumFontFamily);
   static const cutlery_medium = IconData(0xf2a7, fontFamily: mediumFontFamily);
-  static const cutlery_disabled_medium = IconData(0xf2a8, fontFamily: mediumFontFamily);
-  static const customer_assistance_sbb_medium = IconData(0xf2a9, fontFamily: mediumFontFamily);
-  static const curriculum_vitae_medium = IconData(0xf2aa, fontFamily: mediumFontFamily);
+  static const cutlery_disabled_medium = IconData(
+    0xf2a8,
+    fontFamily: mediumFontFamily,
+  );
+  static const customer_assistance_sbb_medium = IconData(
+    0xf2a9,
+    fontFamily: mediumFontFamily,
+  );
+  static const curriculum_vitae_medium = IconData(
+    0xf2aa,
+    fontFamily: mediumFontFamily,
+  );
   static const cup_hot_medium = IconData(0xf2ab, fontFamily: mediumFontFamily);
-  static const cross_tiny_medium = IconData(0xf2ac, fontFamily: mediumFontFamily);
+  static const cross_tiny_medium = IconData(
+    0xf2ac,
+    fontFamily: mediumFontFamily,
+  );
   static const cross_medium = IconData(0xf2ad, fontFamily: mediumFontFamily);
-  static const croissant_medium = IconData(0xf2ae, fontFamily: mediumFontFamily);
+  static const croissant_medium = IconData(
+    0xf2ae,
+    fontFamily: mediumFontFamily,
+  );
   static const create_medium = IconData(0xf2af, fontFamily: mediumFontFamily);
   static const copy_medium = IconData(0xf2b0, fontFamily: mediumFontFamily);
-  static const controls_x_medium = IconData(0xf2b1, fontFamily: mediumFontFamily);
+  static const controls_x_medium = IconData(
+    0xf2b1,
+    fontFamily: mediumFontFamily,
+  );
   static const controls_medium = IconData(0xf2b2, fontFamily: mediumFontFamily);
-  static const context_menu_medium = IconData(0xf2b3, fontFamily: mediumFontFamily);
-  static const container_medium = IconData(0xf2b4, fontFamily: mediumFontFamily);
+  static const context_menu_medium = IconData(
+    0xf2b3,
+    fontFamily: mediumFontFamily,
+  );
+  static const container_medium = IconData(
+    0xf2b4,
+    fontFamily: mediumFontFamily,
+  );
   static const contact_medium = IconData(0xf2b5, fontFamily: mediumFontFamily);
-  static const contact_line_arrow_train_medium = IconData(0xf2b6, fontFamily: mediumFontFamily);
-  static const construction_medium = IconData(0xf2b7, fontFamily: mediumFontFamily);
-  static const computer_chip_medium = IconData(0xf2b8, fontFamily: mediumFontFamily);
-  static const compass_localisation_medium = IconData(0xf2b9, fontFamily: mediumFontFamily);
-  static const combined_mobility_medium = IconData(0xf2ba, fontFamily: mediumFontFamily);
-  static const colour_palette_brush_medium = IconData(0xf2bb, fontFamily: mediumFontFamily);
+  static const contact_line_arrow_train_medium = IconData(
+    0xf2b6,
+    fontFamily: mediumFontFamily,
+  );
+  static const construction_medium = IconData(
+    0xf2b7,
+    fontFamily: mediumFontFamily,
+  );
+  static const computer_chip_medium = IconData(
+    0xf2b8,
+    fontFamily: mediumFontFamily,
+  );
+  static const compass_localisation_medium = IconData(
+    0xf2b9,
+    fontFamily: mediumFontFamily,
+  );
+  static const combined_mobility_medium = IconData(
+    0xf2ba,
+    fontFamily: mediumFontFamily,
+  );
+  static const colour_palette_brush_medium = IconData(
+    0xf2bb,
+    fontFamily: mediumFontFamily,
+  );
   static const coins_medium = IconData(0xf2bc, fontFamily: mediumFontFamily);
-  static const coin_stack_medium = IconData(0xf2bd, fontFamily: mediumFontFamily);
-  static const coin_dollar_medium = IconData(0xf2be, fontFamily: mediumFontFamily);
-  static const coffee_machine_medium = IconData(0xf2bf, fontFamily: mediumFontFamily);
-  static const cloud_voc_medium = IconData(0xf2c0, fontFamily: mediumFontFamily);
-  static const cloud_sunshine_medium = IconData(0xf2c1, fontFamily: mediumFontFamily);
-  static const cloud_sun_medium = IconData(0xf2c2, fontFamily: mediumFontFamily);
-  static const cloud_strong_rain_sun_medium = IconData(0xf2c3, fontFamily: mediumFontFamily);
-  static const cloud_strong_rain_moon_medium = IconData(0xf2c4, fontFamily: mediumFontFamily);
-  static const cloud_snowflake_sun_medium = IconData(0xf2c5, fontFamily: mediumFontFamily);
-  static const cloud_snowflake_medium = IconData(0xf2c6, fontFamily: mediumFontFamily);
-  static const cloud_snow_sun_medium = IconData(0xf2c7, fontFamily: mediumFontFamily);
-  static const cloud_snow_moon_medium = IconData(0xf2c8, fontFamily: mediumFontFamily);
-  static const cloud_snow_medium = IconData(0xf2c9, fontFamily: mediumFontFamily);
-  static const cloud_snow_lightning_medium = IconData(0xf2ca, fontFamily: mediumFontFamily);
-  static const cloud_rain_sun_medium = IconData(0xf2cb, fontFamily: mediumFontFamily);
-  static const cloud_rain_snow_sun_medium = IconData(0xf2cc, fontFamily: mediumFontFamily);
-  static const cloud_rain_snow_moon_medium = IconData(0xf2cd, fontFamily: mediumFontFamily);
-  static const cloud_rain_snow_medium = IconData(0xf2ce, fontFamily: mediumFontFamily);
-  static const cloud_rain_medium = IconData(0xf2cf, fontFamily: mediumFontFamily);
-  static const cloud_particles_medium = IconData(0xf2d0, fontFamily: mediumFontFamily);
-  static const cloud_moon_medium = IconData(0xf2d1, fontFamily: mediumFontFamily);
+  static const coin_stack_medium = IconData(
+    0xf2bd,
+    fontFamily: mediumFontFamily,
+  );
+  static const coin_dollar_medium = IconData(
+    0xf2be,
+    fontFamily: mediumFontFamily,
+  );
+  static const coffee_machine_medium = IconData(
+    0xf2bf,
+    fontFamily: mediumFontFamily,
+  );
+  static const cloud_voc_medium = IconData(
+    0xf2c0,
+    fontFamily: mediumFontFamily,
+  );
+  static const cloud_sunshine_medium = IconData(
+    0xf2c1,
+    fontFamily: mediumFontFamily,
+  );
+  static const cloud_sun_medium = IconData(
+    0xf2c2,
+    fontFamily: mediumFontFamily,
+  );
+  static const cloud_strong_rain_sun_medium = IconData(
+    0xf2c3,
+    fontFamily: mediumFontFamily,
+  );
+  static const cloud_strong_rain_moon_medium = IconData(
+    0xf2c4,
+    fontFamily: mediumFontFamily,
+  );
+  static const cloud_snowflake_sun_medium = IconData(
+    0xf2c5,
+    fontFamily: mediumFontFamily,
+  );
+  static const cloud_snowflake_medium = IconData(
+    0xf2c6,
+    fontFamily: mediumFontFamily,
+  );
+  static const cloud_snow_sun_medium = IconData(
+    0xf2c7,
+    fontFamily: mediumFontFamily,
+  );
+  static const cloud_snow_moon_medium = IconData(
+    0xf2c8,
+    fontFamily: mediumFontFamily,
+  );
+  static const cloud_snow_medium = IconData(
+    0xf2c9,
+    fontFamily: mediumFontFamily,
+  );
+  static const cloud_snow_lightning_medium = IconData(
+    0xf2ca,
+    fontFamily: mediumFontFamily,
+  );
+  static const cloud_rain_sun_medium = IconData(
+    0xf2cb,
+    fontFamily: mediumFontFamily,
+  );
+  static const cloud_rain_snow_sun_medium = IconData(
+    0xf2cc,
+    fontFamily: mediumFontFamily,
+  );
+  static const cloud_rain_snow_moon_medium = IconData(
+    0xf2cd,
+    fontFamily: mediumFontFamily,
+  );
+  static const cloud_rain_snow_medium = IconData(
+    0xf2ce,
+    fontFamily: mediumFontFamily,
+  );
+  static const cloud_rain_medium = IconData(
+    0xf2cf,
+    fontFamily: mediumFontFamily,
+  );
+  static const cloud_particles_medium = IconData(
+    0xf2d0,
+    fontFamily: mediumFontFamily,
+  );
+  static const cloud_moon_medium = IconData(
+    0xf2d1,
+    fontFamily: mediumFontFamily,
+  );
   static const cloud_medium = IconData(0xf2d2, fontFamily: mediumFontFamily);
-  static const cloud_little_snow_sun_medium = IconData(0xf2d3, fontFamily: mediumFontFamily);
-  static const cloud_little_snow_moon_medium = IconData(0xf2d4, fontFamily: mediumFontFamily);
-  static const cloud_lightning_moon_medium = IconData(0xf2d5, fontFamily: mediumFontFamily);
-  static const cloud_lightning_medium = IconData(0xf2d6, fontFamily: mediumFontFamily);
-  static const cloud_ice_medium = IconData(0xf2d7, fontFamily: mediumFontFamily);
-  static const cloud_fog_medium = IconData(0xf2d8, fontFamily: mediumFontFamily);
-  static const cloud_drops_moon_medium = IconData(0xf2d9, fontFamily: mediumFontFamily);
-  static const cloud_drops_medium = IconData(0xf2da, fontFamily: mediumFontFamily);
-  static const cloud_dense_fog_medium = IconData(0xf2db, fontFamily: mediumFontFamily);
-  static const cloud_co2_medium = IconData(0xf2dc, fontFamily: mediumFontFamily);
-  static const cloud_co2_arrow_down_medium = IconData(0xf2dd, fontFamily: mediumFontFamily);
+  static const cloud_little_snow_sun_medium = IconData(
+    0xf2d3,
+    fontFamily: mediumFontFamily,
+  );
+  static const cloud_little_snow_moon_medium = IconData(
+    0xf2d4,
+    fontFamily: mediumFontFamily,
+  );
+  static const cloud_lightning_moon_medium = IconData(
+    0xf2d5,
+    fontFamily: mediumFontFamily,
+  );
+  static const cloud_lightning_medium = IconData(
+    0xf2d6,
+    fontFamily: mediumFontFamily,
+  );
+  static const cloud_ice_medium = IconData(
+    0xf2d7,
+    fontFamily: mediumFontFamily,
+  );
+  static const cloud_fog_medium = IconData(
+    0xf2d8,
+    fontFamily: mediumFontFamily,
+  );
+  static const cloud_drops_moon_medium = IconData(
+    0xf2d9,
+    fontFamily: mediumFontFamily,
+  );
+  static const cloud_drops_medium = IconData(
+    0xf2da,
+    fontFamily: mediumFontFamily,
+  );
+  static const cloud_dense_fog_medium = IconData(
+    0xf2db,
+    fontFamily: mediumFontFamily,
+  );
+  static const cloud_co2_medium = IconData(
+    0xf2dc,
+    fontFamily: mediumFontFamily,
+  );
+  static const cloud_co2_arrow_down_medium = IconData(
+    0xf2dd,
+    fontFamily: mediumFontFamily,
+  );
   static const clock_medium = IconData(0xf2de, fontFamily: mediumFontFamily);
-  static const clipboard_users_medium = IconData(0xf2df, fontFamily: mediumFontFamily);
-  static const clipboard_tick_medium = IconData(0xf2e0, fontFamily: mediumFontFamily);
-  static const clipboard_question_mark_medium = IconData(0xf2e1, fontFamily: mediumFontFamily);
-  static const clipboard_plus_medium = IconData(0xf2e2, fontFamily: mediumFontFamily);
-  static const clipboard_list_medium = IconData(0xf2e3, fontFamily: mediumFontFamily);
-  static const clipboard_empty_medium = IconData(0xf2e4, fontFamily: mediumFontFamily);
-  static const clipboard_cross_medium = IconData(0xf2e5, fontFamily: mediumFontFamily);
-  static const clapperboard_medium = IconData(0xf2e6, fontFamily: mediumFontFamily);
+  static const clipboard_users_medium = IconData(
+    0xf2df,
+    fontFamily: mediumFontFamily,
+  );
+  static const clipboard_tick_medium = IconData(
+    0xf2e0,
+    fontFamily: mediumFontFamily,
+  );
+  static const clipboard_question_mark_medium = IconData(
+    0xf2e1,
+    fontFamily: mediumFontFamily,
+  );
+  static const clipboard_plus_medium = IconData(
+    0xf2e2,
+    fontFamily: mediumFontFamily,
+  );
+  static const clipboard_list_medium = IconData(
+    0xf2e3,
+    fontFamily: mediumFontFamily,
+  );
+  static const clipboard_empty_medium = IconData(
+    0xf2e4,
+    fontFamily: mediumFontFamily,
+  );
+  static const clipboard_cross_medium = IconData(
+    0xf2e5,
+    fontFamily: mediumFontFamily,
+  );
+  static const clapperboard_medium = IconData(
+    0xf2e6,
+    fontFamily: mediumFontFamily,
+  );
   static const city_medium = IconData(0xf2e7, fontFamily: mediumFontFamily);
-  static const circle_triangle_square_medium = IconData(0xf2e8, fontFamily: mediumFontFamily);
-  static const circle_tick_medium = IconData(0xf2e9, fontFamily: mediumFontFamily);
-  static const circle_three_dots_medium = IconData(0xf2ea, fontFamily: mediumFontFamily);
-  static const circle_signal_noise_ratio_medium = IconData(0xf2eb, fontFamily: mediumFontFamily);
-  static const circle_question_mark_medium = IconData(0xf2ec, fontFamily: mediumFontFamily);
-  static const circle_plus_medium = IconData(0xf2ed, fontFamily: mediumFontFamily);
-  static const circle_play_medium = IconData(0xf2ee, fontFamily: mediumFontFamily);
-  static const circle_pen_medium = IconData(0xf2ef, fontFamily: mediumFontFamily);
-  static const circle_minus_medium = IconData(0xf2f0, fontFamily: mediumFontFamily);
-  static const circle_leaf_power_plug_medium = IconData(0xf2f1, fontFamily: mediumFontFamily);
-  static const circle_information_small_medium = IconData(0xf2f2, fontFamily: mediumFontFamily);
-  static const circle_information_medium = IconData(0xf2f3, fontFamily: mediumFontFamily);
-  static const circle_exclamation_point_medium = IconData(0xf2f4, fontFamily: mediumFontFamily);
-  static const circle_empty_medium = IconData(0xf2f5, fontFamily: mediumFontFamily);
-  static const circle_dotted_part_x_medium = IconData(0xf2f6, fontFamily: mediumFontFamily);
-  static const circle_dotted_part_medium = IconData(0xf2f7, fontFamily: mediumFontFamily);
-  static const circle_dotted_medium = IconData(0xf2f8, fontFamily: mediumFontFamily);
-  static const circle_cross_medium = IconData(0xf2f9, fontFamily: mediumFontFamily);
-  static const cigarette_medium = IconData(0xf2fa, fontFamily: mediumFontFamily);
-  static const cigarette_disabled_medium = IconData(0xf2fb, fontFamily: mediumFontFamily);
-  static const christmas_tree_shopping_bag_medium = IconData(0xf2fc, fontFamily: mediumFontFamily);
-  static const child_adult_medium = IconData(0xf2fd, fontFamily: mediumFontFamily);
-  static const chevron_up_medium = IconData(0xf2fe, fontFamily: mediumFontFamily);
-  static const chevron_small_up_medium = IconData(0xf2ff, fontFamily: mediumFontFamily);
-  static const chevron_small_up_circle_medium = IconData(0xf300, fontFamily: mediumFontFamily);
-  static const chevron_small_right_medium = IconData(0xf301, fontFamily: mediumFontFamily);
-  static const chevron_small_right_circle_medium = IconData(0xf302, fontFamily: mediumFontFamily);
-  static const chevron_small_left_right_medium = IconData(0xf303, fontFamily: mediumFontFamily);
-  static const chevron_small_left_medium = IconData(0xf304, fontFamily: mediumFontFamily);
-  static const chevron_small_left_circle_medium = IconData(0xf305, fontFamily: mediumFontFamily);
-  static const chevron_small_end_right_medium = IconData(0xf306, fontFamily: mediumFontFamily);
-  static const chevron_small_end_left_medium = IconData(0xf307, fontFamily: mediumFontFamily);
-  static const chevron_small_down_medium = IconData(0xf308, fontFamily: mediumFontFamily);
-  static const chevron_small_down_flat_medium = IconData(0xf309, fontFamily: mediumFontFamily);
-  static const chevron_small_down_circle_medium = IconData(0xf30a, fontFamily: mediumFontFamily);
-  static const chevron_right_medium = IconData(0xf30b, fontFamily: mediumFontFamily);
-  static const chevron_left_medium = IconData(0xf30c, fontFamily: mediumFontFamily);
-  static const chevron_down_medium = IconData(0xf30d, fontFamily: mediumFontFamily);
-  static const checkpoints_medium = IconData(0xf30e, fontFamily: mediumFontFamily);
-  static const chart_pie_medium = IconData(0xf30f, fontFamily: mediumFontFamily);
-  static const chart_line_medium = IconData(0xf310, fontFamily: mediumFontFamily);
-  static const chart_column_trend_medium = IconData(0xf311, fontFamily: mediumFontFamily);
-  static const chart_column_medium = IconData(0xf312, fontFamily: mediumFontFamily);
-  static const charging_station_medium = IconData(0xf313, fontFamily: mediumFontFamily);
-  static const chairlift_profile_medium = IconData(0xf314, fontFamily: mediumFontFamily);
-  static const certificate_ribbon_tick_medium = IconData(0xf315, fontFamily: mediumFontFamily);
-  static const certificate_ribbon_medium = IconData(0xf316, fontFamily: mediumFontFamily);
-  static const cash_register_medium = IconData(0xf317, fontFamily: mediumFontFamily);
-  static const cargo_bike_trailer_medium = IconData(0xf318, fontFamily: mediumFontFamily);
-  static const cargo_bike_medium = IconData(0xf319, fontFamily: mediumFontFamily);
-  static const car_sign_parking_medium = IconData(0xf31a, fontFamily: mediumFontFamily);
-  static const car_profile_user_group_circle_medium = IconData(0xf31b, fontFamily: mediumFontFamily);
-  static const car_profile_sign_parking_medium = IconData(0xf31c, fontFamily: mediumFontFamily);
-  static const car_profile_power_plug_medium = IconData(0xf31d, fontFamily: mediumFontFamily);
-  static const car_profile_medium = IconData(0xf31e, fontFamily: mediumFontFamily);
-  static const car_power_plug_medium = IconData(0xf31f, fontFamily: mediumFontFamily);
+  static const circle_triangle_square_medium = IconData(
+    0xf2e8,
+    fontFamily: mediumFontFamily,
+  );
+  static const circle_tick_medium = IconData(
+    0xf2e9,
+    fontFamily: mediumFontFamily,
+  );
+  static const circle_three_dots_medium = IconData(
+    0xf2ea,
+    fontFamily: mediumFontFamily,
+  );
+  static const circle_signal_noise_ratio_medium = IconData(
+    0xf2eb,
+    fontFamily: mediumFontFamily,
+  );
+  static const circle_question_mark_medium = IconData(
+    0xf2ec,
+    fontFamily: mediumFontFamily,
+  );
+  static const circle_plus_medium = IconData(
+    0xf2ed,
+    fontFamily: mediumFontFamily,
+  );
+  static const circle_play_medium = IconData(
+    0xf2ee,
+    fontFamily: mediumFontFamily,
+  );
+  static const circle_pen_medium = IconData(
+    0xf2ef,
+    fontFamily: mediumFontFamily,
+  );
+  static const circle_minus_medium = IconData(
+    0xf2f0,
+    fontFamily: mediumFontFamily,
+  );
+  static const circle_leaf_power_plug_medium = IconData(
+    0xf2f1,
+    fontFamily: mediumFontFamily,
+  );
+  static const circle_information_small_medium = IconData(
+    0xf2f2,
+    fontFamily: mediumFontFamily,
+  );
+  static const circle_information_medium = IconData(
+    0xf2f3,
+    fontFamily: mediumFontFamily,
+  );
+  static const circle_exclamation_point_medium = IconData(
+    0xf2f4,
+    fontFamily: mediumFontFamily,
+  );
+  static const circle_empty_medium = IconData(
+    0xf2f5,
+    fontFamily: mediumFontFamily,
+  );
+  static const circle_dotted_part_x_medium = IconData(
+    0xf2f6,
+    fontFamily: mediumFontFamily,
+  );
+  static const circle_dotted_part_medium = IconData(
+    0xf2f7,
+    fontFamily: mediumFontFamily,
+  );
+  static const circle_dotted_medium = IconData(
+    0xf2f8,
+    fontFamily: mediumFontFamily,
+  );
+  static const circle_cross_medium = IconData(
+    0xf2f9,
+    fontFamily: mediumFontFamily,
+  );
+  static const cigarette_medium = IconData(
+    0xf2fa,
+    fontFamily: mediumFontFamily,
+  );
+  static const cigarette_disabled_medium = IconData(
+    0xf2fb,
+    fontFamily: mediumFontFamily,
+  );
+  static const christmas_tree_shopping_bag_medium = IconData(
+    0xf2fc,
+    fontFamily: mediumFontFamily,
+  );
+  static const child_adult_medium = IconData(
+    0xf2fd,
+    fontFamily: mediumFontFamily,
+  );
+  static const chevron_up_medium = IconData(
+    0xf2fe,
+    fontFamily: mediumFontFamily,
+  );
+  static const chevron_small_up_medium = IconData(
+    0xf2ff,
+    fontFamily: mediumFontFamily,
+  );
+  static const chevron_small_up_circle_medium = IconData(
+    0xf300,
+    fontFamily: mediumFontFamily,
+  );
+  static const chevron_small_right_medium = IconData(
+    0xf301,
+    fontFamily: mediumFontFamily,
+  );
+  static const chevron_small_right_circle_medium = IconData(
+    0xf302,
+    fontFamily: mediumFontFamily,
+  );
+  static const chevron_small_left_right_medium = IconData(
+    0xf303,
+    fontFamily: mediumFontFamily,
+  );
+  static const chevron_small_left_medium = IconData(
+    0xf304,
+    fontFamily: mediumFontFamily,
+  );
+  static const chevron_small_left_circle_medium = IconData(
+    0xf305,
+    fontFamily: mediumFontFamily,
+  );
+  static const chevron_small_end_right_medium = IconData(
+    0xf306,
+    fontFamily: mediumFontFamily,
+  );
+  static const chevron_small_end_left_medium = IconData(
+    0xf307,
+    fontFamily: mediumFontFamily,
+  );
+  static const chevron_small_down_medium = IconData(
+    0xf308,
+    fontFamily: mediumFontFamily,
+  );
+  static const chevron_small_down_flat_medium = IconData(
+    0xf309,
+    fontFamily: mediumFontFamily,
+  );
+  static const chevron_small_down_circle_medium = IconData(
+    0xf30a,
+    fontFamily: mediumFontFamily,
+  );
+  static const chevron_right_medium = IconData(
+    0xf30b,
+    fontFamily: mediumFontFamily,
+  );
+  static const chevron_left_medium = IconData(
+    0xf30c,
+    fontFamily: mediumFontFamily,
+  );
+  static const chevron_down_medium = IconData(
+    0xf30d,
+    fontFamily: mediumFontFamily,
+  );
+  static const checkpoints_medium = IconData(
+    0xf30e,
+    fontFamily: mediumFontFamily,
+  );
+  static const chart_pie_medium = IconData(
+    0xf30f,
+    fontFamily: mediumFontFamily,
+  );
+  static const chart_line_medium = IconData(
+    0xf310,
+    fontFamily: mediumFontFamily,
+  );
+  static const chart_column_trend_medium = IconData(
+    0xf311,
+    fontFamily: mediumFontFamily,
+  );
+  static const chart_column_medium = IconData(
+    0xf312,
+    fontFamily: mediumFontFamily,
+  );
+  static const charging_station_medium = IconData(
+    0xf313,
+    fontFamily: mediumFontFamily,
+  );
+  static const chairlift_profile_medium = IconData(
+    0xf314,
+    fontFamily: mediumFontFamily,
+  );
+  static const certificate_ribbon_tick_medium = IconData(
+    0xf315,
+    fontFamily: mediumFontFamily,
+  );
+  static const certificate_ribbon_medium = IconData(
+    0xf316,
+    fontFamily: mediumFontFamily,
+  );
+  static const cash_register_medium = IconData(
+    0xf317,
+    fontFamily: mediumFontFamily,
+  );
+  static const cargo_bike_trailer_medium = IconData(
+    0xf318,
+    fontFamily: mediumFontFamily,
+  );
+  static const cargo_bike_medium = IconData(
+    0xf319,
+    fontFamily: mediumFontFamily,
+  );
+  static const car_sign_parking_medium = IconData(
+    0xf31a,
+    fontFamily: mediumFontFamily,
+  );
+  static const car_profile_user_group_circle_medium = IconData(
+    0xf31b,
+    fontFamily: mediumFontFamily,
+  );
+  static const car_profile_sign_parking_medium = IconData(
+    0xf31c,
+    fontFamily: mediumFontFamily,
+  );
+  static const car_profile_power_plug_medium = IconData(
+    0xf31d,
+    fontFamily: mediumFontFamily,
+  );
+  static const car_profile_medium = IconData(
+    0xf31e,
+    fontFamily: mediumFontFamily,
+  );
+  static const car_power_plug_medium = IconData(
+    0xf31f,
+    fontFamily: mediumFontFamily,
+  );
   static const car_medium = IconData(0xf320, fontFamily: mediumFontFamily);
-  static const camera_two_stars_medium = IconData(0xf321, fontFamily: mediumFontFamily);
+  static const camera_two_stars_medium = IconData(
+    0xf321,
+    fontFamily: mediumFontFamily,
+  );
   static const camera_medium = IconData(0xf322, fontFamily: mediumFontFamily);
-  static const calendar_weekday_medium = IconData(0xf323, fontFamily: mediumFontFamily);
-  static const calendar_one_day_medium = IconData(0xf324, fontFamily: mediumFontFamily);
+  static const calendar_weekday_medium = IconData(
+    0xf323,
+    fontFamily: mediumFontFamily,
+  );
+  static const calendar_one_day_medium = IconData(
+    0xf324,
+    fontFamily: mediumFontFamily,
+  );
   static const calendar_medium = IconData(0xf325, fontFamily: mediumFontFamily);
-  static const calculator_medium = IconData(0xf326, fontFamily: mediumFontFamily);
-  static const cable_car_profile_medium = IconData(0xf327, fontFamily: mediumFontFamily);
-  static const button_power_medium = IconData(0xf328, fontFamily: mediumFontFamily);
-  static const butterfly_medium = IconData(0xf329, fontFamily: mediumFontFamily);
-  static const bus_train_medium = IconData(0xf32a, fontFamily: mediumFontFamily);
-  static const bus_surrounding_area_medium = IconData(0xf32b, fontFamily: mediumFontFamily);
+  static const calculator_medium = IconData(
+    0xf326,
+    fontFamily: mediumFontFamily,
+  );
+  static const cable_car_profile_medium = IconData(
+    0xf327,
+    fontFamily: mediumFontFamily,
+  );
+  static const button_power_medium = IconData(
+    0xf328,
+    fontFamily: mediumFontFamily,
+  );
+  static const butterfly_medium = IconData(
+    0xf329,
+    fontFamily: mediumFontFamily,
+  );
+  static const bus_train_medium = IconData(
+    0xf32a,
+    fontFamily: mediumFontFamily,
+  );
+  static const bus_surrounding_area_medium = IconData(
+    0xf32b,
+    fontFamily: mediumFontFamily,
+  );
   static const bus_stop_medium = IconData(0xf32c, fontFamily: mediumFontFamily);
   static const bus_sbb_medium = IconData(0xf32d, fontFamily: mediumFontFamily);
-  static const bus_profile_medium = IconData(0xf32e, fontFamily: mediumFontFamily);
+  static const bus_profile_medium = IconData(
+    0xf32e,
+    fontFamily: mediumFontFamily,
+  );
   static const bus_medium = IconData(0xf32f, fontFamily: mediumFontFamily);
-  static const bulb_on_percentage_medium = IconData(0xf330, fontFamily: mediumFontFamily);
+  static const bulb_on_percentage_medium = IconData(
+    0xf330,
+    fontFamily: mediumFontFamily,
+  );
   static const bulb_on_medium = IconData(0xf331, fontFamily: mediumFontFamily);
-  static const bulb_off_percentage_signal_medium = IconData(0xf332, fontFamily: mediumFontFamily);
+  static const bulb_off_percentage_signal_medium = IconData(
+    0xf332,
+    fontFamily: mediumFontFamily,
+  );
   static const bulb_off_medium = IconData(0xf333, fontFamily: mediumFontFamily);
-  static const building_tree_medium = IconData(0xf334, fontFamily: mediumFontFamily);
-  static const bucket_foam_broom_medium = IconData(0xf335, fontFamily: mediumFontFamily);
+  static const building_tree_medium = IconData(
+    0xf334,
+    fontFamily: mediumFontFamily,
+  );
+  static const bucket_foam_broom_medium = IconData(
+    0xf335,
+    fontFamily: mediumFontFamily,
+  );
   static const browser_medium = IconData(0xf336, fontFamily: mediumFontFamily);
   static const brochure_medium = IconData(0xf337, fontFamily: mediumFontFamily);
-  static const briefcase_medium = IconData(0xf338, fontFamily: mediumFontFamily);
+  static const briefcase_medium = IconData(
+    0xf338,
+    fontFamily: mediumFontFamily,
+  );
   static const bridge_medium = IconData(0xf339, fontFamily: mediumFontFamily);
-  static const bottle_apple_medium = IconData(0xf33a, fontFamily: mediumFontFamily);
+  static const bottle_apple_medium = IconData(
+    0xf33a,
+    fontFamily: mediumFontFamily,
+  );
   static const bookmark_medium = IconData(0xf33b, fontFamily: mediumFontFamily);
-  static const book_section_mark_medium = IconData(0xf33c, fontFamily: mediumFontFamily);
+  static const book_section_mark_medium = IconData(
+    0xf33c,
+    fontFamily: mediumFontFamily,
+  );
   static const book_medium = IconData(0xf33d, fontFamily: mediumFontFamily);
-  static const boat_profile_medium = IconData(0xf33e, fontFamily: mediumFontFamily);
-  static const bluetooth_medium = IconData(0xf33f, fontFamily: mediumFontFamily);
-  static const bluetooth_disabled_medium = IconData(0xf340, fontFamily: mediumFontFamily);
-  static const binoculars_medium = IconData(0xf341, fontFamily: mediumFontFamily);
-  static const bike_profile_sign_parking_medium = IconData(0xf342, fontFamily: mediumFontFamily);
-  static const bike_profile_power_plug_medium = IconData(0xf343, fontFamily: mediumFontFamily);
-  static const bicycle_tandem_medium = IconData(0xf344, fontFamily: mediumFontFamily);
-  static const bicycle_roof_surveillance_camera_medium = IconData(0xf345, fontFamily: mediumFontFamily);
-  static const bicycle_roof_key_medium = IconData(0xf346, fontFamily: mediumFontFamily);
-  static const bicycle_reservation_medium = IconData(0xf347, fontFamily: mediumFontFamily);
-  static const bicycle_profile_user_group_circle_medium = IconData(0xf348, fontFamily: mediumFontFamily);
+  static const boat_profile_medium = IconData(
+    0xf33e,
+    fontFamily: mediumFontFamily,
+  );
+  static const bluetooth_medium = IconData(
+    0xf33f,
+    fontFamily: mediumFontFamily,
+  );
+  static const bluetooth_disabled_medium = IconData(
+    0xf340,
+    fontFamily: mediumFontFamily,
+  );
+  static const binoculars_medium = IconData(
+    0xf341,
+    fontFamily: mediumFontFamily,
+  );
+  static const bike_profile_sign_parking_medium = IconData(
+    0xf342,
+    fontFamily: mediumFontFamily,
+  );
+  static const bike_profile_power_plug_medium = IconData(
+    0xf343,
+    fontFamily: mediumFontFamily,
+  );
+  static const bicycle_tandem_medium = IconData(
+    0xf344,
+    fontFamily: mediumFontFamily,
+  );
+  static const bicycle_roof_surveillance_camera_medium = IconData(
+    0xf345,
+    fontFamily: mediumFontFamily,
+  );
+  static const bicycle_roof_key_medium = IconData(
+    0xf346,
+    fontFamily: mediumFontFamily,
+  );
+  static const bicycle_reservation_medium = IconData(
+    0xf347,
+    fontFamily: mediumFontFamily,
+  );
+  static const bicycle_profile_user_group_circle_medium = IconData(
+    0xf348,
+    fontFamily: mediumFontFamily,
+  );
   static const bicycle_medium = IconData(0xf349, fontFamily: mediumFontFamily);
   static const bell_medium = IconData(0xf34a, fontFamily: mediumFontFamily);
-  static const bell_disabled_medium = IconData(0xf34b, fontFamily: mediumFontFamily);
-  static const battery_lightning_medium = IconData(0xf34c, fontFamily: mediumFontFamily);
-  static const battery_level_percentage_medium = IconData(0xf34d, fontFamily: mediumFontFamily);
-  static const battery_level_medium_medium = IconData(0xf34e, fontFamily: mediumFontFamily);
-  static const battery_level_low_medium = IconData(0xf34f, fontFamily: mediumFontFamily);
-  static const battery_level_high_medium = IconData(0xf350, fontFamily: mediumFontFamily);
-  static const battery_level_empty_medium = IconData(0xf351, fontFamily: mediumFontFamily);
-  static const barrier_construction_medium = IconData(0xf352, fontFamily: mediumFontFamily);
-  static const banknotes_dollar_medium = IconData(0xf353, fontFamily: mediumFontFamily);
+  static const bell_disabled_medium = IconData(
+    0xf34b,
+    fontFamily: mediumFontFamily,
+  );
+  static const battery_lightning_medium = IconData(
+    0xf34c,
+    fontFamily: mediumFontFamily,
+  );
+  static const battery_level_percentage_medium = IconData(
+    0xf34d,
+    fontFamily: mediumFontFamily,
+  );
+  static const battery_level_medium_medium = IconData(
+    0xf34e,
+    fontFamily: mediumFontFamily,
+  );
+  static const battery_level_low_medium = IconData(
+    0xf34f,
+    fontFamily: mediumFontFamily,
+  );
+  static const battery_level_high_medium = IconData(
+    0xf350,
+    fontFamily: mediumFontFamily,
+  );
+  static const battery_level_empty_medium = IconData(
+    0xf351,
+    fontFamily: mediumFontFamily,
+  );
+  static const barrier_construction_medium = IconData(
+    0xf352,
+    fontFamily: mediumFontFamily,
+  );
+  static const banknotes_dollar_medium = IconData(
+    0xf353,
+    fontFamily: mediumFontFamily,
+  );
   static const balloons_medium = IconData(0xf354, fontFamily: mediumFontFamily);
   static const backpack_medium = IconData(0xf355, fontFamily: mediumFontFamily);
-  static const avatar_train_staff_medium = IconData(0xf356, fontFamily: mediumFontFamily);
-  static const avatar_train_staff_disabled_medium = IconData(0xf357, fontFamily: mediumFontFamily);
-  static const avatar_police_medium = IconData(0xf358, fontFamily: mediumFontFamily);
-  static const arrows_up_down_pressure_medium = IconData(0xf359, fontFamily: mediumFontFamily);
-  static const arrows_up_down_medium = IconData(0xf35a, fontFamily: mediumFontFamily);
-  static const arrows_right_left_medium = IconData(0xf35b, fontFamily: mediumFontFamily);
-  static const arrows_long_up_down_medium = IconData(0xf35c, fontFamily: mediumFontFamily);
-  static const arrows_long_right_left_medium = IconData(0xf35d, fontFamily: mediumFontFamily);
-  static const arrows_left_right_medium = IconData(0xf35e, fontFamily: mediumFontFamily);
-  static const arrows_left_right_down_up_medium = IconData(0xf35f, fontFamily: mediumFontFamily);
-  static const arrows_left_right_dotted_medium = IconData(0xf360, fontFamily: mediumFontFamily);
-  static const arrows_circle_medium = IconData(0xf361, fontFamily: mediumFontFamily);
-  static const arrow_up_right_medium = IconData(0xf362, fontFamily: mediumFontFamily);
+  static const avatar_train_staff_medium = IconData(
+    0xf356,
+    fontFamily: mediumFontFamily,
+  );
+  static const avatar_train_staff_disabled_medium = IconData(
+    0xf357,
+    fontFamily: mediumFontFamily,
+  );
+  static const avatar_police_medium = IconData(
+    0xf358,
+    fontFamily: mediumFontFamily,
+  );
+  static const arrows_up_down_pressure_medium = IconData(
+    0xf359,
+    fontFamily: mediumFontFamily,
+  );
+  static const arrows_up_down_medium = IconData(
+    0xf35a,
+    fontFamily: mediumFontFamily,
+  );
+  static const arrows_right_left_medium = IconData(
+    0xf35b,
+    fontFamily: mediumFontFamily,
+  );
+  static const arrows_long_up_down_medium = IconData(
+    0xf35c,
+    fontFamily: mediumFontFamily,
+  );
+  static const arrows_long_right_left_medium = IconData(
+    0xf35d,
+    fontFamily: mediumFontFamily,
+  );
+  static const arrows_left_right_medium = IconData(
+    0xf35e,
+    fontFamily: mediumFontFamily,
+  );
+  static const arrows_left_right_down_up_medium = IconData(
+    0xf35f,
+    fontFamily: mediumFontFamily,
+  );
+  static const arrows_left_right_dotted_medium = IconData(
+    0xf360,
+    fontFamily: mediumFontFamily,
+  );
+  static const arrows_circle_medium = IconData(
+    0xf361,
+    fontFamily: mediumFontFamily,
+  );
+  static const arrow_up_right_medium = IconData(
+    0xf362,
+    fontFamily: mediumFontFamily,
+  );
   static const arrow_up_medium = IconData(0xf363, fontFamily: mediumFontFamily);
-  static const arrow_up_left_medium = IconData(0xf364, fontFamily: mediumFontFamily);
-  static const arrow_turn_up_medium = IconData(0xf365, fontFamily: mediumFontFamily);
-  static const arrow_turn_right_medium = IconData(0xf366, fontFamily: mediumFontFamily);
-  static const arrow_turn_down_medium = IconData(0xf367, fontFamily: mediumFontFamily);
-  static const arrow_start_right_medium = IconData(0xf368, fontFamily: mediumFontFamily);
-  static const arrow_start_left_medium = IconData(0xf369, fontFamily: mediumFontFamily);
-  static const arrow_right_medium = IconData(0xf36a, fontFamily: mediumFontFamily);
-  static const arrow_long_up_medium = IconData(0xf36b, fontFamily: mediumFontFamily);
-  static const arrow_long_right_medium = IconData(0xf36c, fontFamily: mediumFontFamily);
-  static const arrow_long_left_medium = IconData(0xf36d, fontFamily: mediumFontFamily);
-  static const arrow_long_down_medium = IconData(0xf36e, fontFamily: mediumFontFamily);
-  static const arrow_left_medium = IconData(0xf36f, fontFamily: mediumFontFamily);
-  static const arrow_end_right_medium = IconData(0xf370, fontFamily: mediumFontFamily);
-  static const arrow_down_medium = IconData(0xf371, fontFamily: mediumFontFamily);
-  static const arrow_compass_medium = IconData(0xf372, fontFamily: mediumFontFamily);
-  static const arrow_compass_filled_medium = IconData(0xf373, fontFamily: mediumFontFamily);
-  static const arrow_circle_two_users_medium = IconData(0xf374, fontFamily: mediumFontFamily);
-  static const arrow_circle_train_tracks_medium = IconData(0xf375, fontFamily: mediumFontFamily);
-  static const arrow_circle_time_medium = IconData(0xf376, fontFamily: mediumFontFamily);
-  static const arrow_circle_switzerland_medium = IconData(0xf377, fontFamily: mediumFontFamily);
-  static const arrow_circle_reset_medium = IconData(0xf378, fontFamily: mediumFontFamily);
-  static const arrow_circle_medium = IconData(0xf379, fontFamily: mediumFontFamily);
-  static const arrow_circle_lightning_medium = IconData(0xf37a, fontFamily: mediumFontFamily);
-  static const arrow_circle_eye_medium = IconData(0xf37b, fontFamily: mediumFontFamily);
-  static const arrow_change_medium = IconData(0xf37c, fontFamily: mediumFontFamily);
-  static const arrow_change_horizontal_medium = IconData(0xf37d, fontFamily: mediumFontFamily);
-  static const armchair_profile_user_medium = IconData(0xf37e, fontFamily: mediumFontFamily);
+  static const arrow_up_left_medium = IconData(
+    0xf364,
+    fontFamily: mediumFontFamily,
+  );
+  static const arrow_turn_up_medium = IconData(
+    0xf365,
+    fontFamily: mediumFontFamily,
+  );
+  static const arrow_turn_right_medium = IconData(
+    0xf366,
+    fontFamily: mediumFontFamily,
+  );
+  static const arrow_turn_down_medium = IconData(
+    0xf367,
+    fontFamily: mediumFontFamily,
+  );
+  static const arrow_start_right_medium = IconData(
+    0xf368,
+    fontFamily: mediumFontFamily,
+  );
+  static const arrow_start_left_medium = IconData(
+    0xf369,
+    fontFamily: mediumFontFamily,
+  );
+  static const arrow_right_medium = IconData(
+    0xf36a,
+    fontFamily: mediumFontFamily,
+  );
+  static const arrow_long_up_medium = IconData(
+    0xf36b,
+    fontFamily: mediumFontFamily,
+  );
+  static const arrow_long_right_medium = IconData(
+    0xf36c,
+    fontFamily: mediumFontFamily,
+  );
+  static const arrow_long_left_medium = IconData(
+    0xf36d,
+    fontFamily: mediumFontFamily,
+  );
+  static const arrow_long_down_medium = IconData(
+    0xf36e,
+    fontFamily: mediumFontFamily,
+  );
+  static const arrow_left_medium = IconData(
+    0xf36f,
+    fontFamily: mediumFontFamily,
+  );
+  static const arrow_end_right_medium = IconData(
+    0xf370,
+    fontFamily: mediumFontFamily,
+  );
+  static const arrow_down_medium = IconData(
+    0xf371,
+    fontFamily: mediumFontFamily,
+  );
+  static const arrow_compass_medium = IconData(
+    0xf372,
+    fontFamily: mediumFontFamily,
+  );
+  static const arrow_compass_filled_medium = IconData(
+    0xf373,
+    fontFamily: mediumFontFamily,
+  );
+  static const arrow_circle_two_users_medium = IconData(
+    0xf374,
+    fontFamily: mediumFontFamily,
+  );
+  static const arrow_circle_train_tracks_medium = IconData(
+    0xf375,
+    fontFamily: mediumFontFamily,
+  );
+  static const arrow_circle_time_medium = IconData(
+    0xf376,
+    fontFamily: mediumFontFamily,
+  );
+  static const arrow_circle_switzerland_medium = IconData(
+    0xf377,
+    fontFamily: mediumFontFamily,
+  );
+  static const arrow_circle_reset_medium = IconData(
+    0xf378,
+    fontFamily: mediumFontFamily,
+  );
+  static const arrow_circle_medium = IconData(
+    0xf379,
+    fontFamily: mediumFontFamily,
+  );
+  static const arrow_circle_lightning_medium = IconData(
+    0xf37a,
+    fontFamily: mediumFontFamily,
+  );
+  static const arrow_circle_eye_medium = IconData(
+    0xf37b,
+    fontFamily: mediumFontFamily,
+  );
+  static const arrow_change_medium = IconData(
+    0xf37c,
+    fontFamily: mediumFontFamily,
+  );
+  static const arrow_change_horizontal_medium = IconData(
+    0xf37d,
+    fontFamily: mediumFontFamily,
+  );
+  static const armchair_profile_user_medium = IconData(
+    0xf37e,
+    fontFamily: mediumFontFamily,
+  );
   static const armchair_medium = IconData(0xf37f, fontFamily: mediumFontFamily);
-  static const archive_box_medium = IconData(0xf380, fontFamily: mediumFontFamily);
-  static const apple_bag_medium = IconData(0xf381, fontFamily: mediumFontFamily);
+  static const archive_box_medium = IconData(
+    0xf380,
+    fontFamily: mediumFontFamily,
+  );
+  static const apple_bag_medium = IconData(
+    0xf381,
+    fontFamily: mediumFontFamily,
+  );
   static const app_icon_medium = IconData(0xf382, fontFamily: mediumFontFamily);
   static const angular_medium = IconData(0xf383, fontFamily: mediumFontFamily);
-  static const alarm_clock_medium = IconData(0xf384, fontFamily: mediumFontFamily);
-  static const airplane_train_medium = IconData(0xf385, fontFamily: mediumFontFamily);
+  static const alarm_clock_medium = IconData(
+    0xf384,
+    fontFamily: mediumFontFamily,
+  );
+  static const airplane_train_medium = IconData(
+    0xf385,
+    fontFamily: mediumFontFamily,
+  );
   static const airplane_medium = IconData(0xf386, fontFamily: mediumFontFamily);
-  static const aerosol_can_medium = IconData(0xf387, fontFamily: mediumFontFamily);
-  static const adult_kids_medium = IconData(0xf388, fontFamily: mediumFontFamily);
+  static const aerosol_can_medium = IconData(
+    0xf387,
+    fontFamily: mediumFontFamily,
+  );
+  static const adult_kids_medium = IconData(
+    0xf388,
+    fontFamily: mediumFontFamily,
+  );
   static const wifi_large = IconData(0xf101, fontFamily: largeFontFamily);
-  static const wifi_disabled_large = IconData(0xf102, fontFamily: largeFontFamily);
+  static const wifi_disabled_large = IconData(
+    0xf102,
+    fontFamily: largeFontFamily,
+  );
   static const wheelchair_large = IconData(0xf103, fontFamily: largeFontFamily);
-  static const wheelchair_inaccessible_large = IconData(0xf104, fontFamily: largeFontFamily);
-  static const wheel_thermometer_large = IconData(0xf105, fontFamily: largeFontFamily);
-  static const wheel_microphone_large = IconData(0xf106, fontFamily: largeFontFamily);
-  static const weight_wheel_large = IconData(0xf107, fontFamily: largeFontFamily);
-  static const waves_ladder_large = IconData(0xf108, fontFamily: largeFontFamily);
-  static const washing_machine_large = IconData(0xf109, fontFamily: largeFontFamily);
-  static const warning_light_large = IconData(0xf10a, fontFamily: largeFontFamily);
+  static const wheelchair_inaccessible_large = IconData(
+    0xf104,
+    fontFamily: largeFontFamily,
+  );
+  static const wheel_thermometer_large = IconData(
+    0xf105,
+    fontFamily: largeFontFamily,
+  );
+  static const wheel_microphone_large = IconData(
+    0xf106,
+    fontFamily: largeFontFamily,
+  );
+  static const weight_wheel_large = IconData(
+    0xf107,
+    fontFamily: largeFontFamily,
+  );
+  static const waves_ladder_large = IconData(
+    0xf108,
+    fontFamily: largeFontFamily,
+  );
+  static const washing_machine_large = IconData(
+    0xf109,
+    fontFamily: largeFontFamily,
+  );
+  static const warning_light_large = IconData(
+    0xf10a,
+    fontFamily: largeFontFamily,
+  );
   static const wallet_large = IconData(0xf10b, fontFamily: largeFontFamily);
   static const walk_large_large = IconData(0xf10c, fontFamily: largeFontFamily);
   static const walk_large = IconData(0xf10d, fontFamily: largeFontFamily);
-  static const wagon_coupling_dragging_equipment_large = IconData(0xf10e, fontFamily: largeFontFamily);
+  static const wagon_coupling_dragging_equipment_large = IconData(
+    0xf10e,
+    fontFamily: largeFontFamily,
+  );
   static const user_tie_large = IconData(0xf10f, fontFamily: largeFontFamily);
   static const user_large = IconData(0xf110, fontFamily: largeFontFamily);
-  static const user_headset_large = IconData(0xf111, fontFamily: largeFontFamily);
+  static const user_headset_large = IconData(
+    0xf111,
+    fontFamily: largeFontFamily,
+  );
   static const user_hat_large = IconData(0xf112, fontFamily: largeFontFamily);
   static const user_group_large = IconData(0xf113, fontFamily: largeFontFamily);
-  static const two_speech_bubbles_large = IconData(0xf114, fontFamily: largeFontFamily);
-  static const two_finger_tap_large = IconData(0xf115, fontFamily: largeFontFamily);
-  static const two_adults_kid_large = IconData(0xf116, fontFamily: largeFontFamily);
+  static const two_speech_bubbles_large = IconData(
+    0xf114,
+    fontFamily: largeFontFamily,
+  );
+  static const two_finger_tap_large = IconData(
+    0xf115,
+    fontFamily: largeFontFamily,
+  );
+  static const two_adults_kid_large = IconData(
+    0xf116,
+    fontFamily: largeFontFamily,
+  );
   static const tunnel_large = IconData(0xf117, fontFamily: largeFontFamily);
-  static const tunnel_freight_wagon_shifted_large = IconData(0xf118, fontFamily: largeFontFamily);
+  static const tunnel_freight_wagon_shifted_large = IconData(
+    0xf118,
+    fontFamily: largeFontFamily,
+  );
   static const tree_large = IconData(0xf119, fontFamily: largeFontFamily);
-  static const travel_backpack_large = IconData(0xf11a, fontFamily: largeFontFamily);
+  static const travel_backpack_large = IconData(
+    0xf11a,
+    fontFamily: largeFontFamily,
+  );
   static const trash_large = IconData(0xf11b, fontFamily: largeFontFamily);
-  static const train_tracks_large = IconData(0xf11c, fontFamily: largeFontFamily);
-  static const train_station_large = IconData(0xf11d, fontFamily: largeFontFamily);
+  static const train_tracks_large = IconData(
+    0xf11c,
+    fontFamily: largeFontFamily,
+  );
+  static const train_station_large = IconData(
+    0xf11d,
+    fontFamily: largeFontFamily,
+  );
   static const train_ski_large = IconData(0xf11e, fontFamily: largeFontFamily);
-  static const train_signal_large = IconData(0xf11f, fontFamily: largeFontFamily);
-  static const train_profile_signal_large = IconData(0xf120, fontFamily: largeFontFamily);
-  static const train_profile_large = IconData(0xf121, fontFamily: largeFontFamily);
+  static const train_signal_large = IconData(
+    0xf11f,
+    fontFamily: largeFontFamily,
+  );
+  static const train_profile_signal_large = IconData(
+    0xf120,
+    fontFamily: largeFontFamily,
+  );
+  static const train_profile_large = IconData(
+    0xf121,
+    fontFamily: largeFontFamily,
+  );
   static const train_large = IconData(0xf122, fontFamily: largeFontFamily);
-  static const traffic_jam_large = IconData(0xf123, fontFamily: largeFontFamily);
-  static const tickets_class_large = IconData(0xf124, fontFamily: largeFontFamily);
+  static const traffic_jam_large = IconData(
+    0xf123,
+    fontFamily: largeFontFamily,
+  );
+  static const tickets_class_large = IconData(
+    0xf124,
+    fontFamily: largeFontFamily,
+  );
   static const ticket_day_large = IconData(0xf125, fontFamily: largeFontFamily);
-  static const three_adults_large = IconData(0xf126, fontFamily: largeFontFamily);
-  static const taxi_profile_large = IconData(0xf127, fontFamily: largeFontFamily);
+  static const three_adults_large = IconData(
+    0xf126,
+    fontFamily: largeFontFamily,
+  );
+  static const taxi_profile_large = IconData(
+    0xf127,
+    fontFamily: largeFontFamily,
+  );
   static const target_large = IconData(0xf128, fontFamily: largeFontFamily);
-  static const tablet_smartphone_large = IconData(0xf129, fontFamily: largeFontFamily);
+  static const tablet_smartphone_large = IconData(
+    0xf129,
+    fontFamily: largeFontFamily,
+  );
   static const tablet_large = IconData(0xf12a, fontFamily: largeFontFamily);
-  static const switzerland_route_large = IconData(0xf12b, fontFamily: largeFontFamily);
-  static const switzerland_large = IconData(0xf12c, fontFamily: largeFontFamily);
+  static const switzerland_route_large = IconData(
+    0xf12b,
+    fontFamily: largeFontFamily,
+  );
+  static const switzerland_large = IconData(
+    0xf12c,
+    fontFamily: largeFontFamily,
+  );
   static const swisspass_large = IconData(0xf12d, fontFamily: largeFontFamily);
-  static const surveillance_cameras_train_large = IconData(0xf12e, fontFamily: largeFontFamily);
+  static const surveillance_cameras_train_large = IconData(
+    0xf12e,
+    fontFamily: largeFontFamily,
+  );
   static const sunshine_large = IconData(0xf12f, fontFamily: largeFontFamily);
-  static const sunshade_sun_sand_large = IconData(0xf130, fontFamily: largeFontFamily);
+  static const sunshade_sun_sand_large = IconData(
+    0xf130,
+    fontFamily: largeFontFamily,
+  );
   static const suitcase_large = IconData(0xf131, fontFamily: largeFontFamily);
-  static const suitcase_disabled_large = IconData(0xf132, fontFamily: largeFontFamily);
-  static const street_location_pin_large = IconData(0xf133, fontFamily: largeFontFamily);
+  static const suitcase_disabled_large = IconData(
+    0xf132,
+    fontFamily: largeFontFamily,
+  );
+  static const street_location_pin_large = IconData(
+    0xf133,
+    fontFamily: largeFontFamily,
+  );
   static const station_large = IconData(0xf134, fontFamily: largeFontFamily);
   static const spanner_large = IconData(0xf135, fontFamily: largeFontFamily);
-  static const soccer_ball_large = IconData(0xf136, fontFamily: largeFontFamily);
+  static const soccer_ball_large = IconData(
+    0xf136,
+    fontFamily: largeFontFamily,
+  );
   static const smartphone_large = IconData(0xf137, fontFamily: largeFontFamily);
-  static const smartphone_disabled_large = IconData(0xf138, fontFamily: largeFontFamily);
-  static const sledge_snowshoe_large = IconData(0xf139, fontFamily: largeFontFamily);
-  static const skis_ski_poles_large = IconData(0xf13a, fontFamily: largeFontFamily);
-  static const sign_parking_large = IconData(0xf13b, fontFamily: largeFontFamily);
-  static const shopping_cart_large = IconData(0xf13c, fontFamily: largeFontFamily);
+  static const smartphone_disabled_large = IconData(
+    0xf138,
+    fontFamily: largeFontFamily,
+  );
+  static const sledge_snowshoe_large = IconData(
+    0xf139,
+    fontFamily: largeFontFamily,
+  );
+  static const skis_ski_poles_large = IconData(
+    0xf13a,
+    fontFamily: largeFontFamily,
+  );
+  static const sign_parking_large = IconData(
+    0xf13b,
+    fontFamily: largeFontFamily,
+  );
+  static const shopping_cart_large = IconData(
+    0xf13c,
+    fontFamily: largeFontFamily,
+  );
   static const share_large = IconData(0xf13d, fontFamily: largeFontFamily);
-  static const seat_window_large = IconData(0xf13e, fontFamily: largeFontFamily);
+  static const seat_window_large = IconData(
+    0xf13e,
+    fontFamily: largeFontFamily,
+  );
   static const sbb_signet_large = IconData(0xf13f, fontFamily: largeFontFamily);
-  static const running_shoe_large = IconData(0xf140, fontFamily: largeFontFamily);
+  static const running_shoe_large = IconData(
+    0xf140,
+    fontFamily: largeFontFamily,
+  );
   static const rocket_large = IconData(0xf141, fontFamily: largeFontFamily);
-  static const railway_switch_large = IconData(0xf142, fontFamily: largeFontFamily);
-  static const railway_ship_large = IconData(0xf143, fontFamily: largeFontFamily);
-  static const question_answer_large = IconData(0xf144, fontFamily: largeFontFamily);
-  static const punctuality_large = IconData(0xf145, fontFamily: largeFontFamily);
+  static const railway_switch_large = IconData(
+    0xf142,
+    fontFamily: largeFontFamily,
+  );
+  static const railway_ship_large = IconData(
+    0xf143,
+    fontFamily: largeFontFamily,
+  );
+  static const question_answer_large = IconData(
+    0xf144,
+    fontFamily: largeFontFamily,
+  );
+  static const punctuality_large = IconData(
+    0xf145,
+    fontFamily: largeFontFamily,
+  );
   static const pretzel_large = IconData(0xf146, fontFamily: largeFontFamily);
   static const platform_large = IconData(0xf147, fontFamily: largeFontFamily);
-  static const pizza_slice_large = IconData(0xf148, fontFamily: largeFontFamily);
+  static const pizza_slice_large = IconData(
+    0xf148,
+    fontFamily: largeFontFamily,
+  );
   static const piggy_bank_large = IconData(0xf149, fontFamily: largeFontFamily);
   static const picture_large = IconData(0xf14a, fontFamily: largeFontFamily);
   static const percent_large = IconData(0xf14b, fontFamily: largeFontFamily);
   static const pen_large = IconData(0xf14c, fontFamily: largeFontFamily);
-  static const park_and_rail_large = IconData(0xf14d, fontFamily: largeFontFamily);
+  static const park_and_rail_large = IconData(
+    0xf14d,
+    fontFamily: largeFontFamily,
+  );
   static const paragraph_large = IconData(0xf14e, fontFamily: largeFontFamily);
   static const paper_clip_large = IconData(0xf14f, fontFamily: largeFontFamily);
-  static const paper_aeroplane_large = IconData(0xf150, fontFamily: largeFontFamily);
+  static const paper_aeroplane_large = IconData(
+    0xf150,
+    fontFamily: largeFontFamily,
+  );
   static const newspaper_large = IconData(0xf151, fontFamily: largeFontFamily);
   static const network_large = IconData(0xf152, fontFamily: largeFontFamily);
-  static const music_rock_hand_gesture_large = IconData(0xf153, fontFamily: largeFontFamily);
-  static const music_notes_large = IconData(0xf154, fontFamily: largeFontFamily);
+  static const music_rock_hand_gesture_large = IconData(
+    0xf153,
+    fontFamily: largeFontFamily,
+  );
+  static const music_notes_large = IconData(
+    0xf154,
+    fontFamily: largeFontFamily,
+  );
   static const museum_large = IconData(0xf155, fontFamily: largeFontFamily);
-  static const mountain_sun_large = IconData(0xf156, fontFamily: largeFontFamily);
-  static const mountain_rock_transmitter_signal_large = IconData(0xf157, fontFamily: largeFontFamily);
-  static const mountain_lake_sun_large = IconData(0xf158, fontFamily: largeFontFamily);
-  static const money_exchange_large = IconData(0xf159, fontFamily: largeFontFamily);
+  static const mountain_sun_large = IconData(
+    0xf156,
+    fontFamily: largeFontFamily,
+  );
+  static const mountain_rock_transmitter_signal_large = IconData(
+    0xf157,
+    fontFamily: largeFontFamily,
+  );
+  static const mountain_lake_sun_large = IconData(
+    0xf158,
+    fontFamily: largeFontFamily,
+  );
+  static const money_exchange_large = IconData(
+    0xf159,
+    fontFamily: largeFontFamily,
+  );
   static const medal_large = IconData(0xf15a, fontFamily: largeFontFamily);
-  static const market_shopping_bag_large = IconData(0xf15b, fontFamily: largeFontFamily);
-  static const magnifying_glass_plus_large = IconData(0xf15c, fontFamily: largeFontFamily);
-  static const magnifying_glass_minus_large = IconData(0xf15d, fontFamily: largeFontFamily);
-  static const magnifying_glass_large = IconData(0xf15e, fontFamily: largeFontFamily);
-  static const lucerne_chapel_bridge_large = IconData(0xf15f, fontFamily: largeFontFamily);
+  static const market_shopping_bag_large = IconData(
+    0xf15b,
+    fontFamily: largeFontFamily,
+  );
+  static const magnifying_glass_plus_large = IconData(
+    0xf15c,
+    fontFamily: largeFontFamily,
+  );
+  static const magnifying_glass_minus_large = IconData(
+    0xf15d,
+    fontFamily: largeFontFamily,
+  );
+  static const magnifying_glass_large = IconData(
+    0xf15e,
+    fontFamily: largeFontFamily,
+  );
+  static const lucerne_chapel_bridge_large = IconData(
+    0xf15f,
+    fontFamily: largeFontFamily,
+  );
   static const lotus_large = IconData(0xf160, fontFamily: largeFontFamily);
-  static const locomotive_viaduct_large = IconData(0xf161, fontFamily: largeFontFamily);
-  static const locomotive_profile_moon_large = IconData(0xf162, fontFamily: largeFontFamily);
+  static const locomotive_viaduct_large = IconData(
+    0xf161,
+    fontFamily: largeFontFamily,
+  );
+  static const locomotive_profile_moon_large = IconData(
+    0xf162,
+    fontFamily: largeFontFamily,
+  );
   static const locomotive_large = IconData(0xf163, fontFamily: largeFontFamily);
-  static const locomotive_high_speed_large = IconData(0xf164, fontFamily: largeFontFamily);
+  static const locomotive_high_speed_large = IconData(
+    0xf164,
+    fontFamily: largeFontFamily,
+  );
   static const lock_open_large = IconData(0xf165, fontFamily: largeFontFamily);
-  static const lock_closed_large = IconData(0xf166, fontFamily: largeFontFamily);
-  static const location_pin_surrounding_area_power_plug_large = IconData(0xf167, fontFamily: largeFontFamily);
-  static const location_pin_surrounding_area_large = IconData(0xf168, fontFamily: largeFontFamily);
-  static const location_pin_map_large = IconData(0xf169, fontFamily: largeFontFamily);
-  static const location_pin_camera_large = IconData(0xf16a, fontFamily: largeFontFamily);
+  static const lock_closed_large = IconData(
+    0xf166,
+    fontFamily: largeFontFamily,
+  );
+  static const location_pin_surrounding_area_power_plug_large = IconData(
+    0xf167,
+    fontFamily: largeFontFamily,
+  );
+  static const location_pin_surrounding_area_large = IconData(
+    0xf168,
+    fontFamily: largeFontFamily,
+  );
+  static const location_pin_map_large = IconData(
+    0xf169,
+    fontFamily: largeFontFamily,
+  );
+  static const location_pin_camera_large = IconData(
+    0xf16a,
+    fontFamily: largeFontFamily,
+  );
   static const list_large = IconData(0xf16b, fontFamily: largeFontFamily);
   static const lips_hand_large = IconData(0xf16c, fontFamily: largeFontFamily);
   static const lighthouse_large = IconData(0xf16d, fontFamily: largeFontFamily);
   static const leaf_large = IconData(0xf16e, fontFamily: largeFontFamily);
-  static const laptop_smartphone_large = IconData(0xf16f, fontFamily: largeFontFamily);
+  static const laptop_smartphone_large = IconData(
+    0xf16f,
+    fontFamily: largeFontFamily,
+  );
   static const laptop_large = IconData(0xf170, fontFamily: largeFontFamily);
   static const house_large = IconData(0xf171, fontFamily: largeFontFamily);
   static const hourglass_large = IconData(0xf172, fontFamily: largeFontFamily);
-  static const hiking_boot_large = IconData(0xf173, fontFamily: largeFontFamily);
+  static const hiking_boot_large = IconData(
+    0xf173,
+    fontFamily: largeFontFamily,
+  );
   static const hierarchy_large = IconData(0xf174, fontFamily: largeFontFamily);
   static const heart_large = IconData(0xf175, fontFamily: largeFontFamily);
-  static const heart_filled_large = IconData(0xf176, fontFamily: largeFontFamily);
+  static const heart_filled_large = IconData(
+    0xf176,
+    fontFamily: largeFontFamily,
+  );
   static const handshake_large = IconData(0xf177, fontFamily: largeFontFamily);
   static const hand_sbb_large = IconData(0xf178, fontFamily: largeFontFamily);
-  static const hand_safety_shield_large = IconData(0xf179, fontFamily: largeFontFamily);
-  static const hand_plus_circle_large = IconData(0xf17a, fontFamily: largeFontFamily);
+  static const hand_safety_shield_large = IconData(
+    0xf179,
+    fontFamily: largeFontFamily,
+  );
+  static const hand_plus_circle_large = IconData(
+    0xf17a,
+    fontFamily: largeFontFamily,
+  );
   static const hand_heart_large = IconData(0xf17b, fontFamily: largeFontFamily);
-  static const hand_graduation_cap_large = IconData(0xf17c, fontFamily: largeFontFamily);
-  static const hand_fingers_snap_large = IconData(0xf17d, fontFamily: largeFontFamily);
+  static const hand_graduation_cap_large = IconData(
+    0xf17c,
+    fontFamily: largeFontFamily,
+  );
+  static const hand_fingers_snap_large = IconData(
+    0xf17d,
+    fontFamily: largeFontFamily,
+  );
   static const gps_large = IconData(0xf17e, fontFamily: largeFontFamily);
-  static const gps_disabled_large = IconData(0xf17f, fontFamily: largeFontFamily);
-  static const globe_locomotive_large = IconData(0xf180, fontFamily: largeFontFamily);
-  static const glass_cocktail_large = IconData(0xf181, fontFamily: largeFontFamily);
+  static const gps_disabled_large = IconData(
+    0xf17f,
+    fontFamily: largeFontFamily,
+  );
+  static const globe_locomotive_large = IconData(
+    0xf180,
+    fontFamily: largeFontFamily,
+  );
+  static const glass_cocktail_large = IconData(
+    0xf181,
+    fontFamily: largeFontFamily,
+  );
   static const gift_large = IconData(0xf182, fontFamily: largeFontFamily);
   static const fullscreen_large = IconData(0xf183, fontFamily: largeFontFamily);
-  static const freight_wagon_weight_large = IconData(0xf184, fontFamily: largeFontFamily);
-  static const freight_wagon_truck_container_large = IconData(0xf185, fontFamily: largeFontFamily);
-  static const freight_wagon_tank_large = IconData(0xf186, fontFamily: largeFontFamily);
-  static const freight_wagon_large = IconData(0xf187, fontFamily: largeFontFamily);
-  static const freight_wagon_car_profile_large = IconData(0xf188, fontFamily: largeFontFamily);
-  static const flame_warning_light_large = IconData(0xf189, fontFamily: largeFontFamily);
+  static const freight_wagon_weight_large = IconData(
+    0xf184,
+    fontFamily: largeFontFamily,
+  );
+  static const freight_wagon_truck_container_large = IconData(
+    0xf185,
+    fontFamily: largeFontFamily,
+  );
+  static const freight_wagon_tank_large = IconData(
+    0xf186,
+    fontFamily: largeFontFamily,
+  );
+  static const freight_wagon_large = IconData(
+    0xf187,
+    fontFamily: largeFontFamily,
+  );
+  static const freight_wagon_car_profile_large = IconData(
+    0xf188,
+    fontFamily: largeFontFamily,
+  );
+  static const flame_warning_light_large = IconData(
+    0xf189,
+    fontFamily: largeFontFamily,
+  );
   static const fireplace_large = IconData(0xf18a, fontFamily: largeFontFamily);
-  static const ferris_wheel_large = IconData(0xf18b, fontFamily: largeFontFamily);
+  static const ferris_wheel_large = IconData(
+    0xf18b,
+    fontFamily: largeFontFamily,
+  );
   static const factory_large = IconData(0xf18c, fontFamily: largeFontFamily);
-  static const face_thinking_smiling_large = IconData(0xf18d, fontFamily: largeFontFamily);
-  static const face_thinking_large = IconData(0xf18e, fontFamily: largeFontFamily);
+  static const face_thinking_smiling_large = IconData(
+    0xf18d,
+    fontFamily: largeFontFamily,
+  );
+  static const face_thinking_large = IconData(
+    0xf18e,
+    fontFamily: largeFontFamily,
+  );
   static const face_tear_large = IconData(0xf18f, fontFamily: largeFontFamily);
-  static const face_smiling_large = IconData(0xf190, fontFamily: largeFontFamily);
+  static const face_smiling_large = IconData(
+    0xf190,
+    fontFamily: largeFontFamily,
+  );
   static const face_sad_large = IconData(0xf191, fontFamily: largeFontFamily);
-  static const face_neutral_large = IconData(0xf192, fontFamily: largeFontFamily);
+  static const face_neutral_large = IconData(
+    0xf192,
+    fontFamily: largeFontFamily,
+  );
   static const face_king_large = IconData(0xf193, fontFamily: largeFontFamily);
-  static const face_grinning_large = IconData(0xf194, fontFamily: largeFontFamily);
-  static const face_disagree_large = IconData(0xf195, fontFamily: largeFontFamily);
+  static const face_grinning_large = IconData(
+    0xf194,
+    fontFamily: largeFontFamily,
+  );
+  static const face_disagree_large = IconData(
+    0xf195,
+    fontFamily: largeFontFamily,
+  );
   static const eye_large = IconData(0xf196, fontFamily: largeFontFamily);
-  static const eye_disabled_large = IconData(0xf197, fontFamily: largeFontFamily);
-  static const europe_flag_large = IconData(0xf198, fontFamily: largeFontFamily);
-  static const envelope_open_large = IconData(0xf199, fontFamily: largeFontFamily);
+  static const eye_disabled_large = IconData(
+    0xf197,
+    fontFamily: largeFontFamily,
+  );
+  static const europe_flag_large = IconData(
+    0xf198,
+    fontFamily: largeFontFamily,
+  );
+  static const envelope_open_large = IconData(
+    0xf199,
+    fontFamily: largeFontFamily,
+  );
   static const envelope_large = IconData(0xf19a, fontFamily: largeFontFamily);
-  static const employees_sbb_large = IconData(0xf19b, fontFamily: largeFontFamily);
+  static const employees_sbb_large = IconData(
+    0xf19b,
+    fontFamily: largeFontFamily,
+  );
   static const elephant_large = IconData(0xf19c, fontFamily: largeFontFamily);
-  static const eiffel_tower_large = IconData(0xf19d, fontFamily: largeFontFamily);
+  static const eiffel_tower_large = IconData(
+    0xf19d,
+    fontFamily: largeFontFamily,
+  );
   static const download_large = IconData(0xf19e, fontFamily: largeFontFamily);
   static const dog_large = IconData(0xf19f, fontFamily: largeFontFamily);
-  static const document_text_large = IconData(0xf1a0, fontFamily: largeFontFamily);
-  static const display_switzerland_warning_light_large = IconData(0xf1a1, fontFamily: largeFontFamily);
+  static const document_text_large = IconData(
+    0xf1a0,
+    fontFamily: largeFontFamily,
+  );
+  static const display_switzerland_warning_light_large = IconData(
+    0xf1a1,
+    fontFamily: largeFontFamily,
+  );
   static const display_large = IconData(0xf1a2, fontFamily: largeFontFamily);
   static const diamond_large = IconData(0xf1a3, fontFamily: largeFontFamily);
   static const cutlery_large = IconData(0xf1a4, fontFamily: largeFontFamily);
-  static const cutlery_disabled_large = IconData(0xf1a5, fontFamily: largeFontFamily);
-  static const curriculum_vitae_large = IconData(0xf1a6, fontFamily: largeFontFamily);
+  static const cutlery_disabled_large = IconData(
+    0xf1a5,
+    fontFamily: largeFontFamily,
+  );
+  static const curriculum_vitae_large = IconData(
+    0xf1a6,
+    fontFamily: largeFontFamily,
+  );
   static const croissant_large = IconData(0xf1a7, fontFamily: largeFontFamily);
   static const controls_large = IconData(0xf1a8, fontFamily: largeFontFamily);
-  static const contact_line_arrow_train_large = IconData(0xf1a9, fontFamily: largeFontFamily);
+  static const contact_line_arrow_train_large = IconData(
+    0xf1a9,
+    fontFamily: largeFontFamily,
+  );
   static const coins_large = IconData(0xf1aa, fontFamily: largeFontFamily);
-  static const coin_dollar_large = IconData(0xf1ab, fontFamily: largeFontFamily);
+  static const coin_dollar_large = IconData(
+    0xf1ab,
+    fontFamily: largeFontFamily,
+  );
   static const cloud_large = IconData(0xf1ac, fontFamily: largeFontFamily);
   static const clock_large = IconData(0xf1ad, fontFamily: largeFontFamily);
-  static const clapperboard_large = IconData(0xf1ae, fontFamily: largeFontFamily);
+  static const clapperboard_large = IconData(
+    0xf1ae,
+    fontFamily: largeFontFamily,
+  );
   static const city_large = IconData(0xf1af, fontFamily: largeFontFamily);
-  static const circle_triangle_square_large = IconData(0xf1b0, fontFamily: largeFontFamily);
-  static const circle_tick_large = IconData(0xf1b1, fontFamily: largeFontFamily);
-  static const circle_question_mark_large = IconData(0xf1b2, fontFamily: largeFontFamily);
-  static const circle_play_large = IconData(0xf1b3, fontFamily: largeFontFamily);
-  static const circle_information_large = IconData(0xf1b4, fontFamily: largeFontFamily);
-  static const circle_cross_large = IconData(0xf1b5, fontFamily: largeFontFamily);
+  static const circle_triangle_square_large = IconData(
+    0xf1b0,
+    fontFamily: largeFontFamily,
+  );
+  static const circle_tick_large = IconData(
+    0xf1b1,
+    fontFamily: largeFontFamily,
+  );
+  static const circle_question_mark_large = IconData(
+    0xf1b2,
+    fontFamily: largeFontFamily,
+  );
+  static const circle_play_large = IconData(
+    0xf1b3,
+    fontFamily: largeFontFamily,
+  );
+  static const circle_information_large = IconData(
+    0xf1b4,
+    fontFamily: largeFontFamily,
+  );
+  static const circle_cross_large = IconData(
+    0xf1b5,
+    fontFamily: largeFontFamily,
+  );
   static const cigarette_large = IconData(0xf1b6, fontFamily: largeFontFamily);
-  static const cigarette_disabled_large = IconData(0xf1b7, fontFamily: largeFontFamily);
-  static const christmas_tree_shopping_bag_large = IconData(0xf1b8, fontFamily: largeFontFamily);
-  static const child_adult_large = IconData(0xf1b9, fontFamily: largeFontFamily);
-  static const checkpoints_large = IconData(0xf1ba, fontFamily: largeFontFamily);
+  static const cigarette_disabled_large = IconData(
+    0xf1b7,
+    fontFamily: largeFontFamily,
+  );
+  static const christmas_tree_shopping_bag_large = IconData(
+    0xf1b8,
+    fontFamily: largeFontFamily,
+  );
+  static const child_adult_large = IconData(
+    0xf1b9,
+    fontFamily: largeFontFamily,
+  );
+  static const checkpoints_large = IconData(
+    0xf1ba,
+    fontFamily: largeFontFamily,
+  );
   static const chart_pie_large = IconData(0xf1bb, fontFamily: largeFontFamily);
   static const chart_line_large = IconData(0xf1bc, fontFamily: largeFontFamily);
-  static const chart_column_trend_large = IconData(0xf1bd, fontFamily: largeFontFamily);
-  static const chart_column_large = IconData(0xf1be, fontFamily: largeFontFamily);
-  static const certificate_ribbon_large = IconData(0xf1bf, fontFamily: largeFontFamily);
-  static const car_profile_user_group_circle_large = IconData(0xf1c0, fontFamily: largeFontFamily);
-  static const car_profile_sign_parking_large = IconData(0xf1c1, fontFamily: largeFontFamily);
-  static const car_profile_power_plug_large = IconData(0xf1c2, fontFamily: largeFontFamily);
-  static const car_profile_large = IconData(0xf1c3, fontFamily: largeFontFamily);
-  static const car_power_plug_large = IconData(0xf1c4, fontFamily: largeFontFamily);
-  static const camera_two_stars_large = IconData(0xf1c5, fontFamily: largeFontFamily);
+  static const chart_column_trend_large = IconData(
+    0xf1bd,
+    fontFamily: largeFontFamily,
+  );
+  static const chart_column_large = IconData(
+    0xf1be,
+    fontFamily: largeFontFamily,
+  );
+  static const certificate_ribbon_large = IconData(
+    0xf1bf,
+    fontFamily: largeFontFamily,
+  );
+  static const car_profile_user_group_circle_large = IconData(
+    0xf1c0,
+    fontFamily: largeFontFamily,
+  );
+  static const car_profile_sign_parking_large = IconData(
+    0xf1c1,
+    fontFamily: largeFontFamily,
+  );
+  static const car_profile_power_plug_large = IconData(
+    0xf1c2,
+    fontFamily: largeFontFamily,
+  );
+  static const car_profile_large = IconData(
+    0xf1c3,
+    fontFamily: largeFontFamily,
+  );
+  static const car_power_plug_large = IconData(
+    0xf1c4,
+    fontFamily: largeFontFamily,
+  );
+  static const camera_two_stars_large = IconData(
+    0xf1c5,
+    fontFamily: largeFontFamily,
+  );
   static const camera_large = IconData(0xf1c6, fontFamily: largeFontFamily);
-  static const calendar_one_day_large = IconData(0xf1c7, fontFamily: largeFontFamily);
+  static const calendar_one_day_large = IconData(
+    0xf1c7,
+    fontFamily: largeFontFamily,
+  );
   static const calendar_large = IconData(0xf1c8, fontFamily: largeFontFamily);
   static const calculator_large = IconData(0xf1c9, fontFamily: largeFontFamily);
   static const bus_train_large = IconData(0xf1ca, fontFamily: largeFontFamily);
   static const bulb_on_large = IconData(0xf1cb, fontFamily: largeFontFamily);
   static const bulb_off_large = IconData(0xf1cc, fontFamily: largeFontFamily);
-  static const building_tree_large = IconData(0xf1cd, fontFamily: largeFontFamily);
-  static const bucket_foam_broom_large = IconData(0xf1ce, fontFamily: largeFontFamily);
+  static const building_tree_large = IconData(
+    0xf1cd,
+    fontFamily: largeFontFamily,
+  );
+  static const bucket_foam_broom_large = IconData(
+    0xf1ce,
+    fontFamily: largeFontFamily,
+  );
   static const browser_large = IconData(0xf1cf, fontFamily: largeFontFamily);
   static const brochure_large = IconData(0xf1d0, fontFamily: largeFontFamily);
   static const briefcase_large = IconData(0xf1d1, fontFamily: largeFontFamily);
   static const bridge_large = IconData(0xf1d2, fontFamily: largeFontFamily);
   static const bluetooth_large = IconData(0xf1d3, fontFamily: largeFontFamily);
-  static const bluetooth_disabled_large = IconData(0xf1d4, fontFamily: largeFontFamily);
+  static const bluetooth_disabled_large = IconData(
+    0xf1d4,
+    fontFamily: largeFontFamily,
+  );
   static const binoculars_large = IconData(0xf1d5, fontFamily: largeFontFamily);
-  static const bicycle_roof_surveillance_camera_large = IconData(0xf1d6, fontFamily: largeFontFamily);
-  static const bicycle_roof_key_large = IconData(0xf1d7, fontFamily: largeFontFamily);
-  static const bicycle_reservation_large = IconData(0xf1d8, fontFamily: largeFontFamily);
-  static const bicycle_profile_user_group_circle_large = IconData(0xf1d9, fontFamily: largeFontFamily);
+  static const bicycle_roof_surveillance_camera_large = IconData(
+    0xf1d6,
+    fontFamily: largeFontFamily,
+  );
+  static const bicycle_roof_key_large = IconData(
+    0xf1d7,
+    fontFamily: largeFontFamily,
+  );
+  static const bicycle_reservation_large = IconData(
+    0xf1d8,
+    fontFamily: largeFontFamily,
+  );
+  static const bicycle_profile_user_group_circle_large = IconData(
+    0xf1d9,
+    fontFamily: largeFontFamily,
+  );
   static const bicycle_large = IconData(0xf1da, fontFamily: largeFontFamily);
   static const bell_large = IconData(0xf1db, fontFamily: largeFontFamily);
-  static const bell_disabled_large = IconData(0xf1dc, fontFamily: largeFontFamily);
-  static const battery_level_medium_large = IconData(0xf1dd, fontFamily: largeFontFamily);
-  static const battery_level_low_large = IconData(0xf1de, fontFamily: largeFontFamily);
-  static const battery_level_high_large = IconData(0xf1df, fontFamily: largeFontFamily);
-  static const battery_level_empty_large = IconData(0xf1e0, fontFamily: largeFontFamily);
-  static const barrier_construction_large = IconData(0xf1e1, fontFamily: largeFontFamily);
-  static const banknotes_dollar_large = IconData(0xf1e2, fontFamily: largeFontFamily);
+  static const bell_disabled_large = IconData(
+    0xf1dc,
+    fontFamily: largeFontFamily,
+  );
+  static const battery_level_medium_large = IconData(
+    0xf1dd,
+    fontFamily: largeFontFamily,
+  );
+  static const battery_level_low_large = IconData(
+    0xf1de,
+    fontFamily: largeFontFamily,
+  );
+  static const battery_level_high_large = IconData(
+    0xf1df,
+    fontFamily: largeFontFamily,
+  );
+  static const battery_level_empty_large = IconData(
+    0xf1e0,
+    fontFamily: largeFontFamily,
+  );
+  static const barrier_construction_large = IconData(
+    0xf1e1,
+    fontFamily: largeFontFamily,
+  );
+  static const banknotes_dollar_large = IconData(
+    0xf1e2,
+    fontFamily: largeFontFamily,
+  );
   static const balloons_large = IconData(0xf1e3, fontFamily: largeFontFamily);
   static const backpack_large = IconData(0xf1e4, fontFamily: largeFontFamily);
-  static const avatar_train_staff_large = IconData(0xf1e5, fontFamily: largeFontFamily);
-  static const avatar_train_staff_disabled_large = IconData(0xf1e6, fontFamily: largeFontFamily);
-  static const avatar_police_large = IconData(0xf1e7, fontFamily: largeFontFamily);
-  static const armchair_profile_user_large = IconData(0xf1e8, fontFamily: largeFontFamily);
+  static const avatar_train_staff_large = IconData(
+    0xf1e5,
+    fontFamily: largeFontFamily,
+  );
+  static const avatar_train_staff_disabled_large = IconData(
+    0xf1e6,
+    fontFamily: largeFontFamily,
+  );
+  static const avatar_police_large = IconData(
+    0xf1e7,
+    fontFamily: largeFontFamily,
+  );
+  static const armchair_profile_user_large = IconData(
+    0xf1e8,
+    fontFamily: largeFontFamily,
+  );
   static const armchair_large = IconData(0xf1e9, fontFamily: largeFontFamily);
-  static const archive_box_large = IconData(0xf1ea, fontFamily: largeFontFamily);
+  static const archive_box_large = IconData(
+    0xf1ea,
+    fontFamily: largeFontFamily,
+  );
   static const apple_bag_large = IconData(0xf1eb, fontFamily: largeFontFamily);
   static const app_icon_large = IconData(0xf1ec, fontFamily: largeFontFamily);
-  static const alarm_clock_large = IconData(0xf1ed, fontFamily: largeFontFamily);
-  static const airplane_train_large = IconData(0xf1ee, fontFamily: largeFontFamily);
-  static const aerosol_can_large = IconData(0xf1ef, fontFamily: largeFontFamily);
+  static const alarm_clock_large = IconData(
+    0xf1ed,
+    fontFamily: largeFontFamily,
+  );
+  static const airplane_train_large = IconData(
+    0xf1ee,
+    fontFamily: largeFontFamily,
+  );
+  static const aerosol_can_large = IconData(
+    0xf1ef,
+    fontFamily: largeFontFamily,
+  );
   static const adult_kids_large = IconData(0xf1f0, fontFamily: largeFontFamily);
 }

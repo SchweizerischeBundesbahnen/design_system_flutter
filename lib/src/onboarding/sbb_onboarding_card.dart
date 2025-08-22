@@ -15,12 +15,12 @@ class SBBOnboardingCard extends StatelessWidget {
     VoidCallback? onDismissed,
     Key? key,
   }) : this.extended(
-          title: title,
-          content: content,
-          customContent: null,
-          onDismissed: onDismissed,
-          key: key,
-        );
+         title: title,
+         content: content,
+         customContent: null,
+         onDismissed: onDismissed,
+         key: key,
+       );
 
   SBBOnboardingCard.extended({
     required String title,
@@ -30,36 +30,36 @@ class SBBOnboardingCard extends StatelessWidget {
     VoidCallback? onDismissed,
     Key? key,
   }) : this(
-          key: key,
-          onDismissed: onDismissed,
-          widgetBuilder: (BuildContext context, Orientation orientation) {
-            switch (orientation) {
-              case Orientation.portrait:
-                return _VerticalCard(
-                  embeddedChild: embeddedChild,
-                  title: title,
-                  content: content,
-                  customContent: customContent,
-                );
-              case Orientation.landscape:
-                return _HorizontalCard(
-                  embeddedChild: embeddedChild,
-                  title: title,
-                  content: content,
-                  customContent: customContent,
-                );
-            }
-          },
-        );
+         key: key,
+         onDismissed: onDismissed,
+         widgetBuilder: (BuildContext context, Orientation orientation) {
+           switch (orientation) {
+             case Orientation.portrait:
+               return _VerticalCard(
+                 embeddedChild: embeddedChild,
+                 title: title,
+                 content: content,
+                 customContent: customContent,
+               );
+             case Orientation.landscape:
+               return _HorizontalCard(
+                 embeddedChild: embeddedChild,
+                 title: title,
+                 content: content,
+                 customContent: customContent,
+               );
+           }
+         },
+       );
 
   final OrientationWidgetBuilder widgetBuilder;
   final VoidCallback? onDismissed;
 
   @override
   Widget build(BuildContext context) => widgetBuilder(
-        context,
-        MediaQuery.of(context).orientation,
-      );
+    context,
+    MediaQuery.of(context).orientation,
+  );
 }
 
 class _VerticalCard extends StatelessWidget {

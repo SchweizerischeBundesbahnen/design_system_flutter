@@ -199,7 +199,8 @@ class SBBPickerScrollController extends ScrollController {
   }
 
   double _targetOffset(double offset) {
-    final indexBasedPositionOffset = (0 - initialItem - _indexOffset) * _itemHeight;
+    final indexBasedPositionOffset =
+        (0 - initialItem - _indexOffset) * _itemHeight;
     return offset + indexBasedPositionOffset;
   }
 

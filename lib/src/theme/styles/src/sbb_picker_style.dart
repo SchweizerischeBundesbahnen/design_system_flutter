@@ -7,7 +7,8 @@ class SBBPickerStyle {
     this.textStyle,
   });
 
-  factory SBBPickerStyle.$default({required SBBBaseStyle baseStyle}) => SBBPickerStyle(
+  factory SBBPickerStyle.$default({required SBBBaseStyle baseStyle}) =>
+      SBBPickerStyle(
         highlightColor: baseStyle.themeValue(SBBColors.cloud, SBBColors.iron),
         textStyle: baseStyle.defaultTextStyle?.copyWith(
           fontFamily: SBBFontFamily.sbbFontRoman,
@@ -22,16 +23,15 @@ class SBBPickerStyle {
   SBBPickerStyle copyWith({
     Color? highlightColor,
     TextStyle? textStyle,
-  }) =>
-      SBBPickerStyle(
-        highlightColor: highlightColor ?? this.highlightColor,
-        textStyle: textStyle ?? this.textStyle,
-      );
+  }) => SBBPickerStyle(
+    highlightColor: highlightColor ?? this.highlightColor,
+    textStyle: textStyle ?? this.textStyle,
+  );
 
   SBBPickerStyle lerp(SBBPickerStyle? other, double t) => SBBPickerStyle(
-        highlightColor: Color.lerp(highlightColor, other?.highlightColor, t),
-        textStyle: TextStyle.lerp(textStyle, other?.textStyle, t),
-      );
+    highlightColor: Color.lerp(highlightColor, other?.highlightColor, t),
+    textStyle: TextStyle.lerp(textStyle, other?.textStyle, t),
+  );
 }
 
 extension SBBPickerStyleExtension on SBBPickerStyle? {

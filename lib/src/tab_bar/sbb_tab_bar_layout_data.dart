@@ -16,12 +16,17 @@ class SBBTabBarLayoutData {
   final List<Offset> positions;
 
   List<TabCurves> curves(bool portrait) {
-    final diameter = portrait ? TabItemWidget.portraitSize : TabItemWidget.landscapeSize;
+    final diameter =
+        portrait ? TabItemWidget.portraitSize : TabItemWidget.landscapeSize;
     final radius = diameter / 2.0;
     return positions.map((p) {
       return TabCurves(
         midX: p.dx + radius + 4.0,
-        waveRadius: radius + (portrait ? TabItemWidget.portraitCirclePadding : TabItemWidget.landscapeCirclePadding),
+        waveRadius:
+            radius +
+            (portrait
+                ? TabItemWidget.portraitCirclePadding
+                : TabItemWidget.landscapeCirclePadding),
       );
     }).toList();
   }

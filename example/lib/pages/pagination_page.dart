@@ -12,10 +12,9 @@ class PaginationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Padding(
       padding: EdgeInsets.all(sbbDefaultSpacing),
-      child: Column(children: <Widget>[
-        ThemeModeSegmentedButton(),
-        PaginationView(),
-      ]),
+      child: Column(
+        children: <Widget>[ThemeModeSegmentedButton(), PaginationView()],
+      ),
     );
   }
 }
@@ -50,11 +49,12 @@ class _PaginationViewState extends State<PaginationView> {
             Expanded(
               flex: 10,
               child: PageView(
-                  onPageChanged: _changeCurrentPage,
-                  children: List<Widget>.generate(
-                    _kNumberPages,
-                    (int index) => _IndexedTextPage(pageIndex: index),
-                  )),
+                onPageChanged: _changeCurrentPage,
+                children: List<Widget>.generate(
+                  _kNumberPages,
+                  (int index) => _IndexedTextPage(pageIndex: index),
+                ),
+              ),
             ),
           ],
         ),
@@ -77,8 +77,8 @@ class _PaginationViewState extends State<PaginationView> {
   }
 
   void _changeCurrentPage(int page) => setState(() {
-        currentPage = page;
-      });
+    currentPage = page;
+  });
 }
 
 class _LabeledSBBPagination extends StatelessWidget {
@@ -96,10 +96,7 @@ class _LabeledSBBPagination extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(
-          label,
-          style: SBBTextStyles.extraSmallLight,
-        ),
+        Text(label, style: SBBTextStyles.extraSmallLight),
         const SizedBox(height: sbbDefaultSpacing),
         SBBPagination(
           currentPage: currentPage,
@@ -118,8 +115,6 @@ class _IndexedTextPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('Page #${pageIndex + 1}'),
-    );
+    return Center(child: Text('Page #${pageIndex + 1}'));
   }
 }

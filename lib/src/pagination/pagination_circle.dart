@@ -13,7 +13,8 @@ class PaginationCircle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = SBBControlStyles.of(context).pagination!;
-    final resolvedDrawingColor = isSelected ? style.selectedColor! : style.borderColor!;
+    final resolvedDrawingColor =
+        isSelected ? style.selectedColor! : style.borderColor!;
 
     return AnimatedContainer(
       margin: isSelected ? EdgeInsets.zero : _unselectedPadding,

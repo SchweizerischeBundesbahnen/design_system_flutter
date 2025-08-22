@@ -7,10 +7,11 @@ part of 'sbb_picker.dart';
 ///
 /// Unlike most builders, this callback can return null, indicating the index
 /// is out of range.
-typedef SBBPickerScrollViewItemBuilder = SBBPickerItem? Function(
-  BuildContext context,
-  int index,
-);
+typedef SBBPickerScrollViewItemBuilder =
+    SBBPickerItem? Function(
+      BuildContext context,
+      int index,
+    );
 
 /// A box in which children on a wheel can be scrolled. Should only be used in
 /// combination with [SBBPicker.custom].
@@ -76,7 +77,9 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
   static const _disabledItemOpacity = 0.35;
 
   List<double> get _visibleItemHeights =>
-      _visibleItemHeightAdjustments.map((adjustment) => _itemHeight + adjustment).toList();
+      _visibleItemHeightAdjustments
+          .map((adjustment) => _itemHeight + adjustment)
+          .toList();
 
   double get _listPaddingHeight => _visibleCenterItemIndex * _itemHeight;
 
@@ -240,7 +243,8 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
       builder: (_, int firstVisibleItemIndex, placeholderItem) {
         // check if item visible
         final itemVisible =
-            itemIndex >= firstVisibleItemIndex && itemIndex <= firstVisibleItemIndex + _visibleItemCount;
+            itemIndex >= firstVisibleItemIndex &&
+            itemIndex <= firstVisibleItemIndex + _visibleItemCount;
         if (!itemVisible) {
           // return placeholder item for out of sight items
           return placeholderItem!;
@@ -297,7 +301,8 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
 
   void _onScrolling() {
     final offset = _controller.offset;
-    final firstVisibleItemIndex = _controller._offsetToIndex(offset).floor() - _visibleCenterItemIndex;
+    final firstVisibleItemIndex =
+        _controller._offsetToIndex(offset).floor() - _visibleCenterItemIndex;
     var selectedItemIndex = _controller.selectedItem;
 
     // make sure calculated index is within list range
