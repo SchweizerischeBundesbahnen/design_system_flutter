@@ -9,10 +9,7 @@ part of 'sbb_picker.dart';
 ///
 /// * [SBBPickerScrollView], which is the widget this object controls.
 class SBBPickerScrollController extends ScrollController {
-  SBBPickerScrollController({
-    this.initialItem = 0,
-    this.onTargetItemSelected,
-  });
+  SBBPickerScrollController({this.initialItem = 0, this.onTargetItemSelected});
 
   final ValueNotifier<bool> _scrollingStateNotifier = ValueNotifier(false);
   late VoidCallback _isScrollingListener;
@@ -61,11 +58,7 @@ class SBBPickerScrollController extends ScrollController {
     Duration duration = kThemeAnimationDuration,
     Curve curve = Curves.fastOutSlowIn,
   }) async {
-    await animateTo(
-      itemIndex * _itemHeight,
-      duration: duration,
-      curve: curve,
-    );
+    await animateTo(itemIndex * _itemHeight, duration: duration, curve: curve);
   }
 
   /// Animates the position from its current offset to the given offset.
@@ -97,11 +90,7 @@ class SBBPickerScrollController extends ScrollController {
     Curve curve = Curves.fastOutSlowIn,
   }) async {
     final targetOffset = _targetOffset(offset);
-    return super.animateTo(
-      targetOffset,
-      duration: duration,
-      curve: curve,
-    );
+    return super.animateTo(targetOffset, duration: duration, curve: curve);
   }
 
   /// Jumps the scroll position from the current item to the item at the given
@@ -160,9 +149,7 @@ class SBBPickerScrollController extends ScrollController {
         // ensure scroll position snaps to the nearest item after controller is
         // done scrolling
         final currentScrollPosition = position.pixels;
-        final targetScrollPosition = _snappedScrollPosition(
-          currentScrollPosition,
-        );
+        final targetScrollPosition = _snappedScrollPosition(currentScrollPosition);
 
         // Due to the workaround in the target scroll position calculation, the
         // calculated position may be slightly inaccurate. As a result, if the
@@ -171,10 +158,7 @@ class SBBPickerScrollController extends ScrollController {
         final difference = (currentScrollPosition - targetScrollPosition).abs();
         if (difference > 0.01) {
           onTargetItemSelected?.call(selectedItem);
-          animateToItem(
-            selectedItem,
-            curve: Curves.easeInOut,
-          ).whenComplete(() {
+          animateToItem(selectedItem, curve: Curves.easeInOut).whenComplete(() {
             // update scrolling value after animation is complete
             _scrollingStateNotifier.value = position.isScrollingNotifier.value;
           });

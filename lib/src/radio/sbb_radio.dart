@@ -130,9 +130,7 @@ class SBBRadio<T> extends StatelessWidget {
                 color: enabled ? style?.basic?.backgroundColor : style?.basic?.backgroundColorDisabled,
                 shape: BoxShape.circle,
                 border: Border.fromBorderSide(
-                  BorderSide(
-                    color: (enabled ? style?.basic?.borderColor : style?.basic?.borderColorDisabled)!,
-                  ),
+                  BorderSide(color: (enabled ? style?.basic?.borderColor : style?.basic?.borderColorDisabled)!),
                 ),
               ),
               child: Center(

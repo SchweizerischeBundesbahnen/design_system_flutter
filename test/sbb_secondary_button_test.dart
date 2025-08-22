@@ -17,12 +17,6 @@ void main() {
         ],
       ),
     );
-    await TestSpecs.run(
-      TestSpecs.themedSpecs,
-      widget,
-      tester,
-      'secondary_button',
-      find.byType(Column).first,
-    );
+    await TestSpecs.run(TestSpecs.themedSpecs, widget, tester, 'secondary_button', find.byType(Column).first);
   });
 }

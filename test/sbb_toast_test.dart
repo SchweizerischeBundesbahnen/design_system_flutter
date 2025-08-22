@@ -19,13 +19,7 @@ void main() {
   testWidgets('toast basic test', (WidgetTester tester) async {
     final widget = Column(
       children: [
-        ToastContainer(
-          stream: stream1,
-          child: DefaultToastBody(
-            title: 'Toast',
-            duration: duration,
-          ),
-        ),
+        ToastContainer(stream: stream1, child: DefaultToastBody(title: 'Toast', duration: duration)),
         SizedBox(height: sbbDefaultSpacing),
         ToastContainer(
           stream: stream2,
@@ -85,12 +79,6 @@ void main() {
       ],
     );
 
-    await TestSpecs.run(
-      TestSpecs.themedSpecs,
-      widget,
-      tester,
-      'sbb_toast_test',
-      find.byType(Column).first,
-    );
+    await TestSpecs.run(TestSpecs.themedSpecs, widget, tester, 'sbb_toast_test', find.byType(Column).first);
   });
 }

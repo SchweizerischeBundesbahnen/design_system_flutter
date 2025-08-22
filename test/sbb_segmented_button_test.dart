@@ -66,16 +66,10 @@ void main() {
               withText: true,
             ),
             const SizedBox(height: sbbDefaultSpacing),
-            SBBSegmentedButton(
-              values: const ['Single Option'],
-              selectedStateIndex: 0,
-              selectedIndexChanged: (_) {},
-            ),
+            SBBSegmentedButton(values: const ['Single Option'], selectedStateIndex: 0, selectedIndexChanged: (_) {}),
             const SizedBox(height: sbbDefaultSpacing),
             SBBSegmentedButton.icon(
-              icons: {
-                SBBIcons.user_small: 'Single',
-              },
+              icons: {SBBIcons.user_small: 'Single'},
               selectedStateIndex: 0,
               selectedIndexChanged: (_) {},
               withText: true,
@@ -85,12 +79,6 @@ void main() {
       ),
     );
 
-    await TestSpecs.run(
-      TestSpecs.themedSpecs,
-      widget,
-      tester,
-      'segmented_button_1',
-      find.byType(Align).first,
-    );
+    await TestSpecs.run(TestSpecs.themedSpecs, widget, tester, 'segmented_button_1', find.byType(Align).first);
   });
 }

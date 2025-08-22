@@ -22,13 +22,8 @@ class SBBNotificationBoxContent extends StatelessWidget {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (icon != null) ...[
-          icon!,
-          const SizedBox(width: 8.0),
-        ],
-        Expanded(
-          child: NotificationBoxTextContent(text: text, icon: detailsIcon),
-        ),
+        if (icon != null) ...[icon!, const SizedBox(width: 8.0)],
+        Expanded(child: NotificationBoxTextContent(text: text, icon: detailsIcon)),
         if (isCloseable) const SizedBox(width: sbbIconSizeSmall),
       ],
     );

@@ -39,24 +39,23 @@ class SBBSliderStyle {
     Color? thumbBackgroundColor,
     Color? iconColor,
     Color? disabledIconColor,
-  }) =>
-      SBBSliderStyle(
-        activeTrackColor: activeTrackColor ?? this.activeTrackColor,
-        inactiveTrackColor: inactiveTrackColor ?? this.inactiveTrackColor,
-        thumbColor: thumbColor ?? this.thumbColor,
-        thumbBorderColor: thumbBorderColor ?? this.thumbBorderColor,
-        iconColor: iconColor ?? this.iconColor,
-        disabledIconColor: disabledIconColor ?? this.disabledIconColor,
-      );
+  }) => SBBSliderStyle(
+    activeTrackColor: activeTrackColor ?? this.activeTrackColor,
+    inactiveTrackColor: inactiveTrackColor ?? this.inactiveTrackColor,
+    thumbColor: thumbColor ?? this.thumbColor,
+    thumbBorderColor: thumbBorderColor ?? this.thumbBorderColor,
+    iconColor: iconColor ?? this.iconColor,
+    disabledIconColor: disabledIconColor ?? this.disabledIconColor,
+  );
 
   SBBSliderStyle lerp(SBBSliderStyle? other, double t) => SBBSliderStyle(
-        activeTrackColor: Color.lerp(activeTrackColor, other?.activeTrackColor, t),
-        inactiveTrackColor: Color.lerp(inactiveTrackColor, other?.inactiveTrackColor, t),
-        thumbColor: Color.lerp(thumbColor, other?.thumbColor, t),
-        thumbBorderColor: Color.lerp(thumbBorderColor, other?.thumbBorderColor, t),
-        iconColor: Color.lerp(iconColor, other?.iconColor, t),
-        disabledIconColor: Color.lerp(disabledIconColor, other?.disabledIconColor, t),
-      );
+    activeTrackColor: Color.lerp(activeTrackColor, other?.activeTrackColor, t),
+    inactiveTrackColor: Color.lerp(inactiveTrackColor, other?.inactiveTrackColor, t),
+    thumbColor: Color.lerp(thumbColor, other?.thumbColor, t),
+    thumbBorderColor: Color.lerp(thumbBorderColor, other?.thumbBorderColor, t),
+    iconColor: Color.lerp(iconColor, other?.iconColor, t),
+    disabledIconColor: Color.lerp(disabledIconColor, other?.disabledIconColor, t),
+  );
 }
 
 extension SBBSliderStyleExtension on SBBSliderStyle? {

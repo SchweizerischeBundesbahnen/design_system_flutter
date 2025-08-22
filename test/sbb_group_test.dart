@@ -25,12 +25,6 @@ void main() {
       ),
     );
 
-    await TestSpecs.run(
-      TestSpecs.themedSpecs,
-      widget,
-      tester,
-      'group_1',
-      find.byType(Column).first,
-    );
+    await TestSpecs.run(TestSpecs.themedSpecs, widget, tester, 'group_1', find.byType(Column).first);
   });
 }

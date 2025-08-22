@@ -9,33 +9,13 @@ class SBBInternal {
 
   static const barrierColor = Color(0x80000000);
 
-  static const defaultBoxShadow = <BoxShadow>[
-    BoxShadow(
-      color: Color(0x18000000),
-      blurRadius: 15,
-    )
-  ];
+  static const defaultBoxShadow = <BoxShadow>[BoxShadow(color: Color(0x18000000), blurRadius: 15)];
 
-  static const defaultDarkBoxShadow = <BoxShadow>[
-    BoxShadow(
-      color: Color(0xCC000000),
-      blurRadius: 2,
-    )
-  ];
+  static const defaultDarkBoxShadow = <BoxShadow>[BoxShadow(color: Color(0xCC000000), blurRadius: 2)];
 
-  static const defaultRedBoxShadow = <BoxShadow>[
-    BoxShadow(
-      color: Color(0x33000000),
-      blurRadius: 2,
-    )
-  ];
+  static const defaultRedBoxShadow = <BoxShadow>[BoxShadow(color: Color(0x33000000), blurRadius: 2)];
 
-  static const barrierBoxShadow = <BoxShadow>[
-    BoxShadow(
-      color: SBBInternal.barrierColor,
-      blurRadius: 15,
-    ),
-  ];
+  static const barrierBoxShadow = <BoxShadow>[BoxShadow(color: SBBInternal.barrierColor, blurRadius: 15)];
 }
 
 class SBBButtonContent extends StatelessWidget {
@@ -45,12 +25,6 @@ class SBBButtonContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Flexible(
-      child: Text(
-        label,
-        overflow: TextOverflow.ellipsis,
-        maxLines: 1,
-      ),
-    );
+    return Flexible(child: Text(label, overflow: TextOverflow.ellipsis, maxLines: 1));
   }
 }

@@ -15,41 +15,23 @@ void main() {
         const SBBPagination(numberPages: 5, currentPage: 4),
         const SizedBox(height: sbbDefaultSpacing),
         // floating
-        const SBBPagination(
-          numberPages: 1,
-          currentPage: 0,
-          isFloating: true,
-        ),
+        const SBBPagination(numberPages: 1, currentPage: 0, isFloating: true),
         const SizedBox(height: sbbDefaultSpacing),
         // add containter to see the shadow and floating box
         Container(
           color: SBBColors.white,
           padding: const EdgeInsets.all(sbbDefaultSpacing),
-          child: const SBBPagination(
-            numberPages: 2,
-            currentPage: 0,
-            isFloating: true,
-          ),
+          child: const SBBPagination(numberPages: 2, currentPage: 0, isFloating: true),
         ),
         const SizedBox(height: sbbDefaultSpacing),
         Container(
           color: SBBColors.white,
           padding: const EdgeInsets.all(sbbDefaultSpacing),
-          child: const SBBPagination(
-            numberPages: 5,
-            currentPage: 4,
-            isFloating: true,
-          ),
+          child: const SBBPagination(numberPages: 5, currentPage: 4, isFloating: true),
         ),
       ],
     );
 
-    await TestSpecs.run(
-      TestSpecs.themedSpecs,
-      widget,
-      tester,
-      'pagination',
-      find.byType(Column).first,
-    );
+    await TestSpecs.run(TestSpecs.themedSpecs, widget, tester, 'pagination', find.byType(Column).first);
   });
 }

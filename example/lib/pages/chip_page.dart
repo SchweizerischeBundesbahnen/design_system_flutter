@@ -32,32 +32,35 @@ class _ChipPageState extends State<ChipPage> {
                 label: 'Default',
                 badgeLabel: 9.toString(),
                 selected: _selected1,
-                onSelection: (selected) => {
-                  setState(() {
-                    _selected1 = selected;
-                  })
-                },
+                onSelection:
+                    (selected) => {
+                      setState(() {
+                        _selected1 = selected;
+                      }),
+                    },
               ),
               const SizedBox(height: sbbDefaultSpacing),
               SBBChip(
                 label: 'No badge label',
                 selected: _selected2,
-                onSelection: (selected) => {
-                  setState(() {
-                    _selected2 = selected;
-                  })
-                },
+                onSelection:
+                    (selected) => {
+                      setState(() {
+                        _selected2 = selected;
+                      }),
+                    },
               ),
               const SizedBox(height: sbbDefaultSpacing),
               SBBChip(
                 label: 'Selected',
                 badgeLabel: 'Label',
                 selected: _selected3,
-                onSelection: (selected) => {
-                  setState(() {
-                    _selected3 = selected;
-                  })
-                },
+                onSelection:
+                    (selected) => {
+                      setState(() {
+                        _selected3 = selected;
+                      }),
+                    },
               ),
             ],
           ),

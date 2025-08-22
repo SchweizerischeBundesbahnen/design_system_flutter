@@ -4,5 +4,10 @@ import 'package:provider/provider.dart';
 import 'native_app.dart';
 
 void main() {
-  runApp(ChangeNotifierProvider<AppState>(create: (BuildContext context) => AppState(), child: MyApp()));
+  runApp(
+    ChangeNotifierProvider<AppState>(
+      create: (BuildContext context) => AppState(),
+      child: MyApp(),
+    ),
+  );
 }

@@ -59,16 +59,15 @@ class _IconShowCase extends StatelessWidget {
       child: GridView.builder(
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: iconSize + sbbDefaultSpacing),
+        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: iconSize + sbbDefaultSpacing,
+        ),
         itemCount: icons.length,
         itemBuilder: (BuildContext context, index) {
           final icon = icons[index];
           return IconButton(
             padding: EdgeInsets.zero,
-            icon: Icon(
-              icon['icon'] as IconData,
-              size: iconSize,
-            ),
+            icon: Icon(icon['icon'] as IconData, size: iconSize),
             onPressed: () {
               sbbToast.show(title: icon['name'] as String);
             },

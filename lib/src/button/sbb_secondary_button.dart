@@ -39,10 +39,7 @@ class SBBSecondaryButton extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           if (isLoading)
-            style.themeValue(
-              const SBBLoadingIndicator.tinySmoke(),
-              const SBBLoadingIndicator.tinyCement(),
-            ),
+            style.themeValue(const SBBLoadingIndicator.tinySmoke(), const SBBLoadingIndicator.tinyCement()),
           buttonStyles.buttonLabelBuilder!(context, label),
         ],
       ),

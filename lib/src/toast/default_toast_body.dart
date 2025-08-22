@@ -5,13 +5,7 @@ import '../../sbb_design_system_mobile.dart';
 import 'toast_action_body.dart';
 
 class DefaultToastBody extends StatelessWidget {
-  const DefaultToastBody({
-    super.key,
-    required this.title,
-    required this.duration,
-    this.action,
-    this.style,
-  });
+  const DefaultToastBody({super.key, required this.title, required this.duration, this.action, this.style});
 
   final String title;
   final Duration duration;
@@ -44,11 +38,7 @@ class DefaultToastBody extends StatelessWidget {
   Widget _bodyWithTextAndAction(SBBToastStyle resolvedStyle, BuildContext context) {
     if (action == null) return _bodyWithText(resolvedStyle);
 
-    final builtAction = ToastActionBody(
-      onPressed: action!.onPressed,
-      title: action!.title,
-      style: resolvedStyle,
-    );
+    final builtAction = ToastActionBody(onPressed: action!.onPressed, title: action!.title, style: resolvedStyle);
 
     double actionAndMarginWidth = _actionAndMarginWidth(resolvedStyle.actionTextStyle);
 

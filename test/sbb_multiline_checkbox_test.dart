@@ -50,21 +50,21 @@ class MultilineCheckboxTextState extends State<MultilineCheckboxText> {
 
   @override
   Widget build(BuildContext context) => Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          SBBGroup(
-            child: SBBCheckboxListItem(
-              key: const Key('checkbox'),
-              value: _listItemValue,
-              label: 'Multiline Label with\nSecondary Label',
-              allowMultilineLabel: true,
-              secondaryLabel:
-                  'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut convallis leo et metus semper hendrerit. Duis nec nunc a ligula cursus vulputate. Donec sed elit ultricies, euismod erat et, eleifend augue.',
-              isLastElement: true,
-              tristate: true,
-              onChanged: (value) => setState(() => _listItemValue = value),
-            ),
-          ),
-        ],
-      );
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      SBBGroup(
+        child: SBBCheckboxListItem(
+          key: const Key('checkbox'),
+          value: _listItemValue,
+          label: 'Multiline Label with\nSecondary Label',
+          allowMultilineLabel: true,
+          secondaryLabel:
+              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut convallis leo et metus semper hendrerit. Duis nec nunc a ligula cursus vulputate. Donec sed elit ultricies, euismod erat et, eleifend augue.',
+          isLastElement: true,
+          tristate: true,
+          onChanged: (value) => setState(() => _listItemValue = value),
+        ),
+      ),
+    ],
+  );
 }

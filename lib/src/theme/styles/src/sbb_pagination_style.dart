@@ -3,11 +3,7 @@ import 'package:flutter/material.dart';
 import '../../theme.dart';
 
 class SBBPaginationStyle {
-  SBBPaginationStyle({
-    this.selectedColor,
-    this.borderColor,
-    this.floatingBackgroundColor,
-  });
+  SBBPaginationStyle({this.selectedColor, this.borderColor, this.floatingBackgroundColor});
 
   factory SBBPaginationStyle.$default({required SBBBaseStyle baseStyle}) {
     final isLightTheme = baseStyle.brightness == Brightness.light;
@@ -22,11 +18,7 @@ class SBBPaginationStyle {
   final Color? borderColor;
   final Color? floatingBackgroundColor;
 
-  SBBPaginationStyle copyWith({
-    Color? selectedColor,
-    Color? borderColor,
-    Color? floatingBackgroundColor,
-  }) =>
+  SBBPaginationStyle copyWith({Color? selectedColor, Color? borderColor, Color? floatingBackgroundColor}) =>
       SBBPaginationStyle(
         selectedColor: selectedColor ?? this.selectedColor,
         borderColor: borderColor ?? this.borderColor,
@@ -34,10 +26,10 @@ class SBBPaginationStyle {
       );
 
   SBBPaginationStyle lerp(SBBPaginationStyle? other, double t) => SBBPaginationStyle(
-        selectedColor: Color.lerp(selectedColor, other?.selectedColor, t),
-        borderColor: Color.lerp(borderColor, other?.borderColor, t),
-        floatingBackgroundColor: Color.lerp(floatingBackgroundColor, other?.floatingBackgroundColor, t),
-      );
+    selectedColor: Color.lerp(selectedColor, other?.selectedColor, t),
+    borderColor: Color.lerp(borderColor, other?.borderColor, t),
+    floatingBackgroundColor: Color.lerp(floatingBackgroundColor, other?.floatingBackgroundColor, t),
+  );
 }
 
 extension SBBPaginationStyleExtension on SBBPaginationStyle? {

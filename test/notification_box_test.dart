@@ -18,13 +18,7 @@ void main() {
       ],
     );
 
-    await TestSpecs.run(
-      TestSpecs.themedSpecs,
-      widget,
-      tester,
-      'notification_box_alert',
-      find.byType(Column).first,
-    );
+    await TestSpecs.run(TestSpecs.themedSpecs, widget, tester, 'notification_box_alert', find.byType(Column).first);
   });
 
   testWidgets('warning notification box test', (WidgetTester tester) async {
@@ -36,13 +30,7 @@ void main() {
       ],
     );
 
-    await TestSpecs.run(
-      TestSpecs.themedSpecs,
-      widget,
-      tester,
-      'notification_box_warning',
-      find.byType(Column).first,
-    );
+    await TestSpecs.run(TestSpecs.themedSpecs, widget, tester, 'notification_box_warning', find.byType(Column).first);
   });
 
   testWidgets('success notification box test', (WidgetTester tester) async {
@@ -54,13 +42,7 @@ void main() {
       ],
     );
 
-    await TestSpecs.run(
-      TestSpecs.themedSpecs,
-      widget,
-      tester,
-      'notification_box_success',
-      find.byType(Column).first,
-    );
+    await TestSpecs.run(TestSpecs.themedSpecs, widget, tester, 'notification_box_success', find.byType(Column).first);
   });
 
   testWidgets('information notification box test', (WidgetTester tester) async {

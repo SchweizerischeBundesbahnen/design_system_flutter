@@ -30,10 +30,11 @@ Future<void> main() async {
   }
 
   final icons = responseJson['icons'] as List<dynamic>;
-  final total = icons
-      .cast<Map<String, dynamic>>()
-      .where((e) => (e['tags'] as List).cast<String>().any((t) => t.contains('Size=')))
-      .length;
+  final total =
+      icons
+          .cast<Map<String, dynamic>>()
+          .where((e) => (e['tags'] as List).cast<String>().any((t) => t.contains('Size=')))
+          .length;
   progress = FillingBar(total: total + 4, width: 10, desc: 'Downloading icons');
 
   await prepareIcons('small', icons);
@@ -79,11 +80,7 @@ Future<void> prepareIcons(String type, List<dynamic> icons) async {
     final name = icon['name'];
     final fileName = '$name.svg';
     final svgUri = makeUrlUri(fileName);
-    await downloadSvg(
-      svgUri,
-      fileName.replaceAll('-', '_'),
-      dir.path,
-    );
+    await downloadSvg(svgUri, fileName.replaceAll('-', '_'), dir.path);
   }
 }
 

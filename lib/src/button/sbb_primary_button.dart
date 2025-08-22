@@ -36,10 +36,7 @@ class SBBPrimaryButton extends StatelessWidget {
       focusNode: focusNode,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          if (isLoading) const SBBLoadingIndicator.tinyCloud(),
-          styles.buttonLabelBuilder!(context, label),
-        ],
+        children: [if (isLoading) const SBBLoadingIndicator.tinyCloud(), styles.buttonLabelBuilder!(context, label)],
       ),
     );
   }

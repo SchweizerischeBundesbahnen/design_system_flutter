@@ -21,12 +21,6 @@ void main() {
         ],
       ),
     );
-    await TestSpecs.run(
-      TestSpecs.themedSpecs,
-      widget,
-      tester,
-      'icon_button',
-      find.byType(Column).first,
-    );
+    await TestSpecs.run(TestSpecs.themedSpecs, widget, tester, 'icon_button', find.byType(Column).first);
   });
 }

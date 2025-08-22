@@ -15,10 +15,7 @@ class RenderSliverPinHeader extends RenderSliverSingleBoxAdapter {
         childExtent = child!.size.height;
         break;
     }
-    final paintedChildExtent = min(
-      childExtent,
-      constraints.remainingPaintExtent - constraints.overlap,
-    );
+    final paintedChildExtent = min(childExtent, constraints.remainingPaintExtent - constraints.overlap);
     geometry = SliverGeometry(
       paintExtent: paintedChildExtent,
       maxPaintExtent: childExtent,

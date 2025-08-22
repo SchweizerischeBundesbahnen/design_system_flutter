@@ -12,12 +12,12 @@ class SBBHeaderBoxStyle extends ThemeExtension<SBBHeaderBoxStyle> {
   });
 
   factory SBBHeaderBoxStyle.$default({required SBBBaseStyle baseStyle}) => SBBHeaderBoxStyle(
-        titleTextStyle: SBBTextStyles.mediumBold.copyWith(overflow: TextOverflow.ellipsis),
-        secondaryLabelColor: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
-        largeSecondaryLabelColor: baseStyle.defaultTextColor,
-        backgroundColor: baseStyle.themeValue(SBBColors.white, SBBColors.charcoal),
-        flapBackgroundColor: baseStyle.themeValue(SBBColors.cloud, SBBColors.midnight),
-      );
+    titleTextStyle: SBBTextStyles.mediumBold.copyWith(overflow: TextOverflow.ellipsis),
+    secondaryLabelColor: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
+    largeSecondaryLabelColor: baseStyle.defaultTextColor,
+    backgroundColor: baseStyle.themeValue(SBBColors.white, SBBColors.charcoal),
+    flapBackgroundColor: baseStyle.themeValue(SBBColors.cloud, SBBColors.midnight),
+  );
 
   static SBBHeaderBoxStyle of(BuildContext context) => Theme.of(context).extension<SBBHeaderBoxStyle>()!;
 
@@ -28,20 +28,16 @@ class SBBHeaderBoxStyle extends ThemeExtension<SBBHeaderBoxStyle> {
   final Color? flapBackgroundColor;
 
   @override
-  SBBHeaderBoxStyle copyWith({
-    Color? backgroundColor,
-    Color? flapBackgroundColor,
-  }) =>
-      SBBHeaderBoxStyle(
-        backgroundColor: backgroundColor ?? this.backgroundColor,
-        flapBackgroundColor: flapBackgroundColor ?? this.flapBackgroundColor,
-      );
+  SBBHeaderBoxStyle copyWith({Color? backgroundColor, Color? flapBackgroundColor}) => SBBHeaderBoxStyle(
+    backgroundColor: backgroundColor ?? this.backgroundColor,
+    flapBackgroundColor: flapBackgroundColor ?? this.flapBackgroundColor,
+  );
 
   @override
   SBBHeaderBoxStyle lerp(SBBHeaderBoxStyle? other, double t) => SBBHeaderBoxStyle(
-        backgroundColor: Color.lerp(backgroundColor, other?.backgroundColor, t),
-        flapBackgroundColor: Color.lerp(flapBackgroundColor, other?.flapBackgroundColor, t),
-      );
+    backgroundColor: Color.lerp(backgroundColor, other?.backgroundColor, t),
+    flapBackgroundColor: Color.lerp(flapBackgroundColor, other?.flapBackgroundColor, t),
+  );
 }
 
 extension SBBHeaderBoxStyleExtension on SBBHeaderBoxStyle? {

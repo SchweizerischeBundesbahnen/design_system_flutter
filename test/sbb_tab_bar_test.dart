@@ -10,7 +10,7 @@ void main() {
       SBBIcons.train_small,
       SBBIcons.station_small,
       SBBIcons.archive_box_small,
-      SBBIcons.arrow_compass_small
+      SBBIcons.arrow_compass_small,
     ];
     final items = Iterable.generate(1, (i) => _DemoItem('${i}_a', icons[i % icons.length])).toList();
     final items2 = Iterable.generate(2, (i) => _DemoItem('${i}_b', icons[i % icons.length])).toList();
@@ -20,17 +20,8 @@ void main() {
     final items6 = Iterable.generate(6, (i) => _DemoItem('${i}_f', icons[i % icons.length])).toList();
     final widget = Column(
       children: [
-        SBBTabBar.items(
-          items: items,
-          onTabChanged: (tab) async {},
-          onTap: (tab) {},
-        ),
-        SBBTabBar.items(
-          items: items2,
-          onTabChanged: (tab) async {},
-          initialItem: items2.last,
-          onTap: (tab) {},
-        ),
+        SBBTabBar.items(items: items, onTabChanged: (tab) async {}, onTap: (tab) {}),
+        SBBTabBar.items(items: items2, onTabChanged: (tab) async {}, initialItem: items2.last, onTap: (tab) {}),
         SBBTabBar.items(
           items: items3,
           onTabChanged: (tab) async {},
@@ -58,13 +49,7 @@ void main() {
       ],
     );
 
-    await TestSpecs.run(
-      TestSpecs.themedSpecs,
-      widget,
-      tester,
-      'tab_bar',
-      find.byType(Column).first,
-    );
+    await TestSpecs.run(TestSpecs.themedSpecs, widget, tester, 'tab_bar', find.byType(Column).first);
   });
 }
 

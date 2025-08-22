@@ -43,13 +43,8 @@ class _SwitchPageState extends State<SwitchPage> {
                 value: _value1,
                 onChanged: (value) => setState(() => _value1 = value),
               ),
-              const SizedBox(
-                width: sbbDefaultSpacing,
-              ),
-              SBBSwitch(
-                value: _value1,
-                onChanged: null,
-              ),
+              const SizedBox(width: sbbDefaultSpacing),
+              SBBSwitch(value: _value1, onChanged: null),
             ],
           ),
         ),
@@ -71,7 +66,8 @@ class _SwitchPageState extends State<SwitchPage> {
               ),
               SBBSwitchListItem(
                 value: _value4,
-                title: 'Very Looooooooooooooooooooooong Multiline Label With Subtitle',
+                title:
+                    'Very Looooooooooooooooooooooong Multiline Label With Subtitle',
                 allowMultilineLabel: true,
                 subtitle: 'Subtitle',
                 onChanged: (value) => setState(() => _value4 = value),
@@ -83,10 +79,8 @@ class _SwitchPageState extends State<SwitchPage> {
                 links: [
                   SBBSwitchListItemLink(
                     text: 'Link Text',
-                    onPressed: () => sbbToast.show(
-                      title: 'Link',
-                    ),
-                  )
+                    onPressed: () => sbbToast.show(title: 'Link'),
+                  ),
                 ],
               ),
               SBBSwitchListItem(
@@ -96,21 +90,15 @@ class _SwitchPageState extends State<SwitchPage> {
                 links: [
                   SBBSwitchListItemLink(
                     text: 'Link Text 1',
-                    onPressed: () => sbbToast.show(
-                      title: 'Link 1',
-                    ),
+                    onPressed: () => sbbToast.show(title: 'Link 1'),
                   ),
                   SBBSwitchListItemLink(
                     text: 'Link Text 2',
-                    onPressed: () => sbbToast.show(
-                      title: 'Link 2',
-                    ),
+                    onPressed: () => sbbToast.show(title: 'Link 2'),
                   ),
                   SBBSwitchListItemLink(
                     text: 'Link Text 3',
-                    onPressed: () => sbbToast.show(
-                      title: 'Link 3',
-                    ),
+                    onPressed: () => sbbToast.show(title: 'Link 3'),
                   ),
                 ],
               ),
@@ -121,10 +109,8 @@ class _SwitchPageState extends State<SwitchPage> {
                 links: [
                   SBBSwitchListItemLink(
                     text: 'Link still enabled',
-                    onPressed: () => sbbToast.show(
-                      title: 'Link still enabled',
-                    ),
-                  )
+                    onPressed: () => sbbToast.show(title: 'Link still enabled'),
+                  ),
                 ],
               ),
               SBBSwitchListItem(
@@ -132,10 +118,7 @@ class _SwitchPageState extends State<SwitchPage> {
                 title: 'Only Link disabled',
                 onChanged: (value) => setState(() => _value8 = value),
                 links: [
-                  SBBSwitchListItemLink(
-                    text: 'Link disabled',
-                    onPressed: null,
-                  ),
+                  SBBSwitchListItemLink(text: 'Link disabled', onPressed: null),
                 ],
               ),
               SBBSwitchListItem(
@@ -143,10 +126,7 @@ class _SwitchPageState extends State<SwitchPage> {
                 title: 'All disabled',
                 onChanged: null,
                 links: [
-                  SBBSwitchListItemLink(
-                    text: 'Link disabled',
-                    onPressed: null,
-                  ),
+                  SBBSwitchListItemLink(text: 'Link disabled', onPressed: null),
                 ],
               ),
               SBBSwitchListItem.custom(
@@ -160,8 +140,9 @@ class _SwitchPageState extends State<SwitchPage> {
                     allowMultilineLabel: true,
                     secondaryLabel:
                         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla.',
-                    onChanged: (value) => setState(() => _listItemValue = value),
-                  )
+                    onChanged:
+                        (value) => setState(() => _listItemValue = value),
+                  ),
                 ],
               ),
               SBBSwitchListItem(
@@ -197,7 +178,8 @@ class _SwitchPageState extends State<SwitchPage> {
         SBBGroup(
           child: SBBSwitchListItem.boxed(
             value: _value4,
-            title: 'Very Looooooooooooooooooooooong Multiline Label With Subtitle',
+            title:
+                'Very Looooooooooooooooooooooong Multiline Label With Subtitle',
             allowMultilineLabel: true,
             subtitle: 'Subtitle',
             onChanged: (value) => setState(() => _value4 = value),
@@ -212,10 +194,8 @@ class _SwitchPageState extends State<SwitchPage> {
             links: [
               SBBSwitchListItemLink(
                 text: 'Link Text',
-                onPressed: () => sbbToast.show(
-                  title: 'Link',
-                ),
-              )
+                onPressed: () => sbbToast.show(title: 'Link'),
+              ),
             ],
           ),
         ),
@@ -228,21 +208,15 @@ class _SwitchPageState extends State<SwitchPage> {
             links: [
               SBBSwitchListItemLink(
                 text: 'Link Text 1',
-                onPressed: () => sbbToast.show(
-                  title: 'Link 1',
-                ),
+                onPressed: () => sbbToast.show(title: 'Link 1'),
               ),
               SBBSwitchListItemLink(
                 text: 'Link Text 2',
-                onPressed: () => sbbToast.show(
-                  title: 'Link 2',
-                ),
+                onPressed: () => sbbToast.show(title: 'Link 2'),
               ),
               SBBSwitchListItemLink(
                 text: 'Link Text 3',
-                onPressed: () => sbbToast.show(
-                  title: 'Link 3',
-                ),
+                onPressed: () => sbbToast.show(title: 'Link 3'),
               ),
             ],
           ),
@@ -256,10 +230,8 @@ class _SwitchPageState extends State<SwitchPage> {
             links: [
               SBBSwitchListItemLink(
                 text: 'Link still enabled',
-                onPressed: () => sbbToast.show(
-                  title: 'Link still enabled',
-                ),
-              )
+                onPressed: () => sbbToast.show(title: 'Link still enabled'),
+              ),
             ],
           ),
         ),
@@ -270,10 +242,7 @@ class _SwitchPageState extends State<SwitchPage> {
             title: 'Only Link disabled',
             onChanged: (value) => setState(() => _value8 = value),
             links: [
-              SBBSwitchListItemLink(
-                text: 'Link disabled',
-                onPressed: null,
-              ),
+              SBBSwitchListItemLink(text: 'Link disabled', onPressed: null),
             ],
           ),
         ),
@@ -284,10 +253,7 @@ class _SwitchPageState extends State<SwitchPage> {
             title: 'All disabled',
             onChanged: null,
             links: [
-              SBBSwitchListItemLink(
-                text: 'Link disabled',
-                onPressed: null,
-              ),
+              SBBSwitchListItemLink(text: 'Link disabled', onPressed: null),
             ],
           ),
         ),
@@ -306,7 +272,7 @@ class _SwitchPageState extends State<SwitchPage> {
                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla.',
                 isLastElement: true,
                 onChanged: (value) => setState(() => _listItemValue = value),
-              )
+              ),
             ],
             isLastElement: true,
           ),

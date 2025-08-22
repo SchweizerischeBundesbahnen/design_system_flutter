@@ -31,18 +31,17 @@ class SBBNotificationBox extends StatefulWidget {
     GestureTapCallback? onClose,
     bool hasIcon = true,
     IconData detailsIcon = SBBIcons.chevron_small_right_small,
-  }) =>
-      SBBNotificationBox(
-        state: SBBNotificationBoxState.alert,
-        title: title,
-        text: text,
-        onControllerCreated: onControllerCreated,
-        onTap: onTap,
-        isCloseable: isCloseable,
-        onClose: onClose,
-        hasIcon: hasIcon,
-        detailsIcon: detailsIcon,
-      );
+  }) => SBBNotificationBox(
+    state: SBBNotificationBoxState.alert,
+    title: title,
+    text: text,
+    onControllerCreated: onControllerCreated,
+    onTap: onTap,
+    isCloseable: isCloseable,
+    onClose: onClose,
+    hasIcon: hasIcon,
+    detailsIcon: detailsIcon,
+  );
 
   factory SBBNotificationBox.warning({
     String? title,
@@ -53,18 +52,17 @@ class SBBNotificationBox extends StatefulWidget {
     GestureTapCallback? onClose,
     bool hasIcon = true,
     IconData detailsIcon = SBBIcons.chevron_small_right_small,
-  }) =>
-      SBBNotificationBox(
-        state: SBBNotificationBoxState.warning,
-        title: title,
-        text: text,
-        onControllerCreated: onControllerCreated,
-        onTap: onTap,
-        isCloseable: isCloseable,
-        onClose: onClose,
-        hasIcon: hasIcon,
-        detailsIcon: detailsIcon,
-      );
+  }) => SBBNotificationBox(
+    state: SBBNotificationBoxState.warning,
+    title: title,
+    text: text,
+    onControllerCreated: onControllerCreated,
+    onTap: onTap,
+    isCloseable: isCloseable,
+    onClose: onClose,
+    hasIcon: hasIcon,
+    detailsIcon: detailsIcon,
+  );
 
   factory SBBNotificationBox.success({
     String? title,
@@ -75,18 +73,17 @@ class SBBNotificationBox extends StatefulWidget {
     GestureTapCallback? onClose,
     bool hasIcon = true,
     IconData detailsIcon = SBBIcons.chevron_small_right_small,
-  }) =>
-      SBBNotificationBox(
-        state: SBBNotificationBoxState.success,
-        title: title,
-        text: text,
-        onControllerCreated: onControllerCreated,
-        onTap: onTap,
-        isCloseable: isCloseable,
-        onClose: onClose,
-        hasIcon: hasIcon,
-        detailsIcon: detailsIcon,
-      );
+  }) => SBBNotificationBox(
+    state: SBBNotificationBoxState.success,
+    title: title,
+    text: text,
+    onControllerCreated: onControllerCreated,
+    onTap: onTap,
+    isCloseable: isCloseable,
+    onClose: onClose,
+    hasIcon: hasIcon,
+    detailsIcon: detailsIcon,
+  );
 
   factory SBBNotificationBox.information({
     String? title,
@@ -97,18 +94,17 @@ class SBBNotificationBox extends StatefulWidget {
     GestureTapCallback? onClose,
     bool hasIcon = true,
     IconData detailsIcon = SBBIcons.chevron_small_right_small,
-  }) =>
-      SBBNotificationBox(
-        state: SBBNotificationBoxState.information,
-        title: title,
-        text: text,
-        onControllerCreated: onControllerCreated,
-        onTap: onTap,
-        isCloseable: isCloseable,
-        onClose: onClose,
-        hasIcon: hasIcon,
-        detailsIcon: detailsIcon,
-      );
+  }) => SBBNotificationBox(
+    state: SBBNotificationBoxState.information,
+    title: title,
+    text: text,
+    onControllerCreated: onControllerCreated,
+    onTap: onTap,
+    isCloseable: isCloseable,
+    onClose: onClose,
+    hasIcon: hasIcon,
+    detailsIcon: detailsIcon,
+  );
 
   final SBBNotificationBoxState state;
   final String? title;
@@ -127,17 +123,11 @@ class SBBNotificationBox extends StatefulWidget {
 class _SBBNotificationBoxState extends State<SBBNotificationBox> with SingleTickerProviderStateMixin {
   late final ClosableBoxController _controller = ClosableBoxController(this);
 
-  Widget _animationBuilder({
-    required Animation<double> animation,
-    required Widget child,
-  }) {
+  Widget _animationBuilder({required Animation<double> animation, required Widget child}) {
     return SizeTransition(
       axisAlignment: -1.0,
       sizeFactor: animation,
-      child: FadeTransition(
-        opacity: animation,
-        child: child,
-      ),
+      child: FadeTransition(opacity: animation, child: child),
     );
   }
 
@@ -149,16 +139,8 @@ class _SBBNotificationBoxState extends State<SBBNotificationBox> with SingleTick
 
   @override
   Widget build(BuildContext context) {
-    final iconColor = SBBBaseStyle.of(context).themeValue(
-      widget.state.iconColor,
-      widget.state.iconColorDark,
-    );
-    final icon = widget.hasIcon
-        ? Icon(
-            widget.state.icon,
-            color: iconColor,
-          )
-        : null;
+    final iconColor = SBBBaseStyle.of(context).themeValue(widget.state.iconColor, widget.state.iconColorDark);
+    final icon = widget.hasIcon ? Icon(widget.state.icon, color: iconColor) : null;
     final detailsIcon = widget.onTap != null ? Icon(widget.detailsIcon) : null;
     Widget child;
     switch (widget.title) {
@@ -185,12 +167,8 @@ class _SBBNotificationBoxState extends State<SBBNotificationBox> with SingleTick
             onTap: widget.onTap,
             child: Container(
               decoration: BoxDecoration(
-                border: Border(
-                  left: BorderSide(color: widget.state.backgroundColor, width: 8.0),
-                ),
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(16.0),
-                ),
+                border: Border(left: BorderSide(color: widget.state.backgroundColor, width: 8.0)),
+                borderRadius: const BorderRadius.all(Radius.circular(16.0)),
               ),
               child: Container(
                 decoration: BoxDecoration(

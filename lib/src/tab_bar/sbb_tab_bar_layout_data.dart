@@ -7,10 +7,7 @@ import '../../sbb_design_system_mobile.dart';
 
 /// Represents the positions of a [SBBTabBarItem] in [SBBTabBar]
 class SBBTabBarLayoutData {
-  SBBTabBarLayoutData(
-    this.height,
-    this.positions,
-  );
+  SBBTabBarLayoutData(this.height, this.positions);
 
   final double height;
   final List<Offset> positions;

@@ -8,13 +8,7 @@ import 'test_app.dart';
 void main() {
   void generateTest(String name) {
     testWidgets(name, (WidgetTester tester) async {
-      await TestSpecs.run(
-        TestSpecs.themedSpecs,
-        const DatePickerTest(),
-        tester,
-        name,
-        find.byType(DatePickerTest),
-      );
+      await TestSpecs.run(TestSpecs.themedSpecs, const DatePickerTest(), tester, name, find.byType(DatePickerTest));
     });
   }
 
@@ -33,27 +27,11 @@ class DatePickerTest extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          SBBDateInput(
-            onDateChanged: (_) {},
-          ),
-          SBBDateInput(
-            value: initialDate,
-            onDateChanged: (_) {},
-          ),
-          SBBDateInput(
-            hintText: 'Hint only',
-            onDateChanged: (_) {},
-          ),
-          SBBDateInput(
-            labelText: 'Label and Hint',
-            hintText: 'Label and Hint',
-            onDateChanged: (_) {},
-          ),
-          SBBDateInput(
-            labelText: 'Label and Value',
-            value: initialDate,
-            onDateChanged: (_) {},
-          ),
+          SBBDateInput(onDateChanged: (_) {}),
+          SBBDateInput(value: initialDate, onDateChanged: (_) {}),
+          SBBDateInput(hintText: 'Hint only', onDateChanged: (_) {}),
+          SBBDateInput(labelText: 'Label and Hint', hintText: 'Label and Hint', onDateChanged: (_) {}),
+          SBBDateInput(labelText: 'Label and Value', value: initialDate, onDateChanged: (_) {}),
           SBBDateInput(
             value: initialDate,
             labelText: 'Custom date format',

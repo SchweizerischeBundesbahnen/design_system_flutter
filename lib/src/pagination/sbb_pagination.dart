@@ -21,9 +21,11 @@ class SBBPagination extends StatelessWidget {
     required this.currentPage,
     this.isFloating = false,
     this.semanticsLabel = 'Pagination',
-  })  : assert(numberPages > 0, 'numberPages: $numberPages must be greater than 0'),
-        assert(currentPage >= 0 && currentPage < numberPages,
-            'currentPage: $currentPage must be between 0 and numberPages - 1');
+  }) : assert(numberPages > 0, 'numberPages: $numberPages must be greater than 0'),
+       assert(
+         currentPage >= 0 && currentPage < numberPages,
+         'currentPage: $currentPage must be between 0 and numberPages - 1',
+       );
 
   /// The total number of pages.
   ///
@@ -59,33 +61,22 @@ class SBBPagination extends StatelessWidget {
     );
   }
 
-  Widget get _paginationContent => isFloating
-      ? _FloatingSBBPagination(
-          currentPage: currentPage,
-          numberPages: numberPages,
-        )
-      : _DefaultSBBPagination(
-          numberPages: numberPages,
-          currentPage: currentPage,
-        );
+  Widget get _paginationContent =>
+      isFloating
+          ? _FloatingSBBPagination(currentPage: currentPage, numberPages: numberPages)
+          : _DefaultSBBPagination(numberPages: numberPages, currentPage: currentPage);
 }
 
 /// The default (non-floating) pagination.
 class _DefaultSBBPagination extends StatelessWidget {
-  const _DefaultSBBPagination({
-    required this.numberPages,
-    required this.currentPage,
-  });
+  const _DefaultSBBPagination({required this.numberPages, required this.currentPage});
 
   final int numberPages;
   final int currentPage;
 
   @override
   Widget build(BuildContext context) {
-    return PaginationCircles(
-      numberCircles: numberPages,
-      selectedCircle: currentPage,
-    );
+    return PaginationCircles(numberCircles: numberPages, selectedCircle: currentPage);
   }
 }
 
@@ -93,10 +84,7 @@ class _DefaultSBBPagination extends StatelessWidget {
 ///
 /// Padded container with shadow and background color.
 class _FloatingSBBPagination extends StatelessWidget {
-  const _FloatingSBBPagination({
-    required this.numberPages,
-    required this.currentPage,
-  });
+  const _FloatingSBBPagination({required this.numberPages, required this.currentPage});
 
   final int numberPages;
   final int currentPage;
@@ -107,26 +95,16 @@ class _FloatingSBBPagination extends StatelessWidget {
     return Container(
       decoration: _createBoxDecorationWith(style),
       padding: _floatingPadding,
-      child: PaginationCircles(
-        numberCircles: numberPages,
-        selectedCircle: currentPage,
-      ),
+      child: PaginationCircles(numberCircles: numberPages, selectedCircle: currentPage),
     );
   }
 
   BoxDecoration _createBoxDecorationWith(SBBPaginationStyle style) => BoxDecoration(
-        borderRadius: BorderRadius.circular(_kFloatingPaddingHeight * 2),
-        color: style.floatingBackgroundColor,
-        boxShadow: [
-          BoxShadow(
-            color: SBBColors.black.withOpacity(0.2),
-            blurRadius: _kFloatingShadowBlurRadius,
-          )
-        ],
-      );
+    borderRadius: BorderRadius.circular(_kFloatingPaddingHeight * 2),
+    color: style.floatingBackgroundColor,
+    boxShadow: [BoxShadow(color: SBBColors.black.withOpacity(0.2), blurRadius: _kFloatingShadowBlurRadius)],
+  );
 
-  EdgeInsets get _floatingPadding => const EdgeInsets.symmetric(
-        horizontal: _kFloatingPaddingWidth,
-        vertical: _kFloatingPaddingHeight,
-      );
+  EdgeInsets get _floatingPadding =>
+      const EdgeInsets.symmetric(horizontal: _kFloatingPaddingWidth, vertical: _kFloatingPaddingHeight);
 }

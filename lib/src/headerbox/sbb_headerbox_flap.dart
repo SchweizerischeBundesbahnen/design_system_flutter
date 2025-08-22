@@ -20,10 +20,7 @@ class SBBHeaderboxFlap extends StatelessWidget {
     bool allowMultilineLabel = true,
     IconData? leadingIcon,
     IconData? trailingIcon,
-  }) : this.custom(
-          key: key,
-          child: _buildDefaultFlap(title, allowMultilineLabel, leadingIcon, trailingIcon),
-        );
+  }) : this.custom(key: key, child: _buildDefaultFlap(title, allowMultilineLabel, leadingIcon, trailingIcon));
 
   /// Allows complete customization of the content of the [SBBHeaderboxFlap].
   const SBBHeaderboxFlap.custom({
@@ -47,10 +44,7 @@ class SBBHeaderboxFlap extends StatelessWidget {
     final Color? flapColor = SBBHeaderBoxStyle.of(context).flapBackgroundColor;
     return Container(
       padding: padding,
-      decoration: BoxDecoration(
-        color: flapColor,
-        borderRadius: _flapBorderRadius,
-      ),
+      decoration: BoxDecoration(color: flapColor, borderRadius: _flapBorderRadius),
       child: child,
     );
   }
@@ -63,10 +57,7 @@ class SBBHeaderboxFlap extends StatelessWidget {
   ) {
     return Row(
       children: [
-        if (leadingIcon != null) ...[
-          Icon(leadingIcon, size: _flapIconSize),
-          SizedBox(width: sbbDefaultSpacing * .5),
-        ],
+        if (leadingIcon != null) ...[Icon(leadingIcon, size: _flapIconSize), SizedBox(width: sbbDefaultSpacing * .5)],
         Expanded(
           child: Text(
             title,
@@ -75,10 +66,7 @@ class SBBHeaderboxFlap extends StatelessWidget {
             style: SBBTextStyles.smallLight,
           ),
         ),
-        if (trailingIcon != null) ...[
-          SizedBox(width: sbbDefaultSpacing * .5),
-          Icon(trailingIcon, size: _flapIconSize),
-        ]
+        if (trailingIcon != null) ...[SizedBox(width: sbbDefaultSpacing * .5), Icon(trailingIcon, size: _flapIconSize)],
       ],
     );
   }

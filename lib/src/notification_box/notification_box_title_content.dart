@@ -22,16 +22,8 @@ class SBBNotificationBoxTitleContent extends StatelessWidget {
       children: [
         Row(
           children: [
-            if (icon != null) ...[
-              icon!,
-              const SizedBox(width: 8.0),
-            ],
-            Expanded(
-              child: Text(
-                title,
-                style: Theme.of(context).textTheme.titleMedium,
-              ),
-            ),
+            if (icon != null) ...[icon!, const SizedBox(width: 8.0)],
+            Expanded(child: Text(title, style: Theme.of(context).textTheme.titleMedium)),
           ],
         ),
         const SizedBox(height: 8.0),

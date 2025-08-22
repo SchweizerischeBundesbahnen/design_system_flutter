@@ -8,13 +8,7 @@ import '../../sbb_design_system_mobile.dart';
 ///
 /// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/list-header>
 class SBBListHeader extends StatelessWidget {
-  const SBBListHeader(
-    this.title, {
-    super.key,
-    this.maxLines,
-    this.padding,
-    this.textStyle,
-  });
+  const SBBListHeader(this.title, {super.key, this.maxLines, this.padding, this.textStyle});
 
   final String title;
   final int? maxLines;
@@ -25,11 +19,7 @@ class SBBListHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = SBBControlStyles.of(context);
     return Padding(
-      padding: padding ??
-          const EdgeInsets.symmetric(
-            horizontal: sbbDefaultSpacing,
-            vertical: sbbDefaultSpacing / 2,
-          ),
+      padding: padding ?? const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing, vertical: sbbDefaultSpacing / 2),
       child: Row(
         children: [
           Expanded(
