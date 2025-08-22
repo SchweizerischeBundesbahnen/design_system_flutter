@@ -44,7 +44,8 @@ class BottomLoadingIndicator extends StatefulWidget {
   State<BottomLoadingIndicator> createState() => _BottomLoadingIndicatorState();
 }
 
-class _BottomLoadingIndicatorState extends State<BottomLoadingIndicator> with SingleTickerProviderStateMixin {
+class _BottomLoadingIndicatorState extends State<BottomLoadingIndicator>
+    with SingleTickerProviderStateMixin {
   late final AnimationController _controller = AnimationController(
     duration: widget.duration,
     vsync: this,
@@ -52,10 +53,7 @@ class _BottomLoadingIndicatorState extends State<BottomLoadingIndicator> with Si
   late final Animation<Offset> _offsetAnimation = Tween<Offset>(
     begin: const Offset(-1, 0.0),
     end: const Offset(1, 0.0),
-  ).animate(CurvedAnimation(
-    parent: _controller,
-    curve: Curves.linear,
-  ));
+  ).animate(CurvedAnimation(parent: _controller, curve: Curves.linear));
 
   @override
   void dispose() {
@@ -77,7 +75,10 @@ class _BottomLoadingIndicatorState extends State<BottomLoadingIndicator> with Si
         // clamping the values in borderRadius
         child: SizedBox(
           width: double.infinity,
-          height: widget.circularBorderRadius > 0 ? widget.circularBorderRadius : widget.height,
+          height:
+              widget.circularBorderRadius > 0
+                  ? widget.circularBorderRadius
+                  : widget.height,
           child: Align(
             alignment: Alignment.bottomCenter,
             child: SizedBox(
@@ -101,9 +102,9 @@ class _BottomLoadingIndicatorState extends State<BottomLoadingIndicator> with Si
   BorderRadius _resolveBorderRadius() {
     return widget.circularBorderRadius > 0
         ? BorderRadius.only(
-            bottomLeft: Radius.circular(widget.circularBorderRadius),
-            bottomRight: Radius.circular(widget.circularBorderRadius),
-          )
+          bottomLeft: Radius.circular(widget.circularBorderRadius),
+          bottomRight: Radius.circular(widget.circularBorderRadius),
+        )
         : BorderRadius.zero;
   }
 }

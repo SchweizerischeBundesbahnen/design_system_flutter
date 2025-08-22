@@ -138,7 +138,8 @@ class SBBCheckbox extends StatefulWidget {
   State<SBBCheckbox> createState() => _SBBCheckboxState();
 }
 
-class _SBBCheckboxState extends State<SBBCheckbox> with TickerProviderStateMixin, ToggleableStateMixin {
+class _SBBCheckboxState extends State<SBBCheckbox>
+    with TickerProviderStateMixin, ToggleableStateMixin {
   final _SBBCheckboxPainter _painter = _SBBCheckboxPainter();
   bool? _previousValue;
 
@@ -184,13 +185,14 @@ class _SBBCheckboxState extends State<SBBCheckbox> with TickerProviderStateMixin
           child: buildToggleable(
             mouseCursor: WidgetStateMouseCursor.clickable,
             size: resolvedSize,
-            painter: _painter
-              ..position = position
-              ..reaction = reaction
-              ..value = value
-              ..previousValue = _previousValue
-              ..checkColor = resolvedCheckColor
-              ..boxBorderColor = resolvedBorderColor,
+            painter:
+                _painter
+                  ..position = position
+                  ..reaction = reaction
+                  ..value = value
+                  ..previousValue = _previousValue
+                  ..checkColor = resolvedCheckColor
+                  ..boxBorderColor = resolvedBorderColor,
           ),
         ),
       ),
@@ -207,17 +209,22 @@ class _SBBCheckboxState extends State<SBBCheckbox> with TickerProviderStateMixin
   bool? get value => widget.value;
 
   Size _addPaddingToDefaultWidth(EdgeInsetsGeometry resolvedPadding) => Size(
-        SBBCheckbox.width + resolvedPadding.horizontal,
-        SBBCheckbox.width + resolvedPadding.vertical,
-      );
+    SBBCheckbox.width + resolvedPadding.horizontal,
+    SBBCheckbox.width + resolvedPadding.vertical,
+  );
 
   Color? _resolveBackgroundColor(SBBControlStyle style) =>
-      isInteractive ? style.basic?.backgroundColor : style.basic?.backgroundColorDisabled;
+      isInteractive
+          ? style.basic?.backgroundColor
+          : style.basic?.backgroundColorDisabled;
 
-  Color _resolveTickColor(SBBControlStyle style) => isInteractive ? style.color! : style.colorDisabled!;
+  Color _resolveTickColor(SBBControlStyle style) =>
+      isInteractive ? style.color! : style.colorDisabled!;
 
   Color _resolveBorderColor(SBBControlStyle style) {
-    return isInteractive ? style.basic!.borderColor! : style.basic!.borderColorDisabled!;
+    return isInteractive
+        ? style.basic!.borderColor!
+        : style.basic!.borderColorDisabled!;
   }
 }
 
@@ -288,10 +295,12 @@ class _SBBCheckboxPainter extends ToggleablePainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final Offset origin = size / 2.0 - const Size.square(_kInnerEdgeLength) / 2.0 as Offset;
+    final Offset origin =
+        size / 2.0 - const Size.square(_kInnerEdgeLength) / 2.0 as Offset;
     final double tNormalized = switch (position.status) {
       AnimationStatus.forward || AnimationStatus.completed => position.value,
-      AnimationStatus.reverse || AnimationStatus.dismissed => 1.0 - position.value,
+      AnimationStatus.reverse ||
+      AnimationStatus.dismissed => 1.0 - position.value,
     };
 
     final Paint checkPaint = _createCheckPaint();
@@ -355,7 +364,12 @@ class _SBBCheckboxPainter extends ToggleablePainter {
     canvas.translate(-(_edgeHalf + origin.dx), -(_edgeHalf + origin.dy));
   }
 
-  void _drawCheckShortSide(Canvas canvas, Offset origin, double t, Paint paint) {
+  void _drawCheckShortSide(
+    Canvas canvas,
+    Offset origin,
+    double t,
+    Paint paint,
+  ) {
     const xStart = 0.3 * _kInnerEdgeLength;
     const xEnd = 0.6 * _kInnerEdgeLength;
     final double xAtT = lerpDouble(xStart, xEnd, t)!;
@@ -363,7 +377,10 @@ class _SBBCheckboxPainter extends ToggleablePainter {
     final start = Offset(xStart, 0.6 * _kInnerEdgeLength) + origin;
     final end = Offset(xAtT, 0.7 * _kInnerEdgeLength) + origin;
 
-    final rect = RRect.fromRectAndRadius(Rect.fromPoints(start, end), _markRadius);
+    final rect = RRect.fromRectAndRadius(
+      Rect.fromPoints(start, end),
+      _markRadius,
+    );
     canvas.drawRRect(rect, paint);
   }
 
@@ -375,7 +392,10 @@ class _SBBCheckboxPainter extends ToggleablePainter {
     final start = Offset(0.5 * _kInnerEdgeLength, yAtT) + origin;
     final end = Offset(0.6 * _kInnerEdgeLength, yStart) + origin;
 
-    final rect = RRect.fromRectAndRadius(Rect.fromPoints(start, end), _markRadius);
+    final rect = RRect.fromRectAndRadius(
+      Rect.fromPoints(start, end),
+      _markRadius,
+    );
     canvas.drawRRect(rect, paint);
   }
 
@@ -388,7 +408,11 @@ class _SBBCheckboxPainter extends ToggleablePainter {
 
     final double drawWidth = lerpDouble(0, 0.6 * _kInnerEdgeLength, t)!;
 
-    final Rect rect = Rect.fromCenter(center: center, width: drawWidth, height: height);
+    final Rect rect = Rect.fromCenter(
+      center: center,
+      width: drawWidth,
+      height: height,
+    );
     canvas.drawRRect(RRect.fromRectAndRadius(rect, _markRadius), paint);
   }
 
@@ -400,6 +424,9 @@ class _SBBCheckboxPainter extends ToggleablePainter {
       height: _kInnerEdgeLength + _kBorderWidth,
     );
 
-    canvas.drawRRect(RRect.fromRectAndRadius(rect, Radius.circular(_kCheckboxRadius)), paint);
+    canvas.drawRRect(
+      RRect.fromRectAndRadius(rect, Radius.circular(_kCheckboxRadius)),
+      paint,
+    );
   }
 }

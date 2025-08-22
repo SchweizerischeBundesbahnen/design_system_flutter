@@ -18,10 +18,7 @@ void main() {
   }
 
   void generateTest(String name, List<TextStyle?> textStyles) {
-    final widget = TypographyTest(
-      name: name,
-      textStyles: textStyles,
-    );
+    final widget = TypographyTest(name: name, textStyles: textStyles);
     testWidget(name, widget);
   }
 
@@ -156,7 +153,11 @@ void main() {
 class TypographyTest extends StatelessWidget {
   static const exampleText = 'The quick brown fox jumps over the lazy dog';
 
-  const TypographyTest({super.key, required this.name, required this.textStyles});
+  const TypographyTest({
+    super.key,
+    required this.name,
+    required this.textStyles,
+  });
 
   final String name;
   final List<TextStyle?> textStyles;
@@ -173,14 +174,8 @@ class TypographyTest extends StatelessWidget {
             child: Column(
               spacing: sbbDefaultSpacing * 0.5,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: textStyles
-                  .map(
-                    (e) => Text(
-                      exampleText,
-                      style: e,
-                    ),
-                  )
-                  .toList(),
+              children:
+                  textStyles.map((e) => Text(exampleText, style: e)).toList(),
             ),
           ),
         ),
@@ -195,10 +190,13 @@ class TypographyRedThemeTest extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = SBBBaseStyle.of(context).redTextTheme;
-    return TypographyTest(name: 'typography_red_text_theme', textStyles: [
-      textTheme.bodyLarge,
-      textTheme.bodyMedium,
-      textTheme.bodySmall,
-    ]);
+    return TypographyTest(
+      name: 'typography_red_text_theme',
+      textStyles: [
+        textTheme.bodyLarge,
+        textTheme.bodyMedium,
+        textTheme.bodySmall,
+      ],
+    );
   }
 }

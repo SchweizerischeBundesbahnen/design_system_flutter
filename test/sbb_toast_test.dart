@@ -21,10 +21,7 @@ void main() {
       children: [
         ToastContainer(
           stream: stream1,
-          child: DefaultToastBody(
-            title: 'Toast',
-            duration: duration,
-          ),
+          child: DefaultToastBody(title: 'Toast', duration: duration),
         ),
         SizedBox(height: sbbDefaultSpacing),
         ToastContainer(
@@ -60,7 +57,10 @@ void main() {
           child: DefaultToastBody(
             title: 'Toast with long action title that should go to next row.',
             duration: duration,
-            action: SBBToastAction(onPressed: () {}, title: 'Long Action Title that is veeeeery long'),
+            action: SBBToastAction(
+              onPressed: () {},
+              title: 'Long Action Title that is veeeeery long',
+            ),
           ),
         ),
         SizedBox(height: sbbDefaultSpacing),
@@ -73,13 +73,22 @@ void main() {
               decoration: BoxDecoration(
                 color: SBBColors.sky,
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.elliptical(sbbDefaultSpacing * 4, sbbDefaultSpacing * 2),
-                  bottomRight: Radius.elliptical(sbbDefaultSpacing * 4, sbbDefaultSpacing * 2),
+                  topLeft: Radius.elliptical(
+                    sbbDefaultSpacing * 4,
+                    sbbDefaultSpacing * 2,
+                  ),
+                  bottomRight: Radius.elliptical(
+                    sbbDefaultSpacing * 4,
+                    sbbDefaultSpacing * 2,
+                  ),
                 ),
               ),
               padding: EdgeInsets.all(sbbDefaultSpacing * 3),
             ),
-            action: SBBToastAction(onPressed: () {}, title: 'Long Action Title that is veeeeery long'),
+            action: SBBToastAction(
+              onPressed: () {},
+              title: 'Long Action Title that is veeeeery long',
+            ),
           ),
         ),
       ],

@@ -23,10 +23,11 @@ class PromotionBoxStyle {
         SBBColors.redDarkMode.withValues(alpha: 0.6),
       ),
       badgeColor: SBBColors.red,
-      badgeBorderColor: baseStyle.themeValue(SBBColors.white, SBBColors.charcoal),
-      badgeTextStyle: SBBTextStyles.smallBold.copyWith(
-        color: SBBColors.white,
+      badgeBorderColor: baseStyle.themeValue(
+        SBBColors.white,
+        SBBColors.charcoal,
       ),
+      badgeTextStyle: SBBTextStyles.smallBold.copyWith(color: SBBColors.white),
       gradientColors: baseStyle.themeValue(
         PromotionBoxStyle.lightGradient,
         PromotionBoxStyle.darkGradient,
@@ -84,12 +85,28 @@ class PromotionBoxStyle {
   ) {
     return PromotionBoxStyle(
       borderColor: Color.lerp($this?.borderColor, other?.borderColor, t),
-      badgeShadowColor: Color.lerp($this?.badgeShadowColor, other?.badgeShadowColor, t),
+      badgeShadowColor: Color.lerp(
+        $this?.badgeShadowColor,
+        other?.badgeShadowColor,
+        t,
+      ),
       badgeColor: Color.lerp($this?.badgeColor, other?.badgeColor, t),
-      badgeBorderColor: Color.lerp($this?.badgeBorderColor, other?.badgeBorderColor, t),
-      badgeTextStyle: TextStyle.lerp($this?.badgeTextStyle, other?.badgeTextStyle, t),
+      badgeBorderColor: Color.lerp(
+        $this?.badgeBorderColor,
+        other?.badgeBorderColor,
+        t,
+      ),
+      badgeTextStyle: TextStyle.lerp(
+        $this?.badgeTextStyle,
+        other?.badgeTextStyle,
+        t,
+      ),
       gradientColors: other?.gradientColors,
-      textureOpacity: lerpDouble($this?.textureOpacity, other?.textureOpacity, t),
+      textureOpacity: lerpDouble(
+        $this?.textureOpacity,
+        other?.textureOpacity,
+        t,
+      ),
     );
   }
 

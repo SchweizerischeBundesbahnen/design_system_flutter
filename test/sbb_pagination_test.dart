@@ -15,11 +15,7 @@ void main() {
         const SBBPagination(numberPages: 5, currentPage: 4),
         const SizedBox(height: sbbDefaultSpacing),
         // floating
-        const SBBPagination(
-          numberPages: 1,
-          currentPage: 0,
-          isFloating: true,
-        ),
+        const SBBPagination(numberPages: 1, currentPage: 0, isFloating: true),
         const SizedBox(height: sbbDefaultSpacing),
         // add containter to see the shadow and floating box
         Container(

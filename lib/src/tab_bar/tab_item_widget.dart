@@ -26,7 +26,8 @@ class TabItemWidget extends StatelessWidget {
     final style = SBBBaseStyle.of(context);
     final portrait = MediaQuery.of(context).orientation == Orientation.portrait;
     final size = portrait ? portraitSize : landscapeSize;
-    final topPadding = portrait ? portraitCirclePadding : landscapeCirclePadding;
+    final topPadding =
+        portrait ? portraitCirclePadding : landscapeCirclePadding;
 
     final foregroundColor = style.themeValue(SBBColors.white, SBBColors.black);
     final backgroundColor = style.themeValue(SBBColors.black, SBBColors.white);
@@ -55,7 +56,11 @@ class TabItemWidget extends StatelessWidget {
     return Container(
       width: size,
       height: size,
-      margin: EdgeInsets.only(top: topPadding, left: horizontalCirclePadding, right: horizontalCirclePadding),
+      margin: EdgeInsets.only(
+        top: topPadding,
+        left: horizontalCirclePadding,
+        right: horizontalCirclePadding,
+      ),
       color: containerColor,
       decoration: decoration,
       child: Icon(resolvedIcon, color: iconColor),

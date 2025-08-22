@@ -19,7 +19,11 @@ void main() {
             leadingIcon: SBBIcons.sign_exclamation_point_small,
             trailingIcon: SBBIcons.circle_information_small_small,
           ),
-          trailingWidget: SBBTertiaryButtonSmall(label: 'Label', icon: SBBIcons.dog_small, onPressed: () => {}),
+          trailingWidget: SBBTertiaryButtonSmall(
+            label: 'Label',
+            icon: SBBIcons.dog_small,
+            onPressed: () => {},
+          ),
         ),
         const SizedBox(height: sbbDefaultSpacing),
         const SBBListHeader('Large'),
@@ -27,14 +31,23 @@ void main() {
           title: 'Title',
           leadingIcon: SBBIcons.dog_medium,
           secondaryLabel: 'Subtext',
-          trailingWidget: SBBIconButtonLarge(icon: SBBIcons.dog_small, onPressed: () => {}),
+          trailingWidget: SBBIconButtonLarge(
+            icon: SBBIcons.dog_small,
+            onPressed: () => {},
+          ),
         ),
         const SizedBox(height: sbbDefaultSpacing),
         const SBBListHeader('Custom'),
         SBBHeaderbox.custom(
           padding: EdgeInsets.zero,
           flap: SBBHeaderboxFlap.custom(
-              child: Center(child: Text('Custom Flappy!', style: SBBTextStyles.extraSmallBold))),
+            child: Center(
+              child: Text(
+                'Custom Flappy!',
+                style: SBBTextStyles.extraSmallBold,
+              ),
+            ),
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -43,7 +56,7 @@ void main() {
               Container(color: SBBColors.graphite, width: 25, height: 25),
             ],
           ),
-        )
+        ),
       ],
     );
 

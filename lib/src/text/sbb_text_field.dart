@@ -123,9 +123,7 @@ class _SBBTextField extends State<SBBTextField> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      child: _buildTextField(),
-                    ),
+                    Expanded(child: _buildTextField()),
                     if (widget.suffixIcon != null) widget.suffixIcon!,
                   ],
                 ),
@@ -133,7 +131,7 @@ class _SBBTextField extends State<SBBTextField> {
                   errorText: widget.errorText,
                   hasFocus: _hasFocus,
                   isLastElement: widget.isLastElement,
-                )
+                ),
               ],
             ),
           ),

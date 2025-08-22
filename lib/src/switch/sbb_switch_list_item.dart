@@ -50,26 +50,27 @@ class SBBSwitchListItem extends StatelessWidget {
     List<SBBSwitchListItemLink>? links,
     bool isLoading = false,
   }) : this.custom(
-          key: key,
-          leadingIcon: leadingIcon,
-          title: title,
-          subtitle: subtitle,
-          allowMultilineLabel: allowMultilineLabel,
-          isLastElement: isLastElement,
-          value: value,
-          onChanged: onChanged,
-          isLoading: isLoading,
-          linksWidgets: links
-              ?.map(
-                (linkItem) => SBBListItem(
-                  title: linkItem.text,
-                  onPressed: linkItem.onPressed,
-                  isLastElement: true,
-                  trailingIcon: SBBIcons.chevron_small_right_small,
-                ),
-              )
-              .toList(),
-        );
+         key: key,
+         leadingIcon: leadingIcon,
+         title: title,
+         subtitle: subtitle,
+         allowMultilineLabel: allowMultilineLabel,
+         isLastElement: isLastElement,
+         value: value,
+         onChanged: onChanged,
+         isLoading: isLoading,
+         linksWidgets:
+             links
+                 ?.map(
+                   (linkItem) => SBBListItem(
+                     title: linkItem.text,
+                     onPressed: linkItem.onPressed,
+                     isLastElement: true,
+                     trailingIcon: SBBIcons.chevron_small_right_small,
+                   ),
+                 )
+                 .toList(),
+       );
 
   /// Use this in combination with a [SBBGroup] to create a boxed variant of the [SBBSwitchListItem].
   ///
@@ -99,26 +100,27 @@ class SBBSwitchListItem extends StatelessWidget {
     List<SBBSwitchListItemLink>? links,
     bool isLoading = false,
   }) : this.custom(
-          key: key,
-          leadingIcon: leadingIcon,
-          title: title,
-          subtitle: subtitle,
-          allowMultilineLabel: allowMultilineLabel,
-          isLastElement: true,
-          value: value,
-          onChanged: onChanged,
-          isLoading: isLoading,
-          linksWidgets: links
-              ?.map(
-                (linkItem) => SBBListItem(
-                  title: linkItem.text,
-                  onPressed: linkItem.onPressed,
-                  isLastElement: true,
-                  trailingIcon: SBBIcons.chevron_small_right_small,
-                ),
-              )
-              .toList(),
-        );
+         key: key,
+         leadingIcon: leadingIcon,
+         title: title,
+         subtitle: subtitle,
+         allowMultilineLabel: allowMultilineLabel,
+         isLastElement: true,
+         value: value,
+         onChanged: onChanged,
+         isLoading: isLoading,
+         linksWidgets:
+             links
+                 ?.map(
+                   (linkItem) => SBBListItem(
+                     title: linkItem.text,
+                     onPressed: linkItem.onPressed,
+                     isLastElement: true,
+                     trailingIcon: SBBIcons.chevron_small_right_small,
+                   ),
+                 )
+                 .toList(),
+       );
 
   /// Allows complete customization of the [SBBSwitchListItem].
   const SBBSwitchListItem.custom({
@@ -191,17 +193,13 @@ class SBBSwitchListItem extends StatelessWidget {
                       left: sbbDefaultSpacing * 0.5,
                       right: sbbDefaultSpacing,
                     ),
-                    child: SBBSwitch(
-                      value: value,
-                      onChanged: onChanged,
-                    ),
+                    child: SBBSwitch(value: value, onChanged: onChanged),
                   ),
                 ),
                 if (linksWidgets != null && linksWidgets!.isNotEmpty)
-                  ...linksWidgets!.expand((element) => [
-                        const Divider(),
-                        element,
-                      ]),
+                  ...linksWidgets!.expand(
+                    (element) => [const Divider(), element],
+                  ),
               ],
             ),
             if (!isLastElement) const Divider(),
@@ -214,10 +212,7 @@ class SBBSwitchListItem extends StatelessWidget {
 }
 
 class SBBSwitchListItemLink {
-  SBBSwitchListItemLink({
-    required this.text,
-    required this.onPressed,
-  });
+  SBBSwitchListItemLink({required this.text, required this.onPressed});
 
   final String text;
   final VoidCallback? onPressed;

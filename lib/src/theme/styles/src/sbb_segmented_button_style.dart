@@ -11,23 +11,20 @@ class SBBSegmentedButtonStyle {
     this.boxShadow,
   });
 
-  factory SBBSegmentedButtonStyle.$default({required SBBBaseStyle baseStyle}) => SBBSegmentedButtonStyle(
-        defaultStyle: SBBSegmentedButtonInnerStyle.$default(
-          baseStyle: baseStyle,
-        ),
-        selectedStyle: SBBSegmentedButtonInnerStyle.selected(
-          baseStyle: baseStyle,
-        ),
-        boxShadow: baseStyle.themeValue(
-          SBBInternal.defaultBoxShadow,
-          SBBInternal.defaultDarkBoxShadow,
-        ),
-      );
+  factory SBBSegmentedButtonStyle.$default({
+    required SBBBaseStyle baseStyle,
+  }) => SBBSegmentedButtonStyle(
+    defaultStyle: SBBSegmentedButtonInnerStyle.$default(baseStyle: baseStyle),
+    selectedStyle: SBBSegmentedButtonInnerStyle.selected(baseStyle: baseStyle),
+    boxShadow: baseStyle.themeValue(
+      SBBInternal.defaultBoxShadow,
+      SBBInternal.defaultDarkBoxShadow,
+    ),
+  );
 
-  factory SBBSegmentedButtonStyle.red({required SBBBaseStyle baseStyle}) => SBBSegmentedButtonStyle(
-        defaultStyle: SBBSegmentedButtonInnerStyle.red(
-          baseStyle: baseStyle,
-        ),
+  factory SBBSegmentedButtonStyle.red({required SBBBaseStyle baseStyle}) =>
+      SBBSegmentedButtonStyle(
+        defaultStyle: SBBSegmentedButtonInnerStyle.red(baseStyle: baseStyle),
         selectedStyle: SBBSegmentedButtonInnerStyle.redSelected(
           baseStyle: baseStyle,
         ),
@@ -45,15 +42,15 @@ class SBBSegmentedButtonStyle {
     SBBSegmentedButtonInnerStyle? selectedStyle,
     Color? iconColor,
     List<BoxShadow>? boxShadow,
-  }) =>
-      SBBSegmentedButtonStyle(
-        defaultStyle: defaultStyle ?? this.defaultStyle,
-        selectedStyle: selectedStyle ?? this.selectedStyle,
-        iconColor: iconColor ?? this.iconColor,
-        boxShadow: boxShadow ?? this.boxShadow,
-      );
+  }) => SBBSegmentedButtonStyle(
+    defaultStyle: defaultStyle ?? this.defaultStyle,
+    selectedStyle: selectedStyle ?? this.selectedStyle,
+    iconColor: iconColor ?? this.iconColor,
+    boxShadow: boxShadow ?? this.boxShadow,
+  );
 
-  SBBSegmentedButtonStyle lerp(SBBSegmentedButtonStyle? other, double t) => SBBSegmentedButtonStyle(
+  SBBSegmentedButtonStyle lerp(SBBSegmentedButtonStyle? other, double t) =>
+      SBBSegmentedButtonStyle(
         defaultStyle: defaultStyle?.lerp(other?.defaultStyle, t),
         selectedStyle: selectedStyle?.lerp(other?.selectedStyle, t),
         iconColor: Color.lerp(iconColor, other?.iconColor, t),

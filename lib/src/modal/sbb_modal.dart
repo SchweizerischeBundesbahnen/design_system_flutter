@@ -188,26 +188,27 @@ class SBBModalSheet extends StatelessWidget {
     bool showCloseButton = true,
     Color? backgroundColor,
   }) : this._(
-          key: key,
-          headerBuilder: (BuildContext context) => Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(
-              sbbDefaultSpacing,
-              sbbDefaultSpacing,
-              0.0,
-              sbbDefaultSpacing,
-            ),
-            child: Semantics(
-              header: true,
-              child: Text(
-                title,
-                style: SBBControlStyles.of(context).modalTitleTextStyle,
-              ),
-            ),
-          ),
-          showCloseButton: showCloseButton,
-          backgroundColor: backgroundColor,
-          child: child,
-        );
+         key: key,
+         headerBuilder:
+             (BuildContext context) => Padding(
+               padding: const EdgeInsetsDirectional.fromSTEB(
+                 sbbDefaultSpacing,
+                 sbbDefaultSpacing,
+                 0.0,
+                 sbbDefaultSpacing,
+               ),
+               child: Semantics(
+                 header: true,
+                 child: Text(
+                   title,
+                   style: SBBControlStyles.of(context).modalTitleTextStyle,
+                 ),
+               ),
+             ),
+         showCloseButton: showCloseButton,
+         backgroundColor: backgroundColor,
+         child: child,
+       );
 
   SBBModalSheet.custom({
     Key? key,
@@ -216,12 +217,12 @@ class SBBModalSheet extends StatelessWidget {
     bool showCloseButton = true,
     Color? backgroundColor,
   }) : this._(
-          key: key,
-          headerBuilder: (BuildContext context) => header,
-          showCloseButton: showCloseButton,
-          backgroundColor: backgroundColor,
-          child: child,
-        );
+         key: key,
+         headerBuilder: (BuildContext context) => header,
+         showCloseButton: showCloseButton,
+         backgroundColor: backgroundColor,
+         child: child,
+       );
 
   const SBBModalSheet._({
     super.key,
@@ -266,15 +267,11 @@ class SBBModalSheet extends StatelessWidget {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      child: headerBuilder(context),
-                    ),
+                    Expanded(child: headerBuilder(context)),
                     if (showCloseButton) _CloseButton(),
                   ],
                 ),
-                Flexible(
-                  child: child,
-                ),
+                Flexible(child: child),
               ],
             ),
           ),
@@ -319,24 +316,19 @@ class _ModalHeader extends StatelessWidget {
 class _CloseButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Semantics(
-        label: MaterialLocalizations.of(context).closeButtonTooltip,
-        excludeSemantics: true,
-        button: true,
-        child: Padding(
-          padding: const EdgeInsets.all(6.0),
-          child: SBBIconButtonSmall(
-            onPressed: () => Navigator.of(context).pop(),
-            icon: SBBIcons.cross_small,
-          ),
-        ),
-      );
+    label: MaterialLocalizations.of(context).closeButtonTooltip,
+    excludeSemantics: true,
+    button: true,
+    child: Padding(
+      padding: const EdgeInsets.all(6.0),
+      child: SBBIconButtonSmall(
+        onPressed: () => Navigator.of(context).pop(),
+        icon: SBBIcons.cross_small,
+      ),
+    ),
+  );
 }
 
 Widget _wrapWithBottomSafeArea(Widget child) {
-  return SafeArea(
-    top: false,
-    left: false,
-    right: false,
-    child: child,
-  );
+  return SafeArea(top: false, left: false, right: false, child: child);
 }

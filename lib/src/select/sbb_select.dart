@@ -7,7 +7,8 @@ import '../../sbb_design_system_mobile.dart';
 ///
 /// The type `T` is the type of the value the entry represents. All the entries
 /// in a given menu must represent values with consistent types.
-typedef SelectionValidation<T> = bool Function(List<T> oldSelection, List<T> newSelection);
+typedef SelectionValidation<T> =
+    bool Function(List<T> oldSelection, List<T> newSelection);
 
 /// An item in a menu created by a [SBBSelect] or [SBBMultiSelect].
 ///
@@ -57,8 +58,9 @@ class SBBSelect<T> extends StatelessWidget {
     return InkWell(
       focusColor: style.listItem?.backgroundColorHighlighted,
       hoverColor: style.listItem?.backgroundColorHighlighted,
-      onTap: enabled
-          ? () => showMenu(
+      onTap:
+          enabled
+              ? () => showMenu(
                 context: context,
                 title: title ?? label ?? '',
                 value: value,
@@ -66,13 +68,11 @@ class SBBSelect<T> extends StatelessWidget {
                 onChanged: onChanged!,
                 allowMultilineLabel: allowMultilineLabel,
               )
-          : null,
+              : null,
       child: Column(
         children: [
           Container(
-            constraints: const BoxConstraints(
-              minHeight: 48.0,
-            ),
+            constraints: const BoxConstraints(minHeight: 48.0),
             color: SBBColors.transparent,
             child: Row(
               children: [
@@ -84,61 +84,81 @@ class SBBSelect<T> extends StatelessWidget {
                     ),
                     child: Icon(
                       icon,
-                      color: enabled ? style.textField?.iconColor : style.textField?.iconColorDisabled,
+                      color:
+                          enabled
+                              ? style.textField?.iconColor
+                              : style.textField?.iconColorDisabled,
                     ),
                   ),
                 Expanded(
-                  child: value == null
-                      ? Text(
-                          label ?? hint ?? '',
-                          style: enabled
-                              ? style.textField?.placeholderTextStyle
-                              : style.textField?.placeholderTextStyleDisabled,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        )
-                      : Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: label != null ? MainAxisAlignment.start : MainAxisAlignment.center,
-                          children: [
-                            if (label != null)
-                              Padding(
-                                padding: const EdgeInsets.only(
-                                  top: 5.0,
-                                  bottom: 2.0,
+                  child:
+                      value == null
+                          ? Text(
+                            label ?? hint ?? '',
+                            style:
+                                enabled
+                                    ? style.textField?.placeholderTextStyle
+                                    : style
+                                        .textField
+                                        ?.placeholderTextStyleDisabled,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          )
+                          : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment:
+                                label != null
+                                    ? MainAxisAlignment.start
+                                    : MainAxisAlignment.center,
+                            children: [
+                              if (label != null)
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    top: 5.0,
+                                    bottom: 2.0,
+                                  ),
+                                  child: Text(
+                                    label!,
+                                    style:
+                                        enabled
+                                            ? style.selectLabel?.textStyle
+                                            : style
+                                                .selectLabel
+                                                ?.textStyleDisabled,
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
                                 ),
-                                child: Text(
-                                  label!,
-                                  style: enabled ? style.selectLabel?.textStyle : style.selectLabel?.textStyleDisabled,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
+                              if (label == null) const SizedBox(height: 0.0),
+                              Text(
+                                items
+                                    .firstWhere(
+                                      (element) => element.value == value,
+                                    )
+                                    .label,
+                                style:
+                                    enabled
+                                        ? style.textField?.textStyle
+                                        : style.textField?.textStyleDisabled,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                               ),
-                            if (label == null)
-                              const SizedBox(
-                                height: 0.0,
-                              ),
-                            Text(
-                              items.firstWhere((element) => element.value == value).label,
-                              style: enabled ? style.textField?.textStyle : style.textField?.textStyleDisabled,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
-                        ),
+                            ],
+                          ),
                 ),
                 Icon(
                   SBBIcons.chevron_small_down_small,
-                  color: enabled ? style.textField?.iconColor : style.textField?.iconColorDisabled,
+                  color:
+                      enabled
+                          ? style.textField?.iconColor
+                          : style.textField?.iconColorDisabled,
                 ),
                 const SizedBox(width: sbbDefaultSpacing / 2),
               ],
             ),
           ),
           if (!isLastElement)
-            Divider(
-              indent: icon == null ? sbbDefaultSpacing : 48.0,
-            ),
+            Divider(indent: icon == null ? sbbDefaultSpacing : 48.0),
         ],
       ),
     );
@@ -169,21 +189,25 @@ class SBBSelect<T> extends StatelessWidget {
               child: StatefulBuilder(
                 builder: (context, setState) {
                   return Column(
-                    children: items.asMap().entries.map((entry) {
-                      final isLastElement = entry.key == items.length - 1;
-                      return SBBRadioListItem<T>(
-                        value: entry.value.value,
-                        groupValue: selectedValue,
-                        allowMultilineLabel: allowMultilineLabel,
-                        label: entry.value.label,
-                        onChanged: (value) {
-                          setState(() => selectedValue = value);
-                          Navigator.of(context).pop();
-                          onChanged(value);
-                        },
-                        isLastElement: isLastElement,
-                      );
-                    }).toList(growable: false),
+                    children: items
+                        .asMap()
+                        .entries
+                        .map((entry) {
+                          final isLastElement = entry.key == items.length - 1;
+                          return SBBRadioListItem<T>(
+                            value: entry.value.value,
+                            groupValue: selectedValue,
+                            allowMultilineLabel: allowMultilineLabel,
+                            label: entry.value.label,
+                            onChanged: (value) {
+                              setState(() => selectedValue = value);
+                              Navigator.of(context).pop();
+                              onChanged(value);
+                            },
+                            isLastElement: isLastElement,
+                          );
+                        })
+                        .toList(growable: false),
                   );
                 },
               ),
@@ -255,23 +279,29 @@ class SBBMultiSelect<T> extends StatefulWidget {
                     sbbDefaultSpacing,
                   ),
                   child: Column(
-                    children: items.asMap().entries.map((entry) {
-                      final isLastElement = entry.key == items.length - 1;
-                      return SBBCheckboxListItem(
-                        value: selectedValues.contains(entry.value.value),
-                        label: entry.value.label,
-                        onChanged: (checked) {
-                          setModalState(() {
-                            if (checked == true) {
-                              selectedValues = List.from(selectedValues)..add(entry.value.value);
-                            } else {
-                              selectedValues = List.from(selectedValues)..remove(entry.value.value);
-                            }
-                          });
-                        },
-                        isLastElement: isLastElement,
-                      );
-                    }).toList(growable: false),
+                    children: items
+                        .asMap()
+                        .entries
+                        .map((entry) {
+                          final isLastElement = entry.key == items.length - 1;
+                          return SBBCheckboxListItem(
+                            value: selectedValues.contains(entry.value.value),
+                            label: entry.value.label,
+                            onChanged: (checked) {
+                              setModalState(() {
+                                if (checked == true) {
+                                  selectedValues = List.from(selectedValues)
+                                    ..add(entry.value.value);
+                                } else {
+                                  selectedValues = List.from(selectedValues)
+                                    ..remove(entry.value.value);
+                                }
+                              });
+                            },
+                            isLastElement: isLastElement,
+                          );
+                        })
+                        .toList(growable: false),
                   ),
                 ),
                 Padding(
@@ -282,13 +312,16 @@ class SBBMultiSelect<T> extends StatefulWidget {
                     sbbDefaultSpacing,
                   ),
                   child: SBBPrimaryButton(
-                    label: confirmButtonLabel ?? MaterialLocalizations.of(context).okButtonLabel,
-                    onPressed: isSelectionValid(values, selectedValues)
-                        ? () {
-                            Navigator.of(context).pop();
-                            onChanged(selectedValues);
-                          }
-                        : null,
+                    label:
+                        confirmButtonLabel ??
+                        MaterialLocalizations.of(context).okButtonLabel,
+                    onPressed:
+                        isSelectionValid(values, selectedValues)
+                            ? () {
+                              Navigator.of(context).pop();
+                              onChanged(selectedValues);
+                            }
+                            : null,
                   ),
                 ),
               ],
@@ -319,24 +352,23 @@ class _SBBMultiSelectState<T> extends State<SBBMultiSelect<T>> {
     return InkWell(
       focusColor: style.listItem?.backgroundColorHighlighted,
       hoverColor: style.listItem?.backgroundColorHighlighted,
-      onTap: enabled
-          ? () {
-              SBBMultiSelect.showMenu<T>(
-                context: context,
-                title: widget.title ?? widget.label,
-                values: widget.values,
-                items: widget.items,
-                onChanged: widget.onChanged!,
-                selectionValidation: widget.selectionValidation,
-              );
-            }
-          : null,
+      onTap:
+          enabled
+              ? () {
+                SBBMultiSelect.showMenu<T>(
+                  context: context,
+                  title: widget.title ?? widget.label,
+                  values: widget.values,
+                  items: widget.items,
+                  onChanged: widget.onChanged!,
+                  selectionValidation: widget.selectionValidation,
+                );
+              }
+              : null,
       child: Column(
         children: [
           Container(
-            constraints: const BoxConstraints(
-              minHeight: 48.0,
-            ),
+            constraints: const BoxConstraints(minHeight: 48.0),
             color: SBBColors.transparent,
             child: Row(
               children: [
@@ -348,54 +380,71 @@ class _SBBMultiSelectState<T> extends State<SBBMultiSelect<T>> {
                     ),
                     child: Icon(
                       widget.icon,
-                      color: enabled ? style.textField?.iconColor : style.textField?.iconColorDisabled,
+                      color:
+                          enabled
+                              ? style.textField?.iconColor
+                              : style.textField?.iconColorDisabled,
                     ),
                   ),
                 Expanded(
-                  child: widget.values.isEmpty
-                      ? Text(
-                          widget.label,
-                          style: enabled
-                              ? style.textField?.placeholderTextStyle
-                              : style.textField?.placeholderTextStyleDisabled,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        )
-                      : Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(height: 5.0),
-                            Text(
-                              widget.label,
-                              style: enabled ? style.selectLabel?.textStyle : style.selectLabel?.textStyleDisabled,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            const SizedBox(height: 3.0),
-                            Text(
-                              widget.items
-                                  .where((element) => widget.values.contains(element.value))
-                                  .map((element) => element.label)
-                                  .join(', '),
-                              style: enabled ? style.textField?.textStyle : style.textField?.textStyleDisabled,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
-                        ),
+                  child:
+                      widget.values.isEmpty
+                          ? Text(
+                            widget.label,
+                            style:
+                                enabled
+                                    ? style.textField?.placeholderTextStyle
+                                    : style
+                                        .textField
+                                        ?.placeholderTextStyleDisabled,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          )
+                          : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const SizedBox(height: 5.0),
+                              Text(
+                                widget.label,
+                                style:
+                                    enabled
+                                        ? style.selectLabel?.textStyle
+                                        : style.selectLabel?.textStyleDisabled,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                              const SizedBox(height: 3.0),
+                              Text(
+                                widget.items
+                                    .where(
+                                      (element) =>
+                                          widget.values.contains(element.value),
+                                    )
+                                    .map((element) => element.label)
+                                    .join(', '),
+                                style:
+                                    enabled
+                                        ? style.textField?.textStyle
+                                        : style.textField?.textStyleDisabled,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
                 ),
                 Icon(
                   SBBIcons.chevron_small_down_small,
-                  color: enabled ? style.textField?.iconColor : style.textField?.iconColorDisabled,
+                  color:
+                      enabled
+                          ? style.textField?.iconColor
+                          : style.textField?.iconColorDisabled,
                 ),
                 const SizedBox(width: sbbDefaultSpacing / 2),
               ],
             ),
           ),
           if (!widget.isLastElement)
-            Divider(
-              indent: widget.icon == null ? sbbDefaultSpacing : 48.0,
-            ),
+            Divider(indent: widget.icon == null ? sbbDefaultSpacing : 48.0),
         ],
       ),
     );

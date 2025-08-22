@@ -46,15 +46,9 @@ class SwitchTest extends StatelessWidget {
           padding: const EdgeInsets.all(sbbDefaultSpacing / 2),
           child: Row(
             children: [
-              SBBSwitch(
-                onChanged: (bool? value) {},
-                value: value1,
-              ),
+              SBBSwitch(onChanged: (bool? value) {}, value: value1),
               SizedBox(width: sbbDefaultSpacing * .25),
-              SBBSwitch(
-                onChanged: null,
-                value: value1,
-              ),
+              SBBSwitch(onChanged: null, value: value1),
             ],
           ),
         ),
@@ -82,7 +76,8 @@ class SwitchTest extends StatelessWidget {
         SBBGroup(
           child: SBBSwitchListItem(
             value: value3,
-            title: 'Very Looooooooooooooooooooooooooooooooooooooooooooooong Multiline Label With Subtitle',
+            title:
+                'Very Looooooooooooooooooooooooooooooooooooooooooooooong Multiline Label With Subtitle',
             allowMultilineLabel: true,
             subtitle: 'Subtitle',
             onChanged: (value) {},
@@ -96,10 +91,7 @@ class SwitchTest extends StatelessWidget {
             title: 'With Link',
             onChanged: (value) {},
             links: [
-              SBBSwitchListItemLink(
-                text: 'Link Text',
-                onPressed: () => {},
-              )
+              SBBSwitchListItemLink(text: 'Link Text', onPressed: () => {}),
             ],
             isLastElement: true,
           ),
@@ -113,14 +105,8 @@ class SwitchTest extends StatelessWidget {
                 title: 'With 2 Links',
                 onChanged: (value) {},
                 links: [
-                  SBBSwitchListItemLink(
-                    text: 'Link Text 1',
-                    onPressed: () {},
-                  ),
-                  SBBSwitchListItemLink(
-                    text: 'Link Text 2',
-                    onPressed: () {},
-                  ),
+                  SBBSwitchListItemLink(text: 'Link Text 1', onPressed: () {}),
+                  SBBSwitchListItemLink(text: 'Link Text 2', onPressed: () {}),
                 ],
                 isLastElement: true,
               ),
@@ -137,7 +123,7 @@ class SwitchTest extends StatelessWidget {
               SBBSwitchListItemLink(
                 text: 'Link still enabled',
                 onPressed: () {},
-              )
+              ),
             ],
             isLastElement: true,
           ),
@@ -149,10 +135,7 @@ class SwitchTest extends StatelessWidget {
             title: 'Only Link disabled',
             onChanged: (value) {},
             links: [
-              SBBSwitchListItemLink(
-                text: 'Link disabled',
-                onPressed: null,
-              ),
+              SBBSwitchListItemLink(text: 'Link disabled', onPressed: null),
             ],
             isLastElement: true,
           ),
@@ -164,10 +147,7 @@ class SwitchTest extends StatelessWidget {
             title: 'All disabled',
             onChanged: null,
             links: [
-              SBBSwitchListItemLink(
-                text: 'Link disabled',
-                onPressed: null,
-              ),
+              SBBSwitchListItemLink(text: 'Link disabled', onPressed: null),
             ],
             isLastElement: true,
           ),
@@ -182,7 +162,7 @@ class SwitchTest extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.all(4.0),
                 child: Text('My custom Link Widget'),
-              )
+              ),
             ],
             isLastElement: true,
           ),

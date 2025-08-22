@@ -27,12 +27,7 @@ void main() {
     });
   }
 
-  generateTest(
-    'date_picker_test_1',
-    DateTime(2024, 07, 02),
-    null,
-    null,
-  );
+  generateTest('date_picker_test_1', DateTime(2024, 07, 02), null, null);
   generateTest(
     'date_picker_test_2',
     DateTime(2024, 07, 02),
@@ -67,47 +62,44 @@ class DatePickerTest extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          SBBGroup(
-            child: SBBDatePicker(
-              onDateChanged: (_) {},
-              initialDate: initialDate,
+    mainAxisSize: MainAxisSize.min,
+    children: <Widget>[
+      SBBGroup(
+        child: SBBDatePicker(onDateChanged: (_) {}, initialDate: initialDate),
+      ),
+      const SizedBox(height: sbbDefaultSpacing),
+      SBBGroup(
+        child: SBBDatePicker(
+          onDateChanged: (_) {},
+          initialDate: initialDate,
+          minimumDate: minimumDate,
+          maximumDate: maximumDate,
+        ),
+      ),
+      const SizedBox(height: sbbDefaultSpacing),
+      Row(
+        children: [
+          SizedBox(
+            width: 225,
+            child: SBBGroup(
+              child: SBBDatePicker(
+                onDateChanged: (_) {},
+                initialDate: initialDate,
+              ),
             ),
           ),
-          const SizedBox(height: sbbDefaultSpacing),
-          SBBGroup(
-            child: SBBDatePicker(
-              onDateChanged: (_) {},
-              initialDate: initialDate,
-              minimumDate: minimumDate,
-              maximumDate: maximumDate,
+          const SizedBox(width: sbbDefaultSpacing),
+          SizedBox(
+            width: 180,
+            child: SBBGroup(
+              child: SBBDatePicker(
+                onDateChanged: (_) {},
+                initialDate: initialDate,
+              ),
             ),
-          ),
-          const SizedBox(height: sbbDefaultSpacing),
-          Row(
-            children: [
-              SizedBox(
-                width: 225,
-                child: SBBGroup(
-                  child: SBBDatePicker(
-                    onDateChanged: (_) {},
-                    initialDate: initialDate,
-                  ),
-                ),
-              ),
-              const SizedBox(width: sbbDefaultSpacing),
-              SizedBox(
-                width: 180,
-                child: SBBGroup(
-                  child: SBBDatePicker(
-                    onDateChanged: (_) {},
-                    initialDate: initialDate,
-                  ),
-                ),
-              ),
-            ],
           ),
         ],
-      );
+      ),
+    ],
+  );
 }

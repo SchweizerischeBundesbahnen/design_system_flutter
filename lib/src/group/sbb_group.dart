@@ -81,7 +81,8 @@ class SBBGroup extends StatelessWidget {
           child: Padding(
             padding: padding ?? style.padding!,
             child: Semantics(
-              explicitChildNodes: !(isSemanticContainer ?? style.isSemanticContainer!),
+              explicitChildNodes:
+                  !(isSemanticContainer ?? style.isSemanticContainer!),
               child: Container(child: child),
             ),
           ),

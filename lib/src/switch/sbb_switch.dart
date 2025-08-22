@@ -22,22 +22,14 @@ const _thumbBoxShadows = [
     blurRadius: 9.0,
     spreadRadius: 2.0,
   ),
-  BoxShadow(
-    color: Color(0x1A000000),
-    offset: Offset(0, 4),
-    blurRadius: 2.0,
-  ),
+  BoxShadow(color: Color(0x1A000000), offset: Offset(0, 4), blurRadius: 2.0),
   BoxShadow(
     color: Color(0x1C000000),
     offset: Offset(0, 0),
     blurRadius: 1.0,
     spreadRadius: 1.0,
   ),
-  BoxShadow(
-    color: Color(0x12000000),
-    offset: Offset(0, 1),
-    blurRadius: 1.0,
-  ),
+  BoxShadow(color: Color(0x12000000), offset: Offset(0, 1), blurRadius: 1.0),
 ];
 
 /// The SBB Switch.
@@ -52,11 +44,7 @@ const _thumbBoxShadows = [
 /// * [SBBRadio] and [SBBSegmentedButton], for selecting among a set of
 /// explicit values.
 class SBBSwitch extends StatefulWidget {
-  const SBBSwitch({
-    super.key,
-    required this.value,
-    required this.onChanged,
-  });
+  const SBBSwitch({super.key, required this.value, required this.onChanged});
 
   final bool value;
   final ValueChanged<bool>? onChanged;
@@ -83,15 +71,17 @@ class _SBBSwitchState extends State<SBBSwitch> with TickerProviderStateMixin {
   void initState() {
     super.initState();
 
-    _tap = TapGestureRecognizer()
-      ..onTapDown = _handleTapDown
-      ..onTapUp = _handleTapUp
-      ..onTap = _handleTap
-      ..onTapCancel = _handleTapCancel;
-    _drag = HorizontalDragGestureRecognizer()
-      ..onStart = _handleDragStart
-      ..onUpdate = _handleDragUpdate
-      ..onEnd = _handleDragEnd;
+    _tap =
+        TapGestureRecognizer()
+          ..onTapDown = _handleTapDown
+          ..onTapUp = _handleTapUp
+          ..onTap = _handleTap
+          ..onTapCancel = _handleTapCancel;
+    _drag =
+        HorizontalDragGestureRecognizer()
+          ..onStart = _handleDragStart
+          ..onUpdate = _handleDragUpdate
+          ..onEnd = _handleDragEnd;
 
     _positionController = AnimationController(
       duration: kThemeAnimationDuration,
@@ -190,9 +180,12 @@ class _SBBSwitchState extends State<SBBSwitch> with TickerProviderStateMixin {
     final style = SBBControlStyles.of(context).switchToggle!;
 
     final opacity = isEnabled ? 1.0 : _switchDisabledOpacity;
-    final thumbColor = isEnabled ? style.thumbColor! : style.thumbColorDisabled!;
-    final activeColor = isEnabled ? style.activeColor! : style.activeColorDisabled!;
-    final trackColor = isEnabled ? style.trackColor! : style.trackColorDisabled!;
+    final thumbColor =
+        isEnabled ? style.thumbColor! : style.thumbColorDisabled!;
+    final activeColor =
+        isEnabled ? style.activeColor! : style.activeColorDisabled!;
+    final trackColor =
+        isEnabled ? style.trackColor! : style.trackColorDisabled!;
     final knobColor = style.knobColor!;
     if (_needsPositionAnimation) {
       _resumePositionAnimation();
@@ -275,19 +268,19 @@ class _SBBRenderSwitch extends RenderConstrainedBox {
     required Color knobColor,
     ValueChanged<bool>? onChanged,
     required _SBBSwitchState state,
-  })  : _value = value,
-        _thumbColor = thumbColor,
-        _activeColor = activeColor,
-        _trackColor = trackColor,
-        _knobColor = knobColor,
-        _onChanged = onChanged,
-        _state = state,
-        super(
-          additionalConstraints: const BoxConstraints.tightFor(
-            width: _trackWidth,
-            height: _trackHeight,
-          ),
-        ) {
+  }) : _value = value,
+       _thumbColor = thumbColor,
+       _activeColor = activeColor,
+       _trackColor = trackColor,
+       _knobColor = knobColor,
+       _onChanged = onChanged,
+       _state = state,
+       super(
+         additionalConstraints: const BoxConstraints.tightFor(
+           width: _trackWidth,
+           height: _trackHeight,
+         ),
+       ) {
     state._position.addListener(markNeedsPaint);
     state._reaction.addListener(markNeedsPaint);
   }
@@ -404,30 +397,31 @@ class _SBBRenderSwitch extends RenderConstrainedBox {
       _trackHeight,
       const Radius.circular(_trackRadius),
     );
-    final currentTrackColor = Color.lerp(
-      trackColor,
-      activeColor,
-      currentValue,
-    )!;
-    final currentKnobColor = Color.lerp(
-      knobColor,
-      activeColor,
-      currentValue,
-    )!;
+    final currentTrackColor =
+        Color.lerp(trackColor, activeColor, currentValue)!;
+    final currentKnobColor = Color.lerp(knobColor, activeColor, currentValue)!;
     final trackPaint = Paint()..color = currentTrackColor;
     canvas.drawRRect(trackRRect, trackPaint);
 
     final currentThumbExtension = _thumbPressedExtension * currentReactionValue;
-    final thumbLeft = lerpDouble(
-      trackRRect.left + _trackInnerStart - _thumbRadius,
-      trackRRect.left + _trackInnerEnd - _thumbRadius - currentThumbExtension,
-      currentValue,
-    )!;
-    final thumbRight = lerpDouble(
-      trackRRect.left + _trackInnerStart + _thumbRadius + currentThumbExtension,
-      trackRRect.left + _trackInnerEnd + _thumbRadius,
-      currentValue,
-    )!;
+    final thumbLeft =
+        lerpDouble(
+          trackRRect.left + _trackInnerStart - _thumbRadius,
+          trackRRect.left +
+              _trackInnerEnd -
+              _thumbRadius -
+              currentThumbExtension,
+          currentValue,
+        )!;
+    final thumbRight =
+        lerpDouble(
+          trackRRect.left +
+              _trackInnerStart +
+              _thumbRadius +
+              currentThumbExtension,
+          trackRRect.left + _trackInnerEnd + _thumbRadius,
+          currentValue,
+        )!;
     const thumbTop = _trackHeight * 0.5 - _thumbRadius;
     const thumbBottom = _trackHeight * 0.5 + _thumbRadius;
 
@@ -447,10 +441,11 @@ class _SBBRenderSwitch extends RenderConstrainedBox {
 
     final thumbPaint = Paint()..color = thumbColor;
     canvas.drawRRect(thumbRRect, thumbPaint);
-    final thumbStrokePaint = Paint()
-      ..color = currentKnobColor
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.0;
+    final thumbStrokePaint =
+        Paint()
+          ..color = currentKnobColor
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 1.0;
     canvas.drawRRect(thumbRRect, thumbStrokePaint);
 
     _drawTick(canvas, thumbRRect);

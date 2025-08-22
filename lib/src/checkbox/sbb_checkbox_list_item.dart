@@ -62,19 +62,23 @@ class SBBCheckboxListItem extends StatelessWidget {
     bool isLoading = false,
     String? checkboxSemanticLabel,
   }) : this.custom(
-          key: key,
-          value: value,
-          label: label,
-          onChanged: onChanged,
-          tristate: tristate,
-          isLastElement: isLastElement,
-          allowMultilineLabel: allowMultilineLabel,
-          secondaryLabel: secondaryLabel,
-          leadingIcon: leadingIcon,
-          trailingWidget: _optionallyButtonedTrailingIcon(trailingIcon, onCallToAction, onChanged),
-          isLoading: isLoading,
-          checkboxSemanticLabel: checkboxSemanticLabel,
-        );
+         key: key,
+         value: value,
+         label: label,
+         onChanged: onChanged,
+         tristate: tristate,
+         isLastElement: isLastElement,
+         allowMultilineLabel: allowMultilineLabel,
+         secondaryLabel: secondaryLabel,
+         leadingIcon: leadingIcon,
+         trailingWidget: _optionallyButtonedTrailingIcon(
+           trailingIcon,
+           onCallToAction,
+           onChanged,
+         ),
+         isLoading: isLoading,
+         checkboxSemanticLabel: checkboxSemanticLabel,
+       );
 
   /// Use this in combination with a [SBBGroup] to create a boxed variant of the [SBBCheckboxListItem].
   ///
@@ -107,19 +111,23 @@ class SBBCheckboxListItem extends StatelessWidget {
     bool isLoading = false,
     String? checkboxSemanticLabel,
   }) : this.custom(
-          key: key,
-          value: value,
-          label: label,
-          onChanged: onChanged,
-          tristate: tristate,
-          allowMultilineLabel: allowMultilineLabel,
-          secondaryLabel: secondaryLabel,
-          leadingIcon: leadingIcon,
-          trailingWidget: _optionallyButtonedTrailingIcon(trailingIcon, onCallToAction, onChanged),
-          isLoading: isLoading,
-          isLastElement: true,
-          checkboxSemanticLabel: checkboxSemanticLabel,
-        );
+         key: key,
+         value: value,
+         label: label,
+         onChanged: onChanged,
+         tristate: tristate,
+         allowMultilineLabel: allowMultilineLabel,
+         secondaryLabel: secondaryLabel,
+         leadingIcon: leadingIcon,
+         trailingWidget: _optionallyButtonedTrailingIcon(
+           trailingIcon,
+           onCallToAction,
+           onChanged,
+         ),
+         isLoading: isLoading,
+         isLastElement: true,
+         checkboxSemanticLabel: checkboxSemanticLabel,
+       );
 
   /// Full custom [SBBCheckboxListItem].
   ///
@@ -231,17 +239,20 @@ class SBBCheckboxListItem extends StatelessWidget {
     return trailingIcon == null
         ? null
         : onCallToAction == null
-            ? Padding(
-                padding: const EdgeInsets.only(top: _iconTopPadding, right: sbbDefaultSpacing),
-                child: Icon(trailingIcon, size: 24.0),
-              )
-            : Padding(
-                padding: const EdgeInsets.only(right: sbbDefaultSpacing * .5),
-                child: SBBIconButtonSmall(
-                  icon: trailingIcon,
-                  onPressed: onChanged != null ? onCallToAction : null,
-                ),
-              );
+        ? Padding(
+          padding: const EdgeInsets.only(
+            top: _iconTopPadding,
+            right: sbbDefaultSpacing,
+          ),
+          child: Icon(trailingIcon, size: 24.0),
+        )
+        : Padding(
+          padding: const EdgeInsets.only(right: sbbDefaultSpacing * .5),
+          child: SBBIconButtonSmall(
+            icon: trailingIcon,
+            onPressed: onChanged != null ? onCallToAction : null,
+          ),
+        );
   }
 
   @override
@@ -270,7 +281,7 @@ class SBBCheckboxListItem extends StatelessWidget {
               ),
             ),
             if (!isLastElement) const Divider(),
-            if (isLoading) BottomLoadingIndicator()
+            if (isLoading) BottomLoadingIndicator(),
           ],
         ),
       ),
@@ -324,11 +335,15 @@ class SBBCheckboxListItem extends StatelessWidget {
   }
 
   Color? _resolveBackgroundColor(SBBControlStyle? style) {
-    return _isInteractive ? style?.listItem?.backgroundColor : style?.listItem?.backgroundColorDisabled;
+    return _isInteractive
+        ? style?.listItem?.backgroundColor
+        : style?.listItem?.backgroundColorDisabled;
   }
 
   Color? _resolveIconColor(SBBControlStyle? style) {
-    return _isInteractive ? style?.listItem?.iconColor : style?.listItem?.iconColorDisabled;
+    return _isInteractive
+        ? style?.listItem?.iconColor
+        : style?.listItem?.iconColorDisabled;
   }
 }
 
@@ -360,7 +375,10 @@ class _TextBody extends StatelessWidget {
         children: [
           Text(
             label,
-            style: _isInteractive ? style?.listItem?.textStyle : style?.listItem?.textStyleDisabled,
+            style:
+                _isInteractive
+                    ? style?.listItem?.textStyle
+                    : style?.listItem?.textStyleDisabled,
             maxLines: allowMultilineLabel ? null : 1,
             overflow: allowMultilineLabel ? null : TextOverflow.ellipsis,
           ),
@@ -372,7 +390,9 @@ class _TextBody extends StatelessWidget {
               child: Text(
                 secondaryLabel!,
                 style:
-                    _isInteractive ? style?.listItem?.secondaryTextStyle : style?.listItem?.secondaryTextStyleDisabled,
+                    _isInteractive
+                        ? style?.listItem?.secondaryTextStyle
+                        : style?.listItem?.secondaryTextStyleDisabled,
               ),
             ),
         ],
@@ -389,7 +409,10 @@ class _LeadingIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsetsDirectional.only(top: _iconTopPadding, end: sbbDefaultSpacing * .5),
+      padding: const EdgeInsetsDirectional.only(
+        top: _iconTopPadding,
+        end: sbbDefaultSpacing * .5,
+      ),
       child: Icon(leadingIcon),
     );
   }

@@ -25,57 +25,45 @@ class SBBLoadingIndicator extends StatelessWidget {
 
   /// A tiny loading indicator.
   const SBBLoadingIndicator.tiny({Key? key, Color color = SBBColors.red})
-      : this.custom(
-          key: key,
-          squareWidth: 8,
-          squareHeight: 6.0,
-          squareSpacing: 2.0,
-          translationZ: 0.01,
-          rotationY: -1.2,
-          padding: 8.0,
-          color: color,
-        );
+    : this.custom(
+        key: key,
+        squareWidth: 8,
+        squareHeight: 6.0,
+        squareSpacing: 2.0,
+        translationZ: 0.01,
+        rotationY: -1.2,
+        padding: 8.0,
+        color: color,
+      );
 
   /// A tiny loading indicator in [SBBColors.cloud].
   const SBBLoadingIndicator.tinyCloud({Key? key})
-      : this.tiny(
-          key: key,
-          color: SBBColors.cloud,
-        );
+    : this.tiny(key: key, color: SBBColors.cloud);
 
   /// A tiny loading indicator in [SBBColors.smoke].
   const SBBLoadingIndicator.tinySmoke({Key? key})
-      : this.tiny(
-          key: key,
-          color: SBBColors.smoke,
-        );
+    : this.tiny(key: key, color: SBBColors.smoke);
 
   /// A tiny loading indicator in [SBBColors.cement].
   const SBBLoadingIndicator.tinyCement({Key? key})
-      : this.tiny(
-          key: key,
-          color: SBBColors.cement,
-        );
+    : this.tiny(key: key, color: SBBColors.cement);
 
   /// A medium loading indicator in [SBBColors.red].
   const SBBLoadingIndicator.medium({Key? key, Color color = SBBColors.red})
-      : this.custom(
-          key: key,
-          squareWidth: 29.0,
-          squareHeight: 18.0,
-          squareSpacing: 4.5,
-          translationZ: 0.0035,
-          rotationY: -1.3,
-          padding: 32.0,
-          color: color,
-        );
+    : this.custom(
+        key: key,
+        squareWidth: 29.0,
+        squareHeight: 18.0,
+        squareSpacing: 4.5,
+        translationZ: 0.0035,
+        rotationY: -1.3,
+        padding: 32.0,
+        color: color,
+      );
 
   /// A medium loading indicator in [SBBColors.cloud].
   const SBBLoadingIndicator.mediumCloud({Key? key})
-      : this.medium(
-          key: key,
-          color: SBBColors.cloud,
-        );
+    : this.medium(key: key, color: SBBColors.cloud);
 
   /// The width of a 'window' before transformation.
   final double squareWidth;
@@ -105,9 +93,10 @@ class SBBLoadingIndicator extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(top: padding, bottom: padding),
       child: Transform(
-        transform: Matrix4.identity()
-          ..setEntry(3, 2, translationZ)
-          ..rotateY(rotationY),
+        transform:
+            Matrix4.identity()
+              ..setEntry(3, 2, translationZ)
+              ..rotateY(rotationY),
         alignment: FractionalOffset.centerRight,
         child: LoadingAnimation(
           squareWidth: squareWidth,
@@ -138,7 +127,8 @@ class LoadingAnimation extends StatefulWidget {
   LoadingAnimationState createState() => LoadingAnimationState();
 }
 
-class LoadingAnimationState extends State<LoadingAnimation> with SingleTickerProviderStateMixin {
+class LoadingAnimationState extends State<LoadingAnimation>
+    with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _loadingSquareOne;
   late Animation<double> _loadingSquareTwo;
@@ -155,40 +145,25 @@ class LoadingAnimationState extends State<LoadingAnimation> with SingleTickerPro
       vsync: this,
     )..repeat();
     _loadingSquareOne = Tween(begin: 0.5, end: 0.0).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: Curves.linear,
-      ),
+      CurvedAnimation(parent: _animationController, curve: Curves.linear),
     );
     _loadingSquareTwo = Tween(begin: 1.0, end: 0.5).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: Curves.linear,
-      ),
+      CurvedAnimation(parent: _animationController, curve: Curves.linear),
     );
     _loadingSquareThree = Tween(begin: 0.5, end: 1.0).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: Curves.linear,
-      ),
+      CurvedAnimation(parent: _animationController, curve: Curves.linear),
     );
     _loadingSquareFour = Tween(begin: 0.25, end: 0.5).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: Curves.linear,
-      ),
+      CurvedAnimation(parent: _animationController, curve: Curves.linear),
     );
     _loadingSquareFive = Tween(begin: 0.0, end: 0.25).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: Curves.linear,
-      ),
+      CurvedAnimation(parent: _animationController, curve: Curves.linear),
     );
-    _container = Tween<Offset>(begin: Offset.zero, end: const Offset(-0.2, 0.0)).animate(
-      CurvedAnimation(
-        parent: _animationController,
-        curve: Curves.linear,
-      ),
+    _container = Tween<Offset>(
+      begin: Offset.zero,
+      end: const Offset(-0.2, 0.0),
+    ).animate(
+      CurvedAnimation(parent: _animationController, curve: Curves.linear),
     );
   }
 

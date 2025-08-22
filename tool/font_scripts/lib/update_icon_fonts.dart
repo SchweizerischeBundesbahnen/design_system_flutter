@@ -30,10 +30,15 @@ Future<void> main() async {
   }
 
   final icons = responseJson['icons'] as List<dynamic>;
-  final total = icons
-      .cast<Map<String, dynamic>>()
-      .where((e) => (e['tags'] as List).cast<String>().any((t) => t.contains('Size=')))
-      .length;
+  final total =
+      icons
+          .cast<Map<String, dynamic>>()
+          .where(
+            (e) => (e['tags'] as List).cast<String>().any(
+              (t) => t.contains('Size='),
+            ),
+          )
+          .length;
   progress = FillingBar(total: total + 4, width: 10, desc: 'Downloading icons');
 
   await prepareIcons('small', icons);
@@ -79,11 +84,7 @@ Future<void> prepareIcons(String type, List<dynamic> icons) async {
     final name = icon['name'];
     final fileName = '$name.svg';
     final svgUri = makeUrlUri(fileName);
-    await downloadSvg(
-      svgUri,
-      fileName.replaceAll('-', '_'),
-      dir.path,
-    );
+    await downloadSvg(svgUri, fileName.replaceAll('-', '_'), dir.path);
   }
 }
 
@@ -99,7 +100,8 @@ Future<void> createFlutterFontMap() async {
   final small = await getMap('small');
   final medium = await getMap('medium');
   final large = await getMap('large');
-  mapFont(String name, String value) => sb.writeln('  static const $name = $value;');
+  mapFont(String name, String value) =>
+      sb.writeln('  static const $name = $value;');
 
   sb.writeln('import \'package:flutter/material.dart\';');
   sb.writeln();
@@ -107,9 +109,15 @@ Future<void> createFlutterFontMap() async {
   sb.writeln('const sbbIconSizeMedium = 36.0;');
   sb.writeln('const sbbIconSizeLarge = 48.0;');
   sb.writeln();
-  sb.writeln('const smallFontFamily = \'packages/sbb_design_system_mobile/SBBIconsSmall\';');
-  sb.writeln('const mediumFontFamily = \'packages/sbb_design_system_mobile/SBBIconsMedium\';');
-  sb.writeln('const largeFontFamily = \'packages/sbb_design_system_mobile/SBBIconsLarge\';');
+  sb.writeln(
+    'const smallFontFamily = \'packages/sbb_design_system_mobile/SBBIconsSmall\';',
+  );
+  sb.writeln(
+    'const mediumFontFamily = \'packages/sbb_design_system_mobile/SBBIconsMedium\';',
+  );
+  sb.writeln(
+    'const largeFontFamily = \'packages/sbb_design_system_mobile/SBBIconsLarge\';',
+  );
   sb.writeln();
   sb.writeln('// The names are given by digital.sbb.ch');
   sb.writeln('// ignore_for_file: constant_identifier_names');
@@ -121,10 +129,13 @@ Future<void> createFlutterFontMap() async {
 
   await File('icons/sbb_icons.dart').writeAsString(sb.toString());
 
-  mapFont2(String name) => sb.writeln('    {\'icon\': SBBIcons.$name, \'name\': \'$name\'},');
+  mapFont2(String name) =>
+      sb.writeln('    {\'icon\': SBBIcons.$name, \'name\': \'$name\'},');
 
   sb.clear();
-  sb.writeln('import \'package:sbb_design_system_mobile/sbb_design_system_mobile.dart\';');
+  sb.writeln(
+    'import \'package:sbb_design_system_mobile/sbb_design_system_mobile.dart\';',
+  );
   sb.writeln();
   sb.writeln('sealed class SBBIconsIndex {');
   sb.writeln('  static const iconsSmall = [');

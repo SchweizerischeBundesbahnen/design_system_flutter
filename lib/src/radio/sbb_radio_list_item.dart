@@ -60,19 +60,23 @@ class SBBRadioListItem<T> extends StatelessWidget {
     bool isLoading = false,
     String? radioSemanticLabel,
   }) : this.custom(
-          key: key,
-          value: value,
-          groupValue: groupValue,
-          label: label,
-          allowMultilineLabel: allowMultilineLabel,
-          secondaryLabel: secondaryLabel,
-          onChanged: onChanged,
-          isLastElement: isLastElement,
-          leadingIcon: leadingIcon,
-          trailingWidget: _optionallyButtonedTrailingIcon(trailingIcon, onCallToAction, onChanged),
-          isLoading: isLoading,
-          radioSemanticLabel: radioSemanticLabel,
-        );
+         key: key,
+         value: value,
+         groupValue: groupValue,
+         label: label,
+         allowMultilineLabel: allowMultilineLabel,
+         secondaryLabel: secondaryLabel,
+         onChanged: onChanged,
+         isLastElement: isLastElement,
+         leadingIcon: leadingIcon,
+         trailingWidget: _optionallyButtonedTrailingIcon(
+           trailingIcon,
+           onCallToAction,
+           onChanged,
+         ),
+         isLoading: isLoading,
+         radioSemanticLabel: radioSemanticLabel,
+       );
 
   /// Use this in combination with a [SBBGroup] to create a boxed variant of the [SBBRadioListItem].
   ///
@@ -105,19 +109,23 @@ class SBBRadioListItem<T> extends StatelessWidget {
     bool isLoading = false,
     String? radioSemanticLabel,
   }) : this.custom(
-          key: key,
-          value: value,
-          groupValue: groupValue,
-          label: label,
-          allowMultilineLabel: allowMultilineLabel,
-          secondaryLabel: secondaryLabel,
-          onChanged: onChanged,
-          isLastElement: true,
-          leadingIcon: leadingIcon,
-          trailingWidget: _optionallyButtonedTrailingIcon(trailingIcon, onCallToAction, onChanged),
-          isLoading: isLoading,
-          radioSemanticLabel: radioSemanticLabel,
-        );
+         key: key,
+         value: value,
+         groupValue: groupValue,
+         label: label,
+         allowMultilineLabel: allowMultilineLabel,
+         secondaryLabel: secondaryLabel,
+         onChanged: onChanged,
+         isLastElement: true,
+         leadingIcon: leadingIcon,
+         trailingWidget: _optionallyButtonedTrailingIcon(
+           trailingIcon,
+           onCallToAction,
+           onChanged,
+         ),
+         isLoading: isLoading,
+         radioSemanticLabel: radioSemanticLabel,
+       );
 
   const SBBRadioListItem.custom({
     super.key,
@@ -270,11 +278,15 @@ class SBBRadioListItem<T> extends StatelessWidget {
   }
 
   Color? _resolveBackgroundColor(SBBControlStyle? style) {
-    return _isInteractive ? style?.listItem?.backgroundColor : style?.listItem?.backgroundColorDisabled;
+    return _isInteractive
+        ? style?.listItem?.backgroundColor
+        : style?.listItem?.backgroundColorDisabled;
   }
 
   Color? _resolveIconColor(SBBControlStyle? style) {
-    return _isInteractive ? style?.listItem?.iconColor : style?.listItem?.iconColorDisabled;
+    return _isInteractive
+        ? style?.listItem?.iconColor
+        : style?.listItem?.iconColorDisabled;
   }
 
   static Widget? _optionallyButtonedTrailingIcon<T>(
@@ -286,7 +298,10 @@ class SBBRadioListItem<T> extends StatelessWidget {
 
     if (onCallToAction == null) {
       return Padding(
-        padding: const EdgeInsets.only(top: _iconTopPadding, right: sbbDefaultSpacing),
+        padding: const EdgeInsets.only(
+          top: _iconTopPadding,
+          right: sbbDefaultSpacing,
+        ),
         child: Icon(trailingIcon, size: 24.0),
       );
     } else {
@@ -329,7 +344,10 @@ class _TextBody extends StatelessWidget {
         children: [
           Text(
             label,
-            style: _isInteractive ? style?.listItem?.textStyle : style?.listItem?.textStyleDisabled,
+            style:
+                _isInteractive
+                    ? style?.listItem?.textStyle
+                    : style?.listItem?.textStyleDisabled,
             maxLines: allowMultilineLabel ? null : 1,
             overflow: allowMultilineLabel ? null : TextOverflow.ellipsis,
           ),
@@ -341,7 +359,9 @@ class _TextBody extends StatelessWidget {
               child: Text(
                 secondaryLabel!,
                 style:
-                    _isInteractive ? style?.listItem?.secondaryTextStyle : style?.listItem?.secondaryTextStyleDisabled,
+                    _isInteractive
+                        ? style?.listItem?.secondaryTextStyle
+                        : style?.listItem?.secondaryTextStyleDisabled,
               ),
             ),
         ],
@@ -358,7 +378,10 @@ class _LeadingIcon extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsetsDirectional.only(top: _iconTopPadding, end: sbbDefaultSpacing * .5),
+      padding: const EdgeInsetsDirectional.only(
+        top: _iconTopPadding,
+        end: sbbDefaultSpacing * .5,
+      ),
       child: Icon(leadingIcon),
     );
   }

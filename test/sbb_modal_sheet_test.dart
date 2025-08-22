@@ -29,7 +29,8 @@ class ModalSheetTest extends StatelessWidget {
   final bool isCustom;
 
   @override
-  Widget build(BuildContext context) => isCustom ? _customModalSheets() : _modalSheets();
+  Widget build(BuildContext context) =>
+      isCustom ? _customModalSheets() : _modalSheets();
 
   Widget _modalSheets() {
     return Column(
@@ -41,10 +42,7 @@ class ModalSheetTest extends StatelessWidget {
             padding: const EdgeInsets.all(sbbDefaultSpacing * .5),
             child: Column(
               children: [
-                SBBModalSheet(
-                  title: 'Titel',
-                  child: _modalContent(),
-                ),
+                SBBModalSheet(title: 'Titel', child: _modalContent()),
                 SizedBox(height: sbbDefaultSpacing * .5),
                 SBBModalSheet(
                   title: 'Titel',
@@ -108,7 +106,8 @@ class ModalSheetTest extends StatelessWidget {
         sbbDefaultSpacing,
       ),
       child: const Text(
-          'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.'),
+        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
+      ),
     );
   }
 

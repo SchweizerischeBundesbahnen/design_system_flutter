@@ -15,17 +15,16 @@ class SBBTheme {
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBGroupStyle? groupStyle,
     SBBToastStyle? toastStyle,
-  }) =>
-      createTheme(
-        brightness: Brightness.light,
-        boldFont: boldFont,
-        baseStyle: baseStyle,
-        buttonStyles: buttonStyles,
-        controlStyles: controlStyles,
-        headerBoxStyle: headerBoxStyle,
-        groupStyle: groupStyle,
-        toastStyle: toastStyle,
-      );
+  }) => createTheme(
+    brightness: Brightness.light,
+    boldFont: boldFont,
+    baseStyle: baseStyle,
+    buttonStyles: buttonStyles,
+    controlStyles: controlStyles,
+    headerBoxStyle: headerBoxStyle,
+    groupStyle: groupStyle,
+    toastStyle: toastStyle,
+  );
 
   static ThemeData dark({
     bool boldFont = false,
@@ -35,17 +34,16 @@ class SBBTheme {
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBGroupStyle? groupStyle,
     SBBToastStyle? toastStyle,
-  }) =>
-      createTheme(
-        brightness: Brightness.dark,
-        boldFont: boldFont,
-        baseStyle: baseStyle,
-        buttonStyles: buttonStyles,
-        controlStyles: controlStyles,
-        headerBoxStyle: headerBoxStyle,
-        groupStyle: groupStyle,
-        toastStyle: toastStyle,
-      );
+  }) => createTheme(
+    brightness: Brightness.dark,
+    boldFont: boldFont,
+    baseStyle: baseStyle,
+    buttonStyles: buttonStyles,
+    controlStyles: controlStyles,
+    headerBoxStyle: headerBoxStyle,
+    groupStyle: groupStyle,
+    toastStyle: toastStyle,
+  );
 
   static ThemeData createTheme({
     required Brightness brightness,
@@ -108,44 +106,41 @@ class SBBTheme {
     required SBBHeaderBoxStyle headerBoxStyle,
     required SBBGroupStyle groupStyle,
     required SBBToastStyle toastStyle,
-  }) =>
-      ThemeData(
-        colorScheme: ColorScheme.fromSwatch(
-          primarySwatch: baseStyle.primarySwatch!,
-          accentColor: baseStyle.primaryColor,
-          backgroundColor: baseStyle.backgroundColor,
-          errorColor: controlStyles.textField?.dividerColorError,
-          brightness: brightness,
-        ).copyWith(
-          surfaceTint: SBBColors.transparent,
-        ),
-        scaffoldBackgroundColor: baseStyle.backgroundColor,
-        iconTheme: IconThemeData(
-          color: baseStyle.iconColor,
-          size: sbbIconSizeSmall,
-        ),
-        dividerTheme: DividerThemeData(
-          thickness: 1.0,
-          space: 0.0,
-          color: baseStyle.dividerColor,
-        ),
-        fontFamily: baseStyle.defaultFontFamily,
-        textTheme: baseStyle.createTextTheme(),
-        appBarTheme: controlStyles.appBarTheme,
-        filledButtonTheme: buttonStyles.filledButtonTheme,
-        outlinedButtonTheme: buttonStyles.outlinedButtonTheme,
-        textButtonTheme: buttonStyles.textButtonTheme,
-        materialTapTargetSize: MaterialTapTargetSize.padded,
-        textSelectionTheme: controlStyles.textSelectionTheme,
-        extensions: [
-          baseStyle,
-          buttonStyles,
-          controlStyles,
-          headerBoxStyle,
-          groupStyle,
-          toastStyle,
-        ],
-      );
+  }) => ThemeData(
+    colorScheme: ColorScheme.fromSwatch(
+      primarySwatch: baseStyle.primarySwatch!,
+      accentColor: baseStyle.primaryColor,
+      backgroundColor: baseStyle.backgroundColor,
+      errorColor: controlStyles.textField?.dividerColorError,
+      brightness: brightness,
+    ).copyWith(surfaceTint: SBBColors.transparent),
+    scaffoldBackgroundColor: baseStyle.backgroundColor,
+    iconTheme: IconThemeData(
+      color: baseStyle.iconColor,
+      size: sbbIconSizeSmall,
+    ),
+    dividerTheme: DividerThemeData(
+      thickness: 1.0,
+      space: 0.0,
+      color: baseStyle.dividerColor,
+    ),
+    fontFamily: baseStyle.defaultFontFamily,
+    textTheme: baseStyle.createTextTheme(),
+    appBarTheme: controlStyles.appBarTheme,
+    filledButtonTheme: buttonStyles.filledButtonTheme,
+    outlinedButtonTheme: buttonStyles.outlinedButtonTheme,
+    textButtonTheme: buttonStyles.textButtonTheme,
+    materialTapTargetSize: MaterialTapTargetSize.padded,
+    textSelectionTheme: controlStyles.textSelectionTheme,
+    extensions: [
+      baseStyle,
+      buttonStyles,
+      controlStyles,
+      headerBoxStyle,
+      groupStyle,
+      toastStyle,
+    ],
+  );
 
   /// Convenience method for easier use of [WidgetStateProperty.all].
   static WidgetStateProperty<T> allStates<T>(T value) {
@@ -168,7 +163,8 @@ class SBBTheme {
       }
 
       // pressed / focused
-      if (states.any({WidgetState.pressed, WidgetState.focused}.contains) && pressedValue != null) {
+      if (states.any({WidgetState.pressed, WidgetState.focused}.contains) &&
+          pressedValue != null) {
         return pressedValue;
       }
       // hovered

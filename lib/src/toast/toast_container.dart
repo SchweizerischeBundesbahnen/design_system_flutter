@@ -32,5 +32,6 @@ class ToastContainer extends InheritedWidget {
   }
 
   @override
-  bool updateShouldNotify(ToastContainer oldWidget) => oldWidget.stream != stream || oldWidget.toast != toast;
+  bool updateShouldNotify(ToastContainer oldWidget) =>
+      oldWidget.stream != stream || oldWidget.toast != toast;
 }

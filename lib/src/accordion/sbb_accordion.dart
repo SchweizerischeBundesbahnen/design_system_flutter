@@ -45,11 +45,7 @@ class SBBAccordionItem {
     required String title,
     required String text,
     bool isExpanded = false,
-  }) : this(
-          title: title,
-          body: Text(text),
-          isExpanded: isExpanded,
-        );
+  }) : this(title: title, body: Text(text), isExpanded: isExpanded);
 
   /// The title text that's displayed in the header.
   final String title;
@@ -98,21 +94,16 @@ class SBBAccordion extends StatefulWidget {
     backgroundColor,
     borderColor,
   }) : this(
-          key: key,
-          children: [
-            SBBAccordionItem(
-              title: title,
-              body: body,
-              isExpanded: isExpanded,
-            ),
-          ],
-          titleMaxLines: titleMaxLines,
-          accordionCallback: (index, isExpanded) => singleAccordionCallback?.call(
-            isExpanded,
-          ),
-          backgroundColor: backgroundColor,
-          borderColor: borderColor,
-        );
+         key: key,
+         children: [
+           SBBAccordionItem(title: title, body: body, isExpanded: isExpanded),
+         ],
+         titleMaxLines: titleMaxLines,
+         accordionCallback:
+             (index, isExpanded) => singleAccordionCallback?.call(isExpanded),
+         backgroundColor: backgroundColor,
+         borderColor: borderColor,
+       );
 
   final List<SBBAccordionItem> children;
   final int? titleMaxLines;
@@ -144,16 +135,20 @@ class _SBBAccordionState extends State<SBBAccordion> {
 
     return Material(
       color: widget.backgroundColor ?? style.accordionBackgroundColor,
-      child: Column(
-        children: items,
-      ),
+      child: Column(children: items),
     );
   }
 
-  Container _buildAccordionChildren(BuildContext context, SBBAccordionItem child, int i) {
+  Container _buildAccordionChildren(
+    BuildContext context,
+    SBBAccordionItem child,
+    int i,
+  ) {
     final style = SBBControlStyles.of(context);
     return Container(
-      decoration: BoxDecoration(border: Border.all(color: widget.borderColor ?? SBBColors.transparent)),
+      decoration: BoxDecoration(
+        border: Border.all(color: widget.borderColor ?? SBBColors.transparent),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
@@ -170,7 +165,10 @@ class _SBBAccordionState extends State<SBBAccordion> {
                         child.title,
                         style: style.accordionTitleTextStyle,
                         maxLines: widget.titleMaxLines,
-                        overflow: widget.titleMaxLines == null ? null : TextOverflow.ellipsis,
+                        overflow:
+                            widget.titleMaxLines == null
+                                ? null
+                                : TextOverflow.ellipsis,
                       ),
                     ),
                   ),
@@ -178,9 +176,7 @@ class _SBBAccordionState extends State<SBBAccordion> {
                     padding: const EdgeInsetsDirectional.only(
                       end: sbbDefaultSpacing / 2,
                     ),
-                    child: _ExpandIcon(
-                      _isChildExpanded(i),
-                    ),
+                    child: _ExpandIcon(_isChildExpanded(i)),
                   ),
                 ],
               ),
@@ -196,18 +192,13 @@ class _SBBAccordionState extends State<SBBAccordion> {
                 child: child.body,
               ),
             ),
-            firstCurve: const Interval(
-              0.0,
-              0.6,
-              curve: Curves.fastOutSlowIn,
-            ),
-            secondCurve: const Interval(
-              0.4,
-              1.0,
-              curve: Curves.fastOutSlowIn,
-            ),
+            firstCurve: const Interval(0.0, 0.6, curve: Curves.fastOutSlowIn),
+            secondCurve: const Interval(0.4, 1.0, curve: Curves.fastOutSlowIn),
             sizeCurve: Curves.fastOutSlowIn,
-            crossFadeState: _isChildExpanded(i) ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+            crossFadeState:
+                _isChildExpanded(i)
+                    ? CrossFadeState.showSecond
+                    : CrossFadeState.showFirst,
             duration: kThemeAnimationDuration,
           ),
           if (i < widget.children.length - 1) const Divider(),
@@ -226,7 +217,8 @@ class _ExpandIcon extends StatefulWidget {
   _ExpandIconState createState() => _ExpandIconState();
 }
 
-class _ExpandIconState extends State<_ExpandIcon> with SingleTickerProviderStateMixin {
+class _ExpandIconState extends State<_ExpandIcon>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation<double> _iconTurns;
 
@@ -241,11 +233,7 @@ class _ExpandIconState extends State<_ExpandIcon> with SingleTickerProviderState
       Tween<double>(
         begin: 0.0,
         end: 0.5,
-      ).chain(
-        CurveTween(
-          curve: Curves.fastOutSlowIn,
-        ),
-      ),
+      ).chain(CurveTween(curve: Curves.fastOutSlowIn)),
     );
     // If the widget is initially expanded, rotate the icon without animating it.
     if (widget.isExpanded) {

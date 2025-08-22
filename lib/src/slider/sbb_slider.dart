@@ -55,9 +55,7 @@ class SBBSlider extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       children: [
         if (startIcon != null) _startIcon(style),
-        Expanded(
-          child: _slider(style),
-        ),
+        Expanded(child: _slider(style)),
         if (endIcon != null) _endIcon(style),
       ],
     );

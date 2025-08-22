@@ -3,13 +3,17 @@ import 'package:flutter/material.dart';
 class SBBOnboardingNotification extends Notification {
   SBBOnboardingNotification._(this.type, this.index);
 
-  SBBOnboardingNotification.startPage() : this._(SBBOnboardingNotificationType.startPage, null);
+  SBBOnboardingNotification.startPage()
+    : this._(SBBOnboardingNotificationType.startPage, null);
 
-  SBBOnboardingNotification.endPage() : this._(SBBOnboardingNotificationType.endPage, null);
+  SBBOnboardingNotification.endPage()
+    : this._(SBBOnboardingNotificationType.endPage, null);
 
-  SBBOnboardingNotification.card(int index) : this._(SBBOnboardingNotificationType.card, index);
+  SBBOnboardingNotification.card(int index)
+    : this._(SBBOnboardingNotificationType.card, index);
 
-  SBBOnboardingNotification.other(int index) : this._(SBBOnboardingNotificationType.other, index);
+  SBBOnboardingNotification.other(int index)
+    : this._(SBBOnboardingNotificationType.other, index);
 
   final SBBOnboardingNotificationType type;
   final int? index;
@@ -26,9 +30,4 @@ class SBBOnboardingNotification extends Notification {
   int get hashCode => type.hashCode ^ index.hashCode;
 }
 
-enum SBBOnboardingNotificationType {
-  startPage,
-  endPage,
-  card,
-  other,
-}
+enum SBBOnboardingNotificationType { startPage, endPage, card, other }

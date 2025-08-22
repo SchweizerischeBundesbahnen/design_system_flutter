@@ -1,10 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 class SBBStepperItem {
-  const SBBStepperItem({
-    this.icon,
-    required this.label,
-  });
+  const SBBStepperItem({this.icon, required this.label});
 
   final IconData? icon;
   final String label;
@@ -12,7 +9,9 @@ class SBBStepperItem {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is SBBStepperItem && other.icon == icon && other.label == label;
+    return other is SBBStepperItem &&
+        other.icon == icon &&
+        other.label == label;
   }
 
   @override
