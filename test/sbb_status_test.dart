@@ -20,12 +20,6 @@ void main() {
       ],
     );
 
-    await TestSpecs.run(
-      TestSpecs.themedSpecs,
-      widget,
-      tester,
-      'status',
-      find.byType(Column).first,
-    );
+    await TestSpecs.run(TestSpecs.themedSpecs, widget, tester, 'status', find.byType(Column).first);
   });
 }

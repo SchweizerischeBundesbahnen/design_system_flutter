@@ -52,17 +52,17 @@ class SBBHeaderbox extends StatelessWidget {
     EdgeInsets margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
     String? semanticsLabel,
   }) : this.custom(
-          key: key,
-          child: _DefaultHeaderBoxContent(
-            title: title,
-            leadingIcon: leadingIcon,
-            secondaryLabel: secondaryLabel,
-            trailingWidget: trailingWidget,
-          ),
-          margin: margin,
-          flap: flap,
-          semanticsLabel: semanticsLabel,
-        );
+         key: key,
+         child: _DefaultHeaderBoxContent(
+           title: title,
+           leadingIcon: leadingIcon,
+           secondaryLabel: secondaryLabel,
+           trailingWidget: trailingWidget,
+         ),
+         margin: margin,
+         flap: flap,
+         semanticsLabel: semanticsLabel,
+       );
 
   /// The large [SBBHeaderbox].
   ///
@@ -85,17 +85,17 @@ class SBBHeaderbox extends StatelessWidget {
     EdgeInsets margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
     String? semanticsLabel,
   }) : this.custom(
-          key: key,
-          flap: flap,
-          margin: margin,
-          child: _LargeHeaderBoxContent(
-            title: title,
-            leadingIcon: leadingIcon,
-            secondaryLabel: secondaryLabel,
-            trailingWidget: trailingWidget,
-          ),
-          semanticsLabel: semanticsLabel,
-        );
+         key: key,
+         flap: flap,
+         margin: margin,
+         child: _LargeHeaderBoxContent(
+           title: title,
+           leadingIcon: leadingIcon,
+           secondaryLabel: secondaryLabel,
+           trailingWidget: trailingWidget,
+         ),
+         semanticsLabel: semanticsLabel,
+       );
 
   /// Allows complete customization of the [SBBHeaderbox].
   const SBBHeaderbox.custom({
@@ -214,8 +214,9 @@ class _HeaderBoxForeground extends StatelessWidget {
     );
   }
 
-  List<BoxShadow> get _headerBoxShadow =>
-      [BoxShadow(color: SBBColors.black.withAlpha(32), blurRadius: 4.0, offset: Offset(0, 2.0))];
+  List<BoxShadow> get _headerBoxShadow => [
+    BoxShadow(color: SBBColors.black.withAlpha(32), blurRadius: 4.0, offset: Offset(0, 2.0)),
+  ];
 }
 
 class _HeaderBoxBackgroundBar extends StatelessWidget {
@@ -225,10 +226,7 @@ class _HeaderBoxBackgroundBar extends StatelessWidget {
     final Color? headerColorPrimary = Theme.of(context).appBarTheme.backgroundColor;
     return Align(
       alignment: Alignment.topCenter,
-      child: Container(
-        color: headerColorPrimary,
-        height: _headerBoxNavBarExtensionHeight,
-      ),
+      child: Container(color: headerColorPrimary, height: _headerBoxNavBarExtensionHeight),
     );
   }
 }
@@ -262,12 +260,12 @@ class _DefaultHeaderBoxContent extends StatelessWidget {
                 children: [
                   if (leadingIcon != null) ...[
                     Icon(leadingIcon, size: sbbIconSizeSmall),
-                    SizedBox(width: sbbDefaultSpacing * .5)
+                    SizedBox(width: sbbDefaultSpacing * .5),
                   ],
                   Expanded(child: Text(title, style: style.titleTextStyle)),
                 ],
               ),
-              if (secondaryLabel != null) Text(secondaryLabel!, style: secondaryTextStyle)
+              if (secondaryLabel != null) Text(secondaryLabel!, style: secondaryTextStyle),
             ],
           ),
         ),
@@ -294,13 +292,15 @@ class _LargeHeaderBoxContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = SBBHeaderBoxStyle.of(context);
-    final secondaryTextStyle = SBBTextStyles.mediumLight.copyWith(color: style.largeSecondaryLabelColor);
+    final secondaryTextStyle = SBBTextStyles.mediumLight.copyWith(
+      color: style.largeSecondaryLabelColor,
+    );
 
     return Row(
       children: [
         if (leadingIcon != null) ...[
           Icon(leadingIcon, size: sbbIconSizeMedium),
-          SizedBox(width: sbbDefaultSpacing * .5)
+          SizedBox(width: sbbDefaultSpacing * .5),
         ],
         Expanded(
           child: Column(
@@ -308,7 +308,7 @@ class _LargeHeaderBoxContent extends StatelessWidget {
             children: [
               Text(title, style: style.titleTextStyle),
               SizedBox(height: sbbDefaultSpacing * .25),
-              if (secondaryLabel != null) Text(secondaryLabel!, style: secondaryTextStyle)
+              if (secondaryLabel != null) Text(secondaryLabel!, style: secondaryTextStyle),
             ],
           ),
         ),

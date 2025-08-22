@@ -14,14 +14,16 @@ class SBBGroupStyle extends ThemeExtension<SBBGroupStyle> {
   });
 
   factory SBBGroupStyle.$default({required SBBBaseStyle baseStyle}) => SBBGroupStyle(
-        margin: EdgeInsets.zero,
-        padding: EdgeInsets.zero,
-        color: baseStyle.themeValue(SBBColors.white, SBBColors.charcoal),
-        shadowColor: SBBColors.transparent,
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(sbbDefaultSpacing))),
-        clipBehavior: Clip.hardEdge,
-        isSemanticContainer: true,
-      );
+    margin: EdgeInsets.zero,
+    padding: EdgeInsets.zero,
+    color: baseStyle.themeValue(SBBColors.white, SBBColors.charcoal),
+    shadowColor: SBBColors.transparent,
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.all(Radius.circular(sbbDefaultSpacing)),
+    ),
+    clipBehavior: Clip.hardEdge,
+    isSemanticContainer: true,
+  );
 
   static SBBGroupStyle of(BuildContext context) => Theme.of(context).extension<SBBGroupStyle>()!;
 
@@ -42,16 +44,15 @@ class SBBGroupStyle extends ThemeExtension<SBBGroupStyle> {
     ShapeBorder? shape,
     Clip? clipBehavior,
     bool? isSemanticContainer,
-  }) =>
-      SBBGroupStyle(
-        margin: margin ?? this.margin,
-        padding: padding ?? this.padding,
-        color: color ?? this.color,
-        shadowColor: shadowColor ?? this.shadowColor,
-        shape: shape ?? this.shape,
-        clipBehavior: clipBehavior ?? this.clipBehavior,
-        isSemanticContainer: isSemanticContainer ?? this.isSemanticContainer,
-      );
+  }) => SBBGroupStyle(
+    margin: margin ?? this.margin,
+    padding: padding ?? this.padding,
+    color: color ?? this.color,
+    shadowColor: shadowColor ?? this.shadowColor,
+    shape: shape ?? this.shape,
+    clipBehavior: clipBehavior ?? this.clipBehavior,
+    isSemanticContainer: isSemanticContainer ?? this.isSemanticContainer,
+  );
 
   @override
   SBBGroupStyle lerp(ThemeExtension<SBBGroupStyle>? other, double t) {

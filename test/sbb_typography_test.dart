@@ -7,21 +7,12 @@ import 'test_app.dart';
 void main() {
   void testWidget(String name, Widget widget) {
     testWidgets(name, (WidgetTester tester) async {
-      await TestSpecs.run(
-        TestSpecs.themedSpecs,
-        widget,
-        tester,
-        name,
-        find.byType(Column).first,
-      );
+      await TestSpecs.run(TestSpecs.themedSpecs, widget, tester, name, find.byType(Column).first);
     });
   }
 
   void generateTest(String name, List<TextStyle?> textStyles) {
-    final widget = TypographyTest(
-      name: name,
-      textStyles: textStyles,
-    );
+    final widget = TypographyTest(name: name, textStyles: textStyles);
     testWidget(name, widget);
   }
 
@@ -173,14 +164,7 @@ class TypographyTest extends StatelessWidget {
             child: Column(
               spacing: sbbDefaultSpacing * 0.5,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: textStyles
-                  .map(
-                    (e) => Text(
-                      exampleText,
-                      style: e,
-                    ),
-                  )
-                  .toList(),
+              children: textStyles.map((e) => Text(exampleText, style: e)).toList(),
             ),
           ),
         ),
@@ -195,10 +179,9 @@ class TypographyRedThemeTest extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = SBBBaseStyle.of(context).redTextTheme;
-    return TypographyTest(name: 'typography_red_text_theme', textStyles: [
-      textTheme.bodyLarge,
-      textTheme.bodyMedium,
-      textTheme.bodySmall,
-    ]);
+    return TypographyTest(
+      name: 'typography_red_text_theme',
+      textStyles: [textTheme.bodyLarge, textTheme.bodyMedium, textTheme.bodySmall],
+    );
   }
 }

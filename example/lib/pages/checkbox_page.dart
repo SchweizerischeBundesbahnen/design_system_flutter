@@ -43,20 +43,13 @@ class CheckboxPageState extends State<CheckboxPage> {
                 onChanged: (bool? value) => setState(() => _value1 = value),
                 value: _value1,
               ),
-              SBBCheckbox(
-                onChanged: null,
-                value: _value1,
-              ),
+              SBBCheckbox(onChanged: null, value: _value1),
               SBBCheckbox(
                 onChanged: (bool? value) => setState(() => _value2 = value),
                 value: _value2,
                 tristate: true,
               ),
-              SBBCheckbox(
-                onChanged: null,
-                value: _value2,
-                tristate: true,
-              ),
+              SBBCheckbox(onChanged: null, value: _value2, tristate: true),
             ],
           ),
         ),
@@ -74,38 +67,56 @@ class CheckboxPageState extends State<CheckboxPage> {
                 value: _listItemValue1,
                 label: 'Label',
                 allowMultilineLabel: true,
-                onChanged: _isEnabled ? (value) => setState(() => _listItemValue1 = value) : null,
+                onChanged:
+                    _isEnabled
+                        ? (value) => setState(() => _listItemValue1 = value)
+                        : null,
               ),
               SBBCheckboxListItem(
                 value: _listItemValue2,
                 label: 'Tristate',
                 tristate: true,
-                onChanged: _isEnabled ? (value) => setState(() => _listItemValue2 = value) : null,
+                onChanged:
+                    _isEnabled
+                        ? (value) => setState(() => _listItemValue2 = value)
+                        : null,
               ),
               SBBCheckboxListItem(
                 value: _listItemValue4,
                 label: 'Leading Icon',
-                onChanged: _isEnabled ? (value) => setState(() => _listItemValue4 = value) : null,
+                onChanged:
+                    _isEnabled
+                        ? (value) => setState(() => _listItemValue4 = value)
+                        : null,
                 leadingIcon: SBBIcons.alarm_clock_small,
               ),
               SBBCheckboxListItem(
                 value: _listItemValue5,
                 label: 'Leading and Trailing Icon',
-                onChanged: _isEnabled ? (value) => setState(() => _listItemValue5 = value) : null,
+                onChanged:
+                    _isEnabled
+                        ? (value) => setState(() => _listItemValue5 = value)
+                        : null,
                 leadingIcon: SBBIcons.alarm_clock_small,
                 trailingIcon: SBBIcons.dog_small,
               ),
               SBBCheckboxListItem(
                 value: _listItemValue3,
                 label: 'Button',
-                onChanged: _isEnabled ? (value) => setState(() => _listItemValue3 = value) : null,
+                onChanged:
+                    _isEnabled
+                        ? (value) => setState(() => _listItemValue3 = value)
+                        : null,
                 trailingIcon: SBBIcons.circle_information_small_small,
                 onCallToAction: () => sbbToast.show(title: 'Button pressed'),
               ),
               SBBCheckboxListItem.custom(
                 value: _listItemValue6,
                 label: 'Custom trailing Widget',
-                onChanged: _isEnabled ? (value) => setState(() => _listItemValue6 = value) : null,
+                onChanged:
+                    _isEnabled
+                        ? (value) => setState(() => _listItemValue6 = value)
+                        : null,
                 trailingWidget: Padding(
                   padding: EdgeInsetsDirectional.only(
                     top: sbbDefaultSpacing / 4 * 3,
@@ -120,13 +131,19 @@ class CheckboxPageState extends State<CheckboxPage> {
                 allowMultilineLabel: true,
                 secondaryLabel:
                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut convallis leo et metus semper hendrerit. Duis nec nunc a ligula cursus vulputate. Donec sed elit ultricies, euismod erat et, eleifend augue.',
-                onChanged: _isEnabled ? (value) => setState(() => _listItemValue7 = value) : null,
+                onChanged:
+                    _isEnabled
+                        ? (value) => setState(() => _listItemValue7 = value)
+                        : null,
               ),
               SBBCheckboxListItem(
                 value: _listItemValue8,
                 label: 'Loading',
                 secondaryLabel: 'This will stop loading if selected.',
-                onChanged: _isEnabled ? (value) => setState(() => _listItemValue8 = value!) : null,
+                onChanged:
+                    _isEnabled
+                        ? (value) => setState(() => _listItemValue8 = value!)
+                        : null,
                 isLoading: !_listItemValue8,
                 isLastElement: true,
               ),
@@ -143,7 +160,10 @@ class CheckboxPageState extends State<CheckboxPage> {
                 value: _listItemValue1,
                 label: 'Label',
                 allowMultilineLabel: true,
-                onChanged: _isEnabled ? (value) => setState(() => _listItemValue1 = value) : null,
+                onChanged:
+                    _isEnabled
+                        ? (value) => setState(() => _listItemValue1 = value)
+                        : null,
               ),
             ),
             SBBGroup(
@@ -151,14 +171,20 @@ class CheckboxPageState extends State<CheckboxPage> {
                 value: _listItemValue2,
                 label: 'Tristate',
                 tristate: true,
-                onChanged: _isEnabled ? (value) => setState(() => _listItemValue2 = value) : null,
+                onChanged:
+                    _isEnabled
+                        ? (value) => setState(() => _listItemValue2 = value)
+                        : null,
               ),
             ),
             SBBGroup(
               child: SBBCheckboxListItem.boxed(
                 value: _listItemValue4,
                 label: 'Leading Icon',
-                onChanged: _isEnabled ? (value) => setState(() => _listItemValue4 = value) : null,
+                onChanged:
+                    _isEnabled
+                        ? (value) => setState(() => _listItemValue4 = value)
+                        : null,
                 leadingIcon: SBBIcons.alarm_clock_small,
               ),
             ),
@@ -166,7 +192,10 @@ class CheckboxPageState extends State<CheckboxPage> {
               child: SBBCheckboxListItem.boxed(
                 value: _listItemValue5,
                 label: 'Leading and Trailing Icon',
-                onChanged: _isEnabled ? (value) => setState(() => _listItemValue5 = value) : null,
+                onChanged:
+                    _isEnabled
+                        ? (value) => setState(() => _listItemValue5 = value)
+                        : null,
                 leadingIcon: SBBIcons.alarm_clock_small,
                 trailingIcon: SBBIcons.dog_small,
               ),
@@ -175,7 +204,10 @@ class CheckboxPageState extends State<CheckboxPage> {
               child: SBBCheckboxListItem.boxed(
                 value: _listItemValue3,
                 label: 'Button',
-                onChanged: _isEnabled ? (value) => setState(() => _listItemValue3 = value) : null,
+                onChanged:
+                    _isEnabled
+                        ? (value) => setState(() => _listItemValue3 = value)
+                        : null,
                 trailingIcon: SBBIcons.circle_information_small_small,
                 onCallToAction: () => sbbToast.show(title: 'Button pressed'),
               ),
@@ -184,7 +216,10 @@ class CheckboxPageState extends State<CheckboxPage> {
               child: SBBCheckboxListItem.custom(
                 value: _listItemValue6,
                 label: 'Custom trailing Widget',
-                onChanged: _isEnabled ? (value) => setState(() => _listItemValue6 = value) : null,
+                onChanged:
+                    _isEnabled
+                        ? (value) => setState(() => _listItemValue6 = value)
+                        : null,
                 trailingWidget: Padding(
                   padding: EdgeInsetsDirectional.only(
                     top: sbbDefaultSpacing / 4 * 3,
@@ -202,7 +237,10 @@ class CheckboxPageState extends State<CheckboxPage> {
                 secondaryLabel:
                     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut convallis leo et metus semper hendrerit. '
                     'Duis nec nunc a ligula cursus vulputate. Donec sed elit ultricies, euismod erat et, eleifend augue.',
-                onChanged: _isEnabled ? (value) => setState(() => _listItemValue7 = value) : null,
+                onChanged:
+                    _isEnabled
+                        ? (value) => setState(() => _listItemValue7 = value)
+                        : null,
               ),
             ),
             SBBGroup(
@@ -210,7 +248,10 @@ class CheckboxPageState extends State<CheckboxPage> {
                 value: _listItemValue8,
                 label: 'Loading',
                 secondaryLabel: 'This will not stop.',
-                onChanged: _isEnabled ? (value) => setState(() => _listItemValue8 = value!) : null,
+                onChanged:
+                    _isEnabled
+                        ? (value) => setState(() => _listItemValue8 = value!)
+                        : null,
                 isLoading: true,
               ),
             ),

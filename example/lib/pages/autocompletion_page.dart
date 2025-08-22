@@ -54,7 +54,8 @@ class AutocompletionPageState extends State<AutocompletionPage> {
       },
       favorites: _favorites,
       labelText: 'Autocompletion',
-      controller: TextEditingController()..value = const TextEditingValue(text: ''),
+      controller:
+          TextEditingController()..value = const TextEditingValue(text: ''),
       clearOnSubmit: false,
     );
   }
@@ -64,10 +65,7 @@ class AutocompletionPageState extends State<AutocompletionPage> {
     final style = SBBBaseStyle.of(context);
     return SingleChildScrollView(
       child: Container(
-        color: style.themeValue(
-          SBBColors.white,
-          SBBColors.charcoal,
-        ),
+        color: style.themeValue(SBBColors.white, SBBColors.charcoal),
         child: _autocompletion,
       ),
     );

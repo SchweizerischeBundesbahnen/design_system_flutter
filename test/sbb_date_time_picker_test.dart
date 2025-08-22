@@ -27,12 +27,7 @@ void main() {
     });
   }
 
-  generateTest(
-    'date_time_picker_test_1',
-    DateTime(2024, 07, 02, 12),
-    null,
-    null,
-  );
+  generateTest('date_time_picker_test_1', DateTime(2024, 07, 02, 12), null, null);
   generateTest(
     'date_time_picker_test_2',
     DateTime(2024, 07, 02, 12),
@@ -67,86 +62,83 @@ class DateTimePickerTest extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Row(
-            children: [
-              Expanded(
-                child: SBBGroup(
-                  child: SBBDateTimePicker(
-                    onDateTimeChanged: (_) {},
-                    initialDateTime: initialDateTime,
-                  ),
-                ),
-              ),
-              const SizedBox(width: sbbDefaultSpacing),
-              Expanded(
-                child: SBBGroup(
-                  child: SBBDateTimePicker(
-                    onDateTimeChanged: (_) {},
-                    initialDateTime: initialDateTime,
-                    minuteInterval: 15,
-                  ),
-                ),
-              ),
-            ],
+    mainAxisSize: MainAxisSize.min,
+    children: <Widget>[
+      Row(
+        children: [
+          Expanded(
+            child: SBBGroup(
+              child: SBBDateTimePicker(onDateTimeChanged: (_) {}, initialDateTime: initialDateTime),
+            ),
           ),
-          const SizedBox(height: sbbDefaultSpacing),
-          Row(
-            children: [
-              Expanded(
-                child: SBBGroup(
-                  child: SBBDateTimePicker(
-                    onDateTimeChanged: (_) {},
-                    initialDateTime: initialDateTime,
-                    minimumDateTime: minimumDateTime,
-                    maximumDateTime: maximumDateTime,
-                  ),
-                ),
+          const SizedBox(width: sbbDefaultSpacing),
+          Expanded(
+            child: SBBGroup(
+              child: SBBDateTimePicker(
+                onDateTimeChanged: (_) {},
+                initialDateTime: initialDateTime,
+                minuteInterval: 15,
               ),
-              const SizedBox(width: sbbDefaultSpacing),
-              Expanded(
-                child: SBBGroup(
-                  child: SBBDateTimePicker(
-                    onDateTimeChanged: (_) {},
-                    initialDateTime: initialDateTime,
-                    minimumDateTime: minimumDateTime,
-                    maximumDateTime: maximumDateTime,
-                    minuteInterval: 15,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: sbbDefaultSpacing),
-          Row(
-            children: [
-              SizedBox(
-                width: 185,
-                child: SBBGroup(
-                  child: SBBDateTimePicker(
-                    onDateTimeChanged: (_) {},
-                    initialDateTime: initialDateTime,
-                    minimumDateTime: minimumDateTime,
-                    maximumDateTime: maximumDateTime,
-                  ),
-                ),
-              ),
-              const SizedBox(width: sbbDefaultSpacing),
-              SizedBox(
-                width: 150,
-                child: SBBGroup(
-                  child: SBBDateTimePicker(
-                    onDateTimeChanged: (_) {},
-                    initialDateTime: initialDateTime,
-                    minimumDateTime: minimumDateTime,
-                    maximumDateTime: maximumDateTime,
-                    minuteInterval: 15,
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
         ],
-      );
+      ),
+      const SizedBox(height: sbbDefaultSpacing),
+      Row(
+        children: [
+          Expanded(
+            child: SBBGroup(
+              child: SBBDateTimePicker(
+                onDateTimeChanged: (_) {},
+                initialDateTime: initialDateTime,
+                minimumDateTime: minimumDateTime,
+                maximumDateTime: maximumDateTime,
+              ),
+            ),
+          ),
+          const SizedBox(width: sbbDefaultSpacing),
+          Expanded(
+            child: SBBGroup(
+              child: SBBDateTimePicker(
+                onDateTimeChanged: (_) {},
+                initialDateTime: initialDateTime,
+                minimumDateTime: minimumDateTime,
+                maximumDateTime: maximumDateTime,
+                minuteInterval: 15,
+              ),
+            ),
+          ),
+        ],
+      ),
+      const SizedBox(height: sbbDefaultSpacing),
+      Row(
+        children: [
+          SizedBox(
+            width: 185,
+            child: SBBGroup(
+              child: SBBDateTimePicker(
+                onDateTimeChanged: (_) {},
+                initialDateTime: initialDateTime,
+                minimumDateTime: minimumDateTime,
+                maximumDateTime: maximumDateTime,
+              ),
+            ),
+          ),
+          const SizedBox(width: sbbDefaultSpacing),
+          SizedBox(
+            width: 150,
+            child: SBBGroup(
+              child: SBBDateTimePicker(
+                onDateTimeChanged: (_) {},
+                initialDateTime: initialDateTime,
+                minimumDateTime: minimumDateTime,
+                maximumDateTime: maximumDateTime,
+                minuteInterval: 15,
+              ),
+            ),
+          ),
+        ],
+      ),
+    ],
+  );
 }

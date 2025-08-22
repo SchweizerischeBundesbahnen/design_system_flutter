@@ -8,11 +8,7 @@ void main() {
   testWidgets('slider_1', (WidgetTester tester) async {
     final widget = Column(
       children: [
-        SBBSlider(
-          onChanged: (value) {},
-          value: 50,
-          max: 100,
-        ),
+        SBBSlider(onChanged: (value) {}, value: 50, max: 100),
         const SizedBox(height: sbbDefaultSpacing),
         SBBSlider(
           onChanged: (value) {},
@@ -24,11 +20,7 @@ void main() {
           onChangeEnd: (value) {},
         ),
         const SizedBox(height: sbbDefaultSpacing),
-        const SBBSlider(
-          onChanged: null,
-          value: 75,
-          max: 100,
-        ),
+        const SBBSlider(onChanged: null, value: 75, max: 100),
       ],
     );
 

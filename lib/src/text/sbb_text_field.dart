@@ -104,10 +104,7 @@ class _SBBTextField extends State<SBBTextField> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsetsDirectional.only(
-        start: sbbDefaultSpacing,
-        top: 0.0,
-      ),
+      padding: const EdgeInsetsDirectional.only(start: sbbDefaultSpacing, top: 0.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -123,9 +120,7 @@ class _SBBTextField extends State<SBBTextField> {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      child: _buildTextField(),
-                    ),
+                    Expanded(child: _buildTextField()),
                     if (widget.suffixIcon != null) widget.suffixIcon!,
                   ],
                 ),
@@ -133,7 +128,7 @@ class _SBBTextField extends State<SBBTextField> {
                   errorText: widget.errorText,
                   hasFocus: _hasFocus,
                   isLastElement: widget.isLastElement,
-                )
+                ),
               ],
             ),
           ),

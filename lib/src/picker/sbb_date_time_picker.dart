@@ -40,18 +40,18 @@ class SBBDateTimePicker extends StatefulWidget {
     DateTime? minimumDateTime,
     DateTime? maximumDateTime,
     this.minuteInterval = _defaultMinuteInterval,
-  })  : assert(
-          minuteInterval > 0 && TimeOfDay.minutesPerHour % minuteInterval == 0,
-          'minute interval is not a positive integer factor of 60',
-        ),
-        initialDateTime = _initialDateTime(
-          initialDateTime,
-          minimumDateTime,
-          maximumDateTime,
-          minuteInterval,
-        ),
-        minimumDateTime = _minimumDateTime(minimumDateTime, minuteInterval),
-        maximumDateTime = _maximumDateTime(maximumDateTime, minuteInterval) {
+  }) : assert(
+         minuteInterval > 0 && TimeOfDay.minutesPerHour % minuteInterval == 0,
+         'minute interval is not a positive integer factor of 60',
+       ),
+       initialDateTime = _initialDateTime(
+         initialDateTime,
+         minimumDateTime,
+         maximumDateTime,
+         minuteInterval,
+       ),
+       minimumDateTime = _minimumDateTime(minimumDateTime, minuteInterval),
+       maximumDateTime = _maximumDateTime(maximumDateTime, minuteInterval) {
     assert(
       this.minimumDateTime == null ||
           this.maximumDateTime == null ||
@@ -109,9 +109,7 @@ class SBBDateTimePicker extends StatefulWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: sbbDefaultSpacing,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
             child: SBBGroup(
               child: SBBDateTimePicker(
                 initialDateTime: initialDateTime,
@@ -130,19 +128,18 @@ class SBBDateTimePicker extends StatefulWidget {
           Padding(
             padding: const EdgeInsets.all(sbbDefaultSpacing),
             child: ListenableBuilder(
-                listenable: selectedButtonEnabled,
-                builder: (context, _) {
-                  final onPressed = selectedButtonEnabled.value
-                      ? () {
+              listenable: selectedButtonEnabled,
+              builder: (context, _) {
+                final onPressed =
+                    selectedButtonEnabled.value
+                        ? () {
                           Navigator.of(context).pop();
                           onDateTimeChanged?.call(selectedDateTime);
                         }
-                      : null;
-                  return SBBPrimaryButton(
-                    label: selectedButtonLabel,
-                    onPressed: onPressed,
-                  );
-                }),
+                        : null;
+                return SBBPrimaryButton(label: selectedButtonLabel, onPressed: onPressed);
+              },
+            ),
           ),
         ],
       ),
@@ -168,17 +165,11 @@ class SBBDateTimePicker extends StatefulWidget {
     return dateTime;
   }
 
-  static DateTime? _minimumDateTime(
-    DateTime? minimumDateTime,
-    int minuteInterval,
-  ) {
+  static DateTime? _minimumDateTime(DateTime? minimumDateTime, int minuteInterval) {
     return minimumDateTime?.ceilToInterval(minuteInterval);
   }
 
-  static DateTime? _maximumDateTime(
-    DateTime? maximumDateTime,
-    int minuteInterval,
-  ) {
+  static DateTime? _maximumDateTime(DateTime? maximumDateTime, int minuteInterval) {
     return maximumDateTime?.floorToInterval(minuteInterval);
   }
 }
@@ -261,17 +252,9 @@ class _SBBDateTimePickerState extends _TimeBasedPickerState<SBBDateTimePicker> {
         return SBBPicker.custom(
           child: Row(
             children: [
-              Expanded(
-                child: _buildDatePickerScrollView(),
-              ),
-              SizedBox(
-                width: _hourItemWidth,
-                child: _buildHourPickerScrollView(),
-              ),
-              SizedBox(
-                width: _minuteItemWidth,
-                child: _buildMinutePickerScrollView(),
-              ),
+              Expanded(child: _buildDatePickerScrollView()),
+              SizedBox(width: _hourItemWidth, child: _buildHourPickerScrollView()),
+              SizedBox(width: _minuteItemWidth, child: _buildMinutePickerScrollView()),
             ],
           ),
         );
@@ -324,21 +307,15 @@ class _SBBDateTimePickerState extends _TimeBasedPickerState<SBBDateTimePicker> {
   }
 
   void _onSelectedDateItemChanged(int index) {
-    _onDateTimeSelected(
-      date: _indexToDate(index),
-    );
+    _onDateTimeSelected(date: _indexToDate(index));
   }
 
   void _onSelectedHourItemChanged(int index) {
-    _onDateTimeSelected(
-      hour: _indexToHour(index),
-    );
+    _onDateTimeSelected(hour: _indexToHour(index));
   }
 
   void _onSelectedMinuteItemChanged(int index) {
-    _onDateTimeSelected(
-      minute: _indexToMinute(index),
-    );
+    _onDateTimeSelected(minute: _indexToMinute(index));
   }
 
   SBBPickerItem _buildDateItem(int index) {
@@ -364,10 +341,7 @@ class _SBBDateTimePickerState extends _TimeBasedPickerState<SBBDateTimePicker> {
     final isEnabled = itemDateTime.isInRange(minDateTime, maxDateTime);
     final label = _twoDigits(itemHour);
 
-    return _buildPickerItem(
-      isEnabled: isEnabled,
-      label: label,
-    );
+    return _buildPickerItem(isEnabled: isEnabled, label: label);
   }
 
   SBBPickerItem _buildMinuteItem(int index, DateTime selectedDateTime) {
@@ -378,11 +352,7 @@ class _SBBDateTimePickerState extends _TimeBasedPickerState<SBBDateTimePicker> {
     final isEnabled = itemDateTime.isInRange(minDateTime, maxDateTime);
     final label = _twoDigits(itemMinute);
 
-    return _buildPickerItem(
-      isEnabled: isEnabled,
-      label: label,
-      isLastColumn: true,
-    );
+    return _buildPickerItem(isEnabled: isEnabled, label: label, isLastColumn: true);
   }
 
   void _onDateTimeSelected({DateTime? date, int? hour, int? minute}) {
@@ -400,15 +370,14 @@ class _SBBDateTimePickerState extends _TimeBasedPickerState<SBBDateTimePicker> {
       selectedMinute,
     );
 
-    final validDateTime = _selectedDateTime.clamp(
-      widget.minimumDateTime,
-      widget.maximumDateTime,
-    );
+    final validDateTime = _selectedDateTime.clamp(widget.minimumDateTime, widget.maximumDateTime);
     _selectedDateTimeValueNotifier.value = validDateTime;
   }
 
   void _onScrollingStateChanged() {
-    if (_dateController.isScrolling() || _hourController.isScrolling() || _minuteController.isScrolling()) {
+    if (_dateController.isScrolling() ||
+        _hourController.isScrolling() ||
+        _minuteController.isScrolling()) {
       // do nothing if any controller still scrolling
       return;
     }
@@ -418,10 +387,7 @@ class _SBBDateTimePickerState extends _TimeBasedPickerState<SBBDateTimePicker> {
   }
 
   void _ensureValidDateTime() {
-    final validDateTime = _selectedDateTime.clamp(
-      widget.minimumDateTime,
-      widget.maximumDateTime,
-    );
+    final validDateTime = _selectedDateTime.clamp(widget.minimumDateTime, widget.maximumDateTime);
 
     if (_selectedDateTime == validDateTime) {
       // no correction needed

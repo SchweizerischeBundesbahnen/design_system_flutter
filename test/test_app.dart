@@ -6,30 +6,18 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 class TestSpecs {
-  const TestSpecs._({
-    required this.size,
-    required this.brightness,
-  });
+  const TestSpecs._({required this.size, required this.brightness});
 
-  factory TestSpecs.light() => const TestSpecs._(
-        size: _size,
-        brightness: Brightness.light,
-      );
+  factory TestSpecs.light() => const TestSpecs._(size: _size, brightness: Brightness.light);
 
-  factory TestSpecs.dark() => const TestSpecs._(
-        size: _size,
-        brightness: Brightness.dark,
-      );
+  factory TestSpecs.dark() => const TestSpecs._(size: _size, brightness: Brightness.dark);
 
   static const _size = Size(600, 1000);
 
   final Size size;
   final Brightness brightness;
 
-  static List<TestSpecs> themedSpecs = [
-    TestSpecs.light(),
-    TestSpecs.dark(),
-  ];
+  static List<TestSpecs> themedSpecs = [TestSpecs.light(), TestSpecs.dark()];
 
   String get name => brightness.name;
 
@@ -47,17 +35,12 @@ class TestSpecs {
       tester.view.devicePixelRatio = 1.0;
       tester.platformDispatcher.platformBrightnessTestValue = spec.brightness;
 
-      await tester.pumpWidget(
-        wrap?.call(widget) ?? TestApp(child: widget),
-      );
+      await tester.pumpWidget(wrap?.call(widget) ?? TestApp(child: widget));
       await tester.pumpAndSettle();
       await tester.runAsync(() => tester.pumpAndSettle());
       await tester.pumpAndSettle();
 
-      await expectLater(
-        finder,
-        matchesGoldenFile('goldens/$name.${spec.name}.png'),
-      );
+      await expectLater(finder, matchesGoldenFile('goldens/$name.${spec.name}.png'));
     }
   }
 }
@@ -91,7 +74,9 @@ class TestApp extends StatelessWidget {
       theme: SBBTheme.light(),
       darkTheme: SBBTheme.dark(),
       debugShowCheckedModeBanner: false,
-      builder: (_, __) => Overlay(initialEntries: [OverlayEntry(builder: (context) => Scaffold(body: child))]),
+      builder:
+          (_, __) =>
+              Overlay(initialEntries: [OverlayEntry(builder: (context) => Scaffold(body: child))]),
     );
   }
 }

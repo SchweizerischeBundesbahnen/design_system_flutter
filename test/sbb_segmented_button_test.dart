@@ -73,9 +73,7 @@ void main() {
             ),
             const SizedBox(height: sbbDefaultSpacing),
             SBBSegmentedButton.icon(
-              icons: {
-                SBBIcons.user_small: 'Single',
-              },
+              icons: {SBBIcons.user_small: 'Single'},
               selectedStateIndex: 0,
               selectedIndexChanged: (_) {},
               withText: true,

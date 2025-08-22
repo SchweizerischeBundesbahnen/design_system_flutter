@@ -45,17 +45,9 @@ class SBBPromotionBoxBadgeShadow extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        border: Border.all(
-          width: 0.0,
-          color: SBBColors.transparent,
-        ),
+        border: Border.all(width: 0.0, color: SBBColors.transparent),
         borderRadius: BorderRadius.circular(_borderRadius),
-        boxShadow: [
-          BoxShadow(
-            color: shadowColor,
-            spreadRadius: _shadowSpreadRadius,
-          ),
-        ],
+        boxShadow: [BoxShadow(color: shadowColor, spreadRadius: _shadowSpreadRadius)],
       ),
       child: SizedBox.fromSize(size: badgeSize),
     );

@@ -12,10 +12,10 @@ class SBBStepper extends StatelessWidget {
     required List<SBBStepperItem> steps,
     required int activeStep,
     required OnStepPressedCallback onStepPressed,
-  })  : _steps = steps,
-        _activeStep = activeStep,
-        _onStepPressed = onStepPressed,
-        _colors = null;
+  }) : _steps = steps,
+       _activeStep = activeStep,
+       _onStepPressed = onStepPressed,
+       _colors = null;
 
   /// This variant of the SSB Stepper should be used on a red background.
   const SBBStepper.red({
@@ -23,10 +23,10 @@ class SBBStepper extends StatelessWidget {
     required List<SBBStepperItem> steps,
     required int activeStep,
     required OnStepPressedCallback onStepPressed,
-  })  : _steps = steps,
-        _activeStep = activeStep,
-        _onStepPressed = onStepPressed,
-        _colors = SBBStepperColors.red;
+  }) : _steps = steps,
+       _activeStep = activeStep,
+       _onStepPressed = onStepPressed,
+       _colors = SBBStepperColors.red;
 
   /// The list of steps.
   final List<SBBStepperItem> _steps;
@@ -80,10 +80,7 @@ class SBBStepper extends StatelessWidget {
             final line = PositionedDirectional(
               start: x + 32,
               top: 16,
-              child: _Line(
-                colors: colors,
-                width: lineWidth,
-              ),
+              child: _Line(colors: colors, width: lineWidth),
             );
             widgets.add(line);
           }
@@ -129,11 +126,7 @@ class SBBStepper extends StatelessWidget {
             widgets.add(label);
           }
         }
-        return SizedBox(
-          width: width,
-          height: 56,
-          child: Stack(children: widgets),
-        );
+        return SizedBox(width: width, height: 56, child: Stack(children: widgets));
       },
     );
   }
@@ -174,12 +167,7 @@ class _Circle extends StatelessWidget {
         clipBehavior: Clip.antiAlias,
         color: colors.circleBackground(active),
         shape: _shape(context),
-        child: InkWell(
-          onTap: onPressed,
-          child: Center(
-            child: _iconOrNumber(context),
-          ),
-        ),
+        child: InkWell(onTap: onPressed, child: Center(child: _iconOrNumber(context))),
       ),
     );
   }
@@ -188,21 +176,12 @@ class _Circle extends StatelessWidget {
     if (active) {
       return const CircleBorder();
     }
-    return CircleBorder(
-      side: BorderSide(
-        color: colors.circleBorder(active),
-        width: 1,
-      ),
-    );
+    return CircleBorder(side: BorderSide(color: colors.circleBorder(active), width: 1));
   }
 
   Widget _iconOrNumber(BuildContext context) {
     if (icon != null) {
-      return Icon(
-        icon,
-        size: 24,
-        color: colors.circleContent(active),
-      );
+      return Icon(icon, size: 24, color: colors.circleContent(active));
     } else {
       final baseStyle = SBBBaseStyle.of(context);
       final number = index + 1;
@@ -218,10 +197,7 @@ class _Circle extends StatelessWidget {
 }
 
 class _Line extends StatelessWidget {
-  const _Line({
-    required this.colors,
-    required this.width,
-  });
+  const _Line({required this.colors, required this.width});
 
   final SBBStepperColors colors;
   final double width;

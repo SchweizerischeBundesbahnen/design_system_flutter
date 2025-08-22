@@ -33,27 +33,15 @@ class DatePickerTest extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          SBBDateInput(
-            onDateChanged: (_) {},
-          ),
-          SBBDateInput(
-            value: initialDate,
-            onDateChanged: (_) {},
-          ),
-          SBBDateInput(
-            hintText: 'Hint only',
-            onDateChanged: (_) {},
-          ),
+          SBBDateInput(onDateChanged: (_) {}),
+          SBBDateInput(value: initialDate, onDateChanged: (_) {}),
+          SBBDateInput(hintText: 'Hint only', onDateChanged: (_) {}),
           SBBDateInput(
             labelText: 'Label and Hint',
             hintText: 'Label and Hint',
             onDateChanged: (_) {},
           ),
-          SBBDateInput(
-            labelText: 'Label and Value',
-            value: initialDate,
-            onDateChanged: (_) {},
-          ),
+          SBBDateInput(labelText: 'Label and Value', value: initialDate, onDateChanged: (_) {}),
           SBBDateInput(
             value: initialDate,
             labelText: 'Custom date format',

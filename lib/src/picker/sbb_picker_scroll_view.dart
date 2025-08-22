@@ -7,10 +7,7 @@ part of 'sbb_picker.dart';
 ///
 /// Unlike most builders, this callback can return null, indicating the index
 /// is out of range.
-typedef SBBPickerScrollViewItemBuilder = SBBPickerItem? Function(
-  BuildContext context,
-  int index,
-);
+typedef SBBPickerScrollViewItemBuilder = SBBPickerItem? Function(BuildContext context, int index);
 
 /// A box in which children on a wheel can be scrolled. Should only be used in
 /// combination with [SBBPicker.custom].
@@ -51,25 +48,9 @@ class SBBPickerScrollView extends StatefulWidget {
 }
 
 class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
-  static const _visibleItemTransformValues = [
-    -1.0,
-    -2.5,
-    -3.0,
-    0.0,
-    3.0,
-    2.5,
-    1.0,
-  ];
+  static const _visibleItemTransformValues = [-1.0, -2.5, -3.0, 0.0, 3.0, 2.5, 1.0];
 
-  static const _visibleItemHeightAdjustments = [
-    -2.0,
-    -1.0,
-    0.0,
-    6.0,
-    0.0,
-    -1.0,
-    -2.0,
-  ];
+  static const _visibleItemHeightAdjustments = [-2.0, -1.0, 0.0, 6.0, 0.0, -1.0, -2.0];
 
   static const _visibleCenterItemIndex = 3;
 
@@ -146,9 +127,7 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
   Widget build(BuildContext context) {
     // disable scroll bars because they don't work properly with the way the
     // scroll view is built
-    final noScrollBarsBehaviour = ScrollConfiguration.of(context).copyWith(
-      scrollbars: false,
-    );
+    final noScrollBarsBehaviour = ScrollConfiguration.of(context).copyWith(scrollbars: false);
     return GestureDetector(
       onTapUp: _onTapUp,
       child: SizedBox(
@@ -179,10 +158,7 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
           ),
         _buildNegativeIndexList(),
         _buildPositiveIndexList(positiveIndexListCenterKey),
-        if (!widget.looping)
-          SliverToBoxAdapter(
-            child: SizedBox(height: _listPaddingHeight),
-          ),
+        if (!widget.looping) SliverToBoxAdapter(child: SizedBox(height: _listPaddingHeight)),
       ],
     );
   }
@@ -225,11 +201,7 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
     return _firstVisibleItemIndexBasedItem(itemIndex, itemEnabled, itemWidget);
   }
 
-  Widget _firstVisibleItemIndexBasedItem(
-    int itemIndex,
-    bool itemEnabled,
-    Widget itemWidget,
-  ) {
+  Widget _firstVisibleItemIndexBasedItem(int itemIndex, bool itemEnabled, Widget itemWidget) {
     // placeholder item used for items that are currently not visible
     final placeholderItem = SizedBox(height: _itemHeight);
 
@@ -240,7 +212,8 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
       builder: (_, int firstVisibleItemIndex, placeholderItem) {
         // check if item visible
         final itemVisible =
-            itemIndex >= firstVisibleItemIndex && itemIndex <= firstVisibleItemIndex + _visibleItemCount;
+            itemIndex >= firstVisibleItemIndex &&
+            itemIndex <= firstVisibleItemIndex + _visibleItemCount;
         if (!itemVisible) {
           // return placeholder item for out of sight items
           return placeholderItem!;
@@ -283,10 +256,7 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
           child: Center(
             child: DefaultTextStyle(
               style: textStyle,
-              child: Transform.translate(
-                offset: translationOffset,
-                child: child,
-              ),
+              child: Transform.translate(offset: translationOffset, child: child),
             ),
           ),
         );
@@ -297,7 +267,8 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
 
   void _onScrolling() {
     final offset = _controller.offset;
-    final firstVisibleItemIndex = _controller._offsetToIndex(offset).floor() - _visibleCenterItemIndex;
+    final firstVisibleItemIndex =
+        _controller._offsetToIndex(offset).floor() - _visibleCenterItemIndex;
     var selectedItemIndex = _controller.selectedItem;
 
     // make sure calculated index is within list range

@@ -9,10 +9,7 @@ abstract class SBBOnboardingBuilderDelegate {
     VoidCallback onFinish,
   );
 
-  Widget buildEndPage(
-    BuildContext context,
-    VoidCallback onFinish,
-  );
+  Widget buildEndPage(BuildContext context, VoidCallback onFinish);
 
   List<SBBOnboardingCard> buildCards(BuildContext context);
 

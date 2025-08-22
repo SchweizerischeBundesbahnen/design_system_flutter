@@ -17,22 +17,11 @@ void main() {
       maximumTime: maximumTime,
     );
     testWidgets(name, (WidgetTester tester) async {
-      await TestSpecs.run(
-        TestSpecs.themedSpecs,
-        widget,
-        tester,
-        name,
-        find.byType(TimePickerTest),
-      );
+      await TestSpecs.run(TestSpecs.themedSpecs, widget, tester, name, find.byType(TimePickerTest));
     });
   }
 
-  generateTest(
-    'time_picker_test_1',
-    const TimeOfDay(hour: 13, minute: 37),
-    null,
-    null,
-  );
+  generateTest('time_picker_test_1', const TimeOfDay(hour: 13, minute: 37), null, null);
   generateTest(
     'time_picker_test_2',
     const TimeOfDay(hour: 13, minute: 37),
@@ -67,111 +56,106 @@ class TimePickerTest extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Row(
-            children: [
-              Expanded(
-                child: SBBGroup(
-                  child: SBBTimePicker(
-                    onTimeChanged: (_) {},
-                    initialTime: initialTime,
-                  ),
-                ),
-              ),
-              const SizedBox(width: sbbDefaultSpacing),
-              Expanded(
-                child: SBBGroup(
-                  child: SBBTimePicker(
-                    onTimeChanged: (_) {},
-                    initialTime: initialTime,
-                    minuteInterval: 15,
-                  ),
-                ),
-              ),
-            ],
+    mainAxisSize: MainAxisSize.min,
+    children: <Widget>[
+      Row(
+        children: [
+          Expanded(
+            child: SBBGroup(child: SBBTimePicker(onTimeChanged: (_) {}, initialTime: initialTime)),
           ),
-          const SizedBox(height: sbbDefaultSpacing),
-          Row(
-            children: [
-              Expanded(
-                child: SBBGroup(
-                  child: SBBTimePicker(
-                    onTimeChanged: (_) {},
-                    initialTime: initialTime,
-                    minimumTime: minimumTime,
-                    maximumTime: maximumTime,
-                  ),
-                ),
+          const SizedBox(width: sbbDefaultSpacing),
+          Expanded(
+            child: SBBGroup(
+              child: SBBTimePicker(
+                onTimeChanged: (_) {},
+                initialTime: initialTime,
+                minuteInterval: 15,
               ),
-              const SizedBox(width: sbbDefaultSpacing),
-              Expanded(
-                child: SBBGroup(
-                  child: SBBTimePicker(
-                    onTimeChanged: (_) {},
-                    initialTime: initialTime,
-                    minimumTime: minimumTime,
-                    maximumTime: maximumTime,
-                    minuteInterval: 15,
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
-          const SizedBox(height: sbbDefaultSpacing),
-          Row(
-            children: [
-              Expanded(
-                child: SBBGroup(
-                  child: SBBTimePicker(
-                    onTimeChanged: (_) {},
-                    initialTime: initialTime,
-                    minimumTime: minimumTime,
-                    maximumTime: maximumTime,
-                  ),
-                ),
-              ),
-              const SizedBox(width: sbbDefaultSpacing),
-              SizedBox(
-                width: 150,
-                child: SBBGroup(
-                  child: SBBTimePicker(
-                    onTimeChanged: (_) {},
-                    initialTime: initialTime,
-                    minimumTime: minimumTime,
-                    maximumTime: maximumTime,
-                    minuteInterval: 5,
-                  ),
-                ),
-              ),
-              const SizedBox(width: sbbDefaultSpacing),
-              SizedBox(
-                width: 120,
-                child: SBBGroup(
-                  child: SBBTimePicker(
-                    onTimeChanged: (_) {},
-                    initialTime: initialTime,
-                    minimumTime: minimumTime,
-                    maximumTime: maximumTime,
-                    minuteInterval: 15,
-                  ),
-                ),
-              ),
-              const SizedBox(width: sbbDefaultSpacing),
-              SizedBox(
-                width: 100,
-                child: SBBGroup(
-                  child: SBBTimePicker(
-                    onTimeChanged: (_) {},
-                    initialTime: initialTime,
-                    minimumTime: minimumTime,
-                    maximumTime: maximumTime,
-                    minuteInterval: 30,
-                  ),
-                ),
-              ),
-            ],
-          )
         ],
-      );
+      ),
+      const SizedBox(height: sbbDefaultSpacing),
+      Row(
+        children: [
+          Expanded(
+            child: SBBGroup(
+              child: SBBTimePicker(
+                onTimeChanged: (_) {},
+                initialTime: initialTime,
+                minimumTime: minimumTime,
+                maximumTime: maximumTime,
+              ),
+            ),
+          ),
+          const SizedBox(width: sbbDefaultSpacing),
+          Expanded(
+            child: SBBGroup(
+              child: SBBTimePicker(
+                onTimeChanged: (_) {},
+                initialTime: initialTime,
+                minimumTime: minimumTime,
+                maximumTime: maximumTime,
+                minuteInterval: 15,
+              ),
+            ),
+          ),
+        ],
+      ),
+      const SizedBox(height: sbbDefaultSpacing),
+      Row(
+        children: [
+          Expanded(
+            child: SBBGroup(
+              child: SBBTimePicker(
+                onTimeChanged: (_) {},
+                initialTime: initialTime,
+                minimumTime: minimumTime,
+                maximumTime: maximumTime,
+              ),
+            ),
+          ),
+          const SizedBox(width: sbbDefaultSpacing),
+          SizedBox(
+            width: 150,
+            child: SBBGroup(
+              child: SBBTimePicker(
+                onTimeChanged: (_) {},
+                initialTime: initialTime,
+                minimumTime: minimumTime,
+                maximumTime: maximumTime,
+                minuteInterval: 5,
+              ),
+            ),
+          ),
+          const SizedBox(width: sbbDefaultSpacing),
+          SizedBox(
+            width: 120,
+            child: SBBGroup(
+              child: SBBTimePicker(
+                onTimeChanged: (_) {},
+                initialTime: initialTime,
+                minimumTime: minimumTime,
+                maximumTime: maximumTime,
+                minuteInterval: 15,
+              ),
+            ),
+          ),
+          const SizedBox(width: sbbDefaultSpacing),
+          SizedBox(
+            width: 100,
+            child: SBBGroup(
+              child: SBBTimePicker(
+                onTimeChanged: (_) {},
+                initialTime: initialTime,
+                minimumTime: minimumTime,
+                maximumTime: maximumTime,
+                minuteInterval: 30,
+              ),
+            ),
+          ),
+        ],
+      ),
+    ],
+  );
 }

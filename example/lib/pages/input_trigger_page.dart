@@ -59,9 +59,7 @@ class _PickerPageState extends State<InputTriggerPage> {
       child: Column(
         children: <Widget>[
           const ThemeModeSegmentedButton(),
-          const SizedBox(
-            height: sbbDefaultSpacing,
-          ),
+          const SizedBox(height: sbbDefaultSpacing),
           const SBBListHeader('Demo'),
           SBBGroup(
             child: Column(
@@ -76,7 +74,10 @@ class _PickerPageState extends State<InputTriggerPage> {
                     SBBToast.of(context).show(title: 'onPressed');
                   },
                   prefixIcon: showPrefixIcon ? SBBIcons.dog_small : null,
-                  suffixIcon: showSuffixIcon ? SBBIcons.circle_information_small_small : null,
+                  suffixIcon:
+                      showSuffixIcon
+                          ? SBBIcons.circle_information_small_small
+                          : null,
                   onSuffixPressed: () {
                     SBBToast.of(context).show(title: 'onSuffixPressed');
                   },
@@ -86,29 +87,15 @@ class _PickerPageState extends State<InputTriggerPage> {
               ],
             ),
           ),
-          const SizedBox(
-            height: sbbDefaultSpacing,
-          ),
+          const SizedBox(height: sbbDefaultSpacing),
           const SBBListHeader('Change properties'),
           SBBGroup(
             child: Column(
               children: [
-                SBBTextField(
-                  controller: labelController,
-                  labelText: 'Label',
-                ),
-                SBBTextField(
-                  controller: hintController,
-                  labelText: 'Hint',
-                ),
-                SBBTextField(
-                  controller: valueController,
-                  labelText: 'Value',
-                ),
-                SBBTextField(
-                  controller: errorController,
-                  labelText: 'Error',
-                ),
+                SBBTextField(controller: labelController, labelText: 'Label'),
+                SBBTextField(controller: hintController, labelText: 'Hint'),
+                SBBTextField(controller: valueController, labelText: 'Value'),
+                SBBTextField(controller: errorController, labelText: 'Error'),
                 SBBSwitchListItem(
                   title: 'Enabled',
                   value: enabled,

@@ -138,7 +138,8 @@ class SBBCheckbox extends StatefulWidget {
   State<SBBCheckbox> createState() => _SBBCheckboxState();
 }
 
-class _SBBCheckboxState extends State<SBBCheckbox> with TickerProviderStateMixin, ToggleableStateMixin {
+class _SBBCheckboxState extends State<SBBCheckbox>
+    with TickerProviderStateMixin, ToggleableStateMixin {
   final _SBBCheckboxPainter _painter = _SBBCheckboxPainter();
   bool? _previousValue;
 
@@ -184,13 +185,14 @@ class _SBBCheckboxState extends State<SBBCheckbox> with TickerProviderStateMixin
           child: buildToggleable(
             mouseCursor: WidgetStateMouseCursor.clickable,
             size: resolvedSize,
-            painter: _painter
-              ..position = position
-              ..reaction = reaction
-              ..value = value
-              ..previousValue = _previousValue
-              ..checkColor = resolvedCheckColor
-              ..boxBorderColor = resolvedBorderColor,
+            painter:
+                _painter
+                  ..position = position
+                  ..reaction = reaction
+                  ..value = value
+                  ..previousValue = _previousValue
+                  ..checkColor = resolvedCheckColor
+                  ..boxBorderColor = resolvedBorderColor,
           ),
         ),
       ),
@@ -207,14 +209,15 @@ class _SBBCheckboxState extends State<SBBCheckbox> with TickerProviderStateMixin
   bool? get value => widget.value;
 
   Size _addPaddingToDefaultWidth(EdgeInsetsGeometry resolvedPadding) => Size(
-        SBBCheckbox.width + resolvedPadding.horizontal,
-        SBBCheckbox.width + resolvedPadding.vertical,
-      );
+    SBBCheckbox.width + resolvedPadding.horizontal,
+    SBBCheckbox.width + resolvedPadding.vertical,
+  );
 
   Color? _resolveBackgroundColor(SBBControlStyle style) =>
       isInteractive ? style.basic?.backgroundColor : style.basic?.backgroundColorDisabled;
 
-  Color _resolveTickColor(SBBControlStyle style) => isInteractive ? style.color! : style.colorDisabled!;
+  Color _resolveTickColor(SBBControlStyle style) =>
+      isInteractive ? style.color! : style.colorDisabled!;
 
   Color _resolveBorderColor(SBBControlStyle style) {
     return isInteractive ? style.basic!.borderColor! : style.basic!.borderColorDisabled!;

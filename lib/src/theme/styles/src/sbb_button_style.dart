@@ -53,85 +53,97 @@ class SBBButtonStyle {
     Color? iconColor,
     Color? iconColorHighlighted,
     Color? iconColorDisabled,
-  }) =>
-      SBBButtonStyle(
-        backgroundColor: backgroundColor ?? this.backgroundColor,
-        backgroundColorHighlighted: backgroundColorHighlighted ?? this.backgroundColorHighlighted,
-        backgroundColorDisabled: backgroundColorDisabled ?? this.backgroundColorDisabled,
-        backgroundColorLoading: backgroundColorLoading ?? this.backgroundColorLoading,
-        borderColor: borderColor ?? this.borderColor,
-        borderColorHighlighted: borderColorHighlighted ?? this.borderColorHighlighted,
-        borderColorDisabled: borderColorDisabled ?? this.borderColorDisabled,
-        borderColorLoading: borderColorLoading ?? this.borderColorLoading,
-        textStyle: textStyle ?? this.textStyle,
-        textStyleHighlighted: textStyleHighlighted ?? this.textStyleHighlighted,
-        textStyleDisabled: textStyleDisabled ?? this.textStyleDisabled,
-        textStyleLoading: textStyleLoading ?? this.textStyleLoading,
-        iconColor: iconColor ?? this.iconColor,
-        iconColorHighlighted: iconColorHighlighted ?? this.iconColorHighlighted,
-        iconColorDisabled: iconColorDisabled ?? this.iconColorDisabled,
-      );
+  }) => SBBButtonStyle(
+    backgroundColor: backgroundColor ?? this.backgroundColor,
+    backgroundColorHighlighted: backgroundColorHighlighted ?? this.backgroundColorHighlighted,
+    backgroundColorDisabled: backgroundColorDisabled ?? this.backgroundColorDisabled,
+    backgroundColorLoading: backgroundColorLoading ?? this.backgroundColorLoading,
+    borderColor: borderColor ?? this.borderColor,
+    borderColorHighlighted: borderColorHighlighted ?? this.borderColorHighlighted,
+    borderColorDisabled: borderColorDisabled ?? this.borderColorDisabled,
+    borderColorLoading: borderColorLoading ?? this.borderColorLoading,
+    textStyle: textStyle ?? this.textStyle,
+    textStyleHighlighted: textStyleHighlighted ?? this.textStyleHighlighted,
+    textStyleDisabled: textStyleDisabled ?? this.textStyleDisabled,
+    textStyleLoading: textStyleLoading ?? this.textStyleLoading,
+    iconColor: iconColor ?? this.iconColor,
+    iconColorHighlighted: iconColorHighlighted ?? this.iconColorHighlighted,
+    iconColorDisabled: iconColorDisabled ?? this.iconColorDisabled,
+  );
 
   SBBButtonStyle lerp(SBBButtonStyle? other, double t) => SBBButtonStyle(
-        backgroundColor: Color.lerp(backgroundColor, other?.backgroundColor, t)!,
-        backgroundColorHighlighted: Color.lerp(backgroundColorHighlighted, other?.backgroundColorHighlighted, t),
-        backgroundColorDisabled: Color.lerp(backgroundColorDisabled, other?.backgroundColorDisabled, t),
-        backgroundColorLoading: Color.lerp(backgroundColorLoading, other?.backgroundColorLoading, t),
-        borderColor: Color.lerp(borderColor, other?.borderColor, t),
-        borderColorHighlighted: Color.lerp(borderColorHighlighted, other?.borderColorHighlighted, t),
-        borderColorDisabled: Color.lerp(borderColorDisabled, other?.borderColorDisabled, t),
-        borderColorLoading: Color.lerp(borderColorLoading, other?.borderColorLoading, t),
-        textStyle: TextStyle.lerp(textStyle, other?.textStyle, t),
-        textStyleHighlighted: TextStyle.lerp(textStyleHighlighted, other?.textStyleHighlighted, t),
-        textStyleDisabled: TextStyle.lerp(textStyleDisabled, other?.textStyleDisabled, t),
-        textStyleLoading: TextStyle.lerp(textStyleLoading, other?.textStyleLoading, t),
-        iconColor: Color.lerp(iconColor, other?.iconColor, t),
-        iconColorHighlighted: Color.lerp(iconColorHighlighted, other?.iconColorHighlighted, t),
-        iconColorDisabled: Color.lerp(iconColorDisabled, other?.iconColorDisabled, t),
-      );
+    backgroundColor: Color.lerp(backgroundColor, other?.backgroundColor, t)!,
+    backgroundColorHighlighted: Color.lerp(
+      backgroundColorHighlighted,
+      other?.backgroundColorHighlighted,
+      t,
+    ),
+    backgroundColorDisabled: Color.lerp(backgroundColorDisabled, other?.backgroundColorDisabled, t),
+    backgroundColorLoading: Color.lerp(backgroundColorLoading, other?.backgroundColorLoading, t),
+    borderColor: Color.lerp(borderColor, other?.borderColor, t),
+    borderColorHighlighted: Color.lerp(borderColorHighlighted, other?.borderColorHighlighted, t),
+    borderColorDisabled: Color.lerp(borderColorDisabled, other?.borderColorDisabled, t),
+    borderColorLoading: Color.lerp(borderColorLoading, other?.borderColorLoading, t),
+    textStyle: TextStyle.lerp(textStyle, other?.textStyle, t),
+    textStyleHighlighted: TextStyle.lerp(textStyleHighlighted, other?.textStyleHighlighted, t),
+    textStyleDisabled: TextStyle.lerp(textStyleDisabled, other?.textStyleDisabled, t),
+    textStyleLoading: TextStyle.lerp(textStyleLoading, other?.textStyleLoading, t),
+    iconColor: Color.lerp(iconColor, other?.iconColor, t),
+    iconColorHighlighted: Color.lerp(iconColorHighlighted, other?.iconColorHighlighted, t),
+    iconColorDisabled: Color.lerp(iconColorDisabled, other?.iconColorDisabled, t),
+  );
 
   ButtonStyle toButtonStyle() => ButtonStyle(
-        overlayColor: SBBTheme.resolveStatesWith(
-          defaultValue: backgroundColor!,
-          pressedValue: backgroundColorHighlighted,
-        ),
-        backgroundColor: SBBTheme.resolveStatesWith(
-          defaultValue: backgroundColor!,
-          pressedValue: backgroundColor,
-          disabledValue: backgroundColorDisabled,
-        ),
-        foregroundColor: textStyle == null
+    overlayColor: SBBTheme.resolveStatesWith(
+      defaultValue: backgroundColor!,
+      pressedValue: backgroundColorHighlighted,
+    ),
+    backgroundColor: SBBTheme.resolveStatesWith(
+      defaultValue: backgroundColor!,
+      pressedValue: backgroundColor,
+      disabledValue: backgroundColorDisabled,
+    ),
+    foregroundColor:
+        textStyle == null
             ? null
             : SBBTheme.resolveStatesWith(
-                defaultValue: textStyle!.color!,
-                pressedValue: textStyleHighlighted?.color,
-                disabledValue: textStyleDisabled?.color,
-              ),
-        textStyle: textStyle == null
+              defaultValue: textStyle!.color!,
+              pressedValue: textStyleHighlighted?.color,
+              disabledValue: textStyleDisabled?.color,
+            ),
+    textStyle:
+        textStyle == null
             ? null
             : SBBTheme.resolveStatesWith(
-                defaultValue: textStyle!,
-                pressedValue: textStyleHighlighted,
-                disabledValue: textStyleDisabled,
-                parent: runtimeType.toString(),
-              ),
-        side: borderColor == null
+              defaultValue: textStyle!,
+              pressedValue: textStyleHighlighted,
+              disabledValue: textStyleDisabled,
+              parent: runtimeType.toString(),
+            ),
+    side:
+        borderColor == null
             ? null
             : SBBTheme.resolveStatesWith(
-                defaultValue: BorderSide(color: borderColor!),
-                pressedValue: borderColorHighlighted == null ? null : BorderSide(color: borderColorHighlighted!),
-                disabledValue: borderColorDisabled == null ? null : BorderSide(color: borderColorDisabled!),
-              ),
-        iconColor: iconColor != null
+              defaultValue: BorderSide(color: borderColor!),
+              pressedValue:
+                  borderColorHighlighted == null
+                      ? null
+                      : BorderSide(color: borderColorHighlighted!),
+              disabledValue:
+                  borderColorDisabled == null ? null : BorderSide(color: borderColorDisabled!),
+            ),
+    iconColor:
+        iconColor != null
             ? SBBTheme.resolveStatesWith(
-                defaultValue: iconColor!,
-                pressedValue: iconColorHighlighted,
-                disabledValue: iconColorDisabled,
-              )
+              defaultValue: iconColor!,
+              pressedValue: iconColorHighlighted,
+              disabledValue: iconColorDisabled,
+            )
             : null,
-      );
+  );
 
-  ButtonStyle overrideButtonStyle(ButtonStyle? baseButtonStyle) => toButtonStyle().merge(baseButtonStyle);
+  ButtonStyle overrideButtonStyle(ButtonStyle? baseButtonStyle) =>
+      toButtonStyle().merge(baseButtonStyle);
 }
 
 extension ButtonStyleExtension on SBBButtonStyle? {
@@ -139,7 +151,8 @@ extension ButtonStyleExtension on SBBButtonStyle? {
     if (this == null) return other ?? SBBButtonStyle();
     return this!.copyWith(
       backgroundColor: this!.backgroundColor ?? other?.backgroundColor,
-      backgroundColorHighlighted: this!.backgroundColorHighlighted ?? other?.backgroundColorHighlighted,
+      backgroundColorHighlighted:
+          this!.backgroundColorHighlighted ?? other?.backgroundColorHighlighted,
       backgroundColorDisabled: this!.backgroundColorDisabled ?? other?.backgroundColorDisabled,
       backgroundColorLoading: this!.backgroundColorLoading ?? other?.backgroundColorLoading,
       borderColor: this!.borderColor ?? other?.borderColor,

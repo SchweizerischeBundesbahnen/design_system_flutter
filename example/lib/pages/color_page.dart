@@ -19,10 +19,7 @@ class ColorPage extends StatelessWidget {
           ),
           child: ThemeModeSegmentedButton(),
         ),
-        _ColorShowcase(
-          title: 'Colors',
-          colorEntries: _colors,
-        ),
+        _ColorShowcase(title: 'Colors', colorEntries: _colors),
         _ColorShowcase(
           title: 'Functional colors',
           colorEntries: _functionalColors,
@@ -37,10 +34,7 @@ class ColorPage extends StatelessWidget {
 }
 
 class _ColorShowcase extends StatelessWidget {
-  const _ColorShowcase({
-    required this.title,
-    required this.colorEntries,
-  });
+  const _ColorShowcase({required this.title, required this.colorEntries});
 
   final String title;
   final List<_ColorEntry> colorEntries;
@@ -71,11 +65,9 @@ class _ColorShowcase extends StatelessWidget {
             itemCount: colorEntries.length,
             itemBuilder: (BuildContext context, index) {
               final colorEntry = colorEntries[index];
-              return _ColorShowcaseCard(
-                colorEntry: colorEntry,
-              );
+              return _ColorShowcaseCard(colorEntry: colorEntry);
             },
-          )
+          ),
         ],
       ),
     );
@@ -83,15 +75,14 @@ class _ColorShowcase extends StatelessWidget {
 }
 
 class _ColorShowcaseCard extends StatelessWidget {
-  const _ColorShowcaseCard({
-    required this.colorEntry,
-  });
+  const _ColorShowcaseCard({required this.colorEntry});
 
   final _ColorEntry colorEntry;
 
   @override
   Widget build(BuildContext context) {
-    final valueString = colorEntry.color.value.toRadixString(16).padLeft(8, '0').toUpperCase();
+    final valueString =
+        colorEntry.color.value.toRadixString(16).padLeft(8, '0').toUpperCase();
     final hexString = valueString.substring(2);
     final opacityString = valueString.substring(0, 2);
     const colorValueTextStyle = SBBTextStyles.helpersLabel;
@@ -99,22 +90,14 @@ class _ColorShowcaseCard extends StatelessWidget {
       color: SBBControlStyles.of(context).selectLabel?.textStyleDisabled?.color,
     );
     return SBBGroup(
-      margin: const EdgeInsets.all(
-        sbbDefaultSpacing * 0.5,
-      ),
+      margin: const EdgeInsets.all(sbbDefaultSpacing * 0.5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Expanded(
-            child: Container(
-              color: colorEntry.color,
-            ),
-          ),
+          Expanded(child: Container(color: colorEntry.color)),
           // Divider(),
           Container(
-            padding: const EdgeInsets.all(
-              sbbDefaultSpacing * 0.5,
-            ),
+            padding: const EdgeInsets.all(sbbDefaultSpacing * 0.5),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -126,10 +109,7 @@ class _ColorShowcaseCard extends StatelessWidget {
                       style: colorValueSecondaryTextStyle,
                     ),
                     Expanded(
-                      child: Text(
-                        hexString,
-                        style: colorValueTextStyle,
-                      ),
+                      child: Text(hexString, style: colorValueTextStyle),
                     ),
                   ],
                 ),
@@ -144,10 +124,7 @@ class _ColorShowcaseCard extends StatelessWidget {
 }
 
 class _ColorEntry {
-  const _ColorEntry(
-    this.name,
-    this.color,
-  );
+  const _ColorEntry(this.name, this.color);
 
   final String name;
   final Color color;

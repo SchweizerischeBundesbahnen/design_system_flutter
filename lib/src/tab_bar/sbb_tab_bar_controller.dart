@@ -32,7 +32,10 @@ class SBBTabBarController {
   late AnimationController _animationController;
   late Animation<double> _animation;
   late SBBTabBarNavigationData currentData;
-  late SBBTabBarLayoutData currentLayoutData = SBBTabBarLayoutData(0.0, tabs.map((_) => Offset(-100.0, 0.0)).toList());
+  late SBBTabBarLayoutData currentLayoutData = SBBTabBarLayoutData(
+    0.0,
+    tabs.map((_) => Offset(-100.0, 0.0)).toList(),
+  );
   late List<SBBTabBarWarningSetting> currentWarnings = [];
 
   bool hover = false;
@@ -62,21 +65,12 @@ class SBBTabBarController {
 
   /// Initializing the controller with the animation controller
   void initialize(TickerProvider vsync) {
-    _animationController = AnimationController(
-      vsync: vsync,
-      duration: kThemeAnimationDuration,
-    )..addListener(
-        () {
-          currentData = SBBTabBarNavigationData(
-            selectedTab,
-            _nextTab,
-            _animation.value,
-            hover,
-          );
-          _navigationController.add(currentData);
-          updateCurveAnimation();
-        },
-      );
+    _animationController = AnimationController(vsync: vsync, duration: kThemeAnimationDuration)
+      ..addListener(() {
+        currentData = SBBTabBarNavigationData(selectedTab, _nextTab, _animation.value, hover);
+        _navigationController.add(currentData);
+        updateCurveAnimation();
+      });
     _animation = Tween(begin: 0.0, end: 1.0).animate(_animationController);
   }
 
@@ -85,9 +79,10 @@ class SBBTabBarController {
       final leftProgress = (i == 0) ? 0.0 : tabStates[i - 1];
       final rightProgress = (i == currentLayoutData.positions.length - 1) ? 0.0 : tabStates[i + 1];
 
-      final double leftMidX = curves.length < 2
-          ? 0.0
-          : (i == 0)
+      final double leftMidX =
+          curves.length < 2
+              ? 0.0
+              : (i == 0)
               ? curves[0].midX - (curves[1].midX - curves[0].midX)
               : curves[i - 1].midX;
 

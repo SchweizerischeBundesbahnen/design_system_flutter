@@ -54,14 +54,16 @@ class DefaultToastBody extends StatelessWidget {
 
     final toastWidth = MediaQuery.sizeOf(context).width - resolvedStyle.margin!.vertical;
 
-    final bool willActionOverflow = actionAndMarginWidth / toastWidth > resolvedStyle.actionOverflowThreshold!;
+    final bool willActionOverflow =
+        actionAndMarginWidth / toastWidth > resolvedStyle.actionOverflowThreshold!;
 
     return Wrap(
       children: [
         Row(
           children: [
             Expanded(child: _bodyWithText(resolvedStyle)),
-            if (!willActionOverflow) Padding(padding: resolvedStyle.actionPadding!, child: builtAction),
+            if (!willActionOverflow)
+              Padding(padding: resolvedStyle.actionPadding!, child: builtAction),
             if (willActionOverflow) SizedBox(width: toastWidth * 0.3),
           ],
         ),

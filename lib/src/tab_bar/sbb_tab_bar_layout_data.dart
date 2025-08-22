@@ -7,10 +7,7 @@ import '../../sbb_design_system_mobile.dart';
 
 /// Represents the positions of a [SBBTabBarItem] in [SBBTabBar]
 class SBBTabBarLayoutData {
-  SBBTabBarLayoutData(
-    this.height,
-    this.positions,
-  );
+  SBBTabBarLayoutData(this.height, this.positions);
 
   final double height;
   final List<Offset> positions;
@@ -21,7 +18,9 @@ class SBBTabBarLayoutData {
     return positions.map((p) {
       return TabCurves(
         midX: p.dx + radius + 4.0,
-        waveRadius: radius + (portrait ? TabItemWidget.portraitCirclePadding : TabItemWidget.landscapeCirclePadding),
+        waveRadius:
+            radius +
+            (portrait ? TabItemWidget.portraitCirclePadding : TabItemWidget.landscapeCirclePadding),
       );
     }).toList();
   }

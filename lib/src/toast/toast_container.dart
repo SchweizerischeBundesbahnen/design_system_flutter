@@ -11,12 +11,7 @@ import '../../sbb_design_system_mobile.dart';
 ///
 /// and all other widgets that are used in the [SBBMap.uiControlsBuilder] method.
 class ToastContainer extends InheritedWidget {
-  const ToastContainer({
-    super.key,
-    required this.stream,
-    required super.child,
-    this.toast,
-  });
+  const ToastContainer({super.key, required this.stream, required super.child, this.toast});
 
   final Stream<bool> stream;
   final SBBToast? toast;
@@ -32,5 +27,6 @@ class ToastContainer extends InheritedWidget {
   }
 
   @override
-  bool updateShouldNotify(ToastContainer oldWidget) => oldWidget.stream != stream || oldWidget.toast != toast;
+  bool updateShouldNotify(ToastContainer oldWidget) =>
+      oldWidget.stream != stream || oldWidget.toast != toast;
 }

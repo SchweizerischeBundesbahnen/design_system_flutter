@@ -33,26 +33,19 @@ class SBBTabBar extends StatefulWidget {
     required void Function(SBBTabBarItem tab) onTap,
     Key? key,
     SBBTabBarItem? initialItem,
-  }) =>
-      SBBTabBar._(
-        key: key,
-        controller: SBBTabBarController(items, initialItem ?? items.first),
-        onTabChanged: onTabChanged,
-        onTap: onTap,
-      );
+  }) => SBBTabBar._(
+    key: key,
+    controller: SBBTabBarController(items, initialItem ?? items.first),
+    onTabChanged: onTabChanged,
+    onTap: onTap,
+  );
 
   factory SBBTabBar.controller({
     required SBBTabBarController controller,
     required Future<void> Function(Future<SBBTabBarItem> tabTask) onTabChanged,
     required void Function(SBBTabBarItem tab) onTap,
     Key? key,
-  }) =>
-      SBBTabBar._(
-        key: key,
-        controller: controller,
-        onTabChanged: onTabChanged,
-        onTap: onTap,
-      );
+  }) => SBBTabBar._(key: key, controller: controller, onTabChanged: onTabChanged, onTap: onTap);
 
   final Future<void> Function(Future<SBBTabBarItem> tabTask) onTabChanged;
   final void Function(SBBTabBarItem tab) onTap;
@@ -62,7 +55,8 @@ class SBBTabBar extends StatefulWidget {
   State<SBBTabBar> createState() => _SBBTabBarState();
 }
 
-class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMixin, WidgetsBindingObserver {
+class _SBBTabBarState extends State<SBBTabBar>
+    with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   SBBTabBarController get _controller => widget.controller;
 
   List<SBBTabBarItem> get _tabs => _controller.tabs;
@@ -113,26 +107,21 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
                   height: layoutData.height,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [
-                        cardColor.withValues(alpha: 0.0),
-                        cardColor.withValues(alpha: 1.0),
-                      ],
+                      colors: [cardColor.withValues(alpha: 0.0), cardColor.withValues(alpha: 1.0)],
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                     ),
                   ),
                   child: Stack(
                     children: [
-                      ..._tabs.mapIndexed((i, e) => Positioned(
-                            left: layoutData.positions[i].dx,
-                            child: TabItemWidget(e.icon, selected: true),
-                          )),
-                      CustomPaint(
-                        painter: TabCurvePainter(
-                          _controller.curves,
-                          cardColor,
-                          theme.shadowColor,
+                      ..._tabs.mapIndexed(
+                        (i, e) => Positioned(
+                          left: layoutData.positions[i].dx,
+                          child: TabItemWidget(e.icon, selected: true),
                         ),
+                      ),
+                      CustomPaint(
+                        painter: TabCurvePainter(_controller.curves, cardColor, theme.shadowColor),
                         child: _TabLayout(
                           items: _tabs,
                           selectedTab: navData.selectedTab,

@@ -47,7 +47,10 @@ class SBBTertiaryButtonLarge extends StatelessWidget {
               const SBBLoadingIndicator.tinySmoke(),
               const SBBLoadingIndicator.tinyCement(),
             )
-          else if (icon != null) ...[Icon(icon, size: sbbIconSizeSmall), SizedBox(width: 4.0)],
+          else if (icon != null) ...[
+            Icon(icon, size: sbbIconSizeSmall),
+            SizedBox(width: 4.0),
+          ],
           buttonStyles.buttonLabelBuilder!(context, label),
         ],
       ),
@@ -100,7 +103,10 @@ class SBBTertiaryButtonSmall extends StatelessWidget {
               const SBBLoadingIndicator.tinyCement(),
               const SBBLoadingIndicator.tinySmoke(),
             )
-          else if (icon != null) ...[Icon(icon, size: sbbIconSizeSmall), SizedBox(width: 4.0)],
+          else if (icon != null) ...[
+            Icon(icon, size: sbbIconSizeSmall),
+            SizedBox(width: 4.0),
+          ],
           buttonStyle.buttonLabelBuilder!(context, label),
         ],
       ),
@@ -112,13 +118,9 @@ class SBBTertiaryButtonSmall extends StatelessWidget {
 
     return buttonStyle.tertiarySmallStyle?.overrideButtonStyle(
       Theme.of(context).textButtonTheme.style?.copyWith(
-            fixedSize: SBBTheme.allStates(
-              const Size.fromHeight(SBBInternal.defaultButtonHeightSmall),
-            ),
-            minimumSize: SBBTheme.allStates(
-              const Size(0, SBBInternal.defaultButtonHeightSmall),
-            ),
-          ),
+        fixedSize: SBBTheme.allStates(const Size.fromHeight(SBBInternal.defaultButtonHeightSmall)),
+        minimumSize: SBBTheme.allStates(const Size(0, SBBInternal.defaultButtonHeightSmall)),
+      ),
     );
   }
 }

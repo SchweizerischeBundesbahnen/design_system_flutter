@@ -1,10 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 class SBBStepperItem {
-  const SBBStepperItem({
-    this.icon,
-    required this.label,
-  });
+  const SBBStepperItem({this.icon, required this.label});
 
   final IconData? icon;
   final String label;

@@ -144,30 +144,27 @@ class SBBMessage extends StatelessWidget {
 
   SBBLoadingIndicator _loadingIndicator(BuildContext context) {
     final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
-    return isDarkTheme ? const SBBLoadingIndicator.mediumCloud() : const SBBLoadingIndicator.medium();
+    return isDarkTheme
+        ? const SBBLoadingIndicator.mediumCloud()
+        : const SBBLoadingIndicator.medium();
   }
 
-  Text _title(TextTheme textTheme) => Text(
-        title,
-        style: textTheme.bodyMedium,
-        textAlign: TextAlign.center,
-      );
+  Text _title(TextTheme textTheme) =>
+      Text(title, style: textTheme.bodyMedium, textAlign: TextAlign.center);
 
-  Text _description(TextTheme textTheme) => Text(
-        description,
-        style: textTheme.labelSmall,
-        textAlign: TextAlign.center,
-      );
+  Text _description(TextTheme textTheme) =>
+      Text(description, style: textTheme.labelSmall, textAlign: TextAlign.center);
 
   Widget _errorCode(TextTheme textTheme) => ExcludeSemantics(
-        child: Text(
-          messageCode!,
-          style: textTheme.labelSmall?.copyWith(fontSize: 12.0),
-          textAlign: TextAlign.center,
-        ),
-      );
+    child: Text(
+      messageCode!,
+      style: textTheme.labelSmall?.copyWith(fontSize: 12.0),
+      textAlign: TextAlign.center,
+    ),
+  );
 
-  SBBIconButtonLarge _interactionButton() => SBBIconButtonLarge(icon: interactionIcon, onPressed: onInteraction);
+  SBBIconButtonLarge _interactionButton() =>
+      SBBIconButtonLarge(icon: interactionIcon, onPressed: onInteraction);
 
   Widget _illustration(BuildContext context) {
     final brightness = Theme.of(context).brightness;

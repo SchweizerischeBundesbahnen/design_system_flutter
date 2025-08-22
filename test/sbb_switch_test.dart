@@ -25,12 +25,7 @@ void main() {
 }
 
 class SwitchTest extends StatelessWidget {
-  const SwitchTest({
-    super.key,
-    required this.value1,
-    required this.value2,
-    required this.value3,
-  });
+  const SwitchTest({super.key, required this.value1, required this.value2, required this.value3});
 
   final bool value1;
   final bool value2;
@@ -46,15 +41,9 @@ class SwitchTest extends StatelessWidget {
           padding: const EdgeInsets.all(sbbDefaultSpacing / 2),
           child: Row(
             children: [
-              SBBSwitch(
-                onChanged: (bool? value) {},
-                value: value1,
-              ),
+              SBBSwitch(onChanged: (bool? value) {}, value: value1),
               SizedBox(width: sbbDefaultSpacing * .25),
-              SBBSwitch(
-                onChanged: null,
-                value: value1,
-              ),
+              SBBSwitch(onChanged: null, value: value1),
             ],
           ),
         ),
@@ -82,7 +71,8 @@ class SwitchTest extends StatelessWidget {
         SBBGroup(
           child: SBBSwitchListItem(
             value: value3,
-            title: 'Very Looooooooooooooooooooooooooooooooooooooooooooooong Multiline Label With Subtitle',
+            title:
+                'Very Looooooooooooooooooooooooooooooooooooooooooooooong Multiline Label With Subtitle',
             allowMultilineLabel: true,
             subtitle: 'Subtitle',
             onChanged: (value) {},
@@ -95,12 +85,7 @@ class SwitchTest extends StatelessWidget {
             value: false,
             title: 'With Link',
             onChanged: (value) {},
-            links: [
-              SBBSwitchListItemLink(
-                text: 'Link Text',
-                onPressed: () => {},
-              )
-            ],
+            links: [SBBSwitchListItemLink(text: 'Link Text', onPressed: () => {})],
             isLastElement: true,
           ),
         ),
@@ -113,14 +98,8 @@ class SwitchTest extends StatelessWidget {
                 title: 'With 2 Links',
                 onChanged: (value) {},
                 links: [
-                  SBBSwitchListItemLink(
-                    text: 'Link Text 1',
-                    onPressed: () {},
-                  ),
-                  SBBSwitchListItemLink(
-                    text: 'Link Text 2',
-                    onPressed: () {},
-                  ),
+                  SBBSwitchListItemLink(text: 'Link Text 1', onPressed: () {}),
+                  SBBSwitchListItemLink(text: 'Link Text 2', onPressed: () {}),
                 ],
                 isLastElement: true,
               ),
@@ -133,12 +112,7 @@ class SwitchTest extends StatelessWidget {
             value: false,
             title: 'Disabled, Link enabled',
             onChanged: null,
-            links: [
-              SBBSwitchListItemLink(
-                text: 'Link still enabled',
-                onPressed: () {},
-              )
-            ],
+            links: [SBBSwitchListItemLink(text: 'Link still enabled', onPressed: () {})],
             isLastElement: true,
           ),
         ),
@@ -148,12 +122,7 @@ class SwitchTest extends StatelessWidget {
             value: false,
             title: 'Only Link disabled',
             onChanged: (value) {},
-            links: [
-              SBBSwitchListItemLink(
-                text: 'Link disabled',
-                onPressed: null,
-              ),
-            ],
+            links: [SBBSwitchListItemLink(text: 'Link disabled', onPressed: null)],
             isLastElement: true,
           ),
         ),
@@ -163,12 +132,7 @@ class SwitchTest extends StatelessWidget {
             value: false,
             title: 'All disabled',
             onChanged: null,
-            links: [
-              SBBSwitchListItemLink(
-                text: 'Link disabled',
-                onPressed: null,
-              ),
-            ],
+            links: [SBBSwitchListItemLink(text: 'Link disabled', onPressed: null)],
             isLastElement: true,
           ),
         ),
@@ -179,10 +143,7 @@ class SwitchTest extends StatelessWidget {
             title: 'Custom LinkWidget',
             onChanged: (value) {},
             linksWidgets: [
-              Padding(
-                padding: const EdgeInsets.all(4.0),
-                child: Text('My custom Link Widget'),
-              )
+              Padding(padding: const EdgeInsets.all(4.0), child: Text('My custom Link Widget')),
             ],
             isLastElement: true,
           ),

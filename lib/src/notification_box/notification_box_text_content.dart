@@ -1,12 +1,7 @@
 import 'package:flutter/material.dart';
 
 class NotificationBoxTextContent extends StatelessWidget {
-  const NotificationBoxTextContent({
-    required this.text,
-    super.key,
-    this.clip = true,
-    this.icon,
-  });
+  const NotificationBoxTextContent({required this.text, super.key, this.clip = true, this.icon});
 
   final String text;
   final bool clip;

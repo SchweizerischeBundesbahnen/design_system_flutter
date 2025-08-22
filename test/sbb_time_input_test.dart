@@ -33,27 +33,15 @@ class TimePickerTest extends StatelessWidget {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          SBBTimeInput(
-            onTimeChanged: (_) {},
-          ),
-          SBBTimeInput(
-            value: initialTime,
-            onTimeChanged: (_) {},
-          ),
-          SBBTimeInput(
-            hintText: 'Hint only',
-            onTimeChanged: (_) {},
-          ),
+          SBBTimeInput(onTimeChanged: (_) {}),
+          SBBTimeInput(value: initialTime, onTimeChanged: (_) {}),
+          SBBTimeInput(hintText: 'Hint only', onTimeChanged: (_) {}),
           SBBTimeInput(
             labelText: 'Label and Hint',
             hintText: 'Label and Hint',
             onTimeChanged: (_) {},
           ),
-          SBBTimeInput(
-            labelText: 'Label and Value',
-            value: initialTime,
-            onTimeChanged: (_) {},
-          ),
+          SBBTimeInput(labelText: 'Label and Value', value: initialTime, onTimeChanged: (_) {}),
           SBBTimeInput(
             value: initialTime,
             labelText: 'Custom date format',

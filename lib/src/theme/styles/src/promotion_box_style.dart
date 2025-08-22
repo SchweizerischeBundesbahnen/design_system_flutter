@@ -24,9 +24,7 @@ class PromotionBoxStyle {
       ),
       badgeColor: SBBColors.red,
       badgeBorderColor: baseStyle.themeValue(SBBColors.white, SBBColors.charcoal),
-      badgeTextStyle: SBBTextStyles.smallBold.copyWith(
-        color: SBBColors.white,
-      ),
+      badgeTextStyle: SBBTextStyles.smallBold.copyWith(color: SBBColors.white),
       gradientColors: baseStyle.themeValue(
         PromotionBoxStyle.lightGradient,
         PromotionBoxStyle.darkGradient,
@@ -77,11 +75,7 @@ class PromotionBoxStyle {
     );
   }
 
-  static PromotionBoxStyle lerp(
-    PromotionBoxStyle? $this,
-    PromotionBoxStyle? other,
-    double t,
-  ) {
+  static PromotionBoxStyle lerp(PromotionBoxStyle? $this, PromotionBoxStyle? other, double t) {
     return PromotionBoxStyle(
       borderColor: Color.lerp($this?.borderColor, other?.borderColor, t),
       badgeShadowColor: Color.lerp($this?.badgeShadowColor, other?.badgeShadowColor, t),

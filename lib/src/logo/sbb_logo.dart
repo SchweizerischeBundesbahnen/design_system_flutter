@@ -8,12 +8,7 @@ import '../../sbb_design_system_mobile.dart';
 ///
 /// * https://digital.sbb.ch/de/design-system-mobile-new/basics/brand
 class SBBLogo extends StatelessWidget {
-  const SBBLogo({
-    super.key,
-    this.height,
-    this.width,
-    this.color = SBBColors.white,
-  });
+  const SBBLogo({super.key, this.height, this.width, this.color = SBBColors.white});
 
   static const _defaultHeight = 14.0;
   static const _defaultWidth = 28.0;
@@ -24,9 +19,10 @@ class SBBLogo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final paint = Paint()
-      ..style = PaintingStyle.fill
-      ..color = color;
+    final paint =
+        Paint()
+          ..style = PaintingStyle.fill
+          ..color = color;
 
     return LayoutBuilder(
       builder: (context, constraints) {
@@ -59,35 +55,33 @@ class SBBLogo extends StatelessWidget {
         final yRatio = targetHeight / _defaultHeight;
         final xRatio = targetWidth / _defaultWidth;
 
-        final path = Path()
-          ..moveTo(00.000 * xRatio, 07.000 * yRatio)
-          ..lineTo(06.988 * xRatio, 14.000 * yRatio)
-          ..lineTo(11.066 * xRatio, 14.000 * yRatio)
-          ..lineTo(05.566 * xRatio, 08.609 * yRatio)
-          ..lineTo(12.391 * xRatio, 08.609 * yRatio)
-          ..lineTo(12.391 * xRatio, 14.000 * yRatio)
-          ..lineTo(15.609 * xRatio, 14.000 * yRatio)
-          ..lineTo(15.609 * xRatio, 08.609 * yRatio)
-          ..lineTo(22.434 * xRatio, 08.609 * yRatio)
-          ..lineTo(16.934 * xRatio, 14.000 * yRatio)
-          ..lineTo(21.012 * xRatio, 14.000 * yRatio)
-          ..lineTo(28.000 * xRatio, 07.000 * yRatio)
-          ..lineTo(21.012 * xRatio, 00.000 * yRatio)
-          ..lineTo(16.934 * xRatio, 00.000 * yRatio)
-          ..lineTo(22.434 * xRatio, 05.391 * yRatio)
-          ..lineTo(15.609 * xRatio, 05.391 * yRatio)
-          ..lineTo(15.609 * xRatio, 00.000 * yRatio)
-          ..lineTo(12.391 * xRatio, 00.000 * yRatio)
-          ..lineTo(12.391 * xRatio, 05.391 * yRatio)
-          ..lineTo(05.566 * xRatio, 05.391 * yRatio)
-          ..lineTo(11.066 * xRatio, 00.000 * yRatio)
-          ..lineTo(06.988 * xRatio, 00.000 * yRatio)
-          ..lineTo(00.000 * xRatio, 07.000 * yRatio);
+        final path =
+            Path()
+              ..moveTo(00.000 * xRatio, 07.000 * yRatio)
+              ..lineTo(06.988 * xRatio, 14.000 * yRatio)
+              ..lineTo(11.066 * xRatio, 14.000 * yRatio)
+              ..lineTo(05.566 * xRatio, 08.609 * yRatio)
+              ..lineTo(12.391 * xRatio, 08.609 * yRatio)
+              ..lineTo(12.391 * xRatio, 14.000 * yRatio)
+              ..lineTo(15.609 * xRatio, 14.000 * yRatio)
+              ..lineTo(15.609 * xRatio, 08.609 * yRatio)
+              ..lineTo(22.434 * xRatio, 08.609 * yRatio)
+              ..lineTo(16.934 * xRatio, 14.000 * yRatio)
+              ..lineTo(21.012 * xRatio, 14.000 * yRatio)
+              ..lineTo(28.000 * xRatio, 07.000 * yRatio)
+              ..lineTo(21.012 * xRatio, 00.000 * yRatio)
+              ..lineTo(16.934 * xRatio, 00.000 * yRatio)
+              ..lineTo(22.434 * xRatio, 05.391 * yRatio)
+              ..lineTo(15.609 * xRatio, 05.391 * yRatio)
+              ..lineTo(15.609 * xRatio, 00.000 * yRatio)
+              ..lineTo(12.391 * xRatio, 00.000 * yRatio)
+              ..lineTo(12.391 * xRatio, 05.391 * yRatio)
+              ..lineTo(05.566 * xRatio, 05.391 * yRatio)
+              ..lineTo(11.066 * xRatio, 00.000 * yRatio)
+              ..lineTo(06.988 * xRatio, 00.000 * yRatio)
+              ..lineTo(00.000 * xRatio, 07.000 * yRatio);
 
-        return CustomPaint(
-          size: Size(targetWidth, targetHeight),
-          painter: _Painter(paint, path),
-        );
+        return CustomPaint(size: Size(targetWidth, targetHeight), painter: _Painter(paint, path));
       },
     );
   }

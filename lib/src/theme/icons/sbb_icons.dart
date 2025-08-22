@@ -15,7 +15,10 @@ sealed class SBBIcons {
   static const wifi_small = IconData(0xf102, fontFamily: smallFontFamily);
   static const wifi_disabled_small = IconData(0xf103, fontFamily: smallFontFamily);
   static const wheelchair_uncertain_small = IconData(0xf104, fontFamily: smallFontFamily);
-  static const wheelchair_substitute_transport_small = IconData(0xf105, fontFamily: smallFontFamily);
+  static const wheelchair_substitute_transport_small = IconData(
+    0xf105,
+    fontFamily: smallFontFamily,
+  );
   static const wheelchair_small = IconData(0xf106, fontFamily: smallFontFamily);
   static const wheelchair_sector_location_small = IconData(0xf107, fontFamily: smallFontFamily);
   static const wheelchair_reservation_small = IconData(0xf108, fontFamily: smallFontFamily);
@@ -38,7 +41,10 @@ sealed class SBBIcons {
   static const walk_fast_small = IconData(0xf119, fontFamily: smallFontFamily);
   static const waiting_room_small = IconData(0xf11a, fontFamily: smallFontFamily);
   static const wagon_small = IconData(0xf11b, fontFamily: smallFontFamily);
-  static const wagon_coupling_dragging_equipment_small = IconData(0xf11c, fontFamily: smallFontFamily);
+  static const wagon_coupling_dragging_equipment_small = IconData(
+    0xf11c,
+    fontFamily: smallFontFamily,
+  );
   static const vegetarian_small = IconData(0xf11d, fontFamily: smallFontFamily);
   static const vegan_small = IconData(0xf11e, fontFamily: smallFontFamily);
   static const user_tie_small = IconData(0xf11f, fontFamily: smallFontFamily);
@@ -140,7 +146,10 @@ sealed class SBBIcons {
   static const split_small = IconData(0xf17f, fontFamily: smallFontFamily);
   static const speech_bubble_small = IconData(0xf180, fontFamily: smallFontFamily);
   static const speech_bubble_group_empty_small = IconData(0xf181, fontFamily: smallFontFamily);
-  static const speech_bubble_exclamation_point_small = IconData(0xf182, fontFamily: smallFontFamily);
+  static const speech_bubble_exclamation_point_small = IconData(
+    0xf182,
+    fontFamily: smallFontFamily,
+  );
   static const speech_bubble_empty_small = IconData(0xf183, fontFamily: smallFontFamily);
   static const speaker_small = IconData(0xf184, fontFamily: smallFontFamily);
   static const spanner_small = IconData(0xf185, fontFamily: smallFontFamily);
@@ -234,7 +243,10 @@ sealed class SBBIcons {
   static const mug_hot_small = IconData(0xf1dd, fontFamily: smallFontFamily);
   static const moving_bus_small = IconData(0xf1de, fontFamily: smallFontFamily);
   static const mountain_sun_small = IconData(0xf1df, fontFamily: smallFontFamily);
-  static const mountain_rock_transmitter_signal_small = IconData(0xf1e0, fontFamily: smallFontFamily);
+  static const mountain_rock_transmitter_signal_small = IconData(
+    0xf1e0,
+    fontFamily: smallFontFamily,
+  );
   static const mountain_plus_small = IconData(0xf1e1, fontFamily: smallFontFamily);
   static const mountain_minus_small = IconData(0xf1e2, fontFamily: smallFontFamily);
   static const mountain_lake_sun_small = IconData(0xf1e3, fontFamily: smallFontFamily);
@@ -244,7 +256,10 @@ sealed class SBBIcons {
   static const minimize_screen_small = IconData(0xf1e7, fontFamily: smallFontFamily);
   static const milk_brick_disabled_small = IconData(0xf1e8, fontFamily: smallFontFamily);
   static const microscooter_profile_small = IconData(0xf1e9, fontFamily: smallFontFamily);
-  static const microscooter_profile_power_plug_small = IconData(0xf1ea, fontFamily: smallFontFamily);
+  static const microscooter_profile_power_plug_small = IconData(
+    0xf1ea,
+    fontFamily: smallFontFamily,
+  );
   static const microphone_small = IconData(0xf1eb, fontFamily: smallFontFamily);
   static const microphone_disabled_small = IconData(0xf1ec, fontFamily: smallFontFamily);
   static const metadata_small = IconData(0xf1ed, fontFamily: smallFontFamily);
@@ -272,9 +287,15 @@ sealed class SBBIcons {
   static const lock_open_small = IconData(0xf203, fontFamily: smallFontFamily);
   static const lock_closed_small = IconData(0xf204, fontFamily: smallFontFamily);
   static const location_pin_surrounding_area_small = IconData(0xf205, fontFamily: smallFontFamily);
-  static const location_pin_surrounding_area_power_plug_small = IconData(0xf206, fontFamily: smallFontFamily);
+  static const location_pin_surrounding_area_power_plug_small = IconData(
+    0xf206,
+    fontFamily: smallFontFamily,
+  );
   static const location_pin_small = IconData(0xf207, fontFamily: smallFontFamily);
-  static const location_pin_pulse_surrounding_area_small = IconData(0xf208, fontFamily: smallFontFamily);
+  static const location_pin_pulse_surrounding_area_small = IconData(
+    0xf208,
+    fontFamily: smallFontFamily,
+  );
   static const location_pin_map_small = IconData(0xf209, fontFamily: smallFontFamily);
   static const location_pin_camera_small = IconData(0xf20a, fontFamily: smallFontFamily);
   static const location_pin_b_small = IconData(0xf20b, fontFamily: smallFontFamily);
@@ -332,7 +353,10 @@ sealed class SBBIcons {
   static const gondola_profile_small = IconData(0xf23f, fontFamily: smallFontFamily);
   static const globe_small = IconData(0xf240, fontFamily: smallFontFamily);
   static const globe_locomotive_small = IconData(0xf241, fontFamily: smallFontFamily);
-  static const globe_arrows_left_right_up_down_small = IconData(0xf242, fontFamily: smallFontFamily);
+  static const globe_arrows_left_right_up_down_small = IconData(
+    0xf242,
+    fontFamily: smallFontFamily,
+  );
   static const glass_cocktail_small = IconData(0xf243, fontFamily: smallFontFamily);
   static const github_small = IconData(0xf244, fontFamily: smallFontFamily);
   static const gift_small = IconData(0xf245, fontFamily: smallFontFamily);
@@ -423,7 +447,10 @@ sealed class SBBIcons {
   static const document_image_small = IconData(0xf29a, fontFamily: smallFontFamily);
   static const document_doc_small = IconData(0xf29b, fontFamily: smallFontFamily);
   static const document_check_small = IconData(0xf29c, fontFamily: smallFontFamily);
-  static const display_switzerland_warning_light_small = IconData(0xf29d, fontFamily: smallFontFamily);
+  static const display_switzerland_warning_light_small = IconData(
+    0xf29d,
+    fontFamily: smallFontFamily,
+  );
   static const display_small = IconData(0xf29e, fontFamily: smallFontFamily);
   static const display_gears_small = IconData(0xf29f, fontFamily: smallFontFamily);
   static const display_binary_code_small = IconData(0xf2a0, fontFamily: smallFontFamily);
@@ -593,10 +620,16 @@ sealed class SBBIcons {
   static const bike_profile_power_plug_small = IconData(0xf344, fontFamily: smallFontFamily);
   static const bicycle_tandem_small = IconData(0xf345, fontFamily: smallFontFamily);
   static const bicycle_small = IconData(0xf346, fontFamily: smallFontFamily);
-  static const bicycle_roof_surveillance_camera_small = IconData(0xf347, fontFamily: smallFontFamily);
+  static const bicycle_roof_surveillance_camera_small = IconData(
+    0xf347,
+    fontFamily: smallFontFamily,
+  );
   static const bicycle_roof_key_small = IconData(0xf348, fontFamily: smallFontFamily);
   static const bicycle_reservation_small = IconData(0xf349, fontFamily: smallFontFamily);
-  static const bicycle_profile_user_group_circle_small = IconData(0xf34a, fontFamily: smallFontFamily);
+  static const bicycle_profile_user_group_circle_small = IconData(
+    0xf34a,
+    fontFamily: smallFontFamily,
+  );
   static const bell_small = IconData(0xf34b, fontFamily: smallFontFamily);
   static const bell_disabled_small = IconData(0xf34c, fontFamily: smallFontFamily);
   static const battery_lightning_small = IconData(0xf34d, fontFamily: smallFontFamily);
@@ -664,7 +697,10 @@ sealed class SBBIcons {
   static const wifi_medium = IconData(0xf102, fontFamily: mediumFontFamily);
   static const wifi_disabled_medium = IconData(0xf103, fontFamily: mediumFontFamily);
   static const wheelchair_uncertain_medium = IconData(0xf104, fontFamily: mediumFontFamily);
-  static const wheelchair_substitute_transport_medium = IconData(0xf105, fontFamily: mediumFontFamily);
+  static const wheelchair_substitute_transport_medium = IconData(
+    0xf105,
+    fontFamily: mediumFontFamily,
+  );
   static const wheelchair_sector_location_medium = IconData(0xf106, fontFamily: mediumFontFamily);
   static const wheelchair_reservation_medium = IconData(0xf107, fontFamily: mediumFontFamily);
   static const wheelchair_partially_medium = IconData(0xf108, fontFamily: mediumFontFamily);
@@ -687,7 +723,10 @@ sealed class SBBIcons {
   static const walk_fast_medium = IconData(0xf119, fontFamily: mediumFontFamily);
   static const waiting_room_medium = IconData(0xf11a, fontFamily: mediumFontFamily);
   static const wagon_medium = IconData(0xf11b, fontFamily: mediumFontFamily);
-  static const wagon_coupling_dragging_equipment_medium = IconData(0xf11c, fontFamily: mediumFontFamily);
+  static const wagon_coupling_dragging_equipment_medium = IconData(
+    0xf11c,
+    fontFamily: mediumFontFamily,
+  );
   static const vegetarian_medium = IconData(0xf11d, fontFamily: mediumFontFamily);
   static const vegan_medium = IconData(0xf11e, fontFamily: mediumFontFamily);
   static const user_tie_medium = IconData(0xf11f, fontFamily: mediumFontFamily);
@@ -789,7 +828,10 @@ sealed class SBBIcons {
   static const split_medium = IconData(0xf17f, fontFamily: mediumFontFamily);
   static const speech_bubble_medium = IconData(0xf180, fontFamily: mediumFontFamily);
   static const speech_bubble_group_empty_medium = IconData(0xf181, fontFamily: mediumFontFamily);
-  static const speech_bubble_exclamation_point_medium = IconData(0xf182, fontFamily: mediumFontFamily);
+  static const speech_bubble_exclamation_point_medium = IconData(
+    0xf182,
+    fontFamily: mediumFontFamily,
+  );
   static const speech_bubble_empty_medium = IconData(0xf183, fontFamily: mediumFontFamily);
   static const speaker_medium = IconData(0xf184, fontFamily: mediumFontFamily);
   static const spanner_medium = IconData(0xf185, fontFamily: mediumFontFamily);
@@ -883,7 +925,10 @@ sealed class SBBIcons {
   static const mug_hot_medium = IconData(0xf1dd, fontFamily: mediumFontFamily);
   static const moving_bus_medium = IconData(0xf1de, fontFamily: mediumFontFamily);
   static const mountain_sun_medium = IconData(0xf1df, fontFamily: mediumFontFamily);
-  static const mountain_rock_transmitter_signal_medium = IconData(0xf1e0, fontFamily: mediumFontFamily);
+  static const mountain_rock_transmitter_signal_medium = IconData(
+    0xf1e0,
+    fontFamily: mediumFontFamily,
+  );
   static const mountain_plus_medium = IconData(0xf1e1, fontFamily: mediumFontFamily);
   static const mountain_minus_medium = IconData(0xf1e2, fontFamily: mediumFontFamily);
   static const mountain_lake_sun_medium = IconData(0xf1e3, fontFamily: mediumFontFamily);
@@ -892,7 +937,10 @@ sealed class SBBIcons {
   static const minus_medium = IconData(0xf1e6, fontFamily: mediumFontFamily);
   static const minimize_screen_medium = IconData(0xf1e7, fontFamily: mediumFontFamily);
   static const milk_brick_disabled_medium = IconData(0xf1e8, fontFamily: mediumFontFamily);
-  static const microscooter_profile_power_plug_medium = IconData(0xf1e9, fontFamily: mediumFontFamily);
+  static const microscooter_profile_power_plug_medium = IconData(
+    0xf1e9,
+    fontFamily: mediumFontFamily,
+  );
   static const microscooter_profile_medium = IconData(0xf1ea, fontFamily: mediumFontFamily);
   static const microphone_medium = IconData(0xf1eb, fontFamily: mediumFontFamily);
   static const microphone_disabled_medium = IconData(0xf1ec, fontFamily: mediumFontFamily);
@@ -920,9 +968,18 @@ sealed class SBBIcons {
   static const locker_medium = IconData(0xf202, fontFamily: mediumFontFamily);
   static const lock_open_medium = IconData(0xf203, fontFamily: mediumFontFamily);
   static const lock_closed_medium = IconData(0xf204, fontFamily: mediumFontFamily);
-  static const location_pin_surrounding_area_power_plug_medium = IconData(0xf205, fontFamily: mediumFontFamily);
-  static const location_pin_surrounding_area_medium = IconData(0xf206, fontFamily: mediumFontFamily);
-  static const location_pin_pulse_surrounding_area_medium = IconData(0xf207, fontFamily: mediumFontFamily);
+  static const location_pin_surrounding_area_power_plug_medium = IconData(
+    0xf205,
+    fontFamily: mediumFontFamily,
+  );
+  static const location_pin_surrounding_area_medium = IconData(
+    0xf206,
+    fontFamily: mediumFontFamily,
+  );
+  static const location_pin_pulse_surrounding_area_medium = IconData(
+    0xf207,
+    fontFamily: mediumFontFamily,
+  );
   static const location_pin_medium = IconData(0xf208, fontFamily: mediumFontFamily);
   static const location_pin_map_medium = IconData(0xf209, fontFamily: mediumFontFamily);
   static const location_pin_camera_medium = IconData(0xf20a, fontFamily: mediumFontFamily);
@@ -981,7 +1038,10 @@ sealed class SBBIcons {
   static const gondola_profile_medium = IconData(0xf23f, fontFamily: mediumFontFamily);
   static const globe_medium = IconData(0xf240, fontFamily: mediumFontFamily);
   static const globe_locomotive_medium = IconData(0xf241, fontFamily: mediumFontFamily);
-  static const globe_arrows_left_right_up_down_medium = IconData(0xf242, fontFamily: mediumFontFamily);
+  static const globe_arrows_left_right_up_down_medium = IconData(
+    0xf242,
+    fontFamily: mediumFontFamily,
+  );
   static const glass_cocktail_medium = IconData(0xf243, fontFamily: mediumFontFamily);
   static const github_medium = IconData(0xf244, fontFamily: mediumFontFamily);
   static const gift_medium = IconData(0xf245, fontFamily: mediumFontFamily);
@@ -991,7 +1051,10 @@ sealed class SBBIcons {
   static const funicular_profile_medium = IconData(0xf249, fontFamily: mediumFontFamily);
   static const fullscreen_medium = IconData(0xf24a, fontFamily: mediumFontFamily);
   static const freight_wagon_weight_medium = IconData(0xf24b, fontFamily: mediumFontFamily);
-  static const freight_wagon_truck_container_medium = IconData(0xf24c, fontFamily: mediumFontFamily);
+  static const freight_wagon_truck_container_medium = IconData(
+    0xf24c,
+    fontFamily: mediumFontFamily,
+  );
   static const freight_wagon_tank_medium = IconData(0xf24d, fontFamily: mediumFontFamily);
   static const freight_wagon_switzerland_medium = IconData(0xf24e, fontFamily: mediumFontFamily);
   static const freight_wagon_medium = IconData(0xf24f, fontFamily: mediumFontFamily);
@@ -1072,7 +1135,10 @@ sealed class SBBIcons {
   static const document_image_medium = IconData(0xf29a, fontFamily: mediumFontFamily);
   static const document_doc_medium = IconData(0xf29b, fontFamily: mediumFontFamily);
   static const document_check_medium = IconData(0xf29c, fontFamily: mediumFontFamily);
-  static const display_switzerland_warning_light_medium = IconData(0xf29d, fontFamily: mediumFontFamily);
+  static const display_switzerland_warning_light_medium = IconData(
+    0xf29d,
+    fontFamily: mediumFontFamily,
+  );
   static const display_medium = IconData(0xf29e, fontFamily: mediumFontFamily);
   static const display_gears_medium = IconData(0xf29f, fontFamily: mediumFontFamily);
   static const display_binary_code_medium = IconData(0xf2a0, fontFamily: mediumFontFamily);
@@ -1198,7 +1264,10 @@ sealed class SBBIcons {
   static const cargo_bike_trailer_medium = IconData(0xf318, fontFamily: mediumFontFamily);
   static const cargo_bike_medium = IconData(0xf319, fontFamily: mediumFontFamily);
   static const car_sign_parking_medium = IconData(0xf31a, fontFamily: mediumFontFamily);
-  static const car_profile_user_group_circle_medium = IconData(0xf31b, fontFamily: mediumFontFamily);
+  static const car_profile_user_group_circle_medium = IconData(
+    0xf31b,
+    fontFamily: mediumFontFamily,
+  );
   static const car_profile_sign_parking_medium = IconData(0xf31c, fontFamily: mediumFontFamily);
   static const car_profile_power_plug_medium = IconData(0xf31d, fontFamily: mediumFontFamily);
   static const car_profile_medium = IconData(0xf31e, fontFamily: mediumFontFamily);
@@ -1240,10 +1309,16 @@ sealed class SBBIcons {
   static const bike_profile_sign_parking_medium = IconData(0xf342, fontFamily: mediumFontFamily);
   static const bike_profile_power_plug_medium = IconData(0xf343, fontFamily: mediumFontFamily);
   static const bicycle_tandem_medium = IconData(0xf344, fontFamily: mediumFontFamily);
-  static const bicycle_roof_surveillance_camera_medium = IconData(0xf345, fontFamily: mediumFontFamily);
+  static const bicycle_roof_surveillance_camera_medium = IconData(
+    0xf345,
+    fontFamily: mediumFontFamily,
+  );
   static const bicycle_roof_key_medium = IconData(0xf346, fontFamily: mediumFontFamily);
   static const bicycle_reservation_medium = IconData(0xf347, fontFamily: mediumFontFamily);
-  static const bicycle_profile_user_group_circle_medium = IconData(0xf348, fontFamily: mediumFontFamily);
+  static const bicycle_profile_user_group_circle_medium = IconData(
+    0xf348,
+    fontFamily: mediumFontFamily,
+  );
   static const bicycle_medium = IconData(0xf349, fontFamily: mediumFontFamily);
   static const bell_medium = IconData(0xf34a, fontFamily: mediumFontFamily);
   static const bell_disabled_medium = IconData(0xf34b, fontFamily: mediumFontFamily);
@@ -1321,7 +1396,10 @@ sealed class SBBIcons {
   static const wallet_large = IconData(0xf10b, fontFamily: largeFontFamily);
   static const walk_large_large = IconData(0xf10c, fontFamily: largeFontFamily);
   static const walk_large = IconData(0xf10d, fontFamily: largeFontFamily);
-  static const wagon_coupling_dragging_equipment_large = IconData(0xf10e, fontFamily: largeFontFamily);
+  static const wagon_coupling_dragging_equipment_large = IconData(
+    0xf10e,
+    fontFamily: largeFontFamily,
+  );
   static const user_tie_large = IconData(0xf10f, fontFamily: largeFontFamily);
   static const user_large = IconData(0xf110, fontFamily: largeFontFamily);
   static const user_headset_large = IconData(0xf111, fontFamily: largeFontFamily);
@@ -1394,7 +1472,10 @@ sealed class SBBIcons {
   static const music_notes_large = IconData(0xf154, fontFamily: largeFontFamily);
   static const museum_large = IconData(0xf155, fontFamily: largeFontFamily);
   static const mountain_sun_large = IconData(0xf156, fontFamily: largeFontFamily);
-  static const mountain_rock_transmitter_signal_large = IconData(0xf157, fontFamily: largeFontFamily);
+  static const mountain_rock_transmitter_signal_large = IconData(
+    0xf157,
+    fontFamily: largeFontFamily,
+  );
   static const mountain_lake_sun_large = IconData(0xf158, fontFamily: largeFontFamily);
   static const money_exchange_large = IconData(0xf159, fontFamily: largeFontFamily);
   static const medal_large = IconData(0xf15a, fontFamily: largeFontFamily);
@@ -1410,7 +1491,10 @@ sealed class SBBIcons {
   static const locomotive_high_speed_large = IconData(0xf164, fontFamily: largeFontFamily);
   static const lock_open_large = IconData(0xf165, fontFamily: largeFontFamily);
   static const lock_closed_large = IconData(0xf166, fontFamily: largeFontFamily);
-  static const location_pin_surrounding_area_power_plug_large = IconData(0xf167, fontFamily: largeFontFamily);
+  static const location_pin_surrounding_area_power_plug_large = IconData(
+    0xf167,
+    fontFamily: largeFontFamily,
+  );
   static const location_pin_surrounding_area_large = IconData(0xf168, fontFamily: largeFontFamily);
   static const location_pin_map_large = IconData(0xf169, fontFamily: largeFontFamily);
   static const location_pin_camera_large = IconData(0xf16a, fontFamily: largeFontFamily);
@@ -1468,7 +1552,10 @@ sealed class SBBIcons {
   static const download_large = IconData(0xf19e, fontFamily: largeFontFamily);
   static const dog_large = IconData(0xf19f, fontFamily: largeFontFamily);
   static const document_text_large = IconData(0xf1a0, fontFamily: largeFontFamily);
-  static const display_switzerland_warning_light_large = IconData(0xf1a1, fontFamily: largeFontFamily);
+  static const display_switzerland_warning_light_large = IconData(
+    0xf1a1,
+    fontFamily: largeFontFamily,
+  );
   static const display_large = IconData(0xf1a2, fontFamily: largeFontFamily);
   static const diamond_large = IconData(0xf1a3, fontFamily: largeFontFamily);
   static const cutlery_large = IconData(0xf1a4, fontFamily: largeFontFamily);
@@ -1521,10 +1608,16 @@ sealed class SBBIcons {
   static const bluetooth_large = IconData(0xf1d3, fontFamily: largeFontFamily);
   static const bluetooth_disabled_large = IconData(0xf1d4, fontFamily: largeFontFamily);
   static const binoculars_large = IconData(0xf1d5, fontFamily: largeFontFamily);
-  static const bicycle_roof_surveillance_camera_large = IconData(0xf1d6, fontFamily: largeFontFamily);
+  static const bicycle_roof_surveillance_camera_large = IconData(
+    0xf1d6,
+    fontFamily: largeFontFamily,
+  );
   static const bicycle_roof_key_large = IconData(0xf1d7, fontFamily: largeFontFamily);
   static const bicycle_reservation_large = IconData(0xf1d8, fontFamily: largeFontFamily);
-  static const bicycle_profile_user_group_circle_large = IconData(0xf1d9, fontFamily: largeFontFamily);
+  static const bicycle_profile_user_group_circle_large = IconData(
+    0xf1d9,
+    fontFamily: largeFontFamily,
+  );
   static const bicycle_large = IconData(0xf1da, fontFamily: largeFontFamily);
   static const bell_large = IconData(0xf1db, fontFamily: largeFontFamily);
   static const bell_disabled_large = IconData(0xf1dc, fontFamily: largeFontFamily);

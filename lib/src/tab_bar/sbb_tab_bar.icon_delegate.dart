@@ -27,16 +27,23 @@ class _TabIconDelegate extends MultiChildLayoutDelegate {
     final itemHeight = tabSizes.map((e) => e.height).max + textSizes.map((e) => e.height).max;
     final maxItemWidth = widthWithPadding / tabSizes.length;
 
-    final tabPositions = items.mapIndexed((i, e) {
-      final position = Offset(gestureInsets.left + maxItemWidth * (i + 0.5) - itemWidth * 0.5, 0);
-      positionChild('${e.id}_tab', position);
-      return position;
-    }).toList();
+    final tabPositions =
+        items.mapIndexed((i, e) {
+          final position = Offset(
+            gestureInsets.left + maxItemWidth * (i + 0.5) - itemWidth * 0.5,
+            0,
+          );
+          positionChild('${e.id}_tab', position);
+          return position;
+        }).toList();
 
     items.mapIndexed((i, e) {
       final tabPosition = tabPositions[i];
       final positionX = gestureInsets.left + maxItemWidth * (i + 0.5) - textSizes[i].width * 0.5;
-      final labelX = min(max(sbbDefaultSpacing, positionX), size.width - textSizes[i].width - sbbDefaultSpacing);
+      final labelX = min(
+        max(sbbDefaultSpacing, positionX),
+        size.width - textSizes[i].width - sbbDefaultSpacing,
+      );
       final position = Offset(labelX, tabPosition.dy + tabSizes[i].height);
       positionChild('${e.id}_label', position);
       return position;

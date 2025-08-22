@@ -34,21 +34,23 @@ class SBBIconButtonLarge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final baseStyle = Theme.of(context).textButtonTheme.style?.copyWith(
-          minimumSize: SBBTheme.allStates(const Size(SBBInternal.defaultButtonHeight, SBBInternal.defaultButtonHeight)),
-          fixedSize: SBBTheme.allStates(const Size(SBBInternal.defaultButtonHeight, SBBInternal.defaultButtonHeight)),
-          padding: SBBTheme.allStates(EdgeInsets.zero),
-        );
-    final style = buttonStyle != null
-        ? buttonStyle!.merge(baseStyle)
-        : SBBButtonStyles.of(context).iconLargeStyle?.overrideButtonStyle(baseStyle);
+      minimumSize: SBBTheme.allStates(
+        const Size(SBBInternal.defaultButtonHeight, SBBInternal.defaultButtonHeight),
+      ),
+      fixedSize: SBBTheme.allStates(
+        const Size(SBBInternal.defaultButtonHeight, SBBInternal.defaultButtonHeight),
+      ),
+      padding: SBBTheme.allStates(EdgeInsets.zero),
+    );
+    final style =
+        buttonStyle != null
+            ? buttonStyle!.merge(baseStyle)
+            : SBBButtonStyles.of(context).iconLargeStyle?.overrideButtonStyle(baseStyle);
     return TextButton(
       style: style,
       onPressed: onPressed,
       focusNode: focusNode,
-      child: Semantics(
-        label: semantics,
-        child: Icon(icon, size: sbbIconSizeSmall),
-      ),
+      child: Semantics(label: semantics, child: Icon(icon, size: sbbIconSizeSmall)),
     );
   }
 }
@@ -136,21 +138,15 @@ class _SBBIconButtonSmallRaw extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final baseStyle = Theme.of(context).textButtonTheme.style?.copyWith(
-          minimumSize: SBBTheme.allStates(
-            const Size(
-              SBBInternal.defaultButtonHeightSmall,
-              SBBInternal.defaultButtonHeightSmall,
-            ),
-          ),
-          fixedSize: SBBTheme.allStates(
-            const Size(
-              SBBInternal.defaultButtonHeightSmall,
-              SBBInternal.defaultButtonHeightSmall,
-            ),
-          ),
-          padding: SBBTheme.allStates(EdgeInsets.zero),
-          side: SBBTheme.allStates(const BorderSide(style: BorderStyle.none)),
-        );
+      minimumSize: SBBTheme.allStates(
+        const Size(SBBInternal.defaultButtonHeightSmall, SBBInternal.defaultButtonHeightSmall),
+      ),
+      fixedSize: SBBTheme.allStates(
+        const Size(SBBInternal.defaultButtonHeightSmall, SBBInternal.defaultButtonHeightSmall),
+      ),
+      padding: SBBTheme.allStates(EdgeInsets.zero),
+      side: SBBTheme.allStates(const BorderSide(style: BorderStyle.none)),
+    );
     return Semantics(
       container: true,
       button: true,
@@ -182,10 +178,7 @@ class _SBBIconButtonSmallRaw extends StatelessWidget {
 /// of the child. This increases the size of the button and the button's
 /// "tap target", but not its material or its ink splashes.
 class _InputPadding extends SingleChildRenderObjectWidget {
-  const _InputPadding({
-    super.child,
-    required this.minSize,
-  });
+  const _InputPadding({super.child, required this.minSize});
 
   final Size minSize;
 
@@ -256,10 +249,7 @@ class _RenderInputPadding extends RenderShiftedBox {
 
   @override
   Size computeDryLayout(BoxConstraints constraints) {
-    return _computeSize(
-      constraints: constraints,
-      layoutChild: ChildLayoutHelper.dryLayoutChild,
-    );
+    return _computeSize(constraints: constraints, layoutChild: ChildLayoutHelper.dryLayoutChild);
   }
 
   // add this method as soon as 3.19.6 is removed
@@ -279,10 +269,7 @@ class _RenderInputPadding extends RenderShiftedBox {
 
   @override
   void performLayout() {
-    size = _computeSize(
-      constraints: constraints,
-      layoutChild: ChildLayoutHelper.layoutChild,
-    );
+    size = _computeSize(constraints: constraints, layoutChild: ChildLayoutHelper.layoutChild);
     if (child != null) {
       final BoxParentData childParentData = child!.parentData! as BoxParentData;
       childParentData.offset = Alignment.center.alongOffset(size - child!.size as Offset);

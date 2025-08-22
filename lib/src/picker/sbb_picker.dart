@@ -55,17 +55,14 @@ class SBBPicker extends StatefulWidget {
     required SBBPickerScrollViewItemBuilder itemBuilder,
     bool looping = true,
   }) : this.custom(
-          key: key,
-          child: SBBPickerScrollView(
-            controller: controller ??
-                SBBPickerScrollController(
-                  initialItem: initialSelectedIndex,
-                ),
-            onSelectedItemChanged: onSelectedItemChanged,
-            itemBuilder: itemBuilder,
-            looping: looping,
-          ),
-        );
+         key: key,
+         child: SBBPickerScrollView(
+           controller: controller ?? SBBPickerScrollController(initialItem: initialSelectedIndex),
+           onSelectedItemChanged: onSelectedItemChanged,
+           itemBuilder: itemBuilder,
+           looping: looping,
+         ),
+       );
 
   /// Constructs a basic [SBBPicker].
   ///
@@ -92,20 +89,20 @@ class SBBPicker extends StatefulWidget {
     required List items,
     bool looping = true,
   }) : this(
-          key: key,
-          controller: controller,
-          initialSelectedIndex: initialSelectedIndex,
-          onSelectedItemChanged: onSelectedItemChanged,
-          itemBuilder: (BuildContext context, int index) {
-            if (!looping && (index < 0 || index >= items.length)) {
-              return null;
-            }
-            final item = items[index % items.length];
-            final itemLabel = item.toString();
-            return SBBPickerItem(itemLabel);
-          },
-          looping: false,
-        );
+         key: key,
+         controller: controller,
+         initialSelectedIndex: initialSelectedIndex,
+         onSelectedItemChanged: onSelectedItemChanged,
+         itemBuilder: (BuildContext context, int index) {
+           if (!looping && (index < 0 || index >= items.length)) {
+             return null;
+           }
+           final item = items[index % items.length];
+           final itemLabel = item.toString();
+           return SBBPickerItem(itemLabel);
+         },
+         looping: false,
+       );
 
   /// Constructs a fully customizable [SBBPicker]. This only builds the skeleton
   /// of the Picker where the [SBBPickerScrollView] is not included.
@@ -123,10 +120,7 @@ class SBBPicker extends StatefulWidget {
   /// * [SBBPicker.new], default constructor for SBB Picker with limited
   ///   customization.
   /// * [SBBPicker.list], constructor for basic SBB Picker.
-  const SBBPicker.custom({
-    super.key,
-    required this.child,
-  });
+  const SBBPicker.custom({super.key, required this.child});
 
   static const _lightThemeGradientColorOpacities = [0.31, 0.61, 0.70];
   static const _darkThemeGradientColorOpacities = [0.38, 0.61, 0.76];
@@ -152,10 +146,7 @@ class _SBBPickerState extends _PickerClassState<SBBPicker> {
           _buildHighlightedArea(context),
           ShaderMask(
             shaderCallback: (bounds) => _shaderCallback(context, bounds),
-            child: SizedBox(
-              height: _scrollAreaHeight,
-              child: widget.child,
-            ),
+            child: SizedBox(height: _scrollAreaHeight, child: widget.child),
           ),
         ],
       ),
@@ -166,14 +157,10 @@ class _SBBPickerState extends _PickerClassState<SBBPicker> {
     final highlightColor = SBBControlStyles.of(context).picker!.highlightColor;
     return Container(
       height: _highlightedAreaHeight,
-      margin: const EdgeInsets.symmetric(
-        horizontal: sbbDefaultSpacing * 0.5,
-      ),
+      margin: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * 0.5),
       decoration: BoxDecoration(
         color: highlightColor,
-        borderRadius: const BorderRadius.all(
-          Radius.circular(sbbDefaultSpacing * 0.5),
-        ),
+        borderRadius: const BorderRadius.all(Radius.circular(sbbDefaultSpacing * 0.5)),
       ),
     );
   }
@@ -227,7 +214,9 @@ class _SBBPickerState extends _PickerClassState<SBBPicker> {
     // generate list of opacity values to be used in gradient
     final isLightTheme = Theme.of(context).brightness == Brightness.light;
     final themedOpacities =
-        isLightTheme ? SBBPicker._lightThemeGradientColorOpacities : SBBPicker._darkThemeGradientColorOpacities;
+        isLightTheme
+            ? SBBPicker._lightThemeGradientColorOpacities
+            : SBBPicker._darkThemeGradientColorOpacities;
 
     // start with opacity 0
     var opacities = [0.0];

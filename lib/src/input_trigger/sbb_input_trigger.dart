@@ -39,26 +39,26 @@ class SBBInputTrigger extends StatelessWidget {
     bool enabled = true,
     bool isLastElement = false,
   }) : this.custom(
-          key: key,
-          value: value,
-          labelText: labelText,
-          hintText: hintText,
-          errorText: errorText,
-          onPressed: onPressed,
-          prefixWidget: SBBInputTriggerIconWidget(
-            icon: prefixIcon,
-            enabled: enabled,
-            error: errorText?.isNotEmpty ?? false,
-          ),
-          suffixWidget: SBBInputTriggerIconWidget(
-            icon: suffixIcon,
-            enabled: enabled,
-            onPressed: onSuffixPressed,
-          ),
-          maxLines: maxLines,
-          enabled: enabled,
-          isLastElement: isLastElement,
-        );
+         key: key,
+         value: value,
+         labelText: labelText,
+         hintText: hintText,
+         errorText: errorText,
+         onPressed: onPressed,
+         prefixWidget: SBBInputTriggerIconWidget(
+           icon: prefixIcon,
+           enabled: enabled,
+           error: errorText?.isNotEmpty ?? false,
+         ),
+         suffixWidget: SBBInputTriggerIconWidget(
+           icon: suffixIcon,
+           enabled: enabled,
+           onPressed: onSuffixPressed,
+         ),
+         maxLines: maxLines,
+         enabled: enabled,
+         isLastElement: isLastElement,
+       );
 
   /// Constructs an [SBBInputTrigger] with custom prefix and suffix widgets.
   ///
@@ -126,12 +126,7 @@ class SBBInputTrigger extends StatelessWidget {
               children: [
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: _buildInputContent(style),
-                    ),
-                    suffixWidget,
-                  ],
+                  children: [Expanded(child: _buildInputContent(style)), suffixWidget],
                 ),
                 if (!isLastElement) Divider(color: dividerColor),
               ],
@@ -183,12 +178,7 @@ class SBBInputTrigger extends StatelessWidget {
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        verticalPaddingWidget,
-        if (_hasLabel) labelWidget,
-        valueWidget,
-        bottomWidget,
-      ],
+      children: [verticalPaddingWidget, if (_hasLabel) labelWidget, valueWidget, bottomWidget],
     );
   }
 
@@ -199,7 +189,9 @@ class SBBInputTrigger extends StatelessWidget {
   TextStyle _valueTextStyle(SBBTextFieldStyle style) {
     return !enabled
         ? style.textStyleDisabled!
-        : (!_hasValue ? style.placeholderTextStyle : (_hasError ? style.textStyleError : style.textStyle))!;
+        : (!_hasValue
+            ? style.placeholderTextStyle
+            : (_hasError ? style.textStyleError : style.textStyle))!;
   }
 }
 
@@ -225,13 +217,12 @@ class SBBInputTriggerIconWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (icon == null) {
-      return const SizedBox(
-        width: sbbDefaultSpacing,
-      );
+      return const SizedBox(width: sbbDefaultSpacing);
     }
 
     final style = SBBControlStyles.of(context).textField!;
-    final iconColor = enabled ? (error ? style.prefixIconColorError : style.iconColor) : style.iconColorDisabled;
+    final iconColor =
+        enabled ? (error ? style.prefixIconColorError : style.iconColor) : style.iconColorDisabled;
 
     if (onPressed == null) {
       return Padding(
@@ -248,17 +239,12 @@ class SBBInputTriggerIconWidget extends StatelessWidget {
     // also use left padding on right sight and then transform to the right for
     // symmetric splash effect
     return Container(
-      transform: Transform.translate(
-        offset: const Offset(rightPadding, 0.0),
-      ).transform,
+      transform: Transform.translate(offset: const Offset(rightPadding, 0.0)).transform,
       child: InkResponse(
         // splashRadius: 28.0,
         onTap: onPressed,
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: verticalPadding,
-            horizontal: leftPadding,
-          ),
+          padding: const EdgeInsets.symmetric(vertical: verticalPadding, horizontal: leftPadding),
           child: Icon(icon, color: iconColor),
         ),
       ),

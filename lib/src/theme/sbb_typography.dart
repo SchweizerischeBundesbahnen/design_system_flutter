@@ -162,8 +162,10 @@ class SBBFontFamily {
   static const String sbbFontLight = 'packages/sbb_design_system_mobile/SBBWebLight';
   static const String sbbFontRoman = 'packages/sbb_design_system_mobile/SBBWebRoman';
   static const String sbbFontBold = 'packages/sbb_design_system_mobile/SBBWebBold';
-  static const String sbbFontCondensedBold = 'packages/sbb_design_system_mobile/SBBWebCondensedBold';
-  static const String sbbFontCondensedHeavy = 'packages/sbb_design_system_mobile/SBBWebCondensedHeavy';
+  static const String sbbFontCondensedBold =
+      'packages/sbb_design_system_mobile/SBBWebCondensedBold';
+  static const String sbbFontCondensedHeavy =
+      'packages/sbb_design_system_mobile/SBBWebCondensedHeavy';
 }
 
 extension TextStylesExtensions on TextStyle {
@@ -193,22 +195,28 @@ extension TextStylesExtensions on TextStyle {
   // Text sizes (fontSize, height)
 
   /// Returns an extra extra large ([fontSize], [height]) copy of this text style
-  TextStyle get xxLarge => copyWith(fontSize: SBBTextStyles.xxLargeFontSize, height: SBBTextStyles.xxLargeFontHeight);
+  TextStyle get xxLarge =>
+      copyWith(fontSize: SBBTextStyles.xxLargeFontSize, height: SBBTextStyles.xxLargeFontHeight);
 
   /// Returns an extra large ([fontSize], [height]) copy of this text style
-  TextStyle get xLarge => copyWith(fontSize: SBBTextStyles.xLargeFontSize, height: SBBTextStyles.xLargeFontHeight);
+  TextStyle get xLarge =>
+      copyWith(fontSize: SBBTextStyles.xLargeFontSize, height: SBBTextStyles.xLargeFontHeight);
 
   /// Returns a large ([fontSize], [height]) copy of this text style
-  TextStyle get large => copyWith(fontSize: SBBTextStyles.largeFontSize, height: SBBTextStyles.largeFontHeight);
+  TextStyle get large =>
+      copyWith(fontSize: SBBTextStyles.largeFontSize, height: SBBTextStyles.largeFontHeight);
 
   /// Returns a medium ([fontSize], [height]) copy of this text style
-  TextStyle get medium => copyWith(fontSize: SBBTextStyles.mediumFontSize, height: SBBTextStyles.mediumFontHeight);
+  TextStyle get medium =>
+      copyWith(fontSize: SBBTextStyles.mediumFontSize, height: SBBTextStyles.mediumFontHeight);
 
   /// Returns a small ([fontSize], [height]) copy of this text style
-  TextStyle get small => copyWith(fontSize: SBBTextStyles.smallFontSize, height: SBBTextStyles.smallFontHeight);
+  TextStyle get small =>
+      copyWith(fontSize: SBBTextStyles.smallFontSize, height: SBBTextStyles.smallFontHeight);
 
   /// Returns an extra small ([fontSize], [height]) copy of this text style
-  TextStyle get xSmall => copyWith(fontSize: SBBTextStyles.xSmallFontSize, height: SBBTextStyles.xSmallFontHeight);
+  TextStyle get xSmall =>
+      copyWith(fontSize: SBBTextStyles.xSmallFontSize, height: SBBTextStyles.xSmallFontHeight);
 
   // Font styles
 

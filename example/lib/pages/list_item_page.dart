@@ -47,20 +47,26 @@ class ListItemPage extends StatelessWidget {
                 subtitle: 'This is the Subtitle',
                 buttonIcon: SBBIcons.chevron_small_right_small,
                 onPressedButton: () => sbbToast.show(title: 'Button'),
-                onPressed: () => sbbToast.show(title: 'ListItem with Subtitle and Button'),
+                onPressed:
+                    () => sbbToast.show(
+                      title: 'ListItem with Subtitle and Button',
+                    ),
               ),
               SBBListItem.button(
                 title: 'Icon, Button',
                 leadingIcon: SBBIcons.clock_small,
                 buttonIcon: SBBIcons.chevron_small_right_small,
                 onPressedButton: () => sbbToast.show(title: 'Button'),
-                onPressed: () => sbbToast.show(title: 'ListItem with Icon and Button'),
+                onPressed:
+                    () => sbbToast.show(title: 'ListItem with Icon and Button'),
               ),
               SBBListItem(
                 title: 'Icon, Subtitle',
                 leadingIcon: SBBIcons.clock_small,
                 subtitle: 'This is the Subtitle',
-                onPressed: () => sbbToast.show(title: 'ListItem with Icon and Subtitle'),
+                onPressed:
+                    () =>
+                        sbbToast.show(title: 'ListItem with Icon and Subtitle'),
               ),
               SBBListItem.button(
                 title: 'Icon, Subtitle, Button',
@@ -68,7 +74,10 @@ class ListItemPage extends StatelessWidget {
                 leadingIcon: SBBIcons.clock_small,
                 buttonIcon: SBBIcons.chevron_small_right_small,
                 onPressedButton: () => sbbToast.show(title: 'Button'),
-                onPressed: () => sbbToast.show(title: 'ListItem with Icon, Subtitle and Button'),
+                onPressed:
+                    () => sbbToast.show(
+                      title: 'ListItem with Icon, Subtitle and Button',
+                    ),
               ),
               SBBListItem.button(
                 title: 'Disabled, Icon, Subtitle, Button',
