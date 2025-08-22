@@ -58,6 +58,3 @@ app.*.map.json
 /android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java
 /ios/Runner/GeneratedPluginRegistrant.m
 /android/local.properties
-
-# is done by root lvl analysis file
-/analysis_options.yaml
