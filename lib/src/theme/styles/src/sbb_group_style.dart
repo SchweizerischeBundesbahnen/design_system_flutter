@@ -35,7 +35,6 @@ class SBBGroupStyle extends ThemeExtension<SBBGroupStyle> {
     EdgeInsetsGeometry? margin,
     EdgeInsetsGeometry? padding,
     Color? color,
-    Color? shadowColor,
     ShapeBorder? shape,
     Clip? clipBehavior,
     bool? isSemanticContainer,
