@@ -81,8 +81,7 @@ class _ColorShowcaseCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final valueString =
-        colorEntry.color.value.toRadixString(16).padLeft(8, '0').toUpperCase();
+    final valueString = colorEntry.color.value.toRadixString(16).padLeft(8, '0').toUpperCase();
     final hexString = valueString.substring(2);
     final opacityString = valueString.substring(0, 2);
     const colorValueTextStyle = SBBTextStyles.helpersLabel;

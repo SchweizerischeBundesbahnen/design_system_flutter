@@ -158,8 +158,7 @@ class _StaticPageState extends State<StaticPage> {
                       Text(
                         'Click to expand Headerbox.',
                         style: SBBTextStyles.smallLight.copyWith(
-                          color:
-                              isDark ? SBBColors.graphite : SBBColors.granite,
+                          color: isDark ? SBBColors.graphite : SBBColors.granite,
                         ),
                       ),
                     ],
@@ -189,8 +188,7 @@ class _StaticPageState extends State<StaticPage> {
     return Center(
       child: SBBMessage(
         title: 'Cover me!',
-        description:
-            'This screen is non scrollable.\nUsing a Stack, the Headerbox will simply lay on top of it.',
+        description: 'This screen is non scrollable.\nUsing a Stack, the Headerbox will simply lay on top of it.',
       ),
     );
   }
@@ -231,8 +229,7 @@ class _ScrollablePageState extends State<ScrollablePage> {
                       Text(
                         'Click to expand Headerbox.',
                         style: SBBTextStyles.smallLight.copyWith(
-                          color:
-                              isDark ? SBBColors.graphite : SBBColors.granite,
+                          color: isDark ? SBBColors.graphite : SBBColors.granite,
                         ),
                       ),
                     ],

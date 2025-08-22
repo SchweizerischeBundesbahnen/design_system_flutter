@@ -54,8 +54,7 @@ class AutocompletionPageState extends State<AutocompletionPage> {
       },
       favorites: _favorites,
       labelText: 'Autocompletion',
-      controller:
-          TextEditingController()..value = const TextEditingValue(text: ''),
+      controller: TextEditingController()..value = const TextEditingValue(text: ''),
       clearOnSubmit: false,
     );
   }

@@ -20,10 +20,8 @@ class AccordionPageState extends State<AccordionPage> {
       isExpanded: true,
     ),
     _Item(
-      title:
-          'The title text has only 1 line. So make sure to keep the title short.',
-      text:
-          'The title text has only 1 line. So make sure to keep the title short.',
+      title: 'The title text has only 1 line. So make sure to keep the title short.',
+      text: 'The title text has only 1 line. So make sure to keep the title short.',
     ),
     _Item(
       title: 'Lorem ipsum',

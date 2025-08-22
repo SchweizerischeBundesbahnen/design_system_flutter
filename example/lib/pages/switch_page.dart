@@ -66,8 +66,7 @@ class _SwitchPageState extends State<SwitchPage> {
               ),
               SBBSwitchListItem(
                 value: _value4,
-                title:
-                    'Very Looooooooooooooooooooooong Multiline Label With Subtitle',
+                title: 'Very Looooooooooooooooooooooong Multiline Label With Subtitle',
                 allowMultilineLabel: true,
                 subtitle: 'Subtitle',
                 onChanged: (value) => setState(() => _value4 = value),
@@ -140,8 +139,7 @@ class _SwitchPageState extends State<SwitchPage> {
                     allowMultilineLabel: true,
                     secondaryLabel:
                         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla.',
-                    onChanged:
-                        (value) => setState(() => _listItemValue = value),
+                    onChanged: (value) => setState(() => _listItemValue = value),
                   ),
                 ],
               ),
@@ -178,8 +176,7 @@ class _SwitchPageState extends State<SwitchPage> {
         SBBGroup(
           child: SBBSwitchListItem.boxed(
             value: _value4,
-            title:
-                'Very Looooooooooooooooooooooong Multiline Label With Subtitle',
+            title: 'Very Looooooooooooooooooooooong Multiline Label With Subtitle',
             allowMultilineLabel: true,
             subtitle: 'Subtitle',
             onChanged: (value) => setState(() => _value4 = value),

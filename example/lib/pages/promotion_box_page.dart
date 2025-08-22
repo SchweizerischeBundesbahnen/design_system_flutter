@@ -17,8 +17,7 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
   late ClosableBoxController extraController;
 
   static const _title = 'Bessere Übersicht.';
-  static const _description =
-      'Erkennen Sie nun schneller, auf welchen Perrons Durchsagen vorhanden sind.';
+  static const _description = 'Erkennen Sie nun schneller, auf welchen Perrons Durchsagen vorhanden sind.';
 
   @override
   Widget build(BuildContext context) {

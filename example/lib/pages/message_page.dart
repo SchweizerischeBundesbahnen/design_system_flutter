@@ -40,23 +40,18 @@ class _MessagePageState extends State<MessagePage> {
               SBBCheckboxListItem(
                 value: _showInteractionButton,
                 label: 'Show interaction button',
-                onChanged:
-                    (value) =>
-                        setState(() => _showInteractionButton = value ?? false),
+                onChanged: (value) => setState(() => _showInteractionButton = value ?? false),
               ),
               SBBCheckboxListItem(
                 value: _isLoading,
                 label: 'Is loading',
-                onChanged:
-                    (value) => setState(() => _isLoading = value ?? false),
+                onChanged: (value) => setState(() => _isLoading = value ?? false),
               ),
               SBBCheckboxListItem(
                 value: _showIllustrations,
                 label: 'Show Illustrations',
                 isLastElement: true,
-                onChanged:
-                    (value) =>
-                        setState(() => _showIllustrations = value ?? false),
+                onChanged: (value) => setState(() => _showIllustrations = value ?? false),
               ),
             ],
           ),
@@ -79,8 +74,7 @@ class _MessagePageState extends State<MessagePage> {
             description: _description,
             messageCode: 'Error Code: XYZ-999',
             isLoading: _isLoading,
-            illustration:
-                _showIllustrations ? MessageIllustration.Display : null,
+            illustration: _showIllustrations ? MessageIllustration.Display : null,
             onInteraction: _onInteractionCallback(),
           ),
         ),
@@ -103,6 +97,5 @@ class _MessagePageState extends State<MessagePage> {
     );
   }
 
-  VoidCallback? _onInteractionCallback() =>
-      _showInteractionButton ? () => _toast.show(title: 'Tapped') : null;
+  VoidCallback? _onInteractionCallback() => _showInteractionButton ? () => _toast.show(title: 'Tapped') : null;
 }
