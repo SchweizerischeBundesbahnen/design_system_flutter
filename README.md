@@ -146,6 +146,7 @@ See [RELEASE.md](RELEASE.md).
 
 * [Ralf Winkelmann](https://github.com/rawi-coding)
 * [Nico Vidoni](https://github.com/smallTrogdor)
+* [Simon Meer](https://github.com/simon-meer)
 
 ## Credits
 
