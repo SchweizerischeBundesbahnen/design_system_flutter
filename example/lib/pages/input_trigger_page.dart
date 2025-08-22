@@ -52,10 +52,7 @@ class _PickerPageState extends State<InputTriggerPage> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(
-        vertical: sbbDefaultSpacing,
-        horizontal: sbbDefaultSpacing * 0.5,
-      ),
+      padding: const EdgeInsets.symmetric(vertical: sbbDefaultSpacing, horizontal: sbbDefaultSpacing * 0.5),
       child: Column(
         children: <Widget>[
           const ThemeModeSegmentedButton(),
@@ -74,10 +71,7 @@ class _PickerPageState extends State<InputTriggerPage> {
                     SBBToast.of(context).show(title: 'onPressed');
                   },
                   prefixIcon: showPrefixIcon ? SBBIcons.dog_small : null,
-                  suffixIcon:
-                      showSuffixIcon
-                          ? SBBIcons.circle_information_small_small
-                          : null,
+                  suffixIcon: showSuffixIcon ? SBBIcons.circle_information_small_small : null,
                   onSuffixPressed: () {
                     SBBToast.of(context).show(title: 'onSuffixPressed');
                   },

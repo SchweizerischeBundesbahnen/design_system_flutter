@@ -17,8 +17,7 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
   late ClosableBoxController extraController;
 
   static const _title = 'Bessere Übersicht.';
-  static const _description =
-      'Erkennen Sie nun schneller, auf welchen Perrons Durchsagen vorhanden sind.';
+  static const _description = 'Erkennen Sie nun schneller, auf welchen Perrons Durchsagen vorhanden sind.';
 
   @override
   Widget build(BuildContext context) {
@@ -68,9 +67,7 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
                   SBBPromotionBox.custom(
                     content: Text(
                       'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
-                      style: SBBTextStyles.mediumLight.copyWith(
-                        color: SBBColors.black,
-                      ),
+                      style: SBBTextStyles.mediumLight.copyWith(color: SBBColors.black),
                     ),
                     badgeText: 'Custom with different color',
                     style: _customBoxStyle(context),
@@ -83,26 +80,18 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
                     ),
                     badgeText: 'Custom leading and trailing widget',
                     leading: Icon(SBBIcons.train_large),
-                    trailing: SBBTertiaryButtonSmall(
-                      label: 'Trailing Button',
-                      onPressed: () {},
-                    ),
+                    trailing: SBBTertiaryButtonSmall(label: 'Trailing Button', onPressed: () {}),
                   ),
                   const SizedBox(height: sbbDefaultSpacing),
                   SBBPromotionBox.custom(
                     content: Text(
                       'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
-                      style: SBBTextStyles.mediumLight.copyWith(
-                        color: SBBColors.black,
-                      ),
+                      style: SBBTextStyles.mediumLight.copyWith(color: SBBColors.black),
                     ),
                     onTap: () {},
                     badgeText: 'Custom with on tap',
                     leading: Icon(SBBIcons.train_large),
-                    trailing: SBBTertiaryButtonSmall(
-                      label: 'Trailing Button',
-                      onPressed: () {},
-                    ),
+                    trailing: SBBTertiaryButtonSmall(label: 'Trailing Button', onPressed: () {}),
                     style: _customBoxStyle(context),
                   ),
                 ],
@@ -138,10 +127,5 @@ PromotionBoxStyle _customBoxStyle(BuildContext context) =>
     PromotionBoxStyle.$default(baseStyle: SBBBaseStyle.of(context)).copyWith(
       badgeColor: SBBColors.royal,
       badgeShadowColor: SBBColors.royal.withAlpha((255.0 * 0.2).round()),
-      gradientColors: [
-        SBBColors.cloud,
-        SBBColors.milk,
-        SBBColors.milk,
-        SBBColors.cloud,
-      ],
+      gradientColors: [SBBColors.cloud, SBBColors.milk, SBBColors.milk, SBBColors.cloud],
     );

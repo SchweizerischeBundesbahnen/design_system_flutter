@@ -20,17 +20,13 @@ class SegmentedButtonPageState extends State<SegmentedButtonPage> {
   Widget build(BuildContext context) {
     return ListView(
       children: <Widget>[
-        const Padding(
-          padding: EdgeInsets.all(sbbDefaultSpacing),
-          child: ThemeModeSegmentedButton(),
-        ),
+        const Padding(padding: EdgeInsets.all(sbbDefaultSpacing), child: ThemeModeSegmentedButton()),
         const SBBListHeader('Default (colors based on theme)'),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
           child: SBBSegmentedButton(
             values: ['Option 1', 'Option 2', 'Option 3'],
-            selectedIndexChanged:
-                (value) => setState(() => _selectedStateIndex1 = value),
+            selectedIndexChanged: (value) => setState(() => _selectedStateIndex1 = value),
             selectedStateIndex: _selectedStateIndex1,
           ),
         ),
@@ -42,8 +38,7 @@ class SegmentedButtonPageState extends State<SegmentedButtonPage> {
               SBBIcons.bicycle_small: 'Bicycle',
               SBBIcons.scooter_profile_small: 'Scooter',
             },
-            selectedIndexChanged:
-                (value) => setState(() => _selectedStateIndex2 = value),
+            selectedIndexChanged: (value) => setState(() => _selectedStateIndex2 = value),
             selectedStateIndex: _selectedStateIndex2,
           ),
         ),
@@ -52,8 +47,7 @@ class SegmentedButtonPageState extends State<SegmentedButtonPage> {
           padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
           child: SBBSegmentedButton.redText(
             values: ['Option 1', 'Option 2', 'Option 3'],
-            selectedIndexChanged:
-                (value) => setState(() => _selectedStateIndex3 = value),
+            selectedIndexChanged: (value) => setState(() => _selectedStateIndex3 = value),
             selectedStateIndex: _selectedStateIndex3,
           ),
         ),
@@ -65,8 +59,7 @@ class SegmentedButtonPageState extends State<SegmentedButtonPage> {
               SBBIcons.bicycle_small: 'Bicycle',
               SBBIcons.scooter_profile_small: 'Scooter',
             },
-            selectedIndexChanged:
-                (value) => setState(() => _selectedStateIndex4 = value),
+            selectedIndexChanged: (value) => setState(() => _selectedStateIndex4 = value),
             selectedStateIndex: _selectedStateIndex4,
           ),
         ),

@@ -11,10 +11,7 @@ class LoadingIndicatorPage extends StatelessWidget {
     return const SingleChildScrollView(
       child: Column(
         children: <Widget>[
-          Padding(
-            padding: EdgeInsets.all(sbbDefaultSpacing),
-            child: ThemeModeSegmentedButton(),
-          ),
+          Padding(padding: EdgeInsets.all(sbbDefaultSpacing), child: ThemeModeSegmentedButton()),
           SBBLoadingIndicator.tiny(),
           SBBLoadingIndicator.tinyCloud(),
           SBBLoadingIndicator.medium(),

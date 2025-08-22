@@ -30,11 +30,7 @@ class ButtonPage extends StatelessWidget {
                 const SizedBox(height: sbbDefaultSpacing),
                 const SBBPrimaryButton(label: 'Disabled', onPressed: null),
                 const SizedBox(height: sbbDefaultSpacing),
-                SBBPrimaryButton(
-                  label: 'Loading',
-                  onPressed: () {},
-                  isLoading: true,
-                ),
+                SBBPrimaryButton(label: 'Loading', onPressed: () {}, isLoading: true),
               ],
             ),
           ),
@@ -53,11 +49,7 @@ class ButtonPage extends StatelessWidget {
                 const SizedBox(height: sbbDefaultSpacing),
                 const SBBSecondaryButton(label: 'Disabled', onPressed: null),
                 const SizedBox(height: sbbDefaultSpacing),
-                SBBSecondaryButton(
-                  label: 'Loading',
-                  onPressed: () {},
-                  isLoading: true,
-                ),
+                SBBSecondaryButton(label: 'Loading', onPressed: () {}, isLoading: true),
               ],
             ),
           ),
@@ -77,16 +69,9 @@ class ButtonPage extends StatelessWidget {
                     },
                   ),
                   const SizedBox(height: sbbDefaultSpacing),
-                  const SBBTertiaryButtonLarge(
-                    label: 'Disabled',
-                    onPressed: null,
-                  ),
+                  const SBBTertiaryButtonLarge(label: 'Disabled', onPressed: null),
                   const SizedBox(height: sbbDefaultSpacing),
-                  SBBTertiaryButtonLarge(
-                    label: 'Loading',
-                    onPressed: () {},
-                    isLoading: true,
-                  ),
+                  SBBTertiaryButtonLarge(label: 'Loading', onPressed: () {}, isLoading: true),
                   const SizedBox(height: sbbDefaultSpacing),
                   SBBTertiaryButtonLarge(
                     label: 'Icon',
@@ -96,11 +81,7 @@ class ButtonPage extends StatelessWidget {
                     },
                   ),
                   const SizedBox(height: sbbDefaultSpacing),
-                  const SBBTertiaryButtonLarge(
-                    label: 'Icon Disabled',
-                    icon: SBBIcons.dog_small,
-                    onPressed: null,
-                  ),
+                  const SBBTertiaryButtonLarge(label: 'Icon Disabled', icon: SBBIcons.dog_small, onPressed: null),
                   const SizedBox(height: sbbDefaultSpacing),
                   SBBTertiaryButtonLarge(
                     label: 'Icon Loading',
@@ -128,16 +109,9 @@ class ButtonPage extends StatelessWidget {
                     },
                   ),
                   const SizedBox(height: sbbDefaultSpacing),
-                  const SBBTertiaryButtonSmall(
-                    label: 'Disabled',
-                    onPressed: null,
-                  ),
+                  const SBBTertiaryButtonSmall(label: 'Disabled', onPressed: null),
                   const SizedBox(height: sbbDefaultSpacing),
-                  const SBBTertiaryButtonSmall(
-                    label: 'Loading',
-                    onPressed: null,
-                    isLoading: true,
-                  ),
+                  const SBBTertiaryButtonSmall(label: 'Loading', onPressed: null, isLoading: true),
                   const SizedBox(height: sbbDefaultSpacing),
                   SBBTertiaryButtonSmall(
                     label: 'Icon',
@@ -147,11 +121,7 @@ class ButtonPage extends StatelessWidget {
                     },
                   ),
                   const SizedBox(height: sbbDefaultSpacing),
-                  const SBBTertiaryButtonSmall(
-                    label: 'Icon Disabled',
-                    icon: SBBIcons.dog_small,
-                    onPressed: null,
-                  ),
+                  const SBBTertiaryButtonSmall(label: 'Icon Disabled', icon: SBBIcons.dog_small, onPressed: null),
                   const SizedBox(height: sbbDefaultSpacing),
                   const SBBTertiaryButtonSmall(
                     label: 'Icon Loading',
@@ -177,10 +147,7 @@ class ButtonPage extends StatelessWidget {
                   icon: SBBIcons.glass_cocktail_small,
                 ),
                 const SizedBox(width: sbbDefaultSpacing),
-                const SBBIconButtonLarge(
-                  onPressed: null,
-                  icon: SBBIcons.glass_cocktail_small,
-                ),
+                const SBBIconButtonLarge(onPressed: null, icon: SBBIcons.glass_cocktail_small),
               ],
             ),
           ),
@@ -198,10 +165,7 @@ class ButtonPage extends StatelessWidget {
                   icon: SBBIcons.glass_cocktail_small,
                 ),
                 const SizedBox(width: sbbDefaultSpacing),
-                const SBBIconButtonSmall(
-                  onPressed: null,
-                  icon: SBBIcons.glass_cocktail_small,
-                ),
+                const SBBIconButtonSmall(onPressed: null, icon: SBBIcons.glass_cocktail_small),
                 const SizedBox(width: sbbDefaultSpacing),
               ],
             ),

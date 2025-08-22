@@ -97,13 +97,7 @@ class _ModalPageState extends State<ModalPage> {
           context: context,
           header: const Padding(
             padding: EdgeInsets.all(sbbDefaultSpacing),
-            child: Row(
-              children: [
-                Icon(SBBIcons.app_icon_small),
-                SizedBox(width: sbbDefaultSpacing),
-                Text('Custom'),
-              ],
-            ),
+            child: Row(children: [Icon(SBBIcons.app_icon_small), SizedBox(width: sbbDefaultSpacing), Text('Custom')]),
           ),
           showCloseButton: _showCloseButton,
           backgroundColor: _customBackgroundColor ? SBBColors.peach : null,
@@ -132,12 +126,7 @@ class _ModalPageState extends State<ModalPage> {
 
   Widget _modalContent(BuildContext context, {bool fullHeight = false}) {
     return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(
-        sbbDefaultSpacing,
-        0.0,
-        sbbDefaultSpacing,
-        sbbDefaultSpacing,
-      ),
+      padding: const EdgeInsetsDirectional.fromSTEB(sbbDefaultSpacing, 0.0, sbbDefaultSpacing, sbbDefaultSpacing),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: fullHeight ? MainAxisSize.max : MainAxisSize.min,
@@ -146,10 +135,7 @@ class _ModalPageState extends State<ModalPage> {
             'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
           ),
           const SizedBox(height: sbbDefaultSpacing),
-          SBBPrimaryButton(
-            label: 'Begone!',
-            onPressed: () => Navigator.of(context).pop('OK'),
-          ),
+          SBBPrimaryButton(label: 'Begone!', onPressed: () => Navigator.of(context).pop('OK')),
         ],
       ),
     );

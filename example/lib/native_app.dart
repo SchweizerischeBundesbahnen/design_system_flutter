@@ -66,26 +66,17 @@ class MyApp extends StatelessWidget {
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
-            supportedLocales: const [
-              Locale('en'),
-              Locale('de'),
-              Locale('fr'),
-              Locale('it'),
-            ],
+            supportedLocales: const [Locale('en'), Locale('de'), Locale('fr'), Locale('it')],
             locale: const Locale('de'),
             home: Scaffold(
               appBar: const SBBHeader(title: 'Design System Mobile'),
               body: SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: sbbDefaultSpacing,
-                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
                   child: Column(
                     children: [
                       const Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: sbbDefaultSpacing,
-                        ),
+                        padding: EdgeInsets.symmetric(vertical: sbbDefaultSpacing),
                         child: ThemeModeSegmentedButton(),
                       ),
                       const SBBListHeader('Basics'),
@@ -95,11 +86,7 @@ class MyApp extends StatelessWidget {
                           children: <Widget>[
                             _DemoEntry('Icon', IconPage()),
                             _DemoEntry('Typography', TypographyPage()),
-                            _DemoEntry(
-                              'Color',
-                              ColorPage(),
-                              isLastElement: true,
-                            ),
+                            _DemoEntry('Color', ColorPage(), isLastElement: true),
                           ],
                         ),
                       ),
@@ -114,16 +101,10 @@ class MyApp extends StatelessWidget {
                             _DemoEntry('Link', LinkPage()),
                             _DemoEntry('List Header', ListHeaderPage()),
                             _DemoEntry('List Item', ListItemPage()),
-                            _DemoEntry(
-                              'Loading Indicator',
-                              LoadingIndicatorPage(),
-                            ),
+                            _DemoEntry('Loading Indicator', LoadingIndicatorPage()),
                             _DemoEntry('Picker', PickerPage()),
                             _DemoEntry('Radio Button', RadiobuttonPage()),
-                            _DemoEntry(
-                              'Segmented Button',
-                              SegmentedButtonPage(),
-                            ),
+                            _DemoEntry('Segmented Button', SegmentedButtonPage()),
                             _DemoEntry('Select', SelectPage()),
                             const _DemoEntry('Switch', SwitchPage()),
                             _DemoEntry('Textfield / Textarea', TextFieldPage()),
@@ -131,16 +112,9 @@ class MyApp extends StatelessWidget {
                             const _DemoEntry('Pagination', PaginationPage()),
                             _DemoEntry('Slider', SliderPage()),
                             _DemoEntry('Promotion Box', PromotionBoxPage()),
-                            _DemoEntry(
-                              'Notification Box',
-                              NotificationBoxPage(),
-                            ),
+                            _DemoEntry('Notification Box', NotificationBoxPage()),
                             _DemoEntry('Status', StatusPage()),
-                            _DemoEntry(
-                              'Input Trigger',
-                              InputTriggerPage(),
-                              isLastElement: true,
-                            ),
+                            _DemoEntry('Input Trigger', InputTriggerPage(), isLastElement: true),
                           ],
                         ),
                       ),
@@ -160,11 +134,7 @@ class MyApp extends StatelessWidget {
                             _DemoEntry('Onboarding', OnboardingPage()),
                             _DemoEntry('Message', MessagePage()),
                             _DemoEntry('Stepper', StepperPage()),
-                            _DemoEntry(
-                              'Tab Bar',
-                              TabBarPage(),
-                              isLastElement: true,
-                            ),
+                            _DemoEntry('Tab Bar', TabBarPage(), isLastElement: true),
                           ],
                         ),
                       ),
@@ -191,11 +161,7 @@ class _DemoEntry extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isLight = Theme.of(context).brightness == Brightness.light;
-    final color = SBBBaseStyle.resolve(
-      isLight,
-      SBBColors.white,
-      SBBColors.charcoal,
-    );
+    final color = SBBBaseStyle.resolve(isLight, SBBColors.white, SBBColors.charcoal);
     return OpenContainer(
       closedElevation: 0.0,
       openElevation: 0.0,
@@ -230,11 +196,7 @@ class _DemoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SBBHeader(
-        title: title,
-        onPressedLogo: () => Navigator.maybePop(context),
-        logoTooltip: 'Back to home',
-      ),
+      appBar: SBBHeader(title: title, onPressedLogo: () => Navigator.maybePop(context), logoTooltip: 'Back to home'),
       body: child,
     );
   }
@@ -246,10 +208,7 @@ class ThemeModeSegmentedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SBBSegmentedButton.icon(
-      icons: {
-        SBBIcons.sunshine_small: 'Light theme',
-        SBBIcons.moon_small: 'Dark theme',
-      },
+      icons: {SBBIcons.sunshine_small: 'Light theme', SBBIcons.moon_small: 'Dark theme'},
       selectedIndexChanged: (value) {
         Provider.of<AppState>(context, listen: false).updateTheme(value == 1);
       },

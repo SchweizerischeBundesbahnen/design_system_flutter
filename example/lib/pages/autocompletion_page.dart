@@ -31,19 +31,7 @@ class AutocompletionPageState extends State<AutocompletionPage> {
       onChanged: (value) {
         debugPrint('onChanged: $value');
       },
-      suggestions: [
-        'aaa',
-        'aaa1',
-        'aaa2',
-        'aaa3',
-        'aaa4',
-        'aabb',
-        'bbb',
-        'bbcc',
-        'ccc',
-        'ccdd',
-        'eee',
-      ],
+      suggestions: ['aaa', 'aaa1', 'aaa2', 'aaa3', 'aaa4', 'aabb', 'bbb', 'bbcc', 'ccc', 'ccdd', 'eee'],
       suggestionIcon: SBBIcons.train_station_small,
       enableFavorites: true,
       itemAddedToFavorites: (String item) {
@@ -54,8 +42,7 @@ class AutocompletionPageState extends State<AutocompletionPage> {
       },
       favorites: _favorites,
       labelText: 'Autocompletion',
-      controller:
-          TextEditingController()..value = const TextEditingValue(text: ''),
+      controller: TextEditingController()..value = const TextEditingValue(text: ''),
       clearOnSubmit: false,
     );
   }
@@ -64,10 +51,7 @@ class AutocompletionPageState extends State<AutocompletionPage> {
   Widget build(BuildContext context) {
     final style = SBBBaseStyle.of(context);
     return SingleChildScrollView(
-      child: Container(
-        color: style.themeValue(SBBColors.white, SBBColors.charcoal),
-        child: _autocompletion,
-      ),
+      child: Container(color: style.themeValue(SBBColors.white, SBBColors.charcoal), child: _autocompletion),
     );
   }
 }

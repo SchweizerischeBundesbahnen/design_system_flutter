@@ -62,32 +62,20 @@ class RadiobuttonPageState extends State<RadiobuttonPage> {
               SBBRadioListItem<int>(
                 value: 1,
                 groupValue: _listItemGroupValue,
-                onChanged:
-                    _isEnabled
-                        ? (newValue) =>
-                            setState(() => _listItemGroupValue = newValue)
-                        : null,
+                onChanged: _isEnabled ? (newValue) => setState(() => _listItemGroupValue = newValue) : null,
                 label: 'Label',
               ),
               SBBRadioListItem<int>(
                 value: 2,
                 groupValue: _listItemGroupValue,
-                onChanged:
-                    _isEnabled
-                        ? (newValue) =>
-                            setState(() => _listItemGroupValue = newValue)
-                        : null,
+                onChanged: _isEnabled ? (newValue) => setState(() => _listItemGroupValue = newValue) : null,
                 label: 'Leading Icon',
                 leadingIcon: SBBIcons.alarm_clock_small,
               ),
               SBBRadioListItem<int>(
                 value: 3,
                 groupValue: _listItemGroupValue,
-                onChanged:
-                    _isEnabled
-                        ? (newValue) =>
-                            setState(() => _listItemGroupValue = newValue)
-                        : null,
+                onChanged: _isEnabled ? (newValue) => setState(() => _listItemGroupValue = newValue) : null,
                 label: 'Leading and Trailing Icon',
                 leadingIcon: SBBIcons.alarm_clock_small,
                 trailingIcon: SBBIcons.dog_small,
@@ -95,11 +83,7 @@ class RadiobuttonPageState extends State<RadiobuttonPage> {
               SBBRadioListItem<int>(
                 value: 4,
                 groupValue: _listItemGroupValue,
-                onChanged:
-                    _isEnabled
-                        ? (newValue) =>
-                            setState(() => _listItemGroupValue = newValue)
-                        : null,
+                onChanged: _isEnabled ? (newValue) => setState(() => _listItemGroupValue = newValue) : null,
                 label: 'Button',
                 trailingIcon: SBBIcons.circle_information_small_small,
                 onCallToAction: () => sbbToast.show(title: 'Button'),
@@ -107,28 +91,17 @@ class RadiobuttonPageState extends State<RadiobuttonPage> {
               SBBRadioListItem<int>.custom(
                 value: 5,
                 groupValue: _listItemGroupValue,
-                onChanged:
-                    _isEnabled
-                        ? (newValue) =>
-                            setState(() => _listItemGroupValue = newValue)
-                        : null,
+                onChanged: _isEnabled ? (newValue) => setState(() => _listItemGroupValue = newValue) : null,
                 label: 'Custom trailing Widget',
                 trailingWidget: const Padding(
-                  padding: EdgeInsetsDirectional.only(
-                    top: sbbDefaultSpacing * .75,
-                    end: sbbDefaultSpacing,
-                  ),
+                  padding: EdgeInsetsDirectional.only(top: sbbDefaultSpacing * .75, end: sbbDefaultSpacing),
                   child: Text('CHF 0.99'),
                 ),
               ),
               SBBRadioListItem<int>(
                 value: 6,
                 groupValue: _listItemGroupValue,
-                onChanged:
-                    _isEnabled
-                        ? (newValue) =>
-                            setState(() => _listItemGroupValue = newValue)
-                        : null,
+                onChanged: _isEnabled ? (newValue) => setState(() => _listItemGroupValue = newValue) : null,
                 label: 'Multiline Label with\nSecondary Label',
                 allowMultilineLabel: true,
                 secondaryLabel:
@@ -137,11 +110,7 @@ class RadiobuttonPageState extends State<RadiobuttonPage> {
               SBBRadioListItem<int>(
                 value: 7,
                 groupValue: _listItemGroupValue,
-                onChanged:
-                    _isEnabled
-                        ? (newValue) =>
-                            setState(() => _listItemGroupValue = newValue)
-                        : null,
+                onChanged: _isEnabled ? (newValue) => setState(() => _listItemGroupValue = newValue) : null,
                 label: 'Loading',
                 secondaryLabel: 'This will stop loading if selected.',
                 isLoading: _listItemGroupValue != 7,
@@ -160,11 +129,7 @@ class RadiobuttonPageState extends State<RadiobuttonPage> {
               child: SBBRadioListItem<int>.boxed(
                 value: 1,
                 groupValue: _listItemGroupValue,
-                onChanged:
-                    _isEnabled
-                        ? (newValue) =>
-                            setState(() => _listItemGroupValue = newValue)
-                        : null,
+                onChanged: _isEnabled ? (newValue) => setState(() => _listItemGroupValue = newValue) : null,
                 label: 'Label',
               ),
             ),
@@ -173,11 +138,7 @@ class RadiobuttonPageState extends State<RadiobuttonPage> {
               child: SBBRadioListItem<int>.boxed(
                 value: 2,
                 groupValue: _listItemGroupValue,
-                onChanged:
-                    _isEnabled
-                        ? (newValue) =>
-                            setState(() => _listItemGroupValue = newValue)
-                        : null,
+                onChanged: _isEnabled ? (newValue) => setState(() => _listItemGroupValue = newValue) : null,
                 label: 'Leading Icon',
                 leadingIcon: SBBIcons.alarm_clock_small,
               ),
@@ -187,11 +148,7 @@ class RadiobuttonPageState extends State<RadiobuttonPage> {
               child: SBBRadioListItem<int>.boxed(
                 value: 3,
                 groupValue: _listItemGroupValue,
-                onChanged:
-                    _isEnabled
-                        ? (newValue) =>
-                            setState(() => _listItemGroupValue = newValue)
-                        : null,
+                onChanged: _isEnabled ? (newValue) => setState(() => _listItemGroupValue = newValue) : null,
                 label: 'Leading and Trailing Icon',
                 leadingIcon: SBBIcons.alarm_clock_small,
                 trailingIcon: SBBIcons.dog_small,
@@ -202,11 +159,7 @@ class RadiobuttonPageState extends State<RadiobuttonPage> {
               child: SBBRadioListItem<int>.boxed(
                 value: 4,
                 groupValue: _listItemGroupValue,
-                onChanged:
-                    _isEnabled
-                        ? (newValue) =>
-                            setState(() => _listItemGroupValue = newValue)
-                        : null,
+                onChanged: _isEnabled ? (newValue) => setState(() => _listItemGroupValue = newValue) : null,
                 label: 'Button',
                 trailingIcon: SBBIcons.circle_information_small_small,
                 onCallToAction: () => sbbToast.show(title: 'Button'),
@@ -217,17 +170,10 @@ class RadiobuttonPageState extends State<RadiobuttonPage> {
               child: SBBRadioListItem<int>.custom(
                 value: 5,
                 groupValue: _listItemGroupValue,
-                onChanged:
-                    _isEnabled
-                        ? (newValue) =>
-                            setState(() => _listItemGroupValue = newValue)
-                        : null,
+                onChanged: _isEnabled ? (newValue) => setState(() => _listItemGroupValue = newValue) : null,
                 label: 'Custom trailing Widget',
                 trailingWidget: const Padding(
-                  padding: EdgeInsetsDirectional.only(
-                    top: sbbDefaultSpacing * .75,
-                    end: sbbDefaultSpacing,
-                  ),
+                  padding: EdgeInsetsDirectional.only(top: sbbDefaultSpacing * .75, end: sbbDefaultSpacing),
                   child: Text('CHF 0.99'),
                 ),
                 isLastElement: false,
@@ -238,11 +184,7 @@ class RadiobuttonPageState extends State<RadiobuttonPage> {
               child: SBBRadioListItem<int>.boxed(
                 value: 6,
                 groupValue: _listItemGroupValue,
-                onChanged:
-                    _isEnabled
-                        ? (newValue) =>
-                            setState(() => _listItemGroupValue = newValue)
-                        : null,
+                onChanged: _isEnabled ? (newValue) => setState(() => _listItemGroupValue = newValue) : null,
                 label: 'Multiline Label with\nSecondary Label',
                 allowMultilineLabel: true,
                 secondaryLabel:
@@ -254,11 +196,7 @@ class RadiobuttonPageState extends State<RadiobuttonPage> {
               child: SBBRadioListItem<int>.boxed(
                 value: 7,
                 groupValue: _listItemGroupValue,
-                onChanged:
-                    _isEnabled
-                        ? (newValue) =>
-                            setState(() => _listItemGroupValue = newValue)
-                        : null,
+                onChanged: _isEnabled ? (newValue) => setState(() => _listItemGroupValue = newValue) : null,
                 label: 'Loading',
                 secondaryLabel: 'This will not stop.',
                 isLoading: true,
