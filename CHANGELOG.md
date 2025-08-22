@@ -16,6 +16,10 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - updated icon lib to version 1.8.0
 - dropped support for Flutter SDK 3.27.x
 
+### Fixed
+
+- `SBBGroup`: clip behavior is respected - default ClipBehavior.hard
+
 ## [4.0.0] - 2025-07-14
 
 ### Changed
