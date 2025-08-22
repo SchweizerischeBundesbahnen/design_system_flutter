@@ -71,15 +71,15 @@ class TabCurves {
   TabCurves({
     required this.midX,
     required this.waveRadius,
-  })  : _circleWaveRadius = 0.552284749831 * waveRadius,
-        _twoWaveRadius = waveRadius.toDouble() * 2 {
+  }) : _circleWaveRadius = 0.552284749831 * waveRadius,
+       _twoWaveRadius = waveRadius.toDouble() * 2 {
     // Define the relative starting positions for the anchor points.
     final startPos = [
       const Offset(-2.0, 0.0),
       const Offset(-1.0, 0.0),
       const Offset(0.0, 0.0),
       const Offset(1.0, 0.0),
-      const Offset(2.0, 0.0)
+      const Offset(2.0, 0.0),
     ];
 
     // Calculate the absolute starting positions for the anchor points
@@ -97,7 +97,7 @@ class TabCurves {
       const Offset(-1.0, 1.0),
       const Offset(0.0, 2.0),
       const Offset(1.0, 1.0),
-      const Offset(2.0, 0.0)
+      const Offset(2.0, 0.0),
     ];
 
     // Calculate the absolute ending positions for the anchor points.

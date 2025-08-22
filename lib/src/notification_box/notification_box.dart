@@ -31,18 +31,17 @@ class SBBNotificationBox extends StatefulWidget {
     GestureTapCallback? onClose,
     bool hasIcon = true,
     IconData detailsIcon = SBBIcons.chevron_small_right_small,
-  }) =>
-      SBBNotificationBox(
-        state: SBBNotificationBoxState.alert,
-        title: title,
-        text: text,
-        onControllerCreated: onControllerCreated,
-        onTap: onTap,
-        isCloseable: isCloseable,
-        onClose: onClose,
-        hasIcon: hasIcon,
-        detailsIcon: detailsIcon,
-      );
+  }) => SBBNotificationBox(
+    state: SBBNotificationBoxState.alert,
+    title: title,
+    text: text,
+    onControllerCreated: onControllerCreated,
+    onTap: onTap,
+    isCloseable: isCloseable,
+    onClose: onClose,
+    hasIcon: hasIcon,
+    detailsIcon: detailsIcon,
+  );
 
   factory SBBNotificationBox.warning({
     String? title,
@@ -53,18 +52,17 @@ class SBBNotificationBox extends StatefulWidget {
     GestureTapCallback? onClose,
     bool hasIcon = true,
     IconData detailsIcon = SBBIcons.chevron_small_right_small,
-  }) =>
-      SBBNotificationBox(
-        state: SBBNotificationBoxState.warning,
-        title: title,
-        text: text,
-        onControllerCreated: onControllerCreated,
-        onTap: onTap,
-        isCloseable: isCloseable,
-        onClose: onClose,
-        hasIcon: hasIcon,
-        detailsIcon: detailsIcon,
-      );
+  }) => SBBNotificationBox(
+    state: SBBNotificationBoxState.warning,
+    title: title,
+    text: text,
+    onControllerCreated: onControllerCreated,
+    onTap: onTap,
+    isCloseable: isCloseable,
+    onClose: onClose,
+    hasIcon: hasIcon,
+    detailsIcon: detailsIcon,
+  );
 
   factory SBBNotificationBox.success({
     String? title,
@@ -75,18 +73,17 @@ class SBBNotificationBox extends StatefulWidget {
     GestureTapCallback? onClose,
     bool hasIcon = true,
     IconData detailsIcon = SBBIcons.chevron_small_right_small,
-  }) =>
-      SBBNotificationBox(
-        state: SBBNotificationBoxState.success,
-        title: title,
-        text: text,
-        onControllerCreated: onControllerCreated,
-        onTap: onTap,
-        isCloseable: isCloseable,
-        onClose: onClose,
-        hasIcon: hasIcon,
-        detailsIcon: detailsIcon,
-      );
+  }) => SBBNotificationBox(
+    state: SBBNotificationBoxState.success,
+    title: title,
+    text: text,
+    onControllerCreated: onControllerCreated,
+    onTap: onTap,
+    isCloseable: isCloseable,
+    onClose: onClose,
+    hasIcon: hasIcon,
+    detailsIcon: detailsIcon,
+  );
 
   factory SBBNotificationBox.information({
     String? title,
@@ -97,18 +94,17 @@ class SBBNotificationBox extends StatefulWidget {
     GestureTapCallback? onClose,
     bool hasIcon = true,
     IconData detailsIcon = SBBIcons.chevron_small_right_small,
-  }) =>
-      SBBNotificationBox(
-        state: SBBNotificationBoxState.information,
-        title: title,
-        text: text,
-        onControllerCreated: onControllerCreated,
-        onTap: onTap,
-        isCloseable: isCloseable,
-        onClose: onClose,
-        hasIcon: hasIcon,
-        detailsIcon: detailsIcon,
-      );
+  }) => SBBNotificationBox(
+    state: SBBNotificationBoxState.information,
+    title: title,
+    text: text,
+    onControllerCreated: onControllerCreated,
+    onTap: onTap,
+    isCloseable: isCloseable,
+    onClose: onClose,
+    hasIcon: hasIcon,
+    detailsIcon: detailsIcon,
+  );
 
   final SBBNotificationBoxState state;
   final String? title;
@@ -153,12 +149,13 @@ class _SBBNotificationBoxState extends State<SBBNotificationBox> with SingleTick
       widget.state.iconColor,
       widget.state.iconColorDark,
     );
-    final icon = widget.hasIcon
-        ? Icon(
-            widget.state.icon,
-            color: iconColor,
-          )
-        : null;
+    final icon =
+        widget.hasIcon
+            ? Icon(
+              widget.state.icon,
+              color: iconColor,
+            )
+            : null;
     final detailsIcon = widget.onTap != null ? Icon(widget.detailsIcon) : null;
     Widget child;
     switch (widget.title) {

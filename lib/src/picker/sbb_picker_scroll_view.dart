@@ -7,10 +7,11 @@ part of 'sbb_picker.dart';
 ///
 /// Unlike most builders, this callback can return null, indicating the index
 /// is out of range.
-typedef SBBPickerScrollViewItemBuilder = SBBPickerItem? Function(
-  BuildContext context,
-  int index,
-);
+typedef SBBPickerScrollViewItemBuilder =
+    SBBPickerItem? Function(
+      BuildContext context,
+      int index,
+    );
 
 /// A box in which children on a wheel can be scrolled. Should only be used in
 /// combination with [SBBPicker.custom].

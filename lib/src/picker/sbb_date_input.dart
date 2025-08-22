@@ -46,7 +46,8 @@ class SBBDateInput extends StatefulWidget {
 }
 
 class _SBBDateInputState extends State<SBBDateInput> {
-  late final DateFormat _dateFormat = widget.dateFormat ??
+  late final DateFormat _dateFormat =
+      widget.dateFormat ??
       DateFormat.yMMMMd(
         Localizations.maybeLocaleOf(context).toString(),
       );

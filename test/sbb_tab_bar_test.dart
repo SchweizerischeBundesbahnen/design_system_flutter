@@ -10,7 +10,7 @@ void main() {
       SBBIcons.train_small,
       SBBIcons.station_small,
       SBBIcons.archive_box_small,
-      SBBIcons.arrow_compass_small
+      SBBIcons.arrow_compass_small,
     ];
     final items = Iterable.generate(1, (i) => _DemoItem('${i}_a', icons[i % icons.length])).toList();
     final items2 = Iterable.generate(2, (i) => _DemoItem('${i}_b', icons[i % icons.length])).toList();

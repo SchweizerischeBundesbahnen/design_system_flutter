@@ -62,19 +62,19 @@ class SBBCheckboxListItem extends StatelessWidget {
     bool isLoading = false,
     String? checkboxSemanticLabel,
   }) : this.custom(
-          key: key,
-          value: value,
-          label: label,
-          onChanged: onChanged,
-          tristate: tristate,
-          isLastElement: isLastElement,
-          allowMultilineLabel: allowMultilineLabel,
-          secondaryLabel: secondaryLabel,
-          leadingIcon: leadingIcon,
-          trailingWidget: _optionallyButtonedTrailingIcon(trailingIcon, onCallToAction, onChanged),
-          isLoading: isLoading,
-          checkboxSemanticLabel: checkboxSemanticLabel,
-        );
+         key: key,
+         value: value,
+         label: label,
+         onChanged: onChanged,
+         tristate: tristate,
+         isLastElement: isLastElement,
+         allowMultilineLabel: allowMultilineLabel,
+         secondaryLabel: secondaryLabel,
+         leadingIcon: leadingIcon,
+         trailingWidget: _optionallyButtonedTrailingIcon(trailingIcon, onCallToAction, onChanged),
+         isLoading: isLoading,
+         checkboxSemanticLabel: checkboxSemanticLabel,
+       );
 
   /// Use this in combination with a [SBBGroup] to create a boxed variant of the [SBBCheckboxListItem].
   ///
@@ -107,19 +107,19 @@ class SBBCheckboxListItem extends StatelessWidget {
     bool isLoading = false,
     String? checkboxSemanticLabel,
   }) : this.custom(
-          key: key,
-          value: value,
-          label: label,
-          onChanged: onChanged,
-          tristate: tristate,
-          allowMultilineLabel: allowMultilineLabel,
-          secondaryLabel: secondaryLabel,
-          leadingIcon: leadingIcon,
-          trailingWidget: _optionallyButtonedTrailingIcon(trailingIcon, onCallToAction, onChanged),
-          isLoading: isLoading,
-          isLastElement: true,
-          checkboxSemanticLabel: checkboxSemanticLabel,
-        );
+         key: key,
+         value: value,
+         label: label,
+         onChanged: onChanged,
+         tristate: tristate,
+         allowMultilineLabel: allowMultilineLabel,
+         secondaryLabel: secondaryLabel,
+         leadingIcon: leadingIcon,
+         trailingWidget: _optionallyButtonedTrailingIcon(trailingIcon, onCallToAction, onChanged),
+         isLoading: isLoading,
+         isLastElement: true,
+         checkboxSemanticLabel: checkboxSemanticLabel,
+       );
 
   /// Full custom [SBBCheckboxListItem].
   ///
@@ -231,17 +231,17 @@ class SBBCheckboxListItem extends StatelessWidget {
     return trailingIcon == null
         ? null
         : onCallToAction == null
-            ? Padding(
-                padding: const EdgeInsets.only(top: _iconTopPadding, right: sbbDefaultSpacing),
-                child: Icon(trailingIcon, size: 24.0),
-              )
-            : Padding(
-                padding: const EdgeInsets.only(right: sbbDefaultSpacing * .5),
-                child: SBBIconButtonSmall(
-                  icon: trailingIcon,
-                  onPressed: onChanged != null ? onCallToAction : null,
-                ),
-              );
+        ? Padding(
+          padding: const EdgeInsets.only(top: _iconTopPadding, right: sbbDefaultSpacing),
+          child: Icon(trailingIcon, size: 24.0),
+        )
+        : Padding(
+          padding: const EdgeInsets.only(right: sbbDefaultSpacing * .5),
+          child: SBBIconButtonSmall(
+            icon: trailingIcon,
+            onPressed: onChanged != null ? onCallToAction : null,
+          ),
+        );
   }
 
   @override
@@ -270,7 +270,7 @@ class SBBCheckboxListItem extends StatelessWidget {
               ),
             ),
             if (!isLastElement) const Divider(),
-            if (isLoading) BottomLoadingIndicator()
+            if (isLoading) BottomLoadingIndicator(),
           ],
         ),
       ),

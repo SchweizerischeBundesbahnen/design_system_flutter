@@ -60,19 +60,19 @@ class SBBRadioListItem<T> extends StatelessWidget {
     bool isLoading = false,
     String? radioSemanticLabel,
   }) : this.custom(
-          key: key,
-          value: value,
-          groupValue: groupValue,
-          label: label,
-          allowMultilineLabel: allowMultilineLabel,
-          secondaryLabel: secondaryLabel,
-          onChanged: onChanged,
-          isLastElement: isLastElement,
-          leadingIcon: leadingIcon,
-          trailingWidget: _optionallyButtonedTrailingIcon(trailingIcon, onCallToAction, onChanged),
-          isLoading: isLoading,
-          radioSemanticLabel: radioSemanticLabel,
-        );
+         key: key,
+         value: value,
+         groupValue: groupValue,
+         label: label,
+         allowMultilineLabel: allowMultilineLabel,
+         secondaryLabel: secondaryLabel,
+         onChanged: onChanged,
+         isLastElement: isLastElement,
+         leadingIcon: leadingIcon,
+         trailingWidget: _optionallyButtonedTrailingIcon(trailingIcon, onCallToAction, onChanged),
+         isLoading: isLoading,
+         radioSemanticLabel: radioSemanticLabel,
+       );
 
   /// Use this in combination with a [SBBGroup] to create a boxed variant of the [SBBRadioListItem].
   ///
@@ -105,19 +105,19 @@ class SBBRadioListItem<T> extends StatelessWidget {
     bool isLoading = false,
     String? radioSemanticLabel,
   }) : this.custom(
-          key: key,
-          value: value,
-          groupValue: groupValue,
-          label: label,
-          allowMultilineLabel: allowMultilineLabel,
-          secondaryLabel: secondaryLabel,
-          onChanged: onChanged,
-          isLastElement: true,
-          leadingIcon: leadingIcon,
-          trailingWidget: _optionallyButtonedTrailingIcon(trailingIcon, onCallToAction, onChanged),
-          isLoading: isLoading,
-          radioSemanticLabel: radioSemanticLabel,
-        );
+         key: key,
+         value: value,
+         groupValue: groupValue,
+         label: label,
+         allowMultilineLabel: allowMultilineLabel,
+         secondaryLabel: secondaryLabel,
+         onChanged: onChanged,
+         isLastElement: true,
+         leadingIcon: leadingIcon,
+         trailingWidget: _optionallyButtonedTrailingIcon(trailingIcon, onCallToAction, onChanged),
+         isLoading: isLoading,
+         radioSemanticLabel: radioSemanticLabel,
+       );
 
   const SBBRadioListItem.custom({
     super.key,

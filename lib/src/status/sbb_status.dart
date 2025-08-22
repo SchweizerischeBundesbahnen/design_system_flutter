@@ -8,28 +8,28 @@ class SBBStatus extends StatelessWidget {
   const SBBStatus({required this.type, super.key, this.text});
 
   factory SBBStatus.alert({Key? key, String? text}) => SBBStatus(
-        type: SBBStatusType.alert,
-        key: key,
-        text: text,
-      );
+    type: SBBStatusType.alert,
+    key: key,
+    text: text,
+  );
 
   factory SBBStatus.warning({Key? key, String? text}) => SBBStatus(
-        type: SBBStatusType.warning,
-        key: key,
-        text: text,
-      );
+    type: SBBStatusType.warning,
+    key: key,
+    text: text,
+  );
 
   factory SBBStatus.success({Key? key, String? text}) => SBBStatus(
-        type: SBBStatusType.success,
-        key: key,
-        text: text,
-      );
+    type: SBBStatusType.success,
+    key: key,
+    text: text,
+  );
 
   factory SBBStatus.information({Key? key, String? text}) => SBBStatus(
-        type: SBBStatusType.information,
-        key: key,
-        text: text,
-      );
+    type: SBBStatusType.information,
+    key: key,
+    text: text,
+  );
 
   final SBBStatusType type;
   final String? text;

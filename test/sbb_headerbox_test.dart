@@ -34,7 +34,8 @@ void main() {
         SBBHeaderbox.custom(
           padding: EdgeInsets.zero,
           flap: SBBHeaderboxFlap.custom(
-              child: Center(child: Text('Custom Flappy!', style: SBBTextStyles.extraSmallBold))),
+            child: Center(child: Text('Custom Flappy!', style: SBBTextStyles.extraSmallBold)),
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -43,7 +44,7 @@ void main() {
               Container(color: SBBColors.graphite, width: 25, height: 25),
             ],
           ),
-        )
+        ),
       ],
     );
 

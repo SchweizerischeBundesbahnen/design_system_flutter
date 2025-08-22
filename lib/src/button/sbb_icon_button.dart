@@ -34,13 +34,14 @@ class SBBIconButtonLarge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final baseStyle = Theme.of(context).textButtonTheme.style?.copyWith(
-          minimumSize: SBBTheme.allStates(const Size(SBBInternal.defaultButtonHeight, SBBInternal.defaultButtonHeight)),
-          fixedSize: SBBTheme.allStates(const Size(SBBInternal.defaultButtonHeight, SBBInternal.defaultButtonHeight)),
-          padding: SBBTheme.allStates(EdgeInsets.zero),
-        );
-    final style = buttonStyle != null
-        ? buttonStyle!.merge(baseStyle)
-        : SBBButtonStyles.of(context).iconLargeStyle?.overrideButtonStyle(baseStyle);
+      minimumSize: SBBTheme.allStates(const Size(SBBInternal.defaultButtonHeight, SBBInternal.defaultButtonHeight)),
+      fixedSize: SBBTheme.allStates(const Size(SBBInternal.defaultButtonHeight, SBBInternal.defaultButtonHeight)),
+      padding: SBBTheme.allStates(EdgeInsets.zero),
+    );
+    final style =
+        buttonStyle != null
+            ? buttonStyle!.merge(baseStyle)
+            : SBBButtonStyles.of(context).iconLargeStyle?.overrideButtonStyle(baseStyle);
     return TextButton(
       style: style,
       onPressed: onPressed,
@@ -136,21 +137,21 @@ class _SBBIconButtonSmallRaw extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final baseStyle = Theme.of(context).textButtonTheme.style?.copyWith(
-          minimumSize: SBBTheme.allStates(
-            const Size(
-              SBBInternal.defaultButtonHeightSmall,
-              SBBInternal.defaultButtonHeightSmall,
-            ),
-          ),
-          fixedSize: SBBTheme.allStates(
-            const Size(
-              SBBInternal.defaultButtonHeightSmall,
-              SBBInternal.defaultButtonHeightSmall,
-            ),
-          ),
-          padding: SBBTheme.allStates(EdgeInsets.zero),
-          side: SBBTheme.allStates(const BorderSide(style: BorderStyle.none)),
-        );
+      minimumSize: SBBTheme.allStates(
+        const Size(
+          SBBInternal.defaultButtonHeightSmall,
+          SBBInternal.defaultButtonHeightSmall,
+        ),
+      ),
+      fixedSize: SBBTheme.allStates(
+        const Size(
+          SBBInternal.defaultButtonHeightSmall,
+          SBBInternal.defaultButtonHeightSmall,
+        ),
+      ),
+      padding: SBBTheme.allStates(EdgeInsets.zero),
+      side: SBBTheme.allStates(const BorderSide(style: BorderStyle.none)),
+    );
     return Semantics(
       container: true,
       button: true,

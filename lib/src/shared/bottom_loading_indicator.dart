@@ -52,10 +52,12 @@ class _BottomLoadingIndicatorState extends State<BottomLoadingIndicator> with Si
   late final Animation<Offset> _offsetAnimation = Tween<Offset>(
     begin: const Offset(-1, 0.0),
     end: const Offset(1, 0.0),
-  ).animate(CurvedAnimation(
-    parent: _controller,
-    curve: Curves.linear,
-  ));
+  ).animate(
+    CurvedAnimation(
+      parent: _controller,
+      curve: Curves.linear,
+    ),
+  );
 
   @override
   void dispose() {
@@ -101,9 +103,9 @@ class _BottomLoadingIndicatorState extends State<BottomLoadingIndicator> with Si
   BorderRadius _resolveBorderRadius() {
     return widget.circularBorderRadius > 0
         ? BorderRadius.only(
-            bottomLeft: Radius.circular(widget.circularBorderRadius),
-            bottomRight: Radius.circular(widget.circularBorderRadius),
-          )
+          bottomLeft: Radius.circular(widget.circularBorderRadius),
+          bottomRight: Radius.circular(widget.circularBorderRadius),
+        )
         : BorderRadius.zero;
   }
 }

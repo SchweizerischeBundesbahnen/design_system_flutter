@@ -245,8 +245,9 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>> with Widgets
 
         /// to get the size of the suggestions area between the text field and
         /// the keyboard, do some calculations...
-        final Offset textFieldGlobalPosition =
-            (context.findRenderObject() as RenderBox).localToGlobal(Offset(0.0, height));
+        final Offset textFieldGlobalPosition = (context.findRenderObject() as RenderBox).localToGlobal(
+          Offset(0.0, height),
+        );
 
         /// screen size - textfield bottom y - keyboard height = area height
         final overlayHeight = MediaQuery.of(context).size.height - textFieldGlobalPosition.dy - _bottomInset;

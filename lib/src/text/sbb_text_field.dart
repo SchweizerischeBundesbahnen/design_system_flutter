@@ -133,7 +133,7 @@ class _SBBTextField extends State<SBBTextField> {
                   errorText: widget.errorText,
                   hasFocus: _hasFocus,
                   isLastElement: widget.isLastElement,
-                )
+                ),
               ],
             ),
           ),

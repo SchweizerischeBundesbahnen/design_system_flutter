@@ -27,36 +27,36 @@ class ModalPopupTest extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const SBBListHeader('Modal Popup'),
-          SBBGroup(
-            child: Padding(
-              padding: const EdgeInsets.all(sbbDefaultSpacing * .5),
-              child: Column(
-                children: [
-                  SBBModalPopup(
-                    title: 'Titel',
-                    child: _modalContent(context),
-                  ),
-                  SizedBox(height: sbbDefaultSpacing * .5),
-                  SBBModalPopup(
-                    title: 'Titel',
-                    backgroundColor: SBBColors.peach,
-                    child: _modalContent(context),
-                  ),
-                  SizedBox(height: sbbDefaultSpacing * .5),
-                  SBBModalPopup(
-                    title: 'Titel',
-                    showCloseButton: false,
-                    child: _modalContent(context),
-                  ),
-                ],
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      const SBBListHeader('Modal Popup'),
+      SBBGroup(
+        child: Padding(
+          padding: const EdgeInsets.all(sbbDefaultSpacing * .5),
+          child: Column(
+            children: [
+              SBBModalPopup(
+                title: 'Titel',
+                child: _modalContent(context),
               ),
-            ),
+              SizedBox(height: sbbDefaultSpacing * .5),
+              SBBModalPopup(
+                title: 'Titel',
+                backgroundColor: SBBColors.peach,
+                child: _modalContent(context),
+              ),
+              SizedBox(height: sbbDefaultSpacing * .5),
+              SBBModalPopup(
+                title: 'Titel',
+                showCloseButton: false,
+                child: _modalContent(context),
+              ),
+            ],
           ),
-        ],
-      );
+        ),
+      ),
+    ],
+  );
 
   Widget _modalContent(BuildContext context) {
     return Padding(
@@ -67,7 +67,8 @@ class ModalPopupTest extends StatelessWidget {
         sbbDefaultSpacing,
       ),
       child: const Text(
-          'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.'),
+        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
+      ),
     );
   }
 }

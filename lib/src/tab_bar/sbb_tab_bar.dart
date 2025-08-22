@@ -33,26 +33,24 @@ class SBBTabBar extends StatefulWidget {
     required void Function(SBBTabBarItem tab) onTap,
     Key? key,
     SBBTabBarItem? initialItem,
-  }) =>
-      SBBTabBar._(
-        key: key,
-        controller: SBBTabBarController(items, initialItem ?? items.first),
-        onTabChanged: onTabChanged,
-        onTap: onTap,
-      );
+  }) => SBBTabBar._(
+    key: key,
+    controller: SBBTabBarController(items, initialItem ?? items.first),
+    onTabChanged: onTabChanged,
+    onTap: onTap,
+  );
 
   factory SBBTabBar.controller({
     required SBBTabBarController controller,
     required Future<void> Function(Future<SBBTabBarItem> tabTask) onTabChanged,
     required void Function(SBBTabBarItem tab) onTap,
     Key? key,
-  }) =>
-      SBBTabBar._(
-        key: key,
-        controller: controller,
-        onTabChanged: onTabChanged,
-        onTap: onTap,
-      );
+  }) => SBBTabBar._(
+    key: key,
+    controller: controller,
+    onTabChanged: onTabChanged,
+    onTap: onTap,
+  );
 
   final Future<void> Function(Future<SBBTabBarItem> tabTask) onTabChanged;
   final void Function(SBBTabBarItem tab) onTap;
@@ -123,10 +121,12 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
                   ),
                   child: Stack(
                     children: [
-                      ..._tabs.mapIndexed((i, e) => Positioned(
-                            left: layoutData.positions[i].dx,
-                            child: TabItemWidget(e.icon, selected: true),
-                          )),
+                      ..._tabs.mapIndexed(
+                        (i, e) => Positioned(
+                          left: layoutData.positions[i].dx,
+                          child: TabItemWidget(e.icon, selected: true),
+                        ),
+                      ),
                       CustomPaint(
                         painter: TabCurvePainter(
                           _controller.curves,

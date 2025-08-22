@@ -34,14 +34,15 @@ class SBBTextFieldUnderline extends StatelessWidget {
             ),
           ),
         Divider(
-          color: errorText == null
-              ? hasFocus
-                  ? style?.dividerColorHighlighted
-                  : isLastElement
+          color:
+              errorText == null
+                  ? hasFocus
+                      ? style?.dividerColorHighlighted
+                      : isLastElement
                       ? SBBColors.transparent
                       : style?.dividerColor
-              : style?.dividerColorError,
-        )
+                  : style?.dividerColorError,
+        ),
       ],
     );
   }

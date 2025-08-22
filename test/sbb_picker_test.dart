@@ -55,92 +55,89 @@ class PickerTest extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          Row(
-            children: [
-              Expanded(
-                child: SBBGroup(
-                  child: SBBPicker.list(
-                    onSelectedItemChanged: (_) {},
-                    looping: true,
-                    initialSelectedIndex: initialItem,
-                    items: _fruitNames,
-                  ),
-                ),
+    mainAxisSize: MainAxisSize.min,
+    children: <Widget>[
+      Row(
+        children: [
+          Expanded(
+            child: SBBGroup(
+              child: SBBPicker.list(
+                onSelectedItemChanged: (_) {},
+                looping: true,
+                initialSelectedIndex: initialItem,
+                items: _fruitNames,
               ),
-              const SizedBox(width: sbbDefaultSpacing),
-              Expanded(
-                child: SBBGroup(
-                  child: SBBPicker.list(
-                    onSelectedItemChanged: (_) {},
-                    looping: false,
-                    initialSelectedIndex: initialItem,
-                    items: _fruitNames,
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
-          const SizedBox(height: sbbDefaultSpacing),
-          Row(
-            children: [
-              Expanded(
-                child: SBBGroup(
-                  child: SBBPicker(
-                    onSelectedItemChanged: (_) {},
-                    looping: true,
-                    initialSelectedIndex: initialItem,
-                    itemBuilder: (BuildContext context, int index) {
-                      final isEnabled =
-                          (minItem == null || index >= minItem!) && (maxItem == null || index <= maxItem!);
-                      final item = _fruitNames[index % _fruitNames.length];
-                      return SBBPickerItem(item, isEnabled: isEnabled);
-                    },
-                  ),
-                ),
+          const SizedBox(width: sbbDefaultSpacing),
+          Expanded(
+            child: SBBGroup(
+              child: SBBPicker.list(
+                onSelectedItemChanged: (_) {},
+                looping: false,
+                initialSelectedIndex: initialItem,
+                items: _fruitNames,
               ),
-              const SizedBox(width: sbbDefaultSpacing),
-              Expanded(
-                child: SBBGroup(
-                  child: SBBPicker(
-                    onSelectedItemChanged: (_) {},
-                    looping: false,
-                    initialSelectedIndex: initialItem,
-                    itemBuilder: (BuildContext context, int index) {
-                      final isInRange = (index >= 0) && (index < _fruitNames.length);
-                      if (!isInRange) {
-                        return null;
-                      }
-                      final isEnabled =
-                          (minItem == null || index >= minItem!) && (maxItem == null || index <= maxItem!);
-                      final item = _fruitNames[index];
-                      return SBBPickerItem(item, isEnabled: isEnabled);
-                    },
-                  ),
-                ),
-              ),
-              const SizedBox(width: sbbDefaultSpacing),
-              Expanded(
-                child: SBBGroup(
-                  child: SBBPicker(
-                    onSelectedItemChanged: (_) {},
-                    looping: false,
-                    initialSelectedIndex: initialItem,
-                    itemBuilder: (BuildContext context, int index) {
-                      final isInRange =
-                          (minItem == null || index >= minItem!) && (maxItem == null || index <= maxItem!);
-                      if (!isInRange) {
-                        return null;
-                      }
-                      final item = _fruitNames[index % _fruitNames.length];
-                      return SBBPickerItem(item);
-                    },
-                  ),
-                ),
-              ),
-            ],
+            ),
           ),
         ],
-      );
+      ),
+      const SizedBox(height: sbbDefaultSpacing),
+      Row(
+        children: [
+          Expanded(
+            child: SBBGroup(
+              child: SBBPicker(
+                onSelectedItemChanged: (_) {},
+                looping: true,
+                initialSelectedIndex: initialItem,
+                itemBuilder: (BuildContext context, int index) {
+                  final isEnabled = (minItem == null || index >= minItem!) && (maxItem == null || index <= maxItem!);
+                  final item = _fruitNames[index % _fruitNames.length];
+                  return SBBPickerItem(item, isEnabled: isEnabled);
+                },
+              ),
+            ),
+          ),
+          const SizedBox(width: sbbDefaultSpacing),
+          Expanded(
+            child: SBBGroup(
+              child: SBBPicker(
+                onSelectedItemChanged: (_) {},
+                looping: false,
+                initialSelectedIndex: initialItem,
+                itemBuilder: (BuildContext context, int index) {
+                  final isInRange = (index >= 0) && (index < _fruitNames.length);
+                  if (!isInRange) {
+                    return null;
+                  }
+                  final isEnabled = (minItem == null || index >= minItem!) && (maxItem == null || index <= maxItem!);
+                  final item = _fruitNames[index];
+                  return SBBPickerItem(item, isEnabled: isEnabled);
+                },
+              ),
+            ),
+          ),
+          const SizedBox(width: sbbDefaultSpacing),
+          Expanded(
+            child: SBBGroup(
+              child: SBBPicker(
+                onSelectedItemChanged: (_) {},
+                looping: false,
+                initialSelectedIndex: initialItem,
+                itemBuilder: (BuildContext context, int index) {
+                  final isInRange = (minItem == null || index >= minItem!) && (maxItem == null || index <= maxItem!);
+                  if (!isInRange) {
+                    return null;
+                  }
+                  final item = _fruitNames[index % _fruitNames.length];
+                  return SBBPickerItem(item);
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
+    ],
+  );
 }

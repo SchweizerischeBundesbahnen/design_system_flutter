@@ -33,9 +33,9 @@ class SBBDatePicker extends StatefulWidget {
     DateTime? initialDate,
     DateTime? minimumDate,
     DateTime? maximumDate,
-  })  : initialDate = _initialDate(initialDate, minimumDate, maximumDate),
-        minimumDate = _minimumDate(minimumDate),
-        maximumDate = _maximumDate(maximumDate) {
+  }) : initialDate = _initialDate(initialDate, minimumDate, maximumDate),
+       minimumDate = _minimumDate(minimumDate),
+       maximumDate = _maximumDate(maximumDate) {
     assert(
       this.minimumDate == null || this.maximumDate == null || this.minimumDate!.isBefore(this.maximumDate!),
       'minimum date (${this.minimumDate}) is not before maximum date (${this.maximumDate})',
@@ -103,19 +103,21 @@ class SBBDatePicker extends StatefulWidget {
           Padding(
             padding: const EdgeInsets.all(sbbDefaultSpacing),
             child: ListenableBuilder(
-                listenable: selectedButtonEnabled,
-                builder: (context, _) {
-                  final onPressed = selectedButtonEnabled.value
-                      ? () {
+              listenable: selectedButtonEnabled,
+              builder: (context, _) {
+                final onPressed =
+                    selectedButtonEnabled.value
+                        ? () {
                           Navigator.of(context).pop();
                           onDateChanged?.call(selectedDate);
                         }
-                      : null;
-                  return SBBPrimaryButton(
-                    label: selectedButtonLabel,
-                    onPressed: onPressed,
-                  );
-                }),
+                        : null;
+                return SBBPrimaryButton(
+                  label: selectedButtonLabel,
+                  onPressed: onPressed,
+                );
+              },
+            ),
           ),
         ],
       ),

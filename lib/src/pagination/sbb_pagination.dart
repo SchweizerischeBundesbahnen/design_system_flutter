@@ -21,9 +21,11 @@ class SBBPagination extends StatelessWidget {
     required this.currentPage,
     this.isFloating = false,
     this.semanticsLabel = 'Pagination',
-  })  : assert(numberPages > 0, 'numberPages: $numberPages must be greater than 0'),
-        assert(currentPage >= 0 && currentPage < numberPages,
-            'currentPage: $currentPage must be between 0 and numberPages - 1');
+  }) : assert(numberPages > 0, 'numberPages: $numberPages must be greater than 0'),
+       assert(
+         currentPage >= 0 && currentPage < numberPages,
+         'currentPage: $currentPage must be between 0 and numberPages - 1',
+       );
 
   /// The total number of pages.
   ///
@@ -59,15 +61,16 @@ class SBBPagination extends StatelessWidget {
     );
   }
 
-  Widget get _paginationContent => isFloating
-      ? _FloatingSBBPagination(
-          currentPage: currentPage,
-          numberPages: numberPages,
-        )
-      : _DefaultSBBPagination(
-          numberPages: numberPages,
-          currentPage: currentPage,
-        );
+  Widget get _paginationContent =>
+      isFloating
+          ? _FloatingSBBPagination(
+            currentPage: currentPage,
+            numberPages: numberPages,
+          )
+          : _DefaultSBBPagination(
+            numberPages: numberPages,
+            currentPage: currentPage,
+          );
 }
 
 /// The default (non-floating) pagination.
@@ -115,18 +118,18 @@ class _FloatingSBBPagination extends StatelessWidget {
   }
 
   BoxDecoration _createBoxDecorationWith(SBBPaginationStyle style) => BoxDecoration(
-        borderRadius: BorderRadius.circular(_kFloatingPaddingHeight * 2),
-        color: style.floatingBackgroundColor,
-        boxShadow: [
-          BoxShadow(
-            color: SBBColors.black.withOpacity(0.2),
-            blurRadius: _kFloatingShadowBlurRadius,
-          )
-        ],
-      );
+    borderRadius: BorderRadius.circular(_kFloatingPaddingHeight * 2),
+    color: style.floatingBackgroundColor,
+    boxShadow: [
+      BoxShadow(
+        color: SBBColors.black.withOpacity(0.2),
+        blurRadius: _kFloatingShadowBlurRadius,
+      ),
+    ],
+  );
 
   EdgeInsets get _floatingPadding => const EdgeInsets.symmetric(
-        horizontal: _kFloatingPaddingWidth,
-        vertical: _kFloatingPaddingHeight,
-      );
+    horizontal: _kFloatingPaddingWidth,
+    vertical: _kFloatingPaddingHeight,
+  );
 }

@@ -101,23 +101,22 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
     bool? boldFont,
     Color? labelColor,
     TextTheme? redTextTheme,
-  }) =>
-      SBBBaseStyle(
-        primaryColor: primaryColor ?? this.primaryColor,
-        primaryColorDark: primaryColorDark ?? this.primaryColorDark,
-        primarySwatch: primarySwatch ?? this.primarySwatch,
-        backgroundColor: backgroundColor ?? this.backgroundColor,
-        defaultFontFamily: fontFamily ?? defaultFontFamily,
-        defaultTextColor: defaultTextColor ?? this.defaultTextColor,
-        defaultTextStyle: defaultTextStyle ?? this.defaultTextStyle,
-        dividerColor: dividerColor ?? this.dividerColor,
-        defaultRootContainerPadding: defaultRootContainerPadding ?? this.defaultRootContainerPadding,
-        iconColor: iconColor ?? this.iconColor,
-        brightness: brightness ?? this.brightness,
-        boldFont: boldFont ?? this.boldFont,
-        labelColor: labelColor ?? this.labelColor,
-        redTextTheme: redTextTheme ?? this.redTextTheme,
-      );
+  }) => SBBBaseStyle(
+    primaryColor: primaryColor ?? this.primaryColor,
+    primaryColorDark: primaryColorDark ?? this.primaryColorDark,
+    primarySwatch: primarySwatch ?? this.primarySwatch,
+    backgroundColor: backgroundColor ?? this.backgroundColor,
+    defaultFontFamily: fontFamily ?? defaultFontFamily,
+    defaultTextColor: defaultTextColor ?? this.defaultTextColor,
+    defaultTextStyle: defaultTextStyle ?? this.defaultTextStyle,
+    dividerColor: dividerColor ?? this.dividerColor,
+    defaultRootContainerPadding: defaultRootContainerPadding ?? this.defaultRootContainerPadding,
+    iconColor: iconColor ?? this.iconColor,
+    brightness: brightness ?? this.brightness,
+    boldFont: boldFont ?? this.boldFont,
+    labelColor: labelColor ?? this.labelColor,
+    redTextTheme: redTextTheme ?? this.redTextTheme,
+  );
 
   @override
   ThemeExtension<SBBBaseStyle> lerp(ThemeExtension<SBBBaseStyle>? other, double t) {
@@ -151,14 +150,14 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
 
   TextTheme createTextTheme({Color? colorOverride}) {
     value(double size, double height, {Color? color, String? fontFamily}) => TextStyle(
-          inherit: false,
-          fontSize: size,
-          height: height,
-          fontStyle: FontStyle.normal,
-          fontFamily: fontFamily ?? defaultFontFamily,
-          color: colorOverride ?? color ?? defaultTextColor,
-          textBaseline: TextBaseline.alphabetic,
-        );
+      inherit: false,
+      fontSize: size,
+      height: height,
+      fontStyle: FontStyle.normal,
+      fontFamily: fontFamily ?? defaultFontFamily,
+      color: colorOverride ?? color ?? defaultTextColor,
+      textBaseline: TextBaseline.alphabetic,
+    );
     return TextTheme(
       bodySmall: value(SBBTextStyles.smallFontSize, SBBTextStyles.smallFontHeight),
       bodyMedium: value(SBBTextStyles.mediumFontSize, SBBTextStyles.mediumFontHeight),
@@ -189,18 +188,19 @@ extension StyleExtension on SBBBaseStyle? {
   SBBBaseStyle merge(SBBBaseStyle? other) {
     if (this == null) return other ?? SBBBaseStyle();
     return this!.copyWith(
-      primaryColor: this!.primaryColor ?? other?.primaryColor,
-      primaryColorDark: this!.primaryColorDark ?? other?.primaryColorDark,
-      primarySwatch: this!.primarySwatch ?? other?.primarySwatch,
-      backgroundColor: this!.backgroundColor ?? other?.backgroundColor,
-      fontFamily: this!.defaultFontFamily ?? other?.defaultFontFamily,
-      defaultTextColor: this!.defaultTextColor ?? other?.defaultTextColor,
-      defaultTextStyle: this!.defaultTextStyle ?? other?.defaultTextStyle,
-      dividerColor: this!.dividerColor ?? other?.dividerColor,
-      defaultRootContainerPadding: this!.defaultRootContainerPadding ?? other?.defaultRootContainerPadding,
-      iconColor: this!.iconColor ?? other?.iconColor,
-      brightness: this!.brightness ?? other?.brightness,
-      redTextTheme: this?.redTextTheme ?? other?.redTextTheme,
-    ) as SBBBaseStyle;
+          primaryColor: this!.primaryColor ?? other?.primaryColor,
+          primaryColorDark: this!.primaryColorDark ?? other?.primaryColorDark,
+          primarySwatch: this!.primarySwatch ?? other?.primarySwatch,
+          backgroundColor: this!.backgroundColor ?? other?.backgroundColor,
+          fontFamily: this!.defaultFontFamily ?? other?.defaultFontFamily,
+          defaultTextColor: this!.defaultTextColor ?? other?.defaultTextColor,
+          defaultTextStyle: this!.defaultTextStyle ?? other?.defaultTextStyle,
+          dividerColor: this!.dividerColor ?? other?.dividerColor,
+          defaultRootContainerPadding: this!.defaultRootContainerPadding ?? other?.defaultRootContainerPadding,
+          iconColor: this!.iconColor ?? other?.iconColor,
+          brightness: this!.brightness ?? other?.brightness,
+          redTextTheme: this?.redTextTheme ?? other?.redTextTheme,
+        )
+        as SBBBaseStyle;
   }
 }

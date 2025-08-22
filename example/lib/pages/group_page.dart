@@ -8,8 +8,11 @@ class GroupPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    content(String text) =>
-        SizedBox(height: sbbDefaultSpacing * 2, width: double.infinity, child: Center(child: Text(text)));
+    content(String text) => SizedBox(
+      height: sbbDefaultSpacing * 2,
+      width: double.infinity,
+      child: Center(child: Text(text)),
+    );
     return ListView(
       padding: const EdgeInsets.all(sbbDefaultSpacing),
       children: <Widget>[
@@ -19,9 +22,15 @@ class GroupPage extends StatelessWidget {
         SizedBox(height: sbbDefaultSpacing),
         SBBGroup(color: SBBColors.royal, child: content('Different Color')),
         SizedBox(height: sbbDefaultSpacing),
-        SBBGroup(padding: EdgeInsets.symmetric(vertical: sbbDefaultSpacing), child: content('Extra padding')),
+        SBBGroup(
+          padding: EdgeInsets.symmetric(vertical: sbbDefaultSpacing),
+          child: content('Extra padding'),
+        ),
         SizedBox(height: sbbDefaultSpacing),
-        SBBGroup(margin: EdgeInsets.all(sbbDefaultSpacing * 4), child: content('Extra margin')),
+        SBBGroup(
+          margin: EdgeInsets.all(sbbDefaultSpacing * 4),
+          child: content('Extra margin'),
+        ),
       ],
     );
   }

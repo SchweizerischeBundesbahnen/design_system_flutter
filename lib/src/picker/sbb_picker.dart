@@ -55,17 +55,18 @@ class SBBPicker extends StatefulWidget {
     required SBBPickerScrollViewItemBuilder itemBuilder,
     bool looping = true,
   }) : this.custom(
-          key: key,
-          child: SBBPickerScrollView(
-            controller: controller ??
-                SBBPickerScrollController(
-                  initialItem: initialSelectedIndex,
-                ),
-            onSelectedItemChanged: onSelectedItemChanged,
-            itemBuilder: itemBuilder,
-            looping: looping,
-          ),
-        );
+         key: key,
+         child: SBBPickerScrollView(
+           controller:
+               controller ??
+               SBBPickerScrollController(
+                 initialItem: initialSelectedIndex,
+               ),
+           onSelectedItemChanged: onSelectedItemChanged,
+           itemBuilder: itemBuilder,
+           looping: looping,
+         ),
+       );
 
   /// Constructs a basic [SBBPicker].
   ///
@@ -92,20 +93,20 @@ class SBBPicker extends StatefulWidget {
     required List items,
     bool looping = true,
   }) : this(
-          key: key,
-          controller: controller,
-          initialSelectedIndex: initialSelectedIndex,
-          onSelectedItemChanged: onSelectedItemChanged,
-          itemBuilder: (BuildContext context, int index) {
-            if (!looping && (index < 0 || index >= items.length)) {
-              return null;
-            }
-            final item = items[index % items.length];
-            final itemLabel = item.toString();
-            return SBBPickerItem(itemLabel);
-          },
-          looping: false,
-        );
+         key: key,
+         controller: controller,
+         initialSelectedIndex: initialSelectedIndex,
+         onSelectedItemChanged: onSelectedItemChanged,
+         itemBuilder: (BuildContext context, int index) {
+           if (!looping && (index < 0 || index >= items.length)) {
+             return null;
+           }
+           final item = items[index % items.length];
+           final itemLabel = item.toString();
+           return SBBPickerItem(itemLabel);
+         },
+         looping: false,
+       );
 
   /// Constructs a fully customizable [SBBPicker]. This only builds the skeleton
   /// of the Picker where the [SBBPickerScrollView] is not included.

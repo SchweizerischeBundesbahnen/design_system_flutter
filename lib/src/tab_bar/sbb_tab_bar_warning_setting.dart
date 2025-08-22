@@ -13,10 +13,9 @@ class SBBTabBarWarningSetting {
     String? id,
     String? semantics,
     bool? shown,
-  }) =>
-      SBBTabBarWarningSetting(
-        id: id ?? this.id,
-        semantics: semantics ?? this.semantics,
-        shown: shown ?? this.shown,
-      );
+  }) => SBBTabBarWarningSetting(
+    id: id ?? this.id,
+    semantics: semantics ?? this.semantics,
+    shown: shown ?? this.shown,
+  );
 }

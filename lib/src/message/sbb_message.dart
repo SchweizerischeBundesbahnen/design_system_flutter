@@ -148,24 +148,24 @@ class SBBMessage extends StatelessWidget {
   }
 
   Text _title(TextTheme textTheme) => Text(
-        title,
-        style: textTheme.bodyMedium,
-        textAlign: TextAlign.center,
-      );
+    title,
+    style: textTheme.bodyMedium,
+    textAlign: TextAlign.center,
+  );
 
   Text _description(TextTheme textTheme) => Text(
-        description,
-        style: textTheme.labelSmall,
-        textAlign: TextAlign.center,
-      );
+    description,
+    style: textTheme.labelSmall,
+    textAlign: TextAlign.center,
+  );
 
   Widget _errorCode(TextTheme textTheme) => ExcludeSemantics(
-        child: Text(
-          messageCode!,
-          style: textTheme.labelSmall?.copyWith(fontSize: 12.0),
-          textAlign: TextAlign.center,
-        ),
-      );
+    child: Text(
+      messageCode!,
+      style: textTheme.labelSmall?.copyWith(fontSize: 12.0),
+      textAlign: TextAlign.center,
+    ),
+  );
 
   SBBIconButtonLarge _interactionButton() => SBBIconButtonLarge(icon: interactionIcon, onPressed: onInteraction);
 

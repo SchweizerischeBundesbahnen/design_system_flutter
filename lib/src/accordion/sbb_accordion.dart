@@ -46,10 +46,10 @@ class SBBAccordionItem {
     required String text,
     bool isExpanded = false,
   }) : this(
-          title: title,
-          body: Text(text),
-          isExpanded: isExpanded,
-        );
+         title: title,
+         body: Text(text),
+         isExpanded: isExpanded,
+       );
 
   /// The title text that's displayed in the header.
   final String title;
@@ -98,21 +98,22 @@ class SBBAccordion extends StatefulWidget {
     backgroundColor,
     borderColor,
   }) : this(
-          key: key,
-          children: [
-            SBBAccordionItem(
-              title: title,
-              body: body,
-              isExpanded: isExpanded,
-            ),
-          ],
-          titleMaxLines: titleMaxLines,
-          accordionCallback: (index, isExpanded) => singleAccordionCallback?.call(
-            isExpanded,
-          ),
-          backgroundColor: backgroundColor,
-          borderColor: borderColor,
-        );
+         key: key,
+         children: [
+           SBBAccordionItem(
+             title: title,
+             body: body,
+             isExpanded: isExpanded,
+           ),
+         ],
+         titleMaxLines: titleMaxLines,
+         accordionCallback:
+             (index, isExpanded) => singleAccordionCallback?.call(
+               isExpanded,
+             ),
+         backgroundColor: backgroundColor,
+         borderColor: borderColor,
+       );
 
   final List<SBBAccordionItem> children;
   final int? titleMaxLines;

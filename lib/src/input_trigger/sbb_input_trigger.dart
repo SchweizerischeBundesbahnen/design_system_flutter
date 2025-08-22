@@ -39,26 +39,26 @@ class SBBInputTrigger extends StatelessWidget {
     bool enabled = true,
     bool isLastElement = false,
   }) : this.custom(
-          key: key,
-          value: value,
-          labelText: labelText,
-          hintText: hintText,
-          errorText: errorText,
-          onPressed: onPressed,
-          prefixWidget: SBBInputTriggerIconWidget(
-            icon: prefixIcon,
-            enabled: enabled,
-            error: errorText?.isNotEmpty ?? false,
-          ),
-          suffixWidget: SBBInputTriggerIconWidget(
-            icon: suffixIcon,
-            enabled: enabled,
-            onPressed: onSuffixPressed,
-          ),
-          maxLines: maxLines,
-          enabled: enabled,
-          isLastElement: isLastElement,
-        );
+         key: key,
+         value: value,
+         labelText: labelText,
+         hintText: hintText,
+         errorText: errorText,
+         onPressed: onPressed,
+         prefixWidget: SBBInputTriggerIconWidget(
+           icon: prefixIcon,
+           enabled: enabled,
+           error: errorText?.isNotEmpty ?? false,
+         ),
+         suffixWidget: SBBInputTriggerIconWidget(
+           icon: suffixIcon,
+           enabled: enabled,
+           onPressed: onSuffixPressed,
+         ),
+         maxLines: maxLines,
+         enabled: enabled,
+         isLastElement: isLastElement,
+       );
 
   /// Constructs an [SBBInputTrigger] with custom prefix and suffix widgets.
   ///
@@ -248,9 +248,10 @@ class SBBInputTriggerIconWidget extends StatelessWidget {
     // also use left padding on right sight and then transform to the right for
     // symmetric splash effect
     return Container(
-      transform: Transform.translate(
-        offset: const Offset(rightPadding, 0.0),
-      ).transform,
+      transform:
+          Transform.translate(
+            offset: const Offset(rightPadding, 0.0),
+          ).transform,
       child: InkResponse(
         // splashRadius: 28.0,
         onTap: onPressed,

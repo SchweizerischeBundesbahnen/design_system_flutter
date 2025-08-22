@@ -12,10 +12,10 @@ class SBBStepper extends StatelessWidget {
     required List<SBBStepperItem> steps,
     required int activeStep,
     required OnStepPressedCallback onStepPressed,
-  })  : _steps = steps,
-        _activeStep = activeStep,
-        _onStepPressed = onStepPressed,
-        _colors = null;
+  }) : _steps = steps,
+       _activeStep = activeStep,
+       _onStepPressed = onStepPressed,
+       _colors = null;
 
   /// This variant of the SSB Stepper should be used on a red background.
   const SBBStepper.red({
@@ -23,10 +23,10 @@ class SBBStepper extends StatelessWidget {
     required List<SBBStepperItem> steps,
     required int activeStep,
     required OnStepPressedCallback onStepPressed,
-  })  : _steps = steps,
-        _activeStep = activeStep,
-        _onStepPressed = onStepPressed,
-        _colors = SBBStepperColors.red;
+  }) : _steps = steps,
+       _activeStep = activeStep,
+       _onStepPressed = onStepPressed,
+       _colors = SBBStepperColors.red;
 
   /// The list of steps.
   final List<SBBStepperItem> _steps;

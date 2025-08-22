@@ -173,14 +173,15 @@ class TypographyTest extends StatelessWidget {
             child: Column(
               spacing: sbbDefaultSpacing * 0.5,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: textStyles
-                  .map(
-                    (e) => Text(
-                      exampleText,
-                      style: e,
-                    ),
-                  )
-                  .toList(),
+              children:
+                  textStyles
+                      .map(
+                        (e) => Text(
+                          exampleText,
+                          style: e,
+                        ),
+                      )
+                      .toList(),
             ),
           ),
         ),
@@ -195,10 +196,13 @@ class TypographyRedThemeTest extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = SBBBaseStyle.of(context).redTextTheme;
-    return TypographyTest(name: 'typography_red_text_theme', textStyles: [
-      textTheme.bodyLarge,
-      textTheme.bodyMedium,
-      textTheme.bodySmall,
-    ]);
+    return TypographyTest(
+      name: 'typography_red_text_theme',
+      textStyles: [
+        textTheme.bodyLarge,
+        textTheme.bodyMedium,
+        textTheme.bodySmall,
+      ],
+    );
   }
 }

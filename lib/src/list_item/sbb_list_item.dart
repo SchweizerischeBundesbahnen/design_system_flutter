@@ -16,32 +16,33 @@ class SBBListItem extends StatefulWidget {
     bool isLastElement = false,
     required VoidCallback? onPressed,
   }) : this.custom(
-          key: key,
-          leadingIcon: leadingIcon,
-          title: title,
-          subtitle: subtitle,
-          titleMaxLines: titleMaxLines,
-          subtitleMaxLines: subtitleMaxLines,
-          isLastElement: isLastElement,
-          trailingWidget: trailingIcon != null
-              ? Builder(
-                  builder: (BuildContext context) {
-                    final style = SBBControlStyles.of(context).listItem!;
-                    final isEnabled = onPressed != null;
-                    return Padding(
-                      padding: const EdgeInsetsDirectional.only(
-                        end: sbbDefaultSpacing,
-                      ),
-                      child: Icon(
-                        trailingIcon,
-                        color: isEnabled ? style.iconColor : style.iconColorDisabled,
-                      ),
-                    );
-                  },
-                )
-              : null,
-          onPressed: onPressed,
-        );
+         key: key,
+         leadingIcon: leadingIcon,
+         title: title,
+         subtitle: subtitle,
+         titleMaxLines: titleMaxLines,
+         subtitleMaxLines: subtitleMaxLines,
+         isLastElement: isLastElement,
+         trailingWidget:
+             trailingIcon != null
+                 ? Builder(
+                   builder: (BuildContext context) {
+                     final style = SBBControlStyles.of(context).listItem!;
+                     final isEnabled = onPressed != null;
+                     return Padding(
+                       padding: const EdgeInsetsDirectional.only(
+                         end: sbbDefaultSpacing,
+                       ),
+                       child: Icon(
+                         trailingIcon,
+                         color: isEnabled ? style.iconColor : style.iconColorDisabled,
+                       ),
+                     );
+                   },
+                 )
+                 : null,
+         onPressed: onPressed,
+       );
 
   SBBListItem.button({
     Key? key,
@@ -55,24 +56,24 @@ class SBBListItem extends StatefulWidget {
     required IconData buttonIcon,
     required VoidCallback? onPressedButton,
   }) : this.custom(
-          key: key,
-          leadingIcon: leadingIcon,
-          title: title,
-          subtitle: subtitle,
-          titleMaxLines: titleMaxLines,
-          subtitleMaxLines: subtitleMaxLines,
-          isLastElement: isLastElement,
-          onPressed: onPressed,
-          trailingWidget: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: sbbDefaultSpacing * 0.5,
-            ),
-            child: SBBIconButtonSmall(
-              icon: buttonIcon,
-              onPressed: onPressed != null ? onPressedButton : null,
-            ),
-          ),
-        );
+         key: key,
+         leadingIcon: leadingIcon,
+         title: title,
+         subtitle: subtitle,
+         titleMaxLines: titleMaxLines,
+         subtitleMaxLines: subtitleMaxLines,
+         isLastElement: isLastElement,
+         onPressed: onPressed,
+         trailingWidget: Padding(
+           padding: const EdgeInsets.symmetric(
+             horizontal: sbbDefaultSpacing * 0.5,
+           ),
+           child: SBBIconButtonSmall(
+             icon: buttonIcon,
+             onPressed: onPressed != null ? onPressedButton : null,
+           ),
+         ),
+       );
 
   const SBBListItem.custom({
     super.key,
@@ -178,7 +179,7 @@ class _SBBListItemState extends State<SBBListItem> {
                                     maxLines: widget.subtitleMaxLines,
                                     overflow: wrapSubtitleTitle ? TextOverflow.clip : TextOverflow.ellipsis,
                                   ),
-                                )
+                                ),
                             ],
                           ),
                         ),
@@ -192,7 +193,7 @@ class _SBBListItemState extends State<SBBListItem> {
                     ],
                   ),
                 ),
-                if (!widget.isLastElement) const Divider()
+                if (!widget.isLastElement) const Divider(),
               ],
             ),
           ),

@@ -33,14 +33,14 @@ class SBBPromotionBox extends StatefulWidget {
     GestureTapCallback? onClose,
     String? onTapSemanticsHint,
   }) : this._base(
-          content: _DefaultContent(title: title, subtitle: subtitle, onTap: onTap, onClose: onClose),
-          key: key,
-          badgeText: badgeText,
-          onControllerCreated: onControllerCreated,
-          onTap: onTap,
-          onClose: onClose,
-          onTapSemanticsHint: onTapSemanticsHint,
-        );
+         content: _DefaultContent(title: title, subtitle: subtitle, onTap: onTap, onClose: onClose),
+         key: key,
+         badgeText: badgeText,
+         onControllerCreated: onControllerCreated,
+         onTap: onTap,
+         onClose: onClose,
+         onTapSemanticsHint: onTapSemanticsHint,
+       );
 
   /// Allows for complete customization of the content of the [SBBPromotionBox].
   const SBBPromotionBox.custom({
@@ -58,20 +58,20 @@ class SBBPromotionBox extends StatefulWidget {
     List<Color>? gradientColors,
     PromotionBoxStyle? style,
   }) : this._base(
-          content: content,
-          badgeText: badgeText,
-          key: key,
-          onControllerCreated: onControllerCreated,
-          onTap: onTap,
-          onTapSemanticsHint: onTapSemanticsHint,
-          onClose: null,
-          leading: leading,
-          trailing: trailing,
-          badgeColor: badgeColor,
-          badgeShadowColor: badgeShadowColor,
-          gradientColors: gradientColors,
-          style: style,
-        );
+         content: content,
+         badgeText: badgeText,
+         key: key,
+         onControllerCreated: onControllerCreated,
+         onTap: onTap,
+         onTapSemanticsHint: onTapSemanticsHint,
+         onClose: null,
+         leading: leading,
+         trailing: trailing,
+         badgeColor: badgeColor,
+         badgeShadowColor: badgeShadowColor,
+         gradientColors: gradientColors,
+         style: style,
+       );
 
   const SBBPromotionBox._base({
     required this.content,
@@ -87,8 +87,10 @@ class SBBPromotionBox extends StatefulWidget {
     this.badgeShadowColor,
     this.gradientColors,
     this.style,
-  }) : assert(!(style != null && (badgeColor != null || badgeShadowColor != null || gradientColors != null)),
-            'Cannot set PromotionBoxStyle in combination with badgeColor, badgeShadowColor or gradientColors.');
+  }) : assert(
+         !(style != null && (badgeColor != null || badgeShadowColor != null || gradientColors != null)),
+         'Cannot set PromotionBoxStyle in combination with badgeColor, badgeShadowColor or gradientColors.',
+       );
 
   /// The content between the [leading] and [trailing] Widgets.
   final Widget content;

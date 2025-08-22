@@ -137,7 +137,7 @@ class _SBBTextField extends State<SBBTextFormField> {
                       errorText: errorText,
                       hasFocus: _hasFocus,
                       isLastElement: widget.isLastElement,
-                    )
+                    ),
                   ],
                 ),
                 if (widget.suffixIcon != null)
@@ -145,7 +145,7 @@ class _SBBTextField extends State<SBBTextFormField> {
                     top: -4.0,
                     right: 0.0,
                     child: widget.suffixIcon!,
-                  )
+                  ),
               ],
             ),
           ),

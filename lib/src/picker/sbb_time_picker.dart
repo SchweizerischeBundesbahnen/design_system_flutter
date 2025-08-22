@@ -39,18 +39,18 @@ class SBBTimePicker extends StatefulWidget {
     TimeOfDay? minimumTime,
     TimeOfDay? maximumTime,
     this.minuteInterval = _defaultMinuteInterval,
-  })  : assert(
-          minuteInterval > 0 && TimeOfDay.minutesPerHour % minuteInterval == 0,
-          'minute interval is not a positive integer factor of 60',
-        ),
-        initialTime = _initialTime(
-          initialTime,
-          minimumTime,
-          maximumTime,
-          minuteInterval,
-        ),
-        minimumTime = _minimumTime(minimumTime, minuteInterval),
-        maximumTime = _maximumTime(maximumTime, minuteInterval);
+  }) : assert(
+         minuteInterval > 0 && TimeOfDay.minutesPerHour % minuteInterval == 0,
+         'minute interval is not a positive integer factor of 60',
+       ),
+       initialTime = _initialTime(
+         initialTime,
+         minimumTime,
+         maximumTime,
+         minuteInterval,
+       ),
+       minimumTime = _minimumTime(minimumTime, minuteInterval),
+       maximumTime = _maximumTime(maximumTime, minuteInterval);
 
   final ValueChanged<TimeOfDay>? onTimeChanged;
   final TimeOfDay initialTime;
@@ -121,19 +121,21 @@ class SBBTimePicker extends StatefulWidget {
           Padding(
             padding: const EdgeInsets.all(sbbDefaultSpacing),
             child: ListenableBuilder(
-                listenable: selectedButtonEnabled,
-                builder: (context, _) {
-                  final onPressed = selectedButtonEnabled.value
-                      ? () {
+              listenable: selectedButtonEnabled,
+              builder: (context, _) {
+                final onPressed =
+                    selectedButtonEnabled.value
+                        ? () {
                           Navigator.of(context).pop();
                           onTimeChanged?.call(selectedTime);
                         }
-                      : null;
-                  return SBBPrimaryButton(
-                    label: selectedButtonLabel,
-                    onPressed: onPressed,
-                  );
-                }),
+                        : null;
+                return SBBPrimaryButton(
+                  label: selectedButtonLabel,
+                  onPressed: onPressed,
+                );
+              },
+            ),
           ),
         ],
       ),
@@ -206,11 +208,12 @@ class _SBBTimePickerTimeState extends _TimeBasedPickerState<SBBTimePicker> {
 
   void _initHourController() {
     _hourController = SBBPickerScrollController(
-        initialItem: _hourToIndex(_selectedTime.hour),
-        onTargetItemSelected: (int index) {
-          final closestValidHour = _getClosestValidTime(hourIndex: index);
-          _hourValueNotifier.value = closestValidHour.hour;
-        });
+      initialItem: _hourToIndex(_selectedTime.hour),
+      onTargetItemSelected: (int index) {
+        final closestValidHour = _getClosestValidTime(hourIndex: index);
+        _hourValueNotifier.value = closestValidHour.hour;
+      },
+    );
     _hourController.addScrollingStateListener(_onScrollingStateChanged);
   }
 
@@ -223,22 +226,24 @@ class _SBBTimePickerTimeState extends _TimeBasedPickerState<SBBTimePicker> {
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(builder: (_, constraints) {
-      _adjustItemSizes(constraints.maxWidth);
+    return LayoutBuilder(
+      builder: (_, constraints) {
+        _adjustItemSizes(constraints.maxWidth);
 
-      return SBBPicker.custom(
-        child: Row(
-          children: [
-            Expanded(
-              child: _buildHourPickerScrollView(context),
-            ),
-            Expanded(
-              child: _buildMinutePickerScrollView(context),
-            ),
-          ],
-        ),
-      );
-    });
+        return SBBPicker.custom(
+          child: Row(
+            children: [
+              Expanded(
+                child: _buildHourPickerScrollView(context),
+              ),
+              Expanded(
+                child: _buildMinutePickerScrollView(context),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   @override
