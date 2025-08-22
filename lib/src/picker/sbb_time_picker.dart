@@ -43,12 +43,7 @@ class SBBTimePicker extends StatefulWidget {
          minuteInterval > 0 && TimeOfDay.minutesPerHour % minuteInterval == 0,
          'minute interval is not a positive integer factor of 60',
        ),
-       initialTime = _initialTime(
-         initialTime,
-         minimumTime,
-         maximumTime,
-         minuteInterval,
-       ),
+       initialTime = _initialTime(initialTime, minimumTime, maximumTime, minuteInterval),
        minimumTime = _minimumTime(minimumTime, minuteInterval),
        maximumTime = _maximumTime(maximumTime, minuteInterval);
 
@@ -80,12 +75,7 @@ class SBBTimePicker extends StatefulWidget {
 
     final modalTitle = title ?? localizations.timePickerInputHelpText;
 
-    final modalTime = _initialTime(
-      initialTime,
-      minimumTime,
-      maximumTime,
-      minuteInterval,
-    );
+    final modalTime = _initialTime(initialTime, minimumTime, maximumTime, minuteInterval);
 
     final acceptInitialSelection = initialTime == null;
     final selectedButtonEnabled = ValueNotifier(acceptInitialSelection);
@@ -100,9 +90,7 @@ class SBBTimePicker extends StatefulWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: sbbDefaultSpacing,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
             child: SBBGroup(
               child: SBBTimePicker(
                 initialTime: initialTime,
@@ -130,10 +118,7 @@ class SBBTimePicker extends StatefulWidget {
                           onTimeChanged?.call(selectedTime);
                         }
                         : null;
-                return SBBPrimaryButton(
-                  label: selectedButtonLabel,
-                  onPressed: onPressed,
-                );
+                return SBBPrimaryButton(label: selectedButtonLabel, onPressed: onPressed);
               },
             ),
           ),
@@ -218,9 +203,7 @@ class _SBBTimePickerTimeState extends _TimeBasedPickerState<SBBTimePicker> {
   }
 
   void _initMinuteController() {
-    _minuteController = SBBPickerScrollController(
-      initialItem: _minuteToIndex(_selectedTime.minute),
-    );
+    _minuteController = SBBPickerScrollController(initialItem: _minuteToIndex(_selectedTime.minute));
     _minuteController.addScrollingStateListener(_onScrollingStateChanged);
   }
 
@@ -233,12 +216,8 @@ class _SBBTimePickerTimeState extends _TimeBasedPickerState<SBBTimePicker> {
         return SBBPicker.custom(
           child: Row(
             children: [
-              Expanded(
-                child: _buildHourPickerScrollView(context),
-              ),
-              Expanded(
-                child: _buildMinutePickerScrollView(context),
-              ),
+              Expanded(child: _buildHourPickerScrollView(context)),
+              Expanded(child: _buildMinutePickerScrollView(context)),
             ],
           ),
         );
@@ -323,14 +302,9 @@ class _SBBTimePickerTimeState extends _TimeBasedPickerState<SBBTimePicker> {
     final selectedHour = hour ?? _selectedTime.hour;
     final selectedMinute = minute ?? _selectedTime.minute;
 
-    _selectedTime = TimeOfDay(
-      hour: selectedHour,
-      minute: selectedMinute,
-    );
+    _selectedTime = TimeOfDay(hour: selectedHour, minute: selectedMinute);
 
-    _selectedTimeValueNotifier.value = _getClosestValidTime(
-      hourIndex: selectedHour,
-    );
+    _selectedTimeValueNotifier.value = _getClosestValidTime(hourIndex: selectedHour);
   }
 
   void _onScrollingStateChanged() {

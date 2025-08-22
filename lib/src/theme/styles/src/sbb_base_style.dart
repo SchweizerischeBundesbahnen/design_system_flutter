@@ -23,34 +23,15 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
     this.redTextTheme = redTextTheme ?? createTextTheme(colorOverride: redColor);
   }
 
-  factory SBBBaseStyle.$default({
-    required Brightness brightness,
-    bool boldFont = false,
-  }) {
+  factory SBBBaseStyle.$default({required Brightness brightness, bool boldFont = false}) {
     final isLight = brightness == Brightness.light;
     return SBBBaseStyle(
       primaryColor: SBBColors.red,
       primaryColorDark: SBBColors.red125,
-      primarySwatch: MaterialColor(
-        SBBColors.red.value,
-        const <int, Color>{
-          50: SBBColors.red,
-          100: SBBColors.red,
-          200: SBBColors.red,
-          300: SBBColors.red,
-          400: SBBColors.red,
-          500: SBBColors.red,
-          600: SBBColors.red,
-          700: SBBColors.red,
-          800: SBBColors.red,
-          900: SBBColors.red,
-        },
-      ),
+      primarySwatch: _sbbPrimarySwatchRed(),
       defaultFontFamily: sbbFont,
       defaultTextColor: resolve(isLight, SBBColors.black, SBBColors.white),
-      defaultTextStyle: SBBTextStyles.mediumLight.copyWith(
-        color: resolve(isLight, SBBColors.black, SBBColors.white),
-      ),
+      defaultTextStyle: SBBTextStyles.mediumLight.copyWith(color: resolve(isLight, SBBColors.black, SBBColors.white)),
       backgroundColor: resolve(isLight, SBBColors.milk, SBBColors.black),
       dividerColor: resolve(isLight, SBBColors.cloud, SBBColors.iron),
       defaultRootContainerPadding: sbbDefaultSpacing,
@@ -60,6 +41,19 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
       labelColor: resolve(isLight, SBBColors.granite, SBBColors.graphite),
     );
   }
+
+  static MaterialColor _sbbPrimarySwatchRed() => MaterialColor(SBBColors.red.value, const <int, Color>{
+    50: SBBColors.red,
+    100: SBBColors.red,
+    200: SBBColors.red,
+    300: SBBColors.red,
+    400: SBBColors.red,
+    500: SBBColors.red,
+    600: SBBColors.red,
+    700: SBBColors.red,
+    800: SBBColors.red,
+    900: SBBColors.red,
+  });
 
   T $resolve<T>(T lightThemeValue, T darkThemeValue) {
     final isLight = brightness == Brightness.light;

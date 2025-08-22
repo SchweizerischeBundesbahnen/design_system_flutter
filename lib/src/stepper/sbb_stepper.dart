@@ -77,14 +77,7 @@ class SBBStepper extends StatelessWidget {
           widgets.add(circle);
           // If the current step is not the last step create a connector line.
           if (i <= _steps.length - 1) {
-            final line = PositionedDirectional(
-              start: x + 32,
-              top: 16,
-              child: _Line(
-                colors: colors,
-                width: lineWidth,
-              ),
-            );
+            final line = PositionedDirectional(start: x + 32, top: 16, child: _Line(colors: colors, width: lineWidth));
             widgets.add(line);
           }
           // If this is the active step add the label below the circle. If the
@@ -117,10 +110,7 @@ class SBBStepper extends StatelessWidget {
               child: ExcludeSemantics(
                 child: Text(
                   step.label,
-                  style: baseStyle.themedTextStyle(
-                    textStyle: SBBTextStyles.smallLight,
-                    color: colors.label,
-                  ),
+                  style: baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallLight, color: colors.label),
                   textAlign: textAlign,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -129,11 +119,7 @@ class SBBStepper extends StatelessWidget {
             widgets.add(label);
           }
         }
-        return SizedBox(
-          width: width,
-          height: 56,
-          child: Stack(children: widgets),
-        );
+        return SizedBox(width: width, height: 56, child: Stack(children: widgets));
       },
     );
   }
@@ -152,13 +138,7 @@ class SBBStepper extends StatelessWidget {
 // Internal
 
 class _Circle extends StatelessWidget {
-  const _Circle({
-    required this.colors,
-    required this.index,
-    required this.active,
-    this.icon,
-    this.onPressed,
-  });
+  const _Circle({required this.colors, required this.index, required this.active, this.icon, this.onPressed});
 
   final SBBStepperColors colors;
   final int index;
@@ -174,54 +154,34 @@ class _Circle extends StatelessWidget {
         clipBehavior: Clip.antiAlias,
         color: colors.circleBackground(active),
         shape: _shape(context),
-        child: InkWell(
-          onTap: onPressed,
-          child: Center(
-            child: _iconOrNumber(context),
-          ),
-        ),
+        child: InkWell(onTap: onPressed, child: Center(child: _iconOrNumber(context))),
       ),
     );
   }
 
-  ShapeBorder _shape(BuildContext context) {
-    if (active) {
-      return const CircleBorder();
-    }
-    return CircleBorder(
-      side: BorderSide(
-        color: colors.circleBorder(active),
-        width: 1,
-      ),
-    );
-  }
+  ShapeBorder _shape(BuildContext context) =>
+      active
+          ? CircleBorder()
+          : CircleBorder(
+            side: BorderSide(color: colors.circleBorder(active), width: 1),
+          );
 
   Widget _iconOrNumber(BuildContext context) {
     if (icon != null) {
-      return Icon(
-        icon,
-        size: 24,
-        color: colors.circleContent(active),
-      );
+      return Icon(icon, size: 24, color: colors.circleContent(active));
     } else {
       final baseStyle = SBBBaseStyle.of(context);
       final number = index + 1;
       return Text(
         number.toString(),
-        style: baseStyle.themedTextStyle(
-          textStyle: SBBTextStyles.mediumLight,
-          color: colors.circleContent(active),
-        ),
+        style: baseStyle.themedTextStyle(textStyle: SBBTextStyles.mediumLight, color: colors.circleContent(active)),
       );
     }
   }
 }
 
 class _Line extends StatelessWidget {
-  const _Line({
-    required this.colors,
-    required this.width,
-  });
+  const _Line({required this.colors, required this.width});
 
   final SBBStepperColors colors;
   final double width;

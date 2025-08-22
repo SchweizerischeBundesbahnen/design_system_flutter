@@ -3,12 +3,7 @@ import 'package:flutter/material.dart';
 import '../../sbb_design_system_mobile.dart';
 
 class TabItemWidget extends StatelessWidget {
-  const TabItemWidget(
-    this.icon, {
-    super.key,
-    this.selected = false,
-    this.warning,
-  });
+  const TabItemWidget(this.icon, {super.key, this.selected = false, this.warning});
 
   static const portraitSize = 44.0;
   static const landscapeSize = 36.0;
@@ -37,18 +32,12 @@ class TabItemWidget extends StatelessWidget {
     IconData resolvedIcon = icon;
 
     if (warning != null && !warning!.shown) {
-      decoration = const BoxDecoration(
-        color: SBBColors.red,
-        shape: BoxShape.circle,
-      );
+      decoration = const BoxDecoration(color: SBBColors.red, shape: BoxShape.circle);
       containerColor = null;
       iconColor = SBBColors.white;
       resolvedIcon = SBBIcons.sign_exclamation_point_small;
     } else if (selected) {
-      decoration = BoxDecoration(
-        color: backgroundColor,
-        shape: BoxShape.circle,
-      );
+      decoration = BoxDecoration(color: backgroundColor, shape: BoxShape.circle);
       containerColor = null;
     }
 

@@ -62,21 +62,11 @@ class SBBTabBarController {
 
   /// Initializing the controller with the animation controller
   void initialize(TickerProvider vsync) {
-    _animationController = AnimationController(
-      vsync: vsync,
-      duration: kThemeAnimationDuration,
-    )..addListener(
-      () {
-        currentData = SBBTabBarNavigationData(
-          selectedTab,
-          _nextTab,
-          _animation.value,
-          hover,
-        );
-        _navigationController.add(currentData);
-        updateCurveAnimation();
-      },
-    );
+    _animationController = AnimationController(vsync: vsync, duration: kThemeAnimationDuration)..addListener(() {
+      currentData = SBBTabBarNavigationData(selectedTab, _nextTab, _animation.value, hover);
+      _navigationController.add(currentData);
+      updateCurveAnimation();
+    });
     _animation = Tween(begin: 0.0, end: 1.0).animate(_animationController);
   }
 

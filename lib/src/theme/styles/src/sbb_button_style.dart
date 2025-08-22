@@ -90,10 +90,7 @@ class SBBButtonStyle {
   );
 
   ButtonStyle toButtonStyle() => ButtonStyle(
-    overlayColor: SBBTheme.resolveStatesWith(
-      defaultValue: backgroundColor!,
-      pressedValue: backgroundColorHighlighted,
-    ),
+    overlayColor: SBBTheme.resolveStatesWith(defaultValue: backgroundColor!, pressedValue: backgroundColorHighlighted),
     backgroundColor: SBBTheme.resolveStatesWith(
       defaultValue: backgroundColor!,
       pressedValue: backgroundColor,

@@ -1,13 +1,7 @@
 part of 'sbb_tab_bar.dart';
 
 class _TabIconDelegate extends MultiChildLayoutDelegate {
-  _TabIconDelegate(
-    this.items,
-    this.selectedTab,
-    this.portrait,
-    this.onPositioned,
-    this.gestureInsets,
-  );
+  _TabIconDelegate(this.items, this.selectedTab, this.portrait, this.onPositioned, this.gestureInsets);
 
   final List<SBBTabBarItem> items;
   final SBBTabBarItem selectedTab;

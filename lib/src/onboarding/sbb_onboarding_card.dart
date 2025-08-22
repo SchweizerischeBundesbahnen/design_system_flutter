@@ -3,24 +3,10 @@ import 'package:flutter/material.dart';
 import '../../sbb_design_system_mobile.dart';
 
 class SBBOnboardingCard extends StatelessWidget {
-  const SBBOnboardingCard({
-    super.key,
-    required this.widgetBuilder,
-    this.onDismissed,
-  });
+  const SBBOnboardingCard({super.key, required this.widgetBuilder, this.onDismissed});
 
-  SBBOnboardingCard.basic({
-    required String title,
-    required String content,
-    VoidCallback? onDismissed,
-    Key? key,
-  }) : this.extended(
-         title: title,
-         content: content,
-         customContent: null,
-         onDismissed: onDismissed,
-         key: key,
-       );
+  SBBOnboardingCard.basic({required String title, required String content, VoidCallback? onDismissed, Key? key})
+    : this.extended(title: title, content: content, customContent: null, onDismissed: onDismissed, key: key);
 
   SBBOnboardingCard.extended({
     required String title,
@@ -56,19 +42,11 @@ class SBBOnboardingCard extends StatelessWidget {
   final VoidCallback? onDismissed;
 
   @override
-  Widget build(BuildContext context) => widgetBuilder(
-    context,
-    MediaQuery.of(context).orientation,
-  );
+  Widget build(BuildContext context) => widgetBuilder(context, MediaQuery.of(context).orientation);
 }
 
 class _VerticalCard extends StatelessWidget {
-  const _VerticalCard({
-    required this.title,
-    required this.content,
-    this.embeddedChild,
-    this.customContent,
-  });
+  const _VerticalCard({required this.title, required this.content, this.embeddedChild, this.customContent});
 
   final String title;
   final String content;
@@ -79,13 +57,7 @@ class _VerticalCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Expanded(
-          child: SizedBox(
-            height: 200,
-            width: double.infinity,
-            child: embeddedChild,
-          ),
-        ),
+        Expanded(child: SizedBox(height: 200, width: double.infinity, child: embeddedChild)),
         const SizedBox(height: 16.0),
         MergeSemantics(
           child: Column(
@@ -96,10 +68,7 @@ class _VerticalCard extends StatelessWidget {
                   title,
                   style: SBBTextStyles.largeBold.copyWith(
                     height: 22.0 / 18.0,
-                    color: SBBBaseStyle.of(context).themeValue(
-                      SBBColors.black,
-                      SBBColors.white,
-                    ),
+                    color: SBBBaseStyle.of(context).themeValue(SBBColors.black, SBBColors.white),
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -109,10 +78,7 @@ class _VerticalCard extends StatelessWidget {
                 child: Text(
                   content,
                   style: SBBTextStyles.mediumLight.copyWith(
-                    color: SBBBaseStyle.of(context).themeValue(
-                      SBBColors.black,
-                      SBBColors.white,
-                    ),
+                    color: SBBBaseStyle.of(context).themeValue(SBBColors.black, SBBColors.white),
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -127,12 +93,7 @@ class _VerticalCard extends StatelessWidget {
 }
 
 class _HorizontalCard extends StatelessWidget {
-  const _HorizontalCard({
-    required this.title,
-    required this.content,
-    this.embeddedChild,
-    this.customContent,
-  });
+  const _HorizontalCard({required this.title, required this.content, this.embeddedChild, this.customContent});
 
   final String title;
   final String content;
@@ -143,10 +104,7 @@ class _HorizontalCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: <Widget>[
-        if (embeddedChild != null)
-          Flexible(
-            child: embeddedChild!,
-          ),
+        if (embeddedChild != null) Flexible(child: embeddedChild!),
         Flexible(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -161,10 +119,7 @@ class _HorizontalCard extends StatelessWidget {
                         title,
                         style: SBBTextStyles.largeBold.copyWith(
                           height: 22.0 / 18.0,
-                          color: SBBBaseStyle.of(context).themeValue(
-                            SBBColors.black,
-                            SBBColors.white,
-                          ),
+                          color: SBBBaseStyle.of(context).themeValue(SBBColors.black, SBBColors.white),
                         ),
                         textAlign: TextAlign.center,
                       ),
@@ -174,10 +129,7 @@ class _HorizontalCard extends StatelessWidget {
                       child: Text(
                         content,
                         style: SBBTextStyles.mediumLight.copyWith(
-                          color: SBBBaseStyle.of(context).themeValue(
-                            SBBColors.black,
-                            SBBColors.white,
-                          ),
+                          color: SBBBaseStyle.of(context).themeValue(SBBColors.black, SBBColors.white),
                         ),
                         textAlign: TextAlign.center,
                       ),

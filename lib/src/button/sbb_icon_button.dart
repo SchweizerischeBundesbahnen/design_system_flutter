@@ -64,12 +64,7 @@ class SBBIconButtonLarge extends StatelessWidget {
 ///
 /// * <https://digital.sbb.ch/en/design-system/mobile/components/button/>
 class SBBIconButtonSmall extends StatelessWidget {
-  const SBBIconButtonSmall({
-    super.key,
-    required this.icon,
-    required this.onPressed,
-    this.focusNode,
-  });
+  const SBBIconButtonSmall({super.key, required this.icon, required this.onPressed, this.focusNode});
 
   final IconData icon;
   final VoidCallback? onPressed;
@@ -96,12 +91,7 @@ class SBBIconButtonSmall extends StatelessWidget {
 ///
 /// If [onPressed] callback is null, then the button will be disabled.
 class SBBIconButtonSmallNegative extends StatelessWidget {
-  const SBBIconButtonSmallNegative({
-    super.key,
-    required this.icon,
-    required this.onPressed,
-    this.focusNode,
-  });
+  const SBBIconButtonSmallNegative({super.key, required this.icon, required this.onPressed, this.focusNode});
 
   final IconData icon;
   final VoidCallback? onPressed;
@@ -138,16 +128,10 @@ class _SBBIconButtonSmallRaw extends StatelessWidget {
   Widget build(BuildContext context) {
     final baseStyle = Theme.of(context).textButtonTheme.style?.copyWith(
       minimumSize: SBBTheme.allStates(
-        const Size(
-          SBBInternal.defaultButtonHeightSmall,
-          SBBInternal.defaultButtonHeightSmall,
-        ),
+        const Size(SBBInternal.defaultButtonHeightSmall, SBBInternal.defaultButtonHeightSmall),
       ),
       fixedSize: SBBTheme.allStates(
-        const Size(
-          SBBInternal.defaultButtonHeightSmall,
-          SBBInternal.defaultButtonHeightSmall,
-        ),
+        const Size(SBBInternal.defaultButtonHeightSmall, SBBInternal.defaultButtonHeightSmall),
       ),
       padding: SBBTheme.allStates(EdgeInsets.zero),
       side: SBBTheme.allStates(const BorderSide(style: BorderStyle.none)),
@@ -183,10 +167,7 @@ class _SBBIconButtonSmallRaw extends StatelessWidget {
 /// of the child. This increases the size of the button and the button's
 /// "tap target", but not its material or its ink splashes.
 class _InputPadding extends SingleChildRenderObjectWidget {
-  const _InputPadding({
-    super.child,
-    required this.minSize,
-  });
+  const _InputPadding({super.child, required this.minSize});
 
   final Size minSize;
 
@@ -257,10 +238,7 @@ class _RenderInputPadding extends RenderShiftedBox {
 
   @override
   Size computeDryLayout(BoxConstraints constraints) {
-    return _computeSize(
-      constraints: constraints,
-      layoutChild: ChildLayoutHelper.dryLayoutChild,
-    );
+    return _computeSize(constraints: constraints, layoutChild: ChildLayoutHelper.dryLayoutChild);
   }
 
   // add this method as soon as 3.19.6 is removed
@@ -280,10 +258,7 @@ class _RenderInputPadding extends RenderShiftedBox {
 
   @override
   void performLayout() {
-    size = _computeSize(
-      constraints: constraints,
-      layoutChild: ChildLayoutHelper.layoutChild,
-    );
+    size = _computeSize(constraints: constraints, layoutChild: ChildLayoutHelper.layoutChild);
     if (child != null) {
       final BoxParentData childParentData = child!.parentData! as BoxParentData;
       childParentData.offset = Alignment.center.alongOffset(size - child!.size as Offset);

@@ -50,11 +50,7 @@ class SBBInputTrigger extends StatelessWidget {
            enabled: enabled,
            error: errorText?.isNotEmpty ?? false,
          ),
-         suffixWidget: SBBInputTriggerIconWidget(
-           icon: suffixIcon,
-           enabled: enabled,
-           onPressed: onSuffixPressed,
-         ),
+         suffixWidget: SBBInputTriggerIconWidget(icon: suffixIcon, enabled: enabled, onPressed: onSuffixPressed),
          maxLines: maxLines,
          enabled: enabled,
          isLastElement: isLastElement,
@@ -127,9 +123,7 @@ class SBBInputTrigger extends StatelessWidget {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      child: _buildInputContent(style),
-                    ),
+                    Expanded(child: _buildInputContent(style)),
                     suffixWidget,
                   ],
                 ),
@@ -149,12 +143,7 @@ class SBBInputTrigger extends StatelessWidget {
     final verticalPaddingWidget = SizedBox(height: _verticalPadding);
 
     // widget displaying the input label
-    final labelWidget = Text(
-      _labelText,
-      style: style.labelTextStyle!,
-      maxLines: 1,
-      overflow: TextOverflow.ellipsis,
-    );
+    final labelWidget = Text(_labelText, style: style.labelTextStyle!, maxLines: 1, overflow: TextOverflow.ellipsis);
 
     // widget displaying the input value
     final valueWidget = Padding(
@@ -172,12 +161,7 @@ class SBBInputTrigger extends StatelessWidget {
     if (_hasError) {
       bottomWidget = Padding(
         padding: const EdgeInsets.only(bottom: sbbDefaultSpacing * 0.5),
-        child: Text(
-          _errorText,
-          style: style.errorTextStyle,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-        ),
+        child: Text(_errorText, style: style.errorTextStyle, maxLines: 1, overflow: TextOverflow.ellipsis),
       );
     }
 
@@ -224,11 +208,7 @@ class SBBInputTriggerIconWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (icon == null) {
-      return const SizedBox(
-        width: sbbDefaultSpacing,
-      );
-    }
+    if (icon == null) return const SizedBox(width: sbbDefaultSpacing);
 
     final style = SBBControlStyles.of(context).textField!;
     final iconColor = enabled ? (error ? style.prefixIconColorError : style.iconColor) : style.iconColorDisabled;
@@ -248,18 +228,12 @@ class SBBInputTriggerIconWidget extends StatelessWidget {
     // also use left padding on right sight and then transform to the right for
     // symmetric splash effect
     return Container(
-      transform:
-          Transform.translate(
-            offset: const Offset(rightPadding, 0.0),
-          ).transform,
+      transform: Transform.translate(offset: const Offset(rightPadding, 0.0)).transform,
       child: InkResponse(
         // splashRadius: 28.0,
         onTap: onPressed,
         child: Padding(
-          padding: const EdgeInsets.symmetric(
-            vertical: verticalPadding,
-            horizontal: leftPadding,
-          ),
+          padding: const EdgeInsets.symmetric(vertical: verticalPadding, horizontal: leftPadding),
           child: Icon(icon, color: iconColor),
         ),
       ),

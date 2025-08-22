@@ -47,21 +47,14 @@ class SBBDateInput extends StatefulWidget {
 
 class _SBBDateInputState extends State<SBBDateInput> {
   late final DateFormat _dateFormat =
-      widget.dateFormat ??
-      DateFormat.yMMMMd(
-        Localizations.maybeLocaleOf(context).toString(),
-      );
+      widget.dateFormat ?? DateFormat.yMMMMd(Localizations.maybeLocaleOf(context).toString());
 
   String get _valueText {
     var value = widget.value;
     if (value == null) {
       return '';
     }
-    value = SBBDatePicker._initialDate(
-      widget.value,
-      widget.minimumDate,
-      widget.maximumDate,
-    );
+    value = SBBDatePicker._initialDate(widget.value, widget.minimumDate, widget.maximumDate);
     return _dateFormat.format(value);
   }
 

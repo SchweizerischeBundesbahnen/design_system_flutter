@@ -13,27 +13,11 @@ void main() {
       builder: (context) {
         return Column(
           children: [
-            SBBPromotionBox(
-              badgeText: 'Default',
-              title: title,
-              subtitle: description,
-              onClose: () {},
-            ),
+            SBBPromotionBox(badgeText: 'Default', title: title, subtitle: description, onClose: () {}),
             const SizedBox(height: 8.0),
-            SBBPromotionBox(
-              badgeText: 'onClose null',
-              title: title,
-              subtitle: description,
-              onClose: null,
-            ),
+            SBBPromotionBox(badgeText: 'onClose null', title: title, subtitle: description, onClose: null),
             const SizedBox(height: 8.0),
-            SBBPromotionBox(
-              badgeText: 'Clickable',
-              title: title,
-              subtitle: description,
-              onTap: () {},
-              onClose: () {},
-            ),
+            SBBPromotionBox(badgeText: 'Clickable', title: title, subtitle: description, onTap: () {}, onClose: () {}),
             const SizedBox(height: 8.0),
             SBBPromotionBox(
               badgeText: 'With way too long title and badge text',

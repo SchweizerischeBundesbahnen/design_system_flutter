@@ -8,12 +8,7 @@ import '../../sbb_design_system_mobile.dart';
 ///
 /// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/textfield>
 class SBBTextFieldUnderline extends StatelessWidget {
-  const SBBTextFieldUnderline({
-    this.errorText,
-    required this.hasFocus,
-    this.isLastElement = false,
-    super.key,
-  });
+  const SBBTextFieldUnderline({this.errorText, required this.hasFocus, this.isLastElement = false, super.key});
 
   final String? errorText;
   final bool hasFocus;
@@ -26,13 +21,7 @@ class SBBTextFieldUnderline extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (errorText != null)
-          Padding(
-            padding: const EdgeInsets.only(bottom: 9.0),
-            child: Text(
-              errorText!,
-              style: style?.errorTextStyle,
-            ),
-          ),
+          Padding(padding: const EdgeInsets.only(bottom: 9.0), child: Text(errorText!, style: style?.errorTextStyle)),
         Divider(
           color:
               errorText == null

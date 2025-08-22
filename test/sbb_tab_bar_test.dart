@@ -1,6 +1,6 @@
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import 'test_app.dart';
 
@@ -20,17 +20,8 @@ void main() {
     final items6 = Iterable.generate(6, (i) => _DemoItem('${i}_f', icons[i % icons.length])).toList();
     final widget = Column(
       children: [
-        SBBTabBar.items(
-          items: items,
-          onTabChanged: (tab) async {},
-          onTap: (tab) {},
-        ),
-        SBBTabBar.items(
-          items: items2,
-          onTabChanged: (tab) async {},
-          initialItem: items2.last,
-          onTap: (tab) {},
-        ),
+        SBBTabBar.items(items: items, onTabChanged: (tab) async {}, onTap: (tab) {}),
+        SBBTabBar.items(items: items2, onTabChanged: (tab) async {}, initialItem: items2.last, onTap: (tab) {}),
         SBBTabBar.items(
           items: items3,
           onTabChanged: (tab) async {},

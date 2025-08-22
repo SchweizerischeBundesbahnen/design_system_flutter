@@ -46,13 +46,7 @@ class SBBLinkTextState extends State<SBBLinkText> {
   final _isHoveredValues = [];
 
   @override
-  Widget build(BuildContext context) {
-    return RichText(
-      text: TextSpan(
-        children: _textSpans(),
-      ),
-    );
-  }
+  Widget build(BuildContext context) => RichText(text: TextSpan(children: _textSpans()));
 
   List<TextSpan> _textSpans() {
     final style = SBBBaseStyle.of(context);
@@ -63,12 +57,7 @@ class SBBLinkTextState extends State<SBBLinkText> {
     final List<TextSpan> inlineSpans = [];
     for (var i = 0; i < math.max(plainTextSections.length, linkSections.length); i++) {
       if (i < plainTextSections.length) {
-        inlineSpans.add(
-          TextSpan(
-            text: plainTextSections[i],
-            style: textStyle,
-          ),
-        );
+        inlineSpans.add(TextSpan(text: plainTextSections[i], style: textStyle));
       }
       if (i < linkSections.length) {
         final link = linkSections[i];

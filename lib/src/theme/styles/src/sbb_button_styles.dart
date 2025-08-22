@@ -92,9 +92,7 @@ class SBBButtonStyles extends ThemeExtension<SBBButtonStyles> {
       borderColorDisabled: baseStyle.themeValue(SBBColors.cloud, SBBColors.iron),
       textStyle: baseStyle.themedTextStyle(),
       textStyleHighlighted: baseStyle.themedTextStyle(),
-      textStyleDisabled: baseStyle.themedTextStyle(
-        color: baseStyle.themeValue(SBBColors.graphite, SBBColors.smoke),
-      ),
+      textStyleDisabled: baseStyle.themedTextStyle(color: baseStyle.themeValue(SBBColors.graphite, SBBColors.smoke)),
       iconColor: baseStyle.iconColor,
       iconColorHighlighted: baseStyle.iconColor,
       iconColorDisabled: baseStyle.themeValue(SBBColors.graphite, SBBColors.smoke),

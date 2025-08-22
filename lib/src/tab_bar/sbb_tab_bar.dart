@@ -20,12 +20,7 @@ part 'sbb_tab_bar.layout.dart';
 /// OnTabChanged defines what happens when a tab is selected.
 /// OnTap gets called when a tab is tapped.
 class SBBTabBar extends StatefulWidget {
-  const SBBTabBar._({
-    required this.controller,
-    required this.onTabChanged,
-    required this.onTap,
-    super.key,
-  });
+  const SBBTabBar._({required this.controller, required this.onTabChanged, required this.onTap, super.key});
 
   factory SBBTabBar.items({
     required List<SBBTabBarItem> items,
@@ -45,12 +40,7 @@ class SBBTabBar extends StatefulWidget {
     required Future<void> Function(Future<SBBTabBarItem> tabTask) onTabChanged,
     required void Function(SBBTabBarItem tab) onTap,
     Key? key,
-  }) => SBBTabBar._(
-    key: key,
-    controller: controller,
-    onTabChanged: onTabChanged,
-    onTap: onTap,
-  );
+  }) => SBBTabBar._(key: key, controller: controller, onTabChanged: onTabChanged, onTap: onTap);
 
   final Future<void> Function(Future<SBBTabBarItem> tabTask) onTabChanged;
   final void Function(SBBTabBarItem tab) onTap;
@@ -111,10 +101,7 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
                   height: layoutData.height,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [
-                        cardColor.withValues(alpha: 0.0),
-                        cardColor.withValues(alpha: 1.0),
-                      ],
+                      colors: [cardColor.withValues(alpha: 0.0), cardColor.withValues(alpha: 1.0)],
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                     ),
@@ -122,17 +109,11 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
                   child: Stack(
                     children: [
                       ..._tabs.mapIndexed(
-                        (i, e) => Positioned(
-                          left: layoutData.positions[i].dx,
-                          child: TabItemWidget(e.icon, selected: true),
-                        ),
+                        (i, e) =>
+                            Positioned(left: layoutData.positions[i].dx, child: TabItemWidget(e.icon, selected: true)),
                       ),
                       CustomPaint(
-                        painter: TabCurvePainter(
-                          _controller.curves,
-                          cardColor,
-                          theme.shadowColor,
-                        ),
+                        painter: TabCurvePainter(_controller.curves, cardColor, theme.shadowColor),
                         child: _TabLayout(
                           items: _tabs,
                           selectedTab: navData.selectedTab,

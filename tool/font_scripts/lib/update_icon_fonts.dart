@@ -80,11 +80,7 @@ Future<void> prepareIcons(String type, List<dynamic> icons) async {
     final name = icon['name'];
     final fileName = '$name.svg';
     final svgUri = makeUrlUri(fileName);
-    await downloadSvg(
-      svgUri,
-      fileName.replaceAll('-', '_'),
-      dir.path,
-    );
+    await downloadSvg(svgUri, fileName.replaceAll('-', '_'), dir.path);
   }
 }
 

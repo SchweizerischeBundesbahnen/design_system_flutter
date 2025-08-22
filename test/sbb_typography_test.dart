@@ -1,6 +1,6 @@
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import 'test_app.dart';
 
@@ -18,10 +18,7 @@ void main() {
   }
 
   void generateTest(String name, List<TextStyle?> textStyles) {
-    final widget = TypographyTest(
-      name: name,
-      textStyles: textStyles,
-    );
+    final widget = TypographyTest(name: name, textStyles: textStyles);
     testWidget(name, widget);
   }
 
@@ -173,15 +170,7 @@ class TypographyTest extends StatelessWidget {
             child: Column(
               spacing: sbbDefaultSpacing * 0.5,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children:
-                  textStyles
-                      .map(
-                        (e) => Text(
-                          exampleText,
-                          style: e,
-                        ),
-                      )
-                      .toList(),
+              children: textStyles.map((e) => Text(exampleText, style: e)).toList(),
             ),
           ),
         ),
@@ -198,11 +187,7 @@ class TypographyRedThemeTest extends StatelessWidget {
     final textTheme = SBBBaseStyle.of(context).redTextTheme;
     return TypographyTest(
       name: 'typography_red_text_theme',
-      textStyles: [
-        textTheme.bodyLarge,
-        textTheme.bodyMedium,
-        textTheme.bodySmall,
-      ],
+      textStyles: [textTheme.bodyLarge, textTheme.bodyMedium, textTheme.bodySmall],
     );
   }
 }

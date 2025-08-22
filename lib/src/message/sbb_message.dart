@@ -129,14 +129,8 @@ class SBBMessage extends StatelessWidget {
           _title(textTheme),
           const SizedBox(height: sbbDefaultSpacing),
           _description(textTheme),
-          if (messageCode != null) ...[
-            const SizedBox(height: sbbDefaultSpacing),
-            _errorCode(textTheme),
-          ],
-          if (_showInteractionButton) ...[
-            const SizedBox(height: _messageSpacing),
-            _interactionButton(),
-          ],
+          if (messageCode != null) ...[const SizedBox(height: sbbDefaultSpacing), _errorCode(textTheme)],
+          if (_showInteractionButton) ...[const SizedBox(height: _messageSpacing), _interactionButton()],
         ],
       ),
     );
@@ -147,24 +141,12 @@ class SBBMessage extends StatelessWidget {
     return isDarkTheme ? const SBBLoadingIndicator.mediumCloud() : const SBBLoadingIndicator.medium();
   }
 
-  Text _title(TextTheme textTheme) => Text(
-    title,
-    style: textTheme.bodyMedium,
-    textAlign: TextAlign.center,
-  );
+  Text _title(TextTheme textTheme) => Text(title, style: textTheme.bodyMedium, textAlign: TextAlign.center);
 
-  Text _description(TextTheme textTheme) => Text(
-    description,
-    style: textTheme.labelSmall,
-    textAlign: TextAlign.center,
-  );
+  Text _description(TextTheme textTheme) => Text(description, style: textTheme.labelSmall, textAlign: TextAlign.center);
 
   Widget _errorCode(TextTheme textTheme) => ExcludeSemantics(
-    child: Text(
-      messageCode!,
-      style: textTheme.labelSmall?.copyWith(fontSize: 12.0),
-      textAlign: TextAlign.center,
-    ),
+    child: Text(messageCode!, style: textTheme.labelSmall?.copyWith(fontSize: 12.0), textAlign: TextAlign.center),
   );
 
   SBBIconButtonLarge _interactionButton() => SBBIconButtonLarge(icon: interactionIcon, onPressed: onInteraction);

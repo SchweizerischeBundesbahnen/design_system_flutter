@@ -1,21 +1,12 @@
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import 'test_app.dart';
 
 void main() {
-  void generateTest(
-    String name,
-    TimeOfDay initialTime,
-    TimeOfDay? minimumTime,
-    TimeOfDay? maximumTime,
-  ) {
-    final widget = TimePickerTest(
-      initialTime: initialTime,
-      minimumTime: minimumTime,
-      maximumTime: maximumTime,
-    );
+  void generateTest(String name, TimeOfDay initialTime, TimeOfDay? minimumTime, TimeOfDay? maximumTime) {
+    final widget = TimePickerTest(initialTime: initialTime, minimumTime: minimumTime, maximumTime: maximumTime);
     testWidgets(name, (WidgetTester tester) async {
       await TestSpecs.run(
         TestSpecs.themedSpecs,
@@ -27,12 +18,7 @@ void main() {
     });
   }
 
-  generateTest(
-    'time_picker_test_1',
-    const TimeOfDay(hour: 13, minute: 37),
-    null,
-    null,
-  );
+  generateTest('time_picker_test_1', const TimeOfDay(hour: 13, minute: 37), null, null);
   generateTest(
     'time_picker_test_2',
     const TimeOfDay(hour: 13, minute: 37),
@@ -54,12 +40,7 @@ void main() {
 }
 
 class TimePickerTest extends StatelessWidget {
-  const TimePickerTest({
-    super.key,
-    required this.initialTime,
-    required this.minimumTime,
-    required this.maximumTime,
-  });
+  const TimePickerTest({super.key, required this.initialTime, required this.minimumTime, required this.maximumTime});
 
   final TimeOfDay? initialTime;
   final TimeOfDay? minimumTime;
@@ -71,23 +52,10 @@ class TimePickerTest extends StatelessWidget {
     children: <Widget>[
       Row(
         children: [
-          Expanded(
-            child: SBBGroup(
-              child: SBBTimePicker(
-                onTimeChanged: (_) {},
-                initialTime: initialTime,
-              ),
-            ),
-          ),
+          Expanded(child: SBBGroup(child: SBBTimePicker(onTimeChanged: (_) {}, initialTime: initialTime))),
           const SizedBox(width: sbbDefaultSpacing),
           Expanded(
-            child: SBBGroup(
-              child: SBBTimePicker(
-                onTimeChanged: (_) {},
-                initialTime: initialTime,
-                minuteInterval: 15,
-              ),
-            ),
+            child: SBBGroup(child: SBBTimePicker(onTimeChanged: (_) {}, initialTime: initialTime, minuteInterval: 15)),
           ),
         ],
       ),

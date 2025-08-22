@@ -110,21 +110,14 @@ class _SBBTextField extends State<SBBTextFormField> {
   Widget build(BuildContext context) {
     final style = SBBBaseStyle.of(context);
     return Padding(
-      padding: const EdgeInsets.only(
-        left: 16.0,
-        top: 8.0,
-      ),
+      padding: const EdgeInsets.only(left: 16.0, top: 8.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (widget.icon != null)
             Padding(
               padding: const EdgeInsets.only(top: 12, right: 8.0),
-              child: Icon(
-                widget.icon,
-                size: 24,
-                color: style.themeValue(SBBColors.black, SBBColors.white),
-              ),
+              child: Icon(widget.icon, size: 24, color: style.themeValue(SBBColors.black, SBBColors.white)),
             ),
           Expanded(
             child: Stack(
@@ -140,12 +133,7 @@ class _SBBTextField extends State<SBBTextFormField> {
                     ),
                   ],
                 ),
-                if (widget.suffixIcon != null)
-                  Positioned(
-                    top: -4.0,
-                    right: 0.0,
-                    child: widget.suffixIcon!,
-                  ),
+                if (widget.suffixIcon != null) Positioned(top: -4.0, right: 0.0, child: widget.suffixIcon!),
               ],
             ),
           ),

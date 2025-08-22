@@ -113,32 +113,19 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
     });
 
     _setSize();
-    animationController = AnimationController(
-      vsync: this,
-      duration: kThemeAnimationDuration,
-    )..addListener(() {
+    animationController = AnimationController(vsync: this, duration: kThemeAnimationDuration)..addListener(() {
       if (isAnimating) {
         if (backScrollController.hasClients && backScrollController.offset > 0 && !isBackScrollControllerAnimating) {
           isBackScrollControllerAnimating = true;
-          backScrollController.animateTo(
-            0,
-            duration: kThemeAnimationDuration,
-            curve: Curves.easeInOut,
-          );
+          backScrollController.animateTo(0, duration: kThemeAnimationDuration, curve: Curves.easeInOut);
         } else if (scrollController.hasClients && scrollController.offset > 0 && !isScrollControllerAnimating) {
           isScrollControllerAnimating = true;
-          scrollController.animateTo(
-            0,
-            duration: kThemeAnimationDuration,
-            curve: Curves.easeInOut,
-          );
+          scrollController.animateTo(0, duration: kThemeAnimationDuration, curve: Curves.easeInOut);
         }
       }
       setState(() {});
     });
-    animation = CurveTween(curve: Curves.easeInOut).animate(
-      animationController,
-    );
+    animation = CurveTween(curve: Curves.easeInOut).animate(animationController);
 
     widget.builderDelegate.setPopCallback(_onPop);
   }
@@ -229,15 +216,10 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
                         color: controlStyle.headerBackgroundColor,
                         borderRadius:
                             orientation == Orientation.portrait
-                                ? const BorderRadius.vertical(
-                                  bottom: Radius.circular(sbbDefaultSpacing),
-                                )
+                                ? const BorderRadius.vertical(bottom: Radius.circular(sbbDefaultSpacing))
                                 : null,
                       ),
-                      child: Padding(
-                        padding: frontCardPadding,
-                        child: Container(),
-                      ),
+                      child: Padding(padding: frontCardPadding, child: Container()),
                     ),
                   ),
                   if (orientation == Orientation.portrait)
@@ -270,10 +252,7 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
                           const SizedBox(height: sbbDefaultSpacing),
                           SizedBox(
                             height: SBBInternal.defaultButtonHeightSmall,
-                            child: SBBTertiaryButtonSmall(
-                              onPressed: widget.onFinish,
-                              label: widget.cancelLabel,
-                            ),
+                            child: SBBTertiaryButtonSmall(onPressed: widget.onFinish, label: widget.cancelLabel),
                           ),
                           const SizedBox(height: navigationAreaVerticalPadding),
                         ],
@@ -302,10 +281,7 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
                 child: IgnorePointer(
                   child: Opacity(
                     opacity: isDraggingToPrevious || isAnimating && !goToNextStep! ? 1 : 0,
-                    child: Padding(
-                      padding: frontCardPadding,
-                      child: buildCard(currentStepIndex - 1),
-                    ),
+                    child: Padding(padding: frontCardPadding, child: buildCard(currentStepIndex - 1)),
                   ),
                 ),
               ),
@@ -315,10 +291,7 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
                 child: Align(
                   alignment: Alignment.topRight,
                   child: Padding(
-                    padding: EdgeInsets.only(
-                      top: frontCardPadding.top,
-                      right: frontCardPadding.top,
-                    ),
+                    padding: EdgeInsets.only(top: frontCardPadding.top, right: frontCardPadding.top),
                     child: SBBIconButtonLarge(
                       semantics: widget.cancelLabel,
                       onPressed: widget.onFinish,
@@ -390,11 +363,7 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
           blocking: isShowingStartPage,
           child: Opacity(
             opacity: isShowingStartPage ? 1 : 0,
-            child: widget.builderDelegate.buildStartPage(
-              context,
-              _onStartOnboarding,
-              widget.onFinish,
-            ),
+            child: widget.builderDelegate.buildStartPage(context, _onStartOnboarding, widget.onFinish),
           ),
         ),
       ),
@@ -419,10 +388,7 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
           blocking: isShowingEndPage,
           child: Opacity(
             opacity: isShowingEndPage ? 1 : 0,
-            child: widget.builderDelegate.buildEndPage(
-              context,
-              widget.onFinish,
-            ),
+            child: widget.builderDelegate.buildEndPage(context, widget.onFinish),
           ),
         ),
       ),
@@ -502,9 +468,7 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
                           : newLeftValue < 0
                           ? 1
                           : 2;
-                  backScrollController = ScrollController(
-                    initialScrollOffset: scrollController.offset,
-                  );
+                  backScrollController = ScrollController(initialScrollOffset: scrollController.offset);
                   if (isDraggingToPrevious && currentStepIndex == 0) {
                     setState(() => isShowingStartPage = true);
                   } else if (isDraggingToNext && currentStepIndex == _cards.length - 1) {
@@ -525,9 +489,7 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
             padding: frontCardPadding,
             child: Opacity(
               opacity: isAnimating && !goToNextStep! ? 0 : 1,
-              child: Container(
-                child: buildCard(currentStepIndex),
-              ),
+              child: Container(child: buildCard(currentStepIndex)),
             ),
           ),
         ),
@@ -570,9 +532,7 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
   }
 
   Widget buildCard(int index, {bool isBackCard = false}) => ClipRRect(
-    borderRadius: const BorderRadius.all(
-      Radius.circular(sbbDefaultSpacing),
-    ),
+    borderRadius: const BorderRadius.all(Radius.circular(sbbDefaultSpacing)),
     child: Container(
       color: style.themeValue(SBBColors.white, SBBColors.charcoal),
       width: cardWidth,
@@ -588,9 +548,7 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
           builder:
               (context, constraint) => ConstrainedBox(
                 constraints: BoxConstraints(minHeight: cardHeight),
-                child: IntrinsicHeight(
-                  child: _cards[index],
-                ),
+                child: IntrinsicHeight(child: _cards[index]),
               ),
         ),
       ),
@@ -606,9 +564,7 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
       isShowingStartPage = !goToNextStep! && currentStepIndex == 0;
       isShowingEndPage = goToNextStep && currentStepIndex == _cards.length - 1;
     });
-    backScrollController = ScrollController(
-      initialScrollOffset: isShowingStartPage ? 0 : scrollController.offset,
-    );
+    backScrollController = ScrollController(initialScrollOffset: isShowingStartPage ? 0 : scrollController.offset);
 
     if (goToNextStep!) {
       _cards[currentStepIndex].onDismissed?.call();

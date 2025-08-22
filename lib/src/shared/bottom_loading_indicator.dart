@@ -45,19 +45,11 @@ class BottomLoadingIndicator extends StatefulWidget {
 }
 
 class _BottomLoadingIndicatorState extends State<BottomLoadingIndicator> with SingleTickerProviderStateMixin {
-  late final AnimationController _controller = AnimationController(
-    duration: widget.duration,
-    vsync: this,
-  )..repeat();
+  late final AnimationController _controller = AnimationController(duration: widget.duration, vsync: this)..repeat();
   late final Animation<Offset> _offsetAnimation = Tween<Offset>(
     begin: const Offset(-1, 0.0),
     end: const Offset(1, 0.0),
-  ).animate(
-    CurvedAnimation(
-      parent: _controller,
-      curve: Curves.linear,
-    ),
-  );
+  ).animate(CurvedAnimation(parent: _controller, curve: Curves.linear));
 
   @override
   void dispose() {

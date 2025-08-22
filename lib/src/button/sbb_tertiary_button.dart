@@ -118,12 +118,8 @@ class SBBTertiaryButtonSmall extends StatelessWidget {
 
     return buttonStyle.tertiarySmallStyle?.overrideButtonStyle(
       Theme.of(context).textButtonTheme.style?.copyWith(
-        fixedSize: SBBTheme.allStates(
-          const Size.fromHeight(SBBInternal.defaultButtonHeightSmall),
-        ),
-        minimumSize: SBBTheme.allStates(
-          const Size(0, SBBInternal.defaultButtonHeightSmall),
-        ),
+        fixedSize: SBBTheme.allStates(const Size.fromHeight(SBBInternal.defaultButtonHeightSmall)),
+        minimumSize: SBBTheme.allStates(const Size(0, SBBInternal.defaultButtonHeightSmall)),
       ),
     );
   }

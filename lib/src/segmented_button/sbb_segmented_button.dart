@@ -94,11 +94,7 @@ class SBBSegmentedButton extends StatefulWidget {
          widgetBuilders:
              values.mapIndexed((i, value) {
                return (SBBSegmentedButtonStyle? style, bool selected) {
-                 return Text(
-                   value,
-                   maxLines: 1,
-                   style: style.getTextStyle(selected),
-                 );
+                 return Text(value, maxLines: 1, style: style.getTextStyle(selected));
                };
              }).toList(),
          styleSelector: styleSelector,
@@ -126,12 +122,7 @@ class SBBSegmentedButton extends StatefulWidget {
                        Icon(icon.key, color: style?.iconColor),
                        if (withText) ...[
                          const SizedBox(width: 4.0),
-                         ExcludeSemantics(
-                           child: Text(
-                             icon.value,
-                             style: style.getTextStyle(selected),
-                           ),
-                         ),
+                         ExcludeSemantics(child: Text(icon.value, style: style.getTextStyle(selected))),
                        ],
                      ],
                    ),
@@ -198,9 +189,7 @@ class SegmentedButtonState extends State<SBBSegmentedButton> {
           child: Material(
             color: SBBColors.transparent,
             child: InkWell(
-              customBorder: const RoundedRectangleBorder(
-                borderRadius: _borderRadius,
-              ),
+              customBorder: const RoundedRectangleBorder(borderRadius: _borderRadius),
               onTap: i != widget.selectedStateIndex ? () => widget.selectedIndexChanged(i) : null,
             ),
           ),
@@ -272,10 +261,7 @@ class SegmentedButtonState extends State<SBBSegmentedButton> {
                   focusable: true,
                   selected: selected,
                   button: !selected,
-                  hint: loc.tabLabel(
-                    tabIndex: i + 1,
-                    tabCount: widget.widgetBuilders.length,
-                  ),
+                  hint: loc.tabLabel(tabIndex: i + 1, tabCount: widget.widgetBuilders.length),
                   child: Container(
                     padding: const EdgeInsets.symmetric(horizontal: 4),
                     alignment: Alignment.center,

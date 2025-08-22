@@ -5,25 +5,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'test_app.dart';
 
 void main() {
-  void generateTest(
-    String name,
-    int initialItem,
-    int? minItem,
-    int? maxItem,
-  ) {
-    final widget = PickerTest(
-      initialItem: initialItem,
-      minItem: minItem,
-      maxItem: maxItem,
-    );
+  void generateTest(String name, int initialItem, int? minItem, int? maxItem) {
+    final widget = PickerTest(initialItem: initialItem, minItem: minItem, maxItem: maxItem);
     testWidgets(name, (WidgetTester tester) async {
-      await TestSpecs.run(
-        TestSpecs.themedSpecs,
-        widget,
-        tester,
-        name,
-        find.byType(widget.runtimeType),
-      );
+      await TestSpecs.run(TestSpecs.themedSpecs, widget, tester, name, find.byType(widget.runtimeType));
     });
   }
 
@@ -33,21 +18,9 @@ void main() {
 }
 
 class PickerTest extends StatelessWidget {
-  const PickerTest({
-    super.key,
-    required this.initialItem,
-    required this.minItem,
-    required this.maxItem,
-  });
+  const PickerTest({super.key, required this.initialItem, required this.minItem, required this.maxItem});
 
-  static const List<String> _fruitNames = <String>[
-    'Apple',
-    'Mango',
-    'Banana',
-    'Orange',
-    'Pineapple',
-    'Strawberry',
-  ];
+  static const List<String> _fruitNames = <String>['Apple', 'Mango', 'Banana', 'Orange', 'Pineapple', 'Strawberry'];
 
   final int initialItem;
   final int? minItem;
