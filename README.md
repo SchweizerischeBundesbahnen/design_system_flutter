@@ -1,3 +1,6 @@
+[![build](https://github.com/SchweizerischeBundesbahnen/design_system_flutter/actions/workflows/nightly-build.yaml/badge.svg)](https://github.com/SchweizerischeBundesbahnen/design_system_flutter/actions/workflows/nightly-build.yaml)
+[![pub package](https://img.shields.io/pub/v/sbb_design_system_mobile.svg)](https://pub.dev/packages/sbb_design_system_mobile)
+
 This Flutter package contains official UI elements of the SBB (Swiss Federal Railways) [Design System Mobile].
 It allows an easy integration of SBB theming to your Flutter app (with the possibility of a custom color theming).
 Elements are optimized for dynamic TextSizes, VoiceOver, light & dark mode.
@@ -9,12 +12,12 @@ Elements are optimized for dynamic TextSizes, VoiceOver, light & dark mode.
 
 - [Table of Contents](#table-of-contents)
 - [Getting Started](#getting-started)
-    - [Supported platforms](#supported-platforms)
-    - [In code usage](#in-code-usage)
+  - [Supported platforms](#supported-platforms)
+  - [In code usage](#in-code-usage)
   - [Example App](#example-app)
 - [Documentation](#documentation)
-    - [Design System Mobile specification](#design-system-mobile-specification)
-    - [SBB internal documentation](#sbb-internal-documentation)
+  - [Design System Mobile specification](#design-system-mobile-specification)
+  - [SBB internal documentation](#sbb-internal-documentation)
   - [Read on](#read-on)
 - [License](#license)
 - [Contributing](#contributing)
@@ -24,7 +27,6 @@ Elements are optimized for dynamic TextSizes, VoiceOver, light & dark mode.
   - [Releasing](#releasing)
 - [Maintainer](#maintainer)
 - [Credits](#credits)
-
 
 </details>
 
@@ -41,7 +43,8 @@ Elements are optimized for dynamic TextSizes, VoiceOver, light & dark mode.
 
 #### In code usage
 
-In order for the Theming to work, you need to add the `SBBTheme.light` / `SBBTheme.dark` to your app root. For a `MaterialApp`:
+In order for the Theming to work, you need to add the `SBBTheme.light` / `SBBTheme.dark` to your app root. For a
+`MaterialApp`:
 
 ```Dart
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
@@ -85,6 +88,7 @@ The pixel exact specifications can be found in the [Figma](https://www.figma.com
 #### SBB internal documentation
 
 A the moment, the following documents are only available to people internal to SBB:
+
 * [AppBakery libraries](https://sbb.sharepoint.com/sites/app-bakery/SitePages/Mobile-Libraries.aspx "AppBakery libraries")
 
 ### Read on
@@ -111,12 +115,15 @@ Generally speaking, we are welcoming contributions improving existing UI element
 
 General instructions on _how_ to contribute can be found under [Contributing](Contributing.md).
 
-
 ### Testing
-This project is built and tested using [Github Actions](https://docs.github.com/en/actions). On every PR request, a `test` workflow is triggered, which does the following:
 
-* running all tests in the `.\test\` dir. Failed golden tests will be uploaded to the job artifacts. The tests run on a _macos_ runner.
-* parse the `CHANGELOG.md` file and compare against the [Keep A Changelog](https://keepachangelog.com/en/1.1.0/) schema. This allows for automatic release notes from our Changelog.
+This project is built and tested using [Github Actions](https://docs.github.com/en/actions). On every PR request, a
+`test` workflow is triggered, which does the following:
+
+* running all tests in the `.\test\` dir. Failed golden tests will be uploaded to the job artifacts. The tests run on a
+  _macos_ runner.
+* parse the
+  `CHANGELOG.md` file and compare against the [Keep A Changelog](https://keepachangelog.com/en/1.1.0/) schema. This allows for automatic release notes from our Changelog.
 * Build the example app in `example` for the minimum and latest supported Flutter SDK for both iOS and Android.
 
 ### Coding Standards
@@ -143,8 +150,8 @@ See [RELEASE.md](RELEASE.md).
 ## Credits
 
 In addition to the contributors on GitHub, we thank the following authors for their previous work:
-*  Patrice Müller
-*  Dominik Schmucki
 
+* Patrice Müller
+* Dominik Schmucki
 
 [Design System Mobile]: https://digital.sbb.ch/en/design-system/mobile/overview/
