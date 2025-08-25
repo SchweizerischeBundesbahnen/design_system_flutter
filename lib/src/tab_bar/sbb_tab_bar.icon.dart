@@ -54,7 +54,13 @@ class _TabIcon extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 spacing: 8.0,
                 children: [
-                  TabItemWidget(item.icon, selected: selected, warning: warning),
+                  TabItemWidget(
+                    item.icon,
+                    // This version of the icon is clipped by the clip path.
+                    // There is one underneath that will be drawn as selected.
+                    selected: false,
+                    warning: warning,
+                  ),
                   if (!portrait)
                     Text(
                       item.translate(context),

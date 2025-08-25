@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 
 /// Represents the curves that define the shape of a tab in an animated tab bar,
@@ -246,5 +247,30 @@ class TabCurves {
         wavePath.cubicTo(c34.dx, c34.dy, c43.dx, c43.dy, p4.dx, p4.dy);
       }
     }
+  }
+
+  /// Helper function that converts a list of [TabCurves] into a complete and closed path.
+  ///
+  /// - [curves]: The curves to add to the path.
+  /// - [size]: The size of the canvas we're drawing to.
+  static Path toPath(List<TabCurves> curves, Size size) {
+    final wavePath = Path();
+
+    // Moving to the first tab
+    wavePath.moveTo(0, 0);
+    wavePath.lineTo(curves.first.p0.dx, 0);
+
+    // Drawing the tabs (according to the current state of the animation)
+    for (final c in curves) {
+      c.draw(wavePath);
+    }
+
+    // Closing the path
+    wavePath.lineTo(size.width, 0);
+    wavePath.lineTo(size.width, size.height);
+    wavePath.lineTo(0, size.height);
+    wavePath.close();
+
+    return wavePath;
   }
 }
