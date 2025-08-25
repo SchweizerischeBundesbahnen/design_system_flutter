@@ -11,22 +11,7 @@ class TabCurvePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final wavePath = Path();
-
-    // Moving to the first tab
-    wavePath.moveTo(0, 0);
-    wavePath.lineTo(curves.first.p0.dx, 0);
-
-    // Drawing the tabs (according to the current state of the animation)
-    for (final c in curves) {
-      c.draw(wavePath);
-    }
-
-    // Closing the path
-    wavePath.lineTo(size.width, 0);
-    wavePath.lineTo(size.width, size.height);
-    wavePath.lineTo(0, size.height);
-    wavePath.close();
+    final wavePath = TabCurves.toPath(curves, size);
 
     // Additional shadow
     final waveShadow =

@@ -103,11 +103,12 @@ class SBBTabBarController {
   }
 
   Future<SBBTabBarItem> selectTab(SBBTabBarItem tab) async {
-    _setWarningShown(tab.id);
     if (selectedTab == tab) return tab;
     _nextTab = tab;
     hover = false;
     await _animationController.animateTo(1.0, duration: _duration, curve: Curves.easeInOut);
+    _setWarningShown(tab.id);
+
     selectedTab = tab;
     _animationController.reset();
     return tab;

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
 import 'tab_item_widget.dart';
+import 'tab_curve_clipper.dart';
 import 'tab_curve_painter.dart';
 
 part 'sbb_tab_bar.icon.dart';
@@ -114,22 +115,25 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
                       ),
                       CustomPaint(
                         painter: TabCurvePainter(_controller.curves, cardColor, theme.shadowColor),
-                        child: _TabLayout(
-                          items: _tabs,
-                          selectedTab: navData.selectedTab,
-                          warnings: warnings,
-                          portrait: portrait,
-                          onPositioned: _controller.onLayout,
-                          onTap: (e) {
-                            widget.onTap.call(e);
-                            if (navData.selectedTab == e) return;
-                            widget.onTabChanged(_controller.selectTab(e));
-                          },
-                          onTapDown: (e) {
-                            if (navData.selectedTab == e) return;
-                            _controller.hoverTab(e);
-                          },
-                          onTapCancel: (e) => _controller.cancelHover(),
+                        child: ClipPath(
+                          clipper: TabCurveClipper(curves: _controller.curves),
+                          child: _TabLayout(
+                            items: _tabs,
+                            selectedTab: navData.selectedTab,
+                            warnings: warnings,
+                            portrait: portrait,
+                            onPositioned: _controller.onLayout,
+                            onTap: (e) {
+                              widget.onTap.call(e);
+                              if (navData.selectedTab == e) return;
+                              widget.onTabChanged(_controller.selectTab(e));
+                            },
+                            onTapDown: (e) {
+                              if (navData.selectedTab == e) return;
+                              _controller.hoverTab(e);
+                            },
+                            onTapCancel: (e) => _controller.cancelHover(),
+                          ),
                         ),
                       ),
                     ],
