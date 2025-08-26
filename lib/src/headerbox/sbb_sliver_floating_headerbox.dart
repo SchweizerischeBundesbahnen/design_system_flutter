@@ -16,17 +16,15 @@ final defaultAnimationStyle = AnimationStyle(
 /// This widget behaves the same as [SBBSliverHeaderbox] but allows you to include contracting children.
 /// To achieve this effect, the widget looks at the minimum and maximum intrinsic heights and transitions between them.
 ///
-/// The most flexible way to use it is like so:
+/// The easiest way to get started is like so:
 ///
 /// ```dart
 /// CustomScrollView(
 ///   slivers: [
-///     SBBSliverFloatingHeaderbox.stacked(
-///       _StaticHeader(),
-///       SBBStackedItem.aligned(
-///         alignment: Alignment.bottomLeft,
-///         child: ...
-///       ).
+///     SBBSliverFloatingHeaderbox(
+///       title: 'Title',
+///       secondaryLabel: 'Subtitle',
+///       collapsibleChild: Text('Collapsible'),
 ///     )
 ///   ]
 /// )
@@ -34,6 +32,24 @@ final defaultAnimationStyle = AnimationStyle(
 ///
 /// See [SBBStackedColumn] and [SBBStackedItem] for ways to build contracting items.
 class SBBSliverFloatingHeaderbox extends StatefulWidget {
+  /// The default [SBBSliverFloatingHeaderbox].
+  ///
+  /// The required argument [title] will be ellipsed if too long. The [secondaryLabel] is the subtext
+  /// displayed below and will wrap to multiple lines.
+  ///
+  /// The design guidelines specify an action button for the [trailingWidget],
+  /// i.e. a [SBBTertiaryButtonSmall] with a label and an icon.
+  ///
+  /// Use the [margin] to adjust space around the Headerbox - the default is horizontal margin of 8px.
+  ///
+  /// Additionally, you can set [collapsibleChild] for some content that will be obscured (and reappears) as the
+  /// user scrolls the containing viewport. You can also temporarily disable this behavior by setting [floating]
+  /// to `false`.
+  ///
+  /// You can also use [preceding] to set a widget above the headerbox that will go along with the scroll behavior of
+  /// the headerbox.
+  ///
+  /// For a complete customization of the Headerbox, see the [SBBSliverFloatingHeaderbox.custom_old] constructor.
   SBBSliverFloatingHeaderbox({
     Key? key,
     required String title,
@@ -43,41 +59,52 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
     SBBHeaderboxFlap? flap,
     EdgeInsets margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
     String? semanticsLabel,
-    Widget? contractingWidget,
+    Widget? preceding,
+    Widget? collapsibleChild,
     bool floating = true,
     AnimationStyle? snapStyle,
   }) : this.custom(
-          key: key,
-          snapStyle: snapStyle,
-          child: contractingWidget == null
-              ? DefaultHeaderBoxContent(
-                  title: title,
-                  leadingIcon: leadingIcon,
-                  secondaryLabel: secondaryLabel,
-                  trailingWidget: trailingWidget,
-                )
-              : SBBStackedColumn(
-                  children: [
-                    DefaultHeaderBoxContent(
-                      title: title,
-                      leadingIcon: leadingIcon,
-                      secondaryLabel: secondaryLabel,
-                      trailingWidget: trailingWidget,
-                    ),
-                    SBBStackedItem.aligned(
-                      builder: (context, state, child) => Opacity(
-                        opacity: state.expansionRate,
-                        child: child,
-                      ),
-                      child: contractingWidget,
-                    )
-                  ],
-                ),
-          margin: margin,
-          flap: flap,
-          semanticsLabel: semanticsLabel,
-        );
+         key: key,
+         flap: flap,
+         margin: margin,
+         preceding: preceding,
+         semanticsLabel: semanticsLabel,
+         snapStyle: snapStyle,
+         children: [
+           DefaultHeaderBoxContent(
+             title: title,
+             leadingIcon: leadingIcon,
+             secondaryLabel: secondaryLabel,
+             trailingWidget: trailingWidget,
+           ),
+           if (collapsibleChild != null)
+             SBBStackedItem.aligned(
+               child: Padding(
+                 padding: const EdgeInsets.only(top: sbbDefaultSpacing),
+                 child: collapsibleChild,
+               ),
+             ),
+         ],
+       );
 
+  /// The large [SBBSliverFloatingHeaderbox].
+  ///
+  /// The required argument [title] will be ellipsed if too long. The [secondaryLabel] is the subtext
+  /// displayed below and will wrap to multiple lines.
+  ///
+  /// The design guidelines specify an action button for the [trailingWidget],
+  /// i.e. a [SBBIconButtonLarge].
+  ///
+  /// Use the [margin] to adjust space around the Headerbox - the default is horizontal margin of 8px.
+  ///
+  /// Additionally, you can set [collapsibleChild] for some content that will be obscured (and reappears) as the
+  /// user scrolls the containing viewport. You can also temporarily disable this behavior by setting [floating]
+  /// to `false`.
+  ///
+  /// You can also use [preceding] to set a widget above the headerbox that will go along with the scroll behavior of
+  /// the headerbox.
+  ///
+  /// For a complete customization of the Headerbox, see the [SBBSliverFloatingHeaderbox.custom] constructor.
   SBBSliverFloatingHeaderbox.large({
     Key? key,
     required String title,
@@ -87,69 +114,53 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
     SBBHeaderboxFlap? flap,
     EdgeInsets margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
     String? semanticsLabel,
-    Widget? contractingWidget,
+    Widget? preceding,
+    Widget? collapsibleChild,
     bool floating = true,
     AnimationStyle? snapStyle,
   }) : this.custom(
-          key: key,
-          snapStyle: snapStyle,
-          child: contractingWidget == null
-              ? LargeHeaderBoxContent(
-                  title: title,
-                  leadingIcon: leadingIcon,
-                  secondaryLabel: secondaryLabel,
-                  trailingWidget: trailingWidget,
-                )
-              : SBBStackedColumn(
-                  children: [
-                    LargeHeaderBoxContent(
-                      title: title,
-                      leadingIcon: leadingIcon,
-                      secondaryLabel: secondaryLabel,
-                      trailingWidget: trailingWidget,
-                    ),
-                    SBBStackedItem.aligned(
-                      child: contractingWidget,
-                    )
-                  ],
-                ),
-          margin: margin,
-          flap: flap,
-          semanticsLabel: semanticsLabel,
-        );
+         key: key,
+         flap: flap,
+         margin: margin,
+         preceding: preceding,
+         semanticsLabel: semanticsLabel,
+         snapStyle: snapStyle,
+         children: [
+           LargeHeaderBoxContent(
+             title: title,
+             leadingIcon: leadingIcon,
+             secondaryLabel: secondaryLabel,
+             trailingWidget: trailingWidget,
+           ),
+           if (collapsibleChild != null)
+             SBBStackedItem.aligned(
+               child: Padding(
+                 padding: const EdgeInsets.only(top: sbbDefaultSpacing),
+                 child: collapsibleChild,
+               ),
+             ),
+         ],
+       );
 
-  SBBSliverFloatingHeaderbox.stacked({
-    super.key,
-    EdgeInsets margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
-    EdgeInsets padding = const EdgeInsets.all(sbbDefaultSpacing),
-    SBBHeaderboxFlap? flap,
-    String? semanticsLabel,
-    this.floating = true,
-    this.snapStyle,
-    Widget? leading,
-    required List<Widget> children,
-  }) : child = leading != null
-            ? SBBStackedColumn(
-                children: [
-                  leading,
-                  SBBHeaderbox.custom(
-                    margin: margin,
-                    padding: padding,
-                    flap: flap,
-                    semanticsLabel: semanticsLabel,
-                    child: SBBStackedColumn(children: children),
-                  )
-                ],
-              )
-            : SBBHeaderbox.custom(
-                margin: margin,
-                padding: padding,
-                flap: flap,
-                semanticsLabel: semanticsLabel,
-                child: SBBStackedColumn(children: children),
-              );
 
-  /// Allows complete customization of the [SBBSliverStaticHeaderbox].
+  /// Allows complete customization of the [SBBSliverHeaderbox].
+  ///
+  /// Note that the [children] can -- and should -- make use of [SBBStackedItem] to customize the way they collapse.
+  /// You will normally have one or more static widgets, followed by one or more stacked item widgets like so:
+  ///
+  /// ```dart
+  /// CustomScrollView(
+  ///   slivers: [
+  ///     SBBSliverFloatingHeaderbox.custom(
+  ///       _StaticHeader(),
+  ///       SBBStackedItem.aligned(
+  ///         alignment: Alignment.bottomLeft,
+  ///         child: ...
+  ///       ).
+  ///     )
+  ///   ]
+  /// )
+  /// ```
   SBBSliverFloatingHeaderbox.custom({
     super.key,
     EdgeInsets margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
@@ -158,28 +169,29 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
     String? semanticsLabel,
     this.floating = true,
     this.snapStyle,
-    Widget? leading,
-    required Widget child,
-  }) : child = leading != null
-            ? SBBStackedColumn(
-                children: [
-                  leading,
-                  SBBHeaderbox.custom(
-                    margin: margin,
-                    padding: padding,
-                    flap: flap,
-                    semanticsLabel: semanticsLabel,
-                    child: child,
-                  )
-                ],
-              )
-            : SBBHeaderbox.custom(
-                margin: margin,
-                padding: padding,
-                flap: flap,
-                semanticsLabel: semanticsLabel,
-                child: child,
-              );
+    Widget? preceding,
+    required List<Widget> children,
+  }) : child =
+           preceding != null
+               ? SBBStackedColumn(
+                 children: [
+                   _Preceding(child: preceding),
+                   SBBHeaderbox.custom(
+                     margin: margin,
+                     padding: padding,
+                     flap: flap,
+                     semanticsLabel: semanticsLabel,
+                     child: SBBStackedColumn(children: children),
+                   ),
+                 ],
+               )
+               : SBBHeaderbox.custom(
+                 margin: margin,
+                 padding: padding,
+                 flap: flap,
+                 semanticsLabel: semanticsLabel,
+                 child: SBBStackedColumn(children: children),
+               );
 
   final Widget child;
   final AnimationStyle? snapStyle;
@@ -268,4 +280,26 @@ class _SnapTriggerState extends State<_SnapTrigger> {
 
   @override
   Widget build(BuildContext context) => widget.child;
+}
+
+/// Widget that can be displayed above the headerbox and that will scroll along.
+class _Preceding extends StatelessWidget {
+  const _Preceding({
+    super.key,
+    required this.child,
+  });
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    final style = SBBControlStyles.of(context);
+    return SBBStackedItem.aligned(
+      alignment: Alignment.bottomLeft,
+      child: Container(
+        color: style.headerBackgroundColor,
+        child: child,
+      ),
+    );
+  }
 }

@@ -167,7 +167,7 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
       maxPaintExtent: maxExtent,
       hitTestExtent: maxExtent,
       hasVisualOverflow: layoutExtent > constraints.remainingPaintExtent || constraints.scrollOffset > 0.0,
-      scrollOffsetCorrection: scrollOffsetCorrection.abs() > 0.5 ? scrollOffsetCorrection : null,
+      scrollOffsetCorrection: scrollOffsetCorrection.abs() > 0.01 ? scrollOffsetCorrection : null,
     );
     setChildParentData(child!, constraints, geometry!);
   }

@@ -270,7 +270,7 @@ class _FloatingPageState extends State<FloatingPage> {
         onTap: () => FocusScope.of(context).unfocus(),
         child: CustomScrollView(
           slivers: [
-            SBBSliverFloatingHeaderbox.stacked(
+            SBBSliverFloatingHeaderbox.custom(
               floating: floating,
               padding: EdgeInsets.zero,
               flap: SBBHeaderboxFlap.custom(
