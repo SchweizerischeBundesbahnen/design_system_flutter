@@ -12,6 +12,8 @@ const _flapIconSize = 24.0;
 ///
 /// See [HeaderBox in documentation](https://digital.sbb.ch/de/design-system/mobile/components/container/).
 ///
+/// [allowFloating] makes the flap hide under the headerbox when used in combination with [SBBSliverFloatingHeaderbox].
+///
 /// For a complete custom variant, use the [custom] constructor.
 class SBBHeaderboxFlap extends StatelessWidget {
   SBBHeaderboxFlap({
