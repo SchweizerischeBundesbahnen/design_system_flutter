@@ -54,17 +54,17 @@ class SBBHeaderbox extends StatelessWidget {
     EdgeInsets margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
     String? semanticsLabel,
   }) : this.custom(
-          key: key,
-          child: DefaultHeaderBoxContent(
-            title: title,
-            leadingIcon: leadingIcon,
-            secondaryLabel: secondaryLabel,
-            trailingWidget: trailingWidget,
-          ),
-          margin: margin,
-          flap: flap,
-          semanticsLabel: semanticsLabel,
-        );
+         key: key,
+         child: DefaultHeaderBoxContent(
+           title: title,
+           leadingIcon: leadingIcon,
+           secondaryLabel: secondaryLabel,
+           trailingWidget: trailingWidget,
+         ),
+         margin: margin,
+         flap: flap,
+         semanticsLabel: semanticsLabel,
+       );
 
   /// The large [SBBHeaderbox].
   ///
@@ -87,17 +87,17 @@ class SBBHeaderbox extends StatelessWidget {
     EdgeInsets margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
     String? semanticsLabel,
   }) : this.custom(
-          key: key,
-          flap: flap,
-          margin: margin,
-          child: LargeHeaderBoxContent(
-            title: title,
-            leadingIcon: leadingIcon,
-            secondaryLabel: secondaryLabel,
-            trailingWidget: trailingWidget,
-          ),
-          semanticsLabel: semanticsLabel,
-        );
+         key: key,
+         flap: flap,
+         margin: margin,
+         child: LargeHeaderBoxContent(
+           title: title,
+           leadingIcon: leadingIcon,
+           secondaryLabel: secondaryLabel,
+           trailingWidget: trailingWidget,
+         ),
+         semanticsLabel: semanticsLabel,
+       );
 
   /// Allows complete customization of the [SBBHeaderbox].
   const SBBHeaderbox.custom({
