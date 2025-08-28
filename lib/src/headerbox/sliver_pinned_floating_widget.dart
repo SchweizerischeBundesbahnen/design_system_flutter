@@ -178,6 +178,7 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
       ScrollDirection.reverse when _internalScrollOffset >= extent => false, // not visible
       _ => true,
     };
+
     if (headerIsPartiallyVisible) {
       snapController ??= AnimationController(vsync: vsync!)
         ..addListener(() {

@@ -74,7 +74,7 @@ class SBBStackedItem extends StatelessWidget {
   factory SBBStackedItem.aligned({
     Key? key,
     AlignmentGeometry alignment = AlignmentDirectional.topStart,
-    Clip clipBehavior = Clip.none,
+    Clip clipBehavior = Clip.hardEdge,
     double minHeight = 0,
     double? maxHeight,
     SBBStackedBuilder? builder,

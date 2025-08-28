@@ -180,13 +180,13 @@ class _HeaderBoxForeground extends StatelessWidget {
         decoration: _flappedBackgroundDecoration(context),
         child: SBBStackedColumn(
           children: [
-            Padding(
-              padding: EdgeInsets.only(bottom: _headerBoxFlapTopMargin),
-              child: _headerBox(context),
-            ),
+            _headerBox(context),
             SBBStackedItem.aligned(
               alignment: Alignment.bottomLeft,
-              child: flap,
+              child: Padding(
+                padding: const EdgeInsets.only(top: _headerBoxFlapTopMargin),
+                child: flap,
+              ),
             ),
           ],
         ),

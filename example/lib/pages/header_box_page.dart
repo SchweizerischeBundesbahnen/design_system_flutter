@@ -263,9 +263,7 @@ class _FloatingPageState extends State<FloatingPage> {
     final sbbToast = SBBToast.of(context);
     final style = SBBBaseStyle.of(context);
     return FocusScope(
-      onFocusChange: (focused) => setState(() {
-        floating = !focused;
-      }),
+      onFocusChange: (focused) => setState(() => floating = !focused),
       child: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: CustomScrollView(
@@ -273,58 +271,65 @@ class _FloatingPageState extends State<FloatingPage> {
             SBBSliverFloatingHeaderbox.custom(
               floating: floating,
               padding: EdgeInsets.zero,
-              flap: SBBHeaderboxFlap.custom(
-                allowFloating: true,
-                child: Row(
-                  children: [
-                    Text('Thursday, 01/31/2025', style: SBBTextStyles.smallLight),
-                    Spacer(),
-                    SizedOverflowBox(
-                      size: Size(54, 24),
-                      alignment: Alignment.centerRight,
-                      child: SBBIconButtonSmall(
-                        icon: showAll ? SBBIcons.arrow_up_small : SBBIcons.arrow_down_small,
-                        onPressed: () {
-                          setState(() {
-                            showAll = !showAll;
-                          });
-                        },
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              flap: _flap(),
               children: [
                 _upperRow(context, style),
                 AnimatedSwitcher(
                   duration: Durations.long2,
                   switchInCurve: Curves.easeInOutCubic,
                   switchOutCurve: Curves.easeInOutCubic,
-                  transitionBuilder: (child, anim) => SizeTransition(
-                    sizeFactor: anim,
-                    child: child,
-                  ),
-                  child: showAll
-                      ? SBBStackedColumn(
-                          children: _additionalRows(context),
-                        )
-                      : SizedBox(),
+                  transitionBuilder:
+                      (child, anim) => SizeTransition(
+                        sizeFactor: anim,
+                        child: child,
+                      ),
+                  child:
+                      showAll
+                          ? SBBStackedColumn(
+                            children: _additionalRows(context),
+                          )
+                          : SizedBox(),
                 ),
                 _bottomRow(sbbToast, style),
               ],
             ),
             SliverList.builder(
               itemCount: 60,
-              itemBuilder: (context, index) => SBBListItem(
-                title: 'Item $index',
-                onPressed: () {
-                  FocusScope.of(context).unfocus();
-                  sbbToast.show(title: 'Pressed Item $index', bottom: sbbDefaultSpacing * 6);
-                },
-              ),
-            )
+              itemBuilder:
+                  (context, index) => SBBListItem(
+                    title: 'Item $index',
+                    onPressed: () {
+                      FocusScope.of(context).unfocus();
+                      sbbToast.show(title: 'Pressed Item $index', bottom: sbbDefaultSpacing * 6);
+                    },
+                  ),
+            ),
           ],
         ),
+      ),
+    );
+  }
+
+  SBBHeaderboxFlap _flap() {
+    return SBBHeaderboxFlap.custom(
+      allowFloating: true,
+      child: Row(
+        children: [
+          Text('Thursday, 01/31/2025', style: SBBTextStyles.smallLight),
+          Spacer(),
+          SizedOverflowBox(
+            size: Size(54, 24),
+            alignment: Alignment.centerRight,
+            child: SBBIconButtonSmall(
+              icon: showAll ? SBBIcons.arrow_up_small : SBBIcons.arrow_down_small,
+              onPressed: () {
+                setState(() {
+                  showAll = !showAll;
+                });
+              },
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -416,10 +421,11 @@ class _FloatingPageState extends State<FloatingPage> {
     return SBBStackedItem.aligned(
       alignment: alignment,
       clipBehavior: Clip.hardEdge,
-      builder: (context, state, child) => Opacity(
-        opacity: state.expansionRate,
-        child: child,
-      ),
+      builder:
+          (context, state, child) => Opacity(
+            opacity: state.expansionRate,
+            child: child,
+          ),
       child: Row(
         children: [
           SizedBox(width: 48),
@@ -475,14 +481,15 @@ class _FloatingPageState extends State<FloatingPage> {
     return [
       SBBListItem(title: 'Static with progress bar', onPressed: null),
       SBBStackedItem(
-        builder: (context, state, _) => FractionallySizedBox(
-          widthFactor: state.totalContractionRate,
-          alignment: Alignment.topLeft,
-          child: Container(
-            height: 5,
-            color: SBBColors.red,
-          ),
-        ),
+        builder:
+            (context, state, _) => FractionallySizedBox(
+              widthFactor: state.totalContractionRate,
+              alignment: Alignment.topLeft,
+              child: Container(
+                height: 5,
+                color: SBBColors.red,
+              ),
+            ),
       ),
       SBBStackedItem.aligned(
         alignment: Alignment.center,
@@ -491,10 +498,11 @@ class _FloatingPageState extends State<FloatingPage> {
       ),
       SBBStackedItem.aligned(
         alignment: Alignment.topLeft,
-        builder: (context, state, child) => Transform.translate(
-          offset: Offset((1.0 - state.expansionRate) * 30, 0.0),
-          child: child,
-        ),
+        builder:
+            (context, state, child) => Transform.translate(
+              offset: Offset((1.0 - state.expansionRate) * 30, 0.0),
+              child: child,
+            ),
         child: SBBListItem(title: 'React to progress', onPressed: null),
       ),
     ];
