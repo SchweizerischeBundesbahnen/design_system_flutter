@@ -110,8 +110,14 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
                   child: Stack(
                     children: [
                       ..._tabs.mapIndexed(
-                        (i, e) =>
-                            Positioned(left: layoutData.positions[i].dx, child: TabItemWidget(e.icon, selected: true)),
+                        (i, e) => Positioned(
+                          left: layoutData.positions[i].dx,
+                          child: TabItemWidget(
+                            e.icon,
+                            selected: true,
+                            onTap: () => _onTap(e, navData),
+                          ),
+                        ),
                       ),
                       CustomPaint(
                         painter: TabCurvePainter(_controller.curves, cardColor, theme.shadowColor),
@@ -123,11 +129,7 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
                             warnings: warnings,
                             portrait: portrait,
                             onPositioned: _controller.onLayout,
-                            onTap: (e) {
-                              widget.onTap.call(e);
-                              if (navData.selectedTab == e) return;
-                              widget.onTabChanged(_controller.selectTab(e));
-                            },
+                            onTap: (e) => _onTap(e, navData),
                             onTapDown: (e) {
                               if (navData.selectedTab == e) return;
                               _controller.hoverTab(e);
@@ -145,5 +147,11 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
         );
       },
     );
+  }
+
+  void _onTap(SBBTabBarItem item, SBBTabBarNavigationData navData) {
+    widget.onTap.call(item);
+    if (navData.selectedTab == item) return;
+    widget.onTabChanged(_controller.selectTab(item));
   }
 }
