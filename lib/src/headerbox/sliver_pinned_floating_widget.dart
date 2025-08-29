@@ -97,7 +97,7 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
       return 0.0;
     }
 
-    if(!floating) {
+    if (!floating) {
       return maxExtent;
     }
 
@@ -125,7 +125,14 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
 
     // We keep track an internal scroll offset that ranges from 0..extent.
     // This is what is used to immediately hide or show the widget at hand.
-    _internalScrollOffset = (_internalScrollOffset + (scrollOffset - _previousScrollOffset)).clamp(0, extent);
+    final rawDelta = scrollOffset - _previousScrollOffset;
+    final delta = switch (this.constraints.userScrollDirection) {
+      ScrollDirection.idle => rawDelta,
+      ScrollDirection.forward => min(0.0, rawDelta),
+      ScrollDirection.reverse => max(0.0, rawDelta),
+    };
+
+    _internalScrollOffset = (_internalScrollOffset + delta).clamp(0, extent);
     _previousScrollOffset = scrollOffset;
 
     final snapping = snapController?.isAnimating == true || _wasAnimating;
@@ -143,8 +150,8 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
 
     // Make it so that it looks to the child like we are scrolled only by the internal value
     final SliverConstraints constraints = this.constraints.copyWith(
-          scrollOffset: 0,
-        );
+      scrollOffset: 0,
+    );
 
     child!.layout(
       constraints.asBoxConstraints().copyWith(minHeight: childSize, maxHeight: childSize),
@@ -161,11 +168,12 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
     geometry = SliverGeometry(
       paintOrigin: constraints.overlap,
       layoutExtent: layoutExtent,
-      scrollExtent: maxExtent - minExtent, // do not use `extent`
+      scrollExtent: maxExtent,
       paintExtent: paintedChildSize,
       cacheExtent: cacheExtent,
       maxPaintExtent: maxExtent,
       hitTestExtent: maxExtent,
+      maxScrollObstructionExtent: minExtent,
       hasVisualOverflow: layoutExtent > constraints.remainingPaintExtent || constraints.scrollOffset > 0.0,
       scrollOffsetCorrection: scrollOffsetCorrection.abs() > 0.01 ? scrollOffsetCorrection : null,
     );
@@ -180,13 +188,12 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
     };
 
     if (headerIsPartiallyVisible) {
-      snapController ??= AnimationController(vsync: vsync!)
-        ..addListener(() {
-          if (_virtualScroll != snapAnimation.value) {
-            _virtualScroll = snapAnimation.value;
-            markNeedsLayout();
-          }
-        });
+      snapController ??= AnimationController(vsync: vsync!)..addListener(() {
+        if (_virtualScroll != snapAnimation.value) {
+          _virtualScroll = snapAnimation.value;
+          markNeedsLayout();
+        }
+      });
       snapController!.duration = switch (direction) {
         ScrollDirection.forward => animationStyle?.duration ?? const Duration(milliseconds: 300),
         _ => animationStyle?.reverseDuration ?? const Duration(milliseconds: 300),
@@ -207,6 +214,7 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
           ),
         ),
       );
+
       return snapController!.forward(from: 0.0);
     }
 
@@ -215,9 +223,8 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
 
   void isScrollingUpdate(ScrollPosition position) {
     if (kIsWeb) return;
-
+    
     final now = DateTime.now();
-
     if (position.isScrollingNotifier.value) {
       _timeAtScrollStart = now;
       _scrollOffsetAtScrollStart = _internalScrollOffset;
@@ -228,12 +235,12 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
       final bool useScrollDirection =
           elapsed.inMilliseconds < 500.0 && (_scrollOffsetAtScrollStart - _internalScrollOffset).abs() > (extent / 4);
 
-      final direction = useScrollDirection || extent < 1.0
-          ? position.userScrollDirection
-          : (_internalScrollOffset / extent) < 0.5
+      final direction =
+          useScrollDirection || extent < 1.0
+              ? position.userScrollDirection
+              : (_internalScrollOffset / extent) < 0.5
               ? ScrollDirection.forward
               : ScrollDirection.reverse;
-
 
       snap(direction);
     }

@@ -142,7 +142,6 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
          ],
        );
 
-
   /// Allows complete customization of the [SBBSliverHeaderbox].
   ///
   /// Note that the [children] can -- and should -- make use of [SBBStackedItem] to customize the way they collapse.
@@ -268,6 +267,7 @@ class _SnapTriggerState extends State<_SnapTrigger> {
     assert(position != null);
     final RenderSliverPinnedFloatingWidget? renderer =
         context.findAncestorRenderObjectOfType<RenderSliverPinnedFloatingWidget>();
+
     renderer?.isScrollingUpdate(position!);
   }
 
@@ -301,5 +301,53 @@ class _Preceding extends StatelessWidget {
         child: child,
       ),
     );
+  }
+}
+
+
+/// This spacer should be placed at the very bottom of a scroll view that has
+/// a [SBBSliverFloatingHeaderbox].
+///
+/// It will make sure that the scroll view has enough space to expand and contract
+/// the headerbox.
+class SBBSliverFloatingHeaderboxSpacer extends LeafRenderObjectWidget {
+  const SBBSliverFloatingHeaderboxSpacer({super.key});
+
+  @override
+  RenderObject createRenderObject(BuildContext context) {
+    return _RenderSBBSliverFloatingHeaderboxSpacer();
+  }
+}
+
+class _RenderSBBSliverFloatingHeaderboxSpacer extends RenderSliver {
+  @override
+  void performLayout() {
+    final firstSibling = _header();
+    final scrollExtent = firstSibling?.extent ?? 0.0;
+
+    var size = 0.0;
+    if (constraints.precedingScrollExtent > constraints.viewportMainAxisExtent &&
+        constraints.precedingScrollExtent < constraints.viewportMainAxisExtent + scrollExtent) {
+      size = (constraints.viewportMainAxisExtent + scrollExtent) - constraints.precedingScrollExtent;
+    }
+
+    geometry = SliverGeometry(
+      scrollExtent: size,
+    );
+  }
+
+  RenderSliverPinnedFloatingWidget? _header() {
+    var parentData = this.parentData as ContainerParentDataMixin<RenderSliver>;
+
+    while (parentData.previousSibling != null) {
+      final renderObject = parentData.previousSibling!;
+      parentData = renderObject.parentData as ContainerParentDataMixin<RenderSliver>;
+
+      if (renderObject is RenderSliverPinnedFloatingWidget) {
+        return renderObject;
+      }
+    }
+
+    return null;
   }
 }
