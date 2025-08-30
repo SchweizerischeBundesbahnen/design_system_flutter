@@ -7,8 +7,10 @@ import 'sliver_pinned_floating_widget.dart';
 
 // AnimationStyle was not `const` until recently.
 final defaultAnimationStyle = AnimationStyle(
-  duration: Durations.short4,
-  curve: Curves.easeInOutCubic,
+  duration: Durations.short2,
+  curve: Curves.linear,
+  reverseDuration: Durations.short2,
+  reverseCurve: Curves.linear,
 );
 
 /// A floating, expanding, and contracting version of the SBB Sliver Headerbox.

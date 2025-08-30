@@ -267,7 +267,6 @@ class _FloatingPageState extends State<FloatingPage> {
       child: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: CustomScrollView(
-          physics: BouncingScrollPhysics(),
           slivers: [
             SBBSliverFloatingHeaderbox.custom(
               floating: floating,
