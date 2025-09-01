@@ -7,11 +7,12 @@ import 'package:flutter/scheduler.dart';
 
 import 'intrinsics_override.dart';
 
-typedef SBBStackedBuilder = Widget Function(
-  BuildContext context,
-  ExpansionState state,
-  Widget? child,
-);
+typedef SBBStackedBuilder =
+    Widget Function(
+      BuildContext context,
+      ExpansionState state,
+      Widget? child,
+    );
 
 /// A widget that lays out its children the same way as a shrink-wrapped column,
 /// but contracts them one by one from bottom to top as it shrinks in size.
@@ -42,32 +43,34 @@ class SBBStackedItem extends StatelessWidget {
     Key? key,
     required Widget firstChild,
     required Widget secondChild,
+    AlignmentGeometry alignment = AlignmentDirectional.centerStart,
   }) {
     return SBBStackedItem(
       key: key,
-      builder: (context, progress, _) => Stack(
-        clipBehavior: Clip.none,
-        alignment: Alignment.centerLeft,
-        children: [
-          IgnorePointer(
-            ignoring: progress.expansionRate > 0.1,
-            child: Opacity(
-              opacity: 1.0 - progress.expansionRate,
-              child: firstChild,
-            ),
-          ),
-          OverrideIntrinsics(
-            minHeight: 0.0,
-            child: IgnorePointer(
-              ignoring: progress.expansionRate < 0.9,
-              child: Opacity(
-                opacity: progress.expansionRate,
-                child: secondChild,
+      builder:
+          (context, progress, _) => Stack(
+            clipBehavior: Clip.none,
+            alignment: alignment,
+            children: [
+              IgnorePointer(
+                ignoring: progress.expansionRate > 0.1,
+                child: Opacity(
+                  opacity: 1.0 - progress.expansionRate,
+                  child: firstChild,
+                ),
               ),
-            ),
+              OverrideIntrinsics(
+                minHeight: 0.0,
+                child: IgnorePointer(
+                  ignoring: progress.expansionRate < 0.9,
+                  child: Opacity(
+                    opacity: progress.expansionRate,
+                    child: secondChild,
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
     );
   }
 
@@ -84,30 +87,32 @@ class SBBStackedItem extends StatelessWidget {
       key: key,
       minHeight: minHeight,
       maxHeight: maxHeight,
-      builder: builder == null
-          ? null
-          : (context, progress, child) {
-              return ClipRect(
-                clipBehavior: clipBehavior,
-                child: OverflowBox(
-                  maxHeight: double.infinity,
-                  alignment: alignment,
-                  child: builder(context, progress, child),
-                ),
-              );
-            },
-      child: (child == null)
-          ? null
-          : builder != null
-              ? child
-              : ClipRect(
+      builder:
+          builder == null
+              ? null
+              : (context, progress, child) {
+                return ClipRect(
                   clipBehavior: clipBehavior,
                   child: OverflowBox(
                     maxHeight: double.infinity,
                     alignment: alignment,
-                    child: child,
+                    child: builder(context, progress, child),
                   ),
+                );
+              },
+      child:
+          (child == null)
+              ? null
+              : builder != null
+              ? child
+              : ClipRect(
+                clipBehavior: clipBehavior,
+                child: OverflowBox(
+                  maxHeight: double.infinity,
+                  alignment: alignment,
+                  child: child,
                 ),
+              ),
     );
   }
 
@@ -250,7 +255,7 @@ class _RenderStackedColumn extends RenderBox
     RenderBox? child = lastChild;
 
     // Max height of the construct
-    var totalHeight = min(constraints.maxHeight, desiredHeight);
+    final totalHeight = min(constraints.maxHeight, desiredHeight);
     // Pixels that we must shrink
     var toShrink = desiredHeight - totalHeight;
     var totalWidth = 0.0;
@@ -358,7 +363,6 @@ class _RenderStackedColumn extends RenderBox
 class StackedColumnParentData extends ContainerBoxParentData<RenderBox> {
   ValueNotifier<ExpansionState>? progressNotifier;
 }
-
 
 /// Stores the current state of expansion (and contraction).
 @immutable
