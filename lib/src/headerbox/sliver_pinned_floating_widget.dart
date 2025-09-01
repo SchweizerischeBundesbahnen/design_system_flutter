@@ -141,7 +141,7 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
       if (snapMode == FloatingHeaderSnapMode.scroll || scrollOffset < extent) {
         // With this option, we can tell the layout algorithm that we want to scroll in a direction.
         // We use this to scroll the view in a natural way.
-        scrollOffsetCorrection = _virtualScroll - _internalScrollOffset;
+        scrollOffsetCorrection = max(-scrollOffset, _virtualScroll - _internalScrollOffset);
       } else {
         _internalScrollOffset = _virtualScroll;
       }
@@ -223,7 +223,7 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
 
   void isScrollingUpdate(ScrollPosition position) {
     if (kIsWeb) return;
-    
+
     final now = DateTime.now();
     if (position.isScrollingNotifier.value) {
       _timeAtScrollStart = now;
