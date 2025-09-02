@@ -55,12 +55,7 @@ class SBBToast {
     builder(
       duration: duration,
       bottom: bottom,
-      builder: (stream) => DefaultToastBody(
-        title: title,
-        duration: duration,
-        style: style,
-        action: action,
-      ),
+      builder: (stream) => DefaultToastBody(title: title, duration: duration, style: style, action: action),
     );
   }
 

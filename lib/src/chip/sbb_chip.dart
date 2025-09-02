@@ -42,17 +42,13 @@ class SBBChip extends StatelessWidget {
       child: Container(
         decoration: ShapeDecoration(
           shape: StadiumBorder(
-            side: BorderSide(
-              color: _disabled ? style.disabledBorderColor! : style.borderColor!,
-            ),
+            side: BorderSide(color: _disabled ? style.disabledBorderColor! : style.borderColor!),
           ),
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Flexible(
-              child: _label(style),
-            ),
+            Flexible(child: _label(style)),
             if (_showUnselectButton) _unselectButton(style),
             if (_showBadgeLabel) _badge(style),
           ],
@@ -67,24 +63,15 @@ class SBBChip extends StatelessWidget {
       padding: const EdgeInsets.symmetric(
         vertical: 6.0,
         horizontal: 12.0,
-      ).subtract(
-        EdgeInsets.only(right: _showBadgeLabel || _showUnselectButton ? _kChipMargin : 0),
-      ),
-      child: Text(
-        label,
-        overflow: TextOverflow.ellipsis,
-        style: labelTextStyle,
-      ),
+      ).subtract(EdgeInsets.only(right: _showBadgeLabel || _showUnselectButton ? _kChipMargin : 0)),
+      child: Text(label, overflow: TextOverflow.ellipsis, style: labelTextStyle),
     );
   }
 
   Widget _badge(SBBChipStyle style) {
     final badgeTextStyle = _disabled ? style.badgeTextStyle!.textStyleDisabled : style.badgeTextStyle!.textStyle;
     return _roundedContainer(
-      child: Text(
-        badgeLabel ?? '',
-        style: badgeTextStyle,
-      ),
+      child: Text(badgeLabel ?? '', style: badgeTextStyle),
       color: _disabled ? style.disabledBadgeColor! : style.badgeColor!,
       padding: const EdgeInsets.symmetric(horizontal: 4.0),
     );
@@ -117,13 +104,8 @@ class SBBChip extends StatelessWidget {
       constraints: const BoxConstraints(minWidth: 24.0),
       height: 24.0,
       width: width,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12.0),
-        color: color,
-      ),
-      child: Center(
-        child: child,
-      ),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(12.0), color: color),
+      child: Center(child: child),
     );
   }
 

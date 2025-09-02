@@ -44,7 +44,9 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
         redSegmentedButton: SBBSegmentedButtonStyle.red(baseStyle: baseStyle),
         selectLabel: SBBTextStyle(
           textStyle: baseStyle.themedTextStyle(
-              textStyle: SBBTextStyles.helpersLabel, color: baseStyle.themeValue(SBBColors.metal, SBBColors.cement)),
+            textStyle: SBBTextStyles.helpersLabel,
+            color: baseStyle.themeValue(SBBColors.metal, SBBColors.cement),
+          ),
           textStyleDisabled: baseStyle.themedTextStyle(textStyle: SBBTextStyles.helpersLabel, color: SBBColors.metal),
         ),
         switchToggle: SBBSwitchStyle.$default(baseStyle: baseStyle),
@@ -187,8 +189,11 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
       selectLabel: selectLabel?.lerp(other.selectLabel, t),
       switchToggle: switchToggle?.lerp(other.switchToggle, t),
       headerBackgroundColor: Color.lerp(headerBackgroundColor, other.headerBackgroundColor, t),
-      headerButtonBackgroundColorHighlighted:
-          Color.lerp(headerButtonBackgroundColorHighlighted, other.headerButtonBackgroundColorHighlighted, t),
+      headerButtonBackgroundColorHighlighted: Color.lerp(
+        headerButtonBackgroundColorHighlighted,
+        other.headerButtonBackgroundColorHighlighted,
+        t,
+      ),
       headerIconColor: Color.lerp(headerIconColor, other.headerIconColor, t),
       headerTextStyle: TextStyle.lerp(headerTextStyle, other.headerTextStyle, t),
       linkTextStyle: TextStyle.lerp(linkTextStyle, other.linkTextStyle, t),

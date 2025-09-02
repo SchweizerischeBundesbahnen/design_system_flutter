@@ -33,23 +33,11 @@ class SBBAccordionItem {
     required this.title,
     required this.body,
     this.isExpanded = false,
-    this.padding = const EdgeInsetsDirectional.fromSTEB(
-      sbbDefaultSpacing,
-      10.0,
-      sbbDefaultSpacing,
-      sbbDefaultSpacing,
-    ),
+    this.padding = const EdgeInsetsDirectional.fromSTEB(sbbDefaultSpacing, 10.0, sbbDefaultSpacing, sbbDefaultSpacing),
   });
 
-  SBBAccordionItem.text({
-    required String title,
-    required String text,
-    bool isExpanded = false,
-  }) : this(
-          title: title,
-          body: Text(text),
-          isExpanded: isExpanded,
-        );
+  SBBAccordionItem.text({required String title, required String text, bool isExpanded = false})
+      : this(title: title, body: Text(text), isExpanded: isExpanded);
 
   /// The title text that's displayed in the header.
   final String title;
@@ -99,17 +87,9 @@ class SBBAccordion extends StatefulWidget {
     borderColor,
   }) : this(
           key: key,
-          children: [
-            SBBAccordionItem(
-              title: title,
-              body: body,
-              isExpanded: isExpanded,
-            ),
-          ],
+          children: [SBBAccordionItem(title: title, body: body, isExpanded: isExpanded)],
           titleMaxLines: titleMaxLines,
-          accordionCallback: (index, isExpanded) => singleAccordionCallback?.call(
-            isExpanded,
-          ),
+          accordionCallback: (index, isExpanded) => singleAccordionCallback?.call(isExpanded),
           backgroundColor: backgroundColor,
           borderColor: borderColor,
         );
@@ -144,9 +124,7 @@ class _SBBAccordionState extends State<SBBAccordion> {
 
     return Material(
       color: widget.backgroundColor ?? style.accordionBackgroundColor,
-      child: Column(
-        children: items,
-      ),
+      child: Column(children: items),
     );
   }
 
@@ -175,12 +153,8 @@ class _SBBAccordionState extends State<SBBAccordion> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsetsDirectional.only(
-                      end: sbbDefaultSpacing / 2,
-                    ),
-                    child: _ExpandIcon(
-                      _isChildExpanded(i),
-                    ),
+                    padding: const EdgeInsetsDirectional.only(end: sbbDefaultSpacing / 2),
+                    child: _ExpandIcon(_isChildExpanded(i)),
                   ),
                 ],
               ),
@@ -191,21 +165,10 @@ class _SBBAccordionState extends State<SBBAccordion> {
             secondChild: Container(
               width: double.infinity,
               padding: child.padding,
-              child: DefaultTextStyle(
-                style: style.accordionBodyTextStyle!,
-                child: child.body,
-              ),
+              child: DefaultTextStyle(style: style.accordionBodyTextStyle!, child: child.body),
             ),
-            firstCurve: const Interval(
-              0.0,
-              0.6,
-              curve: Curves.fastOutSlowIn,
-            ),
-            secondCurve: const Interval(
-              0.4,
-              1.0,
-              curve: Curves.fastOutSlowIn,
-            ),
+            firstCurve: const Interval(0.0, 0.6, curve: Curves.fastOutSlowIn),
+            secondCurve: const Interval(0.4, 1.0, curve: Curves.fastOutSlowIn),
             sizeCurve: Curves.fastOutSlowIn,
             crossFadeState: _isChildExpanded(i) ? CrossFadeState.showSecond : CrossFadeState.showFirst,
             duration: kThemeAnimationDuration,
@@ -233,20 +196,8 @@ class _ExpandIconState extends State<_ExpandIcon> with SingleTickerProviderState
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(
-      duration: kThemeAnimationDuration,
-      vsync: this,
-    );
-    _iconTurns = _controller.drive(
-      Tween<double>(
-        begin: 0.0,
-        end: 0.5,
-      ).chain(
-        CurveTween(
-          curve: Curves.fastOutSlowIn,
-        ),
-      ),
-    );
+    _controller = AnimationController(duration: kThemeAnimationDuration, vsync: this);
+    _iconTurns = _controller.drive(Tween<double>(begin: 0.0, end: 0.5).chain(CurveTween(curve: Curves.fastOutSlowIn)));
     // If the widget is initially expanded, rotate the icon without animating it.
     if (widget.isExpanded) {
       _controller.value = _controller.upperBound;
@@ -258,10 +209,7 @@ class _ExpandIconState extends State<_ExpandIcon> with SingleTickerProviderState
     return IgnorePointer(
       child: RotationTransition(
         turns: _iconTurns,
-        child: SBBIconButtonSmall(
-          icon: SBBIcons.chevron_small_down_small,
-          onPressed: () {},
-        ),
+        child: SBBIconButtonSmall(icon: SBBIcons.chevron_small_down_small, onPressed: () {}),
       ),
     );
   }

@@ -34,23 +34,19 @@ class SBBLinkTextState extends State<SBBLinkText> {
   static const plainLinkPattern =
       r'((?:http(?:s)?:\/\/.)(?:www\.)?[-a-zA-ZäöüÄÖÜ0-9@:%._\+~#=$]{2,256}\.[a-z]{2,6}\b(?:[-a-zA-ZäöüÄÖÜ0-9@:%_\+.~#?&//=$]*))';
 
-  final combinedPattern = RegExp([
-    inlineLinkPattern,
-    angleBracketsPattern,
-    plainLinkPattern,
-  ].join(r'|'));
+  final combinedPattern = RegExp(
+    [
+      inlineLinkPattern,
+      angleBracketsPattern,
+      plainLinkPattern,
+    ].join(r'|'),
+  );
 
   final _isPressedValues = [];
   final _isHoveredValues = [];
 
   @override
-  Widget build(BuildContext context) {
-    return RichText(
-      text: TextSpan(
-        children: _textSpans(),
-      ),
-    );
-  }
+  Widget build(BuildContext context) => RichText(text: TextSpan(children: _textSpans()));
 
   List<TextSpan> _textSpans() {
     final style = SBBBaseStyle.of(context);
@@ -61,12 +57,7 @@ class SBBLinkTextState extends State<SBBLinkText> {
     final List<TextSpan> inlineSpans = [];
     for (var i = 0; i < math.max(plainTextSections.length, linkSections.length); i++) {
       if (i < plainTextSections.length) {
-        inlineSpans.add(
-          TextSpan(
-            text: plainTextSections[i],
-            style: textStyle,
-          ),
-        );
+        inlineSpans.add(TextSpan(text: plainTextSections[i], style: textStyle));
       }
       if (i < linkSections.length) {
         final link = linkSections[i];

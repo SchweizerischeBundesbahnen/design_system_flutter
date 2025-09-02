@@ -41,12 +41,7 @@ class _TabLayout extends StatelessWidget {
             );
           })
           .cast<Widget>()
-          .followedBy(items.map(
-            (e) => _TabLabel(
-              item: e,
-              visible: e == selectedTab && portrait,
-            ),
-          ))
+          .followedBy(items.map((e) => _TabLabel(item: e, visible: e == selectedTab && portrait)))
           .toList(),
     );
   }

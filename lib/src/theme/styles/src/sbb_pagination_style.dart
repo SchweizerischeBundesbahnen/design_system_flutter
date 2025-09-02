@@ -3,11 +3,7 @@ import 'package:flutter/material.dart';
 import '../../theme.dart';
 
 class SBBPaginationStyle {
-  SBBPaginationStyle({
-    this.selectedColor,
-    this.borderColor,
-    this.floatingBackgroundColor,
-  });
+  SBBPaginationStyle({this.selectedColor, this.borderColor, this.floatingBackgroundColor});
 
   factory SBBPaginationStyle.$default({required SBBBaseStyle baseStyle}) {
     final isLightTheme = baseStyle.brightness == Brightness.light;

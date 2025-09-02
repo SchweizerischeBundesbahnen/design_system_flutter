@@ -4,33 +4,17 @@ import '../../../sbb_internal.dart';
 import '../../theme.dart';
 
 class SBBSegmentedButtonStyle {
-  SBBSegmentedButtonStyle({
-    this.defaultStyle,
-    this.selectedStyle,
-    this.iconColor,
-    this.boxShadow,
-  });
+  SBBSegmentedButtonStyle({this.defaultStyle, this.selectedStyle, this.iconColor, this.boxShadow});
 
   factory SBBSegmentedButtonStyle.$default({required SBBBaseStyle baseStyle}) => SBBSegmentedButtonStyle(
-        defaultStyle: SBBSegmentedButtonInnerStyle.$default(
-          baseStyle: baseStyle,
-        ),
-        selectedStyle: SBBSegmentedButtonInnerStyle.selected(
-          baseStyle: baseStyle,
-        ),
-        boxShadow: baseStyle.themeValue(
-          SBBInternal.defaultBoxShadow,
-          SBBInternal.defaultDarkBoxShadow,
-        ),
+        defaultStyle: SBBSegmentedButtonInnerStyle.$default(baseStyle: baseStyle),
+        selectedStyle: SBBSegmentedButtonInnerStyle.selected(baseStyle: baseStyle),
+        boxShadow: baseStyle.themeValue(SBBInternal.defaultBoxShadow, SBBInternal.defaultDarkBoxShadow),
       );
 
   factory SBBSegmentedButtonStyle.red({required SBBBaseStyle baseStyle}) => SBBSegmentedButtonStyle(
-        defaultStyle: SBBSegmentedButtonInnerStyle.red(
-          baseStyle: baseStyle,
-        ),
-        selectedStyle: SBBSegmentedButtonInnerStyle.redSelected(
-          baseStyle: baseStyle,
-        ),
+        defaultStyle: SBBSegmentedButtonInnerStyle.red(baseStyle: baseStyle),
+        selectedStyle: SBBSegmentedButtonInnerStyle.redSelected(baseStyle: baseStyle),
         iconColor: SBBColors.white,
         boxShadow: SBBInternal.defaultRedBoxShadow,
       );

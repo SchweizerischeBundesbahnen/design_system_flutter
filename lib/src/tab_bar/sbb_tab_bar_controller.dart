@@ -62,21 +62,12 @@ class SBBTabBarController {
 
   /// Initializing the controller with the animation controller
   void initialize(TickerProvider vsync) {
-    _animationController = AnimationController(
-      vsync: vsync,
-      duration: kThemeAnimationDuration,
-    )..addListener(
-        () {
-          currentData = SBBTabBarNavigationData(
-            selectedTab,
-            _nextTab,
-            _animation.value,
-            hover,
-          );
-          _navigationController.add(currentData);
-          updateCurveAnimation();
-        },
-      );
+    _animationController = AnimationController(vsync: vsync, duration: kThemeAnimationDuration)
+      ..addListener(() {
+        currentData = SBBTabBarNavigationData(selectedTab, _nextTab, _animation.value, hover);
+        _navigationController.add(currentData);
+        updateCurveAnimation();
+      });
     _animation = Tween(begin: 0.0, end: 1.0).animate(_animationController);
   }
 
@@ -112,11 +103,12 @@ class SBBTabBarController {
   }
 
   Future<SBBTabBarItem> selectTab(SBBTabBarItem tab) async {
-    _setWarningShown(tab.id);
     if (selectedTab == tab) return tab;
     _nextTab = tab;
     hover = false;
     await _animationController.animateTo(1.0, duration: _duration, curve: Curves.easeInOut);
+    _setWarningShown(tab.id);
+
     selectedTab = tab;
     _animationController.reset();
     return tab;

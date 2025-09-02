@@ -244,6 +244,7 @@ class _SBBCheckboxState extends State<SBBCheckbox> with TickerProviderStateMixin
 class _SBBCheckboxPainter extends ToggleablePainter {
   bool? get value => _value;
   bool? _value;
+
   set value(bool? value) {
     if (_value == value) {
       return;
@@ -254,6 +255,7 @@ class _SBBCheckboxPainter extends ToggleablePainter {
 
   bool? get previousValue => _previousValue;
   bool? _previousValue;
+
   set previousValue(bool? value) {
     if (_previousValue == value) {
       return;
@@ -264,6 +266,7 @@ class _SBBCheckboxPainter extends ToggleablePainter {
 
   Color get checkColor => _checkColor!;
   Color? _checkColor;
+
   set checkColor(Color newValue) {
     if (newValue == _checkColor) {
       return;
@@ -274,6 +277,7 @@ class _SBBCheckboxPainter extends ToggleablePainter {
 
   Color get boxBorderColor => _boxBorderColor!;
   Color? _boxBorderColor;
+
   set boxBorderColor(Color newValue) {
     if (newValue == _boxBorderColor) {
       return;

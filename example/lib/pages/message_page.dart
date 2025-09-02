@@ -84,12 +84,7 @@ class _MessagePageState extends State<MessagePage> {
             isLoading: _isLoading,
             title: 'Custom',
             description: _description,
-            customIllustration: Container(
-              alignment: Alignment.center,
-              width: 100,
-              height: 100,
-              color: SBBColors.red,
-            ),
+            customIllustration: Container(alignment: Alignment.center, width: 100, height: 100, color: SBBColors.red),
             onInteraction: _onInteractionCallback(),
           ),
         ),

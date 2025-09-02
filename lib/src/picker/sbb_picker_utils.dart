@@ -13,10 +13,7 @@ const _timeItemCount = 2;
 // time constants
 const _lastMinuteOfHour = TimeOfDay.minutesPerHour - 1;
 const _startOfDay = TimeOfDay(hour: 0, minute: 0);
-const _endOfDay = TimeOfDay(
-  hour: TimeOfDay.hoursPerDay - 1,
-  minute: _lastMinuteOfHour,
-);
+const _endOfDay = TimeOfDay(hour: TimeOfDay.hoursPerDay - 1, minute: _lastMinuteOfHour);
 const _defaultMinuteInterval = 1;
 
 /// Abstract class extended by the Picker State classes that handles
@@ -77,14 +74,7 @@ abstract class _TimeBasedPickerState<T extends StatefulWidget> extends _PickerCl
           left: _itemPadding + (isFirstColumn ? _widgetHorizontalPadding : 0),
           right: _itemPadding + (isLastColumn ? _widgetHorizontalPadding : 0),
         ),
-        child: SizedBox(
-          width: textWidth,
-          child: Text(
-            label,
-            textAlign: TextAlign.center,
-            softWrap: false,
-          ),
-        ),
+        child: SizedBox(width: textWidth, child: Text(label, textAlign: TextAlign.center, softWrap: false)),
       ),
     );
   }
@@ -107,20 +97,8 @@ extension DateTimeExtensions on DateTime {
   /// [DateTime.millisecond] and [DateTime.microsecond], provided by
   /// similarly named arguments, or 0 if no argument is provided, or using the
   /// existing value of the property if `null` is provided.
-  DateTime clearTime({
-    hour = 0,
-    minute = 0,
-    second = 0,
-    millisecond = 0,
-    microsecond = 0,
-  }) {
-    return copyWith(
-      hour: hour,
-      minute: minute,
-      second: second,
-      millisecond: millisecond,
-      microsecond: microsecond,
-    );
+  DateTime clearTime({hour = 0, minute = 0, second = 0, millisecond = 0, microsecond = 0}) {
+    return copyWith(hour: hour, minute: minute, second: second, millisecond: millisecond, microsecond: microsecond);
   }
 
   /// Creates a new [DateTime] from [this] one by updating the time properties.
@@ -129,10 +107,7 @@ extension DateTimeExtensions on DateTime {
   /// the properties [DateTime.second], [DateTime.millisecond] and
   /// [DateTime.microsecond] set to 0 and [DateTime.minute] set to given value.
   DateTime roundToMinute(int minute) {
-    return clearTime(
-      hour: hour,
-      minute: minute,
-    );
+    return clearTime(hour: hour, minute: minute);
   }
 
   /// Creates copy of [this] with the minute value rounded to the closest

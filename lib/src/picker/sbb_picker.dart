@@ -57,10 +57,7 @@ class SBBPicker extends StatefulWidget {
   }) : this.custom(
           key: key,
           child: SBBPickerScrollView(
-            controller: controller ??
-                SBBPickerScrollController(
-                  initialItem: initialSelectedIndex,
-                ),
+            controller: controller ?? SBBPickerScrollController(initialItem: initialSelectedIndex),
             onSelectedItemChanged: onSelectedItemChanged,
             itemBuilder: itemBuilder,
             looping: looping,
@@ -123,10 +120,7 @@ class SBBPicker extends StatefulWidget {
   /// * [SBBPicker.new], default constructor for SBB Picker with limited
   ///   customization.
   /// * [SBBPicker.list], constructor for basic SBB Picker.
-  const SBBPicker.custom({
-    super.key,
-    required this.child,
-  });
+  const SBBPicker.custom({super.key, required this.child});
 
   static const _lightThemeGradientColorOpacities = [0.31, 0.61, 0.70];
   static const _darkThemeGradientColorOpacities = [0.38, 0.61, 0.76];
@@ -152,10 +146,7 @@ class _SBBPickerState extends _PickerClassState<SBBPicker> {
           _buildHighlightedArea(context),
           ShaderMask(
             shaderCallback: (bounds) => _shaderCallback(context, bounds),
-            child: SizedBox(
-              height: _scrollAreaHeight,
-              child: widget.child,
-            ),
+            child: SizedBox(height: _scrollAreaHeight, child: widget.child),
           ),
         ],
       ),
@@ -166,14 +157,10 @@ class _SBBPickerState extends _PickerClassState<SBBPicker> {
     final highlightColor = SBBControlStyles.of(context).picker!.highlightColor;
     return Container(
       height: _highlightedAreaHeight,
-      margin: const EdgeInsets.symmetric(
-        horizontal: sbbDefaultSpacing * 0.5,
-      ),
+      margin: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * 0.5),
       decoration: BoxDecoration(
         color: highlightColor,
-        borderRadius: const BorderRadius.all(
-          Radius.circular(sbbDefaultSpacing * 0.5),
-        ),
+        borderRadius: const BorderRadius.all(Radius.circular(sbbDefaultSpacing * 0.5)),
       ),
     );
   }

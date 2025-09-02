@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
 import 'tab_item_widget.dart';
+import 'tab_curve_clipper.dart';
 import 'tab_curve_painter.dart';
 
 part 'sbb_tab_bar.icon.dart';
@@ -20,12 +21,7 @@ part 'sbb_tab_bar.layout.dart';
 /// OnTabChanged defines what happens when a tab is selected.
 /// OnTap gets called when a tab is tapped.
 class SBBTabBar extends StatefulWidget {
-  const SBBTabBar._({
-    required this.controller,
-    required this.onTabChanged,
-    required this.onTap,
-    super.key,
-  });
+  const SBBTabBar._({required this.controller, required this.onTabChanged, required this.onTap, super.key});
 
   factory SBBTabBar.items({
     required List<SBBTabBarItem> items,
@@ -47,12 +43,7 @@ class SBBTabBar extends StatefulWidget {
     required void Function(SBBTabBarItem tab) onTap,
     Key? key,
   }) =>
-      SBBTabBar._(
-        key: key,
-        controller: controller,
-        onTabChanged: onTabChanged,
-        onTap: onTap,
-      );
+      SBBTabBar._(key: key, controller: controller, onTabChanged: onTabChanged, onTap: onTap);
 
   final Future<void> Function(Future<SBBTabBarItem> tabTask) onTabChanged;
   final void Function(SBBTabBarItem tab) onTap;
@@ -113,42 +104,40 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
                   height: layoutData.height,
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
-                      colors: [
-                        cardColor.withValues(alpha: 0.0),
-                        cardColor.withValues(alpha: 1.0),
-                      ],
+                      colors: [cardColor.withValues(alpha: 0.0), cardColor.withValues(alpha: 1.0)],
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
                     ),
                   ),
                   child: Stack(
                     children: [
-                      ..._tabs.mapIndexed((i, e) => Positioned(
-                            left: layoutData.positions[i].dx,
-                            child: TabItemWidget(e.icon, selected: true),
-                          )),
-                      CustomPaint(
-                        painter: TabCurvePainter(
-                          _controller.curves,
-                          cardColor,
-                          theme.shadowColor,
+                      ..._tabs.mapIndexed(
+                        (i, e) => Positioned(
+                          left: layoutData.positions[i].dx,
+                          child: TabItemWidget(
+                            e.icon,
+                            selected: true,
+                            onTap: () => _onTap(e, navData),
+                          ),
                         ),
-                        child: _TabLayout(
-                          items: _tabs,
-                          selectedTab: navData.selectedTab,
-                          warnings: warnings,
-                          portrait: portrait,
-                          onPositioned: _controller.onLayout,
-                          onTap: (e) {
-                            widget.onTap.call(e);
-                            if (navData.selectedTab == e) return;
-                            widget.onTabChanged(_controller.selectTab(e));
-                          },
-                          onTapDown: (e) {
-                            if (navData.selectedTab == e) return;
-                            _controller.hoverTab(e);
-                          },
-                          onTapCancel: (e) => _controller.cancelHover(),
+                      ),
+                      CustomPaint(
+                        painter: TabCurvePainter(_controller.curves, cardColor, theme.shadowColor),
+                        child: ClipPath(
+                          clipper: TabCurveClipper(curves: _controller.curves),
+                          child: _TabLayout(
+                            items: _tabs,
+                            selectedTab: navData.selectedTab,
+                            warnings: warnings,
+                            portrait: portrait,
+                            onPositioned: _controller.onLayout,
+                            onTap: (e) => _onTap(e, navData),
+                            onTapDown: (e) {
+                              if (navData.selectedTab == e) return;
+                              _controller.hoverTab(e);
+                            },
+                            onTapCancel: (e) => _controller.cancelHover(),
+                          ),
                         ),
                       ),
                     ],
@@ -160,5 +149,11 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
         );
       },
     );
+  }
+
+  void _onTap(SBBTabBarItem item, SBBTabBarNavigationData navData) {
+    widget.onTap.call(item);
+    if (navData.selectedTab == item) return;
+    widget.onTabChanged(_controller.selectTab(item));
   }
 }

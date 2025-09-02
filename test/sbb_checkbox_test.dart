@@ -1,6 +1,6 @@
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import 'test_app.dart';
 
@@ -25,12 +25,7 @@ void main() {
 }
 
 class CheckboxTest extends StatelessWidget {
-  const CheckboxTest({
-    super.key,
-    required this.value1,
-    this.value2,
-    required this.value3,
-  });
+  const CheckboxTest({super.key, required this.value1, this.value2, required this.value3});
 
   final bool value1;
   final bool? value2;
@@ -45,24 +40,10 @@ class CheckboxTest extends StatelessWidget {
             padding: const EdgeInsets.all(sbbDefaultSpacing / 2),
             child: Row(
               children: [
-                SBBCheckbox(
-                  onChanged: (bool? value) {},
-                  value: value1,
-                ),
-                SBBCheckbox(
-                  onChanged: null,
-                  value: value1,
-                ),
-                SBBCheckbox(
-                  onChanged: (bool? value) {},
-                  value: value2,
-                  tristate: true,
-                ),
-                SBBCheckbox(
-                  onChanged: null,
-                  value: value2,
-                  tristate: true,
-                ),
+                SBBCheckbox(onChanged: (bool? value) {}, value: value1),
+                SBBCheckbox(onChanged: null, value: value1),
+                SBBCheckbox(onChanged: (bool? value) {}, value: value2, tristate: true),
+                SBBCheckbox(onChanged: null, value: value2, tristate: true),
               ],
             ),
           ),
@@ -71,17 +52,8 @@ class CheckboxTest extends StatelessWidget {
           SBBGroup(
             child: Column(
               children: [
-                SBBCheckboxListItem(
-                  value: value1,
-                  label: 'Default',
-                  onChanged: (value) {},
-                ),
-                SBBCheckboxListItem(
-                  value: value2,
-                  label: 'Tristate',
-                  tristate: true,
-                  onChanged: (value) {},
-                ),
+                SBBCheckboxListItem(value: value1, label: 'Default', onChanged: (value) {}),
+                SBBCheckboxListItem(value: value2, label: 'Tristate', tristate: true, onChanged: (value) {}),
                 SBBCheckboxListItem(
                   value: false,
                   label: 'Leading Icon',
@@ -149,20 +121,10 @@ class CheckboxTest extends StatelessWidget {
           Column(
             spacing: sbbDefaultSpacing * .5,
             children: [
+              SBBGroup(child: SBBCheckboxListItem.boxed(value: value1, label: 'Default', onChanged: (value) {})),
               SBBGroup(
-                child: SBBCheckboxListItem.boxed(
-                  value: value1,
-                  label: 'Default',
-                  onChanged: (value) {},
-                ),
-              ),
-              SBBGroup(
-                child: SBBCheckboxListItem.boxed(
-                  value: value2,
-                  label: 'Tristate',
-                  tristate: true,
-                  onChanged: (value) {},
-                ),
+                child:
+                    SBBCheckboxListItem.boxed(value: value2, label: 'Tristate', tristate: true, onChanged: (value) {}),
               ),
               SBBGroup(
                 child: SBBCheckboxListItem.boxed(

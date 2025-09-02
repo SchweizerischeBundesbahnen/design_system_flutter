@@ -152,27 +152,15 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
     }
 
     if (useMenuButton) {
-      return _build(
-        context,
-        _buildMenuButton(context),
-        _menuButtonIconWidth + _menuButtonIconPadding * 2,
-      );
+      return _build(context, _buildMenuButton(context), _menuButtonIconWidth + _menuButtonIconPadding * 2);
     }
 
     if (useCloseButton) {
-      return _build(
-        context,
-        _buildCloseButton(context),
-        _closeButtonIconWidth + _closeButtonIconPadding * 2,
-      );
+      return _build(context, _buildCloseButton(context), _closeButtonIconWidth + _closeButtonIconPadding * 2);
     }
 
     if (useBackButton) {
-      return _build(
-        context,
-        _buildBackButton(context),
-        _backButtonIconWidth + _backButtonIconPadding * 2,
-      );
+      return _build(context, _buildBackButton(context), _backButtonIconWidth + _backButtonIconPadding * 2);
     }
 
     return _build(context, Container(), leadingWidth ?? kToolbarHeight);
@@ -187,21 +175,14 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
         systemOverlayStyle: SystemUiOverlayStyle(systemNavigationBarColor: SBBColors.transparent),
         titleSpacing: 0.0,
         leading: Container(
-          padding: customLeadingWidth
-              ? EdgeInsets.zero
-              : EdgeInsets.only(
-                  right: kToolbarHeight - leadingWidth,
-                ),
+          padding: customLeadingWidth ? EdgeInsets.zero : EdgeInsets.only(right: kToolbarHeight - leadingWidth),
           child: leading,
         ),
         leadingWidth: customLeadingWidth ? leadingWidth : kToolbarHeight,
         automaticallyImplyLeading: automaticallyImplyLeading,
         title: BlockSemantics(
           blocking: blockSemantics ?? false,
-          child: Semantics(
-            header: true,
-            child: Text(title, style: style.headerTextStyle),
-          ),
+          child: Semantics(header: true, child: Text(title, style: style.headerTextStyle)),
         ),
         actions: actions != null && actions!.isNotEmpty
             ? actions
@@ -301,10 +282,7 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
       ..color = style.headerIconColor!;
     return IconButton(
       padding: EdgeInsets.symmetric(horizontal: padding),
-      icon: CustomPaint(
-        painter: _Painter(paint, path),
-        size: Size(width, height),
-      ),
+      icon: CustomPaint(painter: _Painter(paint, path), size: Size(width, height)),
       tooltip: tooltip,
       onPressed: onPressed,
       splashColor: style.headerButtonBackgroundColorHighlighted,

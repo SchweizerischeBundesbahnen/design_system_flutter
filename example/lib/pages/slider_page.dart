@@ -58,11 +58,7 @@ class SliderPageState extends State<SliderPage> {
         SBBGroup(
           margin: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
           padding: const EdgeInsets.all(sbbDefaultSpacing),
-          child: SBBSlider(
-            onChanged: null,
-            value: _disabledSliderValue,
-            max: _sliderMaxValue,
-          ),
+          child: SBBSlider(onChanged: null, value: _disabledSliderValue, max: _sliderMaxValue),
         ),
       ],
     );

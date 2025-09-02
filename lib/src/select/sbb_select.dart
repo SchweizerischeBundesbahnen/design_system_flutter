@@ -70,22 +70,15 @@ class SBBSelect<T> extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            constraints: const BoxConstraints(
-              minHeight: 48.0,
-            ),
+            constraints: const BoxConstraints(minHeight: 48.0),
             color: SBBColors.transparent,
             child: Row(
               children: [
                 const SizedBox(width: sbbDefaultSpacing),
                 if (icon != null)
                   Padding(
-                    padding: const EdgeInsetsDirectional.only(
-                      end: sbbDefaultSpacing / 2,
-                    ),
-                    child: Icon(
-                      icon,
-                      color: enabled ? style.textField?.iconColor : style.textField?.iconColorDisabled,
-                    ),
+                    padding: const EdgeInsetsDirectional.only(end: sbbDefaultSpacing / 2),
+                    child: Icon(icon, color: enabled ? style.textField?.iconColor : style.textField?.iconColorDisabled),
                   ),
                 Expanded(
                   child: value == null
@@ -103,10 +96,7 @@ class SBBSelect<T> extends StatelessWidget {
                           children: [
                             if (label != null)
                               Padding(
-                                padding: const EdgeInsets.only(
-                                  top: 5.0,
-                                  bottom: 2.0,
-                                ),
+                                padding: const EdgeInsets.only(top: 5.0, bottom: 2.0),
                                 child: Text(
                                   label!,
                                   style: enabled ? style.selectLabel?.textStyle : style.selectLabel?.textStyleDisabled,
@@ -114,10 +104,7 @@ class SBBSelect<T> extends StatelessWidget {
                                   overflow: TextOverflow.ellipsis,
                                 ),
                               ),
-                            if (label == null)
-                              const SizedBox(
-                                height: 0.0,
-                              ),
+                            if (label == null) const SizedBox(height: 0.0),
                             Text(
                               items.firstWhere((element) => element.value == value).label,
                               style: enabled ? style.textField?.textStyle : style.textField?.textStyleDisabled,
@@ -135,10 +122,7 @@ class SBBSelect<T> extends StatelessWidget {
               ],
             ),
           ),
-          if (!isLastElement)
-            Divider(
-              indent: icon == null ? sbbDefaultSpacing : 48.0,
-            ),
+          if (!isLastElement) Divider(indent: icon == null ? sbbDefaultSpacing : 48.0),
         ],
       ),
     );
@@ -299,10 +283,7 @@ class SBBMultiSelect<T> extends StatefulWidget {
     );
   }
 
-  static bool defaultSelectionValidation<T>(
-    List<T> oldSelection,
-    List<T> newSelection,
-  ) {
+  static bool defaultSelectionValidation<T>(List<T> oldSelection, List<T> newSelection) {
     if (oldSelection.length != newSelection.length) {
       return true;
     }
@@ -334,18 +315,14 @@ class _SBBMultiSelectState<T> extends State<SBBMultiSelect<T>> {
       child: Column(
         children: [
           Container(
-            constraints: const BoxConstraints(
-              minHeight: 48.0,
-            ),
+            constraints: const BoxConstraints(minHeight: 48.0),
             color: SBBColors.transparent,
             child: Row(
               children: [
                 const SizedBox(width: sbbDefaultSpacing),
                 if (widget.icon != null)
                   Padding(
-                    padding: const EdgeInsetsDirectional.only(
-                      end: sbbDefaultSpacing / 2,
-                    ),
+                    padding: const EdgeInsetsDirectional.only(end: sbbDefaultSpacing / 2),
                     child: Icon(
                       widget.icon,
                       color: enabled ? style.textField?.iconColor : style.textField?.iconColorDisabled,
@@ -392,10 +369,7 @@ class _SBBMultiSelectState<T> extends State<SBBMultiSelect<T>> {
               ],
             ),
           ),
-          if (!widget.isLastElement)
-            Divider(
-              indent: widget.icon == null ? sbbDefaultSpacing : 48.0,
-            ),
+          if (!widget.isLastElement) Divider(indent: widget.icon == null ? sbbDefaultSpacing : 48.0),
         ],
       ),
     );

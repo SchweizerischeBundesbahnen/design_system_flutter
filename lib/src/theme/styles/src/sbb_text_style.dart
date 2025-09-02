@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SBBTextStyle {
-  SBBTextStyle({
-    this.textStyle,
-    this.textStyleDisabled,
-  });
+  SBBTextStyle({this.textStyle, this.textStyleDisabled});
 
   final TextStyle? textStyle;
   final TextStyle? textStyleDisabled;

@@ -66,26 +66,17 @@ class MyApp extends StatelessWidget {
               GlobalWidgetsLocalizations.delegate,
               GlobalCupertinoLocalizations.delegate,
             ],
-            supportedLocales: const [
-              Locale('en'),
-              Locale('de'),
-              Locale('fr'),
-              Locale('it'),
-            ],
+            supportedLocales: const [Locale('en'), Locale('de'), Locale('fr'), Locale('it')],
             locale: const Locale('de'),
             home: Scaffold(
               appBar: const SBBHeader(title: 'Design System Mobile'),
               body: SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: sbbDefaultSpacing,
-                  ),
+                  padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
                   child: Column(
                     children: [
                       const Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: sbbDefaultSpacing,
-                        ),
+                        padding: EdgeInsets.symmetric(vertical: sbbDefaultSpacing),
                         child: ThemeModeSegmentedButton(),
                       ),
                       const SBBListHeader('Basics'),
@@ -93,19 +84,9 @@ class MyApp extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            _DemoEntry(
-                              'Icon',
-                              IconPage(),
-                            ),
-                            _DemoEntry(
-                              'Typography',
-                              TypographyPage(),
-                            ),
-                            _DemoEntry(
-                              'Color',
-                              ColorPage(),
-                              isLastElement: true,
-                            ),
+                            _DemoEntry('Icon', IconPage()),
+                            _DemoEntry('Typography', TypographyPage()),
+                            _DemoEntry('Color', ColorPage(), isLastElement: true),
                           ],
                         ),
                       ),
@@ -114,84 +95,26 @@ class MyApp extends StatelessWidget {
                       SBBGroup(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            _DemoEntry(
-                              'Button',
-                              ButtonPage(),
-                            ),
-                            _DemoEntry(
-                              'Checkbox',
-                              CheckboxPage(),
-                            ),
-                            _DemoEntry(
-                              'Link',
-                              LinkPage(),
-                            ),
-                            _DemoEntry(
-                              'List Header',
-                              ListHeaderPage(),
-                            ),
-                            _DemoEntry(
-                              'List Item',
-                              ListItemPage(),
-                            ),
-                            _DemoEntry(
-                              'Loading Indicator',
-                              LoadingIndicatorPage(),
-                            ),
-                            _DemoEntry(
-                              'Picker',
-                              PickerPage(),
-                            ),
-                            _DemoEntry(
-                              'Radio Button',
-                              RadiobuttonPage(),
-                            ),
-                            _DemoEntry(
-                              'Segmented Button',
-                              SegmentedButtonPage(),
-                            ),
-                            _DemoEntry(
-                              'Select',
-                              SelectPage(),
-                            ),
-                            const _DemoEntry(
-                              'Switch',
-                              SwitchPage(),
-                            ),
-                            _DemoEntry(
-                              'Textfield / Textarea',
-                              TextFieldPage(),
-                            ),
-                            _DemoEntry(
-                              'Chip',
-                              ChipPage(),
-                            ),
-                            const _DemoEntry(
-                              'Pagination',
-                              PaginationPage(),
-                            ),
-                            _DemoEntry(
-                              'Slider',
-                              SliderPage(),
-                            ),
-                            _DemoEntry(
-                              'Promotion Box',
-                              PromotionBoxPage(),
-                            ),
-                            _DemoEntry(
-                              'Notification Box',
-                              NotificationBoxPage(),
-                            ),
-                            _DemoEntry(
-                              'Status',
-                              StatusPage(),
-                            ),
-                            _DemoEntry(
-                              'Input Trigger',
-                              InputTriggerPage(),
-                              isLastElement: true,
-                            ),
+                          children: const <Widget>[
+                            _DemoEntry('Button', ButtonPage()),
+                            _DemoEntry('Checkbox', CheckboxPage()),
+                            _DemoEntry('Link', LinkPage()),
+                            _DemoEntry('List Header', ListHeaderPage()),
+                            _DemoEntry('List Item', ListItemPage()),
+                            _DemoEntry('Loading Indicator', LoadingIndicatorPage()),
+                            _DemoEntry('Picker', PickerPage()),
+                            _DemoEntry('Radio Button', RadiobuttonPage()),
+                            _DemoEntry('Segmented Button', SegmentedButtonPage()),
+                            _DemoEntry('Select', SelectPage()),
+                            _DemoEntry('Switch', SwitchPage()),
+                            _DemoEntry('Textfield / Textarea', TextFieldPage()),
+                            _DemoEntry('Chip', ChipPage()),
+                            _DemoEntry('Pagination', PaginationPage()),
+                            _DemoEntry('Slider', SliderPage()),
+                            _DemoEntry('Promotion Box', PromotionBoxPage()),
+                            _DemoEntry('Notification Box', NotificationBoxPage()),
+                            _DemoEntry('Status', StatusPage()),
+                            _DemoEntry('Input Trigger', InputTriggerPage(), isLastElement: true),
                           ],
                         ),
                       ),
@@ -200,52 +123,18 @@ class MyApp extends StatelessWidget {
                       SBBGroup(
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            _DemoEntry(
-                              'Accordion',
-                              AccordionPage(),
-                            ),
-                            _DemoEntry(
-                              'Autocompletion',
-                              AutocompletionPage(),
-                            ),
-                            _DemoEntry(
-                              'Group',
-                              GroupPage(),
-                            ),
-                            _DemoEntry(
-                              'Header',
-                              HeaderPage(),
-                            ),
-                            _DemoEntry(
-                              'Headerbox',
-                              HeaderBoxPage(),
-                            ),
-                            _DemoEntry(
-                              'Modal',
-                              ModalPage(),
-                            ),
-                            _DemoEntry(
-                              'Toast',
-                              ToastPage(),
-                            ),
-                            _DemoEntry(
-                              'Onboarding',
-                              OnboardingPage(),
-                            ),
-                            _DemoEntry(
-                              'Message',
-                              MessagePage(),
-                            ),
-                            _DemoEntry(
-                              'Stepper',
-                              StepperPage(),
-                            ),
-                            _DemoEntry(
-                              'Tab Bar',
-                              TabBarPage(),
-                              isLastElement: true,
-                            ),
+                          children: const <Widget>[
+                            _DemoEntry('Accordion', AccordionPage()),
+                            _DemoEntry('Autocompletion', AutocompletionPage()),
+                            _DemoEntry('Group', GroupPage()),
+                            _DemoEntry('Header', HeaderPage()),
+                            _DemoEntry('Headerbox', HeaderBoxPage()),
+                            _DemoEntry('Modal', ModalPage()),
+                            _DemoEntry('Toast', ToastPage()),
+                            _DemoEntry('Onboarding', OnboardingPage()),
+                            _DemoEntry('Message', MessagePage()),
+                            _DemoEntry('Stepper', StepperPage()),
+                            _DemoEntry('Tab Bar', TabBarPage(), isLastElement: true),
                           ],
                         ),
                       ),
@@ -307,11 +196,7 @@ class _DemoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SBBHeader(
-        title: title,
-        onPressedLogo: () => Navigator.maybePop(context),
-        logoTooltip: 'Back to home',
-      ),
+      appBar: SBBHeader(title: title, onPressedLogo: () => Navigator.maybePop(context), logoTooltip: 'Back to home'),
       body: child,
     );
   }
@@ -323,15 +208,9 @@ class ThemeModeSegmentedButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SBBSegmentedButton.icon(
-      icons: {
-        SBBIcons.sunshine_small: 'Light theme',
-        SBBIcons.moon_small: 'Dark theme',
-      },
+      icons: {SBBIcons.sunshine_small: 'Light theme', SBBIcons.moon_small: 'Dark theme'},
       selectedIndexChanged: (value) {
-        Provider.of<AppState>(
-          context,
-          listen: false,
-        ).updateTheme(value == 1);
+        Provider.of<AppState>(context, listen: false).updateTheme(value == 1);
       },
       selectedStateIndex: Provider.of<AppState>(context).isDarkModeOn ? 1 : 0,
     );

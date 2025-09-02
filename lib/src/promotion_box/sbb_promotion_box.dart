@@ -87,8 +87,10 @@ class SBBPromotionBox extends StatefulWidget {
     this.badgeShadowColor,
     this.gradientColors,
     this.style,
-  }) : assert(!(style != null && (badgeColor != null || badgeShadowColor != null || gradientColors != null)),
-            'Cannot set PromotionBoxStyle in combination with badgeColor, badgeShadowColor or gradientColors.');
+  }) : assert(
+          !(style != null && (badgeColor != null || badgeShadowColor != null || gradientColors != null)),
+          'Cannot set PromotionBoxStyle in combination with badgeColor, badgeShadowColor or gradientColors.',
+        );
 
   /// The content between the [leading] and [trailing] Widgets.
   final Widget content;
@@ -167,9 +169,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) => _repaint(),
-    );
+    WidgetsBinding.instance.addPostFrameCallback((_) => _repaint());
     widget.onControllerCreated?.call(_controller);
   }
 
@@ -191,17 +191,11 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
     }
   }
 
-  Widget _animationBuilder({
-    required Animation<double> animation,
-    required Widget child,
-  }) {
+  Widget _animationBuilder({required Animation<double> animation, required Widget child}) {
     return SizeTransition(
       axisAlignment: -1.0,
       sizeFactor: animation,
-      child: FadeTransition(
-        opacity: animation,
-        child: child,
-      ),
+      child: FadeTransition(opacity: animation, child: child),
     );
   }
 
@@ -230,9 +224,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
               margin: EdgeInsets.only(top: paddingTop),
               decoration: BoxDecoration(
                 border: Border.all(color: resolvedStyle.borderColor!),
-                borderRadius: const BorderRadius.all(
-                  Radius.circular(sbbDefaultSpacing),
-                ),
+                borderRadius: const BorderRadius.all(Radius.circular(sbbDefaultSpacing)),
                 image: DecorationImage(
                   image: const AssetImage(_PromotionBoxAssets.noise),
                   repeat: ImageRepeat.repeat,
@@ -254,9 +246,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
                     focusColor: iconStyle?.backgroundColorHighlighted,
                     hoverColor: iconStyle?.backgroundColorHighlighted,
                     customBorder: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(sbbDefaultSpacing),
-                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(sbbDefaultSpacing)),
                     ),
                     onTap: widget.onTap,
                     child: Padding(
@@ -271,18 +261,10 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           if (widget.leading != null)
-                            Padding(
-                              padding: const EdgeInsets.only(right: 8.0),
-                              child: widget.leading!,
-                            ),
-                          Expanded(
-                            child: widget.content,
-                          ),
+                            Padding(padding: const EdgeInsets.only(right: 8.0), child: widget.leading!),
+                          Expanded(child: widget.content),
                           if (widget.trailing != null)
-                            Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                              child: widget.trailing!,
-                            ),
+                            Padding(padding: const EdgeInsets.symmetric(horizontal: 8.0), child: widget.trailing!),
                         ],
                       ),
                     ),
@@ -321,12 +303,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
 }
 
 class _DefaultContent extends StatelessWidget {
-  const _DefaultContent({
-    required this.title,
-    required this.subtitle,
-    this.onTap,
-    this.onClose,
-  });
+  const _DefaultContent({required this.title, required this.subtitle, this.onTap, this.onClose});
 
   final String title;
   final String subtitle;

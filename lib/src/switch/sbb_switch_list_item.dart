@@ -187,21 +187,12 @@ class SBBSwitchListItem extends StatelessWidget {
                   onPressed: enabled ? () => onChanged?.call(!value) : null,
                   isLastElement: true,
                   trailingWidget: Padding(
-                    padding: const EdgeInsets.only(
-                      left: sbbDefaultSpacing * 0.5,
-                      right: sbbDefaultSpacing,
-                    ),
-                    child: SBBSwitch(
-                      value: value,
-                      onChanged: onChanged,
-                    ),
+                    padding: const EdgeInsets.only(left: sbbDefaultSpacing * 0.5, right: sbbDefaultSpacing),
+                    child: SBBSwitch(value: value, onChanged: onChanged),
                   ),
                 ),
                 if (linksWidgets != null && linksWidgets!.isNotEmpty)
-                  ...linksWidgets!.expand((element) => [
-                        const Divider(),
-                        element,
-                      ]),
+                  ...linksWidgets!.expand((element) => [const Divider(), element]),
               ],
             ),
             if (!isLastElement) const Divider(),
@@ -214,10 +205,7 @@ class SBBSwitchListItem extends StatelessWidget {
 }
 
 class SBBSwitchListItemLink {
-  SBBSwitchListItemLink({
-    required this.text,
-    required this.onPressed,
-  });
+  SBBSwitchListItemLink({required this.text, required this.onPressed});
 
   final String text;
   final VoidCallback? onPressed;

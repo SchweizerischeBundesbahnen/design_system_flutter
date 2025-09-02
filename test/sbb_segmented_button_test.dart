@@ -66,16 +66,10 @@ void main() {
               withText: true,
             ),
             const SizedBox(height: sbbDefaultSpacing),
-            SBBSegmentedButton(
-              values: const ['Single Option'],
-              selectedStateIndex: 0,
-              selectedIndexChanged: (_) {},
-            ),
+            SBBSegmentedButton(values: const ['Single Option'], selectedStateIndex: 0, selectedIndexChanged: (_) {}),
             const SizedBox(height: sbbDefaultSpacing),
             SBBSegmentedButton.icon(
-              icons: {
-                SBBIcons.user_small: 'Single',
-              },
+              icons: {SBBIcons.user_small: 'Single'},
               selectedStateIndex: 0,
               selectedIndexChanged: (_) {},
               withText: true,

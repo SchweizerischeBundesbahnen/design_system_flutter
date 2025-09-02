@@ -237,10 +237,7 @@ class SBBCheckboxListItem extends StatelessWidget {
               )
             : Padding(
                 padding: const EdgeInsets.only(right: sbbDefaultSpacing * .5),
-                child: SBBIconButtonSmall(
-                  icon: trailingIcon,
-                  onPressed: onChanged != null ? onCallToAction : null,
-                ),
+                child: SBBIconButtonSmall(icon: trailingIcon, onPressed: onChanged != null ? onCallToAction : null),
               );
   }
 
@@ -263,14 +260,11 @@ class SBBCheckboxListItem extends StatelessWidget {
                 focusColor: style?.listItem?.backgroundColorHighlighted,
                 highlightColor: SBBColors.transparent,
                 hoverColor: SBBColors.transparent,
-                child: Semantics(
-                  enabled: _isInteractive,
-                  child: _checkboxBody(style),
-                ),
+                child: Semantics(enabled: _isInteractive, child: _checkboxBody(style)),
               ),
             ),
             if (!isLastElement) const Divider(),
-            if (isLoading) BottomLoadingIndicator()
+            if (isLoading) BottomLoadingIndicator(),
           ],
         ),
       ),
@@ -366,9 +360,7 @@ class _TextBody extends StatelessWidget {
           ),
           if (secondaryLabel != null)
             Padding(
-              padding: const EdgeInsetsDirectional.only(
-                top: sbbDefaultSpacing * 0.25,
-              ),
+              padding: const EdgeInsetsDirectional.only(top: sbbDefaultSpacing * 0.25),
               child: Text(
                 secondaryLabel!,
                 style:
@@ -413,9 +405,7 @@ class _NonHittableCheckbox extends StatelessWidget {
     return IgnorePointer(
       child: ExcludeFocus(
         child: Padding(
-          padding: const EdgeInsetsDirectional.only(
-            top: sbbDefaultSpacing * 0.75,
-          ),
+          padding: const EdgeInsetsDirectional.only(top: sbbDefaultSpacing * 0.75),
           child: SBBCheckbox(
             value: value,
             tristate: tristate,

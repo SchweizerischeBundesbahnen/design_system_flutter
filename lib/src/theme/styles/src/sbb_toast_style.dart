@@ -48,8 +48,9 @@ class SBBToastStyle extends ThemeExtension<SBBToastStyle> {
         actionOverflowThreshold: 0.25,
         actionPadding: const EdgeInsets.only(left: sbbDefaultSpacing),
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(sbbDefaultSpacing),
-            color: baseStyle.themeValue(SBBColors.metal, SBBColors.smoke)),
+          borderRadius: BorderRadius.circular(sbbDefaultSpacing),
+          color: baseStyle.themeValue(SBBColors.metal, SBBColors.smoke),
+        ),
         titleMaxLines: 2,
         margin: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
         padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: sbbDefaultSpacing),

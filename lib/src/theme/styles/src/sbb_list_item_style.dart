@@ -17,27 +17,14 @@ class SBBListItemStyle {
 
   factory SBBListItemStyle.$default({required SBBBaseStyle baseStyle}) => SBBListItemStyle(
         backgroundColor: SBBColors.transparent,
-        backgroundColorHighlighted: baseStyle.themeValue(
-          SBBColors.platinum,
-          SBBColors.midnight,
-        ),
+        backgroundColorHighlighted: baseStyle.themeValue(SBBColors.platinum, SBBColors.midnight),
         backgroundColorDisabled: SBBColors.transparent,
         iconColor: baseStyle.iconColor,
-        iconColorDisabled: baseStyle.themeValue(
-          SBBColors.granite,
-          SBBColors.graphite,
-        ),
+        iconColorDisabled: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
         textStyle: baseStyle.themedTextStyle(),
-        textStyleDisabled: baseStyle.themedTextStyle(
-          color: baseStyle.themeValue(
-            SBBColors.granite,
-            SBBColors.graphite,
-          ),
-        ),
-        secondaryTextStyle: baseStyle.themedTextStyle(
-          textStyle: SBBTextStyles.smallLight,
-          color: baseStyle.labelColor,
-        ),
+        textStyleDisabled:
+            baseStyle.themedTextStyle(color: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite)),
+        secondaryTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallLight, color: baseStyle.labelColor),
         secondaryTextStyleDisabled: baseStyle.themedTextStyle(
           textStyle: SBBTextStyles.smallLight,
           color: baseStyle.labelColor,

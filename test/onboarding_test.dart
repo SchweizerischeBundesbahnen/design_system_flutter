@@ -1,6 +1,6 @@
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import 'test_app.dart';
 
@@ -63,47 +63,24 @@ class OnboardingTest extends StatelessWidget {
 
 class TestOnboardingBuilderDelegate extends SBBOnboardingBuilderDelegate {
   @override
-  Widget buildStartPage(
-    BuildContext context,
-    VoidCallback onStartOnboarding,
-    VoidCallback onFinish,
-  ) =>
-      Container(
+  Widget buildStartPage(BuildContext context, VoidCallback onStartOnboarding, VoidCallback onFinish) => Container(
         color: SBBColors.red,
         child: Center(
           child: SBBTertiaryButtonLarge(
-            key: const Key('start'),
-            label: 'Onboarding starten',
-            onPressed: onStartOnboarding,
-          ),
+              key: const Key('start'), label: 'Onboarding starten', onPressed: onStartOnboarding),
         ),
       );
 
   @override
-  Widget buildEndPage(
-    BuildContext context,
-    VoidCallback onFinish,
-  ) =>
-      Container(
+  Widget buildEndPage(BuildContext context, VoidCallback onFinish) => Container(
         color: SBBColors.red,
-        child: Center(
-          child: SBBTertiaryButtonLarge(
-            label: 'Onboarding beenden',
-            onPressed: onFinish,
-          ),
-        ),
+        child: Center(child: SBBTertiaryButtonLarge(label: 'Onboarding beenden', onPressed: onFinish)),
       );
 
   @override
   List<SBBOnboardingCard> buildCards(BuildContext context) => [
-        SBBOnboardingCard.basic(
-          title: 'Page 1',
-          content: 'Page 1',
-        ),
-        SBBOnboardingCard.basic(
-          title: 'Page 2',
-          content: 'Page 2',
-        ),
+        SBBOnboardingCard.basic(title: 'Page 1', content: 'Page 1'),
+        SBBOnboardingCard.basic(title: 'Page 2', content: 'Page 2'),
       ];
 
   @override

@@ -39,21 +39,9 @@ class RadioTest extends StatelessWidget {
             padding: const EdgeInsets.all(sbbDefaultSpacing * .5),
             child: Row(
               children: [
-                SBBRadio<int>(
-                  groupValue: groupValue,
-                  onChanged: (newValue) {},
-                  value: 1,
-                ),
-                SBBRadio<int>(
-                  groupValue: groupValue,
-                  onChanged: null,
-                  value: 2,
-                ),
-                SBBRadio<int>(
-                  groupValue: groupValue,
-                  onChanged: (newValue) {},
-                  value: 2,
-                ),
+                SBBRadio<int>(groupValue: groupValue, onChanged: (newValue) {}, value: 1),
+                SBBRadio<int>(groupValue: groupValue, onChanged: null, value: 2),
+                SBBRadio<int>(groupValue: groupValue, onChanged: (newValue) {}, value: 2),
               ],
             ),
           ),
@@ -63,11 +51,7 @@ class RadioTest extends StatelessWidget {
             child: Column(
               children: [
                 SBBRadioListItem<int>(
-                  value: 1,
-                  groupValue: listItemGroupValue,
-                  onChanged: (newValue) {},
-                  label: 'Label',
-                ),
+                    value: 1, groupValue: listItemGroupValue, onChanged: (newValue) {}, label: 'Label'),
                 SBBRadioListItem<int>(
                   value: 2,
                   groupValue: listItemGroupValue,
@@ -123,10 +107,7 @@ class RadioTest extends StatelessWidget {
                   onChanged: (newValue) {},
                   label: 'Custom trailing Widget',
                   trailingWidget: const Padding(
-                    padding: EdgeInsets.only(
-                      top: sbbDefaultSpacing * .75,
-                      right: sbbDefaultSpacing,
-                    ),
+                    padding: EdgeInsets.only(top: sbbDefaultSpacing * .75, right: sbbDefaultSpacing),
                     child: Text('CHF 0.99'),
                   ),
                 ),
@@ -182,17 +163,14 @@ class RadioTest extends StatelessWidget {
                   onChanged: (newValue) {},
                   label: 'Custom trailing Widget',
                   trailingWidget: const Padding(
-                    padding: EdgeInsets.only(
-                      top: sbbDefaultSpacing * .75,
-                      right: sbbDefaultSpacing,
-                    ),
+                    padding: EdgeInsets.only(top: sbbDefaultSpacing * .75, right: sbbDefaultSpacing),
                     child: Text('CHF 0.99'),
                   ),
                   isLastElement: true,
                 ),
               ),
             ],
-          )
+          ),
         ],
       );
 }

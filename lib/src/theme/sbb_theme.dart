@@ -57,36 +57,23 @@ class SBBTheme {
     SBBGroupStyle? groupStyle,
     SBBToastStyle? toastStyle,
   }) {
-    // SET hard-coded default values HERE
-    final defaultBaseStyle = SBBBaseStyle.$default(
-      brightness: brightness,
-      boldFont: boldFont,
-    );
+    // default values are set here and merged with given styles
+    final defaultBaseStyle = SBBBaseStyle.$default(brightness: brightness, boldFont: boldFont);
     final mergedBaseStyle = baseStyle.merge(defaultBaseStyle);
 
-    final defaultButtonStyles = SBBButtonStyles.$default(
-      baseStyle: mergedBaseStyle,
-    );
+    final defaultButtonStyles = SBBButtonStyles.$default(baseStyle: mergedBaseStyle);
     final mergedButtonStyles = buttonStyles.merge(defaultButtonStyles);
 
-    final defaultControlStyles = SBBControlStyles.$default(
-      baseStyle: mergedBaseStyle,
-    );
+    final defaultControlStyles = SBBControlStyles.$default(baseStyle: mergedBaseStyle);
     final mergedControlStyles = controlStyles.merge(defaultControlStyles);
 
-    final defaultHeaderBoxStyle = SBBHeaderBoxStyle.$default(
-      baseStyle: mergedBaseStyle,
-    );
+    final defaultHeaderBoxStyle = SBBHeaderBoxStyle.$default(baseStyle: mergedBaseStyle);
     final mergedHeaderBoxStyle = headerBoxStyle.merge(defaultHeaderBoxStyle);
 
-    final defaultGroupStyle = SBBGroupStyle.$default(
-      baseStyle: mergedBaseStyle,
-    );
+    final defaultGroupStyle = SBBGroupStyle.$default(baseStyle: mergedBaseStyle);
     final mergedGroupStyle = groupStyle.merge(defaultGroupStyle);
 
-    final defaultToastStyle = SBBToastStyle.$default(
-      baseStyle: mergedBaseStyle,
-    );
+    final defaultToastStyle = SBBToastStyle.$default(baseStyle: mergedBaseStyle);
     final mergedToastStyle = defaultToastStyle.merge(defaultToastStyle);
 
     return raw(
@@ -116,19 +103,10 @@ class SBBTheme {
           backgroundColor: baseStyle.backgroundColor,
           errorColor: controlStyles.textField?.dividerColorError,
           brightness: brightness,
-        ).copyWith(
-          surfaceTint: SBBColors.transparent,
-        ),
+        ).copyWith(surfaceTint: SBBColors.transparent),
         scaffoldBackgroundColor: baseStyle.backgroundColor,
-        iconTheme: IconThemeData(
-          color: baseStyle.iconColor,
-          size: sbbIconSizeSmall,
-        ),
-        dividerTheme: DividerThemeData(
-          thickness: 1.0,
-          space: 0.0,
-          color: baseStyle.dividerColor,
-        ),
+        iconTheme: IconThemeData(color: baseStyle.iconColor, size: sbbIconSizeSmall),
+        dividerTheme: DividerThemeData(thickness: 1.0, space: 0.0, color: baseStyle.dividerColor),
         fontFamily: baseStyle.defaultFontFamily,
         textTheme: baseStyle.createTextTheme(),
         appBarTheme: controlStyles.appBarTheme,
@@ -137,14 +115,7 @@ class SBBTheme {
         textButtonTheme: buttonStyles.textButtonTheme,
         materialTapTargetSize: MaterialTapTargetSize.padded,
         textSelectionTheme: controlStyles.textSelectionTheme,
-        extensions: [
-          baseStyle,
-          buttonStyles,
-          controlStyles,
-          headerBoxStyle,
-          groupStyle,
-          toastStyle,
-        ],
+        extensions: [baseStyle, buttonStyles, controlStyles, headerBoxStyle, groupStyle, toastStyle],
       );
 
   /// Convenience method for easier use of [WidgetStateProperty.all].

@@ -4,12 +4,7 @@ import 'package:sbb_design_system_mobile/src/toast/toast_container.dart';
 import '../../sbb_design_system_mobile.dart';
 
 class ToastActionBody extends StatefulWidget {
-  const ToastActionBody({
-    required this.onPressed,
-    required this.title,
-    required this.style,
-    super.key,
-  });
+  const ToastActionBody({required this.onPressed, required this.title, required this.style, super.key});
 
   final VoidCallback onPressed;
   final String title;
@@ -36,10 +31,7 @@ class _ToastActionBodyState extends State<ToastActionBody> {
 
     return GestureDetector(
       onTap: _isActionBeenTriggered ? null : () => _handlePressed(toastContainer.toast?.hide),
-      child: Text(
-        widget.title,
-        style: widget.style.actionTextStyle,
-      ),
+      child: Text(widget.title, style: widget.style.actionTextStyle),
     );
   }
 }

@@ -9,12 +9,23 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+### Fixed
+
+- `SBBTabBar`: properly clips icons as they get selected / unselected
+
+## [4.1.0] - 2025-08-22
+
 ### Changed
 
 - `SBBMessage`: default constructor does not include illustration
 - `SBBMessage`: messageCode and illustration are excluded from semantics
 - updated icon lib to version 1.8.0
 - keyboard focus for `SBBTabBar`
+- dropped support for Flutter SDK 3.27.x
+
+### Fixed
+
+- `SBBGroup`: clip behavior is respected - default ClipBehavior.hard
 
 ## [4.0.0] - 2025-07-14
 
@@ -619,7 +630,9 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Initial project setup
 - Added some widgets
 
-[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.0.0...HEAD
+[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.1.0...HEAD
+
+[4.1.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.0.0...4.1.0
 
 [4.0.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/3.2.0...4.0.0
 

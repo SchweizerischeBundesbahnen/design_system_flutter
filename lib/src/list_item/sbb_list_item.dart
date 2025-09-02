@@ -29,13 +29,8 @@ class SBBListItem extends StatefulWidget {
                     final style = SBBControlStyles.of(context).listItem!;
                     final isEnabled = onPressed != null;
                     return Padding(
-                      padding: const EdgeInsetsDirectional.only(
-                        end: sbbDefaultSpacing,
-                      ),
-                      child: Icon(
-                        trailingIcon,
-                        color: isEnabled ? style.iconColor : style.iconColorDisabled,
-                      ),
+                      padding: const EdgeInsetsDirectional.only(end: sbbDefaultSpacing),
+                      child: Icon(trailingIcon, color: isEnabled ? style.iconColor : style.iconColorDisabled),
                     );
                   },
                 )
@@ -64,9 +59,7 @@ class SBBListItem extends StatefulWidget {
           isLastElement: isLastElement,
           onPressed: onPressed,
           trailingWidget: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: sbbDefaultSpacing * 0.5,
-            ),
+            padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * 0.5),
             child: SBBIconButtonSmall(
               icon: buttonIcon,
               onPressed: onPressed != null ? onPressedButton : null,
@@ -125,32 +118,24 @@ class _SBBListItemState extends State<SBBListItem> {
             child: Column(
               children: [
                 Padding(
-                  padding: const EdgeInsetsDirectional.only(
-                    start: sbbDefaultSpacing,
-                  ),
+                  padding: const EdgeInsetsDirectional.only(start: sbbDefaultSpacing),
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Expanded(
                         child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            vertical: 10.0,
-                          ),
+                          padding: const EdgeInsets.symmetric(vertical: 10.0),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               ConstrainedBox(
-                                constraints: const BoxConstraints(
-                                  minHeight: sbbIconSizeSmall,
-                                ),
+                                constraints: const BoxConstraints(minHeight: sbbIconSizeSmall),
                                 child: Row(
                                   children: [
                                     if (widget.leadingIcon != null)
                                       Padding(
-                                        padding: const EdgeInsetsDirectional.only(
-                                          end: sbbDefaultSpacing * 0.5,
-                                        ),
+                                        padding: const EdgeInsetsDirectional.only(end: sbbDefaultSpacing * 0.5),
                                         child: Icon(
                                           widget.leadingIcon,
                                           color: isEnabled ? style.iconColor : style.iconColorDisabled,
@@ -169,16 +154,14 @@ class _SBBListItemState extends State<SBBListItem> {
                               ),
                               if (widget.subtitle != null)
                                 Padding(
-                                  padding: const EdgeInsetsDirectional.only(
-                                    bottom: 5.0,
-                                  ),
+                                  padding: const EdgeInsetsDirectional.only(bottom: 5.0),
                                   child: Text(
                                     widget.subtitle!,
                                     style: isEnabled ? style.secondaryTextStyle : style.secondaryTextStyleDisabled,
                                     maxLines: widget.subtitleMaxLines,
                                     overflow: wrapSubtitleTitle ? TextOverflow.clip : TextOverflow.ellipsis,
                                   ),
-                                )
+                                ),
                             ],
                           ),
                         ),
@@ -186,13 +169,11 @@ class _SBBListItemState extends State<SBBListItem> {
                       if (widget.trailingWidget != null)
                         widget.trailingWidget!
                       else
-                        const SizedBox(
-                          width: sbbDefaultSpacing,
-                        ),
+                        const SizedBox(width: sbbDefaultSpacing),
                     ],
                   ),
                 ),
-                if (!widget.isLastElement) const Divider()
+                if (!widget.isLastElement) const Divider(),
               ],
             ),
           ),

@@ -1,5 +1,5 @@
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import '../native_app.dart';
 
@@ -73,29 +73,18 @@ class _TypographyShowcase extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        const SizedBox(
-          height: sbbDefaultSpacing,
-        ),
+        const SizedBox(height: sbbDefaultSpacing),
         Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: sbbDefaultSpacing,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
           child: Text('The quick brown fox jumps over the lazy dog', style: style),
         ),
         const SizedBox(height: sbbDefaultSpacing * 0.5),
         Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: sbbDefaultSpacing,
-          ),
-          child: Text(
-            '$name',
-            style: sbbTextStyle.xSmall.romanStyle.copyWith(color: labelColor),
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
+          child: Text(name, style: sbbTextStyle.xSmall.romanStyle.copyWith(color: labelColor)),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: sbbDefaultSpacing,
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
           child: Text(
             'FontFamily: ${style.fontFamily?.split('/').last}, '
             'FontSize: ${style.fontSize}, '
@@ -103,9 +92,7 @@ class _TypographyShowcase extends StatelessWidget {
             style: sbbTextStyle.xSmall.copyWith(color: labelColor),
           ),
         ),
-        const SizedBox(
-          height: sbbDefaultSpacing,
-        ),
+        const SizedBox(height: sbbDefaultSpacing),
         if (!isLastElement) const Divider(),
       ],
     );

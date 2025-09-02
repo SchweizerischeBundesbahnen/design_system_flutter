@@ -25,14 +25,9 @@ class SBBTextFieldStyle {
   factory SBBTextFieldStyle.$default({required SBBBaseStyle baseStyle}) => SBBTextFieldStyle(
         textStyle: baseStyle.themedTextStyle(),
         textStyleDisabled: baseStyle.themedTextStyle(color: baseStyle.labelColor),
-        textStyleError: baseStyle.themedTextStyle(
-          color: baseStyle.themeValue(SBBColors.red, SBBColors.redDarkMode),
-        ),
+        textStyleError: baseStyle.themedTextStyle(color: baseStyle.themeValue(SBBColors.red, SBBColors.redDarkMode)),
         labelTextStyle: baseStyle.themedTextStyle(
-          textStyle: SBBTextStyles.mediumLight.copyWith(
-            height: 12.0 / 10.0,
-            fontSize: 10.0,
-          ),
+          textStyle: SBBTextStyles.mediumLight.copyWith(height: 12.0 / 10.0, fontSize: 10.0),
           color: baseStyle.labelColor,
         ),
         placeholderTextStyle: baseStyle.themedTextStyle(color: baseStyle.labelColor),

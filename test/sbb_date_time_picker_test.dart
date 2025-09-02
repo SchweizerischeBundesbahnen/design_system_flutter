@@ -5,12 +5,7 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'test_app.dart';
 
 void main() {
-  void generateTest(
-    String name,
-    DateTime initialDateTime,
-    DateTime? minimumDateTime,
-    DateTime? maximumDateTime,
-  ) {
+  void generateTest(String name, DateTime initialDateTime, DateTime? minimumDateTime, DateTime? maximumDateTime) {
     final widget = DateTimePickerTest(
       initialDateTime: initialDateTime,
       minimumDateTime: minimumDateTime,
@@ -27,12 +22,7 @@ void main() {
     });
   }
 
-  generateTest(
-    'date_time_picker_test_1',
-    DateTime(2024, 07, 02, 12),
-    null,
-    null,
-  );
+  generateTest('date_time_picker_test_1', DateTime(2024, 07, 02, 12), null, null);
   generateTest(
     'date_time_picker_test_2',
     DateTime(2024, 07, 02, 12),
@@ -72,12 +62,7 @@ class DateTimePickerTest extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: SBBGroup(
-                  child: SBBDateTimePicker(
-                    onDateTimeChanged: (_) {},
-                    initialDateTime: initialDateTime,
-                  ),
-                ),
+                child: SBBGroup(child: SBBDateTimePicker(onDateTimeChanged: (_) {}, initialDateTime: initialDateTime)),
               ),
               const SizedBox(width: sbbDefaultSpacing),
               Expanded(

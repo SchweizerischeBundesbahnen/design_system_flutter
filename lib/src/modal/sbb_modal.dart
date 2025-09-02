@@ -65,19 +65,14 @@ class SBBModalPopup extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = SBBControlStyles.of(context);
     return Dialog(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(sbbDefaultSpacing),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(sbbDefaultSpacing)),
       clipBehavior: clipBehavior,
       backgroundColor: backgroundColor ?? style.modalBackgroundColor,
       child: Semantics(
         explicitChildNodes: true,
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: [
-            _ModalHeader(title, showCloseButton: showCloseButton),
-            child,
-          ],
+          children: [_ModalHeader(title, showCloseButton: showCloseButton), child],
         ),
       ),
     );
@@ -198,10 +193,7 @@ class SBBModalSheet extends StatelessWidget {
             ),
             child: Semantics(
               header: true,
-              child: Text(
-                title,
-                style: SBBControlStyles.of(context).modalTitleTextStyle,
-              ),
+              child: Text(title, style: SBBControlStyles.of(context).modalTitleTextStyle),
             ),
           ),
           showCloseButton: showCloseButton,
@@ -245,10 +237,7 @@ class SBBModalSheet extends StatelessWidget {
         ExcludeSemantics(
           child: GestureDetector(
             onTap: () => Navigator.of(context).pop(),
-            child: Container(
-              height: sbbDefaultSpacing,
-              color: SBBColors.transparent,
-            ),
+            child: Container(height: sbbDefaultSpacing, color: SBBColors.transparent),
           ),
         ),
         Flexible(
@@ -266,15 +255,11 @@ class SBBModalSheet extends StatelessWidget {
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      child: headerBuilder(context),
-                    ),
+                    Expanded(child: headerBuilder(context)),
                     if (showCloseButton) _CloseButton(),
                   ],
                 ),
-                Flexible(
-                  child: child,
-                ),
+                Flexible(child: child),
               ],
             ),
           ),
@@ -298,16 +283,8 @@ class _ModalHeader extends StatelessWidget {
       children: [
         Expanded(
           child: Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(
-              sbbDefaultSpacing,
-              sbbDefaultSpacing,
-              0.0,
-              sbbDefaultSpacing,
-            ),
-            child: Semantics(
-              header: true,
-              child: Text(title, style: style.modalTitleTextStyle),
-            ),
+            padding: const EdgeInsetsDirectional.fromSTEB(sbbDefaultSpacing, sbbDefaultSpacing, 0.0, sbbDefaultSpacing),
+            child: Semantics(header: true, child: Text(title, style: style.modalTitleTextStyle)),
           ),
         ),
         if (showCloseButton) _CloseButton(),
@@ -324,19 +301,11 @@ class _CloseButton extends StatelessWidget {
         button: true,
         child: Padding(
           padding: const EdgeInsets.all(6.0),
-          child: SBBIconButtonSmall(
-            onPressed: () => Navigator.of(context).pop(),
-            icon: SBBIcons.cross_small,
-          ),
+          child: SBBIconButtonSmall(onPressed: () => Navigator.of(context).pop(), icon: SBBIcons.cross_small),
         ),
       );
 }
 
 Widget _wrapWithBottomSafeArea(Widget child) {
-  return SafeArea(
-    top: false,
-    left: false,
-    right: false,
-    child: child,
-  );
+  return SafeArea(top: false, left: false, right: false, child: child);
 }

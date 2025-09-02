@@ -2,10 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/src/theme/theme.dart';
 
 class SBBPickerStyle {
-  SBBPickerStyle({
-    this.highlightColor,
-    this.textStyle,
-  });
+  SBBPickerStyle({this.highlightColor, this.textStyle});
 
   factory SBBPickerStyle.$default({required SBBBaseStyle baseStyle}) => SBBPickerStyle(
         highlightColor: baseStyle.themeValue(SBBColors.cloud, SBBColors.iron),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/src/shared/tapable_element.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
@@ -8,6 +9,7 @@ class TabItemWidget extends StatelessWidget {
     super.key,
     this.selected = false,
     this.warning,
+    this.onTap,
   });
 
   static const portraitSize = 44.0;
@@ -20,6 +22,7 @@ class TabItemWidget extends StatelessWidget {
   final IconData icon;
   final bool selected;
   final SBBTabBarWarningSetting? warning;
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -32,33 +35,26 @@ class TabItemWidget extends StatelessWidget {
     final backgroundColor = style.themeValue(SBBColors.black, SBBColors.white);
     Color iconColor = selected ? foregroundColor : backgroundColor;
 
-    BoxDecoration? decoration;
-    Color? containerColor = SBBColors.transparent;
+    Color? color;
     IconData resolvedIcon = icon;
 
     if (warning != null && !warning!.shown) {
-      decoration = const BoxDecoration(
-        color: SBBColors.red,
-        shape: BoxShape.circle,
-      );
-      containerColor = null;
+      color = SBBColors.red;
       iconColor = SBBColors.white;
       resolvedIcon = SBBIcons.sign_exclamation_point_small;
     } else if (selected) {
-      decoration = BoxDecoration(
-        color: backgroundColor,
-        shape: BoxShape.circle,
-      );
-      containerColor = null;
+      color = backgroundColor;
     }
 
     return Container(
       width: size,
       height: size,
       margin: EdgeInsets.only(top: topPadding, left: horizontalCirclePadding, right: horizontalCirclePadding),
-      color: containerColor,
-      decoration: decoration,
-      child: Icon(resolvedIcon, color: iconColor),
+      child: TapableElement.circle(
+        color: color,
+        onTap: onTap,
+        child: Icon(resolvedIcon, color: iconColor),
+      ),
     );
   }
 }

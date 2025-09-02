@@ -1,5 +1,5 @@
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 class StepperPage extends StatefulWidget {
   const StepperPage({super.key});
@@ -20,33 +20,14 @@ class _StepperPageState extends State<StepperPage> {
   var red = false;
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: _stepper(context),
-      bottomNavigationBar: _footer(context),
-    );
-  }
+  Widget build(BuildContext context) => Scaffold(body: _stepper(context), bottomNavigationBar: _footer(context));
 
   Widget _stepper(BuildContext context) {
-    late final Widget stepper;
-    if (red) {
-      stepper = SBBStepper.red(
-        steps: steps,
-        activeStep: activeStep,
-        onStepPressed: _onStepPressed,
-      );
-    } else {
-      stepper = SBBStepper(
-        steps: steps,
-        activeStep: activeStep,
-        onStepPressed: _onStepPressed,
-      );
-    }
-    return Container(
-      padding: const EdgeInsetsDirectional.all(24),
-      color: red ? SBBColors.red : null,
-      child: stepper,
-    );
+    final stepper =
+        red
+            ? SBBStepper.red(steps: steps, activeStep: activeStep, onStepPressed: _onStepPressed)
+            : SBBStepper(steps: steps, activeStep: activeStep, onStepPressed: _onStepPressed);
+    return Container(padding: const EdgeInsetsDirectional.all(24), color: red ? SBBColors.red : null, child: stepper);
   }
 
   Widget _footer(BuildContext context) {
@@ -55,10 +36,7 @@ class _StepperPageState extends State<StepperPage> {
       child: Row(
         children: [
           const Expanded(child: Text('RED')),
-          SBBSwitch(
-            value: red,
-            onChanged: (value) => setState(() => red = value),
-          ),
+          SBBSwitch(value: red, onChanged: (value) => setState(() => red = value)),
         ],
       ),
     );

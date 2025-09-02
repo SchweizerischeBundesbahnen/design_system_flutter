@@ -214,8 +214,9 @@ class _HeaderBoxForeground extends StatelessWidget {
     );
   }
 
-  List<BoxShadow> get _headerBoxShadow =>
-      [BoxShadow(color: SBBColors.black.withAlpha(32), blurRadius: 4.0, offset: Offset(0, 2.0))];
+  List<BoxShadow> get _headerBoxShadow => [
+        BoxShadow(color: SBBColors.black.withAlpha(32), blurRadius: 4.0, offset: Offset(0, 2.0)),
+      ];
 }
 
 class _HeaderBoxBackgroundBar extends StatelessWidget {
@@ -262,12 +263,12 @@ class _DefaultHeaderBoxContent extends StatelessWidget {
                 children: [
                   if (leadingIcon != null) ...[
                     Icon(leadingIcon, size: sbbIconSizeSmall),
-                    SizedBox(width: sbbDefaultSpacing * .5)
+                    SizedBox(width: sbbDefaultSpacing * .5),
                   ],
                   Expanded(child: Text(title, style: style.titleTextStyle)),
                 ],
               ),
-              if (secondaryLabel != null) Text(secondaryLabel!, style: secondaryTextStyle)
+              if (secondaryLabel != null) Text(secondaryLabel!, style: secondaryTextStyle),
             ],
           ),
         ),
@@ -300,7 +301,7 @@ class _LargeHeaderBoxContent extends StatelessWidget {
       children: [
         if (leadingIcon != null) ...[
           Icon(leadingIcon, size: sbbIconSizeMedium),
-          SizedBox(width: sbbDefaultSpacing * .5)
+          SizedBox(width: sbbDefaultSpacing * .5),
         ],
         Expanded(
           child: Column(
@@ -308,7 +309,7 @@ class _LargeHeaderBoxContent extends StatelessWidget {
             children: [
               Text(title, style: style.titleTextStyle),
               SizedBox(height: sbbDefaultSpacing * .25),
-              if (secondaryLabel != null) Text(secondaryLabel!, style: secondaryTextStyle)
+              if (secondaryLabel != null) Text(secondaryLabel!, style: secondaryTextStyle),
             ],
           ),
         ),

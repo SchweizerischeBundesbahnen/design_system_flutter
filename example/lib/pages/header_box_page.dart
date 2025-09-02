@@ -39,11 +39,7 @@ class _HeaderBoxPageState extends State<HeaderBoxPage> {
           child: PageView(
             physics: NeverScrollableScrollPhysics(),
             controller: _pageViewController,
-            children: <Widget>[
-              DesignGuidelinePage(),
-              StaticPage(),
-              ScrollablePage(),
-            ],
+            children: <Widget>[DesignGuidelinePage(), StaticPage(), ScrollablePage()],
           ),
         ),
         SBBTabBar.controller(
@@ -52,7 +48,7 @@ class _HeaderBoxPageState extends State<HeaderBoxPage> {
           },
           controller: _tabBarController,
           onTap: (tab) {},
-        )
+        ),
       ],
     );
   }
@@ -67,9 +63,7 @@ class _HeaderBoxPageState extends State<HeaderBoxPage> {
 }
 
 class DesignGuidelinePage extends StatelessWidget {
-  const DesignGuidelinePage({
-    super.key,
-  });
+  const DesignGuidelinePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -110,16 +104,14 @@ class DesignGuidelinePage extends StatelessWidget {
           padding: EdgeInsets.zero,
           flap: SBBHeaderboxFlap.custom(child: Center(child: Text('Choooooo!', style: SBBTextStyles.extraSmallBold))),
           child: Center(child: Text('🚂｡🚋｡🚋｡🚋｡🚋˙⊹⁺.')),
-        )
+        ),
       ],
     );
   }
 }
 
 class StaticPage extends StatefulWidget {
-  const StaticPage({
-    super.key,
-  });
+  const StaticPage({super.key});
 
   @override
   State<StaticPage> createState() => _StaticPageState();
@@ -149,13 +141,16 @@ class _StaticPageState extends State<StaticPage> {
                       Text('Static Screen', style: SBBTextStyles.mediumBold),
                       Text(
                         'Click to expand Headerbox.',
-                        style:
-                            SBBTextStyles.smallLight.copyWith(color: isDark ? SBBColors.graphite : SBBColors.granite),
-                      )
+                        style: SBBTextStyles.smallLight.copyWith(
+                          color: isDark ? SBBColors.graphite : SBBColors.granite,
+                        ),
+                      ),
                     ],
                   ),
                   SBBTertiaryButtonSmall(
-                      label: 'Expand', onPressed: () => setState(() => _headerBoxExpanded = !_headerBoxExpanded)),
+                    label: 'Expand',
+                    onPressed: () => setState(() => _headerBoxExpanded = !_headerBoxExpanded),
+                  ),
                 ],
               ),
               AnimatedContainer(
@@ -211,13 +206,16 @@ class _ScrollablePageState extends State<ScrollablePage> {
                       Text('Scrollable Screen', style: SBBTextStyles.mediumBold),
                       Text(
                         'Click to expand Headerbox.',
-                        style:
-                            SBBTextStyles.smallLight.copyWith(color: isDark ? SBBColors.graphite : SBBColors.granite),
-                      )
+                        style: SBBTextStyles.smallLight.copyWith(
+                          color: isDark ? SBBColors.graphite : SBBColors.granite,
+                        ),
+                      ),
                     ],
                   ),
                   SBBTertiaryButtonSmall(
-                      label: 'Expand', onPressed: () => setState(() => _headerBoxExpanded = !_headerBoxExpanded)),
+                    label: 'Expand',
+                    onPressed: () => setState(() => _headerBoxExpanded = !_headerBoxExpanded),
+                  ),
                 ],
               ),
               AnimatedContainer(
@@ -230,11 +228,12 @@ class _ScrollablePageState extends State<ScrollablePage> {
         ),
         SliverList.builder(
           itemCount: 60,
-          itemBuilder: (context, index) => SBBListItem(
-            title: 'Item $index',
-            onPressed: () => sbbToast.show(title: 'Pressed Item $index', bottom: sbbDefaultSpacing * 6),
-          ),
-        )
+          itemBuilder:
+              (context, index) => SBBListItem(
+                title: 'Item $index',
+                onPressed: () => sbbToast.show(title: 'Pressed Item $index', bottom: sbbDefaultSpacing * 6),
+              ),
+        ),
       ],
     );
   }
