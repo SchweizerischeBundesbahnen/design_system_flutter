@@ -2,6 +2,7 @@ part of 'sbb_tab_bar.dart';
 
 class _TabIcon extends StatelessWidget {
   const _TabIcon({
+    required this.focusNode,
     required this.item,
     required this.selected,
     required this.warning,
@@ -13,6 +14,7 @@ class _TabIcon extends StatelessWidget {
     required this.tabCount,
   });
 
+  final FocusNode focusNode;
   final SBBTabBarItem item;
   final bool selected;
   final SBBTabBarWarningSetting? warning;
@@ -34,45 +36,43 @@ class _TabIcon extends StatelessWidget {
     final bottomPadding = portrait ? 0.0 : max(viewPaddingBottom + 8.0, 8.0);
     return LayoutId(
       id: '${item.id}_tab',
-      child: Material(
-        color: SBBColors.transparent,
-        child: InkWell(
-          onTap: onTap,
+      child: InkResponse(
+        focusNode: focusNode,
+        onTap: onTap,
+        onTapDown: onTapDown,
+        onTapCancel: onTapCancel,
+        radius: 24.0,
+        onFocusChange: (f) {
+          if (f) onTapDown(TapDownDetails());
+        },
+        child: Semantics(
+          selected: selected,
+          label: label,
+          hint: warning?.shown == false ? warning?.semantics : null,
+          button: true,
           child: Semantics(
-            selected: selected,
-            label: label,
-            hint: warning?.shown == false ? warning?.semantics : null,
-            button: true,
-            child: Semantics(
-              hint: semanticsHint,
-              excludeSemantics: true,
-              onTap: onTap,
-              child: Padding(
-                padding: EdgeInsets.only(bottom: bottomPadding),
-                child: GestureDetector(
-                  onTap: onTap,
-                  onTapDown: onTapDown,
-                  onTapCancel: onTapCancel,
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    spacing: 8.0,
-                    children: [
-                      TabItemWidget(
-                        item.icon,
-                        // This version of the icon is clipped by the clip path.
-                        // There is one underneath that will be drawn as selected.
-                        selected: false,
-                        warning: warning,
-                      ),
-                      if (!portrait)
-                        Text(
-                          item.translate(context),
-                          style: SBBControlStyles.of(context).tabBarTextStyle,
-                          textAlign: TextAlign.center,
-                        ),
-                    ],
+            hint: semanticsHint,
+            excludeSemantics: true,
+            child: Padding(
+              padding: EdgeInsets.only(bottom: bottomPadding),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                spacing: 8.0,
+                children: [
+                  TabItemWidget(
+                    item.icon,
+                    // This version of the icon is clipped by the clip path.
+                    // There is one underneath that will be drawn as selected.
+                    selected: false,
+                    warning: warning,
                   ),
-                ),
+                  if (!portrait)
+                    Text(
+                      item.translate(context),
+                      style: SBBControlStyles.of(context).tabBarTextStyle,
+                      textAlign: TextAlign.center,
+                    ),
+                ],
               ),
             ),
           ),

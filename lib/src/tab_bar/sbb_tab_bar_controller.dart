@@ -115,6 +115,7 @@ class SBBTabBarController {
   }
 
   Future<void> hoverTab(SBBTabBarItem tab) async {
+    _animationController.reset();
     _nextTab = tab;
     hover = true;
     await _animationController.animateTo(0.25, duration: _duration, curve: Curves.easeInOut);

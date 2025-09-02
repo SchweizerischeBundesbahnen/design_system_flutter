@@ -56,6 +56,8 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
 
   List<SBBTabBarItem> get _tabs => _controller.tabs;
 
+  late final List<FocusNode> _focusNodes = _controller.tabs.map((t) => FocusNode()).toList();
+
   bool get portrait => MediaQuery.of(context).orientation == Orientation.portrait;
 
   @override
@@ -63,11 +65,21 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _controller.initialize(this);
+    for (var n in _focusNodes) {
+      n.addListener(_focusUpdated);
+    }
+  }
+
+  void _focusUpdated() {
+    if (_focusNodes.every((n) => !n.hasFocus)) _controller.cancelHover();
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    for (var n in _focusNodes) {
+      n.removeListener(_focusUpdated);
+    }
     super.dispose();
   }
 
@@ -124,6 +136,7 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
                         child: ClipPath(
                           clipper: TabCurveClipper(curves: _controller.curves),
                           child: _TabLayout(
+                            focusNodes: _focusNodes,
                             items: _tabs,
                             selectedTab: navData.selectedTab,
                             warnings: warnings,
@@ -131,7 +144,10 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
                             onPositioned: _controller.onLayout,
                             onTap: (e) => _onTap(e, navData),
                             onTapDown: (e) {
-                              if (navData.selectedTab == e) return;
+                              if (navData.selectedTab == e) {
+                                _controller.cancelHover();
+                                return;
+                              }
                               _controller.hoverTab(e);
                             },
                             onTapCancel: (e) => _controller.cancelHover(),

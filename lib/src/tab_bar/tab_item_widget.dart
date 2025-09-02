@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/src/shared/tapable_element.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
@@ -50,11 +49,7 @@ class TabItemWidget extends StatelessWidget {
       width: size,
       height: size,
       margin: EdgeInsets.only(top: topPadding, left: horizontalCirclePadding, right: horizontalCirclePadding),
-      child: TapableElement.circle(
-        color: color,
-        onTap: onTap,
-        child: Icon(resolvedIcon, color: iconColor),
-      ),
+      child: Material(shape: const CircleBorder(), color: color, child: Icon(resolvedIcon, color: iconColor)),
     );
   }
 }

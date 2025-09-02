@@ -634,7 +634,9 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Initial project setup
 - Added some widgets
 
-[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.0.0...HEAD
+[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.1.0...HEAD
+
+[4.1.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.0.0...4.1.0
 
 [4.0.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/3.2.0...4.0.0
 

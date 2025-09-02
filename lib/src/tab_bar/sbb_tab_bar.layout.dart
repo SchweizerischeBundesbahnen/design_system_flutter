@@ -2,6 +2,7 @@ part of 'sbb_tab_bar.dart';
 
 class _TabLayout extends StatelessWidget {
   const _TabLayout({
+    required this.focusNodes,
     required this.items,
     required this.selectedTab,
     required this.warnings,
@@ -12,6 +13,7 @@ class _TabLayout extends StatelessWidget {
     required this.onTapCancel,
   });
 
+  final List<FocusNode> focusNodes;
   final List<SBBTabBarItem> items;
   final SBBTabBarItem selectedTab;
   final List<SBBTabBarWarningSetting> warnings;
@@ -30,6 +32,7 @@ class _TabLayout extends StatelessWidget {
           items
               .mapIndexed((i, e) {
                 return _TabIcon(
+                  focusNode: focusNodes[i],
                   item: e,
                   selected: e == selectedTab,
                   warning: warnings.firstWhereOrNull((w) => w.id == e.id),
