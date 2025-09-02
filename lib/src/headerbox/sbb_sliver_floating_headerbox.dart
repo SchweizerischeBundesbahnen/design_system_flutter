@@ -295,11 +295,11 @@ class _Preceding extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final style = SBBControlStyles.of(context);
+    final appBarTheme = Theme.of(context).appBarTheme;
     return SBBStackedItem.aligned(
       alignment: Alignment.bottomLeft,
       child: Container(
-        color: style.headerBackgroundColor,
+        color: appBarTheme.backgroundColor,
         child: child,
       ),
     );
