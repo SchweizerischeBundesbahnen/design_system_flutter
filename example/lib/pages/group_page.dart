@@ -8,8 +8,11 @@ class GroupPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    content(String text) =>
-        SizedBox(height: sbbDefaultSpacing * 2, width: double.infinity, child: Center(child: Text(text)));
+    content(String text) => SizedBox(
+      height: sbbDefaultSpacing * 2,
+      width: double.infinity,
+      child: Center(child: Text(text)),
+    );
     return ListView(
       padding: const EdgeInsets.all(sbbDefaultSpacing),
       children: <Widget>[

@@ -102,45 +102,32 @@ class _SBBTextField extends State<SBBTextField> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsetsDirectional.only(
-        start: sbbDefaultSpacing,
-        top: 0.0,
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (widget.icon != null)
-            Padding(
-              padding: const EdgeInsetsDirectional.only(top: 12, end: 8.0),
-              child: Icon(widget.icon),
-            ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Expanded(
-                      child: _buildTextField(),
-                    ),
-                    if (widget.suffixIcon != null) widget.suffixIcon!,
-                  ],
-                ),
-                SBBTextFieldUnderline(
-                  errorText: widget.errorText,
-                  hasFocus: _hasFocus,
-                  isLastElement: widget.isLastElement,
-                )
-              ],
-            ),
+  Widget build(BuildContext context) => Padding(
+    padding: const EdgeInsetsDirectional.only(start: sbbDefaultSpacing, top: 0.0),
+    child: Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (widget.icon != null)
+          Padding(padding: const EdgeInsetsDirectional.only(top: 12, end: 8.0), child: Icon(widget.icon)),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [Expanded(child: _buildTextField()), if (widget.suffixIcon != null) widget.suffixIcon!],
+              ),
+              SBBTextFieldUnderline(
+                errorText: widget.errorText,
+                hasFocus: _hasFocus,
+                isLastElement: widget.isLastElement,
+              ),
+            ],
           ),
-        ],
-      ),
-    );
-  }
+        ),
+      ],
+    ),
+  );
 
   TextField _buildTextField() {
     final textScaler = MediaQuery.of(context).textScaler;
@@ -149,10 +136,7 @@ class _SBBTextField extends State<SBBTextField> {
     final textStyle = _textStyle(widget.enabled, context);
     final labelStyle = style.placeholderTextStyle!;
     // adjust floating label style to get desired sizes
-    final floatingLabelStyle = labelStyle.copyWith(
-      fontSize: SBBTextStyles.helpersLabel.fontSize! * 1.335,
-      height: 1.5,
-    );
+    final floatingLabelStyle = labelStyle.copyWith(fontSize: SBBTextStyles.helpersLabel.fontSize! * 1.335, height: 1.5);
 
     return TextField(
       autofocus: widget.autofocus,
@@ -182,11 +166,7 @@ class _SBBTextField extends State<SBBTextField> {
     return (widget.enabled ? style?.textStyle : style?.textStyleDisabled)!;
   }
 
-  InputDecoration _decoration(
-    TextScaler textScaler,
-    TextStyle labelStyle,
-    TextStyle floatingLabelStyle,
-  ) {
+  InputDecoration _decoration(TextScaler textScaler, TextStyle labelStyle, TextStyle floatingLabelStyle) {
     final hasValueOrFocus = controller.text.isNotEmpty || _hasFocus;
     final hasLabel = widget.labelText?.isNotEmpty ?? false;
     final hasError = widget.errorText?.isNotEmpty ?? false;

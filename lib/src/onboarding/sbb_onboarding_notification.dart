@@ -26,9 +26,4 @@ class SBBOnboardingNotification extends Notification {
   int get hashCode => type.hashCode ^ index.hashCode;
 }
 
-enum SBBOnboardingNotificationType {
-  startPage,
-  endPage,
-  card,
-  other,
-}
+enum SBBOnboardingNotificationType { startPage, endPage, card, other }

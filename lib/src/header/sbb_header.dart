@@ -21,16 +21,16 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
     String? logoTooltip,
     bool? blockSemantics,
   }) : this._(
-          key: key,
-          title: title,
-          leadingWidget: leadingWidget,
-          leadingWidth: leadingWidth,
-          automaticallyImplyLeading: automaticallyImplyLeading,
-          actions: actions,
-          onPressedLogo: onPressedLogo,
-          logoTooltip: logoTooltip,
-          blockSemantics: blockSemantics,
-        );
+         key: key,
+         title: title,
+         leadingWidget: leadingWidget,
+         leadingWidth: leadingWidth,
+         automaticallyImplyLeading: automaticallyImplyLeading,
+         actions: actions,
+         onPressedLogo: onPressedLogo,
+         logoTooltip: logoTooltip,
+         blockSemantics: blockSemantics,
+       );
 
   const SBBHeader.menu({
     Key? key,
@@ -41,16 +41,16 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
     String? logoTooltip,
     bool? blockSemantics,
   }) : this._(
-          key: key,
-          title: title,
-          automaticallyImplyLeading: false,
-          useMenuButton: true,
-          onPressed: onPressed,
-          onPressedLogo: onPressedLogo,
-          actions: actions,
-          logoTooltip: logoTooltip,
-          blockSemantics: blockSemantics,
-        );
+         key: key,
+         title: title,
+         automaticallyImplyLeading: false,
+         useMenuButton: true,
+         onPressed: onPressed,
+         onPressedLogo: onPressedLogo,
+         actions: actions,
+         logoTooltip: logoTooltip,
+         blockSemantics: blockSemantics,
+       );
 
   const SBBHeader.back({
     Key? key,
@@ -61,16 +61,16 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
     String? logoTooltip,
     bool? blockSemantics,
   }) : this._(
-          key: key,
-          title: title,
-          automaticallyImplyLeading: false,
-          useBackButton: true,
-          onPressed: onPressed,
-          onPressedLogo: onPressedLogo,
-          actions: actions,
-          logoTooltip: logoTooltip,
-          blockSemantics: blockSemantics,
-        );
+         key: key,
+         title: title,
+         automaticallyImplyLeading: false,
+         useBackButton: true,
+         onPressed: onPressed,
+         onPressedLogo: onPressedLogo,
+         actions: actions,
+         logoTooltip: logoTooltip,
+         blockSemantics: blockSemantics,
+       );
 
   const SBBHeader.close({
     Key? key,
@@ -81,16 +81,16 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
     String? logoTooltip,
     bool? blockSemantics,
   }) : this._(
-          key: key,
-          title: title,
-          automaticallyImplyLeading: false,
-          useCloseButton: true,
-          onPressed: onPressed,
-          onPressedLogo: onPressedLogo,
-          actions: actions,
-          logoTooltip: logoTooltip,
-          blockSemantics: blockSemantics,
-        );
+         key: key,
+         title: title,
+         automaticallyImplyLeading: false,
+         useCloseButton: true,
+         onPressed: onPressed,
+         onPressedLogo: onPressedLogo,
+         actions: actions,
+         logoTooltip: logoTooltip,
+         blockSemantics: blockSemantics,
+       );
 
   const SBBHeader._({
     super.key,
@@ -144,7 +144,8 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
       final ModalRoute<dynamic>? parentRoute = ModalRoute.of(context);
       useMenuButton = Scaffold.of(context).hasDrawer;
       useBackButton = parentRoute?.canPop ?? false;
-      useCloseButton = useCloseButton ||
+      useCloseButton =
+          useCloseButton ||
           automaticallyImplyLeading &&
               useBackButton &&
               parentRoute is PageRoute<dynamic> &&
@@ -152,27 +153,15 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
     }
 
     if (useMenuButton) {
-      return _build(
-        context,
-        _buildMenuButton(context),
-        _menuButtonIconWidth + _menuButtonIconPadding * 2,
-      );
+      return _build(context, _buildMenuButton(context), _menuButtonIconWidth + _menuButtonIconPadding * 2);
     }
 
     if (useCloseButton) {
-      return _build(
-        context,
-        _buildCloseButton(context),
-        _closeButtonIconWidth + _closeButtonIconPadding * 2,
-      );
+      return _build(context, _buildCloseButton(context), _closeButtonIconWidth + _closeButtonIconPadding * 2);
     }
 
     if (useBackButton) {
-      return _build(
-        context,
-        _buildBackButton(context),
-        _backButtonIconWidth + _backButtonIconPadding * 2,
-      );
+      return _build(context, _buildBackButton(context), _backButtonIconWidth + _backButtonIconPadding * 2);
     }
 
     return _build(context, Container(), leadingWidth ?? kToolbarHeight);
@@ -187,44 +176,38 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
         systemOverlayStyle: SystemUiOverlayStyle(systemNavigationBarColor: SBBColors.transparent),
         titleSpacing: 0.0,
         leading: Container(
-          padding: customLeadingWidth
-              ? EdgeInsets.zero
-              : EdgeInsets.only(
-                  right: kToolbarHeight - leadingWidth,
-                ),
+          padding: customLeadingWidth ? EdgeInsets.zero : EdgeInsets.only(right: kToolbarHeight - leadingWidth),
           child: leading,
         ),
         leadingWidth: customLeadingWidth ? leadingWidth : kToolbarHeight,
         automaticallyImplyLeading: automaticallyImplyLeading,
         title: BlockSemantics(
           blocking: blockSemantics ?? false,
-          child: Semantics(
-            header: true,
-            child: Text(title, style: style.headerTextStyle),
-          ),
+          child: Semantics(header: true, child: Text(title, style: style.headerTextStyle)),
         ),
-        actions: actions != null && actions!.isNotEmpty
-            ? actions
-            : [
-                ExcludeSemantics(
-                  excluding: onPressedLogo == null,
-                  child: Container(
-                    alignment: Alignment.centerRight,
-                    padding: const EdgeInsets.only(right: sbbDefaultSpacing / 2),
-                    height: kToolbarHeight,
-                    width: customLeadingWidth ? leadingWidth : kToolbarHeight,
-                    child: IconButton(
-                      icon: const SBBLogo(),
-                      onPressed: onPressedLogo,
-                      tooltip: logoTooltip,
-                      splashColor: style.headerButtonBackgroundColorHighlighted,
-                      focusColor: style.headerButtonBackgroundColorHighlighted,
-                      hoverColor: SBBColors.transparent,
-                      highlightColor: SBBColors.transparent,
+        actions:
+            actions != null && actions!.isNotEmpty
+                ? actions
+                : [
+                  ExcludeSemantics(
+                    excluding: onPressedLogo == null,
+                    child: Container(
+                      alignment: Alignment.centerRight,
+                      padding: const EdgeInsets.only(right: sbbDefaultSpacing / 2),
+                      height: kToolbarHeight,
+                      width: customLeadingWidth ? leadingWidth : kToolbarHeight,
+                      child: IconButton(
+                        icon: const SBBLogo(),
+                        onPressed: onPressedLogo,
+                        tooltip: logoTooltip,
+                        splashColor: style.headerButtonBackgroundColorHighlighted,
+                        focusColor: style.headerButtonBackgroundColorHighlighted,
+                        hoverColor: SBBColors.transparent,
+                        highlightColor: SBBColors.transparent,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
       ),
     );
   }
@@ -233,13 +216,14 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 
   Widget _buildMenuButton(BuildContext context) {
-    final path = Path()
-      ..moveTo(0.0, 1.0)
-      ..lineTo(20.718, 1.0)
-      ..moveTo(0.0, 8.0)
-      ..lineTo(20.718, 8.0)
-      ..moveTo(0.0, 15.0)
-      ..lineTo(20.718, 15.0);
+    final path =
+        Path()
+          ..moveTo(0.0, 1.0)
+          ..lineTo(20.718, 1.0)
+          ..moveTo(0.0, 8.0)
+          ..lineTo(20.718, 8.0)
+          ..moveTo(0.0, 15.0)
+          ..lineTo(20.718, 15.0);
     return _buildPaintedIconButton(
       context,
       path,
@@ -252,10 +236,11 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
   }
 
   Widget _buildBackButton(BuildContext context) {
-    final path = Path()
-      ..moveTo(9.322, 0.711)
-      ..lineTo(1.422, 8.519)
-      ..lineTo(9.322, 16.327);
+    final path =
+        Path()
+          ..moveTo(9.322, 0.711)
+          ..lineTo(1.422, 8.519)
+          ..lineTo(9.322, 16.327);
     return _buildPaintedIconButton(
       context,
       path,
@@ -268,11 +253,12 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
   }
 
   Widget _buildCloseButton(BuildContext context) {
-    final path = Path()
-      ..moveTo(0.713, 0.701)
-      ..lineTo(14.463, 14.701)
-      ..moveTo(0.713, 14.701)
-      ..lineTo(14.463, 0.701);
+    final path =
+        Path()
+          ..moveTo(0.713, 0.701)
+          ..lineTo(14.463, 14.701)
+          ..moveTo(0.713, 14.701)
+          ..lineTo(14.463, 0.701);
     return _buildPaintedIconButton(
       context,
       path,
@@ -294,17 +280,15 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
     VoidCallback? onPressed,
   ) {
     final style = SBBControlStyles.of(context);
-    final paint = Paint()
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 2.0
-      ..strokeCap = StrokeCap.butt
-      ..color = style.headerIconColor!;
+    final paint =
+        Paint()
+          ..style = PaintingStyle.stroke
+          ..strokeWidth = 2.0
+          ..strokeCap = StrokeCap.butt
+          ..color = style.headerIconColor!;
     return IconButton(
       padding: EdgeInsets.symmetric(horizontal: padding),
-      icon: CustomPaint(
-        painter: _Painter(paint, path),
-        size: Size(width, height),
-      ),
+      icon: CustomPaint(painter: _Painter(paint, path), size: Size(width, height)),
       tooltip: tooltip,
       onPressed: onPressed,
       splashColor: style.headerButtonBackgroundColorHighlighted,

@@ -184,13 +184,14 @@ class _SBBCheckboxState extends State<SBBCheckbox> with TickerProviderStateMixin
           child: buildToggleable(
             mouseCursor: WidgetStateMouseCursor.clickable,
             size: resolvedSize,
-            painter: _painter
-              ..position = position
-              ..reaction = reaction
-              ..value = value
-              ..previousValue = _previousValue
-              ..checkColor = resolvedCheckColor
-              ..boxBorderColor = resolvedBorderColor,
+            painter:
+                _painter
+                  ..position = position
+                  ..reaction = reaction
+                  ..value = value
+                  ..previousValue = _previousValue
+                  ..checkColor = resolvedCheckColor
+                  ..boxBorderColor = resolvedBorderColor,
           ),
         ),
       ),
@@ -207,9 +208,9 @@ class _SBBCheckboxState extends State<SBBCheckbox> with TickerProviderStateMixin
   bool? get value => widget.value;
 
   Size _addPaddingToDefaultWidth(EdgeInsetsGeometry resolvedPadding) => Size(
-        SBBCheckbox.width + resolvedPadding.horizontal,
-        SBBCheckbox.width + resolvedPadding.vertical,
-      );
+    SBBCheckbox.width + resolvedPadding.horizontal,
+    SBBCheckbox.width + resolvedPadding.vertical,
+  );
 
   Color? _resolveBackgroundColor(SBBControlStyle style) =>
       isInteractive ? style.basic?.backgroundColor : style.basic?.backgroundColorDisabled;
@@ -244,6 +245,7 @@ class _SBBCheckboxState extends State<SBBCheckbox> with TickerProviderStateMixin
 class _SBBCheckboxPainter extends ToggleablePainter {
   bool? get value => _value;
   bool? _value;
+
   set value(bool? value) {
     if (_value == value) {
       return;
@@ -254,6 +256,7 @@ class _SBBCheckboxPainter extends ToggleablePainter {
 
   bool? get previousValue => _previousValue;
   bool? _previousValue;
+
   set previousValue(bool? value) {
     if (_previousValue == value) {
       return;
@@ -264,6 +267,7 @@ class _SBBCheckboxPainter extends ToggleablePainter {
 
   Color get checkColor => _checkColor!;
   Color? _checkColor;
+
   set checkColor(Color newValue) {
     if (newValue == _checkColor) {
       return;
@@ -274,6 +278,7 @@ class _SBBCheckboxPainter extends ToggleablePainter {
 
   Color get boxBorderColor => _boxBorderColor!;
   Color? _boxBorderColor;
+
   set boxBorderColor(Color newValue) {
     if (newValue == _boxBorderColor) {
       return;

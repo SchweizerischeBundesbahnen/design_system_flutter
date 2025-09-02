@@ -10,25 +10,17 @@ class TextFieldPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        const Padding(
-          padding: EdgeInsets.all(16.0),
-          child: ThemeModeSegmentedButton(),
-        ),
+        const Padding(padding: EdgeInsets.all(16.0), child: ThemeModeSegmentedButton()),
         SBBGroup(
           margin: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Column(
             children: <Widget>[
-              const SBBTextField(
-                labelText: 'Label, no Value',
-              ),
+              const SBBTextField(labelText: 'Label, no Value'),
               SBBTextField(
                 labelText: 'Label, Value',
                 controller: TextEditingController()..value = const TextEditingValue(text: 'Value'),
               ),
-              const SBBTextField(
-                labelText: 'Label, Hint, no Value',
-                hintText: 'Hint Value',
-              ),
+              const SBBTextField(labelText: 'Label, Hint, no Value', hintText: 'Hint Value'),
               SBBTextField(
                 labelText: 'With icon',
                 hintText: 'Hint',

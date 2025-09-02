@@ -77,7 +77,7 @@ class SBBGroup extends StatelessWidget {
           type: MaterialType.card,
           color: color ?? style.color,
           shape: style.shape!,
-          clipBehavior: Clip.none,
+          clipBehavior: clipBehavior ?? style.clipBehavior!,
           child: Padding(
             padding: padding ?? style.padding!,
             child: Semantics(

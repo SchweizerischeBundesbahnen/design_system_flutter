@@ -60,19 +60,19 @@ class SBBRadioListItem<T> extends StatelessWidget {
     bool isLoading = false,
     String? radioSemanticLabel,
   }) : this.custom(
-          key: key,
-          value: value,
-          groupValue: groupValue,
-          label: label,
-          allowMultilineLabel: allowMultilineLabel,
-          secondaryLabel: secondaryLabel,
-          onChanged: onChanged,
-          isLastElement: isLastElement,
-          leadingIcon: leadingIcon,
-          trailingWidget: _optionallyButtonedTrailingIcon(trailingIcon, onCallToAction, onChanged),
-          isLoading: isLoading,
-          radioSemanticLabel: radioSemanticLabel,
-        );
+         key: key,
+         value: value,
+         groupValue: groupValue,
+         label: label,
+         allowMultilineLabel: allowMultilineLabel,
+         secondaryLabel: secondaryLabel,
+         onChanged: onChanged,
+         isLastElement: isLastElement,
+         leadingIcon: leadingIcon,
+         trailingWidget: _optionallyButtonedTrailingIcon(trailingIcon, onCallToAction, onChanged),
+         isLoading: isLoading,
+         radioSemanticLabel: radioSemanticLabel,
+       );
 
   /// Use this in combination with a [SBBGroup] to create a boxed variant of the [SBBRadioListItem].
   ///
@@ -105,19 +105,19 @@ class SBBRadioListItem<T> extends StatelessWidget {
     bool isLoading = false,
     String? radioSemanticLabel,
   }) : this.custom(
-          key: key,
-          value: value,
-          groupValue: groupValue,
-          label: label,
-          allowMultilineLabel: allowMultilineLabel,
-          secondaryLabel: secondaryLabel,
-          onChanged: onChanged,
-          isLastElement: true,
-          leadingIcon: leadingIcon,
-          trailingWidget: _optionallyButtonedTrailingIcon(trailingIcon, onCallToAction, onChanged),
-          isLoading: isLoading,
-          radioSemanticLabel: radioSemanticLabel,
-        );
+         key: key,
+         value: value,
+         groupValue: groupValue,
+         label: label,
+         allowMultilineLabel: allowMultilineLabel,
+         secondaryLabel: secondaryLabel,
+         onChanged: onChanged,
+         isLastElement: true,
+         leadingIcon: leadingIcon,
+         trailingWidget: _optionallyButtonedTrailingIcon(trailingIcon, onCallToAction, onChanged),
+         isLoading: isLoading,
+         radioSemanticLabel: radioSemanticLabel,
+       );
 
   const SBBRadioListItem.custom({
     super.key,
@@ -223,10 +223,7 @@ class SBBRadioListItem<T> extends StatelessWidget {
                 focusColor: style?.listItem?.backgroundColorHighlighted,
                 highlightColor: SBBColors.transparent,
                 hoverColor: SBBColors.transparent,
-                child: Semantics(
-                  enabled: _isInteractive,
-                  child: _radioTileBody(style),
-                ),
+                child: Semantics(enabled: _isInteractive, child: _radioTileBody(style)),
               ),
             ),
             if (!isLastElement) const Divider(),
@@ -292,10 +289,7 @@ class SBBRadioListItem<T> extends StatelessWidget {
     } else {
       return Padding(
         padding: const EdgeInsets.only(right: sbbDefaultSpacing * .5),
-        child: SBBIconButtonSmall(
-          icon: trailingIcon,
-          onPressed: onChanged != null ? onCallToAction : null,
-        ),
+        child: SBBIconButtonSmall(icon: trailingIcon, onPressed: onChanged != null ? onCallToAction : null),
       );
     }
   }
@@ -335,9 +329,7 @@ class _TextBody extends StatelessWidget {
           ),
           if (secondaryLabel != null)
             Padding(
-              padding: const EdgeInsetsDirectional.only(
-                top: sbbDefaultSpacing * 0.25,
-              ),
+              padding: const EdgeInsetsDirectional.only(top: sbbDefaultSpacing * 0.25),
               child: Text(
                 secondaryLabel!,
                 style:
@@ -382,9 +374,7 @@ class _NonHittableRadio<T> extends StatelessWidget {
     return IgnorePointer(
       child: ExcludeFocus(
         child: Padding(
-          padding: const EdgeInsetsDirectional.only(
-            top: sbbDefaultSpacing * 0.75,
-          ),
+          padding: const EdgeInsetsDirectional.only(top: sbbDefaultSpacing * 0.75),
           child: SBBRadio(
             value: value,
             groupValue: groupValue,

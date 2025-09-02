@@ -1,5 +1,5 @@
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 class AutocompletionPage extends StatefulWidget {
   const AutocompletionPage({super.key});
@@ -31,19 +31,7 @@ class AutocompletionPageState extends State<AutocompletionPage> {
       onChanged: (value) {
         debugPrint('onChanged: $value');
       },
-      suggestions: [
-        'aaa',
-        'aaa1',
-        'aaa2',
-        'aaa3',
-        'aaa4',
-        'aabb',
-        'bbb',
-        'bbcc',
-        'ccc',
-        'ccdd',
-        'eee',
-      ],
+      suggestions: ['aaa', 'aaa1', 'aaa2', 'aaa3', 'aaa4', 'aabb', 'bbb', 'bbcc', 'ccc', 'ccdd', 'eee'],
       suggestionIcon: SBBIcons.train_station_small,
       enableFavorites: true,
       itemAddedToFavorites: (String item) {
@@ -64,10 +52,7 @@ class AutocompletionPageState extends State<AutocompletionPage> {
     final style = SBBBaseStyle.of(context);
     return SingleChildScrollView(
       child: Container(
-        color: style.themeValue(
-          SBBColors.white,
-          SBBColors.charcoal,
-        ),
+        color: style.themeValue(SBBColors.white, SBBColors.charcoal),
         child: _autocompletion,
       ),
     );

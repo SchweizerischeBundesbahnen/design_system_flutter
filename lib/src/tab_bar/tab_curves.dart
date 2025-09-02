@@ -1,5 +1,6 @@
 import 'dart:math';
 import 'dart:ui' as ui;
+
 import 'package:flutter/material.dart';
 
 /// Represents the curves that define the shape of a tab in an animated tab bar,
@@ -68,28 +69,23 @@ class TabCurves {
   /// - [midX]: The x-coordinate of the center of the tab.
   /// - [waveRadius]: The radius that defines the maximum extent of the wave
   ///   deformation.
-  TabCurves({
-    required this.midX,
-    required this.waveRadius,
-  })  : _circleWaveRadius = 0.552284749831 * waveRadius,
-        _twoWaveRadius = waveRadius.toDouble() * 2 {
+  TabCurves({required this.midX, required this.waveRadius})
+    : _circleWaveRadius = 0.552284749831 * waveRadius,
+      _twoWaveRadius = waveRadius.toDouble() * 2 {
     // Define the relative starting positions for the anchor points.
     final startPos = [
       const Offset(-2.0, 0.0),
       const Offset(-1.0, 0.0),
       const Offset(0.0, 0.0),
       const Offset(1.0, 0.0),
-      const Offset(2.0, 0.0)
+      const Offset(2.0, 0.0),
     ];
 
     // Calculate the absolute starting positions for the anchor points
     // based on `midX` and `waveRadius`.
     _startP = List.generate(
       5,
-      (index) => Offset(
-        midX + startPos[index].dx * waveRadius,
-        startPos[index].dy * waveRadius,
-      ),
+      (index) => Offset(midX + startPos[index].dx * waveRadius, startPos[index].dy * waveRadius),
     );
 
     final endPos = [
@@ -97,17 +93,11 @@ class TabCurves {
       const Offset(-1.0, 1.0),
       const Offset(0.0, 2.0),
       const Offset(1.0, 1.0),
-      const Offset(2.0, 0.0)
+      const Offset(2.0, 0.0),
     ];
 
     // Calculate the absolute ending positions for the anchor points.
-    _endP = List.generate(
-      5,
-      (index) => Offset(
-        midX + endPos[index].dx * waveRadius,
-        endPos[index].dy * waveRadius,
-      ),
-    );
+    _endP = List.generate(5, (index) => Offset(midX + endPos[index].dx * waveRadius, endPos[index].dy * waveRadius));
   }
 
   /// Updates the position of the curve's control points based on the
@@ -126,27 +116,15 @@ class TabCurves {
   ///   Used to calculate "tightness" and adjust curves.
   /// - [rightMidX]: The x-coordinate of the center of the tab to the immediate right.
   ///   Used for tightness calculations.
-  void setProgress(
-    double progress,
-    double leftProgress,
-    double leftMidX,
-    double rightProgress,
-    double rightMidX,
-  ) {
+  void setProgress(double progress, double leftProgress, double leftMidX, double rightProgress, double rightMidX) {
     _leftProgress = leftProgress;
     _rightProgress = rightProgress;
     _progress = progress;
     if (progress == 0.0) return;
 
-    p0 = Offset(
-      _startP[0].dx + progress * (_endP[0].dx - _startP[0].dx),
-      _startP[0].dy,
-    );
+    p0 = Offset(_startP[0].dx + progress * (_endP[0].dx - _startP[0].dx), _startP[0].dy);
 
-    p4 = Offset(
-      _startP[4].dx + progress * (_endP[4].dx - _startP[4].dx),
-      _startP[4].dy,
-    );
+    p4 = Offset(_startP[4].dx + progress * (_endP[4].dx - _startP[4].dx), _startP[4].dy);
 
     final leftWaveEnd = leftMidX + _twoWaveRadius;
     final beforeRightWave = rightMidX - _twoWaveRadius;
@@ -162,10 +140,7 @@ class TabCurves {
     // Adjust p2's horizontal position if "tight" to avoid collision.
     if (_tight) {
       if (leftProgress > progress) {
-        p2 = Offset(
-          p2.dx - (leftProgress - progress) * (_startP[2].dx - leftWaveEnd),
-          p2.dy,
-        );
+        p2 = Offset(p2.dx - (leftProgress - progress) * (_startP[2].dx - leftWaveEnd), p2.dy);
       }
 
       if (rightProgress > progress) {
@@ -186,17 +161,11 @@ class TabCurves {
       final rightProgressRelative = rightProgress / (rightProgress + progress);
       final p1X = _startP[1].dx + progress * (_endP[1].dx - _startP[1].dx);
 
-      p1 = Offset(
-        p1X - leftProgressRelative * (p1X - p3LeftX),
-        p2LeftY + (p2.dy - p2LeftY) * 0.5,
-      );
+      p1 = Offset(p1X - leftProgressRelative * (p1X - p3LeftX), p2LeftY + (p2.dy - p2LeftY) * 0.5);
 
       final p3X = _startP[3].dx + progress * (_endP[3].dx - _startP[3].dx);
 
-      p3 = Offset(
-        p3X - rightProgressRelative * (p3X - p1RightX),
-        p2RightY + (p2.dy - p2RightY) * 0.5,
-      );
+      p3 = Offset(p3X - rightProgressRelative * (p3X - p1RightX), p2RightY + (p2.dy - p2RightY) * 0.5);
     } else {
       // When not tight, p1 and p3 move linearly with the animation progress.
       p1 = Offset(
@@ -278,5 +247,30 @@ class TabCurves {
         wavePath.cubicTo(c34.dx, c34.dy, c43.dx, c43.dy, p4.dx, p4.dy);
       }
     }
+  }
+
+  /// Helper function that converts a list of [TabCurves] into a complete and closed path.
+  ///
+  /// - [curves]: The curves to add to the path.
+  /// - [size]: The size of the canvas we're drawing to.
+  static Path toPath(List<TabCurves> curves, Size size) {
+    final wavePath = Path();
+
+    // Moving to the first tab
+    wavePath.moveTo(0, 0);
+    wavePath.lineTo(curves.first.p0.dx, 0);
+
+    // Drawing the tabs (according to the current state of the animation)
+    for (final c in curves) {
+      c.draw(wavePath);
+    }
+
+    // Closing the path
+    wavePath.lineTo(size.width, 0);
+    wavePath.lineTo(size.width, size.height);
+    wavePath.lineTo(0, size.height);
+    wavePath.close();
+
+    return wavePath;
   }
 }

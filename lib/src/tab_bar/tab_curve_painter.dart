@@ -11,33 +11,27 @@ class TabCurvePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    final wavePath = Path();
-
-    // Moving to the first tab
-    wavePath.moveTo(0, 0);
-    wavePath.lineTo(curves.first.p0.dx, 0);
-
-    // Drawing the tabs (according to the current state of the animation)
-    for (final c in curves) {
-      c.draw(wavePath);
-    }
-
-    // Closing the path
-    wavePath.lineTo(size.width, 0);
-    wavePath.lineTo(size.width, size.height);
-    wavePath.lineTo(0, size.height);
-    wavePath.close();
+    final wavePath = TabCurves.toPath(curves, size);
 
     // Additional shadow
-    final waveShadow = Paint()
-      ..color = shadowColor.withAlpha(64)
-      ..maskFilter = MaskFilter.blur(BlurStyle.normal, 3.0);
+    final waveShadow =
+        Paint()
+          ..color = shadowColor.withAlpha(64)
+          ..maskFilter = MaskFilter.blur(BlurStyle.normal, 3.0);
     canvas.drawPath(wavePath, waveShadow);
 
-    final wavePaint = Paint()
-      ..color = color
-      ..style = PaintingStyle.fill;
+    final wavePaint =
+        Paint()
+          ..color = color
+          ..style = PaintingStyle.fill;
     canvas.drawPath(wavePath, wavePaint);
+  }
+
+  @override
+  bool? hitTest(Offset position) {
+    // Prevent the paint from stopping pointer events from reaching the icons underneath.
+    // Hit tests still reach the children of the paint.
+    return false;
   }
 
   @override

@@ -25,11 +25,7 @@ class SBBListHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = SBBControlStyles.of(context);
     return Padding(
-      padding: padding ??
-          const EdgeInsets.symmetric(
-            horizontal: sbbDefaultSpacing,
-            vertical: sbbDefaultSpacing / 2,
-          ),
+      padding: padding ?? const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing, vertical: sbbDefaultSpacing / 2),
       child: Row(
         children: [
           Expanded(

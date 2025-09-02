@@ -94,10 +94,7 @@ class RadiobuttonPageState extends State<RadiobuttonPage> {
                 onChanged: _isEnabled ? (newValue) => setState(() => _listItemGroupValue = newValue) : null,
                 label: 'Custom trailing Widget',
                 trailingWidget: const Padding(
-                  padding: EdgeInsetsDirectional.only(
-                    top: sbbDefaultSpacing * .75,
-                    end: sbbDefaultSpacing,
-                  ),
+                  padding: EdgeInsetsDirectional.only(top: sbbDefaultSpacing * .75, end: sbbDefaultSpacing),
                   child: Text('CHF 0.99'),
                 ),
               ),
@@ -176,10 +173,7 @@ class RadiobuttonPageState extends State<RadiobuttonPage> {
                 onChanged: _isEnabled ? (newValue) => setState(() => _listItemGroupValue = newValue) : null,
                 label: 'Custom trailing Widget',
                 trailingWidget: const Padding(
-                  padding: EdgeInsetsDirectional.only(
-                    top: sbbDefaultSpacing * .75,
-                    end: sbbDefaultSpacing,
-                  ),
+                  padding: EdgeInsetsDirectional.only(top: sbbDefaultSpacing * .75, end: sbbDefaultSpacing),
                   child: Text('CHF 0.99'),
                 ),
                 isLastElement: false,
@@ -209,7 +203,7 @@ class RadiobuttonPageState extends State<RadiobuttonPage> {
               ),
             ),
           ],
-        )
+        ),
       ],
     );
   }

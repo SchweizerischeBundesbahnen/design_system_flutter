@@ -4,21 +4,14 @@ import '../../sbb_design_system_mobile.dart';
 import 'pagination_circle.dart';
 
 class PaginationCircles extends StatelessWidget {
-  const PaginationCircles({
-    super.key,
-    required this.numberCircles,
-    required this.selectedCircle,
-  });
+  const PaginationCircles({super.key, required this.numberCircles, required this.selectedCircle});
 
   final int numberCircles;
   final int selectedCircle;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: _buildCirclesWithSpacing,
-    );
+    return Row(mainAxisSize: MainAxisSize.min, children: _buildCirclesWithSpacing);
   }
 
   List<Widget> get _buildCirclesWithSpacing {

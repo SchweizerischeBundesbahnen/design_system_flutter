@@ -47,12 +47,13 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
                   ),
                   const SizedBox(height: 8.0),
                   SBBPromotionBox(
-                      badgeText: 'Clickable',
-                      title: _title,
-                      subtitle: _description,
-                      onControllerCreated: (c) => clickableController = c,
-                      onTap: () {},
-                      onClose: () {}),
+                    badgeText: 'Clickable',
+                    title: _title,
+                    subtitle: _description,
+                    onControllerCreated: (c) => clickableController = c,
+                    onTap: () {},
+                    onClose: () {},
+                  ),
                   const SizedBox(height: 8.0),
                   SBBPromotionBox(
                     badgeText: 'With way too long title and badge text',
@@ -92,7 +93,7 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
                     leading: Icon(SBBIcons.train_large),
                     trailing: SBBTertiaryButtonSmall(label: 'Trailing Button', onPressed: () {}),
                     style: _customBoxStyle(context),
-                  )
+                  ),
                 ],
               ),
             ),

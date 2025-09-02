@@ -62,21 +62,11 @@ class SBBTabBarController {
 
   /// Initializing the controller with the animation controller
   void initialize(TickerProvider vsync) {
-    _animationController = AnimationController(
-      vsync: vsync,
-      duration: kThemeAnimationDuration,
-    )..addListener(
-        () {
-          currentData = SBBTabBarNavigationData(
-            selectedTab,
-            _nextTab,
-            _animation.value,
-            hover,
-          );
-          _navigationController.add(currentData);
-          updateCurveAnimation();
-        },
-      );
+    _animationController = AnimationController(vsync: vsync, duration: kThemeAnimationDuration)..addListener(() {
+      currentData = SBBTabBarNavigationData(selectedTab, _nextTab, _animation.value, hover);
+      _navigationController.add(currentData);
+      updateCurveAnimation();
+    });
     _animation = Tween(begin: 0.0, end: 1.0).animate(_animationController);
   }
 
@@ -85,9 +75,10 @@ class SBBTabBarController {
       final leftProgress = (i == 0) ? 0.0 : tabStates[i - 1];
       final rightProgress = (i == currentLayoutData.positions.length - 1) ? 0.0 : tabStates[i + 1];
 
-      final double leftMidX = curves.length < 2
-          ? 0.0
-          : (i == 0)
+      final double leftMidX =
+          curves.length < 2
+              ? 0.0
+              : (i == 0)
               ? curves[0].midX - (curves[1].midX - curves[0].midX)
               : curves[i - 1].midX;
 
@@ -112,11 +103,12 @@ class SBBTabBarController {
   }
 
   Future<SBBTabBarItem> selectTab(SBBTabBarItem tab) async {
-    _setWarningShown(tab.id);
     if (selectedTab == tab) return tab;
     _nextTab = tab;
     hover = false;
     await _animationController.animateTo(1.0, duration: _duration, curve: Curves.easeInOut);
+    _setWarningShown(tab.id);
+
     selectedTab = tab;
     _animationController.reset();
     return tab;

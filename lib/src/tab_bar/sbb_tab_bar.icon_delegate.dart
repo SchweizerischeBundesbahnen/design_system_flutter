@@ -1,13 +1,7 @@
 part of 'sbb_tab_bar.dart';
 
 class _TabIconDelegate extends MultiChildLayoutDelegate {
-  _TabIconDelegate(
-    this.items,
-    this.selectedTab,
-    this.portrait,
-    this.onPositioned,
-    this.gestureInsets,
-  );
+  _TabIconDelegate(this.items, this.selectedTab, this.portrait, this.onPositioned, this.gestureInsets);
 
   final List<SBBTabBarItem> items;
   final SBBTabBarItem selectedTab;
@@ -27,11 +21,12 @@ class _TabIconDelegate extends MultiChildLayoutDelegate {
     final itemHeight = tabSizes.map((e) => e.height).max + textSizes.map((e) => e.height).max;
     final maxItemWidth = widthWithPadding / tabSizes.length;
 
-    final tabPositions = items.mapIndexed((i, e) {
-      final position = Offset(gestureInsets.left + maxItemWidth * (i + 0.5) - itemWidth * 0.5, 0);
-      positionChild('${e.id}_tab', position);
-      return position;
-    }).toList();
+    final tabPositions =
+        items.mapIndexed((i, e) {
+          final position = Offset(gestureInsets.left + maxItemWidth * (i + 0.5) - itemWidth * 0.5, 0);
+          positionChild('${e.id}_tab', position);
+          return position;
+        }).toList();
 
     items.mapIndexed((i, e) {
       final tabPosition = tabPositions[i];
