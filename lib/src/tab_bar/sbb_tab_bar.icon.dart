@@ -37,38 +37,44 @@ class _TabIcon extends StatelessWidget {
     final bottomPadding = portrait ? 0.0 : max(viewPaddingBottom + 8.0, 8.0);
     return LayoutId(
       id: '${item.id}_tab',
-      child: Semantics(
-        selected: selected,
-        label: label,
-        hint: warning?.shown == false ? warning?.semantics : null,
-        button: true,
-        child: Semantics(
-          hint: semanticsHint,
-          excludeSemantics: true,
+      child: Material(
+        color: SBBColors.transparent,
+        child: InkWell(
           onTap: onTap,
-          child: Container(
-            padding: EdgeInsets.only(bottom: bottomPadding),
-            color: SBBColors.transparent,
-            child: GestureDetector(
+          child: Semantics(
+            selected: selected,
+            label: label,
+            hint: warning?.shown == false ? warning?.semantics : null,
+            button: true,
+            child: Semantics(
+              hint: semanticsHint,
+              excludeSemantics: true,
               onTap: onTap,
-              onTapDown: onTapDown,
-              onTapCancel: onTapCancel,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                spacing: 8.0,
-                children: [
-                  TabItemWidget(
-                    item.icon,
-                    selected: selected,
-                    warning: warning,
+              child: Container(
+                padding: EdgeInsets.only(bottom: bottomPadding),
+                color: SBBColors.transparent,
+                child: GestureDetector(
+                  onTap: onTap,
+                  onTapDown: onTapDown,
+                  onTapCancel: onTapCancel,
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    spacing: 8.0,
+                    children: [
+                      TabItemWidget(
+                        item.icon,
+                        selected: selected,
+                        warning: warning,
+                      ),
+                      if (!portrait)
+                        Text(
+                          item.translate(context),
+                          style: SBBControlStyles.of(context).tabBarTextStyle,
+                          textAlign: TextAlign.center,
+                        ),
+                    ],
                   ),
-                  if (!portrait)
-                    Text(
-                      item.translate(context),
-                      style: SBBControlStyles.of(context).tabBarTextStyle,
-                      textAlign: TextAlign.center,
-                    ),
-                ],
+                ),
               ),
             ),
           ),
