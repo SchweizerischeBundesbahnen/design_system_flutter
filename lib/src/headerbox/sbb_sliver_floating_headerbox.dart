@@ -306,7 +306,6 @@ class _Preceding extends StatelessWidget {
   }
 }
 
-
 /// This spacer should be placed at the very bottom of a scroll view that has
 /// a [SBBSliverFloatingHeaderbox].
 ///
@@ -325,12 +324,31 @@ class _RenderSBBSliverFloatingHeaderboxSpacer extends RenderSliver {
   @override
   void performLayout() {
     final firstSibling = _header();
-    final scrollExtent = firstSibling?.extent ?? 0.0;
+
+    if (firstSibling == null) {
+      geometry = SliverGeometry(
+        scrollExtent: 0,
+      );
+      return;
+    }
+
+    final scrollExtent = firstSibling.extent;
+
+    // Space that was filled with scrollable elements
+    final scrollableContentExtent = constraints.precedingScrollExtent;
+
+    // Available space in the viewport
+    final availableSpace = constraints.viewportMainAxisExtent;
 
     var size = 0.0;
-    if (constraints.precedingScrollExtent > constraints.viewportMainAxisExtent &&
-        constraints.precedingScrollExtent < constraints.viewportMainAxisExtent + scrollExtent) {
-      size = (constraints.viewportMainAxisExtent + scrollExtent) - constraints.precedingScrollExtent;
+
+    if (scrollableContentExtent > availableSpace && scrollableContentExtent < (availableSpace + scrollExtent)) {
+      // Bridge the gap if we have enough content to scroll, but not enough to finish the whole length of the headerbox
+      size = (availableSpace + scrollExtent) - scrollableContentExtent;
+    } else if (scrollableContentExtent < availableSpace && firstSibling.childSize < firstSibling.maxExtent) {
+      // If for some reason (e.g. scroll physics) the headerbox is contracted even though there is not enough space,
+      // make sure we make enough space.
+      size = (availableSpace + scrollExtent) - scrollableContentExtent;
     }
 
     geometry = SliverGeometry(
