@@ -263,11 +263,20 @@ class _RenderStackedColumn extends RenderBox
     final totalRange = desiredHeight - shrunkHeight;
     final totalProgress = totalRange <= 0.0 ? 1.0 : (totalHeight - shrunkHeight) / (desiredHeight - shrunkHeight);
 
+    var usedHeight = 0.0;
+
     // First pass to determine sizes
     while (child != null) {
       final parentData = child.parentData! as StackedColumnParentData;
+      final isFirst = parentData.previousSibling == null;
 
-      final (minHeight, maxHeight) = _getMinMax(child);
+      var (minHeight, maxHeight) = _getMinMax(child);
+      if (isFirst) {
+        // Compensate for the case when the minHeight constraint is smaller than
+        // our desired minHeight.
+        minHeight = math.max(minHeight, constraints.minHeight - usedHeight);
+        maxHeight = math.max(maxHeight, minHeight);
+      }
 
       if (toShrink > 0 && minHeight < maxHeight) {
         final height = math.max(minHeight, maxHeight - toShrink);
@@ -294,6 +303,8 @@ class _RenderStackedColumn extends RenderBox
           parentUsesSize: true,
         );
       }
+
+      usedHeight += child.size.height;
 
       final range = (maxHeight - minHeight);
       final current = child.size.height.clamp(minHeight, maxHeight);
