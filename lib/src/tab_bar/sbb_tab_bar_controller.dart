@@ -10,6 +10,7 @@ import 'tab_curves.dart';
 class SBBTabBarController {
   SBBTabBarController(this.tabs, this.selectedTab) {
     currentData = SBBTabBarNavigationData(selectedTab, selectedTab, 0.0, false);
+    _nextTab = selectedTab;
   }
 
   final _navigationController = StreamController<SBBTabBarNavigationData>.broadcast();

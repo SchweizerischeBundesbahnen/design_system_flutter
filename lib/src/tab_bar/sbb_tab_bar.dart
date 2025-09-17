@@ -12,6 +12,8 @@ part 'sbb_tab_bar.icon.dart';
 
 part 'sbb_tab_bar.icon_delegate.dart';
 
+part 'sbb_tab_bar.interactions.dart';
+
 part 'sbb_tab_bar.label.dart';
 
 part 'sbb_tab_bar.layout.dart';
@@ -56,7 +58,7 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
 
   List<SBBTabBarItem> get _tabs => _controller.tabs;
 
-  late final List<FocusNode> _focusNodes = _controller.tabs.map((t) => FocusNode()).toList();
+  late final Map<SBBTabBarItem, FocusNode> _focusNodes = Map.fromIterable(_controller.tabs, value: (t) => FocusNode());
 
   bool get portrait => MediaQuery.of(context).orientation == Orientation.portrait;
 
@@ -65,19 +67,19 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _controller.initialize(this);
-    for (var n in _focusNodes) {
+    for (var n in _focusNodes.values) {
       n.addListener(_focusUpdated);
     }
   }
 
   void _focusUpdated() {
-    if (_focusNodes.every((n) => !n.hasFocus)) _controller.cancelHover();
+    if (_focusNodes.values.every((n) => !n.hasFocus)) _controller.cancelHover();
   }
 
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    for (var n in _focusNodes) {
+    for (var n in _focusNodes.values) {
       n.removeListener(_focusUpdated);
     }
     super.dispose();
@@ -127,7 +129,12 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
                           child: TabItemWidget(
                             e.icon,
                             selected: true,
-                            onTap: () => _onTap(e, navData),
+                            interactions: TabItemInteractions(
+                              focusNode: _focusNodes[e]!,
+                              onTap: () => _onTap(e, navData),
+                              onTapDown: () {},
+                              onTapCancel: () {},
+                            ),
                           ),
                         ),
                       ),
@@ -136,21 +143,18 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
                         child: ClipPath(
                           clipper: TabCurveClipper(curves: _controller.curves),
                           child: _TabLayout(
-                            focusNodes: _focusNodes,
                             items: _tabs,
                             selectedTab: navData.selectedTab,
                             warnings: warnings,
                             portrait: portrait,
                             onPositioned: _controller.onLayout,
-                            onTap: (e) => _onTap(e, navData),
-                            onTapDown: (e) {
-                              if (navData.selectedTab == e) {
-                                _controller.cancelHover();
-                                return;
-                              }
-                              _controller.hoverTab(e);
-                            },
-                            onTapCancel: (e) => _controller.cancelHover(),
+                            interactionsBuilder:
+                                (e) => TabItemInteractions(
+                                  focusNode: _focusNodes[e]!,
+                                  onTap: () => _onTap(e, navData),
+                                  onTapDown: () => _onTapDown(e, navData),
+                                  onTapCancel: () => _controller.cancelHover(),
+                                ),
                           ),
                         ),
                       ),
@@ -169,5 +173,13 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
     widget.onTap.call(item);
     if (navData.selectedTab == item) return;
     widget.onTabChanged(_controller.selectTab(item));
+  }
+
+  void _onTapDown(SBBTabBarItem item, SBBTabBarNavigationData navData) {
+    if (navData.selectedTab == item) {
+      _controller.cancelHover();
+      return;
+    }
+    _controller.hoverTab(item);
   }
 }
