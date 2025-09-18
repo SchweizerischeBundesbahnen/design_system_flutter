@@ -305,7 +305,7 @@ class _FloatingPageState extends State<FloatingPage> {
                     },
                   ),
             ),
-            const SBBSliverFloatingHeaderboxSpacer()
+            const SBBSliverFloatingHeaderboxSpacer(),
           ],
         ),
       ),

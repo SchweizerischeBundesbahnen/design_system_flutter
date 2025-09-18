@@ -270,7 +270,6 @@ class _SBBSliverFloatingHeaderboxState extends State<SBBSliverFloatingHeaderbox>
 
 class _SnapTrigger extends StatefulWidget {
   const _SnapTrigger({
-    super.key,
     required this.child,
   });
 
@@ -326,7 +325,6 @@ class _SnapTriggerState extends State<_SnapTrigger> {
 /// Widget that can be displayed above the headerbox and that will scroll along.
 class _Preceding extends StatelessWidget {
   const _Preceding({
-    super.key,
     required this.child,
   });
 

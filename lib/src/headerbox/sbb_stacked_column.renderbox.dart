@@ -61,7 +61,7 @@ class _RenderStackedColumn extends RenderBox
     _pendingProgress.add(_ProgressUpdate(n, state));
     if (!scheduled) {
       SchedulerBinding.instance.addPostFrameCallback(
-            (_) {
+        (_) {
           // publish to listeners in the *next* frame
           for (final u in _pendingProgress) {
             u.notifier.value = u.value;

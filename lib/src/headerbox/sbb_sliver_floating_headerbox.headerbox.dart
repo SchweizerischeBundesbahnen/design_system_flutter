@@ -14,7 +14,6 @@ enum SBBHeaderboxFlapMode { static, resizable, hideable }
 /// - Supports special flap behavior
 class _Headerbox extends StatelessWidget {
   const _Headerbox({
-    super.key,
     required this.child,
     this.margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
     this.padding = const EdgeInsets.all(sbbDefaultSpacing),
@@ -23,8 +22,6 @@ class _Headerbox extends StatelessWidget {
     this.semanticsLabel,
   });
 
-  /// The margin around the [SBBHeaderbox].
-  ///
   /// Defaults to EdgeInsets.symmetric(horizonal: 8.0).
   final EdgeInsets margin;
 
@@ -33,7 +30,6 @@ class _Headerbox extends StatelessWidget {
   /// The space around [child].
   final EdgeInsets padding;
 
-  /// The flap to display below the [SBBHeaderbox].
   final SBBHeaderboxFlap? flap;
 
   final SBBHeaderboxFlapMode flapMode;

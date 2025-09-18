@@ -1,7 +1,5 @@
 part of 'sbb_stacked_column.dart';
 
-
-
 /// A widget that lets you react to changes in expansion and contraction and provides
 /// several helper functions to achieve different effects.
 ///
@@ -41,28 +39,28 @@ class SBBStackedItem extends StatelessWidget {
       key: key,
       builder:
           (context, progress, _) => Stack(
-        clipBehavior: Clip.none,
-        alignment: alignment,
-        children: [
-          IgnorePointer(
-            ignoring: progress.expansionRate > 0.1,
-            child: Opacity(
-              opacity: 1.0 - progress.expansionRate,
-              child: firstChild,
-            ),
-          ),
-          OverrideIntrinsics(
-            minHeight: 0.0,
-            child: IgnorePointer(
-              ignoring: progress.expansionRate < 0.9,
-              child: Opacity(
-                opacity: progress.expansionRate,
-                child: secondChild,
+            clipBehavior: Clip.none,
+            alignment: alignment,
+            children: [
+              IgnorePointer(
+                ignoring: progress.expansionRate > 0.1,
+                child: Opacity(
+                  opacity: 1.0 - progress.expansionRate,
+                  child: firstChild,
+                ),
               ),
-            ),
+              OverrideIntrinsics(
+                minHeight: 0.0,
+                child: IgnorePointer(
+                  ignoring: progress.expansionRate < 0.9,
+                  child: Opacity(
+                    opacity: progress.expansionRate,
+                    child: secondChild,
+                  ),
+                ),
+              ),
+            ],
           ),
-        ],
-      ),
     );
   }
 
@@ -80,31 +78,31 @@ class SBBStackedItem extends StatelessWidget {
       minHeight: minHeight,
       maxHeight: maxHeight,
       builder:
-      builder == null
-          ? null
-          : (context, progress, child) {
-        return ClipRect(
-          clipBehavior: clipBehavior,
-          child: OverflowBox(
-            maxHeight: double.infinity,
-            alignment: alignment,
-            child: builder(context, progress, child),
-          ),
-        );
-      },
+          builder == null
+              ? null
+              : (context, progress, child) {
+                return ClipRect(
+                  clipBehavior: clipBehavior,
+                  child: OverflowBox(
+                    maxHeight: double.infinity,
+                    alignment: alignment,
+                    child: builder(context, progress, child),
+                  ),
+                );
+              },
       child:
-      (child == null)
-          ? null
-          : builder != null
-          ? child
-          : ClipRect(
-        clipBehavior: clipBehavior,
-        child: OverflowBox(
-          maxHeight: double.infinity,
-          alignment: alignment,
-          child: child,
-        ),
-      ),
+          (child == null)
+              ? null
+              : builder != null
+              ? child
+              : ClipRect(
+                clipBehavior: clipBehavior,
+                child: OverflowBox(
+                  maxHeight: double.infinity,
+                  alignment: alignment,
+                  child: child,
+                ),
+              ),
     );
   }
 
@@ -144,7 +142,6 @@ class SBBStackedItem extends StatelessWidget {
 
 class _SBBStackedItem extends ParentDataWidget<StackedColumnParentData> {
   const _SBBStackedItem({
-    super.key,
     required super.child,
     this.progressNotifier,
   });
