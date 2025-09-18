@@ -3,7 +3,10 @@ import 'package:flutter/rendering.dart';
 import 'package:sbb_design_system_mobile/src/headerbox/sbb_headerbox_content.dart';
 
 import '../../sbb_design_system_mobile.dart';
+import '../sbb_internal.dart';
 import 'sliver_pinned_floating_widget.dart';
+
+part 'sbb_sliver_floating_headerbox.headerbox.dart';
 
 // AnimationStyle was not `const` until recently.
 final defaultAnimationStyle = AnimationStyle(
@@ -73,6 +76,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
     String? secondaryLabel,
     Widget? trailingWidget,
     SBBHeaderboxFlap? flap,
+    SBBHeaderboxFlapMode flapMode = SBBHeaderboxFlapMode.static,
     EdgeInsets margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
     String? semanticsLabel,
     Widget? preceding,
@@ -83,6 +87,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
   }) : this.custom(
          key: key,
          flap: flap,
+         flapMode: flapMode,
          margin: margin,
          preceding: preceding,
          semanticsLabel: semanticsLabel,
@@ -135,6 +140,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
     String? secondaryLabel,
     Widget? trailingWidget,
     SBBHeaderboxFlap? flap,
+    SBBHeaderboxFlapMode flapMode = SBBHeaderboxFlapMode.static,
     EdgeInsets margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
     String? semanticsLabel,
     Widget? preceding,
@@ -145,6 +151,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
   }) : this.custom(
          key: key,
          flap: flap,
+         flapMode: flapMode,
          margin: margin,
          preceding: preceding,
          semanticsLabel: semanticsLabel,
@@ -192,6 +199,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
     EdgeInsets margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
     EdgeInsets padding = const EdgeInsets.all(sbbDefaultSpacing),
     SBBHeaderboxFlap? flap,
+    SBBHeaderboxFlapMode flapMode = SBBHeaderboxFlapMode.static,
     String? semanticsLabel,
     this.resizing = true,
     this.floating = true,
@@ -203,19 +211,21 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
                ? SBBStackedColumn(
                  children: [
                    _Preceding(child: preceding),
-                   SBBHeaderbox.custom(
+                   _Headerbox(
                      margin: margin,
                      padding: padding,
                      flap: flap,
+                     flapMode: flapMode,
                      semanticsLabel: semanticsLabel,
                      child: SBBStackedColumn(children: children),
                    ),
                  ],
                )
-               : SBBHeaderbox.custom(
+               : _Headerbox(
                  margin: margin,
                  padding: padding,
                  flap: flap,
+                 flapMode: flapMode,
                  semanticsLabel: semanticsLabel,
                  child: SBBStackedColumn(children: children),
                );

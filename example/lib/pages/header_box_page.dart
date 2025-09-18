@@ -272,6 +272,7 @@ class _FloatingPageState extends State<FloatingPage> {
               resizing: floating,
               padding: EdgeInsets.zero,
               flap: _flap(),
+              flapMode: SBBHeaderboxFlapMode.hideable,
               children: [
                 _upperRow(context, style),
                 AnimatedSwitcher(
@@ -313,7 +314,6 @@ class _FloatingPageState extends State<FloatingPage> {
 
   SBBHeaderboxFlap _flap() {
     return SBBHeaderboxFlap.custom(
-      allowFloating: true,
       child: Row(
         children: [
           Text('Thursday, 01/31/2025', style: SBBTextStyles.smallLight),

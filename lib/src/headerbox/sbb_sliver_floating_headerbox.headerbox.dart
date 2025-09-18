@@ -1,111 +1,20 @@
-import 'package:flutter/material.dart';
-
-import '../../sbb_design_system_mobile.dart';
-import '../sbb_internal.dart';
-import 'sbb_headerbox_content.dart';
+part of 'sbb_sliver_floating_headerbox.dart';
 
 const _headerBoxMinHeight = 56.0;
 const _headerBoxNavBarExtensionHeight = 24.0;
 const _headerBoxRadius = Radius.circular(sbbDefaultSpacing);
 const _headerBoxFlapTopMargin = 8.0;
 
-/// The SBB Headerbox.
-/// Use according to [documentation](https://digital.sbb.ch/de/design-system/mobile/components/container/)
-///
-/// To place over non scrollable screen content, place this Widget in a [Stack] with the content underneath.
-///
-/// ```dart
-/// @override
-/// Widget build(BuildContext context) {
-///   return Stack(
-///     children: [
-///       _PageContentWidget(),
-///       SBBHeaderbox(
-///         title: 'Awesome Headerbox'
-///       ),
-///     ],
-///   );
-/// }
-/// ```
-///
-/// This will lead to the expected behavior of the Headerbox.
-///
-/// See [SBBSliverHeaderbox] for a headerbox that behaves as expected in scrollable content,
-/// or [SBBSliverFloatingHeaderbox] for a fully dynamic version in scrolling contexts.
-class SBBHeaderbox extends StatelessWidget {
-  /// The default [SBBHeaderbox].
-  ///
-  /// The required argument [title] will be ellipsed if too long. The [secondaryLabel] is the subtext
-  /// displayed below and will wrap to multiple lines.
-  ///
-  /// The design guidelines specify an action button for the [trailingWidget],
-  /// i.e. a [SBBTertiaryButtonSmall] with a label and an icon.
-  ///
-  /// Use the [margin] to adjust space around the Headerbox - the default is horizontal margin of 8px.
-  ///
-  /// For a complete customization of the Headerbox, see the [SBBHeaderbox.custom] constructor.
-  SBBHeaderbox({
-    Key? key,
-    required String title,
-    IconData? leadingIcon,
-    String? secondaryLabel,
-    Widget? trailingWidget,
-    SBBHeaderboxFlap? flap,
-    EdgeInsets margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
-    String? semanticsLabel,
-  }) : this.custom(
-         key: key,
-         child: DefaultHeaderBoxContent(
-           title: title,
-           leadingIcon: leadingIcon,
-           secondaryLabel: secondaryLabel,
-           trailingWidget: trailingWidget,
-         ),
-         margin: margin,
-         flap: flap,
-         semanticsLabel: semanticsLabel,
-       );
+enum SBBHeaderboxFlapMode { static, resizable, hideable }
 
-  /// The large [SBBHeaderbox].
-  ///
-  /// The required argument [title] will be ellipsed if too long. The [secondaryLabel] is the subtext
-  /// displayed below and will wrap to multiple lines.
-  ///
-  /// The design guidelines specify an action button for the [trailingWidget],
-  /// i.e. a [SBBIconButtonLarge].
-  ///
-  /// Use the [margin] to adjust space around the Headerbox - the default is horizontal margin of 8px.
-  ///
-  /// For a complete customization of the Headerbox, see the [SBBHeaderbox.custom] constructor.
-  SBBHeaderbox.large({
-    Key? key,
-    required String title,
-    IconData? leadingIcon,
-    String? secondaryLabel,
-    Widget? trailingWidget,
-    SBBHeaderboxFlap? flap,
-    EdgeInsets margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
-    String? semanticsLabel,
-  }) : this.custom(
-         key: key,
-         flap: flap,
-         margin: margin,
-         child: LargeHeaderBoxContent(
-           title: title,
-           leadingIcon: leadingIcon,
-           secondaryLabel: secondaryLabel,
-           trailingWidget: trailingWidget,
-         ),
-         semanticsLabel: semanticsLabel,
-       );
-
-  /// Allows complete customization of the [SBBHeaderbox].
-  const SBBHeaderbox.custom({
+class _Headerbox extends StatelessWidget {
+  const _Headerbox({
     super.key,
     required this.child,
     this.margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
     this.padding = const EdgeInsets.all(sbbDefaultSpacing),
     this.flap,
+    this.flapMode = SBBHeaderboxFlapMode.static,
     this.semanticsLabel,
   });
 
@@ -121,6 +30,8 @@ class SBBHeaderbox extends StatelessWidget {
 
   /// The flap to display below the [SBBHeaderbox].
   final SBBHeaderboxFlap? flap;
+
+  final SBBHeaderboxFlapMode flapMode;
 
   /// The semantic label for the Headerbox that will be announced by screen readers.
   ///
@@ -139,6 +50,7 @@ class SBBHeaderbox extends StatelessWidget {
           child: _HeaderBoxForeground(
             padding: padding,
             flap: flap,
+            flapMode: flapMode,
             semanticsLabel: semanticsLabel,
             child: child,
           ),
@@ -154,12 +66,14 @@ class _HeaderBoxForeground extends StatelessWidget {
     required this.padding,
     this.semanticsLabel,
     this.flap,
+    this.flapMode = SBBHeaderboxFlapMode.static,
   });
 
   final EdgeInsets padding;
   final Widget child;
   final String? semanticsLabel;
-  final Widget? flap;
+  final SBBHeaderboxFlap? flap;
+  final SBBHeaderboxFlapMode flapMode;
 
   @override
   Widget build(BuildContext context) {
@@ -177,15 +91,42 @@ class _HeaderBoxForeground extends StatelessWidget {
 
     return Container(
       decoration: _flappedBackgroundDecoration(context),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        spacing: _headerBoxFlapTopMargin,
-        children: [
-          _headerBox(context),
-          flap,
-        ],
-      ),
+      child: _column(_headerBox(context), flap),
     );
+  }
+
+  Widget _column(Widget content, Widget flap) {
+    switch (flapMode) {
+      case SBBHeaderboxFlapMode.static:
+        return Column(
+          children: [
+            Flexible(child: content),
+            SizedBox(height: _headerBoxFlapTopMargin),
+            flap,
+          ],
+        );
+      case SBBHeaderboxFlapMode.resizable:
+        return SBBStackedColumn(
+          children: [
+            content,
+            SizedBox(height: _headerBoxFlapTopMargin),
+            flap,
+          ],
+        );
+      case SBBHeaderboxFlapMode.hideable:
+        return SBBStackedColumn(
+          children: [
+            content,
+            SBBStackedItem.aligned(
+              alignment: Alignment.bottomLeft,
+              child: Padding(
+                padding: const EdgeInsets.only(top: _headerBoxFlapTopMargin),
+                child: flap,
+              ),
+            ),
+          ],
+        );
+    }
   }
 
   Widget _headerBox(BuildContext context) {

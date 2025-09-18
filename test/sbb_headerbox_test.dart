@@ -103,8 +103,8 @@ void generateSliverTest(String name, double scrollOffset) {
                   title: 'Additional text or information',
                   leadingIcon: SBBIcons.sign_exclamation_point_small,
                   trailingIcon: SBBIcons.circle_information_small_small,
-                  allowFloating: true,
                 ),
+                flapMode: SBBHeaderboxFlapMode.hideable,
                 children: [
                   Text('Static'),
                   SBBStackedItem.aligned(

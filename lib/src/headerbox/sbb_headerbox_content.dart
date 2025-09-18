@@ -1,10 +1,10 @@
-
 import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
 class DefaultHeaderBoxContent extends StatelessWidget {
   const DefaultHeaderBoxContent({
+    super.key,
     required this.title,
     this.leadingIcon,
     this.secondaryLabel,
@@ -32,12 +32,12 @@ class DefaultHeaderBoxContent extends StatelessWidget {
                 children: [
                   if (leadingIcon != null) ...[
                     Icon(leadingIcon, size: sbbIconSizeSmall),
-                    SizedBox(width: sbbDefaultSpacing * .5)
+                    SizedBox(width: sbbDefaultSpacing * .5),
                   ],
                   Expanded(child: Text(title, style: style.titleTextStyle)),
                 ],
               ),
-              if (secondaryLabel != null) Text(secondaryLabel!, style: secondaryTextStyle)
+              if (secondaryLabel != null) Text(secondaryLabel!, style: secondaryTextStyle),
             ],
           ),
         ),
@@ -50,6 +50,7 @@ class DefaultHeaderBoxContent extends StatelessWidget {
 
 class LargeHeaderBoxContent extends StatelessWidget {
   const LargeHeaderBoxContent({
+    super.key,
     required this.title,
     this.leadingIcon,
     this.secondaryLabel,
@@ -70,7 +71,7 @@ class LargeHeaderBoxContent extends StatelessWidget {
       children: [
         if (leadingIcon != null) ...[
           Icon(leadingIcon, size: sbbIconSizeMedium),
-          SizedBox(width: sbbDefaultSpacing * .5)
+          SizedBox(width: sbbDefaultSpacing * .5),
         ],
         Expanded(
           child: Column(
@@ -78,7 +79,7 @@ class LargeHeaderBoxContent extends StatelessWidget {
             children: [
               Text(title, style: style.titleTextStyle),
               SizedBox(height: sbbDefaultSpacing * .25),
-              if (secondaryLabel != null) Text(secondaryLabel!, style: secondaryTextStyle)
+              if (secondaryLabel != null) Text(secondaryLabel!, style: secondaryTextStyle),
             ],
           ),
         ),
