@@ -35,6 +35,14 @@ final defaultAnimationStyle = AnimationStyle(
 /// ```
 ///
 /// See [SBBStackedColumn] and [SBBStackedItem] for ways to build contracting items.
+///
+/// ## Limitations & Considerations
+///
+/// This widget makes heavy use of intrinsics. This means two things:
+///
+/// - It is relatively expensive, see [IntrinsicHeight].
+/// - You cannot use [LayoutBuilder].
+///
 class SBBSliverFloatingHeaderbox extends StatefulWidget {
   /// The default [SBBSliverFloatingHeaderbox].
   ///
