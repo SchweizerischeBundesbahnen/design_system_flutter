@@ -5,6 +5,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
+/// A widget that is pinned to the top of a viewport and can float, i.e.
+/// appear immediately when the user starts scrolling in the opposite direction.
+///
+/// Crucially, this widgets calculates the intrinsic min and the max height and
+/// transitions between these two heights.
 class SliverPinnedFloatingWidget extends SingleChildRenderObjectWidget {
   const SliverPinnedFloatingWidget({
     super.key,
@@ -12,12 +17,14 @@ class SliverPinnedFloatingWidget extends SingleChildRenderObjectWidget {
     required this.vsync,
     required this.animationStyle,
     this.snapMode = FloatingHeaderSnapMode.scroll,
-    this.floating = false,
+    this.resizing = true,
+    this.floating = true,
   });
 
   final TickerProvider vsync;
   final AnimationStyle animationStyle;
   final FloatingHeaderSnapMode snapMode;
+  final bool resizing;
   final bool floating;
 
   @override
@@ -26,6 +33,7 @@ class SliverPinnedFloatingWidget extends SingleChildRenderObjectWidget {
       vsync: vsync,
       animationStyle: animationStyle,
       snapMode: snapMode,
+      resizing: resizing,
       floating: floating,
     );
   }
@@ -36,6 +44,7 @@ class SliverPinnedFloatingWidget extends SingleChildRenderObjectWidget {
       ..vsync = vsync
       ..animationStyle = animationStyle
       ..snapMode = snapMode
+      ..resizing = resizing
       ..floating = floating;
   }
 }
@@ -46,6 +55,7 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
     required this.animationStyle,
     TickerProvider? vsync,
     this.snapMode = FloatingHeaderSnapMode.scroll,
+    this.resizing = true,
     this.floating = true,
     super.child,
   }) : _vsync = vsync;
@@ -71,6 +81,7 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
 
   AnimationStyle? animationStyle;
   FloatingHeaderSnapMode snapMode;
+  bool resizing = true;
   bool floating = true;
 
   double _previousScrollOffset = 0.0;
@@ -86,7 +97,7 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
 
   // Amount that can be scrolled
   double get extent {
-    if (child == null || !floating) {
+    if (child == null || !resizing) {
       return 0.0;
     }
     return maxExtent - minExtent;
@@ -97,7 +108,7 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
       return 0.0;
     }
 
-    if (!floating) {
+    if (!resizing) {
       return maxExtent;
     }
 
@@ -126,11 +137,14 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
     // We keep track an internal scroll offset that ranges from 0..extent.
     // This is what is used to immediately hide or show the widget at hand.
     final rawDelta = scrollOffset - _previousScrollOffset;
-    final delta = switch (this.constraints.userScrollDirection) {
-      ScrollDirection.idle => rawDelta,
-      ScrollDirection.forward => min(0.0, rawDelta),
-      ScrollDirection.reverse => max(0.0, rawDelta),
-    };
+    final delta =
+        floating
+            ? switch (this.constraints.userScrollDirection) {
+              ScrollDirection.idle => rawDelta,
+              ScrollDirection.forward => min(0.0, rawDelta),
+              ScrollDirection.reverse => max(0.0, rawDelta),
+            }
+            : scrollOffset - _internalScrollOffset;
 
     _internalScrollOffset = (_internalScrollOffset + delta).clamp(0, extent);
     _previousScrollOffset = scrollOffset;

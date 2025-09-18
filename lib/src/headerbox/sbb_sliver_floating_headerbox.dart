@@ -27,7 +27,9 @@ final defaultAnimationStyle = AnimationStyle(
 ///       title: 'Title',
 ///       secondaryLabel: 'Subtitle',
 ///       collapsibleChild: Text('Collapsible'),
-///     )
+///     ),
+///     // ...
+///     const SBBSliverFloatingHeaderboxSpacer(),
 ///   ]
 /// )
 /// ```
@@ -45,8 +47,12 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
   /// Use the [margin] to adjust space around the Headerbox - the default is horizontal margin of 8px.
   ///
   /// Additionally, you can set [collapsibleChild] for some content that will be obscured (and reappears) as the
-  /// user scrolls the containing viewport. You can also temporarily disable this behavior by setting [floating]
+  /// user scrolls the containing viewport. You can also temporarily disable this behavior by setting [resizing]
   /// to `false`.
+  ///
+  /// By default, this header will *float*, i.e. it will expand immediately as the user scrolls in the opposite
+  /// direction. You can disable this behavior by setting [floating] to `false`. In this case, the headerbox will only
+  /// expand when scrolling back to the top.
   ///
   /// You can also use [preceding] to set a widget above the headerbox that will go along with the scroll behavior of
   /// the headerbox.
@@ -64,6 +70,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
     Widget? preceding,
     Widget? collapsibleChild,
     bool floating = true,
+    bool resizing = true,
     AnimationStyle? snapStyle,
   }) : this.custom(
          key: key,
@@ -72,6 +79,8 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
          preceding: preceding,
          semanticsLabel: semanticsLabel,
          snapStyle: snapStyle,
+         resizing: resizing,
+         floating: floating,
          children: [
            DefaultHeaderBoxContent(
              title: title,
@@ -100,8 +109,12 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
   /// Use the [margin] to adjust space around the Headerbox - the default is horizontal margin of 8px.
   ///
   /// Additionally, you can set [collapsibleChild] for some content that will be obscured (and reappears) as the
-  /// user scrolls the containing viewport. You can also temporarily disable this behavior by setting [floating]
+  /// user scrolls the containing viewport. You can also temporarily disable this behavior by setting [resizing]
   /// to `false`.
+  ///
+  /// By default, this header will *float*, i.e. it will expand immediately as the user scrolls in the opposite
+  /// direction. You can disable this behavior by setting [floating] to `false`. In this case, the headerbox will only
+  /// expand when scrolling back to the top.
   ///
   /// You can also use [preceding] to set a widget above the headerbox that will go along with the scroll behavior of
   /// the headerbox.
@@ -119,6 +132,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
     Widget? preceding,
     Widget? collapsibleChild,
     bool floating = true,
+    bool resizing = true,
     AnimationStyle? snapStyle,
   }) : this.custom(
          key: key,
@@ -127,6 +141,8 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
          preceding: preceding,
          semanticsLabel: semanticsLabel,
          snapStyle: snapStyle,
+         resizing: resizing,
+         floating: floating,
          children: [
            LargeHeaderBoxContent(
              title: title,
@@ -158,7 +174,8 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
   ///         alignment: Alignment.bottomLeft,
   ///         child: ...
   ///       ).
-  ///     )
+  ///     ),
+  ///     const SBBSliverFloatingHeaderboxSpacer(),
   ///   ]
   /// )
   /// ```
@@ -168,6 +185,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
     EdgeInsets padding = const EdgeInsets.all(sbbDefaultSpacing),
     SBBHeaderboxFlap? flap,
     String? semanticsLabel,
+    this.resizing = true,
     this.floating = true,
     this.snapStyle,
     Widget? preceding,
@@ -196,6 +214,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
 
   final Widget child;
   final AnimationStyle? snapStyle;
+  final bool resizing;
   final bool floating;
 
   @override
@@ -221,6 +240,7 @@ class _SBBSliverFloatingHeaderboxState extends State<SBBSliverFloatingHeaderbox>
       vsync: this,
       animationStyle: widget.snapStyle ?? defaultAnimationStyle,
       snapMode: FloatingHeaderSnapMode.scroll,
+      resizing: widget.resizing,
       floating: widget.floating,
       child: _SnapTrigger(
         child: widget.child,

@@ -269,7 +269,7 @@ class _FloatingPageState extends State<FloatingPage> {
         child: CustomScrollView(
           slivers: [
             SBBSliverFloatingHeaderbox.custom(
-              floating: floating,
+              resizing: floating,
               padding: EdgeInsets.zero,
               flap: _flap(),
               children: [
@@ -304,7 +304,7 @@ class _FloatingPageState extends State<FloatingPage> {
                     },
                   ),
             ),
-            SBBSliverFloatingHeaderboxSpacer()
+            const SBBSliverFloatingHeaderboxSpacer()
           ],
         ),
       ),
