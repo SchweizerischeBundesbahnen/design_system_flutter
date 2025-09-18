@@ -7,6 +7,11 @@ const _headerBoxFlapTopMargin = 8.0;
 
 enum SBBHeaderboxFlapMode { static, resizable, hideable }
 
+/// This is an adapted version of SBBHeaderbox.
+/// The primary changes are:
+///
+/// - Wraps content in Flexible
+/// - Supports special flap behavior
 class _Headerbox extends StatelessWidget {
   const _Headerbox({
     super.key,
