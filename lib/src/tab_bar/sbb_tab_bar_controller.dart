@@ -70,6 +70,10 @@ class SBBTabBarController {
     _animation = Tween(begin: 0.0, end: 1.0).animate(_animationController);
   }
 
+  void resync(SBBTabBarController controller) {
+    selectTab(controller.selectedTab);
+  }
+
   void updateCurveAnimation() {
     curves.mapIndexed((i, p) {
       final leftProgress = (i == 0) ? 0.0 : tabStates[i - 1];

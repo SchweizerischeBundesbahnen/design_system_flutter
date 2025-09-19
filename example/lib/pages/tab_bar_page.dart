@@ -42,9 +42,9 @@ class TabBarPageState extends State<TabBarPage> {
           ),
           Visibility(
             visible: visible,
-            child: SBBTabBar.controller(
+            child: SBBTabBar.items(
+              items: items,
               onTabChanged: (task) async {},
-              controller: controller,
               onTap: (tab) {
                 sbbToast.show(title: 'Tab tapped: Item ${tab.id}', bottom: sbbDefaultSpacing * 7.0);
               },

@@ -51,7 +51,7 @@ class SBBTabBar extends StatefulWidget {
   State<SBBTabBar> createState() => _SBBTabBarState();
 }
 
-class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMixin, WidgetsBindingObserver {
+class _SBBTabBarState extends State<SBBTabBar> with TickerProviderStateMixin, WidgetsBindingObserver {
   SBBTabBarController get _controller => widget.controller;
 
   List<SBBTabBarItem> get _tabs => _controller.tabs;
@@ -63,6 +63,16 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     _controller.initialize(this);
+  }
+
+  @override
+  void didUpdateWidget(covariant SBBTabBar oldWidget) {
+    if(oldWidget.controller != _controller) {
+      _controller.initialize(this);
+      _controller.resync(oldWidget.controller);
+    }
+
+    super.didUpdateWidget(oldWidget);
   }
 
   @override
