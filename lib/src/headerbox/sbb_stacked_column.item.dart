@@ -31,8 +31,8 @@ class SBBStackedItem extends StatelessWidget {
 
   factory SBBStackedItem.crossfade({
     Key? key,
-    required Widget firstChild,
-    required Widget secondChild,
+    required Widget contractedChild,
+    required Widget expandedChild,
     AlignmentGeometry alignment = AlignmentDirectional.centerStart,
   }) {
     return SBBStackedItem(
@@ -46,7 +46,7 @@ class SBBStackedItem extends StatelessWidget {
                 ignoring: progress.expansionRate > 0.1,
                 child: Opacity(
                   opacity: 1.0 - progress.expansionRate,
-                  child: firstChild,
+                  child: contractedChild,
                 ),
               ),
               OverrideIntrinsics(
@@ -55,7 +55,7 @@ class SBBStackedItem extends StatelessWidget {
                   ignoring: progress.expansionRate < 0.9,
                   child: Opacity(
                     opacity: progress.expansionRate,
-                    child: secondChild,
+                    child: expandedChild,
                   ),
                 ),
               ),

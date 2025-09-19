@@ -22,7 +22,6 @@ class DefaultHeaderBoxContent extends StatelessWidget {
     final secondaryTextStyle = SBBTextStyles.smallLight.copyWith(color: style.secondaryLabelColor);
 
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Expanded(
           child: Column(
@@ -76,9 +75,9 @@ class LargeHeaderBoxContent extends StatelessWidget {
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            spacing: sbbDefaultSpacing * .25,
             children: [
               Text(title, style: style.titleTextStyle),
-              SizedBox(height: sbbDefaultSpacing * .25),
               if (secondaryLabel != null) Text(secondaryLabel!, style: secondaryTextStyle),
             ],
           ),

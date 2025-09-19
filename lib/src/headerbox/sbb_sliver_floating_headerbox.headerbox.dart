@@ -88,11 +88,9 @@ class _HeaderBoxForeground extends StatelessWidget {
   }
 
   Widget _flappedHeaderBox(BuildContext context) {
-    final flap = this.flap!;
-
     return Container(
       decoration: _flappedBackgroundDecoration(context),
-      child: _column(_headerBox(context), flap),
+      child: _column(_headerBox(context), flap!),
     );
   }
 

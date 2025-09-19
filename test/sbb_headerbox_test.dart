@@ -114,8 +114,8 @@ void generateSliverTest(String name, double scrollOffset) {
                         ),
                   ),
                   SBBStackedItem.crossfade(
-                    firstChild: Text("Contracted"),
-                    secondChild: Text("Expanded", style: SBBTextStyles.extraExtraLargeBold),
+                    contractedChild: Text("Contracted"),
+                    expandedChild: Text("Expanded", style: SBBTextStyles.extraExtraLargeBold),
                   ),
                 ],
               ),

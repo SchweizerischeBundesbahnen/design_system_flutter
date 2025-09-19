@@ -338,7 +338,7 @@ class _FloatingPageState extends State<FloatingPage> {
   SBBStackedItem _upperRow(BuildContext context, SBBBaseStyle style) {
     final key = GlobalKey();
     return SBBStackedItem.crossfade(
-      firstChild: Material(
+      contractedChild: Material(
         color: SBBColors.transparent,
         child: InkWell(
           key: key,
@@ -355,7 +355,7 @@ class _FloatingPageState extends State<FloatingPage> {
           ),
         ),
       ),
-      secondChild: Padding(
+      expandedChild: Padding(
         padding: const EdgeInsets.only(left: sbbDefaultSpacing, top: sbbDefaultSpacing * 0.5),
         child: Row(
           children: [

@@ -69,7 +69,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
   /// You can also use [preceding] to set a widget above the headerbox that will go along with the scroll behavior of
   /// the headerbox.
   ///
-  /// For a complete customization of the Headerbox, see the [SBBSliverFloatingHeaderbox.custom_old] constructor.
+  /// For a complete customization of the Headerbox, see the [SBBSliverFloatingHeaderbox.custom] constructor.
   SBBSliverFloatingHeaderbox({
     Key? key,
     required String title,
