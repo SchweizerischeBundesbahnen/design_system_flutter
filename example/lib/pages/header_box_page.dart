@@ -417,10 +417,10 @@ class _FloatingPageState extends State<FloatingPage> {
   }
 
   SBBStackedItem _bottomRow(SBBToast sbbToast, SBBBaseStyle style) {
-    final alignment = pushMode ? Alignment.bottomLeft : Alignment.topLeft;
+    final behavior = pushMode ? SBBContractionBehavior.push : SBBContractionBehavior.clip;
 
-    return SBBStackedItem.aligned(
-      alignment: alignment,
+    return SBBStackedItem.contract(
+      behavior: behavior,
       clipBehavior: Clip.hardEdge,
       builder:
           (context, state, child) => Opacity(
@@ -481,7 +481,7 @@ class _FloatingPageState extends State<FloatingPage> {
   List<Widget> _additionalRows(BuildContext context) {
     return [
       SBBListItem(title: 'Static with progress bar', onPressed: null),
-      SBBStackedItem(
+      SBBStackedItem.custom(
         builder:
             (context, state, _) => FractionallySizedBox(
               widthFactor: state.totalContractionRate,
@@ -492,13 +492,13 @@ class _FloatingPageState extends State<FloatingPage> {
               ),
             ),
       ),
-      SBBStackedItem.aligned(
-        alignment: Alignment.center,
+      SBBStackedItem.contract(
+        behavior: SBBContractionBehavior.center,
         clipBehavior: Clip.hardEdge,
         child: SBBListItem(title: 'Shrink', onPressed: null),
       ),
-      SBBStackedItem.aligned(
-        alignment: Alignment.topLeft,
+      SBBStackedItem.contract(
+        behavior: SBBContractionBehavior.clip,
         builder:
             (context, state, child) => Transform.translate(
               offset: Offset((1.0 - state.expansionRate) * 30, 0.0),

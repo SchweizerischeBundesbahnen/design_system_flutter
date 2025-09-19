@@ -106,7 +106,7 @@ void generateSliverTest(String name, double scrollOffset) {
                 flapMode: SBBHeaderboxFlapMode.hideable,
                 children: [
                   Text('Static'),
-                  SBBStackedItem.aligned(
+                  SBBStackedItem.contract(
                     builder:
                         (context, state, _) => Opacity(
                           opacity: state.expansionRate,

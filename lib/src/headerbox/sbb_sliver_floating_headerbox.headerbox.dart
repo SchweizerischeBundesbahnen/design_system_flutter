@@ -116,8 +116,8 @@ class _HeaderBoxForeground extends StatelessWidget {
         return SBBStackedColumn(
           children: [
             content,
-            SBBStackedItem.aligned(
-              alignment: Alignment.bottomLeft,
+            SBBStackedItem.contract(
+              behavior: SBBContractionBehavior.push,
               child: Padding(
                 padding: const EdgeInsets.only(top: _headerBoxFlapTopMargin),
                 child: flap,

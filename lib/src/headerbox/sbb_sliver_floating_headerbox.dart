@@ -103,7 +103,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
              trailingWidget: trailingWidget,
            ),
            if (collapsibleChild != null)
-             SBBStackedItem.aligned(
+             SBBStackedItem.contract(
                child: Padding(
                  padding: const EdgeInsets.only(top: sbbDefaultSpacing),
                  child: collapsibleChild,
@@ -167,7 +167,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
              trailingWidget: trailingWidget,
            ),
            if (collapsibleChild != null)
-             SBBStackedItem.aligned(
+             SBBStackedItem.contract(
                child: Padding(
                  padding: const EdgeInsets.only(top: sbbDefaultSpacing),
                  child: collapsibleChild,
@@ -186,8 +186,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
   ///   slivers: [
   ///     SBBSliverFloatingHeaderbox.custom(
   ///       _StaticHeader(),
-  ///       SBBStackedItem.aligned(
-  ///         alignment: Alignment.bottomLeft,
+  ///       SBBStackedItem.contract(
   ///         child: ...
   ///       ).
   ///     ),
@@ -333,8 +332,8 @@ class _Preceding extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appBarTheme = Theme.of(context).appBarTheme;
-    return SBBStackedItem.aligned(
-      alignment: Alignment.bottomLeft,
+    return SBBStackedItem.contract(
+      behavior: SBBContractionBehavior.push,
       child: Container(
         color: appBarTheme.backgroundColor,
         child: child,
