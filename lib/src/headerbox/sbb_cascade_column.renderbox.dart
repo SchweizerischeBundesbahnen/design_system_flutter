@@ -1,14 +1,17 @@
 part of 'sbb_cascade_column.dart';
 
-class _RenderStackedColumn extends RenderBox
+class _RenderCascadeColumn extends RenderBox
     with
-        ContainerRenderObjectMixin<RenderBox, StackedColumnParentData>,
-        RenderBoxContainerDefaultsMixin<RenderBox, StackedColumnParentData>,
+        ContainerRenderObjectMixin<RenderBox, CascadeColumnParentData>,
+        RenderBoxContainerDefaultsMixin<RenderBox, CascadeColumnParentData>,
         DebugOverflowIndicatorMixin {
+  _RenderCascadeColumn(this.controller);
+
   double shrunkHeight = 0.0;
   double desiredHeight = 0.0;
-
   double minExtent = 0.0;
+
+  _ContractionController controller;
 
   final Set<_ProgressUpdate> _pendingProgress = {};
 
@@ -19,7 +22,7 @@ class _RenderStackedColumn extends RenderBox
 
     while (child != null) {
       acc += child.getMinIntrinsicHeight(width);
-      child = (child.parentData as StackedColumnParentData).nextSibling;
+      child = (child.parentData as CascadeColumnParentData).nextSibling;
     }
 
     return max(minExtent, acc);
@@ -32,7 +35,7 @@ class _RenderStackedColumn extends RenderBox
 
     while (child != null) {
       acc += child.getMaxIntrinsicHeight(width);
-      child = (child.parentData as StackedColumnParentData).nextSibling;
+      child = (child.parentData as CascadeColumnParentData).nextSibling;
     }
 
     return max(minExtent, acc);
@@ -49,33 +52,6 @@ class _RenderStackedColumn extends RenderBox
     final width = constraints.maxWidth > 1.0 ? constraints.maxWidth : double.infinity;
 
     return (child.getMinIntrinsicHeight(width), child.getMaxIntrinsicHeight(width));
-  }
-
-  void _queueProgressUpdate(StackedColumnParentData pd, ExpansionState state) {
-    final n = pd.progressNotifier;
-
-    if (n == null || n.value == state) return;
-
-    // Maybe use a vsync instead?
-    final scheduled = _pendingProgress.isNotEmpty;
-    _pendingProgress.add(_ProgressUpdate(n, state));
-    if (!scheduled) {
-      SchedulerBinding.instance.addPostFrameCallback(
-        (_) {
-          // publish to listeners in the *next* frame
-          for (final u in _pendingProgress) {
-            u.notifier.value = u.value;
-          }
-          _pendingProgress.clear();
-        },
-      );
-    }
-  }
-
-  @override
-  void detach() {
-    _pendingProgress.clear();
-    super.detach();
   }
 
   @override
@@ -97,7 +73,7 @@ class _RenderStackedColumn extends RenderBox
 
     // First pass to determine sizes
     while (child != null) {
-      final parentData = child.parentData! as StackedColumnParentData;
+      final parentData = child.parentData! as CascadeColumnParentData;
       final isFirst = parentData.previousSibling == null;
 
       var (minHeight, maxHeight) = _getMinMax(child);
@@ -146,7 +122,7 @@ class _RenderStackedColumn extends RenderBox
 
       _queueProgressUpdate(
         parentData,
-        ExpansionState(expansionRate: progress, totalExpansionRate: totalProgress),
+        ContractibleExpansionState(expansionRate: progress, totalExpansionRate: totalProgress),
       );
 
       child = parentData.previousSibling;
@@ -156,7 +132,7 @@ class _RenderStackedColumn extends RenderBox
     child = firstChild;
     var offset = 0.0;
     while (child != null) {
-      final parentData = child.parentData! as StackedColumnParentData;
+      final parentData = child.parentData! as CascadeColumnParentData;
 
       parentData.offset = Offset(0.0, offset);
       offset += child.size.height;
@@ -170,6 +146,12 @@ class _RenderStackedColumn extends RenderBox
       max(totalWidth, constraints.minWidth),
       max(totalHeight, constraints.minHeight),
     );
+
+    // Notify controller
+    final expansionRate = ExpansionState(expansionRate: totalProgress);
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      controller.value = expansionRate;
+    });
   }
 
   @override
@@ -185,7 +167,7 @@ class _RenderStackedColumn extends RenderBox
   void _reversePaint(PaintingContext context, Offset offset) {
     RenderObject? child = lastChild;
     while (child != null) {
-      final childParentData = child.parentData! as StackedColumnParentData;
+      final childParentData = child.parentData! as CascadeColumnParentData;
 
       context.paintChild(child, childParentData.offset + offset);
 
@@ -195,8 +177,48 @@ class _RenderStackedColumn extends RenderBox
 
   @override
   void setupParentData(covariant RenderObject child) {
-    if (child.parentData is! StackedColumnParentData) {
-      child.parentData = StackedColumnParentData();
+    if (child.parentData is! CascadeColumnParentData) {
+      child.parentData = CascadeColumnParentData();
     }
   }
+
+  void _queueProgressUpdate(CascadeColumnParentData pd, ContractibleExpansionState state) {
+    final n = pd.progressNotifier;
+
+    if (n == null || n.value == state) return;
+
+    // Maybe use a vsync instead?
+    final scheduled = _pendingProgress.isNotEmpty;
+    _pendingProgress.add(_ProgressUpdate(n, state));
+    if (!scheduled) {
+      SchedulerBinding.instance.addPostFrameCallback(
+            (_) {
+          // publish to listeners in the *next* frame
+          for (final u in _pendingProgress) {
+            u.notifier.value = u.value;
+          }
+          _pendingProgress.clear();
+        },
+      );
+    }
+  }
+
+  @override
+  void detach() {
+    _pendingProgress.clear();
+    super.detach();
+  }
+}
+
+class _ProgressUpdate {
+  const _ProgressUpdate(this.notifier, this.value);
+
+  final ValueNotifier<ContractibleExpansionState> notifier;
+  final ContractibleExpansionState value;
+
+  @override
+  bool operator ==(Object other) => other is _ProgressUpdate && other.notifier == notifier;
+
+  @override
+  int get hashCode => notifier.hashCode;
 }

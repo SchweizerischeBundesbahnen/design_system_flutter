@@ -12,13 +12,6 @@ part 'sbb_cascade_column.contractible.dart';
 
 part 'sbb_cascade_column.renderbox.dart';
 
-typedef SBBContractibleBuilder =
-    Widget Function(
-      BuildContext context,
-      ExpansionState state,
-      Widget? child,
-    );
-
 /// A widget that accomplishes the cascading shrink effect of the [SBBSliverFloatingHeaderbox].
 ///
 /// It lays out its children the same way as a shrink-wrapped column,
@@ -32,20 +25,60 @@ typedef SBBContractibleBuilder =
 ///  * [SBBSliverFloatingHeaderbox], which is most likely the context in which you want to use this.
 ///  * [SBBContractible], which shrinkable children should be wrapped in.
 ///  * [SBBContractionListener], which allows you to get updates on the expansion rate.
-class SBBCascadeColumn extends MultiChildRenderObjectWidget {
+class SBBCascadeColumn extends StatefulWidget {
   const SBBCascadeColumn({
     super.key,
-    required super.children,
+    required this.children,
   });
 
+  final List<Widget> children;
+
   @override
-  RenderObject createRenderObject(BuildContext context) {
-    return _RenderStackedColumn();
+  State<SBBCascadeColumn> createState() => _SBBCascadeColumnState();
+}
+
+class _SBBCascadeColumnState extends State<SBBCascadeColumn> {
+  late final _ContractionController _controller = _ContractionController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _ContractionScope(
+      controller: _controller,
+      child: _SBBCascadeColumn(
+        controller: _controller,
+        children: widget.children,
+      ),
+    );
   }
 }
 
-class StackedColumnParentData extends ContainerBoxParentData<RenderBox> {
-  ValueNotifier<ExpansionState>? progressNotifier;
+class _SBBCascadeColumn extends MultiChildRenderObjectWidget {
+  const _SBBCascadeColumn({
+    required this.controller,
+    required super.children,
+  });
+
+  final _ContractionController controller;
+
+  @override
+  RenderObject createRenderObject(BuildContext context) {
+    return _RenderCascadeColumn(controller);
+  }
+
+  @override
+  void updateRenderObject(BuildContext context, covariant _RenderCascadeColumn renderObject) {
+    renderObject.controller = controller;
+  }
+}
+
+class CascadeColumnParentData extends ContainerBoxParentData<RenderBox> {
+  ValueNotifier<ContractibleExpansionState>? progressNotifier;
 }
 
 /// Stores the current state of expansion (and contraction).
@@ -53,10 +86,31 @@ class StackedColumnParentData extends ContainerBoxParentData<RenderBox> {
 final class ExpansionState {
   const ExpansionState({
     required this.expansionRate,
+  });
+
+  final double expansionRate;
+
+  double get contractionRate => 1.0 - expansionRate;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ExpansionState && runtimeType == other.runtimeType && expansionRate == other.expansionRate;
+
+  @override
+  int get hashCode => expansionRate.hashCode;
+}
+
+/// Stores the current state of expansion (and contraction).
+@immutable
+final class ContractibleExpansionState {
+  const ContractibleExpansionState({
+    required this.expansionRate,
     required this.totalExpansionRate,
   });
 
-  const ExpansionState.of(double local, double global) : this(expansionRate: local, totalExpansionRate: global);
+  const ContractibleExpansionState.of(double local, double global)
+    : this(expansionRate: local, totalExpansionRate: global);
 
   final double expansionRate;
   final double totalExpansionRate;
@@ -68,7 +122,7 @@ final class ExpansionState {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is ExpansionState &&
+      other is ContractibleExpansionState &&
           runtimeType == other.runtimeType &&
           expansionRate == other.expansionRate &&
           totalExpansionRate == other.totalExpansionRate;
@@ -77,15 +131,28 @@ final class ExpansionState {
   int get hashCode => expansionRate.hashCode ^ totalExpansionRate.hashCode;
 }
 
-class _ProgressUpdate {
-  _ProgressUpdate(this.notifier, this.value);
+/// Controller that holds the current (global) expansion state of the column.
+class _ContractionController extends ValueNotifier<ExpansionState> {
+  _ContractionController([
+    super.initial = const ExpansionState(expansionRate: 1.0),
+  ]);
+}
 
-  final ValueNotifier<ExpansionState> notifier;
-  final ExpansionState value;
+/// Makes the controller available to the subtree, so listeners can subscribe
+/// from anywhere under the SBBCascadeColumn.
+class _ContractionScope extends InheritedNotifier<_ContractionController> {
+  const _ContractionScope({
+    required _ContractionController controller,
+    required super.child,
+  }) : super(notifier: controller);
 
-  @override
-  bool operator ==(Object other) => other is _ProgressUpdate && other.notifier == notifier;
+  static _ContractionController? maybeOf(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<_ContractionScope>()?.notifier;
+  }
 
-  @override
-  int get hashCode => notifier.hashCode;
+  static _ContractionController of(BuildContext context) {
+    final ctrl = maybeOf(context);
+    assert(ctrl != null, 'No SBBCascadeColumn or SBBSliverFloatingHeaderbox found in context. ');
+    return ctrl!;
+  }
 }

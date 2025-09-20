@@ -272,8 +272,8 @@ class _CollapsibleContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (child is SBBContractible || child is SBBCascadeColumn) {
-      // No need to wrap this
+    // Handle special cases in order for the widget to behave as a user would expect.
+    if (child is SBBContractible) {
       return SBBContractible.custom(
         child: Padding(
           padding: const EdgeInsets.only(top: sbbDefaultSpacing),
@@ -282,6 +282,15 @@ class _CollapsibleContent extends StatelessWidget {
               child,
             ],
           ),
+        ),
+      );
+    }
+
+    if(child is SBBCascadeColumn) {
+      return SBBContractible.custom(
+        child: Padding(
+          padding: const EdgeInsets.only(top: sbbDefaultSpacing),
+          child: child,
         ),
       );
     }

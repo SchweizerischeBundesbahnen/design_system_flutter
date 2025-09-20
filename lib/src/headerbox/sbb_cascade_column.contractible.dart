@@ -1,9 +1,69 @@
 part of 'sbb_cascade_column.dart';
 
+typedef ContractibleBuilder =
+    Widget Function(
+      BuildContext context,
+      ContractibleExpansionState state,
+      Widget? child,
+    );
+
+typedef ContractionListenerBuilder =
+    Widget Function(
+      BuildContext context,
+      ExpansionState state,
+      Widget? child,
+    );
+
+
+/// A widget that listens to expansion state changes.
+///
+/// It allows you to react to changes in the nearest [SBBCascadeColumn] or [SBBSliverFloatingHeaderbox] and thus must
+/// must be a descendant of either of them.
+///
+/// You can provide a [child] which will be passed into [builder] which can be beneficial for performance.
+///
+/// Example:
+///
+/// ```dart
+/// SBBCascadeColumn(
+///   children: [
+///     SBBContractionListener(builder: (context, state, _) => Text('${state.expansionRate}')),
+///     SBBContractible(child: 'Hide this'),
+///   ]
+/// )
+/// ```
+class SBBContractionListener extends StatelessWidget {
+  const SBBContractionListener({
+    super.key,
+    required this.builder,
+    this.child,
+  });
+
+  final ContractionListenerBuilder builder;
+  final Widget? child;
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = _ContractionScope.of(context);
+    return ValueListenableBuilder<ExpansionState>(
+      valueListenable: controller,
+      builder: (context, state, _) => builder(context, state, child),
+    );
+  }
+}
+
 enum SBBContractionBehavior {
+  /// Contractible moves along.
   displace,
+
+  /// Contractible gets clipped by the parent.
   clip,
+
+  /// Contractible centers on the remaining space.
   center,
+
+  /// Contractible shrinks as the parent shrinks. It is the caller's responsibility to make sure the widget handles the
+  /// lack of space gracefully.
   shrink,
 }
 
@@ -50,7 +110,7 @@ class SBBContractible extends StatelessWidget {
     Key? key,
     SBBContractionBehavior behavior = SBBContractionBehavior.clip,
     Clip clipBehavior = Clip.hardEdge,
-    SBBContractibleBuilder? builder,
+    ContractibleBuilder? builder,
     Widget? child,
   }) : this._(
          key: key,
@@ -70,7 +130,7 @@ class SBBContractible extends StatelessWidget {
     Clip clipBehavior = Clip.hardEdge,
     double minHeight = 0,
     double? maxHeight,
-    SBBContractibleBuilder? builder,
+    ContractibleBuilder? builder,
     Widget? child,
   }) : this._(
          key: key,
@@ -108,12 +168,13 @@ class SBBContractible extends StatelessWidget {
   final double? minHeight;
   final double? maxHeight;
 
-  final SBBContractibleBuilder? builder;
+  final ContractibleBuilder? builder;
   final Widget? child;
 
   final SBBContractionBehavior behavior;
   final Clip clipBehavior;
-  final notifier = ValueNotifier<ExpansionState>(ExpansionState.of(1.0, 1.0));
+
+  final notifier = ValueNotifier<ContractibleExpansionState>(ContractibleExpansionState.of(1.0, 1.0));
 
   @override
   Widget build(BuildContext context) {
@@ -123,7 +184,7 @@ class SBBContractible extends StatelessWidget {
         child: OverrideIntrinsics(
           minHeight: minHeight,
           maxHeight: maxHeight,
-          child: ValueListenableBuilder<ExpansionState>(
+          child: ValueListenableBuilder<ContractibleExpansionState>(
             valueListenable: notifier,
             builder: _builder(builder!),
             child: child == null ? null : _child(child!, builder),
@@ -141,7 +202,7 @@ class SBBContractible extends StatelessWidget {
     }
   }
 
-  SBBContractibleBuilder _builder(SBBContractibleBuilder builder) {
+  ContractibleBuilder _builder(ContractibleBuilder builder) {
     if (behavior == SBBContractionBehavior.shrink) {
       return builder;
     }
@@ -165,7 +226,7 @@ class SBBContractible extends StatelessWidget {
     };
   }
 
-  Widget _child(Widget child, SBBContractibleBuilder? builder) {
+  Widget _child(Widget child, ContractibleBuilder? builder) {
     if (behavior == SBBContractionBehavior.shrink || builder != null) {
       return child;
     }
@@ -188,61 +249,23 @@ class SBBContractible extends StatelessWidget {
   }
 }
 
-/// A widget that listens to expansion state chanes.
-///
-/// It allows you to react to changes in the current [SBBCascadeColumn] or [SBBSliverFloatingHeaderbox], and must be a
-/// direct child of either one.
-///
-/// You can provide a [child] which will be passed into [builder] which can be beneficial for performance.
-///
-/// Example:
-///
-/// ```dart
-/// SBBCascadeColumn(
-///   children: [
-///     SBBContractionListener(builder: (context, state, _) => Text('${state.totalExpansionRate}')),
-///     SBBContractible(child: 'Hide this'),
-///   ]
-/// )
-/// ```
-class SBBContractionListener extends StatelessWidget {
-  const SBBContractionListener({
-    super.key,
-    this.child,
-    this.builder,
-  });
-
-  final Widget? child;
-  final SBBContractibleBuilder? builder;
-
-  @override
-  Widget build(BuildContext context) {
-    return SBBContractible._(
-      // minHeight is not set, so shrink will effectively do nothing
-      behavior: SBBContractionBehavior.shrink,
-      builder: builder,
-      child: child,
-    );
-  }
-}
-
-class _SBBContractible extends ParentDataWidget<StackedColumnParentData> {
+class _SBBContractible extends ParentDataWidget<CascadeColumnParentData> {
   const _SBBContractible({
     required super.child,
     this.progressNotifier,
   });
 
-  final ValueNotifier<ExpansionState>? progressNotifier;
+  final ValueNotifier<ContractibleExpansionState>? progressNotifier;
 
   @override
   void applyParentData(RenderObject renderObject) {
-    final parentData = renderObject.parentData as StackedColumnParentData;
+    final parentData = renderObject.parentData as CascadeColumnParentData;
 
     parentData.progressNotifier = progressNotifier;
   }
 
   @override
-  Type get debugTypicalAncestorWidgetClass => SBBCascadeColumn;
+  Type get debugTypicalAncestorWidgetClass => _SBBCascadeColumn;
 }
 
 class _Crossfade extends StatelessWidget {
@@ -254,7 +277,7 @@ class _Crossfade extends StatelessWidget {
   });
 
   final AlignmentGeometry alignment;
-  final ExpansionState progress;
+  final ContractibleExpansionState progress;
   final Widget contractedChild;
   final Widget expandedChild;
 

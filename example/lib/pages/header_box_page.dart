@@ -469,7 +469,7 @@ class _FloatingPageState extends State<FloatingPage> {
       SBBContractionListener(
         builder:
             (context, state, _) => FractionallySizedBox(
-              widthFactor: state.totalContractionRate,
+              widthFactor: state.contractionRate,
               alignment: Alignment.topLeft,
               child: Container(
                 height: 5,
