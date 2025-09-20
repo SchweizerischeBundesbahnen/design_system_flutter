@@ -79,7 +79,7 @@ void generateSliverTest(String name, double scrollOffset) {
                   trailingIcon: SBBIcons.circle_information_small_small,
                 ),
                 trailingWidget: SBBTertiaryButtonSmall(label: 'Label', icon: SBBIcons.dog_small, onPressed: () => {}),
-                collapsibleChild: Container(
+                contractibleChild: Container(
                   height: 50,
                   color: Colors.black,
                 ),
@@ -106,14 +106,14 @@ void generateSliverTest(String name, double scrollOffset) {
                 flapMode: SBBHeaderboxFlapMode.hideable,
                 children: [
                   Text('Static'),
-                  SBBStackedItem.contract(
+                  SBBContractionListener(
                     builder:
                         (context, state, _) => Opacity(
                           opacity: state.expansionRate,
                           child: Text('Opacity: ${state.expansionRate.toStringAsFixed(1)}'),
                         ),
                   ),
-                  SBBStackedItem.crossfade(
+                  SBBContractible.crossfade(
                     contractedChild: Text("Contracted"),
                     expandedChild: Text("Expanded", style: SBBTextStyles.extraExtraLargeBold),
                   ),

@@ -105,7 +105,7 @@ class _HeaderBoxForeground extends StatelessWidget {
           ],
         );
       case SBBHeaderboxFlapMode.resizable:
-        return SBBStackedColumn(
+        return SBBCascadeColumn(
           children: [
             content,
             SizedBox(height: _headerBoxFlapTopMargin),
@@ -113,11 +113,11 @@ class _HeaderBoxForeground extends StatelessWidget {
           ],
         );
       case SBBHeaderboxFlapMode.hideable:
-        return SBBStackedColumn(
+        return SBBCascadeColumn(
           children: [
             content,
-            SBBStackedItem.contract(
-              behavior: SBBContractionBehavior.push,
+            SBBContractible(
+              behavior: SBBContractionBehavior.displace,
               child: Padding(
                 padding: const EdgeInsets.only(top: _headerBoxFlapTopMargin),
                 child: flap,

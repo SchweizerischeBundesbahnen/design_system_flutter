@@ -274,24 +274,9 @@ class _FloatingPageState extends State<FloatingPage> {
               flap: _flap(),
               flapMode: SBBHeaderboxFlapMode.hideable,
               children: [
-                _upperRow(context, style),
-                AnimatedSwitcher(
-                  duration: Durations.long2,
-                  switchInCurve: Curves.easeInOutCubic,
-                  switchOutCurve: Curves.easeInOutCubic,
-                  transitionBuilder:
-                      (child, anim) => SizeTransition(
-                        sizeFactor: anim,
-                        child: child,
-                      ),
-                  child:
-                      showAll
-                          ? SBBStackedColumn(
-                            children: _additionalRows(context),
-                          )
-                          : SizedBox(),
-                ),
-                _bottomRow(sbbToast, style),
+                _crossfadeExample(context, style),
+                _additionalRowsSwitcher(context),
+                _contractibleExample(sbbToast, style),
               ],
             ),
             SliverList.builder(
@@ -335,9 +320,9 @@ class _FloatingPageState extends State<FloatingPage> {
     );
   }
 
-  SBBStackedItem _upperRow(BuildContext context, SBBBaseStyle style) {
+  Widget _crossfadeExample(BuildContext context, SBBBaseStyle style) {
     final key = GlobalKey();
-    return SBBStackedItem.crossfade(
+    return SBBContractible.crossfade(
       contractedChild: Material(
         color: SBBColors.transparent,
         child: InkWell(
@@ -416,10 +401,10 @@ class _FloatingPageState extends State<FloatingPage> {
     );
   }
 
-  SBBStackedItem _bottomRow(SBBToast sbbToast, SBBBaseStyle style) {
-    final behavior = pushMode ? SBBContractionBehavior.push : SBBContractionBehavior.clip;
+  SBBContractible _contractibleExample(SBBToast sbbToast, SBBBaseStyle style) {
+    final behavior = pushMode ? SBBContractionBehavior.displace : SBBContractionBehavior.clip;
 
-    return SBBStackedItem.contract(
+    return SBBContractible(
       behavior: behavior,
       clipBehavior: Clip.hardEdge,
       builder:
@@ -430,7 +415,7 @@ class _FloatingPageState extends State<FloatingPage> {
       child: Row(
         children: [
           SizedBox(width: 48),
-          Center(child: pushMode ? Text('Footer that gets pushed up') : Text('Footer that gets pushed over')),
+          Center(child: pushMode ? Text('Footer that gets displaced') : Text('Footer that gets clipped')),
           Spacer(),
           Material(
             color: SBBColors.transparent,
@@ -481,7 +466,7 @@ class _FloatingPageState extends State<FloatingPage> {
   List<Widget> _additionalRows(BuildContext context) {
     return [
       SBBListItem(title: 'Static with progress bar', onPressed: null),
-      SBBStackedItem.custom(
+      SBBContractionListener(
         builder:
             (context, state, _) => FractionallySizedBox(
               widthFactor: state.totalContractionRate,
@@ -492,13 +477,11 @@ class _FloatingPageState extends State<FloatingPage> {
               ),
             ),
       ),
-      SBBStackedItem.contract(
+      SBBContractible.custom(
         behavior: SBBContractionBehavior.center,
-        clipBehavior: Clip.hardEdge,
-        child: SBBListItem(title: 'Shrink', onPressed: null),
+        child: Center(child: SBBListItem(title: 'Stay center', onPressed: null)),
       ),
-      SBBStackedItem.contract(
-        behavior: SBBContractionBehavior.clip,
+      SBBContractible(
         builder:
             (context, state, child) => Transform.translate(
               offset: Offset((1.0 - state.expansionRate) * 30, 0.0),
@@ -507,6 +490,25 @@ class _FloatingPageState extends State<FloatingPage> {
         child: SBBListItem(title: 'React to progress', onPressed: null),
       ),
     ];
+  }
+
+  Widget _additionalRowsSwitcher(BuildContext context) {
+    return AnimatedSwitcher(
+      duration: Durations.long2,
+      switchInCurve: Curves.easeInOutCubic,
+      switchOutCurve: Curves.easeInOutCubic,
+      transitionBuilder:
+          (child, anim) => SizeTransition(
+            sizeFactor: anim,
+            child: child,
+          ),
+      child:
+          showAll
+              ? SBBCascadeColumn(
+                children: _additionalRows(context),
+              )
+              : SizedBox(),
+    );
   }
 }
 

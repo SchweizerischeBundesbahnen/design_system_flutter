@@ -7,6 +7,7 @@ import '../sbb_internal.dart';
 import 'sliver_pinned_floating_widget.dart';
 
 part 'sbb_sliver_floating_headerbox.headerbox.dart';
+
 part 'sbb_sliver_floating_headerbox.spacer.dart';
 
 // AnimationStyle was not `const` until recently.
@@ -38,7 +39,7 @@ final defaultAnimationStyle = AnimationStyle(
 /// )
 /// ```
 ///
-/// See [SBBStackedColumn] and [SBBStackedItem] for ways to build contracting items.
+/// See [SBBCascadeColumn] and [SBBContractible] for ways to build contracting items.
 ///
 /// ## Limitations & Considerations
 ///
@@ -58,7 +59,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
   ///
   /// Use the [margin] to adjust space around the Headerbox - the default is horizontal margin of 8px.
   ///
-  /// Additionally, you can set [collapsibleChild] for some content that will be obscured (and reappears) as the
+  /// Additionally, you can set [contractibleChild] for some content that will be obscured (and reappears) as the
   /// user scrolls the containing viewport. You can also temporarily disable this behavior by setting [resizing]
   /// to `false`.
   ///
@@ -81,7 +82,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
     EdgeInsets margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
     String? semanticsLabel,
     Widget? preceding,
-    Widget? collapsibleChild,
+    Widget? contractibleChild,
     bool floating = true,
     bool resizing = true,
     AnimationStyle? snapStyle,
@@ -102,12 +103,9 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
              secondaryLabel: secondaryLabel,
              trailingWidget: trailingWidget,
            ),
-           if (collapsibleChild != null)
-             SBBStackedItem.contract(
-               child: Padding(
-                 padding: const EdgeInsets.only(top: sbbDefaultSpacing),
-                 child: collapsibleChild,
-               ),
+           if (contractibleChild != null)
+             _CollapsibleContent(
+               child: contractibleChild,
              ),
          ],
        );
@@ -166,19 +164,14 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
              secondaryLabel: secondaryLabel,
              trailingWidget: trailingWidget,
            ),
-           if (collapsibleChild != null)
-             SBBStackedItem.contract(
-               child: Padding(
-                 padding: const EdgeInsets.only(top: sbbDefaultSpacing),
-                 child: collapsibleChild,
-               ),
-             ),
+           if (collapsibleChild != null) SBBContractible(child: SizedBox(height: sbbDefaultSpacing)),
+           if (collapsibleChild != null) _CollapsibleContent(child: collapsibleChild),
          ],
        );
 
-  /// Allows complete customization of the [SBBSliverHeaderbox].
+  /// Allows complete customization of the [SBBSliverFloatingHeaderbox].
   ///
-  /// Note that the [children] can -- and should -- make use of [SBBStackedItem] to customize the way they collapse.
+  /// Note that the [children] can -- and should -- make use of [SBBContractible] to customize the way they collapse.
   /// You will normally have one or more static widgets, followed by one or more stacked item widgets like so:
   ///
   /// ```dart
@@ -186,7 +179,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
   ///   slivers: [
   ///     SBBSliverFloatingHeaderbox.custom(
   ///       _StaticHeader(),
-  ///       SBBStackedItem.contract(
+  ///       SBBContractible(
   ///         child: ...
   ///       ).
   ///     ),
@@ -194,6 +187,11 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
   ///   ]
   /// )
   /// ```
+  ///
+  /// See also:
+  ///
+  ///  * [SBBContractible], which shrinkable children should be wrapped in.
+  ///  * [SBBContractionListener], which allows you to get updates on the expansion rate.
   SBBSliverFloatingHeaderbox.custom({
     super.key,
     EdgeInsets margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
@@ -208,7 +206,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
     required List<Widget> children,
   }) : child =
            preceding != null
-               ? SBBStackedColumn(
+               ? SBBCascadeColumn(
                  children: [
                    _Preceding(child: preceding),
                    _Headerbox(
@@ -217,7 +215,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
                      flap: flap,
                      flapMode: flapMode,
                      semanticsLabel: semanticsLabel,
-                     child: SBBStackedColumn(children: children),
+                     child: SBBCascadeColumn(children: children),
                    ),
                  ],
                )
@@ -227,7 +225,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
                  flap: flap,
                  flapMode: flapMode,
                  semanticsLabel: semanticsLabel,
-                 child: SBBStackedColumn(children: children),
+                 child: SBBCascadeColumn(children: children),
                );
 
   final Widget child;
@@ -262,6 +260,37 @@ class _SBBSliverFloatingHeaderboxState extends State<SBBSliverFloatingHeaderbox>
       floating: widget.floating,
       child: _SnapTrigger(
         child: widget.child,
+      ),
+    );
+  }
+}
+
+class _CollapsibleContent extends StatelessWidget {
+  const _CollapsibleContent({required this.child});
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    if (child is SBBContractible || child is SBBCascadeColumn) {
+      // No need to wrap this
+      return SBBContractible.custom(
+        child: Padding(
+          padding: const EdgeInsets.only(top: sbbDefaultSpacing),
+          child: SBBCascadeColumn(
+            children: [
+              child,
+            ],
+          ),
+        ),
+      );
+    }
+
+    return SBBContractible(
+      clipBehavior: Clip.none,
+      child: Padding(
+        padding: const EdgeInsets.only(top: sbbDefaultSpacing),
+        child: child,
       ),
     );
   }
@@ -332,8 +361,8 @@ class _Preceding extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appBarTheme = Theme.of(context).appBarTheme;
-    return SBBStackedItem.contract(
-      behavior: SBBContractionBehavior.push,
+    return SBBContractible(
+      behavior: SBBContractionBehavior.displace,
       child: Container(
         color: appBarTheme.backgroundColor,
         child: child,

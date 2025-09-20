@@ -1,34 +1,36 @@
-part of 'sbb_stacked_column.dart';
+part of 'sbb_cascade_column.dart';
 
 enum SBBContractionBehavior {
-  push,
+  displace,
   clip,
   center,
   shrink,
 }
 
-/// A widget that lets you react to changes in expansion and contraction and provides
-/// several helper functions to achieve different effects.
+/// A widget that contracts as the user scrolls.
+///
+/// It must be a direct child of either [SBBSliverFloatingHeaderbox] or [SBBCascadeColumn].
+///
+/// By default, it will clip as its parent shrinks, but you can pass in a [behavior] to change this effect, e.g. to
+/// achieve a displacement effect.
 ///
 /// For example:
 ///
 /// ```dart
-/// SBBStackedColumn(
+/// SBBCascadeColumn(
 ///   children: [
-///     // We can use a builder to get progress updates
-///     SBBStackedItem(builder: (context, state, _) => Text('${state.totalExpansionRate}')),
-///     SBBStackedItem.contract(
+///     SBBContractible(
 ///       child: Text('This widget gets clipped as the column shrinks'),
 ///     ),
-///     SBBStackedItem.contract(
-///        behavior: SBBContractionBehavior.push,
-///        child: Text('This widget moves up under the widget above'),
+///     SBBContractible(
+///        behavior: SBBContractionBehavior.displace,
+///        child: Text('This widget moves with the bottom edge'),
 ///      ),
 ///   ],
 /// )
 /// ```
-class SBBStackedItem extends StatelessWidget {
-  SBBStackedItem._({
+class SBBContractible extends StatelessWidget {
+  SBBContractible._({
     super.key,
     this.minHeight,
     this.maxHeight,
@@ -38,23 +40,46 @@ class SBBStackedItem extends StatelessWidget {
     this.builder,
   });
 
-  /// Allows full customization of the stacked item.
+  /// Creates a widget that contracts as the user scrolls.
   ///
-  /// By default, this will not contract unless you set [minHeight] to something smaller than your widget height,
-  /// but using [builder] you can react to the contraction / expansion state of the headerbox.
-  SBBStackedItem.custom({
+  /// Use [behavior] to customize the way this widget contracts. By default it will get clipped.
+  ///
+  /// The simplest way is to provide a [child], but you can also use a [builder] to get updates on the state of expansion.
+  /// You can also provide both, in which case [child] will be passed into the builder function. This can be beneficial for performance.
+  SBBContractible({
     Key? key,
-    double? minHeight,
-    double? maxHeight,
+    SBBContractionBehavior behavior = SBBContractionBehavior.clip,
+    Clip clipBehavior = Clip.hardEdge,
+    SBBContractibleBuilder? builder,
     Widget? child,
-    SBBStackedBuilder? builder,
   }) : this._(
          key: key,
+         behavior: behavior,
+         clipBehavior: clipBehavior,
+         minHeight: 0,
+         maxHeight: null,
+         builder: builder,
+         child: child,
+       );
+
+  /// Allows for full customization of the contractible.
+  /// In particular, you can override the heights.
+  SBBContractible.custom({
+    Key? key,
+    SBBContractionBehavior behavior = SBBContractionBehavior.shrink,
+    Clip clipBehavior = Clip.hardEdge,
+    double minHeight = 0,
+    double? maxHeight,
+    SBBContractibleBuilder? builder,
+    Widget? child,
+  }) : this._(
+         key: key,
+         behavior: behavior,
+         clipBehavior: clipBehavior,
          minHeight: minHeight,
          maxHeight: maxHeight,
-         child: child,
          builder: builder,
-         behavior: SBBContractionBehavior.shrink,
+         child: child,
        );
 
   /// Crossfades between a [contractedChild] and an [expandedChild].
@@ -64,12 +89,12 @@ class SBBStackedItem extends StatelessWidget {
   /// ## Caveats
   ///
   /// The [expandedChild] must be taller than [contractedChild], otherwise it is undefined behavior.
-  SBBStackedItem.crossfade({
+  SBBContractible.crossfade({
     Key? key,
     required Widget contractedChild,
     required Widget expandedChild,
     AlignmentGeometry alignment = AlignmentDirectional.centerStart,
-  }) : this.custom(
+  }) : this._(
          key: key,
          builder:
              (context, progress, _) => _Crossfade(
@@ -80,34 +105,10 @@ class SBBStackedItem extends StatelessWidget {
              ),
        );
 
-  /// Creates a widget that contracts as the user scrolls.
-  ///
-  /// Use [behavior] to customize the way this widget contracts.
-  ///
-  /// The simplest way is to provide a [child], but you can also use a [builder] to get updates on the state of expansion.
-  /// You can also provide both, in which case [child] will be passed into the builder function. This can be beneficial for performance.
-  SBBStackedItem.contract({
-    Key? key,
-    SBBContractionBehavior behavior = SBBContractionBehavior.clip,
-    Clip clipBehavior = Clip.hardEdge,
-    double minHeight = 0,
-    double? maxHeight,
-    SBBStackedBuilder? builder,
-    Widget? child,
-  }) : this._(
-         key: key,
-         minHeight: minHeight,
-         maxHeight: maxHeight,
-         behavior: behavior,
-         clipBehavior: clipBehavior,
-         builder: builder,
-         child: child,
-       );
-
   final double? minHeight;
   final double? maxHeight;
 
-  final SBBStackedBuilder? builder;
+  final SBBContractibleBuilder? builder;
   final Widget? child;
 
   final SBBContractionBehavior behavior;
@@ -117,7 +118,7 @@ class SBBStackedItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (builder != null) {
-      return _SBBStackedItem(
+      return _SBBContractible(
         progressNotifier: notifier,
         child: OverrideIntrinsics(
           minHeight: minHeight,
@@ -130,7 +131,7 @@ class SBBStackedItem extends StatelessWidget {
         ),
       );
     } else {
-      return _SBBStackedItem(
+      return _SBBContractible(
         child: OverrideIntrinsics(
           minHeight: minHeight,
           maxHeight: maxHeight,
@@ -140,13 +141,13 @@ class SBBStackedItem extends StatelessWidget {
     }
   }
 
-  SBBStackedBuilder _builder(SBBStackedBuilder builder) {
+  SBBContractibleBuilder _builder(SBBContractibleBuilder builder) {
     if (behavior == SBBContractionBehavior.shrink) {
       return builder;
     }
 
     final alignment = switch (behavior) {
-      SBBContractionBehavior.push => Alignment.bottomLeft,
+      SBBContractionBehavior.displace => Alignment.bottomLeft,
       SBBContractionBehavior.clip => Alignment.topLeft,
       SBBContractionBehavior.center => Alignment.centerLeft,
       SBBContractionBehavior.shrink => Alignment.centerLeft, // Handled above
@@ -164,13 +165,13 @@ class SBBStackedItem extends StatelessWidget {
     };
   }
 
-  Widget _child(Widget child, SBBStackedBuilder? builder) {
+  Widget _child(Widget child, SBBContractibleBuilder? builder) {
     if (behavior == SBBContractionBehavior.shrink || builder != null) {
       return child;
     }
 
     final alignment = switch (behavior) {
-      SBBContractionBehavior.push => Alignment.bottomLeft,
+      SBBContractionBehavior.displace => Alignment.bottomLeft,
       SBBContractionBehavior.clip => Alignment.topLeft,
       SBBContractionBehavior.center => Alignment.centerLeft,
       SBBContractionBehavior.shrink => Alignment.centerLeft, // Handled above
@@ -187,8 +188,46 @@ class SBBStackedItem extends StatelessWidget {
   }
 }
 
-class _SBBStackedItem extends ParentDataWidget<StackedColumnParentData> {
-  const _SBBStackedItem({
+/// A widget that listens to expansion state chanes.
+///
+/// It allows you to react to changes in the current [SBBCascadeColumn] or [SBBSliverFloatingHeaderbox], and must be a
+/// direct child of either one.
+///
+/// You can provide a [child] which will be passed into [builder] which can be beneficial for performance.
+///
+/// Example:
+///
+/// ```dart
+/// SBBCascadeColumn(
+///   children: [
+///     SBBContractionListener(builder: (context, state, _) => Text('${state.totalExpansionRate}')),
+///     SBBContractible(child: 'Hide this'),
+///   ]
+/// )
+/// ```
+class SBBContractionListener extends StatelessWidget {
+  const SBBContractionListener({
+    super.key,
+    this.child,
+    this.builder,
+  });
+
+  final Widget? child;
+  final SBBContractibleBuilder? builder;
+
+  @override
+  Widget build(BuildContext context) {
+    return SBBContractible._(
+      // minHeight is not set, so shrink will effectively do nothing
+      behavior: SBBContractionBehavior.shrink,
+      builder: builder,
+      child: child,
+    );
+  }
+}
+
+class _SBBContractible extends ParentDataWidget<StackedColumnParentData> {
+  const _SBBContractible({
     required super.child,
     this.progressNotifier,
   });
@@ -203,12 +242,11 @@ class _SBBStackedItem extends ParentDataWidget<StackedColumnParentData> {
   }
 
   @override
-  Type get debugTypicalAncestorWidgetClass => SBBStackedColumn;
+  Type get debugTypicalAncestorWidgetClass => SBBCascadeColumn;
 }
 
 class _Crossfade extends StatelessWidget {
   const _Crossfade({
-    super.key,
     required this.alignment,
     required this.progress,
     required this.contractedChild,

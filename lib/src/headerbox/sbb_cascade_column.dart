@@ -4,24 +4,36 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import 'override_intrinsics.dart';
 
-part 'sbb_stacked_column.item.dart';
+part 'sbb_cascade_column.contractible.dart';
 
-part 'sbb_stacked_column.renderbox.dart';
+part 'sbb_cascade_column.renderbox.dart';
 
-typedef SBBStackedBuilder =
+typedef SBBContractibleBuilder =
     Widget Function(
       BuildContext context,
       ExpansionState state,
       Widget? child,
     );
 
-/// A widget that lays out its children the same way as a shrink-wrapped column,
-/// but contracts them one by one from bottom to top as it shrinks in size.
-class SBBStackedColumn extends MultiChildRenderObjectWidget {
-  const SBBStackedColumn({
+/// A widget that accomplishes the cascading shrink effect of the [SBBSliverFloatingHeaderbox].
+///
+/// It lays out its children the same way as a shrink-wrapped column,
+/// but contracts them one by one from the bottom to the top as it shrinks in size.
+///
+/// Only use this widget for sophisticated effects or when dealing with a contractible flap.
+/// In any other case, it is easier to use one of the constructors in [SBBSliverFloatingHeaderbox].
+///
+/// See also:
+///
+///  * [SBBSliverFloatingHeaderbox], which is most likely the context in which you want to use this.
+///  * [SBBContractible], which shrinkable children should be wrapped in.
+///  * [SBBContractionListener], which allows you to get updates on the expansion rate.
+class SBBCascadeColumn extends MultiChildRenderObjectWidget {
+  const SBBCascadeColumn({
     super.key,
     required super.children,
   });
