@@ -81,6 +81,7 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
     WidgetsBinding.instance.removeObserver(this);
     for (var n in _focusNodes.values) {
       n.removeListener(_focusUpdated);
+      n.dispose();
     }
     super.dispose();
   }

@@ -48,10 +48,15 @@ class TabItemWidget extends StatelessWidget {
     return ExcludeSemantics(
       excluding: selected,
       child: Padding(
-        padding: EdgeInsets.only(top: topPadding, left: horizontalCirclePadding, right: horizontalCirclePadding),
+        padding: EdgeInsets.only(
+          top: topPadding,
+          left: horizontalCirclePadding,
+          right: horizontalCirclePadding,
+        ),
         child: SizedBox.square(
           dimension: size,
           child: InkResponse(
+            splashFactory: NoSplash.splashFactory,
             focusNode: interactions.focusNode,
             onTap: interactions.onTap,
             onTapDown: (_) => interactions.onTapDown(),
@@ -60,7 +65,11 @@ class TabItemWidget extends StatelessWidget {
             onFocusChange: (f) {
               if (f) interactions.onTapDown();
             },
-            child: Material(shape: const CircleBorder(), color: color, child: Icon(resolvedIcon, color: iconColor)),
+            child: Material(
+              shape: const CircleBorder(),
+              color: color,
+              child: Icon(resolvedIcon, color: iconColor),
+            ),
           ),
         ),
       ),
