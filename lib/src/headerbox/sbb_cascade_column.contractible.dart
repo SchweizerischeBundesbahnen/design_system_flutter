@@ -14,7 +14,6 @@ typedef ContractionListenerBuilder =
       Widget? child,
     );
 
-
 /// A widget that listens to expansion state changes.
 ///
 /// It allows you to react to changes in the nearest [SBBCascadeColumn] or [SBBSliverFloatingHeaderbox] and thus must

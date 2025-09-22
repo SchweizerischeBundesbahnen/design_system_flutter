@@ -172,7 +172,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
   /// Allows complete customization of the [SBBSliverFloatingHeaderbox].
   ///
   /// Note that the [children] can -- and should -- make use of [SBBContractible] to customize the way they collapse.
-  /// You will normally have one or more static widgets, followed by one or more stacked item widgets like so:
+  /// You will normally have one or more static widgets, followed by one or more contractible widgets like so:
   ///
   /// ```dart
   /// CustomScrollView(
@@ -286,7 +286,7 @@ class _CollapsibleContent extends StatelessWidget {
       );
     }
 
-    if(child is SBBCascadeColumn) {
+    if (child is SBBCascadeColumn) {
       return SBBContractible.custom(
         child: Padding(
           padding: const EdgeInsets.only(top: sbbDefaultSpacing),
