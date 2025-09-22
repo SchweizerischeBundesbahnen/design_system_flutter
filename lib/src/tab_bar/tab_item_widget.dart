@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/src/shared/tapable_element.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
 class TabItemWidget extends StatelessWidget {
   const TabItemWidget(
     this.icon, {
+    required this.interactions,
     super.key,
     this.selected = false,
     this.warning,
-    this.onTap,
   });
 
   static const portraitSize = 44.0;
@@ -20,9 +19,9 @@ class TabItemWidget extends StatelessWidget {
   static const horizontalCirclePadding = 4.0;
 
   final IconData icon;
+  final TabItemInteractions interactions;
   final bool selected;
   final SBBTabBarWarningSetting? warning;
-  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +34,7 @@ class TabItemWidget extends StatelessWidget {
     final backgroundColor = style.themeValue(SBBColors.black, SBBColors.white);
     Color iconColor = selected ? foregroundColor : backgroundColor;
 
-    Color? color;
+    Color color = SBBColors.transparent;
     IconData resolvedIcon = icon;
 
     if (warning != null && !warning!.shown) {
@@ -46,14 +45,33 @@ class TabItemWidget extends StatelessWidget {
       color = backgroundColor;
     }
 
-    return Container(
-      width: size,
-      height: size,
-      margin: EdgeInsets.only(top: topPadding, left: horizontalCirclePadding, right: horizontalCirclePadding),
-      child: TapableElement.circle(
-        color: color,
-        onTap: onTap,
-        child: Icon(resolvedIcon, color: iconColor),
+    return ExcludeSemantics(
+      excluding: selected,
+      child: Padding(
+        padding: EdgeInsets.only(
+          top: topPadding,
+          left: horizontalCirclePadding,
+          right: horizontalCirclePadding,
+        ),
+        child: SizedBox.square(
+          dimension: size,
+          child: InkResponse(
+            splashFactory: NoSplash.splashFactory,
+            focusNode: interactions.focusNode,
+            onTap: interactions.onTap,
+            onTapDown: (_) => interactions.onTapDown(),
+            onTapCancel: interactions.onTapCancel,
+            radius: size / 2.0 + 4.0,
+            onFocusChange: (f) {
+              if (f) interactions.onTapDown();
+            },
+            child: Material(
+              shape: const CircleBorder(),
+              color: color,
+              child: Icon(resolvedIcon, color: iconColor),
+            ),
+          ),
+        ),
       ),
     );
   }
