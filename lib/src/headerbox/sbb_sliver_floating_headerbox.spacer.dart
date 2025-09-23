@@ -1,10 +1,9 @@
 part of 'sbb_sliver_floating_headerbox.dart';
 
-/// This spacer should be placed at the very bottom of a scroll view that has
-/// a [SBBSliverFloatingHeaderbox].
+/// This spacer should be placed at the very bottom of a scroll view that has a [SBBSliverFloatingHeaderbox].
 ///
-/// It will make sure that the scroll view has enough space to expand and contract
-/// the headerbox.
+/// It will make sure that the scroll view has enough space to fully expand and contract the headerbox. Otherwise, you
+/// may face issues with the headerbox stopping halfway.
 class SBBSliverFloatingHeaderboxSpacer extends LeafRenderObjectWidget {
   const SBBSliverFloatingHeaderboxSpacer({super.key});
 

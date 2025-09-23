@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:sbb_design_system_mobile/src/headerbox/sbb_headerbox_content.dart';
@@ -10,8 +11,8 @@ part 'sbb_sliver_floating_headerbox.headerbox.dart';
 
 part 'sbb_sliver_floating_headerbox.spacer.dart';
 
-// AnimationStyle was not `const` until recently.
-final defaultAnimationStyle = AnimationStyle(
+// Can be made `const` once Flutter 3.29.x deprecated and thus AnimationStyle is const.
+final defaultSnapStyle = AnimationStyle(
   duration: Durations.short2,
   curve: Curves.linear,
   reverseDuration: Durations.short2,
@@ -21,9 +22,9 @@ final defaultAnimationStyle = AnimationStyle(
 /// A floating, expanding, and contracting version of the SBB Sliver Headerbox.
 ///
 /// This widget behaves the same as [SBBSliverHeaderbox] but allows you to include contracting children.
-/// To achieve this effect, the widget looks at the minimum and maximum intrinsic heights and transitions between them.
+/// To achieve this effect, the widget transitions between the minimum and maximum intrinsic heights.
 ///
-/// The easiest way to get started is like so:
+/// A minimal example would be:
 ///
 /// ```dart
 /// CustomScrollView(
@@ -39,7 +40,10 @@ final defaultAnimationStyle = AnimationStyle(
 /// )
 /// ```
 ///
-/// See [SBBCascadeColumn] and [SBBContractible] for ways to build contracting items.
+/// See also:
+///
+///  * [SBBCascadeColumn] and [SBBContractible], for ways to build contracting items.
+///  * [SBBSliverFloatingHeaderboxSpacer], for a widget that should always come last in the list of slivers.
 ///
 /// ## Limitations & Considerations
 ///
@@ -178,10 +182,12 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
   /// CustomScrollView(
   ///   slivers: [
   ///     SBBSliverFloatingHeaderbox.custom(
-  ///       _StaticHeader(),
-  ///       SBBContractible(
-  ///         child: ...
-  ///       ).
+  ///       children: [
+  ///         _StaticHeader(),
+  ///         SBBContractible(
+  ///           child: ...
+  ///         ),
+  ///       ],
   ///     ),
   ///     const SBBSliverFloatingHeaderboxSpacer(),
   ///   ]
@@ -229,6 +235,9 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
                );
 
   final Widget child;
+
+  /// Controls the speed and curve the headerbox uses when snapping to its contracted or expanded state.
+  /// Defaults to [defaultSnapStyle].
   final AnimationStyle? snapStyle;
   final bool resizing;
   final bool floating;
@@ -254,7 +263,7 @@ class _SBBSliverFloatingHeaderboxState extends State<SBBSliverFloatingHeaderbox>
   Widget build(BuildContext context) {
     return SliverPinnedFloatingWidget(
       vsync: this,
-      animationStyle: widget.snapStyle ?? defaultAnimationStyle,
+      animationStyle: widget.snapStyle ?? defaultSnapStyle,
       snapMode: FloatingHeaderSnapMode.scroll,
       resizing: widget.resizing,
       floating: widget.floating,
@@ -341,6 +350,9 @@ class _SnapTriggerState extends State<_SnapTrigger> {
 
   // Called when the sliver starts or ends scrolling.
   void isScrollingListener() {
+    // Scrolling events are kind of broken on web
+    if (kIsWeb) return;
+
     assert(position != null);
     final RenderSliverPinnedFloatingWidget? renderer =
         context.findAncestorRenderObjectOfType<RenderSliverPinnedFloatingWidget>();

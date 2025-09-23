@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-/// Lets you set specific values for the intrinsics of the child.
+/// Selectively lets you override specific intrinsics of [child].
 ///
-/// `null` values mean that the actual intrinsic is used.
+/// In Flutter, there are four intrinsic values that describe how big a child *would like* to be:
+///
+/// * [minWidth]
+/// * [maxWidth]
+/// * [minHeight]
+/// * [maxHeight]
+///
+/// By using this widget, you can change some of these, while `null` values will return the actual values from the child.
 class OverrideIntrinsics extends SingleChildRenderObjectWidget {
   const OverrideIntrinsics({
     super.key,
@@ -64,22 +71,14 @@ class RenderOverrideIntrinsics extends RenderProxyBox {
   double? maxWidth;
 
   @override
-  double computeMinIntrinsicHeight(double width) {
-    return minHeight ?? super.computeMinIntrinsicHeight(width);
-  }
+  double computeMinIntrinsicHeight(double width) => minHeight ?? super.computeMinIntrinsicHeight(width);
 
   @override
-  double computeMaxIntrinsicHeight(double width) {
-    return maxHeight ?? super.computeMaxIntrinsicHeight(width);
-  }
+  double computeMaxIntrinsicHeight(double width) => maxHeight ?? super.computeMaxIntrinsicHeight(width);
 
   @override
-  double computeMinIntrinsicWidth(double height) {
-    return minWidth ?? super.computeMinIntrinsicWidth(height);
-  }
+  double computeMinIntrinsicWidth(double height) => minWidth ?? super.computeMinIntrinsicWidth(height);
 
   @override
-  double computeMaxIntrinsicWidth(double height) {
-    return maxWidth ?? super.computeMaxIntrinsicWidth(height);
-  }
+  double computeMaxIntrinsicWidth(double height) => maxWidth ?? super.computeMaxIntrinsicWidth(height);
 }

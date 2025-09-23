@@ -10,20 +10,44 @@ import 'override_intrinsics.dart';
 
 part 'sbb_cascade_column.contractible.dart';
 
+part 'sbb_cascade_column.listener.dart';
+
 part 'sbb_cascade_column.renderbox.dart';
 
 /// A widget that accomplishes the cascading shrink effect of the [SBBSliverFloatingHeaderbox].
 ///
-/// It lays out its children the same way as a shrink-wrapped column,
+/// It lays out its children the same way as a [Column] with [MainAxisSize.min],
 /// but contracts them one by one from the bottom to the top as it shrinks in size.
 ///
 /// Only use this widget for sophisticated effects or when dealing with a contractible flap.
-/// In any other case, it is easier to use one of the constructors in [SBBSliverFloatingHeaderbox].
+/// In all other cases, it is easier to use one of the constructors in [SBBSliverFloatingHeaderbox].
+///
+/// Example:
+///
+/// ```dart
+/// SBBCascadeColumn(
+///   children: [
+///     Text('This will not shrink'),
+///     SBBContractionListener(
+///       builder: (context, state, _) {
+///         return Text('Neither will this, but we know how much of the way we are: ${state.contractionValue}');
+///       },
+///     ),
+///     SBBContractible(
+///       child: Text('This one will go away'),
+///     ),
+///     SBBContractible(
+///       behavior: SBBContractionBehavior.displace,
+///       child: Text('This one will too, but in a different way!'),
+///     )
+///   ],
+/// )
+/// ```
 ///
 /// See also:
 ///
 ///  * [SBBSliverFloatingHeaderbox], which is most likely the context in which you want to use this.
-///  * [SBBContractible], which shrinkable children should be wrapped in.
+///  * [SBBContractible], which makes its child shrinkable.
 ///  * [SBBContractionListener], which allows you to get updates on the expansion rate.
 class SBBCascadeColumn extends StatefulWidget {
   const SBBCascadeColumn({
@@ -47,15 +71,13 @@ class _SBBCascadeColumnState extends State<SBBCascadeColumn> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return _ContractionScope(
+  Widget build(BuildContext context) => _ContractionScope(
+    controller: _controller,
+    child: _SBBCascadeColumn(
       controller: _controller,
-      child: _SBBCascadeColumn(
-        controller: _controller,
-        children: widget.children,
-      ),
-    );
-  }
+      children: widget.children,
+    ),
+  );
 }
 
 class _SBBCascadeColumn extends MultiChildRenderObjectWidget {
@@ -78,63 +100,62 @@ class _SBBCascadeColumn extends MultiChildRenderObjectWidget {
 }
 
 class CascadeColumnParentData extends ContainerBoxParentData<RenderBox> {
-  ValueNotifier<ContractibleExpansionState>? progressNotifier;
+  ValueNotifier<ContractibleState>? stateNotifier;
 }
 
 /// Stores the current state of expansion (and contraction).
 @immutable
-final class ExpansionState {
-  const ExpansionState({
-    required this.expansionRate,
+final class ContractionState {
+  const ContractionState({
+    required this.expansionValue,
   });
 
-  final double expansionRate;
+  final double expansionValue;
 
-  double get contractionRate => 1.0 - expansionRate;
+  double get contractionValue => 1.0 - expansionValue;
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is ExpansionState && runtimeType == other.runtimeType && expansionRate == other.expansionRate;
+      other is ContractionState && runtimeType == other.runtimeType && expansionValue == other.expansionValue;
 
   @override
-  int get hashCode => expansionRate.hashCode;
+  int get hashCode => expansionValue.hashCode;
 }
 
 /// Stores the current state of expansion (and contraction).
 @immutable
-final class ContractibleExpansionState {
-  const ContractibleExpansionState({
-    required this.expansionRate,
-    required this.totalExpansionRate,
+final class ContractibleState {
+  const ContractibleState({
+    required this.expansionValue,
+    required this.globalExpansionValue,
   });
 
-  const ContractibleExpansionState.of(double local, double global)
-    : this(expansionRate: local, totalExpansionRate: global);
+  const ContractibleState.of(double local, double global) : this(expansionValue: local, globalExpansionValue: global);
 
-  final double expansionRate;
-  final double totalExpansionRate;
+  final double expansionValue;
+  final double globalExpansionValue;
 
-  double get contractionRate => 1.0 - expansionRate;
+  double get contractionValue => 1.0 - expansionValue;
 
-  double get totalContractionRate => 1.0 - totalExpansionRate;
+  double get globalContractionValue => 1.0 - globalExpansionValue;
 
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is ContractibleExpansionState &&
+      other is ContractibleState &&
           runtimeType == other.runtimeType &&
-          expansionRate == other.expansionRate &&
-          totalExpansionRate == other.totalExpansionRate;
+          expansionValue == other.expansionValue &&
+          globalExpansionValue == other.globalExpansionValue;
 
   @override
-  int get hashCode => expansionRate.hashCode ^ totalExpansionRate.hashCode;
+  int get hashCode => expansionValue.hashCode ^ globalExpansionValue.hashCode;
 }
 
 /// Controller that holds the current (global) expansion state of the column.
-class _ContractionController extends ValueNotifier<ExpansionState> {
+class _ContractionController extends ValueNotifier<ContractionState> {
   _ContractionController([
-    super.initial = const ExpansionState(expansionRate: 1.0),
+    super.initial = const ContractionState(expansionValue: 1.0),
   ]);
 }
 
@@ -152,7 +173,7 @@ class _ContractionScope extends InheritedNotifier<_ContractionController> {
 
   static _ContractionController of(BuildContext context) {
     final ctrl = maybeOf(context);
-    assert(ctrl != null, 'No SBBCascadeColumn or SBBSliverFloatingHeaderbox found in context. ');
+    assert(ctrl != null, 'No SBBCascadeColumn or SBBSliverFloatingHeaderbox found in context.');
     return ctrl!;
   }
 }

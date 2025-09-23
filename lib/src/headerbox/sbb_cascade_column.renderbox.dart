@@ -7,9 +7,11 @@ class _RenderCascadeColumn extends RenderBox
         DebugOverflowIndicatorMixin {
   _RenderCascadeColumn(this.controller);
 
-  double shrunkHeight = 0.0;
-  double desiredHeight = 0.0;
-  double minExtent = 0.0;
+  /// Theoretical height of the column when contracted.
+  double contractedHeight = 0.0;
+
+  /// Theoretical height of the column when expanded.
+  double expandedHeight = 0.0;
 
   _ContractionController controller;
 
@@ -18,56 +20,44 @@ class _RenderCascadeColumn extends RenderBox
   @override
   double computeMinIntrinsicHeight(double width) {
     var child = firstChild;
-    var acc = 0.0;
+    var accumulatedHeight = 0.0;
 
     while (child != null) {
-      acc += child.getMinIntrinsicHeight(width);
+      accumulatedHeight += child.getMinIntrinsicHeight(width);
       child = (child.parentData as CascadeColumnParentData).nextSibling;
     }
 
-    return max(minExtent, acc);
+    return max(0.0, accumulatedHeight);
   }
 
   @override
   double computeMaxIntrinsicHeight(double width) {
     var child = firstChild;
-    var acc = 0.0;
+    var accumulatedHeight = 0.0;
 
     while (child != null) {
-      acc += child.getMaxIntrinsicHeight(width);
+      accumulatedHeight += child.getMaxIntrinsicHeight(width);
       child = (child.parentData as CascadeColumnParentData).nextSibling;
     }
 
-    return max(minExtent, acc);
-  }
-
-  void _measureDesiredHeight() {
-    final width = constraints.maxWidth > 1.0 ? constraints.maxWidth : double.infinity;
-
-    shrunkHeight = max(getMinIntrinsicHeight(width), constraints.minHeight);
-    desiredHeight = getMaxIntrinsicHeight(width);
-  }
-
-  (double, double) _getMinMax(RenderBox child) {
-    final width = constraints.maxWidth > 1.0 ? constraints.maxWidth : double.infinity;
-
-    return (child.getMinIntrinsicHeight(width), child.getMaxIntrinsicHeight(width));
+    return max(0.0, accumulatedHeight);
   }
 
   @override
   void performLayout() {
-    _measureDesiredHeight();
+    _calculateHeights();
 
     RenderBox? child = lastChild;
 
-    // Max height of the construct
-    final totalHeight = min(constraints.maxHeight, desiredHeight);
+    // Current height of the construct
+    final currentHeight = min(constraints.maxHeight, expandedHeight);
+
     // Pixels that we must shrink
-    var toShrink = desiredHeight - totalHeight;
+    var pixelsToShrink = expandedHeight - currentHeight;
     var totalWidth = 0.0;
 
-    final totalRange = desiredHeight - shrunkHeight;
-    final totalProgress = totalRange <= 0.0 ? 1.0 : (totalHeight - shrunkHeight) / (desiredHeight - shrunkHeight);
+    final totalRange = expandedHeight - contractedHeight;
+    final totalProgress = totalRange > 0 ? (currentHeight - contractedHeight) / totalRange : 1.0;
 
     var usedHeight = 0.0;
 
@@ -76,7 +66,7 @@ class _RenderCascadeColumn extends RenderBox
       final parentData = child.parentData! as CascadeColumnParentData;
       final isFirst = parentData.previousSibling == null;
 
-      var (minHeight, maxHeight) = _getMinMax(child);
+      var (minHeight, maxHeight) = _getMinMaxHeights(child);
       if (isFirst) {
         // Compensate for the case when the minHeight constraint is smaller than
         // our desired minHeight.
@@ -84,8 +74,8 @@ class _RenderCascadeColumn extends RenderBox
         maxHeight = math.max(maxHeight, minHeight);
       }
 
-      if (toShrink > 0 && minHeight < maxHeight) {
-        final height = math.max(minHeight, maxHeight - toShrink);
+      if (pixelsToShrink > 0 && minHeight < maxHeight) {
+        final height = math.max(minHeight, maxHeight - pixelsToShrink);
         // Child can be shrunk
         child.layout(
           constraints.copyWith(
@@ -98,7 +88,7 @@ class _RenderCascadeColumn extends RenderBox
           parentUsesSize: true,
         );
 
-        toShrink -= (maxHeight - child.size.height);
+        pixelsToShrink -= (maxHeight - child.size.height);
       } else {
         // Child cannot be shrunk, so use original constraints
         child.layout(
@@ -122,7 +112,7 @@ class _RenderCascadeColumn extends RenderBox
 
       _queueProgressUpdate(
         parentData,
-        ContractibleExpansionState(expansionRate: progress, totalExpansionRate: totalProgress),
+        ContractibleState(expansionValue: progress, globalExpansionValue: totalProgress),
       );
 
       child = parentData.previousSibling;
@@ -144,13 +134,13 @@ class _RenderCascadeColumn extends RenderBox
 
     size = Size(
       max(totalWidth, constraints.minWidth),
-      max(totalHeight, constraints.minHeight),
+      max(currentHeight, constraints.minHeight),
     );
 
     // Notify controller
-    final expansionRate = ExpansionState(expansionRate: totalProgress);
+    final contractionState = ContractionState(expansionValue: totalProgress);
     SchedulerBinding.instance.addPostFrameCallback((_) {
-      controller.value = expansionRate;
+      controller.value = contractionState;
     });
   }
 
@@ -162,6 +152,19 @@ class _RenderCascadeColumn extends RenderBox
   @override
   bool hitTestChildren(BoxHitTestResult result, {required Offset position}) {
     return defaultHitTestChildren(result, position: position);
+  }
+
+  void _calculateHeights() {
+    final width = constraints.maxWidth > 1.0 ? constraints.maxWidth : double.infinity;
+
+    expandedHeight = getMaxIntrinsicHeight(width);
+    contractedHeight = max(getMinIntrinsicHeight(width), constraints.minHeight);
+  }
+
+  (double, double) _getMinMaxHeights(RenderBox child) {
+    final width = constraints.maxWidth > 1.0 ? constraints.maxWidth : double.infinity;
+
+    return (child.getMinIntrinsicHeight(width), child.getMaxIntrinsicHeight(width));
   }
 
   void _reversePaint(PaintingContext context, Offset offset) {
@@ -182,14 +185,14 @@ class _RenderCascadeColumn extends RenderBox
     }
   }
 
-  void _queueProgressUpdate(CascadeColumnParentData pd, ContractibleExpansionState state) {
-    final n = pd.progressNotifier;
+  void _queueProgressUpdate(CascadeColumnParentData pd, ContractibleState state) {
+    final n = pd.stateNotifier;
 
     if (n == null || n.value == state) return;
 
-    // Maybe use a vsync instead?
     final scheduled = _pendingProgress.isNotEmpty;
     _pendingProgress.add(_ProgressUpdate(n, state));
+
     if (!scheduled) {
       SchedulerBinding.instance.addPostFrameCallback(
         (_) {
@@ -213,8 +216,8 @@ class _RenderCascadeColumn extends RenderBox
 class _ProgressUpdate {
   const _ProgressUpdate(this.notifier, this.value);
 
-  final ValueNotifier<ContractibleExpansionState> notifier;
-  final ContractibleExpansionState value;
+  final ValueNotifier<ContractibleState> notifier;
+  final ContractibleState value;
 
   @override
   bool operator ==(Object other) => other is _ProgressUpdate && other.notifier == notifier;

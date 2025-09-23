@@ -109,8 +109,8 @@ void generateSliverTest(String name, double scrollOffset) {
                   SBBContractionListener(
                     builder:
                         (context, state, _) => Opacity(
-                          opacity: state.expansionRate,
-                          child: Text('Opacity: ${state.expansionRate.toStringAsFixed(1)}'),
+                          opacity: state.expansionValue,
+                          child: Text('Opacity: ${state.expansionValue.toStringAsFixed(1)}'),
                         ),
                   ),
                   SBBContractible.crossfade(

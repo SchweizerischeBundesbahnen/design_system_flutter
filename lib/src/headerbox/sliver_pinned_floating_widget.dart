@@ -1,7 +1,6 @@
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
@@ -162,7 +161,7 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
     }
     _wasAnimating = snapController?.isAnimating == true;
 
-    // Make it so that it looks to the child like we are scrolled only by the internal value
+    // Layout the child as if we had scrolled only by the internal value
     final SliverConstraints constraints = this.constraints.copyWith(
       scrollOffset: 0,
     );
@@ -236,8 +235,6 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
   }
 
   void isScrollingUpdate(ScrollPosition position) {
-    if (kIsWeb) return;
-
     final now = DateTime.now();
     if (position.isScrollingNotifier.value) {
       _timeAtScrollStart = now;

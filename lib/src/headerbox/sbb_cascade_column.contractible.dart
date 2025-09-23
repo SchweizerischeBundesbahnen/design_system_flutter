@@ -3,56 +3,12 @@ part of 'sbb_cascade_column.dart';
 typedef ContractibleBuilder =
     Widget Function(
       BuildContext context,
-      ContractibleExpansionState state,
+      ContractibleState state,
       Widget? child,
     );
-
-typedef ContractionListenerBuilder =
-    Widget Function(
-      BuildContext context,
-      ExpansionState state,
-      Widget? child,
-    );
-
-/// A widget that listens to expansion state changes.
-///
-/// It allows you to react to changes in the nearest [SBBCascadeColumn] or [SBBSliverFloatingHeaderbox] and thus must
-/// must be a descendant of either of them.
-///
-/// You can provide a [child] which will be passed into [builder] which can be beneficial for performance.
-///
-/// Example:
-///
-/// ```dart
-/// SBBCascadeColumn(
-///   children: [
-///     SBBContractionListener(builder: (context, state, _) => Text('${state.expansionRate}')),
-///     SBBContractible(child: 'Hide this'),
-///   ]
-/// )
-/// ```
-class SBBContractionListener extends StatelessWidget {
-  const SBBContractionListener({
-    super.key,
-    required this.builder,
-    this.child,
-  });
-
-  final ContractionListenerBuilder builder;
-  final Widget? child;
-
-  @override
-  Widget build(BuildContext context) {
-    final controller = _ContractionScope.of(context);
-    return ValueListenableBuilder<ExpansionState>(
-      valueListenable: controller,
-      builder: (context, state, _) => builder(context, state, child),
-    );
-  }
-}
 
 enum SBBContractionBehavior {
-  /// Contractible moves along.
+  /// Contractible moves along the scrolling axis direction instead of shrinking / expanding.
   displace,
 
   /// Contractible gets clipped by the parent.
@@ -61,8 +17,9 @@ enum SBBContractionBehavior {
   /// Contractible centers on the remaining space.
   center,
 
-  /// Contractible shrinks as the parent shrinks. It is the caller's responsibility to make sure the widget handles the
-  /// lack of space gracefully.
+  /// Contractible shrinks as the parent shrinks.
+  ///
+  /// The child must be able to handle the lack of space gracefully.
   shrink,
 }
 
@@ -101,7 +58,8 @@ class SBBContractible extends StatelessWidget {
 
   /// Creates a widget that contracts as the user scrolls.
   ///
-  /// Use [behavior] to customize the way this widget contracts. By default it will get clipped.
+  /// Use [behavior] to customize the way this widget contracts.
+  /// Defaults to [SBBContractionBehavior.clip].
   ///
   /// The simplest way is to provide a [child], but you can also use a [builder] to get updates on the state of expansion.
   /// You can also provide both, in which case [child] will be passed into the builder function. This can be beneficial for performance.
@@ -158,7 +116,7 @@ class SBBContractible extends StatelessWidget {
          builder:
              (context, progress, _) => _Crossfade(
                alignment: alignment,
-               progress: progress,
+               state: progress,
                contractedChild: contractedChild,
                expandedChild: expandedChild,
              ),
@@ -171,19 +129,24 @@ class SBBContractible extends StatelessWidget {
   final Widget? child;
 
   final SBBContractionBehavior behavior;
+
+  /// Controls how / whether the contractible is clipped.
+  ///
+  /// In some cases, you may want to disable this and let the headerbox itself take care of the clipping, e.g. because
+  /// of padding issues.
   final Clip clipBehavior;
 
-  final notifier = ValueNotifier<ContractibleExpansionState>(ContractibleExpansionState.of(1.0, 1.0));
+  final notifier = ValueNotifier<ContractibleState>(ContractibleState.of(1.0, 1.0));
 
   @override
   Widget build(BuildContext context) {
     if (builder != null) {
       return _SBBContractible(
-        progressNotifier: notifier,
+        stateNotifier: notifier,
         child: OverrideIntrinsics(
           minHeight: minHeight,
           maxHeight: maxHeight,
-          child: ValueListenableBuilder<ContractibleExpansionState>(
+          child: ValueListenableBuilder<ContractibleState>(
             valueListenable: notifier,
             builder: _builder(builder!),
             child: child == null ? null : _child(child!, builder),
@@ -251,16 +214,16 @@ class SBBContractible extends StatelessWidget {
 class _SBBContractible extends ParentDataWidget<CascadeColumnParentData> {
   const _SBBContractible({
     required super.child,
-    this.progressNotifier,
+    this.stateNotifier,
   });
 
-  final ValueNotifier<ContractibleExpansionState>? progressNotifier;
+  final ValueNotifier<ContractibleState>? stateNotifier;
 
   @override
   void applyParentData(RenderObject renderObject) {
     final parentData = renderObject.parentData as CascadeColumnParentData;
 
-    parentData.progressNotifier = progressNotifier;
+    parentData.stateNotifier = stateNotifier;
   }
 
   @override
@@ -270,13 +233,13 @@ class _SBBContractible extends ParentDataWidget<CascadeColumnParentData> {
 class _Crossfade extends StatelessWidget {
   const _Crossfade({
     required this.alignment,
-    required this.progress,
+    required this.state,
     required this.contractedChild,
     required this.expandedChild,
   });
 
   final AlignmentGeometry alignment;
-  final ContractibleExpansionState progress;
+  final ContractibleState state;
   final Widget contractedChild;
   final Widget expandedChild;
 
@@ -287,18 +250,18 @@ class _Crossfade extends StatelessWidget {
       alignment: alignment,
       children: [
         IgnorePointer(
-          ignoring: progress.expansionRate > 0.1,
+          ignoring: state.expansionValue > 0.1,
           child: Opacity(
-            opacity: 1.0 - progress.expansionRate,
+            opacity: 1.0 - state.expansionValue,
             child: contractedChild,
           ),
         ),
         OverrideIntrinsics(
           minHeight: 0.0,
           child: IgnorePointer(
-            ignoring: progress.expansionRate < 0.9,
+            ignoring: state.expansionValue < 0.9,
             child: Opacity(
-              opacity: progress.expansionRate,
+              opacity: state.expansionValue,
               child: expandedChild,
             ),
           ),
