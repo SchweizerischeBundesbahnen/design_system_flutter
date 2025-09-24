@@ -79,16 +79,14 @@ class _SBBTabBarState extends State<SBBTabBar> with TickerProviderStateMixin, Wi
     super.didUpdateWidget(oldWidget);
 
     if (oldWidget.controller != widget.controller || oldWidget.items != widget.items) {
-      setState(() {
-        // Clean up
-        _controller.dispose();
-        for (var it in _focusNodes.values) {
-          it.dispose();
-        }
+      // Clean up
+      _controller.dispose();
+      for (var it in _focusNodes.values) {
+        it.dispose();
+      }
 
-        // Rebind
-        _initController();
-      });
+      // Rebind
+      _initController();
     }
   }
 
@@ -111,7 +109,7 @@ class _SBBTabBarState extends State<SBBTabBar> with TickerProviderStateMixin, Wi
   @override
   Widget build(context) {
     return StreamBuilder<SBBTabBarLayoutData>(
-      key: Key('${_controller.hashCode}'),
+      key: ValueKey(_controller),
       stream: _controller.layoutStream,
       initialData: _controller.currentLayoutData,
       builder: (context, snapshot) {
