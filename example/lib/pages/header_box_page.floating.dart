@@ -9,7 +9,7 @@ class FloatingPage extends StatefulWidget {
 
 class _FloatingPageState extends State<FloatingPage> {
   bool pushMode = true;
-  bool floating = true;
+  bool resizing = true;
   bool showAll = false;
 
   @override
@@ -17,13 +17,14 @@ class _FloatingPageState extends State<FloatingPage> {
     final sbbToast = SBBToast.of(context);
     final style = SBBBaseStyle.of(context);
     return FocusScope(
-      onFocusChange: (focused) => setState(() => floating = !focused),
+      // This prevents the headerbox from shrinking when something is focused
+      onFocusChange: (focused) => setState(() => resizing = !focused),
       child: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: CustomScrollView(
           slivers: [
             SBBSliverFloatingHeaderbox.custom(
-              resizing: floating,
+              resizing: resizing,
               padding: EdgeInsets.zero,
               flap: _flap(),
               flapMode: SBBHeaderboxFlapMode.hideable,
@@ -77,11 +78,15 @@ class _FloatingPageState extends State<FloatingPage> {
   Widget _crossfadeExample(BuildContext context, SBBBaseStyle style) {
     final key = GlobalKey();
     return SBBContractible.crossfade(
+      // The contracted child is simply a summarized version of the origin and destination.
       contractedChild: Material(
         color: SBBColors.transparent,
         child: InkWell(
           key: key,
           onTap: () {
+            // Expand the headerbox on tap.
+            // For this to work, we need a context that is a descendant of the headerbox.
+            // In this case, we capture it using a key.
             SBBSliverFloatingHeaderbox.expand(key.currentContext!);
           },
           child: Container(
@@ -94,6 +99,8 @@ class _FloatingPageState extends State<FloatingPage> {
           ),
         ),
       ),
+      // The expanded child is somewhat complicated to achieve the dynamic layout.
+      // It could be simplified massively if we were fine with a simple crossfade that only changes the opacity.
       expandedChild: Padding(
         padding: const EdgeInsets.only(left: sbbDefaultSpacing, top: sbbDefaultSpacing * 0.5),
         child: Row(
@@ -158,8 +165,8 @@ class _FloatingPageState extends State<FloatingPage> {
   SBBContractible _contractibleExample(SBBToast sbbToast, SBBBaseStyle style) {
     return SBBContractible(
       behavior: pushMode ? SBBContractionBehavior.displace : SBBContractionBehavior.clip,
-      clipBehavior: Clip.hardEdge,
       builder:
+          // We can react to the current state of expansion and set an opacity accordingly.
           (context, state, child) => Opacity(
             opacity: state.expansionValue,
             child: child,
