@@ -134,4 +134,11 @@ class SBBTabBarController {
     currentLayoutData = SBBTabBarLayoutData(height, positions);
     _layoutController.add(currentLayoutData);
   }
+
+  void dispose() {
+    _animationController.dispose();
+    _layoutController.close();
+    _navigationController.close();
+    _warningController.close();
+  }
 }

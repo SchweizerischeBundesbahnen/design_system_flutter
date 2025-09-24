@@ -46,7 +46,9 @@ class TabBarPageState extends State<TabBarPage> {
               onTabChanged: (task) async {},
               controller: controller,
               onTap: (tab) {
-                sbbToast.show(title: 'Tab tapped: Item ${tab.id}', bottom: sbbDefaultSpacing * 7.0);
+                if (controller.selectedTab == tab) {
+                  sbbToast.show(title: 'Tab tapped: Item ${tab.id}', bottom: sbbDefaultSpacing * 7.0);
+                }
               },
             ),
           ),
