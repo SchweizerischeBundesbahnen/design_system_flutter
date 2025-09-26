@@ -1,5 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
@@ -69,7 +70,10 @@ class MyApp extends StatelessWidget {
             supportedLocales: const [Locale('en'), Locale('de'), Locale('fr'), Locale('it')],
             locale: const Locale('de'),
             home: Scaffold(
-              appBar: const SBBHeader(title: 'Design System Mobile'),
+              appBar: const SBBHeader(
+                title: 'Design System Mobile',
+                systemOverlayStyle: SystemUiOverlayStyle.light,
+              ),
               body: SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),

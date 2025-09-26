@@ -20,6 +20,7 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
     VoidCallback? onPressedLogo,
     String? logoTooltip,
     bool? blockSemantics,
+    SystemUiOverlayStyle? systemOverlayStyle,
   }) : this._(
          key: key,
          title: title,
@@ -30,6 +31,7 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
          onPressedLogo: onPressedLogo,
          logoTooltip: logoTooltip,
          blockSemantics: blockSemantics,
+         systemOverlayStyle: systemOverlayStyle,
        );
 
   const SBBHeader.menu({
@@ -40,6 +42,7 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
     List<Widget>? actions,
     String? logoTooltip,
     bool? blockSemantics,
+    SystemUiOverlayStyle? systemOverlayStyle,
   }) : this._(
          key: key,
          title: title,
@@ -50,6 +53,7 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
          actions: actions,
          logoTooltip: logoTooltip,
          blockSemantics: blockSemantics,
+         systemOverlayStyle: systemOverlayStyle,
        );
 
   const SBBHeader.back({
@@ -60,6 +64,7 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
     List<Widget>? actions,
     String? logoTooltip,
     bool? blockSemantics,
+    SystemUiOverlayStyle? systemOverlayStyle,
   }) : this._(
          key: key,
          title: title,
@@ -70,6 +75,7 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
          actions: actions,
          logoTooltip: logoTooltip,
          blockSemantics: blockSemantics,
+         systemOverlayStyle: systemOverlayStyle,
        );
 
   const SBBHeader.close({
@@ -80,6 +86,7 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
     List<Widget>? actions,
     String? logoTooltip,
     bool? blockSemantics,
+    SystemUiOverlayStyle? systemOverlayStyle,
   }) : this._(
          key: key,
          title: title,
@@ -90,22 +97,24 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
          actions: actions,
          logoTooltip: logoTooltip,
          blockSemantics: blockSemantics,
+         systemOverlayStyle: systemOverlayStyle,
        );
 
   const SBBHeader._({
     super.key,
     required this.title,
+    required this.automaticallyImplyLeading,
+    required this.onPressedLogo,
+    required this.logoTooltip,
     this.leadingWidget,
     this.leadingWidth,
-    required this.automaticallyImplyLeading,
     this.useMenuButton = false,
     this.useBackButton = false,
     this.useCloseButton = false,
     this.onPressed,
-    required this.onPressedLogo,
-    required this.logoTooltip,
     this.actions,
     this.blockSemantics,
+    this.systemOverlayStyle,
   }) : assert(actions == null || onPressedLogo == null);
 
   final String title;
@@ -120,6 +129,7 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
   final String? logoTooltip;
   final List<Widget>? actions;
   final bool? blockSemantics;
+  final SystemUiOverlayStyle? systemOverlayStyle;
 
   static const _menuButtonIconWidth = 20.718;
   static const _menuButtonIconHeight = 16.0;
@@ -173,7 +183,7 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
     return BlockSemantics(
       blocking: blockSemantics ?? false,
       child: AppBar(
-        systemOverlayStyle: SystemUiOverlayStyle(systemNavigationBarColor: SBBColors.transparent),
+        systemOverlayStyle: systemOverlayStyle ?? SystemUiOverlayStyle(systemNavigationBarColor: SBBColors.transparent),
         titleSpacing: 0.0,
         leading: Container(
           padding: customLeadingWidth ? EdgeInsets.zero : EdgeInsets.only(right: kToolbarHeight - leadingWidth),
