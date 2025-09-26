@@ -110,11 +110,13 @@ Future<void> createFlutterFontMap() async {
   sb.writeln();
   sb.writeln('// The names are given by digital.sbb.ch');
   sb.writeln('// ignore_for_file: constant_identifier_names');
+  sb.writeln('// dart format off');
   sb.writeln('sealed class SBBIcons {');
   small.entries.forEach((e) => mapFont(e.key, e.value));
   medium.entries.forEach((e) => mapFont(e.key, e.value));
   large.entries.forEach((e) => mapFont(e.key, e.value));
   sb.writeln('}');
+  sb.writeln('// dart format on');
 
   await File('icons/sbb_icons.dart').writeAsString(sb.toString());
 
@@ -123,6 +125,7 @@ Future<void> createFlutterFontMap() async {
   sb.clear();
   sb.writeln('import \'package:sbb_design_system_mobile/sbb_design_system_mobile.dart\';');
   sb.writeln();
+  sb.writeln('// dart format off');
   sb.writeln('sealed class SBBIconsIndex {');
   sb.writeln('  static const iconsSmall = [');
   small.entries.forEach((e) => mapFont2(e.key));
@@ -134,6 +137,7 @@ Future<void> createFlutterFontMap() async {
   large.entries.forEach((e) => mapFont2(e.key));
   sb.writeln('  ];');
   sb.writeln('}');
+  sb.writeln('// dart format on');
 
   await File('icons/sbb_icons_index.dart').writeAsString(sb.toString());
 }
