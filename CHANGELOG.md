@@ -23,6 +23,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 ### Added
 - added functional colors (e.g. `SBBColors.error`) and dark variants of additionalColors (e.g. `SBBColors.skyDark`)
 - added `errorColor` to `SBBBaseStyle`
+- added `systemOverlayStyle` to `SBBHeader`
 
 ## [4.1.0] - 2025-08-22
 
