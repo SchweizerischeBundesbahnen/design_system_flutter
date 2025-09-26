@@ -39,7 +39,7 @@ class SBBStatus extends StatelessWidget {
                   padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
                   decoration: BoxDecoration(
                     border: Border.all(color: type.backgroundColor),
-                    color: type.backgroundColor.withOpacity(.05),
+                    color: type.backgroundColor.withValues(alpha: .05),
                   ),
                   child: Text(text!),
                 ),

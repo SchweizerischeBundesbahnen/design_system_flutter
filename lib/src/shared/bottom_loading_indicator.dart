@@ -80,7 +80,7 @@ class _BottomLoadingIndicatorState extends State<BottomLoadingIndicator> with Si
               child: DecoratedBox(
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [SBBColors.white.withOpacity(0.0), color],
+                    colors: [SBBColors.white.withValues(alpha: 0.0), color],
                     stops: [1.0 - widget.widthRatio, 1.0],
                   ),
                 ),

@@ -40,7 +40,7 @@ class SBBTextFieldStyle {
     dividerColorHighlighted: baseStyle.themeValue(SBBColors.black, SBBColors.white),
     dividerColorError: SBBColors.red,
     cursorColor: SBBColors.sky,
-    selectionColor: SBBColors.sky.withOpacity(0.5),
+    selectionColor: SBBColors.sky.withValues(alpha: 0.5),
     selectionHandleColor: SBBColors.sky,
     iconColor: baseStyle.iconColor,
     iconColorDisabled: baseStyle.labelColor,
