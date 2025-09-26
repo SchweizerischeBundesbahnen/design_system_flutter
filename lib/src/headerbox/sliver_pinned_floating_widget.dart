@@ -78,6 +78,7 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
 
   // Snapping related variables
   double _scrollOffsetAtScrollStart = 0.0;
+  double _maxScrollExtent = double.infinity;
   DateTime _timeAtScrollStart = DateTime.now();
 
   late Animation<double> _snapAnimation;
@@ -123,7 +124,11 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
       return _maxExtent;
     }
 
-    return lerpDouble(_maxExtent, _minExtent, _internalScrollOffset / expandableExtent)!;
+    return lerpDouble(
+      _maxExtent,
+      _minExtent,
+      clampDouble(_internalScrollOffset / expandableExtent, 0, 1),
+    )!;
   }
 
   @override
@@ -166,7 +171,7 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
         // With this option, we can tell the layout algorithm that we want to scroll in a direction.
         // We use this to scroll the view in a natural way.
         final delta = _virtualScroll - _internalScrollOffset;
-        scrollOffsetCorrection = max(-scrollOffset, delta);
+        scrollOffsetCorrection = min(max(-scrollOffset, delta), _maxScrollExtent - scrollOffset);
 
         // If there's not enough space to scroll, we simulate the remainder
         final remainder = scrollOffsetCorrection - delta;
@@ -267,6 +272,10 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
   }
 
   void onScrollingUpdate(ScrollPosition position) {
+    // This is only relevant for snapping.
+    // It lets the widget know how much it can scroll and how much it must extract / contract without scrolling.
+    _maxScrollExtent = position.maxScrollExtent;
+
     final now = DateTime.now();
     if (position.isScrollingNotifier.value) {
       _timeAtScrollStart = now;
