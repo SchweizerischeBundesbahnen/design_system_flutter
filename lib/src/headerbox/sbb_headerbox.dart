@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
 import '../sbb_internal.dart';
+import 'sbb_headerbox_content.dart';
 
 const _headerBoxMinHeight = 56.0;
 const _headerBoxNavBarExtensionHeight = 24.0;
@@ -29,7 +30,8 @@ const _headerBoxFlapTopMargin = 8.0;
 ///
 /// This will lead to the expected behavior of the Headerbox.
 ///
-/// See [SBBSliverHeaderbox] for a headerbox that behaves as expected in scrollable content.
+/// See [SBBSliverHeaderbox] for a headerbox that behaves as expected in scrollable content,
+/// or [SBBSliverFloatingHeaderbox] for a fully dynamic version in scrolling contexts.
 class SBBHeaderbox extends StatelessWidget {
   /// The default [SBBHeaderbox].
   ///
@@ -53,7 +55,7 @@ class SBBHeaderbox extends StatelessWidget {
     String? semanticsLabel,
   }) : this.custom(
          key: key,
-         child: _DefaultHeaderBoxContent(
+         child: DefaultHeaderBoxContent(
            title: title,
            leadingIcon: leadingIcon,
            secondaryLabel: secondaryLabel,
@@ -88,7 +90,7 @@ class SBBHeaderbox extends StatelessWidget {
          key: key,
          flap: flap,
          margin: margin,
-         child: _LargeHeaderBoxContent(
+         child: LargeHeaderBoxContent(
            title: title,
            leadingIcon: leadingIcon,
            secondaryLabel: secondaryLabel,
@@ -171,16 +173,16 @@ class _HeaderBoxForeground extends StatelessWidget {
   }
 
   Widget _flappedHeaderBox(BuildContext context) {
+    final flap = this.flap!;
+
     return Container(
       decoration: _flappedBackgroundDecoration(context),
       child: Column(
         mainAxisSize: MainAxisSize.min,
+        spacing: _headerBoxFlapTopMargin,
         children: [
-          Padding(
-            padding: EdgeInsets.only(bottom: _headerBoxFlapTopMargin),
-            child: _headerBox(context),
-          ),
-          flap!,
+          _headerBox(context),
+          flap,
         ],
       ),
     );
@@ -189,6 +191,7 @@ class _HeaderBoxForeground extends StatelessWidget {
   Widget _headerBox(BuildContext context) {
     final SBBHeaderBoxStyle style = SBBHeaderBoxStyle.of(context);
     return Container(
+      clipBehavior: Clip.hardEdge,
       decoration: BoxDecoration(
         color: style.backgroundColor,
         borderRadius: BorderRadius.all(_headerBoxRadius),
@@ -230,92 +233,6 @@ class _HeaderBoxBackgroundBar extends StatelessWidget {
         color: headerColorPrimary,
         height: _headerBoxNavBarExtensionHeight,
       ),
-    );
-  }
-}
-
-class _DefaultHeaderBoxContent extends StatelessWidget {
-  const _DefaultHeaderBoxContent({
-    required this.title,
-    this.leadingIcon,
-    this.secondaryLabel,
-    this.trailingWidget,
-  });
-
-  final String title;
-  final IconData? leadingIcon;
-  final String? secondaryLabel;
-  final Widget? trailingWidget;
-
-  @override
-  Widget build(BuildContext context) {
-    final style = SBBHeaderBoxStyle.of(context);
-    final secondaryTextStyle = SBBTextStyles.smallLight.copyWith(color: style.secondaryLabelColor);
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  if (leadingIcon != null) ...[
-                    Icon(leadingIcon, size: sbbIconSizeSmall),
-                    SizedBox(width: sbbDefaultSpacing * .5),
-                  ],
-                  Expanded(child: Text(title, style: style.titleTextStyle)),
-                ],
-              ),
-              if (secondaryLabel != null) Text(secondaryLabel!, style: secondaryTextStyle),
-            ],
-          ),
-        ),
-        SizedBox(width: sbbDefaultSpacing * .5),
-        if (trailingWidget != null) trailingWidget!,
-      ],
-    );
-  }
-}
-
-class _LargeHeaderBoxContent extends StatelessWidget {
-  const _LargeHeaderBoxContent({
-    required this.title,
-    this.leadingIcon,
-    this.secondaryLabel,
-    this.trailingWidget,
-  });
-
-  final String title;
-  final IconData? leadingIcon;
-  final String? secondaryLabel;
-  final Widget? trailingWidget;
-
-  @override
-  Widget build(BuildContext context) {
-    final style = SBBHeaderBoxStyle.of(context);
-    final secondaryTextStyle = SBBTextStyles.mediumLight.copyWith(color: style.largeSecondaryLabelColor);
-
-    return Row(
-      children: [
-        if (leadingIcon != null) ...[
-          Icon(leadingIcon, size: sbbIconSizeMedium),
-          SizedBox(width: sbbDefaultSpacing * .5),
-        ],
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(title, style: style.titleTextStyle),
-              SizedBox(height: sbbDefaultSpacing * .25),
-              if (secondaryLabel != null) Text(secondaryLabel!, style: secondaryTextStyle),
-            ],
-          ),
-        ),
-        SizedBox(width: sbbDefaultSpacing * .5),
-        if (trailingWidget != null) trailingWidget!,
-      ],
     );
   }
 }

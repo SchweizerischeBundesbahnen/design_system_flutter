@@ -20,7 +20,15 @@ class SBBHeaderboxFlap extends StatelessWidget {
     bool allowMultilineLabel = true,
     IconData? leadingIcon,
     IconData? trailingIcon,
-  }) : this.custom(key: key, child: _buildDefaultFlap(title, allowMultilineLabel, leadingIcon, trailingIcon));
+  }) : this.custom(
+         key: key,
+         child: _buildDefaultFlap(
+           title,
+           allowMultilineLabel,
+           leadingIcon,
+           trailingIcon,
+         ),
+       );
 
   /// Allows complete customization of the content of the [SBBHeaderboxFlap].
   const SBBHeaderboxFlap.custom({

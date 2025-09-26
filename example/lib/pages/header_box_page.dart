@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
+part 'header_box_page.floating.dart';
+
 class HeaderBoxPage extends StatefulWidget {
   const HeaderBoxPage({super.key});
 
@@ -13,6 +15,7 @@ class _HeaderBoxPageState extends State<HeaderBoxPage> {
     _DemoItem(0, SBBIcons.paragraph_small),
     _DemoItem(1, SBBIcons.lock_closed_small),
     _DemoItem(2, SBBIcons.arrows_up_down_small),
+    _DemoItem(3, SBBIcons.merge_small),
   ];
 
   late PageController _pageViewController;
@@ -43,6 +46,7 @@ class _HeaderBoxPageState extends State<HeaderBoxPage> {
               DesignGuidelinePage(),
               StaticPage(),
               ScrollablePage(),
+              FloatingPage(),
             ],
           ),
         ),
@@ -58,6 +62,7 @@ class _HeaderBoxPageState extends State<HeaderBoxPage> {
   }
 
   void _handlePageViewChanged(int newPageIndex) {
+    FocusManager.instance.primaryFocus?.unfocus();
     _pageViewController.animateToPage(
       newPageIndex,
       duration: const Duration(milliseconds: 400),

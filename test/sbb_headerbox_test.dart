@@ -56,4 +56,81 @@ void main() {
       find.byType(Column).first,
     );
   });
+
+  generateSliverTest('headerbox_sliver_expanded', 0.0);
+  generateSliverTest('headerbox_sliver_contracted', 500.0);
+}
+
+void generateSliverTest(String name, double scrollOffset) {
+  testWidgets(name, (WidgetTester tester) async {
+    final widget = Column(
+      children: [
+        Flexible(
+          child: CustomScrollView(
+            controller: ScrollController(initialScrollOffset: scrollOffset),
+            slivers: [
+              SBBSliverFloatingHeaderbox(
+                title: 'Title',
+                leadingIcon: SBBIcons.dog_small,
+                secondaryLabel: 'Subtext',
+                flap: SBBHeaderboxFlap(
+                  title: 'Additional text or information',
+                  leadingIcon: SBBIcons.sign_exclamation_point_small,
+                  trailingIcon: SBBIcons.circle_information_small_small,
+                ),
+                trailingWidget: SBBTertiaryButtonSmall(label: 'Label', icon: SBBIcons.dog_small, onPressed: () => {}),
+                contractibleChild: Container(
+                  height: 50,
+                  color: Colors.black,
+                ),
+              ),
+              SliverList.separated(
+                itemBuilder: (context, i) => ListTile(key: ValueKey(i), title: Text(i.toString())),
+                separatorBuilder: (BuildContext context, int index) {
+                  return Divider();
+                },
+              ),
+            ],
+          ),
+        ),
+        Flexible(
+          child: CustomScrollView(
+            controller: ScrollController(initialScrollOffset: scrollOffset),
+            slivers: [
+              SBBSliverFloatingHeaderbox.custom(
+                flap: SBBHeaderboxFlap(
+                  title: 'Additional text or information',
+                  leadingIcon: SBBIcons.sign_exclamation_point_small,
+                  trailingIcon: SBBIcons.circle_information_small_small,
+                ),
+                flapMode: SBBHeaderboxFlapMode.hideable,
+                children: [
+                  Text('Static'),
+                  SBBContractionListener(
+                    builder:
+                        (context, state, _) => Opacity(
+                          opacity: state.expansionValue,
+                          child: Text('Opacity: ${state.expansionValue.toStringAsFixed(1)}'),
+                        ),
+                  ),
+                  SBBContractible.crossfade(
+                    contractedChild: Text("Contracted"),
+                    expandedChild: Text("Expanded", style: SBBTextStyles.extraExtraLargeBold),
+                  ),
+                ],
+              ),
+              SliverList.separated(
+                itemBuilder: (context, i) => ListTile(key: ValueKey(i), title: Text(i.toString())),
+                separatorBuilder: (BuildContext context, int index) {
+                  return Divider();
+                },
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
+
+    await TestSpecs.run(TestSpecs.themedSpecs, widget, tester, name, find.byType(Column).first);
+  });
 }

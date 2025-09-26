@@ -9,6 +9,10 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+### Added
+
+- added `SBBSliverFloatingHeaderbox` that allows the headerbox to expand and contract as the user scrolls. 
+
 ### Fixed
 
 - `SBBTabBar`: properly clips icons as they get selected / unselected
