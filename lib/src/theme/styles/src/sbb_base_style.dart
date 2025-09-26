@@ -20,7 +20,7 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
     this.labelColor,
     TextTheme? redTextTheme,
   }) {
-    final redColor = resolve(brightness == Brightness.light, SBBColors.red, SBBColors.redDarkMode);
+    final redColor = resolve(brightness == Brightness.light, SBBColors.red, SBBColors.redDark);
     this.redTextTheme = redTextTheme ?? createTextTheme(colorOverride: redColor);
   }
 
