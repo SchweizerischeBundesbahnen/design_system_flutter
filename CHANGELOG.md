@@ -17,6 +17,10 @@ It is expected that you keep this format strictly, since we depend on it in our 
 ### Changed
 
 - updated icon lib to version 1.8.8
+- aligned SBBColors to colors in Figma and specs
+
+### Added
+- added functional colors and dark variants of additionalColors (e.g. `SBBColors.skyDark`)
 
 ## [4.1.0] - 2025-08-22
 
