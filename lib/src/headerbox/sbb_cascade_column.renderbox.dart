@@ -1,5 +1,7 @@
 part of 'sbb_cascade_column.dart';
 
+const _kSmallValue = 1.0;
+
 class _RenderCascadeColumn extends RenderBox
     with
         ContainerRenderObjectMixin<RenderBox, CascadeColumnParentData>,
@@ -7,13 +9,13 @@ class _RenderCascadeColumn extends RenderBox
         DebugOverflowIndicatorMixin {
   _RenderCascadeColumn(this.controller);
 
+  _ContractionController controller;
+
   /// Theoretical height of the column when contracted.
-  double contractedHeight = 0.0;
+  double _minExtent = 0.0;
 
   /// Theoretical height of the column when expanded.
-  double expandedHeight = 0.0;
-
-  _ContractionController controller;
+  double _maxExtent = 0.0;
 
   final Set<_ProgressUpdate> _pendingProgress = {};
 
@@ -45,19 +47,19 @@ class _RenderCascadeColumn extends RenderBox
 
   @override
   void performLayout() {
-    _calculateHeights();
+    _computeExtents();
 
     RenderBox? child = lastChild;
 
     // Current height of the construct
-    final currentHeight = min(constraints.maxHeight, expandedHeight);
+    final currentExtent = min(constraints.maxHeight, _maxExtent);
 
     // Pixels that we must shrink
-    var pixelsToShrink = expandedHeight - currentHeight;
+    var pixelsToShrink = _maxExtent - currentExtent;
     var totalWidth = 0.0;
 
-    final totalRange = expandedHeight - contractedHeight;
-    final totalProgress = totalRange > 0 ? (currentHeight - contractedHeight) / totalRange : 1.0;
+    final totalRange = _maxExtent - _minExtent;
+    final totalProgress = totalRange > 0 ? (currentExtent - _minExtent) / totalRange : 1.0;
 
     var usedHeight = 0.0;
 
@@ -75,8 +77,8 @@ class _RenderCascadeColumn extends RenderBox
       }
 
       if (pixelsToShrink > 0 && minHeight < maxHeight) {
-        final height = math.max(minHeight, maxHeight - pixelsToShrink);
         // Child can be shrunk
+        final height = math.max(minHeight, maxHeight - pixelsToShrink);
         child.layout(
           constraints.copyWith(
             maxHeight: height,
@@ -94,7 +96,7 @@ class _RenderCascadeColumn extends RenderBox
         child.layout(
           constraints.copyWith(
             maxHeight: maxHeight,
-            minHeight: min(minHeight, maxHeight),
+            minHeight: minHeight,
           ),
           parentUsesSize: true,
         );
@@ -102,17 +104,9 @@ class _RenderCascadeColumn extends RenderBox
 
       usedHeight += child.size.height;
 
-      final range = (maxHeight - minHeight);
-      final current = child.size.height.clamp(minHeight, maxHeight);
-      var progress = range > 0 ? (current - minHeight) / range : 1.0;
-
-      if (totalProgress < 0.01) {
-        progress = 0.0;
-      }
-
       _queueProgressUpdate(
         parentData,
-        ContractibleState(expansionValue: progress, globalExpansionValue: totalProgress),
+        _computeProgress(child, minHeight, maxHeight, totalProgress),
       );
 
       child = parentData.previousSibling;
@@ -134,7 +128,7 @@ class _RenderCascadeColumn extends RenderBox
 
     size = Size(
       max(totalWidth, constraints.minWidth),
-      max(currentHeight, constraints.minHeight),
+      max(currentExtent, constraints.minHeight),
     );
 
     // Notify controller
@@ -154,17 +148,19 @@ class _RenderCascadeColumn extends RenderBox
     return defaultHitTestChildren(result, position: position);
   }
 
-  void _calculateHeights() {
-    final width = constraints.maxWidth > 1.0 ? constraints.maxWidth : double.infinity;
+  void _computeExtents() {
+    final width = constraints.maxWidth > _kSmallValue ? constraints.maxWidth : double.infinity;
 
-    expandedHeight = getMaxIntrinsicHeight(width);
-    contractedHeight = max(getMinIntrinsicHeight(width), constraints.minHeight);
+    _maxExtent = getMaxIntrinsicHeight(width);
+    _minExtent = max(getMinIntrinsicHeight(width), constraints.minHeight);
   }
 
   (double, double) _getMinMaxHeights(RenderBox child) {
-    final width = constraints.maxWidth > 1.0 ? constraints.maxWidth : double.infinity;
+    final width = constraints.maxWidth > _kSmallValue ? constraints.maxWidth : double.infinity;
 
-    return (child.getMinIntrinsicHeight(width), child.getMaxIntrinsicHeight(width));
+    final min = child.getMinIntrinsicHeight(width);
+    final max = child.getMaxIntrinsicHeight(width);
+    return (min, math.max(max, min));
   }
 
   void _reversePaint(PaintingContext context, Offset offset) {
@@ -185,7 +181,25 @@ class _RenderCascadeColumn extends RenderBox
     }
   }
 
-  void _queueProgressUpdate(CascadeColumnParentData pd, ContractibleState state) {
+  ContractibleState _computeProgress(RenderBox child, double minHeight, double maxHeight, double totalProgress) {
+    final range = (maxHeight - minHeight);
+    final current = child.size.height.clamp(minHeight, maxHeight);
+    var progress = range > 0 ? (current - minHeight) / range : 1.0;
+
+    if (totalProgress < 0.01) {
+      progress = 0.0;
+    }
+
+    return ContractibleState(
+      expansionValue: progress,
+      globalExpansionValue: totalProgress,
+    );
+  }
+
+  void _queueProgressUpdate(
+    CascadeColumnParentData pd,
+    ContractibleState state,
+  ) {
     final n = pd.stateNotifier;
 
     if (n == null || n.value == state) return;

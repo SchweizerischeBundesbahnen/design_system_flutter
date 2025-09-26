@@ -4,6 +4,9 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
+const _kQuickSnapTime = Duration(milliseconds: 500);
+const _kSmallValue = 1.0;
+
 /// A widget that is pinned to the top of a viewport and can float, i.e.
 /// appear immediately when the user starts scrolling in the opposite direction.
 ///
@@ -131,9 +134,9 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
     }
 
     // Measure children
-    _updateExtents();
+    _computeExtents();
 
-    final scrollOffset = this.constraints.scrollOffset;
+    final scrollOffset = constraints.scrollOffset;
 
     // 1. Floating logic
     // -------------------
@@ -141,7 +144,7 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
     // This is what is used to immediately hide or show the widget at hand.
     if (floating) {
       final delta = scrollOffset - _previousScrollOffset;
-      final clampedDelta = switch (this.constraints.userScrollDirection) {
+      final clampedDelta = switch (constraints.userScrollDirection) {
         ScrollDirection.idle => delta,
         ScrollDirection.forward => min(0.0, delta),
         ScrollDirection.reverse => max(0.0, delta),
@@ -150,7 +153,6 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
       _internalScrollOffset = (_internalScrollOffset + clampedDelta).clamp(0, expandableExtent);
     } else {
       _internalScrollOffset = scrollOffset.clamp(0, expandableExtent);
-      ;
     }
 
     _previousScrollOffset = scrollOffset;
@@ -216,8 +218,8 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
     );
   }
 
-  void _updateExtents() {
-    final crossAxisExtent = constraints.crossAxisExtent > 1.0 ? constraints.crossAxisExtent : double.infinity;
+  void _computeExtents() {
+    final crossAxisExtent = constraints.crossAxisExtent > _kSmallValue ? constraints.crossAxisExtent : double.infinity;
 
     _maxExtent = child!.getMaxIntrinsicHeight(crossAxisExtent);
     _minExtent = child!.getMinIntrinsicHeight(crossAxisExtent);
@@ -272,12 +274,11 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
       _snapController?.stop();
     } else {
       final elapsed = now.difference(_timeAtScrollStart);
-      final bool useScrollDirection =
-          elapsed.inMilliseconds < 500.0 &&
-          (_scrollOffsetAtScrollStart - _internalScrollOffset).abs() > (expandableExtent / 4);
+      final scrollAmountSinceStart = (_scrollOffsetAtScrollStart - _internalScrollOffset).abs();
+      final bool useScrollDirection = elapsed < _kQuickSnapTime && scrollAmountSinceStart > (expandableExtent / 4);
 
       final direction =
-          useScrollDirection || expandableExtent < 1.0
+          useScrollDirection || expandableExtent < _kSmallValue
               ? position.userScrollDirection
               : (_internalScrollOffset / expandableExtent) < 0.5
               ? ScrollDirection.forward
