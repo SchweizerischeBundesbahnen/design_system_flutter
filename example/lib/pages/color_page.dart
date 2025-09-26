@@ -8,7 +8,7 @@ class ColorPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isLight = Theme.brightnessOf(context) == Brightness.light;
+    final isLight = Theme.of(context).brightness == Brightness.light;
     return ListView(
       children: <Widget>[
         Padding(
@@ -29,10 +29,10 @@ class ColorPage extends StatelessWidget {
   }
 
   List<_ColorEntry> _additionalColors(BuildContext context) =>
-      Theme.brightnessOf(context) == Brightness.light ? _additionalColorsLight : _additionalColorsDark;
+      Theme.of(context).brightness == Brightness.light ? _additionalColorsLight : _additionalColorsDark;
 
   List<_ColorEntry> _functionalColors(BuildContext context) =>
-      Theme.brightnessOf(context) == Brightness.light ? _functionalColorsLight : _functionalColorsDark;
+      Theme.of(context).brightness == Brightness.light ? _functionalColorsLight : _functionalColorsDark;
 }
 
 class _ColorShowcase extends StatelessWidget {
