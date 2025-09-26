@@ -281,34 +281,16 @@ class _CollapsibleContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Handle special cases in order for the widget to behave as a user would expect.
-    if (child is SBBContractible) {
-      return SBBContractible.custom(
-        child: Padding(
-          padding: const EdgeInsets.only(top: sbbDefaultSpacing),
-          child: SBBCascadeColumn(
-            children: [
-              child,
-            ],
-          ),
-        ),
-      );
-    }
-
-    if (child is SBBCascadeColumn) {
-      return SBBContractible.custom(
-        child: Padding(
-          padding: const EdgeInsets.only(top: sbbDefaultSpacing),
-          child: child,
-        ),
-      );
-    }
-
-    return SBBContractible(
-      clipBehavior: Clip.none,
-      child: Padding(
-        padding: const EdgeInsets.only(top: sbbDefaultSpacing),
-        child: child,
+    // This is a bit unwieldy, but it does two things:
+    //
+    // 1. Move contents down by the default padding, so that the box will clip them "naturally" by its edge.
+    // 2. Allow users to provide their own SBBContractible for custom effects while still preserving said padding.
+    return SBBContractible.custom(
+      child: SBBCascadeColumn(
+        children: [
+          SizedBox(height: sbbDefaultSpacing),
+          child,
+        ],
       ),
     );
   }
