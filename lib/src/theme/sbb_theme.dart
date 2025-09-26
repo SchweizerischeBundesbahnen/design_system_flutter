@@ -98,7 +98,7 @@ class SBBTheme {
       primarySwatch: baseStyle.primarySwatch!,
       accentColor: baseStyle.primaryColor,
       backgroundColor: baseStyle.backgroundColor,
-      errorColor: controlStyles.textField?.dividerColorError,
+      errorColor: baseStyle.errorColor,
       brightness: brightness,
     ).copyWith(surfaceTint: SBBColors.transparent),
     scaffoldBackgroundColor: baseStyle.backgroundColor,

@@ -394,7 +394,7 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
   TextStyle _itemTextStyle(bool itemEnabled) {
     final style = SBBControlStyles.of(context).picker!;
     final colorOpacity = itemEnabled ? 1.0 : _disabledItemOpacity;
-    final textColor = SBBColors.white.withOpacity(colorOpacity);
+    final textColor = SBBColors.white.withValues(alpha: colorOpacity);
     final textStyle = style.textStyle!.copyWith(color: textColor);
     return textStyle;
   }

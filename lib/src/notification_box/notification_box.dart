@@ -179,7 +179,7 @@ class _SBBNotificationBoxState extends State<SBBNotificationBox> with SingleTick
                     topRight: Radius.circular(15.0),
                     bottomRight: Radius.circular(15.0),
                   ),
-                  color: widget.state.backgroundColor.withOpacity(.05),
+                  color: widget.state.backgroundColor.withValues(alpha: .05),
                 ),
                 padding: const EdgeInsets.all(sbbDefaultSpacing),
                 child: child,

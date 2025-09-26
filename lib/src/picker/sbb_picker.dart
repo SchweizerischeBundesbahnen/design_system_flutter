@@ -231,6 +231,6 @@ class _SBBPickerState extends _PickerClassState<SBBPicker> {
     final textColor = SBBControlStyles.of(context).picker!.textStyle!.color!;
 
     // return generated list of gradient color values
-    return opacities.map((opacity) => textColor.withOpacity(opacity)).toList();
+    return opacities.map((opacity) => textColor.withValues(alpha: opacity)).toList();
   }
 }
