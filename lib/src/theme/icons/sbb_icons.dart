@@ -10,6 +10,7 @@ const largeFontFamily = 'packages/sbb_design_system_mobile/SBBIconsLarge';
 
 // The names are given by digital.sbb.ch
 // ignore_for_file: constant_identifier_names
+// dart format off
 sealed class SBBIcons {
   static const wine_cheese_small = IconData(0xf101, fontFamily: smallFontFamily);
   static const wifi_small = IconData(0xf102, fontFamily: smallFontFamily);
@@ -1554,3 +1555,4 @@ sealed class SBBIcons {
   static const aerosol_can_large = IconData(0xf1f0, fontFamily: largeFontFamily);
   static const adult_kids_large = IconData(0xf1f1, fontFamily: largeFontFamily);
 }
+// dart format on

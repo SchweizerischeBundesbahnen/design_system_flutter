@@ -1,5 +1,6 @@
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
+// dart format off
 sealed class SBBIconsIndex {
   static const iconsSmall = [
     {'icon': SBBIcons.wine_cheese_small, 'name': 'wine_cheese_small'},
@@ -1550,3 +1551,4 @@ sealed class SBBIconsIndex {
     {'icon': SBBIcons.adult_kids_large, 'name': 'adult_kids_large'},
   ];
 }
+// dart format on
