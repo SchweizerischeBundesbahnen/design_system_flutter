@@ -20,7 +20,7 @@ class PromotionBoxStyle {
       borderColor: baseStyle.themeValue(SBBColors.white, SBBColors.charcoal),
       badgeShadowColor: baseStyle.themeValue(
         SBBColors.red.withValues(alpha: 0.2),
-        SBBColors.redDarkMode.withValues(alpha: 0.6),
+        SBBColors.redDark.withValues(alpha: 0.6),
       ),
       badgeColor: SBBColors.red,
       badgeBorderColor: baseStyle.themeValue(SBBColors.white, SBBColors.charcoal),

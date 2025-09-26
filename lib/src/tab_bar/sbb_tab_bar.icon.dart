@@ -6,22 +6,18 @@ class _TabIcon extends StatelessWidget {
     required this.selected,
     required this.warning,
     required this.portrait,
-    required this.onTap,
-    required this.onTapDown,
-    required this.onTapCancel,
     required this.tabIndex,
     required this.tabCount,
+    required this.interactions,
   });
 
   final SBBTabBarItem item;
   final bool selected;
   final SBBTabBarWarningSetting? warning;
   final bool portrait;
-  final GestureTapCallback onTap;
-  final GestureTapDownCallback onTapDown;
-  final GestureTapCancelCallback onTapCancel;
   final int tabIndex;
   final int tabCount;
+  final TabItemInteractions interactions;
 
   @override
   Widget build(BuildContext context) {
@@ -39,25 +35,22 @@ class _TabIcon extends StatelessWidget {
         label: label,
         hint: warning?.shown == false ? warning?.semantics : null,
         button: true,
+        onTap: interactions.onTap,
         child: Semantics(
           hint: semanticsHint,
           excludeSemantics: true,
-          onTap: onTap,
-          child: Container(
-            padding: EdgeInsets.only(bottom: bottomPadding),
-            color: SBBColors.transparent,
-            child: GestureDetector(
-              onTap: onTap,
-              onTapDown: onTapDown,
-              onTapCancel: onTapCancel,
+          child: GestureDetector(
+            onTap: interactions.onTap,
+            child: Container(
+              color: SBBColors.transparent,
+              padding: EdgeInsets.only(bottom: bottomPadding),
               child: Row(
                 mainAxisSize: MainAxisSize.min,
                 spacing: 8.0,
                 children: [
                   TabItemWidget(
                     item.icon,
-                    // This version of the icon is clipped by the clip path.
-                    // There is one underneath that will be drawn as selected.
+                    interactions: interactions,
                     selected: false,
                     warning: warning,
                   ),

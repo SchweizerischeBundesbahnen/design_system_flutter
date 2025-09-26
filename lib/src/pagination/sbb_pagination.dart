@@ -102,7 +102,7 @@ class _FloatingSBBPagination extends StatelessWidget {
   BoxDecoration _createBoxDecorationWith(SBBPaginationStyle style) => BoxDecoration(
     borderRadius: BorderRadius.circular(_kFloatingPaddingHeight * 2),
     color: style.floatingBackgroundColor,
-    boxShadow: [BoxShadow(color: SBBColors.black.withOpacity(0.2), blurRadius: _kFloatingShadowBlurRadius)],
+    boxShadow: [BoxShadow(color: SBBColors.black.withValues(alpha: 0.2), blurRadius: _kFloatingShadowBlurRadius)],
   );
 
   EdgeInsets get _floatingPadding =>

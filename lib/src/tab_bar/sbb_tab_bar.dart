@@ -4,13 +4,15 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
-import 'tab_item_widget.dart';
 import 'tab_curve_clipper.dart';
 import 'tab_curve_painter.dart';
+import 'tab_item_widget.dart';
 
 part 'sbb_tab_bar.icon.dart';
 
 part 'sbb_tab_bar.icon_delegate.dart';
+
+part 'sbb_tab_bar.interactions.dart';
 
 part 'sbb_tab_bar.label.dart';
 
@@ -21,54 +23,81 @@ part 'sbb_tab_bar.layout.dart';
 /// OnTabChanged defines what happens when a tab is selected.
 /// OnTap gets called when a tab is tapped.
 class SBBTabBar extends StatefulWidget {
-  const SBBTabBar._({required this.controller, required this.onTabChanged, required this.onTap, super.key});
+  const SBBTabBar._({
+    this.controller,
+    this.items,
+    this.initialItem,
+    required this.onTabChanged,
+    required this.onTap,
+    super.key,
+  });
 
-  factory SBBTabBar.items({
+  const SBBTabBar.items({
     required List<SBBTabBarItem> items,
     required Future<void> Function(Future<SBBTabBarItem> tabTask) onTabChanged,
     required void Function(SBBTabBarItem tab) onTap,
     Key? key,
     SBBTabBarItem? initialItem,
-  }) => SBBTabBar._(
-    key: key,
-    controller: SBBTabBarController(items, initialItem ?? items.first),
-    onTabChanged: onTabChanged,
-    onTap: onTap,
-  );
+  }) : this._(key: key, items: items, initialItem: initialItem, onTabChanged: onTabChanged, onTap: onTap);
 
-  factory SBBTabBar.controller({
+  const SBBTabBar.controller({
     required SBBTabBarController controller,
     required Future<void> Function(Future<SBBTabBarItem> tabTask) onTabChanged,
     required void Function(SBBTabBarItem tab) onTap,
     Key? key,
-  }) => SBBTabBar._(key: key, controller: controller, onTabChanged: onTabChanged, onTap: onTap);
+  }) : this._(key: key, controller: controller, onTabChanged: onTabChanged, onTap: onTap);
 
   final Future<void> Function(Future<SBBTabBarItem> tabTask) onTabChanged;
   final void Function(SBBTabBarItem tab) onTap;
-  final SBBTabBarController controller;
+  final SBBTabBarController? controller;
+  final List<SBBTabBarItem>? items;
+  final SBBTabBarItem? initialItem;
 
   @override
   State<SBBTabBar> createState() => _SBBTabBarState();
 }
 
-class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMixin, WidgetsBindingObserver {
-  SBBTabBarController get _controller => widget.controller;
+class _SBBTabBarState extends State<SBBTabBar> with TickerProviderStateMixin, WidgetsBindingObserver {
+  late SBBTabBarController _controller;
 
   List<SBBTabBarItem> get _tabs => _controller.tabs;
+
+  Map<SBBTabBarItem, FocusNode> _focusNodes = {};
 
   bool get portrait => MediaQuery.of(context).orientation == Orientation.portrait;
 
   @override
   void initState() {
     super.initState();
+
     WidgetsBinding.instance.addObserver(this);
-    _controller.initialize(this);
+    _initController();
   }
 
   @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
+  void didUpdateWidget(covariant SBBTabBar oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (oldWidget.controller != widget.controller || oldWidget.items != widget.items) {
+      // Clean up
+      _controller.dispose();
+      for (var it in _focusNodes.values) {
+        it.dispose();
+      }
+
+      // Rebind
+      _initController();
+    }
+  }
+
+  void _initController() {
+    _controller = widget.controller ?? SBBTabBarController(widget.items!, widget.initialItem ?? widget.items!.first);
+    _controller.initialize(this);
+    _focusNodes = Map.fromIterable(_controller.tabs, value: (t) => FocusNode());
+  }
+
+  void _focusUpdated() {
+    if (_focusNodes.values.every((n) => !n.hasFocus)) _controller.cancelHover();
   }
 
   @override
@@ -80,6 +109,7 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
   @override
   Widget build(context) {
     return StreamBuilder<SBBTabBarLayoutData>(
+      key: ValueKey(_controller),
       stream: _controller.layoutStream,
       initialData: _controller.currentLayoutData,
       builder: (context, snapshot) {
@@ -115,7 +145,12 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
                           child: TabItemWidget(
                             e.icon,
                             selected: true,
-                            onTap: () => _onTap(e, navData),
+                            interactions: TabItemInteractions(
+                              focusNode: _focusNodes[e]!,
+                              onTap: () => _onTap(e, navData),
+                              onTapDown: () {},
+                              onTapCancel: () {},
+                            ),
                           ),
                         ),
                       ),
@@ -129,12 +164,13 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
                             warnings: warnings,
                             portrait: portrait,
                             onPositioned: _controller.onLayout,
-                            onTap: (e) => _onTap(e, navData),
-                            onTapDown: (e) {
-                              if (navData.selectedTab == e) return;
-                              _controller.hoverTab(e);
-                            },
-                            onTapCancel: (e) => _controller.cancelHover(),
+                            interactionsBuilder:
+                                (e) => TabItemInteractions(
+                                  focusNode: _focusNodes[e]!,
+                                  onTap: () => _onTap(e, navData),
+                                  onTapDown: () => _onTapDown(e, navData),
+                                  onTapCancel: () => _controller.cancelHover(),
+                                ),
                           ),
                         ),
                       ),
@@ -153,5 +189,23 @@ class _SBBTabBarState extends State<SBBTabBar> with SingleTickerProviderStateMix
     widget.onTap.call(item);
     if (navData.selectedTab == item) return;
     widget.onTabChanged(_controller.selectTab(item));
+  }
+
+  void _onTapDown(SBBTabBarItem item, SBBTabBarNavigationData navData) {
+    if (navData.selectedTab == item) {
+      _controller.cancelHover();
+      return;
+    }
+    _controller.hoverTab(item);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    for (var n in _focusNodes.values) {
+      n.removeListener(_focusUpdated);
+      n.dispose();
+    }
+    super.dispose();
   }
 }

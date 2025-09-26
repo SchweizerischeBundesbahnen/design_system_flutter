@@ -21,6 +21,8 @@ class SBBStatus extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final resolvedIconColor = _resolvedIconColor(context);
+    final resolvedBackgroundColor = _resolvedBackgroundColor(context);
     return Semantics(
       container: true,
       child: IntrinsicHeight(
@@ -30,16 +32,16 @@ class SBBStatus extends StatelessWidget {
           children: [
             Container(
               padding: const EdgeInsets.all(4.0),
-              color: type.backgroundColor,
-              child: Icon(type.icon, color: type.iconColor),
+              color: resolvedBackgroundColor,
+              child: Icon(type.icon, color: resolvedIconColor),
             ),
             if (text != null)
               Flexible(
                 child: Container(
                   padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
                   decoration: BoxDecoration(
-                    border: Border.all(color: type.backgroundColor),
-                    color: type.backgroundColor.withOpacity(.05),
+                    border: Border.all(color: resolvedBackgroundColor),
+                    color: resolvedBackgroundColor.withValues(alpha: .05),
                   ),
                   child: Text(text!),
                 ),
@@ -49,4 +51,10 @@ class SBBStatus extends StatelessWidget {
       ),
     );
   }
+
+  Color _resolvedIconColor(BuildContext context) =>
+      SBBBaseStyle.of(context).themeValue(type.iconColor, type.iconColorDark);
+
+  Color _resolvedBackgroundColor(BuildContext context) =>
+      SBBBaseStyle.of(context).themeValue(type.backgroundColor, type.backgroundColorDark);
 }

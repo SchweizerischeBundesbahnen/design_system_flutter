@@ -7,9 +7,7 @@ class _TabLayout extends StatelessWidget {
     required this.warnings,
     required this.portrait,
     required this.onPositioned,
-    required this.onTap,
-    required this.onTapDown,
-    required this.onTapCancel,
+    required this.interactionsBuilder,
   });
 
   final List<SBBTabBarItem> items;
@@ -17,9 +15,7 @@ class _TabLayout extends StatelessWidget {
   final List<SBBTabBarWarningSetting> warnings;
   final bool portrait;
   final Function(List<Offset> positions, double height) onPositioned;
-  final Function(SBBTabBarItem) onTap;
-  final Function(SBBTabBarItem) onTapDown;
-  final Function(SBBTabBarItem) onTapCancel;
+  final TabItemInteractionsBuilder interactionsBuilder;
 
   @override
   Widget build(BuildContext context) {
@@ -28,19 +24,17 @@ class _TabLayout extends StatelessWidget {
       delegate: _TabIconDelegate(items, selectedTab, portrait, onPositioned, gestureInsets),
       children:
           items
-              .mapIndexed((i, e) {
-                return _TabIcon(
+              .mapIndexed(
+                (i, e) => _TabIcon(
                   item: e,
                   selected: e == selectedTab,
                   warning: warnings.firstWhereOrNull((w) => w.id == e.id),
                   portrait: portrait,
                   tabIndex: i,
                   tabCount: items.length,
-                  onTap: () => onTap(e),
-                  onTapDown: (_) => onTapDown(e),
-                  onTapCancel: () => onTapCancel(e),
-                );
-              })
+                  interactions: interactionsBuilder(e),
+                ),
+              )
               .cast<Widget>()
               .followedBy(items.map((e) => _TabLabel(item: e, visible: e == selectedTab && portrait)))
               .toList(),

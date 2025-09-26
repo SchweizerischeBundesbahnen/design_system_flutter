@@ -8,8 +8,9 @@ class ColorPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isLight = Theme.of(context).brightness == Brightness.light;
     return ListView(
-      children: const <Widget>[
+      children: <Widget>[
         Padding(
           padding: EdgeInsetsDirectional.fromSTEB(
             sbbDefaultSpacing,
@@ -20,11 +21,18 @@ class ColorPage extends StatelessWidget {
           child: ThemeModeSegmentedButton(),
         ),
         _ColorShowcase(title: 'Colors', colorEntries: _colors),
-        _ColorShowcase(title: 'Functional colors', colorEntries: _functionalColors),
-        _ColorShowcase(title: 'Off brand colors', colorEntries: _offBrandColors),
+        _ColorShowcase(title: 'Additional colors${isLight ? '' : ' [dark]'}', colorEntries: _additionalColors(context)),
+        _ColorShowcase(title: 'Functional colors${isLight ? '' : ' [dark]'}', colorEntries: _functionalColors(context)),
+        _ColorShowcase(title: 'Off brand / Safety colors', colorEntries: _offBrandColors),
       ],
     );
   }
+
+  List<_ColorEntry> _additionalColors(BuildContext context) =>
+      Theme.of(context).brightness == Brightness.light ? _additionalColorsLight : _additionalColorsDark;
+
+  List<_ColorEntry> _functionalColors(BuildContext context) =>
+      Theme.of(context).brightness == Brightness.light ? _functionalColorsLight : _functionalColorsDark;
 }
 
 class _ColorShowcase extends StatelessWidget {
@@ -68,7 +76,7 @@ class _ColorShowcaseCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final valueString = colorEntry.color.value.toRadixString(16).padLeft(8, '0').toUpperCase();
+    final valueString = colorEntry.color.toARGB32().toRadixString(16).padLeft(8, '0').toUpperCase();
     final hexString = valueString.substring(2);
     final opacityString = valueString.substring(0, 2);
     const colorValueTextStyle = SBBTextStyles.helpersLabel;
@@ -115,7 +123,7 @@ const _colors = [
   _ColorEntry('red', SBBColors.red),
   _ColorEntry('red125', SBBColors.red125),
   _ColorEntry('red150', SBBColors.red150),
-  _ColorEntry('redDarkMode', SBBColors.redDarkMode),
+  _ColorEntry('redDark', SBBColors.redDark),
   _ColorEntry('white', SBBColors.white),
   _ColorEntry('milk', SBBColors.milk),
   _ColorEntry('cloud', SBBColors.cloud),
@@ -137,7 +145,7 @@ const _colors = [
   _ColorEntry('transparent', SBBColors.transparent),
 ];
 
-const _functionalColors = [
+const _additionalColorsLight = [
   _ColorEntry('sky', SBBColors.sky),
   _ColorEntry('night', SBBColors.night),
   _ColorEntry('violet', SBBColors.violet),
@@ -151,8 +159,39 @@ const _functionalColors = [
   _ColorEntry('turquoise', SBBColors.turquoise),
 ];
 
+const _additionalColorsDark = [
+  _ColorEntry('sky', SBBColors.skyDark),
+  _ColorEntry('night', SBBColors.nightDark),
+  _ColorEntry('violet', SBBColors.violetDark),
+  _ColorEntry('pink', SBBColors.pinkDark),
+  _ColorEntry('autumn', SBBColors.autumnDark),
+  _ColorEntry('orange', SBBColors.orangeDark),
+  _ColorEntry('peach', SBBColors.peachDark),
+  _ColorEntry('lemon', SBBColors.lemonDark),
+  _ColorEntry('brown', SBBColors.brownDark),
+  _ColorEntry('green', SBBColors.greenDark),
+  _ColorEntry('turquoise', SBBColors.turquoiseDark),
+];
+
+const _functionalColorsLight = [
+  _ColorEntry('success', SBBColors.success),
+  _ColorEntry('warning', SBBColors.warning),
+  _ColorEntry('error', SBBColors.error),
+  _ColorEntry('product', SBBColors.product),
+  _ColorEntry('brand', SBBColors.brand),
+];
+
+const _functionalColorsDark = [
+  _ColorEntry('success', SBBColors.successDark),
+  _ColorEntry('warning', SBBColors.warningDark),
+  _ColorEntry('error', SBBColors.errorDark),
+  _ColorEntry('product', SBBColors.productDark),
+  _ColorEntry('brand', SBBColors.brandDark),
+];
+
 const _offBrandColors = [
   _ColorEntry('royal', SBBColors.royal),
+  _ColorEntry('royalDark', SBBColors.royalDark),
   _ColorEntry('royal125', SBBColors.royal125),
   _ColorEntry('royal150', SBBColors.royal150),
 ];

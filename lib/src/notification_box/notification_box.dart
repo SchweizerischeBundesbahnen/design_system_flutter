@@ -139,8 +139,9 @@ class _SBBNotificationBoxState extends State<SBBNotificationBox> with SingleTick
 
   @override
   Widget build(BuildContext context) {
-    final iconColor = SBBBaseStyle.of(context).themeValue(widget.state.iconColor, widget.state.iconColorDark);
-    final icon = widget.hasIcon ? Icon(widget.state.icon, color: iconColor) : null;
+    final resolvedIconColor = _resolvedIconColor(context);
+    final resolvedBackgroundColor = _resolvedBackgroundColor(context);
+    final icon = widget.hasIcon ? Icon(widget.state.icon, color: resolvedIconColor) : null;
     final detailsIcon = widget.onTap != null ? Icon(widget.detailsIcon) : null;
     Widget child;
     switch (widget.title) {
@@ -167,19 +168,19 @@ class _SBBNotificationBoxState extends State<SBBNotificationBox> with SingleTick
             onTap: widget.onTap,
             child: Container(
               decoration: BoxDecoration(
-                border: Border(left: BorderSide(color: widget.state.backgroundColor, width: 8.0)),
+                border: Border(left: BorderSide(color: resolvedBackgroundColor, width: 8.0)),
                 borderRadius: const BorderRadius.all(Radius.circular(16.0)),
               ),
               child: Container(
                 decoration: BoxDecoration(
-                  border: Border.all(color: widget.state.backgroundColor),
+                  border: Border.all(color: resolvedBackgroundColor),
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(8.0),
                     bottomLeft: Radius.circular(8.0),
                     topRight: Radius.circular(15.0),
                     bottomRight: Radius.circular(15.0),
                   ),
-                  color: widget.state.backgroundColor.withOpacity(.05),
+                  color: resolvedBackgroundColor.withValues(alpha: .05),
                 ),
                 padding: const EdgeInsets.all(sbbDefaultSpacing),
                 child: child,
@@ -203,4 +204,10 @@ class _SBBNotificationBoxState extends State<SBBNotificationBox> with SingleTick
       ),
     );
   }
+
+  Color _resolvedIconColor(BuildContext context) =>
+      SBBBaseStyle.of(context).themeValue(widget.state.iconColor, widget.state.iconColorDark);
+
+  Color _resolvedBackgroundColor(BuildContext context) =>
+      SBBBaseStyle.of(context).themeValue(widget.state.backgroundColor, widget.state.backgroundColorDark);
 }

@@ -8,6 +8,7 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
     this.primaryColorDark,
     this.primarySwatch,
     this.backgroundColor,
+    this.errorColor,
     this.defaultFontFamily,
     this.defaultTextColor,
     this.defaultTextStyle,
@@ -19,7 +20,7 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
     this.labelColor,
     TextTheme? redTextTheme,
   }) {
-    final redColor = $resolve(SBBColors.red, SBBColors.redDarkMode);
+    final redColor = resolve(brightness == Brightness.light, SBBColors.red, SBBColors.redDark);
     this.redTextTheme = redTextTheme ?? createTextTheme(colorOverride: redColor);
   }
 
@@ -33,6 +34,7 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
       defaultTextColor: resolve(isLight, SBBColors.black, SBBColors.white),
       defaultTextStyle: SBBTextStyles.mediumLight.copyWith(color: resolve(isLight, SBBColors.black, SBBColors.white)),
       backgroundColor: resolve(isLight, SBBColors.milk, SBBColors.black),
+      errorColor: resolve(isLight, SBBColors.error, SBBColors.errorDark),
       dividerColor: resolve(isLight, SBBColors.cloud, SBBColors.iron),
       defaultRootContainerPadding: sbbDefaultSpacing,
       iconColor: resolve(isLight, SBBColors.black, SBBColors.white),
@@ -42,7 +44,7 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
     );
   }
 
-  static MaterialColor _sbbPrimarySwatchRed() => MaterialColor(SBBColors.red.value, const <int, Color>{
+  static MaterialColor _sbbPrimarySwatchRed() => MaterialColor(SBBColors.red.toARGB32(), const <int, Color>{
     50: SBBColors.red,
     100: SBBColors.red,
     200: SBBColors.red,
@@ -55,11 +57,6 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
     900: SBBColors.red,
   });
 
-  T $resolve<T>(T lightThemeValue, T darkThemeValue) {
-    final isLight = brightness == Brightness.light;
-    return SBBBaseStyle.resolve(isLight, lightThemeValue, darkThemeValue);
-  }
-
   static T resolve<T>(bool isLight, T lightThemeValue, T darkThemeValue) => isLight ? lightThemeValue : darkThemeValue;
 
   static SBBBaseStyle of(BuildContext context) => Theme.of(context).extension<SBBBaseStyle>()!;
@@ -68,6 +65,7 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
   final Color? primaryColorDark;
   final MaterialColor? primarySwatch;
   final Color? backgroundColor;
+  final Color? errorColor;
   final String? defaultFontFamily;
   final Color? defaultTextColor;
   final TextStyle? defaultTextStyle;
@@ -85,6 +83,7 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
     Color? primaryColorDark,
     MaterialColor? primarySwatch,
     Color? backgroundColor,
+    Color? errorColor,
     String? fontFamily,
     Color? defaultTextColor,
     TextStyle? defaultTextStyle,
@@ -100,6 +99,7 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
     primaryColorDark: primaryColorDark ?? this.primaryColorDark,
     primarySwatch: primarySwatch ?? this.primarySwatch,
     backgroundColor: backgroundColor ?? this.backgroundColor,
+    errorColor: errorColor ?? this.errorColor,
     defaultFontFamily: fontFamily ?? defaultFontFamily,
     defaultTextColor: defaultTextColor ?? this.defaultTextColor,
     defaultTextStyle: defaultTextStyle ?? this.defaultTextStyle,
@@ -119,6 +119,7 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
       primaryColor: Color.lerp(primaryColor, other.primaryColor, t),
       primaryColorDark: Color.lerp(primaryColorDark, other.primaryColorDark, t),
       backgroundColor: Color.lerp(backgroundColor, other.backgroundColor, t),
+      errorColor: Color.lerp(errorColor, other.errorColor, t),
       defaultTextColor: Color.lerp(defaultTextColor, other.defaultTextColor, t),
       defaultTextStyle: TextStyle.lerp(defaultTextStyle, other.defaultTextStyle, t),
       dividerColor: Color.lerp(dividerColor, other.dividerColor, t),
@@ -186,6 +187,7 @@ extension StyleExtension on SBBBaseStyle? {
           primaryColorDark: this!.primaryColorDark ?? other?.primaryColorDark,
           primarySwatch: this!.primarySwatch ?? other?.primarySwatch,
           backgroundColor: this!.backgroundColor ?? other?.backgroundColor,
+          errorColor: this!.errorColor ?? other?.errorColor,
           fontFamily: this!.defaultFontFamily ?? other?.defaultFontFamily,
           defaultTextColor: this!.defaultTextColor ?? other?.defaultTextColor,
           defaultTextStyle: this!.defaultTextStyle ?? other?.defaultTextStyle,

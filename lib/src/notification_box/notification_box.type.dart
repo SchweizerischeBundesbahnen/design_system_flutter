@@ -1,14 +1,45 @@
 part of 'notification_box.dart';
 
 enum SBBNotificationBoxState {
-  alert(SBBColors.red, SBBColors.red, SBBColors.red, SBBIcons.circle_cross_small),
-  warning(SBBColors.peach, SBBColors.black, SBBColors.peach, SBBIcons.circle_exclamation_point_small),
-  success(SBBColors.green, SBBColors.green, SBBColors.green, SBBIcons.circle_tick_small),
-  information(SBBColors.smoke, SBBColors.black, SBBColors.white, SBBIcons.circle_information_small);
+  alert(
+    SBBColors.error,
+    SBBColors.errorDark,
+    SBBColors.error,
+    SBBColors.errorDark,
+    SBBIcons.circle_cross_small,
+  ),
+  warning(
+    SBBColors.warning,
+    SBBColors.warningDark,
+    SBBColors.black,
+    SBBColors.warningDark,
+    SBBIcons.circle_exclamation_point_small,
+  ),
+  success(
+    SBBColors.success,
+    SBBColors.successDark,
+    SBBColors.success,
+    SBBColors.successDark,
+    SBBIcons.circle_tick_small,
+  ),
+  information(
+    SBBColors.smoke,
+    SBBColors.anthracite,
+    SBBColors.black,
+    SBBColors.anthracite,
+    SBBIcons.circle_information_small,
+  );
 
-  const SBBNotificationBoxState(this.backgroundColor, this.iconColor, this.iconColorDark, this.icon);
+  const SBBNotificationBoxState(
+    this.backgroundColor,
+    this.backgroundColorDark,
+    this.iconColor,
+    this.iconColorDark,
+    this.icon,
+  );
 
   final Color backgroundColor;
+  final Color backgroundColorDark;
   final Color iconColor;
   final Color iconColorDark;
   final IconData icon;

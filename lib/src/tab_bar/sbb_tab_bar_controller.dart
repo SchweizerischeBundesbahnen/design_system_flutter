@@ -10,6 +10,7 @@ import 'tab_curves.dart';
 class SBBTabBarController {
   SBBTabBarController(this.tabs, this.selectedTab) {
     currentData = SBBTabBarNavigationData(selectedTab, selectedTab, 0.0, false);
+    _nextTab = selectedTab;
   }
 
   final _navigationController = StreamController<SBBTabBarNavigationData>.broadcast();
@@ -115,6 +116,7 @@ class SBBTabBarController {
   }
 
   Future<void> hoverTab(SBBTabBarItem tab) async {
+    _animationController.reset();
     _nextTab = tab;
     hover = true;
     await _animationController.animateTo(0.25, duration: _duration, curve: Curves.easeInOut);
@@ -131,5 +133,12 @@ class SBBTabBarController {
     if (positions.equals(currentLayoutData.positions) && height == currentLayoutData.height) return;
     currentLayoutData = SBBTabBarLayoutData(height, positions);
     _layoutController.add(currentLayoutData);
+  }
+
+  void dispose() {
+    _animationController.dispose();
+    _layoutController.close();
+    _navigationController.close();
+    _warningController.close();
   }
 }
