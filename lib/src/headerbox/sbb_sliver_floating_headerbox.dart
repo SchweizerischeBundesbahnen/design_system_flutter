@@ -357,7 +357,7 @@ class _SnapTriggerState extends State<_SnapTrigger> {
     final RenderSliverPinnedFloatingWidget? renderer =
         context.findAncestorRenderObjectOfType<RenderSliverPinnedFloatingWidget>();
 
-    renderer?.isScrollingUpdate(position!);
+    renderer?.onScrollingUpdate(position!);
   }
 
   Future<void> onSnapRequested(bool expand) async {

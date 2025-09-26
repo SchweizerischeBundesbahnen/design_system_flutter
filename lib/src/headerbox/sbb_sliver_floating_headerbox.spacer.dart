@@ -25,7 +25,7 @@ class _RenderSBBSliverFloatingHeaderboxSpacer extends RenderSliver {
       return;
     }
 
-    final scrollExtent = firstSibling.extent;
+    final scrollExtent = firstSibling.expandableExtent;
 
     // Space that was filled with scrollable elements
     final scrollableContentExtent = constraints.precedingScrollExtent;
@@ -38,7 +38,7 @@ class _RenderSBBSliverFloatingHeaderboxSpacer extends RenderSliver {
     if (scrollableContentExtent > availableSpace && scrollableContentExtent < (availableSpace + scrollExtent)) {
       // Bridge the gap if we have enough content to scroll, but not enough to finish the whole length of the headerbox
       size = (availableSpace + scrollExtent) - scrollableContentExtent;
-    } else if (scrollableContentExtent < availableSpace && firstSibling.childSize < firstSibling.maxExtent) {
+    } else if (scrollableContentExtent < availableSpace && firstSibling.currentExtent < firstSibling.maxExtent) {
       // If for some reason (e.g. scroll physics) the headerbox is contracted even though there is not enough space,
       // make sure we make enough space.
       size = (availableSpace + scrollExtent) - scrollableContentExtent;

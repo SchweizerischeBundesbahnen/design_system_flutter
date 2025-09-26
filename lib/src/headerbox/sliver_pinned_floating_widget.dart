@@ -59,8 +59,26 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
     super.child,
   }) : _vsync = vsync;
 
-  double minExtent = 0.0;
-  double maxExtent = 0.0;
+  // Configured by the widget
+  AnimationStyle? animationStyle;
+  FloatingHeaderSnapMode snapMode;
+  bool resizing = true;
+  bool floating = true;
+
+  // State management
+  double _minExtent = 0.0;
+  double _maxExtent = 0.0;
+  double _previousScrollOffset = 0.0;
+  double _internalScrollOffset = 0.0;
+  double _virtualScroll = 0.0;
+  bool _wasAnimating = false;
+
+  // Snapping related variables
+  double _scrollOffsetAtScrollStart = 0.0;
+  DateTime _timeAtScrollStart = DateTime.now();
+
+  late Animation<double> _snapAnimation;
+  AnimationController? _snapController;
 
   TickerProvider? get vsync => _vsync;
   TickerProvider? _vsync;
@@ -71,54 +89,38 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
     }
     _vsync = value;
     if (value == null) {
-      snapController?.dispose();
-      snapController = null;
+      _snapController?.dispose();
+      _snapController = null;
     } else {
-      snapController?.resync(value);
+      _snapController?.resync(value);
     }
   }
 
-  AnimationStyle? animationStyle;
-  FloatingHeaderSnapMode snapMode;
-  bool resizing = true;
-  bool floating = true;
+  /// The contracted size of the render widget.
+  double get minExtent => _minExtent;
 
-  double _previousScrollOffset = 0.0;
-  double _internalScrollOffset = 0.0;
-  double _virtualScroll = 0.0;
-  bool _wasAnimating = false;
+  /// The expanded size of the render widget.
+  double get maxExtent => _maxExtent;
 
-  double _scrollOffsetAtScrollStart = 0.0;
-  DateTime _timeAtScrollStart = DateTime.now();
-
-  late Animation<double> snapAnimation;
-  AnimationController? snapController;
-
-  // Amount that can be scrolled
-  double get extent {
+  /// The amount the widget can stretch, i.e. max - min.
+  double get expandableExtent {
     if (child == null || !resizing) {
       return 0.0;
     }
-    return maxExtent - minExtent;
+    return _maxExtent - _minExtent;
   }
 
-  double get childSize {
+  /// The actual current extent of the render widget.
+  double get currentExtent {
     if (child == null) {
       return 0.0;
     }
 
     if (!resizing) {
-      return maxExtent;
+      return _maxExtent;
     }
 
-    return lerpDouble(maxExtent, minExtent, _internalScrollOffset / extent)!;
-  }
-
-  void _updateExtent() {
-    final crossAxisExtent = constraints.crossAxisExtent > 1.0 ? constraints.crossAxisExtent : double.infinity;
-
-    maxExtent = child!.getMaxIntrinsicHeight(crossAxisExtent);
-    minExtent = child!.getMinIntrinsicHeight(crossAxisExtent);
+    return lerpDouble(_maxExtent, _minExtent, _internalScrollOffset / expandableExtent)!;
   }
 
   @override
@@ -129,94 +131,122 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
     }
 
     // Measure children
-    _updateExtent();
+    _updateExtents();
 
     final scrollOffset = this.constraints.scrollOffset;
 
+    // 1. Floating logic
+    // -------------------
     // We keep track an internal scroll offset that ranges from 0..extent.
     // This is what is used to immediately hide or show the widget at hand.
-    final rawDelta = scrollOffset - _previousScrollOffset;
-    final delta =
-        floating
-            ? switch (this.constraints.userScrollDirection) {
-              ScrollDirection.idle => rawDelta,
-              ScrollDirection.forward => min(0.0, rawDelta),
-              ScrollDirection.reverse => max(0.0, rawDelta),
-            }
-            : scrollOffset - _internalScrollOffset;
+    if (floating) {
+      final delta = scrollOffset - _previousScrollOffset;
+      final clampedDelta = switch (this.constraints.userScrollDirection) {
+        ScrollDirection.idle => delta,
+        ScrollDirection.forward => min(0.0, delta),
+        ScrollDirection.reverse => max(0.0, delta),
+      };
 
-    _internalScrollOffset = (_internalScrollOffset + delta).clamp(0, extent);
+      _internalScrollOffset = (_internalScrollOffset + clampedDelta).clamp(0, expandableExtent);
+    } else {
+      _internalScrollOffset = scrollOffset.clamp(0, expandableExtent);
+      ;
+    }
+
     _previousScrollOffset = scrollOffset;
 
-    final snapping = snapController?.isAnimating == true || _wasAnimating;
+    // 2. Snapping logic
+    // -------------------
+    final snapping = _snapController?.isAnimating == true || _wasAnimating;
     var scrollOffsetCorrection = 0.0;
     if (snapping) {
-      if (snapMode == FloatingHeaderSnapMode.scroll || scrollOffset < extent) {
+      if (snapMode == FloatingHeaderSnapMode.scroll || scrollOffset < expandableExtent) {
         // With this option, we can tell the layout algorithm that we want to scroll in a direction.
         // We use this to scroll the view in a natural way.
-        scrollOffsetCorrection = max(-scrollOffset, _virtualScroll - _internalScrollOffset);
+        final delta = _virtualScroll - _internalScrollOffset;
+        scrollOffsetCorrection = max(-scrollOffset, delta);
+
+        // If there's not enough space to scroll, we simulate the remainder
+        final remainder = scrollOffsetCorrection - delta;
+        _internalScrollOffset -= remainder;
       } else {
         _internalScrollOffset = _virtualScroll;
       }
+
+      _wasAnimating = _snapController?.isAnimating == true;
     }
-    _wasAnimating = snapController?.isAnimating == true;
 
-    // Layout the child as if we had scrolled only by the internal value
-    final SliverConstraints constraints = this.constraints.copyWith(
-      scrollOffset: 0,
-    );
-
+    // 3. Layouting
+    // -------------------
     child!.layout(
-      constraints.asBoxConstraints().copyWith(minHeight: childSize, maxHeight: childSize),
+      constraints.asBoxConstraints(
+        minExtent: minExtent,
+        maxExtent: currentExtent,
+      ),
       parentUsesSize: true,
     );
 
-    final layoutExtent = max(0.0, maxExtent - scrollOffset);
+    final double layoutExtent = max(0.0, _maxExtent - scrollOffset);
 
-    final double paintedChildSize = max(layoutExtent, childSize);
-    final double cacheExtent = maxExtent;
+    final double paintedChildSize = max(layoutExtent, currentExtent);
+    final double cacheExtent = _maxExtent;
 
     assert(paintedChildSize.isFinite);
     assert(paintedChildSize >= 0.0);
     geometry = SliverGeometry(
       paintOrigin: constraints.overlap,
       layoutExtent: layoutExtent,
-      scrollExtent: maxExtent,
+      scrollExtent: _maxExtent,
       paintExtent: paintedChildSize,
       cacheExtent: cacheExtent,
-      maxPaintExtent: maxExtent,
-      hitTestExtent: maxExtent,
-      maxScrollObstructionExtent: minExtent,
-      hasVisualOverflow: layoutExtent > constraints.remainingPaintExtent || constraints.scrollOffset > 0.0,
+      maxPaintExtent: _maxExtent,
+      hitTestExtent: _maxExtent,
+      maxScrollObstructionExtent: _minExtent,
+      hasVisualOverflow: layoutExtent > constraints.remainingPaintExtent,
       scrollOffsetCorrection: scrollOffsetCorrection.abs() > 0.01 ? scrollOffsetCorrection : null,
     );
-    setChildParentData(child!, constraints, geometry!);
+
+    // Layout the child as if we had scrolled only by the internal value
+    setChildParentData(
+      child!,
+      constraints.copyWith(
+        scrollOffset: 0,
+      ),
+      geometry!,
+    );
+  }
+
+  void _updateExtents() {
+    final crossAxisExtent = constraints.crossAxisExtent > 1.0 ? constraints.crossAxisExtent : double.infinity;
+
+    _maxExtent = child!.getMaxIntrinsicHeight(crossAxisExtent);
+    _minExtent = child!.getMinIntrinsicHeight(crossAxisExtent);
   }
 
   Future<void> snap(ScrollDirection direction) {
     final bool headerIsPartiallyVisible = switch (direction) {
       ScrollDirection.forward when _internalScrollOffset <= 0 => false, // completely visible
-      ScrollDirection.reverse when _internalScrollOffset >= extent => false, // not visible
+      ScrollDirection.reverse when _internalScrollOffset >= expandableExtent => false, // not visible
       _ => true,
     };
 
     if (headerIsPartiallyVisible) {
-      snapController ??= AnimationController(vsync: vsync!)..addListener(() {
-        if (_virtualScroll != snapAnimation.value) {
-          _virtualScroll = snapAnimation.value;
+      _snapController ??= AnimationController(vsync: vsync!)..addListener(() {
+        if (_virtualScroll != _snapAnimation.value) {
+          _virtualScroll = _snapAnimation.value;
           markNeedsLayout();
         }
       });
-      snapController!.duration = switch (direction) {
+      _snapController!.duration = switch (direction) {
         ScrollDirection.forward => animationStyle?.duration ?? const Duration(milliseconds: 300),
         _ => animationStyle?.reverseDuration ?? const Duration(milliseconds: 300),
       };
-      snapAnimation = snapController!.drive(
+      _snapAnimation = _snapController!.drive(
         Tween<double>(
           begin: _internalScrollOffset,
           end: switch (direction) {
             ScrollDirection.forward => 0,
-            _ => extent,
+            _ => expandableExtent,
           },
         ).chain(
           CurveTween(
@@ -228,28 +258,28 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
         ),
       );
 
-      return snapController!.forward(from: 0.0);
+      return _snapController!.forward(from: 0.0);
     }
 
     return Future.value();
   }
 
-  void isScrollingUpdate(ScrollPosition position) {
+  void onScrollingUpdate(ScrollPosition position) {
     final now = DateTime.now();
     if (position.isScrollingNotifier.value) {
       _timeAtScrollStart = now;
       _scrollOffsetAtScrollStart = _internalScrollOffset;
-
-      snapController?.stop();
+      _snapController?.stop();
     } else {
       final elapsed = now.difference(_timeAtScrollStart);
       final bool useScrollDirection =
-          elapsed.inMilliseconds < 500.0 && (_scrollOffsetAtScrollStart - _internalScrollOffset).abs() > (extent / 4);
+          elapsed.inMilliseconds < 500.0 &&
+          (_scrollOffsetAtScrollStart - _internalScrollOffset).abs() > (expandableExtent / 4);
 
       final direction =
-          useScrollDirection || extent < 1.0
+          useScrollDirection || expandableExtent < 1.0
               ? position.userScrollDirection
-              : (_internalScrollOffset / extent) < 0.5
+              : (_internalScrollOffset / expandableExtent) < 0.5
               ? ScrollDirection.forward
               : ScrollDirection.reverse;
 
@@ -289,8 +319,8 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
 
   @override
   void detach() {
-    snapController?.dispose();
-    snapController = null; // lazily recreated if we're reattached.
+    _snapController?.dispose();
+    _snapController = null; // lazily recreated if we're reattached.
     super.detach();
   }
 }
