@@ -20,12 +20,14 @@ Future<void> main() async {
   final versionFile = File('icons/.version');
   final newVersion = responseJson['version'];
 
-  print('Version: $newVersion');
   if (await versionFile.exists()) {
     final oldVersion = await versionFile.readAsString();
+    print('Remote Version: $newVersion - Local Version: $oldVersion');
     if (Version.parse(oldVersion) >= Version.parse(newVersion)) {
-      print('already imported. exiting…');
+      print('All up to date!');
       return;
+    } else {
+      print('Starting update process...');
     }
   }
 
@@ -76,18 +78,30 @@ Uri makeUrlUri(String path) {
 Future<void> prepareIcons(String type, List<dynamic> icons) async {
   final filter = icons.where((e) => e['tags'].contains('Size=$type'));
   final dir = await Directory('icons/$type-tmp').create(recursive: true);
-  for (final icon in filter) {
-    final name = icon['name'];
-    final fileName = '$name.svg';
-    final svgUri = makeUrlUri(fileName);
-    await downloadSvg(svgUri, fileName.replaceAll('-', '_'), dir.path);
+  final List<Future<void>> futures = [];
+  final client = Client();
+  var i = 1;
+  try {
+    for (final icon in filter) {
+      final name = icon['name'];
+      final fileName = '$name.svg';
+      final svgUri = makeUrlUri(fileName);
+
+      futures.add(
+          downloadSvg(svgUri, fileName.replaceAll('-', '_'), dir.path, client).then((_) => progress.increment()));
+      if (i % 20 == 0) await Future.wait(futures); // otherwise host closes connection
+      i++;
+    }
+    await Future.wait(futures);
+  }
+  finally {
+    client.close();
   }
 }
 
-Future<void> downloadSvg(Uri uri, String fileName, String path) async {
-  final svg = await get(uri);
+Future<void> downloadSvg(Uri uri, String fileName, String path, Client client) async {
+  final svg = await client.get(uri);
   await File('$path/$fileName').writeAsBytes(svg.bodyBytes);
-  progress.increment();
 }
 
 Future<void> createFlutterFontMap() async {
