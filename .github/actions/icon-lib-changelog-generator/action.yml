@@ -1,0 +1,19 @@
+name: 'icon-lib-changelog-generator'
+description: 'Updates the given CHANGELOG with the given icon lib version using update-changelog.sh'
+inputs:
+  version:
+    description: 'The version of the icon lib'
+    required: true
+  changelog-path:
+    description: 'The path to the changelog file'
+    required: true
+    default: 'CHANGELOG.md'
+runs:
+  using: "composite"
+  steps:
+    - name: Run update-changelog.sh
+      env:
+        VERSION: ${{ inputs.version }}
+        CHANGELOG_FILE: ${{ inputs.changelog-path }}
+      run: .github/actions/icon-lib-changelog-generator/update-changelog.sh "$VERSION" "$CHANGELOG_FILE"
+      shell: bash

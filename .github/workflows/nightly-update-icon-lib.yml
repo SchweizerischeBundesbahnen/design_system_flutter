@@ -1,0 +1,139 @@
+# This workflow updates the icon font used by this package to match the version found at https://icons.app.sbb.ch.
+# If there is a new version, it will create / update a pull request.
+# It is run every night.
+#
+# The icons can be browsed on https://digital.sbb.ch/de/foundation/assets/icons/
+# They are guaranteed to be always backward compatible,
+# meaning that no icons will disappear or renamed in a minor or patch update.
+name: nightly_update_icon_lib
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "20 3 * * *" # 03:20 am every day
+
+jobs:
+  # runs the font tool and will upload artifact with generated files if new version available
+  font-tool:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./tool/font_scripts
+    outputs:
+      has_version_update: ${{ steps.gitDiff.outputs.has_diff }}
+
+    steps:
+
+      - uses: actions/checkout@v5
+
+      - uses: dart-lang/setup-dart@v1
+        with:
+          sdk: 3.9
+
+      - name: Install Dart dependencies
+        run: dart pub get
+
+      - name: Install Node.js dependencies
+        run: npm i
+
+      - name: Run update script
+        run: dart lib/update_icon_fonts.dart
+
+      - name: Move files to correct dirs if exist
+        shell: bash {0}
+        run: |
+          icons_dir="${GITHUB_WORKSPACE}/lib/src/theme/icons"
+          fonts_dir="${GITHUB_WORKSPACE}/lib/fonts"
+          shopt -s nullglob
+          for file in ./icons/*.ttf; do
+            mv -f "$file" "$fonts_dir"/
+          done
+          for file in ./icons/*.dart; do
+            mv -f "$file" "$icons_dir"/
+          done
+          shopt -u nullglob
+
+      - name: Diffing and file operations # checks git diff and moves all relevant files to artifact dir
+        id: gitDiff
+        shell: bash {0}
+        run: |
+          test -n "$(git status "${GITHUB_WORKSPACE}/lib" --porcelain)"
+          has_diff=$?
+          echo "has_diff=${has_diff}" >> "$GITHUB_OUTPUT"
+          if (( has_diff == 0 )); then
+            mkdir "${GITHUB_WORKSPACE}/artifacts"
+            cp "${GITHUB_WORKSPACE}"/lib/fonts/sbb_icons_*.ttf "${GITHUB_WORKSPACE}"/artifacts
+            cp "${GITHUB_WORKSPACE}"/lib/src/theme/icons/sbb_*.dart "${GITHUB_WORKSPACE}"/artifacts
+            cp ./icons/.version "${GITHUB_WORKSPACE}"/artifacts/
+          fi
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          path: artifacts/
+          include-hidden-files: true
+          if-no-files-found: ignore # artifact dir will be empty if no relevant update
+          retention-days: 1
+
+  pull-request-opener:
+    # adapts Changelog and opens PR with correct label
+    permissions:
+      pull-requests: write
+      contents: write
+    runs-on: ubuntu-latest
+    needs: font-tool
+    if: needs.font-tool.outputs.has_version_update == 0
+
+    steps:
+
+      - name: Generate Token
+        id: app-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ vars.APPBAKERYGITHUBAPP_APPID }}
+          private-key: ${{ secrets.APPBAKERYGITHUBAPP_PRIVATEKEY }}
+
+      - uses: actions/checkout@v5
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          persist-credentials: false
+
+      - name: Download Artifacts
+        uses: actions/download-artifact@v5
+        with:
+          path: artifacts/
+
+      - name: Version Number
+        id: version_number
+        run: |
+          icon_version="$(cat ./artifacts/.version)"
+          echo "version=${icon_version}" >> "$GITHUB_OUTPUT"
+
+      - name: Move files
+        shell: bash {0}
+        run: |
+          icons_dir="${GITHUB_WORKSPACE}/lib/src/theme/icons"
+          fonts_dir="${GITHUB_WORKSPACE}/lib/fonts"
+          mv -f ./artifacts/.version ./tool/font_scripts/icons
+          mv -f ./artifacts/sbb_icons*.ttf "$fonts_dir"
+          mv -f ./artifacts/sbb_*.dart "$icons_dir"
+
+      - name: Add or update CHANGELOG entry
+        uses: ./.github/actions/icon-lib-changelog-generator
+        with:
+          version: ${{ steps.version_number.outputs.version }}
+          changelog-path: ./CHANGELOG.md
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v7.0.8
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          sign-commits: true
+          branch: update-icon-lib
+          title: ${{ format('feat{0} update icon lib version to {1}', ':', steps.version_number.outputs.version) }}
+          commit-message: |
+            ${{ format('feat{0} update to icon lib version {1}', ':', steps.version_number.outputs.version) }}
+            
+            This is an automatic commit.
+            * updates icon lib files
+            * updates CHANGELOG

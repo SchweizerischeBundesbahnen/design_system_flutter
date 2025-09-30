@@ -16,12 +16,13 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ### Changed
 
-- updated icon lib to version 1.8.9
+- (auto): updated icon lib to version 1.8.9
 - aligned SBBColors to colors in Figma and specs
 - error color in SBBTheme is used from `SBBBaseStyle.errorColor`
 - use functional colors as in specs for `SBBStatus` and `SBBNotificationBox`
 
 ### Added
+
 - added functional colors (e.g. `SBBColors.error`) and dark variants of additionalColors (e.g. `SBBColors.skyDark`)
 - added `errorColor` to `SBBBaseStyle`
 - added `systemOverlayStyle` to `SBBHeader`
