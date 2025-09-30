@@ -61,10 +61,13 @@ jobs:
           has_diff=$?
           echo "has_diff=${has_diff}" >> "$GITHUB_OUTPUT"
           if (( has_diff == 0 )); then
+            echo "Version update contains relevant updates."
             mkdir "${GITHUB_WORKSPACE}/artifacts"
             cp "${GITHUB_WORKSPACE}"/lib/fonts/sbb_icons_*.ttf "${GITHUB_WORKSPACE}"/artifacts
             cp "${GITHUB_WORKSPACE}"/lib/src/theme/icons/sbb_*.dart "${GITHUB_WORKSPACE}"/artifacts
             cp ./icons/.version "${GITHUB_WORKSPACE}"/artifacts/
+          else 
+            echo "Version update does not contain relevant updates."
           fi
 
       - name: Upload artifacts
