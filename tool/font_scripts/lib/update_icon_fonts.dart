@@ -88,13 +88,13 @@ Future<void> prepareIcons(String type, List<dynamic> icons) async {
       final svgUri = makeUrlUri(fileName);
 
       futures.add(
-          downloadSvg(svgUri, fileName.replaceAll('-', '_'), dir.path, client).then((_) => progress.increment()));
+        downloadSvg(svgUri, fileName.replaceAll('-', '_'), dir.path, client).then((_) => progress.increment()),
+      );
       if (i % 20 == 0) await Future.wait(futures); // otherwise host closes connection
       i++;
     }
     await Future.wait(futures);
-  }
-  finally {
+  } finally {
     client.close();
   }
 }
