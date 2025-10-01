@@ -3,7 +3,7 @@ name: nightly_build
 on:
   workflow_dispatch:
   schedule:
-    - cron: "40 2 * * *" # 02:20 am every day
+    - cron: "40 2 * * *" # 02:40 am every day
 
 jobs:
   test:
