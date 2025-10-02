@@ -3,14 +3,13 @@ import 'package:flutter/rendering.dart';
 
 /// Selectively lets you override specific intrinsics of [child].
 ///
-/// In Flutter, there are four intrinsic values that describe how big a child *would like* to be:
+/// Basically, it lets you change the "ideal" size (or just the width / height) of [child].
+/// Leave unset to use the real value.
 ///
-/// * [minWidth]
-/// * [maxWidth]
-/// * [minHeight]
-/// * [maxHeight]
+/// See also:
 ///
-/// By using this widget, you can change some of these, while `null` values will return the actual values from the child.
+///  * [IntrinsicHeight] and [IntrinsicWidth], for more detailed information on this topic.
+///
 class OverrideIntrinsics extends SingleChildRenderObjectWidget {
   const OverrideIntrinsics({
     super.key,

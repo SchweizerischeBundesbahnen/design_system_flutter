@@ -51,10 +51,8 @@ class _RenderCascadeColumn extends RenderBox
 
     RenderBox? child = lastChild;
 
-    // Current height of the construct
     final currentExtent = min(constraints.maxHeight, _maxExtent);
 
-    // Pixels that we must shrink
     var pixelsToShrink = _maxExtent - currentExtent;
     var totalWidth = 0.0;
 
@@ -104,9 +102,9 @@ class _RenderCascadeColumn extends RenderBox
 
       usedHeight += child.size.height;
 
-      _queueProgressUpdate(
+      _queueStateUpdate(
         parentData,
-        _computeProgress(child, minHeight, maxHeight, totalProgress),
+        _computeState(child, minHeight, maxHeight, totalProgress),
       );
 
       child = parentData.previousSibling;
@@ -181,7 +179,7 @@ class _RenderCascadeColumn extends RenderBox
     }
   }
 
-  ContractibleState _computeProgress(RenderBox child, double minHeight, double maxHeight, double totalProgress) {
+  ContractibleState _computeState(RenderBox child, double minHeight, double maxHeight, double totalProgress) {
     final range = (maxHeight - minHeight);
     final current = child.size.height.clamp(minHeight, maxHeight);
     var progress = range > 0 ? (current - minHeight) / range : 1.0;
@@ -196,7 +194,7 @@ class _RenderCascadeColumn extends RenderBox
     );
   }
 
-  void _queueProgressUpdate(
+  void _queueStateUpdate(
     CascadeColumnParentData pd,
     ContractibleState state,
   ) {
