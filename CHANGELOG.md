@@ -9,6 +9,8 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+## [4.2.0] - 2025-10-03
+
 ### Added
 
 - added `SBBSliverFloatingHeaderbox` that allows the headerbox to expand and contract as the user scrolls.
@@ -644,7 +646,9 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Initial project setup
 - Added some widgets
 
-[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.1.0...HEAD
+[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.2.0...HEAD
+
+[4.2.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.1.0...4.2.0
 
 [4.1.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.0.0...4.1.0
 
