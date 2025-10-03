@@ -11,12 +11,10 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ### Added
 
-- added `SBBSliverFloatingHeaderbox` that allows the headerbox to expand and contract as the user scrolls. 
-
-### Fixed
-
-- `SBBTabBar`: properly clips icons as they get selected / unselected
-- keyboard focus for `SBBTabBar`
+- added `SBBSliverFloatingHeaderbox` that allows the headerbox to expand and contract as the user scrolls.
+- added functional colors (e.g. `SBBColors.error`) and dark variants of additionalColors (e.g. `SBBColors.skyDark`)
+- added `errorColor` to `SBBBaseStyle`
+- added `systemOverlayStyle` to `SBBHeader`
 
 ### Changed
 
@@ -25,11 +23,10 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - error color in SBBTheme is used from `SBBBaseStyle.errorColor`
 - use functional colors as in specs for `SBBStatus` and `SBBNotificationBox`
 
-### Added
+### Fixed
 
-- added functional colors (e.g. `SBBColors.error`) and dark variants of additionalColors (e.g. `SBBColors.skyDark`)
-- added `errorColor` to `SBBBaseStyle`
-- added `systemOverlayStyle` to `SBBHeader`
+- `SBBTabBar`: properly clips icons as they get selected / unselected
+- keyboard focus for `SBBTabBar`
 
 ## [4.1.0] - 2025-08-22
 
