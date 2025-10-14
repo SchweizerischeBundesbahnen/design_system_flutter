@@ -93,11 +93,11 @@ class _SBBTextField extends State<SBBTextField> {
 
   @override
   void dispose() {
-    // if we created our own focus node , dispose of it
-    // otherwise, let the caller dispose of their own instance
-    if (widget.focusNode == null) {
-      _focus.dispose();
-    }
+    _focus.removeListener(_onFocusChange);
+
+    if (widget.focusNode == null) _focus.dispose();
+    if (widget.controller == null) controller.dispose();
+
     super.dispose();
   }
 
