@@ -9,6 +9,10 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+### Fixed
+
+- `SBBTextField`: Remove listener on (custom) FocusNode and dispose own TextEditingController (#392) (#396)
+
 ## [4.2.0] - 2025-10-03
 
 ### Added
