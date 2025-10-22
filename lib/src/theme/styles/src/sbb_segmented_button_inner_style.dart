@@ -12,7 +12,7 @@ class SBBSegmentedButtonInnerStyle {
   );
 
   factory SBBSegmentedButtonInnerStyle.red({required SBBBaseStyle baseStyle}) => SBBSegmentedButtonInnerStyle(
-    backgroundColor: const Color(0xFFD30000),
+    backgroundColor: SBBColors.red125,
     borderColor: SBBColors.transparent,
     textStyle: baseStyle.themedTextStyle(color: SBBColors.white),
   );

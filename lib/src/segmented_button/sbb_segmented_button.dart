@@ -6,7 +6,8 @@ import '../sbb_internal.dart';
 
 part 'sbb_segmented_button.typedefs.dart';
 
-/// SBB Segmented Button. Use according to documentation.
+/// The SBB Segmented-Button.
+/// Use according to [documentation](https://digital.sbb.ch/de/design-system/mobile/components/segmented-button/).
 ///
 /// See also:
 ///
@@ -15,7 +16,6 @@ part 'sbb_segmented_button.typedefs.dart';
 /// * [SBBSlider], for selecting a value in a range.
 /// * [SBBCheckboxListItem], [SBBCheckbox] and [SBBSwitch], for toggling a
 /// particular value on or off.
-/// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/radiobutton>
 class SBBSegmentedButton extends StatefulWidget {
   SBBSegmentedButton({
     Key? key,
@@ -92,7 +92,7 @@ class SBBSegmentedButton extends StatefulWidget {
   }) : this.custom(
          key: key,
          widgetBuilders:
-             values.mapIndexed((i, value) {
+             values.mapIndexed((_, value) {
                return (SBBSegmentedButtonStyle? style, bool selected) {
                  return Text(value, maxLines: 1, style: style.getTextStyle(selected));
                };
@@ -214,37 +214,31 @@ class SegmentedButtonState extends State<SBBSegmentedButton> {
   }
 
   Widget _buildIndicatorLayer() {
+    final buttonCount = widget.widgetBuilders.length;
+    final alignmentX = buttonCount <= 1 ? 0.0 : -1 + 2 * widget.selectedStateIndex / (buttonCount - 1);
+
     return ExcludeSemantics(
-      child: LayoutBuilder(
-        builder: (_, constraints) {
-          return Row(
-            children: <Widget>[
-              AnimatedContainer(
-                duration: kThemeAnimationDuration,
-                curve: Curves.easeInOut,
-                width: constraints.maxWidth / widget.widgetBuilders.length * widget.selectedStateIndex,
+      child: AnimatedAlign(
+        alignment: Alignment(alignmentX, 0),
+        duration: kThemeAnimationDuration,
+        curve: Curves.easeInOut,
+        child: FractionallySizedBox(
+          widthFactor: 1.0 / buttonCount,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: _borderRadius,
+              border: Border.all(color: selectedBorderColor),
+            ),
+            child: Material(
+              borderRadius: _borderRadius,
+              color: style?.selectedStyle?.backgroundColor,
+              child: InkWell(
+                borderRadius: _borderRadius,
+                onTap: () => widget.selectedIndexChanged(widget.selectedStateIndex),
               ),
-              Container(
-                width: constraints.maxWidth / widget.widgetBuilders.length,
-                decoration: BoxDecoration(
-                  borderRadius: _borderRadius,
-                  boxShadow: style?.boxShadow,
-                  border: Border.all(color: selectedBorderColor),
-                ),
-                child: Material(
-                  borderRadius: _borderRadius,
-                  color: style?.selectedStyle?.backgroundColor,
-                  child: InkWell(
-                    borderRadius: _borderRadius,
-                    onTap: () {
-                      widget.selectedIndexChanged(widget.selectedStateIndex);
-                    },
-                  ),
-                ),
-              ),
-            ],
-          );
-        },
+            ),
+          ),
+        ),
       ),
     );
   }
