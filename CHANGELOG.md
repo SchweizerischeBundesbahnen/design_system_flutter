@@ -13,6 +13,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 - `SBBTextField`: Remove listener on (custom) FocusNode and dispose own TextEditingController (#392) (#396)
 - `SBBSegmentedButton`: Fixed animation issue when resizing SBBSegmentedButton (#312)
+- `SBBSegmentedButton`: Removed `boxShadow` from `SBBSegmentedButtonStyle` (#312)
 
 ### Changed
 
