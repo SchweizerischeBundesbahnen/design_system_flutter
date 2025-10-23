@@ -119,7 +119,7 @@ class SBBSegmentedButton extends StatefulWidget {
                    child: Row(
                      mainAxisAlignment: MainAxisAlignment.center,
                      children: [
-                       Icon(icon.key, color: style?.iconColor),
+                       Icon(icon.key, color: style?.getIconColor(selected)),
                        if (withText) ...[
                          const SizedBox(width: 4.0),
                          ExcludeSemantics(child: Text(icon.value, style: style.getTextStyle(selected))),

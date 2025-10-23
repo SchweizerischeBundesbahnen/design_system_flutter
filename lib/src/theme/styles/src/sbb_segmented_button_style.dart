@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import '../../theme.dart';
 
 class SBBSegmentedButtonStyle {
-  SBBSegmentedButtonStyle({this.defaultStyle, this.selectedStyle, this.iconColor});
+  SBBSegmentedButtonStyle({this.defaultStyle, this.selectedStyle});
 
   factory SBBSegmentedButtonStyle.$default({required SBBBaseStyle baseStyle}) => SBBSegmentedButtonStyle(
     defaultStyle: SBBSegmentedButtonInnerStyle.$default(baseStyle: baseStyle),
@@ -13,12 +13,10 @@ class SBBSegmentedButtonStyle {
   factory SBBSegmentedButtonStyle.red({required SBBBaseStyle baseStyle}) => SBBSegmentedButtonStyle(
     defaultStyle: SBBSegmentedButtonInnerStyle.red(baseStyle: baseStyle),
     selectedStyle: SBBSegmentedButtonInnerStyle.redSelected(baseStyle: baseStyle),
-    iconColor: SBBColors.white,
   );
 
   final SBBSegmentedButtonInnerStyle? defaultStyle;
   final SBBSegmentedButtonInnerStyle? selectedStyle;
-  final Color? iconColor;
 
   SBBSegmentedButtonStyle copyWith({
     SBBSegmentedButtonInnerStyle? defaultStyle,
@@ -27,13 +25,11 @@ class SBBSegmentedButtonStyle {
   }) => SBBSegmentedButtonStyle(
     defaultStyle: defaultStyle ?? this.defaultStyle,
     selectedStyle: selectedStyle ?? this.selectedStyle,
-    iconColor: iconColor ?? this.iconColor,
   );
 
   SBBSegmentedButtonStyle lerp(SBBSegmentedButtonStyle? other, double t) => SBBSegmentedButtonStyle(
     defaultStyle: defaultStyle?.lerp(other?.defaultStyle, t),
     selectedStyle: selectedStyle?.lerp(other?.selectedStyle, t),
-    iconColor: Color.lerp(iconColor, other?.iconColor, t),
   );
 }
 
@@ -43,12 +39,10 @@ extension SBBSegmentedButtonStyleExtension on SBBSegmentedButtonStyle? {
     return this!.copyWith(
       defaultStyle: this!.defaultStyle.merge(other?.defaultStyle),
       selectedStyle: this!.selectedStyle.merge(other?.selectedStyle),
-      iconColor: this!.iconColor ?? other?.iconColor,
     );
   }
 
-  TextStyle? getTextStyle(bool selected) {
-    if (this == null) return null;
-    return (selected ? this!.selectedStyle : this!.defaultStyle)?.textStyle;
-  }
+  TextStyle? getTextStyle(bool selected) => (selected ? this?.selectedStyle : this?.defaultStyle)?.textStyle;
+
+  Color? getIconColor(bool selected) => (selected ? this?.selectedStyle : this?.defaultStyle)?.iconColor;
 }
