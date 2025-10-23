@@ -61,6 +61,28 @@ class SBBTextField extends StatefulWidget {
   final TextInputAction? textInputAction;
   final IconData? icon;
 
+  /// Defines the keyboard focus for this widget.
+  ///
+  /// The [focusNode] is a long-lived object that's typically managed by a
+  /// [StatefulWidget] parent. See [FocusNode] for more information.
+  ///
+  /// To give the keyboard focus to this widget, provide a [focusNode] and then
+  /// use the current [FocusScope] to request the focus:
+  ///
+  /// ```dart
+  /// FocusScope.of(context).requestFocus(myFocusNode);
+  /// ```
+  ///
+  /// This happens automatically when the widget is tapped.
+  ///
+  /// To be notified when the widget gains or loses the focus, add a listener
+  /// to the [focusNode]:
+  ///
+  /// ```dart
+  /// myFocusNode.addListener(() { print(myFocusNode.hasFocus); });
+  /// ```
+  ///
+  /// If null, this widget will create its own [FocusNode].
   final FocusNode? focusNode;
 
   final Widget? suffixIcon;
@@ -73,29 +95,41 @@ class SBBTextField extends StatefulWidget {
 }
 
 class _SBBTextField extends State<SBBTextField> {
-  late FocusNode _focus;
-  bool _hasFocus = false;
+  FocusNode? _focusNode;
+
+  FocusNode get _effectiveFocusNode => widget.focusNode ?? (_focusNode ??= FocusNode());
+
   late TextEditingController controller;
 
   @override
   void initState() {
     super.initState();
-    _focus = widget.focusNode ?? FocusNode();
-    _focus.addListener(_onFocusChange);
+
+    _effectiveFocusNode.canRequestFocus = widget.enabled;
+    _effectiveFocusNode.addListener(_handleFocusChanged);
     controller = widget.controller ?? TextEditingController();
   }
 
-  void _onFocusChange() {
-    setState(() {
-      _hasFocus = _focus.hasFocus;
-    });
+  void _handleFocusChanged() {
+    setState(() {});
+  }
+
+  @override
+  void didUpdateWidget(covariant SBBTextField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.focusNode != oldWidget.focusNode) {
+      (oldWidget.focusNode ?? _focusNode)?.removeListener(_handleFocusChanged);
+      (widget.focusNode ?? _focusNode)?.addListener(_handleFocusChanged);
+    }
+
+    _effectiveFocusNode.canRequestFocus = widget.enabled;
   }
 
   @override
   void dispose() {
-    _focus.removeListener(_onFocusChange);
+    _effectiveFocusNode.removeListener(_handleFocusChanged);
+    _focusNode?.dispose();
 
-    if (widget.focusNode == null) _focus.dispose();
     if (widget.controller == null) controller.dispose();
 
     super.dispose();
@@ -119,7 +153,7 @@ class _SBBTextField extends State<SBBTextField> {
               ),
               SBBTextFieldUnderline(
                 errorText: widget.errorText,
-                hasFocus: _hasFocus,
+                hasFocus: _effectiveFocusNode.hasFocus,
                 isLastElement: widget.isLastElement,
               ),
             ],
@@ -140,7 +174,7 @@ class _SBBTextField extends State<SBBTextField> {
 
     return TextField(
       autofocus: widget.autofocus,
-      focusNode: _focus,
+      focusNode: _effectiveFocusNode,
       controller: controller,
       obscureText: widget.obscureText,
       keyboardType: widget.keyboardType,
@@ -167,7 +201,7 @@ class _SBBTextField extends State<SBBTextField> {
   }
 
   InputDecoration _decoration(TextScaler textScaler, TextStyle labelStyle, TextStyle floatingLabelStyle) {
-    final hasValueOrFocus = controller.text.isNotEmpty || _hasFocus;
+    final hasValueOrFocus = controller.text.isNotEmpty || _effectiveFocusNode.hasFocus;
     final hasLabel = widget.labelText?.isNotEmpty ?? false;
     final hasError = widget.errorText?.isNotEmpty ?? false;
 
