@@ -64,7 +64,7 @@ jobs:
         working-directory: example/android
 
       - name: Upload appbundle as artifact.
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: app-release.aab
           path: example/build/app/outputs/bundle/release/
