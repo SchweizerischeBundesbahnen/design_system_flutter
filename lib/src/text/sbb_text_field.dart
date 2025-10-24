@@ -154,7 +154,11 @@ class _SBBTextField extends State<SBBTextField> {
 
   FocusNode get _effectiveFocusNode => widget.focusNode ?? (_focusNode ??= FocusNode());
 
-  late TextEditingController controller;
+  TextEditingController? _controller;
+
+  late bool _isTextEmpty;
+
+  TextEditingController get controller => widget.controller ?? (_controller ??= TextEditingController());
 
   @override
   void initState() {
@@ -162,11 +166,21 @@ class _SBBTextField extends State<SBBTextField> {
 
     _effectiveFocusNode.canRequestFocus = widget.enabled;
     _effectiveFocusNode.addListener(_handleFocusChanged);
-    controller = widget.controller ?? TextEditingController();
+
+    _isTextEmpty = controller.text.isEmpty;
+    controller.addListener(_handleTextControllerChanged);
   }
 
   void _handleFocusChanged() {
     setState(() {});
+  }
+
+  void _handleTextControllerChanged() {
+    if (controller.text.isEmpty != _isTextEmpty) {
+      setState(() {
+        _isTextEmpty = controller.text.isEmpty;
+      });
+    }
   }
 
   @override
@@ -177,6 +191,18 @@ class _SBBTextField extends State<SBBTextField> {
       (widget.focusNode ?? _focusNode)?.addListener(_handleFocusChanged);
     }
 
+    if (widget.controller == null && oldWidget.controller != null) {
+      _controller = TextEditingController.fromValue(oldWidget.controller!.value);
+    } else if (widget.controller != null && oldWidget.controller == null) {
+      _controller!.dispose();
+      _controller = null;
+    }
+
+    if (widget.controller != oldWidget.controller) {
+      (oldWidget.controller ?? _controller)?.removeListener(_handleTextControllerChanged);
+      (widget.controller ?? _controller)?.addListener(_handleTextControllerChanged);
+    }
+
     _effectiveFocusNode.canRequestFocus = widget.enabled;
   }
 
@@ -184,8 +210,8 @@ class _SBBTextField extends State<SBBTextField> {
   void dispose() {
     _effectiveFocusNode.removeListener(_handleFocusChanged);
     _focusNode?.dispose();
-
-    if (widget.controller == null) controller.dispose();
+    controller.removeListener(_handleTextControllerChanged);
+    _controller?.dispose();
 
     super.dispose();
   }
