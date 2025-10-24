@@ -4,11 +4,17 @@ import 'package:flutter/services.dart';
 import '../../sbb_design_system_mobile.dart';
 import 'sbb_text_field_underline.dart';
 
-/// The SBB TextField. Use according to documentation.
+/// The SBBTextField.
 ///
-/// See also:
+/// A text field lets the user enter text, either with hardware keyboard or with
+/// an onscreen keyboard.
 ///
-/// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/textfield>
+/// This component is based on the outlined Material Design text field with no borders. Unlike
+/// the Material Design specifications, the SBB TextInput displays error messages *above* the bottom borderline and therefore
+/// customizes the bottom border completely.
+///
+/// See [documentation](https://digital.sbb.ch/de/design-system/mobile/components/text-input/)
+/// and [Figma design guidelines](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=309-2236).
 class SBBTextField extends StatefulWidget {
   const SBBTextField({
     super.key,
@@ -23,9 +29,11 @@ class SBBTextField extends StatefulWidget {
     this.labelText,
     this.maxLines = 1,
     this.minLines,
+    this.expands = false,
     this.hintMaxLines,
     this.onChanged,
     this.onTap,
+    this.onTapAlwaysCalled = false,
     this.onSubmitted,
     this.textCapitalization = TextCapitalization.none,
     this.textInputAction,
@@ -33,70 +41,177 @@ class SBBTextField extends StatefulWidget {
     this.focusNode,
     this.suffixIcon,
     this.obscureText = false,
+    this.obscuringCharacter = "•",
     this.autofocus = false,
+    this.autofillHints,
   });
 
+  /// Controls the text being edited.
+  ///
+  /// If null, this widget will create its own [TextEditingController].
   final TextEditingController? controller;
+
+  /// If false the text field is "disabled".
   final bool enabled;
+
+  /// {@macro flutter.widgets.editableText.enableInteractiveSelection}
   final bool enableInteractiveSelection;
+
+  /// Text that appears between the input field and the bottom border.
   final String? errorText;
 
   /// Behaves differently (separator) when last element.
   final bool isLastElement;
+
+  /// {@macro flutter.widgets.editableText.keyboardType}
   final TextInputType? keyboardType;
 
   /// The label moves upward on focus.
   final String? labelText;
 
   /// The hint shows only in an empty field.
+  ///
+  /// It acts as a placeholder.
   final String? hintText;
+
+  /// {@macro flutter.widgets.editableText.maxLines}
+  ///  * [expands], which determines whether the field should fill the height of
+  ///    its parent.
   final int? maxLines;
+
+  /// {@macro flutter.widgets.editableText.minLines}
+  ///  * [expands], which determines whether the field should fill the height of
+  ///    its parent.
   final int? minLines;
+
+  /// {@macro flutter.widgets.editableText.expands}
+  final bool expands;
+
+  /// The maximum number of lines the [hintText] can occupy.
   final int? hintMaxLines;
+
+  /// {@macro flutter.widgets.editableText.onChanged}
   final ValueChanged<String>? onChanged;
+
+  /// {@macro flutter.material.textfield.onTap}
   final GestureTapCallback? onTap;
+
+  /// Whether [onTap] should be called for every tap.
+  ///
+  /// Defaults to false, so [onTap] is only called for each distinct tap. When
+  /// enabled, [onTap] is called for every tap including consecutive taps.
+  final bool onTapAlwaysCalled;
+
+  /// {@macro flutter.widgets.editableText.onSubmitted}
   final ValueChanged<String>? onSubmitted;
+
+  /// {@macro flutter.widgets.editableText.inputFormatters}
   final List<TextInputFormatter>? inputFormatters;
+
+  /// {@macro flutter.widgets.editableText.textCapitalization}
   final TextCapitalization textCapitalization;
+
+  /// {@macro flutter.widgets.TextField.textInputAction}
   final TextInputAction? textInputAction;
+
+  /// An icon to show before the input field and outside of the decoration's container.
+  ///
+  /// The decoration's container is the area which is underlined by the bottom underline of the SBBTextField.
+  ///
+  /// The trailing edge of the icon is padded by 16px.
   final IconData? icon;
 
+  /// Defines the keyboard focus for this widget.
+  ///
+  /// The [focusNode] is a long-lived object that's typically managed by a
+  /// [StatefulWidget] parent. See [FocusNode] for more information.
+  ///
+  /// If null, this widget will create its own [FocusNode].
   final FocusNode? focusNode;
 
+  /// An icon that appears after the editable part of the text field, within the text fields input decoration.
   final Widget? suffixIcon;
 
+  /// {@macro flutter.widgets.editableText.obscuringCharacter}
+  final String obscuringCharacter;
+
+  /// {@macro flutter.widgets.editableText.obscureText}
   final bool obscureText;
+
+  /// {@macro flutter.widgets.editableText.autocorrect}
   final bool autofocus;
+
+  /// {@macro flutter.widgets.editableText.autofillHints}
+  /// {@macro flutter.services.AutofillConfiguration.autofillHints}
+  final Iterable<String>? autofillHints;
 
   @override
   State<StatefulWidget> createState() => _SBBTextField();
 }
 
 class _SBBTextField extends State<SBBTextField> {
-  late FocusNode _focus;
-  bool _hasFocus = false;
-  late TextEditingController controller;
+  FocusNode? _focusNode;
+
+  FocusNode get _effectiveFocusNode => widget.focusNode ?? (_focusNode ??= FocusNode());
+
+  TextEditingController? _controller;
+
+  late bool _isTextEmpty;
+
+  TextEditingController get controller => widget.controller ?? (_controller ??= TextEditingController());
 
   @override
   void initState() {
     super.initState();
-    _focus = widget.focusNode ?? FocusNode();
-    _focus.addListener(_onFocusChange);
-    controller = widget.controller ?? TextEditingController();
+
+    _effectiveFocusNode.canRequestFocus = widget.enabled;
+    _effectiveFocusNode.addListener(_handleFocusChanged);
+
+    _isTextEmpty = controller.text.isEmpty;
+    controller.addListener(_handleTextControllerChanged);
   }
 
-  void _onFocusChange() {
-    setState(() {
-      _hasFocus = _focus.hasFocus;
-    });
+  void _handleFocusChanged() {
+    setState(() {});
+  }
+
+  void _handleTextControllerChanged() {
+    if (controller.text.isEmpty != _isTextEmpty) {
+      setState(() {
+        _isTextEmpty = controller.text.isEmpty;
+      });
+    }
+  }
+
+  @override
+  void didUpdateWidget(covariant SBBTextField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.focusNode != oldWidget.focusNode) {
+      (oldWidget.focusNode ?? _focusNode)?.removeListener(_handleFocusChanged);
+      (widget.focusNode ?? _focusNode)?.addListener(_handleFocusChanged);
+    }
+
+    if (widget.controller == null && oldWidget.controller != null) {
+      _controller = TextEditingController.fromValue(oldWidget.controller!.value);
+    } else if (widget.controller != null && oldWidget.controller == null) {
+      _controller!.dispose();
+      _controller = null;
+    }
+
+    if (widget.controller != oldWidget.controller) {
+      (oldWidget.controller ?? _controller)?.removeListener(_handleTextControllerChanged);
+      (widget.controller ?? _controller)?.addListener(_handleTextControllerChanged);
+    }
+
+    _effectiveFocusNode.canRequestFocus = widget.enabled;
   }
 
   @override
   void dispose() {
-    _focus.removeListener(_onFocusChange);
-
-    if (widget.focusNode == null) _focus.dispose();
-    if (widget.controller == null) controller.dispose();
+    _effectiveFocusNode.removeListener(_handleFocusChanged);
+    _focusNode?.dispose();
+    controller.removeListener(_handleTextControllerChanged);
+    _controller?.dispose();
 
     super.dispose();
   }
@@ -119,7 +234,7 @@ class _SBBTextField extends State<SBBTextField> {
               ),
               SBBTextFieldUnderline(
                 errorText: widget.errorText,
-                hasFocus: _hasFocus,
+                hasFocus: _effectiveFocusNode.hasFocus,
                 isLastElement: widget.isLastElement,
               ),
             ],
@@ -140,17 +255,20 @@ class _SBBTextField extends State<SBBTextField> {
 
     return TextField(
       autofocus: widget.autofocus,
-      focusNode: _focus,
+      focusNode: _effectiveFocusNode,
       controller: controller,
       obscureText: widget.obscureText,
+      obscuringCharacter: widget.obscuringCharacter,
       keyboardType: widget.keyboardType,
       maxLines: widget.maxLines,
       minLines: widget.minLines,
+      expands: widget.expands,
       cursorHeight: textScaler.scale(22.0),
       cursorRadius: const Radius.circular(2.0),
       enableInteractiveSelection: widget.enableInteractiveSelection,
       onChanged: widget.onChanged,
       onTap: widget.onTap,
+      onTapAlwaysCalled: widget.onTapAlwaysCalled,
       onSubmitted: widget.onSubmitted,
       enabled: widget.enabled,
       decoration: _decoration(textScaler, labelStyle, floatingLabelStyle),
@@ -158,6 +276,7 @@ class _SBBTextField extends State<SBBTextField> {
       inputFormatters: widget.inputFormatters,
       textCapitalization: widget.textCapitalization,
       textInputAction: widget.textInputAction,
+      autofillHints: widget.autofillHints,
     );
   }
 
@@ -167,7 +286,7 @@ class _SBBTextField extends State<SBBTextField> {
   }
 
   InputDecoration _decoration(TextScaler textScaler, TextStyle labelStyle, TextStyle floatingLabelStyle) {
-    final hasValueOrFocus = controller.text.isNotEmpty || _hasFocus;
+    final hasValueOrFocus = controller.text.isNotEmpty || _effectiveFocusNode.hasFocus;
     final hasLabel = widget.labelText?.isNotEmpty ?? false;
     final hasError = widget.errorText?.isNotEmpty ?? false;
 

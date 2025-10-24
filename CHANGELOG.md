@@ -9,9 +9,14 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+### Added
+
+- added `onTapAlwaysCalled`, `expands`, `autofillHints`, `obscuringCharacter` to `SBBTextField` (#401)
+
 ### Fixed
 
 - `SBBTextField`: Remove listener on (custom) FocusNode and dispose own TextEditingController (#392) (#396)
+- `SBBTextField`: fix label not moving up when value edited without focus changed to text field (#393)
 - `SBBSegmentedButton`: Fixed animation issue when resizing SBBSegmentedButton (#312)
 - `SBBSegmentedButton`: Removed `boxShadow` from `SBBSegmentedButtonStyle` (#312)
 - `SBBSegmentedButton`: Moved `iconColor` from `SBBSegmentedButtonStyle` to `SBBSegmentedButtonInnerStyle` (#312)
