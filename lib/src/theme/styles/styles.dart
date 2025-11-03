@@ -11,6 +11,7 @@ export 'src/sbb_headerbox_style.dart';
 export 'src/sbb_list_item_style.dart';
 export 'src/sbb_pagination_style.dart';
 export 'src/sbb_picker_style.dart';
+export 'src/sbb_popover_style.dart';
 export 'src/sbb_segmented_button_inner_style.dart';
 export 'src/sbb_segmented_button_style.dart';
 export 'src/sbb_slider_style.dart';

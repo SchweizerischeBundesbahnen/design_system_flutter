@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/src/theme/styles/src/sbb_popover_style.dart';
 
 import 'theme.dart';
 
@@ -12,8 +13,9 @@ class SBBTheme {
     SBBBaseStyle? baseStyle,
     SBBButtonStyles? buttonStyles,
     SBBControlStyles? controlStyles,
-    SBBHeaderBoxStyle? headerBoxStyle,
     SBBGroupStyle? groupStyle,
+    SBBHeaderBoxStyle? headerBoxStyle,
+    SBBPopoverStyle? popoverStyle,
     SBBToastStyle? toastStyle,
   }) => createTheme(
     brightness: Brightness.light,
@@ -21,8 +23,9 @@ class SBBTheme {
     baseStyle: baseStyle,
     buttonStyles: buttonStyles,
     controlStyles: controlStyles,
-    headerBoxStyle: headerBoxStyle,
     groupStyle: groupStyle,
+    headerBoxStyle: headerBoxStyle,
+    popoverStyle: popoverStyle,
     toastStyle: toastStyle,
   );
 
@@ -33,6 +36,7 @@ class SBBTheme {
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBGroupStyle? groupStyle,
+    SBBPopoverStyle? popoverStyle,
     SBBToastStyle? toastStyle,
   }) => createTheme(
     brightness: Brightness.dark,
@@ -42,6 +46,7 @@ class SBBTheme {
     controlStyles: controlStyles,
     headerBoxStyle: headerBoxStyle,
     groupStyle: groupStyle,
+    popoverStyle: popoverStyle,
     toastStyle: toastStyle,
   );
 
@@ -53,6 +58,7 @@ class SBBTheme {
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBGroupStyle? groupStyle,
+    SBBPopoverStyle? popoverStyle,
     SBBToastStyle? toastStyle,
   }) {
     // default values are set here and merged with given styles
@@ -65,11 +71,14 @@ class SBBTheme {
     final defaultControlStyles = SBBControlStyles.$default(baseStyle: mergedBaseStyle);
     final mergedControlStyles = controlStyles.merge(defaultControlStyles);
 
+    final defaultGroupStyle = SBBGroupStyle.$default(baseStyle: mergedBaseStyle);
+    final mergedGroupStyle = groupStyle.merge(defaultGroupStyle);
+
     final defaultHeaderBoxStyle = SBBHeaderBoxStyle.$default(baseStyle: mergedBaseStyle);
     final mergedHeaderBoxStyle = headerBoxStyle.merge(defaultHeaderBoxStyle);
 
-    final defaultGroupStyle = SBBGroupStyle.$default(baseStyle: mergedBaseStyle);
-    final mergedGroupStyle = groupStyle.merge(defaultGroupStyle);
+    final defaultPopoverStyle = SBBPopoverStyle.$default(baseStyle: mergedBaseStyle);
+    final mergedPopoverStyle = popoverStyle.merge(defaultPopoverStyle);
 
     final defaultToastStyle = SBBToastStyle.$default(baseStyle: mergedBaseStyle);
     final mergedToastStyle = defaultToastStyle.merge(defaultToastStyle);
@@ -79,8 +88,9 @@ class SBBTheme {
       baseStyle: mergedBaseStyle,
       buttonStyles: mergedButtonStyles,
       controlStyles: mergedControlStyles,
-      headerBoxStyle: mergedHeaderBoxStyle,
       groupStyle: mergedGroupStyle,
+      headerBoxStyle: mergedHeaderBoxStyle,
+      popoverStyle: mergedPopoverStyle,
       toastStyle: mergedToastStyle,
     );
   }
@@ -90,8 +100,9 @@ class SBBTheme {
     required SBBBaseStyle baseStyle,
     required SBBButtonStyles buttonStyles,
     required SBBControlStyles controlStyles,
-    required SBBHeaderBoxStyle headerBoxStyle,
     required SBBGroupStyle groupStyle,
+    required SBBHeaderBoxStyle headerBoxStyle,
+    required SBBPopoverStyle popoverStyle,
     required SBBToastStyle toastStyle,
   }) => ThemeData(
     colorScheme: ColorScheme.fromSwatch(
@@ -112,7 +123,7 @@ class SBBTheme {
     textButtonTheme: buttonStyles.textButtonTheme,
     materialTapTargetSize: MaterialTapTargetSize.padded,
     textSelectionTheme: controlStyles.textSelectionTheme,
-    extensions: [baseStyle, buttonStyles, controlStyles, headerBoxStyle, groupStyle, toastStyle],
+    extensions: [baseStyle, buttonStyles, controlStyles, headerBoxStyle, groupStyle, popoverStyle, toastStyle],
   );
 
   /// Convenience method for easier use of [WidgetStateProperty.all].
