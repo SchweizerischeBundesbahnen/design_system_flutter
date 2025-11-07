@@ -19,15 +19,12 @@ class StatusPage extends StatelessWidget {
         SBBGroup(
           padding: const EdgeInsets.all(sbbDefaultSpacing),
           child: Column(
+            spacing: sbbDefaultSpacing,
             children: [
               SBBStatus.alert(text: text),
-              const SizedBox(height: sbbDefaultSpacing),
               SBBStatus.warning(text: text),
-              const SizedBox(height: sbbDefaultSpacing),
               SBBStatus.success(text: text),
-              const SizedBox(height: sbbDefaultSpacing),
               SBBStatus.information(text: text),
-              const SizedBox(height: sbbDefaultSpacing),
             ],
           ),
         ),
@@ -35,16 +32,13 @@ class StatusPage extends StatelessWidget {
         SBBGroup(
           padding: const EdgeInsets.all(sbbDefaultSpacing),
           child: Row(
+            spacing: sbbDefaultSpacing,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SBBStatus.alert(),
-              const SizedBox(width: sbbDefaultSpacing),
               SBBStatus.warning(),
-              const SizedBox(width: sbbDefaultSpacing),
               SBBStatus.success(),
-              const SizedBox(width: sbbDefaultSpacing),
               SBBStatus.information(),
-              const SizedBox(width: sbbDefaultSpacing),
             ],
           ),
         ),
@@ -52,15 +46,12 @@ class StatusPage extends StatelessWidget {
         SBBGroup(
           padding: const EdgeInsets.all(sbbDefaultSpacing),
           child: Column(
+            spacing: sbbDefaultSpacing,
             children: [
               SBBStatus.alert(text: '$text $text $text $text'),
-              const SizedBox(height: sbbDefaultSpacing),
               SBBStatus.warning(text: '$text $text $text $text'),
-              const SizedBox(height: sbbDefaultSpacing),
               SBBStatus.success(text: '$text $text $text $text'),
-              const SizedBox(height: sbbDefaultSpacing),
               SBBStatus.information(text: '$text $text $text $text'),
-              const SizedBox(height: sbbDefaultSpacing),
             ],
           ),
         ),

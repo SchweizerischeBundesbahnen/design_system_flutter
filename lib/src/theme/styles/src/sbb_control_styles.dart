@@ -30,6 +30,8 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     this.tabBarTextStyle,
     this.promotionBox,
     this.picker,
+    this.stepper,
+    this.coloredStepper,
   });
 
   factory SBBControlStyles.$default({required SBBBaseStyle baseStyle}) => SBBControlStyles(
@@ -67,6 +69,8 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     tabBarTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallLight),
     promotionBox: PromotionBoxStyle.$default(baseStyle: baseStyle),
     picker: SBBPickerStyle.$default(baseStyle: baseStyle),
+    stepper: SBBStepperStyle.$default(baseStyle: baseStyle),
+    coloredStepper: SBBStepperStyle.$colored(baseStyle: baseStyle),
   );
 
   final SBBControlStyle? checkbox;
@@ -80,6 +84,8 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   final SBBSliderStyle? slider;
   final SBBChipStyle? chip;
   final SBBPaginationStyle? pagination;
+  final SBBStepperStyle? stepper;
+  final SBBStepperStyle? coloredStepper;
 
   final Color? headerBackgroundColor;
   final Color? headerButtonBackgroundColorHighlighted;
@@ -142,6 +148,8 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     TextStyle? tabBarTextStyle,
     PromotionBoxStyle? promotionBox,
     SBBPickerStyle? picker,
+    SBBStepperStyle? stepper,
+    SBBStepperStyle? coloredStepper,
   }) => SBBControlStyles(
     checkbox: checkbox ?? this.checkbox,
     slider: slider ?? this.slider,
@@ -170,6 +178,8 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     tabBarTextStyle: tabBarTextStyle ?? this.tabBarTextStyle,
     promotionBox: promotionBox ?? this.promotionBox,
     picker: picker ?? this.picker,
+    stepper: stepper ?? this.stepper,
+    coloredStepper: coloredStepper ?? this.coloredStepper,
   );
 
   @override
@@ -206,6 +216,8 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
       tabBarTextStyle: TextStyle.lerp(tabBarTextStyle, other.tabBarTextStyle, t),
       promotionBox: PromotionBoxStyle.lerp(promotionBox, other.promotionBox, t),
       picker: picker?.lerp(other.picker, t),
+      stepper: stepper?.lerp(other.stepper, t),
+      coloredStepper: coloredStepper?.lerp(other.coloredStepper, t),
     );
   }
 }
@@ -241,6 +253,8 @@ extension SBBControlStylesExtension on SBBControlStyles? {
           modalTitleTextStyle: this!.modalTitleTextStyle ?? other?.modalTitleTextStyle,
           tabBarTextStyle: this!.tabBarTextStyle ?? other?.tabBarTextStyle,
           promotionBox: this!.promotionBox ?? other?.promotionBox,
+          stepper: this!.stepper ?? other?.stepper,
+          coloredStepper: this!.coloredStepper ?? other?.coloredStepper,
         )
         as SBBControlStyles;
   }

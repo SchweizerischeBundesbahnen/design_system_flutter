@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 
+// TODO: Label optional?
 class SBBStepperItem {
   const SBBStepperItem({this.icon, required this.label});
 
