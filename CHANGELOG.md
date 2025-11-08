@@ -25,6 +25,10 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 - (auto): updated icon lib to version 1.8.11
 
+### Deprecated
+
+- Deprecated `SBBAccordion`, `SBBAccordionItem`, `AccordionCallback`, and `SingleAccordionCallback` as they are no longer part of the design specifications
+
 ## [4.2.0] - 2025-10-03
 
 ### Added
