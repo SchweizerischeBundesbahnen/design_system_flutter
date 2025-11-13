@@ -34,6 +34,7 @@ class SBBTextStyles {
   static const double mediumFontSize = 16.0;
   static const double smallFontSize = 14.0;
   static const double xSmallFontSize = 12.0;
+  static const double xxSmallFontSize = 12.0;
 
   // Font heights
   static const double xxLargeFontHeight = 32.0 / xxLargeFontSize;
@@ -42,6 +43,7 @@ class SBBTextStyles {
   static const double mediumFontHeight = 20.0 / mediumFontSize;
   static const double smallFontHeight = 20.0 / smallFontSize;
   static const double xSmallFontHeight = 16.0 / xSmallFontSize;
+  static const double xxSmallFontHeight = 12.0 / xxSmallFontSize;
 
   // Text styles
   static const TextStyle extraExtraLargeLight = TextStyle(
@@ -140,6 +142,23 @@ class SBBTextStyles {
     fontWeight: FontWeight.normal,
   );
 
+  static const TextStyle extraExtraSmallLight = TextStyle(
+    fontFamily: SBBFontFamily.sbbFontLight,
+    fontSize: xxSmallFontSize,
+    height: xxSmallFontHeight,
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.normal,
+  );
+
+  static const TextStyle extraExtraSmallBold = TextStyle(
+    fontFamily: SBBFontFamily.sbbFontBold,
+    fontSize: xxSmallFontSize,
+    height: xxSmallFontHeight,
+    fontStyle: FontStyle.normal,
+    fontWeight: FontWeight.normal,
+  );
+
+  @Deprecated('Use SBBTextStyles.extraExtraSmallLight instead')
   static const TextStyle helpersLabel = TextStyle(
     fontFamily: SBBFontFamily.sbbFontLight,
     fontSize: 10.0,
