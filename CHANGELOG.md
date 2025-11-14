@@ -9,6 +9,8 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+## [4.3.0] - 2025-11-14
+
 ### Added
 
 - added `onTapAlwaysCalled`, `expands`, `autofillHints`, `obscuringCharacter` to `SBBTextField` (#401)
@@ -667,7 +669,9 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Initial project setup
 - Added some widgets
 
-[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.2.0...HEAD
+[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.3.0...HEAD
+
+[4.3.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.2.0...4.3.0
 
 [4.2.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.1.0...4.2.0
 
