@@ -9,21 +9,24 @@ import 'default_button_label.dart';
 /// Only one of them can be set.
 ///
 /// If [isLoading] is true and [label] is null, a themed [SBBLoadingIndicator] will be displayed
-/// as leading Widget within the button. The [onPressed] callback will be ignored.
+/// as label within the button. The [onPressed] and [onLongPress] callbacks will be ignored.
 ///
 /// Either [isLoading] must be true, or one of [label] or [labelText] must not be null.
 ///
-/// If [onPressed] callback is null, the button will be disabled.
+/// If both [onPressed] and [onLongPress] callbacks are null, the button will be disabled.
 ///
 /// For specifications see [Figma](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=7-12)
 class SBBSecondaryButton extends StatelessWidget {
   const SBBSecondaryButton({
     super.key,
+    required this.onPressed,
+    this.onLongPress,
     this.label,
     this.labelText,
-    this.isLoading = false,
-    required this.onPressed,
     this.focusNode,
+    this.onFocusChange,
+    this.autofocus = false,
+    this.isLoading = false,
   }) : assert(!(labelText != null && label != null), 'Cannot provide both labelText and label!'),
        assert(
          !(labelText == null && label == null && !isLoading),
@@ -42,26 +45,47 @@ class SBBSecondaryButton extends StatelessWidget {
 
   /// Whether the button is in a loading state.
   ///
-  /// When true, displays a [SBBLoadingIndicator] as the leading widget and ignores the [onPressed] callback.
+  /// If true, displays a [SBBLoadingIndicator] as the label and ignores the [onPressed] callback.
+  ///
+  /// If true, the button will appear disabled.
+  ///
   /// Defaults to false.
   final bool isLoading;
 
-  /// Callback function that is called when the button is pressed.
+  /// Called when the button is tapped.
+  ///
+  /// If this callback and [onLongPress] are null, then the button will be disabled.
   ///
   /// If null, the button will be disabled. If [isLoading] is true, this callback is ignored.
   final VoidCallback? onPressed;
 
-  /// An optional focus node to control the button's focus state.
+  /// Called when the button is long-pressed.
   ///
-  /// If not provided, a focus node will be created automatically.
+  /// If this callback and [onPressed] are null, then the button will be disabled.
+  ///
+  /// If [isLoading] is true, this callback is ignored.
+  final VoidCallback? onLongPress;
+
+  /// {@macro flutter.widgets.Focus.focusNode}
   final FocusNode? focusNode;
+
+  /// Handler called when the focus changes.
+  ///
+  /// Called with true if this widget's node gains focus, and false if it loses
+  /// focus.
+  final ValueChanged<bool>? onFocusChange;
+
+  /// {@macro flutter.widgets.Focus.autofocus}
+  final bool autofocus;
 
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
-      key: key,
       onPressed: isLoading ? null : onPressed,
+      onLongPress: isLoading ? null : onLongPress,
       focusNode: focusNode,
+      onFocusChange: onFocusChange,
+      autofocus: autofocus,
       child: label ?? _defaultLabel(context),
     );
   }

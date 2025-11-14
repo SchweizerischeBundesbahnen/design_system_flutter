@@ -29,7 +29,7 @@ class ButtonPage extends StatelessWidget {
                       onLongPress: () => sbbToast.show(title: 'Long SBBPrimaryButton'),
                     ),
                     const SBBPrimaryButton(labelText: 'Disabled', onPressed: null),
-                    SBBPrimaryButton(labelText: 'Loading', onPressed: () {}, isLoading: true),
+                    SBBPrimaryButton(onPressed: () {}, isLoading: true),
                   ],
                 ),
               ),
@@ -41,14 +41,13 @@ class ButtonPage extends StatelessWidget {
                   children: [
                     SBBSecondaryButton(
                       labelText: 'Default',
-                      onPressed: () {
-                        sbbToast.show(title: 'SBBSecondaryButton');
-                      },
+                      onPressed: () => sbbToast.show(title: 'SBBSecondaryButton'),
+                      onLongPress: () => sbbToast.show(title: 'Long SBBSecondaryButton'),
                     ),
                     const SizedBox(height: sbbDefaultSpacing),
                     const SBBSecondaryButton(labelText: 'Disabled', onPressed: null),
                     const SizedBox(height: sbbDefaultSpacing),
-                    SBBSecondaryButton(labelText: 'Loading', onPressed: () {}, isLoading: true),
+                    SBBSecondaryButton(onPressed: () {}, isLoading: true),
                   ],
                 ),
               ),
@@ -67,7 +66,7 @@ class ButtonPage extends StatelessWidget {
                         onPressed: () => sbbToast.show(title: 'SBBTertiaryButton'),
                       ),
                       const SBBTertiaryButton(labelText: 'Disabled', onPressed: null),
-                      SBBTertiaryButton(labelText: 'Loading', onPressed: () {}, isLoading: true),
+                      SBBTertiaryButton(onPressed: () {}, isLoading: true),
                       SBBTertiaryButton(
                         iconData: SBBIcons.dog_small,
                         onPressed: () => sbbToast.show(title: 'SBBTertiaryButton only icon'),
@@ -91,7 +90,7 @@ class ButtonPage extends StatelessWidget {
                         onPressed: () => sbbToast.show(title: 'SBBTertiaryButton'),
                       ),
                       const SBBTertiaryButtonSmall(labelText: 'Disabled', onPressed: null),
-                      SBBTertiaryButtonSmall(labelText: 'Loading', onPressed: () {}, isLoading: true),
+                      SBBTertiaryButtonSmall(onPressed: () {}, isLoading: true),
                       SBBTertiaryButtonSmall(iconData: SBBIcons.dog_small, onPressed: () {}),
                     ],
                   ),
