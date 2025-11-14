@@ -5,17 +5,19 @@ import 'default_button_label.dart';
 
 /// The secondary variant of the SBB Button.
 ///
-/// Use [label] for custom content or [labelText] for the standard design.
-/// Only one of them can be set.
+/// Provide either [label] for custom button content or [labelText] for text-only
+/// content with standard styling. These parameters are mutually exclusive.
 ///
-/// If [isLoading] is true and [label] is null, a themed [SBBLoadingIndicator] will be displayed
-/// as label within the button. The [onPressed] and [onLongPress] callbacks will be ignored.
+/// When [isLoading] is true, a loading indicator replaces the label and
+/// the button appears disabled.
 ///
-/// Either [isLoading] must be true, or one of [label] or [labelText] must not be null.
+/// The button is disabled when both [onPressed] and [onLongPress] are null.
 ///
-/// If both [onPressed] and [onLongPress] callbacks are null, the button will be disabled.
+/// See also:
 ///
-/// For specifications see [Figma](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=7-12)
+///  * [SBBPrimaryButton], for the main action.
+///  * [SBBTertiaryButton], for less prominent actions.
+///  * [Figma design specs](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=7-12)
 class SBBSecondaryButton extends StatelessWidget {
   const SBBSecondaryButton({
     super.key,
@@ -33,46 +35,49 @@ class SBBSecondaryButton extends StatelessWidget {
          'One of labelText, label must be set or isLoading must be true!',
        );
 
-  /// Custom widget to display as the button's label.
+  /// A custom widget displayed as the button's content.
   ///
-  /// Only one of [label] or [labelText] can be set.
+  /// For simple text labels, use [labelText] instead.
+  ///
+  /// Cannot be used together with [labelText].
   final Widget? label;
 
-  /// Text string to display as the button's label using the standard design.
+  /// The text displayed in the button.
   ///
-  /// Only one of [label] or [labelText] can be set.
+  /// The text will be styled according to the SBB design system.
+  ///
+  /// Cannot be used together with [label].
   final String? labelText;
 
-  /// Whether the button is in a loading state.
+  /// Whether to show a loading indicator instead of the label.
   ///
-  /// If true, displays a [SBBLoadingIndicator] as the label and ignores the [onPressed] callback.
-  ///
-  /// If true, the button will appear disabled.
+  /// When true:
+  ///  * A themed [SBBLoadingIndicator] replaces the button content
+  ///  * The button becomes disabled ([onPressed] and [onLongPress] are ignored)
   ///
   /// Defaults to false.
   final bool isLoading;
 
   /// Called when the button is tapped.
   ///
-  /// If this callback and [onLongPress] are null, then the button will be disabled.
+  /// The button is disabled when both this and [onLongPress] are null.
   ///
-  /// If null, the button will be disabled. If [isLoading] is true, this callback is ignored.
+  /// Ignored when [isLoading] is true.
   final VoidCallback? onPressed;
 
-  /// Called when the button is long-pressed.
+  /// Called when the button is long pressed.
   ///
-  /// If this callback and [onPressed] are null, then the button will be disabled.
+  /// The button is disabled when both this and [onPressed] are null.
   ///
-  /// If [isLoading] is true, this callback is ignored.
+  /// Ignored when [isLoading] is true.
   final VoidCallback? onLongPress;
 
   /// {@macro flutter.widgets.Focus.focusNode}
   final FocusNode? focusNode;
 
-  /// Handler called when the focus changes.
+  /// Called when the focus state of the button changes.
   ///
-  /// Called with true if this widget's node gains focus, and false if it loses
-  /// focus.
+  /// Receives true when the button gains focus and false when it loses focus.
   final ValueChanged<bool>? onFocusChange;
 
   /// {@macro flutter.widgets.Focus.autofocus}
