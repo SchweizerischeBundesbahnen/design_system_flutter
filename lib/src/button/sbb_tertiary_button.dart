@@ -17,7 +17,7 @@ import '../sbb_internal.dart';
 ///
 /// Either [isLoading] must be true, or one of [labelText] or [labelText] must not be null.
 ///
-/// If [onPressed] callback is null, the button will be disabled.
+/// If both [onPressed] and [onLongPress] callbacks are null, the button will be disabled.
 ///
 /// For specifications see [Figma](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=7-12)
 ///
@@ -104,7 +104,7 @@ class SBBTertiaryButton extends StatelessWidget {
 ///
 /// Either [isLoading] must be true, or one of [labelText] or [labelText] must not be null.
 ///
-/// If [onPressed] callback is null, the button will be disabled.
+/// If both [onPressed] and [onLongPress] callbacks are null, the button will be disabled.
 ///
 /// For specifications see [Figma](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=7-12)
 ///

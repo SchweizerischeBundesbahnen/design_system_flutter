@@ -9,11 +9,11 @@ import '../../sbb_design_system_mobile.dart';
 /// Only one of them can be set.
 ///
 /// If [isLoading] is true and [label] is null, the [SBBLoadingIndicator] will be displayed
-/// as leading Widget within the button. The [onPressed] callback will be ignored.
+/// as label within the button. The [onPressed] and [onLongPress] callbacks will be ignored.
 ///
 /// Either [isLoading] must be true, or one of [label] or [labelText] must not be null.
 ///
-/// If [onPressed] callback is null, the button will be disabled.
+/// If both [onPressed] and [onLongPress] callbacks are null, the button will be disabled.
 ///
 /// For specifications see [Figma](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=7-12)
 class SBBPrimaryButton extends StatelessWidget {
@@ -45,7 +45,10 @@ class SBBPrimaryButton extends StatelessWidget {
 
   /// Whether the button is in a loading state.
   ///
-  /// When true, displays a [SBBLoadingIndicator] as the leading widget and ignores the [onPressed] callback.
+  /// If true, displays a [SBBLoadingIndicator] as the label and ignores the [onPressed] callback.
+  ///
+  /// If true, the button will appear disabled.
+  ///
   /// Defaults to false.
   final bool isLoading;
 
@@ -78,7 +81,6 @@ class SBBPrimaryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FilledButton(
-      key: key,
       onPressed: isLoading ? null : onPressed,
       onLongPress: isLoading ? null : onLongPress,
       focusNode: focusNode,
