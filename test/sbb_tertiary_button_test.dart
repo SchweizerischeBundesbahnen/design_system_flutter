@@ -15,6 +15,7 @@ void main() {
           SBBTertiaryButton(labelText: "Disabled", onPressed: null),
           SBBTertiaryButton(labelText: "Icon", onPressed: () {}, iconData: SBBIcons.dog_small),
           SBBTertiaryButton(labelText: "Icon Disabled", onPressed: null, iconData: SBBIcons.dog_small),
+          SBBTertiaryButton(onPressed: () {}, iconData: SBBIcons.dog_small),
           SBBTertiaryButton(
             label: Container(color: SBBColors.platinum, child: Text('Custom!')),
             onPressed: () {},
@@ -23,6 +24,7 @@ void main() {
           SBBTertiaryButtonSmall(labelText: "Disabled", onPressed: null),
           SBBTertiaryButtonSmall(labelText: "Icon", onPressed: () {}, iconData: SBBIcons.dog_small),
           SBBTertiaryButtonSmall(labelText: "Icon Disabled", onPressed: null, iconData: SBBIcons.dog_small),
+          SBBTertiaryButtonSmall(onPressed: () {}, iconData: SBBIcons.dog_small),
           SBBTertiaryButtonSmall(
             label: Container(color: SBBColors.platinum, child: Text('Custom!')),
             onPressed: () {},
