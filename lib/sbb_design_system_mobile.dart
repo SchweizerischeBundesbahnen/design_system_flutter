@@ -17,6 +17,7 @@ export 'src/notification_box/notification_box.dart';
 export 'src/onboarding/onboarding.dart';
 export 'src/pagination/sbb_pagination.dart';
 export 'src/picker/sbb_picker.dart';
+export 'src/popover/popover.dart';
 export 'src/promotion_box/promotion_box.dart';
 export 'src/radio/radio.dart';
 export 'src/segmented_button/sbb_segmented_button.dart';

@@ -8,6 +8,20 @@ class GroupPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Container(color: Colors.yellow, width: 360, height: 10),
+        SBBModalAnchoredBuilder(
+          collapsedBuilder:
+              (context, showOverlay) => SBBIconButtonLarge(icon: SBBIcons.airplane_medium, onPressed: showOverlay),
+          overlayBuilder: (context, _) {
+            return SBBPopover(child: Container(height: 200, width: 200));
+          },
+        ),
+        Container(color: Colors.green, width: 100, height: 100),
+      ],
+    );
     content(String text) => SizedBox(
       height: sbbDefaultSpacing * 2,
       width: double.infinity,
@@ -18,6 +32,7 @@ class GroupPage extends StatelessWidget {
       children: <Widget>[
         ThemeModeSegmentedButton(),
         SizedBox(height: sbbDefaultSpacing * 2),
+        // SBBPopover(),
         SBBGroup(child: content('Default')),
         SizedBox(height: sbbDefaultSpacing),
         SBBGroup(color: SBBColors.royal, child: content('Different Color')),

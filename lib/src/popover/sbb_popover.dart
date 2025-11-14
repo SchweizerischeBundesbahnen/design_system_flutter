@@ -14,7 +14,7 @@ const _defaultPopoverBorder = SBBPopoverBorder.only(notchTop: true, notchBottom:
 /// borders and custom location.
 ///
 /// Typically, this Widget is used as the floating Widget with either:
-/// * [SBBAnchoredBuilder] allowing to anchor a base and floating widget using [OverlayPortal]
+/// * [SBBModalAnchoredBuilder] allowing to anchor a base and floating widget using [OverlayPortal]
 /// * [SBBModalAnchoredBuilder] which layers a [ModalBarrier] between the base and floating widget
 class SBBPopover extends StatelessWidget {
   const SBBPopover({
