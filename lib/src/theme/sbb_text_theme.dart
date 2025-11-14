@@ -6,6 +6,9 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 /// Definitions for the various typographical styles found in SBB Design System Mobile. To obtain the current SBB text
 /// theme, call [SBBTextTheme.of] with the current [BuildContext]. This is equivalent to calling [Theme.of] and reading
 /// the [ThemeData.sbbTextTheme] property.
+///
+/// See all text theme definitions in
+/// [Figma](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=0-1&p=f&t=8PFFztTe9RBMbOpq-0).
 class SBBTextTheme extends ThemeExtension<SBBTextTheme> {
   const SBBTextTheme({
     required this.xxSmallLight,
