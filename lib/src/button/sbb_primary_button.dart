@@ -19,11 +19,14 @@ import '../../sbb_design_system_mobile.dart';
 class SBBPrimaryButton extends StatelessWidget {
   const SBBPrimaryButton({
     super.key,
+    required this.onPressed,
+    this.onLongPress,
     this.label,
     this.labelText,
     this.isLoading = false,
-    required this.onPressed,
     this.focusNode,
+    this.onFocusChange,
+    this.autofocus = false,
   }) : assert(!(labelText != null && label != null), 'Cannot provide both labelText and label!'),
        assert(
          !(labelText == null && label == null && !isLoading),
@@ -46,22 +49,41 @@ class SBBPrimaryButton extends StatelessWidget {
   /// Defaults to false.
   final bool isLoading;
 
-  /// Callback function that is called when the button is pressed.
+  /// Called when the button is tapped.
+  ///
+  /// If this callback and [onLongPress] are null, then the button will be disabled.
   ///
   /// If null, the button will be disabled. If [isLoading] is true, this callback is ignored.
   final VoidCallback? onPressed;
 
-  /// An optional focus node to control the button's focus state.
+  /// Called when the button is long-pressed.
   ///
-  /// If not provided, a focus node will be created automatically.
+  /// If this callback and [onPressed] are null, then the button will be disabled.
+  ///
+  /// If [isLoading] is true, this callback is ignored.
+  final VoidCallback? onLongPress;
+
+  /// {@macro flutter.widgets.Focus.focusNode}
   final FocusNode? focusNode;
+
+  /// Handler called when the focus changes.
+  ///
+  /// Called with true if this widget's node gains focus, and false if it loses
+  /// focus.
+  final ValueChanged<bool>? onFocusChange;
+
+  /// {@macro flutter.widgets.Focus.autofocus}
+  final bool autofocus;
 
   @override
   Widget build(BuildContext context) {
     return FilledButton(
       key: key,
       onPressed: isLoading ? null : onPressed,
+      onLongPress: isLoading ? null : onLongPress,
       focusNode: focusNode,
+      onFocusChange: onFocusChange,
+      autofocus: autofocus,
       child: label ?? _defaultLabel(),
     );
   }

@@ -25,9 +25,8 @@ class ButtonPage extends StatelessWidget {
                   children: [
                     SBBPrimaryButton(
                       labelText: 'Default',
-                      onPressed: () {
-                        sbbToast.show(title: 'SBBPrimaryButton');
-                      },
+                      onPressed: () => sbbToast.show(title: 'SBBPrimaryButton'),
+                      onLongPress: () => sbbToast.show(title: 'Long SBBPrimaryButton'),
                     ),
                     const SBBPrimaryButton(labelText: 'Disabled', onPressed: null),
                     SBBPrimaryButton(labelText: 'Loading', onPressed: () {}, isLoading: true),
