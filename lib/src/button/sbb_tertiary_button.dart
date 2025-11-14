@@ -236,12 +236,10 @@ class _BaseTertiaryButton extends StatelessWidget {
       child = loading;
     }
 
-    return TextButton(
-      style: style,
-      onPressed: isLoading ? null : onPressed,
-      focusNode: focusNode,
-      child: child!,
-    );
+    final onlyLeading = (loading == null && leading != null && label == null);
+    final resolvedButton = onlyLeading ? _textButtonIcon(child!, context) : _textButton(child!);
+
+    return resolvedButton;
   }
 
   Widget? _resolvedLeading() {
@@ -258,5 +256,21 @@ class _BaseTertiaryButton extends StatelessWidget {
     if (!isLoading) return null;
     final sbbBaseStyle = SBBBaseStyle.of(context);
     return sbbBaseStyle.themeValue(const SBBLoadingIndicator.tinySmoke(), const SBBLoadingIndicator.tinyCement());
+  }
+
+  Widget _textButton(Widget child) => TextButton(
+    style: style,
+    onPressed: isLoading ? null : onPressed,
+    focusNode: focusNode,
+    child: child,
+  );
+
+  Widget _textButtonIcon(Widget child, BuildContext context) {
+    return IconButton(
+      style: style,
+      onPressed: isLoading ? null : onPressed,
+      focusNode: focusNode,
+      icon: child,
+    );
   }
 }
