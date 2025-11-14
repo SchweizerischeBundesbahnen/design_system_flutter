@@ -9,6 +9,10 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+### Changed
+
+- drop support for Flutter SDK 3.29.x
+
 ## [4.3.0] - 2025-11-14
 
 ### Added
