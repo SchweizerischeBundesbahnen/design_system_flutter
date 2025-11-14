@@ -1,51 +1,78 @@
 import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
+import 'default_button_label.dart';
 
 /// The secondary variant of the SBB Button.
 ///
-/// The [label] parameter must not be null.
+/// Use [label] for custom content or [labelText] for the standard design.
+/// Only one of them can be set.
 ///
-/// If [isLoading] is true, then the [SBBLoadingIndicator] will be displayed
-/// inside the button and the [onPressed] callback will be ignored.
+/// If [isLoading] is true and [label] is null, a themed [SBBLoadingIndicator] will be displayed
+/// as leading Widget within the button. The [onPressed] callback will be ignored.
 ///
-/// If [onPressed] callback is null, then the button will be disabled.
+/// Either [isLoading] must be true, or one of [label] or [labelText] must not be null.
 ///
-/// See also:
+/// If [onPressed] callback is null, the button will be disabled.
 ///
-/// * <https://digital.sbb.ch/en/design-system/mobile/components/button/>
+/// For specifications see [Figma](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=7-12)
 class SBBSecondaryButton extends StatelessWidget {
   const SBBSecondaryButton({
     super.key,
-    required this.label,
+    this.label,
+    this.labelText,
     this.isLoading = false,
     required this.onPressed,
     this.focusNode,
-  });
+  }) : assert(!(labelText != null && label != null), 'Cannot provide both labelText and label!'),
+       assert(
+         !(labelText == null && label == null && !isLoading),
+         'One of labelText, label must be set or isLoading must be true!',
+       );
 
-  final String label;
+  /// Custom widget to display as the button's label.
+  ///
+  /// Only one of [label] or [labelText] can be set.
+  final Widget? label;
+
+  /// Text string to display as the button's label using the standard design.
+  ///
+  /// Only one of [label] or [labelText] can be set.
+  final String? labelText;
+
+  /// Whether the button is in a loading state.
+  ///
+  /// When true, displays a [SBBLoadingIndicator] as the leading widget and ignores the [onPressed] callback.
+  /// Defaults to false.
   final bool isLoading;
+
+  /// Callback function that is called when the button is pressed.
+  ///
+  /// If null, the button will be disabled. If [isLoading] is true, this callback is ignored.
   final VoidCallback? onPressed;
+
+  /// An optional focus node to control the button's focus state.
+  ///
+  /// If not provided, a focus node will be created automatically.
   final FocusNode? focusNode;
 
   @override
   Widget build(BuildContext context) {
-    final style = SBBBaseStyle.of(context);
-    final buttonStyles = SBBButtonStyles.of(context);
     return OutlinedButton(
       onPressed: isLoading ? null : onPressed,
       focusNode: focusNode,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          if (isLoading)
-            style.themeValue(
-              const SBBLoadingIndicator.tinySmoke(),
-              const SBBLoadingIndicator.tinyCement(),
-            ),
-          buttonStyles.buttonLabelBuilder!(context, label),
-        ],
-      ),
+      child: label ?? _defaultLabel(context),
     );
+  }
+
+  Widget _defaultLabel(BuildContext context) {
+    final style = SBBBaseStyle.of(context);
+    final themedLoadingIndicator = style.themeValue(
+      const SBBLoadingIndicator.tinySmoke(),
+      const SBBLoadingIndicator.tinyCement(),
+    );
+
+    final child = isLoading ? themedLoadingIndicator : DefaultButtonLabel(label: labelText!);
+    return Center(child: child);
   }
 }
