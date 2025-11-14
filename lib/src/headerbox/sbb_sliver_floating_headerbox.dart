@@ -8,11 +8,9 @@ import '../sbb_internal.dart';
 import 'sliver_pinned_floating_widget.dart';
 
 part 'sbb_sliver_floating_headerbox.headerbox.dart';
-
 part 'sbb_sliver_floating_headerbox.spacer.dart';
 
-// Can be made `const` once Flutter 3.29.x deprecated and thus AnimationStyle is const.
-final defaultSnapStyle = AnimationStyle(
+final defaultSnapStyle = const AnimationStyle(
   duration: Durations.short2,
   curve: Curves.linear,
   reverseDuration: Durations.short2,
@@ -211,29 +209,28 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
     this.snapMode = FloatingHeaderSnapMode.scroll,
     Widget? preceding,
     required List<Widget> children,
-  }) : child =
-           preceding != null
-               ? SBBCascadeColumn(
-                 children: [
-                   _Preceding(child: preceding),
-                   _Headerbox(
-                     margin: margin,
-                     padding: padding,
-                     flap: flap,
-                     flapMode: flapMode,
-                     semanticsLabel: semanticsLabel,
-                     child: SBBCascadeColumn(children: children),
-                   ),
-                 ],
-               )
-               : _Headerbox(
-                 margin: margin,
-                 padding: padding,
-                 flap: flap,
-                 flapMode: flapMode,
-                 semanticsLabel: semanticsLabel,
-                 child: SBBCascadeColumn(children: children),
-               );
+  }) : child = preceding != null
+           ? SBBCascadeColumn(
+               children: [
+                 _Preceding(child: preceding),
+                 _Headerbox(
+                   margin: margin,
+                   padding: padding,
+                   flap: flap,
+                   flapMode: flapMode,
+                   semanticsLabel: semanticsLabel,
+                   child: SBBCascadeColumn(children: children),
+                 ),
+               ],
+             )
+           : _Headerbox(
+               margin: margin,
+               padding: padding,
+               flap: flap,
+               flapMode: flapMode,
+               semanticsLabel: semanticsLabel,
+               child: SBBCascadeColumn(children: children),
+             );
 
   final Widget child;
 
@@ -341,15 +338,15 @@ class _SnapTriggerState extends State<_SnapTrigger> {
     if (kIsWeb) return;
 
     assert(position != null);
-    final RenderSliverPinnedFloatingWidget? renderer =
-        context.findAncestorRenderObjectOfType<RenderSliverPinnedFloatingWidget>();
+    final RenderSliverPinnedFloatingWidget? renderer = context
+        .findAncestorRenderObjectOfType<RenderSliverPinnedFloatingWidget>();
 
     renderer?.onScrollingUpdate(position!);
   }
 
   Future<void> onSnapRequested(bool expand) async {
-    final RenderSliverPinnedFloatingWidget? renderer =
-        context.findAncestorRenderObjectOfType<RenderSliverPinnedFloatingWidget>();
+    final RenderSliverPinnedFloatingWidget? renderer = context
+        .findAncestorRenderObjectOfType<RenderSliverPinnedFloatingWidget>();
 
     await renderer?.snap(expand ? ScrollDirection.forward : ScrollDirection.reverse);
   }
