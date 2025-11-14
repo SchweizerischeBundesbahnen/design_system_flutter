@@ -1,4 +1,3 @@
-export 'src/accordion/sbb_accordion.dart';
 export 'src/button/button.dart';
 export 'src/checkbox/checkbox.dart';
 export 'src/chip/sbb_chip.dart';
