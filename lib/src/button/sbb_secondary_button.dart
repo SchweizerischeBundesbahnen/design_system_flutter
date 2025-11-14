@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
-/// The SBB Secondary Button. Use according to documentation.
+/// The secondary variant of the SBB Button.
 ///
 /// The [label] parameter must not be null.
 ///
