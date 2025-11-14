@@ -38,10 +38,9 @@ class SBBIconButtonLarge extends StatelessWidget {
       fixedSize: SBBTheme.allStates(const Size(SBBInternal.defaultButtonHeight, SBBInternal.defaultButtonHeight)),
       padding: SBBTheme.allStates(EdgeInsets.zero),
     );
-    final style =
-        buttonStyle != null
-            ? buttonStyle!.merge(baseStyle)
-            : SBBButtonStyles.of(context).iconLargeStyle?.overrideButtonStyle(baseStyle);
+    final style = buttonStyle != null
+        ? buttonStyle!.merge(baseStyle)
+        : SBBButtonStyles.of(context).iconLargeStyle?.overrideButtonStyle(baseStyle);
     return TextButton(
       style: style,
       onPressed: onPressed,

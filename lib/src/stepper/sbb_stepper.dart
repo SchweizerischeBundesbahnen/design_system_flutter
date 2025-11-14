@@ -77,7 +77,11 @@ class SBBStepper extends StatelessWidget {
           widgets.add(circle);
           // If the current step is not the last step create a connector line.
           if (i <= _steps.length - 1) {
-            final line = PositionedDirectional(start: x + 32, top: 16, child: _Line(colors: colors, width: lineWidth));
+            final line = PositionedDirectional(
+              start: x + 32,
+              top: 16,
+              child: _Line(colors: colors, width: lineWidth),
+            );
             widgets.add(line);
           }
           // If this is the active step add the label below the circle. If the
@@ -119,7 +123,11 @@ class SBBStepper extends StatelessWidget {
             widgets.add(label);
           }
         }
-        return SizedBox(width: width, height: 56, child: Stack(children: widgets));
+        return SizedBox(
+          width: width,
+          height: 56,
+          child: Stack(children: widgets),
+        );
       },
     );
   }
@@ -154,17 +162,19 @@ class _Circle extends StatelessWidget {
         clipBehavior: Clip.antiAlias,
         color: colors.circleBackground(active),
         shape: _shape(context),
-        child: InkWell(onTap: onPressed, child: Center(child: _iconOrNumber(context))),
+        child: InkWell(
+          onTap: onPressed,
+          child: Center(child: _iconOrNumber(context)),
+        ),
       ),
     );
   }
 
-  ShapeBorder _shape(BuildContext context) =>
-      active
-          ? CircleBorder()
-          : CircleBorder(
-            side: BorderSide(color: colors.circleBorder(active), width: 1),
-          );
+  ShapeBorder _shape(BuildContext context) => active
+      ? CircleBorder()
+      : CircleBorder(
+          side: BorderSide(color: colors.circleBorder(active), width: 1),
+        );
 
   Widget _iconOrNumber(BuildContext context) {
     if (icon != null) {

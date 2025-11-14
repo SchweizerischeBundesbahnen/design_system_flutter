@@ -91,12 +91,11 @@ class SBBSegmentedButton extends StatefulWidget {
     SBBControlStyleSelector<SBBSegmentedButtonStyle>? styleSelector,
   }) : this.custom(
          key: key,
-         widgetBuilders:
-             values.mapIndexed((_, value) {
-               return (SBBSegmentedButtonStyle? style, bool selected) {
-                 return Text(value, maxLines: 1, style: style.getTextStyle(selected));
-               };
-             }).toList(),
+         widgetBuilders: values.mapIndexed((_, value) {
+           return (SBBSegmentedButtonStyle? style, bool selected) {
+             return Text(value, maxLines: 1, style: style.getTextStyle(selected));
+           };
+         }).toList(),
          styleSelector: styleSelector,
          selectedStateIndex: selectedStateIndex,
          selectedIndexChanged: selectedIndexChanged,
@@ -111,24 +110,23 @@ class SBBSegmentedButton extends StatefulWidget {
     SBBControlStyleSelector<SBBSegmentedButtonStyle>? styleSelector,
   }) : this.custom(
          key: key,
-         widgetBuilders:
-             icons.entries.map((icon) {
-               return (SBBSegmentedButtonStyle? style, bool selected) {
-                 return Semantics(
-                   label: icon.value,
-                   child: Row(
-                     mainAxisAlignment: MainAxisAlignment.center,
-                     children: [
-                       Icon(icon.key, color: style?.getIconColor(selected)),
-                       if (withText) ...[
-                         const SizedBox(width: 4.0),
-                         ExcludeSemantics(child: Text(icon.value, style: style.getTextStyle(selected))),
-                       ],
-                     ],
-                   ),
-                 );
-               };
-             }).toList(),
+         widgetBuilders: icons.entries.map((icon) {
+           return (SBBSegmentedButtonStyle? style, bool selected) {
+             return Semantics(
+               label: icon.value,
+               child: Row(
+                 mainAxisAlignment: MainAxisAlignment.center,
+                 children: [
+                   Icon(icon.key, color: style?.getIconColor(selected)),
+                   if (withText) ...[
+                     const SizedBox(width: 4.0),
+                     ExcludeSemantics(child: Text(icon.value, style: style.getTextStyle(selected))),
+                   ],
+                 ],
+               ),
+             );
+           };
+         }).toList(),
          styleSelector: styleSelector,
          selectedStateIndex: selectedStateIndex,
          selectedIndexChanged: selectedIndexChanged,
@@ -247,23 +245,22 @@ class SegmentedButtonState extends State<SBBSegmentedButton> {
     final loc = Localizations.of(context, MaterialLocalizations);
     return IgnorePointer(
       child: Row(
-        children:
-            widget.widgetBuilders.mapIndexed((i, element) {
-              final selected = i == widget.selectedStateIndex;
-              return Expanded(
-                child: Semantics(
-                  focusable: true,
-                  selected: selected,
-                  button: !selected,
-                  hint: loc.tabLabel(tabIndex: i + 1, tabCount: widget.widgetBuilders.length),
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 4),
-                    alignment: Alignment.center,
-                    child: element(style, selected),
-                  ),
-                ),
-              );
-            }).toList(),
+        children: widget.widgetBuilders.mapIndexed((i, element) {
+          final selected = i == widget.selectedStateIndex;
+          return Expanded(
+            child: Semantics(
+              focusable: true,
+              selected: selected,
+              button: !selected,
+              hint: loc.tabLabel(tabIndex: i + 1, tabCount: widget.widgetBuilders.length),
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                alignment: Alignment.center,
+                child: element(style, selected),
+              ),
+            ),
+          );
+        }).toList(),
       ),
     );
   }

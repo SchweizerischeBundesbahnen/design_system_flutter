@@ -332,8 +332,9 @@ class _TextBody extends StatelessWidget {
               padding: const EdgeInsetsDirectional.only(top: sbbDefaultSpacing * 0.25),
               child: Text(
                 secondaryLabel!,
-                style:
-                    _isInteractive ? style?.listItem?.secondaryTextStyle : style?.listItem?.secondaryTextStyleDisabled,
+                style: _isInteractive
+                    ? style?.listItem?.secondaryTextStyle
+                    : style?.listItem?.secondaryTextStyleDisabled,
               ),
             ),
         ],

@@ -96,39 +96,35 @@ class SBBButtonStyle {
       pressedValue: backgroundColor,
       disabledValue: backgroundColorDisabled,
     ),
-    foregroundColor:
-        textStyle == null
-            ? null
-            : SBBTheme.resolveStatesWith(
-              defaultValue: textStyle!.color!,
-              pressedValue: textStyleHighlighted?.color,
-              disabledValue: textStyleDisabled?.color,
-            ),
-    textStyle:
-        textStyle == null
-            ? null
-            : SBBTheme.resolveStatesWith(
-              defaultValue: textStyle!,
-              pressedValue: textStyleHighlighted,
-              disabledValue: textStyleDisabled,
-              parent: runtimeType.toString(),
-            ),
-    side:
-        borderColor == null
-            ? null
-            : SBBTheme.resolveStatesWith(
-              defaultValue: BorderSide(color: borderColor!),
-              pressedValue: borderColorHighlighted == null ? null : BorderSide(color: borderColorHighlighted!),
-              disabledValue: borderColorDisabled == null ? null : BorderSide(color: borderColorDisabled!),
-            ),
-    iconColor:
-        iconColor != null
-            ? SBBTheme.resolveStatesWith(
-              defaultValue: iconColor!,
-              pressedValue: iconColorHighlighted,
-              disabledValue: iconColorDisabled,
-            )
-            : null,
+    foregroundColor: textStyle == null
+        ? null
+        : SBBTheme.resolveStatesWith(
+            defaultValue: textStyle!.color!,
+            pressedValue: textStyleHighlighted?.color,
+            disabledValue: textStyleDisabled?.color,
+          ),
+    textStyle: textStyle == null
+        ? null
+        : SBBTheme.resolveStatesWith(
+            defaultValue: textStyle!,
+            pressedValue: textStyleHighlighted,
+            disabledValue: textStyleDisabled,
+            parent: runtimeType.toString(),
+          ),
+    side: borderColor == null
+        ? null
+        : SBBTheme.resolveStatesWith(
+            defaultValue: BorderSide(color: borderColor!),
+            pressedValue: borderColorHighlighted == null ? null : BorderSide(color: borderColorHighlighted!),
+            disabledValue: borderColorDisabled == null ? null : BorderSide(color: borderColorDisabled!),
+          ),
+    iconColor: iconColor != null
+        ? SBBTheme.resolveStatesWith(
+            defaultValue: iconColor!,
+            pressedValue: iconColorHighlighted,
+            disabledValue: iconColorDisabled,
+          )
+        : null,
   );
 
   ButtonStyle overrideButtonStyle(ButtonStyle? baseButtonStyle) => toButtonStyle().merge(baseButtonStyle);

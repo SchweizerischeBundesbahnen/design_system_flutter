@@ -184,14 +184,13 @@ class _SBBCheckboxState extends State<SBBCheckbox> with TickerProviderStateMixin
           child: buildToggleable(
             mouseCursor: WidgetStateMouseCursor.clickable,
             size: resolvedSize,
-            painter:
-                _painter
-                  ..position = position
-                  ..reaction = reaction
-                  ..value = value
-                  ..previousValue = _previousValue
-                  ..checkColor = resolvedCheckColor
-                  ..boxBorderColor = resolvedBorderColor,
+            painter: _painter
+              ..position = position
+              ..reaction = reaction
+              ..value = value
+              ..previousValue = _previousValue
+              ..checkColor = resolvedCheckColor
+              ..boxBorderColor = resolvedBorderColor,
           ),
         ),
       ),

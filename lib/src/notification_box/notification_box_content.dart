@@ -26,7 +26,9 @@ class SBBNotificationBoxContent extends StatelessWidget {
           icon!,
           const SizedBox(width: 8.0),
         ],
-        Expanded(child: NotificationBoxTextContent(text: text, icon: detailsIcon)),
+        Expanded(
+          child: NotificationBoxTextContent(text: text, icon: detailsIcon),
+        ),
         if (isCloseable) const SizedBox(width: sbbIconSizeSmall),
       ],
     );

@@ -6,8 +6,11 @@ import 'test_app.dart';
 
 void main() {
   testWidgets('group', (WidgetTester tester) async {
-    content(String text) =>
-        SizedBox(height: sbbDefaultSpacing * 2, width: double.infinity, child: Center(child: Text(text)));
+    content(String text) => SizedBox(
+      height: sbbDefaultSpacing * 2,
+      width: double.infinity,
+      child: Center(child: Text(text)),
+    );
 
     final widget = Padding(
       padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
@@ -18,7 +21,10 @@ void main() {
           SizedBox(height: sbbDefaultSpacing),
           SBBGroup(color: SBBColors.royal, child: content('Different Color')),
           SizedBox(height: sbbDefaultSpacing),
-          SBBGroup(padding: EdgeInsets.symmetric(vertical: sbbDefaultSpacing), child: content('Extra padding')),
+          SBBGroup(
+            padding: EdgeInsets.symmetric(vertical: sbbDefaultSpacing),
+            child: content('Extra padding'),
+          ),
           SizedBox(height: sbbDefaultSpacing),
           SBBGroup(margin: EdgeInsets.all(sbbDefaultSpacing * 4), child: content('Extra margin')),
         ],

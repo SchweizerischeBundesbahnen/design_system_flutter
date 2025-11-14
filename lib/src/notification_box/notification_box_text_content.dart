@@ -11,7 +11,9 @@ class NotificationBoxTextContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Expanded(child: Text(text, maxLines: clip ? 3 : null, overflow: clip ? TextOverflow.ellipsis : null)),
+        Expanded(
+          child: Text(text, maxLines: clip ? 3 : null, overflow: clip ? TextOverflow.ellipsis : null),
+        ),
         const SizedBox(width: 8.0),
         if (icon != null) icon!,
       ],

@@ -121,7 +121,9 @@ class CheckboxTest extends StatelessWidget {
       Column(
         spacing: sbbDefaultSpacing * .5,
         children: [
-          SBBGroup(child: SBBCheckboxListItem.boxed(value: value1, label: 'Default', onChanged: (value) {})),
+          SBBGroup(
+            child: SBBCheckboxListItem.boxed(value: value1, label: 'Default', onChanged: (value) {}),
+          ),
           SBBGroup(
             child: SBBCheckboxListItem.boxed(value: value2, label: 'Tristate', tristate: true, onChanged: (value) {}),
           ),

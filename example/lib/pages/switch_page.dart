@@ -72,16 +72,30 @@ class _SwitchPageState extends State<SwitchPage> {
                 value: _value5,
                 title: 'With Link',
                 onChanged: (value) => setState(() => _value5 = value),
-                links: [SBBSwitchListItemLink(text: 'Link Text', onPressed: () => sbbToast.show(title: 'Link'))],
+                links: [
+                  SBBSwitchListItemLink(
+                    text: 'Link Text',
+                    onPressed: () => sbbToast.show(title: 'Link'),
+                  ),
+                ],
               ),
               SBBSwitchListItem(
                 value: _value6,
                 title: 'With 3 Links',
                 onChanged: (value) => setState(() => _value6 = value),
                 links: [
-                  SBBSwitchListItemLink(text: 'Link Text 1', onPressed: () => sbbToast.show(title: 'Link 1')),
-                  SBBSwitchListItemLink(text: 'Link Text 2', onPressed: () => sbbToast.show(title: 'Link 2')),
-                  SBBSwitchListItemLink(text: 'Link Text 3', onPressed: () => sbbToast.show(title: 'Link 3')),
+                  SBBSwitchListItemLink(
+                    text: 'Link Text 1',
+                    onPressed: () => sbbToast.show(title: 'Link 1'),
+                  ),
+                  SBBSwitchListItemLink(
+                    text: 'Link Text 2',
+                    onPressed: () => sbbToast.show(title: 'Link 2'),
+                  ),
+                  SBBSwitchListItemLink(
+                    text: 'Link Text 3',
+                    onPressed: () => sbbToast.show(title: 'Link 3'),
+                  ),
                 ],
               ),
               SBBSwitchListItem(
@@ -167,7 +181,12 @@ class _SwitchPageState extends State<SwitchPage> {
             value: _value5,
             title: 'With Link',
             onChanged: (value) => setState(() => _value5 = value),
-            links: [SBBSwitchListItemLink(text: 'Link Text', onPressed: () => sbbToast.show(title: 'Link'))],
+            links: [
+              SBBSwitchListItemLink(
+                text: 'Link Text',
+                onPressed: () => sbbToast.show(title: 'Link'),
+              ),
+            ],
           ),
         ),
         const SizedBox(height: sbbDefaultSpacing * .5),
@@ -177,9 +196,18 @@ class _SwitchPageState extends State<SwitchPage> {
             title: 'With 3 Links',
             onChanged: (value) => setState(() => _value6 = value),
             links: [
-              SBBSwitchListItemLink(text: 'Link Text 1', onPressed: () => sbbToast.show(title: 'Link 1')),
-              SBBSwitchListItemLink(text: 'Link Text 2', onPressed: () => sbbToast.show(title: 'Link 2')),
-              SBBSwitchListItemLink(text: 'Link Text 3', onPressed: () => sbbToast.show(title: 'Link 3')),
+              SBBSwitchListItemLink(
+                text: 'Link Text 1',
+                onPressed: () => sbbToast.show(title: 'Link 1'),
+              ),
+              SBBSwitchListItemLink(
+                text: 'Link Text 2',
+                onPressed: () => sbbToast.show(title: 'Link 2'),
+              ),
+              SBBSwitchListItemLink(
+                text: 'Link Text 3',
+                onPressed: () => sbbToast.show(title: 'Link 3'),
+              ),
             ],
           ),
         ),
