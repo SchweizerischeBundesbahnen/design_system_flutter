@@ -34,7 +34,7 @@ class SBBTextStyles {
   static const double mediumFontSize = 16.0;
   static const double smallFontSize = 14.0;
   static const double xSmallFontSize = 12.0;
-  static const double xxSmallFontSize = 12.0;
+  static const double xxSmallFontSize = 10.0;
 
   // Font heights
   static const double xxLargeFontHeight = 32.0 / xxLargeFontSize;
