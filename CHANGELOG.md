@@ -12,6 +12,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 ### Added
 
 - added `onTapAlwaysCalled`, `expands`, `autofillHints`, `obscuringCharacter` to `SBBTextField` (#401)
+- added `SBBTextTheme` theme extension to `ThemeData` (#420)
 
 ### Fixed
 

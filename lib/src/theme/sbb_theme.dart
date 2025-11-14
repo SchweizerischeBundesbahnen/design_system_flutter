@@ -14,6 +14,7 @@ class SBBTheme {
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBGroupStyle? groupStyle,
+    SBBTextTheme? textTheme,
     SBBToastStyle? toastStyle,
   }) => createTheme(
     brightness: Brightness.light,
@@ -23,6 +24,7 @@ class SBBTheme {
     controlStyles: controlStyles,
     headerBoxStyle: headerBoxStyle,
     groupStyle: groupStyle,
+    textTheme: textTheme,
     toastStyle: toastStyle,
   );
 
@@ -33,6 +35,7 @@ class SBBTheme {
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBGroupStyle? groupStyle,
+    SBBTextTheme? textTheme,
     SBBToastStyle? toastStyle,
   }) => createTheme(
     brightness: Brightness.dark,
@@ -42,6 +45,7 @@ class SBBTheme {
     controlStyles: controlStyles,
     headerBoxStyle: headerBoxStyle,
     groupStyle: groupStyle,
+    textTheme: textTheme,
     toastStyle: toastStyle,
   );
 
@@ -53,6 +57,7 @@ class SBBTheme {
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBGroupStyle? groupStyle,
+    SBBTextTheme? textTheme,
     SBBToastStyle? toastStyle,
   }) {
     // default values are set here and merged with given styles
@@ -71,6 +76,9 @@ class SBBTheme {
     final defaultGroupStyle = SBBGroupStyle.$default(baseStyle: mergedBaseStyle);
     final mergedGroupStyle = groupStyle.merge(defaultGroupStyle);
 
+    final defaultTextTheme = SBBTextTheme.$default(baseStyle: mergedBaseStyle);
+    final mergedTextTheme = defaultTextTheme.merge(textTheme);
+
     final defaultToastStyle = SBBToastStyle.$default(baseStyle: mergedBaseStyle);
     final mergedToastStyle = defaultToastStyle.merge(defaultToastStyle);
 
@@ -81,6 +89,7 @@ class SBBTheme {
       controlStyles: mergedControlStyles,
       headerBoxStyle: mergedHeaderBoxStyle,
       groupStyle: mergedGroupStyle,
+      textTheme: mergedTextTheme,
       toastStyle: mergedToastStyle,
     );
   }
@@ -92,6 +101,7 @@ class SBBTheme {
     required SBBControlStyles controlStyles,
     required SBBHeaderBoxStyle headerBoxStyle,
     required SBBGroupStyle groupStyle,
+    required SBBTextTheme textTheme,
     required SBBToastStyle toastStyle,
   }) => ThemeData(
     colorScheme: ColorScheme.fromSwatch(
@@ -112,7 +122,15 @@ class SBBTheme {
     textButtonTheme: buttonStyles.textButtonTheme,
     materialTapTargetSize: MaterialTapTargetSize.padded,
     textSelectionTheme: controlStyles.textSelectionTheme,
-    extensions: [baseStyle, buttonStyles, controlStyles, headerBoxStyle, groupStyle, toastStyle],
+    extensions: [
+      baseStyle,
+      buttonStyles,
+      controlStyles,
+      headerBoxStyle,
+      groupStyle,
+      textTheme,
+      toastStyle,
+    ],
   );
 
   /// Convenience method for easier use of [WidgetStateProperty.all].
