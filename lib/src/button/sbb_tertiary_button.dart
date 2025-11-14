@@ -79,7 +79,6 @@ class SBBTertiaryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _BaseTertiaryButton(
-      key: key,
       label: label,
       labelText: labelText,
       icon: icon,
@@ -167,7 +166,6 @@ class SBBTertiaryButtonSmall extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _BaseTertiaryButton(
-      key: key,
       style: _reducedHeightStyle(context),
       label: label,
       labelText: labelText,
@@ -194,7 +192,6 @@ class SBBTertiaryButtonSmall extends StatelessWidget {
 /// Base class for building both the small and the normal variant of SBBTertiaryButton.
 class _BaseTertiaryButton extends StatelessWidget {
   const _BaseTertiaryButton({
-    super.key,
     this.style,
     this.label,
     this.labelText,

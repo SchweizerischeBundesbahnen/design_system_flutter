@@ -59,6 +59,7 @@ class SBBPrimaryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FilledButton(
+      key: key,
       onPressed: isLoading ? null : onPressed,
       focusNode: focusNode,
       child: label ?? _defaultLabel(),

@@ -7,13 +7,16 @@ import 'test_app.dart';
 void main() {
   testWidgets('secondary_button', (WidgetTester tester) async {
     final widget = Padding(
-      padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing / 2),
+      padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing / 2, vertical: sbbDefaultSpacing),
       child: Column(
+        spacing: sbbDefaultSpacing,
         children: [
-          const SizedBox(height: sbbDefaultSpacing),
-          SBBSecondaryButton(label: "Default", onPressed: () {}),
-          const SizedBox(height: sbbDefaultSpacing),
-          SBBSecondaryButton(label: "Disabled", onPressed: null),
+          SBBSecondaryButton(labelText: "Default", onPressed: () {}),
+          SBBSecondaryButton(labelText: "Disabled", onPressed: null),
+          SBBSecondaryButton(
+            label: Container(color: SBBColors.platinum, child: Text('Custom!')),
+            onPressed: () {},
+          ),
         ],
       ),
     );

@@ -59,6 +59,7 @@ class SBBSecondaryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return OutlinedButton(
+      key: key,
       onPressed: isLoading ? null : onPressed,
       focusNode: focusNode,
       child: label ?? _defaultLabel(context),

@@ -22,15 +22,15 @@ class ButtonPage extends StatelessWidget {
             child: Column(
               children: [
                 SBBPrimaryButton(
-                  label: 'Default',
+                  labelText: 'Default',
                   onPressed: () {
                     sbbToast.show(title: 'SBBPrimaryButton');
                   },
                 ),
                 const SizedBox(height: sbbDefaultSpacing),
-                const SBBPrimaryButton(label: 'Disabled', onPressed: null),
+                const SBBPrimaryButton(labelText: 'Disabled', onPressed: null),
                 const SizedBox(height: sbbDefaultSpacing),
-                SBBPrimaryButton(label: 'Loading', onPressed: () {}, isLoading: true),
+                SBBPrimaryButton(labelText: 'Loading', onPressed: () {}, isLoading: true),
               ],
             ),
           ),
@@ -41,15 +41,15 @@ class ButtonPage extends StatelessWidget {
             child: Column(
               children: [
                 SBBSecondaryButton(
-                  label: 'Default',
+                  labelText: 'Default',
                   onPressed: () {
                     sbbToast.show(title: 'SBBSecondaryButton');
                   },
                 ),
                 const SizedBox(height: sbbDefaultSpacing),
-                const SBBSecondaryButton(label: 'Disabled', onPressed: null),
+                const SBBSecondaryButton(labelText: 'Disabled', onPressed: null),
                 const SizedBox(height: sbbDefaultSpacing),
-                SBBSecondaryButton(label: 'Loading', onPressed: () {}, isLoading: true),
+                SBBSecondaryButton(labelText: 'Loading', onPressed: () {}, isLoading: true),
               ],
             ),
           ),
@@ -62,30 +62,34 @@ class ButtonPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SBBTertiaryButtonLarge(
-                    label: 'Default',
+                  SBBTertiaryButton(
+                    labelText: 'Default',
                     onPressed: () {
                       sbbToast.show(title: 'SBBTertiaryButtonLarge');
                     },
                   ),
                   const SizedBox(height: sbbDefaultSpacing),
-                  const SBBTertiaryButtonLarge(label: 'Disabled', onPressed: null),
+                  const SBBTertiaryButton(labelText: 'Disabled', onPressed: null),
                   const SizedBox(height: sbbDefaultSpacing),
-                  SBBTertiaryButtonLarge(label: 'Loading', onPressed: () {}, isLoading: true),
+                  SBBTertiaryButton(labelText: 'Loading', onPressed: () {}, isLoading: true),
                   const SizedBox(height: sbbDefaultSpacing),
-                  SBBTertiaryButtonLarge(
-                    label: 'Icon',
-                    icon: SBBIcons.dog_small,
+                  SBBTertiaryButton(
+                    labelText: 'Icon',
+                    iconData: SBBIcons.dog_small,
                     onPressed: () {
                       sbbToast.show(title: 'SBBTertiaryButtonLarge');
                     },
                   ),
                   const SizedBox(height: sbbDefaultSpacing),
-                  const SBBTertiaryButtonLarge(label: 'Icon Disabled', icon: SBBIcons.dog_small, onPressed: null),
+                  const SBBTertiaryButton(
+                    labelText: 'Icon Disabled',
+                    iconData: SBBIcons.dog_small,
+                    onPressed: null,
+                  ),
                   const SizedBox(height: sbbDefaultSpacing),
-                  SBBTertiaryButtonLarge(
-                    label: 'Icon Loading',
-                    icon: SBBIcons.dog_small,
+                  SBBTertiaryButton(
+                    labelText: 'Icon Loading',
+                    iconData: SBBIcons.dog_small,
                     onPressed: () {},
                     isLoading: true,
                   ),
@@ -103,29 +107,33 @@ class ButtonPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SBBTertiaryButtonSmall(
-                    label: 'Default',
+                    labelText: 'Default',
                     onPressed: () {
                       sbbToast.show(title: 'SBBTertiaryButtonSmall');
                     },
                   ),
                   const SizedBox(height: sbbDefaultSpacing),
-                  const SBBTertiaryButtonSmall(label: 'Disabled', onPressed: null),
+                  const SBBTertiaryButtonSmall(labelText: 'Disabled', onPressed: null),
                   const SizedBox(height: sbbDefaultSpacing),
-                  const SBBTertiaryButtonSmall(label: 'Loading', onPressed: null, isLoading: true),
+                  const SBBTertiaryButtonSmall(labelText: 'Loading', onPressed: null, isLoading: true),
                   const SizedBox(height: sbbDefaultSpacing),
                   SBBTertiaryButtonSmall(
-                    label: 'Icon',
-                    icon: SBBIcons.dog_small,
+                    labelText: 'Icon',
+                    iconData: SBBIcons.dog_small,
                     onPressed: () {
                       sbbToast.show(title: 'SBBTertiaryButtonSmall');
                     },
                   ),
                   const SizedBox(height: sbbDefaultSpacing),
-                  const SBBTertiaryButtonSmall(label: 'Icon Disabled', icon: SBBIcons.dog_small, onPressed: null),
+                  const SBBTertiaryButtonSmall(
+                    labelText: 'Icon Disabled',
+                    iconData: SBBIcons.dog_small,
+                    onPressed: null,
+                  ),
                   const SizedBox(height: sbbDefaultSpacing),
                   const SBBTertiaryButtonSmall(
-                    label: 'Icon Loading',
-                    icon: SBBIcons.dog_small,
+                    labelText: 'Icon Loading',
+                    iconData: SBBIcons.dog_small,
                     onPressed: null,
                     isLoading: true,
                   ),

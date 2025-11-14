@@ -66,14 +66,20 @@ class TestOnboardingBuilderDelegate extends SBBOnboardingBuilderDelegate {
   Widget buildStartPage(BuildContext context, VoidCallback onStartOnboarding, VoidCallback onFinish) => Container(
     color: SBBColors.red,
     child: Center(
-      child: SBBTertiaryButtonLarge(key: const Key('start'), label: 'Onboarding starten', onPressed: onStartOnboarding),
+      child: SBBTertiaryButton(
+        key: const Key('start'),
+        labelText: 'Onboarding starten',
+        onPressed: onStartOnboarding,
+      ),
     ),
   );
 
   @override
   Widget buildEndPage(BuildContext context, VoidCallback onFinish) => Container(
     color: SBBColors.red,
-    child: Center(child: SBBTertiaryButtonLarge(label: 'Onboarding beenden', onPressed: onFinish)),
+    child: Center(
+      child: SBBTertiaryButton(labelText: 'Onboarding beenden', onPressed: onFinish),
+    ),
   );
 
   @override

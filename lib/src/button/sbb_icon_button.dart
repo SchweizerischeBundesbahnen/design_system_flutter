@@ -6,7 +6,7 @@ import 'package:flutter/rendering.dart';
 import '../../sbb_design_system_mobile.dart';
 import '../sbb_internal.dart';
 
-/// SBBIconButtonLarge. Use this as [SBBTertiaryButtonLarge] without label.
+/// SBBIconButtonLarge. Use this as [SBBTertiaryButton] without label.
 ///
 /// The [icon] parameter must not be null. Make sure to use small or medium icons.
 ///
@@ -38,10 +38,9 @@ class SBBIconButtonLarge extends StatelessWidget {
       fixedSize: SBBTheme.allStates(const Size(SBBInternal.defaultButtonHeight, SBBInternal.defaultButtonHeight)),
       padding: SBBTheme.allStates(EdgeInsets.zero),
     );
-    final style =
-        buttonStyle != null
-            ? buttonStyle!.merge(baseStyle)
-            : SBBButtonStyles.of(context).iconLargeStyle?.overrideButtonStyle(baseStyle);
+    final style = buttonStyle != null
+        ? buttonStyle!.merge(baseStyle)
+        : SBBButtonStyles.of(context).iconLargeStyle?.overrideButtonStyle(baseStyle);
     return TextButton(
       style: style,
       onPressed: onPressed,

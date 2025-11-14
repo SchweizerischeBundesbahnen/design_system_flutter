@@ -88,7 +88,7 @@ class SBBDateTimePicker extends StatefulWidget {
 
     final acceptInitialSelection = initialDateTime == null;
     final selectedButtonEnabled = ValueNotifier(acceptInitialSelection);
-    final selectedButtonLabel = localizations.datePickerHelpText;
+    final selectedButtonLabelText = localizations.datePickerHelpText;
 
     var selectedDateTime = modalDateTime;
 
@@ -120,14 +120,13 @@ class SBBDateTimePicker extends StatefulWidget {
             child: ListenableBuilder(
               listenable: selectedButtonEnabled,
               builder: (context, _) {
-                final onPressed =
-                    selectedButtonEnabled.value
-                        ? () {
-                          Navigator.of(context).pop();
-                          onDateTimeChanged?.call(selectedDateTime);
-                        }
-                        : null;
-                return SBBPrimaryButton(label: selectedButtonLabel, onPressed: onPressed);
+                final onPressed = selectedButtonEnabled.value
+                    ? () {
+                        Navigator.of(context).pop();
+                        onDateTimeChanged?.call(selectedDateTime);
+                      }
+                    : null;
+                return SBBPrimaryButton(labelText: selectedButtonLabelText, onPressed: onPressed);
               },
             ),
           ),

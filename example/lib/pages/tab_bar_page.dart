@@ -36,7 +36,7 @@ class TabBarPageState extends State<TabBarPage> {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: sbbDefaultSpacing, horizontal: 8.0),
             child: SBBPrimaryButton(
-              label: 'toggle visibility',
+              labelText: 'toggle visibility',
               onPressed: () => setState(() => visible = !visible),
             ),
           ),
