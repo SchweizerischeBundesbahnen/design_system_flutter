@@ -232,13 +232,13 @@ class SBBCheckboxListItem extends StatelessWidget {
         ? null
         : onCallToAction == null
         ? Padding(
-          padding: const EdgeInsets.only(top: _iconTopPadding, right: sbbDefaultSpacing),
-          child: Icon(trailingIcon, size: 24.0),
-        )
+            padding: const EdgeInsets.only(top: _iconTopPadding, right: sbbDefaultSpacing),
+            child: Icon(trailingIcon, size: 24.0),
+          )
         : Padding(
-          padding: const EdgeInsets.only(right: sbbDefaultSpacing * .5),
-          child: SBBIconButtonSmall(icon: trailingIcon, onPressed: onChanged != null ? onCallToAction : null),
-        );
+            padding: const EdgeInsets.only(right: sbbDefaultSpacing * .5),
+            child: SBBIconButtonSmall(icon: trailingIcon, onPressed: onChanged != null ? onCallToAction : null),
+          );
   }
 
   @override
@@ -363,8 +363,9 @@ class _TextBody extends StatelessWidget {
               padding: const EdgeInsetsDirectional.only(top: sbbDefaultSpacing * 0.25),
               child: Text(
                 secondaryLabel!,
-                style:
-                    _isInteractive ? style?.listItem?.secondaryTextStyle : style?.listItem?.secondaryTextStyleDisabled,
+                style: _isInteractive
+                    ? style?.listItem?.secondaryTextStyle
+                    : style?.listItem?.secondaryTextStyleDisabled,
               ),
             ),
         ],

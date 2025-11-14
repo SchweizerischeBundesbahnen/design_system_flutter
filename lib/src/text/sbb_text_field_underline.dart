@@ -21,16 +21,18 @@ class SBBTextFieldUnderline extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         if (errorText != null)
-          Padding(padding: const EdgeInsets.only(bottom: 9.0), child: Text(errorText!, style: style?.errorTextStyle)),
+          Padding(
+            padding: const EdgeInsets.only(bottom: 9.0),
+            child: Text(errorText!, style: style?.errorTextStyle),
+          ),
         Divider(
-          color:
-              errorText == null
-                  ? hasFocus
-                      ? style?.dividerColorHighlighted
-                      : isLastElement
-                      ? SBBColors.transparent
-                      : style?.dividerColor
-                  : style?.dividerColorError,
+          color: errorText == null
+              ? hasFocus
+                    ? style?.dividerColorHighlighted
+                    : isLastElement
+                    ? SBBColors.transparent
+                    : style?.dividerColor
+              : style?.dividerColorError,
         ),
       ],
     );
