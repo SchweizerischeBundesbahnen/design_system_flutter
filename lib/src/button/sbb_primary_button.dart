@@ -35,9 +35,9 @@ class SBBPrimaryButton extends StatelessWidget {
          'One of labelText, label must be set or isLoading must be true!',
        );
 
-  /// Custom widget to display as the button's label.
+  /// A custom widget displayed as the button's content.
   ///
-  /// Use this if you want customise the Button inner content.
+  /// For simple text labels, use [labelText] instead.
   ///
   /// Cannot be used together with [labelText].
   final Widget? label;
