@@ -52,7 +52,7 @@ class ButtonPage extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: sbbDefaultSpacing),
-              const SBBListHeader('Tertiary Button Large'),
+              const SBBListHeader('Tertiary Button'),
               SBBGroup(
                 padding: const EdgeInsets.all(sbbDefaultSpacing),
                 child: SizedBox(
