@@ -6,23 +6,23 @@ import '../sbb_internal.dart';
 
 /// The tertiary variant of the SBB Button.
 ///
-/// Use [label] for custom content or [labelText] for the standard design.
-/// Only one of them can be set.
+/// Provide either [label] for a custom content or [labelText] for text-only
+/// content with standard styling. These parameters are mutually exclusive.
 ///
-/// To display a leading icon within the button, either use [iconData] for the standard designed icon or
-/// [icon] for completely customizing the leading Widget. Only one of them can be set.
+/// An optional leading icon can be added using [iconData] for standard icons
+/// or [icon] for custom widgets. These parameters are mutually exclusive.
 ///
-/// If [isLoading] is true and [labelText] is null, the [SBBLoadingIndicator] will be displayed
-/// as leading Widget within the button. The [onPressed] callback will be ignored and the [iconData] will not be displayed.
+/// When [isLoading] is true, a loading indicator replaces the button content
+/// and the button appears disabled.
 ///
-/// Either [isLoading] must be true, or one of [labelText] or [labelText] must not be null.
+/// The button is disabled when both [onPressed] and [onLongPress] are null.
 ///
-/// If both [onPressed] and [onLongPress] callbacks are null, the button will be disabled.
+/// See also:
 ///
-/// For specifications see [Figma](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=7-12)
-///
-/// See also
-/// * [SBBTertiaryButtonSmall] for a small sized variant of this Widget with reduced height.
+///  * [SBBTertiaryButtonSmall], for a compact variant with reduced height.
+///  * [SBBPrimaryButton], for the main action.
+///  * [SBBSecondaryButton], for secondary actions.
+///  * [Figma design specs](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=7-12)
 class SBBTertiaryButton extends StatelessWidget {
   const SBBTertiaryButton({
     super.key,
@@ -32,7 +32,10 @@ class SBBTertiaryButton extends StatelessWidget {
     this.iconData,
     this.isLoading = false,
     required this.onPressed,
+    this.onLongPress,
     this.focusNode,
+    this.onFocusChange,
+    this.autofocus = false,
   }) : assert(!(labelText != null && label != null), 'Cannot provide both labelText and label!'),
        assert(!(iconData != null && icon != null), 'Cannot provide both iconData and icon!'),
        assert(
@@ -40,41 +43,69 @@ class SBBTertiaryButton extends StatelessWidget {
          'One of labelText, label, icon, iconData must be set or isLoading must be true!',
        );
 
-  /// Custom widget to display as the button's label.
+  /// A custom widget displayed as the button's content.
   ///
-  /// Only one of [label] or [labelText] can be set.
+  /// For simple text labels, use [labelText] instead.
+  ///
+  /// Cannot be used together with [labelText].
   final Widget? label;
 
-  /// Text string to display as the button's label using the standard design.
+  /// The text displayed in the button.
   ///
-  /// Only one of [label] or [labelText] can be set.
+  /// The text will be styled according to the SBB design system.
+  ///
+  /// Cannot be used together with [label].
   final String? labelText;
 
-  /// Leading widget displayed within the button.
+  /// A custom widget displayed before the label.
   ///
-  /// Only one of [icon] or [iconData] can be set.
+  /// Use this for custom icon layouts. For standard SBB icons, use
+  /// [iconData] instead.
+  ///
+  /// Cannot be used together with [iconData].
   final Widget? icon;
 
-  /// Leading standard designed icon displayed within the button.
+  /// An icon displayed before the label.
   ///
-  /// Only one of [icon] or [iconData] can be set.
+  /// The icon will be sized and styled according to the SBB design system.
+  ///
+  /// Cannot be used together with [icon].
   final IconData? iconData;
 
-  /// Whether the button is in a loading state.
+  /// Whether to show a loading indicator instead of the button content.
   ///
-  /// When true, displays a [SBBLoadingIndicator] as the leading widget and ignores the [onPressed] callback.
+  /// When true:
+  ///  * A [SBBLoadingIndicator] replaces the leading icon and label
+  ///  * The button becomes disabled ([onPressed] and [onLongPress] are ignored)
+  ///  * The label remains visible if provided
+  ///
   /// Defaults to false.
   final bool isLoading;
 
-  /// Callback function that is called when the button is pressed.
+  /// Called when the button is tapped.
   ///
-  /// If null, the button will be disabled. If [isLoading] is true, this callback is ignored.
+  /// The button is disabled when both this and [onLongPress] are null.
+  ///
+  /// Ignored when [isLoading] is true.
   final VoidCallback? onPressed;
 
-  /// An optional focus node to control the button's focus state.
+  /// Called when the button is long-pressed.
   ///
-  /// If not provided, a focus node will be created automatically.
+  /// The button is disabled when both this and [onPressed] are null.
+  ///
+  /// Ignored when [isLoading] is true.
+  final VoidCallback? onLongPress;
+
+  /// {@macro flutter.widgets.Focus.focusNode}
   final FocusNode? focusNode;
+
+  /// Called when the focus state of the button changes.
+  ///
+  /// Receives true when the button gains focus and false when it loses focus.
+  final ValueChanged<bool>? onFocusChange;
+
+  /// {@macro flutter.widgets.Focus.autofocus}
+  final bool autofocus;
 
   @override
   Widget build(BuildContext context) {
@@ -85,31 +116,31 @@ class SBBTertiaryButton extends StatelessWidget {
       iconData: iconData,
       isLoading: isLoading,
       onPressed: onPressed,
+      onLongPress: onLongPress,
       focusNode: focusNode,
+      onFocusChange: onFocusChange,
+      autofocus: autofocus,
     );
   }
 }
 
-/// The **small** tertiary variant of the SBB Button.
+/// The tertiary variant of the SBB Button with reduced height.
 ///
-/// Use [label] for custom content or [labelText] for the standard design.
-/// Only one of them can be set.
+/// Provide either [label] for a custom content or [labelText] for text-only
+/// content with standard styling. These parameters are mutually exclusive.
 ///
-/// To display a leading icon within the button, either use [iconData] for the standard designed icon or
-/// [icon] for completely customizing the leading Widget. Only one of them can be set.
-/// The icon and label are spaced by 4px;
+/// An optional leading icon can be added using [iconData] for standard icons
+/// or [icon] for custom widgets. These parameters are mutually exclusive.
 ///
-/// If [isLoading] is true and [labelText] is null, the [SBBLoadingIndicator] will be displayed
-/// as leading Widget within the button. The [onPressed] callback will be ignored and the [iconData] will not be displayed.
+/// When [isLoading] is true, a loading indicator replaces the button content
+/// and the button appears disabled.
 ///
-/// Either [isLoading] must be true, or one of [labelText] or [labelText] must not be null.
+/// The button is disabled when both [onPressed] and [onLongPress] are null.
 ///
-/// If both [onPressed] and [onLongPress] callbacks are null, the button will be disabled.
+/// See also:
 ///
-/// For specifications see [Figma](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=7-12)
-///
-/// See also
-/// * [SBBTertiaryButton] for a standard sized variant of this Widget.
+///  * [SBBTertiaryButton], for the standard height variant.
+///  * [Figma design specs](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=7-12)
 class SBBTertiaryButtonSmall extends StatelessWidget {
   const SBBTertiaryButtonSmall({
     super.key,
@@ -119,7 +150,10 @@ class SBBTertiaryButtonSmall extends StatelessWidget {
     this.iconData,
     this.isLoading = false,
     required this.onPressed,
+    this.onLongPress,
     this.focusNode,
+    this.onFocusChange,
+    this.autofocus = false,
   }) : assert(!(labelText != null && label != null), 'Cannot provide both labelText and label!'),
        assert(!(iconData != null && icon != null), 'Cannot provide both iconData and icon!'),
        assert(
@@ -127,41 +161,69 @@ class SBBTertiaryButtonSmall extends StatelessWidget {
          'One of labelText, label, icon, iconData must be set or isLoading must be true!',
        );
 
-  /// Custom widget to display as the button's label.
+  /// A custom widget displayed as the button's content.
   ///
-  /// Only one of [label] or [labelText] can be set.
+  /// For simple text labels, use [labelText] instead.
+  ///
+  /// Cannot be used together with [labelText].
   final Widget? label;
 
-  /// Text string to display as the button's label using the standard design.
+  /// The text displayed in the button.
   ///
-  /// Only one of [label] or [labelText] can be set.
+  /// The text will be styled according to the SBB design system.
+  ///
+  /// Cannot be used together with [label].
   final String? labelText;
 
-  /// Leading widget displayed within the button.
+  /// A custom widget displayed before the label.
   ///
-  /// Only one of [icon] or [iconData] can be set.
+  /// Use this for custom icon layouts. For standard SBB icons, use
+  /// [iconData] instead.
+  ///
+  /// Cannot be used together with [iconData].
   final Widget? icon;
 
-  /// Leading standard designed icon displayed within the button.
+  /// An icon displayed before the label.
   ///
-  /// Only one of [icon] or [iconData] can be set.
+  /// The icon will be sized and styled according to the SBB design system.
+  ///
+  /// Cannot be used together with [icon].
   final IconData? iconData;
 
-  /// Whether the button is in a loading state.
+  /// Whether to show a loading indicator instead of the button content.
   ///
-  /// When true, displays a [SBBLoadingIndicator] as the leading widget and ignores the [onPressed] callback.
+  /// When true:
+  ///  * A [SBBLoadingIndicator] replaces the leading icon and label
+  ///  * The button becomes disabled ([onPressed] and [onLongPress] are ignored)
+  ///  * The label remains visible if provided
+  ///
   /// Defaults to false.
   final bool isLoading;
 
-  /// Callback function that is called when the button is pressed.
+  /// Called when the button is tapped.
   ///
-  /// If null, the button will be disabled. If [isLoading] is true, this callback is ignored.
+  /// The button is disabled when both this and [onLongPress] are null.
+  ///
+  /// Ignored when [isLoading] is true.
   final VoidCallback? onPressed;
 
-  /// An optional focus node to control the button's focus state.
+  /// Called when the button is long-pressed.
   ///
-  /// If not provided, a focus node will be created automatically.
+  /// The button is disabled when both this and [onPressed] are null.
+  ///
+  /// Ignored when [isLoading] is true.
+  final VoidCallback? onLongPress;
+
+  /// {@macro flutter.widgets.Focus.focusNode}
   final FocusNode? focusNode;
+
+  /// Called when the focus state of the button changes.
+  ///
+  /// Receives true when the button gains focus and false when it loses focus.
+  final ValueChanged<bool>? onFocusChange;
+
+  /// {@macro flutter.widgets.Focus.autofocus}
+  final bool autofocus;
 
   @override
   Widget build(BuildContext context) {
@@ -173,7 +235,10 @@ class SBBTertiaryButtonSmall extends StatelessWidget {
       iconData: iconData,
       isLoading: isLoading,
       onPressed: onPressed,
+      onLongPress: onLongPress,
       focusNode: focusNode,
+      onFocusChange: onFocusChange,
+      autofocus: autofocus,
     );
   }
 
@@ -199,7 +264,10 @@ class _BaseTertiaryButton extends StatelessWidget {
     this.iconData,
     this.isLoading = false,
     required this.onPressed,
+    this.onLongPress,
     this.focusNode,
+    this.onFocusChange,
+    this.autofocus = false,
   });
 
   final ButtonStyle? style;
@@ -210,7 +278,10 @@ class _BaseTertiaryButton extends StatelessWidget {
   final IconData? iconData;
   final bool isLoading;
   final VoidCallback? onPressed;
+  final VoidCallback? onLongPress;
   final FocusNode? focusNode;
+  final ValueChanged<bool>? onFocusChange;
+  final bool autofocus;
 
   @override
   Widget build(BuildContext context) {
@@ -237,7 +308,7 @@ class _BaseTertiaryButton extends StatelessWidget {
     }
 
     final onlyLeading = (loading == null && leading != null && label == null);
-    final resolvedButton = onlyLeading ? _textButtonIcon(child!, context) : _textButton(child!);
+    final resolvedButton = onlyLeading ? _iconButton(child!, context) : _textButton(child!);
 
     return resolvedButton;
   }
@@ -261,15 +332,19 @@ class _BaseTertiaryButton extends StatelessWidget {
   Widget _textButton(Widget child) => TextButton(
     style: style,
     onPressed: isLoading ? null : onPressed,
+    onLongPress: isLoading ? null : onLongPress,
     focusNode: focusNode,
+    onFocusChange: onFocusChange,
+    autofocus: autofocus,
     child: child,
   );
 
-  Widget _textButtonIcon(Widget child, BuildContext context) {
-    return IconButton(
-      style: style,
+  Widget _iconButton(Widget child, BuildContext context) {
+    return IconButton.outlined(
       onPressed: isLoading ? null : onPressed,
+      onLongPress: isLoading ? null : onLongPress,
       focusNode: focusNode,
+      autofocus: autofocus,
       icon: child,
     );
   }
