@@ -96,38 +96,6 @@ class ButtonPage extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: sbbDefaultSpacing),
-              const SBBListHeader('Icon Button Large'),
-              SBBGroup(
-                padding: const EdgeInsets.all(sbbDefaultSpacing),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  spacing: sbbDefaultSpacing,
-                  children: [
-                    SBBIconButtonLarge(
-                      onPressed: () => sbbToast.show(title: 'SBBIconButtonLarge'),
-                      icon: SBBIcons.glass_cocktail_small,
-                    ),
-                    const SBBIconButtonLarge(onPressed: null, icon: SBBIcons.glass_cocktail_small),
-                  ],
-                ),
-              ),
-              const SizedBox(height: sbbDefaultSpacing),
-              const SBBListHeader('Icon Button Small'),
-              SBBGroup(
-                padding: const EdgeInsets.all(sbbDefaultSpacing),
-                child: Row(
-                  spacing: sbbDefaultSpacing,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SBBIconButtonSmall(
-                      onPressed: () => sbbToast.show(title: 'SBBIconButtonSmall'),
-                      icon: SBBIcons.glass_cocktail_small,
-                    ),
-                    const SBBIconButtonSmall(onPressed: null, icon: SBBIcons.glass_cocktail_small),
-                  ],
-                ),
-              ),
             ],
           ),
         ),

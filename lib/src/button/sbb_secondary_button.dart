@@ -29,6 +29,7 @@ class SBBSecondaryButton extends StatelessWidget {
     this.onFocusChange,
     this.autofocus = false,
     this.isLoading = false,
+    this.semanticLabel,
   }) : assert(!(labelText != null && label != null), 'Cannot provide both labelText and label!'),
        assert(
          !(labelText == null && label == null && !isLoading),
@@ -83,19 +84,30 @@ class SBBSecondaryButton extends StatelessWidget {
   /// {@macro flutter.widgets.Focus.autofocus}
   final bool autofocus;
 
+  /// Provides a textual description of the widget for assistive technologies.
+  ///
+  /// If this is non null, semantics of [label] or [labelText] are ignored.
+  final String? semanticLabel;
+
   @override
   Widget build(BuildContext context) {
-    // The button is surrounded by padding to allow the border to be drawn outside while maintaining correct distances
-    // to other Widgets.
-    return Padding(
-      padding: const EdgeInsets.all(1.0),
-      child: OutlinedButton(
-        onPressed: isLoading ? null : onPressed,
-        onLongPress: isLoading ? null : onLongPress,
-        focusNode: focusNode,
-        onFocusChange: onFocusChange,
-        autofocus: autofocus,
-        child: label ?? _defaultLabel(context),
+    return Semantics(
+      enabled: !isLoading && (onPressed != null || onLongPress != null),
+      button: true,
+      label: semanticLabel,
+      excludeSemantics: semanticLabel != null,
+      // The button is surrounded by padding to allow the border to be drawn outside while
+      // maintaining correct distances to other Widgets.
+      child: Padding(
+        padding: const EdgeInsets.all(1.0),
+        child: OutlinedButton(
+          onPressed: isLoading ? null : onPressed,
+          onLongPress: isLoading ? null : onLongPress,
+          focusNode: focusNode,
+          onFocusChange: onFocusChange,
+          autofocus: autofocus,
+          child: label ?? _defaultLabel(context),
+        ),
       ),
     );
   }

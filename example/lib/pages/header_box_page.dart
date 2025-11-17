@@ -102,8 +102,8 @@ class DesignGuidelinePage extends StatelessWidget {
           title: 'Title',
           leadingIcon: SBBIcons.dog_medium,
           secondaryLabel: 'Subtext',
-          trailingWidget: SBBIconButtonLarge(
-            icon: SBBIcons.dog_small,
+          trailingWidget: SBBTertiaryButton(
+            iconData: SBBIcons.dog_small,
             onPressed: () => sbbToast.show(title: 'Large pressed', bottom: sbbDefaultSpacing * 6),
           ),
         ),

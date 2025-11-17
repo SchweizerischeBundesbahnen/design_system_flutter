@@ -61,8 +61,8 @@ class SBBListItem extends StatefulWidget {
          onPressed: onPressed,
          trailingWidget: Padding(
            padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * 0.5),
-           child: SBBIconButtonSmall(
-             icon: buttonIcon,
+           child: SBBTertiaryButton(
+             iconData: buttonIcon,
              onPressed: onPressed != null ? onPressedButton : null,
            ),
          ),

@@ -13,7 +13,6 @@ class SBBTheme {
   static ThemeData light({
     bool boldFont = false,
     SBBBaseStyle? baseStyle,
-    SBBButtonStyles? buttonStyles,
     SBBButtonThemeData? primaryButtonTheme,
     SBBButtonThemeData? secondaryButtonTheme,
     SBBButtonThemeData? tertiaryButtonTheme,
@@ -26,7 +25,6 @@ class SBBTheme {
     brightness: Brightness.light,
     boldFont: boldFont,
     baseStyle: baseStyle,
-    buttonStyles: buttonStyles,
     primaryButtonTheme: primaryButtonTheme,
     secondaryButtonTheme: secondaryButtonTheme,
     tertiaryButtonTheme: tertiaryButtonTheme,
@@ -40,7 +38,6 @@ class SBBTheme {
   static ThemeData dark({
     bool boldFont = false,
     SBBBaseStyle? baseStyle,
-    SBBButtonStyles? buttonStyles,
     SBBButtonThemeData? primaryButtonTheme,
     SBBButtonThemeData? secondaryButtonTheme,
     SBBButtonThemeData? tertiaryButtonTheme,
@@ -53,7 +50,6 @@ class SBBTheme {
     brightness: Brightness.dark,
     boldFont: boldFont,
     baseStyle: baseStyle,
-    buttonStyles: buttonStyles,
     primaryButtonTheme: primaryButtonTheme,
     secondaryButtonTheme: secondaryButtonTheme,
     tertiaryButtonTheme: tertiaryButtonTheme,
@@ -68,7 +64,6 @@ class SBBTheme {
     required Brightness brightness,
     bool boldFont = false,
     SBBBaseStyle? baseStyle,
-    SBBButtonStyles? buttonStyles,
     SBBButtonThemeData? primaryButtonTheme,
     SBBButtonThemeData? secondaryButtonTheme,
     SBBButtonThemeData? tertiaryButtonTheme,
@@ -81,9 +76,6 @@ class SBBTheme {
     // default values are set here and merged with given styles
     final defaultBaseStyle = SBBBaseStyle.$default(brightness: brightness, boldFont: boldFont);
     final mergedBaseStyle = baseStyle.merge(defaultBaseStyle);
-
-    final defaultButtonStyles = SBBButtonStyles.$default(baseStyle: mergedBaseStyle);
-    final mergedButtonStyles = buttonStyles.merge(defaultButtonStyles);
 
     final defaultPrimaryButtonStyle = DefaultSBBPrimaryButtonStyle(mergedBaseStyle);
     final mergedPrimaryButtonStyle = defaultPrimaryButtonStyle.toButtonStyle().merge(
@@ -117,7 +109,6 @@ class SBBTheme {
     return raw(
       brightness: brightness,
       baseStyle: mergedBaseStyle,
-      buttonStyles: mergedButtonStyles,
       primaryButtonStyle: mergedPrimaryButtonStyle,
       secondaryButtonStyle: mergedSecondaryButtonStyle,
       tertiaryButtonStyle: mergedTertiaryButtonStyle,
@@ -132,7 +123,6 @@ class SBBTheme {
   static ThemeData raw({
     required Brightness brightness,
     required SBBBaseStyle baseStyle,
-    required SBBButtonStyles buttonStyles,
     required ButtonStyle? primaryButtonStyle,
     required ButtonStyle? secondaryButtonStyle,
     required ButtonStyle? tertiaryButtonStyle,
@@ -163,7 +153,6 @@ class SBBTheme {
       textSelectionTheme: controlStyles.textSelectionTheme,
       extensions: [
         baseStyle,
-        buttonStyles,
         controlStyles,
         headerBoxStyle,
         groupStyle,

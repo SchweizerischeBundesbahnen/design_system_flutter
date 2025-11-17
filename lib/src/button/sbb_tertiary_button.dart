@@ -40,6 +40,7 @@ class SBBTertiaryButton extends StatelessWidget {
     this.onFocusChange,
     this.autofocus = false,
     this.isSemanticButton = true,
+    this.semanticLabel,
   }) : assert(!(labelText != null && label != null), 'Cannot provide both labelText and label!'),
        assert(!(iconData != null && icon != null), 'Cannot provide both iconData and icon!'),
        assert(
@@ -120,6 +121,9 @@ class SBBTertiaryButton extends StatelessWidget {
   /// Defaults to true.
   final bool isSemanticButton;
 
+  /// Provides a textual description of the widget for assistive technologies.
+  final String? semanticLabel;
+
   @override
   Widget build(BuildContext context) {
     return _BaseTertiaryButton(
@@ -133,6 +137,8 @@ class SBBTertiaryButton extends StatelessWidget {
       focusNode: focusNode,
       onFocusChange: onFocusChange,
       autofocus: autofocus,
+      isSemanticButton: isSemanticButton,
+      semanticLabel: semanticLabel,
     );
   }
 }
@@ -168,6 +174,7 @@ class SBBTertiaryButtonSmall extends StatelessWidget {
     this.onFocusChange,
     this.autofocus = false,
     this.isSemanticButton = true,
+    this.semanticLabel,
   }) : assert(!(labelText != null && label != null), 'Cannot provide both labelText and label!'),
        assert(!(iconData != null && icon != null), 'Cannot provide both iconData and icon!'),
        assert(
@@ -248,6 +255,11 @@ class SBBTertiaryButtonSmall extends StatelessWidget {
   /// Defaults to true.
   final bool isSemanticButton;
 
+  /// Provides a textual description of the widget for assistive technologies.
+  ///
+  /// If this is non null, semantics of [label] or [icon] are ignored.
+  final String? semanticLabel;
+
   @override
   Widget build(BuildContext context) {
     return _BaseTertiaryButton(
@@ -263,6 +275,7 @@ class SBBTertiaryButtonSmall extends StatelessWidget {
       onFocusChange: onFocusChange,
       autofocus: autofocus,
       isSemanticButton: isSemanticButton,
+      semanticLabel: semanticLabel,
     );
   }
 }
@@ -282,6 +295,7 @@ class _BaseTertiaryButton extends StatelessWidget {
     this.onFocusChange,
     this.autofocus = false,
     this.isSemanticButton = false,
+    this.semanticLabel,
   });
 
   final bool isSmall;
@@ -297,6 +311,7 @@ class _BaseTertiaryButton extends StatelessWidget {
   final ValueChanged<bool>? onFocusChange;
   final bool autofocus;
   final bool isSemanticButton;
+  final String? semanticLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -327,9 +342,15 @@ class _BaseTertiaryButton extends StatelessWidget {
 
     // The button is surrounded by padding to allow the border to be drawn outside while maintaining correct distances
     // to other Widgets.
-    return Padding(
-      padding: const EdgeInsets.all(1.0),
-      child: resolvedButton,
+    return Semantics(
+      enabled: !isLoading && (onPressed != null || onLongPress != null),
+      button: isSemanticButton,
+      label: semanticLabel,
+      excludeSemantics: semanticLabel != null,
+      child: Padding(
+        padding: const EdgeInsets.all(1.0),
+        child: resolvedButton,
+      ),
     );
   }
 
@@ -377,14 +398,9 @@ class _BaseTertiaryButton extends StatelessWidget {
     if (!isSmall) {
       return iconButton;
     } else {
-      return Semantics(
-        container: true,
-        button: isSemanticButton,
-        enabled: onPressed != null || onLongPress != null,
-        child: _InputPadding(
-          minSize: const Size.square(SBBInternal.defaultButtonHeight),
-          child: iconButton,
-        ),
+      return _InputPadding(
+        minSize: const Size.square(SBBInternal.defaultButtonHeight),
+        child: iconButton,
       );
     }
   }
@@ -410,7 +426,7 @@ class _BaseTertiaryButton extends StatelessWidget {
   }
 }
 
-/// Copied from [ButtonStyleButton] in version Flutter SDK 3.38.1
+/// Copied from [ButtonStyleButton] in version Flutter SDK 3.38.1. Allows a tappable area of 44px.
 ///
 /// A widget to pad the area around a [ButtonStyleButton]'s inner [Material].
 ///
