@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/src/button/sbb_button_style_x.dart';
+import 'package:sbb_design_system_mobile/src/button/theme/sbb_button_style_x.dart';
 
-import '../button/default_button_styles.dart';
-import '../button/sbb_button_theme_data.dart';
+import '../button/theme/default_button_styles.dart';
+import '../button/theme/sbb_button_theme_data.dart';
 import 'theme.dart';
 
 const sbbDefaultSpacing = 16.0;
@@ -13,9 +13,9 @@ class SBBTheme {
   static ThemeData light({
     bool boldFont = false,
     SBBBaseStyle? baseStyle,
-    SBBButtonThemeData? primaryButtonTheme,
-    SBBButtonThemeData? secondaryButtonTheme,
-    SBBButtonThemeData? tertiaryButtonTheme,
+    SBBPrimaryButtonThemeData? primaryButtonTheme,
+    SBBSecondaryButtonThemeData? secondaryButtonTheme,
+    SBBTertiaryButtonThemeData? tertiaryButtonTheme,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBGroupStyle? groupStyle,
@@ -38,9 +38,9 @@ class SBBTheme {
   static ThemeData dark({
     bool boldFont = false,
     SBBBaseStyle? baseStyle,
-    SBBButtonThemeData? primaryButtonTheme,
-    SBBButtonThemeData? secondaryButtonTheme,
-    SBBButtonThemeData? tertiaryButtonTheme,
+    SBBPrimaryButtonThemeData? primaryButtonTheme,
+    SBBSecondaryButtonThemeData? secondaryButtonTheme,
+    SBBTertiaryButtonThemeData? tertiaryButtonTheme,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBGroupStyle? groupStyle,
@@ -64,9 +64,9 @@ class SBBTheme {
     required Brightness brightness,
     bool boldFont = false,
     SBBBaseStyle? baseStyle,
-    SBBButtonThemeData? primaryButtonTheme,
-    SBBButtonThemeData? secondaryButtonTheme,
-    SBBButtonThemeData? tertiaryButtonTheme,
+    SBBPrimaryButtonThemeData? primaryButtonTheme,
+    SBBSecondaryButtonThemeData? secondaryButtonTheme,
+    SBBTertiaryButtonThemeData? tertiaryButtonTheme,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBGroupStyle? groupStyle,
@@ -77,20 +77,15 @@ class SBBTheme {
     final defaultBaseStyle = SBBBaseStyle.$default(brightness: brightness, boldFont: boldFont);
     final mergedBaseStyle = baseStyle.merge(defaultBaseStyle);
 
-    final defaultPrimaryButtonStyle = DefaultSBBPrimaryButtonStyle(mergedBaseStyle);
-    final mergedPrimaryButtonStyle = defaultPrimaryButtonStyle.toButtonStyle().merge(
-      primaryButtonTheme?.style?.toButtonStyle(),
-    );
+    final defaultPrimaryButtonTheme = DefaultSBBPrimaryButtonTheme(mergedBaseStyle);
+    final mergedPrimaryButtonTheme = defaultPrimaryButtonTheme.merge(primaryButtonTheme);
 
-    final defaultSecondaryButtonStyle = DefaultSBBSecondaryButtonStyle(mergedBaseStyle);
-    final mergedSecondaryButtonStyle = defaultSecondaryButtonStyle.toButtonStyle().merge(
-      secondaryButtonTheme?.style?.toButtonStyle(),
-    );
+    final defaultSecondaryButtonTheme = DefaultSBBSecondaryButtonTheme(mergedBaseStyle);
+    final mergedSecondaryButtonStyle = defaultSecondaryButtonTheme.merge(secondaryButtonTheme);
 
-    final defaultTertiaryButtonStyle = DefaultSBBTertiaryButtonStyle(mergedBaseStyle);
-    final mergedTertiaryButtonStyle = defaultTertiaryButtonStyle.toButtonStyle().merge(
-      tertiaryButtonTheme?.style?.toButtonStyle(),
-    );
+    final defaultTertiaryButtonTheme = DefaultSBBTertiaryButtonTheme(mergedBaseStyle);
+    final mergedTertiaryButtonStyle = defaultTertiaryButtonTheme.merge(tertiaryButtonTheme);
+
     final defaultControlStyles = SBBControlStyles.$default(baseStyle: mergedBaseStyle);
     final mergedControlStyles = controlStyles.merge(defaultControlStyles);
 
@@ -109,9 +104,9 @@ class SBBTheme {
     return raw(
       brightness: brightness,
       baseStyle: mergedBaseStyle,
-      primaryButtonStyle: mergedPrimaryButtonStyle,
-      secondaryButtonStyle: mergedSecondaryButtonStyle,
-      tertiaryButtonStyle: mergedTertiaryButtonStyle,
+      primaryButtonStyle: mergedPrimaryButtonTheme.style?.toButtonStyle(),
+      secondaryButtonStyle: mergedSecondaryButtonStyle.style?.toButtonStyle(),
+      tertiaryButtonStyle: mergedTertiaryButtonStyle.style?.toButtonStyle(),
       controlStyles: mergedControlStyles,
       headerBoxStyle: mergedHeaderBoxStyle,
       groupStyle: mergedGroupStyle,
@@ -201,4 +196,4 @@ class SBBTheme {
   }
 }
 
-extension _SBBButtonStyle2X on SBBButtonStyle2 {}
+extension _SBBButtonStyle2X on SBBButtonStyle {}

@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 
-import '../../sbb_design_system_mobile.dart';
+import '../../../sbb_design_system_mobile.dart';
 
-/// Style for SBB Buttons. Use this to override e.g. all SBBPrimaryButton values within the [SBBTheme].
-class SBBButtonStyle2 {
-  const SBBButtonStyle2({
+/// Style for SBB Buttons. Use this to override all button variants within the current [SBBTheme].
+///
+/// See also:
+/// * [SBBPrimaryButton]
+/// * [SBBSecondaryButton]
+/// * [SBBTertiaryButton]
+/// * [SBBTertiaryButtonSmall]
+class SBBButtonStyle {
+  const SBBButtonStyle({
     this.textStyle,
     this.backgroundColor,
     this.foregroundColor,
@@ -36,7 +42,7 @@ class SBBButtonStyle2 {
   /// The color of the button's outline.
   final WidgetStateProperty<Color?>? borderColor;
 
-  SBBButtonStyle2 copyWith({
+  SBBButtonStyle copyWith({
     WidgetStateProperty<TextStyle?>? textStyle,
     WidgetStateProperty<Color?>? backgroundColor,
     WidgetStateProperty<Color?>? foregroundColor,
@@ -44,7 +50,7 @@ class SBBButtonStyle2 {
     WidgetStateProperty<Color?>? iconColor,
     WidgetStateProperty<Color?>? borderColor,
   }) {
-    return SBBButtonStyle2(
+    return SBBButtonStyle(
       textStyle: textStyle ?? this.textStyle,
       backgroundColor: backgroundColor ?? this.backgroundColor,
       foregroundColor: foregroundColor ?? this.foregroundColor,
@@ -54,7 +60,7 @@ class SBBButtonStyle2 {
     );
   }
 
-  SBBButtonStyle2 merge(SBBButtonStyle2? other) {
+  SBBButtonStyle merge(SBBButtonStyle? other) {
     if (other == null) return this;
 
     return copyWith(
@@ -67,10 +73,10 @@ class SBBButtonStyle2 {
     );
   }
 
-  static SBBButtonStyle2? lerp(SBBButtonStyle2? a, SBBButtonStyle2? b, double t) {
+  static SBBButtonStyle? lerp(SBBButtonStyle? a, SBBButtonStyle? b, double t) {
     if (identical(a, b)) return a;
 
-    return SBBButtonStyle2(
+    return SBBButtonStyle(
       textStyle: WidgetStateProperty.lerp<TextStyle?>(a?.textStyle, b?.textStyle, t, TextStyle.lerp),
       foregroundColor: WidgetStateProperty.lerp<Color?>(a?.foregroundColor, b?.foregroundColor, t, Color.lerp),
       backgroundColor: WidgetStateProperty.lerp<Color?>(a?.backgroundColor, b?.backgroundColor, t, Color.lerp),
@@ -79,4 +85,26 @@ class SBBButtonStyle2 {
       borderColor: WidgetStateProperty.lerp<Color?>(a?.borderColor, b?.borderColor, t, Color.lerp),
     );
   }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is SBBButtonStyle &&
+        other.textStyle == textStyle &&
+        other.backgroundColor == backgroundColor &&
+        other.foregroundColor == foregroundColor &&
+        other.overlayColor == overlayColor &&
+        other.iconColor == iconColor &&
+        other.borderColor == borderColor;
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    textStyle,
+    backgroundColor,
+    foregroundColor,
+    overlayColor,
+    iconColor,
+    borderColor,
+  );
 }

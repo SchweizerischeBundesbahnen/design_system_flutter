@@ -25,6 +25,7 @@ import '../sbb_internal.dart';
 ///  * [SBBTertiaryButtonSmall], for a compact variant with reduced height.
 ///  * [SBBPrimaryButton], for the main action.
 ///  * [SBBSecondaryButton], for secondary actions.
+///  * [SBBTertiaryButtonThemeData], for setting the [SBBButtonStyle] for all buttons within the current Theme.
 ///  * [Figma design specs](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=7-12)
 class SBBTertiaryButton extends StatelessWidget {
   const SBBTertiaryButton({
@@ -159,6 +160,7 @@ class SBBTertiaryButton extends StatelessWidget {
 /// See also:
 ///
 ///  * [SBBTertiaryButton], for the standard height variant.
+///  * [SBBTertiaryButtonThemeData], for setting the [SBBButtonStyle] for all buttons within the current Theme.
 ///  * [Figma design specs](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=7-12)
 class SBBTertiaryButtonSmall extends StatelessWidget {
   const SBBTertiaryButtonSmall({

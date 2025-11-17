@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../../sbb_design_system_mobile.dart';
-import '../sbb_internal.dart';
+import '../../../sbb_design_system_mobile.dart';
+import '../../sbb_internal.dart';
 
-extension SBBButtonStyleX on SBBButtonStyle2 {
+extension SBBButtonStyleX on SBBButtonStyle {
   ButtonStyle toButtonStyle() {
     WidgetStateProperty<BorderSide?>? resolvedBorderSide;
     if (borderColor != null) {
@@ -31,15 +31,4 @@ extension SBBButtonStyleX on SBBButtonStyle2 {
     tapTargetSize: MaterialTapTargetSize.shrinkWrap,
     mouseCursor: WidgetStateMouseCursor.clickable,
   );
-}
-
-extension ButtonStyleX on ButtonStyle {
-  ButtonStyle toSBBIconButtonStyle() {
-    return copyWith(
-      fixedSize: WidgetStatePropertyAll<Size>(
-        const Size(SBBInternal.defaultButtonHeight, SBBInternal.defaultButtonHeight),
-      ),
-      padding: WidgetStatePropertyAll<EdgeInsets>(EdgeInsets.zero),
-    );
-  }
 }

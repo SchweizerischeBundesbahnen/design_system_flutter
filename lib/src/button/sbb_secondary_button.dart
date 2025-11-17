@@ -17,6 +17,7 @@ import 'default_button_label.dart';
 ///
 ///  * [SBBPrimaryButton], for the main action.
 ///  * [SBBTertiaryButton], for less prominent actions.
+///  * [SBBSecondaryButtonThemeData], for setting the [SBBButtonStyle] for all buttons within the current Theme.
 ///  * [Figma design specs](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=7-12)
 class SBBSecondaryButton extends StatelessWidget {
   const SBBSecondaryButton({
