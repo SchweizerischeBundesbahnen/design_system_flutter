@@ -85,13 +85,18 @@ class SBBSecondaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return OutlinedButton(
-      onPressed: isLoading ? null : onPressed,
-      onLongPress: isLoading ? null : onLongPress,
-      focusNode: focusNode,
-      onFocusChange: onFocusChange,
-      autofocus: autofocus,
-      child: label ?? _defaultLabel(context),
+    // The button is surrounded by padding to allow the border to be drawn outside while maintaining correct distances
+    // to other Widgets.
+    return Padding(
+      padding: const EdgeInsets.all(1.0),
+      child: OutlinedButton(
+        onPressed: isLoading ? null : onPressed,
+        onLongPress: isLoading ? null : onLongPress,
+        focusNode: focusNode,
+        onFocusChange: onFocusChange,
+        autofocus: autofocus,
+        child: label ?? _defaultLabel(context),
+      ),
     );
   }
 

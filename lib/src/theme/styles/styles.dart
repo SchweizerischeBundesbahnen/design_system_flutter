@@ -1,7 +1,7 @@
+export '../../button/sbb_button_style.dart';
 export 'src/promotion_box_style.dart';
 export 'src/sbb_base_style.dart';
 export 'src/sbb_basic_control_style.dart';
-export 'src/sbb_button_style.dart';
 export 'src/sbb_button_styles.dart';
 export 'src/sbb_chip_style.dart';
 export 'src/sbb_control_style.dart';

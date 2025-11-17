@@ -85,18 +85,24 @@ class SBBPrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FilledButton(
-      onPressed: isLoading ? null : onPressed,
-      onLongPress: isLoading ? null : onLongPress,
-      focusNode: focusNode,
-      onFocusChange: onFocusChange,
-      autofocus: autofocus,
-      child: label ?? _defaultLabel(),
+    // The button is surrounded by padding to allow the border to be drawn outside while maintaining correct distances
+    // to other Widgets.
+    return Padding(
+      padding: const EdgeInsets.all(1.0),
+      child: FilledButton(
+        onPressed: isLoading ? null : onPressed,
+        onLongPress: isLoading ? null : onLongPress,
+        focusNode: focusNode,
+        onFocusChange: onFocusChange,
+        autofocus: autofocus,
+        child: label ?? _defaultLabel(),
+      ),
     );
   }
 
   Widget _defaultLabel() {
-    final child = isLoading ? const SBBLoadingIndicator.tinyCloud() : DefaultButtonLabel(label: labelText!);
+    final child =
+        isLoading ? const SBBLoadingIndicator.tiny(color: SBBColors.white) : DefaultButtonLabel(label: labelText!);
     return Center(child: child);
   }
 }

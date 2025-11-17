@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/src/button/sbb_button_style_x.dart';
 
+import '../button/default_button_styles.dart';
+import '../button/sbb_button_theme_data.dart';
 import 'theme.dart';
 
 const sbbDefaultSpacing = 16.0;
@@ -11,6 +14,9 @@ class SBBTheme {
     bool boldFont = false,
     SBBBaseStyle? baseStyle,
     SBBButtonStyles? buttonStyles,
+    SBBButtonThemeData? primaryButtonTheme,
+    SBBButtonThemeData? secondaryButtonTheme,
+    SBBButtonThemeData? tertiaryButtonTheme,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBGroupStyle? groupStyle,
@@ -21,6 +27,9 @@ class SBBTheme {
     boldFont: boldFont,
     baseStyle: baseStyle,
     buttonStyles: buttonStyles,
+    primaryButtonTheme: primaryButtonTheme,
+    secondaryButtonTheme: secondaryButtonTheme,
+    tertiaryButtonTheme: tertiaryButtonTheme,
     controlStyles: controlStyles,
     headerBoxStyle: headerBoxStyle,
     groupStyle: groupStyle,
@@ -32,6 +41,9 @@ class SBBTheme {
     bool boldFont = false,
     SBBBaseStyle? baseStyle,
     SBBButtonStyles? buttonStyles,
+    SBBButtonThemeData? primaryButtonTheme,
+    SBBButtonThemeData? secondaryButtonTheme,
+    SBBButtonThemeData? tertiaryButtonTheme,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBGroupStyle? groupStyle,
@@ -42,6 +54,9 @@ class SBBTheme {
     boldFont: boldFont,
     baseStyle: baseStyle,
     buttonStyles: buttonStyles,
+    primaryButtonTheme: primaryButtonTheme,
+    secondaryButtonTheme: secondaryButtonTheme,
+    tertiaryButtonTheme: tertiaryButtonTheme,
     controlStyles: controlStyles,
     headerBoxStyle: headerBoxStyle,
     groupStyle: groupStyle,
@@ -54,6 +69,9 @@ class SBBTheme {
     bool boldFont = false,
     SBBBaseStyle? baseStyle,
     SBBButtonStyles? buttonStyles,
+    SBBButtonThemeData? primaryButtonTheme,
+    SBBButtonThemeData? secondaryButtonTheme,
+    SBBButtonThemeData? tertiaryButtonTheme,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBGroupStyle? groupStyle,
@@ -67,6 +85,20 @@ class SBBTheme {
     final defaultButtonStyles = SBBButtonStyles.$default(baseStyle: mergedBaseStyle);
     final mergedButtonStyles = buttonStyles.merge(defaultButtonStyles);
 
+    final defaultPrimaryButtonStyle = DefaultSBBPrimaryButtonStyle(mergedBaseStyle);
+    final mergedPrimaryButtonStyle = defaultPrimaryButtonStyle.toButtonStyle().merge(
+      primaryButtonTheme?.style?.toButtonStyle(),
+    );
+
+    final defaultSecondaryButtonStyle = DefaultSBBSecondaryButtonStyle(mergedBaseStyle);
+    final mergedSecondaryButtonStyle = defaultSecondaryButtonStyle.toButtonStyle().merge(
+      secondaryButtonTheme?.style?.toButtonStyle(),
+    );
+
+    final defaultTertiaryButtonStyle = DefaultSBBTertiaryButtonStyle(mergedBaseStyle);
+    final mergedTertiaryButtonStyle = defaultTertiaryButtonStyle.toButtonStyle().merge(
+      tertiaryButtonTheme?.style?.toButtonStyle(),
+    );
     final defaultControlStyles = SBBControlStyles.$default(baseStyle: mergedBaseStyle);
     final mergedControlStyles = controlStyles.merge(defaultControlStyles);
 
@@ -86,6 +118,9 @@ class SBBTheme {
       brightness: brightness,
       baseStyle: mergedBaseStyle,
       buttonStyles: mergedButtonStyles,
+      primaryButtonStyle: mergedPrimaryButtonStyle,
+      secondaryButtonStyle: mergedSecondaryButtonStyle,
+      tertiaryButtonStyle: mergedTertiaryButtonStyle,
       controlStyles: mergedControlStyles,
       headerBoxStyle: mergedHeaderBoxStyle,
       groupStyle: mergedGroupStyle,
@@ -98,40 +133,45 @@ class SBBTheme {
     required Brightness brightness,
     required SBBBaseStyle baseStyle,
     required SBBButtonStyles buttonStyles,
+    required ButtonStyle? primaryButtonStyle,
+    required ButtonStyle? secondaryButtonStyle,
+    required ButtonStyle? tertiaryButtonStyle,
     required SBBControlStyles controlStyles,
     required SBBHeaderBoxStyle headerBoxStyle,
     required SBBGroupStyle groupStyle,
     required SBBTextTheme textTheme,
     required SBBToastStyle toastStyle,
-  }) => ThemeData(
-    colorScheme: ColorScheme.fromSwatch(
-      primarySwatch: baseStyle.primarySwatch!,
-      accentColor: baseStyle.primaryColor,
-      backgroundColor: baseStyle.backgroundColor,
-      errorColor: baseStyle.errorColor,
-      brightness: brightness,
-    ).copyWith(surfaceTint: SBBColors.transparent),
-    scaffoldBackgroundColor: baseStyle.backgroundColor,
-    iconTheme: IconThemeData(color: baseStyle.iconColor, size: sbbIconSizeSmall),
-    dividerTheme: DividerThemeData(thickness: 1.0, space: 0.0, color: baseStyle.dividerColor),
-    fontFamily: baseStyle.defaultFontFamily,
-    textTheme: baseStyle.createTextTheme(),
-    appBarTheme: controlStyles.appBarTheme,
-    filledButtonTheme: buttonStyles.filledButtonTheme,
-    outlinedButtonTheme: buttonStyles.outlinedButtonTheme,
-    textButtonTheme: buttonStyles.textButtonTheme,
-    materialTapTargetSize: MaterialTapTargetSize.padded,
-    textSelectionTheme: controlStyles.textSelectionTheme,
-    extensions: [
-      baseStyle,
-      buttonStyles,
-      controlStyles,
-      headerBoxStyle,
-      groupStyle,
-      textTheme,
-      toastStyle,
-    ],
-  );
+  }) {
+    return ThemeData(
+      colorScheme: ColorScheme.fromSwatch(
+        primarySwatch: baseStyle.primarySwatch!,
+        accentColor: baseStyle.primaryColor,
+        backgroundColor: baseStyle.backgroundColor,
+        errorColor: baseStyle.errorColor,
+        brightness: brightness,
+      ).copyWith(surfaceTint: SBBColors.transparent),
+      scaffoldBackgroundColor: baseStyle.backgroundColor,
+      iconTheme: IconThemeData(color: baseStyle.iconColor, size: sbbIconSizeSmall),
+      dividerTheme: DividerThemeData(thickness: 1.0, space: 0.0, color: baseStyle.dividerColor),
+      fontFamily: baseStyle.defaultFontFamily,
+      textTheme: baseStyle.createTextTheme(),
+      appBarTheme: controlStyles.appBarTheme,
+      filledButtonTheme: FilledButtonThemeData(style: primaryButtonStyle),
+      outlinedButtonTheme: OutlinedButtonThemeData(style: secondaryButtonStyle),
+      textButtonTheme: TextButtonThemeData(style: tertiaryButtonStyle),
+      materialTapTargetSize: MaterialTapTargetSize.padded,
+      textSelectionTheme: controlStyles.textSelectionTheme,
+      extensions: [
+        baseStyle,
+        buttonStyles,
+        controlStyles,
+        headerBoxStyle,
+        groupStyle,
+        textTheme,
+        toastStyle,
+      ],
+    );
+  }
 
   /// Convenience method for easier use of [WidgetStateProperty.all].
   static WidgetStateProperty<T> allStates<T>(T value) {
@@ -171,3 +211,5 @@ class SBBTheme {
     });
   }
 }
+
+extension _SBBButtonStyle2X on SBBButtonStyle2 {}

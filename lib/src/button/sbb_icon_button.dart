@@ -38,9 +38,10 @@ class SBBIconButtonLarge extends StatelessWidget {
       fixedSize: SBBTheme.allStates(const Size(SBBInternal.defaultButtonHeight, SBBInternal.defaultButtonHeight)),
       padding: SBBTheme.allStates(EdgeInsets.zero),
     );
-    final style = buttonStyle != null
-        ? buttonStyle!.merge(baseStyle)
-        : SBBButtonStyles.of(context).iconLargeStyle?.overrideButtonStyle(baseStyle);
+    final style =
+        buttonStyle != null
+            ? buttonStyle!.merge(baseStyle)
+            : SBBButtonStyles.of(context).iconLargeStyle?.overrideButtonStyle(baseStyle);
     return TextButton(
       style: style,
       onPressed: onPressed,
@@ -158,7 +159,7 @@ class _SBBIconButtonSmallRaw extends StatelessWidget {
   }
 }
 
-/// Copied from [ButtonStyleButton] in version Flutter SDK 3.24.5
+/// Copied from [ButtonStyleButton] in version Flutter SDK 3.38.1
 ///
 /// A widget to pad the area around a [ButtonStyleButton]'s inner [Material].
 ///
@@ -188,7 +189,9 @@ class _RenderInputPadding extends RenderShiftedBox {
   Size _minSize;
 
   set minSize(Size value) {
-    if (_minSize == value) return;
+    if (_minSize == value) {
+      return;
+    }
     _minSize = value;
     markNeedsLayout();
   }
@@ -240,20 +243,19 @@ class _RenderInputPadding extends RenderShiftedBox {
     return _computeSize(constraints: constraints, layoutChild: ChildLayoutHelper.dryLayoutChild);
   }
 
-  // add this method as soon as 3.19.6 is removed
-  // @override
-  // double? computeDryBaseline(covariant BoxConstraints constraints, TextBaseline baseline) {
-  //   final RenderBox? child = this.child;
-  //   if (child == null) {
-  //     return null;
-  //   }
-  //   final double? result = child.getDryBaseline(constraints, baseline);
-  //   if (result == null) {
-  //     return null;
-  //   }
-  //   final Size childSize = child.getDryLayout(constraints);
-  //   return result + Alignment.center.alongOffset(getDryLayout(constraints) - childSize as Offset).dy;
-  // }
+  @override
+  double? computeDryBaseline(covariant BoxConstraints constraints, TextBaseline baseline) {
+    final RenderBox? child = this.child;
+    if (child == null) {
+      return null;
+    }
+    final double? result = child.getDryBaseline(constraints, baseline);
+    if (result == null) {
+      return null;
+    }
+    final Size childSize = child.getDryLayout(constraints);
+    return result + Alignment.center.alongOffset(getDryLayout(constraints) - childSize as Offset).dy;
+  }
 
   @override
   void performLayout() {

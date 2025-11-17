@@ -42,7 +42,7 @@ class ButtonPage extends StatelessWidget {
                     SBBSecondaryButton(
                       labelText: 'Default',
                       onPressed: () => sbbToast.show(title: 'SBBSecondaryButton'),
-                      onLongPress: () => sbbToast.show(title: 'Long SBBSecondaryButton'),
+                      // onLongPress: () => sbbToast.show(title: 'Long SBBSecondaryButton'),
                     ),
                     const SizedBox(height: sbbDefaultSpacing),
                     const SBBSecondaryButton(labelText: 'Disabled', onPressed: null),

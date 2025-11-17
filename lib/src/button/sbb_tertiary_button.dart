@@ -1,4 +1,7 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:sbb_design_system_mobile/src/button/default_button_label.dart';
 
 import '../../sbb_design_system_mobile.dart';
@@ -36,6 +39,7 @@ class SBBTertiaryButton extends StatelessWidget {
     this.focusNode,
     this.onFocusChange,
     this.autofocus = false,
+    this.isSemanticButton = true,
   }) : assert(!(labelText != null && label != null), 'Cannot provide both labelText and label!'),
        assert(!(iconData != null && icon != null), 'Cannot provide both iconData and icon!'),
        assert(
@@ -106,6 +110,15 @@ class SBBTertiaryButton extends StatelessWidget {
 
   /// {@macro flutter.widgets.Focus.autofocus}
   final bool autofocus;
+
+  /// Determine whether this subtree represents a button.
+  ///
+  /// If this is null, the screen reader will not announce "button" when this
+  /// is focused. This is useful for [MenuItemButton] and [SubmenuButton] when we
+  /// traverse the menu system.
+  ///
+  /// Defaults to true.
+  final bool isSemanticButton;
 
   @override
   Widget build(BuildContext context) {
@@ -154,6 +167,7 @@ class SBBTertiaryButtonSmall extends StatelessWidget {
     this.focusNode,
     this.onFocusChange,
     this.autofocus = false,
+    this.isSemanticButton = true,
   }) : assert(!(labelText != null && label != null), 'Cannot provide both labelText and label!'),
        assert(!(iconData != null && icon != null), 'Cannot provide both iconData and icon!'),
        assert(
@@ -225,10 +239,19 @@ class SBBTertiaryButtonSmall extends StatelessWidget {
   /// {@macro flutter.widgets.Focus.autofocus}
   final bool autofocus;
 
+  /// Determine whether this subtree represents a button.
+  ///
+  /// If this is null, the screen reader will not announce "button" when this
+  /// is focused. This is useful for [MenuItemButton] and [SubmenuButton] when we
+  /// traverse the menu system.
+  ///
+  /// Defaults to true.
+  final bool isSemanticButton;
+
   @override
   Widget build(BuildContext context) {
     return _BaseTertiaryButton(
-      style: _reducedHeightStyle(context),
+      isSmall: true,
       label: label,
       labelText: labelText,
       icon: icon,
@@ -239,17 +262,7 @@ class SBBTertiaryButtonSmall extends StatelessWidget {
       focusNode: focusNode,
       onFocusChange: onFocusChange,
       autofocus: autofocus,
-    );
-  }
-
-  ButtonStyle? _reducedHeightStyle(BuildContext context) {
-    final buttonStyle = SBBButtonStyles.of(context);
-
-    return buttonStyle.tertiarySmallStyle?.overrideButtonStyle(
-      Theme.of(context).textButtonTheme.style?.copyWith(
-        fixedSize: SBBTheme.allStates(const Size.fromHeight(SBBInternal.defaultButtonHeightSmall)),
-        minimumSize: SBBTheme.allStates(const Size(0, SBBInternal.defaultButtonHeightSmall)),
-      ),
+      isSemanticButton: isSemanticButton,
     );
   }
 }
@@ -257,7 +270,7 @@ class SBBTertiaryButtonSmall extends StatelessWidget {
 /// Base class for building both the small and the normal variant of SBBTertiaryButton.
 class _BaseTertiaryButton extends StatelessWidget {
   const _BaseTertiaryButton({
-    this.style,
+    this.isSmall = false,
     this.label,
     this.labelText,
     this.icon,
@@ -268,9 +281,10 @@ class _BaseTertiaryButton extends StatelessWidget {
     this.focusNode,
     this.onFocusChange,
     this.autofocus = false,
+    this.isSemanticButton = false,
   });
 
-  final ButtonStyle? style;
+  final bool isSmall;
 
   final Widget? label;
   final String? labelText;
@@ -282,6 +296,7 @@ class _BaseTertiaryButton extends StatelessWidget {
   final FocusNode? focusNode;
   final ValueChanged<bool>? onFocusChange;
   final bool autofocus;
+  final bool isSemanticButton;
 
   @override
   Widget build(BuildContext context) {
@@ -308,9 +323,14 @@ class _BaseTertiaryButton extends StatelessWidget {
     }
 
     final onlyLeading = (loading == null && leading != null && label == null);
-    final resolvedButton = onlyLeading ? _iconButton(child!, context) : _textButton(child!);
+    final resolvedButton = onlyLeading ? _iconButton(child!, context) : _textButton(child!, context);
 
-    return resolvedButton;
+    // The button is surrounded by padding to allow the border to be drawn outside while maintaining correct distances
+    // to other Widgets.
+    return Padding(
+      padding: const EdgeInsets.all(1.0),
+      child: resolvedButton,
+    );
   }
 
   Widget? _resolvedLeading() {
@@ -329,23 +349,187 @@ class _BaseTertiaryButton extends StatelessWidget {
     return sbbBaseStyle.themeValue(const SBBLoadingIndicator.tinySmoke(), const SBBLoadingIndicator.tinyCement());
   }
 
-  Widget _textButton(Widget child) => TextButton(
-    style: style,
-    onPressed: isLoading ? null : onPressed,
-    onLongPress: isLoading ? null : onLongPress,
-    focusNode: focusNode,
-    onFocusChange: onFocusChange,
-    autofocus: autofocus,
-    child: child,
-  );
+  Widget _textButton(Widget child, BuildContext context) {
+    final style = _effectiveTextButtonStyle(context);
+    return TextButton(
+      style: style,
+      onPressed: isLoading ? null : onPressed,
+      onLongPress: isLoading ? null : onLongPress,
+      focusNode: focusNode,
+      onFocusChange: onFocusChange,
+      autofocus: autofocus,
+      isSemanticButton: isSemanticButton,
+      child: child,
+    );
+  }
 
   Widget _iconButton(Widget child, BuildContext context) {
-    return IconButton.outlined(
+    final style = _effectiveIconButtonStyle(context);
+
+    final iconButton = IconButton.outlined(
+      style: style,
       onPressed: isLoading ? null : onPressed,
       onLongPress: isLoading ? null : onLongPress,
       focusNode: focusNode,
       autofocus: autofocus,
       icon: child,
+    );
+    if (!isSmall) {
+      return iconButton;
+    } else {
+      return Semantics(
+        container: true,
+        button: isSemanticButton,
+        enabled: onPressed != null || onLongPress != null,
+        child: _InputPadding(
+          minSize: const Size.square(SBBInternal.defaultButtonHeight),
+          child: iconButton,
+        ),
+      );
+    }
+  }
+
+  ButtonStyle? _effectiveTextButtonStyle(BuildContext context) {
+    if (!isSmall) return null;
+
+    final tertiaryButtonStyle = Theme.of(context).textButtonTheme.style;
+    return tertiaryButtonStyle?.copyWith(
+      fixedSize: WidgetStatePropertyAll<Size>(Size.fromHeight(SBBInternal.defaultButtonHeightSmall)),
+      minimumSize: SBBTheme.allStates(const Size(0, SBBInternal.defaultButtonHeightSmall)),
+    );
+  }
+
+  ButtonStyle? _effectiveIconButtonStyle(BuildContext context) {
+    final tertiaryButtonStyle = Theme.of(context).textButtonTheme.style;
+    final sideLength = isSmall ? SBBInternal.defaultButtonHeightSmall : SBBInternal.defaultButtonHeight;
+    return tertiaryButtonStyle?.copyWith(
+      padding: WidgetStatePropertyAll<EdgeInsets>(EdgeInsets.zero),
+      minimumSize: WidgetStatePropertyAll<Size>(Size.square(sideLength)),
+      fixedSize: WidgetStatePropertyAll<Size>(Size.square(sideLength)),
+    );
+  }
+}
+
+/// Copied from [ButtonStyleButton] in version Flutter SDK 3.38.1
+///
+/// A widget to pad the area around a [ButtonStyleButton]'s inner [Material].
+///
+/// Redirect taps that occur in the padded area around the child to the center
+/// of the child. This increases the size of the button and the button's
+/// "tap target", but not its material or its ink splashes.
+class _InputPadding extends SingleChildRenderObjectWidget {
+  const _InputPadding({super.child, required this.minSize});
+
+  final Size minSize;
+
+  @override
+  RenderObject createRenderObject(BuildContext context) {
+    return _RenderInputPadding(minSize);
+  }
+
+  @override
+  void updateRenderObject(BuildContext context, covariant _RenderInputPadding renderObject) {
+    renderObject.minSize = minSize;
+  }
+}
+
+class _RenderInputPadding extends RenderShiftedBox {
+  _RenderInputPadding(this._minSize, [RenderBox? child]) : super(child);
+
+  Size get minSize => _minSize;
+  Size _minSize;
+
+  set minSize(Size value) {
+    if (_minSize == value) {
+      return;
+    }
+    _minSize = value;
+    markNeedsLayout();
+  }
+
+  @override
+  double computeMinIntrinsicWidth(double height) {
+    if (child != null) {
+      return math.max(child!.getMinIntrinsicWidth(height), minSize.width);
+    }
+    return 0.0;
+  }
+
+  @override
+  double computeMinIntrinsicHeight(double width) {
+    if (child != null) {
+      return math.max(child!.getMinIntrinsicHeight(width), minSize.height);
+    }
+    return 0.0;
+  }
+
+  @override
+  double computeMaxIntrinsicWidth(double height) {
+    if (child != null) {
+      return math.max(child!.getMaxIntrinsicWidth(height), minSize.width);
+    }
+    return 0.0;
+  }
+
+  @override
+  double computeMaxIntrinsicHeight(double width) {
+    if (child != null) {
+      return math.max(child!.getMaxIntrinsicHeight(width), minSize.height);
+    }
+    return 0.0;
+  }
+
+  Size _computeSize({required BoxConstraints constraints, required ChildLayouter layoutChild}) {
+    if (child != null) {
+      final Size childSize = layoutChild(child!, constraints);
+      final double height = math.max(childSize.width, minSize.width);
+      final double width = math.max(childSize.height, minSize.height);
+      return constraints.constrain(Size(height, width));
+    }
+    return Size.zero;
+  }
+
+  @override
+  Size computeDryLayout(BoxConstraints constraints) {
+    return _computeSize(constraints: constraints, layoutChild: ChildLayoutHelper.dryLayoutChild);
+  }
+
+  @override
+  double? computeDryBaseline(covariant BoxConstraints constraints, TextBaseline baseline) {
+    final RenderBox? child = this.child;
+    if (child == null) {
+      return null;
+    }
+    final double? result = child.getDryBaseline(constraints, baseline);
+    if (result == null) {
+      return null;
+    }
+    final Size childSize = child.getDryLayout(constraints);
+    return result + Alignment.center.alongOffset(getDryLayout(constraints) - childSize as Offset).dy;
+  }
+
+  @override
+  void performLayout() {
+    size = _computeSize(constraints: constraints, layoutChild: ChildLayoutHelper.layoutChild);
+    if (child != null) {
+      final BoxParentData childParentData = child!.parentData! as BoxParentData;
+      childParentData.offset = Alignment.center.alongOffset(size - child!.size as Offset);
+    }
+  }
+
+  @override
+  bool hitTest(BoxHitTestResult result, {required Offset position}) {
+    if (super.hitTest(result, position: position)) {
+      return true;
+    }
+    final Offset center = child!.size.center(Offset.zero);
+    return result.addWithRawTransform(
+      transform: MatrixUtils.forceToPoint(center),
+      position: center,
+      hitTest: (BoxHitTestResult result, Offset position) {
+        assert(position == center);
+        return child!.hitTest(result, position: center);
+      },
     );
   }
 }
