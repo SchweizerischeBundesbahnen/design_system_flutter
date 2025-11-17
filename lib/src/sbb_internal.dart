@@ -4,10 +4,10 @@ import 'package:flutter/widgets.dart';
 class SBBInternal {
   SBBInternal._();
 
-  /// The default button height as in Figma is 44px with an **inner** stroked border.
+  /// The default button height as in Figma is 44px, 32px respectively with an **inner** stroked border.
   ///
   /// If we draw the border on the inside, the splash will draw over the border. Hence we reduce by
-  /// 1 logical px and add an outer margin of 1px on all sides.
+  /// 2 logical px and add an outer margin of 1px on all sides (done in the corresponding Widgets).
   ///
   /// A custom splash factory will also draw over with long press.
   static const defaultButtonHeight = 42.0;

@@ -195,5 +195,3 @@ class SBBTheme {
     });
   }
 }
-
-extension _SBBButtonStyle2X on SBBButtonStyle {}
