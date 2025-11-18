@@ -2,6 +2,8 @@ import 'package:flutter/widgets.dart';
 
 import '../../../sbb_design_system_mobile.dart';
 
+/// The default button themes are specified using the
+/// [Figma design specs](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=7-12).
 class DefaultSBBPrimaryButtonTheme extends SBBPrimaryButtonThemeData {
   DefaultSBBPrimaryButtonTheme(SBBBaseStyle baseStyle)
     : super(

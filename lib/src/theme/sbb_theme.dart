@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/src/button/theme/sbb_button_style_x.dart';
 
-import '../button/theme/default_button_styles.dart';
+import '../button/theme/default_button_themes.dart';
 import '../button/theme/sbb_button_theme_data.dart';
 import 'theme.dart';
 

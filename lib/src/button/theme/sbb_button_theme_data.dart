@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 
 import '../../../sbb_design_system_mobile.dart';
 
+/// The [SBBButtonThemeData] used to style the SBB Button variants within the current [SBBTheme].
+///
+/// This is a wrapper for passing the underlying [ThemeData] variants of [FilledButtonThemeData],
+/// [OutlinedButtonThemeData] and [TextButtonThemeData].
 @immutable
 sealed class SBBButtonThemeData with Diagnosticable {
   /// Creates an [SBBButtonThemeData].
@@ -39,12 +43,6 @@ sealed class SBBButtonThemeData with Diagnosticable {
       SBBTertiaryButtonThemeData() => SBBTertiaryButtonThemeData(style: style ?? this.style),
     };
   }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(DiagnosticsProperty<SBBButtonStyle>('style', style, defaultValue: null));
-  }
 }
 
 /// The ThemeData for the [SBBPrimaryButton].
@@ -58,14 +56,6 @@ class SBBPrimaryButtonThemeData extends SBBButtonThemeData {
   ///
   /// The [style] may be null.
   const SBBPrimaryButtonThemeData({super.style});
-
-  /// Linearly interpolate between two SBBPrimaryButtonThemeData themes.
-  static SBBPrimaryButtonThemeData? lerp(SBBPrimaryButtonThemeData? a, SBBPrimaryButtonThemeData? b, double t) {
-    if (identical(a, b)) {
-      return a;
-    }
-    return SBBPrimaryButtonThemeData(style: SBBButtonStyle.lerp(a?.style, b?.style, t));
-  }
 }
 
 /// The ThemeData for the [SBBSecondaryButton].
@@ -79,14 +69,6 @@ class SBBSecondaryButtonThemeData extends SBBButtonThemeData {
   ///
   /// The [style] may be null.
   const SBBSecondaryButtonThemeData({super.style});
-
-  /// Linearly interpolate between two SBBSecondaryButtonThemeData themes.
-  static SBBSecondaryButtonThemeData? lerp(SBBSecondaryButtonThemeData? a, SBBSecondaryButtonThemeData? b, double t) {
-    if (identical(a, b)) {
-      return a;
-    }
-    return SBBSecondaryButtonThemeData(style: SBBButtonStyle.lerp(a?.style, b?.style, t));
-  }
 }
 
 /// The ThemeData for the [SBBTertiaryButton] and [SBBTertiaryButtonSmall].
@@ -101,14 +83,6 @@ class SBBTertiaryButtonThemeData extends SBBButtonThemeData {
   ///
   /// The [style] may be null.
   const SBBTertiaryButtonThemeData({super.style});
-
-  /// Linearly interpolate between two SBBTertiaryButtonThemeData themes.
-  static SBBTertiaryButtonThemeData? lerp(SBBTertiaryButtonThemeData? a, SBBTertiaryButtonThemeData? b, double t) {
-    if (identical(a, b)) {
-      return a;
-    }
-    return SBBTertiaryButtonThemeData(style: SBBButtonStyle.lerp(a?.style, b?.style, t));
-  }
 }
 
 extension SBBButtonThemeDataX on SBBButtonThemeData {

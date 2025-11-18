@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 import '../../../sbb_design_system_mobile.dart';
 
-/// Style for SBB Buttons. Use this to override all button variants within the current [SBBTheme].
+/// Style for SBB Buttons. Use this in combination with [SBBButtonThemeData]
+/// to override all button variants within the current [SBBTheme].
 ///
 /// See also:
-/// * [SBBPrimaryButton]
-/// * [SBBSecondaryButton]
-/// * [SBBTertiaryButton]
-/// * [SBBTertiaryButtonSmall]
+/// * [SBBPrimaryButtonThemeData], the ThemeData given to SBBTheme to override the [SBBPrimaryButton]
+/// * [SBBSecondaryButtonThemeData], the ThemeData given to SBBTheme to override the [SBBSecondaryButton]
+/// * [SBBTertiaryButtonThemeData], the ThemeData given to SBBTheme to override the [SBBTertiaryButton]
 class SBBButtonStyle {
   const SBBButtonStyle({
     this.textStyle,
