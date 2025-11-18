@@ -38,7 +38,6 @@ class SBBTertiaryButton extends StatelessWidget {
     required this.onPressed,
     this.onLongPress,
     this.focusNode,
-    this.onFocusChange,
     this.autofocus = false,
     this.isSemanticButton = true,
     this.semanticLabel,
@@ -105,11 +104,6 @@ class SBBTertiaryButton extends StatelessWidget {
   /// {@macro flutter.widgets.Focus.focusNode}
   final FocusNode? focusNode;
 
-  /// Called when the focus state of the button changes.
-  ///
-  /// Receives true when the button gains focus and false when it loses focus.
-  final ValueChanged<bool>? onFocusChange;
-
   /// {@macro flutter.widgets.Focus.autofocus}
   final bool autofocus;
 
@@ -136,7 +130,6 @@ class SBBTertiaryButton extends StatelessWidget {
       onPressed: onPressed,
       onLongPress: onLongPress,
       focusNode: focusNode,
-      onFocusChange: onFocusChange,
       autofocus: autofocus,
       isSemanticButton: isSemanticButton,
       semanticLabel: semanticLabel,
@@ -173,7 +166,6 @@ class SBBTertiaryButtonSmall extends StatelessWidget {
     required this.onPressed,
     this.onLongPress,
     this.focusNode,
-    this.onFocusChange,
     this.autofocus = false,
     this.isSemanticButton = true,
     this.semanticLabel,
@@ -240,11 +232,6 @@ class SBBTertiaryButtonSmall extends StatelessWidget {
   /// {@macro flutter.widgets.Focus.focusNode}
   final FocusNode? focusNode;
 
-  /// Called when the focus state of the button changes.
-  ///
-  /// Receives true when the button gains focus and false when it loses focus.
-  final ValueChanged<bool>? onFocusChange;
-
   /// {@macro flutter.widgets.Focus.autofocus}
   final bool autofocus;
 
@@ -274,7 +261,6 @@ class SBBTertiaryButtonSmall extends StatelessWidget {
       onPressed: onPressed,
       onLongPress: onLongPress,
       focusNode: focusNode,
-      onFocusChange: onFocusChange,
       autofocus: autofocus,
       isSemanticButton: isSemanticButton,
       semanticLabel: semanticLabel,
@@ -294,7 +280,6 @@ class _BaseTertiaryButton extends StatelessWidget {
     required this.onPressed,
     this.onLongPress,
     this.focusNode,
-    this.onFocusChange,
     this.autofocus = false,
     this.isSemanticButton = false,
     this.semanticLabel,
@@ -310,7 +295,6 @@ class _BaseTertiaryButton extends StatelessWidget {
   final VoidCallback? onPressed;
   final VoidCallback? onLongPress;
   final FocusNode? focusNode;
-  final ValueChanged<bool>? onFocusChange;
   final bool autofocus;
   final bool isSemanticButton;
   final String? semanticLabel;
@@ -379,7 +363,6 @@ class _BaseTertiaryButton extends StatelessWidget {
       onPressed: isLoading ? null : onPressed,
       onLongPress: isLoading ? null : onLongPress,
       focusNode: focusNode,
-      onFocusChange: onFocusChange,
       autofocus: autofocus,
       isSemanticButton: isSemanticButton,
       child: child,

@@ -5,8 +5,8 @@ import '../../sbb_design_system_mobile.dart';
 
 /// The primary variant of the SBB Button.
 ///
-/// Use [label] for custom content within the button or [labelText] for the standard design.
-/// Only one of them can be set.
+/// Provide either [label] for custom button content or [labelText] for text-only
+/// content with standard styling. These parameters are mutually exclusive.
 ///
 /// When [isLoading] is true, a loading indicator replaces the label and
 /// the button appears disabled.
@@ -28,7 +28,6 @@ class SBBPrimaryButton extends StatelessWidget {
     this.labelText,
     this.isLoading = false,
     this.focusNode,
-    this.onFocusChange,
     this.autofocus = false,
     this.semanticLabel,
   }) : assert(!(labelText != null && label != null), 'Cannot provide both labelText and label!'),
@@ -77,11 +76,6 @@ class SBBPrimaryButton extends StatelessWidget {
   /// {@macro flutter.widgets.Focus.focusNode}
   final FocusNode? focusNode;
 
-  /// Called when the focus state of the button changes.
-  ///
-  /// Receives true when the button gains focus and false when it loses focus.
-  final ValueChanged<bool>? onFocusChange;
-
   /// {@macro flutter.widgets.Focus.autofocus}
   final bool autofocus;
 
@@ -105,7 +99,6 @@ class SBBPrimaryButton extends StatelessWidget {
           onPressed: isLoading ? null : onPressed,
           onLongPress: isLoading ? null : onLongPress,
           focusNode: focusNode,
-          onFocusChange: onFocusChange,
           autofocus: autofocus,
           child: label ?? _defaultLabel(),
         ),

@@ -27,7 +27,6 @@ class SBBSecondaryButton extends StatelessWidget {
     this.label,
     this.labelText,
     this.focusNode,
-    this.onFocusChange,
     this.autofocus = false,
     this.isLoading = false,
     this.semanticLabel,
@@ -77,11 +76,6 @@ class SBBSecondaryButton extends StatelessWidget {
   /// {@macro flutter.widgets.Focus.focusNode}
   final FocusNode? focusNode;
 
-  /// Called when the focus state of the button changes.
-  ///
-  /// Receives true when the button gains focus and false when it loses focus.
-  final ValueChanged<bool>? onFocusChange;
-
   /// {@macro flutter.widgets.Focus.autofocus}
   final bool autofocus;
 
@@ -105,7 +99,6 @@ class SBBSecondaryButton extends StatelessWidget {
           onPressed: isLoading ? null : onPressed,
           onLongPress: isLoading ? null : onLongPress,
           focusNode: focusNode,
-          onFocusChange: onFocusChange,
           autofocus: autofocus,
           child: label ?? _defaultLabel(context),
         ),
