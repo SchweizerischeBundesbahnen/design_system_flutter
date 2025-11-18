@@ -9,6 +9,26 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+### Added
+
+- added `onLongPress`, `semanticLabel` and `autofocus` to all button variants
+- added `SBBButtonThemeData` to override buttons within `SBBTheme`
+
+### Changed
+
+- BREAKING: All button variants: `label` is replaced by `labelText` - see [v5 migration guide]
+- BREAKING: `SBBTertiaryButton`: `icon` is replaced by `iconData` - see [v5 migration guide]
+- BREAKING: All button variants: `label` is of type `Widget?` - see [v5 migration guide]
+- BREAKING: `SBBTertiaryButton`: `icon` is of type `Widget?` - see [v5 migration guide]
+- BREAKING: Updated `SBBButtonStyle` to have `WidgetStateProperty` values - see [v5 migration guide]
+
+### Removed
+
+- Removed `SBBIconButtonLarge`: use `SBBTertiaryButton` with only `iconData` or `icon` - see [v5 migration guide]
+- Removed `SBBIconButtonSmall`: use `SBBTertiaryButtonSmall` with only `iconData` or `icon` - see [v5 migration guide]
+- Removed `buttonStyles` argument in `SBBTheme`: use `primaryButtonTheme`, `secondaryButtonTheme` and
+  `tertiaryButtonTheme` - see [v5 migration guide]
+
 ## [4.3.0] - 2025-11-14
 
 ### Added
@@ -668,6 +688,8 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 - Initial project setup
 - Added some widgets
+
+[v5 migration guide]: migration_guide.md
 
 [Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.3.0...HEAD
 
