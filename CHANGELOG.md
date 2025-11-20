@@ -12,6 +12,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 ### Added
 
 - added `onLongPress`, `semanticLabel` and `autofocus` to all button variants
+- added `style` to all button variants for changing individual button appearance
 - added `SBBButtonThemeData` to override buttons within `SBBTheme`
 
 ### Changed

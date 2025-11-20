@@ -3,6 +3,8 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:sbb_design_system_mobile/src/button/default_button_label.dart';
+import 'package:sbb_design_system_mobile/src/button/theme/default_button_themes.dart';
+import 'package:sbb_design_system_mobile/src/button/theme/sbb_button_style_x.dart';
 
 import '../../sbb_design_system_mobile.dart';
 import '../sbb_internal.dart';
@@ -30,13 +32,14 @@ import '../sbb_internal.dart';
 class SBBTertiaryButton extends StatelessWidget {
   const SBBTertiaryButton({
     super.key,
+    required this.onPressed,
+    this.onLongPress,
     this.label,
     this.labelText,
     this.icon,
     this.iconData,
     this.isLoading = false,
-    required this.onPressed,
-    this.onLongPress,
+    this.style,
     this.focusNode,
     this.autofocus = false,
     this.isSemanticButton = true,
@@ -47,6 +50,20 @@ class SBBTertiaryButton extends StatelessWidget {
          !(labelText == null && label == null && !isLoading && icon == null && iconData == null),
          'One of labelText, label, icon, iconData must be set or isLoading must be true!',
        );
+
+  /// Called when the button is tapped.
+  ///
+  /// The button is disabled when both this and [onLongPress] are null.
+  ///
+  /// Ignored when [isLoading] is true.
+  final VoidCallback? onPressed;
+
+  /// Called when the button is long-pressed.
+  ///
+  /// The button is disabled when both this and [onPressed] are null.
+  ///
+  /// Ignored when [isLoading] is true.
+  final VoidCallback? onLongPress;
 
   /// A custom widget displayed as the button's content.
   ///
@@ -87,19 +104,11 @@ class SBBTertiaryButton extends StatelessWidget {
   /// Defaults to false.
   final bool isLoading;
 
-  /// Called when the button is tapped.
+  /// Customizes this button's appearance.
   ///
-  /// The button is disabled when both this and [onLongPress] are null.
-  ///
-  /// Ignored when [isLoading] is true.
-  final VoidCallback? onPressed;
-
-  /// Called when the button is long-pressed.
-  ///
-  /// The button is disabled when both this and [onPressed] are null.
-  ///
-  /// Ignored when [isLoading] is true.
-  final VoidCallback? onLongPress;
+  /// Non-null properties of this style override the corresponding
+  /// properties in [DefaultSBBTertiaryButtonTheme.style].
+  final SBBButtonStyle? style;
 
   /// {@macro flutter.widgets.Focus.focusNode}
   final FocusNode? focusNode;
@@ -122,13 +131,14 @@ class SBBTertiaryButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _BaseTertiaryButton(
+      onPressed: onPressed,
+      onLongPress: onLongPress,
       label: label,
       labelText: labelText,
       icon: icon,
       iconData: iconData,
       isLoading: isLoading,
-      onPressed: onPressed,
-      onLongPress: onLongPress,
+      style: style,
       focusNode: focusNode,
       autofocus: autofocus,
       isSemanticButton: isSemanticButton,
@@ -155,111 +165,35 @@ class SBBTertiaryButton extends StatelessWidget {
 ///  * [SBBTertiaryButton], for the standard height variant.
 ///  * [SBBTertiaryButtonThemeData], for setting the [SBBButtonStyle] for all buttons within the current Theme.
 ///  * [Figma design specs](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=7-12)
-class SBBTertiaryButtonSmall extends StatelessWidget {
+class SBBTertiaryButtonSmall extends SBBTertiaryButton {
   const SBBTertiaryButtonSmall({
     super.key,
-    this.label,
-    this.labelText,
-    this.icon,
-    this.iconData,
-    this.isLoading = false,
-    required this.onPressed,
-    this.onLongPress,
-    this.focusNode,
-    this.autofocus = false,
-    this.isSemanticButton = true,
-    this.semanticLabel,
-  }) : assert(!(labelText != null && label != null), 'Cannot provide both labelText and label!'),
-       assert(!(iconData != null && icon != null), 'Cannot provide both iconData and icon!'),
-       assert(
-         !(labelText == null && label == null && !isLoading && icon == null && iconData == null),
-         'One of labelText, label, icon, iconData must be set or isLoading must be true!',
-       );
-
-  /// A custom widget displayed as the button's content.
-  ///
-  /// For simple text labels, use [labelText] instead.
-  ///
-  /// Cannot be used together with [labelText].
-  final Widget? label;
-
-  /// The text displayed in the button.
-  ///
-  /// The text will be styled according to the SBB design system.
-  ///
-  /// Cannot be used together with [label].
-  final String? labelText;
-
-  /// A custom widget displayed before the label.
-  ///
-  /// Use this for custom icon layouts. For standard SBB icons, use
-  /// [iconData] instead.
-  ///
-  /// Cannot be used together with [iconData].
-  final Widget? icon;
-
-  /// An icon displayed before the label.
-  ///
-  /// The icon will be sized and styled according to the SBB design system.
-  ///
-  /// Cannot be used together with [icon].
-  final IconData? iconData;
-
-  /// Whether to show a loading indicator instead of the button content.
-  ///
-  /// When true:
-  ///  * A [SBBLoadingIndicator] replaces the leading icon and label
-  ///  * The button becomes disabled ([onPressed] and [onLongPress] are ignored)
-  ///  * The label remains visible if provided
-  ///
-  /// Defaults to false.
-  final bool isLoading;
-
-  /// Called when the button is tapped.
-  ///
-  /// The button is disabled when both this and [onLongPress] are null.
-  ///
-  /// Ignored when [isLoading] is true.
-  final VoidCallback? onPressed;
-
-  /// Called when the button is long-pressed.
-  ///
-  /// The button is disabled when both this and [onPressed] are null.
-  ///
-  /// Ignored when [isLoading] is true.
-  final VoidCallback? onLongPress;
-
-  /// {@macro flutter.widgets.Focus.focusNode}
-  final FocusNode? focusNode;
-
-  /// {@macro flutter.widgets.Focus.autofocus}
-  final bool autofocus;
-
-  /// Determine whether this subtree represents a button.
-  ///
-  /// If this is null, the screen reader will not announce "button" when this
-  /// is focused. This is useful for [MenuItemButton] and [SubmenuButton] when we
-  /// traverse the menu system.
-  ///
-  /// Defaults to true.
-  final bool isSemanticButton;
-
-  /// Provides a textual description of the widget for assistive technologies.
-  ///
-  /// If this is non null, semantics of [label] or [icon] are ignored.
-  final String? semanticLabel;
+    required super.onPressed,
+    super.onLongPress,
+    super.label,
+    super.labelText,
+    super.icon,
+    super.iconData,
+    super.isLoading = false,
+    super.style,
+    super.focusNode,
+    super.autofocus = false,
+    super.isSemanticButton = true,
+    super.semanticLabel,
+  });
 
   @override
   Widget build(BuildContext context) {
     return _BaseTertiaryButton(
       isSmall: true,
+      onPressed: onPressed,
+      onLongPress: onLongPress,
       label: label,
       labelText: labelText,
       icon: icon,
       iconData: iconData,
       isLoading: isLoading,
-      onPressed: onPressed,
-      onLongPress: onLongPress,
+      style: style,
       focusNode: focusNode,
       autofocus: autofocus,
       isSemanticButton: isSemanticButton,
@@ -271,14 +205,15 @@ class SBBTertiaryButtonSmall extends StatelessWidget {
 /// Base class for building both the small and the normal variant of SBBTertiaryButton.
 class _BaseTertiaryButton extends StatelessWidget {
   const _BaseTertiaryButton({
+    required this.onPressed,
+    this.onLongPress,
     this.isSmall = false,
     this.label,
     this.labelText,
     this.icon,
     this.iconData,
     this.isLoading = false,
-    required this.onPressed,
-    this.onLongPress,
+    this.style,
     this.focusNode,
     this.autofocus = false,
     this.isSemanticButton = false,
@@ -287,13 +222,14 @@ class _BaseTertiaryButton extends StatelessWidget {
 
   final bool isSmall;
 
+  final VoidCallback? onPressed;
+  final VoidCallback? onLongPress;
   final Widget? label;
   final String? labelText;
   final Widget? icon;
   final IconData? iconData;
   final bool isLoading;
-  final VoidCallback? onPressed;
-  final VoidCallback? onLongPress;
+  final SBBButtonStyle? style;
   final FocusNode? focusNode;
   final bool autofocus;
   final bool isSemanticButton;
@@ -357,7 +293,7 @@ class _BaseTertiaryButton extends StatelessWidget {
   }
 
   Widget _textButton(Widget child, BuildContext context) {
-    final style = _effectiveTextButtonStyle(context);
+    final style = _effectiveTextButtonStyle();
     return TextButton(
       style: style,
       onPressed: isLoading ? null : onPressed,
@@ -390,23 +326,41 @@ class _BaseTertiaryButton extends StatelessWidget {
     }
   }
 
-  ButtonStyle? _effectiveTextButtonStyle(BuildContext context) {
-    if (!isSmall) return null;
+  ButtonStyle? _effectiveTextButtonStyle() {
+    final widgetStyle = style?.toButtonStyle();
+    if (!isSmall) return widgetStyle;
 
-    final tertiaryButtonStyle = Theme.of(context).textButtonTheme.style;
-    return tertiaryButtonStyle?.copyWith(
+    final buttonStyleSmall = ButtonStyle(
       fixedSize: WidgetStatePropertyAll<Size>(Size.fromHeight(SBBInternal.defaultButtonHeightSmall)),
       minimumSize: SBBTheme.allStates(const Size(0, SBBInternal.defaultButtonHeightSmall)),
     );
+
+    return _baseOverridenByWidgetStyle(widgetStyle, buttonStyleSmall);
   }
 
   ButtonStyle? _effectiveIconButtonStyle(BuildContext context) {
-    final tertiaryButtonStyle = Theme.of(context).textButtonTheme.style;
     final sideLength = isSmall ? SBBInternal.defaultButtonHeightSmall : SBBInternal.defaultButtonHeight;
-    return tertiaryButtonStyle?.copyWith(
+    final baseStyle = Theme.of(context).textButtonTheme.style;
+    final iconStyle = baseStyle?.copyWith(
       padding: WidgetStatePropertyAll<EdgeInsets>(EdgeInsets.zero),
       minimumSize: WidgetStatePropertyAll<Size>(Size.square(sideLength)),
       fixedSize: WidgetStatePropertyAll<Size>(Size.square(sideLength)),
+    );
+    final widgetStyle = style?.toButtonStyle();
+
+    return _baseOverridenByWidgetStyle(widgetStyle, iconStyle);
+  }
+
+  ButtonStyle? _baseOverridenByWidgetStyle(ButtonStyle? widgetStyle, ButtonStyle? baseStyle) {
+    if (widgetStyle == null) return baseStyle;
+
+    return baseStyle?.copyWith(
+      backgroundColor: widgetStyle.backgroundColor,
+      foregroundColor: widgetStyle.foregroundColor,
+      iconColor: widgetStyle.iconColor,
+      textStyle: widgetStyle.textStyle,
+      overlayColor: widgetStyle.overlayColor,
+      side: widgetStyle.side,
     );
   }
 }

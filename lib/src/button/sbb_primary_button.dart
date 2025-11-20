@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/src/button/default_button_label.dart';
+import 'package:sbb_design_system_mobile/src/button/theme/default_button_themes.dart';
+import 'package:sbb_design_system_mobile/src/button/theme/sbb_button_style_x.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
@@ -27,6 +29,7 @@ class SBBPrimaryButton extends StatelessWidget {
     this.label,
     this.labelText,
     this.isLoading = false,
+    this.style,
     this.focusNode,
     this.autofocus = false,
     this.semanticLabel,
@@ -35,6 +38,20 @@ class SBBPrimaryButton extends StatelessWidget {
          !(labelText == null && label == null && !isLoading),
          'One of labelText, label must be set or isLoading must be true!',
        );
+
+  /// Called when the button is tapped.
+  ///
+  /// The button is disabled when both this and [onLongPress] are null.
+  ///
+  /// Ignored when [isLoading] is true.
+  final VoidCallback? onPressed;
+
+  /// Called when the button is long-pressed.
+  ///
+  /// The button is disabled when both this and [onPressed] are null.
+  ///
+  /// Ignored when [isLoading] is true.
+  final VoidCallback? onLongPress;
 
   /// A custom widget displayed as the button's content.
   ///
@@ -59,19 +76,11 @@ class SBBPrimaryButton extends StatelessWidget {
   /// Defaults to false.
   final bool isLoading;
 
-  /// Called when the button is tapped.
+  /// Customizes this button's appearance.
   ///
-  /// The button is disabled when both this and [onLongPress] are null.
-  ///
-  /// Ignored when [isLoading] is true.
-  final VoidCallback? onPressed;
-
-  /// Called when the button is long-pressed.
-  ///
-  /// The button is disabled when both this and [onPressed] are null.
-  ///
-  /// Ignored when [isLoading] is true.
-  final VoidCallback? onLongPress;
+  /// Non-null properties of this style override the corresponding
+  /// properties in [DefaultSBBPrimaryButtonTheme.style].
+  final SBBButtonStyle? style;
 
   /// {@macro flutter.widgets.Focus.focusNode}
   final FocusNode? focusNode;
@@ -98,6 +107,7 @@ class SBBPrimaryButton extends StatelessWidget {
         child: FilledButton(
           onPressed: isLoading ? null : onPressed,
           onLongPress: isLoading ? null : onLongPress,
+          style: style?.toButtonStyle(),
           focusNode: focusNode,
           autofocus: autofocus,
           child: label ?? _defaultLabel(),

@@ -17,6 +17,11 @@ void main() {
             label: Container(color: SBBColors.platinum, child: Text('Custom!')),
             onPressed: () {},
           ),
+          SBBSecondaryButton(
+            onPressed: null,
+            labelText: 'Custom Style',
+            style: SBBButtonStyle(backgroundColor: WidgetStatePropertyAll(SBBColors.silver)),
+          ),
         ],
       ),
     );

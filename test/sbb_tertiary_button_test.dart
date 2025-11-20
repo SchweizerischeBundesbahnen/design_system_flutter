@@ -17,8 +17,21 @@ void main() {
           SBBTertiaryButton(labelText: "Icon Disabled", onPressed: null, iconData: SBBIcons.dog_small),
           SBBTertiaryButton(onPressed: () {}, iconData: SBBIcons.dog_small),
           SBBTertiaryButton(
-            label: Container(color: SBBColors.platinum, child: Text('Custom!')),
+            label: Container(color: SBBColors.platinum, child: Text('Custom Label!')),
             onPressed: () {},
+          ),
+          SBBTertiaryButton(
+            onPressed: null,
+            labelText: 'Custom Style',
+            style: SBBButtonStyle(backgroundColor: WidgetStatePropertyAll(SBBColors.silver)),
+          ),
+          SBBTertiaryButton(
+            onPressed: null,
+            iconData: SBBIcons.airplane_small,
+            style: SBBButtonStyle(
+              backgroundColor: WidgetStatePropertyAll(SBBColors.silver),
+              iconColor: WidgetStatePropertyAll(SBBColors.turquoise),
+            ),
           ),
           SBBTertiaryButtonSmall(labelText: "Default", onPressed: () {}),
           SBBTertiaryButtonSmall(labelText: "Disabled", onPressed: null),
@@ -26,8 +39,21 @@ void main() {
           SBBTertiaryButtonSmall(labelText: "Icon Disabled", onPressed: null, iconData: SBBIcons.dog_small),
           SBBTertiaryButtonSmall(onPressed: () {}, iconData: SBBIcons.dog_small),
           SBBTertiaryButtonSmall(
-            label: Container(color: SBBColors.platinum, child: Text('Custom!')),
+            label: Container(color: SBBColors.platinum, child: Text('Custom label!')),
             onPressed: () {},
+          ),
+          SBBTertiaryButtonSmall(
+            onPressed: null,
+            labelText: 'Custom Style',
+            style: SBBButtonStyle(backgroundColor: WidgetStatePropertyAll(SBBColors.cement)),
+          ),
+          SBBTertiaryButtonSmall(
+            onPressed: null,
+            iconData: SBBIcons.airplane_small,
+            style: SBBButtonStyle(
+              backgroundColor: WidgetStatePropertyAll(SBBColors.cement),
+              iconColor: WidgetStatePropertyAll(SBBColors.turquoise),
+            ),
           ),
         ],
       ),
