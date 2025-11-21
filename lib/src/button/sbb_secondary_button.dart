@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/src/button/theme/default_button_themes.dart';
 import 'package:sbb_design_system_mobile/src/button/theme/sbb_button_style_x.dart';
@@ -114,6 +115,14 @@ class SBBSecondaryButton extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty<bool>('isLoading', isLoading, defaultValue: false, showName: false));
+    properties.add(DiagnosticsProperty<SBBButtonStyle>('style', style, defaultValue: null, showName: false));
+    properties.add(DiagnosticsProperty<String>('semanticLabel', semanticLabel, defaultValue: null, showName: false));
   }
 
   Widget _defaultLabel(BuildContext context) {

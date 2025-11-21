@@ -145,6 +145,14 @@ class SBBTertiaryButton extends StatelessWidget {
       semanticLabel: semanticLabel,
     );
   }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty<bool>('isLoading', isLoading, defaultValue: false, showName: false));
+    properties.add(DiagnosticsProperty<SBBButtonStyle>('style', style, defaultValue: null, showName: false));
+    properties.add(DiagnosticsProperty<String>('semanticLabel', semanticLabel, defaultValue: null, showName: false));
+  }
 }
 
 /// The tertiary variant of the SBB Button with reduced height.
