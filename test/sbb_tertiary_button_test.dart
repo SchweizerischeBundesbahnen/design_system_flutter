@@ -6,16 +6,20 @@ import 'test_app.dart';
 
 void main() {
   testWidgets('tertiary_button', (WidgetTester tester) async {
+    final pressableKey = ValueKey('pressedButton');
+    final pressableSmallKey = ValueKey('pressedSmallButton');
+    final pressableIconKey = ValueKey('pressedIconButton');
+    final pressableSmallIconKey = ValueKey('pressedSmallIconButton');
     final widget = Padding(
       padding: const EdgeInsets.symmetric(vertical: sbbDefaultSpacing, horizontal: sbbDefaultSpacing / 2),
       child: Column(
         spacing: sbbDefaultSpacing,
         children: [
-          SBBTertiaryButton(labelText: "Default", onPressed: () {}),
+          SBBTertiaryButton(key: pressableKey, labelText: "Default", onPressed: () {}),
           SBBTertiaryButton(labelText: "Disabled", onPressed: null),
           SBBTertiaryButton(labelText: "Icon", onPressed: () {}, iconData: SBBIcons.dog_small),
           SBBTertiaryButton(labelText: "Icon Disabled", onPressed: null, iconData: SBBIcons.dog_small),
-          SBBTertiaryButton(onPressed: () {}, iconData: SBBIcons.dog_small),
+          SBBTertiaryButton(key: pressableIconKey, onPressed: () {}, iconData: SBBIcons.dog_small),
           SBBTertiaryButton(
             label: Container(color: SBBColors.platinum, child: Text('Custom Label!')),
             onPressed: () {},
@@ -33,11 +37,11 @@ void main() {
               iconColor: WidgetStatePropertyAll(SBBColors.turquoise),
             ),
           ),
-          SBBTertiaryButtonSmall(labelText: "Default", onPressed: () {}),
+          SBBTertiaryButtonSmall(key: pressableSmallKey, labelText: "Default", onPressed: () {}),
           SBBTertiaryButtonSmall(labelText: "Disabled", onPressed: null),
           SBBTertiaryButtonSmall(labelText: "Icon", onPressed: () {}, iconData: SBBIcons.dog_small),
           SBBTertiaryButtonSmall(labelText: "Icon Disabled", onPressed: null, iconData: SBBIcons.dog_small),
-          SBBTertiaryButtonSmall(onPressed: () {}, iconData: SBBIcons.dog_small),
+          SBBTertiaryButtonSmall(key: pressableSmallIconKey, onPressed: () {}, iconData: SBBIcons.dog_small),
           SBBTertiaryButtonSmall(
             label: Container(color: SBBColors.platinum, child: Text('Custom label!')),
             onPressed: () {},
@@ -63,6 +67,20 @@ void main() {
       widget,
       tester,
       'tertiary_button',
+      find.byType(Column).first,
+    );
+
+    await tester.press(find.byKey(pressableKey));
+    await tester.press(find.byKey(pressableSmallKey));
+    await tester.press(find.byKey(pressableIconKey));
+    await tester.press(find.byKey(pressableSmallIconKey));
+    await tester.pumpAndSettle();
+
+    await TestSpecs.run(
+      TestSpecs.themedSpecs,
+      widget,
+      tester,
+      'tertiary_button_pressed',
       find.byType(Column).first,
     );
   });
