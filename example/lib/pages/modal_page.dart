@@ -58,8 +58,8 @@ class _ModalPageState extends State<ModalPage> {
   }
 
   Widget _modalSheetFullButton(BuildContext context) {
-    return SBBTertiaryButtonLarge(
-      label: 'Modal Sheet Full',
+    return SBBTertiaryButton(
+      labelText: 'Modal Sheet Full',
       onPressed: () async {
         final result = await showSBBModalSheet<String>(
           context: context,
@@ -74,8 +74,8 @@ class _ModalPageState extends State<ModalPage> {
   }
 
   Widget _modalSheetButton(BuildContext context) {
-    return SBBTertiaryButtonLarge(
-      label: 'Modal Sheet',
+    return SBBTertiaryButton(
+      labelText: 'Modal Sheet',
       onPressed: () async {
         final result = await showSBBModalSheet<String>(
           context: context,
@@ -90,8 +90,8 @@ class _ModalPageState extends State<ModalPage> {
   }
 
   Widget _customModalSheetButton(BuildContext context) {
-    return SBBTertiaryButtonLarge(
-      label: 'Custom Modal Sheet',
+    return SBBTertiaryButton(
+      labelText: 'Custom Modal Sheet',
       onPressed: () async {
         final result = await showCustomSBBModalSheet<String>(
           context: context,
@@ -115,8 +115,8 @@ class _ModalPageState extends State<ModalPage> {
   }
 
   Widget _modalPopupButton(BuildContext context) {
-    return SBBTertiaryButtonLarge(
-      label: 'Modal Popup',
+    return SBBTertiaryButton(
+      labelText: 'Modal Popup',
       onPressed: () async {
         final result = await showSBBModalPopup(
           context: context,
@@ -141,7 +141,7 @@ class _ModalPageState extends State<ModalPage> {
             'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
           ),
           const SizedBox(height: sbbDefaultSpacing),
-          SBBPrimaryButton(label: 'Begone!', onPressed: () => Navigator.of(context).pop('OK')),
+          SBBPrimaryButton(labelText: 'Begone!', onPressed: () => Navigator.of(context).pop('OK')),
         ],
       ),
     );

@@ -30,13 +30,14 @@ class TapableElement extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final iconStyle = SBBButtonStyles.of(context).iconTextStyle;
+    // TODO: replace this with color in each Widget
+    final color = Theme.of(context).iconTheme.color;
     return Material(
       color: color ?? SBBColors.transparent,
       shape: customBorder,
       child: InkWell(
-        focusColor: iconStyle?.backgroundColorHighlighted,
-        hoverColor: iconStyle?.backgroundColorHighlighted,
+        focusColor: color,
+        hoverColor: color,
         customBorder: customBorder,
         onTap: onTap,
         child: child,

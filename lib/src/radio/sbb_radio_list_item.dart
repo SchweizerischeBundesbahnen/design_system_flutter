@@ -289,7 +289,7 @@ class SBBRadioListItem<T> extends StatelessWidget {
     } else {
       return Padding(
         padding: const EdgeInsets.only(right: sbbDefaultSpacing * .5),
-        child: SBBIconButtonSmall(icon: trailingIcon, onPressed: onChanged != null ? onCallToAction : null),
+        child: SBBTertiaryButtonSmall(iconData: trailingIcon, onPressed: onChanged != null ? onCallToAction : null),
       );
     }
   }
