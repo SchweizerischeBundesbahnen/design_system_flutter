@@ -24,7 +24,7 @@ class DefaultSBBPrimaryButtonTheme extends SBBPrimaryButtonThemeData {
             WidgetState.any: baseStyle.primaryColor,
           }),
           borderColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
-            WidgetState.focused | WidgetState.pressed: baseStyle.primaryColor,
+            WidgetState.focused | WidgetState.pressed: baseStyle.primaryColorDark,
             WidgetState.disabled: baseStyle.themeValue(SBBColors.cement, SBBColors.iron),
             WidgetState.any: baseStyle.primaryColor,
           }),

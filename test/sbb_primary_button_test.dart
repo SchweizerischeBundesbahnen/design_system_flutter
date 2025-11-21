@@ -6,7 +6,7 @@ import 'test_app.dart';
 
 void main() {
   testWidgets('primary_button', (WidgetTester tester) async {
-    final pressableKey = ValueKey('pressedPrimaryButton');
+    final pressableKey = ValueKey('pressedButton');
     final widget = Padding(
       padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing / 2, vertical: sbbDefaultSpacing),
       child: Column(
