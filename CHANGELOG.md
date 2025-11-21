@@ -14,6 +14,10 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - drop support for Flutter SDK 3.29.x
 - removed static `SBBTextTheme.of(context)` function
 
+### Fixed
+
+- `SBBTextTheme`: Fixed return type of `ThemeData` extension getter
+
 ## [4.3.0] - 2025-11-14
 
 ### Added
@@ -28,7 +32,6 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - `SBBSegmentedButton`: Fixed animation issue when resizing SBBSegmentedButton (#312)
 - `SBBSegmentedButton`: Removed `boxShadow` from `SBBSegmentedButtonStyle` (#312)
 - `SBBSegmentedButton`: Moved `iconColor` from `SBBSegmentedButtonStyle` to `SBBSegmentedButtonInnerStyle` (#312)
-- `SBBTextTheme`: Fixed return type of `ThemeData` extension getter
 
 ### Changed
 
