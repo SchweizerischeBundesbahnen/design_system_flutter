@@ -59,16 +59,17 @@ class SBBSwitchListItem extends StatelessWidget {
          value: value,
          onChanged: onChanged,
          isLoading: isLoading,
-         linksWidgets: links
-             ?.map(
-               (linkItem) => SBBListItem(
-                 title: linkItem.text,
-                 onPressed: linkItem.onPressed,
-                 isLastElement: true,
-                 trailingIcon: SBBIcons.chevron_small_right_small,
-               ),
-             )
-             .toList(),
+         linksWidgets:
+             links
+                 ?.map(
+                   (linkItem) => SBBListItem(
+                     title: linkItem.text,
+                     onPressed: linkItem.onPressed,
+                     isLastElement: true,
+                     trailingIcon: SBBIcons.chevron_small_right_small,
+                   ),
+                 )
+                 .toList(),
        );
 
   /// Use this in combination with a [SBBGroup] to create a boxed variant of the [SBBSwitchListItem].
@@ -108,16 +109,17 @@ class SBBSwitchListItem extends StatelessWidget {
          value: value,
          onChanged: onChanged,
          isLoading: isLoading,
-         linksWidgets: links
-             ?.map(
-               (linkItem) => SBBListItem(
-                 title: linkItem.text,
-                 onPressed: linkItem.onPressed,
-                 isLastElement: true,
-                 trailingIcon: SBBIcons.chevron_small_right_small,
-               ),
-             )
-             .toList(),
+         linksWidgets:
+             links
+                 ?.map(
+                   (linkItem) => SBBListItem(
+                     title: linkItem.text,
+                     onPressed: linkItem.onPressed,
+                     isLastElement: true,
+                     trailingIcon: SBBIcons.chevron_small_right_small,
+                   ),
+                 )
+                 .toList(),
        );
 
   /// Allows complete customization of the [SBBSwitchListItem].

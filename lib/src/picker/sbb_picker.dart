@@ -213,9 +213,8 @@ class _SBBPickerState extends _PickerClassState<SBBPicker> {
   List<Color> _gradientColors(BuildContext context) {
     // generate list of opacity values to be used in gradient
     final isLightTheme = Theme.of(context).brightness == Brightness.light;
-    final themedOpacities = isLightTheme
-        ? SBBPicker._lightThemeGradientColorOpacities
-        : SBBPicker._darkThemeGradientColorOpacities;
+    final themedOpacities =
+        isLightTheme ? SBBPicker._lightThemeGradientColorOpacities : SBBPicker._darkThemeGradientColorOpacities;
 
     // start with opacity 0
     var opacities = [0.0];

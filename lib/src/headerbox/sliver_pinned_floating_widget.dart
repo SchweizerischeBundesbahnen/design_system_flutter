@@ -238,13 +238,12 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
     };
 
     if (headerIsPartiallyVisible) {
-      _snapController ??= AnimationController(vsync: vsync!)
-        ..addListener(() {
-          if (_virtualScroll != _snapAnimation.value) {
-            _virtualScroll = _snapAnimation.value;
-            markNeedsLayout();
-          }
-        });
+      _snapController ??= AnimationController(vsync: vsync!)..addListener(() {
+        if (_virtualScroll != _snapAnimation.value) {
+          _virtualScroll = _snapAnimation.value;
+          markNeedsLayout();
+        }
+      });
       _snapController!.duration = switch (direction) {
         ScrollDirection.forward => animationStyle?.duration ?? const Duration(milliseconds: 300),
         _ => animationStyle?.reverseDuration ?? const Duration(milliseconds: 300),
@@ -287,11 +286,12 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
       final scrollAmountSinceStart = (_scrollOffsetAtScrollStart - _internalScrollOffset).abs();
       final bool useScrollDirection = elapsed < _kQuickSnapTime && scrollAmountSinceStart > (expandableExtent / 4);
 
-      final direction = useScrollDirection || expandableExtent < _kSmallValue
-          ? position.userScrollDirection
-          : (_internalScrollOffset / expandableExtent) < 0.5
-          ? ScrollDirection.forward
-          : ScrollDirection.reverse;
+      final direction =
+          useScrollDirection || expandableExtent < _kSmallValue
+              ? position.userScrollDirection
+              : (_internalScrollOffset / expandableExtent) < 0.5
+              ? ScrollDirection.forward
+              : ScrollDirection.reverse;
 
       snap(direction);
     }

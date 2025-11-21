@@ -89,9 +89,10 @@ class SBBLoadingIndicator extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.only(top: padding, bottom: padding),
       child: Transform(
-        transform: Matrix4.identity()
-          ..setEntry(3, 2, translationZ)
-          ..rotateY(rotationY),
+        transform:
+            Matrix4.identity()
+              ..setEntry(3, 2, translationZ)
+              ..rotateY(rotationY),
         alignment: FractionalOffset.centerRight,
         child: LoadingAnimation(
           squareWidth: squareWidth,

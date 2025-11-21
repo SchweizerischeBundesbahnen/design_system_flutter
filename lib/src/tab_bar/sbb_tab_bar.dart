@@ -164,12 +164,13 @@ class _SBBTabBarState extends State<SBBTabBar> with TickerProviderStateMixin, Wi
                             warnings: warnings,
                             portrait: portrait,
                             onPositioned: _controller.onLayout,
-                            interactionsBuilder: (e) => TabItemInteractions(
-                              focusNode: _focusNodes[e]!,
-                              onTap: () => _onTap(e, navData),
-                              onTapDown: () => _onTapDown(e, navData),
-                              onTapCancel: () => _controller.cancelHover(),
-                            ),
+                            interactionsBuilder:
+                                (e) => TabItemInteractions(
+                                  focusNode: _focusNodes[e]!,
+                                  onTap: () => _onTap(e, navData),
+                                  onTapDown: () => _onTapDown(e, navData),
+                                  onTapCancel: () => _controller.cancelHover(),
+                                ),
                           ),
                         ),
                       ),

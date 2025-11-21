@@ -78,12 +78,14 @@ class SBBLinkTextState extends State<SBBLinkText> {
         };
         inlineSpans.add(
           TextSpan(
-            onEnter: (_) => setState(() {
-              _isHoveredValues[i] = true;
-            }),
-            onExit: (_) => setState(() {
-              _isHoveredValues[i] = false;
-            }),
+            onEnter:
+                (_) => setState(() {
+                  _isHoveredValues[i] = true;
+                }),
+            onExit:
+                (_) => setState(() {
+                  _isHoveredValues[i] = false;
+                }),
             text: text ?? url,
             style: _linkTextStyle(_isPressedValues[i] == true, _isHoveredValues[i] == true),
             recognizer: tapGestureRecognizer,
@@ -96,9 +98,10 @@ class SBBLinkTextState extends State<SBBLinkText> {
 
   TextStyle? _resolveTextStyle(SBBBaseStyle style) {
     final hasCustomStyle = widget.style != null;
-    final textStyle = hasCustomStyle
-        ? widget.style!.copyWith(color: widget.style!.color ?? style.defaultTextStyle!.color)
-        : style.defaultTextStyle;
+    final textStyle =
+        hasCustomStyle
+            ? widget.style!.copyWith(color: widget.style!.color ?? style.defaultTextStyle!.color)
+            : style.defaultTextStyle;
     return textStyle;
   }
 
@@ -106,15 +109,16 @@ class SBBLinkTextState extends State<SBBLinkText> {
     final style = SBBBaseStyle.of(context);
     final controlStyle = SBBControlStyles.of(context);
     final hasCustomStyle = widget.style != null;
-    final textStyle = hasCustomStyle
-        ? widget.style!.copyWith(color: widget.style!.color ?? style.defaultTextStyle!.color)
-        : style.defaultTextStyle;
-    final linkStyle = hasCustomStyle
-        ? textStyle!.copyWith(color: controlStyle.linkTextStyle!.color)
-        : controlStyle.linkTextStyle;
-    final linkStylePressed = hasCustomStyle
-        ? textStyle!.copyWith(color: controlStyle.linkTextStyleHighlighted!.color)
-        : controlStyle.linkTextStyleHighlighted;
+    final textStyle =
+        hasCustomStyle
+            ? widget.style!.copyWith(color: widget.style!.color ?? style.defaultTextStyle!.color)
+            : style.defaultTextStyle;
+    final linkStyle =
+        hasCustomStyle ? textStyle!.copyWith(color: controlStyle.linkTextStyle!.color) : controlStyle.linkTextStyle;
+    final linkStylePressed =
+        hasCustomStyle
+            ? textStyle!.copyWith(color: controlStyle.linkTextStyleHighlighted!.color)
+            : controlStyle.linkTextStyleHighlighted;
 
     return (isPressed ? linkStylePressed : linkStyle)!;
   }

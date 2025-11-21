@@ -36,13 +36,14 @@ class _FloatingPageState extends State<FloatingPage> {
             ),
             SliverList.builder(
               itemCount: 60,
-              itemBuilder: (context, index) => SBBListItem(
-                title: 'Item $index',
-                onPressed: () {
-                  FocusScope.of(context).unfocus();
-                  sbbToast.show(title: 'Pressed Item $index', bottom: sbbDefaultSpacing * 6);
-                },
-              ),
+              itemBuilder:
+                  (context, index) => SBBListItem(
+                    title: 'Item $index',
+                    onPressed: () {
+                      FocusScope.of(context).unfocus();
+                      sbbToast.show(title: 'Pressed Item $index', bottom: sbbDefaultSpacing * 6);
+                    },
+                  ),
             ),
             const SBBSliverFloatingHeaderboxSpacer(),
           ],
@@ -212,24 +213,26 @@ class _FloatingPageState extends State<FloatingPage> {
     return [
       SBBListItem(title: 'Static with progress bar', onPressed: null),
       SBBContractionListener(
-        builder: (context, state, _) => FractionallySizedBox(
-          widthFactor: state.contractionValue,
-          alignment: Alignment.topLeft,
-          child: Container(
-            height: 5,
-            color: SBBColors.red,
-          ),
-        ),
+        builder:
+            (context, state, _) => FractionallySizedBox(
+              widthFactor: state.contractionValue,
+              alignment: Alignment.topLeft,
+              child: Container(
+                height: 5,
+                color: SBBColors.red,
+              ),
+            ),
       ),
       SBBContractible.custom(
         behavior: SBBContractionBehavior.center,
         child: Center(child: SBBListItem(title: 'Stay center', onPressed: null)),
       ),
       SBBContractible(
-        builder: (context, state, child) => Transform.translate(
-          offset: Offset((1.0 - state.expansionValue) * 30, 0.0),
-          child: child,
-        ),
+        builder:
+            (context, state, child) => Transform.translate(
+              offset: Offset((1.0 - state.expansionValue) * 30, 0.0),
+              child: child,
+            ),
         child: SBBListItem(title: 'React to progress', onPressed: null),
       ),
     ];
@@ -240,15 +243,17 @@ class _FloatingPageState extends State<FloatingPage> {
       duration: Durations.long2,
       switchInCurve: Curves.easeInOutCubic,
       switchOutCurve: Curves.easeInOutCubic,
-      transitionBuilder: (child, anim) => SizeTransition(
-        sizeFactor: anim,
-        child: child,
-      ),
-      child: showAll
-          ? SBBCascadeColumn(
-              children: _additionalRows(context),
-            )
-          : SizedBox(),
+      transitionBuilder:
+          (child, anim) => SizeTransition(
+            sizeFactor: anim,
+            child: child,
+          ),
+      child:
+          showAll
+              ? SBBCascadeColumn(
+                children: _additionalRows(context),
+              )
+              : SizedBox(),
     );
   }
 }

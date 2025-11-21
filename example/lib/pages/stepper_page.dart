@@ -23,9 +23,10 @@ class _StepperPageState extends State<StepperPage> {
   Widget build(BuildContext context) => Scaffold(body: _stepper(context), bottomNavigationBar: _footer(context));
 
   Widget _stepper(BuildContext context) {
-    final stepper = red
-        ? SBBStepper.red(steps: steps, activeStep: activeStep, onStepPressed: _onStepPressed)
-        : SBBStepper(steps: steps, activeStep: activeStep, onStepPressed: _onStepPressed);
+    final stepper =
+        red
+            ? SBBStepper.red(steps: steps, activeStep: activeStep, onStepPressed: _onStepPressed)
+            : SBBStepper(steps: steps, activeStep: activeStep, onStepPressed: _onStepPressed);
     return Container(padding: const EdgeInsetsDirectional.all(24), color: red ? SBBColors.red : null, child: stepper);
   }
 

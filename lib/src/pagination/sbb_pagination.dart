@@ -61,9 +61,10 @@ class SBBPagination extends StatelessWidget {
     );
   }
 
-  Widget get _paginationContent => isFloating
-      ? _FloatingSBBPagination(currentPage: currentPage, numberPages: numberPages)
-      : _DefaultSBBPagination(numberPages: numberPages, currentPage: currentPage);
+  Widget get _paginationContent =>
+      isFloating
+          ? _FloatingSBBPagination(currentPage: currentPage, numberPages: numberPages)
+          : _DefaultSBBPagination(numberPages: numberPages, currentPage: currentPage);
 }
 
 /// The default (non-floating) pagination.

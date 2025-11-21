@@ -113,12 +113,13 @@ class SBBContractible extends StatelessWidget {
     AlignmentGeometry alignment = AlignmentDirectional.centerStart,
   }) : this._(
          key: key,
-         builder: (context, progress, _) => _Crossfade(
-           alignment: alignment,
-           state: progress,
-           contractedChild: contractedChild,
-           expandedChild: expandedChild,
-         ),
+         builder:
+             (context, progress, _) => _Crossfade(
+               alignment: alignment,
+               state: progress,
+               contractedChild: contractedChild,
+               expandedChild: expandedChild,
+             ),
        );
 
   final double? minHeight;

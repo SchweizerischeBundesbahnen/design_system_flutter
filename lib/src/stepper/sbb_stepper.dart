@@ -170,11 +170,12 @@ class _Circle extends StatelessWidget {
     );
   }
 
-  ShapeBorder _shape(BuildContext context) => active
-      ? CircleBorder()
-      : CircleBorder(
-          side: BorderSide(color: colors.circleBorder(active), width: 1),
-        );
+  ShapeBorder _shape(BuildContext context) =>
+      active
+          ? CircleBorder()
+          : CircleBorder(
+            side: BorderSide(color: colors.circleBorder(active), width: 1),
+          );
 
   Widget _iconOrNumber(BuildContext context) {
     if (icon != null) {

@@ -26,13 +26,14 @@ class SBBTextFieldUnderline extends StatelessWidget {
             child: Text(errorText!, style: style?.errorTextStyle),
           ),
         Divider(
-          color: errorText == null
-              ? hasFocus
-                    ? style?.dividerColorHighlighted
-                    : isLastElement
-                    ? SBBColors.transparent
-                    : style?.dividerColor
-              : style?.dividerColorError,
+          color:
+              errorText == null
+                  ? hasFocus
+                      ? style?.dividerColorHighlighted
+                      : isLastElement
+                      ? SBBColors.transparent
+                      : style?.dividerColor
+                  : style?.dividerColorError,
         ),
       ],
     );

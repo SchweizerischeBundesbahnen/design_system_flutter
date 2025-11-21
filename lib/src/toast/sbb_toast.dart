@@ -109,18 +109,19 @@ class SBBToast {
   }
 
   OverlayEntry _buildToastOverlayEntry(double bottom, Widget toast, Stream<bool> stream) => OverlayEntry(
-    builder: (context) => ToastContainer(
-      stream: stream,
-      toast: this,
-      child: Positioned(
-        left: 0.0,
-        right: 0.0,
-        bottom: bottom,
-        child: Align(
-          alignment: Alignment.center,
-          child: Semantics(container: true, liveRegion: true, child: toast),
+    builder:
+        (context) => ToastContainer(
+          stream: stream,
+          toast: this,
+          child: Positioned(
+            left: 0.0,
+            right: 0.0,
+            bottom: bottom,
+            child: Align(
+              alignment: Alignment.center,
+              child: Semantics(container: true, liveRegion: true, child: toast),
+            ),
+          ),
         ),
-      ),
-    ),
   );
 }
