@@ -111,7 +111,9 @@ class DesignGuidelinePage extends StatelessWidget {
         const SBBListHeader('Custom'),
         const SBBHeaderbox.custom(
           padding: EdgeInsets.zero,
-          flap: SBBHeaderboxFlap.custom(child: Center(child: Text('Choooooo!', style: SBBTextStyles.extraSmallBold))),
+          flap: SBBHeaderboxFlap.custom(
+            child: Center(child: Text('Choooooo!', style: SBBTextStyles.extraSmallBold)),
+          ),
           child: Center(child: Text('🚂｡🚋｡🚋｡🚋｡🚋˙⊹⁺.')),
         ),
       ],
@@ -237,11 +239,10 @@ class _ScrollablePageState extends State<ScrollablePage> {
         ),
         SliverList.builder(
           itemCount: 60,
-          itemBuilder:
-              (context, index) => SBBListItem(
-                title: 'Item $index',
-                onPressed: () => sbbToast.show(title: 'Pressed Item $index', bottom: sbbDefaultSpacing * 6),
-              ),
+          itemBuilder: (context, index) => SBBListItem(
+            title: 'Item $index',
+            onPressed: () => sbbToast.show(title: 'Pressed Item $index', bottom: sbbDefaultSpacing * 6),
+          ),
         ),
       ],
     );

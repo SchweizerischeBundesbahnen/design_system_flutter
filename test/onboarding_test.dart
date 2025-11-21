@@ -73,7 +73,9 @@ class TestOnboardingBuilderDelegate extends SBBOnboardingBuilderDelegate {
   @override
   Widget buildEndPage(BuildContext context, VoidCallback onFinish) => Container(
     color: SBBColors.red,
-    child: Center(child: SBBTertiaryButtonLarge(label: 'Onboarding beenden', onPressed: onFinish)),
+    child: Center(
+      child: SBBTertiaryButtonLarge(label: 'Onboarding beenden', onPressed: onFinish),
+    ),
   );
 
   @override
