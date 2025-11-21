@@ -81,10 +81,10 @@ class SBBTheme {
     final mergedPrimaryButtonTheme = defaultPrimaryButtonTheme.merge(primaryButtonTheme);
 
     final defaultSecondaryButtonTheme = DefaultSBBSecondaryButtonTheme(mergedBaseStyle);
-    final mergedSecondaryButtonStyle = defaultSecondaryButtonTheme.merge(secondaryButtonTheme);
+    final mergedSecondaryButtonTheme = defaultSecondaryButtonTheme.merge(secondaryButtonTheme);
 
     final defaultTertiaryButtonTheme = DefaultSBBTertiaryButtonTheme(mergedBaseStyle);
-    final mergedTertiaryButtonStyle = defaultTertiaryButtonTheme.merge(tertiaryButtonTheme);
+    final mergedTertiaryButtonTheme = defaultTertiaryButtonTheme.merge(tertiaryButtonTheme);
 
     final defaultControlStyles = SBBControlStyles.$default(baseStyle: mergedBaseStyle);
     final mergedControlStyles = controlStyles.merge(defaultControlStyles);
@@ -104,9 +104,9 @@ class SBBTheme {
     return raw(
       brightness: brightness,
       baseStyle: mergedBaseStyle,
-      primaryButtonStyle: mergedPrimaryButtonTheme.style?.toButtonStyle(),
-      secondaryButtonStyle: mergedSecondaryButtonStyle.style?.toButtonStyle(),
-      tertiaryButtonStyle: mergedTertiaryButtonStyle.style?.toButtonStyle(),
+      primaryButtonTheme: mergedPrimaryButtonTheme,
+      secondaryButtonTheme: mergedSecondaryButtonTheme,
+      tertiaryButtonTheme: mergedTertiaryButtonTheme,
       controlStyles: mergedControlStyles,
       headerBoxStyle: mergedHeaderBoxStyle,
       groupStyle: mergedGroupStyle,
@@ -118,9 +118,9 @@ class SBBTheme {
   static ThemeData raw({
     required Brightness brightness,
     required SBBBaseStyle baseStyle,
-    required ButtonStyle? primaryButtonStyle,
-    required ButtonStyle? secondaryButtonStyle,
-    required ButtonStyle? tertiaryButtonStyle,
+    required SBBPrimaryButtonThemeData primaryButtonTheme,
+    required SBBSecondaryButtonThemeData secondaryButtonTheme,
+    required SBBTertiaryButtonThemeData tertiaryButtonTheme,
     required SBBControlStyles controlStyles,
     required SBBHeaderBoxStyle headerBoxStyle,
     required SBBGroupStyle groupStyle,
@@ -141,13 +141,16 @@ class SBBTheme {
       fontFamily: baseStyle.defaultFontFamily,
       textTheme: baseStyle.createTextTheme(),
       appBarTheme: controlStyles.appBarTheme,
-      filledButtonTheme: FilledButtonThemeData(style: primaryButtonStyle),
-      outlinedButtonTheme: OutlinedButtonThemeData(style: secondaryButtonStyle),
-      textButtonTheme: TextButtonThemeData(style: tertiaryButtonStyle),
+      filledButtonTheme: FilledButtonThemeData(style: primaryButtonTheme.style?.toButtonStyle()),
+      outlinedButtonTheme: OutlinedButtonThemeData(style: secondaryButtonTheme.style?.toButtonStyle()),
+      textButtonTheme: TextButtonThemeData(style: tertiaryButtonTheme.style?.toButtonStyle()),
       materialTapTargetSize: MaterialTapTargetSize.padded,
       textSelectionTheme: controlStyles.textSelectionTheme,
       extensions: [
         baseStyle,
+        primaryButtonTheme,
+        secondaryButtonTheme,
+        tertiaryButtonTheme,
         controlStyles,
         headerBoxStyle,
         groupStyle,
