@@ -13,6 +13,10 @@ class SBBInternal {
   static const defaultButtonHeight = 42.0;
   static const defaultButtonHeightSmall = 30.0;
 
+  static const defaultSegmentedButtonHeight = 44.0;
+  static const defaultOnboardingButtonNavigationSpacingHeight = 44.0;
+  static const defaultOnboardingButtonNavigationSpacingHeightSmall = 32.0;
+
   static const barrierColor = Color(0x80000000);
 
   static const defaultBoxShadow = <BoxShadow>[BoxShadow(color: Color(0x18000000), blurRadius: 15)];

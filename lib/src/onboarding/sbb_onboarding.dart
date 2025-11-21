@@ -38,9 +38,9 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
   static const navigationAreaVerticalPadding = 24.0;
   static const navigationAreaHeight =
       navigationAreaVerticalPadding +
-      SBBInternal.defaultButtonHeight +
+      SBBInternal.defaultOnboardingButtonNavigationSpacingHeight +
       sbbDefaultSpacing +
-      SBBInternal.defaultButtonHeightSmall +
+      SBBInternal.defaultOnboardingButtonNavigationSpacingHeight +
       navigationAreaVerticalPadding;
   static const visibleBackCardsCount = 2;
 
@@ -249,7 +249,7 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
                           ),
                           const SizedBox(height: sbbDefaultSpacing),
                           SizedBox(
-                            height: SBBInternal.defaultButtonHeightSmall,
+                            height: SBBInternal.defaultOnboardingButtonNavigationSpacingHeightSmall,
                             child: SBBTertiaryButtonSmall(onPressed: widget.onFinish, labelText: widget.cancelLabel),
                           ),
                           const SizedBox(height: navigationAreaVerticalPadding),
