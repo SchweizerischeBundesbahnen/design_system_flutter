@@ -12,6 +12,11 @@ It is expected that you keep this format strictly, since we depend on it in our 
 ### Changed
 
 - drop support for Flutter SDK 3.29.x
+- removed static `SBBTextTheme.of(context)` function
+
+### Fixed
+
+- `SBBTextTheme`: Fixed return type of `ThemeData` extension getter
 
 ## [4.3.0] - 2025-11-14
 

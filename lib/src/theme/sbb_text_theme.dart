@@ -141,14 +141,11 @@ class SBBTextTheme extends ThemeExtension<SBBTextTheme> {
       xxLargeBold: other.xxLargeBold,
     );
   }
-
-  static SBBTextTheme of(BuildContext context) {
-    return Theme.of(context).sbbTextTheme;
-  }
 }
 
 extension SBBTextThemeThemeDataX on ThemeData {
-  SBBTextTheme get sbbTextTheme {
-    return extension();
+  /// The SBB Design System Mobile text theme.
+  SBBTextTheme? get sbbTextTheme {
+    return extension<SBBTextTheme>();
   }
 }
