@@ -49,7 +49,9 @@ class SwitchTest extends StatelessWidget {
         ),
         const SizedBox(height: sbbDefaultSpacing * .5),
         const SBBListHeader('SBBSwitchItem - List'),
-        SBBGroup(child: SBBSwitchListItem(value: value1, title: 'Default', onChanged: (value) {}, isLastElement: true)),
+        SBBGroup(
+          child: SBBSwitchListItem(value: value1, title: 'Default', onChanged: (value) {}, isLastElement: true),
+        ),
         const SizedBox(height: sbbDefaultSpacing * .25),
         SBBGroup(
           child: SBBSwitchListItem(

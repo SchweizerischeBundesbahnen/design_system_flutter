@@ -17,7 +17,10 @@ class ListItemPage extends StatelessWidget {
         SBBGroup(
           child: Column(
             children: <Widget>[
-              SBBListItem(title: 'Default', onPressed: () => sbbToast.show(title: 'ListItem Default')),
+              SBBListItem(
+                title: 'Default',
+                onPressed: () => sbbToast.show(title: 'ListItem Default'),
+              ),
               SBBListItem(
                 title: 'Subtitle',
                 subtitle: 'This is the Subtitle',

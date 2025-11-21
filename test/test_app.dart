@@ -74,7 +74,9 @@ class TestApp extends StatelessWidget {
       theme: SBBTheme.light(),
       darkTheme: SBBTheme.dark(),
       debugShowCheckedModeBanner: false,
-      builder: (_, __) => Overlay(initialEntries: [OverlayEntry(builder: (context) => Scaffold(body: child))]),
+      builder: (_, __) => Overlay(
+        initialEntries: [OverlayEntry(builder: (context) => Scaffold(body: child))],
+      ),
     );
   }
 }

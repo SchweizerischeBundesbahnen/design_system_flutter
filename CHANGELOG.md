@@ -22,6 +22,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - BREAKING: All button variants: `label` is of type `Widget?` - see [v5 migration guide]
 - BREAKING: `SBBTertiaryButton`: `icon` is of type `Widget?` - see [v5 migration guide]
 - BREAKING: Updated `SBBButtonStyle` to have `WidgetStateProperty` values - see [v5 migration guide]
+- drop support for Flutter SDK 3.29.x
 
 ### Removed
 
