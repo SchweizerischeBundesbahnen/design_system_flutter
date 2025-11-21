@@ -126,8 +126,9 @@ class SBBPrimaryButton extends StatelessWidget {
   }
 
   Widget _defaultLabel() {
-    final child =
-        isLoading ? const SBBLoadingIndicator.tiny(color: SBBColors.white) : DefaultButtonLabel(label: labelText!);
+    final child = isLoading
+        ? const SBBLoadingIndicator.tiny(color: SBBColors.white)
+        : DefaultButtonLabel(label: labelText!);
     return Center(child: child);
   }
 }

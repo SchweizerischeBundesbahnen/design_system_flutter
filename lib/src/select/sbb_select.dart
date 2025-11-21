@@ -57,17 +57,16 @@ class SBBSelect<T> extends StatelessWidget {
     return InkWell(
       focusColor: style.listItem?.backgroundColorHighlighted,
       hoverColor: style.listItem?.backgroundColorHighlighted,
-      onTap:
-          enabled
-              ? () => showMenu(
-                context: context,
-                title: title ?? label ?? '',
-                value: value,
-                items: items,
-                onChanged: onChanged!,
-                allowMultilineLabel: allowMultilineLabel,
-              )
-              : null,
+      onTap: enabled
+          ? () => showMenu(
+              context: context,
+              title: title ?? label ?? '',
+              value: value,
+              items: items,
+              onChanged: onChanged!,
+              allowMultilineLabel: allowMultilineLabel,
+            )
+          : null,
       child: Column(
         children: [
           Container(
@@ -82,41 +81,38 @@ class SBBSelect<T> extends StatelessWidget {
                     child: Icon(icon, color: enabled ? style.textField?.iconColor : style.textField?.iconColorDisabled),
                   ),
                 Expanded(
-                  child:
-                      value == null
-                          ? Text(
-                            label ?? hint ?? '',
-                            style:
-                                enabled
-                                    ? style.textField?.placeholderTextStyle
-                                    : style.textField?.placeholderTextStyleDisabled,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          )
-                          : Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: label != null ? MainAxisAlignment.start : MainAxisAlignment.center,
-                            children: [
-                              if (label != null)
-                                Padding(
-                                  padding: const EdgeInsets.only(top: 5.0, bottom: 2.0),
-                                  child: Text(
-                                    label!,
-                                    style:
-                                        enabled ? style.selectLabel?.textStyle : style.selectLabel?.textStyleDisabled,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
+                  child: value == null
+                      ? Text(
+                          label ?? hint ?? '',
+                          style: enabled
+                              ? style.textField?.placeholderTextStyle
+                              : style.textField?.placeholderTextStyleDisabled,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        )
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: label != null ? MainAxisAlignment.start : MainAxisAlignment.center,
+                          children: [
+                            if (label != null)
+                              Padding(
+                                padding: const EdgeInsets.only(top: 5.0, bottom: 2.0),
+                                child: Text(
+                                  label!,
+                                  style: enabled ? style.selectLabel?.textStyle : style.selectLabel?.textStyleDisabled,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
                                 ),
-                              if (label == null) const SizedBox(height: 0.0),
-                              Text(
-                                items.firstWhere((element) => element.value == value).label,
-                                style: enabled ? style.textField?.textStyle : style.textField?.textStyleDisabled,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
                               ),
-                            ],
-                          ),
+                            if (label == null) const SizedBox(height: 0.0),
+                            Text(
+                              items.firstWhere((element) => element.value == value).label,
+                              style: enabled ? style.textField?.textStyle : style.textField?.textStyleDisabled,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
                 ),
                 Icon(
                   SBBIcons.chevron_small_down_small,
@@ -279,13 +275,12 @@ class SBBMultiSelect<T> extends StatefulWidget {
                   ),
                   child: SBBPrimaryButton(
                     labelText: confirmButtonLabelText ?? MaterialLocalizations.of(context).okButtonLabel,
-                    onPressed:
-                        isSelectionValid(values, selectedValues)
-                            ? () {
-                              Navigator.of(context).pop();
-                              onChanged(selectedValues);
-                            }
-                            : null,
+                    onPressed: isSelectionValid(values, selectedValues)
+                        ? () {
+                            Navigator.of(context).pop();
+                            onChanged(selectedValues);
+                          }
+                        : null,
                   ),
                 ),
               ],
@@ -313,19 +308,18 @@ class _SBBMultiSelectState<T> extends State<SBBMultiSelect<T>> {
     return InkWell(
       focusColor: style.listItem?.backgroundColorHighlighted,
       hoverColor: style.listItem?.backgroundColorHighlighted,
-      onTap:
-          enabled
-              ? () {
-                SBBMultiSelect.showMenu<T>(
-                  context: context,
-                  title: widget.title ?? widget.label,
-                  values: widget.values,
-                  items: widget.items,
-                  onChanged: widget.onChanged!,
-                  selectionValidation: widget.selectionValidation,
-                );
-              }
-              : null,
+      onTap: enabled
+          ? () {
+              SBBMultiSelect.showMenu<T>(
+                context: context,
+                title: widget.title ?? widget.label,
+                values: widget.values,
+                items: widget.items,
+                onChanged: widget.onChanged!,
+                selectionValidation: widget.selectionValidation,
+              );
+            }
+          : null,
       child: Column(
         children: [
           Container(
@@ -343,39 +337,37 @@ class _SBBMultiSelectState<T> extends State<SBBMultiSelect<T>> {
                     ),
                   ),
                 Expanded(
-                  child:
-                      widget.values.isEmpty
-                          ? Text(
-                            widget.label,
-                            style:
-                                enabled
-                                    ? style.textField?.placeholderTextStyle
-                                    : style.textField?.placeholderTextStyleDisabled,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          )
-                          : Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const SizedBox(height: 5.0),
-                              Text(
-                                widget.label,
-                                style: enabled ? style.selectLabel?.textStyle : style.selectLabel?.textStyleDisabled,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                              const SizedBox(height: 3.0),
-                              Text(
-                                widget.items
-                                    .where((element) => widget.values.contains(element.value))
-                                    .map((element) => element.label)
-                                    .join(', '),
-                                style: enabled ? style.textField?.textStyle : style.textField?.textStyleDisabled,
-                                maxLines: 1,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ],
-                          ),
+                  child: widget.values.isEmpty
+                      ? Text(
+                          widget.label,
+                          style: enabled
+                              ? style.textField?.placeholderTextStyle
+                              : style.textField?.placeholderTextStyleDisabled,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        )
+                      : Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 5.0),
+                            Text(
+                              widget.label,
+                              style: enabled ? style.selectLabel?.textStyle : style.selectLabel?.textStyleDisabled,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            const SizedBox(height: 3.0),
+                            Text(
+                              widget.items
+                                  .where((element) => widget.values.contains(element.value))
+                                  .map((element) => element.label)
+                                  .join(', '),
+                              style: enabled ? style.textField?.textStyle : style.textField?.textStyleDisabled,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
+                        ),
                 ),
                 Icon(
                   SBBIcons.chevron_small_down_small,

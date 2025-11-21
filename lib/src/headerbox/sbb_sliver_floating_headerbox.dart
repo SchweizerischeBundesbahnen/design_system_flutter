@@ -209,29 +209,28 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
     this.snapMode = FloatingHeaderSnapMode.scroll,
     Widget? preceding,
     required List<Widget> children,
-  }) : child =
-           preceding != null
-               ? SBBCascadeColumn(
-                 children: [
-                   _Preceding(child: preceding),
-                   _Headerbox(
-                     margin: margin,
-                     padding: padding,
-                     flap: flap,
-                     flapMode: flapMode,
-                     semanticsLabel: semanticsLabel,
-                     child: SBBCascadeColumn(children: children),
-                   ),
-                 ],
-               )
-               : _Headerbox(
-                 margin: margin,
-                 padding: padding,
-                 flap: flap,
-                 flapMode: flapMode,
-                 semanticsLabel: semanticsLabel,
-                 child: SBBCascadeColumn(children: children),
-               );
+  }) : child = preceding != null
+           ? SBBCascadeColumn(
+               children: [
+                 _Preceding(child: preceding),
+                 _Headerbox(
+                   margin: margin,
+                   padding: padding,
+                   flap: flap,
+                   flapMode: flapMode,
+                   semanticsLabel: semanticsLabel,
+                   child: SBBCascadeColumn(children: children),
+                 ),
+               ],
+             )
+           : _Headerbox(
+               margin: margin,
+               padding: padding,
+               flap: flap,
+               flapMode: flapMode,
+               semanticsLabel: semanticsLabel,
+               child: SBBCascadeColumn(children: children),
+             );
 
   final Widget child;
 
@@ -339,15 +338,15 @@ class _SnapTriggerState extends State<_SnapTrigger> {
     if (kIsWeb) return;
 
     assert(position != null);
-    final RenderSliverPinnedFloatingWidget? renderer =
-        context.findAncestorRenderObjectOfType<RenderSliverPinnedFloatingWidget>();
+    final RenderSliverPinnedFloatingWidget? renderer = context
+        .findAncestorRenderObjectOfType<RenderSliverPinnedFloatingWidget>();
 
     renderer?.onScrollingUpdate(position!);
   }
 
   Future<void> onSnapRequested(bool expand) async {
-    final RenderSliverPinnedFloatingWidget? renderer =
-        context.findAncestorRenderObjectOfType<RenderSliverPinnedFloatingWidget>();
+    final RenderSliverPinnedFloatingWidget? renderer = context
+        .findAncestorRenderObjectOfType<RenderSliverPinnedFloatingWidget>();
 
     await renderer?.snap(expand ? ScrollDirection.forward : ScrollDirection.reverse);
   }
