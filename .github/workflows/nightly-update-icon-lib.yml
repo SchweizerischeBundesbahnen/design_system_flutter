@@ -128,7 +128,7 @@ jobs:
           changelog-path: ./CHANGELOG.md
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v7.0.8
+        uses: peter-evans/create-pull-request@v7.0.9
         with:
           token: ${{ steps.app-token.outputs.token }}
           sign-commits: true
