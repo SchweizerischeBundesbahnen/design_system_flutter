@@ -15,9 +15,9 @@ Instead of using `SBBIconButtonLarge` / `SBBIconButtonSmall`,
 use `SBBTertiaryButton` / `SBBTertiaryButtonSmall` with only `iconData` or `icon` set.
 
 ### Button Theming
-Buttons can now be themed using `SBBButtonThemeData` as input parameters to `SBBTheme`. To access this data within your
-app, use:
+Buttons can now be themed ap wide using `SBBButtonThemeData` as input parameters to `SBBTheme`.
+To access this data within your app, use:
 
-* `Theme.of(context).filledButtonTheme` for the `SBBPrimaryButton` theme data
-* `Theme.of(context).outlinedButtonTheme` for the `SBBSecondaryButton` theme data
-* `Theme.of(context).textButtonTheme` for the `SBBTertiaryButton` theme data
+* `Theme.of(context).sbbPrimaryButtonTheme` for the `SBBPrimaryButton` theme data
+* `Theme.of(context).sbbSecondaryButtonTheme` for the `SBBSecondaryButton` theme data
+* `Theme.of(context).sbbTertiaryButtonTheme` for the `SBBTertiaryButton` theme data

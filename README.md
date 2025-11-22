@@ -150,13 +150,4 @@ In addition to the contributors on GitHub, we thank the following authors for th
 *  Patrice Müller
 *  Dominik Schmucki
 
-
-#### PRinciples
-
-Good Default values
-Coloring is easily customizable (well documented - and for complete application)
-Geometry can be read for most components
-Geometry can be customized in edge cases (less documentation and guidance given)
-
-
 [Design System Mobile]: https://digital.sbb.ch/en/design-system/mobile/overview/
