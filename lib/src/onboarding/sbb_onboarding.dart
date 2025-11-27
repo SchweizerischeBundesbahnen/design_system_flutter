@@ -38,9 +38,9 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
   static const navigationAreaVerticalPadding = 24.0;
   static const navigationAreaHeight =
       navigationAreaVerticalPadding +
-      SBBInternal.defaultButtonHeight +
+      SBBInternal.defaultOnboardingButtonNavigationSpacingHeight +
       sbbDefaultSpacing +
-      SBBInternal.defaultButtonHeightSmall +
+      SBBInternal.defaultOnboardingButtonNavigationSpacingHeight +
       navigationAreaVerticalPadding;
   static const visibleBackCardsCount = 2;
 
@@ -193,8 +193,6 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
     }
 
     final cardHeightCalculated = cardHeight != double.infinity;
-    final buttonStyle = SBBButtonStyles.of(context).iconLargeNegativeStyle;
-    final negativeButtonStyle = buttonStyle?.toButtonStyle();
     return NotificationListener<SizeChangedLayoutNotification>(
       onNotification: (n) {
         _setSize();
@@ -231,28 +229,28 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
                           Row(
                             children: <Widget>[
                               SizedBox(width: parentPadding),
-                              SBBIconButtonLarge(
-                                semantics: widget.backSemanticsLabel,
+                              SBBTertiaryButton(
+                                semanticLabel: widget.backSemanticsLabel,
                                 onPressed: () {
                                   changeStep(goToNextStep: false);
                                 },
-                                icon: SBBIcons.chevron_small_left_small,
+                                iconData: SBBIcons.chevron_small_left_small,
                               ),
                               const Spacer(),
                               ...stepIndicators,
                               const Spacer(),
-                              SBBIconButtonLarge(
-                                semantics: widget.forwardSemanticsLabel,
+                              SBBTertiaryButton(
+                                semanticLabel: widget.forwardSemanticsLabel,
                                 onPressed: () => changeStep(goToNextStep: true),
-                                icon: SBBIcons.chevron_small_right_small,
+                                iconData: SBBIcons.chevron_small_right_small,
                               ),
                               SizedBox(width: parentPadding),
                             ],
                           ),
                           const SizedBox(height: sbbDefaultSpacing),
                           SizedBox(
-                            height: SBBInternal.defaultButtonHeightSmall,
-                            child: SBBTertiaryButtonSmall(onPressed: widget.onFinish, label: widget.cancelLabel),
+                            height: SBBInternal.defaultOnboardingButtonNavigationSpacingHeightSmall,
+                            child: SBBTertiaryButtonSmall(onPressed: widget.onFinish, labelText: widget.cancelLabel),
                           ),
                           const SizedBox(height: navigationAreaVerticalPadding),
                         ],
@@ -291,11 +289,10 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
                   alignment: Alignment.topRight,
                   child: Padding(
                     padding: EdgeInsets.only(top: frontCardPadding.top, right: frontCardPadding.top),
-                    child: SBBIconButtonLarge(
-                      semantics: widget.cancelLabel,
+                    child: SBBTertiaryButton(
+                      semanticLabel: widget.cancelLabel,
                       onPressed: widget.onFinish,
-                      icon: SBBIcons.cross_small,
-                      buttonStyle: negativeButtonStyle,
+                      iconData: SBBIcons.cross_small,
                     ),
                   ),
                 ),
@@ -306,11 +303,10 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
                   alignment: Alignment.centerRight,
                   child: Padding(
                     padding: EdgeInsets.only(right: frontCardPadding.top),
-                    child: SBBIconButtonLarge(
-                      semantics: widget.forwardSemanticsLabel,
+                    child: SBBTertiaryButton(
+                      semanticLabel: widget.forwardSemanticsLabel,
                       onPressed: () => changeStep(goToNextStep: true),
-                      icon: SBBIcons.chevron_small_right_small,
-                      buttonStyle: negativeButtonStyle,
+                      iconData: SBBIcons.chevron_small_right_small,
                     ),
                   ),
                 ),
@@ -323,11 +319,10 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
                     alignment: Alignment.centerLeft,
                     child: Padding(
                       padding: EdgeInsets.only(left: frontCardPadding.top),
-                      child: SBBIconButtonLarge(
-                        semantics: widget.backSemanticsLabel,
+                      child: SBBTertiaryButton(
+                        semanticLabel: widget.backSemanticsLabel,
                         onPressed: () => changeStep(goToNextStep: false),
-                        icon: SBBIcons.chevron_small_left_small,
-                        buttonStyle: negativeButtonStyle,
+                        iconData: SBBIcons.chevron_small_left_small,
                       ),
                     ),
                   ),

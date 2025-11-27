@@ -168,7 +168,7 @@ class SegmentedButtonState extends State<SBBSegmentedButton> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: SBBInternal.defaultButtonHeight,
+      height: SBBInternal.defaultSegmentedButtonHeight,
       child: Stack(
         children: [
           _buildBackgroundLayer(),

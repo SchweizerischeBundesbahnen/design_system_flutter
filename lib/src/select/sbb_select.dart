@@ -219,7 +219,7 @@ class SBBMultiSelect<T> extends StatefulWidget {
   static showMenu<T>({
     required BuildContext context,
     required String title,
-    String? confirmButtonLabel,
+    String? confirmButtonLabelText,
     required List<T> values,
     required List<SelectMenuItem<T>> items,
     required ValueChanged<List<T>> onChanged,
@@ -274,7 +274,7 @@ class SBBMultiSelect<T> extends StatefulWidget {
                     sbbDefaultSpacing,
                   ),
                   child: SBBPrimaryButton(
-                    label: confirmButtonLabel ?? MaterialLocalizations.of(context).okButtonLabel,
+                    labelText: confirmButtonLabelText ?? MaterialLocalizations.of(context).okButtonLabel,
                     onPressed: isSelectionValid(values, selectedValues)
                         ? () {
                             Navigator.of(context).pop();

@@ -91,8 +91,8 @@ class DesignGuidelinePage extends StatelessWidget {
             trailingIcon: SBBIcons.circle_information_small_small,
           ),
           trailingWidget: SBBTertiaryButtonSmall(
-            label: 'Label',
-            icon: SBBIcons.dog_small,
+            labelText: 'Label',
+            iconData: SBBIcons.dog_small,
             onPressed: () => sbbToast.show(title: 'Default pressed', bottom: sbbDefaultSpacing * 6),
           ),
         ),
@@ -102,8 +102,8 @@ class DesignGuidelinePage extends StatelessWidget {
           title: 'Title',
           leadingIcon: SBBIcons.dog_medium,
           secondaryLabel: 'Subtext',
-          trailingWidget: SBBIconButtonLarge(
-            icon: SBBIcons.dog_small,
+          trailingWidget: SBBTertiaryButton(
+            iconData: SBBIcons.dog_small,
             onPressed: () => sbbToast.show(title: 'Large pressed', bottom: sbbDefaultSpacing * 6),
           ),
         ),
@@ -159,7 +159,7 @@ class _StaticPageState extends State<StaticPage> {
                     ],
                   ),
                   SBBTertiaryButtonSmall(
-                    label: 'Expand',
+                    labelText: 'Expand',
                     onPressed: () => setState(() => _headerBoxExpanded = !_headerBoxExpanded),
                   ),
                 ],
@@ -224,7 +224,7 @@ class _ScrollablePageState extends State<ScrollablePage> {
                     ],
                   ),
                   SBBTertiaryButtonSmall(
-                    label: 'Expand',
+                    labelText: 'Expand',
                     onPressed: () => setState(() => _headerBoxExpanded = !_headerBoxExpanded),
                   ),
                 ],

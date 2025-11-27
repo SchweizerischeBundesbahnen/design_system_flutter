@@ -221,7 +221,7 @@ class _ExpandIconState extends State<_ExpandIcon> with SingleTickerProviderState
     return IgnorePointer(
       child: RotationTransition(
         turns: _iconTurns,
-        child: SBBIconButtonSmall(icon: SBBIcons.chevron_small_down_small, onPressed: () {}),
+        child: SBBTertiaryButtonSmall(iconData: SBBIcons.chevron_small_down_small, onPressed: () {}),
       ),
     );
   }
