@@ -23,19 +23,18 @@ class SBBListItem extends StatefulWidget {
          titleMaxLines: titleMaxLines,
          subtitleMaxLines: subtitleMaxLines,
          isLastElement: isLastElement,
-         trailingWidget:
-             trailingIcon != null
-                 ? Builder(
-                   builder: (BuildContext context) {
-                     final style = SBBControlStyles.of(context).listItem!;
-                     final isEnabled = onPressed != null;
-                     return Padding(
-                       padding: const EdgeInsetsDirectional.only(end: sbbDefaultSpacing),
-                       child: Icon(trailingIcon, color: isEnabled ? style.iconColor : style.iconColorDisabled),
-                     );
-                   },
-                 )
-                 : null,
+         trailingWidget: trailingIcon != null
+             ? Builder(
+                 builder: (BuildContext context) {
+                   final style = SBBControlStyles.of(context).listItem!;
+                   final isEnabled = onPressed != null;
+                   return Padding(
+                     padding: const EdgeInsetsDirectional.only(end: sbbDefaultSpacing),
+                     child: Icon(trailingIcon, color: isEnabled ? style.iconColor : style.iconColorDisabled),
+                   );
+                 },
+               )
+             : null,
          onPressed: onPressed,
        );
 
@@ -61,8 +60,8 @@ class SBBListItem extends StatefulWidget {
          onPressed: onPressed,
          trailingWidget: Padding(
            padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * 0.5),
-           child: SBBIconButtonSmall(
-             icon: buttonIcon,
+           child: SBBTertiaryButton(
+             iconData: buttonIcon,
              onPressed: onPressed != null ? onPressedButton : null,
            ),
          ),

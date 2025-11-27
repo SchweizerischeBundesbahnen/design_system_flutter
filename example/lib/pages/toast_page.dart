@@ -33,30 +33,28 @@ class _ToastPageState extends State<ToastPage> {
                   children: [
                     Expanded(
                       child: SBBSecondaryButton(
-                        label: 'Short (Default)',
+                        labelText: 'Short (Default)',
                         onPressed: () {
                           sbbToast.show(
                             title: titleController.text,
-                            action:
-                                actionController.text.isNotEmpty
-                                    ? SBBToastAction(onPressed: () {}, title: actionController.text)
-                                    : null,
+                            action: actionController.text.isNotEmpty
+                                ? SBBToastAction(onPressed: () {}, title: actionController.text)
+                                : null,
                           );
                         },
                       ),
                     ),
                     const SizedBox(width: sbbDefaultSpacing),
                     Expanded(
-                      child: SBBTertiaryButtonLarge(
-                        label: 'Long',
+                      child: SBBTertiaryButton(
+                        labelText: 'Long',
                         onPressed: () {
                           sbbToast.show(
                             title: titleController.text,
                             duration: SBBToast.durationLong,
-                            action:
-                                actionController.text.isNotEmpty
-                                    ? SBBToastAction(onPressed: () {}, title: actionController.text)
-                                    : null,
+                            action: actionController.text.isNotEmpty
+                                ? SBBToastAction(onPressed: () {}, title: actionController.text)
+                                : null,
                           );
                         },
                       ),
@@ -66,16 +64,15 @@ class _ToastPageState extends State<ToastPage> {
                 const SizedBox(height: sbbDefaultSpacing),
                 SizedBox(
                   width: double.infinity,
-                  child: SBBTertiaryButtonLarge(
-                    label: 'Custom Bottom and Duration',
+                  child: SBBTertiaryButton(
+                    labelText: 'Custom Bottom and Duration',
                     onPressed: () {
                       sbbToast.show(
                         title: titleController.text,
                         duration: const Duration(seconds: 5),
-                        action:
-                            actionController.text.isNotEmpty
-                                ? SBBToastAction(onPressed: () {}, title: actionController.text)
-                                : null,
+                        action: actionController.text.isNotEmpty
+                            ? SBBToastAction(onPressed: () {}, title: actionController.text)
+                            : null,
                         bottom: 128,
                       );
                     },
@@ -84,8 +81,8 @@ class _ToastPageState extends State<ToastPage> {
                 const SizedBox(height: sbbDefaultSpacing),
                 SizedBox(
                   width: double.infinity,
-                  child: SBBTertiaryButtonLarge(
-                    label: 'Custom Toast',
+                  child: SBBTertiaryButton(
+                    labelText: 'Custom Toast',
                     onPressed: () => sbbToast.builder(builder: (showToast) => _customToast(showToast)),
                   ),
                 ),
@@ -99,7 +96,7 @@ class _ToastPageState extends State<ToastPage> {
               children: [
                 Expanded(
                   child: SBBSecondaryButton(
-                    label: 'Hide',
+                    labelText: 'Hide',
                     onPressed: () {
                       sbbToast.hide();
                     },
@@ -107,8 +104,8 @@ class _ToastPageState extends State<ToastPage> {
                 ),
                 const SizedBox(width: sbbDefaultSpacing),
                 Expanded(
-                  child: SBBTertiaryButtonLarge(
-                    label: 'Remove',
+                  child: SBBTertiaryButton(
+                    labelText: 'Remove',
                     onPressed: () {
                       sbbToast.remove();
                     },
@@ -136,14 +133,12 @@ class _ToastPageState extends State<ToastPage> {
   StreamBuilder<bool> _customToast(Stream<bool> showToast) {
     return StreamBuilder(
       stream: showToast,
-      builder:
-          (context, snap) =>
-              snap.data ?? false
-                  ? DecoratedBox(
-                    decoration: ShapeDecoration(shape: CircleBorder(), color: SBBColors.red),
-                    child: SizedBox.fromSize(size: Size(100, 100)),
-                  )
-                  : SizedBox.shrink(),
+      builder: (context, snap) => snap.data ?? false
+          ? DecoratedBox(
+              decoration: ShapeDecoration(shape: CircleBorder(), color: SBBColors.red),
+              child: SizedBox.fromSize(size: Size(100, 100)),
+            )
+          : SizedBox.shrink(),
     );
   }
 }

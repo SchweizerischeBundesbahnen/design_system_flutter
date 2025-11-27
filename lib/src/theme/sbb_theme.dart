@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/src/button/theme/sbb_button_style_x.dart';
 
+import '../button/theme/default_button_themes.dart';
+import '../button/theme/sbb_button_theme_data.dart';
 import 'theme.dart';
 
 const sbbDefaultSpacing = 16.0;
@@ -10,38 +13,50 @@ class SBBTheme {
   static ThemeData light({
     bool boldFont = false,
     SBBBaseStyle? baseStyle,
-    SBBButtonStyles? buttonStyles,
+    SBBPrimaryButtonThemeData? primaryButtonTheme,
+    SBBSecondaryButtonThemeData? secondaryButtonTheme,
+    SBBTertiaryButtonThemeData? tertiaryButtonTheme,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBGroupStyle? groupStyle,
+    SBBTextTheme? textTheme,
     SBBToastStyle? toastStyle,
   }) => createTheme(
     brightness: Brightness.light,
     boldFont: boldFont,
     baseStyle: baseStyle,
-    buttonStyles: buttonStyles,
+    primaryButtonTheme: primaryButtonTheme,
+    secondaryButtonTheme: secondaryButtonTheme,
+    tertiaryButtonTheme: tertiaryButtonTheme,
     controlStyles: controlStyles,
     headerBoxStyle: headerBoxStyle,
     groupStyle: groupStyle,
+    textTheme: textTheme,
     toastStyle: toastStyle,
   );
 
   static ThemeData dark({
     bool boldFont = false,
     SBBBaseStyle? baseStyle,
-    SBBButtonStyles? buttonStyles,
+    SBBPrimaryButtonThemeData? primaryButtonTheme,
+    SBBSecondaryButtonThemeData? secondaryButtonTheme,
+    SBBTertiaryButtonThemeData? tertiaryButtonTheme,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBGroupStyle? groupStyle,
+    SBBTextTheme? textTheme,
     SBBToastStyle? toastStyle,
   }) => createTheme(
     brightness: Brightness.dark,
     boldFont: boldFont,
     baseStyle: baseStyle,
-    buttonStyles: buttonStyles,
+    primaryButtonTheme: primaryButtonTheme,
+    secondaryButtonTheme: secondaryButtonTheme,
+    tertiaryButtonTheme: tertiaryButtonTheme,
     controlStyles: controlStyles,
     headerBoxStyle: headerBoxStyle,
     groupStyle: groupStyle,
+    textTheme: textTheme,
     toastStyle: toastStyle,
   );
 
@@ -49,18 +64,27 @@ class SBBTheme {
     required Brightness brightness,
     bool boldFont = false,
     SBBBaseStyle? baseStyle,
-    SBBButtonStyles? buttonStyles,
+    SBBPrimaryButtonThemeData? primaryButtonTheme,
+    SBBSecondaryButtonThemeData? secondaryButtonTheme,
+    SBBTertiaryButtonThemeData? tertiaryButtonTheme,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBGroupStyle? groupStyle,
+    SBBTextTheme? textTheme,
     SBBToastStyle? toastStyle,
   }) {
     // default values are set here and merged with given styles
     final defaultBaseStyle = SBBBaseStyle.$default(brightness: brightness, boldFont: boldFont);
     final mergedBaseStyle = baseStyle.merge(defaultBaseStyle);
 
-    final defaultButtonStyles = SBBButtonStyles.$default(baseStyle: mergedBaseStyle);
-    final mergedButtonStyles = buttonStyles.merge(defaultButtonStyles);
+    final defaultPrimaryButtonTheme = DefaultSBBPrimaryButtonTheme(mergedBaseStyle);
+    final mergedPrimaryButtonTheme = defaultPrimaryButtonTheme.merge(primaryButtonTheme);
+
+    final defaultSecondaryButtonTheme = DefaultSBBSecondaryButtonTheme(mergedBaseStyle);
+    final mergedSecondaryButtonTheme = defaultSecondaryButtonTheme.merge(secondaryButtonTheme);
+
+    final defaultTertiaryButtonTheme = DefaultSBBTertiaryButtonTheme(mergedBaseStyle);
+    final mergedTertiaryButtonTheme = defaultTertiaryButtonTheme.merge(tertiaryButtonTheme);
 
     final defaultControlStyles = SBBControlStyles.$default(baseStyle: mergedBaseStyle);
     final mergedControlStyles = controlStyles.merge(defaultControlStyles);
@@ -71,16 +95,22 @@ class SBBTheme {
     final defaultGroupStyle = SBBGroupStyle.$default(baseStyle: mergedBaseStyle);
     final mergedGroupStyle = groupStyle.merge(defaultGroupStyle);
 
+    final defaultTextTheme = SBBTextTheme.$default(baseStyle: mergedBaseStyle);
+    final mergedTextTheme = defaultTextTheme.merge(textTheme);
+
     final defaultToastStyle = SBBToastStyle.$default(baseStyle: mergedBaseStyle);
     final mergedToastStyle = defaultToastStyle.merge(defaultToastStyle);
 
     return raw(
       brightness: brightness,
       baseStyle: mergedBaseStyle,
-      buttonStyles: mergedButtonStyles,
+      primaryButtonTheme: mergedPrimaryButtonTheme,
+      secondaryButtonTheme: mergedSecondaryButtonTheme,
+      tertiaryButtonTheme: mergedTertiaryButtonTheme,
       controlStyles: mergedControlStyles,
       headerBoxStyle: mergedHeaderBoxStyle,
       groupStyle: mergedGroupStyle,
+      textTheme: mergedTextTheme,
       toastStyle: mergedToastStyle,
     );
   }
@@ -88,32 +118,47 @@ class SBBTheme {
   static ThemeData raw({
     required Brightness brightness,
     required SBBBaseStyle baseStyle,
-    required SBBButtonStyles buttonStyles,
+    required SBBPrimaryButtonThemeData primaryButtonTheme,
+    required SBBSecondaryButtonThemeData secondaryButtonTheme,
+    required SBBTertiaryButtonThemeData tertiaryButtonTheme,
     required SBBControlStyles controlStyles,
     required SBBHeaderBoxStyle headerBoxStyle,
     required SBBGroupStyle groupStyle,
+    required SBBTextTheme textTheme,
     required SBBToastStyle toastStyle,
-  }) => ThemeData(
-    colorScheme: ColorScheme.fromSwatch(
-      primarySwatch: baseStyle.primarySwatch!,
-      accentColor: baseStyle.primaryColor,
-      backgroundColor: baseStyle.backgroundColor,
-      errorColor: baseStyle.errorColor,
-      brightness: brightness,
-    ).copyWith(surfaceTint: SBBColors.transparent),
-    scaffoldBackgroundColor: baseStyle.backgroundColor,
-    iconTheme: IconThemeData(color: baseStyle.iconColor, size: sbbIconSizeSmall),
-    dividerTheme: DividerThemeData(thickness: 1.0, space: 0.0, color: baseStyle.dividerColor),
-    fontFamily: baseStyle.defaultFontFamily,
-    textTheme: baseStyle.createTextTheme(),
-    appBarTheme: controlStyles.appBarTheme,
-    filledButtonTheme: buttonStyles.filledButtonTheme,
-    outlinedButtonTheme: buttonStyles.outlinedButtonTheme,
-    textButtonTheme: buttonStyles.textButtonTheme,
-    materialTapTargetSize: MaterialTapTargetSize.padded,
-    textSelectionTheme: controlStyles.textSelectionTheme,
-    extensions: [baseStyle, buttonStyles, controlStyles, headerBoxStyle, groupStyle, toastStyle],
-  );
+  }) {
+    return ThemeData(
+      colorScheme: ColorScheme.fromSwatch(
+        primarySwatch: baseStyle.primarySwatch!,
+        accentColor: baseStyle.primaryColor,
+        backgroundColor: baseStyle.backgroundColor,
+        errorColor: baseStyle.errorColor,
+        brightness: brightness,
+      ).copyWith(surfaceTint: SBBColors.transparent),
+      scaffoldBackgroundColor: baseStyle.backgroundColor,
+      iconTheme: IconThemeData(color: baseStyle.iconColor, size: sbbIconSizeSmall),
+      dividerTheme: DividerThemeData(thickness: 1.0, space: 0.0, color: baseStyle.dividerColor),
+      fontFamily: baseStyle.defaultFontFamily,
+      textTheme: baseStyle.createTextTheme(),
+      appBarTheme: controlStyles.appBarTheme,
+      filledButtonTheme: FilledButtonThemeData(style: primaryButtonTheme.style?.toButtonStyle()),
+      outlinedButtonTheme: OutlinedButtonThemeData(style: secondaryButtonTheme.style?.toButtonStyle()),
+      textButtonTheme: TextButtonThemeData(style: tertiaryButtonTheme.style?.toButtonStyle()),
+      materialTapTargetSize: MaterialTapTargetSize.padded,
+      textSelectionTheme: controlStyles.textSelectionTheme,
+      extensions: [
+        baseStyle,
+        primaryButtonTheme,
+        secondaryButtonTheme,
+        tertiaryButtonTheme,
+        controlStyles,
+        headerBoxStyle,
+        groupStyle,
+        textTheme,
+        toastStyle,
+      ],
+    );
+  }
 
   /// Convenience method for easier use of [WidgetStateProperty.all].
   static WidgetStateProperty<T> allStates<T>(T value) {

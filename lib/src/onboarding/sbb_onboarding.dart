@@ -38,9 +38,9 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
   static const navigationAreaVerticalPadding = 24.0;
   static const navigationAreaHeight =
       navigationAreaVerticalPadding +
-      SBBInternal.defaultButtonHeight +
+      SBBInternal.defaultOnboardingButtonNavigationSpacingHeight +
       sbbDefaultSpacing +
-      SBBInternal.defaultButtonHeightSmall +
+      SBBInternal.defaultOnboardingButtonNavigationSpacingHeight +
       navigationAreaVerticalPadding;
   static const visibleBackCardsCount = 2;
 
@@ -113,18 +113,19 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
     });
 
     _setSize();
-    animationController = AnimationController(vsync: this, duration: kThemeAnimationDuration)..addListener(() {
-      if (isAnimating) {
-        if (backScrollController.hasClients && backScrollController.offset > 0 && !isBackScrollControllerAnimating) {
-          isBackScrollControllerAnimating = true;
-          backScrollController.animateTo(0, duration: kThemeAnimationDuration, curve: Curves.easeInOut);
-        } else if (scrollController.hasClients && scrollController.offset > 0 && !isScrollControllerAnimating) {
-          isScrollControllerAnimating = true;
-          scrollController.animateTo(0, duration: kThemeAnimationDuration, curve: Curves.easeInOut);
+    animationController = AnimationController(vsync: this, duration: kThemeAnimationDuration)
+      ..addListener(() {
+        if (isAnimating) {
+          if (backScrollController.hasClients && backScrollController.offset > 0 && !isBackScrollControllerAnimating) {
+            isBackScrollControllerAnimating = true;
+            backScrollController.animateTo(0, duration: kThemeAnimationDuration, curve: Curves.easeInOut);
+          } else if (scrollController.hasClients && scrollController.offset > 0 && !isScrollControllerAnimating) {
+            isScrollControllerAnimating = true;
+            scrollController.animateTo(0, duration: kThemeAnimationDuration, curve: Curves.easeInOut);
+          }
         }
-      }
-      setState(() {});
-    });
+        setState(() {});
+      });
     animation = CurveTween(curve: Curves.easeInOut).animate(animationController);
 
     widget.builderDelegate.setPopCallback(_onPop);
@@ -192,8 +193,6 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
     }
 
     final cardHeightCalculated = cardHeight != double.infinity;
-    final buttonStyle = SBBButtonStyles.of(context).iconLargeNegativeStyle;
-    final negativeButtonStyle = buttonStyle?.toButtonStyle();
     return NotificationListener<SizeChangedLayoutNotification>(
       onNotification: (n) {
         _setSize();
@@ -214,10 +213,9 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
                       width: double.infinity,
                       decoration: BoxDecoration(
                         color: controlStyle.headerBackgroundColor,
-                        borderRadius:
-                            orientation == Orientation.portrait
-                                ? const BorderRadius.vertical(bottom: Radius.circular(sbbDefaultSpacing))
-                                : null,
+                        borderRadius: orientation == Orientation.portrait
+                            ? const BorderRadius.vertical(bottom: Radius.circular(sbbDefaultSpacing))
+                            : null,
                       ),
                       child: Padding(padding: frontCardPadding, child: Container()),
                     ),
@@ -231,28 +229,28 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
                           Row(
                             children: <Widget>[
                               SizedBox(width: parentPadding),
-                              SBBIconButtonLarge(
-                                semantics: widget.backSemanticsLabel,
+                              SBBTertiaryButton(
+                                semanticLabel: widget.backSemanticsLabel,
                                 onPressed: () {
                                   changeStep(goToNextStep: false);
                                 },
-                                icon: SBBIcons.chevron_small_left_small,
+                                iconData: SBBIcons.chevron_small_left_small,
                               ),
                               const Spacer(),
                               ...stepIndicators,
                               const Spacer(),
-                              SBBIconButtonLarge(
-                                semantics: widget.forwardSemanticsLabel,
+                              SBBTertiaryButton(
+                                semanticLabel: widget.forwardSemanticsLabel,
                                 onPressed: () => changeStep(goToNextStep: true),
-                                icon: SBBIcons.chevron_small_right_small,
+                                iconData: SBBIcons.chevron_small_right_small,
                               ),
                               SizedBox(width: parentPadding),
                             ],
                           ),
                           const SizedBox(height: sbbDefaultSpacing),
                           SizedBox(
-                            height: SBBInternal.defaultButtonHeightSmall,
-                            child: SBBTertiaryButtonSmall(onPressed: widget.onFinish, label: widget.cancelLabel),
+                            height: SBBInternal.defaultOnboardingButtonNavigationSpacingHeightSmall,
+                            child: SBBTertiaryButtonSmall(onPressed: widget.onFinish, labelText: widget.cancelLabel),
                           ),
                           const SizedBox(height: navigationAreaVerticalPadding),
                         ],
@@ -266,18 +264,17 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
             if (cardHeightCalculated) buildFrontCard(),
             if (cardHeightCalculated && currentStepIndex > 0 && currentStepIndex < _cards.length && !isShowingEndPage)
               Positioned(
-                left:
-                    isDraggingToPrevious && isAnimating
-                        ? min(
-                          0,
-                          (dragEndPosition! - dragStartPosition - frontCardPadding.left - cardWidth) *
-                              animationValueReversed,
-                        )
-                        : isDraggingToPrevious && !isAnimating
-                        ? cardLeftValue! - frontCardPadding.left
-                        : goToNextStep!
-                        ? -cardWidth * animationValue
-                        : -(cardWidth + frontCardPadding.left) * animationValueReversed,
+                left: isDraggingToPrevious && isAnimating
+                    ? min(
+                        0,
+                        (dragEndPosition! - dragStartPosition - frontCardPadding.left - cardWidth) *
+                            animationValueReversed,
+                      )
+                    : isDraggingToPrevious && !isAnimating
+                    ? cardLeftValue! - frontCardPadding.left
+                    : goToNextStep!
+                    ? -cardWidth * animationValue
+                    : -(cardWidth + frontCardPadding.left) * animationValueReversed,
                 child: IgnorePointer(
                   child: Opacity(
                     opacity: isDraggingToPrevious || isAnimating && !goToNextStep! ? 1 : 0,
@@ -292,11 +289,10 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
                   alignment: Alignment.topRight,
                   child: Padding(
                     padding: EdgeInsets.only(top: frontCardPadding.top, right: frontCardPadding.top),
-                    child: SBBIconButtonLarge(
-                      semantics: widget.cancelLabel,
+                    child: SBBTertiaryButton(
+                      semanticLabel: widget.cancelLabel,
                       onPressed: widget.onFinish,
-                      icon: SBBIcons.cross_small,
-                      buttonStyle: negativeButtonStyle,
+                      iconData: SBBIcons.cross_small,
                     ),
                   ),
                 ),
@@ -307,11 +303,10 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
                   alignment: Alignment.centerRight,
                   child: Padding(
                     padding: EdgeInsets.only(right: frontCardPadding.top),
-                    child: SBBIconButtonLarge(
-                      semantics: widget.forwardSemanticsLabel,
+                    child: SBBTertiaryButton(
+                      semanticLabel: widget.forwardSemanticsLabel,
                       onPressed: () => changeStep(goToNextStep: true),
-                      icon: SBBIcons.chevron_small_right_small,
-                      buttonStyle: negativeButtonStyle,
+                      iconData: SBBIcons.chevron_small_right_small,
                     ),
                   ),
                 ),
@@ -324,11 +319,10 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
                     alignment: Alignment.centerLeft,
                     child: Padding(
                       padding: EdgeInsets.only(left: frontCardPadding.top),
-                      child: SBBIconButtonLarge(
-                        semantics: widget.backSemanticsLabel,
+                      child: SBBTertiaryButton(
+                        semanticLabel: widget.backSemanticsLabel,
                         onPressed: () => changeStep(goToNextStep: false),
-                        icon: SBBIcons.chevron_small_left_small,
-                        buttonStyle: negativeButtonStyle,
+                        iconData: SBBIcons.chevron_small_left_small,
                       ),
                     ),
                   ),
@@ -344,16 +338,15 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
   }
 
   Widget buildStartPage() => Positioned(
-    left:
-        isShowingStartPage && isAnimating
-            ? isDraggingToPrevious
-                ? dragEndPosition! - widgetWidth + (widgetWidth - dragEndPosition!) * animationValue
-                : goToNextStep!
-                ? -widgetWidth * animationValue
-                : -widgetWidth + widgetWidth * animationValue
-            : isShowingStartPage && isDraggingToPrevious
-            ? cardLeftValue
-            : null,
+    left: isShowingStartPage && isAnimating
+        ? isDraggingToPrevious
+              ? dragEndPosition! - widgetWidth + (widgetWidth - dragEndPosition!) * animationValue
+              : goToNextStep!
+              ? -widgetWidth * animationValue
+              : -widgetWidth + widgetWidth * animationValue
+        : isShowingStartPage && isDraggingToPrevious
+        ? cardLeftValue
+        : null,
     child: SizedBox(
       width: widgetWidth,
       height: widgetHeight,
@@ -371,14 +364,13 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
   );
 
   Widget buildEndPage() => Positioned(
-    left:
-        isShowingEndPage && isDraggingToNext
-            ? isAnimating
-                ? dragEndPosition! * animationValueReversed
-                : cardLeftValue! + widgetWidth
-            : isShowingEndPage && isAnimating
-            ? widgetWidth * (goToNextStep! ? animationValueReversed : animationValue)
-            : null,
+    left: isShowingEndPage && isDraggingToNext
+        ? isAnimating
+              ? dragEndPosition! * animationValueReversed
+              : cardLeftValue! + widgetWidth
+        : isShowingEndPage && isAnimating
+        ? widgetWidth * (goToNextStep! ? animationValueReversed : animationValue)
+        : null,
     child: SizedBox(
       width: widgetWidth,
       height: widgetHeight,
@@ -436,49 +428,46 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
   }
 
   Widget buildFrontCard() => Positioned(
-    left:
-        isNotDragging && isAnimating && goToNextStep! && !isShowingStartPage && !isShowingEndPage
-            ? -(cardWidth + frontCardPadding.left) * animationValue
-            : isDraggingToNext && isAnimating && !isShowingEndPage
-            ? min(
-              0,
-              dragEndPosition! -
-                  dragStartPosition -
-                  (cardWidth + frontCardPadding.left + dragEndPosition! - dragStartPosition) * animationValue,
-            )
-            : isDraggingToNext && !isAnimating && !isShowingEndPage
-            ? cardLeftValue
-            : null,
+    left: isNotDragging && isAnimating && goToNextStep! && !isShowingStartPage && !isShowingEndPage
+        ? -(cardWidth + frontCardPadding.left) * animationValue
+        : isDraggingToNext && isAnimating && !isShowingEndPage
+        ? min(
+            0,
+            dragEndPosition! -
+                dragStartPosition -
+                (cardWidth + frontCardPadding.left + dragEndPosition! - dragStartPosition) * animationValue,
+          )
+        : isDraggingToNext && !isAnimating && !isShowingEndPage
+        ? cardLeftValue
+        : null,
     child: BlockSemantics(
       blocking: isBlocking && orientation == Orientation.portrait,
       child: Semantics(
         sortKey: const OrdinalSortKey(1),
         child: GestureDetector(
-          onHorizontalDragUpdate:
-              (details) => setState(() {
-                if (cardLeftValue == null) {
-                  setState(() => dragStartPosition = details.globalPosition.dx);
-                }
-                dragEndPosition = details.globalPosition.dx;
-                final newLeftValue = dragEndPosition! - dragStartPosition;
-                if (isNotDragging) {
-                  dragState =
-                      newLeftValue == 0
-                          ? 0
-                          : newLeftValue < 0
-                          ? 1
-                          : 2;
-                  backScrollController = ScrollController(initialScrollOffset: scrollController.offset);
-                  if (isDraggingToPrevious && currentStepIndex == 0) {
-                    setState(() => isShowingStartPage = true);
-                  } else if (isDraggingToNext && currentStepIndex == _cards.length - 1) {
-                    setState(() => isShowingEndPage = true);
-                  }
-                }
-                setState(
-                  () => cardLeftValue = isDraggingToNext ? min(0, newLeftValue) : min(0, newLeftValue - cardWidth),
-                );
-              }),
+          onHorizontalDragUpdate: (details) => setState(() {
+            if (cardLeftValue == null) {
+              setState(() => dragStartPosition = details.globalPosition.dx);
+            }
+            dragEndPosition = details.globalPosition.dx;
+            final newLeftValue = dragEndPosition! - dragStartPosition;
+            if (isNotDragging) {
+              dragState = newLeftValue == 0
+                  ? 0
+                  : newLeftValue < 0
+                  ? 1
+                  : 2;
+              backScrollController = ScrollController(initialScrollOffset: scrollController.offset);
+              if (isDraggingToPrevious && currentStepIndex == 0) {
+                setState(() => isShowingStartPage = true);
+              } else if (isDraggingToNext && currentStepIndex == _cards.length - 1) {
+                setState(() => isShowingEndPage = true);
+              }
+            }
+            setState(
+              () => cardLeftValue = isDraggingToNext ? min(0, newLeftValue) : min(0, newLeftValue - cardWidth),
+            );
+          }),
           onHorizontalDragEnd: (details) {
             if (dragEndPosition != null) {
               setState(() => changeStep(goToNextStep: isDraggingToNext));
@@ -503,8 +492,8 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
         (isShowingStartPage || isShowingEndPage ? 0 : 1) *
         (goToNextStep!
             ? layerIndex == 0
-                ? 0
-                : 1
+                  ? 0
+                  : 1
             : -1);
     const opacityMultiplier = 1.0 / (visibleBackCardsCount + 1);
     return ExcludeSemantics(
@@ -538,18 +527,16 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
       width: cardWidth,
       height: cardHeight,
       child: SingleChildScrollView(
-        controller:
-            isBackCard && index == currentStepIndex
-                ? backScrollController
-                : index == currentStepIndex
-                ? scrollController
-                : null,
+        controller: isBackCard && index == currentStepIndex
+            ? backScrollController
+            : index == currentStepIndex
+            ? scrollController
+            : null,
         child: LayoutBuilder(
-          builder:
-              (context, constraint) => ConstrainedBox(
-                constraints: BoxConstraints(minHeight: cardHeight),
-                child: IntrinsicHeight(child: _cards[index]),
-              ),
+          builder: (context, constraint) => ConstrainedBox(
+            constraints: BoxConstraints(minHeight: cardHeight),
+            child: IntrinsicHeight(child: _cards[index]),
+          ),
         ),
       ),
     ),

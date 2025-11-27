@@ -79,7 +79,7 @@ class SBBTimePicker extends StatefulWidget {
 
     final acceptInitialSelection = initialTime == null;
     final selectedButtonEnabled = ValueNotifier(acceptInitialSelection);
-    final selectedButtonLabel = localizations.timePickerDialHelpText;
+    final selectedButtonLabelText = localizations.timePickerDialHelpText;
 
     var selectedTime = modalTime;
 
@@ -111,14 +111,13 @@ class SBBTimePicker extends StatefulWidget {
             child: ListenableBuilder(
               listenable: selectedButtonEnabled,
               builder: (context, _) {
-                final onPressed =
-                    selectedButtonEnabled.value
-                        ? () {
-                          Navigator.of(context).pop();
-                          onTimeChanged?.call(selectedTime);
-                        }
-                        : null;
-                return SBBPrimaryButton(label: selectedButtonLabel, onPressed: onPressed);
+                final onPressed = selectedButtonEnabled.value
+                    ? () {
+                        Navigator.of(context).pop();
+                        onTimeChanged?.call(selectedTime);
+                      }
+                    : null;
+                return SBBPrimaryButton(labelText: selectedButtonLabelText, onPressed: onPressed);
               },
             ),
           ),

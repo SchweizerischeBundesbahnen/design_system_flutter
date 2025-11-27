@@ -57,7 +57,9 @@ class _VerticalCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Expanded(child: SizedBox(height: 200, width: double.infinity, child: embeddedChild)),
+        Expanded(
+          child: SizedBox(height: 200, width: double.infinity, child: embeddedChild),
+        ),
         const SizedBox(height: 16.0),
         MergeSemantics(
           child: Column(

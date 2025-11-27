@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Lint workflows using actionlint # https://github.com/rhysd/actionlint/tree/main
         uses: raven-actions/actionlint@v2

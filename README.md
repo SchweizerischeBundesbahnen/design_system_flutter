@@ -150,5 +150,4 @@ In addition to the contributors on GitHub, we thank the following authors for th
 *  Patrice Müller
 *  Dominik Schmucki
 
-
 [Design System Mobile]: https://digital.sbb.ch/en/design-system/mobile/overview/

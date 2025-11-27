@@ -201,7 +201,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
 
   @override
   Widget build(BuildContext context) {
-    final iconStyle = SBBButtonStyles.of(context).iconTextStyle;
+    final baseStyle = SBBBaseStyle.of(context);
     final paddingTop = _badgeSize.height / 2.0;
 
     final style = SBBControlStyles.of(context).promotionBox!;
@@ -243,8 +243,9 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
                 child: Semantics(
                   hint: widget.onTapSemanticsHint,
                   child: InkWell(
-                    focusColor: iconStyle?.backgroundColorHighlighted,
-                    hoverColor: iconStyle?.backgroundColorHighlighted,
+                    // TODO: replace these with own SBBPromotionBoxThemeData values
+                    focusColor: baseStyle.themeValue(SBBColors.milk, SBBColors.iron),
+                    hoverColor: baseStyle.themeValue(SBBColors.milk, SBBColors.iron),
                     customBorder: const RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(sbbDefaultSpacing)),
                     ),

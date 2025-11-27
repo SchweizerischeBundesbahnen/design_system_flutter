@@ -1,51 +1,138 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/src/button/theme/default_button_themes.dart';
+import 'package:sbb_design_system_mobile/src/button/theme/sbb_button_style_x.dart';
 
 import '../../sbb_design_system_mobile.dart';
+import 'default_button_label.dart';
 
-/// The SBB Secondary Button. Use according to documentation.
+/// The secondary variant of the SBB Button.
 ///
-/// The [label] parameter must not be null.
+/// Provide either [label] for custom button content or [labelText] for text-only
+/// content with standard styling. These parameters are mutually exclusive.
 ///
-/// If [isLoading] is true, then the [SBBLoadingIndicator] will be displayed
-/// inside the button and the [onPressed] callback will be ignored.
+/// When [isLoading] is true, a loading indicator replaces the label and
+/// the button appears disabled.
 ///
-/// If [onPressed] callback is null, then the button will be disabled.
+/// The button is disabled when both [onPressed] and [onLongPress] are null.
 ///
 /// See also:
 ///
-/// * <https://digital.sbb.ch/en/design-system/mobile/components/button/>
+///  * [SBBPrimaryButton], for the main action.
+///  * [SBBTertiaryButton], for less prominent actions.
+///  * [SBBSecondaryButtonThemeData], for setting the [SBBButtonStyle] for all buttons within the current Theme.
+///  * [Figma design specs](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=7-12)
 class SBBSecondaryButton extends StatelessWidget {
   const SBBSecondaryButton({
     super.key,
-    required this.label,
-    this.isLoading = false,
     required this.onPressed,
+    this.onLongPress,
+    this.label,
+    this.labelText,
+    this.isLoading = false,
+    this.style,
     this.focusNode,
-  });
+    this.autofocus = false,
+    this.semanticLabel,
+  }) : assert(!(labelText != null && label != null), 'Cannot provide both labelText and label!'),
+       assert(
+         !(labelText == null && label == null && !isLoading),
+         'One of labelText, label must be set or isLoading must be true!',
+       );
 
-  final String label;
-  final bool isLoading;
+  /// Called when the button is tapped.
+  ///
+  /// The button is disabled when both this and [onLongPress] are null.
+  ///
+  /// Ignored when [isLoading] is true.
   final VoidCallback? onPressed;
+
+  /// Called when the button is long pressed.
+  ///
+  /// The button is disabled when both this and [onPressed] are null.
+  ///
+  /// Ignored when [isLoading] is true.
+  final VoidCallback? onLongPress;
+
+  /// A custom widget displayed as the button's content.
+  ///
+  /// For simple text labels, use [labelText] instead.
+  ///
+  /// Cannot be used together with [labelText].
+  final Widget? label;
+
+  /// The text displayed in the button.
+  ///
+  /// The text will be styled according to the SBB design system.
+  ///
+  /// Cannot be used together with [label].
+  final String? labelText;
+
+  /// Whether to show a loading indicator instead of the label.
+  ///
+  /// When true:
+  ///  * A themed [SBBLoadingIndicator] replaces the button content
+  ///  * The button becomes disabled ([onPressed] and [onLongPress] are ignored)
+  ///
+  /// Defaults to false.
+  final bool isLoading;
+
+  /// Customizes this button's appearance.
+  ///
+  /// Non-null properties of this style override the corresponding
+  /// properties in [DefaultSBBSecondaryButtonTheme.style].
+  final SBBButtonStyle? style;
+
+  /// {@macro flutter.widgets.Focus.focusNode}
   final FocusNode? focusNode;
+
+  /// {@macro flutter.widgets.Focus.autofocus}
+  final bool autofocus;
+
+  /// Provides a textual description of the widget for assistive technologies.
+  ///
+  /// If this is non null, semantics of [label] or [labelText] are ignored.
+  final String? semanticLabel;
 
   @override
   Widget build(BuildContext context) {
-    final style = SBBBaseStyle.of(context);
-    final buttonStyles = SBBButtonStyles.of(context);
-    return OutlinedButton(
-      onPressed: isLoading ? null : onPressed,
-      focusNode: focusNode,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          if (isLoading)
-            style.themeValue(
-              const SBBLoadingIndicator.tinySmoke(),
-              const SBBLoadingIndicator.tinyCement(),
-            ),
-          buttonStyles.buttonLabelBuilder!(context, label),
-        ],
+    return Semantics(
+      enabled: !isLoading && (onPressed != null || onLongPress != null),
+      button: true,
+      label: semanticLabel,
+      excludeSemantics: semanticLabel != null,
+      // The button is surrounded by padding to allow the border to be drawn outside while
+      // maintaining correct distances to other Widgets.
+      child: Padding(
+        padding: const EdgeInsets.all(1.0),
+        child: OutlinedButton(
+          onPressed: isLoading ? null : onPressed,
+          onLongPress: isLoading ? null : onLongPress,
+          style: style?.toButtonStyle(),
+          focusNode: focusNode,
+          autofocus: autofocus,
+          child: label ?? _defaultLabel(context),
+        ),
       ),
     );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(DiagnosticsProperty<bool>('isLoading', isLoading, defaultValue: false, showName: false));
+    properties.add(DiagnosticsProperty<SBBButtonStyle>('style', style, defaultValue: null, showName: false));
+    properties.add(DiagnosticsProperty<String>('semanticLabel', semanticLabel, defaultValue: null, showName: false));
+  }
+
+  Widget _defaultLabel(BuildContext context) {
+    final style = SBBBaseStyle.of(context);
+    final themedLoadingIndicator = style.themeValue(
+      const SBBLoadingIndicator.tinySmoke(),
+      const SBBLoadingIndicator.tinyCement(),
+    );
+
+    final child = isLoading ? themedLoadingIndicator : DefaultButtonLabel(label: labelText!);
+    return Center(child: child);
   }
 }

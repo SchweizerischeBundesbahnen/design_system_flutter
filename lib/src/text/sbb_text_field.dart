@@ -228,7 +228,10 @@ class _SBBTextField extends State<SBBTextField> {
           children: <Widget>[
             Row(
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [Expanded(child: _buildTextField()), if (widget.suffixIcon != null) widget.suffixIcon!],
+              children: [
+                Expanded(child: _buildTextField()),
+                if (widget.suffixIcon != null) widget.suffixIcon!,
+              ],
             ),
             SBBTextFieldUnderline(
               errorText: widget.errorText,

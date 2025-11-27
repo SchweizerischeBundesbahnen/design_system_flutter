@@ -47,18 +47,16 @@ class CircleBorderThumbShape extends SliderComponentShape {
     }
 
     // thumb background
-    final fillPaint =
-        Paint()
-          ..color = color ?? sliderTheme.thumbColor ?? Colors.white
-          ..style = PaintingStyle.fill;
+    final fillPaint = Paint()
+      ..color = color ?? sliderTheme.thumbColor ?? Colors.white
+      ..style = PaintingStyle.fill;
     canvas.drawCircle(center, radius, fillPaint);
 
     // thumb border
-    final borderPaint =
-        Paint()
-          ..color = borderColor ?? sliderTheme.activeTrackColor ?? SBBColors.red
-          ..strokeWidth = borderWidth
-          ..style = PaintingStyle.stroke;
+    final borderPaint = Paint()
+      ..color = borderColor ?? sliderTheme.activeTrackColor ?? SBBColors.red
+      ..strokeWidth = borderWidth
+      ..style = PaintingStyle.stroke;
     canvas.drawCircle(center, radius - (borderWidth / 2), borderPaint);
   }
 }

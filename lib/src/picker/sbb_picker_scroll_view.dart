@@ -150,7 +150,10 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
       center: listCenterKey,
       slivers: [
         if (!widget.looping)
-          SliverToBoxAdapter(key: topPaddingListCenterKey, child: SizedBox(height: _listPaddingHeight)),
+          SliverToBoxAdapter(
+            key: topPaddingListCenterKey,
+            child: SizedBox(height: _listPaddingHeight),
+          ),
         _buildNegativeIndexList(),
         _buildPositiveIndexList(positiveIndexListCenterKey),
         if (!widget.looping) SliverToBoxAdapter(child: SizedBox(height: _listPaddingHeight)),

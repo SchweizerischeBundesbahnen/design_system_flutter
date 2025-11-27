@@ -19,7 +19,7 @@ void main() {
             leadingIcon: SBBIcons.sign_exclamation_point_small,
             trailingIcon: SBBIcons.circle_information_small_small,
           ),
-          trailingWidget: SBBTertiaryButtonSmall(label: 'Label', icon: SBBIcons.dog_small, onPressed: () => {}),
+          trailingWidget: SBBTertiaryButtonSmall(labelText: 'Label', iconData: SBBIcons.dog_small, onPressed: () => {}),
         ),
         const SizedBox(height: sbbDefaultSpacing),
         const SBBListHeader('Large'),
@@ -27,7 +27,7 @@ void main() {
           title: 'Title',
           leadingIcon: SBBIcons.dog_medium,
           secondaryLabel: 'Subtext',
-          trailingWidget: SBBIconButtonLarge(icon: SBBIcons.dog_small, onPressed: () => {}),
+          trailingWidget: SBBTertiaryButton(iconData: SBBIcons.dog_small, onPressed: () => {}),
         ),
         const SizedBox(height: sbbDefaultSpacing),
         const SBBListHeader('Custom'),
@@ -78,7 +78,11 @@ void generateSliverTest(String name, double scrollOffset) {
                   leadingIcon: SBBIcons.sign_exclamation_point_small,
                   trailingIcon: SBBIcons.circle_information_small_small,
                 ),
-                trailingWidget: SBBTertiaryButtonSmall(label: 'Label', icon: SBBIcons.dog_small, onPressed: () => {}),
+                trailingWidget: SBBTertiaryButtonSmall(
+                  labelText: 'Label',
+                  iconData: SBBIcons.dog_small,
+                  onPressed: () => {},
+                ),
                 contractibleChild: Container(
                   height: 50,
                   color: Colors.black,
@@ -107,11 +111,10 @@ void generateSliverTest(String name, double scrollOffset) {
                 children: [
                   Text('Static'),
                   SBBContractionListener(
-                    builder:
-                        (context, state, _) => Opacity(
-                          opacity: state.expansionValue,
-                          child: Text('Opacity: ${state.expansionValue.toStringAsFixed(1)}'),
-                        ),
+                    builder: (context, state, _) => Opacity(
+                      opacity: state.expansionValue,
+                      child: Text('Opacity: ${state.expansionValue.toStringAsFixed(1)}'),
+                    ),
                   ),
                   SBBContractible.crossfade(
                     contractedChild: Text("Contracted"),

@@ -12,8 +12,8 @@ class OnboardingPage extends StatelessWidget {
     return Column(
       children: <Widget>[
         const Padding(padding: EdgeInsets.all(sbbDefaultSpacing), child: ThemeModeSegmentedButton()),
-        SBBTertiaryButtonLarge(
-          label: 'Show Onboarding',
+        SBBTertiaryButton(
+          labelText: 'Show Onboarding',
           onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => _OnboardingPage())),
         ),
       ],
@@ -91,7 +91,7 @@ class DemoOnboardingBuilderDelegate extends SBBOnboardingBuilderDelegate {
         content: 'Page 1',
         customContent: Padding(
           padding: const EdgeInsets.all(sbbDefaultSpacing),
-          child: SBBSecondaryButton(label: 'Custom Action', onPressed: () {}),
+          child: SBBSecondaryButton(labelText: 'Custom Action', onPressed: () {}),
         ),
       ),
       SBBOnboardingCard.extended(
@@ -100,7 +100,7 @@ class DemoOnboardingBuilderDelegate extends SBBOnboardingBuilderDelegate {
         content: 'Page 2',
         customContent: Padding(
           padding: const EdgeInsets.only(left: 16.0, right: 16.0, bottom: 16.0),
-          child: SBBSecondaryButton(label: 'Testbutton', onPressed: () {}),
+          child: SBBSecondaryButton(labelText: 'Testbutton', onPressed: () {}),
         ),
       ),
       SBBOnboardingCard.basic(title: 'Page 3', content: 'Page 3'),
@@ -137,7 +137,7 @@ class _VerticalEndPage extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: 67),
-            SBBPrimaryButton(label: 'Close Onboarding', onPressed: onFinish),
+            SBBPrimaryButton(labelText: 'Close Onboarding', onPressed: onFinish),
           ],
         ),
       ),
@@ -173,7 +173,7 @@ class _HorizontalEndPage extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 67),
-                  SBBPrimaryButton(label: 'Close Onboarding', onPressed: onFinish),
+                  SBBPrimaryButton(labelText: 'Close Onboarding', onPressed: onFinish),
                 ],
               ),
             ),
@@ -212,9 +212,9 @@ class _VerticalStartPage extends StatelessWidget {
               padding: EdgeInsets.symmetric(horizontal: sbbDefaultSpacing / 2, vertical: sbbDefaultSpacing),
               child: Column(
                 children: [
-                  SBBPrimaryButton(label: 'Start Onboarding', onPressed: onStartOnboarding),
+                  SBBPrimaryButton(labelText: 'Start Onboarding', onPressed: onStartOnboarding),
                   const SizedBox(height: sbbDefaultSpacing),
-                  SBBSecondaryButton(label: 'Skip Onboarding', onPressed: onFinish),
+                  SBBSecondaryButton(labelText: 'Skip Onboarding', onPressed: onFinish),
                 ],
               ),
             ),
@@ -258,9 +258,9 @@ class _HorizontalStartPage extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: sbbDefaultSpacing / 2, vertical: sbbDefaultSpacing),
                     child: Column(
                       children: [
-                        SBBPrimaryButton(label: 'Start Onboarding', onPressed: onStartOnboarding),
+                        SBBPrimaryButton(labelText: 'Start Onboarding', onPressed: onStartOnboarding),
                         const SizedBox(height: sbbDefaultSpacing),
-                        SBBSecondaryButton(label: 'Skip Onboarding', onPressed: onFinish),
+                        SBBSecondaryButton(labelText: 'Skip Onboarding', onPressed: onFinish),
                       ],
                     ),
                   ),

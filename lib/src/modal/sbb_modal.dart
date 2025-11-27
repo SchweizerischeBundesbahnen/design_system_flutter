@@ -72,7 +72,10 @@ class SBBModalPopup extends StatelessWidget {
         explicitChildNodes: true,
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: [_ModalHeader(title, showCloseButton: showCloseButton), child],
+          children: [
+            _ModalHeader(title, showCloseButton: showCloseButton),
+            child,
+          ],
         ),
       ),
     );
@@ -184,19 +187,18 @@ class SBBModalSheet extends StatelessWidget {
     Color? backgroundColor,
   }) : this._(
          key: key,
-         headerBuilder:
-             (BuildContext context) => Padding(
-               padding: const EdgeInsetsDirectional.fromSTEB(
-                 sbbDefaultSpacing,
-                 sbbDefaultSpacing,
-                 0.0,
-                 sbbDefaultSpacing,
-               ),
-               child: Semantics(
-                 header: true,
-                 child: Text(title, style: SBBControlStyles.of(context).modalTitleTextStyle),
-               ),
-             ),
+         headerBuilder: (BuildContext context) => Padding(
+           padding: const EdgeInsetsDirectional.fromSTEB(
+             sbbDefaultSpacing,
+             sbbDefaultSpacing,
+             0.0,
+             sbbDefaultSpacing,
+           ),
+           child: Semantics(
+             header: true,
+             child: Text(title, style: SBBControlStyles.of(context).modalTitleTextStyle),
+           ),
+         ),
          showCloseButton: showCloseButton,
          backgroundColor: backgroundColor,
          child: child,
@@ -302,7 +304,7 @@ class _CloseButton extends StatelessWidget {
     button: true,
     child: Padding(
       padding: const EdgeInsets.all(6.0),
-      child: SBBIconButtonSmall(onPressed: () => Navigator.of(context).pop(), icon: SBBIcons.cross_small),
+      child: SBBTertiaryButtonSmall(onPressed: () => Navigator.of(context).pop(), iconData: SBBIcons.cross_small),
     ),
   );
 }
