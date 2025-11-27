@@ -11,7 +11,14 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ### Removed
 
-- `SBBAccordion`, `SBBAccordionItem`, `AccordionCallback` and `SingleAccordionCallback`
+- Removed `SBBAccordion`, `SBBAccordionItem`, `AccordionCallback` and `SingleAccordionCallback`
+
+## [4.3.1] - 2025-11-21
+
+### Fixed
+
+- `SBBTextTheme`: Fixed return type of `ThemeData` extension getter
+- drop support for Flutter SDK 3.29.x
 
 ## [4.3.0] - 2025-11-14
 
@@ -673,7 +680,9 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Initial project setup
 - Added some widgets
 
-[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.3.0...HEAD
+[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.3.1...HEAD
+
+[4.3.1]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.3.0...4.3.1
 
 [4.3.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.2.0...4.3.0
 

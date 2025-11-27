@@ -61,17 +61,15 @@ class _SBBSwitchState extends State<SBBSwitch> with TickerProviderStateMixin {
   void initState() {
     super.initState();
 
-    _tap =
-        TapGestureRecognizer()
-          ..onTapDown = _handleTapDown
-          ..onTapUp = _handleTapUp
-          ..onTap = _handleTap
-          ..onTapCancel = _handleTapCancel;
-    _drag =
-        HorizontalDragGestureRecognizer()
-          ..onStart = _handleDragStart
-          ..onUpdate = _handleDragUpdate
-          ..onEnd = _handleDragEnd;
+    _tap = TapGestureRecognizer()
+      ..onTapDown = _handleTapDown
+      ..onTapUp = _handleTapUp
+      ..onTap = _handleTap
+      ..onTapCancel = _handleTapCancel;
+    _drag = HorizontalDragGestureRecognizer()
+      ..onStart = _handleDragStart
+      ..onUpdate = _handleDragUpdate
+      ..onEnd = _handleDragEnd;
 
     _positionController = AnimationController(
       duration: kThemeAnimationDuration,
@@ -253,7 +251,9 @@ class _SBBRenderSwitch extends RenderConstrainedBox {
        _knobColor = knobColor,
        _onChanged = onChanged,
        _state = state,
-       super(additionalConstraints: const BoxConstraints.tightFor(width: _trackWidth, height: _trackHeight)) {
+       super(
+         additionalConstraints: const BoxConstraints.tightFor(width: _trackWidth, height: _trackHeight),
+       ) {
     state._position.addListener(markNeedsPaint);
     state._reaction.addListener(markNeedsPaint);
   }
@@ -370,18 +370,16 @@ class _SBBRenderSwitch extends RenderConstrainedBox {
     canvas.drawRRect(trackRRect, trackPaint);
 
     final currentThumbExtension = _thumbPressedExtension * currentReactionValue;
-    final thumbLeft =
-        lerpDouble(
-          trackRRect.left + _trackInnerStart - _thumbRadius,
-          trackRRect.left + _trackInnerEnd - _thumbRadius - currentThumbExtension,
-          currentValue,
-        )!;
-    final thumbRight =
-        lerpDouble(
-          trackRRect.left + _trackInnerStart + _thumbRadius + currentThumbExtension,
-          trackRRect.left + _trackInnerEnd + _thumbRadius,
-          currentValue,
-        )!;
+    final thumbLeft = lerpDouble(
+      trackRRect.left + _trackInnerStart - _thumbRadius,
+      trackRRect.left + _trackInnerEnd - _thumbRadius - currentThumbExtension,
+      currentValue,
+    )!;
+    final thumbRight = lerpDouble(
+      trackRRect.left + _trackInnerStart + _thumbRadius + currentThumbExtension,
+      trackRRect.left + _trackInnerEnd + _thumbRadius,
+      currentValue,
+    )!;
     const thumbTop = _trackHeight * 0.5 - _thumbRadius;
     const thumbBottom = _trackHeight * 0.5 + _thumbRadius;
 
@@ -401,11 +399,10 @@ class _SBBRenderSwitch extends RenderConstrainedBox {
 
     final thumbPaint = Paint()..color = thumbColor;
     canvas.drawRRect(thumbRRect, thumbPaint);
-    final thumbStrokePaint =
-        Paint()
-          ..color = currentKnobColor
-          ..style = PaintingStyle.stroke
-          ..strokeWidth = 1.0;
+    final thumbStrokePaint = Paint()
+      ..color = currentKnobColor
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = 1.0;
     canvas.drawRRect(thumbRRect, thumbStrokePaint);
 
     _drawTick(canvas, thumbRRect);

@@ -62,7 +62,9 @@ class DateTimePickerTest extends StatelessWidget {
       Row(
         children: [
           Expanded(
-            child: SBBGroup(child: SBBDateTimePicker(onDateTimeChanged: (_) {}, initialDateTime: initialDateTime)),
+            child: SBBGroup(
+              child: SBBDateTimePicker(onDateTimeChanged: (_) {}, initialDateTime: initialDateTime),
+            ),
           ),
           const SizedBox(width: sbbDefaultSpacing),
           Expanded(
