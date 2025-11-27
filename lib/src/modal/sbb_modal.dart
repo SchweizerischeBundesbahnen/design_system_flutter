@@ -304,7 +304,7 @@ class _CloseButton extends StatelessWidget {
     button: true,
     child: Padding(
       padding: const EdgeInsets.all(6.0),
-      child: SBBIconButtonSmall(onPressed: () => Navigator.of(context).pop(), icon: SBBIcons.cross_small),
+      child: SBBTertiaryButtonSmall(onPressed: () => Navigator.of(context).pop(), iconData: SBBIcons.cross_small),
     ),
   );
 }

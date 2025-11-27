@@ -149,7 +149,7 @@ class SBBMessage extends StatelessWidget {
     child: Text(messageCode!, style: textTheme.labelSmall?.copyWith(fontSize: 12.0), textAlign: TextAlign.center),
   );
 
-  SBBIconButtonLarge _interactionButton() => SBBIconButtonLarge(icon: interactionIcon, onPressed: onInteraction);
+  SBBTertiaryButton _interactionButton() => SBBTertiaryButton(iconData: interactionIcon, onPressed: onInteraction);
 
   Widget _illustration(BuildContext context) {
     final brightness = Theme.of(context).brightness;

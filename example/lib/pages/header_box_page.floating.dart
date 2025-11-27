@@ -60,8 +60,8 @@ class _FloatingPageState extends State<FloatingPage> {
           SizedOverflowBox(
             size: Size(54, 24),
             alignment: Alignment.centerRight,
-            child: SBBIconButtonSmall(
-              icon: showAll ? SBBIcons.arrow_up_small : SBBIcons.arrow_down_small,
+            child: SBBTertiaryButtonSmall(
+              iconData: showAll ? SBBIcons.arrow_up_small : SBBIcons.arrow_down_small,
               onPressed: () {
                 setState(() {
                   showAll = !showAll;

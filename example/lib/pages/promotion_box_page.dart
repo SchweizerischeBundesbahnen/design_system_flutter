@@ -80,7 +80,7 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
                     ),
                     badgeText: 'Custom leading and trailing widget',
                     leading: Icon(SBBIcons.train_large),
-                    trailing: SBBTertiaryButtonSmall(label: 'Trailing Button', onPressed: () {}),
+                    trailing: SBBTertiaryButtonSmall(labelText: 'Trailing Button', onPressed: () {}),
                   ),
                   const SizedBox(height: sbbDefaultSpacing),
                   SBBPromotionBox.custom(
@@ -91,7 +91,7 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
                     onTap: () {},
                     badgeText: 'Custom with on tap',
                     leading: Icon(SBBIcons.train_large),
-                    trailing: SBBTertiaryButtonSmall(label: 'Trailing Button', onPressed: () {}),
+                    trailing: SBBTertiaryButtonSmall(labelText: 'Trailing Button', onPressed: () {}),
                     style: _customBoxStyle(context),
                   ),
                 ],
@@ -99,7 +99,7 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
             ),
           ),
           SBBPrimaryButton(
-            label: 'Show',
+            labelText: 'Show',
             onPressed: () {
               defaultController.show();
               closableController.show();
@@ -109,7 +109,7 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
           ),
           const SizedBox(height: 8.0),
           SBBSecondaryButton(
-            label: 'Hide',
+            labelText: 'Hide',
             onPressed: () {
               defaultController.hide();
               closableController.hide();
