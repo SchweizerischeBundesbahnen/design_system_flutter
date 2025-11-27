@@ -10,6 +10,7 @@ on:
   pull_request:
     branches:
       - main
+      - 'releases/**'
 
 # Ensure that new pushes/updates cancel running jobs
 concurrency:
