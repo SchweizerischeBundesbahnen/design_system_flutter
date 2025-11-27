@@ -23,19 +23,20 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - BREAKING: `SBBTertiaryButton`: `icon` is of type `Widget?` - see [v5 migration guide]
 - BREAKING: Updated `SBBButtonStyle` to have `WidgetStateProperty` values - see [v5 migration guide]
 
-## [4.3.1] - 2025-11-21
-
-### Fixed
-
-- `SBBTextTheme`: Fixed return type of `ThemeData` extension getter
-- drop support for Flutter SDK 3.29.x
-
 ### Removed
 
 - Removed `SBBIconButtonLarge`: use `SBBTertiaryButton` with only `iconData` or `icon` - see [v5 migration guide]
 - Removed `SBBIconButtonSmall`: use `SBBTertiaryButtonSmall` with only `iconData` or `icon` - see [v5 migration guide]
 - Removed `buttonStyles` argument in `SBBTheme`: use `primaryButtonTheme`, `secondaryButtonTheme` and
   `tertiaryButtonTheme` - see [v5 migration guide]
+- Removed `SBBAccordion`, `SBBAccordionItem`, `AccordionCallback` and `SingleAccordionCallback`
+
+## [4.3.1] - 2025-11-21
+
+### Fixed
+
+- `SBBTextTheme`: Fixed return type of `ThemeData` extension getter
+- drop support for Flutter SDK 3.29.x
 
 ## [4.3.0] - 2025-11-14
 
