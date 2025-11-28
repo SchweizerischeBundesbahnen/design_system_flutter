@@ -1,62 +1,98 @@
 import 'package:flutter/widgets.dart';
 
-/// Style for SBB Checkboxes. Use this in combination with [SBBCheckboxThemeData]
-/// to override checkboxes within the current [SBBTheme].
+/// Defines the visual properties of [SBBCheckbox].
+///
+/// Use this class in combination with [SBBCheckboxThemeData] to customize
+/// the appearance of checkboxes throughout your app or for specific widget subtrees.
+///
+/// ## Sample code
+///
+/// ```dart
+/// SBBCheckbox(
+///   value: true,
+///   onChanged: (value) {},
+///   style: SBBCheckboxStyle(
+///     fillColor: WidgetStateProperty.all(Colors.blue),
+///     checkColor: WidgetStateProperty.all(Colors.white),
+///   ),
+/// )
+/// ```
 ///
 /// See also:
-/// * [SBBCheckboxThemeData], the ThemeData given to SBBTheme to override the [SBBCheckbox]
+/// * [SBBCheckbox], the checkbox widget that uses this style.
+/// * [SBBCheckboxThemeData], which applies this style theme-wide.
 class SBBCheckboxStyle {
   const SBBCheckboxStyle({
     this.fillColor,
     this.checkColor,
-    this.overlayColor,
     this.borderColor,
     this.margin,
   });
 
-  /// The checkbox background fill color.
+  /// The background color of the checkbox.
+  ///
+  /// This color fills the rounded square that contains the check mark.
+  /// It does not affect the tap target area, which is controlled by [margin].
+  ///
+  /// The color can change based on the checkbox state (selected, disabled, etc.)
+  /// by using [WidgetStateProperty].
   final WidgetStateProperty<Color?>? fillColor;
 
-  /// The color for the check icon or dash when this checkbox is checked.
+  /// The color of the check mark or dash icon.
+  ///
+  /// This color is used for:
+  /// * The check mark when [SBBCheckbox.value] is `true`
+  /// * The dash icon when [SBBCheckbox.value] is `null` (in tristate mode)
+  ///
+  /// The color can change based on the checkbox state by using [WidgetStateProperty].
   final WidgetStateProperty<Color?>? checkColor;
 
-  /// The color for the checkbox's material.
-  final WidgetStateProperty<Color?>? overlayColor;
-
-  /// The color for the border of the checkbox.
+  /// The color of the checkbox border.
+  ///
+  /// This is the outline color of the rounded square surrounding the check mark.
+  /// The border width is defined by [borderWidth].
+  ///
+  /// The color can change based on the checkbox state by using [WidgetStateProperty].
   final WidgetStateProperty<Color?>? borderColor;
 
-  /// The margin between the hit test area of the [SBBCheckbox] and the
-  /// rounded shape with the visual check mark.
+  /// The space between the checkbox's tap target and its visual appearance.
   ///
-  /// By increasing this, the area receiving tap events for the
-  /// [SBBCheckbox] increases.
+  /// This margin increases the interactive area of the checkbox beyond the
+  /// visible [width] × [width] square. A larger margin makes the checkbox
+  /// easier to tap while keeping the visual size constant.
   ///
-  /// Defaults to [EdgeInsets.all(8.0)].
+  /// For example, with `EdgeInsets.all(8.0)`, the tap target extends 8 pixels
+  /// in all directions beyond the visible checkbox.
+  ///
+  /// Defaults to `EdgeInsets.all(8.0)`.
   final EdgeInsetsGeometry? margin;
 
-  /// The width of the box surrounding the checkbox.
+  /// The thickness of the checkbox border.
+  ///
+  /// This value determines how wide the border line around the checkbox appears.
   static const double borderWidth = 1.0;
 
-  /// The border radius of the box surrounding the checkbox.
+  /// The corner radius of the checkbox.
+  ///
+  /// This creates rounded corners for the checkbox square.
   static const Radius borderRadius = Radius.circular(6.0);
 
-  /// The width of the square surrounding the checkbox.
+  /// The size of the checkbox's visible square.
   ///
-  /// If padding is set to [EdgeInsets.zero], this will be the total size of the checkbox.
+  /// This is the width and height of the rounded square containing the check mark,
+  /// not including the [margin]. The total interactive area is larger when margin
+  /// is applied.
   static const double width = 20.0;
 
   SBBCheckboxStyle copyWith({
     WidgetStateProperty<Color?>? fillColor,
     WidgetStateProperty<Color?>? checkColor,
-    WidgetStateProperty<Color?>? overlayColor,
     WidgetStateProperty<Color?>? borderColor,
     EdgeInsetsGeometry? margin,
   }) {
     return SBBCheckboxStyle(
       fillColor: fillColor ?? this.fillColor,
       checkColor: checkColor ?? this.checkColor,
-      overlayColor: overlayColor ?? this.overlayColor,
       borderColor: borderColor ?? this.borderColor,
       margin: margin ?? this.margin,
     );
@@ -68,7 +104,6 @@ class SBBCheckboxStyle {
     return copyWith(
       fillColor: other.fillColor,
       checkColor: other.checkColor,
-      overlayColor: other.overlayColor,
       borderColor: other.borderColor,
       margin: other.margin,
     );
@@ -80,7 +115,6 @@ class SBBCheckboxStyle {
     return SBBCheckboxStyle(
       fillColor: WidgetStateProperty.lerp<Color?>(a?.fillColor, b?.fillColor, t, Color.lerp),
       checkColor: WidgetStateProperty.lerp<Color?>(a?.checkColor, b?.checkColor, t, Color.lerp),
-      overlayColor: WidgetStateProperty.lerp<Color?>(a?.overlayColor, b?.overlayColor, t, Color.lerp),
       borderColor: WidgetStateProperty.lerp<Color?>(a?.borderColor, b?.borderColor, t, Color.lerp),
       margin: EdgeInsetsGeometry.lerp(a?.margin, b?.margin, t),
     );
@@ -92,7 +126,6 @@ class SBBCheckboxStyle {
     return other is SBBCheckboxStyle &&
         other.fillColor == fillColor &&
         other.checkColor == checkColor &&
-        other.overlayColor == overlayColor &&
         other.borderColor == borderColor &&
         other.margin == margin;
   }
@@ -101,7 +134,6 @@ class SBBCheckboxStyle {
   int get hashCode => Object.hash(
     fillColor,
     checkColor,
-    overlayColor,
     borderColor,
     margin,
   );
