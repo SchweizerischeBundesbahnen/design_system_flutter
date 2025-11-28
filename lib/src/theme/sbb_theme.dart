@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/button/theme/sbb_button_style_x.dart';
+import 'package:sbb_design_system_mobile/src/checkbox/theme/default_sbb_checkbox_theme_data.dart';
 
 import '../button/theme/default_button_themes.dart';
-import '../button/theme/sbb_button_theme_data.dart';
-import 'theme.dart';
 
 const sbbDefaultSpacing = 16.0;
 
@@ -16,6 +16,7 @@ class SBBTheme {
     SBBPrimaryButtonThemeData? primaryButtonTheme,
     SBBSecondaryButtonThemeData? secondaryButtonTheme,
     SBBTertiaryButtonThemeData? tertiaryButtonTheme,
+    SBBCheckboxThemeData? checkboxTheme,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBGroupStyle? groupStyle,
@@ -28,6 +29,7 @@ class SBBTheme {
     primaryButtonTheme: primaryButtonTheme,
     secondaryButtonTheme: secondaryButtonTheme,
     tertiaryButtonTheme: tertiaryButtonTheme,
+    checkboxTheme: checkboxTheme,
     controlStyles: controlStyles,
     headerBoxStyle: headerBoxStyle,
     groupStyle: groupStyle,
@@ -41,6 +43,7 @@ class SBBTheme {
     SBBPrimaryButtonThemeData? primaryButtonTheme,
     SBBSecondaryButtonThemeData? secondaryButtonTheme,
     SBBTertiaryButtonThemeData? tertiaryButtonTheme,
+    SBBCheckboxThemeData? checkboxTheme,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBGroupStyle? groupStyle,
@@ -53,6 +56,7 @@ class SBBTheme {
     primaryButtonTheme: primaryButtonTheme,
     secondaryButtonTheme: secondaryButtonTheme,
     tertiaryButtonTheme: tertiaryButtonTheme,
+    checkboxTheme: checkboxTheme,
     controlStyles: controlStyles,
     headerBoxStyle: headerBoxStyle,
     groupStyle: groupStyle,
@@ -67,6 +71,7 @@ class SBBTheme {
     SBBPrimaryButtonThemeData? primaryButtonTheme,
     SBBSecondaryButtonThemeData? secondaryButtonTheme,
     SBBTertiaryButtonThemeData? tertiaryButtonTheme,
+    SBBCheckboxThemeData? checkboxTheme,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBGroupStyle? groupStyle,
@@ -85,6 +90,9 @@ class SBBTheme {
 
     final defaultTertiaryButtonTheme = DefaultSBBTertiaryButtonTheme(mergedBaseStyle);
     final mergedTertiaryButtonTheme = defaultTertiaryButtonTheme.merge(tertiaryButtonTheme);
+
+    final defaultCheckboxTheme = DefaultSBBCheckboxThemeData(mergedBaseStyle);
+    final mergedCheckboxTheme = defaultCheckboxTheme.merge(checkboxTheme);
 
     final defaultControlStyles = SBBControlStyles.$default(baseStyle: mergedBaseStyle);
     final mergedControlStyles = controlStyles.merge(defaultControlStyles);
@@ -107,6 +115,7 @@ class SBBTheme {
       primaryButtonTheme: mergedPrimaryButtonTheme,
       secondaryButtonTheme: mergedSecondaryButtonTheme,
       tertiaryButtonTheme: mergedTertiaryButtonTheme,
+      checkboxTheme: mergedCheckboxTheme,
       controlStyles: mergedControlStyles,
       headerBoxStyle: mergedHeaderBoxStyle,
       groupStyle: mergedGroupStyle,
@@ -121,6 +130,7 @@ class SBBTheme {
     required SBBPrimaryButtonThemeData primaryButtonTheme,
     required SBBSecondaryButtonThemeData secondaryButtonTheme,
     required SBBTertiaryButtonThemeData tertiaryButtonTheme,
+    required SBBCheckboxThemeData checkboxTheme,
     required SBBControlStyles controlStyles,
     required SBBHeaderBoxStyle headerBoxStyle,
     required SBBGroupStyle groupStyle,
@@ -151,6 +161,7 @@ class SBBTheme {
         primaryButtonTheme,
         secondaryButtonTheme,
         tertiaryButtonTheme,
+        checkboxTheme,
         controlStyles,
         headerBoxStyle,
         groupStyle,

@@ -14,6 +14,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - added `onLongPress`, `semanticLabel` and `autofocus` to all button variants
 - added `style` to all button variants for changing individual button appearance
 - added `SBBButtonThemeData` to override buttons within `SBBTheme`
+- added `style` to `SBBCheckbox` to change individual checkbox appearance
 
 ### Changed
 
@@ -22,6 +23,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - BREAKING: All button variants: `label` is of type `Widget?` - see [v5 migration guide]
 - BREAKING: `SBBTertiaryButton`: `icon` is of type `Widget?` - see [v5 migration guide]
 - BREAKING: Updated `SBBButtonStyle` to have `WidgetStateProperty` values - see [v5 migration guide]
+- BREAKING: `SBBCheckbox` uses `SBBCheckboxThemeData` for themed styling - see [v5 migration guide]
 
 ### Removed
 
@@ -30,6 +32,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Removed `buttonStyles` argument in `SBBTheme`: use `primaryButtonTheme`, `secondaryButtonTheme` and
   `tertiaryButtonTheme` - see [v5 migration guide]
 - Removed `SBBAccordion`, `SBBAccordionItem`, `AccordionCallback` and `SingleAccordionCallback`
+- Removed `padding` of `SBBCheckbox` - see [v5 migration guide]
 
 ## [4.3.1] - 2025-11-21
 
