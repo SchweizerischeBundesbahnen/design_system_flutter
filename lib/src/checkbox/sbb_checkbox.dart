@@ -127,10 +127,6 @@ class SBBCheckbox extends StatefulWidget {
   /// This label does not show in the UI.
   final String? semanticLabel;
 
-  /// The side length of a [SBBCheckbox] widget
-  /// with [padding] equal to [EdgeInsets.zero].
-  static const double width = 20.0;
-
   @override
   State<SBBCheckbox> createState() => _SBBCheckboxState();
 }
@@ -166,7 +162,7 @@ class _SBBCheckboxState extends State<SBBCheckbox> with TickerProviderStateMixin
 
     final SBBCheckboxStyle? style = Theme.of(context).sbbCheckboxTheme?.style;
 
-    final effectiveMargin = widget.style?.margin ?? style?.margin ?? EdgeInsets.zero;
+    final effectiveMargin = widget.style?.padding ?? style?.padding ?? EdgeInsets.zero;
     final Size effectiveSize = effectiveMargin.inflateSize(_checkboxSize);
 
     final Color effectiveFillColor = _resolveWithStates<Color?>(

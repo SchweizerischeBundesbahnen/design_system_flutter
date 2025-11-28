@@ -26,13 +26,13 @@ class SBBCheckboxStyle {
     this.fillColor,
     this.checkColor,
     this.borderColor,
-    this.margin,
+    this.padding,
   });
 
   /// The background color of the checkbox.
   ///
   /// This color fills the rounded square that contains the check mark.
-  /// It does not affect the tap target area, which is controlled by [margin].
+  /// It does not affect the tap target area, which is controlled by [padding].
   ///
   /// The color can change based on the checkbox state (selected, disabled, etc.)
   /// by using [WidgetStateProperty].
@@ -50,22 +50,19 @@ class SBBCheckboxStyle {
   /// The color of the checkbox border.
   ///
   /// This is the outline color of the rounded square surrounding the check mark.
-  /// The border width is defined by [borderWidth].
+  /// The border width is defined by [SBBCheckboxStyle.borderWidth].
   ///
   /// The color can change based on the checkbox state by using [WidgetStateProperty].
   final WidgetStateProperty<Color?>? borderColor;
 
   /// The space between the checkbox's tap target and its visual appearance.
   ///
-  /// This margin increases the interactive area of the checkbox beyond the
-  /// visible [width] × [width] square. A larger margin makes the checkbox
+  /// This padding increases the interactive area of the checkbox beyond the
+  /// visible [SBBCheckboxStyle.width] × [SBBCheckboxStyle.width] square. A larger padding makes the checkbox
   /// easier to tap while keeping the visual size constant.
   ///
-  /// For example, with `EdgeInsets.all(8.0)`, the tap target extends 8 pixels
-  /// in all directions beyond the visible checkbox.
-  ///
   /// Defaults to `EdgeInsets.all(8.0)`.
-  final EdgeInsetsGeometry? margin;
+  final EdgeInsetsGeometry? padding;
 
   /// The thickness of the checkbox border.
   ///
@@ -80,7 +77,7 @@ class SBBCheckboxStyle {
   /// The size of the checkbox's visible square.
   ///
   /// This is the width and height of the rounded square containing the check mark,
-  /// not including the [margin]. The total interactive area is larger when margin
+  /// not including the [padding]. The total interactive area is larger when margin
   /// is applied.
   static const double width = 20.0;
 
@@ -88,13 +85,13 @@ class SBBCheckboxStyle {
     WidgetStateProperty<Color?>? fillColor,
     WidgetStateProperty<Color?>? checkColor,
     WidgetStateProperty<Color?>? borderColor,
-    EdgeInsetsGeometry? margin,
+    EdgeInsetsGeometry? padding,
   }) {
     return SBBCheckboxStyle(
       fillColor: fillColor ?? this.fillColor,
       checkColor: checkColor ?? this.checkColor,
       borderColor: borderColor ?? this.borderColor,
-      margin: margin ?? this.margin,
+      padding: padding ?? this.padding,
     );
   }
 
@@ -105,7 +102,7 @@ class SBBCheckboxStyle {
       fillColor: other.fillColor,
       checkColor: other.checkColor,
       borderColor: other.borderColor,
-      margin: other.margin,
+      padding: other.padding,
     );
   }
 
@@ -116,7 +113,7 @@ class SBBCheckboxStyle {
       fillColor: WidgetStateProperty.lerp<Color?>(a?.fillColor, b?.fillColor, t, Color.lerp),
       checkColor: WidgetStateProperty.lerp<Color?>(a?.checkColor, b?.checkColor, t, Color.lerp),
       borderColor: WidgetStateProperty.lerp<Color?>(a?.borderColor, b?.borderColor, t, Color.lerp),
-      margin: EdgeInsetsGeometry.lerp(a?.margin, b?.margin, t),
+      padding: EdgeInsetsGeometry.lerp(a?.padding, b?.padding, t),
     );
   }
 
@@ -127,7 +124,7 @@ class SBBCheckboxStyle {
         other.fillColor == fillColor &&
         other.checkColor == checkColor &&
         other.borderColor == borderColor &&
-        other.margin == margin;
+        other.padding == padding;
   }
 
   @override
@@ -135,6 +132,6 @@ class SBBCheckboxStyle {
     fillColor,
     checkColor,
     borderColor,
-    margin,
+    padding,
   );
 }

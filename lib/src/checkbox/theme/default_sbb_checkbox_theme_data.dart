@@ -16,7 +16,7 @@ class DefaultSBBCheckboxThemeData extends SBBCheckboxThemeData {
             WidgetState.disabled: baseStyle.themeValue(SBBColors.cloud, SBBColors.iron),
             WidgetState.any: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
           }),
-          margin: EdgeInsets.all(8.0),
+          padding: EdgeInsets.all(8.0),
         ),
       );
 }
