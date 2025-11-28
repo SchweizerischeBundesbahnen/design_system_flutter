@@ -120,13 +120,12 @@ class SBBDateTimePicker extends StatefulWidget {
             child: ListenableBuilder(
               listenable: selectedButtonEnabled,
               builder: (context, _) {
-                final onPressed =
-                    selectedButtonEnabled.value
-                        ? () {
-                          Navigator.of(context).pop();
-                          onDateTimeChanged?.call(selectedDateTime);
-                        }
-                        : null;
+                final onPressed = selectedButtonEnabled.value
+                    ? () {
+                        Navigator.of(context).pop();
+                        onDateTimeChanged?.call(selectedDateTime);
+                      }
+                    : null;
                 return SBBPrimaryButton(label: selectedButtonLabel, onPressed: onPressed);
               },
             ),

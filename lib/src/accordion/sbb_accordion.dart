@@ -6,9 +6,15 @@ import '../../sbb_design_system_mobile.dart';
 /// expanded or collapsed.
 ///
 /// The position of the item within an [SBBAccordion] is given by [index].
+@Deprecated(
+  'SBBAccordion is no longer part of the design specifications and will be removed in the next major version.',
+)
 typedef AccordionCallback = void Function(int index, bool isExpanded);
 
 /// Variant of [AccordionCallback] for constructor [SBBAccordion.single]
+@Deprecated(
+  'SBBAccordion is no longer part of the design specifications and will be removed in the next major version.',
+)
 typedef SingleAccordionCallback = void Function(bool isExpanded);
 
 /// The SBB Accordion item - heavily inspired be the material expansion panel.
@@ -24,6 +30,9 @@ typedef SingleAccordionCallback = void Function(bool isExpanded);
 /// * [SBBAccordion], which is intended to be used as the parent widget.
 /// * [ExpansionPanel], which this widget is based on.
 /// * <https://digital.sbb.ch/de/design-system-mobile-new/module/accordion>
+@Deprecated(
+  'SBBAccordion is no longer part of the design specifications and will be removed in the next major version.',
+)
 class SBBAccordionItem {
   /// Creates an accordion item to be used as a child for [SBBAccordion].
   /// See [SBBAccordion] for an example on how to use this widget.
@@ -66,6 +75,9 @@ class SBBAccordionItem {
 /// * [SBBAccordionItem], which is intended to be used as children for this widget.
 /// * [ExpansionPanelList], which this widget is based on.
 /// * <https://digital.sbb.ch/de/design-system-mobile-new/module/accordion>
+@Deprecated(
+  'SBBAccordion is no longer part of the design specifications and will be removed in the next major version.',
+)
 class SBBAccordion extends StatefulWidget {
   const SBBAccordion({
     super.key,

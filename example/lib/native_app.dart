@@ -5,7 +5,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
-import 'pages/accordion_page.dart';
 import 'pages/autocompletion_page.dart';
 import 'pages/button_page.dart';
 import 'pages/checkbox_page.dart';
@@ -128,7 +127,6 @@ class MyApp extends StatelessWidget {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: const <Widget>[
-                            _DemoEntry('Accordion', AccordionPage()),
                             _DemoEntry('Autocompletion', AutocompletionPage()),
                             _DemoEntry('Group', GroupPage()),
                             _DemoEntry('Header', HeaderPage()),

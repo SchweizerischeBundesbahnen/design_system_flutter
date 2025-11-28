@@ -95,9 +95,9 @@ class _BottomLoadingIndicatorState extends State<BottomLoadingIndicator> with Si
   BorderRadius _resolveBorderRadius() {
     return widget.circularBorderRadius > 0
         ? BorderRadius.only(
-          bottomLeft: Radius.circular(widget.circularBorderRadius),
-          bottomRight: Radius.circular(widget.circularBorderRadius),
-        )
+            bottomLeft: Radius.circular(widget.circularBorderRadius),
+            bottomRight: Radius.circular(widget.circularBorderRadius),
+          )
         : BorderRadius.zero;
   }
 }

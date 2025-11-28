@@ -9,9 +9,19 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+## [4.3.1] - 2025-11-21
+
+### Fixed
+
+- `SBBTextTheme`: Fixed return type of `ThemeData` extension getter
+- drop support for Flutter SDK 3.29.x
+
+## [4.3.0] - 2025-11-14
+
 ### Added
 
 - added `onTapAlwaysCalled`, `expands`, `autofillHints`, `obscuringCharacter` to `SBBTextField` (#401)
+- added `SBBTextTheme` theme extension to `ThemeData` (#420)
 
 ### Fixed
 
@@ -24,6 +34,10 @@ It is expected that you keep this format strictly, since we depend on it in our 
 ### Changed
 
 - (auto): updated icon lib to version 1.8.11
+
+### Deprecated
+
+- Deprecated `SBBAccordion`, `SBBAccordionItem`, `AccordionCallback`, and `SingleAccordionCallback` as they are no longer part of the design specifications
 
 ## [4.2.0] - 2025-10-03
 
@@ -662,7 +676,11 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Initial project setup
 - Added some widgets
 
-[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.2.0...HEAD
+[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.3.1...HEAD
+
+[4.3.1]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.3.0...4.3.1
+
+[4.3.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.2.0...4.3.0
 
 [4.2.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.1.0...4.2.0
 
