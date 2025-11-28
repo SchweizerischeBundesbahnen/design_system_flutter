@@ -2,14 +2,13 @@ import 'dart:math' as math;
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/src/checkbox/theme/default_sbb_checkbox_theme_data.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
 const _innerWidthLength = SBBCheckboxStyle.width - 2 * SBBCheckboxStyle.borderWidth;
 const _checkboxSize = Size.square(SBBCheckboxStyle.width);
 
-/// The SBB Checkbox. Use according to documentation.
+/// The SBB Checkbox.
 ///
 /// Consider using [SBBCheckboxListItem] instead of this Widget.
 ///
@@ -29,6 +28,7 @@ const _checkboxSize = Size.square(SBBCheckboxStyle.width);
 ///
 /// See also:
 ///
+/// * [SBBCheckboxThemeData] for setting the [SBBCheckboxStyle] for all checkboxes within the current [SBBTheme].
 /// * [SBBCheckboxListItem], which builds this Widget as a part of a List Item
 /// so that you can give the checkbox a label, a leading icon and a trailing
 /// Widget.
@@ -36,7 +36,7 @@ const _checkboxSize = Size.square(SBBCheckboxStyle.width);
 /// * [SBBRadio], for selecting among a set of explicit values.
 /// * [SBBSegmentedButton], for selecting among a set of explicit values.
 /// * [SBBSlider], for selecting a value in a range.
-/// * <https://digital.sbb.ch/de/design-system/mobile/components/checkbox/>
+/// * [Figma Design Specs](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=123-234)
 class SBBCheckbox extends StatefulWidget {
   /// Creates a SBB Checkbox.
   ///
@@ -51,7 +51,7 @@ class SBBCheckbox extends StatefulWidget {
   /// * [value], which determines whether the checkbox is checked. The [value]
   ///   can only be null if [tristate] is true.
   /// * [onChanged], which is called when the value of the checkbox should
-  ///   change. It can be set to null to disable the checkbox.
+  ///   change. If null, the checkbox is disabled.
   ///
   /// The value of [tristate] must not be null.
   const SBBCheckbox({
@@ -117,7 +117,7 @@ class SBBCheckbox extends StatefulWidget {
   /// Customizes this checkbox appearance.
   ///
   /// Non-null properties of this style override the corresponding
-  /// properties in [DefaultSBBCheckboxThemeData.style].
+  /// properties in [SBBCheckboxThemeData.style] of the theme found in [context].
   final SBBCheckboxStyle? style;
 
   /// The semantic label for the [SBBCheckbox] that will be announced by screen readers.
@@ -183,22 +183,19 @@ class _SBBCheckboxState extends State<SBBCheckbox> with TickerProviderStateMixin
       label: widget.semanticLabel,
       checked: widget.value ?? false,
       mixed: widget.tristate ? widget.value == null : null,
-      child: SizedBox.fromSize(
+      child: buildToggleable(
+        mouseCursor: WidgetStateMouseCursor.clickable,
         size: effectiveSize,
-        child: buildToggleable(
-          mouseCursor: WidgetStateMouseCursor.clickable,
-          size: effectiveSize,
-          painter: _painter
-            ..position = position
-            ..reaction = reaction
-            ..value = value
-            ..previousValue = _previousValue
-            ..isFocused = states.contains(WidgetState.focused)
-            ..isHovered = states.contains(WidgetState.hovered)
-            ..checkColor = effectiveCheckColor
-            ..boxBorderColor = effectiveBorderColor
-            ..boxFillColor = effectiveFillColor,
-        ),
+        painter: _painter
+          ..position = position
+          ..reaction = reaction
+          ..value = value
+          ..previousValue = _previousValue
+          ..isFocused = states.contains(WidgetState.focused)
+          ..isHovered = states.contains(WidgetState.hovered)
+          ..checkColor = effectiveCheckColor
+          ..boxBorderColor = effectiveBorderColor
+          ..boxFillColor = effectiveFillColor,
       ),
     );
   }
