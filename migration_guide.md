@@ -31,3 +31,5 @@ to increase the tappable area.
 
 The theme of the `SBBCheckbox` can be changed and accessed using the `SBBCheckboxThemeData` and may be accessed using
 `Theme.of(context).sbbCheckboxTheme`.
+
+An individual checkbox appearance may be changed using the `style` parameter. 
