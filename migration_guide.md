@@ -21,3 +21,13 @@ To access this data within your app, use:
 * `Theme.of(context).sbbPrimaryButtonTheme` for the `SBBPrimaryButton` theme data
 * `Theme.of(context).sbbSecondaryButtonTheme` for the `SBBSecondaryButton` theme data
 * `Theme.of(context).sbbTertiaryButtonTheme` for the `SBBTertiaryButton` theme data
+
+
+## Checkbox
+
+### Theming & Styling
+The checkbox no longer has a `padding` parameter to increase the tappable area. Use the `SBBCheckboxStyle.margin`
+to increase the tappable area.
+
+The theme of the `SBBCheckbox` can be changed and accessed using the `SBBCheckboxThemeData` and may be accessed using
+`Theme.of(context).sbbCheckboxTheme`.
