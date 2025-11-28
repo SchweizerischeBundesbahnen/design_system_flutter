@@ -26,10 +26,7 @@ To access this data within your app, use:
 ## Checkbox
 
 ### Theming & Styling
-The checkbox no longer has a `padding` parameter to increase the tappable area. Use the `SBBCheckboxStyle.margin`
-to increase the tappable area.
-
-The theme of the `SBBCheckbox` can be changed and accessed using the `SBBCheckboxThemeData` and may be accessed using
-`Theme.of(context).sbbCheckboxTheme`.
-
-An individual checkbox appearance may be changed using the `style` parameter. 
+* `padding`: replace the checkbox `padding` parameter with the `SBBCheckboxStyle.margin` to increase the tappable area
+* customize the theme of the `SBBCheckbox` with `SBBCheckboxThemeData`
+* access the theme using `Theme.of(context).sbbCheckboxTheme`
+* customize n individual checkbox by setting its `style` parameter in the constructor 
