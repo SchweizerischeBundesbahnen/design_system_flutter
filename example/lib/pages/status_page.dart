@@ -1,5 +1,5 @@
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import '../native_app.dart';
 
@@ -53,7 +53,10 @@ class StatusPage extends StatelessWidget {
           padding: const EdgeInsets.all(sbbDefaultSpacing),
           child: Column(
             children: [
-              SBBStatus.alert(text: '$text $text $text $text'),
+              SBBStatus.alert(
+                text:
+                    '$text $text $text $text $text $text $text $text $text $text $text $text $text $text $text $text ',
+              ),
               const SizedBox(height: sbbDefaultSpacing),
               SBBStatus.warning(text: '$text $text $text $text'),
               const SizedBox(height: sbbDefaultSpacing),

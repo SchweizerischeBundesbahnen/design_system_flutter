@@ -61,7 +61,9 @@ class SBBStatusStyle {
   final double? alphaValue;
 
   /// The shape of the border of [SBBStatus].
-  static ShapeBorder get shape => RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0));
+  static RoundedRectangleBorder get border => RoundedRectangleBorder(borderRadius: BorderRadius.all(borderRadius));
+
+  static Radius get borderRadius => Radius.circular(8.0);
 
   SBBStatusStyle copyWith({
     TextStyle? textStyle,

@@ -4,6 +4,7 @@ import 'package:sbb_design_system_mobile/src/button/theme/sbb_button_style_x.dar
 import 'package:sbb_design_system_mobile/src/checkbox/theme/default_sbb_checkbox_theme_data.dart';
 
 import '../button/theme/default_button_themes.dart';
+import '../status/theme/default_sbb_status_theme.dart';
 
 const sbbDefaultSpacing = 16.0;
 
@@ -20,6 +21,7 @@ class SBBTheme {
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBGroupStyle? groupStyle,
+    SBBStatusThemeData? statusTheme,
     SBBTextTheme? textTheme,
     SBBToastStyle? toastStyle,
   }) => createTheme(
@@ -33,6 +35,7 @@ class SBBTheme {
     controlStyles: controlStyles,
     headerBoxStyle: headerBoxStyle,
     groupStyle: groupStyle,
+    statusTheme: statusTheme,
     textTheme: textTheme,
     toastStyle: toastStyle,
   );
@@ -47,6 +50,7 @@ class SBBTheme {
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBGroupStyle? groupStyle,
+    SBBStatusThemeData? statusTheme,
     SBBTextTheme? textTheme,
     SBBToastStyle? toastStyle,
   }) => createTheme(
@@ -60,6 +64,7 @@ class SBBTheme {
     controlStyles: controlStyles,
     headerBoxStyle: headerBoxStyle,
     groupStyle: groupStyle,
+    statusTheme: statusTheme,
     textTheme: textTheme,
     toastStyle: toastStyle,
   );
@@ -75,6 +80,7 @@ class SBBTheme {
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBGroupStyle? groupStyle,
+    SBBStatusThemeData? statusTheme,
     SBBTextTheme? textTheme,
     SBBToastStyle? toastStyle,
   }) {
@@ -103,6 +109,9 @@ class SBBTheme {
     final defaultGroupStyle = SBBGroupStyle.$default(baseStyle: mergedBaseStyle);
     final mergedGroupStyle = groupStyle.merge(defaultGroupStyle);
 
+    final defaultStatusTheme = DefaultSBBStatusTheme(baseStyle: mergedBaseStyle);
+    final mergedStatusTheme = defaultStatusTheme.merge(statusTheme);
+
     final defaultTextTheme = SBBTextTheme.$default(baseStyle: mergedBaseStyle);
     final mergedTextTheme = defaultTextTheme.merge(textTheme);
 
@@ -119,6 +128,7 @@ class SBBTheme {
       controlStyles: mergedControlStyles,
       headerBoxStyle: mergedHeaderBoxStyle,
       groupStyle: mergedGroupStyle,
+      statusTheme: mergedStatusTheme,
       textTheme: mergedTextTheme,
       toastStyle: mergedToastStyle,
     );
@@ -134,6 +144,7 @@ class SBBTheme {
     required SBBControlStyles controlStyles,
     required SBBHeaderBoxStyle headerBoxStyle,
     required SBBGroupStyle groupStyle,
+    required SBBStatusThemeData statusTheme,
     required SBBTextTheme textTheme,
     required SBBToastStyle toastStyle,
   }) {
@@ -165,6 +176,7 @@ class SBBTheme {
         controlStyles,
         headerBoxStyle,
         groupStyle,
+        statusTheme,
         textTheme,
         toastStyle,
       ],
