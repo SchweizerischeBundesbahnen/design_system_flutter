@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
-part 'sbb_status.type.dart';
-
 /// The SBB Status.
 ///
 /// A Widget to display important, non-dismissible information to the user.
