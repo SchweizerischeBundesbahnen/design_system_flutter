@@ -10,64 +10,52 @@ class StatusPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.all(sbbDefaultSpacing),
-      children: [
-        const ThemeModeSegmentedButton(),
-        const SizedBox(height: sbbDefaultSpacing),
-        const SBBListHeader('Default'),
-        SBBGroup(
-          padding: const EdgeInsets.all(sbbDefaultSpacing),
-          child: Column(
-            children: [
-              SBBStatus.alert(
-                label: Container(color: SBBColors.green, child: Text('hello')),
+    return CustomScrollView(
+      slivers: [
+        SBBSliverHeaderbox.custom(child: const ThemeModeSegmentedButton()),
+        SliverList.list(
+          children: [
+            const SBBListHeader('Default'),
+            SBBGroup(
+              padding: const EdgeInsets.all(sbbDefaultSpacing),
+              child: Column(
+                spacing: sbbDefaultSpacing,
+                children: [
+                  SBBStatus.alert(labelText: text),
+                  SBBStatus.warning(labelText: text),
+                  SBBStatus.success(labelText: text),
+                  SBBStatus.information(labelText: text),
+                ],
               ),
-              const SizedBox(height: sbbDefaultSpacing),
-              SBBStatus.warning(labelText: text),
-              const SizedBox(height: sbbDefaultSpacing),
-              SBBStatus.success(labelText: text),
-              const SizedBox(height: sbbDefaultSpacing),
-              SBBStatus.information(labelText: text),
-              const SizedBox(height: sbbDefaultSpacing),
-            ],
-          ),
-        ),
-        const SBBListHeader('Without text'),
-        SBBGroup(
-          padding: const EdgeInsets.all(sbbDefaultSpacing),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SBBStatus.alert(),
-              const SizedBox(width: sbbDefaultSpacing),
-              SBBStatus.warning(),
-              const SizedBox(width: sbbDefaultSpacing),
-              SBBStatus.success(),
-              const SizedBox(width: sbbDefaultSpacing),
-              SBBStatus.information(),
-              const SizedBox(width: sbbDefaultSpacing),
-            ],
-          ),
-        ),
-        const SBBListHeader('Long text'),
-        SBBGroup(
-          padding: const EdgeInsets.all(sbbDefaultSpacing),
-          child: Column(
-            children: [
-              SBBStatus.alert(
-                labelText:
-                    '$text $text $text $text $text $text $text $text $text $text $text $text $text $text $text $text ',
+            ),
+            const SBBListHeader('Without text'),
+            SBBGroup(
+              padding: const EdgeInsets.all(sbbDefaultSpacing),
+              child: Row(
+                spacing: sbbDefaultSpacing,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SBBStatus.alert(),
+                  SBBStatus.warning(),
+                  SBBStatus.success(),
+                  SBBStatus.information(),
+                ],
               ),
-              const SizedBox(height: sbbDefaultSpacing),
-              SBBStatus.warning(labelText: '$text $text $text $text'),
-              const SizedBox(height: sbbDefaultSpacing),
-              SBBStatus.success(labelText: '$text $text $text $text'),
-              const SizedBox(height: sbbDefaultSpacing),
-              SBBStatus.information(labelText: '$text $text $text $text'),
-              const SizedBox(height: sbbDefaultSpacing),
-            ],
-          ),
+            ),
+            const SBBListHeader('Long text'),
+            SBBGroup(
+              padding: const EdgeInsets.all(sbbDefaultSpacing),
+              child: Column(
+                spacing: sbbDefaultSpacing,
+                children: [
+                  SBBStatus.alert(labelText: text * 10),
+                  SBBStatus.warning(labelText: text * 10),
+                  SBBStatus.success(labelText: text * 10),
+                  SBBStatus.information(labelText: text * 10),
+                ],
+              ),
+            ),
+          ],
         ),
       ],
     );
