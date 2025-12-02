@@ -20,13 +20,15 @@ class StatusPage extends StatelessWidget {
           padding: const EdgeInsets.all(sbbDefaultSpacing),
           child: Column(
             children: [
-              SBBStatus.alert(text: text),
+              SBBStatus.alert(
+                label: Container(color: SBBColors.green, child: Text('hello')),
+              ),
               const SizedBox(height: sbbDefaultSpacing),
-              SBBStatus.warning(text: text),
+              SBBStatus.warning(labelText: text),
               const SizedBox(height: sbbDefaultSpacing),
-              SBBStatus.success(text: text),
+              SBBStatus.success(labelText: text),
               const SizedBox(height: sbbDefaultSpacing),
-              SBBStatus.information(text: text),
+              SBBStatus.information(labelText: text),
               const SizedBox(height: sbbDefaultSpacing),
             ],
           ),
@@ -54,15 +56,15 @@ class StatusPage extends StatelessWidget {
           child: Column(
             children: [
               SBBStatus.alert(
-                text:
+                labelText:
                     '$text $text $text $text $text $text $text $text $text $text $text $text $text $text $text $text ',
               ),
               const SizedBox(height: sbbDefaultSpacing),
-              SBBStatus.warning(text: '$text $text $text $text'),
+              SBBStatus.warning(labelText: '$text $text $text $text'),
               const SizedBox(height: sbbDefaultSpacing),
-              SBBStatus.success(text: '$text $text $text $text'),
+              SBBStatus.success(labelText: '$text $text $text $text'),
               const SizedBox(height: sbbDefaultSpacing),
-              SBBStatus.information(text: '$text $text $text $text'),
+              SBBStatus.information(labelText: '$text $text $text $text'),
               const SizedBox(height: sbbDefaultSpacing),
             ],
           ),
