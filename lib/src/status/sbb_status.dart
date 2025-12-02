@@ -6,7 +6,7 @@ part 'sbb_status.type.dart';
 
 /// The SBB Status.
 ///
-/// A Widget to display important information to the user, that is non dismissible.
+/// A Widget to display important, non-dismissible information to the user.
 ///
 /// Provide either [label] for custom content or [labelText] for text-only
 /// content with standard styling. For a custom trailing widget, use [icon] instead of the
@@ -24,10 +24,10 @@ part 'sbb_status.type.dart';
 /// // Simple text status
 /// SBBStatus.alert(labelText: 'Connection failed')
 ///
-/// // Custom styled status
+/// // Custom styled status with custom content
 /// SBBStatus.success(
 ///   label: Row(
-///     children: [
+///     children: <Widget>[
 ///       Text('Upload complete'),
 ///       SizedBox(width: 4),
 ///       Icon(Icons.check),
@@ -118,8 +118,8 @@ sealed class SBBStatus extends StatelessWidget {
 
   /// Text string to display as the status label using the standard design.
   ///
-  /// The label will be styled according to the SBB design system with a
-  /// maximum of 2 lines and ellipsis overflow.
+  /// The label will be styled according to the design specifications with a
+  /// maximum of two lines and ellipsis overflow.
   ///
   /// Cannot be used together with [label].
   final String? labelText;
@@ -136,7 +136,7 @@ sealed class SBBStatus extends StatelessWidget {
   /// Cannot be used together with [icon].
   final IconData? iconData;
 
-  /// Customizes this status indicator's appearance.
+  /// Customizes this status appearance.
   ///
   /// Non-null properties of this style override the corresponding
   /// properties in the theme and default styles.
@@ -238,7 +238,7 @@ final class _SBBStatusAlert extends SBBStatus {
     IconData? iconData,
     super.style,
     super.semanticLabel,
-  }) : super._(iconData: icon == null ? SBBIcons.circle_cross_small : null);
+  }) : super._(iconData: icon == null && iconData == null ? SBBIcons.circle_cross_small : iconData);
 
   @override
   SBBStatusStyle? _getThemedStyle(BuildContext context) {
@@ -255,7 +255,7 @@ final class _SBBStatusWarning extends SBBStatus {
     IconData? iconData,
     super.style,
     super.semanticLabel,
-  }) : super._(iconData: icon == null ? SBBIcons.circle_exclamation_point_small : null);
+  }) : super._(iconData: icon == null && iconData == null ? SBBIcons.circle_exclamation_point_small : iconData);
 
   @override
   SBBStatusStyle? _getThemedStyle(BuildContext context) {
@@ -272,7 +272,7 @@ final class _SBBStatusSuccess extends SBBStatus {
     IconData? iconData,
     super.style,
     super.semanticLabel,
-  }) : super._(iconData: icon == null ? SBBIcons.circle_tick_small : null);
+  }) : super._(iconData: icon == null && iconData == null ? SBBIcons.circle_tick_small : iconData);
 
   @override
   SBBStatusStyle? _getThemedStyle(BuildContext context) {
@@ -289,7 +289,7 @@ final class _SBBStatusInformation extends SBBStatus {
     IconData? iconData,
     super.style,
     super.semanticLabel,
-  }) : super._(iconData: icon == null ? SBBIcons.circle_information_small : null);
+  }) : super._(iconData: icon == null && iconData == null ? SBBIcons.circle_information_small : iconData);
 
   @override
   SBBStatusStyle? _getThemedStyle(BuildContext context) {
