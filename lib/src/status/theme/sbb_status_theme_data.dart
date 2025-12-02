@@ -9,28 +9,6 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 ///
 /// To access this in your application, use `Theme.of(context).sbbStatusTheme`.
 ///
-/// ## Sample code
-///
-/// ```dart
-/// Theme(
-///   data: ThemeData(
-///     extensions: [
-///       SBBStatusThemeData(
-///         alert: SBBStatusStyle(
-///           backgroundColor: Colors.red,
-///           foregroundColor: Colors.white,
-///         ),
-///         warning: SBBStatusStyle(
-///           backgroundColor: Colors.orange,
-///           foregroundColor: Colors.black,
-///         ),
-///       ),
-///     ],
-///   ),
-///   child: MyApp(),
-/// )
-/// ```
-///
 /// See also:
 /// * [SBBStatus], the status widget that uses this theme.
 /// * [SBBStatusStyle], which defines the visual properties.

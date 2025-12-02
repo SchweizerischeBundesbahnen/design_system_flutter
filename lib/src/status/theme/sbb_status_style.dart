@@ -63,6 +63,9 @@ class SBBStatusStyle {
   /// The shape of the border of [SBBStatus].
   static RoundedRectangleBorder get border => RoundedRectangleBorder(borderRadius: BorderRadius.all(borderRadius));
 
+  /// The border radius of the [SBBStatus].
+  ///
+  /// All content is clipped to a RoundedRectangle with this border.
   static Radius get borderRadius => Radius.circular(8.0);
 
   SBBStatusStyle copyWith({
