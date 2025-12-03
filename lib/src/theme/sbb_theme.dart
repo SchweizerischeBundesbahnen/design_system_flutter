@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/button/theme/sbb_button_style_x.dart';
 import 'package:sbb_design_system_mobile/src/checkbox/theme/default_sbb_checkbox_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/radio/theme/default_sbb_radio_theme_data.dart';
 
 import '../button/theme/default_button_themes.dart';
 
@@ -17,6 +18,7 @@ class SBBTheme {
     SBBSecondaryButtonThemeData? secondaryButtonTheme,
     SBBTertiaryButtonThemeData? tertiaryButtonTheme,
     SBBCheckboxThemeData? checkboxTheme,
+    SBBRadioThemeData? radioTheme,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBGroupStyle? groupStyle,
@@ -30,6 +32,7 @@ class SBBTheme {
     secondaryButtonTheme: secondaryButtonTheme,
     tertiaryButtonTheme: tertiaryButtonTheme,
     checkboxTheme: checkboxTheme,
+    radioTheme: radioTheme,
     controlStyles: controlStyles,
     headerBoxStyle: headerBoxStyle,
     groupStyle: groupStyle,
@@ -44,6 +47,7 @@ class SBBTheme {
     SBBSecondaryButtonThemeData? secondaryButtonTheme,
     SBBTertiaryButtonThemeData? tertiaryButtonTheme,
     SBBCheckboxThemeData? checkboxTheme,
+    SBBRadioThemeData? radioTheme,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBGroupStyle? groupStyle,
@@ -57,6 +61,7 @@ class SBBTheme {
     secondaryButtonTheme: secondaryButtonTheme,
     tertiaryButtonTheme: tertiaryButtonTheme,
     checkboxTheme: checkboxTheme,
+    radioTheme: radioTheme,
     controlStyles: controlStyles,
     headerBoxStyle: headerBoxStyle,
     groupStyle: groupStyle,
@@ -72,6 +77,7 @@ class SBBTheme {
     SBBSecondaryButtonThemeData? secondaryButtonTheme,
     SBBTertiaryButtonThemeData? tertiaryButtonTheme,
     SBBCheckboxThemeData? checkboxTheme,
+    SBBRadioThemeData? radioTheme,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBGroupStyle? groupStyle,
@@ -93,6 +99,9 @@ class SBBTheme {
 
     final defaultCheckboxTheme = DefaultSBBCheckboxThemeData(mergedBaseStyle);
     final mergedCheckboxTheme = defaultCheckboxTheme.merge(checkboxTheme);
+
+    final defaultRadioTheme = DefaultSBBRadioThemeData(mergedBaseStyle);
+    final mergedRadioTheme = defaultRadioTheme.merge(radioTheme);
 
     final defaultControlStyles = SBBControlStyles.$default(baseStyle: mergedBaseStyle);
     final mergedControlStyles = controlStyles.merge(defaultControlStyles);
@@ -116,6 +125,7 @@ class SBBTheme {
       secondaryButtonTheme: mergedSecondaryButtonTheme,
       tertiaryButtonTheme: mergedTertiaryButtonTheme,
       checkboxTheme: mergedCheckboxTheme,
+      radioTheme: mergedRadioTheme,
       controlStyles: mergedControlStyles,
       headerBoxStyle: mergedHeaderBoxStyle,
       groupStyle: mergedGroupStyle,
@@ -131,6 +141,7 @@ class SBBTheme {
     required SBBSecondaryButtonThemeData secondaryButtonTheme,
     required SBBTertiaryButtonThemeData tertiaryButtonTheme,
     required SBBCheckboxThemeData checkboxTheme,
+    required SBBRadioThemeData radioTheme,
     required SBBControlStyles controlStyles,
     required SBBHeaderBoxStyle headerBoxStyle,
     required SBBGroupStyle groupStyle,
@@ -162,6 +173,7 @@ class SBBTheme {
         secondaryButtonTheme,
         tertiaryButtonTheme,
         checkboxTheme,
+        radioTheme,
         controlStyles,
         headerBoxStyle,
         groupStyle,
