@@ -4,17 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
-/// The size of the radio button.
-const double _kRadioSize = 20.0;
-
-/// The size of the inner circle when selected.
-const double _kInnerCircleSize = 8.0;
-
-/// The border width of the radio button.
-const double _kBorderWidth = 1.0;
-
-/// The default padding around the radio to increase the tappable area.
-const EdgeInsets _kDefaultPadding = EdgeInsets.all(8.0);
+const EdgeInsets _defaultPadding = EdgeInsets.all(8.0);
 
 /// The SBB Radio.
 ///
@@ -68,7 +58,7 @@ class SBBRadio<T> extends StatefulWidget {
   const SBBRadio({
     super.key,
     required this.value,
-    this.padding,
+    this.style,
     this.toggleable = false,
     this.focusNode,
     this.autofocus = false,
@@ -79,10 +69,11 @@ class SBBRadio<T> extends StatefulWidget {
   /// The value represented by this radio button.
   final T value;
 
-  /// Enlarges the hittable area around the [SBBRadio].
+  /// Customizes this radio appearance.
   ///
-  /// Defaults to 8px on all sides.
-  final EdgeInsetsGeometry? padding;
+  /// Non-null properties of this style override the corresponding
+  /// properties in [SBBRadioThemeData.style] of the theme found in [context].
+  final SBBRadioStyle? style;
 
   /// Set to true if this radio button is allowed to be returned to an
   /// indeterminate state by selecting it again when selected.
@@ -93,16 +84,13 @@ class SBBRadio<T> extends StatefulWidget {
   /// Defaults to false.
   final bool toggleable;
 
-  /// An optional focus node to use for this radio button.
+  /// {@macro flutter.widgets.Focus.focusNode}
   final FocusNode? focusNode;
 
-  /// True if this widget will be selected as the initial focus when no other
-  /// node in its scope is currently focused.
-  ///
-  /// Defaults to false.
+  /// {@macro flutter.widgets.Focus.autofocus}
   final bool autofocus;
 
-  /// Whether this radio button is enabled.
+  /// Whether this radio is enabled.
   ///
   /// If null, the radio is enabled if there is an [SBBRadioGroup] ancestor with
   /// a non-null [SBBRadioGroup.onChanged] callback.
@@ -119,8 +107,7 @@ class SBBRadio<T> extends StatefulWidget {
   State<SBBRadio<T>> createState() => _SBBRadioState<T>();
 }
 
-class _SBBRadioState<T> extends State<SBBRadio<T>> with TickerProviderStateMixin, ToggleableStateMixin {
-  final _SBBRadioPainter _painter = _SBBRadioPainter();
+class _SBBRadioState<T> extends State<SBBRadio<T>> {
   FocusNode? _focusNode;
   RadioGroupRegistry<T>? _registry;
 
@@ -130,20 +117,10 @@ class _SBBRadioState<T> extends State<SBBRadio<T>> with TickerProviderStateMixin
   void didChangeDependencies() {
     super.didChangeDependencies();
     _registry = RadioGroup.maybeOf<T>(context);
-    animateToValue();
-  }
-
-  @override
-  void didUpdateWidget(SBBRadio<T> oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    if (widget.value != oldWidget.value) {
-      animateToValue();
-    }
   }
 
   @override
   void dispose() {
-    _painter.dispose();
     _focusNode?.dispose();
     super.dispose();
   }
@@ -152,21 +129,9 @@ class _SBBRadioState<T> extends State<SBBRadio<T>> with TickerProviderStateMixin
   Widget build(BuildContext context) {
     assert(debugCheckHasMaterial(context));
 
-    final bool isDark = SBBBaseStyle.of(context).brightness == Brightness.dark;
     final bool effectiveEnabled = widget.enabled ?? (_registry?.onChanged != null);
-
-    // Resolve colors based on state
-    final Color fillColor = isDark ? SBBColors.charcoal : SBBColors.white;
-    final Color borderColor = isDark ? SBBColors.graphite : SBBColors.granite;
-    final Color innerCircleColor;
-    if (effectiveEnabled) {
-      innerCircleColor = SBBControlStyles.of(context).radioButton?.color ?? SBBColors.red;
-    } else {
-      innerCircleColor = isDark ? SBBColors.graphite : SBBColors.granite;
-    }
-
-    final EdgeInsetsGeometry effectivePadding = widget.padding ?? _kDefaultPadding;
-    final Size effectiveSize = effectivePadding.inflateSize(const Size.square(_kRadioSize));
+    final SBBRadioStyle? themeStyle = Theme.of(context).sbbRadioTheme?.style;
+    final EdgeInsetsGeometry effectivePadding = widget.style?.padding ?? themeStyle?.padding ?? _defaultPadding;
 
     return Semantics(
       label: widget.semanticLabel,
@@ -179,35 +144,112 @@ class _SBBRadioState<T> extends State<SBBRadio<T>> with TickerProviderStateMixin
         groupRegistry: _registry,
         enabled: effectiveEnabled,
         builder: (BuildContext context, ToggleableStateMixin state) {
-          return buildToggleable(
-            mouseCursor: WidgetStateMouseCursor.clickable,
-            size: effectiveSize,
-            painter: _painter
-              ..position = position
-              ..reaction = reaction
-              ..value = value
-              ..isFocused = states.contains(WidgetState.focused)
-              ..isHovered = states.contains(WidgetState.hovered)
-              ..fillColor = fillColor
-              ..borderColor = borderColor
-              ..innerCircleColor = innerCircleColor,
+          return _SBBRadioPaint(
+            toggleableState: state,
+            style: widget.style,
+            padding: effectivePadding,
           );
         },
       ),
     );
   }
+}
+
+/// The [_SBBRadioPaint] widget is responsible for resolving the effective style
+/// and rendering the radio button with animation.
+///
+/// It's a stateful widget that manages the animation controller and painter.
+class _SBBRadioPaint extends StatefulWidget {
+  const _SBBRadioPaint({
+    required this.toggleableState,
+    required this.padding,
+    this.style,
+  });
+
+  final ToggleableStateMixin toggleableState;
+  final SBBRadioStyle? style;
+  final EdgeInsetsGeometry padding;
 
   @override
-  ValueChanged<bool?>? get onChanged {
-    // The RawRadio handles calling the registry's onChanged
-    return null;
+  State<_SBBRadioPaint> createState() => _SBBRadioPaintState();
+}
+
+class _SBBRadioPaintState extends State<_SBBRadioPaint> {
+  final _SBBRadioPainter _painter = _SBBRadioPainter();
+
+  @override
+  void dispose() {
+    _painter.dispose();
+    super.dispose();
   }
 
   @override
-  bool get tristate => widget.toggleable;
+  Widget build(BuildContext context) {
+    final SBBRadioStyle? themeStyle = Theme.of(context).sbbRadioTheme?.style;
 
-  @override
-  bool? get value => widget.value == _registry?.groupValue;
+    // Compute active and inactive state so that colors can be determined and painter can lerp between them
+    final Set<WidgetState> activeStates = {...widget.toggleableState.states, WidgetState.selected};
+    final Set<WidgetState> inactiveStates = {...widget.toggleableState.states}..remove(WidgetState.selected);
+
+    final Color activeFillColor = _resolveColor(
+      widget.style?.fillColor,
+      themeStyle?.fillColor,
+      activeStates,
+    );
+    final Color inactiveFillColor = _resolveColor(
+      widget.style?.fillColor,
+      themeStyle?.fillColor,
+      inactiveStates,
+    );
+
+    final Color activeBorderColor = _resolveColor(
+      widget.style?.borderColor,
+      themeStyle?.borderColor,
+      activeStates,
+    );
+    final Color inactiveBorderColor = _resolveColor(
+      widget.style?.borderColor,
+      themeStyle?.borderColor,
+      inactiveStates,
+    );
+
+    final Color activeInnerCircleColor = _resolveColor(
+      widget.style?.innerCircleColor,
+      themeStyle?.innerCircleColor,
+      activeStates,
+    );
+    final Color inactiveInnerCircleColor = _resolveColor(
+      widget.style?.innerCircleColor,
+      themeStyle?.innerCircleColor,
+      inactiveStates,
+    );
+
+    final Size effectiveSize = widget.padding.inflateSize(const Size.square(SBBRadioStyle.radioRadius * 2));
+
+    return CustomPaint(
+      size: effectiveSize,
+      painter: _painter
+        ..position = widget.toggleableState.position
+        ..reaction = widget.toggleableState.reaction
+        ..isFocused = widget.toggleableState.states.contains(WidgetState.focused)
+        ..isHovered = widget.toggleableState.states.contains(WidgetState.hovered)
+        ..activeColor = activeInnerCircleColor
+        ..inactiveColor = inactiveInnerCircleColor
+        ..activeFillColor = activeFillColor
+        ..inactiveFillColor = inactiveFillColor
+        ..activeBorderColor = activeBorderColor
+        ..inactiveBorderColor = inactiveBorderColor,
+    );
+  }
+
+  Color _resolveColor(
+    WidgetStateProperty<Color?>? widgetColor,
+    WidgetStateProperty<Color?>? themeColor,
+    Set<WidgetState> states,
+  ) {
+    final WidgetStateProperty<Color?>? effectiveProperty = widgetColor ?? themeColor;
+    return effectiveProperty?.resolve(states) ?? SBBColors.red;
+  }
 }
 
 /// The [_SBBRadioPainter] is responsible for drawing the radio button with
@@ -221,49 +263,48 @@ class _SBBRadioState<T> extends State<SBBRadio<T>> with TickerProviderStateMixin
 /// The inner circle animates from the center, growing from 0 to 8x8 px during
 /// the selection animation. The animation is controlled by the [position]
 /// property inherited from [ToggleablePainter].
-///
-/// Colors:
-/// * Fill color: white (light mode) / charcoal (dark mode)
-/// * Border color: granite (light mode) / graphite (dark mode)
-/// * Inner circle: primary color when enabled, granite/graphite when disabled
 class _SBBRadioPainter extends ToggleablePainter {
-  bool? get value => _value;
-  bool? _value;
+  Color get activeFillColor => _activeFillColor!;
+  Color? _activeFillColor;
 
-  set value(bool? value) {
-    if (_value == value) {
-      return;
-    }
-    _value = value;
+  set activeFillColor(Color newValue) {
+    if (newValue == _activeFillColor) return;
+    _activeFillColor = newValue;
     notifyListeners();
   }
 
-  Color get fillColor => _fillColor!;
-  Color? _fillColor;
+  Color get activeBorderColor => _activeBorderColor!;
+  Color? _activeBorderColor;
 
-  set fillColor(Color newValue) {
-    if (newValue == _fillColor) return;
-    _fillColor = newValue;
+  set activeBorderColor(Color newValue) {
+    if (newValue == _activeBorderColor) return;
+    _activeBorderColor = newValue;
     notifyListeners();
   }
 
-  Color get borderColor => _borderColor!;
-  Color? _borderColor;
+  Color get inactiveFillColor => _inactiveFillColor!;
+  Color? _inactiveFillColor;
 
-  set borderColor(Color newValue) {
-    if (newValue == _borderColor) return;
-    _borderColor = newValue;
+  set inactiveFillColor(Color newValue) {
+    if (newValue == _inactiveFillColor) return;
+    _inactiveFillColor = newValue;
     notifyListeners();
   }
 
-  Color get innerCircleColor => _innerCircleColor!;
-  Color? _innerCircleColor;
+  Color get inactiveBorderColor => _inactiveBorderColor!;
+  Color? _inactiveBorderColor;
 
-  set innerCircleColor(Color newValue) {
-    if (newValue == _innerCircleColor) return;
-    _innerCircleColor = newValue;
+  set inactiveBorderColor(Color newValue) {
+    if (newValue == _inactiveBorderColor) return;
+    _inactiveBorderColor = newValue;
     notifyListeners();
   }
+
+  Color get _currentActiveColor => Color.lerp(inactiveColor, activeColor, position.value)!;
+
+  Color get _currentFillColor => Color.lerp(inactiveFillColor, activeFillColor, position.value)!;
+
+  Color get _currentBorderColor => Color.lerp(inactiveBorderColor, activeBorderColor, position.value)!;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -274,14 +315,13 @@ class _SBBRadioPainter extends ToggleablePainter {
     final Paint innerCirclePaint = _createInnerCirclePaint();
 
     // fill
-    canvas.drawCircle(center, _kRadioSize / 2.0, fillPaint);
+    canvas.drawCircle(center, SBBRadioStyle.radioRadius, fillPaint);
     // border
-    canvas.drawCircle(center, _kRadioSize / 2.0 - _kBorderWidth / 2.0, borderPaint);
+    canvas.drawCircle(center, SBBRadioStyle.radioRadius - SBBRadioStyle.borderWidth / 2.0, borderPaint);
 
-    // inner circle
-    if (value ?? false) {
+    if (!position.isDismissed) {
       final double t = position.value;
-      final double radius = lerpDouble(0.0, _kInnerCircleSize / 2.0, t)!;
+      final double radius = lerpDouble(0.0, SBBRadioStyle.innerCircleRadius, t)!;
       if (radius > 0) {
         canvas.drawCircle(center, radius, innerCirclePaint);
       }
@@ -290,20 +330,20 @@ class _SBBRadioPainter extends ToggleablePainter {
 
   Paint _createFillPaint() {
     return Paint()
-      ..color = fillColor
+      ..color = _currentFillColor
       ..style = PaintingStyle.fill;
   }
 
   Paint _createBorderPaint() {
     return Paint()
-      ..color = borderColor
-      ..strokeWidth = _kBorderWidth
+      ..color = _currentBorderColor
+      ..strokeWidth = SBBRadioStyle.borderWidth
       ..style = PaintingStyle.stroke;
   }
 
   Paint _createInnerCirclePaint() {
     return Paint()
-      ..color = innerCircleColor
+      ..color = _currentActiveColor
       ..style = PaintingStyle.fill;
   }
 }
