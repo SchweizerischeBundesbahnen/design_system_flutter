@@ -43,22 +43,22 @@ class SBBRadioStyle {
   /// The space between the radio's tap target and its visual appearance.
   ///
   /// This padding increases the interactive area of the radio beyond the
-  /// visible [SBBRadioStyle.radioSize] × [SBBRadioStyle.radioSize] square. A larger padding makes the radio
+  /// visible [SBBRadioStyle.radioRadius] × [SBBRadioStyle.radioRadius] square. A larger padding makes the radio
   /// easier to tap while keeping the visual size constant.
   ///
   /// Defaults to `EdgeInsets.all(8.0)`.
   final EdgeInsetsGeometry? padding;
 
-  /// The size of the radios's visible circle.
+  /// The radius of the radios's visible circle.
   ///
   /// This is the width and height of the rounded square containing the inner circle,
   /// not including the [padding].
-  static const double radioSize = 20.0;
+  static const double radioRadius = 10.0;
 
-  /// The size of the inner circle when the radio is selected.
+  /// The radius of the inner circle when the radio is selected.
   ///
-  /// This is the diameter of the filled circle that appears when the radio is selected.
-  static const double innerCircleSize = 8.0;
+  /// This is the radius of the filled circle that appears when the radio is selected.
+  static const double innerCircleRadius = 4.0;
 
   /// The thickness of the radio border.
   ///
