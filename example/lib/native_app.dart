@@ -26,7 +26,7 @@ import 'pages/onboarding_page.dart';
 import 'pages/pagination_page.dart';
 import 'pages/picker_page.dart';
 import 'pages/promotion_box_page.dart';
-import 'pages/radio_button_page.dart';
+import 'pages/radio_page.dart';
 import 'pages/segmented_button_page.dart';
 import 'pages/select_page.dart';
 import 'pages/slider_page.dart';
@@ -106,7 +106,7 @@ class MyApp extends StatelessWidget {
                             _DemoEntry('List Item', ListItemPage()),
                             _DemoEntry('Loading Indicator', LoadingIndicatorPage()),
                             _DemoEntry('Picker', PickerPage()),
-                            _DemoEntry('Radio Button', RadiobuttonPage()),
+                            _DemoEntry('Radio', RadioPage()),
                             _DemoEntry('Segmented Button', SegmentedButtonPage()),
                             _DemoEntry('Select', SelectPage()),
                             _DemoEntry('Switch', SwitchPage()),
