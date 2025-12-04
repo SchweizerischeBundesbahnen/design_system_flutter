@@ -30,3 +30,23 @@ To access this data within your app, use:
 * customize the theme of the `SBBCheckbox` with `SBBCheckboxThemeData`
 * access the theme using `Theme.of(context).sbbCheckboxTheme`
 * customize n individual checkbox by setting its `style` parameter in the constructor 
+
+
+## Radio
+
+### Usage
+* the `onChanged` and `groupValue` parameters are obsolete and moved to the corresponding `SBBRadioGroup` ancestor
+* see the [official Flutter guide](https://docs.flutter.dev/release/breaking-changes/radio-api-redesign) for 
+  usage of the new radio group concept
+  * instead of a `RadioGroup`, use a `SBBRadioGroup`
+* added: use `toggleable` for allowing a radio to return to unselected state without 
+  selecting a different radio in its group
+
+This also accounts for the `SBBRadioListItem`.
+
+### Theming & Styling
+* `padding`: replace the checkbox `padding` parameter with the `SBBRadioStyle.padding` to increase tappable area
+* customize the theme of all `SBBRadio` with `SBBRadioThemeData`
+* access the theme using `Theme.of(context).sbbRadioTheme`
+* customize an individual radio by setting its `style` parameter in the constructor
+
