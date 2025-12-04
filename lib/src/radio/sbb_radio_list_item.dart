@@ -10,9 +10,43 @@ const double _minListTileHeight = 44.0;
 ///
 /// Use [SBBControlStyle].listItem to manipulate the style of this Widget.
 ///
+/// This widget must be used within a [SBBRadioGroup] that manages the selection
+/// state for the group. The list item will automatically participate in the group's
+/// selection logic.
+///
+/// ## Example
+///
+/// ```dart
+/// SBBRadioGroup<SingingCharacter>(
+///   groupValue: _character,
+///   onChanged: (SingingCharacter? newValue) {
+///     setState(() {
+///       _character = newValue;
+///     });
+///   },
+///   child: Column(
+///     children: [
+///       SBBRadioListItem(
+///         value: SingingCharacter.lafayette,
+///         label: 'Lafayette',
+///       ),
+///       SBBRadioListItem(
+///         value: SingingCharacter.jefferson,
+///         label: 'Jefferson',
+///       ),
+///       SBBRadioListItem(
+///         value: SingingCharacter.washington,
+///         label: 'Washington',
+///       ),
+///     ],
+///   ),
+/// )
+/// ```
+///
 /// See also:
 ///
 /// * [SBBRadio], which is a part of this widget.
+/// * [SBBRadioGroup], which manages the selection state for a group of radio items.
 /// * [SBBSegmentedButton], a widget with semantics similar to [SBBRadio].
 /// * [SBBSlider], for selecting a value in a range.
 /// * [SBBCheckboxListItem], [SBBCheckbox] and [SBBSwitch], for toggling a
@@ -29,10 +63,8 @@ class SBBRadioListItem<T> extends StatelessWidget {
   ///
   /// The following arguments are required:
   ///
-  /// * [value] and [groupValue] together determine whether the radio button is
-  ///   selected.
+  /// * [value], the value represented by the radio of this list item
   /// * [label], the primary text written on [SBBRadioListItem].
-  /// * [onChanged] is called when the user selects this radio button.
   ///
   /// Set the [isLastElement] true for the last item in a list to not show any Divider.
   ///
@@ -48,9 +80,7 @@ class SBBRadioListItem<T> extends StatelessWidget {
   SBBRadioListItem({
     Key? key,
     required T value,
-    required T? groupValue,
     required String label,
-    required ValueChanged<T?>? onChanged,
     bool allowMultilineLabel = false,
     String? secondaryLabel,
     bool isLastElement = false,
@@ -62,14 +92,12 @@ class SBBRadioListItem<T> extends StatelessWidget {
   }) : this.custom(
          key: key,
          value: value,
-         groupValue: groupValue,
          label: label,
          allowMultilineLabel: allowMultilineLabel,
          secondaryLabel: secondaryLabel,
-         onChanged: onChanged,
          isLastElement: isLastElement,
          leadingIcon: leadingIcon,
-         trailingWidget: _optionallyButtonedTrailingIcon(trailingIcon, onCallToAction, onChanged),
+         trailingWidget: _optionallyButtonedTrailingIcon(trailingIcon, onCallToAction),
          isLoading: isLoading,
          radioSemanticLabel: radioSemanticLabel,
        );
@@ -78,25 +106,32 @@ class SBBRadioListItem<T> extends StatelessWidget {
   ///
   /// ```dart
   /// SBBGroup(
-  ///   child: SBBRadioButtonListItem<SingingCharacter>(
-  ///   value: SingingCharacter.lafayette,
-  ///   groupValue: _character,
-  ///   onChanged: (SingingCharacter newValue) {
-  ///     setState(() {
-  ///       _character = newValue;
-  ///     });
-  ///   },
-  ///   )
+  ///   child: SBBRadioGroup<SingingCharacter>(
+  ///     groupValue: _character,
+  ///     onChanged: (SingingCharacter? newValue) {
+  ///       setState(() {
+  ///         _character = newValue;
+  ///       });
+  ///     },
+  ///     child: Column(
+  ///       children: [
+  ///         SBBRadioListItem.boxed(
+  ///           value: SingingCharacter.lafayette,
+  ///           label: 'Lafayette',
+  ///         ),
+  ///         SBBRadioListItem.boxed(
+  ///           value: SingingCharacter.jefferson,
+  ///           label: 'Jefferson',
+  ///         ),
+  ///       ],
+  ///     ),
+  ///   ),
   /// )
-  ///
   /// ```
-  ///
   SBBRadioListItem.boxed({
     Key? key,
     required T value,
-    required T? groupValue,
     required String label,
-    required ValueChanged<T?>? onChanged,
     bool allowMultilineLabel = false,
     String? secondaryLabel,
     IconData? leadingIcon,
@@ -107,14 +142,12 @@ class SBBRadioListItem<T> extends StatelessWidget {
   }) : this.custom(
          key: key,
          value: value,
-         groupValue: groupValue,
          label: label,
          allowMultilineLabel: allowMultilineLabel,
          secondaryLabel: secondaryLabel,
-         onChanged: onChanged,
          isLastElement: true,
          leadingIcon: leadingIcon,
-         trailingWidget: _optionallyButtonedTrailingIcon(trailingIcon, onCallToAction, onChanged),
+         trailingWidget: _optionallyButtonedTrailingIcon(trailingIcon, onCallToAction),
          isLoading: isLoading,
          radioSemanticLabel: radioSemanticLabel,
        );
@@ -122,9 +155,7 @@ class SBBRadioListItem<T> extends StatelessWidget {
   const SBBRadioListItem.custom({
     super.key,
     required this.value,
-    required this.groupValue,
     required this.label,
-    required this.onChanged,
     this.allowMultilineLabel = false,
     this.secondaryLabel,
     this.isLastElement = false,
@@ -137,40 +168,6 @@ class SBBRadioListItem<T> extends StatelessWidget {
   /// The value represented by this radio button.
   final T value;
 
-  /// The currently selected value for a group of radio buttons.
-  ///
-  /// This radio button is considered selected if its [value] matches the
-  /// [groupValue].
-  final T? groupValue;
-
-  /// Called when the user selects this [SBBRadioListItem].
-  ///
-  /// The [SBBRadioListItem] passes [value] as a parameter to this callback. The list item
-  /// does not actually change state until the parent widget rebuilds the
-  /// list item with the new [groupValue].
-  ///
-  /// If null, the list item will be displayed as disabled.
-  ///
-  /// The provided callback will not be invoked if this list item is already
-  /// selected.
-  ///
-  /// The callback provided to [onChanged] should update the state of the parent
-  /// [StatefulWidget] using the [State.setState] method, so that the parent
-  /// gets rebuilt; for example:
-  ///
-  /// ```dart
-  /// SBBRadioButtonListItem<SingingCharacter>(
-  ///   value: SingingCharacter.lafayette,
-  ///   groupValue: _character,
-  ///   onChanged: (SingingCharacter newValue) {
-  ///     setState(() {
-  ///       _character = newValue;
-  ///     });
-  ///   },
-  /// )
-  /// ```
-  final ValueChanged<T?>? onChanged;
-
   /// The primary label on the tile.
   final String label;
 
@@ -180,16 +177,16 @@ class SBBRadioListItem<T> extends StatelessWidget {
   /// The subtext displayed below the [label] over multiple lines.
   final String? secondaryLabel;
 
-  /// Whether to draw a [Divider] below the [SBBCheckboxListItem].
+  /// Whether to draw a [Divider] below the [SBBRadioListItem].
   final bool isLastElement;
 
-  /// The icon displayed in between the [SBBCheckbox] and the [label].
+  /// The icon displayed in between the [SBBRadio] and the [label].
   final IconData? leadingIcon;
 
   /// The widget displayed at the end of the tile.
   final Widget? trailingWidget;
 
-  /// Whether to display a BottomLoadingIndicator on the [SBBCheckboxListItem].
+  /// Whether to display a BottomLoadingIndicator on the [SBBRadioListItem].
   final bool isLoading;
 
   /// The semantic label for the RadioButton that will be announced by screen readers.
@@ -199,31 +196,27 @@ class SBBRadioListItem<T> extends StatelessWidget {
   /// This label does not show in the UI.
   final String? radioSemanticLabel;
 
-  /// Whether [value] of this control can be changed by user interaction.
-  ///
-  /// The control is considered interactive if the [onChanged] callback is
-  /// non-null. If the callback is null, then the control is disabled, and
-  /// non-interactive.
-  bool get _isInteractive => onChanged != null;
-
   @override
   Widget build(BuildContext context) {
     final style = SBBControlStyles.of(context).radioButton;
+    final radioGroup = RadioGroup.maybeOf<T>(context);
+    final isInteractive = radioGroup != null;
+
     return MergeSemantics(
       child: Material(
-        color: _resolveBackgroundColor(style),
+        color: _resolveBackgroundColor(style, isInteractive),
         child: Stack(
           alignment: Alignment.bottomCenter,
           children: [
             ConstrainedBox(
               constraints: const BoxConstraints(minHeight: _minListTileHeight),
               child: InkWell(
-                onTap: _isInteractive ? () => onChanged!(value) : null,
+                onTap: isInteractive ? () => radioGroup.onChanged(value) : null,
                 splashColor: style?.listItem?.backgroundColorHighlighted,
                 focusColor: style?.listItem?.backgroundColorHighlighted,
                 highlightColor: SBBColors.transparent,
                 hoverColor: SBBColors.transparent,
-                child: Semantics(enabled: _isInteractive, child: _radioTileBody(style)),
+                child: Semantics(enabled: isInteractive, child: _radioTileBody(style, isInteractive)),
               ),
             ),
             if (!isLastElement) const Divider(),
@@ -234,8 +227,8 @@ class SBBRadioListItem<T> extends StatelessWidget {
     );
   }
 
-  Widget _radioTileBody(SBBControlStyle? style) {
-    final Color? resolvedIconColor = _resolveIconColor(style);
+  Widget _radioTileBody(SBBControlStyle? style, bool isInteractive) {
+    final Color? resolvedIconColor = _resolveIconColor(style, isInteractive);
 
     return IconTheme.merge(
       data: IconThemeData(color: resolvedIconColor),
@@ -245,8 +238,7 @@ class SBBRadioListItem<T> extends StatelessWidget {
           const SizedBox(width: sbbDefaultSpacing),
           _NonHittableRadio<T>(
             value: value,
-            groupValue: groupValue,
-            onChanged: onChanged,
+            isInteractive: isInteractive,
             radioSemanticLabel: radioSemanticLabel,
           ),
           const SizedBox(width: sbbDefaultSpacing * 0.5),
@@ -254,7 +246,7 @@ class SBBRadioListItem<T> extends StatelessWidget {
           Expanded(
             child: _TextBody(
               label: label,
-              isInteractive: _isInteractive,
+              isInteractive: isInteractive,
               style: style,
               allowMultilineLabel: allowMultilineLabel,
               secondaryLabel: secondaryLabel,
@@ -266,18 +258,17 @@ class SBBRadioListItem<T> extends StatelessWidget {
     );
   }
 
-  Color? _resolveBackgroundColor(SBBControlStyle? style) {
-    return _isInteractive ? style?.listItem?.backgroundColor : style?.listItem?.backgroundColorDisabled;
+  Color? _resolveBackgroundColor(SBBControlStyle? style, bool isInteractive) {
+    return isInteractive ? style?.listItem?.backgroundColor : style?.listItem?.backgroundColorDisabled;
   }
 
-  Color? _resolveIconColor(SBBControlStyle? style) {
-    return _isInteractive ? style?.listItem?.iconColor : style?.listItem?.iconColorDisabled;
+  Color? _resolveIconColor(SBBControlStyle? style, bool isInteractive) {
+    return isInteractive ? style?.listItem?.iconColor : style?.listItem?.iconColorDisabled;
   }
 
-  static Widget? _optionallyButtonedTrailingIcon<T>(
+  static Widget? _optionallyButtonedTrailingIcon(
     IconData? trailingIcon,
     VoidCallback? onCallToAction,
-    ValueChanged<T?>? onChanged,
   ) {
     if (trailingIcon == null) return null;
 
@@ -289,7 +280,7 @@ class SBBRadioListItem<T> extends StatelessWidget {
     } else {
       return Padding(
         padding: const EdgeInsets.only(right: sbbDefaultSpacing * .5),
-        child: SBBTertiaryButtonSmall(iconData: trailingIcon, onPressed: onChanged != null ? onCallToAction : null),
+        child: SBBTertiaryButtonSmall(iconData: trailingIcon, onPressed: onCallToAction),
       );
     }
   }
@@ -360,14 +351,12 @@ class _LeadingIcon extends StatelessWidget {
 class _NonHittableRadio<T> extends StatelessWidget {
   const _NonHittableRadio({
     required this.value,
-    required this.groupValue,
-    required this.onChanged,
+    required this.isInteractive,
     this.radioSemanticLabel,
   });
 
   final T value;
-  final T? groupValue;
-  final ValueChanged<T?>? onChanged;
+  final bool isInteractive;
   final String? radioSemanticLabel;
 
   @override
@@ -378,9 +367,8 @@ class _NonHittableRadio<T> extends StatelessWidget {
           padding: const EdgeInsetsDirectional.only(top: sbbDefaultSpacing * 0.75),
           child: SBBRadio(
             value: value,
-            groupValue: groupValue,
-            onChanged: onChanged,
-            padding: EdgeInsets.zero,
+            style: SBBRadioStyle(padding: EdgeInsets.zero),
+            enabled: isInteractive,
             semanticLabel: radioSemanticLabel,
           ),
         ),
