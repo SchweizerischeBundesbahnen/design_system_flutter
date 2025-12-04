@@ -78,154 +78,139 @@ class RadioPageState extends State<RadioPage> {
               const SizedBox(height: sbbDefaultSpacing),
               SBBListHeader('Radio List Item - ListView'),
               SBBGroup(
-                child: Column(
-                  children: [
-                    SBBRadioListItem<int>(
-                      value: 1,
-                      groupValue: _listItemGroupValue,
-                      onChanged: _pageEnabled ? (newValue) => setState(() => _listItemGroupValue = newValue) : null,
-                      label: 'Label',
-                    ),
-                    SBBRadioListItem<int>(
-                      value: 2,
-                      groupValue: _listItemGroupValue,
-                      onChanged: _pageEnabled ? (newValue) => setState(() => _listItemGroupValue = newValue) : null,
-                      label: 'Leading Icon',
-                      leadingIcon: SBBIcons.alarm_clock_small,
-                    ),
-                    SBBRadioListItem<int>(
-                      value: 3,
-                      groupValue: _listItemGroupValue,
-                      onChanged: _pageEnabled ? (newValue) => setState(() => _listItemGroupValue = newValue) : null,
-                      label: 'Leading and Trailing Icon',
-                      leadingIcon: SBBIcons.alarm_clock_small,
-                      trailingIcon: SBBIcons.dog_small,
-                    ),
-                    SBBRadioListItem<int>(
-                      value: 4,
-                      groupValue: _listItemGroupValue,
-                      onChanged: _pageEnabled ? (newValue) => setState(() => _listItemGroupValue = newValue) : null,
-                      label: 'Button',
-                      trailingIcon: SBBIcons.circle_information_small_small,
-                      onCallToAction: () => sbbToast.show(title: 'Button'),
-                    ),
-                    SBBRadioListItem<int>.custom(
-                      value: 5,
-                      groupValue: _listItemGroupValue,
-                      onChanged: _pageEnabled ? (newValue) => setState(() => _listItemGroupValue = newValue) : null,
-                      label: 'Custom trailing Widget',
-                      trailingWidget: const Padding(
-                        padding: EdgeInsetsDirectional.only(top: sbbDefaultSpacing * .75, end: sbbDefaultSpacing),
-                        child: Text('CHF 0.99'),
-                      ),
-                    ),
-                    SBBRadioListItem<int>(
-                      value: 6,
-                      groupValue: _listItemGroupValue,
-                      onChanged: _pageEnabled ? (newValue) => setState(() => _listItemGroupValue = newValue) : null,
-                      label: 'Multiline Label with\nSecondary Label',
-                      allowMultilineLabel: true,
-                      secondaryLabel:
-                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut convallis leo et metus semper hendrerit. Duis nec nunc a ligula cursus vulputate. Donec sed elit ultricies, euismod erat et, eleifend augue.',
-                    ),
-                    SBBRadioListItem<int>(
-                      value: 7,
-                      groupValue: _listItemGroupValue,
-                      onChanged: _pageEnabled ? (newValue) => setState(() => _listItemGroupValue = newValue) : null,
-                      label: 'Loading',
-                      secondaryLabel: 'This will stop loading if selected.',
-                      isLoading: _listItemGroupValue != 7,
-                      isLastElement: true,
-                    ),
-                  ],
-                ),
+                child: _pageEnabled
+                    ? SBBRadioGroup<int>(
+                        groupValue: _listItemGroupValue,
+                        onChanged: _pageEnabled ? (newValue) => setState(() => _listItemGroupValue = newValue) : (_) {},
+                        child: _listViewItems(sbbToast),
+                      )
+                    : _listViewItems(sbbToast), // temporary until SBBRadioListItem allows setting enabled
               ),
               const SizedBox(height: sbbDefaultSpacing),
               const SBBListHeader('Radio List Item - Boxed'),
-              Column(
-                // spacing: sbbDefaultSpacing * 0.5,  add once support for Flutter SDK 3.24.5 removed
-                // and remove SizedBoxes below
-                children: [
-                  SBBGroup(
-                    child: SBBRadioListItem<int>.boxed(
-                      value: 1,
-                      groupValue: _listItemGroupValue,
-                      onChanged: _pageEnabled ? (newValue) => setState(() => _listItemGroupValue = newValue) : null,
-                      label: 'Label',
-                    ),
-                  ),
-                  SizedBox(height: sbbDefaultSpacing * .5),
-                  SBBGroup(
-                    child: SBBRadioListItem<int>.boxed(
-                      value: 2,
-                      groupValue: _listItemGroupValue,
-                      onChanged: _pageEnabled ? (newValue) => setState(() => _listItemGroupValue = newValue) : null,
-                      label: 'Leading Icon',
-                      leadingIcon: SBBIcons.alarm_clock_small,
-                    ),
-                  ),
-                  SizedBox(height: sbbDefaultSpacing * .5),
-                  SBBGroup(
-                    child: SBBRadioListItem<int>.boxed(
-                      value: 3,
-                      groupValue: _listItemGroupValue,
-                      onChanged: _pageEnabled ? (newValue) => setState(() => _listItemGroupValue = newValue) : null,
-                      label: 'Leading and Trailing Icon',
-                      leadingIcon: SBBIcons.alarm_clock_small,
-                      trailingIcon: SBBIcons.dog_small,
-                    ),
-                  ),
-                  SizedBox(height: sbbDefaultSpacing * .5),
-                  SBBGroup(
-                    child: SBBRadioListItem<int>.boxed(
-                      value: 4,
-                      groupValue: _listItemGroupValue,
-                      onChanged: _pageEnabled ? (newValue) => setState(() => _listItemGroupValue = newValue) : null,
-                      label: 'Button',
-                      trailingIcon: SBBIcons.circle_information_small_small,
-                      onCallToAction: () => sbbToast.show(title: 'Button'),
-                    ),
-                  ),
-                  SizedBox(height: sbbDefaultSpacing * .5),
-                  SBBGroup(
-                    child: SBBRadioListItem<int>.custom(
-                      value: 5,
-                      groupValue: _listItemGroupValue,
-                      onChanged: _pageEnabled ? (newValue) => setState(() => _listItemGroupValue = newValue) : null,
-                      label: 'Custom trailing Widget',
-                      trailingWidget: const Padding(
-                        padding: EdgeInsetsDirectional.only(top: sbbDefaultSpacing * .75, end: sbbDefaultSpacing),
-                        child: Text('CHF 0.99'),
-                      ),
-                      isLastElement: false,
-                    ),
-                  ),
-                  SizedBox(height: sbbDefaultSpacing * .5),
-                  SBBGroup(
-                    child: SBBRadioListItem<int>.boxed(
-                      value: 6,
-                      groupValue: _listItemGroupValue,
-                      onChanged: _pageEnabled ? (newValue) => setState(() => _listItemGroupValue = newValue) : null,
-                      label: 'Multiline Label with\nSecondary Label',
-                      allowMultilineLabel: true,
-                      secondaryLabel:
-                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut convallis leo et metus semper hendrerit. Duis nec nunc a ligula cursus vulputate. Donec sed elit ultricies, euismod erat et, eleifend augue.',
-                    ),
-                  ),
-                  SizedBox(height: sbbDefaultSpacing * .5),
-                  SBBGroup(
-                    child: SBBRadioListItem<int>.boxed(
-                      value: 7,
-                      groupValue: _listItemGroupValue,
-                      onChanged: _pageEnabled ? (newValue) => setState(() => _listItemGroupValue = newValue) : null,
-                      label: 'Loading',
-                      secondaryLabel: 'This will not stop.',
-                      isLoading: true,
-                    ),
-                  ),
-                ],
-              ),
+              if (_pageEnabled)
+                SBBRadioGroup(
+                  groupValue: _listItemGroupValue,
+                  onChanged: (newValue) => setState(() => _listItemGroupValue = newValue),
+                  child: _boxedItems(sbbToast),
+                ),
+              if (!_pageEnabled) _boxedItems(sbbToast), // temporary until SBBRadioListItem also allows setting enabled
             ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Column _listViewItems(SBBToast sbbToast) {
+    return Column(
+      children: [
+        SBBRadioListItem<int>(
+          value: 1,
+          label: 'Label',
+        ),
+        SBBRadioListItem<int>(
+          value: 2,
+          label: 'Leading Icon',
+          leadingIcon: SBBIcons.alarm_clock_small,
+        ),
+        SBBRadioListItem<int>(
+          value: 3,
+          label: 'Leading and Trailing Icon',
+          leadingIcon: SBBIcons.alarm_clock_small,
+          trailingIcon: SBBIcons.dog_small,
+        ),
+        SBBRadioListItem<int>(
+          value: 4,
+          label: 'Button',
+          trailingIcon: SBBIcons.circle_information_small_small,
+          onCallToAction: () => sbbToast.show(title: 'Button'),
+        ),
+        SBBRadioListItem<int>.custom(
+          value: 5,
+          label: 'Custom trailing Widget',
+          trailingWidget: const Padding(
+            padding: EdgeInsetsDirectional.only(top: sbbDefaultSpacing * .75, end: sbbDefaultSpacing),
+            child: Text('CHF 0.99'),
+          ),
+        ),
+        SBBRadioListItem<int>(
+          value: 6,
+          label: 'Multiline Label with\nSecondary Label',
+          allowMultilineLabel: true,
+          secondaryLabel:
+              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut convallis leo et metus semper hendrerit. Duis nec nunc a ligula cursus vulputate. Donec sed elit ultricies, euismod erat et, eleifend augue.',
+        ),
+        SBBRadioListItem<int>(
+          value: 7,
+          label: 'Loading',
+          secondaryLabel: 'This will stop loading if selected.',
+          isLoading: _listItemGroupValue != 7,
+          isLastElement: true,
+        ),
+      ],
+    );
+  }
+
+  Column _boxedItems(SBBToast sbbToast) {
+    return Column(
+      spacing: sbbDefaultSpacing * 0.5,
+      children: [
+        SBBGroup(
+          child: SBBRadioListItem<int>.boxed(
+            value: 1,
+            label: 'Label',
+          ),
+        ),
+        SBBGroup(
+          child: SBBRadioListItem<int>.boxed(
+            value: 2,
+            label: 'Leading Icon',
+            leadingIcon: SBBIcons.alarm_clock_small,
+          ),
+        ),
+        SBBGroup(
+          child: SBBRadioListItem<int>.boxed(
+            value: 3,
+            label: 'Leading and Trailing Icon',
+            leadingIcon: SBBIcons.alarm_clock_small,
+            trailingIcon: SBBIcons.dog_small,
+          ),
+        ),
+        SBBGroup(
+          child: SBBRadioListItem<int>.boxed(
+            value: 4,
+            label: 'Button',
+            trailingIcon: SBBIcons.circle_information_small_small,
+            onCallToAction: () => sbbToast.show(title: 'Button'),
+          ),
+        ),
+        SBBGroup(
+          child: SBBRadioListItem<int>.custom(
+            value: 5,
+            label: 'Custom trailing Widget',
+            trailingWidget: const Padding(
+              padding: EdgeInsetsDirectional.only(top: sbbDefaultSpacing * .75, end: sbbDefaultSpacing),
+              child: Text('CHF 0.99'),
+            ),
+            isLastElement: false,
+          ),
+        ),
+        SBBGroup(
+          child: SBBRadioListItem<int>.boxed(
+            value: 6,
+            label: 'Multiline Label with\nSecondary Label',
+            allowMultilineLabel: true,
+            secondaryLabel:
+                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut convallis leo et metus semper hendrerit. Duis nec nunc a ligula cursus vulputate. Donec sed elit ultricies, euismod erat et, eleifend augue.',
+          ),
+        ),
+        SBBGroup(
+          child: SBBRadioListItem<int>.boxed(
+            value: 7,
+            label: 'Loading',
+            secondaryLabel: 'This will not stop.',
+            isLoading: true,
           ),
         ),
       ],
