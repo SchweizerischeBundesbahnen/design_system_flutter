@@ -29,6 +29,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - BREAKING: Updated `SBBButtonStyle` to have `WidgetStateProperty` values - see [v5 migration guide]
 - BREAKING: `SBBCheckbox` uses `SBBCheckboxThemeData` for themed styling - see [v5 migration guide]
 - BREAKING: `SBBRadio` needs an `SBBRadio` ancestor for its group value and `onChanged` callback - see [v5 migration guide]
+- dropped support for Flutter SDK 3.32.x
 
 ### Removed
 
