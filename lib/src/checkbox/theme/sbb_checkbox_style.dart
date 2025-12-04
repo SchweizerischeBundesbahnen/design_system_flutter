@@ -26,13 +26,13 @@ class SBBCheckboxStyle {
     this.fillColor,
     this.checkColor,
     this.borderColor,
-    this.padding,
+    this.tapTargetPadding,
   });
 
   /// The background color of the checkbox.
   ///
   /// This color fills the rounded square that contains the check mark.
-  /// It does not affect the tap target area, which is controlled by [padding].
+  /// It does not affect the tap target area, which is controlled by [tapTargetPadding].
   ///
   /// The color can change based on the checkbox state (selected, disabled, etc.)
   /// by using [WidgetStateProperty].
@@ -62,7 +62,7 @@ class SBBCheckboxStyle {
   /// easier to tap while keeping the visual size constant.
   ///
   /// Defaults to `EdgeInsets.all(8.0)`.
-  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? tapTargetPadding;
 
   /// The thickness of the checkbox border.
   ///
@@ -77,7 +77,7 @@ class SBBCheckboxStyle {
   /// The size of the checkbox's visible square.
   ///
   /// This is the width and height of the rounded square containing the check mark,
-  /// not including the [padding]. The total interactive area is larger when margin
+  /// not including the [tapTargetPadding]. The total interactive area is larger when margin
   /// is applied.
   static const double width = 20.0;
 
@@ -85,13 +85,13 @@ class SBBCheckboxStyle {
     WidgetStateProperty<Color?>? fillColor,
     WidgetStateProperty<Color?>? checkColor,
     WidgetStateProperty<Color?>? borderColor,
-    EdgeInsetsGeometry? padding,
+    EdgeInsetsGeometry? tapTargetPadding,
   }) {
     return SBBCheckboxStyle(
       fillColor: fillColor ?? this.fillColor,
       checkColor: checkColor ?? this.checkColor,
       borderColor: borderColor ?? this.borderColor,
-      padding: padding ?? this.padding,
+      tapTargetPadding: tapTargetPadding ?? this.tapTargetPadding,
     );
   }
 
@@ -102,7 +102,7 @@ class SBBCheckboxStyle {
       fillColor: other.fillColor,
       checkColor: other.checkColor,
       borderColor: other.borderColor,
-      padding: other.padding,
+      tapTargetPadding: other.tapTargetPadding,
     );
   }
 
@@ -113,7 +113,7 @@ class SBBCheckboxStyle {
       fillColor: WidgetStateProperty.lerp<Color?>(a?.fillColor, b?.fillColor, t, Color.lerp),
       checkColor: WidgetStateProperty.lerp<Color?>(a?.checkColor, b?.checkColor, t, Color.lerp),
       borderColor: WidgetStateProperty.lerp<Color?>(a?.borderColor, b?.borderColor, t, Color.lerp),
-      padding: EdgeInsetsGeometry.lerp(a?.padding, b?.padding, t),
+      tapTargetPadding: EdgeInsetsGeometry.lerp(a?.tapTargetPadding, b?.tapTargetPadding, t),
     );
   }
 
@@ -124,7 +124,7 @@ class SBBCheckboxStyle {
         other.fillColor == fillColor &&
         other.checkColor == checkColor &&
         other.borderColor == borderColor &&
-        other.padding == padding;
+        other.tapTargetPadding == tapTargetPadding;
   }
 
   @override
@@ -132,6 +132,6 @@ class SBBCheckboxStyle {
     fillColor,
     checkColor,
     borderColor,
-    padding,
+    tapTargetPadding,
   );
 }

@@ -411,7 +411,7 @@ class _NonHittableCheckbox extends StatelessWidget {
             value: value,
             tristate: tristate,
             onChanged: onChanged,
-            style: SBBCheckboxStyle(padding: EdgeInsets.zero),
+            style: SBBCheckboxStyle(tapTargetPadding: EdgeInsets.zero),
             semanticLabel: semanticLabel,
           ),
         ),

@@ -160,12 +160,9 @@ class _SBBCheckboxState extends State<SBBCheckbox> with TickerProviderStateMixin
   Widget build(BuildContext context) {
     assert(debugCheckHasMaterial(context));
 
-    final SBBCheckboxStyle? style = Theme
-        .of(context)
-        .sbbCheckboxTheme
-        ?.style;
+    final SBBCheckboxStyle? style = Theme.of(context).sbbCheckboxTheme?.style;
 
-    final effectiveMargin = widget.style?.padding ?? style?.padding ?? EdgeInsets.zero;
+    final effectiveMargin = widget.style?.tapTargetPadding ?? style?.tapTargetPadding ?? EdgeInsets.zero;
     final Size effectiveSize = effectiveMargin.inflateSize(_checkboxSize);
 
     // provide both active and inactive variants to the painter so it can lerp
@@ -270,7 +267,6 @@ class _SBBCheckboxPainter extends ToggleablePainter {
     notifyListeners();
   }
 
-
   Color get activeBorderColor => _activeBorderColor!;
   Color? _activeBorderColor;
 
@@ -359,9 +355,7 @@ class _SBBCheckboxPainter extends ToggleablePainter {
     }
   }
 
-  Paint _createCheckPaint() =>
-      Paint()
-        ..color = _currentCheckColor;
+  Paint _createCheckPaint() => Paint()..color = _currentCheckColor;
 
   Paint _createBoxBorderPaint() {
     return Paint()
