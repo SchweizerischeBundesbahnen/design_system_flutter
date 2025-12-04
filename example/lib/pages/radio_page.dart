@@ -84,7 +84,7 @@ class RadioPageState extends State<RadioPage> {
                         onChanged: _pageEnabled ? (newValue) => setState(() => _listItemGroupValue = newValue) : (_) {},
                         child: _listViewItems(sbbToast),
                       )
-                    : _listViewItems(sbbToast), // temporary until SBBRadioListItem allows setting enabled
+                    : _listViewItems(sbbToast), // TODO: temporary until SBBRadioListItem allows setting enabled
               ),
               const SizedBox(height: sbbDefaultSpacing),
               const SBBListHeader('Radio List Item - Boxed'),
@@ -94,7 +94,8 @@ class RadioPageState extends State<RadioPage> {
                   onChanged: (newValue) => setState(() => _listItemGroupValue = newValue),
                   child: _boxedItems(sbbToast),
                 ),
-              if (!_pageEnabled) _boxedItems(sbbToast), // temporary until SBBRadioListItem also allows setting enabled
+              // TODO: temporary until SBBRadioListItem also allows setting enabled
+              if (!_pageEnabled) _boxedItems(sbbToast),
             ],
           ),
         ),
