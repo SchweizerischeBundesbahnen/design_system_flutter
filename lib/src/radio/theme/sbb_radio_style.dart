@@ -25,13 +25,13 @@ class SBBRadioStyle {
     this.fillColor,
     this.innerCircleColor,
     this.borderColor,
-    this.padding,
+    this.tapTargetPadding,
   });
 
   /// The background color of the radio.
   ///
   /// This color fills the radio circle.
-  /// It does not affect the tap target area, which is controlled by [padding].
+  /// It does not affect the tap target area, which is controlled by [tapTargetPadding].
   final WidgetStateProperty<Color?>? fillColor;
 
   /// The color of the inner circle when the radio is selected.
@@ -47,12 +47,12 @@ class SBBRadioStyle {
   /// easier to tap while keeping the visual size constant.
   ///
   /// Defaults to `EdgeInsets.all(8.0)`.
-  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? tapTargetPadding;
 
   /// The radius of the radios's visible circle.
   ///
   /// This is the width and height of the rounded square containing the inner circle,
-  /// not including the [padding].
+  /// not including the [tapTargetPadding].
   static const double radioRadius = 10.0;
 
   /// The radius of the inner circle when the radio is selected.
@@ -69,13 +69,13 @@ class SBBRadioStyle {
     WidgetStateProperty<Color?>? fillColor,
     WidgetStateProperty<Color?>? innerCircleColor,
     WidgetStateProperty<Color?>? borderColor,
-    EdgeInsetsGeometry? padding,
+    EdgeInsetsGeometry? tapTargetPadding,
   }) {
     return SBBRadioStyle(
       fillColor: fillColor ?? this.fillColor,
       innerCircleColor: innerCircleColor ?? this.innerCircleColor,
       borderColor: borderColor ?? this.borderColor,
-      padding: padding ?? this.padding,
+      tapTargetPadding: tapTargetPadding ?? this.tapTargetPadding,
     );
   }
 
@@ -86,7 +86,7 @@ class SBBRadioStyle {
       fillColor: other.fillColor,
       innerCircleColor: other.innerCircleColor,
       borderColor: other.borderColor,
-      padding: other.padding,
+      tapTargetPadding: other.tapTargetPadding,
     );
   }
 
@@ -97,7 +97,7 @@ class SBBRadioStyle {
       fillColor: WidgetStateProperty.lerp<Color?>(a?.fillColor, b?.fillColor, t, Color.lerp),
       innerCircleColor: WidgetStateProperty.lerp<Color?>(a?.innerCircleColor, b?.innerCircleColor, t, Color.lerp),
       borderColor: WidgetStateProperty.lerp<Color?>(a?.borderColor, b?.borderColor, t, Color.lerp),
-      padding: EdgeInsetsGeometry.lerp(a?.padding, b?.padding, t),
+      tapTargetPadding: EdgeInsetsGeometry.lerp(a?.tapTargetPadding, b?.tapTargetPadding, t),
     );
   }
 
@@ -108,7 +108,7 @@ class SBBRadioStyle {
         other.fillColor == fillColor &&
         other.innerCircleColor == innerCircleColor &&
         other.borderColor == borderColor &&
-        other.padding == padding;
+        other.tapTargetPadding == tapTargetPadding;
   }
 
   @override
@@ -116,6 +116,6 @@ class SBBRadioStyle {
     fillColor,
     innerCircleColor,
     borderColor,
-    padding,
+    tapTargetPadding,
   );
 }

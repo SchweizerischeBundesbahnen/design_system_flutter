@@ -45,9 +45,6 @@ class SBBRadio<T> extends StatefulWidget {
   ///
   /// The [value] is required and identifies this radio button within its group.
   ///
-  /// The [padding] parameter controls the space around the radio button to
-  /// increase the tappable area. Defaults to 8px on all sides.
-  ///
   /// The [toggleable] parameter, when true, allows the radio to be deselected
   /// by tapping it again when it's already selected. This will call
   /// [SBBRadioGroup.onChanged] with null.
@@ -131,7 +128,8 @@ class _SBBRadioState<T> extends State<SBBRadio<T>> {
 
     final bool effectiveEnabled = widget.enabled ?? (_registry?.onChanged != null);
     final SBBRadioStyle? themeStyle = Theme.of(context).sbbRadioTheme?.style;
-    final EdgeInsetsGeometry effectivePadding = widget.style?.padding ?? themeStyle?.padding ?? _defaultPadding;
+    final EdgeInsetsGeometry effectivePadding =
+        widget.style?.tapTargetPadding ?? themeStyle?.tapTargetPadding ?? _defaultPadding;
 
     return Semantics(
       label: widget.semanticLabel,

@@ -17,7 +17,7 @@ class DefaultSBBRadioThemeData extends SBBRadioThemeData {
             WidgetState.disabled: baseStyle.themeValue(SBBColors.cloud, SBBColors.iron),
             WidgetState.any: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
           }),
-          padding: EdgeInsets.all(8.0),
+          tapTargetPadding: EdgeInsets.all(8.0),
         ),
       );
 }

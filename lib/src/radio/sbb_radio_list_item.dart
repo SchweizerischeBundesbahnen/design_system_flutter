@@ -367,7 +367,7 @@ class _NonHittableRadio<T> extends StatelessWidget {
           padding: const EdgeInsetsDirectional.only(top: sbbDefaultSpacing * 0.75),
           child: SBBRadio(
             value: value,
-            style: SBBRadioStyle(padding: EdgeInsets.zero),
+            style: SBBRadioStyle(tapTargetPadding: EdgeInsets.zero),
             enabled: isInteractive,
             semanticLabel: radioSemanticLabel,
           ),
