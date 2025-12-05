@@ -152,26 +152,28 @@ class SBBSelect<T> extends StatelessWidget {
               ),
               child: StatefulBuilder(
                 builder: (context, setState) {
-                  return Column(
-                    children: items
-                        .asMap()
-                        .entries
-                        .map((entry) {
-                          final isLastElement = entry.key == items.length - 1;
-                          return SBBRadioListItem<T>(
-                            value: entry.value.value,
-                            groupValue: selectedValue,
-                            allowMultilineLabel: allowMultilineLabel,
-                            label: entry.value.label,
-                            onChanged: (value) {
-                              setState(() => selectedValue = value);
-                              Navigator.of(context).pop();
-                              onChanged(value);
-                            },
-                            isLastElement: isLastElement,
-                          );
-                        })
-                        .toList(growable: false),
+                  return SBBRadioGroup<T>(
+                    onChanged: (value) {
+                      setState(() => selectedValue = value);
+                      Navigator.of(context).pop();
+                      onChanged(value);
+                    },
+                    groupValue: selectedValue,
+                    child: Column(
+                      children: items
+                          .asMap()
+                          .entries
+                          .map((entry) {
+                            final isLastElement = entry.key == items.length - 1;
+                            return SBBRadioListItem<T>(
+                              value: entry.value.value,
+                              allowMultilineLabel: allowMultilineLabel,
+                              label: entry.value.label,
+                              isLastElement: isLastElement,
+                            );
+                          })
+                          .toList(growable: false),
+                    ),
                   );
                 },
               ),

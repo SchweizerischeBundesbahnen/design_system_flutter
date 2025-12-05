@@ -162,18 +162,32 @@ class _SBBCheckboxState extends State<SBBCheckbox> with TickerProviderStateMixin
 
     final SBBCheckboxStyle? style = Theme.of(context).sbbCheckboxTheme?.style;
 
-    final effectiveMargin = widget.style?.padding ?? style?.padding ?? EdgeInsets.zero;
+    final effectiveMargin = widget.style?.tapTargetPadding ?? style?.tapTargetPadding ?? EdgeInsets.zero;
     final Size effectiveSize = effectiveMargin.inflateSize(_checkboxSize);
 
-    final Color effectiveFillColor = _resolveWithStates<Color?>(
-      _effectiveValue<WidgetStateProperty<Color?>>(widget.style?.fillColor, style?.fillColor),
-    )!;
-    final Color effectiveCheckColor = _resolveWithStates<Color?>(
-      _effectiveValue<WidgetStateProperty<Color?>>(widget.style?.checkColor, style?.checkColor),
-    )!;
-    final Color effectiveBorderColor = _resolveWithStates<Color?>(
-      _effectiveValue<WidgetStateProperty<Color?>>(widget.style?.borderColor, style?.borderColor),
-    )!;
+    // provide both active and inactive variants to the painter so it can lerp
+    final Set<WidgetState> activeStates = {...states, WidgetState.selected};
+    final Set<WidgetState> inactiveStates = {...states}..remove(WidgetState.selected);
+
+    final WidgetStateProperty<Color?>? fillProp = _effectiveValue<WidgetStateProperty<Color?>>(
+      widget.style?.fillColor,
+      style?.fillColor,
+    );
+    final WidgetStateProperty<Color?>? checkProp = _effectiveValue<WidgetStateProperty<Color?>>(
+      widget.style?.checkColor,
+      style?.checkColor,
+    );
+    final WidgetStateProperty<Color?>? borderProp = _effectiveValue<WidgetStateProperty<Color?>>(
+      widget.style?.borderColor,
+      style?.borderColor,
+    );
+
+    final Color activeFillColor = fillProp?.resolve(activeStates) ?? SBBColors.red;
+    final Color inactiveFillColor = fillProp?.resolve(inactiveStates) ?? SBBColors.red;
+    final Color activeCheckColor = checkProp?.resolve(activeStates) ?? SBBColors.red;
+    final Color inactiveCheckColor = checkProp?.resolve(inactiveStates) ?? SBBColors.red;
+    final Color activeBorderColor = borderProp?.resolve(activeStates) ?? SBBColors.red;
+    final Color inactiveBorderColor = borderProp?.resolve(inactiveStates) ?? SBBColors.red;
 
     return Semantics(
       label: widget.semanticLabel,
@@ -189,9 +203,12 @@ class _SBBCheckboxState extends State<SBBCheckbox> with TickerProviderStateMixin
           ..previousValue = _previousValue
           ..isFocused = states.contains(WidgetState.focused)
           ..isHovered = states.contains(WidgetState.hovered)
-          ..checkColor = effectiveCheckColor
-          ..boxBorderColor = effectiveBorderColor
-          ..boxFillColor = effectiveFillColor,
+          ..activeFillColor = activeFillColor
+          ..inactiveFillColor = inactiveFillColor
+          ..activeBorderColor = activeBorderColor
+          ..inactiveBorderColor = inactiveBorderColor
+          ..activeColor = activeCheckColor
+          ..inactiveColor = inactiveCheckColor,
       ),
     );
   }
@@ -207,10 +224,6 @@ class _SBBCheckboxState extends State<SBBCheckbox> with TickerProviderStateMixin
 
   T? _effectiveValue<T>(T? widgetValue, T? themeValue) {
     return widgetValue ?? themeValue;
-  }
-
-  T? _resolveWithStates<T>(WidgetStateProperty<T>? property) {
-    return property?.resolve(states);
   }
 }
 
@@ -235,13 +248,12 @@ class _SBBCheckboxState extends State<SBBCheckbox> with TickerProviderStateMixin
 ///
 /// The painter is a simplified version of the Material [_CheckboxPainter].
 class _SBBCheckboxPainter extends ToggleablePainter {
+  // value / previousValue are still used for animation direction decisions.
   bool? get value => _value;
   bool? _value;
 
   set value(bool? value) {
-    if (_value == value) {
-      return;
-    }
+    if (_value == value) return;
     _value = value;
     notifyListeners();
   }
@@ -251,40 +263,51 @@ class _SBBCheckboxPainter extends ToggleablePainter {
 
   set previousValue(bool? value) {
     if (_previousValue == value) return;
-
     _previousValue = value;
     notifyListeners();
   }
 
-  Color get checkColor => _checkColor!;
-  Color? _checkColor;
+  Color get activeBorderColor => _activeBorderColor!;
+  Color? _activeBorderColor;
 
-  set checkColor(Color newValue) {
-    if (newValue == _checkColor) return;
-
-    _checkColor = newValue;
+  set activeBorderColor(Color c) {
+    if (c == _activeBorderColor) return;
+    _activeBorderColor = c;
     notifyListeners();
   }
 
-  Color get boxBorderColor => _boxBorderColor!;
-  Color? _boxBorderColor;
+  Color get inactiveBorderColor => _inactiveBorderColor!;
+  Color? _inactiveBorderColor;
 
-  set boxBorderColor(Color newValue) {
-    if (newValue == _boxBorderColor) return;
-
-    _boxBorderColor = newValue;
+  set inactiveBorderColor(Color c) {
+    if (c == _inactiveBorderColor) return;
+    _inactiveBorderColor = c;
     notifyListeners();
   }
 
-  Color get boxFillColor => _boxFillColor!;
-  Color? _boxFillColor;
+  Color get activeFillColor => _activeFillColor!;
+  Color? _activeFillColor;
 
-  set boxFillColor(Color newValue) {
-    if (newValue == _boxFillColor) return;
-
-    _boxFillColor = newValue;
+  set activeFillColor(Color c) {
+    if (c == _activeFillColor) return;
+    _activeFillColor = c;
     notifyListeners();
   }
+
+  Color get inactiveFillColor => _inactiveFillColor!;
+  Color? _inactiveFillColor;
+
+  set inactiveFillColor(Color c) {
+    if (c == _inactiveFillColor) return;
+    _inactiveFillColor = c;
+    notifyListeners();
+  }
+
+  Color get _currentCheckColor => Color.lerp(inactiveColor, activeColor, position.value)!;
+
+  Color get _currentBoxBorderColor => Color.lerp(inactiveBorderColor, activeBorderColor, position.value)!;
+
+  Color get _currentBoxFillColor => Color.lerp(inactiveFillColor, activeFillColor, position.value)!;
 
   double get _edgeHalf => _innerWidthLength * 0.5;
 
@@ -332,18 +355,18 @@ class _SBBCheckboxPainter extends ToggleablePainter {
     }
   }
 
-  Paint _createCheckPaint() => Paint()..color = checkColor;
+  Paint _createCheckPaint() => Paint()..color = _currentCheckColor;
 
   Paint _createBoxBorderPaint() {
     return Paint()
-      ..color = boxBorderColor
+      ..color = _currentBoxBorderColor
       ..strokeWidth = 1.0
       ..style = PaintingStyle.stroke;
   }
 
   Paint _createBoxFillPaint() {
     return Paint()
-      ..color = boxFillColor
+      ..color = _currentBoxFillColor
       ..style = PaintingStyle.fill;
   }
 

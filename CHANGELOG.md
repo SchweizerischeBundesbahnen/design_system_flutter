@@ -18,6 +18,10 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - added `style` to `SBBStatus`
 - added `SBBStatusThemeData` to override styling of `SBBStatus` within the current `SBBTheme`
 - `SBBStatus`: added `label` and `labelText`, `icon` and `iconData` parameters - see [v5 migration guide]
+- added `SBBRadioGroup` - see [v5 migration guide]
+- added `style` to `SBBRadio`
+- added `SBBRadioThemeData` to override `SBBRadioStyle` within the `SBBTheme`
+- added `focusNode` & `autofocus` to `SBBRadio`
 
 ### Changed
 
@@ -27,6 +31,8 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - BREAKING: `SBBTertiaryButton`: `icon` is of type `Widget?` - see [v5 migration guide]
 - BREAKING: Updated `SBBButtonStyle` to have `WidgetStateProperty` values - see [v5 migration guide]
 - BREAKING: `SBBCheckbox` uses `SBBCheckboxThemeData` for themed styling - see [v5 migration guide]
+- BREAKING: `SBBRadio` needs an `SBBRadioGroup` ancestor for its group value and `onChanged` callback - see [v5 migration guide]
+- dropped support for Flutter SDK 3.32.x
 
 ### Removed
 
@@ -37,6 +43,8 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Removed `SBBAccordion`, `SBBAccordionItem`, `AccordionCallback` and `SingleAccordionCallback`
 - Removed `padding` of `SBBCheckbox` - see [v5 migration guide]
 - Removed `text` of `SBBStatus` - see [v5 migration guide]
+- Removed `onChanged` & `groupValue` from `SBBRadio` & `SBBRadioListItem` - see [v5 migration guide]
+- Removed `padding` from `SBBRadio` - moved to `SBBRadioStyle` - see [v5 migration guide]
 
 ## [4.3.1] - 2025-11-21
 
