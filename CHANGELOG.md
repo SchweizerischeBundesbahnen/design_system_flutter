@@ -15,6 +15,9 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - added `style` to all button variants for changing individual button appearance
 - added `SBBButtonThemeData` to override buttons within `SBBTheme`
 - added `style` to `SBBCheckbox` to change individual checkbox appearance
+- added `style` to `SBBStatus`
+- added `SBBStatusThemeData` to override styling of `SBBStatus` within the current `SBBTheme`
+- `SBBStatus`: added `label` and `labelText`, `icon` and `iconData` parameters - see [v5 migration guide]
 - added `SBBRadioGroup` - see [v5 migration guide]
 - added `style` to `SBBRadio`
 - added `SBBRadioThemeData` to override `SBBRadioStyle` within the `SBBTheme`
@@ -39,6 +42,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
   `tertiaryButtonTheme` - see [v5 migration guide]
 - Removed `SBBAccordion`, `SBBAccordionItem`, `AccordionCallback` and `SingleAccordionCallback`
 - Removed `padding` of `SBBCheckbox` - see [v5 migration guide]
+- Removed `text` of `SBBStatus` - see [v5 migration guide]
 - Removed `onChanged` & `groupValue` from `SBBRadio` & `SBBRadioListItem` - see [v5 migration guide]
 - Removed `padding` from `SBBRadio` - moved to `SBBRadioStyle` - see [v5 migration guide]
 
