@@ -1,5 +1,5 @@
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import '../native_app.dart';
 
@@ -12,8 +12,7 @@ class ChipPage extends StatefulWidget {
 
 class _ChipPageState extends State<ChipPage> {
   bool _selected1 = false;
-  bool _selected2 = false;
-  bool _selected3 = true;
+  bool _selected2 = true;
 
   @override
   Widget build(BuildContext context) {
@@ -26,38 +25,21 @@ class _ChipPageState extends State<ChipPage> {
         SBBGroup(
           margin: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
           padding: const EdgeInsets.all(sbbDefaultSpacing),
-          child: Column(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            spacing: sbbDefaultSpacing,
             children: [
               SBBChip(
-                label: 'Default',
-                badgeLabel: 9.toString(),
+                labelText: 'Chip Label',
+                trailingText: 99.toString(),
                 selected: _selected1,
-                onSelection: (selected) => {
-                  setState(() {
-                    _selected1 = selected;
-                  }),
-                },
+                onChanged: (selected) => setState(() => _selected1 = selected),
               ),
-              const SizedBox(height: sbbDefaultSpacing),
               SBBChip(
-                label: 'No badge label',
+                labelText: 'Chip Label',
+                trailingText: 99.toString(),
                 selected: _selected2,
-                onSelection: (selected) => {
-                  setState(() {
-                    _selected2 = selected;
-                  }),
-                },
-              ),
-              const SizedBox(height: sbbDefaultSpacing),
-              SBBChip(
-                label: 'Selected',
-                badgeLabel: 'Label',
-                selected: _selected3,
-                onSelection: (selected) => {
-                  setState(() {
-                    _selected3 = selected;
-                  }),
-                },
+                onChanged: (selected) => setState(() => _selected2 = selected),
               ),
             ],
           ),
@@ -66,13 +48,20 @@ class _ChipPageState extends State<ChipPage> {
         SBBGroup(
           margin: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
           padding: const EdgeInsets.all(sbbDefaultSpacing),
-          child: Column(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            spacing: sbbDefaultSpacing,
             children: [
-              SBBChip(label: 'Default', badgeLabel: 3.toString(), onSelection: null),
-              const SizedBox(height: sbbDefaultSpacing),
-              const SBBChip(label: 'Selected', onSelection: null, selected: true),
+              SBBChip(labelText: 'Chip Label', trailingText: 99.toString(), onChanged: null),
+              const SBBChip(labelText: 'Chip Label', onChanged: null, selected: true),
             ],
           ),
+        ),
+        const SBBListHeader('Long Text'),
+        SBBGroup(
+          margin: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
+          padding: const EdgeInsets.all(sbbDefaultSpacing),
+          child: SBBChip(labelText: 'L${"o" * 100}ng Text', trailingText: 99.toString(), onChanged: (_) {}),
         ),
       ],
     );

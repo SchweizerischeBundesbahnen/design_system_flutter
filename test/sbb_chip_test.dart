@@ -8,23 +8,23 @@ void main() {
   testWidgets('chip_1', (WidgetTester tester) async {
     final widget = Column(
       children: [
-        SBBChip(label: 'Default', badgeLabel: '9', onSelection: (selected) {}),
+        SBBChip(labelText: 'Default', trailingText: '9', onChanged: (selected) {}),
         const SizedBox(height: sbbDefaultSpacing),
-        SBBChip(label: 'Default & No Badge', onSelection: (selected) {}),
+        SBBChip(labelText: 'Default & No Badge', onChanged: (selected) {}),
         const SizedBox(height: sbbDefaultSpacing),
         SBBChip(
-          label: 'This is a very long text with a longer badge label, that should not be longer than one line.',
-          badgeLabel: 'Production',
-          onSelection: (selected) {},
+          labelText: 'This is a very long text with a longer badge label, that should not be longer than one line.',
+          trailingText: 'Production',
+          onChanged: (selected) {},
         ),
         const SizedBox(height: sbbDefaultSpacing),
-        SBBChip(label: 'Selected', badgeLabel: '3', selected: true, onSelection: (selected) {}),
+        SBBChip(labelText: 'Selected', trailingText: '3', selected: true, onChanged: (selected) {}),
         const SizedBox(height: sbbDefaultSpacing),
-        SBBChip(label: 'Selected & No Badge', selected: true, onSelection: (selected) {}),
+        SBBChip(labelText: 'Selected & No Badge', selected: true, onChanged: (selected) {}),
         const SizedBox(height: sbbDefaultSpacing),
-        const SBBChip(label: 'Disabled', onSelection: null),
+        const SBBChip(labelText: 'Disabled', onChanged: null),
         const SizedBox(height: sbbDefaultSpacing),
-        const SBBChip(label: 'Disabled & Selected', selected: true, onSelection: null),
+        const SBBChip(labelText: 'Disabled & Selected', selected: true, onChanged: null),
       ],
     );
 
