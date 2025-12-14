@@ -15,7 +15,7 @@ class SBBChipThemeData extends ThemeExtension<SBBChipThemeData> with Diagnostica
   /// The [style] may be null.
   const SBBChipThemeData({this.style});
 
-  /// Overrides for the chip's default style.
+  /// Overrides for the chip.dart's default style.
   ///
   /// Non-null properties or non-null resolved [WidgetStateProperty]
   /// values override the default values.

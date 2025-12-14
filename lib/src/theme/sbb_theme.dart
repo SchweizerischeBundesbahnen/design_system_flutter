@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/button/theme/sbb_button_style_x.dart';
 import 'package:sbb_design_system_mobile/src/checkbox/theme/default_sbb_checkbox_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/chip/theme/default_sbb_chip_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/chip/theme/sbb_chip_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/radio/theme/default_sbb_radio_theme_data.dart';
 
 import '../button/theme/default_button_themes.dart';
@@ -19,6 +21,7 @@ class SBBTheme {
     SBBSecondaryButtonThemeData? secondaryButtonTheme,
     SBBTertiaryButtonThemeData? tertiaryButtonTheme,
     SBBCheckboxThemeData? checkboxTheme,
+    SBBChipThemeData? chipTheme,
     SBBRadioThemeData? radioTheme,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
@@ -34,6 +37,7 @@ class SBBTheme {
     secondaryButtonTheme: secondaryButtonTheme,
     tertiaryButtonTheme: tertiaryButtonTheme,
     checkboxTheme: checkboxTheme,
+    chipTheme: chipTheme,
     radioTheme: radioTheme,
     controlStyles: controlStyles,
     headerBoxStyle: headerBoxStyle,
@@ -50,6 +54,7 @@ class SBBTheme {
     SBBSecondaryButtonThemeData? secondaryButtonTheme,
     SBBTertiaryButtonThemeData? tertiaryButtonTheme,
     SBBCheckboxThemeData? checkboxTheme,
+    SBBChipThemeData? chipTheme,
     SBBRadioThemeData? radioTheme,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
@@ -65,6 +70,7 @@ class SBBTheme {
     secondaryButtonTheme: secondaryButtonTheme,
     tertiaryButtonTheme: tertiaryButtonTheme,
     checkboxTheme: checkboxTheme,
+    chipTheme: chipTheme,
     radioTheme: radioTheme,
     controlStyles: controlStyles,
     headerBoxStyle: headerBoxStyle,
@@ -82,6 +88,7 @@ class SBBTheme {
     SBBSecondaryButtonThemeData? secondaryButtonTheme,
     SBBTertiaryButtonThemeData? tertiaryButtonTheme,
     SBBCheckboxThemeData? checkboxTheme,
+    SBBChipThemeData? chipTheme,
     SBBRadioThemeData? radioTheme,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
@@ -105,6 +112,9 @@ class SBBTheme {
 
     final defaultCheckboxTheme = DefaultSBBCheckboxThemeData(mergedBaseStyle);
     final mergedCheckboxTheme = defaultCheckboxTheme.merge(checkboxTheme);
+
+    final defaultChipTheme = DefaultSBBChipThemeData(mergedBaseStyle);
+    final mergedChipTheme = defaultChipTheme.merge(chipTheme);
 
     final defaultRadioTheme = DefaultSBBRadioThemeData(mergedBaseStyle);
     final mergedRadioTheme = defaultRadioTheme.merge(radioTheme);
@@ -134,6 +144,7 @@ class SBBTheme {
       secondaryButtonTheme: mergedSecondaryButtonTheme,
       tertiaryButtonTheme: mergedTertiaryButtonTheme,
       checkboxTheme: mergedCheckboxTheme,
+      chipTheme: mergedChipTheme,
       radioTheme: mergedRadioTheme,
       controlStyles: mergedControlStyles,
       headerBoxStyle: mergedHeaderBoxStyle,
@@ -151,6 +162,7 @@ class SBBTheme {
     required SBBSecondaryButtonThemeData secondaryButtonTheme,
     required SBBTertiaryButtonThemeData tertiaryButtonTheme,
     required SBBCheckboxThemeData checkboxTheme,
+    required SBBChipThemeData chipTheme,
     required SBBRadioThemeData radioTheme,
     required SBBControlStyles controlStyles,
     required SBBHeaderBoxStyle headerBoxStyle,
@@ -184,6 +196,7 @@ class SBBTheme {
         secondaryButtonTheme,
         tertiaryButtonTheme,
         checkboxTheme,
+        chipTheme,
         radioTheme,
         controlStyles,
         headerBoxStyle,
