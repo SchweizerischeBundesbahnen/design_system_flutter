@@ -11,30 +11,28 @@ class DefaultSBBChipThemeData extends SBBChipThemeData {
         style: SBBChipStyle(
           borderColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.disabled: baseStyle.themeValue(SBBColors.cloud, SBBColors.iron),
-            WidgetState.any: baseStyle.themeValue(SBBColors.metal, SBBColors.smoke),
+            WidgetState.any: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
           }),
           backgroundColor: WidgetStatePropertyAll(baseStyle.themeValue(SBBColors.white, SBBColors.charcoal)),
           labelForegroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.disabled: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
             WidgetState.any: baseStyle.themeValue(SBBColors.black, SBBColors.white),
           }),
-          trailingForegroundColor: WidgetStatePropertyAll(SBBColors.white),
-          labelTextStyle: WidgetStateProperty.fromMap(<WidgetStatesConstraint, TextStyle?>{
-            WidgetState.disabled: baseStyle.themedTextStyle(
-              textStyle: SBBTextStyles.mediumLight,
-              color: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
-            ),
-            WidgetState.any: baseStyle.themedTextStyle(
-              textStyle: SBBTextStyles.mediumLight,
-              color: baseStyle.themeValue(SBBColors.black, SBBColors.white),
-            ),
+          trailingForegroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
+            WidgetState.selected & WidgetState.disabled: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
+            WidgetState.disabled: SBBColors.white,
+            WidgetState.selected: baseStyle.themeValue(SBBColors.black, SBBColors.white),
+            WidgetState.any: SBBColors.white,
           }),
-          trailingTextStyle: WidgetStatePropertyAll(
-            baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallBold, color: SBBColors.white),
-          ),
+          labelTextStyle: WidgetStateProperty.fromMap(<WidgetStatesConstraint, TextStyle?>{
+            WidgetState.disabled: baseStyle.themedTextStyle(textStyle: SBBTextStyles.mediumLight),
+            WidgetState.any: baseStyle.themedTextStyle(textStyle: SBBTextStyles.mediumLight),
+          }),
+          trailingTextStyle: WidgetStatePropertyAll(baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallBold)),
           trailingBackgroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
+            WidgetState.selected & WidgetState.disabled: baseStyle.themeValue(SBBColors.milk, SBBColors.iron),
             WidgetState.disabled: baseStyle.themeValue(SBBColors.graphite, SBBColors.iron),
-            WidgetState.selected: baseStyle.themeValue(SBBColors.graphite, SBBColors.iron),
+            WidgetState.selected: baseStyle.themeValue(SBBColors.cloud, SBBColors.granite),
             WidgetState.any: baseStyle.primaryColor,
           }),
           overlayColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
