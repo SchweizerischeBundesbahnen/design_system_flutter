@@ -8,14 +8,14 @@ const Size _badgeSize = Size(24.0, 24.0);
 
 /// The SBB Chip.
 ///
-///  The widget itself does not hold selection state: when the chip.dart is tapped it
+/// The widget itself does not hold selection state: when the chip.dart is tapped it
 /// calls [onChanged] with the new value and relies on its parent to rebuild it
 /// with an updated [selected] value.
 ///
 /// Provide either [label] for custom content or [labelText] for simple text
 /// content with the standard design. These parameters are mutually exclusive.
 ///
-/// If [onChanged] is null the chip.dart is displayed as disabled and will not
+/// If [onChanged] is null the chip is displayed as disabled and will not
 /// respond to input gestures.
 ///
 /// See also:
