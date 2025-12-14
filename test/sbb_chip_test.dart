@@ -7,24 +7,21 @@ import 'test_app.dart';
 void main() {
   testWidgets('chip_1', (WidgetTester tester) async {
     final widget = Column(
+      spacing: sbbDefaultSpacing,
       children: [
         SBBChip(labelText: 'Default', trailingText: '9', onChanged: (selected) {}),
-        const SizedBox(height: sbbDefaultSpacing),
-        SBBChip(labelText: 'Default & No Badge', onChanged: (selected) {}),
-        const SizedBox(height: sbbDefaultSpacing),
-        SBBChip(
-          labelText: 'This is a very long text with a longer badge label, that should not be longer than one line.',
-          trailingText: 'Production',
-          onChanged: (selected) {},
-        ),
-        const SizedBox(height: sbbDefaultSpacing),
+        SBBChip(labelText: 'L${"o" * 100}ng Text', trailingText: '99', onChanged: (selected) {}),
         SBBChip(labelText: 'Selected', trailingText: '3', selected: true, onChanged: (selected) {}),
-        const SizedBox(height: sbbDefaultSpacing),
-        SBBChip(labelText: 'Selected & No Badge', selected: true, onChanged: (selected) {}),
-        const SizedBox(height: sbbDefaultSpacing),
-        const SBBChip(labelText: 'Disabled', onChanged: null),
-        const SizedBox(height: sbbDefaultSpacing),
-        const SBBChip(labelText: 'Disabled & Selected', selected: true, onChanged: null),
+        const SBBChip(labelText: 'Disabled', onChanged: null, trailingText: '99'),
+        const SBBChip(labelText: 'Disabled & Selected', selected: true, onChanged: null, trailingText: '9'),
+        SBBChip(
+          label: Container(
+            color: SBBColors.blue,
+            child: Text('Custom', style: sbbTextStyle.copyWith(color: SBBColors.white)),
+          ),
+          onChanged: (_) {},
+          trailing: Container(width: 10, height: 10, color: SBBColors.turquoise),
+        ),
       ],
     );
 
