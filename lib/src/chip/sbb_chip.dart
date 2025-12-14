@@ -45,7 +45,8 @@ class SBBChip extends StatefulWidget {
     this.focusNode,
   }) : assert(labelText == null || label == null, 'Cannot provide both labelText and label!'),
        assert(labelText != null || label != null, 'One of labelText or label must be set!'),
-       assert(trailingText == null || trailing == null, 'Cannot provide both badgeText and trailing!');
+       assert(trailingText == null || trailing == null, 'Cannot provide both trailingText and trailing!'),
+       assert(trailingText != null || trailing != null, 'One of trailingText or trailing must be set!');
 
   /// Called when [selected] should change.
   ///
@@ -169,7 +170,7 @@ class _SBBChipState extends State<SBBChip> {
               child: IconTheme.merge(
                 data: IconThemeData(color: trailingForegroundColor),
                 child: AnimatedSwitcher(
-                  duration: Durations.short3,
+                  duration: Durations.short4,
                   child: _trailing(trailingBackgroundColor, trailingTextStyle),
                 ),
               ),
