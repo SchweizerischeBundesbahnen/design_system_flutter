@@ -13,55 +13,67 @@ class ChipPage extends StatefulWidget {
 class _ChipPageState extends State<ChipPage> {
   bool _selected1 = false;
   bool _selected2 = true;
+  bool _selected3 = false;
+  int _enabledIndex = 0;
+
+  bool get _isEnabled => _enabledIndex == 0;
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.all(sbbDefaultSpacing),
-      children: [
-        const ThemeModeSegmentedButton(),
-        const SizedBox(height: sbbDefaultSpacing),
-        const SBBListHeader('Default'),
-        SBBGroup(
-          margin: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
-          padding: const EdgeInsets.all(sbbDefaultSpacing),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+    return CustomScrollView(
+      slivers: [
+        SBBSliverHeaderbox.custom(
+          child: Column(
             spacing: sbbDefaultSpacing,
             children: [
-              SBBChip(
-                labelText: 'Chip Label',
-                trailingText: 99.toString(),
-                selected: _selected1,
-                onChanged: (selected) => setState(() => _selected1 = selected),
-              ),
-              SBBChip(
-                labelText: 'Chip Label',
-                trailingText: 99.toString(),
-                selected: _selected2,
-                onChanged: (selected) => setState(() => _selected2 = selected),
+              const ThemeModeSegmentedButton(),
+              SBBSegmentedButton(
+                values: ['All Enabled', 'All Disabled'],
+                selectedStateIndex: _enabledIndex,
+                selectedIndexChanged: (i) => setState(() => _enabledIndex = i),
               ),
             ],
           ),
         ),
-        const SBBListHeader('Disabled'),
-        SBBGroup(
-          margin: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
-          padding: const EdgeInsets.all(sbbDefaultSpacing),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            spacing: sbbDefaultSpacing,
+        SliverPadding(
+          padding: EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
+          sliver: SliverList.list(
             children: [
-              SBBChip(labelText: 'Chip Label', trailingText: 99.toString(), onChanged: null),
-              const SBBChip(labelText: 'Chip Label', onChanged: null, selected: true),
+              const SBBListHeader('Default'),
+              SBBGroup(
+                padding: const EdgeInsets.all(sbbDefaultSpacing),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  spacing: sbbDefaultSpacing,
+                  children: [
+                    SBBChip(
+                      labelText: 'Chip Label',
+                      trailingText: 99.toString(),
+                      selected: _selected1,
+                      onChanged: _isEnabled ? (selected) => setState(() => _selected1 = selected) : null,
+                    ),
+                    SBBChip(
+                      labelText: 'Chip Label',
+                      trailingText: 99.toString(),
+                      selected: _selected2,
+                      onChanged: _isEnabled ? (selected) => setState(() => _selected2 = selected) : null,
+                    ),
+                  ],
+                ),
+              ),
+
+              const SBBListHeader('Long Text'),
+              SBBGroup(
+                padding: const EdgeInsets.all(sbbDefaultSpacing),
+                child: SBBChip(
+                  labelText: 'L${"o" * 100}ng Text',
+                  trailingText: 99.toString(),
+                  selected: _selected3,
+                  onChanged: _isEnabled ? (selected) => setState(() => _selected3 = selected) : null,
+                ),
+              ),
             ],
           ),
-        ),
-        const SBBListHeader('Long Text'),
-        SBBGroup(
-          margin: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
-          padding: const EdgeInsets.all(sbbDefaultSpacing),
-          child: SBBChip(labelText: 'L${"o" * 100}ng Text', trailingText: 99.toString(), onChanged: (_) {}),
         ),
       ],
     );
