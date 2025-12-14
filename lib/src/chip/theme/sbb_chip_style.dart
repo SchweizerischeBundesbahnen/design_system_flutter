@@ -20,7 +20,7 @@ import 'package:flutter/widgets.dart';
 /// ```
 ///
 /// See also:
-/// * [SBBChip], the chip.dart widget that uses this style.
+/// * [SBBChip], the widget that uses this style.
 /// * [SBBChipThemeData], which applies this style theme-wide.
 class SBBChipStyle {
   const SBBChipStyle({
@@ -34,15 +34,15 @@ class SBBChipStyle {
     this.overlayColor,
   });
 
-  /// The color of the chip.dart border.
+  /// The color of the chip border.
   ///
-  /// This is the outline color of the chip.dart container.
+  /// This is the outline color of the chip container.
   /// The border width is defined by [SBBChipStyle.borderWidth].
   final WidgetStateProperty<Color?>? borderColor;
 
-  /// The background color of the chip.dart.
+  /// The background color of the chip.
   ///
-  /// This fills the entire chip.dart container.
+  /// This fills the entire chip.
   final WidgetStateProperty<Color?>? backgroundColor;
 
   /// The color of the label text.
@@ -55,7 +55,7 @@ class SBBChipStyle {
   /// This affects the icon or text color within the trailing badge or custom widget.
   final WidgetStateProperty<Color?>? trailingForegroundColor;
 
-  /// The text style for the chip.dart label.
+  /// The text style for the chip label.
   ///
   /// Applies to all text descendants of the label of SBBChip.
   ///
@@ -80,17 +80,17 @@ class SBBChipStyle {
 
   /// The overlay color shown on interaction.
   ///
-  /// This creates the visual feedback when the chip.dart is interacted with.
+  /// This creates the visual feedback when the chip is interacted with.
   final WidgetStateProperty<Color?>? overlayColor;
 
-  /// The thickness of the chip.dart border.
+  /// The thickness of the chip border.
   ///
-  /// This value determines how wide the border line around the chip.dart appears.
+  /// This value determines how wide the border line around the chip appears.
   static const double borderWidth = 1.0;
 
-  /// The shape of the chip.dart's border.
+  /// The shape of the chip's border.
   ///
-  /// This creates the pill-shaped appearance of the chip.dart.
+  /// This creates the pill-shaped appearance of the chip.
   static const ShapeBorder borderShape = StadiumBorder();
 
   /// The size of the trailing badge circle.

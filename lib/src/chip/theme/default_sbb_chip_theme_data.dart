@@ -1,9 +1,8 @@
 import 'package:flutter/widgets.dart';
 
 import '../../../sbb_design_system_mobile.dart';
-import '../chip.dart';
 
-/// The default chip.dart theme is specified using the
+/// The default chip theme is specified using the
 /// * [Figma design specs](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=129-3181)
 class DefaultSBBChipThemeData extends SBBChipThemeData {
   DefaultSBBChipThemeData(SBBBaseStyle baseStyle)

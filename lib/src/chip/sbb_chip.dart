@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/src/chip/chip.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
@@ -8,7 +7,7 @@ const Size _badgeSize = Size(24.0, 24.0);
 
 /// The SBB Chip.
 ///
-/// The widget itself does not hold selection state: when the chip.dart is tapped it
+/// The widget itself does not hold selection state: when the chip is tapped it
 /// calls [onChanged] with the new value and relies on its parent to rebuild it
 /// with an updated [selected] value.
 ///
@@ -26,8 +25,8 @@ class SBBChip extends StatefulWidget {
   ///
   /// The following arguments are required:
   ///
-  /// * [onChanged] which is called when the chip.dart should toggle its [selected]
-  ///   state. If null the chip.dart is disabled.
+  /// * [onChanged] which is called when the chip should toggle its [selected]
+  ///   state. If null the chip is disabled.
   /// * Either [label] or [labelText] must be provided. They are mutually
   ///   exclusive.
   ///
@@ -50,31 +49,31 @@ class SBBChip extends StatefulWidget {
 
   /// Called when [selected] should change.
   ///
-  /// The chip.dart calls this callback with the new boolean value but does not
+  /// The chip calls this callback with the new boolean value but does not
   /// change its own internal state. The parent should update the [selected]
-  /// value and rebuild the chip.dart accordingly.
+  /// value and rebuild the chip accordingly.
   ///
-  /// If this callback is null, the chip.dart is displayed as disabled and will not
+  /// If this callback is null, the chip is displayed as disabled and will not
   /// respond to taps.
   final ValueChanged<bool>? onChanged;
 
-  /// Whether this chip.dart is selected.
+  /// Whether this chip is selected.
   ///
   /// If false, the [trailing] widget or a default badge with [trailingText] will
   /// be shown. If true, the [trailing] widget is shown if provided, otherwise
   /// a default badge with a [SBBIcons.cross_small] icon is shown.
   final bool selected;
 
-  /// A custom widget displayed as the chip.dart's content.
+  /// A custom widget displayed as the chip's content.
   ///
   /// For simple text labels, prefer [labelText].
   ///
   /// Cannot be used together with [labelText].
   final Widget? label;
 
-  /// Text string to display as the chip.dart's label using the standard design.
+  /// Text string to display as the chip's label using the standard design.
   ///
-  /// The chip.dart will be styled according to the SBB design system.
+  /// The chip will be styled according to the SBB design system.
   ///
   /// Cannot be used together with [label].
   final String? labelText;
@@ -87,9 +86,9 @@ class SBBChip extends StatefulWidget {
   /// Cannot be used together with [trailingText].
   final Widget? trailing;
 
-  /// Text string to display within the chip.dart's trailing badge using the standard design.
+  /// Text string to display within the chip's trailing badge using the standard design.
   ///
-  /// If this and [trailing] is null, the chip.dart will not display a trailing widget.
+  /// If this and [trailing] is null, the chip will not display a trailing widget.
   ///
   /// Cannot be used together with [trailing].
   final String? trailingText;

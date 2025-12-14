@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'sbb_chip_style.dart';
+import '../../../sbb_design_system_mobile.dart';
 
 /// The ThemeData for the [SBBChip].
 ///
@@ -15,7 +15,7 @@ class SBBChipThemeData extends ThemeExtension<SBBChipThemeData> with Diagnostica
   /// The [style] may be null.
   const SBBChipThemeData({this.style});
 
-  /// Overrides for the chip.dart's default style.
+  /// Overrides for the chip's default style.
   ///
   /// Non-null properties or non-null resolved [WidgetStateProperty]
   /// values override the default values.
