@@ -43,6 +43,7 @@ class SBBChip extends StatefulWidget {
     this.trailing,
     this.trailingText,
     this.style,
+    this.focusNode,
   }) : assert(labelText == null || label == null, 'Cannot provide both labelText and label!'),
        assert(labelText != null || label != null, 'One of labelText or label must be set!'),
        assert(trailingText == null || trailing == null, 'Cannot provide both badgeText and trailing!');
@@ -99,6 +100,9 @@ class SBBChip extends StatefulWidget {
   /// properties in [SBBChipThemeData.style] of the theme found in [context].
   final SBBChipStyle? style;
 
+  /// {@macro flutter.widgets.Focus.focusNode}
+  final FocusNode? focusNode;
+
   @override
   State<SBBChip> createState() => _SBBChipState();
 }
@@ -153,6 +157,7 @@ class _SBBChipState extends State<SBBChip> {
         customBorder: StadiumBorder(),
         onTap: widget.onChanged != null ? () => widget.onChanged?.call(!widget.selected) : null,
         statesController: _statesController,
+        focusNode: widget.focusNode,
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
