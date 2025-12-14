@@ -17,6 +17,8 @@ const Size _badgeSize = Size(24.0, 24.0);
 /// If [onChanged] is null the chip is displayed as disabled and will not
 /// respond to input gestures.
 ///
+/// Requires one of its ancestors to be a [Material] widget.
+///
 /// See also:
 ///
 /// * [Figma design specs](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=129-3181)
@@ -138,6 +140,8 @@ class _SBBChipState extends State<SBBChip> {
 
   @override
   Widget build(BuildContext context) {
+    debugCheckHasMaterial(context);
+
     final themeStyle = Theme.of(context).sbbChipTheme!.style!;
     final effectiveStyle = themeStyle.merge(widget.style);
     final states = _statesController.value;
@@ -150,32 +154,40 @@ class _SBBChipState extends State<SBBChip> {
     final trailingTextStyle = effectiveStyle.trailingTextStyle?.resolve(states);
     final trailingBackgroundColor = effectiveStyle.trailingBackgroundColor?.resolve(states) ?? SBBColors.red;
 
-    return Material(
-      color: backgroundColor,
-      shape: StadiumBorder(side: BorderSide(color: borderColor)),
-      child: InkWell(
-        customBorder: StadiumBorder(),
-        onTap: widget.onChanged != null ? () => widget.onChanged?.call(!widget.selected) : null,
-        statesController: _statesController,
-        focusNode: widget.focusNode,
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            DefaultTextStyle.merge(
-              style: labelTextStyle?.copyWith(color: labelForegroundColor),
-              child: _label(labelTextStyle),
-            ),
-            DefaultTextStyle.merge(
-              style: trailingTextStyle?.copyWith(color: trailingForegroundColor),
-              child: IconTheme.merge(
-                data: IconThemeData(color: trailingForegroundColor),
-                child: AnimatedSwitcher(
-                  duration: Durations.short4,
-                  child: _trailing(trailingBackgroundColor, trailingTextStyle),
+    return ClipPath(
+      clipper: ShapeBorderClipper(
+        shape: StadiumBorder(side: BorderSide(color: borderColor)),
+      ),
+      clipBehavior: Clip.hardEdge,
+      child: DecoratedBox(
+        decoration: ShapeDecoration(
+          shape: StadiumBorder(side: BorderSide(color: borderColor)),
+          color: backgroundColor,
+        ),
+        child: InkWell(
+          customBorder: StadiumBorder(),
+          onTap: widget.onChanged != null ? () => widget.onChanged?.call(!widget.selected) : null,
+          statesController: _statesController,
+          focusNode: widget.focusNode,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              DefaultTextStyle.merge(
+                style: labelTextStyle?.copyWith(color: labelForegroundColor),
+                child: _label(labelTextStyle),
+              ),
+              DefaultTextStyle.merge(
+                style: trailingTextStyle?.copyWith(color: trailingForegroundColor),
+                child: IconTheme.merge(
+                  data: IconThemeData(color: trailingForegroundColor),
+                  child: AnimatedSwitcher(
+                    duration: Durations.short4,
+                    child: _trailing(trailingBackgroundColor, trailingTextStyle),
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
