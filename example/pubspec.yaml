@@ -13,7 +13,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
-  auto_route: ^10.0.0
+  auto_route: 11.1.0
 
   # https://pub.dev/packages/provider
   provider: ^6.1.5
