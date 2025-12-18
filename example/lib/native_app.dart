@@ -101,6 +101,7 @@ class MyApp extends StatelessWidget {
                           children: const <Widget>[
                             _DemoEntry('Button', ButtonPage()),
                             _DemoEntry('Checkbox', CheckboxPage()),
+                            _DemoEntry('Chip', ChipPage()),
                             _DemoEntry('Link', LinkPage()),
                             _DemoEntry('List Header', ListHeaderPage()),
                             _DemoEntry('List Item', ListItemPage()),
@@ -111,7 +112,6 @@ class MyApp extends StatelessWidget {
                             _DemoEntry('Select', SelectPage()),
                             _DemoEntry('Switch', SwitchPage()),
                             _DemoEntry('Textfield / Textarea', TextFieldPage()),
-                            _DemoEntry('Chip', ChipPage()),
                             _DemoEntry('Pagination', PaginationPage()),
                             _DemoEntry('Slider', SliderPage()),
                             _DemoEntry('Promotion Box', PromotionBoxPage()),

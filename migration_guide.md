@@ -31,6 +31,21 @@ To access this data within your app, use:
 * access the theme using `Theme.of(context).sbbCheckboxTheme`
 * customize n individual checkbox by setting its `style` parameter in the constructor 
 
+## Chip
+
+### Constructor arguments
+* To use `SBBChip` the same way as before:
+  * replace `onSelection` with `onChanged`
+  * replace `label` with `labelText`
+  * replace `badgeLabel` with `trailingText`
+* complete customization of the `SBBChip` content with `label` and `trailing`
+* added the ability to control the Focus with a custom `focusNode`
+
+### Theming & Styling
+* customize the theme of the `SBBChip` with `SBBChipThemeData` as input to `SBBTheme`
+* access the theme using `Theme.of(context).sbbChipTheme`
+* customize a chip by setting its `style` parameter in the constructor
+
 
 ## Status
 

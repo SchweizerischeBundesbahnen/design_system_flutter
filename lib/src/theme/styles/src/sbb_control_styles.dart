@@ -5,7 +5,6 @@ import '../../theme.dart';
 class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   SBBControlStyles({
     this.checkbox,
-    this.chip,
     this.pagination,
     this.slider,
     this.radioButton,
@@ -36,7 +35,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     listItem: SBBListItemStyle.$default(baseStyle: baseStyle),
     slider: SBBSliderStyle.$default(baseStyle: baseStyle),
     checkbox: SBBControlStyle.$default(baseStyle: baseStyle),
-    chip: SBBChipStyle.$default(baseStyle: baseStyle),
     pagination: SBBPaginationStyle.$default(baseStyle: baseStyle),
     radioButton: SBBControlStyle.$default(baseStyle: baseStyle),
     textField: SBBTextFieldStyle.$default(baseStyle: baseStyle),
@@ -78,7 +76,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   final SBBListItemStyle? listItem;
   final SBBTextStyle? selectLabel;
   final SBBSliderStyle? slider;
-  final SBBChipStyle? chip;
   final SBBPaginationStyle? pagination;
 
   final Color? headerBackgroundColor;
@@ -117,7 +114,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   ThemeExtension<SBBControlStyles> copyWith({
     SBBControlStyle? checkbox,
     SBBSliderStyle? slider,
-    SBBChipStyle? chip,
     SBBPaginationStyle? pagination,
     SBBControlStyle? radioButton,
     SBBTextFieldStyle? textField,
@@ -145,7 +141,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   }) => SBBControlStyles(
     checkbox: checkbox ?? this.checkbox,
     slider: slider ?? this.slider,
-    chip: chip ?? this.chip,
     pagination: pagination ?? this.pagination,
     radioButton: radioButton ?? this.radioButton,
     textField: textField ?? this.textField,
@@ -178,7 +173,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     return SBBControlStyles(
       checkbox: checkbox?.lerp(other.checkbox, t),
       slider: slider?.lerp(other.slider, t),
-      chip: chip?.lerp(other.chip, t),
       pagination: pagination?.lerp(other.pagination, t),
       radioButton: radioButton?.lerp(other.radioButton, t),
       textField: textField?.lerp(other.textField, t),
@@ -216,7 +210,6 @@ extension SBBControlStylesExtension on SBBControlStyles? {
     return this!.copyWith(
           checkbox: this!.checkbox.merge(other?.checkbox),
           slider: this!.slider.merge(other?.slider),
-          chip: this!.chip.merge(other?.chip),
           pagination: this!.pagination.merge(other?.pagination),
           radioButton: this!.radioButton.merge(other?.radioButton),
           textField: this!.textField.merge(other?.textField),
