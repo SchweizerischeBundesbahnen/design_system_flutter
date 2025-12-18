@@ -102,10 +102,10 @@ class SBBRadioListItem<T> extends StatelessWidget {
          radioSemanticLabel: radioSemanticLabel,
        );
 
-  /// Use this in combination with a [SBBGroup] to create a boxed variant of the [SBBRadioListItem].
+  /// Use this in combination with a [SBBContentBox] to create a boxed variant of the [SBBRadioListItem].
   ///
   /// ```dart
-  /// SBBGroup(
+  /// SBBContentBox(
   ///   child: SBBRadioGroup<SingingCharacter>(
   ///     groupValue: _character,
   ///     onChanged: (SingingCharacter? newValue) {

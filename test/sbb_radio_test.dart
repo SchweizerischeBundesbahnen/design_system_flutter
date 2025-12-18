@@ -52,7 +52,7 @@ class RadioTest extends StatelessWidget {
       ),
       const SizedBox(height: sbbDefaultSpacing),
       const SBBListHeader('RadioButton Item - List'),
-      SBBGroup(
+      SBBContentBox(
         child: Column(
           children: [
             SBBRadioGroup(
@@ -133,13 +133,13 @@ class RadioTest extends StatelessWidget {
         child: Column(
           spacing: sbbDefaultSpacing * 0.5,
           children: [
-            SBBGroup(
+            SBBContentBox(
               child: SBBRadioListItem<int>.boxed(
                 value: 1,
                 label: 'Label',
               ),
             ),
-            SBBGroup(
+            SBBContentBox(
               child: SBBRadioListItem<int>.boxed(
                 value: 2,
                 label: 'Leading and Trailing Icon',
@@ -147,7 +147,7 @@ class RadioTest extends StatelessWidget {
                 trailingIcon: SBBIcons.dog_small,
               ),
             ),
-            SBBGroup(
+            SBBContentBox(
               child: SBBRadioListItem<int>.boxed(
                 value: 3,
                 label: 'Button',
@@ -155,7 +155,7 @@ class RadioTest extends StatelessWidget {
                 onCallToAction: () => {},
               ),
             ),
-            SBBGroup(
+            SBBContentBox(
               child: SBBRadioListItem<int>.custom(
                 value: 4,
                 label: 'Custom trailing Widget',

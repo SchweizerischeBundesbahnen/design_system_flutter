@@ -9,13 +9,9 @@ import 'tab_curve_painter.dart';
 import 'tab_item_widget.dart';
 
 part 'sbb_tab_bar.icon.dart';
-
 part 'sbb_tab_bar.icon_delegate.dart';
-
 part 'sbb_tab_bar.interactions.dart';
-
 part 'sbb_tab_bar.label.dart';
-
 part 'sbb_tab_bar.layout.dart';
 
 /// The TabBar for SBB themed apps with multiple tabs.
@@ -125,7 +121,7 @@ class _SBBTabBarState extends State<SBBTabBar> with TickerProviderStateMixin, Wi
               builder: (context, snapshot) {
                 final warnings = snapshot.requireData;
                 final theme = Theme.of(context);
-                final cardColor = SBBGroupStyle.of(context).color ?? theme.scaffoldBackgroundColor;
+                final cardColor = SBBContentBoxStyle.of(context).color ?? theme.scaffoldBackgroundColor;
                 _controller.changeOrientation(portrait);
                 _controller.updateCurveAnimation();
                 return Container(

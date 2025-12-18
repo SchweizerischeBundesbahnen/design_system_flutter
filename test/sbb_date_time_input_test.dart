@@ -1,7 +1,7 @@
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:intl/intl.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import 'test_app.dart';
 
@@ -29,7 +29,7 @@ class DateTimePickerTest extends StatelessWidget {
     final initialDateTime = DateTime(2024, 07, 03, 12, 33);
     final minimumDateTime = DateTime(2024, 08, 01, 16, 12);
     final maximumDateTime = DateTime(2024, 07, 01, 08, 43);
-    return SBBGroup(
+    return SBBContentBox(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[

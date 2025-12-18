@@ -3,10 +3,11 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/button/theme/sbb_button_style_x.dart';
 import 'package:sbb_design_system_mobile/src/checkbox/theme/default_sbb_checkbox_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/chip/theme/default_sbb_chip_theme_data.dart';
-import 'package:sbb_design_system_mobile/src/chip/theme/sbb_chip_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/radio/theme/default_sbb_radio_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/container/container.dart';
 
 import '../button/theme/default_button_themes.dart';
+import '../container/theme/default_sbb_content_box_theme_data.dart';
 import '../status/theme/default_sbb_status_theme.dart';
 
 const sbbDefaultSpacing = 16.0;
@@ -22,10 +23,11 @@ class SBBTheme {
     SBBTertiaryButtonThemeData? tertiaryButtonTheme,
     SBBCheckboxThemeData? checkboxTheme,
     SBBChipThemeData? chipTheme,
-    SBBRadioThemeData? radioTheme,
+    SBBContentBoxThemeData? contentBoxTheme,
     SBBControlStyles? controlStyles,
+    @Deprecated('Use contentBoxTheme instead') SBBContentBoxStyle? groupStyle,
     SBBHeaderBoxStyle? headerBoxStyle,
-    SBBGroupStyle? groupStyle,
+    SBBRadioThemeData? radioTheme,
     SBBStatusThemeData? statusTheme,
     SBBTextTheme? textTheme,
     SBBToastStyle? toastStyle,
@@ -38,11 +40,11 @@ class SBBTheme {
     tertiaryButtonTheme: tertiaryButtonTheme,
     checkboxTheme: checkboxTheme,
     chipTheme: chipTheme,
+    contentBoxTheme: contentBoxTheme,
     radioTheme: radioTheme,
     controlStyles: controlStyles,
-    headerBoxStyle: headerBoxStyle,
     groupStyle: groupStyle,
-    statusTheme: statusTheme,
+    headerBoxStyle: headerBoxStyle,
     textTheme: textTheme,
     toastStyle: toastStyle,
   );
@@ -55,10 +57,11 @@ class SBBTheme {
     SBBTertiaryButtonThemeData? tertiaryButtonTheme,
     SBBCheckboxThemeData? checkboxTheme,
     SBBChipThemeData? chipTheme,
+    SBBContentBoxThemeData? contentBoxTheme,
+    @Deprecated('Use contentBoxTheme instead') SBBContentBoxStyle? groupStyle,
     SBBRadioThemeData? radioTheme,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
-    SBBGroupStyle? groupStyle,
     SBBStatusThemeData? statusTheme,
     SBBTextTheme? textTheme,
     SBBToastStyle? toastStyle,
@@ -71,6 +74,7 @@ class SBBTheme {
     tertiaryButtonTheme: tertiaryButtonTheme,
     checkboxTheme: checkboxTheme,
     chipTheme: chipTheme,
+    contentBoxTheme: contentBoxTheme,
     radioTheme: radioTheme,
     controlStyles: controlStyles,
     headerBoxStyle: headerBoxStyle,
@@ -89,10 +93,11 @@ class SBBTheme {
     SBBTertiaryButtonThemeData? tertiaryButtonTheme,
     SBBCheckboxThemeData? checkboxTheme,
     SBBChipThemeData? chipTheme,
-    SBBRadioThemeData? radioTheme,
     SBBControlStyles? controlStyles,
+    SBBContentBoxThemeData? contentBoxTheme,
+    @Deprecated('Use contentBoxTheme instead') SBBGroupStyle? groupStyle,
     SBBHeaderBoxStyle? headerBoxStyle,
-    SBBGroupStyle? groupStyle,
+    SBBRadioThemeData? radioTheme,
     SBBStatusThemeData? statusTheme,
     SBBTextTheme? textTheme,
     SBBToastStyle? toastStyle,
@@ -125,11 +130,14 @@ class SBBTheme {
     final defaultHeaderBoxStyle = SBBHeaderBoxStyle.$default(baseStyle: mergedBaseStyle);
     final mergedHeaderBoxStyle = headerBoxStyle.merge(defaultHeaderBoxStyle);
 
-    final defaultGroupStyle = SBBGroupStyle.$default(baseStyle: mergedBaseStyle);
+    final defaultGroupStyle = SBBContentBoxStyle.$default(baseStyle: mergedBaseStyle);
     final mergedGroupStyle = groupStyle.merge(defaultGroupStyle);
 
     final defaultStatusTheme = DefaultSBBStatusTheme(baseStyle: mergedBaseStyle);
     final mergedStatusTheme = defaultStatusTheme.merge(statusTheme);
+
+    final defaultContentBoxTheme = DefaultSBBContentBoxTheme(baseStyle: mergedBaseStyle);
+    final mergedContentBoxTheme = defaultContentBoxTheme.merge(contentBoxTheme);
 
     final defaultTextTheme = SBBTextTheme.$default(baseStyle: mergedBaseStyle);
     final mergedTextTheme = defaultTextTheme.merge(textTheme);
@@ -145,10 +153,11 @@ class SBBTheme {
       tertiaryButtonTheme: mergedTertiaryButtonTheme,
       checkboxTheme: mergedCheckboxTheme,
       chipTheme: mergedChipTheme,
-      radioTheme: mergedRadioTheme,
       controlStyles: mergedControlStyles,
-      headerBoxStyle: mergedHeaderBoxStyle,
+      contentBoxTheme: mergedContentBoxTheme,
       groupStyle: mergedGroupStyle,
+      headerBoxStyle: mergedHeaderBoxStyle,
+      radioTheme: mergedRadioTheme,
       statusTheme: mergedStatusTheme,
       textTheme: mergedTextTheme,
       toastStyle: mergedToastStyle,
@@ -163,10 +172,11 @@ class SBBTheme {
     required SBBTertiaryButtonThemeData tertiaryButtonTheme,
     required SBBCheckboxThemeData checkboxTheme,
     required SBBChipThemeData chipTheme,
-    required SBBRadioThemeData radioTheme,
+    required SBBContentBoxThemeData contentBoxTheme,
     required SBBControlStyles controlStyles,
+    @Deprecated('Use contentBoxTheme instead.') required SBBContentBoxStyle groupStyle,
     required SBBHeaderBoxStyle headerBoxStyle,
-    required SBBGroupStyle groupStyle,
+    required SBBRadioThemeData radioTheme,
     required SBBStatusThemeData statusTheme,
     required SBBTextTheme textTheme,
     required SBBToastStyle toastStyle,
@@ -196,6 +206,7 @@ class SBBTheme {
         secondaryButtonTheme,
         tertiaryButtonTheme,
         checkboxTheme,
+        contentBoxTheme,
         chipTheme,
         radioTheme,
         controlStyles,

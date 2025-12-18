@@ -16,7 +16,7 @@ class StatusPage extends StatelessWidget {
         SliverList.list(
           children: [
             const SBBListHeader('Default'),
-            SBBGroup(
+            SBBContentBox(
               padding: const EdgeInsets.all(sbbDefaultSpacing),
               child: Column(
                 spacing: sbbDefaultSpacing,
@@ -29,7 +29,7 @@ class StatusPage extends StatelessWidget {
               ),
             ),
             const SBBListHeader('Without text'),
-            SBBGroup(
+            SBBContentBox(
               padding: const EdgeInsets.all(sbbDefaultSpacing),
               child: Row(
                 spacing: sbbDefaultSpacing,
@@ -43,7 +43,7 @@ class StatusPage extends StatelessWidget {
               ),
             ),
             const SBBListHeader('Long text'),
-            SBBGroup(
+            SBBContentBox(
               padding: const EdgeInsets.all(sbbDefaultSpacing),
               child: Column(
                 spacing: sbbDefaultSpacing,

@@ -76,10 +76,10 @@ class SBBCheckboxListItem extends StatelessWidget {
          checkboxSemanticLabel: checkboxSemanticLabel,
        );
 
-  /// Use this in combination with a [SBBGroup] to create a boxed variant of the [SBBCheckboxListItem].
+  /// Use this in combination with a [SBBContentBox] to create a boxed variant of the [SBBCheckboxListItem].
   ///
   /// ```dart
-  /// SBBGroup(
+  /// SBBContentBox(
   ///   child: SBBCheckboxListItem(
   ///     value: _throwShotAway,
   ///     onChanged: (bool newValue) {
@@ -123,7 +123,7 @@ class SBBCheckboxListItem extends StatelessWidget {
 
   /// Full custom [SBBCheckboxListItem].
   ///
-  /// When using [isBoxed], wrap this widget with a SBBGroup to achieve the desired outcome.
+  /// When using [isBoxed], wrap this widget with a [SBBContentBox] to achieve the desired outcome.
   const SBBCheckboxListItem.custom({
     super.key,
     required this.value,

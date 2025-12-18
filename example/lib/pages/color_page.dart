@@ -83,7 +83,7 @@ class _ColorShowcaseCard extends StatelessWidget {
     final colorValueSecondaryTextStyle = SBBTextStyles.helpersLabel.copyWith(
       color: SBBControlStyles.of(context).selectLabel?.textStyleDisabled?.color,
     );
-    return SBBGroup(
+    return SBBContentBox(
       margin: const EdgeInsets.all(sbbDefaultSpacing * 0.5),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,

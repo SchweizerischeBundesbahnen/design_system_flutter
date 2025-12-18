@@ -40,7 +40,7 @@ class _ChipPageState extends State<ChipPage> {
           sliver: SliverList.list(
             children: [
               const SBBListHeader('Default'),
-              SBBGroup(
+              SBBContentBox(
                 padding: const EdgeInsets.all(sbbDefaultSpacing),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -63,7 +63,7 @@ class _ChipPageState extends State<ChipPage> {
               ),
 
               const SBBListHeader('Long Text'),
-              SBBGroup(
+              SBBContentBox(
                 padding: const EdgeInsets.all(sbbDefaultSpacing),
                 child: SBBChip(
                   labelText: 'L${"o" * 100}ng Text',

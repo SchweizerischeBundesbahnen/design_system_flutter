@@ -165,7 +165,7 @@ class TypographyTest extends StatelessWidget {
         SBBListHeader(name),
         SizedBox(
           width: double.infinity,
-          child: SBBGroup(
+          child: SBBContentBox(
             padding: EdgeInsets.all(sbbDefaultSpacing),
             child: Column(
               spacing: sbbDefaultSpacing * 0.5,

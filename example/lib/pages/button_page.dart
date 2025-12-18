@@ -18,7 +18,7 @@ class ButtonPage extends StatelessWidget {
             children: [
               const SizedBox(height: sbbDefaultSpacing),
               const SBBListHeader('Primary Button'),
-              SBBGroup(
+              SBBContentBox(
                 padding: const EdgeInsets.all(sbbDefaultSpacing),
                 child: Column(
                   spacing: sbbDefaultSpacing,
@@ -35,7 +35,7 @@ class ButtonPage extends StatelessWidget {
               ),
               const SizedBox(height: sbbDefaultSpacing),
               const SBBListHeader('Secondary Button'),
-              SBBGroup(
+              SBBContentBox(
                 padding: const EdgeInsets.all(sbbDefaultSpacing),
                 child: Column(
                   children: [
@@ -53,7 +53,7 @@ class ButtonPage extends StatelessWidget {
               ),
               const SizedBox(height: sbbDefaultSpacing),
               const SBBListHeader('Tertiary Button'),
-              SBBGroup(
+              SBBContentBox(
                 padding: const EdgeInsets.all(sbbDefaultSpacing),
                 child: SizedBox(
                   width: double.infinity,
@@ -78,7 +78,7 @@ class ButtonPage extends StatelessWidget {
               ),
               const SizedBox(height: sbbDefaultSpacing),
               const SBBListHeader('Tertiary Button Small'),
-              SBBGroup(
+              SBBContentBox(
                 padding: const EdgeInsets.all(sbbDefaultSpacing),
                 child: SizedBox(
                   width: double.infinity,

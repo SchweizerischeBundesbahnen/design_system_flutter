@@ -45,7 +45,7 @@ class SelectPageState extends State<SelectPage> {
         const ThemeModeSegmentedButton(),
         const SizedBox(height: sbbDefaultSpacing),
         const SBBListHeader('Single value'),
-        SBBGroup(
+        SBBContentBox(
           child: Column(
             children: <Widget>[
               SBBSelect<int>(
@@ -116,7 +116,7 @@ class SelectPageState extends State<SelectPage> {
         ),
         const SizedBox(height: sbbDefaultSpacing),
         const SBBListHeader('Multiple values'),
-        SBBGroup(
+        SBBContentBox(
           child: Column(
             children: <Widget>[
               SBBMultiSelect<int>(

@@ -25,7 +25,7 @@ class _ToastPageState extends State<ToastPage> {
           const ThemeModeSegmentedButton(),
           const SizedBox(height: sbbDefaultSpacing),
           const SBBListHeader('Show Toast'),
-          SBBGroup(
+          SBBContentBox(
             padding: const EdgeInsets.all(sbbDefaultSpacing),
             child: Column(
               children: [
@@ -90,7 +90,7 @@ class _ToastPageState extends State<ToastPage> {
             ),
           ),
           const SBBListHeader('Additional Toast actions'),
-          SBBGroup(
+          SBBContentBox(
             padding: const EdgeInsets.all(sbbDefaultSpacing),
             child: Row(
               children: [
@@ -116,7 +116,7 @@ class _ToastPageState extends State<ToastPage> {
           ),
           const SizedBox(height: sbbDefaultSpacing * 2),
           const SBBListHeader('Edit Toast Content'),
-          SBBGroup(
+          SBBContentBox(
             padding: const EdgeInsets.all(sbbDefaultSpacing),
             child: Column(
               children: [

@@ -1,5 +1,5 @@
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import '../native_app.dart';
 
@@ -11,7 +11,7 @@ class TextFieldPage extends StatelessWidget {
     return ListView(
       children: [
         const Padding(padding: EdgeInsets.all(16.0), child: ThemeModeSegmentedButton()),
-        SBBGroup(
+        SBBContentBox(
           margin: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Column(
             children: <Widget>[
@@ -50,7 +50,7 @@ class TextFieldPage extends StatelessWidget {
             ],
           ),
         ),
-        SBBGroup(
+        SBBContentBox(
           margin: const EdgeInsets.all(16.0),
           child: Column(
             children: [
