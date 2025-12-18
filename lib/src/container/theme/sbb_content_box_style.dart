@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 
-import '../../theme.dart';
+import '../../../sbb_design_system_mobile.dart';
+
+typedef SBBGroupStyle = SBBContentBoxStyle;
 
 class SBBContentBoxStyle extends ThemeExtension<SBBContentBoxStyle> {
   SBBContentBoxStyle({
     this.margin,
     this.padding,
     this.color,
-    this.shape,
+    @Deprecated('In the next major version this property will be read only.') this.shape,
     this.clipBehavior,
     this.isSemanticContainer,
   });
@@ -26,6 +28,7 @@ class SBBContentBoxStyle extends ThemeExtension<SBBContentBoxStyle> {
   final EdgeInsetsGeometry? margin;
   final EdgeInsetsGeometry? padding;
   final Color? color;
+  @Deprecated('In the next major version this property will be read only.')
   final ShapeBorder? shape;
   final Clip? clipBehavior;
   final bool? isSemanticContainer;
@@ -35,7 +38,7 @@ class SBBContentBoxStyle extends ThemeExtension<SBBContentBoxStyle> {
     EdgeInsetsGeometry? margin,
     EdgeInsetsGeometry? padding,
     Color? color,
-    ShapeBorder? shape,
+    @Deprecated('In the next major version this property will be read only.') ShapeBorder? shape,
     Clip? clipBehavior,
     bool? isSemanticContainer,
   }) => SBBContentBoxStyle(
