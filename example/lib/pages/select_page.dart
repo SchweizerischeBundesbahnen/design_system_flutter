@@ -1,5 +1,5 @@
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import '../native_app.dart';
 
@@ -45,7 +45,7 @@ class SelectPageState extends State<SelectPage> {
         const ThemeModeSegmentedButton(),
         const SizedBox(height: sbbDefaultSpacing),
         const SBBListHeader('Single value'),
-        SBBGroup(
+        SBBContentBox(
           child: Column(
             children: <Widget>[
               SBBSelect<int>(
@@ -116,7 +116,7 @@ class SelectPageState extends State<SelectPage> {
         ),
         const SizedBox(height: sbbDefaultSpacing),
         const SBBListHeader('Multiple values'),
-        SBBGroup(
+        SBBContentBox(
           child: Column(
             children: <Widget>[
               SBBMultiSelect<int>(

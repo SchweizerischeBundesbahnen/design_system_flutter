@@ -35,11 +35,11 @@ class DatePickerTest extends StatelessWidget {
   Widget build(BuildContext context) => Column(
     mainAxisSize: MainAxisSize.min,
     children: <Widget>[
-      SBBGroup(
+      SBBContentBox(
         child: SBBDatePicker(onDateChanged: (_) {}, initialDate: initialDate),
       ),
       const SizedBox(height: sbbDefaultSpacing),
-      SBBGroup(
+      SBBContentBox(
         child: SBBDatePicker(
           onDateChanged: (_) {},
           initialDate: initialDate,
@@ -52,14 +52,14 @@ class DatePickerTest extends StatelessWidget {
         children: [
           SizedBox(
             width: 225,
-            child: SBBGroup(
+            child: SBBContentBox(
               child: SBBDatePicker(onDateChanged: (_) {}, initialDate: initialDate),
             ),
           ),
           const SizedBox(width: sbbDefaultSpacing),
           SizedBox(
             width: 180,
-            child: SBBGroup(
+            child: SBBContentBox(
               child: SBBDatePicker(onDateChanged: (_) {}, initialDate: initialDate),
             ),
           ),

@@ -111,7 +111,7 @@ class MessageTest extends StatelessWidget {
         const SBBListHeader('SBBMessage'),
         SizedBox(
           width: 400.0,
-          child: SBBGroup(padding: const EdgeInsets.all(sbbDefaultSpacing / 2), child: sbbMessage),
+          child: SBBContentBox(padding: const EdgeInsets.all(sbbDefaultSpacing / 2), child: sbbMessage),
         ),
       ],
     );

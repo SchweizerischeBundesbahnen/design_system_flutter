@@ -14,7 +14,7 @@ class LinkPage extends StatelessWidget {
       children: <Widget>[
         const ThemeModeSegmentedButton(),
         const SizedBox(height: sbbDefaultSpacing),
-        SBBGroup(
+        SBBContentBox(
           padding: const EdgeInsets.all(sbbDefaultSpacing),
           child: SBBLinkText(
             text: '''We are using a subset of the Markdown syntax for recognizing links in a text:

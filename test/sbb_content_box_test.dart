@@ -5,7 +5,7 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'test_app.dart';
 
 void main() {
-  testWidgets('group', (WidgetTester tester) async {
+  testWidgets('content_box', (WidgetTester tester) async {
     content(String text) => SizedBox(
       height: sbbDefaultSpacing * 2,
       width: double.infinity,
@@ -15,18 +15,15 @@ void main() {
     final widget = Padding(
       padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
       child: Column(
+        spacing: sbbDefaultSpacing,
         children: [
-          SizedBox(height: sbbDefaultSpacing),
-          SBBGroup(child: content('Default')),
-          SizedBox(height: sbbDefaultSpacing),
-          SBBGroup(color: SBBColors.royal, child: content('Different Color')),
-          SizedBox(height: sbbDefaultSpacing),
-          SBBGroup(
+          SBBContentBox(child: content('Default')),
+          SBBContentBox(color: SBBColors.royal, child: content('Different Color')),
+          SBBContentBox(
             padding: EdgeInsets.symmetric(vertical: sbbDefaultSpacing),
             child: content('Extra padding'),
           ),
-          SizedBox(height: sbbDefaultSpacing),
-          SBBGroup(margin: EdgeInsets.all(sbbDefaultSpacing * 4), child: content('Extra margin')),
+          SBBContentBox(margin: EdgeInsets.all(sbbDefaultSpacing * 4), child: content('Extra margin')),
         ],
       ),
     );
@@ -35,7 +32,7 @@ void main() {
       TestSpecs.themedSpecs,
       widget,
       tester,
-      'group_1',
+      'content_box_1',
       find.byType(Column).first,
     );
   });

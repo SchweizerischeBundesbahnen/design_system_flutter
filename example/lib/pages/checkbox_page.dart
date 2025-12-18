@@ -53,7 +53,7 @@ class CheckboxPageState extends State<CheckboxPage> {
           selectedIndexChanged: (i) => setState(() => _enabledIndex = i),
         ),
         const SBBListHeader('Checkbox Item - List'),
-        SBBGroup(
+        SBBContentBox(
           child: Column(
             children: [
               SBBCheckboxListItem(
@@ -121,7 +121,7 @@ class CheckboxPageState extends State<CheckboxPage> {
         Column(
           spacing: sbbDefaultSpacing * 0.5,
           children: [
-            SBBGroup(
+            SBBContentBox(
               child: SBBCheckboxListItem.boxed(
                 value: _listItemValue1,
                 label: 'Label',
@@ -129,7 +129,7 @@ class CheckboxPageState extends State<CheckboxPage> {
                 onChanged: _isEnabled ? (value) => setState(() => _listItemValue1 = value) : null,
               ),
             ),
-            SBBGroup(
+            SBBContentBox(
               child: SBBCheckboxListItem.boxed(
                 value: _listItemValue2,
                 label: 'Tristate',
@@ -137,7 +137,7 @@ class CheckboxPageState extends State<CheckboxPage> {
                 onChanged: _isEnabled ? (value) => setState(() => _listItemValue2 = value) : null,
               ),
             ),
-            SBBGroup(
+            SBBContentBox(
               child: SBBCheckboxListItem.boxed(
                 value: _listItemValue4,
                 label: 'Leading Icon',
@@ -145,7 +145,7 @@ class CheckboxPageState extends State<CheckboxPage> {
                 leadingIcon: SBBIcons.alarm_clock_small,
               ),
             ),
-            SBBGroup(
+            SBBContentBox(
               child: SBBCheckboxListItem.boxed(
                 value: _listItemValue5,
                 label: 'Leading and Trailing Icon',
@@ -154,7 +154,7 @@ class CheckboxPageState extends State<CheckboxPage> {
                 trailingIcon: SBBIcons.dog_small,
               ),
             ),
-            SBBGroup(
+            SBBContentBox(
               child: SBBCheckboxListItem.boxed(
                 value: _listItemValue3,
                 label: 'Button',
@@ -163,7 +163,7 @@ class CheckboxPageState extends State<CheckboxPage> {
                 onCallToAction: () => sbbToast.show(title: 'Button pressed'),
               ),
             ),
-            SBBGroup(
+            SBBContentBox(
               child: SBBCheckboxListItem.custom(
                 value: _listItemValue6,
                 label: 'Custom trailing Widget',
@@ -174,7 +174,7 @@ class CheckboxPageState extends State<CheckboxPage> {
                 ),
               ),
             ),
-            SBBGroup(
+            SBBContentBox(
               child: SBBCheckboxListItem.boxed(
                 value: _listItemValue7,
                 label: 'Multiline Label with\nSecondary Label',
@@ -185,7 +185,7 @@ class CheckboxPageState extends State<CheckboxPage> {
                 onChanged: _isEnabled ? (value) => setState(() => _listItemValue7 = value) : null,
               ),
             ),
-            SBBGroup(
+            SBBContentBox(
               child: SBBCheckboxListItem.boxed(
                 value: _listItemValue8,
                 label: 'Loading',

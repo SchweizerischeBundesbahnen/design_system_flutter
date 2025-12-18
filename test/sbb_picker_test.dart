@@ -1,6 +1,6 @@
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import 'test_app.dart';
 
@@ -33,7 +33,7 @@ class PickerTest extends StatelessWidget {
       Row(
         children: [
           Expanded(
-            child: SBBGroup(
+            child: SBBContentBox(
               child: SBBPicker.list(
                 onSelectedItemChanged: (_) {},
                 looping: true,
@@ -44,7 +44,7 @@ class PickerTest extends StatelessWidget {
           ),
           const SizedBox(width: sbbDefaultSpacing),
           Expanded(
-            child: SBBGroup(
+            child: SBBContentBox(
               child: SBBPicker.list(
                 onSelectedItemChanged: (_) {},
                 looping: false,
@@ -59,7 +59,7 @@ class PickerTest extends StatelessWidget {
       Row(
         children: [
           Expanded(
-            child: SBBGroup(
+            child: SBBContentBox(
               child: SBBPicker(
                 onSelectedItemChanged: (_) {},
                 looping: true,
@@ -74,7 +74,7 @@ class PickerTest extends StatelessWidget {
           ),
           const SizedBox(width: sbbDefaultSpacing),
           Expanded(
-            child: SBBGroup(
+            child: SBBContentBox(
               child: SBBPicker(
                 onSelectedItemChanged: (_) {},
                 looping: false,
@@ -93,7 +93,7 @@ class PickerTest extends StatelessWidget {
           ),
           const SizedBox(width: sbbDefaultSpacing),
           Expanded(
-            child: SBBGroup(
+            child: SBBContentBox(
               child: SBBPicker(
                 onSelectedItemChanged: (_) {},
                 looping: false,

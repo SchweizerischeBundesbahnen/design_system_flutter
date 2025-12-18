@@ -9,9 +9,18 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+### Added
+
+- Added `SBBContentBox` and `SBBContentBoxThemeData` with `SBBContentBoxStyle` to align with design specifications
+
 ### Changed
 
 - (auto): updated icon lib to version 1.8.14
+
+### Deprecated
+
+- `SBBGroup`: use `SBBContentBox` instead
+- `SBBGroupStyle`: use `SBBContentBoxStyle` instead
 
 ## [4.3.1] - 2025-11-21
 

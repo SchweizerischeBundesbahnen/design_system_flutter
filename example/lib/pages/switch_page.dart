@@ -47,7 +47,7 @@ class _SwitchPageState extends State<SwitchPage> {
         ),
         const SizedBox(height: sbbDefaultSpacing),
         const SBBListHeader('SwitchItem - List'),
-        SBBGroup(
+        SBBContentBox(
           child: Column(
             children: [
               SBBSwitchListItem(
@@ -149,7 +149,7 @@ class _SwitchPageState extends State<SwitchPage> {
         ),
         const SizedBox(height: sbbDefaultSpacing * 2),
         const SBBListHeader('SwitchItem - Boxed'),
-        SBBGroup(
+        SBBContentBox(
           child: SBBSwitchListItem.boxed(
             value: _value2,
             title: 'Default',
@@ -157,7 +157,7 @@ class _SwitchPageState extends State<SwitchPage> {
           ),
         ),
         const SizedBox(height: sbbDefaultSpacing * .5),
-        SBBGroup(
+        SBBContentBox(
           child: SBBSwitchListItem.boxed(
             value: _value3,
             title: 'Icon',
@@ -166,7 +166,7 @@ class _SwitchPageState extends State<SwitchPage> {
           ),
         ),
         const SizedBox(height: sbbDefaultSpacing * .5),
-        SBBGroup(
+        SBBContentBox(
           child: SBBSwitchListItem.boxed(
             value: _value4,
             title: 'Very Looooooooooooooooooooooong Multiline Label With Subtitle',
@@ -176,7 +176,7 @@ class _SwitchPageState extends State<SwitchPage> {
           ),
         ),
         const SizedBox(height: sbbDefaultSpacing * .5),
-        SBBGroup(
+        SBBContentBox(
           child: SBBSwitchListItem.boxed(
             value: _value5,
             title: 'With Link',
@@ -190,7 +190,7 @@ class _SwitchPageState extends State<SwitchPage> {
           ),
         ),
         const SizedBox(height: sbbDefaultSpacing * .5),
-        SBBGroup(
+        SBBContentBox(
           child: SBBSwitchListItem.boxed(
             value: _value6,
             title: 'With 3 Links',
@@ -212,7 +212,7 @@ class _SwitchPageState extends State<SwitchPage> {
           ),
         ),
         const SizedBox(height: sbbDefaultSpacing * .5),
-        SBBGroup(
+        SBBContentBox(
           child: SBBSwitchListItem.boxed(
             value: _value7,
             title: 'Disabled, Link enabled',
@@ -226,7 +226,7 @@ class _SwitchPageState extends State<SwitchPage> {
           ),
         ),
         const SizedBox(height: sbbDefaultSpacing * .5),
-        SBBGroup(
+        SBBContentBox(
           child: SBBSwitchListItem.boxed(
             value: _value8,
             title: 'Only Link disabled',
@@ -235,7 +235,7 @@ class _SwitchPageState extends State<SwitchPage> {
           ),
         ),
         const SizedBox(height: sbbDefaultSpacing * .5),
-        SBBGroup(
+        SBBContentBox(
           child: SBBSwitchListItem.boxed(
             value: _value9,
             title: 'All disabled',
@@ -244,7 +244,7 @@ class _SwitchPageState extends State<SwitchPage> {
           ),
         ),
         const SizedBox(height: sbbDefaultSpacing * .5),
-        SBBGroup(
+        SBBContentBox(
           child: SBBSwitchListItem.custom(
             value: _value10,
             title: 'Custom LinkWidget',
@@ -264,7 +264,7 @@ class _SwitchPageState extends State<SwitchPage> {
           ),
         ),
         const SizedBox(height: sbbDefaultSpacing * .5),
-        SBBGroup(
+        SBBContentBox(
           child: SBBSwitchListItem(
             value: _value11,
             title: 'Loading',

@@ -208,7 +208,7 @@ class _VerticalStartPage extends StatelessWidget {
               textAlign: TextAlign.center,
             ),
             const SizedBox(height: sbbDefaultSpacing * 9),
-            SBBGroup(
+            SBBContentBox(
               padding: EdgeInsets.symmetric(horizontal: sbbDefaultSpacing / 2, vertical: sbbDefaultSpacing),
               child: Column(
                 children: [
@@ -254,7 +254,7 @@ class _HorizontalStartPage extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 67),
-                  SBBGroup(
+                  SBBContentBox(
                     padding: EdgeInsets.symmetric(horizontal: sbbDefaultSpacing / 2, vertical: sbbDefaultSpacing),
                     child: Column(
                       children: [

@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 
-import '../../theme.dart';
+import '../../../sbb_design_system_mobile.dart';
 
-class SBBGroupStyle extends ThemeExtension<SBBGroupStyle> {
-  SBBGroupStyle({
+typedef SBBGroupStyle = SBBContentBoxStyle;
+
+class SBBContentBoxStyle extends ThemeExtension<SBBContentBoxStyle> {
+  SBBContentBoxStyle({
     this.margin,
     this.padding,
     this.color,
-    this.shape,
+    @Deprecated('In the next major version this property will be read only.') this.shape,
     this.clipBehavior,
     this.isSemanticContainer,
   });
 
-  factory SBBGroupStyle.$default({required SBBBaseStyle baseStyle}) => SBBGroupStyle(
+  factory SBBContentBoxStyle.$default({required SBBBaseStyle baseStyle}) => SBBContentBoxStyle(
     margin: EdgeInsets.zero,
     padding: EdgeInsets.zero,
     color: baseStyle.themeValue(SBBColors.white, SBBColors.charcoal),
@@ -21,24 +23,25 @@ class SBBGroupStyle extends ThemeExtension<SBBGroupStyle> {
     isSemanticContainer: true,
   );
 
-  static SBBGroupStyle of(BuildContext context) => Theme.of(context).extension<SBBGroupStyle>()!;
+  static SBBContentBoxStyle of(BuildContext context) => Theme.of(context).extension<SBBContentBoxStyle>()!;
 
   final EdgeInsetsGeometry? margin;
   final EdgeInsetsGeometry? padding;
   final Color? color;
+  @Deprecated('In the next major version this property will be read only.')
   final ShapeBorder? shape;
   final Clip? clipBehavior;
   final bool? isSemanticContainer;
 
   @override
-  SBBGroupStyle copyWith({
+  SBBContentBoxStyle copyWith({
     EdgeInsetsGeometry? margin,
     EdgeInsetsGeometry? padding,
     Color? color,
-    ShapeBorder? shape,
+    @Deprecated('In the next major version this property will be read only.') ShapeBorder? shape,
     Clip? clipBehavior,
     bool? isSemanticContainer,
-  }) => SBBGroupStyle(
+  }) => SBBContentBoxStyle(
     margin: margin ?? this.margin,
     padding: padding ?? this.padding,
     color: color ?? this.color,
@@ -48,9 +51,9 @@ class SBBGroupStyle extends ThemeExtension<SBBGroupStyle> {
   );
 
   @override
-  SBBGroupStyle lerp(ThemeExtension<SBBGroupStyle>? other, double t) {
-    if (other is! SBBGroupStyle) return this;
-    return SBBGroupStyle(
+  SBBContentBoxStyle lerp(ThemeExtension<SBBContentBoxStyle>? other, double t) {
+    if (other is! SBBContentBoxStyle) return this;
+    return SBBContentBoxStyle(
       margin: EdgeInsetsGeometry.lerp(margin, other.margin, t) as EdgeInsets?,
       padding: EdgeInsetsGeometry.lerp(padding, other.padding, t) as EdgeInsets?,
       color: Color.lerp(color, other.color, t),
@@ -61,9 +64,9 @@ class SBBGroupStyle extends ThemeExtension<SBBGroupStyle> {
   }
 }
 
-extension SBBGroupStyleExtension on SBBGroupStyle? {
-  SBBGroupStyle merge(SBBGroupStyle? other) {
-    if (this == null) return other ?? SBBGroupStyle();
+extension SBBContentBoxStyleExtension on SBBContentBoxStyle? {
+  SBBContentBoxStyle merge(SBBContentBoxStyle? other) {
+    if (this == null) return other ?? SBBContentBoxStyle();
     return this!.copyWith(
       margin: this!.margin ?? other?.margin,
       padding: this!.padding ?? other?.padding,

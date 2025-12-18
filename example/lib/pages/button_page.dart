@@ -17,7 +17,7 @@ class ButtonPage extends StatelessWidget {
           const ThemeModeSegmentedButton(),
           const SizedBox(height: sbbDefaultSpacing),
           const SBBListHeader('Primary Button'),
-          SBBGroup(
+          SBBContentBox(
             padding: const EdgeInsets.all(sbbDefaultSpacing),
             child: Column(
               children: [
@@ -36,7 +36,7 @@ class ButtonPage extends StatelessWidget {
           ),
           const SizedBox(height: sbbDefaultSpacing),
           const SBBListHeader('Secondary Button'),
-          SBBGroup(
+          SBBContentBox(
             padding: const EdgeInsets.all(sbbDefaultSpacing),
             child: Column(
               children: [
@@ -55,7 +55,7 @@ class ButtonPage extends StatelessWidget {
           ),
           const SizedBox(height: sbbDefaultSpacing),
           const SBBListHeader('Tertiary Button Large'),
-          SBBGroup(
+          SBBContentBox(
             padding: const EdgeInsets.all(sbbDefaultSpacing),
             child: SizedBox(
               width: double.infinity,
@@ -95,7 +95,7 @@ class ButtonPage extends StatelessWidget {
           ),
           const SizedBox(height: sbbDefaultSpacing),
           const SBBListHeader('Tertiary Button Small'),
-          SBBGroup(
+          SBBContentBox(
             padding: const EdgeInsets.all(sbbDefaultSpacing),
             child: SizedBox(
               width: double.infinity,
@@ -135,7 +135,7 @@ class ButtonPage extends StatelessWidget {
           ),
           const SizedBox(height: sbbDefaultSpacing),
           const SBBListHeader('Icon Button Large'),
-          SBBGroup(
+          SBBContentBox(
             padding: const EdgeInsets.all(sbbDefaultSpacing),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -153,7 +153,7 @@ class ButtonPage extends StatelessWidget {
           ),
           const SizedBox(height: sbbDefaultSpacing),
           const SBBListHeader('Icon Button Small'),
-          SBBGroup(
+          SBBContentBox(
             padding: const EdgeInsets.all(sbbDefaultSpacing),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
