@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
-/// SBBGroup. Use to structure content.
+/// SBBContentBox. Use to structure content.
 ///
 /// May be placed anywhere in the screen to structure other components.
 ///
-/// Referred to as `Container` component in the [SBB Design System](https://digital.sbb.ch/de/design-system/mobile/components/container/)
-///
 /// See also:
 /// - [SBBHeaderbox]: A variant of this component fixed below the [SBBHeader].
-class SBBGroup extends StatelessWidget {
-  const SBBGroup({
+/// - [Figma Design Specification](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=141-2024)
+class SBBContentBox extends StatelessWidget {
+  const SBBContentBox({
     super.key,
     this.margin,
     this.padding,
@@ -21,13 +20,13 @@ class SBBGroup extends StatelessWidget {
     required this.child,
   });
 
-  /// The empty space that surrounds the [SBBContentbox].
+  /// The empty space that surrounds the [SBBContentBox].
   ///
   /// If this property is null then [SBBGroupStyle.margin] is used, which defaults to
   /// [EdgeInsets.zero].
   final EdgeInsetsGeometry? margin;
 
-  /// The empty space that separates the [child] and the edge of [SBBContentbox].
+  /// The empty space that separates the [child] and the edge of [SBBContentBox].
   ///
   /// If this property is null then [SBBGroupStyle.padding] is used, which defaults to
   /// [EdgeInsets.zero].

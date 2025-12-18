@@ -76,7 +76,7 @@ class SBBCheckboxListItem extends StatelessWidget {
          checkboxSemanticLabel: checkboxSemanticLabel,
        );
 
-  /// Use this in combination with a [SBBGroup] to create a boxed variant of the [SBBCheckboxListItem].
+  /// Use this in combination with a [SBBContentBox] to create a boxed variant of the [SBBCheckboxListItem].
   ///
   /// ```dart
   /// SBBGroup(

@@ -91,7 +91,7 @@ class SBBTimePicker extends StatefulWidget {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
-            child: SBBGroup(
+            child: SBBContentBox(
               child: SBBTimePicker(
                 initialTime: initialTime,
                 minimumTime: minimumTime,

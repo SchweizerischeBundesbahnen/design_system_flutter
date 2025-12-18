@@ -74,7 +74,7 @@ class SBBRadioListItem<T> extends StatelessWidget {
          radioSemanticLabel: radioSemanticLabel,
        );
 
-  /// Use this in combination with a [SBBGroup] to create a boxed variant of the [SBBRadioListItem].
+  /// Use this in combination with a [SBBContentBox] to create a boxed variant of the [SBBRadioListItem].
   ///
   /// ```dart
   /// SBBGroup(
@@ -137,7 +137,7 @@ class SBBRadioListItem<T> extends StatelessWidget {
   /// The value represented by this radio button.
   final T value;
 
-  /// The currently selected value for a group of radio buttons.
+  /// The currently selected value for a container of radio buttons.
   ///
   /// This radio button is considered selected if its [value] matches the
   /// [groupValue].

@@ -58,7 +58,7 @@ class _PickerPageState extends State<InputTriggerPage> {
           const ThemeModeSegmentedButton(),
           const SizedBox(height: sbbDefaultSpacing),
           const SBBListHeader('Demo'),
-          SBBGroup(
+          SBBContentBox(
             child: Column(
               children: [
                 SBBInputTrigger(
@@ -83,7 +83,7 @@ class _PickerPageState extends State<InputTriggerPage> {
           ),
           const SizedBox(height: sbbDefaultSpacing),
           const SBBListHeader('Change properties'),
-          SBBGroup(
+          SBBContentBox(
             child: Column(
               children: [
                 SBBTextField(controller: labelController, labelText: 'Label'),

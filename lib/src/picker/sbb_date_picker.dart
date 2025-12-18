@@ -84,7 +84,7 @@ class SBBDatePicker extends StatefulWidget {
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
-            child: SBBGroup(
+            child: SBBContentBox(
               child: SBBDatePicker(
                 initialDate: modalDate,
                 minimumDate: minimumDate,

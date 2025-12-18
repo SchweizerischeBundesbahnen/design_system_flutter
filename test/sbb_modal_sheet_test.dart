@@ -36,7 +36,7 @@ class ModalSheetTest extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         const SBBListHeader('Modal Sheet'),
-        SBBGroup(
+        SBBContentBox(
           child: Padding(
             padding: const EdgeInsets.all(sbbDefaultSpacing * .5),
             child: Column(
@@ -59,7 +59,7 @@ class ModalSheetTest extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         const SBBListHeader('Custom Modal Sheet'),
-        SBBGroup(
+        SBBContentBox(
           child: Padding(
             padding: const EdgeInsets.all(sbbDefaultSpacing * .5),
             child: Column(

@@ -36,7 +36,7 @@ class CheckboxTest extends StatelessWidget {
     mainAxisSize: MainAxisSize.min,
     children: [
       const SBBListHeader('Checkbox'),
-      SBBGroup(
+      SBBContentBox(
         padding: const EdgeInsets.all(sbbDefaultSpacing / 2),
         child: Row(
           children: [
@@ -49,7 +49,7 @@ class CheckboxTest extends StatelessWidget {
       ),
       const SizedBox(height: sbbDefaultSpacing),
       const SBBListHeader('CheckboxItem - List'),
-      SBBGroup(
+      SBBContentBox(
         child: Column(
           children: [
             SBBCheckboxListItem(value: value1, label: 'Default', onChanged: (value) {}),
@@ -121,13 +121,13 @@ class CheckboxTest extends StatelessWidget {
       Column(
         spacing: sbbDefaultSpacing * .5,
         children: [
-          SBBGroup(
+          SBBContentBox(
             child: SBBCheckboxListItem.boxed(value: value1, label: 'Default', onChanged: (value) {}),
           ),
-          SBBGroup(
+          SBBContentBox(
             child: SBBCheckboxListItem.boxed(value: value2, label: 'Tristate', tristate: true, onChanged: (value) {}),
           ),
-          SBBGroup(
+          SBBContentBox(
             child: SBBCheckboxListItem.boxed(
               value: value3,
               label: 'Leading Icon, Button (Disabled)',
@@ -137,7 +137,7 @@ class CheckboxTest extends StatelessWidget {
               trailingIcon: SBBIcons.circle_information_small_small,
             ),
           ),
-          SBBGroup(
+          SBBContentBox(
             child: SBBCheckboxListItem.custom(
               value: false,
               label: 'Custom trailing Widget',

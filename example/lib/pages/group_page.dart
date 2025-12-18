@@ -18,16 +18,16 @@ class GroupPage extends StatelessWidget {
       children: <Widget>[
         ThemeModeSegmentedButton(),
         SizedBox(height: sbbDefaultSpacing * 2),
-        SBBGroup(child: content('Default')),
+        SBBContentBox(child: content('Default')),
         SizedBox(height: sbbDefaultSpacing),
-        SBBGroup(color: SBBColors.royal, child: content('Different Color')),
+        SBBContentBox(color: SBBColors.royal, child: content('Different Color')),
         SizedBox(height: sbbDefaultSpacing),
-        SBBGroup(
+        SBBContentBox(
           padding: EdgeInsets.symmetric(vertical: sbbDefaultSpacing),
           child: content('Extra padding'),
         ),
         SizedBox(height: sbbDefaultSpacing),
-        SBBGroup(margin: EdgeInsets.all(sbbDefaultSpacing * 4), child: content('Extra margin')),
+        SBBContentBox(margin: EdgeInsets.all(sbbDefaultSpacing * 4), child: content('Extra margin')),
       ],
     );
   }
