@@ -3,8 +3,9 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/button/theme/sbb_button_style_x.dart';
 import 'package:sbb_design_system_mobile/src/checkbox/theme/default_sbb_checkbox_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/chip/theme/default_sbb_chip_theme_data.dart';
-import 'package:sbb_design_system_mobile/src/radio/theme/default_sbb_radio_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/container/container.dart';
+import 'package:sbb_design_system_mobile/src/radio/theme/default_sbb_radio_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/switch/theme/default_sbb_switch_theme_data.dart';
 
 import '../button/theme/default_button_themes.dart';
 import '../container/theme/default_sbb_content_box_theme_data.dart';
@@ -29,6 +30,7 @@ class SBBTheme {
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBRadioThemeData? radioTheme,
     SBBStatusThemeData? statusTheme,
+    SBBSwitchThemeData? switchTheme,
     SBBTextTheme? textTheme,
     SBBToastStyle? toastStyle,
   }) => createTheme(
@@ -45,6 +47,8 @@ class SBBTheme {
     controlStyles: controlStyles,
     groupStyle: groupStyle,
     headerBoxStyle: headerBoxStyle,
+    statusTheme: statusTheme,
+    switchTheme: switchTheme,
     textTheme: textTheme,
     toastStyle: toastStyle,
   );
@@ -63,6 +67,7 @@ class SBBTheme {
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBStatusThemeData? statusTheme,
+    SBBSwitchThemeData? switchTheme,
     SBBTextTheme? textTheme,
     SBBToastStyle? toastStyle,
   }) => createTheme(
@@ -80,6 +85,7 @@ class SBBTheme {
     headerBoxStyle: headerBoxStyle,
     groupStyle: groupStyle,
     statusTheme: statusTheme,
+    switchTheme: switchTheme,
     textTheme: textTheme,
     toastStyle: toastStyle,
   );
@@ -99,6 +105,7 @@ class SBBTheme {
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBRadioThemeData? radioTheme,
     SBBStatusThemeData? statusTheme,
+    SBBSwitchThemeData? switchTheme,
     SBBTextTheme? textTheme,
     SBBToastStyle? toastStyle,
   }) {
@@ -136,6 +143,9 @@ class SBBTheme {
     final defaultStatusTheme = DefaultSBBStatusTheme(baseStyle: mergedBaseStyle);
     final mergedStatusTheme = defaultStatusTheme.merge(statusTheme);
 
+    final defaultSwitchTheme = DefaultSBBSwitchThemeData(mergedBaseStyle);
+    final mergedSwitchTheme = defaultSwitchTheme.merge(switchTheme);
+
     final defaultContentBoxTheme = DefaultSBBContentBoxTheme(baseStyle: mergedBaseStyle);
     final mergedContentBoxTheme = defaultContentBoxTheme.merge(contentBoxTheme);
 
@@ -159,6 +169,7 @@ class SBBTheme {
       headerBoxStyle: mergedHeaderBoxStyle,
       radioTheme: mergedRadioTheme,
       statusTheme: mergedStatusTheme,
+      switchTheme: mergedSwitchTheme,
       textTheme: mergedTextTheme,
       toastStyle: mergedToastStyle,
     );
@@ -178,6 +189,7 @@ class SBBTheme {
     required SBBHeaderBoxStyle headerBoxStyle,
     required SBBRadioThemeData radioTheme,
     required SBBStatusThemeData statusTheme,
+    required SBBSwitchThemeData switchTheme,
     required SBBTextTheme textTheme,
     required SBBToastStyle toastStyle,
   }) {
@@ -213,6 +225,7 @@ class SBBTheme {
         headerBoxStyle,
         groupStyle,
         statusTheme,
+        switchTheme,
         textTheme,
         toastStyle,
       ],
