@@ -10,7 +10,7 @@ import 'pages/button_page.dart';
 import 'pages/checkbox_page.dart';
 import 'pages/chip_page.dart';
 import 'pages/color_page.dart';
-import 'pages/group_page.dart';
+import 'pages/container_page.dart';
 import 'pages/header_box_page.dart';
 import 'pages/header_page.dart';
 import 'pages/icon_page.dart';
@@ -128,7 +128,7 @@ class MyApp extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: const <Widget>[
                             _DemoEntry('Autocompletion', AutocompletionPage()),
-                            _DemoEntry('Group', GroupPage()),
+                            _DemoEntry('Group', ContainerPage()),
                             _DemoEntry('Header', HeaderPage()),
                             _DemoEntry('Headerbox', HeaderBoxPage()),
                             _DemoEntry('Modal', ModalPage()),

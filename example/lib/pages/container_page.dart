@@ -3,8 +3,8 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import '../native_app.dart';
 
-class GroupPage extends StatelessWidget {
-  const GroupPage({super.key});
+class ContainerPage extends StatelessWidget {
+  const ContainerPage({super.key});
 
   @override
   Widget build(BuildContext context) {
