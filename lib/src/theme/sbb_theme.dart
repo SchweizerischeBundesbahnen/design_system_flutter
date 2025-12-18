@@ -13,7 +13,7 @@ class SBBTheme {
     SBBButtonStyles? buttonStyles,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
-    SBBGroupStyle? groupStyle,
+    SBBContentBoxStyle? groupStyle,
     SBBTextTheme? textTheme,
     SBBToastStyle? toastStyle,
   }) => createTheme(
@@ -34,7 +34,7 @@ class SBBTheme {
     SBBButtonStyles? buttonStyles,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
-    SBBGroupStyle? groupStyle,
+    SBBContentBoxStyle? groupStyle,
     SBBTextTheme? textTheme,
     SBBToastStyle? toastStyle,
   }) => createTheme(
@@ -56,7 +56,7 @@ class SBBTheme {
     SBBButtonStyles? buttonStyles,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
-    SBBGroupStyle? groupStyle,
+    SBBContentBoxStyle? groupStyle,
     SBBTextTheme? textTheme,
     SBBToastStyle? toastStyle,
   }) {
@@ -73,7 +73,7 @@ class SBBTheme {
     final defaultHeaderBoxStyle = SBBHeaderBoxStyle.$default(baseStyle: mergedBaseStyle);
     final mergedHeaderBoxStyle = headerBoxStyle.merge(defaultHeaderBoxStyle);
 
-    final defaultGroupStyle = SBBGroupStyle.$default(baseStyle: mergedBaseStyle);
+    final defaultGroupStyle = SBBContentBoxStyle.$default(baseStyle: mergedBaseStyle);
     final mergedGroupStyle = groupStyle.merge(defaultGroupStyle);
 
     final defaultTextTheme = SBBTextTheme.$default(baseStyle: mergedBaseStyle);
@@ -100,7 +100,7 @@ class SBBTheme {
     required SBBButtonStyles buttonStyles,
     required SBBControlStyles controlStyles,
     required SBBHeaderBoxStyle headerBoxStyle,
-    required SBBGroupStyle groupStyle,
+    required SBBContentBoxStyle groupStyle,
     required SBBTextTheme textTheme,
     required SBBToastStyle toastStyle,
   }) => ThemeData(

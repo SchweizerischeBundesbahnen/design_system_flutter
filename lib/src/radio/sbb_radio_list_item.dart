@@ -77,7 +77,7 @@ class SBBRadioListItem<T> extends StatelessWidget {
   /// Use this in combination with a [SBBContentBox] to create a boxed variant of the [SBBRadioListItem].
   ///
   /// ```dart
-  /// SBBGroup(
+  /// SBBContentBox(
   ///   child: SBBRadioButtonListItem<SingingCharacter>(
   ///   value: SingingCharacter.lafayette,
   ///   groupValue: _character,

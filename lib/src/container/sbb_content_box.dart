@@ -22,19 +22,19 @@ class SBBContentBox extends StatelessWidget {
 
   /// The empty space that surrounds the [SBBContentBox].
   ///
-  /// If this property is null then [SBBGroupStyle.margin] is used, which defaults to
+  /// If this property is null then [SBBContentBoxStyle.margin] is used, which defaults to
   /// [EdgeInsets.zero].
   final EdgeInsetsGeometry? margin;
 
   /// The empty space that separates the [child] and the edge of [SBBContentBox].
   ///
-  /// If this property is null then [SBBGroupStyle.padding] is used, which defaults to
+  /// If this property is null then [SBBContentBoxStyle.padding] is used, which defaults to
   /// [EdgeInsets.zero].
   final EdgeInsetsGeometry? padding;
 
   /// The box's background color.
   ///
-  /// If this property is null then the ambient [SBBGroupStyle.color] is used, which is
+  /// If this property is null then the ambient [SBBContentBoxStyle.color] is used, which is
   /// by default:
   /// * [SBBColors.white] in light mode
   /// * [SBBColors.charcoal] in dark mode
@@ -42,14 +42,14 @@ class SBBContentBox extends StatelessWidget {
 
   /// {@macro flutter.material.Material.clipBehavior}
   ///
-  /// If this property is null then [SBBGroupStyle.clipBehavior] is used, which is by
+  /// If this property is null then [SBBContentBoxStyle.clipBehavior] is used, which is by
   /// default [Clip.hardEdge].
   final Clip? clipBehavior;
 
   /// Whether this widget represents a single semantic container, or if false
   /// a collection of individual semantic nodes.
   ///
-  /// If null, will use the value of [SBBGroupStyle.isSemanticContainer], which is by default
+  /// If null, will use the value of [SBBContentBoxStyle.isSemanticContainer], which is by default
   /// true.
   ///
   /// Setting this flag to true will attempt to merge all child semantics into
@@ -65,7 +65,7 @@ class SBBContentBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SBBGroupStyle style = SBBGroupStyle.of(context);
+    final SBBContentBoxStyle style = SBBContentBoxStyle.of(context);
 
     return Semantics(
       container: isSemanticContainer ?? style.isSemanticContainer!,
