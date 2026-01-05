@@ -13,7 +13,7 @@ jobs:
 
       - uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: 16.4
+          xcode-version: ~26.1
 
       - uses: actions/checkout@v6
 
@@ -78,7 +78,7 @@ jobs:
 
       - uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: 16.4
+          xcode-version: ~26.1
 
       - uses: actions/checkout@v6
 
