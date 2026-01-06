@@ -4,20 +4,73 @@ import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
-const _switchDisabledOpacity = 0.5;
-
 /// The SBB Switch.
-/// Use according to [documentation](https://digital.sbb.ch/en/design-system/mobile/components/switch/)
+///
+/// A toggle switch that allows users to switch between two states: on or off.
+///
+/// The [SBBSwitch] is a stateless widget that does not maintain any internal state.
+/// Instead, when the user toggles the switch, the widget calls the [onChanged] callback.
+/// The parent widget should listen for the [onChanged] callback and rebuild the switch
+/// with a new [value] to reflect the change in state.
+///
+/// If the [onChanged] callback is null, the switch will be displayed as disabled
+/// and will not respond to user gestures.
+///
+/// ## Sample code
+///
+/// ### Basic usage
+/// ```dart
+/// bool _isEnabled = false;
+///
+/// SBBSwitch(
+///   value: _isEnabled,
+///   onChanged: (bool newValue) {
+///     setState(() {
+///       _isEnabled = newValue;
+///     });
+///   },
+/// )
+/// ```
+///
+/// ### With custom styling
+/// ```dart
+/// SBBSwitch(
+///   value: _isEnabled,
+///   onChanged: (bool newValue) {
+///     setState(() {
+///       _isEnabled = newValue;
+///     });
+///   },
+///   style: SBBSwitchStyle(
+///     trackColor: WidgetStateProperty.fromMap({
+///       WidgetState.selected: Colors.blue,
+///       WidgetState.any: Colors.grey,
+///     }),
+///   ),
+/// )
+/// ```
+///
+/// Requires one of its ancestors to be a [Material] widget.
 ///
 /// See also:
 ///
-/// * [SBBSwitchListItem], which builds this Widget as a part of a List Item
-/// so that you can give the Switch a title, a subtitle, a leading icon and a
-/// link Widget.
-/// * [SBBCheckbox], a widget with semantics similar to [SBBSwitch].
-/// * [SBBRadio] and [SBBSegmentedButton], for selecting among a set of
-/// explicit values.
+/// * [SBBSwitchListItem], which builds this widget as part of a list item
+///   with a label, subtitle, leading icon, and optional trailing widget.
+/// * [SBBCheckbox], a widget with similar toggle semantics but different appearance.
+/// * [SBBRadio], for selecting among a set of explicit values.
+/// * [SBBSegmentedButton], for selecting among multiple options with button-like appearance.
+/// * [SBBSwitchThemeData], for setting the [SBBSwitchStyle] for all switches within the current theme.
+/// * [Figma Design Specs](https://digital.sbb.ch/en/design-system/mobile/components/switch/)
 class SBBSwitch extends StatefulWidget {
+  /// Creates an SBB Switch.
+  ///
+  /// The [value] and [onChanged] arguments are required.
+  ///
+  /// The [value] must not be null, and it determines whether the switch is
+  /// in the "on" (true) or "off" (false) state.
+  ///
+  /// The [onChanged] callback is called when the user toggles the switch.
+  /// If [onChanged] is null, the switch will be disabled and displayed with reduced opacity colors.
   const SBBSwitch({
     super.key,
     required this.value,
@@ -25,13 +78,27 @@ class SBBSwitch extends StatefulWidget {
     this.style,
   });
 
+  /// When [value] is true, the switch appears with the knob
+  /// positioned to the right and the track colored with the active color.
+  ///
+  /// When [value] is false, the switch appears with the knob
+  /// positioned to the left and the track colored with the inactive color.
   final bool value;
+
+  /// Called when the user toggles the switch.
+  ///
+  /// The switch passes the new boolean value to the callback. The parent widget
+  /// is responsible for updating the [value] property to reflect the change.
+  ///
+  /// If this callback is null, the switch will be displayed as disabled and will
+  /// not respond to user gestures. Use null to disable the switch when a certain
+  /// condition is met (e.g., when loading data or when the user lacks permissions).
   final ValueChanged<bool>? onChanged;
 
-  /// Customizes this switch appearance.
+  /// Customizes the appearance of this switch.
   ///
-  /// Non-null properties of this style override the corresponding
-  /// properties in [SBBSwitchThemeData.style] of the theme found in [context].
+  /// Non-null properties of this style override the corresponding properties
+  /// in the [SBBSwitchThemeData.style] from the theme found in [context].
   final SBBSwitchStyle? style;
 
   @override
@@ -42,11 +109,6 @@ class _SBBSwitchState extends State<SBBSwitch> with TickerProviderStateMixin, To
   final _SBBSwitchPainter _painter = _SBBSwitchPainter();
 
   bool _needsPositionAnimation = false;
-
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   void didUpdateWidget(SBBSwitch oldWidget) {
