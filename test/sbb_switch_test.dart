@@ -13,7 +13,7 @@ void main() {
         TestSpecs.themedSpecs,
         widget,
         tester,
-        '${name}_initial',
+        name,
         find.byType(SwitchTest),
       );
     });
@@ -44,6 +44,24 @@ class SwitchTest extends StatelessWidget {
               SBBSwitch(onChanged: (bool? value) {}, value: value1),
               SizedBox(width: sbbDefaultSpacing * .25),
               SBBSwitch(onChanged: null, value: value1),
+            ],
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(sbbDefaultSpacing / 2),
+          child: Row(
+            children: [
+              SBBSwitch(
+                onChanged: (bool? value) {},
+                value: value1,
+                style: SBBSwitchStyle(trackColor: WidgetStatePropertyAll(SBBColors.blue)),
+              ),
+              SizedBox(width: sbbDefaultSpacing * .25),
+              SBBSwitch(
+                onChanged: null,
+                value: value1,
+                style: SBBSwitchStyle(trackColor: WidgetStatePropertyAll(SBBColors.green)),
+              ),
             ],
           ),
         ),
