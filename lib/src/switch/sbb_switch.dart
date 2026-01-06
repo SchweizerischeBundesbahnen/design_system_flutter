@@ -1,26 +1,10 @@
 import 'dart:ui';
 
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
-const _trackWidth = 52.0;
-const _trackHeight = 20.0;
-const _trackRadius = 28.0;
-const _trackInnerStart = _trackRadius * 0.5;
-const _trackInnerEnd = _trackWidth - _trackInnerStart;
-const _trackInnerLength = _trackInnerEnd - _trackInnerStart;
 const _switchDisabledOpacity = 0.5;
-const _thumbRadius = 27.0 * 0.5;
-const _thumbPressedExtension = 7.0;
-const _thumbBoxShadows = [
-  BoxShadow(color: Color(0x14000000), offset: Offset(0, 4), blurRadius: 9.0, spreadRadius: 2.0),
-  BoxShadow(color: Color(0x1A000000), offset: Offset(0, 4), blurRadius: 2.0),
-  BoxShadow(color: Color(0x1C000000), offset: Offset(0, 0), blurRadius: 1.0, spreadRadius: 1.0),
-  BoxShadow(color: Color(0x12000000), offset: Offset(0, 1), blurRadius: 1.0),
-];
 
 /// The SBB Switch.
 /// Use according to [documentation](https://digital.sbb.ch/en/design-system/mobile/components/switch/)
@@ -43,384 +27,313 @@ class SBBSwitch extends StatefulWidget {
   State<SBBSwitch> createState() => _SBBSwitchState();
 }
 
-class _SBBSwitchState extends State<SBBSwitch> with TickerProviderStateMixin {
-  late TapGestureRecognizer _tap;
-  late HorizontalDragGestureRecognizer _drag;
-
-  late AnimationController _positionController;
-  late CurvedAnimation _position;
-
-  late AnimationController _reactionController;
-  late Animation<double> _reaction;
-
-  bool get isEnabled => widget.onChanged != null;
+class _SBBSwitchState extends State<SBBSwitch> with TickerProviderStateMixin, ToggleableStateMixin {
+  final _SBBSwitchPainter _painter = _SBBSwitchPainter();
 
   bool _needsPositionAnimation = false;
 
   @override
   void initState() {
     super.initState();
-
-    _tap = TapGestureRecognizer()
-      ..onTapDown = _handleTapDown
-      ..onTapUp = _handleTapUp
-      ..onTap = _handleTap
-      ..onTapCancel = _handleTapCancel;
-    _drag = HorizontalDragGestureRecognizer()
-      ..onStart = _handleDragStart
-      ..onUpdate = _handleDragUpdate
-      ..onEnd = _handleDragEnd;
-
-    _positionController = AnimationController(
-      duration: kThemeAnimationDuration,
-      value: widget.value ? 1.0 : 0.0,
-      vsync: this,
-    );
-    _position = CurvedAnimation(parent: _positionController, curve: Curves.linear);
-    _reactionController = AnimationController(duration: kThemeAnimationDuration, vsync: this);
-    _reaction = CurvedAnimation(parent: _reactionController, curve: Curves.ease);
   }
 
   @override
   void didUpdateWidget(SBBSwitch oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (_needsPositionAnimation || oldWidget.value != widget.value) {
-      _resumePositionAnimation(isLinear: _needsPositionAnimation);
-    }
-  }
 
-  void _resumePositionAnimation({bool isLinear = true}) {
-    _needsPositionAnimation = false;
-    _position
-      ..curve = isLinear ? Curves.linear : Curves.ease
-      ..reverseCurve = isLinear ? Curves.linear : Curves.ease.flipped;
-    if (widget.value) {
-      _positionController.forward();
-    } else {
-      _positionController.reverse();
+    if (oldWidget.value != widget.value) {
+      if (position.value == 0.0 || position.value == 1.0) {
+        updateCurve();
+      }
+      animateToValue();
     }
-  }
-
-  void _handleTapDown(TapDownDetails details) {
-    if (isEnabled) {
-      _needsPositionAnimation = false;
-    }
-    _reactionController.forward();
-  }
-
-  void _handleTap([Intent? _]) {
-    if (isEnabled) {
-      widget.onChanged!(!widget.value);
-    }
-  }
-
-  void _handleTapUp(TapUpDetails details) {
-    if (isEnabled) {
-      _needsPositionAnimation = false;
-      _reactionController.reverse();
-    }
-  }
-
-  void _handleTapCancel() {
-    if (isEnabled) {
-      _reactionController.reverse();
-    }
-  }
-
-  void _handleDragStart(DragStartDetails details) {
-    if (isEnabled) {
-      _needsPositionAnimation = false;
-      _reactionController.forward();
-    }
-  }
-
-  void _handleDragUpdate(DragUpdateDetails details) {
-    if (isEnabled) {
-      _position
-        ..curve = Curves.linear
-        ..reverseCurve = Curves.linear;
-      final delta = details.primaryDelta! / _trackInnerLength;
-      _positionController.value += delta;
-    }
-  }
-
-  void _handleDragEnd(DragEndDetails details) {
-    setState(() {
-      _needsPositionAnimation = true;
-    });
-    if (_position.value >= 0.5 != widget.value) {
-      widget.onChanged!(!widget.value);
-    }
-    _reactionController.reverse();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final style = SBBControlStyles.of(context).switchToggle!;
-
-    final opacity = isEnabled ? 1.0 : _switchDisabledOpacity;
-    final thumbColor = isEnabled ? style.thumbColor! : style.thumbColorDisabled!;
-    final activeColor = isEnabled ? style.activeColor! : style.activeColorDisabled!;
-    final trackColor = isEnabled ? style.trackColor! : style.trackColorDisabled!;
-    final knobColor = style.knobColor!;
-    if (_needsPositionAnimation) {
-      _resumePositionAnimation();
-    }
-    return Opacity(
-      opacity: opacity,
-      child: _SBBSwitchRenderObjectWidget(
-        value: widget.value,
-        thumbColor: thumbColor,
-        activeColor: activeColor,
-        trackColor: trackColor,
-        knobColor: knobColor,
-        onChanged: widget.onChanged,
-        state: this,
-      ),
-    );
   }
 
   @override
   void dispose() {
-    _tap.dispose();
-    _drag.dispose();
-    _positionController.dispose();
-    _reactionController.dispose();
+    _painter.dispose();
     super.dispose();
   }
-}
 
-class _SBBSwitchRenderObjectWidget extends LeafRenderObjectWidget {
-  const _SBBSwitchRenderObjectWidget({
-    required this.value,
-    required this.thumbColor,
-    required this.activeColor,
-    required this.trackColor,
-    required this.knobColor,
-    required this.onChanged,
-    required this.state,
-  });
+  void updateCurve() {
+    position
+      ..curve = Curves.easeIn
+      ..reverseCurve = Curves.easeOut;
+  }
 
-  final bool value;
-  final Color thumbColor;
-  final Color activeColor;
-  final Color trackColor;
-  final Color knobColor;
-  final ValueChanged<bool>? onChanged;
-  final _SBBSwitchState state;
+  void _handleDragStart(DragStartDetails details) {
+    if (isInteractive) {
+      reactionController.forward();
+    }
+  }
+
+  void _handleDragUpdate(DragUpdateDetails details) {
+    if (isInteractive) {
+      position
+        ..curve = Curves.linear
+        ..reverseCurve = null;
+      final double delta = details.primaryDelta! / SBBSwitchStyle.trackInnerLength;
+      positionController.value += delta;
+    }
+  }
+
+  void _handleDragEnd(DragEndDetails details) {
+    if (position.value >= 0.5 != widget.value) {
+      widget.onChanged?.call(!widget.value);
+      setState(() {
+        _needsPositionAnimation = true;
+      });
+    } else {
+      animateToValue();
+    }
+    reactionController.reverse();
+  }
 
   @override
-  _SBBRenderSwitch createRenderObject(BuildContext context) {
-    return _SBBRenderSwitch(
-      value: value,
-      thumbColor: thumbColor,
-      activeColor: activeColor,
-      trackColor: trackColor,
-      knobColor: knobColor,
-      onChanged: onChanged,
-      state: state,
+  Widget build(BuildContext context) {
+    assert(debugCheckHasMaterial(context));
+
+    if (_needsPositionAnimation) {
+      _needsPositionAnimation = false;
+      animateToValue();
+    }
+
+    final style = Theme.of(context).sbbSwitchTheme!.style!;
+
+    // Colors need to be resolved in selected and non selected states separately
+    // so that they can be lerped between.
+    final Set<WidgetState> activeStates = states..add(WidgetState.selected);
+    final Set<WidgetState> inactiveStates = states..remove(WidgetState.selected);
+
+    final Color activeTrackColor = style.trackColor?.resolve(activeStates) ?? SBBColors.red;
+    final Color inactiveTrackColor = style.trackColor?.resolve(inactiveStates) ?? SBBColors.granite;
+
+    final Color activeKnobBackgroundColor = style.knobBackgroundColor?.resolve(activeStates) ?? SBBColors.white;
+    final Color inactiveKnobBackgroundColor = style.knobBackgroundColor?.resolve(inactiveStates) ?? SBBColors.white;
+
+    final Color activeKnobBorderColor = style.knobBorderColor?.resolve(activeStates) ?? SBBColors.red;
+    final Color inactiveKnobBorderColor = style.knobBorderColor?.resolve(inactiveStates) ?? SBBColors.granite;
+
+    final Color activeKnobForegroundColor = style.knobForegroundColor?.resolve(activeStates) ?? SBBColors.red;
+    final Color inactiveKnobForegroundColor = style.knobForegroundColor?.resolve(inactiveStates) ?? SBBColors.white;
+
+    // TODO: add customizable padding
+    final effectiveSwitchSize = SBBSwitchStyle.switchSize;
+
+    return Semantics(
+      toggled: widget.value,
+      child: GestureDetector(
+        excludeFromSemantics: true,
+        onHorizontalDragStart: _handleDragStart,
+        onHorizontalDragUpdate: _handleDragUpdate,
+        onHorizontalDragEnd: _handleDragEnd,
+        child: buildToggleable(
+          size: effectiveSwitchSize,
+          painter: _painter
+            ..position = position
+            ..positionController = positionController
+            ..reaction = reaction
+            ..downPosition = downPosition
+            ..activeColor = activeTrackColor
+            ..inactiveColor = inactiveTrackColor
+            ..activeKnobBackgroundColor = activeKnobBackgroundColor
+            ..inactiveKnobBackgroundColor = inactiveKnobBackgroundColor
+            ..activeKnobBorderColor = activeKnobBorderColor
+            ..inactiveKnobBorderColor = inactiveKnobBorderColor
+            ..activeKnobForegroundColor = activeKnobForegroundColor
+            ..inactiveKnobForegroundColor = inactiveKnobForegroundColor,
+        ),
+      ),
     );
   }
 
-  @override
-  void updateRenderObject(BuildContext context, _SBBRenderSwitch renderObject) {
-    assert(renderObject._state == state);
-    renderObject
-      ..value = value
-      ..thumbColor = thumbColor
-      ..activeColor = activeColor
-      ..trackColor = trackColor
-      ..knobColor = knobColor
-      ..onChanged = onChanged;
+  void _handleChanged(bool? value) {
+    assert(value != null);
+    assert(widget.onChanged != null);
+    widget.onChanged?.call(value!);
   }
+
+  @override
+  ValueChanged<bool?>? get onChanged => widget.onChanged != null ? _handleChanged : null;
+
+  @override
+  bool get tristate => false;
+
+  @override
+  bool? get value => widget.value;
 }
 
-class _SBBRenderSwitch extends RenderConstrainedBox {
-  _SBBRenderSwitch({
-    required bool value,
-    required Color thumbColor,
-    required Color activeColor,
-    required Color trackColor,
-    required Color knobColor,
-    ValueChanged<bool>? onChanged,
-    required _SBBSwitchState state,
-  }) : _value = value,
-       _thumbColor = thumbColor,
-       _activeColor = activeColor,
-       _trackColor = trackColor,
-       _knobColor = knobColor,
-       _onChanged = onChanged,
-       _state = state,
-       super(
-         additionalConstraints: const BoxConstraints.tightFor(width: _trackWidth, height: _trackHeight),
-       ) {
-    state._position.addListener(markNeedsPaint);
-    state._reaction.addListener(markNeedsPaint);
-  }
+class _SBBSwitchPainter extends ToggleablePainter {
+  AnimationController get positionController => _positionController!;
+  AnimationController? _positionController;
 
-  final _SBBSwitchState _state;
-
-  bool get value => _value;
-  bool _value;
-
-  set value(bool value) {
-    if (value == _value) {
+  set positionController(AnimationController? value) {
+    assert(value != null);
+    if (value == _positionController) {
       return;
     }
-    _value = value;
-    markNeedsSemanticsUpdate();
+    _positionController = value;
+    _colorAnimation?.dispose();
+    _colorAnimation = CurvedAnimation(
+      parent: positionController,
+      curve: Curves.easeOut,
+      reverseCurve: Curves.easeIn,
+    );
+    notifyListeners();
   }
 
-  Color get thumbColor => _thumbColor;
-  Color _thumbColor;
+  CurvedAnimation? _colorAnimation;
 
-  set thumbColor(Color value) {
-    if (value == _thumbColor) {
-      return;
-    }
-    _thumbColor = value;
-    markNeedsPaint();
+  Color get activeKnobBackgroundColor => _activeKnobBackgroundColor!;
+  Color? _activeKnobBackgroundColor;
+
+  set activeKnobBackgroundColor(Color value) {
+    if (value == _activeKnobBackgroundColor) return;
+    _activeKnobBackgroundColor = value;
+    notifyListeners();
   }
 
-  Color get activeColor => _activeColor;
-  Color _activeColor;
+  Color get inactiveKnobBackgroundColor => _inactiveKnobBackgroundColor!;
+  Color? _inactiveKnobBackgroundColor;
 
-  set activeColor(Color value) {
-    if (value == _activeColor) {
-      return;
-    }
-    _activeColor = value;
-    markNeedsPaint();
+  set inactiveKnobBackgroundColor(Color value) {
+    if (value == _inactiveKnobBackgroundColor) return;
+    _inactiveKnobBackgroundColor = value;
+    notifyListeners();
   }
 
-  Color get trackColor => _trackColor;
-  Color _trackColor;
+  Color get activeKnobBorderColor => _activeKnobBorderColor!;
+  Color? _activeKnobBorderColor;
 
-  set trackColor(Color value) {
-    if (value == _trackColor) {
-      return;
-    }
-    _trackColor = value;
-    markNeedsPaint();
+  set activeKnobBorderColor(Color value) {
+    if (value == _activeKnobBorderColor) return;
+    _activeKnobBorderColor = value;
+    notifyListeners();
   }
 
-  Color get knobColor => _knobColor;
-  Color _knobColor;
+  Color get inactiveKnobBorderColor => _inactiveKnobBorderColor!;
+  Color? _inactiveKnobBorderColor;
 
-  set knobColor(Color value) {
-    if (value == _knobColor) {
-      return;
-    }
-    _knobColor = value;
-    markNeedsPaint();
+  set inactiveKnobBorderColor(Color value) {
+    if (value == _inactiveKnobBorderColor) return;
+    _inactiveKnobBorderColor = value;
+    notifyListeners();
   }
 
-  ValueChanged<bool>? get onChanged => _onChanged;
-  ValueChanged<bool>? _onChanged;
+  Color get activeKnobForegroundColor => _activeKnobForegroundColor!;
+  Color? _activeKnobForegroundColor;
 
-  set onChanged(ValueChanged<bool>? value) {
-    if (value == _onChanged) {
-      return;
-    }
-    final wasEnabled = isEnabled;
-    _onChanged = value;
-    if (wasEnabled != isEnabled) {
-      markNeedsPaint();
-      markNeedsSemanticsUpdate();
-    }
+  set activeKnobForegroundColor(Color value) {
+    if (value == _activeKnobForegroundColor) return;
+    _activeKnobForegroundColor = value;
+    notifyListeners();
   }
 
-  bool get isEnabled => onChanged != null;
+  Color get inactiveKnobForegroundColor => _inactiveKnobForegroundColor!;
+  Color? _inactiveKnobForegroundColor;
+
+  set inactiveKnobForegroundColor(Color value) {
+    if (value == _inactiveKnobForegroundColor) return;
+    _inactiveKnobForegroundColor = value;
+    notifyListeners();
+  }
+
+  Color get currentKnobBackgroundColor => Color.lerp(
+    inactiveKnobBackgroundColor,
+    activeKnobBackgroundColor,
+    _colorAnimation!.value,
+  )!;
+
+  Color get currentTrackColor => Color.lerp(inactiveColor, activeColor, _colorAnimation!.value)!;
+
+  Color get currentKnobBorderColor =>
+      Color.lerp(inactiveKnobBorderColor, activeKnobBorderColor, _colorAnimation!.value)!;
+
+  Color get currentKnobForegroundColor =>
+      Color.lerp(inactiveKnobForegroundColor, activeKnobForegroundColor, _colorAnimation!.value)!;
 
   @override
-  bool hitTestSelf(Offset position) => true;
+  void paint(Canvas canvas, Size size) {
+    final currentValue = position.value;
+    final currentReactionValue = reaction.value;
+    final switchMidpoint = size.center(Offset.zero);
 
-  @override
-  void handleEvent(PointerEvent event, BoxHitTestEntry entry) {
-    assert(debugHandleEvent(event, entry));
-    if (event is PointerDownEvent && isEnabled) {
-      _state._drag.addPointer(event);
-      _state._tap.addPointer(event);
-    }
-  }
-
-  @override
-  void describeSemanticsConfiguration(SemanticsConfiguration config) {
-    super.describeSemanticsConfiguration(config);
-
-    if (isEnabled) {
-      config.onTap = _state._handleTap;
-    }
-
-    config.isEnabled = isEnabled;
-    config.isToggled = _value;
-  }
-
-  @override
-  void paint(PaintingContext context, Offset offset) {
-    final canvas = context.canvas;
-
-    final currentValue = _state._position.value;
-    final currentReactionValue = _state._reaction.value;
-
-    final trackRRect = RRect.fromLTRBR(0.0, 0.0, _trackWidth, _trackHeight, const Radius.circular(_trackRadius));
-    final currentTrackColor = Color.lerp(trackColor, activeColor, currentValue)!;
-    final currentKnobColor = Color.lerp(knobColor, activeColor, currentValue)!;
+    // Draw track
+    final trackRect = Rect.fromCenter(
+      center: switchMidpoint,
+      width: SBBSwitchStyle.trackWidth,
+      height: SBBSwitchStyle.trackHeight,
+    );
+    final trackRRect = RRect.fromRectAndRadius(trackRect, Radius.circular(trackRect.shortestSide / 2));
     final trackPaint = Paint()..color = currentTrackColor;
     canvas.drawRRect(trackRRect, trackPaint);
 
-    final currentThumbExtension = _thumbPressedExtension * currentReactionValue;
-    final thumbLeft = lerpDouble(
-      trackRRect.left + _trackInnerStart - _thumbRadius,
-      trackRRect.left + _trackInnerEnd - _thumbRadius - currentThumbExtension,
+    // Calculate thumb position and size
+    final currentKnobExtensions = SBBSwitchStyle.knobPressedExtension * currentReactionValue;
+    final knobLeft = lerpDouble(
+      SBBSwitchStyle.trackInnerStart - SBBSwitchStyle.knobRadius,
+      SBBSwitchStyle.trackInnerEnd - SBBSwitchStyle.knobRadius - currentKnobExtensions,
       currentValue,
     )!;
-    final thumbRight = lerpDouble(
-      trackRRect.left + _trackInnerStart + _thumbRadius + currentThumbExtension,
-      trackRRect.left + _trackInnerEnd + _thumbRadius,
+    final knobRight = lerpDouble(
+      SBBSwitchStyle.trackInnerStart + SBBSwitchStyle.knobRadius + currentKnobExtensions,
+      SBBSwitchStyle.trackInnerEnd + SBBSwitchStyle.knobRadius,
       currentValue,
     )!;
-    const thumbTop = _trackHeight * 0.5 - _thumbRadius;
-    const thumbBottom = _trackHeight * 0.5 + _thumbRadius;
+    final knobTop = switchMidpoint.dy - SBBSwitchStyle.knobRadius;
+    final knobBottom = switchMidpoint.dy + SBBSwitchStyle.knobRadius;
 
     final thumbRRect = RRect.fromLTRBR(
-      thumbLeft,
-      thumbTop,
-      thumbRight,
-      thumbBottom,
-      const Radius.circular(_thumbRadius),
+      knobLeft,
+      knobTop,
+      knobRight,
+      knobBottom,
+      Radius.circular(SBBSwitchStyle.knobRadius),
     );
 
-    for (final shadow in _thumbBoxShadows) {
+    // Draw shadows
+    for (final shadow in SBBSwitchStyle.knobBoxShadows) {
       final shadowRRect = thumbRRect.shift(shadow.offset);
       final shadowPaint = shadow.toPaint();
       canvas.drawRRect(shadowRRect, shadowPaint);
     }
 
-    final thumbPaint = Paint()..color = thumbColor;
+    // Draw thumb background
+    final thumbPaint = Paint()..color = currentKnobBackgroundColor;
     canvas.drawRRect(thumbRRect, thumbPaint);
+
+    // Draw thumb border
     final thumbStrokePaint = Paint()
-      ..color = currentKnobColor
+      ..color = currentKnobBorderColor
       ..style = PaintingStyle.stroke
-      ..strokeWidth = 1.0;
+      ..strokeWidth = SBBSwitchStyle.knobBorderWidth;
     canvas.drawRRect(thumbRRect, thumbStrokePaint);
 
-    _drawTick(canvas, thumbRRect);
+    // Draw tick icon
+    _drawTick(canvas, thumbRRect, currentKnobForegroundColor, _colorAnimation!.value);
   }
 
-  void _drawTick(Canvas canvas, RRect thumbRRect) {
-    final value = _state._position.value;
-    final painter = TextPainter(textDirection: TextDirection.ltr);
+  void _drawTick(Canvas canvas, RRect thumbRRect, Color color, double value) {
     final icon = SBBIcons.tick_small;
-    final alpha = lerpDouble(0, 255, value)!.toInt();
-    final textColor = activeColor.withAlpha(alpha);
     final iconSize = Size.square(sbbIconSizeSmall);
     final iconPosition = thumbRRect.center - iconSize.center(Offset.zero);
+
+    final painter = TextPainter(textDirection: TextDirection.ltr);
     painter.text = TextSpan(
       text: String.fromCharCode(icon.codePoint),
-      style: TextStyle(fontFamily: icon.fontFamily, color: textColor, fontSize: iconSize.height),
+      style: TextStyle(
+        fontFamily: icon.fontFamily,
+        color: color,
+        fontSize: iconSize.height,
+      ),
     );
     painter.layout();
     painter.paint(canvas, iconPosition);
+  }
+
+  @override
+  void dispose() {
+    _colorAnimation?.dispose();
+    super.dispose();
   }
 }

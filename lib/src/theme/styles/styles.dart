@@ -1,5 +1,5 @@
-export '../../container/theme/sbb_content_box_style.dart';
 export '../../button/theme/sbb_button_style.dart';
+export '../../container/theme/sbb_content_box_style.dart';
 export 'src/promotion_box_style.dart';
 export 'src/sbb_base_style.dart';
 export 'src/sbb_basic_control_style.dart';
@@ -12,7 +12,6 @@ export 'src/sbb_picker_style.dart';
 export 'src/sbb_segmented_button_inner_style.dart';
 export 'src/sbb_segmented_button_style.dart';
 export 'src/sbb_slider_style.dart';
-export 'src/sbb_switch_style.dart';
 export 'src/sbb_text_field_style.dart';
 export 'src/sbb_text_style.dart';
 export 'src/sbb_toast_style.dart';

@@ -13,7 +13,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     this.redSegmentedButton,
     this.listItem,
     this.selectLabel,
-    this.switchToggle,
     this.headerBackgroundColor,
     this.headerButtonBackgroundColorHighlighted,
     this.headerIconColor,
@@ -47,7 +46,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
       ),
       textStyleDisabled: baseStyle.themedTextStyle(textStyle: SBBTextStyles.helpersLabel, color: SBBColors.metal),
     ),
-    switchToggle: SBBSwitchStyle.$default(baseStyle: baseStyle),
     headerBackgroundColor: baseStyle.primaryColor,
     headerButtonBackgroundColorHighlighted: baseStyle.primaryColorDark,
     headerIconColor: SBBColors.white,
@@ -68,7 +66,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   );
 
   final SBBControlStyle? checkbox;
-  final SBBSwitchStyle? switchToggle;
   final SBBControlStyle? radioButton;
   final SBBTextFieldStyle? textField;
   final SBBSegmentedButtonStyle? segmentedButton;
@@ -121,7 +118,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     SBBSegmentedButtonStyle? redSegmentedButton,
     SBBListItemStyle? listItem,
     SBBTextStyle? selectLabel,
-    SBBSwitchStyle? switchToggle,
     Color? headerBackgroundColor,
     Color? headerButtonBackgroundColorHighlighted,
     Color? headerIconColor,
@@ -147,7 +143,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     redSegmentedButton: redSegmentedButton ?? this.redSegmentedButton,
     listItem: listItem ?? this.listItem,
     selectLabel: selectLabel ?? this.selectLabel,
-    switchToggle: switchToggle ?? this.switchToggle,
     headerBackgroundColor: headerBackgroundColor ?? this.headerBackgroundColor,
     headerButtonBackgroundColorHighlighted:
         headerButtonBackgroundColorHighlighted ?? this.headerButtonBackgroundColorHighlighted,
@@ -179,7 +174,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
       redSegmentedButton: redSegmentedButton?.lerp(other.redSegmentedButton, t),
       listItem: listItem?.lerp(other.listItem, t),
       selectLabel: selectLabel?.lerp(other.selectLabel, t),
-      switchToggle: switchToggle?.lerp(other.switchToggle, t),
       headerBackgroundColor: Color.lerp(headerBackgroundColor, other.headerBackgroundColor, t),
       headerButtonBackgroundColorHighlighted: Color.lerp(
         headerButtonBackgroundColorHighlighted,
@@ -216,7 +210,6 @@ extension SBBControlStylesExtension on SBBControlStyles? {
           redSegmentedButton: this!.redSegmentedButton.merge(other?.redSegmentedButton),
           listItem: this!.listItem.merge(other?.listItem),
           selectLabel: this!.selectLabel.merge(other?.selectLabel),
-          switchToggle: this!.switchToggle.merge(other?.switchToggle),
           picker: this!.picker.merge(other?.picker),
           headerBackgroundColor: this!.headerBackgroundColor ?? other?.headerBackgroundColor,
           headerButtonBackgroundColorHighlighted:

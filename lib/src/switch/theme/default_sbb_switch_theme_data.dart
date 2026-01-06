@@ -20,7 +20,7 @@ class DefaultSBBSwitchThemeData extends SBBSwitchThemeData {
             WidgetState.disabled: baseStyle.themeValue(SBBColors.graphite, SBBColors.granite).withValues(alpha: 0.5),
             WidgetState.any: baseStyle.themeValue(SBBColors.graphite, SBBColors.granite),
           }),
-          knobTickMarkColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
+          knobForegroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.selected & WidgetState.disabled: baseStyle.primaryColor?.withValues(alpha: 0.4),
             WidgetState.selected: baseStyle.primaryColor,
             WidgetState.any: SBBColors.white,
