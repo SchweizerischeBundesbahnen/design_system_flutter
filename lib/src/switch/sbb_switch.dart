@@ -18,10 +18,21 @@ const _switchDisabledOpacity = 0.5;
 /// * [SBBRadio] and [SBBSegmentedButton], for selecting among a set of
 /// explicit values.
 class SBBSwitch extends StatefulWidget {
-  const SBBSwitch({super.key, required this.value, required this.onChanged});
+  const SBBSwitch({
+    super.key,
+    required this.value,
+    required this.onChanged,
+    this.style,
+  });
 
   final bool value;
   final ValueChanged<bool>? onChanged;
+
+  /// Customizes this switch appearance.
+  ///
+  /// Non-null properties of this style override the corresponding
+  /// properties in [SBBSwitchThemeData.style] of the theme found in [context].
+  final SBBSwitchStyle? style;
 
   @override
   State<SBBSwitch> createState() => _SBBSwitchState();
@@ -98,26 +109,29 @@ class _SBBSwitchState extends State<SBBSwitch> with TickerProviderStateMixin, To
       animateToValue();
     }
 
-    final style = Theme.of(context).sbbSwitchTheme!.style!;
+    final SBBSwitchStyle? effectiveStyle = _getEffectiveStyle(context);
 
     // Colors need to be resolved in selected and non selected states separately
     // so that they can be lerped between.
     final Set<WidgetState> activeStates = states..add(WidgetState.selected);
     final Set<WidgetState> inactiveStates = states..remove(WidgetState.selected);
 
-    final Color activeTrackColor = style.trackColor?.resolve(activeStates) ?? SBBColors.red;
-    final Color inactiveTrackColor = style.trackColor?.resolve(inactiveStates) ?? SBBColors.granite;
+    final Color activeTrackColor = effectiveStyle?.trackColor?.resolve(activeStates) ?? SBBColors.red;
+    final Color inactiveTrackColor = effectiveStyle?.trackColor?.resolve(inactiveStates) ?? SBBColors.granite;
 
-    final Color activeKnobBackgroundColor = style.knobBackgroundColor?.resolve(activeStates) ?? SBBColors.white;
-    final Color inactiveKnobBackgroundColor = style.knobBackgroundColor?.resolve(inactiveStates) ?? SBBColors.white;
+    final Color activeKnobBackgroundColor =
+        effectiveStyle?.knobBackgroundColor?.resolve(activeStates) ?? SBBColors.white;
+    final Color inactiveKnobBackgroundColor =
+        effectiveStyle?.knobBackgroundColor?.resolve(inactiveStates) ?? SBBColors.white;
 
-    final Color activeKnobBorderColor = style.knobBorderColor?.resolve(activeStates) ?? SBBColors.red;
-    final Color inactiveKnobBorderColor = style.knobBorderColor?.resolve(inactiveStates) ?? SBBColors.granite;
+    final Color activeKnobBorderColor = effectiveStyle?.knobBorderColor?.resolve(activeStates) ?? SBBColors.red;
+    final Color inactiveKnobBorderColor = effectiveStyle?.knobBorderColor?.resolve(inactiveStates) ?? SBBColors.granite;
 
-    final Color activeKnobForegroundColor = style.knobForegroundColor?.resolve(activeStates) ?? SBBColors.red;
-    final Color inactiveKnobForegroundColor = style.knobForegroundColor?.resolve(inactiveStates) ?? SBBColors.white;
+    final Color activeKnobForegroundColor = effectiveStyle?.knobForegroundColor?.resolve(activeStates) ?? SBBColors.red;
+    final Color inactiveKnobForegroundColor =
+        effectiveStyle?.knobForegroundColor?.resolve(inactiveStates) ?? SBBColors.white;
 
-    final effectiveMargin = style.tapTargetPadding ?? const EdgeInsets.symmetric(vertical: 4.0);
+    final effectiveMargin = effectiveStyle?.tapTargetPadding ?? const EdgeInsets.symmetric(vertical: 4.0);
     final effectiveSwitchSize = effectiveMargin.inflateSize(SBBSwitchStyle.switchSize);
 
     return Semantics(
@@ -145,6 +159,11 @@ class _SBBSwitchState extends State<SBBSwitch> with TickerProviderStateMixin, To
         ),
       ),
     );
+  }
+
+  SBBSwitchStyle? _getEffectiveStyle(BuildContext context) {
+    final SBBSwitchStyle? themeStyle = Theme.of(context).sbbSwitchTheme?.style;
+    return themeStyle?.merge(widget.style) ?? widget.style;
   }
 
   void _handleChanged(bool? value) {
