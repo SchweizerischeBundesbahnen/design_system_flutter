@@ -78,6 +78,7 @@ class SBBSwitch extends StatefulWidget {
     this.style,
     this.focusNode,
     this.autofocus = false,
+    this.semanticLabel,
   });
 
   /// When [value] is true, the switch appears with the knob
@@ -108,6 +109,13 @@ class SBBSwitch extends StatefulWidget {
 
   /// {@macro flutter.widgets.Focus.autofocus}
   final bool autofocus;
+
+  /// The semantic label for the [SBBSwitch] that will be announced by screen readers.
+  ///
+  /// This is announced by assistive technologies (e.g TalkBack/VoiceOver).
+  ///
+  /// This label does not show in the UI.
+  final String? semanticLabel;
 
   @override
   State<SBBSwitch> createState() => _SBBSwitchState();
@@ -205,6 +213,7 @@ class _SBBSwitchState extends State<SBBSwitch> with TickerProviderStateMixin, To
     final effectiveSwitchSize = effectiveMargin.inflateSize(SBBSwitchStyle.switchSize);
 
     return Semantics(
+      label: widget.semanticLabel,
       toggled: widget.value,
       focused: states.contains(WidgetState.focused),
       focusable: isInteractive,
