@@ -23,6 +23,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - added `style` to `SBBRadio`
 - added `SBBRadioThemeData` to override `SBBRadioStyle` within the `SBBTheme`
 - added `focusNode` & `autofocus` to `SBBRadio`
+- added `style` to `SBBSwitch` - see [v5 migration guide]
 
 ### Changed
 
@@ -39,6 +40,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - BREAKING: `SBBRadio` needs an `SBBRadioGroup` ancestor for its group value and `onChanged` callback - see [v5 migration guide]
 - dropped support for Flutter SDK 3.32.x
 - BREAKING: removed default left margin on component `SBBTextField` (#402)
+- BREAKING: `SBBSwitch` is now styled with own `SBBSwitchStyle` from `SBBSwitchThemeData` - see [v5 migration guide]
 
 ### Removed
 

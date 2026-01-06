@@ -26,7 +26,7 @@ To access this data within your app, use:
 ## Checkbox
 
 ### Theming & Styling
-* `padding`: replace the checkbox `padding` parameter with the `SBBCheckboxStyle.padding` to increase tappable area
+* `padding`: replace the checkbox `padding` parameter with the `SBBCheckboxStyle.tapTargetPadding` to increase tappable area
 * customize the theme of the `SBBCheckbox` with `SBBCheckboxThemeData`
 * access the theme using `Theme.of(context).sbbCheckboxTheme`
 * customize n individual checkbox by setting its `style` parameter in the constructor 
@@ -72,8 +72,14 @@ To access this data within your app, use:
 This also accounts for the `SBBRadioListItem`.
 
 ### Theming & Styling
-* `padding`: replace the checkbox `padding` parameter with the `SBBRadioStyle.padding` to increase tappable area
+* `padding`: replace the checkbox `padding` parameter with the `SBBRadioStyle.tapTargetPadding` to increase tappable area
 * customize the theme of all `SBBRadio` with `SBBRadioThemeData`
 * access the theme using `Theme.of(context).sbbRadioTheme`
 * customize an individual radio by setting its `style` parameter in the constructor
 
+
+## Switch
+* increase the tappable area of the switch by setting the `SBBSwitchStyle.tapTargetPadding` value
+* customize the theme of all `SBBSwitch` with `SBBSwitchThemeData`
+* access the theme using `Theme.of(context).sbbSwitchTheme`
+* customize an individual switch by setting its `style` parameter in the constructor
