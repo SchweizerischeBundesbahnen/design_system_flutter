@@ -191,8 +191,8 @@ class _SBBSwitchState extends State<SBBSwitch> with TickerProviderStateMixin, To
 
     // Colors need to be resolved in selected and non selected states separately
     // so that they can be lerped between.
-    final Set<WidgetState> activeStates = states..add(WidgetState.selected);
-    final Set<WidgetState> inactiveStates = states..remove(WidgetState.selected);
+    final Set<WidgetState> activeStates = {...states, WidgetState.selected};
+    final Set<WidgetState> inactiveStates = Set<WidgetState>.from(states)..remove(WidgetState.selected);
 
     final Color activeTrackColor = effectiveStyle?.trackColor?.resolve(activeStates) ?? SBBColors.red;
     final Color inactiveTrackColor = effectiveStyle?.trackColor?.resolve(inactiveStates) ?? SBBColors.granite;
