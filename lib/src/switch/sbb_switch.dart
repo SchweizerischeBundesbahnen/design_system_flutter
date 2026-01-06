@@ -117,8 +117,8 @@ class _SBBSwitchState extends State<SBBSwitch> with TickerProviderStateMixin, To
     final Color activeKnobForegroundColor = style.knobForegroundColor?.resolve(activeStates) ?? SBBColors.red;
     final Color inactiveKnobForegroundColor = style.knobForegroundColor?.resolve(inactiveStates) ?? SBBColors.white;
 
-    // TODO: add customizable padding
-    final effectiveSwitchSize = SBBSwitchStyle.switchSize;
+    final effectiveMargin = style.tapTargetPadding ?? const EdgeInsets.symmetric(vertical: 4.0);
+    final effectiveSwitchSize = effectiveMargin.inflateSize(SBBSwitchStyle.switchSize);
 
     return Semantics(
       toggled: widget.value,

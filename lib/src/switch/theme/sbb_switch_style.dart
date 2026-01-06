@@ -14,6 +14,7 @@ class SBBSwitchStyle {
     this.knobBackgroundColor,
     this.knobBorderColor,
     this.knobForegroundColor,
+    this.tapTargetPadding,
   });
 
   /// The color of the switch track.
@@ -27,6 +28,16 @@ class SBBSwitchStyle {
 
   /// The color for the icon (tick mark) on the knob.
   final WidgetStateProperty<Color?>? knobForegroundColor;
+
+  /// The space between the switch's tap target and its visual appearance.
+  ///
+  /// This padding increases the interactive area of the switch beyond the
+  /// visible [switchSize]. A larger padding makes the switch easier to tap
+  /// while keeping the visual size constant.
+  ///
+  /// Defaults to `EdgeInsets.symmetric(vertical: 4.0, horizontal: 0.0)` to ensure
+  /// a minimum tap target height of 36.
+  final EdgeInsetsGeometry? tapTargetPadding;
 
   static const double trackWidth = 52.0;
 
@@ -58,12 +69,14 @@ class SBBSwitchStyle {
     WidgetStateProperty<Color?>? knobBackgroundColor,
     WidgetStateProperty<Color?>? knobBorderColor,
     WidgetStateProperty<Color?>? knobForegroundColor,
+    EdgeInsetsGeometry? tapTargetPadding,
   }) {
     return SBBSwitchStyle(
       trackColor: trackColor ?? this.trackColor,
       knobBackgroundColor: knobBackgroundColor ?? this.knobBackgroundColor,
       knobBorderColor: knobBorderColor ?? this.knobBorderColor,
       knobForegroundColor: knobForegroundColor ?? this.knobForegroundColor,
+      tapTargetPadding: tapTargetPadding ?? this.tapTargetPadding,
     );
   }
 
@@ -75,6 +88,7 @@ class SBBSwitchStyle {
       knobBackgroundColor: other.knobBackgroundColor,
       knobBorderColor: other.knobBorderColor,
       knobForegroundColor: other.knobForegroundColor,
+      tapTargetPadding: other.tapTargetPadding,
     );
   }
 
@@ -96,6 +110,7 @@ class SBBSwitchStyle {
         t,
         Color.lerp,
       ),
+      tapTargetPadding: EdgeInsetsGeometry.lerp(a?.tapTargetPadding, b?.tapTargetPadding, t),
     );
   }
 
@@ -106,7 +121,8 @@ class SBBSwitchStyle {
         other.trackColor == trackColor &&
         other.knobBackgroundColor == knobBackgroundColor &&
         other.knobBorderColor == knobBorderColor &&
-        other.knobForegroundColor == knobForegroundColor;
+        other.knobForegroundColor == knobForegroundColor &&
+        other.tapTargetPadding == tapTargetPadding;
   }
 
   @override
@@ -115,5 +131,6 @@ class SBBSwitchStyle {
     knobBackgroundColor,
     knobBorderColor,
     knobForegroundColor,
+    tapTargetPadding,
   );
 }
