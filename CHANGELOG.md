@@ -24,6 +24,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - added `SBBRadioThemeData` to override `SBBRadioStyle` within the `SBBTheme`
 - added `focusNode` & `autofocus` to `SBBRadio`
 - added `style` to `SBBSwitch` - see [v5 migration guide]
+- added `focusNode` & `autofocus` to `SBBSwitch`
 
 ### Changed
 
@@ -106,7 +107,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 ### Added
 
 - added `SBBSliverFloatingHeaderbox` that allows the headerbox to expand and contract as the user scrolls.
-- added functional colors (e.g. `SBBColors.error`) and dark variants of additionalColors (e.g. `SBBColors.skyDark`)
+- added functional colors (e.g. `SBBColors.error`) and dark variants of `additionalColors` (e.g. `SBBColors.skyDark`)
 - added `errorColor` to `SBBBaseStyle`
 - added `systemOverlayStyle` to `SBBHeader`
 

@@ -76,6 +76,8 @@ class SBBSwitch extends StatefulWidget {
     required this.value,
     required this.onChanged,
     this.style,
+    this.focusNode,
+    this.autofocus = false,
   });
 
   /// When [value] is true, the switch appears with the knob
@@ -100,6 +102,12 @@ class SBBSwitch extends StatefulWidget {
   /// Non-null properties of this style override the corresponding properties
   /// in the [SBBSwitchThemeData.style] from the theme found in [context].
   final SBBSwitchStyle? style;
+
+  /// {@macro flutter.widgets.Focus.focusNode}
+  final FocusNode? focusNode;
+
+  /// {@macro flutter.widgets.Focus.autofocus}
+  final bool autofocus;
 
   @override
   State<SBBSwitch> createState() => _SBBSwitchState();
@@ -198,13 +206,18 @@ class _SBBSwitchState extends State<SBBSwitch> with TickerProviderStateMixin, To
 
     return Semantics(
       toggled: widget.value,
+      focused: states.contains(WidgetState.focused),
+      focusable: isInteractive,
       child: GestureDetector(
         excludeFromSemantics: true,
         onHorizontalDragStart: _handleDragStart,
         onHorizontalDragUpdate: _handleDragUpdate,
         onHorizontalDragEnd: _handleDragEnd,
+        onTap: isInteractive ? () => widget.onChanged?.call(!widget.value) : null,
         child: buildToggleable(
           size: effectiveSwitchSize,
+          focusNode: widget.focusNode,
+          autofocus: widget.autofocus,
           painter: _painter
             ..position = position
             ..positionController = positionController
