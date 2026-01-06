@@ -349,20 +349,24 @@ class _SBBSwitchPainter extends ToggleablePainter {
     final trackPaint = Paint()..color = currentTrackColor;
     canvas.drawRRect(trackRRect, trackPaint);
 
-    // Calculate thumb position and size
+    // Calculate knob position and size
     final currentKnobExtensions = SBBSwitchStyle.knobPressedExtension * currentReactionValue;
-    final knobLeft = lerpDouble(
-      SBBSwitchStyle.trackInnerStart - SBBSwitchStyle.knobRadius,
-      SBBSwitchStyle.trackInnerEnd - SBBSwitchStyle.knobRadius - currentKnobExtensions,
-      currentValue,
-    )!;
-    final knobRight = lerpDouble(
-      SBBSwitchStyle.trackInnerStart + SBBSwitchStyle.knobRadius + currentKnobExtensions,
-      SBBSwitchStyle.trackInnerEnd + SBBSwitchStyle.knobRadius,
-      currentValue,
-    )!;
-    final knobTop = switchMidpoint.dy - SBBSwitchStyle.knobRadius;
-    final knobBottom = switchMidpoint.dy + SBBSwitchStyle.knobRadius;
+    final knobLeft =
+        trackRRect.left +
+        lerpDouble(
+          SBBSwitchStyle.trackInnerStart - SBBSwitchStyle.knobRadius,
+          SBBSwitchStyle.trackInnerEnd - SBBSwitchStyle.knobRadius - currentKnobExtensions,
+          currentValue,
+        )!;
+    final knobRight =
+        trackRRect.left +
+        lerpDouble(
+          SBBSwitchStyle.trackInnerStart + SBBSwitchStyle.knobRadius + currentKnobExtensions,
+          SBBSwitchStyle.trackInnerEnd + SBBSwitchStyle.knobRadius,
+          currentValue,
+        )!;
+    final knobTop = trackRRect.center.dy - SBBSwitchStyle.knobRadius;
+    final knobBottom = trackRRect.center.dy + SBBSwitchStyle.knobRadius;
 
     final thumbRRect = RRect.fromLTRBR(
       knobLeft,
