@@ -188,7 +188,11 @@ class SBBSwitchListItem extends StatelessWidget {
                   isLastElement: true,
                   trailingWidget: Padding(
                     padding: const EdgeInsets.only(left: sbbDefaultSpacing * 0.5, right: sbbDefaultSpacing),
-                    child: SBBSwitch(value: value, onChanged: onChanged),
+                    child: SBBSwitch(
+                      value: value,
+                      onChanged: onChanged,
+                      style: SBBSwitchStyle(tapTargetPadding: EdgeInsets.zero),
+                    ),
                   ),
                 ),
                 if (linksWidgets != null && linksWidgets!.isNotEmpty)
