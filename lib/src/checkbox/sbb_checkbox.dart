@@ -60,6 +60,8 @@ class SBBCheckbox extends StatefulWidget {
     this.tristate = false,
     required this.onChanged,
     this.style,
+    this.focusNode,
+    this.autofocus = false,
     this.semanticLabel,
   }) : assert(tristate || value != null, 'Value can only be null if tristate is true!');
 
@@ -119,6 +121,12 @@ class SBBCheckbox extends StatefulWidget {
   /// Non-null properties of this style override the corresponding
   /// properties in [SBBCheckboxThemeData.style] of the theme found in [context].
   final SBBCheckboxStyle? style;
+
+  /// {@macro flutter.widgets.Focus.focusNode}
+  final FocusNode? focusNode;
+
+  /// {@macro flutter.widgets.Focus.autofocus}
+  final bool autofocus;
 
   /// The semantic label for the [SBBCheckbox] that will be announced by screen readers.
   ///
@@ -194,6 +202,8 @@ class _SBBCheckboxState extends State<SBBCheckbox> with TickerProviderStateMixin
       checked: widget.value ?? false,
       mixed: widget.tristate ? widget.value == null : null,
       child: buildToggleable(
+        autofocus: widget.autofocus,
+        focusNode: widget.focusNode,
         mouseCursor: WidgetStateMouseCursor.clickable,
         size: effectiveSize,
         painter: _painter
