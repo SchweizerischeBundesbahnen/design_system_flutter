@@ -24,6 +24,9 @@ class SBBListItemV5 extends StatelessWidget {
     this.enabled = true,
     this.padding = const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
     this.statesController,
+    this.trailingHorizontalGapWidth = 16.0,
+    this.leadingHorizontalGapWidth = 8.0,
+    this.subtitleVerticalGapHeight = 4.0,
   }) : assert(title != null || titleText != null, 'Either title or titleText must be provided'),
        assert(title == null || titleText == null, 'Only one of title or titleText can be set'),
        assert(subtitle == null || subtitleText == null, 'Only one of subtitle or subtitleText can be set'),
@@ -56,8 +59,16 @@ class SBBListItemV5 extends StatelessWidget {
 
   final MaterialStatesController? statesController;
 
+  final double trailingHorizontalGapWidth;
+
+  final double leadingHorizontalGapWidth;
+
+  final double subtitleVerticalGapHeight;
+
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasMaterial(context));
+
     final TextDirection textDirection = Directionality.of(context);
     final EdgeInsets resolvedPadding = padding.resolve(textDirection);
 
@@ -93,6 +104,9 @@ class SBBListItemV5 extends StatelessWidget {
           title: titleWidget ?? const SizedBox(),
           subtitle: subtitleWidget,
           trailing: trailingWidget,
+          trailingHorizontalGapWidth: trailingHorizontalGapWidth,
+          leadingHorizontalGapWidth: leadingHorizontalGapWidth,
+          subtitleVerticalGapHeight: subtitleVerticalGapHeight,
         ),
       ),
     );
@@ -105,12 +119,18 @@ class _SBBListItemV5 extends SlottedMultiChildRenderObjectWidget<_SBBListItemSlo
     required this.title,
     this.subtitle,
     this.trailing,
+    required this.trailingHorizontalGapWidth,
+    required this.leadingHorizontalGapWidth,
+    required this.subtitleVerticalGapHeight,
   });
 
   final Widget? leading;
   final Widget title;
   final Widget? subtitle;
   final Widget? trailing;
+  final double trailingHorizontalGapWidth;
+  final double leadingHorizontalGapWidth;
+  final double subtitleVerticalGapHeight;
 
   @override
   Iterable<_SBBListItemSlot> get slots => _SBBListItemSlot.values;
@@ -127,18 +147,64 @@ class _SBBListItemV5 extends SlottedMultiChildRenderObjectWidget<_SBBListItemSlo
 
   @override
   _RenderSBBListItemV5 createRenderObject(BuildContext context) {
-    return _RenderSBBListItemV5();
+    return _RenderSBBListItemV5(
+      trailingHorizontalGapWidth: trailingHorizontalGapWidth,
+      leadingHorizontalGapWidth: leadingHorizontalGapWidth,
+      subtitleVerticalGapHeight: subtitleVerticalGapHeight,
+    );
+  }
+
+  @override
+  void updateRenderObject(BuildContext context, _RenderSBBListItemV5 renderObject) {
+    renderObject
+      ..trailingHorizontalGapWidth = trailingHorizontalGapWidth
+      ..leadingHorizontalGapWidth = leadingHorizontalGapWidth
+      ..subtitleVerticalGapHeight = subtitleVerticalGapHeight;
   }
 }
 
 class _RenderSBBListItemV5 extends RenderBox with SlottedContainerRenderObjectMixin<_SBBListItemSlot, RenderBox> {
-  _RenderSBBListItemV5();
+  _RenderSBBListItemV5({
+    required double trailingHorizontalGapWidth,
+    required double leadingHorizontalGapWidth,
+    required double subtitleVerticalGapHeight,
+  }) : _trailingHorizontalGapWidth = trailingHorizontalGapWidth,
+       _leadingHorizontalGapWidth = leadingHorizontalGapWidth,
+       _subtitleVerticalGapHeight = subtitleVerticalGapHeight;
 
-  static const double _trailingHorizontalGapWidth = 16.0;
+  double _trailingHorizontalGapWidth;
+  double _leadingHorizontalGapWidth;
+  double _subtitleVerticalGapHeight;
 
-  static const double _leadingHorizontalGapWidth = 8.0;
+  double get trailingHorizontalGapWidth => _trailingHorizontalGapWidth;
 
-  static const double _subtitleVerticalGapHeight = 4.0;
+  set trailingHorizontalGapWidth(double value) {
+    if (_trailingHorizontalGapWidth == value) {
+      return;
+    }
+    _trailingHorizontalGapWidth = value;
+    markNeedsLayout();
+  }
+
+  double get leadingHorizontalGapWidth => _leadingHorizontalGapWidth;
+
+  set leadingHorizontalGapWidth(double value) {
+    if (_leadingHorizontalGapWidth == value) {
+      return;
+    }
+    _leadingHorizontalGapWidth = value;
+    markNeedsLayout();
+  }
+
+  double get subtitleVerticalGapHeight => _subtitleVerticalGapHeight;
+
+  set subtitleVerticalGapHeight(double value) {
+    if (_subtitleVerticalGapHeight == value) {
+      return;
+    }
+    _subtitleVerticalGapHeight = value;
+    markNeedsLayout();
+  }
 
   RenderBox? get leading => childForSlot(_SBBListItemSlot.leading);
 
