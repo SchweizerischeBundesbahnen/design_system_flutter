@@ -20,6 +20,7 @@ extension SBBButtonStyleX on SBBButtonStyle {
       overlayColor: overlayColor,
       iconColor: iconColor,
       side: resolvedBorderSide,
+      foregroundBuilder: foregroundBuilder,
     );
   }
 
