@@ -3,9 +3,6 @@ import 'package:sbb_design_system_mobile/src/container/container.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
-@Deprecated('Use SBBContentBox.')
-typedef SBBGroup = SBBContentBox;
-
 /// SBBContentBox. Use to structure content.
 ///
 /// May be placed anywhere in the screen to structure other components.
