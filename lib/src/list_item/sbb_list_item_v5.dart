@@ -8,6 +8,17 @@ typedef _PositionChild = void Function(RenderBox child, Offset offset);
 
 enum _SBBListItemSlot { leading, title, subtitle, trailing }
 
+/// TODO: add link text widgets
+/// TODO: add SBBDivider
+/// TODO: add static method for adding dividers
+/// TODO: add isLoading state
+/// TODO: make widgetStatesController internal only
+/// TODO: add styling and themeData
+/// TODO: add DefaultTextStyle & DefaultIconThemeData
+/// TODO: add focusNode & autofocus
+/// TODO: add documentation
+/// TODO: overhaul all convenience ListItems (Radio, Checkbox, Switch)
+
 class SBBListItemV5 extends StatelessWidget {
   const SBBListItemV5({
     super.key,
@@ -286,11 +297,9 @@ class _RenderSBBListItemV5 extends RenderBox with SlottedContainerRenderObjectMi
     final RenderBox? subtitle = this.subtitle;
     final RenderBox? trailing = this.trailing;
 
-    // Layout trailing first to know available width
     final Size? trailingSize = trailing == null ? null : getSize(trailing, looseConstraints);
     final double trailingWidth = trailingSize != null ? trailingSize.width + _trailingHorizontalGapWidth : 0.0;
 
-    // Layout leading
     final Size? leadingSize = leading == null ? null : getSize(leading, looseConstraints);
     final double leadingWidth = leadingSize != null ? leadingSize.width + _leadingHorizontalGapWidth : 0.0;
 
@@ -303,16 +312,16 @@ class _RenderSBBListItemV5 extends RenderBox with SlottedContainerRenderObjectMi
     final Size? subtitleSize = subtitle == null ? null : getSize(subtitle, textConstraints);
 
     // Calculate positions
-    // Title is always at y=0 (top aligned after padding)
+    // Title is always at y=0
     final double titleY = 0.0;
 
     // Determine subtitle Y position based on what's taller: leading or title
     final double leadingHeight = leadingSize?.height ?? 0.0;
-    final double baseHeight = math.max(leadingHeight, titleSize.height);
-    final double subtitleY = baseHeight + _subtitleVerticalGapHeight;
+    final double subtitleOffsetHeight = math.max(leadingHeight, titleSize.height);
+    final double subtitleY = subtitleOffsetHeight + _subtitleVerticalGapHeight;
 
     // Calculate total tile height
-    final double tileHeight = subtitleSize != null ? subtitleY + subtitleSize.height : baseHeight;
+    final double tileHeight = subtitleSize != null ? subtitleY + subtitleSize.height : subtitleOffsetHeight;
 
     if (positionChild != null) {
       // Position title (always left aligned after leading)
@@ -331,10 +340,7 @@ class _RenderSBBListItemV5 extends RenderBox with SlottedContainerRenderObjectMi
 
       // Position leading (left aligned at top)
       if (leading != null && leadingSize != null) {
-        positionChild(
-          leading,
-          Offset(0.0, 0.0),
-        );
+        positionChild(leading, Offset.zero);
       }
 
       // Position trailing (right aligned, vertically centered)
