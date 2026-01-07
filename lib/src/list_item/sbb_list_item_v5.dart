@@ -8,8 +8,6 @@ typedef _PositionChild = void Function(RenderBox child, Offset offset);
 
 enum _SBBListItemSlot { leading, title, subtitle, trailing }
 
-/// A single fixed-height row for SBB design system that contains text and
-/// optional leading/trailing widgets.
 class SBBListItemV5 extends StatelessWidget {
   const SBBListItemV5({
     super.key,
@@ -28,43 +26,30 @@ class SBBListItemV5 extends StatelessWidget {
     this.statesController,
   });
 
-  /// A widget to display before the title.
   final Widget? leading;
 
-  /// The primary content of the list item.
   final Widget? title;
 
-  /// Additional content displayed below the title.
   final Widget? subtitle;
 
-  /// A widget to display after the title/subtitle.
   final Widget? trailing;
 
-  /// Convenience parameter to create a leading Icon widget.
   final IconData? leadingIconData;
 
-  /// Convenience parameter to create a title Text widget.
   final String? titleText;
 
-  /// Convenience parameter to create a subtitle Text widget.
   final String? subtitleText;
 
-  /// Convenience parameter to create a trailing Icon widget.
   final IconData? trailingIconData;
 
-  /// Called when the user taps this list item.
   final GestureTapCallback? onTap;
 
-  /// Called when the user long-presses on this list item.
   final GestureLongPressCallback? onLongPress;
 
-  /// Whether this list item is interactive.
   final bool enabled;
 
-  /// The item's internal padding.
   final EdgeInsetsGeometry padding;
 
-  /// Controls the visual state of the InkWell.
   final MaterialStatesController? statesController;
 
   @override
