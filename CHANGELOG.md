@@ -15,6 +15,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - added `style` to all button variants for changing individual button appearance
 - added `SBBButtonThemeData` to override buttons within `SBBTheme`
 - added `style` to `SBBCheckbox` to change individual checkbox appearance
+- added `focusNode` and `autofocus` to `SBBCheckbox`
 - added `focusNode`, `style`, `trailingText` and `trailing` to `SBBChip` - see [v5 migration guide]
 - added `style` to `SBBStatus`
 - added `SBBStatusThemeData` to override styling of `SBBStatus` within the current `SBBTheme`
