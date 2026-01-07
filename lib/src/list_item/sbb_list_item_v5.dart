@@ -24,7 +24,11 @@ class SBBListItemV5 extends StatelessWidget {
     this.enabled = true,
     this.padding = const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
     this.statesController,
-  });
+  }) : assert(title != null || titleText != null, 'Either title or titleText must be provided'),
+       assert(title == null || titleText == null, 'Only one of title or titleText can be set'),
+       assert(subtitle == null || subtitleText == null, 'Only one of subtitle or subtitleText can be set'),
+       assert(leading == null || leadingIconData == null, 'Only one of leading or leadingIconData can be set'),
+       assert(trailing == null || trailingIconData == null, 'Only one of trailing or trailingIconData can be set');
 
   final Widget? leading;
 
