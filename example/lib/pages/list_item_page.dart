@@ -17,6 +17,25 @@ class ListItemPage extends StatelessWidget {
         SBBContentBox(
           child: Column(
             children: <Widget>[
+              SBBListItemV5(
+                title: Container(
+                  height: 300,
+                  width: 100,
+                  color: SBBColors.green,
+                  child: Text('Hello'),
+                ),
+                subtitle: SBBStatus.information(labelText: 'This is an information'),
+                leading: Icon(SBBIcons.chevron_small_up_circle_small),
+                onTap: () {},
+                trailing: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SBBSwitch(value: true, onChanged: (_) {}),
+                    Icon(SBBIcons.thermometer_medium),
+                  ],
+                ),
+              ),
               SBBListItem(
                 title: 'Default',
                 onPressed: () => sbbToast.show(title: 'ListItem Default'),
