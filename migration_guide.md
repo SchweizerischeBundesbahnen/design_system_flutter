@@ -22,6 +22,9 @@ To access this data within your app, use:
 * `Theme.of(context).sbbSecondaryButtonTheme` for the `SBBSecondaryButton` theme data
 * `Theme.of(context).sbbTertiaryButtonTheme` for the `SBBTertiaryButton` theme data
 
+### ButtonLabelBuilder
+Use the `foregroundBuilder` of the `SBBButtonStyle` as a replacement
+
 
 ## Checkbox
 
