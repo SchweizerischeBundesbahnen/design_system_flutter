@@ -71,7 +71,7 @@ jobs:
           validation_level: "error"
 
   build-android:
-    name: "Build Android aab"
+    name: Build Example App Android
     runs-on: ubuntu-latest
     needs: [ test, changelog-test ]
     defaults:
@@ -103,7 +103,7 @@ jobs:
         run: flutter build appbundle --profile --no-pub
 
   build-iOS:
-    name: Build iOS package
+    name: Build Example App iOS
     runs-on: macos-15
     needs: [ test, changelog-test ]
     defaults:
