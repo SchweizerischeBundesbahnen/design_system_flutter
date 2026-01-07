@@ -17,6 +17,7 @@ class SBBButtonStyle {
     this.overlayColor,
     this.iconColor,
     this.borderColor,
+    this.foregroundBuilder,
   });
 
   /// The style for a button's [Text] widget descendants.
@@ -42,6 +43,17 @@ class SBBButtonStyle {
   /// The color of the button's outline.
   final WidgetStateProperty<Color?>? borderColor;
 
+  /// Creates a Widget that contains the button's label parameter which is used
+  /// instead of the button's label.
+  ///
+  /// This allows to override the foreground for all buttons within the current
+  /// [SBBTheme].
+  ///
+  /// The returned widget is clipped by the button's
+  /// shape (Stadium border), inset by `EdgeInsets.symmetric(horizontal: 16.0)`
+  /// and aligned with `Alignment.center`.
+  final ButtonLayerBuilder? foregroundBuilder;
+
   SBBButtonStyle copyWith({
     WidgetStateProperty<TextStyle?>? textStyle,
     WidgetStateProperty<Color?>? backgroundColor,
@@ -49,6 +61,7 @@ class SBBButtonStyle {
     WidgetStateProperty<Color?>? overlayColor,
     WidgetStateProperty<Color?>? iconColor,
     WidgetStateProperty<Color?>? borderColor,
+    ButtonLayerBuilder? foregroundBuilder,
   }) {
     return SBBButtonStyle(
       textStyle: textStyle ?? this.textStyle,
@@ -57,6 +70,7 @@ class SBBButtonStyle {
       overlayColor: overlayColor ?? this.overlayColor,
       iconColor: iconColor ?? this.iconColor,
       borderColor: borderColor ?? this.borderColor,
+      foregroundBuilder: foregroundBuilder ?? this.foregroundBuilder,
     );
   }
 
@@ -70,6 +84,7 @@ class SBBButtonStyle {
       overlayColor: other.overlayColor,
       iconColor: other.iconColor,
       borderColor: other.borderColor,
+      foregroundBuilder: other.foregroundBuilder,
     );
   }
 
@@ -83,6 +98,7 @@ class SBBButtonStyle {
       overlayColor: WidgetStateProperty.lerp<Color?>(a?.overlayColor, b?.overlayColor, t, Color.lerp),
       iconColor: WidgetStateProperty.lerp<Color?>(a?.iconColor, b?.iconColor, t, Color.lerp),
       borderColor: WidgetStateProperty.lerp<Color?>(a?.borderColor, b?.borderColor, t, Color.lerp),
+      foregroundBuilder: t < 0.5 ? a?.foregroundBuilder : b?.foregroundBuilder,
     );
   }
 
@@ -95,7 +111,8 @@ class SBBButtonStyle {
         other.foregroundColor == foregroundColor &&
         other.overlayColor == overlayColor &&
         other.iconColor == iconColor &&
-        other.borderColor == borderColor;
+        other.borderColor == borderColor &&
+        other.foregroundBuilder == foregroundBuilder;
   }
 
   @override
@@ -106,5 +123,6 @@ class SBBButtonStyle {
     overlayColor,
     iconColor,
     borderColor,
+    foregroundBuilder,
   );
 }
