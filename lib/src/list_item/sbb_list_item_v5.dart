@@ -33,6 +33,7 @@ class SBBListItemV5 extends StatefulWidget {
     this.links,
     this.focusNode,
     this.autofocus = false,
+    this.enableFeedback = true,
     this.padding,
     this.trailingHorizontalGapWidth,
     this.leadingHorizontalGapWidth,
@@ -147,6 +148,9 @@ class SBBListItemV5 extends StatefulWidget {
 
   /// {@macro flutter.widgets.Focus.autofocus}
   final bool autofocus;
+
+  /// {@macro flutter.material.ListTile.enableFeedback}
+  final bool enableFeedback;
 
   /// Padding around the list item's content.
   ///
@@ -322,6 +326,7 @@ class _SBBListItemV5State extends State<SBBListItemV5> {
       onLongPress: widget.enabled ? widget.onLongPress : null,
       autofocus: widget.autofocus,
       focusNode: widget.focusNode,
+      enableFeedback: widget.enableFeedback,
       statesController: _statesController,
       overlayColor: effectiveOverlayColor,
       child: Semantics(
@@ -414,6 +419,7 @@ class SBBListItemV5Boxed extends SBBListItemV5 {
     super.links,
     super.focusNode,
     super.autofocus,
+    super.enableFeedback,
     super.style,
     super.padding,
     super.trailingHorizontalGapWidth,
