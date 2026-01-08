@@ -268,7 +268,7 @@ class SBBListItemV5 extends StatefulWidget {
   /// properties in [SBBListItemThemeData.style] of the theme found in [context].
   final SBBListItemV5Style? style;
 
-  /// Add a one pixel border in between each tile. If color isn't specified the
+  /// Add a one pixel border in between each item. If color isn't specified the
   /// [ThemeData.dividerColor] of the context's [Theme] is used, which defaults to
   /// [SBBBaseStyle.dividerColor].
   static Iterable<Widget> divideListItems({
@@ -784,7 +784,10 @@ class _RenderSBBListItemV5 extends RenderBox with SlottedContainerRenderObjectMi
     final double titleHeight = titleSize.height;
 
     // Find the maximum height between leading and title for center alignment
-    final double maxCenterHeight = math.max(leadingHeight, titleHeight);
+    final double maxCenterHeight = math.max(
+      math.max(leadingHeight, titleHeight),
+      SBBListItemV5Style.minInnerHeight,
+    );
 
     // Center-align title and leading
     final double titleY = (maxCenterHeight - titleHeight) / 2.0;
@@ -793,7 +796,7 @@ class _RenderSBBListItemV5 extends RenderBox with SlottedContainerRenderObjectMi
     // Position subtitle below the max of leading/title bottom
     final double subtitleY = maxCenterHeight + _subtitleVerticalGapHeight;
 
-    // Calculate total tile height
+    // Calculate total item height
     final double tileHeight = subtitleSize != null ? subtitleY + subtitleSize.height : maxCenterHeight;
 
     if (positionChild != null) {
@@ -811,7 +814,7 @@ class _RenderSBBListItemV5 extends RenderBox with SlottedContainerRenderObjectMi
         );
       }
 
-      // Position leading (left aligned, vertically centered with title)
+      // Position leading (left aligned, vertically centered)
       if (leading != null && leadingSize != null) {
         positionChild(leading, Offset(0, leadingY));
       }
@@ -913,11 +916,11 @@ class _RenderSBBListItemV5 extends RenderBox with SlottedContainerRenderObjectMi
 
       throw FlutterError.fromParts(<DiagnosticsNode>[
         ErrorSummary(
-          '$overflowedWidget widget consumes the entire tile width (including ListTile.contentPadding).',
+          '$overflowedWidget widget consumes the entire item width (including SBBListItem.padding).',
         ),
         ErrorDescription(
-          'Either resize the tile width so that the ${overflowedWidget.toLowerCase()} widget plus any content padding '
-          'do not exceed the tile width, or use a sized widget, or consider replacing '
+          'Either resize the item width so that the ${overflowedWidget.toLowerCase()} widget plus any content padding '
+          'do not exceed the item width, or use a sized widget, or consider replacing '
           'ListTile with a custom widget.',
         ),
         ErrorHint(

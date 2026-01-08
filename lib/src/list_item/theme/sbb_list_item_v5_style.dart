@@ -34,6 +34,11 @@ class SBBListItemV5Style {
     this.overlayColor,
   });
 
+  /// The minimum vertical height of a list item without [SBBListItemV5.padding] applied.
+  ///
+  /// This ensures list items meet accessibility standards for touch targets.
+  static double get minInnerHeight => 24.0;
+
   /// The text style for the list item title.
   ///
   /// Applies to all text descendants of the title of SBBListItemV5.
