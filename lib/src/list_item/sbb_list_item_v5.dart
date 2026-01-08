@@ -299,6 +299,67 @@ class SBBListItemV5 extends StatefulWidget {
 
   @override
   State<SBBListItemV5> createState() => _SBBListItemV5State();
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties.add(
+      FlagProperty(
+        'enabled',
+        value: enabled,
+        ifTrue: 'true',
+        ifFalse: 'false',
+        showName: true,
+        defaultValue: true,
+      ),
+    );
+    properties.add(
+      FlagProperty(
+        'isLoading',
+        value: isLoading,
+        ifTrue: 'true',
+        ifFalse: 'false',
+        showName: true,
+        defaultValue: false,
+      ),
+    );
+    properties.add(
+      FlagProperty(
+        'autofocus',
+        value: autofocus,
+        ifTrue: 'true',
+        ifFalse: 'false',
+        showName: true,
+        defaultValue: false,
+      ),
+    );
+    properties.add(
+      FlagProperty(
+        'enableFeedback',
+        value: enableFeedback,
+        ifTrue: 'true',
+        ifFalse: 'false',
+        showName: true,
+        defaultValue: true,
+      ),
+    );
+    properties.add(DiagnosticsProperty<Function>('onTap', onTap, defaultValue: null));
+    properties.add(DiagnosticsProperty<Function>('onLongPress', onLongPress, defaultValue: null));
+    properties.add(DiagnosticsProperty<FocusNode>('focusNode', focusNode, defaultValue: null));
+    properties.add(
+      DiagnosticsProperty<EdgeInsetsGeometry>('padding', padding, defaultValue: null),
+    );
+    properties.add(
+      DoubleProperty('trailingHorizontalGapWidth', trailingHorizontalGapWidth, defaultValue: null),
+    );
+    properties.add(
+      DoubleProperty('leadingHorizontalGapWidth', leadingHorizontalGapWidth, defaultValue: null),
+    );
+    properties.add(
+      DoubleProperty('subtitleVerticalGapHeight', subtitleVerticalGapHeight, defaultValue: null),
+    );
+    properties.add(DiagnosticsProperty<SBBListItemV5Style>('style', style, defaultValue: null));
+  }
 }
 
 class _SBBListItemV5State extends State<SBBListItemV5> {
