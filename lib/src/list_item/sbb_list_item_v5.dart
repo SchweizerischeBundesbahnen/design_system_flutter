@@ -12,7 +12,6 @@ typedef _PositionChild = void Function(RenderBox child, Offset offset);
 
 enum _SBBListItemSlot { leading, title, subtitle, trailing }
 
-/// TODO: add semantics
 /// TODO: add documentation
 /// TODO: overhaul all convenience ListItems (Radio, Checkbox, Switch)
 
@@ -20,68 +19,159 @@ class SBBListItemV5 extends StatefulWidget {
   const SBBListItemV5({
     super.key,
     this.leading,
-    this.title,
-    this.subtitle,
-    this.trailing,
     this.leadingIconData,
+    this.title,
     this.titleText,
+    this.subtitle,
     this.subtitleText,
+    this.trailing,
     this.trailingIconData,
     this.onTap,
     this.onLongPress,
     this.enabled = true,
     this.isLoading = false,
     this.links,
+    this.focusNode,
+    this.autofocus = false,
     this.padding,
     this.trailingHorizontalGapWidth,
     this.leadingHorizontalGapWidth,
     this.subtitleVerticalGapHeight,
     this.style,
-    this.focusNode,
-    this.autofocus = false,
   }) : assert(title != null || titleText != null, 'Either title or titleText must be provided'),
        assert(title == null || titleText == null, 'Only one of title or titleText can be set'),
        assert(subtitle == null || subtitleText == null, 'Only one of subtitle or subtitleText can be set'),
        assert(leading == null || leadingIconData == null, 'Only one of leading or leadingIconData can be set'),
        assert(trailing == null || trailingIconData == null, 'Only one of trailing or trailingIconData can be set');
 
+  /// A custom widget displayed as the list item's leading content.
+  ///
+  /// For simple icons, use [leadingIconData] instead.
+  ///
+  /// The Widget is vertically centered with [titleText] or [title].
+  ///
+  /// Cannot be used together with [leadingIconData].
   final Widget? leading;
 
-  final Widget? title;
-
-  final Widget? subtitle;
-
-  final Widget? trailing;
-
+  /// Icon data for the leading icon.
+  ///
+  /// The icon is vertically centered with [titleText] or [title].
+  ///
+  /// Cannot be used together with [leading].
   final IconData? leadingIconData;
 
-  /// maxLines 1 with Ellipsis overflow
+  /// A custom widget displayed as the list item's title.
+  ///
+  /// For simple text labels, use [titleText] instead.
+  ///
+  /// The [title] is vertically centered with [leading] or [leadingIconData].
+  ///
+  /// Cannot be used together with [titleText].
+  final Widget? title;
+
+  /// Text string to display as the list item's title using standard styling.
+  ///
+  /// The text is clamped to a single line with ellipsis overflow.
+  /// The [titleText] is vertically centered with [leading] or [leadingIconData].
+  ///
+  /// Cannot be used together with [title].
   final String? titleText;
 
+  /// A custom widget displayed as the list item's subtitle below the title.
+  ///
+  /// For simple text labels, use [subtitleText] instead.
+  ///
+  /// Cannot be used together with [subtitleText].
+  final Widget? subtitle;
+
+  /// Text string to display as the list item's subtitle using standard styling.
+  ///
+  /// The subtitle is positioned below the title and leading widget.
+  ///
+  /// Cannot be used together with [subtitle].
   final String? subtitleText;
 
+  /// A custom widget displayed as the list item's trailing content.
+  ///
+  /// For simple icons, use [trailingIconData] instead.
+  ///
+  /// [trailing] is vertically centered relative to the list item.
+  ///
+  /// Cannot be used together with [trailingIconData].
+  final Widget? trailing;
+
+  /// Icon data for the trailing icon.
+  ///
+  /// Cannot be used together with [trailing].
   final IconData? trailingIconData;
 
+  /// Called when the list item is tapped.
+  ///
+  /// The list item is disabled when both this and [onLongPress] are null.
+  ///
+  /// Ignored when [enabled] is false.
   final GestureTapCallback? onTap;
 
+  /// Called when the list item is long-pressed.
+  ///
+  /// The list item is disabled when both this and [onTap] are null.
+  ///
+  /// Ignored when [enabled] is false.
   final GestureLongPressCallback? onLongPress;
 
+  /// Whether the list item is enabled for interaction.
+  ///
+  /// When false, [onTap] and [onLongPress] are ignored and the item
+  /// is styled as disabled.
+  ///
+  /// Defaults to true.
   final bool enabled;
 
+  /// Whether to show a loading indicator at the bottom of the item.
+  ///
+  /// When true, a [BottomLoadingIndicator] is displayed at the bottom of the list item.
+  ///
+  /// Defaults to false.
   final bool isLoading;
 
-  final FocusNode? focusNode;
-
-  final bool autofocus;
-
+  /// Additional widgets displayed below the list item main content.
+  ///
+  /// This is typically used with a list of [SBBListItemV5] itself with a trailing icon.
+  ///
+  /// Links are displayed in a column below the list item with
+  /// top dividers separating each link.
   final Iterable<Widget>? links;
 
+  /// {@macro flutter.widgets.Focus.focusNode}
+  final FocusNode? focusNode;
+
+  /// {@macro flutter.widgets.Focus.autofocus}
+  final bool autofocus;
+
+  /// Padding around the list item's content.
+  ///
+  /// Defaults to symmetric padding of 16.0 horizontal and 10.0 vertical.
   final EdgeInsetsGeometry? padding;
 
+  /// Horizontal gap width between the trailing widget and the edge.
+  ///
+  /// Overrides the value in [SBBListItemThemeData.trailingHorizontalGapWidth].
+  ///
+  /// Defaults to 16.0.
   final double? trailingHorizontalGapWidth;
 
+  /// Horizontal gap width between the leading widget and the title/subtitle.
+  ///
+  /// Overrides the value in [SBBListItemThemeData.subtitleVerticalGapHeight].
+  ///
+  /// Defaults to 8.0.
   final double? leadingHorizontalGapWidth;
 
+  /// Vertical gap height between the title and subtitle.
+  ///
+  /// Overrides the value in [SBBListItemThemeData.subtitleVerticalGapHeight].
+  ///
+  /// Defaults to 4.0.
   final double? subtitleVerticalGapHeight;
 
   /// Customizes this list item appearance.
@@ -310,25 +400,25 @@ class SBBListItemV5Boxed extends SBBListItemV5 {
   const SBBListItemV5Boxed({
     super.key,
     super.leading,
-    super.title,
-    super.subtitle,
-    super.trailing,
     super.leadingIconData,
+    super.title,
     super.titleText,
+    super.subtitle,
     super.subtitleText,
+    super.trailing,
     super.trailingIconData,
     super.onTap,
     super.onLongPress,
     super.enabled,
     super.isLoading,
     super.links,
+    super.focusNode,
+    super.autofocus,
+    super.style,
     super.padding,
     super.trailingHorizontalGapWidth,
     super.leadingHorizontalGapWidth,
     super.subtitleVerticalGapHeight,
-    super.style,
-    super.focusNode,
-    super.autofocus,
   });
 
   @override
