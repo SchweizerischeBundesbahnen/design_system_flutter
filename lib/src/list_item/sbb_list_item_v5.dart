@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:sbb_design_system_mobile/src/shared/bottom_loading_indicator.dart';
 
 import '../../sbb_design_system_mobile.dart';
 import 'divider_painter.dart';
@@ -11,10 +12,10 @@ typedef _PositionChild = void Function(RenderBox child, Offset offset);
 
 enum _SBBListItemSlot { leading, title, subtitle, trailing }
 
-/// TODO: add isLoading state
 /// TODO: make widgetStatesController internal only
 /// TODO: add styling and themeData
 /// TODO: add DefaultTextStyle & DefaultIconThemeData
+/// TODO: baseline alignment of text and leading icon
 /// TODO: add focusNode & autofocus
 /// TODO: add documentation
 /// TODO: overhaul all convenience ListItems (Radio, Checkbox, Switch)

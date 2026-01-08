@@ -17,7 +17,10 @@ class ListItemPage extends StatelessWidget {
       slivers: [
         SBBSliverHeaderbox.custom(child: ThemeModeSegmentedButton()),
         SliverPadding(
-          padding: const EdgeInsets.symmetric(vertical: sbbDefaultSpacing, horizontal: sbbDefaultSpacing * .5),
+          padding: const EdgeInsets.symmetric(
+            vertical: sbbDefaultSpacing * .5,
+            horizontal: sbbDefaultSpacing * .5,
+          ).copyWith(bottom: sbbDefaultSpacing * 3),
           sliver: SliverList.list(
             children: [
               SBBListHeader('Listed'),
@@ -33,7 +36,6 @@ class ListItemPage extends StatelessWidget {
                       ),
                       SBBListItemV5(
                         titleText: 'Ohne Icon',
-                        leadingIconData: SBBIcons.dog_small,
                         onTap: () => sbbToast.show(title: 'Ohne Icon'),
                       ),
                       SBBListItemV5(
@@ -91,8 +93,36 @@ class ListItemPage extends StatelessWidget {
               SizedBox(height: sbbDefaultSpacing),
               SBBListHeader('Boxed'),
               Column(
-                spacing: sbbDefaultSpacing,
-                children: [SBBListItemV5Boxed()],
+                spacing: sbbDefaultSpacing * .5,
+                children: [
+                  SBBListItemV5Boxed(
+                    titleText: 'Default',
+                    leadingIconData: SBBIcons.dog_small,
+                    onTap: () => sbbToast.show(title: 'Default'),
+                  ),
+                  SBBListItemV5Boxed(
+                    titleText: 'Ohne Icon',
+                    onTap: () => sbbToast.show(title: 'Ohne Icon'),
+                  ),
+                  SBBListItemV5Boxed(
+                    titleText: 'Mit Subtext',
+                    subtitleText: loremIpsum,
+                    leadingIconData: SBBIcons.dog_small,
+                    onTap: () => sbbToast.show(title: 'Mit Subtext'),
+                  ),
+                  SBBListItemV5Boxed(
+                    titleText: 'Mit Icon Rechts',
+                    leadingIconData: SBBIcons.dog_small,
+                    trailingIconData: SBBIcons.chevron_small_right_small,
+                    onTap: () => sbbToast.show(title: 'Mit Icon Rechts'),
+                  ),
+                  SBBListItemV5Boxed(
+                    titleText: 'Loading',
+                    leadingIconData: SBBIcons.dog_small,
+                    onTap: () => sbbToast.show(title: 'Loading'),
+                    isLoading: true,
+                  ),
+                ],
               ),
             ],
           ),
