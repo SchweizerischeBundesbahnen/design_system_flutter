@@ -206,3 +206,67 @@ class SBBCheckboxListItem extends StatelessWidget {
     }
   }
 }
+
+/// A boxed variant of [SBBCheckboxListItem] with border and padding.
+///
+/// This widget extends [SBBCheckboxListItem] and wraps the list item in an [SBBContentBox]
+/// to provide a contained appearance with rounded borders and background.
+///
+/// All parameters and behavior are identical to [SBBCheckboxListItem].
+///
+/// ## Sample code
+///
+/// ```dart
+/// SBBCheckboxListItemBoxed(
+///   value: _isChecked,
+///   onChanged: (newValue) {
+///     setState(() {
+///       _isChecked = newValue ?? false;
+///     });
+///   },
+///   titleText: 'Boxed Checkbox Item',
+///   subtitleText: 'This item has a border',
+/// )
+/// ```
+///
+/// See also:
+///
+///  * [SBBCheckboxListItem], for the standard variant without borders.
+///  * [SBBListItemV5Boxed], the underlying boxed list item widget.
+///  * [SBBContentBox], which provides the border and padding styling.
+class SBBCheckboxListItemBoxed extends SBBCheckboxListItem {
+  const SBBCheckboxListItemBoxed({
+    super.key,
+    super.leading,
+    super.leadingIconData,
+    super.title,
+    super.titleText,
+    super.subtitle,
+    super.subtitleText,
+    super.trailing,
+    super.trailingIconData,
+    super.onLongPress,
+    super.enabled,
+    super.isLoading,
+    super.links,
+    super.focusNode,
+    super.autofocus,
+    super.enableFeedback,
+    super.padding,
+    super.trailingHorizontalGapWidth,
+    super.leadingHorizontalGapWidth,
+    super.subtitleVerticalGapHeight,
+    super.leadingCheckboxGapWidth,
+    super.listItemStyle,
+    required super.value,
+    super.tristate,
+    required super.onChanged,
+    super.checkboxStyle,
+    super.checkboxSemanticLabel,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SBBContentBox(child: super.build(context));
+  }
+}

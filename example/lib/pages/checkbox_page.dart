@@ -144,84 +144,71 @@ class CheckboxPageState extends State<CheckboxPage> {
               ),
               const SizedBox(height: sbbDefaultSpacing),
               const SBBListHeader('Checkbox Item - Boxed'),
-              // Column(
-              //   spacing: sbbDefaultSpacing * 0.5,
-              //   children: [
-              //     SBBContentBox(
-              //       child: SBBCheckboxListItem.boxed(
-              //         value: _listItemValue1,
-              //         titleText: 'Label',
-              //         allowMultilineLabel: true,
-              //         onChanged: _isEnabled ? (value) => setState(() => _listItemValue1 = value) : null,
-              //       ),
-              //     ),
-              //     SBBContentBox(
-              //       child: SBBCheckboxListItem.boxed(
-              //         value: _listItemValue2,
-              //         titleText: 'Tristate',
-              //         tristate: true,
-              //         onChanged: _isEnabled ? (value) => setState(() => _listItemValue2 = value) : null,
-              //       ),
-              //     ),
-              //     SBBContentBox(
-              //       child: SBBCheckboxListItem.boxed(
-              //         value: _listItemValue4,
-              //         titleText: 'Leading Icon',
-              //         onChanged: _isEnabled ? (value) => setState(() => _listItemValue4 = value) : null,
-              //         leadingIconData: SBBIcons.alarm_clock_small,
-              //       ),
-              //     ),
-              //     SBBContentBox(
-              //       child: SBBCheckboxListItem.boxed(
-              //         value: _listItemValue5,
-              //         titleText: 'Leading and Trailing Icon',
-              //         onChanged: _isEnabled ? (value) => setState(() => _listItemValue5 = value) : null,
-              //         leadingIconData: SBBIcons.alarm_clock_small,
-              //         trailingIconData: SBBIcons.dog_small,
-              //       ),
-              //     ),
-              //     SBBContentBox(
-              //       child: SBBCheckboxListItem.boxed(
-              //         value: _listItemValue3,
-              //         titleText: 'Button',
-              //         onChanged: _isEnabled ? (value) => setState(() => _listItemValue3 = value) : null,
-              //         trailingIconData: SBBIcons.circle_information_small_small,
-              //         onCallToAction: () => sbbToast.show(title: 'Button pressed'),
-              //       ),
-              //     ),
-              //     SBBContentBox(
-              //       child: SBBCheckboxListItem.custom(
-              //         value: _listItemValue6,
-              //         titleText: 'Custom trailing Widget',
-              //         onChanged: _isEnabled ? (value) => setState(() => _listItemValue6 = value) : null,
-              //         trailingWidget: Padding(
-              //           padding: EdgeInsetsDirectional.only(top: sbbDefaultSpacing / 4 * 3, end: sbbDefaultSpacing),
-              //           child: Text('CHF 0.99'),
-              //         ),
-              //       ),
-              //     ),
-              //     SBBContentBox(
-              //       child: SBBCheckboxListItem.boxed(
-              //         value: _listItemValue7,
-              //         titleText: 'Multiline Label with\nSecondary Label',
-              //         allowMultilineLabel: true,
-              //         secondaryLabel:
-              //             'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut convallis leo et metus semper hendrerit. '
-              //             'Duis nec nunc a ligula cursus vulputate. Donec sed elit ultricies, euismod erat et, eleifend augue.',
-              //         onChanged: _isEnabled ? (value) => setState(() => _listItemValue7 = value) : null,
-              //       ),
-              //     ),
-              //     SBBContentBox(
-              //       child: SBBCheckboxListItem.boxed(
-              //         value: _listItemValue8,
-              //         titleText: 'Loading',
-              //         secondaryLabel: 'This will not stop.',
-              //         onChanged: _isEnabled ? (value) => setState(() => _listItemValue8 = value!) : null,
-              //         isLoading: true,
-              //       ),
-              //     ),
-              //   ],
-              // ),
+              Padding(
+                padding: const EdgeInsets.only(bottom: sbbDefaultSpacing * 4),
+                child: Column(
+                  spacing: sbbDefaultSpacing * 0.5,
+                  children: [
+                    SBBCheckboxListItemBoxed(
+                      value: _listItemValue1,
+                      titleText: 'Label',
+                      onChanged: _isEnabled ? (value) => setState(() => _listItemValue1 = value) : null,
+                    ),
+                    SBBCheckboxListItemBoxed(
+                      value: _listItemValue2,
+                      titleText: 'Tristate',
+                      tristate: true,
+                      onChanged: _isEnabled ? (value) => setState(() => _listItemValue2 = value) : null,
+                    ),
+                    SBBCheckboxListItemBoxed(
+                      value: _listItemValue4,
+                      titleText: 'Leading Icon',
+                      onChanged: _isEnabled ? (value) => setState(() => _listItemValue4 = value) : null,
+                      leadingIconData: SBBIcons.alarm_clock_small,
+                    ),
+                    SBBCheckboxListItemBoxed(
+                      value: _listItemValue5,
+                      titleText: 'Leading and Trailing Icon',
+                      onChanged: _isEnabled ? (value) => setState(() => _listItemValue5 = value) : null,
+                      leadingIconData: SBBIcons.alarm_clock_small,
+                      trailingIconData: SBBIcons.dog_small,
+                    ),
+                    SBBCheckboxListItemBoxed(
+                      value: _listItemValue3,
+                      titleText: 'Button',
+                      onChanged: _isEnabled ? (value) => setState(() => _listItemValue3 = value) : null,
+                      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16).copyWith(right: 8.0),
+                      trailing: SBBTertiaryButtonSmall(
+                        iconData: SBBIcons.circle_information_small_small,
+                        onPressed: () => sbbToast.show(title: 'Button pressed'),
+                      ),
+                    ),
+                    SBBCheckboxListItemBoxed(
+                      value: _listItemValue6,
+                      titleText: 'Custom Trailing',
+                      onChanged: _isEnabled ? (value) => setState(() => _listItemValue6 = value) : null,
+                      trailing: Text('CHF 0.99'),
+                    ),
+                    SBBContentBox(
+                      child: SBBCheckboxListItemBoxed(
+                        value: _listItemValue7,
+                        title: Text('Multiline Label with\nSecondary Label'),
+                        subtitleText:
+                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut convallis leo et metus semper hendrerit. '
+                            'Duis nec nunc a ligula cursus vulputate. Donec sed elit ultricies, euismod erat et, eleifend augue.',
+                        onChanged: _isEnabled ? (value) => setState(() => _listItemValue7 = value) : null,
+                      ),
+                    ),
+                    SBBCheckboxListItemBoxed(
+                      value: _listItemValue8,
+                      titleText: 'Loading',
+                      subtitleText: 'This will not stop.',
+                      onChanged: _isEnabled ? (value) => setState(() => _listItemValue8 = value!) : null,
+                      isLoading: true,
+                    ),
+                  ],
+                ),
+              ),
             ],
           ),
         ),
