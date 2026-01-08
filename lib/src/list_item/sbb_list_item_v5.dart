@@ -12,6 +12,7 @@ typedef _PositionChild = void Function(RenderBox child, Offset offset);
 
 enum _SBBListItemSlot { leading, title, subtitle, trailing }
 
+/// TODO: add semantics
 /// TODO: add documentation
 /// TODO: overhaul all convenience ListItems (Radio, Checkbox, Switch)
 
@@ -235,16 +236,21 @@ class _SBBListItemV5State extends State<SBBListItemV5> {
         focusNode: widget.focusNode,
         statesController: _statesController,
         overlayColor: effectiveOverlayColor,
-        child: Padding(
-          padding: effectivePadding,
-          child: _SBBListItemV5(
-            leading: leadingWidget,
-            title: titleWidget ?? const SizedBox(),
-            subtitle: subtitleWidget,
-            trailing: trailingWidget,
-            trailingHorizontalGapWidth: effectiveTrailingGapWidth,
-            leadingHorizontalGapWidth: effectiveLeadingGapWidth,
-            subtitleVerticalGapHeight: effectiveSubtitleGapHeight,
+        child: Semantics(
+          button: widget.onTap != null || widget.onLongPress != null,
+          enabled: widget.enabled,
+          focused: widget.focusNode?.hasFocus,
+          child: Padding(
+            padding: effectivePadding,
+            child: _SBBListItemV5(
+              leading: leadingWidget,
+              title: titleWidget ?? const SizedBox(),
+              subtitle: subtitleWidget,
+              trailing: trailingWidget,
+              trailingHorizontalGapWidth: effectiveTrailingGapWidth,
+              leadingHorizontalGapWidth: effectiveLeadingGapWidth,
+              subtitleVerticalGapHeight: effectiveSubtitleGapHeight,
+            ),
           ),
         ),
       ),
