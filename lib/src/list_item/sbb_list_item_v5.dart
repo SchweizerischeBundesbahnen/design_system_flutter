@@ -3,6 +3,9 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
+import '../../sbb_design_system_mobile.dart';
+import 'divider_painter.dart';
+
 typedef _Sizes = ({double titleY, BoxConstraints textConstraints, Size tileSize});
 typedef _PositionChild = void Function(RenderBox child, Offset offset);
 
@@ -76,45 +79,9 @@ class SBBListItemV5 extends StatelessWidget {
 
   final double subtitleVerticalGapHeight;
 
-  /// Add a divider above each link widget with an indent of 16.0.
-  /// If there is only one link, a divider is still added at the top.
-  ///
-  /// The divider indent is set to 16.0 to align with the content padding.
-  /// Only the divider is indented, not the link itself, to ensure splash
-  /// reactions work correctly.
-  static Iterable<Widget> divideLinks({
-    BuildContext? context,
-    required Iterable<Widget> links,
-    Color? color,
-    double indent = 16.0,
-  }) {
-    assert(color != null || context != null);
-    links = links.toList();
-
-    if (links.isEmpty) {
-      return links;
-    }
-
-    Widget wrapLink(Widget link) {
-      return CustomPaint(
-        painter: _IndentedDividerPainter(
-          color: color ?? Divider.createBorderSide(context).color,
-          indent: indent,
-        ),
-        child: link,
-      );
-    }
-
-    return links.map(wrapLink);
-  }
-
   /// Add a one pixel border in between each tile. If color isn't specified the
   /// [ThemeData.dividerColor] of the context's [Theme] is used.
-  ///
-  /// See also:
-  ///
-  ///  * [Divider], which you can use to obtain this effect manually.
-  static Iterable<Widget> divideTiles({
+  static Iterable<Widget> divideListItems({
     BuildContext? context,
     required Iterable<Widget> tiles,
     Color? color,
@@ -126,17 +93,20 @@ class SBBListItemV5 extends StatelessWidget {
       return tiles;
     }
 
-    Widget wrapTile(Widget tile) {
-      return DecoratedBox(
-        position: DecorationPosition.foreground,
-        decoration: BoxDecoration(
-          border: Border(bottom: Divider.createBorderSide(context, color: color)),
+    final resolvedColor = color ?? Theme.of(context!).dividerTheme.color ?? SBBColors.graphite;
+
+    Widget wrapListItem(Widget link) {
+      return CustomPaint(
+        painter: SBBDividerPainter(
+          paintAtTop: false,
+          color: resolvedColor,
+          indent: 0.0,
         ),
-        child: tile,
+        child: link,
       );
     }
 
-    return <Widget>[...tiles.take(tiles.length - 1).map(wrapTile), tiles.last];
+    return <Widget>[...tiles.take(tiles.length - 1).map(wrapListItem), tiles.last];
   }
 
   @override
@@ -189,12 +159,39 @@ class SBBListItemV5 extends StatelessWidget {
       child = Column(
         children: [
           child,
-          ...SBBListItemV5.divideLinks(context: context, links: links!),
+          ..._divideLinks(context: context, links: links!),
         ],
       );
     }
 
     return child;
+  }
+
+  Iterable<Widget> _divideLinks({
+    BuildContext? context,
+    required Iterable<Widget> links,
+    Color? color,
+    double indent = 16.0,
+  }) {
+    assert(color != null || context != null);
+    links = links.toList();
+
+    if (links.isEmpty) return links;
+
+    final resolvedColor = color ?? Theme.of(context!).dividerTheme.color ?? SBBColors.graphite;
+
+    Widget wrapLink(Widget link) {
+      return CustomPaint(
+        painter: SBBDividerPainter(
+          paintAtTop: true,
+          color: resolvedColor,
+          indent: indent,
+        ),
+        child: link,
+      );
+    }
+
+    return links.map(wrapLink);
   }
 }
 
@@ -377,6 +374,8 @@ class _RenderSBBListItemV5 extends RenderBox with SlottedContainerRenderObjectMi
     final Size? leadingSize = leading == null ? null : getSize(leading, looseConstraints);
     final double leadingWidth = leadingSize != null ? leadingSize.width + _leadingHorizontalGapWidth : 0.0;
 
+    _makeOverflowAssertion(tileWidth, leadingSize, trailingSize);
+
     // Calculate available width for title and subtitle
     final double availableTitleWidth = tileWidth - leadingWidth - trailingWidth;
     final BoxConstraints titleConstraints = looseConstraints.tighten(width: availableTitleWidth);
@@ -496,6 +495,39 @@ class _RenderSBBListItemV5 extends RenderBox with SlottedContainerRenderObjectMi
       }
     }
     return false;
+  }
+
+  void _makeOverflowAssertion(double tileWidth, Size? leadingSize, Size? trailingSize) {
+    assert(() {
+      if (tileWidth == 0.0) {
+        return true;
+      }
+
+      String? overflowedWidget;
+      if (tileWidth == leadingSize?.width) {
+        overflowedWidget = 'Leading';
+      } else if (tileWidth == trailingSize?.width) {
+        overflowedWidget = 'Trailing';
+      }
+
+      if (overflowedWidget == null) {
+        return true;
+      }
+
+      throw FlutterError.fromParts(<DiagnosticsNode>[
+        ErrorSummary(
+          '$overflowedWidget widget consumes the entire tile width (including ListTile.contentPadding).',
+        ),
+        ErrorDescription(
+          'Either resize the tile width so that the ${overflowedWidget.toLowerCase()} widget plus any content padding '
+          'do not exceed the tile width, or use a sized widget, or consider replacing '
+          'ListTile with a custom widget.',
+        ),
+        ErrorHint(
+          'See also: https://api.flutter.dev/flutter/material/ListTile-class.html#material.ListTile.4',
+        ),
+      ]);
+    }());
   }
 }
 

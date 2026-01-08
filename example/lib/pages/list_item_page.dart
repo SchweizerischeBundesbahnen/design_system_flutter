@@ -16,7 +16,7 @@ class ListItemPage extends StatelessWidget {
         const SizedBox(height: sbbDefaultSpacing),
         SBBContentBox(
           child: Column(
-            children: SBBListItemV5.divideTiles(
+            children: SBBListItemV5.divideListItems(
               context: context,
               tiles: [
                 SBBListItemV5(
