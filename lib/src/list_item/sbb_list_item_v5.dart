@@ -12,9 +12,6 @@ typedef _PositionChild = void Function(RenderBox child, Offset offset);
 
 enum _SBBListItemSlot { leading, title, subtitle, trailing }
 
-/// TODO: make widgetStatesController internal only
-/// TODO: add styling and themeData
-/// TODO: add DefaultTextStyle & DefaultIconThemeData
 /// TODO: baseline alignment of text and leading icon
 /// TODO: add focusNode & autofocus
 /// TODO: add documentation
@@ -36,10 +33,11 @@ class SBBListItemV5 extends StatefulWidget {
     this.enabled = true,
     this.isLoading = false,
     this.links,
-    this.padding = const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
-    this.trailingHorizontalGapWidth = 16.0,
-    this.leadingHorizontalGapWidth = 8.0,
-    this.subtitleVerticalGapHeight = 4.0,
+    this.padding,
+    this.trailingHorizontalGapWidth,
+    this.leadingHorizontalGapWidth,
+    this.subtitleVerticalGapHeight,
+    this.style,
   }) : assert(title != null || titleText != null, 'Either title or titleText must be provided'),
        assert(title == null || titleText == null, 'Only one of title or titleText can be set'),
        assert(subtitle == null || subtitleText == null, 'Only one of subtitle or subtitleText can be set'),
@@ -70,15 +68,21 @@ class SBBListItemV5 extends StatefulWidget {
 
   final bool isLoading;
 
-  final EdgeInsetsGeometry padding;
+  final EdgeInsetsGeometry? padding;
 
   final Iterable<Widget>? links;
 
-  final double trailingHorizontalGapWidth;
+  final double? trailingHorizontalGapWidth;
 
-  final double leadingHorizontalGapWidth;
+  final double? leadingHorizontalGapWidth;
 
-  final double subtitleVerticalGapHeight;
+  final double? subtitleVerticalGapHeight;
+
+  /// Customizes this list item appearance.
+  ///
+  /// Non-null properties of this style override the corresponding
+  /// properties in [SBBListItemThemeData.style] of the theme found in [context].
+  final SBBListItemV5Style? style;
 
   /// Add a one pixel border in between each tile. If color isn't specified the
   /// [ThemeData.dividerColor] of the context's [Theme] is used, which defaults to
@@ -147,8 +151,25 @@ class _SBBListItemV5State extends State<SBBListItemV5> {
   Widget build(BuildContext context) {
     assert(debugCheckHasMaterial(context));
 
-    final TextDirection textDirection = Directionality.of(context);
-    final EdgeInsets resolvedPadding = widget.padding.resolve(textDirection);
+    final themeData = Theme.of(context).sbbListItemTheme;
+    final effectiveStyle = (themeData?.style ?? SBBListItemV5Style()).merge(widget.style);
+    final states = _statesController.value;
+
+    final effectivePadding =
+        widget.padding ?? themeData?.padding ?? const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0);
+    final effectiveTrailingGapWidth =
+        widget.trailingHorizontalGapWidth ?? themeData?.trailingHorizontalGapWidth ?? 16.0;
+    final effectiveLeadingGapWidth = widget.leadingHorizontalGapWidth ?? themeData?.leadingHorizontalGapWidth ?? 8.0;
+    final effectiveSubtitleGapHeight = widget.subtitleVerticalGapHeight ?? themeData?.subtitleVerticalGapHeight ?? 4.0;
+    final effectiveOverlayColor = effectiveStyle.overlayColor;
+
+    final resolvedTitleTextStyle = effectiveStyle.titleTextStyle?.resolve(states) ?? SBBTextStyles.mediumLight;
+    final resolvedSubtitleTextStyle = effectiveStyle.subtitleTextStyle?.resolve(states) ?? SBBTextStyles.smallLight;
+    final resolvedTitleForegroundColor = effectiveStyle.titleForegroundColor?.resolve(states);
+    final resolvedSubtitleForegroundColor = effectiveStyle.subtitleForegroundColor?.resolve(states);
+    final resolvedLeadingForegroundColor = effectiveStyle.leadingForegroundColor?.resolve(states);
+    final resolvedTrailingForegroundColor = effectiveStyle.trailingForegroundColor?.resolve(states);
+    final resolvedBackgroundColor = effectiveStyle.backgroundColor?.resolve(states);
 
     // Build actual widgets from convenience parameters
     Widget? leadingWidget = widget.leading;
@@ -171,20 +192,53 @@ class _SBBListItemV5State extends State<SBBListItemV5> {
       trailingWidget = Icon(widget.trailingIconData);
     }
 
-    Widget child = InkWell(
-      onTap: widget.enabled ? widget.onTap : null,
-      onLongPress: widget.enabled ? widget.onLongPress : null,
-      statesController: _statesController,
-      child: Padding(
-        padding: resolvedPadding,
-        child: _SBBListItemV5(
-          leading: leadingWidget,
-          title: titleWidget ?? const SizedBox(),
-          subtitle: subtitleWidget,
-          trailing: trailingWidget,
-          trailingHorizontalGapWidth: widget.trailingHorizontalGapWidth,
-          leadingHorizontalGapWidth: widget.leadingHorizontalGapWidth,
-          subtitleVerticalGapHeight: widget.subtitleVerticalGapHeight,
+    // Apply theming to all widgets
+    if (leadingWidget != null) {
+      leadingWidget = IconTheme.merge(
+        data: IconThemeData(color: resolvedLeadingForegroundColor),
+        child: leadingWidget,
+      );
+    }
+
+    if (titleWidget != null) {
+      titleWidget = DefaultTextStyle.merge(
+        style: resolvedTitleTextStyle.copyWith(color: resolvedTitleForegroundColor),
+        child: titleWidget,
+      );
+    }
+
+    if (subtitleWidget != null) {
+      subtitleWidget = DefaultTextStyle.merge(
+        style: resolvedSubtitleTextStyle.copyWith(color: resolvedSubtitleForegroundColor),
+        child: subtitleWidget,
+      );
+    }
+
+    if (trailingWidget != null) {
+      trailingWidget = IconTheme.merge(
+        data: IconThemeData(color: resolvedTrailingForegroundColor),
+        child: trailingWidget,
+      );
+    }
+
+    Widget child = DecoratedBox(
+      decoration: BoxDecoration(color: resolvedBackgroundColor),
+      child: InkWell(
+        onTap: widget.enabled ? widget.onTap : null,
+        onLongPress: widget.enabled ? widget.onLongPress : null,
+        statesController: _statesController,
+        overlayColor: effectiveOverlayColor,
+        child: Padding(
+          padding: effectivePadding,
+          child: _SBBListItemV5(
+            leading: leadingWidget,
+            title: titleWidget ?? const SizedBox(),
+            subtitle: subtitleWidget,
+            trailing: trailingWidget,
+            trailingHorizontalGapWidth: effectiveTrailingGapWidth,
+            leadingHorizontalGapWidth: effectiveLeadingGapWidth,
+            subtitleVerticalGapHeight: effectiveSubtitleGapHeight,
+          ),
         ),
       ),
     );
@@ -259,6 +313,7 @@ class SBBListItemV5Boxed extends SBBListItemV5 {
     super.trailingHorizontalGapWidth,
     super.leadingHorizontalGapWidth,
     super.subtitleVerticalGapHeight,
+    super.style,
   });
 
   @override
