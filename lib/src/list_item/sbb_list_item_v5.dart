@@ -304,12 +304,15 @@ class _RenderSBBListItemV5 extends RenderBox with SlottedContainerRenderObjectMi
     final double leadingWidth = leadingSize != null ? leadingSize.width + _leadingHorizontalGapWidth : 0.0;
 
     // Calculate available width for title and subtitle
-    final double availableWidth = tileWidth - leadingWidth - trailingWidth;
-    final BoxConstraints textConstraints = looseConstraints.tighten(width: availableWidth);
+    final double availableTitleWidth = tileWidth - leadingWidth - trailingWidth;
+    final BoxConstraints titleConstraints = looseConstraints.tighten(width: availableTitleWidth);
+
+    final double availableSubTitleWidth = tileWidth - trailingWidth;
+    final BoxConstraints subTitleConstraints = looseConstraints.tighten(width: availableSubTitleWidth);
 
     // Layout title and subtitle
-    final Size titleSize = getSize(title, textConstraints);
-    final Size? subtitleSize = subtitle == null ? null : getSize(subtitle, textConstraints);
+    final Size titleSize = getSize(title, titleConstraints);
+    final Size? subtitleSize = subtitle == null ? null : getSize(subtitle, subTitleConstraints);
 
     // Calculate positions
     // Title is always at y=0
@@ -358,7 +361,7 @@ class _RenderSBBListItemV5 extends RenderBox with SlottedContainerRenderObjectMi
 
     return (
       titleY: titleY,
-      textConstraints: textConstraints,
+      textConstraints: titleConstraints,
       tileSize: Size(tileWidth, tileHeight),
     );
   }
