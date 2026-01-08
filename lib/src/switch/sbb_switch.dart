@@ -81,13 +81,16 @@ class SBBSwitch extends StatefulWidget {
     this.semanticLabel,
   });
 
+  /// {@template sbb_design_system.switch.value}
   /// When [value] is true, the switch appears with the knob
   /// positioned to the right and the track colored with the active color.
   ///
   /// When [value] is false, the switch appears with the knob
   /// positioned to the left and the track colored with the inactive color.
+  /// {@endtemplate}
   final bool value;
 
+  /// {@template sbb_design_system.switch.onChanged}
   /// Called when the user toggles the switch.
   ///
   /// The switch passes the new boolean value to the callback. The parent widget
@@ -96,12 +99,15 @@ class SBBSwitch extends StatefulWidget {
   /// If this callback is null, the switch will be displayed as disabled and will
   /// not respond to user gestures. Use null to disable the switch when a certain
   /// condition is met (e.g., when loading data or when the user lacks permissions).
+  /// {@endtemplate}
   final ValueChanged<bool>? onChanged;
 
+  /// {@template sbb_design_system.switch.style}
   /// Customizes the appearance of this switch.
   ///
   /// Non-null properties of this style override the corresponding properties
   /// in the [SBBSwitchThemeData.style] from the theme found in [context].
+  /// {@endtemplate}
   final SBBSwitchStyle? style;
 
   /// {@macro flutter.widgets.Focus.focusNode}
@@ -110,11 +116,13 @@ class SBBSwitch extends StatefulWidget {
   /// {@macro flutter.widgets.Focus.autofocus}
   final bool autofocus;
 
+  /// {@template sbb_design_system.switch.semanticLabel}
   /// The semantic label for the [SBBSwitch] that will be announced by screen readers.
   ///
   /// This is announced by assistive technologies (e.g TalkBack/VoiceOver).
   ///
   /// This label does not show in the UI.
+  /// {@endtemplate}
   final String? semanticLabel;
 
   @override
