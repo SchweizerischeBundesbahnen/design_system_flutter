@@ -227,19 +227,19 @@ class _SBBListItemV5State extends State<SBBListItemV5> {
       );
     }
 
-    Widget child = DecoratedBox(
-      decoration: BoxDecoration(color: resolvedBackgroundColor),
-      child: InkWell(
-        onTap: widget.enabled ? widget.onTap : null,
-        onLongPress: widget.enabled ? widget.onLongPress : null,
-        autofocus: widget.autofocus,
-        focusNode: widget.focusNode,
-        statesController: _statesController,
-        overlayColor: effectiveOverlayColor,
-        child: Semantics(
-          button: widget.onTap != null || widget.onLongPress != null,
-          enabled: widget.enabled,
-          focused: widget.focusNode?.hasFocus,
+    Widget child = InkWell(
+      onTap: widget.enabled ? widget.onTap : null,
+      onLongPress: widget.enabled ? widget.onLongPress : null,
+      autofocus: widget.autofocus,
+      focusNode: widget.focusNode,
+      statesController: _statesController,
+      overlayColor: effectiveOverlayColor,
+      child: Semantics(
+        button: widget.onTap != null || widget.onLongPress != null,
+        enabled: widget.enabled,
+        focused: widget.focusNode?.hasFocus,
+        child: Ink(
+          color: resolvedBackgroundColor,
           child: Padding(
             padding: effectivePadding,
             child: _SBBListItemV5(
