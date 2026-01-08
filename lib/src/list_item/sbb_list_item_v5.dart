@@ -12,9 +12,91 @@ typedef _PositionChild = void Function(RenderBox child, Offset offset);
 
 enum _SBBListItemSlot { leading, title, subtitle, trailing }
 
-/// TODO: add documentation
-/// TODO: overhaul all convenience ListItems (Radio, Checkbox, Switch)
+/// TODO: overhaul convenience ListItems
 
+/// A customizable list item component following the SBB design system.
+///
+/// Provides a flexible layout with optional leading, title, subtitle, and trailing widgets.
+/// The title and leading widgets are center-aligned vertically, with the subtitle positioned
+/// below them.
+///
+/// Provide either [title] for custom content or [titleText] for text-only content with
+/// standard styling. These parameters are mutually exclusive.
+///
+/// Optionally provide [subtitle] or [subtitleText] for additional information below the title.
+/// These parameters are mutually exclusive.
+///
+/// Leading and trailing icons can be provided either as custom [Widget]s via [leading] and
+/// [trailing], or as [IconData] via [leadingIconData] and [trailingIconData]. These parameter
+/// pairs are mutually exclusive.
+///
+/// When [isLoading] is true, a loading indicator is displayed at the bottom of the item.
+///
+/// When [links] are provided, they are displayed below the list item with top dividers.
+///
+/// The list item is disabled when both [onTap] and [onLongPress] are null or [enabled] is false.
+///
+/// Use [SBBListItemV5.divideListItems] to automatically add dividers between multiple list items.
+///
+///
+/// ## Sample code
+///
+/// ```dart
+/// SBBListItemV5(
+///   titleText: 'List Item Title',
+///   subtitleText: 'Additional information',
+///   leadingIconData: Icons.favorite,
+///   trailingIconData: Icons.chevron_right,
+///   onTap: () {},
+/// )
+/// ```
+///
+/// ## Sample code with dividers
+///
+/// ```dart
+/// Column(
+///   children: SBBListItemV5.divideListItems(
+///     context: context,
+///     items: [
+///       SBBListItemV5(
+///         titleText: 'First Item',
+///         onTap: () {},
+///       ),
+///       SBBListItemV5(
+///         titleText: 'Second Item',
+///         onTap: () {},
+///       ),
+///       SBBListItemV5(
+///         titleText: 'Third Item',
+///         onTap: () {},
+///       ),
+///     ],
+///   ).toList(),
+/// )
+/// ```
+///
+/// ## Customization
+///
+/// Use [style] to customize appearance for a single item, or
+/// [SBBListItemThemeData] to apply consistent styling across your app:
+///
+/// ```dart
+/// SBBListItemV5(
+///   titleText: 'Styled Item',
+///   onTap: () {},
+///   style: SBBListItemV5Style(
+///     backgroundColor: WidgetStateProperty.all(Colors.blue),
+///     titleForegroundColor: WidgetStateProperty.all(Colors.white),
+///   ),
+/// )
+/// ```
+///
+/// See also:
+///
+///  * [SBBListItemV5Boxed], for a boxed variant.
+///  * [SBBListItemV5Style], for customizing the appearance.
+///  * [SBBListItemThemeData], for setting list item theme properties across your app.
+///  * [Figma design specs](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=282-933)
 class SBBListItemV5 extends StatefulWidget {
   const SBBListItemV5({
     super.key,
@@ -401,6 +483,10 @@ class _SBBListItemV5State extends State<SBBListItemV5> {
   }
 }
 
+/// The boxed variant of [SBBListItemV5].
+///
+/// This is a convenience class and is equivalent to wrapping
+/// the [SBBListItemV5] inside a [SBBContentBox].
 class SBBListItemV5Boxed extends SBBListItemV5 {
   const SBBListItemV5Boxed({
     super.key,
