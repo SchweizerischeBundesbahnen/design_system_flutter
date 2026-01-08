@@ -116,16 +116,16 @@ class _SwitchPageState extends State<SwitchPage> {
                       value: _value7,
                       title: 'Custom LinkWidget',
                       onChanged: _isEnabled ? (value) => setState(() => _value7 = value) : null,
-                      linksWidgets: [
-                        SBBCheckboxListItem(
-                          value: _listItemValue,
-                          label: 'Text',
-                          allowMultilineLabel: true,
-                          secondaryLabel:
-                              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla.',
-                          onChanged: _isEnabled ? (value) => setState(() => _listItemValue = value) : null,
-                        ),
-                      ],
+                      // linksWidgets: [
+                      //   SBBCheckboxListItem(
+                      //     value: _listItemValue,
+                      //     label: 'Text',
+                      //     allowMultilineLabel: true,
+                      //     secondaryLabel:
+                      //         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla.',
+                      //     onChanged: _isEnabled ? (value) => setState(() => _listItemValue = value) : null,
+                      //   ),
+                      // ],
                     ),
                     SBBSwitchListItem(
                       value: _value8,
@@ -208,17 +208,17 @@ class _SwitchPageState extends State<SwitchPage> {
                   value: _value7,
                   title: 'Custom LinkWidget',
                   onChanged: _isEnabled ? (value) => setState(() => _value7 = value) : null,
-                  linksWidgets: [
-                    SBBCheckboxListItem(
-                      value: _listItemValue,
-                      label: 'Text',
-                      allowMultilineLabel: true,
-                      secondaryLabel:
-                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla.',
-                      isLastElement: true,
-                      onChanged: _isEnabled ? (value) => setState(() => _listItemValue = value) : null,
-                    ),
-                  ],
+                  // linksWidgets: [
+                  //   SBBCheckboxListItem(
+                  //     value: _listItemValue,
+                  //     label: 'Text',
+                  //     allowMultilineLabel: true,
+                  //     secondaryLabel:
+                  //         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla.',
+                  //     isLastElement: true,
+                  //     onChanged: _isEnabled ? (value) => setState(() => _listItemValue = value) : null,
+                  //   ),
+                  // ],
                   isLastElement: true,
                 ),
               ),

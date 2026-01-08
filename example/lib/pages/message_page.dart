@@ -36,24 +36,25 @@ class _MessagePageState extends State<MessagePage> {
         SBBContentBox(
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            children: [
-              SBBCheckboxListItem(
-                value: _showInteractionButton,
-                label: 'Show interaction button',
-                onChanged: (value) => setState(() => _showInteractionButton = value ?? false),
-              ),
-              SBBCheckboxListItem(
-                value: _isLoading,
-                label: 'Is loading',
-                onChanged: (value) => setState(() => _isLoading = value ?? false),
-              ),
-              SBBCheckboxListItem(
-                value: _showIllustrations,
-                label: 'Show Illustrations',
-                isLastElement: true,
-                onChanged: (value) => setState(() => _showIllustrations = value ?? false),
-              ),
-            ],
+            children: SBBListItemV5.divideListItems(
+              items: [
+                SBBCheckboxListItem(
+                  value: _showInteractionButton,
+                  titleText: 'Show interaction button',
+                  onChanged: (value) => setState(() => _showInteractionButton = value ?? false),
+                ),
+                SBBCheckboxListItem(
+                  value: _isLoading,
+                  titleText: 'Is loading',
+                  onChanged: (value) => setState(() => _isLoading = value ?? false),
+                ),
+                SBBCheckboxListItem(
+                  value: _showIllustrations,
+                  titleText: 'Show Illustrations',
+                  onChanged: (value) => setState(() => _showIllustrations = value ?? false),
+                ),
+              ],
+            ).toList(growable: false),
           ),
         ),
         const SizedBox(height: sbbDefaultSpacing),

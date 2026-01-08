@@ -22,28 +22,32 @@ class _ModalPageState extends State<ModalPage> {
         ThemeModeSegmentedButton(),
         const SizedBox(height: sbbDefaultSpacing),
         const SBBListHeader('Settings'),
-        SBBCheckboxListItem(
-          value: _showCloseButton,
-          label: 'Show close button',
-          onChanged: (value) {
-            setState(() {
-              if (value != null) {
-                _showCloseButton = value;
-              }
-            });
-          },
-        ),
-        SBBCheckboxListItem(
-          value: _customBackgroundColor,
-          label: 'Custom background color',
-          isLastElement: true,
-          onChanged: (value) {
-            setState(() {
-              if (value != null) {
-                _customBackgroundColor = value;
-              }
-            });
-          },
+        ...SBBListItemV5.divideListItems(
+          context: context,
+          items: [
+            SBBCheckboxListItem(
+              value: _showCloseButton,
+              titleText: 'Show close button',
+              onChanged: (value) {
+                setState(() {
+                  if (value != null) {
+                    _showCloseButton = value;
+                  }
+                });
+              },
+            ),
+            SBBCheckboxListItem(
+              value: _customBackgroundColor,
+              titleText: 'Custom background color',
+              onChanged: (value) {
+                setState(() {
+                  if (value != null) {
+                    _customBackgroundColor = value;
+                  }
+                });
+              },
+            ),
+          ],
         ),
         const SizedBox(height: sbbDefaultSpacing),
         _modalPopupButton(context),

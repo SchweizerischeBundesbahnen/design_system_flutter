@@ -245,14 +245,13 @@ class SBBMultiSelect<T> extends StatefulWidget {
                     sbbDefaultSpacing,
                   ),
                   child: Column(
-                    children: items
-                        .asMap()
-                        .entries
-                        .map((entry) {
-                          final isLastElement = entry.key == items.length - 1;
+                    children: SBBListItemV5.divideListItems(
+                      context: context,
+                      items: items.asMap().entries.map(
+                        (entry) {
                           return SBBCheckboxListItem(
                             value: selectedValues.contains(entry.value.value),
-                            label: entry.value.label,
+                            titleText: entry.value.label,
                             onChanged: (checked) {
                               setModalState(() {
                                 if (checked == true) {
@@ -262,10 +261,10 @@ class SBBMultiSelect<T> extends StatefulWidget {
                                 }
                               });
                             },
-                            isLastElement: isLastElement,
                           );
-                        })
-                        .toList(growable: false),
+                        },
+                      ),
+                    ).toList(growable: false),
                   ),
                 ),
                 Padding(
