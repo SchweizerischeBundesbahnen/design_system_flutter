@@ -33,6 +33,7 @@ class SBBListItemV5 extends StatelessWidget {
     this.onTap,
     this.onLongPress,
     this.enabled = true,
+    this.isLoading = false,
     this.links,
     this.padding = const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
     this.statesController,
@@ -67,6 +68,8 @@ class SBBListItemV5 extends StatelessWidget {
 
   final bool enabled;
 
+  final bool isLoading;
+
   final EdgeInsetsGeometry padding;
 
   final Iterable<Widget>? links;
@@ -80,17 +83,18 @@ class SBBListItemV5 extends StatelessWidget {
   final double subtitleVerticalGapHeight;
 
   /// Add a one pixel border in between each tile. If color isn't specified the
-  /// [ThemeData.dividerColor] of the context's [Theme] is used.
+  /// [ThemeData.dividerColor] of the context's [Theme] is used, which defaults to
+  /// [SBBBaseStyle.dividerColor].
   static Iterable<Widget> divideListItems({
     BuildContext? context,
-    required Iterable<Widget> tiles,
+    required Iterable<Widget> items,
     Color? color,
   }) {
     assert(color != null || context != null);
-    tiles = tiles.toList();
+    items = items.toList();
 
-    if (tiles.isEmpty || tiles.length == 1) {
-      return tiles;
+    if (items.isEmpty || items.length == 1) {
+      return items;
     }
 
     final resolvedColor = color ?? Theme.of(context!).dividerTheme.color ?? SBBColors.graphite;
@@ -106,7 +110,7 @@ class SBBListItemV5 extends StatelessWidget {
       );
     }
 
-    return <Widget>[...tiles.take(tiles.length - 1).map(wrapListItem), tiles.last];
+    return <Widget>[...items.take(items.length - 1).map(wrapListItem), items.last];
   }
 
   @override
@@ -154,6 +158,16 @@ class SBBListItemV5 extends StatelessWidget {
         ),
       ),
     );
+
+    if (isLoading) {
+      child = Stack(
+        alignment: Alignment.bottomCenter,
+        children: [
+          child,
+          BottomLoadingIndicator(),
+        ],
+      );
+    }
 
     if (links?.isNotEmpty ?? false) {
       child = Column(
