@@ -8,9 +8,6 @@ typedef _PositionChild = void Function(RenderBox child, Offset offset);
 
 enum _SBBListItemSlot { leading, title, subtitle, trailing }
 
-/// TODO: add link text widgets
-/// TODO: add SBBDivider
-/// TODO: add static method for adding dividers
 /// TODO: add isLoading state
 /// TODO: make widgetStatesController internal only
 /// TODO: add styling and themeData
@@ -79,6 +76,69 @@ class SBBListItemV5 extends StatelessWidget {
 
   final double subtitleVerticalGapHeight;
 
+  /// Add a divider above each link widget with an indent of 16.0.
+  /// If there is only one link, a divider is still added at the top.
+  ///
+  /// The divider indent is set to 16.0 to align with the content padding.
+  /// Only the divider is indented, not the link itself, to ensure splash
+  /// reactions work correctly.
+  static Iterable<Widget> divideLinks({
+    BuildContext? context,
+    required Iterable<Widget> links,
+    Color? color,
+    double indent = 16.0,
+  }) {
+    assert(color != null || context != null);
+    links = links.toList();
+
+    if (links.isEmpty) {
+      return links;
+    }
+
+    Widget wrapLink(Widget link) {
+      return CustomPaint(
+        painter: _IndentedDividerPainter(
+          color: color ?? Divider.createBorderSide(context).color,
+          indent: indent,
+        ),
+        child: link,
+      );
+    }
+
+    return links.map(wrapLink);
+  }
+
+  /// Add a one pixel border in between each tile. If color isn't specified the
+  /// [ThemeData.dividerColor] of the context's [Theme] is used.
+  ///
+  /// See also:
+  ///
+  ///  * [Divider], which you can use to obtain this effect manually.
+  static Iterable<Widget> divideTiles({
+    BuildContext? context,
+    required Iterable<Widget> tiles,
+    Color? color,
+  }) {
+    assert(color != null || context != null);
+    tiles = tiles.toList();
+
+    if (tiles.isEmpty || tiles.length == 1) {
+      return tiles;
+    }
+
+    Widget wrapTile(Widget tile) {
+      return DecoratedBox(
+        position: DecorationPosition.foreground,
+        decoration: BoxDecoration(
+          border: Border(bottom: Divider.createBorderSide(context, color: color)),
+        ),
+        child: tile,
+      );
+    }
+
+    return <Widget>[...tiles.take(tiles.length - 1).map(wrapTile), tiles.last];
+  }
+
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMaterial(context));
@@ -129,7 +189,7 @@ class SBBListItemV5 extends StatelessWidget {
       child = Column(
         children: [
           child,
-          ...links!,
+          ...SBBListItemV5.divideLinks(context: context, links: links!),
         ],
       );
     }
@@ -436,5 +496,33 @@ class _RenderSBBListItemV5 extends RenderBox with SlottedContainerRenderObjectMi
       }
     }
     return false;
+  }
+}
+
+class _IndentedDividerPainter extends CustomPainter {
+  const _IndentedDividerPainter({
+    required this.color,
+    required this.indent,
+  });
+
+  final Color color;
+  final double indent;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = color
+      ..strokeWidth = 1.0;
+
+    canvas.drawLine(
+      Offset(indent, 0),
+      Offset(size.width, 0),
+      paint,
+    );
+  }
+
+  @override
+  bool shouldRepaint(_IndentedDividerPainter oldDelegate) {
+    return oldDelegate.color != color || oldDelegate.indent != indent;
   }
 }
