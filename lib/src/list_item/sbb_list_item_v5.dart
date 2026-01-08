@@ -12,7 +12,6 @@ typedef _PositionChild = void Function(RenderBox child, Offset offset);
 
 enum _SBBListItemSlot { leading, title, subtitle, trailing }
 
-/// TODO: add focusNode & autofocus
 /// TODO: add documentation
 /// TODO: overhaul all convenience ListItems (Radio, Checkbox, Switch)
 
@@ -37,6 +36,8 @@ class SBBListItemV5 extends StatefulWidget {
     this.leadingHorizontalGapWidth,
     this.subtitleVerticalGapHeight,
     this.style,
+    this.focusNode,
+    this.autofocus = false,
   }) : assert(title != null || titleText != null, 'Either title or titleText must be provided'),
        assert(title == null || titleText == null, 'Only one of title or titleText can be set'),
        assert(subtitle == null || subtitleText == null, 'Only one of subtitle or subtitleText can be set'),
@@ -53,6 +54,7 @@ class SBBListItemV5 extends StatefulWidget {
 
   final IconData? leadingIconData;
 
+  /// maxLines 1 with Ellipsis overflow
   final String? titleText;
 
   final String? subtitleText;
@@ -67,9 +69,13 @@ class SBBListItemV5 extends StatefulWidget {
 
   final bool isLoading;
 
-  final EdgeInsetsGeometry? padding;
+  final FocusNode? focusNode;
+
+  final bool autofocus;
 
   final Iterable<Widget>? links;
+
+  final EdgeInsetsGeometry? padding;
 
   final double? trailingHorizontalGapWidth;
 
@@ -178,7 +184,7 @@ class _SBBListItemV5State extends State<SBBListItemV5> {
 
     Widget? titleWidget = widget.title;
     if (titleWidget == null && widget.titleText != null) {
-      titleWidget = Text(widget.titleText!);
+      titleWidget = Text(widget.titleText!, maxLines: 1, overflow: TextOverflow.ellipsis);
     }
 
     Widget? subtitleWidget = widget.subtitle;
@@ -225,6 +231,8 @@ class _SBBListItemV5State extends State<SBBListItemV5> {
       child: InkWell(
         onTap: widget.enabled ? widget.onTap : null,
         onLongPress: widget.enabled ? widget.onLongPress : null,
+        autofocus: widget.autofocus,
+        focusNode: widget.focusNode,
         statesController: _statesController,
         overlayColor: effectiveOverlayColor,
         child: Padding(
@@ -313,6 +321,8 @@ class SBBListItemV5Boxed extends SBBListItemV5 {
     super.leadingHorizontalGapWidth,
     super.subtitleVerticalGapHeight,
     super.style,
+    super.focusNode,
+    super.autofocus,
   });
 
   @override
@@ -664,33 +674,5 @@ class _RenderSBBListItemV5 extends RenderBox with SlottedContainerRenderObjectMi
         ),
       ]);
     }());
-  }
-}
-
-class _IndentedDividerPainter extends CustomPainter {
-  const _IndentedDividerPainter({
-    required this.color,
-    required this.indent,
-  });
-
-  final Color color;
-  final double indent;
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final paint = Paint()
-      ..color = color
-      ..strokeWidth = 1.0;
-
-    canvas.drawLine(
-      Offset(indent, 0),
-      Offset(size.width, 0),
-      paint,
-    );
-  }
-
-  @override
-  bool shouldRepaint(_IndentedDividerPainter oldDelegate) {
-    return oldDelegate.color != color || oldDelegate.indent != indent;
   }
 }
