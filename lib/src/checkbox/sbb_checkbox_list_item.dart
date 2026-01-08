@@ -172,7 +172,6 @@ class SBBCheckboxListItem extends StatelessWidget {
     }
 
     return SBBListItemV5(
-      key: key,
       leading: checkboxLeading,
       title: title,
       titleText: titleText,
