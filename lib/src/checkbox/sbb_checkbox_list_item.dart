@@ -29,6 +29,7 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 ///
 ///  * [SBBCheckbox], the checkbox widget used as leading content.
 ///  * [SBBListItemV5], the underlying list item widget.
+///  * [SBBCheckboxListItemBoxed], a boxed variant of this widget.
 class SBBCheckboxListItem extends StatelessWidget {
   const SBBCheckboxListItem({
     super.key,
@@ -91,6 +92,8 @@ class SBBCheckboxListItem extends StatelessWidget {
   final GestureLongPressCallback? onLongPress;
 
   /// {@macro sbb_design_system.list_item.enabled}
+  ///
+  /// If this is false, the checkbox will also appear disabled.
   final bool enabled;
 
   /// {@macro sbb_design_system.list_item.isLoading}
@@ -153,10 +156,10 @@ class SBBCheckboxListItem extends StatelessWidget {
       leadingWidget = Icon(leadingIconData);
     }
 
-    Widget checkboxLeading = SBBCheckbox(
+    Widget resolvedLeading = SBBCheckbox(
       value: value,
       tristate: tristate,
-      onChanged: onChanged,
+      onChanged: enabled ? onChanged : null,
       style: (checkboxStyle ?? const SBBCheckboxStyle()).copyWith(
         tapTargetPadding: EdgeInsets.zero,
       ),
@@ -164,15 +167,15 @@ class SBBCheckboxListItem extends StatelessWidget {
     );
 
     if (leadingWidget != null) {
-      checkboxLeading = Row(
+      resolvedLeading = Row(
         mainAxisSize: MainAxisSize.min,
         spacing: leadingCheckboxGapWidth,
-        children: [checkboxLeading, leadingWidget],
+        children: [resolvedLeading, leadingWidget],
       );
     }
 
     return SBBListItemV5(
-      leading: checkboxLeading,
+      leading: resolvedLeading,
       title: title,
       titleText: titleText,
       subtitle: subtitle,
