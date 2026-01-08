@@ -12,7 +12,6 @@ typedef _PositionChild = void Function(RenderBox child, Offset offset);
 
 enum _SBBListItemSlot { leading, title, subtitle, trailing }
 
-/// TODO: baseline alignment of text and leading icon
 /// TODO: add focusNode & autofocus
 /// TODO: add documentation
 /// TODO: overhaul all convenience ListItems (Radio, Checkbox, Switch)
@@ -519,20 +518,25 @@ class _RenderSBBListItemV5 extends RenderBox with SlottedContainerRenderObjectMi
     final Size titleSize = getSize(title, titleConstraints);
     final Size? subtitleSize = subtitle == null ? null : getSize(subtitle, subTitleConstraints);
 
-    // Calculate positions
-    // Title is always at y=0
-    final double titleY = 0.0;
-
-    // Determine subtitle Y position based on what's taller: leading or title
+    // Calculate center-aligned positions for title and leading
     final double leadingHeight = leadingSize?.height ?? 0.0;
-    final double subtitleOffsetHeight = math.max(leadingHeight, titleSize.height);
-    final double subtitleY = subtitleOffsetHeight + _subtitleVerticalGapHeight;
+    final double titleHeight = titleSize.height;
+
+    // Find the maximum height between leading and title for center alignment
+    final double maxCenterHeight = math.max(leadingHeight, titleHeight);
+
+    // Center-align title and leading
+    final double titleY = (maxCenterHeight - titleHeight) / 2.0;
+    final double leadingY = (maxCenterHeight - leadingHeight) / 2.0;
+
+    // Position subtitle below the max of leading/title bottom
+    final double subtitleY = maxCenterHeight + _subtitleVerticalGapHeight;
 
     // Calculate total tile height
-    final double tileHeight = subtitleSize != null ? subtitleY + subtitleSize.height : subtitleOffsetHeight;
+    final double tileHeight = subtitleSize != null ? subtitleY + subtitleSize.height : maxCenterHeight;
 
     if (positionChild != null) {
-      // Position title (always left aligned after leading)
+      // Position title (left aligned after leading, vertically centered with leading)
       positionChild(
         title,
         Offset(leadingWidth, titleY),
@@ -546,9 +550,9 @@ class _RenderSBBListItemV5 extends RenderBox with SlottedContainerRenderObjectMi
         );
       }
 
-      // Position leading (left aligned at top)
+      // Position leading (left aligned, vertically centered with title)
       if (leading != null && leadingSize != null) {
-        positionChild(leading, Offset.zero);
+        positionChild(leading, Offset(0, leadingY));
       }
 
       // Position trailing (right aligned, vertically centered)
