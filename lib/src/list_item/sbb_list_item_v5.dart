@@ -145,37 +145,46 @@ class SBBListItemV5 extends StatefulWidget {
   /// Cannot be used together with [leading].
   final IconData? leadingIconData;
 
+  /// {@template sbb_design_system.list_item.title}
   /// A custom widget displayed as the list item's title.
   ///
   /// For simple text labels, use [titleText] instead.
   ///
-  /// The [title] is vertically centered with [leading] or [leadingIconData].
+  /// The title is vertically centered with [leading] or [leadingIconData].
   ///
   /// Cannot be used together with [titleText].
+  /// {@endtemplate}
   final Widget? title;
 
+  /// {@template sbb_design_system.list_item.titleText}
   /// Text string to display as the list item's title using standard styling.
   ///
   /// The text is clamped to a single line with ellipsis overflow.
-  /// The [titleText] is vertically centered with [leading] or [leadingIconData].
+  /// The title is vertically centered with [leading] or [leadingIconData].
   ///
   /// Cannot be used together with [title].
+  /// {@endtemplate}
   final String? titleText;
 
+  /// {@template sbb_design_system.list_item.subtitle}
   /// A custom widget displayed as the list item's subtitle below the title.
   ///
   /// For simple text labels, use [subtitleText] instead.
   ///
   /// Cannot be used together with [subtitleText].
+  /// {@endtemplate}
   final Widget? subtitle;
 
+  /// {@template sbb_design_system.list_item.subtitleText}
   /// Text string to display as the list item's subtitle using standard styling.
   ///
   /// The subtitle is positioned below the title and leading widget.
   ///
   /// Cannot be used together with [subtitle].
+  /// {@endtemplate}
   final String? subtitleText;
 
+  /// {@template sbb_design_system.list_item.trailing}
   /// A custom widget displayed as the list item's trailing content.
   ///
   /// For simple icons, use [trailingIconData] instead.
@@ -183,48 +192,61 @@ class SBBListItemV5 extends StatefulWidget {
   /// [trailing] is vertically centered relative to the list item.
   ///
   /// Cannot be used together with [trailingIconData].
+  /// {@endtemplate}
   final Widget? trailing;
 
+  /// {@template sbb_design_system.list_item.trailingIconData}
   /// Icon data for the trailing icon.
   ///
   /// Cannot be used together with [trailing].
+  /// {@endtemplate}
   final IconData? trailingIconData;
 
+  /// {@template sbb_design_system.list_item.onTap}
   /// Called when the list item is tapped.
   ///
   /// The list item is disabled when both this and [onLongPress] are null.
   ///
   /// Ignored when [enabled] is false.
+  /// {@endtemplate}
   final GestureTapCallback? onTap;
 
+  /// {@template sbb_design_system.list_item.onLongPress}
   /// Called when the list item is long-pressed.
   ///
   /// The list item is disabled when both this and [onTap] are null.
   ///
   /// Ignored when [enabled] is false.
+  /// {@endtemplate}
   final GestureLongPressCallback? onLongPress;
 
+  /// {@template sbb_design_system.list_item.enabled}
   /// Whether the list item is enabled for interaction.
   ///
   /// When false, [onTap] and [onLongPress] are ignored and the item
   /// is styled as disabled.
   ///
   /// Defaults to true.
+  /// {@endtemplate}
   final bool enabled;
 
+  /// {@template sbb_design_system.list_item.isLoading}
   /// Whether to show a loading indicator at the bottom of the item.
   ///
   /// When true, a [BottomLoadingIndicator] is displayed at the bottom of the list item.
   ///
   /// Defaults to false.
+  /// {@endtemplate}
   final bool isLoading;
 
+  /// {@template sbb_design_system.list_item.links}
   /// Additional widgets displayed below the list item main content.
   ///
   /// This is typically used with a list of [SBBListItemV5] itself with a trailing icon.
   ///
   /// Links are displayed in a column below the list item with
   /// top dividers separating each link.
+  /// {@endtemplate}
   final Iterable<Widget>? links;
 
   /// {@macro flutter.widgets.Focus.focusNode}
@@ -236,36 +258,46 @@ class SBBListItemV5 extends StatefulWidget {
   /// {@macro flutter.material.ListTile.enableFeedback}
   final bool enableFeedback;
 
+  /// {@template sbb_design_system.list_item.padding}
   /// Padding around the list item's content.
   ///
   /// Defaults to symmetric padding of 16.0 horizontal and 10.0 vertical.
+  /// {@endtemplate}
   final EdgeInsetsGeometry? padding;
 
-  /// Horizontal gap width between the trailing widget and the edge.
+  /// {@template sbb_design_system.list_item.trailingHorizontalGapWidth}
+  /// Horizontal gap width between the trailing widget and the [title].
   ///
   /// Overrides the value in [SBBListItemThemeData.trailingHorizontalGapWidth].
   ///
   /// Defaults to 16.0.
+  /// {@endtemplate}
   final double? trailingHorizontalGapWidth;
 
-  /// Horizontal gap width between the leading widget and the title/subtitle.
+  /// {@template sbb_design_system.list_item.leadingHorizontalGapWidth}
+  /// Horizontal gap width between the leading widget and the title.
   ///
-  /// Overrides the value in [SBBListItemThemeData.subtitleVerticalGapHeight].
+  /// Overrides the value in [SBBListItemThemeData.leadingHorizontalGapWidth].
   ///
   /// Defaults to 8.0.
+  /// {@endtemplate}
   final double? leadingHorizontalGapWidth;
 
-  /// Vertical gap height between the title and subtitle.
+  /// {@template sbb_design_system.list_item.subtitleVerticalGapHeight}
+  /// Vertical gap height between the title or leading (depending which is larger) and subtitle.
   ///
   /// Overrides the value in [SBBListItemThemeData.subtitleVerticalGapHeight].
   ///
   /// Defaults to 4.0.
+  /// {@endtemplate}
   final double? subtitleVerticalGapHeight;
 
+  /// {@template sbb_design_system.list_item.style}
   /// Customizes this list item appearance.
   ///
   /// Non-null properties of this style override the corresponding
   /// properties in [SBBListItemThemeData.style] of the theme found in [context].
+  /// {@endtemplate}
   final SBBListItemV5Style? style;
 
   /// Add a one pixel border in between each item. If color isn't specified the

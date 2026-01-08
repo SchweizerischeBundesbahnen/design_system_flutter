@@ -1,71 +1,208 @@
 import 'package:flutter/widgets.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
-class SBBCheckboxListItem extends SBBListItemV5 {
-  SBBCheckboxListItem({
+/// A convenience wrapper that combines [SBBListItemV5] with [SBBCheckbox] as the leading widget.
+///
+/// This widget automatically handles checkbox state changes and positions the checkbox
+/// as the leading content of the list item. Additional leading content can be provided
+/// via [leading] or [leadingIconData] and will be positioned after the checkbox.
+///
+/// The same result can be achieved by manually placing an [SBBCheckbox] in the
+/// [SBBListItemV5.leading] parameter.
+///
+/// ## Sample code
+///
+/// ```dart
+/// SBBCheckboxListItem(
+///   value: _isChecked,
+///   onChanged: (newValue) {
+///     setState(() {
+///       _isChecked = newValue ?? false;
+///     });
+///   },
+///   titleText: 'Checkbox Item',
+///   subtitleText: 'Additional information',
+/// )
+/// ```
+///
+/// See also:
+///
+///  * [SBBCheckbox], the checkbox widget used as leading content.
+///  * [SBBListItemV5], the underlying list item widget.
+class SBBCheckboxListItem extends StatelessWidget {
+  const SBBCheckboxListItem({
     super.key,
-    Widget? leading,
-    IconData? leadingIconData,
-    super.title,
-    super.titleText,
-    super.subtitle,
-    super.subtitleText,
-    super.trailing,
-    super.trailingIconData,
-    super.onLongPress,
-    super.enabled = true,
-    super.isLoading = false,
-    super.links,
-    super.focusNode,
-    super.autofocus = false,
-    super.enableFeedback = true,
-    super.padding,
-    super.trailingHorizontalGapWidth,
-    super.leadingHorizontalGapWidth,
-    super.subtitleVerticalGapHeight,
-    double leadingCheckboxGapWidth = 8.0,
-    SBBListItemV5Style? listItemStyle,
-    required bool? value,
-    bool tristate = false,
-    required ValueChanged<bool?>? onChanged,
-    SBBCheckboxStyle? checkboxStyle,
-    String? checkboxSemanticLabel,
-  }) : super(
-         onTap: onChanged != null && enabled
-             ? () => onChanged.call(
-                 value == null
-                     ? false
-                     : value
-                     ? tristate
-                           ? null
-                           : false
-                     : true,
-               )
-             : null,
-         leading: Builder(
-           builder: (BuildContext context) {
-             Widget? leadingWidget = leading;
-             if (leadingWidget == null && leadingIconData != null) {
-               leadingWidget = Icon(leadingIconData);
-             }
+    this.leading,
+    this.leadingIconData,
+    this.title,
+    this.titleText,
+    this.subtitle,
+    this.subtitleText,
+    this.trailing,
+    this.trailingIconData,
+    this.onLongPress,
+    this.enabled = true,
+    this.isLoading = false,
+    this.links,
+    this.focusNode,
+    this.autofocus = false,
+    this.enableFeedback = true,
+    this.padding,
+    this.trailingHorizontalGapWidth,
+    this.leadingHorizontalGapWidth,
+    this.subtitleVerticalGapHeight,
+    this.leadingCheckboxGapWidth = 8.0,
+    this.listItemStyle,
+    required this.value,
+    this.tristate = false,
+    required this.onChanged,
+    this.checkboxStyle,
+    this.checkboxSemanticLabel,
+  });
 
-             Widget child = SBBCheckbox(
-               value: value,
-               tristate: tristate,
-               onChanged: onChanged,
-               style: (checkboxStyle ?? SBBCheckboxStyle()).copyWith(tapTargetPadding: EdgeInsets.zero),
-               semanticLabel: checkboxSemanticLabel,
-             );
+  /// Additional leading widget displayed after the checkbox.
+  final Widget? leading;
 
-             if (leadingWidget != null) {
-               child = Row(
-                 mainAxisSize: MainAxisSize.min,
-                 spacing: leadingCheckboxGapWidth,
-                 children: [child, leadingWidget],
-               );
-             }
-             return child;
-           },
-         ),
-       );
+  /// Icon data for additional leading icon displayed after the checkbox.
+  final IconData? leadingIconData;
+
+  /// {@macro sbb_design_system.list_item.title}
+  final Widget? title;
+
+  /// {@macro sbb_design_system.list_item.titleText}
+  final String? titleText;
+
+  /// {@macro sbb_design_system.list_item.subtitle}
+  final Widget? subtitle;
+
+  /// {@macro sbb_design_system.list_item.subtitleText}
+  final String? subtitleText;
+
+  /// {@macro sbb_design_system.list_item.trailing}
+  final Widget? trailing;
+
+  /// {@macro sbb_design_system.list_item.trailingIconData}
+  final IconData? trailingIconData;
+
+  /// {@macro sbb_design_system.list_item.onLongPress}
+  ///
+  /// Within the [SBBCheckboxListItem], the [SBBListItemV5.onTap] calls the [onChanged] callback with the
+  /// updated value.
+  final GestureLongPressCallback? onLongPress;
+
+  /// {@macro sbb_design_system.list_item.enabled}
+  final bool enabled;
+
+  /// {@macro sbb_design_system.list_item.isLoading}
+  final bool isLoading;
+
+  /// {@macro sbb_design_system.list_item.links}
+  final Iterable<Widget>? links;
+
+  /// {@macro flutter.widgets.Focus.focusNode}
+  final FocusNode? focusNode;
+
+  /// {@macro flutter.widgets.Focus.autofocus}
+  final bool autofocus;
+
+  /// {@macro flutter.material.ListTile.enableFeedback}
+  final bool enableFeedback;
+
+  /// {@macro sbb_design_system.list_item.padding}
+  final EdgeInsetsGeometry? padding;
+
+  /// {@macro sbb_design_system.list_item.trailingHorizontalGapWidth}
+  final double? trailingHorizontalGapWidth;
+
+  /// {@macro sbb_design_system.list_item.leadingHorizontalGapWidth}
+  final double? leadingHorizontalGapWidth;
+
+  /// {@macro sbb_design_system.list_item.subtitleVerticalGapHeight}
+  final double? subtitleVerticalGapHeight;
+
+  /// Horizontal gap width between the checkbox and additional leading content.
+  ///
+  /// Defaults to 8.0.
+  final double leadingCheckboxGapWidth;
+
+  /// {@macro sbb_design_system.list_item.style}
+  final SBBListItemV5Style? listItemStyle;
+
+  /// {@macro sbb_design_system.checkbox.value}
+  final bool? value;
+
+  /// {@macro sbb_design_system.checkbox.tristate}
+  final bool tristate;
+
+  /// {@macro sbb_design_system.checkbox.onChanged}
+  ///
+  /// Within the [SBBCheckboxListItem], the [SBBListItemV5.onTap] calls the [onChanged] callback with the
+  /// updated value.
+  final ValueChanged<bool?>? onChanged;
+
+  /// {@macro sbb_design_system.checkbox.style}
+  final SBBCheckboxStyle? checkboxStyle;
+
+  /// {@macro sbb_design_system.checkbox.semanticLabel}
+  final String? checkboxSemanticLabel;
+
+  @override
+  Widget build(BuildContext context) {
+    Widget? leadingWidget = leading;
+    if (leadingWidget == null && leadingIconData != null) {
+      leadingWidget = Icon(leadingIconData);
+    }
+
+    Widget checkboxLeading = SBBCheckbox(
+      value: value,
+      tristate: tristate,
+      onChanged: onChanged,
+      style: (checkboxStyle ?? const SBBCheckboxStyle()).copyWith(
+        tapTargetPadding: EdgeInsets.zero,
+      ),
+      semanticLabel: checkboxSemanticLabel,
+    );
+
+    if (leadingWidget != null) {
+      checkboxLeading = Row(
+        mainAxisSize: MainAxisSize.min,
+        spacing: leadingCheckboxGapWidth,
+        children: [checkboxLeading, leadingWidget],
+      );
+    }
+
+    return SBBListItemV5(
+      key: key,
+      leading: checkboxLeading,
+      title: title,
+      titleText: titleText,
+      subtitle: subtitle,
+      subtitleText: subtitleText,
+      trailing: trailing,
+      trailingIconData: trailingIconData,
+      onTap: onChanged != null && enabled ? () => _callOnChanged(onChanged!) : null,
+      onLongPress: onLongPress,
+      enabled: enabled,
+      isLoading: isLoading,
+      links: links,
+      focusNode: focusNode,
+      autofocus: autofocus,
+      enableFeedback: enableFeedback,
+      padding: padding,
+      trailingHorizontalGapWidth: trailingHorizontalGapWidth,
+      leadingHorizontalGapWidth: leadingHorizontalGapWidth,
+      subtitleVerticalGapHeight: subtitleVerticalGapHeight,
+      style: listItemStyle,
+    );
+  }
+
+  void _callOnChanged(ValueChanged<bool?> onChanged) {
+    if (value == null) {
+      onChanged(false);
+    } else if (value!) {
+      onChanged(tristate ? null : false);
+    } else {
+      onChanged(true);
+    }
+  }
 }
