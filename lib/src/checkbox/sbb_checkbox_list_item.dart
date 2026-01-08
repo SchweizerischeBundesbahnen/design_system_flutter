@@ -172,7 +172,6 @@ class SBBCheckboxListItem extends StatelessWidget {
     }
 
     return SBBListItemV5(
-      key: key,
       leading: checkboxLeading,
       title: title,
       titleText: titleText,
@@ -207,27 +206,11 @@ class SBBCheckboxListItem extends StatelessWidget {
   }
 }
 
-/// A boxed variant of [SBBCheckboxListItem] with border and padding.
+/// A boxed variant of [SBBCheckboxListItem] with rounded borders.
 ///
-/// This widget extends [SBBCheckboxListItem] and wraps the list item in an [SBBContentBox]
-/// to provide a contained appearance with rounded borders and background.
+/// This widget extends [SBBCheckboxListItem] and wraps the list item in an [SBBContentBox].
 ///
 /// All parameters and behavior are identical to [SBBCheckboxListItem].
-///
-/// ## Sample code
-///
-/// ```dart
-/// SBBCheckboxListItemBoxed(
-///   value: _isChecked,
-///   onChanged: (newValue) {
-///     setState(() {
-///       _isChecked = newValue ?? false;
-///     });
-///   },
-///   titleText: 'Boxed Checkbox Item',
-///   subtitleText: 'This item has a border',
-/// )
-/// ```
 ///
 /// See also:
 ///
