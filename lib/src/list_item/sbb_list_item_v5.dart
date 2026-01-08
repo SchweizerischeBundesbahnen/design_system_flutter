@@ -20,7 +20,7 @@ enum _SBBListItemSlot { leading, title, subtitle, trailing }
 /// TODO: add documentation
 /// TODO: overhaul all convenience ListItems (Radio, Checkbox, Switch)
 
-class SBBListItemV5 extends StatelessWidget {
+class SBBListItemV5 extends StatefulWidget {
   const SBBListItemV5({
     super.key,
     this.leading,
@@ -37,7 +37,6 @@ class SBBListItemV5 extends StatelessWidget {
     this.isLoading = false,
     this.links,
     this.padding = const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
-    this.statesController,
     this.trailingHorizontalGapWidth = 16.0,
     this.leadingHorizontalGapWidth = 8.0,
     this.subtitleVerticalGapHeight = 4.0,
@@ -74,8 +73,6 @@ class SBBListItemV5 extends StatelessWidget {
   final EdgeInsetsGeometry padding;
 
   final Iterable<Widget>? links;
-
-  final MaterialStatesController? statesController;
 
   final double trailingHorizontalGapWidth;
 
@@ -115,37 +112,69 @@ class SBBListItemV5 extends StatelessWidget {
   }
 
   @override
+  State<SBBListItemV5> createState() => _SBBListItemV5State();
+}
+
+class _SBBListItemV5State extends State<SBBListItemV5> {
+  late WidgetStatesController _statesController;
+
+  @override
+  void initState() {
+    super.initState();
+    _statesController = WidgetStatesController();
+    _updateStatesController();
+  }
+
+  @override
+  void didUpdateWidget(SBBListItemV5 oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.enabled != oldWidget.enabled) {
+      _updateStatesController();
+    }
+  }
+
+  void _updateStatesController() {
+    _statesController.update(WidgetState.disabled, !widget.enabled);
+  }
+
+  @override
+  void dispose() {
+    _statesController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMaterial(context));
 
     final TextDirection textDirection = Directionality.of(context);
-    final EdgeInsets resolvedPadding = padding.resolve(textDirection);
+    final EdgeInsets resolvedPadding = widget.padding.resolve(textDirection);
 
     // Build actual widgets from convenience parameters
-    Widget? leadingWidget = leading;
-    if (leadingWidget == null && leadingIconData != null) {
-      leadingWidget = Icon(leadingIconData);
+    Widget? leadingWidget = widget.leading;
+    if (leadingWidget == null && widget.leadingIconData != null) {
+      leadingWidget = Icon(widget.leadingIconData);
     }
 
-    Widget? titleWidget = title;
-    if (titleWidget == null && titleText != null) {
-      titleWidget = Text(titleText!);
+    Widget? titleWidget = widget.title;
+    if (titleWidget == null && widget.titleText != null) {
+      titleWidget = Text(widget.titleText!);
     }
 
-    Widget? subtitleWidget = subtitle;
-    if (subtitleWidget == null && subtitleText != null) {
-      subtitleWidget = Text(subtitleText!);
+    Widget? subtitleWidget = widget.subtitle;
+    if (subtitleWidget == null && widget.subtitleText != null) {
+      subtitleWidget = Text(widget.subtitleText!);
     }
 
-    Widget? trailingWidget = trailing;
-    if (trailingWidget == null && trailingIconData != null) {
-      trailingWidget = Icon(trailingIconData);
+    Widget? trailingWidget = widget.trailing;
+    if (trailingWidget == null && widget.trailingIconData != null) {
+      trailingWidget = Icon(widget.trailingIconData);
     }
 
     Widget child = InkWell(
-      onTap: enabled ? onTap : null,
-      onLongPress: enabled ? onLongPress : null,
-      statesController: statesController,
+      onTap: widget.enabled ? widget.onTap : null,
+      onLongPress: widget.enabled ? widget.onLongPress : null,
+      statesController: _statesController,
       child: Padding(
         padding: resolvedPadding,
         child: _SBBListItemV5(
@@ -153,14 +182,14 @@ class SBBListItemV5 extends StatelessWidget {
           title: titleWidget ?? const SizedBox(),
           subtitle: subtitleWidget,
           trailing: trailingWidget,
-          trailingHorizontalGapWidth: trailingHorizontalGapWidth,
-          leadingHorizontalGapWidth: leadingHorizontalGapWidth,
-          subtitleVerticalGapHeight: subtitleVerticalGapHeight,
+          trailingHorizontalGapWidth: widget.trailingHorizontalGapWidth,
+          leadingHorizontalGapWidth: widget.leadingHorizontalGapWidth,
+          subtitleVerticalGapHeight: widget.subtitleVerticalGapHeight,
         ),
       ),
     );
 
-    if (isLoading) {
+    if (widget.isLoading) {
       child = Stack(
         alignment: Alignment.bottomCenter,
         children: [
@@ -170,11 +199,11 @@ class SBBListItemV5 extends StatelessWidget {
       );
     }
 
-    if (links?.isNotEmpty ?? false) {
+    if (widget.links?.isNotEmpty ?? false) {
       child = Column(
         children: [
           child,
-          ..._divideLinks(context: context, links: links!),
+          ..._divideLinks(context: context, links: widget.links!),
         ],
       );
     }
@@ -207,6 +236,39 @@ class SBBListItemV5 extends StatelessWidget {
     }
 
     return links.map(wrapLink);
+  }
+}
+
+class SBBListItemV5Boxed extends SBBListItemV5 {
+  const SBBListItemV5Boxed({
+    super.key,
+    super.leading,
+    super.title,
+    super.subtitle,
+    super.trailing,
+    super.leadingIconData,
+    super.titleText,
+    super.subtitleText,
+    super.trailingIconData,
+    super.onTap,
+    super.onLongPress,
+    super.enabled,
+    super.isLoading,
+    super.links,
+    super.padding,
+    super.trailingHorizontalGapWidth,
+    super.leadingHorizontalGapWidth,
+    super.subtitleVerticalGapHeight,
+  });
+
+  @override
+  State<SBBListItemV5> createState() => _SBBListItemV5BoxedState();
+}
+
+class _SBBListItemV5BoxedState extends _SBBListItemV5State {
+  @override
+  Widget build(BuildContext context) {
+    return SBBContentBox(child: super.build(context));
   }
 }
 
