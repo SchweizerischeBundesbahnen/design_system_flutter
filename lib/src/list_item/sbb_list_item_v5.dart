@@ -33,6 +33,7 @@ class SBBListItemV5 extends StatelessWidget {
     this.onTap,
     this.onLongPress,
     this.enabled = true,
+    this.links,
     this.padding = const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
     this.statesController,
     this.trailingHorizontalGapWidth = 16.0,
@@ -67,6 +68,8 @@ class SBBListItemV5 extends StatelessWidget {
   final bool enabled;
 
   final EdgeInsetsGeometry padding;
+
+  final Iterable<Widget>? links;
 
   final MaterialStatesController? statesController;
 
@@ -104,7 +107,7 @@ class SBBListItemV5 extends StatelessWidget {
       trailingWidget = Icon(trailingIconData);
     }
 
-    return InkWell(
+    Widget child = InkWell(
       onTap: enabled ? onTap : null,
       onLongPress: enabled ? onLongPress : null,
       statesController: statesController,
@@ -121,6 +124,17 @@ class SBBListItemV5 extends StatelessWidget {
         ),
       ),
     );
+
+    if (links?.isNotEmpty ?? false) {
+      child = Column(
+        children: [
+          child,
+          ...links!,
+        ],
+      );
+    }
+
+    return child;
   }
 }
 
