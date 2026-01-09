@@ -3,6 +3,10 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import '../native_app.dart';
 
+const loremIpsum =
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+    ' Curabitur finibus, nulla nec tempor ornare, purus orci dictum tortor, non tristique velit tellus eu ligula.';
+
 class RadioPage extends StatefulWidget {
   const RadioPage({super.key});
 
@@ -77,141 +81,162 @@ class RadioPageState extends State<RadioPage> {
               ),
               const SizedBox(height: sbbDefaultSpacing),
               SBBListHeader('Radio List Item - ListView'),
-              SBBGroup(
-                child: _pageEnabled
-                    ? SBBRadioGroup<int>(
-                        groupValue: _listItemGroupValue,
-                        onChanged: _pageEnabled ? (newValue) => setState(() => _listItemGroupValue = newValue) : (_) {},
-                        child: _listViewItems(sbbToast),
-                      )
-                    : _listViewItems(sbbToast), // TODO: temporary until SBBRadioListItem allows setting enabled
+              SBBContentBox(
+                child: SBBRadioGroup<int>(
+                  groupValue: _listItemGroupValue,
+                  onChanged: (newValue) => setState(() => _listItemGroupValue = newValue),
+                  child: Column(
+                    children: SBBListItemV5.divideListItems(
+                      context: context,
+                      items: [
+                        SBBRadioListItem<int>(
+                          value: 1,
+                          titleText: 'Label',
+                          enabled: _pageEnabled,
+                        ),
+                        SBBRadioListItem<int>(
+                          value: 2,
+                          titleText: 'Leading Icon',
+                          leadingIconData: SBBIcons.alarm_clock_small,
+
+                          enabled: _pageEnabled,
+                        ),
+                        SBBRadioListItem<int>(
+                          value: 3,
+                          titleText: 'Leading and Trailing Icon',
+                          enabled: _pageEnabled,
+                          leadingIconData: SBBIcons.alarm_clock_small,
+                          trailingIconData: SBBIcons.dog_small,
+                        ),
+                        SBBRadioListItem<int>(
+                          value: 4,
+                          titleText: 'Button',
+                          enabled: _pageEnabled,
+                          padding: SBBListItemV5Style.defaultPadding.copyWith(right: 8),
+                          trailing: SBBTertiaryButtonSmall(
+                            iconData: SBBIcons.circle_information_small_small,
+                            onPressed: _pageEnabled ? () => sbbToast.show(title: 'Button pressed') : null,
+                          ),
+                        ),
+                        SBBRadioListItem<int>(
+                          value: 5,
+                          titleText: 'Custom Trailing',
+                          enabled: _pageEnabled,
+                          trailing: Text('CHF 0.99'),
+                        ),
+                        SBBRadioListItem<int>(
+                          value: 6,
+                          title: Text('Multiline Label with\nSecondary Label'),
+                          enabled: _pageEnabled,
+                          subtitleText: loremIpsum,
+                        ),
+                        SBBRadioListItem<int>(
+                          value: 7,
+                          title: Text('Mit Links'),
+                          enabled: _pageEnabled,
+                          leadingIconData: SBBIcons.globe_small,
+                          links: [
+                            SBBListItemV5(
+                              titleText: "Link",
+                              trailingIconData: SBBIcons.chevron_small_right_small,
+                              onTap: () => sbbToast.show(title: 'Link'),
+                            ),
+                            SBBListItemV5(
+                              titleText: "Link 2",
+                              trailingIconData: SBBIcons.chevron_small_right_small,
+                              onTap: () => sbbToast.show(title: 'Link 2'),
+                            ),
+                          ],
+                        ),
+                        SBBRadioListItem<int>(
+                          value: 8,
+                          titleText: 'Loading',
+                          enabled: _pageEnabled,
+                          subtitleText: 'This will stop loading if selected.',
+                          isLoading: _listItemGroupValue != 8,
+                        ),
+                      ],
+                    ).toList(growable: false),
+                  ),
+                ),
               ),
               const SizedBox(height: sbbDefaultSpacing),
               const SBBListHeader('Radio List Item - Boxed'),
-              if (_pageEnabled)
-                SBBRadioGroup(
+              Padding(
+                padding: const EdgeInsets.only(bottom: sbbDefaultSpacing * 4),
+                child: SBBRadioGroup(
                   groupValue: _listItemGroupValue,
                   onChanged: (newValue) => setState(() => _listItemGroupValue = newValue),
-                  child: _boxedItems(sbbToast),
+                  child: Column(
+                    spacing: sbbDefaultSpacing * 0.5,
+                    children: [
+                      SBBRadioListItemBoxed<int>(
+                        value: 1,
+                        titleText: 'Label',
+                      ),
+                      SBBRadioListItemBoxed<int>(
+                        value: 2,
+                        titleText: 'Leading Icon',
+                        leadingIconData: SBBIcons.alarm_clock_small,
+                      ),
+                      SBBRadioListItemBoxed<int>(
+                        value: 3,
+                        titleText: 'Leading and Trailing Icon',
+                        leadingIconData: SBBIcons.alarm_clock_small,
+                        trailingIconData: SBBIcons.dog_small,
+                      ),
+                      SBBRadioListItemBoxed<int>(
+                        value: 4,
+                        titleText: 'Button',
+                        enabled: _pageEnabled,
+                        padding: SBBListItemV5Style.defaultPadding.copyWith(right: 8),
+                        trailing: SBBTertiaryButtonSmall(
+                          iconData: SBBIcons.circle_information_small_small,
+                          onPressed: _pageEnabled ? () => sbbToast.show(title: 'Button pressed') : null,
+                        ),
+                      ),
+
+                      SBBRadioListItemBoxed<int>(
+                        value: 5,
+                        titleText: 'Custom Trailing',
+                        enabled: _pageEnabled,
+                        trailing: Text('CHF 0.99'),
+                      ),
+                      SBBRadioListItemBoxed<int>(
+                        value: 6,
+                        title: Text('Multiline Label with\nSecondary Label'),
+                        enabled: _pageEnabled,
+                        subtitleText: loremIpsum,
+                      ),
+                      SBBRadioListItemBoxed<int>(
+                        value: 7,
+                        title: Text('Mit Links'),
+                        leadingIconData: SBBIcons.globe_small,
+                        enabled: _pageEnabled,
+                        links: [
+                          SBBListItemV5(
+                            titleText: "Link",
+                            trailingIconData: SBBIcons.chevron_small_right_small,
+                            onTap: () => sbbToast.show(title: 'Link'),
+                          ),
+                          SBBListItemV5(
+                            titleText: "Link 2",
+                            trailingIconData: SBBIcons.chevron_small_right_small,
+                            onTap: () => sbbToast.show(title: 'Link 2'),
+                          ),
+                        ],
+                      ),
+                      SBBRadioListItemBoxed<int>(
+                        value: 8,
+                        titleText: 'Loading',
+                        subtitleText: 'This will not stop.',
+                        isLoading: true,
+                      ),
+                    ],
+                  ),
                 ),
-              // TODO: temporary until SBBRadioListItem also allows setting enabled
-              if (!_pageEnabled) _boxedItems(sbbToast),
+              ),
             ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  Column _listViewItems(SBBToast sbbToast) {
-    return Column(
-      children: [
-        SBBRadioListItem<int>(
-          value: 1,
-          label: 'Label',
-        ),
-        SBBRadioListItem<int>(
-          value: 2,
-          label: 'Leading Icon',
-          leadingIcon: SBBIcons.alarm_clock_small,
-        ),
-        SBBRadioListItem<int>(
-          value: 3,
-          label: 'Leading and Trailing Icon',
-          leadingIcon: SBBIcons.alarm_clock_small,
-          trailingIcon: SBBIcons.dog_small,
-        ),
-        SBBRadioListItem<int>(
-          value: 4,
-          label: 'Button',
-          trailingIcon: SBBIcons.circle_information_small_small,
-          onCallToAction: () => sbbToast.show(title: 'Button'),
-        ),
-        SBBRadioListItem<int>.custom(
-          value: 5,
-          label: 'Custom trailing Widget',
-          trailingWidget: const Padding(
-            padding: EdgeInsetsDirectional.only(top: sbbDefaultSpacing * .75, end: sbbDefaultSpacing),
-            child: Text('CHF 0.99'),
-          ),
-        ),
-        SBBRadioListItem<int>(
-          value: 6,
-          label: 'Multiline Label with\nSecondary Label',
-          allowMultilineLabel: true,
-          secondaryLabel:
-              'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut convallis leo et metus semper hendrerit. Duis nec nunc a ligula cursus vulputate. Donec sed elit ultricies, euismod erat et, eleifend augue.',
-        ),
-        SBBRadioListItem<int>(
-          value: 7,
-          label: 'Loading',
-          secondaryLabel: 'This will stop loading if selected.',
-          isLoading: _listItemGroupValue != 7,
-          isLastElement: true,
-        ),
-      ],
-    );
-  }
-
-  Column _boxedItems(SBBToast sbbToast) {
-    return Column(
-      spacing: sbbDefaultSpacing * 0.5,
-      children: [
-        SBBGroup(
-          child: SBBRadioListItem<int>.boxed(
-            value: 1,
-            label: 'Label',
-          ),
-        ),
-        SBBGroup(
-          child: SBBRadioListItem<int>.boxed(
-            value: 2,
-            label: 'Leading Icon',
-            leadingIcon: SBBIcons.alarm_clock_small,
-          ),
-        ),
-        SBBGroup(
-          child: SBBRadioListItem<int>.boxed(
-            value: 3,
-            label: 'Leading and Trailing Icon',
-            leadingIcon: SBBIcons.alarm_clock_small,
-            trailingIcon: SBBIcons.dog_small,
-          ),
-        ),
-        SBBGroup(
-          child: SBBRadioListItem<int>.boxed(
-            value: 4,
-            label: 'Button',
-            trailingIcon: SBBIcons.circle_information_small_small,
-            onCallToAction: () => sbbToast.show(title: 'Button'),
-          ),
-        ),
-        SBBGroup(
-          child: SBBRadioListItem<int>.custom(
-            value: 5,
-            label: 'Custom trailing Widget',
-            trailingWidget: const Padding(
-              padding: EdgeInsetsDirectional.only(top: sbbDefaultSpacing * .75, end: sbbDefaultSpacing),
-              child: Text('CHF 0.99'),
-            ),
-            isLastElement: false,
-          ),
-        ),
-        SBBGroup(
-          child: SBBRadioListItem<int>.boxed(
-            value: 6,
-            label: 'Multiline Label with\nSecondary Label',
-            allowMultilineLabel: true,
-            secondaryLabel:
-                'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut convallis leo et metus semper hendrerit. Duis nec nunc a ligula cursus vulputate. Donec sed elit ultricies, euismod erat et, eleifend augue.',
-          ),
-        ),
-        SBBGroup(
-          child: SBBRadioListItem<int>.boxed(
-            value: 7,
-            label: 'Loading',
-            secondaryLabel: 'This will not stop.',
-            isLoading: true,
           ),
         ),
       ],
