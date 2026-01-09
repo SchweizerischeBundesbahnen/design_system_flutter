@@ -359,11 +359,11 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>> with Widgets
   }
 
   Widget _createListItem({required T item, required VoidCallback onPressed, required VoidCallback onCallToAction}) {
-    return SBBListItemV5(
+    return SBBListItem(
       titleText: item.toString(),
       onTap: onPressed,
       leadingIconData: widget.suggestionIcon,
-      padding: SBBListItemV5Style.defaultPadding.copyWith(right: 8.0),
+      padding: SBBListItemStyle.defaultPadding.copyWith(right: 8.0),
       trailing: SBBTertiaryButtonSmall(onPressed: onPressed),
     );
   }

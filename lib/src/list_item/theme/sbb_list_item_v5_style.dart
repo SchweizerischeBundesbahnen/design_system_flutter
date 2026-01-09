@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-/// Defines the visual properties of [SBBListItemV5].
+/// Defines the visual properties of [SBBListItem].
 ///
 /// Use this class in combination with [SBBListItemThemeData] to customize
 /// the appearance of list items throughout your app or for specific widget subtrees.
@@ -8,7 +8,7 @@ import 'package:flutter/widgets.dart';
 /// ## Sample code
 ///
 /// ```dart
-/// SBBListItemV5(
+/// SBBListItem(
 ///   titleText: 'Title',
 ///   subtitleText: 'Subtitle',
 ///   onTap: () {},
@@ -20,10 +20,10 @@ import 'package:flutter/widgets.dart';
 /// ```
 ///
 /// See also:
-/// * [SBBListItemV5], the widget that uses this style.
+/// * [SBBListItem], the widget that uses this style.
 /// * [SBBListItemThemeData], which applies this style theme-wide.
-class SBBListItemV5Style {
-  const SBBListItemV5Style({
+class SBBListItemStyle {
+  const SBBListItemStyle({
     this.titleTextStyle,
     this.subtitleTextStyle,
     this.titleForegroundColor,
@@ -34,14 +34,14 @@ class SBBListItemV5Style {
     this.overlayColor,
   });
 
-  /// The minimum vertical height of a list item without [SBBListItemV5.padding] applied.
+  /// The minimum vertical height of a list item without [SBBListItem.padding] applied.
   ///
   /// This ensures list items meet accessibility standards for touch targets.
   static double get minInnerHeight => 24.0;
 
   /// The text style for the list item title.
   ///
-  /// Applies to all text descendants of the title of SBBListItemV5.
+  /// Applies to all text descendants of the title of SBBListItem.
   ///
   /// The color of the [titleTextStyle] is typically not used directly, the
   /// [titleForegroundColor] is used instead.
@@ -49,7 +49,7 @@ class SBBListItemV5Style {
 
   /// The text style for the list item subtitle.
   ///
-  /// Applies to all text descendants of the subtitle of SBBListItemV5.
+  /// Applies to all text descendants of the subtitle of SBBListItem.
   ///
   /// The color of the [subtitleTextStyle] is typically not used directly, the
   /// [subtitleForegroundColor] is used instead.
@@ -88,7 +88,7 @@ class SBBListItemV5Style {
   /// The default padding of the list item.
   static EdgeInsets get defaultPadding => EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0);
 
-  SBBListItemV5Style copyWith({
+  SBBListItemStyle copyWith({
     WidgetStateProperty<TextStyle?>? titleTextStyle,
     WidgetStateProperty<TextStyle?>? subtitleTextStyle,
     WidgetStateProperty<Color?>? titleForegroundColor,
@@ -98,7 +98,7 @@ class SBBListItemV5Style {
     WidgetStateProperty<Color?>? overlayColor,
     WidgetStateProperty<Color?>? backgroundColor,
   }) {
-    return SBBListItemV5Style(
+    return SBBListItemStyle(
       titleTextStyle: titleTextStyle ?? this.titleTextStyle,
       subtitleTextStyle: subtitleTextStyle ?? this.subtitleTextStyle,
       titleForegroundColor: titleForegroundColor ?? this.titleForegroundColor,
@@ -110,7 +110,7 @@ class SBBListItemV5Style {
     );
   }
 
-  SBBListItemV5Style merge(SBBListItemV5Style? other) {
+  SBBListItemStyle merge(SBBListItemStyle? other) {
     if (other == null) return this;
 
     return copyWith(
@@ -125,10 +125,10 @@ class SBBListItemV5Style {
     );
   }
 
-  static SBBListItemV5Style? lerp(SBBListItemV5Style? a, SBBListItemV5Style? b, double t) {
+  static SBBListItemStyle? lerp(SBBListItemStyle? a, SBBListItemStyle? b, double t) {
     if (identical(a, b)) return a;
 
-    return SBBListItemV5Style(
+    return SBBListItemStyle(
       titleTextStyle: WidgetStateProperty.lerp<TextStyle?>(a?.titleTextStyle, b?.titleTextStyle, t, TextStyle.lerp),
       subtitleTextStyle: WidgetStateProperty.lerp<TextStyle?>(
         a?.subtitleTextStyle,
@@ -168,7 +168,7 @@ class SBBListItemV5Style {
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is SBBListItemV5Style &&
+    return other is SBBListItemStyle &&
         other.titleTextStyle == titleTextStyle &&
         other.subtitleTextStyle == subtitleTextStyle &&
         other.titleForegroundColor == titleForegroundColor &&

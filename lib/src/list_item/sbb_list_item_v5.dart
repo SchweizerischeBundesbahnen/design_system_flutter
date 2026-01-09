@@ -37,13 +37,13 @@ enum _SBBListItemSlot { leading, title, subtitle, trailing }
 ///
 /// The list item is disabled when both [onTap] and [onLongPress] are null or [enabled] is false.
 ///
-/// Use [SBBListItemV5.divideListItems] to automatically add dividers between multiple list items.
+/// Use [SBBListItem.divideListItems] to automatically add dividers between multiple list items.
 ///
 ///
 /// ## Sample code
 ///
 /// ```dart
-/// SBBListItemV5(
+/// SBBListItem(
 ///   titleText: 'List Item Title',
 ///   subtitleText: 'Additional information',
 ///   onTap: () {},
@@ -54,18 +54,18 @@ enum _SBBListItemSlot { leading, title, subtitle, trailing }
 ///
 /// ```dart
 /// Column(
-///   children: SBBListItemV5.divideListItems(
+///   children: SBBListItem.divideListItems(
 ///     context: context,
 ///     items: [
-///       SBBListItemV5(
+///       SBBListItem(
 ///         titleText: 'First Item',
 ///         onTap: () {},
 ///       ),
-///       SBBListItemV5(
+///       SBBListItem(
 ///         titleText: 'Second Item',
 ///         onTap: () {},
 ///       ),
-///       SBBListItemV5(
+///       SBBListItem(
 ///         titleText: 'Third Item',
 ///         onTap: () {},
 ///       ),
@@ -80,10 +80,10 @@ enum _SBBListItemSlot { leading, title, subtitle, trailing }
 /// [SBBListItemThemeData] to apply consistent styling across your app:
 ///
 /// ```dart
-/// SBBListItemV5(
+/// SBBListItem(
 ///   titleText: 'Styled Item',
 ///   onTap: () {},
-///   style: SBBListItemV5Style(
+///   style: SBBListItemStyle(
 ///     backgroundColor: WidgetStateProperty.all(Colors.blue),
 ///     titleForegroundColor: WidgetStateProperty.all(Colors.white),
 ///   ),
@@ -92,12 +92,12 @@ enum _SBBListItemSlot { leading, title, subtitle, trailing }
 ///
 /// See also:
 ///
-///  * [SBBListItemV5Boxed], for a boxed variant.
-///  * [SBBListItemV5Style], for customizing the appearance.
+///  * [SBBListItemBoxed], for a boxed variant.
+///  * [SBBListItemStyle], for customizing the appearance.
 ///  * [SBBListItemThemeData], for setting list item theme properties across your app.
 ///  * [Figma design specs](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=282-933)
-class SBBListItemV5 extends StatefulWidget {
-  const SBBListItemV5({
+class SBBListItem extends StatefulWidget {
+  const SBBListItem({
     super.key,
     this.leading,
     this.leadingIconData,
@@ -242,7 +242,7 @@ class SBBListItemV5 extends StatefulWidget {
   /// {@template sbb_design_system.list_item.links}
   /// Additional widgets displayed below the list item main content.
   ///
-  /// This is typically used with a list of [SBBListItemV5] itself with a trailing icon.
+  /// This is typically used with a list of [SBBListItem] itself with a trailing icon.
   ///
   /// Links are displayed in a column below the list item with
   /// top dividers separating each link.
@@ -298,7 +298,7 @@ class SBBListItemV5 extends StatefulWidget {
   /// Non-null properties of this style override the corresponding
   /// properties in [SBBListItemThemeData.style] of the theme found in [context].
   /// {@endtemplate}
-  final SBBListItemV5Style? style;
+  final SBBListItemStyle? style;
 
   /// Add a one pixel border in between each item. If color isn't specified the
   /// [ThemeData.dividerColor] of the context's [Theme] is used, which defaults to
@@ -332,7 +332,7 @@ class SBBListItemV5 extends StatefulWidget {
   }
 
   @override
-  State<SBBListItemV5> createState() => _SBBListItemV5State();
+  State<SBBListItem> createState() => _SBBListItemState();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
@@ -392,11 +392,11 @@ class SBBListItemV5 extends StatefulWidget {
     properties.add(
       DoubleProperty('subtitleVerticalGapHeight', subtitleVerticalGapHeight, defaultValue: null),
     );
-    properties.add(DiagnosticsProperty<SBBListItemV5Style>('style', style, defaultValue: null));
+    properties.add(DiagnosticsProperty<SBBListItemStyle>('style', style, defaultValue: null));
   }
 }
 
-class _SBBListItemV5State extends State<SBBListItemV5> {
+class _SBBListItemState extends State<SBBListItem> {
   late WidgetStatesController _statesController;
 
   bool get _isInteractive => widget.enabled && (widget.onTap != null || widget.onLongPress != null);
@@ -409,7 +409,7 @@ class _SBBListItemV5State extends State<SBBListItemV5> {
   }
 
   @override
-  void didUpdateWidget(SBBListItemV5 oldWidget) {
+  void didUpdateWidget(SBBListItem oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.enabled != oldWidget.enabled ||
         widget.onTap != oldWidget.onTap ||
@@ -433,10 +433,10 @@ class _SBBListItemV5State extends State<SBBListItemV5> {
     assert(debugCheckHasMaterial(context));
 
     final themeData = Theme.of(context).sbbListItemTheme;
-    final effectiveStyle = (themeData?.style ?? SBBListItemV5Style()).merge(widget.style);
+    final effectiveStyle = (themeData?.style ?? SBBListItemStyle()).merge(widget.style);
     final states = _statesController.value;
 
-    final effectivePadding = widget.padding ?? themeData?.padding ?? SBBListItemV5Style.defaultPadding;
+    final effectivePadding = widget.padding ?? themeData?.padding ?? SBBListItemStyle.defaultPadding;
     final effectiveTrailingGapWidth =
         widget.trailingHorizontalGapWidth ?? themeData?.trailingHorizontalGapWidth ?? 16.0;
     final effectiveLeadingGapWidth = widget.leadingHorizontalGapWidth ?? themeData?.leadingHorizontalGapWidth ?? 8.0;
@@ -519,7 +519,7 @@ class _SBBListItemV5State extends State<SBBListItemV5> {
           color: resolvedBackgroundColor,
           child: Padding(
             padding: effectivePadding,
-            child: _SBBListItemV5(
+            child: _SBBListItem(
               leading: leadingWidget,
               title: titleWidget ?? const SizedBox(),
               subtitle: subtitleWidget,
@@ -600,12 +600,12 @@ class _SBBListItemV5State extends State<SBBListItemV5> {
   }
 }
 
-/// The boxed variant of [SBBListItemV5].
+/// The boxed variant of [SBBListItem].
 ///
 /// This is a convenience class and is equivalent to wrapping
-/// the [SBBListItemV5] inside a [SBBContentBox].
-class SBBListItemV5Boxed extends SBBListItemV5 {
-  const SBBListItemV5Boxed({
+/// the [SBBListItem] inside a [SBBContentBox].
+class SBBListItemBoxed extends SBBListItem {
+  const SBBListItemBoxed({
     super.key,
     super.leading,
     super.leadingIconData,
@@ -631,18 +631,18 @@ class SBBListItemV5Boxed extends SBBListItemV5 {
   });
 
   @override
-  State<SBBListItemV5> createState() => _SBBListItemV5BoxedState();
+  State<SBBListItem> createState() => _SBBListItemBoxedState();
 }
 
-class _SBBListItemV5BoxedState extends _SBBListItemV5State {
+class _SBBListItemBoxedState extends _SBBListItemState {
   @override
   Widget build(BuildContext context) {
     return SBBContentBox(child: super.build(context));
   }
 }
 
-class _SBBListItemV5 extends SlottedMultiChildRenderObjectWidget<_SBBListItemSlot, RenderBox> {
-  const _SBBListItemV5({
+class _SBBListItem extends SlottedMultiChildRenderObjectWidget<_SBBListItemSlot, RenderBox> {
+  const _SBBListItem({
     this.leading,
     required this.title,
     this.subtitle,
@@ -674,8 +674,8 @@ class _SBBListItemV5 extends SlottedMultiChildRenderObjectWidget<_SBBListItemSlo
   }
 
   @override
-  _RenderSBBListItemV5 createRenderObject(BuildContext context) {
-    return _RenderSBBListItemV5(
+  _RenderSBBListItem createRenderObject(BuildContext context) {
+    return _RenderSBBListItem(
       trailingHorizontalGapWidth: trailingHorizontalGapWidth,
       leadingHorizontalGapWidth: leadingHorizontalGapWidth,
       subtitleVerticalGapHeight: subtitleVerticalGapHeight,
@@ -683,7 +683,7 @@ class _SBBListItemV5 extends SlottedMultiChildRenderObjectWidget<_SBBListItemSlo
   }
 
   @override
-  void updateRenderObject(BuildContext context, _RenderSBBListItemV5 renderObject) {
+  void updateRenderObject(BuildContext context, _RenderSBBListItem renderObject) {
     renderObject
       ..trailingHorizontalGapWidth = trailingHorizontalGapWidth
       ..leadingHorizontalGapWidth = leadingHorizontalGapWidth
@@ -691,8 +691,8 @@ class _SBBListItemV5 extends SlottedMultiChildRenderObjectWidget<_SBBListItemSlo
   }
 }
 
-class _RenderSBBListItemV5 extends RenderBox with SlottedContainerRenderObjectMixin<_SBBListItemSlot, RenderBox> {
-  _RenderSBBListItemV5({
+class _RenderSBBListItem extends RenderBox with SlottedContainerRenderObjectMixin<_SBBListItemSlot, RenderBox> {
+  _RenderSBBListItem({
     required double trailingHorizontalGapWidth,
     required double leadingHorizontalGapWidth,
     required double subtitleVerticalGapHeight,
@@ -788,7 +788,7 @@ class _RenderSBBListItemV5 extends RenderBox with SlottedContainerRenderObjectMi
       math.max(leadingHeight, title.getMinIntrinsicHeight(width)) + subtitleHeight,
       trailingHeight,
     );
-    return math.max(SBBListItemV5Style.minInnerHeight, minContentHeight);
+    return math.max(SBBListItemStyle.minInnerHeight, minContentHeight);
   }
 
   @override
@@ -848,7 +848,7 @@ class _RenderSBBListItemV5 extends RenderBox with SlottedContainerRenderObjectMi
 
     // Fix the title height to minInnerHeight only if no subtitle
     if (subtitleSize == null) {
-      maxTitleRowHeight = math.max(maxTitleRowHeight, SBBListItemV5Style.minInnerHeight);
+      maxTitleRowHeight = math.max(maxTitleRowHeight, SBBListItemStyle.minInnerHeight);
     }
 
     // Center-align title and leading

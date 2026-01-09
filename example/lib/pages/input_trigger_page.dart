@@ -90,7 +90,7 @@ class _PickerPageState extends State<InputTriggerPage> {
                 SBBTextField(controller: hintController, labelText: 'Hint'),
                 SBBTextField(controller: valueController, labelText: 'Value'),
                 SBBTextField(controller: errorController, labelText: 'Error'),
-                ...SBBListItemV5.divideListItems(
+                ...SBBListItem.divideListItems(
                   context: context,
                   items: [
                     SBBSwitchListItem(

@@ -88,7 +88,7 @@ class MyApp extends StatelessWidget {
                           SBBContentBox(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: SBBListItemV5.divideListItems(
+                              children: SBBListItem.divideListItems(
                                 context: context,
                                 items: [
                                   _DemoEntry('Icon', IconPage()),
@@ -103,7 +103,7 @@ class MyApp extends StatelessWidget {
                           SBBContentBox(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: SBBListItemV5.divideListItems(
+                              children: SBBListItem.divideListItems(
                                 context: context,
                                 items: [
                                   _DemoEntry('Button', ButtonPage()),
@@ -134,7 +134,7 @@ class MyApp extends StatelessWidget {
                           SBBContentBox(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: SBBListItemV5.divideListItems(
+                              children: SBBListItem.divideListItems(
                                 context: context,
                                 items: [
                                   _DemoEntry('Autocompletion', AutocompletionPage()),
@@ -182,7 +182,7 @@ class _DemoEntry extends StatelessWidget {
       closedShape: const RoundedRectangleBorder(),
       openShape: const RoundedRectangleBorder(),
       closedBuilder: (context, action) {
-        return SBBListItemV5(
+        return SBBListItem(
           titleText: title,
           trailingIconData: SBBIcons.chevron_small_right_small,
           onTap: action,

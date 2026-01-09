@@ -36,7 +36,7 @@ class _MessagePageState extends State<MessagePage> {
         SBBContentBox(
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            children: SBBListItemV5.divideListItems(
+            children: SBBListItem.divideListItems(
               items: [
                 SBBCheckboxListItem(
                   value: _showInteractionButton,

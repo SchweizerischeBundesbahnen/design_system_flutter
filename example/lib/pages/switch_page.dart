@@ -63,7 +63,7 @@ class _SwitchPageState extends State<SwitchPage> {
               const SBBListHeader('SwitchItem - List'),
               SBBContentBox(
                 child: Column(
-                  children: SBBListItemV5.divideListItems(
+                  children: SBBListItem.divideListItems(
                     context: context,
                     items: [
                       SBBSwitchListItem(
@@ -88,7 +88,7 @@ class _SwitchPageState extends State<SwitchPage> {
                         titleText: 'With Link',
                         onChanged: _isEnabled ? (value) => setState(() => _value5 = value) : null,
                         links: [
-                          SBBListItemV5(
+                          SBBListItem(
                             titleText: 'Link Text',
                             onTap: () => sbbToast.show(title: 'Link'),
                             trailingIconData: SBBIcons.chevron_small_right_small,
@@ -100,17 +100,17 @@ class _SwitchPageState extends State<SwitchPage> {
                         titleText: 'With 3 Links',
                         onChanged: _isEnabled ? (value) => setState(() => _value6 = value) : null,
                         links: [
-                          SBBListItemV5(
+                          SBBListItem(
                             titleText: 'Toggleable Link',
                             onTap: _isEnabled ? () => sbbToast.show(title: 'Toggleable Link') : null,
                             trailingIconData: SBBIcons.chevron_small_right_small,
                           ),
-                          SBBListItemV5(
+                          SBBListItem(
                             titleText: 'Link Text 2',
                             onTap: () => sbbToast.show(title: 'Link 2'),
                             trailingIconData: SBBIcons.chevron_small_right_small,
                           ),
-                          SBBListItemV5(
+                          SBBListItem(
                             titleText: 'Link Text',
                             onTap: () => sbbToast.show(title: 'Link 3'),
                             trailingIconData: SBBIcons.chevron_small_right_small,
@@ -170,7 +170,7 @@ class _SwitchPageState extends State<SwitchPage> {
                     titleText: 'With Link',
                     onChanged: _isEnabled ? (value) => setState(() => _value5 = value) : null,
                     links: [
-                      SBBListItemV5(
+                      SBBListItem(
                         titleText: 'Link Text',
                         onTap: () => sbbToast.show(title: 'Link'),
                         trailingIconData: SBBIcons.chevron_small_right_small,
@@ -182,17 +182,17 @@ class _SwitchPageState extends State<SwitchPage> {
                     titleText: 'With 3 Links',
                     onChanged: _isEnabled ? (value) => setState(() => _value6 = value) : null,
                     links: [
-                      SBBListItemV5(
+                      SBBListItem(
                         titleText: 'Toggleable Link',
                         onTap: _isEnabled ? () => sbbToast.show(title: 'Toggleable Link') : null,
                         trailingIconData: SBBIcons.chevron_small_right_small,
                       ),
-                      SBBListItemV5(
+                      SBBListItem(
                         titleText: 'Link Text 2',
                         onTap: () => sbbToast.show(title: 'Link 2'),
                         trailingIconData: SBBIcons.chevron_small_right_small,
                       ),
-                      SBBListItemV5(
+                      SBBListItem(
                         titleText: 'Link Text',
                         onTap: () => sbbToast.show(title: 'Link 3'),
                         trailingIconData: SBBIcons.chevron_small_right_small,

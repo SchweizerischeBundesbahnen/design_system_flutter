@@ -22,7 +22,7 @@ class _ModalPageState extends State<ModalPage> {
         ThemeModeSegmentedButton(),
         const SizedBox(height: sbbDefaultSpacing),
         const SBBListHeader('Settings'),
-        ...SBBListItemV5.divideListItems(
+        ...SBBListItem.divideListItems(
           context: context,
           items: [
             SBBCheckboxListItem(

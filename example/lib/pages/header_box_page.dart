@@ -239,7 +239,7 @@ class _ScrollablePageState extends State<ScrollablePage> {
         ),
         SliverList.builder(
           itemCount: 60,
-          itemBuilder: (context, index) => SBBListItemV5(
+          itemBuilder: (context, index) => SBBListItem(
             titleText: 'Item $index',
             onTap: () => sbbToast.show(title: 'Pressed Item $index', bottom: sbbDefaultSpacing * 6),
           ),

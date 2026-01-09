@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 
 import '../../../sbb_design_system_mobile.dart';
 
-/// The ThemeData for the [SBBListItemV5].
+/// The ThemeData for the [SBBListItem].
 ///
-/// Use this to set the [SBBListItemStyle] and layout properties for all [SBBListItemV5]
+/// Use this to set the [SBBListItemStyle] and layout properties for all [SBBListItem]
 /// within the current [SBBTheme].
 ///
 /// To access this in your application, use `Theme.of(context).sbbListItemTheme`.
@@ -31,7 +31,7 @@ class SBBListItemThemeData extends ThemeExtension<SBBListItemThemeData> with Dia
   /// values override the default values.
   ///
   /// If [style] is null, then this theme doesn't override the style.
-  final SBBListItemV5Style? style;
+  final SBBListItemStyle? style;
 
   /// The padding around the list item's content.
   ///
@@ -55,7 +55,7 @@ class SBBListItemThemeData extends ThemeExtension<SBBListItemThemeData> with Dia
 
   @override
   SBBListItemThemeData copyWith({
-    SBBListItemV5Style? style,
+    SBBListItemStyle? style,
     EdgeInsetsGeometry? padding,
     double? trailingHorizontalGapWidth,
     double? leadingHorizontalGapWidth,
@@ -74,7 +74,7 @@ class SBBListItemThemeData extends ThemeExtension<SBBListItemThemeData> with Dia
   SBBListItemThemeData lerp(SBBListItemThemeData? other, double t) {
     if (other == null) return this;
     return SBBListItemThemeData(
-      style: SBBListItemV5Style.lerp(style, other.style, t),
+      style: SBBListItemStyle.lerp(style, other.style, t),
       padding: EdgeInsetsGeometry.lerp(padding, other.padding, t),
       trailingHorizontalGapWidth: lerpDouble(trailingHorizontalGapWidth, other.trailingHorizontalGapWidth, t),
       leadingHorizontalGapWidth: lerpDouble(leadingHorizontalGapWidth, other.leadingHorizontalGapWidth, t),

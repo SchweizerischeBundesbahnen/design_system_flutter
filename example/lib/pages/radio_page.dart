@@ -86,7 +86,7 @@ class RadioPageState extends State<RadioPage> {
                   groupValue: _listItemGroupValue,
                   onChanged: (newValue) => setState(() => _listItemGroupValue = newValue),
                   child: Column(
-                    children: SBBListItemV5.divideListItems(
+                    children: SBBListItem.divideListItems(
                       context: context,
                       items: [
                         SBBRadioListItem<int>(
@@ -112,7 +112,7 @@ class RadioPageState extends State<RadioPage> {
                           value: 4,
                           titleText: 'Button',
                           enabled: _pageEnabled,
-                          padding: SBBListItemV5Style.defaultPadding.copyWith(right: 8),
+                          padding: SBBListItemStyle.defaultPadding.copyWith(right: 8),
                           trailing: SBBTertiaryButtonSmall(
                             iconData: SBBIcons.circle_information_small_small,
                             onPressed: _pageEnabled ? () => sbbToast.show(title: 'Button pressed') : null,
@@ -136,12 +136,12 @@ class RadioPageState extends State<RadioPage> {
                           enabled: _pageEnabled,
                           leadingIconData: SBBIcons.globe_small,
                           links: [
-                            SBBListItemV5(
+                            SBBListItem(
                               titleText: "Link",
                               trailingIconData: SBBIcons.chevron_small_right_small,
                               onTap: () => sbbToast.show(title: 'Link'),
                             ),
-                            SBBListItemV5(
+                            SBBListItem(
                               titleText: "Link 2",
                               trailingIconData: SBBIcons.chevron_small_right_small,
                               onTap: () => sbbToast.show(title: 'Link 2'),
@@ -189,7 +189,7 @@ class RadioPageState extends State<RadioPage> {
                         value: 4,
                         titleText: 'Button',
                         enabled: _pageEnabled,
-                        padding: SBBListItemV5Style.defaultPadding.copyWith(right: 8),
+                        padding: SBBListItemStyle.defaultPadding.copyWith(right: 8),
                         trailing: SBBTertiaryButtonSmall(
                           iconData: SBBIcons.circle_information_small_small,
                           onPressed: _pageEnabled ? () => sbbToast.show(title: 'Button pressed') : null,
@@ -214,12 +214,12 @@ class RadioPageState extends State<RadioPage> {
                         leadingIconData: SBBIcons.globe_small,
                         enabled: _pageEnabled,
                         links: [
-                          SBBListItemV5(
+                          SBBListItem(
                             titleText: "Link",
                             trailingIconData: SBBIcons.chevron_small_right_small,
                             onTap: () => sbbToast.show(title: 'Link'),
                           ),
-                          SBBListItemV5(
+                          SBBListItem(
                             titleText: "Link 2",
                             trailingIconData: SBBIcons.chevron_small_right_small,
                             onTap: () => sbbToast.show(title: 'Link 2'),

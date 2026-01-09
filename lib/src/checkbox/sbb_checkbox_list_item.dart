@@ -1,14 +1,14 @@
 import 'package:flutter/widgets.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
-/// A convenience wrapper that combines [SBBListItemV5] with [SBBCheckbox] as the leading widget.
+/// A convenience wrapper that combines [SBBListItem] with [SBBCheckbox] as the leading widget.
 ///
 /// This widget automatically handles checkbox state changes and positions the checkbox
 /// as the leading content of the list item. Additional leading content can be provided
 /// via [leading] or [leadingIconData] and will be positioned after the checkbox.
 ///
 /// The same result can be achieved by manually placing an [SBBCheckbox] in the
-/// [SBBListItemV5.leading] parameter.
+/// [SBBListItem.leading] parameter.
 ///
 /// ## Sample code
 ///
@@ -28,7 +28,7 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 /// See also:
 ///
 ///  * [SBBCheckbox], the checkbox widget used as leading content.
-///  * [SBBListItemV5], the underlying list item widget.
+///  * [SBBListItem], the underlying list item widget.
 ///  * [SBBCheckboxListItemBoxed], a boxed variant of this widget.
 class SBBCheckboxListItem extends StatelessWidget {
   const SBBCheckboxListItem({
@@ -87,7 +87,7 @@ class SBBCheckboxListItem extends StatelessWidget {
 
   /// {@macro sbb_design_system.list_item.onLongPress}
   ///
-  /// Within the [SBBCheckboxListItem], the [SBBListItemV5.onTap] calls the [onChanged] callback with the
+  /// Within the [SBBCheckboxListItem], the [SBBListItem.onTap] calls the [onChanged] callback with the
   /// updated value.
   final GestureLongPressCallback? onLongPress;
 
@@ -129,7 +129,7 @@ class SBBCheckboxListItem extends StatelessWidget {
   final double leadingCheckboxGapWidth;
 
   /// {@macro sbb_design_system.list_item.style}
-  final SBBListItemV5Style? listItemStyle;
+  final SBBListItemStyle? listItemStyle;
 
   /// {@macro sbb_design_system.checkbox.value}
   final bool? value;
@@ -139,7 +139,7 @@ class SBBCheckboxListItem extends StatelessWidget {
 
   /// {@macro sbb_design_system.checkbox.onChanged}
   ///
-  /// Within the [SBBCheckboxListItem], the [SBBListItemV5.onTap] calls the [onChanged] callback with the
+  /// Within the [SBBCheckboxListItem], the [SBBListItem.onTap] calls the [onChanged] callback with the
   /// updated value.
   final ValueChanged<bool?>? onChanged;
 
@@ -174,7 +174,7 @@ class SBBCheckboxListItem extends StatelessWidget {
       );
     }
 
-    return SBBListItemV5(
+    return SBBListItem(
       leading: resolvedLeading,
       title: title,
       titleText: titleText,
@@ -218,7 +218,7 @@ class SBBCheckboxListItem extends StatelessWidget {
 /// See also:
 ///
 ///  * [SBBCheckboxListItem], for the standard variant without borders.
-///  * [SBBListItemV5Boxed], the underlying boxed list item widget.
+///  * [SBBListItemBoxed], the underlying boxed list item widget.
 ///  * [SBBContentBox], which provides the border and padding styling.
 class SBBCheckboxListItemBoxed extends SBBCheckboxListItem {
   const SBBCheckboxListItemBoxed({

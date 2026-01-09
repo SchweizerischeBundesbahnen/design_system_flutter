@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
-/// A convenience wrapper that combines [SBBListItemV5] with [SBBSwitch] as the trailing widget.
+/// A convenience wrapper that combines [SBBListItem] with [SBBSwitch] as the trailing widget.
 ///
 /// This widget automatically handles switch state changes and positions the switch
 /// as the trailing content of the list item.
 ///
 /// The same result can be achieved by manually placing an [SBBSwitch] in the
-/// [SBBListItemV5.trailing] parameter.
+/// [SBBListItem.trailing] parameter.
 ///
 /// ## Sample code
 ///
@@ -28,7 +28,7 @@ import '../../sbb_design_system_mobile.dart';
 /// See also:
 ///
 ///  * [SBBSwitch], the switch widget used as trailing content.
-///  * [SBBListItemV5], the underlying list item widget.
+///  * [SBBListItem], the underlying list item widget.
 ///  * [SBBSwitchListItemBoxed], a boxed variant of this widget.
 class SBBSwitchListItem extends StatelessWidget {
   const SBBSwitchListItem({
@@ -77,7 +77,7 @@ class SBBSwitchListItem extends StatelessWidget {
 
   /// {@macro sbb_design_system.list_item.onLongPress}
   ///
-  /// Within the [SBBSwitchListItem], the [SBBListItemV5.onTap] calls the [onChanged] callback with the
+  /// Within the [SBBSwitchListItem], the [SBBListItem.onTap] calls the [onChanged] callback with the
   /// updated value.
   final GestureLongPressCallback? onLongPress;
 
@@ -112,14 +112,14 @@ class SBBSwitchListItem extends StatelessWidget {
   final double? subtitleVerticalGapHeight;
 
   /// {@macro sbb_design_system.list_item.style}
-  final SBBListItemV5Style? listItemStyle;
+  final SBBListItemStyle? listItemStyle;
 
   /// {@macro sbb_design_system.switch.value}
   final bool value;
 
   /// {@macro sbb_design_system.switch.onChanged}
   ///
-  /// Within the [SBBSwitchListItem], the [SBBListItemV5.onTap] calls the [onChanged] callback with the
+  /// Within the [SBBSwitchListItem], the [SBBListItem.onTap] calls the [onChanged] callback with the
   /// updated value.
   final ValueChanged<bool>? onChanged;
 
@@ -140,7 +140,7 @@ class SBBSwitchListItem extends StatelessWidget {
       semanticLabel: switchSemanticLabel,
     );
 
-    return SBBListItemV5(
+    return SBBListItem(
       leading: leading,
       leadingIconData: leadingIconData,
       title: title,
@@ -189,7 +189,7 @@ class SBBSwitchListItem extends StatelessWidget {
 /// See also:
 ///
 ///  * [SBBSwitchListItem], for the standard variant without borders.
-///  * [SBBListItemV5Boxed], the underlying boxed list item widget.
+///  * [SBBListItemBoxed], the underlying boxed list item widget.
 ///  * [SBBContentBox], which provides the border and padding styling.
 class SBBSwitchListItemBoxed extends SBBSwitchListItem {
   const SBBSwitchListItemBoxed({

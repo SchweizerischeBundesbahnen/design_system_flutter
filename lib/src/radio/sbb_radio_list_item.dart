@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
-/// A convenience wrapper that combines [SBBListItemV5] with [SBBRadio] as the leading widget.
+/// A convenience wrapper that combines [SBBListItem] with [SBBRadio] as the leading widget.
 ///
 /// This widget automatically handles radio selection state changes via an ancestor [SBBRadioGroup]
 /// and positions the radio button as the leading content of the list item. Additional leading
@@ -39,7 +39,7 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 ///
 ///  * [SBBRadio], the radio widget used as leading content.
 ///  * [SBBRadioGroup], which manages the selection state for a group of radio items.
-///  * [SBBListItemV5], the underlying list item widget.
+///  * [SBBListItem], the underlying list item widget.
 ///  * [SBBRadioListItemBoxed], a boxed variant of this widget.
 class SBBRadioListItem<T> extends StatelessWidget {
   const SBBRadioListItem({
@@ -97,7 +97,7 @@ class SBBRadioListItem<T> extends StatelessWidget {
 
   /// {@macro sbb_design_system.list_item.onLongPress}
   ///
-  /// Within the [SBBRadioListItem], the [SBBListItemV5.onTap] calls the radio group's
+  /// Within the [SBBRadioListItem], the [SBBListItem.onTap] calls the radio group's
   /// onChanged callback with this item's [value].
   final GestureLongPressCallback? onLongPress;
 
@@ -139,7 +139,7 @@ class SBBRadioListItem<T> extends StatelessWidget {
   final double leadingRadioGapWidth;
 
   /// {@macro sbb_design_system.list_item.style}
-  final SBBListItemV5Style? listItemStyle;
+  final SBBListItemStyle? listItemStyle;
 
   /// {@macro sbb_design_system.radio.value}
   final T value;
@@ -181,7 +181,7 @@ class SBBRadioListItem<T> extends StatelessWidget {
       );
     }
 
-    return SBBListItemV5(
+    return SBBListItem(
       leading: resolvedLeading,
       title: title,
       titleText: titleText,
@@ -215,7 +215,7 @@ class SBBRadioListItem<T> extends StatelessWidget {
 /// See also:
 ///
 ///  * [SBBRadioListItem], for the standard variant without borders.
-///  * [SBBListItemV5Boxed], the underlying boxed list item widget.
+///  * [SBBListItemBoxed], the underlying boxed list item widget.
 ///  * [SBBContentBox], which provides the border and padding styling.
 class SBBRadioListItemBoxed<T> extends SBBRadioListItem<T> {
   const SBBRadioListItemBoxed({

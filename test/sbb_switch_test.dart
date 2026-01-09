@@ -92,7 +92,7 @@ class SwitchTest extends StatelessWidget {
                 titleText: 'With Link',
                 onChanged: (value) {},
                 links: [
-                  SBBListItemV5(
+                  SBBListItem(
                     titleText: 'Link Text',
                     onTap: () => {},
                     trailingIconData: SBBIcons.chevron_small_right_small,
@@ -104,12 +104,12 @@ class SwitchTest extends StatelessWidget {
                 titleText: 'With 2 Links',
                 onChanged: (value) {},
                 links: [
-                  SBBListItemV5(
+                  SBBListItem(
                     titleText: 'Link Text 1',
                     onTap: () => {},
                     trailingIconData: SBBIcons.chevron_small_right_small,
                   ),
-                  SBBListItemV5(
+                  SBBListItem(
                     titleText: 'Link Text 2',
                     onTap: () => {},
                     trailingIconData: SBBIcons.chevron_small_right_small,
@@ -121,7 +121,7 @@ class SwitchTest extends StatelessWidget {
                 titleText: 'Disabled, Link enabled',
                 onChanged: null,
                 links: [
-                  SBBListItemV5(
+                  SBBListItem(
                     titleText: 'Link Text',
                     onTap: () => {},
                     trailingIconData: SBBIcons.chevron_small_right_small,
@@ -133,7 +133,7 @@ class SwitchTest extends StatelessWidget {
                 titleText: 'Only Link disabled',
                 onChanged: (value) {},
                 links: [
-                  SBBListItemV5(
+                  SBBListItem(
                     titleText: 'Link Text',
                     trailingIconData: SBBIcons.chevron_small_right_small,
                   ),
@@ -144,7 +144,7 @@ class SwitchTest extends StatelessWidget {
                 titleText: 'All disabled',
                 onChanged: null,
                 links: [
-                  SBBListItemV5(
+                  SBBListItem(
                     titleText: 'Link Text',
                     trailingIconData: SBBIcons.chevron_small_right_small,
                   ),

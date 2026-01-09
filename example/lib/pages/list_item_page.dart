@@ -26,61 +26,61 @@ class ListItemPage extends StatelessWidget {
               SBBListHeader('Listed'),
               SBBContentBox(
                 child: Column(
-                  children: SBBListItemV5.divideListItems(
+                  children: SBBListItem.divideListItems(
                     context: context,
                     items: [
-                      SBBListItemV5(
+                      SBBListItem(
                         titleText: 'Default',
                         leadingIconData: SBBIcons.dog_small,
                         onTap: () => sbbToast.show(title: 'Default'),
                       ),
-                      SBBListItemV5(
+                      SBBListItem(
                         titleText: 'Ohne Icon',
                         onTap: () => sbbToast.show(title: 'Ohne Icon'),
                       ),
-                      SBBListItemV5(
+                      SBBListItem(
                         titleText: 'Mit Subtext',
                         subtitleText: loremIpsum,
                         leadingIconData: SBBIcons.dog_small,
                         onTap: () => sbbToast.show(title: 'Mit Subtext'),
                       ),
-                      SBBListItemV5(
+                      SBBListItem(
                         titleText: 'Mit Icon Rechts',
                         leadingIconData: SBBIcons.dog_small,
                         trailingIconData: SBBIcons.chevron_small_right_small,
                         onTap: () => sbbToast.show(title: 'Mit Icon Rechts'),
                       ),
-                      SBBListItemV5(
+                      SBBListItem(
                         titleText: 'Mit Button',
                         leadingIconData: SBBIcons.dog_small,
                         trailing: SBBTertiaryButtonSmall(onPressed: () {}, iconData: SBBIcons.dog_small),
-                        padding: SBBListItemV5Style.defaultPadding.copyWith(right: 8),
+                        padding: SBBListItemStyle.defaultPadding.copyWith(right: 8),
                         onTap: () => sbbToast.show(title: 'Mit Button'),
                       ),
-                      SBBListItemV5(
+                      SBBListItem(
                         titleText: 'Mit Status Nachricht',
                         leadingIconData: SBBIcons.dog_small,
                         subtitle: SBBStatus.information(labelText: 'Lorem ipsum sit dolor amet unt.'),
                         onTap: () => sbbToast.show(title: 'Mit Status Nachricht'),
                       ),
-                      SBBListItemV5(
+                      SBBListItem(
                         title: Text('Mit Links'),
                         leadingIconData: SBBIcons.globe_small,
                         onTap: () => sbbToast.show(title: 'Mit Links'),
                         links: [
-                          SBBListItemV5(
+                          SBBListItem(
                             titleText: "Link",
                             trailingIconData: SBBIcons.chevron_small_right_small,
                             onTap: () => sbbToast.show(title: 'Link'),
                           ),
-                          SBBListItemV5(
+                          SBBListItem(
                             titleText: "Link 2",
                             trailingIconData: SBBIcons.chevron_small_right_small,
                             onTap: () => sbbToast.show(title: 'Link 2'),
                           ),
                         ],
                       ),
-                      SBBListItemV5(
+                      SBBListItem(
                         titleText: 'Loading',
                         leadingIconData: SBBIcons.dog_small,
                         onTap: () => sbbToast.show(title: 'Loading'),
@@ -95,28 +95,28 @@ class ListItemPage extends StatelessWidget {
               Column(
                 spacing: sbbDefaultSpacing * .5,
                 children: [
-                  SBBListItemV5Boxed(
+                  SBBListItemBoxed(
                     titleText: 'Default',
                     leadingIconData: SBBIcons.dog_small,
                     onTap: () => sbbToast.show(title: 'Default'),
                   ),
-                  SBBListItemV5Boxed(
+                  SBBListItemBoxed(
                     titleText: 'Ohne Icon',
                     onTap: () => sbbToast.show(title: 'Ohne Icon'),
                   ),
-                  SBBListItemV5Boxed(
+                  SBBListItemBoxed(
                     titleText: 'Mit Subtext',
                     subtitleText: loremIpsum,
                     leadingIconData: SBBIcons.dog_small,
                     onTap: () => sbbToast.show(title: 'Mit Subtext'),
                   ),
-                  SBBListItemV5Boxed(
+                  SBBListItemBoxed(
                     titleText: 'Mit Icon Rechts',
                     leadingIconData: SBBIcons.dog_small,
                     trailingIconData: SBBIcons.chevron_small_right_small,
                     onTap: () => sbbToast.show(title: 'Mit Icon Rechts'),
                   ),
-                  SBBListItemV5Boxed(
+                  SBBListItemBoxed(
                     titleText: 'Loading',
                     leadingIconData: SBBIcons.dog_small,
                     onTap: () => sbbToast.show(title: 'Loading'),

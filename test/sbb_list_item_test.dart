@@ -17,42 +17,42 @@ void main() {
           margin: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing / 2, vertical: sbbDefaultSpacing),
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            children: SBBListItemV5.divideListItems(
+            children: SBBListItem.divideListItems(
               context: context,
               items: [
-                SBBListItemV5(
+                SBBListItem(
                   key: pressableKey,
                   titleText: 'Default',
                   leadingIconData: SBBIcons.dog_small,
                   onTap: () {},
                 ),
-                SBBListItemV5(titleText: 'Disabled', leadingIconData: SBBIcons.dog_small, enabled: false),
-                SBBListItemV5(titleText: 'With trailing', trailingIconData: SBBIcons.dog_small, onTap: () {}),
-                SBBListItemV5(titleText: 'With subtitle', subtitleText: loremIpsum, onTap: () {}),
-                SBBListItemV5(
+                SBBListItem(titleText: 'Disabled', leadingIconData: SBBIcons.dog_small, enabled: false),
+                SBBListItem(titleText: 'With trailing', trailingIconData: SBBIcons.dog_small, onTap: () {}),
+                SBBListItem(titleText: 'With subtitle', subtitleText: loremIpsum, onTap: () {}),
+                SBBListItem(
                   titleText: 'Ellipse! ' * 20,
                   subtitleText: 'The title will be clamped to one line',
                   onTap: () {},
                 ),
-                SBBListItemV5(
+                SBBListItem(
                   titleText: 'With links!',
                   links: [
-                    SBBListItemV5(
+                    SBBListItem(
                       titleText: 'Link 1',
                       trailingIconData: SBBIcons.chevron_small_right_small,
                     ),
                   ],
                   onTap: () {},
                 ),
-                SBBListItemV5(
+                SBBListItem(
                   title: Container(color: SBBColors.platinum, child: Text('Custom!')),
                   leading: Container(height: 20, width: 30, color: SBBColors.red),
                   onTap: () {},
                 ),
-                SBBListItemV5(
+                SBBListItem(
                   onTap: null,
                   titleText: 'Custom Style',
-                  style: SBBListItemV5Style(backgroundColor: WidgetStatePropertyAll(SBBColors.silver)),
+                  style: SBBListItemStyle(backgroundColor: WidgetStatePropertyAll(SBBColors.silver)),
                 ),
               ],
             ).toList(),

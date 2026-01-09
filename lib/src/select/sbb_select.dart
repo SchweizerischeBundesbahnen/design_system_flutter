@@ -162,7 +162,7 @@ class SBBSelect<T> extends StatelessWidget {
                     },
                     groupValue: selectedValue,
                     child: Column(
-                      children: SBBListItemV5.divideListItems(
+                      children: SBBListItem.divideListItems(
                         context: context,
                         items: items.asMap().entries.map((entry) {
                           return SBBRadioListItem<T>(
@@ -243,7 +243,7 @@ class SBBMultiSelect<T> extends StatefulWidget {
                     sbbDefaultSpacing,
                   ),
                   child: Column(
-                    children: SBBListItemV5.divideListItems(
+                    children: SBBListItem.divideListItems(
                       context: context,
                       items: items.asMap().entries.map(
                         (entry) {
