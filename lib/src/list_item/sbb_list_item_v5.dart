@@ -843,8 +843,8 @@ class _RenderSBBListItemV5 extends RenderBox with SlottedContainerRenderObjectMi
     // Find the maximum height between leading and title for center alignment
     double maxTitleRowHeight = math.max(leadingHeight, titleHeight);
 
-    // Fix the title height to minInnerHeight only if no subtitle and trailingSize.height is smaller than minInnerHeight
-    if (subtitleSize == null && (trailingSize?.height ?? 0.0) < SBBListItemV5Style.minInnerHeight) {
+    // Fix the title height to minInnerHeight only if no subtitle
+    if (subtitleSize == null) {
       maxTitleRowHeight = math.max(maxTitleRowHeight, SBBListItemV5Style.minInnerHeight);
     }
 
