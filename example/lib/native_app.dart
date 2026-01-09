@@ -128,7 +128,7 @@ class MyApp extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: const <Widget>[
                             _DemoEntry('Autocompletion', AutocompletionPage()),
-                            _DemoEntry('Group', ContainerPage()),
+                            _DemoEntry('Container', ContainerPage()),
                             _DemoEntry('Header', HeaderPage()),
                             _DemoEntry('Headerbox', HeaderBoxPage()),
                             _DemoEntry('Modal', ModalPage()),

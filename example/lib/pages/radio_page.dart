@@ -77,7 +77,7 @@ class RadioPageState extends State<RadioPage> {
               ),
               const SizedBox(height: sbbDefaultSpacing),
               SBBListHeader('Radio List Item - ListView'),
-              SBBGroup(
+              SBBContentBox(
                 child: _pageEnabled
                     ? SBBRadioGroup<int>(
                         groupValue: _listItemGroupValue,
@@ -157,20 +157,20 @@ class RadioPageState extends State<RadioPage> {
     return Column(
       spacing: sbbDefaultSpacing * 0.5,
       children: [
-        SBBGroup(
+        SBBContentBox(
           child: SBBRadioListItem<int>.boxed(
             value: 1,
             label: 'Label',
           ),
         ),
-        SBBGroup(
+        SBBContentBox(
           child: SBBRadioListItem<int>.boxed(
             value: 2,
             label: 'Leading Icon',
             leadingIcon: SBBIcons.alarm_clock_small,
           ),
         ),
-        SBBGroup(
+        SBBContentBox(
           child: SBBRadioListItem<int>.boxed(
             value: 3,
             label: 'Leading and Trailing Icon',
@@ -178,7 +178,7 @@ class RadioPageState extends State<RadioPage> {
             trailingIcon: SBBIcons.dog_small,
           ),
         ),
-        SBBGroup(
+        SBBContentBox(
           child: SBBRadioListItem<int>.boxed(
             value: 4,
             label: 'Button',
@@ -186,7 +186,7 @@ class RadioPageState extends State<RadioPage> {
             onCallToAction: () => sbbToast.show(title: 'Button'),
           ),
         ),
-        SBBGroup(
+        SBBContentBox(
           child: SBBRadioListItem<int>.custom(
             value: 5,
             label: 'Custom trailing Widget',
@@ -197,7 +197,7 @@ class RadioPageState extends State<RadioPage> {
             isLastElement: false,
           ),
         ),
-        SBBGroup(
+        SBBContentBox(
           child: SBBRadioListItem<int>.boxed(
             value: 6,
             label: 'Multiline Label with\nSecondary Label',
@@ -206,7 +206,7 @@ class RadioPageState extends State<RadioPage> {
                 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut convallis leo et metus semper hendrerit. Duis nec nunc a ligula cursus vulputate. Donec sed elit ultricies, euismod erat et, eleifend augue.',
           ),
         ),
-        SBBGroup(
+        SBBContentBox(
           child: SBBRadioListItem<int>.boxed(
             value: 7,
             label: 'Loading',
