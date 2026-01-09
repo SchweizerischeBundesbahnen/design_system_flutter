@@ -36,9 +36,9 @@ class _FloatingPageState extends State<FloatingPage> {
             ),
             SliverList.builder(
               itemCount: 60,
-              itemBuilder: (context, index) => SBBListItem(
-                title: 'Item $index',
-                onPressed: () {
+              itemBuilder: (context, index) => SBBListItemV5(
+                titleText: 'Item $index',
+                onTap: () {
                   FocusScope.of(context).unfocus();
                   sbbToast.show(title: 'Pressed Item $index', bottom: sbbDefaultSpacing * 6);
                 },
@@ -210,7 +210,7 @@ class _FloatingPageState extends State<FloatingPage> {
 
   List<Widget> _additionalRows(BuildContext context) {
     return [
-      SBBListItem(title: 'Static with progress bar', onPressed: null),
+      SBBListItemV5(titleText: 'Static with progress bar', onTap: null),
       SBBContractionListener(
         builder: (context, state, _) => FractionallySizedBox(
           widthFactor: state.contractionValue,
@@ -223,14 +223,14 @@ class _FloatingPageState extends State<FloatingPage> {
       ),
       SBBContractible.custom(
         behavior: SBBContractionBehavior.center,
-        child: Center(child: SBBListItem(title: 'Stay center', onPressed: null)),
+        child: Center(child: SBBListItemV5(titleText: 'Stay center', onTap: null)),
       ),
       SBBContractible(
         builder: (context, state, child) => Transform.translate(
           offset: Offset((1.0 - state.expansionValue) * 30, 0.0),
           child: child,
         ),
-        child: SBBListItem(title: 'React to progress', onPressed: null),
+        child: SBBListItemV5(titleText: 'React to progress', onTap: null),
       ),
     ];
   }

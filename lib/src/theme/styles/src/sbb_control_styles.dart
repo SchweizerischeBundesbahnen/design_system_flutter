@@ -11,7 +11,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     this.textField,
     this.segmentedButton,
     this.redSegmentedButton,
-    this.listItem,
     this.selectLabel,
     this.headerBackgroundColor,
     this.headerButtonBackgroundColorHighlighted,
@@ -31,7 +30,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   });
 
   factory SBBControlStyles.$default({required SBBBaseStyle baseStyle}) => SBBControlStyles(
-    listItem: SBBListItemStyle.$default(baseStyle: baseStyle),
     slider: SBBSliderStyle.$default(baseStyle: baseStyle),
     checkbox: SBBControlStyle.$default(baseStyle: baseStyle),
     pagination: SBBPaginationStyle.$default(baseStyle: baseStyle),
@@ -70,7 +68,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   final SBBTextFieldStyle? textField;
   final SBBSegmentedButtonStyle? segmentedButton;
   final SBBSegmentedButtonStyle? redSegmentedButton;
-  final SBBListItemStyle? listItem;
   final SBBTextStyle? selectLabel;
   final SBBSliderStyle? slider;
   final SBBPaginationStyle? pagination;
@@ -116,7 +113,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     SBBTextFieldStyle? textField,
     SBBSegmentedButtonStyle? segmentedButton,
     SBBSegmentedButtonStyle? redSegmentedButton,
-    SBBListItemStyle? listItem,
     SBBTextStyle? selectLabel,
     Color? headerBackgroundColor,
     Color? headerButtonBackgroundColorHighlighted,
@@ -141,7 +137,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     textField: textField ?? this.textField,
     segmentedButton: segmentedButton ?? this.segmentedButton,
     redSegmentedButton: redSegmentedButton ?? this.redSegmentedButton,
-    listItem: listItem ?? this.listItem,
     selectLabel: selectLabel ?? this.selectLabel,
     headerBackgroundColor: headerBackgroundColor ?? this.headerBackgroundColor,
     headerButtonBackgroundColorHighlighted:
@@ -172,7 +167,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
       textField: textField?.lerp(other.textField, t),
       segmentedButton: segmentedButton?.lerp(other.segmentedButton, t),
       redSegmentedButton: redSegmentedButton?.lerp(other.redSegmentedButton, t),
-      listItem: listItem?.lerp(other.listItem, t),
       selectLabel: selectLabel?.lerp(other.selectLabel, t),
       headerBackgroundColor: Color.lerp(headerBackgroundColor, other.headerBackgroundColor, t),
       headerButtonBackgroundColorHighlighted: Color.lerp(
@@ -208,7 +202,6 @@ extension SBBControlStylesExtension on SBBControlStyles? {
           textField: this!.textField.merge(other?.textField),
           segmentedButton: this!.segmentedButton.merge(other?.segmentedButton),
           redSegmentedButton: this!.redSegmentedButton.merge(other?.redSegmentedButton),
-          listItem: this!.listItem.merge(other?.listItem),
           selectLabel: this!.selectLabel.merge(other?.selectLabel),
           picker: this!.picker.merge(other?.picker),
           headerBackgroundColor: this!.headerBackgroundColor ?? other?.headerBackgroundColor,

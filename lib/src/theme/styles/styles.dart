@@ -6,7 +6,6 @@ export 'src/sbb_basic_control_style.dart';
 export 'src/sbb_control_style.dart';
 export 'src/sbb_control_styles.dart';
 export 'src/sbb_headerbox_style.dart';
-export 'src/sbb_list_item_style.dart';
 export 'src/sbb_pagination_style.dart';
 export 'src/sbb_picker_style.dart';
 export 'src/sbb_segmented_button_inner_style.dart';

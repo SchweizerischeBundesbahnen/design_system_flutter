@@ -53,10 +53,12 @@ class SBBSelect<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = SBBControlStyles.of(context);
+    final baseStyle = SBBBaseStyle.of(context);
     final enabled = onChanged != null;
     return InkWell(
-      focusColor: style.listItem?.backgroundColorHighlighted,
-      hoverColor: style.listItem?.backgroundColorHighlighted,
+      /// TODO: smallTrogdor - rm and move to own style of overhauled SBBTextField
+      focusColor: baseStyle.themeValue(SBBColors.platinum, SBBColors.midnight),
+      hoverColor: baseStyle.themeValue(SBBColors.platinum, SBBColors.midnight),
       onTap: enabled
           ? () => showMenu(
               context: context,
@@ -302,9 +304,11 @@ class _SBBMultiSelectState<T> extends State<SBBMultiSelect<T>> {
   @override
   Widget build(BuildContext context) {
     final enabled = widget.onChanged != null;
+    final baseStyle = SBBBaseStyle.of(context);
     return InkWell(
-      focusColor: style.listItem?.backgroundColorHighlighted,
-      hoverColor: style.listItem?.backgroundColorHighlighted,
+      /// TODO: smallTrogdor - rm and move to own style
+      focusColor: baseStyle.themeValue(SBBColors.platinum, SBBColors.midnight),
+      hoverColor: baseStyle.themeValue(SBBColors.platinum, SBBColors.midnight),
       onTap: enabled
           ? () {
               SBBMultiSelect.showMenu<T>(
