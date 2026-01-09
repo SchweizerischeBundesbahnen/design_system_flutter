@@ -90,34 +90,38 @@ class _PickerPageState extends State<InputTriggerPage> {
                 SBBTextField(controller: hintController, labelText: 'Hint'),
                 SBBTextField(controller: valueController, labelText: 'Value'),
                 SBBTextField(controller: errorController, labelText: 'Error'),
-                SBBSwitchListItem(
-                  title: 'Enabled',
-                  value: enabled,
-                  onChanged: (enabled) {
-                    setState(() {
-                      this.enabled = enabled;
-                    });
-                  },
-                ),
-                SBBSwitchListItem(
-                  title: 'Prefix Icon',
-                  value: showPrefixIcon,
-                  onChanged: (enabled) {
-                    setState(() {
-                      showPrefixIcon = enabled;
-                    });
-                  },
-                ),
-                SBBSwitchListItem(
-                  title: 'Suffix Icon',
-                  value: showSuffixIcon,
-                  onChanged: (enabled) {
-                    setState(() {
-                      showSuffixIcon = enabled;
-                    });
-                  },
-                  isLastElement: true,
-                ),
+                ...SBBListItemV5.divideListItems(
+                  context: context,
+                  items: [
+                    SBBSwitchListItem(
+                      titleText: 'Enabled',
+                      value: enabled,
+                      onChanged: (enabled) {
+                        setState(() {
+                          this.enabled = enabled;
+                        });
+                      },
+                    ),
+                    SBBSwitchListItem(
+                      titleText: 'Prefix Icon',
+                      value: showPrefixIcon,
+                      onChanged: (enabled) {
+                        setState(() {
+                          showPrefixIcon = enabled;
+                        });
+                      },
+                    ),
+                    SBBSwitchListItem(
+                      titleText: 'Suffix Icon',
+                      value: showSuffixIcon,
+                      onChanged: (enabled) {
+                        setState(() {
+                          showSuffixIcon = enabled;
+                        });
+                      },
+                    ),
+                  ],
+                ).toList(growable: false),
               ],
             ),
           ),
