@@ -51,69 +51,78 @@ class CheckboxTest extends StatelessWidget {
       const SBBListHeader('CheckboxItem - List'),
       SBBContentBox(
         child: Column(
-          children: [
-            SBBCheckboxListItem(value: value1, label: 'Default', onChanged: (value) {}),
-            SBBCheckboxListItem(value: value2, label: 'Tristate', tristate: true, onChanged: (value) {}),
-            SBBCheckboxListItem(
-              value: false,
-              label: 'Leading Icon',
-              onChanged: (value) {},
-              leadingIcon: SBBIcons.alarm_clock_small,
-            ),
-            SBBCheckboxListItem(
-              value: false,
-              label: 'Trailing Icon',
-              onChanged: (value) {},
-              trailingIcon: SBBIcons.dog_small,
-            ),
-            SBBCheckboxListItem(
-              value: false,
-              label: 'Leading and Trailing Icon',
-              onChanged: (value) {},
-              leadingIcon: SBBIcons.alarm_clock_small,
-              trailingIcon: SBBIcons.dog_small,
-            ),
-            SBBCheckboxListItem(
-              value: false,
-              label: 'Leading and Trailing Icon (Disabled)',
-              onChanged: null,
-              leadingIcon: SBBIcons.alarm_clock_small,
-              trailingIcon: SBBIcons.dog_small,
-            ),
-            SBBCheckboxListItem(
-              value: false,
-              label: 'Button',
-              onChanged: (value) {},
-              onCallToAction: () {},
-              trailingIcon: SBBIcons.circle_information_small_small,
-            ),
-            SBBCheckboxListItem(
-              value: value3,
-              label: 'Leading Icon and Button',
-              onChanged: (value) {},
-              onCallToAction: () {},
-              leadingIcon: SBBIcons.alarm_clock_small,
-              trailingIcon: SBBIcons.circle_information_small_small,
-            ),
-            SBBCheckboxListItem(
-              value: value3,
-              label: 'Leading Icon and Button (Disabled)',
-              onChanged: null,
-              onCallToAction: () {},
-              leadingIcon: SBBIcons.alarm_clock_small,
-              trailingIcon: SBBIcons.circle_information_small_small,
-            ),
-            SBBCheckboxListItem.custom(
-              value: false,
-              label: 'Custom trailing Widget',
-              isLastElement: true,
-              onChanged: (value) {},
-              trailingWidget: const Padding(
-                padding: EdgeInsets.only(top: sbbDefaultSpacing * 0.75, right: sbbDefaultSpacing),
-                child: Text('CHF 0.99'),
+          children: SBBListItem.divideListItems(
+            context: context,
+            items: [
+              SBBCheckboxListItem(value: value1, titleText: 'Default', onChanged: (value) {}),
+              SBBCheckboxListItem(value: value2, titleText: 'Tristate', tristate: true, onChanged: (value) {}),
+              SBBCheckboxListItem(
+                value: false,
+                titleText: 'Leading Icon',
+                onChanged: (value) {},
+                leadingIconData: SBBIcons.alarm_clock_small,
               ),
-            ),
-          ],
+              SBBCheckboxListItem(
+                value: false,
+                titleText: 'Trailing Icon',
+                onChanged: (value) {},
+                trailingIconData: SBBIcons.dog_small,
+              ),
+              SBBCheckboxListItem(
+                value: false,
+                titleText: 'Leading and Trailing Icon',
+                onChanged: (value) {},
+                leadingIconData: SBBIcons.alarm_clock_small,
+                trailingIconData: SBBIcons.dog_small,
+              ),
+              SBBCheckboxListItem(
+                value: false,
+                titleText: 'Leading and Trailing Icon (Disabled)',
+                enabled: false,
+                onChanged: (_) {},
+                leadingIconData: SBBIcons.alarm_clock_small,
+                trailingIconData: SBBIcons.dog_small,
+              ),
+              SBBCheckboxListItem(
+                value: false,
+                titleText: 'Button',
+                onChanged: (_) {},
+                padding: SBBListItemStyle.defaultPadding.copyWith(right: 8),
+                trailing: SBBTertiaryButtonSmall(
+                  iconData: SBBIcons.circle_information_small_small,
+                  onPressed: () {},
+                ),
+              ),
+              SBBCheckboxListItem(
+                value: value3,
+                titleText: 'Leading Icon and Button',
+                onChanged: (_) {},
+                padding: SBBListItemStyle.defaultPadding.copyWith(right: 8),
+                trailing: SBBTertiaryButtonSmall(
+                  iconData: SBBIcons.circle_information_small_small,
+                  onPressed: () {},
+                ),
+                leadingIconData: SBBIcons.alarm_clock_small,
+              ),
+              SBBCheckboxListItem(
+                value: value3,
+                onChanged: null,
+                titleText: 'Leading Icon and Button (Disabled)',
+                padding: SBBListItemStyle.defaultPadding.copyWith(right: 8),
+                trailing: SBBTertiaryButtonSmall(
+                  iconData: SBBIcons.circle_information_small_small,
+                  onPressed: null,
+                ),
+                leadingIconData: SBBIcons.alarm_clock_small,
+              ),
+              SBBCheckboxListItem(
+                value: false,
+                titleText: 'Custom Trailing',
+                onChanged: (value) {},
+                trailing: Text('CHF 0.99'),
+              ),
+            ],
+          ).toList(growable: false),
         ),
       ),
       const SizedBox(height: sbbDefaultSpacing),
@@ -121,33 +130,29 @@ class CheckboxTest extends StatelessWidget {
       Column(
         spacing: sbbDefaultSpacing * .5,
         children: [
-          SBBContentBox(
-            child: SBBCheckboxListItem.boxed(value: value1, label: 'Default', onChanged: (value) {}),
+          SBBCheckboxListItemBoxed(value: value1, titleText: 'Default', onChanged: (value) {}),
+          SBBCheckboxListItemBoxed(
+            value: value2,
+            titleText: 'Tristate',
+            tristate: true,
+            onChanged: (value) {},
           ),
-          SBBContentBox(
-            child: SBBCheckboxListItem.boxed(value: value2, label: 'Tristate', tristate: true, onChanged: (value) {}),
-          ),
-          SBBContentBox(
-            child: SBBCheckboxListItem.boxed(
-              value: value3,
-              label: 'Leading Icon, Button (Disabled)',
-              onChanged: null,
-              onCallToAction: () {},
-              leadingIcon: SBBIcons.alarm_clock_small,
-              trailingIcon: SBBIcons.circle_information_small_small,
+          SBBCheckboxListItemBoxed(
+            value: value3,
+            titleText: 'Leading Icon and Button (Disabled)',
+            onChanged: null,
+            padding: SBBListItemStyle.defaultPadding.copyWith(right: 8),
+            trailing: SBBTertiaryButtonSmall(
+              iconData: SBBIcons.circle_information_small_small,
+              onPressed: null,
             ),
+            leadingIconData: SBBIcons.alarm_clock_small,
           ),
-          SBBContentBox(
-            child: SBBCheckboxListItem.custom(
-              value: false,
-              label: 'Custom trailing Widget',
-              isLastElement: true,
-              onChanged: (value) {},
-              trailingWidget: const Padding(
-                padding: EdgeInsets.only(top: sbbDefaultSpacing * 0.75, right: sbbDefaultSpacing),
-                child: Text('CHF 0.99'),
-              ),
-            ),
+          SBBCheckboxListItemBoxed(
+            value: false,
+            titleText: 'Custom Trailing',
+            onChanged: (value) {},
+            trailing: Text('CHF 0.99'),
           ),
         ],
       ),

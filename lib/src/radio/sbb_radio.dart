@@ -63,15 +63,20 @@ class SBBRadio<T> extends StatefulWidget {
     this.semanticLabel,
   });
 
+  /// {@template sbb_design_system.radio.value}
   /// The value represented by this radio button.
+  /// {@endtemplate}
   final T value;
 
+  /// {@template sbb_design_system.radio.style}
   /// Customizes this radio appearance.
   ///
   /// Non-null properties of this style override the corresponding
   /// properties in [SBBRadioThemeData.style] of the theme found in [context].
+  /// {@endtemplate}
   final SBBRadioStyle? style;
 
+  /// {@template sbb_design_system.radio.toggleable}
   /// Set to true if this radio button is allowed to be returned to an
   /// indeterminate state by selecting it again when selected.
   ///
@@ -79,6 +84,7 @@ class SBBRadio<T> extends StatefulWidget {
   /// will be called with null.
   ///
   /// Defaults to false.
+  /// {@endtemplate}
   final bool toggleable;
 
   /// {@macro flutter.widgets.Focus.focusNode}
@@ -93,11 +99,13 @@ class SBBRadio<T> extends StatefulWidget {
   /// a non-null [SBBRadioGroup.onChanged] callback.
   final bool? enabled;
 
+  /// {@template sbb_design_system.radio.semanticLabel}
   /// The semantic label for the [SBBRadio] that will be announced by screen readers.
   ///
   /// This is announced by assistive technologies (e.g TalkBack/VoiceOver).
   ///
   /// This label does not show in the UI.
+  /// {@endtemplate}
   final String? semanticLabel;
 
   @override
