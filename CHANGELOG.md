@@ -40,6 +40,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - BREAKING: `SBBChip`: renamed `onSelected` to `onChanged` - see [v5 migration guide]
 - BREAKING: `SBBChip`: renamed `badgeText` to `trailingText` - see [v5 migration guide]
 - BREAKING: `SBBRadio` needs an `SBBRadioGroup` ancestor for its group value and `onChanged` callback - see [v5 migration guide]
+- BREAKING: migrated to the new flexible `SBBListItem` implementation - see [v5 migration guide]
 - dropped support for Flutter SDK 3.32.x
 - BREAKING: removed default left margin on component `SBBTextField` (#402)
 - BREAKING: `SBBSwitch` is now styled with own `SBBSwitchStyle` from `SBBSwitchThemeData` - see [v5 migration guide]
