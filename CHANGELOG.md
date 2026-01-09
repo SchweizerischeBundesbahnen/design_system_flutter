@@ -46,6 +46,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ### Removed
 
+- Removed convenience methods `SBBTheme.allStates` and `SBBTheme.resolveStatesWith` - use methods on `WidgetStateProperty`
 - Removed `SBBIconButtonLarge`: use `SBBTertiaryButton` with only `iconData` or `icon` - see [v5 migration guide]
 - Removed `SBBIconButtonSmall`: use `SBBTertiaryButtonSmall` with only `iconData` or `icon` - see [v5 migration guide]
 - Removed `buttonStyles` argument in `SBBTheme`: use `primaryButtonTheme`, `secondaryButtonTheme` and

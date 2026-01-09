@@ -340,7 +340,7 @@ class _BaseTertiaryButton extends StatelessWidget {
 
     final buttonStyleSmall = ButtonStyle(
       fixedSize: WidgetStatePropertyAll<Size>(Size.fromHeight(SBBInternal.defaultButtonHeightSmall)),
-      minimumSize: SBBTheme.allStates(const Size(0, SBBInternal.defaultButtonHeightSmall)),
+      minimumSize: WidgetStatePropertyAll(const Size(0, SBBInternal.defaultButtonHeightSmall)),
     );
 
     return _baseOverridenByWidgetStyle(widgetStyle, buttonStyleSmall);
