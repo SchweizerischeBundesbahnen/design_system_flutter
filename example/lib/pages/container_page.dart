@@ -13,21 +13,27 @@ class ContainerPage extends StatelessWidget {
       width: double.infinity,
       child: Center(child: Text(text)),
     );
-    return ListView(
-      padding: const EdgeInsets.all(sbbDefaultSpacing),
-      children: <Widget>[
-        ThemeModeSegmentedButton(),
-        SizedBox(height: sbbDefaultSpacing * 2),
-        SBBContentBox(child: content('Default')),
-        SizedBox(height: sbbDefaultSpacing),
-        SBBContentBox(color: SBBColors.royal, child: content('Different Color')),
-        SizedBox(height: sbbDefaultSpacing),
-        SBBContentBox(
-          padding: EdgeInsets.symmetric(vertical: sbbDefaultSpacing),
-          child: content('Extra padding'),
+    return CustomScrollView(
+      slivers: [
+        SBBSliverHeaderbox.custom(child: ThemeModeSegmentedButton()),
+        SliverPadding(
+          padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5, vertical: sbbDefaultSpacing),
+          sliver: SliverList.list(
+            children: [
+              SBBListHeader('ContentBox'),
+              SBBContentBox(child: content('Default')),
+              SizedBox(height: sbbDefaultSpacing),
+              SBBContentBox(color: SBBColors.royal, child: content('Different Color')),
+              SizedBox(height: sbbDefaultSpacing),
+              SBBContentBox(
+                padding: EdgeInsets.symmetric(vertical: sbbDefaultSpacing),
+                child: content('Extra padding'),
+              ),
+              SizedBox(height: sbbDefaultSpacing),
+              SBBContentBox(margin: EdgeInsets.all(sbbDefaultSpacing * 4), child: content('Extra margin')),
+            ],
+          ),
         ),
-        SizedBox(height: sbbDefaultSpacing),
-        SBBContentBox(margin: EdgeInsets.all(sbbDefaultSpacing * 4), child: content('Extra margin')),
       ],
     );
   }
