@@ -160,19 +160,15 @@ class SBBSelect<T> extends StatelessWidget {
                     },
                     groupValue: selectedValue,
                     child: Column(
-                      children: items
-                          .asMap()
-                          .entries
-                          .map((entry) {
-                            final isLastElement = entry.key == items.length - 1;
-                            return SBBRadioListItem<T>(
-                              value: entry.value.value,
-                              allowMultilineLabel: allowMultilineLabel,
-                              label: entry.value.label,
-                              isLastElement: isLastElement,
-                            );
-                          })
-                          .toList(growable: false),
+                      children: SBBListItemV5.divideListItems(
+                        context: context,
+                        items: items.asMap().entries.map((entry) {
+                          return SBBRadioListItem<T>(
+                            value: entry.value.value,
+                            titleText: entry.value.label,
+                          );
+                        }),
+                      ).toList(growable: false),
                     ),
                   );
                 },

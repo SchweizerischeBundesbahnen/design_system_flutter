@@ -1,42 +1,34 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
-import '../../sbb_design_system_mobile.dart';
-import '../shared/bottom_loading_indicator.dart';
-
-const double _iconTopPadding = 10.0;
-const double _minListTileHeight = 44.0;
-
-/// SBB Radio Button List Item. Use according to documentation.
+/// A convenience wrapper that combines [SBBListItemV5] with [SBBRadio] as the leading widget.
 ///
-/// Use [SBBControlStyle].listItem to manipulate the style of this Widget.
+/// This widget automatically handles radio selection state changes via an ancestor [SBBRadioGroup]
+/// and positions the radio button as the leading content of the list item. Additional leading
+/// content can be provided via [leading] or [leadingIconData] and will be positioned after the
+/// radio button.
 ///
-/// This widget must be used within a [SBBRadioGroup] that manages the selection
-/// state for the group. The list item will automatically participate in the group's
-/// selection logic.
 ///
-/// ## Example
+/// ## Sample code
 ///
 /// ```dart
-/// SBBRadioGroup<SingingCharacter>(
-///   groupValue: _character,
-///   onChanged: (SingingCharacter? newValue) {
+/// SBBRadioGroup<String>(
+///   groupValue: _selectedValue,
+///   onChanged: (newValue) {
 ///     setState(() {
-///       _character = newValue;
+///       _selectedValue = newValue;
 ///     });
 ///   },
 ///   child: Column(
 ///     children: [
 ///       SBBRadioListItem(
-///         value: SingingCharacter.lafayette,
-///         label: 'Lafayette',
+///         value: 'option1',
+///         titleText: 'Option 1',
+///         subtitleText: 'Additional information',
 ///       ),
 ///       SBBRadioListItem(
-///         value: SingingCharacter.jefferson,
-///         label: 'Jefferson',
-///       ),
-///       SBBRadioListItem(
-///         value: SingingCharacter.washington,
-///         label: 'Washington',
+///         value: 'option2',
+///         titleText: 'Option 2',
 ///       ),
 ///     ],
 ///   ),
@@ -45,334 +37,217 @@ const double _minListTileHeight = 44.0;
 ///
 /// See also:
 ///
-/// * [SBBRadio], which is a part of this widget.
-/// * [SBBRadioGroup], which manages the selection state for a group of radio items.
-/// * [SBBSegmentedButton], a widget with semantics similar to [SBBRadio].
-/// * [SBBSlider], for selecting a value in a range.
-/// * [SBBCheckboxListItem], [SBBCheckbox] and [SBBSwitch], for toggling a
-/// particular value on or off.
-/// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/radiobutton>
+///  * [SBBRadio], the radio widget used as leading content.
+///  * [SBBRadioGroup], which manages the selection state for a group of radio items.
+///  * [SBBListItemV5], the underlying list item widget.
+///  * [SBBRadioListItemBoxed], a boxed variant of this widget.
 class SBBRadioListItem<T> extends StatelessWidget {
-  /// Creates a combination of a tile and a [SBBRadio].
-  ///
-  /// The [SBBRadioListItem] itself does not maintain any state. Instead, when the
-  /// state of the checkbox changes, the widget calls the [onChanged] callback.
-  /// Most widgets that use a checkbox will listen for the [onChanged] callback
-  /// and rebuild the checkbox tile with a new [value] to update the visual
-  /// appearance of the checkbox.
-  ///
-  /// The following arguments are required:
-  ///
-  /// * [value], the value represented by the radio of this list item
-  /// * [label], the primary text written on [SBBRadioListItem].
-  ///
-  /// Set the [isLastElement] true for the last item in a list to not show any Divider.
-  ///
-  /// The trailing widget of this widget is determined in the following way:
-  ///
-  /// * if no [trailingIcon] is given, no trailing Widget will be shown.
-  /// * if [onCallToAction] is not given, the trailingIcon will be shown as 24px sized [Icon].
-  /// * if [onCallToAction] is given, the trailingIcon will be wrapped in a [SBBIconButtonSmall].
-  ///
-  /// If [isLoading] is true, a bottom loading indicator will be displayed.
-  ///
-  /// Check the [SBBRadioListItem.custom] constructor for a complete customization.
-  SBBRadioListItem({
-    Key? key,
-    required T value,
-    required String label,
-    bool allowMultilineLabel = false,
-    String? secondaryLabel,
-    bool isLastElement = false,
-    IconData? leadingIcon,
-    IconData? trailingIcon,
-    VoidCallback? onCallToAction,
-    bool isLoading = false,
-    String? radioSemanticLabel,
-  }) : this.custom(
-         key: key,
-         value: value,
-         label: label,
-         allowMultilineLabel: allowMultilineLabel,
-         secondaryLabel: secondaryLabel,
-         isLastElement: isLastElement,
-         leadingIcon: leadingIcon,
-         trailingWidget: _optionallyButtonedTrailingIcon(trailingIcon, onCallToAction),
-         isLoading: isLoading,
-         radioSemanticLabel: radioSemanticLabel,
-       );
-
-  /// Use this in combination with a [SBBContentBox] to create a boxed variant of the [SBBRadioListItem].
-  ///
-  /// ```dart
-  /// SBBContentBox(
-  ///   child: SBBRadioGroup<SingingCharacter>(
-  ///     groupValue: _character,
-  ///     onChanged: (SingingCharacter? newValue) {
-  ///       setState(() {
-  ///         _character = newValue;
-  ///       });
-  ///     },
-  ///     child: Column(
-  ///       children: [
-  ///         SBBRadioListItem.boxed(
-  ///           value: SingingCharacter.lafayette,
-  ///           label: 'Lafayette',
-  ///         ),
-  ///         SBBRadioListItem.boxed(
-  ///           value: SingingCharacter.jefferson,
-  ///           label: 'Jefferson',
-  ///         ),
-  ///       ],
-  ///     ),
-  ///   ),
-  /// )
-  /// ```
-  SBBRadioListItem.boxed({
-    Key? key,
-    required T value,
-    required String label,
-    bool allowMultilineLabel = false,
-    String? secondaryLabel,
-    IconData? leadingIcon,
-    IconData? trailingIcon,
-    VoidCallback? onCallToAction,
-    bool isLoading = false,
-    String? radioSemanticLabel,
-  }) : this.custom(
-         key: key,
-         value: value,
-         label: label,
-         allowMultilineLabel: allowMultilineLabel,
-         secondaryLabel: secondaryLabel,
-         isLastElement: true,
-         leadingIcon: leadingIcon,
-         trailingWidget: _optionallyButtonedTrailingIcon(trailingIcon, onCallToAction),
-         isLoading: isLoading,
-         radioSemanticLabel: radioSemanticLabel,
-       );
-
-  const SBBRadioListItem.custom({
+  const SBBRadioListItem({
     super.key,
-    required this.value,
-    required this.label,
-    this.allowMultilineLabel = false,
-    this.secondaryLabel,
-    this.isLastElement = false,
-    this.leadingIcon,
-    this.trailingWidget,
+    this.leading,
+    this.leadingIconData,
+    this.title,
+    this.titleText,
+    this.subtitle,
+    this.subtitleText,
+    this.trailing,
+    this.trailingIconData,
+    this.onLongPress,
+    this.enabled = true,
     this.isLoading = false,
+    this.links,
+    this.focusNode,
+    this.autofocus = false,
+    this.enableFeedback = true,
+    this.padding,
+    this.trailingHorizontalGapWidth,
+    this.leadingHorizontalGapWidth,
+    this.subtitleVerticalGapHeight,
+    this.leadingRadioGapWidth = 8.0,
+    this.listItemStyle,
+    required this.value,
+    this.toggleable = false,
+    this.radioStyle,
     this.radioSemanticLabel,
   });
 
-  /// The value represented by this radio button.
-  final T value;
+  /// Additional leading widget displayed after the radio button.
+  final Widget? leading;
 
-  /// The primary label on the tile.
-  final String label;
+  /// Icon data for additional leading icon displayed after the radio button.
+  final IconData? leadingIconData;
 
-  /// Whether the [label] can wrap to a second line.
-  final bool allowMultilineLabel;
+  /// {@macro sbb_design_system.list_item.title}
+  final Widget? title;
 
-  /// The subtext displayed below the [label] over multiple lines.
-  final String? secondaryLabel;
+  /// {@macro sbb_design_system.list_item.titleText}
+  final String? titleText;
 
-  /// Whether to draw a [Divider] below the [SBBRadioListItem].
-  final bool isLastElement;
+  /// {@macro sbb_design_system.list_item.subtitle}
+  final Widget? subtitle;
 
-  /// The icon displayed in between the [SBBRadio] and the [label].
-  final IconData? leadingIcon;
+  /// {@macro sbb_design_system.list_item.subtitleText}
+  final String? subtitleText;
 
-  /// The widget displayed at the end of the tile.
-  final Widget? trailingWidget;
+  /// {@macro sbb_design_system.list_item.trailing}
+  final Widget? trailing;
 
-  /// Whether to display a BottomLoadingIndicator on the [SBBRadioListItem].
+  /// {@macro sbb_design_system.list_item.trailingIconData}
+  final IconData? trailingIconData;
+
+  /// {@macro sbb_design_system.list_item.onLongPress}
+  ///
+  /// Within the [SBBRadioListItem], the [SBBListItemV5.onTap] calls the radio group's
+  /// onChanged callback with this item's [value].
+  final GestureLongPressCallback? onLongPress;
+
+  /// {@macro sbb_design_system.list_item.enabled}
+  ///
+  /// If this is false, the radio button will also appear disabled.
+  final bool enabled;
+
+  /// {@macro sbb_design_system.list_item.isLoading}
   final bool isLoading;
 
-  /// The semantic label for the RadioButton that will be announced by screen readers.
+  /// {@macro sbb_design_system.list_item.links}
+  final Iterable<Widget>? links;
+
+  /// {@macro flutter.widgets.Focus.focusNode}
+  final FocusNode? focusNode;
+
+  /// {@macro flutter.widgets.Focus.autofocus}
+  final bool autofocus;
+
+  /// {@macro flutter.material.ListTile.enableFeedback}
+  final bool enableFeedback;
+
+  /// {@macro sbb_design_system.list_item.padding}
+  final EdgeInsetsGeometry? padding;
+
+  /// {@macro sbb_design_system.list_item.trailingHorizontalGapWidth}
+  final double? trailingHorizontalGapWidth;
+
+  /// {@macro sbb_design_system.list_item.leadingHorizontalGapWidth}
+  final double? leadingHorizontalGapWidth;
+
+  /// {@macro sbb_design_system.list_item.subtitleVerticalGapHeight}
+  final double? subtitleVerticalGapHeight;
+
+  /// Horizontal gap width between the radio button and additional leading content.
   ///
-  /// This is announced by assistive technologies (e.g TalkBack/VoiceOver).
-  ///
-  /// This label does not show in the UI.
+  /// Defaults to 8.0.
+  final double leadingRadioGapWidth;
+
+  /// {@macro sbb_design_system.list_item.style}
+  final SBBListItemV5Style? listItemStyle;
+
+  /// {@macro sbb_design_system.radio.value}
+  final T value;
+
+  /// {@macro sbb_design_system.radio.toggleable}
+  final bool toggleable;
+
+  /// {@macro sbb_design_system.radio.style}
+  final SBBRadioStyle? radioStyle;
+
+  /// {@macro sbb_design_system.radio.semanticLabel}
   final String? radioSemanticLabel;
 
   @override
   Widget build(BuildContext context) {
-    final style = SBBControlStyles.of(context).radioButton;
-    final radioGroup = RadioGroup.maybeOf<T>(context);
-    final isInteractive = radioGroup != null;
+    final radioRegistry = RadioGroup.maybeOf<T>(context);
+    final bool isInteractive = enabled && radioRegistry?.onChanged != null;
 
-    return MergeSemantics(
-      child: Material(
-        color: _resolveBackgroundColor(style, isInteractive),
-        child: Stack(
-          alignment: Alignment.bottomCenter,
-          children: [
-            ConstrainedBox(
-              constraints: const BoxConstraints(minHeight: _minListTileHeight),
-              child: InkWell(
-                onTap: isInteractive ? () => radioGroup.onChanged(value) : null,
-                splashColor: style?.listItem?.backgroundColorHighlighted,
-                focusColor: style?.listItem?.backgroundColorHighlighted,
-                highlightColor: SBBColors.transparent,
-                hoverColor: SBBColors.transparent,
-                child: Semantics(enabled: isInteractive, child: _radioTileBody(style, isInteractive)),
-              ),
-            ),
-            if (!isLastElement) const Divider(),
-            if (isLoading) BottomLoadingIndicator(),
-          ],
-        ),
+    Widget? leadingWidget = leading;
+    if (leadingWidget == null && leadingIconData != null) {
+      leadingWidget = Icon(leadingIconData);
+    }
+
+    Widget resolvedLeading = SBBRadio<T>(
+      value: value,
+      style: (radioStyle ?? const SBBRadioStyle()).copyWith(
+        tapTargetPadding: EdgeInsets.zero,
       ),
+      toggleable: toggleable,
+      enabled: isInteractive,
+      semanticLabel: radioSemanticLabel,
     );
-  }
 
-  Widget _radioTileBody(SBBControlStyle? style, bool isInteractive) {
-    final Color? resolvedIconColor = _resolveIconColor(style, isInteractive);
-
-    return IconTheme.merge(
-      data: IconThemeData(color: resolvedIconColor),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(width: sbbDefaultSpacing),
-          _NonHittableRadio<T>(
-            value: value,
-            isInteractive: isInteractive,
-            radioSemanticLabel: radioSemanticLabel,
-          ),
-          const SizedBox(width: sbbDefaultSpacing * 0.5),
-          if (leadingIcon != null) _LeadingIcon(leadingIcon: leadingIcon),
-          Expanded(
-            child: _TextBody(
-              label: label,
-              isInteractive: isInteractive,
-              style: style,
-              allowMultilineLabel: allowMultilineLabel,
-              secondaryLabel: secondaryLabel,
-            ),
-          ),
-          if (trailingWidget != null) trailingWidget!,
-        ],
-      ),
-    );
-  }
-
-  Color? _resolveBackgroundColor(SBBControlStyle? style, bool isInteractive) {
-    return isInteractive ? style?.listItem?.backgroundColor : style?.listItem?.backgroundColorDisabled;
-  }
-
-  Color? _resolveIconColor(SBBControlStyle? style, bool isInteractive) {
-    return isInteractive ? style?.listItem?.iconColor : style?.listItem?.iconColorDisabled;
-  }
-
-  static Widget? _optionallyButtonedTrailingIcon(
-    IconData? trailingIcon,
-    VoidCallback? onCallToAction,
-  ) {
-    if (trailingIcon == null) return null;
-
-    if (onCallToAction == null) {
-      return Padding(
-        padding: const EdgeInsets.only(top: _iconTopPadding, right: sbbDefaultSpacing),
-        child: Icon(trailingIcon, size: 24.0),
-      );
-    } else {
-      return Padding(
-        padding: const EdgeInsets.only(right: sbbDefaultSpacing * .5),
-        child: SBBTertiaryButtonSmall(iconData: trailingIcon, onPressed: onCallToAction),
+    if (leadingWidget != null) {
+      resolvedLeading = Row(
+        mainAxisSize: MainAxisSize.min,
+        spacing: leadingRadioGapWidth,
+        children: [resolvedLeading, leadingWidget],
       );
     }
-  }
-}
 
-class _TextBody extends StatelessWidget {
-  const _TextBody({
-    required this.label,
-    required bool isInteractive,
-    required this.style,
-    required this.allowMultilineLabel,
-    required this.secondaryLabel,
-  }) : _isInteractive = isInteractive;
-
-  final String label;
-  final bool _isInteractive;
-  final SBBControlStyle? style;
-  final bool allowMultilineLabel;
-  final String? secondaryLabel;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsetsDirectional.only(
-        top: sbbDefaultSpacing * 0.75,
-        bottom: sbbDefaultSpacing * 0.75,
-        end: sbbDefaultSpacing,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            label,
-            style: _isInteractive ? style?.listItem?.textStyle : style?.listItem?.textStyleDisabled,
-            maxLines: allowMultilineLabel ? null : 1,
-            overflow: allowMultilineLabel ? null : TextOverflow.ellipsis,
-          ),
-          if (secondaryLabel != null)
-            Padding(
-              padding: const EdgeInsetsDirectional.only(top: sbbDefaultSpacing * 0.25),
-              child: Text(
-                secondaryLabel!,
-                style: _isInteractive
-                    ? style?.listItem?.secondaryTextStyle
-                    : style?.listItem?.secondaryTextStyleDisabled,
-              ),
-            ),
-        ],
-      ),
+    return SBBListItemV5(
+      leading: resolvedLeading,
+      title: title,
+      titleText: titleText,
+      subtitle: subtitle,
+      subtitleText: subtitleText,
+      trailing: trailing,
+      trailingIconData: trailingIconData,
+      onTap: isInteractive ? () => radioRegistry!.onChanged(value) : null,
+      onLongPress: onLongPress,
+      enabled: enabled,
+      isLoading: isLoading,
+      links: links,
+      focusNode: focusNode,
+      autofocus: autofocus,
+      enableFeedback: enableFeedback,
+      padding: padding,
+      trailingHorizontalGapWidth: trailingHorizontalGapWidth,
+      leadingHorizontalGapWidth: leadingHorizontalGapWidth,
+      subtitleVerticalGapHeight: subtitleVerticalGapHeight,
+      style: listItemStyle,
     );
   }
 }
 
-class _LeadingIcon extends StatelessWidget {
-  const _LeadingIcon({required this.leadingIcon});
-
-  final IconData? leadingIcon;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsetsDirectional.only(top: _iconTopPadding, end: sbbDefaultSpacing * .5),
-      child: Icon(leadingIcon),
-    );
-  }
-}
-
-class _NonHittableRadio<T> extends StatelessWidget {
-  const _NonHittableRadio({
-    required this.value,
-    required this.isInteractive,
-    this.radioSemanticLabel,
+/// A boxed variant of [SBBRadioListItem] with rounded borders.
+///
+/// This widget extends [SBBRadioListItem] and wraps the list item in an [SBBContentBox].
+///
+/// All parameters and behavior are identical to [SBBRadioListItem].
+///
+/// See also:
+///
+///  * [SBBRadioListItem], for the standard variant without borders.
+///  * [SBBListItemV5Boxed], the underlying boxed list item widget.
+///  * [SBBContentBox], which provides the border and padding styling.
+class SBBRadioListItemBoxed<T> extends SBBRadioListItem<T> {
+  const SBBRadioListItemBoxed({
+    super.key,
+    required super.value,
+    super.leading,
+    super.leadingIconData,
+    super.title,
+    super.titleText,
+    super.subtitle,
+    super.subtitleText,
+    super.trailing,
+    super.trailingIconData,
+    super.onLongPress,
+    super.enabled,
+    super.isLoading,
+    super.links,
+    super.focusNode,
+    super.autofocus,
+    super.enableFeedback,
+    super.padding,
+    super.trailingHorizontalGapWidth,
+    super.leadingHorizontalGapWidth,
+    super.subtitleVerticalGapHeight,
+    super.leadingRadioGapWidth,
+    super.listItemStyle,
+    super.radioStyle,
+    super.radioSemanticLabel,
   });
 
-  final T value;
-  final bool isInteractive;
-  final String? radioSemanticLabel;
-
   @override
   Widget build(BuildContext context) {
-    return IgnorePointer(
-      child: ExcludeFocus(
-        child: Padding(
-          padding: const EdgeInsetsDirectional.only(top: sbbDefaultSpacing * 0.75),
-          child: SBBRadio(
-            value: value,
-            style: SBBRadioStyle(tapTargetPadding: EdgeInsets.zero),
-            enabled: isInteractive,
-            semanticLabel: radioSemanticLabel,
-          ),
-        ),
-      ),
-    );
+    return SBBContentBox(child: super.build(context));
   }
 }
