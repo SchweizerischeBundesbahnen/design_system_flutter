@@ -7,9 +7,9 @@ import '../container.dart';
 ///
 /// This class provides the standard styling for [SBBContentBox] widgets based on the current
 /// [SBBBaseStyle].
-class DefaultSBBContentBoxTheme extends SBBContentBoxThemeData {
-  /// Creates a [DefaultSBBContentBoxTheme] with standard SBB styling.
-  DefaultSBBContentBoxTheme({required SBBBaseStyle baseStyle})
+class DefaultSBBContentBoxThemeData extends SBBContentBoxThemeData {
+  /// Creates a [DefaultSBBContentBoxThemeData] with standard SBB styling.
+  DefaultSBBContentBoxThemeData({required SBBBaseStyle baseStyle})
     : super(
         style: SBBContentBoxStyle(
           margin: EdgeInsets.zero,

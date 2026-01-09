@@ -23,7 +23,7 @@ class SBBContentBoxThemeData extends ThemeExtension<SBBContentBoxThemeData> with
   /// [SBBContentBox] widgets.
   ///
   /// If [style] is null, then this theme doesn't override anything and the default
-  /// [DefaultSBBContentBoxTheme] will be used.
+  /// [DefaultSBBContentBoxThemeData] will be used.
   final SBBContentBoxStyle? style;
 
   @override

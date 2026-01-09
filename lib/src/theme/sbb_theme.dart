@@ -138,7 +138,7 @@ class SBBTheme {
     final defaultSwitchTheme = DefaultSBBSwitchThemeData(mergedBaseStyle);
     final mergedSwitchTheme = defaultSwitchTheme.merge(switchTheme);
 
-    final defaultContentBoxTheme = DefaultSBBContentBoxTheme(baseStyle: mergedBaseStyle);
+    final defaultContentBoxTheme = DefaultSBBContentBoxThemeData(baseStyle: mergedBaseStyle);
     final mergedContentBoxTheme = defaultContentBoxTheme.merge(contentBoxTheme);
 
     final defaultTextTheme = SBBTextTheme.$default(baseStyle: mergedBaseStyle);
