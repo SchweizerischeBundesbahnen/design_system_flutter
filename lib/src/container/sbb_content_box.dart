@@ -66,11 +66,7 @@ class SBBContentBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO (@smallTrogdor): remove this with version 5.0.0
-    final SBBContentBoxStyle legacyStyle = SBBContentBoxStyle.of(context);
-    final SBBContentBoxStyle newStyle = Theme.of(context).sbbContentBoxTheme!.style!;
-
-    final style = legacyStyle.merge(newStyle);
+    final SBBContentBoxStyle style = Theme.of(context).sbbContentBoxTheme!.style!;
 
     return Semantics(
       container: isSemanticContainer ?? style.isSemanticContainer!,
@@ -80,7 +76,7 @@ class SBBContentBox extends StatelessWidget {
           key: key,
           type: MaterialType.card,
           color: color ?? style.color,
-          shape: style.shape!,
+          shape: SBBContentBoxStyle.shape,
           clipBehavior: clipBehavior ?? style.clipBehavior!,
           child: Padding(
             padding: padding ?? style.padding!,

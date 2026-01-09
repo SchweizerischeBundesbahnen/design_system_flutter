@@ -15,9 +15,6 @@ class DefaultSBBContentBoxTheme extends SBBContentBoxThemeData {
           margin: EdgeInsets.zero,
           padding: EdgeInsets.zero,
           color: baseStyle.themeValue(SBBColors.white, SBBColors.charcoal),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(sbbDefaultSpacing)),
-          ),
           clipBehavior: Clip.hardEdge,
           isSemanticContainer: true,
         ),

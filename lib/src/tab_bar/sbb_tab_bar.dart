@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/src/container/container.dart';
 
 import '../../sbb_design_system_mobile.dart';
 import 'tab_curve_clipper.dart';
@@ -121,7 +122,7 @@ class _SBBTabBarState extends State<SBBTabBar> with TickerProviderStateMixin, Wi
               builder: (context, snapshot) {
                 final warnings = snapshot.requireData;
                 final theme = Theme.of(context);
-                final cardColor = SBBContentBoxStyle.of(context).color ?? theme.scaffoldBackgroundColor;
+                final cardColor = theme.sbbContentBoxTheme?.style?.color ?? theme.scaffoldBackgroundColor;
                 _controller.changeOrientation(portrait);
                 _controller.updateCurveAnimation();
                 return Container(
