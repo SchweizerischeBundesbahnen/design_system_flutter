@@ -107,7 +107,7 @@ class SBBTertiaryButton extends StatelessWidget {
   /// Customizes this button's appearance.
   ///
   /// Non-null properties of this style override the corresponding
-  /// properties in [DefaultSBBTertiaryButtonTheme.style].
+  /// properties in [DefaultSBBTertiaryButtonThemeData.style].
   final SBBButtonStyle? style;
 
   /// {@macro flutter.widgets.Focus.focusNode}

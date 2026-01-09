@@ -80,7 +80,7 @@ class SBBSecondaryButton extends StatelessWidget {
   /// Customizes this button's appearance.
   ///
   /// Non-null properties of this style override the corresponding
-  /// properties in [DefaultSBBSecondaryButtonTheme.style].
+  /// properties in [DefaultSBBSecondaryButtonThemeData.style].
   final SBBButtonStyle? style;
 
   /// {@macro flutter.widgets.Focus.focusNode}
