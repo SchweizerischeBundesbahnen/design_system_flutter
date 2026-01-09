@@ -399,6 +399,8 @@ class SBBListItemV5 extends StatefulWidget {
 class _SBBListItemV5State extends State<SBBListItemV5> {
   late WidgetStatesController _statesController;
 
+  bool get _isInteractive => widget.enabled && (widget.onTap != null || widget.onLongPress != null);
+
   @override
   void initState() {
     super.initState();
@@ -409,13 +411,15 @@ class _SBBListItemV5State extends State<SBBListItemV5> {
   @override
   void didUpdateWidget(SBBListItemV5 oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.enabled != oldWidget.enabled) {
+    if (widget.enabled != oldWidget.enabled ||
+        widget.onTap != oldWidget.onTap ||
+        widget.onLongPress != oldWidget.onLongPress) {
       _updateStatesController();
     }
   }
 
   void _updateStatesController() {
-    _statesController.update(WidgetState.disabled, !widget.enabled);
+    _statesController.update(WidgetState.disabled, !_isInteractive);
   }
 
   @override
@@ -471,30 +475,32 @@ class _SBBListItemV5State extends State<SBBListItemV5> {
 
     // Apply theming to all widgets
     if (leadingWidget != null) {
-      leadingWidget = IconTheme.merge(
-        data: IconThemeData(color: resolvedLeadingForegroundColor),
+      leadingWidget = _addDefaultAncestorWithResolved(
         child: leadingWidget,
+        foregroundColor: resolvedLeadingForegroundColor,
       );
     }
 
     if (titleWidget != null) {
-      titleWidget = DefaultTextStyle.merge(
-        style: resolvedTitleTextStyle.copyWith(color: resolvedTitleForegroundColor),
+      titleWidget = _addDefaultAncestorWithResolved(
         child: titleWidget,
+        foregroundColor: resolvedTitleForegroundColor,
+        textStyle: resolvedTitleTextStyle,
       );
     }
 
     if (subtitleWidget != null) {
-      subtitleWidget = DefaultTextStyle.merge(
-        style: resolvedSubtitleTextStyle.copyWith(color: resolvedSubtitleForegroundColor),
+      subtitleWidget = _addDefaultAncestorWithResolved(
         child: subtitleWidget,
+        foregroundColor: resolvedSubtitleForegroundColor,
+        textStyle: resolvedSubtitleTextStyle,
       );
     }
 
     if (trailingWidget != null) {
-      trailingWidget = IconTheme.merge(
-        data: IconThemeData(color: resolvedTrailingForegroundColor),
+      trailingWidget = _addDefaultAncestorWithResolved(
         child: trailingWidget,
+        foregroundColor: resolvedTrailingForegroundColor,
       );
     }
 
@@ -507,8 +513,8 @@ class _SBBListItemV5State extends State<SBBListItemV5> {
       statesController: _statesController,
       overlayColor: effectiveOverlayColor,
       child: Semantics(
-        button: widget.onTap != null || widget.onLongPress != null,
-        enabled: widget.enabled,
+        button: _isInteractive,
+        enabled: _isInteractive,
         focused: widget.focusNode?.hasFocus,
         child: Ink(
           color: resolvedBackgroundColor,
@@ -547,6 +553,23 @@ class _SBBListItemV5State extends State<SBBListItemV5> {
       );
     }
 
+    return child;
+  }
+
+  Widget _addDefaultAncestorWithResolved({
+    required Widget child,
+    required Color? foregroundColor,
+    TextStyle? textStyle,
+  }) {
+    final resolvedTextStyle = textStyle?.copyWith(color: foregroundColor) ?? TextStyle(color: foregroundColor);
+
+    child = DefaultTextStyle.merge(
+      style: resolvedTextStyle,
+      child: IconTheme.merge(
+        data: IconThemeData(color: foregroundColor),
+        child: child,
+      ),
+    );
     return child;
   }
 
