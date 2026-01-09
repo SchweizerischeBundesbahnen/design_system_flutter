@@ -78,7 +78,8 @@ class CheckboxTest extends StatelessWidget {
               SBBCheckboxListItem(
                 value: false,
                 titleText: 'Leading and Trailing Icon (Disabled)',
-                onChanged: null,
+                enabled: false,
+                onChanged: (_) {},
                 leadingIconData: SBBIcons.alarm_clock_small,
                 trailingIconData: SBBIcons.dog_small,
               ),
@@ -105,8 +106,8 @@ class CheckboxTest extends StatelessWidget {
               ),
               SBBCheckboxListItem(
                 value: value3,
+                onChanged: null,
                 titleText: 'Leading Icon and Button (Disabled)',
-                onChanged: (_) {},
                 padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16).copyWith(right: 8.0),
                 trailing: SBBTertiaryButtonSmall(
                   iconData: SBBIcons.circle_information_small_small,
@@ -139,7 +140,7 @@ class CheckboxTest extends StatelessWidget {
           SBBCheckboxListItemBoxed(
             value: value3,
             titleText: 'Leading Icon and Button (Disabled)',
-            onChanged: (_) {},
+            onChanged: null,
             padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16).copyWith(right: 8.0),
             trailing: SBBTertiaryButtonSmall(
               iconData: SBBIcons.circle_information_small_small,
