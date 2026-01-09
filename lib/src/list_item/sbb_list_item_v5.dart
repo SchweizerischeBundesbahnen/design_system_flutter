@@ -12,7 +12,6 @@ typedef _PositionChild = void Function(RenderBox child, Offset offset);
 
 enum _SBBListItemSlot { leading, title, subtitle, trailing }
 
-/// TODO: overhaul convenience ListItems
 /// TODO: add migration documentation
 /// TODO: document changes in CHANGELOG
 
