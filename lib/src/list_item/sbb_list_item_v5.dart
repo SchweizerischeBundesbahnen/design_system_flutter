@@ -46,8 +46,6 @@ enum _SBBListItemSlot { leading, title, subtitle, trailing }
 /// SBBListItemV5(
 ///   titleText: 'List Item Title',
 ///   subtitleText: 'Additional information',
-///   leadingIconData: Icons.favorite,
-///   trailingIconData: Icons.chevron_right,
 ///   onTap: () {},
 /// )
 /// ```
@@ -784,7 +782,13 @@ class _RenderSBBListItemV5 extends RenderBox with SlottedContainerRenderObjectMi
     final double subtitleHeight = subtitle == null
         ? 0.0
         : subtitle!.getMinIntrinsicHeight(width) + _subtitleVerticalGapHeight;
-    return title.getMinIntrinsicHeight(width) + subtitleHeight;
+    final double leadingHeight = leading == null ? 0.0 : leading!.getMinIntrinsicHeight(width);
+    final double trailingHeight = trailing == null ? 0.0 : trailing!.getMinIntrinsicHeight(width);
+    final minContentHeight = math.max(
+      math.max(leadingHeight, title.getMinIntrinsicHeight(width)) + subtitleHeight,
+      trailingHeight,
+    );
+    return math.max(SBBListItemV5Style.minInnerHeight, minContentHeight);
   }
 
   @override
