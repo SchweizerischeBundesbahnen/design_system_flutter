@@ -54,7 +54,7 @@ class ListItemPage extends StatelessWidget {
                         titleText: 'Mit Button',
                         leadingIconData: SBBIcons.dog_small,
                         trailing: SBBTertiaryButtonSmall(onPressed: () {}, iconData: SBBIcons.dog_small),
-                        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16).copyWith(right: 8),
+                        padding: SBBListItemV5Style.defaultPadding.copyWith(right: 8),
                         onTap: () => sbbToast.show(title: 'Mit Button'),
                       ),
                       SBBListItemV5(

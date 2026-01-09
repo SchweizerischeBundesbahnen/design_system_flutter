@@ -87,7 +87,7 @@ class CheckboxTest extends StatelessWidget {
                 value: false,
                 titleText: 'Button',
                 onChanged: (_) {},
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16).copyWith(right: 8.0),
+                padding: SBBListItemV5Style.defaultPadding.copyWith(right: 8),
                 trailing: SBBTertiaryButtonSmall(
                   iconData: SBBIcons.circle_information_small_small,
                   onPressed: () {},
@@ -97,7 +97,7 @@ class CheckboxTest extends StatelessWidget {
                 value: value3,
                 titleText: 'Leading Icon and Button',
                 onChanged: (_) {},
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16).copyWith(right: 8.0),
+                padding: SBBListItemV5Style.defaultPadding.copyWith(right: 8),
                 trailing: SBBTertiaryButtonSmall(
                   iconData: SBBIcons.circle_information_small_small,
                   onPressed: () {},
@@ -108,7 +108,7 @@ class CheckboxTest extends StatelessWidget {
                 value: value3,
                 onChanged: null,
                 titleText: 'Leading Icon and Button (Disabled)',
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16).copyWith(right: 8.0),
+                padding: SBBListItemV5Style.defaultPadding.copyWith(right: 8),
                 trailing: SBBTertiaryButtonSmall(
                   iconData: SBBIcons.circle_information_small_small,
                   onPressed: null,
@@ -141,7 +141,7 @@ class CheckboxTest extends StatelessWidget {
             value: value3,
             titleText: 'Leading Icon and Button (Disabled)',
             onChanged: null,
-            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16).copyWith(right: 8.0),
+            padding: SBBListItemV5Style.defaultPadding.copyWith(right: 8),
             trailing: SBBTertiaryButtonSmall(
               iconData: SBBIcons.circle_information_small_small,
               onPressed: null,

@@ -112,7 +112,7 @@ class CheckboxPageState extends State<CheckboxPage> {
                         value: _listItemValue3,
                         titleText: 'Button',
                         onChanged: _isEnabled ? (value) => setState(() => _listItemValue3 = value) : null,
-                        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16).copyWith(right: 8.0),
+                        padding: SBBListItemV5Style.defaultPadding.copyWith(right: 8),
                         trailing: SBBTertiaryButtonSmall(
                           iconData: SBBIcons.circle_information_small_small,
                           onPressed: _isEnabled ? () => sbbToast.show(title: 'Button pressed') : null,
@@ -177,7 +177,7 @@ class CheckboxPageState extends State<CheckboxPage> {
                       value: _listItemValue3,
                       titleText: 'Button',
                       onChanged: _isEnabled ? (value) => setState(() => _listItemValue3 = value) : null,
-                      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16).copyWith(right: 8.0),
+                      padding: SBBListItemV5Style.defaultPadding.copyWith(right: 8),
                       trailing: SBBTertiaryButtonSmall(
                         iconData: SBBIcons.circle_information_small_small,
                         onPressed: _isEnabled ? () => sbbToast.show(title: 'Button pressed') : null,

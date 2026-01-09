@@ -191,6 +191,9 @@ class SBBListItemV5 extends StatefulWidget {
   ///
   /// [trailing] is vertically centered relative to the list item.
   ///
+  /// Note that when adding for example a button, the [padding] might have to be adapted
+  /// for the button to be aligned with other trailing icons due to the button's inherent padding.
+  ///
   /// Cannot be used together with [trailingIconData].
   /// {@endtemplate}
   final Widget? trailing;
@@ -436,8 +439,7 @@ class _SBBListItemV5State extends State<SBBListItemV5> {
     final effectiveStyle = (themeData?.style ?? SBBListItemV5Style()).merge(widget.style);
     final states = _statesController.value;
 
-    final effectivePadding =
-        widget.padding ?? themeData?.padding ?? const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0);
+    final effectivePadding = widget.padding ?? themeData?.padding ?? SBBListItemV5Style.defaultPadding;
     final effectiveTrailingGapWidth =
         widget.trailingHorizontalGapWidth ?? themeData?.trailingHorizontalGapWidth ?? 16.0;
     final effectiveLeadingGapWidth = widget.leadingHorizontalGapWidth ?? themeData?.leadingHorizontalGapWidth ?? 8.0;

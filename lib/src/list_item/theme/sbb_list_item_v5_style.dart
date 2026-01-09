@@ -85,6 +85,9 @@ class SBBListItemV5Style {
   /// This fills the entire list item.
   final WidgetStateProperty<Color?>? backgroundColor;
 
+  /// The default padding of the list item.
+  static EdgeInsets get defaultPadding => EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0);
+
   SBBListItemV5Style copyWith({
     WidgetStateProperty<TextStyle?>? titleTextStyle,
     WidgetStateProperty<TextStyle?>? subtitleTextStyle,
