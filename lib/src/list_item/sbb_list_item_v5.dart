@@ -841,20 +841,22 @@ class _RenderSBBListItemV5 extends RenderBox with SlottedContainerRenderObjectMi
     final double titleHeight = titleSize.height;
 
     // Find the maximum height between leading and title for center alignment
-    final double maxCenterHeight = math.max(
-      math.max(leadingHeight, titleHeight),
-      SBBListItemV5Style.minInnerHeight,
-    );
+    double maxTitleRowHeight = math.max(leadingHeight, titleHeight);
+
+    // Fix the title height to minInnerHeight only if no subtitle and trailingSize.height is smaller than minInnerHeight
+    if (subtitleSize == null && (trailingSize?.height ?? 0.0) < SBBListItemV5Style.minInnerHeight) {
+      maxTitleRowHeight = math.max(maxTitleRowHeight, SBBListItemV5Style.minInnerHeight);
+    }
 
     // Center-align title and leading
-    final double titleY = (maxCenterHeight - titleHeight) / 2.0;
-    final double leadingY = (maxCenterHeight - leadingHeight) / 2.0;
+    final double titleY = (maxTitleRowHeight - titleHeight) / 2.0;
+    final double leadingY = (maxTitleRowHeight - leadingHeight) / 2.0;
 
     // Position subtitle below the max of leading/title bottom
-    final double subtitleY = maxCenterHeight + _subtitleVerticalGapHeight;
+    final double subtitleY = maxTitleRowHeight + _subtitleVerticalGapHeight;
 
     // Calculate total item height
-    final double tileHeight = subtitleSize != null ? subtitleY + subtitleSize.height : maxCenterHeight;
+    final double tileHeight = subtitleSize != null ? subtitleY + subtitleSize.height : maxTitleRowHeight;
 
     if (positionChild != null) {
       // Position title (left aligned after leading, vertically centered with leading)
