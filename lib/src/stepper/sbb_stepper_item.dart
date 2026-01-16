@@ -1,25 +1,39 @@
 import 'package:flutter/widgets.dart';
 
-// TODO: Label optional?
-class SBBStepperItem {
-  const SBBStepperItem({this.icon, required this.label});
+// TODO: Add style for each step
+// TODO: Allow override of badge icon and to be hidden
+// TODO: Custom content?
+sealed class SBBStepperItem {
+  const SBBStepperItem._({this.labelText, this.label});
 
-  final IconData? icon;
-  final String label;
+  final String? labelText;
+  final Widget? label;
 
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    return other is SBBStepperItem && other.icon == icon && other.label == label;
-  }
+  const factory SBBStepperItem.icon({required IconData icon, String? labelText, Widget? label}) = SBBStepperItemIcon;
 
-  @override
-  int get hashCode {
-    return Object.hash(icon, label);
-  }
+  const factory SBBStepperItem.text({required String text, String? labelText, Widget? label}) = SBBStepperItemText;
+
+  const factory SBBStepperItem.numbered({String? labelText, Widget? label}) = SBBStepperItemNumbered;
 
   @override
-  String toString() {
-    return 'SBBStepperItem($label)';
-  }
+  bool operator ==(Object other) => identical(this, other) || runtimeType == other.runtimeType;
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+}
+
+class SBBStepperItemIcon extends SBBStepperItem {
+  const SBBStepperItemIcon({required this.icon, super.label, super.labelText}) : super._();
+
+  final IconData icon;
+}
+
+class SBBStepperItemText extends SBBStepperItem {
+  const SBBStepperItemText({required this.text, super.label, super.labelText}) : super._();
+
+  final String text;
+}
+
+class SBBStepperItemNumbered extends SBBStepperItem {
+  const SBBStepperItemNumbered({super.label, super.labelText}) : super._();
 }

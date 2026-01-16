@@ -31,7 +31,7 @@ class SBBStepperStyle {
     backgroundBorderColor: baseStyle.themeValue(SBBColors.black, SBBColors.white),
     selectedBackgroundBorderColor: null,
     checkedBackgroundColor: baseStyle.primaryColor,
-    checkedBorderColor: SBBColors.white,
+    checkedBorderColor: null,
   );
 
   factory SBBStepperStyle.$colored({required SBBBaseStyle baseStyle}) => SBBStepperStyle(
