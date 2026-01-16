@@ -71,10 +71,10 @@ class SBBSwitchListItem extends StatelessWidget {
              .toList(),
        );
 
-  /// Use this in combination with a [SBBGroup] to create a boxed variant of the [SBBSwitchListItem].
+  /// Use this in combination with a [SBBContentBox] to create a boxed variant of the [SBBSwitchListItem].
   ///
   /// ```dart
-  /// SBBGroup(
+  /// SBBContentBox(
   ///   child: SBBSwitchListItem(
   ///     value: _throwShotAway,
   ///     onChanged: (bool newValue) {

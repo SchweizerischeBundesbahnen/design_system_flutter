@@ -49,11 +49,11 @@ class SwitchTest extends StatelessWidget {
         ),
         const SizedBox(height: sbbDefaultSpacing * .5),
         const SBBListHeader('SBBSwitchItem - List'),
-        SBBGroup(
+        SBBContentBox(
           child: SBBSwitchListItem(value: value1, title: 'Default', onChanged: (value) {}, isLastElement: true),
         ),
         const SizedBox(height: sbbDefaultSpacing * .25),
-        SBBGroup(
+        SBBContentBox(
           child: SBBSwitchListItem(
             value: value2,
             title: 'Leading Icon',
@@ -63,7 +63,7 @@ class SwitchTest extends StatelessWidget {
           ),
         ),
         const SizedBox(height: sbbDefaultSpacing * .25),
-        SBBGroup(
+        SBBContentBox(
           child: SBBSwitchListItem(
             value: value3,
             title: 'Very Looooooooooooooooooooooooooooooooooooooooooooooong Multiline Label With Subtitle',
@@ -74,7 +74,7 @@ class SwitchTest extends StatelessWidget {
           ),
         ),
         const SizedBox(height: sbbDefaultSpacing * .25),
-        SBBGroup(
+        SBBContentBox(
           child: SBBSwitchListItem(
             value: false,
             title: 'With Link',
@@ -84,7 +84,7 @@ class SwitchTest extends StatelessWidget {
           ),
         ),
         const SizedBox(height: sbbDefaultSpacing * .25),
-        SBBGroup(
+        SBBContentBox(
           child: Column(
             children: [
               SBBSwitchListItem(
@@ -101,7 +101,7 @@ class SwitchTest extends StatelessWidget {
           ),
         ),
         const SizedBox(height: sbbDefaultSpacing * .25),
-        SBBGroup(
+        SBBContentBox(
           child: SBBSwitchListItem(
             value: false,
             title: 'Disabled, Link enabled',
@@ -111,7 +111,7 @@ class SwitchTest extends StatelessWidget {
           ),
         ),
         const SizedBox(height: sbbDefaultSpacing * .25),
-        SBBGroup(
+        SBBContentBox(
           child: SBBSwitchListItem(
             value: false,
             title: 'Only Link disabled',
@@ -121,7 +121,7 @@ class SwitchTest extends StatelessWidget {
           ),
         ),
         const SizedBox(height: sbbDefaultSpacing * .25),
-        SBBGroup(
+        SBBContentBox(
           child: SBBSwitchListItem(
             value: false,
             title: 'All disabled',
@@ -131,7 +131,7 @@ class SwitchTest extends StatelessWidget {
           ),
         ),
         const SizedBox(height: sbbDefaultSpacing * .25),
-        SBBGroup(
+        SBBContentBox(
           child: SBBSwitchListItem.custom(
             value: false,
             title: 'Custom LinkWidget',

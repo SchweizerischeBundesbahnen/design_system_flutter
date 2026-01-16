@@ -53,13 +53,13 @@ class TimePickerTest extends StatelessWidget {
       Row(
         children: [
           Expanded(
-            child: SBBGroup(
+            child: SBBContentBox(
               child: SBBTimePicker(onTimeChanged: (_) {}, initialTime: initialTime),
             ),
           ),
           const SizedBox(width: sbbDefaultSpacing),
           Expanded(
-            child: SBBGroup(
+            child: SBBContentBox(
               child: SBBTimePicker(onTimeChanged: (_) {}, initialTime: initialTime, minuteInterval: 15),
             ),
           ),
@@ -69,7 +69,7 @@ class TimePickerTest extends StatelessWidget {
       Row(
         children: [
           Expanded(
-            child: SBBGroup(
+            child: SBBContentBox(
               child: SBBTimePicker(
                 onTimeChanged: (_) {},
                 initialTime: initialTime,
@@ -80,7 +80,7 @@ class TimePickerTest extends StatelessWidget {
           ),
           const SizedBox(width: sbbDefaultSpacing),
           Expanded(
-            child: SBBGroup(
+            child: SBBContentBox(
               child: SBBTimePicker(
                 onTimeChanged: (_) {},
                 initialTime: initialTime,
@@ -96,7 +96,7 @@ class TimePickerTest extends StatelessWidget {
       Row(
         children: [
           Expanded(
-            child: SBBGroup(
+            child: SBBContentBox(
               child: SBBTimePicker(
                 onTimeChanged: (_) {},
                 initialTime: initialTime,
@@ -108,7 +108,7 @@ class TimePickerTest extends StatelessWidget {
           const SizedBox(width: sbbDefaultSpacing),
           SizedBox(
             width: 150,
-            child: SBBGroup(
+            child: SBBContentBox(
               child: SBBTimePicker(
                 onTimeChanged: (_) {},
                 initialTime: initialTime,
@@ -121,7 +121,7 @@ class TimePickerTest extends StatelessWidget {
           const SizedBox(width: sbbDefaultSpacing),
           SizedBox(
             width: 120,
-            child: SBBGroup(
+            child: SBBContentBox(
               child: SBBTimePicker(
                 onTimeChanged: (_) {},
                 initialTime: initialTime,
@@ -134,7 +134,7 @@ class TimePickerTest extends StatelessWidget {
           const SizedBox(width: sbbDefaultSpacing),
           SizedBox(
             width: 100,
-            child: SBBGroup(
+            child: SBBContentBox(
               child: SBBTimePicker(
                 onTimeChanged: (_) {},
                 initialTime: initialTime,

@@ -1,5 +1,5 @@
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import '../native_app.dart';
 
@@ -14,7 +14,7 @@ class ListHeaderPage extends StatelessWidget {
         const ThemeModeSegmentedButton(),
         const SizedBox(height: sbbDefaultSpacing),
         const SBBListHeader('List Header'),
-        SBBGroup(child: Container(height: 125.0)),
+        SBBContentBox(child: Container(height: 125.0)),
         const SizedBox(height: sbbDefaultSpacing),
       ],
     );

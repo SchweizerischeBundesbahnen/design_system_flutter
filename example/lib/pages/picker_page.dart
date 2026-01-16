@@ -1,5 +1,5 @@
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import '../native_app.dart';
 
@@ -37,7 +37,7 @@ class _PickerPageState extends State<PickerPage> {
           const ThemeModeSegmentedButton(),
           const SizedBox(height: sbbDefaultSpacing),
           const SBBListHeader('Picker input fields'),
-          SBBGroup(
+          SBBContentBox(
             child: Column(
               children: [
                 SBBDateInput(
@@ -76,7 +76,7 @@ class _PickerPageState extends State<PickerPage> {
           ),
           const SizedBox(height: sbbDefaultSpacing),
           const SBBListHeader('Date Time Picker (date & time)'),
-          SBBGroup(
+          SBBContentBox(
             child: SBBDateTimePicker(
               onDateTimeChanged: (DateTime dateTime) {
                 debugPrint('selected date time: $dateTime');
@@ -85,7 +85,7 @@ class _PickerPageState extends State<PickerPage> {
           ),
           const SizedBox(height: sbbDefaultSpacing),
           const SBBListHeader('Date Picker (date only)'),
-          SBBGroup(
+          SBBContentBox(
             child: SBBDatePicker(
               onDateChanged: (DateTime date) {
                 debugPrint('selected date: $date');
@@ -94,7 +94,7 @@ class _PickerPageState extends State<PickerPage> {
           ),
           const SizedBox(height: sbbDefaultSpacing),
           const SBBListHeader('Time Picker (time only)'),
-          SBBGroup(
+          SBBContentBox(
             child: SBBTimePicker(
               onTimeChanged: (TimeOfDay time) {
                 debugPrint('selected time: $time');
@@ -103,7 +103,7 @@ class _PickerPageState extends State<PickerPage> {
           ),
           const SizedBox(height: sbbDefaultSpacing),
           const SBBListHeader('Picker (looping)'),
-          SBBGroup(
+          SBBContentBox(
             child: SBBPicker.list(
               onSelectedItemChanged: (int index) {
                 final selectedItemIndex = index % _fruitNames.length;
@@ -115,7 +115,7 @@ class _PickerPageState extends State<PickerPage> {
           ),
           const SizedBox(height: sbbDefaultSpacing),
           const SBBListHeader('Picker (non looping)'),
-          SBBGroup(
+          SBBContentBox(
             child: SBBPicker.list(
               looping: false,
               onSelectedItemChanged: (int index) {

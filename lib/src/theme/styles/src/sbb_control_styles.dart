@@ -139,7 +139,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     TextStyle? linkTextStyle,
     TextStyle? linkTextStyleHighlighted,
     TextStyle? listHeaderTextStyle,
-    Color? groupBackgroundColor,
     TextStyle? accordionTitleTextStyle,
     TextStyle? accordionBodyTextStyle,
     Color? accordionBackgroundColor,

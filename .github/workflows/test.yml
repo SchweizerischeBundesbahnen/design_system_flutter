@@ -25,7 +25,7 @@ jobs:
 
       - uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: 16.4
+          xcode-version: ~26.1
 
       - uses: actions/checkout@v6
 
@@ -49,7 +49,7 @@ jobs:
         run: flutter test
 
       - name: Upload goldens if tests fail.
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         if: ${{ failure() && steps.test.conclusion == 'failure' }}
         with:
           name: goldens
@@ -71,7 +71,7 @@ jobs:
           validation_level: "error"
 
   build-android:
-    name: "Build Android aab"
+    name: Build Example App Android
     runs-on: ubuntu-latest
     needs: [ test, changelog-test ]
     defaults:
@@ -103,7 +103,7 @@ jobs:
         run: flutter build appbundle --profile --no-pub
 
   build-iOS:
-    name: Build iOS package
+    name: Build Example App iOS
     runs-on: macos-15
     needs: [ test, changelog-test ]
     defaults:
@@ -117,7 +117,7 @@ jobs:
 
       - uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: 16.4
+          xcode-version: ~26.1
 
       - uses: actions/checkout@v6
 

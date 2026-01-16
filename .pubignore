@@ -40,6 +40,9 @@ build/
 # failed golden tests
 test/failures
 
+# golden files
+test/goldens
+
 # ============== TOOLS
 tool/**
 

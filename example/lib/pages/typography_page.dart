@@ -15,7 +15,7 @@ class TypographyPage extends StatelessWidget {
         const ThemeModeSegmentedButton(),
         const SizedBox(height: sbbDefaultSpacing),
         SBBListHeader('SBB Font Light (Default)'),
-        SBBGroup(
+        SBBContentBox(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -30,7 +30,7 @@ class TypographyPage extends StatelessWidget {
         ),
         const SizedBox(height: sbbDefaultSpacing),
         SBBListHeader('SBB Font Bold'),
-        SBBGroup(
+        SBBContentBox(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -45,7 +45,7 @@ class TypographyPage extends StatelessWidget {
         ),
         const SizedBox(height: sbbDefaultSpacing),
         SBBListHeader('Red Text Theme'),
-        SBBGroup(
+        SBBContentBox(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

@@ -143,7 +143,7 @@ class SBBSelect<T> extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            SBBGroup(
+            SBBContentBox(
               margin: const EdgeInsetsDirectional.fromSTEB(
                 sbbDefaultSpacing,
                 sbbDefaultSpacing / 2,
@@ -235,7 +235,7 @@ class SBBMultiSelect<T> extends StatefulWidget {
           return SingleChildScrollView(
             child: Column(
               children: [
-                SBBGroup(
+                SBBContentBox(
                   margin: const EdgeInsetsDirectional.fromSTEB(
                     sbbDefaultSpacing,
                     sbbDefaultSpacing / 2,

@@ -29,7 +29,7 @@ class DatePickerTest extends StatelessWidget {
     final initialDate = DateTime(2024, 07, 03);
     final minimumDate = DateTime(2024, 08, 01);
     final maximumDate = DateTime(2024, 07, 01);
-    return SBBGroup(
+    return SBBContentBox(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[

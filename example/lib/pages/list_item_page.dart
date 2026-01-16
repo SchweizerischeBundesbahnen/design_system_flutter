@@ -14,7 +14,7 @@ class ListItemPage extends StatelessWidget {
       children: [
         const ThemeModeSegmentedButton(),
         const SizedBox(height: sbbDefaultSpacing),
-        SBBGroup(
+        SBBContentBox(
           child: Column(
             children: <Widget>[
               SBBListItem(

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/src/container/container.dart';
+import 'package:sbb_design_system_mobile/src/container/theme/default_sbb_content_box_theme_data.dart';
 
 import 'theme.dart';
 
@@ -13,7 +15,8 @@ class SBBTheme {
     SBBButtonStyles? buttonStyles,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
-    SBBGroupStyle? groupStyle,
+    @Deprecated('Use contentBoxTheme instead') SBBContentBoxStyle? groupStyle,
+    SBBContentBoxThemeData? contentBoxTheme,
     SBBTextTheme? textTheme,
     SBBToastStyle? toastStyle,
   }) => createTheme(
@@ -24,6 +27,7 @@ class SBBTheme {
     controlStyles: controlStyles,
     headerBoxStyle: headerBoxStyle,
     groupStyle: groupStyle,
+    contentBoxTheme: contentBoxTheme,
     textTheme: textTheme,
     toastStyle: toastStyle,
   );
@@ -34,7 +38,8 @@ class SBBTheme {
     SBBButtonStyles? buttonStyles,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
-    SBBGroupStyle? groupStyle,
+    @Deprecated('Use contentBoxTheme instead') SBBContentBoxStyle? groupStyle,
+    SBBContentBoxThemeData? contentBoxTheme,
     SBBTextTheme? textTheme,
     SBBToastStyle? toastStyle,
   }) => createTheme(
@@ -45,6 +50,7 @@ class SBBTheme {
     controlStyles: controlStyles,
     headerBoxStyle: headerBoxStyle,
     groupStyle: groupStyle,
+    contentBoxTheme: contentBoxTheme,
     textTheme: textTheme,
     toastStyle: toastStyle,
   );
@@ -56,7 +62,8 @@ class SBBTheme {
     SBBButtonStyles? buttonStyles,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
-    SBBGroupStyle? groupStyle,
+    @Deprecated('Use contentBoxTheme instead') SBBContentBoxStyle? groupStyle,
+    SBBContentBoxThemeData? contentBoxTheme,
     SBBTextTheme? textTheme,
     SBBToastStyle? toastStyle,
   }) {
@@ -73,8 +80,11 @@ class SBBTheme {
     final defaultHeaderBoxStyle = SBBHeaderBoxStyle.$default(baseStyle: mergedBaseStyle);
     final mergedHeaderBoxStyle = headerBoxStyle.merge(defaultHeaderBoxStyle);
 
-    final defaultGroupStyle = SBBGroupStyle.$default(baseStyle: mergedBaseStyle);
+    final defaultGroupStyle = SBBContentBoxStyle.$default(baseStyle: mergedBaseStyle);
     final mergedGroupStyle = groupStyle.merge(defaultGroupStyle);
+
+    final defaultContentBoxTheme = DefaultSBBContentBoxTheme(baseStyle: mergedBaseStyle);
+    final mergedContentBoxTheme = defaultContentBoxTheme.merge(contentBoxTheme);
 
     final defaultTextTheme = SBBTextTheme.$default(baseStyle: mergedBaseStyle);
     final mergedTextTheme = defaultTextTheme.merge(textTheme);
@@ -89,6 +99,7 @@ class SBBTheme {
       controlStyles: mergedControlStyles,
       headerBoxStyle: mergedHeaderBoxStyle,
       groupStyle: mergedGroupStyle,
+      contentBoxTheme: mergedContentBoxTheme,
       textTheme: mergedTextTheme,
       toastStyle: mergedToastStyle,
     );
@@ -100,7 +111,8 @@ class SBBTheme {
     required SBBButtonStyles buttonStyles,
     required SBBControlStyles controlStyles,
     required SBBHeaderBoxStyle headerBoxStyle,
-    required SBBGroupStyle groupStyle,
+    @Deprecated('Use contentBoxTheme instead.') required SBBContentBoxStyle groupStyle,
+    required SBBContentBoxThemeData contentBoxTheme,
     required SBBTextTheme textTheme,
     required SBBToastStyle toastStyle,
   }) => ThemeData(
@@ -128,6 +140,7 @@ class SBBTheme {
       controlStyles,
       headerBoxStyle,
       groupStyle,
+      contentBoxTheme,
       textTheme,
       toastStyle,
     ],

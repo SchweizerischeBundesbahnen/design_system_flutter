@@ -1,6 +1,6 @@
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import 'test_app.dart';
 
@@ -52,7 +52,7 @@ class MultilineCheckboxTextState extends State<MultilineCheckboxText> {
   Widget build(BuildContext context) => Column(
     mainAxisSize: MainAxisSize.min,
     children: [
-      SBBGroup(
+      SBBContentBox(
         child: SBBCheckboxListItem(
           key: const Key('checkbox'),
           value: _listItemValue,

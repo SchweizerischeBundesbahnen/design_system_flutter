@@ -33,7 +33,7 @@ class _MessagePageState extends State<MessagePage> {
         const ThemeModeSegmentedButton(),
         const SizedBox(height: sbbDefaultSpacing),
         const SBBListHeader('Settings'),
-        SBBGroup(
+        SBBContentBox(
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -58,7 +58,7 @@ class _MessagePageState extends State<MessagePage> {
         ),
         const SizedBox(height: sbbDefaultSpacing),
         const SBBListHeader('Default'),
-        SBBGroup(
+        SBBContentBox(
           child: SBBMessage(
             title: 'Title, single line if possible',
             description: _description,
@@ -68,7 +68,7 @@ class _MessagePageState extends State<MessagePage> {
           ),
         ),
         const SBBListHeader('Error'),
-        SBBGroup(
+        SBBContentBox(
           child: SBBMessage.error(
             title: 'Title, single line if possible',
             description: _description,
@@ -79,7 +79,7 @@ class _MessagePageState extends State<MessagePage> {
           ),
         ),
         const SBBListHeader('Custom'),
-        SBBGroup(
+        SBBContentBox(
           child: SBBMessage(
             isLoading: _isLoading,
             title: 'Custom',

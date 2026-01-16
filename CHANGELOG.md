@@ -9,6 +9,21 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+## [4.4.0] - 2025-12-18
+
+### Added
+
+- Added `SBBContentBox` and `SBBContentBoxThemeData` with `SBBContentBoxStyle` to align with design specifications
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.14
+
+### Deprecated
+
+- `SBBGroup`: use `SBBContentBox` instead
+- `SBBGroupStyle`: use `SBBContentBoxStyle` instead
+
 ## [4.3.1] - 2025-11-21
 
 ### Fixed
@@ -676,7 +691,9 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Initial project setup
 - Added some widgets
 
-[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.3.1...HEAD
+[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.4.0...HEAD
+
+[4.4.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.3.1...4.4.0
 
 [4.3.1]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.3.0...4.3.1
 

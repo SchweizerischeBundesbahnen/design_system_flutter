@@ -47,7 +47,7 @@ class RadioTest extends StatelessWidget {
       ),
       const SizedBox(height: sbbDefaultSpacing),
       const SBBListHeader('RadioButton Item - List'),
-      SBBGroup(
+      SBBContentBox(
         child: Column(
           children: [
             SBBRadioListItem<int>(value: 1, groupValue: listItemGroupValue, onChanged: (newValue) {}, label: 'Label'),
@@ -127,7 +127,7 @@ class RadioTest extends StatelessWidget {
       Column(
         spacing: sbbDefaultSpacing * 0.5,
         children: [
-          SBBGroup(
+          SBBContentBox(
             child: SBBRadioListItem<int>.boxed(
               value: 1,
               groupValue: listItemGroupValue,
@@ -135,7 +135,7 @@ class RadioTest extends StatelessWidget {
               label: 'Label',
             ),
           ),
-          SBBGroup(
+          SBBContentBox(
             child: SBBRadioListItem<int>.boxed(
               value: 2,
               groupValue: listItemGroupValue,
@@ -145,7 +145,7 @@ class RadioTest extends StatelessWidget {
               trailingIcon: SBBIcons.dog_small,
             ),
           ),
-          SBBGroup(
+          SBBContentBox(
             child: SBBRadioListItem<int>.boxed(
               value: 3,
               groupValue: listItemGroupValue,
@@ -155,7 +155,7 @@ class RadioTest extends StatelessWidget {
               onCallToAction: () => {},
             ),
           ),
-          SBBGroup(
+          SBBContentBox(
             child: SBBRadioListItem<int>.custom(
               value: 4,
               groupValue: listItemGroupValue,

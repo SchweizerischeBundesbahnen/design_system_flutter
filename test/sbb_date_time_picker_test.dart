@@ -62,13 +62,13 @@ class DateTimePickerTest extends StatelessWidget {
       Row(
         children: [
           Expanded(
-            child: SBBGroup(
+            child: SBBContentBox(
               child: SBBDateTimePicker(onDateTimeChanged: (_) {}, initialDateTime: initialDateTime),
             ),
           ),
           const SizedBox(width: sbbDefaultSpacing),
           Expanded(
-            child: SBBGroup(
+            child: SBBContentBox(
               child: SBBDateTimePicker(
                 onDateTimeChanged: (_) {},
                 initialDateTime: initialDateTime,
@@ -82,7 +82,7 @@ class DateTimePickerTest extends StatelessWidget {
       Row(
         children: [
           Expanded(
-            child: SBBGroup(
+            child: SBBContentBox(
               child: SBBDateTimePicker(
                 onDateTimeChanged: (_) {},
                 initialDateTime: initialDateTime,
@@ -93,7 +93,7 @@ class DateTimePickerTest extends StatelessWidget {
           ),
           const SizedBox(width: sbbDefaultSpacing),
           Expanded(
-            child: SBBGroup(
+            child: SBBContentBox(
               child: SBBDateTimePicker(
                 onDateTimeChanged: (_) {},
                 initialDateTime: initialDateTime,
@@ -110,7 +110,7 @@ class DateTimePickerTest extends StatelessWidget {
         children: [
           SizedBox(
             width: 185,
-            child: SBBGroup(
+            child: SBBContentBox(
               child: SBBDateTimePicker(
                 onDateTimeChanged: (_) {},
                 initialDateTime: initialDateTime,
@@ -122,7 +122,7 @@ class DateTimePickerTest extends StatelessWidget {
           const SizedBox(width: sbbDefaultSpacing),
           SizedBox(
             width: 150,
-            child: SBBGroup(
+            child: SBBContentBox(
               child: SBBDateTimePicker(
                 onDateTimeChanged: (_) {},
                 initialDateTime: initialDateTime,

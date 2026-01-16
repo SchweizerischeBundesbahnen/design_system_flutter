@@ -56,7 +56,7 @@ class RadiobuttonPageState extends State<RadiobuttonPage> {
           selectedIndexChanged: (i) => setState(() => _enabledIndex = i),
         ),
         SBBListHeader('RadioButton Item - List'),
-        SBBGroup(
+        SBBContentBox(
           child: Column(
             children: [
               SBBRadioListItem<int>(
@@ -125,7 +125,7 @@ class RadiobuttonPageState extends State<RadiobuttonPage> {
           // spacing: sbbDefaultSpacing * 0.5,  add once support for Flutter SDK 3.24.5 removed
           // and remove SizedBoxes below
           children: [
-            SBBGroup(
+            SBBContentBox(
               child: SBBRadioListItem<int>.boxed(
                 value: 1,
                 groupValue: _listItemGroupValue,
@@ -134,7 +134,7 @@ class RadiobuttonPageState extends State<RadiobuttonPage> {
               ),
             ),
             SizedBox(height: sbbDefaultSpacing * .5),
-            SBBGroup(
+            SBBContentBox(
               child: SBBRadioListItem<int>.boxed(
                 value: 2,
                 groupValue: _listItemGroupValue,
@@ -144,7 +144,7 @@ class RadiobuttonPageState extends State<RadiobuttonPage> {
               ),
             ),
             SizedBox(height: sbbDefaultSpacing * .5),
-            SBBGroup(
+            SBBContentBox(
               child: SBBRadioListItem<int>.boxed(
                 value: 3,
                 groupValue: _listItemGroupValue,
@@ -155,7 +155,7 @@ class RadiobuttonPageState extends State<RadiobuttonPage> {
               ),
             ),
             SizedBox(height: sbbDefaultSpacing * .5),
-            SBBGroup(
+            SBBContentBox(
               child: SBBRadioListItem<int>.boxed(
                 value: 4,
                 groupValue: _listItemGroupValue,
@@ -166,7 +166,7 @@ class RadiobuttonPageState extends State<RadiobuttonPage> {
               ),
             ),
             SizedBox(height: sbbDefaultSpacing * .5),
-            SBBGroup(
+            SBBContentBox(
               child: SBBRadioListItem<int>.custom(
                 value: 5,
                 groupValue: _listItemGroupValue,
@@ -180,7 +180,7 @@ class RadiobuttonPageState extends State<RadiobuttonPage> {
               ),
             ),
             SizedBox(height: sbbDefaultSpacing * .5),
-            SBBGroup(
+            SBBContentBox(
               child: SBBRadioListItem<int>.boxed(
                 value: 6,
                 groupValue: _listItemGroupValue,
@@ -192,7 +192,7 @@ class RadiobuttonPageState extends State<RadiobuttonPage> {
               ),
             ),
             SizedBox(height: sbbDefaultSpacing * .5),
-            SBBGroup(
+            SBBContentBox(
               child: SBBRadioListItem<int>.boxed(
                 value: 7,
                 groupValue: _listItemGroupValue,

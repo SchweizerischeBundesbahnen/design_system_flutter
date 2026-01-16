@@ -38,7 +38,7 @@ class _IconShowCase extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SBBGroup(
+    return SBBContentBox(
       padding: const EdgeInsets.all(sbbDefaultSpacing / 2),
       child: GridView.builder(
         physics: const NeverScrollableScrollPhysics(),
