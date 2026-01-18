@@ -92,7 +92,8 @@ enum _SBBListItemSlot { leading, title, subtitle, trailing }
 ///  * [SBBListItemBoxed], for a boxed variant.
 ///  * [SBBListItemStyle], for customizing the appearance.
 ///  * [SBBListItemThemeData], for setting list item theme properties across your app.
-///  * [Figma design specs](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=282-933)
+///  * [Design Guidelines](https://digital.sbb.ch/de/design-system/mobile/components/list-item)
+///  * [Figma design specs](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=282-933) (internal only)
 class SBBListItem extends StatefulWidget {
   const SBBListItem({
     super.key,
