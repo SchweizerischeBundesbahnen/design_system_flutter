@@ -4,8 +4,8 @@ import '../../../sbb_design_system_mobile.dart';
 
 /// The default button themes are specified using the
 /// [Figma design specs](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=7-12).
-class DefaultSBBPrimaryButtonTheme extends SBBPrimaryButtonThemeData {
-  DefaultSBBPrimaryButtonTheme(SBBBaseStyle baseStyle)
+class DefaultSBBPrimaryButtonThemeData extends SBBPrimaryButtonThemeData {
+  DefaultSBBPrimaryButtonThemeData(SBBBaseStyle baseStyle)
     : super(
         style: SBBButtonStyle(
           textStyle: WidgetStateProperty.fromMap(<WidgetStatesConstraint, TextStyle?>{
@@ -32,8 +32,8 @@ class DefaultSBBPrimaryButtonTheme extends SBBPrimaryButtonThemeData {
       );
 }
 
-class DefaultSBBSecondaryButtonTheme extends SBBSecondaryButtonThemeData {
-  DefaultSBBSecondaryButtonTheme(SBBBaseStyle baseStyle)
+class DefaultSBBSecondaryButtonThemeData extends SBBSecondaryButtonThemeData {
+  DefaultSBBSecondaryButtonThemeData(SBBBaseStyle baseStyle)
     : super(
         style: SBBButtonStyle(
           textStyle: WidgetStateProperty.fromMap(<WidgetStatesConstraint, TextStyle?>{
@@ -64,8 +64,8 @@ class DefaultSBBSecondaryButtonTheme extends SBBSecondaryButtonThemeData {
       );
 }
 
-class DefaultSBBTertiaryButtonTheme extends SBBTertiaryButtonThemeData {
-  DefaultSBBTertiaryButtonTheme(SBBBaseStyle baseStyle)
+class DefaultSBBTertiaryButtonThemeData extends SBBTertiaryButtonThemeData {
+  DefaultSBBTertiaryButtonThemeData(SBBBaseStyle baseStyle)
     : super(
         style: SBBButtonStyle(
           textStyle: WidgetStateProperty.fromMap(<WidgetStatesConstraint, TextStyle?>{

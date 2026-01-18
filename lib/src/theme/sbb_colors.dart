@@ -9,8 +9,6 @@ class SBBColors {
   static const Color red = Color(0xFFEB0000);
   static const Color red125 = Color(0xFFC60018);
   static const Color red150 = Color(0xFFA20013);
-  @Deprecated('Use SBBColors.redDark instead.')
-  static const Color redDarkMode = Color(0xFFFF3838); // red85
   static const Color redDark = Color(0xFFFF3838); // red85
   static const Color white = Color(0xFFFFFFFF);
   static const Color milk = Color(0xFFF6F6F6);

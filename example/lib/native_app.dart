@@ -16,7 +16,6 @@ import 'pages/header_page.dart';
 import 'pages/icon_page.dart';
 import 'pages/input_trigger_page.dart';
 import 'pages/link_page.dart';
-import 'pages/list_header_page.dart';
 import 'pages/list_item_page.dart';
 import 'pages/loading_indicator_page.dart';
 import 'pages/message_page.dart';
@@ -103,7 +102,6 @@ class MyApp extends StatelessWidget {
                             _DemoEntry('Checkbox', CheckboxPage()),
                             _DemoEntry('Chip', ChipPage()),
                             _DemoEntry('Link', LinkPage()),
-                            _DemoEntry('List Header', ListHeaderPage()),
                             _DemoEntry('List Item', ListItemPage()),
                             _DemoEntry('Loading Indicator', LoadingIndicatorPage()),
                             _DemoEntry('Picker', PickerPage()),
