@@ -8,12 +8,12 @@ class SBBDividerPainter extends CustomPainter {
     required this.color,
     required this.indent,
     required this.paintAtTop,
-    this.width = 1.0,
+    this.height = 1.0,
   });
 
   final Color color;
   final double indent;
-  final double width;
+  final double height;
   final bool paintAtTop;
 
   @override
@@ -21,7 +21,7 @@ class SBBDividerPainter extends CustomPainter {
     final y = paintAtTop ? 0.0 : size.height;
     final paint = Paint()
       ..color = color
-      ..strokeWidth = width;
+      ..strokeWidth = height;
 
     canvas.drawLine(Offset(indent, y), Offset(size.width, y), paint);
   }
@@ -30,7 +30,7 @@ class SBBDividerPainter extends CustomPainter {
   bool shouldRepaint(SBBDividerPainter oldDelegate) {
     return oldDelegate.color != color ||
         oldDelegate.indent != indent ||
-        oldDelegate.width != width ||
+        oldDelegate.height != height ||
         oldDelegate.paintAtTop != paintAtTop;
   }
 }
