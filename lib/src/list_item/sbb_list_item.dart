@@ -12,9 +12,6 @@ typedef _PositionChild = void Function(RenderBox child, Offset offset);
 
 enum _SBBListItemSlot { leading, title, subtitle, trailing }
 
-/// TODO: add migration documentation
-/// TODO: document changes in CHANGELOG
-
 /// A customizable list item component following the SBB design system.
 ///
 /// Provides a flexible layout with optional leading, title, subtitle, and trailing widgets.
