@@ -132,7 +132,7 @@ class SBBTheme {
     final defaultHeaderBoxStyle = SBBHeaderBoxStyle.$default(baseStyle: mergedBaseStyle);
     final mergedHeaderBoxStyle = headerBoxStyle.merge(defaultHeaderBoxStyle);
 
-    final defaultStatusTheme = DefaultSBBStatusTheme(baseStyle: mergedBaseStyle);
+    final defaultStatusTheme = DefaultSBBStatusThemeData(baseStyle: mergedBaseStyle);
     final mergedStatusTheme = defaultStatusTheme.merge(statusTheme);
 
     final defaultSwitchTheme = DefaultSBBSwitchThemeData(mergedBaseStyle);
