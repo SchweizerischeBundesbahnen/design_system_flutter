@@ -1,7 +1,7 @@
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
-class DefaultSBBStatusTheme extends SBBStatusThemeData {
-  DefaultSBBStatusTheme({required SBBBaseStyle baseStyle})
+class DefaultSBBStatusThemeData extends SBBStatusThemeData {
+  DefaultSBBStatusThemeData({required SBBBaseStyle baseStyle})
     : super(
         alert: SBBStatusStyle(
           textStyle: SBBTextStyles.smallLight,

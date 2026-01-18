@@ -107,7 +107,7 @@ class SBBTertiaryButton extends StatelessWidget {
   /// Customizes this button's appearance.
   ///
   /// Non-null properties of this style override the corresponding
-  /// properties in [DefaultSBBTertiaryButtonTheme.style].
+  /// properties in [DefaultSBBTertiaryButtonThemeData.style].
   final SBBButtonStyle? style;
 
   /// {@macro flutter.widgets.Focus.focusNode}
@@ -340,7 +340,7 @@ class _BaseTertiaryButton extends StatelessWidget {
 
     final buttonStyleSmall = ButtonStyle(
       fixedSize: WidgetStatePropertyAll<Size>(Size.fromHeight(SBBInternal.defaultButtonHeightSmall)),
-      minimumSize: SBBTheme.allStates(const Size(0, SBBInternal.defaultButtonHeightSmall)),
+      minimumSize: WidgetStatePropertyAll(const Size(0, SBBInternal.defaultButtonHeightSmall)),
     );
 
     return _baseOverridenByWidgetStyle(widgetStyle, buttonStyleSmall);

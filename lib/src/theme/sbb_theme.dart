@@ -9,7 +9,7 @@ import 'package:sbb_design_system_mobile/src/switch/theme/default_sbb_switch_the
 
 import '../button/theme/default_button_themes.dart';
 import '../container/theme/default_sbb_content_box_theme_data.dart';
-import '../status/theme/default_sbb_status_theme.dart';
+import '../status/theme/default_sbb_status_theme_data.dart';
 
 const sbbDefaultSpacing = 16.0;
 
@@ -113,13 +113,13 @@ class SBBTheme {
     final defaultBaseStyle = SBBBaseStyle.$default(brightness: brightness, boldFont: boldFont);
     final mergedBaseStyle = baseStyle.merge(defaultBaseStyle);
 
-    final defaultPrimaryButtonTheme = DefaultSBBPrimaryButtonTheme(mergedBaseStyle);
+    final defaultPrimaryButtonTheme = DefaultSBBPrimaryButtonThemeData(mergedBaseStyle);
     final mergedPrimaryButtonTheme = defaultPrimaryButtonTheme.merge(primaryButtonTheme);
 
-    final defaultSecondaryButtonTheme = DefaultSBBSecondaryButtonTheme(mergedBaseStyle);
+    final defaultSecondaryButtonTheme = DefaultSBBSecondaryButtonThemeData(mergedBaseStyle);
     final mergedSecondaryButtonTheme = defaultSecondaryButtonTheme.merge(secondaryButtonTheme);
 
-    final defaultTertiaryButtonTheme = DefaultSBBTertiaryButtonTheme(mergedBaseStyle);
+    final defaultTertiaryButtonTheme = DefaultSBBTertiaryButtonThemeData(mergedBaseStyle);
     final mergedTertiaryButtonTheme = defaultTertiaryButtonTheme.merge(tertiaryButtonTheme);
 
     final defaultCheckboxTheme = DefaultSBBCheckboxThemeData(mergedBaseStyle);
@@ -140,7 +140,7 @@ class SBBTheme {
     final defaultGroupStyle = SBBContentBoxStyle.$default(baseStyle: mergedBaseStyle);
     final mergedGroupStyle = groupStyle.merge(defaultGroupStyle);
 
-    final defaultStatusTheme = DefaultSBBStatusTheme(baseStyle: mergedBaseStyle);
+    final defaultStatusTheme = DefaultSBBStatusThemeData(baseStyle: mergedBaseStyle);
     final mergedStatusTheme = defaultStatusTheme.merge(statusTheme);
 
     final defaultSwitchTheme = DefaultSBBSwitchThemeData(mergedBaseStyle);
@@ -230,43 +230,5 @@ class SBBTheme {
         toastStyle,
       ],
     );
-  }
-
-  /// Convenience method for easier use of [WidgetStateProperty.all].
-  static WidgetStateProperty<T> allStates<T>(T value) {
-    return WidgetStateProperty.all(value);
-  }
-
-  /// Convenience method for easier use of [WidgetStateProperty.resolveWith].
-  static WidgetStateProperty<T?> resolveStatesWith<T>({
-    required T defaultValue,
-    T? pressedValue,
-    T? disabledValue,
-    T? hoveredValue,
-    String? parent,
-    T? selectedValue,
-  }) {
-    return WidgetStateProperty.resolveWith((states) {
-      // disabled
-      if (states.contains(WidgetState.disabled) && disabledValue != null) {
-        return disabledValue;
-      }
-
-      // pressed / focused
-      if (states.any({WidgetState.pressed, WidgetState.focused}.contains) && pressedValue != null) {
-        return pressedValue;
-      }
-      // hovered
-      if (states.contains(WidgetState.hovered) && hoveredValue != null) {
-        return hoveredValue;
-      }
-
-      // selected
-      if (states.contains(WidgetState.selected) && selectedValue != null) {
-        return selectedValue;
-      }
-      // default
-      return defaultValue;
-    });
   }
 }
