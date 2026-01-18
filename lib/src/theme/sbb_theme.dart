@@ -26,7 +26,6 @@ class SBBTheme {
     SBBChipThemeData? chipTheme,
     SBBContentBoxThemeData? contentBoxTheme,
     SBBControlStyles? controlStyles,
-    @Deprecated('Use contentBoxTheme instead') SBBContentBoxStyle? groupStyle,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBRadioThemeData? radioTheme,
     SBBStatusThemeData? statusTheme,
@@ -45,7 +44,6 @@ class SBBTheme {
     contentBoxTheme: contentBoxTheme,
     radioTheme: radioTheme,
     controlStyles: controlStyles,
-    groupStyle: groupStyle,
     headerBoxStyle: headerBoxStyle,
     statusTheme: statusTheme,
     switchTheme: switchTheme,
@@ -62,7 +60,6 @@ class SBBTheme {
     SBBCheckboxThemeData? checkboxTheme,
     SBBChipThemeData? chipTheme,
     SBBContentBoxThemeData? contentBoxTheme,
-    @Deprecated('Use contentBoxTheme instead') SBBContentBoxStyle? groupStyle,
     SBBRadioThemeData? radioTheme,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
@@ -83,7 +80,6 @@ class SBBTheme {
     radioTheme: radioTheme,
     controlStyles: controlStyles,
     headerBoxStyle: headerBoxStyle,
-    groupStyle: groupStyle,
     statusTheme: statusTheme,
     switchTheme: switchTheme,
     textTheme: textTheme,
@@ -101,7 +97,6 @@ class SBBTheme {
     SBBChipThemeData? chipTheme,
     SBBControlStyles? controlStyles,
     SBBContentBoxThemeData? contentBoxTheme,
-    @Deprecated('Use contentBoxTheme instead') SBBGroupStyle? groupStyle,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBRadioThemeData? radioTheme,
     SBBStatusThemeData? statusTheme,
@@ -137,16 +132,13 @@ class SBBTheme {
     final defaultHeaderBoxStyle = SBBHeaderBoxStyle.$default(baseStyle: mergedBaseStyle);
     final mergedHeaderBoxStyle = headerBoxStyle.merge(defaultHeaderBoxStyle);
 
-    final defaultGroupStyle = SBBContentBoxStyle.$default(baseStyle: mergedBaseStyle);
-    final mergedGroupStyle = groupStyle.merge(defaultGroupStyle);
-
     final defaultStatusTheme = DefaultSBBStatusThemeData(baseStyle: mergedBaseStyle);
     final mergedStatusTheme = defaultStatusTheme.merge(statusTheme);
 
     final defaultSwitchTheme = DefaultSBBSwitchThemeData(mergedBaseStyle);
     final mergedSwitchTheme = defaultSwitchTheme.merge(switchTheme);
 
-    final defaultContentBoxTheme = DefaultSBBContentBoxTheme(baseStyle: mergedBaseStyle);
+    final defaultContentBoxTheme = DefaultSBBContentBoxThemeData(baseStyle: mergedBaseStyle);
     final mergedContentBoxTheme = defaultContentBoxTheme.merge(contentBoxTheme);
 
     final defaultTextTheme = SBBTextTheme.$default(baseStyle: mergedBaseStyle);
@@ -165,7 +157,6 @@ class SBBTheme {
       chipTheme: mergedChipTheme,
       controlStyles: mergedControlStyles,
       contentBoxTheme: mergedContentBoxTheme,
-      groupStyle: mergedGroupStyle,
       headerBoxStyle: mergedHeaderBoxStyle,
       radioTheme: mergedRadioTheme,
       statusTheme: mergedStatusTheme,
@@ -185,7 +176,6 @@ class SBBTheme {
     required SBBChipThemeData chipTheme,
     required SBBContentBoxThemeData contentBoxTheme,
     required SBBControlStyles controlStyles,
-    @Deprecated('Use contentBoxTheme instead.') required SBBContentBoxStyle groupStyle,
     required SBBHeaderBoxStyle headerBoxStyle,
     required SBBRadioThemeData radioTheme,
     required SBBStatusThemeData statusTheme,
@@ -223,7 +213,6 @@ class SBBTheme {
         radioTheme,
         controlStyles,
         headerBoxStyle,
-        groupStyle,
         statusTheme,
         switchTheme,
         textTheme,
