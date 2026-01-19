@@ -1,5 +1,9 @@
+![banner](Banner.jpg)
+
 [![build](https://github.com/SchweizerischeBundesbahnen/design_system_flutter/actions/workflows/nightly-build.yaml/badge.svg)](https://github.com/SchweizerischeBundesbahnen/design_system_flutter/actions/workflows/nightly-build.yaml)
 [![pub package](https://img.shields.io/pub/v/sbb_design_system_mobile.svg)](https://pub.dev/packages/sbb_design_system_mobile)
+
+<img src="https://custom-icon-badges.demolab.com/badge/baked%20by%20appbakery-212121?style=for-the-badge&logo=app_bakery_logo_white" alt="Baked by AppBakery Badge"/>
 
 This Flutter package contains official UI elements of the SBB (Swiss Federal Railways) [Design System Mobile].
 It allows an easy integration of SBB theming to your Flutter app (with the possibility of a custom color theming).
