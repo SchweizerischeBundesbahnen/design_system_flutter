@@ -9,6 +9,14 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+### Added
+
+- Added `SBBSpacing` with spacings according to SBB Design System
+
+### Deprecated
+
+- `sbbDefaultSpacing`: use `SBBSpacing.medium` instead
+
 ## [4.4.0] - 2025-12-18
 
 ### Added
