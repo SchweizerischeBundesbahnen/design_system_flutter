@@ -17,6 +17,10 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 - `sbbDefaultSpacing`: use `SBBSpacing.medium` instead
 
+### Fixed
+
+- `SBBIconButtonSmall`: `key` parameter is correctly handled in parent class (#473)
+
 ## [4.4.0] - 2025-12-18
 
 ### Added
