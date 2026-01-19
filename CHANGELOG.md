@@ -47,6 +47,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ### Removed
 
+- Removed convenience methods `SBBTheme.allStates` and `SBBTheme.resolveStatesWith` - use methods on `WidgetStateProperty`
 - Removed `SBBIconButtonLarge`: use `SBBTertiaryButton` with only `iconData` or `icon` - see [v5 migration guide]
 - Removed `SBBIconButtonSmall`: use `SBBTertiaryButtonSmall` with only `iconData` or `icon` - see [v5 migration guide]
 - Removed `buttonStyles` argument in `SBBTheme`: use `primaryButtonTheme`, `secondaryButtonTheme` and
@@ -57,6 +58,9 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Removed `text` of `SBBStatus` - see [v5 migration guide]
 - Removed `onChanged` & `groupValue` from `SBBRadio` & `SBBRadioListItem` - see [v5 migration guide]
 - Removed `padding` from `SBBRadio` - moved to `SBBRadioStyle` - see [v5 migration guide]
+- Removed deprecated `SBBGroupStyle`, use `SBBContentBoxThemeData` instead
+- Removed `SBBGroupStyle.of(context)` and `SBBContentBoxStyle.of(context)` accessor, use `Theme.of(context).sbbContentBoxTheme` instead
+- Removed deprecated `SBBGroup`
 
 
 ## [4.4.0] - 2025-12-18

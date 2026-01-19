@@ -10,7 +10,7 @@ import 'package:sbb_design_system_mobile/src/switch/theme/default_sbb_switch_the
 import '../button/theme/default_button_themes.dart';
 import '../container/theme/default_sbb_content_box_theme_data.dart';
 import '../list_item/theme/default_sbb_list_item_theme_data.dart';
-import '../status/theme/default_sbb_status_theme.dart';
+import '../status/theme/default_sbb_status_theme_data.dart';
 
 const sbbDefaultSpacing = 16.0;
 
@@ -27,7 +27,6 @@ class SBBTheme {
     SBBChipThemeData? chipTheme,
     SBBContentBoxThemeData? contentBoxTheme,
     SBBControlStyles? controlStyles,
-    @Deprecated('Use contentBoxTheme instead') SBBContentBoxStyle? groupStyle,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBListItemThemeData? listItemTheme,
     SBBRadioThemeData? radioTheme,
@@ -47,7 +46,6 @@ class SBBTheme {
     contentBoxTheme: contentBoxTheme,
     radioTheme: radioTheme,
     controlStyles: controlStyles,
-    groupStyle: groupStyle,
     headerBoxStyle: headerBoxStyle,
     listItemTheme: listItemTheme,
     statusTheme: statusTheme,
@@ -65,7 +63,6 @@ class SBBTheme {
     SBBCheckboxThemeData? checkboxTheme,
     SBBChipThemeData? chipTheme,
     SBBContentBoxThemeData? contentBoxTheme,
-    @Deprecated('Use contentBoxTheme instead') SBBContentBoxStyle? groupStyle,
     SBBRadioThemeData? radioTheme,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
@@ -88,7 +85,6 @@ class SBBTheme {
     controlStyles: controlStyles,
     headerBoxStyle: headerBoxStyle,
     listItemTheme: listItemTheme,
-    groupStyle: groupStyle,
     statusTheme: statusTheme,
     switchTheme: switchTheme,
     textTheme: textTheme,
@@ -106,7 +102,6 @@ class SBBTheme {
     SBBChipThemeData? chipTheme,
     SBBControlStyles? controlStyles,
     SBBContentBoxThemeData? contentBoxTheme,
-    @Deprecated('Use contentBoxTheme instead') SBBGroupStyle? groupStyle,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBListItemThemeData? listItemTheme,
     SBBRadioThemeData? radioTheme,
@@ -119,13 +114,13 @@ class SBBTheme {
     final defaultBaseStyle = SBBBaseStyle.$default(brightness: brightness, boldFont: boldFont);
     final mergedBaseStyle = baseStyle.merge(defaultBaseStyle);
 
-    final defaultPrimaryButtonTheme = DefaultSBBPrimaryButtonTheme(mergedBaseStyle);
+    final defaultPrimaryButtonTheme = DefaultSBBPrimaryButtonThemeData(mergedBaseStyle);
     final mergedPrimaryButtonTheme = defaultPrimaryButtonTheme.merge(primaryButtonTheme);
 
-    final defaultSecondaryButtonTheme = DefaultSBBSecondaryButtonTheme(mergedBaseStyle);
+    final defaultSecondaryButtonTheme = DefaultSBBSecondaryButtonThemeData(mergedBaseStyle);
     final mergedSecondaryButtonTheme = defaultSecondaryButtonTheme.merge(secondaryButtonTheme);
 
-    final defaultTertiaryButtonTheme = DefaultSBBTertiaryButtonTheme(mergedBaseStyle);
+    final defaultTertiaryButtonTheme = DefaultSBBTertiaryButtonThemeData(mergedBaseStyle);
     final mergedTertiaryButtonTheme = defaultTertiaryButtonTheme.merge(tertiaryButtonTheme);
 
     final defaultCheckboxTheme = DefaultSBBCheckboxThemeData(mergedBaseStyle);
@@ -137,11 +132,8 @@ class SBBTheme {
     final defaultControlStyles = SBBControlStyles.$default(baseStyle: mergedBaseStyle);
     final mergedControlStyles = controlStyles.merge(defaultControlStyles);
 
-    final defaultContentBoxTheme = DefaultSBBContentBoxTheme(baseStyle: mergedBaseStyle);
+    final defaultContentBoxTheme = DefaultSBBContentBoxThemeData(baseStyle: mergedBaseStyle);
     final mergedContentBoxTheme = defaultContentBoxTheme.merge(contentBoxTheme);
-
-    final defaultGroupStyle = SBBContentBoxStyle.$default(baseStyle: mergedBaseStyle);
-    final mergedGroupStyle = groupStyle.merge(defaultGroupStyle);
 
     final defaultHeaderBoxStyle = SBBHeaderBoxStyle.$default(baseStyle: mergedBaseStyle);
     final mergedHeaderBoxStyle = headerBoxStyle.merge(defaultHeaderBoxStyle);
@@ -152,7 +144,7 @@ class SBBTheme {
     final defaultRadioTheme = DefaultSBBRadioThemeData(mergedBaseStyle);
     final mergedRadioTheme = defaultRadioTheme.merge(radioTheme);
 
-    final defaultStatusTheme = DefaultSBBStatusTheme(baseStyle: mergedBaseStyle);
+    final defaultStatusTheme = DefaultSBBStatusThemeData(baseStyle: mergedBaseStyle);
     final mergedStatusTheme = defaultStatusTheme.merge(statusTheme);
 
     final defaultSwitchTheme = DefaultSBBSwitchThemeData(mergedBaseStyle);
@@ -174,7 +166,6 @@ class SBBTheme {
       chipTheme: mergedChipTheme,
       controlStyles: mergedControlStyles,
       contentBoxTheme: mergedContentBoxTheme,
-      groupStyle: mergedGroupStyle,
       headerBoxStyle: mergedHeaderBoxStyle,
       listItemTheme: mergedListItemTheme,
       radioTheme: mergedRadioTheme,
@@ -195,7 +186,6 @@ class SBBTheme {
     required SBBChipThemeData chipTheme,
     required SBBContentBoxThemeData contentBoxTheme,
     required SBBControlStyles controlStyles,
-    @Deprecated('Use contentBoxTheme instead.') required SBBContentBoxStyle groupStyle,
     required SBBHeaderBoxStyle headerBoxStyle,
     required SBBListItemThemeData listItemTheme,
     required SBBRadioThemeData radioTheme,
@@ -233,7 +223,6 @@ class SBBTheme {
         chipTheme,
         controlStyles,
         headerBoxStyle,
-        groupStyle,
         listItemTheme,
         radioTheme,
         statusTheme,
@@ -242,43 +231,5 @@ class SBBTheme {
         toastStyle,
       ],
     );
-  }
-
-  /// Convenience method for easier use of [WidgetStateProperty.all].
-  static WidgetStateProperty<T> allStates<T>(T value) {
-    return WidgetStateProperty.all(value);
-  }
-
-  /// Convenience method for easier use of [WidgetStateProperty.resolveWith].
-  static WidgetStateProperty<T?> resolveStatesWith<T>({
-    required T defaultValue,
-    T? pressedValue,
-    T? disabledValue,
-    T? hoveredValue,
-    String? parent,
-    T? selectedValue,
-  }) {
-    return WidgetStateProperty.resolveWith((states) {
-      // disabled
-      if (states.contains(WidgetState.disabled) && disabledValue != null) {
-        return disabledValue;
-      }
-
-      // pressed / focused
-      if (states.any({WidgetState.pressed, WidgetState.focused}.contains) && pressedValue != null) {
-        return pressedValue;
-      }
-      // hovered
-      if (states.contains(WidgetState.hovered) && hoveredValue != null) {
-        return hoveredValue;
-      }
-
-      // selected
-      if (states.contains(WidgetState.selected) && selectedValue != null) {
-        return selectedValue;
-      }
-      // default
-      return defaultValue;
-    });
   }
 }
