@@ -4,7 +4,8 @@ import 'package:sbb_design_system_mobile/src/container/theme/default_sbb_content
 
 import 'theme.dart';
 
-const sbbDefaultSpacing = 16.0;
+@Deprecated('Use SBBSpacing.medium and others instead.')
+const sbbDefaultSpacing = SBBSpacing.medium;
 
 class SBBTheme {
   SBBTheme._();
