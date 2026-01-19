@@ -72,7 +72,6 @@ class SBBIconButtonSmall extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _SBBIconButtonSmallRaw(
-      key: key,
       icon: icon,
       onPressed: onPressed,
       style: SBBButtonStyles.of(context).iconSmallStyle,
@@ -99,7 +98,6 @@ class SBBIconButtonSmallNegative extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _SBBIconButtonSmallRaw(
-      key: key,
       icon: icon,
       onPressed: onPressed,
       style: SBBButtonStyles.of(context).iconSmallNegativeStyle,
@@ -111,7 +109,6 @@ class SBBIconButtonSmallNegative extends StatelessWidget {
 /// Base widget for [SBBIconButtonSmall] and [SBBIconButtonSmallNegative].
 class _SBBIconButtonSmallRaw extends StatelessWidget {
   const _SBBIconButtonSmallRaw({
-    super.key,
     required this.icon,
     required this.onPressed,
     required this.style,
