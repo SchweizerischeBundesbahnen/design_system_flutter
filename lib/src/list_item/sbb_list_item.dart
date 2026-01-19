@@ -543,6 +543,7 @@ class _SBBListItemState extends State<SBBListItem> {
 
     if (widget.links?.isNotEmpty ?? false) {
       child = Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           child,
           ..._divideLinks(context: context, links: widget.links!),
