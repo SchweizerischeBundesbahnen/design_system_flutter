@@ -4,6 +4,13 @@ import 'package:flutter/services.dart';
 import '../../sbb_design_system_mobile.dart';
 import 'sbb_text_field_underline.dart';
 
+/// TODO: remove the isLastElement b*****it
+/// TODO: add easy params of underlying TextField
+/// TODO: create and add SBBInputDecoration to params with moved trailing, leading and so forth
+/// TODO: add themeData according to v5.0.0 with
+/// TODO: improve docs
+/// TODO: add migration guideline & CHANGELOG
+
 /// The SBBTextField.
 ///
 /// A text field lets the user enter text, either with hardware keyboard or with
