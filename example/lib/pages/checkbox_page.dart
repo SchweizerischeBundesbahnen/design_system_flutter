@@ -81,146 +81,133 @@ class CheckboxPageState extends State<CheckboxPage> {
               const SBBListHeader('Checkbox Item - List'),
               SBBContentBox(
                 child: Column(
-                  children: [
-                    SBBCheckboxListItem(
-                      value: _listItemValue1,
-                      label: 'Label',
-                      allowMultilineLabel: true,
-                      onChanged: _isEnabled ? (value) => setState(() => _listItemValue1 = value) : null,
-                    ),
-                    SBBCheckboxListItem(
-                      value: _listItemValue2,
-                      label: 'Tristate',
-                      tristate: true,
-                      onChanged: _isEnabled ? (value) => setState(() => _listItemValue2 = value) : null,
-                    ),
-                    SBBCheckboxListItem(
-                      value: _listItemValue4,
-                      label: 'Leading Icon',
-                      onChanged: _isEnabled ? (value) => setState(() => _listItemValue4 = value) : null,
-                      leadingIcon: SBBIcons.alarm_clock_small,
-                    ),
-                    SBBCheckboxListItem(
-                      value: _listItemValue5,
-                      label: 'Leading and Trailing Icon',
-                      onChanged: _isEnabled ? (value) => setState(() => _listItemValue5 = value) : null,
-                      leadingIcon: SBBIcons.alarm_clock_small,
-                      trailingIcon: SBBIcons.dog_small,
-                    ),
-                    SBBCheckboxListItem(
-                      value: _listItemValue3,
-                      label: 'Button',
-                      onChanged: _isEnabled ? (value) => setState(() => _listItemValue3 = value) : null,
-                      trailingIcon: SBBIcons.circle_information_small_small,
-                      onCallToAction: () => sbbToast.show(title: 'Button pressed'),
-                    ),
-                    SBBCheckboxListItem.custom(
-                      value: _listItemValue6,
-                      label: 'Custom trailing Widget',
-                      onChanged: _isEnabled ? (value) => setState(() => _listItemValue6 = value) : null,
-                      trailingWidget: Padding(
-                        padding: EdgeInsetsDirectional.only(top: sbbDefaultSpacing / 4 * 3, end: sbbDefaultSpacing),
-                        child: Text('CHF 0.99'),
+                  children: SBBListItem.divideListItems(
+                    context: context,
+                    items: [
+                      SBBCheckboxListItem(
+                        value: _listItemValue1,
+                        titleText: 'Label',
+                        onChanged: _isEnabled ? (value) => setState(() => _listItemValue1 = value) : null,
                       ),
-                    ),
-                    SBBCheckboxListItem(
-                      value: _listItemValue7,
-                      label: 'Multiline Label with\nSecondary Label',
-                      allowMultilineLabel: true,
-                      secondaryLabel:
-                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut convallis leo et metus semper hendrerit. Duis nec nunc a ligula cursus vulputate. Donec sed elit ultricies, euismod erat et, eleifend augue.',
-                      onChanged: _isEnabled ? (value) => setState(() => _listItemValue7 = value) : null,
-                    ),
-                    SBBCheckboxListItem(
-                      value: _listItemValue8,
-                      label: 'Loading',
-                      secondaryLabel: 'This will stop loading if selected.',
-                      onChanged: _isEnabled ? (value) => setState(() => _listItemValue8 = value!) : null,
-                      isLoading: !_listItemValue8,
-                      isLastElement: true,
-                    ),
-                  ],
+                      SBBCheckboxListItem(
+                        value: _listItemValue2,
+                        titleText: 'Tristate',
+                        tristate: true,
+                        onChanged: _isEnabled ? (value) => setState(() => _listItemValue2 = value) : null,
+                      ),
+                      SBBCheckboxListItem(
+                        value: _listItemValue4,
+                        titleText: 'Leading Icon',
+                        onChanged: _isEnabled ? (value) => setState(() => _listItemValue4 = value) : null,
+                        leadingIconData: SBBIcons.alarm_clock_small,
+                      ),
+                      SBBCheckboxListItem(
+                        value: _listItemValue5,
+                        titleText: 'Leading and Trailing Icon',
+                        onChanged: _isEnabled ? (value) => setState(() => _listItemValue5 = value) : null,
+                        leadingIconData: SBBIcons.alarm_clock_small,
+                        trailingIconData: SBBIcons.dog_small,
+                      ),
+                      SBBCheckboxListItem(
+                        value: _listItemValue3,
+                        titleText: 'Button',
+                        onChanged: _isEnabled ? (value) => setState(() => _listItemValue3 = value) : null,
+                        padding: SBBListItemStyle.defaultPadding.copyWith(right: 8),
+                        trailing: SBBTertiaryButtonSmall(
+                          iconData: SBBIcons.circle_information_small_small,
+                          onPressed: _isEnabled ? () => sbbToast.show(title: 'Button pressed') : null,
+                        ),
+                      ),
+                      SBBCheckboxListItem(
+                        value: _listItemValue6,
+                        titleText: 'Custom Trailing',
+                        onChanged: _isEnabled ? (value) => setState(() => _listItemValue6 = value) : null,
+                        trailing: Text('CHF 0.99'),
+                      ),
+                      SBBCheckboxListItem(
+                        value: _listItemValue7,
+                        title: Text('Multiline Label with\nSecondary Label'),
+                        subtitleText:
+                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut convallis leo et metus semper hendrerit. Duis nec nunc a ligula cursus vulputate. Donec sed elit ultricies, euismod erat et, eleifend augue.',
+                        onChanged: _isEnabled ? (value) => setState(() => _listItemValue7 = value) : null,
+                      ),
+                      SBBCheckboxListItem(
+                        value: _listItemValue8,
+                        titleText: 'Loading',
+                        subtitleText: 'This will stop loading if selected.',
+                        onChanged: _isEnabled ? (value) => setState(() => _listItemValue8 = value!) : null,
+                        isLoading: !_listItemValue8,
+                      ),
+                    ],
+                  ).toList(growable: false),
                 ),
               ),
               const SizedBox(height: sbbDefaultSpacing),
               const SBBListHeader('Checkbox Item - Boxed'),
-              Column(
-                spacing: sbbDefaultSpacing * 0.5,
-                children: [
-                  SBBContentBox(
-                    child: SBBCheckboxListItem.boxed(
+              Padding(
+                padding: const EdgeInsets.only(bottom: sbbDefaultSpacing * 4),
+                child: Column(
+                  spacing: sbbDefaultSpacing * 0.5,
+                  children: [
+                    SBBCheckboxListItemBoxed(
                       value: _listItemValue1,
-                      label: 'Label',
-                      allowMultilineLabel: true,
+                      titleText: 'Label',
                       onChanged: _isEnabled ? (value) => setState(() => _listItemValue1 = value) : null,
                     ),
-                  ),
-                  SBBContentBox(
-                    child: SBBCheckboxListItem.boxed(
+                    SBBCheckboxListItemBoxed(
                       value: _listItemValue2,
-                      label: 'Tristate',
+                      titleText: 'Tristate',
                       tristate: true,
                       onChanged: _isEnabled ? (value) => setState(() => _listItemValue2 = value) : null,
                     ),
-                  ),
-                  SBBContentBox(
-                    child: SBBCheckboxListItem.boxed(
+                    SBBCheckboxListItemBoxed(
                       value: _listItemValue4,
-                      label: 'Leading Icon',
+                      titleText: 'Leading Icon',
                       onChanged: _isEnabled ? (value) => setState(() => _listItemValue4 = value) : null,
-                      leadingIcon: SBBIcons.alarm_clock_small,
+                      leadingIconData: SBBIcons.alarm_clock_small,
                     ),
-                  ),
-                  SBBContentBox(
-                    child: SBBCheckboxListItem.boxed(
+                    SBBCheckboxListItemBoxed(
                       value: _listItemValue5,
-                      label: 'Leading and Trailing Icon',
+                      titleText: 'Leading and Trailing Icon',
                       onChanged: _isEnabled ? (value) => setState(() => _listItemValue5 = value) : null,
-                      leadingIcon: SBBIcons.alarm_clock_small,
-                      trailingIcon: SBBIcons.dog_small,
+                      leadingIconData: SBBIcons.alarm_clock_small,
+                      trailingIconData: SBBIcons.dog_small,
                     ),
-                  ),
-                  SBBContentBox(
-                    child: SBBCheckboxListItem.boxed(
+                    SBBCheckboxListItemBoxed(
                       value: _listItemValue3,
-                      label: 'Button',
+                      titleText: 'Button',
                       onChanged: _isEnabled ? (value) => setState(() => _listItemValue3 = value) : null,
-                      trailingIcon: SBBIcons.circle_information_small_small,
-                      onCallToAction: () => sbbToast.show(title: 'Button pressed'),
-                    ),
-                  ),
-                  SBBContentBox(
-                    child: SBBCheckboxListItem.custom(
-                      value: _listItemValue6,
-                      label: 'Custom trailing Widget',
-                      onChanged: _isEnabled ? (value) => setState(() => _listItemValue6 = value) : null,
-                      trailingWidget: Padding(
-                        padding: EdgeInsetsDirectional.only(top: sbbDefaultSpacing / 4 * 3, end: sbbDefaultSpacing),
-                        child: Text('CHF 0.99'),
+                      padding: SBBListItemStyle.defaultPadding.copyWith(right: 8),
+                      trailing: SBBTertiaryButtonSmall(
+                        iconData: SBBIcons.circle_information_small_small,
+                        onPressed: _isEnabled ? () => sbbToast.show(title: 'Button pressed') : null,
                       ),
                     ),
-                  ),
-                  SBBContentBox(
-                    child: SBBCheckboxListItem.boxed(
-                      value: _listItemValue7,
-                      label: 'Multiline Label with\nSecondary Label',
-                      allowMultilineLabel: true,
-                      secondaryLabel:
-                          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut convallis leo et metus semper hendrerit. '
-                          'Duis nec nunc a ligula cursus vulputate. Donec sed elit ultricies, euismod erat et, eleifend augue.',
-                      onChanged: _isEnabled ? (value) => setState(() => _listItemValue7 = value) : null,
+                    SBBCheckboxListItemBoxed(
+                      value: _listItemValue6,
+                      titleText: 'Custom Trailing',
+                      onChanged: _isEnabled ? (value) => setState(() => _listItemValue6 = value) : null,
+                      trailing: Text('CHF 0.99'),
                     ),
-                  ),
-                  SBBContentBox(
-                    child: SBBCheckboxListItem.boxed(
+                    SBBContentBox(
+                      child: SBBCheckboxListItemBoxed(
+                        value: _listItemValue7,
+                        title: Text('Multiline Label with\nSecondary Label'),
+                        subtitleText:
+                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut convallis leo et metus semper hendrerit. '
+                            'Duis nec nunc a ligula cursus vulputate. Donec sed elit ultricies, euismod erat et, eleifend augue.',
+                        onChanged: _isEnabled ? (value) => setState(() => _listItemValue7 = value) : null,
+                      ),
+                    ),
+                    SBBCheckboxListItemBoxed(
                       value: _listItemValue8,
-                      label: 'Loading',
-                      secondaryLabel: 'This will not stop.',
+                      titleText: 'Loading',
+                      subtitleText: 'This will not stop.',
                       onChanged: _isEnabled ? (value) => setState(() => _listItemValue8 = value!) : null,
                       isLoading: true,
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ],
           ),

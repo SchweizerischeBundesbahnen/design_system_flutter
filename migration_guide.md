@@ -49,6 +49,58 @@ Use the `foregroundBuilder` of the `SBBButtonStyle` as a replacement
 * access the theme using `Theme.of(context).sbbChipTheme`
 * customize a chip by setting its `style` parameter in the constructor
 
+## ListItem
+
+The list item has received a lot of changes. In general the content is completely customizable now.
+
+### Usage
+* replace `title` with `titleText` to have a standard styled title
+* replace `leadingIcon` with `leadingIconData` to have a standard style leading icon Widget
+* replace `subtitle` with `subtitleText` to have a standard styled subtitle
+* replace `trailingIcon` with `trailingIconData` to have standard styled trailing icon Widget
+* use `title`, `subtitle`, `leading` and `trailing` to completely customize the content with custom Widgets
+* set the gap widths between `title`, `subtitle` and `trailing` with the corresponding parameters ()
+  * `trailingHorizontalGapWidth`
+  * `leadingHorizontalGapWidth`
+  * `subtitleVerticalGapHeight`
+* If you want a multi line title, use `title` with your own `Text` Widget, the `titleText` will clamp to one line.
+* replace `onPressed` with `onTap`
+* replace `buttonIcon` and `onPressedButton` from the `button` constructor with a custom trailing widget. Do not forget
+  to adjust the `padding`, since the `SBBTertiaryButtonSmall` has an inherent padding to the right
+* `isLastElement` was removed, use the static method `divideListItems` to separate list items with a SBB themed divider
+  (this is analogous to the Material implementation)
+
+### Theming & Styling
+* customize the theme of the `SBBListItem` with `SBBListThemeData` as input to `SBBTheme`
+* access the theme using `Theme.of(context).sbbListTheme`
+* customize a list item by setting its `style` parameter in the constructor
+
+### Convenience wrappers SBBRadioListItem, SBBCheckboxListItem and SBBSwitchListItem
+* basically, all of these have an underlying `SBBListItem` with either a custom trailing or leading widget
+* the `onTap` callback is overridden to call the `onChanged` callbacks of the contents
+* the parameters are a union between the individual content and a standard `SBBListItem`
+
+### Boxed Variant
+* use `SBBListItemBoxed`, `SBBRadioListItemBoxed`, `SBBCheckboxListItemBoxed` and `SBBSwitchListItemBoxed`
+* You do not need to wrap this in a `SBBContentBox` anymore
+
+## Radio
+
+### Usage
+* the `onChanged` and `groupValue` parameters are obsolete and moved to the corresponding `SBBRadioGroup` ancestor
+* see the [official Flutter guide](https://docs.flutter.dev/release/breaking-changes/radio-api-redesign) for
+  usage of the new radio group concept
+  * instead of a `RadioGroup`, use a `SBBRadioGroup`
+* added: use `toggleable` for allowing a radio to return to unselected state without
+  selecting a different radio in its group
+
+This also accounts for the `SBBRadioListItem`.
+
+### Theming & Styling
+* `padding`: replace the checkbox `padding` parameter with the `SBBRadioStyle.tapTargetPadding` to increase tappable area
+* customize the theme of all `SBBRadio` with `SBBRadioThemeData`
+* access the theme using `Theme.of(context).sbbRadioTheme`
+* customize an individual radio by setting its `style` parameter in the constructor
 
 ## Status
 
@@ -61,24 +113,6 @@ Use the `foregroundBuilder` of the `SBBButtonStyle` as a replacement
 * access the theme using `Theme.of(context).sbbStatusTheme`
 * customize individual status by setting its `style` parameter in the constructor
 
-
-## Radio
-
-### Usage
-* the `onChanged` and `groupValue` parameters are obsolete and moved to the corresponding `SBBRadioGroup` ancestor
-* see the [official Flutter guide](https://docs.flutter.dev/release/breaking-changes/radio-api-redesign) for 
-  usage of the new radio group concept
-  * instead of a `RadioGroup`, use a `SBBRadioGroup`
-* added: use `toggleable` for allowing a radio to return to unselected state without 
-  selecting a different radio in its group
-
-This also accounts for the `SBBRadioListItem`.
-
-### Theming & Styling
-* `padding`: replace the checkbox `padding` parameter with the `SBBRadioStyle.tapTargetPadding` to increase tappable area
-* customize the theme of all `SBBRadio` with `SBBRadioThemeData`
-* access the theme using `Theme.of(context).sbbRadioTheme`
-* customize an individual radio by setting its `style` parameter in the constructor
 
 
 ## Switch

@@ -1,216 +1,225 @@
 import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
-import '../shared/bottom_loading_indicator.dart';
 
-/// The SBB Switch List Item.
-/// Use according to [documentation](https://digital.sbb.ch/en/design-system/mobile/components/switch/)
+/// A convenience wrapper that combines [SBBListItem] with [SBBSwitch] as the trailing widget.
+///
+/// This widget automatically handles switch state changes and positions the switch
+/// as the trailing content of the list item.
+///
+/// The same result can be achieved by manually placing an [SBBSwitch] in the
+/// [SBBListItem.trailing] parameter.
+///
+/// ## Sample code
+///
+/// ```dart
+/// SBBSwitchListItem(
+///   value: _isEnabled,
+///   onChanged: (newValue) {
+///     setState(() {
+///       _isEnabled = newValue;
+///     });
+///   },
+///   titleText: 'Enable notifications',
+///   subtitleText: 'Receive push notifications',
+/// )
+/// ```
 ///
 /// See also:
 ///
-/// * [SBBSwitch], which is a part of this widget.
-/// * [SBBListItem], a widget with semantics similar to [SBBSwitchListItem].
-/// * [SBBRadio], for selecting among a set of explicit values.
-/// * [SBBSegmentedButton], for selecting among a set of explicit values.
-/// * [SBBSlider], for selecting a value in a range.
-///
-/// Relates to a [SwitchListTile] in the Material specifications.
+///  * [SBBSwitch], the switch widget used as trailing content.
+///  * [SBBListItem], the underlying list item widget.
+///  * [SBBSwitchListItemBoxed], a boxed variant of this widget.
 class SBBSwitchListItem extends StatelessWidget {
-  /// Creates a combination of a [SBBListItem] and a [SBBSwitch].
-  ///
-  /// The [SBBSwitchListItem] itself does not maintain any state. Instead, when the
-  /// state of the checkbox changes, the widget calls the [onChanged] callback.
-  /// Most widgets that use a checkbox will listen for the [onChanged] callback
-  /// and rebuild the checkbox tile with a new [value] to update the visual
-  /// appearance of the checkbox.
-  ///
-  /// The following arguments are required:
-  ///
-  /// * [value], which determines whether the [SBBSwitch] is 'on'.
-  /// * [title], the primary text written on [SBBSwitchListItem].
-  /// * [onChanged], which is called when the value of the Switch should
-  ///   change. It can be set to null to disable the [SBBSwitch].
-  ///
-  /// Set the [isLastElement] true for the last item in a list to not show any Divider.
-  ///
-  /// The [links] display below the [SBBSwitchListItem].
-  ///
-  /// If [isLoading] is true, a bottom loading indicator will be displayed.
-  ///
-  /// Check the [SBBSwitchListItem.custom] constructor for a complete customization.
-  SBBSwitchListItem({
-    Key? key,
-    IconData? leadingIcon,
-    required String title,
-    String? subtitle,
-    bool allowMultilineLabel = false,
-    bool isLastElement = false,
-    required bool value,
-    required ValueChanged<bool>? onChanged,
-    List<SBBSwitchListItemLink>? links,
-    bool isLoading = false,
-  }) : this.custom(
-         key: key,
-         leadingIcon: leadingIcon,
-         title: title,
-         subtitle: subtitle,
-         allowMultilineLabel: allowMultilineLabel,
-         isLastElement: isLastElement,
-         value: value,
-         onChanged: onChanged,
-         isLoading: isLoading,
-         linksWidgets: links
-             ?.map(
-               (linkItem) => SBBListItem(
-                 title: linkItem.text,
-                 onPressed: linkItem.onPressed,
-                 isLastElement: true,
-                 trailingIcon: SBBIcons.chevron_small_right_small,
-               ),
-             )
-             .toList(),
-       );
-
-  /// Use this in combination with a [SBBContentBox] to create a boxed variant of the [SBBSwitchListItem].
-  ///
-  /// ```dart
-  /// SBBContentBox(
-  ///   child: SBBSwitchListItem(
-  ///     value: _throwShotAway,
-  ///     onChanged: (bool newValue) {
-  ///       setState(() {
-  ///         _throwShotAway = newValue;
-  ///       });
-  ///     },
-  ///     title: 'Example',
-  ///   )
-  /// )
-  ///
-  /// ```
-  ///
-  SBBSwitchListItem.boxed({
-    Key? key,
-    IconData? leadingIcon,
-    required String title,
-    String? subtitle,
-    bool allowMultilineLabel = false,
-    required bool value,
-    required ValueChanged<bool>? onChanged,
-    List<SBBSwitchListItemLink>? links,
-    bool isLoading = false,
-  }) : this.custom(
-         key: key,
-         leadingIcon: leadingIcon,
-         title: title,
-         subtitle: subtitle,
-         allowMultilineLabel: allowMultilineLabel,
-         isLastElement: true,
-         value: value,
-         onChanged: onChanged,
-         isLoading: isLoading,
-         linksWidgets: links
-             ?.map(
-               (linkItem) => SBBListItem(
-                 title: linkItem.text,
-                 onPressed: linkItem.onPressed,
-                 isLastElement: true,
-                 trailingIcon: SBBIcons.chevron_small_right_small,
-               ),
-             )
-             .toList(),
-       );
-
-  /// Allows complete customization of the [SBBSwitchListItem].
-  const SBBSwitchListItem.custom({
+  const SBBSwitchListItem({
     super.key,
-    required this.value,
-    required this.title,
-    this.allowMultilineLabel = false,
+    this.leading,
+    this.leadingIconData,
+    this.title,
+    this.titleText,
     this.subtitle,
-    required this.onChanged,
-    this.isLastElement = true,
-    this.leadingIcon,
-    this.linksWidgets,
+    this.subtitleText,
+    this.onLongPress,
+    this.enabled = true,
     this.isLoading = false,
+    this.links,
+    this.focusNode,
+    this.autofocus = false,
+    this.enableFeedback = true,
+    this.padding,
+    this.trailingHorizontalGapWidth,
+    this.leadingHorizontalGapWidth,
+    this.subtitleVerticalGapHeight,
+    this.listItemStyle,
+    required this.value,
+    required this.onChanged,
+    this.switchStyle,
+    this.switchSemanticLabel,
   });
 
-  /// Whether this switch is on or off.
+  /// Additional leading widget displayed before the title.
+  final Widget? leading;
+
+  /// Icon data for leading icon displayed before the title.
+  final IconData? leadingIconData;
+
+  /// {@macro sbb_design_system.list_item.title}
+  final Widget? title;
+
+  /// {@macro sbb_design_system.list_item.titleText}
+  final String? titleText;
+
+  /// {@macro sbb_design_system.list_item.subtitle}
+  final Widget? subtitle;
+
+  /// {@macro sbb_design_system.list_item.subtitleText}
+  final String? subtitleText;
+
+  /// {@macro sbb_design_system.list_item.onLongPress}
+  ///
+  /// Within the [SBBSwitchListItem], the [SBBListItem.onTap] calls the [onChanged] callback with the
+  /// updated value.
+  final GestureLongPressCallback? onLongPress;
+
+  /// {@macro sbb_design_system.list_item.enabled}
+  final bool enabled;
+
+  /// {@macro sbb_design_system.list_item.isLoading}
+  final bool isLoading;
+
+  /// {@macro sbb_design_system.list_item.links}
+  final Iterable<Widget>? links;
+
+  /// {@macro flutter.widgets.Focus.focusNode}
+  final FocusNode? focusNode;
+
+  /// {@macro flutter.widgets.Focus.autofocus}
+  final bool autofocus;
+
+  /// {@macro flutter.material.ListTile.enableFeedback}
+  final bool enableFeedback;
+
+  /// {@macro sbb_design_system.list_item.padding}
+  final EdgeInsetsGeometry? padding;
+
+  /// {@macro sbb_design_system.list_item.trailingHorizontalGapWidth}
+  final double? trailingHorizontalGapWidth;
+
+  /// {@macro sbb_design_system.list_item.leadingHorizontalGapWidth}
+  final double? leadingHorizontalGapWidth;
+
+  /// {@macro sbb_design_system.list_item.subtitleVerticalGapHeight}
+  final double? subtitleVerticalGapHeight;
+
+  /// {@macro sbb_design_system.list_item.style}
+  final SBBListItemStyle? listItemStyle;
+
+  /// {@macro sbb_design_system.switch.value}
   final bool value;
 
-  /// Called when the user toggles the switch on or off.
+  /// {@macro sbb_design_system.switch.onChanged}
   ///
-  /// The switch passes the new value to the callback but does not actually
-  /// change state until the parent widget rebuilds the switch with the new
-  /// value.
+  /// Within the [SBBSwitchListItem], the [SBBListItem.onTap] calls the [onChanged] callback with the
+  /// updated value.
   final ValueChanged<bool>? onChanged;
 
-  /// The primary text displayed on the [SBBSwitchListItem].
-  final String title;
+  /// {@macro sbb_design_system.switch.style}
+  final SBBSwitchStyle? switchStyle;
 
-  /// Whether the primary text can stretch over multiple lines.
-  final bool allowMultilineLabel;
-
-  /// The secondary text displayed below the [title].
-  final String? subtitle;
-
-  /// Whether to display a [Divider] below this Widget.
-  final bool isLastElement;
-
-  /// The icon displayed left of the [title].
-  final IconData? leadingIcon;
-
-  /// The widgets displayed below the primary [SBBSwitchListItem].
-  final List<Widget>? linksWidgets;
-
-  /// Whether to display a BottomLoadingIndicator on the [SBBSwitchListItem].
-  final bool isLoading;
+  /// {@macro sbb_design_system.switch.semanticLabel}
+  final String? switchSemanticLabel;
 
   @override
   Widget build(BuildContext context) {
-    final style = SBBControlStyles.of(context).listItem;
-    final enabled = onChanged != null;
-    return Material(
-      color: style?.backgroundColor,
-      child: ConstrainedBox(
-        constraints: const BoxConstraints(minHeight: 44.0),
-        child: Stack(
-          alignment: Alignment.bottomCenter,
-          children: [
-            Column(
-              children: [
-                SBBListItem.custom(
-                  leadingIcon: leadingIcon,
-                  title: title,
-                  titleMaxLines: allowMultilineLabel ? null : 1,
-                  subtitle: subtitle,
-                  subtitleMaxLines: null,
-                  onPressed: enabled ? () => onChanged?.call(!value) : null,
-                  isLastElement: true,
-                  trailingWidget: Padding(
-                    padding: const EdgeInsets.only(left: sbbDefaultSpacing * 0.5, right: sbbDefaultSpacing),
-                    child: SBBSwitch(
-                      value: value,
-                      onChanged: onChanged,
-                      style: SBBSwitchStyle(tapTargetPadding: EdgeInsets.zero),
-                    ),
-                  ),
-                ),
-                if (linksWidgets != null && linksWidgets!.isNotEmpty)
-                  ...linksWidgets!.expand((element) => [const Divider(), element]),
-              ],
-            ),
-            if (!isLastElement) const Divider(),
-            if (isLoading) const BottomLoadingIndicator(),
-          ],
-        ),
+    final trailing = SBBSwitch(
+      value: value,
+      onChanged: enabled ? onChanged : null,
+      style: (switchStyle ?? const SBBSwitchStyle()).copyWith(
+        tapTargetPadding: EdgeInsets.zero,
       ),
+      semanticLabel: switchSemanticLabel,
+    );
+
+    return SBBListItem(
+      leading: leading,
+      leadingIconData: leadingIconData,
+      title: title,
+      titleText: titleText,
+      subtitle: subtitle,
+      subtitleText: subtitleText,
+      trailing: trailing,
+      onTap: onChanged != null && enabled ? () => onChanged!(!value) : null,
+      onLongPress: onLongPress,
+      enabled: enabled,
+      isLoading: isLoading,
+      links: links,
+      focusNode: focusNode,
+      autofocus: autofocus,
+      enableFeedback: enableFeedback,
+      padding: padding,
+      trailingHorizontalGapWidth: trailingHorizontalGapWidth,
+      leadingHorizontalGapWidth: leadingHorizontalGapWidth,
+      subtitleVerticalGapHeight: subtitleVerticalGapHeight,
+      style: listItemStyle,
     );
   }
 }
 
-class SBBSwitchListItemLink {
-  SBBSwitchListItemLink({required this.text, required this.onPressed});
+/// A boxed variant of [SBBSwitchListItem] with rounded borders.
+///
+/// This widget extends [SBBSwitchListItem] and wraps the list item in an [SBBContentBox].
+///
+/// All parameters and behavior are identical to [SBBSwitchListItem].
+///
+/// ## Sample code
+///
+/// ```dart
+/// SBBSwitchListItemBoxed(
+///   value: _isEnabled,
+///   onChanged: (newValue) {
+///     setState(() {
+///       _isEnabled = newValue;
+///     });
+///   },
+///   titleText: 'Enable notifications',
+///   subtitleText: 'This item has a border',
+/// )
+/// ```
+///
+/// See also:
+///
+///  * [SBBSwitchListItem], for the standard variant without borders.
+///  * [SBBListItemBoxed], the underlying boxed list item widget.
+///  * [SBBContentBox], which provides the border and padding styling.
+class SBBSwitchListItemBoxed extends SBBSwitchListItem {
+  const SBBSwitchListItemBoxed({
+    super.key,
+    super.leading,
+    super.leadingIconData,
+    super.title,
+    super.titleText,
+    super.subtitle,
+    super.subtitleText,
+    super.onLongPress,
+    super.enabled,
+    super.isLoading,
+    super.links,
+    super.focusNode,
+    super.autofocus,
+    super.enableFeedback,
+    super.padding,
+    super.trailingHorizontalGapWidth,
+    super.leadingHorizontalGapWidth,
+    super.subtitleVerticalGapHeight,
+    super.listItemStyle,
+    required super.value,
+    required super.onChanged,
+    super.switchStyle,
+    super.switchSemanticLabel,
+  });
 
-  final String text;
-  final VoidCallback? onPressed;
+  @override
+  Widget build(BuildContext context) {
+    return SBBContentBox(child: super.build(context));
+  }
 }

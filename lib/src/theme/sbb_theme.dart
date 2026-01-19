@@ -9,6 +9,7 @@ import 'package:sbb_design_system_mobile/src/switch/theme/default_sbb_switch_the
 
 import '../button/theme/default_button_themes.dart';
 import '../container/theme/default_sbb_content_box_theme_data.dart';
+import '../list_item/theme/default_sbb_list_item_theme_data.dart';
 import '../status/theme/default_sbb_status_theme_data.dart';
 
 const sbbDefaultSpacing = 16.0;
@@ -27,6 +28,7 @@ class SBBTheme {
     SBBContentBoxThemeData? contentBoxTheme,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
+    SBBListItemThemeData? listItemTheme,
     SBBRadioThemeData? radioTheme,
     SBBStatusThemeData? statusTheme,
     SBBSwitchThemeData? switchTheme,
@@ -45,6 +47,7 @@ class SBBTheme {
     radioTheme: radioTheme,
     controlStyles: controlStyles,
     headerBoxStyle: headerBoxStyle,
+    listItemTheme: listItemTheme,
     statusTheme: statusTheme,
     switchTheme: switchTheme,
     textTheme: textTheme,
@@ -63,6 +66,7 @@ class SBBTheme {
     SBBRadioThemeData? radioTheme,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
+    SBBListItemThemeData? listItemTheme,
     SBBStatusThemeData? statusTheme,
     SBBSwitchThemeData? switchTheme,
     SBBTextTheme? textTheme,
@@ -80,6 +84,7 @@ class SBBTheme {
     radioTheme: radioTheme,
     controlStyles: controlStyles,
     headerBoxStyle: headerBoxStyle,
+    listItemTheme: listItemTheme,
     statusTheme: statusTheme,
     switchTheme: switchTheme,
     textTheme: textTheme,
@@ -98,6 +103,7 @@ class SBBTheme {
     SBBControlStyles? controlStyles,
     SBBContentBoxThemeData? contentBoxTheme,
     SBBHeaderBoxStyle? headerBoxStyle,
+    SBBListItemThemeData? listItemTheme,
     SBBRadioThemeData? radioTheme,
     SBBStatusThemeData? statusTheme,
     SBBSwitchThemeData? switchTheme,
@@ -123,23 +129,26 @@ class SBBTheme {
     final defaultChipTheme = DefaultSBBChipThemeData(mergedBaseStyle);
     final mergedChipTheme = defaultChipTheme.merge(chipTheme);
 
-    final defaultRadioTheme = DefaultSBBRadioThemeData(mergedBaseStyle);
-    final mergedRadioTheme = defaultRadioTheme.merge(radioTheme);
-
     final defaultControlStyles = SBBControlStyles.$default(baseStyle: mergedBaseStyle);
     final mergedControlStyles = controlStyles.merge(defaultControlStyles);
 
+    final defaultContentBoxTheme = DefaultSBBContentBoxThemeData(baseStyle: mergedBaseStyle);
+    final mergedContentBoxTheme = defaultContentBoxTheme.merge(contentBoxTheme);
+
     final defaultHeaderBoxStyle = SBBHeaderBoxStyle.$default(baseStyle: mergedBaseStyle);
     final mergedHeaderBoxStyle = headerBoxStyle.merge(defaultHeaderBoxStyle);
+
+    final defaultListItemTheme = DefaultSBBListItemThemeData(baseStyle: mergedBaseStyle);
+    final mergedListItemTheme = defaultListItemTheme.merge(listItemTheme);
+
+    final defaultRadioTheme = DefaultSBBRadioThemeData(mergedBaseStyle);
+    final mergedRadioTheme = defaultRadioTheme.merge(radioTheme);
 
     final defaultStatusTheme = DefaultSBBStatusThemeData(baseStyle: mergedBaseStyle);
     final mergedStatusTheme = defaultStatusTheme.merge(statusTheme);
 
     final defaultSwitchTheme = DefaultSBBSwitchThemeData(mergedBaseStyle);
     final mergedSwitchTheme = defaultSwitchTheme.merge(switchTheme);
-
-    final defaultContentBoxTheme = DefaultSBBContentBoxThemeData(baseStyle: mergedBaseStyle);
-    final mergedContentBoxTheme = defaultContentBoxTheme.merge(contentBoxTheme);
 
     final defaultTextTheme = SBBTextTheme.$default(baseStyle: mergedBaseStyle);
     final mergedTextTheme = defaultTextTheme.merge(textTheme);
@@ -158,6 +167,7 @@ class SBBTheme {
       controlStyles: mergedControlStyles,
       contentBoxTheme: mergedContentBoxTheme,
       headerBoxStyle: mergedHeaderBoxStyle,
+      listItemTheme: mergedListItemTheme,
       radioTheme: mergedRadioTheme,
       statusTheme: mergedStatusTheme,
       switchTheme: mergedSwitchTheme,
@@ -177,6 +187,7 @@ class SBBTheme {
     required SBBContentBoxThemeData contentBoxTheme,
     required SBBControlStyles controlStyles,
     required SBBHeaderBoxStyle headerBoxStyle,
+    required SBBListItemThemeData listItemTheme,
     required SBBRadioThemeData radioTheme,
     required SBBStatusThemeData statusTheme,
     required SBBSwitchThemeData switchTheme,
@@ -210,9 +221,10 @@ class SBBTheme {
         checkboxTheme,
         contentBoxTheme,
         chipTheme,
-        radioTheme,
         controlStyles,
         headerBoxStyle,
+        listItemTheme,
+        radioTheme,
         statusTheme,
         switchTheme,
         textTheme,

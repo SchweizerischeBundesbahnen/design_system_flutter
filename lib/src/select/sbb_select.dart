@@ -53,10 +53,12 @@ class SBBSelect<T> extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = SBBControlStyles.of(context);
+    final baseStyle = SBBBaseStyle.of(context);
     final enabled = onChanged != null;
     return InkWell(
-      focusColor: style.listItem?.backgroundColorHighlighted,
-      hoverColor: style.listItem?.backgroundColorHighlighted,
+      /// TODO: smallTrogdor - rm and move to own style of overhauled SBBTextField
+      focusColor: baseStyle.themeValue(SBBColors.platinum, SBBColors.midnight),
+      hoverColor: baseStyle.themeValue(SBBColors.platinum, SBBColors.midnight),
       onTap: enabled
           ? () => showMenu(
               context: context,
@@ -160,19 +162,15 @@ class SBBSelect<T> extends StatelessWidget {
                     },
                     groupValue: selectedValue,
                     child: Column(
-                      children: items
-                          .asMap()
-                          .entries
-                          .map((entry) {
-                            final isLastElement = entry.key == items.length - 1;
-                            return SBBRadioListItem<T>(
-                              value: entry.value.value,
-                              allowMultilineLabel: allowMultilineLabel,
-                              label: entry.value.label,
-                              isLastElement: isLastElement,
-                            );
-                          })
-                          .toList(growable: false),
+                      children: SBBListItem.divideListItems(
+                        context: context,
+                        items: items.asMap().entries.map((entry) {
+                          return SBBRadioListItem<T>(
+                            value: entry.value.value,
+                            titleText: entry.value.label,
+                          );
+                        }),
+                      ).toList(growable: false),
                     ),
                   );
                 },
@@ -245,14 +243,13 @@ class SBBMultiSelect<T> extends StatefulWidget {
                     sbbDefaultSpacing,
                   ),
                   child: Column(
-                    children: items
-                        .asMap()
-                        .entries
-                        .map((entry) {
-                          final isLastElement = entry.key == items.length - 1;
+                    children: SBBListItem.divideListItems(
+                      context: context,
+                      items: items.asMap().entries.map(
+                        (entry) {
                           return SBBCheckboxListItem(
                             value: selectedValues.contains(entry.value.value),
-                            label: entry.value.label,
+                            titleText: entry.value.label,
                             onChanged: (checked) {
                               setModalState(() {
                                 if (checked == true) {
@@ -262,10 +259,10 @@ class SBBMultiSelect<T> extends StatefulWidget {
                                 }
                               });
                             },
-                            isLastElement: isLastElement,
                           );
-                        })
-                        .toList(growable: false),
+                        },
+                      ),
+                    ).toList(growable: false),
                   ),
                 ),
                 Padding(
@@ -307,9 +304,11 @@ class _SBBMultiSelectState<T> extends State<SBBMultiSelect<T>> {
   @override
   Widget build(BuildContext context) {
     final enabled = widget.onChanged != null;
+    final baseStyle = SBBBaseStyle.of(context);
     return InkWell(
-      focusColor: style.listItem?.backgroundColorHighlighted,
-      hoverColor: style.listItem?.backgroundColorHighlighted,
+      /// TODO: smallTrogdor - rm and move to own style
+      focusColor: baseStyle.themeValue(SBBColors.platinum, SBBColors.midnight),
+      hoverColor: baseStyle.themeValue(SBBColors.platinum, SBBColors.midnight),
       onTap: enabled
           ? () {
               SBBMultiSelect.showMenu<T>(

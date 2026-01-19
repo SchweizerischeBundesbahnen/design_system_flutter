@@ -65,12 +65,15 @@ class SBBCheckbox extends StatefulWidget {
     this.semanticLabel,
   }) : assert(tristate || value != null, 'Value can only be null if tristate is true!');
 
+  /// {@template sbb_design_system.checkbox.value}
   /// Whether this checkbox is checked.
   ///
   /// If [tristate] is false (the default), [value] must not be null.
   /// If [tristate] is true, SBBCheckbox displays a dash when [value] is null.
+  /// {@endtemplate}
   final bool? value;
 
+  /// {@template sbb_design_system.checkbox.onChanged}
   /// Called when the value of the checkbox should change.
   ///
   /// The checkbox passes the new value to the callback but does not actually
@@ -98,8 +101,10 @@ class SBBCheckbox extends StatefulWidget {
   ///   },
   /// )
   /// ```
+  /// {@endtemplate}
   final ValueChanged<bool?>? onChanged;
 
+  /// {@template sbb_design_system.checkbox.tristate}
   /// If true the checkbox's [value] can be true, false, or null.
   ///
   /// [SBBCheckbox] displays a dash when its value is null.
@@ -114,12 +119,15 @@ class SBBCheckbox extends StatefulWidget {
   /// false => true => null => false.
   ///
   /// If tristate is false (the default), [value] must not be null.
+  /// {@endtemplate}
   final bool tristate;
 
-  /// Customizes this checkbox appearance.
+  /// {@template sbb_design_system.checkbox.style}
+  /// Customizes the checkbox appearance.
   ///
   /// Non-null properties of this style override the corresponding
   /// properties in [SBBCheckboxThemeData.style] of the theme found in [context].
+  /// {@endtemplate}
   final SBBCheckboxStyle? style;
 
   /// {@macro flutter.widgets.Focus.focusNode}
@@ -128,11 +136,13 @@ class SBBCheckbox extends StatefulWidget {
   /// {@macro flutter.widgets.Focus.autofocus}
   final bool autofocus;
 
+  /// {@template sbb_design_system.checkbox.semanticLabel}
   /// The semantic label for the [SBBCheckbox] that will be announced by screen readers.
   ///
   /// This is announced by assistive technologies (e.g TalkBack/VoiceOver).
   ///
   /// This label does not show in the UI.
+  /// {@endtemplate}
   final String? semanticLabel;
 
   @override
