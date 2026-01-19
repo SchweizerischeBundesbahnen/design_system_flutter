@@ -9,6 +9,8 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+## [4.5.0] - 2026-01-19
+
 ### Added
 
 - Added `SBBSpacing` with spacings according to SBB Design System
@@ -703,7 +705,9 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Initial project setup
 - Added some widgets
 
-[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.4.0...HEAD
+[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.5.0...HEAD
+
+[4.5.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.4.0...4.5.0
 
 [4.4.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.3.1...4.4.0
 
