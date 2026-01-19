@@ -154,6 +154,17 @@ class CheckboxTest extends StatelessWidget {
             onChanged: (value) {},
             trailing: Text('CHF 0.99'),
           ),
+          SBBCheckboxListItemBoxed(
+            value: false,
+            onChanged: (_) {},
+            titleText: 'Custom Centered Link',
+            links: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Center(child: Text('Centered Link')),
+              ),
+            ],
+          ),
         ],
       ),
     ],

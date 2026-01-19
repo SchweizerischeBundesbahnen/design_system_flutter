@@ -67,7 +67,7 @@ class SwitchTest extends StatelessWidget {
               ],
             ),
           ),
-          const SBBListHeader('SBBSwitchItem - List'),
+          const SBBListHeader('SBBSwitchItem - Boxed'),
           Column(
             mainAxisSize: MainAxisSize.min,
             spacing: sbbDefaultSpacing * .5,
@@ -154,7 +154,12 @@ class SwitchTest extends StatelessWidget {
                 value: false,
                 titleText: 'Custom LinkWidget',
                 onChanged: (value) {},
-                links: [Text('My custom Link Widget')],
+                links: [
+                  Padding(
+                    padding: const EdgeInsets.all(sbbDefaultSpacing),
+                    child: Container(color: SBBColors.green, child: Text('My custom Link Widget')),
+                  ),
+                ],
               ),
             ],
           ),
