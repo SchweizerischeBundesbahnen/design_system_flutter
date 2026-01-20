@@ -1,10 +1,15 @@
+// TODO: add easy params of underlying TextField
+// TODO: create and add SBBInputDecoration to params with moved trailing, leading and so forth
+// TODO: add themeData according to v5.0.0 with
+// TODO: improve docs
+// TODO: add migration guideline & CHANGELOG
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../sbb_design_system_mobile.dart';
-import 'sbb_text_field_underline.dart';
 
-/// The SBBTextField.
+/// The SBBTextInput.
 ///
 /// A text field lets the user enter text, either with hardware keyboard or with
 /// an onscreen keyboard.
@@ -15,8 +20,8 @@ import 'sbb_text_field_underline.dart';
 ///
 /// See [documentation](https://digital.sbb.ch/de/design-system/mobile/components/text-input/)
 /// and [Figma design guidelines](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=309-2236).
-class SBBTextField extends StatefulWidget {
-  const SBBTextField({
+class SBBTextInput extends StatefulWidget {
+  const SBBTextInput({
     super.key,
     this.controller,
     this.enabled = true,
@@ -24,7 +29,6 @@ class SBBTextField extends StatefulWidget {
     this.errorText,
     this.hintText,
     this.inputFormatters,
-    this.isLastElement = false,
     this.keyboardType,
     this.labelText,
     this.maxLines = 1,
@@ -59,9 +63,6 @@ class SBBTextField extends StatefulWidget {
 
   /// Text that appears between the input field and the bottom border.
   final String? errorText;
-
-  /// Behaves differently (separator) when last element.
-  final bool isLastElement;
 
   /// {@macro flutter.widgets.editableText.keyboardType}
   final TextInputType? keyboardType;
@@ -116,7 +117,7 @@ class SBBTextField extends StatefulWidget {
 
   /// An icon to show before the input field and outside of the decoration's container.
   ///
-  /// The decoration's container is the area which is underlined by the bottom underline of the SBBTextField.
+  /// The decoration's container is the area which is underlined by the bottom underline of the SBBTextInput.
   ///
   /// The trailing edge of the icon is padded by 16px.
   final IconData? icon;
@@ -146,10 +147,10 @@ class SBBTextField extends StatefulWidget {
   final Iterable<String>? autofillHints;
 
   @override
-  State<StatefulWidget> createState() => _SBBTextField();
+  State<StatefulWidget> createState() => _SBBTextInput();
 }
 
-class _SBBTextField extends State<SBBTextField> {
+class _SBBTextInput extends State<SBBTextInput> {
   FocusNode? _focusNode;
 
   FocusNode get _effectiveFocusNode => widget.focusNode ?? (_focusNode ??= FocusNode());
@@ -184,7 +185,7 @@ class _SBBTextField extends State<SBBTextField> {
   }
 
   @override
-  void didUpdateWidget(covariant SBBTextField oldWidget) {
+  void didUpdateWidget(covariant SBBTextInput oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.focusNode != oldWidget.focusNode) {
       (oldWidget.focusNode ?? _focusNode)?.removeListener(_handleFocusChanged);
@@ -217,32 +218,51 @@ class _SBBTextField extends State<SBBTextField> {
   }
 
   @override
-  Widget build(BuildContext context) => Row(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      if (widget.icon != null)
-        Padding(padding: const EdgeInsetsDirectional.only(top: 12, end: 8.0), child: Icon(widget.icon)),
-      Expanded(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Expanded(child: _buildTextField()),
-                if (widget.suffixIcon != null) widget.suffixIcon!,
-              ],
-            ),
-            SBBTextFieldUnderline(
-              errorText: widget.errorText,
-              hasFocus: _effectiveFocusNode.hasFocus,
-              isLastElement: widget.isLastElement,
-            ),
-          ],
+  Widget build(BuildContext context) {
+    final style = SBBControlStyles.of(context).textField;
+    Widget child = Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        if (widget.icon != null)
+          Padding(padding: const EdgeInsetsDirectional.only(top: 12, end: 8.0), child: Icon(widget.icon)),
+        Expanded(child: _buildTextField()),
+        if (widget.suffixIcon != null) widget.suffixIcon!,
+      ],
+    );
+
+    if (widget.errorText != null) {
+      child = Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          child,
+          Padding(
+            padding: const EdgeInsets.only(bottom: 9.0),
+            child: Text(widget.errorText!, style: style?.errorTextStyle),
+          ),
+        ],
+      );
+    }
+
+    child = AnimatedContainer(
+      duration: Durations.medium1,
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color:
+                (widget.errorText == null
+                    ? _effectiveFocusNode.hasFocus
+                          ? style?.dividerColorHighlighted
+                          : SBBColors.transparent
+                    : style?.dividerColorError) ??
+                SBBColors.transparent,
+          ),
         ),
       ),
-    ],
-  );
+      child: child,
+    );
+
+    return AnimatedSwitcher(duration: Durations.medium1, child: child);
+  }
 
   TextField _buildTextField() {
     final textScaler = MediaQuery.of(context).textScaler;
