@@ -3,8 +3,17 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import '../native_app.dart';
 
-class TextFieldPage extends StatelessWidget {
+class TextFieldPage extends StatefulWidget {
   const TextFieldPage({super.key});
+
+  @override
+  State<TextFieldPage> createState() => _TextFieldPageState();
+}
+
+class _TextFieldPageState extends State<TextFieldPage> {
+  String? errorText;
+
+  final textEditingController = TextEditingController.fromValue(TextEditingValue(text: 'Type...'));
 
   @override
   Widget build(BuildContext context) {
@@ -17,27 +26,55 @@ class TextFieldPage extends StatelessWidget {
             children: SBBListItem.divideListItems(
               context: context,
               items: [
-                const SBBTextInput(labelText: 'Label, no Value'),
+                SBBTextInput(
+                  labelText: 'Label, no Value',
+                  suffixIcon: Icon(SBBIcons.circle_information_small_small),
+                  // icon: SBBIcons.unicorn_small,
+                ),
                 SBBTextInput(
                   labelText: 'Label, Value',
                   controller: TextEditingController()..value = const TextEditingValue(text: 'Value'),
+                  suffixIcon: Icon(SBBIcons.adult_kids_small),
                 ),
-                const SBBTextInput(labelText: 'Label, Hint, no Value', hintText: 'Hint Value'),
+                const SBBTextInput(labelText: 'Label, Hint, no Value'),
                 SBBTextInput(
                   labelText: 'With icon',
-                  hintText: 'Hint',
-                  controller: TextEditingController()..value = const TextEditingValue(text: 'Icon'),
-                  icon: SBBIcons.route_circle_start_small,
+                  // hintText: 'Hint',
+                  // controller: TextEditingController()..value = const TextEditingValue(text: 'Icon'),
+                  icon: SBBIcons.unicorn_small,
                 ),
                 SBBTextInput(
+                  icon: SBBIcons.unicorn_small,
                   labelText: 'Multiline',
                   maxLines: 3,
                   controller: TextEditingController()..value = const TextEditingValue(text: "I'm\nmulti\nline"),
+                  errorText: 'Hello',
                 ),
                 SBBTextInput(
                   labelText: 'Error Message',
-                  controller: TextEditingController()..value = const TextEditingValue(text: 'Value'),
-                  errorText: 'Error',
+                  controller: textEditingController,
+                  errorText: errorText,
+                  icon: SBBIcons.unicorn_small,
+                  suffixIcon: Icon(SBBIcons.circle_information_small_small),
+                  onChanged: (value) {
+                    print(textEditingController.text);
+                    if (errorText == null && value.length > 10) {
+                      setState(() {
+                        errorText = 'Too Long!';
+                      });
+                    } else if (errorText != null && value.length <= 10) {
+                      setState(() {
+                        errorText = null;
+                      });
+                    }
+                    // setState(() {
+                    //   if (value.length > 10) {
+                    //     errorText = 'Too Long!';
+                    //   } else {
+                    //     errorText = null;
+                    //   }
+                    // });
+                  },
                 ),
                 SBBTextInput(
                   labelText: 'Disabled',

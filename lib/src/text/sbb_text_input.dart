@@ -223,6 +223,8 @@ class _SBBTextInput extends State<SBBTextInput> {
 
   TextEditingController get controller => widget.controller ?? (_controller ??= TextEditingController());
 
+  final Key _textFieldKey = UniqueKey();
+
   @override
   void initState() {
     super.initState();
@@ -266,31 +268,42 @@ class _SBBTextInput extends State<SBBTextInput> {
   @override
   Widget build(BuildContext context) {
     final style = SBBControlStyles.of(context).textField;
-    Widget child = Row(
+    Widget child = Padding(
+      padding: const EdgeInsets.only(top: 6),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          if (widget.icon != null)
+            Padding(padding: const EdgeInsetsDirectional.only(top: 5.0, end: 8.0), child: Icon(widget.icon)),
+          Expanded(child: _buildTextField()),
+          if (widget.suffixIcon != null)
+            Padding(
+              padding: const EdgeInsets.only(top: 5.0),
+              child: widget.suffixIcon!,
+            ),
+        ],
+      ),
+    );
+
+    child = Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (widget.icon != null)
-          Padding(padding: const EdgeInsetsDirectional.only(top: 12, end: 8.0), child: Icon(widget.icon)),
-        Expanded(child: _buildTextField()),
-        if (widget.suffixIcon != null) widget.suffixIcon!,
+        child,
+        AnimatedSwitcher(
+          duration: Durations.medium1,
+          child: widget.errorText != null
+              ? Padding(
+                  padding: const EdgeInsets.only(top: 3.0),
+                  child: Text(widget.errorText!, style: style?.errorTextStyle),
+                )
+              : SizedBox.shrink(),
+        ),
       ],
     );
 
-    if (widget.errorText != null) {
-      child = Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          child,
-          Padding(
-            padding: const EdgeInsets.only(bottom: 9.0),
-            child: Text(widget.errorText!, style: style?.errorTextStyle),
-          ),
-        ],
-      );
-    }
-
     child = AnimatedContainer(
       duration: Durations.medium1,
+      padding: EdgeInsets.only(bottom: 6),
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
@@ -310,16 +323,16 @@ class _SBBTextInput extends State<SBBTextInput> {
     return AnimatedSwitcher(duration: Durations.medium1, child: child);
   }
 
-  TextField _buildTextField() {
-    final textScaler = MediaQuery.of(context).textScaler;
+  Widget _buildTextField() {
     final style = SBBControlStyles.of(context).textField!;
     final hasError = widget.errorText?.isNotEmpty ?? false;
     final textStyle = _textStyle(widget.enabled, context);
     final labelStyle = style.placeholderTextStyle!;
     // adjust floating label style to get desired sizes
-    final floatingLabelStyle = labelStyle.copyWith(fontSize: SBBTextStyles.helpersLabel.fontSize! * 1.335, height: 1.5);
+    final floatingLabelStyle = labelStyle.copyWith(fontSize: SBBTextStyles.helpersLabel.fontSize! * (1 / 0.75));
 
     return TextField(
+      key: _textFieldKey,
       groupId: widget.groupId,
       controller: controller,
       focusNode: _effectiveFocusNode,
@@ -349,11 +362,8 @@ class _SBBTextInput extends State<SBBTextInput> {
       autofillHints: widget.autofillHints,
 
       /// TODO: change this to an SBBTextInputDecoration
-      decoration: _decoration(textScaler, labelStyle, floatingLabelStyle),
+      decoration: _decoration(labelStyle, floatingLabelStyle),
       style: hasError ? textStyle.copyWith(color: SBBColors.red) : textStyle,
-
-      /// TODO: check the effect without textScaler
-      cursorHeight: textScaler.scale(22.0),
       cursorRadius: const Radius.circular(2.0),
     );
   }
@@ -363,33 +373,8 @@ class _SBBTextInput extends State<SBBTextInput> {
     return (widget.enabled ? style?.textStyle : style?.textStyleDisabled)!;
   }
 
-  InputDecoration _decoration(TextScaler textScaler, TextStyle labelStyle, TextStyle floatingLabelStyle) {
-    final hasValueOrFocus = controller.text.isNotEmpty || _effectiveFocusNode.hasFocus;
-    final hasLabel = widget.labelText?.isNotEmpty ?? false;
-    final hasError = widget.errorText?.isNotEmpty ?? false;
-
-    var topPadding = 0.0;
-    var bottomPadding = 0.0;
-
-    if (hasLabel && hasValueOrFocus) {
-      topPadding = 5.0 + -2.0;
-
-      if (hasError) {
-        bottomPadding = 3.0;
-      } else {
-        bottomPadding = 9.0;
-      }
-    } else {
-      topPadding = 14.0;
-
-      if (hasError) {
-        bottomPadding = 8.0;
-      } else {
-        bottomPadding = 14.0;
-      }
-    }
+  InputDecoration _decoration(TextStyle labelStyle, TextStyle floatingLabelStyle) {
     return InputDecoration(
-      isCollapsed: !hasValueOrFocus,
       isDense: true,
       labelText: widget.labelText,
       focusedBorder: InputBorder.none,
@@ -397,10 +382,7 @@ class _SBBTextInput extends State<SBBTextInput> {
       disabledBorder: InputBorder.none,
       errorBorder: InputBorder.none,
       focusedErrorBorder: InputBorder.none,
-      contentPadding: EdgeInsetsDirectional.only(
-        top: textScaler.scale(topPadding),
-        bottom: textScaler.scale(bottomPadding),
-      ),
+      contentPadding: EdgeInsets.zero,
       floatingLabelStyle: floatingLabelStyle,
       labelStyle: labelStyle,
       hintText: widget.hintText,
