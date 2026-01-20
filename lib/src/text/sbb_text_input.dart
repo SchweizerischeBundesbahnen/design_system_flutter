@@ -1,4 +1,3 @@
-// TODO: add easy params of underlying TextField
 // TODO: create and add SBBInputDecoration to params with moved trailing, leading and so forth
 // TODO: add themeData according to v5.0.0 with
 // TODO: improve docs
@@ -23,57 +22,83 @@ import '../../sbb_design_system_mobile.dart';
 class SBBTextInput extends StatefulWidget {
   const SBBTextInput({
     super.key,
+    this.groupId = EditableText,
     this.controller,
-    this.enabled = true,
-    this.enableInteractiveSelection = true,
-    this.errorText,
-    this.hintText,
-    this.inputFormatters,
+    this.focusNode,
     this.keyboardType,
-    this.labelText,
+    this.textInputAction,
+    this.textCapitalization = TextCapitalization.none,
+    this.readOnly = false,
+    this.showCursor = true,
+    this.autofocus = false,
+    this.obscuringCharacter = "•",
+    this.obscureText = false,
+    this.autocorrect,
+    this.enableSuggestions = true,
     this.maxLines = 1,
     this.minLines,
     this.expands = false,
-    this.hintMaxLines,
     this.onChanged,
+    this.onSubmitted,
+    this.inputFormatters,
+    this.enabled = true,
+    this.ignorePointers,
+    this.keyboardAppearance,
+    this.enableInteractiveSelection = true,
     this.onTap,
     this.onTapAlwaysCalled = false,
-    this.onSubmitted,
-    this.textCapitalization = TextCapitalization.none,
-    this.textInputAction,
-    this.icon,
-    this.focusNode,
-    this.suffixIcon,
-    this.obscureText = false,
-    this.obscuringCharacter = "•",
-    this.autofocus = false,
+    this.scrollController,
     this.autofillHints,
+
+    /// TODO: move these to SBBInputDecoration
+    this.errorText,
+    this.hintText,
+    this.labelText,
+    this.hintMaxLines,
+    this.icon,
+    this.suffixIcon,
   });
+
+  /// {@macro flutter.widgets.editableText.groupId}
+  final Object groupId;
 
   /// Controls the text being edited.
   ///
   /// If null, this widget will create its own [TextEditingController].
   final TextEditingController? controller;
 
-  /// If false the text field is "disabled".
-  final bool enabled;
-
-  /// {@macro flutter.widgets.editableText.enableInteractiveSelection}
-  final bool enableInteractiveSelection;
-
-  /// Text that appears between the input field and the bottom border.
-  final String? errorText;
+  /// {@macro flutter.widgets.Focus.focusNode}
+  final FocusNode? focusNode;
 
   /// {@macro flutter.widgets.editableText.keyboardType}
   final TextInputType? keyboardType;
 
-  /// The label moves upward on focus.
-  final String? labelText;
+  /// {@macro flutter.widgets.TextField.textInputAction}
+  final TextInputAction? textInputAction;
 
-  /// The hint shows only in an empty field.
-  ///
-  /// It acts as a placeholder.
-  final String? hintText;
+  /// {@macro flutter.widgets.editableText.textCapitalization}
+  final TextCapitalization textCapitalization;
+
+  /// {@macro flutter.widgets.editableText.readOnly}
+  final bool readOnly;
+
+  /// {@macro flutter.widgets.editableText.showCursor}
+  final bool showCursor;
+
+  /// {@macro flutter.widgets.editableText.autocorrect}
+  final bool autofocus;
+
+  /// {@macro flutter.widgets.editableText.obscuringCharacter}
+  final String obscuringCharacter;
+
+  /// {@macro flutter.widgets.editableText.obscureText}
+  final bool obscureText;
+
+  /// {@macro flutter.widgets.editableText.autocorrect}
+  final bool? autocorrect;
+
+  /// {@macro flutter.services.TextInputConfiguration.enableSuggestions}
+  final bool enableSuggestions;
 
   /// {@macro flutter.widgets.editableText.maxLines}
   ///  * [expands], which determines whether the field should fill the height of
@@ -88,13 +113,64 @@ class SBBTextInput extends StatefulWidget {
   /// {@macro flutter.widgets.editableText.expands}
   final bool expands;
 
-  /// The maximum number of lines the [hintText] can occupy.
-  final int? hintMaxLines;
-
   /// {@macro flutter.widgets.editableText.onChanged}
+  ///
+  /// See also:
+  ///
+  ///  * [inputFormatters], which are called before [onChanged]
+  ///    runs and can validate and change ("format") the input value.
   final ValueChanged<String>? onChanged;
 
+  /// {@macro flutter.widgets.editableText.onSubmitted}
+  final ValueChanged<String>? onSubmitted;
+
+  /// {@macro flutter.widgets.editableText.inputFormatters}
+  final List<TextInputFormatter>? inputFormatters;
+
+  /// If false the text field is "disabled". It ignores taps and its
+  /// the disabled state properties are rendered.
+  ///
+  /// When a text field is disabled, all of its children widgets are also
+  /// disabled, including the [SBBInputDecoration.trailing]. If you need to keep
+  /// the trailing interactive while disabling the text field, consider using
+  /// [readOnly] and [enableInteractiveSelection] instead:
+  ///
+  /// ```dart
+  /// SBBTextInput(
+  ///   enabled: true,
+  ///   readOnly: true,
+  ///   enableInteractiveSelection: false,
+  ///   decoration: SBBInputDecoration(
+  ///     trailing: IconButton(
+  ///       onPressed: () {
+  ///         // This will work because the SBBTextInput is enabled
+  ///       },
+  ///       icon: const Icon(Icons.edit_outlined),
+  ///     ),
+  ///   ),
+  /// )
+  /// ```
+  final bool enabled;
+
+  /// Determines whether this widget ignores pointer events.
+  ///
+  /// Defaults to null, and when null, does nothing.
+  final bool? ignorePointers;
+
+  /// The appearance of the keyboard.
+  ///
+  /// This setting is only honored on iOS devices.
+  ///
+  /// If unset, defaults to [ThemeData.brightness].
+  final Brightness? keyboardAppearance;
+
+  /// {@macro flutter.widgets.editableText.enableInteractiveSelection}
+  final bool enableInteractiveSelection;
+
   /// {@macro flutter.material.textfield.onTap}
+  ///
+  /// If [onTapAlwaysCalled] is enabled, this will also be called for consecutive
+  /// taps.
   final GestureTapCallback? onTap;
 
   /// Whether [onTap] should be called for every tap.
@@ -103,17 +179,26 @@ class SBBTextInput extends StatefulWidget {
   /// enabled, [onTap] is called for every tap including consecutive taps.
   final bool onTapAlwaysCalled;
 
-  /// {@macro flutter.widgets.editableText.onSubmitted}
-  final ValueChanged<String>? onSubmitted;
+  /// {@macro flutter.widgets.editableText.scrollController}
+  final ScrollController? scrollController;
 
-  /// {@macro flutter.widgets.editableText.inputFormatters}
-  final List<TextInputFormatter>? inputFormatters;
+  /// {@macro flutter.widgets.editableText.autofillHints}
+  /// {@macro flutter.services.AutofillConfiguration.autofillHints}
+  final Iterable<String>? autofillHints;
 
-  /// {@macro flutter.widgets.editableText.textCapitalization}
-  final TextCapitalization textCapitalization;
+  /// Text that appears between the input field and the bottom border.
+  final String? errorText;
 
-  /// {@macro flutter.widgets.TextField.textInputAction}
-  final TextInputAction? textInputAction;
+  /// The label moves upward on focus.
+  final String? labelText;
+
+  /// The hint shows only in an empty field.
+  ///
+  /// It acts as a placeholder.
+  final String? hintText;
+
+  /// The maximum number of lines the [hintText] can occupy.
+  final int? hintMaxLines;
 
   /// An icon to show before the input field and outside of the decoration's container.
   ///
@@ -122,29 +207,8 @@ class SBBTextInput extends StatefulWidget {
   /// The trailing edge of the icon is padded by 16px.
   final IconData? icon;
 
-  /// Defines the keyboard focus for this widget.
-  ///
-  /// The [focusNode] is a long-lived object that's typically managed by a
-  /// [StatefulWidget] parent. See [FocusNode] for more information.
-  ///
-  /// If null, this widget will create its own [FocusNode].
-  final FocusNode? focusNode;
-
   /// An icon that appears after the editable part of the text field, within the text fields input decoration.
   final Widget? suffixIcon;
-
-  /// {@macro flutter.widgets.editableText.obscuringCharacter}
-  final String obscuringCharacter;
-
-  /// {@macro flutter.widgets.editableText.obscureText}
-  final bool obscureText;
-
-  /// {@macro flutter.widgets.editableText.autocorrect}
-  final bool autofocus;
-
-  /// {@macro flutter.widgets.editableText.autofillHints}
-  /// {@macro flutter.services.AutofillConfiguration.autofillHints}
-  final Iterable<String>? autofillHints;
 
   @override
   State<StatefulWidget> createState() => _SBBTextInput();
@@ -274,29 +338,41 @@ class _SBBTextInput extends State<SBBTextInput> {
     final floatingLabelStyle = labelStyle.copyWith(fontSize: SBBTextStyles.helpersLabel.fontSize! * 1.335, height: 1.5);
 
     return TextField(
-      autofocus: widget.autofocus,
-      focusNode: _effectiveFocusNode,
+      groupId: widget.groupId,
       controller: controller,
-      obscureText: widget.obscureText,
-      obscuringCharacter: widget.obscuringCharacter,
+      focusNode: _effectiveFocusNode,
       keyboardType: widget.keyboardType,
+      textInputAction: widget.textInputAction,
+      textCapitalization: widget.textCapitalization,
+      readOnly: widget.readOnly,
+      showCursor: widget.showCursor,
+      autofocus: widget.autofocus,
+      obscuringCharacter: widget.obscuringCharacter,
+      obscureText: widget.obscureText,
+      autocorrect: widget.autocorrect,
+      enableSuggestions: widget.enableSuggestions,
       maxLines: widget.maxLines,
       minLines: widget.minLines,
       expands: widget.expands,
-      cursorHeight: textScaler.scale(22.0),
-      cursorRadius: const Radius.circular(2.0),
-      enableInteractiveSelection: widget.enableInteractiveSelection,
       onChanged: widget.onChanged,
+      onSubmitted: widget.onSubmitted,
+      inputFormatters: widget.inputFormatters,
+      enabled: widget.enabled,
+      ignorePointers: widget.ignorePointers,
+      keyboardAppearance: widget.keyboardAppearance,
+      enableInteractiveSelection: widget.enableInteractiveSelection,
       onTap: widget.onTap,
       onTapAlwaysCalled: widget.onTapAlwaysCalled,
-      onSubmitted: widget.onSubmitted,
-      enabled: widget.enabled,
+      scrollController: widget.scrollController,
+      autofillHints: widget.autofillHints,
+
+      /// TODO: change this to an SBBTextInputDecoration
       decoration: _decoration(textScaler, labelStyle, floatingLabelStyle),
       style: hasError ? textStyle.copyWith(color: SBBColors.red) : textStyle,
-      inputFormatters: widget.inputFormatters,
-      textCapitalization: widget.textCapitalization,
-      textInputAction: widget.textInputAction,
-      autofillHints: widget.autofillHints,
+
+      /// TODO: check the effect without textScaler
+      cursorHeight: textScaler.scale(22.0),
+      cursorRadius: const Radius.circular(2.0),
     );
   }
 
