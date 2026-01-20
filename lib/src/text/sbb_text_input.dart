@@ -221,8 +221,6 @@ class _SBBTextInput extends State<SBBTextInput> {
 
   TextEditingController? _controller;
 
-  late bool _isTextEmpty;
-
   TextEditingController get controller => widget.controller ?? (_controller ??= TextEditingController());
 
   @override
@@ -231,21 +229,12 @@ class _SBBTextInput extends State<SBBTextInput> {
 
     _effectiveFocusNode.canRequestFocus = widget.enabled;
     _effectiveFocusNode.addListener(_handleFocusChanged);
-
-    _isTextEmpty = controller.text.isEmpty;
-    controller.addListener(_handleTextControllerChanged);
   }
 
   void _handleFocusChanged() {
-    setState(() {});
-  }
-
-  void _handleTextControllerChanged() {
-    if (controller.text.isEmpty != _isTextEmpty) {
-      setState(() {
-        _isTextEmpty = controller.text.isEmpty;
-      });
-    }
+    setState(() {
+      // Rebuild widget on focus change to update accordingly.
+    });
   }
 
   @override
@@ -255,6 +244,7 @@ class _SBBTextInput extends State<SBBTextInput> {
       (oldWidget.focusNode ?? _focusNode)?.removeListener(_handleFocusChanged);
       (widget.focusNode ?? _focusNode)?.addListener(_handleFocusChanged);
     }
+    _effectiveFocusNode.canRequestFocus = widget.enabled;
 
     if (widget.controller == null && oldWidget.controller != null) {
       _controller = TextEditingController.fromValue(oldWidget.controller!.value);
@@ -262,20 +252,12 @@ class _SBBTextInput extends State<SBBTextInput> {
       _controller!.dispose();
       _controller = null;
     }
-
-    if (widget.controller != oldWidget.controller) {
-      (oldWidget.controller ?? _controller)?.removeListener(_handleTextControllerChanged);
-      (widget.controller ?? _controller)?.addListener(_handleTextControllerChanged);
-    }
-
-    _effectiveFocusNode.canRequestFocus = widget.enabled;
   }
 
   @override
   void dispose() {
     _effectiveFocusNode.removeListener(_handleFocusChanged);
     _focusNode?.dispose();
-    controller.removeListener(_handleTextControllerChanged);
     _controller?.dispose();
 
     super.dispose();
