@@ -1,4 +1,5 @@
 // TODO: create and add SBBInputDecoration to params with moved trailing, leading and so forth
+// TODO: expose FloatingLabelBehavior
 // TODO: add themeData according to v5.0.0 with
 // TODO: improve docs
 // TODO: add migration guideline & CHANGELOG
