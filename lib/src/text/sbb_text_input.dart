@@ -297,14 +297,14 @@ class _SBBTextInput extends State<SBBTextInput> {
                   padding: const EdgeInsets.only(top: 3.0),
                   child: Text(widget.errorText!, style: style?.errorTextStyle),
                 )
-              : SizedBox.shrink(),
+              : SizedBox(height: 3),
         ),
       ],
     );
 
     child = AnimatedContainer(
       duration: Durations.medium1,
-      padding: EdgeInsets.only(bottom: 6),
+      padding: EdgeInsets.only(bottom: 3),
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
