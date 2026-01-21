@@ -49,6 +49,19 @@ class _TextFieldPageState extends State<TextFieldPage> {
                           maxLines: null,
                         ),
                       ),
+                      ConstrainedBox(
+                        constraints: BoxConstraints(maxHeight: 100),
+                        child: TextField(
+                          // labelText: 'Label',
+                          controller: emptyTextEditingController,
+                          // icon: SBBIcons.unicorn_small,
+                          // suffixIcon: Container(height: 50, width: 10, color: SBBColors.green),
+                          // errorText: ' Hello',
+                          // placeholderText: 'Hint',
+                          expands: true,
+                          maxLines: null,
+                        ),
+                      ),
                       SBBTextInput(
                         labelText: 'Label',
                         controller: defaultTextEditingController,
