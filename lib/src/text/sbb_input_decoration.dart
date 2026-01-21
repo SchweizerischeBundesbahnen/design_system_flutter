@@ -10,6 +10,7 @@ class SBBInputDecoration {
   const SBBInputDecoration({
     this.leading,
     this.trailing,
+    this.hint,
     this.error,
   });
 
@@ -25,6 +26,12 @@ class SBBInputDecoration {
   /// of the input field.
   final Widget? trailing;
 
+  /// An optional widget to display in place of the input when the field
+  /// is focused and empty.
+  ///
+  /// The hint widget is baseline-aligned with where the input would be.
+  final Widget? hint;
+
   /// An optional error widget to display below the input field.
   ///
   /// The error widget is displayed at the left edge of the decorator box,
@@ -36,12 +43,14 @@ class SBBInputDecoration {
   SBBInputDecoration copyWith({
     Widget? leading,
     Widget? trailing,
+    Widget? hint,
     Widget? error,
     EdgeInsetsGeometry? contentPadding,
   }) {
     return SBBInputDecoration(
       leading: leading ?? this.leading,
       trailing: trailing ?? this.trailing,
+      hint: hint ?? this.hint,
       error: error ?? this.error,
     );
   }
@@ -53,9 +62,10 @@ class SBBInputDecoration {
     return other is SBBInputDecoration &&
         other.leading == leading &&
         other.trailing == trailing &&
+        other.hint == hint &&
         other.error == error;
   }
 
   @override
-  int get hashCode => Object.hash(leading, trailing, error);
+  int get hashCode => Object.hash(leading, trailing, hint, error);
 }

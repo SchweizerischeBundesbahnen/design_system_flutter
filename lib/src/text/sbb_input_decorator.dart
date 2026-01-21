@@ -16,6 +16,8 @@ class SBBInputDecorator extends StatelessWidget {
     required this.decoration,
     this.expands = false,
     this.isMultiline = false,
+    this.isEmpty = false,
+    this.isFocused = false,
     this.child,
   });
 
@@ -30,6 +32,16 @@ class SBBInputDecorator extends StatelessWidget {
   /// When true, leading and trailing widgets are top-aligned instead of centered.
   final bool isMultiline;
 
+  /// Whether the input field is empty.
+  ///
+  /// When true and [isFocused] is true, the hint is displayed.
+  final bool isEmpty;
+
+  /// Whether the input field has focus.
+  ///
+  /// When true and [isEmpty] is true, the hint is displayed.
+  final bool isFocused;
+
   /// The widget below this decorator, usually some sort of [EditableText].
   final Widget? child;
 
@@ -39,6 +51,8 @@ class SBBInputDecorator extends StatelessWidget {
       decoration: decoration,
       expands: expands,
       isMultiline: isMultiline,
+      isEmpty: isEmpty,
+      isFocused: isFocused,
       child: child,
     );
   }
@@ -47,6 +61,7 @@ class SBBInputDecorator extends StatelessWidget {
 enum _SBBDecorationSlot {
   leading,
   input,
+  hint,
   trailing,
   error,
 }
@@ -59,6 +74,7 @@ class _RenderSBBDecorationLayout {
   const _RenderSBBDecorationLayout({
     required this.leadingOffset,
     required this.inputOffset,
+    required this.hintOffset,
     required this.trailingOffset,
     required this.errorOffset,
     required this.size,
@@ -66,6 +82,7 @@ class _RenderSBBDecorationLayout {
 
   final Offset leadingOffset;
   final Offset inputOffset;
+  final Offset hintOffset;
   final Offset trailingOffset;
   final Offset errorOffset;
   final Size size;
@@ -76,12 +93,16 @@ class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSl
     required this.decoration,
     required this.expands,
     required this.isMultiline,
+    required this.isEmpty,
+    required this.isFocused,
     this.child,
   });
 
   final SBBInputDecoration decoration;
   final bool expands;
   final bool isMultiline;
+  final bool isEmpty;
+  final bool isFocused;
   final Widget? child;
 
   @override
@@ -92,6 +113,7 @@ class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSl
     return switch (slot) {
       _SBBDecorationSlot.leading => decoration.leading,
       _SBBDecorationSlot.input => child,
+      _SBBDecorationSlot.hint => decoration.hint,
       _SBBDecorationSlot.trailing => decoration.trailing,
       _SBBDecorationSlot.error => decoration.error,
     };
@@ -103,6 +125,8 @@ class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSl
       decoration: decoration,
       expands: expands,
       isMultiline: isMultiline,
+      isEmpty: isEmpty,
+      isFocused: isFocused,
     );
   }
 
@@ -111,7 +135,9 @@ class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSl
     renderObject
       ..decoration = decoration
       ..expands = expands
-      ..isMultiline = isMultiline;
+      ..isMultiline = isMultiline
+      ..isEmpty = isEmpty
+      ..isFocused = isFocused;
   }
 }
 
@@ -121,13 +147,19 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     required SBBInputDecoration decoration,
     required bool expands,
     required bool isMultiline,
+    required bool isEmpty,
+    required bool isFocused,
   }) : _decoration = decoration,
        _expands = expands,
-       _isMultiline = isMultiline;
+       _isMultiline = isMultiline,
+       _isEmpty = isEmpty,
+       _isFocused = isFocused;
 
   RenderBox? get leading => childForSlot(_SBBDecorationSlot.leading);
 
   RenderBox? get input => childForSlot(_SBBDecorationSlot.input);
+
+  RenderBox? get hint => childForSlot(_SBBDecorationSlot.hint);
 
   RenderBox? get trailing => childForSlot(_SBBDecorationSlot.trailing);
 
@@ -139,6 +171,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     return <RenderBox>[
       if (leading != null) leading!,
       if (input != null) input!,
+      if (hint != null) hint!,
       if (trailing != null) trailing!,
       if (error != null) error!,
     ];
@@ -168,6 +201,24 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
   set isMultiline(bool value) {
     if (_isMultiline == value) return;
     _isMultiline = value;
+    markNeedsLayout();
+  }
+
+  bool get isEmpty => _isEmpty;
+  bool _isEmpty;
+
+  set isEmpty(bool value) {
+    if (_isEmpty == value) return;
+    _isEmpty = value;
+    markNeedsLayout();
+  }
+
+  bool get isFocused => _isFocused;
+  bool _isFocused;
+
+  set isFocused(bool value) {
+    if (_isFocused == value) return;
+    _isFocused = value;
     markNeedsLayout();
   }
 
@@ -241,8 +292,17 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
       inputHeight = inputSize.height;
     }
 
+    // Layout hint with same constraints as input
+    double hintHeight = 0.0;
+    if (hint != null) {
+      final Size hintSize = layoutChild(hint!, inputConstraints);
+      hintHeight = hintSize.height;
+    }
+
     // Calculate the maximum height among all three elements (row-like behavior)
-    final double titleRowHeight = [leadingHeight, inputHeight, trailingHeight, 48.0].reduce(math.max);
+    // The hint should be included in the height calculation if isEmpty
+    final double maxInputHeight = isEmpty ? math.max(inputHeight, hintHeight) : inputHeight;
+    final double titleRowHeight = [leadingHeight, maxInputHeight, trailingHeight, 48.0].reduce(math.max);
 
     // Calculate offsets to align each element vertically
     // For multiline inputs, top-align all elements; otherwise center them
@@ -253,6 +313,12 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     final Offset inputOffset = Offset(
       leadingWidth,
       isMultiline ? 0.0 : (titleRowHeight - inputHeight) / 2.0,
+    );
+
+    // Hint is positioned at the same location as input (baseline-aligned)
+    final Offset hintOffset = Offset(
+      leadingWidth,
+      isMultiline ? 0.0 : (titleRowHeight - hintHeight) / 2.0,
     );
 
     final Offset trailingOffset = trailing != null
@@ -275,6 +341,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     return _RenderSBBDecorationLayout(
       leadingOffset: leadingOffset,
       inputOffset: inputOffset,
+      hintOffset: hintOffset,
       trailingOffset: trailingOffset,
       errorOffset: errorOffset,
       size: size,
@@ -301,6 +368,12 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     if (input != null) {
       final BoxParentData inputParentData = _boxParentData(input!);
       inputParentData.offset = layout.inputOffset;
+    }
+
+    // Position hint
+    if (hint != null) {
+      final BoxParentData hintParentData = _boxParentData(hint!);
+      hintParentData.offset = layout.hintOffset;
     }
 
     // Position trailing
@@ -375,17 +448,22 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
 
   @override
   double computeMinIntrinsicHeight(double width) {
+    // Calculate available width for input after accounting for leading and trailing
     final double leadingWidth = leading?.getMinIntrinsicWidth(double.infinity) ?? 0.0;
     final double trailingWidth = trailing?.getMinIntrinsicWidth(double.infinity) ?? 0.0;
     final double availableInputWidth = math.max(0.0, width - leadingWidth - trailingWidth);
 
     final double leadingHeight = leading?.getMinIntrinsicHeight(width) ?? 0.0;
     final double inputHeight = input?.getMinIntrinsicHeight(availableInputWidth) ?? 0.0;
+    final double hintHeight = hint?.getMinIntrinsicHeight(availableInputWidth) ?? 0.0;
     final double trailingHeight = trailing?.getMinIntrinsicHeight(width) ?? 0.0;
 
     final double errorHeight = error?.getMinIntrinsicHeight(width) ?? 0.0;
 
-    return math.max(leadingHeight, math.max(inputHeight, trailingHeight)) + errorHeight;
+    // Return the maximum height among all (row-like behavior) plus error height
+    // Include hint in calculation if isEmpty
+    final double maxInputHeight = isEmpty ? math.max(inputHeight, hintHeight) : inputHeight;
+    return math.max(leadingHeight, math.max(maxInputHeight, trailingHeight)) + errorHeight;
   }
 
   @override
@@ -394,13 +472,19 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     final double trailingWidth = trailing?.getMaxIntrinsicWidth(double.infinity) ?? 0.0;
     final double availableInputWidth = math.max(0.0, width - leadingWidth - trailingWidth);
 
+    // Get the intrinsic heights of all three children
     final double leadingHeight = leading?.getMaxIntrinsicHeight(width) ?? 0.0;
     final double inputHeight = input?.getMaxIntrinsicHeight(availableInputWidth) ?? 0.0;
+    final double hintHeight = hint?.getMaxIntrinsicHeight(availableInputWidth) ?? 0.0;
     final double trailingHeight = trailing?.getMaxIntrinsicHeight(width) ?? 0.0;
 
+    // Get the error height
     final double errorHeight = error?.getMaxIntrinsicHeight(width) ?? 0.0;
 
-    return math.max(leadingHeight, math.max(inputHeight, trailingHeight)) + errorHeight;
+    // Return the maximum height among all (row-like behavior) plus error height
+    // Include hint in calculation if isEmpty
+    final double maxInputHeight = isEmpty ? math.max(inputHeight, hintHeight) : inputHeight;
+    return math.max(leadingHeight, math.max(maxInputHeight, trailingHeight)) + errorHeight;
   }
 
   @override
@@ -409,10 +493,19 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
       BoxParentData leadingParentData = _boxParentData(leading!);
       context.paintChild(leading!, leadingParentData.offset + offset);
     }
+
+    // Only paint hint if focused and empty
+    if (hint != null && isFocused && isEmpty) {
+      final BoxParentData hintParentData = _boxParentData(hint!);
+      context.paintChild(hint!, hintParentData.offset + offset);
+    }
+
+    // Paint input (may be empty)
     if (input != null) {
       final BoxParentData inputParentData = _boxParentData(input!);
       context.paintChild(input!, inputParentData.offset + offset);
     }
+
     if (trailing != null) {
       final BoxParentData trailingParentData = _boxParentData(trailing!);
       context.paintChild(trailing!, trailingParentData.offset + offset);

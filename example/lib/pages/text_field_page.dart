@@ -35,7 +35,7 @@ class _TextFieldPageState extends State<TextFieldPage> {
                   children: SBBListItem.divideListItems(
                     context: context,
                     items: [
-                      SBBTextField(labelText: 'Empty', controller: emptyTextEditingController),
+                      SBBTextField(labelText: 'Empty', controller: emptyTextEditingController, hintText: 'Hint'),
                       ConstrainedBox(
                         constraints: BoxConstraints(maxHeight: 100),
                         child: SBBTextInput(
@@ -44,6 +44,7 @@ class _TextFieldPageState extends State<TextFieldPage> {
                           icon: SBBIcons.unicorn_small,
                           suffixIcon: Container(height: 50, width: 10, color: SBBColors.green),
                           errorText: ' Hello',
+                          placeholderText: 'Hint',
                           expands: true,
                           maxLines: null,
                         ),
@@ -53,7 +54,7 @@ class _TextFieldPageState extends State<TextFieldPage> {
                         controller: defaultTextEditingController,
                         icon: SBBIcons.unicorn_small,
                       ),
-                      const SBBTextInput(labelText: 'With Placeholder', hintText: 'Placeholder'),
+                      const SBBTextInput(labelText: 'With Placeholder', placeholderText: 'Placeholder'),
                       SBBTextInput(
                         labelText: 'With leading and trailing icon',
                         icon: SBBIcons.unicorn_small,

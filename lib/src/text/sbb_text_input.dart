@@ -55,7 +55,7 @@ class SBBTextInput extends StatefulWidget {
 
     /// TODO: move these to SBBInputDecoration
     this.errorText,
-    this.hintText,
+    this.placeholderText,
     this.labelText,
     this.hintMaxLines,
     this.icon,
@@ -198,9 +198,9 @@ class SBBTextInput extends StatefulWidget {
   /// The hint shows only in an empty field.
   ///
   /// It acts as a placeholder.
-  final String? hintText;
+  final String? placeholderText;
 
-  /// The maximum number of lines the [hintText] can occupy.
+  /// The maximum number of lines the [placeholderText] can occupy.
   final int? hintMaxLines;
 
   /// An icon to show before the input field and outside of the decoration's container.
@@ -273,65 +273,35 @@ class _SBBTextInput extends State<SBBTextInput> {
     final style = SBBControlStyles.of(context).textField;
     final bool isMultiline = (widget.maxLines ?? 0) != 1;
 
-    return SBBInputDecorator(
-      decoration: SBBInputDecoration(
-        leading: widget.icon != null
-            ? Padding(
-                padding: const EdgeInsets.only(right: 8.0),
-                child: Icon(widget.icon),
-              )
-            : null,
-        trailing: widget.suffixIcon,
-        error: widget.errorText != null ? Text(widget.errorText!, style: style?.errorTextStyle) : null,
-      ),
-      expands: widget.expands,
-      isMultiline: isMultiline,
+    return AnimatedBuilder(
+      animation: Listenable.merge(<Listenable>[_effectiveFocusNode, controller]),
+      builder: (BuildContext context, Widget? child) {
+        return SBBInputDecorator(
+          decoration: SBBInputDecoration(
+            leading: widget.icon != null
+                ? Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: Icon(widget.icon),
+                  )
+                : null,
+            trailing: widget.suffixIcon,
+            hint: widget.placeholderText != null
+                ? Text(
+                    widget.placeholderText!,
+                    style: style?.placeholderTextStyle,
+                  )
+                : null,
+            error: widget.errorText != null ? Text(widget.errorText!, style: style?.errorTextStyle) : null,
+          ),
+          expands: widget.expands,
+          isMultiline: isMultiline,
+          isEmpty: controller.text.isEmpty,
+          isFocused: _effectiveFocusNode.hasFocus,
+          child: child,
+        );
+      },
       child: _buildTextField(),
     );
-
-    Widget child = Row(
-      children: [
-        if (widget.icon != null) Padding(padding: const EdgeInsetsDirectional.only(end: 8.0), child: Icon(widget.icon)),
-        Expanded(child: _buildTextField()),
-        if (widget.suffixIcon != null) widget.suffixIcon!,
-      ],
-    );
-
-    child = Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        child,
-        AnimatedSwitcher(
-          duration: Durations.medium1,
-          child: widget.errorText != null
-              ? Padding(
-                  padding: const EdgeInsets.only(top: 3.0),
-                  child: Text(widget.errorText!, style: style?.errorTextStyle),
-                )
-              : SizedBox(height: 3),
-        ),
-      ],
-    );
-
-    child = AnimatedContainer(
-      duration: Durations.medium1,
-      decoration: BoxDecoration(
-        border: Border(
-          bottom: BorderSide(
-            color:
-                (widget.errorText == null
-                    ? _effectiveFocusNode.hasFocus
-                          ? style?.dividerColorHighlighted
-                          : SBBColors.transparent
-                    : style?.dividerColorError) ??
-                SBBColors.transparent,
-          ),
-        ),
-      ),
-      child: child,
-    );
-
-    return AnimatedSwitcher(duration: Durations.medium1, child: child);
   }
 
   Widget _buildTextField() {
@@ -396,7 +366,7 @@ class _SBBTextInput extends State<SBBTextInput> {
       contentPadding: EdgeInsets.zero,
       floatingLabelStyle: floatingLabelStyle,
       labelStyle: labelStyle,
-      hintText: widget.hintText,
+      hintText: widget.placeholderText,
       hintStyle: labelStyle,
       hintMaxLines: widget.hintMaxLines,
       alignLabelWithHint: true,
