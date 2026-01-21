@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
@@ -190,40 +191,20 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     }
 
     // Calculate available width for input
-    final double availableWidth = constraints.maxWidth - leadingWidth - trailingWidth;
+    final double availableInputWidth = constraints.maxWidth - leadingWidth - trailingWidth;
+    final BoxConstraints inputConstraints = constraints.tighten(width: availableInputWidth);
 
     // Layout input
     double inputHeight = 0.0;
     if (input != null) {
-      final BoxConstraints inputConstraints = expands
-          ? BoxConstraints(
-              minWidth: availableWidth,
-              maxWidth: availableWidth,
-              minHeight: constraints.maxHeight,
-              maxHeight: constraints.maxHeight,
-            )
-          : BoxConstraints(minWidth: availableWidth, maxWidth: availableWidth);
-
       final Size inputSize = layoutChild(input!, inputConstraints);
       inputHeight = inputSize.height;
     }
 
-    // Calculate total size
-    final double height = expands ? constraints.maxHeight : inputHeight;
-    final Size size = Size(constraints.maxWidth, height);
-
     // Calculate input baseline
-    final double inputBaseline = input == null
-        ? 0.0
-        : getBaseline(
-            input!,
-            BoxConstraints(
-              minWidth: availableWidth,
-              maxWidth: availableWidth,
-            ),
-          );
+    final double inputBaseline = input == null ? 0.0 : getBaseline(input!, inputConstraints);
 
-    // Calculate leading offset (centered on input's first baseline)
+    // Calculate leading offset (aligned with input's first baseline)
     Offset leadingOffset = Offset.zero;
     if (leading != null && input != null) {
       final double leadingBaseline = getBaseline(
@@ -245,8 +226,14 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
         looseConstraints,
       );
       final double trailingY = inputBaseline - trailingBaseline;
-      trailingOffset = Offset(leadingWidth + availableWidth, trailingY);
+      trailingOffset = Offset(leadingWidth + availableInputWidth, trailingY);
     }
+
+    // Calculate total size
+    final double contentHeight = [leadingHeight, inputHeight, trailingHeight].max;
+
+    final double height = expands ? constraints.maxHeight : contentHeight;
+    final Size size = Size(constraints.maxWidth, height);
 
     return _RenderSBBDecorationLayout(
       leadingOffset: leadingOffset,

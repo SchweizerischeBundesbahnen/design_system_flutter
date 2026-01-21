@@ -271,13 +271,10 @@ class _SBBTextInput extends State<SBBTextInput> {
   @override
   Widget build(BuildContext context) {
     final style = SBBControlStyles.of(context).textField;
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 30.0),
-      child: SBBInputDecorator(
-        decoration: SBBInputDecoration(leading: Icon(widget.icon), trailing: widget.suffixIcon),
-        expands: widget.expands,
-        child: _buildTextField(),
-      ),
+    return SBBInputDecorator(
+      decoration: SBBInputDecoration(leading: Icon(widget.icon), trailing: widget.suffixIcon),
+      expands: widget.expands,
+      child: _buildTextField(),
     );
 
     Widget child = Row(
