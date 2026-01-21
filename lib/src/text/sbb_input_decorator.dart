@@ -65,6 +65,7 @@ enum _SBBDecorationSlot {
   hint,
   trailing,
   error,
+  container,
 }
 
 // Type definitions for layout helpers
@@ -120,6 +121,7 @@ class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSl
       _SBBDecorationSlot.hint => decoration.hint,
       _SBBDecorationSlot.trailing => decoration.trailing,
       _SBBDecorationSlot.error => decoration.error,
+      _SBBDecorationSlot.container => decoration.container,
     };
   }
 
@@ -171,6 +173,8 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
 
   RenderBox? get error => childForSlot(_SBBDecorationSlot.error);
 
+  RenderBox? get container => childForSlot(_SBBDecorationSlot.container);
+
   // The returned list is ordered for hit testing.
   @override
   Iterable<RenderBox> get children {
@@ -181,6 +185,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
       if (hint != null) hint!,
       if (trailing != null) trailing!,
       if (error != null) error!,
+      if (container != null) container!,
     ];
   }
 
@@ -329,7 +334,6 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     final double titleRowHeight = [leadingHeight, labelInputHeight, trailingHeight, 48.0].reduce(math.max);
 
     // Calculate offsets
-    // Label is at the top, same x as input
     final Offset labelOffset = label != null
         ? Offset(leadingWidth, isMultiline ? 0.0 : (titleRowHeight - labelInputHeight) / 2.0)
         : Offset.zero;
@@ -384,42 +388,26 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     );
 
     size = constraints.constrain(layout.size);
+    assert(size.width == constraints.constrainWidth(layout.size.width));
+    assert(size.height == constraints.constrainHeight(layout.size.height));
 
-    // Position label
-    if (label != null) {
-      BoxParentData labelParentData = _boxParentData(label!);
-      labelParentData.offset = layout.labelOffset;
+    void setParentData(RenderBox? box, Offset offset) {
+      if (box == null) return;
+      _boxParentData(box).offset = offset;
     }
 
-    // Position leading
-    if (leading != null) {
-      BoxParentData leadingParentData = _boxParentData(leading!);
-      leadingParentData.offset = layout.leadingOffset;
+    if (container != null) {
+      final BoxConstraints containerConstraints = BoxConstraints.tight(size);
+      container!.layout(containerConstraints, parentUsesSize: true);
+      setParentData(container, Offset.zero);
     }
 
-    // Position input
-    if (input != null) {
-      final BoxParentData inputParentData = _boxParentData(input!);
-      inputParentData.offset = layout.inputOffset;
-    }
-
-    // Position hint
-    if (hint != null) {
-      final BoxParentData hintParentData = _boxParentData(hint!);
-      hintParentData.offset = layout.hintOffset;
-    }
-
-    // Position trailing
-    if (trailing != null) {
-      final BoxParentData trailingParentData = _boxParentData(trailing!);
-      trailingParentData.offset = layout.trailingOffset;
-    }
-
-    // Position error
-    if (error != null) {
-      final BoxParentData errorParentData = _boxParentData(error!);
-      errorParentData.offset = layout.errorOffset;
-    }
+    setParentData(label, layout.labelOffset);
+    setParentData(leading, layout.leadingOffset);
+    setParentData(input, layout.inputOffset);
+    setParentData(hint, layout.hintOffset);
+    setParentData(trailing, layout.trailingOffset);
+    setParentData(error, layout.errorOffset);
   }
 
   @override
@@ -547,6 +535,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     doPaint(input);
     doPaint(trailing);
     doPaint(error);
+    doPaint(container);
   }
 
   @override

@@ -297,7 +297,32 @@ class _SBBTextInput extends State<SBBTextInput> {
                     style: style?.placeholderTextStyle,
                   )
                 : null,
-            error: widget.errorText != null ? Text(widget.errorText!, style: style?.errorTextStyle) : null,
+            error: AnimatedSwitcher(
+              duration: Durations.medium1,
+              child: widget.errorText != null
+                  ? Padding(
+                      padding: const EdgeInsets.only(bottom: 6.0),
+                      child: Text(
+                        widget.errorText!,
+                        style: SBBTextStyles.extraExtraSmallBold.copyWith(color: SBBColors.error),
+                      ),
+                    )
+                  : SizedBox.shrink(),
+            ),
+            container: AnimatedContainer(
+              duration: Durations.medium1,
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: widget.errorText != null
+                        ? SBBColors.error
+                        : _effectiveFocusNode.hasFocus
+                        ? SBBColors.granite
+                        : SBBColors.transparent,
+                  ),
+                ),
+              ),
+            ),
           ),
           expands: widget.expands,
           isMultiline: isMultiline,

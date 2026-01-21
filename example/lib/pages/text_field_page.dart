@@ -70,6 +70,7 @@ class _TextFieldPageState extends State<TextFieldPage> {
                         icon: SBBIcons.unicorn_small,
                         labelText: 'Multiline',
                         maxLines: 3,
+                        minLines: 1,
                         controller: TextEditingController()..value = const TextEditingValue(text: "I'm\nmulti\nline"),
                         errorText: 'Hello',
                       ),

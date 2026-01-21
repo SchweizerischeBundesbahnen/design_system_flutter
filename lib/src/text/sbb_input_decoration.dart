@@ -13,6 +13,7 @@ class SBBInputDecoration {
     this.hint,
     this.label,
     this.error,
+    this.container,
   });
 
   /// An optional widget to display before the input field.
@@ -45,6 +46,8 @@ class SBBInputDecoration {
   /// below the main content (input, leading, trailing).
   final Widget? error;
 
+  final Widget? container;
+
   /// Creates a copy of this decoration with the given fields replaced
   /// by the new values.
   SBBInputDecoration copyWith({
@@ -53,7 +56,7 @@ class SBBInputDecoration {
     Widget? hint,
     Widget? label,
     Widget? error,
-    EdgeInsetsGeometry? contentPadding,
+    Widget? container,
   }) {
     return SBBInputDecoration(
       leading: leading ?? this.leading,
@@ -61,6 +64,7 @@ class SBBInputDecoration {
       hint: hint ?? this.hint,
       label: label ?? this.label,
       error: error ?? this.error,
+      container: container ?? this.container,
     );
   }
 
@@ -73,9 +77,10 @@ class SBBInputDecoration {
         other.trailing == trailing &&
         other.hint == hint &&
         other.label == label &&
-        other.error == error;
+        other.error == error &&
+        other.container == container;
   }
 
   @override
-  int get hashCode => Object.hash(leading, trailing, hint, label, error);
+  int get hashCode => Object.hash(leading, trailing, hint, label, error, container);
 }
