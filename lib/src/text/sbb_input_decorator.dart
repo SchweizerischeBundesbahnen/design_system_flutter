@@ -229,6 +229,12 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     markNeedsLayout();
   }
 
+  static double _minWidth(RenderBox? box, double height) => box?.getMinIntrinsicWidth(height) ?? 0.0;
+
+  static double _maxWidth(RenderBox? box, double height) => box?.getMaxIntrinsicWidth(height) ?? 0.0;
+
+  static double _minHeight(RenderBox? box, double width) => box?.getMinIntrinsicHeight(width) ?? 0.0;
+
   static double _getBaseline(RenderBox box, BoxConstraints boxConstraints) {
     return ChildLayoutHelper.getBaseline(box, boxConstraints, TextBaseline.alphabetic) ?? box.size.height;
   }
@@ -418,8 +424,6 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
 
   @override
   double? computeDryBaseline(covariant BoxConstraints constraints, TextBaseline baseline) {
-    assert(baseline == TextBaseline.alphabetic, 'Only alphabetic baseline is supported');
-
     final RenderBox? input = this.input;
     if (input == null) {
       return 0.0;
@@ -457,114 +461,99 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
 
   @override
   double computeMinIntrinsicWidth(double height) {
-    final double leadingWidth = leading?.getMinIntrinsicWidth(height) ?? 0.0;
-    final double inputWidth = input?.getMinIntrinsicWidth(height) ?? 0.0;
-    final double trailingWidth = trailing?.getMinIntrinsicWidth(height) ?? 0.0;
-    final double errorWidth = error?.getMinIntrinsicWidth(height) ?? 0.0;
-    final double labelWidth = label?.getMinIntrinsicWidth(height) ?? 0.0;
+    final double leadingWidth = _minWidth(leading, height);
+    final double inputWidth = _minWidth(input, height);
+    final double hintWidth = _minWidth(hint, height);
+    final double trailingWidth = _minWidth(trailing, height);
+    final double errorWidth = _minWidth(error, height);
+    final double labelWidth = _minWidth(label, height);
 
-    return math.max(
-      leadingWidth + inputWidth + trailingWidth,
-      math.max(errorWidth, labelWidth + leadingWidth),
-    );
+    final double contentWidth = math.max(hintWidth, inputWidth);
+
+    return <double>[
+      errorWidth,
+      leadingWidth + labelWidth + trailingWidth,
+      leadingWidth + contentWidth + trailingWidth,
+    ].reduce(math.max);
   }
 
   @override
   double computeMaxIntrinsicWidth(double height) {
-    final double leadingWidth = leading?.getMaxIntrinsicWidth(height) ?? 0.0;
-    final double inputWidth = input?.getMaxIntrinsicWidth(height) ?? 0.0;
-    final double trailingWidth = trailing?.getMaxIntrinsicWidth(height) ?? 0.0;
-    final double errorWidth = error?.getMaxIntrinsicWidth(height) ?? 0.0;
-    final double labelWidth = label?.getMaxIntrinsicWidth(height) ?? 0.0;
+    final double leadingWidth = _maxWidth(leading, height);
+    final double inputWidth = _maxWidth(input, height);
+    final double hintWidth = _maxWidth(hint, height);
+    final double trailingWidth = _maxWidth(trailing, height);
+    final double errorWidth = _maxWidth(error, height);
+    final double labelWidth = _maxWidth(label, height);
 
-    return math.max(
-      leadingWidth + inputWidth + trailingWidth,
-      math.max(errorWidth, labelWidth + leadingWidth + trailingWidth),
-    );
+    final double contentWidth = math.max(hintWidth, inputWidth);
+
+    return <double>[
+      errorWidth,
+      leadingWidth + labelWidth + trailingWidth,
+      leadingWidth + contentWidth + trailingWidth,
+    ].reduce(math.max);
   }
 
   @override
   double computeMinIntrinsicHeight(double width) {
-    // Calculate available width for input after accounting for leading and trailing
     final double leadingWidth = leading?.getMinIntrinsicWidth(double.infinity) ?? 0.0;
     final double trailingWidth = trailing?.getMinIntrinsicWidth(double.infinity) ?? 0.0;
     final double availableInputWidth = math.max(0.0, width - leadingWidth - trailingWidth);
 
     final double labelHeight = label?.getMinIntrinsicHeight(availableInputWidth) ?? 0.0;
-    final double leadingHeight = leading?.getMinIntrinsicHeight(width) ?? 0.0;
     final double inputHeight = input?.getMinIntrinsicHeight(availableInputWidth) ?? 0.0;
     final double hintHeight = hint?.getMinIntrinsicHeight(availableInputWidth) ?? 0.0;
+    final double leadingHeight = leading?.getMinIntrinsicHeight(width) ?? 0.0;
     final double trailingHeight = trailing?.getMinIntrinsicHeight(width) ?? 0.0;
     final double errorHeight = error?.getMinIntrinsicHeight(width) ?? 0.0;
 
     // Return the maximum height among all (row-like behavior) plus error height
     // Include hint in calculation if isEmpty
     final double maxInputHeight = isEmpty ? math.max(inputHeight, hintHeight) : inputHeight;
-    final double titleRowHeight = math.max(leadingHeight, math.max(maxInputHeight + labelHeight, trailingHeight));
+    final double titleRowHeight = [
+      leadingHeight,
+      maxInputHeight + labelHeight,
+      trailingHeight,
+    ].reduce(math.max);
     return titleRowHeight + errorHeight;
   }
 
   @override
   double computeMaxIntrinsicHeight(double width) {
-    final double leadingWidth = leading?.getMaxIntrinsicWidth(double.infinity) ?? 0.0;
-    final double trailingWidth = trailing?.getMaxIntrinsicWidth(double.infinity) ?? 0.0;
-    final double availableInputWidth = math.max(0.0, width - leadingWidth - trailingWidth);
+    return getMinIntrinsicHeight(width);
+  }
 
-    // Get the intrinsic heights of all children
-    final double labelHeight = label?.getMaxIntrinsicHeight(availableInputWidth) ?? 0.0;
-    final double leadingHeight = leading?.getMaxIntrinsicHeight(width) ?? 0.0;
-    final double inputHeight = input?.getMaxIntrinsicHeight(availableInputWidth) ?? 0.0;
-    final double hintHeight = hint?.getMaxIntrinsicHeight(availableInputWidth) ?? 0.0;
-    final double trailingHeight = trailing?.getMaxIntrinsicHeight(width) ?? 0.0;
-    final double errorHeight = error?.getMaxIntrinsicHeight(width) ?? 0.0;
-
-    // Return the maximum height among all (row-like behavior) plus error height and label height
-    // Include hint in calculation if isEmpty
-    final double maxInputHeight = isEmpty ? math.max(inputHeight, hintHeight) : inputHeight;
-    final double titleRowHeight = math.max(leadingHeight, math.max(maxInputHeight + labelHeight, trailingHeight));
-    return titleRowHeight + errorHeight;
+  @override
+  double computeDistanceToActualBaseline(TextBaseline baseline) {
+    final RenderBox? input = this.input;
+    if (input == null) {
+      return 0.0;
+    }
+    return _boxParentData(input).offset.dy + (input.getDistanceToActualBaseline(baseline) ?? input.size.height);
   }
 
   @override
   void paint(PaintingContext context, Offset offset) {
-    if (label != null) {
-      BoxParentData labelParentData = _boxParentData(label!);
-      context.paintChild(label!, labelParentData.offset + offset);
+    void doPaint(RenderBox? child) {
+      if (child != null) {
+        context.paintChild(child, _boxParentData(child).offset + offset);
+      }
     }
 
-    if (leading != null) {
-      BoxParentData leadingParentData = _boxParentData(leading!);
-      context.paintChild(leading!, leadingParentData.offset + offset);
-    }
-
-    // Only paint hint if focused and empty
-    if (hint != null && isFocused && isEmpty) {
-      final BoxParentData hintParentData = _boxParentData(hint!);
-      context.paintChild(hint!, hintParentData.offset + offset);
-    }
-
-    // Paint input (may be empty)
-    if (input != null) {
-      final BoxParentData inputParentData = _boxParentData(input!);
-      context.paintChild(input!, inputParentData.offset + offset);
-    }
-
-    if (trailing != null) {
-      final BoxParentData trailingParentData = _boxParentData(trailing!);
-      context.paintChild(trailing!, trailingParentData.offset + offset);
-    }
-    if (error != null) {
-      final BoxParentData errorParentData = _boxParentData(error!);
-      context.paintChild(error!, errorParentData.offset + offset);
-    }
+    doPaint(label);
+    doPaint(leading);
+    if (isEmpty && isFocused) doPaint(hint);
+    doPaint(input);
+    doPaint(trailing);
+    doPaint(error);
   }
 
   @override
   bool hitTestChildren(BoxHitTestResult result, {required Offset position}) {
     for (final RenderBox child in children) {
-      final BoxParentData parentData = _boxParentData(child);
       final bool isHit = result.addWithPaintOffset(
-        offset: parentData.offset,
+        offset: _boxParentData(child).offset,
         position: position,
         hitTest: (BoxHitTestResult result, Offset transformed) {
           return child.hitTest(result, position: transformed);
