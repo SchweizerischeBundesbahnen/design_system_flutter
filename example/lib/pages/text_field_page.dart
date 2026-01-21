@@ -35,6 +35,7 @@ class _TextFieldPageState extends State<TextFieldPage> {
                   children: SBBListItem.divideListItems(
                     context: context,
                     items: [
+                      SBBTextField(labelText: 'Empty', controller: emptyTextEditingController),
                       SBBTextInput(labelText: 'Empty', controller: emptyTextEditingController),
                       SBBTextInput(
                         labelText: 'Label',
@@ -45,7 +46,7 @@ class _TextFieldPageState extends State<TextFieldPage> {
                       SBBTextInput(
                         labelText: 'With leading and trailing icon',
                         icon: SBBIcons.unicorn_small,
-                        suffixIcon: Icon(SBBIcons.circle_information_small_small),
+                        suffixIcon: Container(height: 50, width: 200, color: SBBColors.green),
                       ),
                       // TODO: Move to separate Textarea page
                       // SBBTextInput(

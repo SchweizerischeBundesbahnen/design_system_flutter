@@ -6,6 +6,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sbb_design_system_mobile/src/text/sbb_input_decoration.dart';
+import 'package:sbb_design_system_mobile/src/text/sbb_input_decorator.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
@@ -269,6 +271,15 @@ class _SBBTextInput extends State<SBBTextInput> {
   @override
   Widget build(BuildContext context) {
     final style = SBBControlStyles.of(context).textField;
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 30.0),
+      child: SBBInputDecorator(
+        decoration: SBBInputDecoration(leading: Icon(widget.icon), trailing: widget.suffixIcon),
+        expands: widget.expands,
+        child: _buildTextField(),
+      ),
+    );
+
     Widget child = Row(
       children: [
         if (widget.icon != null) Padding(padding: const EdgeInsetsDirectional.only(end: 8.0), child: Icon(widget.icon)),
