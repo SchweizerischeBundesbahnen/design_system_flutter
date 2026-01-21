@@ -10,6 +10,7 @@ class SBBInputDecoration {
   const SBBInputDecoration({
     this.leading,
     this.trailing,
+    this.error,
   });
 
   /// An optional widget to display before the input field.
@@ -24,16 +25,24 @@ class SBBInputDecoration {
   /// of the input field.
   final Widget? trailing;
 
+  /// An optional error widget to display below the input field.
+  ///
+  /// The error widget is displayed at the left edge of the decorator box,
+  /// below the main content (input, leading, trailing).
+  final Widget? error;
+
   /// Creates a copy of this decoration with the given fields replaced
   /// by the new values.
   SBBInputDecoration copyWith({
     Widget? leading,
     Widget? trailing,
+    Widget? error,
     EdgeInsetsGeometry? contentPadding,
   }) {
     return SBBInputDecoration(
       leading: leading ?? this.leading,
       trailing: trailing ?? this.trailing,
+      error: error ?? this.error,
     );
   }
 
@@ -41,9 +50,12 @@ class SBBInputDecoration {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     if (other.runtimeType != runtimeType) return false;
-    return other is SBBInputDecoration && other.leading == leading && other.trailing == trailing;
+    return other is SBBInputDecoration &&
+        other.leading == leading &&
+        other.trailing == trailing &&
+        other.error == error;
   }
 
   @override
-  int get hashCode => Object.hash(leading, trailing);
+  int get hashCode => Object.hash(leading, trailing, error);
 }

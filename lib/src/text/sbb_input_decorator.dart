@@ -48,6 +48,7 @@ enum _SBBDecorationSlot {
   leading,
   input,
   trailing,
+  error,
 }
 
 // Type definitions for layout helpers
@@ -59,12 +60,14 @@ class _RenderSBBDecorationLayout {
     required this.leadingOffset,
     required this.inputOffset,
     required this.trailingOffset,
+    required this.errorOffset,
     required this.size,
   });
 
   final Offset leadingOffset;
   final Offset inputOffset;
   final Offset trailingOffset;
+  final Offset errorOffset;
   final Size size;
 }
 
@@ -90,6 +93,7 @@ class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSl
       _SBBDecorationSlot.leading => decoration.leading,
       _SBBDecorationSlot.input => child,
       _SBBDecorationSlot.trailing => decoration.trailing,
+      _SBBDecorationSlot.error => decoration.error,
     };
   }
 
@@ -127,6 +131,8 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
 
   RenderBox? get trailing => childForSlot(_SBBDecorationSlot.trailing);
 
+  RenderBox? get error => childForSlot(_SBBDecorationSlot.error);
+
   // The returned list is ordered for hit testing.
   @override
   Iterable<RenderBox> get children {
@@ -134,7 +140,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
       if (leading != null) leading!,
       if (input != null) input!,
       if (trailing != null) trailing!,
-      // if (container != null) container!,
+      if (error != null) error!,
     ];
   }
 
@@ -245,14 +251,25 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
           )
         : Offset.zero;
 
-    // Calculate total size
-    final double height = expands ? constraints.maxHeight : maxHeight;
-    final Size size = Size(constraints.maxWidth, height);
+    // Layout error widget below the main content
+    double errorHeight = 0.0;
+    if (error != null) {
+      final Size errorSize = layoutChild(error!, looseConstraints);
+      errorHeight = errorSize.height;
+    }
+
+    final Offset errorOffset = error != null ? Offset(0, maxHeight) : Offset.zero;
+
+    // Calculate total size including error
+    final double contentHeight = expands ? constraints.maxHeight : maxHeight;
+    final double totalHeight = contentHeight + errorHeight;
+    final Size size = Size(constraints.maxWidth, totalHeight);
 
     return _RenderSBBDecorationLayout(
       leadingOffset: leadingOffset,
       inputOffset: inputOffset,
       trailingOffset: trailingOffset,
+      errorOffset: errorOffset,
       size: size,
     );
   }
@@ -283,6 +300,12 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     if (trailing != null) {
       final BoxParentData trailingParentData = _boxParentData(trailing!);
       trailingParentData.offset = layout.trailingOffset;
+    }
+
+    // Position error
+    if (error != null) {
+      final BoxParentData errorParentData = _boxParentData(error!);
+      errorParentData.offset = layout.errorOffset;
     }
   }
 
@@ -353,8 +376,11 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     final double inputHeight = input?.getMinIntrinsicHeight(availableInputWidth) ?? 0.0;
     final double trailingHeight = trailing?.getMinIntrinsicHeight(width) ?? 0.0;
 
-    // Return the maximum height among all three (row-like behavior)
-    return math.max(leadingHeight, math.max(inputHeight, trailingHeight));
+    // Get the error height
+    final double errorHeight = error?.getMinIntrinsicHeight(width) ?? 0.0;
+
+    // Return the maximum height among all three (row-like behavior) plus error height
+    return math.max(leadingHeight, math.max(inputHeight, trailingHeight)) + errorHeight;
   }
 
   @override
@@ -373,8 +399,11 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     final double inputHeight = input?.getMaxIntrinsicHeight(availableInputWidth) ?? 0.0;
     final double trailingHeight = trailing?.getMaxIntrinsicHeight(width) ?? 0.0;
 
-    // Return the maximum height among all three (row-like behavior)
-    return math.max(leadingHeight, math.max(inputHeight, trailingHeight));
+    // Get the error height
+    final double errorHeight = error?.getMaxIntrinsicHeight(width) ?? 0.0;
+
+    // Return the maximum height among all three (row-like behavior) plus error height
+    return math.max(leadingHeight, math.max(inputHeight, trailingHeight)) + errorHeight;
   }
 
   @override
@@ -390,6 +419,10 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     if (trailing != null) {
       final BoxParentData trailingParentData = _boxParentData(trailing!);
       context.paintChild(trailing!, trailingParentData.offset + offset);
+    }
+    if (error != null) {
+      final BoxParentData errorParentData = _boxParentData(error!);
+      context.paintChild(error!, errorParentData.offset + offset);
     }
   }
 

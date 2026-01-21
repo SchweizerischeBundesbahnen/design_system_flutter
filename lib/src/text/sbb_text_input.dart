@@ -274,7 +274,11 @@ class _SBBTextInput extends State<SBBTextInput> {
     final bool isMultiline = (widget.maxLines ?? 0) != 1;
 
     return SBBInputDecorator(
-      decoration: SBBInputDecoration(leading: Icon(widget.icon), trailing: widget.suffixIcon),
+      decoration: SBBInputDecoration(
+        leading: widget.icon != null ? Icon(widget.icon) : null,
+        trailing: widget.suffixIcon,
+        error: widget.errorText != null ? Text(widget.errorText!, style: style?.errorTextStyle) : null,
+      ),
       expands: widget.expands,
       isMultiline: isMultiline,
       child: _buildTextField(),

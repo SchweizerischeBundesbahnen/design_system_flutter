@@ -37,73 +37,67 @@ class _TextFieldPageState extends State<TextFieldPage> {
                     items: [
                       SBBTextField(labelText: 'Empty', controller: emptyTextEditingController),
                       ConstrainedBox(
-                        constraints: BoxConstraints(maxHeight: 200),
+                        constraints: BoxConstraints(maxHeight: 100),
                         child: SBBTextInput(
-                          icon: SBBIcons.unicorn_small,
-                          // labelText: 'Empty',
+                          labelText: 'Label',
                           controller: emptyTextEditingController,
+                          icon: SBBIcons.unicorn_small,
+                          errorText: ' Hello',
                           expands: true,
                           maxLines: null,
                         ),
                       ),
-                      // SBBTextInput(
-                      //   labelText: 'Label',
-                      //   controller: defaultTextEditingController,
-                      //   icon: SBBIcons.unicorn_small,
-                      // ),
-                      // const SBBTextInput(labelText: 'With Placeholder', hintText: 'Placeholder'),
-                      // SBBTextInput(
-                      //   labelText: 'With leading and trailing icon',
-                      //   icon: SBBIcons.unicorn_small,
-                      //   suffixIcon: InkWell(
-                      //     onTap: () {
-                      //       print('hello');
-                      //     },
-                      //     child: Container(height: 50, width: 200, color: SBBColors.green),
-                      //   ),
-                      // ),
-                      // // TODO: Move to separate Textarea page
-                      // SBBTextInput(
-                      //   icon: SBBIcons.unicorn_small,
-                      //   labelText: 'Multiline',
-                      //   maxLines: 3,
-                      //   controller: TextEditingController()..value = const TextEditingValue(text: "I'm\nmulti\nline"),
-                      //   errorText: 'Hello',
-                      // ),
-                      // SBBTextInput(
-                      //   labelText: 'Error Message if input too long',
-                      //   controller: textEditingController,
-                      //   errorText: errorText,
-                      //   icon: SBBIcons.unicorn_small,
-                      //   suffixIcon: Icon(SBBIcons.circle_information_small_small),
-                      //   onChanged: (value) {
-                      //     if (errorText == null && value.length > 10) {
-                      //       setState(() {
-                      //         errorText = 'Too Long!';
-                      //       });
-                      //     } else if (errorText != null && value.length <= 10) {
-                      //       setState(() {
-                      //         errorText = null;
-                      //       });
-                      //     }
-                      //     // setState(() {
-                      //     //   if (value.length > 10) {
-                      //     //     errorText = 'Too Long!';
-                      //     //   } else {
-                      //     //     errorText = null;
-                      //     //   }
-                      //     // });
-                      //   },
-                      // ),
-                      // SBBTextInput(
-                      //   labelText: 'Disabled',
-                      //   controller: TextEditingController()..value = const TextEditingValue(text: 'Value'),
-                      //   enabled: false,
-                      // ),
-                      // SBBTextInput(
-                      //   labelText: 'Last Element (Without Divider)',
-                      //   controller: TextEditingController()..value = const TextEditingValue(text: 'Value'),
-                      // ),
+                      SBBTextInput(
+                        labelText: 'Label',
+                        controller: defaultTextEditingController,
+                        icon: SBBIcons.unicorn_small,
+                      ),
+                      const SBBTextInput(labelText: 'With Placeholder', hintText: 'Placeholder'),
+                      SBBTextInput(
+                        labelText: 'With leading and trailing icon',
+                        icon: SBBIcons.unicorn_small,
+                        suffixIcon: InkWell(
+                          onTap: () {
+                            print('hello');
+                          },
+                          child: Container(height: 50, width: 200, color: SBBColors.green),
+                        ),
+                      ),
+                      // TODO: Move to separate Textarea page
+                      SBBTextInput(
+                        icon: SBBIcons.unicorn_small,
+                        labelText: 'Multiline',
+                        maxLines: 3,
+                        controller: TextEditingController()..value = const TextEditingValue(text: "I'm\nmulti\nline"),
+                        errorText: 'Hello',
+                      ),
+                      SBBTextInput(
+                        labelText: 'Error Message if input too long',
+                        controller: textEditingController,
+                        errorText: errorText,
+                        icon: SBBIcons.unicorn_small,
+                        suffixIcon: Icon(SBBIcons.circle_information_small_small),
+                        onChanged: (value) {
+                          if (errorText == null && value.length > 10) {
+                            setState(() {
+                              errorText = 'Too Long!';
+                            });
+                          } else if (errorText != null && value.length <= 10) {
+                            setState(() {
+                              errorText = null;
+                            });
+                          }
+                        },
+                      ),
+                      SBBTextInput(
+                        labelText: 'Disabled',
+                        controller: TextEditingController()..value = const TextEditingValue(text: 'Value'),
+                        enabled: false,
+                      ),
+                      SBBTextInput(
+                        labelText: 'Last Element (Without Divider)',
+                        controller: TextEditingController()..value = const TextEditingValue(text: 'Value'),
+                      ),
                     ],
                   ).toList(growable: false),
                 ),
