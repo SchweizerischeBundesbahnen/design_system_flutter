@@ -269,21 +269,12 @@ class _SBBTextInput extends State<SBBTextInput> {
   @override
   Widget build(BuildContext context) {
     final style = SBBControlStyles.of(context).textField;
-    Widget child = Padding(
-      padding: const EdgeInsets.only(top: 6),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          if (widget.icon != null)
-            Padding(padding: const EdgeInsetsDirectional.only(top: 5.0, end: 8.0), child: Icon(widget.icon)),
-          Expanded(child: _buildTextField()),
-          if (widget.suffixIcon != null)
-            Padding(
-              padding: const EdgeInsets.only(top: 5.0),
-              child: widget.suffixIcon!,
-            ),
-        ],
-      ),
+    Widget child = Row(
+      children: [
+        if (widget.icon != null) Padding(padding: const EdgeInsetsDirectional.only(end: 8.0), child: Icon(widget.icon)),
+        Expanded(child: _buildTextField()),
+        if (widget.suffixIcon != null) widget.suffixIcon!,
+      ],
     );
 
     child = Column(
@@ -304,7 +295,6 @@ class _SBBTextInput extends State<SBBTextInput> {
 
     child = AnimatedContainer(
       duration: Durations.medium1,
-      padding: EdgeInsets.only(bottom: 3),
       decoration: BoxDecoration(
         border: Border(
           bottom: BorderSide(
@@ -363,8 +353,8 @@ class _SBBTextInput extends State<SBBTextInput> {
       autofillHints: widget.autofillHints,
 
       /// TODO: change this to an SBBTextInputDecoration
-      decoration: _decoration(labelStyle, floatingLabelStyle),
-      style: hasError ? textStyle.copyWith(color: SBBColors.red) : textStyle,
+      decoration: null,
+      style: hasError ? textStyle.copyWith(color: SBBColors.error) : textStyle,
       cursorRadius: const Radius.circular(2.0),
     );
   }
