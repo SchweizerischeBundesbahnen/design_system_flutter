@@ -343,7 +343,18 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
 
   @override
   double computeMinIntrinsicHeight(double width) {
-    return input?.getMinIntrinsicHeight(width) ?? 0.0;
+    // Calculate available width for input after accounting for leading and trailing
+    final double leadingWidth = leading?.getMinIntrinsicWidth(double.infinity) ?? 0.0;
+    final double trailingWidth = trailing?.getMinIntrinsicWidth(double.infinity) ?? 0.0;
+    final double availableInputWidth = math.max(0.0, width - leadingWidth - trailingWidth);
+
+    // Get the intrinsic heights of all three children
+    final double leadingHeight = leading?.getMinIntrinsicHeight(width) ?? 0.0;
+    final double inputHeight = input?.getMinIntrinsicHeight(availableInputWidth) ?? 0.0;
+    final double trailingHeight = trailing?.getMinIntrinsicHeight(width) ?? 0.0;
+
+    // Return the maximum height among all three (row-like behavior)
+    return math.max(leadingHeight, math.max(inputHeight, trailingHeight));
   }
 
   @override
@@ -351,7 +362,19 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     if (expands) {
       return double.infinity;
     }
-    return input?.getMaxIntrinsicHeight(width) ?? 0.0;
+
+    // Calculate available width for input after accounting for leading and trailing
+    final double leadingWidth = leading?.getMaxIntrinsicWidth(double.infinity) ?? 0.0;
+    final double trailingWidth = trailing?.getMaxIntrinsicWidth(double.infinity) ?? 0.0;
+    final double availableInputWidth = math.max(0.0, width - leadingWidth - trailingWidth);
+
+    // Get the intrinsic heights of all three children
+    final double leadingHeight = leading?.getMaxIntrinsicHeight(width) ?? 0.0;
+    final double inputHeight = input?.getMaxIntrinsicHeight(availableInputWidth) ?? 0.0;
+    final double trailingHeight = trailing?.getMaxIntrinsicHeight(width) ?? 0.0;
+
+    // Return the maximum height among all three (row-like behavior)
+    return math.max(leadingHeight, math.max(inputHeight, trailingHeight));
   }
 
   @override
