@@ -1,4 +1,5 @@
-import 'package:collection/collection.dart';
+import 'dart:math' as math;
+
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
@@ -201,38 +202,20 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
       inputHeight = inputSize.height;
     }
 
-    // Calculate input baseline
-    final double inputBaseline = input == null ? 0.0 : getBaseline(input!, inputConstraints);
+    // Calculate the maximum height among all three elements (row-like behavior)
+    final double maxHeight = [leadingHeight, inputHeight, trailingHeight].reduce(math.max);
 
-    // Calculate leading offset (aligned with input's first baseline)
-    Offset leadingOffset = Offset.zero;
-    if (leading != null && input != null) {
-      final double leadingBaseline = getBaseline(
-        leading!,
-        looseConstraints,
-      );
-      final double leadingY = inputBaseline - leadingBaseline;
-      leadingOffset = Offset(0, leadingY);
-    }
+    // Calculate offsets to center each element vertically
+    final Offset leadingOffset = leading != null ? Offset(0, (maxHeight - leadingHeight) / 2.0) : Offset.zero;
 
-    // Calculate input offset
-    final Offset inputOffset = Offset(leadingWidth, 0);
+    final Offset inputOffset = Offset(leadingWidth, (maxHeight - inputHeight) / 2.0);
 
-    // Calculate trailing offset (aligned with input baseline)
-    Offset trailingOffset = Offset.zero;
-    if (trailing != null && input != null) {
-      final double trailingBaseline = getBaseline(
-        trailing!,
-        looseConstraints,
-      );
-      final double trailingY = inputBaseline - trailingBaseline;
-      trailingOffset = Offset(leadingWidth + availableInputWidth, trailingY);
-    }
+    final Offset trailingOffset = trailing != null
+        ? Offset(leadingWidth + availableInputWidth, (maxHeight - trailingHeight) / 2.0)
+        : Offset.zero;
 
     // Calculate total size
-    final double contentHeight = [leadingHeight, inputHeight, trailingHeight].max;
-
-    final double height = expands ? constraints.maxHeight : contentHeight;
+    final double height = expands ? constraints.maxHeight : maxHeight;
     final Size size = Size(constraints.maxWidth, height);
 
     return _RenderSBBDecorationLayout(
