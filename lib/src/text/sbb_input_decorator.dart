@@ -159,6 +159,16 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     required ChildLayouter layoutChild,
     required _ChildBaselineGetter getBaseline,
   }) {
+    assert(
+      constraints.maxWidth < double.infinity,
+      'An SBBInputDecorator, which is typically created by a SBBTextInput, cannot '
+      'have an unbounded width.\n'
+      'This happens when the parent widget does not provide a finite width '
+      'constraint. For example, if the InputDecorator is contained by a Row, '
+      'then its width must be constrained. An Expanded widget or a SizedBox '
+      'can be used to constrain the width.',
+    );
+
     final BoxConstraints looseConstraints = constraints.loosen();
 
     // Layout leading if present

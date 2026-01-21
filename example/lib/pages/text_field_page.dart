@@ -46,16 +46,21 @@ class _TextFieldPageState extends State<TextFieldPage> {
                       SBBTextInput(
                         labelText: 'With leading and trailing icon',
                         icon: SBBIcons.unicorn_small,
-                        suffixIcon: Container(height: 50, width: 200, color: SBBColors.green),
+                        suffixIcon: InkWell(
+                          onTap: () {
+                            print('hello');
+                          },
+                          child: Container(height: 50, width: 200, color: SBBColors.green),
+                        ),
                       ),
                       // TODO: Move to separate Textarea page
-                      // SBBTextInput(
-                      //   icon: SBBIcons.unicorn_small,
-                      //   labelText: 'Multiline',
-                      //   maxLines: 3,
-                      //   controller: TextEditingController()..value = const TextEditingValue(text: "I'm\nmulti\nline"),
-                      //   errorText: 'Hello',
-                      // ),
+                      SBBTextInput(
+                        icon: SBBIcons.unicorn_small,
+                        labelText: 'Multiline',
+                        maxLines: 3,
+                        controller: TextEditingController()..value = const TextEditingValue(text: "I'm\nmulti\nline"),
+                        errorText: 'Hello',
+                      ),
                       SBBTextInput(
                         labelText: 'Error Message if input too long',
                         controller: textEditingController,
