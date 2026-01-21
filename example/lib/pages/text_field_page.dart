@@ -42,6 +42,7 @@ class _TextFieldPageState extends State<TextFieldPage> {
                           labelText: 'Label',
                           controller: emptyTextEditingController,
                           icon: SBBIcons.unicorn_small,
+                          suffixIcon: Container(height: 50, width: 10, color: SBBColors.green),
                           errorText: ' Hello',
                           expands: true,
                           maxLines: null,

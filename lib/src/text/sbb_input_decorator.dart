@@ -201,11 +201,20 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
 
     final BoxConstraints looseConstraints = constraints.loosen();
 
+    // Layout error if present first to know the bottomHeight
+    double errorHeight = 0.0;
+    if (error != null) {
+      final Size errorSize = layoutChild(error!, looseConstraints);
+      errorHeight = errorSize.height;
+    }
+
+    final BoxConstraints titleRowConstraints = looseConstraints.deflate(EdgeInsets.only(top: errorHeight));
+
     // Layout leading if present
     double leadingWidth = 0.0;
     double leadingHeight = 0.0;
     if (leading != null) {
-      final Size leadingSize = layoutChild(leading!, looseConstraints);
+      final Size leadingSize = layoutChild(leading!, titleRowConstraints);
       leadingWidth = leadingSize.width;
       leadingHeight = leadingSize.height;
     }
@@ -214,14 +223,16 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     double trailingWidth = 0.0;
     double trailingHeight = 0.0;
     if (trailing != null) {
-      final Size trailingSize = layoutChild(trailing!, looseConstraints);
+      final Size trailingSize = layoutChild(trailing!, titleRowConstraints);
       trailingWidth = trailingSize.width;
       trailingHeight = trailingSize.height;
     }
 
     // Calculate available width for input
     final double availableInputWidth = constraints.maxWidth - leadingWidth - trailingWidth;
-    final BoxConstraints inputConstraints = constraints.tighten(width: availableInputWidth);
+    final BoxConstraints inputConstraints = constraints
+        .tighten(width: availableInputWidth)
+        .deflate(EdgeInsets.only(top: errorHeight));
 
     // Layout input
     double inputHeight = 0.0;
@@ -231,37 +242,33 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     }
 
     // Calculate the maximum height among all three elements (row-like behavior)
-    final double maxHeight = [leadingHeight, inputHeight, trailingHeight].reduce(math.max);
+    final double titleRowHeight = [leadingHeight, inputHeight, trailingHeight].reduce(math.max);
 
     // Calculate offsets to align each element vertically
     // For multiline inputs, top-align all elements; otherwise center them
     final Offset leadingOffset = leading != null
-        ? Offset(0, isMultiline ? 0.0 : (maxHeight - leadingHeight) / 2.0)
+        ? Offset(0, isMultiline ? 0.0 : (titleRowHeight - leadingHeight) / 2.0)
         : Offset.zero;
 
     final Offset inputOffset = Offset(
       leadingWidth,
-      isMultiline ? 0.0 : (maxHeight - inputHeight) / 2.0,
+      isMultiline ? 0.0 : (titleRowHeight - inputHeight) / 2.0,
     );
 
     final Offset trailingOffset = trailing != null
         ? Offset(
             leadingWidth + availableInputWidth,
-            isMultiline ? 0.0 : (maxHeight - trailingHeight) / 2.0,
+            isMultiline ? 0.0 : (titleRowHeight - trailingHeight) / 2.0,
           )
         : Offset.zero;
 
     // Layout error widget below the main content
-    double errorHeight = 0.0;
-    if (error != null) {
-      final Size errorSize = layoutChild(error!, looseConstraints);
-      errorHeight = errorSize.height;
-    }
+    // if expands, needs to be laid out at the bottom
+    final errorY = expands ? constraints.maxHeight - errorHeight : titleRowHeight;
+    final Offset errorOffset = error != null ? Offset(0, errorY) : Offset.zero;
 
-    final Offset errorOffset = error != null ? Offset(0, maxHeight) : Offset.zero;
-
-    // Calculate total size including error
-    final double contentHeight = expands ? constraints.maxHeight : maxHeight;
+    // Calculate total size
+    final double contentHeight = expands ? constraints.maxHeight : titleRowHeight;
     final double totalHeight = contentHeight + errorHeight;
     final Size size = Size(constraints.maxWidth, totalHeight);
 
