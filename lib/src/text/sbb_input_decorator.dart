@@ -15,6 +15,7 @@ class SBBInputDecorator extends StatelessWidget {
     super.key,
     required this.decoration,
     this.expands = false,
+    this.isMultiline = false,
     this.child,
   });
 
@@ -24,6 +25,11 @@ class SBBInputDecorator extends StatelessWidget {
   /// Whether the input field should expand to fill available space.
   final bool expands;
 
+  /// Whether the input field can have multiple lines.
+  ///
+  /// When true, leading and trailing widgets are top-aligned instead of centered.
+  final bool isMultiline;
+
   /// The widget below this decorator, usually some sort of [EditableText].
   final Widget? child;
 
@@ -32,6 +38,7 @@ class SBBInputDecorator extends StatelessWidget {
     return _SBBDecorator(
       decoration: decoration,
       expands: expands,
+      isMultiline: isMultiline,
       child: child,
     );
   }
@@ -65,11 +72,13 @@ class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSl
   const _SBBDecorator({
     required this.decoration,
     required this.expands,
+    required this.isMultiline,
     this.child,
   });
 
   final SBBInputDecoration decoration;
   final bool expands;
+  final bool isMultiline;
   final Widget? child;
 
   @override
@@ -89,6 +98,7 @@ class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSl
     return _RenderSBBDecoration(
       decoration: decoration,
       expands: expands,
+      isMultiline: isMultiline,
     );
   }
 
@@ -96,7 +106,8 @@ class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSl
   void updateRenderObject(BuildContext context, _RenderSBBDecoration renderObject) {
     renderObject
       ..decoration = decoration
-      ..expands = expands;
+      ..expands = expands
+      ..isMultiline = isMultiline;
   }
 }
 
@@ -105,8 +116,10 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
   _RenderSBBDecoration({
     required SBBInputDecoration decoration,
     required bool expands,
+    required bool isMultiline,
   }) : _decoration = decoration,
-       _expands = expands;
+       _expands = expands,
+       _isMultiline = isMultiline;
 
   RenderBox? get leading => childForSlot(_SBBDecorationSlot.leading);
 
@@ -140,6 +153,15 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
   set expands(bool value) {
     if (_expands == value) return;
     _expands = value;
+    markNeedsLayout();
+  }
+
+  bool get isMultiline => _isMultiline;
+  bool _isMultiline;
+
+  set isMultiline(bool value) {
+    if (_isMultiline == value) return;
+    _isMultiline = value;
     markNeedsLayout();
   }
 
@@ -205,13 +227,22 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     // Calculate the maximum height among all three elements (row-like behavior)
     final double maxHeight = [leadingHeight, inputHeight, trailingHeight].reduce(math.max);
 
-    // Calculate offsets to center each element vertically
-    final Offset leadingOffset = leading != null ? Offset(0, (maxHeight - leadingHeight) / 2.0) : Offset.zero;
+    // Calculate offsets to align each element vertically
+    // For multiline inputs, top-align all elements; otherwise center them
+    final Offset leadingOffset = leading != null
+        ? Offset(0, isMultiline ? 0.0 : (maxHeight - leadingHeight) / 2.0)
+        : Offset.zero;
 
-    final Offset inputOffset = Offset(leadingWidth, (maxHeight - inputHeight) / 2.0);
+    final Offset inputOffset = Offset(
+      leadingWidth,
+      isMultiline ? 0.0 : (maxHeight - inputHeight) / 2.0,
+    );
 
     final Offset trailingOffset = trailing != null
-        ? Offset(leadingWidth + availableInputWidth, (maxHeight - trailingHeight) / 2.0)
+        ? Offset(
+            leadingWidth + availableInputWidth,
+            isMultiline ? 0.0 : (maxHeight - trailingHeight) / 2.0,
+          )
         : Offset.zero;
 
     // Calculate total size

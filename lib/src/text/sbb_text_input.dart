@@ -271,9 +271,12 @@ class _SBBTextInput extends State<SBBTextInput> {
   @override
   Widget build(BuildContext context) {
     final style = SBBControlStyles.of(context).textField;
+    final bool isMultiline = (widget.maxLines ?? 0) != 1;
+
     return SBBInputDecorator(
       decoration: SBBInputDecoration(leading: Icon(widget.icon), trailing: widget.suffixIcon),
       expands: widget.expands,
+      isMultiline: isMultiline,
       child: _buildTextField(),
     );
 
