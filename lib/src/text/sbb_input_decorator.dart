@@ -242,7 +242,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     }
 
     // Calculate the maximum height among all three elements (row-like behavior)
-    final double titleRowHeight = [leadingHeight, inputHeight, trailingHeight].reduce(math.max);
+    final double titleRowHeight = [leadingHeight, inputHeight, trailingHeight, 48.0].reduce(math.max);
 
     // Calculate offsets to align each element vertically
     // For multiline inputs, top-align all elements; otherwise center them
@@ -360,7 +360,8 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     final double leadingWidth = leading?.getMinIntrinsicWidth(height) ?? 0.0;
     final double inputWidth = input?.getMinIntrinsicWidth(height) ?? 0.0;
     final double trailingWidth = trailing?.getMinIntrinsicWidth(height) ?? 0.0;
-    return leadingWidth + inputWidth + trailingWidth;
+    final double errorWidth = error?.getMinIntrinsicWidth(height) ?? 0.0;
+    return math.max(leadingWidth + inputWidth + trailingWidth, errorWidth);
   }
 
   @override
@@ -368,48 +369,37 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     final double leadingWidth = leading?.getMaxIntrinsicWidth(height) ?? 0.0;
     final double inputWidth = input?.getMaxIntrinsicWidth(height) ?? 0.0;
     final double trailingWidth = trailing?.getMaxIntrinsicWidth(height) ?? 0.0;
-    return leadingWidth + inputWidth + trailingWidth;
+    final double errorWidth = error?.getMaxIntrinsicWidth(height) ?? 0.0;
+    return math.max(leadingWidth + inputWidth + trailingWidth, errorWidth);
   }
 
   @override
   double computeMinIntrinsicHeight(double width) {
-    // Calculate available width for input after accounting for leading and trailing
     final double leadingWidth = leading?.getMinIntrinsicWidth(double.infinity) ?? 0.0;
     final double trailingWidth = trailing?.getMinIntrinsicWidth(double.infinity) ?? 0.0;
     final double availableInputWidth = math.max(0.0, width - leadingWidth - trailingWidth);
 
-    // Get the intrinsic heights of all three children
     final double leadingHeight = leading?.getMinIntrinsicHeight(width) ?? 0.0;
     final double inputHeight = input?.getMinIntrinsicHeight(availableInputWidth) ?? 0.0;
     final double trailingHeight = trailing?.getMinIntrinsicHeight(width) ?? 0.0;
 
-    // Get the error height
     final double errorHeight = error?.getMinIntrinsicHeight(width) ?? 0.0;
 
-    // Return the maximum height among all three (row-like behavior) plus error height
     return math.max(leadingHeight, math.max(inputHeight, trailingHeight)) + errorHeight;
   }
 
   @override
   double computeMaxIntrinsicHeight(double width) {
-    if (expands) {
-      return double.infinity;
-    }
-
-    // Calculate available width for input after accounting for leading and trailing
     final double leadingWidth = leading?.getMaxIntrinsicWidth(double.infinity) ?? 0.0;
     final double trailingWidth = trailing?.getMaxIntrinsicWidth(double.infinity) ?? 0.0;
     final double availableInputWidth = math.max(0.0, width - leadingWidth - trailingWidth);
 
-    // Get the intrinsic heights of all three children
     final double leadingHeight = leading?.getMaxIntrinsicHeight(width) ?? 0.0;
     final double inputHeight = input?.getMaxIntrinsicHeight(availableInputWidth) ?? 0.0;
     final double trailingHeight = trailing?.getMaxIntrinsicHeight(width) ?? 0.0;
 
-    // Get the error height
     final double errorHeight = error?.getMaxIntrinsicHeight(width) ?? 0.0;
 
-    // Return the maximum height among all three (row-like behavior) plus error height
     return math.max(leadingHeight, math.max(inputHeight, trailingHeight)) + errorHeight;
   }
 

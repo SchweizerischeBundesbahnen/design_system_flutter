@@ -275,7 +275,12 @@ class _SBBTextInput extends State<SBBTextInput> {
 
     return SBBInputDecorator(
       decoration: SBBInputDecoration(
-        leading: widget.icon != null ? Icon(widget.icon) : null,
+        leading: widget.icon != null
+            ? Padding(
+                padding: const EdgeInsets.only(right: 8.0),
+                child: Icon(widget.icon),
+              )
+            : null,
         trailing: widget.suffixIcon,
         error: widget.errorText != null ? Text(widget.errorText!, style: style?.errorTextStyle) : null,
       ),
