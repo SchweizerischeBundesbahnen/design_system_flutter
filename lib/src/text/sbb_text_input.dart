@@ -278,6 +278,12 @@ class _SBBTextInput extends State<SBBTextInput> {
       builder: (BuildContext context, Widget? child) {
         return SBBInputDecorator(
           decoration: SBBInputDecoration(
+            label: widget.labelText != null
+                ? Text(
+                    widget.labelText!,
+                    style: style?.labelTextStyle,
+                  )
+                : null,
             leading: widget.icon != null
                 ? Padding(
                     padding: const EdgeInsets.only(right: 8.0),
@@ -341,8 +347,6 @@ class _SBBTextInput extends State<SBBTextInput> {
       onTapAlwaysCalled: widget.onTapAlwaysCalled,
       scrollController: widget.scrollController,
       autofillHints: widget.autofillHints,
-
-      /// TODO: change this to an SBBTextInputDecoration
       decoration: null,
       style: hasError ? textStyle.copyWith(color: SBBColors.error) : textStyle,
       cursorRadius: const Radius.circular(2.0),

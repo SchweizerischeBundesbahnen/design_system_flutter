@@ -74,6 +74,7 @@ class MyApp extends StatelessWidget {
               ),
               body: Builder(
                 builder: (context) {
+                  return TextFieldPage();
                   return SingleChildScrollView(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),

@@ -59,6 +59,7 @@ class SBBInputDecorator extends StatelessWidget {
 }
 
 enum _SBBDecorationSlot {
+  label,
   leading,
   input,
   hint,
@@ -72,6 +73,7 @@ typedef _ChildBaselineGetter = double Function(RenderBox child, BoxConstraints c
 // Container for layout values computed by _RenderSBBDecoration._layout.
 class _RenderSBBDecorationLayout {
   const _RenderSBBDecorationLayout({
+    required this.labelOffset,
     required this.leadingOffset,
     required this.inputOffset,
     required this.hintOffset,
@@ -80,6 +82,7 @@ class _RenderSBBDecorationLayout {
     required this.size,
   });
 
+  final Offset labelOffset;
   final Offset leadingOffset;
   final Offset inputOffset;
   final Offset hintOffset;
@@ -111,6 +114,7 @@ class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSl
   @override
   Widget? childForSlot(_SBBDecorationSlot slot) {
     return switch (slot) {
+      _SBBDecorationSlot.label => decoration.label,
       _SBBDecorationSlot.leading => decoration.leading,
       _SBBDecorationSlot.input => child,
       _SBBDecorationSlot.hint => decoration.hint,
@@ -155,6 +159,8 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
        _isEmpty = isEmpty,
        _isFocused = isFocused;
 
+  RenderBox? get label => childForSlot(_SBBDecorationSlot.label);
+
   RenderBox? get leading => childForSlot(_SBBDecorationSlot.leading);
 
   RenderBox? get input => childForSlot(_SBBDecorationSlot.input);
@@ -169,6 +175,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
   @override
   Iterable<RenderBox> get children {
     return <RenderBox>[
+      if (label != null) label!,
       if (leading != null) leading!,
       if (input != null) input!,
       if (hint != null) hint!,
@@ -279,11 +286,21 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
       trailingHeight = trailingSize.height;
     }
 
-    // Calculate available width for input
+    // Calculate available width for input (and label)
     final double availableInputWidth = constraints.maxWidth - leadingWidth - trailingWidth;
+
+    // Layout label with same width constraints as input
+    double labelHeight = 0.0;
+    if (label != null) {
+      final BoxConstraints labelConstraints = looseConstraints.tighten(width: availableInputWidth);
+      final Size labelSize = layoutChild(label!, labelConstraints);
+      labelHeight = labelSize.height;
+    }
+
+    // Layout input with constraints accounting for label and error
     final BoxConstraints inputConstraints = constraints
         .tighten(width: availableInputWidth)
-        .deflate(EdgeInsets.only(top: errorHeight));
+        .deflate(EdgeInsets.only(top: labelHeight, bottom: errorHeight));
 
     // Layout input
     double inputHeight = 0.0;
@@ -302,9 +319,15 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     // Calculate the maximum height among all three elements (row-like behavior)
     // The hint should be included in the height calculation if isEmpty
     final double maxInputHeight = isEmpty ? math.max(inputHeight, hintHeight) : inputHeight;
-    final double titleRowHeight = [leadingHeight, maxInputHeight, trailingHeight, 48.0].reduce(math.max);
+    final double labelInputHeight = labelHeight + maxInputHeight;
+    final double titleRowHeight = [leadingHeight, labelInputHeight, trailingHeight, 48.0].reduce(math.max);
 
-    // Calculate offsets to align each element vertically
+    // Calculate offsets
+    // Label is at the top, same x as input
+    final Offset labelOffset = label != null
+        ? Offset(leadingWidth, isMultiline ? 0.0 : (titleRowHeight - labelInputHeight) / 2.0)
+        : Offset.zero;
+
     // For multiline inputs, top-align all elements; otherwise center them
     final Offset leadingOffset = leading != null
         ? Offset(0, isMultiline ? 0.0 : (titleRowHeight - leadingHeight) / 2.0)
@@ -312,20 +335,17 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
 
     final Offset inputOffset = Offset(
       leadingWidth,
-      isMultiline ? 0.0 : (titleRowHeight - inputHeight) / 2.0,
+      isMultiline ? labelHeight : labelOffset.dy + labelHeight,
     );
 
-    // Hint is positioned at the same location as input (baseline-aligned)
+    // Hint is positioned at the same location as input
     final Offset hintOffset = Offset(
       leadingWidth,
-      isMultiline ? 0.0 : (titleRowHeight - hintHeight) / 2.0,
+      isMultiline ? labelHeight : labelOffset.dy + labelHeight,
     );
 
     final Offset trailingOffset = trailing != null
-        ? Offset(
-            leadingWidth + availableInputWidth,
-            isMultiline ? 0.0 : (titleRowHeight - trailingHeight) / 2.0,
-          )
+        ? Offset(leadingWidth + availableInputWidth, isMultiline ? 0.0 : (titleRowHeight - trailingHeight) / 2.0)
         : Offset.zero;
 
     // Layout error widget below the main content
@@ -339,6 +359,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     final Size size = Size(constraints.maxWidth, totalHeight);
 
     return _RenderSBBDecorationLayout(
+      labelOffset: labelOffset,
       leadingOffset: leadingOffset,
       inputOffset: inputOffset,
       hintOffset: hintOffset,
@@ -357,6 +378,12 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     );
 
     size = constraints.constrain(layout.size);
+
+    // Position label
+    if (label != null) {
+      BoxParentData labelParentData = _boxParentData(label!);
+      labelParentData.offset = layout.labelOffset;
+    }
 
     // Position leading
     if (leading != null) {
@@ -434,7 +461,12 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     final double inputWidth = input?.getMinIntrinsicWidth(height) ?? 0.0;
     final double trailingWidth = trailing?.getMinIntrinsicWidth(height) ?? 0.0;
     final double errorWidth = error?.getMinIntrinsicWidth(height) ?? 0.0;
-    return math.max(leadingWidth + inputWidth + trailingWidth, errorWidth);
+    final double labelWidth = label?.getMinIntrinsicWidth(height) ?? 0.0;
+
+    return math.max(
+      leadingWidth + inputWidth + trailingWidth,
+      math.max(errorWidth, labelWidth + leadingWidth),
+    );
   }
 
   @override
@@ -443,7 +475,12 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     final double inputWidth = input?.getMaxIntrinsicWidth(height) ?? 0.0;
     final double trailingWidth = trailing?.getMaxIntrinsicWidth(height) ?? 0.0;
     final double errorWidth = error?.getMaxIntrinsicWidth(height) ?? 0.0;
-    return math.max(leadingWidth + inputWidth + trailingWidth, errorWidth);
+    final double labelWidth = label?.getMaxIntrinsicWidth(height) ?? 0.0;
+
+    return math.max(
+      leadingWidth + inputWidth + trailingWidth,
+      math.max(errorWidth, labelWidth + leadingWidth + trailingWidth),
+    );
   }
 
   @override
@@ -453,17 +490,18 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     final double trailingWidth = trailing?.getMinIntrinsicWidth(double.infinity) ?? 0.0;
     final double availableInputWidth = math.max(0.0, width - leadingWidth - trailingWidth);
 
+    final double labelHeight = label?.getMinIntrinsicHeight(availableInputWidth) ?? 0.0;
     final double leadingHeight = leading?.getMinIntrinsicHeight(width) ?? 0.0;
     final double inputHeight = input?.getMinIntrinsicHeight(availableInputWidth) ?? 0.0;
     final double hintHeight = hint?.getMinIntrinsicHeight(availableInputWidth) ?? 0.0;
     final double trailingHeight = trailing?.getMinIntrinsicHeight(width) ?? 0.0;
-
     final double errorHeight = error?.getMinIntrinsicHeight(width) ?? 0.0;
 
     // Return the maximum height among all (row-like behavior) plus error height
     // Include hint in calculation if isEmpty
     final double maxInputHeight = isEmpty ? math.max(inputHeight, hintHeight) : inputHeight;
-    return math.max(leadingHeight, math.max(maxInputHeight, trailingHeight)) + errorHeight;
+    final double titleRowHeight = math.max(leadingHeight, math.max(maxInputHeight + labelHeight, trailingHeight));
+    return titleRowHeight + errorHeight;
   }
 
   @override
@@ -472,23 +510,28 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     final double trailingWidth = trailing?.getMaxIntrinsicWidth(double.infinity) ?? 0.0;
     final double availableInputWidth = math.max(0.0, width - leadingWidth - trailingWidth);
 
-    // Get the intrinsic heights of all three children
+    // Get the intrinsic heights of all children
+    final double labelHeight = label?.getMaxIntrinsicHeight(availableInputWidth) ?? 0.0;
     final double leadingHeight = leading?.getMaxIntrinsicHeight(width) ?? 0.0;
     final double inputHeight = input?.getMaxIntrinsicHeight(availableInputWidth) ?? 0.0;
     final double hintHeight = hint?.getMaxIntrinsicHeight(availableInputWidth) ?? 0.0;
     final double trailingHeight = trailing?.getMaxIntrinsicHeight(width) ?? 0.0;
-
-    // Get the error height
     final double errorHeight = error?.getMaxIntrinsicHeight(width) ?? 0.0;
 
-    // Return the maximum height among all (row-like behavior) plus error height
+    // Return the maximum height among all (row-like behavior) plus error height and label height
     // Include hint in calculation if isEmpty
     final double maxInputHeight = isEmpty ? math.max(inputHeight, hintHeight) : inputHeight;
-    return math.max(leadingHeight, math.max(maxInputHeight, trailingHeight)) + errorHeight;
+    final double titleRowHeight = math.max(leadingHeight, math.max(maxInputHeight + labelHeight, trailingHeight));
+    return titleRowHeight + errorHeight;
   }
 
   @override
   void paint(PaintingContext context, Offset offset) {
+    if (label != null) {
+      BoxParentData labelParentData = _boxParentData(label!);
+      context.paintChild(label!, labelParentData.offset + offset);
+    }
+
     if (leading != null) {
       BoxParentData leadingParentData = _boxParentData(leading!);
       context.paintChild(leading!, leadingParentData.offset + offset);

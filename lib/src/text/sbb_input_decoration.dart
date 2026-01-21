@@ -11,6 +11,7 @@ class SBBInputDecoration {
     this.leading,
     this.trailing,
     this.hint,
+    this.label,
     this.error,
   });
 
@@ -32,6 +33,12 @@ class SBBInputDecoration {
   /// The hint widget is baseline-aligned with where the input would be.
   final Widget? hint;
 
+  /// An optional widget to display above the input field.
+  ///
+  /// The label widget is displayed at the top of the decorator box,
+  /// with the same width constraints and x offset as the input field.
+  final Widget? label;
+
   /// An optional error widget to display below the input field.
   ///
   /// The error widget is displayed at the left edge of the decorator box,
@@ -44,6 +51,7 @@ class SBBInputDecoration {
     Widget? leading,
     Widget? trailing,
     Widget? hint,
+    Widget? label,
     Widget? error,
     EdgeInsetsGeometry? contentPadding,
   }) {
@@ -51,6 +59,7 @@ class SBBInputDecoration {
       leading: leading ?? this.leading,
       trailing: trailing ?? this.trailing,
       hint: hint ?? this.hint,
+      label: label ?? this.label,
       error: error ?? this.error,
     );
   }
@@ -63,9 +72,10 @@ class SBBInputDecoration {
         other.leading == leading &&
         other.trailing == trailing &&
         other.hint == hint &&
+        other.label == label &&
         other.error == error;
   }
 
   @override
-  int get hashCode => Object.hash(leading, trailing, hint, error);
+  int get hashCode => Object.hash(leading, trailing, hint, label, error);
 }
