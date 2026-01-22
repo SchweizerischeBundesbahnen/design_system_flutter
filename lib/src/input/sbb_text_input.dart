@@ -4,6 +4,8 @@
 // TODO: improve docs
 // TODO: add migration guideline & CHANGELOG
 
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -213,48 +215,61 @@ class SBBTextInput extends StatefulWidget {
   final Widget? suffixIcon;
 
   @override
-  State<StatefulWidget> createState() => _SBBTextInput();
+  State<StatefulWidget> createState() => _SBBTextInputState();
 }
 
-class _SBBTextInput extends State<SBBTextInput> {
+class _SBBTextInputState extends State<SBBTextInput> implements TextSelectionGestureDetectorBuilderDelegate {
   FocusNode? _focusNode;
 
   FocusNode get _effectiveFocusNode => widget.focusNode ?? (_focusNode ??= FocusNode());
 
   TextEditingController? _controller;
 
-  TextEditingController get controller => widget.controller ?? (_controller ??= TextEditingController());
+  TextEditingController get _effectiveController => widget.controller ?? (_controller ??= TextEditingController());
 
-  final Key _textFieldKey = UniqueKey();
+  late _SBBTextInputSelectionGestureDetectorBuilder _selectionGestureDetectorBuilder;
+
+  bool _showSelectionHandles = false;
+
+  @override
+  final GlobalKey<EditableTextState> editableTextKey = GlobalKey<EditableTextState>();
+
+  @override
+  late bool forcePressEnabled;
+
+  @override
+  bool get selectionEnabled => widget.enableInteractiveSelection && widget.enabled;
 
   @override
   void initState() {
     super.initState();
+    _selectionGestureDetectorBuilder = _SBBTextInputSelectionGestureDetectorBuilder(state: this);
 
     _effectiveFocusNode.canRequestFocus = widget.enabled;
     _effectiveFocusNode.addListener(_handleFocusChanged);
   }
 
-  void _handleFocusChanged() {
-    setState(() {
-      // Rebuild widget on focus change to update accordingly.
-    });
-  }
-
   @override
   void didUpdateWidget(covariant SBBTextInput oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.focusNode != oldWidget.focusNode) {
-      (oldWidget.focusNode ?? _focusNode)?.removeListener(_handleFocusChanged);
-      (widget.focusNode ?? _focusNode)?.addListener(_handleFocusChanged);
-    }
-    _effectiveFocusNode.canRequestFocus = widget.enabled;
 
     if (widget.controller == null && oldWidget.controller != null) {
       _controller = TextEditingController.fromValue(oldWidget.controller!.value);
     } else if (widget.controller != null && oldWidget.controller == null) {
       _controller!.dispose();
       _controller = null;
+    }
+
+    if (widget.focusNode != oldWidget.focusNode) {
+      (oldWidget.focusNode ?? _focusNode)?.removeListener(_handleFocusChanged);
+      (widget.focusNode ?? _focusNode)?.addListener(_handleFocusChanged);
+    }
+    _effectiveFocusNode.canRequestFocus = widget.enabled;
+
+    if (_effectiveFocusNode.hasFocus && widget.readOnly != oldWidget.readOnly && widget.enabled) {
+      if (_effectiveController.selection.isCollapsed) {
+        _showSelectionHandles = !widget.readOnly;
+      }
     }
   }
 
@@ -269,43 +284,104 @@ class _SBBTextInput extends State<SBBTextInput> {
 
   @override
   Widget build(BuildContext context) {
-    final style = SBBControlStyles.of(context).textField;
+    assert(debugCheckHasMaterial(context));
+
+    final theme = Theme.of(context);
+
+    final style = SBBControlStyles.of(context).textField!;
     final bool isMultiline = (widget.maxLines ?? 0) != 1;
 
-    return AnimatedBuilder(
-      animation: Listenable.merge(<Listenable>[_effectiveFocusNode, controller]),
-      builder: (BuildContext context, Widget? child) {
-        return SBBInputDecorator(
-          decoration: _getEffectiveDecoration(style: style),
-          expands: widget.expands,
-          isMultiline: isMultiline,
-          isEmpty: controller.text.isEmpty,
-          isFocused: _effectiveFocusNode.hasFocus,
-          child: child,
-        );
-      },
-      child: _buildTextField(),
-    );
-  }
+    // build platform specific things (selection controls, cursor)
+    TextSelectionControls? textSelectionControls;
+    final bool paintCursorAboveText;
+    final bool cursorOpacityAnimates;
+    Offset? cursorOffset;
+    VoidCallback? handleDidGainAccessibilityFocus;
+    VoidCallback? handleDidLoseAccessibilityFocus;
+    final SpellCheckConfiguration spellCheckConfiguration;
+    final Brightness keyboardAppearance = widget.keyboardAppearance ?? theme.brightness;
 
-  Widget _buildTextField() {
-    final style = SBBControlStyles.of(context).textField!;
+    switch (theme.platform) {
+      case TargetPlatform.iOS:
+        forcePressEnabled = true;
+        textSelectionControls = cupertinoTextSelectionHandleControls;
+        paintCursorAboveText = true;
+        cursorOpacityAnimates = true;
+        cursorOffset = Offset(iOSHorizontalOffset / MediaQuery.devicePixelRatioOf(context), 0);
+        spellCheckConfiguration = CupertinoTextField.inferIOSSpellCheckConfiguration(null);
+      case TargetPlatform.macOS:
+        forcePressEnabled = false;
+        textSelectionControls ??= cupertinoDesktopTextSelectionHandleControls;
+        paintCursorAboveText = true;
+        cursorOpacityAnimates = false;
+        spellCheckConfiguration = CupertinoTextField.inferIOSSpellCheckConfiguration(null);
+        handleDidGainAccessibilityFocus = () {
+          // Automatically activate the TextField when it receives accessibility focus.
+          if (!_effectiveFocusNode.hasFocus && _effectiveFocusNode.canRequestFocus) {
+            _effectiveFocusNode.requestFocus();
+          }
+        };
+        handleDidLoseAccessibilityFocus = () {
+          _effectiveFocusNode.unfocus();
+        };
+
+      case TargetPlatform.android:
+      case TargetPlatform.fuchsia:
+        forcePressEnabled = false;
+        textSelectionControls ??= materialTextSelectionHandleControls;
+        paintCursorAboveText = false;
+        cursorOpacityAnimates = false;
+        spellCheckConfiguration = TextField.inferAndroidSpellCheckConfiguration(null);
+
+      case TargetPlatform.linux:
+        forcePressEnabled = false;
+        textSelectionControls ??= desktopTextSelectionHandleControls;
+        paintCursorAboveText = false;
+        cursorOpacityAnimates = false;
+        spellCheckConfiguration = TextField.inferAndroidSpellCheckConfiguration(null);
+        handleDidGainAccessibilityFocus = () {
+          // Automatically activate the TextField when it receives accessibility focus.
+          if (!_effectiveFocusNode.hasFocus && _effectiveFocusNode.canRequestFocus) {
+            _effectiveFocusNode.requestFocus();
+          }
+        };
+        handleDidLoseAccessibilityFocus = () {
+          _effectiveFocusNode.unfocus();
+        };
+
+      case TargetPlatform.windows:
+        forcePressEnabled = false;
+        textSelectionControls ??= desktopTextSelectionHandleControls;
+        paintCursorAboveText = false;
+        cursorOpacityAnimates = false;
+        spellCheckConfiguration = TextField.inferAndroidSpellCheckConfiguration(null);
+        handleDidGainAccessibilityFocus = () {
+          // Automatically activate the TextField when it receives accessibility focus.
+          if (!_effectiveFocusNode.hasFocus && _effectiveFocusNode.canRequestFocus) {
+            _effectiveFocusNode.requestFocus();
+          }
+        };
+        handleDidLoseAccessibilityFocus = () {
+          _effectiveFocusNode.unfocus();
+        };
+    }
+
     final hasError = widget.errorText?.isNotEmpty ?? false;
     final textStyle = _textStyle(widget.enabled, context);
     final labelStyle = style.placeholderTextStyle!;
     // adjust floating label style to get desired sizes
     final floatingLabelStyle = labelStyle.copyWith(fontSize: SBBTextStyles.helpersLabel.fontSize! * (1 / 0.75));
-
-    return TextField(
-      key: _textFieldKey,
-      groupId: widget.groupId,
-      controller: controller,
+    Widget editableText = EditableText(
+      key: editableTextKey,
+      readOnly: widget.readOnly || !widget.enabled,
+      showCursor: widget.showCursor,
+      showSelectionHandles: _showSelectionHandles,
+      controller: _effectiveController,
       focusNode: _effectiveFocusNode,
       keyboardType: widget.keyboardType,
       textInputAction: widget.textInputAction,
       textCapitalization: widget.textCapitalization,
-      readOnly: widget.readOnly,
-      showCursor: widget.showCursor,
+      style: hasError ? textStyle.copyWith(color: SBBColors.error) : textStyle,
       autofocus: widget.autofocus,
       obscuringCharacter: widget.obscuringCharacter,
       obscureText: widget.obscureText,
@@ -314,21 +390,90 @@ class _SBBTextInput extends State<SBBTextInput> {
       maxLines: widget.maxLines,
       minLines: widget.minLines,
       expands: widget.expands,
+      selectionColor: _effectiveFocusNode.hasFocus ? SBBColors.autumn : null,
+      selectionControls: widget.enableInteractiveSelection ? textSelectionControls : null,
       onChanged: widget.onChanged,
+      onSelectionChanged: _handleSelectionChanged,
       onSubmitted: widget.onSubmitted,
+      groupId: widget.groupId,
+      onSelectionHandleTapped: _handleSelectionHandleTapped,
       inputFormatters: widget.inputFormatters,
-      enabled: widget.enabled,
-      ignorePointers: widget.ignorePointers,
-      keyboardAppearance: widget.keyboardAppearance,
+      rendererIgnoresPointer: true,
+      cursorOpacityAnimates: cursorOpacityAnimates,
+      cursorOffset: cursorOffset,
+      paintCursorAboveText: paintCursorAboveText,
+      contextMenuBuilder: _defaultContextMenuBuilder,
+      cursorColor: SBBColors.blue,
+      backgroundCursorColor: CupertinoColors.inactiveGray,
+      keyboardAppearance: keyboardAppearance,
       enableInteractiveSelection: widget.enableInteractiveSelection,
-      onTap: widget.onTap,
-      onTapAlwaysCalled: widget.onTapAlwaysCalled,
       scrollController: widget.scrollController,
       autofillHints: widget.autofillHints,
-      decoration: null,
-      style: hasError ? textStyle.copyWith(color: SBBColors.error) : textStyle,
-      cursorRadius: const Radius.circular(2.0),
+      restorationId: 'editable',
+      spellCheckConfiguration: spellCheckConfiguration,
+      magnifierConfiguration: TextMagnifier.adaptiveMagnifierConfiguration,
     );
+
+    return _selectionGestureDetectorBuilder.buildGestureDetector(
+      behavior: HitTestBehavior.translucent,
+      child: AnimatedBuilder(
+        animation: _effectiveController,
+        builder: (context, child) {
+          return Semantics(
+            enabled: widget.enabled,
+            currentValueLength: _effectiveController.text.characters.length,
+            onTap: widget.readOnly
+                ? null
+                : () {
+                    if (!_effectiveController.selection.isValid) {
+                      _effectiveController.selection = TextSelection.collapsed(
+                        offset: _effectiveController.text.length,
+                      );
+                    }
+                    _requestKeyboard();
+                  },
+            onDidGainAccessibilityFocus: handleDidGainAccessibilityFocus,
+            onDidLoseAccessibilityFocus: handleDidLoseAccessibilityFocus,
+            onFocus: widget.enabled
+                ? () {
+                    assert(
+                      _effectiveFocusNode.canRequestFocus,
+                      'Received SemanticsAction.focus from the engine. However, the FocusNode '
+                      'of this text field cannot gain focus. This likely indicates a bug. '
+                      'If this text field cannot be focused (e.g. because it is not '
+                      'enabled), then its corresponding semantics node must be configured '
+                      'such that the assistive technology cannot request focus on it.',
+                    );
+
+                    if (_effectiveFocusNode.canRequestFocus && !_effectiveFocusNode.hasFocus) {
+                      _effectiveFocusNode.requestFocus();
+                    } else if (!widget.readOnly) {
+                      _requestKeyboard();
+                    }
+                  }
+                : null,
+            child: AnimatedBuilder(
+              animation: Listenable.merge(<Listenable>[_effectiveFocusNode, _effectiveController]),
+              builder: (BuildContext context, Widget? child) {
+                return SBBInputDecorator(
+                  decoration: _getEffectiveDecoration(style: style),
+                  expands: widget.expands,
+                  isMultiline: isMultiline,
+                  isEmpty: _effectiveController.text.isEmpty,
+                  isFocused: _effectiveFocusNode.hasFocus,
+                  child: child,
+                );
+              },
+              child: editableText,
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  void _requestKeyboard() {
+    _editableText?.requestKeyboard();
   }
 
   TextStyle _textStyle(bool enabled, BuildContext context) {
@@ -352,5 +497,110 @@ class _SBBTextInput extends State<SBBTextInput> {
             : SBBColors.transparent,
       ),
     );
+  }
+
+  EditableTextState? get _editableText => editableTextKey.currentState;
+
+  bool _shouldShowSelectionHandles(SelectionChangedCause? cause) {
+    // When the text field is activated by something that doesn't trigger the
+    // selection toolbar, we shouldn't show the handles either.
+    if (!_selectionGestureDetectorBuilder.shouldShowSelectionToolbar ||
+        !_selectionGestureDetectorBuilder.shouldShowSelectionHandles) {
+      return false;
+    }
+
+    if (cause == SelectionChangedCause.keyboard) {
+      return false;
+    }
+
+    if (widget.readOnly && _effectiveController.selection.isCollapsed) {
+      return false;
+    }
+
+    if (!widget.enabled) {
+      return false;
+    }
+
+    if (cause == SelectionChangedCause.longPress || cause == SelectionChangedCause.stylusHandwriting) {
+      return true;
+    }
+
+    if (_effectiveController.text.isNotEmpty) {
+      return true;
+    }
+
+    return false;
+  }
+
+  void _handleFocusChanged() {
+    setState(() {
+      // Rebuild widget on focus change to update accordingly.
+    });
+  }
+
+  void _handleSelectionHandleTapped() {
+    if (_effectiveController.selection.isCollapsed) {
+      _editableText!.toggleToolbar();
+    }
+  }
+
+  void _handleSelectionChanged(TextSelection selection, SelectionChangedCause? cause) {
+    final bool willShowSelectionHandles = _shouldShowSelectionHandles(cause);
+    if (willShowSelectionHandles != _showSelectionHandles) {
+      setState(() {
+        _showSelectionHandles = willShowSelectionHandles;
+      });
+    }
+
+    switch (Theme.of(context).platform) {
+      case TargetPlatform.iOS:
+      case TargetPlatform.macOS:
+      case TargetPlatform.linux:
+      case TargetPlatform.windows:
+      case TargetPlatform.fuchsia:
+      case TargetPlatform.android:
+        if (cause == SelectionChangedCause.longPress) {
+          _editableText?.bringIntoView(selection.extent);
+        }
+    }
+
+    switch (Theme.of(context).platform) {
+      case TargetPlatform.iOS:
+      case TargetPlatform.fuchsia:
+      case TargetPlatform.android:
+        break;
+      case TargetPlatform.macOS:
+      case TargetPlatform.linux:
+      case TargetPlatform.windows:
+        if (cause == SelectionChangedCause.drag) {
+          _editableText?.hideToolbar();
+        }
+    }
+  }
+
+  Widget _defaultContextMenuBuilder(
+    BuildContext context,
+    EditableTextState editableTextState,
+  ) {
+    if (defaultTargetPlatform == TargetPlatform.iOS && SystemContextMenu.isSupported(context)) {
+      return SystemContextMenu.editableText(editableTextState: editableTextState);
+    }
+    return AdaptiveTextSelectionToolbar.editableText(editableTextState: editableTextState);
+  }
+}
+
+class _SBBTextInputSelectionGestureDetectorBuilder extends TextSelectionGestureDetectorBuilder {
+  _SBBTextInputSelectionGestureDetectorBuilder({required _SBBTextInputState state})
+    : _state = state,
+      super(delegate: state);
+
+  final _SBBTextInputState _state;
+
+  @override
+  bool get onUserTapAlwaysCalled => _state.widget.onTapAlwaysCalled;
+
+  @override
+  void onUserTap() {
+    _state.widget.onTap?.call();
   }
 }
