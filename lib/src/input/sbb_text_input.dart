@@ -287,15 +287,18 @@ class _SBBTextInputState extends State<SBBTextInput> implements TextSelectionGes
     assert(debugCheckHasMaterial(context));
 
     final theme = Theme.of(context);
+    final DefaultSelectionStyle selectionStyle = DefaultSelectionStyle.of(context);
 
     final style = SBBControlStyles.of(context).textField!;
     final bool isMultiline = (widget.maxLines ?? 0) != 1;
 
-    // build platform specific things (selection controls, cursor)
+    // determine platform specific properties (selection controls, cursor)
     TextSelectionControls? textSelectionControls;
     final bool paintCursorAboveText;
     final bool cursorOpacityAnimates;
     Offset? cursorOffset;
+    final Color cursorColor = selectionStyle.cursorColor ?? theme.colorScheme.primary;
+    final Color selectionColor = selectionStyle.selectionColor ?? theme.colorScheme.primary.withValues(alpha: 0.4);
     VoidCallback? handleDidGainAccessibilityFocus;
     VoidCallback? handleDidLoseAccessibilityFocus;
     final SpellCheckConfiguration spellCheckConfiguration;
@@ -390,7 +393,7 @@ class _SBBTextInputState extends State<SBBTextInput> implements TextSelectionGes
       maxLines: widget.maxLines,
       minLines: widget.minLines,
       expands: widget.expands,
-      selectionColor: _effectiveFocusNode.hasFocus ? SBBColors.autumn : null,
+      selectionColor: _effectiveFocusNode.hasFocus ? selectionColor : null,
       selectionControls: widget.enableInteractiveSelection ? textSelectionControls : null,
       onChanged: widget.onChanged,
       onSelectionChanged: _handleSelectionChanged,
@@ -403,7 +406,7 @@ class _SBBTextInputState extends State<SBBTextInput> implements TextSelectionGes
       cursorOffset: cursorOffset,
       paintCursorAboveText: paintCursorAboveText,
       contextMenuBuilder: _defaultContextMenuBuilder,
-      cursorColor: SBBColors.blue,
+      cursorColor: cursorColor,
       backgroundCursorColor: CupertinoColors.inactiveGray,
       keyboardAppearance: keyboardAppearance,
       enableInteractiveSelection: widget.enableInteractiveSelection,
@@ -460,7 +463,8 @@ class _SBBTextInputState extends State<SBBTextInput> implements TextSelectionGes
                   expands: widget.expands,
                   isMultiline: isMultiline,
                   isEmpty: _effectiveController.text.isEmpty,
-                  isFocused: _effectiveFocusNode.hasFocus,
+                  hasFocus: _effectiveFocusNode.hasFocus,
+                  enabled: widget.enabled,
                   child: child,
                 );
               },
@@ -552,16 +556,8 @@ class _SBBTextInputState extends State<SBBTextInput> implements TextSelectionGes
       });
     }
 
-    switch (Theme.of(context).platform) {
-      case TargetPlatform.iOS:
-      case TargetPlatform.macOS:
-      case TargetPlatform.linux:
-      case TargetPlatform.windows:
-      case TargetPlatform.fuchsia:
-      case TargetPlatform.android:
-        if (cause == SelectionChangedCause.longPress) {
-          _editableText?.bringIntoView(selection.extent);
-        }
+    if (cause == SelectionChangedCause.longPress) {
+      _editableText?.bringIntoView(selection.extent);
     }
 
     switch (Theme.of(context).platform) {

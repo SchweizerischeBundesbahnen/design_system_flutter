@@ -10,15 +10,19 @@ class SBBInputDecorator extends StatelessWidget {
   const SBBInputDecorator({
     super.key,
     required this.decoration,
+    required this.enabled,
     this.expands = false,
     this.isMultiline = false,
     this.isEmpty = false,
-    this.isFocused = false,
+    this.hasFocus = false,
     this.child,
   });
 
   /// The decoration to display around the input field.
   final SBBInputDecoration decoration;
+
+  /// Whether the input field is enabled.
+  final bool enabled;
 
   /// Whether the input field should expand to fill available space.
   final bool expands;
@@ -30,13 +34,13 @@ class SBBInputDecorator extends StatelessWidget {
 
   /// Whether the input field is empty.
   ///
-  /// When true and [isFocused] is true, the hint is displayed.
+  /// When true and [hasFocus] is true, the hint is displayed.
   final bool isEmpty;
 
   /// Whether the input field has focus.
   ///
   /// When true and [isEmpty] is true, the hint is displayed.
-  final bool isFocused;
+  final bool hasFocus;
 
   /// The widget below this decorator, usually some sort of [EditableText].
   final Widget? child;
@@ -91,7 +95,7 @@ class SBBInputDecorator extends StatelessWidget {
       expands: expands,
       isMultiline: isMultiline,
       isEmpty: isEmpty,
-      isFocused: isFocused,
+      isFocused: hasFocus,
       child: child,
     );
   }
