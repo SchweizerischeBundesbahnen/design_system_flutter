@@ -358,14 +358,20 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
         ? Offset(leadingWidth + availableInputWidth, isMultiline ? 0.0 : (titleRowHeight - trailingHeight) / 2.0)
         : Offset.zero;
 
-    // Layout error widget below the main content
+    // Layout error widget below the bottomMost of the titleRowHeight
     // if expands, needs to be laid out at the bottom
-    final errorY = expands ? constraints.maxHeight - errorHeight : titleRowHeight;
+    final double topAlignedErrorY = [
+      leadingHeight + leadingOffset.dy,
+      labelInputHeight + labelOffset.dy,
+      trailingHeight + trailingOffset.dy,
+    ].reduce(math.max);
+    final errorY = expands ? constraints.maxHeight - errorHeight : topAlignedErrorY;
     final Offset errorOffset = error != null ? Offset(0, errorY) : Offset.zero;
 
     // Calculate total size
-    final double contentHeight = expands ? constraints.maxHeight : titleRowHeight;
-    final double totalHeight = contentHeight + errorHeight;
+    final double totalHeight = expands
+        ? constraints.maxHeight
+        : math.max(topAlignedErrorY + errorHeight, titleRowHeight);
     final Size size = Size(constraints.maxWidth, totalHeight);
 
     return _RenderSBBDecorationLayout(
