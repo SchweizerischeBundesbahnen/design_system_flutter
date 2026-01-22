@@ -8,7 +8,7 @@ class SBBDecoration {
   const SBBDecoration({
     this.leading,
     this.trailing,
-    this.hint,
+    this.placeholder,
     this.label,
     this.error,
     this.container,
@@ -29,8 +29,8 @@ class SBBDecoration {
   /// An optional widget to display in place of the input when the field
   /// is focused and empty.
   ///
-  /// The hint widget is baseline-aligned with where the input would be.
-  final Widget? hint;
+  /// The placeholder widget is baseline-aligned with where the input would be.
+  final Widget? placeholder;
 
   /// An optional widget to display above the input field.
   ///
@@ -52,7 +52,7 @@ class SBBDecoration {
   SBBDecoration copyWith({
     Widget? leading,
     Widget? trailing,
-    Widget? hint,
+    Widget? placeholder,
     Widget? label,
     Widget? error,
     Widget? container,
@@ -60,7 +60,7 @@ class SBBDecoration {
     return SBBDecoration(
       leading: leading ?? this.leading,
       trailing: trailing ?? this.trailing,
-      hint: hint ?? this.hint,
+      placeholder: placeholder ?? this.placeholder,
       label: label ?? this.label,
       error: error ?? this.error,
       container: container ?? this.container,
@@ -74,12 +74,12 @@ class SBBDecoration {
     return other is SBBDecoration &&
         other.leading == leading &&
         other.trailing == trailing &&
-        other.hint == hint &&
+        other.placeholder == placeholder &&
         other.label == label &&
         other.error == error &&
         other.container == container;
   }
 
   @override
-  int get hashCode => Object.hash(leading, trailing, hint, label, error, container);
+  int get hashCode => Object.hash(leading, trailing, placeholder, label, error, container);
 }

@@ -34,12 +34,12 @@ class SBBInputDecorator extends StatelessWidget {
 
   /// Whether the input field is empty.
   ///
-  /// When true and [hasFocus] is true, the hint is displayed.
+  /// When true and [hasFocus] is true, the placeholder is displayed.
   final bool isEmpty;
 
   /// Whether the input field has focus.
   ///
-  /// When true and [isEmpty] is true, the hint is displayed.
+  /// When true and [isEmpty] is true, the placeholder is displayed.
   final bool hasFocus;
 
   /// The widget below this decorator, usually some sort of [EditableText].
@@ -88,7 +88,7 @@ class SBBInputDecorator extends StatelessWidget {
         leading: leading,
         label: label,
         trailing: trailing,
-        hint: placeholder,
+        placeholder: placeholder,
         error: error,
         container: container,
       ),
@@ -122,7 +122,7 @@ enum _SBBDecorationSlot {
   label,
   leading,
   input,
-  hint,
+  placeholder,
   trailing,
   error,
   container,
@@ -130,7 +130,6 @@ enum _SBBDecorationSlot {
 
 class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSlot, RenderBox> {
   const _SBBDecorator({
-    super.key,
     required this.decoration,
     required this.expands,
     required this.isMultiline,
@@ -155,7 +154,7 @@ class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSl
       _SBBDecorationSlot.label => decoration.label,
       _SBBDecorationSlot.leading => decoration.leading,
       _SBBDecorationSlot.input => child,
-      _SBBDecorationSlot.hint => decoration.hint,
+      _SBBDecorationSlot.placeholder => decoration.placeholder,
       _SBBDecorationSlot.trailing => decoration.trailing,
       _SBBDecorationSlot.error => decoration.error,
       _SBBDecorationSlot.container => decoration.container,
@@ -228,7 +227,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
 
   RenderBox? get input => childForSlot(_SBBDecorationSlot.input);
 
-  RenderBox? get hint => childForSlot(_SBBDecorationSlot.hint);
+  RenderBox? get placeholder => childForSlot(_SBBDecorationSlot.placeholder);
 
   RenderBox? get trailing => childForSlot(_SBBDecorationSlot.trailing);
 
@@ -243,7 +242,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
       if (label != null) label!,
       if (leading != null) leading!,
       if (input != null) input!,
-      if (hint != null) hint!,
+      if (placeholder != null) placeholder!,
       if (trailing != null) trailing!,
       if (error != null) error!,
       if (container != null) container!,
@@ -381,15 +380,15 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
       inputHeight = inputSize.height;
     }
 
-    // Layout hint with same constraints as input
+    // Layout placeholder with same constraints as input
     double hintHeight = 0.0;
-    if (hint != null) {
-      final Size hintSize = layoutChild(hint!, inputConstraints);
+    if (placeholder != null) {
+      final Size hintSize = layoutChild(placeholder!, inputConstraints);
       hintHeight = hintSize.height;
     }
 
     // Calculate the maximum height among all three elements (row-like behavior)
-    // The hint should be included in the height calculation if isEmpty
+    // The placeholder should be included in the height calculation if isEmpty
     final double maxInputHeight = isEmpty ? math.max(inputHeight, hintHeight) : inputHeight;
     final double labelInputHeight = labelHeight + maxInputHeight;
     final double titleRowHeight = [leadingHeight, labelInputHeight, trailingHeight, 48.0].reduce(math.max);
@@ -472,7 +471,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     setParentData(label, layout.labelOffset);
     setParentData(leading, layout.leadingOffset);
     setParentData(input, layout.inputOffset);
-    setParentData(hint, layout.hintOffset);
+    setParentData(placeholder, layout.hintOffset);
     setParentData(trailing, layout.trailingOffset);
     setParentData(error, layout.errorOffset);
   }
@@ -518,7 +517,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
   double computeMinIntrinsicWidth(double height) {
     final double leadingWidth = _minWidth(leading, height);
     final double inputWidth = _minWidth(input, height);
-    final double hintWidth = _minWidth(hint, height);
+    final double hintWidth = _minWidth(placeholder, height);
     final double trailingWidth = _minWidth(trailing, height);
     final double errorWidth = _minWidth(error, height);
     final double labelWidth = _minWidth(label, height);
@@ -536,7 +535,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
   double computeMaxIntrinsicWidth(double height) {
     final double leadingWidth = _maxWidth(leading, height);
     final double inputWidth = _maxWidth(input, height);
-    final double hintWidth = _maxWidth(hint, height);
+    final double hintWidth = _maxWidth(placeholder, height);
     final double trailingWidth = _maxWidth(trailing, height);
     final double errorWidth = _maxWidth(error, height);
     final double labelWidth = _maxWidth(label, height);
@@ -558,13 +557,13 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
 
     final double labelHeight = label?.getMinIntrinsicHeight(availableInputWidth) ?? 0.0;
     final double inputHeight = input?.getMinIntrinsicHeight(availableInputWidth) ?? 0.0;
-    final double hintHeight = hint?.getMinIntrinsicHeight(availableInputWidth) ?? 0.0;
+    final double hintHeight = placeholder?.getMinIntrinsicHeight(availableInputWidth) ?? 0.0;
     final double leadingHeight = leading?.getMinIntrinsicHeight(width) ?? 0.0;
     final double trailingHeight = trailing?.getMinIntrinsicHeight(width) ?? 0.0;
     final double errorHeight = error?.getMinIntrinsicHeight(width) ?? 0.0;
 
     // Return the maximum height among all (row-like behavior) plus error height
-    // Include hint in calculation if isEmpty
+    // Include placeholder in calculation if isEmpty
     final double maxInputHeight = isEmpty ? math.max(inputHeight, hintHeight) : inputHeight;
     final double titleRowHeight = [
       leadingHeight,
@@ -598,7 +597,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
 
     doPaint(label);
     doPaint(leading);
-    if (isEmpty && isFocused) doPaint(hint);
+    if (isEmpty && isFocused) doPaint(placeholder);
     doPaint(input);
     doPaint(trailing);
     doPaint(error);
