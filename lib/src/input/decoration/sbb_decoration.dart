@@ -1,13 +1,11 @@
 import 'package:flutter/widgets.dart';
 
-/// Defines the visual properties of an [SBBInputDecorator].
+/// Defines the visual properties of an [_SBBDecorator].
 ///
-/// This is a simplified version of Material's [InputDecoration] that only
-/// supports leading and input widgets, without borders, labels, or other
-/// complex decorations.
+/// Analog to [SBBInputDecoration] for the [_SBBDecorator].
 @immutable
-class SBBInputDecoration {
-  const SBBInputDecoration({
+class SBBDecoration {
+  const SBBDecoration({
     this.leading,
     this.trailing,
     this.hint,
@@ -46,11 +44,12 @@ class SBBInputDecoration {
   /// below the main content (input, leading, trailing).
   final Widget? error;
 
+  /// The container surrounding the decoration.
   final Widget? container;
 
   /// Creates a copy of this decoration with the given fields replaced
   /// by the new values.
-  SBBInputDecoration copyWith({
+  SBBDecoration copyWith({
     Widget? leading,
     Widget? trailing,
     Widget? hint,
@@ -58,7 +57,7 @@ class SBBInputDecoration {
     Widget? error,
     Widget? container,
   }) {
-    return SBBInputDecoration(
+    return SBBDecoration(
       leading: leading ?? this.leading,
       trailing: trailing ?? this.trailing,
       hint: hint ?? this.hint,
@@ -72,7 +71,7 @@ class SBBInputDecoration {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     if (other.runtimeType != runtimeType) return false;
-    return other is SBBInputDecoration &&
+    return other is SBBDecoration &&
         other.leading == leading &&
         other.trailing == trailing &&
         other.hint == hint &&

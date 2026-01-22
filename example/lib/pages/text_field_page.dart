@@ -47,6 +47,9 @@ class _TextFieldPageState extends State<TextFieldPage> {
                           placeholderText: 'Hint',
                           expands: true,
                           maxLines: null,
+                          onTap: () {
+                            print('hello');
+                          },
                         ),
                       ),
                       ConstrainedBox(
@@ -60,6 +63,9 @@ class _TextFieldPageState extends State<TextFieldPage> {
                           // placeholderText: 'Hint',
                           expands: true,
                           maxLines: null,
+                          onTap: () {
+                            print('Material TextField');
+                          },
                         ),
                       ),
                       SBBTextInput(

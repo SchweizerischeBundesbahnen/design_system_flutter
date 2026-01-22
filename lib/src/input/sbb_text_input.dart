@@ -6,10 +6,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:sbb_design_system_mobile/src/text/sbb_input_decoration.dart';
-import 'package:sbb_design_system_mobile/src/text/sbb_input_decorator.dart';
 
 import '../../sbb_design_system_mobile.dart';
+import 'decoration/sbb_input_decorator.dart';
 
 /// The SBBTextInput.
 ///
@@ -134,7 +133,7 @@ class SBBTextInput extends StatefulWidget {
   /// the disabled state properties are rendered.
   ///
   /// When a text field is disabled, all of its children widgets are also
-  /// disabled, including the [SBBInputDecoration.trailing]. If you need to keep
+  /// disabled, including the [SBBDecoration.trailing]. If you need to keep
   /// the trailing interactive while disabling the text field, consider using
   /// [readOnly] and [enableInteractiveSelection] instead:
   ///
@@ -337,71 +336,20 @@ class _SBBTextInput extends State<SBBTextInput> {
     return (widget.enabled ? style?.textStyle : style?.textStyleDisabled)!;
   }
 
-  InputDecoration _decoration(TextStyle labelStyle, TextStyle floatingLabelStyle) {
-    return InputDecoration(
-      isDense: true,
-      labelText: widget.labelText,
-      focusedBorder: InputBorder.none,
-      enabledBorder: InputBorder.none,
-      disabledBorder: InputBorder.none,
-      errorBorder: InputBorder.none,
-      focusedErrorBorder: InputBorder.none,
-      contentPadding: EdgeInsets.zero,
-      floatingLabelStyle: floatingLabelStyle,
-      labelStyle: labelStyle,
-      hintText: widget.placeholderText,
-      hintStyle: labelStyle,
-      hintMaxLines: widget.hintMaxLines,
-      alignLabelWithHint: true,
-    );
-  }
-
   SBBInputDecoration _getEffectiveDecoration({SBBTextFieldStyle? style}) {
     return SBBInputDecoration(
-      label: widget.labelText != null
-          ? Text(
-              widget.labelText!,
-              style: style?.labelTextStyle,
-            )
-          : null,
-      leading: widget.icon != null
-          ? Padding(
-              padding: const EdgeInsets.only(right: 8.0),
-              child: Icon(widget.icon),
-            )
-          : null,
+      labelText: widget.labelText,
+      leadingIconData: widget.icon,
       trailing: widget.suffixIcon,
-      hint: widget.placeholderText != null
-          ? Text(
-              widget.placeholderText!,
-              style: style?.placeholderTextStyle,
-            )
-          : null,
-      error: AnimatedSwitcher(
-        duration: Durations.medium1,
-        child: widget.errorText != null
-            ? Padding(
-                padding: const EdgeInsets.only(bottom: 6.0),
-                child: Text(
-                  widget.errorText!,
-                  style: SBBTextStyles.extraExtraSmallBold.copyWith(color: SBBColors.error),
-                ),
-              )
-            : SizedBox.shrink(),
-      ),
-      container: AnimatedContainer(
-        duration: Durations.medium1,
-        decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(
-              color: widget.errorText != null
-                  ? SBBColors.error
-                  : _effectiveFocusNode.hasFocus
-                  ? SBBColors.granite
-                  : SBBColors.transparent,
-            ),
-          ),
-        ),
+      placeholderText: widget.placeholderText,
+      errorText: widget.errorText,
+
+      borderColor: WidgetStatePropertyAll(
+        widget.errorText != null
+            ? SBBColors.error
+            : _effectiveFocusNode.hasFocus
+            ? SBBColors.granite
+            : SBBColors.transparent,
       ),
     );
   }

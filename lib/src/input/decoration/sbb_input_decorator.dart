@@ -2,14 +2,10 @@ import 'dart:math' as math;
 
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:sbb_design_system_mobile/src/input/decoration/sbb_decoration.dart';
 
-import 'sbb_input_decoration.dart';
+import '../../../sbb_design_system_mobile.dart';
 
-/// Displays decoration around an input field.
-///
-/// This is a simplified decorator that only supports a leading widget
-/// and the input field itself. The leading widget is vertically centered
-/// on the first baseline of the input field.
 class SBBInputDecorator extends StatelessWidget {
   const SBBInputDecorator({
     super.key,
@@ -47,14 +43,74 @@ class SBBInputDecorator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    Widget? leading = decoration.leading;
+    if (leading == null && decoration.leadingIconData != null) {
+      leading = Icon(decoration.leadingIconData);
+    }
+
+    Widget? label = decoration.label;
+    if (label == null && decoration.labelText != null) {
+      label = Text(decoration.labelText!);
+    }
+
+    Widget? trailing = decoration.trailing;
+    if (trailing == null && decoration.trailingIconData != null) {
+      trailing = Icon(decoration.trailingIconData);
+    }
+
+    Widget? placeholder = decoration.placeholder;
+    if (placeholder == null && decoration.placeholderText != null) {
+      placeholder = Text(decoration.placeholderText!);
+    }
+
+    Widget? error = decoration.error;
+    if (error == null && decoration.errorText != null) {
+      error = Text(decoration.errorText!);
+    }
+    error = AnimatedSwitcher(
+      duration: Duration(milliseconds: 250), // TODO: define Animation duration
+      child: error ?? SizedBox.shrink(),
+    );
+
+    final Widget container = AnimatedContainer(
+      duration: Duration(milliseconds: 250), // TODO: define Animation duration
+      decoration: BoxDecoration(
+        border: Border(bottom: BorderSide(color: SBBColors.green)),
+      ),
+    );
+
     return _SBBDecorator(
-      decoration: decoration,
+      decoration: SBBDecoration(
+        leading: leading,
+        label: label,
+        trailing: trailing,
+        hint: placeholder,
+        error: error,
+        container: container,
+      ),
       expands: expands,
       isMultiline: isMultiline,
       isEmpty: isEmpty,
       isFocused: isFocused,
       child: child,
     );
+  }
+
+  Widget _addDefaultAncestorWithResolved({
+    required Widget child,
+    required Color? foregroundColor,
+    TextStyle? textStyle,
+  }) {
+    final resolvedTextStyle = textStyle?.copyWith(color: foregroundColor) ?? TextStyle(color: foregroundColor);
+
+    child = DefaultTextStyle.merge(
+      style: resolvedTextStyle,
+      child: IconTheme.merge(
+        data: IconThemeData(color: foregroundColor),
+        child: child,
+      ),
+    );
+    return child;
   }
 }
 
@@ -68,32 +124,9 @@ enum _SBBDecorationSlot {
   container,
 }
 
-// Type definitions for layout helpers
-typedef _ChildBaselineGetter = double Function(RenderBox child, BoxConstraints constraints);
-
-// Container for layout values computed by _RenderSBBDecoration._layout.
-class _RenderSBBDecorationLayout {
-  const _RenderSBBDecorationLayout({
-    required this.labelOffset,
-    required this.leadingOffset,
-    required this.inputOffset,
-    required this.hintOffset,
-    required this.trailingOffset,
-    required this.errorOffset,
-    required this.size,
-  });
-
-  final Offset labelOffset;
-  final Offset leadingOffset;
-  final Offset inputOffset;
-  final Offset hintOffset;
-  final Offset trailingOffset;
-  final Offset errorOffset;
-  final Size size;
-}
-
 class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSlot, RenderBox> {
   const _SBBDecorator({
+    super.key,
     required this.decoration,
     required this.expands,
     required this.isMultiline,
@@ -102,7 +135,7 @@ class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSl
     this.child,
   });
 
-  final SBBInputDecoration decoration;
+  final SBBDecoration decoration;
   final bool expands;
   final bool isMultiline;
   final bool isEmpty;
@@ -147,10 +180,34 @@ class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSl
   }
 }
 
+// Type definitions for layout helpers
+typedef _ChildBaselineGetter = double Function(RenderBox child, BoxConstraints constraints);
+
+// Container for layout values computed by _RenderSBBDecoration._layout.
+class _RenderSBBDecorationLayout {
+  const _RenderSBBDecorationLayout({
+    required this.labelOffset,
+    required this.leadingOffset,
+    required this.inputOffset,
+    required this.hintOffset,
+    required this.trailingOffset,
+    required this.errorOffset,
+    required this.size,
+  });
+
+  final Offset labelOffset;
+  final Offset leadingOffset;
+  final Offset inputOffset;
+  final Offset hintOffset;
+  final Offset trailingOffset;
+  final Offset errorOffset;
+  final Size size;
+}
+
 // The workhorse
 class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMixin<_SBBDecorationSlot, RenderBox> {
   _RenderSBBDecoration({
-    required SBBInputDecoration decoration,
+    required SBBDecoration decoration,
     required bool expands,
     required bool isMultiline,
     required bool isEmpty,
@@ -189,10 +246,10 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     ];
   }
 
-  SBBInputDecoration get decoration => _decoration;
-  SBBInputDecoration _decoration;
+  SBBDecoration get decoration => _decoration;
+  SBBDecoration _decoration;
 
-  set decoration(SBBInputDecoration value) {
+  set decoration(SBBDecoration value) {
     if (_decoration == value) return;
     _decoration = value;
     markNeedsLayout();
