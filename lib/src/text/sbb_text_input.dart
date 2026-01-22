@@ -273,72 +273,65 @@ class _SBBTextInput extends State<SBBTextInput> {
     final style = SBBControlStyles.of(context).textField;
     final bool isMultiline = (widget.maxLines ?? 0) != 1;
 
-    return GestureDetector(
-      onTap: () {
-        if (!_effectiveFocusNode.hasFocus) _effectiveFocusNode.requestFocus();
-      },
-      behavior: HitTestBehavior.translucent,
-
-      child: AnimatedBuilder(
-        animation: Listenable.merge(<Listenable>[_effectiveFocusNode, controller]),
-        builder: (BuildContext context, Widget? child) {
-          return SBBInputDecorator(
-            decoration: SBBInputDecoration(
-              label: widget.labelText != null
-                  ? Text(
-                      widget.labelText!,
-                      style: style?.labelTextStyle,
-                    )
-                  : null,
-              leading: widget.icon != null
+    return AnimatedBuilder(
+      animation: Listenable.merge(<Listenable>[_effectiveFocusNode, controller]),
+      builder: (BuildContext context, Widget? child) {
+        return SBBInputDecorator(
+          decoration: SBBInputDecoration(
+            label: widget.labelText != null
+                ? Text(
+                    widget.labelText!,
+                    style: style?.labelTextStyle,
+                  )
+                : null,
+            leading: widget.icon != null
+                ? Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: Icon(widget.icon),
+                  )
+                : null,
+            trailing: widget.suffixIcon,
+            hint: widget.placeholderText != null
+                ? Text(
+                    widget.placeholderText!,
+                    style: style?.placeholderTextStyle,
+                  )
+                : null,
+            error: AnimatedSwitcher(
+              duration: Durations.medium1,
+              child: widget.errorText != null
                   ? Padding(
-                      padding: const EdgeInsets.only(right: 8.0),
-                      child: Icon(widget.icon),
+                      padding: const EdgeInsets.only(bottom: 6.0),
+                      child: Text(
+                        widget.errorText!,
+                        style: SBBTextStyles.extraExtraSmallBold.copyWith(color: SBBColors.error),
+                      ),
                     )
-                  : null,
-              trailing: widget.suffixIcon,
-              hint: widget.placeholderText != null
-                  ? Text(
-                      widget.placeholderText!,
-                      style: style?.placeholderTextStyle,
-                    )
-                  : null,
-              error: AnimatedSwitcher(
-                duration: Durations.medium1,
-                child: widget.errorText != null
-                    ? Padding(
-                        padding: const EdgeInsets.only(bottom: 6.0),
-                        child: Text(
-                          widget.errorText!,
-                          style: SBBTextStyles.extraExtraSmallBold.copyWith(color: SBBColors.error),
-                        ),
-                      )
-                    : SizedBox.shrink(),
-              ),
-              container: AnimatedContainer(
-                duration: Durations.medium1,
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                      color: widget.errorText != null
-                          ? SBBColors.error
-                          : _effectiveFocusNode.hasFocus
-                          ? SBBColors.granite
-                          : SBBColors.transparent,
-                    ),
+                  : SizedBox.shrink(),
+            ),
+            container: AnimatedContainer(
+              duration: Durations.medium1,
+              decoration: BoxDecoration(
+                border: Border(
+                  bottom: BorderSide(
+                    color: widget.errorText != null
+                        ? SBBColors.error
+                        : _effectiveFocusNode.hasFocus
+                        ? SBBColors.granite
+                        : SBBColors.transparent,
                   ),
                 ),
               ),
             ),
-            expands: widget.expands,
-            isMultiline: isMultiline,
-            isEmpty: controller.text.isEmpty,
-            isFocused: _effectiveFocusNode.hasFocus,
-            child: child,
-          );
-        },
-        child: _buildTextField(),
-      ),
+          ),
+          expands: widget.expands,
+          isMultiline: isMultiline,
+          isEmpty: controller.text.isEmpty,
+          isFocused: _effectiveFocusNode.hasFocus,
+          child: child,
+        );
+      },
+      child: _buildTextField(),
     );
   }
 
