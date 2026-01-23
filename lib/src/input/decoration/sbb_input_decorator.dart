@@ -129,8 +129,10 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
             widget.states,
           );
       final TextStyle? textStyle = widget.decoration.labelTextStyle ?? inputDecorationTheme?.labelTextStyle;
-      final TextStyle? floatingTextStyle =
+      TextStyle? floatingTextStyle =
           widget.decoration.floatingLabelTextStyle ?? inputDecorationTheme?.floatingLabelTextStyle;
+      floatingTextStyle = floatingTextStyle.scaled(1 / _kFinalLabelScale);
+
       final resolvedTextStyle =
           (widget._labelShouldFloat ? floatingTextStyle : textStyle)?.copyWith(color: resolvedColor) ??
           TextStyle(color: resolvedColor);
@@ -835,5 +837,16 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
       if (isHit) return true;
     }
     return false;
+  }
+}
+
+extension on TextStyle? {
+  TextStyle? scaled(double d) {
+    if (this == null) return null;
+
+    final scaledHeight = this!.height != null ? this!.height! * d : null;
+    final scaledFontSize = this!.fontSize != null ? this!.fontSize! * d : null;
+
+    return this!.copyWith(fontSize: scaledFontSize, height: scaledHeight);
   }
 }
