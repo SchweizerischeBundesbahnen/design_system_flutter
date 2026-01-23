@@ -128,7 +128,7 @@ class CheckboxTest extends StatelessWidget {
       const SizedBox(height: sbbDefaultSpacing),
       const SBBListHeader('CheckboxItem - Boxed'),
       Column(
-        spacing: sbbDefaultSpacing * .5,
+        spacing: SBBSpacing.xSmall,
         children: [
           SBBCheckboxListItemBoxed(value: value1, titleText: 'Default', onChanged: (value) {}),
           SBBCheckboxListItemBoxed(

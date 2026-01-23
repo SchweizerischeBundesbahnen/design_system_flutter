@@ -38,7 +38,7 @@ class SBBHeaderboxFlap extends StatelessWidget {
       sbbDefaultSpacing,
       0.0, // margin from [SBBHeaderBox] to allow shadow
       sbbDefaultSpacing,
-      sbbDefaultSpacing * .5,
+      SBBSpacing.xSmall,
     ),
   });
 
@@ -67,7 +67,7 @@ class SBBHeaderboxFlap extends StatelessWidget {
       children: [
         if (leadingIcon != null) ...[
           Icon(leadingIcon, size: _flapIconSize),
-          SizedBox(width: sbbDefaultSpacing * .5),
+          SizedBox(width: SBBSpacing.xSmall),
         ],
         Expanded(
           child: Text(
@@ -78,7 +78,7 @@ class SBBHeaderboxFlap extends StatelessWidget {
           ),
         ),
         if (trailingIcon != null) ...[
-          SizedBox(width: sbbDefaultSpacing * .5),
+          SizedBox(width: SBBSpacing.xSmall),
           Icon(trailingIcon, size: _flapIconSize),
         ],
       ],

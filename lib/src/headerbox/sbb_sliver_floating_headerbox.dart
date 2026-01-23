@@ -8,6 +8,7 @@ import '../sbb_internal.dart';
 import 'sliver_pinned_floating_widget.dart';
 
 part 'sbb_sliver_floating_headerbox.headerbox.dart';
+
 part 'sbb_sliver_floating_headerbox.spacer.dart';
 
 final defaultSnapStyle = const AnimationStyle(
@@ -81,7 +82,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
     Widget? trailingWidget,
     SBBHeaderboxFlap? flap,
     SBBHeaderboxFlapMode flapMode = SBBHeaderboxFlapMode.static,
-    EdgeInsets margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
+    EdgeInsets margin = const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
     String? semanticsLabel,
     Widget? preceding,
     Widget? contractibleChild,
@@ -142,7 +143,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
     Widget? trailingWidget,
     SBBHeaderboxFlap? flap,
     SBBHeaderboxFlapMode flapMode = SBBHeaderboxFlapMode.static,
-    EdgeInsets margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
+    EdgeInsets margin = const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
     String? semanticsLabel,
     Widget? preceding,
     Widget? collapsibleChild,
@@ -198,7 +199,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
   ///  * [SBBContractionListener], which allows you to get updates on the expansion rate.
   SBBSliverFloatingHeaderbox.custom({
     super.key,
-    EdgeInsets margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
+    EdgeInsets margin = const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
     EdgeInsets padding = const EdgeInsets.all(sbbDefaultSpacing),
     SBBHeaderboxFlap? flap,
     SBBHeaderboxFlapMode flapMode = SBBHeaderboxFlapMode.static,

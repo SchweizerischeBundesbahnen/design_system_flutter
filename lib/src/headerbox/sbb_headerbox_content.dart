@@ -31,7 +31,7 @@ class DefaultHeaderBoxContent extends StatelessWidget {
                 children: [
                   if (leadingIcon != null) ...[
                     Icon(leadingIcon, size: sbbIconSizeSmall),
-                    SizedBox(width: sbbDefaultSpacing * .5),
+                    SizedBox(width: SBBSpacing.xSmall),
                   ],
                   Expanded(child: Text(title, style: style.titleTextStyle)),
                 ],
@@ -40,7 +40,7 @@ class DefaultHeaderBoxContent extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(width: sbbDefaultSpacing * .5),
+        SizedBox(width: SBBSpacing.xSmall),
         if (trailingWidget != null) trailingWidget!,
       ],
     );
@@ -70,7 +70,7 @@ class LargeHeaderBoxContent extends StatelessWidget {
       children: [
         if (leadingIcon != null) ...[
           Icon(leadingIcon, size: sbbIconSizeMedium),
-          SizedBox(width: sbbDefaultSpacing * .5),
+          SizedBox(width: SBBSpacing.xSmall),
         ],
         Expanded(
           child: Column(
@@ -82,7 +82,7 @@ class LargeHeaderBoxContent extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(width: sbbDefaultSpacing * .5),
+        SizedBox(width: SBBSpacing.xSmall),
         if (trailingWidget != null) trailingWidget!,
       ],
     );

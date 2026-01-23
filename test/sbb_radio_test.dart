@@ -36,7 +36,7 @@ class RadioTest extends StatelessWidget {
     children: [
       const SBBListHeader('RadioButton'),
       Padding(
-        padding: const EdgeInsets.all(sbbDefaultSpacing * .5),
+        padding: const EdgeInsets.all(SBBSpacing.xSmall),
         child: SBBRadioGroup<int>(
           groupValue: groupValue,
           onChanged: (_) {},

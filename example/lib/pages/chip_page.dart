@@ -36,7 +36,7 @@ class _ChipPageState extends State<ChipPage> {
           ),
         ),
         SliverPadding(
-          padding: EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
+          padding: EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
           sliver: SliverList.list(
             children: [
               const SBBListHeader('Default'),

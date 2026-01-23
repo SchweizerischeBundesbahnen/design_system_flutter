@@ -18,8 +18,8 @@ class ListItemPage extends StatelessWidget {
         SBBSliverHeaderbox.custom(child: ThemeModeSegmentedButton()),
         SliverPadding(
           padding: const EdgeInsets.symmetric(
-            vertical: sbbDefaultSpacing * .5,
-            horizontal: sbbDefaultSpacing * .5,
+            vertical: SBBSpacing.xSmall,
+            horizontal: SBBSpacing.xSmall,
           ).copyWith(bottom: sbbDefaultSpacing * 3),
           sliver: SliverList.list(
             children: [
@@ -92,7 +92,7 @@ class ListItemPage extends StatelessWidget {
               SizedBox(height: sbbDefaultSpacing),
               SBBListHeader('Boxed'),
               Column(
-                spacing: sbbDefaultSpacing * .5,
+                spacing: SBBSpacing.xSmall,
                 children: [
                   SBBListItemBoxed(
                     titleText: 'Default',

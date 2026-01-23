@@ -254,7 +254,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
                       padding: const EdgeInsets.fromLTRB(
                         sbbDefaultSpacing,
                         sbbDefaultSpacing,
-                        sbbDefaultSpacing * .5,
+                        SBBSpacing.xSmall,
                         sbbDefaultSpacing,
                       ),
                       child: Row(
@@ -324,16 +324,16 @@ class _DefaultContent extends StatelessWidget {
           children: [
             Expanded(child: Text(title, style: textTheme.titleMedium)),
             if (onClose != null) const SizedBox(width: sbbIconSizeSmall),
-            const SizedBox(width: sbbDefaultSpacing * .5),
+            const SizedBox(width: SBBSpacing.xSmall),
           ],
         ),
-        const SizedBox(height: sbbDefaultSpacing * .5),
+        const SizedBox(height: SBBSpacing.xSmall),
         Row(
           children: [
             Expanded(child: Text(subtitle, style: textTheme.bodyMedium)),
             onTap != null
                 ? Icon(SBBIcons.chevron_small_right_small, color: crossColor, size: sbbIconSizeSmall)
-                : const SizedBox(width: sbbDefaultSpacing * .5),
+                : const SizedBox(width: SBBSpacing.xSmall),
           ],
         ),
       ],

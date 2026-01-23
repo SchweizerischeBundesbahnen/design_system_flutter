@@ -45,15 +45,15 @@ class CheckboxPageState extends State<CheckboxPage> {
           ),
         ),
         SliverPadding(
-          padding: EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
+          padding: EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
           sliver: SliverList.list(
             children: [
               const SBBListHeader('Checkbox'),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
+                padding: const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  spacing: sbbDefaultSpacing * .5,
+                  spacing: SBBSpacing.xSmall,
                   children: [
                     Row(
                       children: [

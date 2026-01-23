@@ -32,13 +32,13 @@ class ModalPopupTest extends StatelessWidget {
       const SBBListHeader('Modal Popup'),
       SBBContentBox(
         child: Padding(
-          padding: const EdgeInsets.all(sbbDefaultSpacing * .5),
+          padding: const EdgeInsets.all(SBBSpacing.xSmall),
           child: Column(
             children: [
               SBBModalPopup(title: 'Titel', child: _modalContent(context)),
-              SizedBox(height: sbbDefaultSpacing * .5),
+              SizedBox(height: SBBSpacing.xSmall),
               SBBModalPopup(title: 'Titel', backgroundColor: SBBColors.peach, child: _modalContent(context)),
-              SizedBox(height: sbbDefaultSpacing * .5),
+              SizedBox(height: SBBSpacing.xSmall),
               SBBModalPopup(title: 'Titel', showCloseButton: false, child: _modalContent(context)),
             ],
           ),

@@ -41,12 +41,12 @@ class RadioPageState extends State<RadioPage> {
           ),
         ),
         SliverPadding(
-          padding: EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
+          padding: EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
           sliver: SliverList.list(
             children: <Widget>[
               const SBBListHeader('Radio'),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
+                padding: const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
                 child: SBBRadioGroup<int>(
                   groupValue: _groupValue,
                   onChanged: (newValue) => setState(() => _groupValue = newValue),

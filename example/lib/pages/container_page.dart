@@ -17,7 +17,7 @@ class ContainerPage extends StatelessWidget {
       slivers: [
         SBBSliverHeaderbox.custom(child: ThemeModeSegmentedButton()),
         SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5, vertical: sbbDefaultSpacing),
+          padding: const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall, vertical: sbbDefaultSpacing),
           sliver: SliverList.list(
             children: [
               SBBListHeader('ContentBox'),

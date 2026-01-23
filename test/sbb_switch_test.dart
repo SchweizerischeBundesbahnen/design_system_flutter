@@ -34,7 +34,7 @@ class SwitchTest extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
+      padding: const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -70,7 +70,7 @@ class SwitchTest extends StatelessWidget {
           const SBBListHeader('SBBSwitchItem - Boxed'),
           Column(
             mainAxisSize: MainAxisSize.min,
-            spacing: sbbDefaultSpacing * .5,
+            spacing: SBBSpacing.xSmall,
             children: [
               SBBSwitchListItemBoxed(value: value1, titleText: 'Default', onChanged: (value) {}),
               SBBSwitchListItemBoxed(
