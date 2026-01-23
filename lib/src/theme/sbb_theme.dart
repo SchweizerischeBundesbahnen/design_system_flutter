@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/container/container.dart';
 import 'package:sbb_design_system_mobile/src/container/theme/default_sbb_content_box_theme_data.dart';
-
-import 'theme.dart';
+import 'package:sbb_design_system_mobile/src/stepper/theme/default_sbb_stepper_theme_data.dart';
 
 const sbbDefaultSpacing = 16.0;
 
@@ -13,6 +13,7 @@ class SBBTheme {
     bool boldFont = false,
     SBBBaseStyle? baseStyle,
     SBBButtonStyles? buttonStyles,
+    SBBStepperThemeData? stepperStyle,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
     @Deprecated('Use contentBoxTheme instead') SBBContentBoxStyle? groupStyle,
@@ -24,6 +25,7 @@ class SBBTheme {
     boldFont: boldFont,
     baseStyle: baseStyle,
     buttonStyles: buttonStyles,
+    stepperStyle: stepperStyle,
     controlStyles: controlStyles,
     headerBoxStyle: headerBoxStyle,
     groupStyle: groupStyle,
@@ -36,6 +38,7 @@ class SBBTheme {
     bool boldFont = false,
     SBBBaseStyle? baseStyle,
     SBBButtonStyles? buttonStyles,
+    SBBStepperThemeData? stepperStyle,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
     @Deprecated('Use contentBoxTheme instead') SBBContentBoxStyle? groupStyle,
@@ -47,6 +50,7 @@ class SBBTheme {
     boldFont: boldFont,
     baseStyle: baseStyle,
     buttonStyles: buttonStyles,
+    stepperStyle: stepperStyle,
     controlStyles: controlStyles,
     headerBoxStyle: headerBoxStyle,
     groupStyle: groupStyle,
@@ -60,6 +64,7 @@ class SBBTheme {
     bool boldFont = false,
     SBBBaseStyle? baseStyle,
     SBBButtonStyles? buttonStyles,
+    SBBStepperThemeData? stepperStyle,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
     @Deprecated('Use contentBoxTheme instead') SBBContentBoxStyle? groupStyle,
@@ -73,6 +78,9 @@ class SBBTheme {
 
     final defaultButtonStyles = SBBButtonStyles.$default(baseStyle: mergedBaseStyle);
     final mergedButtonStyles = buttonStyles.merge(defaultButtonStyles);
+
+    final defaultStepperTheme = DefaultSBBStepperThemeData(mergedBaseStyle);
+    final mergedStepperTheme = defaultStepperTheme.merge(stepperStyle);
 
     final defaultControlStyles = SBBControlStyles.$default(baseStyle: mergedBaseStyle);
     final mergedControlStyles = controlStyles.merge(defaultControlStyles);
@@ -96,6 +104,7 @@ class SBBTheme {
       brightness: brightness,
       baseStyle: mergedBaseStyle,
       buttonStyles: mergedButtonStyles,
+      stepperTheme: mergedStepperTheme,
       controlStyles: mergedControlStyles,
       headerBoxStyle: mergedHeaderBoxStyle,
       groupStyle: mergedGroupStyle,
@@ -109,6 +118,7 @@ class SBBTheme {
     required Brightness brightness,
     required SBBBaseStyle baseStyle,
     required SBBButtonStyles buttonStyles,
+    required SBBStepperThemeData stepperTheme,
     required SBBControlStyles controlStyles,
     required SBBHeaderBoxStyle headerBoxStyle,
     @Deprecated('Use contentBoxTheme instead.') required SBBContentBoxStyle groupStyle,
@@ -137,6 +147,7 @@ class SBBTheme {
     extensions: [
       baseStyle,
       buttonStyles,
+      stepperTheme,
       controlStyles,
       headerBoxStyle,
       groupStyle,

@@ -3,15 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
-const _dividerHeight = 2.0;
-const _stepCircleSize = 32.0;
-
 typedef OnStepPressedCallback = void Function(SBBStepperItem item, int index);
 
 /// The SBB Stepper.
 /// Use according to [documentation](https://digital.sbb.ch/de/design-system/mobile/components/stepper/).
 ///
 /// TODO: Document code
+/// TODO: Assert (index in range etc.)
 ///
 class SBBStepper extends StatelessWidget {
   const SBBStepper({
@@ -51,6 +49,7 @@ class SBBStepper extends StatelessWidget {
     required this.onStepPressed,
     required this.padding,
     required bool isColoredStyle,
+    this.style,
   }) : assert(steps.length >= 2, 'needs at least two steps to work'),
        _isColoredStyle = isColoredStyle;
 
@@ -67,37 +66,45 @@ class SBBStepper extends StatelessWidget {
 
   final bool _isColoredStyle;
 
+  /// Customizes this stepper appearance.
+  ///
+  /// Non-null properties of this style override the corresponding
+  /// properties in [SBBStepperThemeData.style] of the theme found in [context].
+  final SBBStepperStyle? style;
+
   @override
   Widget build(BuildContext context) {
-    // TODO: handle null style with default?
-    final style = _isColoredStyle ? context.coloredStepperStyle : context.stepperStyle;
+    final theme = Theme.of(context).sbbStepperTheme!;
+    final themeStyle = _isColoredStyle ? theme.coloredStyle! : theme.style!;
+    final effectiveStyle = themeStyle.merge(style);
+
+    final resolvedLabelTextStyle = effectiveStyle.itemStyle!.labelTextStyle?.merge(_activeItem.style?.labelTextStyle);
+
     return Padding(
       padding: padding,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          _steps(style),
-          _label(style),
+          _steps(effectiveStyle),
+          _label(resolvedLabelTextStyle),
         ],
       ),
     );
   }
 
-  Widget _steps(SBBStepperStyle? style) {
+  Widget _steps(SBBStepperStyle style) {
     return Row(
       spacing: 4.0,
       children:
           steps
-              .mapIndexed((i, step) => _circle(i, style!, step))
-              .dividedBy(Expanded(child: _Divider(color: style?.dividerColor)))
+              .mapIndexed((i, step) => _circle(i, style, step))
+              .dividedBy(Expanded(child: _Divider(color: style.dividerColor)))
               .toList(),
     );
   }
 
-  Widget _label(SBBStepperStyle? style) {
+  Widget _label(TextStyle? labelTextStyle) {
     if (!_hasAnyLabel) return const SizedBox.shrink();
-
-    final textStyle = sbbTextStyle.small.lightStyle.copyWith(color: style?.labelTextColor);
 
     final labelWidget =
         steps[activeStep].label ??
@@ -107,16 +114,16 @@ class SBBStepper extends StatelessWidget {
           overflow: TextOverflow.ellipsis,
           softWrap: false,
           textAlign: TextAlign.center,
-          style: textStyle,
+          style: labelTextStyle,
         );
 
     return Padding(
       padding: const EdgeInsets.only(top: 8.0),
       child: LayoutBuilder(
         builder: (context, constraints) {
+          final stepCircleSize = SBBStepperItemStyle.stepCircleSize;
           final width = constraints.maxWidth;
-          // Same center calculation you had in your delegate:
-          final double xCenter = _stepCircleSize / 2 + activeStep * (width - _stepCircleSize) / (steps.length - 1);
+          final xCenter = stepCircleSize / 2 + activeStep * (width - stepCircleSize) / (steps.length - 1);
 
           return _EdgeClampedCenterX(
             centerX: xCenter,
@@ -128,16 +135,19 @@ class SBBStepper extends StatelessWidget {
   }
 
   Widget _circle(int i, SBBStepperStyle style, SBBStepperItem step) {
+    final effectiveItemStyle = style.itemStyle!.merge(step.style);
     return _StepCircle(
       index: i,
       activeStep: activeStep,
-      style: style,
+      style: effectiveItemStyle,
       item: step,
       onPressed: () => onStepPressed(step, i),
     );
   }
 
   bool get _hasAnyLabel => steps.any((step) => step.labelText != null || step.label != null);
+
+  SBBStepperItem get _activeItem => steps.elementAt(activeStep);
 }
 
 class _Divider extends StatelessWidget {
@@ -149,16 +159,16 @@ class _Divider extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: _dividerHeight,
+      height: SBBStepperStyle.dividerHeight,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(_dividerHeight),
+        borderRadius: BorderRadius.circular(SBBStepperStyle.dividerHeight),
         color: color,
       ),
     );
   }
 }
 
-class _StepCircle extends StatelessWidget {
+class _StepCircle extends StatefulWidget {
   const _StepCircle({
     required this.index,
     required this.activeStep,
@@ -170,8 +180,40 @@ class _StepCircle extends StatelessWidget {
   final int index;
   final int activeStep;
   final VoidCallback? onPressed;
-  final SBBStepperStyle style;
+  final SBBStepperItemStyle style;
   final SBBStepperItem item;
+
+  @override
+  State<_StepCircle> createState() => _StepCircleState();
+}
+
+class _StepCircleState extends State<_StepCircle> {
+  late WidgetStatesController _statesController;
+
+  @override
+  void initState() {
+    super.initState();
+    _statesController = WidgetStatesController();
+    _updateStatesController();
+  }
+
+  @override
+  void didUpdateWidget(_StepCircle oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.index != oldWidget.index || widget.activeStep != oldWidget.activeStep) {
+      _updateStatesController();
+    }
+  }
+
+  void _updateStatesController() {
+    _statesController.update(WidgetState.selected, widget.index == widget.activeStep);
+  }
+
+  @override
+  void dispose() {
+    _statesController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -185,14 +227,15 @@ class _StepCircle extends StatelessWidget {
   }
 
   Widget _circle(BuildContext context) {
+    final resolvedBackgroundColor = widget.style.backgroundColor?.resolve(_statesController.value);
     return SizedBox.square(
-      dimension: _stepCircleSize,
+      dimension: SBBStepperItemStyle.stepCircleSize,
       child: Material(
         clipBehavior: Clip.antiAlias,
-        color: _active ? style.selectedBackgroundColor : style.backgroundColor,
+        color: resolvedBackgroundColor,
         shape: _shape(),
         child: InkWell(
-          onTap: onPressed,
+          onTap: widget.onPressed,
           child: Center(
             child: ConstrainedBox(
               constraints: const BoxConstraints.tightFor(
@@ -208,6 +251,8 @@ class _StepCircle extends StatelessWidget {
   }
 
   Widget _checkedBadge() {
+    final resolvedBackgroundColor = widget.style.badgeBackgroundColor?.resolve(_statesController.value);
+    final resolvedBorderColor = widget.style.badgeBorderColor?.resolve(_statesController.value);
     return Positioned(
       top: -4,
       right: -2,
@@ -216,15 +261,12 @@ class _StepCircle extends StatelessWidget {
         height: 12,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: style.checkedBackgroundColor,
-          border:
-              style.checkedBorderColor != null
-                  ? BoxBorder.fromBorderSide(BorderSide(color: style.checkedBorderColor!))
-                  : null,
+          color: resolvedBackgroundColor,
+          border: resolvedBorderColor != null ? BoxBorder.fromBorderSide(BorderSide(color: resolvedBorderColor)) : null,
         ),
         child: Icon(
           SBBIcons.tick_small,
-          color: SBBColors.white,
+          color: SBBColors.white, // TODO: Add to style
           size: 10.0,
           fontWeight: FontWeight.w900,
         ),
@@ -233,31 +275,28 @@ class _StepCircle extends StatelessWidget {
   }
 
   ShapeBorder _shape() {
-    final borderColor = _active ? style.selectedBackgroundBorderColor : style.backgroundBorderColor;
+    final resolvedBorderColor = widget.style.borderColor?.resolve(_statesController.value);
     return CircleBorder(
-      side: borderColor != null ? BorderSide(color: borderColor, width: 1) : BorderSide.none,
+      side: resolvedBorderColor != null ? BorderSide(color: resolvedBorderColor, width: 1) : BorderSide.none,
     );
   }
 
   // TODO: Why is cast needed. Use when?
   Widget _circleContent() {
-    if (item is SBBStepperItemIcon) {
-      final iconColor = _active ? style.selectedIconColor : style.iconColor;
-      return Icon((item as SBBStepperItemIcon).icon, size: 24, color: iconColor);
+    if (widget.item is SBBStepperItemIcon) {
+      final resolvedIconColor = widget.style.iconColor?.resolve(_statesController.value);
+      return Icon((widget.item as SBBStepperItemIcon).icon, size: 24, color: resolvedIconColor);
     }
 
-    final textStyle = _active ? sbbTextStyle.medium.boldStyle : sbbTextStyle.medium.lightStyle;
-    final textColor = _active ? style.selectedTextColor : style.textColor;
-    final text = item is SBBStepperItemText ? (item as SBBStepperItemText).text : '${index + 1}';
+    final resolvedTextStyle = widget.style.textStyle?.resolve(_statesController.value);
+    final text = widget.item is SBBStepperItemText ? (widget.item as SBBStepperItemText).text : '${widget.index + 1}';
     return FittedBox(
       fit: BoxFit.scaleDown,
-      child: Text(text, style: textStyle.copyWith(color: textColor)),
+      child: Text(text, style: resolvedTextStyle),
     );
   }
 
-  bool get _active => index == activeStep;
-
-  bool get _passedStep => index < activeStep;
+  bool get _passedStep => widget.index < widget.activeStep;
 }
 
 /// TODO: DOCUMENT, maybe rename?
@@ -312,12 +351,6 @@ class _RenderEdgeClampedCenterX extends RenderShiftedBox {
     final parentData = child!.parentData as BoxParentData;
     parentData.offset = Offset(clampedLeft, 0.0);
   }
-}
-
-extension _ThemeBuildContextExtension on BuildContext {
-  SBBStepperStyle? get stepperStyle => SBBControlStyles.of(this).stepper;
-
-  SBBStepperStyle? get coloredStepperStyle => SBBControlStyles.of(this).coloredStepper;
 }
 
 extension _WidgetExtension on Iterable<Widget> {
