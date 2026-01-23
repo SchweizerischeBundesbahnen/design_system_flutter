@@ -12,6 +12,12 @@ import 'package:flutter/services.dart';
 import '../../sbb_design_system_mobile.dart';
 import 'decoration/sbb_input_decorator.dart';
 
+// TODO: add internal states controller and hand states down to SBBInputDecorator for resolving
+// TODO: (add theme data and get effective in SBBTextInput)
+// TODO: move decoration related params to SBBInputDecoration
+// TODO: animate label and input when single line
+// TODO: think about case when multiline (center between baselines?)
+
 /// The SBBTextInput.
 ///
 /// A text field lets the user enter text, either with hardware keyboard or with
@@ -306,6 +312,11 @@ class _SBBTextInputState extends State<SBBTextInput>
     super.dispose();
   }
 
+  // The SBBTextInput does these things:
+  // Determine the state and hand down the WidgetStates to SBBInputDecorator
+  // (Determine effective decoration values by comparing to theme)
+  // Build EditableText with platform specific controls
+  // Build the text selection gesture controls
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMaterial(context));
