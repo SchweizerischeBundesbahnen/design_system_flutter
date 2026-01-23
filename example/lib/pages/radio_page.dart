@@ -112,7 +112,7 @@ class RadioPageState extends State<RadioPage> {
                           value: 4,
                           titleText: 'Button',
                           enabled: _pageEnabled,
-                          padding: SBBListItemStyle.defaultPadding.copyWith(right: 8),
+                          padding: EdgeInsets.fromLTRB(16.0, 0.0, 8.0, 0.0),
                           trailing: SBBTertiaryButtonSmall(
                             iconData: SBBIcons.circle_information_small_small,
                             onPressed: _pageEnabled ? () => sbbToast.show(title: 'Button pressed') : null,
@@ -189,7 +189,7 @@ class RadioPageState extends State<RadioPage> {
                         value: 4,
                         titleText: 'Button',
                         enabled: _pageEnabled,
-                        padding: SBBListItemStyle.defaultPadding.copyWith(right: 8),
+                        padding: EdgeInsets.fromLTRB(16.0, 0.0, 8.0, 0.0),
                         trailing: SBBTertiaryButtonSmall(
                           iconData: SBBIcons.circle_information_small_small,
                           onPressed: _pageEnabled ? () => sbbToast.show(title: 'Button pressed') : null,
