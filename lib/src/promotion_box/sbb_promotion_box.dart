@@ -251,12 +251,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
                     ),
                     onTap: widget.onTap,
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(
-                        SBBSpacing.medium,
-                        SBBSpacing.medium,
-                        SBBSpacing.xSmall,
-                        SBBSpacing.medium,
-                      ),
+                      padding: const EdgeInsets.all(SBBSpacing.medium).copyWith(right: SBBSpacing.xSmall),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,

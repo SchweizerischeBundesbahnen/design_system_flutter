@@ -17,10 +17,7 @@ class ListItemPage extends StatelessWidget {
       slivers: [
         SBBSliverHeaderbox.custom(child: ThemeModeSegmentedButton()),
         SliverPadding(
-          padding: const EdgeInsets.symmetric(
-            vertical: SBBSpacing.xSmall,
-            horizontal: SBBSpacing.xSmall,
-          ).copyWith(bottom: 48.0),
+          padding: const EdgeInsets.all(SBBSpacing.xSmall),
           sliver: SliverList.list(
             children: [
               SBBListHeader('Listed'),
