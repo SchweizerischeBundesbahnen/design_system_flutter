@@ -39,6 +39,12 @@ class SBBInputDecorator extends StatelessWidget {
   /// The widget below this decorator, usually some sort of [EditableText].
   final Widget? child;
 
+  /// Whether the label needs to move above the input and seem to start floating.
+  ///
+  /// Will float when not empty or when focused while enabled.
+  bool get _labelFloating =>
+      !isEmpty || (states.contains(WidgetState.focused) && !states.contains(WidgetState.disabled));
+
   @override
   Widget build(BuildContext context) {
     final inputDecorationTheme = Theme.of(context).sbbInputDecorationTheme;
@@ -64,10 +70,19 @@ class SBBInputDecorator extends StatelessWidget {
       final Color? resolvedColor = (decoration.labelForegroundColor ?? inputDecorationTheme?.labelForegroundColor)
           ?.resolve(states);
       final TextStyle? textStyle = decoration.labelTextStyle ?? inputDecorationTheme?.labelTextStyle;
-      label = _addDefaultAncestorWithResolved(
-        child: label,
-        foregroundColor: resolvedColor,
-        textStyle: textStyle,
+      final TextStyle? floatingTextStyle =
+          decoration.floatingLabelTextStyle ?? inputDecorationTheme?.floatingLabelTextStyle;
+      final resolvedTextStyle =
+          (_labelFloating ? floatingTextStyle : textStyle)?.copyWith(color: resolvedColor) ??
+          TextStyle(color: resolvedColor);
+
+      label = AnimatedDefaultTextStyle(
+        style: resolvedTextStyle,
+        duration: Duration(milliseconds: 250), // TODO: define Animation duration
+        child: IconTheme.merge(
+          data: IconThemeData(color: resolvedColor),
+          child: label,
+        ),
       );
     }
 
