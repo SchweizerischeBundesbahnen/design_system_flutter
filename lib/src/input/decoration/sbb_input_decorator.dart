@@ -1,7 +1,7 @@
 import 'dart:math' as math;
 
+import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 import 'package:sbb_design_system_mobile/src/input/decoration/sbb_decoration.dart';
 
 import '../../../sbb_design_system_mobile.dart';
@@ -41,12 +41,15 @@ class SBBInputDecorator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final inputDecorationTheme = Theme.of(context).sbbInputDecorationTheme;
+
     Widget? leading = decoration.leading;
     if (leading == null && decoration.leadingIconData != null) {
       leading = Icon(decoration.leadingIconData);
     }
-    if (leading != null && decoration.leadingForegroundColor != null) {
-      final Color? resolvedColor = decoration.leadingForegroundColor!.resolve(states);
+    if (leading != null) {
+      final Color? resolvedColor = (decoration.leadingForegroundColor ?? inputDecorationTheme?.leadingForegroundColor)
+          ?.resolve(states);
       leading = _addDefaultAncestorWithResolved(
         child: leading,
         foregroundColor: resolvedColor,
@@ -57,12 +60,14 @@ class SBBInputDecorator extends StatelessWidget {
     if (label == null && decoration.labelText != null) {
       label = Text(decoration.labelText!);
     }
-    if (label != null && decoration.labelForegroundColor != null) {
-      final Color? resolvedColor = decoration.labelForegroundColor!.resolve(states);
-      leading = _addDefaultAncestorWithResolved(
+    if (label != null) {
+      final Color? resolvedColor = (decoration.labelForegroundColor ?? inputDecorationTheme?.labelForegroundColor)
+          ?.resolve(states);
+      final TextStyle? textStyle = decoration.labelTextStyle ?? inputDecorationTheme?.labelTextStyle;
+      label = _addDefaultAncestorWithResolved(
         child: label,
         foregroundColor: resolvedColor,
-        textStyle: decoration.labelTextStyle,
+        textStyle: textStyle,
       );
     }
 
@@ -70,8 +75,9 @@ class SBBInputDecorator extends StatelessWidget {
     if (trailing == null && decoration.trailingIconData != null) {
       trailing = Icon(decoration.trailingIconData);
     }
-    if (trailing != null && decoration.trailingForegroundColor != null) {
-      final Color? resolvedColor = decoration.trailingForegroundColor!.resolve(states);
+    if (trailing != null) {
+      final Color? resolvedColor = (decoration.trailingForegroundColor ?? inputDecorationTheme?.trailingForegroundColor)
+          ?.resolve(states);
       trailing = _addDefaultAncestorWithResolved(
         child: trailing,
         foregroundColor: resolvedColor,
@@ -82,12 +88,14 @@ class SBBInputDecorator extends StatelessWidget {
     if (placeholder == null && decoration.placeholderText != null) {
       placeholder = Text(decoration.placeholderText!);
     }
-    if (placeholder != null && decoration.placeholderForegroundColor != null) {
-      final Color? resolvedColor = decoration.placeholderForegroundColor!.resolve(states);
+    if (placeholder != null) {
+      final Color? resolvedColor =
+          (decoration.placeholderForegroundColor ?? inputDecorationTheme?.placeholderForegroundColor)?.resolve(states);
+      final TextStyle? textStyle = decoration.placeholderTextStyle ?? inputDecorationTheme?.placeholderTextStyle;
       placeholder = _addDefaultAncestorWithResolved(
         child: placeholder,
         foregroundColor: resolvedColor,
-        textStyle: decoration.placeholderTextStyle,
+        textStyle: textStyle,
       );
     }
 
@@ -95,12 +103,14 @@ class SBBInputDecorator extends StatelessWidget {
     if (error == null && decoration.errorText != null) {
       error = Text(decoration.errorText!);
     }
-    if (error != null && decoration.errorForegroundColor != null) {
-      final Color? resolvedColor = decoration.errorForegroundColor!.resolve(states);
+    if (error != null) {
+      final Color? resolvedColor = (decoration.errorForegroundColor ?? inputDecorationTheme?.errorForegroundColor)
+          ?.resolve(states);
+      final TextStyle? textStyle = decoration.errorTextStyle ?? inputDecorationTheme?.errorTextStyle;
       error = _addDefaultAncestorWithResolved(
         child: error,
         foregroundColor: resolvedColor,
-        textStyle: decoration.errorTextStyle,
+        textStyle: textStyle,
       );
     }
     error = AnimatedSwitcher(
@@ -108,7 +118,8 @@ class SBBInputDecorator extends StatelessWidget {
       child: error ?? SizedBox.shrink(),
     );
 
-    final Color resolvedBorderColor = decoration.borderColor?.resolve(states) ?? SBBColors.transparent;
+    final Color resolvedBorderColor =
+        (decoration.borderColor ?? inputDecorationTheme?.borderColor)?.resolve(states) ?? SBBColors.transparent;
     final Widget container = AnimatedContainer(
       duration: Duration(milliseconds: 250), // TODO: define Animation duration
       decoration: BoxDecoration(

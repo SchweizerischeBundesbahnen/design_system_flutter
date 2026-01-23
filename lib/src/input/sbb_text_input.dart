@@ -8,9 +8,9 @@ import 'decoration/sbb_input_decorator.dart';
 
 // TODO: animate label and input when single line
 // TODO: expose FloatingLabelBehavior
+// TODO: add semantics ordering and traversal
 // TODO: think about case when multiline (center between baselines?)
-// TODO: add themeData according to v5.0.0 with
-// TODO: (add theme data and get effective in SBBTextInput)
+// TODO: add Boxed variant
 // TODO: improve docs
 // TODO: add migration guideline & CHANGELOG
 
@@ -362,10 +362,6 @@ class _SBBTextInputState extends State<SBBTextInput>
         spellCheckConfiguration = TextField.inferAndroidSpellCheckConfiguration(null);
     }
 
-    final textStyle = _textStyle(widget.enabled, context);
-    final labelStyle = style.placeholderTextStyle!;
-    // adjust floating label style to get desired sizes
-    final floatingLabelStyle = labelStyle.copyWith(fontSize: SBBTextStyles.helpersLabel.fontSize! * (1 / 0.75));
     Widget editableText = EditableText(
       key: editableTextKey,
       readOnly: widget.readOnly || !widget.enabled,
@@ -376,7 +372,7 @@ class _SBBTextInputState extends State<SBBTextInput>
       keyboardType: widget.keyboardType,
       textInputAction: widget.textInputAction,
       textCapitalization: widget.textCapitalization,
-      style: _hasError ? textStyle.copyWith(color: SBBColors.error) : textStyle,
+      style: _effectiveInputTextStyle(context),
       autofocus: widget.autofocus,
       obscuringCharacter: widget.obscuringCharacter,
       obscureText: widget.obscureText,
@@ -450,7 +446,7 @@ class _SBBTextInputState extends State<SBBTextInput>
               animation: Listenable.merge(<Listenable>[_effectiveFocusNode, _effectiveController]),
               builder: (BuildContext context, Widget? child) {
                 return SBBInputDecorator(
-                  decoration: _getEffectiveDecoration(style: style),
+                  decoration: widget.decoration ?? SBBInputDecoration(),
                   expands: widget.expands,
                   isMultiline: isMultiline,
                   isEmpty: _effectiveController.text.isEmpty,
@@ -470,7 +466,7 @@ class _SBBTextInputState extends State<SBBTextInput>
     _editableText?.requestKeyboard();
   }
 
-  TextStyle _textStyle(bool enabled, BuildContext context) {
+  TextStyle _effectiveInputTextStyle(BuildContext context) {
     final themeData = Theme.of(context).sbbTextInputTheme;
     final states = _statesController.value;
 

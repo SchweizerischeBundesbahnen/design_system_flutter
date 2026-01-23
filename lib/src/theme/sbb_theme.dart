@@ -4,6 +4,7 @@ import 'package:sbb_design_system_mobile/src/button/theme/sbb_button_style_x.dar
 import 'package:sbb_design_system_mobile/src/checkbox/theme/default_sbb_checkbox_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/chip/theme/default_sbb_chip_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/container/container.dart';
+import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_input_decoration_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_text_input_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/radio/theme/default_sbb_radio_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/switch/theme/default_sbb_switch_theme_data.dart';
@@ -29,6 +30,7 @@ class SBBTheme {
     SBBContentBoxThemeData? contentBoxTheme,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
+    SBBInputDecorationThemeData? inputDecorationTheme,
     SBBListItemThemeData? listItemTheme,
     SBBRadioThemeData? radioTheme,
     SBBStatusThemeData? statusTheme,
@@ -49,6 +51,7 @@ class SBBTheme {
     radioTheme: radioTheme,
     controlStyles: controlStyles,
     headerBoxStyle: headerBoxStyle,
+    inputDecorationTheme: inputDecorationTheme,
     listItemTheme: listItemTheme,
     statusTheme: statusTheme,
     switchTheme: switchTheme,
@@ -69,6 +72,7 @@ class SBBTheme {
     SBBRadioThemeData? radioTheme,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
+    SBBInputDecorationThemeData? inputDecorationTheme,
     SBBListItemThemeData? listItemTheme,
     SBBStatusThemeData? statusTheme,
     SBBSwitchThemeData? switchTheme,
@@ -88,6 +92,7 @@ class SBBTheme {
     radioTheme: radioTheme,
     controlStyles: controlStyles,
     headerBoxStyle: headerBoxStyle,
+    inputDecorationTheme: inputDecorationTheme,
     listItemTheme: listItemTheme,
     statusTheme: statusTheme,
     switchTheme: switchTheme,
@@ -108,6 +113,7 @@ class SBBTheme {
     SBBControlStyles? controlStyles,
     SBBContentBoxThemeData? contentBoxTheme,
     SBBHeaderBoxStyle? headerBoxStyle,
+    SBBInputDecorationThemeData? inputDecorationTheme,
     SBBListItemThemeData? listItemTheme,
     SBBRadioThemeData? radioTheme,
     SBBStatusThemeData? statusTheme,
@@ -165,6 +171,9 @@ class SBBTheme {
     final defaultToastStyle = SBBToastStyle.$default(baseStyle: mergedBaseStyle);
     final mergedToastStyle = defaultToastStyle.merge(defaultToastStyle);
 
+    final defaultInputDecorationTheme = DefaultSBBInputDecorationThemeData(mergedBaseStyle);
+    final mergedInputDecorationTheme = defaultInputDecorationTheme.merge(inputDecorationTheme);
+
     return raw(
       brightness: brightness,
       baseStyle: mergedBaseStyle,
@@ -183,6 +192,7 @@ class SBBTheme {
       textTheme: mergedTextTheme,
       textInputTheme: mergedTextInputTheme,
       toastStyle: mergedToastStyle,
+      inputDecorationTheme: mergedInputDecorationTheme,
     );
   }
 
@@ -197,6 +207,7 @@ class SBBTheme {
     required SBBContentBoxThemeData contentBoxTheme,
     required SBBControlStyles controlStyles,
     required SBBHeaderBoxStyle headerBoxStyle,
+    required SBBInputDecorationThemeData inputDecorationTheme,
     required SBBListItemThemeData listItemTheme,
     required SBBRadioThemeData radioTheme,
     required SBBStatusThemeData statusTheme,
@@ -234,6 +245,7 @@ class SBBTheme {
         chipTheme,
         controlStyles,
         headerBoxStyle,
+        inputDecorationTheme,
         listItemTheme,
         radioTheme,
         statusTheme,
