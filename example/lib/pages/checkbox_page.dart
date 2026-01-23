@@ -145,7 +145,7 @@ class CheckboxPageState extends State<CheckboxPage> {
               const SizedBox(height: SBBSpacing.medium),
               const SBBListHeader('Checkbox Item - Boxed'),
               Padding(
-                padding: const EdgeInsets.only(bottom: SBBSpacing.medium * 4),
+                padding: const EdgeInsets.only(bottom: 64.0),
                 child: Column(
                   spacing: SBBSpacing.xSmall,
                   children: [

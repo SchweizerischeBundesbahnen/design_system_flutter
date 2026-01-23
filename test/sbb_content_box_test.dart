@@ -23,7 +23,7 @@ void main() {
             padding: EdgeInsets.symmetric(vertical: SBBSpacing.medium),
             child: content('Extra padding'),
           ),
-          SBBContentBox(margin: EdgeInsets.all(SBBSpacing.medium * 4), child: content('Extra margin')),
+          SBBContentBox(margin: EdgeInsets.all(64.0), child: content('Extra margin')),
         ],
       ),
     );

@@ -20,7 +20,7 @@ class ListItemPage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(
             vertical: SBBSpacing.xSmall,
             horizontal: SBBSpacing.xSmall,
-          ).copyWith(bottom: SBBSpacing.medium * 3),
+          ).copyWith(bottom: 48.0),
           sliver: SliverList.list(
             children: [
               SBBListHeader('Listed'),

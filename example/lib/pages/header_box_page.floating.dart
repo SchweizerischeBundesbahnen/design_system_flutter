@@ -40,7 +40,7 @@ class _FloatingPageState extends State<FloatingPage> {
                 titleText: 'Item $index',
                 onTap: () {
                   FocusScope.of(context).unfocus();
-                  sbbToast.show(title: 'Pressed Item $index', bottom: SBBSpacing.medium * 6);
+                  sbbToast.show(title: 'Pressed Item $index', bottom: 96.0);
                 },
               ),
             ),
@@ -182,7 +182,7 @@ class _FloatingPageState extends State<FloatingPage> {
                 pushMode = !pushMode;
                 FocusScope.of(context).unfocus();
               });
-              sbbToast.show(title: 'Toggled mode', bottom: SBBSpacing.medium * 6);
+              sbbToast.show(title: 'Toggled mode', bottom: 96.0);
             },
           ),
         ],

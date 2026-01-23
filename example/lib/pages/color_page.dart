@@ -56,7 +56,7 @@ class _ColorShowcase extends StatelessWidget {
           GridView.builder(
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: SBBSpacing.medium * 10),
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 160.0),
             itemCount: colorEntries.length,
             itemBuilder: (BuildContext context, index) {
               final colorEntry = colorEntries[index];

@@ -37,7 +37,7 @@ class _PaginationViewState extends State<PaginationView> {
   Widget build(BuildContext context) {
     return Expanded(
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: SBBSpacing.medium * 3, horizontal: SBBSpacing.medium),
+        padding: const EdgeInsets.symmetric(vertical: 48.0, horizontal: SBBSpacing.medium),
         child: Column(
           children: [
             _paginationHeader(),

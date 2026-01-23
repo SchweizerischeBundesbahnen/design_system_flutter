@@ -207,7 +207,7 @@ class _VerticalStartPage extends StatelessWidget {
               style: SBBTextStyles.extraLargeLight.copyWith(color: controlStyle.headerTextStyle!.color),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: SBBSpacing.medium * 9),
+            const SizedBox(height: 144.0),
             SBBContentBox(
               padding: EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall, vertical: SBBSpacing.medium),
               child: Column(

@@ -30,7 +30,7 @@ class ContainerPage extends StatelessWidget {
                 child: content('Extra padding'),
               ),
               SizedBox(height: SBBSpacing.medium),
-              SBBContentBox(margin: EdgeInsets.all(SBBSpacing.medium * 4), child: content('Extra margin')),
+              SBBContentBox(margin: EdgeInsets.all(64.0), child: content('Extra margin')),
             ],
           ),
         ),

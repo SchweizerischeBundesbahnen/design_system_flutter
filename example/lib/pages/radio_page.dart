@@ -163,7 +163,7 @@ class RadioPageState extends State<RadioPage> {
               const SizedBox(height: SBBSpacing.medium),
               const SBBListHeader('Radio List Item - Boxed'),
               Padding(
-                padding: const EdgeInsets.only(bottom: SBBSpacing.medium * 4),
+                padding: const EdgeInsets.only(bottom: 64.0),
                 child: SBBRadioGroup(
                   groupValue: _listItemGroupValue,
                   onChanged: (newValue) => setState(() => _listItemGroupValue = newValue),

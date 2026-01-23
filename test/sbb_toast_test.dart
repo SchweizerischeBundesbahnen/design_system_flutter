@@ -70,11 +70,11 @@ void main() {
               decoration: BoxDecoration(
                 color: SBBColors.sky,
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.elliptical(SBBSpacing.medium * 4, SBBSpacing.xLarge),
-                  bottomRight: Radius.elliptical(SBBSpacing.medium * 4, SBBSpacing.xLarge),
+                  topLeft: Radius.elliptical(64.0, SBBSpacing.xLarge),
+                  bottomRight: Radius.elliptical(64.0, SBBSpacing.xLarge),
                 ),
               ),
-              padding: EdgeInsets.all(SBBSpacing.medium * 3),
+              padding: EdgeInsets.all(48.0),
             ),
             action: SBBToastAction(onPressed: () {}, title: 'Long Action Title that is veeeeery long'),
           ),
