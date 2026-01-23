@@ -323,74 +323,28 @@ class _SBBTextInputState extends State<SBBTextInput>
     Offset? cursorOffset;
     final Color cursorColor = selectionStyle.cursorColor ?? theme.colorScheme.primary;
     final Color selectionColor = selectionStyle.selectionColor ?? theme.colorScheme.primary.withValues(alpha: 0.4);
-    VoidCallback? handleDidGainAccessibilityFocus;
-    VoidCallback? handleDidLoseAccessibilityFocus;
     final SpellCheckConfiguration spellCheckConfiguration;
     final Brightness keyboardAppearance = widget.keyboardAppearance ?? theme.brightness;
 
     switch (theme.platform) {
       case TargetPlatform.iOS:
+      case TargetPlatform.macOS:
         forcePressEnabled = true;
         textSelectionControls = cupertinoTextSelectionHandleControls;
         paintCursorAboveText = true;
         cursorOpacityAnimates = true;
         cursorOffset = Offset(iOSHorizontalOffset / MediaQuery.devicePixelRatioOf(context), 0);
         spellCheckConfiguration = CupertinoTextField.inferIOSSpellCheckConfiguration(null);
-      case TargetPlatform.macOS:
-        forcePressEnabled = false;
-        textSelectionControls ??= cupertinoDesktopTextSelectionHandleControls;
-        paintCursorAboveText = true;
-        cursorOpacityAnimates = false;
-        spellCheckConfiguration = CupertinoTextField.inferIOSSpellCheckConfiguration(null);
-        handleDidGainAccessibilityFocus = () {
-          // Automatically activate the TextField when it receives accessibility focus.
-          if (!_effectiveFocusNode.hasFocus && _effectiveFocusNode.canRequestFocus) {
-            _effectiveFocusNode.requestFocus();
-          }
-        };
-        handleDidLoseAccessibilityFocus = () {
-          _effectiveFocusNode.unfocus();
-        };
 
       case TargetPlatform.android:
       case TargetPlatform.fuchsia:
+      case TargetPlatform.linux:
+      case TargetPlatform.windows:
         forcePressEnabled = false;
         textSelectionControls ??= materialTextSelectionHandleControls;
         paintCursorAboveText = false;
         cursorOpacityAnimates = false;
         spellCheckConfiguration = TextField.inferAndroidSpellCheckConfiguration(null);
-
-      case TargetPlatform.linux:
-        forcePressEnabled = false;
-        textSelectionControls ??= desktopTextSelectionHandleControls;
-        paintCursorAboveText = false;
-        cursorOpacityAnimates = false;
-        spellCheckConfiguration = TextField.inferAndroidSpellCheckConfiguration(null);
-        handleDidGainAccessibilityFocus = () {
-          // Automatically activate the TextField when it receives accessibility focus.
-          if (!_effectiveFocusNode.hasFocus && _effectiveFocusNode.canRequestFocus) {
-            _effectiveFocusNode.requestFocus();
-          }
-        };
-        handleDidLoseAccessibilityFocus = () {
-          _effectiveFocusNode.unfocus();
-        };
-
-      case TargetPlatform.windows:
-        forcePressEnabled = false;
-        textSelectionControls ??= desktopTextSelectionHandleControls;
-        paintCursorAboveText = false;
-        cursorOpacityAnimates = false;
-        spellCheckConfiguration = TextField.inferAndroidSpellCheckConfiguration(null);
-        handleDidGainAccessibilityFocus = () {
-          // Automatically activate the TextField when it receives accessibility focus.
-          if (!_effectiveFocusNode.hasFocus && _effectiveFocusNode.canRequestFocus) {
-            _effectiveFocusNode.requestFocus();
-          }
-        };
-        handleDidLoseAccessibilityFocus = () {
-          _effectiveFocusNode.unfocus();
-        };
     }
 
     final hasError = widget.errorText?.isNotEmpty ?? false;
@@ -460,8 +414,6 @@ class _SBBTextInputState extends State<SBBTextInput>
                     }
                     _requestKeyboard();
                   },
-            onDidGainAccessibilityFocus: handleDidGainAccessibilityFocus,
-            onDidLoseAccessibilityFocus: handleDidLoseAccessibilityFocus,
             onFocus: widget.enabled
                 ? () {
                     assert(
