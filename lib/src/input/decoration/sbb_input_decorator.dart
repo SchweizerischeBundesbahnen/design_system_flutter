@@ -1,4 +1,5 @@
 import 'dart:math' as math;
+import 'dart:ui' show lerpDouble;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -6,7 +7,12 @@ import 'package:sbb_design_system_mobile/src/input/decoration/sbb_decoration.dar
 
 import '../../../sbb_design_system_mobile.dart';
 
-class SBBInputDecorator extends StatelessWidget {
+// Animation constants
+const Duration _kTransitionDuration = Duration(milliseconds: 167);
+const Curve _kTransitionCurve = Curves.fastOutSlowIn;
+const double _kFinalLabelScale = 0.75;
+
+class SBBInputDecorator extends StatefulWidget {
   const SBBInputDecorator({
     super.key,
     required this.decoration,
@@ -42,43 +48,96 @@ class SBBInputDecorator extends StatelessWidget {
   /// Whether the label needs to move above the input and seem to start floating.
   ///
   /// Will float when not empty or when focused while enabled.
-  bool get _labelFloating =>
+  bool get _labelShouldFloat =>
       !isEmpty || (states.contains(WidgetState.focused) && !states.contains(WidgetState.disabled));
+
+  @override
+  State<SBBInputDecorator> createState() => _SBBInputDecoratorState();
+}
+
+class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTickerProviderStateMixin {
+  late final AnimationController _floatingLabelController;
+  late final CurvedAnimation _floatingLabelAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _floatingLabelController = AnimationController(
+      duration: _kTransitionDuration,
+      vsync: this,
+      value: widget._labelShouldFloat ? 1.0 : 0.0,
+    );
+    _floatingLabelController.addListener(_handleAnimationChange);
+    _floatingLabelAnimation = CurvedAnimation(
+      parent: _floatingLabelController,
+      curve: _kTransitionCurve,
+      reverseCurve: _kTransitionCurve.flipped,
+    );
+  }
+
+  @override
+  void didUpdateWidget(SBBInputDecorator oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget._labelShouldFloat != oldWidget._labelShouldFloat) {
+      if (widget._labelShouldFloat) {
+        _floatingLabelController.forward();
+      } else {
+        _floatingLabelController.reverse();
+      }
+    }
+  }
+
+  @override
+  void dispose() {
+    _floatingLabelController.dispose();
+    _floatingLabelAnimation.dispose();
+    super.dispose();
+  }
+
+  void _handleAnimationChange() {
+    setState(() {
+      // The _floatingLabelController's value has changed.
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     final inputDecorationTheme = Theme.of(context).sbbInputDecorationTheme;
 
-    Widget? leading = decoration.leading;
-    if (leading == null && decoration.leadingIconData != null) {
-      leading = Icon(decoration.leadingIconData);
+    Widget? leading = widget.decoration.leading;
+    if (leading == null && widget.decoration.leadingIconData != null) {
+      leading = Icon(widget.decoration.leadingIconData);
     }
     if (leading != null) {
-      final Color? resolvedColor = (decoration.leadingForegroundColor ?? inputDecorationTheme?.leadingForegroundColor)
-          ?.resolve(states);
+      final Color? resolvedColor =
+          (widget.decoration.leadingForegroundColor ?? inputDecorationTheme?.leadingForegroundColor)?.resolve(
+            widget.states,
+          );
       leading = _addDefaultAncestorWithResolved(
         child: leading,
         foregroundColor: resolvedColor,
       );
     }
 
-    Widget? label = decoration.label;
-    if (label == null && decoration.labelText != null) {
-      label = Text(decoration.labelText!);
+    Widget? label = widget.decoration.label;
+    if (label == null && widget.decoration.labelText != null) {
+      label = Text(widget.decoration.labelText!);
     }
     if (label != null) {
-      final Color? resolvedColor = (decoration.labelForegroundColor ?? inputDecorationTheme?.labelForegroundColor)
-          ?.resolve(states);
-      final TextStyle? textStyle = decoration.labelTextStyle ?? inputDecorationTheme?.labelTextStyle;
+      final Color? resolvedColor =
+          (widget.decoration.labelForegroundColor ?? inputDecorationTheme?.labelForegroundColor)?.resolve(
+            widget.states,
+          );
+      final TextStyle? textStyle = widget.decoration.labelTextStyle ?? inputDecorationTheme?.labelTextStyle;
       final TextStyle? floatingTextStyle =
-          decoration.floatingLabelTextStyle ?? inputDecorationTheme?.floatingLabelTextStyle;
+          widget.decoration.floatingLabelTextStyle ?? inputDecorationTheme?.floatingLabelTextStyle;
       final resolvedTextStyle =
-          (_labelFloating ? floatingTextStyle : textStyle)?.copyWith(color: resolvedColor) ??
+          (widget._labelShouldFloat ? floatingTextStyle : textStyle)?.copyWith(color: resolvedColor) ??
           TextStyle(color: resolvedColor);
 
       label = AnimatedDefaultTextStyle(
         style: resolvedTextStyle,
-        duration: Duration(milliseconds: 250), // TODO: define Animation duration
+        duration: _kTransitionDuration,
         child: IconTheme.merge(
           data: IconThemeData(color: resolvedColor),
           child: label,
@@ -86,27 +145,31 @@ class SBBInputDecorator extends StatelessWidget {
       );
     }
 
-    Widget? trailing = decoration.trailing;
-    if (trailing == null && decoration.trailingIconData != null) {
-      trailing = Icon(decoration.trailingIconData);
+    Widget? trailing = widget.decoration.trailing;
+    if (trailing == null && widget.decoration.trailingIconData != null) {
+      trailing = Icon(widget.decoration.trailingIconData);
     }
     if (trailing != null) {
-      final Color? resolvedColor = (decoration.trailingForegroundColor ?? inputDecorationTheme?.trailingForegroundColor)
-          ?.resolve(states);
+      final Color? resolvedColor =
+          (widget.decoration.trailingForegroundColor ?? inputDecorationTheme?.trailingForegroundColor)?.resolve(
+            widget.states,
+          );
       trailing = _addDefaultAncestorWithResolved(
         child: trailing,
         foregroundColor: resolvedColor,
       );
     }
 
-    Widget? placeholder = decoration.placeholder;
-    if (placeholder == null && decoration.placeholderText != null) {
-      placeholder = Text(decoration.placeholderText!);
+    Widget? placeholder = widget.decoration.placeholder;
+    if (placeholder == null && widget.decoration.placeholderText != null) {
+      placeholder = Text(widget.decoration.placeholderText!);
     }
     if (placeholder != null) {
       final Color? resolvedColor =
-          (decoration.placeholderForegroundColor ?? inputDecorationTheme?.placeholderForegroundColor)?.resolve(states);
-      final TextStyle? textStyle = decoration.placeholderTextStyle ?? inputDecorationTheme?.placeholderTextStyle;
+          (widget.decoration.placeholderForegroundColor ?? inputDecorationTheme?.placeholderForegroundColor)?.resolve(
+            widget.states,
+          );
+      final TextStyle? textStyle = widget.decoration.placeholderTextStyle ?? inputDecorationTheme?.placeholderTextStyle;
       placeholder = _addDefaultAncestorWithResolved(
         child: placeholder,
         foregroundColor: resolvedColor,
@@ -114,14 +177,16 @@ class SBBInputDecorator extends StatelessWidget {
       );
     }
 
-    Widget? error = decoration.error;
-    if (error == null && decoration.errorText != null) {
-      error = Text(decoration.errorText!);
+    Widget? error = widget.decoration.error;
+    if (error == null && widget.decoration.errorText != null) {
+      error = Text(widget.decoration.errorText!);
     }
     if (error != null) {
-      final Color? resolvedColor = (decoration.errorForegroundColor ?? inputDecorationTheme?.errorForegroundColor)
-          ?.resolve(states);
-      final TextStyle? textStyle = decoration.errorTextStyle ?? inputDecorationTheme?.errorTextStyle;
+      final Color? resolvedColor =
+          (widget.decoration.errorForegroundColor ?? inputDecorationTheme?.errorForegroundColor)?.resolve(
+            widget.states,
+          );
+      final TextStyle? textStyle = widget.decoration.errorTextStyle ?? inputDecorationTheme?.errorTextStyle;
       error = _addDefaultAncestorWithResolved(
         child: error,
         foregroundColor: resolvedColor,
@@ -129,14 +194,15 @@ class SBBInputDecorator extends StatelessWidget {
       );
     }
     error = AnimatedSwitcher(
-      duration: Duration(milliseconds: 250), // TODO: define Animation duration
+      duration: _kTransitionDuration,
       child: error ?? SizedBox.shrink(),
     );
 
     final Color resolvedBorderColor =
-        (decoration.borderColor ?? inputDecorationTheme?.borderColor)?.resolve(states) ?? SBBColors.transparent;
+        (widget.decoration.borderColor ?? inputDecorationTheme?.borderColor)?.resolve(widget.states) ??
+        SBBColors.transparent;
     final Widget container = AnimatedContainer(
-      duration: Duration(milliseconds: 250), // TODO: define Animation duration
+      duration: _kTransitionDuration,
       decoration: BoxDecoration(
         border: Border(bottom: BorderSide(color: resolvedBorderColor)),
       ),
@@ -151,11 +217,12 @@ class SBBInputDecorator extends StatelessWidget {
         error: error,
         container: container,
       ),
-      expands: expands,
-      isMultiline: isMultiline,
-      isEmpty: isEmpty,
-      isFocused: states.contains(WidgetState.focused),
-      child: child,
+      expands: widget.expands,
+      isMultiline: widget.isMultiline,
+      isEmpty: widget.isEmpty,
+      isFocused: widget.states.contains(WidgetState.focused),
+      floatingLabelProgress: _floatingLabelAnimation.value,
+      child: widget.child,
     );
   }
 
@@ -194,6 +261,7 @@ class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSl
     required this.isMultiline,
     required this.isEmpty,
     required this.isFocused,
+    required this.floatingLabelProgress,
     this.child,
   });
 
@@ -202,6 +270,7 @@ class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSl
   final bool isMultiline;
   final bool isEmpty;
   final bool isFocused;
+  final double floatingLabelProgress;
   final Widget? child;
 
   @override
@@ -228,6 +297,7 @@ class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSl
       isMultiline: isMultiline,
       isEmpty: isEmpty,
       isFocused: isFocused,
+      floatingLabelProgress: floatingLabelProgress,
     );
   }
 
@@ -238,7 +308,8 @@ class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSl
       ..expands = expands
       ..isMultiline = isMultiline
       ..isEmpty = isEmpty
-      ..isFocused = isFocused;
+      ..isFocused = isFocused
+      ..floatingLabelProgress = floatingLabelProgress;
   }
 }
 
@@ -274,11 +345,13 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     required bool isMultiline,
     required bool isEmpty,
     required bool isFocused,
+    required double floatingLabelProgress,
   }) : _decoration = decoration,
        _expands = expands,
        _isMultiline = isMultiline,
        _isEmpty = isEmpty,
-       _isFocused = isFocused;
+       _isFocused = isFocused,
+       _floatingLabelProgress = floatingLabelProgress;
 
   RenderBox? get label => childForSlot(_SBBDecorationSlot.label);
 
@@ -353,6 +426,18 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     markNeedsLayout();
   }
 
+  double get floatingLabelProgress => _floatingLabelProgress;
+  double _floatingLabelProgress;
+
+  set floatingLabelProgress(double value) {
+    if (_floatingLabelProgress == value) return;
+    _floatingLabelProgress = value;
+    markNeedsLayout();
+  }
+
+  // Records where the label was painted (for transform).
+  Matrix4? _labelTransform;
+
   static double _minWidth(RenderBox? box, double height) => box?.getMinIntrinsicWidth(height) ?? 0.0;
 
   static double _maxWidth(RenderBox? box, double height) => box?.getMaxIntrinsicWidth(height) ?? 0.0;
@@ -371,7 +456,6 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
   BoxParentData _boxParentData(RenderBox box) => box.parentData! as BoxParentData;
 
   // Returns layout information used by performLayout to position all children.
-  // This method applies layout to all children using layoutChild.
   _RenderSBBDecorationLayout _layout(
     BoxConstraints constraints, {
     required ChildLayouter layoutChild,
@@ -396,7 +480,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
       errorHeight = errorSize.height;
     }
 
-    final BoxConstraints titleRowConstraints = looseConstraints.deflate(EdgeInsets.only(top: errorHeight));
+    final BoxConstraints titleRowConstraints = looseConstraints.deflate(EdgeInsets.only(bottom: errorHeight));
 
     // Layout leading if present
     double leadingWidth = 0.0;
@@ -420,17 +504,28 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     final double availableInputWidth = constraints.maxWidth - leadingWidth - trailingWidth;
 
     // Layout label with same width constraints as input
+    // Increase the available width for the label when it is scaled down.
     double labelHeight = 0.0;
+    double labelWidth = 0.0;
     if (label != null) {
-      final BoxConstraints labelConstraints = looseConstraints.tighten(width: availableInputWidth);
+      final double invertedLabelScale = lerpDouble(
+        1.0,
+        1 / _kFinalLabelScale,
+        floatingLabelProgress,
+      )!;
+      final BoxConstraints labelConstraints = looseConstraints.copyWith(
+        maxWidth: availableInputWidth * invertedLabelScale,
+      );
       final Size labelSize = layoutChild(label!, labelConstraints);
       labelHeight = labelSize.height;
+      labelWidth = labelSize.width;
     }
 
-    // Layout input with constraints accounting for label and error
-    final BoxConstraints inputConstraints = constraints
-        .tighten(width: availableInputWidth)
-        .deflate(EdgeInsets.only(top: labelHeight, bottom: errorHeight));
+    // For single-line: calculate the floating label height (scaled)
+    final double floatingLabelHeight = labelHeight * _kFinalLabelScale;
+
+    // Layout input with constraints
+    final BoxConstraints inputConstraints = constraints.tighten(width: availableInputWidth);
 
     // Layout input
     double inputHeight = 0.0;
@@ -446,44 +541,61 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
       hintHeight = hintSize.height;
     }
 
-    // Calculate the maximum height among all three elements (row-like behavior)
-    // The placeholder should be included in the height calculation if isEmpty
+    // Calculate the maximum height among input/hint
     final double maxInputHeight = isEmpty ? math.max(inputHeight, hintHeight) : inputHeight;
-    final double labelInputHeight = labelHeight + maxInputHeight;
-    final double titleRowHeight = [leadingHeight, labelInputHeight, trailingHeight, 48.0].reduce(math.max);
 
-    // Calculate offsets
-    final Offset labelOffset = label != null
-        ? Offset(leadingWidth, isMultiline ? 0.0 : (titleRowHeight - labelInputHeight) / 2.0)
-        : Offset.zero;
+    // For single-line case: Always reserve space for both floating label and input
+    // to ensure height doesn't change during animation.
+    // The height should accommodate: floatingLabel + input when fully floated.
+    final double floatingContentHeight = floatingLabelHeight + maxInputHeight;
+
+    // When not floating, label is centered (takes labelHeight).
+    // We need the max of both scenarios to keep height stable.
+    final double stableContentHeight = math.max(labelHeight, floatingContentHeight);
+
+    // Title row height is max of leading, content area, trailing, and min height (48.0)
+    final double titleRowHeight = [leadingHeight, stableContentHeight, trailingHeight, 48.0].reduce(math.max);
+
+    // Calculate label offset based on floatingLabelProgress
+    // When not floating (progress=0): label is centered vertically
+    // When floating (progress=1): label is at top, scaled down
+    final double labelCenteredY = (titleRowHeight - labelHeight) / 2.0;
+    final double labelFloatingY = (titleRowHeight - floatingContentHeight) / 2.0;
+
+    // Interpolate label Y position
+    final double labelY = lerpDouble(labelCenteredY, labelFloatingY, floatingLabelProgress)!;
+
+    final Offset labelOffset = label != null ? Offset(leadingWidth, isMultiline ? 0.0 : labelY) : Offset.zero;
 
     // For multiline inputs, top-align all elements; otherwise center them
     final Offset leadingOffset = leading != null
         ? Offset(0, isMultiline ? 0.0 : (titleRowHeight - leadingHeight) / 2.0)
         : Offset.zero;
 
+    // Input position: when floating, input is below the floating label
+    // When not floating, input is centered (same as where the label would be)
+    final double inputCenteredY = (titleRowHeight - maxInputHeight) / 2.0;
+    final double inputFloatingY = labelFloatingY + floatingLabelHeight;
+    final double inputY = lerpDouble(inputCenteredY, inputFloatingY, floatingLabelProgress)!;
+
     final Offset inputOffset = Offset(
       leadingWidth,
-      isMultiline ? labelHeight : labelOffset.dy + labelHeight,
+      isMultiline ? labelHeight : inputY,
     );
 
     // Hint is positioned at the same location as input
     final Offset hintOffset = Offset(
       leadingWidth,
-      isMultiline ? labelHeight : labelOffset.dy + labelHeight,
+      isMultiline ? labelHeight : inputY,
     );
 
     final Offset trailingOffset = trailing != null
         ? Offset(leadingWidth + availableInputWidth, isMultiline ? 0.0 : (titleRowHeight - trailingHeight) / 2.0)
         : Offset.zero;
 
-    // Layout error widget below the bottomMost of the titleRowHeight
+    // Layout error widget below the titleRowHeight
     // if expands, needs to be laid out at the bottom
-    final double topAlignedErrorY = [
-      leadingHeight + leadingOffset.dy,
-      labelInputHeight + labelOffset.dy,
-      trailingHeight + trailingOffset.dy,
-    ].reduce(math.max);
+    final double topAlignedErrorY = titleRowHeight;
     final errorY = expands ? constraints.maxHeight - errorHeight : topAlignedErrorY;
     final Offset errorOffset = error != null ? Offset(0, errorY) : Offset.zero;
 
@@ -621,13 +733,17 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     final double trailingHeight = _minHeight(trailing, width);
     final double errorHeight = _minHeight(error, width);
 
-    // Return the maximum height among all (row-like behavior) plus error height
-    // Include placeholder in calculation if isEmpty
+    // For single-line: always reserve space for floating state
     final double maxInputHeight = isEmpty ? math.max(inputHeight, hintHeight) : inputHeight;
+    final double floatingLabelHeight = labelHeight * _kFinalLabelScale;
+    final double floatingContentHeight = floatingLabelHeight + maxInputHeight;
+    final double stableContentHeight = math.max(labelHeight, floatingContentHeight);
+
     final double titleRowHeight = [
       leadingHeight,
-      maxInputHeight + labelHeight,
+      stableContentHeight,
       trailingHeight,
+      48.0,
     ].reduce(math.max);
     return titleRowHeight + errorHeight;
   }
@@ -646,6 +762,10 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     return _boxParentData(input).offset.dy + (input.getDistanceToActualBaseline(baseline) ?? input.size.height);
   }
 
+  void _paintLabel(PaintingContext context, Offset offset) {
+    context.paintChild(label!, offset);
+  }
+
   @override
   void paint(PaintingContext context, Offset offset) {
     void doPaint(RenderBox? child) {
@@ -654,20 +774,59 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
       }
     }
 
-    doPaint(label);
+    doPaint(container);
+
+    // Paint label with transform for scaling animation (single-line only)
+    if (label != null && !isMultiline) {
+      final Offset labelOffset = _boxParentData(label!).offset;
+
+      // Calculate scale
+      final double scale = lerpDouble(1.0, _kFinalLabelScale, floatingLabelProgress)!;
+
+      // The label should stay at its left position, only scale and move vertically
+      final double dx = labelOffset.dx;
+      final double dy = labelOffset.dy;
+
+      _labelTransform = Matrix4.identity()
+        ..translate(dx, dy)
+        ..scale(scale, scale);
+
+      layer = context.pushTransform(
+        needsCompositing,
+        offset,
+        _labelTransform!,
+        _paintLabel,
+        oldLayer: layer as TransformLayer?,
+      );
+    } else {
+      doPaint(label);
+      layer = null;
+    }
+
     doPaint(leading);
     if (isEmpty && isFocused) doPaint(placeholder);
     doPaint(input);
     doPaint(trailing);
     doPaint(error);
-    doPaint(container);
+  }
+
+  @override
+  void applyPaintTransform(RenderObject child, Matrix4 transform) {
+    if (child == label && _labelTransform != null && !isMultiline) {
+      final Offset labelOffset = _boxParentData(label!).offset;
+      transform
+        ..multiply(_labelTransform!)
+        ..translate(-labelOffset.dx, -labelOffset.dy);
+    }
+    super.applyPaintTransform(child, transform);
   }
 
   @override
   bool hitTestChildren(BoxHitTestResult result, {required Offset position}) {
     for (final RenderBox child in children) {
+      final Offset offset = _boxParentData(child).offset;
       final bool isHit = result.addWithPaintOffset(
-        offset: _boxParentData(child).offset,
+        offset: offset,
         position: position,
         hitTest: (BoxHitTestResult result, Offset transformed) {
           return child.hitTest(result, position: transformed);
