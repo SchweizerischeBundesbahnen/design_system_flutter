@@ -39,66 +39,65 @@ class _TextFieldPageState extends State<TextFieldPage> {
                       ConstrainedBox(
                         constraints: BoxConstraints(maxHeight: 100),
                         child: SBBTextInput(
-                          labelText: 'Label',
+                          decoration: SBBInputDecoration(
+                            labelText: 'Label',
+                            leadingIconData: SBBIcons.unicorn_small,
+                            trailing: Container(height: 50, width: 10, color: SBBColors.green),
+                            errorText: 'Hello',
+                            placeholderText: 'Placeholder',
+                          ),
                           controller: emptyTextEditingController,
-                          icon: SBBIcons.unicorn_small,
-                          suffixIcon: Container(height: 50, width: 10, color: SBBColors.green),
-                          errorText: ' Hello',
-                          placeholderText: 'Hint',
                           expands: true,
                           maxLines: null,
-                          onTap: () {
-                            print('hello');
-                          },
                         ),
                       ),
                       ConstrainedBox(
                         constraints: BoxConstraints(maxHeight: 100),
                         child: TextField(
-                          // labelText: 'Label',
                           controller: emptyTextEditingController,
-                          // icon: SBBIcons.unicorn_small,
-                          // suffixIcon: Container(height: 50, width: 10, color: SBBColors.green),
-                          // errorText: ' Hello',
-                          // placeholderText: 'Hint',
                           expands: true,
                           maxLines: null,
-                          onTap: () {
-                            print('Material TextField');
-                          },
                         ),
                       ),
                       SBBTextInput(
-                        labelText: 'Label',
+                        decoration: SBBInputDecoration(
+                          labelText: 'Label',
+                          leadingIconData: SBBIcons.unicorn_small,
+                        ),
                         controller: defaultTextEditingController,
-                        icon: SBBIcons.unicorn_small,
                       ),
-                      const SBBTextInput(labelText: 'With Placeholder', placeholderText: 'Placeholder'),
+                      const SBBTextInput(
+                        decoration: SBBInputDecoration(
+                          labelText: 'With Placeholder',
+                          placeholderText: 'Placeholder',
+                        ),
+                      ),
                       SBBTextInput(
-                        labelText: 'With leading and trailing icon',
-                        icon: SBBIcons.unicorn_small,
-                        suffixIcon: InkWell(
-                          onTap: () {
-                            print('hello');
-                          },
-                          child: Container(height: 50, width: 200, color: SBBColors.green),
+                        decoration: SBBInputDecoration(
+                          labelText: 'With leading and trailing icon',
+                          leadingIconData: SBBIcons.unicorn_small,
+                          trailing: Container(height: 50, width: 200, color: SBBColors.green),
                         ),
                       ),
                       // TODO: Move to separate Textarea page
                       SBBTextInput(
-                        icon: SBBIcons.unicorn_small,
-                        labelText: 'Multiline',
+                        decoration: SBBInputDecoration(
+                          leadingIconData: SBBIcons.unicorn_small,
+                          labelText: 'Multiline',
+                          errorText: 'Error Text',
+                        ),
                         maxLines: 3,
                         minLines: 1,
                         controller: TextEditingController()..value = const TextEditingValue(text: "I'm\nmulti\nline"),
-                        errorText: 'Hello',
                       ),
                       SBBTextInput(
-                        labelText: 'Error Message if input too long',
+                        decoration: SBBInputDecoration(
+                          labelText: 'Display Error Message if input too long',
+                          errorText: errorText,
+                          leadingIconData: SBBIcons.unicorn_small,
+                          trailingIconData: SBBIcons.circle_information_small_small,
+                        ),
                         controller: textEditingController,
-                        errorText: errorText,
-                        icon: SBBIcons.unicorn_small,
-                        suffixIcon: Icon(SBBIcons.circle_information_small_small),
                         onChanged: (value) {
                           if (errorText == null && value.length > 10) {
                             setState(() {
@@ -112,12 +111,12 @@ class _TextFieldPageState extends State<TextFieldPage> {
                         },
                       ),
                       SBBTextInput(
-                        labelText: 'Disabled',
+                        decoration: SBBInputDecoration(labelText: 'Disabled'),
                         controller: TextEditingController()..value = const TextEditingValue(text: 'Value'),
                         enabled: false,
                       ),
                       SBBTextInput(
-                        labelText: 'Last Element (Without Divider)',
+                        decoration: SBBInputDecoration(labelText: 'Last Element (no divider)'),
                         controller: TextEditingController()..value = const TextEditingValue(text: 'Value'),
                       ),
                     ],

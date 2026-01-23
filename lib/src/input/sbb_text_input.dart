@@ -1,9 +1,3 @@
-// TODO: create and add SBBInputDecoration to params with moved trailing, leading and so forth
-// TODO: expose FloatingLabelBehavior
-// TODO: add themeData according to v5.0.0 with
-// TODO: improve docs
-// TODO: add migration guideline & CHANGELOG
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -12,10 +6,13 @@ import 'package:flutter/services.dart';
 import '../../sbb_design_system_mobile.dart';
 import 'decoration/sbb_input_decorator.dart';
 
-// TODO: (add theme data and get effective in SBBTextInput)
-// TODO: move decoration related params to SBBInputDecoration
 // TODO: animate label and input when single line
+// TODO: expose FloatingLabelBehavior
 // TODO: think about case when multiline (center between baselines?)
+// TODO: add themeData according to v5.0.0 with
+// TODO: (add theme data and get effective in SBBTextInput)
+// TODO: improve docs
+// TODO: add migration guideline & CHANGELOG
 
 /// The SBBTextInput.
 ///
@@ -33,6 +30,7 @@ class SBBTextInput extends StatefulWidget {
     super.key,
     this.groupId = EditableText,
     this.controller,
+    this.decoration,
     this.focusNode,
     this.keyboardType,
     this.textInputAction,
@@ -58,14 +56,6 @@ class SBBTextInput extends StatefulWidget {
     this.onTapAlwaysCalled = false,
     this.scrollController,
     this.autofillHints,
-
-    /// TODO: move these to SBBInputDecoration
-    this.errorText,
-    this.placeholderText,
-    this.labelText,
-    this.hintMaxLines,
-    this.icon,
-    this.suffixIcon,
   });
 
   /// {@macro flutter.widgets.editableText.groupId}
@@ -75,6 +65,12 @@ class SBBTextInput extends StatefulWidget {
   ///
   /// If null, this widget will create its own [TextEditingController].
   final TextEditingController? controller;
+
+  /// The decoration surrounding the underlying [EditableText] field.
+  ///
+  /// The values given for colors and text styles will override the values given in
+  /// [SBBInputDecorationThemeData].
+  final SBBInputDecoration? decoration;
 
   /// {@macro flutter.widgets.Focus.focusNode}
   final FocusNode? focusNode;
@@ -195,30 +191,6 @@ class SBBTextInput extends StatefulWidget {
   /// {@macro flutter.services.AutofillConfiguration.autofillHints}
   final Iterable<String>? autofillHints;
 
-  /// Text that appears between the input field and the bottom border.
-  final String? errorText;
-
-  /// The label moves upward on focus.
-  final String? labelText;
-
-  /// The hint shows only in an empty field.
-  ///
-  /// It acts as a placeholder.
-  final String? placeholderText;
-
-  /// The maximum number of lines the [placeholderText] can occupy.
-  final int? hintMaxLines;
-
-  /// An icon to show before the input field and outside of the decoration's container.
-  ///
-  /// The decoration's container is the area which is underlined by the bottom underline of the SBBTextInput.
-  ///
-  /// The trailing edge of the icon is padded by 16px.
-  final IconData? icon;
-
-  /// An icon that appears after the editable part of the text field, within the text fields input decoration.
-  final Widget? suffixIcon;
-
   @override
   State<StatefulWidget> createState() => _SBBTextInputState();
 }
@@ -262,7 +234,7 @@ class _SBBTextInputState extends State<SBBTextInput>
             uniqueIdentifier: autofillId,
             autofillHints: autofillHints,
             currentEditingValue: _effectiveController.value,
-            hintText: widget.placeholderText,
+            hintText: widget.decoration?.placeholderText,
           )
         : AutofillConfiguration.disabled;
 
@@ -321,9 +293,11 @@ class _SBBTextInputState extends State<SBBTextInput>
     return <WidgetState>{
       if (!widget.enabled) WidgetState.disabled,
       if (_effectiveFocusNode.hasFocus) WidgetState.focused,
-      if (widget.errorText?.isNotEmpty ?? false) WidgetState.error,
+      if (_hasError) WidgetState.error,
     };
   }
+
+  bool get _hasError => widget.decoration?.errorText != null || widget.decoration?.error != null;
 
   void _updateStates() {
     _statesController.value = _computeStates();
@@ -375,7 +349,6 @@ class _SBBTextInputState extends State<SBBTextInput>
         spellCheckConfiguration = TextField.inferAndroidSpellCheckConfiguration(null);
     }
 
-    final hasError = widget.errorText?.isNotEmpty ?? false;
     final textStyle = _textStyle(widget.enabled, context);
     final labelStyle = style.placeholderTextStyle!;
     // adjust floating label style to get desired sizes
@@ -390,7 +363,7 @@ class _SBBTextInputState extends State<SBBTextInput>
       keyboardType: widget.keyboardType,
       textInputAction: widget.textInputAction,
       textCapitalization: widget.textCapitalization,
-      style: hasError ? textStyle.copyWith(color: SBBColors.error) : textStyle,
+      style: _hasError ? textStyle.copyWith(color: SBBColors.error) : textStyle,
       autofocus: widget.autofocus,
       obscuringCharacter: widget.obscuringCharacter,
       obscureText: widget.obscureText,
@@ -490,15 +463,9 @@ class _SBBTextInputState extends State<SBBTextInput>
   }
 
   SBBInputDecoration _getEffectiveDecoration({SBBTextFieldStyle? style}) {
-    return SBBInputDecoration(
-      labelText: widget.labelText,
-      leadingIconData: widget.icon,
-      trailing: widget.suffixIcon,
-      placeholderText: widget.placeholderText,
-      errorText: widget.errorText,
-
+    return (widget.decoration ?? SBBInputDecoration()).copyWith(
       borderColor: WidgetStatePropertyAll(
-        widget.errorText != null
+        _hasError
             ? SBBColors.error
             : _effectiveFocusNode.hasFocus
             ? SBBColors.granite
