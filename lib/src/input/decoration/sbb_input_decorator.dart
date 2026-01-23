@@ -595,16 +595,16 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
 
   @override
   double computeMinIntrinsicHeight(double width) {
-    final double leadingWidth = leading?.getMinIntrinsicWidth(double.infinity) ?? 0.0;
-    final double trailingWidth = trailing?.getMinIntrinsicWidth(double.infinity) ?? 0.0;
+    final double leadingWidth = _minWidth(leading, double.infinity);
+    final double trailingWidth = _minWidth(trailing, double.infinity);
     final double availableInputWidth = math.max(0.0, width - leadingWidth - trailingWidth);
 
-    final double labelHeight = label?.getMinIntrinsicHeight(availableInputWidth) ?? 0.0;
-    final double inputHeight = input?.getMinIntrinsicHeight(availableInputWidth) ?? 0.0;
-    final double hintHeight = placeholder?.getMinIntrinsicHeight(availableInputWidth) ?? 0.0;
-    final double leadingHeight = leading?.getMinIntrinsicHeight(width) ?? 0.0;
-    final double trailingHeight = trailing?.getMinIntrinsicHeight(width) ?? 0.0;
-    final double errorHeight = error?.getMinIntrinsicHeight(width) ?? 0.0;
+    final double labelHeight = _minHeight(label, availableInputWidth);
+    final double inputHeight = _minHeight(input, availableInputWidth);
+    final double hintHeight = _minHeight(placeholder, availableInputWidth);
+    final double leadingHeight = _minHeight(leading, width);
+    final double trailingHeight = _minHeight(trailing, width);
+    final double errorHeight = _minHeight(error, width);
 
     // Return the maximum height among all (row-like behavior) plus error height
     // Include placeholder in calculation if isEmpty
