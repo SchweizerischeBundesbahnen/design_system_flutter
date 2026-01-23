@@ -1,16 +1,9 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:sbb_design_system_mobile/src/shared/bottom_loading_indicator.dart';
 
 import '../../sbb_design_system_mobile.dart';
 import 'divider_painter.dart';
-
-typedef _Sizes = ({double titleY, BoxConstraints textConstraints, Size tileSize});
-typedef _PositionChild = void Function(RenderBox child, Offset offset);
-
-enum _SBBListItemSlot { leading, title, subtitle, trailing }
 
 /// A customizable list item component following the SBB design system.
 ///
@@ -455,8 +448,10 @@ class _SBBListItemState extends State<SBBListItem> {
       leadingWidget = Icon(widget.leadingIconData);
     }
 
-    Widget? titleWidget = widget.title;
-    if (titleWidget == null && widget.titleText != null) {
+    Widget titleWidget;
+    if (widget.title != null) {
+      titleWidget = widget.title!;
+    } else {
       titleWidget = Text(widget.titleText!, maxLines: 1, overflow: TextOverflow.ellipsis);
     }
 
@@ -471,18 +466,16 @@ class _SBBListItemState extends State<SBBListItem> {
     }
 
     // Apply theming to all widgets
+    titleWidget = _addDefaultAncestorWithResolved(
+      child: titleWidget,
+      foregroundColor: resolvedTitleForegroundColor,
+      textStyle: resolvedTitleTextStyle,
+    );
+
     if (leadingWidget != null) {
       leadingWidget = _addDefaultAncestorWithResolved(
         child: leadingWidget,
         foregroundColor: resolvedLeadingForegroundColor,
-      );
-    }
-
-    if (titleWidget != null) {
-      titleWidget = _addDefaultAncestorWithResolved(
-        child: titleWidget,
-        foregroundColor: resolvedTitleForegroundColor,
-        textStyle: resolvedTitleTextStyle,
       );
     }
 
@@ -501,7 +494,44 @@ class _SBBListItemState extends State<SBBListItem> {
       );
     }
 
-    Widget child = InkWell(
+    // Arrange widgets to each other
+    Widget child = titleWidget;
+    if (leadingWidget != null) {
+      child = Row(
+        children: [
+          leadingWidget,
+          SizedBox(width: effectiveLeadingGapWidth),
+          Expanded(child: titleWidget),
+        ],
+      );
+    } else {
+      child = Align(alignment: Alignment.centerLeft, child: child);
+    }
+
+    if (subtitleWidget != null) {
+      child = Column(
+        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          child,
+          SizedBox(height: effectiveSubtitleGapHeight),
+          subtitleWidget,
+        ],
+      );
+    }
+
+    if (trailingWidget != null) {
+      child = Row(
+        children: [
+          Expanded(child: child),
+          SizedBox(width: effectiveTrailingGapWidth),
+          trailingWidget,
+        ],
+      );
+    }
+
+    child = InkWell(
       onTap: widget.enabled ? widget.onTap : null,
       onLongPress: widget.enabled ? widget.onLongPress : null,
       autofocus: widget.autofocus,
@@ -517,18 +547,15 @@ class _SBBListItemState extends State<SBBListItem> {
           color: resolvedBackgroundColor,
           child: Padding(
             padding: effectivePadding,
-            child: _SBBListItem(
-              leading: leadingWidget,
-              title: titleWidget ?? const SizedBox(),
-              subtitle: subtitleWidget,
-              trailing: trailingWidget,
-              trailingHorizontalGapWidth: effectiveTrailingGapWidth,
-              leadingHorizontalGapWidth: effectiveLeadingGapWidth,
-              subtitleVerticalGapHeight: effectiveSubtitleGapHeight,
-            ),
+            child: child,
           ),
         ),
       ),
+    );
+
+    child = ConstrainedBox(
+      constraints: BoxConstraints(minWidth: double.infinity, minHeight: 44.0),
+      child: child,
     );
 
     if (widget.isLoading) {
@@ -637,357 +664,5 @@ class _SBBListItemBoxedState extends _SBBListItemState {
   @override
   Widget build(BuildContext context) {
     return SBBContentBox(child: super.build(context));
-  }
-}
-
-class _SBBListItem extends SlottedMultiChildRenderObjectWidget<_SBBListItemSlot, RenderBox> {
-  const _SBBListItem({
-    this.leading,
-    required this.title,
-    this.subtitle,
-    this.trailing,
-    required this.trailingHorizontalGapWidth,
-    required this.leadingHorizontalGapWidth,
-    required this.subtitleVerticalGapHeight,
-  });
-
-  final Widget? leading;
-  final Widget title;
-  final Widget? subtitle;
-  final Widget? trailing;
-  final double trailingHorizontalGapWidth;
-  final double leadingHorizontalGapWidth;
-  final double subtitleVerticalGapHeight;
-
-  @override
-  Iterable<_SBBListItemSlot> get slots => _SBBListItemSlot.values;
-
-  @override
-  Widget? childForSlot(_SBBListItemSlot slot) {
-    return switch (slot) {
-      _SBBListItemSlot.leading => leading,
-      _SBBListItemSlot.title => title,
-      _SBBListItemSlot.subtitle => subtitle,
-      _SBBListItemSlot.trailing => trailing,
-    };
-  }
-
-  @override
-  _RenderSBBListItem createRenderObject(BuildContext context) {
-    return _RenderSBBListItem(
-      trailingHorizontalGapWidth: trailingHorizontalGapWidth,
-      leadingHorizontalGapWidth: leadingHorizontalGapWidth,
-      subtitleVerticalGapHeight: subtitleVerticalGapHeight,
-    );
-  }
-
-  @override
-  void updateRenderObject(BuildContext context, _RenderSBBListItem renderObject) {
-    renderObject
-      ..trailingHorizontalGapWidth = trailingHorizontalGapWidth
-      ..leadingHorizontalGapWidth = leadingHorizontalGapWidth
-      ..subtitleVerticalGapHeight = subtitleVerticalGapHeight;
-  }
-}
-
-class _RenderSBBListItem extends RenderBox with SlottedContainerRenderObjectMixin<_SBBListItemSlot, RenderBox> {
-  _RenderSBBListItem({
-    required double trailingHorizontalGapWidth,
-    required double leadingHorizontalGapWidth,
-    required double subtitleVerticalGapHeight,
-  }) : _trailingHorizontalGapWidth = trailingHorizontalGapWidth,
-       _leadingHorizontalGapWidth = leadingHorizontalGapWidth,
-       _subtitleVerticalGapHeight = subtitleVerticalGapHeight;
-
-  double _trailingHorizontalGapWidth;
-  double _leadingHorizontalGapWidth;
-  double _subtitleVerticalGapHeight;
-
-  double get trailingHorizontalGapWidth => _trailingHorizontalGapWidth;
-
-  set trailingHorizontalGapWidth(double value) {
-    if (_trailingHorizontalGapWidth == value) {
-      return;
-    }
-    _trailingHorizontalGapWidth = value;
-    markNeedsLayout();
-  }
-
-  double get leadingHorizontalGapWidth => _leadingHorizontalGapWidth;
-
-  set leadingHorizontalGapWidth(double value) {
-    if (_leadingHorizontalGapWidth == value) {
-      return;
-    }
-    _leadingHorizontalGapWidth = value;
-    markNeedsLayout();
-  }
-
-  double get subtitleVerticalGapHeight => _subtitleVerticalGapHeight;
-
-  set subtitleVerticalGapHeight(double value) {
-    if (_subtitleVerticalGapHeight == value) {
-      return;
-    }
-    _subtitleVerticalGapHeight = value;
-    markNeedsLayout();
-  }
-
-  RenderBox? get leading => childForSlot(_SBBListItemSlot.leading);
-
-  RenderBox get title => childForSlot(_SBBListItemSlot.title)!;
-
-  RenderBox? get subtitle => childForSlot(_SBBListItemSlot.subtitle);
-
-  RenderBox? get trailing => childForSlot(_SBBListItemSlot.trailing);
-
-  @override
-  Iterable<RenderBox> get children {
-    final RenderBox? title = childForSlot(_SBBListItemSlot.title);
-    return <RenderBox>[?leading, ?title, ?subtitle, ?trailing];
-  }
-
-  @override
-  bool get sizedByParent => false;
-
-  static double _minWidth(RenderBox? box, double height) {
-    return box == null ? 0.0 : box.getMinIntrinsicWidth(height);
-  }
-
-  static double _maxWidth(RenderBox? box, double height) {
-    return box == null ? 0.0 : box.getMaxIntrinsicWidth(height);
-  }
-
-  @override
-  double computeMinIntrinsicWidth(double height) {
-    final double leadingWidth = leading == null ? 0.0 : _minWidth(leading, height) + _leadingHorizontalGapWidth;
-    final double titleWidth = _minWidth(title, height);
-    final double subtitleWidth = _minWidth(subtitle, height);
-    final double trailingWidth = trailing == null ? 0.0 : _minWidth(trailing, height) + _trailingHorizontalGapWidth;
-    return leadingWidth + math.max(titleWidth, subtitleWidth) + trailingWidth;
-  }
-
-  @override
-  double computeMaxIntrinsicWidth(double height) {
-    final double leadingWidth = leading == null ? 0.0 : _maxWidth(leading, height) + _leadingHorizontalGapWidth;
-    final double titleWidth = _maxWidth(title, height);
-    final double subtitleWidth = _maxWidth(subtitle, height);
-    final double trailingWidth = trailing == null ? 0.0 : _maxWidth(trailing, height) + _trailingHorizontalGapWidth;
-    return leadingWidth + math.max(titleWidth, subtitleWidth) + trailingWidth;
-  }
-
-  @override
-  double computeMinIntrinsicHeight(double width) {
-    final double subtitleHeight = subtitle == null
-        ? 0.0
-        : subtitle!.getMinIntrinsicHeight(width) + _subtitleVerticalGapHeight;
-    final double leadingHeight = leading == null ? 0.0 : leading!.getMinIntrinsicHeight(width);
-    final double trailingHeight = trailing == null ? 0.0 : trailing!.getMinIntrinsicHeight(width);
-    final minContentHeight = math.max(
-      math.max(leadingHeight, title.getMinIntrinsicHeight(width)) + subtitleHeight,
-      trailingHeight,
-    );
-    return math.max(SBBListItemStyle.minInnerHeight, minContentHeight);
-  }
-
-  @override
-  double computeMaxIntrinsicHeight(double width) {
-    return computeMinIntrinsicHeight(width);
-  }
-
-  @override
-  double? computeDistanceToActualBaseline(TextBaseline baseline) {
-    final BoxParentData parentData = title.parentData! as BoxParentData;
-    final BaselineOffset offset = BaselineOffset(title.getDistanceToActualBaseline(baseline)) + parentData.offset.dy;
-    return offset.offset;
-  }
-
-  static void _positionBox(RenderBox box, Offset offset) {
-    final BoxParentData parentData = box.parentData! as BoxParentData;
-    parentData.offset = offset;
-  }
-
-  _Sizes _computeSizes(
-    ChildLayouter getSize,
-    BoxConstraints constraints, {
-    _PositionChild? positionChild,
-  }) {
-    final BoxConstraints looseConstraints = constraints.loosen();
-    final double tileWidth = looseConstraints.maxWidth;
-
-    final RenderBox? leading = this.leading;
-    final RenderBox? subtitle = this.subtitle;
-    final RenderBox? trailing = this.trailing;
-
-    final Size? trailingSize = trailing == null ? null : getSize(trailing, looseConstraints);
-    final double trailingWidth = trailingSize != null ? trailingSize.width + _trailingHorizontalGapWidth : 0.0;
-
-    final Size? leadingSize = leading == null ? null : getSize(leading, looseConstraints);
-    final double leadingWidth = leadingSize != null ? leadingSize.width + _leadingHorizontalGapWidth : 0.0;
-
-    _makeOverflowAssertion(tileWidth, leadingSize, trailingSize);
-
-    // Calculate available width for title and subtitle
-    final double availableTitleWidth = tileWidth - leadingWidth - trailingWidth;
-    final BoxConstraints titleConstraints = looseConstraints.tighten(width: availableTitleWidth);
-
-    final double availableSubTitleWidth = tileWidth - trailingWidth;
-    final BoxConstraints subTitleConstraints = looseConstraints.tighten(width: availableSubTitleWidth);
-
-    // Layout title and subtitle
-    final Size titleSize = getSize(title, titleConstraints);
-    final Size? subtitleSize = subtitle == null ? null : getSize(subtitle, subTitleConstraints);
-
-    // Calculate center-aligned positions for title and leading
-    final double leadingHeight = leadingSize?.height ?? 0.0;
-    final double titleHeight = titleSize.height;
-
-    // Find the maximum height between leading and title for center alignment
-    double maxTitleRowHeight = math.max(leadingHeight, titleHeight);
-
-    // Fix the title height to minInnerHeight only if no subtitle
-    if (subtitleSize == null) {
-      maxTitleRowHeight = math.max(maxTitleRowHeight, SBBListItemStyle.minInnerHeight);
-    }
-
-    // Center-align title and leading
-    final double titleY = (maxTitleRowHeight - titleHeight) / 2.0;
-    final double leadingY = (maxTitleRowHeight - leadingHeight) / 2.0;
-
-    // Position subtitle below the max of leading/title bottom
-    final double subtitleY = maxTitleRowHeight + _subtitleVerticalGapHeight;
-
-    // Calculate total item height
-    final double tileHeight = subtitleSize != null ? subtitleY + subtitleSize.height : maxTitleRowHeight;
-
-    if (positionChild != null) {
-      // Position title (left aligned after leading, vertically centered with leading)
-      positionChild(
-        title,
-        Offset(leadingWidth, titleY),
-      );
-
-      // Position subtitle (always left aligned after leading)
-      if (subtitle != null) {
-        positionChild(
-          subtitle,
-          Offset(0, subtitleY),
-        );
-      }
-
-      // Position leading (left aligned, vertically centered)
-      if (leading != null && leadingSize != null) {
-        positionChild(leading, Offset(0, leadingY));
-      }
-
-      // Position trailing (right aligned, vertically centered)
-      if (trailing != null && trailingSize != null) {
-        final double trailingY = (tileHeight - trailingSize.height) / 2.0;
-        positionChild(
-          trailing,
-          Offset(
-            tileWidth - trailingSize.width,
-            trailingY,
-          ),
-        );
-      }
-    }
-
-    return (
-      titleY: titleY,
-      textConstraints: titleConstraints,
-      tileSize: Size(tileWidth, tileHeight),
-    );
-  }
-
-  @override
-  Size computeDryLayout(BoxConstraints constraints) {
-    return constraints.constrain(
-      _computeSizes(
-        ChildLayoutHelper.dryLayoutChild,
-        constraints,
-      ).tileSize,
-    );
-  }
-
-  @override
-  void performLayout() {
-    final Size tileSize = _computeSizes(
-      ChildLayoutHelper.layoutChild,
-      constraints,
-      positionChild: _positionBox,
-    ).tileSize;
-
-    size = constraints.constrain(tileSize);
-  }
-
-  @override
-  void paint(PaintingContext context, Offset offset) {
-    void doPaint(RenderBox? child) {
-      if (child != null) {
-        final BoxParentData parentData = child.parentData! as BoxParentData;
-        context.paintChild(child, parentData.offset + offset);
-      }
-    }
-
-    doPaint(leading);
-    doPaint(title);
-    doPaint(subtitle);
-    doPaint(trailing);
-  }
-
-  @override
-  bool hitTestSelf(Offset position) => true;
-
-  @override
-  bool hitTestChildren(BoxHitTestResult result, {required Offset position}) {
-    for (final RenderBox child in children) {
-      final BoxParentData parentData = child.parentData! as BoxParentData;
-      final bool isHit = result.addWithPaintOffset(
-        offset: parentData.offset,
-        position: position,
-        hitTest: (BoxHitTestResult result, Offset transformed) {
-          assert(transformed == position - parentData.offset);
-          return child.hitTest(result, position: transformed);
-        },
-      );
-      if (isHit) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  void _makeOverflowAssertion(double tileWidth, Size? leadingSize, Size? trailingSize) {
-    assert(() {
-      if (tileWidth == 0.0) {
-        return true;
-      }
-
-      String? overflowedWidget;
-      if (tileWidth == leadingSize?.width) {
-        overflowedWidget = 'Leading';
-      } else if (tileWidth == trailingSize?.width) {
-        overflowedWidget = 'Trailing';
-      }
-
-      if (overflowedWidget == null) {
-        return true;
-      }
-
-      throw FlutterError.fromParts(<DiagnosticsNode>[
-        ErrorSummary(
-          '$overflowedWidget widget consumes the entire item width (including SBBListItem.padding).',
-        ),
-        ErrorDescription(
-          'Either resize the item width so that the ${overflowedWidget.toLowerCase()} widget plus any content padding '
-          'do not exceed the item width, or use a sized widget, or consider replacing '
-          'ListTile with a custom widget.',
-        ),
-        ErrorHint(
-          'See also: https://api.flutter.dev/flutter/material/ListTile-class.html#material.ListTile.4',
-        ),
-      ]);
-    }());
   }
 }

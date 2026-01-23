@@ -54,12 +54,11 @@ class ListItemPage extends StatelessWidget {
                         titleText: 'Mit Button',
                         leadingIconData: SBBIcons.dog_small,
                         trailing: SBBTertiaryButtonSmall(onPressed: () {}, iconData: SBBIcons.dog_small),
-                        padding: SBBListItemStyle.defaultPadding.copyWith(right: 8),
+                        padding: EdgeInsets.fromLTRB(16.0, 0.0, 8.0, 0.0),
                         onTap: () => sbbToast.show(title: 'Mit Button'),
                       ),
                       SBBListItem(
                         titleText: 'Mit Status Nachricht',
-                        leadingIconData: SBBIcons.dog_small,
                         subtitle: SBBStatus.information(labelText: 'Lorem ipsum sit dolor amet unt.'),
                         onTap: () => sbbToast.show(title: 'Mit Status Nachricht'),
                       ),
