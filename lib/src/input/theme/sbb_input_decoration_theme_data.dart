@@ -1,3 +1,5 @@
+import 'dart:ui' show lerpDouble;
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -13,12 +15,17 @@ class SBBInputDecorationThemeData extends ThemeExtension<SBBInputDecorationTheme
   /// Creates an [SBBInputDecorationThemeData].
   const SBBInputDecorationThemeData({
     this.leadingForegroundColor,
+    this.leadingInputGap,
     this.trailingForegroundColor,
+    this.inputTrailingGap,
     this.errorTextStyle,
     this.errorForegroundColor,
+    this.titleRowErrorGap,
+    this.errorBottomPadding,
     this.labelTextStyle,
     this.labelForegroundColor,
     this.floatingLabelTextStyle,
+    this.floatingLabelInputGap,
     this.placeholderTextStyle,
     this.placeholderForegroundColor,
     this.borderColor,
@@ -27,8 +34,14 @@ class SBBInputDecorationThemeData extends ThemeExtension<SBBInputDecorationTheme
   /// The foreground color of the leading icon.
   final WidgetStateProperty<Color?>? leadingForegroundColor;
 
+  /// The gap between the leading widget and the input field.
+  final double? leadingInputGap;
+
   /// The foreground color of the trailing icon.
   final WidgetStateProperty<Color?>? trailingForegroundColor;
+
+  /// The gap between the input field and the trailing widget.
+  final double? inputTrailingGap;
 
   /// The foreground color of the error text.
   final WidgetStateProperty<Color?>? errorForegroundColor;
@@ -42,6 +55,9 @@ class SBBInputDecorationThemeData extends ThemeExtension<SBBInputDecorationTheme
   /// The text style for the floating label when the input is focused or has content.
   final TextStyle? floatingLabelTextStyle;
 
+  /// The gap between the floating label and the input field.
+  final double? floatingLabelInputGap;
+
   /// The text style for the placeholder text.
   final TextStyle? placeholderTextStyle;
 
@@ -51,32 +67,48 @@ class SBBInputDecorationThemeData extends ThemeExtension<SBBInputDecorationTheme
   /// The text style for the error text.
   final TextStyle? errorTextStyle;
 
+  /// The gap between the title row and the error widget.
+  final double? titleRowErrorGap;
+
+  /// The padding below the error widget.
+  final double? errorBottomPadding;
+
   /// The color of the border around the input field.
   final WidgetStateProperty<Color?>? borderColor;
 
   @override
   SBBInputDecorationThemeData copyWith({
     WidgetStateProperty<Color?>? leadingForegroundColor,
+    double? leadingInputGap,
     WidgetStateProperty<Color?>? trailingForegroundColor,
+    double? inputTrailingGap,
     WidgetStateProperty<Color?>? errorForegroundColor,
     TextStyle? labelTextStyle,
     WidgetStateProperty<Color?>? labelForegroundColor,
     TextStyle? floatingLabelTextStyle,
+    double? floatingLabelInputGap,
     TextStyle? placeholderTextStyle,
     WidgetStateProperty<Color?>? placeholderForegroundColor,
     TextStyle? errorTextStyle,
+    double? titleRowErrorGap,
+    double? errorBottomPadding,
     WidgetStateProperty<Color?>? borderColor,
   }) {
     return SBBInputDecorationThemeData(
       leadingForegroundColor: leadingForegroundColor ?? this.leadingForegroundColor,
+      leadingInputGap: leadingInputGap ?? this.leadingInputGap,
       trailingForegroundColor: trailingForegroundColor ?? this.trailingForegroundColor,
+      inputTrailingGap: inputTrailingGap ?? this.inputTrailingGap,
       errorForegroundColor: errorForegroundColor ?? this.errorForegroundColor,
       labelTextStyle: labelTextStyle ?? this.labelTextStyle,
       labelForegroundColor: labelForegroundColor ?? this.labelForegroundColor,
       floatingLabelTextStyle: floatingLabelTextStyle ?? this.floatingLabelTextStyle,
+      floatingLabelInputGap: floatingLabelInputGap ?? this.floatingLabelInputGap,
       placeholderTextStyle: placeholderTextStyle ?? this.placeholderTextStyle,
       placeholderForegroundColor: placeholderForegroundColor ?? this.placeholderForegroundColor,
       errorTextStyle: errorTextStyle ?? this.errorTextStyle,
+      titleRowErrorGap: titleRowErrorGap ?? this.titleRowErrorGap,
+      errorBottomPadding: errorBottomPadding ?? this.errorBottomPadding,
       borderColor: borderColor ?? this.borderColor,
     );
   }
@@ -91,12 +123,14 @@ class SBBInputDecorationThemeData extends ThemeExtension<SBBInputDecorationTheme
         t,
         Color.lerp,
       ),
+      leadingInputGap: lerpDouble(leadingInputGap, other.leadingInputGap, t),
       trailingForegroundColor: WidgetStateProperty.lerp<Color?>(
         trailingForegroundColor,
         other.trailingForegroundColor,
         t,
         Color.lerp,
       ),
+      inputTrailingGap: lerpDouble(inputTrailingGap, other.inputTrailingGap, t),
       errorForegroundColor: WidgetStateProperty.lerp<Color?>(
         errorForegroundColor,
         other.errorForegroundColor,
@@ -111,6 +145,7 @@ class SBBInputDecorationThemeData extends ThemeExtension<SBBInputDecorationTheme
         Color.lerp,
       ),
       floatingLabelTextStyle: TextStyle.lerp(floatingLabelTextStyle, other.floatingLabelTextStyle, t),
+      floatingLabelInputGap: lerpDouble(floatingLabelInputGap, other.floatingLabelInputGap, t),
       placeholderTextStyle: TextStyle.lerp(placeholderTextStyle, other.placeholderTextStyle, t),
       placeholderForegroundColor: WidgetStateProperty.lerp<Color?>(
         placeholderForegroundColor,
@@ -119,6 +154,8 @@ class SBBInputDecorationThemeData extends ThemeExtension<SBBInputDecorationTheme
         Color.lerp,
       ),
       errorTextStyle: TextStyle.lerp(errorTextStyle, other.errorTextStyle, t),
+      titleRowErrorGap: lerpDouble(titleRowErrorGap, other.titleRowErrorGap, t),
+      errorBottomPadding: lerpDouble(errorBottomPadding, other.errorBottomPadding, t),
       borderColor: WidgetStateProperty.lerp<Color?>(
         borderColor,
         other.borderColor,
@@ -131,14 +168,19 @@ class SBBInputDecorationThemeData extends ThemeExtension<SBBInputDecorationTheme
   @override
   int get hashCode => Object.hash(
     leadingForegroundColor,
+    leadingInputGap,
     trailingForegroundColor,
+    inputTrailingGap,
     errorForegroundColor,
     labelTextStyle,
     labelForegroundColor,
     floatingLabelTextStyle,
+    floatingLabelInputGap,
     placeholderTextStyle,
     placeholderForegroundColor,
     errorTextStyle,
+    titleRowErrorGap,
+    errorBottomPadding,
     borderColor,
   );
 
@@ -148,14 +190,19 @@ class SBBInputDecorationThemeData extends ThemeExtension<SBBInputDecorationTheme
     if (other.runtimeType != runtimeType) return false;
     return other is SBBInputDecorationThemeData &&
         other.leadingForegroundColor == leadingForegroundColor &&
+        other.leadingInputGap == leadingInputGap &&
         other.trailingForegroundColor == trailingForegroundColor &&
+        other.inputTrailingGap == inputTrailingGap &&
         other.errorForegroundColor == errorForegroundColor &&
         other.labelTextStyle == labelTextStyle &&
         other.labelForegroundColor == labelForegroundColor &&
         other.floatingLabelTextStyle == floatingLabelTextStyle &&
+        other.floatingLabelInputGap == floatingLabelInputGap &&
         other.placeholderTextStyle == placeholderTextStyle &&
         other.placeholderForegroundColor == placeholderForegroundColor &&
         other.errorTextStyle == errorTextStyle &&
+        other.titleRowErrorGap == titleRowErrorGap &&
+        other.errorBottomPadding == errorBottomPadding &&
         other.borderColor == borderColor;
   }
 }
@@ -165,14 +212,19 @@ extension SBBInputDecorationThemeDataX on SBBInputDecorationThemeData {
     if (other == null) return this;
     return copyWith(
       leadingForegroundColor: other.leadingForegroundColor,
+      leadingInputGap: other.leadingInputGap,
       trailingForegroundColor: other.trailingForegroundColor,
+      inputTrailingGap: other.inputTrailingGap,
       errorForegroundColor: other.errorForegroundColor,
       labelTextStyle: other.labelTextStyle,
       labelForegroundColor: other.labelForegroundColor,
       floatingLabelTextStyle: other.floatingLabelTextStyle,
+      floatingLabelInputGap: other.floatingLabelInputGap,
       placeholderTextStyle: other.placeholderTextStyle,
       placeholderForegroundColor: other.placeholderForegroundColor,
       errorTextStyle: other.errorTextStyle,
+      titleRowErrorGap: other.titleRowErrorGap,
+      errorBottomPadding: other.errorBottomPadding,
       borderColor: other.borderColor,
     );
   }

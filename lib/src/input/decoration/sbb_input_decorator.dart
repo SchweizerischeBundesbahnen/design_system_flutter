@@ -4,6 +4,7 @@ import 'dart:ui' show lerpDouble;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:sbb_design_system_mobile/src/input/decoration/sbb_decoration.dart';
+import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_input_decoration_theme_data.dart';
 
 import '../../../sbb_design_system_mobile.dart';
 
@@ -104,9 +105,17 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
   Widget build(BuildContext context) {
     final inputDecorationTheme = Theme.of(context).sbbInputDecorationTheme;
 
+    // Determine if we're using default widgets (for padding application)
+    final bool isDefaultLeading = widget.decoration.leading == null && widget.decoration.leadingIconData != null;
+    final bool isDefaultTrailing = widget.decoration.trailing == null && widget.decoration.trailingIconData != null;
+    final bool isDefaultError = widget.decoration.error == null && widget.decoration.errorText != null;
+
     Widget? leading = widget.decoration.leading;
     if (leading == null && widget.decoration.leadingIconData != null) {
-      leading = Icon(widget.decoration.leadingIconData);
+      leading = Padding(
+        padding: EdgeInsets.only(right: _effectiveLeadingInputGap(inputDecorationTheme)),
+        child: Icon(widget.decoration.leadingIconData),
+      );
     }
     if (leading != null) {
       final Color? resolvedColor =
@@ -149,7 +158,10 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
 
     Widget? trailing = widget.decoration.trailing;
     if (trailing == null && widget.decoration.trailingIconData != null) {
-      trailing = Icon(widget.decoration.trailingIconData);
+      trailing = Padding(
+        padding: EdgeInsets.only(left: _effectiveInputTrailingGap(inputDecorationTheme)),
+        child: Icon(widget.decoration.trailingIconData),
+      );
     }
     if (trailing != null) {
       final Color? resolvedColor =
@@ -181,7 +193,13 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
 
     Widget? error = widget.decoration.error;
     if (error == null && widget.decoration.errorText != null) {
-      error = Text(widget.decoration.errorText!);
+      error = Padding(
+        padding: EdgeInsets.only(
+          top: _effectiveTitleRowErrorGap(inputDecorationTheme),
+          bottom: _effectiveErrorBottomPadding(inputDecorationTheme),
+        ),
+        child: Text(widget.decoration.errorText!),
+      );
     }
     if (error != null) {
       final Color? resolvedColor =
@@ -224,6 +242,7 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
       isEmpty: widget.isEmpty,
       isFocused: widget.states.contains(WidgetState.focused),
       floatingLabelProgress: _floatingLabelAnimation.value,
+      floatingLabelInputGap: _effectiveFloatingLabelInputGap(inputDecorationTheme),
       child: widget.child,
     );
   }
@@ -243,6 +262,27 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
       ),
     );
     return child;
+  }
+
+  // Gap resolution methods
+  double _effectiveLeadingInputGap(SBBInputDecorationThemeData? theme) {
+    return widget.decoration.leadingInputGap ?? theme?.leadingInputGap ?? defaultLeadingInputGap;
+  }
+
+  double _effectiveInputTrailingGap(SBBInputDecorationThemeData? theme) {
+    return widget.decoration.inputTrailingGap ?? theme?.inputTrailingGap ?? defaultInputTrailingGap;
+  }
+
+  double _effectiveFloatingLabelInputGap(SBBInputDecorationThemeData? theme) {
+    return widget.decoration.floatingLabelInputGap ?? theme?.floatingLabelInputGap ?? defaultFloatingLabelInputGap;
+  }
+
+  double _effectiveTitleRowErrorGap(SBBInputDecorationThemeData? theme) {
+    return widget.decoration.titleRowErrorGap ?? theme?.titleRowErrorGap ?? defaultTitleRowErrorGap;
+  }
+
+  double _effectiveErrorBottomPadding(SBBInputDecorationThemeData? theme) {
+    return widget.decoration.errorBottomPadding ?? theme?.errorBottomPadding ?? defaultErrorBottomPadding;
   }
 }
 
@@ -264,6 +304,7 @@ class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSl
     required this.isEmpty,
     required this.isFocused,
     required this.floatingLabelProgress,
+    required this.floatingLabelInputGap,
     this.child,
   });
 
@@ -273,6 +314,7 @@ class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSl
   final bool isEmpty;
   final bool isFocused;
   final double floatingLabelProgress;
+  final double floatingLabelInputGap;
   final Widget? child;
 
   @override
@@ -300,6 +342,7 @@ class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSl
       isEmpty: isEmpty,
       isFocused: isFocused,
       floatingLabelProgress: floatingLabelProgress,
+      floatingLabelInputGap: floatingLabelInputGap,
     );
   }
 
@@ -311,7 +354,8 @@ class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSl
       ..isMultiline = isMultiline
       ..isEmpty = isEmpty
       ..isFocused = isFocused
-      ..floatingLabelProgress = floatingLabelProgress;
+      ..floatingLabelProgress = floatingLabelProgress
+      ..floatingLabelInputGap = floatingLabelInputGap;
   }
 }
 
@@ -348,12 +392,14 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     required bool isEmpty,
     required bool isFocused,
     required double floatingLabelProgress,
+    required double floatingLabelInputGap,
   }) : _decoration = decoration,
        _expands = expands,
        _isMultiline = isMultiline,
        _isEmpty = isEmpty,
        _isFocused = isFocused,
-       _floatingLabelProgress = floatingLabelProgress;
+       _floatingLabelProgress = floatingLabelProgress,
+       _floatingLabelInputGap = floatingLabelInputGap;
 
   RenderBox? get label => childForSlot(_SBBDecorationSlot.label);
 
@@ -434,6 +480,15 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
   set floatingLabelProgress(double value) {
     if (_floatingLabelProgress == value) return;
     _floatingLabelProgress = value;
+    markNeedsLayout();
+  }
+
+  double get floatingLabelInputGap => _floatingLabelInputGap;
+  double _floatingLabelInputGap;
+
+  set floatingLabelInputGap(double value) {
+    if (_floatingLabelInputGap == value) return;
+    _floatingLabelInputGap = value;
     markNeedsLayout();
   }
 
@@ -523,7 +578,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
       labelWidth = labelSize.width;
     }
 
-    // For single-line: calculate the floating label height (scaled)
+    // For single-line: calculate the floating label height (scaled) plus gap
     final double floatingLabelHeight = labelHeight * _kFinalLabelScale;
 
     // Layout input with constraints
@@ -548,14 +603,14 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
 
     // For single-line case: Always reserve space for both floating label and input
     // to ensure height doesn't change during animation.
-    // The height should accommodate: floatingLabel + input when fully floated.
-    final double floatingContentHeight = floatingLabelHeight + maxInputHeight;
+    // The height should accommodate: floatingLabel + gap + input when fully floated.
+    final double floatingContentHeight = floatingLabelHeight + floatingLabelInputGap + maxInputHeight;
 
     // When not floating, label is centered (takes labelHeight).
     // We need the max of both scenarios to keep height stable.
     final double stableContentHeight = math.max(labelHeight, floatingContentHeight);
 
-    // Title row height is max of leading, content area, trailing, and min height (48.0)
+    // Title row height is max of leading, content area, trailing, and min height (48.0) // TODO: factor out the 48.0
     final double titleRowHeight = [leadingHeight, stableContentHeight, trailingHeight, 48.0].reduce(math.max);
 
     // Calculate label offset based on floatingLabelProgress
@@ -574,21 +629,21 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
         ? Offset(0, isMultiline ? 0.0 : (titleRowHeight - leadingHeight) / 2.0)
         : Offset.zero;
 
-    // Input position: when floating, input is below the floating label
+    // Input position: when floating, input is below the floating label + gap
     // When not floating, input is centered (same as where the label would be)
     final double inputCenteredY = (titleRowHeight - maxInputHeight) / 2.0;
-    final double inputFloatingY = labelFloatingY + floatingLabelHeight;
+    final double inputFloatingY = labelFloatingY + floatingLabelHeight + floatingLabelInputGap;
     final double inputY = lerpDouble(inputCenteredY, inputFloatingY, floatingLabelProgress)!;
 
     final Offset inputOffset = Offset(
       leadingWidth,
-      isMultiline ? labelHeight : inputY,
+      isMultiline ? labelHeight + floatingLabelInputGap : inputY,
     );
 
     // Hint is positioned at the same location as input
     final Offset hintOffset = Offset(
       leadingWidth,
-      isMultiline ? labelHeight : inputY,
+      isMultiline ? labelHeight + floatingLabelInputGap : inputY,
     );
 
     final Offset trailingOffset = trailing != null
@@ -738,7 +793,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     // For single-line: always reserve space for floating state
     final double maxInputHeight = isEmpty ? math.max(inputHeight, hintHeight) : inputHeight;
     final double floatingLabelHeight = labelHeight * _kFinalLabelScale;
-    final double floatingContentHeight = floatingLabelHeight + maxInputHeight;
+    final double floatingContentHeight = floatingLabelHeight + floatingLabelInputGap + maxInputHeight;
     final double stableContentHeight = math.max(labelHeight, floatingContentHeight);
 
     final double titleRowHeight = [
