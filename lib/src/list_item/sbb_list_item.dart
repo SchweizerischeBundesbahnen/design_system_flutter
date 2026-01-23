@@ -5,11 +5,6 @@ import 'package:sbb_design_system_mobile/src/shared/bottom_loading_indicator.dar
 import '../../sbb_design_system_mobile.dart';
 import 'divider_painter.dart';
 
-typedef _Sizes = ({double titleY, BoxConstraints textConstraints, Size tileSize});
-typedef _PositionChild = void Function(RenderBox child, Offset offset);
-
-enum _SBBListItemSlot { leading, title, subtitle, trailing }
-
 /// A customizable list item component following the SBB design system.
 ///
 /// Provides a flexible layout with optional leading, title, subtitle, and trailing widgets.
