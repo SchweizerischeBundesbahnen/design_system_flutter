@@ -12,7 +12,8 @@ import '../container/theme/default_sbb_content_box_theme_data.dart';
 import '../list_item/theme/default_sbb_list_item_theme_data.dart';
 import '../status/theme/default_sbb_status_theme_data.dart';
 
-const sbbDefaultSpacing = 16.0;
+@Deprecated('Use SBBSpacing.medium and others instead.')
+const sbbDefaultSpacing = SBBSpacing.medium;
 
 class SBBTheme {
   SBBTheme._();

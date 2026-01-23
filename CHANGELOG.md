@@ -63,6 +63,21 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Removed deprecated `SBBGroup`
 
 
+## [4.5.0] - 2026-01-19
+
+### Added
+
+- Added `SBBSpacing` with spacings according to SBB Design System
+
+### Deprecated
+
+- `sbbDefaultSpacing`: use `SBBSpacing.medium` instead
+
+### Fixed
+
+- `SBBIconButtonSmall`: `key` parameter is correctly handled in parent class (#473)
+
+
 ## [4.4.0] - 2025-12-18
 
 ### Added
@@ -747,8 +762,9 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 [v5 migration guide]: migration_guide.md
 
+[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.5.0...HEAD
 
-[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.4.0...HEAD
+[4.5.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.4.0...4.5.0
 
 [4.4.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.3.1...4.4.0
 
