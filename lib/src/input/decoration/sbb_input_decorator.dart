@@ -9,9 +9,8 @@ import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_input_decor
 import '../../../sbb_design_system_mobile.dart';
 
 // Animation constants
-const Duration _kTransitionDuration = Duration(milliseconds: 167);
+const Duration _kTransitionDuration = Duration(milliseconds: 200);
 const Curve _kTransitionCurve = Curves.fastOutSlowIn;
-const double _kFinalLabelScale = 0.75;
 
 class SBBInputDecorator extends StatefulWidget {
   const SBBInputDecorator({
@@ -135,7 +134,6 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
       final TextStyle? textStyle = widget.decoration.labelTextStyle ?? inputDecorationTheme?.labelTextStyle;
       TextStyle? floatingTextStyle =
           widget.decoration.floatingLabelTextStyle ?? inputDecorationTheme?.floatingLabelTextStyle;
-      floatingTextStyle = floatingTextStyle.scaled(1 / _kFinalLabelScale);
 
       final resolvedTextStyle =
           (widget._labelShouldFloat ? floatingTextStyle : textStyle)?.copyWith(color: resolvedColor) ??
@@ -363,7 +361,7 @@ class _RenderSBBDecorationLayout {
     required this.labelOffset,
     required this.leadingOffset,
     required this.inputOffset,
-    required this.hintOffset,
+    required this.placeholderOffset,
     required this.trailingOffset,
     required this.errorOffset,
     required this.size,
@@ -372,7 +370,7 @@ class _RenderSBBDecorationLayout {
   final Offset labelOffset;
   final Offset leadingOffset;
   final Offset inputOffset;
-  final Offset hintOffset;
+  final Offset placeholderOffset;
   final Offset trailingOffset;
   final Offset errorOffset;
   final Size size;
@@ -556,23 +554,11 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     final double availableInputWidth = constraints.maxWidth - leadingWidth - trailingWidth;
 
     // Layout label with same width constraints as input
-    // Increase the available width for the label when it is scaled down.
     double labelHeight = 0.0;
     if (label != null) {
-      final double invertedLabelScale = lerpDouble(
-        1.0,
-        1 / _kFinalLabelScale,
-        floatingLabelProgress,
-      )!;
-      final BoxConstraints labelConstraints = looseConstraints.copyWith(
-        maxWidth: availableInputWidth * invertedLabelScale,
-      );
-      final Size labelSize = layoutChild(label!, labelConstraints);
-      labelHeight = labelSize.height;
+      final BoxConstraints labelConstraints = looseConstraints.copyWith(maxWidth: availableInputWidth);
+      labelHeight = layoutChild(label!, labelConstraints).height;
     }
-
-    // For single-line: calculate the floating label height (scaled) plus gap
-    final double floatingLabelHeight = labelHeight * _kFinalLabelScale;
 
     // Layout input with constraints
     final BoxConstraints inputConstraints = constraints.tighten(width: availableInputWidth);
@@ -580,24 +566,22 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     // Layout input
     double inputHeight = 0.0;
     if (input != null) {
-      final Size inputSize = layoutChild(input!, inputConstraints);
-      inputHeight = inputSize.height;
+      inputHeight = layoutChild(input!, inputConstraints).height;
     }
 
     // Layout placeholder with same constraints as input
-    double hintHeight = 0.0;
+    double placeholderHeight = 0.0;
     if (placeholder != null) {
-      final Size hintSize = layoutChild(placeholder!, inputConstraints);
-      hintHeight = hintSize.height;
+      placeholderHeight = layoutChild(placeholder!, inputConstraints).height;
     }
 
-    // Calculate the maximum height among input/hint
-    final double maxInputHeight = isEmpty ? math.max(inputHeight, hintHeight) : inputHeight;
+    // Calculate the maximum height among input/placeholder
+    final double maxInputHeight = isEmpty ? math.max(inputHeight, placeholderHeight) : inputHeight;
 
     // For single-line case: Always reserve space for both floating label and input
     // to ensure height doesn't change during animation.
     // The height should accommodate: floatingLabel + gap + input when fully floated.
-    final double floatingContentHeight = floatingLabelHeight + floatingLabelInputGap + maxInputHeight;
+    final double floatingContentHeight = labelHeight + floatingLabelInputGap + maxInputHeight;
 
     // When not floating, label is centered (takes labelHeight).
     // We need the max of both scenarios to keep height stable.
@@ -625,7 +609,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     // Input position: when floating, input is below the floating label + gap
     // When not floating, input is centered (same as where the label would be)
     final double inputCenteredY = (titleRowHeight - maxInputHeight) / 2.0;
-    final double inputFloatingY = labelFloatingY + floatingLabelHeight + floatingLabelInputGap;
+    final double inputFloatingY = labelFloatingY + labelHeight + floatingLabelInputGap;
     final double inputY = lerpDouble(inputCenteredY, inputFloatingY, floatingLabelProgress)!;
 
     final Offset inputOffset = Offset(
@@ -633,8 +617,8 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
       isMultiline ? labelHeight + floatingLabelInputGap : inputY,
     );
 
-    // Hint is positioned at the same location as input
-    final Offset hintOffset = Offset(
+    // Placeholder is positioned at the same location as input
+    final Offset placeholderOffset = Offset(
       leadingWidth,
       isMultiline ? labelHeight + floatingLabelInputGap : inputY,
     );
@@ -644,10 +628,10 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
         : Offset.zero;
 
     // Layout error widget below the tallest of the widgets in the title row
-    // if expands, needs to be laid out at the bottom
+    // if expands is true, needs to be laid out at the bottom
     final double topAlignedErrorY = [
       leadingOffset.dy + leadingHeight,
-      labelOffset.dy + stableContentHeight,
+      inputOffset.dy + inputHeight,
       trailingOffset.dy + trailingHeight,
     ].reduce(math.max);
     final errorY = expands ? constraints.maxHeight - errorHeight : topAlignedErrorY;
@@ -657,13 +641,13 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     final double totalHeight = expands
         ? constraints.maxHeight
         : math.max(topAlignedErrorY + errorHeight, titleRowHeight);
-    final Size size = Size(constraints.maxWidth, math.max(totalHeight, 48.0)); // TODO: factor out the 48.0
+    final Size size = Size(constraints.maxWidth, totalHeight); // TODO: factor out the 48.0
 
     return _RenderSBBDecorationLayout(
       labelOffset: labelOffset,
       leadingOffset: leadingOffset,
       inputOffset: inputOffset,
-      hintOffset: hintOffset,
+      placeholderOffset: placeholderOffset,
       trailingOffset: trailingOffset,
       errorOffset: errorOffset,
       size: size,
@@ -696,7 +680,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     setParentData(label, layout.labelOffset);
     setParentData(leading, layout.leadingOffset);
     setParentData(input, layout.inputOffset);
-    setParentData(placeholder, layout.hintOffset);
+    setParentData(placeholder, layout.placeholderOffset);
     setParentData(trailing, layout.trailingOffset);
     setParentData(error, layout.errorOffset);
   }
@@ -742,12 +726,12 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
   double computeMinIntrinsicWidth(double height) {
     final double leadingWidth = _minWidth(leading, height);
     final double inputWidth = _minWidth(input, height);
-    final double hintWidth = _minWidth(placeholder, height);
+    final double placeholderWidth = _minWidth(placeholder, height);
     final double trailingWidth = _minWidth(trailing, height);
     final double errorWidth = _minWidth(error, height);
     final double labelWidth = _minWidth(label, height);
 
-    final double contentWidth = math.max(hintWidth, inputWidth);
+    final double contentWidth = math.max(placeholderWidth, inputWidth);
 
     return <double>[
       errorWidth,
@@ -760,12 +744,12 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
   double computeMaxIntrinsicWidth(double height) {
     final double leadingWidth = _maxWidth(leading, height);
     final double inputWidth = _maxWidth(input, height);
-    final double hintWidth = _maxWidth(placeholder, height);
+    final double placeholderWidth = _maxWidth(placeholder, height);
     final double trailingWidth = _maxWidth(trailing, height);
     final double errorWidth = _maxWidth(error, height);
     final double labelWidth = _maxWidth(label, height);
 
-    final double contentWidth = math.max(hintWidth, inputWidth);
+    final double contentWidth = math.max(placeholderWidth, inputWidth);
 
     return <double>[
       errorWidth,
@@ -782,15 +766,13 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
 
     final double labelHeight = _minHeight(label, availableInputWidth);
     final double inputHeight = _minHeight(input, availableInputWidth);
-    final double hintHeight = _minHeight(placeholder, availableInputWidth);
+    final double placeholderHeight = _minHeight(placeholder, availableInputWidth);
     final double leadingHeight = _minHeight(leading, width);
     final double trailingHeight = _minHeight(trailing, width);
     final double errorHeight = _minHeight(error, width);
 
-    // For single-line: always reserve space for floating state
-    final double maxInputHeight = isEmpty ? math.max(inputHeight, hintHeight) : inputHeight;
-    final double floatingLabelHeight = labelHeight * _kFinalLabelScale;
-    final double floatingContentHeight = floatingLabelHeight + floatingLabelInputGap + maxInputHeight;
+    final double maxInputHeight = isEmpty ? math.max(inputHeight, placeholderHeight) : inputHeight;
+    final double floatingContentHeight = labelHeight + floatingLabelInputGap + maxInputHeight;
     final double stableContentHeight = math.max(labelHeight, floatingContentHeight);
 
     final double titleRowHeight = [
@@ -834,16 +816,11 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     if (label != null && !isMultiline) {
       final Offset labelOffset = _boxParentData(label!).offset;
 
-      // Calculate scale
-      final double scale = lerpDouble(1.0, _kFinalLabelScale, floatingLabelProgress)!;
-
-      // The label should stay at its left position, only scale and move vertically
+      // The label should stay at its left position, only move vertically
       final double dx = labelOffset.dx;
       final double dy = labelOffset.dy;
 
-      _labelTransform = Matrix4.identity()
-        ..translate(dx, dy)
-        ..scale(scale, scale);
+      _labelTransform = Matrix4.identity()..translateByDouble(dx, dy, 0, 1);
 
       layer = context.pushTransform(
         needsCompositing,
@@ -870,7 +847,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
       final Offset labelOffset = _boxParentData(label!).offset;
       transform
         ..multiply(_labelTransform!)
-        ..translate(-labelOffset.dx, -labelOffset.dy);
+        ..translateByDouble(-labelOffset.dx, -labelOffset.dy, 0, 1);
     }
     super.applyPaintTransform(child, transform);
   }
@@ -889,16 +866,5 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
       if (isHit) return true;
     }
     return false;
-  }
-}
-
-extension on TextStyle? {
-  TextStyle? scaled(double d) {
-    if (this == null) return null;
-
-    final scaledHeight = this!.height != null ? this!.height! * d : null;
-    final scaledFontSize = this!.fontSize != null ? this!.fontSize! * d : null;
-
-    return this!.copyWith(fontSize: scaledFontSize, height: scaledHeight);
   }
 }

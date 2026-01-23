@@ -6,11 +6,10 @@ import 'package:flutter/services.dart';
 import '../../sbb_design_system_mobile.dart';
 import 'decoration/sbb_input_decorator.dart';
 
-// TODO: animate label and input when single line
+// TODO: think about case when multiline (center between baselines?)
 // TODO: expose FloatingLabelBehavior
 // TODO: think about text scaling
 // TODO: add semantics ordering and traversal
-// TODO: think about case when multiline (center between baselines?)
 // TODO: add Boxed variant
 // TODO: improve docs
 // TODO: add migration guideline & CHANGELOG

@@ -67,10 +67,12 @@ class _TextFieldPageState extends State<TextFieldPage> {
                         ),
                         controller: defaultTextEditingController,
                       ),
-                      const SBBTextInput(
+                      SBBTextInput(
                         decoration: SBBInputDecoration(
                           labelText: 'With Placeholder',
+                          // label: Container(color: SBBColors.green, width: 100, height: 200),
                           placeholderText: 'Placeholder',
+                          leadingIconData: SBBIcons.unicorn_small,
                         ),
                       ),
                       SBBTextInput(
@@ -81,15 +83,18 @@ class _TextFieldPageState extends State<TextFieldPage> {
                         ),
                       ),
                       // TODO: Move to separate Textarea page
-                      SBBTextInput(
-                        decoration: SBBInputDecoration(
-                          leadingIconData: SBBIcons.unicorn_small,
-                          labelText: 'Multiline',
-                          errorText: 'Error Text',
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8.0),
+                        child: SBBTextInput(
+                          decoration: SBBInputDecoration(
+                            leadingIconData: SBBIcons.unicorn_small,
+                            labelText: 'Multiline',
+                            errorText: 'Error Text',
+                          ),
+                          maxLines: 3,
+                          // minLines: 1,
+                          controller: TextEditingController()..value = const TextEditingValue(text: "I'm\nmulti\nline"),
                         ),
-                        maxLines: 3,
-                        minLines: 1,
-                        controller: TextEditingController()..value = const TextEditingValue(text: "I'm\nmulti\nline"),
                       ),
                       SBBTextInput(
                         decoration: SBBInputDecoration(
