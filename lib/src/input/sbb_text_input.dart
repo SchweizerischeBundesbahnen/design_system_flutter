@@ -56,6 +56,8 @@ class SBBTextInput extends StatefulWidget {
     this.onTapAlwaysCalled = false,
     this.scrollController,
     this.autofillHints,
+    this.inputTextStyle,
+    this.inputForegroundColor,
   });
 
   /// {@macro flutter.widgets.editableText.groupId}
@@ -191,6 +193,18 @@ class SBBTextInput extends StatefulWidget {
   /// {@macro flutter.services.AutofillConfiguration.autofillHints}
   final Iterable<String>? autofillHints;
 
+  /// The text style for the input text.
+  ///
+  /// If null, the value from [SBBTextInputThemeData.inputTextStyle] is used.
+  /// If that is also null, the default text style is used.
+  final TextStyle? inputTextStyle;
+
+  /// The color of the input text.
+  ///
+  /// If null, the value from [SBBTextInputThemeData.inputForegroundColor] is used.
+  /// If that is also null, the default color is used.
+  final WidgetStateProperty<Color?>? inputForegroundColor;
+
   @override
   State<StatefulWidget> createState() => _SBBTextInputState();
 }
@@ -303,11 +317,10 @@ class _SBBTextInputState extends State<SBBTextInput>
     _statesController.value = _computeStates();
   }
 
-  // The SBBTextInput does these things:
-  // Determine the state and hand down the WidgetStates to SBBInputDecorator
-  // (Determine effective decoration values by comparing to theme)
-  // Build EditableText with platform specific controls
-  // Build the text selection gesture controls
+  // The SBBTextInput does three things:
+  // 1. Determine the WidgetStates and hand down the WidgetStates to SBBInputDecorator for color resolving
+  // 2. Build styled EditableText with platform specific look (mainly cursor)
+  // 3. Build the text selection gesture controls
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMaterial(context));
@@ -458,8 +471,18 @@ class _SBBTextInputState extends State<SBBTextInput>
   }
 
   TextStyle _textStyle(bool enabled, BuildContext context) {
-    final style = SBBControlStyles.of(context).textField;
-    return (widget.enabled ? style?.textStyle : style?.textStyleDisabled)!;
+    final themeData = Theme.of(context).sbbTextInputTheme;
+    final states = _statesController.value;
+
+    if (widget.inputTextStyle != null) {
+      final textStyle = widget.inputTextStyle;
+      final color = widget.inputForegroundColor?.resolve(states);
+      return color != null ? textStyle!.copyWith(color: color) : textStyle!;
+    }
+
+    final textStyle = themeData!.inputTextStyle;
+    final color = widget.inputForegroundColor?.resolve(states) ?? themeData.inputForegroundColor?.resolve(states);
+    return color != null ? textStyle!.copyWith(color: color) : textStyle!;
   }
 
   SBBInputDecoration _getEffectiveDecoration({SBBTextFieldStyle? style}) {
