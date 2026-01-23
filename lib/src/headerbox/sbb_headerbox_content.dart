@@ -75,7 +75,7 @@ class LargeHeaderBoxContent extends StatelessWidget {
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            spacing: sbbDefaultSpacing * .25,
+            spacing: SBBSpacing.xxSmall,
             children: [
               Text(title, style: style.titleTextStyle),
               if (secondaryLabel != null) Text(secondaryLabel!, style: secondaryTextStyle),

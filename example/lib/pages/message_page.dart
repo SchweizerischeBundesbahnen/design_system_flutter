@@ -28,10 +28,10 @@ class _MessagePageState extends State<MessagePage> {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: const EdgeInsets.all(sbbDefaultSpacing),
+      padding: const EdgeInsets.all(SBBSpacing.medium),
       children: [
         const ThemeModeSegmentedButton(),
-        const SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: SBBSpacing.medium),
         const SBBListHeader('Settings'),
         SBBContentBox(
           child: Column(
@@ -57,7 +57,7 @@ class _MessagePageState extends State<MessagePage> {
             ).toList(growable: false),
           ),
         ),
-        const SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: SBBSpacing.medium),
         const SBBListHeader('Default'),
         SBBContentBox(
           child: SBBMessage(

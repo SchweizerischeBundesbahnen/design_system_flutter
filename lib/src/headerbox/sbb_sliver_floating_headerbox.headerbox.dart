@@ -2,7 +2,7 @@ part of 'sbb_sliver_floating_headerbox.dart';
 
 const _headerBoxMinHeight = 56.0;
 const _headerBoxNavBarExtensionHeight = 24.0;
-const _headerBoxRadius = Radius.circular(sbbDefaultSpacing);
+const _headerBoxRadius = Radius.circular(SBBSpacing.medium);
 const _headerBoxFlapTopMargin = 8.0;
 
 enum SBBHeaderboxFlapMode { static, resizable, hideable }
@@ -16,7 +16,7 @@ class _Headerbox extends StatelessWidget {
   const _Headerbox({
     required this.child,
     this.margin = const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
-    this.padding = const EdgeInsets.all(sbbDefaultSpacing),
+    this.padding = const EdgeInsets.all(SBBSpacing.medium),
     this.flap,
     this.flapMode = SBBHeaderboxFlapMode.static,
     this.semanticsLabel,

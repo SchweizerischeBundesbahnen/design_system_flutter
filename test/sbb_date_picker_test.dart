@@ -38,7 +38,7 @@ class DatePickerTest extends StatelessWidget {
       SBBContentBox(
         child: SBBDatePicker(onDateChanged: (_) {}, initialDate: initialDate),
       ),
-      const SizedBox(height: sbbDefaultSpacing),
+      const SizedBox(height: SBBSpacing.medium),
       SBBContentBox(
         child: SBBDatePicker(
           onDateChanged: (_) {},
@@ -47,7 +47,7 @@ class DatePickerTest extends StatelessWidget {
           maximumDate: maximumDate,
         ),
       ),
-      const SizedBox(height: sbbDefaultSpacing),
+      const SizedBox(height: SBBSpacing.medium),
       Row(
         children: [
           SizedBox(
@@ -56,7 +56,7 @@ class DatePickerTest extends StatelessWidget {
               child: SBBDatePicker(onDateChanged: (_) {}, initialDate: initialDate),
             ),
           ),
-          const SizedBox(width: sbbDefaultSpacing),
+          const SizedBox(width: SBBSpacing.medium),
           SizedBox(
             width: 180,
             child: SBBContentBox(

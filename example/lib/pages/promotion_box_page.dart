@@ -22,7 +22,7 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(sbbDefaultSpacing),
+      padding: const EdgeInsets.all(SBBSpacing.medium),
       child: Column(
         children: [
           const ThemeModeSegmentedButton(),
@@ -30,7 +30,7 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  const SizedBox(height: sbbDefaultSpacing),
+                  const SizedBox(height: SBBSpacing.medium),
                   SBBPromotionBox(
                     badgeText: 'Default',
                     title: _title,
@@ -63,7 +63,7 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
                     onControllerCreated: (c) => extraController = c,
                     onClose: () {},
                   ),
-                  const SizedBox(height: sbbDefaultSpacing),
+                  const SizedBox(height: SBBSpacing.medium),
                   SBBPromotionBox.custom(
                     content: Text(
                       'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
@@ -72,7 +72,7 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
                     badgeText: 'Custom with different color',
                     style: _customBoxStyle(context),
                   ),
-                  const SizedBox(height: sbbDefaultSpacing),
+                  const SizedBox(height: SBBSpacing.medium),
                   SBBPromotionBox.custom(
                     content: Text(
                       'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
@@ -82,7 +82,7 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
                     leading: Icon(SBBIcons.train_large),
                     trailing: SBBTertiaryButtonSmall(labelText: 'Trailing Button', onPressed: () {}),
                   ),
-                  const SizedBox(height: sbbDefaultSpacing),
+                  const SizedBox(height: SBBSpacing.medium),
                   SBBPromotionBox.custom(
                     content: Text(
                       'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',

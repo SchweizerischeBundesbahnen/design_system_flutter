@@ -1,5 +1,5 @@
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import '../native_app.dart';
 
@@ -11,7 +11,7 @@ class PaginationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Padding(
-      padding: EdgeInsets.all(sbbDefaultSpacing),
+      padding: EdgeInsets.all(SBBSpacing.medium),
       child: Column(children: <Widget>[ThemeModeSegmentedButton(), PaginationView()]),
     );
   }
@@ -37,7 +37,7 @@ class _PaginationViewState extends State<PaginationView> {
   Widget build(BuildContext context) {
     return Expanded(
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: sbbDefaultSpacing * 3, horizontal: sbbDefaultSpacing),
+        padding: const EdgeInsets.symmetric(vertical: SBBSpacing.medium * 3, horizontal: SBBSpacing.medium),
         child: Column(
           children: [
             _paginationHeader(),
@@ -81,7 +81,7 @@ class _LabeledSBBPagination extends StatelessWidget {
     return Column(
       children: [
         Text(label, style: SBBTextStyles.extraSmallLight),
-        const SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: SBBSpacing.medium),
         SBBPagination(currentPage: currentPage, numberPages: _kNumberPages, isFloating: isFloating),
       ],
     );

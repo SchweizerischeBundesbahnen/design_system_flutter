@@ -65,7 +65,7 @@ class SBBModalPopup extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = SBBControlStyles.of(context);
     return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(sbbDefaultSpacing)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(SBBSpacing.medium)),
       clipBehavior: clipBehavior,
       backgroundColor: backgroundColor ?? style.modalBackgroundColor,
       child: Semantics(
@@ -189,10 +189,10 @@ class SBBModalSheet extends StatelessWidget {
          key: key,
          headerBuilder: (BuildContext context) => Padding(
            padding: const EdgeInsetsDirectional.fromSTEB(
-             sbbDefaultSpacing,
-             sbbDefaultSpacing,
+             SBBSpacing.medium,
+             SBBSpacing.medium,
              0.0,
-             sbbDefaultSpacing,
+             SBBSpacing.medium,
            ),
            child: Semantics(
              header: true,
@@ -240,7 +240,7 @@ class SBBModalSheet extends StatelessWidget {
         ExcludeSemantics(
           child: GestureDetector(
             onTap: () => Navigator.of(context).pop(),
-            child: Container(height: sbbDefaultSpacing, color: SBBColors.transparent),
+            child: Container(height: SBBSpacing.medium, color: SBBColors.transparent),
           ),
         ),
         Flexible(
@@ -248,8 +248,8 @@ class SBBModalSheet extends StatelessWidget {
             decoration: BoxDecoration(
               color: backgroundColor ?? style.modalBackgroundColor,
               borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(sbbDefaultSpacing),
-                topRight: Radius.circular(sbbDefaultSpacing),
+                topLeft: Radius.circular(SBBSpacing.medium),
+                topRight: Radius.circular(SBBSpacing.medium),
               ),
             ),
             child: Column(
@@ -286,7 +286,7 @@ class _ModalHeader extends StatelessWidget {
       children: [
         Expanded(
           child: Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(sbbDefaultSpacing, sbbDefaultSpacing, 0.0, sbbDefaultSpacing),
+            padding: const EdgeInsetsDirectional.fromSTEB(SBBSpacing.medium, SBBSpacing.medium, 0.0, SBBSpacing.medium),
             child: Semantics(header: true, child: Text(title, style: style.modalTitleTextStyle)),
           ),
         ),

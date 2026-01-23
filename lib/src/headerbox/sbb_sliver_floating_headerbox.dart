@@ -8,7 +8,6 @@ import '../sbb_internal.dart';
 import 'sliver_pinned_floating_widget.dart';
 
 part 'sbb_sliver_floating_headerbox.headerbox.dart';
-
 part 'sbb_sliver_floating_headerbox.spacer.dart';
 
 final defaultSnapStyle = const AnimationStyle(
@@ -167,7 +166,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
              secondaryLabel: secondaryLabel,
              trailingWidget: trailingWidget,
            ),
-           if (collapsibleChild != null) SBBContractible(child: SizedBox(height: sbbDefaultSpacing)),
+           if (collapsibleChild != null) SBBContractible(child: SizedBox(height: SBBSpacing.medium)),
            if (collapsibleChild != null) _CollapsibleContent(child: collapsibleChild),
          ],
        );
@@ -200,7 +199,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
   SBBSliverFloatingHeaderbox.custom({
     super.key,
     EdgeInsets margin = const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
-    EdgeInsets padding = const EdgeInsets.all(sbbDefaultSpacing),
+    EdgeInsets padding = const EdgeInsets.all(SBBSpacing.medium),
     SBBHeaderboxFlap? flap,
     SBBHeaderboxFlapMode flapMode = SBBHeaderboxFlapMode.static,
     String? semanticsLabel,
@@ -291,7 +290,7 @@ class _CollapsibleContent extends StatelessWidget {
     return SBBContractible.custom(
       child: SBBCascadeColumn(
         children: [
-          SizedBox(height: sbbDefaultSpacing),
+          SizedBox(height: SBBSpacing.medium),
           child,
         ],
       ),

@@ -49,7 +49,7 @@ class ModalPopupTest extends StatelessWidget {
 
   Widget _modalContent(BuildContext context) {
     return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(sbbDefaultSpacing, 0.0, sbbDefaultSpacing, sbbDefaultSpacing),
+      padding: const EdgeInsetsDirectional.fromSTEB(SBBSpacing.medium, 0.0, SBBSpacing.medium, SBBSpacing.medium),
       child: const Text(
         'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
       ),

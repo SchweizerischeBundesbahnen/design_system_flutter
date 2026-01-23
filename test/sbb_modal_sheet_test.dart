@@ -79,7 +79,7 @@ class ModalSheetTest extends StatelessWidget {
 
   Widget _modalContent() {
     return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(sbbDefaultSpacing, 0.0, sbbDefaultSpacing, sbbDefaultSpacing),
+      padding: const EdgeInsetsDirectional.fromSTEB(SBBSpacing.medium, 0.0, SBBSpacing.medium, SBBSpacing.medium),
       child: const Text(
         'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
       ),
@@ -88,11 +88,11 @@ class ModalSheetTest extends StatelessWidget {
 
   Widget _modalHeader() {
     return Padding(
-      padding: EdgeInsets.all(sbbDefaultSpacing),
+      padding: EdgeInsets.all(SBBSpacing.medium),
       child: Row(
         children: [
           Icon(SBBIcons.app_icon_small),
-          SizedBox(width: sbbDefaultSpacing),
+          SizedBox(width: SBBSpacing.medium),
           Text('Custom'),
         ],
       ),

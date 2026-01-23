@@ -17,7 +17,7 @@ class SBBToastStyle extends ThemeExtension<SBBToastStyle> {
   /// the action wraps to a new line. Default value is 0.25 (25% of the toast width).
   ///
   /// The [actionPadding] is the padding applied to the action widget.
-  /// By default, applies [EdgeInsets.only(left: sbbDefaultSpacing)].
+  /// By default, applies [EdgeInsets.only(left: SBBSpacing.medium)].
   ///
   /// The [decoration] is the decoration for the toast container.
   /// By default, uses [BoxDecoration] with rounded corners and a background color
@@ -27,10 +27,10 @@ class SBBToastStyle extends ThemeExtension<SBBToastStyle> {
   /// Default value is 2.
   ///
   /// The [margin] is the margin around the toast.
-  /// By default, applies [EdgeInsets.symmetric(horizontal: sbbDefaultSpacing)].
+  /// By default, applies [EdgeInsets.symmetric(horizontal: SBBSpacing.medium)].
   ///
   /// The [padding] is the padding inside the toast.
-  /// By default, applies [EdgeInsets.symmetric(vertical: 6.0, horizontal: sbbDefaultSpacing)].
+  /// By default, applies [EdgeInsets.symmetric(vertical: 6.0, horizontal: SBBSpacing.medium)].
   const SBBToastStyle({
     this.titleTextStyle,
     this.actionTextStyle,
@@ -46,14 +46,14 @@ class SBBToastStyle extends ThemeExtension<SBBToastStyle> {
     titleTextStyle: SBBTextStyles.smallLight.copyWith(decoration: TextDecoration.none, color: SBBColors.white),
     actionTextStyle: SBBTextStyles.smallBold.copyWith(decoration: TextDecoration.none, color: SBBColors.white),
     actionOverflowThreshold: 0.25,
-    actionPadding: const EdgeInsets.only(left: sbbDefaultSpacing),
+    actionPadding: const EdgeInsets.only(left: SBBSpacing.medium),
     decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(sbbDefaultSpacing),
+      borderRadius: BorderRadius.circular(SBBSpacing.medium),
       color: baseStyle.themeValue(SBBColors.metal, SBBColors.smoke),
     ),
     titleMaxLines: 2,
-    margin: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
-    padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: sbbDefaultSpacing),
+    margin: const EdgeInsets.symmetric(horizontal: SBBSpacing.medium),
+    padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: SBBSpacing.medium),
   );
 
   static SBBToastStyle of(BuildContext context) => Theme.of(context).extension<SBBToastStyle>()!;

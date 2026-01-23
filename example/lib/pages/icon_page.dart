@@ -10,17 +10,17 @@ class IconPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final sbbToast = SBBToast.of(context);
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(sbbDefaultSpacing),
+      padding: const EdgeInsets.all(SBBSpacing.medium),
       child: Column(
         children: [
           const ThemeModeSegmentedButton(),
-          const SizedBox(height: sbbDefaultSpacing),
+          const SizedBox(height: SBBSpacing.medium),
           const SBBListHeader('Small Icons'),
           _IconShowCase(icons: SBBIconsIndex.iconsSmall, iconSize: sbbIconSizeSmall, sbbToast: sbbToast),
-          const SizedBox(height: sbbDefaultSpacing),
+          const SizedBox(height: SBBSpacing.medium),
           const SBBListHeader('Medium Icons'),
           _IconShowCase(icons: SBBIconsIndex.iconsMedium, iconSize: sbbIconSizeMedium, sbbToast: sbbToast),
-          const SizedBox(height: sbbDefaultSpacing),
+          const SizedBox(height: SBBSpacing.medium),
           const SBBListHeader('Large Icons'),
           _IconShowCase(icons: SBBIconsIndex.iconsLarge, iconSize: sbbIconSizeLarge, sbbToast: sbbToast),
         ],
@@ -39,11 +39,11 @@ class _IconShowCase extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SBBContentBox(
-      padding: const EdgeInsets.all(sbbDefaultSpacing / 2),
+      padding: const EdgeInsets.all(SBBSpacing.xSmall),
       child: GridView.builder(
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: iconSize + sbbDefaultSpacing),
+        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: iconSize + SBBSpacing.medium),
         itemCount: icons.length,
         itemBuilder: (BuildContext context, index) {
           final icon = icons[index];

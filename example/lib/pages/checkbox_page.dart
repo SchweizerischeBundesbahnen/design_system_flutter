@@ -33,7 +33,7 @@ class CheckboxPageState extends State<CheckboxPage> {
       slivers: [
         SBBSliverHeaderbox.custom(
           child: Column(
-            spacing: sbbDefaultSpacing,
+            spacing: SBBSpacing.medium,
             children: [
               ThemeModeSegmentedButton(),
               SBBSegmentedButton(
@@ -77,7 +77,7 @@ class CheckboxPageState extends State<CheckboxPage> {
                   ],
                 ),
               ),
-              const SizedBox(height: sbbDefaultSpacing),
+              const SizedBox(height: SBBSpacing.medium),
               const SBBListHeader('Checkbox Item - List'),
               SBBContentBox(
                 child: Column(
@@ -142,12 +142,12 @@ class CheckboxPageState extends State<CheckboxPage> {
                   ).toList(growable: false),
                 ),
               ),
-              const SizedBox(height: sbbDefaultSpacing),
+              const SizedBox(height: SBBSpacing.medium),
               const SBBListHeader('Checkbox Item - Boxed'),
               Padding(
-                padding: const EdgeInsets.only(bottom: sbbDefaultSpacing * 4),
+                padding: const EdgeInsets.only(bottom: SBBSpacing.medium * 4),
                 child: Column(
-                  spacing: sbbDefaultSpacing * 0.5,
+                  spacing: SBBSpacing.xSmall,
                   children: [
                     SBBCheckboxListItemBoxed(
                       value: _listItemValue1,

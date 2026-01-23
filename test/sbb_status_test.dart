@@ -8,7 +8,7 @@ void main() {
   testWidgets('status test', (WidgetTester tester) async {
     const String text = 'Lorem ipsum sit dolor';
     final widget = Column(
-      spacing: sbbDefaultSpacing,
+      spacing: SBBSpacing.medium,
       children: [
         SBBStatus.alert(labelText: text),
         SBBStatus.warning(labelText: text),

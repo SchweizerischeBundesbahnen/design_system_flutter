@@ -7,7 +7,7 @@ class TransparentTapableElement extends StatelessWidget {
   factory TransparentTapableElement.roundedBox({Key? key, GestureTapCallback? onTap, Widget? child}) {
     return TransparentTapableElement(
       key: key,
-      customBorder: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(sbbDefaultSpacing))),
+      customBorder: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(SBBSpacing.medium))),
       onTap: onTap,
       child: child,
     );

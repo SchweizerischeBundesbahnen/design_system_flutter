@@ -100,7 +100,7 @@ class SBBSliverHeaderbox extends SingleChildRenderObjectWidget {
     super.key,
     required Widget child,
     EdgeInsets margin = const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
-    EdgeInsets padding = const EdgeInsets.all(sbbDefaultSpacing),
+    EdgeInsets padding = const EdgeInsets.all(SBBSpacing.medium),
     SBBHeaderboxFlap? flap,
     String? semanticsLabel,
   }) : super(

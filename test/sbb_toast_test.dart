@@ -23,7 +23,7 @@ void main() {
           stream: stream1,
           child: DefaultToastBody(title: 'Toast', duration: duration),
         ),
-        SizedBox(height: sbbDefaultSpacing),
+        SizedBox(height: SBBSpacing.medium),
         ToastContainer(
           stream: stream2,
           child: DefaultToastBody(
@@ -32,7 +32,7 @@ void main() {
             action: SBBToastAction(onPressed: () {}, title: 'Action'),
           ),
         ),
-        SizedBox(height: sbbDefaultSpacing),
+        SizedBox(height: SBBSpacing.medium),
         ToastContainer(
           stream: stream3,
           child: DefaultToastBody(
@@ -41,7 +41,7 @@ void main() {
             duration: duration,
           ),
         ),
-        SizedBox(height: sbbDefaultSpacing),
+        SizedBox(height: SBBSpacing.medium),
         ToastContainer(
           stream: stream4,
           child: DefaultToastBody(
@@ -51,7 +51,7 @@ void main() {
             action: SBBToastAction(onPressed: () {}, title: 'Action'),
           ),
         ),
-        SizedBox(height: sbbDefaultSpacing),
+        SizedBox(height: SBBSpacing.medium),
         ToastContainer(
           stream: stream5,
           child: DefaultToastBody(
@@ -60,7 +60,7 @@ void main() {
             action: SBBToastAction(onPressed: () {}, title: 'Long Action Title that is veeeeery long'),
           ),
         ),
-        SizedBox(height: sbbDefaultSpacing),
+        SizedBox(height: SBBSpacing.medium),
         ToastContainer(
           stream: stream6,
           child: DefaultToastBody(
@@ -70,11 +70,11 @@ void main() {
               decoration: BoxDecoration(
                 color: SBBColors.sky,
                 borderRadius: BorderRadius.only(
-                  topLeft: Radius.elliptical(sbbDefaultSpacing * 4, sbbDefaultSpacing * 2),
-                  bottomRight: Radius.elliptical(sbbDefaultSpacing * 4, sbbDefaultSpacing * 2),
+                  topLeft: Radius.elliptical(SBBSpacing.medium * 4, SBBSpacing.xLarge),
+                  bottomRight: Radius.elliptical(SBBSpacing.medium * 4, SBBSpacing.xLarge),
                 ),
               ),
-              padding: EdgeInsets.all(sbbDefaultSpacing * 3),
+              padding: EdgeInsets.all(SBBSpacing.medium * 3),
             ),
             action: SBBToastAction(onPressed: () {}, title: 'Long Action Title that is veeeeery long'),
           ),

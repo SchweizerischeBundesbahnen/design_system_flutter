@@ -40,9 +40,9 @@ class SwitchTest extends StatelessWidget {
         children: [
           const SBBListHeader('SBBSwitch'),
           Padding(
-            padding: const EdgeInsets.all(sbbDefaultSpacing / 2),
+            padding: const EdgeInsets.all(SBBSpacing.xSmall),
             child: Row(
-              spacing: sbbDefaultSpacing * .25,
+              spacing: SBBSpacing.xxSmall,
               children: [
                 SBBSwitch(onChanged: (_) {}, value: value1),
                 SBBSwitch(onChanged: null, value: value1),
@@ -50,9 +50,9 @@ class SwitchTest extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(sbbDefaultSpacing / 2),
+            padding: const EdgeInsets.all(SBBSpacing.xSmall),
             child: Row(
-              spacing: sbbDefaultSpacing * .25,
+              spacing: SBBSpacing.xxSmall,
               children: [
                 SBBSwitch(
                   onChanged: (_) {},
@@ -156,7 +156,7 @@ class SwitchTest extends StatelessWidget {
                 onChanged: (value) {},
                 links: [
                   Padding(
-                    padding: const EdgeInsets.all(sbbDefaultSpacing),
+                    padding: const EdgeInsets.all(SBBSpacing.medium),
                     child: Container(color: SBBColors.green, child: Text('My custom Link Widget')),
                   ),
                 ],

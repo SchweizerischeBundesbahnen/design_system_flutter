@@ -37,7 +37,7 @@ class CheckboxTest extends StatelessWidget {
     children: [
       const SBBListHeader('Checkbox'),
       SBBContentBox(
-        padding: const EdgeInsets.all(sbbDefaultSpacing / 2),
+        padding: const EdgeInsets.all(SBBSpacing.xSmall),
         child: Row(
           children: [
             SBBCheckbox(onChanged: (bool? value) {}, value: value1),
@@ -47,7 +47,7 @@ class CheckboxTest extends StatelessWidget {
           ],
         ),
       ),
-      const SizedBox(height: sbbDefaultSpacing),
+      const SizedBox(height: SBBSpacing.medium),
       const SBBListHeader('CheckboxItem - List'),
       SBBContentBox(
         child: Column(
@@ -125,7 +125,7 @@ class CheckboxTest extends StatelessWidget {
           ).toList(growable: false),
         ),
       ),
-      const SizedBox(height: sbbDefaultSpacing),
+      const SizedBox(height: SBBSpacing.medium),
       const SBBListHeader('CheckboxItem - Boxed'),
       Column(
         spacing: SBBSpacing.xSmall,

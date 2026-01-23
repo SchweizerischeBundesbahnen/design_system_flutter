@@ -9,7 +9,7 @@ void main() {
     final widget = Column(
       children: [
         SBBSlider(onChanged: (value) {}, value: 50, max: 100),
-        const SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: SBBSpacing.medium),
         SBBSlider(
           onChanged: (value) {},
           value: 25,
@@ -19,7 +19,7 @@ void main() {
           onChangeStart: (value) {},
           onChangeEnd: (value) {},
         ),
-        const SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: SBBSpacing.medium),
         const SBBSlider(onChanged: null, value: 75, max: 100),
       ],
     );

@@ -42,7 +42,7 @@ class PickerTest extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: sbbDefaultSpacing),
+          const SizedBox(width: SBBSpacing.medium),
           Expanded(
             child: SBBContentBox(
               child: SBBPicker.list(
@@ -55,7 +55,7 @@ class PickerTest extends StatelessWidget {
           ),
         ],
       ),
-      const SizedBox(height: sbbDefaultSpacing),
+      const SizedBox(height: SBBSpacing.medium),
       Row(
         children: [
           Expanded(
@@ -72,7 +72,7 @@ class PickerTest extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: sbbDefaultSpacing),
+          const SizedBox(width: SBBSpacing.medium),
           Expanded(
             child: SBBContentBox(
               child: SBBPicker(
@@ -91,7 +91,7 @@ class PickerTest extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: sbbDefaultSpacing),
+          const SizedBox(width: SBBSpacing.medium),
           Expanded(
             child: SBBContentBox(
               child: SBBPicker(

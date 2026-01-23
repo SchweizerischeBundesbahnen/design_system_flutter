@@ -20,7 +20,7 @@ class ListItemPage extends StatelessWidget {
           padding: const EdgeInsets.symmetric(
             vertical: SBBSpacing.xSmall,
             horizontal: SBBSpacing.xSmall,
-          ).copyWith(bottom: sbbDefaultSpacing * 3),
+          ).copyWith(bottom: SBBSpacing.medium * 3),
           sliver: SliverList.list(
             children: [
               SBBListHeader('Listed'),
@@ -89,7 +89,7 @@ class ListItemPage extends StatelessWidget {
                   ).toList(),
                 ),
               ),
-              SizedBox(height: sbbDefaultSpacing),
+              SizedBox(height: SBBSpacing.medium),
               SBBListHeader('Boxed'),
               Column(
                 spacing: SBBSpacing.xSmall,

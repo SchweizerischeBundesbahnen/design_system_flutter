@@ -182,7 +182,7 @@ class _SBBNotificationBoxState extends State<SBBNotificationBox> with SingleTick
                   ),
                   color: resolvedBackgroundColor.withValues(alpha: .05),
                 ),
-                padding: const EdgeInsets.all(sbbDefaultSpacing),
+                padding: const EdgeInsets.all(SBBSpacing.medium),
                 child: child,
               ),
             ),

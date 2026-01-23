@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 const _flapBorderRadius = BorderRadius.only(
-  bottomLeft: Radius.circular(sbbDefaultSpacing),
-  bottomRight: Radius.circular(sbbDefaultSpacing),
+  bottomLeft: Radius.circular(SBBSpacing.medium),
+  bottomRight: Radius.circular(SBBSpacing.medium),
 );
 
 const _flapIconSize = 24.0;
@@ -35,9 +35,9 @@ class SBBHeaderboxFlap extends StatelessWidget {
     super.key,
     required this.child,
     this.padding = const EdgeInsets.fromLTRB(
-      sbbDefaultSpacing,
+      SBBSpacing.medium,
       0.0, // margin from [SBBHeaderBox] to allow shadow
-      sbbDefaultSpacing,
+      SBBSpacing.medium,
       SBBSpacing.xSmall,
     ),
   });

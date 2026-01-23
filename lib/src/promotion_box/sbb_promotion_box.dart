@@ -224,7 +224,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
               margin: EdgeInsets.only(top: paddingTop),
               decoration: BoxDecoration(
                 border: Border.all(color: resolvedStyle.borderColor!),
-                borderRadius: const BorderRadius.all(Radius.circular(sbbDefaultSpacing)),
+                borderRadius: const BorderRadius.all(Radius.circular(SBBSpacing.medium)),
                 image: DecorationImage(
                   image: const AssetImage(_PromotionBoxAssets.noise),
                   repeat: ImageRepeat.repeat,
@@ -247,15 +247,15 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
                     focusColor: baseStyle.themeValue(SBBColors.milk, SBBColors.iron),
                     hoverColor: baseStyle.themeValue(SBBColors.milk, SBBColors.iron),
                     customBorder: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(sbbDefaultSpacing)),
+                      borderRadius: BorderRadius.all(Radius.circular(SBBSpacing.medium)),
                     ),
                     onTap: widget.onTap,
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(
-                        sbbDefaultSpacing,
-                        sbbDefaultSpacing,
+                        SBBSpacing.medium,
+                        SBBSpacing.medium,
                         SBBSpacing.xSmall,
-                        sbbDefaultSpacing,
+                        SBBSpacing.medium,
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
