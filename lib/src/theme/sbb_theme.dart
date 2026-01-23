@@ -28,7 +28,7 @@ class SBBTheme {
     SBBCheckboxThemeData? checkboxTheme,
     SBBChipThemeData? chipTheme,
     SBBContentBoxThemeData? contentBoxTheme,
-    SBBStepperThemeData? stepperStyle,
+    SBBStepperThemeData? stepperTheme,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBListItemThemeData? listItemTheme,
@@ -48,7 +48,7 @@ class SBBTheme {
     chipTheme: chipTheme,
     contentBoxTheme: contentBoxTheme,
     radioTheme: radioTheme,
-    stepperStyle: stepperStyle,
+    stepperTheme: stepperTheme,
     controlStyles: controlStyles,
     headerBoxStyle: headerBoxStyle,
     listItemTheme: listItemTheme,
@@ -68,7 +68,7 @@ class SBBTheme {
     SBBChipThemeData? chipTheme,
     SBBContentBoxThemeData? contentBoxTheme,
     SBBRadioThemeData? radioTheme,
-    SBBStepperThemeData? stepperStyle,
+    SBBStepperThemeData? stepperTheme,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBListItemThemeData? listItemTheme,
@@ -87,7 +87,7 @@ class SBBTheme {
     chipTheme: chipTheme,
     contentBoxTheme: contentBoxTheme,
     radioTheme: radioTheme,
-    stepperStyle: stepperStyle,
+    stepperTheme: stepperTheme,
     controlStyles: controlStyles,
     headerBoxStyle: headerBoxStyle,
     listItemTheme: listItemTheme,
@@ -106,7 +106,7 @@ class SBBTheme {
     SBBTertiaryButtonThemeData? tertiaryButtonTheme,
     SBBCheckboxThemeData? checkboxTheme,
     SBBChipThemeData? chipTheme,
-    SBBStepperThemeData? stepperStyle,
+    SBBStepperThemeData? stepperTheme,
     SBBControlStyles? controlStyles,
     SBBContentBoxThemeData? contentBoxTheme,
     SBBHeaderBoxStyle? headerBoxStyle,
@@ -137,7 +137,7 @@ class SBBTheme {
     final mergedChipTheme = defaultChipTheme.merge(chipTheme);
 
     final defaultStepperTheme = DefaultSBBStepperThemeData(mergedBaseStyle);
-    final mergedStepperTheme = defaultStepperTheme.merge(stepperStyle);
+    final mergedStepperTheme = defaultStepperTheme.merge(stepperTheme);
 
     final defaultControlStyles = SBBControlStyles.$default(baseStyle: mergedBaseStyle);
     final mergedControlStyles = controlStyles.merge(defaultControlStyles);

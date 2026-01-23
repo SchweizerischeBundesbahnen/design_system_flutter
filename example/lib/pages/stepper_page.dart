@@ -42,11 +42,11 @@ class _StepperPageState extends State<StepperPage> {
 
   final customSteps = [
     SBBStepperItem.icon(
-      label: SBBChip(label: 'Test', onSelection: null),
+      label: SBBChip(trailingText: '1', labelText: 'Label', onChanged: null),
       icon: SBBIcons.unicorn_small,
     ),
     SBBStepperItem.text(label: SBBLoadingIndicator.tiny(), text: 'Test'),
-    SBBStepperItem.numbered(label: SBBStatus.information(text: 'Custom')),
+    SBBStepperItem.numbered(label: SBBStatus.information(labelText: 'Custom')),
     SBBStepperItem.icon(
       label: Container(
         padding: EdgeInsets.all(8.0),
@@ -55,22 +55,22 @@ class _StepperPageState extends State<StepperPage> {
       ),
       icon: SBBIcons.train_small,
     ),
-    SBBStepperItem.numbered(label: SBBStatus.success(text: 'Custom')),
+    SBBStepperItem.numbered(label: SBBStatus.success(labelText: 'Custom')),
   ];
   var customStep = 0;
 
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: const EdgeInsets.all(sbbDefaultSpacing),
+      padding: const EdgeInsets.all(SBBSpacing.medium),
       children: [
         const ThemeModeSegmentedButton(),
-        const SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: SBBSpacing.medium),
         const SBBListHeader('Default'),
-        SBBGroup(
-          padding: const EdgeInsets.all(sbbDefaultSpacing),
+        SBBContentBox(
+          padding: const EdgeInsets.all(SBBSpacing.medium),
           child: Column(
-            spacing: sbbDefaultSpacing,
+            spacing: SBBSpacing.medium,
             children: [
               SBBStepper(
                 steps: numericSteps,
@@ -104,11 +104,11 @@ class _StepperPageState extends State<StepperPage> {
           ),
         ),
         const SBBListHeader('Colored'),
-        SBBGroup(
+        SBBContentBox(
           color: SBBBaseStyle.of(context).primaryColor,
-          padding: const EdgeInsets.all(sbbDefaultSpacing),
+          padding: const EdgeInsets.all(SBBSpacing.medium),
           child: Column(
-            spacing: sbbDefaultSpacing,
+            spacing: SBBSpacing.medium,
             children: [
               SBBStepper.colored(
                 steps: numericSteps,
