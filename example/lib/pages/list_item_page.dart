@@ -43,7 +43,6 @@ class ListItemPage extends StatelessWidget {
                         subtitleText: loremIpsum,
                         leadingIconData: SBBIcons.dog_small,
                         onTap: () => sbbToast.show(title: 'Mit Subtext'),
-                        trailing: Container(height: 300, width: 200, color: SBBColors.green),
                       ),
                       SBBListItem(
                         titleText: 'Mit Icon Rechts',
@@ -60,8 +59,6 @@ class ListItemPage extends StatelessWidget {
                       ),
                       SBBListItem(
                         titleText: 'Mit Status Nachricht',
-                        leading: Container(height: 150, width: 10, color: SBBColors.green),
-                        trailing: Container(height: 400, width: 10, color: SBBColors.black),
                         subtitle: SBBStatus.information(labelText: 'Lorem ipsum sit dolor amet unt.'),
                         onTap: () => sbbToast.show(title: 'Mit Status Nachricht'),
                       ),
