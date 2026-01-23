@@ -12,7 +12,6 @@ import 'package:flutter/services.dart';
 import '../../sbb_design_system_mobile.dart';
 import 'decoration/sbb_input_decorator.dart';
 
-// TODO: add internal states controller and hand states down to SBBInputDecorator for resolving
 // TODO: (add theme data and get effective in SBBTextInput)
 // TODO: move decoration related params to SBBInputDecoration
 // TODO: animate label and input when single line
@@ -238,6 +237,8 @@ class _SBBTextInputState extends State<SBBTextInput>
 
   bool _showSelectionHandles = false;
 
+  late WidgetStatesController _statesController;
+
   @override
   final GlobalKey<EditableTextState> editableTextKey = GlobalKey<EditableTextState>();
 
@@ -277,6 +278,8 @@ class _SBBTextInputState extends State<SBBTextInput>
 
     _effectiveFocusNode.canRequestFocus = widget.enabled;
     _effectiveFocusNode.addListener(_handleFocusChanged);
+
+    _statesController = WidgetStatesController(_computeStates());
   }
 
   @override
@@ -301,6 +304,8 @@ class _SBBTextInputState extends State<SBBTextInput>
         _showSelectionHandles = !widget.readOnly;
       }
     }
+
+    _updateStates();
   }
 
   @override
@@ -308,8 +313,20 @@ class _SBBTextInputState extends State<SBBTextInput>
     _effectiveFocusNode.removeListener(_handleFocusChanged);
     _focusNode?.dispose();
     _controller?.dispose();
-
+    _statesController.dispose();
     super.dispose();
+  }
+
+  Set<WidgetState> _computeStates() {
+    return <WidgetState>{
+      if (!widget.enabled) WidgetState.disabled,
+      if (_effectiveFocusNode.hasFocus) WidgetState.focused,
+      if (widget.errorText?.isNotEmpty ?? false) WidgetState.error,
+    };
+  }
+
+  void _updateStates() {
+    _statesController.value = _computeStates();
   }
 
   // The SBBTextInput does these things:
@@ -451,8 +468,7 @@ class _SBBTextInputState extends State<SBBTextInput>
                   expands: widget.expands,
                   isMultiline: isMultiline,
                   isEmpty: _effectiveController.text.isEmpty,
-                  hasFocus: _effectiveFocusNode.hasFocus,
-                  enabled: widget.enabled,
+                  states: _statesController.value,
                   child: child,
                 );
               },
@@ -525,6 +541,7 @@ class _SBBTextInputState extends State<SBBTextInput>
   }
 
   void _handleFocusChanged() {
+    _updateStates();
     setState(() {
       // Rebuild widget on focus change to update accordingly.
     });

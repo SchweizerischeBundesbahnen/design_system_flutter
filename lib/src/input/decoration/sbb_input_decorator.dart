@@ -10,19 +10,15 @@ class SBBInputDecorator extends StatelessWidget {
   const SBBInputDecorator({
     super.key,
     required this.decoration,
-    required this.enabled,
     this.expands = false,
     this.isMultiline = false,
     this.isEmpty = false,
-    this.hasFocus = false,
+    this.states = const <WidgetState>{},
     this.child,
   });
 
   /// The decoration to display around the input field.
   final SBBInputDecoration decoration;
-
-  /// Whether the input field is enabled.
-  final bool enabled;
 
   /// Whether the input field should expand to fill available space.
   final bool expands;
@@ -34,13 +30,11 @@ class SBBInputDecorator extends StatelessWidget {
 
   /// Whether the input field is empty.
   ///
-  /// When true and [hasFocus] is true, the placeholder is displayed.
+  /// When true and the input field has focus, the placeholder is displayed.
   final bool isEmpty;
 
-  /// Whether the input field has focus.
-  ///
-  /// When true and [isEmpty] is true, the placeholder is displayed.
-  final bool hasFocus;
+  /// The states of the input field.
+  final Set<WidgetState> states;
 
   /// The widget below this decorator, usually some sort of [EditableText].
   final Widget? child;
@@ -51,35 +45,74 @@ class SBBInputDecorator extends StatelessWidget {
     if (leading == null && decoration.leadingIconData != null) {
       leading = Icon(decoration.leadingIconData);
     }
+    if (leading != null && decoration.leadingForegroundColor != null) {
+      final Color? resolvedColor = decoration.leadingForegroundColor!.resolve(states);
+      leading = _addDefaultAncestorWithResolved(
+        child: leading,
+        foregroundColor: resolvedColor,
+      );
+    }
 
     Widget? label = decoration.label;
     if (label == null && decoration.labelText != null) {
       label = Text(decoration.labelText!);
+    }
+    if (label != null && decoration.labelForegroundColor != null) {
+      final Color? resolvedColor = decoration.labelForegroundColor!.resolve(states);
+      leading = _addDefaultAncestorWithResolved(
+        child: label,
+        foregroundColor: resolvedColor,
+        textStyle: decoration.labelTextStyle,
+      );
     }
 
     Widget? trailing = decoration.trailing;
     if (trailing == null && decoration.trailingIconData != null) {
       trailing = Icon(decoration.trailingIconData);
     }
+    if (trailing != null && decoration.trailingForegroundColor != null) {
+      final Color? resolvedColor = decoration.trailingForegroundColor!.resolve(states);
+      trailing = _addDefaultAncestorWithResolved(
+        child: trailing,
+        foregroundColor: resolvedColor,
+      );
+    }
 
     Widget? placeholder = decoration.placeholder;
     if (placeholder == null && decoration.placeholderText != null) {
       placeholder = Text(decoration.placeholderText!);
+    }
+    if (placeholder != null && decoration.placeholderForegroundColor != null) {
+      final Color? resolvedColor = decoration.placeholderForegroundColor!.resolve(states);
+      placeholder = _addDefaultAncestorWithResolved(
+        child: placeholder,
+        foregroundColor: resolvedColor,
+        textStyle: decoration.placeholderTextStyle,
+      );
     }
 
     Widget? error = decoration.error;
     if (error == null && decoration.errorText != null) {
       error = Text(decoration.errorText!);
     }
+    if (error != null && decoration.errorForegroundColor != null) {
+      final Color? resolvedColor = decoration.errorForegroundColor!.resolve(states);
+      error = _addDefaultAncestorWithResolved(
+        child: error,
+        foregroundColor: resolvedColor,
+        textStyle: decoration.errorTextStyle,
+      );
+    }
     error = AnimatedSwitcher(
       duration: Duration(milliseconds: 250), // TODO: define Animation duration
       child: error ?? SizedBox.shrink(),
     );
 
+    final Color resolvedBorderColor = decoration.borderColor?.resolve(states) ?? SBBColors.transparent;
     final Widget container = AnimatedContainer(
       duration: Duration(milliseconds: 250), // TODO: define Animation duration
       decoration: BoxDecoration(
-        border: Border(bottom: BorderSide(color: SBBColors.green)),
+        border: Border(bottom: BorderSide(color: resolvedBorderColor)),
       ),
     );
 
@@ -95,7 +128,7 @@ class SBBInputDecorator extends StatelessWidget {
       expands: expands,
       isMultiline: isMultiline,
       isEmpty: isEmpty,
-      isFocused: hasFocus,
+      isFocused: states.contains(WidgetState.focused),
       child: child,
     );
   }
