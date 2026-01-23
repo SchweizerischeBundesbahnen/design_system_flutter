@@ -406,58 +406,61 @@ class _SBBTextInputState extends State<SBBTextInput>
       magnifierConfiguration: TextMagnifier.adaptiveMagnifierConfiguration,
     );
 
-    return _selectionGestureDetectorBuilder.buildGestureDetector(
-      behavior: HitTestBehavior.translucent,
-      child: AnimatedBuilder(
-        animation: _effectiveController,
-        builder: (context, child) {
-          return Semantics(
-            enabled: widget.enabled,
-            currentValueLength: _effectiveController.text.characters.length,
-            onTap: widget.readOnly
-                ? null
-                : () {
-                    if (!_effectiveController.selection.isValid) {
-                      _effectiveController.selection = TextSelection.collapsed(
-                        offset: _effectiveController.text.length,
-                      );
-                    }
-                    _requestKeyboard();
-                  },
-            onFocus: widget.enabled
-                ? () {
-                    assert(
-                      _effectiveFocusNode.canRequestFocus,
-                      'Received SemanticsAction.focus from the engine. However, the FocusNode '
-                      'of this text field cannot gain focus. This likely indicates a bug. '
-                      'If this text field cannot be focused (e.g. because it is not '
-                      'enabled), then its corresponding semantics node must be configured '
-                      'such that the assistive technology cannot request focus on it.',
-                    );
-
-                    if (_effectiveFocusNode.canRequestFocus && !_effectiveFocusNode.hasFocus) {
-                      _effectiveFocusNode.requestFocus();
-                    } else if (!widget.readOnly) {
+    return IgnorePointer(
+      ignoring: widget.ignorePointers ?? false,
+      child: _selectionGestureDetectorBuilder.buildGestureDetector(
+        behavior: HitTestBehavior.translucent,
+        child: AnimatedBuilder(
+          animation: _effectiveController,
+          builder: (context, child) {
+            return Semantics(
+              enabled: widget.enabled,
+              currentValueLength: _effectiveController.text.characters.length,
+              onTap: widget.readOnly
+                  ? null
+                  : () {
+                      if (!_effectiveController.selection.isValid) {
+                        _effectiveController.selection = TextSelection.collapsed(
+                          offset: _effectiveController.text.length,
+                        );
+                      }
                       _requestKeyboard();
+                    },
+              onFocus: widget.enabled
+                  ? () {
+                      assert(
+                        _effectiveFocusNode.canRequestFocus,
+                        'Received SemanticsAction.focus from the engine. However, the FocusNode '
+                        'of this text field cannot gain focus. This likely indicates a bug. '
+                        'If this text field cannot be focused (e.g. because it is not '
+                        'enabled), then its corresponding semantics node must be configured '
+                        'such that the assistive technology cannot request focus on it.',
+                      );
+
+                      if (_effectiveFocusNode.canRequestFocus && !_effectiveFocusNode.hasFocus) {
+                        _effectiveFocusNode.requestFocus();
+                      } else if (!widget.readOnly) {
+                        _requestKeyboard();
+                      }
                     }
-                  }
-                : null,
-            child: AnimatedBuilder(
-              animation: Listenable.merge(<Listenable>[_effectiveFocusNode, _effectiveController]),
-              builder: (BuildContext context, Widget? child) {
-                return SBBInputDecorator(
-                  decoration: widget.decoration ?? SBBInputDecoration(),
-                  expands: widget.expands,
-                  isMultiline: isMultiline,
-                  isEmpty: _effectiveController.text.isEmpty,
-                  states: _statesController.value,
-                  child: child,
-                );
-              },
-              child: editableText,
-            ),
-          );
-        },
+                  : null,
+              child: AnimatedBuilder(
+                animation: Listenable.merge(<Listenable>[_effectiveFocusNode, _effectiveController]),
+                builder: (BuildContext context, Widget? child) {
+                  return SBBInputDecorator(
+                    decoration: widget.decoration ?? SBBInputDecoration(),
+                    expands: widget.expands,
+                    isMultiline: isMultiline,
+                    isEmpty: _effectiveController.text.isEmpty,
+                    states: _statesController.value,
+                    child: child,
+                  );
+                },
+                child: editableText,
+              ),
+            );
+          },
+        ),
       ),
     );
   }
