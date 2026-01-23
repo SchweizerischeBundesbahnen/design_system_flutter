@@ -54,6 +54,7 @@ class _TextFieldPageState extends State<TextFieldPage> {
                       ConstrainedBox(
                         constraints: BoxConstraints(maxHeight: 100),
                         child: TextField(
+                          decoration: InputDecoration(labelText: 'Label'),
                           controller: emptyTextEditingController,
                           expands: true,
                           maxLines: null,
@@ -76,7 +77,7 @@ class _TextFieldPageState extends State<TextFieldPage> {
                         decoration: SBBInputDecoration(
                           labelText: 'With leading and trailing icon',
                           leadingIconData: SBBIcons.unicorn_small,
-                          trailing: Container(height: 50, width: 200, color: SBBColors.green),
+                          trailing: Container(height: 20, width: 200, color: SBBColors.green),
                         ),
                       ),
                       // TODO: Move to separate Textarea page

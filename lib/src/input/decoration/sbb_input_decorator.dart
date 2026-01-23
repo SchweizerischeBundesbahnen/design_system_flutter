@@ -105,11 +105,6 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
   Widget build(BuildContext context) {
     final inputDecorationTheme = Theme.of(context).sbbInputDecorationTheme;
 
-    // Determine if we're using default widgets (for padding application)
-    final bool isDefaultLeading = widget.decoration.leading == null && widget.decoration.leadingIconData != null;
-    final bool isDefaultTrailing = widget.decoration.trailing == null && widget.decoration.trailingIconData != null;
-    final bool isDefaultError = widget.decoration.error == null && widget.decoration.errorText != null;
-
     Widget? leading = widget.decoration.leading;
     if (leading == null && widget.decoration.leadingIconData != null) {
       leading = Padding(
@@ -563,7 +558,6 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     // Layout label with same width constraints as input
     // Increase the available width for the label when it is scaled down.
     double labelHeight = 0.0;
-    double labelWidth = 0.0;
     if (label != null) {
       final double invertedLabelScale = lerpDouble(
         1.0,
@@ -575,7 +569,6 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
       );
       final Size labelSize = layoutChild(label!, labelConstraints);
       labelHeight = labelSize.height;
-      labelWidth = labelSize.width;
     }
 
     // For single-line: calculate the floating label height (scaled) plus gap
@@ -610,7 +603,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     // We need the max of both scenarios to keep height stable.
     final double stableContentHeight = math.max(labelHeight, floatingContentHeight);
 
-    // Title row height is max of leading, content area, trailing, and min height (48.0) // TODO: factor out the 48.0
+    // Title row height is max of leading, content area, trailing
     final double titleRowHeight = [leadingHeight, stableContentHeight, trailingHeight, 48.0].reduce(math.max);
 
     // Calculate label offset based on floatingLabelProgress
@@ -650,9 +643,13 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
         ? Offset(leadingWidth + availableInputWidth, isMultiline ? 0.0 : (titleRowHeight - trailingHeight) / 2.0)
         : Offset.zero;
 
-    // Layout error widget below the titleRowHeight
+    // Layout error widget below the tallest of the widgets in the title row
     // if expands, needs to be laid out at the bottom
-    final double topAlignedErrorY = titleRowHeight;
+    final double topAlignedErrorY = [
+      leadingOffset.dy + leadingHeight,
+      labelOffset.dy + stableContentHeight,
+      trailingOffset.dy + trailingHeight,
+    ].reduce(math.max);
     final errorY = expands ? constraints.maxHeight - errorHeight : topAlignedErrorY;
     final Offset errorOffset = error != null ? Offset(0, errorY) : Offset.zero;
 
@@ -660,7 +657,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     final double totalHeight = expands
         ? constraints.maxHeight
         : math.max(topAlignedErrorY + errorHeight, titleRowHeight);
-    final Size size = Size(constraints.maxWidth, totalHeight);
+    final Size size = Size(constraints.maxWidth, math.max(totalHeight, 48.0)); // TODO: factor out the 48.0
 
     return _RenderSBBDecorationLayout(
       labelOffset: labelOffset,

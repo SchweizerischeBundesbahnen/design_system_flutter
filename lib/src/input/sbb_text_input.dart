@@ -8,6 +8,7 @@ import 'decoration/sbb_input_decorator.dart';
 
 // TODO: animate label and input when single line
 // TODO: expose FloatingLabelBehavior
+// TODO: think about text scaling
 // TODO: add semantics ordering and traversal
 // TODO: think about case when multiline (center between baselines?)
 // TODO: add Boxed variant
