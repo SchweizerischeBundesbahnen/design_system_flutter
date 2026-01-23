@@ -218,7 +218,8 @@ class SBBTextInput extends StatefulWidget {
   State<StatefulWidget> createState() => _SBBTextInputState();
 }
 
-class _SBBTextInputState extends State<SBBTextInput> implements TextSelectionGestureDetectorBuilderDelegate {
+class _SBBTextInputState extends State<SBBTextInput>
+    implements TextSelectionGestureDetectorBuilderDelegate, AutofillClient {
   FocusNode? _focusNode;
 
   FocusNode get _effectiveFocusNode => widget.focusNode ?? (_focusNode ??= FocusNode());
@@ -239,6 +240,29 @@ class _SBBTextInputState extends State<SBBTextInput> implements TextSelectionGes
 
   @override
   bool get selectionEnabled => widget.enableInteractiveSelection && widget.enabled;
+
+  @override
+  String get autofillId => _editableText!.autofillId;
+
+  @override
+  void autofill(TextEditingValue newEditingValue) => _editableText!.autofill(newEditingValue);
+
+  @override
+  TextInputConfiguration get textInputConfiguration {
+    final List<String>? autofillHints = widget.autofillHints?.toList(growable: false);
+    final AutofillConfiguration autofillConfiguration = autofillHints != null
+        ? AutofillConfiguration(
+            uniqueIdentifier: autofillId,
+            autofillHints: autofillHints,
+            currentEditingValue: _effectiveController.value,
+            hintText: widget.placeholderText,
+          )
+        : AutofillConfiguration.disabled;
+
+    return _editableText!.textInputConfiguration.copyWith(
+      autofillConfiguration: autofillConfiguration,
+    );
+  }
 
   @override
   void initState() {
@@ -412,6 +436,7 @@ class _SBBTextInputState extends State<SBBTextInput> implements TextSelectionGes
       enableInteractiveSelection: widget.enableInteractiveSelection,
       scrollController: widget.scrollController,
       autofillHints: widget.autofillHints,
+      autofillClient: this,
       restorationId: 'editable',
       spellCheckConfiguration: spellCheckConfiguration,
       magnifierConfiguration: TextMagnifier.adaptiveMagnifierConfiguration,
