@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
 import '../shared/close_button.dart';
-import '../shared/tapable_element.dart';
+import '../shared/transparent_tapable_element.dart';
 import 'notification_box_content.dart';
 import 'notification_box_title_content.dart';
 
@@ -164,7 +164,7 @@ class _SBBNotificationBoxState extends State<SBBNotificationBox> with SingleTick
       animation: _controller.animation,
       child: Stack(
         children: [
-          TapableElement.roundedBox(
+          TransparentTapableElement.roundedBox(
             onTap: widget.onTap,
             child: Container(
               decoration: BoxDecoration(

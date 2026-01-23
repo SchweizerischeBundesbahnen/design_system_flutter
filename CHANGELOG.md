@@ -9,6 +9,75 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+### Added
+
+- added `onLongPress`, `semanticLabel` and `autofocus` to all button variants
+- added `style` to all button variants for changing individual button appearance
+- added `SBBButtonThemeData` to override buttons within `SBBTheme`
+- added `style` to `SBBCheckbox` to change individual checkbox appearance
+- added `focusNode` and `autofocus` to `SBBCheckbox`
+- added `focusNode`, `style`, `trailingText` and `trailing` to `SBBChip` - see [v5 migration guide]
+- added `style` to `SBBStatus`
+- added `SBBStatusThemeData` to override styling of `SBBStatus` within the current `SBBTheme`
+- `SBBStatus`: added `label` and `labelText`, `icon` and `iconData` parameters - see [v5 migration guide]
+- added `SBBRadioGroup` - see [v5 migration guide]
+- added `style` to `SBBRadio`
+- added `SBBRadioThemeData` to override `SBBRadioStyle` within the `SBBTheme`
+- added `focusNode` & `autofocus` to `SBBRadio`
+- added `style` to `SBBSwitch` - see [v5 migration guide]
+- added `focusNode` & `autofocus` to `SBBSwitch`
+
+### Changed
+
+- BREAKING: All button variants: `label` is replaced by `labelText` - see [v5 migration guide]
+- BREAKING: `SBBTertiaryButton`: `icon` is replaced by `iconData` - see [v5 migration guide]
+- BREAKING: All button variants: `label` is of type `Widget?` - see [v5 migration guide]
+- BREAKING: `SBBTertiaryButton`: `icon` is of type `Widget?` - see [v5 migration guide]
+- BREAKING: Updated `SBBButtonStyle` to have `WidgetStateProperty` values - see [v5 migration guide]
+- BREAKING: `SBBCheckbox` uses `SBBCheckboxThemeData` for themed styling - see [v5 migration guide]
+- BREAKING: `SBBChip` uses `SBBChipThemeData` for themed styling - see [v5 migration guide]
+- BREAKING: `SBBChip`: `label` is of type `Widget?` - see [v5 migration guide]
+- BREAKING: `SBBChip`: renamed `onSelected` to `onChanged` - see [v5 migration guide]
+- BREAKING: `SBBChip`: renamed `badgeText` to `trailingText` - see [v5 migration guide]
+- BREAKING: `SBBRadio` needs an `SBBRadioGroup` ancestor for its group value and `onChanged` callback - see [v5 migration guide]
+- BREAKING: migrated to the new flexible `SBBListItem` implementation - see [v5 migration guide]
+- dropped support for Flutter SDK 3.32.x
+- BREAKING: removed default left margin on component `SBBTextField` (#402)
+- BREAKING: `SBBSwitch` is now styled with own `SBBSwitchStyle` from `SBBSwitchThemeData` - see [v5 migration guide]
+
+### Removed
+
+- Removed convenience methods `SBBTheme.allStates` and `SBBTheme.resolveStatesWith` - use methods on `WidgetStateProperty`
+- Removed `SBBIconButtonLarge`: use `SBBTertiaryButton` with only `iconData` or `icon` - see [v5 migration guide]
+- Removed `SBBIconButtonSmall`: use `SBBTertiaryButtonSmall` with only `iconData` or `icon` - see [v5 migration guide]
+- Removed `buttonStyles` argument in `SBBTheme`: use `primaryButtonTheme`, `secondaryButtonTheme` and
+  `tertiaryButtonTheme` - see [v5 migration guide]
+- Removed `SBBAccordion`, `SBBAccordionItem`, `AccordionCallback` and `SingleAccordionCallback`
+- Removed `padding` of `SBBCheckbox` - see [v5 migration guide]
+- Removed `chip` of `SBBControlStyles` - use `SBBChipThemeData` - see [v5 migration guide]
+- Removed `text` of `SBBStatus` - see [v5 migration guide]
+- Removed `onChanged` & `groupValue` from `SBBRadio` & `SBBRadioListItem` - see [v5 migration guide]
+- Removed `padding` from `SBBRadio` - moved to `SBBRadioStyle` - see [v5 migration guide]
+- Removed deprecated `SBBGroupStyle`, use `SBBContentBoxThemeData` instead
+- Removed `SBBGroupStyle.of(context)` and `SBBContentBoxStyle.of(context)` accessor, use `Theme.of(context).sbbContentBoxTheme` instead
+- Removed deprecated `SBBGroup`
+
+
+## [4.5.0] - 2026-01-19
+
+### Added
+
+- Added `SBBSpacing` with spacings according to SBB Design System
+
+### Deprecated
+
+- `sbbDefaultSpacing`: use `SBBSpacing.medium` instead
+
+### Fixed
+
+- `SBBIconButtonSmall`: `key` parameter is correctly handled in parent class (#473)
+
+
 ## [4.4.0] - 2025-12-18
 
 ### Added
@@ -59,7 +128,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 ### Added
 
 - added `SBBSliverFloatingHeaderbox` that allows the headerbox to expand and contract as the user scrolls.
-- added functional colors (e.g. `SBBColors.error`) and dark variants of additionalColors (e.g. `SBBColors.skyDark`)
+- added functional colors (e.g. `SBBColors.error`) and dark variants of `additionalColors` (e.g. `SBBColors.skyDark`)
 - added `errorColor` to `SBBBaseStyle`
 - added `systemOverlayStyle` to `SBBHeader`
 
@@ -691,7 +760,11 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Initial project setup
 - Added some widgets
 
-[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.4.0...HEAD
+[v5 migration guide]: migration_guide.md
+
+[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.5.0...HEAD
+
+[4.5.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.4.0...4.5.0
 
 [4.4.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.3.1...4.4.0
 

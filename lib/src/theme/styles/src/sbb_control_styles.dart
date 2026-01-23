@@ -5,16 +5,13 @@ import '../../theme.dart';
 class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   SBBControlStyles({
     this.checkbox,
-    this.chip,
     this.pagination,
     this.slider,
     this.radioButton,
     this.textField,
     this.segmentedButton,
     this.redSegmentedButton,
-    this.listItem,
     this.selectLabel,
-    this.switchToggle,
     this.headerBackgroundColor,
     this.headerButtonBackgroundColorHighlighted,
     this.headerIconColor,
@@ -33,10 +30,8 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   });
 
   factory SBBControlStyles.$default({required SBBBaseStyle baseStyle}) => SBBControlStyles(
-    listItem: SBBListItemStyle.$default(baseStyle: baseStyle),
     slider: SBBSliderStyle.$default(baseStyle: baseStyle),
     checkbox: SBBControlStyle.$default(baseStyle: baseStyle),
-    chip: SBBChipStyle.$default(baseStyle: baseStyle),
     pagination: SBBPaginationStyle.$default(baseStyle: baseStyle),
     radioButton: SBBControlStyle.$default(baseStyle: baseStyle),
     textField: SBBTextFieldStyle.$default(baseStyle: baseStyle),
@@ -49,7 +44,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
       ),
       textStyleDisabled: baseStyle.themedTextStyle(textStyle: SBBTextStyles.helpersLabel, color: SBBColors.metal),
     ),
-    switchToggle: SBBSwitchStyle.$default(baseStyle: baseStyle),
     headerBackgroundColor: baseStyle.primaryColor,
     headerButtonBackgroundColorHighlighted: baseStyle.primaryColorDark,
     headerIconColor: SBBColors.white,
@@ -70,15 +64,12 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   );
 
   final SBBControlStyle? checkbox;
-  final SBBSwitchStyle? switchToggle;
   final SBBControlStyle? radioButton;
   final SBBTextFieldStyle? textField;
   final SBBSegmentedButtonStyle? segmentedButton;
   final SBBSegmentedButtonStyle? redSegmentedButton;
-  final SBBListItemStyle? listItem;
   final SBBTextStyle? selectLabel;
   final SBBSliderStyle? slider;
-  final SBBChipStyle? chip;
   final SBBPaginationStyle? pagination;
 
   final Color? headerBackgroundColor;
@@ -117,15 +108,12 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   ThemeExtension<SBBControlStyles> copyWith({
     SBBControlStyle? checkbox,
     SBBSliderStyle? slider,
-    SBBChipStyle? chip,
     SBBPaginationStyle? pagination,
     SBBControlStyle? radioButton,
     SBBTextFieldStyle? textField,
     SBBSegmentedButtonStyle? segmentedButton,
     SBBSegmentedButtonStyle? redSegmentedButton,
-    SBBListItemStyle? listItem,
     SBBTextStyle? selectLabel,
-    SBBSwitchStyle? switchToggle,
     Color? headerBackgroundColor,
     Color? headerButtonBackgroundColorHighlighted,
     Color? headerIconColor,
@@ -144,15 +132,12 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   }) => SBBControlStyles(
     checkbox: checkbox ?? this.checkbox,
     slider: slider ?? this.slider,
-    chip: chip ?? this.chip,
     pagination: pagination ?? this.pagination,
     radioButton: radioButton ?? this.radioButton,
     textField: textField ?? this.textField,
     segmentedButton: segmentedButton ?? this.segmentedButton,
     redSegmentedButton: redSegmentedButton ?? this.redSegmentedButton,
-    listItem: listItem ?? this.listItem,
     selectLabel: selectLabel ?? this.selectLabel,
-    switchToggle: switchToggle ?? this.switchToggle,
     headerBackgroundColor: headerBackgroundColor ?? this.headerBackgroundColor,
     headerButtonBackgroundColorHighlighted:
         headerButtonBackgroundColorHighlighted ?? this.headerButtonBackgroundColorHighlighted,
@@ -177,15 +162,12 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     return SBBControlStyles(
       checkbox: checkbox?.lerp(other.checkbox, t),
       slider: slider?.lerp(other.slider, t),
-      chip: chip?.lerp(other.chip, t),
       pagination: pagination?.lerp(other.pagination, t),
       radioButton: radioButton?.lerp(other.radioButton, t),
       textField: textField?.lerp(other.textField, t),
       segmentedButton: segmentedButton?.lerp(other.segmentedButton, t),
       redSegmentedButton: redSegmentedButton?.lerp(other.redSegmentedButton, t),
-      listItem: listItem?.lerp(other.listItem, t),
       selectLabel: selectLabel?.lerp(other.selectLabel, t),
-      switchToggle: switchToggle?.lerp(other.switchToggle, t),
       headerBackgroundColor: Color.lerp(headerBackgroundColor, other.headerBackgroundColor, t),
       headerButtonBackgroundColorHighlighted: Color.lerp(
         headerButtonBackgroundColorHighlighted,
@@ -215,15 +197,12 @@ extension SBBControlStylesExtension on SBBControlStyles? {
     return this!.copyWith(
           checkbox: this!.checkbox.merge(other?.checkbox),
           slider: this!.slider.merge(other?.slider),
-          chip: this!.chip.merge(other?.chip),
           pagination: this!.pagination.merge(other?.pagination),
           radioButton: this!.radioButton.merge(other?.radioButton),
           textField: this!.textField.merge(other?.textField),
           segmentedButton: this!.segmentedButton.merge(other?.segmentedButton),
           redSegmentedButton: this!.redSegmentedButton.merge(other?.redSegmentedButton),
-          listItem: this!.listItem.merge(other?.listItem),
           selectLabel: this!.selectLabel.merge(other?.selectLabel),
-          switchToggle: this!.switchToggle.merge(other?.switchToggle),
           picker: this!.picker.merge(other?.picker),
           headerBackgroundColor: this!.headerBackgroundColor ?? other?.headerBackgroundColor,
           headerButtonBackgroundColorHighlighted:

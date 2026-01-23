@@ -94,8 +94,8 @@ class SelectPageState extends State<SelectPage> {
                 onChanged: null,
               ),
               const SizedBox(height: sbbDefaultSpacing),
-              SBBTertiaryButtonLarge(
-                label: 'Call showMenu() without building Widget',
+              SBBTertiaryButton(
+                labelText: 'Call showMenu() without building Widget',
                 onPressed: () {
                   SBBSelect.showMenu<int>(
                     context: context,
@@ -162,8 +162,8 @@ class SelectPageState extends State<SelectPage> {
                 onChanged: null,
               ),
               const SizedBox(height: sbbDefaultSpacing),
-              SBBTertiaryButtonLarge(
-                label: 'Call showMenu() without building Widget',
+              SBBTertiaryButton(
+                labelText: 'Call showMenu() without building Widget',
                 onPressed: () {
                   SBBMultiSelect.showMenu<int>(
                     context: context,

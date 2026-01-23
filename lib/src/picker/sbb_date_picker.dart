@@ -72,7 +72,7 @@ class SBBDatePicker extends StatefulWidget {
 
     final acceptInitialSelection = initialDate == null;
     final selectedButtonEnabled = ValueNotifier(acceptInitialSelection);
-    final selectedButtonLabel = localizations.datePickerHelpText;
+    final selectedButtonLabelText = localizations.datePickerHelpText;
 
     var selectedDate = modalDate;
 
@@ -109,7 +109,7 @@ class SBBDatePicker extends StatefulWidget {
                         onDateChanged?.call(selectedDate);
                       }
                     : null;
-                return SBBPrimaryButton(label: selectedButtonLabel, onPressed: onPressed);
+                return SBBPrimaryButton(labelText: selectedButtonLabelText, onPressed: onPressed);
               },
             ),
           ),

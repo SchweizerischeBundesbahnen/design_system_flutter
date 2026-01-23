@@ -10,50 +10,52 @@ class StatusPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.all(sbbDefaultSpacing),
-      children: [
-        const ThemeModeSegmentedButton(),
-        const SizedBox(height: sbbDefaultSpacing),
-        const SBBListHeader('Default'),
-        SBBContentBox(
-          padding: const EdgeInsets.all(sbbDefaultSpacing),
-          child: Column(
-            spacing: sbbDefaultSpacing,
-            children: [
-              SBBStatus.alert(text: text),
-              SBBStatus.warning(text: text),
-              SBBStatus.success(text: text),
-              SBBStatus.information(text: text),
-            ],
-          ),
-        ),
-        const SBBListHeader('Without text'),
-        SBBContentBox(
-          padding: const EdgeInsets.all(sbbDefaultSpacing),
-          child: Row(
-            spacing: sbbDefaultSpacing,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SBBStatus.alert(),
-              SBBStatus.warning(),
-              SBBStatus.success(),
-              SBBStatus.information(),
-            ],
-          ),
-        ),
-        const SBBListHeader('Long text'),
-        SBBContentBox(
-          padding: const EdgeInsets.all(sbbDefaultSpacing),
-          child: Column(
-            spacing: sbbDefaultSpacing,
-            children: [
-              SBBStatus.alert(text: '$text $text $text $text'),
-              SBBStatus.warning(text: '$text $text $text $text'),
-              SBBStatus.success(text: '$text $text $text $text'),
-              SBBStatus.information(text: '$text $text $text $text'),
-            ],
-          ),
+    return CustomScrollView(
+      slivers: [
+        SBBSliverHeaderbox.custom(child: const ThemeModeSegmentedButton()),
+        SliverList.list(
+          children: [
+            const SBBListHeader('Default'),
+            SBBContentBox(
+              padding: const EdgeInsets.all(sbbDefaultSpacing),
+              child: Column(
+                spacing: sbbDefaultSpacing,
+                children: [
+                  SBBStatus.alert(labelText: text),
+                  SBBStatus.warning(labelText: text),
+                  SBBStatus.success(labelText: text),
+                  SBBStatus.information(labelText: text),
+                ],
+              ),
+            ),
+            const SBBListHeader('Without text'),
+            SBBContentBox(
+              padding: const EdgeInsets.all(sbbDefaultSpacing),
+              child: Row(
+                spacing: sbbDefaultSpacing,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SBBStatus.alert(),
+                  SBBStatus.warning(),
+                  SBBStatus.success(),
+                  SBBStatus.information(),
+                ],
+              ),
+            ),
+            const SBBListHeader('Long text'),
+            SBBContentBox(
+              padding: const EdgeInsets.all(sbbDefaultSpacing),
+              child: Column(
+                spacing: sbbDefaultSpacing,
+                children: [
+                  SBBStatus.alert(labelText: text * 10),
+                  SBBStatus.warning(labelText: text * 10),
+                  SBBStatus.success(labelText: text * 10),
+                  SBBStatus.information(labelText: text * 10),
+                ],
+              ),
+            ),
+          ],
         ),
       ],
     );

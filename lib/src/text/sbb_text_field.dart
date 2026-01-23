@@ -217,34 +217,31 @@ class _SBBTextField extends State<SBBTextField> {
   }
 
   @override
-  Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsetsDirectional.only(start: sbbDefaultSpacing, top: 0.0),
-    child: Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        if (widget.icon != null)
-          Padding(padding: const EdgeInsetsDirectional.only(top: 12, end: 8.0), child: Icon(widget.icon)),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Expanded(child: _buildTextField()),
-                  if (widget.suffixIcon != null) widget.suffixIcon!,
-                ],
-              ),
-              SBBTextFieldUnderline(
-                errorText: widget.errorText,
-                hasFocus: _effectiveFocusNode.hasFocus,
-                isLastElement: widget.isLastElement,
-              ),
-            ],
-          ),
+  Widget build(BuildContext context) => Row(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      if (widget.icon != null)
+        Padding(padding: const EdgeInsetsDirectional.only(top: 12, end: 8.0), child: Icon(widget.icon)),
+      Expanded(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(child: _buildTextField()),
+                if (widget.suffixIcon != null) widget.suffixIcon!,
+              ],
+            ),
+            SBBTextFieldUnderline(
+              errorText: widget.errorText,
+              hasFocus: _effectiveFocusNode.hasFocus,
+              isLastElement: widget.isLastElement,
+            ),
+          ],
         ),
-      ],
-    ),
+      ),
+    ],
   );
 
   TextField _buildTextField() {

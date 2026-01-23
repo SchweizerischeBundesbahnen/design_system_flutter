@@ -8,15 +8,18 @@ void main() {
   testWidgets('status test', (WidgetTester tester) async {
     const String text = 'Lorem ipsum sit dolor';
     final widget = Column(
+      spacing: sbbDefaultSpacing,
       children: [
-        SBBStatus.alert(text: text),
-        const SizedBox(height: sbbDefaultSpacing),
-        SBBStatus.warning(text: text),
-        const SizedBox(height: sbbDefaultSpacing),
-        SBBStatus.success(text: text),
-        const SizedBox(height: sbbDefaultSpacing),
-        SBBStatus.information(text: text),
-        const SizedBox(height: sbbDefaultSpacing),
+        SBBStatus.alert(labelText: text),
+        SBBStatus.warning(labelText: text),
+        SBBStatus.success(labelText: text),
+        SBBStatus.information(labelText: text),
+        SBBStatus.alert(),
+        SBBStatus.alert(iconData: SBBIcons.airplane_small),
+        SBBStatus.alert(
+          style: SBBStatusStyle(backgroundColor: SBBColors.turquoise),
+          label: Text('Custom'),
+        ),
       ],
     );
 

@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/button/theme/sbb_button_style_x.dart';
+import 'package:sbb_design_system_mobile/src/checkbox/theme/default_sbb_checkbox_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/chip/theme/default_sbb_chip_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/container/container.dart';
-import 'package:sbb_design_system_mobile/src/container/theme/default_sbb_content_box_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/radio/theme/default_sbb_radio_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/switch/theme/default_sbb_switch_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/stepper/theme/default_sbb_stepper_theme_data.dart';
 
-const sbbDefaultSpacing = 16.0;
+import '../button/theme/default_button_themes.dart';
+import '../container/theme/default_sbb_content_box_theme_data.dart';
+import '../list_item/theme/default_sbb_list_item_theme_data.dart';
+import '../status/theme/default_sbb_status_theme_data.dart';
+
+@Deprecated('Use SBBSpacing.medium and others instead.')
+const sbbDefaultSpacing = SBBSpacing.medium;
 
 class SBBTheme {
   SBBTheme._();
@@ -12,24 +22,38 @@ class SBBTheme {
   static ThemeData light({
     bool boldFont = false,
     SBBBaseStyle? baseStyle,
-    SBBButtonStyles? buttonStyles,
+    SBBPrimaryButtonThemeData? primaryButtonTheme,
+    SBBSecondaryButtonThemeData? secondaryButtonTheme,
+    SBBTertiaryButtonThemeData? tertiaryButtonTheme,
+    SBBCheckboxThemeData? checkboxTheme,
+    SBBChipThemeData? chipTheme,
+    SBBContentBoxThemeData? contentBoxTheme,
     SBBStepperThemeData? stepperStyle,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
-    @Deprecated('Use contentBoxTheme instead') SBBContentBoxStyle? groupStyle,
-    SBBContentBoxThemeData? contentBoxTheme,
+    SBBListItemThemeData? listItemTheme,
+    SBBRadioThemeData? radioTheme,
+    SBBStatusThemeData? statusTheme,
+    SBBSwitchThemeData? switchTheme,
     SBBTextTheme? textTheme,
     SBBToastStyle? toastStyle,
   }) => createTheme(
     brightness: Brightness.light,
     boldFont: boldFont,
     baseStyle: baseStyle,
-    buttonStyles: buttonStyles,
+    primaryButtonTheme: primaryButtonTheme,
+    secondaryButtonTheme: secondaryButtonTheme,
+    tertiaryButtonTheme: tertiaryButtonTheme,
+    checkboxTheme: checkboxTheme,
+    chipTheme: chipTheme,
+    contentBoxTheme: contentBoxTheme,
+    radioTheme: radioTheme,
     stepperStyle: stepperStyle,
     controlStyles: controlStyles,
     headerBoxStyle: headerBoxStyle,
-    groupStyle: groupStyle,
-    contentBoxTheme: contentBoxTheme,
+    listItemTheme: listItemTheme,
+    statusTheme: statusTheme,
+    switchTheme: switchTheme,
     textTheme: textTheme,
     toastStyle: toastStyle,
   );
@@ -37,24 +61,38 @@ class SBBTheme {
   static ThemeData dark({
     bool boldFont = false,
     SBBBaseStyle? baseStyle,
-    SBBButtonStyles? buttonStyles,
+    SBBPrimaryButtonThemeData? primaryButtonTheme,
+    SBBSecondaryButtonThemeData? secondaryButtonTheme,
+    SBBTertiaryButtonThemeData? tertiaryButtonTheme,
+    SBBCheckboxThemeData? checkboxTheme,
+    SBBChipThemeData? chipTheme,
+    SBBContentBoxThemeData? contentBoxTheme,
+    SBBRadioThemeData? radioTheme,
     SBBStepperThemeData? stepperStyle,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
-    @Deprecated('Use contentBoxTheme instead') SBBContentBoxStyle? groupStyle,
-    SBBContentBoxThemeData? contentBoxTheme,
+    SBBListItemThemeData? listItemTheme,
+    SBBStatusThemeData? statusTheme,
+    SBBSwitchThemeData? switchTheme,
     SBBTextTheme? textTheme,
     SBBToastStyle? toastStyle,
   }) => createTheme(
     brightness: Brightness.dark,
     boldFont: boldFont,
     baseStyle: baseStyle,
-    buttonStyles: buttonStyles,
+    primaryButtonTheme: primaryButtonTheme,
+    secondaryButtonTheme: secondaryButtonTheme,
+    tertiaryButtonTheme: tertiaryButtonTheme,
+    checkboxTheme: checkboxTheme,
+    chipTheme: chipTheme,
+    contentBoxTheme: contentBoxTheme,
+    radioTheme: radioTheme,
     stepperStyle: stepperStyle,
     controlStyles: controlStyles,
     headerBoxStyle: headerBoxStyle,
-    groupStyle: groupStyle,
-    contentBoxTheme: contentBoxTheme,
+    listItemTheme: listItemTheme,
+    statusTheme: statusTheme,
+    switchTheme: switchTheme,
     textTheme: textTheme,
     toastStyle: toastStyle,
   );
@@ -63,12 +101,19 @@ class SBBTheme {
     required Brightness brightness,
     bool boldFont = false,
     SBBBaseStyle? baseStyle,
-    SBBButtonStyles? buttonStyles,
+    SBBPrimaryButtonThemeData? primaryButtonTheme,
+    SBBSecondaryButtonThemeData? secondaryButtonTheme,
+    SBBTertiaryButtonThemeData? tertiaryButtonTheme,
+    SBBCheckboxThemeData? checkboxTheme,
+    SBBChipThemeData? chipTheme,
     SBBStepperThemeData? stepperStyle,
     SBBControlStyles? controlStyles,
-    SBBHeaderBoxStyle? headerBoxStyle,
-    @Deprecated('Use contentBoxTheme instead') SBBContentBoxStyle? groupStyle,
     SBBContentBoxThemeData? contentBoxTheme,
+    SBBHeaderBoxStyle? headerBoxStyle,
+    SBBListItemThemeData? listItemTheme,
+    SBBRadioThemeData? radioTheme,
+    SBBStatusThemeData? statusTheme,
+    SBBSwitchThemeData? switchTheme,
     SBBTextTheme? textTheme,
     SBBToastStyle? toastStyle,
   }) {
@@ -76,8 +121,20 @@ class SBBTheme {
     final defaultBaseStyle = SBBBaseStyle.$default(brightness: brightness, boldFont: boldFont);
     final mergedBaseStyle = baseStyle.merge(defaultBaseStyle);
 
-    final defaultButtonStyles = SBBButtonStyles.$default(baseStyle: mergedBaseStyle);
-    final mergedButtonStyles = buttonStyles.merge(defaultButtonStyles);
+    final defaultPrimaryButtonTheme = DefaultSBBPrimaryButtonThemeData(mergedBaseStyle);
+    final mergedPrimaryButtonTheme = defaultPrimaryButtonTheme.merge(primaryButtonTheme);
+
+    final defaultSecondaryButtonTheme = DefaultSBBSecondaryButtonThemeData(mergedBaseStyle);
+    final mergedSecondaryButtonTheme = defaultSecondaryButtonTheme.merge(secondaryButtonTheme);
+
+    final defaultTertiaryButtonTheme = DefaultSBBTertiaryButtonThemeData(mergedBaseStyle);
+    final mergedTertiaryButtonTheme = defaultTertiaryButtonTheme.merge(tertiaryButtonTheme);
+
+    final defaultCheckboxTheme = DefaultSBBCheckboxThemeData(mergedBaseStyle);
+    final mergedCheckboxTheme = defaultCheckboxTheme.merge(checkboxTheme);
+
+    final defaultChipTheme = DefaultSBBChipThemeData(mergedBaseStyle);
+    final mergedChipTheme = defaultChipTheme.merge(chipTheme);
 
     final defaultStepperTheme = DefaultSBBStepperThemeData(mergedBaseStyle);
     final mergedStepperTheme = defaultStepperTheme.merge(stepperStyle);
@@ -85,14 +142,23 @@ class SBBTheme {
     final defaultControlStyles = SBBControlStyles.$default(baseStyle: mergedBaseStyle);
     final mergedControlStyles = controlStyles.merge(defaultControlStyles);
 
+    final defaultContentBoxTheme = DefaultSBBContentBoxThemeData(baseStyle: mergedBaseStyle);
+    final mergedContentBoxTheme = defaultContentBoxTheme.merge(contentBoxTheme);
+
     final defaultHeaderBoxStyle = SBBHeaderBoxStyle.$default(baseStyle: mergedBaseStyle);
     final mergedHeaderBoxStyle = headerBoxStyle.merge(defaultHeaderBoxStyle);
 
-    final defaultGroupStyle = SBBContentBoxStyle.$default(baseStyle: mergedBaseStyle);
-    final mergedGroupStyle = groupStyle.merge(defaultGroupStyle);
+    final defaultListItemTheme = DefaultSBBListItemThemeData(baseStyle: mergedBaseStyle);
+    final mergedListItemTheme = defaultListItemTheme.merge(listItemTheme);
 
-    final defaultContentBoxTheme = DefaultSBBContentBoxTheme(baseStyle: mergedBaseStyle);
-    final mergedContentBoxTheme = defaultContentBoxTheme.merge(contentBoxTheme);
+    final defaultRadioTheme = DefaultSBBRadioThemeData(mergedBaseStyle);
+    final mergedRadioTheme = defaultRadioTheme.merge(radioTheme);
+
+    final defaultStatusTheme = DefaultSBBStatusThemeData(baseStyle: mergedBaseStyle);
+    final mergedStatusTheme = defaultStatusTheme.merge(statusTheme);
+
+    final defaultSwitchTheme = DefaultSBBSwitchThemeData(mergedBaseStyle);
+    final mergedSwitchTheme = defaultSwitchTheme.merge(switchTheme);
 
     final defaultTextTheme = SBBTextTheme.$default(baseStyle: mergedBaseStyle);
     final mergedTextTheme = defaultTextTheme.merge(textTheme);
@@ -103,12 +169,19 @@ class SBBTheme {
     return raw(
       brightness: brightness,
       baseStyle: mergedBaseStyle,
-      buttonStyles: mergedButtonStyles,
+      primaryButtonTheme: mergedPrimaryButtonTheme,
+      secondaryButtonTheme: mergedSecondaryButtonTheme,
+      tertiaryButtonTheme: mergedTertiaryButtonTheme,
+      checkboxTheme: mergedCheckboxTheme,
+      chipTheme: mergedChipTheme,
       stepperTheme: mergedStepperTheme,
       controlStyles: mergedControlStyles,
-      headerBoxStyle: mergedHeaderBoxStyle,
-      groupStyle: mergedGroupStyle,
       contentBoxTheme: mergedContentBoxTheme,
+      headerBoxStyle: mergedHeaderBoxStyle,
+      listItemTheme: mergedListItemTheme,
+      radioTheme: mergedRadioTheme,
+      statusTheme: mergedStatusTheme,
+      switchTheme: mergedSwitchTheme,
       textTheme: mergedTextTheme,
       toastStyle: mergedToastStyle,
     );
@@ -117,81 +190,59 @@ class SBBTheme {
   static ThemeData raw({
     required Brightness brightness,
     required SBBBaseStyle baseStyle,
-    required SBBButtonStyles buttonStyles,
+    required SBBPrimaryButtonThemeData primaryButtonTheme,
+    required SBBSecondaryButtonThemeData secondaryButtonTheme,
+    required SBBTertiaryButtonThemeData tertiaryButtonTheme,
+    required SBBCheckboxThemeData checkboxTheme,
+    required SBBChipThemeData chipTheme,
+    required SBBContentBoxThemeData contentBoxTheme,
     required SBBStepperThemeData stepperTheme,
     required SBBControlStyles controlStyles,
     required SBBHeaderBoxStyle headerBoxStyle,
-    @Deprecated('Use contentBoxTheme instead.') required SBBContentBoxStyle groupStyle,
-    required SBBContentBoxThemeData contentBoxTheme,
+    required SBBListItemThemeData listItemTheme,
+    required SBBRadioThemeData radioTheme,
+    required SBBStatusThemeData statusTheme,
+    required SBBSwitchThemeData switchTheme,
     required SBBTextTheme textTheme,
     required SBBToastStyle toastStyle,
-  }) => ThemeData(
-    colorScheme: ColorScheme.fromSwatch(
-      primarySwatch: baseStyle.primarySwatch!,
-      accentColor: baseStyle.primaryColor,
-      backgroundColor: baseStyle.backgroundColor,
-      errorColor: baseStyle.errorColor,
-      brightness: brightness,
-    ).copyWith(surfaceTint: SBBColors.transparent),
-    scaffoldBackgroundColor: baseStyle.backgroundColor,
-    iconTheme: IconThemeData(color: baseStyle.iconColor, size: sbbIconSizeSmall),
-    dividerTheme: DividerThemeData(thickness: 1.0, space: 0.0, color: baseStyle.dividerColor),
-    fontFamily: baseStyle.defaultFontFamily,
-    textTheme: baseStyle.createTextTheme(),
-    appBarTheme: controlStyles.appBarTheme,
-    filledButtonTheme: buttonStyles.filledButtonTheme,
-    outlinedButtonTheme: buttonStyles.outlinedButtonTheme,
-    textButtonTheme: buttonStyles.textButtonTheme,
-    materialTapTargetSize: MaterialTapTargetSize.padded,
-    textSelectionTheme: controlStyles.textSelectionTheme,
-    extensions: [
-      baseStyle,
-      buttonStyles,
-      stepperTheme,
-      controlStyles,
-      headerBoxStyle,
-      groupStyle,
-      contentBoxTheme,
-      textTheme,
-      toastStyle,
-    ],
-  );
-
-  /// Convenience method for easier use of [WidgetStateProperty.all].
-  static WidgetStateProperty<T> allStates<T>(T value) {
-    return WidgetStateProperty.all(value);
-  }
-
-  /// Convenience method for easier use of [WidgetStateProperty.resolveWith].
-  static WidgetStateProperty<T?> resolveStatesWith<T>({
-    required T defaultValue,
-    T? pressedValue,
-    T? disabledValue,
-    T? hoveredValue,
-    String? parent,
-    T? selectedValue,
   }) {
-    return WidgetStateProperty.resolveWith((states) {
-      // disabled
-      if (states.contains(WidgetState.disabled) && disabledValue != null) {
-        return disabledValue;
-      }
-
-      // pressed / focused
-      if (states.any({WidgetState.pressed, WidgetState.focused}.contains) && pressedValue != null) {
-        return pressedValue;
-      }
-      // hovered
-      if (states.contains(WidgetState.hovered) && hoveredValue != null) {
-        return hoveredValue;
-      }
-
-      // selected
-      if (states.contains(WidgetState.selected) && selectedValue != null) {
-        return selectedValue;
-      }
-      // default
-      return defaultValue;
-    });
+    return ThemeData(
+      colorScheme: ColorScheme.fromSwatch(
+        primarySwatch: baseStyle.primarySwatch!,
+        accentColor: baseStyle.primaryColor,
+        backgroundColor: baseStyle.backgroundColor,
+        errorColor: baseStyle.errorColor,
+        brightness: brightness,
+      ).copyWith(surfaceTint: SBBColors.transparent),
+      scaffoldBackgroundColor: baseStyle.backgroundColor,
+      iconTheme: IconThemeData(color: baseStyle.iconColor, size: sbbIconSizeSmall),
+      dividerTheme: DividerThemeData(thickness: 1.0, space: 0.0, color: baseStyle.dividerColor),
+      fontFamily: baseStyle.defaultFontFamily,
+      textTheme: baseStyle.createTextTheme(),
+      appBarTheme: controlStyles.appBarTheme,
+      filledButtonTheme: FilledButtonThemeData(style: primaryButtonTheme.style?.toButtonStyle()),
+      outlinedButtonTheme: OutlinedButtonThemeData(style: secondaryButtonTheme.style?.toButtonStyle()),
+      textButtonTheme: TextButtonThemeData(style: tertiaryButtonTheme.style?.toButtonStyle()),
+      materialTapTargetSize: MaterialTapTargetSize.padded,
+      textSelectionTheme: controlStyles.textSelectionTheme,
+      extensions: [
+        baseStyle,
+        primaryButtonTheme,
+        secondaryButtonTheme,
+        tertiaryButtonTheme,
+        checkboxTheme,
+        contentBoxTheme,
+        chipTheme,
+        controlStyles,
+        headerBoxStyle,
+        listItemTheme,
+        radioTheme,
+        statusTheme,
+        stepperTheme,
+        switchTheme,
+        textTheme,
+        toastStyle,
+      ],
+    );
   }
 }

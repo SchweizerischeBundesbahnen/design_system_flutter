@@ -37,12 +37,17 @@ class RadioTest extends StatelessWidget {
       const SBBListHeader('RadioButton'),
       Padding(
         padding: const EdgeInsets.all(sbbDefaultSpacing * .5),
-        child: Row(
-          children: [
-            SBBRadio<int>(groupValue: groupValue, onChanged: (newValue) {}, value: 1),
-            SBBRadio<int>(groupValue: groupValue, onChanged: null, value: 2),
-            SBBRadio<int>(groupValue: groupValue, onChanged: (newValue) {}, value: 2),
-          ],
+        child: SBBRadioGroup<int>(
+          groupValue: groupValue,
+          onChanged: (_) {},
+          child: Row(
+            children: [
+              SBBRadio<int>(value: 1),
+              SBBRadio<int>(value: 2, enabled: false),
+              SBBRadio<int>(value: 3),
+              SBBRadio<int>(value: 4, style: SBBRadioStyle(fillColor: WidgetStatePropertyAll(SBBColors.turquoise))),
+            ],
+          ),
         ),
       ),
       const SizedBox(height: sbbDefaultSpacing),
@@ -50,125 +55,117 @@ class RadioTest extends StatelessWidget {
       SBBContentBox(
         child: Column(
           children: [
-            SBBRadioListItem<int>(value: 1, groupValue: listItemGroupValue, onChanged: (newValue) {}, label: 'Label'),
-            SBBRadioListItem<int>(
-              value: 2,
+            SBBRadioGroup(
               groupValue: listItemGroupValue,
-              onChanged: (newValue) {},
-              label: 'Button',
-              trailingIcon: SBBIcons.circle_information_small_small,
-              onCallToAction: () {},
-            ),
-            SBBRadioListItem<int>(
-              value: 3,
-              groupValue: listItemGroupValue,
-              onChanged: (newValue) {},
-              label: 'Leading and Button',
-              leadingIcon: SBBIcons.alarm_clock_small,
-              trailingIcon: SBBIcons.circle_information_small_small,
-              onCallToAction: () {},
-            ),
-            SBBRadioListItem<int>(
-              value: 4,
-              groupValue: listItemGroupValue,
-              onChanged: null,
-              label: 'Leading Icon, Button (Disabled)',
-              leadingIcon: SBBIcons.alarm_clock_small,
-              trailingIcon: SBBIcons.circle_information_small_small,
-              onCallToAction: () {},
-            ),
-            SBBRadioListItem<int>(
-              value: 5,
-              groupValue: listItemGroupValue,
-              onChanged: (newValue) {},
-              label: 'Leading Icon',
-              leadingIcon: SBBIcons.alarm_clock_small,
-            ),
-            SBBRadioListItem<int>(
-              value: 6,
-              groupValue: listItemGroupValue,
-              onChanged: (newValue) {},
-              label: 'Leading and Trailing Icon',
-              leadingIcon: SBBIcons.alarm_clock_small,
-              trailingIcon: SBBIcons.circle_information_small_small,
-            ),
-            SBBRadioListItem<int>(
-              value: 7,
-              groupValue: listItemGroupValue,
-              onChanged: null,
-              label: 'Leading and Trailing Icon (Disabled)',
-              leadingIcon: SBBIcons.alarm_clock_small,
-              trailingIcon: SBBIcons.circle_information_small_small,
-            ),
-            SBBRadioListItem<int>.custom(
-              value: 8,
-              groupValue: listItemGroupValue,
-              onChanged: (newValue) {},
-              label: 'Custom trailing Widget',
-              trailingWidget: const Padding(
-                padding: EdgeInsets.only(top: sbbDefaultSpacing * .75, right: sbbDefaultSpacing),
-                child: Text('CHF 0.99'),
+              onChanged: (_) {},
+              child: Column(
+                children: SBBListItem.divideListItems(
+                  context: context,
+                  items: [
+                    SBBRadioListItem<int>(value: 1, titleText: 'Label'),
+                    SBBRadioListItem<int>(
+                      value: 2,
+                      titleText: 'Button',
+                      padding: EdgeInsets.fromLTRB(16.0, 0.0, 8.0, 0.0),
+                      trailing: SBBTertiaryButtonSmall(
+                        iconData: SBBIcons.circle_information_small_small,
+                        onPressed: () {},
+                      ),
+                    ),
+                    SBBRadioListItem<int>(
+                      value: 3,
+                      titleText: 'Leading and Button',
+                      padding: EdgeInsets.fromLTRB(16.0, 0.0, 8.0, 0.0),
+                      trailing: SBBTertiaryButtonSmall(
+                        iconData: SBBIcons.circle_information_small_small,
+                        onPressed: () {},
+                      ),
+                    ),
+                    SBBRadioListItem<int>(
+                      value: 4,
+                      enabled: false,
+                      titleText: 'Leading Icon, Button (Disabled)',
+                      padding: EdgeInsets.fromLTRB(16.0, 0.0, 8.0, 0.0),
+                      trailing: SBBTertiaryButtonSmall(
+                        iconData: SBBIcons.circle_information_small_small,
+                        onPressed: null,
+                      ),
+                    ),
+                    SBBRadioListItem<int>(
+                      value: 5,
+                      titleText: 'Leading Icon',
+                      leadingIconData: SBBIcons.alarm_clock_small,
+                    ),
+                    SBBRadioListItem<int>(
+                      value: 6,
+                      titleText: 'Leading and Trailing Icon',
+                      leadingIconData: SBBIcons.alarm_clock_small,
+                      trailingIconData: SBBIcons.circle_information_small_small,
+                    ),
+                    SBBRadioListItem<int>(
+                      value: 7,
+                      titleText: 'Leading and Trailing Icon (Disabled)',
+                      leadingIconData: SBBIcons.alarm_clock_small,
+                      trailingIconData: SBBIcons.circle_information_small_small,
+                    ),
+                    SBBRadioListItem<int>(
+                      value: 8,
+                      titleText: 'Custom Trailing',
+                      trailing: Text('CHF 0.99'),
+                    ),
+                    SBBRadioListItem<int>(
+                      value: 7,
+                      titleText: 'Leading and Trailing Icon (Disabled)',
+                      leadingIconData: SBBIcons.alarm_clock_small,
+                      trailingIconData: SBBIcons.circle_information_small_small,
+                      enabled: false,
+                    ),
+                    SBBRadioListItem<int>(
+                      value: 9,
+                      title: Text('Multiline Label with\nSecondary Label'),
+                      subtitleText: 'Test',
+                    ),
+                  ],
+                ).toList(growable: false),
               ),
-            ),
-            SBBRadioListItem<int>(
-              value: 9,
-              groupValue: listItemGroupValue,
-              onChanged: (newValue) {},
-              label: 'Multiline Label with\nSecondary Label',
-              allowMultilineLabel: true,
-              secondaryLabel: 'Test',
-              isLastElement: true,
             ),
           ],
         ),
       ),
       const SizedBox(height: sbbDefaultSpacing),
       const SBBListHeader('RadioButton Item - List'),
-      Column(
-        spacing: sbbDefaultSpacing * 0.5,
-        children: [
-          SBBContentBox(
-            child: SBBRadioListItem<int>.boxed(
+      SBBRadioGroup(
+        groupValue: listItemGroupValue,
+        onChanged: (_) {},
+        child: Column(
+          spacing: sbbDefaultSpacing * 0.5,
+          children: [
+            SBBRadioListItemBoxed<int>(
               value: 1,
-              groupValue: listItemGroupValue,
-              onChanged: (newValue) {},
-              label: 'Label',
+              titleText: 'Label',
             ),
-          ),
-          SBBContentBox(
-            child: SBBRadioListItem<int>.boxed(
+            SBBRadioListItemBoxed<int>(
               value: 2,
-              groupValue: listItemGroupValue,
-              onChanged: (newValue) {},
-              label: 'Leading and Trailing Icon',
-              leadingIcon: SBBIcons.alarm_clock_small,
-              trailingIcon: SBBIcons.dog_small,
+              titleText: 'Leading and Trailing Icon',
+              leadingIconData: SBBIcons.alarm_clock_small,
+              trailingIconData: SBBIcons.dog_small,
             ),
-          ),
-          SBBContentBox(
-            child: SBBRadioListItem<int>.boxed(
+            SBBRadioListItemBoxed<int>(
               value: 3,
-              groupValue: listItemGroupValue,
-              onChanged: (newValue) {},
-              label: 'Button',
-              trailingIcon: SBBIcons.circle_information_small_small,
-              onCallToAction: () => {},
-            ),
-          ),
-          SBBContentBox(
-            child: SBBRadioListItem<int>.custom(
-              value: 4,
-              groupValue: listItemGroupValue,
-              onChanged: (newValue) {},
-              label: 'Custom trailing Widget',
-              trailingWidget: const Padding(
-                padding: EdgeInsets.only(top: sbbDefaultSpacing * .75, right: sbbDefaultSpacing),
-                child: Text('CHF 0.99'),
+              titleText: 'Button',
+              padding: EdgeInsets.fromLTRB(16.0, 0.0, 8.0, 0.0),
+              trailing: SBBTertiaryButtonSmall(
+                iconData: SBBIcons.circle_information_small_small,
+                onPressed: () {},
               ),
-              isLastElement: true,
             ),
-          ),
-        ],
+            SBBRadioListItemBoxed<int>(
+              value: 4,
+              titleText: 'Custom Trailing',
+              trailing: Text('CHF 0.99'),
+            ),
+          ],
+        ),
       ),
     ],
   );

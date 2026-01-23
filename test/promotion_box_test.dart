@@ -44,7 +44,7 @@ void main() {
               ),
               badgeText: 'Custom leading and trailing widget',
               leading: Icon(SBBIcons.train_large),
-              trailing: SBBTertiaryButtonSmall(label: 'Trailing Button', onPressed: () {}),
+              trailing: SBBTertiaryButtonSmall(labelText: 'Trailing Button', onPressed: () {}),
             ),
             const SizedBox(height: 8.0),
             SBBPromotionBox.custom(
@@ -55,7 +55,7 @@ void main() {
               onTap: () {},
               badgeText: 'Custom with on tap',
               leading: Icon(SBBIcons.train_large),
-              trailing: SBBTertiaryButtonSmall(label: 'Trailing Button', onPressed: () {}),
+              trailing: SBBTertiaryButtonSmall(labelText: 'Trailing Button', onPressed: () {}),
               style: _customBoxStyle(context),
             ),
           ],
