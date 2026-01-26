@@ -71,7 +71,7 @@ class _TextFieldPageState extends State<TextFieldPage> {
                       SBBTextInput(
                         decoration: SBBInputDecoration(
                           labelText: 'With Placeholder',
-                          // label: Container(color: SBBColors.green, width: 100, height: 200),
+                          // label: Container(color: SBBColors.green, width: 100, height: 2),
                           placeholderText: 'Placeholder',
                           leadingIconData: SBBIcons.unicorn_small,
                         ),

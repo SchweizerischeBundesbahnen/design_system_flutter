@@ -250,6 +250,7 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
       floatingLabelProgress: _floatingLabelAnimation.value,
       floatingLabelInputGap: _effectiveFloatingLabelInputGap(inputDecorationTheme),
       minInputHeight: widget.minInputHeight,
+      maxLabelHeight: maxLabelTextHeight,
       child: widget.child,
     );
   }
@@ -313,6 +314,7 @@ class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSl
     required this.floatingLabelProgress,
     required this.floatingLabelInputGap,
     required this.minInputHeight,
+    this.maxLabelHeight,
     this.child,
   });
 
@@ -324,6 +326,7 @@ class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSl
   final double floatingLabelProgress;
   final double floatingLabelInputGap;
   final double minInputHeight;
+  final double? maxLabelHeight;
   final Widget? child;
 
   @override
@@ -353,6 +356,7 @@ class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSl
       floatingLabelProgress: floatingLabelProgress,
       floatingLabelInputGap: floatingLabelInputGap,
       minInputHeight: minInputHeight,
+      maxLabelHeight: maxLabelHeight,
     );
   }
 
@@ -366,7 +370,8 @@ class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSl
       ..isFocused = isFocused
       ..floatingLabelProgress = floatingLabelProgress
       ..floatingLabelInputGap = floatingLabelInputGap
-      ..minInputHeight = minInputHeight;
+      ..minInputHeight = minInputHeight
+      ..maxLabelHeight = maxLabelHeight;
   }
 }
 
@@ -405,6 +410,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     required double floatingLabelProgress,
     required double floatingLabelInputGap,
     required double minInputHeight,
+    double? maxLabelHeight,
   }) : _decoration = decoration,
        _expands = expands,
        _isMultiline = isMultiline,
@@ -412,7 +418,8 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
        _isFocused = isFocused,
        _floatingLabelProgress = floatingLabelProgress,
        _floatingLabelInputGap = floatingLabelInputGap,
-       _minInputHeight = minInputHeight;
+       _minInputHeight = minInputHeight,
+       _maxLabelHeight = maxLabelHeight;
 
   RenderBox? get label => childForSlot(_SBBDecorationSlot.label);
 
@@ -514,6 +521,15 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     markNeedsLayout();
   }
 
+  double? get maxLabelHeight => _maxLabelHeight;
+  double? _maxLabelHeight;
+
+  set maxLabelHeight(double? value) {
+    if (_maxLabelHeight == value) return;
+    _maxLabelHeight = value;
+    markNeedsLayout();
+  }
+
   // Records where the label was painted (for transform).
   Matrix4? _labelTransform;
 
@@ -603,7 +619,8 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     // For single-line case: Always reserve space for both floating label and input
     // to ensure height doesn't change during animation.
     // The height should accommodate: floatingLabel + gap + input when fully floated.
-    final double stableContentHeight = labelHeight + floatingLabelInputGap + maxInputHeight;
+    final double stableContentHeight =
+        (isMultiline ? maxLabelHeight ?? labelHeight : labelHeight) + floatingLabelInputGap + maxInputHeight;
 
     // Title row height is max of leading, content area, trailing
     final double titleRowHeight = [
@@ -663,7 +680,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     // if expands is true, needs to be laid out at the bottom
     final double topAlignedErrorY = [
       leadingOffset.dy + leadingHeight,
-      math.max(stableContentHeight, 41.5),
+      isMultiline ? stableContentHeight : inputOffset.dy + maxInputHeight,
       trailingOffset.dy + trailingHeight,
     ].reduce(math.max);
     final errorY = expands ? constraints.maxHeight - errorHeight : topAlignedErrorY;
@@ -830,10 +847,6 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     return _boxParentData(input).offset.dy + (input.getDistanceToActualBaseline(baseline) ?? input.size.height);
   }
 
-  void _paintLabel(PaintingContext context, Offset offset) {
-    context.paintChild(label!, offset);
-  }
-
   @override
   void paint(PaintingContext context, Offset offset) {
     void doPaint(RenderBox? child) {
@@ -844,46 +857,12 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
 
     doPaint(container);
     doPaint(label);
-
-    // // Paint label with transform for scaling animation
-    // if (label != null) {
-    //   final Offset labelOffset = _boxParentData(label!).offset;
-    //
-    //   // The label should stay at its left position, only move vertically
-    //   final double dx = labelOffset.dx;
-    //   final double dy = labelOffset.dy;
-    //
-    //   _labelTransform = Matrix4.identity()..translateByDouble(dx, dy, 0, 1);
-    //
-    //   layer = context.pushTransform(
-    //     needsCompositing,
-    //     offset,
-    //     _labelTransform!,
-    //     _paintLabel,
-    //     oldLayer: layer as TransformLayer?,
-    //   );
-    // } else {
-    //   doPaint(label);
-    //   layer = null;
-    // }
-
     doPaint(leading);
     doPaint(placeholder);
     doPaint(input);
     doPaint(trailing);
     doPaint(error);
   }
-
-  // @override
-  // void applyPaintTransform(RenderObject child, Matrix4 transform) {
-  //   if (child == label && _labelTransform != null) {
-  //     final Offset labelOffset = _boxParentData(label!).offset;
-  //     transform
-  //       ..multiply(_labelTransform!)
-  //       ..translateByDouble(-labelOffset.dx, -labelOffset.dy, 0, 1);
-  //   }
-  //   super.applyPaintTransform(child, transform);
-  // }
 
   @override
   bool hitTestChildren(BoxHitTestResult result, {required Offset position}) {

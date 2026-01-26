@@ -6,7 +6,6 @@ import 'package:flutter/services.dart';
 import '../../sbb_design_system_mobile.dart';
 import 'decoration/sbb_input_decorator.dart';
 
-// TODO: think about case when multiline (center between baselines?)
 // TODO: add asserts to SBBInputDecoration
 // TODO: expose FloatingLabelBehavior
 // TODO: think about text scaling
