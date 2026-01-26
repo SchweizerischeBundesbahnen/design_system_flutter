@@ -511,15 +511,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     required ChildLayouter layoutChild,
     required _ChildBaselineGetter getBaseline,
   }) {
-    assert(
-      constraints.maxWidth < double.infinity,
-      'An SBBInputDecorator, which is typically created by a SBBTextInput, cannot '
-      'have an unbounded width.\n'
-      'This happens when the parent widget does not provide a finite width '
-      'constraint. For example, if the InputDecorator is contained by a Row, '
-      'then its width must be constrained. An Expanded widget or a SizedBox '
-      'can be used to constrain the width.',
-    );
+    _assertHasBoundedWidth(constraints);
 
     final BoxConstraints looseConstraints = constraints.loosen();
 
@@ -532,7 +524,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
 
     final BoxConstraints titleRowConstraints = looseConstraints.deflate(EdgeInsets.only(bottom: errorHeight));
 
-    // Layout leading if present
+    // Layout leading
     double leadingWidth = 0.0;
     double leadingHeight = 0.0;
     if (leading != null) {
@@ -541,7 +533,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
       leadingHeight = leadingSize.height;
     }
 
-    // Layout trailing if present
+    // Layout trailing
     double trailingWidth = 0.0;
     double trailingHeight = 0.0;
     if (trailing != null) {
@@ -550,18 +542,17 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
       trailingHeight = trailingSize.height;
     }
 
-    // Calculate available width for input (and label)
-    final double availableInputWidth = constraints.maxWidth - leadingWidth - trailingWidth;
+    _assertTrailingLeadingDoNotOverflow(constraints, leadingWidth, trailingWidth);
 
-    // Layout label with same width constraints as input
+    // Enforce input / placeholder and label to have maximum available width
+    final double availableInputWidth = constraints.maxWidth - leadingWidth - trailingWidth;
+    final inputConstraints = titleRowConstraints.tighten(width: availableInputWidth);
+
+    // Layout label
     double labelHeight = 0.0;
     if (label != null) {
-      final BoxConstraints labelConstraints = looseConstraints.copyWith(maxWidth: availableInputWidth);
-      labelHeight = layoutChild(label!, labelConstraints).height;
+      labelHeight = layoutChild(label!, inputConstraints).height;
     }
-
-    // Layout input with constraints
-    final BoxConstraints inputConstraints = constraints.tighten(width: availableInputWidth);
 
     // Layout input
     double inputHeight = 0.0;
@@ -569,13 +560,13 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
       inputHeight = layoutChild(input!, inputConstraints).height;
     }
 
-    // Layout placeholder with same constraints as input
+    // Layout placeholder
     double placeholderHeight = 0.0;
     if (placeholder != null) {
       placeholderHeight = layoutChild(placeholder!, inputConstraints).height;
     }
 
-    // Calculate the maximum height among input/placeholder
+    // Calculate the maximum height among input/placeholder (placeholder only shown if input is empty, has size zero)
     final double maxInputHeight = isEmpty ? math.max(inputHeight, placeholderHeight) : inputHeight;
 
     // For single-line case: Always reserve space for both floating label and input
@@ -590,21 +581,32 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     // Title row height is max of leading, content area, trailing
     final double titleRowHeight = [leadingHeight, stableContentHeight, trailingHeight, 48.0].reduce(math.max);
 
+    // Position label:
     // Calculate label offset based on floatingLabelProgress
-    // When not floating (progress=0): label is centered vertically
-    // When floating (progress=1): label is at top, scaled down
+    // When not floating (progress=0): label is centered vertically of titleRowHeight
+    // When floating (progress=1): label is at top
     final double labelCenteredY = (titleRowHeight - labelHeight) / 2.0;
     final double labelFloatingY = (titleRowHeight - floatingContentHeight) / 2.0;
 
-    // Interpolate label Y position
+    //  Interpolate label Y position
     final double labelY = lerpDouble(labelCenteredY, labelFloatingY, floatingLabelProgress)!;
+    final Offset labelOffset = label != null ? Offset(leadingWidth, labelY) : Offset.zero;
 
-    final Offset labelOffset = label != null ? Offset(leadingWidth, isMultiline ? 0.0 : labelY) : Offset.zero;
-
-    // For multiline inputs, top-align all elements; otherwise center them
-    final Offset leadingOffset = leading != null
-        ? Offset(0, isMultiline ? 0.0 : (titleRowHeight - leadingHeight) / 2.0)
-        : Offset.zero;
+    // Position trailing & leading:
+    // For multiline inputs, top-align leading and trailing elements; otherwise center them
+    final Offset leadingOffset;
+    if (leading != null) {
+      leadingOffset = Offset(0, isMultiline ? 0.0 : (titleRowHeight - leadingHeight) / 2);
+    } else {
+      leadingOffset = Offset.zero;
+    }
+    final Offset trailingOffset;
+    if (trailing != null) {
+      final trailingX = leadingWidth + availableInputWidth;
+      trailingOffset = Offset(trailingX, isMultiline ? 0.0 : (titleRowHeight - trailingHeight) / 2);
+    } else {
+      trailingOffset = Offset.zero;
+    }
 
     // Input position: when floating, input is below the floating label + gap
     // When not floating, input is centered (same as where the label would be)
@@ -614,18 +616,14 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
 
     final Offset inputOffset = Offset(
       leadingWidth,
-      isMultiline ? labelHeight + floatingLabelInputGap : inputY,
+      inputY,
     );
 
     // Placeholder is positioned at the same location as input
     final Offset placeholderOffset = Offset(
       leadingWidth,
-      isMultiline ? labelHeight + floatingLabelInputGap : inputY,
+      inputY,
     );
-
-    final Offset trailingOffset = trailing != null
-        ? Offset(leadingWidth + availableInputWidth, isMultiline ? 0.0 : (titleRowHeight - trailingHeight) / 2.0)
-        : Offset.zero;
 
     // Layout error widget below the tallest of the widgets in the title row
     // if expands is true, needs to be laid out at the bottom
@@ -811,28 +809,29 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     }
 
     doPaint(container);
+    doPaint(label);
 
-    // Paint label with transform for scaling animation (single-line only)
-    if (label != null && !isMultiline) {
-      final Offset labelOffset = _boxParentData(label!).offset;
-
-      // The label should stay at its left position, only move vertically
-      final double dx = labelOffset.dx;
-      final double dy = labelOffset.dy;
-
-      _labelTransform = Matrix4.identity()..translateByDouble(dx, dy, 0, 1);
-
-      layer = context.pushTransform(
-        needsCompositing,
-        offset,
-        _labelTransform!,
-        _paintLabel,
-        oldLayer: layer as TransformLayer?,
-      );
-    } else {
-      doPaint(label);
-      layer = null;
-    }
+    // // Paint label with transform for scaling animation
+    // if (label != null) {
+    //   final Offset labelOffset = _boxParentData(label!).offset;
+    //
+    //   // The label should stay at its left position, only move vertically
+    //   final double dx = labelOffset.dx;
+    //   final double dy = labelOffset.dy;
+    //
+    //   _labelTransform = Matrix4.identity()..translateByDouble(dx, dy, 0, 1);
+    //
+    //   layer = context.pushTransform(
+    //     needsCompositing,
+    //     offset,
+    //     _labelTransform!,
+    //     _paintLabel,
+    //     oldLayer: layer as TransformLayer?,
+    //   );
+    // } else {
+    //   doPaint(label);
+    //   layer = null;
+    // }
 
     doPaint(leading);
     if (isEmpty && isFocused) doPaint(placeholder);
@@ -841,16 +840,16 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     doPaint(error);
   }
 
-  @override
-  void applyPaintTransform(RenderObject child, Matrix4 transform) {
-    if (child == label && _labelTransform != null && !isMultiline) {
-      final Offset labelOffset = _boxParentData(label!).offset;
-      transform
-        ..multiply(_labelTransform!)
-        ..translateByDouble(-labelOffset.dx, -labelOffset.dy, 0, 1);
-    }
-    super.applyPaintTransform(child, transform);
-  }
+  // @override
+  // void applyPaintTransform(RenderObject child, Matrix4 transform) {
+  //   if (child == label && _labelTransform != null) {
+  //     final Offset labelOffset = _boxParentData(label!).offset;
+  //     transform
+  //       ..multiply(_labelTransform!)
+  //       ..translateByDouble(-labelOffset.dx, -labelOffset.dy, 0, 1);
+  //   }
+  //   super.applyPaintTransform(child, transform);
+  // }
 
   @override
   bool hitTestChildren(BoxHitTestResult result, {required Offset position}) {
@@ -866,5 +865,47 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
       if (isHit) return true;
     }
     return false;
+  }
+
+  void _assertHasBoundedWidth(BoxConstraints constraints) {
+    assert(
+      constraints.maxWidth < double.infinity,
+      'An SBBInputDecorator, which is typically created by a SBBTextInput, cannot '
+      'have an unbounded width.\n'
+      'This happens when the parent widget does not provide a finite width '
+      'constraint. For example, if the InputDecorator is contained by a Row, '
+      'then its width must be constrained. An Expanded widget or a SizedBox '
+      'can be used to constrain the width.',
+    );
+  }
+
+  void _assertTrailingLeadingDoNotOverflow(BoxConstraints constraints, double leadingWidth, double trailingWidth) {
+    final maxWidth = constraints.loosen().maxWidth;
+    assert(() {
+      if (maxWidth == 0.0) {
+        return true;
+      }
+
+      String? overflowedWidget;
+      if (maxWidth == leadingWidth) {
+        overflowedWidget = 'Leading';
+      } else if (maxWidth == trailingWidth) {
+        overflowedWidget = 'Trailing';
+      }
+
+      if (overflowedWidget == null) {
+        return true;
+      }
+
+      throw FlutterError.fromParts(<DiagnosticsNode>[
+        ErrorSummary(
+          '$overflowedWidget widget consumes the entire width.',
+        ),
+        ErrorDescription(
+          'Either resize the width so that the ${overflowedWidget.toLowerCase()} widget '
+          'do not exceed the available width, or use a sized widget.',
+        ),
+      ]);
+    }());
   }
 }
