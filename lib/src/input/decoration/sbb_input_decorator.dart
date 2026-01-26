@@ -9,7 +9,7 @@ import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_input_decor
 import '../../../sbb_design_system_mobile.dart';
 
 // Animation constants
-const Duration _kTransitionDuration = Duration(milliseconds: 200);
+const Duration _kTransitionDuration = Duration(milliseconds: 168);
 const Curve _kTransitionCurve = Curves.fastOutSlowIn;
 
 class SBBInputDecorator extends StatefulWidget {
@@ -179,7 +179,7 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
     Widget? placeholder = widget.decoration.placeholder;
     if (placeholder == null && widget.decoration.placeholderText != null) {
       placeholder = AnimatedOpacity(
-        duration: _kTransitionDuration,
+        duration: _kTransitionDuration * 1.25,
         opacity: widget.isEmpty && widget.states.contains(WidgetState.focused) ? 1 : 0,
         child: Text(widget.decoration.placeholderText!),
       );
