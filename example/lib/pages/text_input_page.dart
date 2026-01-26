@@ -3,14 +3,14 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import '../native_app.dart';
 
-class TextFieldPage extends StatefulWidget {
-  const TextFieldPage({super.key});
+class TextInputPage extends StatefulWidget {
+  const TextInputPage({super.key});
 
   @override
-  State<TextFieldPage> createState() => _TextFieldPageState();
+  State<TextInputPage> createState() => _TextInputPageState();
 }
 
-class _TextFieldPageState extends State<TextFieldPage> {
+class _TextInputPageState extends State<TextInputPage> {
   String? errorText;
 
   final emptyTextEditingController = TextEditingController();
@@ -19,6 +19,7 @@ class _TextFieldPageState extends State<TextFieldPage> {
 
   @override
   Widget build(BuildContext context) {
+    final sbbToast = SBBToast.of(context);
     return CustomScrollView(
       slivers: [
         SBBSliverHeaderbox.custom(child: ThemeModeSegmentedButton()),
@@ -35,32 +36,6 @@ class _TextFieldPageState extends State<TextFieldPage> {
                   children: SBBListItem.divideListItems(
                     context: context,
                     items: [
-                      SBBTextField(labelText: 'Empty', controller: emptyTextEditingController, hintText: 'Hint'),
-                      ConstrainedBox(
-                        constraints: BoxConstraints(maxHeight: 100),
-                        child: SBBTextInput(
-                          decoration: SBBInputDecoration(
-                            // label: Container(height: 4, width: 100, color: SBBColors.green),
-                            labelText: 'Label',
-                            leadingIconData: SBBIcons.unicorn_small,
-                            trailing: Container(height: 90, width: 10, color: SBBColors.autumn),
-                            errorText: 'Hello',
-                            placeholderText: 'Placeholder',
-                          ),
-                          controller: emptyTextEditingController,
-                          expands: true,
-                          maxLines: null,
-                        ),
-                      ),
-                      ConstrainedBox(
-                        constraints: BoxConstraints(maxHeight: 100),
-                        child: TextField(
-                          decoration: InputDecoration(labelText: 'Label'),
-                          controller: emptyTextEditingController,
-                          expands: true,
-                          maxLines: null,
-                        ),
-                      ),
                       SBBTextInput(
                         decoration: SBBInputDecoration(
                           labelText: 'Default',
@@ -70,44 +45,40 @@ class _TextFieldPageState extends State<TextFieldPage> {
                       ),
                       SBBTextInput(
                         decoration: SBBInputDecoration(
+                          labelText: 'With Trailing Icon',
+                          leadingIconData: SBBIcons.unicorn_small,
+                          trailingIconData: SBBIcons.circle_information_small_small,
+                        ),
+                      ),
+                      SBBTextInput(
+                        decoration: SBBInputDecoration(
                           labelText: 'With Placeholder',
-                          // label: Container(color: SBBColors.green, width: 100, height: 2),
                           placeholderText: 'Placeholder',
                           leadingIconData: SBBIcons.unicorn_small,
                         ),
                       ),
                       SBBTextInput(
                         decoration: SBBInputDecoration(
-                          labelText: 'With leading and trailing icon',
+                          labelText: 'With Custom Button',
+                          placeholderText: 'Press the Button!',
                           leadingIconData: SBBIcons.unicorn_small,
-                          trailing: Container(height: 20, width: 200, color: SBBColors.green),
+                          trailing: SBBTertiaryButtonSmall(
+                            iconData: SBBIcons.dog_small,
+                            onPressed: () => sbbToast.show(title: 'Button pressed'),
+                          ),
                         ),
-                      ),
-                      // TODO: Move to separate Textarea page
-                      SBBTextInput(
-                        decoration: SBBInputDecoration(
-                          leadingIconData: SBBIcons.unicorn_small,
-                          // label: Container(height: 100, width: 10, color: SBBColors.green),
-                          labelText: 'LabelText',
-                          errorText: 'Error Text',
-                          placeholderText: 'Placeholder\nsd',
-                        ),
-                        maxLines: 3,
-                        // minLines: 1,
-                        // controller: TextEditingController()..value = const TextEditingValue(text: "I'm\nmulti\nline"),
                       ),
                       SBBTextInput(
                         decoration: SBBInputDecoration(
                           labelText: 'Display Error Message if input too long',
                           errorText: errorText,
                           leadingIconData: SBBIcons.unicorn_small,
-                          trailingIconData: SBBIcons.circle_information_small_small,
                         ),
                         controller: textEditingController,
                         onChanged: (value) {
                           if (errorText == null && value.length > 10) {
                             setState(() {
-                              errorText = 'Too Long!';
+                              errorText = 'Input is too long!';
                             });
                           } else if (errorText != null && value.length <= 10) {
                             setState(() {
@@ -117,13 +88,9 @@ class _TextFieldPageState extends State<TextFieldPage> {
                         },
                       ),
                       SBBTextInput(
-                        decoration: SBBInputDecoration(labelText: 'Disabled'),
+                        decoration: SBBInputDecoration(leadingIconData: SBBIcons.unicorn_small, labelText: 'Disabled'),
                         controller: TextEditingController()..value = const TextEditingValue(text: 'Value'),
                         enabled: false,
-                      ),
-                      SBBTextInput(
-                        decoration: SBBInputDecoration(labelText: 'Last Element (no divider)'),
-                        controller: TextEditingController()..value = const TextEditingValue(text: 'Value'),
                       ),
                     ],
                   ).toList(growable: false),

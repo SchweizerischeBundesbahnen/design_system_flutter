@@ -33,7 +33,8 @@ import 'pages/status_page.dart';
 import 'pages/stepper_page.dart';
 import 'pages/switch_page.dart';
 import 'pages/tab_bar_page.dart';
-import 'pages/text_field_page.dart';
+import 'pages/text_area_page.dart';
+import 'pages/text_input_page.dart';
 import 'pages/toast_page.dart';
 import 'pages/typography_page.dart';
 
@@ -74,7 +75,6 @@ class MyApp extends StatelessWidget {
               ),
               body: Builder(
                 builder: (context) {
-                  return TextFieldPage();
                   return SingleChildScrollView(
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
@@ -117,7 +117,8 @@ class MyApp extends StatelessWidget {
                                   _DemoEntry('Segmented Button', SegmentedButtonPage()),
                                   _DemoEntry('Select', SelectPage()),
                                   _DemoEntry('Switch', SwitchPage()),
-                                  _DemoEntry('Textfield / Textarea', TextFieldPage()),
+                                  _DemoEntry('Text Input', TextInputPage()),
+                                  _DemoEntry('Text Area', TextAreaPage()),
                                   _DemoEntry('Pagination', PaginationPage()),
                                   _DemoEntry('Slider', SliderPage()),
                                   _DemoEntry('Promotion Box', PromotionBoxPage()),

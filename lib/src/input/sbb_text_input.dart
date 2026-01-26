@@ -7,9 +7,11 @@ import '../../sbb_design_system_mobile.dart';
 import 'decoration/sbb_input_decorator.dart';
 
 // TODO: expose FloatingLabelBehavior
+// TODO: add contentPadding
 // TODO: think about text scaling
 // TODO: add semantics ordering and traversal
 // TODO: add Boxed variant
+// TODO: add clear Button
 // TODO: improve docs
 // TODO: add migration guideline & CHANGELOG
 
