@@ -7,6 +7,7 @@ import '../../sbb_design_system_mobile.dart';
 import 'decoration/sbb_input_decorator.dart';
 
 // TODO: think about case when multiline (center between baselines?)
+// TODO: add asserts to SBBInputDecoration
 // TODO: expose FloatingLabelBehavior
 // TODO: think about text scaling
 // TODO: add semantics ordering and traversal
@@ -362,6 +363,8 @@ class _SBBTextInputState extends State<SBBTextInput>
         spellCheckConfiguration = TextField.inferAndroidSpellCheckConfiguration(null);
     }
 
+    final effectiveInputTextStyle = _effectiveInputTextStyle(context);
+
     Widget editableText = EditableText(
       key: editableTextKey,
       readOnly: widget.readOnly || !widget.enabled,
@@ -372,7 +375,7 @@ class _SBBTextInputState extends State<SBBTextInput>
       keyboardType: widget.keyboardType,
       textInputAction: widget.textInputAction,
       textCapitalization: widget.textCapitalization,
-      style: _effectiveInputTextStyle(context),
+      style: effectiveInputTextStyle,
       autofocus: widget.autofocus,
       obscuringCharacter: widget.obscuringCharacter,
       obscureText: widget.obscureText,
@@ -451,6 +454,7 @@ class _SBBTextInputState extends State<SBBTextInput>
                     return SBBInputDecorator(
                       decoration: widget.decoration ?? SBBInputDecoration(),
                       expands: widget.expands,
+                      minInputHeight: effectiveInputTextStyle.height! * effectiveInputTextStyle.fontSize!,
                       isMultiline: isMultiline,
                       isEmpty: _effectiveController.text.isEmpty,
                       states: _statesController.value,

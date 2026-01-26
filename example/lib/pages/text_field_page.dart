@@ -40,9 +40,10 @@ class _TextFieldPageState extends State<TextFieldPage> {
                         constraints: BoxConstraints(maxHeight: 100),
                         child: SBBTextInput(
                           decoration: SBBInputDecoration(
+                            // label: Container(height: 4, width: 100, color: SBBColors.green),
                             labelText: 'Label',
                             leadingIconData: SBBIcons.unicorn_small,
-                            trailing: Container(height: 50, width: 10, color: SBBColors.green),
+                            trailing: Container(height: 90, width: 10, color: SBBColors.autumn),
                             errorText: 'Hello',
                             placeholderText: 'Placeholder',
                           ),
@@ -62,7 +63,7 @@ class _TextFieldPageState extends State<TextFieldPage> {
                       ),
                       SBBTextInput(
                         decoration: SBBInputDecoration(
-                          labelText: 'Label',
+                          labelText: 'Default',
                           leadingIconData: SBBIcons.unicorn_small,
                         ),
                         controller: defaultTextEditingController,
@@ -83,18 +84,17 @@ class _TextFieldPageState extends State<TextFieldPage> {
                         ),
                       ),
                       // TODO: Move to separate Textarea page
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: SBBTextInput(
-                          decoration: SBBInputDecoration(
-                            leadingIconData: SBBIcons.unicorn_small,
-                            labelText: 'Multiline',
-                            errorText: 'Error Text',
-                          ),
-                          maxLines: 3,
-                          // minLines: 1,
-                          controller: TextEditingController()..value = const TextEditingValue(text: "I'm\nmulti\nline"),
+                      SBBTextInput(
+                        decoration: SBBInputDecoration(
+                          leadingIconData: SBBIcons.unicorn_small,
+                          // label: Container(height: 100, width: 10, color: SBBColors.green),
+                          labelText: 'LabelText',
+                          errorText: 'Error Text',
+                          placeholderText: 'Placeholder\nsd',
                         ),
+                        maxLines: 3,
+                        // minLines: 1,
+                        // controller: TextEditingController()..value = const TextEditingValue(text: "I'm\nmulti\nline"),
                       ),
                       SBBTextInput(
                         decoration: SBBInputDecoration(

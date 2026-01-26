@@ -16,6 +16,7 @@ class SBBInputDecorator extends StatefulWidget {
   const SBBInputDecorator({
     super.key,
     required this.decoration,
+    required this.minInputHeight,
     this.expands = false,
     this.isMultiline = false,
     this.isEmpty = false,
@@ -25,6 +26,9 @@ class SBBInputDecorator extends StatefulWidget {
 
   /// The decoration to display around the input field.
   final SBBInputDecoration decoration;
+
+  /// The minimum height of the input field given by one line text style.
+  final double minInputHeight;
 
   /// Whether the input field should expand to fill available space.
   final bool expands;
@@ -123,8 +127,9 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
     }
 
     Widget? label = widget.decoration.label;
+    double? maxLabelTextHeight;
     if (label == null && widget.decoration.labelText != null) {
-      label = Text(widget.decoration.labelText!);
+      label = Text(widget.decoration.labelText!, maxLines: 1, overflow: TextOverflow.ellipsis);
     }
     if (label != null) {
       final Color? resolvedColor =
@@ -138,6 +143,10 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
       final resolvedTextStyle =
           (widget._labelShouldFloat ? floatingTextStyle : textStyle)?.copyWith(color: resolvedColor) ??
           TextStyle(color: resolvedColor);
+
+      if (widget.decoration.labelText != null && textStyle?.fontSize != null && textStyle?.height != null) {
+        maxLabelTextHeight = textStyle!.fontSize! * textStyle.height!;
+      }
 
       label = AnimatedDefaultTextStyle(
         style: resolvedTextStyle,
@@ -169,7 +178,11 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
 
     Widget? placeholder = widget.decoration.placeholder;
     if (placeholder == null && widget.decoration.placeholderText != null) {
-      placeholder = Text(widget.decoration.placeholderText!);
+      placeholder = AnimatedOpacity(
+        duration: _kTransitionDuration,
+        opacity: widget.isEmpty && widget.states.contains(WidgetState.focused) ? 1 : 0,
+        child: Text(widget.decoration.placeholderText!),
+      );
     }
     if (placeholder != null) {
       final Color? resolvedColor =
@@ -236,6 +249,7 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
       isFocused: widget.states.contains(WidgetState.focused),
       floatingLabelProgress: _floatingLabelAnimation.value,
       floatingLabelInputGap: _effectiveFloatingLabelInputGap(inputDecorationTheme),
+      minInputHeight: widget.minInputHeight,
       child: widget.child,
     );
   }
@@ -298,6 +312,7 @@ class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSl
     required this.isFocused,
     required this.floatingLabelProgress,
     required this.floatingLabelInputGap,
+    required this.minInputHeight,
     this.child,
   });
 
@@ -308,6 +323,7 @@ class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSl
   final bool isFocused;
   final double floatingLabelProgress;
   final double floatingLabelInputGap;
+  final double minInputHeight;
   final Widget? child;
 
   @override
@@ -336,6 +352,7 @@ class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSl
       isFocused: isFocused,
       floatingLabelProgress: floatingLabelProgress,
       floatingLabelInputGap: floatingLabelInputGap,
+      minInputHeight: minInputHeight,
     );
   }
 
@@ -348,7 +365,8 @@ class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSl
       ..isEmpty = isEmpty
       ..isFocused = isFocused
       ..floatingLabelProgress = floatingLabelProgress
-      ..floatingLabelInputGap = floatingLabelInputGap;
+      ..floatingLabelInputGap = floatingLabelInputGap
+      ..minInputHeight = minInputHeight;
   }
 }
 
@@ -386,13 +404,15 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     required bool isFocused,
     required double floatingLabelProgress,
     required double floatingLabelInputGap,
+    required double minInputHeight,
   }) : _decoration = decoration,
        _expands = expands,
        _isMultiline = isMultiline,
        _isEmpty = isEmpty,
        _isFocused = isFocused,
        _floatingLabelProgress = floatingLabelProgress,
-       _floatingLabelInputGap = floatingLabelInputGap;
+       _floatingLabelInputGap = floatingLabelInputGap,
+       _minInputHeight = minInputHeight;
 
   RenderBox? get label => childForSlot(_SBBDecorationSlot.label);
 
@@ -485,6 +505,15 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     markNeedsLayout();
   }
 
+  double get minInputHeight => _minInputHeight;
+  double _minInputHeight;
+
+  set minInputHeight(double value) {
+    if (_minInputHeight == value) return;
+    _minInputHeight = value;
+    markNeedsLayout();
+  }
+
   // Records where the label was painted (for transform).
   Matrix4? _labelTransform;
 
@@ -546,13 +575,15 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
 
     // Enforce input / placeholder and label to have maximum available width
     final double availableInputWidth = constraints.maxWidth - leadingWidth - trailingWidth;
-    final inputConstraints = titleRowConstraints.tighten(width: availableInputWidth);
+    BoxConstraints inputConstraints = titleRowConstraints.tighten(width: availableInputWidth);
 
     // Layout label
     double labelHeight = 0.0;
     if (label != null) {
       labelHeight = layoutChild(label!, inputConstraints).height;
     }
+
+    inputConstraints = inputConstraints.deflate(EdgeInsets.only(top: labelHeight));
 
     // Layout input
     double inputHeight = 0.0;
@@ -566,27 +597,30 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
       placeholderHeight = layoutChild(placeholder!, inputConstraints).height;
     }
 
-    // Calculate the maximum height among input/placeholder (placeholder only shown if input is empty, has size zero)
-    final double maxInputHeight = isEmpty ? math.max(inputHeight, placeholderHeight) : inputHeight;
+    // Calculate the maximum height among input/placeholder (placeholder only visible if empty)
+    final double maxInputHeight = [inputHeight, placeholderHeight, minInputHeight].reduce(math.max);
 
     // For single-line case: Always reserve space for both floating label and input
     // to ensure height doesn't change during animation.
     // The height should accommodate: floatingLabel + gap + input when fully floated.
-    final double floatingContentHeight = labelHeight + floatingLabelInputGap + maxInputHeight;
-
-    // When not floating, label is centered (takes labelHeight).
-    // We need the max of both scenarios to keep height stable.
-    final double stableContentHeight = math.max(labelHeight, floatingContentHeight);
+    final double stableContentHeight = labelHeight + floatingLabelInputGap + maxInputHeight;
 
     // Title row height is max of leading, content area, trailing
-    final double titleRowHeight = [leadingHeight, stableContentHeight, trailingHeight, 48.0].reduce(math.max);
+    final double titleRowHeight = [
+      if (!isMultiline) leadingHeight,
+      stableContentHeight,
+      if (!isMultiline) trailingHeight,
+      48.0,
+    ].reduce(math.max);
 
     // Position label:
     // Calculate label offset based on floatingLabelProgress
     // When not floating (progress=0): label is centered vertically of titleRowHeight
     // When floating (progress=1): label is at top
-    final double labelCenteredY = (titleRowHeight - labelHeight) / 2.0;
-    final double labelFloatingY = (titleRowHeight - floatingContentHeight) / 2.0;
+    final labelBox = !isMultiline ? titleRowHeight : labelHeight + floatingLabelInputGap + minInputHeight;
+
+    final double labelCenteredY = (labelBox - labelHeight) / 2.0;
+    final double labelFloatingY = !isMultiline ? (labelBox - stableContentHeight) / 2.0 : 0.0;
 
     //  Interpolate label Y position
     final double labelY = lerpDouble(labelCenteredY, labelFloatingY, floatingLabelProgress)!;
@@ -629,7 +663,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     // if expands is true, needs to be laid out at the bottom
     final double topAlignedErrorY = [
       leadingOffset.dy + leadingHeight,
-      inputOffset.dy + inputHeight,
+      math.max(stableContentHeight, 41.5),
       trailingOffset.dy + trailingHeight,
     ].reduce(math.max);
     final errorY = expands ? constraints.maxHeight - errorHeight : topAlignedErrorY;
@@ -639,7 +673,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     final double totalHeight = expands
         ? constraints.maxHeight
         : math.max(topAlignedErrorY + errorHeight, titleRowHeight);
-    final Size size = Size(constraints.maxWidth, totalHeight); // TODO: factor out the 48.0
+    final Size size = Size(constraints.maxWidth, totalHeight);
 
     return _RenderSBBDecorationLayout(
       labelOffset: labelOffset,
@@ -834,7 +868,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     // }
 
     doPaint(leading);
-    if (isEmpty && isFocused) doPaint(placeholder);
+    doPaint(placeholder);
     doPaint(input);
     doPaint(trailing);
     doPaint(error);
