@@ -33,14 +33,35 @@ class SBBInputDecoration {
     this.titleRowErrorGap,
     this.errorBottomPadding,
     this.borderColor,
-  });
+  }) : assert(
+         !(leading != null && leadingIconData != null),
+         'leading and leadingIconData are mutually exclusive. Provide only one.',
+       ),
+       assert(
+         !(label != null && labelText != null),
+         'label and labelText are mutually exclusive. Provide only one.',
+       ),
+       assert(
+         !(trailing != null && trailingIconData != null),
+         'trailing and trailingIconData are mutually exclusive. Provide only one.',
+       ),
+       assert(
+         !(placeholder != null && placeholderText != null),
+         'placeholder and placeholderText are mutually exclusive. Provide only one.',
+       ),
+       assert(
+         !(error != null && errorText != null),
+         'error and errorText are mutually exclusive. Provide only one.',
+       );
 
   /// An optional widget to display before the input field.
+  ///
+  /// Mutually exclusive with [leadingIconData]. Only one of the two can be provided.
   final Widget? leading;
 
   /// An optional icon to display before the input field.
   ///
-  /// If both [leading] and [leadingIconData] are provided, [leading] takes precedence.
+  /// Mutually exclusive with [leading]. Only one of the two can be provided.
   final IconData? leadingIconData;
 
   /// The foreground color of the leading icon.
@@ -53,11 +74,13 @@ class SBBInputDecoration {
   final double? leadingInputGap;
 
   /// An optional widget to display as the label above the input field.
+  ///
+  /// Mutually exclusive with [labelText]. Only one of the two can be provided.
   final Widget? label;
 
   /// Text to display as the label above the input field.
   ///
-  /// If both [label] and [labelText] are provided, [label] takes precedence.
+  /// Mutually exclusive with [label]. Only one of the two can be provided.
   final String? labelText;
 
   /// The text style for the label.
@@ -73,11 +96,13 @@ class SBBInputDecoration {
   final double? floatingLabelInputGap;
 
   /// An optional widget to display after the input field.
+  ///
+  /// Mutually exclusive with [trailingIconData]. Only one of the two can be provided.
   final Widget? trailing;
 
   /// An optional icon to display after the input field.
   ///
-  /// If both [trailing] and [trailingIconData] are provided, [trailing] takes precedence.
+  /// Mutually exclusive with [trailing]. Only one of the two can be provided.
   final IconData? trailingIconData;
 
   /// The foreground color of the trailing icon.
@@ -90,11 +115,13 @@ class SBBInputDecoration {
   final double? inputTrailingGap;
 
   /// An optional widget to display as a hint/placeholder in the input field.
+  ///
+  /// Mutually exclusive with [placeholderText]. Only one of the two can be provided.
   final Widget? placeholder;
 
   /// Text to display as a hint/placeholder in the input field.
   ///
-  /// If both [placeholder] and [placeholderText] are provided, [placeholder] takes precedence.
+  /// Mutually exclusive with [placeholder]. Only one of the two can be provided.
   final String? placeholderText;
 
   /// The text style for the hint text.
@@ -104,11 +131,13 @@ class SBBInputDecoration {
   final WidgetStateProperty<Color?>? placeholderForegroundColor;
 
   /// An optional widget to display as an error message below the input field.
+  ///
+  /// Mutually exclusive with [errorText]. Only one of the two can be provided.
   final Widget? error;
 
   /// Text to display as an error message below the input field.
   ///
-  /// If both [error] and [errorText] are provided, [error] takes precedence.
+  /// Mutually exclusive with [error]. Only one of the two can be provided.
   final String? errorText;
 
   /// The text style for the error text.
