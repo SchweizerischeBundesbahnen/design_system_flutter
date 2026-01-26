@@ -352,7 +352,6 @@ class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSl
       expands: expands,
       isMultiline: isMultiline,
       isEmpty: isEmpty,
-      isFocused: isFocused,
       floatingLabelProgress: floatingLabelProgress,
       floatingLabelInputGap: floatingLabelInputGap,
       minInputHeight: minInputHeight,
@@ -367,7 +366,6 @@ class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSl
       ..expands = expands
       ..isMultiline = isMultiline
       ..isEmpty = isEmpty
-      ..isFocused = isFocused
       ..floatingLabelProgress = floatingLabelProgress
       ..floatingLabelInputGap = floatingLabelInputGap
       ..minInputHeight = minInputHeight
@@ -406,7 +404,6 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     required bool expands,
     required bool isMultiline,
     required bool isEmpty,
-    required bool isFocused,
     required double floatingLabelProgress,
     required double floatingLabelInputGap,
     required double minInputHeight,
@@ -415,7 +412,6 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
        _expands = expands,
        _isMultiline = isMultiline,
        _isEmpty = isEmpty,
-       _isFocused = isFocused,
        _floatingLabelProgress = floatingLabelProgress,
        _floatingLabelInputGap = floatingLabelInputGap,
        _minInputHeight = minInputHeight,
@@ -485,15 +481,6 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     markNeedsLayout();
   }
 
-  bool get isFocused => _isFocused;
-  bool _isFocused;
-
-  set isFocused(bool value) {
-    if (_isFocused == value) return;
-    _isFocused = value;
-    markNeedsLayout();
-  }
-
   double get floatingLabelProgress => _floatingLabelProgress;
   double _floatingLabelProgress;
 
@@ -529,9 +516,6 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     _maxLabelHeight = value;
     markNeedsLayout();
   }
-
-  // Records where the label was painted (for transform).
-  Matrix4? _labelTransform;
 
   static double _minWidth(RenderBox? box, double height) => box?.getMinIntrinsicWidth(height) ?? 0.0;
 
