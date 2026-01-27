@@ -70,6 +70,20 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
   late final CurvedAnimation _floatingLabelAnimation;
   SBBFloatingLabelBehavior _inheritedFloatingLabelBehavior = SBBFloatingLabelBehavior.auto;
 
+  // Provide unique sort keys to avoid mixing up sort order with sibling input decorators.
+  late final OrdinalSortKey _leadingSemanticsSortOrder = OrdinalSortKey(
+    0,
+    name: hashCode.toString(),
+  );
+  late final OrdinalSortKey _inputSemanticsSortOrder = OrdinalSortKey(
+    1,
+    name: hashCode.toString(),
+  );
+  late final OrdinalSortKey _trailingSemanticsSortOrder = OrdinalSortKey(
+    2,
+    name: hashCode.toString(),
+  );
+
   @override
   void initState() {
     super.initState();
@@ -279,6 +293,24 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
       decoration: _effectiveBoxDecoration(inputDecorationTheme),
     );
 
+    // If at least two out of the three are visible, it needs semantics sort order.
+    final bool needsSemanticsSortKey =
+        _shouldFloat &&
+        (widget.child != null ? (leading != null || trailing != null) : (leading != null && trailing != null));
+
+    Widget? input = widget.child;
+    if (input != null && needsSemanticsSortKey) {
+      input = Semantics(sortKey: _inputSemanticsSortOrder, child: input);
+    }
+
+    if (leading != null && needsSemanticsSortKey) {
+      leading = Semantics(sortKey: _leadingSemanticsSortOrder, child: leading);
+    }
+
+    if (trailing != null && needsSemanticsSortKey) {
+      trailing = Semantics(sortKey: _trailingSemanticsSortOrder, child: trailing);
+    }
+
     return _SBBDecorator(
       decoration: SBBDecoration(
         leading: leading,
@@ -298,7 +330,7 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
       minTotalHeight: textScaler.scale(SBBInputDecoration.minInputFieldHeight),
       maxLabelHeight: maxLabelTextHeight,
       contentPadding: _effectiveContentPadding(inputDecorationTheme),
-      child: widget.child,
+      child: input,
     );
   }
 
