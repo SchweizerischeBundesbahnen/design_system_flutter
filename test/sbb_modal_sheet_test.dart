@@ -38,13 +38,13 @@ class ModalSheetTest extends StatelessWidget {
         const SBBListHeader('Modal Sheet'),
         SBBContentBox(
           child: Padding(
-            padding: const EdgeInsets.all(sbbDefaultSpacing * .5),
+            padding: const EdgeInsets.all(SBBSpacing.xSmall),
             child: Column(
               children: [
                 SBBModalSheet(title: 'Titel', child: _modalContent()),
-                SizedBox(height: sbbDefaultSpacing * .5),
+                SizedBox(height: SBBSpacing.xSmall),
                 SBBModalSheet(title: 'Titel', backgroundColor: SBBColors.peach, child: _modalContent()),
-                SizedBox(height: sbbDefaultSpacing * .5),
+                SizedBox(height: SBBSpacing.xSmall),
                 SBBModalSheet(title: 'Titel', showCloseButton: false, child: _modalContent()),
               ],
             ),
@@ -61,13 +61,13 @@ class ModalSheetTest extends StatelessWidget {
         const SBBListHeader('Custom Modal Sheet'),
         SBBContentBox(
           child: Padding(
-            padding: const EdgeInsets.all(sbbDefaultSpacing * .5),
+            padding: const EdgeInsets.all(SBBSpacing.xSmall),
             child: Column(
               children: [
                 SBBModalSheet.custom(header: _modalHeader(), child: _modalContent()),
-                SizedBox(height: sbbDefaultSpacing * .5),
+                SizedBox(height: SBBSpacing.xSmall),
                 SBBModalSheet.custom(header: _modalHeader(), showCloseButton: false, child: _modalContent()),
-                SizedBox(height: sbbDefaultSpacing * .5),
+                SizedBox(height: SBBSpacing.xSmall),
                 SBBModalSheet.custom(header: _modalHeader(), backgroundColor: SBBColors.peach, child: _modalContent()),
               ],
             ),
@@ -79,7 +79,7 @@ class ModalSheetTest extends StatelessWidget {
 
   Widget _modalContent() {
     return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(sbbDefaultSpacing, 0.0, sbbDefaultSpacing, sbbDefaultSpacing),
+      padding: const EdgeInsetsDirectional.fromSTEB(SBBSpacing.medium, 0.0, SBBSpacing.medium, SBBSpacing.medium),
       child: const Text(
         'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
       ),
@@ -88,11 +88,11 @@ class ModalSheetTest extends StatelessWidget {
 
   Widget _modalHeader() {
     return Padding(
-      padding: EdgeInsets.all(sbbDefaultSpacing),
+      padding: EdgeInsets.all(SBBSpacing.medium),
       child: Row(
         children: [
           Icon(SBBIcons.app_icon_small),
-          SizedBox(width: sbbDefaultSpacing),
+          SizedBox(width: SBBSpacing.medium),
           Text('Custom'),
         ],
       ),

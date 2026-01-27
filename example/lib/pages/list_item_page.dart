@@ -17,10 +17,7 @@ class ListItemPage extends StatelessWidget {
       slivers: [
         SBBSliverHeaderbox.custom(child: ThemeModeSegmentedButton()),
         SliverPadding(
-          padding: const EdgeInsets.symmetric(
-            vertical: sbbDefaultSpacing * .5,
-            horizontal: sbbDefaultSpacing * .5,
-          ).copyWith(bottom: sbbDefaultSpacing * 3),
+          padding: const EdgeInsets.all(SBBSpacing.xSmall),
           sliver: SliverList.list(
             children: [
               SBBListHeader('Listed'),
@@ -54,12 +51,11 @@ class ListItemPage extends StatelessWidget {
                         titleText: 'Mit Button',
                         leadingIconData: SBBIcons.dog_small,
                         trailing: SBBTertiaryButtonSmall(onPressed: () {}, iconData: SBBIcons.dog_small),
-                        padding: SBBListItemStyle.defaultPadding.copyWith(right: 8),
+                        padding: EdgeInsets.fromLTRB(16.0, 0.0, 8.0, 0.0),
                         onTap: () => sbbToast.show(title: 'Mit Button'),
                       ),
                       SBBListItem(
                         titleText: 'Mit Status Nachricht',
-                        leadingIconData: SBBIcons.dog_small,
                         subtitle: SBBStatus.information(labelText: 'Lorem ipsum sit dolor amet unt.'),
                         onTap: () => sbbToast.show(title: 'Mit Status Nachricht'),
                       ),
@@ -90,10 +86,10 @@ class ListItemPage extends StatelessWidget {
                   ).toList(),
                 ),
               ),
-              SizedBox(height: sbbDefaultSpacing),
+              SizedBox(height: SBBSpacing.medium),
               SBBListHeader('Boxed'),
               Column(
-                spacing: sbbDefaultSpacing * .5,
+                spacing: SBBSpacing.xSmall,
                 children: [
                   SBBListItemBoxed(
                     titleText: 'Default',

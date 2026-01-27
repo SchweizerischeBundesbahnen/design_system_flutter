@@ -31,11 +31,11 @@ class _PickerPageState extends State<PickerPage> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(vertical: sbbDefaultSpacing, horizontal: sbbDefaultSpacing * 0.5),
+      padding: const EdgeInsets.symmetric(vertical: SBBSpacing.medium, horizontal: SBBSpacing.xSmall),
       child: Column(
         children: <Widget>[
           const ThemeModeSegmentedButton(),
-          const SizedBox(height: sbbDefaultSpacing),
+          const SizedBox(height: SBBSpacing.medium),
           const SBBListHeader('Picker input fields'),
           SBBContentBox(
             child: Column(
@@ -74,7 +74,7 @@ class _PickerPageState extends State<PickerPage> {
               ],
             ),
           ),
-          const SizedBox(height: sbbDefaultSpacing),
+          const SizedBox(height: SBBSpacing.medium),
           const SBBListHeader('Date Time Picker (date & time)'),
           SBBContentBox(
             child: SBBDateTimePicker(
@@ -83,7 +83,7 @@ class _PickerPageState extends State<PickerPage> {
               },
             ),
           ),
-          const SizedBox(height: sbbDefaultSpacing),
+          const SizedBox(height: SBBSpacing.medium),
           const SBBListHeader('Date Picker (date only)'),
           SBBContentBox(
             child: SBBDatePicker(
@@ -92,7 +92,7 @@ class _PickerPageState extends State<PickerPage> {
               },
             ),
           ),
-          const SizedBox(height: sbbDefaultSpacing),
+          const SizedBox(height: SBBSpacing.medium),
           const SBBListHeader('Time Picker (time only)'),
           SBBContentBox(
             child: SBBTimePicker(
@@ -101,7 +101,7 @@ class _PickerPageState extends State<PickerPage> {
               },
             ),
           ),
-          const SizedBox(height: sbbDefaultSpacing),
+          const SizedBox(height: SBBSpacing.medium),
           const SBBListHeader('Picker (looping)'),
           SBBContentBox(
             child: SBBPicker.list(
@@ -113,7 +113,7 @@ class _PickerPageState extends State<PickerPage> {
               items: _fruitNames,
             ),
           ),
-          const SizedBox(height: sbbDefaultSpacing),
+          const SizedBox(height: SBBSpacing.medium),
           const SBBListHeader('Picker (non looping)'),
           SBBContentBox(
             child: SBBPicker.list(

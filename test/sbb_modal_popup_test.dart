@@ -32,13 +32,13 @@ class ModalPopupTest extends StatelessWidget {
       const SBBListHeader('Modal Popup'),
       SBBContentBox(
         child: Padding(
-          padding: const EdgeInsets.all(sbbDefaultSpacing * .5),
+          padding: const EdgeInsets.all(SBBSpacing.xSmall),
           child: Column(
             children: [
               SBBModalPopup(title: 'Titel', child: _modalContent(context)),
-              SizedBox(height: sbbDefaultSpacing * .5),
+              SizedBox(height: SBBSpacing.xSmall),
               SBBModalPopup(title: 'Titel', backgroundColor: SBBColors.peach, child: _modalContent(context)),
-              SizedBox(height: sbbDefaultSpacing * .5),
+              SizedBox(height: SBBSpacing.xSmall),
               SBBModalPopup(title: 'Titel', showCloseButton: false, child: _modalContent(context)),
             ],
           ),
@@ -49,7 +49,7 @@ class ModalPopupTest extends StatelessWidget {
 
   Widget _modalContent(BuildContext context) {
     return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(sbbDefaultSpacing, 0.0, sbbDefaultSpacing, sbbDefaultSpacing),
+      padding: const EdgeInsetsDirectional.fromSTEB(SBBSpacing.medium, 0.0, SBBSpacing.medium, SBBSpacing.medium),
       child: const Text(
         'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
       ),

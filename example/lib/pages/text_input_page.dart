@@ -25,9 +25,9 @@ class _TextInputPageState extends State<TextInputPage> {
         SBBSliverHeaderbox.custom(child: ThemeModeSegmentedButton()),
         SliverPadding(
           padding: const EdgeInsets.symmetric(
-            vertical: sbbDefaultSpacing * .5,
-            horizontal: sbbDefaultSpacing * .5,
-          ).copyWith(bottom: sbbDefaultSpacing * 3),
+            vertical: SBBSpacing.xSmall,
+            horizontal: SBBSpacing.xSmall,
+          ).copyWith(bottom: SBBSpacing.xLarge),
           sliver: SliverList.list(
             children: [
               SBBListHeader('Listed'),
@@ -105,10 +105,10 @@ class _TextInputPageState extends State<TextInputPage> {
                   ),
                 ),
               ),
-              SizedBox(height: sbbDefaultSpacing),
+              SizedBox(height: SBBSpacing.medium),
               SBBListHeader('Boxed'),
               Column(
-                spacing: sbbDefaultSpacing * 0.5,
+                spacing: SBBSpacing.xSmall,
                 children: [
                   SBBTextInputBoxed(
                     decoration: SBBInputDecoration(

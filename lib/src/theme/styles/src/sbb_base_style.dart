@@ -36,7 +36,7 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
       backgroundColor: resolve(isLight, SBBColors.milk, SBBColors.black),
       errorColor: resolve(isLight, SBBColors.error, SBBColors.errorDark),
       dividerColor: resolve(isLight, SBBColors.cloud, SBBColors.iron),
-      defaultRootContainerPadding: sbbDefaultSpacing,
+      defaultRootContainerPadding: SBBSpacing.medium,
       iconColor: resolve(isLight, SBBColors.black, SBBColors.white),
       brightness: brightness,
       boldFont: boldFont,

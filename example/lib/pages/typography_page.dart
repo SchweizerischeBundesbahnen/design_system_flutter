@@ -10,10 +10,10 @@ class TypographyPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = SBBBaseStyle.of(context).redTextTheme;
     return ListView(
-      padding: const EdgeInsets.all(sbbDefaultSpacing),
+      padding: const EdgeInsets.all(SBBSpacing.medium),
       children: <Widget>[
         const ThemeModeSegmentedButton(),
-        const SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: SBBSpacing.medium),
         SBBListHeader('SBB Font Light (Default)'),
         SBBContentBox(
           child: Column(
@@ -28,7 +28,7 @@ class TypographyPage extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: SBBSpacing.medium),
         SBBListHeader('SBB Font Bold'),
         SBBContentBox(
           child: Column(
@@ -43,7 +43,7 @@ class TypographyPage extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: SBBSpacing.medium),
         SBBListHeader('Red Text Theme'),
         SBBContentBox(
           child: Column(
@@ -73,18 +73,18 @@ class _TypographyShowcase extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        const SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: SBBSpacing.medium),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
+          padding: const EdgeInsets.symmetric(horizontal: SBBSpacing.medium),
           child: Text('The quick brown fox jumps over the lazy dog', style: style),
         ),
-        const SizedBox(height: sbbDefaultSpacing * 0.5),
+        const SizedBox(height: SBBSpacing.xSmall),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
+          padding: const EdgeInsets.symmetric(horizontal: SBBSpacing.medium),
           child: Text(name, style: sbbTextStyle.xSmall.romanStyle.copyWith(color: labelColor)),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
+          padding: const EdgeInsets.symmetric(horizontal: SBBSpacing.medium),
           child: Text(
             'FontFamily: ${style.fontFamily?.split('/').last}, '
             'FontSize: ${style.fontSize}, '
@@ -92,7 +92,7 @@ class _TypographyShowcase extends StatelessWidget {
             style: sbbTextStyle.xSmall.copyWith(color: labelColor),
           ),
         ),
-        const SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: SBBSpacing.medium),
         if (!isLastElement) const Divider(),
       ],
     );

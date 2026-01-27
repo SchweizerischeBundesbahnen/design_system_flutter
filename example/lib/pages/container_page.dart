@@ -9,7 +9,7 @@ class ContainerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     content(String text) => SizedBox(
-      height: sbbDefaultSpacing * 2,
+      height: SBBSpacing.xLarge,
       width: double.infinity,
       child: Center(child: Text(text)),
     );
@@ -17,20 +17,20 @@ class ContainerPage extends StatelessWidget {
       slivers: [
         SBBSliverHeaderbox.custom(child: ThemeModeSegmentedButton()),
         SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5, vertical: sbbDefaultSpacing),
+          padding: const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall, vertical: SBBSpacing.medium),
           sliver: SliverList.list(
             children: [
               SBBListHeader('ContentBox'),
               SBBContentBox(child: content('Default')),
-              SizedBox(height: sbbDefaultSpacing),
+              SizedBox(height: SBBSpacing.medium),
               SBBContentBox(color: SBBColors.royal, child: content('Different Color')),
-              SizedBox(height: sbbDefaultSpacing),
+              SizedBox(height: SBBSpacing.medium),
               SBBContentBox(
-                padding: EdgeInsets.symmetric(vertical: sbbDefaultSpacing),
+                padding: EdgeInsets.symmetric(vertical: SBBSpacing.medium),
                 child: content('Extra padding'),
               ),
-              SizedBox(height: sbbDefaultSpacing),
-              SBBContentBox(margin: EdgeInsets.all(sbbDefaultSpacing * 4), child: content('Extra margin')),
+              SizedBox(height: SBBSpacing.medium),
+              SBBContentBox(margin: EdgeInsets.all(64.0), child: content('Extra margin')),
             ],
           ),
         ),

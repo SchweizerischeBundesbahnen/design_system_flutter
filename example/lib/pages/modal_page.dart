@@ -17,10 +17,10 @@ class _ModalPageState extends State<ModalPage> {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: const EdgeInsets.all(sbbDefaultSpacing),
+      padding: const EdgeInsets.all(SBBSpacing.medium),
       children: [
         ThemeModeSegmentedButton(),
-        const SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: SBBSpacing.medium),
         const SBBListHeader('Settings'),
         ...SBBListItem.divideListItems(
           context: context,
@@ -49,13 +49,13 @@ class _ModalPageState extends State<ModalPage> {
             ),
           ],
         ),
-        const SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: SBBSpacing.medium),
         _modalPopupButton(context),
-        const SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: SBBSpacing.medium),
         _modalSheetButton(context),
-        const SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: SBBSpacing.medium),
         _modalSheetFullButton(context),
-        const SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: SBBSpacing.medium),
         _customModalSheetButton(context),
       ],
     );
@@ -100,11 +100,11 @@ class _ModalPageState extends State<ModalPage> {
         final result = await showCustomSBBModalSheet<String>(
           context: context,
           header: const Padding(
-            padding: EdgeInsets.all(sbbDefaultSpacing),
+            padding: EdgeInsets.all(SBBSpacing.medium),
             child: Row(
               children: [
                 Icon(SBBIcons.app_icon_small),
-                SizedBox(width: sbbDefaultSpacing),
+                SizedBox(width: SBBSpacing.medium),
                 Text('Custom'),
               ],
             ),
@@ -136,7 +136,7 @@ class _ModalPageState extends State<ModalPage> {
 
   Widget _modalContent(BuildContext context, {bool fullHeight = false}) {
     return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(sbbDefaultSpacing, 0.0, sbbDefaultSpacing, sbbDefaultSpacing),
+      padding: const EdgeInsetsDirectional.fromSTEB(SBBSpacing.medium, 0.0, SBBSpacing.medium, SBBSpacing.medium),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: fullHeight ? MainAxisSize.max : MainAxisSize.min,
@@ -144,7 +144,7 @@ class _ModalPageState extends State<ModalPage> {
           const Text(
             'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
           ),
-          const SizedBox(height: sbbDefaultSpacing),
+          const SizedBox(height: SBBSpacing.medium),
           SBBPrimaryButton(labelText: 'Begone!', onPressed: () => Navigator.of(context).pop('OK')),
         ],
       ),

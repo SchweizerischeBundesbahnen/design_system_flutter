@@ -46,7 +46,7 @@ class SBBSwitchListItem extends StatelessWidget {
     this.focusNode,
     this.autofocus = false,
     this.enableFeedback = true,
-    this.padding,
+    this.padding = const EdgeInsets.symmetric(vertical: 8, horizontal: 16.0),
     this.trailingHorizontalGapWidth,
     this.leadingHorizontalGapWidth,
     this.subtitleVerticalGapHeight,

@@ -132,7 +132,7 @@ class SBBPicker extends StatefulWidget {
 }
 
 class _SBBPickerState extends _PickerClassState<SBBPicker> {
-  get _widgetHeight => _scrollAreaHeight + sbbDefaultSpacing * 2;
+  get _widgetHeight => _scrollAreaHeight + SBBSpacing.xLarge;
 
   get _highlightedAreaHeight => _itemHeight + 4.0;
 
@@ -157,10 +157,10 @@ class _SBBPickerState extends _PickerClassState<SBBPicker> {
     final highlightColor = SBBControlStyles.of(context).picker!.highlightColor;
     return Container(
       height: _highlightedAreaHeight,
-      margin: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * 0.5),
+      margin: const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
       decoration: BoxDecoration(
         color: highlightColor,
-        borderRadius: const BorderRadius.all(Radius.circular(sbbDefaultSpacing * 0.5)),
+        borderRadius: const BorderRadius.all(Radius.circular(SBBSpacing.xSmall)),
       ),
     );
   }

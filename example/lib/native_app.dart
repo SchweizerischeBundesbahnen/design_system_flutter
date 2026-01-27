@@ -77,11 +77,11 @@ class MyApp extends StatelessWidget {
                 builder: (context) {
                   return SingleChildScrollView(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
+                      padding: const EdgeInsets.symmetric(horizontal: SBBSpacing.medium),
                       child: Column(
                         children: [
                           const Padding(
-                            padding: EdgeInsets.symmetric(vertical: sbbDefaultSpacing),
+                            padding: EdgeInsets.symmetric(vertical: SBBSpacing.medium),
                             child: ThemeModeSegmentedButton(),
                           ),
                           const SBBListHeader('Basics'),
@@ -98,7 +98,7 @@ class MyApp extends StatelessWidget {
                               ).toList(growable: false),
                             ),
                           ),
-                          const SizedBox(height: sbbDefaultSpacing),
+                          const SizedBox(height: SBBSpacing.medium),
                           const SBBListHeader('Elements'),
                           SBBContentBox(
                             child: Column(
@@ -129,7 +129,7 @@ class MyApp extends StatelessWidget {
                               ).toList(growable: false),
                             ),
                           ),
-                          const SizedBox(height: sbbDefaultSpacing),
+                          const SizedBox(height: SBBSpacing.medium),
                           const SBBListHeader('Modules'),
                           SBBContentBox(
                             child: Column(
@@ -151,7 +151,7 @@ class MyApp extends StatelessWidget {
                               ).toList(growable: false),
                             ),
                           ),
-                          const SizedBox(height: sbbDefaultSpacing),
+                          const SizedBox(height: SBBSpacing.medium),
                         ],
                       ),
                     ),

@@ -676,7 +676,7 @@ class SBBTextInputBoxed extends SBBTextInput {
          decoration: decoration?.contentPadding != null
              ? decoration
              : (decoration ?? SBBInputDecoration()).copyWith(
-                 contentPadding: EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
+                 contentPadding: EdgeInsets.symmetric(horizontal: SBBSpacing.medium),
                ),
        );
 

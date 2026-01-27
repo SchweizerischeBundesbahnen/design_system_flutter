@@ -20,14 +20,14 @@ class SliderPageState extends State<SliderPage> {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: const EdgeInsets.all(sbbDefaultSpacing),
+      padding: const EdgeInsets.all(SBBSpacing.medium),
       children: [
         const ThemeModeSegmentedButton(),
-        const SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: SBBSpacing.medium),
         const SBBListHeader('Default'),
         SBBContentBox(
-          margin: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
-          padding: const EdgeInsets.all(sbbDefaultSpacing),
+          margin: const EdgeInsets.symmetric(horizontal: SBBSpacing.medium),
+          padding: const EdgeInsets.all(SBBSpacing.medium),
           child: SBBSlider(
             onChanged: (value) {
               setState(() {
@@ -40,8 +40,8 @@ class SliderPageState extends State<SliderPage> {
         ),
         const SBBListHeader('Without Icons'),
         SBBContentBox(
-          margin: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
-          padding: const EdgeInsets.all(sbbDefaultSpacing),
+          margin: const EdgeInsets.symmetric(horizontal: SBBSpacing.medium),
+          padding: const EdgeInsets.all(SBBSpacing.medium),
           child: SBBSlider(
             onChanged: (value) {
               setState(() {
@@ -56,8 +56,8 @@ class SliderPageState extends State<SliderPage> {
         ),
         const SBBListHeader('Disabled'),
         SBBContentBox(
-          margin: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
-          padding: const EdgeInsets.all(sbbDefaultSpacing),
+          margin: const EdgeInsets.symmetric(horizontal: SBBSpacing.medium),
+          padding: const EdgeInsets.all(SBBSpacing.medium),
           child: SBBSlider(onChanged: null, value: _disabledSliderValue, max: _sliderMaxValue),
         ),
       ],

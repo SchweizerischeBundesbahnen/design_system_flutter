@@ -33,7 +33,7 @@ class CheckboxPageState extends State<CheckboxPage> {
       slivers: [
         SBBSliverHeaderbox.custom(
           child: Column(
-            spacing: sbbDefaultSpacing,
+            spacing: SBBSpacing.medium,
             children: [
               ThemeModeSegmentedButton(),
               SBBSegmentedButton(
@@ -45,15 +45,15 @@ class CheckboxPageState extends State<CheckboxPage> {
           ),
         ),
         SliverPadding(
-          padding: EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
+          padding: EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
           sliver: SliverList.list(
             children: [
               const SBBListHeader('Checkbox'),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
+                padding: const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  spacing: sbbDefaultSpacing * .5,
+                  spacing: SBBSpacing.xSmall,
                   children: [
                     Row(
                       children: [
@@ -77,7 +77,7 @@ class CheckboxPageState extends State<CheckboxPage> {
                   ],
                 ),
               ),
-              const SizedBox(height: sbbDefaultSpacing),
+              const SizedBox(height: SBBSpacing.medium),
               const SBBListHeader('Checkbox Item - List'),
               SBBContentBox(
                 child: Column(
@@ -112,7 +112,7 @@ class CheckboxPageState extends State<CheckboxPage> {
                         value: _listItemValue3,
                         titleText: 'Button',
                         onChanged: _isEnabled ? (value) => setState(() => _listItemValue3 = value) : null,
-                        padding: SBBListItemStyle.defaultPadding.copyWith(right: 8),
+                        padding: EdgeInsets.fromLTRB(16.0, 0.0, 8.0, 0.0),
                         trailing: SBBTertiaryButtonSmall(
                           iconData: SBBIcons.circle_information_small_small,
                           onPressed: _isEnabled ? () => sbbToast.show(title: 'Button pressed') : null,
@@ -142,12 +142,12 @@ class CheckboxPageState extends State<CheckboxPage> {
                   ).toList(growable: false),
                 ),
               ),
-              const SizedBox(height: sbbDefaultSpacing),
+              const SizedBox(height: SBBSpacing.medium),
               const SBBListHeader('Checkbox Item - Boxed'),
               Padding(
-                padding: const EdgeInsets.only(bottom: sbbDefaultSpacing * 4),
+                padding: const EdgeInsets.only(bottom: 64.0),
                 child: Column(
-                  spacing: sbbDefaultSpacing * 0.5,
+                  spacing: SBBSpacing.xSmall,
                   children: [
                     SBBCheckboxListItemBoxed(
                       value: _listItemValue1,
@@ -177,7 +177,7 @@ class CheckboxPageState extends State<CheckboxPage> {
                       value: _listItemValue3,
                       titleText: 'Button',
                       onChanged: _isEnabled ? (value) => setState(() => _listItemValue3 = value) : null,
-                      padding: SBBListItemStyle.defaultPadding.copyWith(right: 8),
+                      padding: EdgeInsets.fromLTRB(16.0, 0.0, 8.0, 0.0),
                       trailing: SBBTertiaryButtonSmall(
                         iconData: SBBIcons.circle_information_small_small,
                         onPressed: _isEnabled ? () => sbbToast.show(title: 'Button pressed') : null,

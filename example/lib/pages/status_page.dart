@@ -17,9 +17,9 @@ class StatusPage extends StatelessWidget {
           children: [
             const SBBListHeader('Default'),
             SBBContentBox(
-              padding: const EdgeInsets.all(sbbDefaultSpacing),
+              padding: const EdgeInsets.all(SBBSpacing.medium),
               child: Column(
-                spacing: sbbDefaultSpacing,
+                spacing: SBBSpacing.medium,
                 children: [
                   SBBStatus.alert(labelText: text),
                   SBBStatus.warning(labelText: text),
@@ -30,9 +30,9 @@ class StatusPage extends StatelessWidget {
             ),
             const SBBListHeader('Without text'),
             SBBContentBox(
-              padding: const EdgeInsets.all(sbbDefaultSpacing),
+              padding: const EdgeInsets.all(SBBSpacing.medium),
               child: Row(
-                spacing: sbbDefaultSpacing,
+                spacing: SBBSpacing.medium,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SBBStatus.alert(),
@@ -44,9 +44,9 @@ class StatusPage extends StatelessWidget {
             ),
             const SBBListHeader('Long text'),
             SBBContentBox(
-              padding: const EdgeInsets.all(sbbDefaultSpacing),
+              padding: const EdgeInsets.all(SBBSpacing.medium),
               child: Column(
-                spacing: sbbDefaultSpacing,
+                spacing: SBBSpacing.medium,
                 children: [
                   SBBStatus.alert(labelText: text * 10),
                   SBBStatus.warning(labelText: text * 10),

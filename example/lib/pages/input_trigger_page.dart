@@ -52,11 +52,11 @@ class _PickerPageState extends State<InputTriggerPage> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(vertical: sbbDefaultSpacing, horizontal: sbbDefaultSpacing * 0.5),
+      padding: const EdgeInsets.symmetric(vertical: SBBSpacing.medium, horizontal: SBBSpacing.xSmall),
       child: Column(
         children: <Widget>[
           const ThemeModeSegmentedButton(),
-          const SizedBox(height: sbbDefaultSpacing),
+          const SizedBox(height: SBBSpacing.medium),
           const SBBListHeader('Demo'),
           SBBContentBox(
             child: Column(
@@ -81,7 +81,7 @@ class _PickerPageState extends State<InputTriggerPage> {
               ],
             ),
           ),
-          const SizedBox(height: sbbDefaultSpacing),
+          const SizedBox(height: SBBSpacing.medium),
           const SBBListHeader('Change properties'),
           SBBContentBox(
             child: Column(

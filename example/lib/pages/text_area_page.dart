@@ -28,9 +28,9 @@ class _TextAreaPageState extends State<TextAreaPage> {
         SBBSliverHeaderbox.custom(child: ThemeModeSegmentedButton()),
         SliverPadding(
           padding: const EdgeInsets.symmetric(
-            vertical: sbbDefaultSpacing * .5,
-            horizontal: sbbDefaultSpacing * .5,
-          ).copyWith(bottom: sbbDefaultSpacing * 3),
+            vertical: SBBSpacing.xSmall,
+            horizontal: SBBSpacing.xSmall,
+          ).copyWith(bottom: SBBSpacing.xLarge),
           sliver: SliverList.list(
             children: [
               SBBListHeader('Listed'),
@@ -40,17 +40,17 @@ class _TextAreaPageState extends State<TextAreaPage> {
                     context: context,
                     items: [
                       Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
+                        padding: const EdgeInsets.only(top: SBBSpacing.xSmall),
                         child: SBBTextInput(
                           decoration: SBBInputDecoration(
                             leading: Padding(
-                              padding: EdgeInsets.only(top: 4.0, right: 8.0),
+                              padding: EdgeInsets.only(top: SBBSpacing.xxSmall, right: SBBSpacing.xSmall),
                               child: Icon(
                                 SBBIcons.unicorn_small,
                               ),
                             ),
                             trailing: Padding(
-                              padding: EdgeInsets.only(top: 4.0, left: 8.0),
+                              padding: EdgeInsets.only(top: SBBSpacing.xxSmall, right: SBBSpacing.xSmall),
                               child: Icon(
                                 SBBIcons.circle_information_small_small,
                               ),
@@ -66,13 +66,13 @@ class _TextAreaPageState extends State<TextAreaPage> {
                         child: SBBTextInput(
                           decoration: SBBInputDecoration(
                             leading: Padding(
-                              padding: EdgeInsets.only(top: 4.0, right: 8.0),
+                              padding: EdgeInsets.only(top: SBBSpacing.xxSmall, right: SBBSpacing.xSmall),
                               child: Icon(
                                 SBBIcons.unicorn_small,
                               ),
                             ),
                             trailing: Padding(
-                              padding: EdgeInsets.only(top: 4.0, left: 8.0),
+                              padding: EdgeInsets.only(top: SBBSpacing.xxSmall, right: SBBSpacing.xSmall),
                               child: Icon(
                                 SBBIcons.circle_information_small_small,
                               ),
@@ -96,17 +96,17 @@ class _TextAreaPageState extends State<TextAreaPage> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
+                        padding: const EdgeInsets.only(top: SBBSpacing.xSmall),
                         child: SBBTextInput(
                           decoration: SBBInputDecoration(
                             leading: Padding(
-                              padding: EdgeInsets.only(top: 4.0, right: 8.0),
+                              padding: EdgeInsets.only(top: SBBSpacing.xxSmall, right: SBBSpacing.xSmall),
                               child: Icon(
                                 SBBIcons.unicorn_small,
                               ),
                             ),
                             trailing: Padding(
-                              padding: EdgeInsets.only(top: 4.0, left: 8.0),
+                              padding: EdgeInsets.only(top: SBBSpacing.xxSmall, right: SBBSpacing.xSmall),
                               child: Icon(
                                 SBBIcons.circle_information_small_small,
                               ),
@@ -122,14 +122,14 @@ class _TextAreaPageState extends State<TextAreaPage> {
                   ).toList(growable: false),
                 ),
               ),
-              SizedBox(height: sbbDefaultSpacing),
+              SizedBox(height: SBBSpacing.medium),
               SBBListHeader('Resizable with Drag Handle'),
               SBBContentBox(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
+                      padding: const EdgeInsets.only(top: SBBSpacing.xSmall),
                       child: ConstrainedBox(
                         constraints: BoxConstraints(
                           minHeight: 60.0,
@@ -139,7 +139,7 @@ class _TextAreaPageState extends State<TextAreaPage> {
                           decoration: SBBInputDecoration(
                             labelText: 'Resizable Text Area',
                             leading: Padding(
-                              padding: EdgeInsets.only(top: 4.0, right: 8.0),
+                              padding: EdgeInsets.only(top: SBBSpacing.xxSmall, right: SBBSpacing.xSmall),
                               child: Icon(
                                 SBBIcons.pen_small,
                               ),
@@ -160,12 +160,12 @@ class _TextAreaPageState extends State<TextAreaPage> {
                         });
                       },
                       child: Container(
-                        height: 32,
+                        height: SBBSpacing.xLarge,
                         color: SBBColors.silver,
                         child: Center(
                           child: Container(
-                            width: 40,
-                            height: 4,
+                            width: SBBSpacing.xLarge,
+                            height: SBBSpacing.xxSmall,
                             decoration: BoxDecoration(
                               color: SBBColors.iron,
                               borderRadius: BorderRadius.circular(2),
@@ -177,7 +177,7 @@ class _TextAreaPageState extends State<TextAreaPage> {
                   ],
                 ),
               ),
-              SizedBox(height: sbbDefaultSpacing),
+              SizedBox(height: SBBSpacing.medium),
               SBBListHeader('Boxed'),
               SBBContentBox(
                 child: Form(

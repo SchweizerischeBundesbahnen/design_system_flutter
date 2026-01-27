@@ -37,7 +37,7 @@ class CheckboxTest extends StatelessWidget {
     children: [
       const SBBListHeader('Checkbox'),
       SBBContentBox(
-        padding: const EdgeInsets.all(sbbDefaultSpacing / 2),
+        padding: const EdgeInsets.all(SBBSpacing.xSmall),
         child: Row(
           children: [
             SBBCheckbox(onChanged: (bool? value) {}, value: value1),
@@ -47,7 +47,7 @@ class CheckboxTest extends StatelessWidget {
           ],
         ),
       ),
-      const SizedBox(height: sbbDefaultSpacing),
+      const SizedBox(height: SBBSpacing.medium),
       const SBBListHeader('CheckboxItem - List'),
       SBBContentBox(
         child: Column(
@@ -87,7 +87,7 @@ class CheckboxTest extends StatelessWidget {
                 value: false,
                 titleText: 'Button',
                 onChanged: (_) {},
-                padding: SBBListItemStyle.defaultPadding.copyWith(right: 8),
+                padding: EdgeInsets.fromLTRB(16.0, 0.0, 8.0, 0.0),
                 trailing: SBBTertiaryButtonSmall(
                   iconData: SBBIcons.circle_information_small_small,
                   onPressed: () {},
@@ -97,7 +97,7 @@ class CheckboxTest extends StatelessWidget {
                 value: value3,
                 titleText: 'Leading Icon and Button',
                 onChanged: (_) {},
-                padding: SBBListItemStyle.defaultPadding.copyWith(right: 8),
+                padding: EdgeInsets.fromLTRB(16.0, 0.0, 8.0, 0.0),
                 trailing: SBBTertiaryButtonSmall(
                   iconData: SBBIcons.circle_information_small_small,
                   onPressed: () {},
@@ -108,7 +108,7 @@ class CheckboxTest extends StatelessWidget {
                 value: value3,
                 onChanged: null,
                 titleText: 'Leading Icon and Button (Disabled)',
-                padding: SBBListItemStyle.defaultPadding.copyWith(right: 8),
+                padding: EdgeInsets.fromLTRB(16.0, 0.0, 8.0, 0.0),
                 trailing: SBBTertiaryButtonSmall(
                   iconData: SBBIcons.circle_information_small_small,
                   onPressed: null,
@@ -125,10 +125,10 @@ class CheckboxTest extends StatelessWidget {
           ).toList(growable: false),
         ),
       ),
-      const SizedBox(height: sbbDefaultSpacing),
+      const SizedBox(height: SBBSpacing.medium),
       const SBBListHeader('CheckboxItem - Boxed'),
       Column(
-        spacing: sbbDefaultSpacing * .5,
+        spacing: SBBSpacing.xSmall,
         children: [
           SBBCheckboxListItemBoxed(value: value1, titleText: 'Default', onChanged: (value) {}),
           SBBCheckboxListItemBoxed(
@@ -141,7 +141,7 @@ class CheckboxTest extends StatelessWidget {
             value: value3,
             titleText: 'Leading Icon and Button (Disabled)',
             onChanged: null,
-            padding: SBBListItemStyle.defaultPadding.copyWith(right: 8),
+            padding: EdgeInsets.fromLTRB(16.0, 0.0, 8.0, 0.0),
             trailing: SBBTertiaryButtonSmall(
               iconData: SBBIcons.circle_information_small_small,
               onPressed: null,

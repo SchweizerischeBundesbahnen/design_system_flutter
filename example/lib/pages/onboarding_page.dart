@@ -11,7 +11,7 @@ class OnboardingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        const Padding(padding: EdgeInsets.all(sbbDefaultSpacing), child: ThemeModeSegmentedButton()),
+        const Padding(padding: EdgeInsets.all(SBBSpacing.medium), child: ThemeModeSegmentedButton()),
         SBBTertiaryButton(
           labelText: 'Show Onboarding',
           onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (context) => _OnboardingPage())),
@@ -90,7 +90,7 @@ class DemoOnboardingBuilderDelegate extends SBBOnboardingBuilderDelegate {
         title: 'Page 1',
         content: 'Page 1',
         customContent: Padding(
-          padding: const EdgeInsets.all(sbbDefaultSpacing),
+          padding: const EdgeInsets.all(SBBSpacing.medium),
           child: SBBSecondaryButton(labelText: 'Custom Action', onPressed: () {}),
         ),
       ),
@@ -207,13 +207,13 @@ class _VerticalStartPage extends StatelessWidget {
               style: SBBTextStyles.extraLargeLight.copyWith(color: controlStyle.headerTextStyle!.color),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: sbbDefaultSpacing * 9),
+            const SizedBox(height: 144.0),
             SBBContentBox(
-              padding: EdgeInsets.symmetric(horizontal: sbbDefaultSpacing / 2, vertical: sbbDefaultSpacing),
+              padding: EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall, vertical: SBBSpacing.medium),
               child: Column(
                 children: [
                   SBBPrimaryButton(labelText: 'Start Onboarding', onPressed: onStartOnboarding),
-                  const SizedBox(height: sbbDefaultSpacing),
+                  const SizedBox(height: SBBSpacing.medium),
                   SBBSecondaryButton(labelText: 'Skip Onboarding', onPressed: onFinish),
                 ],
               ),
@@ -255,11 +255,11 @@ class _HorizontalStartPage extends StatelessWidget {
                   ),
                   const SizedBox(height: 67),
                   SBBContentBox(
-                    padding: EdgeInsets.symmetric(horizontal: sbbDefaultSpacing / 2, vertical: sbbDefaultSpacing),
+                    padding: EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall, vertical: SBBSpacing.medium),
                     child: Column(
                       children: [
                         SBBPrimaryButton(labelText: 'Start Onboarding', onPressed: onStartOnboarding),
-                        const SizedBox(height: sbbDefaultSpacing),
+                        const SizedBox(height: SBBSpacing.medium),
                         SBBSecondaryButton(labelText: 'Skip Onboarding', onPressed: onFinish),
                       ],
                     ),

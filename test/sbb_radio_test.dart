@@ -36,7 +36,7 @@ class RadioTest extends StatelessWidget {
     children: [
       const SBBListHeader('RadioButton'),
       Padding(
-        padding: const EdgeInsets.all(sbbDefaultSpacing * .5),
+        padding: const EdgeInsets.all(SBBSpacing.xSmall),
         child: SBBRadioGroup<int>(
           groupValue: groupValue,
           onChanged: (_) {},
@@ -50,7 +50,7 @@ class RadioTest extends StatelessWidget {
           ),
         ),
       ),
-      const SizedBox(height: sbbDefaultSpacing),
+      const SizedBox(height: SBBSpacing.medium),
       const SBBListHeader('RadioButton Item - List'),
       SBBContentBox(
         child: Column(
@@ -66,7 +66,7 @@ class RadioTest extends StatelessWidget {
                     SBBRadioListItem<int>(
                       value: 2,
                       titleText: 'Button',
-                      padding: SBBListItemStyle.defaultPadding.copyWith(right: 8),
+                      padding: EdgeInsets.fromLTRB(16.0, 0.0, 8.0, 0.0),
                       trailing: SBBTertiaryButtonSmall(
                         iconData: SBBIcons.circle_information_small_small,
                         onPressed: () {},
@@ -75,7 +75,7 @@ class RadioTest extends StatelessWidget {
                     SBBRadioListItem<int>(
                       value: 3,
                       titleText: 'Leading and Button',
-                      padding: SBBListItemStyle.defaultPadding.copyWith(right: 8),
+                      padding: EdgeInsets.fromLTRB(16.0, 0.0, 8.0, 0.0),
                       trailing: SBBTertiaryButtonSmall(
                         iconData: SBBIcons.circle_information_small_small,
                         onPressed: () {},
@@ -85,7 +85,7 @@ class RadioTest extends StatelessWidget {
                       value: 4,
                       enabled: false,
                       titleText: 'Leading Icon, Button (Disabled)',
-                      padding: SBBListItemStyle.defaultPadding.copyWith(right: 8),
+                      padding: EdgeInsets.fromLTRB(16.0, 0.0, 8.0, 0.0),
                       trailing: SBBTertiaryButtonSmall(
                         iconData: SBBIcons.circle_information_small_small,
                         onPressed: null,
@@ -132,13 +132,13 @@ class RadioTest extends StatelessWidget {
           ],
         ),
       ),
-      const SizedBox(height: sbbDefaultSpacing),
+      const SizedBox(height: SBBSpacing.medium),
       const SBBListHeader('RadioButton Item - List'),
       SBBRadioGroup(
         groupValue: listItemGroupValue,
         onChanged: (_) {},
         child: Column(
-          spacing: sbbDefaultSpacing * 0.5,
+          spacing: SBBSpacing.xSmall,
           children: [
             SBBRadioListItemBoxed<int>(
               value: 1,
@@ -153,7 +153,7 @@ class RadioTest extends StatelessWidget {
             SBBRadioListItemBoxed<int>(
               value: 3,
               titleText: 'Button',
-              padding: SBBListItemStyle.defaultPadding.copyWith(right: 8),
+              padding: EdgeInsets.fromLTRB(16.0, 0.0, 8.0, 0.0),
               trailing: SBBTertiaryButtonSmall(
                 iconData: SBBIcons.circle_information_small_small,
                 onPressed: () {},

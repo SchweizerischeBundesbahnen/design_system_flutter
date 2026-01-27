@@ -13,10 +13,10 @@ class ColorPage extends StatelessWidget {
       children: <Widget>[
         Padding(
           padding: EdgeInsetsDirectional.fromSTEB(
-            sbbDefaultSpacing,
-            sbbDefaultSpacing,
-            sbbDefaultSpacing,
-            sbbDefaultSpacing * 0.5,
+            SBBSpacing.medium,
+            SBBSpacing.medium,
+            SBBSpacing.medium,
+            SBBSpacing.xSmall,
           ),
           child: ThemeModeSegmentedButton(),
         ),
@@ -44,19 +44,19 @@ class _ColorShowcase extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(sbbDefaultSpacing * 0.5),
+      padding: const EdgeInsets.all(SBBSpacing.xSmall),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: const EdgeInsetsDirectional.symmetric(horizontal: sbbDefaultSpacing * 0.5),
+            padding: const EdgeInsetsDirectional.symmetric(horizontal: SBBSpacing.xSmall),
             child: Text(title, style: SBBControlStyles.of(context).listHeaderTextStyle),
           ),
           // const SBBListHeader('Small Icons'),
           GridView.builder(
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
-            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: sbbDefaultSpacing * 10),
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 160.0),
             itemCount: colorEntries.length,
             itemBuilder: (BuildContext context, index) {
               final colorEntry = colorEntries[index];
@@ -84,14 +84,14 @@ class _ColorShowcaseCard extends StatelessWidget {
       color: SBBControlStyles.of(context).selectLabel?.textStyleDisabled?.color,
     );
     return SBBContentBox(
-      margin: const EdgeInsets.all(sbbDefaultSpacing * 0.5),
+      margin: const EdgeInsets.all(SBBSpacing.xSmall),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(child: Container(color: colorEntry.color)),
           // Divider(),
           Container(
-            padding: const EdgeInsets.all(sbbDefaultSpacing * 0.5),
+            padding: const EdgeInsets.all(SBBSpacing.xSmall),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
