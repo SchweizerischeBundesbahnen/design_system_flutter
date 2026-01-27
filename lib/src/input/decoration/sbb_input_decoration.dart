@@ -33,6 +33,7 @@ class SBBInputDecoration {
     this.titleRowErrorGap,
     this.errorBottomPadding,
     this.borderColor,
+    this.contentPadding,
   }) : assert(
          !(leading != null && leadingIconData != null),
          'leading and leadingIconData are mutually exclusive. Provide only one.',
@@ -164,6 +165,12 @@ class SBBInputDecoration {
   /// and to a surrounding border for a boxed input field.
   final WidgetStateProperty<Color?>? borderColor;
 
+  /// The padding around all decoration content.
+  ///
+  /// If null, the value from [SBBInputDecorationThemeData.contentPadding] is used.
+  /// If that is also null, defaults to [EdgeInsets.zero].
+  final EdgeInsetsGeometry? contentPadding;
+
   /// Creates a copy of this decoration with the given fields replaced
   /// by the new values.
   SBBInputDecoration copyWith({
@@ -192,6 +199,7 @@ class SBBInputDecoration {
     double? titleRowErrorGap,
     double? errorBottomPadding,
     WidgetStateProperty<Color?>? borderColor,
+    EdgeInsetsGeometry? contentPadding,
   }) {
     return SBBInputDecoration(
       leading: leading ?? this.leading,
@@ -219,6 +227,7 @@ class SBBInputDecoration {
       titleRowErrorGap: titleRowErrorGap ?? this.titleRowErrorGap,
       errorBottomPadding: errorBottomPadding ?? this.errorBottomPadding,
       borderColor: borderColor ?? this.borderColor,
+      contentPadding: contentPadding ?? this.contentPadding,
     );
   }
 
@@ -251,7 +260,8 @@ class SBBInputDecoration {
         other.errorForegroundColor == errorForegroundColor &&
         other.titleRowErrorGap == titleRowErrorGap &&
         other.errorBottomPadding == errorBottomPadding &&
-        other.borderColor == borderColor;
+        other.borderColor == borderColor &&
+        other.contentPadding == contentPadding;
   }
 
   @override
@@ -281,5 +291,6 @@ class SBBInputDecoration {
     titleRowErrorGap,
     errorBottomPadding,
     borderColor,
+    contentPadding,
   ]);
 }

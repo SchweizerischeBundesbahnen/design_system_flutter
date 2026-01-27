@@ -251,6 +251,7 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
       floatingLabelInputGap: _effectiveFloatingLabelInputGap(inputDecorationTheme),
       minInputHeight: widget.minInputHeight,
       maxLabelHeight: maxLabelTextHeight,
+      contentPadding: _effectiveContentPadding(inputDecorationTheme),
       child: widget.child,
     );
   }
@@ -292,6 +293,10 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
   double _effectiveErrorBottomPadding(SBBInputDecorationThemeData? theme) {
     return widget.decoration.errorBottomPadding ?? theme?.errorBottomPadding ?? defaultErrorBottomPadding;
   }
+
+  EdgeInsetsGeometry _effectiveContentPadding(SBBInputDecorationThemeData? theme) {
+    return widget.decoration.contentPadding ?? theme?.contentPadding ?? defaultContentPadding;
+  }
 }
 
 enum _SBBDecorationSlot {
@@ -314,6 +319,7 @@ class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSl
     required this.floatingLabelProgress,
     required this.floatingLabelInputGap,
     required this.minInputHeight,
+    required this.contentPadding,
     this.maxLabelHeight,
     this.child,
   });
@@ -327,6 +333,7 @@ class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSl
   final double floatingLabelInputGap;
   final double minInputHeight;
   final double? maxLabelHeight;
+  final EdgeInsetsGeometry contentPadding;
   final Widget? child;
 
   @override
@@ -356,6 +363,7 @@ class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSl
       floatingLabelInputGap: floatingLabelInputGap,
       minInputHeight: minInputHeight,
       maxLabelHeight: maxLabelHeight,
+      contentPadding: contentPadding,
     );
   }
 
@@ -369,7 +377,8 @@ class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSl
       ..floatingLabelProgress = floatingLabelProgress
       ..floatingLabelInputGap = floatingLabelInputGap
       ..minInputHeight = minInputHeight
-      ..maxLabelHeight = maxLabelHeight;
+      ..maxLabelHeight = maxLabelHeight
+      ..contentPadding = contentPadding;
   }
 }
 
@@ -407,6 +416,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     required double floatingLabelProgress,
     required double floatingLabelInputGap,
     required double minInputHeight,
+    required EdgeInsetsGeometry contentPadding,
     double? maxLabelHeight,
   }) : _decoration = decoration,
        _expands = expands,
@@ -415,7 +425,8 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
        _floatingLabelProgress = floatingLabelProgress,
        _floatingLabelInputGap = floatingLabelInputGap,
        _minInputHeight = minInputHeight,
-       _maxLabelHeight = maxLabelHeight;
+       _maxLabelHeight = maxLabelHeight,
+       _contentPadding = contentPadding;
 
   RenderBox? get label => childForSlot(_SBBDecorationSlot.label);
 
@@ -517,6 +528,15 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     markNeedsLayout();
   }
 
+  EdgeInsetsGeometry get contentPadding => _contentPadding;
+  EdgeInsetsGeometry _contentPadding;
+
+  set contentPadding(EdgeInsetsGeometry value) {
+    if (_contentPadding == value) return;
+    _contentPadding = value;
+    markNeedsLayout();
+  }
+
   static double _minWidth(RenderBox? box, double height) => box?.getMinIntrinsicWidth(height) ?? 0.0;
 
   static double _maxWidth(RenderBox? box, double height) => box?.getMaxIntrinsicWidth(height) ?? 0.0;
@@ -542,16 +562,20 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
   }) {
     _assertHasBoundedWidth(constraints);
 
+    final EdgeInsets resolvedContentPadding = contentPadding.resolve(TextDirection.ltr);
     final BoxConstraints looseConstraints = constraints.loosen();
+
+    // Deflate constraints by contentPadding for all child layouts
+    final BoxConstraints paddedConstraints = looseConstraints.deflate(resolvedContentPadding);
 
     // Layout error if present first to know the bottomHeight
     double errorHeight = 0.0;
     if (error != null) {
-      final Size errorSize = layoutChild(error!, looseConstraints);
+      final Size errorSize = layoutChild(error!, paddedConstraints);
       errorHeight = errorSize.height;
     }
 
-    final BoxConstraints titleRowConstraints = looseConstraints.deflate(EdgeInsets.only(bottom: errorHeight));
+    final BoxConstraints titleRowConstraints = paddedConstraints.deflate(EdgeInsets.only(bottom: errorHeight));
 
     // Layout leading
     double leadingWidth = 0.0;
@@ -571,10 +595,10 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
       trailingHeight = trailingSize.height;
     }
 
-    _assertTrailingLeadingDoNotOverflow(constraints, leadingWidth, trailingWidth);
+    _assertTrailingLeadingDoNotOverflow(paddedConstraints, leadingWidth, trailingWidth);
 
     // Enforce input / placeholder and label to have maximum available width
-    final double availableInputWidth = constraints.maxWidth - leadingWidth - trailingWidth;
+    final double availableInputWidth = paddedConstraints.maxWidth - leadingWidth - trailingWidth;
     BoxConstraints inputConstraints = titleRowConstraints.tighten(width: availableInputWidth);
 
     // Layout label
@@ -623,22 +647,29 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     final double labelCenteredY = (labelBox - labelHeight) / 2.0;
     final double labelFloatingY = !isMultiline ? (labelBox - stableContentHeight) / 2.0 : 0.0;
 
-    //  Interpolate label Y position
-    final double labelY = lerpDouble(labelCenteredY, labelFloatingY, floatingLabelProgress)!;
-    final Offset labelOffset = label != null ? Offset(leadingWidth, labelY) : Offset.zero;
+    //  Interpolate label Y position (add top padding)
+    final double labelY =
+        lerpDouble(labelCenteredY, labelFloatingY, floatingLabelProgress)! + resolvedContentPadding.top;
+    final Offset labelOffset = label != null ? Offset(leadingWidth + resolvedContentPadding.left, labelY) : Offset.zero;
 
     // Position trailing & leading:
     // For multiline inputs, top-align leading and trailing elements; otherwise center them
     final Offset leadingOffset;
     if (leading != null) {
-      leadingOffset = Offset(0, isMultiline ? 0.0 : (titleRowHeight - leadingHeight) / 2);
+      leadingOffset = Offset(
+        resolvedContentPadding.left,
+        (isMultiline ? 0.0 : (titleRowHeight - leadingHeight) / 2) + resolvedContentPadding.top,
+      );
     } else {
       leadingOffset = Offset.zero;
     }
     final Offset trailingOffset;
     if (trailing != null) {
-      final trailingX = leadingWidth + availableInputWidth;
-      trailingOffset = Offset(trailingX, isMultiline ? 0.0 : (titleRowHeight - trailingHeight) / 2);
+      final trailingX = leadingWidth + availableInputWidth + resolvedContentPadding.left;
+      trailingOffset = Offset(
+        trailingX,
+        (isMultiline ? 0.0 : (titleRowHeight - trailingHeight) / 2) + resolvedContentPadding.top,
+      );
     } else {
       trailingOffset = Offset.zero;
     }
@@ -647,16 +678,17 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     // When not floating, input is centered (same as where the label would be)
     final double inputCenteredY = (titleRowHeight - maxInputHeight) / 2.0;
     final double inputFloatingY = labelFloatingY + labelHeight + floatingLabelInputGap;
-    final double inputY = lerpDouble(inputCenteredY, inputFloatingY, floatingLabelProgress)!;
+    final double inputY =
+        lerpDouble(inputCenteredY, inputFloatingY, floatingLabelProgress)! + resolvedContentPadding.top;
 
     final Offset inputOffset = Offset(
-      leadingWidth,
+      leadingWidth + resolvedContentPadding.left,
       inputY,
     );
 
     // Placeholder is positioned at the same location as input
     final Offset placeholderOffset = Offset(
-      leadingWidth,
+      leadingWidth + resolvedContentPadding.left,
       inputY,
     );
 
@@ -664,16 +696,17 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     // if expands is true, needs to be laid out at the bottom
     final double topAlignedErrorY = [
       leadingOffset.dy + leadingHeight,
-      isMultiline ? stableContentHeight : inputOffset.dy + maxInputHeight,
+      isMultiline ? stableContentHeight + resolvedContentPadding.top : inputOffset.dy + maxInputHeight,
       trailingOffset.dy + trailingHeight,
     ].reduce(math.max);
-    final errorY = expands ? constraints.maxHeight - errorHeight : topAlignedErrorY;
-    final Offset errorOffset = error != null ? Offset(0, errorY) : Offset.zero;
+    final errorY = expands ? constraints.maxHeight - errorHeight - resolvedContentPadding.bottom : topAlignedErrorY;
+    final Offset errorOffset = error != null ? Offset(resolvedContentPadding.left, errorY) : Offset.zero;
 
-    // Calculate total size
-    final double totalHeight = expands
+    // Calculate total size (add padding to total height)
+    final double contentHeight = expands
         ? constraints.maxHeight
-        : math.max(topAlignedErrorY + errorHeight, titleRowHeight);
+        : math.max(topAlignedErrorY + errorHeight, titleRowHeight + resolvedContentPadding.top);
+    final double totalHeight = contentHeight + resolvedContentPadding.bottom;
     final Size size = Size(constraints.maxWidth, totalHeight);
 
     return _RenderSBBDecorationLayout(
@@ -731,14 +764,15 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
       getBaseline: _getDryBaseline,
     );
 
+    final EdgeInsets resolvedContentPadding = contentPadding.resolve(TextDirection.ltr);
     final double leadingWidth = leading?.getMinIntrinsicWidth(double.infinity) ?? 0.0;
     final double trailingWidth = trailing?.getMinIntrinsicWidth(double.infinity) ?? 0.0;
 
     return layout.inputOffset.dy +
         (input.getDryBaseline(
               BoxConstraints(
-                minWidth: constraints.maxWidth - leadingWidth - trailingWidth,
-                maxWidth: constraints.maxWidth - leadingWidth - trailingWidth,
+                minWidth: constraints.maxWidth - leadingWidth - trailingWidth - resolvedContentPadding.horizontal,
+                maxWidth: constraints.maxWidth - leadingWidth - trailingWidth - resolvedContentPadding.horizontal,
               ),
               TextBaseline.alphabetic,
             ) ??
@@ -757,6 +791,8 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
 
   @override
   double computeMinIntrinsicWidth(double height) {
+    final EdgeInsets resolvedContentPadding = contentPadding.resolve(TextDirection.ltr);
+
     final double leadingWidth = _minWidth(leading, height);
     final double inputWidth = _minWidth(input, height);
     final double placeholderWidth = _minWidth(placeholder, height);
@@ -766,15 +802,19 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
 
     final double contentWidth = math.max(placeholderWidth, inputWidth);
 
-    return <double>[
+    final double minWidth = <double>[
       errorWidth,
       leadingWidth + labelWidth + trailingWidth,
       leadingWidth + contentWidth + trailingWidth,
     ].reduce(math.max);
+
+    return minWidth + resolvedContentPadding.horizontal;
   }
 
   @override
   double computeMaxIntrinsicWidth(double height) {
+    final EdgeInsets resolvedContentPadding = contentPadding.resolve(TextDirection.ltr);
+
     final double leadingWidth = _maxWidth(leading, height);
     final double inputWidth = _maxWidth(input, height);
     final double placeholderWidth = _maxWidth(placeholder, height);
@@ -784,25 +824,30 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
 
     final double contentWidth = math.max(placeholderWidth, inputWidth);
 
-    return <double>[
+    final double maxWidth = <double>[
       errorWidth,
       leadingWidth + labelWidth + trailingWidth,
       leadingWidth + contentWidth + trailingWidth,
     ].reduce(math.max);
+
+    return maxWidth + resolvedContentPadding.horizontal;
   }
 
   @override
   double computeMinIntrinsicHeight(double width) {
+    final EdgeInsets resolvedContentPadding = contentPadding.resolve(TextDirection.ltr);
+    final double availableWidth = math.max(0.0, width - resolvedContentPadding.horizontal);
+
     final double leadingWidth = _minWidth(leading, double.infinity);
     final double trailingWidth = _minWidth(trailing, double.infinity);
-    final double availableInputWidth = math.max(0.0, width - leadingWidth - trailingWidth);
+    final double availableInputWidth = math.max(0.0, availableWidth - leadingWidth - trailingWidth);
 
     final double labelHeight = _minHeight(label, availableInputWidth);
     final double inputHeight = _minHeight(input, availableInputWidth);
     final double placeholderHeight = _minHeight(placeholder, availableInputWidth);
-    final double leadingHeight = _minHeight(leading, width);
-    final double trailingHeight = _minHeight(trailing, width);
-    final double errorHeight = _minHeight(error, width);
+    final double leadingHeight = _minHeight(leading, availableWidth);
+    final double trailingHeight = _minHeight(trailing, availableWidth);
+    final double errorHeight = _minHeight(error, availableWidth);
 
     final double maxInputHeight = isEmpty ? math.max(inputHeight, placeholderHeight) : inputHeight;
     final double floatingContentHeight = labelHeight + floatingLabelInputGap + maxInputHeight;
@@ -814,7 +859,8 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
       trailingHeight,
       48.0,
     ].reduce(math.max);
-    return titleRowHeight + errorHeight;
+
+    return titleRowHeight + errorHeight + resolvedContentPadding.vertical;
   }
 
   @override
