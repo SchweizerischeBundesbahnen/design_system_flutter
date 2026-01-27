@@ -2,11 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_input_decoration_theme_data.dart';
 
 import '../../sbb_design_system_mobile.dart';
 import 'decoration/sbb_input_decorator.dart';
 
-// TODO: add clear Button
 // TODO: add Boxed variant
 // TODO: add semantics ordering and traversal
 // TODO: improve docs
@@ -56,6 +56,7 @@ class SBBTextInput extends StatefulWidget {
     this.autofillHints,
     this.inputTextStyle,
     this.inputForegroundColor,
+    this.enableClearButton,
   });
 
   /// {@macro flutter.widgets.editableText.groupId}
@@ -203,6 +204,17 @@ class SBBTextInput extends StatefulWidget {
   /// If that is also null, the default color is used.
   final WidgetStateProperty<Color?>? inputForegroundColor;
 
+  /// Whether to show a [SBBIcons.cross_tiny_small] tappable icon instead of this [decoration.trailingIconData]
+  /// when the input is not empty and has focus.
+  ///
+  /// This only replaces the icon given in [decoration.trailingIconData]. Custom trailing widgets
+  /// via [decoration.trailing] are not replaced.
+  ///
+  /// This setting can be overridden in the [SBBTextInputThemeData].
+  ///
+  /// Defaults to true.
+  final bool? enableClearButton;
+
   @override
   State<StatefulWidget> createState() => _SBBTextInputState();
 }
@@ -326,7 +338,6 @@ class _SBBTextInputState extends State<SBBTextInput>
     final theme = Theme.of(context);
     final DefaultSelectionStyle selectionStyle = DefaultSelectionStyle.of(context);
 
-    final style = SBBControlStyles.of(context).textField!;
     final bool isMultiline = (widget.maxLines ?? 0) != 1;
 
     // determine platform specific properties (selection controls, cursor)
@@ -449,7 +460,7 @@ class _SBBTextInputState extends State<SBBTextInput>
                   animation: Listenable.merge(<Listenable>[_effectiveFocusNode, _effectiveController]),
                   builder: (BuildContext context, Widget? child) {
                     return SBBInputDecorator(
-                      decoration: widget.decoration ?? SBBInputDecoration(),
+                      decoration: _getEffectiveDecorationWithClearButton(context),
                       expands: widget.expands,
                       minInputHeight: effectiveInputTextStyle.height! * effectiveInputTextStyle.fontSize!,
                       isMultiline: isMultiline,
@@ -487,14 +498,47 @@ class _SBBTextInputState extends State<SBBTextInput>
     return color != null ? textStyle!.copyWith(color: color) : textStyle!;
   }
 
-  SBBInputDecoration _getEffectiveDecoration({SBBTextFieldStyle? style}) {
-    return (widget.decoration ?? SBBInputDecoration()).copyWith(
-      borderColor: WidgetStatePropertyAll(
-        _hasError
-            ? SBBColors.error
-            : _effectiveFocusNode.hasFocus
-            ? SBBColors.granite
-            : SBBColors.transparent,
+  SBBInputDecoration _getEffectiveDecorationWithClearButton(BuildContext context) {
+    final themeData = Theme.of(context).sbbTextInputTheme;
+    final effectiveShowClearButton = widget.enableClearButton ?? themeData?.enableClearButton ?? true;
+
+    final baseDecoration = widget.decoration ?? SBBInputDecoration();
+
+    if (baseDecoration.trailing != null || !effectiveShowClearButton) return baseDecoration;
+
+    final shouldReplaceTrailingWithClearButton = _effectiveFocusNode.hasFocus && _effectiveController.text.isNotEmpty;
+
+    final inputDecorationTheme = Theme.of(context).sbbInputDecorationTheme;
+    final Widget trailing = widget.decoration?.trailingIconData == null
+        ? SizedBox.shrink()
+        : Padding(
+            padding: EdgeInsets.only(left: _effectiveTrailingInputGap(inputDecorationTheme)),
+            child: Icon(widget.decoration!.trailingIconData),
+          );
+
+    return baseDecoration.copyWith(
+      trailing: AnimatedSwitcher(
+        duration: Duration(milliseconds: 200),
+        child: shouldReplaceTrailingWithClearButton
+            ? Material(
+                color: Colors.transparent,
+                child: Ink(
+                  width: 24.0,
+                  height: 24.0,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(12.0),
+                    onTap: () {
+                      _effectiveController.clear();
+                      widget.onChanged?.call('');
+                    },
+                    child: Icon(
+                      SBBIcons.cross_tiny_small,
+                      size: 24.0,
+                    ),
+                  ),
+                ),
+              )
+            : trailing,
       ),
     );
   }
@@ -579,6 +623,10 @@ class _SBBTextInputState extends State<SBBTextInput>
       return SystemContextMenu.editableText(editableTextState: editableTextState);
     }
     return AdaptiveTextSelectionToolbar.editableText(editableTextState: editableTextState);
+  }
+
+  double _effectiveTrailingInputGap(SBBInputDecorationThemeData? inputDecorationTheme) {
+    return widget.decoration?.inputTrailingGap ?? inputDecorationTheme?.inputTrailingGap ?? defaultInputTrailingGap;
   }
 }
 

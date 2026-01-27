@@ -14,6 +14,7 @@ class SBBTextInputThemeData extends ThemeExtension<SBBTextInputThemeData> with D
   const SBBTextInputThemeData({
     this.inputTextStyle,
     this.inputForegroundColor,
+    this.enableClearButton,
   });
 
   /// The text style for the input text.
@@ -26,14 +27,21 @@ class SBBTextInputThemeData extends ThemeExtension<SBBTextInputThemeData> with D
   /// This affects the color of the text entered by the user.
   final WidgetStateProperty<Color?>? inputForegroundColor;
 
+  /// Whether to replace the trailingIconData with a clear button when the input is focused and has content.
+  ///
+  /// Defaults to `true`.
+  final bool? enableClearButton;
+
   @override
   SBBTextInputThemeData copyWith({
     TextStyle? inputTextStyle,
     WidgetStateProperty<Color?>? inputForegroundColor,
+    bool? enableClearButton,
   }) {
     return SBBTextInputThemeData(
       inputTextStyle: inputTextStyle ?? this.inputTextStyle,
       inputForegroundColor: inputForegroundColor ?? this.inputForegroundColor,
+      enableClearButton: enableClearButton ?? this.enableClearButton,
     );
   }
 
@@ -52,11 +60,12 @@ class SBBTextInputThemeData extends ThemeExtension<SBBTextInputThemeData> with D
         t,
         Color.lerp,
       ),
+      enableClearButton: t < 0.5 ? enableClearButton : other.enableClearButton,
     );
   }
 
   @override
-  int get hashCode => Object.hash(inputTextStyle, inputForegroundColor);
+  int get hashCode => Object.hash(inputTextStyle, inputForegroundColor, enableClearButton);
 
   @override
   bool operator ==(Object other) {
@@ -64,7 +73,8 @@ class SBBTextInputThemeData extends ThemeExtension<SBBTextInputThemeData> with D
     if (other.runtimeType != runtimeType) return false;
     return other is SBBTextInputThemeData &&
         other.inputTextStyle == inputTextStyle &&
-        other.inputForegroundColor == inputForegroundColor;
+        other.inputForegroundColor == inputForegroundColor &&
+        other.enableClearButton == enableClearButton;
   }
 }
 
@@ -74,6 +84,7 @@ extension SBBTextInputThemeDataX on SBBTextInputThemeData {
     return copyWith(
       inputTextStyle: other.inputTextStyle,
       inputForegroundColor: other.inputForegroundColor,
+      enableClearButton: other.enableClearButton,
     );
   }
 }

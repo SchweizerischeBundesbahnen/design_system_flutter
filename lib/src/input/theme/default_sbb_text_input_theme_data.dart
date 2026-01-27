@@ -13,5 +13,6 @@ class DefaultSBBTextInputThemeData extends SBBTextInputThemeData {
           WidgetState.error: baseStyle.themeValue(SBBColors.error, SBBColors.errorDark),
           WidgetState.any: baseStyle.defaultTextColor,
         }),
+        enableClearButton: true,
       );
 }

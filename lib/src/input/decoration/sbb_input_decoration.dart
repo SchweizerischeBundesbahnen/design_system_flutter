@@ -46,10 +46,6 @@ class SBBInputDecoration {
          'label and labelText are mutually exclusive. Provide only one.',
        ),
        assert(
-         !(trailing != null && trailingIconData != null),
-         'trailing and trailingIconData are mutually exclusive. Provide only one.',
-       ),
-       assert(
          !(placeholder != null && placeholderText != null),
          'placeholder and placeholderText are mutually exclusive. Provide only one.',
        ),
@@ -112,12 +108,12 @@ class SBBInputDecoration {
 
   /// An optional widget to display after the input field.
   ///
-  /// Mutually exclusive with [trailingIconData]. Only one of the two can be provided.
+  /// Mutually exclusive with [trailingIconData]. If both are provided, trailing takes precedence.
   final Widget? trailing;
 
   /// An optional icon to display after the input field.
   ///
-  /// Mutually exclusive with [trailing]. Only one of the two can be provided.
+  /// Mutually exclusive with [trailing]. If both are provided, trailing takes precedence.
   final IconData? trailingIconData;
 
   /// The foreground color of the trailing icon.
