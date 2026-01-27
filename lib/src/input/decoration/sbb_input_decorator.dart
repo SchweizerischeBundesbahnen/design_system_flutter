@@ -635,7 +635,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
       if (!isMultiline) leadingHeight,
       stableContentHeight,
       if (!isMultiline) trailingHeight,
-      48.0,
+      SBBInputDecoration.minInputFieldHeight,
     ].reduce(math.max);
 
     // Position label:
@@ -857,7 +857,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
       leadingHeight,
       stableContentHeight,
       trailingHeight,
-      48.0,
+      SBBInputDecoration.minInputFieldHeight,
     ].reduce(math.max);
 
     return titleRowHeight + errorHeight + resolvedContentPadding.vertical;

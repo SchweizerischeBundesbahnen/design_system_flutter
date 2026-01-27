@@ -171,8 +171,9 @@ class SBBInputDecoration {
   /// If that is also null, defaults to [EdgeInsets.zero].
   final EdgeInsetsGeometry? contentPadding;
 
-  /// Creates a copy of this decoration with the given fields replaced
-  /// by the new values.
+  /// The minimum height for input fields.
+  static double get minInputFieldHeight => 48.0;
+
   SBBInputDecoration copyWith({
     Widget? leading,
     IconData? leadingIconData,
