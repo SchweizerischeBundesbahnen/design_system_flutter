@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../sbb_design_system_mobile.dart';
+
 /// Defines the visual properties and content for SBB inputs.
 ///
 /// This class provides a way to configure the appearance and content of
@@ -18,6 +20,7 @@ class SBBInputDecoration {
     this.labelForegroundColor,
     this.floatingLabelTextStyle,
     this.floatingLabelInputGap,
+    this.floatingLabelBehavior,
     this.trailing,
     this.trailingIconData,
     this.trailingForegroundColor,
@@ -95,6 +98,17 @@ class SBBInputDecoration {
 
   /// The gap between the floating label and the input field.
   final double? floatingLabelInputGap;
+
+  /// Defines the floating behavior of the label.
+  ///
+  /// * When set to [SBBFloatingLabelBehavior.auto], the label floats based on
+  /// focus and content state.
+  /// * When set to [SBBFloatingLabelBehavior.always],
+  /// the label always remains in the floating position. The placeholder will always be shown unless the
+  /// input is not empty.
+  ///
+  /// If null, the value from [SBBInputDecorationThemeData.floatingLabelBehavior] is used.
+  final SBBFloatingLabelBehavior? floatingLabelBehavior;
 
   /// An optional widget to display after the input field.
   ///
@@ -187,6 +201,7 @@ class SBBInputDecoration {
     WidgetStateProperty<Color?>? labelForegroundColor,
     TextStyle? floatingLabelTextStyle,
     double? floatingLabelInputGap,
+    SBBFloatingLabelBehavior? floatingLabelBehavior,
     Widget? trailing,
     IconData? trailingIconData,
     WidgetStateProperty<Color?>? trailingForegroundColor,
@@ -215,6 +230,7 @@ class SBBInputDecoration {
       labelForegroundColor: labelForegroundColor ?? this.labelForegroundColor,
       floatingLabelTextStyle: floatingLabelTextStyle ?? this.floatingLabelTextStyle,
       floatingLabelInputGap: floatingLabelInputGap ?? this.floatingLabelInputGap,
+      floatingLabelBehavior: floatingLabelBehavior ?? this.floatingLabelBehavior,
       trailing: trailing ?? this.trailing,
       trailingIconData: trailingIconData ?? this.trailingIconData,
       trailingForegroundColor: trailingForegroundColor ?? this.trailingForegroundColor,
@@ -249,6 +265,7 @@ class SBBInputDecoration {
         other.labelForegroundColor == labelForegroundColor &&
         other.floatingLabelTextStyle == floatingLabelTextStyle &&
         other.floatingLabelInputGap == floatingLabelInputGap &&
+        other.floatingLabelBehavior == floatingLabelBehavior &&
         other.trailing == trailing &&
         other.trailingIconData == trailingIconData &&
         other.trailingForegroundColor == trailingForegroundColor &&
@@ -279,6 +296,7 @@ class SBBInputDecoration {
     labelForegroundColor,
     floatingLabelTextStyle,
     floatingLabelInputGap,
+    floatingLabelBehavior,
     trailing,
     trailingIconData,
     trailingForegroundColor,

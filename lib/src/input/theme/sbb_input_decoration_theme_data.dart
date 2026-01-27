@@ -26,6 +26,7 @@ class SBBInputDecorationThemeData extends ThemeExtension<SBBInputDecorationTheme
     this.labelForegroundColor,
     this.floatingLabelTextStyle,
     this.floatingLabelInputGap,
+    this.floatingLabelBehavior,
     this.placeholderTextStyle,
     this.placeholderForegroundColor,
     this.borderColor,
@@ -58,6 +59,17 @@ class SBBInputDecorationThemeData extends ThemeExtension<SBBInputDecorationTheme
 
   /// The gap between the floating label and the input field.
   final double? floatingLabelInputGap;
+
+  /// Defines the floating behavior of the label for all inputs.
+  ///
+  /// * When set to [SBBFloatingLabelBehavior.auto], the label floats based on
+  /// focus and content state.
+  /// * When set to [SBBFloatingLabelBehavior.always],
+  /// the label always remains in the floating position. The placeholder will always be shown unless the
+  /// input is not empty.
+  ///
+  /// If null, defaults to [SBBFloatingLabelBehavior.auto].
+  final SBBFloatingLabelBehavior? floatingLabelBehavior;
 
   /// The text style for the placeholder text.
   final TextStyle? placeholderTextStyle;
@@ -93,6 +105,7 @@ class SBBInputDecorationThemeData extends ThemeExtension<SBBInputDecorationTheme
     WidgetStateProperty<Color?>? labelForegroundColor,
     TextStyle? floatingLabelTextStyle,
     double? floatingLabelInputGap,
+    SBBFloatingLabelBehavior? floatingLabelBehavior,
     TextStyle? placeholderTextStyle,
     WidgetStateProperty<Color?>? placeholderForegroundColor,
     TextStyle? errorTextStyle,
@@ -111,6 +124,7 @@ class SBBInputDecorationThemeData extends ThemeExtension<SBBInputDecorationTheme
       labelForegroundColor: labelForegroundColor ?? this.labelForegroundColor,
       floatingLabelTextStyle: floatingLabelTextStyle ?? this.floatingLabelTextStyle,
       floatingLabelInputGap: floatingLabelInputGap ?? this.floatingLabelInputGap,
+      floatingLabelBehavior: floatingLabelBehavior ?? this.floatingLabelBehavior,
       placeholderTextStyle: placeholderTextStyle ?? this.placeholderTextStyle,
       placeholderForegroundColor: placeholderForegroundColor ?? this.placeholderForegroundColor,
       errorTextStyle: errorTextStyle ?? this.errorTextStyle,
@@ -154,6 +168,7 @@ class SBBInputDecorationThemeData extends ThemeExtension<SBBInputDecorationTheme
       ),
       floatingLabelTextStyle: TextStyle.lerp(floatingLabelTextStyle, other.floatingLabelTextStyle, t),
       floatingLabelInputGap: lerpDouble(floatingLabelInputGap, other.floatingLabelInputGap, t),
+      floatingLabelBehavior: t < 0.5 ? floatingLabelBehavior : other.floatingLabelBehavior,
       placeholderTextStyle: TextStyle.lerp(placeholderTextStyle, other.placeholderTextStyle, t),
       placeholderForegroundColor: WidgetStateProperty.lerp<Color?>(
         placeholderForegroundColor,
@@ -185,6 +200,7 @@ class SBBInputDecorationThemeData extends ThemeExtension<SBBInputDecorationTheme
     labelForegroundColor,
     floatingLabelTextStyle,
     floatingLabelInputGap,
+    floatingLabelBehavior,
     placeholderTextStyle,
     placeholderForegroundColor,
     errorTextStyle,
@@ -208,6 +224,7 @@ class SBBInputDecorationThemeData extends ThemeExtension<SBBInputDecorationTheme
         other.labelForegroundColor == labelForegroundColor &&
         other.floatingLabelTextStyle == floatingLabelTextStyle &&
         other.floatingLabelInputGap == floatingLabelInputGap &&
+        other.floatingLabelBehavior == floatingLabelBehavior &&
         other.placeholderTextStyle == placeholderTextStyle &&
         other.placeholderForegroundColor == placeholderForegroundColor &&
         other.errorTextStyle == errorTextStyle &&
@@ -231,6 +248,7 @@ extension SBBInputDecorationThemeDataX on SBBInputDecorationThemeData {
       labelForegroundColor: other.labelForegroundColor,
       floatingLabelTextStyle: other.floatingLabelTextStyle,
       floatingLabelInputGap: other.floatingLabelInputGap,
+      floatingLabelBehavior: other.floatingLabelBehavior,
       placeholderTextStyle: other.placeholderTextStyle,
       placeholderForegroundColor: other.placeholderForegroundColor,
       errorTextStyle: other.errorTextStyle,

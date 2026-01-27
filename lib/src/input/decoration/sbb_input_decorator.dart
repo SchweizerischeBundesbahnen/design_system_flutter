@@ -62,6 +62,7 @@ class SBBInputDecorator extends StatefulWidget {
 class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTickerProviderStateMixin {
   late final AnimationController _floatingLabelController;
   late final CurvedAnimation _floatingLabelAnimation;
+  SBBFloatingLabelBehavior _inheritedFloatingLabelBehavior = SBBFloatingLabelBehavior.auto;
 
   @override
   void initState() {
@@ -69,7 +70,7 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
     _floatingLabelController = AnimationController(
       duration: _kTransitionDuration,
       vsync: this,
-      value: widget._labelShouldFloat ? 1.0 : 0.0,
+      value: _shouldFloat ? 1.0 : 0.0,
     );
     _floatingLabelController.addListener(_handleAnimationChange);
     _floatingLabelAnimation = CurvedAnimation(
@@ -79,14 +80,55 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
     );
   }
 
+  bool get _shouldFloat {
+    final behavior = _effectiveFloatingLabelBehavior;
+    return behavior == SBBFloatingLabelBehavior.always ||
+        (behavior == SBBFloatingLabelBehavior.auto && widget._labelShouldFloat);
+  }
+
+  SBBFloatingLabelBehavior get _effectiveFloatingLabelBehavior {
+    return widget.decoration.floatingLabelBehavior ?? _inheritedFloatingLabelBehavior;
+  }
+
+  bool get _shouldShowPlaceholder =>
+      widget.isEmpty &&
+      (widget.states.contains(WidgetState.focused) ||
+          _effectiveFloatingLabelBehavior == SBBFloatingLabelBehavior.always);
+
   @override
   void didUpdateWidget(SBBInputDecorator oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget._labelShouldFloat != oldWidget._labelShouldFloat) {
-      if (widget._labelShouldFloat) {
+    final oldBehavior = oldWidget.decoration.floatingLabelBehavior ?? _inheritedFloatingLabelBehavior;
+
+    final oldShouldFloat =
+        oldBehavior == SBBFloatingLabelBehavior.always ||
+        (oldBehavior == SBBFloatingLabelBehavior.auto && oldWidget._labelShouldFloat);
+    final newShouldFloat = _shouldFloat;
+
+    if (newShouldFloat != oldShouldFloat) {
+      if (newShouldFloat) {
         _floatingLabelController.forward();
       } else {
         _floatingLabelController.reverse();
+      }
+    }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    final inputDecorationTheme = Theme.of(context).sbbInputDecorationTheme;
+    final newBehavior = inputDecorationTheme?.floatingLabelBehavior ?? SBBFloatingLabelBehavior.auto;
+
+    if (_inheritedFloatingLabelBehavior != newBehavior) {
+      _inheritedFloatingLabelBehavior = newBehavior;
+      // Re-evaluate if label should float with the new theme value
+      if (_shouldFloat != (_floatingLabelController.value == 1.0)) {
+        if (_shouldFloat) {
+          _floatingLabelController.forward();
+        } else {
+          _floatingLabelController.reverse();
+        }
       }
     }
   }
@@ -108,7 +150,7 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
   Widget build(BuildContext context) {
     final inputDecorationTheme = Theme.of(context).sbbInputDecorationTheme;
 
-    final TextScaler textScaler = MediaQuery.textScalerOf(context);
+    final textScaler = MediaQuery.textScalerOf(context);
 
     Widget? leading = widget.decoration.leading;
     if (leading == null && widget.decoration.leadingIconData != null) {
@@ -143,7 +185,7 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
           widget.decoration.floatingLabelTextStyle ?? inputDecorationTheme?.floatingLabelTextStyle;
 
       final resolvedTextStyle =
-          (widget._labelShouldFloat ? floatingTextStyle : textStyle)?.copyWith(color: resolvedColor) ??
+          (_shouldFloat ? floatingTextStyle : textStyle)?.copyWith(color: resolvedColor) ??
           TextStyle(color: resolvedColor);
 
       if (widget.decoration.labelText != null && textStyle?.fontSize != null && textStyle?.height != null) {
@@ -182,7 +224,7 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
     if (placeholder == null && widget.decoration.placeholderText != null) {
       placeholder = AnimatedOpacity(
         duration: _kTransitionDuration * 1.25,
-        opacity: widget.isEmpty && widget.states.contains(WidgetState.focused) ? 1 : 0,
+        opacity: _shouldShowPlaceholder ? 1 : 0,
         child: Text(widget.decoration.placeholderText!),
       );
     }

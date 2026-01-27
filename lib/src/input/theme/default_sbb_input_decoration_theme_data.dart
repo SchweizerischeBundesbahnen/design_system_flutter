@@ -36,6 +36,7 @@ class DefaultSBBInputDecorationThemeData extends SBBInputDecorationThemeData {
         }),
         floatingLabelTextStyle: SBBTextStyles.extraExtraSmallLight,
         floatingLabelInputGap: defaultFloatingLabelInputGap,
+        floatingLabelBehavior: SBBFloatingLabelBehavior.auto,
         placeholderTextStyle: baseStyle.defaultTextStyle,
         placeholderForegroundColor: WidgetStatePropertyAll(baseStyle.themeValue(SBBColors.granite, SBBColors.graphite)),
         borderColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
