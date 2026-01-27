@@ -76,10 +76,10 @@ class SBBSelect<T> extends StatelessWidget {
             color: SBBColors.transparent,
             child: Row(
               children: [
-                const SizedBox(width: sbbDefaultSpacing),
+                const SizedBox(width: SBBSpacing.medium),
                 if (icon != null)
                   Padding(
-                    padding: const EdgeInsetsDirectional.only(end: sbbDefaultSpacing / 2),
+                    padding: const EdgeInsetsDirectional.only(end: SBBSpacing.xSmall),
                     child: Icon(icon, color: enabled ? style.textField?.iconColor : style.textField?.iconColorDisabled),
                   ),
                 Expanded(
@@ -120,11 +120,11 @@ class SBBSelect<T> extends StatelessWidget {
                   SBBIcons.chevron_small_down_small,
                   color: enabled ? style.textField?.iconColor : style.textField?.iconColorDisabled,
                 ),
-                const SizedBox(width: sbbDefaultSpacing / 2),
+                const SizedBox(width: SBBSpacing.xSmall),
               ],
             ),
           ),
-          if (!isLastElement) Divider(indent: icon == null ? sbbDefaultSpacing : 48.0),
+          if (!isLastElement) Divider(indent: icon == null ? SBBSpacing.medium : 48.0),
         ],
       ),
     );
@@ -147,10 +147,10 @@ class SBBSelect<T> extends StatelessWidget {
           children: [
             SBBContentBox(
               margin: const EdgeInsetsDirectional.fromSTEB(
-                sbbDefaultSpacing,
-                sbbDefaultSpacing / 2,
-                sbbDefaultSpacing,
-                sbbDefaultSpacing,
+                SBBSpacing.medium,
+                SBBSpacing.xSmall,
+                SBBSpacing.medium,
+                SBBSpacing.medium,
               ),
               child: StatefulBuilder(
                 builder: (context, setState) {
@@ -237,10 +237,10 @@ class SBBMultiSelect<T> extends StatefulWidget {
               children: [
                 SBBContentBox(
                   margin: const EdgeInsetsDirectional.fromSTEB(
-                    sbbDefaultSpacing,
-                    sbbDefaultSpacing / 2,
-                    sbbDefaultSpacing,
-                    sbbDefaultSpacing,
+                    SBBSpacing.medium,
+                    SBBSpacing.xSmall,
+                    SBBSpacing.medium,
+                    SBBSpacing.medium,
                   ),
                   child: Column(
                     children: SBBListItem.divideListItems(
@@ -267,10 +267,10 @@ class SBBMultiSelect<T> extends StatefulWidget {
                 ),
                 Padding(
                   padding: const EdgeInsetsDirectional.fromSTEB(
-                    sbbDefaultSpacing,
+                    SBBSpacing.medium,
                     0.0,
-                    sbbDefaultSpacing,
-                    sbbDefaultSpacing,
+                    SBBSpacing.medium,
+                    SBBSpacing.medium,
                   ),
                   child: SBBPrimaryButton(
                     labelText: confirmButtonLabelText ?? MaterialLocalizations.of(context).okButtonLabel,
@@ -328,10 +328,10 @@ class _SBBMultiSelectState<T> extends State<SBBMultiSelect<T>> {
             color: SBBColors.transparent,
             child: Row(
               children: [
-                const SizedBox(width: sbbDefaultSpacing),
+                const SizedBox(width: SBBSpacing.medium),
                 if (widget.icon != null)
                   Padding(
-                    padding: const EdgeInsetsDirectional.only(end: sbbDefaultSpacing / 2),
+                    padding: const EdgeInsetsDirectional.only(end: SBBSpacing.xSmall),
                     child: Icon(
                       widget.icon,
                       color: enabled ? style.textField?.iconColor : style.textField?.iconColorDisabled,
@@ -374,11 +374,11 @@ class _SBBMultiSelectState<T> extends State<SBBMultiSelect<T>> {
                   SBBIcons.chevron_small_down_small,
                   color: enabled ? style.textField?.iconColor : style.textField?.iconColorDisabled,
                 ),
-                const SizedBox(width: sbbDefaultSpacing / 2),
+                const SizedBox(width: SBBSpacing.xSmall),
               ],
             ),
           ),
-          if (!widget.isLastElement) Divider(indent: widget.icon == null ? sbbDefaultSpacing : 48.0),
+          if (!widget.isLastElement) Divider(indent: widget.icon == null ? SBBSpacing.medium : 48.0),
         ],
       ),
     );

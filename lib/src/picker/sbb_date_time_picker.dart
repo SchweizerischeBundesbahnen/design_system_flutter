@@ -99,7 +99,7 @@ class SBBDateTimePicker extends StatefulWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
+            padding: const EdgeInsets.symmetric(horizontal: SBBSpacing.medium),
             child: SBBContentBox(
               child: SBBDateTimePicker(
                 initialDateTime: initialDateTime,
@@ -116,7 +116,7 @@ class SBBDateTimePicker extends StatefulWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(sbbDefaultSpacing),
+            padding: const EdgeInsets.all(SBBSpacing.medium),
             child: ListenableBuilder(
               listenable: selectedButtonEnabled,
               builder: (context, _) {

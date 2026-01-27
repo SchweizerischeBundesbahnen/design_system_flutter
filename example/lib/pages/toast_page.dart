@@ -18,15 +18,15 @@ class _ToastPageState extends State<ToastPage> {
   Widget build(BuildContext context) {
     final sbbToast = SBBToast.of(context);
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(sbbDefaultSpacing),
+      padding: const EdgeInsets.all(SBBSpacing.medium),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           const ThemeModeSegmentedButton(),
-          const SizedBox(height: sbbDefaultSpacing),
+          const SizedBox(height: SBBSpacing.medium),
           const SBBListHeader('Show Toast'),
           SBBContentBox(
-            padding: const EdgeInsets.all(sbbDefaultSpacing),
+            padding: const EdgeInsets.all(SBBSpacing.medium),
             child: Column(
               children: [
                 Row(
@@ -44,7 +44,7 @@ class _ToastPageState extends State<ToastPage> {
                         },
                       ),
                     ),
-                    const SizedBox(width: sbbDefaultSpacing),
+                    const SizedBox(width: SBBSpacing.medium),
                     Expanded(
                       child: SBBTertiaryButton(
                         labelText: 'Long',
@@ -61,7 +61,7 @@ class _ToastPageState extends State<ToastPage> {
                     ),
                   ],
                 ),
-                const SizedBox(height: sbbDefaultSpacing),
+                const SizedBox(height: SBBSpacing.medium),
                 SizedBox(
                   width: double.infinity,
                   child: SBBTertiaryButton(
@@ -78,7 +78,7 @@ class _ToastPageState extends State<ToastPage> {
                     },
                   ),
                 ),
-                const SizedBox(height: sbbDefaultSpacing),
+                const SizedBox(height: SBBSpacing.medium),
                 SizedBox(
                   width: double.infinity,
                   child: SBBTertiaryButton(
@@ -91,7 +91,7 @@ class _ToastPageState extends State<ToastPage> {
           ),
           const SBBListHeader('Additional Toast actions'),
           SBBContentBox(
-            padding: const EdgeInsets.all(sbbDefaultSpacing),
+            padding: const EdgeInsets.all(SBBSpacing.medium),
             child: Row(
               children: [
                 Expanded(
@@ -102,7 +102,7 @@ class _ToastPageState extends State<ToastPage> {
                     },
                   ),
                 ),
-                const SizedBox(width: sbbDefaultSpacing),
+                const SizedBox(width: SBBSpacing.medium),
                 Expanded(
                   child: SBBTertiaryButton(
                     labelText: 'Remove',
@@ -114,10 +114,10 @@ class _ToastPageState extends State<ToastPage> {
               ],
             ),
           ),
-          const SizedBox(height: sbbDefaultSpacing * 2),
+          const SizedBox(height: SBBSpacing.xLarge),
           const SBBListHeader('Edit Toast Content'),
           SBBContentBox(
-            padding: const EdgeInsets.all(sbbDefaultSpacing),
+            padding: const EdgeInsets.all(SBBSpacing.medium),
             child: Column(
               children: [
                 SBBTextField(labelText: 'Toast Title', controller: titleController),

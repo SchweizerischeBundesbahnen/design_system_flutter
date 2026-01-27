@@ -19,7 +19,7 @@ class PaginationCircles extends StatelessWidget {
     for (var i = 0; i < numberCircles; i++) {
       result.add(PaginationCircle(isSelected: i == selectedCircle));
       if (_shouldAddSpacing(i)) {
-        result.add(const SizedBox(width: sbbDefaultSpacing * .5));
+        result.add(const SizedBox(width: SBBSpacing.xSmall));
       }
     }
     return result;

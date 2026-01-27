@@ -40,10 +40,10 @@ class SelectPageState extends State<SelectPage> {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: const EdgeInsets.all(sbbDefaultSpacing),
+      padding: const EdgeInsets.all(SBBSpacing.medium),
       children: [
         const ThemeModeSegmentedButton(),
-        const SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: SBBSpacing.medium),
         const SBBListHeader('Single value'),
         SBBContentBox(
           child: Column(
@@ -93,7 +93,7 @@ class SelectPageState extends State<SelectPage> {
                 items: _items,
                 onChanged: null,
               ),
-              const SizedBox(height: sbbDefaultSpacing),
+              const SizedBox(height: SBBSpacing.medium),
               SBBTertiaryButton(
                 labelText: 'Call showMenu() without building Widget',
                 onPressed: () {
@@ -110,11 +110,11 @@ class SelectPageState extends State<SelectPage> {
                   );
                 },
               ),
-              const SizedBox(height: sbbDefaultSpacing),
+              const SizedBox(height: SBBSpacing.medium),
             ],
           ),
         ),
-        const SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: SBBSpacing.medium),
         const SBBListHeader('Multiple values'),
         SBBContentBox(
           child: Column(
@@ -161,7 +161,7 @@ class SelectPageState extends State<SelectPage> {
                 items: _multiSelectItems,
                 onChanged: null,
               ),
-              const SizedBox(height: sbbDefaultSpacing),
+              const SizedBox(height: SBBSpacing.medium),
               SBBTertiaryButton(
                 labelText: 'Call showMenu() without building Widget',
                 onPressed: () {
@@ -178,7 +178,7 @@ class SelectPageState extends State<SelectPage> {
                   );
                 },
               ),
-              const SizedBox(height: sbbDefaultSpacing),
+              const SizedBox(height: SBBSpacing.medium),
             ],
           ),
         ),

@@ -166,9 +166,9 @@ class TypographyTest extends StatelessWidget {
         SizedBox(
           width: double.infinity,
           child: SBBContentBox(
-            padding: EdgeInsets.all(sbbDefaultSpacing),
+            padding: EdgeInsets.all(SBBSpacing.medium),
             child: Column(
-              spacing: sbbDefaultSpacing * 0.5,
+              spacing: SBBSpacing.xSmall,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: textStyles.map((e) => Text(exampleText, style: e)).toList(),
             ),

@@ -160,7 +160,7 @@ class SBBInputTrigger extends StatelessWidget {
     Widget bottomWidget = verticalPaddingWidget;
     if (_hasError) {
       bottomWidget = Padding(
-        padding: const EdgeInsets.only(bottom: sbbDefaultSpacing * 0.5),
+        padding: const EdgeInsets.only(bottom: SBBSpacing.xSmall),
         child: Text(_errorText, style: style.errorTextStyle, maxLines: 1, overflow: TextOverflow.ellipsis),
       );
     }
@@ -202,13 +202,13 @@ class SBBInputTriggerIconWidget extends StatelessWidget {
   final bool error;
   final VoidCallback? onPressed;
 
-  static const verticalPadding = sbbDefaultSpacing * 0.75;
-  static const leftPadding = sbbDefaultSpacing;
-  static const rightPadding = sbbDefaultSpacing * 0.5;
+  static const verticalPadding = SBBSpacing.small;
+  static const leftPadding = SBBSpacing.medium;
+  static const rightPadding = SBBSpacing.xSmall;
 
   @override
   Widget build(BuildContext context) {
-    if (icon == null) return const SizedBox(width: sbbDefaultSpacing);
+    if (icon == null) return const SizedBox(width: SBBSpacing.medium);
 
     final style = SBBControlStyles.of(context).textField!;
     final iconColor = enabled ? (error ? style.prefixIconColorError : style.iconColor) : style.iconColorDisabled;

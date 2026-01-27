@@ -40,7 +40,7 @@ class _FloatingPageState extends State<FloatingPage> {
                 titleText: 'Item $index',
                 onTap: () {
                   FocusScope.of(context).unfocus();
-                  sbbToast.show(title: 'Pressed Item $index', bottom: sbbDefaultSpacing * 6);
+                  sbbToast.show(title: 'Pressed Item $index', bottom: 96.0);
                 },
               ),
             ),
@@ -90,7 +90,7 @@ class _FloatingPageState extends State<FloatingPage> {
           },
           child: Container(
             constraints: BoxConstraints(minWidth: double.infinity),
-            padding: const EdgeInsets.all(sbbDefaultSpacing),
+            padding: const EdgeInsets.all(SBBSpacing.medium),
             child: Text(
               'Bern → Bern Wankdorf',
               style: SBBTextStyles.mediumBold,
@@ -101,7 +101,7 @@ class _FloatingPageState extends State<FloatingPage> {
       // The expanded child is somewhat complicated to achieve the dynamic layout.
       // It could be simplified massively if we were fine with a simple crossfade that only changes the opacity.
       expandedChild: Padding(
-        padding: const EdgeInsets.only(left: sbbDefaultSpacing, top: sbbDefaultSpacing * 0.5),
+        padding: const EdgeInsets.only(left: SBBSpacing.medium, top: SBBSpacing.xSmall),
         child: Row(
           children: [
             Stack(
@@ -109,14 +109,14 @@ class _FloatingPageState extends State<FloatingPage> {
                 Align(
                   alignment: Alignment.topCenter,
                   child: Padding(
-                    padding: const EdgeInsets.only(top: sbbDefaultSpacing),
+                    padding: const EdgeInsets.only(top: SBBSpacing.medium),
                     child: _circle(context),
                   ),
                 ),
                 Positioned(
-                  top: sbbDefaultSpacing * 2,
-                  bottom: sbbDefaultSpacing * 2,
-                  left: sbbDefaultSpacing * 0.5 - 0.5,
+                  top: SBBSpacing.xLarge,
+                  bottom: SBBSpacing.xLarge,
+                  left: SBBSpacing.xSmall - 0.5,
                   child: Container(
                     color: style.labelColor,
                     width: 1,
@@ -125,7 +125,7 @@ class _FloatingPageState extends State<FloatingPage> {
                 Align(
                   alignment: Alignment.bottomCenter,
                   child: Padding(
-                    padding: const EdgeInsets.only(bottom: sbbDefaultSpacing),
+                    padding: const EdgeInsets.only(bottom: SBBSpacing.medium),
                     child: _circle(context),
                   ),
                 ),
@@ -182,7 +182,7 @@ class _FloatingPageState extends State<FloatingPage> {
                 pushMode = !pushMode;
                 FocusScope.of(context).unfocus();
               });
-              sbbToast.show(title: 'Toggled mode', bottom: sbbDefaultSpacing * 6);
+              sbbToast.show(title: 'Toggled mode', bottom: 96.0);
             },
           ),
         ],
@@ -199,8 +199,8 @@ class _FloatingPageState extends State<FloatingPage> {
     );
     return Container(
       decoration: decoration,
-      width: sbbDefaultSpacing,
-      height: sbbDefaultSpacing,
+      width: SBBSpacing.medium,
+      height: SBBSpacing.medium,
       child: Container(
         decoration: decoration,
         margin: EdgeInsets.all(3),

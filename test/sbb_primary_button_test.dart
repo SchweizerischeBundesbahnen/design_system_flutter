@@ -8,9 +8,9 @@ void main() {
   testWidgets('primary_button', (WidgetTester tester) async {
     final pressableKey = ValueKey('pressedButton');
     final widget = Padding(
-      padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing / 2, vertical: sbbDefaultSpacing),
+      padding: const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall, vertical: SBBSpacing.medium),
       child: Column(
-        spacing: sbbDefaultSpacing,
+        spacing: SBBSpacing.medium,
         children: [
           SBBPrimaryButton(key: pressableKey, labelText: "Default", onPressed: () {}),
           SBBPrimaryButton(labelText: "Disabled", onPressed: null),

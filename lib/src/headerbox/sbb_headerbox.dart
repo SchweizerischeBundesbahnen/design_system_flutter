@@ -6,7 +6,7 @@ import 'sbb_headerbox_content.dart';
 
 const _headerBoxMinHeight = 56.0;
 const _headerBoxNavBarExtensionHeight = 24.0;
-const _headerBoxRadius = Radius.circular(sbbDefaultSpacing);
+const _headerBoxRadius = Radius.circular(SBBSpacing.medium);
 const _headerBoxFlapTopMargin = 8.0;
 
 /// The SBB Headerbox.
@@ -51,7 +51,7 @@ class SBBHeaderbox extends StatelessWidget {
     String? secondaryLabel,
     Widget? trailingWidget,
     SBBHeaderboxFlap? flap,
-    EdgeInsets margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
+    EdgeInsets margin = const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
     String? semanticsLabel,
   }) : this.custom(
          key: key,
@@ -84,7 +84,7 @@ class SBBHeaderbox extends StatelessWidget {
     String? secondaryLabel,
     Widget? trailingWidget,
     SBBHeaderboxFlap? flap,
-    EdgeInsets margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
+    EdgeInsets margin = const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
     String? semanticsLabel,
   }) : this.custom(
          key: key,
@@ -103,8 +103,8 @@ class SBBHeaderbox extends StatelessWidget {
   const SBBHeaderbox.custom({
     super.key,
     required this.child,
-    this.margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
-    this.padding = const EdgeInsets.all(sbbDefaultSpacing),
+    this.margin = const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
+    this.padding = const EdgeInsets.all(SBBSpacing.medium),
     this.flap,
     this.semanticsLabel,
   });

@@ -8,7 +8,7 @@ void main() {
   testWidgets('headerbox_1', (WidgetTester tester) async {
     final widget = Column(
       children: [
-        const SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: SBBSpacing.medium),
         const SBBListHeader('Default'),
         SBBHeaderbox(
           title: 'Title',
@@ -21,7 +21,7 @@ void main() {
           ),
           trailingWidget: SBBTertiaryButtonSmall(labelText: 'Label', iconData: SBBIcons.dog_small, onPressed: () => {}),
         ),
-        const SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: SBBSpacing.medium),
         const SBBListHeader('Large'),
         SBBHeaderbox.large(
           title: 'Title',
@@ -29,7 +29,7 @@ void main() {
           secondaryLabel: 'Subtext',
           trailingWidget: SBBTertiaryButton(iconData: SBBIcons.dog_small, onPressed: () => {}),
         ),
-        const SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: SBBSpacing.medium),
         const SBBListHeader('Custom'),
         SBBHeaderbox.custom(
           padding: EdgeInsets.zero,

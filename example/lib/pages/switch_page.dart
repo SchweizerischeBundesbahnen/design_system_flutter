@@ -34,7 +34,7 @@ class _SwitchPageState extends State<SwitchPage> {
       slivers: [
         SBBSliverHeaderbox.custom(
           child: Column(
-            spacing: sbbDefaultSpacing,
+            spacing: SBBSpacing.medium,
             children: [
               ThemeModeSegmentedButton(),
               SBBSegmentedButton(
@@ -46,14 +46,14 @@ class _SwitchPageState extends State<SwitchPage> {
           ),
         ),
         SliverPadding(
-          padding: EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5).copyWith(bottom: sbbDefaultSpacing * 2),
+          padding: EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall).copyWith(bottom: SBBSpacing.xLarge),
           sliver: SliverList.list(
             children: [
               const SBBListHeader('Switch'),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Padding(
-                  padding: const EdgeInsets.only(left: sbbDefaultSpacing * .5),
+                  padding: const EdgeInsets.only(left: SBBSpacing.xSmall),
                   child: SBBSwitch(
                     value: _value1,
                     onChanged: _isEnabled ? (value) => setState(() => _value1 = value) : null,
@@ -143,10 +143,10 @@ class _SwitchPageState extends State<SwitchPage> {
                   ).toList(growable: false),
                 ),
               ),
-              const SizedBox(height: sbbDefaultSpacing * 2),
+              const SizedBox(height: SBBSpacing.xLarge),
               const SBBListHeader('SwitchItem - Boxed'),
               Column(
-                spacing: sbbDefaultSpacing * .5,
+                spacing: SBBSpacing.xSmall,
                 children: [
                   SBBSwitchListItemBoxed(
                     value: _value2,

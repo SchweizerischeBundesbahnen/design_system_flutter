@@ -202,7 +202,7 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
                   excluding: onPressedLogo == null,
                   child: Container(
                     alignment: Alignment.centerRight,
-                    padding: const EdgeInsets.only(right: sbbDefaultSpacing / 2),
+                    padding: const EdgeInsets.only(right: SBBSpacing.xSmall),
                     height: kToolbarHeight,
                     width: customLeadingWidth ? leadingWidth : kToolbarHeight,
                     child: IconButton(

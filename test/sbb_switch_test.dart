@@ -34,15 +34,15 @@ class SwitchTest extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
+      padding: const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           const SBBListHeader('SBBSwitch'),
           Padding(
-            padding: const EdgeInsets.all(sbbDefaultSpacing / 2),
+            padding: const EdgeInsets.all(SBBSpacing.xSmall),
             child: Row(
-              spacing: sbbDefaultSpacing * .25,
+              spacing: SBBSpacing.xxSmall,
               children: [
                 SBBSwitch(onChanged: (_) {}, value: value1),
                 SBBSwitch(onChanged: null, value: value1),
@@ -50,9 +50,9 @@ class SwitchTest extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(sbbDefaultSpacing / 2),
+            padding: const EdgeInsets.all(SBBSpacing.xSmall),
             child: Row(
-              spacing: sbbDefaultSpacing * .25,
+              spacing: SBBSpacing.xxSmall,
               children: [
                 SBBSwitch(
                   onChanged: (_) {},
@@ -70,7 +70,7 @@ class SwitchTest extends StatelessWidget {
           const SBBListHeader('SBBSwitchItem - Boxed'),
           Column(
             mainAxisSize: MainAxisSize.min,
-            spacing: sbbDefaultSpacing * .5,
+            spacing: SBBSpacing.xSmall,
             children: [
               SBBSwitchListItemBoxed(value: value1, titleText: 'Default', onChanged: (value) {}),
               SBBSwitchListItemBoxed(
@@ -156,7 +156,7 @@ class SwitchTest extends StatelessWidget {
                 onChanged: (value) {},
                 links: [
                   Padding(
-                    padding: const EdgeInsets.all(sbbDefaultSpacing),
+                    padding: const EdgeInsets.all(SBBSpacing.medium),
                     child: Container(color: SBBColors.green, child: Text('My custom Link Widget')),
                   ),
                 ],

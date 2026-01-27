@@ -61,6 +61,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Removed deprecated `SBBGroupStyle`, use `SBBContentBoxThemeData` instead
 - Removed `SBBGroupStyle.of(context)` and `SBBContentBoxStyle.of(context)` accessor, use `Theme.of(context).sbbContentBoxTheme` instead
 - Removed deprecated `SBBGroup`
+- Removed deprecated `sbbDefaultSpacing`
 
 
 ## [4.5.0] - 2026-01-19

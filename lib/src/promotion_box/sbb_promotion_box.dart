@@ -224,7 +224,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
               margin: EdgeInsets.only(top: paddingTop),
               decoration: BoxDecoration(
                 border: Border.all(color: resolvedStyle.borderColor!),
-                borderRadius: const BorderRadius.all(Radius.circular(sbbDefaultSpacing)),
+                borderRadius: const BorderRadius.all(Radius.circular(SBBSpacing.medium)),
                 image: DecorationImage(
                   image: const AssetImage(_PromotionBoxAssets.noise),
                   repeat: ImageRepeat.repeat,
@@ -247,16 +247,11 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
                     focusColor: baseStyle.themeValue(SBBColors.milk, SBBColors.iron),
                     hoverColor: baseStyle.themeValue(SBBColors.milk, SBBColors.iron),
                     customBorder: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(sbbDefaultSpacing)),
+                      borderRadius: BorderRadius.all(Radius.circular(SBBSpacing.medium)),
                     ),
                     onTap: widget.onTap,
                     child: Padding(
-                      padding: const EdgeInsets.fromLTRB(
-                        sbbDefaultSpacing,
-                        sbbDefaultSpacing,
-                        sbbDefaultSpacing * .5,
-                        sbbDefaultSpacing,
-                      ),
+                      padding: const EdgeInsets.all(SBBSpacing.medium).copyWith(right: SBBSpacing.xSmall),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -324,16 +319,16 @@ class _DefaultContent extends StatelessWidget {
           children: [
             Expanded(child: Text(title, style: textTheme.titleMedium)),
             if (onClose != null) const SizedBox(width: sbbIconSizeSmall),
-            const SizedBox(width: sbbDefaultSpacing * .5),
+            const SizedBox(width: SBBSpacing.xSmall),
           ],
         ),
-        const SizedBox(height: sbbDefaultSpacing * .5),
+        const SizedBox(height: SBBSpacing.xSmall),
         Row(
           children: [
             Expanded(child: Text(subtitle, style: textTheme.bodyMedium)),
             onTap != null
                 ? Icon(SBBIcons.chevron_small_right_small, color: crossColor, size: sbbIconSizeSmall)
-                : const SizedBox(width: sbbDefaultSpacing * .5),
+                : const SizedBox(width: SBBSpacing.xSmall),
           ],
         ),
       ],

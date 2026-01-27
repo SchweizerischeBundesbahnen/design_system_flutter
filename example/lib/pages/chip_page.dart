@@ -24,7 +24,7 @@ class _ChipPageState extends State<ChipPage> {
       slivers: [
         SBBSliverHeaderbox.custom(
           child: Column(
-            spacing: sbbDefaultSpacing,
+            spacing: SBBSpacing.medium,
             children: [
               const ThemeModeSegmentedButton(),
               SBBSegmentedButton(
@@ -36,15 +36,15 @@ class _ChipPageState extends State<ChipPage> {
           ),
         ),
         SliverPadding(
-          padding: EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
+          padding: EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
           sliver: SliverList.list(
             children: [
               const SBBListHeader('Default'),
               SBBContentBox(
-                padding: const EdgeInsets.all(sbbDefaultSpacing),
+                padding: const EdgeInsets.all(SBBSpacing.medium),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  spacing: sbbDefaultSpacing,
+                  spacing: SBBSpacing.medium,
                   children: [
                     SBBChip(
                       labelText: 'Chip Label',
@@ -64,7 +64,7 @@ class _ChipPageState extends State<ChipPage> {
 
               const SBBListHeader('Long Text'),
               SBBContentBox(
-                padding: const EdgeInsets.all(sbbDefaultSpacing),
+                padding: const EdgeInsets.all(SBBSpacing.medium),
                 child: SBBChip(
                   labelText: 'L${"o" * 100}ng Text',
                   trailingText: 99.toString(),
