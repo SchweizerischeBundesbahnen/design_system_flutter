@@ -46,9 +46,10 @@ class SBBContentBoxStyle extends ThemeExtension<SBBContentBoxStyle> {
   final bool? isSemanticContainer;
 
   /// The border of the content box.
-  static ShapeBorder get shape => RoundedRectangleBorder(
-    borderRadius: BorderRadius.all(Radius.circular(sbbDefaultSpacing)),
-  );
+  static ShapeBorder get shape => RoundedRectangleBorder(borderRadius: radius);
+
+  /// The radius of the content box.
+  static BorderRadius get radius => BorderRadius.all(Radius.circular(sbbDefaultSpacing));
 
   @override
   SBBContentBoxStyle copyWith({

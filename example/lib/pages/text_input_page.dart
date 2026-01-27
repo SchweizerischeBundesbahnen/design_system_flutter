@@ -15,7 +15,7 @@ class _TextInputPageState extends State<TextInputPage> {
 
   final emptyTextEditingController = TextEditingController();
   final defaultTextEditingController = TextEditingController.fromValue(TextEditingValue(text: 'Default'));
-  final textEditingController = TextEditingController.fromValue(TextEditingValue(text: 'Type...'));
+  final errorTextEditingController = TextEditingController.fromValue(TextEditingValue(text: 'Type...'));
 
   @override
   Widget build(BuildContext context) {
@@ -31,84 +31,142 @@ class _TextInputPageState extends State<TextInputPage> {
           sliver: SliverList.list(
             children: [
               SBBListHeader('Listed'),
-              SBBContentBox(
-                child: Column(
-                  children: SBBListItem.divideListItems(
-                    context: context,
-                    items: [
-                      SBBTextInput(
-                        decoration: SBBInputDecoration(
-                          labelText: 'Default',
-                          leadingIconData: SBBIcons.unicorn_small,
-                        ),
-                        controller: defaultTextEditingController,
-                      ),
-                      SBBTextInput(
-                        decoration: SBBInputDecoration(
-                          labelText: 'With Trailing Icon',
-                          leadingIconData: SBBIcons.unicorn_small,
-                          trailingIconData: SBBIcons.circle_information_small_small,
-                        ),
-                      ),
-                      SBBTextInput(
-                        decoration: SBBInputDecoration(
-                          labelText: 'With Placeholder',
-                          placeholderText: 'Placeholder',
-                          leadingIconData: SBBIcons.unicorn_small,
-                        ),
-                      ),
-                      SBBTextInput(
-                        decoration: SBBInputDecoration(
-                          labelText: 'With Custom Button',
-                          placeholderText: 'Press the Button!',
-                          leadingIconData: SBBIcons.unicorn_small,
-                          trailing: SBBTertiaryButtonSmall(
-                            iconData: SBBIcons.dog_small,
-                            onPressed: () => sbbToast.show(title: 'Button pressed'),
+              ConstrainedBox(
+                constraints: BoxConstraints(minHeight: 320),
+                child: Align(
+                  alignment: Alignment.topCenter,
+                  child: SBBContentBox(
+                    child: Column(
+                      children: SBBListItem.divideListItems(
+                        context: context,
+                        items: [
+                          SBBTextInput(
+                            decoration: SBBInputDecoration(
+                              labelText: 'Default',
+                              leadingIconData: SBBIcons.unicorn_small,
+                            ),
+                            controller: defaultTextEditingController,
                           ),
-                        ),
-                      ),
-                      SBBTextInput(
-                        decoration: SBBInputDecoration(
-                          labelText: 'Display Error Message if input too long',
-                          errorText: errorText,
-                          leadingIconData: SBBIcons.unicorn_small,
-                        ),
-                        controller: textEditingController,
-                        onChanged: (value) {
-                          if (errorText == null && value.length > 10) {
-                            setState(() {
-                              errorText = 'Input is too long!';
-                            });
-                          } else if (errorText != null && value.length <= 10) {
-                            setState(() {
-                              errorText = null;
-                            });
-                          }
-                        },
-                      ),
-                      SBBTextInput(
-                        decoration: SBBInputDecoration(leadingIconData: SBBIcons.unicorn_small, labelText: 'Disabled'),
-                        controller: TextEditingController()..value = const TextEditingValue(text: 'Value'),
-                        enabled: false,
-                      ),
-                    ],
-                  ).toList(growable: false),
+                          SBBTextInput(
+                            decoration: SBBInputDecoration(
+                              labelText: 'With Trailing Icon',
+                              leadingIconData: SBBIcons.unicorn_small,
+                              trailingIconData: SBBIcons.circle_information_small_small,
+                            ),
+                          ),
+                          SBBTextInput(
+                            decoration: SBBInputDecoration(
+                              labelText: 'With Placeholder',
+                              placeholderText: 'Placeholder',
+                              leadingIconData: SBBIcons.unicorn_small,
+                            ),
+                          ),
+                          SBBTextInput(
+                            decoration: SBBInputDecoration(
+                              labelText: 'With Custom Button',
+                              placeholderText: 'Press the Button!',
+                              leadingIconData: SBBIcons.unicorn_small,
+                              trailing: SBBTertiaryButtonSmall(
+                                iconData: SBBIcons.dog_small,
+                                onPressed: () => sbbToast.show(title: 'Button pressed'),
+                              ),
+                            ),
+                          ),
+                          SBBTextInput(
+                            decoration: SBBInputDecoration(
+                              labelText: 'Display Error Message if input too long',
+                              errorText: errorText,
+                              leadingIconData: SBBIcons.unicorn_small,
+                            ),
+                            controller: errorTextEditingController,
+                            onChanged: (value) {
+                              if (errorText == null && value.length > 10) {
+                                setState(() {
+                                  errorText = 'Input is too long!';
+                                });
+                              } else if (errorText != null && value.length <= 10) {
+                                setState(() {
+                                  errorText = null;
+                                });
+                              }
+                            },
+                          ),
+                          SBBTextInput(
+                            decoration: SBBInputDecoration(
+                              leadingIconData: SBBIcons.unicorn_small,
+                              labelText: 'Disabled',
+                            ),
+                            controller: TextEditingController()..value = const TextEditingValue(text: 'Value'),
+                            enabled: false,
+                          ),
+                        ],
+                      ).toList(growable: false),
+                    ),
+                  ),
                 ),
               ),
               SizedBox(height: sbbDefaultSpacing),
               SBBListHeader('Boxed'),
-              SBBContentBox(
-                child: Form(
-                  autovalidateMode: AutovalidateMode.always,
-                  child: SBBTextFormField(
-                    labelText: 'Label',
-                    hintText: 'Minimum of 8 characters',
-                    controller: TextEditingController(),
-                    validator: (value) => (value?.length ?? 0) > 7 ? null : 'Minimum of 8 characters required',
-                    isLastElement: true,
+              Column(
+                spacing: sbbDefaultSpacing * 0.5,
+                children: [
+                  SBBTextInputBoxed(
+                    decoration: SBBInputDecoration(
+                      labelText: 'Default',
+                      leadingIconData: SBBIcons.unicorn_small,
+                    ),
+                    controller: defaultTextEditingController,
                   ),
-                ),
+                  SBBTextInputBoxed(
+                    decoration: SBBInputDecoration(
+                      labelText: 'With Trailing Icon',
+                      leadingIconData: SBBIcons.unicorn_small,
+                      trailingIconData: SBBIcons.circle_information_small_small,
+                    ),
+                  ),
+                  SBBTextInputBoxed(
+                    decoration: SBBInputDecoration(
+                      labelText: 'With Placeholder',
+                      placeholderText: 'Placeholder',
+                      leadingIconData: SBBIcons.unicorn_small,
+                    ),
+                  ),
+                  SBBTextInputBoxed(
+                    decoration: SBBInputDecoration(
+                      labelText: 'With Custom Button',
+                      placeholderText: 'Press the Button!',
+                      leadingIconData: SBBIcons.unicorn_small,
+                      trailing: SBBTertiaryButtonSmall(
+                        iconData: SBBIcons.dog_small,
+                        onPressed: () => sbbToast.show(title: 'Button pressed'),
+                      ),
+                    ),
+                  ),
+                  SBBTextInputBoxed(
+                    decoration: SBBInputDecoration(
+                      labelText: 'Display Error Message if input too long',
+                      errorText: errorText,
+                      leadingIconData: SBBIcons.unicorn_small,
+                    ),
+                    controller: errorTextEditingController,
+                    onChanged: (value) {
+                      if (errorText == null && value.length > 10) {
+                        setState(() {
+                          errorText = 'Input is too long!';
+                        });
+                      } else if (errorText != null && value.length <= 10) {
+                        setState(() {
+                          errorText = null;
+                        });
+                      }
+                    },
+                  ),
+                  SBBTextInputBoxed(
+                    decoration: SBBInputDecoration(leadingIconData: SBBIcons.unicorn_small, labelText: 'Disabled'),
+                    controller: TextEditingController()..value = const TextEditingValue(text: 'Value'),
+                    enabled: false,
+                  ),
+                ],
               ),
             ],
           ),

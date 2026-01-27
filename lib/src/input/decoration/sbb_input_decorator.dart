@@ -20,6 +20,7 @@ class SBBInputDecorator extends StatefulWidget {
     this.expands = false,
     this.isMultiline = false,
     this.isEmpty = false,
+    this.isBoxed = false,
     this.states = const <WidgetState>{},
     this.child,
   });
@@ -42,6 +43,11 @@ class SBBInputDecorator extends StatefulWidget {
   ///
   /// When true and the input field has focus, the placeholder is displayed.
   final bool isEmpty;
+
+  /// Whether the decoration is assumed to be inside of an [SBBContentBox].
+  ///
+  /// This will draw the [decoration.borderColor] with a different shape.
+  final bool isBoxed;
 
   /// The states of the input field.
   final Set<WidgetState> states;
@@ -268,14 +274,9 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
       child: error ?? SizedBox.shrink(),
     );
 
-    final Color resolvedBorderColor =
-        (widget.decoration.borderColor ?? inputDecorationTheme?.borderColor)?.resolve(widget.states) ??
-        SBBColors.transparent;
     final Widget container = AnimatedContainer(
       duration: _kTransitionDuration,
-      decoration: BoxDecoration(
-        border: Border(bottom: BorderSide(color: resolvedBorderColor)),
-      ),
+      decoration: _effectiveBoxDecoration(inputDecorationTheme),
     );
 
     return _SBBDecorator(
@@ -299,6 +300,20 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
       contentPadding: _effectiveContentPadding(inputDecorationTheme),
       child: widget.child,
     );
+  }
+
+  BoxDecoration _effectiveBoxDecoration(SBBInputDecorationThemeData? inputDecorationTheme) {
+    final effectiveStates = Set<WidgetState>.from(widget.states);
+    if (widget.isBoxed) effectiveStates.remove(WidgetState.focused);
+
+    final Color resolvedBorderColor =
+        (widget.decoration.borderColor ?? inputDecorationTheme?.borderColor)?.resolve(effectiveStates) ??
+        SBBColors.transparent;
+    final resolvedBorder = widget.isBoxed
+        ? Border.all(color: resolvedBorderColor)
+        : Border(bottom: BorderSide(color: resolvedBorderColor));
+
+    return BoxDecoration(borderRadius: widget.isBoxed ? SBBContentBoxStyle.radius : null, border: resolvedBorder);
   }
 
   Widget _addDefaultAncestorWithResolved({

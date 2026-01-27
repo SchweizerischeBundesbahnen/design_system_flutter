@@ -7,7 +7,6 @@ import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_input_decor
 import '../../sbb_design_system_mobile.dart';
 import 'decoration/sbb_input_decorator.dart';
 
-// TODO: add Boxed variant
 // TODO: add semantics ordering and traversal
 // TODO: improve docs
 // TODO: add migration guideline & CHANGELOG
@@ -465,6 +464,7 @@ class _SBBTextInputState extends State<SBBTextInput>
                       minInputHeight: effectiveInputTextStyle.height! * effectiveInputTextStyle.fontSize!,
                       isMultiline: isMultiline,
                       isEmpty: _effectiveController.text.isEmpty,
+                      isBoxed: isBoxed,
                       states: _statesController.value,
                       child: child,
                     );
@@ -544,6 +544,8 @@ class _SBBTextInputState extends State<SBBTextInput>
   }
 
   EditableTextState? get _editableText => editableTextKey.currentState;
+
+  bool get isBoxed => false;
 
   bool _shouldShowSelectionHandles(SelectionChangedCause? cause) {
     // When the text field is activated by something that doesn't trigger the
@@ -627,6 +629,68 @@ class _SBBTextInputState extends State<SBBTextInput>
 
   double _effectiveTrailingInputGap(SBBInputDecorationThemeData? inputDecorationTheme) {
     return widget.decoration?.inputTrailingGap ?? inputDecorationTheme?.inputTrailingGap ?? defaultInputTrailingGap;
+  }
+}
+
+/// The boxed variant of [SBBTextInput].
+///
+/// This has mainly two effects:
+/// * if no [decoration.contentPadding] is given, a default padding of
+/// [EdgeInsets.symmetric(horizontal: SBBSpacing.medium)] will be applied.
+/// * the border of the input decoration will only show if it has an error and in a surrounding manner.
+class SBBTextInputBoxed extends SBBTextInput {
+  SBBTextInputBoxed({
+    super.key,
+    super.groupId,
+    super.controller,
+    SBBInputDecoration? decoration,
+    super.focusNode,
+    super.keyboardType,
+    super.textInputAction,
+    super.textCapitalization,
+    super.readOnly,
+    super.showCursor,
+    super.autofocus,
+    super.obscuringCharacter,
+    super.obscureText,
+    super.autocorrect,
+    super.enableSuggestions,
+    super.maxLines,
+    super.minLines,
+    super.expands,
+    super.onChanged,
+    super.onSubmitted,
+    super.inputFormatters,
+    super.enabled,
+    super.ignorePointers,
+    super.keyboardAppearance,
+    super.enableInteractiveSelection,
+    super.onTap,
+    super.onTapAlwaysCalled,
+    super.scrollController,
+    super.autofillHints,
+    super.inputTextStyle,
+    super.inputForegroundColor,
+    super.enableClearButton,
+  }) : super(
+         decoration: decoration?.contentPadding != null
+             ? decoration
+             : (decoration ?? SBBInputDecoration()).copyWith(
+                 contentPadding: EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
+               ),
+       );
+
+  @override
+  State<SBBTextInput> createState() => _SBBTextInputStateBoxed();
+}
+
+class _SBBTextInputStateBoxed extends _SBBTextInputState {
+  @override
+  bool get isBoxed => true;
+
+  @override
+  Widget build(BuildContext context) {
+    return SBBContentBox(child: super.build(context));
   }
 }
 
