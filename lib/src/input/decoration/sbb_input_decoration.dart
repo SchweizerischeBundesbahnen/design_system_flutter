@@ -172,6 +172,8 @@ class SBBInputDecoration {
   final EdgeInsetsGeometry? contentPadding;
 
   /// The minimum height for input fields.
+  ///
+  /// This value will scale when text scaling is applied.
   static double get minInputFieldHeight => 48.0;
 
   SBBInputDecoration copyWith({

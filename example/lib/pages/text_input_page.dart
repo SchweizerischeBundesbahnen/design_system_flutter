@@ -38,7 +38,6 @@ class _TextInputPageState extends State<TextInputPage> {
                     items: [
                       SBBTextInput(
                         decoration: SBBInputDecoration(
-                          contentPadding: EdgeInsets.all(16.0),
                           labelText: 'Default',
                           leadingIconData: SBBIcons.unicorn_small,
                         ),

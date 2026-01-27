@@ -108,6 +108,8 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
   Widget build(BuildContext context) {
     final inputDecorationTheme = Theme.of(context).sbbInputDecorationTheme;
 
+    final TextScaler textScaler = MediaQuery.textScalerOf(context);
+
     Widget? leading = widget.decoration.leading;
     if (leading == null && widget.decoration.leadingIconData != null) {
       leading = Padding(
@@ -201,7 +203,7 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
     if (error == null && widget.decoration.errorText != null) {
       error = Padding(
         padding: EdgeInsets.only(
-          top: _effectiveTitleRowErrorGap(inputDecorationTheme),
+          top: textScaler.scale(_effectiveTitleRowErrorGap(inputDecorationTheme)),
           bottom: _effectiveErrorBottomPadding(inputDecorationTheme),
         ),
         child: Text(widget.decoration.errorText!),
@@ -248,8 +250,9 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
       isEmpty: widget.isEmpty,
       isFocused: widget.states.contains(WidgetState.focused),
       floatingLabelProgress: _floatingLabelAnimation.value,
-      floatingLabelInputGap: _effectiveFloatingLabelInputGap(inputDecorationTheme),
+      floatingLabelInputGap: textScaler.scale(_effectiveFloatingLabelInputGap(inputDecorationTheme)),
       minInputHeight: widget.minInputHeight,
+      minTotalHeight: textScaler.scale(SBBInputDecoration.minInputFieldHeight),
       maxLabelHeight: maxLabelTextHeight,
       contentPadding: _effectiveContentPadding(inputDecorationTheme),
       child: widget.child,
@@ -319,6 +322,7 @@ class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSl
     required this.floatingLabelProgress,
     required this.floatingLabelInputGap,
     required this.minInputHeight,
+    required this.minTotalHeight,
     required this.contentPadding,
     this.maxLabelHeight,
     this.child,
@@ -332,6 +336,7 @@ class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSl
   final double floatingLabelProgress;
   final double floatingLabelInputGap;
   final double minInputHeight;
+  final double minTotalHeight;
   final double? maxLabelHeight;
   final EdgeInsetsGeometry contentPadding;
   final Widget? child;
@@ -362,6 +367,7 @@ class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSl
       floatingLabelProgress: floatingLabelProgress,
       floatingLabelInputGap: floatingLabelInputGap,
       minInputHeight: minInputHeight,
+      minTotalHeight: minTotalHeight,
       maxLabelHeight: maxLabelHeight,
       contentPadding: contentPadding,
     );
@@ -416,6 +422,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     required double floatingLabelProgress,
     required double floatingLabelInputGap,
     required double minInputHeight,
+    required double minTotalHeight,
     required EdgeInsetsGeometry contentPadding,
     double? maxLabelHeight,
   }) : _decoration = decoration,
@@ -425,6 +432,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
        _floatingLabelProgress = floatingLabelProgress,
        _floatingLabelInputGap = floatingLabelInputGap,
        _minInputHeight = minInputHeight,
+       _minTotalHeight = minTotalHeight,
        _maxLabelHeight = maxLabelHeight,
        _contentPadding = contentPadding;
 
@@ -516,6 +524,15 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
   set minInputHeight(double value) {
     if (_minInputHeight == value) return;
     _minInputHeight = value;
+    markNeedsLayout();
+  }
+
+  double get minTotalHeight => _minTotalHeight;
+  double _minTotalHeight;
+
+  set minTotalHeight(double value) {
+    if (_minTotalHeight == value) return;
+    _minTotalHeight = value;
     markNeedsLayout();
   }
 
@@ -635,7 +652,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
       if (!isMultiline) leadingHeight,
       stableContentHeight,
       if (!isMultiline) trailingHeight,
-      SBBInputDecoration.minInputFieldHeight,
+      minTotalHeight,
     ].reduce(math.max);
 
     // Position label:
@@ -857,7 +874,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
       leadingHeight,
       stableContentHeight,
       trailingHeight,
-      SBBInputDecoration.minInputFieldHeight,
+      minTotalHeight,
     ].reduce(math.max);
 
     return titleRowHeight + errorHeight + resolvedContentPadding.vertical;
