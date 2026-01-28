@@ -275,7 +275,8 @@ class _SBBTextInputState extends State<SBBTextInput>
     _effectiveFocusNode.canRequestFocus = widget.enabled;
     _effectiveFocusNode.addListener(_handleFocusChanged);
 
-    _statesController = WidgetStatesController(_computeStates());
+    _statesController = WidgetStatesController();
+    _updateStates();
   }
 
   @override
@@ -313,18 +314,12 @@ class _SBBTextInputState extends State<SBBTextInput>
     super.dispose();
   }
 
-  Set<WidgetState> _computeStates() {
-    return <WidgetState>{
-      if (!widget.enabled) WidgetState.disabled,
-      if (_effectiveFocusNode.hasFocus) WidgetState.focused,
-      if (_hasError) WidgetState.error,
-    };
-  }
-
   bool get _hasError => widget.decoration?.errorText != null || widget.decoration?.error != null;
 
   void _updateStates() {
-    _statesController.value = _computeStates();
+    _statesController.update(WidgetState.disabled, !widget.enabled);
+    _statesController.update(WidgetState.focused, _effectiveFocusNode.hasFocus);
+    _statesController.update(WidgetState.error, _hasError);
   }
 
   // The SBBTextInput does three things:
@@ -466,7 +461,7 @@ class _SBBTextInputState extends State<SBBTextInput>
                       isMultiline: isMultiline,
                       isEmpty: _effectiveController.text.isEmpty,
                       isBoxed: isBoxed,
-                      states: _statesController.value,
+                      states: Set<WidgetState>.from(_statesController.value),
                       child: child,
                     );
                   },

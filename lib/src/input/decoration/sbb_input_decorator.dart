@@ -172,8 +172,6 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
 
     final textScaler = MediaQuery.textScalerOf(context);
 
-    print('Building Decorator');
-
     Widget? leading = widget.decoration.leading;
     if (leading == null && widget.decoration.leadingIconData != null) {
       leading = Padding(
