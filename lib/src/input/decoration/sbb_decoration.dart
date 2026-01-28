@@ -12,6 +12,7 @@ class SBBDecoration {
     this.label,
     this.error,
     this.container,
+    this.input,
   });
 
   /// An optional widget to display before the input field.
@@ -47,6 +48,9 @@ class SBBDecoration {
   /// The container surrounding the decoration.
   final Widget? container;
 
+  /// The input widget at the center of the decoration.
+  final Widget? input;
+
   /// Creates a copy of this decoration with the given fields replaced
   /// by the new values.
   SBBDecoration copyWith({
@@ -56,6 +60,7 @@ class SBBDecoration {
     Widget? label,
     Widget? error,
     Widget? container,
+    Widget? input,
   }) {
     return SBBDecoration(
       leading: leading ?? this.leading,
@@ -64,6 +69,7 @@ class SBBDecoration {
       label: label ?? this.label,
       error: error ?? this.error,
       container: container ?? this.container,
+      input: input ?? this.input,
     );
   }
 
@@ -77,9 +83,10 @@ class SBBDecoration {
         other.placeholder == placeholder &&
         other.label == label &&
         other.error == error &&
-        other.container == container;
+        other.container == container &&
+        other.input == input;
   }
 
   @override
-  int get hashCode => Object.hash(leading, trailing, placeholder, label, error, container);
+  int get hashCode => Object.hash(leading, trailing, placeholder, label, error, container, input);
 }

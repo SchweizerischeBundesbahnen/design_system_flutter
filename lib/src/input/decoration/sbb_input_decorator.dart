@@ -172,6 +172,8 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
 
     final textScaler = MediaQuery.textScalerOf(context);
 
+    print('Building Decorator');
+
     Widget? leading = widget.decoration.leading;
     if (leading == null && widget.decoration.leadingIconData != null) {
       leading = Padding(
@@ -293,21 +295,16 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
       decoration: _effectiveBoxDecoration(inputDecorationTheme),
     );
 
-    // If at least two out of the three are visible, it needs semantics sort order.
-    final bool needsSemanticsSortKey =
-        _shouldFloat &&
-        (widget.child != null ? (leading != null || trailing != null) : (leading != null && trailing != null));
-
     Widget? input = widget.child;
-    if (input != null && needsSemanticsSortKey) {
+    if (input != null) {
       input = Semantics(sortKey: _inputSemanticsSortOrder, child: input);
     }
 
-    if (leading != null && needsSemanticsSortKey) {
+    if (leading != null) {
       leading = Semantics(sortKey: _leadingSemanticsSortOrder, child: leading);
     }
 
-    if (trailing != null && needsSemanticsSortKey) {
+    if (trailing != null) {
       trailing = Semantics(sortKey: _trailingSemanticsSortOrder, child: trailing);
     }
 
@@ -534,17 +531,42 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
 
   RenderBox? get container => childForSlot(_SBBDecorationSlot.container);
 
+  @override
+  void visitChildrenForSemantics(RenderObjectVisitor visitor) {
+    if (container != null) {
+      visitor(container!);
+    }
+    if (label != null) {
+      visitor(label!);
+    }
+    if (leading != null) {
+      visitor(leading!);
+    }
+    if (placeholder != null) {
+      visitor(placeholder!);
+    }
+    if (input != null) {
+      visitor(input!);
+    }
+    if (trailing != null) {
+      visitor(trailing!);
+    }
+    if (error != null) {
+      visitor(error!);
+    }
+  }
+
   // The returned list is ordered for hit testing.
   @override
   Iterable<RenderBox> get children {
     return <RenderBox>[
-      if (label != null) label!,
-      if (leading != null) leading!,
-      if (input != null) input!,
-      if (placeholder != null) placeholder!,
-      if (trailing != null) trailing!,
-      if (error != null) error!,
-      if (container != null) container!,
+      ?label,
+      ?leading,
+      ?input,
+      ?placeholder,
+      ?trailing,
+      ?error,
+      ?container,
     ];
   }
 
