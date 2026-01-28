@@ -7,21 +7,37 @@ import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_input_decor
 import '../../sbb_design_system_mobile.dart';
 import 'decoration/sbb_input_decorator.dart';
 
-// TODO: improve docs
 // TODO: add migration guideline & CHANGELOG
 // TODO: one final check
 
-/// The SBBTextInput.
+/// The SBB TextInput.
 ///
-/// A text field lets the user enter text, either with hardware keyboard or with
-/// an onscreen keyboard.
+/// A customizable text input field that supports both single-line and multiline modes
+/// with optional leading and trailing icons, error states, and validation.
 ///
-/// This component is based on the outlined Material Design text field with no borders. Unlike
-/// the Material Design specifications, the SBB TextInput displays error messages *above* the bottom borderline and therefore
-/// customizes the bottom border completely.
+/// ## Multiline Mode
 ///
-/// See [documentation](https://digital.sbb.ch/de/design-system/mobile/components/text-input/)
-/// and [Figma design guidelines](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=309-2236).
+/// When the text field is configured as multiline (either by setting [maxLines] to null
+/// with [expands] set to true, or by setting [maxLines] to a value greater than 1),
+/// the leading and trailing icons become top-aligned instead of center-aligned.
+///
+/// ## Key Properties
+///
+/// * [inputFormatters]: Customize input validation and formatting. These are called
+///   before [onChanged] and can validate or transform the input value.
+/// * [onTap]: Called when the text field is tapped. Use [onTapAlwaysCalled] to receive
+///   this callback for every tap, including consecutive taps.
+/// * [enabled]: Controls whether the text field is interactive. When false, the field
+///   is disabled and its children (including trailing icons) are also disabled.
+///   Use [readOnly] and [enableInteractiveSelection] if you need to keep trailing widgets
+///   interactive while disabling the text field.
+/// * [ignorePointers]: Determines whether the widget ignores pointer events (taps, etc.).
+///
+/// See also:
+/// * [SBBTextInputThemeData] for customizing the style across the current theme
+/// * [SBBInputDecoration] for customizing the decoration surrounding the raw input field
+/// * [digital.sbb.ch documenation](https://digital.sbb.ch/de/design-system/mobile/components/text-input/)
+/// * [Figma design guidelines](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=309-2236) (internal only)
 class SBBTextInput extends StatefulWidget {
   const SBBTextInput({
     super.key,
