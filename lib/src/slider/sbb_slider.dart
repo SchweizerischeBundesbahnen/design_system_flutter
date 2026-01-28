@@ -26,7 +26,7 @@ const _iconPadding = 4.0;
 /// See also:
 ///
 /// * <https://digital.sbb.ch/de/design-system/mobile/components/slider>
-class SBBSlider extends StatelessWidget {
+class SBBSlider extends StatefulWidget {
   const SBBSlider({
     super.key,
     required this.onChanged,
@@ -37,6 +37,8 @@ class SBBSlider extends StatelessWidget {
     this.endIcon = SBBIcons.walk_fast_small,
     this.onChangeStart,
     this.onChangeEnd,
+    this.style,
+    this.focusNode,
   });
 
   final ValueChanged<double>? onChanged;
@@ -48,62 +50,125 @@ class SBBSlider extends StatelessWidget {
   final IconData? startIcon;
   final IconData? endIcon;
 
+  /// Customizes this slider appearance.
+  ///
+  /// Non-null properties of this style override the corresponding
+  /// properties in [SBBSliderThemeData.style] of the theme found in [context].
+  final SBBSliderStyle? style;
+
+  /// {@macro flutter.widgets.Focus.focusNode}
+  final FocusNode? focusNode;
+
+  @override
+  State<SBBSlider> createState() => _SBBSliderState();
+}
+
+class _SBBSliderState extends State<SBBSlider> {
+  late WidgetStatesController _statesController;
+  FocusNode? _focusNode;
+
+  FocusNode get _effectiveFocusNode => widget.focusNode ?? (_focusNode ??= FocusNode());
+
+  @override
+  void initState() {
+    super.initState();
+    _statesController = WidgetStatesController();
+    _effectiveFocusNode.addListener(_handleFocusChanged);
+    _updateStatesController();
+  }
+
+  @override
+  void didUpdateWidget(SBBSlider oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.onChanged != oldWidget.onChanged) {
+      _updateStatesController();
+    }
+  }
+
+  void _updateStatesController() {
+    _statesController.update(WidgetState.disabled, widget.onChanged == null);
+    _statesController.update(WidgetState.focused, _effectiveFocusNode.hasFocus);
+  }
+
+  @override
+  void dispose() {
+    _statesController.dispose();
+    _effectiveFocusNode.removeListener(_handleFocusChanged);
+    _focusNode?.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final style = SBBControlStyles.of(context).slider!;
+    final themeStyle = Theme.of(context).sbbSliderTheme?.style;
+    final effectiveStyle = themeStyle?.merge(widget.style) ?? widget.style ?? const SBBSliderStyle();
+    final states = _statesController.value;
+
+    final trackColor = effectiveStyle.trackColor?.resolve(states) ?? SBBColors.smoke;
+    final activeTrackColor = effectiveStyle.activeTrackColor?.resolve(states) ?? SBBColors.red;
+    final thumbBackgroundColor = effectiveStyle.thumbBackgroundColor?.resolve(states) ?? SBBColors.green;
+    final thumbBorderColor = effectiveStyle.thumbBorderColor?.resolve(states) ?? SBBColors.red;
+    final leadingForegroundColor = effectiveStyle.leadingForegroundColor?.resolve(states) ?? SBBColors.black;
+    final trailingForegroundColor = effectiveStyle.trailingForegroundColor?.resolve(states) ?? SBBColors.black;
+
+    print(thumbBackgroundColor);
+
     return Row(
       mainAxisSize: MainAxisSize.max,
       children: [
-        if (startIcon != null) _startIcon(style),
-        Expanded(child: _slider(style)),
-        if (endIcon != null) _endIcon(style),
+        if (widget.startIcon != null) _startIcon(leadingForegroundColor),
+        Expanded(child: _slider(trackColor, activeTrackColor, thumbBackgroundColor, thumbBorderColor)),
+        if (widget.endIcon != null) _endIcon(trailingForegroundColor),
       ],
     );
   }
 
-  Widget _endIcon(SBBSliderStyle style) {
+  Widget _endIcon(Color color) {
     return Padding(
       padding: const EdgeInsets.only(left: _iconPadding),
-      child: Icon(endIcon, color: _isDisabled ? style.disabledIconColor : style.iconColor),
+      child: Icon(widget.endIcon, color: color),
     );
   }
 
-  Widget _startIcon(SBBSliderStyle style) {
+  Widget _startIcon(Color color) {
     return Padding(
       padding: const EdgeInsets.only(right: _iconPadding),
-      child: Icon(startIcon, color: _isDisabled ? style.disabledIconColor : style.iconColor),
+      child: Icon(widget.startIcon, color: color),
     );
   }
 
-  Widget _slider(SBBSliderStyle style) {
-    return Opacity(
-      opacity: _isDisabled ? 0.5 : 1.0,
-      child: SliderTheme(
-        data: SliderThemeData(
-          trackHeight: _trackHeight,
-          thumbColor: style.thumbColor,
-          activeTrackColor: style.activeTrackColor,
-          inactiveTrackColor: style.inactiveTrackColor,
-          trackShape: EvenRoundedRectSliderTrackShape(),
-          thumbShape: CircleBorderThumbShape(
-            radius: _thumbRadius,
-            borderWidth: _thumbBorderWidth,
-            color: style.thumbColor,
-            borderColor: style.thumbBorderColor,
-          ),
-          overlayShape: SliderComponentShape.noOverlay,
+  Widget _slider(Color trackColor, Color activeTrackColor, Color thumbBackgroundColor, Color thumbBorderColor) {
+    return SliderTheme(
+      data: SliderThemeData(
+        trackHeight: _trackHeight,
+        thumbColor: thumbBackgroundColor,
+        activeTrackColor: activeTrackColor,
+        inactiveTrackColor: trackColor,
+        trackShape: EvenRoundedRectSliderTrackShape(),
+        thumbShape: CircleBorderThumbShape(
+          radius: _thumbRadius,
+          borderWidth: _thumbBorderWidth,
+          color: thumbBackgroundColor,
+          borderColor: thumbBorderColor,
         ),
-        child: Slider(
-          value: value,
-          min: min,
-          max: max,
-          onChanged: onChanged,
-          onChangeStart: onChangeStart,
-          onChangeEnd: onChangeEnd,
-        ),
+        overlayShape: SliderComponentShape.noOverlay,
+      ),
+      child: Slider(
+        value: widget.value,
+        min: widget.min,
+        max: widget.max,
+        onChanged: widget.onChanged,
+        onChangeStart: widget.onChangeStart,
+        onChangeEnd: widget.onChangeEnd,
+        focusNode: _effectiveFocusNode,
       ),
     );
   }
 
-  get _isDisabled => onChanged == null;
+  void _handleFocusChanged() {
+    _updateStatesController();
+    setState(() {
+      // resolve colors
+    });
+  }
 }
