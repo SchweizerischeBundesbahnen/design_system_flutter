@@ -7,7 +7,6 @@ import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_input_decor
 import '../../sbb_design_system_mobile.dart';
 import 'decoration/sbb_input_decorator.dart';
 
-// TODO: overhaul tests
 // TODO: improve docs
 // TODO: add migration guideline & CHANGELOG
 // TODO: one final check
