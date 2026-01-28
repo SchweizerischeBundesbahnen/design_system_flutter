@@ -64,6 +64,15 @@ void main() {
                         controller: TextEditingController()..value = const TextEditingValue(text: 'Value'),
                         enabled: false,
                       ),
+                      SBBTextInput(
+                        decoration: SBBInputDecoration(
+                          leadingIconData: SBBIcons.unicorn_small,
+                          label: Container(color: SBBColors.green, child: Text('Custom!')),
+                          trailing: Container(height: 30, color: SBBColors.autumn, width: 30),
+                        ),
+                        controller: TextEditingController()..value = const TextEditingValue(text: 'Custom'),
+                        enabled: false,
+                      ),
                     ],
                   ).toList(growable: false),
                 ),

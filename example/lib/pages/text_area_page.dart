@@ -179,17 +179,28 @@ class _TextAreaPageState extends State<TextAreaPage> {
               ),
               SizedBox(height: SBBSpacing.medium),
               SBBListHeader('Boxed'),
-              SBBContentBox(
-                child: Form(
-                  autovalidateMode: AutovalidateMode.always,
-                  child: SBBTextFormField(
-                    labelText: 'Label',
-                    hintText: 'Minimum of 8 characters',
-                    controller: TextEditingController(),
-                    validator: (value) => (value?.length ?? 0) > 7 ? null : 'Minimum of 8 characters required',
-                    isLastElement: true,
+              SBBTextInputBoxed(
+                decoration: SBBInputDecoration(
+                  contentPadding: const EdgeInsets.symmetric(
+                    vertical: SBBSpacing.xSmall,
+                    horizontal: SBBSpacing.medium,
                   ),
+                  leading: Padding(
+                    padding: EdgeInsets.only(top: SBBSpacing.xxSmall, right: SBBSpacing.xSmall),
+                    child: Icon(
+                      SBBIcons.unicorn_small,
+                    ),
+                  ),
+                  trailing: Padding(
+                    padding: EdgeInsets.only(top: SBBSpacing.xxSmall, right: SBBSpacing.xSmall),
+                    child: Icon(
+                      SBBIcons.circle_information_small_small,
+                    ),
+                  ),
+                  labelText: 'Label',
                 ),
+                controller: defaultTextEditingController,
+                maxLines: 3,
               ),
             ],
           ),
