@@ -8,10 +8,11 @@ import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_input_decor
 
 import '../../../sbb_design_system_mobile.dart';
 
-// Animation constants
 const Duration _kTransitionDuration = Duration(milliseconds: 168);
 const Curve _kTransitionCurve = Curves.fastOutSlowIn;
 
+/// The SBBInputDecorator is responsible for the label animation ticker, resolving
+/// theme and WidgetProperty values and building the consequent RenderObjectWidget (_SBBDecorator).
 class SBBInputDecorator extends StatefulWidget {
   const SBBInputDecorator({
     super.key,
@@ -675,7 +676,6 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
 
   BoxParentData _boxParentData(RenderBox box) => box.parentData! as BoxParentData;
 
-  // Returns layout information used by performLayout to position all children.
   _RenderSBBDecorationLayout _layout(
     BoxConstraints constraints, {
     required ChildLayouter layoutChild,
@@ -742,16 +742,14 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
       placeholderHeight = layoutChild(placeholder!, inputConstraints).height;
     }
 
-    // Calculate the maximum height among input/placeholder (placeholder only visible if empty)
     final double maxInputHeight = [inputHeight, placeholderHeight, minInputHeight].reduce(math.max);
 
-    // For single-line case: Always reserve space for both floating label and input
-    // to ensure height doesn't change during animation.
-    // The height should accommodate: floatingLabel + gap + input when fully floated.
+    // To prevent changing height of the decorated field during animation,
+    // space is reserved for both floating label and input.
+    // Since this is top aligned in multiline case, we use the maximum label height to prevent it from getting smaller
     final double stableContentHeight =
         (isMultiline ? maxLabelHeight ?? labelHeight : labelHeight) + floatingLabelInputGap + maxInputHeight;
 
-    // Title row height is max of leading, content area, trailing
     final double titleRowHeight = [
       if (!isMultiline) leadingHeight,
       stableContentHeight,
@@ -760,15 +758,21 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
     ].reduce(math.max);
 
     // Position label:
+    // The labelSpaceHeight is the height of the theoretical space for the label to move around
+    // In single line case, this is trivially the titleRowHeight (everything is centered)
+    // In the multiline case, this is a theoretical box which assumes the height of the first line of the input,
+    // and the maximum possible labelHeight.
     // Calculate label offset based on floatingLabelProgress
-    // When not floating (progress=0): label is centered vertically of titleRowHeight
-    // When floating (progress=1): label is at top
-    final labelBox = !isMultiline ? titleRowHeight : labelHeight + floatingLabelInputGap + minInputHeight;
+    // When not floating (progress=0): label is centered vertically of labelSpaceHeight
+    // When floating (progress=1): label is at top of stableContentHeight middle
+    final labelSpaceHeight = !isMultiline
+        ? titleRowHeight
+        : (maxLabelHeight ?? labelHeight) + floatingLabelInputGap + minInputHeight;
 
-    final double labelCenteredY = (labelBox - labelHeight) / 2.0;
-    final double labelFloatingY = !isMultiline ? (labelBox - stableContentHeight) / 2.0 : 0.0;
+    final double labelCenteredY = (labelSpaceHeight - labelHeight) / 2.0;
+    final double labelFloatingY = !isMultiline ? (labelSpaceHeight - stableContentHeight) / 2.0 : 0.0;
 
-    //  Interpolate label Y position (add top padding)
+    //  Interpolate label Y position
     final double labelY =
         lerpDouble(labelCenteredY, labelFloatingY, floatingLabelProgress)! + resolvedContentPadding.top;
     final Offset labelOffset = label != null ? Offset(leadingWidth + resolvedContentPadding.left, labelY) : Offset.zero;
@@ -795,10 +799,14 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
       trailingOffset = Offset.zero;
     }
 
-    // Input position: when floating, input is below the floating label + gap
-    // When not floating, input is centered (same as where the label would be)
+    // Input position:
+    // single line: when floating, input is below the floating label + gap
+    // multiline: when floating, input is below labelHeight and gap to not jitter with labelOffset.dy in extreme cases
+    // When not floating, input is centered
     final double inputCenteredY = (titleRowHeight - maxInputHeight) / 2.0;
-    final double inputFloatingY = labelFloatingY + labelHeight + floatingLabelInputGap;
+    final double inputFloatingY = !isMultiline
+        ? labelFloatingY + labelHeight + floatingLabelInputGap
+        : labelHeight + floatingLabelInputGap;
     final double inputY =
         lerpDouble(inputCenteredY, inputFloatingY, floatingLabelProgress)! + resolvedContentPadding.top;
 

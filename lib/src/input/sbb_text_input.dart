@@ -8,7 +8,6 @@ import '../../sbb_design_system_mobile.dart';
 import 'decoration/sbb_input_decorator.dart';
 
 // TODO: add migration guideline & CHANGELOG
-// TODO: one final check
 
 /// The SBB TextInput.
 ///
