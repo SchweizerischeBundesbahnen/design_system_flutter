@@ -139,16 +139,20 @@ class _FloatingPageState extends State<FloatingPage> {
                   Flexible(
                     child: OverflowBox(
                       maxHeight: double.infinity,
-                      child: SBBTextField(
-                        labelText: 'Origin',
+                      child: SBBTextInput(
+                        decoration: SBBInputDecoration(
+                          labelText: 'Origin',
+                        ),
                       ),
                     ),
                   ),
                   Flexible(
                     child: OverflowBox(
                       maxHeight: double.infinity,
-                      child: SBBTextField(
-                        labelText: 'Destination',
+                      child: SBBTextInput(
+                        decoration: SBBInputDecoration(
+                          labelText: 'Destination',
+                        ),
                       ),
                     ),
                   ),

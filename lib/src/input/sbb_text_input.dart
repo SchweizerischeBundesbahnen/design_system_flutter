@@ -7,8 +7,6 @@ import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_input_decor
 import '../../sbb_design_system_mobile.dart';
 import 'decoration/sbb_input_decorator.dart';
 
-// TODO: add migration guideline & CHANGELOG
-
 /// The SBB TextInput.
 ///
 /// A customizable text input field that supports both single-line and multiline modes
