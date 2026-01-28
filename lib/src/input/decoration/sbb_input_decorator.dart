@@ -319,18 +319,17 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
         placeholder: placeholder,
         error: error,
         container: container,
+        input: input,
       ),
       expands: widget.expands,
       isMultiline: widget.isMultiline,
       isEmpty: widget.isEmpty,
-      isFocused: widget.states.contains(WidgetState.focused),
       floatingLabelProgress: _floatingLabelAnimation.value,
       floatingLabelInputGap: textScaler.scale(_effectiveFloatingLabelInputGap(inputDecorationTheme)),
       minInputHeight: widget.minInputHeight,
       minTotalHeight: textScaler.scale(SBBInputDecoration.minInputFieldHeight),
       maxLabelHeight: maxLabelTextHeight,
       contentPadding: _effectiveContentPadding(inputDecorationTheme),
-      child: input,
     );
   }
 
@@ -407,28 +406,24 @@ class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSl
     required this.expands,
     required this.isMultiline,
     required this.isEmpty,
-    required this.isFocused,
     required this.floatingLabelProgress,
     required this.floatingLabelInputGap,
     required this.minInputHeight,
     required this.minTotalHeight,
     required this.contentPadding,
     this.maxLabelHeight,
-    this.child,
   });
 
   final SBBDecoration decoration;
   final bool expands;
   final bool isMultiline;
   final bool isEmpty;
-  final bool isFocused;
   final double floatingLabelProgress;
   final double floatingLabelInputGap;
   final double minInputHeight;
   final double minTotalHeight;
   final double? maxLabelHeight;
   final EdgeInsetsGeometry contentPadding;
-  final Widget? child;
 
   @override
   Iterable<_SBBDecorationSlot> get slots => _SBBDecorationSlot.values;
@@ -438,7 +433,7 @@ class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSl
     return switch (slot) {
       _SBBDecorationSlot.label => decoration.label,
       _SBBDecorationSlot.leading => decoration.leading,
-      _SBBDecorationSlot.input => child,
+      _SBBDecorationSlot.input => decoration.input,
       _SBBDecorationSlot.placeholder => decoration.placeholder,
       _SBBDecorationSlot.trailing => decoration.trailing,
       _SBBDecorationSlot.error => decoration.error,
