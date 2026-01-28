@@ -39,84 +39,48 @@ class _TextAreaPageState extends State<TextAreaPage> {
                   children: SBBListItem.divideListItems(
                     context: context,
                     items: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: SBBSpacing.xSmall),
-                        child: SBBTextInput(
-                          decoration: SBBInputDecoration(
-                            leading: Padding(
-                              padding: EdgeInsets.only(top: SBBSpacing.xxSmall, right: SBBSpacing.xSmall),
-                              child: Icon(
-                                SBBIcons.unicorn_small,
-                              ),
-                            ),
-                            trailing: Padding(
-                              padding: EdgeInsets.only(top: SBBSpacing.xxSmall, right: SBBSpacing.xSmall),
-                              child: Icon(
-                                SBBIcons.circle_information_small_small,
-                              ),
-                            ),
-                            labelText: 'Label',
-                          ),
-                          controller: defaultTextEditingController,
-                          maxLines: 3,
+                      SBBTextInput(
+                        decoration: SBBInputDecoration(
+                          contentPadding: const EdgeInsets.only(top: SBBSpacing.xSmall),
+                          leadingIconData: SBBIcons.unicorn_small,
+                          trailingIconData: SBBIcons.circle_information_small_small,
+                          labelText: 'Label',
                         ),
+                        controller: defaultTextEditingController,
+                        maxLines: 3,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8.0),
-                        child: SBBTextInput(
-                          decoration: SBBInputDecoration(
-                            leading: Padding(
-                              padding: EdgeInsets.only(top: SBBSpacing.xxSmall, right: SBBSpacing.xSmall),
-                              child: Icon(
-                                SBBIcons.unicorn_small,
-                              ),
-                            ),
-                            trailing: Padding(
-                              padding: EdgeInsets.only(top: SBBSpacing.xxSmall, right: SBBSpacing.xSmall),
-                              child: Icon(
-                                SBBIcons.circle_information_small_small,
-                              ),
-                            ),
-                            labelText: 'Label',
-                            errorText: errorText,
-                          ),
-                          controller: errorTextEditingController,
-                          maxLines: 2,
-                          onChanged: (value) {
-                            if (errorText == null && value.length > 27) {
-                              setState(() {
-                                errorText = 'SCREAAAAAM! AAAAAH!';
-                              });
-                            } else if (errorText != null && value.length <= 27) {
-                              setState(() {
-                                errorText = null;
-                              });
-                            }
-                          },
+                      SBBTextInput(
+                        decoration: SBBInputDecoration(
+                          contentPadding: const EdgeInsets.only(top: SBBSpacing.xSmall),
+                          leadingIconData: SBBIcons.unicorn_small,
+                          trailingIconData: SBBIcons.circle_information_small_small,
+                          labelText: 'Label',
+                          errorText: errorText,
                         ),
+                        controller: errorTextEditingController,
+                        maxLines: 2,
+                        onChanged: (value) {
+                          if (errorText == null && value.length > 27) {
+                            setState(() {
+                              errorText = 'SCREAAAAAM! AAAAAH!';
+                            });
+                          } else if (errorText != null && value.length <= 27) {
+                            setState(() {
+                              errorText = null;
+                            });
+                          }
+                        },
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: SBBSpacing.xSmall),
-                        child: SBBTextInput(
-                          decoration: SBBInputDecoration(
-                            leading: Padding(
-                              padding: EdgeInsets.only(top: SBBSpacing.xxSmall, right: SBBSpacing.xSmall),
-                              child: Icon(
-                                SBBIcons.unicorn_small,
-                              ),
-                            ),
-                            trailing: Padding(
-                              padding: EdgeInsets.only(top: SBBSpacing.xxSmall, right: SBBSpacing.xSmall),
-                              child: Icon(
-                                SBBIcons.circle_information_small_small,
-                              ),
-                            ),
-                            labelText: 'I extend from one line to maximum three lines!',
-                          ),
-                          controller: emptyTextEditingController,
-                          maxLines: 3,
-                          minLines: 1,
+                      SBBTextInput(
+                        decoration: SBBInputDecoration(
+                          contentPadding: const EdgeInsets.only(top: SBBSpacing.xSmall),
+                          leadingIconData: SBBIcons.unicorn_small,
+                          trailingIconData: SBBIcons.circle_information_small_small,
+                          labelText: 'I extend from one line to maximum three lines!',
                         ),
+                        controller: emptyTextEditingController,
+                        maxLines: 3,
+                        minLines: 1,
                       ),
                     ],
                   ).toList(growable: false),
@@ -128,29 +92,21 @@ class _TextAreaPageState extends State<TextAreaPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(top: SBBSpacing.xSmall),
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                          minHeight: 60.0,
-                          maxHeight: _expandableHeight,
+                    ConstrainedBox(
+                      constraints: BoxConstraints(
+                        minHeight: 60.0,
+                        maxHeight: _expandableHeight,
+                      ),
+                      child: SBBTextInput(
+                        decoration: SBBInputDecoration(
+                          contentPadding: const EdgeInsets.only(top: SBBSpacing.xSmall),
+                          labelText: 'Resizable Text Area',
+                          leadingIconData: SBBIcons.pen_small,
+                          placeholderText: 'Drag the handle below to resize...',
                         ),
-                        child: SBBTextInput(
-                          decoration: SBBInputDecoration(
-                            labelText: 'Resizable Text Area',
-                            leading: Padding(
-                              padding: EdgeInsets.only(top: SBBSpacing.xxSmall, right: SBBSpacing.xSmall),
-                              child: Icon(
-                                SBBIcons.pen_small,
-                              ),
-                            ),
-
-                            placeholderText: 'Drag the handle below to resize...',
-                          ),
-                          controller: expandableTextEditingController,
-                          expands: true,
-                          maxLines: null,
-                        ),
+                        controller: expandableTextEditingController,
+                        expands: true,
+                        maxLines: null,
                       ),
                     ),
                     GestureDetector(
@@ -182,21 +138,11 @@ class _TextAreaPageState extends State<TextAreaPage> {
               SBBTextInputBoxed(
                 decoration: SBBInputDecoration(
                   contentPadding: const EdgeInsets.symmetric(
-                    vertical: SBBSpacing.xSmall,
+                    vertical: SBBSpacing.small,
                     horizontal: SBBSpacing.medium,
                   ),
-                  leading: Padding(
-                    padding: EdgeInsets.only(top: SBBSpacing.xxSmall, right: SBBSpacing.xSmall),
-                    child: Icon(
-                      SBBIcons.unicorn_small,
-                    ),
-                  ),
-                  trailing: Padding(
-                    padding: EdgeInsets.only(top: SBBSpacing.xxSmall, right: SBBSpacing.xSmall),
-                    child: Icon(
-                      SBBIcons.circle_information_small_small,
-                    ),
-                  ),
+                  leadingIconData: SBBIcons.unicorn_small,
+                  trailingIconData: SBBIcons.circle_information_small_small,
                   labelText: 'Label',
                 ),
                 controller: defaultTextEditingController,

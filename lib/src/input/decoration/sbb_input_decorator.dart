@@ -176,7 +176,10 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
     Widget? leading = widget.decoration.leading;
     if (leading == null && widget.decoration.leadingIconData != null) {
       leading = Padding(
-        padding: EdgeInsets.only(right: _effectiveLeadingInputGap(inputDecorationTheme)),
+        padding: EdgeInsets.only(
+          top: widget.isMultiline ? textScaler.scale(SBBSpacing.xxSmall) : 0.0,
+          right: _effectiveLeadingInputGap(inputDecorationTheme),
+        ),
         child: Icon(widget.decoration.leadingIconData),
       );
     }
@@ -226,7 +229,10 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
     Widget? trailing = widget.decoration.trailing;
     if (trailing == null && widget.decoration.trailingIconData != null) {
       trailing = Padding(
-        padding: EdgeInsets.only(left: _effectiveInputTrailingGap(inputDecorationTheme)),
+        padding: EdgeInsets.only(
+          top: widget.isMultiline ? textScaler.scale(SBBSpacing.xxSmall) : 0.0,
+          left: _effectiveInputTrailingGap(inputDecorationTheme),
+        ),
         child: Icon(widget.decoration.trailingIconData),
       );
     }

@@ -21,59 +21,33 @@ void main() {
                   children: SBBListItem.divideListItems(
                     context: context,
                     items: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: SBBSpacing.xSmall),
-                        child: SBBTextInput(
-                          key: pressableKey,
-                          decoration: SBBInputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
-                              vertical: SBBSpacing.xxSmall,
-                              horizontal: SBBSpacing.medium,
-                            ),
-                            leading: Padding(
-                              padding: EdgeInsets.only(top: SBBSpacing.xxSmall, right: SBBSpacing.xSmall),
-                              child: Icon(
-                                SBBIcons.unicorn_small,
-                              ),
-                            ),
-                            trailing: Padding(
-                              padding: EdgeInsets.only(top: SBBSpacing.xxSmall, right: SBBSpacing.xSmall),
-                              child: Icon(
-                                SBBIcons.circle_information_small_small,
-                              ),
-                            ),
-                            labelText: 'Label',
+                      SBBTextInput(
+                        key: pressableKey,
+                        decoration: SBBInputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                            vertical: SBBSpacing.small,
+                            horizontal: SBBSpacing.medium,
                           ),
-                          controller: TextEditingController(text: 'Value'),
-                          maxLines: 3,
+                          leadingIconData: SBBIcons.unicorn_small,
+                          trailingIconData: SBBIcons.circle_information_small_small,
+                          labelText: 'Label',
                         ),
+                        controller: TextEditingController(text: 'Value'),
+                        maxLines: 3,
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: SBBSpacing.xSmall),
-                        child: SBBTextInput(
-                          decoration: SBBInputDecoration(
-                            contentPadding: EdgeInsets.symmetric(
-                              vertical: SBBSpacing.xxSmall,
-                              horizontal: SBBSpacing.medium,
-                            ),
-                            errorText: 'This is an error!',
-                            leading: Padding(
-                              padding: EdgeInsets.only(top: SBBSpacing.xxSmall, right: SBBSpacing.xSmall),
-                              child: Icon(
-                                SBBIcons.unicorn_small,
-                              ),
-                            ),
-                            trailing: Padding(
-                              padding: EdgeInsets.only(top: SBBSpacing.xxSmall, right: SBBSpacing.xSmall),
-                              child: Icon(
-                                SBBIcons.circle_information_small_small,
-                              ),
-                            ),
-                            labelText: 'Label',
+                      SBBTextInput(
+                        decoration: SBBInputDecoration(
+                          contentPadding: EdgeInsets.symmetric(
+                            vertical: SBBSpacing.small,
+                            horizontal: SBBSpacing.medium,
                           ),
-                          controller: TextEditingController(text: 'Value'),
-                          maxLines: 2,
+                          errorText: 'This is an error!',
+                          leadingIconData: SBBIcons.unicorn_small,
+                          trailingIconData: SBBIcons.circle_information_small_small,
+                          labelText: 'Label',
                         ),
+                        controller: TextEditingController(text: 'Value'),
+                        maxLines: 2,
                       ),
                     ],
                   ).toList(growable: false),
@@ -84,19 +58,9 @@ void main() {
               SBBTextInputBoxed(
                 key: boxedPressableKey,
                 decoration: SBBInputDecoration(
-                  contentPadding: EdgeInsets.symmetric(vertical: SBBSpacing.xxSmall, horizontal: SBBSpacing.medium),
-                  leading: Padding(
-                    padding: EdgeInsets.only(top: SBBSpacing.xxSmall, right: SBBSpacing.xSmall),
-                    child: Icon(
-                      SBBIcons.unicorn_small,
-                    ),
-                  ),
-                  trailing: Padding(
-                    padding: EdgeInsets.only(top: SBBSpacing.xxSmall, right: SBBSpacing.xSmall),
-                    child: Icon(
-                      SBBIcons.circle_information_small_small,
-                    ),
-                  ),
+                  contentPadding: EdgeInsets.symmetric(vertical: SBBSpacing.small, horizontal: SBBSpacing.medium),
+                  leadingIconData: SBBIcons.unicorn_small,
+                  trailingIconData: SBBIcons.circle_information_small_small,
                   labelText: 'Label',
                 ),
                 controller: TextEditingController(text: 'Value'),

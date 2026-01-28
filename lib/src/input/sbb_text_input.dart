@@ -17,6 +17,7 @@ import 'decoration/sbb_input_decorator.dart';
 /// When the text field is configured as multiline (either by setting [maxLines] to null
 /// with [expands] set to true, or by setting [maxLines] to a value greater than 1),
 /// the leading and trailing icons become top-aligned instead of center-aligned.
+/// The leadingIconData and trailingIconData will have a default padding added to the top.
 ///
 /// ## Key Properties
 ///
