@@ -33,8 +33,8 @@ class SBBSlider extends StatefulWidget {
     required this.value,
     this.min = 0.0,
     this.max = 1.0,
-    this.startIcon = SBBIcons.walk_slow_small,
-    this.endIcon = SBBIcons.walk_fast_small,
+    this.leadingIconData = SBBIcons.walk_slow_small,
+    this.trailingIconData = SBBIcons.walk_fast_small,
     this.onChangeStart,
     this.onChangeEnd,
     this.style,
@@ -47,8 +47,8 @@ class SBBSlider extends StatefulWidget {
   final double value;
   final double min;
   final double max;
-  final IconData? startIcon;
-  final IconData? endIcon;
+  final IconData? leadingIconData;
+  final IconData? trailingIconData;
 
   /// Customizes this slider appearance.
   ///
@@ -111,15 +111,15 @@ class _SBBSliderState extends State<SBBSlider> {
     final leadingForegroundColor = effectiveStyle.leadingForegroundColor?.resolve(states) ?? SBBColors.black;
     final trailingForegroundColor = effectiveStyle.trailingForegroundColor?.resolve(states) ?? SBBColors.black;
 
-    if (widget.startIcon == null && widget.endIcon == null) {
+    if (widget.leadingIconData == null && widget.trailingIconData == null) {
       return _slider(trackColor, activeTrackColor, thumbBackgroundColor, thumbBorderColor);
     }
 
     return Row(
       children: [
-        if (widget.startIcon != null) _startIcon(leadingForegroundColor),
+        if (widget.leadingIconData != null) _startIcon(leadingForegroundColor),
         Expanded(child: _slider(trackColor, activeTrackColor, thumbBackgroundColor, thumbBorderColor)),
-        if (widget.endIcon != null) _endIcon(trailingForegroundColor),
+        if (widget.trailingIconData != null) _endIcon(trailingForegroundColor),
       ],
     );
   }
@@ -127,14 +127,14 @@ class _SBBSliderState extends State<SBBSlider> {
   Widget _endIcon(Color color) {
     return Padding(
       padding: const EdgeInsets.only(left: _iconPadding),
-      child: Icon(widget.endIcon, color: color),
+      child: Icon(widget.trailingIconData, color: color),
     );
   }
 
   Widget _startIcon(Color color) {
     return Padding(
       padding: const EdgeInsets.only(right: _iconPadding),
-      child: Icon(widget.startIcon, color: color),
+      child: Icon(widget.leadingIconData, color: color),
     );
   }
 
