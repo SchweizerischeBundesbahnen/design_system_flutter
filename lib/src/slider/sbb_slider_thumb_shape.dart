@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../sbb_design_system_mobile.dart';
+
 const _thumbBoxShadows = <BoxShadow>[
   BoxShadow(color: Color(0x338D8D8D), offset: Offset(0, 1), blurRadius: 8.0),
   BoxShadow(color: Color(0x1A8D8D8D), offset: Offset(0, 4), blurRadius: 32.0),
@@ -10,14 +12,14 @@ class CircleBorderThumbShape extends SliderComponentShape {
   const CircleBorderThumbShape({
     required this.radius,
     required this.borderWidth,
-    required this.backgroundColor,
-    required this.borderColor,
+    required this.disabledBorderColor,
+    required this.enabledBorderColor,
   });
 
   final double radius;
   final double borderWidth;
-  final Color backgroundColor;
-  final Color borderColor;
+  final Color enabledBorderColor;
+  final Color disabledBorderColor;
 
   @override
   Size getPreferredSize(bool isEnabled, bool isDiscrete) {
@@ -43,6 +45,13 @@ class CircleBorderThumbShape extends SliderComponentShape {
 
     // drop shadows
     if (enableAnimation.value > 0.5) _paintShadow(center, canvas);
+
+    final disabledBackgroundColor = sliderTheme.disabledThumbColor;
+    final enabledBackgroundColor = sliderTheme.thumbColor;
+
+    final backgroundColor =
+        Color.lerp(disabledBackgroundColor, enabledBackgroundColor, enableAnimation.value) ?? SBBColors.white;
+    final borderColor = Color.lerp(disabledBorderColor, enabledBorderColor, enableAnimation.value) ?? SBBColors.red;
 
     // thumb background
     final fillPaint = Paint()

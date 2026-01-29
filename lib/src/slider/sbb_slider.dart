@@ -4,11 +4,6 @@ import '../../sbb_design_system_mobile.dart';
 import 'sbb_slider_thumb_shape.dart';
 import 'sbb_slider_track_shape.dart';
 
-const _trackHeight = 4.0;
-const _thumbRadius = 11.0;
-const _thumbBorderWidth = 2.0;
-const _iconPadding = 4.0;
-
 /// The SBB Slider. Use according to documentation.
 ///
 /// The [value] parameter must not be null.
@@ -38,7 +33,6 @@ class SBBSlider extends StatefulWidget {
     this.onChangeStart,
     this.onChangeEnd,
     this.style,
-    this.focusNode,
   });
 
   final ValueChanged<double>? onChanged;
@@ -56,24 +50,17 @@ class SBBSlider extends StatefulWidget {
   /// properties in [SBBSliderThemeData.style] of the theme found in [context].
   final SBBSliderStyle? style;
 
-  /// {@macro flutter.widgets.Focus.focusNode}
-  final FocusNode? focusNode;
-
   @override
   State<SBBSlider> createState() => _SBBSliderState();
 }
 
 class _SBBSliderState extends State<SBBSlider> {
   late WidgetStatesController _statesController;
-  FocusNode? _focusNode;
-
-  FocusNode get _effectiveFocusNode => widget.focusNode ?? (_focusNode ??= FocusNode());
 
   @override
   void initState() {
     super.initState();
     _statesController = WidgetStatesController();
-    _effectiveFocusNode.addListener(_handleFocusChanged);
     _updateStatesController();
   }
 
@@ -87,91 +74,102 @@ class _SBBSliderState extends State<SBBSlider> {
 
   void _updateStatesController() {
     _statesController.update(WidgetState.disabled, widget.onChanged == null);
-    _statesController.update(WidgetState.focused, _effectiveFocusNode.hasFocus);
   }
 
   @override
   void dispose() {
     _statesController.dispose();
-    _effectiveFocusNode.removeListener(_handleFocusChanged);
-    _focusNode?.dispose();
     super.dispose();
+  }
+
+  void _handleChangeStart(double value) {
+    _statesController.update(WidgetState.pressed, true);
+    widget.onChangeStart?.call(value);
+    setState(() {
+      // reevaluate colors
+    });
+  }
+
+  void _handleChangeEnd(double value) {
+    _statesController.update(WidgetState.pressed, false);
+    widget.onChangeEnd?.call(value);
+    setState(() {
+      // reevaluate colors
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     final themeStyle = Theme.of(context).sbbSliderTheme?.style;
     final effectiveStyle = themeStyle?.merge(widget.style) ?? widget.style ?? const SBBSliderStyle();
-    final states = _statesController.value;
 
-    final trackColor = effectiveStyle.trackColor?.resolve(states) ?? SBBColors.smoke;
-    final activeTrackColor = effectiveStyle.activeTrackColor?.resolve(states) ?? SBBColors.red;
-    final thumbBackgroundColor = effectiveStyle.thumbBackgroundColor?.resolve(states) ?? SBBColors.green;
-    final thumbBorderColor = effectiveStyle.thumbBorderColor?.resolve(states) ?? SBBColors.red;
-    final leadingForegroundColor = effectiveStyle.leadingForegroundColor?.resolve(states) ?? SBBColors.black;
-    final trailingForegroundColor = effectiveStyle.trailingForegroundColor?.resolve(states) ?? SBBColors.black;
+    final slider = _slider(effectiveStyle);
 
     if (widget.leadingIconData == null && widget.trailingIconData == null) {
-      return _slider(trackColor, activeTrackColor, thumbBackgroundColor, thumbBorderColor);
+      return slider;
+    } else {
+      final leadingForegroundColor = effectiveStyle.leadingForegroundColor?.resolve(_statesController.value);
+      final trailingForegroundColor = effectiveStyle.trailingForegroundColor?.resolve(_statesController.value);
+
+      return Row(
+        children: [
+          if (widget.leadingIconData != null) _leadingIcon(leadingForegroundColor),
+          Expanded(child: slider),
+          if (widget.trailingIconData != null) _trailingIcon(trailingForegroundColor),
+        ],
+      );
     }
-
-    return Row(
-      children: [
-        if (widget.leadingIconData != null) _startIcon(leadingForegroundColor),
-        Expanded(child: _slider(trackColor, activeTrackColor, thumbBackgroundColor, thumbBorderColor)),
-        if (widget.trailingIconData != null) _endIcon(trailingForegroundColor),
-      ],
-    );
   }
 
-  Widget _endIcon(Color color) {
-    return Padding(
-      padding: const EdgeInsets.only(left: _iconPadding),
-      child: Icon(widget.trailingIconData, color: color),
-    );
+  Widget _trailingIcon(Color? color) {
+    return Icon(widget.trailingIconData, color: color);
   }
 
-  Widget _startIcon(Color color) {
-    return Padding(
-      padding: const EdgeInsets.only(right: _iconPadding),
-      child: Icon(widget.leadingIconData, color: color),
-    );
+  Widget _leadingIcon(Color? color) {
+    return Icon(widget.leadingIconData, color: color);
   }
 
-  Widget _slider(Color trackColor, Color activeTrackColor, Color thumbBackgroundColor, Color thumbBorderColor) {
+  Widget _slider(SBBSliderStyle effectiveStyle) {
+    final Set<WidgetState> enabledStates = {..._statesController.value}..remove(WidgetState.disabled);
+    final Set<WidgetState> disabledStates = {..._statesController.value, WidgetState.disabled};
+
+    final inactiveTrackColor = effectiveStyle.trackColor?.resolve(enabledStates) ?? SBBColors.smoke;
+    final disabledInactiveTrackColor = effectiveStyle.trackColor?.resolve(disabledStates) ?? SBBColors.smoke;
+    final activeTrackColor = effectiveStyle.activeTrackColor?.resolve(enabledStates) ?? SBBColors.red;
+    final disabledActiveTrackColor = effectiveStyle.activeTrackColor?.resolve(disabledStates) ?? SBBColors.red;
+    final thumbBackgroundColor = effectiveStyle.thumbBackgroundColor?.resolve(enabledStates) ?? SBBColors.green;
+    final disabledThumbBackgroundColor =
+        effectiveStyle.thumbBackgroundColor?.resolve(disabledStates) ?? SBBColors.green;
+    final thumbBorderColor = effectiveStyle.thumbBorderColor?.resolve(enabledStates) ?? SBBColors.red;
+    final disabledThumbBorderColor = effectiveStyle.thumbBorderColor?.resolve(disabledStates) ?? SBBColors.red;
+
     return SliderTheme(
       data: SliderThemeData(
-        trackHeight: _trackHeight,
+        trackHeight: SBBSliderStyle.trackHeight,
+        inactiveTrackColor: inactiveTrackColor,
+        disabledInactiveTrackColor: disabledInactiveTrackColor,
         activeTrackColor: activeTrackColor,
-        disabledActiveTrackColor: activeTrackColor,
-        inactiveTrackColor: trackColor,
-        disabledInactiveTrackColor: trackColor,
-        trackShape: EvenRoundedRectSliderTrackShape(thumbRadius: _thumbRadius),
+        disabledActiveTrackColor: disabledActiveTrackColor,
+        thumbColor: thumbBackgroundColor,
+        disabledThumbColor: disabledThumbBackgroundColor,
+        trackShape: EvenRoundedRectSliderTrackShape(thumbRadius: SBBSliderStyle.thumbRadius),
         thumbShape: CircleBorderThumbShape(
-          radius: _thumbRadius,
-          borderWidth: _thumbBorderWidth,
-          backgroundColor: thumbBackgroundColor,
-          borderColor: thumbBorderColor,
+          radius: SBBSliderStyle.thumbRadius,
+          borderWidth: SBBSliderStyle.thumbBorderWidth,
+          enabledBorderColor: thumbBorderColor,
+          disabledBorderColor: disabledThumbBorderColor,
         ),
         overlayShape: SliderComponentShape.noOverlay,
-        padding: EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
+        padding: EdgeInsets.symmetric(horizontal: SBBSpacing.small),
       ),
       child: Slider(
         value: widget.value,
         min: widget.min,
         max: widget.max,
         onChanged: widget.onChanged,
-        onChangeStart: widget.onChangeStart,
-        onChangeEnd: widget.onChangeEnd,
-        focusNode: _effectiveFocusNode,
+        onChangeStart: _handleChangeStart,
+        onChangeEnd: _handleChangeEnd,
       ),
     );
-  }
-
-  void _handleFocusChanged() {
-    _updateStatesController();
-    setState(() {
-      // resolve colors
-    });
   }
 }

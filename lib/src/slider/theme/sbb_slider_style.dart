@@ -18,6 +18,26 @@ class SBBSliderStyle {
     this.trailingForegroundColor,
   });
 
+  /// The height of the slider track in logical pixels.
+  ///
+  /// Default value is 4.0 logical pixels.
+  static double get trackHeight => 4.0;
+
+  /// The radius of the slider thumb in logical pixels.
+  ///
+  /// Default value is 11.0 logical pixels.
+  static double get thumbRadius => 11.0;
+
+  /// The width of the border around the slider thumb in logical pixels.
+  ///
+  /// Default value is 2.0 logical pixels.
+  static double get thumbBorderWidth => 2.0;
+
+  /// The padding between the slider and its leading/trailing icons in logical pixels.
+  ///
+  /// Default value is 4.0 logical pixels.
+  static double get iconPadding => 4.0;
+
   /// The color of the inactive track.
   ///
   /// This is the portion of the track that is not filled by the active track.
