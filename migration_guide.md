@@ -102,6 +102,29 @@ This also accounts for the `SBBRadioListItem`.
 * access the theme using `Theme.of(context).sbbRadioTheme`
 * customize an individual radio by setting its `style` parameter in the constructor
 
+
+## Slider
+
+### Constructor arguments
+* `startIcon` and `endIcon` are replaced with `leading`/`leadingIconData` and `trailing`/`trailingIconData`
+  * for simple icons use `leadingIconData` and `trailingIconData`
+  * for custom widgets use `leading` and `trailing`
+
+### Styling Changes
+* `SBBSliderStyle` properties now use `WidgetStateProperty<Color?>` instead of simple `Color` values
+  * this allows different colors for enabled/disabled/pressed states
+  * replace simple color assignments with state-aware properties
+* icon styling changed:
+  * old: `style.iconColor` and `style.disabledIconColor`
+  * new: `leadingForegroundColor` and `trailingForegroundColor` using `WidgetStateProperty<Color?>`
+* `padding` parameter replaces the hardcoded icon padding logic
+
+### Theming & Styling
+* customize the theme of all `SBBSlider` with `SBBSliderThemeData` as input to `SBBTheme`
+* access the theme using `Theme.of(context).sbbSliderTheme`
+* customize an individual slider by setting its `style` parameter in the constructor
+
+
 ## Status
 
 ### Constructor arguments
