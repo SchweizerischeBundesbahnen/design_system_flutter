@@ -16,27 +16,8 @@ class SBBSliderStyle {
     this.thumbBorderColor,
     this.leadingForegroundColor,
     this.trailingForegroundColor,
+    this.padding,
   });
-
-  /// The height of the slider track in logical pixels.
-  ///
-  /// Default value is 4.0 logical pixels.
-  static double get trackHeight => 4.0;
-
-  /// The radius of the slider thumb in logical pixels.
-  ///
-  /// Default value is 11.0 logical pixels.
-  static double get thumbRadius => 11.0;
-
-  /// The width of the border around the slider thumb in logical pixels.
-  ///
-  /// Default value is 2.0 logical pixels.
-  static double get thumbBorderWidth => 2.0;
-
-  /// The padding between the slider and its leading/trailing icons in logical pixels.
-  ///
-  /// Default value is 4.0 logical pixels.
-  static double get iconPadding => 4.0;
 
   /// The color of the inactive track.
   ///
@@ -54,11 +35,31 @@ class SBBSliderStyle {
   /// The border color of the thumb.
   final WidgetStateProperty<Color?>? thumbBorderColor;
 
-  /// The color of the leading (start) icon.
+  /// The color of the leading Widget.
   final WidgetStateProperty<Color?>? leadingForegroundColor;
 
-  /// The color of the trailing (end) icon.
+  /// The color of the trailing Widget.
   final WidgetStateProperty<Color?>? trailingForegroundColor;
+
+  /// The padding around the slider track.
+  ///
+  /// Defaults to [EdgeInsets.symmetric(horizontal: SBBSpacing.small)].
+  final EdgeInsetsGeometry? padding;
+
+  /// The height of the slider track in logical pixels.
+  ///
+  /// Default value is 4.0 logical pixels.
+  static double get trackHeight => 4.0;
+
+  /// The radius of the slider thumb in logical pixels.
+  ///
+  /// Default value is 11.0 logical pixels.
+  static double get thumbRadius => 11.0;
+
+  /// The width of the border around the slider thumb in logical pixels.
+  ///
+  /// Default value is 2.0 logical pixels.
+  static double get thumbBorderWidth => 2.0;
 
   SBBSliderStyle copyWith({
     WidgetStateProperty<Color?>? trackColor,
@@ -67,6 +68,7 @@ class SBBSliderStyle {
     WidgetStateProperty<Color?>? thumbBorderColor,
     WidgetStateProperty<Color?>? leadingForegroundColor,
     WidgetStateProperty<Color?>? trailingForegroundColor,
+    EdgeInsetsGeometry? padding,
   }) {
     return SBBSliderStyle(
       trackColor: trackColor ?? this.trackColor,
@@ -75,6 +77,7 @@ class SBBSliderStyle {
       thumbBorderColor: thumbBorderColor ?? this.thumbBorderColor,
       leadingForegroundColor: leadingForegroundColor ?? this.leadingForegroundColor,
       trailingForegroundColor: trailingForegroundColor ?? this.trailingForegroundColor,
+      padding: padding ?? this.padding,
     );
   }
 
@@ -88,6 +91,7 @@ class SBBSliderStyle {
       thumbBorderColor: other.thumbBorderColor,
       leadingForegroundColor: other.leadingForegroundColor,
       trailingForegroundColor: other.trailingForegroundColor,
+      padding: other.padding,
     );
   }
 
@@ -116,6 +120,7 @@ class SBBSliderStyle {
         t,
         Color.lerp,
       ),
+      padding: EdgeInsetsGeometry.lerp(a?.padding, b?.padding, t),
     );
   }
 
@@ -128,7 +133,8 @@ class SBBSliderStyle {
         other.thumbBackgroundColor == thumbBackgroundColor &&
         other.thumbBorderColor == thumbBorderColor &&
         other.leadingForegroundColor == leadingForegroundColor &&
-        other.trailingForegroundColor == trailingForegroundColor;
+        other.trailingForegroundColor == trailingForegroundColor &&
+        other.padding == padding;
   }
 
   @override
@@ -139,5 +145,6 @@ class SBBSliderStyle {
     thumbBorderColor,
     leadingForegroundColor,
     trailingForegroundColor,
+    padding,
   );
 }

@@ -28,12 +28,15 @@ class SBBSlider extends StatefulWidget {
     required this.value,
     this.min = 0.0,
     this.max = 1.0,
-    this.leadingIconData = SBBIcons.walk_slow_small,
-    this.trailingIconData = SBBIcons.walk_fast_small,
+    this.leading,
+    this.leadingIconData,
+    this.trailing,
+    this.trailingIconData,
     this.onChangeStart,
     this.onChangeEnd,
     this.style,
-  });
+  }) : assert(leading == null || leadingIconData == null, 'Only one of leading or leadingIconData can be set'),
+       assert(trailing == null || trailingIconData == null, 'Only one of trailing or trailingIconData can be set');
 
   final ValueChanged<double>? onChanged;
   final ValueChanged<double>? onChangeStart;
@@ -41,7 +44,29 @@ class SBBSlider extends StatefulWidget {
   final double value;
   final double min;
   final double max;
+
+  /// A custom widget displayed as the slider's leading content.
+  ///
+  /// For simple icons, use [leadingIconData] instead.
+  ///
+  /// Cannot be used together with [leadingIconData].
+  final Widget? leading;
+
+  /// Icon data for the leading icon.
+  ///
+  /// Cannot be used together with [leading].
   final IconData? leadingIconData;
+
+  /// A custom widget displayed as the slider's trailing content.
+  ///
+  /// For simple icons, use [trailingIconData] instead.
+  ///
+  /// Cannot be used together with [trailingIconData].
+  final Widget? trailing;
+
+  /// Icon data for the trailing icon.
+  ///
+  /// Cannot be used together with [trailing].
   final IconData? trailingIconData;
 
   /// Customizes this slider appearance.
@@ -105,28 +130,62 @@ class _SBBSliderState extends State<SBBSlider> {
 
     final slider = _slider(effectiveStyle);
 
-    if (widget.leadingIconData == null && widget.trailingIconData == null) {
+    if (widget.leading == null &&
+        widget.leadingIconData == null &&
+        widget.trailing == null &&
+        widget.trailingIconData == null) {
       return slider;
     } else {
       final leadingForegroundColor = effectiveStyle.leadingForegroundColor?.resolve(_statesController.value);
       final trailingForegroundColor = effectiveStyle.trailingForegroundColor?.resolve(_statesController.value);
 
+      // Build actual widgets from convenience parameters
+      Widget? leadingWidget = widget.leading;
+      if (leadingWidget == null && widget.leadingIconData != null) {
+        leadingWidget = Icon(widget.leadingIconData);
+      }
+
+      Widget? trailingWidget = widget.trailing;
+      if (trailingWidget == null && widget.trailingIconData != null) {
+        trailingWidget = Icon(widget.trailingIconData);
+      }
+
+      // Apply theming
+      if (leadingWidget != null) {
+        leadingWidget = _applyForegroundColor(
+          child: leadingWidget,
+          foregroundColor: leadingForegroundColor,
+        );
+      }
+
+      if (trailingWidget != null) {
+        trailingWidget = _applyForegroundColor(
+          child: trailingWidget,
+          foregroundColor: trailingForegroundColor,
+        );
+      }
+
       return Row(
         children: [
-          if (widget.leadingIconData != null) _leadingIcon(leadingForegroundColor),
+          if (leadingWidget != null) leadingWidget,
           Expanded(child: slider),
-          if (widget.trailingIconData != null) _trailingIcon(trailingForegroundColor),
+          if (trailingWidget != null) trailingWidget,
         ],
       );
     }
   }
 
-  Widget _trailingIcon(Color? color) {
-    return Icon(widget.trailingIconData, color: color);
-  }
-
-  Widget _leadingIcon(Color? color) {
-    return Icon(widget.leadingIconData, color: color);
+  Widget _applyForegroundColor({
+    required Widget child,
+    required Color? foregroundColor,
+  }) {
+    return DefaultTextStyle.merge(
+      style: TextStyle(color: foregroundColor),
+      child: IconTheme.merge(
+        data: IconThemeData(color: foregroundColor),
+        child: child,
+      ),
+    );
   }
 
   Widget _slider(SBBSliderStyle effectiveStyle) {
@@ -142,6 +201,7 @@ class _SBBSliderState extends State<SBBSlider> {
         effectiveStyle.thumbBackgroundColor?.resolve(disabledStates) ?? SBBColors.green;
     final thumbBorderColor = effectiveStyle.thumbBorderColor?.resolve(enabledStates) ?? SBBColors.red;
     final disabledThumbBorderColor = effectiveStyle.thumbBorderColor?.resolve(disabledStates) ?? SBBColors.red;
+    final padding = effectiveStyle.padding ?? EdgeInsets.symmetric(horizontal: SBBSpacing.small);
 
     return SliderTheme(
       data: SliderThemeData(
@@ -160,7 +220,7 @@ class _SBBSliderState extends State<SBBSlider> {
           disabledBorderColor: disabledThumbBorderColor,
         ),
         overlayShape: SliderComponentShape.noOverlay,
-        padding: EdgeInsets.symmetric(horizontal: SBBSpacing.small),
+        padding: padding,
       ),
       child: Slider(
         value: widget.value,
