@@ -74,7 +74,11 @@ class SBBColors {
 
   // off brand / safety relevant colors
   static const Color royal = Color(0xFF06348B);
-  static const Color royalDark = Color(0xFF4077DF); // royal85
+  static const Color royalDark = Color(0xFF0053EF);
+  static const Color royal85 = Color(0xFF4077DF);
+  static const Color royal85Dark = royal85;
   static const Color royal125 = Color(0xFF032668);
+  static const Color royal125Dark = Color(0xFF245ECB);
   static const Color royal150 = Color(0xFF021C4E);
+  static const Color royal150Dark = Color(0xFF3C65B3);
 }
