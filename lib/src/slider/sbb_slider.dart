@@ -34,6 +34,8 @@ class SBBSlider extends StatefulWidget {
     this.trailingIconData,
     this.onChangeStart,
     this.onChangeEnd,
+    this.divisions,
+    this.allowedInteraction,
     this.style,
   }) : assert(leading == null || leadingIconData == null, 'Only one of leading or leadingIconData can be set'),
        assert(trailing == null || trailingIconData == null, 'Only one of trailing or trailingIconData can be set');
@@ -68,6 +70,14 @@ class SBBSlider extends StatefulWidget {
   ///
   /// Cannot be used together with [trailing].
   final IconData? trailingIconData;
+
+  /// The number of discrete divisions.
+  ///
+  /// If null, the slider will be continuous.
+  final int? divisions;
+
+  /// Which gestures should be recognized on the slider.
+  final SliderInteraction? allowedInteraction;
 
   /// Customizes this slider appearance.
   ///
@@ -226,6 +236,8 @@ class _SBBSliderState extends State<SBBSlider> {
         value: widget.value,
         min: widget.min,
         max: widget.max,
+        divisions: widget.divisions,
+        allowedInteraction: widget.allowedInteraction,
         onChanged: widget.onChanged,
         onChangeStart: _handleChangeStart,
         onChangeEnd: _handleChangeEnd,
