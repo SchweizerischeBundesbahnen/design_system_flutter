@@ -5,7 +5,7 @@ import 'sbb_slider_thumb_shape.dart';
 import 'sbb_slider_track_shape.dart';
 
 const _trackHeight = 4.0;
-const _thumbRadius = 14.0;
+const _thumbRadius = 11.0;
 const _thumbBorderWidth = 2.0;
 const _iconPadding = 4.0;
 
@@ -111,10 +111,11 @@ class _SBBSliderState extends State<SBBSlider> {
     final leadingForegroundColor = effectiveStyle.leadingForegroundColor?.resolve(states) ?? SBBColors.black;
     final trailingForegroundColor = effectiveStyle.trailingForegroundColor?.resolve(states) ?? SBBColors.black;
 
-    print(thumbBackgroundColor);
+    if (widget.startIcon == null && widget.endIcon == null) {
+      return _slider(trackColor, activeTrackColor, thumbBackgroundColor, thumbBorderColor);
+    }
 
     return Row(
-      mainAxisSize: MainAxisSize.max,
       children: [
         if (widget.startIcon != null) _startIcon(leadingForegroundColor),
         Expanded(child: _slider(trackColor, activeTrackColor, thumbBackgroundColor, thumbBorderColor)),
@@ -141,17 +142,19 @@ class _SBBSliderState extends State<SBBSlider> {
     return SliderTheme(
       data: SliderThemeData(
         trackHeight: _trackHeight,
-        thumbColor: thumbBackgroundColor,
         activeTrackColor: activeTrackColor,
+        disabledActiveTrackColor: activeTrackColor,
         inactiveTrackColor: trackColor,
-        trackShape: EvenRoundedRectSliderTrackShape(),
+        disabledInactiveTrackColor: trackColor,
+        trackShape: EvenRoundedRectSliderTrackShape(thumbRadius: _thumbRadius),
         thumbShape: CircleBorderThumbShape(
           radius: _thumbRadius,
           borderWidth: _thumbBorderWidth,
-          color: thumbBackgroundColor,
+          backgroundColor: thumbBackgroundColor,
           borderColor: thumbBorderColor,
         ),
         overlayShape: SliderComponentShape.noOverlay,
+        padding: EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
       ),
       child: Slider(
         value: widget.value,
