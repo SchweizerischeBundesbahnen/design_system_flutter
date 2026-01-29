@@ -4,23 +4,55 @@ import '../../sbb_design_system_mobile.dart';
 import 'sbb_slider_thumb_shape.dart';
 import 'sbb_slider_track_shape.dart';
 
-/// The SBB Slider. Use according to documentation.
+/// A slider component following the SBB design system.
 ///
-/// The [value] parameter must not be null.
+/// This widget is a wrapper around the Material [Slider] widget with custom
+/// SBB-specific styling applied through [SBBSliderStyle] and [SBBSliderThemeData].
+/// It does not add new functionality to the underlying [Slider] but rather
+/// provides a consistent visual appearance aligned with the SBB design guidelines.
 ///
-/// If [onChanged] callback is null, then the slider will be disabled.
+/// The slider allows users to select a single value from a continuous or discrete
+/// range. The value is represented by the position of the thumb on the track.
 ///
-/// Use [SBBSliderStyle] to customize the slider theme.
+/// ## Basic usage
 ///
-/// [onChangeStart] is called when the user starts to select a new value for
-/// the slider.
+/// ```dart
+/// SBBSlider(
+///   value: _currentValue,
+///   min: 0.0,
+///   max: 100.0,
+///   onChanged: (double newValue) {
+///     setState(() {
+///       _currentValue = newValue;
+///     });
+///   },
+/// )
+/// ```
 ///
-/// [onChangeEnd] is called when the user is done selecting a new value for
-/// the slider.
+/// ## With leading and trailing icons
+///
+/// ```dart
+/// SBBSlider(
+///   value: _currentValue,
+///   leadingIconData: Icons.remove,
+///   trailingIconData: Icons.add,
+///   onChanged: (double newValue) {
+///     setState(() {
+///       _currentValue = newValue;
+///     });
+///   },
+/// )
+/// ```
+///
+/// If [onChanged] is null, the slider will be displayed as disabled and cannot
+/// be interacted with.
 ///
 /// See also:
 ///
-/// * <https://digital.sbb.ch/de/design-system/mobile/components/slider>
+/// * [SBBSliderStyle], for customizing the slider appearance.
+/// * [SBBSliderThemeData], for setting slider theme properties across your app.
+/// * [Slider], the underlying Material Design slider widget.
+/// * [Design Guidelines](https://digital.sbb.ch/de/design-system/mobile/components/slider)
 class SBBSlider extends StatefulWidget {
   const SBBSlider({
     super.key,
@@ -38,23 +70,63 @@ class SBBSlider extends StatefulWidget {
     this.allowedInteraction,
     this.style,
   }) : assert(leading == null || leadingIconData == null, 'Only one of leading or leadingIconData can be set'),
-       assert(trailing == null || trailingIconData == null, 'Only one of trailing or trailingIconData can be set');
+       assert(trailing == null || trailingIconData == null, 'Only one of trailing or trailingIconData can be set'),
+       assert(min <= max, 'Min must be smaller or equal to max!');
 
+  /// Called when the user is selecting a new value for the slider by dragging or tapping.
+  ///
+  /// The slider passes the new value to the callback but does not actually
+  /// change state until the parent widget rebuilds the slider with the new value.
+  ///
+  /// If null, the slider will be displayed as disabled and cannot be interacted with.
   final ValueChanged<double>? onChanged;
+
+  /// Called when the user starts to select a new value for the slider.
+  ///
+  /// This callback is invoked when the user begins a drag or tap interaction.
+  /// It receives the current value before any changes are made.
   final ValueChanged<double>? onChangeStart;
+
+  /// Called when the user is done selecting a new value for the slider.
+  ///
+  /// This callback is invoked when the user completes a drag or tap interaction.
+  /// It receives the final selected value.
   final ValueChanged<double>? onChangeEnd;
+
+  /// The currently selected value for this slider.
+  ///
+  /// The slider's thumb is drawn at a position that corresponds to this value.
+  /// Must be between [min] and [max].
   final double value;
+
+  /// The minimum value the user can select.
+  ///
+  /// Defaults to 0.0. Must be less than or equal to [max].
+  ///
+  /// If [max] equals [min], the slider is disabled.
   final double min;
+
+  /// The maximum value the user can select.
+  ///
+  /// Defaults to 1.0. Must be greater than or equal to [min].
+  ///
+  /// If [max] equals [min], the slider is disabled.
   final double max;
 
   /// A custom widget displayed as the slider's leading content.
   ///
   /// For simple icons, use [leadingIconData] instead.
   ///
+  /// The widget is positioned to the left of the slider track and is
+  /// themed using the [SBBSliderStyle.leadingForegroundColor].
+  ///
   /// Cannot be used together with [leadingIconData].
   final Widget? leading;
 
   /// Icon data for the leading icon.
+  ///
+  /// The icon is positioned to the left of the slider track and is
+  /// themed using the [SBBSliderStyle.leadingForegroundColor].
   ///
   /// Cannot be used together with [leading].
   final IconData? leadingIconData;
@@ -63,26 +135,39 @@ class SBBSlider extends StatefulWidget {
   ///
   /// For simple icons, use [trailingIconData] instead.
   ///
+  /// The widget is positioned to the right of the slider track and is
+  /// themed using the [SBBSliderStyle.trailingForegroundColor].
+  ///
   /// Cannot be used together with [trailingIconData].
   final Widget? trailing;
 
   /// Icon data for the trailing icon.
+  ///
+  /// The icon is positioned to the right of the slider track and is
+  /// themed using the [SBBSliderStyle.trailingForegroundColor].
   ///
   /// Cannot be used together with [trailing].
   final IconData? trailingIconData;
 
   /// The number of discrete divisions.
   ///
-  /// If null, the slider will be continuous.
+  /// If null, the slider will be continuous and allow any value between [min] and [max].
+  ///
+  /// If set to a positive integer, the slider will snap to discrete values.
   final int? divisions;
 
   /// Which gestures should be recognized on the slider.
+  ///
+  /// Defaults to [SliderInteraction.tapAndSlide], allowing the user to tap anywhere
+  /// on the track or drag the thumb.
   final SliderInteraction? allowedInteraction;
 
   /// Customizes this slider appearance.
   ///
   /// Non-null properties of this style override the corresponding
   /// properties in [SBBSliderThemeData.style] of the theme found in [context].
+  ///
+  /// If both [style] and the theme style are null, default SBB styling is applied.
   final SBBSliderStyle? style;
 
   @override
@@ -108,7 +193,7 @@ class _SBBSliderState extends State<SBBSlider> {
   }
 
   void _updateStatesController() {
-    _statesController.update(WidgetState.disabled, widget.onChanged == null);
+    _statesController.update(WidgetState.disabled, widget.onChanged == null || widget.min == widget.max);
   }
 
   @override
