@@ -5,6 +5,7 @@ import 'package:sbb_design_system_mobile/src/checkbox/theme/default_sbb_checkbox
 import 'package:sbb_design_system_mobile/src/chip/theme/default_sbb_chip_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/container/container.dart';
 import 'package:sbb_design_system_mobile/src/radio/theme/default_sbb_radio_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/slider/theme/default_sbb_slider_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/switch/theme/default_sbb_switch_theme_data.dart';
 
 import '../button/theme/default_button_themes.dart';
@@ -29,6 +30,7 @@ class SBBTheme {
     SBBListItemThemeData? listItemTheme,
     SBBRadioThemeData? radioTheme,
     SBBStatusThemeData? statusTheme,
+    SBBSliderThemeData? sliderTheme,
     SBBSwitchThemeData? switchTheme,
     SBBTextTheme? textTheme,
     SBBToastStyle? toastStyle,
@@ -47,6 +49,7 @@ class SBBTheme {
     headerBoxStyle: headerBoxStyle,
     listItemTheme: listItemTheme,
     statusTheme: statusTheme,
+    sliderTheme: sliderTheme,
     switchTheme: switchTheme,
     textTheme: textTheme,
     toastStyle: toastStyle,
@@ -66,6 +69,7 @@ class SBBTheme {
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBListItemThemeData? listItemTheme,
     SBBStatusThemeData? statusTheme,
+    SBBSliderThemeData? sliderTheme,
     SBBSwitchThemeData? switchTheme,
     SBBTextTheme? textTheme,
     SBBToastStyle? toastStyle,
@@ -84,6 +88,7 @@ class SBBTheme {
     headerBoxStyle: headerBoxStyle,
     listItemTheme: listItemTheme,
     statusTheme: statusTheme,
+    sliderTheme: sliderTheme,
     switchTheme: switchTheme,
     textTheme: textTheme,
     toastStyle: toastStyle,
@@ -104,6 +109,7 @@ class SBBTheme {
     SBBListItemThemeData? listItemTheme,
     SBBRadioThemeData? radioTheme,
     SBBStatusThemeData? statusTheme,
+    SBBSliderThemeData? sliderTheme,
     SBBSwitchThemeData? switchTheme,
     SBBTextTheme? textTheme,
     SBBToastStyle? toastStyle,
@@ -145,6 +151,9 @@ class SBBTheme {
     final defaultStatusTheme = DefaultSBBStatusThemeData(baseStyle: mergedBaseStyle);
     final mergedStatusTheme = defaultStatusTheme.merge(statusTheme);
 
+    final defaultSliderTheme = DefaultSBBSliderThemeData(mergedBaseStyle);
+    final mergedSliderTheme = defaultSliderTheme.merge(sliderTheme);
+
     final defaultSwitchTheme = DefaultSBBSwitchThemeData(mergedBaseStyle);
     final mergedSwitchTheme = defaultSwitchTheme.merge(switchTheme);
 
@@ -168,6 +177,7 @@ class SBBTheme {
       listItemTheme: mergedListItemTheme,
       radioTheme: mergedRadioTheme,
       statusTheme: mergedStatusTheme,
+      sliderTheme: mergedSliderTheme,
       switchTheme: mergedSwitchTheme,
       textTheme: mergedTextTheme,
       toastStyle: mergedToastStyle,
@@ -188,6 +198,7 @@ class SBBTheme {
     required SBBListItemThemeData listItemTheme,
     required SBBRadioThemeData radioTheme,
     required SBBStatusThemeData statusTheme,
+    required SBBSliderThemeData sliderTheme,
     required SBBSwitchThemeData switchTheme,
     required SBBTextTheme textTheme,
     required SBBToastStyle toastStyle,
@@ -224,6 +235,7 @@ class SBBTheme {
         listItemTheme,
         radioTheme,
         statusTheme,
+        sliderTheme,
         switchTheme,
         textTheme,
         toastStyle,
