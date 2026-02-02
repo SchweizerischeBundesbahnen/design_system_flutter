@@ -9,7 +9,7 @@ void main() {
     final widget = Align(
       alignment: Alignment.center,
       child: Container(
-        padding: const EdgeInsets.all(sbbDefaultSpacing),
+        padding: const EdgeInsets.all(SBBSpacing.medium),
         child: Column(
           children: [
             SBBSegmentedButton(
@@ -17,7 +17,7 @@ void main() {
               selectedStateIndex: 0,
               selectedIndexChanged: (_) {},
             ),
-            const SizedBox(height: sbbDefaultSpacing),
+            const SizedBox(height: SBBSpacing.medium),
             SBBSegmentedButton.icon(
               icons: {
                 SBBIcons.microscooter_profile_small: 'Micro',
@@ -27,7 +27,7 @@ void main() {
               selectedStateIndex: 1,
               selectedIndexChanged: (_) {},
             ),
-            const SizedBox(height: sbbDefaultSpacing),
+            const SizedBox(height: SBBSpacing.medium),
             SBBSegmentedButton.icon(
               icons: {
                 SBBIcons.microscooter_profile_small: 'Micro',
@@ -38,13 +38,13 @@ void main() {
               selectedIndexChanged: (_) {},
               withText: true,
             ),
-            const SizedBox(height: sbbDefaultSpacing),
+            const SizedBox(height: SBBSpacing.medium),
             SBBSegmentedButton.redText(
               values: const ['Option 1', 'Option 2', 'Option 3'],
               selectedStateIndex: 2,
               selectedIndexChanged: (_) {},
             ),
-            const SizedBox(height: sbbDefaultSpacing),
+            const SizedBox(height: SBBSpacing.medium),
             SBBSegmentedButton.redIcon(
               icons: {
                 SBBIcons.microscooter_profile_small: 'Micro',
@@ -54,7 +54,7 @@ void main() {
               selectedStateIndex: 1,
               selectedIndexChanged: (_) {},
             ),
-            const SizedBox(height: sbbDefaultSpacing),
+            const SizedBox(height: SBBSpacing.medium),
             SBBSegmentedButton.redIcon(
               icons: {
                 SBBIcons.microscooter_profile_small: 'Micro',
@@ -65,9 +65,9 @@ void main() {
               selectedIndexChanged: (_) {},
               withText: true,
             ),
-            const SizedBox(height: sbbDefaultSpacing),
+            const SizedBox(height: SBBSpacing.medium),
             SBBSegmentedButton(values: const ['Single Option'], selectedStateIndex: 0, selectedIndexChanged: (_) {}),
-            const SizedBox(height: sbbDefaultSpacing),
+            const SizedBox(height: SBBSpacing.medium),
             SBBSegmentedButton.icon(
               icons: {SBBIcons.user_small: 'Single'},
               selectedStateIndex: 0,

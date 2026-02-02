@@ -81,7 +81,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
     Widget? trailingWidget,
     SBBHeaderboxFlap? flap,
     SBBHeaderboxFlapMode flapMode = SBBHeaderboxFlapMode.static,
-    EdgeInsets margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
+    EdgeInsets margin = const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
     String? semanticsLabel,
     Widget? preceding,
     Widget? contractibleChild,
@@ -142,7 +142,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
     Widget? trailingWidget,
     SBBHeaderboxFlap? flap,
     SBBHeaderboxFlapMode flapMode = SBBHeaderboxFlapMode.static,
-    EdgeInsets margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
+    EdgeInsets margin = const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
     String? semanticsLabel,
     Widget? preceding,
     Widget? collapsibleChild,
@@ -166,7 +166,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
              secondaryLabel: secondaryLabel,
              trailingWidget: trailingWidget,
            ),
-           if (collapsibleChild != null) SBBContractible(child: SizedBox(height: sbbDefaultSpacing)),
+           if (collapsibleChild != null) SBBContractible(child: SizedBox(height: SBBSpacing.medium)),
            if (collapsibleChild != null) _CollapsibleContent(child: collapsibleChild),
          ],
        );
@@ -198,8 +198,8 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
   ///  * [SBBContractionListener], which allows you to get updates on the expansion rate.
   SBBSliverFloatingHeaderbox.custom({
     super.key,
-    EdgeInsets margin = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
-    EdgeInsets padding = const EdgeInsets.all(sbbDefaultSpacing),
+    EdgeInsets margin = const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
+    EdgeInsets padding = const EdgeInsets.all(SBBSpacing.medium),
     SBBHeaderboxFlap? flap,
     SBBHeaderboxFlapMode flapMode = SBBHeaderboxFlapMode.static,
     String? semanticsLabel,
@@ -290,7 +290,7 @@ class _CollapsibleContent extends StatelessWidget {
     return SBBContractible.custom(
       child: SBBCascadeColumn(
         children: [
-          SizedBox(height: sbbDefaultSpacing),
+          SizedBox(height: SBBSpacing.medium),
           child,
         ],
       ),

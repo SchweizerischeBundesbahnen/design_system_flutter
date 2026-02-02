@@ -7,7 +7,7 @@ import 'test_app.dart';
 void main() {
   testWidgets('chip_1', (WidgetTester tester) async {
     final widget = Column(
-      spacing: sbbDefaultSpacing,
+      spacing: SBBSpacing.medium,
       children: [
         SBBChip(labelText: 'Default', trailingText: '9', onChanged: (selected) {}),
         SBBChip(labelText: 'L${"o" * 100}ng Text', trailingText: '99', onChanged: (selected) {}),

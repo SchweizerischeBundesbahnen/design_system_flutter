@@ -117,7 +117,7 @@ class SBBMessage extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return Padding(
-      padding: const EdgeInsets.all(sbbDefaultSpacing),
+      padding: const EdgeInsets.all(SBBSpacing.medium),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -127,9 +127,9 @@ class SBBMessage extends StatelessWidget {
             const SizedBox(height: _messageSpacing),
           ],
           _title(textTheme),
-          const SizedBox(height: sbbDefaultSpacing),
+          const SizedBox(height: SBBSpacing.medium),
           _description(textTheme),
-          if (messageCode != null) ...[const SizedBox(height: sbbDefaultSpacing), _errorCode(textTheme)],
+          if (messageCode != null) ...[const SizedBox(height: SBBSpacing.medium), _errorCode(textTheme)],
           if (_showInteractionButton) ...[const SizedBox(height: _messageSpacing), _interactionButton()],
         ],
       ),

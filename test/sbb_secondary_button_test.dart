@@ -8,9 +8,9 @@ void main() {
   testWidgets('secondary_button', (WidgetTester tester) async {
     final pressableKey = ValueKey('pressedButton');
     final widget = Padding(
-      padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing / 2, vertical: sbbDefaultSpacing),
+      padding: const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall, vertical: SBBSpacing.medium),
       child: Column(
-        spacing: sbbDefaultSpacing,
+        spacing: SBBSpacing.medium,
         children: [
           SBBSecondaryButton(key: pressableKey, labelText: "Default", onPressed: () {}),
           SBBSecondaryButton(labelText: "Disabled", onPressed: null),

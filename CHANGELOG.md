@@ -44,6 +44,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - dropped support for Flutter SDK 3.32.x
 - BREAKING: removed default left margin on component `SBBTextField` (#402)
 - BREAKING: `SBBSwitch` is now styled with own `SBBSwitchStyle` from `SBBSwitchThemeData` - see [v5 migration guide]
+- BREAKING: overhauled `SBBSlider` component - see [v5 migration guide]
 - BREAKING: overhauled `SBBStepper` component - see [v5 migration guide]
 
 ### Removed
@@ -62,6 +63,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Removed deprecated `SBBGroupStyle`, use `SBBContentBoxThemeData` instead
 - Removed `SBBGroupStyle.of(context)` and `SBBContentBoxStyle.of(context)` accessor, use `Theme.of(context).sbbContentBoxTheme` instead
 - Removed deprecated `SBBGroup`
+- Removed deprecated `sbbDefaultSpacing`
 
 
 ## [4.5.0] - 2026-01-19

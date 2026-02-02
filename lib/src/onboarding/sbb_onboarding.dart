@@ -39,7 +39,7 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
   static const navigationAreaHeight =
       navigationAreaVerticalPadding +
       SBBInternal.defaultOnboardingButtonNavigationSpacingHeight +
-      sbbDefaultSpacing +
+      SBBSpacing.medium +
       SBBInternal.defaultOnboardingButtonNavigationSpacingHeight +
       navigationAreaVerticalPadding;
   static const visibleBackCardsCount = 2;
@@ -214,7 +214,7 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
                       decoration: BoxDecoration(
                         color: controlStyle.headerBackgroundColor,
                         borderRadius: orientation == Orientation.portrait
-                            ? const BorderRadius.vertical(bottom: Radius.circular(sbbDefaultSpacing))
+                            ? const BorderRadius.vertical(bottom: Radius.circular(SBBSpacing.medium))
                             : null,
                       ),
                       child: Padding(padding: frontCardPadding, child: Container()),
@@ -247,7 +247,7 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
                               SizedBox(width: parentPadding),
                             ],
                           ),
-                          const SizedBox(height: sbbDefaultSpacing),
+                          const SizedBox(height: SBBSpacing.medium),
                           SizedBox(
                             height: SBBInternal.defaultOnboardingButtonNavigationSpacingHeightSmall,
                             child: SBBTertiaryButtonSmall(onPressed: widget.onFinish, labelText: widget.cancelLabel),
@@ -521,7 +521,7 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
   }
 
   Widget buildCard(int index, {bool isBackCard = false}) => ClipRRect(
-    borderRadius: const BorderRadius.all(Radius.circular(sbbDefaultSpacing)),
+    borderRadius: const BorderRadius.all(Radius.circular(SBBSpacing.medium)),
     child: Container(
       color: style.themeValue(SBBColors.white, SBBColors.charcoal),
       width: cardWidth,

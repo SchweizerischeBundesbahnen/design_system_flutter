@@ -29,7 +29,7 @@ class RadioPageState extends State<RadioPage> {
       slivers: [
         SBBSliverHeaderbox.custom(
           child: Column(
-            spacing: sbbDefaultSpacing,
+            spacing: SBBSpacing.medium,
             children: [
               ThemeModeSegmentedButton(),
               SBBSegmentedButton(
@@ -41,12 +41,12 @@ class RadioPageState extends State<RadioPage> {
           ),
         ),
         SliverPadding(
-          padding: EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
+          padding: EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
           sliver: SliverList.list(
             children: <Widget>[
               const SBBListHeader('Radio'),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing * .5),
+                padding: const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
                 child: SBBRadioGroup<int>(
                   groupValue: _groupValue,
                   onChanged: (newValue) => setState(() => _groupValue = newValue),
@@ -79,7 +79,7 @@ class RadioPageState extends State<RadioPage> {
                   ),
                 ),
               ),
-              const SizedBox(height: sbbDefaultSpacing),
+              const SizedBox(height: SBBSpacing.medium),
               SBBListHeader('Radio List Item - ListView'),
               SBBContentBox(
                 child: SBBRadioGroup<int>(
@@ -160,15 +160,15 @@ class RadioPageState extends State<RadioPage> {
                   ),
                 ),
               ),
-              const SizedBox(height: sbbDefaultSpacing),
+              const SizedBox(height: SBBSpacing.medium),
               const SBBListHeader('Radio List Item - Boxed'),
               Padding(
-                padding: const EdgeInsets.only(bottom: sbbDefaultSpacing * 4),
+                padding: const EdgeInsets.only(bottom: 64.0),
                 child: SBBRadioGroup(
                   groupValue: _listItemGroupValue,
                   onChanged: (newValue) => setState(() => _listItemGroupValue = newValue),
                   child: Column(
-                    spacing: sbbDefaultSpacing * 0.5,
+                    spacing: SBBSpacing.xSmall,
                     children: [
                       SBBRadioListItemBoxed<int>(
                         value: 1,

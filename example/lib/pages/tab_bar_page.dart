@@ -32,10 +32,10 @@ class TabBarPageState extends State<TabBarPage> {
     return Scaffold(
       body: Column(
         children: [
-          const Padding(padding: EdgeInsets.all(sbbDefaultSpacing), child: ThemeModeSegmentedButton()),
+          const Padding(padding: EdgeInsets.all(SBBSpacing.medium), child: ThemeModeSegmentedButton()),
           Spacer(),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: sbbDefaultSpacing, horizontal: 8.0),
+            padding: const EdgeInsets.symmetric(vertical: SBBSpacing.medium, horizontal: SBBSpacing.xSmall),
             child: SBBPrimaryButton(
               labelText: 'toggle visibility',
               onPressed: () => setState(() => visible = !visible),
@@ -48,7 +48,7 @@ class TabBarPageState extends State<TabBarPage> {
               controller: controller,
               onTap: (tab) {
                 if (controller.selectedTab == tab) {
-                  sbbToast.show(title: 'Tab tapped: Item ${tab.id}', bottom: sbbDefaultSpacing * 7.0);
+                  sbbToast.show(title: 'Tab tapped: Item ${tab.id}', bottom: 112);
                 }
               },
             ),

@@ -18,19 +18,19 @@ class _NotificationBoxPage extends State<NotificationBoxPage> {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: const EdgeInsets.all(sbbDefaultSpacing),
+      padding: const EdgeInsets.all(SBBSpacing.medium),
       children: [
         const ThemeModeSegmentedButton(),
-        const SizedBox(height: sbbDefaultSpacing),
+        const SizedBox(height: SBBSpacing.medium),
         const SBBListHeader('Alert'),
         SBBContentBox(
-          padding: const EdgeInsets.all(sbbDefaultSpacing),
+          padding: const EdgeInsets.all(SBBSpacing.medium),
           child: Column(
             children: [
               SBBNotificationBox.alert(title: title, text: text, onTap: () {}),
-              const SizedBox(height: sbbDefaultSpacing),
+              const SizedBox(height: SBBSpacing.medium),
               SBBNotificationBox.alert(text: text),
-              const SizedBox(height: sbbDefaultSpacing),
+              const SizedBox(height: SBBSpacing.medium),
               SBBNotificationBox.alert(
                 title: title,
                 text: text,
@@ -39,7 +39,7 @@ class _NotificationBoxPage extends State<NotificationBoxPage> {
                 isCloseable: false,
                 detailsIcon: SBBIcons.arrows_circle_small,
               ),
-              const SizedBox(height: sbbDefaultSpacing),
+              const SizedBox(height: SBBSpacing.medium),
               SBBNotificationBox.alert(
                 text: text,
                 onTap: () {},
@@ -47,19 +47,19 @@ class _NotificationBoxPage extends State<NotificationBoxPage> {
                 isCloseable: false,
                 detailsIcon: SBBIcons.arrows_circle_small,
               ),
-              const SizedBox(height: sbbDefaultSpacing),
+              const SizedBox(height: SBBSpacing.medium),
             ],
           ),
         ),
         const SBBListHeader('Warning'),
         SBBContentBox(
-          padding: const EdgeInsets.all(sbbDefaultSpacing),
+          padding: const EdgeInsets.all(SBBSpacing.medium),
           child: Column(
             children: [
               SBBNotificationBox.warning(title: title, text: text, onTap: () {}),
-              const SizedBox(height: sbbDefaultSpacing),
+              const SizedBox(height: SBBSpacing.medium),
               SBBNotificationBox.warning(text: text),
-              const SizedBox(height: sbbDefaultSpacing),
+              const SizedBox(height: SBBSpacing.medium),
               SBBNotificationBox.warning(
                 title: title,
                 text: text,
@@ -68,7 +68,7 @@ class _NotificationBoxPage extends State<NotificationBoxPage> {
                 isCloseable: false,
                 detailsIcon: SBBIcons.arrows_circle_small,
               ),
-              const SizedBox(height: sbbDefaultSpacing),
+              const SizedBox(height: SBBSpacing.medium),
               SBBNotificationBox.warning(
                 text: text,
                 onTap: () {},
@@ -81,13 +81,13 @@ class _NotificationBoxPage extends State<NotificationBoxPage> {
         ),
         const SBBListHeader('Success'),
         SBBContentBox(
-          padding: const EdgeInsets.all(sbbDefaultSpacing),
+          padding: const EdgeInsets.all(SBBSpacing.medium),
           child: Column(
             children: [
               SBBNotificationBox.success(title: title, text: text, onTap: () {}),
-              const SizedBox(height: sbbDefaultSpacing),
+              const SizedBox(height: SBBSpacing.medium),
               SBBNotificationBox.success(text: text),
-              const SizedBox(height: sbbDefaultSpacing),
+              const SizedBox(height: SBBSpacing.medium),
               SBBNotificationBox.success(
                 title: title,
                 text: text,
@@ -96,7 +96,7 @@ class _NotificationBoxPage extends State<NotificationBoxPage> {
                 isCloseable: false,
                 detailsIcon: SBBIcons.arrows_circle_small,
               ),
-              const SizedBox(height: sbbDefaultSpacing),
+              const SizedBox(height: SBBSpacing.medium),
               SBBNotificationBox.success(
                 text: text,
                 onTap: () {},
@@ -109,13 +109,13 @@ class _NotificationBoxPage extends State<NotificationBoxPage> {
         ),
         const SBBListHeader('Information'),
         SBBContentBox(
-          padding: const EdgeInsets.all(sbbDefaultSpacing),
+          padding: const EdgeInsets.all(SBBSpacing.medium),
           child: Column(
             children: [
               SBBNotificationBox.information(title: title, onTap: () {}, text: text),
-              const SizedBox(height: sbbDefaultSpacing),
+              const SizedBox(height: SBBSpacing.medium),
               SBBNotificationBox.information(text: text),
-              const SizedBox(height: sbbDefaultSpacing),
+              const SizedBox(height: SBBSpacing.medium),
               SBBNotificationBox.information(
                 title: title,
                 text: text,
@@ -124,7 +124,7 @@ class _NotificationBoxPage extends State<NotificationBoxPage> {
                 isCloseable: false,
                 detailsIcon: SBBIcons.arrows_circle_small,
               ),
-              const SizedBox(height: sbbDefaultSpacing),
+              const SizedBox(height: SBBSpacing.medium),
               SBBNotificationBox.information(
                 text: text,
                 onTap: () {},

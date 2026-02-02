@@ -14,7 +14,7 @@ void main() {
     final widget = Builder(
       builder: (context) {
         return SBBContentBox(
-          margin: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing / 2, vertical: sbbDefaultSpacing),
+          margin: const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall, vertical: SBBSpacing.medium),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: SBBListItem.divideListItems(

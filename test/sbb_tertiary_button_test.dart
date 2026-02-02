@@ -11,9 +11,9 @@ void main() {
     final pressableIconKey = ValueKey('pressedIconButton');
     final pressableSmallIconKey = ValueKey('pressedSmallIconButton');
     final widget = Padding(
-      padding: const EdgeInsets.symmetric(vertical: sbbDefaultSpacing, horizontal: sbbDefaultSpacing / 2),
+      padding: const EdgeInsets.symmetric(vertical: SBBSpacing.medium, horizontal: SBBSpacing.xSmall),
       child: Column(
-        spacing: sbbDefaultSpacing,
+        spacing: SBBSpacing.medium,
         children: [
           SBBTertiaryButton(key: pressableKey, labelText: "Default", onPressed: () {}),
           SBBTertiaryButton(labelText: "Disabled", onPressed: null),

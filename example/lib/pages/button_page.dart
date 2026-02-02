@@ -13,15 +13,15 @@ class ButtonPage extends StatelessWidget {
       slivers: [
         SBBSliverHeaderbox.custom(child: ThemeModeSegmentedButton()),
         SliverPadding(
-          padding: EdgeInsets.symmetric(horizontal: 8.0),
+          padding: EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
           sliver: SliverList.list(
             children: [
-              const SizedBox(height: sbbDefaultSpacing),
+              const SizedBox(height: SBBSpacing.medium),
               const SBBListHeader('Primary Button'),
               SBBContentBox(
-                padding: const EdgeInsets.all(sbbDefaultSpacing),
+                padding: const EdgeInsets.all(SBBSpacing.medium),
                 child: Column(
-                  spacing: sbbDefaultSpacing,
+                  spacing: SBBSpacing.medium,
                   children: [
                     SBBPrimaryButton(
                       labelText: 'Default',
@@ -33,10 +33,10 @@ class ButtonPage extends StatelessWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: sbbDefaultSpacing),
+              const SizedBox(height: SBBSpacing.medium),
               const SBBListHeader('Secondary Button'),
               SBBContentBox(
-                padding: const EdgeInsets.all(sbbDefaultSpacing),
+                padding: const EdgeInsets.all(SBBSpacing.medium),
                 child: Column(
                   children: [
                     SBBSecondaryButton(
@@ -44,21 +44,21 @@ class ButtonPage extends StatelessWidget {
                       onPressed: () => sbbToast.show(title: 'SBBSecondaryButton'),
                       // onLongPress: () => sbbToast.show(title: 'Long SBBSecondaryButton'),
                     ),
-                    const SizedBox(height: sbbDefaultSpacing),
+                    const SizedBox(height: SBBSpacing.medium),
                     const SBBSecondaryButton(labelText: 'Disabled', onPressed: null),
-                    const SizedBox(height: sbbDefaultSpacing),
+                    const SizedBox(height: SBBSpacing.medium),
                     SBBSecondaryButton(onPressed: () {}, isLoading: true),
                   ],
                 ),
               ),
-              const SizedBox(height: sbbDefaultSpacing),
+              const SizedBox(height: SBBSpacing.medium),
               const SBBListHeader('Tertiary Button'),
               SBBContentBox(
-                padding: const EdgeInsets.all(sbbDefaultSpacing),
+                padding: const EdgeInsets.all(SBBSpacing.medium),
                 child: SizedBox(
                   width: double.infinity,
                   child: Column(
-                    spacing: sbbDefaultSpacing,
+                    spacing: SBBSpacing.medium,
                     children: [
                       SBBTertiaryButton(
                         iconData: SBBIcons.dog_small,
@@ -76,14 +76,14 @@ class ButtonPage extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(height: sbbDefaultSpacing),
+              const SizedBox(height: SBBSpacing.medium),
               const SBBListHeader('Tertiary Button Small'),
               SBBContentBox(
-                padding: const EdgeInsets.all(sbbDefaultSpacing),
+                padding: const EdgeInsets.all(SBBSpacing.medium),
                 child: SizedBox(
                   width: double.infinity,
                   child: Column(
-                    spacing: sbbDefaultSpacing,
+                    spacing: SBBSpacing.medium,
                     children: [
                       SBBTertiaryButtonSmall(
                         iconData: SBBIcons.dog_small,

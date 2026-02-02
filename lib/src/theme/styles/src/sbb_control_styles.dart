@@ -6,7 +6,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   SBBControlStyles({
     this.checkbox,
     this.pagination,
-    this.slider,
     this.radioButton,
     this.textField,
     this.segmentedButton,
@@ -30,7 +29,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   });
 
   factory SBBControlStyles.$default({required SBBBaseStyle baseStyle}) => SBBControlStyles(
-    slider: SBBSliderStyle.$default(baseStyle: baseStyle),
     checkbox: SBBControlStyle.$default(baseStyle: baseStyle),
     pagination: SBBPaginationStyle.$default(baseStyle: baseStyle),
     radioButton: SBBControlStyle.$default(baseStyle: baseStyle),
@@ -69,7 +67,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   final SBBSegmentedButtonStyle? segmentedButton;
   final SBBSegmentedButtonStyle? redSegmentedButton;
   final SBBTextStyle? selectLabel;
-  final SBBSliderStyle? slider;
   final SBBPaginationStyle? pagination;
 
   final Color? headerBackgroundColor;
@@ -107,7 +104,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   @override
   ThemeExtension<SBBControlStyles> copyWith({
     SBBControlStyle? checkbox,
-    SBBSliderStyle? slider,
     SBBPaginationStyle? pagination,
     SBBControlStyle? radioButton,
     SBBTextFieldStyle? textField,
@@ -131,7 +127,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     SBBPickerStyle? picker,
   }) => SBBControlStyles(
     checkbox: checkbox ?? this.checkbox,
-    slider: slider ?? this.slider,
     pagination: pagination ?? this.pagination,
     radioButton: radioButton ?? this.radioButton,
     textField: textField ?? this.textField,
@@ -161,7 +156,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     if (other is! SBBControlStyles) return this;
     return SBBControlStyles(
       checkbox: checkbox?.lerp(other.checkbox, t),
-      slider: slider?.lerp(other.slider, t),
       pagination: pagination?.lerp(other.pagination, t),
       radioButton: radioButton?.lerp(other.radioButton, t),
       textField: textField?.lerp(other.textField, t),
@@ -196,7 +190,6 @@ extension SBBControlStylesExtension on SBBControlStyles? {
     if (this == null) return other ?? SBBControlStyles();
     return this!.copyWith(
           checkbox: this!.checkbox.merge(other?.checkbox),
-          slider: this!.slider.merge(other?.slider),
           pagination: this!.pagination.merge(other?.pagination),
           radioButton: this!.radioButton.merge(other?.radioButton),
           textField: this!.textField.merge(other?.textField),

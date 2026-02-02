@@ -47,7 +47,7 @@ class SBBContentBoxStyle extends ThemeExtension<SBBContentBoxStyle> {
 
   /// The border of the content box.
   static ShapeBorder get shape => RoundedRectangleBorder(
-    borderRadius: BorderRadius.all(Radius.circular(sbbDefaultSpacing)),
+    borderRadius: BorderRadius.all(Radius.circular(SBBSpacing.medium)),
   );
 
   @override
