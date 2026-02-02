@@ -12,11 +12,11 @@ class StepperPage extends StatefulWidget {
 
 class _StepperPageState extends State<StepperPage> {
   final numericSteps = [
-    const SBBStepperItem.numbered(labelText: 'StepItem 1'),
-    const SBBStepperItem.numbered(labelText: 'StepItem 2'),
-    const SBBStepperItem.numbered(labelText: 'StepItem 3'),
-    const SBBStepperItem.numbered(labelText: 'StepItem 4'),
-    const SBBStepperItem.numbered(labelText: 'StepItem 5'),
+    const SBBStepperItem.numbered(labelText: 'Step 1'),
+    const SBBStepperItem.numbered(labelText: 'Step 2'),
+    const SBBStepperItem.numbered(labelText: 'Step 3'),
+    const SBBStepperItem.numbered(labelText: 'Step 4'),
+    const SBBStepperItem.numbered(labelText: 'Step 5'),
   ];
   var activeNumericStep = 0;
   var activeNumericStepColored = 0;
