@@ -9,12 +9,20 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 /// ## Sample code
 ///
 /// ```dart
-/// Sample Code TODO: add
+/// SBBStepperItem.numbered(
+///   style: SBBStepperItemStyle(
+///     backgroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
+///       WidgetState.selected: SBBColors.iron,
+///       WidgetState.any: SBBColors.aluminum,
+///     }),
+///   ),
+/// ),
 /// ```
 ///
 /// See also:
 /// * [SBBStepper], the widget that uses this style.
 /// * [SBBStepperStyle], the overall style for the stepper.
+/// * [SBBStepperItemStyle], the style for a step of the stepper.
 /// * [SBBStepperThemeData], which applies this style theme-wide.
 class SBBStepperItemStyle {
   const SBBStepperItemStyle({
@@ -22,43 +30,56 @@ class SBBStepperItemStyle {
     this.borderColor,
     this.badgeBackgroundColor,
     this.badgeBorderColor,
+    this.badgeIconColor,
     this.iconColor,
     this.textStyle,
     this.labelTextStyle,
   });
 
-  /// TODO: Document
+  /// Color of the icon shown inside of a step.
   final WidgetStateProperty<Color?>? iconColor;
 
-  /// TODO: Document
+  /// Background color of the step.
   final WidgetStateProperty<Color?>? backgroundColor;
 
-  /// TODO: Document
+  /// Color of the step border.
   final WidgetStateProperty<Color?>? borderColor;
 
-  /// TODO: Document
-  final WidgetStateProperty<Color?>? badgeBackgroundColor;
+  /// Icon displayed in the badge shown for passed steps.
+  final Color? badgeIconColor;
 
-  /// TODO: Document
-  final WidgetStateProperty<Color?>? badgeBorderColor;
+  /// Background color of the badge shown for passed steps.
+  final Color? badgeBackgroundColor;
 
-  /// TODO: Document
+  /// Color of the badge border shown for passed steps.
+  final Color? badgeBorderColor;
+
+  /// TextStyle of text shown inside of a step.
   final WidgetStateProperty<TextStyle?>? textStyle;
 
-  /// TODO: Document
+  /// TextStyle of the label shown below the active step.
   final TextStyle? labelTextStyle;
 
   /// The height of the divider between steps.
   static const double stepCircleSize = 32.0;
 
-  /// TODO: Add more static values like paddings etc.
+  /// The size of the icon of a step.
+  static const double stepIconSize = 24.0;
+
+  /// The size of the badge on a step.
+  static const double badgeSize = 12.0;
+
+  /// The size of the icon inside the badge on a step.
+  static const double badgeIconSize = 10.0;
 
   SBBStepperItemStyle copyWith({
     WidgetStateProperty<Color?>? iconColor,
     WidgetStateProperty<Color?>? backgroundColor,
     WidgetStateProperty<Color?>? borderColor,
-    WidgetStateProperty<Color?>? badgeBackgroundColor,
-    WidgetStateProperty<Color?>? badgeBorderColor,
+    Color? badgeIconColor,
+    Color? badgeBackgroundColor,
+    Color? badgeBorderColor,
+    IconData? badgeIconData,
     WidgetStateProperty<TextStyle?>? textStyle,
     TextStyle? labelTextStyle,
   }) {
@@ -66,6 +87,7 @@ class SBBStepperItemStyle {
       iconColor: iconColor ?? this.iconColor,
       backgroundColor: backgroundColor ?? this.backgroundColor,
       borderColor: borderColor ?? this.borderColor,
+      badgeIconColor: badgeIconColor ?? this.badgeIconColor,
       badgeBackgroundColor: badgeBackgroundColor ?? this.badgeBackgroundColor,
       badgeBorderColor: badgeBorderColor ?? this.badgeBorderColor,
       textStyle: textStyle ?? this.textStyle,
@@ -80,6 +102,7 @@ class SBBStepperItemStyle {
       iconColor: other.iconColor,
       backgroundColor: other.backgroundColor,
       borderColor: other.borderColor,
+      badgeIconColor: other.badgeIconColor,
       badgeBackgroundColor: other.badgeBackgroundColor,
       badgeBorderColor: other.badgeBorderColor,
       textStyle: other.textStyle,
@@ -94,13 +117,9 @@ class SBBStepperItemStyle {
       iconColor: WidgetStateProperty.lerp<Color?>(a?.iconColor, b?.iconColor, t, Color.lerp),
       backgroundColor: WidgetStateProperty.lerp<Color?>(a?.backgroundColor, b?.backgroundColor, t, Color.lerp),
       borderColor: WidgetStateProperty.lerp<Color?>(a?.borderColor, b?.borderColor, t, Color.lerp),
-      badgeBackgroundColor: WidgetStateProperty.lerp<Color?>(
-        a?.badgeBackgroundColor,
-        b?.badgeBackgroundColor,
-        t,
-        Color.lerp,
-      ),
-      badgeBorderColor: WidgetStateProperty.lerp<Color?>(a?.badgeBorderColor, b?.badgeBorderColor, t, Color.lerp),
+      badgeBorderColor: Color.lerp(a?.badgeBorderColor, b?.badgeBorderColor, t),
+      badgeBackgroundColor: Color.lerp(a?.badgeBackgroundColor, b?.badgeBackgroundColor, t),
+      badgeIconColor: Color.lerp(a?.badgeIconColor, b?.badgeIconColor, t),
       textStyle: WidgetStateProperty.lerp<TextStyle?>(a?.textStyle, b?.textStyle, t, TextStyle.lerp),
       labelTextStyle: TextStyle.lerp(a?.labelTextStyle, b?.labelTextStyle, t),
     );

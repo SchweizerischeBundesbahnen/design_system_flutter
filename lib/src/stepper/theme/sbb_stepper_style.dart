@@ -9,7 +9,16 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 /// ## Sample code
 ///
 /// ```dart
-/// Sample Code TODO: add
+/// SBBStepper(
+///   style: SBBStepperStyle(
+///     dividerColor: SBBColors.green,
+///   ),
+///   steps: [...],
+///   activeStep: activeStep,
+///   onStepPressed: (_, i) {
+///     setState(() => activeStep = i);
+///   },
+/// ),
 /// ```
 ///
 /// See also:
@@ -19,26 +28,30 @@ class SBBStepperStyle {
   const SBBStepperStyle({
     this.dividerColor,
     this.itemStyle,
+    this.padding,
   });
 
-  /// TODO: Document
+  /// Color of the divider between steps.
   final Color? dividerColor;
 
-  /// TODO: Document
+  /// Defines the visual properties the steps.
   final SBBStepperItemStyle? itemStyle;
+
+  /// Padding around whole stepper with labels.
+  final EdgeInsetsGeometry? padding;
 
   /// The height of the divider between steps.
   static const double dividerHeight = 2.0;
 
-  /// TODO: Add more static values like paddings etc.
-
   SBBStepperStyle copyWith({
     Color? dividerColor,
     SBBStepperItemStyle? itemStyle,
+    EdgeInsetsGeometry? padding,
   }) {
     return SBBStepperStyle(
       dividerColor: dividerColor ?? this.dividerColor,
       itemStyle: itemStyle ?? this.itemStyle,
+      padding: padding ?? this.padding,
     );
   }
 
@@ -48,6 +61,7 @@ class SBBStepperStyle {
     return copyWith(
       dividerColor: other.dividerColor,
       itemStyle: other.itemStyle,
+      padding: other.padding,
     );
   }
 
@@ -57,6 +71,7 @@ class SBBStepperStyle {
     return SBBStepperStyle(
       dividerColor: Color.lerp(a?.dividerColor, b?.dividerColor, t),
       itemStyle: SBBStepperItemStyle.lerp(a?.itemStyle, b?.itemStyle, t),
+      padding: EdgeInsetsGeometry.lerp(a?.padding, b?.padding, t) as EdgeInsets?,
     );
   }
 }

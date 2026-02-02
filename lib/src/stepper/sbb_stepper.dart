@@ -8,38 +8,55 @@ typedef OnStepPressedCallback = void Function(SBBStepperItem item, int index);
 /// The SBB Stepper.
 /// Use according to [documentation](https://digital.sbb.ch/de/design-system/mobile/components/stepper/).
 ///
-/// TODO: Document code
-/// TODO: Assert (index in range etc.)
+/// Provide a list of [SBBStepperItem] via [steps] and indicate the current
+/// active step with [activeStep]. When a step is tapped the [onStepPressed]
+/// callback is invoked with the corresponding item and index. The stepper does
+/// not manage selection state; its parent should update [activeStep] and
+/// rebuild the widget.
 ///
+/// Use [SBBStepper.colored] to create the colored variant of the stepper.
+/// Custom appearance can be provided via [style], which will override
+/// non-null properties from the theme.
+///
+/// The widget requires at least two steps and an [activeStep] within the
+/// valid range.
+///
+/// See also:
+/// * [SBBStepperItem] to define individual steps.
 class SBBStepper extends StatelessWidget {
   const SBBStepper({
     Key? key,
     required List<SBBStepperItem> steps,
     required int activeStep,
     required OnStepPressedCallback onStepPressed,
-    EdgeInsets padding = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
+    SBBStepperStyle? style,
   }) : this._(
          key: key,
          steps: steps,
          activeStep: activeStep,
          onStepPressed: onStepPressed,
          isColoredStyle: false,
-         padding: padding,
+         style: style,
        );
 
+  /// Creates the colored style variant of [SBBStepper].
+  ///
+  /// Semantics and behavior are identical to the default constructor; the only
+  /// difference is that the stepper uses the theme's coloredStyle as the
+  /// baseline when resolving appearance.
   const SBBStepper.colored({
     Key? key,
     required List<SBBStepperItem> steps,
     required int activeStep,
     required OnStepPressedCallback onStepPressed,
-    EdgeInsets padding = const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
+    SBBStepperStyle? style,
   }) : this._(
          key: key,
          steps: steps,
          activeStep: activeStep,
          onStepPressed: onStepPressed,
          isColoredStyle: true,
-         padding: padding,
+         style: style,
        );
 
   const SBBStepper._({
@@ -47,21 +64,29 @@ class SBBStepper extends StatelessWidget {
     required this.steps,
     required this.activeStep,
     required this.onStepPressed,
-    required this.padding,
     required bool isColoredStyle,
     this.style,
   }) : assert(steps.length >= 2, 'needs at least two steps to work'),
+       assert(activeStep >= 0 && activeStep < steps.length, 'activeStep needs to be in range of steps'),
        _isColoredStyle = isColoredStyle;
 
-  final EdgeInsets padding;
-
-  /// TODO:
+  /// The list of steps shown by this stepper.
+  ///
+  /// Each item controls its content (icon or text), optional badge and an
+  /// optional per-item style that can further override the resolved style.
   final List<SBBStepperItem> steps;
 
-  /// TODO:
+  /// Called when a step is pressed.
+  ///
+  /// The callback receives the pressed [SBBStepperItem] and its index in
+  /// [steps]. The stepper does not change [activeStep] itself; the parent
+  /// should update state and rebuild if necessary.
   final OnStepPressedCallback onStepPressed;
 
-  /// TODO:
+  /// Index of the currently active step in [steps].
+  ///
+  /// The active step is visually indicated and its label (if any) is shown
+  /// centered under the corresponding circle.
   final int activeStep;
 
   final bool _isColoredStyle;
@@ -81,7 +106,7 @@ class SBBStepper extends StatelessWidget {
     final resolvedLabelTextStyle = effectiveStyle.itemStyle!.labelTextStyle?.merge(_activeItem.style?.labelTextStyle);
 
     return Padding(
-      padding: padding,
+      padding: themeStyle.padding ?? EdgeInsets.zero,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -94,7 +119,7 @@ class SBBStepper extends StatelessWidget {
 
   Widget _steps(SBBStepperStyle style) {
     return Row(
-      spacing: 4.0,
+      spacing: SBBSpacing.xxSmall,
       children:
           steps
               .mapIndexed((i, step) => _circle(i, style, step))
@@ -118,9 +143,9 @@ class SBBStepper extends StatelessWidget {
         );
 
     return Padding(
-      padding: const EdgeInsets.only(top: 8.0),
+      padding: const EdgeInsets.only(top: SBBSpacing.xSmall),
       child: LayoutBuilder(
-        builder: (context, constraints) {
+        builder: (_, constraints) {
           final stepCircleSize = SBBStepperItemStyle.stepCircleSize;
           final width = constraints.maxWidth;
           final xCenter = stepCircleSize / 2 + activeStep * (width - stepCircleSize) / (steps.length - 1);
@@ -221,7 +246,7 @@ class _StepCircleState extends State<_StepCircle> {
       clipBehavior: Clip.none,
       children: [
         _circle(context),
-        if (_passedStep) _checkedBadge(),
+        if (_passedStep && widget.item.showBadgeWhenPassed) _badge(),
       ],
     );
   }
@@ -239,8 +264,8 @@ class _StepCircleState extends State<_StepCircle> {
           child: Center(
             child: ConstrainedBox(
               constraints: const BoxConstraints.tightFor(
-                width: 24.0,
-                height: 24.0,
+                width: SBBSpacing.large,
+                height: SBBSpacing.large,
               ),
               child: _circleContent(),
             ),
@@ -250,24 +275,23 @@ class _StepCircleState extends State<_StepCircle> {
     );
   }
 
-  Widget _checkedBadge() {
-    final resolvedBackgroundColor = widget.style.badgeBackgroundColor?.resolve(_statesController.value);
-    final resolvedBorderColor = widget.style.badgeBorderColor?.resolve(_statesController.value);
+  Widget _badge() {
+    final backgroundColor = widget.style.badgeBorderColor;
     return Positioned(
       top: -4,
       right: -2,
       child: Container(
-        width: 12,
-        height: 12,
+        width: SBBStepperItemStyle.badgeSize,
+        height: SBBStepperItemStyle.badgeSize,
         decoration: BoxDecoration(
           shape: BoxShape.circle,
-          color: resolvedBackgroundColor,
-          border: resolvedBorderColor != null ? BoxBorder.fromBorderSide(BorderSide(color: resolvedBorderColor)) : null,
+          color: widget.style.badgeBackgroundColor,
+          border: backgroundColor != null ? BoxBorder.fromBorderSide(BorderSide(color: backgroundColor)) : null,
         ),
         child: Icon(
-          SBBIcons.tick_small,
-          color: SBBColors.white, // TODO: Add to style
-          size: 10.0,
+          widget.item.badgeIcon,
+          color: widget.style.badgeIconColor,
+          size: SBBStepperItemStyle.badgeIconSize,
           fontWeight: FontWeight.w900,
         ),
       ),
@@ -281,15 +305,15 @@ class _StepCircleState extends State<_StepCircle> {
     );
   }
 
-  // TODO: Why is cast needed. Use when?
   Widget _circleContent() {
-    if (widget.item is SBBStepperItemIcon) {
+    var item = widget.item;
+    if (item is SBBStepperItemIcon) {
       final resolvedIconColor = widget.style.iconColor?.resolve(_statesController.value);
-      return Icon((widget.item as SBBStepperItemIcon).icon, size: 24, color: resolvedIconColor);
+      return Icon(item.icon, size: SBBStepperItemStyle.stepIconSize, color: resolvedIconColor);
     }
 
     final resolvedTextStyle = widget.style.textStyle?.resolve(_statesController.value);
-    final text = widget.item is SBBStepperItemText ? (widget.item as SBBStepperItemText).text : '${widget.index + 1}';
+    final text = item is SBBStepperItemText ? item.text : '${widget.index + 1}';
     return FittedBox(
       fit: BoxFit.scaleDown,
       child: Text(text, style: resolvedTextStyle),
@@ -299,10 +323,16 @@ class _StepCircleState extends State<_StepCircle> {
   bool get _passedStep => widget.index < widget.activeStep;
 }
 
-/// TODO: DOCUMENT, maybe rename?
+/// A widget that positions its single child horizontally so that the child's
+/// horizontal center is at [centerX], but clamps the child's left edge to the
+/// parent's horizontal bounds so that the child remains fully visible.
+///
+/// Used to center the active step's label under the active circle while
+/// preventing the label from overflowing past the stepper's edges.
 class _EdgeClampedCenterX extends SingleChildRenderObjectWidget {
   const _EdgeClampedCenterX({required this.centerX, super.child});
 
+  /// Desired horizontal center of the child in the parent's coordinate space.
   final double centerX;
 
   @override
@@ -314,7 +344,7 @@ class _EdgeClampedCenterX extends SingleChildRenderObjectWidget {
   }
 }
 
-/// TODO: DOCUMENT
+/// Render object used by [_EdgeClampedCenterX].
 class _RenderEdgeClampedCenterX extends RenderShiftedBox {
   _RenderEdgeClampedCenterX({required double centerX, RenderBox? child}) : _centerX = centerX, super(child);
 

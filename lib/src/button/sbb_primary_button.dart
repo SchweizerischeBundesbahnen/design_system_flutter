@@ -34,7 +34,7 @@ class SBBPrimaryButton extends StatelessWidget {
     this.focusNode,
     this.autofocus = false,
     this.semanticLabel,
-  }) : assert(!(labelText != null && label != null), 'Cannot provide both labelText and label!'),
+  }) : assert(labelText == null || label == null, 'Cannot provide both labelText and label!'),
        assert(
          !(labelText == null && label == null && !isLoading),
          'One of labelText, label must be set or isLoading must be true!',
@@ -126,9 +126,8 @@ class SBBPrimaryButton extends StatelessWidget {
   }
 
   Widget _defaultLabel() {
-    final child = isLoading
-        ? const SBBLoadingIndicator.tiny(color: SBBColors.white)
-        : DefaultButtonLabel(label: labelText!);
+    final child =
+        isLoading ? const SBBLoadingIndicator.tiny(color: SBBColors.white) : DefaultButtonLabel(label: labelText!);
     return Center(child: child);
   }
 }
