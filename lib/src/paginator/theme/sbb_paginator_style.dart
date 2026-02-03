@@ -10,16 +10,23 @@ import 'package:flutter/material.dart';
 /// * [SBBPaginatorThemeData], which applies this style theme-wide.
 class SBBPaginatorStyle {
   const SBBPaginatorStyle({
-    this.foregroundColor,
+    this.circleBorderColor,
+    this.circleFillColor,
     this.floatingBackgroundColor,
     this.floatingBoxShadow,
   });
 
-  /// The foreground color of the paginator circles.
+  /// The border color of the paginator circles.
   ///
-  /// This affects the color of the circle indicators and their borders.
+  /// This affects the color of the circle borders.
   /// The selected state is used for the currently active page.
-  final WidgetStateProperty<Color?>? foregroundColor;
+  final WidgetStateProperty<Color?>? circleBorderColor;
+
+  /// The fill color of the paginator circles.
+  ///
+  /// This affects the color of the circle fill.
+  /// The selected state is used for the currently active page.
+  final WidgetStateProperty<Color?>? circleFillColor;
 
   /// The background color of the floating paginator container.
   final Color? floatingBackgroundColor;
@@ -30,12 +37,14 @@ class SBBPaginatorStyle {
   final List<BoxShadow>? floatingBoxShadow;
 
   SBBPaginatorStyle copyWith({
-    WidgetStateProperty<Color?>? foregroundColor,
+    WidgetStateProperty<Color?>? circleBorderColor,
+    WidgetStateProperty<Color?>? circleFillColor,
     Color? floatingBackgroundColor,
     List<BoxShadow>? floatingBoxShadow,
   }) {
     return SBBPaginatorStyle(
-      foregroundColor: foregroundColor ?? this.foregroundColor,
+      circleBorderColor: circleBorderColor ?? this.circleBorderColor,
+      circleFillColor: circleFillColor ?? this.circleFillColor,
       floatingBackgroundColor: floatingBackgroundColor ?? this.floatingBackgroundColor,
       floatingBoxShadow: floatingBoxShadow ?? this.floatingBoxShadow,
     );
@@ -45,7 +54,8 @@ class SBBPaginatorStyle {
     if (other == null) return this;
 
     return copyWith(
-      foregroundColor: other.foregroundColor,
+      circleBorderColor: other.circleBorderColor,
+      circleFillColor: other.circleFillColor,
       floatingBackgroundColor: other.floatingBackgroundColor,
       floatingBoxShadow: other.floatingBoxShadow,
     );
@@ -55,7 +65,8 @@ class SBBPaginatorStyle {
     if (identical(a, b)) return a;
 
     return SBBPaginatorStyle(
-      foregroundColor: WidgetStateProperty.lerp<Color?>(a?.foregroundColor, b?.foregroundColor, t, Color.lerp),
+      circleBorderColor: WidgetStateProperty.lerp<Color?>(a?.circleBorderColor, b?.circleBorderColor, t, Color.lerp),
+      circleFillColor: WidgetStateProperty.lerp<Color?>(a?.circleFillColor, b?.circleFillColor, t, Color.lerp),
       floatingBackgroundColor: Color.lerp(a?.floatingBackgroundColor, b?.floatingBackgroundColor, t),
       floatingBoxShadow: BoxShadow.lerpList(a?.floatingBoxShadow, b?.floatingBoxShadow, t),
     );
@@ -65,14 +76,16 @@ class SBBPaginatorStyle {
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     return other is SBBPaginatorStyle &&
-        other.foregroundColor == foregroundColor &&
+        other.circleBorderColor == circleBorderColor &&
+        other.circleFillColor == circleFillColor &&
         other.floatingBackgroundColor == floatingBackgroundColor &&
         other.floatingBoxShadow == floatingBoxShadow;
   }
 
   @override
   int get hashCode => Object.hash(
-    foregroundColor,
+    circleBorderColor,
+    circleFillColor,
     floatingBackgroundColor,
     floatingBoxShadow,
   );
