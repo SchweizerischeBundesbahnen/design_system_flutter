@@ -86,25 +86,21 @@ class SBBPaginatorFloating extends SBBPaginator {
     final themeData = Theme.of(context).sbbPaginatorTheme;
     final style = themeData?.style;
 
-    final states = <WidgetState>{};
-    final backgroundColor = style?.floatingBackgroundColor?.resolve(states);
-    final borderColor = style?.floatingBorderColor?.resolve(states);
-    final boxShadow = style?.floatingBoxShadow?.resolve(states);
+    final backgroundColor = style?.floatingBackgroundColor;
+    final boxShadow = style?.floatingBoxShadow;
 
     return Container(
-      decoration: _createBoxDecorationWith(backgroundColor, borderColor, boxShadow),
+      decoration: _createBoxDecorationWith(backgroundColor, boxShadow),
       padding: _floatingPadding,
       child: super.build(context),
     );
   }
 
-  BoxDecoration _createBoxDecorationWith(Color? backgroundColor, Color? borderColor, List<BoxShadow>? boxShadow) =>
-      BoxDecoration(
-        borderRadius: BorderRadius.circular(_kFloatingPaddingHeight * 2),
-        color: backgroundColor,
-        border: borderColor != null ? Border.all(color: borderColor) : null,
-        boxShadow: boxShadow,
-      );
+  BoxDecoration _createBoxDecorationWith(Color? backgroundColor, List<BoxShadow>? boxShadow) => BoxDecoration(
+    borderRadius: BorderRadius.circular(_kFloatingPaddingHeight * 2),
+    color: backgroundColor,
+    boxShadow: boxShadow,
+  );
 
   EdgeInsets get _floatingPadding =>
       const EdgeInsets.symmetric(horizontal: _kFloatingPaddingWidth, vertical: _kFloatingPaddingHeight);

@@ -9,18 +9,15 @@ class DefaultSBBPaginatorThemeData extends SBBPaginatorThemeData {
         style: SBBPaginatorStyle(
           foregroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.selected: baseStyle.themeValue(baseStyle.primaryColor, SBBColors.white),
-            WidgetState.any: baseStyle.themeValue(SBBColors.metal, SBBColors.graphite),
+            WidgetState.any: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
           }),
-          floatingBackgroundColor: WidgetStatePropertyAll(
-            baseStyle.themeValue(SBBColors.milk, SBBColors.iron),
-          ),
-          floatingBorderColor: const WidgetStatePropertyAll(null),
-          floatingBoxShadow: WidgetStatePropertyAll([
+          floatingBackgroundColor: baseStyle.themeValue(SBBColors.white, SBBColors.iron),
+          floatingBoxShadow: [
             BoxShadow(
               color: SBBColors.black.withValues(alpha: 0.2),
               blurRadius: 8.0,
             ),
-          ]),
+          ],
         ),
       );
 }

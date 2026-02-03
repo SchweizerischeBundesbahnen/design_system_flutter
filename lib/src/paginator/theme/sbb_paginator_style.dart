@@ -12,39 +12,31 @@ class SBBPaginatorStyle {
   const SBBPaginatorStyle({
     this.foregroundColor,
     this.floatingBackgroundColor,
-    this.floatingBorderColor,
     this.floatingBoxShadow,
   });
 
-  /// The foreground color of the paginator.dart circles.
+  /// The foreground color of the paginator circles.
   ///
   /// This affects the color of the circle indicators and their borders.
   /// The selected state is used for the currently active page.
   final WidgetStateProperty<Color?>? foregroundColor;
 
-  /// The background color of the floating paginator.dart container.
-  final WidgetStateProperty<Color?>? floatingBackgroundColor;
+  /// The background color of the floating paginator container.
+  final Color? floatingBackgroundColor;
 
-  /// The border color of the floating paginator.dart container.
-  ///
-  /// This affects the outline of the floating container.
-  final WidgetStateProperty<Color?>? floatingBorderColor;
-
-  /// The box shadow of the floating paginator.dart container.
+  /// The box shadow of the floating paginator container.
   ///
   /// This creates the elevation effect for the floating variant.
-  final WidgetStateProperty<List<BoxShadow>?>? floatingBoxShadow;
+  final List<BoxShadow>? floatingBoxShadow;
 
   SBBPaginatorStyle copyWith({
     WidgetStateProperty<Color?>? foregroundColor,
-    WidgetStateProperty<Color?>? floatingBackgroundColor,
-    WidgetStateProperty<Color?>? floatingBorderColor,
-    WidgetStateProperty<List<BoxShadow>?>? floatingBoxShadow,
+    Color? floatingBackgroundColor,
+    List<BoxShadow>? floatingBoxShadow,
   }) {
     return SBBPaginatorStyle(
       foregroundColor: foregroundColor ?? this.foregroundColor,
       floatingBackgroundColor: floatingBackgroundColor ?? this.floatingBackgroundColor,
-      floatingBorderColor: floatingBorderColor ?? this.floatingBorderColor,
       floatingBoxShadow: floatingBoxShadow ?? this.floatingBoxShadow,
     );
   }
@@ -55,7 +47,6 @@ class SBBPaginatorStyle {
     return copyWith(
       foregroundColor: other.foregroundColor,
       floatingBackgroundColor: other.floatingBackgroundColor,
-      floatingBorderColor: other.floatingBorderColor,
       floatingBoxShadow: other.floatingBoxShadow,
     );
   }
@@ -65,24 +56,8 @@ class SBBPaginatorStyle {
 
     return SBBPaginatorStyle(
       foregroundColor: WidgetStateProperty.lerp<Color?>(a?.foregroundColor, b?.foregroundColor, t, Color.lerp),
-      floatingBackgroundColor: WidgetStateProperty.lerp<Color?>(
-        a?.floatingBackgroundColor,
-        b?.floatingBackgroundColor,
-        t,
-        Color.lerp,
-      ),
-      floatingBorderColor: WidgetStateProperty.lerp<Color?>(
-        a?.floatingBorderColor,
-        b?.floatingBorderColor,
-        t,
-        Color.lerp,
-      ),
-      floatingBoxShadow: WidgetStateProperty.lerp<List<BoxShadow>?>(
-        a?.floatingBoxShadow,
-        b?.floatingBoxShadow,
-        t,
-        BoxShadow.lerpList,
-      ),
+      floatingBackgroundColor: Color.lerp(a?.floatingBackgroundColor, b?.floatingBackgroundColor, t),
+      floatingBoxShadow: BoxShadow.lerpList(a?.floatingBoxShadow, b?.floatingBoxShadow, t),
     );
   }
 
@@ -92,7 +67,6 @@ class SBBPaginatorStyle {
     return other is SBBPaginatorStyle &&
         other.foregroundColor == foregroundColor &&
         other.floatingBackgroundColor == floatingBackgroundColor &&
-        other.floatingBorderColor == floatingBorderColor &&
         other.floatingBoxShadow == floatingBoxShadow;
   }
 
@@ -100,7 +74,6 @@ class SBBPaginatorStyle {
   int get hashCode => Object.hash(
     foregroundColor,
     floatingBackgroundColor,
-    floatingBorderColor,
     floatingBoxShadow,
   );
 }
