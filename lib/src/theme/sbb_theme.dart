@@ -4,6 +4,7 @@ import 'package:sbb_design_system_mobile/src/button/theme/sbb_button_style_x.dar
 import 'package:sbb_design_system_mobile/src/checkbox/theme/default_sbb_checkbox_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/chip/theme/default_sbb_chip_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/container/container.dart';
+import 'package:sbb_design_system_mobile/src/paginator/theme/default_sbb_paginator_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/radio/theme/default_sbb_radio_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/slider/theme/default_sbb_slider_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/switch/theme/default_sbb_switch_theme_data.dart';
@@ -28,6 +29,7 @@ class SBBTheme {
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBListItemThemeData? listItemTheme,
+    SBBPaginatorThemeData? paginatorTheme,
     SBBRadioThemeData? radioTheme,
     SBBStatusThemeData? statusTheme,
     SBBSliderThemeData? sliderTheme,
@@ -48,6 +50,7 @@ class SBBTheme {
     controlStyles: controlStyles,
     headerBoxStyle: headerBoxStyle,
     listItemTheme: listItemTheme,
+    paginatorTheme: paginatorTheme,
     statusTheme: statusTheme,
     sliderTheme: sliderTheme,
     switchTheme: switchTheme,
@@ -68,6 +71,7 @@ class SBBTheme {
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBListItemThemeData? listItemTheme,
+    SBBPaginatorThemeData? paginatorTheme,
     SBBStatusThemeData? statusTheme,
     SBBSliderThemeData? sliderTheme,
     SBBSwitchThemeData? switchTheme,
@@ -87,6 +91,7 @@ class SBBTheme {
     controlStyles: controlStyles,
     headerBoxStyle: headerBoxStyle,
     listItemTheme: listItemTheme,
+    paginatorTheme: paginatorTheme,
     statusTheme: statusTheme,
     sliderTheme: sliderTheme,
     switchTheme: switchTheme,
@@ -107,6 +112,7 @@ class SBBTheme {
     SBBContentBoxThemeData? contentBoxTheme,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBListItemThemeData? listItemTheme,
+    SBBPaginatorThemeData? paginatorTheme,
     SBBRadioThemeData? radioTheme,
     SBBStatusThemeData? statusTheme,
     SBBSliderThemeData? sliderTheme,
@@ -145,6 +151,9 @@ class SBBTheme {
     final defaultListItemTheme = DefaultSBBListItemThemeData(baseStyle: mergedBaseStyle);
     final mergedListItemTheme = defaultListItemTheme.merge(listItemTheme);
 
+    final defaultPaginatorTheme = DefaultSBBPaginatorThemeData(mergedBaseStyle);
+    final mergedPaginatorTheme = defaultPaginatorTheme.merge(paginatorTheme);
+
     final defaultRadioTheme = DefaultSBBRadioThemeData(mergedBaseStyle);
     final mergedRadioTheme = defaultRadioTheme.merge(radioTheme);
 
@@ -175,6 +184,7 @@ class SBBTheme {
       contentBoxTheme: mergedContentBoxTheme,
       headerBoxStyle: mergedHeaderBoxStyle,
       listItemTheme: mergedListItemTheme,
+      paginatorTheme: mergedPaginatorTheme,
       radioTheme: mergedRadioTheme,
       statusTheme: mergedStatusTheme,
       sliderTheme: mergedSliderTheme,
@@ -196,6 +206,7 @@ class SBBTheme {
     required SBBControlStyles controlStyles,
     required SBBHeaderBoxStyle headerBoxStyle,
     required SBBListItemThemeData listItemTheme,
+    required SBBPaginatorThemeData paginatorTheme,
     required SBBRadioThemeData radioTheme,
     required SBBStatusThemeData statusTheme,
     required SBBSliderThemeData sliderTheme,
@@ -233,6 +244,7 @@ class SBBTheme {
         controlStyles,
         headerBoxStyle,
         listItemTheme,
+        paginatorTheme,
         radioTheme,
         statusTheme,
         sliderTheme,

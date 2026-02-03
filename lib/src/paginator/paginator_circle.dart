@@ -7,14 +7,18 @@ const double _unselectedWidth = 6.0;
 const EdgeInsets _unselectedPadding = EdgeInsets.all(1.0);
 
 class PaginatorCircle extends StatelessWidget {
-  const PaginatorCircle({super.key, required this.isSelected});
+  const PaginatorCircle({super.key, required this.isSelected, this.color});
 
   final bool isSelected;
 
+  final WidgetStateProperty<Color?>? color;
+
   @override
   Widget build(BuildContext context) {
-    final style = SBBControlStyles.of(context).pagination!;
-    final resolvedDrawingColor = isSelected ? style.selectedColor! : style.borderColor!;
+    final style = Theme.of(context).sbbPaginatorTheme?.style;
+    final effectiveColor = color ?? style?.foregroundColor;
+
+    final resolvedColor = effectiveColor?.resolve({if (isSelected) WidgetState.selected});
 
     return AnimatedContainer(
       margin: isSelected ? EdgeInsets.zero : _unselectedPadding,
@@ -22,9 +26,9 @@ class PaginatorCircle extends StatelessWidget {
       width: isSelected ? _selectedWidth : _unselectedWidth,
       height: isSelected ? _selectedWidth : _unselectedWidth,
       decoration: BoxDecoration(
-        color: isSelected ? resolvedDrawingColor : null,
+        color: resolvedColor,
         shape: BoxShape.circle,
-        border: Border.all(color: resolvedDrawingColor),
+        border: Border.all(color: resolvedColor ?? SBBColors.green),
       ),
     );
   }

@@ -1,6 +1,5 @@
 export '../../button/theme/sbb_button_style.dart';
 export '../../container/theme/sbb_content_box_style.dart';
-export '../../paginator/theme/sbb_paginator_style.dart';
 export 'src/promotion_box_style.dart';
 export 'src/sbb_base_style.dart';
 export 'src/sbb_basic_control_style.dart';
