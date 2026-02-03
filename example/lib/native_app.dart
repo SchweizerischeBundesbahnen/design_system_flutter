@@ -22,7 +22,7 @@ import 'pages/message_page.dart';
 import 'pages/modal_page.dart';
 import 'pages/notification_box_page.dart';
 import 'pages/onboarding_page.dart';
-import 'pages/pagination_page.dart';
+import 'pages/paginator_page.dart';
 import 'pages/picker_page.dart';
 import 'pages/promotion_box_page.dart';
 import 'pages/radio_page.dart';
@@ -117,7 +117,7 @@ class MyApp extends StatelessWidget {
                                   _DemoEntry('Select', SelectPage()),
                                   _DemoEntry('Switch', SwitchPage()),
                                   _DemoEntry('Textfield / Textarea', TextFieldPage()),
-                                  _DemoEntry('Pagination', PaginationPage()),
+                                  _DemoEntry('Paginator', PaginatorPage()),
                                   _DemoEntry('Slider', SliderPage()),
                                   _DemoEntry('Promotion Box', PromotionBoxPage()),
                                   _DemoEntry('Notification Box', NotificationBoxPage()),

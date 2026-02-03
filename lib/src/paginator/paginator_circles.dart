@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
-import 'pagination_circle.dart';
+import 'paginator_circle.dart';
 
-class PaginationCircles extends StatelessWidget {
-  const PaginationCircles({super.key, required this.numberCircles, required this.selectedCircle});
+class PaginatorCircles extends StatelessWidget {
+  const PaginatorCircles({super.key, required this.numberCircles, required this.selectedCircle});
 
   final int numberCircles;
   final int selectedCircle;
@@ -17,7 +17,7 @@ class PaginationCircles extends StatelessWidget {
   List<Widget> get _buildCirclesWithSpacing {
     var result = <Widget>[];
     for (var i = 0; i < numberCircles; i++) {
-      result.add(PaginationCircle(isSelected: i == selectedCircle));
+      result.add(PaginatorCircle(isSelected: i == selectedCircle));
       if (_shouldAddSpacing(i)) {
         result.add(const SizedBox(width: SBBSpacing.xSmall));
       }

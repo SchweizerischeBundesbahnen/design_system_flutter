@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
-import 'pagination_circles.dart';
+import 'paginator_circles.dart';
 
 const double _kFloatingPaddingHeight = 4.0;
 const double _kFloatingPaddingWidth = 36.0;
@@ -10,23 +10,22 @@ const double _kFloatingShadowBlurRadius = 8.0;
 // TODO: change example app page to showcase good floating
 // TODO: change theming and style to v5 variant
 // TODO: add constants to style as static getter
-// TODO: Change to SBBPaginator
 // TODO: Change isFloating to SBBPaginatorFloating
 
-/// The SBB Pagination.
+/// The SBB Paginator.
 ///
-/// Use according to [documentation](https://digital.sbb.ch/de/design-system/mobile/components/pagination/).
+/// Use according to [documentation](https://digital.sbb.ch/de/design-system/mobile/components/paginator/).
 ///
 /// For the floating variant, set [isFloating] to true.
 ///
 /// The semantics value will be the [currentpage] + 1. The semantics is marked as readonly.
-class SBBPagination extends StatelessWidget {
-  const SBBPagination({
+class SBBPaginator extends StatelessWidget {
+  const SBBPaginator({
     super.key,
     required this.numberPages,
     required this.currentPage,
     this.isFloating = false,
-    this.semanticsLabel = 'Pagination',
+    this.semanticsLabel = 'Paginator',
   }) : assert(numberPages > 0, 'numberPages: $numberPages must be greater than 0'),
        assert(
          currentPage >= 0 && currentPage < numberPages,
@@ -35,7 +34,7 @@ class SBBPagination extends StatelessWidget {
 
   /// The total number of pages.
   ///
-  /// Must be greater than 0. If it is 1, no pagination is shown.
+  /// Must be greater than 0. If it is 1, no paginator is shown.
   final int numberPages;
 
   /// The index of the current page, starting at 0.
@@ -43,14 +42,14 @@ class SBBPagination extends StatelessWidget {
   /// Must be between 0 and [numberPages] - 1.
   final int currentPage;
 
-  /// Whether the pagination is floating or not.
+  /// Whether the paginator is floating or not.
   ///
   /// Defaults to false.
   final bool isFloating;
 
-  /// The semantics label of the pagination.
+  /// The semantics label of the paginator.
   ///
-  /// Defaults to 'Pagination'.
+  /// Defaults to 'Paginator'.
   final String semanticsLabel;
 
   @override
@@ -68,28 +67,28 @@ class SBBPagination extends StatelessWidget {
   }
 
   Widget get _paginationContent => isFloating
-      ? _FloatingSBBPagination(currentPage: currentPage, numberPages: numberPages)
-      : _DefaultSBBPagination(numberPages: numberPages, currentPage: currentPage);
+      ? _FloatingSBBPaginator(currentPage: currentPage, numberPages: numberPages)
+      : _DefaultSBBPaginator(numberPages: numberPages, currentPage: currentPage);
 }
 
-/// The default (non-floating) pagination.
-class _DefaultSBBPagination extends StatelessWidget {
-  const _DefaultSBBPagination({required this.numberPages, required this.currentPage});
+/// The default (non-floating) paginator.
+class _DefaultSBBPaginator extends StatelessWidget {
+  const _DefaultSBBPaginator({required this.numberPages, required this.currentPage});
 
   final int numberPages;
   final int currentPage;
 
   @override
   Widget build(BuildContext context) {
-    return PaginationCircles(numberCircles: numberPages, selectedCircle: currentPage);
+    return PaginatorCircles(numberCircles: numberPages, selectedCircle: currentPage);
   }
 }
 
-/// The Floating SBB Pagination.
+/// The Floating SBB Paginator.
 ///
 /// Padded container with shadow and background color.
-class _FloatingSBBPagination extends StatelessWidget {
-  const _FloatingSBBPagination({required this.numberPages, required this.currentPage});
+class _FloatingSBBPaginator extends StatelessWidget {
+  const _FloatingSBBPaginator({required this.numberPages, required this.currentPage});
 
   final int numberPages;
   final int currentPage;
@@ -100,11 +99,11 @@ class _FloatingSBBPagination extends StatelessWidget {
     return Container(
       decoration: _createBoxDecorationWith(style),
       padding: _floatingPadding,
-      child: PaginationCircles(numberCircles: numberPages, selectedCircle: currentPage),
+      child: PaginatorCircles(numberCircles: numberPages, selectedCircle: currentPage),
     );
   }
 
-  BoxDecoration _createBoxDecorationWith(SBBPaginationStyle style) => BoxDecoration(
+  BoxDecoration _createBoxDecorationWith(SBBPaginatorStyle style) => BoxDecoration(
     borderRadius: BorderRadius.circular(_kFloatingPaddingHeight * 2),
     color: style.floatingBackgroundColor,
     boxShadow: [BoxShadow(color: SBBColors.black.withValues(alpha: 0.2), blurRadius: _kFloatingShadowBlurRadius)],

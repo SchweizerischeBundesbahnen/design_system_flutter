@@ -30,7 +30,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
 
   factory SBBControlStyles.$default({required SBBBaseStyle baseStyle}) => SBBControlStyles(
     checkbox: SBBControlStyle.$default(baseStyle: baseStyle),
-    pagination: SBBPaginationStyle.$default(baseStyle: baseStyle),
+    pagination: SBBPaginatorStyle.$default(baseStyle: baseStyle),
     radioButton: SBBControlStyle.$default(baseStyle: baseStyle),
     textField: SBBTextFieldStyle.$default(baseStyle: baseStyle),
     segmentedButton: SBBSegmentedButtonStyle.$default(baseStyle: baseStyle),
@@ -67,7 +67,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   final SBBSegmentedButtonStyle? segmentedButton;
   final SBBSegmentedButtonStyle? redSegmentedButton;
   final SBBTextStyle? selectLabel;
-  final SBBPaginationStyle? pagination;
+  final SBBPaginatorStyle? pagination;
 
   final Color? headerBackgroundColor;
   final Color? headerButtonBackgroundColorHighlighted;
@@ -104,7 +104,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   @override
   ThemeExtension<SBBControlStyles> copyWith({
     SBBControlStyle? checkbox,
-    SBBPaginationStyle? pagination,
+    SBBPaginatorStyle? pagination,
     SBBControlStyle? radioButton,
     SBBTextFieldStyle? textField,
     SBBSegmentedButtonStyle? segmentedButton,
