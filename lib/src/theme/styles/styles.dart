@@ -1,12 +1,12 @@
 export '../../button/theme/sbb_button_style.dart';
 export '../../container/theme/sbb_content_box_style.dart';
+export '../../paginator/theme/sbb_paginator_style.dart';
 export 'src/promotion_box_style.dart';
 export 'src/sbb_base_style.dart';
 export 'src/sbb_basic_control_style.dart';
 export 'src/sbb_control_style.dart';
 export 'src/sbb_control_styles.dart';
 export 'src/sbb_headerbox_style.dart';
-export 'src/sbb_paginator_style.dart';
 export 'src/sbb_picker_style.dart';
 export 'src/sbb_segmented_button_inner_style.dart';
 export 'src/sbb_segmented_button_style.dart';
