@@ -15,19 +15,19 @@ void main() {
         const SBBPaginator(numberPages: 5, currentPage: 4),
         const SizedBox(height: SBBSpacing.medium),
         // floating
-        const SBBPaginator(numberPages: 1, currentPage: 0, isFloating: true),
+        const SBBPaginatorFloating(numberPages: 1, currentPage: 0),
         const SizedBox(height: SBBSpacing.medium),
         // add containter to see the shadow and floating box
         Container(
           color: SBBColors.white,
           padding: const EdgeInsets.all(SBBSpacing.medium),
-          child: const SBBPaginator(numberPages: 2, currentPage: 0, isFloating: true),
+          child: const SBBPaginatorFloating(numberPages: 2, currentPage: 0),
         ),
         const SizedBox(height: SBBSpacing.medium),
         Container(
           color: SBBColors.white,
           padding: const EdgeInsets.all(SBBSpacing.medium),
-          child: const SBBPaginator(numberPages: 5, currentPage: 4, isFloating: true),
+          child: const SBBPaginatorFloating(numberPages: 5, currentPage: 4),
         ),
       ],
     );

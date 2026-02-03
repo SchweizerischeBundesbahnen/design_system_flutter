@@ -9,6 +9,8 @@ const double _kFloatingShadowBlurRadius = 8.0;
 
 // TODO: change theming and style to v5 variant
 // TODO: add constants to style as static getter
+// TODO: improve docs
+// TODO: add to migration guide / CHANGELOG
 
 /// The SBB Paginator.
 ///
@@ -61,9 +63,12 @@ class SBBPaginator extends StatelessWidget {
   }
 }
 
-/// The Floating SBB Paginator.
+/// The floating variant of the SBB Paginator.
 ///
-/// Padded container with shadow and background color.
+/// Adds a padded container with shadow and background color according to the applied style to the underlying
+/// paginator.
+///
+/// This should be used on top of any content within a [Stack].
 class SBBPaginatorFloating extends SBBPaginator {
   const SBBPaginatorFloating({
     super.key,
