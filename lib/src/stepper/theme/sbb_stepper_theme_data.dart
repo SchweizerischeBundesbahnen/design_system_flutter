@@ -13,21 +13,21 @@ class SBBStepperThemeData extends ThemeExtension<SBBStepperThemeData> with Diagn
   /// Creates an [SBBStepperThemeData].
   ///
   /// The [style] may be null.
-  const SBBStepperThemeData({this.style, this.coloredStyle});
+  const SBBStepperThemeData({this.style, this.filledStyle});
 
   /// Style overrides for [SBBStepper].
   ///
   /// If null, the default style is used.
   final SBBStepperStyle? style;
 
-  /// Style overrides for [SBBStepper.colored].
+  /// Style overrides for [SBBStepper.filled].
   ///
-  /// If null, the default colored style is used.
-  final SBBStepperStyle? coloredStyle;
+  /// If null, the default filled style is used.
+  final SBBStepperStyle? filledStyle;
 
   @override
-  SBBStepperThemeData copyWith({SBBStepperStyle? style, SBBStepperStyle? coloredStyle}) {
-    return SBBStepperThemeData(style: style ?? this.style, coloredStyle: coloredStyle ?? this.coloredStyle);
+  SBBStepperThemeData copyWith({SBBStepperStyle? style, SBBStepperStyle? filledStyle}) {
+    return SBBStepperThemeData(style: style ?? this.style, filledStyle: filledStyle ?? this.filledStyle);
   }
 
   @override
@@ -35,7 +35,7 @@ class SBBStepperThemeData extends ThemeExtension<SBBStepperThemeData> with Diagn
     if (other == null) return this;
     return SBBStepperThemeData(
       style: SBBStepperStyle.lerp(style, other.style, t),
-      coloredStyle: SBBStepperStyle.lerp(coloredStyle, other.coloredStyle, t),
+      filledStyle: SBBStepperStyle.lerp(filledStyle, other.filledStyle, t),
     );
   }
 
@@ -45,16 +45,16 @@ class SBBStepperThemeData extends ThemeExtension<SBBStepperThemeData> with Diagn
       other is SBBStepperThemeData &&
           runtimeType == other.runtimeType &&
           style == other.style &&
-          coloredStyle == other.coloredStyle;
+          filledStyle == other.filledStyle;
 
   @override
-  int get hashCode => Object.hash(style, coloredStyle);
+  int get hashCode => Object.hash(style, filledStyle);
 }
 
 extension SBBStepperThemeDataX on SBBStepperThemeData {
   SBBStepperThemeData merge(SBBStepperThemeData? other) {
     if (other == null) return this;
-    return copyWith(style: style?.merge(other.style), coloredStyle: coloredStyle?.merge(other.coloredStyle));
+    return copyWith(style: style?.merge(other.style), filledStyle: filledStyle?.merge(other.filledStyle));
   }
 }
 

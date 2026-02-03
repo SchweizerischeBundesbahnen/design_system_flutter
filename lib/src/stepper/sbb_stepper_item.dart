@@ -9,8 +9,7 @@ import '../../sbb_design_system_mobile.dart';
 /// string inside the circle, or [SBBStepperItemNumbered] to display the
 /// step number automatically.
 ///
-/// Note: [labelText] and [label] are mutually exclusive — provide at most one
-/// of them.
+/// Note: [labelText] and [label] are mutually exclusive — provide only one of them.
 sealed class SBBStepperItem {
   const SBBStepperItem._({
     this.labelText,

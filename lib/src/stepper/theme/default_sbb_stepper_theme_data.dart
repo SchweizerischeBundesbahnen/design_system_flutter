@@ -8,13 +8,16 @@ class DefaultSBBStepperThemeData extends SBBStepperThemeData {
   DefaultSBBStepperThemeData(SBBBaseStyle baseStyle)
     : super(
         style: _defaultStyle(baseStyle),
-        coloredStyle: _coloredDefaultStyle(baseStyle),
+        filledStyle: _filledDefaultStyle(baseStyle),
       );
 
   static SBBStepperStyle _defaultStyle(SBBBaseStyle baseStyle) {
     return SBBStepperStyle(
       padding: EdgeInsets.symmetric(horizontal: SBBSpacing.medium),
-      dividerColor: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
+      dividerColor: baseStyle.themeValue(
+        SBBColors.black.withValues(alpha: 0.3),
+        SBBColors.white.withValues(alpha: 0.7),
+      ),
       itemStyle: SBBStepperItemStyle(
         backgroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
           WidgetState.selected: baseStyle.primaryColor,
@@ -26,15 +29,12 @@ class DefaultSBBStepperThemeData extends SBBStepperThemeData {
         }),
         badgeBackgroundColor: baseStyle.primaryColor,
         badgeIconColor: SBBColors.white,
-        iconColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
+        foregroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
           WidgetState.selected: SBBColors.white,
           WidgetState.any: baseStyle.themeValue(SBBColors.black, SBBColors.white),
         }),
         textStyle: WidgetStateProperty.fromMap(<WidgetStatesConstraint, TextStyle?>{
-          WidgetState.selected: baseStyle.themedTextStyle(
-            textStyle: SBBTextStyles.mediumBold,
-            color: SBBColors.white,
-          ),
+          WidgetState.selected: baseStyle.themedTextStyle(textStyle: SBBTextStyles.mediumBold),
           WidgetState.any: baseStyle.themedTextStyle(textStyle: SBBTextStyles.mediumLight),
         }),
         labelTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallLight),
@@ -42,7 +42,7 @@ class DefaultSBBStepperThemeData extends SBBStepperThemeData {
     );
   }
 
-  static SBBStepperStyle _coloredDefaultStyle(SBBBaseStyle baseStyle) {
+  static SBBStepperStyle _filledDefaultStyle(SBBBaseStyle baseStyle) {
     return SBBStepperStyle(
       padding: EdgeInsets.symmetric(horizontal: SBBSpacing.medium),
       dividerColor: SBBColors.white.withValues(alpha: 0.7),
@@ -58,16 +58,13 @@ class DefaultSBBStepperThemeData extends SBBStepperThemeData {
         badgeBackgroundColor: baseStyle.primaryColor,
         badgeBorderColor: SBBColors.white,
         badgeIconColor: SBBColors.white,
-        iconColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
+        foregroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
           WidgetState.selected: baseStyle.primaryColor,
           WidgetState.any: SBBColors.white,
         }),
         textStyle: WidgetStateProperty.fromMap(<WidgetStatesConstraint, TextStyle?>{
-          WidgetState.selected: baseStyle.themedTextStyle(
-            textStyle: SBBTextStyles.mediumBold,
-            color: baseStyle.primaryColor,
-          ),
-          WidgetState.any: baseStyle.themedTextStyle(textStyle: SBBTextStyles.mediumLight, color: SBBColors.white),
+          WidgetState.selected: baseStyle.themedTextStyle(textStyle: SBBTextStyles.mediumBold),
+          WidgetState.any: baseStyle.themedTextStyle(textStyle: SBBTextStyles.mediumLight),
         }),
         labelTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallLight, color: SBBColors.white),
       ),

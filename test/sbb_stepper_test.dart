@@ -11,7 +11,7 @@ void main() {
     required List<SBBStepperItem> textSteps,
     required List<SBBStepperItem> iconSteps,
     required List<SBBStepperItem> customSteps,
-    bool isColored = false,
+    bool isFilled = false,
   }) {
     testWidgets(name, (WidgetTester tester) async {
       final widget = StepperTest(
@@ -19,7 +19,7 @@ void main() {
         textSteps: textSteps,
         iconSteps: iconSteps,
         customSteps: customSteps,
-        isColored: isColored,
+        isFilled: isFilled,
       );
 
       await TestSpecs.run(
@@ -98,12 +98,12 @@ void main() {
   );
 
   generateTest(
-    'stepper_colored',
+    'stepper_filled',
     numberedSteps: numberedSteps,
     textSteps: textSteps,
     iconSteps: iconSteps,
     customSteps: customSteps,
-    isColored: true,
+    isFilled: true,
   );
 }
 
@@ -114,19 +114,19 @@ class StepperTest extends StatelessWidget {
     required this.textSteps,
     required this.iconSteps,
     required this.customSteps,
-    this.isColored = false,
+    this.isFilled = false,
   });
 
   final List<SBBStepperItem> numberedSteps;
   final List<SBBStepperItem> textSteps;
   final List<SBBStepperItem> iconSteps;
   final List<SBBStepperItem> customSteps;
-  final bool isColored;
+  final bool isFilled;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: isColored ? SBBColors.red : null,
+      color: isFilled ? SBBColors.red : null,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -153,8 +153,8 @@ class StepperTest extends StatelessWidget {
   }
 
   SBBStepper _stepper(List<SBBStepperItem> steps, int activeStep, {SBBStepperStyle? style}) {
-    if (isColored) {
-      return SBBStepper.colored(
+    if (isFilled) {
+      return SBBStepper.filled(
         steps: steps,
         activeStep: activeStep,
         onStepPressed: (_, _) {},

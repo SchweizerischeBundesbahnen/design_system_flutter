@@ -34,10 +34,10 @@ class SBBStepperStyle {
   /// Color of the divider between steps.
   final Color? dividerColor;
 
-  /// Defines the visual properties the steps.
+  /// Defines the visual properties of the steps.
   final SBBStepperItemStyle? itemStyle;
 
-  /// Padding around whole stepper with labels.
+  /// Padding around the whole stepper with labels.
   final EdgeInsetsGeometry? padding;
 
   /// The height of the divider between steps.

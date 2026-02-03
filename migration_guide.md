@@ -141,7 +141,7 @@ This also accounts for the `SBBRadioListItem`.
 
 #### Changes to `SBBStepper`
 
-* Renamed factory `SBBStepper.red` to `SBBStepper.colored` as theme's primary color is used
+* Renamed factory `SBBStepper.red` to `SBBStepper.filled` as theme's primary color is used
 
 #### Changes to `SBBStepperItem`
 
@@ -159,9 +159,6 @@ This also accounts for the `SBBRadioListItem`.
 * `SBBStepperStyle` and `SBBStepperItemStyle` properties use `WidgetStateProperty<T?>` for state aware styles
     * this allows different colors for enabled/disabled states
     * replace simple color assignments with state-aware properties where needed
-* icon styling changed:
-    * old: `style.iconColor` and `style.disabledIconColor`
-    * new: `leadingForegroundColor` and `trailingForegroundColor` using `WidgetStateProperty<Color?>`
 * `padding` parameter replaces the hardcoded padding logic
 
 ### Theming & Styling

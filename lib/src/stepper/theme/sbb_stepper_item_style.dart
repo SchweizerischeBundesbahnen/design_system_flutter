@@ -22,7 +22,6 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 /// See also:
 /// * [SBBStepper], the widget that uses this style.
 /// * [SBBStepperStyle], the overall style for the stepper.
-/// * [SBBStepperItemStyle], the style for a step of the stepper.
 /// * [SBBStepperThemeData], which applies this style theme-wide.
 class SBBStepperItemStyle {
   const SBBStepperItemStyle({
@@ -31,13 +30,13 @@ class SBBStepperItemStyle {
     this.badgeBackgroundColor,
     this.badgeBorderColor,
     this.badgeIconColor,
-    this.iconColor,
+    this.foregroundColor,
     this.textStyle,
     this.labelTextStyle,
   });
 
-  /// Color of the icon shown inside of a step.
-  final WidgetStateProperty<Color?>? iconColor;
+  /// Color of the icon or text of the step.
+  final WidgetStateProperty<Color?>? foregroundColor;
 
   /// Background color of the step.
   final WidgetStateProperty<Color?>? backgroundColor;
@@ -45,7 +44,7 @@ class SBBStepperItemStyle {
   /// Color of the step border.
   final WidgetStateProperty<Color?>? borderColor;
 
-  /// Icon displayed in the badge shown for passed steps.
+  /// Color of the icon shown in the badge
   final Color? badgeIconColor;
 
   /// Background color of the badge shown for passed steps.
@@ -55,12 +54,15 @@ class SBBStepperItemStyle {
   final Color? badgeBorderColor;
 
   /// TextStyle of text shown inside of a step.
+  ///
+  /// The color of the [textStyle] is typically not used directly, the
+  /// [foregroundColor] is used instead.
   final WidgetStateProperty<TextStyle?>? textStyle;
 
   /// TextStyle of the label shown below the active step.
   final TextStyle? labelTextStyle;
 
-  /// The height of the divider between steps.
+  /// The size of the step's circle shape.
   static const double stepCircleSize = 32.0;
 
   /// The size of the icon of a step.
@@ -73,7 +75,7 @@ class SBBStepperItemStyle {
   static const double badgeIconSize = 10.0;
 
   SBBStepperItemStyle copyWith({
-    WidgetStateProperty<Color?>? iconColor,
+    WidgetStateProperty<Color?>? foregroundColor,
     WidgetStateProperty<Color?>? backgroundColor,
     WidgetStateProperty<Color?>? borderColor,
     Color? badgeIconColor,
@@ -84,7 +86,7 @@ class SBBStepperItemStyle {
     TextStyle? labelTextStyle,
   }) {
     return SBBStepperItemStyle(
-      iconColor: iconColor ?? this.iconColor,
+      foregroundColor: foregroundColor ?? this.foregroundColor,
       backgroundColor: backgroundColor ?? this.backgroundColor,
       borderColor: borderColor ?? this.borderColor,
       badgeIconColor: badgeIconColor ?? this.badgeIconColor,
@@ -99,7 +101,7 @@ class SBBStepperItemStyle {
     if (other == null) return this;
 
     return copyWith(
-      iconColor: other.iconColor,
+      foregroundColor: other.foregroundColor,
       backgroundColor: other.backgroundColor,
       borderColor: other.borderColor,
       badgeIconColor: other.badgeIconColor,
@@ -114,7 +116,7 @@ class SBBStepperItemStyle {
     if (identical(a, b)) return a;
 
     return SBBStepperItemStyle(
-      iconColor: WidgetStateProperty.lerp<Color?>(a?.iconColor, b?.iconColor, t, Color.lerp),
+      foregroundColor: WidgetStateProperty.lerp<Color?>(a?.foregroundColor, b?.foregroundColor, t, Color.lerp),
       backgroundColor: WidgetStateProperty.lerp<Color?>(a?.backgroundColor, b?.backgroundColor, t, Color.lerp),
       borderColor: WidgetStateProperty.lerp<Color?>(a?.borderColor, b?.borderColor, t, Color.lerp),
       badgeBorderColor: Color.lerp(a?.badgeBorderColor, b?.badgeBorderColor, t),
