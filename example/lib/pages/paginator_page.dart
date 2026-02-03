@@ -79,10 +79,12 @@ class _LabeledSBBPaginator extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: SBBSpacing.medium),
       child: Column(
         mainAxisSize: MainAxisSize.min,
-        spacing: SBBSpacing.medium,
+        spacing: SBBSpacing.small,
         children: [
           Text(label, style: SBBTextStyles.extraSmallLight),
-          SBBPaginator(currentPage: currentPage, numberPages: _kNumberPages, isFloating: isFloating),
+          isFloating
+              ? SBBPaginatorFloating(numberPages: _kNumberPages, currentPage: currentPage)
+              : SBBPaginator(currentPage: currentPage, numberPages: _kNumberPages),
         ],
       ),
     );

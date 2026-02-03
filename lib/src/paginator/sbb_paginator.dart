@@ -9,22 +9,22 @@ const double _kFloatingShadowBlurRadius = 8.0;
 
 // TODO: change theming and style to v5 variant
 // TODO: add constants to style as static getter
-// TODO: Change isFloating to SBBPaginatorFloating
 
 /// The SBB Paginator.
 ///
-/// Use according to [documentation](https://digital.sbb.ch/de/design-system/mobile/components/paginator/).
-///
-/// For the floating variant, set [isFloating] to true.
-///
 /// The semantics value will be the [currentpage] + 1. The semantics is marked as readonly.
+///
+/// See also:
+/// * [SBBPaginatorFloating] for a floating variant of this to position on top of any content
+/// * [SBBPaginatorThemeData] for customizing the style of the paginator across the current theme
+/// * [SBBPaginatorStyle] for adjusting the appearance of the paginator
+/// * Guidelines for usage on [digital.sbb.ch](https://digital.sbb.ch/de/design-system/mobile/components/paginator/)
 class SBBPaginator extends StatelessWidget {
   const SBBPaginator({
     super.key,
     required this.numberPages,
     required this.currentPage,
-    this.isFloating = false,
-    this.semanticsLabel = 'Paginator',
+    this.semanticsLabel,
   }) : assert(numberPages > 0, 'numberPages: $numberPages must be greater than 0'),
        assert(
          currentPage >= 0 && currentPage < numberPages,
@@ -41,15 +41,10 @@ class SBBPaginator extends StatelessWidget {
   /// Must be between 0 and [numberPages] - 1.
   final int currentPage;
 
-  /// Whether the paginator is floating or not.
-  ///
-  /// Defaults to false.
-  final bool isFloating;
-
   /// The semantics label of the paginator.
   ///
   /// Defaults to 'Paginator'.
-  final String semanticsLabel;
+  final String? semanticsLabel;
 
   @override
   Widget build(BuildContext context) {
@@ -61,36 +56,25 @@ class SBBPaginator extends StatelessWidget {
       value: '${currentPage + 1}',
       maxValueLength: numberPages,
       readOnly: true,
-      child: _paginationContent,
+      child: PaginatorCircles(numberCircles: numberPages, selectedCircle: currentPage),
     );
-  }
-
-  Widget get _paginationContent => isFloating
-      ? _FloatingSBBPaginator(currentPage: currentPage, numberPages: numberPages)
-      : _DefaultSBBPaginator(numberPages: numberPages, currentPage: currentPage);
-}
-
-/// The default (non-floating) paginator.
-class _DefaultSBBPaginator extends StatelessWidget {
-  const _DefaultSBBPaginator({required this.numberPages, required this.currentPage});
-
-  final int numberPages;
-  final int currentPage;
-
-  @override
-  Widget build(BuildContext context) {
-    return PaginatorCircles(numberCircles: numberPages, selectedCircle: currentPage);
   }
 }
 
 /// The Floating SBB Paginator.
 ///
 /// Padded container with shadow and background color.
-class _FloatingSBBPaginator extends StatelessWidget {
-  const _FloatingSBBPaginator({required this.numberPages, required this.currentPage});
-
-  final int numberPages;
-  final int currentPage;
+class SBBPaginatorFloating extends SBBPaginator {
+  const SBBPaginatorFloating({
+    super.key,
+    required super.numberPages,
+    required super.currentPage,
+    super.semanticsLabel,
+  }) : assert(numberPages > 0, 'numberPages: $numberPages must be greater than 0'),
+       assert(
+         currentPage >= 0 && currentPage < numberPages,
+         'currentPage: $currentPage must be between 0 and numberPages - 1',
+       );
 
   @override
   Widget build(BuildContext context) {
@@ -98,7 +82,7 @@ class _FloatingSBBPaginator extends StatelessWidget {
     return Container(
       decoration: _createBoxDecorationWith(style),
       padding: _floatingPadding,
-      child: PaginatorCircles(numberCircles: numberPages, selectedCircle: currentPage),
+      child: super.build(context),
     );
   }
 
