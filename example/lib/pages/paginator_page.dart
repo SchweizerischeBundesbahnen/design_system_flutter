@@ -10,9 +10,13 @@ class PaginatorPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.all(SBBSpacing.medium),
-      child: Column(children: <Widget>[ThemeModeSegmentedButton(), PaginatorView()]),
+    return Column(
+      children: <Widget>[
+        SBBHeaderbox.custom(child: ThemeModeSegmentedButton()),
+        Expanded(
+          child: PaginatorView(),
+        ),
+      ],
     );
   }
 }
@@ -35,26 +39,24 @@ class _PaginatorViewState extends State<PaginatorView> {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 48.0, horizontal: SBBSpacing.medium),
-        child: Column(
-          children: [
-            _LabeledSBBPaginator(label: 'Default', currentPage: currentPage),
-            Expanded(
-              child: Stack(
-                alignment: Alignment.bottomCenter,
-                children: [
-                  PageView(
-                    onPageChanged: _changeCurrentPage,
-                    children: List<Widget>.generate(_kNumberPages, (int index) => _IndexedTextPage(pageIndex: index)),
-                  ),
-                  _LabeledSBBPaginator(label: 'Floating', currentPage: currentPage, isFloating: true),
-                ],
-              ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 48.0, horizontal: SBBSpacing.medium),
+      child: Column(
+        children: [
+          _LabeledSBBPaginator(label: 'Default', currentPage: currentPage),
+          Expanded(
+            child: Stack(
+              alignment: Alignment.bottomCenter,
+              children: [
+                PageView(
+                  onPageChanged: _changeCurrentPage,
+                  children: List<Widget>.generate(_kNumberPages, (int index) => _IndexedTextPage(pageIndex: index)),
+                ),
+                _LabeledSBBPaginator(label: 'Floating', currentPage: currentPage, isFloating: true),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

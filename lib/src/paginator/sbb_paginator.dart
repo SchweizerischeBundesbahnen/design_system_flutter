@@ -7,7 +7,6 @@ const double _kFloatingPaddingHeight = 4.0;
 const double _kFloatingPaddingWidth = 36.0;
 const double _kFloatingShadowBlurRadius = 8.0;
 
-// TODO: change example app page to showcase good floating
 // TODO: change theming and style to v5 variant
 // TODO: add constants to style as static getter
 // TODO: Change isFloating to SBBPaginatorFloating
