@@ -40,27 +40,22 @@ class _PaginationViewState extends State<PaginationView> {
         padding: const EdgeInsets.symmetric(vertical: 48.0, horizontal: SBBSpacing.medium),
         child: Column(
           children: [
-            _paginationHeader(),
+            _LabeledSBBPagination(label: 'Default', currentPage: currentPage),
             Expanded(
-              flex: 10,
-              child: PageView(
-                onPageChanged: _changeCurrentPage,
-                children: List<Widget>.generate(_kNumberPages, (int index) => _IndexedTextPage(pageIndex: index)),
+              child: Stack(
+                alignment: Alignment.bottomCenter,
+                children: [
+                  PageView(
+                    onPageChanged: _changeCurrentPage,
+                    children: List<Widget>.generate(_kNumberPages, (int index) => _IndexedTextPage(pageIndex: index)),
+                  ),
+                  _LabeledSBBPagination(label: 'Floating', currentPage: currentPage, isFloating: true),
+                ],
               ),
             ),
           ],
         ),
       ),
-    );
-  }
-
-  Widget _paginationHeader() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        _LabeledSBBPagination(label: 'Default', currentPage: currentPage),
-        _LabeledSBBPagination(label: 'Floating', currentPage: currentPage, isFloating: true),
-      ],
     );
   }
 
@@ -78,12 +73,16 @@ class _LabeledSBBPagination extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Text(label, style: SBBTextStyles.extraSmallLight),
-        const SizedBox(height: SBBSpacing.medium),
-        SBBPagination(currentPage: currentPage, numberPages: _kNumberPages, isFloating: isFloating),
-      ],
+    return Padding(
+      padding: const EdgeInsets.only(bottom: SBBSpacing.medium),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        spacing: SBBSpacing.medium,
+        children: [
+          Text(label, style: SBBTextStyles.extraSmallLight),
+          SBBPagination(currentPage: currentPage, numberPages: _kNumberPages, isFloating: isFloating),
+        ],
+      ),
     );
   }
 }
@@ -95,6 +94,9 @@ class _IndexedTextPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(child: Text('Page #${pageIndex + 1}'));
+    return SBBContentBox(
+      margin: EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
+      child: Center(child: Text('Page #${pageIndex + 1}')),
+    );
   }
 }
