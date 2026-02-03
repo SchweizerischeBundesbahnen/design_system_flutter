@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/src/paginator/paginator_circle.dart';
 
 import '../../sbb_design_system_mobile.dart';
-import 'paginator_circles.dart';
 
 const double _kFloatingPaddingHeight = 4.0;
 const double _kFloatingPaddingWidth = 36.0;
-const double _kFloatingShadowBlurRadius = 8.0;
 
-// TODO: change theming and style to v5 variant
 // TODO: add constants to style as static getter
 // TODO: improve docs
 // TODO: add to migration guide / CHANGELOG
@@ -27,6 +25,7 @@ class SBBPaginator extends StatelessWidget {
     required this.numberPages,
     required this.currentPage,
     this.semanticsLabel,
+    this.style,
   }) : assert(numberPages > 0, 'numberPages: $numberPages must be greater than 0'),
        assert(
          currentPage >= 0 && currentPage < numberPages,
@@ -48,6 +47,12 @@ class SBBPaginator extends StatelessWidget {
   /// Defaults to 'Paginator'.
   final String? semanticsLabel;
 
+  /// Customizes this paginator appearance.
+  ///
+  /// Non-null properties of this style override the corresponding
+  /// properties in [SBBPaginatorThemeData.style] of the theme found in [context].
+  final SBBPaginatorStyle? style;
+
   @override
   Widget build(BuildContext context) {
     if (numberPages <= 1) {
@@ -58,8 +63,29 @@ class SBBPaginator extends StatelessWidget {
       value: '${currentPage + 1}',
       maxValueLength: numberPages,
       readOnly: true,
-      child: PaginatorCircles(numberCircles: numberPages, selectedCircle: currentPage),
+      child: Row(
+        spacing: SBBSpacing.medium,
+        mainAxisSize: MainAxisSize.min,
+        children: _buildCirclesWithSpacing(style?.circleFillColor, style?.circleBorderColor),
+      ),
     );
+  }
+
+  List<Widget> _buildCirclesWithSpacing(
+    WidgetStateProperty<Color?>? widgetFillColor,
+    WidgetStateProperty<Color?>? widgetBorderColor,
+  ) {
+    var result = <Widget>[];
+    for (var i = 0; i < numberPages; i++) {
+      result.add(
+        PaginatorCircle(
+          isSelected: i == currentPage,
+          fillColor: widgetFillColor,
+          borderColor: widgetBorderColor,
+        ),
+      );
+    }
+    return result;
   }
 }
 
@@ -75,6 +101,7 @@ class SBBPaginatorFloating extends SBBPaginator {
     required super.numberPages,
     required super.currentPage,
     super.semanticsLabel,
+    super.style,
   }) : assert(numberPages > 0, 'numberPages: $numberPages must be greater than 0'),
        assert(
          currentPage >= 0 && currentPage < numberPages,
@@ -83,14 +110,11 @@ class SBBPaginatorFloating extends SBBPaginator {
 
   @override
   Widget build(BuildContext context) {
-    final themeData = Theme.of(context).sbbPaginatorTheme;
-    final style = themeData?.style;
-
-    final backgroundColor = style?.floatingBackgroundColor;
-    final boxShadow = style?.floatingBoxShadow;
+    final themeStyle = Theme.of(context).sbbPaginatorTheme?.style;
+    final effectiveStyle = themeStyle?.merge(style);
 
     return Container(
-      decoration: _createBoxDecorationWith(backgroundColor, boxShadow),
+      decoration: _createBoxDecorationWith(effectiveStyle?.floatingBackgroundColor, effectiveStyle?.floatingBoxShadow),
       padding: _floatingPadding,
       child: super.build(context),
     );

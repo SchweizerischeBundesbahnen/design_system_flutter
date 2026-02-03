@@ -10,21 +10,21 @@ class PaginatorCircle extends StatelessWidget {
   const PaginatorCircle({
     super.key,
     required this.isSelected,
-    this.circleBorderColor,
-    this.circleFillColor,
+    this.borderColor,
+    this.fillColor,
   });
 
   final bool isSelected;
 
-  final WidgetStateProperty<Color?>? circleBorderColor;
+  final WidgetStateProperty<Color?>? borderColor;
 
-  final WidgetStateProperty<Color?>? circleFillColor;
+  final WidgetStateProperty<Color?>? fillColor;
 
   @override
   Widget build(BuildContext context) {
     final style = Theme.of(context).sbbPaginatorTheme?.style;
-    final effectiveBorderColor = circleBorderColor ?? style?.circleBorderColor;
-    final effectiveFillColor = circleFillColor ?? style?.circleFillColor;
+    final effectiveBorderColor = borderColor ?? style?.circleBorderColor;
+    final effectiveFillColor = fillColor ?? style?.circleFillColor;
 
     final resolvedBorderColor = effectiveBorderColor?.resolve({if (isSelected) WidgetState.selected});
     final resolvedFillColor = effectiveFillColor?.resolve({if (isSelected) WidgetState.selected});
