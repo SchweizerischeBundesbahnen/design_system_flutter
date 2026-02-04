@@ -15,7 +15,7 @@ class SBBPaginatorThemeData extends ThemeExtension<SBBPaginatorThemeData> with D
   /// The [style] may be null.
   const SBBPaginatorThemeData({this.style});
 
-  /// Overrides for the paginator.dart's default style.
+  /// Overrides for the paginator's default style.
   ///
   /// Non-null properties or non-null resolved [WidgetStateProperty]
   /// values override the default values.

@@ -5,7 +5,7 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'test_app.dart';
 
 void main() {
-  testWidgets('paginator.dart', (WidgetTester tester) async {
+  testWidgets('paginator', (WidgetTester tester) async {
     final widget = Column(
       children: [
         const SBBPaginator(numberPages: 1, currentPage: 0),
@@ -36,7 +36,7 @@ void main() {
       TestSpecs.themedSpecs,
       widget,
       tester,
-      'paginator.dart',
+      'paginator',
       find.byType(Column).first,
     );
   });
