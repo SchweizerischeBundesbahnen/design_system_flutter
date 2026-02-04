@@ -3,18 +3,21 @@ import 'package:sbb_design_system_mobile/src/paginator/paginator_circle.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
-// TODO: improve docs
-// TODO: add to migration guide / CHANGELOG
+// TODO: migration guideline
 
-/// The SBB Paginator.
+/// The SBB paginator to display page navigation information
 ///
-/// The semantics value will be the [currentpage] + 1. The semantics is marked as readonly.
+/// The paginator shows circular indicators for each page, with the current page
+/// highlighted. The semantics value will be the [currentPage] + 1 and is marked as readonly.
+///
+/// The paginator is not displayed if [numberPages] is 1 or less.
 ///
 /// See also:
-/// * [SBBPaginatorFloating] for a floating variant of this to position on top of any content
-/// * [SBBPaginatorThemeData] for customizing the style of the paginator.dart across the current theme
-/// * [SBBPaginatorStyle] for adjusting the appearance of the paginator.dart
-/// * Guidelines for usage on [digital.sbb.ch](https://digital.sbb.ch/de/design-system/mobile/components/paginator/)
+///
+///  * [SBBPaginatorFloating], for a floating variant positioned on top of content.
+///  * [SBBPaginatorThemeData], for customizing the paginator style across the current theme.
+///  * [SBBPaginatorStyle], for adjusting the appearance of a paginator.
+///  * Guidelines on [digital.sbb.ch](https://digital.sbb.ch/de/design-system/mobile/components/paginator/)
 class SBBPaginator extends StatelessWidget {
   const SBBPaginator({
     super.key,
@@ -30,7 +33,7 @@ class SBBPaginator extends StatelessWidget {
 
   /// The total number of pages.
   ///
-  /// Must be greater than 0. If it is 1, no paginator.dart is shown.
+  /// Must be greater than 0. If it is 1, no paginator is shown.
   final int numberPages;
 
   /// The index of the current page, starting at 0.
@@ -38,12 +41,10 @@ class SBBPaginator extends StatelessWidget {
   /// Must be between 0 and [numberPages] - 1.
   final int currentPage;
 
-  /// The semantics label of the paginator.dart.
-  ///
-  /// Defaults to 'Paginator'.
+  /// The semantics label of the paginator.
   final String? semanticsLabel;
 
-  /// Customizes this paginator appearance.
+  /// Customizes this paginator's appearance.
   ///
   /// Non-null properties of this style override the corresponding
   /// properties in [SBBPaginatorThemeData.style] of the theme found in [context].
@@ -85,10 +86,37 @@ class SBBPaginator extends StatelessWidget {
 
 /// The floating variant of the SBB Paginator.
 ///
-/// Adds a padded container with shadow and background color according to the applied style to the underlying
-/// paginator.dart.
+/// Adds a padded container with shadow and background color according to the applied style
+/// to the underlying paginator. This variant is designed to be positioned on top of content,
+/// typically within a [Stack].
 ///
-/// This should be used on top of any content within a [Stack].
+/// Example:
+///
+/// ```dart
+/// Stack(
+///   alignment: Alignment.bottomCenter,
+///   children: [
+///     // Your page content here
+///     PageView(
+///       children: [/* pages */],
+///     ),
+///     // Floating paginator positioned at the bottom
+///     Padding(
+///       padding: const EdgeInsets.all(SBBSpacing.medium),
+///       child: SBBPaginatorFloating(
+///         numberPages: 5,
+///         currentPage: currentPage,
+///       ),
+///     ),
+///   ],
+/// )
+/// ```
+///
+/// See also:
+///
+///  * [SBBPaginator], for a standard paginator without floating behavior.
+///  * [SBBPaginatorThemeData], for customizing the paginator style across the current theme.
+///  * [SBBPaginatorStyle], for adjusting the appearance of individual paginators.
 class SBBPaginatorFloating extends SBBPaginator {
   const SBBPaginatorFloating({
     super.key,
