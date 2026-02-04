@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../sbb_design_system_mobile.dart';
+
 /// Defines the visual properties of [SBBPaginator].
 ///
 /// Use this class in combination with [SBBPaginatorThemeData] to customize
@@ -35,6 +37,12 @@ class SBBPaginatorStyle {
   ///
   /// This creates the elevation effect for the floating variant.
   final List<BoxShadow>? floatingBoxShadow;
+
+  /// The padding between the circles and the floating container.
+  static EdgeInsets get floatingPadding => EdgeInsets.symmetric(horizontal: 36.0, vertical: SBBSpacing.xxSmall);
+
+  /// The size of the circles in the paginator.
+  static Size get circleSize => Size.fromRadius(4.0);
 
   SBBPaginatorStyle copyWith({
     WidgetStateProperty<Color?>? circleBorderColor,

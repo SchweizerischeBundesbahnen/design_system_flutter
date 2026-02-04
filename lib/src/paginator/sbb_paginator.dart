@@ -3,10 +3,6 @@ import 'package:sbb_design_system_mobile/src/paginator/paginator_circle.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
-const double _kFloatingPaddingHeight = 4.0;
-const double _kFloatingPaddingWidth = 36.0;
-
-// TODO: add constants to style as static getter
 // TODO: improve docs
 // TODO: add to migration guide / CHANGELOG
 
@@ -66,26 +62,24 @@ class SBBPaginator extends StatelessWidget {
       child: Row(
         spacing: SBBSpacing.medium,
         mainAxisSize: MainAxisSize.min,
-        children: _buildCirclesWithSpacing(style?.circleFillColor, style?.circleBorderColor),
+        children: _circles(style?.circleFillColor, style?.circleBorderColor),
       ),
     );
   }
 
-  List<Widget> _buildCirclesWithSpacing(
+  List<Widget> _circles(
     WidgetStateProperty<Color?>? widgetFillColor,
     WidgetStateProperty<Color?>? widgetBorderColor,
   ) {
-    var result = <Widget>[];
-    for (var i = 0; i < numberPages; i++) {
-      result.add(
-        PaginatorCircle(
-          isSelected: i == currentPage,
-          fillColor: widgetFillColor,
-          borderColor: widgetBorderColor,
-        ),
-      );
-    }
-    return result;
+    return List<Widget>.generate(
+      numberPages,
+      (idx) => PaginatorCircle(
+        isSelected: idx == currentPage,
+        fillColor: widgetFillColor,
+        borderColor: widgetBorderColor,
+      ),
+      growable: false,
+    );
   }
 }
 
@@ -114,18 +108,13 @@ class SBBPaginatorFloating extends SBBPaginator {
     final effectiveStyle = themeStyle?.merge(style);
 
     return Container(
-      decoration: _createBoxDecorationWith(effectiveStyle?.floatingBackgroundColor, effectiveStyle?.floatingBoxShadow),
-      padding: _floatingPadding,
+      decoration: ShapeDecoration(
+        shape: StadiumBorder(),
+        color: effectiveStyle?.floatingBackgroundColor,
+        shadows: effectiveStyle?.floatingBoxShadow,
+      ),
+      padding: SBBPaginatorStyle.floatingPadding,
       child: super.build(context),
     );
   }
-
-  BoxDecoration _createBoxDecorationWith(Color? backgroundColor, List<BoxShadow>? boxShadow) => BoxDecoration(
-    borderRadius: BorderRadius.circular(_kFloatingPaddingHeight * 2),
-    color: backgroundColor,
-    boxShadow: boxShadow,
-  );
-
-  EdgeInsets get _floatingPadding =>
-      const EdgeInsets.symmetric(horizontal: _kFloatingPaddingWidth, vertical: _kFloatingPaddingHeight);
 }
