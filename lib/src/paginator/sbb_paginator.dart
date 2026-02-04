@@ -59,7 +59,7 @@ class SBBPaginator extends StatelessWidget {
       maxValueLength: numberPages,
       readOnly: true,
       child: Row(
-        spacing: SBBSpacing.medium,
+        spacing: SBBSpacing.xSmall,
         mainAxisSize: MainAxisSize.min,
         children: _circles(style?.circleFillColor, style?.circleBorderColor),
       ),
@@ -130,6 +130,10 @@ class SBBPaginatorFloating extends SBBPaginator {
 
   @override
   Widget build(BuildContext context) {
+    if (numberPages <= 1) {
+      return const SizedBox.shrink();
+    }
+
     final themeStyle = Theme.of(context).sbbPaginatorTheme?.style;
     final effectiveStyle = themeStyle?.merge(style);
 

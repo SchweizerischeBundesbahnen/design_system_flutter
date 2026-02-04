@@ -39,10 +39,11 @@ class SBBPaginatorStyle {
   final List<BoxShadow>? floatingBoxShadow;
 
   /// The padding between the circles and the floating container.
-  static EdgeInsets get floatingPadding => EdgeInsets.symmetric(horizontal: 36.0, vertical: SBBSpacing.xxSmall);
+  static EdgeInsets get floatingPadding =>
+      EdgeInsets.symmetric(horizontal: SBBSpacing.xLarge, vertical: SBBSpacing.xxSmall);
 
   /// The size of the circles in the paginator.
-  static Size get circleSize => Size.fromRadius(4.0);
+  static Size get circleSize => Size.fromRadius(3.0);
 
   SBBPaginatorStyle copyWith({
     WidgetStateProperty<Color?>? circleBorderColor,
