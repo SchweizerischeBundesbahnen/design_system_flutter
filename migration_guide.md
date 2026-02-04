@@ -84,6 +84,24 @@ The list item has received a lot of changes. In general the content is completel
 * use `SBBListItemBoxed`, `SBBRadioListItemBoxed`, `SBBCheckboxListItemBoxed` and `SBBSwitchListItemBoxed`
 * You do not need to wrap this in a `SBBContentBox` anymore
 
+
+
+## Paginator
+
+### Class Changes
+* `SBBPagination` is now split into two separate widgets:
+  * `SBBPaginator`: the standard paginator
+  * `SBBPaginatorFloating`: the floating variant (inherits from `SBBPaginator`)
+* Replace `isFloating: true` with `SBBPaginatorFloating` instead of `SBBPaginator`
+
+### Theming & Styling
+* customize the theme of all `SBBPaginator` with `SBBPaginatorThemeData` as input to `SBBTheme`
+* access the theme using `Theme.of(context).sbbPaginatorTheme`
+* customize an individual paginator by setting its `style` parameter in the constructor
+* Old style access via `SBBControlStyles.of(context).pagination!` is replaced with theme extension pattern
+
+
+
 ## Radio
 
 ### Usage

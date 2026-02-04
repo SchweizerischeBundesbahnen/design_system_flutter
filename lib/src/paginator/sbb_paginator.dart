@@ -3,8 +3,6 @@ import 'package:sbb_design_system_mobile/src/paginator/paginator_circle.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
-// TODO: migration guideline
-
 /// The SBB paginator to display page navigation information
 ///
 /// The paginator shows circular indicators for each page, with the current page
