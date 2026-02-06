@@ -88,8 +88,7 @@ The list item has received a lot of changes. In general the content is completel
 
 ### Usage
 * the `onChanged` and `groupValue` parameters are obsolete and moved to the corresponding `SBBRadioGroup` ancestor
-* see the [official Flutter guide](https://docs.flutter.dev/release/breaking-changes/radio-api-redesign) for
-  usage of the new radio group concept
+* see the [official Flutter guide](https://docs.flutter.dev/release/breaking-changes/radio-api-redesign) for usage of the new radio group concept
   * instead of a `RadioGroup`, use a `SBBRadioGroup`
 * added: use `toggleable` for allowing a radio to return to unselected state without
   selecting a different radio in its group
@@ -136,7 +135,37 @@ This also accounts for the `SBBRadioListItem`.
 * access the theme using `Theme.of(context).sbbStatusTheme`
 * customize individual status by setting its `style` parameter in the constructor
 
+## Stepper
 
+### Constructor arguments
+
+#### Changes to `SBBStepper`
+
+* Renamed factory `SBBStepper.red` to `SBBStepper.filled` as theme's primary color is used
+
+#### Changes to `SBBStepperItem`
+
+* Use provided factories to create `SBBStepperItem`. They can also be combined.
+    * `SBBStepperItem.icon`: Shows the provided `icon` in the step
+    * `SBBStepperItem.text`: Shows the provided `text` in the step. Text will be scaled down if to big.
+    * `SBBStepperItem.numbered`: Shows the number/position of the step
+* Use `labelText` instead of `label` for text label. Use `label` for custom widget.
+* `labelText` and `label` are now optional
+* set `showBadgeWhenPassed` to `false` if badge should not be shown when passed
+* added `badgeIcon` to customize badge icon of step
+
+### Styling Changes
+* `SBBStepperItemStyle` added to allow customizing each step on its own.
+* `SBBStepperStyle` and `SBBStepperItemStyle` properties use `WidgetStateProperty<T?>` for state aware styles
+    * this allows different colors for enabled/disabled states
+    * replace simple color assignments with state-aware properties where needed
+* `padding` parameter replaces the hardcoded padding logic
+
+### Theming & Styling
+* customize the theme of all `SBBStepper` with `SBBStepperThemeData` as input to `SBBTheme`
+* access the theme using `Theme.of(context).sbbStepperTheme`
+* customize an individual stepper by setting its `style` parameter in the constructor
+* customize an individual step by setting the `SBBStepperItem`'s `style` parameter in the constructor
 
 ## Switch
 * increase the tappable area of the switch by setting the `SBBSwitchStyle.tapTargetPadding` value

@@ -7,6 +7,7 @@ import 'package:sbb_design_system_mobile/src/container/container.dart';
 import 'package:sbb_design_system_mobile/src/radio/theme/default_sbb_radio_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/slider/theme/default_sbb_slider_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/switch/theme/default_sbb_switch_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/stepper/theme/default_sbb_stepper_theme_data.dart';
 
 import '../button/theme/default_button_themes.dart';
 import '../container/theme/default_sbb_content_box_theme_data.dart';
@@ -25,6 +26,7 @@ class SBBTheme {
     SBBCheckboxThemeData? checkboxTheme,
     SBBChipThemeData? chipTheme,
     SBBContentBoxThemeData? contentBoxTheme,
+    SBBStepperThemeData? stepperTheme,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBListItemThemeData? listItemTheme,
@@ -45,6 +47,7 @@ class SBBTheme {
     chipTheme: chipTheme,
     contentBoxTheme: contentBoxTheme,
     radioTheme: radioTheme,
+    stepperTheme: stepperTheme,
     controlStyles: controlStyles,
     headerBoxStyle: headerBoxStyle,
     listItemTheme: listItemTheme,
@@ -65,6 +68,7 @@ class SBBTheme {
     SBBChipThemeData? chipTheme,
     SBBContentBoxThemeData? contentBoxTheme,
     SBBRadioThemeData? radioTheme,
+    SBBStepperThemeData? stepperTheme,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBListItemThemeData? listItemTheme,
@@ -84,6 +88,7 @@ class SBBTheme {
     chipTheme: chipTheme,
     contentBoxTheme: contentBoxTheme,
     radioTheme: radioTheme,
+    stepperTheme: stepperTheme,
     controlStyles: controlStyles,
     headerBoxStyle: headerBoxStyle,
     listItemTheme: listItemTheme,
@@ -103,6 +108,7 @@ class SBBTheme {
     SBBTertiaryButtonThemeData? tertiaryButtonTheme,
     SBBCheckboxThemeData? checkboxTheme,
     SBBChipThemeData? chipTheme,
+    SBBStepperThemeData? stepperTheme,
     SBBControlStyles? controlStyles,
     SBBContentBoxThemeData? contentBoxTheme,
     SBBHeaderBoxStyle? headerBoxStyle,
@@ -132,6 +138,9 @@ class SBBTheme {
 
     final defaultChipTheme = DefaultSBBChipThemeData(mergedBaseStyle);
     final mergedChipTheme = defaultChipTheme.merge(chipTheme);
+
+    final defaultStepperTheme = DefaultSBBStepperThemeData(mergedBaseStyle);
+    final mergedStepperTheme = defaultStepperTheme.merge(stepperTheme);
 
     final defaultControlStyles = SBBControlStyles.$default(baseStyle: mergedBaseStyle);
     final mergedControlStyles = controlStyles.merge(defaultControlStyles);
@@ -171,6 +180,7 @@ class SBBTheme {
       tertiaryButtonTheme: mergedTertiaryButtonTheme,
       checkboxTheme: mergedCheckboxTheme,
       chipTheme: mergedChipTheme,
+      stepperTheme: mergedStepperTheme,
       controlStyles: mergedControlStyles,
       contentBoxTheme: mergedContentBoxTheme,
       headerBoxStyle: mergedHeaderBoxStyle,
@@ -193,6 +203,7 @@ class SBBTheme {
     required SBBCheckboxThemeData checkboxTheme,
     required SBBChipThemeData chipTheme,
     required SBBContentBoxThemeData contentBoxTheme,
+    required SBBStepperThemeData stepperTheme,
     required SBBControlStyles controlStyles,
     required SBBHeaderBoxStyle headerBoxStyle,
     required SBBListItemThemeData listItemTheme,
@@ -236,6 +247,7 @@ class SBBTheme {
         radioTheme,
         statusTheme,
         sliderTheme,
+        stepperTheme,
         switchTheme,
         textTheme,
         toastStyle,
