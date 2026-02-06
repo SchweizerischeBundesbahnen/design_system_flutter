@@ -59,9 +59,9 @@ class SBBTabBarBadgeIcon extends SBBTabBarBadge {
 
   @override
   Widget build(BuildContext context) {
-    final primaryColor = Theme.of(context).primaryColor;
+    final primaryColor = Theme.of(context).extension<SBBBaseStyle>()?.primaryColor;
     final resolvedForegroundColor = foregroundColor ?? SBBColors.white;
-    final resolvedBackgroundColor = backgroundColor ?? primaryColor;
+    final resolvedBackgroundColor = backgroundColor ?? primaryColor ?? SBBColors.red;
 
     return CustomPaint(
       size: Size.square(_badgeIconSize),
@@ -100,7 +100,8 @@ class SBBTabBarBadgeText extends SBBTabBarBadge {
 
   @override
   Widget build(BuildContext context) {
-    final resolvedBackgroundColor = backgroundColor ?? Theme.of(context).primaryColor;
+    final primaryColor = Theme.of(context).extension<SBBBaseStyle>()?.primaryColor;
+    final resolvedBackgroundColor = backgroundColor ?? primaryColor ?? SBBColors.red;
 
     return Container(
       decoration: ShapeDecoration(shape: StadiumBorder(), color: resolvedBackgroundColor),
