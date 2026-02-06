@@ -11,10 +11,10 @@ class SegmentedButtonPage extends StatefulWidget {
 }
 
 class SegmentedButtonPageState extends State<SegmentedButtonPage> {
-  int _selectedStateIndex1 = 0;
-  int _selectedStateIndex2 = 0;
-  int _selectedStateIndex3 = 0;
-  int _selectedStateIndex4 = 0;
+  String _selectedOption1 = 'Option 1';
+  IconData _selectedVehicle1 = SBBIcons.microscooter_profile_small;
+  String _selectedOption2 = 'Option 1';
+  IconData _selectedVehicle2 = SBBIcons.microscooter_profile_small;
 
   @override
   Widget build(BuildContext context) {
@@ -24,43 +24,72 @@ class SegmentedButtonPageState extends State<SegmentedButtonPage> {
         const SBBListHeader('Default (colors based on theme)'),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: SBBSpacing.medium),
-          child: SBBSegmentedButton(
-            values: ['Option 1', 'Option 2', 'Option 3'],
-            selectedIndexChanged: (value) => setState(() => _selectedStateIndex1 = value),
-            selectedStateIndex: _selectedStateIndex1,
+          child: SBBSegmentedButton<String>(
+            segments: [
+              SBBButtonSegment(
+                value: 'Option 1',
+                label: Container(width: 500, height: 200, color: SBBColors.orange),
+              ),
+              SBBButtonSegment(value: 'Option 2', labelText: 'Option 2'),
+              SBBButtonSegment(value: 'Option 3', labelText: 'Option 3'),
+            ],
+            selected: _selectedOption1,
+            onSelectionChanged: (value) => setState(() => _selectedOption1 = value),
           ),
         ),
         Padding(
           padding: const EdgeInsets.all(SBBSpacing.medium),
-          child: SBBSegmentedButton.icon(
-            icons: {
-              SBBIcons.microscooter_profile_small: 'Microscooter',
-              SBBIcons.bicycle_small: 'Bicycle',
-              SBBIcons.scooter_profile_small: 'Scooter',
-            },
-            selectedIndexChanged: (value) => setState(() => _selectedStateIndex2 = value),
-            selectedStateIndex: _selectedStateIndex2,
+          child: SBBSegmentedButton<IconData>(
+            segments: [
+              SBBButtonSegment(
+                value: SBBIcons.microscooter_profile_small,
+                leadingIconData: SBBIcons.microscooter_profile_small,
+              ),
+              SBBButtonSegment(
+                value: SBBIcons.bicycle_small,
+                leadingIconData: SBBIcons.bicycle_small,
+              ),
+              SBBButtonSegment(
+                value: SBBIcons.scooter_profile_small,
+                leadingIconData: SBBIcons.scooter_profile_small,
+              ),
+            ],
+            selected: _selectedVehicle1,
+            onSelectionChanged: (value) => setState(() => _selectedVehicle1 = value),
           ),
         ),
         const SBBListHeader('Red'),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: SBBSpacing.medium),
-          child: SBBSegmentedButton.redText(
-            values: ['Option 1', 'Option 2', 'Option 3'],
-            selectedIndexChanged: (value) => setState(() => _selectedStateIndex3 = value),
-            selectedStateIndex: _selectedStateIndex3,
+          child: SBBSegmentedButton<String>(
+            segments: [
+              SBBButtonSegment(value: 'Option 1', labelText: 'Option 1'),
+              SBBButtonSegment(value: 'Option 2', labelText: 'Option 2'),
+              SBBButtonSegment(value: 'Option 3', labelText: 'Option 3'),
+            ],
+            selected: _selectedOption2,
+            onSelectionChanged: (value) => setState(() => _selectedOption2 = value),
           ),
         ),
         Padding(
           padding: const EdgeInsets.all(SBBSpacing.medium),
-          child: SBBSegmentedButton.redIcon(
-            icons: {
-              SBBIcons.microscooter_profile_small: 'Microscooter',
-              SBBIcons.bicycle_small: 'Bicycle',
-              SBBIcons.scooter_profile_small: 'Scooter',
-            },
-            selectedIndexChanged: (value) => setState(() => _selectedStateIndex4 = value),
-            selectedStateIndex: _selectedStateIndex4,
+          child: SBBSegmentedButton<IconData>(
+            segments: [
+              SBBButtonSegment(
+                value: SBBIcons.microscooter_profile_small,
+                leadingIconData: SBBIcons.microscooter_profile_small,
+              ),
+              SBBButtonSegment(
+                value: SBBIcons.bicycle_small,
+                leadingIconData: SBBIcons.bicycle_small,
+              ),
+              SBBButtonSegment(
+                value: SBBIcons.scooter_profile_small,
+                leadingIconData: SBBIcons.scooter_profile_small,
+              ),
+            ],
+            selected: _selectedVehicle2,
+            onSelectionChanged: (value) => setState(() => _selectedVehicle2 = value),
           ),
         ),
       ],
