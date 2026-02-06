@@ -69,6 +69,7 @@ class TabItemWidget extends StatelessWidget {
 
     if (_shouldShowBadge) {
       child = Stack(
+        clipBehavior: Clip.none,
         children: [
           child,
           Positioned(top: badge!.offset.dy, right: badge!.offset.dx, child: badge!.badge),

@@ -27,10 +27,16 @@ class TabBarPageState extends State<TabBarPage> {
     ])
     ..setBadges([
       SBBTabBarItemBadge(
-        id: '3',
-        badge: Icon(SBBIcons.three_adults_small, color: SBBColors.orange),
+        id: '4',
+        badge: SBBTabBarBadgeIcon(badgeIcon: SBBBadgeIconData.checkmark),
+        displayMode: SBBTabBarItemBadgeDisplayMode.always,
+        offset: Offset(5.0, -2.0),
+      ),
+      SBBTabBarItemBadge(
+        id: '5',
+        badge: SBBTabBarBadgeIcon(badgeIcon: SBBBadgeIconData.exclamationMark),
         autoDismiss: true,
-        // autoDismiss: true,
+        offset: Offset(5.0, -2.0),
       ),
     ]);
 

@@ -120,7 +120,6 @@ class _SBBTabBarState extends State<SBBTabBar> with TickerProviderStateMixin, Wi
               initialData: _controller.currentBadges,
               builder: (context, snapshot) {
                 final badges = snapshot.requireData;
-                print(badges);
                 return StreamBuilder<List<SBBTabBarWarningSetting>>(
                   stream: _controller.warningStream,
                   initialData: _controller.currentWarnings,
