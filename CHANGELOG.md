@@ -46,6 +46,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - BREAKING: `SBBSwitch` is now styled with own `SBBSwitchStyle` from `SBBSwitchThemeData` - see [v5 migration guide]
 - BREAKING: overhauled `SBBSlider` component - see [v5 migration guide]
 - BREAKING: overhauled `SBBStepper` component - see [v5 migration guide]
+- BREAKING: overhauled `SBBSegmentedButton` component - see [v5 migration guide]
 
 ### Removed
 
