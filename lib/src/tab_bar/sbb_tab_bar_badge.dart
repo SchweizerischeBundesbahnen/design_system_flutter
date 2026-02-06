@@ -63,12 +63,14 @@ class SBBTabBarBadgeIcon extends SBBTabBarBadge {
     final resolvedForegroundColor = foregroundColor ?? SBBColors.white;
     final resolvedBackgroundColor = backgroundColor ?? primaryColor ?? SBBColors.red;
 
-    return CustomPaint(
-      size: Size.square(_badgeIconSize),
-      painter: _BadgeIconPainter(
-        badgeIcon: badgeIcon,
-        foregroundColor: resolvedForegroundColor,
-        backgroundColor: resolvedBackgroundColor,
+    return ExcludeSemantics(
+      child: CustomPaint(
+        size: Size.square(_badgeIconSize),
+        painter: _BadgeIconPainter(
+          badgeIcon: badgeIcon,
+          foregroundColor: resolvedForegroundColor,
+          backgroundColor: resolvedBackgroundColor,
+        ),
       ),
     );
   }
@@ -103,17 +105,19 @@ class SBBTabBarBadgeText extends SBBTabBarBadge {
     final primaryColor = Theme.of(context).extension<SBBBaseStyle>()?.primaryColor;
     final resolvedBackgroundColor = backgroundColor ?? primaryColor ?? SBBColors.red;
 
-    return Container(
-      decoration: ShapeDecoration(shape: StadiumBorder(), color: resolvedBackgroundColor),
-      constraints: BoxConstraints(minWidth: _badgeIconSize, minHeight: _badgeIconSize),
-      child: Center(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 4.0),
-          child: Text(
-            labelText,
-            style:
-                textStyle ??
-                SBBTextStyles.extraExtraSmallBold.copyWith(color: SBBColors.white, fontWeight: FontWeight.w900),
+    return ExcludeSemantics(
+      child: Container(
+        decoration: ShapeDecoration(shape: StadiumBorder(), color: resolvedBackgroundColor),
+        constraints: BoxConstraints(minWidth: _badgeIconSize, minHeight: _badgeIconSize),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 4.0),
+            child: Text(
+              labelText,
+              style:
+                  textStyle ??
+                  SBBTextStyles.extraExtraSmallBold.copyWith(color: SBBColors.white, fontWeight: FontWeight.w900),
+            ),
           ),
         ),
       ),
