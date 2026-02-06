@@ -9,6 +9,12 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+### Added
+
+- Added `SBBTabBarController.setBadges` for adding badges to the `SBBTabBar`
+- Added `SBBTabBarBadge` with `SBBTabBarBadgeIcon` (display predefined TabBar icons) and `SBBTabBarBadgeText`
+- Added `SBBTabBarItemBadge` for holding the `SBBTabBarBadge` information
+
 ## [4.5.0] - 2026-01-19
 
 ### Added
