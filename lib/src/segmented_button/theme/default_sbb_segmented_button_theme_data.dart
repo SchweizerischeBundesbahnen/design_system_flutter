@@ -14,7 +14,7 @@ class DefaultSBBSegmentedButtonThemeData extends SBBSegmentedButtonThemeData {
           }),
           borderColor: WidgetStateProperty<Color?>.fromMap({
             WidgetState.selected: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
-            WidgetState.any: null,
+            WidgetState.any: baseStyle.themeValue(SBBColors.cloud, SBBColors.iron),
           }),
           segmentStyle: SBBButtonSegmentStyle(
             foregroundColor: WidgetStatePropertyAll(baseStyle.defaultTextColor),
@@ -28,7 +28,7 @@ class DefaultSBBSegmentedButtonThemeData extends SBBSegmentedButtonThemeData {
           }),
           borderColor: WidgetStateProperty<Color?>.fromMap({
             WidgetState.selected: SBBColors.red150,
-            WidgetState.any: null,
+            WidgetState.any: SBBColors.red125,
           }),
           segmentStyle: SBBButtonSegmentStyle(
             foregroundColor: WidgetStatePropertyAll(SBBColors.white),

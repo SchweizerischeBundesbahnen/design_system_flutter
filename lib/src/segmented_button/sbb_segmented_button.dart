@@ -4,19 +4,27 @@ import 'package:flutter/material.dart';
 import '../../sbb_design_system_mobile.dart';
 import '../sbb_internal.dart';
 
-// TODO: improve docs
-// TODO: add migration guideline & readme
-
-/// The SBB Segmented-Button.
-/// Use according to [documentation](https://digital.sbb.ch/de/design-system/mobile/components/segmented-button/).
+/// The SBB Segmented Button.
+///
+/// Displays multiple segments representing mutually exclusive options. The user
+/// can tap a segment to select it, triggering the [onSelectionChanged] callback.
+///
+/// This widget does not maintain any state itself. The selection state is managed
+/// by the parent widget. When a segment is tapped, [onSelectionChanged] is invoked
+/// with the corresponding segment value, and the parent must update [selected]
+/// to reflect the new selection.
+///
+/// Provide [segments] with descriptions of each option, and set [selected] to the
+/// currently active segment value. Use [style] to customize appearance.
+///
+/// Use according to the [design documentation](https://digital.sbb.ch/de/design-system/mobile/components/segmented-button/).
 ///
 /// See also:
 ///
-/// * [SBBRadioListItem] and [SBBRadio], a widget with semantics
-/// similar to [SBBSegmentedButton].
+/// * [SBBSegmentedButtonFilled], for a style variant optimized on top of filled backgrounds.
+/// * [SBBRadioListItem] and [SBBRadio], widgets with similar semantics.
 /// * [SBBSlider], for selecting a value in a range.
-/// * [SBBCheckboxListItem], [SBBCheckbox] and [SBBSwitch], for toggling a
-/// particular value on or off.
+/// * [SBBCheckboxListItem], [SBBCheckbox] and [SBBSwitch], for toggling values.
 class SBBSegmentedButton<T> extends StatefulWidget {
   const SBBSegmentedButton({
     super.key,
@@ -30,13 +38,23 @@ class SBBSegmentedButton<T> extends StatefulWidget {
   /// Descriptions of the segments in the button.
   final List<SBBButtonSegment<T>> segments;
 
-  /// The currently selected value.
+  /// The currently selected segment value.
+  ///
+  /// This must be one of the values from [segments]. Update this property
+  /// when [onSelectionChanged] is called to reflect the new selection.
   final T selected;
 
-  /// The function that is called when the selection changes.
+  /// Called when the user taps a different segment.
+  ///
+  /// The callback is invoked with the value of the tapped segment.
+  /// The parent widget is responsible for updating [selected] to reflect
+  /// the new selection.
   final ValueChanged<T> onSelectionChanged;
 
   /// Customizes this button's appearance.
+  ///
+  /// Non-null properties of this style override the corresponding
+  /// properties in [SBBSegmentedButtonThemeData.style].
   final SBBSegmentedButtonStyle? style;
 
   /// Horizontal gap width between the leading widget and the label.
@@ -201,10 +219,11 @@ class _SBBSegmentedButtonState<T> extends State<SBBSegmentedButton<T>> {
     Widget child;
     if (label != null && leading != null) {
       child = Row(
+        mainAxisSize: MainAxisSize.min,
         spacing: effectiveLeadingGapWidth,
         children: [
           leading,
-          Expanded(child: label),
+          Flexible(child: label),
         ],
       );
     } else {
@@ -234,6 +253,13 @@ class _SBBSegmentedButtonState<T> extends State<SBBSegmentedButton<T>> {
   }
 }
 
+/// Creates the filled style variant of [SBBSegmentedButton].
+///
+/// Semantics and behavior are identical to [SBBSegmentedButton]; the only
+/// difference is that the segmented button styling is adjusted to work on colored background.
+///
+/// Use [SBBSegmentedButtonThemeData.filledStyle] to override the styling for all filled variants
+/// in the current Theme context.
 class SBBSegmentedButtonFilled<T> extends SBBSegmentedButton<T> {
   const SBBSegmentedButtonFilled({
     super.key,
