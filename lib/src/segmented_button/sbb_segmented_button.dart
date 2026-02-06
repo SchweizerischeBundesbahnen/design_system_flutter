@@ -6,6 +6,14 @@ import '../sbb_internal.dart';
 
 part 'sbb_segmented_button.typedefs.dart';
 
+// TODO: add SBBButtonSegment with value, label, labelText, leading, leadingIconData
+// TODO: add SBBButtonSegmentStyle
+// TODO: change SBBSegmentedButton to generic with segments parameter, selected and selectedChanged
+// TODO: add SBBSegmentedButtonStyle with inner style
+// TODO: add SBBSegmentedButtonThemeData
+// TODO: improve docs
+// TODO: add migration guideline & readme
+
 /// The SBB Segmented-Button.
 /// Use according to [documentation](https://digital.sbb.ch/de/design-system/mobile/components/segmented-button/).
 ///
