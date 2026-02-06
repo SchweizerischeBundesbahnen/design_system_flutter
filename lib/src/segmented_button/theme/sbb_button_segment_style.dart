@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 /// Defines the visual properties for an [SBBButtonSegment].
@@ -8,15 +7,11 @@ import 'package:flutter/material.dart';
 ///
 /// See also:
 /// * [SBBButtonSegment], the class that uses this style.
-class SBBButtonSegmentStyle with Diagnosticable {
+class SBBButtonSegmentStyle {
   const SBBButtonSegmentStyle({
-    this.backgroundColor,
     this.foregroundColor,
     this.textStyle,
   });
-
-  /// The background color of the segment.
-  final WidgetStateProperty<Color?>? backgroundColor;
 
   /// The foreground color (for text and icons).
   final WidgetStateProperty<Color?>? foregroundColor;
@@ -25,15 +20,13 @@ class SBBButtonSegmentStyle with Diagnosticable {
   ///
   /// The color of the [textStyle] is typically not used directly, the
   /// [foregroundColor] is used instead.
-  final TextStyle? textStyle;
+  final WidgetStateProperty<TextStyle?>? textStyle;
 
   SBBButtonSegmentStyle copyWith({
-    WidgetStateProperty<Color?>? backgroundColor,
     WidgetStateProperty<Color?>? foregroundColor,
-    TextStyle? textStyle,
+    WidgetStateProperty<TextStyle?>? textStyle,
   }) {
     return SBBButtonSegmentStyle(
-      backgroundColor: backgroundColor ?? this.backgroundColor,
       foregroundColor: foregroundColor ?? this.foregroundColor,
       textStyle: textStyle ?? this.textStyle,
     );
@@ -43,7 +36,6 @@ class SBBButtonSegmentStyle with Diagnosticable {
     if (other == null) return this;
 
     return copyWith(
-      backgroundColor: other.backgroundColor,
       foregroundColor: other.foregroundColor,
       textStyle: other.textStyle,
     );
@@ -53,33 +45,17 @@ class SBBButtonSegmentStyle with Diagnosticable {
     if (identical(a, b)) return a;
 
     return SBBButtonSegmentStyle(
-      backgroundColor: WidgetStateProperty.lerp<Color?>(a?.backgroundColor, b?.backgroundColor, t, Color.lerp),
       foregroundColor: WidgetStateProperty.lerp<Color?>(a?.foregroundColor, b?.foregroundColor, t, Color.lerp),
-      textStyle: TextStyle.lerp(a?.textStyle, b?.textStyle, t),
+      textStyle: WidgetStateProperty.lerp<TextStyle?>(a?.textStyle, b?.textStyle, t, TextStyle.lerp),
     );
   }
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
-    return other is SBBButtonSegmentStyle &&
-        other.backgroundColor == backgroundColor &&
-        other.foregroundColor == foregroundColor &&
-        other.textStyle == textStyle;
+    return other is SBBButtonSegmentStyle && other.foregroundColor == foregroundColor && other.textStyle == textStyle;
   }
 
   @override
-  int get hashCode => Object.hash(backgroundColor, foregroundColor, textStyle);
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties.add(
-      DiagnosticsProperty<WidgetStateProperty<Color?>>('backgroundColor', backgroundColor, defaultValue: null),
-    );
-    properties.add(
-      DiagnosticsProperty<WidgetStateProperty<Color?>>('foregroundColor', foregroundColor, defaultValue: null),
-    );
-    properties.add(DiagnosticsProperty<TextStyle?>('textStyle', textStyle, defaultValue: null));
-  }
+  int get hashCode => Object.hash(foregroundColor, textStyle);
 }

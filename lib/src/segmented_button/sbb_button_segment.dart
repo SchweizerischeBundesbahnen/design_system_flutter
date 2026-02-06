@@ -28,6 +28,10 @@ class SBBButtonSegment<T> with Diagnosticable {
        assert(
          leading == null || leadingIconData == null,
          'Cannot provide both leading and leadingIconData!',
+       ),
+       assert(
+         label != null || labelText != null || leading != null || leadingIconData != null,
+         'Must provide either label, labelText, leading or leadingIconData!',
        );
 
   /// The value represented by this segment.

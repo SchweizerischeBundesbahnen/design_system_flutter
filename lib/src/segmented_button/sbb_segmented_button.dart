@@ -25,6 +25,7 @@ class SBBSegmentedButton<T> extends StatefulWidget {
     required this.segments,
     required this.selected,
     required this.onSelectionChanged,
+    this.style,
   }) : assert(segments.length > 0, 'At least one segment must be provided.');
 
   /// Descriptions of the segments in the button.
@@ -36,30 +37,43 @@ class SBBSegmentedButton<T> extends StatefulWidget {
   /// The function that is called when the selection changes.
   final ValueChanged<T> onSelectionChanged;
 
+  /// Customizes this button's appearance.
+  final SBBSegmentedButtonStyle? style;
+
   @override
-  SegmentedButtonState<T> createState() => SegmentedButtonState<T>();
+  State<SBBSegmentedButton<T>> createState() => _SBBSegmentedButtonState<T>();
 }
 
-class SegmentedButtonState<T> extends State<SBBSegmentedButton<T>> {
-  static const _borderRadius = BorderRadius.all(Radius.circular(22));
-
+class _SBBSegmentedButtonState<T> extends State<SBBSegmentedButton<T>> {
   int get _selectedIndex => widget.segments.indexWhere((segment) => segment.value == widget.selected);
+
+  SBBSegmentedButtonStyle get effectiveStyle {
+    final themeData = Theme.of(context).sbbSegmentedButtonTheme;
+    final themeStyle = themeData?.style;
+    return widget.style?.merge(themeStyle) ?? themeStyle ?? const SBBSegmentedButtonStyle();
+  }
+
+  Set<WidgetState> get _states => {};
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: SBBInternal.defaultSegmentedButtonHeight,
+    return ConstrainedBox(
+      constraints: BoxConstraints.tightFor(height: SBBInternal.defaultSegmentedButtonHeight),
       child: Stack(
         children: [
-          _buildBackgroundLayer(),
-          _buildIndicatorLayer(),
-          _buildForegroundLayer(),
+          _backgroundLayer(),
+          _indicatorLayer(),
+          _foregroundLayer(),
         ],
       ),
     );
   }
 
-  Widget _buildBackgroundLayer() {
+  Widget _backgroundLayer() {
+    final style = effectiveStyle;
+    final backgroundColor = style.backgroundColor?.resolve(_states) ?? SBBColors.milk;
+    final borderColor = style.borderColor?.resolve(_states);
+
     final List<Widget> children = [];
     for (var i = 0; i < widget.segments.length; i++) {
       final segment = widget.segments[i];
@@ -68,7 +82,7 @@ class SegmentedButtonState<T> extends State<SBBSegmentedButton<T>> {
           child: Material(
             color: SBBColors.transparent,
             child: InkWell(
-              customBorder: const RoundedRectangleBorder(borderRadius: _borderRadius),
+              customBorder: StadiumBorder(),
               onTap: segment.value != widget.selected ? () => widget.onSelectionChanged(segment.value) : null,
             ),
           ),
@@ -76,23 +90,23 @@ class SegmentedButtonState<T> extends State<SBBSegmentedButton<T>> {
       );
     }
     return ExcludeSemantics(
-      child: Stack(
-        children: [
-          Container(
-            margin: const EdgeInsets.all(1.0),
-            decoration: BoxDecoration(
-              color: SBBColors.milk, // style?.defaultStyle?.backgroundColor,
-              border: Border.all(color: SBBColors.green),
-              borderRadius: _borderRadius,
-            ),
-          ),
-          Row(children: children),
-        ],
+      child: Container(
+        margin: const EdgeInsets.all(1.0),
+        decoration: ShapeDecoration(
+          shape: StadiumBorder(side: borderColor != null ? BorderSide(color: borderColor) : BorderSide.none),
+          color: backgroundColor,
+        ),
+        child: Row(children: children),
       ),
     );
   }
 
-  Widget _buildIndicatorLayer() {
+  Widget _indicatorLayer() {
+    final style = effectiveStyle;
+    final selectedStates = {..._states, WidgetState.selected};
+    final backgroundColor = style.backgroundColor?.resolve(selectedStates) ?? SBBColors.milk;
+    final borderColor = style.borderColor?.resolve(selectedStates);
+
     final buttonCount = widget.segments.length;
     final alignmentX = buttonCount <= 1 ? 0.0 : -1 + 2 * _selectedIndex / (buttonCount - 1);
 
@@ -104,15 +118,14 @@ class SegmentedButtonState<T> extends State<SBBSegmentedButton<T>> {
         child: FractionallySizedBox(
           widthFactor: 1.0 / buttonCount,
           child: Container(
-            decoration: BoxDecoration(
-              borderRadius: _borderRadius,
-              border: Border.all(color: SBBColors.green),
+            decoration: ShapeDecoration(
+              shape: StadiumBorder(side: borderColor != null ? BorderSide(color: borderColor) : BorderSide.none),
             ),
             child: Material(
-              borderRadius: _borderRadius,
-              color: SBBColors.green,
+              shape: StadiumBorder(),
+              color: backgroundColor,
               child: InkWell(
-                borderRadius: _borderRadius,
+                customBorder: StadiumBorder(),
                 onTap: () => widget.onSelectionChanged(widget.selected),
               ),
             ),
@@ -122,7 +135,7 @@ class SegmentedButtonState<T> extends State<SBBSegmentedButton<T>> {
     );
   }
 
-  Widget _buildForegroundLayer() {
+  Widget _foregroundLayer() {
     final loc = Localizations.of(context, MaterialLocalizations);
     return IgnorePointer(
       child: Row(
@@ -147,64 +160,89 @@ class SegmentedButtonState<T> extends State<SBBSegmentedButton<T>> {
   }
 
   Widget _buildSegmentContent(SBBButtonSegment<T> segment, bool selected) {
-    final effectiveStyle = segment.style;
-
-    // If custom label is provided, use it
-    if (segment.label != null) {
-      if (segment.leading != null) {
-        return Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            segment.leading!,
-            const SizedBox(width: 4.0),
-            Flexible(child: segment.label!),
-          ],
-        );
-      }
-      return segment.label!;
+    Widget? leading = segment.leading;
+    if (leading == null && segment.leadingIconData != null) {
+      leading = Icon(segment.leadingIconData);
     }
 
-    // If labelText is provided, render with style
-    if (segment.labelText != null) {
-      final textWidget = Text(
-        segment.labelText!,
-        maxLines: 1,
-        // style: effectiveStyle.getTextStyle(selected),
+    Widget? label = segment.label;
+    if (label == null && segment.labelText != null) {
+      label = Text(segment.labelText!, overflow: TextOverflow.ellipsis, maxLines: 1);
+    }
+
+    // add styling and foregroundColor
+    final style = effectiveStyle;
+    final effectiveSegmentStyle = style.segmentStyle?.merge(segment.style) ?? segment.style;
+    final states = {..._states, if (selected) WidgetState.selected};
+    final foregroundColor = effectiveSegmentStyle?.foregroundColor?.resolve(states) ?? SBBColors.green;
+    final resolvedTextStyle = effectiveSegmentStyle?.textStyle?.resolve(states);
+
+    leading = _addDefaultAncestorWithResolved(
+      child: leading,
+      foregroundColor: foregroundColor,
+      textStyle: resolvedTextStyle,
+    );
+
+    label = _addDefaultAncestorWithResolved(
+      child: label,
+      foregroundColor: foregroundColor,
+      textStyle: resolvedTextStyle,
+    );
+
+    Widget child;
+    if (label != null && leading != null) {
+      child = Row(
+        spacing: SBBSpacing.xxSmall,
+        children: [
+          leading,
+          Expanded(child: label),
+        ],
       );
-
-      if (segment.leadingIconData != null) {
-        return Semantics(
-          label: segment.labelText,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Icon(segment.leadingIconData),
-              const SizedBox(width: 4.0),
-              Flexible(child: ExcludeSemantics(child: textWidget)),
-            ],
-          ),
-        );
-      }
-
-      return textWidget;
+    } else {
+      child = label ?? leading!; // asserted that one of it is non null
     }
 
-    // If only leadingIconData is provided
-    if (segment.leadingIconData != null) {
-      return Semantics(
-        label: segment.value.toString(),
-        child: Icon(segment.leadingIconData),
-      );
-    }
+    return child;
+  }
 
-    // If only leading is provided
-    if (segment.leading != null) {
-      return segment.leading!;
-    }
+  Widget? _addDefaultAncestorWithResolved({
+    Widget? child,
+    required Color? foregroundColor,
+    TextStyle? textStyle,
+  }) {
+    if (child == null) return null;
 
-    // Fallback
-    return const SizedBox.shrink();
+    final resolvedTextStyle = textStyle?.copyWith(color: foregroundColor) ?? TextStyle(color: foregroundColor);
+
+    child = DefaultTextStyle.merge(
+      style: resolvedTextStyle,
+      child: IconTheme.merge(
+        data: IconThemeData(color: foregroundColor),
+        child: child,
+      ),
+    );
+    return child;
+  }
+}
+
+class SBBSegmentedButtonFilled<T> extends SBBSegmentedButton<T> {
+  const SBBSegmentedButtonFilled({
+    super.key,
+    required super.segments,
+    required super.selected,
+    required super.onSelectionChanged,
+    super.style,
+  });
+
+  @override
+  State<SBBSegmentedButton<T>> createState() => _SBBSegmentedButtonStateBoxed();
+}
+
+class _SBBSegmentedButtonStateBoxed<T> extends _SBBSegmentedButtonState<T> {
+  @override
+  SBBSegmentedButtonStyle get effectiveStyle {
+    final themeData = Theme.of(context).sbbSegmentedButtonTheme;
+    final themeStyle = themeData?.filledStyle;
+    return widget.style?.merge(themeStyle) ?? themeStyle ?? const SBBSegmentedButtonStyle();
   }
 }
