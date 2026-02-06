@@ -2,20 +2,59 @@ import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
+/// Icon options available for the badge icon type.
 enum SBBBadgeIconData { checkmark, exclamationMark, info, live }
 
 const double _badgeIconSize = 18.0;
 
+/// A base class for badge widgets displayed in tab bar items.
+///
+/// This widget is designed to be used as the badge content in [SBBTabBarItemBadge].
+/// It provides a common interface for different badge types with customizable
+/// foreground and background colors.
+///
+/// Subclasses:
+/// - [SBBTabBarBadgeIcon]: Displays a badge with an icon (checkmark, exclamation, info, or live indicator).
+/// - [SBBTabBarBadgeText]: Displays a badge with text content.
+///
+/// Example:
+/// ```dart
+/// SBBTabBarItemBadge(
+///   id: 'tab_1',
+///   badge: SBBTabBarBadgeIcon(badgeIcon: SBBBadgeIconData.info),
+/// )
+/// ```
 sealed class SBBTabBarBadge extends StatelessWidget {
   const SBBTabBarBadge({super.key, this.foregroundColor, this.backgroundColor});
 
+  /// The color of the badge foreground (e.g., icon or text).
+  ///
+  /// If null, defaults to white for icon badges or white for text badges.
   final Color? foregroundColor;
+
+  /// The background color of the badge.
+  ///
+  /// If null, defaults to the theme's primary color.
   final Color? backgroundColor;
 }
 
+/// A badge widget that displays an icon inside a circular background.
+///
+/// This badge type is used to show status indicators such as checkmarks,
+/// exclamation marks, info icons, or live indicators.
+///
+/// Example:
+/// ```dart
+/// SBBTabBarBadgeIcon(
+///   badgeIcon: SBBBadgeIconData.checkmark,
+///   foregroundColor: Colors.white,
+///   backgroundColor: Colors.green,
+/// )
+/// ```
 class SBBTabBarBadgeIcon extends SBBTabBarBadge {
   const SBBTabBarBadgeIcon({super.key, required this.badgeIcon, super.foregroundColor, super.backgroundColor});
 
+  /// The icon to display in the badge.
   final SBBBadgeIconData badgeIcon;
 
   @override
@@ -35,10 +74,28 @@ class SBBTabBarBadgeIcon extends SBBTabBarBadge {
   }
 }
 
+/// A badge widget that displays text inside a stadium-shaped (pill-shaped) background.
+///
+/// This badge type is typically used for displaying counts, labels, or short
+/// status text.
+///
+/// Example:
+/// ```dart
+/// SBBTabBarBadgeText(
+///   labelText: '5',
+///   backgroundColor: Colors.red,
+/// )
+/// ```
 class SBBTabBarBadgeText extends SBBTabBarBadge {
   const SBBTabBarBadgeText({super.key, required this.labelText, this.textStyle, super.backgroundColor});
 
+  /// The text content to display in the badge.
   final String labelText;
+
+  /// Custom text style for the label.
+  ///
+  /// If null, defaults to [SBBTextStyles.extraExtraSmallBold] with white color
+  /// and font weight w900.
   final TextStyle? textStyle;
 
   @override
