@@ -22,10 +22,15 @@ class TabBarPageState extends State<TabBarPage> {
   bool visible = true;
   late SBBTabBarController controller = SBBTabBarController(items, items.first)
     ..setWarnings([
-      SBBTabBarWarningSetting(id: '3', semantics: 'Warning 2', shown: false),
       SBBTabBarWarningSetting(id: '2', semantics: 'Warning 1', shown: false),
     ])
     ..setBadges([
+      SBBTabBarItemBadge(
+        id: '3',
+        badge: SBBTabBarBadgeText(labelText: '9'),
+        displayMode: SBBTabBarItemBadgeDisplayMode.always,
+        offset: Offset(5.0, -2.0),
+      ),
       SBBTabBarItemBadge(
         id: '4',
         badge: SBBTabBarBadgeIcon(badgeIcon: SBBBadgeIconData.checkmark),

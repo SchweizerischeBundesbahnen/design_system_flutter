@@ -4,6 +4,8 @@ import '../../sbb_design_system_mobile.dart';
 
 enum SBBBadgeIconData { checkmark, exclamationMark, info, live }
 
+const double _badgeIconSize = 18.0;
+
 sealed class SBBTabBarBadge extends StatelessWidget {
   const SBBTabBarBadge({super.key, this.foregroundColor, this.backgroundColor});
 
@@ -12,8 +14,6 @@ sealed class SBBTabBarBadge extends StatelessWidget {
 }
 
 class SBBTabBarBadgeIcon extends SBBTabBarBadge {
-  static double get _badgeIconSize => 18.0;
-
   const SBBTabBarBadgeIcon({super.key, required this.badgeIcon, super.foregroundColor, super.backgroundColor});
 
   final SBBBadgeIconData badgeIcon;
@@ -36,14 +36,30 @@ class SBBTabBarBadgeIcon extends SBBTabBarBadge {
 }
 
 class SBBTabBarBadgeText extends SBBTabBarBadge {
-  const SBBTabBarBadgeText({super.key, required this.labelText});
+  const SBBTabBarBadgeText({super.key, required this.labelText, this.textStyle, super.backgroundColor});
 
   final String labelText;
+  final TextStyle? textStyle;
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    final resolvedBackgroundColor = backgroundColor ?? Theme.of(context).primaryColor;
+
+    return Container(
+      decoration: ShapeDecoration(shape: StadiumBorder(), color: resolvedBackgroundColor),
+      constraints: BoxConstraints(minWidth: _badgeIconSize, minHeight: _badgeIconSize),
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 4.0),
+          child: Text(
+            labelText,
+            style:
+                textStyle ??
+                SBBTextStyles.extraExtraSmallBold.copyWith(color: SBBColors.white, fontWeight: FontWeight.w900),
+          ),
+        ),
+      ),
+    );
   }
 }
 
