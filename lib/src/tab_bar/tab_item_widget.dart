@@ -72,7 +72,11 @@ class TabItemWidget extends StatelessWidget {
         clipBehavior: Clip.none,
         children: [
           child,
-          Positioned(top: badge!.offset.dy, right: badge!.offset.dx, child: badge!.badge),
+          Positioned(
+            top: badge!.offset.dy,
+            right: badge!.offset.dx,
+            child: IgnorePointer(child: badge!.badge),
+          ),
         ],
       );
     }
