@@ -26,14 +26,15 @@ import '../sbb_internal.dart';
 /// * [SBBSlider], for selecting a value in a range.
 /// * [SBBCheckboxListItem], [SBBCheckbox] and [SBBSwitch], for toggling values.
 class SBBSegmentedButton<T> extends StatefulWidget {
-  const SBBSegmentedButton({
+  SBBSegmentedButton({
     super.key,
     required this.segments,
     required this.selected,
     required this.onSelectionChanged,
     this.style,
     this.leadingHorizontalGapWidth,
-  }) : assert(segments.length > 0, 'At least one segment must be provided.');
+  }) : assert(segments.isNotEmpty, 'At least one segment must be provided.'),
+       assert(segments.any((s) => s.value == selected), 'Selected must match one of the values of segments!');
 
   /// Descriptions of the segments in the button.
   final List<SBBButtonSegment<T>> segments;
@@ -261,7 +262,7 @@ class _SBBSegmentedButtonState<T> extends State<SBBSegmentedButton<T>> {
 /// Use [SBBSegmentedButtonThemeData.filledStyle] to override the styling for all filled variants
 /// in the current Theme context.
 class SBBSegmentedButtonFilled<T> extends SBBSegmentedButton<T> {
-  const SBBSegmentedButtonFilled({
+  SBBSegmentedButtonFilled({
     super.key,
     required super.segments,
     required super.selected,
