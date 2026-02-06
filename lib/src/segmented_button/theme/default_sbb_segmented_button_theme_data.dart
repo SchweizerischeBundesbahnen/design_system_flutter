@@ -6,6 +6,7 @@ import '../../../sbb_design_system_mobile.dart';
 class DefaultSBBSegmentedButtonThemeData extends SBBSegmentedButtonThemeData {
   DefaultSBBSegmentedButtonThemeData(SBBBaseStyle baseStyle)
     : super(
+        leadingHorizontalGapWidth: SBBSpacing.xxSmall,
         style: SBBSegmentedButtonStyle(
           backgroundColor: WidgetStateProperty<Color?>.fromMap({
             WidgetState.selected: baseStyle.themeValue(SBBColors.white, SBBColors.iron),

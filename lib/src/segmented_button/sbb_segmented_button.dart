@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import '../../sbb_design_system_mobile.dart';
 import '../sbb_internal.dart';
 
-// TODO: add SBBSegmentedButtonStyle with inner style
-// TODO: add SBBSegmentedButtonThemeData
 // TODO: improve docs
 // TODO: add migration guideline & readme
 
@@ -26,6 +24,7 @@ class SBBSegmentedButton<T> extends StatefulWidget {
     required this.selected,
     required this.onSelectionChanged,
     this.style,
+    this.leadingHorizontalGapWidth,
   }) : assert(segments.length > 0, 'At least one segment must be provided.');
 
   /// Descriptions of the segments in the button.
@@ -39,6 +38,13 @@ class SBBSegmentedButton<T> extends StatefulWidget {
 
   /// Customizes this button's appearance.
   final SBBSegmentedButtonStyle? style;
+
+  /// Horizontal gap width between the leading widget and the label.
+  ///
+  /// Overrides the value in [SBBSegmentedButtonThemeData.leadingHorizontalGapWidth].
+  ///
+  /// Defaults to 4.0.
+  final double? leadingHorizontalGapWidth;
 
   @override
   State<SBBSegmentedButton<T>> createState() => _SBBSegmentedButtonState<T>();
@@ -171,11 +177,14 @@ class _SBBSegmentedButtonState<T> extends State<SBBSegmentedButton<T>> {
     }
 
     // add styling and foregroundColor
+    final themeData = Theme.of(context).sbbSegmentedButtonTheme;
     final style = effectiveStyle;
     final effectiveSegmentStyle = style.segmentStyle?.merge(segment.style) ?? segment.style;
     final states = {..._states, if (selected) WidgetState.selected};
     final foregroundColor = effectiveSegmentStyle?.foregroundColor?.resolve(states) ?? SBBColors.green;
     final resolvedTextStyle = effectiveSegmentStyle?.textStyle?.resolve(states);
+    final effectiveLeadingGapWidth =
+        widget.leadingHorizontalGapWidth ?? themeData?.leadingHorizontalGapWidth ?? SBBSpacing.xxSmall;
 
     leading = _addDefaultAncestorWithResolved(
       child: leading,
@@ -192,7 +201,7 @@ class _SBBSegmentedButtonState<T> extends State<SBBSegmentedButton<T>> {
     Widget child;
     if (label != null && leading != null) {
       child = Row(
-        spacing: SBBSpacing.xxSmall,
+        spacing: effectiveLeadingGapWidth,
         children: [
           leading,
           Expanded(child: label),

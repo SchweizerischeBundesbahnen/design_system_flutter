@@ -13,7 +13,7 @@ class SBBSegmentedButtonThemeData extends ThemeExtension<SBBSegmentedButtonTheme
   /// Creates an [SBBSegmentedButtonThemeData].
   ///
   /// The [style] may be null.
-  const SBBSegmentedButtonThemeData({this.style, this.filledStyle});
+  const SBBSegmentedButtonThemeData({this.style, this.filledStyle, this.leadingHorizontalGapWidth});
 
   /// Overrides for the segmented button's default style.
   ///
@@ -27,6 +27,11 @@ class SBBSegmentedButtonThemeData extends ThemeExtension<SBBSegmentedButtonTheme
   ///
   /// If null, the default filled style is used.
   final SBBSegmentedButtonStyle? filledStyle;
+
+  /// Horizontal gap width between the leading widget and the label.
+  ///
+  /// Defaults to 4.0.
+  final double? leadingHorizontalGapWidth;
 
   @override
   SBBSegmentedButtonThemeData copyWith({SBBSegmentedButtonStyle? style, SBBSegmentedButtonStyle? filledStyle}) {
