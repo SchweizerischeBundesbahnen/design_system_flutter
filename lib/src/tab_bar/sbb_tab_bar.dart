@@ -115,62 +115,72 @@ class _SBBTabBarState extends State<SBBTabBar> with TickerProviderStateMixin, Wi
           initialData: _controller.currentData,
           builder: (context, snapshot) {
             final navData = snapshot.requireData;
-            return StreamBuilder<List<SBBTabBarWarningSetting>>(
-              stream: _controller.warningStream,
-              initialData: _controller.currentWarnings,
+            return StreamBuilder(
+              stream: _controller.badgesStream,
+              initialData: _controller.currentBadges,
               builder: (context, snapshot) {
-                final warnings = snapshot.requireData;
-                final theme = Theme.of(context);
-                final cardColor = SBBContentBoxStyle.of(context).color ?? theme.scaffoldBackgroundColor;
-                _controller.changeOrientation(portrait);
-                _controller.updateCurveAnimation();
-                return Container(
-                  height: layoutData.height,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [cardColor.withValues(alpha: 0.0), cardColor.withValues(alpha: 1.0)],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
-                    ),
-                  ),
-                  child: Stack(
-                    children: [
-                      ..._tabs.mapIndexed(
-                        (i, e) => Positioned(
-                          left: layoutData.positions[i].dx,
-                          child: TabItemWidget(
-                            e.icon,
-                            selected: true,
-                            interactions: TabItemInteractions(
-                              focusNode: _focusNodes[e]!,
-                              onTap: () => _onTap(e, navData),
-                              onTapDown: () {},
-                              onTapCancel: () {},
-                            ),
-                          ),
+                final badges = snapshot.requireData;
+                print(badges);
+                return StreamBuilder<List<SBBTabBarWarningSetting>>(
+                  stream: _controller.warningStream,
+                  initialData: _controller.currentWarnings,
+                  builder: (context, snapshot) {
+                    final warnings = snapshot.requireData;
+                    final theme = Theme.of(context);
+                    final cardColor = SBBContentBoxStyle.of(context).color ?? theme.scaffoldBackgroundColor;
+                    _controller.changeOrientation(portrait);
+                    _controller.updateCurveAnimation();
+                    return Container(
+                      height: layoutData.height,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [cardColor.withValues(alpha: 0.0), cardColor.withValues(alpha: 1.0)],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
                         ),
                       ),
-                      CustomPaint(
-                        painter: TabCurvePainter(_controller.curves, cardColor, theme.shadowColor),
-                        child: ClipPath(
-                          clipper: TabCurveClipper(curves: _controller.curves),
-                          child: _TabLayout(
-                            items: _tabs,
-                            selectedTab: navData.selectedTab,
-                            warnings: warnings,
-                            portrait: portrait,
-                            onPositioned: _controller.onLayout,
-                            interactionsBuilder: (e) => TabItemInteractions(
-                              focusNode: _focusNodes[e]!,
-                              onTap: () => _onTap(e, navData),
-                              onTapDown: () => _onTapDown(e, navData),
-                              onTapCancel: () => _controller.cancelHover(),
+                      child: Stack(
+                        children: [
+                          ..._tabs.mapIndexed(
+                            (i, e) => Positioned(
+                              left: layoutData.positions[i].dx,
+                              child: TabItemWidget(
+                                e.icon,
+                                selected: true,
+                                badge: badges.firstWhereOrNull((badge) => badge.id == e.id),
+                                interactions: TabItemInteractions(
+                                  focusNode: _focusNodes[e]!,
+                                  onTap: () => _onTap(e, navData),
+                                  onTapDown: () {},
+                                  onTapCancel: () {},
+                                ),
+                              ),
                             ),
                           ),
-                        ),
+                          CustomPaint(
+                            painter: TabCurvePainter(_controller.curves, cardColor, theme.shadowColor),
+                            child: ClipPath(
+                              clipper: TabCurveClipper(curves: _controller.curves),
+                              child: _TabLayout(
+                                items: _tabs,
+                                selectedTab: navData.selectedTab,
+                                warnings: warnings,
+                                badges: badges,
+                                portrait: portrait,
+                                onPositioned: _controller.onLayout,
+                                interactionsBuilder: (e) => TabItemInteractions(
+                                  focusNode: _focusNodes[e]!,
+                                  onTap: () => _onTap(e, navData),
+                                  onTapDown: () => _onTapDown(e, navData),
+                                  onTapCancel: () => _controller.cancelHover(),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    );
+                  },
                 );
               },
             );

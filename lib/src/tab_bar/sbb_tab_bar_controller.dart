@@ -16,6 +16,7 @@ class SBBTabBarController {
   final _navigationController = StreamController<SBBTabBarNavigationData>.broadcast();
   final _layoutController = StreamController<SBBTabBarLayoutData>.broadcast();
   final _warningController = StreamController<List<SBBTabBarWarningSetting>>.broadcast();
+  final _badgeController = StreamController<List<SBBTabBarItemBadge>>.broadcast();
 
   /// The current navigation data.
   Stream<SBBTabBarNavigationData> get navigationStream => _navigationController.stream;
@@ -26,6 +27,10 @@ class SBBTabBarController {
   /// Currently active warnings.
   Stream<List<SBBTabBarWarningSetting>> get warningStream => _warningController.stream;
 
+  Stream<List<SBBTabBarItemBadge>> get badgesStream => _badgeController.stream.map(
+    (badges) => badges.whereNot((badge) => _dismissedBadgeIds.contains(badge.id)).toList(growable: false),
+  );
+
   final List<SBBTabBarItem> tabs;
   late SBBTabBarItem selectedTab;
   late TickerProvider vsync;
@@ -35,6 +40,8 @@ class SBBTabBarController {
   late SBBTabBarNavigationData currentData;
   late SBBTabBarLayoutData currentLayoutData = SBBTabBarLayoutData(0.0, tabs.map((_) => Offset(-100.0, 0.0)).toList());
   late List<SBBTabBarWarningSetting> currentWarnings = [];
+  List<SBBTabBarItemBadge> _badges = [];
+  final Set<String> _dismissedBadgeIds = {};
 
   bool hover = false;
   List<TabCurves> curves = [];
@@ -46,6 +53,9 @@ class SBBTabBarController {
 
   /// Index of the next Tab (same value as from when the animation is not active)
   int get to => tabs.indexOf(currentData.nextTab);
+
+  List<SBBTabBarItemBadge> get currentBadges =>
+      _badges.whereNot((badge) => _dismissedBadgeIds.contains(badge.id)).toList(growable: false);
 
   /// Recalculating the curves for the Tabs
   void changeOrientation(bool portrait) {
@@ -103,12 +113,28 @@ class SBBTabBarController {
     _warningController.add(warnings);
   }
 
+  void setBadges(List<SBBTabBarItemBadge> badges) {
+    _dismissedBadgeIds.clear();
+    _updateDismissedBadgeIds(selectedTab.id);
+    _badges = badges;
+    _badgeController.add(_badges);
+  }
+
+  void _updateDismissedBadgeIds(String id) {
+    final badge = _badges.firstWhereOrNull((badge) => badge.id == id);
+    if (badge != null && badge.autoDismiss) {
+      _dismissedBadgeIds.add(badge.id);
+    }
+    _badgeController.add(_badges);
+  }
+
   Future<SBBTabBarItem> selectTab(SBBTabBarItem tab) async {
     if (selectedTab == tab) return tab;
     _nextTab = tab;
     hover = false;
     await _animationController.animateTo(1.0, duration: _duration, curve: Curves.easeInOut);
     _setWarningShown(tab.id);
+    _updateDismissedBadgeIds(tab.id);
 
     selectedTab = tab;
     _animationController.reset();
@@ -140,5 +166,6 @@ class SBBTabBarController {
     _layoutController.close();
     _navigationController.close();
     _warningController.close();
+    _badgeController.close();
   }
 }

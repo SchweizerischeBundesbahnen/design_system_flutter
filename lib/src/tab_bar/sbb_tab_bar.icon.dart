@@ -5,6 +5,7 @@ class _TabIcon extends StatelessWidget {
     required this.item,
     required this.selected,
     required this.warning,
+    required this.badge,
     required this.portrait,
     required this.tabIndex,
     required this.tabCount,
@@ -14,6 +15,7 @@ class _TabIcon extends StatelessWidget {
   final SBBTabBarItem item;
   final bool selected;
   final SBBTabBarWarningSetting? warning;
+  final SBBTabBarItemBadge? badge;
   final bool portrait;
   final int tabIndex;
   final int tabCount;
@@ -53,6 +55,7 @@ class _TabIcon extends StatelessWidget {
                     interactions: interactions,
                     selected: false,
                     warning: warning,
+                    badge: badge,
                   ),
                   if (!portrait)
                     Text(

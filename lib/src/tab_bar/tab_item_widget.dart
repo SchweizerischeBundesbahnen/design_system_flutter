@@ -9,6 +9,7 @@ class TabItemWidget extends StatelessWidget {
     super.key,
     this.selected = false,
     this.warning,
+    this.badge,
   });
 
   static const portraitSize = 44.0;
@@ -22,6 +23,7 @@ class TabItemWidget extends StatelessWidget {
   final TabItemInteractions interactions;
   final bool selected;
   final SBBTabBarWarningSetting? warning;
+  final SBBTabBarItemBadge? badge;
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +47,35 @@ class TabItemWidget extends StatelessWidget {
       color = backgroundColor;
     }
 
+    Widget child = SizedBox.square(
+      dimension: size,
+      child: InkResponse(
+        splashFactory: NoSplash.splashFactory,
+        focusNode: interactions.focusNode,
+        onTap: interactions.onTap,
+        onTapDown: (_) => interactions.onTapDown(),
+        onTapCancel: interactions.onTapCancel,
+        radius: size / 2.0 + 4.0,
+        onFocusChange: (f) {
+          if (f) interactions.onTapDown();
+        },
+        child: Material(
+          shape: const CircleBorder(),
+          color: color,
+          child: Icon(resolvedIcon, color: iconColor),
+        ),
+      ),
+    );
+
+    if (_shouldShowBadge) {
+      child = Stack(
+        children: [
+          child,
+          Positioned(top: badge!.offset.dy, right: badge!.offset.dx, child: badge!.badge),
+        ],
+      );
+    }
+
     return ExcludeSemantics(
       excluding: selected,
       child: Padding(
@@ -53,26 +84,17 @@ class TabItemWidget extends StatelessWidget {
           left: horizontalCirclePadding,
           right: horizontalCirclePadding,
         ),
-        child: SizedBox.square(
-          dimension: size,
-          child: InkResponse(
-            splashFactory: NoSplash.splashFactory,
-            focusNode: interactions.focusNode,
-            onTap: interactions.onTap,
-            onTapDown: (_) => interactions.onTapDown(),
-            onTapCancel: interactions.onTapCancel,
-            radius: size / 2.0 + 4.0,
-            onFocusChange: (f) {
-              if (f) interactions.onTapDown();
-            },
-            child: Material(
-              shape: const CircleBorder(),
-              color: color,
-              child: Icon(resolvedIcon, color: iconColor),
-            ),
-          ),
-        ),
+        child: child,
       ),
     );
+  }
+
+  bool get _shouldShowBadge {
+    if (badge == null) return false;
+    return switch (badge!.displayMode) {
+      SBBTabBarItemBadgeDisplayMode.always => true,
+      SBBTabBarItemBadgeDisplayMode.whenSelected => selected,
+      SBBTabBarItemBadgeDisplayMode.whenUnselected => !selected,
+    };
   }
 }

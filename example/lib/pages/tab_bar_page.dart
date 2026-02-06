@@ -24,6 +24,14 @@ class TabBarPageState extends State<TabBarPage> {
     ..setWarnings([
       SBBTabBarWarningSetting(id: '3', semantics: 'Warning 2', shown: false),
       SBBTabBarWarningSetting(id: '2', semantics: 'Warning 1', shown: false),
+    ])
+    ..setBadges([
+      SBBTabBarItemBadge(
+        id: '3',
+        badge: Icon(SBBIcons.three_adults_small, color: SBBColors.orange),
+        autoDismiss: true,
+        // autoDismiss: true,
+      ),
     ]);
 
   @override
