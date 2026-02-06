@@ -11,4 +11,12 @@ abstract class SBBTabBarItem {
   final IconData icon;
 
   String translate(BuildContext context);
+
+  @override
+  get hashCode => Object.hash(id, icon);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) || other is SBBTabBarItem && other.icon == icon && other.id == id;
+  }
 }
