@@ -61,7 +61,7 @@ class SegmentedButtonPageState extends State<SegmentedButtonPage> {
         const SBBListHeader('Red'),
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: SBBSpacing.medium),
-          child: SBBSegmentedButton<String>(
+          child: SBBSegmentedButtonFilled<String>(
             segments: [
               SBBButtonSegment(value: 'Option 1', labelText: 'Option 1'),
               SBBButtonSegment(value: 'Option 2', labelText: 'Option 2'),
@@ -73,7 +73,7 @@ class SegmentedButtonPageState extends State<SegmentedButtonPage> {
         ),
         Padding(
           padding: const EdgeInsets.all(SBBSpacing.medium),
-          child: SBBSegmentedButton<IconData>(
+          child: SBBSegmentedButtonFilled<IconData>(
             segments: [
               SBBButtonSegment(
                 value: SBBIcons.microscooter_profile_small,
