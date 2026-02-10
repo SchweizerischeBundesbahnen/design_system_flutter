@@ -14,7 +14,8 @@ const double _badgeIconSize = 18.0;
 /// foreground and background colors.
 ///
 /// Subclasses:
-/// - [SBBTabBarBadgeIcon]: Displays a badge with an icon (checkmark, exclamation, info, or live indicator).
+/// - [SBBTabBarBadgeIcon]: Displays a badge with one of the four badge icons specified in the Figma design guidelines
+/// (checkmark, exclamation, info, or live indicator).
 /// - [SBBTabBarBadgeText]: Displays a badge with text content.
 ///
 /// Example:
@@ -40,8 +41,8 @@ sealed class SBBTabBarBadge extends StatelessWidget {
 
 /// A badge widget that displays an icon inside a circular background.
 ///
-/// This badge type is used to show status indicators such as checkmarks,
-/// exclamation marks, info icons, or live indicators.
+/// This badge type is used to display one of the four badge icons specified in the Figma design guidelines.
+/// See [SBBBadgeIconData].
 ///
 /// Example:
 /// ```dart
