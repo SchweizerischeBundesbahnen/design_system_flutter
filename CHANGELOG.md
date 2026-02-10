@@ -9,6 +9,8 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+## [4.6.0] - 2026-02-10
+
 ### Added
 
 - Added `royal85`, `royal85Dark`, `royal125Dark` and `royal150Dark` colors
@@ -716,7 +718,9 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Initial project setup
 - Added some widgets
 
-[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.5.0...HEAD
+[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.6.0...HEAD
+
+[4.6.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.5.0...4.6.0
 
 [4.5.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.4.0...4.5.0
 
