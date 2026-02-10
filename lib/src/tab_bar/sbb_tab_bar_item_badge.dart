@@ -21,25 +21,31 @@ enum SBBTabBarItemBadgeDisplayMode {
 /// the badge is associated with the correct tab.
 class SBBTabBarItemBadge {
   const SBBTabBarItemBadge({
-    /// Unique identifier that must match the id of the corresponding [SBBTabBarItem].
     required this.id,
-
-    /// The widget to display as the badge content.
-    ///
-    /// This is typically a [SBBTabBarBadge] widget.
     required this.badge,
-
-    /// Controls when the badge is displayed. Defaults to [SBBTabBarItemBadgeDisplayMode.whenUnselected].
     this.displayMode = SBBTabBarItemBadgeDisplayMode.whenUnselected,
-
-    /// If true, the badge automatically dismisses after the associated tab is selected. Defaults to false.
-    ///
-    /// This will reset if the [SBBTabBarController.setBadges] method is called again.
     this.autoDismiss = false,
-
-    /// The offset of the badge position relative to the top-right corner. Defaults to [Offset.zero].
     this.offset = Offset.zero,
   });
+
+  /// Unique identifier that must match the id of the corresponding [SBBTabBarItem].
+  final String id;
+
+  /// Controls when the badge is displayed. Defaults to [SBBTabBarItemBadgeDisplayMode.whenUnselected].
+  final SBBTabBarItemBadgeDisplayMode displayMode;
+
+  /// If true, the badge automatically dismisses after the associated tab is selected. Defaults to false.
+  ///
+  /// This will reset if the [SBBTabBarController.setBadges] method is called again.
+  final bool autoDismiss;
+
+  /// The widget to display as the badge content.
+  ///
+  /// This is typically a [SBBTabBarBadge] widget.
+  final Widget badge;
+
+  /// The offset of the badge position relative to the top-right corner. Defaults to [Offset.zero].
+  final Offset offset;
 
   @override
   String toString() {
@@ -64,10 +70,4 @@ class SBBTabBarItemBadge {
 
   @override
   int get hashCode => Object.hash(id, displayMode, autoDismiss, badge, offset);
-
-  final String id;
-  final SBBTabBarItemBadgeDisplayMode displayMode;
-  final bool autoDismiss;
-  final Widget badge;
-  final Offset offset;
 }
