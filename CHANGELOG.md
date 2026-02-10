@@ -12,6 +12,9 @@ It is expected that you keep this format strictly, since we depend on it in our 
 ### Added
 
 - Added `royal85`, `royal85Dark`, `royal125Dark` and `royal150Dark` colors
+- Added `SBBTabBarController.setBadges` for adding badges to the `SBBTabBar`
+- Added `SBBTabBarBadge` with `SBBTabBarBadgeIcon` (display predefined TabBar icons) and `SBBTabBarBadgeText`
+- Added `SBBTabBarItemBadge` for holding the `SBBTabBarBadge` information
 
 ### Fixed
 

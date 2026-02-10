@@ -5,6 +5,7 @@ class _TabLayout extends StatelessWidget {
     required this.items,
     required this.selectedTab,
     required this.warnings,
+    required this.badges,
     required this.portrait,
     required this.onPositioned,
     required this.interactionsBuilder,
@@ -13,6 +14,7 @@ class _TabLayout extends StatelessWidget {
   final List<SBBTabBarItem> items;
   final SBBTabBarItem selectedTab;
   final List<SBBTabBarWarningSetting> warnings;
+  final List<SBBTabBarItemBadge> badges;
   final bool portrait;
   final Function(List<Offset> positions, double height) onPositioned;
   final TabItemInteractionsBuilder interactionsBuilder;
@@ -28,6 +30,7 @@ class _TabLayout extends StatelessWidget {
               item: e,
               selected: e == selectedTab,
               warning: warnings.firstWhereOrNull((w) => w.id == e.id),
+              badge: badges.firstWhereOrNull((b) => b.id == e.id),
               portrait: portrait,
               tabIndex: i,
               tabCount: items.length,

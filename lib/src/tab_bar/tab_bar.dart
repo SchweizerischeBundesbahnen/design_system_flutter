@@ -4,3 +4,5 @@ export 'sbb_tab_bar_item.dart';
 export 'sbb_tab_bar_navigation_data.dart';
 export 'sbb_tab_bar_layout_data.dart';
 export 'sbb_tab_bar_warning_setting.dart';
+export 'sbb_tab_bar_item_badge.dart';
+export 'sbb_tab_bar_badge.dart';
