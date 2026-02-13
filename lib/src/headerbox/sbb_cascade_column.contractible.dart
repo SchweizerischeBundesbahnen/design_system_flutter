@@ -222,6 +222,13 @@ class _SBBContractible extends ParentDataWidget<CascadeColumnParentData> {
   void applyParentData(RenderObject renderObject) {
     final parentData = renderObject.parentData as CascadeColumnParentData;
 
+    if (parentData.stateNotifier != stateNotifier && parentData.stateNotifier != null) {
+      // Make sure that a new notifier retains the previous state to prevent flickering.
+      // Additionally, we schedule a layout pass to make sure that it matches the actual layout.
+      stateNotifier?.value = parentData.stateNotifier!.value;
+      renderObject.markNeedsLayout();
+    }
+
     parentData.stateNotifier = stateNotifier;
   }
 
