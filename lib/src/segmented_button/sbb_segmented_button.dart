@@ -107,7 +107,7 @@ class _SBBSegmentedButtonState<T> extends State<SBBSegmentedButton<T>> {
           child: Material(
             color: SBBColors.transparent,
             child: InkWell(
-              customBorder: StadiumBorder(),
+              customBorder: SBBSegmentedButtonStyle.shape,
               onTap: segment.value != widget.selected ? () => widget.onSelectionChanged(segment.value) : null,
             ),
           ),
@@ -118,7 +118,7 @@ class _SBBSegmentedButtonState<T> extends State<SBBSegmentedButton<T>> {
       child: Container(
         margin: const EdgeInsets.all(1.0),
         decoration: ShapeDecoration(
-          shape: StadiumBorder(side: borderColor != null ? BorderSide(color: borderColor) : BorderSide.none),
+          shape: _shapeWithBorder(borderColor),
           color: backgroundColor,
         ),
         child: Row(children: children),
@@ -144,19 +144,25 @@ class _SBBSegmentedButtonState<T> extends State<SBBSegmentedButton<T>> {
           widthFactor: 1.0 / buttonCount,
           child: Container(
             decoration: ShapeDecoration(
-              shape: StadiumBorder(side: borderColor != null ? BorderSide(color: borderColor) : BorderSide.none),
+              shape: _shapeWithBorder(borderColor),
             ),
             child: Material(
-              shape: StadiumBorder(),
+              shape: SBBSegmentedButtonStyle.shape,
               color: backgroundColor,
               child: InkWell(
-                customBorder: StadiumBorder(),
+                customBorder: SBBSegmentedButtonStyle.shape,
                 onTap: () => widget.onSelectionChanged(widget.selected),
               ),
             ),
           ),
         ),
       ),
+    );
+  }
+
+  StadiumBorder _shapeWithBorder(Color? borderColor) {
+    return SBBSegmentedButtonStyle.shape.copyWith(
+      side: borderColor != null ? BorderSide(color: borderColor) : BorderSide.none,
     );
   }
 
