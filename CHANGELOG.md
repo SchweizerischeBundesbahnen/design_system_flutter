@@ -9,6 +9,10 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+### Fixed
+
+- `SBBSliverFloatingHeaderbox`: Fixed an issue with the crossfade showing the wrong widget.
+
 ## [4.6.0] - 2026-02-10
 
 ### Added
