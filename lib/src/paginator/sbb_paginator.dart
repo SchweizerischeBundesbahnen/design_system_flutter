@@ -5,8 +5,8 @@ import '../../sbb_design_system_mobile.dart';
 
 /// The SBB paginator to display page navigation information
 ///
-/// The paginator shows circular indicators for each page, with the current page
-/// highlighted. The semantics value will be the [currentPage] + 1 and is marked as readonly.
+/// The paginator shows circular indicators for each page.
+/// The indicator for the current page is highlighted with the [WidgetState.selected] state.
 ///
 /// The paginator is not displayed if [numberPages] is 1 or less.
 ///
@@ -40,6 +40,8 @@ class SBBPaginator extends StatelessWidget {
   final int currentPage;
 
   /// The semantics label of the paginator.
+  ///
+  /// The semantics value will be the [currentPage] + 1.
   final String? semanticsLabel;
 
   /// Customizes this paginator's appearance.
