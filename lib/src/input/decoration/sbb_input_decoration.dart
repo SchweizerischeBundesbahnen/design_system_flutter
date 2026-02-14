@@ -38,19 +38,19 @@ class SBBInputDecoration {
     this.borderColor,
     this.contentPadding,
   }) : assert(
-         !(leading != null && leadingIconData != null),
+         leading == null || leadingIconData == null,
          'leading and leadingIconData are mutually exclusive. Provide only one.',
        ),
        assert(
-         !(label != null && labelText != null),
+         label == null || labelText == null,
          'label and labelText are mutually exclusive. Provide only one.',
        ),
        assert(
-         !(placeholder != null && placeholderText != null),
+         placeholder == null || placeholderText == null,
          'placeholder and placeholderText are mutually exclusive. Provide only one.',
        ),
        assert(
-         !(error != null && errorText != null),
+         error == null || errorText == null,
          'error and errorText are mutually exclusive. Provide only one.',
        );
 
