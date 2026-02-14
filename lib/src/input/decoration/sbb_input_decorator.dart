@@ -173,26 +173,7 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
 
     final textScaler = MediaQuery.textScalerOf(context);
 
-    Widget? leading = widget.decoration.leading;
-    if (leading == null && widget.decoration.leadingIconData != null) {
-      leading = Padding(
-        padding: EdgeInsets.only(
-          top: widget.isMultiline ? textScaler.scale(SBBSpacing.xxSmall) : 0.0,
-          right: _effectiveLeadingInputGap(inputDecorationTheme),
-        ),
-        child: Icon(widget.decoration.leadingIconData),
-      );
-    }
-    if (leading != null) {
-      final Color? resolvedColor =
-          (widget.decoration.leadingForegroundColor ?? inputDecorationTheme?.leadingForegroundColor)?.resolve(
-            widget.states,
-          );
-      leading = _addDefaultAncestorWithResolved(
-        child: leading,
-        foregroundColor: resolvedColor,
-      );
-    }
+    Widget? leading = _leading(textScaler, inputDecorationTheme);
 
     Widget? label = widget.decoration.label;
     double? maxLabelTextHeight;
@@ -226,74 +207,11 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
       );
     }
 
-    Widget? trailing = widget.decoration.trailing;
-    if (trailing == null && widget.decoration.trailingIconData != null) {
-      trailing = Padding(
-        padding: EdgeInsets.only(
-          top: widget.isMultiline ? textScaler.scale(SBBSpacing.xxSmall) : 0.0,
-          left: _effectiveInputTrailingGap(inputDecorationTheme),
-        ),
-        child: Icon(widget.decoration.trailingIconData),
-      );
-    }
-    if (trailing != null) {
-      final Color? resolvedColor =
-          (widget.decoration.trailingForegroundColor ?? inputDecorationTheme?.trailingForegroundColor)?.resolve(
-            widget.states,
-          );
-      trailing = _addDefaultAncestorWithResolved(
-        child: trailing,
-        foregroundColor: resolvedColor,
-      );
-    }
+    Widget? trailing = _trailing(textScaler, inputDecorationTheme);
 
-    Widget? placeholder = widget.decoration.placeholder;
-    if (placeholder == null && widget.decoration.placeholderText != null) {
-      placeholder = AnimatedOpacity(
-        duration: _kTransitionDuration * 1.25,
-        opacity: _shouldShowPlaceholder ? 1 : 0,
-        child: Text(widget.decoration.placeholderText!),
-      );
-    }
-    if (placeholder != null) {
-      final Color? resolvedColor =
-          (widget.decoration.placeholderForegroundColor ?? inputDecorationTheme?.placeholderForegroundColor)?.resolve(
-            widget.states,
-          );
-      final TextStyle? textStyle = widget.decoration.placeholderTextStyle ?? inputDecorationTheme?.placeholderTextStyle;
-      placeholder = _addDefaultAncestorWithResolved(
-        child: placeholder,
-        foregroundColor: resolvedColor,
-        textStyle: textStyle,
-      );
-    }
+    Widget? placeholder = _placeholder(inputDecorationTheme);
 
-    Widget? error = widget.decoration.error;
-    if (error == null && widget.decoration.errorText != null) {
-      error = Padding(
-        padding: EdgeInsets.only(
-          top: textScaler.scale(_effectiveTitleRowErrorGap(inputDecorationTheme)),
-          bottom: _effectiveErrorBottomPadding(inputDecorationTheme),
-        ),
-        child: Text(widget.decoration.errorText!),
-      );
-    }
-    if (error != null) {
-      final Color? resolvedColor =
-          (widget.decoration.errorForegroundColor ?? inputDecorationTheme?.errorForegroundColor)?.resolve(
-            widget.states,
-          );
-      final TextStyle? textStyle = widget.decoration.errorTextStyle ?? inputDecorationTheme?.errorTextStyle;
-      error = _addDefaultAncestorWithResolved(
-        child: error,
-        foregroundColor: resolvedColor,
-        textStyle: textStyle,
-      );
-    }
-    error = AnimatedSwitcher(
-      duration: _kTransitionDuration,
-      child: error ?? SizedBox.shrink(),
-    );
+    Widget? error = _errorWidget(textScaler, inputDecorationTheme);
 
     final Widget container = AnimatedContainer(
       duration: _kTransitionDuration,
@@ -333,6 +251,108 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
       maxLabelHeight: maxLabelTextHeight,
       contentPadding: _effectiveContentPadding(inputDecorationTheme),
     );
+  }
+
+  Widget? _leading(TextScaler textScaler, SBBInputDecorationThemeData? inputDecorationTheme) {
+    Widget? leading = widget.decoration.leading;
+    if (leading == null && widget.decoration.leadingIconData != null) {
+      leading = Padding(
+        padding: EdgeInsets.only(
+          top: widget.isMultiline ? textScaler.scale(SBBSpacing.xxSmall) : 0.0,
+          right: _effectiveLeadingInputGap(inputDecorationTheme),
+        ),
+        child: Icon(widget.decoration.leadingIconData),
+      );
+    }
+    if (leading != null) {
+      final Color? resolvedColor =
+          (widget.decoration.leadingForegroundColor ?? inputDecorationTheme?.leadingForegroundColor)?.resolve(
+            widget.states,
+          );
+      leading = _addDefaultAncestorWithResolved(
+        child: leading,
+        foregroundColor: resolvedColor,
+      );
+    }
+    return leading;
+  }
+
+  Widget? _trailing(TextScaler textScaler, SBBInputDecorationThemeData? inputDecorationTheme) {
+    Widget? trailing = widget.decoration.trailing;
+    if (trailing == null && widget.decoration.trailingIconData != null) {
+      trailing = Padding(
+        padding: EdgeInsets.only(
+          top: widget.isMultiline ? textScaler.scale(SBBSpacing.xxSmall) : 0.0,
+          left: _effectiveInputTrailingGap(inputDecorationTheme),
+        ),
+        child: Icon(widget.decoration.trailingIconData),
+      );
+    }
+    if (trailing != null) {
+      final Color? resolvedColor =
+          (widget.decoration.trailingForegroundColor ?? inputDecorationTheme?.trailingForegroundColor)?.resolve(
+            widget.states,
+          );
+      trailing = _addDefaultAncestorWithResolved(
+        child: trailing,
+        foregroundColor: resolvedColor,
+      );
+    }
+    return trailing;
+  }
+
+  Widget? _placeholder(SBBInputDecorationThemeData? inputDecorationTheme) {
+    Widget? placeholder = widget.decoration.placeholder;
+    if (placeholder == null && widget.decoration.placeholderText != null) {
+      placeholder = AnimatedOpacity(
+        duration: _kTransitionDuration * 1.25,
+        opacity: _shouldShowPlaceholder ? 1 : 0,
+        child: Text(widget.decoration.placeholderText!),
+      );
+    }
+    if (placeholder != null) {
+      final Color? resolvedColor =
+          (widget.decoration.placeholderForegroundColor ?? inputDecorationTheme?.placeholderForegroundColor)?.resolve(
+            widget.states,
+          );
+      final TextStyle? textStyle = widget.decoration.placeholderTextStyle ?? inputDecorationTheme?.placeholderTextStyle;
+      placeholder = _addDefaultAncestorWithResolved(
+        child: placeholder,
+        foregroundColor: resolvedColor,
+        textStyle: textStyle,
+      );
+    }
+    return placeholder;
+  }
+
+  Widget? _errorWidget(TextScaler textScaler, SBBInputDecorationThemeData? inputDecorationTheme) {
+    Widget? error = widget.decoration.error;
+    if (error == null && widget.decoration.errorText != null) {
+      error = Padding(
+        padding: EdgeInsets.only(
+          top: textScaler.scale(_effectiveTitleRowErrorGap(inputDecorationTheme)),
+          bottom: _effectiveErrorBottomPadding(inputDecorationTheme),
+        ),
+        child: Text(widget.decoration.errorText!),
+      );
+    }
+    if (error != null) {
+      final Color? resolvedColor =
+          (widget.decoration.errorForegroundColor ?? inputDecorationTheme?.errorForegroundColor)?.resolve(
+            widget.states,
+          );
+      final TextStyle? textStyle = widget.decoration.errorTextStyle ?? inputDecorationTheme?.errorTextStyle;
+      error = _addDefaultAncestorWithResolved(
+        child: error,
+        foregroundColor: resolvedColor,
+        textStyle: textStyle,
+      );
+    }
+    error = AnimatedSwitcher(
+      duration: _kTransitionDuration,
+      child: error ?? SizedBox.shrink(),
+    );
+    return error;
   }
 
   BoxDecoration _effectiveBoxDecoration(SBBInputDecorationThemeData? inputDecorationTheme) {
