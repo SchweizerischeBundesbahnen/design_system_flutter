@@ -6,12 +6,13 @@ import 'package:sbb_design_system_mobile/src/chip/theme/default_sbb_chip_theme_d
 import 'package:sbb_design_system_mobile/src/container/container.dart';
 import 'package:sbb_design_system_mobile/src/radio/theme/default_sbb_radio_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/slider/theme/default_sbb_slider_theme_data.dart';
-import 'package:sbb_design_system_mobile/src/switch/theme/default_sbb_switch_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/stepper/theme/default_sbb_stepper_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/switch/theme/default_sbb_switch_theme_data.dart';
 
 import '../button/theme/default_button_themes.dart';
 import '../container/theme/default_sbb_content_box_theme_data.dart';
 import '../list_item/theme/default_sbb_list_item_theme_data.dart';
+import '../segmented_button/theme/default_sbb_segmented_button_theme_data.dart';
 import '../status/theme/default_sbb_status_theme_data.dart';
 
 class SBBTheme {
@@ -32,6 +33,7 @@ class SBBTheme {
     SBBListItemThemeData? listItemTheme,
     SBBRadioThemeData? radioTheme,
     SBBStatusThemeData? statusTheme,
+    SBBSegmentedButtonThemeData? segmentedButtonTheme,
     SBBSliderThemeData? sliderTheme,
     SBBSwitchThemeData? switchTheme,
     SBBTextTheme? textTheme,
@@ -52,6 +54,7 @@ class SBBTheme {
     headerBoxStyle: headerBoxStyle,
     listItemTheme: listItemTheme,
     statusTheme: statusTheme,
+    segmentedButtonTheme: segmentedButtonTheme,
     sliderTheme: sliderTheme,
     switchTheme: switchTheme,
     textTheme: textTheme,
@@ -73,6 +76,7 @@ class SBBTheme {
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBListItemThemeData? listItemTheme,
     SBBStatusThemeData? statusTheme,
+    SBBSegmentedButtonThemeData? segmentedButtonTheme,
     SBBSliderThemeData? sliderTheme,
     SBBSwitchThemeData? switchTheme,
     SBBTextTheme? textTheme,
@@ -93,6 +97,7 @@ class SBBTheme {
     headerBoxStyle: headerBoxStyle,
     listItemTheme: listItemTheme,
     statusTheme: statusTheme,
+    segmentedButtonTheme: segmentedButtonTheme,
     sliderTheme: sliderTheme,
     switchTheme: switchTheme,
     textTheme: textTheme,
@@ -115,6 +120,7 @@ class SBBTheme {
     SBBListItemThemeData? listItemTheme,
     SBBRadioThemeData? radioTheme,
     SBBStatusThemeData? statusTheme,
+    SBBSegmentedButtonThemeData? segmentedButtonTheme,
     SBBSliderThemeData? sliderTheme,
     SBBSwitchThemeData? switchTheme,
     SBBTextTheme? textTheme,
@@ -160,6 +166,9 @@ class SBBTheme {
     final defaultStatusTheme = DefaultSBBStatusThemeData(baseStyle: mergedBaseStyle);
     final mergedStatusTheme = defaultStatusTheme.merge(statusTheme);
 
+    final defaultSegmentedButtonTheme = DefaultSBBSegmentedButtonThemeData(mergedBaseStyle);
+    final mergedSegmentedButtonTheme = defaultSegmentedButtonTheme.merge(segmentedButtonTheme);
+
     final defaultSliderTheme = DefaultSBBSliderThemeData(mergedBaseStyle);
     final mergedSliderTheme = defaultSliderTheme.merge(sliderTheme);
 
@@ -187,6 +196,7 @@ class SBBTheme {
       listItemTheme: mergedListItemTheme,
       radioTheme: mergedRadioTheme,
       statusTheme: mergedStatusTheme,
+      segmentedButtonTheme: mergedSegmentedButtonTheme,
       sliderTheme: mergedSliderTheme,
       switchTheme: mergedSwitchTheme,
       textTheme: mergedTextTheme,
@@ -209,6 +219,7 @@ class SBBTheme {
     required SBBListItemThemeData listItemTheme,
     required SBBRadioThemeData radioTheme,
     required SBBStatusThemeData statusTheme,
+    required SBBSegmentedButtonThemeData segmentedButtonTheme,
     required SBBSliderThemeData sliderTheme,
     required SBBSwitchThemeData switchTheme,
     required SBBTextTheme textTheme,
@@ -246,6 +257,7 @@ class SBBTheme {
         listItemTheme,
         radioTheme,
         statusTheme,
+        segmentedButtonTheme,
         sliderTheme,
         stepperTheme,
         switchTheme,

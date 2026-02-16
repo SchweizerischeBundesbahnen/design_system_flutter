@@ -22,9 +22,7 @@ class CheckboxPageState extends State<CheckboxPage> {
   bool? _listItemValue7 = false;
   bool _listItemValue8 = false;
 
-  int _enabledIndex = 0;
-
-  bool get _isEnabled => _enabledIndex == 0;
+  bool _isEnabled = true;
 
   @override
   Widget build(BuildContext context) {
@@ -37,9 +35,12 @@ class CheckboxPageState extends State<CheckboxPage> {
             children: [
               ThemeModeSegmentedButton(),
               SBBSegmentedButton(
-                values: ['All Enabled', 'All Disabled'],
-                selectedStateIndex: _enabledIndex,
-                selectedIndexChanged: (i) => setState(() => _enabledIndex = i),
+                segments: [
+                  SBBButtonSegment(value: true, labelText: 'All enabled'),
+                  SBBButtonSegment(value: false, labelText: 'All Disabled'),
+                ],
+                selected: _isEnabled,
+                onSelectionChanged: (update) => setState(() => _isEnabled = update),
               ),
             ],
           ),

@@ -213,12 +213,15 @@ class ThemeModeSegmentedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SBBSegmentedButton.icon(
-      icons: {SBBIcons.sunshine_small: 'Light theme', SBBIcons.moon_small: 'Dark theme'},
-      selectedIndexChanged: (value) {
-        Provider.of<AppState>(context, listen: false).updateTheme(value == 1);
+    return SBBSegmentedButton<bool>(
+      segments: [
+        SBBButtonSegment(value: false, leadingIconData: SBBIcons.sunshine_small),
+        SBBButtonSegment(value: true, leadingIconData: SBBIcons.moon_small),
+      ],
+      onSelectionChanged: (value) {
+        Provider.of<AppState>(context, listen: false).updateTheme(value);
       },
-      selectedStateIndex: Provider.of<AppState>(context).isDarkModeOn ? 1 : 0,
+      selected: Provider.of<AppState>(context).isDarkModeOn,
     );
   }
 }

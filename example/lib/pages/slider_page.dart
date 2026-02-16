@@ -15,11 +15,8 @@ class SliderPage extends StatefulWidget {
 class SliderPageState extends State<SliderPage> {
   double _defaultSliderValue = 50.0;
   double _iconlessSliderValue = 50.0;
-  final double _disabledSliderValue = 50.0;
 
-  int _selectedStateIndex = 0;
-
-  bool get _isEnabled => _selectedStateIndex == 0;
+  bool _isEnabled = true;
 
   @override
   Widget build(BuildContext context) {
@@ -30,14 +27,13 @@ class SliderPageState extends State<SliderPage> {
             spacing: SBBSpacing.small,
             children: [
               const ThemeModeSegmentedButton(),
-              SBBSegmentedButton.text(
-                values: ['Enabled', 'Disabled'],
-                selectedStateIndex: _selectedStateIndex,
-                selectedIndexChanged: (val) {
-                  setState(() {
-                    _selectedStateIndex = val;
-                  });
-                },
+              SBBSegmentedButton(
+                segments: [
+                  SBBButtonSegment(value: true, labelText: 'All enabled'),
+                  SBBButtonSegment(value: false, labelText: 'All Disabled'),
+                ],
+                selected: _isEnabled,
+                onSelectionChanged: (update) => setState(() => _isEnabled = update),
               ),
             ],
           ),
