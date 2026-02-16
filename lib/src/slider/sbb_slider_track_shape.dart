@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 
 /// Custom track shape to get even height for active and inactive track on [RoundedRectSliderTrackShape].
 class EvenRoundedRectSliderTrackShape extends RoundedRectSliderTrackShape {
+  const EvenRoundedRectSliderTrackShape({required this.thumbRadius});
+
+  final double thumbRadius;
+
   @override
   void paint(
     PaintingContext context,
@@ -15,7 +19,6 @@ class EvenRoundedRectSliderTrackShape extends RoundedRectSliderTrackShape {
     bool isDiscrete = false,
     bool isEnabled = false,
     double additionalActiveTrackHeight = 0,
-    double thumbRadius = 14.0,
   }) {
     // Assign the track segment paints, which are leading: active and
     // trailing: inactive.

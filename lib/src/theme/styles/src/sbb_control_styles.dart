@@ -4,10 +4,7 @@ import '../../theme.dart';
 
 class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   SBBControlStyles({
-    this.checkbox,
     this.pagination,
-    this.slider,
-    this.radioButton,
     this.textField,
     this.segmentedButton,
     this.redSegmentedButton,
@@ -19,9 +16,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     this.linkTextStyle,
     this.linkTextStyleHighlighted,
     this.listHeaderTextStyle,
-    this.accordionTitleTextStyle,
-    this.accordionBodyTextStyle,
-    this.accordionBackgroundColor,
     this.modalBackgroundColor,
     this.modalTitleTextStyle,
     this.tabBarTextStyle,
@@ -30,10 +24,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   });
 
   factory SBBControlStyles.$default({required SBBBaseStyle baseStyle}) => SBBControlStyles(
-    slider: SBBSliderStyle.$default(baseStyle: baseStyle),
-    checkbox: SBBControlStyle.$default(baseStyle: baseStyle),
     pagination: SBBPaginationStyle.$default(baseStyle: baseStyle),
-    radioButton: SBBControlStyle.$default(baseStyle: baseStyle),
     textField: SBBTextFieldStyle.$default(baseStyle: baseStyle),
     segmentedButton: SBBSegmentedButtonStyle.$default(baseStyle: baseStyle),
     redSegmentedButton: SBBSegmentedButtonStyle.red(baseStyle: baseStyle),
@@ -53,9 +44,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
       color: baseStyle.themeValue(baseStyle.primaryColorDark, SBBColors.white),
     ),
     listHeaderTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallLight),
-    accordionTitleTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.mediumLight),
-    accordionBodyTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallLight),
-    accordionBackgroundColor: baseStyle.themeValue(SBBColors.white, SBBColors.charcoal),
     modalBackgroundColor: baseStyle.themeValue(SBBColors.milk, SBBColors.midnight),
     modalTitleTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.largeLight),
     tabBarTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallLight),
@@ -63,13 +51,10 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     picker: SBBPickerStyle.$default(baseStyle: baseStyle),
   );
 
-  final SBBControlStyle? checkbox;
-  final SBBControlStyle? radioButton;
   final SBBTextFieldStyle? textField;
   final SBBSegmentedButtonStyle? segmentedButton;
   final SBBSegmentedButtonStyle? redSegmentedButton;
   final SBBTextStyle? selectLabel;
-  final SBBSliderStyle? slider;
   final SBBPaginationStyle? pagination;
 
   final Color? headerBackgroundColor;
@@ -79,9 +64,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   final TextStyle? linkTextStyle;
   final TextStyle? linkTextStyleHighlighted;
   final TextStyle? listHeaderTextStyle;
-  final TextStyle? accordionTitleTextStyle;
-  final TextStyle? accordionBodyTextStyle;
-  final Color? accordionBackgroundColor;
   final Color? modalBackgroundColor;
   final TextStyle? modalTitleTextStyle;
   final TextStyle? tabBarTextStyle;
@@ -91,7 +73,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   static SBBControlStyles of(BuildContext context) => Theme.of(context).extension<SBBControlStyles>()!;
 
   AppBarTheme get appBarTheme => AppBarTheme(
-    color: headerBackgroundColor,
+    backgroundColor: headerBackgroundColor,
     iconTheme: IconThemeData(color: headerIconColor),
     actionsIconTheme: IconThemeData(color: headerIconColor),
     elevation: 0.0,
@@ -106,10 +88,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
 
   @override
   ThemeExtension<SBBControlStyles> copyWith({
-    SBBControlStyle? checkbox,
-    SBBSliderStyle? slider,
     SBBPaginationStyle? pagination,
-    SBBControlStyle? radioButton,
     SBBTextFieldStyle? textField,
     SBBSegmentedButtonStyle? segmentedButton,
     SBBSegmentedButtonStyle? redSegmentedButton,
@@ -121,19 +100,13 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     TextStyle? linkTextStyle,
     TextStyle? linkTextStyleHighlighted,
     TextStyle? listHeaderTextStyle,
-    TextStyle? accordionTitleTextStyle,
-    TextStyle? accordionBodyTextStyle,
-    Color? accordionBackgroundColor,
     Color? modalBackgroundColor,
     TextStyle? modalTitleTextStyle,
     TextStyle? tabBarTextStyle,
     PromotionBoxStyle? promotionBox,
     SBBPickerStyle? picker,
   }) => SBBControlStyles(
-    checkbox: checkbox ?? this.checkbox,
-    slider: slider ?? this.slider,
     pagination: pagination ?? this.pagination,
-    radioButton: radioButton ?? this.radioButton,
     textField: textField ?? this.textField,
     segmentedButton: segmentedButton ?? this.segmentedButton,
     redSegmentedButton: redSegmentedButton ?? this.redSegmentedButton,
@@ -146,9 +119,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     linkTextStyle: linkTextStyle ?? this.linkTextStyle,
     linkTextStyleHighlighted: linkTextStyleHighlighted ?? this.linkTextStyleHighlighted,
     listHeaderTextStyle: listHeaderTextStyle ?? this.listHeaderTextStyle,
-    accordionTitleTextStyle: accordionTitleTextStyle ?? this.accordionTitleTextStyle,
-    accordionBodyTextStyle: accordionBodyTextStyle ?? this.accordionBodyTextStyle,
-    accordionBackgroundColor: accordionBackgroundColor ?? this.accordionBackgroundColor,
     modalBackgroundColor: modalBackgroundColor ?? this.modalBackgroundColor,
     modalTitleTextStyle: modalTitleTextStyle ?? this.modalTitleTextStyle,
     tabBarTextStyle: tabBarTextStyle ?? this.tabBarTextStyle,
@@ -160,10 +130,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   ThemeExtension<SBBControlStyles> lerp(ThemeExtension<SBBControlStyles>? other, double t) {
     if (other is! SBBControlStyles) return this;
     return SBBControlStyles(
-      checkbox: checkbox?.lerp(other.checkbox, t),
-      slider: slider?.lerp(other.slider, t),
       pagination: pagination?.lerp(other.pagination, t),
-      radioButton: radioButton?.lerp(other.radioButton, t),
       textField: textField?.lerp(other.textField, t),
       segmentedButton: segmentedButton?.lerp(other.segmentedButton, t),
       redSegmentedButton: redSegmentedButton?.lerp(other.redSegmentedButton, t),
@@ -179,9 +146,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
       linkTextStyle: TextStyle.lerp(linkTextStyle, other.linkTextStyle, t),
       linkTextStyleHighlighted: TextStyle.lerp(linkTextStyleHighlighted, other.linkTextStyleHighlighted, t),
       listHeaderTextStyle: TextStyle.lerp(listHeaderTextStyle, other.listHeaderTextStyle, t),
-      accordionTitleTextStyle: TextStyle.lerp(accordionTitleTextStyle, other.accordionTitleTextStyle, t),
-      accordionBodyTextStyle: TextStyle.lerp(accordionBodyTextStyle, other.accordionBodyTextStyle, t),
-      accordionBackgroundColor: Color.lerp(accordionBackgroundColor, other.accordionBackgroundColor, t),
       modalBackgroundColor: Color.lerp(modalBackgroundColor, other.modalBackgroundColor, t),
       modalTitleTextStyle: TextStyle.lerp(modalTitleTextStyle, other.modalTitleTextStyle, t),
       tabBarTextStyle: TextStyle.lerp(tabBarTextStyle, other.tabBarTextStyle, t),
@@ -195,10 +159,7 @@ extension SBBControlStylesExtension on SBBControlStyles? {
   SBBControlStyles merge(SBBControlStyles? other) {
     if (this == null) return other ?? SBBControlStyles();
     return this!.copyWith(
-          checkbox: this!.checkbox.merge(other?.checkbox),
-          slider: this!.slider.merge(other?.slider),
           pagination: this!.pagination.merge(other?.pagination),
-          radioButton: this!.radioButton.merge(other?.radioButton),
           textField: this!.textField.merge(other?.textField),
           segmentedButton: this!.segmentedButton.merge(other?.segmentedButton),
           redSegmentedButton: this!.redSegmentedButton.merge(other?.redSegmentedButton),
@@ -212,9 +173,6 @@ extension SBBControlStylesExtension on SBBControlStyles? {
           linkTextStyle: this!.linkTextStyle ?? other?.linkTextStyle,
           linkTextStyleHighlighted: this!.linkTextStyleHighlighted ?? other?.linkTextStyleHighlighted,
           listHeaderTextStyle: this!.listHeaderTextStyle ?? other?.listHeaderTextStyle,
-          accordionTitleTextStyle: this!.accordionTitleTextStyle ?? other?.accordionTitleTextStyle,
-          accordionBodyTextStyle: this!.accordionBodyTextStyle ?? other?.accordionBodyTextStyle,
-          accordionBackgroundColor: this!.accordionBackgroundColor ?? other?.accordionBackgroundColor,
           modalBackgroundColor: this!.modalBackgroundColor ?? other?.modalBackgroundColor,
           modalTitleTextStyle: this!.modalTitleTextStyle ?? other?.modalTitleTextStyle,
           tabBarTextStyle: this!.tabBarTextStyle ?? other?.tabBarTextStyle,

@@ -44,8 +44,8 @@ class SBBTertiaryButton extends StatelessWidget {
     this.autofocus = false,
     this.isSemanticButton = true,
     this.semanticLabel,
-  }) : assert(!(labelText != null && label != null), 'Cannot provide both labelText and label!'),
-       assert(!(iconData != null && icon != null), 'Cannot provide both iconData and icon!'),
+  }) : assert(labelText == null || label == null, 'Cannot provide both labelText and label!'),
+       assert(iconData == null || icon == null, 'Cannot provide both iconData and icon!'),
        assert(
          !(labelText == null && label == null && !isLoading && icon == null && iconData == null),
          'One of labelText, label, icon, iconData must be set or isLoading must be true!',
