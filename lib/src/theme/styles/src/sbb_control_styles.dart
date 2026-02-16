@@ -4,7 +4,6 @@ import '../../theme.dart';
 
 class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   SBBControlStyles({
-    this.pagination,
     this.textField,
     this.selectLabel,
     this.headerBackgroundColor,
@@ -22,7 +21,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   });
 
   factory SBBControlStyles.$default({required SBBBaseStyle baseStyle}) => SBBControlStyles(
-    pagination: SBBPaginationStyle.$default(baseStyle: baseStyle),
     textField: SBBTextFieldStyle.$default(baseStyle: baseStyle),
     selectLabel: SBBTextStyle(
       textStyle: baseStyle.themedTextStyle(
@@ -49,7 +47,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
 
   final SBBTextFieldStyle? textField;
   final SBBTextStyle? selectLabel;
-  final SBBPaginationStyle? pagination;
 
   final Color? headerBackgroundColor;
   final Color? headerButtonBackgroundColorHighlighted;
@@ -82,7 +79,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
 
   @override
   ThemeExtension<SBBControlStyles> copyWith({
-    SBBPaginationStyle? pagination,
     SBBTextFieldStyle? textField,
     SBBTextStyle? selectLabel,
     Color? headerBackgroundColor,
@@ -98,7 +94,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     PromotionBoxStyle? promotionBox,
     SBBPickerStyle? picker,
   }) => SBBControlStyles(
-    pagination: pagination ?? this.pagination,
     textField: textField ?? this.textField,
     selectLabel: selectLabel ?? this.selectLabel,
     headerBackgroundColor: headerBackgroundColor ?? this.headerBackgroundColor,
@@ -120,7 +115,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   ThemeExtension<SBBControlStyles> lerp(ThemeExtension<SBBControlStyles>? other, double t) {
     if (other is! SBBControlStyles) return this;
     return SBBControlStyles(
-      pagination: pagination?.lerp(other.pagination, t),
       textField: textField?.lerp(other.textField, t),
       selectLabel: selectLabel?.lerp(other.selectLabel, t),
       headerBackgroundColor: Color.lerp(headerBackgroundColor, other.headerBackgroundColor, t),
@@ -147,7 +141,6 @@ extension SBBControlStylesExtension on SBBControlStyles? {
   SBBControlStyles merge(SBBControlStyles? other) {
     if (this == null) return other ?? SBBControlStyles();
     return this!.copyWith(
-          pagination: this!.pagination.merge(other?.pagination),
           textField: this!.textField.merge(other?.textField),
           selectLabel: this!.selectLabel.merge(other?.selectLabel),
           picker: this!.picker.merge(other?.picker),
