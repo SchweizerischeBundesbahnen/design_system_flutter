@@ -9,6 +9,8 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+## [4.7.0] - 2026-02-17
+
 ### Changed
 
 - drop support for Flutter SDK 3.32.x (minimum required dart sdk version 3.9.0)
@@ -726,7 +728,9 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Initial project setup
 - Added some widgets
 
-[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.6.0...HEAD
+[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.7.0...HEAD
+
+[4.7.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.6.0...4.7.0
 
 [4.6.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.5.0...4.6.0
 
