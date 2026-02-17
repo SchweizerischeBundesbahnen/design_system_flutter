@@ -9,10 +9,13 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+### Changed
+
+- drop support for Flutter SDK 3.32.x (minimum required dart sdk version 3.9.0)
+
 ### Fixed
 
 - `SBBSliverFloatingHeaderbox`: Fixed an issue with the crossfade showing the wrong widget.
-- drop support for Flutter SDK 3.32.x (minimum required dart sdk version 3.9.0)
 
 ## [4.6.0] - 2026-02-10
 
