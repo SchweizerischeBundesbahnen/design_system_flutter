@@ -4,9 +4,9 @@ import 'package:sbb_design_system_mobile/src/button/theme/sbb_button_style_x.dar
 import 'package:sbb_design_system_mobile/src/checkbox/theme/default_sbb_checkbox_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/chip/theme/default_sbb_chip_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/container/container.dart';
-import 'package:sbb_design_system_mobile/src/paginator/theme/default_sbb_paginator_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_input_decoration_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_text_input_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/paginator/theme/default_sbb_paginator_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/radio/theme/default_sbb_radio_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/slider/theme/default_sbb_slider_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/stepper/theme/default_sbb_stepper_theme_data.dart';
@@ -27,6 +27,7 @@ class SBBTheme {
     SBBPrimaryButtonThemeData? primaryButtonTheme,
     SBBSecondaryButtonThemeData? secondaryButtonTheme,
     SBBTertiaryButtonThemeData? tertiaryButtonTheme,
+    SBBAccentButtonThemeData? accentButtonTheme,
     SBBCheckboxThemeData? checkboxTheme,
     SBBChipThemeData? chipTheme,
     SBBContentBoxThemeData? contentBoxTheme,
@@ -51,6 +52,7 @@ class SBBTheme {
     primaryButtonTheme: primaryButtonTheme,
     secondaryButtonTheme: secondaryButtonTheme,
     tertiaryButtonTheme: tertiaryButtonTheme,
+    accentButtonTheme: accentButtonTheme,
     checkboxTheme: checkboxTheme,
     chipTheme: chipTheme,
     contentBoxTheme: contentBoxTheme,
@@ -76,6 +78,7 @@ class SBBTheme {
     SBBPrimaryButtonThemeData? primaryButtonTheme,
     SBBSecondaryButtonThemeData? secondaryButtonTheme,
     SBBTertiaryButtonThemeData? tertiaryButtonTheme,
+    SBBAccentButtonThemeData? accentButtonTheme,
     SBBCheckboxThemeData? checkboxTheme,
     SBBChipThemeData? chipTheme,
     SBBContentBoxThemeData? contentBoxTheme,
@@ -100,6 +103,7 @@ class SBBTheme {
     primaryButtonTheme: primaryButtonTheme,
     secondaryButtonTheme: secondaryButtonTheme,
     tertiaryButtonTheme: tertiaryButtonTheme,
+    accentButtonTheme: accentButtonTheme,
     checkboxTheme: checkboxTheme,
     chipTheme: chipTheme,
     contentBoxTheme: contentBoxTheme,
@@ -126,6 +130,7 @@ class SBBTheme {
     SBBPrimaryButtonThemeData? primaryButtonTheme,
     SBBSecondaryButtonThemeData? secondaryButtonTheme,
     SBBTertiaryButtonThemeData? tertiaryButtonTheme,
+    SBBAccentButtonThemeData? accentButtonTheme,
     SBBCheckboxThemeData? checkboxTheme,
     SBBChipThemeData? chipTheme,
     SBBStepperThemeData? stepperTheme,
@@ -156,6 +161,9 @@ class SBBTheme {
 
     final defaultTertiaryButtonTheme = DefaultSBBTertiaryButtonThemeData(mergedBaseStyle);
     final mergedTertiaryButtonTheme = defaultTertiaryButtonTheme.merge(tertiaryButtonTheme);
+
+    final defaultAccentButtonTheme = DefaultSBBAccentButtonThemeData(mergedBaseStyle);
+    final mergedAccentButtonTheme = defaultAccentButtonTheme.merge(accentButtonTheme);
 
     final defaultCheckboxTheme = DefaultSBBCheckboxThemeData(mergedBaseStyle);
     final mergedCheckboxTheme = defaultCheckboxTheme.merge(checkboxTheme);
@@ -214,6 +222,7 @@ class SBBTheme {
       primaryButtonTheme: mergedPrimaryButtonTheme,
       secondaryButtonTheme: mergedSecondaryButtonTheme,
       tertiaryButtonTheme: mergedTertiaryButtonTheme,
+      accentButtonTheme: mergedAccentButtonTheme,
       checkboxTheme: mergedCheckboxTheme,
       chipTheme: mergedChipTheme,
       stepperTheme: mergedStepperTheme,
@@ -240,6 +249,7 @@ class SBBTheme {
     required SBBPrimaryButtonThemeData primaryButtonTheme,
     required SBBSecondaryButtonThemeData secondaryButtonTheme,
     required SBBTertiaryButtonThemeData tertiaryButtonTheme,
+    required SBBAccentButtonThemeData accentButtonTheme,
     required SBBCheckboxThemeData checkboxTheme,
     required SBBChipThemeData chipTheme,
     required SBBContentBoxThemeData contentBoxTheme,
@@ -282,6 +292,7 @@ class SBBTheme {
         primaryButtonTheme,
         secondaryButtonTheme,
         tertiaryButtonTheme,
+        accentButtonTheme,
         checkboxTheme,
         contentBoxTheme,
         chipTheme,
