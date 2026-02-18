@@ -84,6 +84,24 @@ The list item has received a lot of changes. In general the content is completel
 * use `SBBListItemBoxed`, `SBBRadioListItemBoxed`, `SBBCheckboxListItemBoxed` and `SBBSwitchListItemBoxed`
 * You do not need to wrap this in a `SBBContentBox` anymore
 
+
+
+## Paginator
+
+### Class Changes
+* `SBBPagination` is now split into two separate widgets:
+  * `SBBPaginator`: the standard paginator
+  * `SBBPaginatorFloating`: the floating variant (inherits from `SBBPaginator`)
+* Replace `isFloating: true` with `SBBPaginatorFloating` instead of `SBBPaginator`
+
+### Theming & Styling
+* customize the theme of all `SBBPaginator` with `SBBPaginatorThemeData` as input to `SBBTheme`
+* access the theme using `Theme.of(context).sbbPaginatorTheme`
+* customize an individual paginator by setting its `style` parameter in the constructor
+* Old style access via `SBBControlStyles.of(context).pagination!` is replaced with theme extension pattern
+
+
+
 ## Radio
 
 ### Usage
@@ -134,6 +152,77 @@ This also accounts for the `SBBRadioListItem`.
 * customize the theme of all `SBBStatus` with `SBBStatusThemeData` as input parameter to `SBBTheme`.
 * access the theme using `Theme.of(context).sbbStatusTheme`
 * customize individual status by setting its `style` parameter in the constructor
+
+
+## Segmented Button
+
+### Filled Variant
+use `SBBSegmentedButtonFilled` for the filled style variant (replaces `SBBSegmentedButton.redText` and `SBBSegmentedButton.redIcon`)
+
+### Constructor arguments
+* The new implementation uses `SBBButtonSegment` to describe each segment instead of widget builders
+* Replace index-based selection (`selectedStateIndex`) with value-based selection (`selected`)
+* Replace `selectedIndexChanged` callback with `onSelectionChanged` that provides the selected value instead of index
+* For text segments: use `SBBButtonSegment(value: value, labelText: 'Text')`
+* For icon segments: use `SBBButtonSegment(value: value, leadingIconData: iconData)`
+* For icon with text: use `SBBButtonSegment(value: value, leadingIconData: iconData, labelText: 'Text')`
+* Complete customization is possible using `label` and `leading` parameters in `SBBButtonSegment`
+
+### Example Migration
+
+Old implementation:
+```dart
+SBBSegmentedButton.text(
+  values: ['Option 1', 'Option 2', 'Option 3'],
+  selectedStateIndex: selectedIndex,
+  selectedIndexChanged: (index) => setState(() => selectedIndex = index),
+)
+```
+
+New implementation:
+```dart
+SBBSegmentedButton<int>(
+  segments: [
+    SBBButtonSegment(value: 0, labelText: 'Option 1'),
+    SBBButtonSegment(value: 1, labelText: 'Option 2'),
+    SBBButtonSegment(value: 2, labelText: 'Option 3'),
+  ],
+  selected: selectedValue,
+  onSelectionChanged: (value) => setState(() => selectedValue = value),
+)
+```
+
+Old icon implementation:
+```dart
+SBBSegmentedButton.icon(
+  icons: {
+    SBBIcons.train_medium: 'Train',
+    SBBIcons.bus_medium: 'Bus',
+  },
+  selectedStateIndex: selectedIndex,
+  selectedIndexChanged: (index) => setState(() => selectedIndex = index),
+  withText: true,
+)
+```
+
+New implementation:
+```dart
+SBBSegmentedButton<String>(
+  segments: [
+    SBBButtonSegment(value: 'train', leadingIconData: SBBIcons.train_medium, labelText: 'Train'),
+    SBBButtonSegment(value: 'bus', leadingIconData: SBBIcons.bus_medium, labelText: 'Bus'),
+  ],
+  selected: selectedValue,
+  onSelectionChanged: (value) => setState(() => selectedValue = value),
+)
+```
+### Theming & Styling
+* customize the theme of all `SBBSegmentedButton` with `SBBSegmentedButtonThemeData` as input to `SBBTheme`
+* access the theme using `Theme.of(context).sbbSegmentedButtonTheme`
+* customize an individual segmented button by setting its `style` parameter in the constructor
+* customize individual segments by setting the `style` parameter in `SBBButtonSegment`
+* `SBBSegmentedButtonStyle` and `SBBButtonSegmentStyle` use `WidgetStateProperty<T?>` for state-aware styling
+
 
 ## Stepper
 

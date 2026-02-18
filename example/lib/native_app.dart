@@ -22,7 +22,7 @@ import 'pages/message_page.dart';
 import 'pages/modal_page.dart';
 import 'pages/notification_box_page.dart';
 import 'pages/onboarding_page.dart';
-import 'pages/pagination_page.dart';
+import 'pages/paginator_page.dart';
 import 'pages/picker_page.dart';
 import 'pages/promotion_box_page.dart';
 import 'pages/radio_page.dart';
@@ -119,7 +119,7 @@ class MyApp extends StatelessWidget {
                                   _DemoEntry('Switch', SwitchPage()),
                                   _DemoEntry('Text Input', TextInputPage()),
                                   _DemoEntry('Text Area', TextAreaPage()),
-                                  _DemoEntry('Pagination', PaginationPage()),
+                                  _DemoEntry('Paginator', PaginatorPage()),
                                   _DemoEntry('Slider', SliderPage()),
                                   _DemoEntry('Promotion Box', PromotionBoxPage()),
                                   _DemoEntry('Notification Box', NotificationBoxPage()),
@@ -215,12 +215,15 @@ class ThemeModeSegmentedButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SBBSegmentedButton.icon(
-      icons: {SBBIcons.sunshine_small: 'Light theme', SBBIcons.moon_small: 'Dark theme'},
-      selectedIndexChanged: (value) {
-        Provider.of<AppState>(context, listen: false).updateTheme(value == 1);
+    return SBBSegmentedButton<bool>(
+      segments: [
+        SBBButtonSegment(value: false, leadingIconData: SBBIcons.sunshine_small),
+        SBBButtonSegment(value: true, leadingIconData: SBBIcons.moon_small),
+      ],
+      onSelectionChanged: (value) {
+        Provider.of<AppState>(context, listen: false).updateTheme(value);
       },
-      selectedStateIndex: Provider.of<AppState>(context).isDarkModeOn ? 1 : 0,
+      selected: Provider.of<AppState>(context).isDarkModeOn,
     );
   }
 }

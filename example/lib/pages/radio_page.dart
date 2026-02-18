@@ -18,9 +18,7 @@ class RadioPageState extends State<RadioPage> {
   int? _groupValue = 1;
   int? _listItemGroupValue;
 
-  int _enabledIndex = 0;
-
-  bool get _pageEnabled => _enabledIndex == 0;
+  bool _pageEnabled = true;
 
   @override
   Widget build(BuildContext context) {
@@ -33,9 +31,12 @@ class RadioPageState extends State<RadioPage> {
             children: [
               ThemeModeSegmentedButton(),
               SBBSegmentedButton(
-                values: ['All Enabled', 'All Disabled'],
-                selectedStateIndex: _enabledIndex,
-                selectedIndexChanged: (i) => setState(() => _enabledIndex = i),
+                segments: [
+                  SBBButtonSegment(value: true, labelText: 'All enabled'),
+                  SBBButtonSegment(value: false, labelText: 'All Disabled'),
+                ],
+                selected: _pageEnabled,
+                onSelectionChanged: (update) => setState(() => _pageEnabled = update),
               ),
             ],
           ),

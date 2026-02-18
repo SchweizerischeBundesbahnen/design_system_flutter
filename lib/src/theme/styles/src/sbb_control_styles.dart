@@ -4,10 +4,7 @@ import '../../theme.dart';
 
 class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   SBBControlStyles({
-    this.pagination,
     this.textField,
-    this.segmentedButton,
-    this.redSegmentedButton,
     this.selectLabel,
     this.headerBackgroundColor,
     this.headerButtonBackgroundColorHighlighted,
@@ -24,10 +21,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   });
 
   factory SBBControlStyles.$default({required SBBBaseStyle baseStyle}) => SBBControlStyles(
-    pagination: SBBPaginationStyle.$default(baseStyle: baseStyle),
     textField: SBBTextFieldStyle.$default(baseStyle: baseStyle),
-    segmentedButton: SBBSegmentedButtonStyle.$default(baseStyle: baseStyle),
-    redSegmentedButton: SBBSegmentedButtonStyle.red(baseStyle: baseStyle),
     selectLabel: SBBTextStyle(
       textStyle: baseStyle.themedTextStyle(
         textStyle: SBBTextStyles.helpersLabel,
@@ -52,10 +46,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   );
 
   final SBBTextFieldStyle? textField;
-  final SBBSegmentedButtonStyle? segmentedButton;
-  final SBBSegmentedButtonStyle? redSegmentedButton;
   final SBBTextStyle? selectLabel;
-  final SBBPaginationStyle? pagination;
 
   final Color? headerBackgroundColor;
   final Color? headerButtonBackgroundColorHighlighted;
@@ -88,10 +79,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
 
   @override
   ThemeExtension<SBBControlStyles> copyWith({
-    SBBPaginationStyle? pagination,
     SBBTextFieldStyle? textField,
-    SBBSegmentedButtonStyle? segmentedButton,
-    SBBSegmentedButtonStyle? redSegmentedButton,
     SBBTextStyle? selectLabel,
     Color? headerBackgroundColor,
     Color? headerButtonBackgroundColorHighlighted,
@@ -106,10 +94,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     PromotionBoxStyle? promotionBox,
     SBBPickerStyle? picker,
   }) => SBBControlStyles(
-    pagination: pagination ?? this.pagination,
     textField: textField ?? this.textField,
-    segmentedButton: segmentedButton ?? this.segmentedButton,
-    redSegmentedButton: redSegmentedButton ?? this.redSegmentedButton,
     selectLabel: selectLabel ?? this.selectLabel,
     headerBackgroundColor: headerBackgroundColor ?? this.headerBackgroundColor,
     headerButtonBackgroundColorHighlighted:
@@ -130,10 +115,7 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   ThemeExtension<SBBControlStyles> lerp(ThemeExtension<SBBControlStyles>? other, double t) {
     if (other is! SBBControlStyles) return this;
     return SBBControlStyles(
-      pagination: pagination?.lerp(other.pagination, t),
       textField: textField?.lerp(other.textField, t),
-      segmentedButton: segmentedButton?.lerp(other.segmentedButton, t),
-      redSegmentedButton: redSegmentedButton?.lerp(other.redSegmentedButton, t),
       selectLabel: selectLabel?.lerp(other.selectLabel, t),
       headerBackgroundColor: Color.lerp(headerBackgroundColor, other.headerBackgroundColor, t),
       headerButtonBackgroundColorHighlighted: Color.lerp(
@@ -159,10 +141,7 @@ extension SBBControlStylesExtension on SBBControlStyles? {
   SBBControlStyles merge(SBBControlStyles? other) {
     if (this == null) return other ?? SBBControlStyles();
     return this!.copyWith(
-          pagination: this!.pagination.merge(other?.pagination),
           textField: this!.textField.merge(other?.textField),
-          segmentedButton: this!.segmentedButton.merge(other?.segmentedButton),
-          redSegmentedButton: this!.redSegmentedButton.merge(other?.redSegmentedButton),
           selectLabel: this!.selectLabel.merge(other?.selectLabel),
           picker: this!.picker.merge(other?.picker),
           headerBackgroundColor: this!.headerBackgroundColor ?? other?.headerBackgroundColor,
