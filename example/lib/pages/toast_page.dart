@@ -120,8 +120,14 @@ class _ToastPageState extends State<ToastPage> {
             padding: const EdgeInsets.all(SBBSpacing.medium),
             child: Column(
               children: [
-                SBBTextField(labelText: 'Toast Title', controller: titleController),
-                SBBTextField(labelText: 'Toast Action (empty action will hide action)', controller: actionController),
+                SBBTextInput(
+                  decoration: SBBInputDecoration(labelText: 'Toast Title'),
+                  controller: titleController,
+                ),
+                SBBTextInput(
+                  decoration: SBBInputDecoration(labelText: 'Toast Action (empty action will hide action)'),
+                  controller: actionController,
+                ),
               ],
             ),
           ),

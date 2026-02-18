@@ -5,6 +5,8 @@ import 'package:sbb_design_system_mobile/src/checkbox/theme/default_sbb_checkbox
 import 'package:sbb_design_system_mobile/src/chip/theme/default_sbb_chip_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/container/container.dart';
 import 'package:sbb_design_system_mobile/src/paginator/theme/default_sbb_paginator_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_input_decoration_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_text_input_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/radio/theme/default_sbb_radio_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/slider/theme/default_sbb_slider_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/stepper/theme/default_sbb_stepper_theme_data.dart';
@@ -31,6 +33,7 @@ class SBBTheme {
     SBBStepperThemeData? stepperTheme,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
+    SBBInputDecorationThemeData? inputDecorationTheme,
     SBBListItemThemeData? listItemTheme,
     SBBPaginatorThemeData? paginatorTheme,
     SBBRadioThemeData? radioTheme,
@@ -39,6 +42,7 @@ class SBBTheme {
     SBBSliderThemeData? sliderTheme,
     SBBSwitchThemeData? switchTheme,
     SBBTextTheme? textTheme,
+    SBBTextInputThemeData? textInputTheme,
     SBBToastStyle? toastStyle,
   }) => createTheme(
     brightness: Brightness.light,
@@ -54,6 +58,7 @@ class SBBTheme {
     stepperTheme: stepperTheme,
     controlStyles: controlStyles,
     headerBoxStyle: headerBoxStyle,
+    inputDecorationTheme: inputDecorationTheme,
     listItemTheme: listItemTheme,
     paginatorTheme: paginatorTheme,
     statusTheme: statusTheme,
@@ -61,6 +66,7 @@ class SBBTheme {
     sliderTheme: sliderTheme,
     switchTheme: switchTheme,
     textTheme: textTheme,
+    textInputTheme: textInputTheme,
     toastStyle: toastStyle,
   );
 
@@ -77,6 +83,7 @@ class SBBTheme {
     SBBStepperThemeData? stepperTheme,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
+    SBBInputDecorationThemeData? inputDecorationTheme,
     SBBListItemThemeData? listItemTheme,
     SBBPaginatorThemeData? paginatorTheme,
     SBBStatusThemeData? statusTheme,
@@ -84,6 +91,7 @@ class SBBTheme {
     SBBSliderThemeData? sliderTheme,
     SBBSwitchThemeData? switchTheme,
     SBBTextTheme? textTheme,
+    SBBTextInputThemeData? textInputTheme,
     SBBToastStyle? toastStyle,
   }) => createTheme(
     brightness: Brightness.dark,
@@ -99,6 +107,7 @@ class SBBTheme {
     stepperTheme: stepperTheme,
     controlStyles: controlStyles,
     headerBoxStyle: headerBoxStyle,
+    inputDecorationTheme: inputDecorationTheme,
     listItemTheme: listItemTheme,
     paginatorTheme: paginatorTheme,
     statusTheme: statusTheme,
@@ -106,6 +115,7 @@ class SBBTheme {
     sliderTheme: sliderTheme,
     switchTheme: switchTheme,
     textTheme: textTheme,
+    textInputTheme: textInputTheme,
     toastStyle: toastStyle,
   );
 
@@ -122,6 +132,7 @@ class SBBTheme {
     SBBControlStyles? controlStyles,
     SBBContentBoxThemeData? contentBoxTheme,
     SBBHeaderBoxStyle? headerBoxStyle,
+    SBBInputDecorationThemeData? inputDecorationTheme,
     SBBListItemThemeData? listItemTheme,
     SBBPaginatorThemeData? paginatorTheme,
     SBBRadioThemeData? radioTheme,
@@ -130,6 +141,7 @@ class SBBTheme {
     SBBSliderThemeData? sliderTheme,
     SBBSwitchThemeData? switchTheme,
     SBBTextTheme? textTheme,
+    SBBTextInputThemeData? textInputTheme,
     SBBToastStyle? toastStyle,
   }) {
     // default values are set here and merged with given styles
@@ -187,8 +199,14 @@ class SBBTheme {
     final defaultTextTheme = SBBTextTheme.$default(baseStyle: mergedBaseStyle);
     final mergedTextTheme = defaultTextTheme.merge(textTheme);
 
+    final defaultTextInputTheme = DefaultSBBTextInputThemeData(mergedBaseStyle);
+    final mergedTextInputTheme = defaultTextInputTheme.merge(textInputTheme);
+
     final defaultToastStyle = SBBToastStyle.$default(baseStyle: mergedBaseStyle);
     final mergedToastStyle = defaultToastStyle.merge(defaultToastStyle);
+
+    final defaultInputDecorationTheme = DefaultSBBInputDecorationThemeData(mergedBaseStyle);
+    final mergedInputDecorationTheme = defaultInputDecorationTheme.merge(inputDecorationTheme);
 
     return raw(
       brightness: brightness,
@@ -210,7 +228,9 @@ class SBBTheme {
       sliderTheme: mergedSliderTheme,
       switchTheme: mergedSwitchTheme,
       textTheme: mergedTextTheme,
+      textInputTheme: mergedTextInputTheme,
       toastStyle: mergedToastStyle,
+      inputDecorationTheme: mergedInputDecorationTheme,
     );
   }
 
@@ -226,6 +246,7 @@ class SBBTheme {
     required SBBStepperThemeData stepperTheme,
     required SBBControlStyles controlStyles,
     required SBBHeaderBoxStyle headerBoxStyle,
+    required SBBInputDecorationThemeData inputDecorationTheme,
     required SBBListItemThemeData listItemTheme,
     required SBBPaginatorThemeData paginatorTheme,
     required SBBRadioThemeData radioTheme,
@@ -234,6 +255,7 @@ class SBBTheme {
     required SBBSliderThemeData sliderTheme,
     required SBBSwitchThemeData switchTheme,
     required SBBTextTheme textTheme,
+    required SBBTextInputThemeData textInputTheme,
     required SBBToastStyle toastStyle,
   }) {
     return ThemeData(
@@ -265,6 +287,7 @@ class SBBTheme {
         chipTheme,
         controlStyles,
         headerBoxStyle,
+        inputDecorationTheme,
         listItemTheme,
         paginatorTheme,
         radioTheme,
@@ -274,6 +297,7 @@ class SBBTheme {
         stepperTheme,
         switchTheme,
         textTheme,
+        textInputTheme,
         toastStyle,
       ],
     );

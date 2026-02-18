@@ -26,6 +26,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - added `focusNode` & `autofocus` to `SBBRadio`
 - added `style` to `SBBSwitch` - see [v5 migration guide]
 - added `focusNode` & `autofocus` to `SBBSwitch`
+- added `SBBTextInput` - see [v5 migration guide]
 
 ### Changed
 
@@ -65,6 +66,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Removed `SBBGroupStyle.of(context)` and `SBBContentBoxStyle.of(context)` accessor, use `Theme.of(context).sbbContentBoxTheme` instead
 - Removed deprecated `SBBGroup`
 - Removed deprecated `sbbDefaultSpacing`
+- Removed `SBBTextField`
 
 
 ## [4.5.0] - 2026-01-19

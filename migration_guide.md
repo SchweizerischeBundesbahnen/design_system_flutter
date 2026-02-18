@@ -261,3 +261,167 @@ SBBSegmentedButton<String>(
 * customize the theme of all `SBBSwitch` with `SBBSwitchThemeData`
 * access the theme using `Theme.of(context).sbbSwitchTheme`
 * customize an individual switch by setting its `style` parameter in the constructor
+
+
+## Text Input
+
+### From SBBTextField to SBBTextInput
+
+The `SBBTextField` has been replaced by the more flexible `SBBTextInput`. 
+This migration introduces a new decoration system (`SBBInputDecoration`) 
+and theme support (`SBBInputDecorationThemeData` and `SBBTextInputThemeData`).
+
+It allows to truly build expandable and multiline text input fields (Text Area).
+
+A boxed variant is added: `SBBTextInputBoxed`
+
+#### Key Differences
+
+| Aspect | SBBTextField | SBBTextInput |
+|--------|-------------|------------|
+| **Leading widget** | `icon` (IconData only) | `decoration.leading` or `decoration.leadingIconData` |
+| **Trailing widget** | `suffixIcon` (Widget) | `decoration.trailing` or `decoration.trailingIconData` |
+| **Label** | `labelText` | `decoration.labelText` or `decoration.label` |
+| **Placeholder** | `hintText` | `decoration.placeholderText` or `decoration.placeholder` |
+| **Error handling** | `errorText` only | `decoration.errorText` or `decoration.error` (as Widget) |
+| **Theming** | No theme support | `SBBInputDecorationThemeData` + `SBBTextInputThemeData` |
+| **Disabled state** | `enabled` only | `enabled` + `readOnly` (more granular control) |
+| **State management** | Custom underline widget | `SBBInputDecorator` with flexible styling |
+| **Multiline icons** | Always center-aligned | Automatically top-aligned in multiline mode |
+
+#### Basic Migration Example
+
+**Before (SBBTextField):**
+```dart
+SBBTextField(
+  controller: _controller,
+  labelText: 'Username',
+  hintText: 'Enter your username',
+  errorText: _error,
+  icon: Icons.person,
+  suffixIcon: Icon(Icons.clear),
+  onChanged: (value) => setState(() {}),
+)
+```
+
+**After (SBBTextInput):**
+```dart
+SBBTextInput(
+  controller: _controller,
+  decoration: SBBInputDecoration(
+    labelText: 'Username',
+    placeholderText: 'Enter your username',
+    errorText: _error,
+    leadingIconData: Icons.person,
+    trailingIconData: Icons.clear,
+  ),
+  onChanged: (value) => setState(() {}),
+)
+```
+
+#### Property Mapping
+
+| SBBTextField | SBBTextInput |
+|------------|-----------|
+| `controller` | `controller` |
+| `enabled` | `enabled` |
+| `labelText` | `decoration.labelText` |
+| `hintText` | `decoration.placeholderText` |
+| `errorText` | `decoration.errorText` |
+| `icon` | `decoration.leadingIconData` |
+| `suffixIcon` | `decoration.trailing` or `decoration.trailingIconData` |
+| `obscureText` | `obscureText` |
+| `obscuringCharacter` | `obscuringCharacter` |
+| `maxLines` | `maxLines` |
+| `minLines` | `minLines` |
+| `keyboardType` | `keyboardType` |
+| `textInputAction` | `textInputAction` |
+| `inputFormatters` | `inputFormatters` |
+| `onChanged` | `onChanged` |
+| `onSubmitted` | `onSubmitted` |
+| `onTap` | `onTap` |
+| `onTapAlwaysCalled` | `onTapAlwaysCalled` |
+| `focusNode` | `focusNode` |
+| `autofocus` | `autofocus` |
+| `textCapitalization` | `textCapitalization` |
+| `enableInteractiveSelection` | `enableInteractiveSelection` |
+| `isLastElement` | *(removed)* - use `SBBListItem.divideListItems()` if in lists |
+
+#### Theming
+
+**SBBTextField** had no theme support. **SBBTextInput** uses two theme classes:
+
+1. **`SBBInputDecorationThemeData`**: Controls decoration-level styling
+   - Access via `Theme.of(context).sbbInputDecorationTheme`
+   - Configure default colors, gaps, text styles for labels, errors, placeholders
+
+2. **`SBBTextInputThemeData`**: Controls input-specific styling
+   - Access via `Theme.of(context).sbbTextInputTheme`
+   - Configure input text style, foreground color, clear button behavior
+   - Example:
+   ```dart
+   SBBTextInputThemeData(
+     inputTextStyle: TextStyle(fontSize: 16),
+     enableClearButton: true,
+   )
+   ```
+
+#### Advanced Features
+
+**SBBTextInput** provides features not available in **SBBTextField**:
+
+1. **Custom Widgets instead of just text**:
+   ```dart
+   SBBTextInput(
+     decoration: SBBInputDecoration(
+       label: CustomLabelWidget(),  // Instead of just labelText
+       error: CustomErrorWidget(),  // Instead of just errorText
+       leading: CustomLeadingWidget(),  // Instead of just icon
+     ),
+   )
+   ```
+
+2. **More granular disabled state control**:
+   ```dart
+   SBBTextInput(
+     enabled: false,  // Disables everything including trailing widgets
+     // OR
+     readOnly: true,  // Text can't be edited but trailing widgets stay interactive
+     enableInteractiveSelection: false,
+   )
+   ```
+
+3. **Clear button automation**:
+A cross small will be displayed instead of the trailingIconData when focused and has non empty input.
+   ```dart
+   SBBTextInput(
+     enableClearButton: true,  // Replaces trailing icon with clear button on focus + content (defaults to true)
+     decoration: SBBInputDecoration(
+       trailingIconData: Icons.search,
+     ),
+   )
+   ```
+
+5. **Floating label behavior control**:
+   ```dart
+   SBBTextInput(
+     decoration: SBBInputDecoration(
+       labelText: 'Email',
+       floatingLabelBehavior: SBBFloatingLabelBehavior.always,
+       // Label always floats, placeholder shows when empty
+     ),
+   )
+   ```
+
+#### Migration Checklist
+
+- [ ] Replace `SBBTextField` with `SBBTextInput`
+- [ ] Move `icon` → `decoration.leadingIconData`
+- [ ] Move `hintText` → `decoration.placeholderText`
+- [ ] Move `errorText` → `decoration.errorText`
+- [ ] Move `suffixIcon` → `decoration.trailing` or `decoration.trailingIconData`
+- [ ] Update `isLastElement` usage (remove parameter, use `SBBListItem.divideListItems` instead)
+- [ ] Set up theme data if applying custom styles globally
+- [ ] Test multiline mode if used (icons should be top-aligned now)
+- [ ] Consider using `readOnly` instead of just `enabled` for readonly fields with interactive trailing widgets
+

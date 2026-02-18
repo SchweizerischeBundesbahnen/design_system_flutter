@@ -4,18 +4,9 @@ import 'package:flutter/services.dart';
 import '../../sbb_design_system_mobile.dart';
 import 'sbb_text_field_underline.dart';
 
-/// The SBBTextField.
-///
-/// A text field lets the user enter text, either with hardware keyboard or with
-/// an onscreen keyboard.
-///
-/// This component is based on the outlined Material Design text field with no borders. Unlike
-/// the Material Design specifications, the SBB TextInput displays error messages *above* the bottom borderline and therefore
-/// customizes the bottom border completely.
-///
-/// See [documentation](https://digital.sbb.ch/de/design-system/mobile/components/text-input/)
-/// and [Figma design guidelines](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=309-2236).
+@Deprecated('Use SBBTextInput instead.')
 class SBBTextField extends StatefulWidget {
+  @Deprecated('Use SBBTextInput instead.')
   const SBBTextField({
     super.key,
     this.controller,
