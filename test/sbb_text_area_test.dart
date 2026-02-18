@@ -24,10 +24,7 @@ void main() {
                       SBBTextInput(
                         key: pressableKey,
                         decoration: SBBInputDecoration(
-                          contentPadding: EdgeInsets.symmetric(
-                            vertical: SBBSpacing.small,
-                            horizontal: SBBSpacing.medium,
-                          ),
+                          contentPadding: EdgeInsets.only(top: SBBSpacing.xSmall),
                           leadingIconData: SBBIcons.unicorn_small,
                           trailingIconData: SBBIcons.circle_information_small_small,
                           labelText: 'Label',
@@ -37,10 +34,7 @@ void main() {
                       ),
                       SBBTextInput(
                         decoration: SBBInputDecoration(
-                          contentPadding: EdgeInsets.symmetric(
-                            vertical: SBBSpacing.small,
-                            horizontal: SBBSpacing.medium,
-                          ),
+                          contentPadding: EdgeInsets.only(top: SBBSpacing.xSmall),
                           errorText: 'This is an error!',
                           leadingIconData: SBBIcons.unicorn_small,
                           trailingIconData: SBBIcons.circle_information_small_small,
@@ -58,10 +52,27 @@ void main() {
               SBBTextInputBoxed(
                 key: boxedPressableKey,
                 decoration: SBBInputDecoration(
-                  contentPadding: EdgeInsets.symmetric(vertical: SBBSpacing.small, horizontal: SBBSpacing.medium),
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: SBBSpacing.small,
+                    horizontal: SBBSpacing.medium,
+                  ).copyWith(bottom: 0),
                   leadingIconData: SBBIcons.unicorn_small,
                   trailingIconData: SBBIcons.circle_information_small_small,
                   labelText: 'Label',
+                ),
+                controller: TextEditingController(text: 'Value'),
+                maxLines: 3,
+              ),
+              SBBTextInputBoxed(
+                decoration: SBBInputDecoration(
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: SBBSpacing.small,
+                    horizontal: SBBSpacing.medium,
+                  ).copyWith(bottom: 0),
+                  leadingIconData: SBBIcons.unicorn_small,
+                  trailingIconData: SBBIcons.circle_information_small_small,
+                  labelText: 'Label',
+                  errorText: 'This is an error',
                 ),
                 controller: TextEditingController(text: 'Value'),
                 maxLines: 3,
