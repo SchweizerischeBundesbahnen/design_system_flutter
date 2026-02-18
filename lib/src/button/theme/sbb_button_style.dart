@@ -9,6 +9,7 @@ import '../../../sbb_design_system_mobile.dart';
 /// * [SBBPrimaryButtonThemeData], the ThemeData given to SBBTheme to override the [SBBPrimaryButton]
 /// * [SBBSecondaryButtonThemeData], the ThemeData given to SBBTheme to override the [SBBSecondaryButton]
 /// * [SBBTertiaryButtonThemeData], the ThemeData given to SBBTheme to override the [SBBTertiaryButton]
+/// * [SBBAccentButtonThemeData], the ThemeData given to SBBTheme to override the [SBBAccentButton]
 class SBBButtonStyle {
   const SBBButtonStyle({
     this.textStyle,
