@@ -20,6 +20,7 @@ import '../../sbb_design_system_mobile.dart';
 ///
 ///  * [SBBSecondaryButton], for secondary actions.
 ///  * [SBBTertiaryButton], for less prominent actions.
+///  * [SBBAccentButton], for contexts that need colorless buttons.
 ///  * [SBBPrimaryButtonThemeData], for setting the [SBBButtonStyle] for all buttons within the current Theme.
 ///  * [Figma design specs](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=7-12)
 class SBBPrimaryButton extends StatelessWidget {
