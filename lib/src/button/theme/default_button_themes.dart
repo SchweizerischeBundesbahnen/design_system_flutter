@@ -104,11 +104,11 @@ class DefaultSBBAccentButtonThemeData extends SBBAccentButtonThemeData {
             WidgetState.any: baseStyle.themedTextStyle(),
           }),
           backgroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
-            WidgetState.disabled: baseStyle.themeValue(SBBColors.transparent, SBBColors.white),
+            WidgetState.disabled: baseStyle.themeValue(SBBColors.graphite, SBBColors.iron),
             WidgetState.any: baseStyle.themeValue(SBBColors.charcoal, SBBColors.white),
           }),
           foregroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
-            WidgetState.disabled: baseStyle.themeValue(SBBColors.smoke, SBBColors.graphite),
+            WidgetState.disabled: baseStyle.themeValue(SBBColors.white, SBBColors.smoke),
             WidgetState.any: baseStyle.themeValue(SBBColors.white, SBBColors.black),
           }),
           overlayColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
@@ -116,8 +116,9 @@ class DefaultSBBAccentButtonThemeData extends SBBAccentButtonThemeData {
             WidgetState.any: null,
           }),
           borderColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
-            WidgetState.disabled: baseStyle.themeValue(SBBColors.iron, SBBColors.cloud),
-            WidgetState.any: SBBColors.smoke,
+            WidgetState.focused | WidgetState.pressed: baseStyle.themeValue(SBBColors.black, SBBColors.graphite),
+            WidgetState.disabled: baseStyle.themeValue(SBBColors.graphite, SBBColors.iron),
+            WidgetState.any: baseStyle.themeValue(SBBColors.charcoal, SBBColors.white),
           }),
         ),
       );
