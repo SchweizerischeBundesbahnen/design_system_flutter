@@ -63,7 +63,7 @@ class SBBMessage extends StatelessWidget {
     super.key,
     required this.title,
     required this.description,
-    this.illustration = MessageIllustration.Display,
+    this.illustration = .Display,
     this.isLoading = false,
     this.messageCode,
     this.onInteraction,

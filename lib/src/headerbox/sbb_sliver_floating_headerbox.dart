@@ -80,7 +80,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
     String? secondaryLabel,
     Widget? trailingWidget,
     SBBHeaderboxFlap? flap,
-    SBBHeaderboxFlapMode flapMode = SBBHeaderboxFlapMode.static,
+    SBBHeaderboxFlapMode flapMode = .static,
     EdgeInsets margin = const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
     String? semanticsLabel,
     Widget? preceding,
@@ -141,7 +141,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
     String? secondaryLabel,
     Widget? trailingWidget,
     SBBHeaderboxFlap? flap,
-    SBBHeaderboxFlapMode flapMode = SBBHeaderboxFlapMode.static,
+    SBBHeaderboxFlapMode flapMode = .static,
     EdgeInsets margin = const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
     String? semanticsLabel,
     Widget? preceding,
@@ -201,7 +201,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
     EdgeInsets margin = const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
     EdgeInsets padding = const EdgeInsets.all(SBBSpacing.medium),
     SBBHeaderboxFlap? flap,
-    SBBHeaderboxFlapMode flapMode = SBBHeaderboxFlapMode.static,
+    SBBHeaderboxFlapMode flapMode = .static,
     String? semanticsLabel,
     this.resizing = true,
     this.floating = true,
@@ -367,7 +367,7 @@ class _Preceding extends StatelessWidget {
   Widget build(BuildContext context) {
     final appBarTheme = Theme.of(context).appBarTheme;
     return SBBContractible(
-      behavior: SBBContractionBehavior.displace,
+      behavior: .displace,
       child: Container(
         color: appBarTheme.backgroundColor,
         child: child,

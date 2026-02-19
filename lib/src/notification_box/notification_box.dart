@@ -32,7 +32,7 @@ class SBBNotificationBox extends StatefulWidget {
     bool hasIcon = true,
     IconData detailsIcon = SBBIcons.chevron_small_right_small,
   }) => SBBNotificationBox(
-    state: SBBNotificationBoxState.alert,
+    state: .alert,
     title: title,
     text: text,
     onControllerCreated: onControllerCreated,
@@ -53,7 +53,7 @@ class SBBNotificationBox extends StatefulWidget {
     bool hasIcon = true,
     IconData detailsIcon = SBBIcons.chevron_small_right_small,
   }) => SBBNotificationBox(
-    state: SBBNotificationBoxState.warning,
+    state: .warning,
     title: title,
     text: text,
     onControllerCreated: onControllerCreated,
@@ -74,7 +74,7 @@ class SBBNotificationBox extends StatefulWidget {
     bool hasIcon = true,
     IconData detailsIcon = SBBIcons.chevron_small_right_small,
   }) => SBBNotificationBox(
-    state: SBBNotificationBoxState.success,
+    state: .success,
     title: title,
     text: text,
     onControllerCreated: onControllerCreated,
@@ -95,7 +95,7 @@ class SBBNotificationBox extends StatefulWidget {
     bool hasIcon = true,
     IconData detailsIcon = SBBIcons.chevron_small_right_small,
   }) => SBBNotificationBox(
-    state: SBBNotificationBoxState.information,
+    state: .information,
     title: title,
     text: text,
     onControllerCreated: onControllerCreated,

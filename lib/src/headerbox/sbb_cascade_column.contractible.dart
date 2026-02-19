@@ -51,7 +51,7 @@ class SBBContractible extends StatelessWidget {
     this.minHeight,
     this.maxHeight,
     this.clipBehavior = Clip.none,
-    this.behavior = SBBContractionBehavior.shrink,
+    this.behavior = .shrink,
     this.child,
     this.builder,
   });
@@ -65,7 +65,7 @@ class SBBContractible extends StatelessWidget {
   /// You can also provide both, in which case [child] will be passed into the builder function. This can be beneficial for performance.
   SBBContractible({
     Key? key,
-    SBBContractionBehavior behavior = SBBContractionBehavior.clip,
+    SBBContractionBehavior behavior = .clip,
     Clip clipBehavior = Clip.hardEdge,
     ContractibleBuilder? builder,
     Widget? child,
@@ -83,7 +83,7 @@ class SBBContractible extends StatelessWidget {
   /// In particular, you can override the heights.
   SBBContractible.custom({
     Key? key,
-    SBBContractionBehavior behavior = SBBContractionBehavior.shrink,
+    SBBContractionBehavior behavior = .shrink,
     Clip clipBehavior = Clip.hardEdge,
     double minHeight = 0,
     double? maxHeight,
@@ -164,15 +164,15 @@ class SBBContractible extends StatelessWidget {
   }
 
   ContractibleBuilder _builder(ContractibleBuilder builder) {
-    if (behavior == SBBContractionBehavior.shrink) {
+    if (behavior == .shrink) {
       return builder;
     }
 
     final alignment = switch (behavior) {
-      SBBContractionBehavior.displace => Alignment.bottomLeft,
-      SBBContractionBehavior.clip => Alignment.topLeft,
-      SBBContractionBehavior.center => Alignment.centerLeft,
-      SBBContractionBehavior.shrink => Alignment.centerLeft, // Handled above
+      .displace => Alignment.bottomLeft,
+      .clip => Alignment.topLeft,
+      .center => Alignment.centerLeft,
+      .shrink => Alignment.centerLeft, // Handled above
     };
 
     return (context, progress, child) {
@@ -188,15 +188,15 @@ class SBBContractible extends StatelessWidget {
   }
 
   Widget _child(Widget child, ContractibleBuilder? builder) {
-    if (behavior == SBBContractionBehavior.shrink || builder != null) {
+    if (behavior == .shrink || builder != null) {
       return child;
     }
 
     final alignment = switch (behavior) {
-      SBBContractionBehavior.displace => Alignment.bottomLeft,
-      SBBContractionBehavior.clip => Alignment.topLeft,
-      SBBContractionBehavior.center => Alignment.centerLeft,
-      SBBContractionBehavior.shrink => Alignment.centerLeft, // Handled above
+      .displace => Alignment.bottomLeft,
+      .clip => Alignment.topLeft,
+      .center => Alignment.centerLeft,
+      .shrink => Alignment.centerLeft, // Handled above
     };
 
     return ClipRect(

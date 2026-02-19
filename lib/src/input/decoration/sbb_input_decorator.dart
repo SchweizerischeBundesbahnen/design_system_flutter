@@ -69,7 +69,7 @@ class SBBInputDecorator extends StatefulWidget {
 class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTickerProviderStateMixin {
   late final AnimationController _floatingLabelController;
   late final CurvedAnimation _floatingLabelAnimation;
-  SBBFloatingLabelBehavior _inheritedFloatingLabelBehavior = SBBFloatingLabelBehavior.auto;
+  SBBFloatingLabelBehavior _inheritedFloatingLabelBehavior = .auto;
 
   // Provide unique sort keys to avoid mixing up sort order with sibling input decorators.
   late final OrdinalSortKey _leadingSemanticsSortOrder = OrdinalSortKey(
@@ -103,8 +103,7 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
 
   bool get _shouldFloat {
     final behavior = _effectiveFloatingLabelBehavior;
-    return behavior == SBBFloatingLabelBehavior.always ||
-        (behavior == SBBFloatingLabelBehavior.auto && widget._labelShouldFloat);
+    return behavior == .always || (behavior == .auto && widget._labelShouldFloat);
   }
 
   SBBFloatingLabelBehavior get _effectiveFloatingLabelBehavior {
@@ -112,18 +111,14 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
   }
 
   bool get _shouldShowPlaceholder =>
-      widget.isEmpty &&
-      (widget.states.contains(WidgetState.focused) ||
-          _effectiveFloatingLabelBehavior == SBBFloatingLabelBehavior.always);
+      widget.isEmpty && (widget.states.contains(WidgetState.focused) || _effectiveFloatingLabelBehavior == .always);
 
   @override
   void didUpdateWidget(SBBInputDecorator oldWidget) {
     super.didUpdateWidget(oldWidget);
     final oldBehavior = oldWidget.decoration.floatingLabelBehavior ?? _inheritedFloatingLabelBehavior;
 
-    final oldShouldFloat =
-        oldBehavior == SBBFloatingLabelBehavior.always ||
-        (oldBehavior == SBBFloatingLabelBehavior.auto && oldWidget._labelShouldFloat);
+    final oldShouldFloat = oldBehavior == .always || (oldBehavior == .auto && oldWidget._labelShouldFloat);
     final newShouldFloat = _shouldFloat;
 
     if (newShouldFloat != oldShouldFloat) {
@@ -139,7 +134,7 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
   void didChangeDependencies() {
     super.didChangeDependencies();
     final inputDecorationTheme = Theme.of(context).sbbInputDecorationTheme;
-    final newBehavior = inputDecorationTheme?.floatingLabelBehavior ?? SBBFloatingLabelBehavior.auto;
+    final newBehavior = inputDecorationTheme?.floatingLabelBehavior ?? .auto;
 
     if (_inheritedFloatingLabelBehavior != newBehavior) {
       _inheritedFloatingLabelBehavior = newBehavior;
@@ -453,13 +448,13 @@ class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSl
   @override
   Widget? childForSlot(_SBBDecorationSlot slot) {
     return switch (slot) {
-      _SBBDecorationSlot.label => decoration.label,
-      _SBBDecorationSlot.leading => decoration.leading,
-      _SBBDecorationSlot.input => decoration.input,
-      _SBBDecorationSlot.placeholder => decoration.placeholder,
-      _SBBDecorationSlot.trailing => decoration.trailing,
-      _SBBDecorationSlot.error => decoration.error,
-      _SBBDecorationSlot.container => decoration.container,
+      .label => decoration.label,
+      .leading => decoration.leading,
+      .input => decoration.input,
+      .placeholder => decoration.placeholder,
+      .trailing => decoration.trailing,
+      .error => decoration.error,
+      .container => decoration.container,
     };
   }
 
@@ -542,19 +537,19 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
        _maxLabelHeight = maxLabelHeight,
        _contentPadding = contentPadding;
 
-  RenderBox? get label => childForSlot(_SBBDecorationSlot.label);
+  RenderBox? get label => childForSlot(.label);
 
-  RenderBox? get leading => childForSlot(_SBBDecorationSlot.leading);
+  RenderBox? get leading => childForSlot(.leading);
 
-  RenderBox? get input => childForSlot(_SBBDecorationSlot.input);
+  RenderBox? get input => childForSlot(.input);
 
-  RenderBox? get placeholder => childForSlot(_SBBDecorationSlot.placeholder);
+  RenderBox? get placeholder => childForSlot(.placeholder);
 
-  RenderBox? get trailing => childForSlot(_SBBDecorationSlot.trailing);
+  RenderBox? get trailing => childForSlot(.trailing);
 
-  RenderBox? get error => childForSlot(_SBBDecorationSlot.error);
+  RenderBox? get error => childForSlot(.error);
 
-  RenderBox? get container => childForSlot(_SBBDecorationSlot.container);
+  RenderBox? get container => childForSlot(.container);
 
   @override
   void visitChildrenForSemantics(RenderObjectVisitor visitor) {

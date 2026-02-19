@@ -28,7 +28,7 @@ void main() {
       title: 'With illustration',
       description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
-      illustration: MessageIllustration.Woman,
+      illustration: .Woman,
     ),
   );
 
@@ -48,7 +48,7 @@ void main() {
       title: 'With interaction and illustration',
       description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
-      illustration: MessageIllustration.Man,
+      illustration: .Man,
       onInteraction: () {},
     ),
   );
@@ -81,7 +81,7 @@ void main() {
       description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
       messageCode: 'Fehlercode: XYZ-9999',
-      illustration: MessageIllustration.Display,
+      illustration: .Display,
       onInteraction: () {},
     ),
   );

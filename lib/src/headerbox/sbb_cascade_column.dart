@@ -9,9 +9,7 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'override_intrinsics.dart';
 
 part 'sbb_cascade_column.contractible.dart';
-
 part 'sbb_cascade_column.listener.dart';
-
 part 'sbb_cascade_column.renderbox.dart';
 
 /// A widget that accomplishes the cascading shrink effect of the [SBBSliverFloatingHeaderbox].

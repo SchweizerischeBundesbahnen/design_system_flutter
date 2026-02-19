@@ -27,7 +27,7 @@ class _FloatingPageState extends State<FloatingPage> {
               resizing: resizing,
               padding: EdgeInsets.zero,
               flap: _flap(),
-              flapMode: SBBHeaderboxFlapMode.hideable,
+              flapMode: .hideable,
               children: [
                 _crossfadeExample(context, style),
                 _additionalRowsSwitcher(context),
@@ -167,7 +167,7 @@ class _FloatingPageState extends State<FloatingPage> {
 
   SBBContractible _contractibleExample(SBBToast sbbToast, SBBBaseStyle style) {
     return SBBContractible(
-      behavior: pushMode ? SBBContractionBehavior.displace : SBBContractionBehavior.clip,
+      behavior: pushMode ? .displace : .clip,
       builder:
           // We can react to the current state of expansion and set an opacity accordingly.
           (context, state, child) => Opacity(
@@ -226,7 +226,7 @@ class _FloatingPageState extends State<FloatingPage> {
         ),
       ),
       SBBContractible.custom(
-        behavior: SBBContractionBehavior.center,
+        behavior: .center,
         child: Center(child: SBBListItem(titleText: 'Stay center', onTap: null)),
       ),
       SBBContractible(

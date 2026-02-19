@@ -18,7 +18,7 @@ class _Headerbox extends StatelessWidget {
     this.margin = const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
     this.padding = const EdgeInsets.all(SBBSpacing.medium),
     this.flap,
-    this.flapMode = SBBHeaderboxFlapMode.static,
+    this.flapMode = .static,
     this.semanticsLabel,
   });
 
@@ -67,7 +67,7 @@ class _HeaderBoxForeground extends StatelessWidget {
     required this.padding,
     this.semanticsLabel,
     this.flap,
-    this.flapMode = SBBHeaderboxFlapMode.static,
+    this.flapMode = .static,
   });
 
   final EdgeInsets padding;
@@ -96,7 +96,7 @@ class _HeaderBoxForeground extends StatelessWidget {
 
   Widget _column(Widget content, Widget flap) {
     switch (flapMode) {
-      case SBBHeaderboxFlapMode.static:
+      case .static:
         return Column(
           children: [
             Flexible(child: content),
@@ -104,7 +104,7 @@ class _HeaderBoxForeground extends StatelessWidget {
             flap,
           ],
         );
-      case SBBHeaderboxFlapMode.resizable:
+      case .resizable:
         return SBBCascadeColumn(
           children: [
             content,
@@ -112,12 +112,12 @@ class _HeaderBoxForeground extends StatelessWidget {
             flap,
           ],
         );
-      case SBBHeaderboxFlapMode.hideable:
+      case .hideable:
         return SBBCascadeColumn(
           children: [
             content,
             SBBContractible(
-              behavior: SBBContractionBehavior.displace,
+              behavior: .displace,
               child: Padding(
                 padding: const EdgeInsets.only(top: _headerBoxFlapTopMargin),
                 child: flap,

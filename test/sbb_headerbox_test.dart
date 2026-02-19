@@ -107,7 +107,7 @@ void generateSliverTest(String name, double scrollOffset) {
                   leadingIcon: SBBIcons.sign_exclamation_point_small,
                   trailingIcon: SBBIcons.circle_information_small_small,
                 ),
-                flapMode: SBBHeaderboxFlapMode.hideable,
+                flapMode: .hideable,
                 children: [
                   Text('Static'),
                   SBBContractionListener(
