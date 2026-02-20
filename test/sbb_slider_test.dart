@@ -7,7 +7,7 @@ import 'test_app.dart';
 void main() {
   testWidgets('slider', (WidgetTester tester) async {
     final widget = Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const .all(8.0),
       child: Column(
         spacing: SBBSpacing.medium,
         children: [

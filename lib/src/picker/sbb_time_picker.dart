@@ -87,10 +87,10 @@ class SBBTimePicker extends StatefulWidget {
       context: context,
       title: modalTitle,
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: .min,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: SBBSpacing.medium),
+            padding: const .symmetric(horizontal: SBBSpacing.medium),
             child: SBBContentBox(
               child: SBBTimePicker(
                 initialTime: initialTime,
@@ -107,7 +107,7 @@ class SBBTimePicker extends StatefulWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(SBBSpacing.medium),
+            padding: const .all(SBBSpacing.medium),
             child: ListenableBuilder(
               listenable: selectedButtonEnabled,
               builder: (context, _) {
@@ -243,7 +243,7 @@ class _SBBTimePickerTimeState extends _TimeBasedPickerState<SBBTimePicker> {
   Widget _buildMinutePickerScrollView(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: _hourValueNotifier,
-      builder: (BuildContext context, int selectedHour, _) {
+      builder: (context, selectedHour, _) {
         return SBBPickerScrollView(
           controller: _minuteController,
           onSelectedItemChanged: _onSelectedMinuteItemChanged,
@@ -274,7 +274,7 @@ class _SBBTimePickerTimeState extends _TimeBasedPickerState<SBBTimePicker> {
     return _buildPickerItem(
       isEnabled: isEnabled,
       label: label,
-      alignment: Alignment.centerRight,
+      alignment: .centerRight,
       textWidth: _timeItemTextWidth,
       isFirstColumn: true,
     );
@@ -291,7 +291,7 @@ class _SBBTimePickerTimeState extends _TimeBasedPickerState<SBBTimePicker> {
     return _buildPickerItem(
       isEnabled: isEnabled,
       label: label,
-      alignment: Alignment.centerLeft,
+      alignment: .centerLeft,
       textWidth: _timeItemTextWidth,
       isLastColumn: true,
     );

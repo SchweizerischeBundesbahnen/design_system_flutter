@@ -8,9 +8,9 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 class TestSpecs {
   const TestSpecs._({required this.size, required this.brightness});
 
-  factory TestSpecs.light() => const TestSpecs._(size: _size, brightness: Brightness.light);
+  factory TestSpecs.light() => const TestSpecs._(size: _size, brightness: .light);
 
-  factory TestSpecs.dark() => const TestSpecs._(size: _size, brightness: Brightness.dark);
+  factory TestSpecs.dark() => const TestSpecs._(size: _size, brightness: .dark);
 
   static const _size = Size(600, 1000);
 

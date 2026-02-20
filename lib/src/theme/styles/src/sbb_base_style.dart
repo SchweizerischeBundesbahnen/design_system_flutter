@@ -20,12 +20,12 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
     this.labelColor,
     TextTheme? redTextTheme,
   }) {
-    final redColor = resolve(brightness == Brightness.light, SBBColors.red, SBBColors.redDark);
+    final redColor = resolve(brightness == .light, SBBColors.red, SBBColors.redDark);
     this.redTextTheme = redTextTheme ?? createTextTheme(colorOverride: redColor);
   }
 
   factory SBBBaseStyle.$default({required Brightness brightness, bool boldFont = false}) {
-    final isLight = brightness == Brightness.light;
+    final isLight = brightness == .light;
     return SBBBaseStyle(
       primaryColor: SBBColors.red,
       primaryColorDark: SBBColors.red125,
@@ -135,7 +135,7 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
   }
 
   T themeValue<T>(T lightThemeValue, T darkThemeValue) =>
-      resolve(brightness == Brightness.light, lightThemeValue, darkThemeValue);
+      resolve(brightness == .light, lightThemeValue, darkThemeValue);
 
   TextStyle themedTextStyle({TextStyle? textStyle, Color? color, String? fontFamily}) =>
       (textStyle ?? defaultTextStyle)!.copyWith(
@@ -148,10 +148,10 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
       inherit: false,
       fontSize: size,
       height: height,
-      fontStyle: FontStyle.normal,
+      fontStyle: .normal,
       fontFamily: fontFamily ?? defaultFontFamily,
       color: colorOverride ?? color ?? defaultTextColor,
-      textBaseline: TextBaseline.alphabetic,
+      textBaseline: .alphabetic,
     );
     return TextTheme(
       bodySmall: value(SBBTextStyles.smallFontSize, SBBTextStyles.smallFontHeight),

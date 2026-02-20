@@ -32,7 +32,7 @@ class SBBNotificationBox extends StatefulWidget {
     bool hasIcon = true,
     IconData detailsIcon = SBBIcons.chevron_small_right_small,
   }) => SBBNotificationBox(
-    state: SBBNotificationBoxState.alert,
+    state: .alert,
     title: title,
     text: text,
     onControllerCreated: onControllerCreated,
@@ -53,7 +53,7 @@ class SBBNotificationBox extends StatefulWidget {
     bool hasIcon = true,
     IconData detailsIcon = SBBIcons.chevron_small_right_small,
   }) => SBBNotificationBox(
-    state: SBBNotificationBoxState.warning,
+    state: .warning,
     title: title,
     text: text,
     onControllerCreated: onControllerCreated,
@@ -74,7 +74,7 @@ class SBBNotificationBox extends StatefulWidget {
     bool hasIcon = true,
     IconData detailsIcon = SBBIcons.chevron_small_right_small,
   }) => SBBNotificationBox(
-    state: SBBNotificationBoxState.success,
+    state: .success,
     title: title,
     text: text,
     onControllerCreated: onControllerCreated,
@@ -95,7 +95,7 @@ class SBBNotificationBox extends StatefulWidget {
     bool hasIcon = true,
     IconData detailsIcon = SBBIcons.chevron_small_right_small,
   }) => SBBNotificationBox(
-    state: SBBNotificationBoxState.information,
+    state: .information,
     title: title,
     text: text,
     onControllerCreated: onControllerCreated,
@@ -169,29 +169,29 @@ class _SBBNotificationBoxState extends State<SBBNotificationBox> with SingleTick
             child: Container(
               decoration: BoxDecoration(
                 border: Border(left: BorderSide(color: resolvedBackgroundColor, width: 8.0)),
-                borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+                borderRadius: const BorderRadius.all(.circular(16.0)),
               ),
               child: Container(
                 decoration: BoxDecoration(
                   border: Border.all(color: resolvedBackgroundColor),
                   borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(8.0),
-                    bottomLeft: Radius.circular(8.0),
-                    topRight: Radius.circular(15.0),
-                    bottomRight: Radius.circular(15.0),
+                    topLeft: .circular(8.0),
+                    bottomLeft: .circular(8.0),
+                    topRight: .circular(15.0),
+                    bottomRight: .circular(15.0),
                   ),
                   color: resolvedBackgroundColor.withValues(alpha: .05),
                 ),
-                padding: const EdgeInsets.all(SBBSpacing.medium),
+                padding: const .all(SBBSpacing.medium),
                 child: child,
               ),
             ),
           ),
           if (widget.isCloseable)
             Align(
-              alignment: Alignment.topRight,
+              alignment: .topRight,
               child: Padding(
-                padding: const EdgeInsets.only(top: 4.0, right: 4.0),
+                padding: const .only(top: 4.0, right: 4.0),
                 child: SBBCloseButton(
                   onTap: () async {
                     await _controller.hide();

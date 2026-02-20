@@ -54,7 +54,7 @@ class SBBAutocompletion<T> extends StatefulWidget {
     this.labelText,
     this.onChanged,
     this.onTextSubmitted,
-    this.textCapitalization = TextCapitalization.none,
+    this.textCapitalization = .none,
     this.icon,
   }) : super(key: key);
 
@@ -255,7 +255,7 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>> with Widgets
         final style = SBBBaseStyle.of(context);
 
         listSuggestionsEntry = OverlayEntry(
-          builder: (BuildContext context) {
+          builder: (context) {
             final backgroundColor = style.themeValue(SBBColors.milk, SBBColors.black);
             final optionColor = style.themeValue(SBBColors.white, SBBColors.charcoal);
             return Positioned(
@@ -266,10 +266,10 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>> with Widgets
                 showWhenUnlinked: false,
                 offset: Offset(-textFieldGlobalPosition.dx, height),
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: textFieldGlobalPosition.dx),
+                  padding: .symmetric(horizontal: textFieldGlobalPosition.dx),
                   color: backgroundColor,
                   child: ListView(
-                    padding: EdgeInsets.zero,
+                    padding: .zero,
                     shrinkWrap: true,
                     children: [
                       if (widget.favorites.isNotEmpty && widget.enableFavorites)

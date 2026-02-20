@@ -8,33 +8,36 @@ class ContainerPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    content(String text) => SizedBox(
-      height: SBBSpacing.xLarge,
-      width: double.infinity,
-      child: Center(child: Text(text)),
-    );
     return CustomScrollView(
       slivers: [
         SBBSliverHeaderbox.custom(child: ThemeModeSegmentedButton()),
         SliverPadding(
-          padding: const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall, vertical: SBBSpacing.medium),
+          padding: const .symmetric(horizontal: SBBSpacing.xSmall, vertical: SBBSpacing.medium),
           sliver: SliverList.list(
             children: [
               SBBListHeader('ContentBox'),
-              SBBContentBox(child: content('Default')),
+              SBBContentBox(child: _content('Default')),
               SizedBox(height: SBBSpacing.medium),
-              SBBContentBox(color: SBBColors.royal, child: content('Different Color')),
+              SBBContentBox(color: SBBColors.royal, child: _content('Different Color')),
               SizedBox(height: SBBSpacing.medium),
               SBBContentBox(
-                padding: EdgeInsets.symmetric(vertical: SBBSpacing.medium),
-                child: content('Extra padding'),
+                padding: .symmetric(vertical: SBBSpacing.medium),
+                child: _content('Extra padding'),
               ),
               SizedBox(height: SBBSpacing.medium),
-              SBBContentBox(margin: EdgeInsets.all(64.0), child: content('Extra margin')),
+              SBBContentBox(margin: .all(64.0), child: _content('Extra margin')),
             ],
           ),
         ),
       ],
+    );
+  }
+
+  Widget _content(String text) {
+    return SizedBox(
+      height: SBBSpacing.xLarge,
+      width: .infinity,
+      child: Center(child: Text(text)),
     );
   }
 }

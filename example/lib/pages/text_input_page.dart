@@ -34,7 +34,7 @@ class _TextInputPageState extends State<TextInputPage> {
               ConstrainedBox(
                 constraints: BoxConstraints(minHeight: 320),
                 child: Align(
-                  alignment: Alignment.topCenter,
+                  alignment: .topCenter,
                   child: SBBContentBox(
                     child: Column(
                       children: SBBListItem.divideListItems(

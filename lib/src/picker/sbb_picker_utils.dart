@@ -70,13 +70,13 @@ abstract class _TimeBasedPickerState<T extends StatefulWidget> extends _PickerCl
       isEnabled: isEnabled,
       widget: Container(
         alignment: alignment,
-        padding: EdgeInsets.only(
+        padding: .only(
           left: _itemPadding + (isFirstColumn ? _widgetHorizontalPadding : 0),
           right: _itemPadding + (isLastColumn ? _widgetHorizontalPadding : 0),
         ),
         child: SizedBox(
           width: textWidth,
-          child: Text(label, textAlign: TextAlign.center, softWrap: false),
+          child: Text(label, textAlign: .center, softWrap: false),
         ),
       ),
     );

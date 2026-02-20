@@ -114,14 +114,14 @@ class SBBInputTrigger extends StatelessWidget {
     return InkWell(
       onTap: enabled ? onPressed : null,
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         children: [
           prefixWidget,
           Expanded(
             child: Column(
               children: [
                 Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: .start,
                   children: [
                     Expanded(child: _buildInputContent(style)),
                     suffixWidget,
@@ -143,16 +143,16 @@ class SBBInputTrigger extends StatelessWidget {
     final verticalPaddingWidget = SizedBox(height: _verticalPadding);
 
     // widget displaying the input label
-    final labelWidget = Text(_labelText, style: style.labelTextStyle!, maxLines: 1, overflow: TextOverflow.ellipsis);
+    final labelWidget = Text(_labelText, style: style.labelTextStyle!, maxLines: 1, overflow: .ellipsis);
 
     // widget displaying the input value
     final valueWidget = Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2.0),
+      padding: const .symmetric(vertical: 2.0),
       child: Text(
         _valueText,
         style: valueTextStyle,
         maxLines: maxLines,
-        overflow: maxLines != null ? TextOverflow.ellipsis : null,
+        overflow: maxLines != null ? .ellipsis : null,
       ),
     );
 
@@ -160,13 +160,13 @@ class SBBInputTrigger extends StatelessWidget {
     Widget bottomWidget = verticalPaddingWidget;
     if (_hasError) {
       bottomWidget = Padding(
-        padding: const EdgeInsets.only(bottom: SBBSpacing.xSmall),
-        child: Text(_errorText, style: style.errorTextStyle, maxLines: 1, overflow: TextOverflow.ellipsis),
+        padding: const .only(bottom: SBBSpacing.xSmall),
+        child: Text(_errorText, style: style.errorTextStyle, maxLines: 1, overflow: .ellipsis),
       );
     }
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: .start,
       children: [
         verticalPaddingWidget,
         if (_hasLabel) labelWidget,
@@ -215,7 +215,7 @@ class SBBInputTriggerIconWidget extends StatelessWidget {
 
     if (onPressed == null) {
       return Padding(
-        padding: const EdgeInsets.fromLTRB(
+        padding: const .fromLTRB(
           leftPadding,
           verticalPadding,
           leftPadding - rightPadding,
@@ -233,7 +233,7 @@ class SBBInputTriggerIconWidget extends StatelessWidget {
         // splashRadius: 28.0,
         onTap: onPressed,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: verticalPadding, horizontal: leftPadding),
+          padding: const .symmetric(vertical: verticalPadding, horizontal: leftPadding),
           child: Icon(icon, color: iconColor),
         ),
       ),

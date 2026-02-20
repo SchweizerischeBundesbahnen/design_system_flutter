@@ -51,7 +51,7 @@ class SBBHeaderbox extends StatelessWidget {
     String? secondaryLabel,
     Widget? trailingWidget,
     SBBHeaderboxFlap? flap,
-    EdgeInsets margin = const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
+    EdgeInsets margin = const .symmetric(horizontal: SBBSpacing.xSmall),
     String? semanticsLabel,
   }) : this.custom(
          key: key,
@@ -84,7 +84,7 @@ class SBBHeaderbox extends StatelessWidget {
     String? secondaryLabel,
     Widget? trailingWidget,
     SBBHeaderboxFlap? flap,
-    EdgeInsets margin = const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
+    EdgeInsets margin = const .symmetric(horizontal: SBBSpacing.xSmall),
     String? semanticsLabel,
   }) : this.custom(
          key: key,
@@ -103,8 +103,8 @@ class SBBHeaderbox extends StatelessWidget {
   const SBBHeaderbox.custom({
     super.key,
     required this.child,
-    this.margin = const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
-    this.padding = const EdgeInsets.all(SBBSpacing.medium),
+    this.margin = const .symmetric(horizontal: SBBSpacing.xSmall),
+    this.padding = const .all(SBBSpacing.medium),
     this.flap,
     this.semanticsLabel,
   });
@@ -178,7 +178,7 @@ class _HeaderBoxForeground extends StatelessWidget {
     return Container(
       decoration: _flappedBackgroundDecoration(context),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: .min,
         spacing: _headerBoxFlapTopMargin,
         children: [
           _headerBox(context),
@@ -191,13 +191,13 @@ class _HeaderBoxForeground extends StatelessWidget {
   Widget _headerBox(BuildContext context) {
     final SBBHeaderBoxStyle style = SBBHeaderBoxStyle.of(context);
     return Container(
-      clipBehavior: Clip.hardEdge,
+      clipBehavior: .hardEdge,
       decoration: BoxDecoration(
         color: style.backgroundColor,
         borderRadius: BorderRadius.all(_headerBoxRadius),
         boxShadow: _headerBoxShadow,
       ),
-      constraints: BoxConstraints(minHeight: _headerBoxMinHeight, minWidth: double.infinity),
+      constraints: BoxConstraints(minHeight: _headerBoxMinHeight, minWidth: .infinity),
       padding: padding,
       child: child,
     );
@@ -209,8 +209,8 @@ class _HeaderBoxForeground extends StatelessWidget {
       boxShadow: SBBInternal.defaultBoxShadow,
       borderRadius: BorderRadius.only(bottomLeft: _headerBoxRadius, bottomRight: _headerBoxRadius),
       gradient: LinearGradient(
-        begin: Alignment.bottomCenter,
-        end: Alignment.topCenter,
+        begin: .bottomCenter,
+        end: .topCenter,
         colors: [flapBackgroundColor, flapBackgroundColor, SBBColors.white.withAlpha(0)],
         stops: [0.0, 0.5, 1.0],
       ),
@@ -228,7 +228,7 @@ class _HeaderBoxBackgroundBar extends StatelessWidget {
     // take AppBar background color to align with e.g. SBBHeader
     final Color? headerColorPrimary = Theme.of(context).appBarTheme.backgroundColor;
     return Align(
-      alignment: Alignment.topCenter,
+      alignment: .topCenter,
       child: Container(
         color: headerColorPrimary,
         height: _headerBoxNavBarExtensionHeight,

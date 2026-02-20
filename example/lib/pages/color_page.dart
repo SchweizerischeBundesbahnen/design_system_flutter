@@ -8,9 +8,9 @@ class ColorPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isLight = Theme.of(context).brightness == Brightness.light;
+    final isLight = Theme.of(context).brightness == .light;
     return ListView(
-      children: <Widget>[
+      children: [
         Padding(
           padding: EdgeInsetsDirectional.fromSTEB(
             SBBSpacing.medium,
@@ -29,10 +29,10 @@ class ColorPage extends StatelessWidget {
   }
 
   List<_ColorEntry> _additionalColors(BuildContext context) =>
-      Theme.of(context).brightness == Brightness.light ? _additionalColorsLight : _additionalColorsDark;
+      Theme.of(context).brightness == .light ? _additionalColorsLight : _additionalColorsDark;
 
   List<_ColorEntry> _functionalColors(BuildContext context) =>
-      Theme.of(context).brightness == Brightness.light ? _functionalColorsLight : _functionalColorsDark;
+      Theme.of(context).brightness == .light ? _functionalColorsLight : _functionalColorsDark;
 }
 
 class _ColorShowcase extends StatelessWidget {
@@ -44,7 +44,7 @@ class _ColorShowcase extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: .start,
       children: [
         SBBListHeader(title),
         GridView.builder(
@@ -72,21 +72,20 @@ class _ColorShowcaseCard extends StatelessWidget {
     final valueString = colorEntry.color.toARGB32().toRadixString(16).padLeft(8, '0').toUpperCase();
     final hexString = valueString.substring(2);
     final opacityString = valueString.substring(0, 2);
-    const colorValueTextStyle = SBBTextStyles.helpersLabel;
-    final colorValueSecondaryTextStyle = SBBTextStyles.helpersLabel.copyWith(
+    const colorValueTextStyle = SBBTextStyles.extraExtraSmallLight;
+    final colorValueSecondaryTextStyle = SBBTextStyles.extraExtraSmallLight.copyWith(
       color: SBBControlStyles.of(context).selectLabel?.textStyleDisabled?.color,
     );
     return SBBContentBox(
-      margin: const EdgeInsets.all(SBBSpacing.xSmall),
+      margin: const .all(SBBSpacing.xSmall),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         children: [
           Expanded(child: Container(color: colorEntry.color)),
-          // Divider(),
           Container(
-            padding: const EdgeInsets.all(SBBSpacing.xSmall),
+            padding: const .all(SBBSpacing.xSmall),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: .start,
               children: [
                 Text(colorEntry.name),
                 Row(
@@ -95,7 +94,6 @@ class _ColorShowcaseCard extends StatelessWidget {
                     Expanded(child: Text(hexString, style: colorValueTextStyle)),
                   ],
                 ),
-                // Text(alphaString),
               ],
             ),
           ),

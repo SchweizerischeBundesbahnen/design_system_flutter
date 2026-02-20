@@ -17,7 +17,7 @@ class ListItemPage extends StatelessWidget {
       slivers: [
         SBBSliverHeaderbox.custom(child: ThemeModeSegmentedButton()),
         SliverPadding(
-          padding: const EdgeInsets.all(SBBSpacing.xSmall),
+          padding: const .all(SBBSpacing.xSmall),
           sliver: SliverList.list(
             children: [
               SBBListHeader('Listed'),
@@ -51,7 +51,7 @@ class ListItemPage extends StatelessWidget {
                         titleText: 'Mit Button',
                         leadingIconData: SBBIcons.dog_small,
                         trailing: SBBTertiaryButtonSmall(onPressed: () {}, iconData: SBBIcons.dog_small),
-                        padding: EdgeInsets.fromLTRB(16.0, 0.0, 8.0, 0.0),
+                        padding: .fromLTRB(16.0, 0.0, 8.0, 0.0),
                         onTap: () => sbbToast.show(title: 'Mit Button'),
                       ),
                       SBBListItem(

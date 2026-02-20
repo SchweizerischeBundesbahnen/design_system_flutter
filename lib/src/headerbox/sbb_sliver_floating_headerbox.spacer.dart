@@ -19,9 +19,7 @@ class _RenderSBBSliverFloatingHeaderboxSpacer extends RenderSliver {
     final firstSibling = _header();
 
     if (firstSibling == null) {
-      geometry = SliverGeometry(
-        scrollExtent: 0,
-      );
+      geometry = SliverGeometry(scrollExtent: 0);
       return;
     }
 
@@ -44,9 +42,7 @@ class _RenderSBBSliverFloatingHeaderboxSpacer extends RenderSliver {
       size = (availableSpace + scrollExtent) - scrollableContentExtent;
     }
 
-    geometry = SliverGeometry(
-      scrollExtent: size,
-    );
+    geometry = SliverGeometry(scrollExtent: size);
   }
 
   RenderSliverPinnedFloatingWidget? _header() {

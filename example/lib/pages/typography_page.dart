@@ -10,14 +10,14 @@ class TypographyPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = SBBBaseStyle.of(context).redTextTheme;
     return ListView(
-      padding: const EdgeInsets.all(SBBSpacing.medium),
-      children: <Widget>[
+      padding: const .all(SBBSpacing.medium),
+      children: [
         const ThemeModeSegmentedButton(),
         const SizedBox(height: SBBSpacing.medium),
         SBBListHeader('SBB Font Light (Default)'),
         SBBContentBox(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: .start,
             children: [
               _TypographyShowcase('sbbTextStyle.xxLarge', sbbTextStyle.xxLarge),
               _TypographyShowcase('sbbTextStyle.xLarge', sbbTextStyle.xLarge),
@@ -32,7 +32,7 @@ class TypographyPage extends StatelessWidget {
         SBBListHeader('SBB Font Bold'),
         SBBContentBox(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: .start,
             children: [
               _TypographyShowcase('sbbTextStyle.xxLarge.boldStyle', sbbTextStyle.xxLarge.boldStyle),
               _TypographyShowcase('sbbTextStyle.xLarge.boldStyle', sbbTextStyle.xLarge.boldStyle),
@@ -47,7 +47,7 @@ class TypographyPage extends StatelessWidget {
         SBBListHeader('Red Text Theme'),
         SBBContentBox(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: .start,
             children: [
               _TypographyShowcase('SBBBaseStyle.redTextTheme.bodyLarge', textTheme.bodyLarge!),
               _TypographyShowcase('SBBBaseStyle.redTextTheme.bodyMedium', textTheme.bodyMedium!),
@@ -71,20 +71,20 @@ class _TypographyShowcase extends StatelessWidget {
   Widget build(BuildContext context) {
     final labelColor = SBBBaseStyle.of(context).labelColor;
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
+      crossAxisAlignment: .start,
+      children: [
         const SizedBox(height: SBBSpacing.medium),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: SBBSpacing.medium),
+          padding: const .symmetric(horizontal: SBBSpacing.medium),
           child: Text('The quick brown fox jumps over the lazy dog', style: style),
         ),
         const SizedBox(height: SBBSpacing.xSmall),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: SBBSpacing.medium),
+          padding: const .symmetric(horizontal: SBBSpacing.medium),
           child: Text(name, style: sbbTextStyle.xSmall.romanStyle.copyWith(color: labelColor)),
         ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: SBBSpacing.medium),
+          padding: const .symmetric(horizontal: SBBSpacing.medium),
           child: Text(
             'FontFamily: ${style.fontFamily?.split('/').last}, '
             'FontSize: ${style.fontSize}, '

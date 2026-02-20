@@ -19,7 +19,7 @@ class ButtonPage extends StatelessWidget {
               const SizedBox(height: SBBSpacing.medium),
               const SBBListHeader('Primary Button'),
               SBBContentBox(
-                padding: const EdgeInsets.all(SBBSpacing.medium),
+                padding: const .all(SBBSpacing.medium),
                 child: Column(
                   spacing: SBBSpacing.medium,
                   children: [
@@ -36,7 +36,7 @@ class ButtonPage extends StatelessWidget {
               const SizedBox(height: SBBSpacing.medium),
               const SBBListHeader('Secondary Button'),
               SBBContentBox(
-                padding: const EdgeInsets.all(SBBSpacing.medium),
+                padding: const .all(SBBSpacing.medium),
                 child: Column(
                   children: [
                     SBBSecondaryButton(
@@ -54,9 +54,9 @@ class ButtonPage extends StatelessWidget {
               const SizedBox(height: SBBSpacing.medium),
               const SBBListHeader('Tertiary Button'),
               SBBContentBox(
-                padding: const EdgeInsets.all(SBBSpacing.medium),
+                padding: const .all(SBBSpacing.medium),
                 child: SizedBox(
-                  width: double.infinity,
+                  width: .infinity,
                   child: Column(
                     spacing: SBBSpacing.medium,
                     children: [
@@ -79,9 +79,9 @@ class ButtonPage extends StatelessWidget {
               const SizedBox(height: SBBSpacing.medium),
               const SBBListHeader('Tertiary Button Small'),
               SBBContentBox(
-                padding: const EdgeInsets.all(SBBSpacing.medium),
+                padding: const .all(SBBSpacing.medium),
                 child: SizedBox(
-                  width: double.infinity,
+                  width: .infinity,
                   child: Column(
                     spacing: SBBSpacing.medium,
                     children: [

@@ -25,7 +25,7 @@ class SBBTextFormField extends StatefulWidget {
     this.minLines,
     this.onChanged,
     this.onTap,
-    this.textCapitalization = TextCapitalization.none,
+    this.textCapitalization = .none,
     this.textInputAction,
     this.icon,
     this.focusNode,
@@ -110,21 +110,21 @@ class _SBBTextField extends State<SBBTextFormField> {
   Widget build(BuildContext context) {
     final style = SBBBaseStyle.of(context);
     return Padding(
-      padding: const EdgeInsets.only(left: 16.0, top: 8.0),
+      padding: const .only(left: 16.0, top: 8.0),
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         children: [
           if (widget.icon != null)
             Padding(
-              padding: const EdgeInsets.only(top: 12, right: 8.0),
+              padding: const .only(top: 12, right: 8.0),
               child: Icon(widget.icon, size: 24, color: style.themeValue(SBBColors.black, SBBColors.white)),
             ),
           Expanded(
             child: Stack(
               children: [
                 Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
+                  crossAxisAlignment: .start,
+                  children: [
                     _buildTextFormField(),
                     SBBTextFieldUnderline(
                       errorText: errorText,
@@ -168,7 +168,7 @@ class _SBBTextField extends State<SBBTextFormField> {
       maxLines: widget.maxLines,
       minLines: widget.minLines,
       cursorHeight: 19.0,
-      cursorRadius: const Radius.circular(2.0),
+      cursorRadius: const .circular(2.0),
       enableInteractiveSelection: widget.enableInteractiveSelection,
       onChanged: widget.onChanged,
       onTap: widget.onTap,
@@ -193,7 +193,7 @@ class _SBBTextField extends State<SBBTextFormField> {
       errorStyle: const TextStyle(fontSize: 0, height: 0),
       errorText: errorText,
       focusedErrorBorder: InputBorder.none,
-      contentPadding: widget.maxLines == 1 ? const EdgeInsets.only(bottom: 2.0) : const EdgeInsets.only(bottom: 8.0),
+      contentPadding: widget.maxLines == 1 ? const .only(bottom: 2.0) : const .only(bottom: 8.0),
       labelStyle: textField.placeholderTextStyle,
       hintText: widget.hintText,
       hintStyle: textField.placeholderTextStyle,

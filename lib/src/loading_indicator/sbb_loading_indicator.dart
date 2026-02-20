@@ -87,7 +87,7 @@ class SBBLoadingIndicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(top: padding, bottom: padding),
+      padding: .only(top: padding, bottom: padding),
       child: Transform(
         transform: Matrix4.identity()
           ..setEntry(3, 2, translationZ)
@@ -173,9 +173,9 @@ class LoadingAnimationState extends State<LoadingAnimation> with SingleTickerPro
       position: _container,
       child: AnimatedBuilder(
         animation: _animationController,
-        builder: (BuildContext context, Widget? child) {
+        builder: (context, Widget? child) {
           return Row(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisSize: .min,
             children: [
               _Square(
                 opacity: _loadingSquareOne.value,

@@ -80,8 +80,8 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
     String? secondaryLabel,
     Widget? trailingWidget,
     SBBHeaderboxFlap? flap,
-    SBBHeaderboxFlapMode flapMode = SBBHeaderboxFlapMode.static,
-    EdgeInsets margin = const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
+    SBBHeaderboxFlapMode flapMode = .static,
+    EdgeInsets margin = const .symmetric(horizontal: SBBSpacing.xSmall),
     String? semanticsLabel,
     Widget? preceding,
     Widget? contractibleChild,
@@ -141,8 +141,8 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
     String? secondaryLabel,
     Widget? trailingWidget,
     SBBHeaderboxFlap? flap,
-    SBBHeaderboxFlapMode flapMode = SBBHeaderboxFlapMode.static,
-    EdgeInsets margin = const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
+    SBBHeaderboxFlapMode flapMode = .static,
+    EdgeInsets margin = const .symmetric(horizontal: SBBSpacing.xSmall),
     String? semanticsLabel,
     Widget? preceding,
     Widget? collapsibleChild,
@@ -198,15 +198,15 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
   ///  * [SBBContractionListener], which allows you to get updates on the expansion rate.
   SBBSliverFloatingHeaderbox.custom({
     super.key,
-    EdgeInsets margin = const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
-    EdgeInsets padding = const EdgeInsets.all(SBBSpacing.medium),
+    EdgeInsets margin = const .symmetric(horizontal: SBBSpacing.xSmall),
+    EdgeInsets padding = const .all(SBBSpacing.medium),
     SBBHeaderboxFlap? flap,
-    SBBHeaderboxFlapMode flapMode = SBBHeaderboxFlapMode.static,
+    SBBHeaderboxFlapMode flapMode = .static,
     String? semanticsLabel,
     this.resizing = true,
     this.floating = true,
     this.snapStyle,
-    this.snapMode = FloatingHeaderSnapMode.scroll,
+    this.snapMode = .scroll,
     Widget? preceding,
     required List<Widget> children,
   }) : child = preceding != null
@@ -266,7 +266,7 @@ class _SBBSliverFloatingHeaderboxState extends State<SBBSliverFloatingHeaderbox>
     return SliverPinnedFloatingWidget(
       vsync: this,
       animationStyle: widget.snapStyle ?? defaultSnapStyle,
-      snapMode: FloatingHeaderSnapMode.scroll,
+      snapMode: .scroll,
       resizing: widget.resizing,
       floating: widget.floating,
       child: _SnapTrigger(
@@ -348,7 +348,7 @@ class _SnapTriggerState extends State<_SnapTrigger> {
     final RenderSliverPinnedFloatingWidget? renderer = context
         .findAncestorRenderObjectOfType<RenderSliverPinnedFloatingWidget>();
 
-    await renderer?.snap(expand ? ScrollDirection.forward : ScrollDirection.reverse);
+    await renderer?.snap(expand ? .forward : .reverse);
   }
 
   @override
@@ -367,7 +367,7 @@ class _Preceding extends StatelessWidget {
   Widget build(BuildContext context) {
     final appBarTheme = Theme.of(context).appBarTheme;
     return SBBContractible(
-      behavior: SBBContractionBehavior.displace,
+      behavior: .displace,
       child: Container(
         color: appBarTheme.backgroundColor,
         child: child,

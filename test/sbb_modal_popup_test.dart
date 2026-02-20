@@ -27,12 +27,12 @@ class ModalPopupTest extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Column(
-    mainAxisSize: MainAxisSize.min,
+    mainAxisSize: .min,
     children: [
       const SBBListHeader('Modal Popup'),
       SBBContentBox(
         child: Padding(
-          padding: const EdgeInsets.all(SBBSpacing.xSmall),
+          padding: const .all(SBBSpacing.xSmall),
           child: Column(
             children: [
               SBBModalPopup(title: 'Titel', child: _modalContent(context)),

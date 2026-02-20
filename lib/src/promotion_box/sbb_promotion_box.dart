@@ -210,30 +210,30 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
     return _animationBuilder(
       animation: _controller.animation,
       child: Padding(
-        padding: const EdgeInsets.only(top: 10.0),
+        padding: const .only(top: 10.0),
         child: Stack(
           children: [
             Align(
-              alignment: Alignment.topCenter,
+              alignment: .topCenter,
               child: SBBPromotionBoxBadgeShadow(
                 badgeSize: _badgeSize,
                 shadowColor: widget.badgeShadowColor ?? resolvedStyle.badgeShadowColor!,
               ),
             ),
             Container(
-              margin: EdgeInsets.only(top: paddingTop),
+              margin: .only(top: paddingTop),
               decoration: BoxDecoration(
                 border: Border.all(color: resolvedStyle.borderColor!),
                 borderRadius: const BorderRadius.all(Radius.circular(SBBSpacing.medium)),
                 image: DecorationImage(
                   image: const AssetImage(_PromotionBoxAssets.noise),
-                  repeat: ImageRepeat.repeat,
-                  fit: BoxFit.none,
+                  repeat: .repeat,
+                  fit: .none,
                   opacity: resolvedStyle.textureOpacity!,
                 ),
                 gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
+                  begin: .topCenter,
+                  end: .bottomCenter,
                   colors: widget.gradientColors ?? resolvedStyle.gradientColors!,
                   stops: _gradientStops,
                 ),
@@ -253,14 +253,13 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
                     child: Padding(
                       padding: const EdgeInsets.all(SBBSpacing.medium).copyWith(right: SBBSpacing.xSmall),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: .start,
+                        crossAxisAlignment: .center,
                         children: [
-                          if (widget.leading != null)
-                            Padding(padding: const EdgeInsets.only(right: 8.0), child: widget.leading!),
+                          if (widget.leading != null) Padding(padding: const .only(right: 8.0), child: widget.leading!),
                           Expanded(child: widget.content),
                           if (widget.trailing != null)
-                            Padding(padding: const EdgeInsets.symmetric(horizontal: 8.0), child: widget.trailing!),
+                            Padding(padding: const .symmetric(horizontal: 8.0), child: widget.trailing!),
                         ],
                       ),
                     ),
@@ -269,7 +268,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
               ),
             ),
             Align(
-              alignment: Alignment.topCenter,
+              alignment: .topCenter,
               child: SBBPromotionBoxBadge(
                 key: _badgeKey,
                 text: widget.badgeText,
@@ -280,9 +279,9 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
             ),
             if (widget.onClose != null)
               Align(
-                alignment: Alignment.topRight,
+                alignment: .topRight,
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 14.0),
+                  padding: const .only(top: 14.0),
                   child: SBBCloseButton(
                     onTap: () async {
                       await _controller.hide();
@@ -312,10 +311,10 @@ class _DefaultContent extends StatelessWidget {
     final crossColor = SBBBaseStyle.of(context).iconColor;
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.stretch,
+      crossAxisAlignment: .stretch,
       children: [
         Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: .start,
           children: [
             Expanded(child: Text(title, style: textTheme.titleMedium)),
             if (onClose != null) const SizedBox(width: sbbIconSizeSmall),

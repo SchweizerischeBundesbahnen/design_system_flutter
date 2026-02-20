@@ -43,9 +43,9 @@ class _TabIcon extends StatelessWidget {
             onTap: interactions.onTap,
             child: Container(
               color: SBBColors.transparent,
-              padding: EdgeInsets.only(bottom: bottomPadding),
+              padding: .only(bottom: bottomPadding),
               child: Row(
-                mainAxisSize: MainAxisSize.min,
+                mainAxisSize: .min,
                 spacing: 8.0,
                 children: [
                   TabItemWidget(
@@ -58,7 +58,7 @@ class _TabIcon extends StatelessWidget {
                     Text(
                       item.translate(context),
                       style: SBBControlStyles.of(context).tabBarTextStyle,
-                      textAlign: TextAlign.center,
+                      textAlign: .center,
                     ),
                 ],
               ),

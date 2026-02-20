@@ -78,12 +78,8 @@ class SBBLinkTextState extends State<SBBLinkText> {
         };
         inlineSpans.add(
           TextSpan(
-            onEnter: (_) => setState(() {
-              _isHoveredValues[i] = true;
-            }),
-            onExit: (_) => setState(() {
-              _isHoveredValues[i] = false;
-            }),
+            onEnter: (_) => setState(() => _isHoveredValues[i] = true),
+            onExit: (_) => setState(() => _isHoveredValues[i] = false),
             text: text ?? url,
             style: _linkTextStyle(_isPressedValues[i] == true, _isHoveredValues[i] == true),
             recognizer: tapGestureRecognizer,

@@ -8,7 +8,7 @@ void main() {
   testWidgets('secondary_button', (WidgetTester tester) async {
     final pressableKey = ValueKey('pressedButton');
     final widget = Padding(
-      padding: const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall, vertical: SBBSpacing.medium),
+      padding: const .symmetric(horizontal: SBBSpacing.xSmall, vertical: SBBSpacing.medium),
       child: Column(
         spacing: SBBSpacing.medium,
         children: [

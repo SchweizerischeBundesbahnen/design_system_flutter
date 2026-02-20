@@ -50,8 +50,8 @@ class SBBContractible extends StatelessWidget {
     super.key,
     this.minHeight,
     this.maxHeight,
-    this.clipBehavior = Clip.none,
-    this.behavior = SBBContractionBehavior.shrink,
+    this.clipBehavior = .none,
+    this.behavior = .shrink,
     this.child,
     this.builder,
   });
@@ -65,8 +65,8 @@ class SBBContractible extends StatelessWidget {
   /// You can also provide both, in which case [child] will be passed into the builder function. This can be beneficial for performance.
   SBBContractible({
     Key? key,
-    SBBContractionBehavior behavior = SBBContractionBehavior.clip,
-    Clip clipBehavior = Clip.hardEdge,
+    SBBContractionBehavior behavior = .clip,
+    Clip clipBehavior = .hardEdge,
     ContractibleBuilder? builder,
     Widget? child,
   }) : this._(
@@ -83,8 +83,8 @@ class SBBContractible extends StatelessWidget {
   /// In particular, you can override the heights.
   SBBContractible.custom({
     Key? key,
-    SBBContractionBehavior behavior = SBBContractionBehavior.shrink,
-    Clip clipBehavior = Clip.hardEdge,
+    SBBContractionBehavior behavior = .shrink,
+    Clip clipBehavior = .hardEdge,
     double minHeight = 0,
     double? maxHeight,
     ContractibleBuilder? builder,
@@ -164,22 +164,22 @@ class SBBContractible extends StatelessWidget {
   }
 
   ContractibleBuilder _builder(ContractibleBuilder builder) {
-    if (behavior == SBBContractionBehavior.shrink) {
+    if (behavior == .shrink) {
       return builder;
     }
 
-    final alignment = switch (behavior) {
-      SBBContractionBehavior.displace => Alignment.bottomLeft,
-      SBBContractionBehavior.clip => Alignment.topLeft,
-      SBBContractionBehavior.center => Alignment.centerLeft,
-      SBBContractionBehavior.shrink => Alignment.centerLeft, // Handled above
+    final Alignment alignment = switch (behavior) {
+      .displace => .bottomLeft,
+      .clip => .topLeft,
+      .center => .centerLeft,
+      .shrink => .centerLeft, // Handled above
     };
 
     return (context, progress, child) {
       return ClipRect(
         clipBehavior: clipBehavior,
         child: OverflowBox(
-          maxHeight: double.infinity,
+          maxHeight: .infinity,
           alignment: alignment,
           child: builder(context, progress, child),
         ),
@@ -188,21 +188,21 @@ class SBBContractible extends StatelessWidget {
   }
 
   Widget _child(Widget child, ContractibleBuilder? builder) {
-    if (behavior == SBBContractionBehavior.shrink || builder != null) {
+    if (behavior == .shrink || builder != null) {
       return child;
     }
 
-    final alignment = switch (behavior) {
-      SBBContractionBehavior.displace => Alignment.bottomLeft,
-      SBBContractionBehavior.clip => Alignment.topLeft,
-      SBBContractionBehavior.center => Alignment.centerLeft,
-      SBBContractionBehavior.shrink => Alignment.centerLeft, // Handled above
+    final Alignment alignment = switch (behavior) {
+      .displace => .bottomLeft,
+      .clip => .topLeft,
+      .center => .centerLeft,
+      .shrink => .centerLeft, // Handled above
     };
 
     return ClipRect(
       clipBehavior: clipBehavior,
       child: OverflowBox(
-        maxHeight: double.infinity,
+        maxHeight: .infinity,
         alignment: alignment,
         child: child,
       ),
@@ -245,7 +245,7 @@ class _Crossfade extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      clipBehavior: Clip.none,
+      clipBehavior: .none,
       alignment: alignment,
       children: [
         IgnorePointer(

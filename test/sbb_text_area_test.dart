@@ -11,20 +11,20 @@ void main() {
     final widget = Builder(
       builder: (context) {
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall, vertical: SBBSpacing.medium),
+          padding: const .symmetric(horizontal: SBBSpacing.xSmall, vertical: SBBSpacing.medium),
           child: Column(
             children: [
               SBBListHeader('Listed'),
               SBBContentBox(
                 child: Column(
-                  mainAxisSize: MainAxisSize.min,
+                  mainAxisSize: .min,
                   children: SBBListItem.divideListItems(
                     context: context,
                     items: [
                       SBBTextInput(
                         key: pressableKey,
                         decoration: SBBInputDecoration(
-                          contentPadding: EdgeInsets.only(top: SBBSpacing.xSmall),
+                          contentPadding: .only(top: SBBSpacing.xSmall),
                           leadingIconData: SBBIcons.unicorn_small,
                           trailingIconData: SBBIcons.circle_information_small_small,
                           labelText: 'Label',
@@ -34,7 +34,7 @@ void main() {
                       ),
                       SBBTextInput(
                         decoration: SBBInputDecoration(
-                          contentPadding: EdgeInsets.only(top: SBBSpacing.xSmall),
+                          contentPadding: .only(top: SBBSpacing.xSmall),
                           errorText: 'This is an error!',
                           leadingIconData: SBBIcons.unicorn_small,
                           trailingIconData: SBBIcons.circle_information_small_small,

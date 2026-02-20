@@ -46,10 +46,10 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
 
   final GlobalKey<State<StatefulWidget>> globalKey = GlobalKey();
 
-  double widgetWidth = double.infinity;
-  double widgetHeight = double.infinity;
-  double cardWidth = double.infinity;
-  double cardHeight = double.infinity;
+  double widgetWidth = .infinity;
+  double widgetHeight = .infinity;
+  double cardWidth = .infinity;
+  double cardHeight = .infinity;
   double parentPadding = -1;
   late EdgeInsets frontCardPadding;
 
@@ -142,10 +142,10 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
         widgetHeight = size.height;
         cardWidth = widgetWidth - frontCardPadding.horizontal;
         switch (orientation) {
-          case Orientation.portrait:
+          case .portrait:
             cardHeight = widgetHeight - navigationAreaHeight - frontCardPadding.vertical;
             break;
-          case Orientation.landscape:
+          case .landscape:
             cardHeight = widgetHeight - frontCardPadding.vertical;
             break;
         }
@@ -156,19 +156,19 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
   @override
   void didChangeDependencies() {
     switch (orientation) {
-      case Orientation.portrait:
+      case .portrait:
         parentPadding = style.defaultRootContainerPadding!;
-        frontCardPadding = EdgeInsets.only(
+        frontCardPadding = .only(
           left: parentPadding,
           right: parentPadding,
           bottom: parentPadding,
           top: visibleBackCardsCount * parentPadding + parentPadding,
         );
         break;
-      case Orientation.landscape:
+      case .landscape:
         parentPadding = style.defaultRootContainerPadding! / 2;
         const horizontalPadding = 86.0;
-        frontCardPadding = EdgeInsets.only(
+        frontCardPadding = .only(
           left: horizontalPadding,
           right: horizontalPadding,
           bottom: parentPadding,
@@ -192,7 +192,7 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
       backCards.add(buildBackCard(i));
     }
 
-    final cardHeightCalculated = cardHeight != double.infinity;
+    final cardHeightCalculated = cardHeight != .infinity;
     return NotificationListener<SizeChangedLayoutNotification>(
       onNotification: (n) {
         _setSize();
@@ -200,34 +200,34 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
       },
       child: SizeChangedLayoutNotifier(
         child: Stack(
-          clipBehavior: Clip.none,
-          alignment: Alignment.topCenter,
-          children: <Widget>[
+          clipBehavior: .none,
+          alignment: .topCenter,
+          children: [
             Container(
               key: globalKey,
               color: style.themeValue(SBBColors.milk, SBBColors.black),
               child: Column(
-                children: <Widget>[
+                children: [
                   Expanded(
                     child: Container(
-                      width: double.infinity,
+                      width: .infinity,
                       decoration: BoxDecoration(
                         color: controlStyle.headerBackgroundColor,
-                        borderRadius: orientation == Orientation.portrait
-                            ? const BorderRadius.vertical(bottom: Radius.circular(SBBSpacing.medium))
+                        borderRadius: orientation == .portrait
+                            ? const BorderRadius.vertical(bottom: .circular(SBBSpacing.medium))
                             : null,
                       ),
                       child: Padding(padding: frontCardPadding, child: Container()),
                     ),
                   ),
-                  if (orientation == Orientation.portrait)
+                  if (orientation == .portrait)
                     Semantics(
                       sortKey: const OrdinalSortKey(2),
                       child: Column(
                         children: [
                           const SizedBox(height: navigationAreaVerticalPadding),
                           Row(
-                            children: <Widget>[
+                            children: [
                               SizedBox(width: parentPadding),
                               SBBTertiaryButton(
                                 semanticLabel: widget.backSemanticsLabel,
@@ -282,13 +282,13 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
                   ),
                 ),
               ),
-            if (orientation == Orientation.landscape) ...[
+            if (orientation == .landscape) ...[
               Semantics(
                 sortKey: const OrdinalSortKey(3),
                 child: Align(
-                  alignment: Alignment.topRight,
+                  alignment: .topRight,
                   child: Padding(
-                    padding: EdgeInsets.only(top: frontCardPadding.top, right: frontCardPadding.top),
+                    padding: .only(top: frontCardPadding.top, right: frontCardPadding.top),
                     child: SBBTertiaryButton(
                       semanticLabel: widget.cancelLabel,
                       onPressed: widget.onFinish,
@@ -300,9 +300,9 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
               Semantics(
                 sortKey: const OrdinalSortKey(2),
                 child: Align(
-                  alignment: Alignment.centerRight,
+                  alignment: .centerRight,
                   child: Padding(
-                    padding: EdgeInsets.only(right: frontCardPadding.top),
+                    padding: .only(right: frontCardPadding.top),
                     child: SBBTertiaryButton(
                       semanticLabel: widget.forwardSemanticsLabel,
                       onPressed: () => changeStep(goToNextStep: true),
@@ -316,9 +316,9 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
                 child: Semantics(
                   sortKey: const OrdinalSortKey(0),
                   child: Align(
-                    alignment: Alignment.centerLeft,
+                    alignment: .centerLeft,
                     child: Padding(
-                      padding: EdgeInsets.only(left: frontCardPadding.top),
+                      padding: .only(left: frontCardPadding.top),
                       child: SBBTertiaryButton(
                         semanticLabel: widget.backSemanticsLabel,
                         onPressed: () => changeStep(goToNextStep: false),
@@ -422,8 +422,8 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
     return Container(
       height: 4.0 + sizeAdjustment,
       width: 4.0 + sizeAdjustment,
-      margin: EdgeInsets.all(5.0 + marginAdjustment),
-      decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+      margin: .all(5.0 + marginAdjustment),
+      decoration: BoxDecoration(color: color, shape: .circle),
     );
   }
 
@@ -441,7 +441,7 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
         ? cardLeftValue
         : null,
     child: BlockSemantics(
-      blocking: isBlocking && orientation == Orientation.portrait,
+      blocking: isBlocking && orientation == .portrait,
       child: Semantics(
         sortKey: const OrdinalSortKey(1),
         child: GestureDetector(
@@ -499,7 +499,7 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
     return ExcludeSemantics(
       child: Container(
         color: controlStyle.headerBackgroundColor,
-        margin: EdgeInsets.only(
+        margin: .only(
           top: max(
             0.0,
             visibleBackCardsCount * parentPadding -
@@ -512,7 +512,7 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
           opacity: max(0.0, 1.0 - layerIndex * opacityMultiplier + resizeValue * opacityMultiplier),
           child: Transform.scale(
             scale: 1.0 - 0.1 * layerIndex + 0.1 * resizeValue,
-            alignment: Alignment.topCenter,
+            alignment: .topCenter,
             child: buildCard(currentStepIndex + layerIndex, isBackCard: true),
           ),
         ),

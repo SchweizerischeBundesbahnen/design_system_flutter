@@ -52,9 +52,9 @@ class _SwitchPageState extends State<SwitchPage> {
             children: [
               const SBBListHeader('Switch'),
               Align(
-                alignment: Alignment.centerLeft,
+                alignment: .centerLeft,
                 child: Padding(
-                  padding: const EdgeInsets.only(left: SBBSpacing.xSmall),
+                  padding: const .only(left: SBBSpacing.xSmall),
                   child: SBBSwitch(
                     value: _value1,
                     onChanged: _isEnabled ? (value) => setState(() => _value1 = value) : null,

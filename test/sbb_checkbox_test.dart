@@ -33,11 +33,11 @@ class CheckboxTest extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Column(
-    mainAxisSize: MainAxisSize.min,
+    mainAxisSize: .min,
     children: [
       const SBBListHeader('Checkbox'),
       SBBContentBox(
-        padding: const EdgeInsets.all(SBBSpacing.xSmall),
+        padding: const .all(SBBSpacing.xSmall),
         child: Row(
           children: [
             SBBCheckbox(onChanged: (bool? value) {}, value: value1),
@@ -87,7 +87,7 @@ class CheckboxTest extends StatelessWidget {
                 value: false,
                 titleText: 'Button',
                 onChanged: (_) {},
-                padding: EdgeInsets.fromLTRB(16.0, 0.0, 8.0, 0.0),
+                padding: .fromLTRB(16.0, 0.0, 8.0, 0.0),
                 trailing: SBBTertiaryButtonSmall(
                   iconData: SBBIcons.circle_information_small_small,
                   onPressed: () {},
@@ -97,7 +97,7 @@ class CheckboxTest extends StatelessWidget {
                 value: value3,
                 titleText: 'Leading Icon and Button',
                 onChanged: (_) {},
-                padding: EdgeInsets.fromLTRB(16.0, 0.0, 8.0, 0.0),
+                padding: .fromLTRB(16.0, 0.0, 8.0, 0.0),
                 trailing: SBBTertiaryButtonSmall(
                   iconData: SBBIcons.circle_information_small_small,
                   onPressed: () {},
@@ -108,7 +108,7 @@ class CheckboxTest extends StatelessWidget {
                 value: value3,
                 onChanged: null,
                 titleText: 'Leading Icon and Button (Disabled)',
-                padding: EdgeInsets.fromLTRB(16.0, 0.0, 8.0, 0.0),
+                padding: .fromLTRB(16.0, 0.0, 8.0, 0.0),
                 trailing: SBBTertiaryButtonSmall(
                   iconData: SBBIcons.circle_information_small_small,
                   onPressed: null,
@@ -141,7 +141,7 @@ class CheckboxTest extends StatelessWidget {
             value: value3,
             titleText: 'Leading Icon and Button (Disabled)',
             onChanged: null,
-            padding: EdgeInsets.fromLTRB(16.0, 0.0, 8.0, 0.0),
+            padding: .fromLTRB(16.0, 0.0, 8.0, 0.0),
             trailing: SBBTertiaryButtonSmall(
               iconData: SBBIcons.circle_information_small_small,
               onPressed: null,
@@ -160,7 +160,7 @@ class CheckboxTest extends StatelessWidget {
             titleText: 'Custom Centered Link',
             links: [
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const .all(8.0),
                 child: Center(child: Text('Centered Link')),
               ),
             ],

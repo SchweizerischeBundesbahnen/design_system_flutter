@@ -28,7 +28,7 @@ void main() {
       title: 'With illustration',
       description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
-      illustration: MessageIllustration.Woman,
+      illustration: .Woman,
     ),
   );
 
@@ -48,7 +48,7 @@ void main() {
       title: 'With interaction and illustration',
       description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
-      illustration: MessageIllustration.Man,
+      illustration: .Man,
       onInteraction: () {},
     ),
   );
@@ -81,7 +81,7 @@ void main() {
       description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
       messageCode: 'Fehlercode: XYZ-9999',
-      illustration: MessageIllustration.Display,
+      illustration: .Display,
       onInteraction: () {},
     ),
   );
@@ -92,7 +92,7 @@ void main() {
       title: 'Custom Illustration',
       description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
-      customIllustration: Container(alignment: Alignment.center, width: 100, height: 100, color: SBBColors.red),
+      customIllustration: Container(alignment: .center, width: 100, height: 100, color: SBBColors.red),
     ),
   );
 }
@@ -106,12 +106,12 @@ class MessageTest extends StatelessWidget {
   Widget build(BuildContext context) {
     MessageIllustration.values.expand((i) => Brightness.values.map((b) => precacheImage(i.asset(b), context))).toList();
     return Column(
-      mainAxisSize: MainAxisSize.min,
+      mainAxisSize: .min,
       children: [
         const SBBListHeader('SBBMessage'),
         SizedBox(
           width: 400.0,
-          child: SBBContentBox(padding: const EdgeInsets.all(SBBSpacing.xSmall), child: sbbMessage),
+          child: SBBContentBox(padding: const .all(SBBSpacing.xSmall), child: sbbMessage),
         ),
       ],
     );

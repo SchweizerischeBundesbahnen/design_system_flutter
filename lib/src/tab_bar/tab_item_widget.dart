@@ -26,7 +26,7 @@ class TabItemWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = SBBBaseStyle.of(context);
-    final portrait = MediaQuery.of(context).orientation == Orientation.portrait;
+    final portrait = MediaQuery.of(context).orientation == .portrait;
     final size = portrait ? portraitSize : landscapeSize;
     final topPadding = portrait ? portraitCirclePadding : landscapeCirclePadding;
 
@@ -48,7 +48,7 @@ class TabItemWidget extends StatelessWidget {
     return ExcludeSemantics(
       excluding: selected,
       child: Padding(
-        padding: EdgeInsets.only(
+        padding: .only(
           top: topPadding,
           left: horizontalCirclePadding,
           right: horizontalCirclePadding,
