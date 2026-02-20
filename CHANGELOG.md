@@ -50,6 +50,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - BREAKING: overhauled `SBBSlider` component - see [v5 migration guide]
 - BREAKING: overhauled `SBBStepper` component - see [v5 migration guide]
 - BREAKING: overhauled `SBBSegmentedButton` component - see [v5 migration guide]
+- BREAKING: overhauled `SBBMessage` component - see [v5 migration guide]
 
 ### Removed
 

@@ -425,3 +425,20 @@ A cross small will be displayed instead of the trailingIconData when focused and
 - [ ] Test multiline mode if used (icons should be top-aligned now)
 - [ ] Consider using `readOnly` instead of just `enabled` for readonly fields with interactive trailing widgets
 
+
+
+## Message
+
+### Constructor arguments
+* Replace required `title` with `titleText` (or use `title` for custom widgets)
+* Replace required `description` with `subtitleText` (or use `subtitle` for custom widgets)
+* Replace `messageCode` with `errorText` (or use `error` for custom widgets)
+* Replace `customIllustration` with `illustration` parameter (accepts `SBBIllustration` or any custom widget)
+* Replace `illustration: MessageIllustration.Display` with `illustration: SBBIllustration.display()` (use SBBIllustration widget or custom)
+* Replace `onInteraction` callback and `interactionIcon` with an `action` widget parameter (typically `SBBTertiaryButton`)
+
+
+### Theming & Styling
+* customize the theme of all `SBBMessage` with `SBBMessageThemeData` as input to `SBBTheme`
+* access the theme using `Theme.of(context).sbbMessageTheme`
+* customize an individual message by setting its `style` parameter in the constructor
