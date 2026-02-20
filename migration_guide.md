@@ -28,6 +28,9 @@ Use the `foregroundBuilder` of the `SBBButtonStyle` as a replacement
 
 ## Checkbox
 
+### Constructor
+* added `focusNode` and `autofocus`
+
 ### Theming & Styling
 * `padding`: replace the checkbox `padding` parameter with the `SBBCheckboxStyle.tapTargetPadding` to increase tappable area
 * customize the theme of the `SBBCheckbox` with `SBBCheckboxThemeData`
@@ -133,6 +136,7 @@ The list item has received a lot of changes. In general the content is completel
   * instead of a `RadioGroup<T>`, use a `SBBRadioGroup<T>`
 * added: use `toggleable` for allowing a radio to return to unselected state without
   selecting a different radio in its group
+* added `focusNode` & `autofocus`
 
 All of the above also affects the `SBBRadioListItem`.
 
@@ -280,6 +284,7 @@ SBBSegmentedButton<String>(
 * customize an individual step by setting the `SBBStepperItem`'s `style` parameter in the constructor
 
 ## Switch
+* added `focusNode` & `autofocus`
 * increase the tappable area of the switch by setting the `SBBSwitchStyle.tapTargetPadding` value
 * customize the theme of all `SBBSwitch` with `SBBSwitchThemeData`
 * access the theme using `Theme.of(context).sbbSwitchTheme`
