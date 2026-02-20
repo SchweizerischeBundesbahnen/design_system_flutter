@@ -57,21 +57,6 @@ class SBBMessage extends StatelessWidget {
     this.customIllustration,
   });
 
-  /// Used to display an error in form of a [SBBMessage] to the user.
-  ///
-  /// The [illustration] will default to [MessageIllustration.Display].
-  const SBBMessage.error({
-    super.key,
-    required this.title,
-    required this.description,
-    this.illustration = .Display,
-    this.isLoading = false,
-    this.messageCode,
-    this.onInteraction,
-    this.interactionIcon = _kDefaultInteractionIcon,
-    this.customIllustration,
-  });
-
   /// The title of the message displayed directly below the [illustration] or [customIllustration].
   final String title;
 
