@@ -23,21 +23,36 @@ class SBBMessageStyle {
   });
 
   /// The text style for the title.
+  ///
+  /// The color of the [titleTextStyle] is typically not used directly, the
+  /// [titleForegroundColor] is used instead.
   final TextStyle? titleTextStyle;
 
   /// The color of the title text.
+  ///
+  /// This color is typically used instead of the color of the [titleTextStyle].
   final Color? titleForegroundColor;
 
   /// The text style for the subtitle.
+  ///
+  /// The color of the [subtitleTextStyle] is typically not used directly, the
+  /// [subtitleForegroundColor] is used instead.
   final TextStyle? subtitleTextStyle;
 
   /// The color of the subtitle text.
+  ///
+  /// This color is typically used instead of the color of the [subtitleTextStyle].
   final Color? subtitleForegroundColor;
 
   /// The text style for the error text.
+  ///
+  /// The color of the [errorTextStyle] is typically not used directly, the
+  /// [errorForegroundColor] is used instead.
   final TextStyle? errorTextStyle;
 
   /// The color of the error text.
+  ///
+  /// This color is typically used instead of the color of the [errorTextStyle].
   final Color? errorForegroundColor;
 
   /// The padding around the message content.

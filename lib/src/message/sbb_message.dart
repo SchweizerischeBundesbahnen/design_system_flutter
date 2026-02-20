@@ -2,19 +2,58 @@ import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
-/// The SBB Message. This widget allows displaying messages to the user, e.g. for Error messages.
+/// The SBB Message widget displays messages to the user, typically for errors, loading states, or informational content.
 ///
+/// This widget combines visual elements (illustration, title, subtitle, error text) with optional actions
+/// to create a complete message experience. It supports both static and custom content through either
+/// text strings or widgets.
+///
+/// Provide either [titleText] for simple text or [title] for custom content. These parameters are mutually exclusive.
+/// Similarly, [subtitleText] and [subtitle], as well as [errorText] and [error], are mutually exclusive.
+///
+/// For the [illustration] field, typically use a [SBBIllustration] factory constructor to display
+/// a predefined illustration. For example:
+/// ```dart
+/// SBBMessage(
+///   titleText: 'Operation failed',
+///   illustration: SBBIllustration.display(),
+/// )
+/// ```
+///
+/// For the [action] field, typically add a [SBBTertiaryButton] with only [iconData] set to perform
+/// a related action. For example:
+/// ```dart
+/// SBBMessage(
+///   titleText: 'Error occurred',
+///   action: SBBTertiaryButton(
+///     onPressed: () => handleRetry(),
+///     iconData: SBBIcons.arrows_small,
+///   ),
+/// )
+/// ```
+///
+/// If [isLoading] is true, a [SBBLoadingIndicator] is shown instead of the [illustration].
+///
+/// Requires one of its ancestors to be a [Material] widget.
 ///
 /// See also:
 ///
-/// * <https://digital.sbb.ch/en/design-system/mobile/components/message/>
+/// * [SBBIllustration], for predefined illustration assets to use with the [illustration] field.
+/// * [SBBTertiaryButton], for action buttons to use with the [action] field.
+/// * [SBBLoadingIndicator], shown when [isLoading] is true.
+/// * [digital.sbb.ch](https://digital.sbb.ch/de/design-system/mobile/components/message/)
 class SBBMessage extends StatelessWidget {
-  /// Use the required [titleText] and [subtitleText] to display a message to the user.
+  /// Creates an SBB Message.
   ///
-  /// If [illustration] and [illustration] is null, will not display anything above the [titleText], unless
-  /// [isLoading] is true.
+  /// The following arguments are required:
   ///
-  /// The [errorText] is typically used only within an error message. See [SBBMessage.error].
+  /// * Either [title] or [titleText] must be provided. They are mutually exclusive.
+  ///
+  /// The following arguments are mutually exclusive:
+  ///
+  /// * [title] and [titleText]
+  /// * [subtitle] and [subtitleText]
+  /// * [error] and [errorText]
   const SBBMessage({
     super.key,
     this.title,
@@ -32,37 +71,86 @@ class SBBMessage extends StatelessWidget {
        assert(subtitle == null || subtitleText == null, 'Only subtitleText or subtitle can be set!'),
        assert(error == null || errorText == null, 'Only error or errorText can be set!');
 
+  /// A custom widget displayed as the message's title.
+  ///
+  /// For simple text titles, prefer [titleText].
+  ///
+  /// Cannot be used together with [titleText].
   final Widget? title;
 
-  /// The title of the message displayed directly below the [illustration] or [illustration].
+  /// Text string to display as the message's title using the standard design.
+  ///
+  /// This text is displayed directly below the [illustration] or loading indicator.
+  /// The title should be concise and clearly indicate the message's purpose.
+  ///
+  /// Cannot be used together with [title].
   final String? titleText;
 
+  /// A custom widget displayed as the message's subtitle or body.
+  ///
+  /// For simple text subtitles, prefer [subtitleText].
+  ///
+  /// Cannot be used together with [subtitleText].
   final Widget? subtitle;
 
-  /// The body of the message. Used to give a longer explanation of what has happened.
+  /// Text string to display as the message's body using the standard design.
+  ///
+  /// This text provides a longer explanation of what has happened or what action
+  /// the user should take. It appears below the [titleText] or [title].
+  ///
+  /// Cannot be used together with [subtitle].
   final String? subtitleText;
 
+  /// A custom widget displayed below the subtitle for error information.
+  ///
+  /// For simple error text, prefer [errorText].
+  ///
+  /// Cannot be used together with [errorText].
   final Widget? error;
 
-  /// Optional text displayed below the [subtitleText]. Usually depicts an error code.
+  /// Text string to display as error information using the standard design.
   ///
-  /// This text is excluded from semantics.
+  /// This text is typically used only within error messages to show additional
+  /// details like error codes. The text is excluded from semantics.
   ///
   /// Example: 'Error-Code: XYZ-9999'
+  ///
+  /// Cannot be used together with [error].
   final String? errorText;
 
-  /// If [isLoading] is true, a [SBBLoadingIndicator] is shown instead of the [illustration] or [illustration].
+  /// Whether to show a loading indicator instead of the [illustration].
+  ///
+  /// When true, a [SBBLoadingIndicator] is displayed in place of the [illustration].
+  /// The button and text remain visible and functional.
   ///
   /// Defaults to false.
   final bool isLoading;
 
-  /// Used to display a complete custom illustration instead of [illustration].
+  /// A widget to display above the title, typically used for visual content.
   ///
-  /// If is null and [illustration] is non null, displays [illustration].
+  /// Usually populated with a [SBBIllustration] factory constructor for predefined
+  /// illustrations. If null and [isLoading] is false, no illustration is displayed.
   ///
-  /// Overridden by [isLoading] to show a [SBBLoadingIndicator].
+  /// This field is overridden by [isLoading] to show a [SBBLoadingIndicator].
+  ///
+  /// Example:
+  /// ```dart
+  /// illustration: SBBIllustration.staffMale()
+  /// ```
   final Widget? illustration;
 
+  /// An optional widget displayed below all text content, typically an action button.
+  ///
+  /// Usually populated with a [SBBTertiaryButton] for tertiary actions or navigation.
+  /// Only the icon should be displayed when using the compact form.
+  ///
+  /// Example:
+  /// ```dart
+  /// action: SBBTertiaryButton(
+  ///   onPressed: () => handleAction(),
+  ///   iconData: SBBIcons.arrows_small,
+  /// )
+  /// ```
   final Widget? action;
 
   /// Customizes this message's appearance.
