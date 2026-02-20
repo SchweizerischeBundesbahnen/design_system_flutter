@@ -40,13 +40,13 @@ class _PaginatorViewState extends State<PaginatorView> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 48.0, horizontal: SBBSpacing.medium),
+      padding: const .symmetric(vertical: 48.0, horizontal: SBBSpacing.medium),
       child: Column(
         children: [
           _LabeledSBBPaginator(label: 'Default', currentPage: currentPage),
           Expanded(
             child: Stack(
-              alignment: Alignment.bottomCenter,
+              alignment: .bottomCenter,
               children: [
                 PageView(
                   onPageChanged: _changeCurrentPage,
@@ -76,9 +76,9 @@ class _LabeledSBBPaginator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(bottom: SBBSpacing.medium),
+      padding: const .only(bottom: SBBSpacing.medium),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: .min,
         spacing: SBBSpacing.small,
         children: [
           Text(label, style: SBBTextStyles.extraSmallLight),
@@ -99,7 +99,7 @@ class _IndexedTextPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SBBContentBox(
-      margin: EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
+      margin: .symmetric(horizontal: SBBSpacing.xSmall),
       child: Center(child: Text('Page #${pageIndex + 1}')),
     );
   }

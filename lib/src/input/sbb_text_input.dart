@@ -521,7 +521,7 @@ class _SBBTextInputState extends State<SBBTextInput>
     final Widget trailing = widget.decoration?.trailingIconData == null
         ? SizedBox.shrink()
         : Padding(
-            padding: EdgeInsets.only(left: _effectiveTrailingInputGap(inputDecorationTheme)),
+            padding: .only(left: _effectiveTrailingInputGap(inputDecorationTheme)),
             child: Icon(widget.decoration!.trailingIconData),
           );
 
@@ -685,7 +685,7 @@ class SBBTextInputBoxed extends SBBTextInput {
          decoration: decoration?.contentPadding != null
              ? decoration
              : (decoration ?? SBBInputDecoration()).copyWith(
-                 contentPadding: EdgeInsets.symmetric(horizontal: SBBSpacing.medium),
+                 contentPadding: .symmetric(horizontal: SBBSpacing.medium),
                ),
        );
 

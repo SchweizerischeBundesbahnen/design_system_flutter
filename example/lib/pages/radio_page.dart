@@ -42,21 +42,21 @@ class RadioPageState extends State<RadioPage> {
           ),
         ),
         SliverPadding(
-          padding: EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
+          padding: .symmetric(horizontal: SBBSpacing.xSmall),
           sliver: SliverList.list(
             children: <Widget>[
               const SBBListHeader('Radio'),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
+                padding: const .symmetric(horizontal: SBBSpacing.xSmall),
                 child: SBBRadioGroup<int>(
                   groupValue: _groupValue,
                   onChanged: (newValue) => setState(() => _groupValue = newValue),
                   child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: .min,
+                    crossAxisAlignment: .start,
                     children: [
                       Row(
-                        mainAxisSize: MainAxisSize.min,
+                        mainAxisSize: .min,
                         children: [
                           SBBRadio<int>(
                             value: 1,
@@ -66,7 +66,7 @@ class RadioPageState extends State<RadioPage> {
                         ],
                       ),
                       Row(
-                        mainAxisSize: MainAxisSize.min,
+                        mainAxisSize: .min,
                         children: [
                           SBBRadio<int>(
                             value: 2,
@@ -113,7 +113,7 @@ class RadioPageState extends State<RadioPage> {
                           value: 4,
                           titleText: 'Button',
                           enabled: _pageEnabled,
-                          padding: EdgeInsets.fromLTRB(16.0, 0.0, 8.0, 0.0),
+                          padding: .fromLTRB(16.0, 0.0, 8.0, 0.0),
                           trailing: SBBTertiaryButtonSmall(
                             iconData: SBBIcons.circle_information_small_small,
                             onPressed: _pageEnabled ? () => sbbToast.show(title: 'Button pressed') : null,
@@ -164,7 +164,7 @@ class RadioPageState extends State<RadioPage> {
               const SizedBox(height: SBBSpacing.medium),
               const SBBListHeader('Radio List Item - Boxed'),
               Padding(
-                padding: const EdgeInsets.only(bottom: 64.0),
+                padding: const .only(bottom: 64.0),
                 child: SBBRadioGroup(
                   groupValue: _listItemGroupValue,
                   onChanged: (newValue) => setState(() => _listItemGroupValue = newValue),
@@ -190,7 +190,7 @@ class RadioPageState extends State<RadioPage> {
                         value: 4,
                         titleText: 'Button',
                         enabled: _pageEnabled,
-                        padding: EdgeInsets.fromLTRB(16.0, 0.0, 8.0, 0.0),
+                        padding: .fromLTRB(16.0, 0.0, 8.0, 0.0),
                         trailing: SBBTertiaryButtonSmall(
                           iconData: SBBIcons.circle_information_small_small,
                           onPressed: _pageEnabled ? () => sbbToast.show(title: 'Button pressed') : null,

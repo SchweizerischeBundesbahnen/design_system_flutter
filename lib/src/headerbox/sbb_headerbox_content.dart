@@ -25,7 +25,7 @@ class DefaultHeaderBoxContent extends StatelessWidget {
       children: [
         Expanded(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: .start,
             children: [
               Row(
                 children: [
@@ -74,7 +74,7 @@ class LargeHeaderBoxContent extends StatelessWidget {
         ],
         Expanded(
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: .start,
             spacing: SBBSpacing.xxSmall,
             children: [
               Text(title, style: style.titleTextStyle),

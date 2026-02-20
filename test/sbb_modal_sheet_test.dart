@@ -33,12 +33,12 @@ class ModalSheetTest extends StatelessWidget {
 
   Widget _modalSheets() {
     return Column(
-      mainAxisSize: MainAxisSize.min,
+      mainAxisSize: .min,
       children: [
         const SBBListHeader('Modal Sheet'),
         SBBContentBox(
           child: Padding(
-            padding: const EdgeInsets.all(SBBSpacing.xSmall),
+            padding: const .all(SBBSpacing.xSmall),
             child: Column(
               children: [
                 SBBModalSheet(title: 'Titel', child: _modalContent()),
@@ -56,12 +56,12 @@ class ModalSheetTest extends StatelessWidget {
 
   Widget _customModalSheets() {
     return Column(
-      mainAxisSize: MainAxisSize.min,
+      mainAxisSize: .min,
       children: [
         const SBBListHeader('Custom Modal Sheet'),
         SBBContentBox(
           child: Padding(
-            padding: const EdgeInsets.all(SBBSpacing.xSmall),
+            padding: const .all(SBBSpacing.xSmall),
             child: Column(
               children: [
                 SBBModalSheet.custom(header: _modalHeader(), child: _modalContent()),
@@ -88,7 +88,7 @@ class ModalSheetTest extends StatelessWidget {
 
   Widget _modalHeader() {
     return Padding(
-      padding: EdgeInsets.all(SBBSpacing.medium),
+      padding: .all(SBBSpacing.medium),
       child: Row(
         children: [
           Icon(SBBIcons.app_icon_small),

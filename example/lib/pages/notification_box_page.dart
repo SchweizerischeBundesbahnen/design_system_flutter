@@ -18,13 +18,13 @@ class _NotificationBoxPage extends State<NotificationBoxPage> {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: const EdgeInsets.all(SBBSpacing.medium),
+      padding: const .all(SBBSpacing.medium),
       children: [
         const ThemeModeSegmentedButton(),
         const SizedBox(height: SBBSpacing.medium),
         const SBBListHeader('Alert'),
         SBBContentBox(
-          padding: const EdgeInsets.all(SBBSpacing.medium),
+          padding: const .all(SBBSpacing.medium),
           child: Column(
             children: [
               SBBNotificationBox.alert(title: title, text: text, onTap: () {}),
@@ -53,7 +53,7 @@ class _NotificationBoxPage extends State<NotificationBoxPage> {
         ),
         const SBBListHeader('Warning'),
         SBBContentBox(
-          padding: const EdgeInsets.all(SBBSpacing.medium),
+          padding: const .all(SBBSpacing.medium),
           child: Column(
             children: [
               SBBNotificationBox.warning(title: title, text: text, onTap: () {}),
@@ -81,7 +81,7 @@ class _NotificationBoxPage extends State<NotificationBoxPage> {
         ),
         const SBBListHeader('Success'),
         SBBContentBox(
-          padding: const EdgeInsets.all(SBBSpacing.medium),
+          padding: const .all(SBBSpacing.medium),
           child: Column(
             children: [
               SBBNotificationBox.success(title: title, text: text, onTap: () {}),
@@ -109,7 +109,7 @@ class _NotificationBoxPage extends State<NotificationBoxPage> {
         ),
         const SBBListHeader('Information'),
         SBBContentBox(
-          padding: const EdgeInsets.all(SBBSpacing.medium),
+          padding: const .all(SBBSpacing.medium),
           child: Column(
             children: [
               SBBNotificationBox.information(title: title, onTap: () {}, text: text),

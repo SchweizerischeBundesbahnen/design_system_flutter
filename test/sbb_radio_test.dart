@@ -32,11 +32,11 @@ class RadioTest extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Column(
-    mainAxisSize: MainAxisSize.min,
+    mainAxisSize: .min,
     children: [
       const SBBListHeader('RadioButton'),
       Padding(
-        padding: const EdgeInsets.all(SBBSpacing.xSmall),
+        padding: const .all(SBBSpacing.xSmall),
         child: SBBRadioGroup<int>(
           groupValue: groupValue,
           onChanged: (_) {},
@@ -66,7 +66,7 @@ class RadioTest extends StatelessWidget {
                     SBBRadioListItem<int>(
                       value: 2,
                       titleText: 'Button',
-                      padding: EdgeInsets.fromLTRB(16.0, 0.0, 8.0, 0.0),
+                      padding: .fromLTRB(16.0, 0.0, 8.0, 0.0),
                       trailing: SBBTertiaryButtonSmall(
                         iconData: SBBIcons.circle_information_small_small,
                         onPressed: () {},
@@ -75,7 +75,7 @@ class RadioTest extends StatelessWidget {
                     SBBRadioListItem<int>(
                       value: 3,
                       titleText: 'Leading and Button',
-                      padding: EdgeInsets.fromLTRB(16.0, 0.0, 8.0, 0.0),
+                      padding: .fromLTRB(16.0, 0.0, 8.0, 0.0),
                       trailing: SBBTertiaryButtonSmall(
                         iconData: SBBIcons.circle_information_small_small,
                         onPressed: () {},
@@ -85,7 +85,7 @@ class RadioTest extends StatelessWidget {
                       value: 4,
                       enabled: false,
                       titleText: 'Leading Icon, Button (Disabled)',
-                      padding: EdgeInsets.fromLTRB(16.0, 0.0, 8.0, 0.0),
+                      padding: .fromLTRB(16.0, 0.0, 8.0, 0.0),
                       trailing: SBBTertiaryButtonSmall(
                         iconData: SBBIcons.circle_information_small_small,
                         onPressed: null,
@@ -153,7 +153,7 @@ class RadioTest extends StatelessWidget {
             SBBRadioListItemBoxed<int>(
               value: 3,
               titleText: 'Button',
-              padding: EdgeInsets.fromLTRB(16.0, 0.0, 8.0, 0.0),
+              padding: .fromLTRB(16.0, 0.0, 8.0, 0.0),
               trailing: SBBTertiaryButtonSmall(
                 iconData: SBBIcons.circle_information_small_small,
                 onPressed: () {},

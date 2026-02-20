@@ -47,8 +47,8 @@ class SliderPageState extends State<SliderPage> {
             children: [
               const SBBListHeader('Default'),
               SBBContentBox(
-                margin: const EdgeInsets.symmetric(horizontal: SBBSpacing.medium),
-                padding: const EdgeInsets.all(SBBSpacing.medium),
+                margin: const .symmetric(horizontal: SBBSpacing.medium),
+                padding: const .all(SBBSpacing.medium),
                 child: SBBSlider(
                   onChanged: _isEnabled
                       ? (value) {
@@ -65,8 +65,8 @@ class SliderPageState extends State<SliderPage> {
               ),
               const SBBListHeader('Without Icons'),
               SBBContentBox(
-                margin: const EdgeInsets.symmetric(horizontal: SBBSpacing.medium),
-                padding: const EdgeInsets.all(SBBSpacing.medium),
+                margin: const .symmetric(horizontal: SBBSpacing.medium),
+                padding: const .all(SBBSpacing.medium),
                 child: SBBSlider(
                   onChanged: _isEnabled
                       ? (value) {

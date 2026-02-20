@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 import '../../../sbb_design_system_mobile.dart';
 import '../container.dart';
 
@@ -12,10 +10,10 @@ class DefaultSBBContentBoxThemeData extends SBBContentBoxThemeData {
   DefaultSBBContentBoxThemeData({required SBBBaseStyle baseStyle})
     : super(
         style: SBBContentBoxStyle(
-          margin: EdgeInsets.zero,
-          padding: EdgeInsets.zero,
+          margin: .zero,
+          padding: .zero,
           color: baseStyle.themeValue(SBBColors.white, SBBColors.charcoal),
-          clipBehavior: Clip.hardEdge,
+          clipBehavior: .hardEdge,
           isSemanticContainer: true,
         ),
       );

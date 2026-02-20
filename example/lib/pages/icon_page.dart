@@ -10,7 +10,7 @@ class IconPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final sbbToast = SBBToast.of(context);
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(SBBSpacing.medium),
+      padding: const .all(SBBSpacing.medium),
       child: Column(
         children: [
           const ThemeModeSegmentedButton(),
@@ -39,7 +39,7 @@ class _IconShowCase extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SBBContentBox(
-      padding: const EdgeInsets.all(SBBSpacing.xSmall),
+      padding: const .all(SBBSpacing.xSmall),
       child: GridView.builder(
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
@@ -48,7 +48,7 @@ class _IconShowCase extends StatelessWidget {
         itemBuilder: (BuildContext context, index) {
           final icon = icons[index];
           return IconButton(
-            padding: EdgeInsets.zero,
+            padding: .zero,
             icon: Icon(icon['icon'] as IconData, size: iconSize),
             onPressed: () {
               sbbToast.show(title: icon['name'] as String);

@@ -109,9 +109,9 @@ class SBBStepper extends StatelessWidget {
     final resolvedLabelTextStyle = effectiveStyle.itemStyle!.labelTextStyle?.merge(_activeItem.style?.labelTextStyle);
 
     return Padding(
-      padding: themeStyle.padding ?? EdgeInsets.zero,
+      padding: themeStyle.padding ?? .zero,
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: .min,
         children: [
           _steps(effectiveStyle),
           _label(resolvedLabelTextStyle),
@@ -138,14 +138,14 @@ class SBBStepper extends StatelessWidget {
         Text(
           steps[activeStep].labelText!,
           maxLines: 1,
-          overflow: TextOverflow.ellipsis,
+          overflow: .ellipsis,
           softWrap: false,
           textAlign: TextAlign.center,
           style: labelTextStyle,
         );
 
     return Padding(
-      padding: const EdgeInsets.only(top: SBBSpacing.xxSmall),
+      padding: const .only(top: SBBSpacing.xxSmall),
       child: _EdgeClampedCentered(
         stepCircleSize: SBBStepperItemStyle.stepCircleSize,
         activeStep: activeStep,
@@ -179,7 +179,7 @@ class _Divider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: double.infinity,
+      width: .infinity,
       height: SBBStepperStyle.dividerHeight,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(SBBStepperStyle.dividerHeight),
@@ -239,7 +239,7 @@ class _StepCircleState extends State<_StepCircle> {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      clipBehavior: Clip.none,
+      clipBehavior: .none,
       children: [
         _circle(context),
         if (_passedStep && widget.item.showBadgeWhenPassed) _badge(),
@@ -252,7 +252,7 @@ class _StepCircleState extends State<_StepCircle> {
     return SizedBox.square(
       dimension: SBBStepperItemStyle.stepCircleSize,
       child: Material(
-        clipBehavior: Clip.antiAlias,
+        clipBehavior: .antiAlias,
         color: resolvedBackgroundColor,
         shape: _shape(),
         child: InkWell(
@@ -281,7 +281,7 @@ class _StepCircleState extends State<_StepCircle> {
           width: SBBStepperItemStyle.badgeSize,
           height: SBBStepperItemStyle.badgeSize,
           decoration: BoxDecoration(
-            shape: BoxShape.circle,
+            shape: .circle,
             color: widget.style.badgeBackgroundColor,
             border: backgroundColor != null ? BoxBorder.fromBorderSide(BorderSide(color: backgroundColor)) : null,
           ),

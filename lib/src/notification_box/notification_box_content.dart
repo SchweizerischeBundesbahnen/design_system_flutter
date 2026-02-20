@@ -20,7 +20,7 @@ class SBBNotificationBoxContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: .start,
       children: [
         if (icon != null) ...[
           icon!,

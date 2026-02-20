@@ -20,7 +20,7 @@ Future<T?> showSBBModalPopup<T>({
   required BuildContext context,
   required String title,
   required Widget child,
-  Clip clipBehavior = Clip.none,
+  Clip clipBehavior = .none,
   bool showCloseButton = true,
   Color? backgroundColor,
 }) {
@@ -50,7 +50,7 @@ class SBBModalPopup extends StatelessWidget {
     super.key,
     required this.title,
     required this.child,
-    this.clipBehavior = Clip.none,
+    this.clipBehavior = .none,
     this.showCloseButton = true,
     this.backgroundColor,
   });
@@ -71,7 +71,7 @@ class SBBModalPopup extends StatelessWidget {
       child: Semantics(
         explicitChildNodes: true,
         child: Column(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisSize: .min,
           children: [
             _ModalHeader(title, showCloseButton: showCloseButton),
             child,
@@ -235,7 +235,7 @@ class SBBModalSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = SBBControlStyles.of(context);
     return Column(
-      mainAxisSize: MainAxisSize.min,
+      mainAxisSize: .min,
       children: [
         ExcludeSemantics(
           child: GestureDetector(
@@ -248,15 +248,15 @@ class SBBModalSheet extends StatelessWidget {
             decoration: BoxDecoration(
               color: backgroundColor ?? style.modalBackgroundColor,
               borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(SBBSpacing.medium),
-                topRight: Radius.circular(SBBSpacing.medium),
+                topLeft: .circular(SBBSpacing.medium),
+                topRight: .circular(SBBSpacing.medium),
               ),
             ),
             child: Column(
-              mainAxisSize: MainAxisSize.min,
+              mainAxisSize: .min,
               children: [
                 Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: .start,
                   children: [
                     Expanded(child: headerBuilder(context)),
                     if (showCloseButton) _CloseButton(),
@@ -282,7 +282,7 @@ class _ModalHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = SBBControlStyles.of(context);
     return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: .start,
       children: [
         Expanded(
           child: Padding(
@@ -303,7 +303,7 @@ class _CloseButton extends StatelessWidget {
     excludeSemantics: true,
     button: true,
     child: Padding(
-      padding: const EdgeInsets.all(6.0),
+      padding: const .all(6.0),
       child: SBBTertiaryButtonSmall(onPressed: () => Navigator.of(context).pop(), iconData: SBBIcons.cross_small),
     ),
   );

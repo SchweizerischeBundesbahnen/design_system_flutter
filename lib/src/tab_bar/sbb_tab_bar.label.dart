@@ -16,7 +16,7 @@ class _TabLabel extends StatelessWidget {
         visible: visible,
         child: ExcludeSemantics(
           child: Padding(
-            padding: EdgeInsets.only(top: 4.0, bottom: bottomPadding),
+            padding: .only(top: 4.0, bottom: bottomPadding),
             child: Text(
               item.translate(context),
               style: SBBControlStyles.of(context).tabBarTextStyle,

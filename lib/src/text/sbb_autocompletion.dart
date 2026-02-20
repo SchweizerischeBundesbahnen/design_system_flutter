@@ -266,10 +266,10 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>> with Widgets
                 showWhenUnlinked: false,
                 offset: Offset(-textFieldGlobalPosition.dx, height),
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: textFieldGlobalPosition.dx),
+                  padding: .symmetric(horizontal: textFieldGlobalPosition.dx),
                   color: backgroundColor,
                   child: ListView(
-                    padding: EdgeInsets.zero,
+                    padding: .zero,
                     shrinkWrap: true,
                     children: [
                       if (widget.favorites.isNotEmpty && widget.enableFavorites)

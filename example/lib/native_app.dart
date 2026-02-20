@@ -77,17 +77,17 @@ class MyApp extends StatelessWidget {
                 builder: (context) {
                   return SingleChildScrollView(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: SBBSpacing.medium),
+                      padding: const .symmetric(horizontal: SBBSpacing.medium),
                       child: Column(
                         children: [
                           const Padding(
-                            padding: EdgeInsets.symmetric(vertical: SBBSpacing.medium),
+                            padding: .symmetric(vertical: SBBSpacing.medium),
                             child: ThemeModeSegmentedButton(),
                           ),
                           const SBBListHeader('Basics'),
                           SBBContentBox(
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: .center,
                               children: SBBListItem.divideListItems(
                                 context: context,
                                 items: [
@@ -102,7 +102,7 @@ class MyApp extends StatelessWidget {
                           const SBBListHeader('Elements'),
                           SBBContentBox(
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: .center,
                               children: SBBListItem.divideListItems(
                                 context: context,
                                 items: [
@@ -133,7 +133,7 @@ class MyApp extends StatelessWidget {
                           const SBBListHeader('Modules'),
                           SBBContentBox(
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: .center,
                               children: SBBListItem.divideListItems(
                                 context: context,
                                 items: [

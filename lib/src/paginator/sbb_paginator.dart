@@ -62,7 +62,7 @@ class SBBPaginator extends StatelessWidget {
       readOnly: true,
       child: Row(
         spacing: SBBSpacing.xSmall,
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: .min,
         children: _circles(style?.circleFillColor, style?.circleBorderColor),
       ),
     );

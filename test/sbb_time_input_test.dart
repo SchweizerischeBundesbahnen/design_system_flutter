@@ -31,7 +31,7 @@ class TimePickerTest extends StatelessWidget {
     const maximumTime = TimeOfDay(hour: 08, minute: 43);
     return SBBContentBox(
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: .min,
         children: <Widget>[
           SBBTimeInput(onTimeChanged: (_) {}),
           SBBTimeInput(value: initialTime, onTimeChanged: (_) {}),

@@ -48,7 +48,7 @@ class TabItemWidget extends StatelessWidget {
     return ExcludeSemantics(
       excluding: selected,
       child: Padding(
-        padding: EdgeInsets.only(
+        padding: .only(
           top: topPadding,
           left: horizontalCirclePadding,
           right: horizontalCirclePadding,

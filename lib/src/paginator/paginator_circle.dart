@@ -31,7 +31,7 @@ class PaginatorCircle extends StatelessWidget {
       height: SBBPaginatorStyle.circleSize.height,
       decoration: BoxDecoration(
         color: resolvedFillColor,
-        shape: BoxShape.circle,
+        shape: .circle,
         border: Border.all(
           color: resolvedBorderColor ?? SBBColors.transparent,
           strokeAlign: isSelected ? BorderSide.strokeAlignOutside : BorderSide.strokeAlignInside,

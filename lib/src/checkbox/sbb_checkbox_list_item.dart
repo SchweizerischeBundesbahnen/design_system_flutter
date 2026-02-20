@@ -160,15 +160,13 @@ class SBBCheckboxListItem extends StatelessWidget {
       value: value,
       tristate: tristate,
       onChanged: enabled ? onChanged : null,
-      style: (checkboxStyle ?? const SBBCheckboxStyle()).copyWith(
-        tapTargetPadding: EdgeInsets.zero,
-      ),
+      style: (checkboxStyle ?? const SBBCheckboxStyle()).copyWith(tapTargetPadding: .zero),
       semanticLabel: checkboxSemanticLabel,
     );
 
     if (leadingWidget != null) {
       resolvedLeading = Row(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: .min,
         spacing: leadingCheckboxGapWidth,
         children: [resolvedLeading, leadingWidget],
       );

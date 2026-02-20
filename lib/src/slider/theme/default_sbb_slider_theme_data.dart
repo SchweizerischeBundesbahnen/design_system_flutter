@@ -30,7 +30,7 @@ class DefaultSBBSliderThemeData extends SBBSliderThemeData {
             WidgetState.disabled: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
             WidgetState.any: baseStyle.iconColor,
           }),
-          padding: EdgeInsets.symmetric(horizontal: SBBSpacing.medium),
+          padding: .symmetric(horizontal: SBBSpacing.medium),
         ),
       );
 }

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
-const EdgeInsets _defaultPadding = EdgeInsets.all(8.0);
+const EdgeInsets _defaultPadding = .all(8.0);
 
 /// The SBB Radio.
 ///
@@ -337,19 +337,19 @@ class _SBBRadioPainter extends ToggleablePainter {
   Paint _createFillPaint() {
     return Paint()
       ..color = _currentFillColor
-      ..style = PaintingStyle.fill;
+      ..style = .fill;
   }
 
   Paint _createBorderPaint() {
     return Paint()
       ..color = _currentBorderColor
       ..strokeWidth = SBBRadioStyle.borderWidth
-      ..style = PaintingStyle.stroke;
+      ..style = .stroke;
   }
 
   Paint _createInnerCirclePaint() {
     return Paint()
       ..color = _currentActiveColor
-      ..style = PaintingStyle.fill;
+      ..style = .fill;
   }
 }

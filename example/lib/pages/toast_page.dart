@@ -18,15 +18,15 @@ class _ToastPageState extends State<ToastPage> {
   Widget build(BuildContext context) {
     final sbbToast = SBBToast.of(context);
     return SingleChildScrollView(
-      padding: const EdgeInsets.all(SBBSpacing.medium),
+      padding: const .all(SBBSpacing.medium),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         children: <Widget>[
           const ThemeModeSegmentedButton(),
           const SizedBox(height: SBBSpacing.medium),
           const SBBListHeader('Show Toast'),
           SBBContentBox(
-            padding: const EdgeInsets.all(SBBSpacing.medium),
+            padding: const .all(SBBSpacing.medium),
             child: Column(
               children: [
                 Row(
@@ -63,7 +63,7 @@ class _ToastPageState extends State<ToastPage> {
                 ),
                 const SizedBox(height: SBBSpacing.medium),
                 SizedBox(
-                  width: double.infinity,
+                  width: .infinity,
                   child: SBBTertiaryButton(
                     labelText: 'Custom Bottom and Duration',
                     onPressed: () {
@@ -80,7 +80,7 @@ class _ToastPageState extends State<ToastPage> {
                 ),
                 const SizedBox(height: SBBSpacing.medium),
                 SizedBox(
-                  width: double.infinity,
+                  width: .infinity,
                   child: SBBTertiaryButton(
                     labelText: 'Custom Toast',
                     onPressed: () => sbbToast.builder(builder: (showToast) => _customToast(showToast)),
@@ -91,7 +91,7 @@ class _ToastPageState extends State<ToastPage> {
           ),
           const SBBListHeader('Additional Toast actions'),
           SBBContentBox(
-            padding: const EdgeInsets.all(SBBSpacing.medium),
+            padding: const .all(SBBSpacing.medium),
             child: Row(
               children: [
                 Expanded(
@@ -117,7 +117,7 @@ class _ToastPageState extends State<ToastPage> {
           const SizedBox(height: SBBSpacing.xLarge),
           const SBBListHeader('Edit Toast Content'),
           SBBContentBox(
-            padding: const EdgeInsets.all(SBBSpacing.medium),
+            padding: const .all(SBBSpacing.medium),
             child: Column(
               children: [
                 SBBTextInput(

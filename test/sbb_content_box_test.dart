@@ -8,22 +8,22 @@ void main() {
   testWidgets('content_box', (WidgetTester tester) async {
     content(String text) => SizedBox(
       height: SBBSpacing.xLarge,
-      width: double.infinity,
+      width: .infinity,
       child: Center(child: Text(text)),
     );
 
     final widget = Padding(
-      padding: const EdgeInsets.symmetric(horizontal: SBBSpacing.medium),
+      padding: const .symmetric(horizontal: SBBSpacing.medium),
       child: Column(
         spacing: SBBSpacing.medium,
         children: [
           SBBContentBox(child: content('Default')),
           SBBContentBox(color: SBBColors.royal, child: content('Different Color')),
           SBBContentBox(
-            padding: EdgeInsets.symmetric(vertical: SBBSpacing.medium),
+            padding: .symmetric(vertical: SBBSpacing.medium),
             child: content('Extra padding'),
           ),
-          SBBContentBox(margin: EdgeInsets.all(64.0), child: content('Extra margin')),
+          SBBContentBox(margin: .all(64.0), child: content('Extra margin')),
         ],
       ),
     );

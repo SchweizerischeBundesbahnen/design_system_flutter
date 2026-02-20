@@ -41,7 +41,7 @@ class _TextAreaPageState extends State<TextAreaPage> {
                     items: [
                       SBBTextInput(
                         decoration: SBBInputDecoration(
-                          contentPadding: const EdgeInsets.only(top: SBBSpacing.xSmall),
+                          contentPadding: const .only(top: SBBSpacing.xSmall),
                           leadingIconData: SBBIcons.unicorn_small,
                           trailingIconData: SBBIcons.circle_information_small_small,
                           labelText: 'Label',
@@ -51,7 +51,7 @@ class _TextAreaPageState extends State<TextAreaPage> {
                       ),
                       SBBTextInput(
                         decoration: SBBInputDecoration(
-                          contentPadding: const EdgeInsets.only(top: SBBSpacing.xSmall),
+                          contentPadding: const .only(top: SBBSpacing.xSmall),
                           leadingIconData: SBBIcons.unicorn_small,
                           trailingIconData: SBBIcons.circle_information_small_small,
                           labelText: 'Label',
@@ -73,7 +73,7 @@ class _TextAreaPageState extends State<TextAreaPage> {
                       ),
                       SBBTextInput(
                         decoration: SBBInputDecoration(
-                          contentPadding: const EdgeInsets.only(top: SBBSpacing.xSmall),
+                          contentPadding: const .only(top: SBBSpacing.xSmall),
                           leadingIconData: SBBIcons.unicorn_small,
                           trailingIconData: SBBIcons.circle_information_small_small,
                           labelText: 'I extend from one line to maximum three lines!',
@@ -90,7 +90,7 @@ class _TextAreaPageState extends State<TextAreaPage> {
               SBBListHeader('Resizable with Drag Handle'),
               SBBContentBox(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  crossAxisAlignment: .stretch,
                   children: [
                     ConstrainedBox(
                       constraints: BoxConstraints(
@@ -99,7 +99,7 @@ class _TextAreaPageState extends State<TextAreaPage> {
                       ),
                       child: SBBTextInput(
                         decoration: SBBInputDecoration(
-                          contentPadding: const EdgeInsets.only(top: SBBSpacing.xSmall),
+                          contentPadding: const .only(top: SBBSpacing.xSmall),
                           labelText: 'Resizable Text Area',
                           leadingIconData: SBBIcons.pen_small,
                           placeholderText: 'Drag the handle below to resize...',
@@ -137,7 +137,7 @@ class _TextAreaPageState extends State<TextAreaPage> {
               SBBListHeader('Boxed'),
               SBBTextInputBoxed(
                 decoration: SBBInputDecoration(
-                  contentPadding: const EdgeInsets.symmetric(
+                  contentPadding: const .symmetric(
                     vertical: SBBSpacing.small,
                     horizontal: SBBSpacing.medium,
                   ),

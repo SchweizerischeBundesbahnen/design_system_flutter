@@ -57,7 +57,7 @@ class DateTimePickerTest extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Column(
-    mainAxisSize: MainAxisSize.min,
+    mainAxisSize: .min,
     children: <Widget>[
       Row(
         children: [

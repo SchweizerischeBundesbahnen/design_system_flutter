@@ -209,16 +209,16 @@ class _SBBTextField extends State<SBBTextField> {
 
   @override
   Widget build(BuildContext context) => Row(
-    crossAxisAlignment: CrossAxisAlignment.start,
+    crossAxisAlignment: .start,
     children: [
       if (widget.icon != null)
         Padding(padding: const EdgeInsetsDirectional.only(top: 12, end: 8.0), child: Icon(widget.icon)),
       Expanded(
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: .start,
           children: <Widget>[
             Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: .start,
               children: [
                 Expanded(child: _buildTextField()),
                 if (widget.suffixIcon != null) widget.suffixIcon!,
@@ -255,7 +255,7 @@ class _SBBTextField extends State<SBBTextField> {
       minLines: widget.minLines,
       expands: widget.expands,
       cursorHeight: textScaler.scale(22.0),
-      cursorRadius: const Radius.circular(2.0),
+      cursorRadius: const.circular(2.0),
       enableInteractiveSelection: widget.enableInteractiveSelection,
       onChanged: widget.onChanged,
       onTap: widget.onTap,

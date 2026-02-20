@@ -7,6 +7,6 @@ class DefaultButtonLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(label, overflow: TextOverflow.ellipsis, maxLines: 1);
+    return Text(label, overflow: .ellipsis, maxLines: 1);
   }
 }

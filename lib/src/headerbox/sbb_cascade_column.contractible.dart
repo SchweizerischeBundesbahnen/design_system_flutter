@@ -50,7 +50,7 @@ class SBBContractible extends StatelessWidget {
     super.key,
     this.minHeight,
     this.maxHeight,
-    this.clipBehavior = Clip.none,
+    this.clipBehavior = .none,
     this.behavior = .shrink,
     this.child,
     this.builder,
@@ -66,7 +66,7 @@ class SBBContractible extends StatelessWidget {
   SBBContractible({
     Key? key,
     SBBContractionBehavior behavior = .clip,
-    Clip clipBehavior = Clip.hardEdge,
+    Clip clipBehavior = .hardEdge,
     ContractibleBuilder? builder,
     Widget? child,
   }) : this._(
@@ -84,7 +84,7 @@ class SBBContractible extends StatelessWidget {
   SBBContractible.custom({
     Key? key,
     SBBContractionBehavior behavior = .shrink,
-    Clip clipBehavior = Clip.hardEdge,
+    Clip clipBehavior = .hardEdge,
     double minHeight = 0,
     double? maxHeight,
     ContractibleBuilder? builder,
@@ -168,18 +168,18 @@ class SBBContractible extends StatelessWidget {
       return builder;
     }
 
-    final alignment = switch (behavior) {
-      .displace => Alignment.bottomLeft,
-      .clip => Alignment.topLeft,
-      .center => Alignment.centerLeft,
-      .shrink => Alignment.centerLeft, // Handled above
+    final Alignment alignment = switch (behavior) {
+      .displace => .bottomLeft,
+      .clip => .topLeft,
+      .center => .centerLeft,
+      .shrink => .centerLeft, // Handled above
     };
 
     return (context, progress, child) {
       return ClipRect(
         clipBehavior: clipBehavior,
         child: OverflowBox(
-          maxHeight: double.infinity,
+          maxHeight: .infinity,
           alignment: alignment,
           child: builder(context, progress, child),
         ),
@@ -192,17 +192,17 @@ class SBBContractible extends StatelessWidget {
       return child;
     }
 
-    final alignment = switch (behavior) {
-      .displace => Alignment.bottomLeft,
-      .clip => Alignment.topLeft,
-      .center => Alignment.centerLeft,
-      .shrink => Alignment.centerLeft, // Handled above
+    final Alignment alignment = switch (behavior) {
+      .displace => .bottomLeft,
+      .clip => .topLeft,
+      .center => .centerLeft,
+      .shrink => .centerLeft, // Handled above
     };
 
     return ClipRect(
       clipBehavior: clipBehavior,
       child: OverflowBox(
-        maxHeight: double.infinity,
+        maxHeight: .infinity,
         alignment: alignment,
         child: child,
       ),
@@ -245,7 +245,7 @@ class _Crossfade extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      clipBehavior: Clip.none,
+      clipBehavior: .none,
       alignment: alignment,
       children: [
         IgnorePointer(

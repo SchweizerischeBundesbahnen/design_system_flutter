@@ -72,7 +72,7 @@ class SBBCheckboxStyle {
   /// The corner radius of the checkbox.
   ///
   /// This creates rounded corners for the checkbox square.
-  static const Radius borderRadius = Radius.circular(6.0);
+  static const Radius borderRadius = .circular(6.0);
 
   /// The size of the checkbox's visible square.
   ///

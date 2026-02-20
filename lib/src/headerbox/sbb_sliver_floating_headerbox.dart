@@ -81,7 +81,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
     Widget? trailingWidget,
     SBBHeaderboxFlap? flap,
     SBBHeaderboxFlapMode flapMode = .static,
-    EdgeInsets margin = const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
+    EdgeInsets margin = const .symmetric(horizontal: SBBSpacing.xSmall),
     String? semanticsLabel,
     Widget? preceding,
     Widget? contractibleChild,
@@ -142,7 +142,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
     Widget? trailingWidget,
     SBBHeaderboxFlap? flap,
     SBBHeaderboxFlapMode flapMode = .static,
-    EdgeInsets margin = const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
+    EdgeInsets margin = const .symmetric(horizontal: SBBSpacing.xSmall),
     String? semanticsLabel,
     Widget? preceding,
     Widget? collapsibleChild,
@@ -198,15 +198,15 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
   ///  * [SBBContractionListener], which allows you to get updates on the expansion rate.
   SBBSliverFloatingHeaderbox.custom({
     super.key,
-    EdgeInsets margin = const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
-    EdgeInsets padding = const EdgeInsets.all(SBBSpacing.medium),
+    EdgeInsets margin = const .symmetric(horizontal: SBBSpacing.xSmall),
+    EdgeInsets padding = const .all(SBBSpacing.medium),
     SBBHeaderboxFlap? flap,
     SBBHeaderboxFlapMode flapMode = .static,
     String? semanticsLabel,
     this.resizing = true,
     this.floating = true,
     this.snapStyle,
-    this.snapMode = FloatingHeaderSnapMode.scroll,
+    this.snapMode = .scroll,
     Widget? preceding,
     required List<Widget> children,
   }) : child = preceding != null
@@ -266,7 +266,7 @@ class _SBBSliverFloatingHeaderboxState extends State<SBBSliverFloatingHeaderbox>
     return SliverPinnedFloatingWidget(
       vsync: this,
       animationStyle: widget.snapStyle ?? defaultSnapStyle,
-      snapMode: FloatingHeaderSnapMode.scroll,
+      snapMode: .scroll,
       resizing: widget.resizing,
       floating: widget.floating,
       child: _SnapTrigger(

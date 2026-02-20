@@ -38,14 +38,14 @@ class _ChipPageState extends State<ChipPage> {
           ),
         ),
         SliverPadding(
-          padding: EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
+          padding: .symmetric(horizontal: SBBSpacing.xSmall),
           sliver: SliverList.list(
             children: [
               const SBBListHeader('Default'),
               SBBContentBox(
-                padding: const EdgeInsets.all(SBBSpacing.medium),
+                padding: const .all(SBBSpacing.medium),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+                  mainAxisAlignment: .center,
                   spacing: SBBSpacing.medium,
                   children: [
                     SBBChip(
@@ -66,7 +66,7 @@ class _ChipPageState extends State<ChipPage> {
 
               const SBBListHeader('Long Text'),
               SBBContentBox(
-                padding: const EdgeInsets.all(SBBSpacing.medium),
+                padding: const .all(SBBSpacing.medium),
                 child: SBBChip(
                   labelText: 'L${"o" * 100}ng Text',
                   trailingText: 99.toString(),

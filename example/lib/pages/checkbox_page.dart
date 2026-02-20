@@ -46,14 +46,14 @@ class CheckboxPageState extends State<CheckboxPage> {
           ),
         ),
         SliverPadding(
-          padding: EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
+          padding: .symmetric(horizontal: SBBSpacing.xSmall),
           sliver: SliverList.list(
             children: [
               const SBBListHeader('Checkbox'),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
+                padding: const .symmetric(horizontal: SBBSpacing.xSmall),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: .start,
                   spacing: SBBSpacing.xSmall,
                   children: [
                     Row(
@@ -113,7 +113,7 @@ class CheckboxPageState extends State<CheckboxPage> {
                         value: _listItemValue3,
                         titleText: 'Button',
                         onChanged: _isEnabled ? (value) => setState(() => _listItemValue3 = value) : null,
-                        padding: EdgeInsets.fromLTRB(16.0, 0.0, 8.0, 0.0),
+                        padding: .fromLTRB(16.0, 0.0, 8.0, 0.0),
                         trailing: SBBTertiaryButtonSmall(
                           iconData: SBBIcons.circle_information_small_small,
                           onPressed: _isEnabled ? () => sbbToast.show(title: 'Button pressed') : null,
@@ -146,7 +146,7 @@ class CheckboxPageState extends State<CheckboxPage> {
               const SizedBox(height: SBBSpacing.medium),
               const SBBListHeader('Checkbox Item - Boxed'),
               Padding(
-                padding: const EdgeInsets.only(bottom: 64.0),
+                padding: const .only(bottom: 64.0),
                 child: Column(
                   spacing: SBBSpacing.xSmall,
                   children: [
@@ -178,7 +178,7 @@ class CheckboxPageState extends State<CheckboxPage> {
                       value: _listItemValue3,
                       titleText: 'Button',
                       onChanged: _isEnabled ? (value) => setState(() => _listItemValue3 = value) : null,
-                      padding: EdgeInsets.fromLTRB(16.0, 0.0, 8.0, 0.0),
+                      padding: .fromLTRB(16.0, 0.0, 8.0, 0.0),
                       trailing: SBBTertiaryButtonSmall(
                         iconData: SBBIcons.circle_information_small_small,
                         onPressed: _isEnabled ? () => sbbToast.show(title: 'Button pressed') : null,

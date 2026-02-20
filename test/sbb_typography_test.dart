@@ -164,12 +164,12 @@ class TypographyTest extends StatelessWidget {
       children: [
         SBBListHeader(name),
         SizedBox(
-          width: double.infinity,
+          width: .infinity,
           child: SBBContentBox(
-            padding: EdgeInsets.all(SBBSpacing.medium),
+            padding: .all(SBBSpacing.medium),
             child: Column(
               spacing: SBBSpacing.xSmall,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: .start,
               children: textStyles.map((e) => Text(exampleText, style: e)).toList(),
             ),
           ),

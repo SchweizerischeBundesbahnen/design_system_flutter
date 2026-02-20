@@ -55,7 +55,7 @@ class DefaultToastBody extends StatelessWidget {
             if (willActionOverflow) SizedBox(width: toastWidth * 0.3),
           ],
         ),
-        if (willActionOverflow) Align(alignment: Alignment.bottomRight, child: builtAction),
+        if (willActionOverflow) Align(alignment: .bottomRight, child: builtAction),
       ],
     );
   }

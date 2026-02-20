@@ -17,7 +17,7 @@ class SBBCloseButton extends StatelessWidget {
       child: TransparentTapableElement.circle(
         onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.all(12.0),
+          padding: const .all(12.0),
           child: Icon(SBBIcons.cross_small, color: crossColor, size: sbbIconSizeSmall),
         ),
       ),

@@ -32,12 +32,12 @@ void main() {
         const SizedBox(height: SBBSpacing.medium),
         const SBBListHeader('Custom'),
         SBBHeaderbox.custom(
-          padding: EdgeInsets.zero,
+          padding: .zero,
           flap: SBBHeaderboxFlap.custom(
             child: Center(child: Text('Custom Flappy!', style: SBBTextStyles.extraSmallBold)),
           ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: .spaceEvenly,
             children: [
               Container(color: SBBColors.red, width: 25, height: 25),
               Container(color: SBBColors.granite, width: 25, height: 25),

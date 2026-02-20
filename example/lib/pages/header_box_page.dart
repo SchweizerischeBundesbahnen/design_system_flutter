@@ -110,7 +110,7 @@ class DesignGuidelinePage extends StatelessWidget {
         const SizedBox(height: SBBSpacing.medium),
         const SBBListHeader('Custom'),
         const SBBHeaderbox.custom(
-          padding: EdgeInsets.zero,
+          padding: .zero,
           flap: SBBHeaderboxFlap.custom(
             child: Center(child: Text('Choooooo!', style: SBBTextStyles.extraSmallBold)),
           ),
@@ -135,19 +135,19 @@ class _StaticPageState extends State<StaticPage> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isDark = Theme.of(context).brightness == .dark;
     return Stack(
       children: [
         _body(),
         SBBHeaderbox.custom(
           child: Column(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisSize: .min,
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: .spaceBetween,
                 children: [
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: .start,
                     children: [
                       Text('Static Screen', style: SBBTextStyles.mediumBold),
                       Text(
@@ -201,18 +201,18 @@ class _ScrollablePageState extends State<ScrollablePage> {
   @override
   Widget build(BuildContext context) {
     final sbbToast = SBBToast.of(context);
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isDark = Theme.of(context).brightness == .dark;
     return CustomScrollView(
       slivers: [
         SBBSliverHeaderbox.custom(
           child: Column(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisSize: .min,
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: .spaceBetween,
                 children: [
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: .start,
                     children: [
                       Text('Scrollable Screen', style: SBBTextStyles.mediumBold),
                       Text(

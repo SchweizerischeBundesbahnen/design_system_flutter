@@ -80,10 +80,10 @@ class SBBDatePicker extends StatefulWidget {
       context: context,
       title: modalTitle,
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: .min,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: SBBSpacing.medium),
+            padding: const .symmetric(horizontal: SBBSpacing.medium),
             child: SBBContentBox(
               child: SBBDatePicker(
                 initialDate: modalDate,
@@ -99,7 +99,7 @@ class SBBDatePicker extends StatefulWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(SBBSpacing.medium),
+            padding: const .all(SBBSpacing.medium),
             child: ListenableBuilder(
               listenable: selectedButtonEnabled,
               builder: (context, _) {
@@ -302,7 +302,7 @@ class _SBBDatePickerState extends _TimeBasedPickerState<SBBDatePicker> {
     final isEnabled = itemDate.isInRange(minDate, maxDate);
     final label = '$itemDay.';
 
-    return _buildPickerItem(isEnabled: isEnabled, label: label, alignment: Alignment.centerRight, isFirstColumn: true);
+    return _buildPickerItem(isEnabled: isEnabled, label: label, alignment: .centerRight, isFirstColumn: true);
   }
 
   SBBPickerItem _buildMonthItem(int index, int selectedYear) {
@@ -313,7 +313,7 @@ class _SBBDatePickerState extends _TimeBasedPickerState<SBBDatePicker> {
     final isEnabled = itemDate.isInRange(minDate, maxDate);
     final label = _dateFormat.format(itemDate);
 
-    return _buildPickerItem(isEnabled: isEnabled, label: label, alignment: Alignment.centerLeft);
+    return _buildPickerItem(isEnabled: isEnabled, label: label, alignment: .centerLeft);
   }
 
   SBBPickerItem _buildYearItem(int index) {

@@ -46,14 +46,14 @@ class SBBToastStyle extends ThemeExtension<SBBToastStyle> {
     titleTextStyle: SBBTextStyles.smallLight.copyWith(decoration: TextDecoration.none, color: SBBColors.white),
     actionTextStyle: SBBTextStyles.smallBold.copyWith(decoration: TextDecoration.none, color: SBBColors.white),
     actionOverflowThreshold: 0.25,
-    actionPadding: const EdgeInsets.only(left: SBBSpacing.medium),
+    actionPadding: const .only(left: SBBSpacing.medium),
     decoration: BoxDecoration(
       borderRadius: BorderRadius.circular(SBBSpacing.medium),
       color: baseStyle.themeValue(SBBColors.metal, SBBColors.smoke),
     ),
     titleMaxLines: 2,
-    margin: const EdgeInsets.symmetric(horizontal: SBBSpacing.medium),
-    padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: SBBSpacing.medium),
+    margin: const .symmetric(horizontal: SBBSpacing.medium),
+    padding: const .symmetric(vertical: 6.0, horizontal: SBBSpacing.medium),
   );
 
   static SBBToastStyle of(BuildContext context) => Theme.of(context).extension<SBBToastStyle>()!;

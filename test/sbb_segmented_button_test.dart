@@ -7,7 +7,7 @@ import 'test_app.dart';
 void main() {
   testWidgets('segmented_button_1', (WidgetTester tester) async {
     final widget = Padding(
-      padding: EdgeInsets.all(SBBSpacing.medium),
+      padding: .all(SBBSpacing.medium),
       child: Column(
         spacing: SBBSpacing.medium,
         children: [
@@ -107,15 +107,15 @@ void main() {
 
   testWidgets('segmented_button_custom_label', (WidgetTester tester) async {
     final widget = Align(
-      alignment: Alignment.center,
+      alignment: .center,
       child: Container(
-        padding: const EdgeInsets.all(SBBSpacing.medium),
+        padding: const .all(SBBSpacing.medium),
         child: SBBSegmentedButton<String>(
           segments: [
             SBBButtonSegment(
               value: 'badge1',
               label: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                padding: const .symmetric(horizontal: 8.0, vertical: 4.0),
                 decoration: BoxDecoration(
                   color: SBBColors.green,
                   borderRadius: BorderRadius.circular(12.0),
@@ -126,7 +126,7 @@ void main() {
             SBBButtonSegment(
               value: 'badge2',
               label: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                padding: const .symmetric(horizontal: 8.0, vertical: 4.0),
                 decoration: BoxDecoration(
                   color: SBBColors.green,
                   borderRadius: BorderRadius.circular(12.0),
@@ -137,7 +137,7 @@ void main() {
             SBBButtonSegment(
               value: 'badge3',
               label: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
+                padding: const .symmetric(horizontal: 8.0, vertical: 4.0),
                 decoration: BoxDecoration(
                   color: SBBColors.green,
                   borderRadius: BorderRadius.circular(12.0),

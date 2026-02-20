@@ -40,7 +40,7 @@ class SelectPageState extends State<SelectPage> {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: const EdgeInsets.all(SBBSpacing.medium),
+      padding: const .all(SBBSpacing.medium),
       children: [
         const ThemeModeSegmentedButton(),
         const SizedBox(height: SBBSpacing.medium),

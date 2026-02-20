@@ -58,14 +58,14 @@ class _VerticalCard extends StatelessWidget {
     return Column(
       children: <Widget>[
         Expanded(
-          child: SizedBox(height: 200, width: double.infinity, child: embeddedChild),
+          child: SizedBox(height: 200, width: .infinity, child: embeddedChild),
         ),
         const SizedBox(height: 16.0),
         MergeSemantics(
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                padding: const .symmetric(horizontal: 16.0),
                 child: Text(
                   title,
                   style: SBBTextStyles.largeBold.copyWith(
@@ -76,7 +76,7 @@ class _VerticalCard extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const .all(16.0),
                 child: Text(
                   content,
                   style: SBBTextStyles.mediumLight.copyWith(
@@ -109,14 +109,14 @@ class _HorizontalCard extends StatelessWidget {
         if (embeddedChild != null) Flexible(child: embeddedChild!),
         Flexible(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: .center,
+            crossAxisAlignment: .stretch,
             children: [
               MergeSemantics(
                 child: Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      padding: const .symmetric(horizontal: 16.0),
                       child: Text(
                         title,
                         style: SBBTextStyles.largeBold.copyWith(
@@ -127,7 +127,7 @@ class _HorizontalCard extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: const .all(16.0),
                       child: Text(
                         content,
                         style: SBBTextStyles.mediumLight.copyWith(

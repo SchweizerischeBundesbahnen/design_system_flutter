@@ -452,7 +452,7 @@ class _SBBListItemState extends State<SBBListItem> {
     if (widget.title != null) {
       titleWidget = widget.title!;
     } else {
-      titleWidget = Text(widget.titleText!, maxLines: 1, overflow: TextOverflow.ellipsis);
+      titleWidget = Text(widget.titleText!, maxLines: 1, overflow: .ellipsis);
     }
 
     Widget? subtitleWidget = widget.subtitle;
@@ -505,14 +505,14 @@ class _SBBListItemState extends State<SBBListItem> {
         ],
       );
     } else {
-      child = Align(alignment: Alignment.centerLeft, child: child);
+      child = Align(alignment: .centerLeft, child: child);
     }
 
     if (subtitleWidget != null) {
       child = Column(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisSize: .min,
+        mainAxisAlignment: .start,
+        crossAxisAlignment: .stretch,
         children: [
           child,
           SizedBox(height: effectiveSubtitleGapHeight),
@@ -554,13 +554,13 @@ class _SBBListItemState extends State<SBBListItem> {
     );
 
     child = ConstrainedBox(
-      constraints: BoxConstraints(minWidth: double.infinity, minHeight: 44.0),
+      constraints: BoxConstraints(minWidth: .infinity, minHeight: 44.0),
       child: child,
     );
 
     if (widget.isLoading) {
       child = Stack(
-        alignment: Alignment.bottomCenter,
+        alignment: .bottomCenter,
         children: [
           child,
           BottomLoadingIndicator(),
@@ -570,7 +570,7 @@ class _SBBListItemState extends State<SBBListItem> {
 
     if (widget.links?.isNotEmpty ?? false) {
       child = Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        crossAxisAlignment: .stretch,
         children: [
           child,
           ..._divideLinks(context: context, links: widget.links!),

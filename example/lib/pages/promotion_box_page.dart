@@ -22,7 +22,7 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(SBBSpacing.medium),
+      padding: const .all(SBBSpacing.medium),
       child: Column(
         children: [
           const ThemeModeSegmentedButton(),

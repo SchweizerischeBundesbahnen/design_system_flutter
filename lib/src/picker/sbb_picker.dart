@@ -141,7 +141,7 @@ class _SBBPickerState extends _PickerClassState<SBBPicker> {
     return SizedBox(
       height: _widgetHeight,
       child: Stack(
-        alignment: Alignment.center,
+        alignment: .center,
         children: [
           _buildHighlightedArea(context),
           ShaderMask(
@@ -157,7 +157,7 @@ class _SBBPickerState extends _PickerClassState<SBBPicker> {
     final highlightColor = SBBControlStyles.of(context).picker!.highlightColor;
     return Container(
       height: _highlightedAreaHeight,
-      margin: const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
+      margin: const .symmetric(horizontal: SBBSpacing.xSmall),
       decoration: BoxDecoration(
         color: highlightColor,
         borderRadius: const BorderRadius.all(Radius.circular(SBBSpacing.xSmall)),
@@ -167,8 +167,8 @@ class _SBBPickerState extends _PickerClassState<SBBPicker> {
 
   Shader _shaderCallback(BuildContext context, Rect bounds) {
     return LinearGradient(
-      begin: Alignment.topCenter,
-      end: Alignment.bottomCenter,
+      begin: .topCenter,
+      end: .bottomCenter,
       stops: _gradientStops(),
       colors: _gradientColors(context),
     ).createShader(bounds);
@@ -212,7 +212,7 @@ class _SBBPickerState extends _PickerClassState<SBBPicker> {
 
   List<Color> _gradientColors(BuildContext context) {
     // generate list of opacity values to be used in gradient
-    final isLightTheme = Theme.of(context).brightness == Brightness.light;
+    final isLightTheme = Theme.of(context).brightness == .light;
     final themedOpacities = isLightTheme
         ? SBBPicker._lightThemeGradientColorOpacities
         : SBBPicker._darkThemeGradientColorOpacities;

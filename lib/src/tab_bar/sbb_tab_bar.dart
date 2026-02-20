@@ -130,8 +130,8 @@ class _SBBTabBarState extends State<SBBTabBar> with TickerProviderStateMixin, Wi
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [cardColor.withValues(alpha: 0.0), cardColor.withValues(alpha: 1.0)],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
+                      begin: .topCenter,
+                      end: .bottomCenter,
                     ),
                   ),
                   child: Stack(

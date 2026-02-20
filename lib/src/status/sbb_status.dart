@@ -168,7 +168,7 @@ sealed class SBBStatus extends StatelessWidget {
           label: semanticLabel,
           excludeSemantics: semanticLabel != null,
           child: ClipRRect(
-            clipBehavior: Clip.hardEdge,
+            clipBehavior: .hardEdge,
             borderRadius: BorderRadius.all(SBBStatusStyle.borderRadius),
             child: DecoratedBox(
               decoration: ShapeDecoration(
@@ -177,7 +177,7 @@ sealed class SBBStatus extends StatelessWidget {
               ),
               child: IntrinsicHeight(
                 child: Row(
-                  mainAxisSize: MainAxisSize.min,
+                  mainAxisSize: .min,
                   children: [
                     _icon(resolvedBackgroundColor, resolvedIconColor),
                     if (label != null || labelText != null) _label(),
@@ -200,10 +200,10 @@ sealed class SBBStatus extends StatelessWidget {
     }
 
     return Container(
-      padding: const EdgeInsets.all(4.0),
+      padding: const .all(4.0),
       color: backgroundColor,
       child: ConstrainedBox(
-        constraints: BoxConstraints.tightFor(height: double.infinity),
+        constraints: BoxConstraints.tightFor(height: .infinity),
         child: Icon(iconData, color: iconColor),
       ),
     );
@@ -214,11 +214,11 @@ sealed class SBBStatus extends StatelessWidget {
 
     return Flexible(
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
+        padding: const .symmetric(vertical: 4.0, horizontal: 8.0),
         child: Text(
           labelText!,
           maxLines: 2,
-          overflow: TextOverflow.ellipsis,
+          overflow: .ellipsis,
         ),
       ),
     );
