@@ -16,7 +16,8 @@ enum MessageIllustration {
   // ignore: constant_identifier_names
   Woman('woman.png'),
   // ignore: constant_identifier_names
-  Display('display.png');
+  Display('display.png')
+  ;
 
   const MessageIllustration(this.fileName);
 

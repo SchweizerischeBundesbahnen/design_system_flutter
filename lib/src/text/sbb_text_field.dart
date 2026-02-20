@@ -255,7 +255,7 @@ class _SBBTextField extends State<SBBTextField> {
       minLines: widget.minLines,
       expands: widget.expands,
       cursorHeight: textScaler.scale(22.0),
-      cursorRadius: const.circular(2.0),
+      cursorRadius: const .circular(2.0),
       enableInteractiveSelection: widget.enableInteractiveSelection,
       onChanged: widget.onChanged,
       onTap: widget.onTap,

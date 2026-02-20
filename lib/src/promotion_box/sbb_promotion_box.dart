@@ -256,8 +256,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
                         mainAxisAlignment: .start,
                         crossAxisAlignment: .center,
                         children: [
-                          if (widget.leading != null)
-                            Padding(padding: const .only(right: 8.0), child: widget.leading!),
+                          if (widget.leading != null) Padding(padding: const .only(right: 8.0), child: widget.leading!),
                           Expanded(child: widget.content),
                           if (widget.trailing != null)
                             Padding(padding: const .symmetric(horizontal: 8.0), child: widget.trailing!),
