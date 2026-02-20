@@ -1,5 +1,3 @@
-import 'package:flutter/widgets.dart';
-
 import '../../../sbb_design_system_mobile.dart';
 
 /// The default list header theme is specified using the
@@ -11,8 +9,8 @@ class DefaultSBBListHeaderThemeData extends SBBListHeaderThemeData {
           foregroundColor: baseStyle.themeValue(SBBColors.black, SBBColors.white),
           textStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallLight),
           maxLines: null,
-          textOverflow: TextOverflow.ellipsis,
-          padding: const EdgeInsets.symmetric(
+          textOverflow: .ellipsis,
+          padding: const .symmetric(
             horizontal: SBBSpacing.medium,
             vertical: SBBSpacing.xSmall,
           ),

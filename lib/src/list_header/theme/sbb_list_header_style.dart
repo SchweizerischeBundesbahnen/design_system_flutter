@@ -30,7 +30,7 @@ class SBBListHeaderStyle {
   /// The padding around the list header.
   final EdgeInsetsGeometry? padding;
 
-  static const EdgeInsetsGeometry defaultPadding = EdgeInsetsGeometry.symmetric(
+  static const EdgeInsetsGeometry defaultPadding = .symmetric(
     vertical: SBBSpacing.xSmall,
     horizontal: SBBSpacing.medium,
   );
