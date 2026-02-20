@@ -5,16 +5,16 @@ V5 introduces a lot of breaking changes to allow for a more flexible and modern 
 ## Buttons
 
 ### Constructor arguments
-To use buttons the same way as before, replace `label` with `labelText`.
-To use `SBBTertiaryButton` with an icon the same way as in v4, replace `icon` with `iconData`.
-
-Button content can be completely customized using the `label` parameter of type `Widget?`.
+* replace `label` with `labelText` (or custom Widget for `label` parameter)
+* `SBBTertiaryButton`: replace `icon` with `iconData` (or custom Widget for `icon` parameter)
+* customize appearance of a single button via the `style` parameter
+* added `onLongPress`, `semanticLabel` and `autofocus` to all button variants
 
 ### Icon Buttons
-Instead of using `SBBIconButtonLarge` / `SBBIconButtonSmall`,
-use `SBBTertiaryButton` / `SBBTertiaryButtonSmall` with only `iconData` or `icon` set.
+* `SBBIconButtonLarge` / `SBBIconButtonSmall` are replaced by `SBBTertiaryButton` / `SBBTertiaryButtonSmall`
+  with only `iconData` or `icon` set
 
-### Button Theming
+### Theming
 Buttons can now be themed ap wide using `SBBButtonThemeData` as input parameters to `SBBTheme`.
 To access this data within your app, use:
 
@@ -38,11 +38,9 @@ Use the `foregroundBuilder` of the `SBBButtonStyle` as a replacement
 ## Chip
 
 ### Constructor arguments
-* To use `SBBChip` the same way as before:
-  * replace `onSelection` with `onChanged`
-  * replace `label` with `labelText`
-  * replace `badgeLabel` with `trailingText`
-* complete customization of the `SBBChip` content with `label` and `trailing`
+* replace `onSelection` with `onChanged`
+* replace `label` with `labelText` (complete custom content with `label`)
+* replace `badgeLabel` with `trailingText` (complete custom content with `label`)
 * added the ability to control the Focus with a custom `focusNode`
 
 ### Theming & Styling
@@ -56,21 +54,17 @@ Use the `foregroundBuilder` of the `SBBButtonStyle` as a replacement
 The list item has received a lot of changes. In general the content is completely customizable now.
 
 ### Usage
-* replace `title` with `titleText` to have a standard styled title
-* replace `leadingIcon` with `leadingIconData` to have a standard style leading icon Widget
-* replace `subtitle` with `subtitleText` to have a standard styled subtitle
-* replace `trailingIcon` with `trailingIconData` to have standard styled trailing icon Widget
-* use `title`, `subtitle`, `leading` and `trailing` to completely customize the content with custom Widgets
-* set the gap widths between `title`, `subtitle` and `trailing` with the corresponding parameters ()
-  * `trailingHorizontalGapWidth`
-  * `leadingHorizontalGapWidth`
-  * `subtitleVerticalGapHeight`
-* If you want a multi line title, use `title` with your own `Text` Widget, the `titleText` will clamp to one line.
 * replace `onPressed` with `onTap`
+* replace `title` with `titleText`
+* replace `leadingIcon` with `leadingIconData`
+* replace `subtitle` with `subtitleText`
+* replace `trailingIcon` with `trailingIconData`
+* use `title`, `subtitle`, `leading` and `trailing` of type Widget? for complete customization
+* If you want a multi line title, use `title` with your own `Text` Widget, the `titleText` will clamp to one line
 * replace `buttonIcon` and `onPressedButton` from the `button` constructor with a custom trailing widget. Do not forget
   to adjust the `padding`, since the `SBBTertiaryButtonSmall` has an inherent padding to the right
-* `isLastElement` was removed, use the static method `divideListItems` to separate list items with a SBB themed divider
-  (this is analogous to the Material implementation)
+* `isLastElement` was removed, use the static method `SBBListItem.divideListItems` to separate list 
+  items with a SBB themed divider (this is analogous to the Material implementation)
 
 ### Theming & Styling
 * customize the theme of the `SBBListItem` with `SBBListThemeData` as input to `SBBTheme`
@@ -80,24 +74,40 @@ The list item has received a lot of changes. In general the content is completel
 ### Convenience wrappers SBBRadioListItem, SBBCheckboxListItem and SBBSwitchListItem
 * basically, all of these have an underlying `SBBListItem` with either a custom trailing or leading widget
 * the `onTap` callback is overridden to call the `onChanged` callbacks of the contents
-* the parameters are a union between the individual content and a standard `SBBListItem`
+* the parameters are a union between the individual trailing content and a standard `SBBListItem`
 
 ### Boxed Variant
 * use `SBBListItemBoxed`, `SBBRadioListItemBoxed`, `SBBCheckboxListItemBoxed` and `SBBSwitchListItemBoxed`
-* You do not need to wrap this in a `SBBContentBox` anymore
+* You do NOT need to wrap this in a `SBBContentBox` anymore
 
 
-## List Header
+## ListHeader
 
 ### Constructor arguments
 * Replace `title` with `titleText`
 * Remove `maxLines`, `padding`, and `textStyle` parameters from constructor
-* Use the `style` parameter with `SBBListHeaderStyle` for customization instead
+* Use the `style` parameter with `SBBListHeaderStyle` for customization
 
 ### Theming & Styling
 * customize the theme of all `SBBListHeader` with `SBBListHeaderThemeData` as input to `SBBTheme`
 * access the theme using `Theme.of(context).sbbListHeaderTheme`
 * customize an individual list header by setting its `style` parameter in the constructor
+
+
+## Message
+
+### Constructor arguments
+* Replace required `title` with `titleText` (or use `title` for custom widgets)
+* Replace required `description` with `subtitleText` (or use `subtitle` for custom widgets)
+* Replace `messageCode` with `errorText` (or use `error` for custom widgets)
+* Replace `customIllustration` with `illustration` parameter (accepts `SBBIllustration` or any custom widget)
+* Replace `illustration: MessageIllustration.Display` with `illustration: SBBIllustration.display()` (use SBBIllustration widget or custom)
+* Replace `onInteraction` callback and `interactionIcon` with an `action` widget parameter (typically `SBBTertiaryButton`)
+
+### Theming & Styling
+* customize the theme of all `SBBMessage` with `SBBMessageThemeData` as input to `SBBTheme`
+* access the theme using `Theme.of(context).sbbMessageTheme`
+* customize an individual message by setting its `style` parameter in the constructor
 
 
 ## Paginator
@@ -118,13 +128,13 @@ The list item has received a lot of changes. In general the content is completel
 ## Radio
 
 ### Usage
-* the `onChanged` and `groupValue` parameters are obsolete and moved to the corresponding `SBBRadioGroup` ancestor
+* the `onChanged` and `groupValue` in `SBBRadio<T>` parameters are moved to the `SBBRadioGroup<T>` ancestor
 * see the [official Flutter guide](https://docs.flutter.dev/release/breaking-changes/radio-api-redesign) for usage of the new radio group concept
-  * instead of a `RadioGroup`, use a `SBBRadioGroup`
+  * instead of a `RadioGroup<T>`, use a `SBBRadioGroup<T>`
 * added: use `toggleable` for allowing a radio to return to unselected state without
   selecting a different radio in its group
 
-This also accounts for the `SBBRadioListItem`.
+All of the above also affects the `SBBRadioListItem`.
 
 ### Theming & Styling
 * `padding`: replace the checkbox `padding` parameter with the `SBBRadioStyle.tapTargetPadding` to increase tappable area
@@ -158,8 +168,8 @@ This also accounts for the `SBBRadioListItem`.
 ## Status
 
 ### Constructor arguments
-* To use `SBBStatus` the same way as before, replace `text` with `labelText`
-* The content of the `SBBStatus` can now be completely customized using `label` and `icon` parameters.
+* replace `text` with `labelText`
+* complete customization using `label` and `icon` parameters
 
 ### Theming & Styling
 * customize the theme of all `SBBStatus` with `SBBStatusThemeData` as input parameter to `SBBTheme`.
@@ -437,21 +447,3 @@ A cross small will be displayed instead of the trailingIconData when focused and
 - [ ] Set up theme data if applying custom styles globally
 - [ ] Test multiline mode if used (icons should be top-aligned now)
 - [ ] Consider using `readOnly` instead of just `enabled` for readonly fields with interactive trailing widgets
-
-
-
-## Message
-
-### Constructor arguments
-* Replace required `title` with `titleText` (or use `title` for custom widgets)
-* Replace required `description` with `subtitleText` (or use `subtitle` for custom widgets)
-* Replace `messageCode` with `errorText` (or use `error` for custom widgets)
-* Replace `customIllustration` with `illustration` parameter (accepts `SBBIllustration` or any custom widget)
-* Replace `illustration: MessageIllustration.Display` with `illustration: SBBIllustration.display()` (use SBBIllustration widget or custom)
-* Replace `onInteraction` callback and `interactionIcon` with an `action` widget parameter (typically `SBBTertiaryButton`)
-
-
-### Theming & Styling
-* customize the theme of all `SBBMessage` with `SBBMessageThemeData` as input to `SBBTheme`
-* access the theme using `Theme.of(context).sbbMessageTheme`
-* customize an individual message by setting its `style` parameter in the constructor
