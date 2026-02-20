@@ -95,3 +95,31 @@ class DefaultSBBTertiaryButtonThemeData extends SBBTertiaryButtonThemeData {
         ),
       );
 }
+
+class DefaultSBBAccentButtonThemeData extends SBBAccentButtonThemeData {
+  DefaultSBBAccentButtonThemeData(SBBBaseStyle baseStyle)
+    : super(
+        style: SBBButtonStyle(
+          textStyle: WidgetStateProperty.fromMap(<WidgetStatesConstraint, TextStyle?>{
+            WidgetState.any: baseStyle.themedTextStyle(),
+          }),
+          backgroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
+            WidgetState.disabled: baseStyle.themeValue(SBBColors.graphite, SBBColors.iron),
+            WidgetState.any: baseStyle.themeValue(SBBColors.charcoal, SBBColors.white),
+          }),
+          foregroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
+            WidgetState.disabled: baseStyle.themeValue(SBBColors.white, SBBColors.smoke),
+            WidgetState.any: baseStyle.themeValue(SBBColors.white, SBBColors.black),
+          }),
+          overlayColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
+            WidgetState.focused | WidgetState.pressed: baseStyle.themeValue(SBBColors.black, SBBColors.graphite),
+            WidgetState.any: null,
+          }),
+          borderColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
+            WidgetState.focused | WidgetState.pressed: baseStyle.themeValue(SBBColors.black, SBBColors.graphite),
+            WidgetState.disabled: baseStyle.themeValue(SBBColors.graphite, SBBColors.iron),
+            WidgetState.any: baseStyle.themeValue(SBBColors.charcoal, SBBColors.white),
+          }),
+        ),
+      );
+}

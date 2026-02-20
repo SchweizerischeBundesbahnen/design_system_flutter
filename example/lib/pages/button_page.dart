@@ -13,7 +13,7 @@ class ButtonPage extends StatelessWidget {
       slivers: [
         SBBSliverHeaderbox.custom(child: ThemeModeSegmentedButton()),
         SliverPadding(
-          padding: EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
+          padding: EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall).copyWith(bottom: SBBSpacing.xLarge),
           sliver: SliverList.list(
             children: [
               const SizedBox(height: SBBSpacing.medium),
@@ -97,6 +97,26 @@ class ButtonPage extends StatelessWidget {
                         iconData: SBBIcons.dog_small,
                         onPressed: () => sbbToast.show(title: 'SBBTertiaryButtonSmall only icon'),
                       ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: SBBSpacing.medium),
+              const SBBListHeader('Accent Button'),
+              SBBContentBox(
+                padding: const EdgeInsets.all(SBBSpacing.medium),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: Column(
+                    spacing: SBBSpacing.medium,
+                    children: [
+                      SBBAccentButton(
+                        labelText: 'Default',
+                        onPressed: () => sbbToast.show(title: 'SBBAccentButton'),
+                        onLongPress: () => sbbToast.show(title: 'SBBAccentButton Long Press'),
+                      ),
+                      const SBBAccentButton(labelText: 'Disabled', onPressed: null),
+                      SBBAccentButton(onPressed: () {}, isLoading: true),
                     ],
                   ),
                 ),

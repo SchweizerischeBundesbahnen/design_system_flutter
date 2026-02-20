@@ -6,7 +6,9 @@ import 'package:sbb_design_system_mobile/src/button/theme/sbb_button_style_x.dar
 
 import '../../sbb_design_system_mobile.dart';
 
-/// The primary variant of the SBB Button.
+/// The accent variant of the SBB Button.
+///
+/// To be used in an interface that does not allow for the standard colored button variants.
 ///
 /// Provide either [label] for custom button content or [labelText] for text-only
 /// content with standard styling. These parameters are mutually exclusive.
@@ -18,13 +20,13 @@ import '../../sbb_design_system_mobile.dart';
 ///
 /// See also:
 ///
+///  * [SBBPrimaryButton], for primary actions
 ///  * [SBBSecondaryButton], for secondary actions.
 ///  * [SBBTertiaryButton], for less prominent actions.
-///  * [SBBAccentButton], for contexts that need colorless buttons.
-///  * [SBBPrimaryButtonThemeData], for setting the [SBBButtonStyle] for all buttons within the current Theme.
+///  * [SBBAccentButtonThemeData], for setting the [SBBButtonStyle] for all buttons within the current Theme.
 ///  * [Figma design specs](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=7-12)
-class SBBPrimaryButton extends StatelessWidget {
-  const SBBPrimaryButton({
+class SBBAccentButton extends StatelessWidget {
+  const SBBAccentButton({
     super.key,
     required this.onPressed,
     this.onLongPress,
@@ -81,7 +83,7 @@ class SBBPrimaryButton extends StatelessWidget {
   /// Customizes this button's appearance.
   ///
   /// Non-null properties of this style override the corresponding
-  /// properties in [DefaultSBBPrimaryButtonThemeData.style].
+  /// properties in [DefaultSBBAccentButtonThemeData.style].
   final SBBButtonStyle? style;
 
   /// {@macro flutter.widgets.Focus.focusNode}
@@ -97,6 +99,9 @@ class SBBPrimaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final accentButtonStyle = Theme.of(context).sbbAccentButtonTheme?.style;
+    final effectiveStyle = accentButtonStyle?.merge(style).toButtonStyle();
+
     return Semantics(
       enabled: !isLoading && (onPressed != null || onLongPress != null),
       button: true,
@@ -109,7 +114,7 @@ class SBBPrimaryButton extends StatelessWidget {
         child: FilledButton(
           onPressed: isLoading ? null : onPressed,
           onLongPress: isLoading ? null : onLongPress,
-          style: style?.toButtonStyle(),
+          style: effectiveStyle,
           focusNode: focusNode,
           autofocus: autofocus,
           child: label ?? _defaultLabel(),
@@ -128,7 +133,7 @@ class SBBPrimaryButton extends StatelessWidget {
 
   Widget _defaultLabel() {
     final child = isLoading
-        ? const SBBLoadingIndicator.tiny(color: SBBColors.white)
+        ? const SBBLoadingIndicator.tiny(color: SBBColors.smoke)
         : DefaultButtonLabel(label: labelText!);
     return Center(child: child);
   }

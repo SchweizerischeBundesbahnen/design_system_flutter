@@ -142,6 +142,50 @@ class SBBTertiaryButtonThemeData extends ThemeExtension<SBBTertiaryButtonThemeDa
   }
 }
 
+/// The ThemeData for the [SBBAccentButton].
+///
+/// Use this to set the [SBBButtonStyle] for all [SBBAccentButton] within the current [SBBTheme].
+///
+/// To access this in your application, use `Theme.of(context).accentButtonTheme`.
+@immutable
+class SBBAccentButtonThemeData extends ThemeExtension<SBBAccentButtonThemeData> with Diagnosticable {
+  /// Creates an [SBBAccentButtonThemeData].
+  ///
+  /// The [style] may be null.
+  const SBBAccentButtonThemeData({this.style});
+
+  /// Overrides for the button's default style.
+  ///
+  /// Non-null properties or non-null resolved [WidgetStateProperty]
+  /// values override the default values.
+  ///
+  /// If [style] is null, then this theme doesn't override anything.
+  final SBBButtonStyle? style;
+
+  @override
+  SBBAccentButtonThemeData copyWith({SBBButtonStyle? style}) {
+    return SBBAccentButtonThemeData(style: style ?? this.style);
+  }
+
+  @override
+  SBBAccentButtonThemeData lerp(SBBAccentButtonThemeData? other, double t) {
+    if (other == null) return this;
+    return SBBAccentButtonThemeData(
+      style: SBBButtonStyle.lerp(style, other.style, t),
+    );
+  }
+
+  @override
+  int get hashCode => style.hashCode;
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    if (other.runtimeType != runtimeType) return false;
+    return other is SBBAccentButtonThemeData && other.style == style;
+  }
+}
+
 extension SBBPrimaryButtonThemeDataX on SBBPrimaryButtonThemeData {
   SBBPrimaryButtonThemeData merge(SBBPrimaryButtonThemeData? other) {
     if (other == null) return this;
@@ -163,6 +207,13 @@ extension SBBTertiaryButtonThemeDataX on SBBTertiaryButtonThemeData {
   }
 }
 
+extension SBBAccentButtonThemeDataX on SBBAccentButtonThemeData {
+  SBBAccentButtonThemeData merge(SBBAccentButtonThemeData? other) {
+    if (other == null) return this;
+    return copyWith(style: style?.merge(other.style));
+  }
+}
+
 extension SBBButtonThemeDataThemeDataX on ThemeData {
   SBBPrimaryButtonThemeData? get sbbPrimaryButtonTheme {
     return extension<SBBPrimaryButtonThemeData>();
@@ -174,5 +225,9 @@ extension SBBButtonThemeDataThemeDataX on ThemeData {
 
   SBBTertiaryButtonThemeData? get sbbTertiaryButtonTheme {
     return extension<SBBTertiaryButtonThemeData>();
+  }
+
+  SBBAccentButtonThemeData? get sbbAccentButtonTheme {
+    return extension<SBBAccentButtonThemeData>();
   }
 }
