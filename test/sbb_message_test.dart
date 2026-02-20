@@ -16,7 +16,7 @@ void main() {
   generateTest(
     'message_test_1',
     const SBBMessage(
-      title: 'Default',
+      titleText: 'Default',
       description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
     ),
@@ -25,7 +25,7 @@ void main() {
   generateTest(
     'message_test_2',
     const SBBMessage(
-      title: 'With illustration',
+      titleText: 'With illustration',
       description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
       illustration: .Woman,
@@ -35,7 +35,7 @@ void main() {
   generateTest(
     'message_test_3',
     SBBMessage(
-      title: 'With interaction',
+      titleText: 'With interaction',
       description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
       onInteraction: () {},
@@ -45,7 +45,7 @@ void main() {
   generateTest(
     'message_test_4',
     SBBMessage(
-      title: 'With interaction and illustration',
+      titleText: 'With interaction and illustration',
       description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
       illustration: .Man,
@@ -56,7 +56,7 @@ void main() {
   generateTest(
     'message_test_5',
     SBBMessage(
-      title: 'Default, custom icon',
+      titleText: 'Default, custom icon',
       description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
       onInteraction: () {},
@@ -67,7 +67,7 @@ void main() {
   generateTest(
     'message_test_6',
     SBBMessage.error(
-      title: 'Error, no interaction',
+      titleText: 'Error, no interaction',
       description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
       messageCode: 'Fehlercode: XYZ-9999',
@@ -77,7 +77,7 @@ void main() {
   generateTest(
     'message_test_7',
     SBBMessage.error(
-      title: 'Error, with interaction',
+      titleText: 'Error, with interaction',
       description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
       messageCode: 'Fehlercode: XYZ-9999',
@@ -89,7 +89,7 @@ void main() {
   generateTest(
     'message_test_8',
     SBBMessage(
-      title: 'Custom Illustration',
+      titleText: 'Custom Illustration',
       description:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
       customIllustration: Container(alignment: .center, width: 100, height: 100, color: SBBColors.red),

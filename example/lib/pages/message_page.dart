@@ -62,7 +62,7 @@ class _MessagePageState extends State<MessagePage> {
         const SBBListHeader('Default'),
         SBBContentBox(
           child: SBBMessage(
-            title: 'Title, single line if possible',
+            titleText: 'Title, single line if possible',
             description: _description,
             isLoading: _isLoading,
             onInteraction: _onInteractionCallback(),
@@ -71,7 +71,7 @@ class _MessagePageState extends State<MessagePage> {
         const SBBListHeader('Error'),
         SBBContentBox(
           child: SBBMessage(
-            title: 'Title, single line if possible',
+            titleText: 'Title, single line if possible',
             description: _description,
             messageCode: 'Error Code: XYZ-999',
             isLoading: _isLoading,
@@ -82,7 +82,7 @@ class _MessagePageState extends State<MessagePage> {
         SBBContentBox(
           child: SBBMessage(
             isLoading: _isLoading,
-            title: 'Custom',
+            titleText: 'Custom',
             description: _description,
             customIllustration: Container(
               alignment: .center,

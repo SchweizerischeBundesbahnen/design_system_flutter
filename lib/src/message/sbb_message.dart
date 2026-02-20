@@ -14,15 +14,15 @@ const _messageSpacing = 24.0;
 ///
 /// * <https://digital.sbb.ch/en/design-system/mobile/components/message/>
 class SBBMessage extends StatelessWidget {
-  /// Use the required [title] and [description] to display a message to the user.
+  /// Use the required [titleText] and [description] to display a message to the user.
   ///
-  /// If [illustration] and [customIllustration] is null, will not display anything above the [title], unless
+  /// If [illustration] and [customIllustration] is null, will not display anything above the [titleText], unless
   /// [isLoading] is true.
   ///
   /// The [messageCode] is typically used only within an error message. See [SBBMessage.error].
   const SBBMessage({
     super.key,
-    required this.title,
+    this.titleText,
     required this.description,
     this.isLoading = false,
     this.messageCode,
@@ -32,7 +32,7 @@ class SBBMessage extends StatelessWidget {
   });
 
   /// The title of the message displayed directly below the [illustration] or [customIllustration].
-  final String title;
+  final String? titleText;
 
   /// The body of the message. Used to give a longer explanation of what has happened.
   final String description;
@@ -88,7 +88,7 @@ class SBBMessage extends StatelessWidget {
     return isDarkTheme ? const SBBLoadingIndicator.mediumCloud() : const SBBLoadingIndicator.medium();
   }
 
-  Text _title(TextTheme textTheme) => Text(title, style: textTheme.bodyMedium, textAlign: .center);
+  Text _title(TextTheme textTheme) => Text(titleText, style: textTheme.bodyMedium, textAlign: .center);
 
   Text _description(TextTheme textTheme) => Text(description, style: textTheme.labelSmall, textAlign: .center);
 
