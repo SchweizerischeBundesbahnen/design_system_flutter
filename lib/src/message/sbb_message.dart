@@ -183,19 +183,19 @@ class SBBMessage extends StatelessWidget {
       );
     }
 
-    Widget resolvedTitle = title ?? Text(titleText!);
+    Widget resolvedTitle = title ?? Text(titleText!, textAlign: .center);
     resolvedTitle = _addDefaultAncestorWithResolved(
       textStyle: effectiveStyle.titleTextStyle?.copyWith(color: effectiveStyle.titleForegroundColor),
       child: resolvedTitle,
     )!;
 
-    Widget? resolvedSubtitle = subtitle ?? (subtitleText != null ? Text(subtitleText!) : null);
+    Widget? resolvedSubtitle = subtitle ?? (subtitleText != null ? Text(subtitleText!, textAlign: .center) : null);
     resolvedSubtitle = _addDefaultAncestorWithResolved(
       textStyle: effectiveStyle.subtitleTextStyle?.copyWith(color: effectiveStyle.subtitleForegroundColor),
       child: resolvedSubtitle,
     );
 
-    Widget? resolvedError = error ?? (errorText != null ? Text(errorText!) : null);
+    Widget? resolvedError = error ?? (errorText != null ? Text(errorText!, textAlign: .center) : null);
     resolvedError = _addDefaultAncestorWithResolved(
       textStyle: effectiveStyle.errorTextStyle?.copyWith(color: effectiveStyle.errorForegroundColor),
       child: resolvedError,
