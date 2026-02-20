@@ -1,5 +1,7 @@
 import 'package:flutter/widgets.dart';
 
+import '../../../sbb_design_system_mobile.dart';
+
 /// Defines the visual properties of [SBBListHeader].
 ///
 /// Use this class in combination with [SBBListHeaderThemeData] to customize
@@ -27,6 +29,11 @@ class SBBListHeaderStyle {
 
   /// The padding around the list header.
   final EdgeInsetsGeometry? padding;
+
+  static const EdgeInsetsGeometry defaultPadding = EdgeInsetsGeometry.symmetric(
+    vertical: SBBSpacing.xSmall,
+    horizontal: SBBSpacing.medium,
+  );
 
   SBBListHeaderStyle copyWith({
     Color? foregroundColor,

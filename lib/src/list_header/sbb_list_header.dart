@@ -41,15 +41,8 @@ class SBBListHeader extends StatelessWidget {
     final effectiveStyle = themeStyle?.merge(style);
 
     final foregroundColor = effectiveStyle?.foregroundColor;
-    final textStyle = effectiveStyle?.textStyle;
     final maxLines = effectiveStyle?.maxLines;
-    final textOverflow = effectiveStyle?.textOverflow;
-    final padding =
-        effectiveStyle?.padding ??
-        const EdgeInsets.symmetric(
-          horizontal: SBBSpacing.medium,
-          vertical: SBBSpacing.xSmall,
-        );
+    final padding = effectiveStyle?.padding ?? SBBListHeaderStyle.defaultPadding;
 
     return Padding(
       padding: padding,
@@ -58,8 +51,8 @@ class SBBListHeader extends StatelessWidget {
         child: Text(
           titleText,
           maxLines: maxLines,
-          overflow: maxLines == null ? null : textOverflow,
-          style: textStyle?.copyWith(color: foregroundColor) ?? TextStyle(color: foregroundColor),
+          overflow: maxLines == null ? null : effectiveStyle?.textOverflow,
+          style: effectiveStyle?.textStyle?.copyWith(color: foregroundColor) ?? TextStyle(color: foregroundColor),
         ),
       ),
     );
