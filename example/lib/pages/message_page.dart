@@ -37,6 +37,7 @@ class _MessagePageState extends State<MessagePage> {
           child: Column(
             mainAxisSize: .min,
             children: SBBListItem.divideListItems(
+              context: context,
               items: [
                 SBBCheckboxListItem(
                   value: _showInteractionButton,

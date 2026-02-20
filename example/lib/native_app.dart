@@ -1,6 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_design_system_mobile_example/pages/illustration_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
@@ -139,6 +140,7 @@ class MyApp extends StatelessWidget {
                                 items: [
                                   _DemoEntry('Autocompletion', AutocompletionPage()),
                                   _DemoEntry('Container', ContainerPage()),
+                                  _DemoEntry('Illustrations', IllustrationPage()),
                                   _DemoEntry('Header', HeaderPage()),
                                   _DemoEntry('Headerbox', HeaderBoxPage()),
                                   _DemoEntry('Modal', ModalPage()),
