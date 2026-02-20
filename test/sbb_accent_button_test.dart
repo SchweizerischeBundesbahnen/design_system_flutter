@@ -5,7 +5,7 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'test_app.dart';
 
 void main() {
-  testWidgets('primary_button', (WidgetTester tester) async {
+  testWidgets('accent_button', (WidgetTester tester) async {
     final pressableKey = ValueKey('pressedButton');
     final widget = Padding(
       padding: const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall, vertical: SBBSpacing.medium),
@@ -31,7 +31,9 @@ void main() {
       widget,
       tester,
       'accent_button',
-      find.byType(Column).first,
+      find
+          .byType(Column)
+          .first,
     );
     await tester.press(find.byKey(pressableKey));
     await tester.pumpAndSettle();
@@ -41,7 +43,9 @@ void main() {
       widget,
       tester,
       'accent_button_pressed',
-      find.byType(Column).first,
+      find
+          .byType(Column)
+          .first,
     );
   });
 }
