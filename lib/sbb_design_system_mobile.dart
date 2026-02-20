@@ -13,7 +13,7 @@ export 'src/list_header/sbb_list_header.dart';
 export 'src/list_item/list_item.dart';
 export 'src/loading_indicator/sbb_loading_indicator.dart';
 export 'src/logo/sbb_logo.dart';
-export 'src/message/sbb_message.dart';
+export 'src/message/message.dart';
 export 'src/modal/sbb_modal.dart';
 export 'src/notification_box/notification_box.dart';
 export 'src/onboarding/onboarding.dart';
