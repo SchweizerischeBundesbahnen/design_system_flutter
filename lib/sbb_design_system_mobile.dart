@@ -8,7 +8,7 @@ export 'src/headerbox/headerbox.dart';
 export 'src/input/input.dart';
 export 'src/input_trigger/sbb_input_trigger.dart';
 export 'src/link/sbb_link_text.dart';
-export 'src/list_header/sbb_list_header.dart';
+export 'src/list_header/list_header.dart';
 export 'src/list_item/list_item.dart';
 export 'src/loading_indicator/sbb_loading_indicator.dart';
 export 'src/logo/sbb_logo.dart';
