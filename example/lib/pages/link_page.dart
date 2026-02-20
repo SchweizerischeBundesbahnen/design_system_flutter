@@ -10,12 +10,12 @@ class LinkPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final sbbToast = SBBToast.of(context);
     return ListView(
-      padding: const EdgeInsets.all(SBBSpacing.medium),
-      children: <Widget>[
+      padding: const .all(SBBSpacing.medium),
+      children: [
         const ThemeModeSegmentedButton(),
         const SizedBox(height: SBBSpacing.medium),
         SBBContentBox(
-          padding: const EdgeInsets.all(SBBSpacing.medium),
+          padding: const .all(SBBSpacing.medium),
           child: SBBLinkText(
             text: '''We are using a subset of the Markdown syntax for recognizing links in a text:
 

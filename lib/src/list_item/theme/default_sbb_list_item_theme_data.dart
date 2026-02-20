@@ -7,7 +7,7 @@ import '../../../sbb_design_system_mobile.dart';
 class DefaultSBBListItemThemeData extends SBBListItemThemeData {
   DefaultSBBListItemThemeData({required SBBBaseStyle baseStyle})
     : super(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0),
+        padding: const .symmetric(horizontal: 16.0, vertical: 10.0),
         trailingHorizontalGapWidth: 16.0,
         leadingHorizontalGapWidth: 8.0,
         subtitleVerticalGapHeight: 4.0,

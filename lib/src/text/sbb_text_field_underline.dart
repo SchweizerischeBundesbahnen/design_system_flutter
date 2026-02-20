@@ -18,11 +18,11 @@ class SBBTextFieldUnderline extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = SBBControlStyles.of(context).textField;
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: .start,
       children: [
         if (errorText != null)
           Padding(
-            padding: const EdgeInsets.only(bottom: 9.0),
+            padding: const .only(bottom: 9.0),
             child: Text(errorText!, style: style?.errorTextStyle),
           ),
         Divider(

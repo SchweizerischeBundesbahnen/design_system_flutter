@@ -116,7 +116,7 @@ class _SBBSegmentedButtonState<T> extends State<SBBSegmentedButton<T>> {
     }
     return ExcludeSemantics(
       child: Container(
-        margin: const EdgeInsets.all(1.0),
+        margin: const .all(1.0),
         decoration: ShapeDecoration(
           shape: _shapeWithBorder(borderColor),
           color: backgroundColor,
@@ -179,8 +179,8 @@ class _SBBSegmentedButtonState<T> extends State<SBBSegmentedButton<T>> {
               button: !selected,
               hint: loc.tabLabel(tabIndex: i + 1, tabCount: widget.segments.length),
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 4),
-                alignment: Alignment.center,
+                padding: const .symmetric(horizontal: 4),
+                alignment: .center,
                 child: _buildSegmentContent(segment, selected),
               ),
             ),
@@ -198,7 +198,7 @@ class _SBBSegmentedButtonState<T> extends State<SBBSegmentedButton<T>> {
 
     Widget? label = segment.label;
     if (label == null && segment.labelText != null) {
-      label = Text(segment.labelText!, overflow: TextOverflow.ellipsis, maxLines: 1);
+      label = Text(segment.labelText!, overflow: .ellipsis, maxLines: 1);
     }
 
     // add styling and foregroundColor
@@ -226,7 +226,7 @@ class _SBBSegmentedButtonState<T> extends State<SBBSegmentedButton<T>> {
     Widget child;
     if (label != null && leading != null) {
       child = Row(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: .min,
         spacing: effectiveLeadingGapWidth,
         children: [
           leading,

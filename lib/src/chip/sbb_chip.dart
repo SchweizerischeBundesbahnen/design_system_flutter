@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
-const EdgeInsets _badgeMargin = EdgeInsets.only(right: 4.0);
+const EdgeInsets _badgeMargin = .only(right: 4.0);
 const Size _badgeSize = Size(24.0, 24.0);
 
 /// The SBB Chip.
@@ -158,7 +158,7 @@ class _SBBChipState extends State<SBBChip> {
       clipper: ShapeBorderClipper(
         shape: StadiumBorder(side: BorderSide(color: borderColor)),
       ),
-      clipBehavior: Clip.hardEdge,
+      clipBehavior: .hardEdge,
       child: DecoratedBox(
         decoration: ShapeDecoration(
           shape: StadiumBorder(side: BorderSide(color: borderColor)),
@@ -170,7 +170,7 @@ class _SBBChipState extends State<SBBChip> {
           statesController: _statesController,
           focusNode: widget.focusNode,
           child: Row(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisSize: .min,
             children: [
               DefaultTextStyle.merge(
                 style: labelTextStyle?.copyWith(color: labelForegroundColor),
@@ -205,11 +205,8 @@ class _SBBChipState extends State<SBBChip> {
   Widget _defaultLabel(TextStyle? labelTextStyle) {
     return Flexible(
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-          vertical: 6.0,
-          horizontal: 12.0,
-        ),
-        child: Text(widget.labelText!, overflow: TextOverflow.ellipsis, style: labelTextStyle, maxLines: 1),
+        padding: const .symmetric(vertical: 6.0, horizontal: 12.0),
+        child: Text(widget.labelText!, overflow: .ellipsis, style: labelTextStyle, maxLines: 1),
       ),
     );
   }
@@ -222,7 +219,7 @@ class _SBBChipState extends State<SBBChip> {
       child: Center(
         child: Baseline(
           baseline: badgeTextStyle?.fontSize ?? 14.0,
-          baselineType: TextBaseline.ideographic,
+          baselineType: .ideographic,
           child: Text(widget.trailingText ?? '', maxLines: 1),
         ),
       ),
@@ -247,7 +244,7 @@ class _SBBChipState extends State<SBBChip> {
       key: key,
       margin: _badgeMargin,
       constraints: BoxConstraints.tight(_badgeSize),
-      decoration: BoxDecoration(shape: BoxShape.circle, color: color),
+      decoration: BoxDecoration(shape: .circle, color: color),
       child: child,
     );
   }

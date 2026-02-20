@@ -40,14 +40,14 @@ class SelectPageState extends State<SelectPage> {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: const EdgeInsets.all(SBBSpacing.medium),
+      padding: const .all(SBBSpacing.medium),
       children: [
         const ThemeModeSegmentedButton(),
         const SizedBox(height: SBBSpacing.medium),
         const SBBListHeader('Single value'),
         SBBContentBox(
           child: Column(
-            children: <Widget>[
+            children: [
               SBBSelect<int>(
                 label: 'Label',
                 value: _selectedValue1,
@@ -118,7 +118,7 @@ class SelectPageState extends State<SelectPage> {
         const SBBListHeader('Multiple values'),
         SBBContentBox(
           child: Column(
-            children: <Widget>[
+            children: [
               SBBMultiSelect<int>(
                 label: 'Label',
                 values: _multiSelectValues1,

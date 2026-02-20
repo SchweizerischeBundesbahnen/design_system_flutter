@@ -45,7 +45,7 @@ class SBBTextInput extends StatefulWidget {
     this.focusNode,
     this.keyboardType,
     this.textInputAction,
-    this.textCapitalization = TextCapitalization.none,
+    this.textCapitalization = .none,
     this.readOnly = false,
     this.showCursor = true,
     this.autofocus = false,
@@ -429,7 +429,7 @@ class _SBBTextInputState extends State<SBBTextInput>
       child: IgnorePointer(
         ignoring: widget.ignorePointers ?? false,
         child: _selectionGestureDetectorBuilder.buildGestureDetector(
-          behavior: HitTestBehavior.translucent,
+          behavior: .translucent,
           child: AnimatedBuilder(
             animation: _effectiveController,
             builder: (context, child) {
@@ -466,7 +466,7 @@ class _SBBTextInputState extends State<SBBTextInput>
                     : null,
                 child: AnimatedBuilder(
                   animation: Listenable.merge(<Listenable>[_effectiveFocusNode, _effectiveController]),
-                  builder: (BuildContext context, Widget? child) {
+                  builder: (context, Widget? child) {
                     return SBBInputDecorator(
                       decoration: _getEffectiveDecorationWithClearButton(context),
                       expands: widget.expands,
@@ -521,7 +521,7 @@ class _SBBTextInputState extends State<SBBTextInput>
     final Widget trailing = widget.decoration?.trailingIconData == null
         ? SizedBox.shrink()
         : Padding(
-            padding: EdgeInsets.only(left: _effectiveTrailingInputGap(inputDecorationTheme)),
+            padding: .only(left: _effectiveTrailingInputGap(inputDecorationTheme)),
             child: Icon(widget.decoration!.trailingIconData),
           );
 
@@ -564,7 +564,7 @@ class _SBBTextInputState extends State<SBBTextInput>
       return false;
     }
 
-    if (cause == SelectionChangedCause.keyboard) {
+    if (cause == .keyboard) {
       return false;
     }
 
@@ -576,7 +576,7 @@ class _SBBTextInputState extends State<SBBTextInput>
       return false;
     }
 
-    if (cause == SelectionChangedCause.longPress || cause == SelectionChangedCause.stylusHandwriting) {
+    if (cause == .longPress || cause == .stylusHandwriting) {
       return true;
     }
 
@@ -608,7 +608,7 @@ class _SBBTextInputState extends State<SBBTextInput>
       });
     }
 
-    if (cause == SelectionChangedCause.longPress) {
+    if (cause == .longPress) {
       _editableText?.bringIntoView(selection.extent);
     }
 
@@ -620,7 +620,7 @@ class _SBBTextInputState extends State<SBBTextInput>
       case TargetPlatform.macOS:
       case TargetPlatform.linux:
       case TargetPlatform.windows:
-        if (cause == SelectionChangedCause.drag) {
+        if (cause == .drag) {
           _editableText?.hideToolbar();
         }
     }
@@ -685,7 +685,7 @@ class SBBTextInputBoxed extends SBBTextInput {
          decoration: decoration?.contentPadding != null
              ? decoration
              : (decoration ?? SBBInputDecoration()).copyWith(
-                 contentPadding: EdgeInsets.symmetric(horizontal: SBBSpacing.medium),
+                 contentPadding: .symmetric(horizontal: SBBSpacing.medium),
                ),
        );
 

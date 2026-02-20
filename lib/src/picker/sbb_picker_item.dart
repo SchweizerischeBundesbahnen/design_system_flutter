@@ -12,7 +12,7 @@ class SBBPickerItem {
     : this.custom(
         isEnabled: isEnabled,
         widget: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: _widgetHorizontalPadding + _itemMinPadding),
+          padding: const .symmetric(horizontal: _widgetHorizontalPadding + _itemMinPadding),
           child: Text(label, softWrap: false),
         ),
       );

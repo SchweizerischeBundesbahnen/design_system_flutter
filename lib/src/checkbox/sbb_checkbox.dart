@@ -180,7 +180,7 @@ class _SBBCheckboxState extends State<SBBCheckbox> with TickerProviderStateMixin
 
     final SBBCheckboxStyle? style = Theme.of(context).sbbCheckboxTheme?.style;
 
-    final effectiveMargin = widget.style?.tapTargetPadding ?? style?.tapTargetPadding ?? EdgeInsets.zero;
+    final effectiveMargin = widget.style?.tapTargetPadding ?? style?.tapTargetPadding ?? .zero;
     final Size effectiveSize = effectiveMargin.inflateSize(_checkboxSize);
 
     // provide both active and inactive variants to the painter so it can lerp
@@ -331,14 +331,14 @@ class _SBBCheckboxPainter extends ToggleablePainter {
 
   double get _edgeHalf => _innerWidthLength * 0.5;
 
-  Radius get _markRadius => Radius.circular(0.02 * _innerWidthLength);
+  Radius get _markRadius => .circular(0.02 * _innerWidthLength);
 
   @override
   void paint(Canvas canvas, Size size) {
     final Offset origin = size / 2.0 - const Size.square(_innerWidthLength) / 2.0 as Offset;
     final double tNormalized = switch (position.status) {
-      AnimationStatus.forward || AnimationStatus.completed => position.value,
-      AnimationStatus.reverse || AnimationStatus.dismissed => 1.0 - position.value,
+      .forward || .completed => position.value,
+      .reverse || .dismissed => 1.0 - position.value,
     };
 
     final Paint checkPaint = _createCheckPaint();
@@ -381,13 +381,13 @@ class _SBBCheckboxPainter extends ToggleablePainter {
     return Paint()
       ..color = _currentBoxBorderColor
       ..strokeWidth = 1.0
-      ..style = PaintingStyle.stroke;
+      ..style = .stroke;
   }
 
   Paint _createBoxFillPaint() {
     return Paint()
       ..color = _currentBoxFillColor
-      ..style = PaintingStyle.fill;
+      ..style = .fill;
   }
 
   void _drawCheck(Canvas canvas, Offset origin, double t, Paint paint) {

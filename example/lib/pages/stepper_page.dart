@@ -25,7 +25,7 @@ class _StepperPageState extends State<StepperPage> {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: const EdgeInsets.all(SBBSpacing.medium),
+      padding: const .all(SBBSpacing.medium),
       children: [
         const ThemeModeSegmentedButton(),
         const SizedBox(height: SBBSpacing.medium),
@@ -40,7 +40,7 @@ class _StepperPageState extends State<StepperPage> {
   Widget _filledSteppers(BuildContext context) {
     return SBBContentBox(
       color: SBBBaseStyle.of(context).primaryColor,
-      padding: const EdgeInsets.symmetric(vertical: SBBSpacing.medium),
+      padding: const .symmetric(vertical: SBBSpacing.medium),
       child: Column(
         spacing: SBBSpacing.medium,
         children: [
@@ -72,7 +72,7 @@ class _StepperPageState extends State<StepperPage> {
 
   Widget _defaultSteppers() {
     return SBBContentBox(
-      padding: const EdgeInsets.symmetric(vertical: SBBSpacing.medium),
+      padding: const .symmetric(vertical: SBBSpacing.medium),
       child: Column(
         spacing: SBBSpacing.medium,
         children: [
@@ -148,7 +148,7 @@ class _StepperPageState extends State<StepperPage> {
     SBBStepperItem.numbered(label: SBBStatus.information(labelText: 'Custom')),
     SBBStepperItem.icon(
       label: Container(
-        padding: EdgeInsets.all(8.0),
+        padding: .all(8.0),
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.orange),
         child: Text('Label'),
       ),

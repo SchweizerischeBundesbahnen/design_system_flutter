@@ -194,10 +194,7 @@ class _RenderCascadeColumn extends RenderBox
     );
   }
 
-  void _queueStateUpdate(
-    CascadeColumnParentData pd,
-    ContractibleState state,
-  ) {
+  void _queueStateUpdate(CascadeColumnParentData pd, ContractibleState state) {
     final n = pd.stateNotifier;
 
     if (n == null || n.value == state) return;
@@ -206,15 +203,13 @@ class _RenderCascadeColumn extends RenderBox
     _pendingProgress.add(_ProgressUpdate(n, state));
 
     if (!scheduled) {
-      SchedulerBinding.instance.addPostFrameCallback(
-        (_) {
-          // publish to listeners in the *next* frame
-          for (final u in _pendingProgress) {
-            u.notifier.value = u.value;
-          }
-          _pendingProgress.clear();
-        },
-      );
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        // publish to listeners in the *next* frame
+        for (final u in _pendingProgress) {
+          u.notifier.value = u.value;
+        }
+        _pendingProgress.clear();
+      });
     }
   }
 

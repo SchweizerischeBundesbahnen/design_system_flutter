@@ -80,7 +80,7 @@ void main() {
     SBBStepperItem.numbered(label: SBBStatus.information(labelText: 'Custom')),
     SBBStepperItem.icon(
       label: Container(
-        padding: EdgeInsets.all(8.0),
+        padding: .all(8.0),
         decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.orange),
         child: Text('Label'),
       ),
@@ -128,7 +128,7 @@ class StepperTest extends StatelessWidget {
     return Container(
       color: isFilled ? SBBColors.red : null,
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: .min,
         children: [
           const SBBListHeader('Numbered'),
           _stepper(numberedSteps, 0),

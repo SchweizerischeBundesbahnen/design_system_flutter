@@ -105,7 +105,7 @@ class SBBPrimaryButton extends StatelessWidget {
       // The button is surrounded by padding to allow the border to be
       // drawn outside while maintaining correct distances to other Widgets.
       child: Padding(
-        padding: const EdgeInsets.all(1.0),
+        padding: const .all(1.0),
         child: FilledButton(
           onPressed: isLoading ? null : onPressed,
           onLongPress: isLoading ? null : onLongPress,

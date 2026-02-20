@@ -25,9 +25,9 @@ class _FloatingPageState extends State<FloatingPage> {
           slivers: [
             SBBSliverFloatingHeaderbox.custom(
               resizing: resizing,
-              padding: EdgeInsets.zero,
+              padding: .zero,
               flap: _flap(),
-              flapMode: SBBHeaderboxFlapMode.hideable,
+              flapMode: .hideable,
               children: [
                 _crossfadeExample(context, style),
                 _additionalRowsSwitcher(context),
@@ -59,7 +59,7 @@ class _FloatingPageState extends State<FloatingPage> {
           Spacer(),
           SizedOverflowBox(
             size: Size(54, 24),
-            alignment: Alignment.centerRight,
+            alignment: .centerRight,
             child: SBBTertiaryButtonSmall(
               iconData: showAll ? SBBIcons.arrow_up_small : SBBIcons.arrow_down_small,
               onPressed: () {
@@ -89,8 +89,8 @@ class _FloatingPageState extends State<FloatingPage> {
             SBBSliverFloatingHeaderbox.expand(key.currentContext!);
           },
           child: Container(
-            constraints: BoxConstraints(minWidth: double.infinity),
-            padding: const EdgeInsets.all(SBBSpacing.medium),
+            constraints: BoxConstraints(minWidth: .infinity),
+            padding: const .all(SBBSpacing.medium),
             child: Text(
               'Bern → Bern Wankdorf',
               style: SBBTextStyles.mediumBold,
@@ -101,15 +101,15 @@ class _FloatingPageState extends State<FloatingPage> {
       // The expanded child is somewhat complicated to achieve the dynamic layout.
       // It could be simplified massively if we were fine with a simple crossfade that only changes the opacity.
       expandedChild: Padding(
-        padding: const EdgeInsets.only(left: SBBSpacing.medium, top: SBBSpacing.xSmall),
+        padding: const .only(left: SBBSpacing.medium, top: SBBSpacing.xSmall),
         child: Row(
           children: [
             Stack(
               children: [
                 Align(
-                  alignment: Alignment.topCenter,
+                  alignment: .topCenter,
                   child: Padding(
-                    padding: const EdgeInsets.only(top: SBBSpacing.medium),
+                    padding: const .only(top: SBBSpacing.medium),
                     child: _circle(context),
                   ),
                 ),
@@ -123,9 +123,9 @@ class _FloatingPageState extends State<FloatingPage> {
                   ),
                 ),
                 Align(
-                  alignment: Alignment.bottomCenter,
+                  alignment: .bottomCenter,
                   child: Padding(
-                    padding: const EdgeInsets.only(bottom: SBBSpacing.medium),
+                    padding: const .only(bottom: SBBSpacing.medium),
                     child: _circle(context),
                   ),
                 ),
@@ -133,12 +133,12 @@ class _FloatingPageState extends State<FloatingPage> {
             ),
             Expanded(
               child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: .min,
+                crossAxisAlignment: .start,
                 children: [
                   Flexible(
                     child: OverflowBox(
-                      maxHeight: double.infinity,
+                      maxHeight: .infinity,
                       child: SBBTextInput(
                         decoration: SBBInputDecoration(
                           labelText: 'Origin',
@@ -148,7 +148,7 @@ class _FloatingPageState extends State<FloatingPage> {
                   ),
                   Flexible(
                     child: OverflowBox(
-                      maxHeight: double.infinity,
+                      maxHeight: .infinity,
                       child: SBBTextInput(
                         decoration: SBBInputDecoration(
                           labelText: 'Destination',
@@ -167,7 +167,7 @@ class _FloatingPageState extends State<FloatingPage> {
 
   SBBContractible _contractibleExample(SBBToast sbbToast, SBBBaseStyle style) {
     return SBBContractible(
-      behavior: pushMode ? SBBContractionBehavior.displace : SBBContractionBehavior.clip,
+      behavior: pushMode ? .displace : .clip,
       builder:
           // We can react to the current state of expansion and set an opacity accordingly.
           (context, state, child) => Opacity(
@@ -196,7 +196,7 @@ class _FloatingPageState extends State<FloatingPage> {
 
   Container _circle(BuildContext context) {
     var decoration = BoxDecoration(
-      shape: BoxShape.circle,
+      shape: .circle,
       border: Border.all(
         color: Theme.of(context).colorScheme.onSurface,
       ),
@@ -207,7 +207,7 @@ class _FloatingPageState extends State<FloatingPage> {
       height: SBBSpacing.medium,
       child: Container(
         decoration: decoration,
-        margin: EdgeInsets.all(3),
+        margin: .all(3),
       ),
     );
   }
@@ -218,7 +218,7 @@ class _FloatingPageState extends State<FloatingPage> {
       SBBContractionListener(
         builder: (context, state, _) => FractionallySizedBox(
           widthFactor: state.contractionValue,
-          alignment: Alignment.topLeft,
+          alignment: .topLeft,
           child: Container(
             height: 5,
             color: SBBColors.red,
@@ -226,7 +226,7 @@ class _FloatingPageState extends State<FloatingPage> {
         ),
       ),
       SBBContractible.custom(
-        behavior: SBBContractionBehavior.center,
+        behavior: .center,
         child: Center(child: SBBListItem(titleText: 'Stay center', onTap: null)),
       ),
       SBBContractible(
@@ -279,8 +279,8 @@ class ControlsButton extends StatelessWidget {
               start: BorderSide(color: Theme.of(context).dividerTheme.color!),
             ),
           ),
-          padding: EdgeInsets.all(12.0),
-          margin: EdgeInsets.zero,
+          padding: .all(12.0),
+          margin: .zero,
           child: Icon(SBBIcons.controls_small),
         ),
       ),

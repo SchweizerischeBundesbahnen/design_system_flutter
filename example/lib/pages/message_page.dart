@@ -28,14 +28,14 @@ class _MessagePageState extends State<MessagePage> {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: const EdgeInsets.all(SBBSpacing.medium),
+      padding: const .all(SBBSpacing.medium),
       children: [
         const ThemeModeSegmentedButton(),
         const SizedBox(height: SBBSpacing.medium),
         const SBBListHeader('Settings'),
         SBBContentBox(
           child: Column(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisSize: .min,
             children: SBBListItem.divideListItems(
               items: [
                 SBBCheckboxListItem(
@@ -64,7 +64,7 @@ class _MessagePageState extends State<MessagePage> {
             title: 'Title, single line if possible',
             description: _description,
             isLoading: _isLoading,
-            illustration: _showIllustrations ? MessageIllustration.Woman : null,
+            illustration: _showIllustrations ? .Woman : null,
             onInteraction: _onInteractionCallback(),
           ),
         ),
@@ -75,7 +75,7 @@ class _MessagePageState extends State<MessagePage> {
             description: _description,
             messageCode: 'Error Code: XYZ-999',
             isLoading: _isLoading,
-            illustration: _showIllustrations ? MessageIllustration.Display : null,
+            illustration: _showIllustrations ? .Display : null,
             onInteraction: _onInteractionCallback(),
           ),
         ),
@@ -86,7 +86,7 @@ class _MessagePageState extends State<MessagePage> {
             title: 'Custom',
             description: _description,
             customIllustration: Container(
-              alignment: Alignment.center,
+              alignment: .center,
               width: 100,
               height: 100,
               color: SBBColors.red,

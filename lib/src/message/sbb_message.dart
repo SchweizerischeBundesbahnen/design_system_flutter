@@ -16,7 +16,8 @@ enum MessageIllustration {
   // ignore: constant_identifier_names
   Woman('woman.png'),
   // ignore: constant_identifier_names
-  Display('display.png');
+  Display('display.png')
+  ;
 
   const MessageIllustration(this.fileName);
 
@@ -63,7 +64,7 @@ class SBBMessage extends StatelessWidget {
     super.key,
     required this.title,
     required this.description,
-    this.illustration = MessageIllustration.Display,
+    this.illustration = .Display,
     this.isLoading = false,
     this.messageCode,
     this.onInteraction,
@@ -117,9 +118,9 @@ class SBBMessage extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return Padding(
-      padding: const EdgeInsets.all(SBBSpacing.medium),
+      padding: const .all(SBBSpacing.medium),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: .min,
         children: [
           if (_showLeading) ...[
             if (isLoading) _loadingIndicator(context),
@@ -137,16 +138,16 @@ class SBBMessage extends StatelessWidget {
   }
 
   SBBLoadingIndicator _loadingIndicator(BuildContext context) {
-    final isDarkTheme = Theme.of(context).brightness == Brightness.dark;
+    final isDarkTheme = Theme.of(context).brightness == .dark;
     return isDarkTheme ? const SBBLoadingIndicator.mediumCloud() : const SBBLoadingIndicator.medium();
   }
 
-  Text _title(TextTheme textTheme) => Text(title, style: textTheme.bodyMedium, textAlign: TextAlign.center);
+  Text _title(TextTheme textTheme) => Text(title, style: textTheme.bodyMedium, textAlign: .center);
 
-  Text _description(TextTheme textTheme) => Text(description, style: textTheme.labelSmall, textAlign: TextAlign.center);
+  Text _description(TextTheme textTheme) => Text(description, style: textTheme.labelSmall, textAlign: .center);
 
   Widget _errorCode(TextTheme textTheme) => ExcludeSemantics(
-    child: Text(messageCode!, style: textTheme.labelSmall?.copyWith(fontSize: 12.0), textAlign: TextAlign.center),
+    child: Text(messageCode!, style: textTheme.labelSmall?.copyWith(fontSize: 12.0), textAlign: .center),
   );
 
   SBBTertiaryButton _interactionButton() => SBBTertiaryButton(iconData: interactionIcon, onPressed: onInteraction);

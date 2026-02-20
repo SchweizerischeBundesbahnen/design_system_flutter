@@ -21,10 +21,10 @@ class SegmentedButtonPageState extends State<SegmentedButtonPage> {
   @override
   Widget build(BuildContext context) {
     return CustomScrollView(
-      slivers: <Widget>[
+      slivers: [
         SBBSliverHeaderbox.custom(child: ThemeModeSegmentedButton()),
         SliverPadding(
-          padding: EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
+          padding: .symmetric(horizontal: SBBSpacing.xSmall),
           sliver: SliverList.list(
             children: [
               const SBBListHeader('Default'),

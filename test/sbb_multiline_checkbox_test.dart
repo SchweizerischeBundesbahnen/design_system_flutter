@@ -50,7 +50,7 @@ class MultilineCheckboxTextState extends State<MultilineCheckboxText> {
 
   @override
   Widget build(BuildContext context) => Padding(
-    padding: const EdgeInsets.symmetric(vertical: SBBSpacing.medium),
+    padding: const .symmetric(vertical: SBBSpacing.medium),
     child: SBBCheckboxListItemBoxed(
       key: const Key('checkbox'),
       value: _listItemValue,

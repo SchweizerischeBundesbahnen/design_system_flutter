@@ -31,8 +31,8 @@ class DateTimePickerTest extends StatelessWidget {
     final maximumDateTime = DateTime(2024, 07, 01, 08, 43);
     return SBBContentBox(
       child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
+        mainAxisSize: .min,
+        children: [
           SBBDateTimeInput(onDateTimeChanged: (_) {}),
           SBBDateTimeInput(value: initialDateTime, onDateTimeChanged: (_) {}),
           SBBDateTimeInput(hintText: 'Hint only', onDateTimeChanged: (_) {}),

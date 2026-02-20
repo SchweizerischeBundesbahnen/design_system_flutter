@@ -17,7 +17,7 @@ class _ModalPageState extends State<ModalPage> {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      padding: const EdgeInsets.all(SBBSpacing.medium),
+      padding: const .all(SBBSpacing.medium),
       children: [
         ThemeModeSegmentedButton(),
         const SizedBox(height: SBBSpacing.medium),
@@ -100,7 +100,7 @@ class _ModalPageState extends State<ModalPage> {
         final result = await showCustomSBBModalSheet<String>(
           context: context,
           header: const Padding(
-            padding: EdgeInsets.all(SBBSpacing.medium),
+            padding: .all(SBBSpacing.medium),
             child: Row(
               children: [
                 Icon(SBBIcons.app_icon_small),
@@ -138,8 +138,8 @@ class _ModalPageState extends State<ModalPage> {
     return Padding(
       padding: const EdgeInsetsDirectional.fromSTEB(SBBSpacing.medium, 0.0, SBBSpacing.medium, SBBSpacing.medium),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisSize: fullHeight ? MainAxisSize.max : MainAxisSize.min,
+        crossAxisAlignment: .start,
+        mainAxisSize: fullHeight ? .max : .min,
         children: [
           const Text(
             'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',

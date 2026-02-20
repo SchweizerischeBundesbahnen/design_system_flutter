@@ -61,7 +61,7 @@ class _SBBTabBarState extends State<SBBTabBar> with TickerProviderStateMixin, Wi
 
   Map<SBBTabBarItem, FocusNode> _focusNodes = {};
 
-  bool get portrait => MediaQuery.of(context).orientation == Orientation.portrait;
+  bool get portrait => MediaQuery.of(context).orientation == .portrait;
 
   @override
   void initState() {
@@ -130,8 +130,8 @@ class _SBBTabBarState extends State<SBBTabBar> with TickerProviderStateMixin, Wi
                   decoration: BoxDecoration(
                     gradient: LinearGradient(
                       colors: [cardColor.withValues(alpha: 0.0), cardColor.withValues(alpha: 1.0)],
-                      begin: Alignment.topCenter,
-                      end: Alignment.bottomCenter,
+                      begin: .topCenter,
+                      end: .bottomCenter,
                     ),
                   ),
                   child: Stack(

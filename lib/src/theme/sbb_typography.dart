@@ -50,112 +50,112 @@ class SBBTextStyles {
     fontFamily: SBBFontFamily.sbbFontLight,
     fontSize: xxLargeFontSize,
     height: xxLargeFontHeight,
-    fontStyle: FontStyle.normal,
-    fontWeight: FontWeight.normal,
+    fontStyle: .normal,
+    fontWeight: .normal,
   );
 
   static const TextStyle extraExtraLargeBold = TextStyle(
     fontFamily: SBBFontFamily.sbbFontBold,
     fontSize: xxLargeFontSize,
     height: xxLargeFontHeight,
-    fontStyle: FontStyle.normal,
-    fontWeight: FontWeight.normal,
+    fontStyle: .normal,
+    fontWeight: .normal,
   );
 
   static const TextStyle extraLargeLight = TextStyle(
     fontFamily: SBBFontFamily.sbbFontLight,
     fontSize: xLargeFontSize,
     height: xLargeFontHeight,
-    fontStyle: FontStyle.normal,
-    fontWeight: FontWeight.normal,
+    fontStyle: .normal,
+    fontWeight: .normal,
   );
 
   static const TextStyle extraLargeBold = TextStyle(
     fontFamily: SBBFontFamily.sbbFontBold,
     fontSize: xLargeFontSize,
     height: xLargeFontHeight,
-    fontStyle: FontStyle.normal,
-    fontWeight: FontWeight.normal,
+    fontStyle: .normal,
+    fontWeight: .normal,
   );
 
   static const TextStyle largeLight = TextStyle(
     fontFamily: SBBFontFamily.sbbFontLight,
     fontSize: largeFontSize,
     height: largeFontHeight,
-    fontStyle: FontStyle.normal,
-    fontWeight: FontWeight.normal,
+    fontStyle: .normal,
+    fontWeight: .normal,
   );
 
   static const TextStyle largeBold = TextStyle(
     fontFamily: SBBFontFamily.sbbFontBold,
     fontSize: largeFontSize,
     height: largeFontHeight,
-    fontStyle: FontStyle.normal,
-    fontWeight: FontWeight.normal,
+    fontStyle: .normal,
+    fontWeight: .normal,
   );
 
   static const TextStyle mediumLight = TextStyle(
     fontFamily: SBBFontFamily.sbbFontLight,
     fontSize: mediumFontSize,
     height: mediumFontHeight,
-    fontStyle: FontStyle.normal,
-    fontWeight: FontWeight.normal,
+    fontStyle: .normal,
+    fontWeight: .normal,
   );
 
   static const TextStyle mediumBold = TextStyle(
     fontFamily: SBBFontFamily.sbbFontBold,
     fontSize: mediumFontSize,
     height: mediumFontHeight,
-    fontStyle: FontStyle.normal,
-    fontWeight: FontWeight.normal,
+    fontStyle: .normal,
+    fontWeight: .normal,
   );
 
   static const TextStyle smallLight = TextStyle(
     fontFamily: SBBFontFamily.sbbFontLight,
     fontSize: smallFontSize,
     height: smallFontHeight,
-    fontStyle: FontStyle.normal,
-    fontWeight: FontWeight.normal,
+    fontStyle: .normal,
+    fontWeight: .normal,
   );
 
   static const TextStyle smallBold = TextStyle(
     fontFamily: SBBFontFamily.sbbFontBold,
     fontSize: smallFontSize,
     height: smallFontHeight,
-    fontStyle: FontStyle.normal,
-    fontWeight: FontWeight.normal,
+    fontStyle: .normal,
+    fontWeight: .normal,
   );
 
   static const TextStyle extraSmallLight = TextStyle(
     fontFamily: SBBFontFamily.sbbFontLight,
     fontSize: xSmallFontSize,
     height: xSmallFontHeight,
-    fontStyle: FontStyle.normal,
-    fontWeight: FontWeight.normal,
+    fontStyle: .normal,
+    fontWeight: .normal,
   );
 
   static const TextStyle extraSmallBold = TextStyle(
     fontFamily: SBBFontFamily.sbbFontBold,
     fontSize: xSmallFontSize,
     height: xSmallFontHeight,
-    fontStyle: FontStyle.normal,
-    fontWeight: FontWeight.normal,
+    fontStyle: .normal,
+    fontWeight: .normal,
   );
 
   static const TextStyle extraExtraSmallLight = TextStyle(
     fontFamily: SBBFontFamily.sbbFontLight,
     fontSize: xxSmallFontSize,
     height: xxSmallFontHeight,
-    fontStyle: FontStyle.normal,
-    fontWeight: FontWeight.normal,
+    fontStyle: .normal,
+    fontWeight: .normal,
   );
 
   static const TextStyle extraExtraSmallBold = TextStyle(
     fontFamily: SBBFontFamily.sbbFontBold,
     fontSize: xxSmallFontSize,
     height: xxSmallFontHeight,
-    fontStyle: FontStyle.normal,
-    fontWeight: FontWeight.normal,
+    fontStyle: .normal,
+    fontWeight: .normal,
   );
 
   @Deprecated('Use SBBTextStyles.extraExtraSmallLight instead')
@@ -163,8 +163,8 @@ class SBBTextStyles {
     fontFamily: SBBFontFamily.sbbFontLight,
     fontSize: 10.0,
     height: 12.0 / 10.0,
-    fontStyle: FontStyle.normal,
-    fontWeight: FontWeight.normal,
+    fontStyle: .normal,
+    fontWeight: .normal,
   );
 }
 
@@ -232,8 +232,8 @@ extension TextStylesExtensions on TextStyle {
   // Font styles
 
   /// Returns an italic ([fontStyle] copy of this text style)
-  TextStyle get italic => copyWith(fontStyle: FontStyle.italic);
+  TextStyle get italic => copyWith(fontStyle: .italic);
 
   /// Returns an normal ([fontStyle] copy of this text style)
-  TextStyle get normal => copyWith(fontStyle: FontStyle.normal);
+  TextStyle get normal => copyWith(fontStyle: .normal);
 }

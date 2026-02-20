@@ -13,7 +13,7 @@ class DefaultSBBStepperThemeData extends SBBStepperThemeData {
 
   static SBBStepperStyle _defaultStyle(SBBBaseStyle baseStyle) {
     return SBBStepperStyle(
-      padding: EdgeInsets.symmetric(horizontal: SBBSpacing.medium),
+      padding: .symmetric(horizontal: SBBSpacing.medium),
       dividerColor: baseStyle.themeValue(
         SBBColors.black.withValues(alpha: 0.3),
         SBBColors.white.withValues(alpha: 0.7),
@@ -44,7 +44,7 @@ class DefaultSBBStepperThemeData extends SBBStepperThemeData {
 
   static SBBStepperStyle _filledDefaultStyle(SBBBaseStyle baseStyle) {
     return SBBStepperStyle(
-      padding: EdgeInsets.symmetric(horizontal: SBBSpacing.medium),
+      padding: .symmetric(horizontal: SBBSpacing.medium),
       dividerColor: SBBColors.white.withValues(alpha: 0.7),
       itemStyle: SBBStepperItemStyle(
         backgroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{

@@ -20,7 +20,7 @@ class SBBLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final paint = Paint()
-      ..style = PaintingStyle.fill
+      ..style = .fill
       ..color = color;
 
     return LayoutBuilder(
@@ -28,14 +28,14 @@ class SBBLogo extends StatelessWidget {
         var targetHeight = 0.0;
         var targetWidth = 0.0;
         if (height != null) {
-          if (height == double.infinity) {
+          if (height == .infinity) {
             targetHeight = constraints.maxHeight;
           } else {
             targetHeight = height!;
           }
         }
         if (width != null) {
-          if (width == double.infinity) {
+          if (width == .infinity) {
             targetWidth = constraints.maxWidth;
           } else {
             targetWidth = width!;

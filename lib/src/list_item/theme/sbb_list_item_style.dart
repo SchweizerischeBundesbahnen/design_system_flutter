@@ -86,7 +86,7 @@ class SBBListItemStyle {
   final WidgetStateProperty<Color?>? backgroundColor;
 
   /// The default padding of the list item.
-  static EdgeInsets get defaultPadding => EdgeInsets.symmetric(horizontal: 16.0, vertical: 10.0);
+  static EdgeInsets get defaultPadding => .symmetric(horizontal: 16.0, vertical: 10.0);
 
   SBBListItemStyle copyWith({
     WidgetStateProperty<TextStyle?>? titleTextStyle,

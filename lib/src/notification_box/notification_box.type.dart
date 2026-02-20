@@ -28,7 +28,8 @@ enum SBBNotificationBoxState {
     SBBColors.black,
     SBBColors.anthracite,
     SBBIcons.circle_information_small,
-  );
+  )
+  ;
 
   const SBBNotificationBoxState(
     this.backgroundColor,

@@ -296,7 +296,7 @@ class _SBBSliderState extends State<SBBSlider> {
         effectiveStyle.thumbBackgroundColor?.resolve(disabledStates) ?? SBBColors.green;
     final thumbBorderColor = effectiveStyle.thumbBorderColor?.resolve(enabledStates) ?? SBBColors.red;
     final disabledThumbBorderColor = effectiveStyle.thumbBorderColor?.resolve(disabledStates) ?? SBBColors.red;
-    final padding = effectiveStyle.padding ?? EdgeInsets.symmetric(horizontal: SBBSpacing.small);
+    final padding = effectiveStyle.padding ?? .symmetric(horizontal: SBBSpacing.small);
 
     return SliderTheme(
       data: SliderThemeData(

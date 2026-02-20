@@ -217,7 +217,7 @@ class _SBBSwitchState extends State<SBBSwitch> with TickerProviderStateMixin, To
     final Color inactiveKnobForegroundColor =
         effectiveStyle?.knobForegroundColor?.resolve(inactiveStates) ?? SBBColors.white;
 
-    final effectiveMargin = effectiveStyle?.tapTargetPadding ?? const EdgeInsets.symmetric(vertical: 4.0);
+    final effectiveMargin = effectiveStyle?.tapTargetPadding ?? const .symmetric(vertical: 4.0);
     final effectiveSwitchSize = effectiveMargin.inflateSize(SBBSwitchStyle.switchSize);
 
     return Semantics(
@@ -375,7 +375,7 @@ class _SBBSwitchPainter extends ToggleablePainter {
       width: SBBSwitchStyle.trackWidth,
       height: SBBSwitchStyle.trackHeight,
     );
-    final trackRRect = RRect.fromRectAndRadius(trackRect, Radius.circular(trackRect.shortestSide / 2));
+    final trackRRect = RRect.fromRectAndRadius(trackRect, .circular(trackRect.shortestSide / 2));
     final trackPaint = Paint()..color = currentTrackColor;
     canvas.drawRRect(trackRRect, trackPaint);
 
@@ -403,7 +403,7 @@ class _SBBSwitchPainter extends ToggleablePainter {
       knobTop,
       knobRight,
       knobBottom,
-      Radius.circular(SBBSwitchStyle.knobRadius),
+      .circular(SBBSwitchStyle.knobRadius),
     );
 
     // Draw shadows
@@ -420,7 +420,7 @@ class _SBBSwitchPainter extends ToggleablePainter {
     // Draw thumb border
     final thumbStrokePaint = Paint()
       ..color = currentKnobBorderColor
-      ..style = PaintingStyle.stroke
+      ..style = .stroke
       ..strokeWidth = SBBSwitchStyle.knobBorderWidth;
     canvas.drawRRect(thumbRRect, thumbStrokePaint);
 
@@ -433,7 +433,7 @@ class _SBBSwitchPainter extends ToggleablePainter {
     final iconSize = Size.square(sbbIconSizeSmall);
     final iconPosition = thumbRRect.center - iconSize.center(Offset.zero);
 
-    final painter = TextPainter(textDirection: TextDirection.ltr);
+    final painter = TextPainter(textDirection: .ltr);
     painter.text = TextSpan(
       text: String.fromCharCode(icon.codePoint),
       style: TextStyle(

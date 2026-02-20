@@ -252,8 +252,8 @@ class _BaseTertiaryButton extends StatelessWidget {
     Widget? child;
     if (leading != null && label != null) {
       child = Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment: .center,
+        mainAxisSize: .min,
         spacing: 4.0,
         children: [leading, label],
       );
@@ -278,7 +278,7 @@ class _BaseTertiaryButton extends StatelessWidget {
       label: semanticLabel,
       excludeSemantics: semanticLabel != null,
       child: Padding(
-        padding: const EdgeInsets.all(1.0),
+        padding: const .all(1.0),
         child: resolvedButton,
       ),
     );
@@ -343,23 +343,23 @@ class _BaseTertiaryButton extends StatelessWidget {
       minimumSize: WidgetStatePropertyAll(const Size(0, SBBInternal.defaultButtonHeightSmall)),
     );
 
-    return _baseOverridenByWidgetStyle(widgetStyle, buttonStyleSmall);
+    return _baseOverriddenByWidgetStyle(widgetStyle, buttonStyleSmall);
   }
 
   ButtonStyle? _effectiveIconButtonStyle(BuildContext context) {
     final sideLength = isSmall ? SBBInternal.defaultButtonHeightSmall : SBBInternal.defaultButtonHeight;
     final baseStyle = Theme.of(context).textButtonTheme.style;
     final iconStyle = baseStyle?.copyWith(
-      padding: WidgetStatePropertyAll<EdgeInsets>(EdgeInsets.zero),
+      padding: WidgetStatePropertyAll<EdgeInsets>(.zero),
       minimumSize: WidgetStatePropertyAll<Size>(Size.square(sideLength)),
       fixedSize: WidgetStatePropertyAll<Size>(Size.square(sideLength)),
     );
     final widgetStyle = style?.toButtonStyle();
 
-    return _baseOverridenByWidgetStyle(widgetStyle, iconStyle);
+    return _baseOverriddenByWidgetStyle(widgetStyle, iconStyle);
   }
 
-  ButtonStyle? _baseOverridenByWidgetStyle(ButtonStyle? widgetStyle, ButtonStyle? baseStyle) {
+  ButtonStyle? _baseOverriddenByWidgetStyle(ButtonStyle? widgetStyle, ButtonStyle? baseStyle) {
     if (widgetStyle == null) return baseStyle;
 
     return baseStyle?.copyWith(
