@@ -6,6 +6,7 @@ import 'package:sbb_design_system_mobile/src/chip/theme/default_sbb_chip_theme_d
 import 'package:sbb_design_system_mobile/src/container/container.dart';
 import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_input_decoration_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_text_input_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/message/theme/default_sbb_message_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/paginator/theme/default_sbb_paginator_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/radio/theme/default_sbb_radio_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/slider/theme/default_sbb_slider_theme_data.dart';
@@ -31,6 +32,7 @@ class SBBTheme {
     SBBCheckboxThemeData? checkboxTheme,
     SBBChipThemeData? chipTheme,
     SBBContentBoxThemeData? contentBoxTheme,
+    SBBMessageThemeData? messageTheme,
     SBBStepperThemeData? stepperTheme,
     SBBControlStyles? controlStyles,
     SBBHeaderBoxStyle? headerBoxStyle,
@@ -56,6 +58,7 @@ class SBBTheme {
     checkboxTheme: checkboxTheme,
     chipTheme: chipTheme,
     contentBoxTheme: contentBoxTheme,
+    messageTheme: messageTheme,
     radioTheme: radioTheme,
     stepperTheme: stepperTheme,
     controlStyles: controlStyles,
@@ -82,6 +85,7 @@ class SBBTheme {
     SBBCheckboxThemeData? checkboxTheme,
     SBBChipThemeData? chipTheme,
     SBBContentBoxThemeData? contentBoxTheme,
+    SBBMessageThemeData? messageTheme,
     SBBRadioThemeData? radioTheme,
     SBBStepperThemeData? stepperTheme,
     SBBControlStyles? controlStyles,
@@ -107,6 +111,7 @@ class SBBTheme {
     checkboxTheme: checkboxTheme,
     chipTheme: chipTheme,
     contentBoxTheme: contentBoxTheme,
+    messageTheme: messageTheme,
     radioTheme: radioTheme,
     stepperTheme: stepperTheme,
     controlStyles: controlStyles,
@@ -136,6 +141,7 @@ class SBBTheme {
     SBBStepperThemeData? stepperTheme,
     SBBControlStyles? controlStyles,
     SBBContentBoxThemeData? contentBoxTheme,
+    SBBMessageThemeData? messageTheme,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBInputDecorationThemeData? inputDecorationTheme,
     SBBListItemThemeData? listItemTheme,
@@ -216,6 +222,9 @@ class SBBTheme {
     final defaultInputDecorationTheme = DefaultSBBInputDecorationThemeData(mergedBaseStyle);
     final mergedInputDecorationTheme = defaultInputDecorationTheme.merge(inputDecorationTheme);
 
+    final defaultMessageTheme = DefaultSBBMessageThemeData(mergedBaseStyle);
+    final mergedMessageTheme = defaultMessageTheme.merge(messageTheme);
+
     return raw(
       brightness: brightness,
       baseStyle: mergedBaseStyle,
@@ -228,6 +237,7 @@ class SBBTheme {
       stepperTheme: mergedStepperTheme,
       controlStyles: mergedControlStyles,
       contentBoxTheme: mergedContentBoxTheme,
+      messageTheme: mergedMessageTheme,
       headerBoxStyle: mergedHeaderBoxStyle,
       listItemTheme: mergedListItemTheme,
       paginatorTheme: mergedPaginatorTheme,
@@ -253,6 +263,7 @@ class SBBTheme {
     required SBBCheckboxThemeData checkboxTheme,
     required SBBChipThemeData chipTheme,
     required SBBContentBoxThemeData contentBoxTheme,
+    required SBBMessageThemeData messageTheme,
     required SBBStepperThemeData stepperTheme,
     required SBBControlStyles controlStyles,
     required SBBHeaderBoxStyle headerBoxStyle,
@@ -300,6 +311,7 @@ class SBBTheme {
         headerBoxStyle,
         inputDecorationTheme,
         listItemTheme,
+        messageTheme,
         paginatorTheme,
         radioTheme,
         statusTheme,
