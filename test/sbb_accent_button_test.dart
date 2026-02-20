@@ -31,9 +31,7 @@ void main() {
       widget,
       tester,
       'accent_button',
-      find
-          .byType(Column)
-          .first,
+      find.byType(Column).first,
     );
     await tester.press(find.byKey(pressableKey));
     await tester.pumpAndSettle();
@@ -43,9 +41,7 @@ void main() {
       widget,
       tester,
       'accent_button_pressed',
-      find
-          .byType(Column)
-          .first,
+      find.byType(Column).first,
     );
   });
 }
