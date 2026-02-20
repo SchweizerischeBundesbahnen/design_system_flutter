@@ -34,6 +34,7 @@ Use the `foregroundBuilder` of the `SBBButtonStyle` as a replacement
 * access the theme using `Theme.of(context).sbbCheckboxTheme`
 * customize an individual checkbox by setting its `style` parameter in the constructor 
 
+
 ## Chip
 
 ### Constructor arguments
@@ -48,6 +49,7 @@ Use the `foregroundBuilder` of the `SBBButtonStyle` as a replacement
 * customize the theme of the `SBBChip` with `SBBChipThemeData` as input to `SBBTheme`
 * access the theme using `Theme.of(context).sbbChipTheme`
 * customize a chip by setting its `style` parameter in the constructor
+
 
 ## ListItem
 
@@ -85,6 +87,18 @@ The list item has received a lot of changes. In general the content is completel
 * You do not need to wrap this in a `SBBContentBox` anymore
 
 
+## List Header
+
+### Constructor arguments
+* Replace `title` with `titleText`
+* Remove `maxLines`, `padding`, and `textStyle` parameters from constructor
+* Use the `style` parameter with `SBBListHeaderStyle` for customization instead
+
+### Theming & Styling
+* customize the theme of all `SBBListHeader` with `SBBListHeaderThemeData` as input to `SBBTheme`
+* access the theme using `Theme.of(context).sbbListHeaderTheme`
+* customize an individual list header by setting its `style` parameter in the constructor
+
 
 ## Paginator
 
@@ -99,7 +113,6 @@ The list item has received a lot of changes. In general the content is completel
 * access the theme using `Theme.of(context).sbbPaginatorTheme`
 * customize an individual paginator by setting its `style` parameter in the constructor
 * Old style access via `SBBControlStyles.of(context).pagination!` is replaced with theme extension pattern
-
 
 
 ## Radio
