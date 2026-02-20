@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
-/// SBB List Header. Use according to documentation.
+/// The SBB List Header.
+///
+/// A header widget used to label and organize list content within a list view.
+/// It displays a text label with configurable styling, overflow behavior, and padding.
 ///
 /// See also:
 ///
@@ -10,13 +13,26 @@ import '../../sbb_design_system_mobile.dart';
 /// * [SBBListItem.divideListItems]: to separate items in a list with the SBB specific divider
 /// * [digital.sbb.ch/listView](https://digital.sbb.ch/de/design-system/mobile/components/list-view/)
 class SBBListHeader extends StatelessWidget {
+  /// Creates an SBB List Header.
+  ///
+  /// The [titleText] parameter is required.
+  ///
+  /// The [style] parameter can be used to customize the appearance of the header.
+  /// Non-null properties of [style] will override the corresponding properties
+  /// in [SBBListHeaderThemeData.style] of the theme found in [context].
   const SBBListHeader(
     this.titleText, {
     super.key,
     this.style,
   });
 
+  /// The text to display as the header label.
   final String titleText;
+
+  /// Customizes this list header appearance.
+  ///
+  /// Non-null properties of this style override the corresponding
+  /// properties in [SBBListHeaderThemeData.style] of the theme found in [context].
   final SBBListHeaderStyle? style;
 
   @override
