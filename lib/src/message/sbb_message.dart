@@ -7,31 +7,6 @@ const _kDefaultInteractionIcon = SBBIcons.arrows_circle_small;
 const _illustrationMaxHeight = 145.0;
 const _messageSpacing = 24.0;
 
-/// The illustrations that ship with this package.
-///
-/// The [Display] is typically used for error messages.
-enum MessageIllustration {
-  // ignore: constant_identifier_names
-  Man('man.png'),
-  // ignore: constant_identifier_names
-  Woman('woman.png'),
-  // ignore: constant_identifier_names
-  Display('display.png')
-  ;
-
-  const MessageIllustration(this.fileName);
-
-  final String fileName;
-
-  static String parent = 'lib/assets/illustrations';
-  static String package = 'sbb_design_system_mobile';
-
-  AssetImage asset(Brightness brightness) {
-    final path = '$parent/${brightness.name}/$fileName';
-    return AssetImage(path, package: package);
-  }
-}
-
 /// The SBB Message. This widget allows displaying messages to the user, e.g. for Error messages.
 ///
 ///
@@ -49,7 +24,6 @@ class SBBMessage extends StatelessWidget {
     super.key,
     required this.title,
     required this.description,
-    this.illustration,
     this.isLoading = false,
     this.messageCode,
     this.onInteraction,
@@ -62,13 +36,6 @@ class SBBMessage extends StatelessWidget {
 
   /// The body of the message. Used to give a longer explanation of what has happened.
   final String description;
-
-  /// Enum with illustrations provided by the library.
-  ///
-  /// See [MessageIllustration] for explanation.
-  ///
-  /// The illustration image is excluded from semantics.
-  final MessageIllustration? illustration;
 
   /// Optional text displayed below the [description]. Usually depicts an error code.
   ///
@@ -107,16 +74,10 @@ class SBBMessage extends StatelessWidget {
       child: Column(
         mainAxisSize: .min,
         children: [
-          if (_showLeading) ...[
-            if (isLoading) _loadingIndicator(context),
-            if (!isLoading) customIllustration ?? _illustration(context),
-            const SizedBox(height: _messageSpacing),
-          ],
           _title(textTheme),
           const SizedBox(height: SBBSpacing.medium),
           _description(textTheme),
           if (messageCode != null) ...[const SizedBox(height: SBBSpacing.medium), _errorCode(textTheme)],
-          if (_showInteractionButton) ...[const SizedBox(height: _messageSpacing), _interactionButton()],
         ],
       ),
     );
@@ -136,16 +97,4 @@ class SBBMessage extends StatelessWidget {
   );
 
   SBBTertiaryButton _interactionButton() => SBBTertiaryButton(iconData: interactionIcon, onPressed: onInteraction);
-
-  Widget _illustration(BuildContext context) {
-    final brightness = Theme.of(context).brightness;
-    return Container(
-      constraints: const BoxConstraints(maxHeight: _illustrationMaxHeight),
-      child: Image(image: illustration!.asset(brightness), excludeFromSemantics: true),
-    );
-  }
-
-  bool get _showInteractionButton => onInteraction != null && !isLoading;
-
-  bool get _showLeading => isLoading || illustration != null || customIllustration != null;
 }

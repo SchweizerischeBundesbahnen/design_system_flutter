@@ -65,18 +65,16 @@ class _MessagePageState extends State<MessagePage> {
             title: 'Title, single line if possible',
             description: _description,
             isLoading: _isLoading,
-            illustration: _showIllustrations ? .Woman : null,
             onInteraction: _onInteractionCallback(),
           ),
         ),
         const SBBListHeader('Error'),
         SBBContentBox(
-          child: SBBMessage.error(
+          child: SBBMessage(
             title: 'Title, single line if possible',
             description: _description,
             messageCode: 'Error Code: XYZ-999',
             isLoading: _isLoading,
-            illustration: _showIllustrations ? .Display : null,
             onInteraction: _onInteractionCallback(),
           ),
         ),
