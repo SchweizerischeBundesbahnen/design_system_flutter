@@ -63,8 +63,9 @@ class SBBMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context).textTheme;
     final isDark = Theme.brightnessOf(context) == Brightness.dark;
+    final themeData = Theme.of(context).sbbMessageTheme;
+    final style = themeData?.style;
 
     Widget? resolvedIllustration;
     if (illustration != null || isLoading) {
@@ -76,7 +77,7 @@ class SBBMessage extends StatelessWidget {
         illustrationChild = illustration!;
       }
       resolvedIllustration = Padding(
-        padding: .only(bottom: SBBSpacing.large),
+        padding: EdgeInsets.only(bottom: style?.illustrationTitleGap ?? SBBSpacing.large),
         child: AnimatedSwitcher(
           duration: Durations.medium1,
           child: illustrationChild,
@@ -84,16 +85,45 @@ class SBBMessage extends StatelessWidget {
       );
     }
 
-    Widget resolvedTitle = title ?? Text(titleText!);
+    Widget resolvedTitle =
+        title ??
+        DefaultTextStyle.merge(
+          style: style?.titleTextStyle?.copyWith(color: style.titleForegroundColor),
+          child: Text(titleText!),
+        );
 
-    Widget? resolvedSubtitle = subtitle ?? (subtitleText != null ? Text(subtitleText!) : null);
+    Widget? resolvedSubtitle =
+        subtitle ??
+        (subtitleText != null
+            ? DefaultTextStyle.merge(
+                style: style?.subtitleTextStyle?.copyWith(color: style.subtitleForegroundColor),
+                child: Text(subtitleText!),
+              )
+            : null);
 
-    Widget? resolvedError = error ?? (errorText != null ? Text(errorText!) : null);
+    Widget? resolvedError =
+        error ??
+        (errorText != null
+            ? Semantics(
+                enabled: false,
+                child: DefaultTextStyle.merge(
+                  style: style?.errorTextStyle?.copyWith(color: style.errorForegroundColor),
+                  child: Text(errorText!),
+                ),
+              )
+            : null);
 
-    Widget child = _buildSingleChildOrColumn(resolvedIllustration, resolvedTitle, resolvedSubtitle, resolvedError);
+    Widget child = _buildSingleChildOrColumn(
+      resolvedIllustration,
+      resolvedTitle,
+      resolvedSubtitle,
+      resolvedError,
+      style?.textGap ?? SBBSpacing.medium,
+      style?.textActionGap ?? SBBSpacing.large,
+    );
 
     return Padding(
-      padding: const .all(SBBSpacing.medium),
+      padding: themeData?.padding ?? SBBMessageStyle.defaultPadding,
       child: child,
     );
   }
@@ -103,17 +133,19 @@ class SBBMessage extends StatelessWidget {
     Widget resolvedTitle,
     Widget? resolvedSubtitle,
     Widget? resolvedError,
+    double textGap,
+    double textActionGap,
   ) {
     final textChildren = [
       resolvedTitle,
       resolvedSubtitle,
       resolvedError,
-    ].nonNulls.intersperseWith(SizedBox(height: SBBSpacing.medium));
+    ].nonNulls.intersperseWith(SizedBox(height: textGap));
 
     final children = [
       resolvedIllustration,
       ...textChildren,
-      if (action != null) SizedBox(height: SBBSpacing.large),
+      if (action != null) SizedBox(height: textActionGap),
       action,
     ].nonNulls.toList(growable: false);
 
