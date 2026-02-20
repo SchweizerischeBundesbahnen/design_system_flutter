@@ -124,7 +124,7 @@ class _SBBTextField extends State<SBBTextFormField> {
               children: [
                 Column(
                   crossAxisAlignment: .start,
-                  children: <Widget>[
+                  children: [
                     _buildTextFormField(),
                     SBBTextFieldUnderline(
                       errorText: errorText,

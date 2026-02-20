@@ -9,7 +9,7 @@ class HeaderPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView(
-      children: <Widget>[
+      children: [
         const Padding(padding: .all(SBBSpacing.medium), child: ThemeModeSegmentedButton()),
         const SBBListHeader('No leading Widget'),
         const SBBHeader(title: 'Title', automaticallyImplyLeading: false),

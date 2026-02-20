@@ -11,7 +11,7 @@ class PaginatorPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: <Widget>[
+      children: [
         SBBHeaderbox.custom(child: ThemeModeSegmentedButton()),
         Expanded(
           child: PaginatorView(),

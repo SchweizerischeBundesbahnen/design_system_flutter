@@ -33,7 +33,7 @@ class _PickerPageState extends State<PickerPage> {
     return SingleChildScrollView(
       padding: const .symmetric(vertical: SBBSpacing.medium, horizontal: SBBSpacing.xSmall),
       child: Column(
-        children: <Widget>[
+        children: [
           const ThemeModeSegmentedButton(),
           const SizedBox(height: SBBSpacing.medium),
           const SBBListHeader('Picker input fields'),

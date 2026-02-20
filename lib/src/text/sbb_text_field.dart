@@ -216,7 +216,7 @@ class _SBBTextField extends State<SBBTextField> {
       Expanded(
         child: Column(
           crossAxisAlignment: .start,
-          children: <Widget>[
+          children: [
             Row(
               crossAxisAlignment: .start,
               children: [

@@ -149,7 +149,7 @@ class _SBBRadioState<T> extends State<SBBRadio<T>> {
         autofocus: widget.autofocus,
         groupRegistry: _registry,
         enabled: effectiveEnabled,
-        builder: (BuildContext context, ToggleableStateMixin state) {
+        builder: (context, state) {
           return _SBBRadioPaint(
             toggleableState: state,
             style: widget.style,

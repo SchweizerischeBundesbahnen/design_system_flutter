@@ -47,7 +47,7 @@ class SelectPageState extends State<SelectPage> {
         const SBBListHeader('Single value'),
         SBBContentBox(
           child: Column(
-            children: <Widget>[
+            children: [
               SBBSelect<int>(
                 label: 'Label',
                 value: _selectedValue1,
@@ -118,7 +118,7 @@ class SelectPageState extends State<SelectPage> {
         const SBBListHeader('Multiple values'),
         SBBContentBox(
           child: Column(
-            children: <Widget>[
+            children: [
               SBBMultiSelect<int>(
                 label: 'Label',
                 values: _multiSelectValues1,

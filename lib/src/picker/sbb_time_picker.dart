@@ -243,7 +243,7 @@ class _SBBTimePickerTimeState extends _TimeBasedPickerState<SBBTimePicker> {
   Widget _buildMinutePickerScrollView(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: _hourValueNotifier,
-      builder: (BuildContext context, int selectedHour, _) {
+      builder: (context, selectedHour, _) {
         return SBBPickerScrollView(
           controller: _minuteController,
           onSelectedItemChanged: _onSelectedMinuteItemChanged,

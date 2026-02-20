@@ -49,7 +49,7 @@ class TimePickerTest extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Column(
     mainAxisSize: .min,
-    children: <Widget>[
+    children: [
       Row(
         children: [
           Expanded(

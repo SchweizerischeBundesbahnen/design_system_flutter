@@ -18,7 +18,7 @@ class SBBOnboardingCard extends StatelessWidget {
   }) : this(
          key: key,
          onDismissed: onDismissed,
-         widgetBuilder: (BuildContext context, Orientation orientation) {
+         widgetBuilder: (context, orientation) {
            switch (orientation) {
              case Orientation.portrait:
                return _VerticalCard(
@@ -56,7 +56,7 @@ class _VerticalCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: <Widget>[
+      children: [
         Expanded(
           child: SizedBox(height: 200, width: .infinity, child: embeddedChild),
         ),
@@ -105,7 +105,7 @@ class _HorizontalCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      children: <Widget>[
+      children: [
         if (embeddedChild != null) Flexible(child: embeddedChild!),
         Flexible(
           child: Column(

@@ -44,7 +44,7 @@ class RadioPageState extends State<RadioPage> {
         SliverPadding(
           padding: .symmetric(horizontal: SBBSpacing.xSmall),
           sliver: SliverList.list(
-            children: <Widget>[
+            children: [
               const SBBListHeader('Radio'),
               Padding(
                 padding: const .symmetric(horizontal: SBBSpacing.xSmall),

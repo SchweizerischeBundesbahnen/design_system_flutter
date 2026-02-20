@@ -34,7 +34,7 @@ class DatePickerTest extends StatelessWidget {
   @override
   Widget build(BuildContext context) => Column(
     mainAxisSize: .min,
-    children: <Widget>[
+    children: [
       SBBContentBox(
         child: SBBDatePicker(onDateChanged: (_) {}, initialDate: initialDate),
       ),

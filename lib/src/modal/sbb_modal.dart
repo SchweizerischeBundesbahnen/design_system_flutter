@@ -26,7 +26,7 @@ Future<T?> showSBBModalPopup<T>({
 }) {
   return showDialog<T>(
     context: context,
-    builder: (BuildContext context) {
+    builder: (_) {
       return SBBModalPopup(
         title: title,
         clipBehavior: clipBehavior,
@@ -115,7 +115,7 @@ Future<T?> showSBBModalSheet<T>({
     useSafeArea: useSafeArea,
     enableDrag: enableDrag,
     constraints: constraints,
-    builder: (BuildContext context) {
+    builder: (_) {
       return SBBModalSheet(
         title: title,
         showCloseButton: showCloseButton,
@@ -160,7 +160,7 @@ Future<T?> showCustomSBBModalSheet<T>({
     useSafeArea: useSafeArea,
     enableDrag: enableDrag,
     constraints: constraints,
-    builder: (BuildContext context) {
+    builder: (_) {
       return SBBModalSheet.custom(
         header: header,
         showCloseButton: showCloseButton,
@@ -187,7 +187,7 @@ class SBBModalSheet extends StatelessWidget {
     Color? backgroundColor,
   }) : this._(
          key: key,
-         headerBuilder: (BuildContext context) => Padding(
+         headerBuilder: (context) => Padding(
            padding: const EdgeInsetsDirectional.fromSTEB(
              SBBSpacing.medium,
              SBBSpacing.medium,
@@ -212,7 +212,7 @@ class SBBModalSheet extends StatelessWidget {
     Color? backgroundColor,
   }) : this._(
          key: key,
-         headerBuilder: (BuildContext context) => header,
+         headerBuilder: (_) => header,
          showCloseButton: showCloseButton,
          backgroundColor: backgroundColor,
          child: child,

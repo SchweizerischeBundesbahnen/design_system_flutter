@@ -21,7 +21,7 @@ class _ToastPageState extends State<ToastPage> {
       padding: const .all(SBBSpacing.medium),
       child: Column(
         crossAxisAlignment: .start,
-        children: <Widget>[
+        children: [
           const ThemeModeSegmentedButton(),
           const SizedBox(height: SBBSpacing.medium),
           const SBBListHeader('Show Toast'),

@@ -466,7 +466,7 @@ class _SBBTextInputState extends State<SBBTextInput>
                     : null,
                 child: AnimatedBuilder(
                   animation: Listenable.merge(<Listenable>[_effectiveFocusNode, _effectiveController]),
-                  builder: (BuildContext context, Widget? child) {
+                  builder: (context, Widget? child) {
                     return SBBInputDecorator(
                       decoration: _getEffectiveDecorationWithClearButton(context),
                       expands: widget.expands,

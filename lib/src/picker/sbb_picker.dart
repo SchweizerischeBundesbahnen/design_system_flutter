@@ -93,7 +93,7 @@ class SBBPicker extends StatefulWidget {
          controller: controller,
          initialSelectedIndex: initialSelectedIndex,
          onSelectedItemChanged: onSelectedItemChanged,
-         itemBuilder: (BuildContext context, int index) {
+         itemBuilder: (context, index) {
            if (!looping && (index < 0 || index >= items.length)) {
              return null;
            }

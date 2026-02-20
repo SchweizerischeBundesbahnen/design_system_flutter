@@ -11,7 +11,7 @@ class LinkPage extends StatelessWidget {
     final sbbToast = SBBToast.of(context);
     return ListView(
       padding: const .all(SBBSpacing.medium),
-      children: <Widget>[
+      children: [
         const ThemeModeSegmentedButton(),
         const SizedBox(height: SBBSpacing.medium),
         SBBContentBox(

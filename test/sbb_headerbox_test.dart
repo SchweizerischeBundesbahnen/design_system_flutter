@@ -89,10 +89,8 @@ void generateSliverTest(String name, double scrollOffset) {
                 ),
               ),
               SliverList.separated(
-                itemBuilder: (context, i) => ListTile(key: ValueKey(i), title: Text(i.toString())),
-                separatorBuilder: (BuildContext context, int index) {
-                  return Divider();
-                },
+                itemBuilder: (_, i) => ListTile(key: ValueKey(i), title: Text(i.toString())),
+                separatorBuilder: (_, _) => Divider(),
               ),
             ],
           ),
@@ -124,9 +122,7 @@ void generateSliverTest(String name, double scrollOffset) {
               ),
               SliverList.separated(
                 itemBuilder: (context, i) => ListTile(key: ValueKey(i), title: Text(i.toString())),
-                separatorBuilder: (BuildContext context, int index) {
-                  return Divider();
-                },
+                separatorBuilder: (_, _) => Divider(),
               ),
             ],
           ),

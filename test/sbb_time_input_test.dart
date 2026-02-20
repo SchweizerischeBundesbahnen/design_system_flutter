@@ -32,7 +32,7 @@ class TimePickerTest extends StatelessWidget {
     return SBBContentBox(
       child: Column(
         mainAxisSize: .min,
-        children: <Widget>[
+        children: [
           SBBTimeInput(onTimeChanged: (_) {}),
           SBBTimeInput(value: initialTime, onTimeChanged: (_) {}),
           SBBTimeInput(hintText: 'Hint only', onTimeChanged: (_) {}),

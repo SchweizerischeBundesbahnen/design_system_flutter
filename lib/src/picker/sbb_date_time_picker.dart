@@ -270,7 +270,7 @@ class _SBBDateTimePickerState extends _TimeBasedPickerState<SBBDateTimePicker> {
   Widget _buildHourPickerScrollView() {
     return ValueListenableBuilder(
       valueListenable: _dateValueNotifier,
-      builder: (BuildContext context, DateTime selectedDate, _) {
+      builder: (context, selectedDate, _) {
         return SBBPickerScrollView(
           controller: _hourController,
           onSelectedItemChanged: _onSelectedHourItemChanged,
@@ -283,7 +283,7 @@ class _SBBDateTimePickerState extends _TimeBasedPickerState<SBBDateTimePicker> {
   Widget _buildMinutePickerScrollView() {
     return ValueListenableBuilder(
       valueListenable: _dateHourValueNotifier,
-      builder: (BuildContext context, DateTime selectedDateTime, _) {
+      builder: (context, selectedDateTime, _) {
         return SBBPickerScrollView(
           controller: _minuteController,
           onSelectedItemChanged: _onSelectedMinuteItemChanged,

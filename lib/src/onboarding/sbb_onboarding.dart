@@ -202,12 +202,12 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
         child: Stack(
           clipBehavior: .none,
           alignment: .topCenter,
-          children: <Widget>[
+          children: [
             Container(
               key: globalKey,
               color: style.themeValue(SBBColors.milk, SBBColors.black),
               child: Column(
-                children: <Widget>[
+                children: [
                   Expanded(
                     child: Container(
                       width: .infinity,
@@ -227,7 +227,7 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
                         children: [
                           const SizedBox(height: navigationAreaVerticalPadding),
                           Row(
-                            children: <Widget>[
+                            children: [
                               SizedBox(width: parentPadding),
                               SBBTertiaryButton(
                                 semanticLabel: widget.backSemanticsLabel,

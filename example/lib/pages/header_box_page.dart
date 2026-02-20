@@ -42,7 +42,7 @@ class _HeaderBoxPageState extends State<HeaderBoxPage> {
           child: PageView(
             physics: NeverScrollableScrollPhysics(),
             controller: _pageViewController,
-            children: <Widget>[
+            children: [
               DesignGuidelinePage(),
               StaticPage(),
               ScrollablePage(),

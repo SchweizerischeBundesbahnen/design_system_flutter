@@ -173,7 +173,7 @@ class LoadingAnimationState extends State<LoadingAnimation> with SingleTickerPro
       position: _container,
       child: AnimatedBuilder(
         animation: _animationController,
-        builder: (BuildContext context, Widget? child) {
+        builder: (context, Widget? child) {
           return Row(
             mainAxisSize: .min,
             children: [

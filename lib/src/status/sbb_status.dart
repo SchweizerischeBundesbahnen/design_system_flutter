@@ -25,7 +25,7 @@ import '../../sbb_design_system_mobile.dart';
 /// // Custom styled status with custom content
 /// SBBStatus.success(
 ///   label: Row(
-///     children: <Widget>[
+///     children: [
 ///       Text('Upload complete'),
 ///       SizedBox(width: 4),
 ///       Icon(Icons.check),

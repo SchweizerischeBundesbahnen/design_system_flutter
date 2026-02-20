@@ -246,7 +246,7 @@ class _SBBDatePickerState extends _TimeBasedPickerState<SBBDatePicker> {
   Widget _buildDayPickerScrollView(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: _monthYearValueNotifier,
-      builder: (BuildContext context, DateTime selectedMonthYear, _) {
+      builder: (context, selectedMonthYear, _) {
         return SBBPickerScrollView(
           controller: _dayController,
           onSelectedItemChanged: _onSelectedDayItemChanged,
@@ -259,7 +259,7 @@ class _SBBDatePickerState extends _TimeBasedPickerState<SBBDatePicker> {
   Widget _buildMonthPickerScrollView(BuildContext context) {
     return ValueListenableBuilder(
       valueListenable: _yearValueNotifier,
-      builder: (BuildContext context, int selectedYear, _) {
+      builder: (context, selectedYear, _) {
         return SBBPickerScrollView(
           controller: _monthController,
           onSelectedItemChanged: _onSelectedMonthItemChanged,

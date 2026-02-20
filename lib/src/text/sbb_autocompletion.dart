@@ -255,7 +255,7 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>> with Widgets
         final style = SBBBaseStyle.of(context);
 
         listSuggestionsEntry = OverlayEntry(
-          builder: (BuildContext context) {
+          builder: (context) {
             final backgroundColor = style.themeValue(SBBColors.milk, SBBColors.black);
             final optionColor = style.themeValue(SBBColors.white, SBBColors.charcoal);
             return Positioned(

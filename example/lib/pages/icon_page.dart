@@ -45,7 +45,7 @@ class _IconShowCase extends StatelessWidget {
         shrinkWrap: true,
         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: iconSize + SBBSpacing.medium),
         itemCount: icons.length,
-        itemBuilder: (BuildContext context, index) {
+        itemBuilder: (context, index) {
           final icon = icons[index];
           return IconButton(
             padding: .zero,

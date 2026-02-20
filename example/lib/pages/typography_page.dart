@@ -11,7 +11,7 @@ class TypographyPage extends StatelessWidget {
     final textTheme = SBBBaseStyle.of(context).redTextTheme;
     return ListView(
       padding: const .all(SBBSpacing.medium),
-      children: <Widget>[
+      children: [
         const ThemeModeSegmentedButton(),
         const SizedBox(height: SBBSpacing.medium),
         SBBListHeader('SBB Font Light (Default)'),
@@ -72,7 +72,7 @@ class _TypographyShowcase extends StatelessWidget {
     final labelColor = SBBBaseStyle.of(context).labelColor;
     return Column(
       crossAxisAlignment: .start,
-      children: <Widget>[
+      children: [
         const SizedBox(height: SBBSpacing.medium),
         Padding(
           padding: const .symmetric(horizontal: SBBSpacing.medium),

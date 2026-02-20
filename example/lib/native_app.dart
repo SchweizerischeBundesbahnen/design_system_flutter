@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => AppState(),
       child: Consumer<AppState>(
-        builder: (BuildContext context, AppState appState, _) {
+        builder: (context, appState, _) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             theme: SBBTheme.light(),

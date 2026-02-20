@@ -10,7 +10,7 @@ class ColorPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final isLight = Theme.of(context).brightness == .light;
     return ListView(
-      children: <Widget>[
+      children: [
         Padding(
           padding: EdgeInsetsDirectional.fromSTEB(
             SBBSpacing.medium,
@@ -58,7 +58,7 @@ class _ColorShowcase extends StatelessWidget {
             shrinkWrap: true,
             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 160.0),
             itemCount: colorEntries.length,
-            itemBuilder: (BuildContext context, index) {
+            itemBuilder: (context, index) {
               final colorEntry = colorEntries[index];
               return _ColorShowcaseCard(colorEntry: colorEntry);
             },

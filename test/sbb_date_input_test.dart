@@ -32,7 +32,7 @@ class DatePickerTest extends StatelessWidget {
     return SBBContentBox(
       child: Column(
         mainAxisSize: .min,
-        children: <Widget>[
+        children: [
           SBBDateInput(onDateChanged: (_) {}),
           SBBDateInput(value: initialDate, onDateChanged: (_) {}),
           SBBDateInput(hintText: 'Hint only', onDateChanged: (_) {}),

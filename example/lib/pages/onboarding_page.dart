@@ -10,7 +10,7 @@ class OnboardingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: <Widget>[
+      children: [
         const Padding(padding: .all(SBBSpacing.medium), child: ThemeModeSegmentedButton()),
         SBBTertiaryButton(
           labelText: 'Show Onboarding',
