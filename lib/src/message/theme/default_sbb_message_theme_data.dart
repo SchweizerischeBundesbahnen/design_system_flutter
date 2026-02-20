@@ -16,6 +16,5 @@ class DefaultSBBMessageThemeData extends SBBMessageThemeData {
           textGap: SBBSpacing.medium,
           textActionGap: SBBSpacing.large,
         ),
-        padding: const .all(SBBSpacing.medium),
       );
 }

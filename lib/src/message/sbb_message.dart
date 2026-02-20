@@ -26,7 +26,11 @@ class SBBMessage extends StatelessWidget {
     this.isLoading = false,
     this.illustration,
     this.action,
-  });
+    this.style,
+  }) : assert(title != null || titleText != null, 'One of title or titleText must be set!'),
+       assert(title == null || titleText == null, 'Only titleText or title can be set!'),
+       assert(subtitle == null || subtitleText == null, 'Only subtitleText or subtitle can be set!'),
+       assert(error == null || errorText == null, 'Only error or errorText can be set!');
 
   final Widget? title;
 
@@ -61,11 +65,17 @@ class SBBMessage extends StatelessWidget {
 
   final Widget? action;
 
+  /// Customizes this message's appearance.
+  ///
+  /// Non-null properties of this style override the corresponding
+  /// properties in [SBBMessageThemeData.style].
+  final SBBMessageStyle? style;
+
   @override
   Widget build(BuildContext context) {
     final isDark = Theme.brightnessOf(context) == Brightness.dark;
     final themeData = Theme.of(context).sbbMessageTheme;
-    final style = themeData?.style;
+    final effectiveStyle = _getEffectiveStyle(themeData);
 
     Widget? resolvedIllustration;
     if (illustration != null || isLoading) {
@@ -77,7 +87,7 @@ class SBBMessage extends StatelessWidget {
         illustrationChild = illustration!;
       }
       resolvedIllustration = Padding(
-        padding: EdgeInsets.only(bottom: style?.illustrationTitleGap ?? SBBSpacing.large),
+        padding: EdgeInsets.only(bottom: effectiveStyle.illustrationTitleGap),
         child: AnimatedSwitcher(
           duration: Durations.medium1,
           child: illustrationChild,
@@ -85,46 +95,55 @@ class SBBMessage extends StatelessWidget {
       );
     }
 
-    Widget resolvedTitle =
-        title ??
-        DefaultTextStyle.merge(
-          style: style?.titleTextStyle?.copyWith(color: style.titleForegroundColor),
-          child: Text(titleText!),
-        );
+    Widget resolvedTitle = title ?? Text(titleText!);
+    resolvedTitle = _addDefaultAncestorWithResolved(
+      textStyle: effectiveStyle.titleTextStyle?.copyWith(color: effectiveStyle.titleForegroundColor),
+      child: resolvedTitle,
+    )!;
 
-    Widget? resolvedSubtitle =
-        subtitle ??
-        (subtitleText != null
-            ? DefaultTextStyle.merge(
-                style: style?.subtitleTextStyle?.copyWith(color: style.subtitleForegroundColor),
-                child: Text(subtitleText!),
-              )
-            : null);
+    Widget? resolvedSubtitle = subtitle ?? (subtitleText != null ? Text(subtitleText!) : null);
+    resolvedSubtitle = _addDefaultAncestorWithResolved(
+      textStyle: effectiveStyle.subtitleTextStyle?.copyWith(color: effectiveStyle.subtitleForegroundColor),
+      child: resolvedSubtitle,
+    );
 
-    Widget? resolvedError =
-        error ??
-        (errorText != null
-            ? Semantics(
-                enabled: false,
-                child: DefaultTextStyle.merge(
-                  style: style?.errorTextStyle?.copyWith(color: style.errorForegroundColor),
-                  child: Text(errorText!),
-                ),
-              )
-            : null);
+    Widget? resolvedError = error ?? (errorText != null ? Text(errorText!) : null);
+    resolvedError = _addDefaultAncestorWithResolved(
+      textStyle: effectiveStyle.errorTextStyle?.copyWith(color: effectiveStyle.errorForegroundColor),
+      child: resolvedError,
+    );
 
     Widget child = _buildSingleChildOrColumn(
       resolvedIllustration,
       resolvedTitle,
       resolvedSubtitle,
       resolvedError,
-      style?.textGap ?? SBBSpacing.medium,
-      style?.textActionGap ?? SBBSpacing.large,
+      effectiveStyle.textGap,
+      effectiveStyle.textActionGap,
     );
 
     return Padding(
-      padding: themeData?.padding ?? SBBMessageStyle.defaultPadding,
+      padding: effectiveStyle.padding ?? SBBMessageStyle.defaultPadding,
       child: child,
+    );
+  }
+
+  SBBMessageStyle _getEffectiveStyle(SBBMessageThemeData? themeData) {
+    final themeStyle = themeData?.style;
+    return style?.merge(themeStyle) ?? themeStyle ?? const SBBMessageStyle();
+  }
+
+  Widget? _addDefaultAncestorWithResolved({
+    required TextStyle? textStyle,
+    required Widget? child,
+  }) {
+    if (child == null) return null;
+    return DefaultTextStyle.merge(
+      style: textStyle,
+      child: IconTheme.merge(
+        data: IconThemeData(color: textStyle?.color),
+        child: child,
+      ),
     );
   }
 

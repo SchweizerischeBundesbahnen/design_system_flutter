@@ -13,7 +13,6 @@ class SBBMessageThemeData extends ThemeExtension<SBBMessageThemeData> with Diagn
   /// Creates an [SBBMessageThemeData].
   const SBBMessageThemeData({
     this.style,
-    this.padding = const EdgeInsets.all(SBBSpacing.medium),
   });
 
   /// Overrides for the message's default style.
@@ -23,17 +22,12 @@ class SBBMessageThemeData extends ThemeExtension<SBBMessageThemeData> with Diagn
   /// If [style] is null, then this theme doesn't override anything.
   final SBBMessageStyle? style;
 
-  /// The padding around the entire message content.
-  final EdgeInsets padding;
-
   @override
   SBBMessageThemeData copyWith({
     SBBMessageStyle? style,
-    EdgeInsets? padding,
   }) {
     return SBBMessageThemeData(
       style: style ?? this.style,
-      padding: padding ?? this.padding,
     );
   }
 
@@ -42,18 +36,17 @@ class SBBMessageThemeData extends ThemeExtension<SBBMessageThemeData> with Diagn
     if (other == null) return this;
     return SBBMessageThemeData(
       style: SBBMessageStyle.lerp(style, other.style, t),
-      padding: EdgeInsets.lerp(padding, other.padding, t) ?? padding,
     );
   }
 
   @override
-  int get hashCode => Object.hash(style, padding);
+  int get hashCode => style.hashCode;
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     if (other.runtimeType != runtimeType) return false;
-    return other is SBBMessageThemeData && other.style == style && other.padding == padding;
+    return other is SBBMessageThemeData && other.style == style;
   }
 }
 
@@ -62,7 +55,6 @@ extension SBBMessageThemeDataX on SBBMessageThemeData {
     if (other == null) return this;
     return copyWith(
       style: style?.merge(other.style),
-      padding: other.padding,
     );
   }
 }
