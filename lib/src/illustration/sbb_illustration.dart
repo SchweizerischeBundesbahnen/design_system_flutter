@@ -11,55 +11,55 @@ class SBBIllustration extends StatelessWidget {
   });
 
   factory SBBIllustration.staffMale({String? semanticLabel, bool excludeFromSemantics = false}) => SBBIllustration._(
-    assetName: 'man',
+    assetName: 'man.png',
     semanticLabel: semanticLabel,
     excludeFromSemantics: excludeFromSemantics,
   );
 
   factory SBBIllustration.staffFemale({String? semanticLabel, bool excludeFromSemantics = false}) => SBBIllustration._(
-    assetName: 'woman',
+    assetName: 'woman.png',
     semanticLabel: semanticLabel,
     excludeFromSemantics: excludeFromSemantics,
   );
 
   factory SBBIllustration.display({String? semanticLabel, bool excludeFromSemantics = false}) => SBBIllustration._(
-    assetName: 'display',
+    assetName: 'display.png',
     semanticLabel: semanticLabel,
     excludeFromSemantics: excludeFromSemantics,
   );
 
   factory SBBIllustration.binoculars({String? semanticLabel, bool excludeFromSemantics = false}) => SBBIllustration._(
-    assetName: 'binoculars',
+    assetName: 'binoculars.png',
     semanticLabel: semanticLabel,
     excludeFromSemantics: excludeFromSemantics,
   );
 
   factory SBBIllustration.telescope({String? semanticLabel, bool excludeFromSemantics = false}) => SBBIllustration._(
-    assetName: 'telescope',
+    assetName: 'telescope.png',
     semanticLabel: semanticLabel,
     excludeFromSemantics: excludeFromSemantics,
   );
 
   factory SBBIllustration.train({String? semanticLabel, bool excludeFromSemantics = false}) => SBBIllustration._(
-    assetName: 'train',
+    assetName: 'train.png',
     semanticLabel: semanticLabel,
     excludeFromSemantics: excludeFromSemantics,
   );
 
   factory SBBIllustration.elevator({String? semanticLabel, bool excludeFromSemantics = false}) => SBBIllustration._(
-    assetName: 'elevator',
+    assetName: 'elevator.png',
     semanticLabel: semanticLabel,
     excludeFromSemantics: excludeFromSemantics,
   );
 
   factory SBBIllustration.boat({String? semanticLabel, bool excludeFromSemantics = false}) => SBBIllustration._(
-    assetName: 'boat',
+    assetName: 'boat.png',
     semanticLabel: semanticLabel,
     excludeFromSemantics: excludeFromSemantics,
   );
 
   factory SBBIllustration.cableCar({String? semanticLabel, bool excludeFromSemantics = false}) => SBBIllustration._(
-    assetName: 'cableCar',
+    assetName: 'cableCar.png',
     semanticLabel: semanticLabel,
     excludeFromSemantics: excludeFromSemantics,
   );
