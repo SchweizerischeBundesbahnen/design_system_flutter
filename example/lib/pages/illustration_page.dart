@@ -16,26 +16,26 @@ class IllustrationPage extends StatelessWidget {
           sliver: SliverList.list(
             children: [
               SBBIllustration.staffFemale(),
+              SizedBox(height: SBBSpacing.medium),
               SBBIllustration.staffMale(),
+              SizedBox(height: SBBSpacing.medium),
               SBBIllustration.display(),
+              SizedBox(height: SBBSpacing.medium),
               SBBIllustration.binoculars(),
+              SizedBox(height: SBBSpacing.medium),
               SBBIllustration.telescope(),
+              SizedBox(height: SBBSpacing.medium),
               SBBIllustration.train(),
+              SizedBox(height: SBBSpacing.medium),
               SBBIllustration.elevator(),
+              SizedBox(height: SBBSpacing.medium),
               SBBIllustration.boat(),
+              SizedBox(height: SBBSpacing.medium),
               SBBIllustration.cableCar(),
             ],
           ),
         ),
       ],
-    );
-  }
-
-  Widget _content(String text) {
-    return SizedBox(
-      height: SBBSpacing.xLarge,
-      width: .infinity,
-      child: Center(child: Text(text)),
     );
   }
 }
