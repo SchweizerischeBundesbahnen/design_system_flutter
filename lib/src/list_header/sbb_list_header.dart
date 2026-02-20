@@ -53,11 +53,14 @@ class SBBListHeader extends StatelessWidget {
 
     return Padding(
       padding: padding,
-      child: Text(
-        titleText,
-        maxLines: maxLines,
-        overflow: maxLines == null ? null : textOverflow,
-        style: textStyle?.copyWith(color: foregroundColor) ?? TextStyle(color: foregroundColor),
+      child: ConstrainedBox(
+        constraints: BoxConstraints(minWidth: double.infinity),
+        child: Text(
+          titleText,
+          maxLines: maxLines,
+          overflow: maxLines == null ? null : textOverflow,
+          style: textStyle?.copyWith(color: foregroundColor) ?? TextStyle(color: foregroundColor),
+        ),
       ),
     );
   }
