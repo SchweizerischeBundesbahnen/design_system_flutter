@@ -25,14 +25,14 @@ class SBBListHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final style = SBBControlStyles.of(context);
     return Padding(
-      padding: padding ?? const EdgeInsets.symmetric(horizontal: SBBSpacing.medium, vertical: SBBSpacing.xSmall),
+      padding: padding ?? const .symmetric(horizontal: SBBSpacing.medium, vertical: SBBSpacing.xSmall),
       child: Row(
         children: [
           Expanded(
             child: Text(
               title,
               maxLines: maxLines,
-              overflow: maxLines == null ? null : TextOverflow.ellipsis,
+              overflow: maxLines == null ? null : .ellipsis,
               style: textStyle ?? style.listHeaderTextStyle,
             ),
           ),

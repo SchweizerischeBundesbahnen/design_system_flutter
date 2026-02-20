@@ -56,14 +56,14 @@ class CircleBorderThumbShape extends SliderComponentShape {
     // thumb background
     final fillPaint = Paint()
       ..color = backgroundColor
-      ..style = PaintingStyle.fill;
+      ..style = .fill;
     canvas.drawCircle(center, radius, fillPaint);
 
     // thumb border
     final borderPaint = Paint()
       ..color = borderColor
       ..strokeWidth = borderWidth
-      ..style = PaintingStyle.stroke;
+      ..style = .stroke;
     canvas.drawCircle(center, radius, borderPaint);
   }
 

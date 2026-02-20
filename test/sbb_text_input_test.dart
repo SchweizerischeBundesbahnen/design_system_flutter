@@ -11,7 +11,7 @@ void main() {
     final widget = Builder(
       builder: (context) {
         return Padding(
-          padding: const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall, vertical: SBBSpacing.medium),
+          padding: const .symmetric(horizontal: SBBSpacing.xSmall, vertical: SBBSpacing.medium),
           child: Column(
             children: [
               SBBListHeader('Listed'),

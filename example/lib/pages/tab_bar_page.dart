@@ -32,10 +32,10 @@ class TabBarPageState extends State<TabBarPage> {
     return Scaffold(
       body: Column(
         children: [
-          const Padding(padding: EdgeInsets.all(SBBSpacing.medium), child: ThemeModeSegmentedButton()),
+          const Padding(padding: .all(SBBSpacing.medium), child: ThemeModeSegmentedButton()),
           Spacer(),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: SBBSpacing.medium, horizontal: SBBSpacing.xSmall),
+            padding: const .symmetric(vertical: SBBSpacing.medium, horizontal: SBBSpacing.xSmall),
             child: SBBPrimaryButton(
               labelText: 'toggle visibility',
               onPressed: () => setState(() => visible = !visible),

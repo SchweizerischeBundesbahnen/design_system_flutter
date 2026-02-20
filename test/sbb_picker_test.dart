@@ -28,8 +28,8 @@ class PickerTest extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Column(
-    mainAxisSize: MainAxisSize.min,
-    children: <Widget>[
+    mainAxisSize: .min,
+    children: [
       Row(
         children: [
           Expanded(
@@ -64,7 +64,7 @@ class PickerTest extends StatelessWidget {
                 onSelectedItemChanged: (_) {},
                 looping: true,
                 initialSelectedIndex: initialItem,
-                itemBuilder: (BuildContext context, int index) {
+                itemBuilder: (_, index) {
                   final isEnabled = (minItem == null || index >= minItem!) && (maxItem == null || index <= maxItem!);
                   final item = _fruitNames[index % _fruitNames.length];
                   return SBBPickerItem(item, isEnabled: isEnabled);
@@ -79,7 +79,7 @@ class PickerTest extends StatelessWidget {
                 onSelectedItemChanged: (_) {},
                 looping: false,
                 initialSelectedIndex: initialItem,
-                itemBuilder: (BuildContext context, int index) {
+                itemBuilder: (_, index) {
                   final isInRange = (index >= 0) && (index < _fruitNames.length);
                   if (!isInRange) {
                     return null;
@@ -98,7 +98,7 @@ class PickerTest extends StatelessWidget {
                 onSelectedItemChanged: (_) {},
                 looping: false,
                 initialSelectedIndex: initialItem,
-                itemBuilder: (BuildContext context, int index) {
+                itemBuilder: (_, index) {
                   final isInRange = (minItem == null || index >= minItem!) && (maxItem == null || index <= maxItem!);
                   if (!isInRange) {
                     return null;

@@ -52,9 +52,9 @@ class _PickerPageState extends State<InputTriggerPage> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(vertical: SBBSpacing.medium, horizontal: SBBSpacing.xSmall),
+      padding: const .symmetric(vertical: SBBSpacing.medium, horizontal: SBBSpacing.xSmall),
       child: Column(
-        children: <Widget>[
+        children: [
           const ThemeModeSegmentedButton(),
           const SizedBox(height: SBBSpacing.medium),
           const SBBListHeader('Demo'),

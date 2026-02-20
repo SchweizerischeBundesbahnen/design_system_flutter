@@ -35,10 +35,10 @@ class EvenRoundedRectSliderTrackShape extends RoundedRectSliderTrackShape {
     final Paint leftTrackPaint;
     final Paint rightTrackPaint;
     switch (textDirection) {
-      case TextDirection.ltr:
+      case .ltr:
         leftTrackPaint = activePaint;
         rightTrackPaint = inactivePaint;
-      case TextDirection.rtl:
+      case .rtl:
         leftTrackPaint = inactivePaint;
         rightTrackPaint = activePaint;
     }
@@ -50,28 +50,28 @@ class EvenRoundedRectSliderTrackShape extends RoundedRectSliderTrackShape {
       isEnabled: isEnabled,
       isDiscrete: isDiscrete,
     );
-    final Radius trackRadius = Radius.circular(trackRect.height / 2);
-    final Radius activeTrackRadius = Radius.circular((trackRect.height + additionalActiveTrackHeight) / 2);
+    final trackRadius = Radius.circular(trackRect.height / 2);
+    final activeTrackRadius = Radius.circular((trackRect.height + additionalActiveTrackHeight) / 2);
 
     context.canvas.drawRRect(
       RRect.fromLTRBAndCorners(
         trackRect.left - thumbRadius,
-        (textDirection == TextDirection.ltr) ? trackRect.top - (additionalActiveTrackHeight / 2) : trackRect.top,
+        (textDirection == .ltr) ? trackRect.top - (additionalActiveTrackHeight / 2) : trackRect.top,
         thumbCenter.dx,
-        (textDirection == TextDirection.ltr) ? trackRect.bottom + (additionalActiveTrackHeight / 2) : trackRect.bottom,
-        topLeft: (textDirection == TextDirection.ltr) ? activeTrackRadius : trackRadius,
-        bottomLeft: (textDirection == TextDirection.ltr) ? activeTrackRadius : trackRadius,
+        (textDirection == .ltr) ? trackRect.bottom + (additionalActiveTrackHeight / 2) : trackRect.bottom,
+        topLeft: (textDirection == .ltr) ? activeTrackRadius : trackRadius,
+        bottomLeft: (textDirection == .ltr) ? activeTrackRadius : trackRadius,
       ),
       leftTrackPaint,
     );
     context.canvas.drawRRect(
       RRect.fromLTRBAndCorners(
         thumbCenter.dx,
-        (textDirection == TextDirection.rtl) ? trackRect.top - (additionalActiveTrackHeight / 2) : trackRect.top,
+        (textDirection == .rtl) ? trackRect.top - (additionalActiveTrackHeight / 2) : trackRect.top,
         trackRect.right + thumbRadius,
-        (textDirection == TextDirection.rtl) ? trackRect.bottom + (additionalActiveTrackHeight / 2) : trackRect.bottom,
-        topRight: (textDirection == TextDirection.rtl) ? activeTrackRadius : trackRadius,
-        bottomRight: (textDirection == TextDirection.rtl) ? activeTrackRadius : trackRadius,
+        (textDirection == .rtl) ? trackRect.bottom + (additionalActiveTrackHeight / 2) : trackRect.bottom,
+        topRight: (textDirection == .rtl) ? activeTrackRadius : trackRadius,
+        bottomRight: (textDirection == .rtl) ? activeTrackRadius : trackRadius,
       ),
       rightTrackPaint,
     );

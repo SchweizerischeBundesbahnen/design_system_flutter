@@ -34,13 +34,13 @@ class SwitchTest extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
+      padding: const .symmetric(horizontal: SBBSpacing.xSmall),
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: .min,
         children: [
           const SBBListHeader('SBBSwitch'),
           Padding(
-            padding: const EdgeInsets.all(SBBSpacing.xSmall),
+            padding: const .all(SBBSpacing.xSmall),
             child: Row(
               spacing: SBBSpacing.xxSmall,
               children: [
@@ -50,7 +50,7 @@ class SwitchTest extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(SBBSpacing.xSmall),
+            padding: const .all(SBBSpacing.xSmall),
             child: Row(
               spacing: SBBSpacing.xxSmall,
               children: [
@@ -69,7 +69,7 @@ class SwitchTest extends StatelessWidget {
           ),
           const SBBListHeader('SBBSwitchItem - Boxed'),
           Column(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisSize: .min,
             spacing: SBBSpacing.xSmall,
             children: [
               SBBSwitchListItemBoxed(value: value1, titleText: 'Default', onChanged: (value) {}),
@@ -156,7 +156,7 @@ class SwitchTest extends StatelessWidget {
                 onChanged: (value) {},
                 links: [
                   Padding(
-                    padding: const EdgeInsets.all(SBBSpacing.medium),
+                    padding: const .all(SBBSpacing.medium),
                     child: Container(color: SBBColors.green, child: Text('My custom Link Widget')),
                   ),
                 ],

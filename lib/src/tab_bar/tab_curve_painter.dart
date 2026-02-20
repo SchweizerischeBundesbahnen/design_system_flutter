@@ -16,12 +16,12 @@ class TabCurvePainter extends CustomPainter {
     // Additional shadow
     final waveShadow = Paint()
       ..color = shadowColor.withAlpha(64)
-      ..maskFilter = MaskFilter.blur(BlurStyle.normal, 3.0);
+      ..maskFilter = MaskFilter.blur(.normal, 3.0);
     canvas.drawPath(wavePath, waveShadow);
 
     final wavePaint = Paint()
       ..color = color
-      ..style = PaintingStyle.fill;
+      ..style = .fill;
     canvas.drawPath(wavePath, wavePaint);
   }
 

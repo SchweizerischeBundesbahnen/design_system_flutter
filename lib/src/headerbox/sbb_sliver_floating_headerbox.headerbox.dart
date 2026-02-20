@@ -15,10 +15,10 @@ enum SBBHeaderboxFlapMode { static, resizable, hideable }
 class _Headerbox extends StatelessWidget {
   const _Headerbox({
     required this.child,
-    this.margin = const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
-    this.padding = const EdgeInsets.all(SBBSpacing.medium),
+    this.margin = const .symmetric(horizontal: SBBSpacing.xSmall),
+    this.padding = const .all(SBBSpacing.medium),
     this.flap,
-    this.flapMode = SBBHeaderboxFlapMode.static,
+    this.flapMode = .static,
     this.semanticsLabel,
   });
 
@@ -67,7 +67,7 @@ class _HeaderBoxForeground extends StatelessWidget {
     required this.padding,
     this.semanticsLabel,
     this.flap,
-    this.flapMode = SBBHeaderboxFlapMode.static,
+    this.flapMode = .static,
   });
 
   final EdgeInsets padding;
@@ -96,7 +96,7 @@ class _HeaderBoxForeground extends StatelessWidget {
 
   Widget _column(Widget content, Widget flap) {
     switch (flapMode) {
-      case SBBHeaderboxFlapMode.static:
+      case .static:
         return Column(
           children: [
             Flexible(child: content),
@@ -104,7 +104,7 @@ class _HeaderBoxForeground extends StatelessWidget {
             flap,
           ],
         );
-      case SBBHeaderboxFlapMode.resizable:
+      case .resizable:
         return SBBCascadeColumn(
           children: [
             content,
@@ -112,14 +112,14 @@ class _HeaderBoxForeground extends StatelessWidget {
             flap,
           ],
         );
-      case SBBHeaderboxFlapMode.hideable:
+      case .hideable:
         return SBBCascadeColumn(
           children: [
             content,
             SBBContractible(
-              behavior: SBBContractionBehavior.displace,
+              behavior: .displace,
               child: Padding(
-                padding: const EdgeInsets.only(top: _headerBoxFlapTopMargin),
+                padding: const .only(top: _headerBoxFlapTopMargin),
                 child: flap,
               ),
             ),
@@ -131,13 +131,13 @@ class _HeaderBoxForeground extends StatelessWidget {
   Widget _headerBox(BuildContext context) {
     final SBBHeaderBoxStyle style = SBBHeaderBoxStyle.of(context);
     return Container(
-      clipBehavior: Clip.hardEdge,
+      clipBehavior: .hardEdge,
       decoration: BoxDecoration(
         color: style.backgroundColor,
         borderRadius: BorderRadius.all(_headerBoxRadius),
         boxShadow: _headerBoxShadow,
       ),
-      constraints: BoxConstraints(minHeight: _headerBoxMinHeight, minWidth: double.infinity),
+      constraints: BoxConstraints(minHeight: _headerBoxMinHeight, minWidth: .infinity),
       padding: padding,
       child: child,
     );
@@ -149,8 +149,8 @@ class _HeaderBoxForeground extends StatelessWidget {
       boxShadow: SBBInternal.defaultBoxShadow,
       borderRadius: BorderRadius.only(bottomLeft: _headerBoxRadius, bottomRight: _headerBoxRadius),
       gradient: LinearGradient(
-        begin: Alignment.bottomCenter,
-        end: Alignment.topCenter,
+        begin: .bottomCenter,
+        end: .topCenter,
         colors: [flapBackgroundColor, flapBackgroundColor, SBBColors.white.withAlpha(0)],
         stops: [0.0, 0.5, 1.0],
       ),
@@ -168,7 +168,7 @@ class _HeaderBoxBackgroundBar extends StatelessWidget {
     // take AppBar background color to align with e.g. SBBHeader
     final Color? headerColorPrimary = Theme.of(context).appBarTheme.backgroundColor;
     return Align(
-      alignment: Alignment.topCenter,
+      alignment: .topCenter,
       child: Container(
         color: headerColorPrimary,
         height: _headerBoxNavBarExtensionHeight,

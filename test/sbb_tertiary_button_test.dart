@@ -11,7 +11,7 @@ void main() {
     final pressableIconKey = ValueKey('pressedIconButton');
     final pressableSmallIconKey = ValueKey('pressedSmallIconButton');
     final widget = Padding(
-      padding: const EdgeInsets.symmetric(vertical: SBBSpacing.medium, horizontal: SBBSpacing.xSmall),
+      padding: const .symmetric(vertical: SBBSpacing.medium, horizontal: SBBSpacing.xSmall),
       child: Column(
         spacing: SBBSpacing.medium,
         children: [

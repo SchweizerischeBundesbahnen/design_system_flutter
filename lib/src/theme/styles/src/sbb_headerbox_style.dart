@@ -12,7 +12,7 @@ class SBBHeaderBoxStyle extends ThemeExtension<SBBHeaderBoxStyle> {
   });
 
   factory SBBHeaderBoxStyle.$default({required SBBBaseStyle baseStyle}) => SBBHeaderBoxStyle(
-    titleTextStyle: SBBTextStyles.mediumBold.copyWith(overflow: TextOverflow.ellipsis),
+    titleTextStyle: SBBTextStyles.mediumBold.copyWith(overflow: .ellipsis),
     secondaryLabelColor: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
     largeSecondaryLabelColor: baseStyle.defaultTextColor,
     backgroundColor: baseStyle.themeValue(SBBColors.white, SBBColors.charcoal),

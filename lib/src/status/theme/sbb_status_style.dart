@@ -66,7 +66,7 @@ class SBBStatusStyle {
   /// The border radius of the [SBBStatus].
   ///
   /// All content is clipped to a RoundedRectangle with this border.
-  static Radius get borderRadius => Radius.circular(8.0);
+  static Radius get borderRadius => .circular(8.0);
 
   SBBStatusStyle copyWith({
     TextStyle? textStyle,

@@ -96,10 +96,10 @@ class SBBDateTimePicker extends StatefulWidget {
       context: context,
       title: modalTitle,
       child: Column(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: .min,
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: SBBSpacing.medium),
+            padding: const .symmetric(horizontal: SBBSpacing.medium),
             child: SBBContentBox(
               child: SBBDateTimePicker(
                 initialDateTime: initialDateTime,
@@ -116,7 +116,7 @@ class SBBDateTimePicker extends StatefulWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(SBBSpacing.medium),
+            padding: const .all(SBBSpacing.medium),
             child: ListenableBuilder(
               listenable: selectedButtonEnabled,
               builder: (context, _) {
@@ -270,7 +270,7 @@ class _SBBDateTimePickerState extends _TimeBasedPickerState<SBBDateTimePicker> {
   Widget _buildHourPickerScrollView() {
     return ValueListenableBuilder(
       valueListenable: _dateValueNotifier,
-      builder: (BuildContext context, DateTime selectedDate, _) {
+      builder: (context, selectedDate, _) {
         return SBBPickerScrollView(
           controller: _hourController,
           onSelectedItemChanged: _onSelectedHourItemChanged,
@@ -283,7 +283,7 @@ class _SBBDateTimePickerState extends _TimeBasedPickerState<SBBDateTimePicker> {
   Widget _buildMinutePickerScrollView() {
     return ValueListenableBuilder(
       valueListenable: _dateHourValueNotifier,
-      builder: (BuildContext context, DateTime selectedDateTime, _) {
+      builder: (context, selectedDateTime, _) {
         return SBBPickerScrollView(
           controller: _minuteController,
           onSelectedItemChanged: _onSelectedMinuteItemChanged,
@@ -315,7 +315,7 @@ class _SBBDateTimePickerState extends _TimeBasedPickerState<SBBDateTimePicker> {
     return _buildPickerItem(
       isEnabled: isEnabled,
       label: label,
-      alignment: Alignment.centerRight,
+      alignment: .centerRight,
       isFirstColumn: true,
     );
   }

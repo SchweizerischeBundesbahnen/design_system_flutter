@@ -18,7 +18,7 @@ class SliverPinnedFloatingWidget extends SingleChildRenderObjectWidget {
     required super.child,
     required this.vsync,
     required this.animationStyle,
-    this.snapMode = FloatingHeaderSnapMode.scroll,
+    this.snapMode = .scroll,
     this.resizing = true,
     this.floating = true,
   });
@@ -56,7 +56,7 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
   RenderSliverPinnedFloatingWidget({
     required this.animationStyle,
     TickerProvider? vsync,
-    this.snapMode = FloatingHeaderSnapMode.scroll,
+    this.snapMode = .scroll,
     this.resizing = true,
     this.floating = true,
     super.child,
@@ -78,7 +78,7 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
 
   // Snapping related variables
   double _scrollOffsetAtScrollStart = 0.0;
-  double _maxScrollExtent = double.infinity;
+  double _maxScrollExtent = .infinity;
   DateTime _timeAtScrollStart = DateTime.now();
 
   late Animation<double> _snapAnimation;
@@ -134,7 +134,7 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
   @override
   void performLayout() {
     if (child == null) {
-      geometry = SliverGeometry.zero;
+      geometry = .zero;
       return;
     }
 
@@ -150,9 +150,9 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
     if (floating) {
       final delta = scrollOffset - _previousScrollOffset;
       final clampedDelta = switch (constraints.userScrollDirection) {
-        ScrollDirection.idle => delta,
-        ScrollDirection.forward => min(0.0, delta),
-        ScrollDirection.reverse => max(0.0, delta),
+        .idle => delta,
+        .forward => min(0.0, delta),
+        .reverse => max(0.0, delta),
       };
 
       _internalScrollOffset = (_internalScrollOffset + clampedDelta).clamp(0, expandableExtent);
@@ -167,7 +167,7 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
     final snapping = _snapController?.isAnimating == true || _wasAnimating;
     var scrollOffsetCorrection = 0.0;
     if (snapping) {
-      if (snapMode == FloatingHeaderSnapMode.scroll || scrollOffset < expandableExtent) {
+      if (snapMode == .scroll || scrollOffset < expandableExtent) {
         // With this option, we can tell the layout algorithm that we want to scroll in a direction.
         // We use this to scroll the view in a natural way.
         final delta = _virtualScroll - _internalScrollOffset;
@@ -232,8 +232,8 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
 
   Future<void> snap(ScrollDirection direction) {
     final bool headerIsPartiallyVisible = switch (direction) {
-      ScrollDirection.forward when _internalScrollOffset <= 0 => false, // completely visible
-      ScrollDirection.reverse when _internalScrollOffset >= expandableExtent => false, // not visible
+      .forward when _internalScrollOffset <= 0 => false, // completely visible
+      .reverse when _internalScrollOffset >= expandableExtent => false, // not visible
       _ => true,
     };
 
@@ -246,20 +246,20 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
           }
         });
       _snapController!.duration = switch (direction) {
-        ScrollDirection.forward => animationStyle?.duration ?? const Duration(milliseconds: 300),
+        .forward => animationStyle?.duration ?? const Duration(milliseconds: 300),
         _ => animationStyle?.reverseDuration ?? const Duration(milliseconds: 300),
       };
       _snapAnimation = _snapController!.drive(
         Tween<double>(
           begin: _internalScrollOffset,
           end: switch (direction) {
-            ScrollDirection.forward => 0,
+            .forward => 0,
             _ => expandableExtent,
           },
         ).chain(
           CurveTween(
             curve: switch (direction) {
-              ScrollDirection.forward => animationStyle?.curve ?? Curves.easeInOut,
+              .forward => animationStyle?.curve ?? Curves.easeInOut,
               _ => animationStyle?.reverseCurve ?? Curves.easeInOut,
             },
           ),
@@ -287,11 +287,11 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
       final scrollAmountSinceStart = (_scrollOffsetAtScrollStart - _internalScrollOffset).abs();
       final bool useScrollDirection = elapsed < _kQuickSnapTime && scrollAmountSinceStart > (expandableExtent / 4);
 
-      final direction = useScrollDirection || expandableExtent < _kSmallValue
+      final ScrollDirection direction = useScrollDirection || expandableExtent < _kSmallValue
           ? position.userScrollDirection
           : (_internalScrollOffset / expandableExtent) < 0.5
-          ? ScrollDirection.forward
-          : ScrollDirection.reverse;
+          ? .forward
+          : .reverse;
 
       snap(direction);
     }
@@ -301,7 +301,7 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
   void showOnScreen({
     RenderObject? descendant,
     Rect? rect,
-    Duration duration = Duration.zero,
+    Duration duration = .zero,
     Curve curve = Curves.ease,
   }) {
     // The widget is always on screen by definition.

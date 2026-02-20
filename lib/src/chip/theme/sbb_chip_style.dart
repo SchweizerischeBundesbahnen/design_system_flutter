@@ -97,7 +97,7 @@ class SBBChipStyle {
   static const Size badgeSize = Size(24.0, 24.0);
 
   /// The margin between the label and trailing badge.
-  static const EdgeInsets badgeMargin = EdgeInsets.only(right: 4.0);
+  static const EdgeInsets badgeMargin = .only(right: 4.0);
 
   SBBChipStyle copyWith({
     WidgetStateProperty<Color?>? borderColor,

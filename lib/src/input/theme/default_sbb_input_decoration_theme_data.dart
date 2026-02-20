@@ -9,7 +9,7 @@ const double defaultFloatingLabelInputGap = 2.0;
 const double defaultTitleRowErrorGap = 4.0;
 const double defaultErrorBottomPadding = 6.0;
 
-const EdgeInsets defaultContentPadding = EdgeInsets.zero;
+const EdgeInsets defaultContentPadding = .zero;
 
 /// The default input decoration theme is specified with colors for leading/trailing icons and error text.
 class DefaultSBBInputDecorationThemeData extends SBBInputDecorationThemeData {
@@ -36,7 +36,7 @@ class DefaultSBBInputDecorationThemeData extends SBBInputDecorationThemeData {
         }),
         floatingLabelTextStyle: SBBTextStyles.extraExtraSmallLight,
         floatingLabelInputGap: defaultFloatingLabelInputGap,
-        floatingLabelBehavior: SBBFloatingLabelBehavior.auto,
+        floatingLabelBehavior: .auto,
         placeholderTextStyle: baseStyle.defaultTextStyle,
         placeholderForegroundColor: WidgetStatePropertyAll(baseStyle.themeValue(SBBColors.granite, SBBColors.graphite)),
         borderColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{

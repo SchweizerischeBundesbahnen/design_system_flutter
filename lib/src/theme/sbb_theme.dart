@@ -46,7 +46,7 @@ class SBBTheme {
     SBBTextInputThemeData? textInputTheme,
     SBBToastStyle? toastStyle,
   }) => createTheme(
-    brightness: Brightness.light,
+    brightness: .light,
     boldFont: boldFont,
     baseStyle: baseStyle,
     primaryButtonTheme: primaryButtonTheme,
@@ -97,7 +97,7 @@ class SBBTheme {
     SBBTextInputThemeData? textInputTheme,
     SBBToastStyle? toastStyle,
   }) => createTheme(
-    brightness: Brightness.dark,
+    brightness: .dark,
     boldFont: boldFont,
     baseStyle: baseStyle,
     primaryButtonTheme: primaryButtonTheme,
@@ -285,7 +285,7 @@ class SBBTheme {
       filledButtonTheme: FilledButtonThemeData(style: primaryButtonTheme.style?.toButtonStyle()),
       outlinedButtonTheme: OutlinedButtonThemeData(style: secondaryButtonTheme.style?.toButtonStyle()),
       textButtonTheme: TextButtonThemeData(style: tertiaryButtonTheme.style?.toButtonStyle()),
-      materialTapTargetSize: MaterialTapTargetSize.padded,
+      materialTapTargetSize: .padded,
       textSelectionTheme: controlStyles.textSelectionTheme,
       extensions: [
         baseStyle,

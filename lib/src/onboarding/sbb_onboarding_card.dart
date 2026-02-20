@@ -18,16 +18,16 @@ class SBBOnboardingCard extends StatelessWidget {
   }) : this(
          key: key,
          onDismissed: onDismissed,
-         widgetBuilder: (BuildContext context, Orientation orientation) {
+         widgetBuilder: (context, orientation) {
            switch (orientation) {
-             case Orientation.portrait:
+             case .portrait:
                return _VerticalCard(
                  embeddedChild: embeddedChild,
                  title: title,
                  content: content,
                  customContent: customContent,
                );
-             case Orientation.landscape:
+             case .landscape:
                return _HorizontalCard(
                  embeddedChild: embeddedChild,
                  title: title,
@@ -56,33 +56,33 @@ class _VerticalCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: <Widget>[
+      children: [
         Expanded(
-          child: SizedBox(height: 200, width: double.infinity, child: embeddedChild),
+          child: SizedBox(height: 200, width: .infinity, child: embeddedChild),
         ),
         const SizedBox(height: 16.0),
         MergeSemantics(
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                padding: const .symmetric(horizontal: 16.0),
                 child: Text(
                   title,
                   style: SBBTextStyles.largeBold.copyWith(
                     height: 22.0 / 18.0,
                     color: SBBBaseStyle.of(context).themeValue(SBBColors.black, SBBColors.white),
                   ),
-                  textAlign: TextAlign.center,
+                  textAlign: .center,
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(16.0),
+                padding: const .all(16.0),
                 child: Text(
                   content,
                   style: SBBTextStyles.mediumLight.copyWith(
                     color: SBBBaseStyle.of(context).themeValue(SBBColors.black, SBBColors.white),
                   ),
-                  textAlign: TextAlign.center,
+                  textAlign: .center,
                 ),
               ),
             ],
@@ -105,35 +105,35 @@ class _HorizontalCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      children: <Widget>[
+      children: [
         if (embeddedChild != null) Flexible(child: embeddedChild!),
         Flexible(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
+            mainAxisAlignment: .center,
+            crossAxisAlignment: .stretch,
             children: [
               MergeSemantics(
                 child: Column(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                      padding: const .symmetric(horizontal: 16.0),
                       child: Text(
                         title,
                         style: SBBTextStyles.largeBold.copyWith(
                           height: 22.0 / 18.0,
                           color: SBBBaseStyle.of(context).themeValue(SBBColors.black, SBBColors.white),
                         ),
-                        textAlign: TextAlign.center,
+                        textAlign: .center,
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.all(16.0),
+                      padding: const .all(16.0),
                       child: Text(
                         content,
                         style: SBBTextStyles.mediumLight.copyWith(
                           color: SBBBaseStyle.of(context).themeValue(SBBColors.black, SBBColors.white),
                         ),
-                        textAlign: TextAlign.center,
+                        textAlign: .center,
                       ),
                     ),
                   ],

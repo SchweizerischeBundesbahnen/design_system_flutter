@@ -35,6 +35,6 @@ class SBBButtonContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Flexible(
-    child: Text(label, overflow: TextOverflow.ellipsis, maxLines: 1),
+    child: Text(label, overflow: .ellipsis, maxLines: 1),
   );
 }

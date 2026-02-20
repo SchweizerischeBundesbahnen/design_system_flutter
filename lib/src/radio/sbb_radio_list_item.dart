@@ -166,7 +166,7 @@ class SBBRadioListItem<T> extends StatelessWidget {
     Widget resolvedLeading = SBBRadio<T>(
       value: value,
       style: (radioStyle ?? const SBBRadioStyle()).copyWith(
-        tapTargetPadding: EdgeInsets.zero,
+        tapTargetPadding: .zero,
       ),
       toggleable: toggleable,
       enabled: isInteractive,
@@ -175,7 +175,7 @@ class SBBRadioListItem<T> extends StatelessWidget {
 
     if (leadingWidget != null) {
       resolvedLeading = Row(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: .min,
         spacing: leadingRadioGapWidth,
         children: [resolvedLeading, leadingWidget],
       );

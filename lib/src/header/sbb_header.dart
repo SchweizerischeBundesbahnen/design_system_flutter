@@ -186,7 +186,7 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
         systemOverlayStyle: systemOverlayStyle ?? SystemUiOverlayStyle(systemNavigationBarColor: SBBColors.transparent),
         titleSpacing: 0.0,
         leading: Container(
-          padding: customLeadingWidth ? EdgeInsets.zero : EdgeInsets.only(right: kToolbarHeight - leadingWidth),
+          padding: customLeadingWidth ? .zero : .only(right: kToolbarHeight - leadingWidth),
           child: leading,
         ),
         leadingWidth: customLeadingWidth ? leadingWidth : kToolbarHeight,
@@ -201,8 +201,8 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
                 ExcludeSemantics(
                   excluding: onPressedLogo == null,
                   child: Container(
-                    alignment: Alignment.centerRight,
-                    padding: const EdgeInsets.only(right: SBBSpacing.xSmall),
+                    alignment: .centerRight,
+                    padding: const .only(right: SBBSpacing.xSmall),
                     height: kToolbarHeight,
                     width: customLeadingWidth ? leadingWidth : kToolbarHeight,
                     child: IconButton(
@@ -287,12 +287,12 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
   ) {
     final style = SBBControlStyles.of(context);
     final paint = Paint()
-      ..style = PaintingStyle.stroke
+      ..style = .stroke
       ..strokeWidth = 2.0
-      ..strokeCap = StrokeCap.butt
+      ..strokeCap = .butt
       ..color = style.headerIconColor!;
     return IconButton(
-      padding: EdgeInsets.symmetric(horizontal: padding),
+      padding: .symmetric(horizontal: padding),
       icon: CustomPaint(painter: _Painter(paint, path), size: Size(width, height)),
       tooltip: tooltip,
       onPressed: onPressed,

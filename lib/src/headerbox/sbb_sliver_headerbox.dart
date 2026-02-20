@@ -49,7 +49,7 @@ class SBBSliverHeaderbox extends SingleChildRenderObjectWidget {
     String? secondaryLabel,
     Widget? trailingWidget,
     SBBHeaderboxFlap? flap,
-    EdgeInsets margin = const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
+    EdgeInsets margin = const .symmetric(horizontal: SBBSpacing.xSmall),
     String? semanticsLabel,
   }) : super(
          child: SBBHeaderbox(
@@ -81,7 +81,7 @@ class SBBSliverHeaderbox extends SingleChildRenderObjectWidget {
     String? secondaryLabel,
     Widget? trailingWidget,
     SBBHeaderboxFlap? flap,
-    EdgeInsets margin = const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
+    EdgeInsets margin = const .symmetric(horizontal: SBBSpacing.xSmall),
     String? semanticsLabel,
   }) : super(
          child: SBBHeaderbox.large(
@@ -99,8 +99,8 @@ class SBBSliverHeaderbox extends SingleChildRenderObjectWidget {
   SBBSliverHeaderbox.custom({
     super.key,
     required Widget child,
-    EdgeInsets margin = const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
-    EdgeInsets padding = const EdgeInsets.all(SBBSpacing.medium),
+    EdgeInsets margin = const .symmetric(horizontal: SBBSpacing.xSmall),
+    EdgeInsets padding = const .all(SBBSpacing.medium),
     SBBHeaderboxFlap? flap,
     String? semanticsLabel,
   }) : super(

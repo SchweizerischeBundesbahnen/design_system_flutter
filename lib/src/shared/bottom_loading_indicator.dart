@@ -70,12 +70,12 @@ class _BottomLoadingIndicatorState extends State<BottomLoadingIndicator> with Si
         // add a SizedBox with the height of the borderRadius to stop the ClipRRect from
         // clamping the values in borderRadius
         child: SizedBox(
-          width: double.infinity,
+          width: .infinity,
           height: widget.circularBorderRadius > 0 ? widget.circularBorderRadius : widget.height,
           child: Align(
-            alignment: Alignment.bottomCenter,
+            alignment: .bottomCenter,
             child: SizedBox(
-              width: double.infinity,
+              width: .infinity,
               height: widget.height,
               child: DecoratedBox(
                 decoration: BoxDecoration(
@@ -95,8 +95,8 @@ class _BottomLoadingIndicatorState extends State<BottomLoadingIndicator> with Si
   BorderRadius _resolveBorderRadius() {
     return widget.circularBorderRadius > 0
         ? BorderRadius.only(
-            bottomLeft: Radius.circular(widget.circularBorderRadius),
-            bottomRight: Radius.circular(widget.circularBorderRadius),
+            bottomLeft: .circular(widget.circularBorderRadius),
+            bottomRight: .circular(widget.circularBorderRadius),
           )
         : BorderRadius.zero;
   }

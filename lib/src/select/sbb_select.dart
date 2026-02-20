@@ -90,20 +90,20 @@ class SBBSelect<T> extends StatelessWidget {
                               ? style.textField?.placeholderTextStyle
                               : style.textField?.placeholderTextStyleDisabled,
                           maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+                          overflow: .ellipsis,
                         )
                       : Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: label != null ? MainAxisAlignment.start : MainAxisAlignment.center,
+                          crossAxisAlignment: .start,
+                          mainAxisAlignment: label != null ? .start : .center,
                           children: [
                             if (label != null)
                               Padding(
-                                padding: const EdgeInsets.only(top: 5.0, bottom: 2.0),
+                                padding: const .only(top: 5.0, bottom: 2.0),
                                 child: Text(
                                   label!,
                                   style: enabled ? style.selectLabel?.textStyle : style.selectLabel?.textStyleDisabled,
                                   maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
+                                  overflow: .ellipsis,
                                 ),
                               ),
                             if (label == null) const SizedBox(height: 0.0),
@@ -111,7 +111,7 @@ class SBBSelect<T> extends StatelessWidget {
                               items.firstWhere((element) => element.value == value).label,
                               style: enabled ? style.textField?.textStyle : style.textField?.textStyleDisabled,
                               maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
+                              overflow: .ellipsis,
                             ),
                           ],
                         ),
@@ -345,17 +345,17 @@ class _SBBMultiSelectState<T> extends State<SBBMultiSelect<T>> {
                               ? style.textField?.placeholderTextStyle
                               : style.textField?.placeholderTextStyleDisabled,
                           maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
+                          overflow: .ellipsis,
                         )
                       : Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment: .start,
                           children: [
                             const SizedBox(height: 5.0),
                             Text(
                               widget.label,
                               style: enabled ? style.selectLabel?.textStyle : style.selectLabel?.textStyleDisabled,
                               maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
+                              overflow: .ellipsis,
                             ),
                             const SizedBox(height: 3.0),
                             Text(
@@ -365,7 +365,7 @@ class _SBBMultiSelectState<T> extends State<SBBMultiSelect<T>> {
                                   .join(', '),
                               style: enabled ? style.textField?.textStyle : style.textField?.textStyleDisabled,
                               maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
+                              overflow: .ellipsis,
                             ),
                           ],
                         ),

@@ -27,9 +27,9 @@ extension SBBButtonStyleX on SBBButtonStyle {
   ButtonStyle get baseButtonStyle => ButtonStyle(
     overlayColor: WidgetStatePropertyAll<Color>(SBBColors.transparent),
     fixedSize: WidgetStatePropertyAll<Size>(const Size.fromHeight(SBBInternal.defaultButtonHeight)),
-    padding: WidgetStatePropertyAll<EdgeInsets>(const EdgeInsets.symmetric(horizontal: SBBSpacing.medium)),
+    padding: WidgetStatePropertyAll<EdgeInsets>(const .symmetric(horizontal: SBBSpacing.medium)),
     elevation: WidgetStatePropertyAll<double>(0),
-    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+    tapTargetSize: .shrinkWrap,
     mouseCursor: WidgetStateMouseCursor.clickable,
   );
 }

@@ -46,7 +46,7 @@ class SBBSwitchListItem extends StatelessWidget {
     this.focusNode,
     this.autofocus = false,
     this.enableFeedback = true,
-    this.padding = const EdgeInsets.symmetric(vertical: 8, horizontal: 16.0),
+    this.padding = const .symmetric(vertical: 8, horizontal: 16.0),
     this.trailingHorizontalGapWidth,
     this.leadingHorizontalGapWidth,
     this.subtitleVerticalGapHeight,
@@ -134,9 +134,7 @@ class SBBSwitchListItem extends StatelessWidget {
     final trailing = SBBSwitch(
       value: value,
       onChanged: enabled ? onChanged : null,
-      style: (switchStyle ?? const SBBSwitchStyle()).copyWith(
-        tapTargetPadding: EdgeInsets.zero,
-      ),
+      style: (switchStyle ?? const SBBSwitchStyle()).copyWith(tapTargetPadding: .zero),
       semanticLabel: switchSemanticLabel,
     );
 
