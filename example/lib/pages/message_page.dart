@@ -40,11 +40,6 @@ class _MessagePageState extends State<MessagePage> {
               context: context,
               items: [
                 SBBCheckboxListItem(
-                  value: _showInteractionButton,
-                  titleText: 'Show interaction button',
-                  onChanged: (value) => setState(() => _showInteractionButton = value ?? false),
-                ),
-                SBBCheckboxListItem(
                   value: _isLoading,
                   titleText: 'Is loading',
                   onChanged: (value) => setState(() => _isLoading = value ?? false),
@@ -68,6 +63,14 @@ class _MessagePageState extends State<MessagePage> {
             illustration: _showIllustrations ? SBBIllustration.staffMale() : null,
           ),
         ),
+        const SizedBox(height: SBBSpacing.medium),
+        SBBContentBox(
+          child: SBBMessage(
+            titleText: 'Telescope',
+            isLoading: _isLoading,
+            illustration: _showIllustrations ? SBBIllustration.telescope() : null,
+          ),
+        ),
         const SBBListHeader('Error'),
         SBBContentBox(
           child: SBBMessage(
@@ -76,20 +79,7 @@ class _MessagePageState extends State<MessagePage> {
             errorText: 'Error Code: XYZ-999',
             isLoading: _isLoading,
             illustration: _showIllustrations ? SBBIllustration.display() : null,
-          ),
-        ),
-        const SBBListHeader('Custom'),
-        SBBContentBox(
-          child: SBBMessage(
-            isLoading: _isLoading,
-            titleText: 'Custom',
-            subtitleText: _description,
-            illustration: Container(
-              alignment: .center,
-              width: 100,
-              height: 100,
-              color: SBBColors.red,
-            ),
+            action: SBBTertiaryButton(onPressed: () {}, iconData: SBBIcons.arrows_circle_small),
           ),
         ),
       ],
