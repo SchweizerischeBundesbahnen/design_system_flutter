@@ -43,28 +43,21 @@ class _ColorShowcase extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(SBBSpacing.xSmall),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsetsDirectional.symmetric(horizontal: SBBSpacing.xSmall),
-            child: Text(title, style: SBBControlStyles.of(context).listHeaderTextStyle),
-          ),
-          // const SBBListHeader('Small Icons'),
-          GridView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 160.0),
-            itemCount: colorEntries.length,
-            itemBuilder: (BuildContext context, index) {
-              final colorEntry = colorEntries[index];
-              return _ColorShowcaseCard(colorEntry: colorEntry);
-            },
-          ),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SBBListHeader(title),
+        GridView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 160.0),
+          itemCount: colorEntries.length,
+          itemBuilder: (BuildContext context, index) {
+            final colorEntry = colorEntries[index];
+            return _ColorShowcaseCard(colorEntry: colorEntry);
+          },
+        ),
+      ],
     );
   }
 }
