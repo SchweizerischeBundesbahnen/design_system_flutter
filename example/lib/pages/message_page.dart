@@ -14,7 +14,6 @@ class MessagePage extends StatefulWidget {
 }
 
 class _MessagePageState extends State<MessagePage> {
-  bool _showInteractionButton = true;
   bool _isLoading = false;
   bool _showIllustrations = true;
   late SBBToast _toast;
@@ -27,64 +26,77 @@ class _MessagePageState extends State<MessagePage> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: const .all(SBBSpacing.medium),
-      children: [
-        const ThemeModeSegmentedButton(),
-        const SizedBox(height: SBBSpacing.medium),
-        const SBBListHeader('Settings'),
-        SBBContentBox(
+    return CustomScrollView(
+      slivers: [
+        SBBSliverHeaderbox.custom(
           child: Column(
-            mainAxisSize: .min,
-            children: SBBListItem.divideListItems(
-              context: context,
-              items: [
-                SBBCheckboxListItem(
-                  value: _isLoading,
-                  titleText: 'Is loading',
-                  onChanged: (value) => setState(() => _isLoading = value ?? false),
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const ThemeModeSegmentedButton(),
+              const SizedBox(height: SBBSpacing.medium),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: SBBListItem.divideListItems(
+                  context: context,
+                  items: [
+                    SBBSwitchListItem(
+                      value: _isLoading,
+                      titleText: 'Is Loading',
+                      onChanged: (value) => setState(() => _isLoading = value ?? false),
+                    ),
+                    SBBSwitchListItem(
+                      value: _showIllustrations,
+                      titleText: 'Show Illustrations',
+                      onChanged: (value) => setState(() => _showIllustrations = value ?? false),
+                    ),
+                  ],
+                ).toList(growable: false),
+              ),
+            ],
+          ),
+        ),
+        SliverPadding(
+          padding: EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall).copyWith(bottom: SBBSpacing.xLarge),
+          sliver: SliverList.list(
+            children: [
+              const SizedBox(height: SBBSpacing.medium),
+              const SBBListHeader('Default'),
+              SBBContentBox(
+                child: SBBMessage(
+                  titleText: 'Title, single line if possible',
+                  subtitleText: _description,
+                  isLoading: _isLoading,
+                  illustration: _showIllustrations ? SBBIllustration.staffMale() : null,
                 ),
-                SBBCheckboxListItem(
-                  value: _showIllustrations,
-                  titleText: 'Show Illustrations',
-                  onChanged: (value) => setState(() => _showIllustrations = value ?? false),
+              ),
+              const SizedBox(height: SBBSpacing.medium),
+              SBBContentBox(
+                child: SBBMessage(
+                  titleText: 'Telescope',
+                  isLoading: _isLoading,
+                  illustration: _showIllustrations ? SBBIllustration.telescope() : null,
                 ),
-              ],
-            ).toList(growable: false),
-          ),
-        ),
-        const SizedBox(height: SBBSpacing.medium),
-        const SBBListHeader('Default'),
-        SBBContentBox(
-          child: SBBMessage(
-            titleText: 'Title, single line if possible',
-            subtitleText: _description,
-            isLoading: _isLoading,
-            illustration: _showIllustrations ? SBBIllustration.staffMale() : null,
-          ),
-        ),
-        const SizedBox(height: SBBSpacing.medium),
-        SBBContentBox(
-          child: SBBMessage(
-            titleText: 'Telescope',
-            isLoading: _isLoading,
-            illustration: _showIllustrations ? SBBIllustration.telescope() : null,
-          ),
-        ),
-        const SBBListHeader('Error'),
-        SBBContentBox(
-          child: SBBMessage(
-            titleText: 'Title, single line if possible',
-            subtitleText: _description,
-            errorText: 'Error Code: XYZ-999',
-            isLoading: _isLoading,
-            illustration: _showIllustrations ? SBBIllustration.display() : null,
-            action: SBBTertiaryButton(onPressed: () {}, iconData: SBBIcons.arrows_circle_small),
+              ),
+              const SBBListHeader('Error'),
+              SBBContentBox(
+                child: SBBMessage(
+                  titleText: 'Title, single line if possible',
+                  subtitleText: _description,
+                  errorText: 'Error Code: XYZ-999',
+                  isLoading: _isLoading,
+                  illustration: _showIllustrations ? SBBIllustration.display() : null,
+                  action: SBBTertiaryButton(
+                    onPressed: () {
+                      _toast.show(title: 'Error');
+                    },
+                    iconData: SBBIcons.arrows_circle_small,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ],
     );
   }
-
-  VoidCallback? _onInteractionCallback() => _showInteractionButton ? () => _toast.show(title: 'Tapped') : null;
 }
