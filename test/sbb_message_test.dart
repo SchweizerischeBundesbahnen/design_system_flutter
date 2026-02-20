@@ -17,7 +17,7 @@ void main() {
     'message_test_1',
     const SBBMessage(
       titleText: 'Default',
-      description:
+      subtitleText:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
     ),
   );
@@ -26,7 +26,7 @@ void main() {
     'message_test_2',
     const SBBMessage(
       titleText: 'With illustration',
-      description:
+      subtitleText:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
       illustration: .Woman,
     ),
@@ -36,7 +36,7 @@ void main() {
     'message_test_3',
     SBBMessage(
       titleText: 'With interaction',
-      description:
+      subtitleText:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
       onInteraction: () {},
     ),
@@ -46,7 +46,7 @@ void main() {
     'message_test_4',
     SBBMessage(
       titleText: 'With interaction and illustration',
-      description:
+      subtitleText:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
       illustration: .Man,
       onInteraction: () {},
@@ -57,7 +57,7 @@ void main() {
     'message_test_5',
     SBBMessage(
       titleText: 'Default, custom icon',
-      description:
+      subtitleText:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
       onInteraction: () {},
       interactionIcon: SBBIcons.train_small,
@@ -68,9 +68,9 @@ void main() {
     'message_test_6',
     SBBMessage.error(
       titleText: 'Error, no interaction',
-      description:
+      subtitleText:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
-      messageCode: 'Fehlercode: XYZ-9999',
+      errorText: 'Fehlercode: XYZ-9999',
     ),
   );
 
@@ -78,9 +78,9 @@ void main() {
     'message_test_7',
     SBBMessage.error(
       titleText: 'Error, with interaction',
-      description:
+      subtitleText:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
-      messageCode: 'Fehlercode: XYZ-9999',
+      errorText: 'Fehlercode: XYZ-9999',
       illustration: .Display,
       onInteraction: () {},
     ),
@@ -90,9 +90,9 @@ void main() {
     'message_test_8',
     SBBMessage(
       titleText: 'Custom Illustration',
-      description:
+      subtitleText:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
-      customIllustration: Container(alignment: .center, width: 100, height: 100, color: SBBColors.red),
+      illustration: Container(alignment: .center, width: 100, height: 100, color: SBBColors.red),
     ),
   );
 }

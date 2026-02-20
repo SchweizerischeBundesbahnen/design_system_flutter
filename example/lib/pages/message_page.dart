@@ -63,19 +63,19 @@ class _MessagePageState extends State<MessagePage> {
         SBBContentBox(
           child: SBBMessage(
             titleText: 'Title, single line if possible',
-            description: _description,
+            subtitleText: _description,
             isLoading: _isLoading,
-            onInteraction: _onInteractionCallback(),
+            illustration: _showIllustrations ? SBBIllustration.staffMale() : null,
           ),
         ),
         const SBBListHeader('Error'),
         SBBContentBox(
           child: SBBMessage(
             titleText: 'Title, single line if possible',
-            description: _description,
-            messageCode: 'Error Code: XYZ-999',
+            subtitleText: _description,
+            errorText: 'Error Code: XYZ-999',
             isLoading: _isLoading,
-            onInteraction: _onInteractionCallback(),
+            illustration: _showIllustrations ? SBBIllustration.display() : null,
           ),
         ),
         const SBBListHeader('Custom'),
@@ -83,14 +83,13 @@ class _MessagePageState extends State<MessagePage> {
           child: SBBMessage(
             isLoading: _isLoading,
             titleText: 'Custom',
-            description: _description,
-            customIllustration: Container(
+            subtitleText: _description,
+            illustration: Container(
               alignment: .center,
               width: 100,
               height: 100,
               color: SBBColors.red,
             ),
-            onInteraction: _onInteractionCallback(),
           ),
         ),
       ],
