@@ -433,7 +433,7 @@ class _SBBSwitchPainter extends ToggleablePainter {
     final iconSize = Size.square(sbbIconSizeSmall);
     final iconPosition = thumbRRect.center - iconSize.center(Offset.zero);
 
-    final painter = TextPainter(textDirection: TextDirection.ltr);
+    final painter = TextPainter(textDirection: .ltr);
     painter.text = TextSpan(
       text: String.fromCharCode(icon.codePoint),
       style: TextStyle(

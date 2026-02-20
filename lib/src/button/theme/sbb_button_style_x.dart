@@ -29,7 +29,7 @@ extension SBBButtonStyleX on SBBButtonStyle {
     fixedSize: WidgetStatePropertyAll<Size>(const Size.fromHeight(SBBInternal.defaultButtonHeight)),
     padding: WidgetStatePropertyAll<EdgeInsets>(const .symmetric(horizontal: SBBSpacing.medium)),
     elevation: WidgetStatePropertyAll<double>(0),
-    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+    tapTargetSize: .shrinkWrap,
     mouseCursor: WidgetStateMouseCursor.clickable,
   );
 }

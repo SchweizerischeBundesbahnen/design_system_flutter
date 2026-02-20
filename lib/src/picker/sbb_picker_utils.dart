@@ -76,7 +76,7 @@ abstract class _TimeBasedPickerState<T extends StatefulWidget> extends _PickerCl
         ),
         child: SizedBox(
           width: textWidth,
-          child: Text(label, textAlign: TextAlign.center, softWrap: false),
+          child: Text(label, textAlign: .center, softWrap: false),
         ),
       ),
     );

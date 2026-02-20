@@ -20,14 +20,14 @@ class SBBOnboardingCard extends StatelessWidget {
          onDismissed: onDismissed,
          widgetBuilder: (context, orientation) {
            switch (orientation) {
-             case Orientation.portrait:
+             case .portrait:
                return _VerticalCard(
                  embeddedChild: embeddedChild,
                  title: title,
                  content: content,
                  customContent: customContent,
                );
-             case Orientation.landscape:
+             case .landscape:
                return _HorizontalCard(
                  embeddedChild: embeddedChild,
                  title: title,
@@ -72,7 +72,7 @@ class _VerticalCard extends StatelessWidget {
                     height: 22.0 / 18.0,
                     color: SBBBaseStyle.of(context).themeValue(SBBColors.black, SBBColors.white),
                   ),
-                  textAlign: TextAlign.center,
+                  textAlign: .center,
                 ),
               ),
               Padding(
@@ -82,7 +82,7 @@ class _VerticalCard extends StatelessWidget {
                   style: SBBTextStyles.mediumLight.copyWith(
                     color: SBBBaseStyle.of(context).themeValue(SBBColors.black, SBBColors.white),
                   ),
-                  textAlign: TextAlign.center,
+                  textAlign: .center,
                 ),
               ),
             ],
@@ -123,7 +123,7 @@ class _HorizontalCard extends StatelessWidget {
                           height: 22.0 / 18.0,
                           color: SBBBaseStyle.of(context).themeValue(SBBColors.black, SBBColors.white),
                         ),
-                        textAlign: TextAlign.center,
+                        textAlign: .center,
                       ),
                     ),
                     Padding(
@@ -133,7 +133,7 @@ class _HorizontalCard extends StatelessWidget {
                         style: SBBTextStyles.mediumLight.copyWith(
                           color: SBBBaseStyle.of(context).themeValue(SBBColors.black, SBBColors.white),
                         ),
-                        textAlign: TextAlign.center,
+                        textAlign: .center,
                       ),
                     ),
                   ],

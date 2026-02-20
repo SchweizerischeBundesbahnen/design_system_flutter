@@ -20,7 +20,7 @@ class _TabLabel extends StatelessWidget {
             child: Text(
               item.translate(context),
               style: SBBControlStyles.of(context).tabBarTextStyle,
-              textAlign: TextAlign.center,
+              textAlign: .center,
             ),
           ),
         ),

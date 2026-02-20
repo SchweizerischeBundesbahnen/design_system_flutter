@@ -227,8 +227,8 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
                 borderRadius: const BorderRadius.all(Radius.circular(SBBSpacing.medium)),
                 image: DecorationImage(
                   image: const AssetImage(_PromotionBoxAssets.noise),
-                  repeat: ImageRepeat.repeat,
-                  fit: BoxFit.none,
+                  repeat: .repeat,
+                  fit: .none,
                   opacity: resolvedStyle.textureOpacity!,
                 ),
                 gradient: LinearGradient(

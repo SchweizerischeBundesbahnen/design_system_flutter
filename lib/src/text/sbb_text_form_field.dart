@@ -25,7 +25,7 @@ class SBBTextFormField extends StatefulWidget {
     this.minLines,
     this.onChanged,
     this.onTap,
-    this.textCapitalization = TextCapitalization.none,
+    this.textCapitalization = .none,
     this.textInputAction,
     this.icon,
     this.focusNode,

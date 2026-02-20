@@ -67,7 +67,7 @@ class DefaultToastBody extends StatelessWidget {
     final actionTextPainter = TextPainter(
       text: TextSpan(text: action!.title, style: style),
       maxLines: 1,
-      textDirection: TextDirection.ltr,
+      textDirection: .ltr,
     )..layout();
     final result = actionTextPainter.size.width + SBBSpacing.medium;
     actionTextPainter.dispose();

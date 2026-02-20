@@ -348,7 +348,7 @@ class _SnapTriggerState extends State<_SnapTrigger> {
     final RenderSliverPinnedFloatingWidget? renderer = context
         .findAncestorRenderObjectOfType<RenderSliverPinnedFloatingWidget>();
 
-    await renderer?.snap(expand ? ScrollDirection.forward : ScrollDirection.reverse);
+    await renderer?.snap(expand ? .forward : .reverse);
   }
 
   @override

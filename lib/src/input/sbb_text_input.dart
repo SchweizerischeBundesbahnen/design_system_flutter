@@ -45,7 +45,7 @@ class SBBTextInput extends StatefulWidget {
     this.focusNode,
     this.keyboardType,
     this.textInputAction,
-    this.textCapitalization = TextCapitalization.none,
+    this.textCapitalization = .none,
     this.readOnly = false,
     this.showCursor = true,
     this.autofocus = false,
@@ -429,7 +429,7 @@ class _SBBTextInputState extends State<SBBTextInput>
       child: IgnorePointer(
         ignoring: widget.ignorePointers ?? false,
         child: _selectionGestureDetectorBuilder.buildGestureDetector(
-          behavior: HitTestBehavior.translucent,
+          behavior: .translucent,
           child: AnimatedBuilder(
             animation: _effectiveController,
             builder: (context, child) {
@@ -564,7 +564,7 @@ class _SBBTextInputState extends State<SBBTextInput>
       return false;
     }
 
-    if (cause == SelectionChangedCause.keyboard) {
+    if (cause == .keyboard) {
       return false;
     }
 
@@ -576,7 +576,7 @@ class _SBBTextInputState extends State<SBBTextInput>
       return false;
     }
 
-    if (cause == SelectionChangedCause.longPress || cause == SelectionChangedCause.stylusHandwriting) {
+    if (cause == .longPress || cause == .stylusHandwriting) {
       return true;
     }
 
@@ -608,7 +608,7 @@ class _SBBTextInputState extends State<SBBTextInput>
       });
     }
 
-    if (cause == SelectionChangedCause.longPress) {
+    if (cause == .longPress) {
       _editableText?.bringIntoView(selection.extent);
     }
 
@@ -620,7 +620,7 @@ class _SBBTextInputState extends State<SBBTextInput>
       case TargetPlatform.macOS:
       case TargetPlatform.linux:
       case TargetPlatform.windows:
-        if (cause == SelectionChangedCause.drag) {
+        if (cause == .drag) {
           _editableText?.hideToolbar();
         }
     }

@@ -60,9 +60,9 @@ class DemoOnboardingBuilderDelegate extends SBBOnboardingBuilderDelegate {
   Widget buildStartPage(BuildContext context, VoidCallback onStartOnboarding, VoidCallback onFinish) {
     final orientation = MediaQuery.of(context).orientation;
     switch (orientation) {
-      case Orientation.portrait:
+      case .portrait:
         return _VerticalStartPage(onStartOnboarding: onStartOnboarding, onFinish: onFinish);
-      case Orientation.landscape:
+      case .landscape:
         return _HorizontalStartPage(onStartOnboarding: onStartOnboarding, onFinish: onFinish);
     }
   }
@@ -71,9 +71,9 @@ class DemoOnboardingBuilderDelegate extends SBBOnboardingBuilderDelegate {
   Widget buildEndPage(BuildContext context, VoidCallback onFinish) {
     final orientation = MediaQuery.of(context).orientation;
     switch (orientation) {
-      case Orientation.portrait:
+      case .portrait:
         return _VerticalEndPage(onFinish: onFinish);
-      case Orientation.landscape:
+      case .landscape:
         return _HorizontalEndPage(onFinish: onFinish);
     }
   }
@@ -134,7 +134,7 @@ class _VerticalEndPage extends StatelessWidget {
             Text(
               'Thank you! Bye Bye!',
               style: SBBTextStyles.extraLargeLight.copyWith(color: controlStyle.headerTextStyle!.color),
-              textAlign: TextAlign.center,
+              textAlign: .center,
             ),
             const SizedBox(height: 67),
             SBBPrimaryButton(labelText: 'Close Onboarding', onPressed: onFinish),
@@ -170,7 +170,7 @@ class _HorizontalEndPage extends StatelessWidget {
                   Text(
                     'Thank you! Bye Bye!',
                     style: SBBTextStyles.extraLargeLight.copyWith(color: controlStyle.headerTextStyle!.color),
-                    textAlign: TextAlign.center,
+                    textAlign: .center,
                   ),
                   const SizedBox(height: 67),
                   SBBPrimaryButton(labelText: 'Close Onboarding', onPressed: onFinish),
@@ -205,7 +205,7 @@ class _VerticalStartPage extends StatelessWidget {
             Text(
               'Welcome to the Onboarding',
               style: SBBTextStyles.extraLargeLight.copyWith(color: controlStyle.headerTextStyle!.color),
-              textAlign: TextAlign.center,
+              textAlign: .center,
             ),
             const SizedBox(height: 144.0),
             SBBContentBox(
@@ -251,7 +251,7 @@ class _HorizontalStartPage extends StatelessWidget {
                   Text(
                     'Welcome to the Onboarding',
                     style: SBBTextStyles.extraLargeLight.copyWith(color: controlStyle.headerTextStyle!.color),
-                    textAlign: TextAlign.center,
+                    textAlign: .center,
                   ),
                   const SizedBox(height: 67),
                   SBBContentBox(
@@ -278,10 +278,10 @@ class _IllustrationWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
-    final double height = mediaQuery.orientation == Orientation.portrait ? 200 : mediaQuery.size.height;
+    final double height = mediaQuery.orientation == .portrait ? 200 : mediaQuery.size.height;
     return SizedBox(
       height: height,
-      child: SvgPicture.asset('assets/images/szene-2.svg', fit: BoxFit.cover, excludeFromSemantics: true),
+      child: SvgPicture.asset('assets/images/szene-2.svg', fit: .cover, excludeFromSemantics: true),
     );
   }
 }

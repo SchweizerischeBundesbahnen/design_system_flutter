@@ -58,7 +58,7 @@ class _TabIcon extends StatelessWidget {
                     Text(
                       item.translate(context),
                       style: SBBControlStyles.of(context).tabBarTextStyle,
-                      textAlign: TextAlign.center,
+                      textAlign: .center,
                     ),
                 ],
               ),

@@ -148,7 +148,7 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
       inherit: false,
       fontSize: size,
       height: height,
-      fontStyle: FontStyle.normal,
+      fontStyle: .normal,
       fontFamily: fontFamily ?? defaultFontFamily,
       color: colorOverride ?? color ?? defaultTextColor,
       textBaseline: .alphabetic,

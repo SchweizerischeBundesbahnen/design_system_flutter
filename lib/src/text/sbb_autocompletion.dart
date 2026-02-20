@@ -54,7 +54,7 @@ class SBBAutocompletion<T> extends StatefulWidget {
     this.labelText,
     this.onChanged,
     this.onTextSubmitted,
-    this.textCapitalization = TextCapitalization.none,
+    this.textCapitalization = .none,
     this.icon,
   }) : super(key: key);
 

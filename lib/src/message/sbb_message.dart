@@ -142,12 +142,12 @@ class SBBMessage extends StatelessWidget {
     return isDarkTheme ? const SBBLoadingIndicator.mediumCloud() : const SBBLoadingIndicator.medium();
   }
 
-  Text _title(TextTheme textTheme) => Text(title, style: textTheme.bodyMedium, textAlign: TextAlign.center);
+  Text _title(TextTheme textTheme) => Text(title, style: textTheme.bodyMedium, textAlign: .center);
 
-  Text _description(TextTheme textTheme) => Text(description, style: textTheme.labelSmall, textAlign: TextAlign.center);
+  Text _description(TextTheme textTheme) => Text(description, style: textTheme.labelSmall, textAlign: .center);
 
   Widget _errorCode(TextTheme textTheme) => ExcludeSemantics(
-    child: Text(messageCode!, style: textTheme.labelSmall?.copyWith(fontSize: 12.0), textAlign: TextAlign.center),
+    child: Text(messageCode!, style: textTheme.labelSmall?.copyWith(fontSize: 12.0), textAlign: .center),
   );
 
   SBBTertiaryButton _interactionButton() => SBBTertiaryButton(iconData: interactionIcon, onPressed: onInteraction);

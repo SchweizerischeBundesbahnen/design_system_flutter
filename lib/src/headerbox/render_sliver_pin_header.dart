@@ -8,10 +8,10 @@ class RenderSliverPinHeader extends RenderSliverSingleBoxAdapter {
     child!.layout(constraints.asBoxConstraints(), parentUsesSize: true);
     double childExtent;
     switch (constraints.axis) {
-      case Axis.horizontal:
+      case .horizontal:
         childExtent = child!.size.width;
         break;
-      case Axis.vertical:
+      case .vertical:
         childExtent = child!.size.height;
         break;
     }

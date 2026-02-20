@@ -74,7 +74,7 @@ class SBBContentBox extends StatelessWidget {
         padding: margin ?? style.margin!,
         child: Material(
           key: key,
-          type: MaterialType.card,
+          type: .card,
           color: color ?? style.color,
           shape: SBBContentBoxStyle.shape,
           clipBehavior: clipBehavior ?? style.clipBehavior!,

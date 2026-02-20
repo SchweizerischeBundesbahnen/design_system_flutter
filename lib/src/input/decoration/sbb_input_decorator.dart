@@ -704,7 +704,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
   }) {
     _assertHasBoundedWidth(constraints);
 
-    final EdgeInsets resolvedContentPadding = contentPadding.resolve(TextDirection.ltr);
+    final EdgeInsets resolvedContentPadding = contentPadding.resolve(.ltr);
     final BoxConstraints looseConstraints = constraints.loosen();
 
     // Deflate constraints by contentPadding for all child layouts
@@ -914,7 +914,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
       getBaseline: _getDryBaseline,
     );
 
-    final EdgeInsets resolvedContentPadding = contentPadding.resolve(TextDirection.ltr);
+    final EdgeInsets resolvedContentPadding = contentPadding.resolve(.ltr);
     final double leadingWidth = leading?.getMinIntrinsicWidth(.infinity) ?? 0.0;
     final double trailingWidth = trailing?.getMinIntrinsicWidth(.infinity) ?? 0.0;
 
@@ -941,7 +941,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
 
   @override
   double computeMinIntrinsicWidth(double height) {
-    final EdgeInsets resolvedContentPadding = contentPadding.resolve(TextDirection.ltr);
+    final EdgeInsets resolvedContentPadding = contentPadding.resolve(.ltr);
 
     final double leadingWidth = _minWidth(leading, height);
     final double inputWidth = _minWidth(input, height);
@@ -963,7 +963,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
 
   @override
   double computeMaxIntrinsicWidth(double height) {
-    final EdgeInsets resolvedContentPadding = contentPadding.resolve(TextDirection.ltr);
+    final EdgeInsets resolvedContentPadding = contentPadding.resolve(.ltr);
 
     final double leadingWidth = _maxWidth(leading, height);
     final double inputWidth = _maxWidth(input, height);
@@ -985,7 +985,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
 
   @override
   double computeMinIntrinsicHeight(double width) {
-    final EdgeInsets resolvedContentPadding = contentPadding.resolve(TextDirection.ltr);
+    final EdgeInsets resolvedContentPadding = contentPadding.resolve(.ltr);
     final double availableWidth = math.max(0.0, width - resolvedContentPadding.horizontal);
 
     final double leadingWidth = _minWidth(leading, .infinity);

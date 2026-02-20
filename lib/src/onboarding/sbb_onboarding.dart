@@ -142,10 +142,10 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
         widgetHeight = size.height;
         cardWidth = widgetWidth - frontCardPadding.horizontal;
         switch (orientation) {
-          case Orientation.portrait:
+          case .portrait:
             cardHeight = widgetHeight - navigationAreaHeight - frontCardPadding.vertical;
             break;
-          case Orientation.landscape:
+          case .landscape:
             cardHeight = widgetHeight - frontCardPadding.vertical;
             break;
         }
@@ -156,7 +156,7 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
   @override
   void didChangeDependencies() {
     switch (orientation) {
-      case Orientation.portrait:
+      case .portrait:
         parentPadding = style.defaultRootContainerPadding!;
         frontCardPadding = .only(
           left: parentPadding,
@@ -165,7 +165,7 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
           top: visibleBackCardsCount * parentPadding + parentPadding,
         );
         break;
-      case Orientation.landscape:
+      case .landscape:
         parentPadding = style.defaultRootContainerPadding! / 2;
         const horizontalPadding = 86.0;
         frontCardPadding = .only(
@@ -213,14 +213,14 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
                       width: .infinity,
                       decoration: BoxDecoration(
                         color: controlStyle.headerBackgroundColor,
-                        borderRadius: orientation == Orientation.portrait
+                        borderRadius: orientation == .portrait
                             ? const BorderRadius.vertical(bottom: .circular(SBBSpacing.medium))
                             : null,
                       ),
                       child: Padding(padding: frontCardPadding, child: Container()),
                     ),
                   ),
-                  if (orientation == Orientation.portrait)
+                  if (orientation == .portrait)
                     Semantics(
                       sortKey: const OrdinalSortKey(2),
                       child: Column(
@@ -282,7 +282,7 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
                   ),
                 ),
               ),
-            if (orientation == Orientation.landscape) ...[
+            if (orientation == .landscape) ...[
               Semantics(
                 sortKey: const OrdinalSortKey(3),
                 child: Align(
@@ -441,7 +441,7 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
         ? cardLeftValue
         : null,
     child: BlockSemantics(
-      blocking: isBlocking && orientation == Orientation.portrait,
+      blocking: isBlocking && orientation == .portrait,
       child: Semantics(
         sortKey: const OrdinalSortKey(1),
         child: GestureDetector(

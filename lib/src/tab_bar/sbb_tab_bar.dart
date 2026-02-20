@@ -61,7 +61,7 @@ class _SBBTabBarState extends State<SBBTabBar> with TickerProviderStateMixin, Wi
 
   Map<SBBTabBarItem, FocusNode> _focusNodes = {};
 
-  bool get portrait => MediaQuery.of(context).orientation == Orientation.portrait;
+  bool get portrait => MediaQuery.of(context).orientation == .portrait;
 
   @override
   void initState() {

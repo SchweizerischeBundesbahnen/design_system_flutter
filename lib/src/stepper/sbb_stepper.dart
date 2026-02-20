@@ -140,7 +140,7 @@ class SBBStepper extends StatelessWidget {
           maxLines: 1,
           overflow: .ellipsis,
           softWrap: false,
-          textAlign: TextAlign.center,
+          textAlign: .center,
           style: labelTextStyle,
         );
 
@@ -289,7 +289,7 @@ class _StepCircleState extends State<_StepCircle> {
             widget.item.badgeIcon,
             color: widget.style.badgeIconColor,
             size: SBBStepperItemStyle.badgeIconSize,
-            fontWeight: FontWeight.w900,
+            fontWeight: .w900,
           ),
         ),
       ),
@@ -310,7 +310,7 @@ class _StepCircleState extends State<_StepCircle> {
       content = Icon(item.icon, size: SBBStepperItemStyle.stepIconSize);
     } else {
       final text = item is SBBStepperItemText ? item.text : '${widget.index + 1}';
-      content = FittedBox(fit: BoxFit.scaleDown, child: Text(text));
+      content = FittedBox(fit: .scaleDown, child: Text(text));
     }
 
     final resolvedForegroundColor = widget.style.foregroundColor?.resolve(_statesController.value);
