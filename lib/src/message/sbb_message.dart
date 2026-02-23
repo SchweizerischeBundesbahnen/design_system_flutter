@@ -256,8 +256,7 @@ class SBBMessage extends StatelessWidget {
       action,
     ].nonNulls.toList(growable: false);
 
-    final child = children.length < 2 ? children.first : Column(mainAxisSize: .min, children: children);
-    return child;
+    return children.length < 2 ? children.first : Column(mainAxisSize: .min, children: children);
   }
 }
 

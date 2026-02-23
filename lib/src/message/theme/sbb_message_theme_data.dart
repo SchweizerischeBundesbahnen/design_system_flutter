@@ -5,7 +5,7 @@ import '../../../sbb_design_system_mobile.dart';
 
 /// The ThemeData for the [SBBMessage].
 ///
-/// Use this to set the [SBBMessageStyle] and spacing for all [SBBMessage] within the current [SBBTheme].
+/// Use this to set the [SBBMessageStyle] for all [SBBMessage] within the current [SBBTheme].
 ///
 /// To access this in your application, use `Theme.of(context).sbbMessageTheme`.
 @immutable
