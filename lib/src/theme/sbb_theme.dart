@@ -7,6 +7,7 @@ import 'package:sbb_design_system_mobile/src/container/container.dart';
 import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_input_decoration_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_text_input_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/list_header/theme/default_sbb_list_header_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/message/theme/default_sbb_message_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/paginator/theme/default_sbb_paginator_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/radio/theme/default_sbb_radio_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/slider/theme/default_sbb_slider_theme_data.dart';
@@ -38,6 +39,7 @@ class SBBTheme {
     SBBInputDecorationThemeData? inputDecorationTheme,
     SBBListHeaderThemeData? listHeaderTheme,
     SBBListItemThemeData? listItemTheme,
+    SBBMessageThemeData? messageTheme,
     SBBPaginatorThemeData? paginatorTheme,
     SBBRadioThemeData? radioTheme,
     SBBStatusThemeData? statusTheme,
@@ -64,6 +66,7 @@ class SBBTheme {
     headerBoxStyle: headerBoxStyle,
     inputDecorationTheme: inputDecorationTheme,
     listHeaderTheme: listHeaderTheme,
+    messageTheme: messageTheme,
     listItemTheme: listItemTheme,
     paginatorTheme: paginatorTheme,
     statusTheme: statusTheme,
@@ -92,6 +95,7 @@ class SBBTheme {
     SBBInputDecorationThemeData? inputDecorationTheme,
     SBBListHeaderThemeData? listHeaderTheme,
     SBBListItemThemeData? listItemTheme,
+    SBBMessageThemeData? messageTheme,
     SBBPaginatorThemeData? paginatorTheme,
     SBBStatusThemeData? statusTheme,
     SBBSegmentedButtonThemeData? segmentedButtonTheme,
@@ -118,6 +122,7 @@ class SBBTheme {
     inputDecorationTheme: inputDecorationTheme,
     listHeaderTheme: listHeaderTheme,
     listItemTheme: listItemTheme,
+    messageTheme: messageTheme,
     paginatorTheme: paginatorTheme,
     statusTheme: statusTheme,
     segmentedButtonTheme: segmentedButtonTheme,
@@ -145,6 +150,7 @@ class SBBTheme {
     SBBInputDecorationThemeData? inputDecorationTheme,
     SBBListHeaderThemeData? listHeaderTheme,
     SBBListItemThemeData? listItemTheme,
+    SBBMessageThemeData? messageTheme,
     SBBPaginatorThemeData? paginatorTheme,
     SBBRadioThemeData? radioTheme,
     SBBStatusThemeData? statusTheme,
@@ -195,6 +201,9 @@ class SBBTheme {
     final defaultListItemTheme = DefaultSBBListItemThemeData(baseStyle: mergedBaseStyle);
     final mergedListItemTheme = defaultListItemTheme.merge(listItemTheme);
 
+    final defaultMessageTheme = DefaultSBBMessageThemeData(mergedBaseStyle);
+    final mergedMessageTheme = defaultMessageTheme.merge(messageTheme);
+
     final defaultPaginatorTheme = DefaultSBBPaginatorThemeData(mergedBaseStyle);
     final mergedPaginatorTheme = defaultPaginatorTheme.merge(paginatorTheme);
 
@@ -240,6 +249,7 @@ class SBBTheme {
       headerBoxStyle: mergedHeaderBoxStyle,
       listHeaderTheme: mergedListHeaderTheme,
       listItemTheme: mergedListItemTheme,
+      messageTheme: mergedMessageTheme,
       paginatorTheme: mergedPaginatorTheme,
       radioTheme: mergedRadioTheme,
       statusTheme: mergedStatusTheme,
@@ -269,6 +279,7 @@ class SBBTheme {
     required SBBInputDecorationThemeData inputDecorationTheme,
     required SBBListHeaderThemeData listHeaderTheme,
     required SBBListItemThemeData listItemTheme,
+    required SBBMessageThemeData messageTheme,
     required SBBPaginatorThemeData paginatorTheme,
     required SBBRadioThemeData radioTheme,
     required SBBStatusThemeData statusTheme,
@@ -312,6 +323,7 @@ class SBBTheme {
         inputDecorationTheme,
         listHeaderTheme,
         listItemTheme,
+        messageTheme,
         paginatorTheme,
         radioTheme,
         statusTheme,
