@@ -4,6 +4,7 @@ import 'package:sbb_design_system_mobile/src/button/theme/sbb_button_style_x.dar
 import 'package:sbb_design_system_mobile/src/checkbox/theme/default_sbb_checkbox_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/chip/theme/default_sbb_chip_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/container/container.dart';
+import 'package:sbb_design_system_mobile/src/header/theme/default_sbb_header_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_input_decoration_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_text_input_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/paginator/theme/default_sbb_paginator_theme_data.dart';
@@ -33,6 +34,7 @@ class SBBTheme {
     SBBContentBoxThemeData? contentBoxTheme,
     SBBStepperThemeData? stepperTheme,
     SBBControlStyles? controlStyles,
+    SBBHeaderThemeData? headerTheme,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBInputDecorationThemeData? inputDecorationTheme,
     SBBListItemThemeData? listItemTheme,
@@ -59,6 +61,7 @@ class SBBTheme {
     radioTheme: radioTheme,
     stepperTheme: stepperTheme,
     controlStyles: controlStyles,
+    headerTheme: headerTheme,
     headerBoxStyle: headerBoxStyle,
     inputDecorationTheme: inputDecorationTheme,
     listItemTheme: listItemTheme,
@@ -136,6 +139,7 @@ class SBBTheme {
     SBBStepperThemeData? stepperTheme,
     SBBControlStyles? controlStyles,
     SBBContentBoxThemeData? contentBoxTheme,
+    SBBHeaderThemeData? headerTheme,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBInputDecorationThemeData? inputDecorationTheme,
     SBBListItemThemeData? listItemTheme,
@@ -179,6 +183,9 @@ class SBBTheme {
 
     final defaultContentBoxTheme = DefaultSBBContentBoxThemeData(baseStyle: mergedBaseStyle);
     final mergedContentBoxTheme = defaultContentBoxTheme.merge(contentBoxTheme);
+
+    final defaultHeaderTheme = DefaultSBBHeaderThemeData(baseStyle: mergedBaseStyle);
+    final mergedHeaderTheme = defaultHeaderTheme.merge(headerTheme);
 
     final defaultHeaderBoxStyle = SBBHeaderBoxStyle.$default(baseStyle: mergedBaseStyle);
     final mergedHeaderBoxStyle = headerBoxStyle.merge(defaultHeaderBoxStyle);
@@ -228,6 +235,7 @@ class SBBTheme {
       stepperTheme: mergedStepperTheme,
       controlStyles: mergedControlStyles,
       contentBoxTheme: mergedContentBoxTheme,
+      headerTheme: mergedHeaderTheme,
       headerBoxStyle: mergedHeaderBoxStyle,
       listItemTheme: mergedListItemTheme,
       paginatorTheme: mergedPaginatorTheme,
@@ -255,6 +263,7 @@ class SBBTheme {
     required SBBContentBoxThemeData contentBoxTheme,
     required SBBStepperThemeData stepperTheme,
     required SBBControlStyles controlStyles,
+    required SBBHeaderThemeData headerTheme,
     required SBBHeaderBoxStyle headerBoxStyle,
     required SBBInputDecorationThemeData inputDecorationTheme,
     required SBBListItemThemeData listItemTheme,
@@ -281,7 +290,7 @@ class SBBTheme {
       dividerTheme: DividerThemeData(thickness: 1.0, space: 0.0, color: baseStyle.dividerColor),
       fontFamily: baseStyle.defaultFontFamily,
       textTheme: baseStyle.createTextTheme(),
-      appBarTheme: controlStyles.appBarTheme,
+      appBarTheme: headerTheme.appBarTheme,
       filledButtonTheme: FilledButtonThemeData(style: primaryButtonTheme.style?.toButtonStyle()),
       outlinedButtonTheme: OutlinedButtonThemeData(style: secondaryButtonTheme.style?.toButtonStyle()),
       textButtonTheme: TextButtonThemeData(style: tertiaryButtonTheme.style?.toButtonStyle()),
@@ -297,6 +306,7 @@ class SBBTheme {
         contentBoxTheme,
         chipTheme,
         controlStyles,
+        headerTheme,
         headerBoxStyle,
         inputDecorationTheme,
         listItemTheme,
