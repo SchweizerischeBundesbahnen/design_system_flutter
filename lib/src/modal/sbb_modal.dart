@@ -3,6 +3,16 @@ import 'package:flutter/material.dart';
 import '../../sbb_design_system_mobile.dart';
 import '../sbb_internal.dart';
 
+// TODO: check how often showSBBModalPopup, showSBBModalSheet and showSBBCustomModalSheet are used in code.sbb.ch
+// TODO: check underlying parameters of showDialog / showBottomSheet
+// TODO: check SafeArea wrapper still necessary?
+// TODO: change parameters to remove the need for custom (title, titleText, child)
+// TODO: add leading and trailing widgets
+// TODO: check whether content is moved correctly if no title row (noCloseButton, no title, no titleText, no trailing / leading)
+// TODO: add v5 Theming / Styling
+// TODO: improve documentation
+// TODO: add to Migration guide / changelog
+
 /// Shows a SBB Modal Popup. Use according to documentation.
 ///
 /// If you try to close the popup but the underlying page is navigated back
