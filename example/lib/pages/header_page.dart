@@ -15,13 +15,13 @@ class HeaderPage extends StatelessWidget {
         const SBBHeader(titleText: 'Title', automaticallyImplyLeading: false),
         const SizedBox(height: SBBSpacing.medium),
         const SBBListHeader('Menu'),
-        SBBHeader.menu(titleText: 'Title'),
+        SBBHeader(titleText: 'Title', leading: SBBHeaderLeadingMenuButton()),
         const SizedBox(height: SBBSpacing.medium),
         const SBBListHeader('Back'),
-        SBBHeader.back(titleText: 'Title'),
+        SBBHeader(titleText: 'Title', leading: SBBHeaderLeadingBackButton()),
         const SizedBox(height: SBBSpacing.medium),
         const SBBListHeader('Close'),
-        SBBHeader.close(titleText: 'Title'),
+        SBBHeader(titleText: 'Title', leading: SBBHeaderLeadingCloseButton()),
       ],
     );
   }

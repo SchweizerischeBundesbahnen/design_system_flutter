@@ -10,13 +10,16 @@ void main() {
       spacing: SBBSpacing.medium,
       children: [
         const SBBHeader(titleText: 'No leading Widget', automaticallyImplyLeading: false),
-        SBBHeader.menu(titleText: 'Menu'),
-        SBBHeader.back(titleText: 'Back'),
-        SBBHeader.close(titleText: 'Close'),
+        SBBHeader(titleText: 'Menu', leading: SBBHeaderLeadingMenuButton()),
+        SBBHeader(titleText: 'Back', leading: SBBHeaderLeadingBackButton()),
+        SBBHeader(titleText: 'Close', leading: SBBHeaderLeadingCloseButton()),
         SizedBox(
           height: SBBHeaderStyle.toolbarHeight + 48.0,
           child: SBBHeader(
-            leading: Container(color: SBBColors.turquoise, child: Text('Custom')),
+            leading: Container(
+              color: SBBColors.turquoise,
+              child: Center(child: Text('Custom')),
+            ),
             title: Row(
               mainAxisSize: MainAxisSize.min,
               spacing: 8.0,

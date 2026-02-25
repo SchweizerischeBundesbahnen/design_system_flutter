@@ -4,16 +4,18 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// The ThemeData for the [SBBHeader].
 ///
-/// TODO:
+/// Use this to set the [SBBHeaderStyle] for all [SBBHeader] within the current [SBBTheme].
 ///
-/// See also:
-/// * [TODO], TODO
+/// To access this in your application, use `Theme.of(context).sbbHeaderTheme`.
 @immutable
 class SBBHeaderThemeData extends ThemeExtension<SBBHeaderThemeData> with Diagnosticable {
-  /// TODO:
   const SBBHeaderThemeData({this.style});
 
-  /// TODO:
+  /// Overrides for the header's default style.
+  ///
+  /// Non-null values override the default values.
+  ///
+  /// If [style] is null, then this theme doesn't override the style.
   final SBBHeaderStyle? style;
 
   @override
@@ -33,7 +35,12 @@ class SBBHeaderThemeData extends ThemeExtension<SBBHeaderThemeData> with Diagnos
     );
   }
 
-  // TODO: equal / hashcode
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) || other is SBBHeaderThemeData && runtimeType == other.runtimeType && style == other.style;
+
+  @override
+  int get hashCode => style.hashCode;
 }
 
 extension SBBHeaderThemeDataX on SBBHeaderThemeData {
@@ -48,7 +55,7 @@ extension SBBHeaderThemeDataX on SBBHeaderThemeData {
     );
   }
 
-  /// TODO
+  /// Converts the [SBBHeaderThemeData] to [AppBarTheme] used for default [ThemeData.appBarTheme].
   AppBarTheme get appBarTheme => AppBarTheme(
     foregroundColor: style?.foregroundColor,
     backgroundColor: style?.backgroundColor,
