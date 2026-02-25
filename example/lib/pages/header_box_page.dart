@@ -179,8 +179,8 @@ class _StaticPageState extends State<StaticPage> {
   Center _body() {
     return Center(
       child: SBBMessage(
-        title: 'Cover me!',
-        description: 'This screen is non scrollable.\nUsing a Stack, the Headerbox will simply lay on top of it.',
+        titleText: 'Cover me!',
+        subtitleText: 'This screen is non scrollable.\nUsing a Stack, the Headerbox will simply lay on top of it.',
       ),
     );
   }

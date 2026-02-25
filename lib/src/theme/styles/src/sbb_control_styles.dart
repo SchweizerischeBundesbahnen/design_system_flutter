@@ -8,7 +8,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     this.selectLabel,
     this.linkTextStyle,
     this.linkTextStyleHighlighted,
-    this.listHeaderTextStyle,
     this.modalBackgroundColor,
     this.modalTitleTextStyle,
     this.tabBarTextStyle,
@@ -29,7 +28,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     linkTextStyleHighlighted: baseStyle.defaultTextStyle?.copyWith(
       color: baseStyle.themeValue(baseStyle.primaryColorDark, SBBColors.white),
     ),
-    listHeaderTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallLight),
     modalBackgroundColor: baseStyle.themeValue(SBBColors.milk, SBBColors.midnight),
     modalTitleTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.largeLight),
     tabBarTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallLight),
@@ -42,7 +40,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
 
   final TextStyle? linkTextStyle;
   final TextStyle? linkTextStyleHighlighted;
-  final TextStyle? listHeaderTextStyle;
   final Color? modalBackgroundColor;
   final TextStyle? modalTitleTextStyle;
   final TextStyle? tabBarTextStyle;
@@ -67,7 +64,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     TextStyle? headerTextStyle,
     TextStyle? linkTextStyle,
     TextStyle? linkTextStyleHighlighted,
-    TextStyle? listHeaderTextStyle,
     Color? modalBackgroundColor,
     TextStyle? modalTitleTextStyle,
     TextStyle? tabBarTextStyle,
@@ -78,7 +74,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     selectLabel: selectLabel ?? this.selectLabel,
     linkTextStyle: linkTextStyle ?? this.linkTextStyle,
     linkTextStyleHighlighted: linkTextStyleHighlighted ?? this.linkTextStyleHighlighted,
-    listHeaderTextStyle: listHeaderTextStyle ?? this.listHeaderTextStyle,
     modalBackgroundColor: modalBackgroundColor ?? this.modalBackgroundColor,
     modalTitleTextStyle: modalTitleTextStyle ?? this.modalTitleTextStyle,
     tabBarTextStyle: tabBarTextStyle ?? this.tabBarTextStyle,
@@ -94,7 +89,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
       selectLabel: selectLabel?.lerp(other.selectLabel, t),
       linkTextStyle: TextStyle.lerp(linkTextStyle, other.linkTextStyle, t),
       linkTextStyleHighlighted: TextStyle.lerp(linkTextStyleHighlighted, other.linkTextStyleHighlighted, t),
-      listHeaderTextStyle: TextStyle.lerp(listHeaderTextStyle, other.listHeaderTextStyle, t),
       modalBackgroundColor: Color.lerp(modalBackgroundColor, other.modalBackgroundColor, t),
       modalTitleTextStyle: TextStyle.lerp(modalTitleTextStyle, other.modalTitleTextStyle, t),
       tabBarTextStyle: TextStyle.lerp(tabBarTextStyle, other.tabBarTextStyle, t),
@@ -113,7 +107,6 @@ extension SBBControlStylesExtension on SBBControlStyles? {
           picker: this!.picker.merge(other?.picker),
           linkTextStyle: this!.linkTextStyle ?? other?.linkTextStyle,
           linkTextStyleHighlighted: this!.linkTextStyleHighlighted ?? other?.linkTextStyleHighlighted,
-          listHeaderTextStyle: this!.listHeaderTextStyle ?? other?.listHeaderTextStyle,
           modalBackgroundColor: this!.modalBackgroundColor ?? other?.modalBackgroundColor,
           modalTitleTextStyle: this!.modalTitleTextStyle ?? other?.modalTitleTextStyle,
           tabBarTextStyle: this!.tabBarTextStyle ?? other?.tabBarTextStyle,

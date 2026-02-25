@@ -16,95 +16,107 @@ void main() {
   generateTest(
     'message_test_1',
     const SBBMessage(
-      title: 'Default',
-      description:
+      titleText: 'Default',
+      subtitleText:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
     ),
   );
 
   generateTest(
     'message_test_2',
-    const SBBMessage(
-      title: 'With illustration',
-      description:
+    SBBMessage(
+      titleText: 'With illustration',
+      subtitleText:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
-      illustration: .Woman,
+      illustration: SBBIllustration.staffFemale(),
     ),
   );
 
   generateTest(
     'message_test_3',
     SBBMessage(
-      title: 'With interaction',
-      description:
+      titleText: 'With interaction',
+      subtitleText:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
-      onInteraction: () {},
+      action: SBBTertiaryButton(onPressed: () {}, iconData: SBBIcons.arrows_circle_small),
     ),
   );
 
   generateTest(
     'message_test_4',
     SBBMessage(
-      title: 'With interaction and illustration',
-      description:
+      titleText: 'With interaction and illustration',
+      subtitleText:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
-      illustration: .Man,
-      onInteraction: () {},
+      illustration: SBBIllustration.staffMale(),
+      action: SBBTertiaryButton(onPressed: () {}, iconData: SBBIcons.arrows_circle_small),
     ),
   );
 
   generateTest(
     'message_test_5',
     SBBMessage(
-      title: 'Default, custom icon',
-      description:
+      titleText: 'Default, custom icon',
+      subtitleText:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
-      onInteraction: () {},
-      interactionIcon: SBBIcons.train_small,
+      action: SBBTertiaryButton(onPressed: () {}, iconData: SBBIcons.three_adults_small),
     ),
   );
 
   generateTest(
     'message_test_6',
-    SBBMessage.error(
-      title: 'Error, no interaction',
-      description:
+    SBBMessage(
+      titleText: 'Error, no interaction',
+      subtitleText:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
-      messageCode: 'Fehlercode: XYZ-9999',
+      errorText: 'Fehlercode: XYZ-9999',
+      illustration: SBBIllustration.display(),
     ),
   );
 
   generateTest(
     'message_test_7',
-    SBBMessage.error(
-      title: 'Error, with interaction',
-      description:
+    SBBMessage(
+      titleText: 'Error, with interaction',
+      subtitleText:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
-      messageCode: 'Fehlercode: XYZ-9999',
-      illustration: .Display,
-      onInteraction: () {},
+      errorText: 'Fehlercode: XYZ-9999',
+      illustration: SBBIllustration.display(),
+      action: SBBTertiaryButton(onPressed: () {}, iconData: SBBIcons.arrows_circle_small),
     ),
   );
 
   generateTest(
     'message_test_8',
     SBBMessage(
-      title: 'Custom Illustration',
-      description:
+      title: Container(color: SBBColors.turquoise, child: Text('Custom')),
+      subtitleText:
           'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
-      customIllustration: Container(alignment: .center, width: 100, height: 100, color: SBBColors.red),
+      illustration: Container(alignment: .center, width: 100, height: 100, color: SBBColors.red),
     ),
   );
 }
 
 class MessageTest extends StatelessWidget {
+  static const String _parent = 'lib/assets/illustrations';
+  static const String _package = 'sbb_design_system_mobile';
+
   const MessageTest({super.key, required this.sbbMessage});
 
   final SBBMessage sbbMessage;
 
+  AssetImage _image(Brightness brightness, String assetName) {
+    final path = '$_parent/${brightness.name}/$assetName';
+    return AssetImage(path, package: _package);
+  }
+
   @override
   Widget build(BuildContext context) {
-    MessageIllustration.values.expand((i) => Brightness.values.map((b) => precacheImage(i.asset(b), context))).toList();
+    [
+      'man.png',
+      'woman.png',
+      'display.png',
+    ].expand((i) => Brightness.values.map((b) => precacheImage(_image(b, i), context))).toList();
     return Column(
       mainAxisSize: .min,
       children: [
