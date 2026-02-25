@@ -30,7 +30,7 @@ import '../../sbb_design_system_mobile.dart';
 /// Actions:
 /// - Use [actions] to show trailing action widgets (e.g. icon buttons).
 /// - If [actions] is null, the SBB logo is shown. To suppress it, provide
-///   at least an empty list.
+///   an empty list.
 ///
 /// Bottom:
 /// - Use [bottom] to attach a [PreferredSizeWidget].
