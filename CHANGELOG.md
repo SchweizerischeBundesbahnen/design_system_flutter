@@ -32,6 +32,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - BREAKING: overhauled `SBBSlider` component - see [v5 migration guide]
 - BREAKING: overhauled `SBBStatus` component - see [v5 migration guide]
 - BREAKING: overhauled `SBBStepper` component - see [v5 migration guide]
+- BREAKING: overhauled `SBBHeader` component - see [v5 migration guide]
 - BREAKING: different theming / styling for `SBBSwitch` - see [v5 migration guide]
 - BREAKING: overhauled `SBBTextField` and renamed to `SBBTextInput` - see [v5 migration guide]
 - BREAKING: removed default left margin on component `SBBTextInput` (#402)
