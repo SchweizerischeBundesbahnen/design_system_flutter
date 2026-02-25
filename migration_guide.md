@@ -60,7 +60,7 @@ Use the `foregroundBuilder` of the `SBBButtonStyle` as a replacement
 
 ### Constructor arguments
 * replace `title` with `titleText` (complete custom content with `title`)
-* replace `leadingWidget` with `widget`
+* replace `leadingWidget` with `leading`
 * removed `blockSemantics`, check out `excludeHeaderSemantics`
 * removed `systemOverlayStyle`, moved to style `SBBHeaderStyle.systemOverlayStyle`
 * removed `onPressedLogo` and `logoTooltip`. To customize trailing content, provide actions yourself.

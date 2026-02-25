@@ -20,29 +20,29 @@ import '../../sbb_design_system_mobile.dart';
 ///   1) If the surrounding [Scaffold] has a drawer, a menu button is shown.
 ///   2) If the current route can pop, a back button is shown.
 ///   3) If the current route is a fullscreen dialog, a close button is shown.
-///   Otherwise, no leading is shown.
-/// - To override the automatic behavior, either:
-///   - Pass a widget to [leading] directly (e.g. one of the SBB buttons
-///     [SBBHeaderLeadingMenuButton], [SBBHeaderLeadingBackButton],
-///     [SBBHeaderLeadingCloseButton]) or a custom widget.
-///   - Set [automaticallyImplyLeading] to false and supply your own leading.
+/// - To override the automatic behavior, pass a widget to [leading] directly
+///   (e.g. one of the SBB buttons [SBBHeaderLeadingMenuButton],
+///   [SBBHeaderLeadingBackButton], [SBBHeaderLeadingCloseButton]) or a custom widget.
+/// - To remove leading, set [automaticallyImplyLeading] to false with [leading] null.
 /// - If [leadingWidth] is not provided and the leading widget is one of the
 ///   SBB-provided buttons, a default width is applied.
 ///
 /// Actions:
 /// - Use [actions] to show trailing action widgets (e.g. icon buttons).
-/// - If [actions] is null or empty, the SBB logo is shown. To suppress it,
-///   provide at least one trailing widget yourself (e.g. a zero-sized widget).
+/// - If [actions] is null, the SBB logo is shown. To suppress it, provide
+///   at least an empty list.
 ///
 /// Bottom:
 /// - Use [bottom] to attach a [PreferredSizeWidget].
 ///
 /// Custom appearance can be provided via [style], which will override
 /// non-null properties from the theme.
-/// {@endtemplate}
 ///
-/// Normally used inside a [Scaffold]. If otherwise, use [SBBHeaderStyle.toolbarHeight] + [bottom] height if given
-/// to contraint the height.
+/// This widget is normally used inside a [Scaffold] as the appBar parameter to
+/// properly constrain its height. If used otherwise, you must make sure to
+/// properly constrain its height, e.g. by using the [SBBHeaderStyle.toolbarHeight]
+/// or [SBBHeaderStyle.smallToolbarHeight] in addition to the height of the bottom widget.
+/// {@endtemplate}
 ///
 /// Sample code:
 ///
@@ -77,6 +77,7 @@ import '../../sbb_design_system_mobile.dart';
 /// - [AppBar], which is used by this widget under the hood.
 /// - [Design Specification](https://digital.sbb.ch/de/design-system-mobile-new/module/header)
 /// {@endtemplate}
+/// - [SBBHeaderSmall], small variant of the SBB header
 class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
   const SBBHeader({
     super.key,
@@ -115,7 +116,8 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
   /// {@macro flutter.material.appbar.leadingWidth}
   ///
   /// If null and [leading] is one of the provided SBB leading icon buttons,
-  /// a default width is used. When implied automatically, the default widths are also applied.
+  /// a default width is used. When [automaticallyImplyLeading] is true, the
+  /// correct widths are supplied.
   final double? leadingWidth;
 
   /// {@macro flutter.material.appbar.bottom}
@@ -167,9 +169,6 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
 ///
 /// {@macro sbb_design_system.header_description}
 ///
-/// Normally used inside a [Scaffold]. If otherwise and [bottom] not null, use [SBBHeaderStyle.toolbarHeight] + [bottom]
-/// height to contraint the height.
-///
 /// Sample code:
 ///
 /// ```dart
@@ -195,6 +194,7 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
 /// ```
 ///
 /// {@macro sbb_design_system.header_see_also}
+/// - [SBBHeader], default variant of the SBB header
 class SBBHeaderSmall extends SBBHeader {
   const SBBHeaderSmall({
     super.key,
@@ -271,7 +271,7 @@ class _BaseHeader extends StatelessWidget {
       automaticallyImplyLeading: automaticallyImplyLeading,
       useDefaultSemanticsOrder: useDefaultSemanticsOrder,
       excludeHeaderSemantics: excludeHeaderSemantics,
-      actions: actions != null && actions!.isNotEmpty ? actions : [_sbbLogo()],
+      actions: actions ?? [_sbbLogo()],
     );
   }
 

@@ -200,5 +200,9 @@ class _IconPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(covariant _IconPainter oldDelegate) => path != oldDelegate.path || color != oldDelegate.color;
+  bool shouldRepaint(covariant _IconPainter oldDelegate) =>
+      path != oldDelegate.path ||
+      color != oldDelegate.color ||
+      style != oldDelegate.style ||
+      strokeWidth != oldDelegate.strokeWidth;
 }
