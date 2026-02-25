@@ -89,7 +89,7 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
 
   SBBBaseStyle get style => Theme.of(context).extension()!;
 
-  SBBControlStyles get controlStyle => Theme.of(context).extension()!;
+  SBBHeaderStyle? get headerStyle => Theme.of(context).sbbHeaderTheme?.style;
 
   Orientation get orientation => MediaQuery.of(context).orientation;
 
@@ -212,7 +212,7 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
                     child: Container(
                       width: .infinity,
                       decoration: BoxDecoration(
-                        color: controlStyle.headerBackgroundColor,
+                        color: headerStyle?.backgroundColor,
                         borderRadius: orientation == .portrait
                             ? const BorderRadius.vertical(bottom: .circular(SBBSpacing.medium))
                             : null,
@@ -498,7 +498,7 @@ class SBBOnboardingState extends State<SBBOnboarding> with SingleTickerProviderS
     const opacityMultiplier = 1.0 / (visibleBackCardsCount + 1);
     return ExcludeSemantics(
       child: Container(
-        color: controlStyle.headerBackgroundColor,
+        color: headerStyle?.backgroundColor,
         margin: .only(
           top: max(
             0.0,
