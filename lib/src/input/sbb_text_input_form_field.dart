@@ -3,6 +3,12 @@ import 'package:flutter/services.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
+// TODO: add issue for the selectAllOnFocus & assertions in SBBTextInput
+// TODO: add boxed variant SBBTextInputBoxedFormField
+// TODO: build example page
+// TODO: check all parameters exposed / compare it with TextFormField
+// TODO: documentation & migration guide
+
 /// The SBB TextFormField.
 ///
 /// See also:
@@ -44,7 +50,6 @@ class SBBTextInputFormField extends FormField<String> {
     bool? ignorePointers,
     Brightness? keyboardAppearance,
     bool enableInteractiveSelection = true,
-    bool? selectAllOnFocus, // TODO: check
     Iterable<String>? autofillHints,
     AutovalidateMode? autovalidateMode,
     super.restorationId,
