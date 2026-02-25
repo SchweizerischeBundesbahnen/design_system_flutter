@@ -57,7 +57,10 @@ class SBBHeaderStyle {
   final TextStyle? titleTextStyle;
 
   /// default height of the toolbar component of the [SBBHeader].
-  static double get toolbarHeight => kToolbarHeight;
+  static double get toolbarHeight => 80.0;
+
+  /// default height of the toolbar component of the [SBBHeader].
+  static double get smallToolbarHeight => 56.0;
 
   SBBHeaderStyle copyWith({
     bool? centerTitle,

@@ -5,6 +5,7 @@ import '../../sbb_design_system_mobile.dart';
 
 /// The SBB Header.
 ///
+/// {@template sbb_design_system.header_description}
 /// A top app bar that follows the SBB Design System and builds on top of
 /// Flutter’s [AppBar]. Use it to display a page title, a navigation affordance
 /// (menu, back, close) and optional actions.
@@ -38,6 +39,10 @@ import '../../sbb_design_system_mobile.dart';
 ///
 /// Custom appearance can be provided via [style], which will override
 /// non-null properties from the theme.
+/// {@endtemplate}
+///
+/// Normally used inside a [Scaffold]. If otherwise, use [SBBHeaderStyle.toolbarHeight] + [bottom] height if given
+/// to contraint the height.
 ///
 /// Sample code:
 ///
@@ -63,6 +68,7 @@ import '../../sbb_design_system_mobile.dart';
 /// );
 /// ```
 ///
+/// {@template sbb_design_system.header_see_also}
 /// See also:
 /// - [SBBHeaderLeadingMenuButton], [SBBHeaderLeadingBackButton],
 ///   and [SBBHeaderLeadingCloseButton] for SBB-styled leading widgets.
@@ -70,6 +76,7 @@ import '../../sbb_design_system_mobile.dart';
 /// - [SBBHeaderThemeData], to provide theme-wide defaults for headers.
 /// - [AppBar], which is used by this widget under the hood.
 /// - [Design Specification](https://digital.sbb.ch/de/design-system-mobile-new/module/header)
+/// {@endtemplate}
 class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
   const SBBHeader({
     super.key,
@@ -134,6 +141,110 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    return _BaseHeader(
+      title: title,
+      titleText: titleText,
+      leading: leading,
+      leadingWidth: leadingWidth,
+      bottom: _resolvedBottom,
+      actions: actions,
+      style: style,
+      excludeHeaderSemantics: excludeHeaderSemantics,
+      automaticallyImplyLeading: automaticallyImplyLeading,
+      useDefaultSemanticsOrder: useDefaultSemanticsOrder,
+    );
+  }
+
+  @override
+  Size get preferredSize => Size.fromHeight(_toolbarHeight + (bottom?.preferredSize.height ?? 0));
+
+  double get _toolbarHeight => SBBHeaderStyle.toolbarHeight;
+
+  PreferredSizeWidget? get _resolvedBottom => _DefaultBottomSpacer(bottom: bottom);
+}
+
+/// The small variant of SBB Header
+///
+/// {@macro sbb_design_system.header_description}
+///
+/// Normally used inside a [Scaffold]. If otherwise and [bottom] not null, use [SBBHeaderStyle.toolbarHeight] + [bottom]
+/// height to contraint the height.
+///
+/// Sample code:
+///
+/// ```dart
+/// // Simple header with a text title and automatic leading.
+/// SBBHeaderSmall(titleText: 'SBB');
+///
+/// // A header with a menu icon leading, custom title and style.
+/// SBBHeaderSmall(
+///   leading: SBBHeaderLeadingMenuButton(),
+///   title: Row(
+///     spacing: 8.0,
+///     children: [
+///       const Icon(SBBIcons.train_small),
+///       const Text('SBB Mobile'),
+///     ],
+///   ),
+///   style: const SBBHeaderStyle(
+///     backgroundColor: Color(0xFF000000),
+///     foregroundColor: Color(0xFFFFFFFF),
+///     centerTitle: false,
+///   ),
+/// );
+/// ```
+///
+/// {@macro sbb_design_system.header_see_also}
+class SBBHeaderSmall extends SBBHeader {
+  const SBBHeaderSmall({
+    super.key,
+    super.titleText,
+    super.title,
+    super.leading,
+    super.leadingWidth,
+    super.actions,
+    super.bottom,
+    super.excludeHeaderSemantics = false,
+    super.automaticallyImplyLeading = true,
+    super.useDefaultSemanticsOrder = true,
+    super.style,
+  });
+
+  @override
+  double get _toolbarHeight => SBBHeaderStyle.smallToolbarHeight;
+
+  @override
+  PreferredSizeWidget? get _resolvedBottom => bottom;
+}
+
+/// Base class for building both the small and the normal variant of [SBBHeader].
+class _BaseHeader extends StatelessWidget {
+  const _BaseHeader({
+    required this.title,
+    required this.titleText,
+    required this.leading,
+    required this.leadingWidth,
+    required this.bottom,
+    required this.actions,
+    required this.style,
+    required this.excludeHeaderSemantics,
+    required this.automaticallyImplyLeading,
+    required this.useDefaultSemanticsOrder,
+  });
+
+  final Widget? title;
+  final String? titleText;
+  final Widget? leading;
+  final double? leadingWidth;
+  final PreferredSizeWidget? bottom;
+  final bool automaticallyImplyLeading;
+  final bool excludeHeaderSemantics;
+  final bool useDefaultSemanticsOrder;
+  final List<Widget>? actions;
+  final SBBHeaderStyle? style;
+
+  @override
+  Widget build(BuildContext context) {
     final themeData = Theme.of(context).sbbHeaderTheme;
     final effectiveStyle = (themeData?.style ?? SBBHeaderStyle()).merge(style);
 
@@ -176,11 +287,6 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
-  @override
-  Size get preferredSize => Size.fromHeight(
-    SBBHeaderStyle.toolbarHeight + (bottom?.preferredSize.height ?? 0),
-  );
-
   Widget? _resolveLeading(BuildContext context) {
     if (leading != null) return leading;
 
@@ -214,4 +320,27 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
     }
     return title;
   }
+}
+
+/// Workaround for bottom spacing of [SBBHeader] as setting [AppBar.toolbarHeight] centers elements of AppBar.
+class _DefaultBottomSpacer extends StatelessWidget implements PreferredSizeWidget {
+  const _DefaultBottomSpacer({this.bottom});
+
+  final PreferredSizeWidget? bottom;
+
+  @override
+  Size get preferredSize => Size.fromHeight(extraSpace + (bottom?.preferredSize.height ?? 0));
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (bottom != null) bottom!,
+        SizedBox(height: extraSpace),
+      ],
+    );
+  }
+
+  double get extraSpace => SBBHeaderStyle.toolbarHeight - SBBHeaderStyle.smallToolbarHeight;
 }

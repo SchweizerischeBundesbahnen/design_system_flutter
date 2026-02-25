@@ -5,17 +5,17 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'test_app.dart';
 
 void main() {
-  testWidgets('header test', (WidgetTester tester) async {
+  testWidgets('small header test', (WidgetTester tester) async {
     final widget = Column(
       spacing: SBBSpacing.medium,
       children: [
-        _toolbarHeightSized(SBBHeader(titleText: 'No leading Widget', automaticallyImplyLeading: false)),
-        _toolbarHeightSized(SBBHeader(titleText: 'Menu', leading: SBBHeaderLeadingMenuButton())),
-        _toolbarHeightSized(SBBHeader(titleText: 'Back', leading: SBBHeaderLeadingBackButton())),
-        _toolbarHeightSized(SBBHeader(titleText: 'Close', leading: SBBHeaderLeadingCloseButton())),
+        const SBBHeaderSmall(titleText: 'No leading Widget', automaticallyImplyLeading: false),
+        const SBBHeaderSmall(titleText: 'Menu', leading: SBBHeaderLeadingMenuButton()),
+        const SBBHeaderSmall(titleText: 'Back', leading: SBBHeaderLeadingBackButton()),
+        const SBBHeaderSmall(titleText: 'Close', leading: SBBHeaderLeadingCloseButton()),
         SizedBox(
-          height: SBBHeaderStyle.toolbarHeight + 48.0,
-          child: SBBHeader(
+          height: SBBHeaderStyle.smallToolbarHeight + 48.0,
+          child: SBBHeaderSmall(
             leading: Container(
               color: SBBColors.turquoise,
               child: Center(child: Text('Custom')),
@@ -56,16 +56,8 @@ void main() {
       TestSpecs.themedSpecs,
       widget,
       tester,
-      'header',
+      'header_small',
       find.byType(Column).first,
     );
   });
-}
-
-/// needed as [SBBHeader] set's a bottom widget as spacer which leads to unconstrainted height.
-Widget _toolbarHeightSized(SBBHeader header) {
-  return SizedBox(
-    height: SBBHeaderStyle.toolbarHeight,
-    child: header,
-  );
 }

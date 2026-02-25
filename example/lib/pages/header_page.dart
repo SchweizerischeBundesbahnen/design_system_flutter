@@ -10,19 +10,32 @@ class HeaderPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        const Padding(padding: .all(SBBSpacing.medium), child: ThemeModeSegmentedButton()),
-        const SBBListHeader('No leading Widget'),
-        const SBBHeader(titleText: 'Title', automaticallyImplyLeading: false),
-        const SizedBox(height: SBBSpacing.medium),
-        const SBBListHeader('Menu'),
-        SBBHeader(titleText: 'Title', leading: SBBHeaderLeadingMenuButton()),
-        const SizedBox(height: SBBSpacing.medium),
-        const SBBListHeader('Back'),
-        SBBHeader(titleText: 'Title', leading: SBBHeaderLeadingBackButton()),
-        const SizedBox(height: SBBSpacing.medium),
-        const SBBListHeader('Close'),
-        SBBHeader(titleText: 'Title', leading: SBBHeaderLeadingCloseButton()),
+        Padding(padding: .all(SBBSpacing.medium), child: ThemeModeSegmentedButton()),
+        SBBListHeader('Default'),
+        _toolbarHeightSized(SBBHeader(titleText: 'No leading Widget', automaticallyImplyLeading: false)),
+        SizedBox(height: SBBSpacing.medium),
+        _toolbarHeightSized(SBBHeader(titleText: 'Menu', leading: SBBHeaderLeadingMenuButton())),
+        SizedBox(height: SBBSpacing.medium),
+        _toolbarHeightSized(SBBHeader(titleText: 'Back', leading: SBBHeaderLeadingBackButton())),
+        SizedBox(height: SBBSpacing.medium),
+        _toolbarHeightSized(SBBHeader(titleText: 'Close', leading: SBBHeaderLeadingCloseButton())),
+        SBBListHeader('Small'),
+        SBBHeaderSmall(titleText: 'No leading Widget', automaticallyImplyLeading: false),
+        SizedBox(height: SBBSpacing.medium),
+        SBBHeaderSmall(titleText: 'Menu', leading: SBBHeaderLeadingMenuButton()),
+        SizedBox(height: SBBSpacing.medium),
+        SBBHeaderSmall(titleText: 'Back', leading: SBBHeaderLeadingBackButton()),
+        SizedBox(height: SBBSpacing.medium),
+        SBBHeaderSmall(titleText: 'Close', leading: SBBHeaderLeadingCloseButton()),
       ],
+    );
+  }
+
+  /// needed as [SBBHeader] set's a bottom widget as spacer which leads to unconstrainted height.
+  Widget _toolbarHeightSized(SBBHeader header) {
+    return SizedBox(
+      height: SBBHeaderStyle.toolbarHeight,
+      child: header,
     );
   }
 }

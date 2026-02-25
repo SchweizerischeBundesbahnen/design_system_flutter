@@ -68,7 +68,7 @@ class MyApp extends StatelessWidget {
             supportedLocales: const [Locale('en'), Locale('de'), Locale('fr'), Locale('it')],
             locale: const Locale('de'),
             home: Scaffold(
-              appBar: const SBBHeader(titleText: 'Design System Mobile'),
+              appBar: const SBBHeaderSmall(titleText: 'Design System Mobile'),
               body: _content(),
             ),
           );
@@ -212,7 +212,7 @@ class _DemoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SBBHeader(titleText: title),
+      appBar: SBBHeaderSmall(titleText: title),
       body: child,
     );
   }
