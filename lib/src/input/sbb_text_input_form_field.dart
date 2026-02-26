@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
-// TODO: add tests
 // TODO: documentation & migration guide
 
 /// The SBB TextFormField.
