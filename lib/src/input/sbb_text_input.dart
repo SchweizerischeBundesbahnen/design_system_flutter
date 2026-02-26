@@ -695,6 +695,7 @@ class SBBTextInputBoxed extends SBBTextInput {
     super.onSubmitted,
     super.inputFormatters,
     super.enabled,
+    super.selectAllOnFocus,
     super.ignorePointers,
     super.keyboardAppearance,
     super.enableInteractiveSelection,

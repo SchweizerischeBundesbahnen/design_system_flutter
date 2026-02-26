@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
-// TODO: add boxed variant SBBTextInputBoxedFormField
 // TODO: build example page
 // TODO: check all parameters exposed / compare it with TextFormField
 // TODO: documentation & migration guide
@@ -56,6 +55,7 @@ class SBBTextInputFormField extends FormField<String> {
     super.onSaved,
     super.validator,
     super.errorBuilder,
+    Widget Function(FormFieldState<String>)? builder,
     AutovalidateMode? autovalidateMode,
     super.restorationId,
   }) : assert(initialValue == null || controller == null),
@@ -74,57 +74,59 @@ class SBBTextInputFormField extends FormField<String> {
        super(
          initialValue: controller != null ? controller.text : (initialValue ?? ''),
          autovalidateMode: autovalidateMode ?? AutovalidateMode.disabled,
-         builder: (FormFieldState<String> field) {
-           final _SBBTextInputFormFieldState state = field as _SBBTextInputFormFieldState;
+         builder:
+             builder ??
+             (FormFieldState<String> field) {
+               final _SBBTextInputFormFieldState state = field as _SBBTextInputFormFieldState;
 
-           SBBInputDecoration effectiveDecoration = decoration ?? const SBBInputDecoration();
-           final String? errorText = field.errorText;
-           if (errorText != null) {
-             effectiveDecoration = errorBuilder != null
-                 ? effectiveDecoration.copyWith(error: errorBuilder(state.context, errorText))
-                 : effectiveDecoration.copyWith(errorText: errorText);
-           }
+               SBBInputDecoration effectiveDecoration = decoration ?? const SBBInputDecoration();
+               final String? errorText = field.errorText;
+               if (errorText != null) {
+                 effectiveDecoration = errorBuilder != null
+                     ? effectiveDecoration.copyWith(error: errorBuilder(state.context, errorText))
+                     : effectiveDecoration.copyWith(errorText: errorText);
+               }
 
-           void onChangedHandler(String value) {
-             field.didChange(value);
-             onChanged?.call(value);
-           }
+               void onChangedHandler(String value) {
+                 field.didChange(value);
+                 onChanged?.call(value);
+               }
 
-           return SBBTextInput(
-             groupId: groupId,
-             controller: state._effectiveController,
-             decoration: effectiveDecoration,
-             focusNode: focusNode,
-             keyboardType: keyboardType,
-             textInputAction: textInputAction,
-             textCapitalization: textCapitalization,
-             readOnly: readOnly,
-             showCursor: showCursor,
-             autofocus: autofocus,
-             obscuringCharacter: obscuringCharacter,
-             obscureText: obscureText,
-             autocorrect: autocorrect,
-             enableSuggestions: enableSuggestions,
-             maxLines: maxLines,
-             minLines: minLines,
-             expands: expands,
-             onChanged: onChangedHandler,
-             onSubmitted: onFieldSubmitted,
-             inputFormatters: inputFormatters,
-             enabled: enabled,
-             selectAllOnFocus: selectAllOnFocus,
-             ignorePointers: ignorePointers,
-             keyboardAppearance: keyboardAppearance,
-             enableInteractiveSelection: enableInteractiveSelection,
-             onTap: onTap,
-             onTapAlwaysCalled: onTapAlwaysCalled,
-             scrollController: scrollController,
-             autofillHints: autofillHints,
-             inputTextStyle: inputTextStyle,
-             inputForegroundColor: inputForegroundColor,
-             enableClearButton: enableClearButton,
-           );
-         },
+               return SBBTextInput(
+                 groupId: groupId,
+                 controller: state._effectiveController,
+                 decoration: effectiveDecoration,
+                 focusNode: focusNode,
+                 keyboardType: keyboardType,
+                 textInputAction: textInputAction,
+                 textCapitalization: textCapitalization,
+                 readOnly: readOnly,
+                 showCursor: showCursor,
+                 autofocus: autofocus,
+                 obscuringCharacter: obscuringCharacter,
+                 obscureText: obscureText,
+                 autocorrect: autocorrect,
+                 enableSuggestions: enableSuggestions,
+                 maxLines: maxLines,
+                 minLines: minLines,
+                 expands: expands,
+                 onChanged: onChangedHandler,
+                 onSubmitted: onFieldSubmitted,
+                 inputFormatters: inputFormatters,
+                 enabled: enabled,
+                 selectAllOnFocus: selectAllOnFocus,
+                 ignorePointers: ignorePointers,
+                 keyboardAppearance: keyboardAppearance,
+                 enableInteractiveSelection: enableInteractiveSelection,
+                 onTap: onTap,
+                 onTapAlwaysCalled: onTapAlwaysCalled,
+                 scrollController: scrollController,
+                 autofillHints: autofillHints,
+                 inputTextStyle: inputTextStyle,
+                 inputForegroundColor: inputForegroundColor,
+                 enableClearButton: enableClearButton,
+               );
+             },
        );
 
   /// {@macro flutter.widgets.editableText.groupId}
@@ -224,4 +226,116 @@ class _SBBTextInputFormFieldState extends FormFieldState<String> {
       didChange(_effectiveController.text);
     }
   }
+}
+
+class SBBTextInputBoxedFormField extends SBBTextInputFormField {
+  SBBTextInputBoxedFormField({
+    super.key,
+    // FIELDS FROM SBBTextInput
+    super.groupId = EditableText,
+    super.controller,
+    super.decoration,
+    super.focusNode,
+    super.keyboardType,
+    super.textInputAction,
+    super.textCapitalization,
+    super.readOnly,
+    super.showCursor,
+    super.autofocus,
+    super.obscuringCharacter,
+    super.obscureText,
+    super.autocorrect,
+    super.enableSuggestions,
+    super.maxLines,
+    super.minLines,
+    super.expands,
+    super.selectAllOnFocus,
+    super.inputFormatters,
+    super.ignorePointers,
+    super.keyboardAppearance,
+    super.enableInteractiveSelection,
+    super.onTap,
+    super.onTapAlwaysCalled,
+    super.scrollController,
+    super.autofillHints,
+    super.inputTextStyle,
+    super.inputForegroundColor,
+    super.enableClearButton,
+    // FIELDS FROM FormField
+    super.initialValue,
+    super.onChanged,
+    super.onFieldSubmitted,
+    super.enabled,
+    super.forceErrorText,
+    super.onSaved,
+    super.validator,
+    super.errorBuilder,
+    super.autovalidateMode,
+    super.restorationId,
+  }) : assert(initialValue == null || controller == null),
+       assert(obscuringCharacter.length == 1),
+       assert(maxLines == null || maxLines > 0),
+       assert(minLines == null || minLines > 0),
+       assert(
+         (maxLines == null) || (minLines == null) || (maxLines >= minLines),
+         "minLines can't be greater than maxLines",
+       ),
+       assert(
+         !expands || (maxLines == null && minLines == null),
+         'minLines and maxLines must be null when expands is true.',
+       ),
+       assert(!obscureText || maxLines == 1, 'Obscured fields cannot be multiline.'),
+       super(
+         builder: (FormFieldState<String> field) {
+           final _SBBTextInputFormFieldState state = field as _SBBTextInputFormFieldState;
+
+           SBBInputDecoration effectiveDecoration = decoration ?? const SBBInputDecoration();
+           final String? errorText = field.errorText;
+           if (errorText != null) {
+             effectiveDecoration = errorBuilder != null
+                 ? effectiveDecoration.copyWith(error: errorBuilder(state.context, errorText))
+                 : effectiveDecoration.copyWith(errorText: errorText);
+           }
+
+           void onChangedHandler(String value) {
+             field.didChange(value);
+             onChanged?.call(value);
+           }
+
+           return SBBTextInputBoxed(
+             groupId: groupId,
+             controller: state._effectiveController,
+             decoration: effectiveDecoration,
+             focusNode: focusNode,
+             keyboardType: keyboardType,
+             textInputAction: textInputAction,
+             textCapitalization: textCapitalization,
+             readOnly: readOnly,
+             showCursor: showCursor,
+             autofocus: autofocus,
+             obscuringCharacter: obscuringCharacter,
+             obscureText: obscureText,
+             autocorrect: autocorrect,
+             enableSuggestions: enableSuggestions,
+             maxLines: maxLines,
+             minLines: minLines,
+             expands: expands,
+             onChanged: onChangedHandler,
+             onSubmitted: onFieldSubmitted,
+             inputFormatters: inputFormatters,
+             enabled: enabled,
+             selectAllOnFocus: selectAllOnFocus,
+             ignorePointers: ignorePointers,
+             keyboardAppearance: keyboardAppearance,
+             enableInteractiveSelection: enableInteractiveSelection,
+             onTap: onTap,
+             onTapAlwaysCalled: onTapAlwaysCalled,
+             scrollController: scrollController,
+             autofillHints: autofillHints,
+             inputTextStyle: inputTextStyle,
+             inputForegroundColor: inputForegroundColor,
+             enableClearButton: enableClearButton,
+           );
+         },
+       );
 }
