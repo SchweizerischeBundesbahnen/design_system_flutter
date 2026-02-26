@@ -3,14 +3,52 @@ import 'package:flutter/services.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
-// TODO: documentation & migration guide
-
-/// The SBB TextFormField.
+/// The SBB TextInputFormField wraps [SBBTextInput] in a [FormField].
+///
+/// This widget combines the [SBBTextInput] with form field functionality, allowing
+/// integration with Flutter's [Form] API for validation and state management.
+///
+/// ## Overview
+///
+/// The `SBBTextInputFormField` is a convenience widget that wraps a [SBBTextInput]
+/// inside a [FormField]. This enables:
+/// * Form validation through [validator]
+/// * Automatic form submission handling
+/// * Integration with [FormState] methods
+/// * State persistence through [onSaved]
+///
+/// Most parameters are directly forwarded to the underlying [SBBTextInput].
+/// See [SBBTextInput] for detailed documentation on text input behavior.
+///
+/// ## Form Integration
+///
+/// ```dart
+/// final _formKey = GlobalKey<FormState>();
+///
+/// Form(
+///   key: _formKey,
+///   child: SBBTextInputFormField(
+///     decoration: SBBInputDecoration(
+///       label: 'Username',
+///     ),
+///     validator: (value) {
+///       if (value?.isEmpty ?? true) {
+///         return 'Username is required';
+///       }
+///       return null;
+///     },
+///     onSaved: (value) {
+///       // Handle saved value
+///     },
+///   ),
+/// )
+/// ```
 ///
 /// See also:
 ///
-/// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/textfield>
-/// * <https://digital.sbb.ch/de/design-system-mobile-new/seitentypen/form>
+/// * [SBBTextInput], the underlying text input widget
+/// * [SBBInputDecoration] for customizing the decoration
+/// * [SBBTextInputBoxedFormField], for the boxed variant
 class SBBTextInputFormField extends FormField<String> {
   SBBTextInputFormField({
     super.key,
@@ -136,8 +174,11 @@ class SBBTextInputFormField extends FormField<String> {
   /// initialize its [TextEditingController.text] with [initialValue].
   final TextEditingController? controller;
 
-  /// Called when the user initiates a change to the SBBTextInput's
-  /// value: when they have inserted or deleted text or reset the form.
+  /// Called when the user initiates a change to the [SBBTextInput]'s value:
+  /// when they have inserted or deleted text, or when the form is reset.
+  ///
+  /// This is different from [FormField.onSaved], which is called when the form
+  /// is saved. Use this callback for immediate reactions to user input.
   final ValueChanged<String>? onChanged;
 
   @override
@@ -226,6 +267,13 @@ class _SBBTextInputFormFieldState extends FormFieldState<String> {
   }
 }
 
+/// The boxed variant of [SBBTextInputFormField].
+///
+/// See also:
+///
+/// * [SBBTextInputFormField], the standard (non-boxed) variant
+/// * [SBBTextInputBoxed], the underlying boxed text input widget
+/// * [SBBTextInput], for detailed parameter documentation
 class SBBTextInputBoxedFormField extends SBBTextInputFormField {
   SBBTextInputBoxedFormField({
     super.key,
