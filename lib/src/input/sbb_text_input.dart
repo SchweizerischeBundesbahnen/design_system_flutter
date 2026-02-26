@@ -43,7 +43,7 @@ class SBBTextInput extends StatefulWidget {
     this.controller,
     this.decoration,
     this.focusNode,
-    this.keyboardType,
+    TextInputType? keyboardType,
     this.textInputAction,
     this.textCapitalization = .none,
     this.readOnly = false,
@@ -60,9 +60,10 @@ class SBBTextInput extends StatefulWidget {
     this.onSubmitted,
     this.inputFormatters,
     this.enabled = true,
+    this.selectAllOnFocus = false,
     this.ignorePointers,
     this.keyboardAppearance,
-    this.enableInteractiveSelection = true,
+    bool? enableInteractiveSelection,
     this.onTap,
     this.onTapAlwaysCalled = false,
     this.scrollController,
@@ -70,7 +71,26 @@ class SBBTextInput extends StatefulWidget {
     this.inputTextStyle,
     this.inputForegroundColor,
     this.enableClearButton,
-  });
+  }) : assert(obscuringCharacter.length == 1),
+       assert(maxLines == null || maxLines > 0),
+       assert(minLines == null || minLines > 0),
+       assert(
+         (maxLines == null) || (minLines == null) || (maxLines >= minLines),
+         "minLines can't be greater than maxLines",
+       ),
+       assert(
+         !expands || (maxLines == null && minLines == null),
+         'minLines and maxLines must be null when expands is true.',
+       ),
+       assert(!obscureText || maxLines == 1, 'Obscured fields cannot be multiline.'),
+       assert(
+         !identical(textInputAction, TextInputAction.newline) ||
+             maxLines == 1 ||
+             !identical(keyboardType, TextInputType.text),
+         'Use keyboardType TextInputType.multiline when using TextInputAction.newline on a multiline TextField.',
+       ),
+       keyboardType = keyboardType ?? (maxLines == 1 ? TextInputType.text : TextInputType.multiline),
+       enableInteractiveSelection = enableInteractiveSelection ?? (!readOnly || !obscureText);
 
   /// {@macro flutter.widgets.editableText.groupId}
   final Object groupId;
@@ -170,6 +190,9 @@ class SBBTextInput extends StatefulWidget {
   /// )
   /// ```
   final bool enabled;
+
+  /// {@macro flutter.widgets.editableText.selectAllOnFocus}
+  final bool? selectAllOnFocus;
 
   /// Determines whether this widget ignores pointer events.
   ///
@@ -414,6 +437,7 @@ class _SBBTextInputState extends State<SBBTextInput>
       paintCursorAboveText: paintCursorAboveText,
       contextMenuBuilder: _defaultContextMenuBuilder,
       cursorColor: cursorColor,
+      selectAllOnFocus: widget.selectAllOnFocus,
       backgroundCursorColor: CupertinoColors.inactiveGray,
       keyboardAppearance: keyboardAppearance,
       enableInteractiveSelection: widget.enableInteractiveSelection,
