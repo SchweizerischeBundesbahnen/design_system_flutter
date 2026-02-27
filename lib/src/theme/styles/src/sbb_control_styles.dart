@@ -6,10 +6,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   SBBControlStyles({
     this.textField,
     this.selectLabel,
-    this.headerBackgroundColor,
-    this.headerButtonBackgroundColorHighlighted,
-    this.headerIconColor,
-    this.headerTextStyle,
     this.linkTextStyle,
     this.linkTextStyleHighlighted,
     this.modalBackgroundColor,
@@ -28,10 +24,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
       ),
       textStyleDisabled: baseStyle.themedTextStyle(textStyle: SBBTextStyles.helpersLabel, color: SBBColors.metal),
     ),
-    headerBackgroundColor: baseStyle.primaryColor,
-    headerButtonBackgroundColorHighlighted: baseStyle.primaryColorDark,
-    headerIconColor: SBBColors.white,
-    headerTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.largeLight, color: SBBColors.white),
     linkTextStyle: baseStyle.defaultTextStyle?.copyWith(color: baseStyle.primaryColor),
     linkTextStyleHighlighted: baseStyle.defaultTextStyle?.copyWith(
       color: baseStyle.themeValue(baseStyle.primaryColorDark, SBBColors.white),
@@ -46,10 +38,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   final SBBTextFieldStyle? textField;
   final SBBTextStyle? selectLabel;
 
-  final Color? headerBackgroundColor;
-  final Color? headerButtonBackgroundColorHighlighted;
-  final Color? headerIconColor;
-  final TextStyle? headerTextStyle;
   final TextStyle? linkTextStyle;
   final TextStyle? linkTextStyleHighlighted;
   final Color? modalBackgroundColor;
@@ -59,14 +47,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   final SBBPickerStyle? picker;
 
   static SBBControlStyles of(BuildContext context) => Theme.of(context).extension<SBBControlStyles>()!;
-
-  AppBarTheme get appBarTheme => AppBarTheme(
-    backgroundColor: headerBackgroundColor,
-    iconTheme: IconThemeData(color: headerIconColor),
-    actionsIconTheme: IconThemeData(color: headerIconColor),
-    elevation: 0.0,
-    centerTitle: true,
-  );
 
   TextSelectionThemeData get textSelectionTheme => TextSelectionThemeData(
     selectionColor: textField!.selectionColor,
@@ -92,11 +72,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   }) => SBBControlStyles(
     textField: textField ?? this.textField,
     selectLabel: selectLabel ?? this.selectLabel,
-    headerBackgroundColor: headerBackgroundColor ?? this.headerBackgroundColor,
-    headerButtonBackgroundColorHighlighted:
-        headerButtonBackgroundColorHighlighted ?? this.headerButtonBackgroundColorHighlighted,
-    headerIconColor: headerIconColor ?? this.headerIconColor,
-    headerTextStyle: headerTextStyle ?? this.headerTextStyle,
     linkTextStyle: linkTextStyle ?? this.linkTextStyle,
     linkTextStyleHighlighted: linkTextStyleHighlighted ?? this.linkTextStyleHighlighted,
     modalBackgroundColor: modalBackgroundColor ?? this.modalBackgroundColor,
@@ -112,14 +87,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     return SBBControlStyles(
       textField: textField?.lerp(other.textField, t),
       selectLabel: selectLabel?.lerp(other.selectLabel, t),
-      headerBackgroundColor: Color.lerp(headerBackgroundColor, other.headerBackgroundColor, t),
-      headerButtonBackgroundColorHighlighted: Color.lerp(
-        headerButtonBackgroundColorHighlighted,
-        other.headerButtonBackgroundColorHighlighted,
-        t,
-      ),
-      headerIconColor: Color.lerp(headerIconColor, other.headerIconColor, t),
-      headerTextStyle: TextStyle.lerp(headerTextStyle, other.headerTextStyle, t),
       linkTextStyle: TextStyle.lerp(linkTextStyle, other.linkTextStyle, t),
       linkTextStyleHighlighted: TextStyle.lerp(linkTextStyleHighlighted, other.linkTextStyleHighlighted, t),
       modalBackgroundColor: Color.lerp(modalBackgroundColor, other.modalBackgroundColor, t),
@@ -138,11 +105,6 @@ extension SBBControlStylesExtension on SBBControlStyles? {
           textField: this!.textField.merge(other?.textField),
           selectLabel: this!.selectLabel.merge(other?.selectLabel),
           picker: this!.picker.merge(other?.picker),
-          headerBackgroundColor: this!.headerBackgroundColor ?? other?.headerBackgroundColor,
-          headerButtonBackgroundColorHighlighted:
-              this!.headerButtonBackgroundColorHighlighted ?? other?.headerButtonBackgroundColorHighlighted,
-          headerIconColor: this!.headerIconColor ?? other?.headerIconColor,
-          headerTextStyle: this!.headerTextStyle ?? other?.headerTextStyle,
           linkTextStyle: this!.linkTextStyle ?? other?.linkTextStyle,
           linkTextStyleHighlighted: this!.linkTextStyleHighlighted ?? other?.linkTextStyleHighlighted,
           modalBackgroundColor: this!.modalBackgroundColor ?? other?.modalBackgroundColor,

@@ -10,28 +10,32 @@ class HeaderPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        const Padding(padding: .all(SBBSpacing.medium), child: ThemeModeSegmentedButton()),
-        const SBBListHeader('No leading Widget'),
-        const SBBHeader(title: 'Title', automaticallyImplyLeading: false),
-        const SizedBox(height: SBBSpacing.medium),
-        const SBBListHeader('Menu'),
-        const SBBHeader.menu(title: 'Title'),
-        const SizedBox(height: SBBSpacing.medium),
-        const SBBListHeader('Back'),
-        const SBBHeader.back(title: 'Title'),
-        const SizedBox(height: SBBSpacing.medium),
-        const SBBListHeader('Close'),
-        const SBBHeader.close(title: 'Title'),
-        const SizedBox(height: SBBSpacing.medium),
-        const SBBListHeader('With Callback on SBB Signet'),
-        SBBHeader(
-          title: 'Title',
-          automaticallyImplyLeading: false,
-          onPressedLogo: () => Navigator.maybePop(context),
-          logoTooltip: 'Back to home',
-        ),
-        const SizedBox(height: SBBSpacing.medium),
+        Padding(padding: .all(SBBSpacing.medium), child: ThemeModeSegmentedButton()),
+        SBBListHeader('Default'),
+        _toolbarHeightSized(SBBHeader(titleText: 'No leading Widget', automaticallyImplyLeading: false)),
+        SizedBox(height: SBBSpacing.medium),
+        _toolbarHeightSized(SBBHeader(titleText: 'Menu', leading: SBBHeaderLeadingMenuButton())),
+        SizedBox(height: SBBSpacing.medium),
+        _toolbarHeightSized(SBBHeader(titleText: 'Back', leading: SBBHeaderLeadingBackButton())),
+        SizedBox(height: SBBSpacing.medium),
+        _toolbarHeightSized(SBBHeader(titleText: 'Close', leading: SBBHeaderLeadingCloseButton())),
+        SBBListHeader('Small'),
+        SBBHeaderSmall(titleText: 'No leading Widget', automaticallyImplyLeading: false),
+        SizedBox(height: SBBSpacing.medium),
+        SBBHeaderSmall(titleText: 'Menu', leading: SBBHeaderLeadingMenuButton()),
+        SizedBox(height: SBBSpacing.medium),
+        SBBHeaderSmall(titleText: 'Back', leading: SBBHeaderLeadingBackButton()),
+        SizedBox(height: SBBSpacing.medium),
+        SBBHeaderSmall(titleText: 'Close', leading: SBBHeaderLeadingCloseButton()),
       ],
+    );
+  }
+
+  /// needed as [SBBHeader] set's a bottom widget as spacer which leads to unconstrainted height.
+  Widget _toolbarHeightSized(SBBHeader header) {
+    return SizedBox(
+      height: SBBHeaderStyle.toolbarHeight,
+      child: header,
     );
   }
 }

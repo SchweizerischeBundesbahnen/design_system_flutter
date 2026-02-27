@@ -1,318 +1,346 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:sbb_design_system_mobile/src/header/sbb_header_style_scope.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
-/// The SBB Header. Use according to documentation.
+/// The SBB Header.
 ///
+/// {@template sbb_design_system.header_description}
+/// A top app bar that follows the SBB Design System and builds on top of
+/// Flutter’s [AppBar]. Use it to display a page title, a navigation affordance
+/// (menu, back, close) and optional actions.
+///
+/// Provide either [titleText] for a simple, text-only title with standard
+/// styling, or [title] for a fully custom title widget. These two parameters
+/// are mutually exclusive.
+///
+/// Leading behavior:
+/// - By default, when [automaticallyImplyLeading] is true, the header chooses
+///   a leading icon based on context:
+///   1) If the surrounding [Scaffold] has a drawer, a menu button is shown.
+///   2) If the current route can pop, a back button is shown.
+///   3) If the current route is a fullscreen dialog, a close button is shown.
+/// - To override the automatic behavior, pass a widget to [leading] directly
+///   (e.g. one of the SBB buttons [SBBHeaderLeadingMenuButton],
+///   [SBBHeaderLeadingBackButton], [SBBHeaderLeadingCloseButton]) or a custom widget.
+/// - To remove leading, set [automaticallyImplyLeading] to false with [leading] null.
+/// - If [leadingWidth] is not provided and the leading widget is one of the
+///   SBB-provided buttons, a default width is applied.
+///
+/// Actions:
+/// - Use [actions] to show trailing action widgets (e.g. icon buttons).
+/// - If [actions] is null, the SBB logo is shown. To suppress it, provide
+///   an empty list.
+///
+/// Bottom:
+/// - Use [bottom] to attach a [PreferredSizeWidget].
+///
+/// Custom appearance can be provided via [style], which will override
+/// non-null properties from the theme.
+///
+/// This widget is normally used inside a [Scaffold] as the appBar parameter to
+/// properly constrain its height. If used otherwise, you must make sure to
+/// properly constrain its height, e.g. by using the [SBBHeaderStyle.toolbarHeight]
+/// or [SBBHeaderStyle.smallToolbarHeight] in addition to the height of the bottom widget.
+/// {@endtemplate}
+///
+/// Sample code:
+///
+/// ```dart
+/// // Simple header with a text title and automatic leading.
+/// SBBHeader(titleText: 'SBB');
+///
+/// // A header with a menu icon leading, custom title and style.
+/// SBBHeader(
+///   leading: SBBHeaderLeadingMenuButton(),
+///   title: Row(
+///     spacing: 8.0,
+///     children: [
+///       const Icon(SBBIcons.train_small),
+///       const Text('SBB Mobile'),
+///     ],
+///   ),
+///   style: const SBBHeaderStyle(
+///     backgroundColor: Color(0xFF000000),
+///     foregroundColor: Color(0xFFFFFFFF),
+///     centerTitle: false,
+///   ),
+/// );
+/// ```
+///
+/// {@template sbb_design_system.header_see_also}
 /// See also:
-///
-/// * [AppBar], which is a part of this Widget.
-/// * https://digital.sbb.ch/de/design-system-mobile-new/module/header
+/// - [SBBHeaderLeadingMenuButton], [SBBHeaderLeadingBackButton],
+///   and [SBBHeaderLeadingCloseButton] for SBB-styled leading widgets.
+/// - [SBBHeaderStyle], for customizing the header’s appearance.
+/// - [SBBHeaderThemeData], to provide theme-wide defaults for headers.
+/// - [AppBar], which is used by this widget under the hood.
+/// - [Design Specification](https://digital.sbb.ch/de/design-system-mobile-new/module/header)
+/// {@endtemplate}
+/// - [SBBHeaderSmall], small variant of the SBB header
 class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
   const SBBHeader({
-    Key? key,
-    String title = '',
-    Widget? leadingWidget,
-    double? leadingWidth,
-    bool automaticallyImplyLeading = true,
-    List<Widget>? actions,
-    VoidCallback? onPressedLogo,
-    String? logoTooltip,
-    bool? blockSemantics,
-    SystemUiOverlayStyle? systemOverlayStyle,
-  }) : this._(
-         key: key,
-         title: title,
-         leadingWidget: leadingWidget,
-         leadingWidth: leadingWidth,
-         automaticallyImplyLeading: automaticallyImplyLeading,
-         actions: actions,
-         onPressedLogo: onPressedLogo,
-         logoTooltip: logoTooltip,
-         blockSemantics: blockSemantics,
-         systemOverlayStyle: systemOverlayStyle,
-       );
-
-  const SBBHeader.menu({
-    Key? key,
-    String title = '',
-    VoidCallback? onPressed,
-    VoidCallback? onPressedLogo,
-    List<Widget>? actions,
-    String? logoTooltip,
-    bool? blockSemantics,
-    SystemUiOverlayStyle? systemOverlayStyle,
-  }) : this._(
-         key: key,
-         title: title,
-         automaticallyImplyLeading: false,
-         useMenuButton: true,
-         onPressed: onPressed,
-         onPressedLogo: onPressedLogo,
-         actions: actions,
-         logoTooltip: logoTooltip,
-         blockSemantics: blockSemantics,
-         systemOverlayStyle: systemOverlayStyle,
-       );
-
-  const SBBHeader.back({
-    Key? key,
-    String title = '',
-    VoidCallback? onPressed,
-    VoidCallback? onPressedLogo,
-    List<Widget>? actions,
-    String? logoTooltip,
-    bool? blockSemantics,
-    SystemUiOverlayStyle? systemOverlayStyle,
-  }) : this._(
-         key: key,
-         title: title,
-         automaticallyImplyLeading: false,
-         useBackButton: true,
-         onPressed: onPressed,
-         onPressedLogo: onPressedLogo,
-         actions: actions,
-         logoTooltip: logoTooltip,
-         blockSemantics: blockSemantics,
-         systemOverlayStyle: systemOverlayStyle,
-       );
-
-  const SBBHeader.close({
-    Key? key,
-    String title = '',
-    VoidCallback? onPressed,
-    VoidCallback? onPressedLogo,
-    List<Widget>? actions,
-    String? logoTooltip,
-    bool? blockSemantics,
-    SystemUiOverlayStyle? systemOverlayStyle,
-  }) : this._(
-         key: key,
-         title: title,
-         automaticallyImplyLeading: false,
-         useCloseButton: true,
-         onPressed: onPressed,
-         onPressedLogo: onPressedLogo,
-         actions: actions,
-         logoTooltip: logoTooltip,
-         blockSemantics: blockSemantics,
-         systemOverlayStyle: systemOverlayStyle,
-       );
-
-  const SBBHeader._({
     super.key,
-    required this.title,
-    required this.automaticallyImplyLeading,
-    required this.onPressedLogo,
-    required this.logoTooltip,
-    this.leadingWidget,
+    this.titleText,
+    this.title,
+    this.leading,
     this.leadingWidth,
-    this.useMenuButton = false,
-    this.useBackButton = false,
-    this.useCloseButton = false,
-    this.onPressed,
     this.actions,
-    this.blockSemantics,
-    this.systemOverlayStyle,
-  }) : assert(actions == null || onPressedLogo == null);
+    this.bottom,
+    this.excludeHeaderSemantics = false,
+    this.automaticallyImplyLeading = true,
+    this.useDefaultSemanticsOrder = true,
+    this.style,
+  }) : assert(title == null || titleText == null, 'Only one of title or titleText can be set');
 
-  final String title;
-  final Widget? leadingWidget;
+  /// A custom widget displayed as the header's title.
+  ///
+  /// For simple text labels, use [titleText] instead.
+  ///
+  /// Cannot be used together with [titleText].
+  final Widget? title;
+
+  /// Text string to display as the header's title.
+  ///
+  /// Cannot be used together with [title].
+  final String? titleText;
+
+  /// {@macro flutter.material.appbar.leading}
+  ///
+  /// You can pass one of the provided SBB leading icon buttons:
+  /// - [SBBHeaderLeadingMenuButton]
+  /// - [SBBHeaderLeadingBackButton]
+  /// - [SBBHeaderLeadingCloseButton]
+  final Widget? leading;
+
+  /// {@macro flutter.material.appbar.leadingWidth}
+  ///
+  /// If null and [leading] is one of the provided SBB leading icon buttons,
+  /// a default width is used. When [automaticallyImplyLeading] is true, the
+  /// correct widths are supplied.
   final double? leadingWidth;
-  final bool automaticallyImplyLeading;
-  final bool useMenuButton;
-  final bool useBackButton;
-  final bool useCloseButton;
-  final VoidCallback? onPressed;
-  final VoidCallback? onPressedLogo;
-  final String? logoTooltip;
-  final List<Widget>? actions;
-  final bool? blockSemantics;
-  final SystemUiOverlayStyle? systemOverlayStyle;
 
-  static const _menuButtonIconWidth = 20.718;
-  static const _menuButtonIconHeight = 16.0;
-  static const _menuButtonIconPadding = 16.688;
-  static const _backButtonIconWidth = 10.025;
-  static const _backButtonIconHeight = 15.401;
-  static const _backButtonIconPadding = 18.027;
-  static const _closeButtonIconWidth = 15.177;
-  static const _closeButtonIconHeight = 15.401;
-  static const _closeButtonIconPadding = 15.974;
+  /// {@macro flutter.material.appbar.bottom}
+  final PreferredSizeWidget? bottom;
+
+  /// {@macro flutter.material.appbar.automaticallyImplyLeading}
+  final bool automaticallyImplyLeading;
+
+  /// {@macro flutter.material.appbar.excludeHeaderSemantics}
+  final bool excludeHeaderSemantics;
+
+  /// {@macro flutter.material.appbar.useDefaultSemanticsOrder}
+  final bool useDefaultSemanticsOrder;
+
+  /// {@macro flutter.material.appbar.actions}
+  final List<Widget>? actions;
+
+  /// Customizes this header's appearance.
+  ///
+  /// Non-null properties of this style override the corresponding
+  /// properties in [SBBHeaderThemeData.style] of the theme found in [context].
+  final SBBHeaderStyle? style;
 
   @override
   Widget build(BuildContext context) {
-    if (leadingWidget != null) {
-      return _build(context, leadingWidget!, leadingWidth ?? kToolbarHeight);
-    }
-
-    var useMenuButton = this.useMenuButton;
-    var useCloseButton = this.useCloseButton;
-    var useBackButton = this.useBackButton;
-    if (automaticallyImplyLeading) {
-      final ModalRoute<dynamic>? parentRoute = ModalRoute.of(context);
-      useMenuButton = Scaffold.of(context).hasDrawer;
-      useBackButton = parentRoute?.canPop ?? false;
-      useCloseButton =
-          useCloseButton ||
-          automaticallyImplyLeading &&
-              useBackButton &&
-              parentRoute is PageRoute<dynamic> &&
-              parentRoute.fullscreenDialog;
-    }
-
-    if (useMenuButton) {
-      return _build(context, _buildMenuButton(context), _menuButtonIconWidth + _menuButtonIconPadding * 2);
-    }
-
-    if (useCloseButton) {
-      return _build(context, _buildCloseButton(context), _closeButtonIconWidth + _closeButtonIconPadding * 2);
-    }
-
-    if (useBackButton) {
-      return _build(context, _buildBackButton(context), _backButtonIconWidth + _backButtonIconPadding * 2);
-    }
-
-    return _build(context, Container(), leadingWidth ?? kToolbarHeight);
+    return _BaseHeader(
+      title: title,
+      titleText: titleText,
+      leading: leading,
+      leadingWidth: leadingWidth,
+      bottom: _resolvedBottom,
+      actions: actions,
+      style: style,
+      excludeHeaderSemantics: excludeHeaderSemantics,
+      automaticallyImplyLeading: automaticallyImplyLeading,
+      useDefaultSemanticsOrder: useDefaultSemanticsOrder,
+    );
   }
 
-  Widget _build(BuildContext context, Widget leading, double leadingWidth) {
-    final customLeadingWidth = leadingWidth > kToolbarHeight;
-    final style = SBBControlStyles.of(context);
-    return BlockSemantics(
-      blocking: blockSemantics ?? false,
-      child: AppBar(
-        systemOverlayStyle: systemOverlayStyle ?? SystemUiOverlayStyle(systemNavigationBarColor: SBBColors.transparent),
-        titleSpacing: 0.0,
-        leading: Container(
-          padding: customLeadingWidth ? .zero : .only(right: kToolbarHeight - leadingWidth),
-          child: leading,
-        ),
-        leadingWidth: customLeadingWidth ? leadingWidth : kToolbarHeight,
-        automaticallyImplyLeading: automaticallyImplyLeading,
-        title: BlockSemantics(
-          blocking: blockSemantics ?? false,
-          child: Semantics(header: true, child: Text(title, style: style.headerTextStyle)),
-        ),
-        actions: actions != null && actions!.isNotEmpty
-            ? actions
-            : [
-                ExcludeSemantics(
-                  excluding: onPressedLogo == null,
-                  child: Container(
-                    alignment: .centerRight,
-                    padding: const .only(right: SBBSpacing.xSmall),
-                    height: kToolbarHeight,
-                    width: customLeadingWidth ? leadingWidth : kToolbarHeight,
-                    child: IconButton(
-                      icon: const SBBLogo(),
-                      onPressed: onPressedLogo,
-                      tooltip: logoTooltip,
-                      splashColor: style.headerButtonBackgroundColorHighlighted,
-                      focusColor: style.headerButtonBackgroundColorHighlighted,
-                      hoverColor: SBBColors.transparent,
-                      highlightColor: SBBColors.transparent,
-                    ),
-                  ),
-                ),
-              ],
+  @override
+  Size get preferredSize => Size.fromHeight(_toolbarHeight + (bottom?.preferredSize.height ?? 0));
+
+  double get _toolbarHeight => SBBHeaderStyle.toolbarHeight;
+
+  PreferredSizeWidget? get _resolvedBottom => _DefaultBottomSpacer(bottom: bottom);
+}
+
+/// The small variant of SBB Header
+///
+/// {@macro sbb_design_system.header_description}
+///
+/// Sample code:
+///
+/// ```dart
+/// // Simple header with a text title and automatic leading.
+/// SBBHeaderSmall(titleText: 'SBB');
+///
+/// // A header with a menu icon leading, custom title and style.
+/// SBBHeaderSmall(
+///   leading: SBBHeaderLeadingMenuButton(),
+///   title: Row(
+///     spacing: 8.0,
+///     children: [
+///       const Icon(SBBIcons.train_small),
+///       const Text('SBB Mobile'),
+///     ],
+///   ),
+///   style: const SBBHeaderStyle(
+///     backgroundColor: Color(0xFF000000),
+///     foregroundColor: Color(0xFFFFFFFF),
+///     centerTitle: false,
+///   ),
+/// );
+/// ```
+///
+/// {@macro sbb_design_system.header_see_also}
+/// - [SBBHeader], default variant of the SBB header
+class SBBHeaderSmall extends SBBHeader {
+  const SBBHeaderSmall({
+    super.key,
+    super.titleText,
+    super.title,
+    super.leading,
+    super.leadingWidth,
+    super.actions,
+    super.bottom,
+    super.excludeHeaderSemantics = false,
+    super.automaticallyImplyLeading = true,
+    super.useDefaultSemanticsOrder = true,
+    super.style,
+  });
+
+  @override
+  double get _toolbarHeight => SBBHeaderStyle.smallToolbarHeight;
+
+  @override
+  PreferredSizeWidget? get _resolvedBottom => bottom;
+}
+
+/// Base class for building both the small and the normal variant of [SBBHeader].
+class _BaseHeader extends StatelessWidget {
+  const _BaseHeader({
+    required this.title,
+    required this.titleText,
+    required this.leading,
+    required this.leadingWidth,
+    required this.bottom,
+    required this.actions,
+    required this.style,
+    required this.excludeHeaderSemantics,
+    required this.automaticallyImplyLeading,
+    required this.useDefaultSemanticsOrder,
+  });
+
+  final Widget? title;
+  final String? titleText;
+  final Widget? leading;
+  final double? leadingWidth;
+  final PreferredSizeWidget? bottom;
+  final bool automaticallyImplyLeading;
+  final bool excludeHeaderSemantics;
+  final bool useDefaultSemanticsOrder;
+  final List<Widget>? actions;
+  final SBBHeaderStyle? style;
+
+  @override
+  Widget build(BuildContext context) {
+    final themeData = Theme.of(context).sbbHeaderTheme;
+    final effectiveStyle = (themeData?.style ?? SBBHeaderStyle()).merge(style);
+
+    final resolvedLeading = _resolveLeading(context);
+    final leadingWithScope = resolvedLeading == null
+        ? null
+        : SBBHeaderStyleScope(style: effectiveStyle, child: resolvedLeading);
+
+    return AppBar(
+      leading: leadingWithScope,
+      leadingWidth: _resolveLeadingWidth(context, resolvedLeading),
+      title: _resolveTitle(),
+      bottom: bottom,
+      foregroundColor: effectiveStyle.foregroundColor,
+      backgroundColor: effectiveStyle.backgroundColor,
+      titleSpacing: effectiveStyle.titleSpacing,
+      titleTextStyle: effectiveStyle.titleTextStyle,
+      centerTitle: effectiveStyle.centerTitle,
+      clipBehavior: effectiveStyle.clipBehavior,
+      elevation: effectiveStyle.elevation,
+      systemOverlayStyle: effectiveStyle.systemOverlayStyle,
+      toolbarTextStyle: effectiveStyle.toolbarTextStyle,
+      actionsPadding: effectiveStyle.actionsPadding,
+      automaticallyImplyLeading: automaticallyImplyLeading,
+      useDefaultSemanticsOrder: useDefaultSemanticsOrder,
+      excludeHeaderSemantics: excludeHeaderSemantics,
+      actions: actions ?? [_sbbLogo()],
+    );
+  }
+
+  Widget _sbbLogo() {
+    return ExcludeSemantics(
+      child: Container(
+        alignment: Alignment.centerRight,
+        padding: const EdgeInsets.only(right: SBBSpacing.xSmall),
+        height: SBBHeaderStyle.toolbarHeight,
+        width: SBBHeaderStyle.toolbarHeight,
+        child: const SBBLogo(),
       ),
     );
   }
 
-  @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+  Widget? _resolveLeading(BuildContext context) {
+    if (leading != null) return leading;
 
-  Widget _buildMenuButton(BuildContext context) {
-    final path = Path()
-      ..moveTo(0.0, 1.0)
-      ..lineTo(20.718, 1.0)
-      ..moveTo(0.0, 8.0)
-      ..lineTo(20.718, 8.0)
-      ..moveTo(0.0, 15.0)
-      ..lineTo(20.718, 15.0);
-    return _buildPaintedIconButton(
-      context,
-      path,
-      _menuButtonIconWidth,
-      _menuButtonIconHeight,
-      _menuButtonIconPadding,
-      MaterialLocalizations.of(context).openAppDrawerTooltip,
-      onPressed ?? () => Scaffold.of(context).openDrawer(),
-    );
+    if (!automaticallyImplyLeading) return null;
+
+    final ModalRoute<dynamic>? parentRoute = ModalRoute.of(context);
+    if (Scaffold.of(context).hasDrawer) {
+      return SBBHeaderLeadingMenuButton();
+    } else if (parentRoute?.canPop ?? false) {
+      return SBBHeaderLeadingBackButton();
+    } else if (parentRoute is PageRoute<dynamic> && parentRoute.fullscreenDialog) {
+      return SBBHeaderLeadingCloseButton();
+    }
+
+    return null;
   }
 
-  Widget _buildBackButton(BuildContext context) {
-    final path = Path()
-      ..moveTo(9.322, 0.711)
-      ..lineTo(1.422, 8.519)
-      ..lineTo(9.322, 16.327);
-    return _buildPaintedIconButton(
-      context,
-      path,
-      _backButtonIconWidth,
-      _backButtonIconHeight,
-      _backButtonIconPadding,
-      MaterialLocalizations.of(context).backButtonTooltip,
-      onPressed ?? () => Navigator.maybePop(context),
-    );
+  double? _resolveLeadingWidth(BuildContext context, Widget? resolvedLeading) {
+    if (leadingWidth != null) return leadingWidth;
+
+    if (resolvedLeading is SBBHeaderLeadingMenuButton) return SBBHeaderLeadingMenuButton.leadingWidth;
+    if (resolvedLeading is SBBHeaderLeadingBackButton) return SBBHeaderLeadingBackButton.leadingWidth(context);
+    if (resolvedLeading is SBBHeaderLeadingCloseButton) return SBBHeaderLeadingCloseButton.leadingWidth;
+
+    return null;
   }
 
-  Widget _buildCloseButton(BuildContext context) {
-    final path = Path()
-      ..moveTo(0.713, 0.701)
-      ..lineTo(14.463, 14.701)
-      ..moveTo(0.713, 14.701)
-      ..lineTo(14.463, 0.701);
-    return _buildPaintedIconButton(
-      context,
-      path,
-      _closeButtonIconWidth,
-      _closeButtonIconHeight,
-      _closeButtonIconPadding,
-      MaterialLocalizations.of(context).closeButtonTooltip,
-      onPressed ?? () => Navigator.maybePop(context),
-    );
-  }
-
-  Widget _buildPaintedIconButton(
-    BuildContext context,
-    Path path,
-    double width,
-    double height,
-    double padding,
-    String tooltip,
-    VoidCallback? onPressed,
-  ) {
-    final style = SBBControlStyles.of(context);
-    final paint = Paint()
-      ..style = .stroke
-      ..strokeWidth = 2.0
-      ..strokeCap = .butt
-      ..color = style.headerIconColor!;
-    return IconButton(
-      padding: .symmetric(horizontal: padding),
-      icon: CustomPaint(painter: _Painter(paint, path), size: Size(width, height)),
-      tooltip: tooltip,
-      onPressed: onPressed,
-      splashColor: style.headerButtonBackgroundColorHighlighted,
-      focusColor: style.headerButtonBackgroundColorHighlighted,
-      hoverColor: SBBColors.transparent,
-      highlightColor: SBBColors.transparent,
-    );
+  Widget? _resolveTitle() {
+    if (title == null && titleText != null) {
+      return Text(titleText!);
+    }
+    return title;
   }
 }
 
-class _Painter extends CustomPainter {
-  const _Painter(this.paintObject, this.path);
+/// Workaround for bottom spacing of [SBBHeader] as setting [AppBar.toolbarHeight] centers elements of AppBar.
+class _DefaultBottomSpacer extends StatelessWidget implements PreferredSizeWidget {
+  const _DefaultBottomSpacer({this.bottom});
 
-  final Paint paintObject;
-  final Path path;
-
-  @override
-  void paint(Canvas canvas, Size size) => canvas.drawPath(path, paintObject);
+  final PreferredSizeWidget? bottom;
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+  Size get preferredSize => Size.fromHeight(extraSpace + (bottom?.preferredSize.height ?? 0));
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (bottom != null) bottom!,
+        SizedBox(height: extraSpace),
+      ],
+    );
+  }
+
+  double get extraSpace => SBBHeaderStyle.toolbarHeight - SBBHeaderStyle.smallToolbarHeight;
 }

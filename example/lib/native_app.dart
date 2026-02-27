@@ -71,100 +71,113 @@ class MyApp extends StatelessWidget {
             supportedLocales: const [Locale('en'), Locale('de'), Locale('fr'), Locale('it')],
             locale: const Locale('de'),
             home: Scaffold(
-              appBar: const SBBHeader(
-                title: 'Design System Mobile',
-                systemOverlayStyle: SystemUiOverlayStyle.light,
-              ),
-              body: Builder(
-                builder: (context) {
-                  return SingleChildScrollView(
-                    child: Padding(
-                      padding: const .symmetric(horizontal: SBBSpacing.medium),
-                      child: Column(
-                        children: [
-                          const Padding(
-                            padding: .symmetric(vertical: SBBSpacing.medium),
-                            child: ThemeModeSegmentedButton(),
-                          ),
-                          const SBBListHeader('Basics'),
-                          SBBContentBox(
-                            child: Column(
-                              mainAxisAlignment: .center,
-                              children: SBBListItem.divideListItems(
-                                context: context,
-                                items: [
-                                  _DemoEntry('Icon', IconPage()),
-                                  _DemoEntry('Typography', TypographyPage()),
-                                  _DemoEntry('Color', ColorPage()),
-                                ],
-                              ).toList(growable: false),
-                            ),
-                          ),
-                          const SizedBox(height: SBBSpacing.medium),
-                          const SBBListHeader('Elements'),
-                          SBBContentBox(
-                            child: Column(
-                              mainAxisAlignment: .center,
-                              children: SBBListItem.divideListItems(
-                                context: context,
-                                items: [
-                                  _DemoEntry('Button', ButtonPage()),
-                                  _DemoEntry('Checkbox', CheckboxPage()),
-                                  _DemoEntry('Chip', ChipPage()),
-                                  _DemoEntry('Link', LinkPage()),
-                                  _DemoEntry('List Item', ListItemPage()),
-                                  _DemoEntry('Loading Indicator', LoadingIndicatorPage()),
-                                  _DemoEntry('Picker', PickerPage()),
-                                  _DemoEntry('Radio', RadioPage()),
-                                  _DemoEntry('Segmented Button', SegmentedButtonPage()),
-                                  _DemoEntry('Select', SelectPage()),
-                                  _DemoEntry('Switch', SwitchPage()),
-                                  _DemoEntry('Text Input', TextInputPage()),
-                                  _DemoEntry('Text Area', TextAreaPage()),
-                                  _DemoEntry('Paginator', PaginatorPage()),
-                                  _DemoEntry('Slider', SliderPage()),
-                                  _DemoEntry('Promotion Box', PromotionBoxPage()),
-                                  _DemoEntry('Notification Box', NotificationBoxPage()),
-                                  _DemoEntry('Status', StatusPage()),
-                                  _DemoEntry('Input Trigger', InputTriggerPage()),
-                                ],
-                              ).toList(growable: false),
-                            ),
-                          ),
-                          const SizedBox(height: SBBSpacing.medium),
-                          const SBBListHeader('Modules'),
-                          SBBContentBox(
-                            child: Column(
-                              mainAxisAlignment: .center,
-                              children: SBBListItem.divideListItems(
-                                context: context,
-                                items: [
-                                  _DemoEntry('Autocompletion', AutocompletionPage()),
-                                  _DemoEntry('Container', ContainerPage()),
-                                  _DemoEntry('Forms', FormPage()),
-                                  _DemoEntry('Header', HeaderPage()),
-                                  _DemoEntry('Headerbox', HeaderBoxPage()),
-                                  _DemoEntry('Illustrations', IllustrationPage()),
-                                  _DemoEntry('Message', MessagePage()),
-                                  _DemoEntry('Modal', ModalPage()),
-                                  _DemoEntry('Onboarding', OnboardingPage()),
-                                  _DemoEntry('Stepper', StepperPage()),
-                                  _DemoEntry('Tab Bar', TabBarPage()),
-                                  _DemoEntry('Toast', ToastPage()),
-                                ],
-                              ).toList(growable: false),
-                            ),
-                          ),
-                          const SizedBox(height: SBBSpacing.medium),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
+              appBar: const SBBHeaderSmall(titleText: 'Design System Mobile'),
+              body: _content(),
             ),
           );
         },
+      ),
+    );
+  }
+
+  Widget _content() {
+    return Builder(
+      builder: (context) {
+        return SingleChildScrollView(
+          child: Padding(
+            padding: const .symmetric(horizontal: SBBSpacing.medium),
+            child: Column(
+              children: [
+                const Padding(
+                  padding: .symmetric(vertical: SBBSpacing.medium),
+                  child: ThemeModeSegmentedButton(),
+                ),
+                const SBBListHeader('Basics'),
+                _basics(context),
+                const SizedBox(height: SBBSpacing.medium),
+                const SBBListHeader('Elements'),
+                _elements(context),
+                const SizedBox(height: SBBSpacing.medium),
+                const SBBListHeader('Modules'),
+                _modules(context),
+                const SizedBox(height: SBBSpacing.xLarge),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget _basics(BuildContext context) {
+    return SBBContentBox(
+      child: Column(
+        mainAxisAlignment: .center,
+        children: SBBListItem.divideListItems(
+          context: context,
+          items: [
+            _DemoEntry('Icon', IconPage()),
+            _DemoEntry('Typography', TypographyPage()),
+            _DemoEntry('Color', ColorPage()),
+          ],
+        ).toList(growable: false),
+      ),
+    );
+  }
+
+  Widget _elements(BuildContext context) {
+    return SBBContentBox(
+      child: Column(
+        mainAxisAlignment: .center,
+        children: SBBListItem.divideListItems(
+          context: context,
+          items: [
+            _DemoEntry('Button', ButtonPage()),
+            _DemoEntry('Checkbox', CheckboxPage()),
+            _DemoEntry('Chip', ChipPage()),
+            _DemoEntry('Link', LinkPage()),
+            _DemoEntry('List Item', ListItemPage()),
+            _DemoEntry('Loading Indicator', LoadingIndicatorPage()),
+            _DemoEntry('Picker', PickerPage()),
+            _DemoEntry('Radio', RadioPage()),
+            _DemoEntry('Segmented Button', SegmentedButtonPage()),
+            _DemoEntry('Select', SelectPage()),
+            _DemoEntry('Switch', SwitchPage()),
+            _DemoEntry('Text Input', TextInputPage()),
+            _DemoEntry('Text Area', TextAreaPage()),
+            _DemoEntry('Paginator', PaginatorPage()),
+            _DemoEntry('Slider', SliderPage()),
+            _DemoEntry('Promotion Box', PromotionBoxPage()),
+            _DemoEntry('Notification Box', NotificationBoxPage()),
+            _DemoEntry('Status', StatusPage()),
+            _DemoEntry('Input Trigger', InputTriggerPage()),
+          ],
+        ).toList(growable: false),
+      ),
+    );
+  }
+
+  Widget _modules(BuildContext context) {
+    return SBBContentBox(
+      child: Column(
+        mainAxisAlignment: .center,
+        children: SBBListItem.divideListItems(
+          context: context,
+          items: [
+            _DemoEntry('Autocompletion', AutocompletionPage()),
+            _DemoEntry('Container', ContainerPage()),
+            _DemoEntry('Forms', FormPage()),
+            _DemoEntry('Header', HeaderPage()),
+            _DemoEntry('Headerbox', HeaderBoxPage()),
+            _DemoEntry('Illustrations', IllustrationPage()),
+            _DemoEntry('Message', MessagePage()),
+            _DemoEntry('Modal', ModalPage()),
+            _DemoEntry('Onboarding', OnboardingPage()),
+            _DemoEntry('Stepper', StepperPage()),
+            _DemoEntry('Tab Bar', TabBarPage()),
+            _DemoEntry('Toast', ToastPage()),
+          ],
+        ).toList(growable: false),
       ),
     );
   }
@@ -185,16 +198,12 @@ class _DemoEntry extends StatelessWidget {
       closedColor: SBBColors.transparent,
       closedShape: const RoundedRectangleBorder(),
       openShape: const RoundedRectangleBorder(),
-      closedBuilder: (context, action) {
-        return SBBListItem(
-          titleText: title,
-          trailingIconData: SBBIcons.chevron_small_right_small,
-          onTap: action,
-        );
-      },
-      openBuilder: (context, action) {
-        return _DemoPage(title, page);
-      },
+      closedBuilder: (_, action) => SBBListItem(
+        titleText: title,
+        trailingIconData: SBBIcons.chevron_small_right_small,
+        onTap: action,
+      ),
+      openBuilder: (context, action) => _DemoPage(title, page),
     );
   }
 }
@@ -208,7 +217,7 @@ class _DemoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SBBHeader(title: title, onPressedLogo: () => Navigator.maybePop(context), logoTooltip: 'Back to home'),
+      appBar: SBBHeaderSmall(titleText: title),
       body: child,
     );
   }

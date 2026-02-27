@@ -52,6 +52,44 @@ Use the `foregroundBuilder` of the `SBBButtonStyle` as a replacement
 * customize a chip by setting its `style` parameter in the constructor
 
 
+## Header
+
+### Added SBBHeaderSmall
+* replace `SBBHeader` with `SBBHeaderSmall` to keep the same size
+* `SBBHeader` now has an added spacing matching the design spec.
+
+### Constructor arguments
+* replace `title` with `titleText` (complete custom content with `title`)
+* replace `leadingWidget` with `leading`
+* removed `blockSemantics`, check out `excludeHeaderSemantics`
+* removed `systemOverlayStyle`, moved to style `SBBHeaderStyle.systemOverlayStyle`
+* removed `onPressedLogo` and `logoTooltip`. To customize trailing content, provide actions yourself.
+* added `useDefaultSemanticsOrder`, `excludeHeaderSemantics`, `bottom` and `style`
+
+### Leading buttons
+* removed factory methods `SBBHeader.back()`, `SBBHeader.close()` and `SBBHeader.menu()`.
+* exposed new widgets `SBBHeaderLeadingBackButton`, `SBBHeaderLeadingCloseButton` and `SBBHeaderLeadingMenuButton`.
+* If you previously used default `automaticallyImplyLeading: true`, the header will pick one of the above widgets automatically.
+
+Old implementation:
+```dart
+SBBHeader.back(title: 'SBB Header')
+```
+
+New implementation:
+```dart
+SBBHeader(
+   titleText: 'SBB Header',
+   leading: SBBHeaderLeadingBackButton(),
+)
+```
+
+### Theming & Styling
+* customize the theme of the `SBBHeader` and `SBBHeaderSmall` with `SBBHeaderThemeData` as input to `SBBTheme`
+* access the theme using `Theme.of(context).sbbHeaderTheme`
+* customize a header by setting its `style` parameter in the constructor
+
+
 ## ListItem
 
 The list item has received a lot of changes. In general the content is completely customizable now.
@@ -305,17 +343,17 @@ A boxed variant is added: `SBBTextInputBoxed`
 
 #### Key Differences
 
-| Aspect | SBBTextField | SBBTextInput |
-|--------|-------------|------------|
-| **Leading widget** | `icon` (IconData only) | `decoration.leading` or `decoration.leadingIconData` |
-| **Trailing widget** | `suffixIcon` (Widget) | `decoration.trailing` or `decoration.trailingIconData` |
-| **Label** | `labelText` | `decoration.labelText` or `decoration.label` |
-| **Placeholder** | `hintText` | `decoration.placeholderText` or `decoration.placeholder` |
-| **Error handling** | `errorText` only | `decoration.errorText` or `decoration.error` (as Widget) |
-| **Theming** | No theme support | `SBBInputDecorationThemeData` + `SBBTextInputThemeData` |
-| **Disabled state** | `enabled` only | `enabled` + `readOnly` (more granular control) |
-| **State management** | Custom underline widget | `SBBInputDecorator` with flexible styling |
-| **Multiline icons** | Always center-aligned | Automatically top-aligned in multiline mode |
+| Aspect               | SBBTextField            | SBBTextInput                                             |
+|----------------------|-------------------------|----------------------------------------------------------|
+| **Leading widget**   | `icon` (IconData only)  | `decoration.leading` or `decoration.leadingIconData`     |
+| **Trailing widget**  | `suffixIcon` (Widget)   | `decoration.trailing` or `decoration.trailingIconData`   |
+| **Label**            | `labelText`             | `decoration.labelText` or `decoration.label`             |
+| **Placeholder**      | `hintText`              | `decoration.placeholderText` or `decoration.placeholder` |
+| **Error handling**   | `errorText` only        | `decoration.errorText` or `decoration.error` (as Widget) |
+| **Theming**          | No theme support        | `SBBInputDecorationThemeData` + `SBBTextInputThemeData`  |
+| **Disabled state**   | `enabled` only          | `enabled` + `readOnly` (more granular control)           |
+| **State management** | Custom underline widget | `SBBInputDecorator` with flexible styling                |
+| **Multiline icons**  | Always center-aligned   | Automatically top-aligned in multiline mode              |
 
 #### Basic Migration Example
 
@@ -349,31 +387,31 @@ SBBTextInput(
 
 #### Property Mapping
 
-| SBBTextField | SBBTextInput |
-|------------|-----------|
-| `controller` | `controller` |
-| `enabled` | `enabled` |
-| `labelText` | `decoration.labelText` |
-| `hintText` | `decoration.placeholderText` |
-| `errorText` | `decoration.errorText` |
-| `icon` | `decoration.leadingIconData` |
-| `suffixIcon` | `decoration.trailing` or `decoration.trailingIconData` |
-| `obscureText` | `obscureText` |
-| `obscuringCharacter` | `obscuringCharacter` |
-| `maxLines` | `maxLines` |
-| `minLines` | `minLines` |
-| `keyboardType` | `keyboardType` |
-| `textInputAction` | `textInputAction` |
-| `inputFormatters` | `inputFormatters` |
-| `onChanged` | `onChanged` |
-| `onSubmitted` | `onSubmitted` |
-| `onTap` | `onTap` |
-| `onTapAlwaysCalled` | `onTapAlwaysCalled` |
-| `focusNode` | `focusNode` |
-| `autofocus` | `autofocus` |
-| `textCapitalization` | `textCapitalization` |
-| `enableInteractiveSelection` | `enableInteractiveSelection` |
-| `isLastElement` | *(removed)* - use `SBBListItem.divideListItems()` if in lists |
+| SBBTextField                 | SBBTextInput                                                  |
+|------------------------------|---------------------------------------------------------------|
+| `controller`                 | `controller`                                                  |
+| `enabled`                    | `enabled`                                                     |
+| `labelText`                  | `decoration.labelText`                                        |
+| `hintText`                   | `decoration.placeholderText`                                  |
+| `errorText`                  | `decoration.errorText`                                        |
+| `icon`                       | `decoration.leadingIconData`                                  |
+| `suffixIcon`                 | `decoration.trailing` or `decoration.trailingIconData`        |
+| `obscureText`                | `obscureText`                                                 |
+| `obscuringCharacter`         | `obscuringCharacter`                                          |
+| `maxLines`                   | `maxLines`                                                    |
+| `minLines`                   | `minLines`                                                    |
+| `keyboardType`               | `keyboardType`                                                |
+| `textInputAction`            | `textInputAction`                                             |
+| `inputFormatters`            | `inputFormatters`                                             |
+| `onChanged`                  | `onChanged`                                                   |
+| `onSubmitted`                | `onSubmitted`                                                 |
+| `onTap`                      | `onTap`                                                       |
+| `onTapAlwaysCalled`          | `onTapAlwaysCalled`                                           |
+| `focusNode`                  | `focusNode`                                                   |
+| `autofocus`                  | `autofocus`                                                   |
+| `textCapitalization`         | `textCapitalization`                                          |
+| `enableInteractiveSelection` | `enableInteractiveSelection`                                  |
+| `isLastElement`              | *(removed)* - use `SBBListItem.divideListItems()` if in lists |
 
 #### Theming
 
@@ -430,7 +468,7 @@ A cross small will be displayed instead of the trailingIconData when focused and
    )
    ```
 
-5. **Floating label behavior control**:
+4. **Floating label behavior control**:
    ```dart
    SBBTextInput(
      decoration: SBBInputDecoration(

@@ -28,7 +28,7 @@ class _OnboardingPage extends StatelessWidget {
     return Scaffold(
       appBar: _PreferredSizeWidget(),
       body: PopScope(
-        onPopInvoked: (didPop) => builderDelegate.onPop(),
+        onPopInvokedWithResult: (didPop, _) => builderDelegate.onPop(),
         child: SBBOnboarding(
           builderDelegate: builderDelegate,
           onFinish: () => Navigator.of(context).pop(),
@@ -44,9 +44,9 @@ class _OnboardingPage extends StatelessWidget {
 class _PreferredSizeWidget extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
-    final style = SBBControlStyles.of(context);
+    final headerStyle = Theme.of(context).sbbHeaderTheme?.style;
     final statusBarHeight = MediaQuery.of(context).padding.top;
-    return Container(height: statusBarHeight, color: style.headerBackgroundColor);
+    return Container(height: statusBarHeight, color: headerStyle?.backgroundColor);
   }
 
   @override
@@ -122,9 +122,9 @@ class _VerticalEndPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = SBBBaseStyle.of(context);
-    final controlStyle = SBBControlStyles.of(context);
+    final headerStyle = Theme.of(context).sbbHeaderTheme?.style;
     return Container(
-      color: controlStyle.headerBackgroundColor,
+      color: headerStyle?.backgroundColor,
       child: Padding(
         padding: .all(style.defaultRootContainerPadding!),
         child: Column(
@@ -133,7 +133,7 @@ class _VerticalEndPage extends StatelessWidget {
             const Spacer(),
             Text(
               'Thank you! Bye Bye!',
-              style: SBBTextStyles.extraLargeLight.copyWith(color: controlStyle.headerTextStyle!.color),
+              style: SBBTextStyles.extraLargeLight.copyWith(color: headerStyle?.foregroundColor),
               textAlign: .center,
             ),
             const SizedBox(height: 67),
@@ -153,9 +153,9 @@ class _HorizontalEndPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = SBBBaseStyle.of(context);
-    final controlStyle = SBBControlStyles.of(context);
+    final headerStyle = Theme.of(context).sbbHeaderTheme?.style;
     return Container(
-      color: controlStyle.headerBackgroundColor,
+      color: headerStyle?.backgroundColor,
       child: Padding(
         padding: .all(style.defaultRootContainerPadding!),
         child: Row(
@@ -169,7 +169,7 @@ class _HorizontalEndPage extends StatelessWidget {
                 children: [
                   Text(
                     'Thank you! Bye Bye!',
-                    style: SBBTextStyles.extraLargeLight.copyWith(color: controlStyle.headerTextStyle!.color),
+                    style: SBBTextStyles.extraLargeLight.copyWith(color: headerStyle?.foregroundColor),
                     textAlign: .center,
                   ),
                   const SizedBox(height: 67),
@@ -193,9 +193,9 @@ class _VerticalStartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = SBBBaseStyle.of(context);
-    final controlStyle = SBBControlStyles.of(context);
+    final headerStyle = Theme.of(context).sbbHeaderTheme?.style;
     return Container(
-      color: controlStyle.headerBackgroundColor,
+      color: headerStyle?.backgroundColor,
       child: Padding(
         padding: .all(style.defaultRootContainerPadding!),
         child: Column(
@@ -204,7 +204,7 @@ class _VerticalStartPage extends StatelessWidget {
             const Spacer(),
             Text(
               'Welcome to the Onboarding',
-              style: SBBTextStyles.extraLargeLight.copyWith(color: controlStyle.headerTextStyle!.color),
+              style: SBBTextStyles.extraLargeLight.copyWith(color: headerStyle?.foregroundColor),
               textAlign: .center,
             ),
             const SizedBox(height: 144.0),
@@ -234,9 +234,9 @@ class _HorizontalStartPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = SBBBaseStyle.of(context);
-    final controlStyle = SBBControlStyles.of(context);
+    final headerStyle = Theme.of(context).sbbHeaderTheme?.style;
     return Container(
-      color: controlStyle.headerBackgroundColor,
+      color: headerStyle?.backgroundColor,
       child: Padding(
         padding: .all(style.defaultRootContainerPadding!),
         child: Row(
@@ -250,7 +250,7 @@ class _HorizontalStartPage extends StatelessWidget {
                 children: [
                   Text(
                     'Welcome to the Onboarding',
-                    style: SBBTextStyles.extraLargeLight.copyWith(color: controlStyle.headerTextStyle!.color),
+                    style: SBBTextStyles.extraLargeLight.copyWith(color: headerStyle?.foregroundColor),
                     textAlign: .center,
                   ),
                   const SizedBox(height: 67),
