@@ -19,7 +19,7 @@ concurrency:
 
 jobs:
   test:
-    runs-on: macos-15
+    runs-on: macos-26
 
     steps:
 
@@ -104,7 +104,7 @@ jobs:
 
   build-iOS:
     name: Build Example App iOS
-    runs-on: macos-15
+    runs-on: macos-26
     needs: [ test, changelog-test ]
     defaults:
       run:
