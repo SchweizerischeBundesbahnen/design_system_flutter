@@ -22,7 +22,7 @@ import '../../sbb_design_system_mobile.dart';
 /// SBBPrimaryButton(
 ///   label: 'Show Toast',
 ///   onPressed: () {
-///     SBBToast.of(context).show(title: 'Hello from SBBToast!');
+///     SBBToast.of(context).show(titleText: 'Hello from SBBToast!');
 ///   },
 /// )
 /// ```
@@ -46,22 +46,32 @@ class SBBToast {
 
   /// Shows a [SBBToast] with a default body.
   ///
-  /// [title] is the main text displayed in the toast.
+  /// [title] is a custom widget displayed as the main content.
+  /// [titleText] is the main text displayed in the toast.
   /// [duration] specifies how long the toast will be visible (default: [durationShort]).
   /// [bottom] sets the distance from the bottom of the screen (default: [defaultBottom]).
   /// [action] optionally provides an action button for the toast.
   /// [style] optionally customizes the toast's appearance. Check [SBBToastStyle] for more arguments.
   void show({
-    required String title,
+    Widget? title,
+    String? titleText,
     Duration duration = durationShort,
     double bottom = defaultBottom,
     SBBToastAction? action,
     SBBToastStyle? style,
   }) {
+    assert(titleText == null || title == null, 'Cannot provide both titleText and title!');
+    assert(titleText != null || title != null, 'One of titleText or title must be set!');
     builder(
       duration: duration,
       bottom: bottom,
-      builder: (stream) => DefaultToastBody(title: title, duration: duration, style: style, action: action),
+      builder: (stream) => DefaultToastBody(
+        title: title,
+        titleText: titleText,
+        duration: duration,
+        style: style,
+        action: action,
+      ),
     );
   }
 

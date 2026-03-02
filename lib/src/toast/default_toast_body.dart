@@ -5,9 +5,18 @@ import '../../sbb_design_system_mobile.dart';
 import 'toast_action_body.dart';
 
 class DefaultToastBody extends StatelessWidget {
-  const DefaultToastBody({super.key, required this.title, required this.duration, this.action, this.style});
+  const DefaultToastBody({
+    super.key,
+    this.title,
+    this.titleText,
+    required this.duration,
+    this.action,
+    this.style,
+  }) : assert(titleText == null || title == null, 'Cannot provide both titleText and title!'),
+       assert(titleText != null || title != null, 'One of titleText or title must be set!');
 
-  final String title;
+  final Widget? title;
+  final String? titleText;
   final Duration duration;
   final SBBToastAction? action;
   final SBBToastStyle? style;
@@ -61,7 +70,7 @@ class DefaultToastBody extends StatelessWidget {
   }
 
   Widget _bodyWithText(SBBToastStyle resolvedStyle) =>
-      Text(title, style: resolvedStyle.titleTextStyle, maxLines: resolvedStyle.titleMaxLines);
+      title ?? Text(titleText!, style: resolvedStyle.titleTextStyle, maxLines: resolvedStyle.titleMaxLines);
 
   double _actionAndMarginWidth(TextStyle? style) {
     final actionTextPainter = TextPainter(

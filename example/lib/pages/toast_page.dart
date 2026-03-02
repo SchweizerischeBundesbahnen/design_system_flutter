@@ -36,7 +36,7 @@ class _ToastPageState extends State<ToastPage> {
                         labelText: 'Short (Default)',
                         onPressed: () {
                           sbbToast.show(
-                            title: titleController.text,
+                            titleText: titleController.text,
                             action: actionController.text.isNotEmpty
                                 ? SBBToastAction(onPressed: () {}, title: actionController.text)
                                 : null,
@@ -50,7 +50,7 @@ class _ToastPageState extends State<ToastPage> {
                         labelText: 'Long',
                         onPressed: () {
                           sbbToast.show(
-                            title: titleController.text,
+                            titleText: titleController.text,
                             duration: SBBToast.durationLong,
                             action: actionController.text.isNotEmpty
                                 ? SBBToastAction(onPressed: () {}, title: actionController.text)
@@ -68,7 +68,7 @@ class _ToastPageState extends State<ToastPage> {
                     labelText: 'Custom Bottom and Duration',
                     onPressed: () {
                       sbbToast.show(
-                        title: titleController.text,
+                        titleText: titleController.text,
                         duration: const Duration(seconds: 5),
                         action: actionController.text.isNotEmpty
                             ? SBBToastAction(onPressed: () {}, title: actionController.text)

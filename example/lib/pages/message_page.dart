@@ -87,7 +87,7 @@ class _MessagePageState extends State<MessagePage> {
                   illustration: _showIllustrations ? SBBIllustration.display() : null,
                   action: SBBTertiaryButton(
                     onPressed: () {
-                      _toast.show(title: 'Error');
+                      _toast.show(titleText: 'Error');
                     },
                     iconData: SBBIcons.arrows_circle_small,
                   ),

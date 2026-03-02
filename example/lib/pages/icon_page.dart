@@ -51,7 +51,7 @@ class _IconShowCase extends StatelessWidget {
             padding: .zero,
             icon: Icon(icon['icon'] as IconData, size: iconSize),
             onPressed: () {
-              sbbToast.show(title: icon['name'] as String);
+              sbbToast.show(titleText: icon['name'] as String);
             },
           );
         },
