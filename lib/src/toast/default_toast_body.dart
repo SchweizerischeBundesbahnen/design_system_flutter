@@ -12,20 +12,18 @@ class DefaultToastBody extends StatelessWidget {
     this.title,
     this.titleText,
     this.action,
-    this.style,
   }) : assert(titleText == null || title == null, 'Cannot provide both titleText and title!'),
        assert(titleText != null || title != null, 'One of titleText or title must be set!');
 
   final Widget? title;
   final String? titleText;
   final Widget? action;
-  final SBBToastStyle? style;
 
   @override
   Widget build(BuildContext context) {
     final themeStyle = Theme.of(context).sbbToastTheme?.style;
-    final resolvedStyle = (themeStyle ?? SBBToastStyle()).merge(style);
     final toastScope = ToastScope.of(context);
+    final resolvedStyle = (themeStyle ?? SBBToastStyle()).merge(toastScope.style);
 
     return StreamBuilder<bool>(
       stream: toastScope.stream,

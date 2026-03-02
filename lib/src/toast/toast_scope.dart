@@ -7,10 +7,17 @@ import '../../sbb_design_system_mobile.dart';
 /// * [DefaultToastBody]
 /// * [ToastActionBody]
 class ToastScope extends InheritedWidget {
-  const ToastScope({super.key, required this.stream, required super.child, this.toast});
+  const ToastScope({
+    super.key,
+    required super.child,
+    required this.stream,
+    this.toast,
+    this.style,
+  });
 
   final Stream<bool> stream;
   final SBBToast? toast;
+  final SBBToastStyle? style;
 
   static ToastScope? maybeOf(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<ToastScope>();
