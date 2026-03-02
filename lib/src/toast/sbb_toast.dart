@@ -66,6 +66,9 @@ class SBBToast {
   /// - When both fit within available space, they appear side-by-side separated by [titleActionHorizontalGap].
   /// - If the action exceeds the width threshold (default 25% of total width), it automatically
   ///   wraps to the next line, separated from the title by [titleActionVerticalGap].
+  /// - Therefore, if the [SBBToastStyle.actionOverflowThreshold] is set to zero, it will always wrap to the next line.
+  ///   If the threshold is set to one on the other hand, it will always stay on the same line.
+  ///
   ///
   /// **Parameters:**
   /// - [title]: A custom widget for the main content. Prefer [titleText] for simple text.
