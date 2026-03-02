@@ -6,8 +6,6 @@ import 'package:sbb_design_system_mobile/src/toast/toast_scope.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
-// TODO: change action to type widget and make SBBToastAction a stateless widget
-// TODO: add title / titleText logic for building custom titles with SlottedMultiChildRenderObject
 // TODO: add v5 styling / theming concept
 // TODO: improve documentation
 // TODO: add to migration guide
@@ -54,16 +52,17 @@ class SBBToast {
   void show({
     Widget? title,
     String? titleText,
-    Duration duration = durationShort,
-    double bottom = SBBSpacing.xLarge,
     Widget? action,
     SBBToastStyle? style,
+    Duration duration = durationShort,
+    double bottom = SBBSpacing.xLarge,
   }) {
     assert(titleText == null || title == null, 'Cannot provide both titleText and title!');
     assert(titleText != null || title != null, 'One of titleText or title must be set!');
     builder(
       duration: duration,
-      builder: (context, stream) => DefaultToastBody(
+      bottom: bottom,
+      builder: (_, _) => DefaultToastBody(
         title: title,
         titleText: titleText,
         style: style,
