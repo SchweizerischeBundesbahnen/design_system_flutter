@@ -6,7 +6,6 @@ import 'package:sbb_design_system_mobile/src/toast/toast_scope.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
-// TODO: add v5 styling / theming concept
 // TODO: improve documentation
 // TODO: add to migration guide
 
