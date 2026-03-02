@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:sbb_design_system_mobile/src/toast/toast_scope.dart';
 
 import '../../sbb_design_system_mobile.dart';

@@ -23,7 +23,8 @@ class DefaultToastBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final resolvedStyle = style.merge(SBBToastStyle.of(context));
+    final themeStyle = Theme.of(context).sbbToastTheme?.style;
+    final resolvedStyle = (themeStyle ?? SBBToastStyle()).merge(style);
     final toastScope = ToastScope.of(context);
 
     return StreamBuilder<bool>(
@@ -34,29 +35,63 @@ class DefaultToastBody extends StatelessWidget {
           opacity: isVisible ? 1.0 : 0.0,
           duration: kThemeAnimationDuration,
           child: Container(
-            decoration: resolvedStyle.decoration,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(SBBToastStyle.borderRadius),
+              color: resolvedStyle.backgroundColor,
+            ),
             margin: resolvedStyle.margin,
             padding: resolvedStyle.padding,
-            child: _bodyWithTextAndAction(resolvedStyle, context),
+            child: body(resolvedStyle, context),
           ),
         );
       },
     );
   }
 
-  Widget _bodyWithTextAndAction(SBBToastStyle resolvedStyle, BuildContext context) {
-    final resolvedTitle =
-        title ?? Text(titleText!, style: resolvedStyle.titleTextStyle, maxLines: resolvedStyle.titleMaxLines);
-    final horizontalGap = resolvedStyle.actionPadding?.horizontal ?? 0.0;
-    final verticalGap = resolvedStyle.actionPadding?.vertical ?? 0.0;
-    final overflowThreshold = resolvedStyle.actionOverflowThreshold ?? 0.0;
+  Widget body(SBBToastStyle resolvedStyle, BuildContext context) {
+    Widget resolvedTitle = _resolvedTitle(resolvedStyle)!;
+    Widget? resolvedAction = _resolvedAction(resolvedStyle);
+    final horizontalGap = resolvedStyle.titleActionHorizontalGap ?? SBBSpacing.xLarge;
+    final verticalGap = resolvedStyle.titleActionVerticalGap ?? SBBSpacing.xSmall;
+    final overflowThreshold = resolvedStyle.actionOverflowThreshold ?? 0.25;
 
     return _SBBDefaultToast(
       title: resolvedTitle,
-      action: action,
+      action: resolvedAction,
       horizontalGap: horizontalGap,
       verticalGap: verticalGap,
       overflowThreshold: overflowThreshold,
+    );
+  }
+
+  Widget? _resolvedTitle(SBBToastStyle resolvedStyle) {
+    final resolvedTitle =
+        title ?? Text(titleText!, style: resolvedStyle.titleTextStyle, maxLines: resolvedStyle.titleMaxLines);
+
+    return _addDefaultAncestorWithResolved(
+      textStyle: resolvedStyle.titleTextStyle?.copyWith(color: resolvedStyle.titleForegroundColor),
+      child: resolvedTitle,
+    );
+  }
+
+  Widget? _resolvedAction(SBBToastStyle resolvedStyle) {
+    return _addDefaultAncestorWithResolved(
+      textStyle: resolvedStyle.actionTextStyle?.copyWith(color: resolvedStyle.actionForegroundColor),
+      child: action,
+    );
+  }
+
+  Widget? _addDefaultAncestorWithResolved({
+    required TextStyle? textStyle,
+    required Widget? child,
+  }) {
+    if (child == null) return null;
+    return DefaultTextStyle.merge(
+      style: textStyle,
+      child: IconTheme.merge(
+        data: IconThemeData(color: textStyle?.color),
+        child: child,
+      ),
     );
   }
 }
