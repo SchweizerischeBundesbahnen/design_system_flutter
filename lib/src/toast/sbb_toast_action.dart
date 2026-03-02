@@ -4,11 +4,18 @@ import 'package:sbb_design_system_mobile/src/toast/toast_scope.dart';
 import '../../sbb_design_system_mobile.dart';
 
 class SBBToastAction extends StatefulWidget {
-  const SBBToastAction({required this.onPressed, required this.title, this.style, super.key});
+  const SBBToastAction({
+    required this.onTap,
+    required this.title,
+    this.style,
+    this.hideOnTap = true,
+    super.key,
+  });
 
-  final VoidCallback onPressed;
+  final VoidCallback onTap;
   final String title;
   final SBBToastStyle? style;
+  final bool hideOnTap;
 
   @override
   State<SBBToastAction> createState() => _SBBToastActionState();
@@ -21,8 +28,8 @@ class _SBBToastActionState extends State<SBBToastAction> {
     if (_isActionBeenTriggered) return;
 
     setState(() => _isActionBeenTriggered = true);
-    widget.onPressed();
-    hideToast?.call();
+    widget.onTap();
+    if (widget.hideOnTap) hideToast?.call();
   }
 
   @override
@@ -31,7 +38,10 @@ class _SBBToastActionState extends State<SBBToastAction> {
 
     return GestureDetector(
       onTap: _isActionBeenTriggered ? null : () => _handlePressed(toastScope.toast?.hide),
-      child: Text(widget.title, style: widget.style?.actionTextStyle),
+      child: Text(
+        widget.title,
+        style: widget.style?.actionTextStyle?.copyWith(color: widget.style?.actionForegroundColor),
+      ),
     );
   }
 }

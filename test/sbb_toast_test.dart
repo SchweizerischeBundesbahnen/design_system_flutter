@@ -28,7 +28,7 @@ void main() {
           stream: stream2,
           child: DefaultToastBody(
             titleText: 'Toast with action',
-            action: SBBToastAction(onPressed: () {}, title: 'Action'),
+            action: SBBToastAction(onTap: () {}, title: 'Action'),
           ),
         ),
         SizedBox(height: SBBSpacing.medium),
@@ -45,7 +45,7 @@ void main() {
           child: DefaultToastBody(
             titleText:
                 'Toast with multiple lines that should only expand to two lines with an action. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum accumsan sem sit amet diam ornare ornare. Cras a justo neque. Proin enim lacus, hendrerit eu turpis quis, semper aliquet enim. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nam dictum ligula nec risus euismod, vel tincidunt nibh interdum. Donec neque tortor, viverra eget tristique non, cursus quis turpis. Morbi viverra id justo nec blandit. Nunc posuere dapibus mauris, ut sodales arcu dignissim a. Vivamus et orci id turpis ullamcorper varius eu vitae neque. Integer et auctor risus. Aenean vitae tincidunt tellus, nec eleifend ex. Maecenas ut erat eget tellus luctus porttitor et eget nisi.',
-            action: SBBToastAction(onPressed: () {}, title: 'Action'),
+            action: SBBToastAction(onTap: () {}, title: 'Action'),
           ),
         ),
         SizedBox(height: SBBSpacing.medium),
@@ -53,7 +53,7 @@ void main() {
           stream: stream5,
           child: DefaultToastBody(
             titleText: 'Toast with long action title that should go to next row.',
-            action: SBBToastAction(onPressed: () {}, title: 'Long Action Title that is veeeeery long'),
+            action: SBBToastAction(onTap: () {}, title: 'Long Action Title that is veeeeery long'),
           ),
         ),
         SizedBox(height: SBBSpacing.medium),
@@ -71,7 +71,7 @@ void main() {
               ),
               padding: .all(48.0),
             ),
-            action: SBBToastAction(onPressed: () {}, title: 'Long Action Title that is veeeeery long'),
+            action: SBBToastAction(onTap: () {}, title: 'Long Action Title that is veeeeery long'),
           ),
         ),
       ],
