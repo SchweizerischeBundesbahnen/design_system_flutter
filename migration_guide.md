@@ -490,3 +490,26 @@ A cross small will be displayed instead of the trailingIconData when focused and
 - [ ] Set up theme data if applying custom styles globally
 - [ ] Test multiline mode if used (icons should be top-aligned now)
 - [ ] Consider using `readOnly` instead of just `enabled` for readonly fields with interactive trailing widgets
+
+
+## Toast
+
+* removed the static field `defaultBottom`
+* the layouting has slightly changed, use `SBBToastStyle.actionOverflowThreshold` to adjust the layout mechanism
+  of the action and title to each other (see API docs for specifics)
+
+### show
+
+* replace `title` with `titleText` (or use `title` for completely custom title Widget)
+* replace `onPressed` with `onTap` in `SBBToastAction` (or use completely custom Widget for `action`)
+
+### builder
+
+* the builder now also adds the `BuildContext` in its parameters
+
+### styling / theming
+
+* NOTE: the `SBBToastStyle` API has completely changed
+* use `SBBToastThemeData` to override the style of all toast within your application
+* access the theme using `Theme.of(context).sbbStepperTheme`
+* individual change of style via the `style` constructor parameter
