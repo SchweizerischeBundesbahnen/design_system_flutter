@@ -11,7 +11,6 @@ class DefaultToastBody extends StatelessWidget {
     super.key,
     this.title,
     this.titleText,
-    required this.displayDuration,
     this.action,
     this.style,
   }) : assert(titleText == null || title == null, 'Cannot provide both titleText and title!'),
@@ -19,8 +18,7 @@ class DefaultToastBody extends StatelessWidget {
 
   final Widget? title;
   final String? titleText;
-  final Duration displayDuration;
-  final SBBToastAction? action;
+  final Widget? action;
   final SBBToastStyle? style;
 
   @override
@@ -49,14 +47,13 @@ class DefaultToastBody extends StatelessWidget {
   Widget _bodyWithTextAndAction(SBBToastStyle resolvedStyle, BuildContext context) {
     final resolvedTitle =
         title ?? Text(titleText!, style: resolvedStyle.titleTextStyle, maxLines: resolvedStyle.titleMaxLines);
-    final builtAction = SBBToastAction(onPressed: action!.onPressed, title: action!.title, style: resolvedStyle);
     final horizontalGap = resolvedStyle.actionPadding?.horizontal ?? 0.0;
     final verticalGap = resolvedStyle.actionPadding?.vertical ?? 0.0;
     final overflowThreshold = resolvedStyle.actionOverflowThreshold ?? 0.0;
 
     return _SBBDefaultToast(
       title: resolvedTitle,
-      action: builtAction,
+      action: action,
       horizontalGap: horizontalGap,
       verticalGap: verticalGap,
       overflowThreshold: overflowThreshold,

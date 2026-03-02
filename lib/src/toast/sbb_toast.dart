@@ -57,7 +57,7 @@ class SBBToast {
     String? titleText,
     Duration duration = durationShort,
     double bottom = defaultBottom,
-    SBBToastAction? action,
+    Widget? action,
     SBBToastStyle? style,
   }) {
     assert(titleText == null || title == null, 'Cannot provide both titleText and title!');
@@ -65,10 +65,9 @@ class SBBToast {
     builder(
       duration: duration,
       bottom: bottom,
-      builder: (stream) => DefaultToastBody(
+      builder: (context, stream) => DefaultToastBody(
         title: title,
         titleText: titleText,
-        duration: duration,
         style: style,
         action: action,
       ),
@@ -82,7 +81,7 @@ class SBBToast {
   /// [bottom] sets the distance from the bottom of the screen (default: [defaultBottom]).
   /// [duration] specifies how long the toast will be visible (default: [durationShort]).
   void builder({
-    required Widget Function(Stream<bool> stream) builder,
+    required Widget Function(BuildContext context, Stream<bool> stream) builder,
     double bottom = defaultBottom,
     Duration duration = durationShort,
   }) {
@@ -90,7 +89,7 @@ class SBBToast {
       remove();
       _streamController = StreamController<bool>();
       _streamController!.add(true);
-      _overlayEntry = _buildToastOverlayEntry(bottom, builder(_streamController!.stream), _streamController!.stream);
+      _overlayEntry = _buildToastOverlayEntry(bottom, builder, _streamController!.stream);
       _overlayState.insert(_overlayEntry!);
       _fadeOutTimer = Timer(duration + kThemeAnimationDuration * 2, () {
         _streamController?.add(false);
@@ -124,7 +123,11 @@ class SBBToast {
     _streamController = null;
   }
 
-  OverlayEntry _buildToastOverlayEntry(double bottom, Widget toast, Stream<bool> stream) => OverlayEntry(
+  OverlayEntry _buildToastOverlayEntry(
+    double bottom,
+    Widget Function(BuildContext context, Stream<bool> stream) builder,
+    Stream<bool> stream,
+  ) => OverlayEntry(
     builder: (context) => ToastScope(
       stream: stream,
       toast: this,
@@ -134,7 +137,7 @@ class SBBToast {
         bottom: bottom,
         child: Align(
           alignment: .center,
-          child: Semantics(container: true, liveRegion: true, child: toast),
+          child: Semantics(container: true, liveRegion: true, child: builder(context, stream)),
         ),
       ),
     ),
