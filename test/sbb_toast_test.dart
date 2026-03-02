@@ -21,14 +21,13 @@ void main() {
       children: [
         ToastScope(
           stream: stream1,
-          child: DefaultToastBody(titleText: 'Toast', duration: duration),
+          child: DefaultToastBody(titleText: 'Toast'),
         ),
         SizedBox(height: SBBSpacing.medium),
         ToastScope(
           stream: stream2,
           child: DefaultToastBody(
             titleText: 'Toast with action',
-            duration: duration,
             action: SBBToastAction(onPressed: () {}, title: 'Action'),
           ),
         ),
@@ -38,7 +37,6 @@ void main() {
           child: DefaultToastBody(
             titleText:
                 'Toast with multiple lines that should only expand to two lines. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum accumsan sem sit amet diam ornare ornare. Cras a justo neque. Proin enim lacus, hendrerit eu turpis quis, semper aliquet enim. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nam dictum ligula nec risus euismod, vel tincidunt nibh interdum. Donec neque tortor, viverra eget tristique non, cursus quis turpis. Morbi viverra id justo nec blandit. Nunc posuere dapibus mauris, ut sodales arcu dignissim a. Vivamus et orci id turpis ullamcorper varius eu vitae neque. Integer et auctor risus. Aenean vitae tincidunt tellus, nec eleifend ex. Maecenas ut erat eget tellus luctus porttitor et eget nisi.',
-            duration: duration,
           ),
         ),
         SizedBox(height: SBBSpacing.medium),
@@ -47,7 +45,6 @@ void main() {
           child: DefaultToastBody(
             titleText:
                 'Toast with multiple lines that should only expand to two lines with an action. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum accumsan sem sit amet diam ornare ornare. Cras a justo neque. Proin enim lacus, hendrerit eu turpis quis, semper aliquet enim. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nam dictum ligula nec risus euismod, vel tincidunt nibh interdum. Donec neque tortor, viverra eget tristique non, cursus quis turpis. Morbi viverra id justo nec blandit. Nunc posuere dapibus mauris, ut sodales arcu dignissim a. Vivamus et orci id turpis ullamcorper varius eu vitae neque. Integer et auctor risus. Aenean vitae tincidunt tellus, nec eleifend ex. Maecenas ut erat eget tellus luctus porttitor et eget nisi.',
-            duration: duration,
             action: SBBToastAction(onPressed: () {}, title: 'Action'),
           ),
         ),
@@ -56,7 +53,6 @@ void main() {
           stream: stream5,
           child: DefaultToastBody(
             titleText: 'Toast with long action title that should go to next row.',
-            duration: duration,
             action: SBBToastAction(onPressed: () {}, title: 'Long Action Title that is veeeeery long'),
           ),
         ),
@@ -65,7 +61,6 @@ void main() {
           stream: stream6,
           child: DefaultToastBody(
             titleText: 'Toast with custom styling (a lot of padding)',
-            duration: duration,
             style: SBBToastStyle(
               decoration: BoxDecoration(
                 color: SBBColors.sky,

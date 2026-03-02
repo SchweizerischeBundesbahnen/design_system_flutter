@@ -83,7 +83,7 @@ class _ToastPageState extends State<ToastPage> {
                   width: .infinity,
                   child: SBBTertiaryButton(
                     labelText: 'Custom Toast',
-                    onPressed: () => sbbToast.builder(builder: (showToast) => _customToast(showToast)),
+                    onPressed: () => sbbToast.builder(builder: (context, showToast) => _customToast(showToast)),
                   ),
                 ),
               ],
