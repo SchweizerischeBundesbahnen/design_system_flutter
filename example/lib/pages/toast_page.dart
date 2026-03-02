@@ -17,122 +17,122 @@ class _ToastPageState extends State<ToastPage> {
   @override
   Widget build(BuildContext context) {
     final sbbToast = SBBToast.of(context);
-    return SingleChildScrollView(
-      padding: const .all(SBBSpacing.medium),
-      child: Column(
-        crossAxisAlignment: .start,
-        children: [
-          const ThemeModeSegmentedButton(),
-          const SizedBox(height: SBBSpacing.medium),
-          const SBBListHeader('Show Toast'),
-          SBBContentBox(
-            padding: const .all(SBBSpacing.medium),
-            child: Column(
-              children: [
-                Row(
+    return CustomScrollView(
+      slivers: [
+        SBBSliverHeaderbox.custom(
+          child: Column(
+            crossAxisAlignment: .start,
+            spacing: SBBSpacing.xSmall,
+            children: [
+              const ThemeModeSegmentedButton(),
+              SizedBox(height: SBBSpacing.xSmall),
+              Text('Edit Toast Content', style: sbbTextStyle.small.boldStyle),
+              SBBTextInput(
+                decoration: SBBInputDecoration(labelText: 'Toast Title'),
+                controller: titleController,
+              ),
+              SBBTextInput(
+                decoration: SBBInputDecoration(labelText: 'Toast Action (empty action will hide action)'),
+                controller: actionController,
+              ),
+            ],
+          ),
+        ),
+        SliverPadding(
+          padding: EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
+          sliver: SliverList.list(
+            children: [
+              const SizedBox(height: SBBSpacing.medium),
+              const SBBListHeader('Show Toast'),
+              SBBContentBox(
+                padding: const .all(SBBSpacing.medium),
+                child: Column(
+                  spacing: SBBSpacing.medium,
+                  children: [
+                    SBBPrimaryButton(
+                      labelText: 'Show default',
+                      onPressed: () {
+                        sbbToast.show(
+                          titleText: titleController.text,
+                          action: actionController.text.isNotEmpty
+                              ? SBBToastAction(onTap: () {}, title: actionController.text)
+                              : null,
+                        );
+                      },
+                    ),
+                    SBBSecondaryButton(
+                      labelText: 'Show with long duration',
+                      onPressed: () {
+                        sbbToast.show(
+                          titleText: titleController.text,
+                          duration: SBBToast.durationLong,
+                          action: actionController.text.isNotEmpty
+                              ? SBBToastAction(onTap: () {}, title: actionController.text)
+                              : null,
+                        );
+                      },
+                    ),
+                    Row(
+                      spacing: SBBSpacing.xSmall,
+                      children: [
+                        Expanded(
+                          child: SBBTertiaryButton(
+                            labelText: 'Custom bottom spacing and duration',
+                            onPressed: () {
+                              sbbToast.show(
+                                titleText: titleController.text,
+                                duration: const Duration(seconds: 5),
+                                action: actionController.text.isNotEmpty
+                                    ? SBBToastAction(onTap: () {}, title: actionController.text)
+                                    : null,
+                                bottom: 128,
+                              );
+                            },
+                          ),
+                        ),
+                        Expanded(
+                          child: SBBTertiaryButton(
+                            labelText: 'Completely custom toast',
+                            iconData: SBBIcons.flame_warning_light_small,
+                            onPressed: () {
+                              sbbToast.builder(builder: (context, showToast) => _customToast(showToast));
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+              const SBBListHeader('Additional Toast actions'),
+              SBBContentBox(
+                padding: const .all(SBBSpacing.medium),
+                child: Row(
+                  spacing: SBBSpacing.xSmall,
                   children: [
                     Expanded(
-                      child: SBBSecondaryButton(
-                        labelText: 'Short (Default)',
+                      child: SBBTertiaryButton(
+                        labelText: 'Hide',
                         onPressed: () {
-                          sbbToast.show(
-                            titleText: titleController.text,
-                            action: actionController.text.isNotEmpty
-                                ? SBBToastAction(onTap: () {}, title: actionController.text)
-                                : null,
-                          );
+                          sbbToast.hide();
                         },
                       ),
                     ),
-                    const SizedBox(width: SBBSpacing.medium),
                     Expanded(
                       child: SBBTertiaryButton(
-                        labelText: 'Long',
+                        labelText: 'Remove',
                         onPressed: () {
-                          sbbToast.show(
-                            titleText: titleController.text,
-                            duration: SBBToast.durationLong,
-                            action: actionController.text.isNotEmpty
-                                ? SBBToastAction(onTap: () {}, title: actionController.text)
-                                : null,
-                          );
+                          sbbToast.remove();
                         },
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: SBBSpacing.medium),
-                SizedBox(
-                  width: .infinity,
-                  child: SBBTertiaryButton(
-                    labelText: 'Custom Bottom and Duration',
-                    onPressed: () {
-                      sbbToast.show(
-                        titleText: titleController.text,
-                        duration: const Duration(seconds: 5),
-                        action: actionController.text.isNotEmpty
-                            ? SBBToastAction(onTap: () {}, title: actionController.text)
-                            : null,
-                        bottom: 128,
-                      );
-                    },
-                  ),
-                ),
-                const SizedBox(height: SBBSpacing.medium),
-                SizedBox(
-                  width: .infinity,
-                  child: SBBTertiaryButton(
-                    labelText: 'Custom Toast',
-                    onPressed: () => sbbToast.builder(builder: (context, showToast) => _customToast(showToast)),
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-          const SBBListHeader('Additional Toast actions'),
-          SBBContentBox(
-            padding: const .all(SBBSpacing.medium),
-            child: Row(
-              children: [
-                Expanded(
-                  child: SBBSecondaryButton(
-                    labelText: 'Hide',
-                    onPressed: () {
-                      sbbToast.hide();
-                    },
-                  ),
-                ),
-                const SizedBox(width: SBBSpacing.medium),
-                Expanded(
-                  child: SBBTertiaryButton(
-                    labelText: 'Remove',
-                    onPressed: () {
-                      sbbToast.remove();
-                    },
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: SBBSpacing.xLarge),
-          const SBBListHeader('Edit Toast Content'),
-          SBBContentBox(
-            padding: const .all(SBBSpacing.medium),
-            child: Column(
-              children: [
-                SBBTextInput(
-                  decoration: SBBInputDecoration(labelText: 'Toast Title'),
-                  controller: titleController,
-                ),
-                SBBTextInput(
-                  decoration: SBBInputDecoration(labelText: 'Toast Action (empty action will hide action)'),
-                  controller: actionController,
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 

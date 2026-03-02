@@ -6,6 +6,9 @@ import 'package:sbb_design_system_mobile/src/toast/toast_scope.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
+// TODO: improve tests
+// TODO: migration guide
+
 /// A dismissible message overlay that appears at the bottom of the screen, typically for transient notifications.
 ///
 /// [SBBToast] automatically dismisses after a specified duration and
