@@ -31,7 +31,6 @@ class SBBToast {
 
   static const durationShort = Duration(milliseconds: 2000);
   static const durationLong = Duration(milliseconds: 3500);
-  static const defaultBottom = 30.0;
 
   final OverlayState _overlayState;
 
@@ -56,7 +55,7 @@ class SBBToast {
     Widget? title,
     String? titleText,
     Duration duration = durationShort,
-    double bottom = defaultBottom,
+    double bottom = SBBSpacing.xLarge,
     Widget? action,
     SBBToastStyle? style,
   }) {
@@ -64,7 +63,6 @@ class SBBToast {
     assert(titleText != null || title != null, 'One of titleText or title must be set!');
     builder(
       duration: duration,
-      bottom: bottom,
       builder: (context, stream) => DefaultToastBody(
         title: title,
         titleText: titleText,
@@ -82,7 +80,7 @@ class SBBToast {
   /// [duration] specifies how long the toast will be visible (default: [durationShort]).
   void builder({
     required Widget Function(BuildContext context, Stream<bool> stream) builder,
-    double bottom = defaultBottom,
+    double bottom = SBBSpacing.xLarge,
     Duration duration = durationShort,
   }) {
     showToastMessage() {
