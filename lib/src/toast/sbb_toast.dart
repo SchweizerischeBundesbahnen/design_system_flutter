@@ -2,9 +2,15 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/src/toast/default_toast_body.dart';
-import 'package:sbb_design_system_mobile/src/toast/toast_container.dart';
+import 'package:sbb_design_system_mobile/src/toast/toast_scope.dart';
 
 import '../../sbb_design_system_mobile.dart';
+
+// TODO: change action to type widget and make SBBToastAction a stateless widget
+// TODO: add title / titleText logic for building custom titles with SlottedMultiChildRenderObject
+// TODO: add v5 styling / theming concept
+// TODO: improve documentation
+// TODO: add to migration guide
 
 /// SBB Toast. Use according to documentation.
 ///
@@ -109,7 +115,7 @@ class SBBToast {
   }
 
   OverlayEntry _buildToastOverlayEntry(double bottom, Widget toast, Stream<bool> stream) => OverlayEntry(
-    builder: (context) => ToastContainer(
+    builder: (context) => ToastScope(
       stream: stream,
       toast: this,
       child: Positioned(

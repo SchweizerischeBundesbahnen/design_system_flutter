@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/toast/default_toast_body.dart';
-import 'package:sbb_design_system_mobile/src/toast/toast_container.dart';
+import 'package:sbb_design_system_mobile/src/toast/toast_scope.dart';
 
 import 'test_app.dart';
 
@@ -19,12 +19,12 @@ void main() {
   testWidgets('toast basic test', (WidgetTester tester) async {
     final widget = Column(
       children: [
-        ToastContainer(
+        ToastScope(
           stream: stream1,
           child: DefaultToastBody(title: 'Toast', duration: duration),
         ),
         SizedBox(height: SBBSpacing.medium),
-        ToastContainer(
+        ToastScope(
           stream: stream2,
           child: DefaultToastBody(
             title: 'Toast with action',
@@ -33,7 +33,7 @@ void main() {
           ),
         ),
         SizedBox(height: SBBSpacing.medium),
-        ToastContainer(
+        ToastScope(
           stream: stream3,
           child: DefaultToastBody(
             title:
@@ -42,7 +42,7 @@ void main() {
           ),
         ),
         SizedBox(height: SBBSpacing.medium),
-        ToastContainer(
+        ToastScope(
           stream: stream4,
           child: DefaultToastBody(
             title:
@@ -52,7 +52,7 @@ void main() {
           ),
         ),
         SizedBox(height: SBBSpacing.medium),
-        ToastContainer(
+        ToastScope(
           stream: stream5,
           child: DefaultToastBody(
             title: 'Toast with long action title that should go to next row.',
@@ -61,7 +61,7 @@ void main() {
           ),
         ),
         SizedBox(height: SBBSpacing.medium),
-        ToastContainer(
+        ToastScope(
           stream: stream6,
           child: DefaultToastBody(
             title: 'Toast with custom styling (a lot of padding)',

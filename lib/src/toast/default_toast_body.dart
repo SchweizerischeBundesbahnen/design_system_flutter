@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/src/toast/toast_container.dart';
+import 'package:sbb_design_system_mobile/src/toast/toast_scope.dart';
 
 import '../../sbb_design_system_mobile.dart';
 import 'toast_action_body.dart';
@@ -15,7 +15,7 @@ class DefaultToastBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final resolvedStyle = style.merge(SBBToastStyle.of(context));
-    final toastContainer = ToastContainer.of(context);
+    final toastContainer = ToastScope.of(context);
 
     return StreamBuilder<bool>(
       stream: toastContainer.stream,

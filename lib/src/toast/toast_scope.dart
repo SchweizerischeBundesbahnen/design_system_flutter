@@ -1,0 +1,29 @@
+import 'package:flutter/cupertino.dart';
+import 'package:sbb_design_system_mobile/src/toast/default_toast_body.dart';
+import 'package:sbb_design_system_mobile/src/toast/toast_action_body.dart';
+
+import '../../sbb_design_system_mobile.dart';
+
+/// The [ToastScope] is an [InheritedWidget] that provides the
+/// [stream] and [SBBToast] to the
+/// * [DefaultToastBody]
+/// * [ToastActionBody]
+class ToastScope extends InheritedWidget {
+  const ToastScope({super.key, required this.stream, required super.child, this.toast});
+
+  final Stream<bool> stream;
+  final SBBToast? toast;
+
+  static ToastScope? maybeOf(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<ToastScope>();
+  }
+
+  static ToastScope of(BuildContext context) {
+    final ToastScope? result = maybeOf(context);
+    assert(result != null, 'No SBBToastContainer found in context');
+    return result!;
+  }
+
+  @override
+  bool updateShouldNotify(ToastScope oldWidget) => oldWidget.stream != stream || oldWidget.toast != toast;
+}
