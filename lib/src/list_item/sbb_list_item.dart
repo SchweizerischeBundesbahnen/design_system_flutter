@@ -605,18 +605,18 @@ class _SBBListItemState extends State<SBBListItem> {
     BuildContext? context,
     required Iterable<Widget> links,
     Color? color,
-    double indent = 16.0,
+    double indent = SBBSpacing.medium,
   }) {
     assert(color != null || context != null);
     links = links.toList();
 
     if (links.isEmpty) return links;
 
-    final resolvedColor = color ?? Theme.of(context!).dividerTheme.color ?? SBBColors.graphite;
+    final resolvedColor = color ?? Theme.of(context!).dividerColor;
 
     Widget wrapLink(Widget link) {
       return CustomPaint(
-        painter: DividerPainter(
+        foregroundPainter: DividerPainter(
           paintAtTop: true,
           color: resolvedColor,
           indent: indent,
