@@ -313,7 +313,7 @@ class SBBListItem extends StatefulWidget {
 
     Widget wrapListItem(Widget link) {
       return CustomPaint(
-        painter: SBBDividerPainter(
+        foregroundPainter: DividerPainter(
           paintAtTop: false,
           color: resolvedColor,
           indent: 0.0,
@@ -616,7 +616,7 @@ class _SBBListItemState extends State<SBBListItem> {
 
     Widget wrapLink(Widget link) {
       return CustomPaint(
-        painter: SBBDividerPainter(
+        painter: DividerPainter(
           paintAtTop: true,
           color: resolvedColor,
           indent: indent,
