@@ -54,6 +54,8 @@ class _ModalPageState extends State<ModalPage> {
         const SizedBox(height: SBBSpacing.medium),
         _modalSheetButton(context),
         const SizedBox(height: SBBSpacing.medium),
+        _modalSheetExpandButton(context),
+        const SizedBox(height: SBBSpacing.medium),
         _modalSheetFullButton(context),
       ],
     );
@@ -69,7 +71,7 @@ class _ModalPageState extends State<ModalPage> {
           showCloseButton: _showCloseButton,
           scrollControlDisabledMaxHeightRatio: 1.0,
           style: SBBBottomSheetStyle(backgroundColor: _customBackgroundColor ? SBBColors.peach : null),
-          body: _modalContent(context),
+          body: _modalContent(context, fullHeight: true),
         );
         debugPrint('Modal Sheet Full Result: $result');
       },
@@ -82,13 +84,32 @@ class _ModalPageState extends State<ModalPage> {
       onPressed: () async {
         final result = await showSBBBottomSheet<String>(
           context: context,
-          titleText: 'Titel',
+          titleText: 'Title',
           showCloseButton: _showCloseButton,
           style: SBBBottomSheetStyle(
             backgroundColor: _customBackgroundColor ? SBBColors.peach : null,
-            constraints: BoxConstraints.expand(),
+            constraints: BoxConstraints.tightFor(width: double.infinity),
           ),
-          body: _modalContent(context),
+          body: _modalContent(context, fullHeight: false),
+        );
+        debugPrint('Modal Sheet Result: $result');
+      },
+    );
+  }
+
+  Widget _modalSheetExpandButton(BuildContext context) {
+    return SBBTertiaryButton(
+      labelText: 'Modal Sheet Expand',
+      onPressed: () async {
+        final result = await showSBBBottomSheet<String>(
+          context: context,
+          titleText: 'Title',
+          showCloseButton: _showCloseButton,
+          style: SBBBottomSheetStyle(
+            backgroundColor: _customBackgroundColor ? SBBColors.peach : null,
+            constraints: BoxConstraints.tightFor(width: double.infinity),
+          ),
+          body: _modalContent(context, fullHeight: true),
         );
         debugPrint('Modal Sheet Result: $result');
       },
@@ -111,15 +132,20 @@ class _ModalPageState extends State<ModalPage> {
     );
   }
 
-  Widget _modalContent(BuildContext context) {
+  Widget _modalContent(BuildContext context, {bool fullHeight = false}) {
     return Column(
       crossAxisAlignment: .start,
-      mainAxisSize: .max,
+      mainAxisSize: fullHeight ? .max : .min,
       mainAxisAlignment: .spaceBetween,
       children: [
-        const Text(
-          'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
+        Text(
+          'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, '
+          'sed diam nonumy eirmod tempor invidunt ut labore et dolore '
+          'magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. '
+          'Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
+          style: sbbTextStyle.small.lightStyle,
         ),
+        SizedBox(height: SBBSpacing.medium),
         SBBPrimaryButton(labelText: 'Begone!', onPressed: () => Navigator.of(context).pop('OK')),
       ],
     );

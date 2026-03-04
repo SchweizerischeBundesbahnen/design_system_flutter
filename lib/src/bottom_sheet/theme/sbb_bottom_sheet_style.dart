@@ -74,10 +74,6 @@ class SBBBottomSheetStyle {
 
   /// The padding applied within the bottom sheet.
   ///
-  /// The left, right and top fields will be applied to the BottomSheet title row.
-  ///
-  /// The left, right and bottom fields will be applied to the BottomSheet body.
-  ///
   /// Defaults to
   /// `EdgeInsets.symmetric(horizontal: SBBSpacing.medium, vertical: SBBSpacing.small).copyWith(bottom: 0.0)`
   final EdgeInsets? padding;

@@ -23,15 +23,18 @@ Future<T?> showSBBModalPopup<T>({
   required String title,
   required Widget child,
   Clip clipBehavior = .none,
+  bool useRootNavigator = true,
   bool showCloseButton = true,
   Color? backgroundColor,
 }) {
   return showDialog<T>(
     context: context,
+    useRootNavigator: useRootNavigator,
     builder: (_) {
       return SBBModalPopup(
         title: title,
         clipBehavior: clipBehavior,
+        useRootNavigator: useRootNavigator,
         showCloseButton: showCloseButton,
         backgroundColor: backgroundColor,
         child: child,
@@ -54,6 +57,7 @@ class SBBModalPopup extends StatelessWidget {
     required this.child,
     this.clipBehavior = .none,
     this.showCloseButton = true,
+    this.useRootNavigator = true,
     this.backgroundColor,
   });
 
@@ -61,23 +65,28 @@ class SBBModalPopup extends StatelessWidget {
   final Widget child;
   final Clip clipBehavior;
   final bool showCloseButton;
+  final bool useRootNavigator;
   final Color? backgroundColor;
 
   @override
   Widget build(BuildContext context) {
-    final style = SBBControlStyles.of(context);
+    final style = Theme.of(context).sbbBottomSheetTheme?.style;
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(SBBSpacing.medium)),
       clipBehavior: clipBehavior,
-      backgroundColor: backgroundColor ?? style.modalBackgroundColor,
+      backgroundColor: backgroundColor ?? style?.backgroundColor,
       child: Semantics(
         explicitChildNodes: true,
-        child: Column(
-          mainAxisSize: .min,
-          children: [
-            _ModalHeader(title, showCloseButton: showCloseButton),
-            child,
-          ],
+        child: Padding(
+          padding: style?.padding?.copyWith(bottom: SBBSpacing.medium) ?? EdgeInsets.zero,
+          child: Column(
+            mainAxisSize: .min,
+            children: [
+              _ModalHeader(title, showCloseButton: showCloseButton),
+              SizedBox(height: style?.titleBodyGap),
+              Flexible(child: child),
+            ],
+          ),
         ),
       ),
     );
@@ -186,7 +195,8 @@ class SBBBottomSheet extends StatelessWidget {
     this.trailing,
     this.trailingIconData,
     required this.body,
-    required this.showCloseButton,
+    this.showCloseButton = true,
+    this.useRootNavigator = false,
     required this.style,
   });
 
@@ -198,29 +208,150 @@ class SBBBottomSheet extends StatelessWidget {
   final IconData? trailingIconData;
   final Widget body;
   final bool showCloseButton;
+  final bool useRootNavigator;
   final SBBBottomSheetStyle style;
 
   @override
   Widget build(BuildContext context) {
+    // Build actual widgets from convenience parameters
+    Widget? leadingWidget = leading;
+    if (leadingWidget == null && leadingIconData != null) {
+      leadingWidget = Icon(leadingIconData);
+    }
+
+    Widget? titleWidget = title;
+    if (titleWidget == null && titleText != null) {
+      titleWidget = Text(titleText!);
+    }
+
+    Widget? trailingWidget = trailing;
+    if (trailingWidget == null && trailingIconData != null) {
+      trailingWidget = Icon(trailingIconData);
+    }
+
+    // Apply theming to all widgets
+
+    if (titleWidget != null) {
+      titleWidget = _addDefaultAncestorWithResolved(
+        child: titleWidget,
+        foregroundColor: style.titleForegroundColor,
+        textStyle: style.titleTextStyle,
+      );
+    }
+
+    if (leadingWidget != null) {
+      leadingWidget = _addDefaultAncestorWithResolved(
+        child: leadingWidget,
+        textStyle: style.leadingTextStyle,
+        foregroundColor: style.leadingForegroundColor,
+      );
+    }
+
+    if (trailingWidget != null) {
+      trailingWidget = _addDefaultAncestorWithResolved(
+        child: trailingWidget,
+        foregroundColor: style.trailingForegroundColor,
+        textStyle: style.trailingTextStyle,
+      );
+    }
+
+    final Widget child;
+    if (titleWidget != null || leadingWidget != null || trailingWidget != null || showCloseButton) {
+      child = Column(
+        mainAxisSize: .min,
+        crossAxisAlignment: .start,
+        spacing: style.titleBodyGap ?? 0,
+        children: [
+          _BottomSheetTitleRow(
+            title: titleWidget,
+            leading: leadingWidget,
+            trailing: trailingWidget,
+            showCloseButton: showCloseButton,
+            style: style,
+            useRootNavigator: useRootNavigator,
+          ),
+          Flexible(child: body),
+        ],
+      );
+    } else {
+      child = body;
+    }
+
     return Container(
       padding: style.padding,
       color: style.backgroundColor,
-      child: Column(
-        mainAxisSize: .min,
-        crossAxisAlignment: .start,
+      child: child,
+    );
+  }
+
+  static Widget _addDefaultAncestorWithResolved({
+    required Widget child,
+    required Color? foregroundColor,
+    TextStyle? textStyle,
+  }) {
+    final resolvedTextStyle = textStyle?.copyWith(color: foregroundColor) ?? TextStyle(color: foregroundColor);
+
+    child = DefaultTextStyle.merge(
+      style: resolvedTextStyle,
+      child: IconTheme.merge(
+        data: IconThemeData(color: foregroundColor),
+        child: child,
+      ),
+    );
+    return child;
+  }
+}
+
+class _BottomSheetTitleRow extends StatelessWidget {
+  const _BottomSheetTitleRow({
+    this.title,
+    this.leading,
+    this.trailing,
+    required this.showCloseButton,
+    required this.style,
+    required this.useRootNavigator,
+  });
+
+  final Widget? title;
+  final Widget? leading;
+  final Widget? trailing;
+  final bool showCloseButton;
+  final SBBBottomSheetStyle style;
+  final bool useRootNavigator;
+
+  @override
+  Widget build(BuildContext context) {
+    Widget child = title ?? const SizedBox();
+
+    if (leading != null) {
+      child = Row(
         children: [
-          ConstrainedBox(
-            constraints: BoxConstraints(minHeight: style.titleMinHeight!),
-            child: Row(
-              mainAxisAlignment: .start,
-              children: [
-                Expanded(child: Text(titleText!, style: style.titleTextStyle)),
-                if (showCloseButton) _CloseButton(),
-              ],
-            ),
-          ),
-          SizedBox(height: style.titleBodyGap),
-          Flexible(child: body),
+          leading!,
+          SizedBox(width: 8.0),
+          Expanded(child: child),
+        ],
+      );
+    } else {
+      child = Align(alignment: .centerLeft, child: child);
+    }
+
+    if (trailing != null) {
+      child = Row(
+        children: [
+          Expanded(child: child),
+          SizedBox(width: 16.0),
+          trailing!,
+        ],
+      );
+    }
+
+    return ConstrainedBox(
+      constraints: BoxConstraints(minHeight: style.titleMinHeight ?? SBBSpacing.xLarge),
+      child: Row(
+        mainAxisAlignment: .spaceBetween,
+        children: [
+          Expanded(child: child),
+          if (showCloseButton) _CloseButton(useRootNavigator: useRootNavigator),
         ],
       ),
     );
@@ -228,38 +359,39 @@ class SBBBottomSheet extends StatelessWidget {
 }
 
 class _ModalHeader extends StatelessWidget {
-  const _ModalHeader(this.title, {this.showCloseButton = true});
+  const _ModalHeader(this.title, {this.showCloseButton = true, this.useRootNavigator = true});
 
   final String title;
   final bool showCloseButton;
+  final bool useRootNavigator;
 
   @override
   Widget build(BuildContext context) {
-    final style = SBBControlStyles.of(context);
+    final style = Theme.of(context).sbbBottomSheetTheme?.style;
     return Row(
-      crossAxisAlignment: .start,
       children: [
         Expanded(
-          child: Padding(
-            padding: const EdgeInsetsDirectional.fromSTEB(SBBSpacing.medium, SBBSpacing.medium, 0.0, SBBSpacing.medium),
-            child: Semantics(header: true, child: Text(title, style: style.modalTitleTextStyle)),
-          ),
+          child: Semantics(header: true, child: Text(title, style: style?.titleTextStyle)),
         ),
-        if (showCloseButton) _CloseButton(),
+        if (showCloseButton) _CloseButton(useRootNavigator: useRootNavigator),
       ],
     );
   }
 }
 
 class _CloseButton extends StatelessWidget {
+  const _CloseButton({required this.useRootNavigator});
+
+  final bool useRootNavigator;
+
   @override
   Widget build(BuildContext context) => Semantics(
     label: MaterialLocalizations.of(context).closeButtonTooltip,
     excludeSemantics: true,
     button: true,
-    child: Padding(
-      padding: const .all(6.0),
-      child: SBBTertiaryButtonSmall(onPressed: () => Navigator.of(context).pop(), iconData: SBBIcons.cross_small),
+    child: SBBTertiaryButtonSmall(
+      onPressed: () => Navigator.of(context, rootNavigator: useRootNavigator).pop(),
+      iconData: SBBIcons.cross_small,
     ),
   );
 }
