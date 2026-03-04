@@ -42,12 +42,12 @@ class _MessagePageState extends State<MessagePage> {
                     SBBSwitchListItem(
                       value: _isLoading,
                       titleText: 'Is Loading',
-                      onChanged: (value) => setState(() => _isLoading = value ?? false),
+                      onChanged: (value) => setState(() => _isLoading = value),
                     ),
                     SBBSwitchListItem(
                       value: _showIllustrations,
                       titleText: 'Show Illustrations',
-                      onChanged: (value) => setState(() => _showIllustrations = value ?? false),
+                      onChanged: (value) => setState(() => _showIllustrations = value),
                     ),
                   ],
                 ).toList(growable: false),

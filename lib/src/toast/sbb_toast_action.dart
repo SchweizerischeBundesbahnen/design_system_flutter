@@ -80,7 +80,7 @@ class _SBBToastActionState extends State<SBBToastAction> {
       onTap: _isActionBeenTriggered ? null : () => _handlePressed(toastScope.toast?.hide),
       child: Text(
         widget.title,
-        style: resolvedStyle?.actionTextStyle?.copyWith(color: resolvedStyle?.actionForegroundColor),
+        style: resolvedStyle?.actionTextStyle?.copyWith(color: resolvedStyle.actionForegroundColor),
       ),
     );
   }
