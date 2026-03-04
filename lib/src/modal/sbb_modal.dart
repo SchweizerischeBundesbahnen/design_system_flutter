@@ -82,6 +82,13 @@ class SBBModalPopup extends StatelessWidget {
   }
 }
 
+// TODO: expose more of the underlying parameters?
+// TODO: parameter remodeling (optional title and move it up) - add trailing, leading and conveniences
+// TODO: keep showCloseButton
+// TODO: v5 Styling / Theming
+// TODO: documentation
+// TODO: migration guide
+
 /// Shows an SBB Modal Sheet. Use according to documentation.
 ///
 /// If you try to close the sheet but the underlying page is navigated back
@@ -93,10 +100,10 @@ class SBBModalPopup extends StatelessWidget {
 /// See also:
 ///
 /// * [showCustomSBBModalSheet], variant for custom modal sheet.
-/// * [SBBModalSheet], which will be displayed.
+/// * [SBBBottomSheet], which will be displayed.
 /// * [showModalBottomSheet], which is used to display the modal.
 /// * <https://digital.sbb.ch/en/design-system/mobile/components/modal-view/>
-Future<T?> showSBBModalSheet<T>({
+Future<T?> showSBBBottomSheet<T>({
   required BuildContext context,
   required String title,
   required Widget child,
@@ -116,7 +123,7 @@ Future<T?> showSBBModalSheet<T>({
     enableDrag: enableDrag,
     constraints: constraints,
     builder: (_) {
-      return SBBModalSheet(
+      return SBBBottomSheet(
         title: title,
         showCloseButton: showCloseButton,
         backgroundColor: backgroundColor,
@@ -137,8 +144,8 @@ Future<T?> showSBBModalSheet<T>({
 ///
 /// See also:
 ///
-/// * [showSBBModalSheet], which is used to display the modal.
-/// * [SBBModalSheet], which will be displayed.
+/// * [showSBBBottomSheet], which is used to display the modal.
+/// * [SBBBottomSheet], which will be displayed.
 /// * [showModalBottomSheet], which is used to display the modal.
 /// * <https://digital.sbb.ch/en/design-system/mobile/components/modal-view/>
 Future<T?> showCustomSBBModalSheet<T>({
@@ -161,7 +168,7 @@ Future<T?> showCustomSBBModalSheet<T>({
     enableDrag: enableDrag,
     constraints: constraints,
     builder: (_) {
-      return SBBModalSheet.custom(
+      return SBBBottomSheet.custom(
         header: header,
         showCloseButton: showCloseButton,
         backgroundColor: backgroundColor,
@@ -176,10 +183,10 @@ Future<T?> showCustomSBBModalSheet<T>({
 ///
 /// See also:
 ///
-/// * [showSBBModalSheet], which is typically used to display this Widget.
+/// * [showSBBBottomSheet], which is typically used to display this Widget.
 /// * <https://digital.sbb.ch/en/design-system/mobile/components/modal-view/>
-class SBBModalSheet extends StatelessWidget {
-  SBBModalSheet({
+class SBBBottomSheet extends StatelessWidget {
+  SBBBottomSheet({
     Key? key,
     required String title,
     required Widget child,
@@ -204,7 +211,7 @@ class SBBModalSheet extends StatelessWidget {
          child: child,
        );
 
-  SBBModalSheet.custom({
+  SBBBottomSheet.custom({
     Key? key,
     required Widget header,
     required Widget child,
@@ -218,7 +225,7 @@ class SBBModalSheet extends StatelessWidget {
          child: child,
        );
 
-  const SBBModalSheet._({
+  const SBBBottomSheet._({
     super.key,
     required this.headerBuilder,
     required this.child,

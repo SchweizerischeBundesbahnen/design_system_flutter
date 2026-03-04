@@ -53,13 +53,13 @@ class SBBTimePicker extends StatefulWidget {
   final TimeOfDay? maximumTime;
   final int minuteInterval;
 
-  /// Shows an [SBBModalSheet] with an [SBBTimePicker] to select a [TimeOfDay].
+  /// Shows an [SBBBottomSheet] with an [SBBTimePicker] to select a [TimeOfDay].
   /// Use according to documentation.
   ///
   /// See also:
   ///
   /// * [SBBTimePicker], which will be displayed.
-  /// * [showSBBModalSheet], which is used to display the modal.
+  /// * [showSBBBottomSheet], which is used to display the modal.
   /// * <https://digital.sbb.ch/en/design-system/mobile/components/picker/>
   /// * <https://digital.sbb.ch/en/design-system/mobile/components/modal-view/>
   static void showModal({
@@ -83,7 +83,7 @@ class SBBTimePicker extends StatefulWidget {
 
     var selectedTime = modalTime;
 
-    showSBBModalSheet(
+    showSBBBottomSheet(
       context: context,
       title: modalTitle,
       child: Column(

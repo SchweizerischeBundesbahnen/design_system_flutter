@@ -65,7 +65,7 @@ class _ModalPageState extends State<ModalPage> {
     return SBBTertiaryButton(
       labelText: 'Modal Sheet Full',
       onPressed: () async {
-        final result = await showSBBModalSheet<String>(
+        final result = await showSBBBottomSheet<String>(
           context: context,
           title: 'Titel',
           showCloseButton: _showCloseButton,
@@ -81,7 +81,7 @@ class _ModalPageState extends State<ModalPage> {
     return SBBTertiaryButton(
       labelText: 'Modal Sheet',
       onPressed: () async {
-        final result = await showSBBModalSheet<String>(
+        final result = await showSBBBottomSheet<String>(
           context: context,
           title: 'Titel',
           showCloseButton: _showCloseButton,
