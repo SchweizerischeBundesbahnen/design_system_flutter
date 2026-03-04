@@ -67,7 +67,7 @@ class _ModalPageState extends State<ModalPage> {
       onPressed: () async {
         final result = await showSBBBottomSheet<String>(
           context: context,
-          title: 'Titel',
+          titleText: 'Titel',
           showCloseButton: _showCloseButton,
           backgroundColor: _customBackgroundColor ? SBBColors.peach : null,
           body: _modalContent(context, fullHeight: true),
@@ -83,7 +83,7 @@ class _ModalPageState extends State<ModalPage> {
       onPressed: () async {
         final result = await showSBBBottomSheet<String>(
           context: context,
-          title: 'Titel',
+          titleText: 'Titel',
           showCloseButton: _showCloseButton,
           backgroundColor: _customBackgroundColor ? SBBColors.peach : null,
           body: _modalContent(context),

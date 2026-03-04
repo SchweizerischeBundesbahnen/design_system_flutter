@@ -7,7 +7,7 @@ part of 'sbb_picker.dart';
 /// * [SBBDateTimeInput], variant for date time values.
 /// * [SBBDateInput], variant for date values.
 /// * [SBBTimePicker], picker for time values.
-/// * [SBBTimePicker.showModal], which is used to display the modal.
+/// * [SBBTimePicker.showModal], which is used to display the bottom_sheet.
 /// * <https://digital.sbb.ch/en/design-system/mobile/components/picker/>
 class SBBTimeInput extends StatefulWidget {
   const SBBTimeInput({

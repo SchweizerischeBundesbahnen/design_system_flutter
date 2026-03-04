@@ -16,7 +16,7 @@ const double _defaultScrollControlDisabledMaxHeightRatio = 9.0 / 16.0;
 /// See also:
 ///
 /// * [SBBModalPopup], which will be displayed.
-/// * [showDialog], which is used to display the modal.
+/// * [showDialog], which is used to display the bottom_sheet.
 /// * <https://digital.sbb.ch/en/design-system/mobile/components/modal-view/>
 Future<T?> showSBBModalPopup<T>({
   required BuildContext context,
@@ -100,13 +100,13 @@ class SBBModalPopup extends StatelessWidget {
 ///
 /// See also:
 ///
-/// * [showCustomSBBModalSheet], variant for custom modal sheet.
+/// * [showCustomSBBModalSheet], variant for custom bottom_sheet sheet.
 /// * [SBBBottomSheet], which will be displayed.
-/// * [showModalBottomSheet], which is used to display the modal.
+/// * [showModalBottomSheet], which is used to display the bottom_sheet.
 /// * <https://digital.sbb.ch/en/design-system/mobile/components/modal-view/>
 Future<T?> showSBBBottomSheet<T>({
   required BuildContext context,
-  required String title,
+  required String titleText,
   required Widget body,
   Color? backgroundColor, // TODO: move to style
   String? barrierLabel,
@@ -114,7 +114,8 @@ Future<T?> showSBBBottomSheet<T>({
   Clip? clipBehavior, // TODO: move to style
   BoxConstraints? constraints, // TODO: move to style
   Color barrierColor = SBBInternal.barrierColor, // TODO: move to style
-  bool isScrollControlled = false, // TODO: EXPLICITLY STATE THAT THIS WAS DEFAULTED TO FALSE
+  // TODO: EXPLICITLY STATE IN MIGRATION GUIDE THAT THIS WAS DEFAULTED TO FALSE AND SHOW EXAMPLE WITH PARAM BELOW
+  bool isScrollControlled = false,
   double scrollControlDisabledMaxHeightRatio = _defaultScrollControlDisabledMaxHeightRatio,
   bool useRootNavigator = true,
   bool isDismissible = true,
@@ -149,7 +150,7 @@ Future<T?> showSBBBottomSheet<T>({
     requestFocus: requestFocus,
     builder: (_) {
       return SBBBottomSheet(
-        title: title,
+        title: titleText,
         // TODO: add this to the documentation that isDismissible influences this
         showCloseButton: isDismissible && showCloseButton,
         backgroundColor: backgroundColor,
@@ -169,9 +170,9 @@ Future<T?> showSBBBottomSheet<T>({
 ///
 /// See also:
 ///
-/// * [showSBBBottomSheet], which is used to display the modal.
+/// * [showSBBBottomSheet], which is used to display the bottom_sheet.
 /// * [SBBBottomSheet], which will be displayed.
-/// * [showModalBottomSheet], which is used to display the modal.
+/// * [showModalBottomSheet], which is used to display the bottom_sheet.
 /// * <https://digital.sbb.ch/en/design-system/mobile/components/modal-view/>
 Future<T?> showCustomSBBModalSheet<T>({
   required BuildContext context,

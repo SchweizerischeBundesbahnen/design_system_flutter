@@ -68,7 +68,7 @@ class SBBDateTimePicker extends StatefulWidget {
   /// See also:
   ///
   /// * [SBBDateTimePicker], which will be displayed.
-  /// * [showSBBBottomSheet], which is used to display the modal.
+  /// * [showSBBBottomSheet], which is used to display the bottom_sheet.
   /// * <https://digital.sbb.ch/en/design-system/mobile/components/picker/>
   /// * <https://digital.sbb.ch/en/design-system/mobile/components/modal-view/>
   static void showModal({
@@ -94,7 +94,7 @@ class SBBDateTimePicker extends StatefulWidget {
 
     showSBBBottomSheet(
       context: context,
-      title: modalTitle,
+      titleText: modalTitle,
       body: Column(
         mainAxisSize: .min,
         children: [
