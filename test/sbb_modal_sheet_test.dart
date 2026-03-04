@@ -41,11 +41,11 @@ class ModalSheetTest extends StatelessWidget {
             padding: const .all(SBBSpacing.xSmall),
             child: Column(
               children: [
-                SBBBottomSheet(title: 'Titel', child: _modalContent()),
+                SBBBottomSheet(titleText: 'Titel', body: _modalContent()),
                 SizedBox(height: SBBSpacing.xSmall),
-                SBBBottomSheet(title: 'Titel', backgroundColor: SBBColors.peach, child: _modalContent()),
+                SBBBottomSheet(titleText: 'Titel', backgroundColor: SBBColors.peach, body: _modalContent()),
                 SizedBox(height: SBBSpacing.xSmall),
-                SBBBottomSheet(title: 'Titel', showCloseButton: false, child: _modalContent()),
+                SBBBottomSheet(titleText: 'Titel', showCloseButton: false, body: _modalContent()),
               ],
             ),
           ),

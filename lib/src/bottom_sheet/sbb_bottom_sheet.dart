@@ -105,15 +105,17 @@ class SBBModalPopup extends StatelessWidget {
 /// * [showModalBottomSheet], which is used to display the bottom_sheet.
 /// * <https://digital.sbb.ch/en/design-system/mobile/components/modal-view/>
 Future<T?> showSBBBottomSheet<T>({
+  Key? key,
   required BuildContext context,
-  required String titleText,
+  Widget? title,
+  String? titleText,
+  Widget? leading,
+  IconData? leadingIconData,
+  Widget? trailing,
+  IconData? trailingIconData,
   required Widget body,
-  Color? backgroundColor, // TODO: move to style
+  SBBBottomSheetStyle? style,
   String? barrierLabel,
-  ShapeBorder? shape, // TODO: move to style as static const
-  Clip? clipBehavior, // TODO: move to style
-  BoxConstraints? constraints, // TODO: move to style
-  Color barrierColor = SBBInternal.barrierColor, // TODO: move to style
   // TODO: EXPLICITLY STATE IN MIGRATION GUIDE THAT THIS WAS DEFAULTED TO FALSE AND SHOW EXAMPLE WITH PARAM BELOW
   bool isScrollControlled = false,
   double scrollControlDisabledMaxHeightRatio = _defaultScrollControlDisabledMaxHeightRatio,
@@ -126,19 +128,21 @@ Future<T?> showSBBBottomSheet<T>({
   bool showCloseButton = true,
   bool? requestFocus,
 }) {
+  assert(title == null || titleText == null, 'Only title or titleText can be set!');
+  assert(leading == null || leadingIconData == null, 'Only leading or leadingIconData can be set!');
+  assert(trailing == null || trailingIconData == null, 'Only trailing or trailingIconData can be set!');
+
+  final themeStyle = Theme.of(context).sbbBottomSheetTheme?.style;
+  final SBBBottomSheetStyle resolvedStyle = (themeStyle ?? SBBBottomSheetStyle()).merge(style);
+
   return showModalBottomSheet<T>(
     context: context,
-    backgroundColor: SBBColors.green,
-    // TODO: move to style
+    backgroundColor: resolvedStyle.backgroundColor,
     barrierLabel: barrierLabel,
     shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(SBBSpacing.medium))),
-    // TODO: move to style
-    clipBehavior: clipBehavior,
-    // TODO: move to style
-    constraints: constraints,
-    // TODO: move to style
-    barrierColor: barrierColor,
-    // TODO: move to style
+    clipBehavior: resolvedStyle.clipBehavior,
+    constraints: resolvedStyle.constraints,
+    barrierColor: resolvedStyle.barrierColor,
     isScrollControlled: isScrollControlled,
     scrollControlDisabledMaxHeightRatio: scrollControlDisabledMaxHeightRatio,
     useRootNavigator: useRootNavigator,
@@ -150,58 +154,19 @@ Future<T?> showSBBBottomSheet<T>({
     requestFocus: requestFocus,
     builder: (_) {
       return SBBBottomSheet(
-        title: titleText,
+        key: key,
+        title: title,
+        titleText: titleText,
+        leading: leading,
+        leadingIconData: leadingIconData,
+        trailing: trailing,
+        trailingIconData: trailingIconData,
         // TODO: add this to the documentation that isDismissible influences this
         showCloseButton: isDismissible && showCloseButton,
-        backgroundColor: backgroundColor,
-        child: useSafeArea ? _wrapWithBottomSafeArea(body) : body,
+        style: resolvedStyle,
+        body: useSafeArea ? _wrapWithBottomSafeArea(body) : body,
       );
     },
-  );
-}
-
-/// Shows an SBB Modal Sheet. Use according to documentation.
-///
-/// If you try to close the sheet but the underlying page is navigated back
-/// instead, try using the `rootNavigator` parameter of the `Navigator`:
-/// ```dart
-/// Navigator.of(context, rootNavigator: true).pop(result)
-/// ```
-///
-/// See also:
-///
-/// * [showSBBBottomSheet], which is used to display the bottom_sheet.
-/// * [SBBBottomSheet], which will be displayed.
-/// * [showModalBottomSheet], which is used to display the bottom_sheet.
-/// * <https://digital.sbb.ch/en/design-system/mobile/components/modal-view/>
-Future<T?> showCustomSBBModalSheet<T>({
-  required BuildContext context,
-  required Widget header,
-  required Widget child,
-  bool useRootNavigator = true,
-  bool useSafeArea = true,
-  bool enableDrag = true,
-  bool showCloseButton = true,
-  Color? backgroundColor,
-  BoxConstraints? constraints,
-}) {
-  return showModalBottomSheet<T>(
-    context: context,
-    isScrollControlled: true,
-    backgroundColor: SBBColors.green,
-    useRootNavigator: useRootNavigator,
-    useSafeArea: useSafeArea,
-    enableDrag: enableDrag,
-    constraints: constraints,
-    builder: (_) {
-      return SBBBottomSheet.custom(
-        header: header,
-        showCloseButton: showCloseButton,
-        backgroundColor: backgroundColor,
-        child: useSafeArea ? _wrapWithBottomSafeArea(child) : child,
-      );
-    },
-    barrierColor: SBBInternal.barrierColor,
   );
 }
 
@@ -212,80 +177,50 @@ Future<T?> showCustomSBBModalSheet<T>({
 /// * [showSBBBottomSheet], which is typically used to display this Widget.
 /// * <https://digital.sbb.ch/en/design-system/mobile/components/modal-view/>
 class SBBBottomSheet extends StatelessWidget {
-  SBBBottomSheet({
-    Key? key,
-    required String title,
-    required Widget child,
-    bool showCloseButton = true,
-    Color? backgroundColor,
-  }) : this._(
-         key: key,
-         headerBuilder: (context) => Padding(
-           padding: const EdgeInsetsDirectional.fromSTEB(
-             SBBSpacing.medium,
-             SBBSpacing.medium,
-             0.0,
-             SBBSpacing.medium,
-           ),
-           child: Semantics(
-             header: true,
-             child: Text(title, style: SBBControlStyles.of(context).modalTitleTextStyle),
-           ),
-         ),
-         showCloseButton: showCloseButton,
-         backgroundColor: backgroundColor,
-         child: child,
-       );
-
-  SBBBottomSheet.custom({
-    Key? key,
-    required Widget header,
-    required Widget child,
-    bool showCloseButton = true,
-    Color? backgroundColor,
-  }) : this._(
-         key: key,
-         headerBuilder: (_) => header,
-         showCloseButton: showCloseButton,
-         backgroundColor: backgroundColor,
-         child: child,
-       );
-
-  const SBBBottomSheet._({
+  const SBBBottomSheet({
     super.key,
-    required this.headerBuilder,
-    required this.child,
+    this.title,
+    this.titleText,
+    this.leading,
+    this.leadingIconData,
+    this.trailing,
+    this.trailingIconData,
+    required this.body,
     required this.showCloseButton,
-    this.backgroundColor,
+    required this.style,
   });
 
-  final WidgetBuilder headerBuilder;
-  final Widget child;
+  final Widget? title;
+  final String? titleText;
+  final Widget? leading;
+  final IconData? leadingIconData;
+  final Widget? trailing;
+  final IconData? trailingIconData;
+  final Widget body;
   final bool showCloseButton;
-  final Color? backgroundColor;
+  final SBBBottomSheetStyle style;
 
   @override
   Widget build(BuildContext context) {
-    final style = SBBControlStyles.of(context);
-    return DecoratedBox(
-      decoration: BoxDecoration(
-        color: backgroundColor ?? style.modalBackgroundColor,
-        borderRadius: const BorderRadius.only(
-          topLeft: .circular(SBBSpacing.medium),
-          topRight: .circular(SBBSpacing.medium),
-        ),
-      ),
+    return Container(
+      padding: style.padding,
+      color: style.backgroundColor,
       child: Column(
         mainAxisSize: .min,
+        crossAxisAlignment: .start,
         children: [
-          Row(
-            crossAxisAlignment: .start,
-            children: [
-              Expanded(child: headerBuilder(context)),
-              if (showCloseButton) _CloseButton(),
-            ],
+          ConstrainedBox(
+            constraints: BoxConstraints(minHeight: style.titleMinHeight!),
+            child: Row(
+              mainAxisAlignment: .start,
+              children: [
+                Expanded(child: Text(titleText!, style: style.titleTextStyle)),
+                if (showCloseButton) _CloseButton(),
+              ],
+            ),
           ),
-          Flexible(child: child),
+          SizedBox(height: style.titleBodyGap),
+          Flexible(child: body),
         ],
       ),
     );

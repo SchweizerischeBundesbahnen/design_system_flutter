@@ -55,8 +55,6 @@ class _ModalPageState extends State<ModalPage> {
         _modalSheetButton(context),
         const SizedBox(height: SBBSpacing.medium),
         _modalSheetFullButton(context),
-        const SizedBox(height: SBBSpacing.medium),
-        _customModalSheetButton(context),
       ],
     );
   }
@@ -69,8 +67,9 @@ class _ModalPageState extends State<ModalPage> {
           context: context,
           titleText: 'Titel',
           showCloseButton: _showCloseButton,
-          backgroundColor: _customBackgroundColor ? SBBColors.peach : null,
-          body: _modalContent(context, fullHeight: true),
+          scrollControlDisabledMaxHeightRatio: 1.0,
+          style: SBBBottomSheetStyle(backgroundColor: _customBackgroundColor ? SBBColors.peach : null),
+          body: _modalContent(context),
         );
         debugPrint('Modal Sheet Full Result: $result');
       },
@@ -85,35 +84,13 @@ class _ModalPageState extends State<ModalPage> {
           context: context,
           titleText: 'Titel',
           showCloseButton: _showCloseButton,
-          backgroundColor: _customBackgroundColor ? SBBColors.peach : null,
+          style: SBBBottomSheetStyle(
+            backgroundColor: _customBackgroundColor ? SBBColors.peach : null,
+            constraints: BoxConstraints.expand(),
+          ),
           body: _modalContent(context),
         );
         debugPrint('Modal Sheet Result: $result');
-      },
-    );
-  }
-
-  Widget _customModalSheetButton(BuildContext context) {
-    return SBBTertiaryButton(
-      labelText: 'Custom Modal Sheet',
-      onPressed: () async {
-        final result = await showCustomSBBModalSheet<String>(
-          context: context,
-          header: const Padding(
-            padding: .all(SBBSpacing.medium),
-            child: Row(
-              children: [
-                Icon(SBBIcons.app_icon_small),
-                SizedBox(width: SBBSpacing.medium),
-                Text('Custom'),
-              ],
-            ),
-          ),
-          showCloseButton: _showCloseButton,
-          backgroundColor: _customBackgroundColor ? SBBColors.peach : null,
-          child: _modalContent(context),
-        );
-        debugPrint('Custom Modal Sheet Result: $result');
       },
     );
   }
@@ -134,20 +111,17 @@ class _ModalPageState extends State<ModalPage> {
     );
   }
 
-  Widget _modalContent(BuildContext context, {bool fullHeight = false}) {
-    return Padding(
-      padding: const EdgeInsetsDirectional.fromSTEB(SBBSpacing.medium, 0.0, SBBSpacing.medium, SBBSpacing.medium),
-      child: Column(
-        crossAxisAlignment: .start,
-        mainAxisSize: fullHeight ? .max : .min,
-        children: [
-          const Text(
-            'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
-          ),
-          const SizedBox(height: SBBSpacing.medium),
-          SBBPrimaryButton(labelText: 'Begone!', onPressed: () => Navigator.of(context).pop('OK')),
-        ],
-      ),
+  Widget _modalContent(BuildContext context) {
+    return Column(
+      crossAxisAlignment: .start,
+      mainAxisSize: .max,
+      mainAxisAlignment: .spaceBetween,
+      children: [
+        const Text(
+          'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
+        ),
+        SBBPrimaryButton(labelText: 'Begone!', onPressed: () => Navigator.of(context).pop('OK')),
+      ],
     );
   }
 }

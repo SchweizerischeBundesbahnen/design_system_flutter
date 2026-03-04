@@ -1,4 +1,4 @@
-export 'src/bottom_sheet/sbb_bottom_sheet.dart';
+export 'src/bottom_sheet/bottom_sheet.dart';
 export 'src/button/button.dart';
 export 'src/checkbox/checkbox.dart';
 export 'src/chip/chip.dart';
