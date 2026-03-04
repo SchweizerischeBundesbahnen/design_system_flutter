@@ -93,9 +93,6 @@ class SBBModalPopup extends StatelessWidget {
   }
 }
 
-// TODO: parameter remodeling (optional title and move it up) - add trailing, leading and conveniences
-// TODO: keep showCloseButton
-// TODO: v5 Styling / Theming
 // TODO: documentation
 // TODO: migration guide
 
@@ -230,7 +227,6 @@ class SBBBottomSheet extends StatelessWidget {
     }
 
     // Apply theming to all widgets
-
     if (titleWidget != null) {
       titleWidget = _addDefaultAncestorWithResolved(
         child: titleWidget,
@@ -321,39 +317,29 @@ class _BottomSheetTitleRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget child = title ?? const SizedBox();
+    if (title == null && leading == null && trailing == null && !showCloseButton) return SizedBox.shrink();
 
-    if (leading != null) {
+    final closeButton = showCloseButton ? _CloseButton(useRootNavigator: useRootNavigator) : null;
+
+    final nonNullChildren = [title, leading, trailing, closeButton].nonNulls.toList(growable: false);
+    final Widget child;
+    if (nonNullChildren.length > 1) {
       child = Row(
+        spacing: SBBSpacing.xSmall,
         children: [
-          leading!,
-          SizedBox(width: 8.0),
-          Expanded(child: child),
+          ?leading,
+          if (title != null) Expanded(child: title!),
+          ?trailing,
+          ?closeButton,
         ],
       );
     } else {
-      child = Align(alignment: .centerLeft, child: child);
-    }
-
-    if (trailing != null) {
-      child = Row(
-        children: [
-          Expanded(child: child),
-          SizedBox(width: 16.0),
-          trailing!,
-        ],
-      );
+      child = nonNullChildren.first;
     }
 
     return ConstrainedBox(
       constraints: BoxConstraints(minHeight: style.titleMinHeight ?? SBBSpacing.xLarge),
-      child: Row(
-        mainAxisAlignment: .spaceBetween,
-        children: [
-          Expanded(child: child),
-          if (showCloseButton) _CloseButton(useRootNavigator: useRootNavigator),
-        ],
-      ),
+      child: child,
     );
   }
 }
