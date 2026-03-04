@@ -10,7 +10,7 @@ class SBBDivider extends StatelessWidget {
   Widget build(BuildContext context) {
     final Color resolvedColor = color ?? Theme.of(context).dividerColor;
     return CustomPaint(
-      foregroundPainter: SBBDividerPainter(
+      painter: SBBDividerPainter(
         color: resolvedColor,
         indent: 0.0,
         paintAtTop: false,

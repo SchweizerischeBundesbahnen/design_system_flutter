@@ -11,12 +11,12 @@ void main() {
         return ListView.separated(
           itemCount: 10,
           itemBuilder: (_, idx) => SBBListItem(
-            style: SBBListItemStyle(backgroundColor: WidgetStatePropertyAll(SBBColors.lemon)),
+            style: SBBListItemStyle(backgroundColor: WidgetStatePropertyAll(SBBColors.cloud)),
             titleText: 'List Item $idx',
             leadingIconData: SBBIcons.dog_small,
             onTap: () {},
           ),
-          separatorBuilder: (_, _) => SBBDivider(),
+          separatorBuilder: (_, _) => SBBDivider(color: SBBColors.lemon),
         );
       },
     );
@@ -25,7 +25,7 @@ void main() {
       widget,
       tester,
       'list_item_separated',
-      find.byType(SBBContentBox).first,
+      find.byType(ListView).first,
     );
   });
 }
