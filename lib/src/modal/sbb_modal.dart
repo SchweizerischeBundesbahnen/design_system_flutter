@@ -130,7 +130,7 @@ Future<T?> showSBBBottomSheet<T>({
     backgroundColor: SBBColors.green,
     // TODO: move to style
     barrierLabel: barrierLabel,
-    shape: shape,
+    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(SBBSpacing.medium))),
     // TODO: move to style
     clipBehavior: clipBehavior,
     // TODO: move to style
@@ -266,40 +266,27 @@ class SBBBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = SBBControlStyles.of(context);
-    return Column(
-      mainAxisSize: .min,
-      children: [
-        ExcludeSemantics(
-          child: GestureDetector(
-            onTap: () => Navigator.of(context).pop(),
-            child: Container(height: SBBSpacing.medium, color: SBBColors.transparent),
-          ),
+    return DecoratedBox(
+      decoration: BoxDecoration(
+        color: backgroundColor ?? style.modalBackgroundColor,
+        borderRadius: const BorderRadius.only(
+          topLeft: .circular(SBBSpacing.medium),
+          topRight: .circular(SBBSpacing.medium),
         ),
-        Flexible(
-          child: Container(
-            decoration: BoxDecoration(
-              color: backgroundColor ?? style.modalBackgroundColor,
-              borderRadius: const BorderRadius.only(
-                topLeft: .circular(SBBSpacing.medium),
-                topRight: .circular(SBBSpacing.medium),
-              ),
-            ),
-            child: Column(
-              mainAxisSize: .min,
-              children: [
-                Row(
-                  crossAxisAlignment: .start,
-                  children: [
-                    Expanded(child: headerBuilder(context)),
-                    if (showCloseButton) _CloseButton(),
-                  ],
-                ),
-                Flexible(child: child),
-              ],
-            ),
+      ),
+      child: Column(
+        mainAxisSize: .min,
+        children: [
+          Row(
+            crossAxisAlignment: .start,
+            children: [
+              Expanded(child: headerBuilder(context)),
+              if (showCloseButton) _CloseButton(),
+            ],
           ),
-        ),
-      ],
+          Flexible(child: child),
+        ],
+      ),
     );
   }
 }
