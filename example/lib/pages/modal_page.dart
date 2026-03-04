@@ -70,7 +70,7 @@ class _ModalPageState extends State<ModalPage> {
           title: 'Titel',
           showCloseButton: _showCloseButton,
           backgroundColor: _customBackgroundColor ? SBBColors.peach : null,
-          child: _modalContent(context, fullHeight: true),
+          body: _modalContent(context, fullHeight: true),
         );
         debugPrint('Modal Sheet Full Result: $result');
       },
@@ -86,7 +86,7 @@ class _ModalPageState extends State<ModalPage> {
           title: 'Titel',
           showCloseButton: _showCloseButton,
           backgroundColor: _customBackgroundColor ? SBBColors.peach : null,
-          child: _modalContent(context),
+          body: _modalContent(context),
         );
         debugPrint('Modal Sheet Result: $result');
       },

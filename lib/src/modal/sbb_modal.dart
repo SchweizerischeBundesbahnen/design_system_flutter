@@ -107,7 +107,7 @@ class SBBModalPopup extends StatelessWidget {
 Future<T?> showSBBBottomSheet<T>({
   required BuildContext context,
   required String title,
-  required Widget child,
+  required Widget body,
   Color? backgroundColor, // TODO: move to style
   String? barrierLabel,
   ShapeBorder? shape, // TODO: move to style as static const
@@ -117,6 +117,7 @@ Future<T?> showSBBBottomSheet<T>({
   bool isScrollControlled = false, // TODO: EXPLICITLY STATE THAT THIS WAS DEFAULTED TO FALSE
   double scrollControlDisabledMaxHeightRatio = _defaultScrollControlDisabledMaxHeightRatio,
   bool useRootNavigator = true,
+  bool isDismissible = true,
   bool enableDrag = true,
   bool useSafeArea = true,
   AnimationController? transitionAnimationController,
@@ -140,6 +141,7 @@ Future<T?> showSBBBottomSheet<T>({
     isScrollControlled: isScrollControlled,
     scrollControlDisabledMaxHeightRatio: scrollControlDisabledMaxHeightRatio,
     useRootNavigator: useRootNavigator,
+    isDismissible: isDismissible,
     enableDrag: enableDrag,
     useSafeArea: useSafeArea,
     transitionAnimationController: transitionAnimationController,
@@ -148,9 +150,10 @@ Future<T?> showSBBBottomSheet<T>({
     builder: (_) {
       return SBBBottomSheet(
         title: title,
-        showCloseButton: showCloseButton,
+        // TODO: add this to the documentation that isDismissible influences this
+        showCloseButton: isDismissible && showCloseButton,
         backgroundColor: backgroundColor,
-        child: useSafeArea ? _wrapWithBottomSafeArea(child) : child,
+        child: useSafeArea ? _wrapWithBottomSafeArea(body) : body,
       );
     },
   );

@@ -86,7 +86,7 @@ class SBBTimePicker extends StatefulWidget {
     showSBBBottomSheet(
       context: context,
       title: modalTitle,
-      child: Column(
+      body: Column(
         mainAxisSize: .min,
         children: [
           Padding(

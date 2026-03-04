@@ -142,7 +142,7 @@ class SBBSelect<T> extends StatelessWidget {
     showSBBBottomSheet(
       context: context,
       title: title,
-      child: SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Column(
           children: [
             SBBContentBox(
@@ -230,7 +230,7 @@ class SBBMultiSelect<T> extends StatefulWidget {
     showSBBBottomSheet(
       context: context,
       title: title,
-      child: StatefulBuilder(
+      body: StatefulBuilder(
         builder: (context, setModalState) {
           return SingleChildScrollView(
             child: Column(
