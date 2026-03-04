@@ -511,5 +511,5 @@ A cross small will be displayed instead of the trailingIconData when focused and
 
 * NOTE: the `SBBToastStyle` API has completely changed
 * use `SBBToastThemeData` to override the style of all toast within your application
-* access the theme using `Theme.of(context).sbbStepperTheme`
+* access the theme using `Theme.of(context).sbbToastTheme`
 * individual change of style via the `style` constructor parameter

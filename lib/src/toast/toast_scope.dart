@@ -5,7 +5,6 @@ import '../../sbb_design_system_mobile.dart';
 /// The [ToastScope] is an [InheritedWidget] that provides the
 /// [stream] and [SBBToast] to the
 /// * [DefaultToastBody]
-/// * [ToastActionBody]
 class ToastScope extends InheritedWidget {
   const ToastScope({
     super.key,
