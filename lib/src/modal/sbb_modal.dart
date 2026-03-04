@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../../sbb_design_system_mobile.dart';
 import '../sbb_internal.dart';
 
+const double _defaultScrollControlDisabledMaxHeightRatio = 9.0 / 16.0;
+
 /// Shows a SBB Modal Popup. Use according to documentation.
 ///
 /// If you try to close the popup but the underlying page is navigated back
@@ -82,7 +84,6 @@ class SBBModalPopup extends StatelessWidget {
   }
 }
 
-// TODO: expose more of the underlying parameters?
 // TODO: parameter remodeling (optional title and move it up) - add trailing, leading and conveniences
 // TODO: keep showCloseButton
 // TODO: v5 Styling / Theming
@@ -107,21 +108,43 @@ Future<T?> showSBBBottomSheet<T>({
   required BuildContext context,
   required String title,
   required Widget child,
+  Color? backgroundColor, // TODO: move to style
+  String? barrierLabel,
+  ShapeBorder? shape, // TODO: move to style as static const
+  Clip? clipBehavior, // TODO: move to style
+  BoxConstraints? constraints, // TODO: move to style
+  Color barrierColor = SBBInternal.barrierColor, // TODO: move to style
+  bool isScrollControlled = false, // TODO: EXPLICITLY STATE THAT THIS WAS DEFAULTED TO FALSE
+  double scrollControlDisabledMaxHeightRatio = _defaultScrollControlDisabledMaxHeightRatio,
   bool useRootNavigator = true,
-  bool useSafeArea = true,
   bool enableDrag = true,
+  bool useSafeArea = true,
+  AnimationController? transitionAnimationController,
+  AnimationStyle? sheetAnimationStyle,
   bool showCloseButton = true,
-  BoxConstraints? constraints,
-  Color? backgroundColor,
+  bool? requestFocus,
 }) {
   return showModalBottomSheet<T>(
     context: context,
-    isScrollControlled: true,
-    backgroundColor: SBBColors.transparent,
-    useRootNavigator: useRootNavigator,
-    useSafeArea: useSafeArea,
-    enableDrag: enableDrag,
+    backgroundColor: SBBColors.green,
+    // TODO: move to style
+    barrierLabel: barrierLabel,
+    shape: shape,
+    // TODO: move to style
+    clipBehavior: clipBehavior,
+    // TODO: move to style
     constraints: constraints,
+    // TODO: move to style
+    barrierColor: barrierColor,
+    // TODO: move to style
+    isScrollControlled: isScrollControlled,
+    scrollControlDisabledMaxHeightRatio: scrollControlDisabledMaxHeightRatio,
+    useRootNavigator: useRootNavigator,
+    enableDrag: enableDrag,
+    useSafeArea: useSafeArea,
+    transitionAnimationController: transitionAnimationController,
+    sheetAnimationStyle: sheetAnimationStyle,
+    requestFocus: requestFocus,
     builder: (_) {
       return SBBBottomSheet(
         title: title,
@@ -130,7 +153,6 @@ Future<T?> showSBBBottomSheet<T>({
         child: useSafeArea ? _wrapWithBottomSafeArea(child) : child,
       );
     },
-    barrierColor: SBBInternal.barrierColor,
   );
 }
 
@@ -162,7 +184,7 @@ Future<T?> showCustomSBBModalSheet<T>({
   return showModalBottomSheet<T>(
     context: context,
     isScrollControlled: true,
-    backgroundColor: SBBColors.transparent,
+    backgroundColor: SBBColors.green,
     useRootNavigator: useRootNavigator,
     useSafeArea: useSafeArea,
     enableDrag: enableDrag,
