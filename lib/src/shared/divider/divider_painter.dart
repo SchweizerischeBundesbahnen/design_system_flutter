@@ -1,8 +1,6 @@
 import 'package:flutter/rendering.dart';
 
-/// Paints a divider that can be indented.
-///
-/// Used by links in [SBBListItem.links] and [SBBListItem.divideListItems].
+/// Paints a divider that can be indented and optionally at the top of the underlying child.
 class SBBDividerPainter extends CustomPainter {
   const SBBDividerPainter({
     required this.color,

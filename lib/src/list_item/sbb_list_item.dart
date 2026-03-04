@@ -3,7 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:sbb_design_system_mobile/src/shared/bottom_loading_indicator.dart';
 
 import '../../sbb_design_system_mobile.dart';
-import 'divider_painter.dart';
+import '../shared/divider/divider_painter.dart';
 
 /// A customizable list item component following the SBB design system.
 ///
@@ -306,11 +306,11 @@ class SBBListItem extends StatefulWidget {
       return items;
     }
 
-    final resolvedColor = color ?? Theme.of(context!).dividerTheme.color ?? SBBColors.graphite;
+    final resolvedColor = color ?? Theme.of(context!).dividerColor;
 
     Widget wrapListItem(Widget link) {
       return CustomPaint(
-        painter: SBBDividerPainter(
+        foregroundPainter: SBBDividerPainter(
           paintAtTop: false,
           color: resolvedColor,
           indent: 0.0,
