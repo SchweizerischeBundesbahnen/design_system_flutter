@@ -71,24 +71,41 @@ class SBBModalPopup extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final style = Theme.of(context).sbbBottomSheetTheme?.style;
+    final resolvedTitlePadding = _resolvedTitlePadding(style);
+    final resolvedBodyPadding = _resolvedBodyPadding(style);
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(SBBSpacing.medium)),
       clipBehavior: clipBehavior,
       backgroundColor: backgroundColor ?? style?.backgroundColor,
       child: Semantics(
         explicitChildNodes: true,
-        child: Padding(
-          padding: style?.padding?.copyWith(bottom: SBBSpacing.medium) ?? EdgeInsets.zero,
-          child: Column(
-            mainAxisSize: .min,
-            children: [
-              _ModalHeader(title, showCloseButton: showCloseButton),
-              SizedBox(height: style?.titleBodyGap),
-              Flexible(child: child),
-            ],
-          ),
+        child: Column(
+          mainAxisSize: .min,
+          children: [
+            Padding(
+              padding: resolvedTitlePadding,
+              child: _ModalHeader(title, showCloseButton: showCloseButton, useRootNavigator: useRootNavigator),
+            ),
+            Flexible(
+              child: Padding(
+                padding: resolvedBodyPadding,
+                child: child,
+              ),
+            ),
+          ],
         ),
       ),
+    );
+  }
+
+  EdgeInsets _resolvedBodyPadding(SBBBottomSheetStyle? style) =>
+      (style?.padding ?? EdgeInsets.zero).copyWith(top: style?.titleBodyGap ?? 0.0, bottom: SBBSpacing.medium);
+
+  // need to adjust this in case showCloseButton is displayed
+  EdgeInsets _resolvedTitlePadding(SBBBottomSheetStyle? style) {
+    return (style?.padding ?? EdgeInsets.zero).copyWith(
+      right: showCloseButton ? SBBSpacing.xSmall : (style?.padding ?? EdgeInsets.zero).right,
+      bottom: 0.0,
     );
   }
 }
@@ -158,21 +175,19 @@ Future<T?> showSBBBottomSheet<T>({
     transitionAnimationController: transitionAnimationController,
     sheetAnimationStyle: sheetAnimationStyle,
     requestFocus: requestFocus,
-    builder: (_) {
-      return SBBBottomSheet(
-        key: key,
-        title: title,
-        titleText: titleText,
-        leading: leading,
-        leadingIconData: leadingIconData,
-        trailing: trailing,
-        trailingIconData: trailingIconData,
-        // TODO: add this to the documentation that isDismissible influences this
-        showCloseButton: isDismissible && showCloseButton,
-        style: resolvedStyle,
-        body: useSafeArea ? _wrapWithBottomSafeArea(body) : body,
-      );
-    },
+    builder: (_) => SBBBottomSheet(
+      key: key,
+      title: title,
+      titleText: titleText,
+      leading: leading,
+      leadingIconData: leadingIconData,
+      trailing: trailing,
+      trailingIconData: trailingIconData,
+      // TODO: add this to the documentation that isDismissible influences this
+      showCloseButton: isDismissible && showCloseButton,
+      style: resolvedStyle,
+      body: useSafeArea ? _wrapWithBottomSafeArea(body) : body,
+    ),
   );
 }
 
@@ -253,30 +268,48 @@ class SBBBottomSheet extends StatelessWidget {
 
     final Widget child;
     if (titleWidget != null || leadingWidget != null || trailingWidget != null || showCloseButton) {
+      final resolvedTitleRowPadding = _resolvedTitlePadding();
+      final resolvedBodyPadding = _resolvedBodyPadding();
       child = Column(
         mainAxisSize: .min,
         crossAxisAlignment: .start,
-        spacing: style.titleBodyGap ?? 0,
         children: [
-          _BottomSheetTitleRow(
-            title: titleWidget,
-            leading: leadingWidget,
-            trailing: trailingWidget,
-            showCloseButton: showCloseButton,
-            style: style,
-            useRootNavigator: useRootNavigator,
+          Padding(
+            padding: resolvedTitleRowPadding,
+            child: _BottomSheetTitleRow(
+              title: titleWidget,
+              leading: leadingWidget,
+              trailing: trailingWidget,
+              showCloseButton: showCloseButton,
+              style: style,
+              useRootNavigator: useRootNavigator,
+            ),
           ),
-          Flexible(child: body),
+          Flexible(
+            child: Padding(padding: resolvedBodyPadding, child: body),
+          ),
         ],
       );
     } else {
-      child = body;
+      child = Padding(
+        padding: style.padding ?? EdgeInsets.zero,
+        child: body,
+      );
     }
 
-    return Container(
-      padding: style.padding,
-      color: style.backgroundColor,
+    return DecoratedBox(
+      decoration: BoxDecoration(color: style.backgroundColor),
       child: child,
+    );
+  }
+
+  EdgeInsets _resolvedBodyPadding() => (style.padding ?? EdgeInsets.zero).copyWith(top: style.titleBodyGap ?? 0);
+
+  // need to adjust for the close button
+  EdgeInsets _resolvedTitlePadding() {
+    return (style.padding ?? EdgeInsets.zero).copyWith(
+      right: showCloseButton ? SBBSpacing.xSmall : style.padding?.right ?? 0.0,
+      bottom: 0.0,
     );
   }
 
@@ -317,11 +350,12 @@ class _BottomSheetTitleRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (title == null && leading == null && trailing == null && !showCloseButton) return SizedBox.shrink();
-
     final closeButton = showCloseButton ? _CloseButton(useRootNavigator: useRootNavigator) : null;
 
     final nonNullChildren = [title, leading, trailing, closeButton].nonNulls.toList(growable: false);
+
+    if (nonNullChildren.isEmpty) return SizedBox.shrink();
+
     final Widget child;
     if (nonNullChildren.length > 1) {
       child = Row(

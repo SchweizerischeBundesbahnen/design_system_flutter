@@ -84,7 +84,9 @@ class _ModalPageState extends State<ModalPage> {
       onPressed: () async {
         final result = await showSBBBottomSheet<String>(
           context: context,
-          titleText: 'Title',
+          title: Container(height: 20, width: double.infinity, color: SBBColors.green),
+          leading: Container(height: 100, width: 10, color: SBBColors.red),
+          trailing: Container(height: 10, width: 10, color: SBBColors.red),
           showCloseButton: _showCloseButton,
           style: SBBBottomSheetStyle(
             backgroundColor: _customBackgroundColor ? SBBColors.peach : null,
@@ -138,6 +140,7 @@ class _ModalPageState extends State<ModalPage> {
       mainAxisSize: fullHeight ? .max : .min,
       mainAxisAlignment: .spaceBetween,
       children: [
+        Container(width: double.infinity, height: 20, color: SBBColors.turquoise),
         Text(
           'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, '
           'sed diam nonumy eirmod tempor invidunt ut labore et dolore '
