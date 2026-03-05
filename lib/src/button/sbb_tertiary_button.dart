@@ -257,7 +257,7 @@ class _BaseTertiaryButton extends StatelessWidget {
         spacing: 4.0,
         children: [
           leading,
-          Expanded(child: label),
+          Flexible(child: label),
         ],
       );
     } else if (leading != null) {
