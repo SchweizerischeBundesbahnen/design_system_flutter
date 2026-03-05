@@ -41,7 +41,9 @@ class _TextAreaPageState extends State<TextAreaPage> {
                     items: [
                       SBBTextInput(
                         decoration: SBBInputDecoration(
-                          contentPadding: const .only(top: SBBSpacing.xSmall),
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: SBBSpacing.medium,
+                          ).copyWith(top: SBBSpacing.xSmall),
                           leadingIconData: SBBIcons.unicorn_small,
                           trailingIconData: SBBIcons.circle_information_small_small,
                           labelText: 'Label',
@@ -51,7 +53,9 @@ class _TextAreaPageState extends State<TextAreaPage> {
                       ),
                       SBBTextInput(
                         decoration: SBBInputDecoration(
-                          contentPadding: const .only(top: SBBSpacing.xSmall),
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: SBBSpacing.medium,
+                          ).copyWith(top: SBBSpacing.xSmall),
                           leadingIconData: SBBIcons.unicorn_small,
                           trailingIconData: SBBIcons.circle_information_small_small,
                           labelText: 'Label',
@@ -73,10 +77,12 @@ class _TextAreaPageState extends State<TextAreaPage> {
                       ),
                       SBBTextInput(
                         decoration: SBBInputDecoration(
-                          contentPadding: const .only(top: SBBSpacing.xSmall),
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: SBBSpacing.medium,
+                          ).copyWith(top: SBBSpacing.xSmall),
                           leadingIconData: SBBIcons.unicorn_small,
                           trailingIconData: SBBIcons.circle_information_small_small,
-                          labelText: 'I extend from one line to maximum three lines!',
+                          labelText: 'Maximum three lines!',
                         ),
                         controller: emptyTextEditingController,
                         maxLines: 3,
@@ -99,7 +105,9 @@ class _TextAreaPageState extends State<TextAreaPage> {
                       ),
                       child: SBBTextInput(
                         decoration: SBBInputDecoration(
-                          contentPadding: const .only(top: SBBSpacing.xSmall),
+                          contentPadding: EdgeInsets.symmetric(
+                            horizontal: SBBSpacing.medium,
+                          ).copyWith(top: SBBSpacing.xSmall),
                           labelText: 'Resizable Text Area',
                           leadingIconData: SBBIcons.pen_small,
                           placeholderText: 'Drag the handle below to resize...',

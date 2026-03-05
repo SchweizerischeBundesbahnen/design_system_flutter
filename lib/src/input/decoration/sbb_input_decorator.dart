@@ -359,7 +359,9 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
         SBBColors.transparent;
     final resolvedBorder = widget.isBoxed
         ? Border.all(color: resolvedBorderColor)
-        : Border(bottom: BorderSide(color: resolvedBorderColor));
+        : Border(
+            bottom: BorderSide(color: resolvedBorderColor, width: 1.0, strokeAlign: BorderSide.strokeAlignInside),
+          );
 
     return BoxDecoration(borderRadius: widget.isBoxed ? SBBContentBoxStyle.radius : null, border: resolvedBorder);
   }

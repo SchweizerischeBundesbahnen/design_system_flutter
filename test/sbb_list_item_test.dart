@@ -4,7 +4,7 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import 'test_app.dart';
 
-const loremIpsum =
+const _loremIpsum =
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
     ' Curabitur finibus, nulla nec tempor ornare, purus orci dictum tortor, non tristique velit tellus eu ligula.';
 
@@ -28,7 +28,7 @@ void main() {
                 ),
                 SBBListItem(titleText: 'Disabled', leadingIconData: SBBIcons.dog_small, enabled: false),
                 SBBListItem(titleText: 'With trailing', trailingIconData: SBBIcons.dog_small, onTap: () {}),
-                SBBListItem(titleText: 'With subtitle', subtitleText: loremIpsum, onTap: () {}),
+                SBBListItem(titleText: 'With subtitle', subtitleText: _loremIpsum, onTap: () {}),
                 SBBListItem(
                   titleText: 'Ellipse! ' * 20,
                   subtitleText: 'The title will be clamped to one line',
