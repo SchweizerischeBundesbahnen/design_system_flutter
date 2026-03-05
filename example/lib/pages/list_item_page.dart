@@ -13,11 +13,12 @@ class ListItemPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final sbbToast = SBBToast.of(context);
+    final baseStyle = SBBBaseStyle.of(context);
     return CustomScrollView(
       slivers: [
         SBBSliverHeaderbox.custom(child: ThemeModeSegmentedButton()),
         SliverPadding(
-          padding: const .all(SBBSpacing.xSmall),
+          padding: EdgeInsets.all(SBBSpacing.xSmall),
           sliver: SliverList.list(
             children: [
               SBBListHeader('Listed'),
@@ -121,6 +122,23 @@ class ListItemPage extends StatelessWidget {
                 ],
               ),
             ],
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: SBBSpacing.xSmall),
+            child: SBBListHeader('Dynamically generated'),
+          ),
+        ),
+        SliverPadding(
+          padding: EdgeInsets.all(SBBSpacing.xSmall).copyWith(bottom: SBBSpacing.xLarge),
+          sliver: SliverList.separated(
+            itemCount: 50,
+            itemBuilder: (context, idx) => SBBListItem(
+              onTap: () {},
+              titleText: 'Index ${idx + 1}',
+            ),
+            separatorBuilder: (_, _) => SBBDivider(),
           ),
         ),
       ],

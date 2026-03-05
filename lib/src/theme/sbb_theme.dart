@@ -321,6 +321,7 @@ class SBBTheme {
       scaffoldBackgroundColor: baseStyle.backgroundColor,
       iconTheme: IconThemeData(color: baseStyle.iconColor, size: sbbIconSizeSmall),
       dividerTheme: DividerThemeData(thickness: 1.0, space: 0.0, color: baseStyle.dividerColor),
+      dividerColor: baseStyle.dividerColor,
       fontFamily: baseStyle.defaultFontFamily,
       textTheme: baseStyle.createTextTheme(),
       appBarTheme: headerTheme.appBarTheme,

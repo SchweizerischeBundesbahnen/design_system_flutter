@@ -514,3 +514,56 @@ A cross small will be displayed instead of the trailingIconData when focused and
 - [ ] Set up theme data if applying custom styles globally
 - [ ] Test multiline mode if used (icons should be top-aligned now)
 - [ ] Consider using `readOnly` instead of just `enabled` for readonly fields with interactive trailing widgets
+
+## Text Input Form Field
+
+### From SBBTextFormField to SBBTextInputFormField
+
+The `SBBTextFormField` has been replaced by `SBBTextInputFormField`, which simply wraps `SBBTextInput` 
+with form field functionality.
+
+Use `SBBTextInputBoxedFormField` for the boxed style.
+
+#### Migration
+
+Replace `SBBTextFormField` with `SBBTextInputFormField`:
+
+**Before:**
+```dart
+SBBTextFormField(
+  controller: _controller,
+  labelText: 'Username',
+  hintText: 'Enter username',
+  icon: SBBIcons.unicorn_small,
+  validator: (value) {
+    if (value?.isEmpty ?? true) return 'Required';
+    return null;
+  },
+)
+```
+
+**After:**
+```dart
+SBBTextInputFormField(
+  controller: _controller,
+  decoration: SBBInputDecoration(
+    labelText: 'Username',
+    placeholderText: 'Enter username',
+    leadingIconData: SBBIcons.unicorn_small,
+  ),
+  validator: (value) {
+    if (value?.isEmpty ?? true) return 'Required';
+    return null;
+  },
+)
+```
+
+#### Key Changes
+
+| SBBTextFormField | SBBTextInputFormField |
+|------------------|----------------------|
+| `labelText` | `decoration.labelText` |
+| `hintText` | `decoration.placeholderText` |
+| `icon` | `decoration.leadingIconData` |
+| `suffixIcon` | `decoration.trailing` or `decoration.trailingIconData` |
+
