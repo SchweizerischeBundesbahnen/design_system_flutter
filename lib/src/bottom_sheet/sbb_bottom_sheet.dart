@@ -110,9 +110,6 @@ class SBBModalPopup extends StatelessWidget {
   }
 }
 
-// TODO: add migration
-// TODO: tests
-
 /// Shows an SBB Bottom Sheet.
 ///
 /// A bottom sheet is a modal window displayed at the bottom of the screen that
@@ -191,8 +188,6 @@ class SBBModalPopup extends StatelessWidget {
 /// Navigator.of(context, rootNavigator: true).pop(result)
 /// ```
 ///
-///
-///
 /// See also:
 ///
 /// * [SBBBottomSheet], which will be displayed.
@@ -211,6 +206,7 @@ Future<T?> showSBBBottomSheet<T>({
   required Widget body,
   SBBBottomSheetStyle? style,
   String? barrierLabel,
+  // TODO: EXPLICITLY STATE IN MIGRATION GUIDE THAT THIS IS NOW SET TO FALSE BY DEFAULT
   bool isScrollControlled = false,
   double scrollControlDisabledMaxHeightRatio = _defaultScrollControlDisabledMaxHeightRatio,
   bool useRootNavigator = true,
