@@ -110,23 +110,96 @@ class SBBModalPopup extends StatelessWidget {
   }
 }
 
-// TODO: documentation
-// TODO: migration guide
+// TODO: add migration
+// TODO: tests
+// TODO: examples
 
-/// Shows an SBB Modal Sheet. Use according to documentation.
+/// Shows an SBB Bottom Sheet.
+///
+/// A bottom sheet is a modal window displayed at the bottom of the screen that
+/// prevents the user from interacting with the rest of the app until dismissed.
+///
+/// Provide either [titleText] for a simple text title or [title] for custom title
+/// content. These parameters are mutually exclusive. Similarly, provide either
+/// [leadingIconData] or [leading] for leading content, and either
+/// [trailingIconData] or [trailing] for trailing content.
+///
+/// The sheet can be dismissed by tapping outside (if [isDismissible] is true),
+/// swiping downward (if [enableDrag] is true), or tapping the close button
+/// (if [showCloseButton] is true and [isDismissible] is true).
+///
+/// The [body] parameter is required and contains the main content of the sheet.
+///
+/// Returns a `Future` that resolves to the value (if any) that was passed to
+/// [Navigator.pop] when the bottom sheet was closed.
+///
+/// ## Parameters
+///
+/// * **[isScrollControlled]**: When `false` (default), the sheet has a fixed maximum
+///   height determined by [scrollControlDisabledMaxHeightRatio]. When `true`, the sheet
+///   can expand to fill the entire available space (minus safe areas) and becomes draggable
+///   if it contains scrollable content. Use `isScrollControlled: true` when your content
+///   is a [ListView], [GridView], or other scrollable widget.
+///
+///   **Example - Fixed height (isScrollControlled: false):**
+///   ```dart
+///   showSBBBottomSheet(
+///     context: context,
+///     titleText: 'Select Item',
+///     body: Column(
+///       children: [
+///         ListTile(title: Text('Option 1')),
+///         ListTile(title: Text('Option 2')),
+///       ],
+///     ),
+///     isScrollControlled: false, // Sheet takes 9 / 16 of screen height
+///   );
+///   ```
+///
+///   **Example - Full height scrollable (isScrollControlled: true):**
+///   ```dart
+///   showSBBBottomSheet(
+///     context: context,
+///     titleText: 'Long List',
+///     body: ListView.builder(
+///       itemCount: 100,
+///       itemBuilder: (context, index) => ListTile(title: Text('Item $index')),
+///     ),
+///     isScrollControlled: true, // Sheet expands to fill available space
+///   );
+///   ```
+///
+/// * **[scrollControlDisabledMaxHeightRatio]**: Only used when [isScrollControlled] is `false`.
+///   Defines the maximum height of the sheet as a ratio of the screen height.
+///   Defaults to `9.0 / 16.0`. Valid range is typically 0.0 to 1.0.
+///   Ignored when [isScrollControlled] is `true`.
+///
+///   **Example - Custom height ratio:**
+///   ```dart
+///   showSBBBottomSheet(
+///     context: context,
+///     titleText: 'Half Screen',
+///     body: Text('This sheet takes 50% of screen height'),
+///     isScrollControlled: false,
+///     scrollControlDisabledMaxHeightRatio: 0.5,
+///   );
+///   ```
+/// * useSafeArea wraps the [SBBBottomSheet] in a SafeArea that also respects the bottom
 ///
 /// If you try to close the sheet but the underlying page is navigated back
-/// instead, try using the `rootNavigator` parameter of the `Navigator`:
+/// instead, try using the `rootNavigator` parameter:
 /// ```dart
 /// Navigator.of(context, rootNavigator: true).pop(result)
 /// ```
 ///
+///
+///
 /// See also:
 ///
-/// * [showCustomSBBModalSheet], variant for custom bottom_sheet sheet.
 /// * [SBBBottomSheet], which will be displayed.
-/// * [showModalBottomSheet], which is used to display the bottom_sheet.
-/// * <https://digital.sbb.ch/en/design-system/mobile/components/modal-view/>
+/// * [SBBBottomSheetStyle], the style used to change the appearance of this
+/// * [showModalBottomSheet], which is used by this function internally.
+/// * <https://digital.sbb.ch/de/design-system/mobile/components/bottom-sheet/>
 Future<T?> showSBBBottomSheet<T>({
   Key? key,
   required BuildContext context,
@@ -139,7 +212,6 @@ Future<T?> showSBBBottomSheet<T>({
   required Widget body,
   SBBBottomSheetStyle? style,
   String? barrierLabel,
-  // TODO: EXPLICITLY STATE IN MIGRATION GUIDE THAT THIS WAS DEFAULTED TO FALSE AND SHOW EXAMPLE WITH PARAM BELOW
   bool isScrollControlled = false,
   double scrollControlDisabledMaxHeightRatio = _defaultScrollControlDisabledMaxHeightRatio,
   bool useRootNavigator = true,
@@ -154,6 +226,10 @@ Future<T?> showSBBBottomSheet<T>({
   assert(title == null || titleText == null, 'Only title or titleText can be set!');
   assert(leading == null || leadingIconData == null, 'Only leading or leadingIconData can be set!');
   assert(trailing == null || trailingIconData == null, 'Only trailing or trailingIconData can be set!');
+  assert(
+    scrollControlDisabledMaxHeightRatio >= 0.0 && scrollControlDisabledMaxHeightRatio <= 1.0,
+    'scrollControlDisabledMaxHeightRatio must be between 0.0 and 1.0!',
+  );
 
   final themeStyle = Theme.of(context).sbbBottomSheetTheme?.style;
   final SBBBottomSheetStyle resolvedStyle = (themeStyle ?? SBBBottomSheetStyle()).merge(style);
@@ -183,7 +259,6 @@ Future<T?> showSBBBottomSheet<T>({
       leadingIconData: leadingIconData,
       trailing: trailing,
       trailingIconData: trailingIconData,
-      // TODO: add this to the documentation that isDismissible influences this
       showCloseButton: isDismissible && showCloseButton,
       style: resolvedStyle,
       body: useSafeArea ? _wrapWithBottomSafeArea(body) : body,
@@ -191,7 +266,21 @@ Future<T?> showSBBBottomSheet<T>({
   );
 }
 
-/// The SBB Modal Sheet. Use according to documentation.
+/// The SBB Bottom Sheet widget.
+///
+/// This widget displays a modal sheet with optional header elements (title, leading,
+/// trailing icons) and a body. The sheet is styled according to the SBB design system.
+///
+/// Provide either [titleText] for a simple text title or [title] for custom title
+/// content. These parameters are mutually exclusive. Similarly, provide either
+/// [leadingIconData] or [leading] for leading content, and either [trailingIconData]
+/// or [trailing] for trailing content.
+///
+/// The header row is only shown if at least one of the following is true:
+///  * [title] or [titleText] is provided
+///  * [leading] or [leadingIconData] is provided
+///  * [trailing] or [trailingIconData] is provided
+///  * [showCloseButton] is true
 ///
 /// See also:
 ///
@@ -212,15 +301,61 @@ class SBBBottomSheet extends StatelessWidget {
     required this.style,
   });
 
+  /// A custom widget displayed as the sheet's title.
+  ///
+  /// For simple text titles, use [titleText] instead.
+  ///
+  /// Cannot be used together with [titleText].
   final Widget? title;
+
+  /// Text string to display as the sheet's title.
+  ///
+  /// Cannot be used together with [title].
   final String? titleText;
+
+  /// A custom widget displayed at the leading edge of the header.
+  ///
+  /// For icon-only leading content, use [leadingIconData] instead.
+  ///
+  /// Cannot be used together with [leadingIconData].
   final Widget? leading;
+
+  /// Icon data for an icon displayed at the leading edge of the header.
+  ///
+  /// Cannot be used together with [leading].
   final IconData? leadingIconData;
+
+  /// A custom widget displayed at the trailing edge of the header.
+  ///
+  /// For icon-only trailing content, use [trailingIconData] instead.
+  ///
+  /// Cannot be used together with [trailingIconData].
   final Widget? trailing;
+
+  /// Icon data for an icon displayed at the trailing edge of the header.
+  ///
+  /// Cannot be used together with [trailing].
   final IconData? trailingIconData;
+
+  /// The main content widget of the bottom sheet.
   final Widget body;
+
+  /// Whether to show a close button in the header.
   final bool showCloseButton;
+
+  /// Whether to use the root navigator when popping the sheet.
+  ///
+  /// When true, [Navigator.of] will use [rootNavigator: true] to dismiss
+  /// the sheet. This is useful when the sheet needs to be dismissed from
+  /// a context that is not the direct parent of the sheet.
+  ///
+  /// Defaults to false.
   final bool useRootNavigator;
+
+  /// Customizes this sheet's appearance.
+  ///
+  /// Non-null properties of this style override the corresponding
+  /// properties from the theme's default [SBBBottomSheetStyle].
   final SBBBottomSheetStyle style;
 
   @override
