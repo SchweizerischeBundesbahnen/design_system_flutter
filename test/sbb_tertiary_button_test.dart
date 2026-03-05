@@ -18,6 +18,14 @@ void main() {
           SBBTertiaryButton(key: pressableKey, labelText: "Default", onPressed: () {}),
           SBBTertiaryButton(labelText: "Disabled", onPressed: null),
           SBBTertiaryButton(labelText: "Icon", onPressed: () {}, iconData: SBBIcons.dog_small),
+          ConstrainedBox(
+            constraints: BoxConstraints(maxWidth: 165),
+            child: SBBTertiaryButton(
+              labelText: "Constrained That should fade",
+              onPressed: () {},
+              iconData: SBBIcons.dog_small,
+            ),
+          ),
           SBBTertiaryButton(labelText: "Icon Disabled", onPressed: null, iconData: SBBIcons.dog_small),
           SBBTertiaryButton(key: pressableIconKey, onPressed: () {}, iconData: SBBIcons.dog_small),
           SBBTertiaryButton(
