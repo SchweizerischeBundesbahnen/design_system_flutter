@@ -1,5 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_design_system_mobile_example/pages/form_page.dart';
 import 'package:flutter_design_system_mobile_example/pages/illustration_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
@@ -164,15 +166,16 @@ class MyApp extends StatelessWidget {
           items: [
             _DemoEntry('Autocompletion', AutocompletionPage()),
             _DemoEntry('Container', ContainerPage()),
-            _DemoEntry('Illustrations', IllustrationPage()),
+            _DemoEntry('Forms', FormPage()),
             _DemoEntry('Header', HeaderPage()),
             _DemoEntry('Headerbox', HeaderBoxPage()),
-            _DemoEntry('Modal', ModalPage()),
-            _DemoEntry('Toast', ToastPage()),
-            _DemoEntry('Onboarding', OnboardingPage()),
+            _DemoEntry('Illustrations', IllustrationPage()),
             _DemoEntry('Message', MessagePage()),
+            _DemoEntry('Modal', ModalPage()),
+            _DemoEntry('Onboarding', OnboardingPage()),
             _DemoEntry('Stepper', StepperPage()),
             _DemoEntry('Tab Bar', TabBarPage()),
+            _DemoEntry('Toast', ToastPage()),
           ],
         ).toList(growable: false),
       ),
