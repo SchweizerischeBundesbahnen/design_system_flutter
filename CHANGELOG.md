@@ -13,6 +13,10 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 - (auto): updated icon lib to version 1.8.15
 
+### Deprecated
+
+- deprecated `SBBOnboarding` as it is no part of the official design system and will be removed in v5
+
 ## [4.7.0] - 2026-02-17
 
 ### Changed
