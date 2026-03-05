@@ -75,7 +75,7 @@ class _ToastPageState extends State<ToastPage> {
                     Row(
                       spacing: SBBSpacing.xSmall,
                       children: [
-                        Expanded(
+                        Flexible(
                           child: SBBTertiaryButton(
                             labelText: 'Custom bottom spacing and duration',
                             onPressed: () {
@@ -90,7 +90,7 @@ class _ToastPageState extends State<ToastPage> {
                             },
                           ),
                         ),
-                        Expanded(
+                        Flexible(
                           child: SBBTertiaryButton(
                             labelText: 'Completely custom toast',
                             iconData: SBBIcons.flame_warning_light_small,

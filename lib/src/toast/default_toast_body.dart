@@ -203,7 +203,8 @@ class _RenderSBBDefaultToast extends RenderBox with SlottedContainerRenderObject
     final titleSize = _title?.size ?? Size.zero;
 
     final baseWidth = titleSize.width + (hasAction ? actionWithGapWidth : 0.0);
-    final actionOnSeparateLine = hasAction && baseWidth > 0 && (actionSize.width / baseWidth) > overflowThreshold;
+    final actionOnSeparateLine =
+        hasAction && baseWidth > 0 && (actionSize.width / constraints.maxWidth) > overflowThreshold;
 
     final layoutHeight = actionOnSeparateLine
         ? titleSize.height + verticalGap + actionSize.height
@@ -239,7 +240,8 @@ class _RenderSBBDefaultToast extends RenderBox with SlottedContainerRenderObject
     final titleSize = _title?.size ?? Size.zero;
 
     final baseWidth = titleSize.width + (hasAction ? actionWithGapWidth : 0.0);
-    final actionOnSeparateLine = hasAction && baseWidth > 0 && (actionSize.width / baseWidth) > overflowThreshold;
+    final actionOnSeparateLine =
+        hasAction && baseWidth > 0 && (actionSize.width / constraints.maxWidth) > overflowThreshold;
 
     final layoutHeight = actionOnSeparateLine
         ? titleSize.height + verticalGap + actionSize.height
