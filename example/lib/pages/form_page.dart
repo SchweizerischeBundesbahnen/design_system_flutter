@@ -53,7 +53,7 @@ class _FormPageState extends State<FormPage> {
                   labelText: 'Reset All',
                   onPressed: () {
                     _resetAllForms();
-                    sbbToast.show(title: 'All forms reset');
+                    sbbToast.show(titleText: 'All forms reset');
                   },
                 ),
               ],
@@ -169,7 +169,7 @@ class _FormPageState extends State<FormPage> {
                           if (boxValidate && listValidate) {
                             _listedFormKey.currentState!.save();
                             _boxedFormKey.currentState!.save();
-                            sbbToast.show(title: 'Form saved successfully');
+                            sbbToast.show(titleText: 'Form saved successfully');
                           }
                         },
                       ),
