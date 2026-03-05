@@ -255,7 +255,10 @@ class _BaseTertiaryButton extends StatelessWidget {
         mainAxisAlignment: .center,
         mainAxisSize: .min,
         spacing: 4.0,
-        children: [leading, label],
+        children: [
+          leading,
+          Expanded(child: label),
+        ],
       );
     } else if (leading != null) {
       child = leading;
