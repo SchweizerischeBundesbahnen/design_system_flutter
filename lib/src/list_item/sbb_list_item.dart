@@ -3,7 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:sbb_design_system_mobile/src/shared/bottom_loading_indicator.dart';
 
 import '../../sbb_design_system_mobile.dart';
-import 'divider_painter.dart';
+import '../shared/divider/divider_painter.dart';
 
 /// A customizable list item component following the SBB design system.
 ///
@@ -294,6 +294,9 @@ class SBBListItem extends StatefulWidget {
   /// Add a one pixel border in between each item. If color isn't specified the
   /// [ThemeData.dividerColor] of the context's [Theme] is used, which defaults to
   /// [SBBBaseStyle.dividerColor].
+  ///
+  /// See also [SBBDivider] for using the same underlying widget
+  /// in indexed builder methods (e.g. [ListView.separated]).
   static Iterable<Widget> divideListItems({
     BuildContext? context,
     required Iterable<Widget> items,
@@ -306,11 +309,11 @@ class SBBListItem extends StatefulWidget {
       return items;
     }
 
-    final resolvedColor = color ?? Theme.of(context!).dividerTheme.color ?? SBBColors.graphite;
+    final resolvedColor = color ?? Theme.of(context!).dividerColor;
 
     Widget wrapListItem(Widget link) {
       return CustomPaint(
-        painter: SBBDividerPainter(
+        foregroundPainter: DividerPainter(
           paintAtTop: false,
           color: resolvedColor,
           indent: 0.0,
@@ -602,18 +605,18 @@ class _SBBListItemState extends State<SBBListItem> {
     BuildContext? context,
     required Iterable<Widget> links,
     Color? color,
-    double indent = 16.0,
+    double indent = SBBSpacing.medium,
   }) {
     assert(color != null || context != null);
     links = links.toList();
 
     if (links.isEmpty) return links;
 
-    final resolvedColor = color ?? Theme.of(context!).dividerTheme.color ?? SBBColors.graphite;
+    final resolvedColor = color ?? Theme.of(context!).dividerColor;
 
     Widget wrapLink(Widget link) {
       return CustomPaint(
-        painter: SBBDividerPainter(
+        foregroundPainter: DividerPainter(
           paintAtTop: true,
           color: resolvedColor,
           indent: indent,
