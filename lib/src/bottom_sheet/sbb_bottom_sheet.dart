@@ -112,7 +112,6 @@ class SBBModalPopup extends StatelessWidget {
 
 // TODO: add migration
 // TODO: tests
-// TODO: examples
 
 /// Shows an SBB Bottom Sheet.
 ///

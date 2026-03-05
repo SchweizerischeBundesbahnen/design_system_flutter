@@ -6,6 +6,7 @@ import 'package:provider/provider.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import 'pages/autocompletion_page.dart';
+import 'pages/bottom_sheet_page.dart';
 import 'pages/button_page.dart';
 import 'pages/checkbox_page.dart';
 import 'pages/chip_page.dart';
@@ -19,7 +20,6 @@ import 'pages/link_page.dart';
 import 'pages/list_item_page.dart';
 import 'pages/loading_indicator_page.dart';
 import 'pages/message_page.dart';
-import 'pages/modal_page.dart';
 import 'pages/notification_box_page.dart';
 import 'pages/onboarding_page.dart';
 import 'pages/paginator_page.dart';
@@ -130,6 +130,7 @@ class MyApp extends StatelessWidget {
         children: SBBListItem.divideListItems(
           context: context,
           items: [
+            _DemoEntry('Bottom Sheet', BottomSheetPage()),
             _DemoEntry('Button', ButtonPage()),
             _DemoEntry('Checkbox', CheckboxPage()),
             _DemoEntry('Chip', ChipPage()),
@@ -167,7 +168,6 @@ class MyApp extends StatelessWidget {
             _DemoEntry('Illustrations', IllustrationPage()),
             _DemoEntry('Header', HeaderPage()),
             _DemoEntry('Headerbox', HeaderBoxPage()),
-            _DemoEntry('Modal', ModalPage()),
             _DemoEntry('Toast', ToastPage()),
             _DemoEntry('Onboarding', OnboardingPage()),
             _DemoEntry('Message', MessagePage()),
