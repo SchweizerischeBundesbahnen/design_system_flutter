@@ -259,7 +259,7 @@ Future<T?> showSBBBottomSheet<T>({
       trailing: trailing,
       trailingIconData: trailingIconData,
       showCloseButton: isDismissible && showCloseButton,
-      style: resolvedStyle,
+      style: style,
       body: useSafeArea ? _wrapWithBottomSafeArea(body) : body,
     ),
   );
@@ -288,16 +288,16 @@ Future<T?> showSBBBottomSheet<T>({
 class SBBBottomSheet extends StatelessWidget {
   const SBBBottomSheet({
     super.key,
+    required this.body,
     this.title,
     this.titleText,
     this.leading,
     this.leadingIconData,
     this.trailing,
     this.trailingIconData,
-    required this.body,
     this.showCloseButton = true,
     this.useRootNavigator = false,
-    required this.style,
+    this.style,
   });
 
   /// A custom widget displayed as the sheet's title.
@@ -355,10 +355,13 @@ class SBBBottomSheet extends StatelessWidget {
   ///
   /// Non-null properties of this style override the corresponding
   /// properties from the theme's default [SBBBottomSheetStyle].
-  final SBBBottomSheetStyle style;
+  final SBBBottomSheetStyle? style;
 
   @override
   Widget build(BuildContext context) {
+    final themeStyle = Theme.of(context).sbbBottomSheetTheme?.style;
+    final SBBBottomSheetStyle resolvedStyle = (themeStyle ?? SBBBottomSheetStyle()).merge(style);
+
     // Build actual widgets from convenience parameters
     Widget? leadingWidget = leading;
     if (leadingWidget == null && leadingIconData != null) {
@@ -379,31 +382,31 @@ class SBBBottomSheet extends StatelessWidget {
     if (titleWidget != null) {
       titleWidget = _addDefaultAncestorWithResolved(
         child: titleWidget,
-        foregroundColor: style.titleForegroundColor,
-        textStyle: style.titleTextStyle,
+        foregroundColor: resolvedStyle.titleForegroundColor,
+        textStyle: resolvedStyle.titleTextStyle,
       );
     }
 
     if (leadingWidget != null) {
       leadingWidget = _addDefaultAncestorWithResolved(
         child: leadingWidget,
-        textStyle: style.leadingTextStyle,
-        foregroundColor: style.leadingForegroundColor,
+        textStyle: resolvedStyle.leadingTextStyle,
+        foregroundColor: resolvedStyle.leadingForegroundColor,
       );
     }
 
     if (trailingWidget != null) {
       trailingWidget = _addDefaultAncestorWithResolved(
         child: trailingWidget,
-        foregroundColor: style.trailingForegroundColor,
-        textStyle: style.trailingTextStyle,
+        foregroundColor: resolvedStyle.trailingForegroundColor,
+        textStyle: resolvedStyle.trailingTextStyle,
       );
     }
 
     final Widget child;
     if (titleWidget != null || leadingWidget != null || trailingWidget != null || showCloseButton) {
-      final resolvedTitleRowPadding = _resolvedTitlePadding();
-      final resolvedBodyPadding = _resolvedBodyPadding();
+      final resolvedTitleRowPadding = _resolvedTitlePadding(resolvedStyle);
+      final resolvedBodyPadding = _resolvedBodyPadding(resolvedStyle);
       child = Column(
         mainAxisSize: .min,
         crossAxisAlignment: .start,
@@ -415,7 +418,7 @@ class SBBBottomSheet extends StatelessWidget {
               leading: leadingWidget,
               trailing: trailingWidget,
               showCloseButton: showCloseButton,
-              style: style,
+              style: resolvedStyle,
               useRootNavigator: useRootNavigator,
             ),
           ),
@@ -426,21 +429,22 @@ class SBBBottomSheet extends StatelessWidget {
       );
     } else {
       child = Padding(
-        padding: style.padding ?? EdgeInsets.zero,
+        padding: resolvedStyle.padding ?? EdgeInsets.zero,
         child: body,
       );
     }
 
     return DecoratedBox(
-      decoration: BoxDecoration(color: style.backgroundColor),
+      decoration: BoxDecoration(color: resolvedStyle.backgroundColor),
       child: child,
     );
   }
 
-  EdgeInsets _resolvedBodyPadding() => (style.padding ?? EdgeInsets.zero).copyWith(top: style.titleBodyGap ?? 0);
+  EdgeInsets _resolvedBodyPadding(SBBBottomSheetStyle style) =>
+      (style.padding ?? EdgeInsets.zero).copyWith(top: style.titleBodyGap ?? 0);
 
   // need to adjust for the close button
-  EdgeInsets _resolvedTitlePadding() {
+  EdgeInsets _resolvedTitlePadding(SBBBottomSheetStyle style) {
     return (style.padding ?? EdgeInsets.zero).copyWith(
       right: showCloseButton ? SBBSpacing.xSmall : style.padding?.right ?? 0.0,
       bottom: 0.0,
