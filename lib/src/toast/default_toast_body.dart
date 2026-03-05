@@ -51,7 +51,7 @@ class DefaultToastBody extends StatelessWidget {
     Widget? resolvedAction = _resolvedAction(resolvedStyle);
     final horizontalGap = resolvedStyle.titleActionHorizontalGap ?? SBBSpacing.xLarge;
     final verticalGap = resolvedStyle.titleActionVerticalGap ?? SBBSpacing.xSmall;
-    final overflowThreshold = resolvedStyle.actionOverflowThreshold ?? 0.25;
+    final overflowThreshold = resolvedStyle.actionOverflowThreshold ?? 0.40;
 
     return _SBBDefaultToast(
       title: resolvedTitle,
@@ -99,8 +99,8 @@ enum _ToastSlot { title, action }
 /// Lays out the title and action following a simplified Material layouting SnackBar approach:
 ///
 /// - The width of the toast is determined by the width of the title, a horizontal gap and the width of the action
-/// - The action will overflow to a separate line with a vertical gap to the title if its size is above the
-///   configurable actionOverflowThreshold.
+/// - The action will overflow to a separate line with a vertical gap to the title if the actionWidth is
+///   larger than 40% of the available maxWidth
 class _SBBDefaultToast extends SlottedMultiChildRenderObjectWidget<_ToastSlot, RenderBox> {
   const _SBBDefaultToast({
     required this.title,
