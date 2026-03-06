@@ -62,8 +62,9 @@ class SBBToast {
   /// The title and optional action are laid out intelligently:
   /// - In most scenarios, the action and the title appear on the same line with the title being wrapped to make
   ///   space for the action.
-  /// - If however, the action width exceeds the threshold (default 40% of total AVAILABLE width), the action is
+  /// - If however, the action width exceeds the threshold (default 25% of total AVAILABLE width), the action is
   ///   wrapped to the next line, separated from the title by [SBBToastStyle.titleActionVerticalGap].
+  ///   Also, the title is then constrained to 60% of the total available width.
   /// - Therefore, if the [SBBToastStyle.actionOverflowThreshold] is set to zero, it will always wrap to the next line.
   ///   If the threshold is set to one on the other hand, it will always stay on the same line.
   ///

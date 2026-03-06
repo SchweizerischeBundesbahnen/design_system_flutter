@@ -14,7 +14,7 @@ class DefaultSBBToastThemeData extends SBBToastThemeData {
           actionForegroundColor: SBBColors.white,
           titleActionHorizontalGap: SBBSpacing.large,
           titleActionVerticalGap: SBBSpacing.xSmall,
-          actionOverflowThreshold: 0.4,
+          actionOverflowThreshold: 0.25,
           backgroundColor: baseStyle.themeValue(SBBColors.metal, SBBColors.smoke),
           padding: const .symmetric(vertical: 6.0, horizontal: SBBSpacing.medium),
           margin: const .symmetric(horizontal: SBBSpacing.medium),

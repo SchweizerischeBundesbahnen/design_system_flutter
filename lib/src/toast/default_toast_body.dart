@@ -51,7 +51,7 @@ class DefaultToastBody extends StatelessWidget {
     Widget? resolvedAction = _resolvedAction(resolvedStyle);
     final horizontalGap = resolvedStyle.titleActionHorizontalGap ?? SBBSpacing.xLarge;
     final verticalGap = resolvedStyle.titleActionVerticalGap ?? SBBSpacing.xSmall;
-    final overflowThreshold = resolvedStyle.actionOverflowThreshold ?? 0.40;
+    final overflowThreshold = resolvedStyle.actionOverflowThreshold ?? .25;
 
     return _SBBDefaultToast(
       title: resolvedTitle,
@@ -198,13 +198,21 @@ class _RenderSBBDefaultToast extends RenderBox with SlottedContainerRenderObject
     final actionSize = _action?.size ?? Size.zero;
     final actionWithGapWidth = actionSize.width + horizontalGap;
 
-    final titleConstraints = hasAction ? loose.deflate(EdgeInsets.only(right: actionWithGapWidth)) : loose;
+    final actionOnSeparateLine = hasAction && (actionSize.width / constraints.maxWidth) > overflowThreshold;
+
+    final BoxConstraints titleConstraints;
+    if (!hasAction) {
+      titleConstraints = loose;
+    } else if (actionOnSeparateLine) {
+      titleConstraints = loose.deflate(EdgeInsets.only(right: constraints.maxWidth * 0.4));
+    } else {
+      titleConstraints = loose.deflate(EdgeInsets.only(right: actionWithGapWidth));
+    }
+
     _title?.layout(titleConstraints, parentUsesSize: true);
     final titleSize = _title?.size ?? Size.zero;
 
     final baseWidth = titleSize.width + (hasAction ? actionWithGapWidth : 0.0);
-    final actionOnSeparateLine =
-        hasAction && baseWidth > 0 && (actionSize.width / constraints.maxWidth) > overflowThreshold;
 
     final layoutHeight = actionOnSeparateLine
         ? titleSize.height + verticalGap + actionSize.height

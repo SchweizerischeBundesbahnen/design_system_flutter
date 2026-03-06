@@ -17,7 +17,7 @@ class SBBToastStyle {
     this.actionForegroundColor,
     this.titleActionHorizontalGap = SBBSpacing.large,
     this.titleActionVerticalGap = SBBSpacing.xSmall,
-    this.actionOverflowThreshold = 0.4,
+    this.actionOverflowThreshold = 0.25,
     this.backgroundColor,
     this.padding,
     this.margin,
@@ -60,7 +60,7 @@ class SBBToastStyle {
 
   /// The threshold (fraction of toast maxWidth constraint) at which the action wraps to the next line.
   ///
-  /// Default: 0.4 (40%).
+  /// Defaults to 0.25
   final double? actionOverflowThreshold;
 
   /// The background color of the toast.
