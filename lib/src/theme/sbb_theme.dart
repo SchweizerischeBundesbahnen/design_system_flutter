@@ -14,6 +14,7 @@ import 'package:sbb_design_system_mobile/src/radio/theme/default_sbb_radio_theme
 import 'package:sbb_design_system_mobile/src/slider/theme/default_sbb_slider_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/stepper/theme/default_sbb_stepper_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/switch/theme/default_sbb_switch_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/toast/theme/default_sbb_toast_theme_data.dart';
 
 import '../button/theme/default_button_themes.dart';
 import '../container/theme/default_sbb_content_box_theme_data.dart';
@@ -50,7 +51,7 @@ class SBBTheme {
     SBBSwitchThemeData? switchTheme,
     SBBTextTheme? textTheme,
     SBBTextInputThemeData? textInputTheme,
-    SBBToastStyle? toastStyle,
+    SBBToastThemeData? toastTheme,
   }) => createTheme(
     brightness: .light,
     boldFont: boldFont,
@@ -78,7 +79,7 @@ class SBBTheme {
     switchTheme: switchTheme,
     textTheme: textTheme,
     textInputTheme: textInputTheme,
-    toastStyle: toastStyle,
+    toastTheme: toastTheme,
   );
 
   static ThemeData dark({
@@ -106,7 +107,7 @@ class SBBTheme {
     SBBSwitchThemeData? switchTheme,
     SBBTextTheme? textTheme,
     SBBTextInputThemeData? textInputTheme,
-    SBBToastStyle? toastStyle,
+    SBBToastThemeData? toastTheme,
   }) => createTheme(
     brightness: .dark,
     boldFont: boldFont,
@@ -133,7 +134,7 @@ class SBBTheme {
     switchTheme: switchTheme,
     textTheme: textTheme,
     textInputTheme: textInputTheme,
-    toastStyle: toastStyle,
+    toastTheme: toastTheme,
   );
 
   static ThemeData createTheme({
@@ -163,7 +164,7 @@ class SBBTheme {
     SBBSwitchThemeData? switchTheme,
     SBBTextTheme? textTheme,
     SBBTextInputThemeData? textInputTheme,
-    SBBToastStyle? toastStyle,
+    SBBToastThemeData? toastTheme,
   }) {
     // default values are set here and merged with given styles
     final defaultBaseStyle = SBBBaseStyle.$default(brightness: brightness, boldFont: boldFont);
@@ -235,8 +236,8 @@ class SBBTheme {
     final defaultTextInputTheme = DefaultSBBTextInputThemeData(mergedBaseStyle);
     final mergedTextInputTheme = defaultTextInputTheme.merge(textInputTheme);
 
-    final defaultToastStyle = SBBToastStyle.$default(baseStyle: mergedBaseStyle);
-    final mergedToastStyle = defaultToastStyle.merge(defaultToastStyle);
+    final defaultToastTheme = DefaultSBBToastThemeData(mergedBaseStyle);
+    final mergedToastTheme = defaultToastTheme.merge(toastTheme);
 
     final defaultInputDecorationTheme = DefaultSBBInputDecorationThemeData(mergedBaseStyle);
     final mergedInputDecorationTheme = defaultInputDecorationTheme.merge(inputDecorationTheme);
@@ -266,7 +267,7 @@ class SBBTheme {
       switchTheme: mergedSwitchTheme,
       textTheme: mergedTextTheme,
       textInputTheme: mergedTextInputTheme,
-      toastStyle: mergedToastStyle,
+      toastTheme: mergedToastTheme,
       inputDecorationTheme: mergedInputDecorationTheme,
     );
   }
@@ -297,7 +298,7 @@ class SBBTheme {
     required SBBSwitchThemeData switchTheme,
     required SBBTextTheme textTheme,
     required SBBTextInputThemeData textInputTheme,
-    required SBBToastStyle toastStyle,
+    required SBBToastThemeData toastTheme,
   }) {
     return ThemeData(
       colorScheme: ColorScheme.fromSwatch(
@@ -344,7 +345,7 @@ class SBBTheme {
         switchTheme,
         textTheme,
         textInputTheme,
-        toastStyle,
+        toastTheme,
       ],
     );
   }

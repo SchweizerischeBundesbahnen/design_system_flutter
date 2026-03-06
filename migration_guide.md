@@ -491,6 +491,7 @@ A cross small will be displayed instead of the trailingIconData when focused and
 - [ ] Test multiline mode if used (icons should be top-aligned now)
 - [ ] Consider using `readOnly` instead of just `enabled` for readonly fields with interactive trailing widgets
 
+
 ## Text Input Form Field
 
 ### From SBBTextFormField to SBBTextInputFormField
@@ -543,3 +544,25 @@ SBBTextInputFormField(
 | `icon` | `decoration.leadingIconData` |
 | `suffixIcon` | `decoration.trailing` or `decoration.trailingIconData` |
 
+
+## Toast
+
+* removed the static field `defaultBottom`
+* the layouting has slightly changed, use `SBBToastStyle.actionOverflowThreshold` to adjust the layout mechanism
+  of the action and title to each other (see API docs for specifics)
+
+### show
+
+* replace `title` with `titleText` (or use `title` for completely custom title Widget)
+* replace `onPressed` with `onTap` in `SBBToastAction` (or use completely custom Widget for `action`)
+
+### builder
+
+* the builder now also adds the `BuildContext` in its parameters
+
+### styling / theming
+
+* NOTE: the `SBBToastStyle` API has completely changed
+* use `SBBToastThemeData` to override the style of all toast within your application
+* access the theme using `Theme.of(context).sbbToastTheme`
+* individual change of style via the `style` constructor parameter

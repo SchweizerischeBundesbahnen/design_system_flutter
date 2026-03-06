@@ -25,8 +25,8 @@ class ButtonPage extends StatelessWidget {
                   children: [
                     SBBPrimaryButton(
                       labelText: 'Default',
-                      onPressed: () => sbbToast.show(title: 'SBBPrimaryButton'),
-                      onLongPress: () => sbbToast.show(title: 'Long SBBPrimaryButton'),
+                      onPressed: () => sbbToast.show(titleText: 'SBBPrimaryButton'),
+                      onLongPress: () => sbbToast.show(titleText: 'Long SBBPrimaryButton'),
                     ),
                     const SBBPrimaryButton(labelText: 'Disabled', onPressed: null),
                     SBBPrimaryButton(onPressed: () {}, isLoading: true),
@@ -41,8 +41,8 @@ class ButtonPage extends StatelessWidget {
                   children: [
                     SBBSecondaryButton(
                       labelText: 'Default',
-                      onPressed: () => sbbToast.show(title: 'SBBSecondaryButton'),
-                      // onLongPress: () => sbbToast.show(title: 'Long SBBSecondaryButton'),
+                      onPressed: () => sbbToast.show(titleText: 'SBBSecondaryButton'),
+                      // onLongPress: () => sbbToast.show(titleText: 'Long SBBSecondaryButton'),
                     ),
                     const SizedBox(height: SBBSpacing.medium),
                     const SBBSecondaryButton(labelText: 'Disabled', onPressed: null),
@@ -63,14 +63,14 @@ class ButtonPage extends StatelessWidget {
                       SBBTertiaryButton(
                         iconData: SBBIcons.dog_small,
                         labelText: 'Default',
-                        onPressed: () => sbbToast.show(title: 'SBBTertiaryButton'),
-                        onLongPress: () => sbbToast.show(title: 'SBBTertiaryButton Long Press'),
+                        onPressed: () => sbbToast.show(titleText: 'SBBTertiaryButton'),
+                        onLongPress: () => sbbToast.show(titleText: 'SBBTertiaryButton Long Press'),
                       ),
                       const SBBTertiaryButton(labelText: 'Disabled', onPressed: null),
                       SBBTertiaryButton(onPressed: () {}, isLoading: true),
                       SBBTertiaryButton(
                         iconData: SBBIcons.dog_small,
-                        onPressed: () => sbbToast.show(title: 'SBBTertiaryButton only icon'),
+                        onPressed: () => sbbToast.show(titleText: 'SBBTertiaryButton only icon'),
                       ),
                     ],
                   ),
@@ -88,14 +88,14 @@ class ButtonPage extends StatelessWidget {
                       SBBTertiaryButtonSmall(
                         iconData: SBBIcons.dog_small,
                         labelText: 'Default',
-                        onPressed: () => sbbToast.show(title: 'SBBTertiaryButtonSmall'),
-                        onLongPress: () => sbbToast.show(title: 'SBBTertiaryButtonSmall Long Press'),
+                        onPressed: () => sbbToast.show(titleText: 'SBBTertiaryButtonSmall'),
+                        onLongPress: () => sbbToast.show(titleText: 'SBBTertiaryButtonSmall Long Press'),
                       ),
                       const SBBTertiaryButtonSmall(labelText: 'Disabled', onPressed: null),
                       SBBTertiaryButtonSmall(onPressed: () {}, isLoading: true),
                       SBBTertiaryButtonSmall(
                         iconData: SBBIcons.dog_small,
-                        onPressed: () => sbbToast.show(title: 'SBBTertiaryButtonSmall only icon'),
+                        onPressed: () => sbbToast.show(titleText: 'SBBTertiaryButtonSmall only icon'),
                       ),
                     ],
                   ),
@@ -112,8 +112,8 @@ class ButtonPage extends StatelessWidget {
                     children: [
                       SBBAccentButton(
                         labelText: 'Default',
-                        onPressed: () => sbbToast.show(title: 'SBBAccentButton'),
-                        onLongPress: () => sbbToast.show(title: 'SBBAccentButton Long Press'),
+                        onPressed: () => sbbToast.show(titleText: 'SBBAccentButton'),
+                        onLongPress: () => sbbToast.show(titleText: 'SBBAccentButton Long Press'),
                       ),
                       const SBBAccentButton(labelText: 'Disabled', onPressed: null),
                       SBBAccentButton(onPressed: () {}, isLoading: true),

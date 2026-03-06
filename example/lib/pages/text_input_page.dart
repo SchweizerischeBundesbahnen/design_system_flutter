@@ -79,7 +79,7 @@ class _TextInputPageState extends State<TextInputPage> {
                                 contentPadding: EdgeInsets.only(left: SBBSpacing.medium, right: SBBSpacing.xSmall),
                                 trailing: SBBTertiaryButtonSmall(
                                   iconData: SBBIcons.dog_small,
-                                  onPressed: () => sbbToast.show(title: 'Button pressed'),
+                                  onPressed: () => sbbToast.show(titleText: 'Button pressed'),
                                 ),
                               ),
                             ),
@@ -149,7 +149,7 @@ class _TextInputPageState extends State<TextInputPage> {
                         leadingIconData: SBBIcons.unicorn_small,
                         trailing: SBBTertiaryButtonSmall(
                           iconData: SBBIcons.dog_small,
-                          onPressed: () => sbbToast.show(title: 'Button pressed'),
+                          onPressed: () => sbbToast.show(titleText: 'Button pressed'),
                         ),
                       ),
                     ),

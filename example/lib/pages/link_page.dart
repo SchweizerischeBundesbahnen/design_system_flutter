@@ -28,7 +28,7 @@ URL in angle brackets - <url>
 Just the plain URL - url
 https://sbb.sharepoint.com/sites/app-bakery''',
             onLaunch: (link) {
-              sbbToast.show(title: link);
+              sbbToast.show(titleText: link);
             },
           ),
         ),
