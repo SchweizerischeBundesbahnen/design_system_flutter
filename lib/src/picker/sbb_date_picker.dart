@@ -47,13 +47,13 @@ class SBBDatePicker extends StatefulWidget {
   final DateTime? minimumDate;
   final DateTime? maximumDate;
 
-  /// Shows an [SBBModalSheet] with an [SBBDatePicker] to select a [DateTime].
+  /// Shows an [SBBBottomSheet] with an [SBBDatePicker] to select a [DateTime].
   /// Use according to documentation.
   ///
   /// See also:
   ///
   /// * [SBBDatePicker], which will be displayed.
-  /// * [showSBBModalSheet], which is used to display the modal.
+  /// * [showSBBBottomSheet], which is used to display the bottom_sheet.
   /// * <https://digital.sbb.ch/en/design-system/mobile/components/picker/>
   /// * <https://digital.sbb.ch/en/design-system/mobile/components/modal-view/>
   static void showModal({
@@ -76,10 +76,10 @@ class SBBDatePicker extends StatefulWidget {
 
     var selectedDate = modalDate;
 
-    showSBBModalSheet(
+    showSBBBottomSheet(
       context: context,
-      title: modalTitle,
-      child: Column(
+      titleText: modalTitle,
+      body: Column(
         mainAxisSize: .min,
         children: [
           Padding(

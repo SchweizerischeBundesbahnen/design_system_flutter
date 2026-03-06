@@ -2,6 +2,30 @@
 
 V5 introduces a lot of breaking changes to allow for a more flexible and modern Design System.
 
+
+## BottomSheet (previously Modal) 
+
+* `isScrollControlled` is by default false (previously true) - see below
+* replace `showSBBModalSheet` with `showSBBBottomSheet`
+* replace `title` with `titleText` (or use `title` for complete custom titles)
+* replace `child` with `body`
+* removed `showCustomSBBModalSheet` - do not set title in `showSBBBottomSheet`
+* moved `background` and `constraints` to `SBBBottomSheetStyle` with other parameters
+
+### isScrollControlled
+
+* set to `true` only when using a `ListView` or other scrollable view inside the bottom sheet
+* otherwise, use `scrollControlDisabledMaxHeightRatio` for determining the max height of the bottom sheet
+
+See documentation for further guidance.
+
+### Theming
+
+* customize the theme of the `showSBBBottomSheet` with `SBBBottomSheetThemeData`
+* access the theme using `Theme.of(context).sbbBottomSheetTheme`
+* customize an individual bottom sheet by setting its `style` parameter in the constructor
+
+
 ## Buttons
 
 ### Constructor arguments

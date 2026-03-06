@@ -139,10 +139,10 @@ class SBBSelect<T> extends StatelessWidget {
     bool allowMultilineLabel = false,
   }) {
     var selectedValue = value;
-    showSBBModalSheet(
+    showSBBBottomSheet(
       context: context,
-      title: title,
-      child: SingleChildScrollView(
+      titleText: title,
+      body: SingleChildScrollView(
         child: Column(
           children: [
             SBBContentBox(
@@ -227,10 +227,10 @@ class SBBMultiSelect<T> extends StatefulWidget {
   }) {
     final isSelectionValid = selectionValidation ?? defaultSelectionValidation;
     var selectedValues = values;
-    showSBBModalSheet(
+    showSBBBottomSheet(
       context: context,
-      title: title,
-      child: StatefulBuilder(
+      titleText: title,
+      body: StatefulBuilder(
         builder: (context, setModalState) {
           return SingleChildScrollView(
             child: Column(

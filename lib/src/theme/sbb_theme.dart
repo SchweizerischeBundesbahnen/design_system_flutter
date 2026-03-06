@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/bottom_sheet/theme/default_sbb_bottom_sheet_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/button/theme/sbb_button_style_x.dart';
 import 'package:sbb_design_system_mobile/src/checkbox/theme/default_sbb_checkbox_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/chip/theme/default_sbb_chip_theme_data.dart';
@@ -27,6 +28,7 @@ class SBBTheme {
   static ThemeData light({
     bool boldFont = false,
     SBBBaseStyle? baseStyle,
+    SBBBottomSheetThemeData? bottomSheetTheme,
     SBBPrimaryButtonThemeData? primaryButtonTheme,
     SBBSecondaryButtonThemeData? secondaryButtonTheme,
     SBBTertiaryButtonThemeData? tertiaryButtonTheme,
@@ -55,6 +57,7 @@ class SBBTheme {
     brightness: .light,
     boldFont: boldFont,
     baseStyle: baseStyle,
+    bottomSheetTheme: bottomSheetTheme,
     primaryButtonTheme: primaryButtonTheme,
     secondaryButtonTheme: secondaryButtonTheme,
     tertiaryButtonTheme: tertiaryButtonTheme,
@@ -84,6 +87,7 @@ class SBBTheme {
   static ThemeData dark({
     bool boldFont = false,
     SBBBaseStyle? baseStyle,
+    SBBBottomSheetThemeData? bottomSheetTheme,
     SBBPrimaryButtonThemeData? primaryButtonTheme,
     SBBSecondaryButtonThemeData? secondaryButtonTheme,
     SBBTertiaryButtonThemeData? tertiaryButtonTheme,
@@ -111,6 +115,7 @@ class SBBTheme {
     brightness: .dark,
     boldFont: boldFont,
     baseStyle: baseStyle,
+    bottomSheetTheme: bottomSheetTheme,
     primaryButtonTheme: primaryButtonTheme,
     secondaryButtonTheme: secondaryButtonTheme,
     tertiaryButtonTheme: tertiaryButtonTheme,
@@ -140,6 +145,7 @@ class SBBTheme {
     required Brightness brightness,
     bool boldFont = false,
     SBBBaseStyle? baseStyle,
+    SBBBottomSheetThemeData? bottomSheetTheme,
     SBBPrimaryButtonThemeData? primaryButtonTheme,
     SBBSecondaryButtonThemeData? secondaryButtonTheme,
     SBBTertiaryButtonThemeData? tertiaryButtonTheme,
@@ -168,6 +174,9 @@ class SBBTheme {
     // default values are set here and merged with given styles
     final defaultBaseStyle = SBBBaseStyle.$default(brightness: brightness, boldFont: boldFont);
     final mergedBaseStyle = baseStyle.merge(defaultBaseStyle);
+
+    final defaultBottomSheetTheme = DefaultSBBBottomSheetThemeData(mergedBaseStyle);
+    final mergedBottomSheetTheme = defaultBottomSheetTheme.merge(bottomSheetTheme);
 
     final defaultPrimaryButtonTheme = DefaultSBBPrimaryButtonThemeData(mergedBaseStyle);
     final mergedPrimaryButtonTheme = defaultPrimaryButtonTheme.merge(primaryButtonTheme);
@@ -244,6 +253,7 @@ class SBBTheme {
     return raw(
       brightness: brightness,
       baseStyle: mergedBaseStyle,
+      bottomSheetTheme: mergedBottomSheetTheme,
       primaryButtonTheme: mergedPrimaryButtonTheme,
       secondaryButtonTheme: mergedSecondaryButtonTheme,
       tertiaryButtonTheme: mergedTertiaryButtonTheme,
@@ -274,6 +284,7 @@ class SBBTheme {
   static ThemeData raw({
     required Brightness brightness,
     required SBBBaseStyle baseStyle,
+    required SBBBottomSheetThemeData bottomSheetTheme,
     required SBBPrimaryButtonThemeData primaryButtonTheme,
     required SBBSecondaryButtonThemeData secondaryButtonTheme,
     required SBBTertiaryButtonThemeData tertiaryButtonTheme,
@@ -321,6 +332,7 @@ class SBBTheme {
       textSelectionTheme: controlStyles.textSelectionTheme,
       extensions: [
         baseStyle,
+        bottomSheetTheme,
         primaryButtonTheme,
         secondaryButtonTheme,
         tertiaryButtonTheme,

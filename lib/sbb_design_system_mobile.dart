@@ -1,3 +1,4 @@
+export 'src/bottom_sheet/bottom_sheet.dart';
 export 'src/button/button.dart';
 export 'src/checkbox/checkbox.dart';
 export 'src/chip/chip.dart';
@@ -14,7 +15,6 @@ export 'src/list_item/list_item.dart';
 export 'src/loading_indicator/sbb_loading_indicator.dart';
 export 'src/logo/sbb_logo.dart';
 export 'src/message/message.dart';
-export 'src/modal/sbb_modal.dart';
 export 'src/notification_box/notification_box.dart';
 export 'src/onboarding/onboarding.dart';
 export 'src/paginator/paginator.dart';
