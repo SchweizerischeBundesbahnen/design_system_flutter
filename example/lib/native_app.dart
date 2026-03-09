@@ -22,7 +22,6 @@ import 'pages/list_item_page.dart';
 import 'pages/loading_indicator_page.dart';
 import 'pages/message_page.dart';
 import 'pages/notification_box_page.dart';
-import 'pages/onboarding_page.dart';
 import 'pages/paginator_page.dart';
 import 'pages/picker_page.dart';
 import 'pages/promotion_box_page.dart';
@@ -172,7 +171,6 @@ class MyApp extends StatelessWidget {
             _DemoEntry('Headerbox', HeaderBoxPage()),
             _DemoEntry('Illustrations', IllustrationPage()),
             _DemoEntry('Message', MessagePage()),
-            _DemoEntry('Onboarding', OnboardingPage()),
             _DemoEntry('Stepper', StepperPage()),
             _DemoEntry('Tab Bar', TabBarPage()),
           ],

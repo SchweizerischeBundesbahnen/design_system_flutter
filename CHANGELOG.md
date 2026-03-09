@@ -49,6 +49,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Removed `SBBAccordion`, `SBBAccordionItem`, `AccordionCallback` and `SingleAccordionCallback`
 - Removed deprecated `SBBGroupStyle`, use `SBBContentBoxThemeData` instead
 - Removed deprecated `SBBGroup`
+- Removed deprecated `SBBOnboarding`
 - Removed deprecated `sbbDefaultSpacing`
 - Removed `SBBTextField` - replaced by `SBBTextInput`
 
