@@ -27,6 +27,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - BREAKING: overhauled `SBBListHeader` - see [v5 migration guide]
 - BREAKING: overhauled `SBBListItem` - see [v5 migration guide]
 - BREAKING: overhauled `SBBMessage` component - see [v5 migration guide]
+- BREAKING: overhauled `SBBModal` component and renamed to `SBBBottomSheet` - see [v5 migration guide]
 - BREAKING: overhauled `SBBPagination` and renamed to `SBBPaginator` - see [v5 migration guide]
 - BREAKING: overhauled `SBBRadio` with `SBBRadioGroup` ancestor - see [v5 migration guide]
 - BREAKING: overhauled `SBBSegmentedButton` component - see [v5 migration guide]
