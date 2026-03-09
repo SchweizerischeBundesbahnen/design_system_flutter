@@ -206,7 +206,6 @@ Future<T?> showSBBBottomSheet<T>({
   required Widget body,
   SBBBottomSheetStyle? style,
   String? barrierLabel,
-  // TODO: EXPLICITLY STATE IN MIGRATION GUIDE THAT THIS IS NOW SET TO FALSE BY DEFAULT
   bool isScrollControlled = false,
   double scrollControlDisabledMaxHeightRatio = _defaultScrollControlDisabledMaxHeightRatio,
   bool useRootNavigator = true,
@@ -496,11 +495,13 @@ class _BottomSheetTitleRow extends StatelessWidget {
         spacing: SBBSpacing.xSmall,
         children: [
           ?leading,
-          if (title != null) Expanded(child: title!),
+          if (title != null) Expanded(child: title!) else Spacer(),
           ?trailing,
           ?closeButton,
         ],
       );
+    } else if (closeButton != null || trailing != null) {
+      child = Align(alignment: .centerRight, child: closeButton ?? trailing);
     } else {
       child = nonNullChildren.first;
     }

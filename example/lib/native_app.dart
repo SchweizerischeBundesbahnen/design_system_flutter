@@ -170,7 +170,6 @@ class MyApp extends StatelessWidget {
             _DemoEntry('Forms', FormPage()),
             _DemoEntry('Header', HeaderPage()),
             _DemoEntry('Headerbox', HeaderBoxPage()),
-            _DemoEntry('Toast', ToastPage()),
             _DemoEntry('Illustrations', IllustrationPage()),
             _DemoEntry('Message', MessagePage()),
             _DemoEntry('Onboarding', OnboardingPage()),
