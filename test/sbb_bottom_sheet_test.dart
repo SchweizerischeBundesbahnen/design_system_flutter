@@ -38,6 +38,12 @@ class ModalSheetTest extends StatelessWidget {
             style: SBBBottomSheetStyle(backgroundColor: SBBColors.peach),
             body: _modalContent(),
           ),
+          SBBBottomSheet(leadingIconData: SBBIcons.three_adults_small, body: _modalContent()),
+          SBBBottomSheet(
+            leadingIconData: SBBIcons.three_adults_small,
+            trailingIconData: SBBIcons.warning_light_small,
+            body: _modalContent(),
+          ),
           SBBBottomSheet(titleText: 'Title', showCloseButton: false, body: _modalContent()),
           SBBBottomSheet(
             body: Container(height: 20, width: double.infinity, color: SBBColors.turquoise),
@@ -54,8 +60,6 @@ class ModalSheetTest extends StatelessWidget {
 
   Widget _modalContent() => const Text(
     'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, '
-    'sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. '
-    'At vero eos et accusam et justo duo dolores et ea rebum. '
-    'Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
+    'sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua.',
   );
 }
