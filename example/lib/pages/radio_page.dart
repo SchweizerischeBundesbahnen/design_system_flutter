@@ -116,7 +116,7 @@ class RadioPageState extends State<RadioPage> {
                           padding: .fromLTRB(16.0, 0.0, 8.0, 0.0),
                           trailing: SBBTertiaryButtonSmall(
                             iconData: SBBIcons.circle_information_small_small,
-                            onPressed: _pageEnabled ? () => sbbToast.show(title: 'Button pressed') : null,
+                            onPressed: _pageEnabled ? () => sbbToast.show(titleText: 'Button pressed') : null,
                           ),
                         ),
                         SBBRadioListItem<int>(
@@ -140,12 +140,12 @@ class RadioPageState extends State<RadioPage> {
                             SBBListItem(
                               titleText: "Link",
                               trailingIconData: SBBIcons.chevron_small_right_small,
-                              onTap: () => sbbToast.show(title: 'Link'),
+                              onTap: () => sbbToast.show(titleText: 'Link'),
                             ),
                             SBBListItem(
                               titleText: "Link 2",
                               trailingIconData: SBBIcons.chevron_small_right_small,
-                              onTap: () => sbbToast.show(title: 'Link 2'),
+                              onTap: () => sbbToast.show(titleText: 'Link 2'),
                             ),
                           ],
                         ),
@@ -193,7 +193,7 @@ class RadioPageState extends State<RadioPage> {
                         padding: .fromLTRB(16.0, 0.0, 8.0, 0.0),
                         trailing: SBBTertiaryButtonSmall(
                           iconData: SBBIcons.circle_information_small_small,
-                          onPressed: _pageEnabled ? () => sbbToast.show(title: 'Button pressed') : null,
+                          onPressed: _pageEnabled ? () => sbbToast.show(titleText: 'Button pressed') : null,
                         ),
                       ),
 
@@ -218,12 +218,12 @@ class RadioPageState extends State<RadioPage> {
                           SBBListItem(
                             titleText: "Link",
                             trailingIconData: SBBIcons.chevron_small_right_small,
-                            onTap: () => sbbToast.show(title: 'Link'),
+                            onTap: () => sbbToast.show(titleText: 'Link'),
                           ),
                           SBBListItem(
                             titleText: "Link 2",
                             trailingIconData: SBBIcons.chevron_small_right_small,
-                            onTap: () => sbbToast.show(title: 'Link 2'),
+                            onTap: () => sbbToast.show(titleText: 'Link 2'),
                           ),
                         ],
                       ),

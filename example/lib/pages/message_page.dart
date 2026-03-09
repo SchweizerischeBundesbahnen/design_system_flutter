@@ -42,12 +42,12 @@ class _MessagePageState extends State<MessagePage> {
                     SBBSwitchListItem(
                       value: _isLoading,
                       titleText: 'Is Loading',
-                      onChanged: (value) => setState(() => _isLoading = value ?? false),
+                      onChanged: (value) => setState(() => _isLoading = value),
                     ),
                     SBBSwitchListItem(
                       value: _showIllustrations,
                       titleText: 'Show Illustrations',
-                      onChanged: (value) => setState(() => _showIllustrations = value ?? false),
+                      onChanged: (value) => setState(() => _showIllustrations = value),
                     ),
                   ],
                 ).toList(growable: false),
@@ -87,7 +87,7 @@ class _MessagePageState extends State<MessagePage> {
                   illustration: _showIllustrations ? SBBIllustration.display() : null,
                   action: SBBTertiaryButton(
                     onPressed: () {
-                      _toast.show(title: 'Error');
+                      _toast.show(titleText: 'Error');
                     },
                     iconData: SBBIcons.arrows_circle_small,
                   ),

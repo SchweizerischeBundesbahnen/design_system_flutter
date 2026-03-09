@@ -116,7 +116,7 @@ class CheckboxPageState extends State<CheckboxPage> {
                         padding: .fromLTRB(16.0, 0.0, 8.0, 0.0),
                         trailing: SBBTertiaryButtonSmall(
                           iconData: SBBIcons.circle_information_small_small,
-                          onPressed: _isEnabled ? () => sbbToast.show(title: 'Button pressed') : null,
+                          onPressed: _isEnabled ? () => sbbToast.show(titleText: 'Button pressed') : null,
                         ),
                       ),
                       SBBCheckboxListItem(
@@ -181,7 +181,7 @@ class CheckboxPageState extends State<CheckboxPage> {
                       padding: .fromLTRB(16.0, 0.0, 8.0, 0.0),
                       trailing: SBBTertiaryButtonSmall(
                         iconData: SBBIcons.circle_information_small_small,
-                        onPressed: _isEnabled ? () => sbbToast.show(title: 'Button pressed') : null,
+                        onPressed: _isEnabled ? () => sbbToast.show(titleText: 'Button pressed') : null,
                       ),
                     ),
                     SBBCheckboxListItemBoxed(

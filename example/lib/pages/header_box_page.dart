@@ -93,7 +93,7 @@ class DesignGuidelinePage extends StatelessWidget {
           trailingWidget: SBBTertiaryButtonSmall(
             labelText: 'Label',
             iconData: SBBIcons.dog_small,
-            onPressed: () => sbbToast.show(title: 'Default pressed', bottom: 96.0),
+            onPressed: () => sbbToast.show(titleText: 'Default pressed', bottom: 96.0),
           ),
         ),
         const SizedBox(height: SBBSpacing.medium),
@@ -104,7 +104,7 @@ class DesignGuidelinePage extends StatelessWidget {
           secondaryLabel: 'Subtext',
           trailingWidget: SBBTertiaryButton(
             iconData: SBBIcons.dog_small,
-            onPressed: () => sbbToast.show(title: 'Large pressed', bottom: 96.0),
+            onPressed: () => sbbToast.show(titleText: 'Large pressed', bottom: 96.0),
           ),
         ),
         const SizedBox(height: SBBSpacing.medium),
@@ -241,7 +241,7 @@ class _ScrollablePageState extends State<ScrollablePage> {
           itemCount: 60,
           itemBuilder: (context, index) => SBBListItem(
             titleText: 'Item $index',
-            onTap: () => sbbToast.show(title: 'Pressed Item $index', bottom: 96.0),
+            onTap: () => sbbToast.show(titleText: 'Pressed Item $index', bottom: 96.0),
           ),
         ),
       ],
