@@ -53,6 +53,39 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Removed `SBBTextField` - replaced by `SBBTextInput`
 
 
+## [4.8.0] - 2026-03-05
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.15
+
+### Deprecated
+
+- deprecated `SBBOnboarding` as it is no part of the official design system and will be removed in v5
+
+## [4.7.0] - 2026-02-17
+
+### Changed
+
+- drop support for Flutter SDK 3.32.x (minimum required dart sdk version 3.9.0)
+
+### Fixed
+
+- `SBBSliverFloatingHeaderbox`: Fixed an issue with the crossfade showing the wrong widget.
+
+## [4.6.0] - 2026-02-10
+
+### Added
+
+- Added `royal85`, `royal85Dark`, `royal125Dark` and `royal150Dark` colors
+- Added `SBBTabBarController.setBadges` for adding badges to the `SBBTabBar`
+- Added `SBBTabBarBadge` with `SBBTabBarBadgeIcon` (display predefined TabBar icons) and `SBBTabBarBadgeText`
+- Added `SBBTabBarItemBadge` for holding the `SBBTabBarBadge` information
+
+### Fixed
+
+- Corrected color for `royalDark` (0xFF4077DF to 0xFF0053EF)
+
 ## [4.5.0] - 2026-01-19
 
 ### Added
@@ -66,7 +99,6 @@ It is expected that you keep this format strictly, since we depend on it in our 
 ### Fixed
 
 - `SBBIconButtonSmall`: `key` parameter is correctly handled in parent class (#473)
-
 
 ## [4.4.0] - 2025-12-18
 
@@ -118,7 +150,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 ### Added
 
 - added `SBBSliverFloatingHeaderbox` that allows the headerbox to expand and contract as the user scrolls.
-- added functional colors (e.g. `SBBColors.error`) and dark variants of `additionalColors` (e.g. `SBBColors.skyDark`)
+- added functional colors (e.g. `SBBColors.error`) and dark variants of additionalColors (e.g. `SBBColors.skyDark`)
 - added `errorColor` to `SBBBaseStyle`
 - added `systemOverlayStyle` to `SBBHeader`
 
@@ -752,7 +784,13 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 [v5 migration guide]: migration_guide.md
 
-[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.5.0...HEAD
+[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.8.0...HEAD
+
+[4.8.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.7.0...4.8.0
+
+[4.7.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.6.0...4.7.0
+
+[4.6.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.5.0...4.6.0
 
 [4.5.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.4.0...4.5.0
 

@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
+@Deprecated(
+  'SBBOnboarding is deprecated since it is no component in the official Design System. Will be removed in v5.',
+)
 class SBBOnboardingCard extends StatelessWidget {
   const SBBOnboardingCard({super.key, required this.widgetBuilder, this.onDismissed});
 

@@ -12,6 +12,9 @@ import '../sbb_internal.dart';
 /// See also:
 ///
 /// * https://digital.sbb.ch/de/design-system-mobile-new/seitentypen/onboarding
+@Deprecated(
+  'SBBOnboarding is deprecated since it is no component in the official Design System. Will be removed in v5.',
+)
 class SBBOnboarding extends StatefulWidget {
   const SBBOnboarding({
     super.key,

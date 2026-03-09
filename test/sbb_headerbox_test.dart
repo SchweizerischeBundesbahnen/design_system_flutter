@@ -5,8 +5,26 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'test_app.dart';
 
 void main() {
-  testWidgets('headerbox_1', (WidgetTester tester) async {
-    final widget = Column(
+  generateTest('headerbox_1', HeaderboxTest());
+  generateTest('headerbox_sliver_expanded', FloatingHeaderboxTest());
+  generateTest('headerbox_sliver_contracted', FloatingHeaderboxTest(scrollOffset: 500.0));
+  generateTest('headerbox_sliver_contracted_after_update', FloatingHeaderboxWithUpdateTest());
+}
+
+void generateTest(String name, Widget widget) {
+  testWidgets(name, (WidgetTester tester) async {
+    await TestSpecs.run(TestSpecs.themedSpecs, widget, tester, name, find.byType(Column).first);
+  });
+}
+
+class HeaderboxTest extends StatelessWidget {
+  const HeaderboxTest({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
       children: [
         const SizedBox(height: SBBSpacing.medium),
         const SBBListHeader('Default'),
@@ -47,23 +65,20 @@ void main() {
         ),
       ],
     );
-
-    await TestSpecs.run(
-      TestSpecs.themedSpecs,
-      widget,
-      tester,
-      'headerbox_1',
-      find.byType(Column).first,
-    );
-  });
-
-  generateSliverTest('headerbox_sliver_expanded', 0.0);
-  generateSliverTest('headerbox_sliver_contracted', 500.0);
+  }
 }
 
-void generateSliverTest(String name, double scrollOffset) {
-  testWidgets(name, (WidgetTester tester) async {
-    final widget = Column(
+class FloatingHeaderboxTest extends StatelessWidget {
+  const FloatingHeaderboxTest({
+    super.key,
+    this.scrollOffset = 0.0,
+  });
+
+  final double scrollOffset;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
       children: [
         Flexible(
           child: CustomScrollView(
@@ -129,7 +144,51 @@ void generateSliverTest(String name, double scrollOffset) {
         ),
       ],
     );
+  }
+}
 
-    await TestSpecs.run(TestSpecs.themedSpecs, widget, tester, name, find.byType(Column).first);
+class FloatingHeaderboxWithUpdateTest extends StatelessWidget {
+  const FloatingHeaderboxWithUpdateTest({
+    super.key,
   });
+
+  @override
+  Widget build(BuildContext context) {
+    // The future builder will cause a rebuild with the same layout.
+    // In the past, we had an issue with `SBBContractible` losing its state.
+    return FutureBuilder(
+      future: Future.value(),
+      builder: (context, asyncSnapshot) {
+        return Column(
+          children: [
+            Flexible(
+              child: CustomScrollView(
+                controller: ScrollController(initialScrollOffset: 500),
+                slivers: [
+                  SBBSliverFloatingHeaderbox.custom(
+                    flapMode: SBBHeaderboxFlapMode.hideable,
+                    children: [
+                      SBBContractible.crossfade(
+                        contractedChild: SizedBox(height: 50, child: Text("Contracted")),
+                        expandedChild: SizedBox(
+                          height: 100,
+                          child: Text("Expanded", style: SBBTextStyles.extraExtraLargeBold),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SliverList.separated(
+                    itemBuilder: (context, i) => ListTile(key: ValueKey(i), title: Text(i.toString())),
+                    separatorBuilder: (BuildContext context, int index) {
+                      return Divider();
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
 }

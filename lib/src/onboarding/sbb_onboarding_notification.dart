@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+@Deprecated(
+  'SBBOnboarding is deprecated since it is no component in the official Design System. Will be removed in v5.',
+)
 class SBBOnboardingNotification extends Notification {
   SBBOnboardingNotification._(this.type, this.index);
 

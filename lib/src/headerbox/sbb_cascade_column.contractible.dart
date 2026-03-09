@@ -101,7 +101,13 @@ class SBBContractible extends StatelessWidget {
 
   /// Crossfades between a [contractedChild] and an [expandedChild].
   ///
-  /// Using [alignment] you can specify what happens to the position of the [expandedChild] when the widget shrinks.
+  /// Using [alignment] you can specify what happens to the position of the [contractedChild] when the widget shrinks.
+  ///
+  /// Note that during the transition, [expandedChild] will shrink to the size of [contractedChild]. This allows for
+  /// some interesting effects, but means that [expandedChild] must be able to deal with smaller constraints.
+  ///
+  /// In cases where [expandedChild] is unable to shrink, consider wrapping it in an [OverflowBox] that has its height
+  /// set to [double.infinity].
   ///
   /// ## Caveats
   ///
@@ -221,6 +227,13 @@ class _SBBContractible extends ParentDataWidget<CascadeColumnParentData> {
   @override
   void applyParentData(RenderObject renderObject) {
     final parentData = renderObject.parentData as CascadeColumnParentData;
+
+    if (parentData.stateNotifier != stateNotifier && parentData.stateNotifier != null) {
+      // Make sure that a new notifier retains the previous state to prevent flickering.
+      // Additionally, we schedule a layout pass to make sure that it matches the actual layout.
+      stateNotifier?.value = parentData.stateNotifier!.value;
+      renderObject.markNeedsLayout();
+    }
 
     parentData.stateNotifier = stateNotifier;
   }
