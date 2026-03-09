@@ -856,3 +856,4 @@ It is expected that you keep this format strictly, since we depend on it in our 
 [0.0.2]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/0.0.1...0.0.2
 
 [0.0.1]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/releases/tag/0.0.1
+
