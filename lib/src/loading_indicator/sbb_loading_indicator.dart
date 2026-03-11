@@ -93,7 +93,7 @@ class SBBLoadingIndicator extends StatelessWidget {
           ..setEntry(3, 2, translationZ)
           ..rotateY(rotationY),
         alignment: FractionalOffset.centerRight,
-        child: LoadingAnimation(
+        child: _LoadingAnimation(
           squareWidth: squareWidth,
           squareHeight: squareHeight,
           squareSpacing: squareSpacing,
@@ -104,9 +104,8 @@ class SBBLoadingIndicator extends StatelessWidget {
   }
 }
 
-class LoadingAnimation extends StatefulWidget {
-  const LoadingAnimation({
-    super.key,
+class _LoadingAnimation extends StatefulWidget {
+  const _LoadingAnimation({
     required this.squareWidth,
     required this.squareHeight,
     required this.squareSpacing,
@@ -119,10 +118,10 @@ class LoadingAnimation extends StatefulWidget {
   final Color color;
 
   @override
-  LoadingAnimationState createState() => LoadingAnimationState();
+  _LoadingAnimationState createState() => _LoadingAnimationState();
 }
 
-class LoadingAnimationState extends State<LoadingAnimation> with SingleTickerProviderStateMixin {
+class _LoadingAnimationState extends State<_LoadingAnimation> with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _loadingSquareOne;
   late Animation<double> _loadingSquareTwo;
