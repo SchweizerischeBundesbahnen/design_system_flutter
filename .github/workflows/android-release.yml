@@ -5,6 +5,7 @@ on:
       - closed
     branches:
       - main
+  workflow_dispatch:
 
 jobs:
   build-and-release:
@@ -12,26 +13,25 @@ jobs:
     if: github.event.pull_request.merged == true && contains(github.event.pull_request.labels.*.name, 'autorelease')
 
     steps:
-      - name: Generate Token
+      - name: Generate token
         id: app-token
         uses: actions/create-github-app-token@v2
         with:
           app-id: ${{ vars.APPBAKERYGITHUBAPP_APPID }}
           private-key: ${{ secrets.APPBAKERYGITHUBAPP_PRIVATEKEY }}
 
-      - name: Clone Repository
-        uses: actions/checkout@v6
+      - uses: actions/checkout@v6
         with:
           token: ${{ steps.app-token.outputs.token }}
           persist-credentials: false
 
       - uses: actions/setup-java@v5
         with:
-          java-version: "17"
+          java-version: "21"
           distribution: "temurin"
           cache: "gradle"
 
-      - name: Write Keystore from base64 encoded secret.
+      - name: Write keystore from base64 encoded secret 🤫
         id: write_keystore
         uses: timheuer/base64-to-file@v1.2
         with:
@@ -39,19 +39,20 @@ jobs:
           fileDir: "./example/android/app/keys"
           encodedString: ${{ secrets.KEYSTORE_64 }}
 
-      - name: Clone flutter version specified in .fvm.
-        uses: subosito/flutter-action@v2
+      - uses: subosito/flutter-action@v2
         with:
           channel: stable
+          flutter-version: 3.41.x
+          cache: true
 
-      - name: Run flutter doctor.
+      - name: Run flutter doctor
         run: flutter doctor -v
 
-      - name: Install dependencies.
+      - name: Install dependencies
         run: flutter pub get
         working-directory: example
 
-      - name: Build appbundle.
+      - name: Build appbundle
         run: flutter build appbundle --no-pub
         working-directory: example
         env:
@@ -59,18 +60,17 @@ jobs:
           KEY_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
           SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
 
-      - name: Create Signing Report.
+      - name: Create signing report
         run: ./gradlew signingReport
         working-directory: example/android
 
-      - name: Upload appbundle as artifact.
-        uses: actions/upload-artifact@v7
+      - uses: actions/upload-artifact@v7
         with:
           name: app-release.aab
           path: example/build/app/outputs/bundle/release/
           retention-days: 1
 
-      - name: Write Google SA json from base64 encoded secret.
+      - name: Write Google SA json from base64 encoded secret
         id: write_google_sa
         uses: timheuer/base64-to-file@v1.2
         with:
@@ -78,6 +78,6 @@ jobs:
           fileDir: "./example/android/app/keys"
           encodedString: ${{ secrets.GOOGLE_PLAYSTORE_SERVICE_ACCOUNT_64 }}
 
-      - name: Release using GPP.
+      - name: Release using GPP
         run: ./gradlew publishBundle --artifact-dir ../build/app/outputs/bundle/release/
         working-directory: example/android
