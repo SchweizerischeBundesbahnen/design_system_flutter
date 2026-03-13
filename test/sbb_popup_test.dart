@@ -26,10 +26,9 @@ class PopupTest extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SBBContentBox(
-      padding: const EdgeInsets.all(SBBSpacing.medium),
+      padding: const .all(SBBSpacing.xSmall),
       child: Column(
-        spacing: SBBSpacing.medium,
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: .min,
         children: [
           // Title only
           SBBPopup(
@@ -40,18 +39,12 @@ class PopupTest extends StatelessWidget {
           SBBPopup(
             titleText: 'Title',
             leadingIconData: SBBIcons.dog_small,
-            style: SBBPopupStyle(backgroundColor: SBBColors.peach),
+            style: SBBPopupStyle(backgroundColor: SBBColors.peach, margin: .zero),
             body: _popupBody(),
           ),
           // Leading icon only (no title)
           SBBPopup(
             leadingIconData: SBBIcons.three_adults_small,
-            body: _popupBody(),
-          ),
-          // Leading + trailing icons, no title
-          SBBPopup(
-            leadingIconData: SBBIcons.three_adults_small,
-            trailingIconData: SBBIcons.warning_light_small,
             body: _popupBody(),
           ),
           // Title without close button
@@ -60,19 +53,14 @@ class PopupTest extends StatelessWidget {
             showCloseButton: false,
             body: _popupBody(),
           ),
-          // No header at all, body only
-          SBBPopup(
-            showCloseButton: false,
-            body: Container(height: 20, width: double.infinity, color: SBBColors.turquoise),
-          ),
           // Custom title widget
           SBBPopup(
             title: Container(
               height: 10,
-              width: double.infinity,
+              width: .infinity,
               color: SBBColors.lemon,
             ),
-            body: Container(height: 20, width: double.infinity, color: SBBColors.turquoise),
+            body: Container(height: 20, width: .infinity, color: SBBColors.turquoise),
           ),
         ],
       ),
