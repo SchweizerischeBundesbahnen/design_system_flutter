@@ -83,12 +83,6 @@ class _BottomSheetPageState extends State<BottomSheetPage> {
                 description: 'Expand with CustomScrollView and isScrollControlled: true',
                 onPressed: () => _showCustomSliverExample(context),
               ),
-              const SizedBox(height: SBBSpacing.medium),
-              _ExampleCard(
-                title: 'Modal Popup',
-                description: 'Dialog-style modal popup',
-                onPressed: () => _showModalPopup(context),
-              ),
             ],
           ),
         ),
@@ -231,31 +225,6 @@ class _BottomSheetPageState extends State<BottomSheetPage> {
       ),
     );
   }
-
-  void _showModalPopup(BuildContext context) {
-    showSBBModalPopup(
-      context: context,
-      title: 'Modal Popup',
-      showCloseButton: _showCloseButton,
-      backgroundColor: _customBackgroundColor ? SBBColors.peach : null,
-      child: SingleChildScrollView(
-        child: Column(
-          spacing: SBBSpacing.medium,
-          crossAxisAlignment: .start,
-          children: [
-            Text(
-              'This is a modal popup, displayed as a dialog.',
-              style: sbbTextStyle.small.lightStyle,
-            ),
-            SBBPrimaryButton(
-              labelText: 'Got it',
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
 }
 
 class _ExampleCard extends StatelessWidget {
@@ -300,7 +269,7 @@ class _ExampleCard extends StatelessWidget {
 }
 
 class _KeyboardAwareBody extends StatelessWidget {
-  _KeyboardAwareBody({super.key});
+  _KeyboardAwareBody();
 
   final TextEditingController controller = TextEditingController();
 
