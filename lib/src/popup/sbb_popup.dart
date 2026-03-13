@@ -5,9 +5,6 @@ import '../sbb_internal.dart';
 
 /// Shows an SBB Popup dialog.
 ///
-/// A popup is a modal dialog displayed in the center of the screen (by default)
-/// that prevents the user from interacting with the rest of the app until dismissed.
-///
 /// Provide either [titleText] for a simple text title or [title] for a custom
 /// title widget. These parameters are mutually exclusive. Similarly, provide
 /// either [leadingIconData] or [leading] for leading content, and either
@@ -212,14 +209,10 @@ class SBBPopup extends StatelessWidget {
 
     // Apply theming to all widgets
     if (titleWidget != null) {
-      titleWidget = DefaultTextStyle.merge(
-        style: (resolvedStyle.titleTextStyle ?? const TextStyle()).copyWith(
-          color: resolvedStyle.titleForegroundColor,
-        ),
-        child: IconTheme.merge(
-          data: IconThemeData(color: resolvedStyle.titleForegroundColor),
-          child: titleWidget,
-        ),
+      titleWidget = _addDefaultAncestorWithResolved(
+        child: titleWidget,
+        foregroundColor: resolvedStyle.titleForegroundColor,
+        textStyle: resolvedStyle.titleTextStyle,
       );
     }
 

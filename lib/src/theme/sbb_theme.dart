@@ -11,6 +11,7 @@ import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_text_input_
 import 'package:sbb_design_system_mobile/src/list_header/theme/default_sbb_list_header_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/message/theme/default_sbb_message_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/paginator/theme/default_sbb_paginator_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/popup/theme/default_sbb_popup_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/radio/theme/default_sbb_radio_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/slider/theme/default_sbb_slider_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/stepper/theme/default_sbb_stepper_theme_data.dart';
@@ -54,6 +55,7 @@ class SBBTheme {
     SBBTextTheme? textTheme,
     SBBTextInputThemeData? textInputTheme,
     SBBToastThemeData? toastTheme,
+    SBBPopupThemeData? popupTheme,
   }) => createTheme(
     brightness: .light,
     boldFont: boldFont,
@@ -83,6 +85,7 @@ class SBBTheme {
     textTheme: textTheme,
     textInputTheme: textInputTheme,
     toastTheme: toastTheme,
+    popupTheme: popupTheme,
   );
 
   static ThemeData dark({
@@ -112,6 +115,7 @@ class SBBTheme {
     SBBTextTheme? textTheme,
     SBBTextInputThemeData? textInputTheme,
     SBBToastThemeData? toastTheme,
+    SBBPopupThemeData? popupTheme,
   }) => createTheme(
     brightness: .dark,
     boldFont: boldFont,
@@ -140,6 +144,7 @@ class SBBTheme {
     textTheme: textTheme,
     textInputTheme: textInputTheme,
     toastTheme: toastTheme,
+    popupTheme: popupTheme,
   );
 
   static ThemeData createTheme({
@@ -171,6 +176,7 @@ class SBBTheme {
     SBBTextTheme? textTheme,
     SBBTextInputThemeData? textInputTheme,
     SBBToastThemeData? toastTheme,
+    SBBPopupThemeData? popupTheme,
   }) {
     // default values are set here and merged with given styles
     final defaultBaseStyle = SBBBaseStyle.$default(brightness: brightness, boldFont: boldFont);
@@ -248,6 +254,9 @@ class SBBTheme {
     final defaultToastTheme = DefaultSBBToastThemeData(mergedBaseStyle);
     final mergedToastTheme = defaultToastTheme.merge(toastTheme);
 
+    final defaultPopupTheme = DefaultSBBPopupThemeData(mergedBaseStyle);
+    final mergedPopupTheme = defaultPopupTheme.merge(popupTheme);
+
     final defaultInputDecorationTheme = DefaultSBBInputDecorationThemeData(mergedBaseStyle);
     final mergedInputDecorationTheme = defaultInputDecorationTheme.merge(inputDecorationTheme);
 
@@ -278,6 +287,7 @@ class SBBTheme {
       textTheme: mergedTextTheme,
       textInputTheme: mergedTextInputTheme,
       toastTheme: mergedToastTheme,
+      popupTheme: mergedPopupTheme,
       inputDecorationTheme: mergedInputDecorationTheme,
     );
   }
@@ -310,6 +320,7 @@ class SBBTheme {
     required SBBTextTheme textTheme,
     required SBBTextInputThemeData textInputTheme,
     required SBBToastThemeData toastTheme,
+    required SBBPopupThemeData popupTheme,
   }) {
     return ThemeData(
       colorScheme: ColorScheme.fromSwatch(
@@ -358,6 +369,7 @@ class SBBTheme {
         textTheme,
         textInputTheme,
         toastTheme,
+        popupTheme,
       ],
     );
   }

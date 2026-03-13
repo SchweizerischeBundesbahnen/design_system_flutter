@@ -10,6 +10,10 @@ class SBBPopupStyle {
   const SBBPopupStyle({
     this.titleTextStyle,
     this.titleForegroundColor,
+    this.leadingTextStyle,
+    this.leadingForegroundColor,
+    this.trailingTextStyle,
+    this.trailingForegroundColor,
     this.backgroundColor,
     this.clipBehavior,
     this.constraints,
@@ -28,6 +32,24 @@ class SBBPopupStyle {
 
   /// The color of the title text and close button.
   final Color? titleForegroundColor;
+
+  /// The text style for the leading widget.
+  ///
+  /// The color of the [leadingTextStyle] is typically not used directly; the
+  /// [leadingForegroundColor] is used instead.
+  final TextStyle? leadingTextStyle;
+
+  /// The color of the leading widget.
+  final Color? leadingForegroundColor;
+
+  /// The text style for the trailing widget.
+  ///
+  /// The color of the [trailingTextStyle] is typically not used directly; the
+  /// [trailingForegroundColor] is used instead.
+  final TextStyle? trailingTextStyle;
+
+  /// The color of the trailing widget.
+  final Color? trailingForegroundColor;
 
   /// The background color of the popup dialog.
   final Color? backgroundColor;
@@ -65,12 +87,15 @@ class SBBPopupStyle {
   final EdgeInsets? margin;
 
   /// The default shape for the popup.
-  static ShapeBorder shape(BorderRadiusGeometry? borderRadius) =>
-      RoundedRectangleBorder(borderRadius: BorderRadius.circular(SBBSpacing.medium));
+  static ShapeBorder shape = RoundedRectangleBorder(borderRadius: BorderRadius.circular(SBBSpacing.medium));
 
   SBBPopupStyle copyWith({
     TextStyle? titleTextStyle,
     Color? titleForegroundColor,
+    TextStyle? leadingTextStyle,
+    Color? leadingForegroundColor,
+    TextStyle? trailingTextStyle,
+    Color? trailingForegroundColor,
     Color? backgroundColor,
     Clip? clipBehavior,
     BoxConstraints? constraints,
@@ -83,6 +108,10 @@ class SBBPopupStyle {
     return SBBPopupStyle(
       titleTextStyle: titleTextStyle ?? this.titleTextStyle,
       titleForegroundColor: titleForegroundColor ?? this.titleForegroundColor,
+      leadingTextStyle: leadingTextStyle ?? this.leadingTextStyle,
+      leadingForegroundColor: leadingForegroundColor ?? this.leadingForegroundColor,
+      trailingTextStyle: trailingTextStyle ?? this.trailingTextStyle,
+      trailingForegroundColor: trailingForegroundColor ?? this.trailingForegroundColor,
       backgroundColor: backgroundColor ?? this.backgroundColor,
       clipBehavior: clipBehavior ?? this.clipBehavior,
       constraints: constraints ?? this.constraints,
@@ -99,6 +128,10 @@ class SBBPopupStyle {
     return copyWith(
       titleTextStyle: other.titleTextStyle,
       titleForegroundColor: other.titleForegroundColor,
+      leadingTextStyle: other.leadingTextStyle,
+      leadingForegroundColor: other.leadingForegroundColor,
+      trailingTextStyle: other.trailingTextStyle,
+      trailingForegroundColor: other.trailingForegroundColor,
       backgroundColor: other.backgroundColor,
       clipBehavior: other.clipBehavior,
       constraints: other.constraints,
@@ -115,6 +148,10 @@ class SBBPopupStyle {
     return SBBPopupStyle(
       titleTextStyle: TextStyle.lerp(a?.titleTextStyle, b?.titleTextStyle, t),
       titleForegroundColor: Color.lerp(a?.titleForegroundColor, b?.titleForegroundColor, t),
+      leadingTextStyle: TextStyle.lerp(a?.leadingTextStyle, b?.leadingTextStyle, t),
+      leadingForegroundColor: Color.lerp(a?.leadingForegroundColor, b?.leadingForegroundColor, t),
+      trailingTextStyle: TextStyle.lerp(a?.trailingTextStyle, b?.trailingTextStyle, t),
+      trailingForegroundColor: Color.lerp(a?.trailingForegroundColor, b?.trailingForegroundColor, t),
       backgroundColor: Color.lerp(a?.backgroundColor, b?.backgroundColor, t),
       clipBehavior: t < 0.5 ? a?.clipBehavior : b?.clipBehavior,
       constraints: BoxConstraints.lerp(a?.constraints, b?.constraints, t),
@@ -132,6 +169,10 @@ class SBBPopupStyle {
     return other is SBBPopupStyle &&
         other.titleTextStyle == titleTextStyle &&
         other.titleForegroundColor == titleForegroundColor &&
+        other.leadingTextStyle == leadingTextStyle &&
+        other.leadingForegroundColor == leadingForegroundColor &&
+        other.trailingTextStyle == trailingTextStyle &&
+        other.trailingForegroundColor == trailingForegroundColor &&
         other.backgroundColor == backgroundColor &&
         other.clipBehavior == clipBehavior &&
         other.constraints == constraints &&
@@ -146,6 +187,10 @@ class SBBPopupStyle {
   int get hashCode => Object.hash(
     titleTextStyle,
     titleForegroundColor,
+    leadingTextStyle,
+    leadingForegroundColor,
+    trailingTextStyle,
+    trailingForegroundColor,
     backgroundColor,
     clipBehavior,
     constraints,
