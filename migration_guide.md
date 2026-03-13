@@ -190,6 +190,61 @@ The list item has received a lot of changes. In general the content is completel
 * Old style access via `SBBControlStyles.of(context).pagination!` is replaced with theme extension pattern
 
 
+## Popup (previously Modal Popup)
+
+### New capabilities
+
+* replace `showSBBModalPopup` with `showSBBPopup`
+* replace `SBBModalPopup` widget with `SBBPopup`
+* replace `title` (String) with `titleText`, or use `title` for a custom widget
+* replace `child` with `body`
+* removed `backgroundColor` and `clipBehavior` direct parameters – move them to `SBBPopupStyle` via
+  the `style` parameter
+
+### New capabilities
+
+* added optional `leading` / `leadingIconData` and `trailing` / `trailingIconData` header elements
+* `isDismissible` controls whether tapping the barrier closes the popup (previously always
+  dismissible)
+* `showCloseButton` is now `false` when `isDismissible` is `false`
+* customise appearance via `SBBPopupStyle` and `SBBPopupThemeData`
+
+### Example migration
+
+Old implementation:
+
+```dart
+showSBBModalPopup
+(
+context: context,
+title: 'My Title',
+backgroundColor: SBBColors.peach,
+child: Text('Content
+'
+)
+,
+);
+```
+
+New implementation:
+
+```dart
+showSBBPopup
+(
+context: context,
+titleText: 'My Title',
+style: SBBPopupStyle(backgroundColor: SBBColors.peach),
+body: Text('Content'),
+);
+```
+
+### Theming & Styling
+
+* customize the theme of all `SBBPopup` with `SBBPopupThemeData` as input to `SBBTheme`
+* access the theme using `Theme.of(context).sbbPopupTheme`
+* customize an individual popup by setting its `style` parameter
+
+
 ## Radio
 
 ### Usage
