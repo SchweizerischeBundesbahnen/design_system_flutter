@@ -16,7 +16,6 @@ import 'pages/container_page.dart';
 import 'pages/header_box_page.dart';
 import 'pages/header_page.dart';
 import 'pages/icon_page.dart';
-import 'pages/input_trigger_page.dart';
 import 'pages/link_page.dart';
 import 'pages/list_item_page.dart';
 import 'pages/loading_indicator_page.dart';
@@ -29,6 +28,7 @@ import 'pages/radio_page.dart';
 import 'pages/segmented_button_page.dart';
 import 'pages/select_page.dart';
 import 'pages/slider_page.dart';
+import 'pages/static_input_page.dart';
 import 'pages/status_page.dart';
 import 'pages/stepper_page.dart';
 import 'pages/switch_page.dart';
@@ -150,7 +150,7 @@ class MyApp extends StatelessWidget {
             _DemoEntry('Promotion Box', PromotionBoxPage()),
             _DemoEntry('Notification Box', NotificationBoxPage()),
             _DemoEntry('Status', StatusPage()),
-            _DemoEntry('Input Trigger', InputTriggerPage()),
+            _DemoEntry('Static Input', StaticInputPage()),
           ],
         ).toList(growable: false),
       ),

@@ -9,6 +9,7 @@ export 'src/headerbox/headerbox.dart';
 export 'src/illustration/sbb_illustration.dart';
 export 'src/input/input.dart';
 export 'src/input_trigger/sbb_input_trigger.dart';
+export 'src/input_trigger/sbb_static_input.dart';
 export 'src/link/sbb_link_text.dart';
 export 'src/list_header/list_header.dart';
 export 'src/list_item/list_item.dart';
