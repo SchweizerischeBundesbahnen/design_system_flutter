@@ -3,14 +3,14 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import '../native_app.dart';
 
-class SelectPage extends StatefulWidget {
-  const SelectPage({super.key});
+class DropdownPage extends StatefulWidget {
+  const DropdownPage({super.key});
 
   @override
-  SelectPageState createState() => SelectPageState();
+  State<DropdownPage> createState() => _DropdownPageState();
 }
 
-class SelectPageState extends State<SelectPage> {
+class _DropdownPageState extends State<DropdownPage> {
   int? _selectedValue1;
   int? _selectedValue2 = 1;
   int? _selectedValue3;
@@ -48,8 +48,8 @@ class SelectPageState extends State<SelectPage> {
         SBBContentBox(
           child: Column(
             children: [
-              SBBSelect<int>(
-                label: 'Label',
+              SBBDropdown<int>(
+                inputDecoration: SBBInputDecoration(labelText: 'Label'),
                 value: _selectedValue1,
                 items: _items,
                 onChanged: (value) {
@@ -57,8 +57,8 @@ class SelectPageState extends State<SelectPage> {
                   setState(() => _selectedValue1 = value);
                 },
               ),
-              SBBSelect<int>(
-                label: 'Default Value',
+              SBBDropdown<int>(
+                inputDecoration: SBBInputDecoration(labelText: 'Default Value'),
                 value: _selectedValue2,
                 items: _items,
                 onChanged: (value) {
@@ -66,9 +66,10 @@ class SelectPageState extends State<SelectPage> {
                   setState(() => _selectedValue2 = value);
                 },
               ),
-              SBBSelect<int>(
-                label: 'Custom Menu Title',
-                title: 'This is the custom menu title',
+              SBBDropdown<int>(
+                inputDecoration: SBBInputDecoration(labelText: 'Default Value'),
+                // label: 'Custom Menu Title',
+                // title: 'This is the custom menu title',
                 value: _selectedValue3,
                 items: _items,
                 onChanged: (value) {
@@ -76,9 +77,8 @@ class SelectPageState extends State<SelectPage> {
                   setState(() => _selectedValue3 = value);
                 },
               ),
-              SBBSelect<int>(
-                label: 'Icon',
-                icon: SBBIcons.route_circle_start_small,
+              SBBDropdown<int>(
+                inputDecoration: SBBInputDecoration(leadingIconData: SBBIcons.route_circle_start_small),
                 value: _selectedValue4,
                 items: _items,
                 onChanged: (value) {
@@ -86,9 +86,11 @@ class SelectPageState extends State<SelectPage> {
                   setState(() => _selectedValue4 = value);
                 },
               ),
-              SBBSelect<int>(
-                label: 'Disabled',
-                icon: SBBIcons.route_circle_start_small,
+              SBBDropdown<int>(
+                inputDecoration: SBBInputDecoration(
+                  labelText: 'Disabled',
+                  leadingIconData: SBBIcons.route_circle_start_small,
+                ),
                 value: _selectedValue4,
                 items: _items,
                 onChanged: null,
@@ -97,7 +99,7 @@ class SelectPageState extends State<SelectPage> {
               SBBTertiaryButton(
                 labelText: 'Call showMenu() without building Widget',
                 onPressed: () {
-                  SBBSelect.showMenu<int>(
+                  SBBDropdown.showMenu<int>(
                     context: context,
                     title: 'Title',
                     value: _selectedValue5,
@@ -119,7 +121,7 @@ class SelectPageState extends State<SelectPage> {
         SBBContentBox(
           child: Column(
             children: [
-              SBBMultiSelect<int>(
+              SBBMultiDropdown<int>(
                 label: 'Label',
                 values: _multiSelectValues1,
                 items: _multiSelectItems,
@@ -128,7 +130,7 @@ class SelectPageState extends State<SelectPage> {
                   setState(() => _multiSelectValues1 = value);
                 },
               ),
-              SBBMultiSelect<int>(
+              SBBMultiDropdown<int>(
                 label: 'Default Value',
                 values: _multiSelectValues2,
                 items: _multiSelectItems,
@@ -136,7 +138,7 @@ class SelectPageState extends State<SelectPage> {
                   setState(() => _multiSelectValues2 = value);
                 },
               ),
-              SBBMultiSelect<int>(
+              SBBMultiDropdown<int>(
                 label: 'Custom Menu Title',
                 title: 'This is the custom menu title',
                 values: _multiSelectValues3,
@@ -145,7 +147,7 @@ class SelectPageState extends State<SelectPage> {
                   setState(() => _multiSelectValues3 = value);
                 },
               ),
-              SBBMultiSelect<int>(
+              SBBMultiDropdown<int>(
                 label: 'Icon',
                 icon: SBBIcons.route_circle_start_small,
                 values: _multiSelectValues4,
@@ -154,7 +156,7 @@ class SelectPageState extends State<SelectPage> {
                   setState(() => _multiSelectValues4 = value);
                 },
               ),
-              SBBMultiSelect<int>(
+              SBBMultiDropdown<int>(
                 label: 'Disabled',
                 icon: SBBIcons.route_circle_start_small,
                 values: _multiSelectValues4,
@@ -165,7 +167,7 @@ class SelectPageState extends State<SelectPage> {
               SBBTertiaryButton(
                 labelText: 'Call showMenu() without building Widget',
                 onPressed: () {
-                  SBBMultiSelect.showMenu<int>(
+                  SBBMultiDropdown.showMenu<int>(
                     context: context,
                     title: 'Title',
                     values: _multiSelectValues5,

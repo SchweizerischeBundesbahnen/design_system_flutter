@@ -2,195 +2,14 @@ import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
-/// Signature for custom selection validation to be used in [SBBMultiSelect] to
-/// determine whether the submit button is enabled or not.
-///
-/// The type `T` is the type of the value the entry represents. All the entries
-/// in a given menu must represent values with consistent types.
-typedef SelectionValidation<T> = bool Function(List<T> oldSelection, List<T> newSelection);
-
-/// An item in a menu created by a [SBBSelect] or [SBBMultiSelect].
-///
-/// The type `T` is the type of the value the entry represents. All the entries
-/// in a given menu must represent values with consistent types.
-class SelectMenuItem<T> {
-  const SelectMenuItem({required this.value, required this.label});
-
-  final T value;
-  final String label;
-}
-
-/// SBB Select (single value). Use according to documentation.
-///
-/// See also:
-///
-/// * [SBBMultiSelect], variant for multiple values
-/// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/select>
-class SBBSelect<T> extends StatelessWidget {
-  const SBBSelect({
-    super.key,
-    this.label,
-    this.hint,
-    this.icon,
-    this.title,
-    this.allowMultilineLabel = false,
-    this.isLastElement = false,
-    required this.value,
-    required this.items,
-    required this.onChanged,
-  });
-
-  final String? label;
-  final String? hint;
-  final IconData? icon;
-  final String? title;
-  final bool allowMultilineLabel;
-  final bool isLastElement;
-  final T? value;
-  final List<SelectMenuItem<T>> items;
-  final ValueChanged<T?>? onChanged;
-
-  @override
-  Widget build(BuildContext context) {
-    final style = SBBControlStyles.of(context);
-    final baseStyle = SBBBaseStyle.of(context);
-    final enabled = onChanged != null;
-    return InkWell(
-      /// TODO: smallTrogdor - rm and move to own style of overhauled SBBTextField
-      focusColor: baseStyle.themeValue(SBBColors.platinum, SBBColors.midnight),
-      hoverColor: baseStyle.themeValue(SBBColors.platinum, SBBColors.midnight),
-      onTap: enabled
-          ? () => showMenu(
-              context: context,
-              title: title ?? label ?? '',
-              value: value,
-              items: items,
-              onChanged: onChanged!,
-              allowMultilineLabel: allowMultilineLabel,
-            )
-          : null,
-      child: Column(
-        children: [
-          Container(
-            constraints: const BoxConstraints(minHeight: 48.0),
-            color: SBBColors.transparent,
-            child: Row(
-              children: [
-                const SizedBox(width: SBBSpacing.medium),
-                if (icon != null)
-                  Padding(
-                    padding: const EdgeInsetsDirectional.only(end: SBBSpacing.xSmall),
-                    child: Icon(icon, color: enabled ? style.textField?.iconColor : style.textField?.iconColorDisabled),
-                  ),
-                Expanded(
-                  child: value == null
-                      ? Text(
-                          label ?? hint ?? '',
-                          style: enabled
-                              ? style.textField?.placeholderTextStyle
-                              : style.textField?.placeholderTextStyleDisabled,
-                          maxLines: 1,
-                          overflow: .ellipsis,
-                        )
-                      : Column(
-                          crossAxisAlignment: .start,
-                          mainAxisAlignment: label != null ? .start : .center,
-                          children: [
-                            if (label != null)
-                              Padding(
-                                padding: const .only(top: 5.0, bottom: 2.0),
-                                child: Text(
-                                  label!,
-                                  style: enabled ? style.selectLabel?.textStyle : style.selectLabel?.textStyleDisabled,
-                                  maxLines: 1,
-                                  overflow: .ellipsis,
-                                ),
-                              ),
-                            if (label == null) const SizedBox(height: 0.0),
-                            Text(
-                              items.firstWhere((element) => element.value == value).label,
-                              style: enabled ? style.textField?.textStyle : style.textField?.textStyleDisabled,
-                              maxLines: 1,
-                              overflow: .ellipsis,
-                            ),
-                          ],
-                        ),
-                ),
-                Icon(
-                  SBBIcons.chevron_small_down_small,
-                  color: enabled ? style.textField?.iconColor : style.textField?.iconColorDisabled,
-                ),
-                const SizedBox(width: SBBSpacing.xSmall),
-              ],
-            ),
-          ),
-          if (!isLastElement) Divider(indent: icon == null ? SBBSpacing.medium : 48.0),
-        ],
-      ),
-    );
-  }
-
-  static showMenu<T>({
-    required BuildContext context,
-    required String title,
-    required T? value,
-    required List<SelectMenuItem<T>> items,
-    required ValueChanged<T?> onChanged,
-    bool allowMultilineLabel = false,
-  }) {
-    var selectedValue = value;
-    showSBBBottomSheet(
-      context: context,
-      titleText: title,
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            SBBContentBox(
-              margin: const EdgeInsetsDirectional.fromSTEB(
-                SBBSpacing.medium,
-                SBBSpacing.xSmall,
-                SBBSpacing.medium,
-                SBBSpacing.medium,
-              ),
-              child: StatefulBuilder(
-                builder: (context, setState) {
-                  return SBBRadioGroup<T>(
-                    onChanged: (value) {
-                      setState(() => selectedValue = value);
-                      Navigator.of(context).pop();
-                      onChanged(value);
-                    },
-                    groupValue: selectedValue,
-                    child: Column(
-                      children: SBBListItem.divideListItems(
-                        context: context,
-                        items: items.asMap().entries.map((entry) {
-                          return SBBRadioListItem<T>(
-                            value: entry.value.value,
-                            titleText: entry.value.label,
-                          );
-                        }),
-                      ).toList(growable: false),
-                    ),
-                  );
-                },
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
 /// SBB Select (multiple values). Use according to documentation.
 ///
 /// See also:
 ///
-/// * [SBBSelect], variant for single value
+/// * [SBBDropdown], variant for single value
 /// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/select>
-class SBBMultiSelect<T> extends StatefulWidget {
-  const SBBMultiSelect({
+class SBBMultiDropdown<T> extends StatefulWidget {
+  const SBBMultiDropdown({
     super.key,
     required this.label,
     this.icon,
@@ -214,7 +33,7 @@ class SBBMultiSelect<T> extends StatefulWidget {
   final SelectionValidation? selectionValidation;
 
   @override
-  State<StatefulWidget> createState() => _SBBMultiSelectState<T>();
+  State<StatefulWidget> createState() => _SBBMultiDropdownState<T>();
 
   static showMenu<T>({
     required BuildContext context,
@@ -298,7 +117,7 @@ class SBBMultiSelect<T> extends StatefulWidget {
   }
 }
 
-class _SBBMultiSelectState<T> extends State<SBBMultiSelect<T>> {
+class _SBBMultiDropdownState<T> extends State<SBBMultiDropdown<T>> {
   SBBControlStyles get style => Theme.of(context).extension()!;
 
   @override
@@ -311,7 +130,7 @@ class _SBBMultiSelectState<T> extends State<SBBMultiSelect<T>> {
       hoverColor: baseStyle.themeValue(SBBColors.platinum, SBBColors.midnight),
       onTap: enabled
           ? () {
-              SBBMultiSelect.showMenu<T>(
+              SBBMultiDropdown.showMenu<T>(
                 context: context,
                 title: widget.title ?? widget.label,
                 values: widget.values,

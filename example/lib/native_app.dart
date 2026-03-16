@@ -13,6 +13,7 @@ import 'pages/checkbox_page.dart';
 import 'pages/chip_page.dart';
 import 'pages/color_page.dart';
 import 'pages/container_page.dart';
+import 'pages/dropdown_page.dart';
 import 'pages/header_box_page.dart';
 import 'pages/header_page.dart';
 import 'pages/icon_page.dart';
@@ -27,7 +28,6 @@ import 'pages/picker_page.dart';
 import 'pages/promotion_box_page.dart';
 import 'pages/radio_page.dart';
 import 'pages/segmented_button_page.dart';
-import 'pages/select_page.dart';
 import 'pages/slider_page.dart';
 import 'pages/status_page.dart';
 import 'pages/stepper_page.dart';
@@ -134,13 +134,13 @@ class MyApp extends StatelessWidget {
             _DemoEntry('Button', ButtonPage()),
             _DemoEntry('Checkbox', CheckboxPage()),
             _DemoEntry('Chip', ChipPage()),
+            _DemoEntry('Illustrations', IllustrationPage()),
             _DemoEntry('Link', LinkPage()),
             _DemoEntry('List Item', ListItemPage()),
             _DemoEntry('Loading Indicator', LoadingIndicatorPage()),
             _DemoEntry('Picker', PickerPage()),
             _DemoEntry('Radio', RadioPage()),
             _DemoEntry('Segmented Button', SegmentedButtonPage()),
-            _DemoEntry('Select', SelectPage()),
             _DemoEntry('Switch', SwitchPage()),
             _DemoEntry('Text Input', TextInputPage()),
             _DemoEntry('Text Area', TextAreaPage()),
@@ -166,10 +166,10 @@ class MyApp extends StatelessWidget {
           items: [
             _DemoEntry('Autocompletion', AutocompletionPage()),
             _DemoEntry('Container', ContainerPage()),
+            _DemoEntry('Dropdown', DropdownPage()),
             _DemoEntry('Forms', FormPage()),
             _DemoEntry('Header', HeaderPage()),
             _DemoEntry('Headerbox', HeaderBoxPage()),
-            _DemoEntry('Illustrations', IllustrationPage()),
             _DemoEntry('Message', MessagePage()),
             _DemoEntry('Stepper', StepperPage()),
             _DemoEntry('Tab Bar', TabBarPage()),
