@@ -47,6 +47,7 @@ class SBBTheme {
     SBBListItemThemeData? listItemTheme,
     SBBMessageThemeData? messageTheme,
     SBBPaginatorThemeData? paginatorTheme,
+    SBBPopupThemeData? popupTheme,
     SBBRadioThemeData? radioTheme,
     SBBStatusThemeData? statusTheme,
     SBBSegmentedButtonThemeData? segmentedButtonTheme,
@@ -55,7 +56,6 @@ class SBBTheme {
     SBBTextTheme? textTheme,
     SBBTextInputThemeData? textInputTheme,
     SBBToastThemeData? toastTheme,
-    SBBPopupThemeData? popupTheme,
   }) => createTheme(
     brightness: .light,
     boldFont: boldFont,
@@ -78,6 +78,7 @@ class SBBTheme {
     messageTheme: messageTheme,
     listItemTheme: listItemTheme,
     paginatorTheme: paginatorTheme,
+    popupTheme: popupTheme,
     statusTheme: statusTheme,
     segmentedButtonTheme: segmentedButtonTheme,
     sliderTheme: sliderTheme,
@@ -85,7 +86,6 @@ class SBBTheme {
     textTheme: textTheme,
     textInputTheme: textInputTheme,
     toastTheme: toastTheme,
-    popupTheme: popupTheme,
   );
 
   static ThemeData dark({
@@ -108,6 +108,7 @@ class SBBTheme {
     SBBListItemThemeData? listItemTheme,
     SBBMessageThemeData? messageTheme,
     SBBPaginatorThemeData? paginatorTheme,
+    SBBPopupThemeData? popupTheme,
     SBBStatusThemeData? statusTheme,
     SBBSegmentedButtonThemeData? segmentedButtonTheme,
     SBBSliderThemeData? sliderTheme,
@@ -115,7 +116,6 @@ class SBBTheme {
     SBBTextTheme? textTheme,
     SBBTextInputThemeData? textInputTheme,
     SBBToastThemeData? toastTheme,
-    SBBPopupThemeData? popupTheme,
   }) => createTheme(
     brightness: .dark,
     boldFont: boldFont,
@@ -137,6 +137,7 @@ class SBBTheme {
     listItemTheme: listItemTheme,
     messageTheme: messageTheme,
     paginatorTheme: paginatorTheme,
+    popupTheme: popupTheme,
     statusTheme: statusTheme,
     segmentedButtonTheme: segmentedButtonTheme,
     sliderTheme: sliderTheme,
@@ -144,7 +145,6 @@ class SBBTheme {
     textTheme: textTheme,
     textInputTheme: textInputTheme,
     toastTheme: toastTheme,
-    popupTheme: popupTheme,
   );
 
   static ThemeData createTheme({
@@ -168,6 +168,7 @@ class SBBTheme {
     SBBListItemThemeData? listItemTheme,
     SBBMessageThemeData? messageTheme,
     SBBPaginatorThemeData? paginatorTheme,
+    SBBPopupThemeData? popupTheme,
     SBBRadioThemeData? radioTheme,
     SBBStatusThemeData? statusTheme,
     SBBSegmentedButtonThemeData? segmentedButtonTheme,
@@ -176,7 +177,6 @@ class SBBTheme {
     SBBTextTheme? textTheme,
     SBBTextInputThemeData? textInputTheme,
     SBBToastThemeData? toastTheme,
-    SBBPopupThemeData? popupTheme,
   }) {
     // default values are set here and merged with given styles
     final defaultBaseStyle = SBBBaseStyle.$default(brightness: brightness, boldFont: boldFont);
@@ -230,6 +230,9 @@ class SBBTheme {
     final defaultPaginatorTheme = DefaultSBBPaginatorThemeData(mergedBaseStyle);
     final mergedPaginatorTheme = defaultPaginatorTheme.merge(paginatorTheme);
 
+    final defaultPopupTheme = DefaultSBBPopupThemeData(mergedBaseStyle);
+    final mergedPopupTheme = defaultPopupTheme.merge(popupTheme);
+
     final defaultRadioTheme = DefaultSBBRadioThemeData(mergedBaseStyle);
     final mergedRadioTheme = defaultRadioTheme.merge(radioTheme);
 
@@ -254,9 +257,6 @@ class SBBTheme {
     final defaultToastTheme = DefaultSBBToastThemeData(mergedBaseStyle);
     final mergedToastTheme = defaultToastTheme.merge(toastTheme);
 
-    final defaultPopupTheme = DefaultSBBPopupThemeData(mergedBaseStyle);
-    final mergedPopupTheme = defaultPopupTheme.merge(popupTheme);
-
     final defaultInputDecorationTheme = DefaultSBBInputDecorationThemeData(mergedBaseStyle);
     final mergedInputDecorationTheme = defaultInputDecorationTheme.merge(inputDecorationTheme);
 
@@ -279,6 +279,7 @@ class SBBTheme {
       listItemTheme: mergedListItemTheme,
       messageTheme: mergedMessageTheme,
       paginatorTheme: mergedPaginatorTheme,
+      popupTheme: mergedPopupTheme,
       radioTheme: mergedRadioTheme,
       statusTheme: mergedStatusTheme,
       segmentedButtonTheme: mergedSegmentedButtonTheme,
@@ -287,7 +288,6 @@ class SBBTheme {
       textTheme: mergedTextTheme,
       textInputTheme: mergedTextInputTheme,
       toastTheme: mergedToastTheme,
-      popupTheme: mergedPopupTheme,
       inputDecorationTheme: mergedInputDecorationTheme,
     );
   }
@@ -312,6 +312,7 @@ class SBBTheme {
     required SBBListItemThemeData listItemTheme,
     required SBBMessageThemeData messageTheme,
     required SBBPaginatorThemeData paginatorTheme,
+    required SBBPopupThemeData popupTheme,
     required SBBRadioThemeData radioTheme,
     required SBBStatusThemeData statusTheme,
     required SBBSegmentedButtonThemeData segmentedButtonTheme,
@@ -320,7 +321,6 @@ class SBBTheme {
     required SBBTextTheme textTheme,
     required SBBTextInputThemeData textInputTheme,
     required SBBToastThemeData toastTheme,
-    required SBBPopupThemeData popupTheme,
   }) {
     return ThemeData(
       colorScheme: ColorScheme.fromSwatch(
@@ -360,6 +360,7 @@ class SBBTheme {
         listItemTheme,
         messageTheme,
         paginatorTheme,
+        popupTheme,
         radioTheme,
         statusTheme,
         segmentedButtonTheme,
@@ -369,7 +370,6 @@ class SBBTheme {
         textTheme,
         textInputTheme,
         toastTheme,
-        popupTheme,
       ],
     );
   }
