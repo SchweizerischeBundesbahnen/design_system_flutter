@@ -6,7 +6,6 @@ ContractibleState
 ContractionState
 SelectMenuItem
 ClosableBoxController
-TextStylesExtensions
 PromotionBoxStyle
 StyleExtension
 
