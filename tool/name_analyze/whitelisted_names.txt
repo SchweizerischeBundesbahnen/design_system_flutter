@@ -7,5 +7,3 @@ ContractionState
 SelectMenuItem
 ClosableBoxController
 PromotionBoxStyle
-StyleExtension
-

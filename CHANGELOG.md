@@ -53,6 +53,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Removed deprecated `SBBOnboarding`
 - Removed deprecated `sbbDefaultSpacing`
 - Removed `SBBTextField` - replaced by `SBBTextInput`
+- Removed `merge` extension on `SBBBaseStyle`
 
 ## [4.8.0] - 2026-03-05
 
