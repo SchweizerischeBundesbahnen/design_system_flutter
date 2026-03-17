@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../sbb_design_system_mobile.dart';
 import '../input/decoration/sbb_input_decorator.dart';
 
-// TODO: tests
 // TODO: add example for expands
 // TODO: documentation / migration guide
 
