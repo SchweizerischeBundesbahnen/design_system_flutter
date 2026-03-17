@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import '../../sbb_design_system_mobile.dart';
 import '../input/decoration/sbb_input_decorator.dart';
 
-// TODO: migration guide
-
 /// The SBB Decorated Text.
 ///
 /// A static text display widget that mimics the appearance of [SBBTextInput] without
