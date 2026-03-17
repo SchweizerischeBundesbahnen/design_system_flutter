@@ -142,7 +142,6 @@ class _PickerPageState extends State<PickerPage> {
   }
 }
 
-
 /// Overrides and/or extends the current theme with a [ThemeExtension] for
 /// the given [child]. The theme change is animated.
 class ExtendedTheme<T extends ThemeExtension<T>> extends StatelessWidget {
