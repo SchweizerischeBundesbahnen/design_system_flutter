@@ -192,7 +192,7 @@ The list item has received a lot of changes. In general the content is completel
 
 ## Popup (previously Modal Popup)
 
-### New capabilities
+### Drop In Replacement
 
 * replace `showSBBModalPopup` with `showSBBPopup`
 * replace `SBBModalPopup` widget with `SBBPopup`
@@ -214,27 +214,22 @@ The list item has received a lot of changes. In general the content is completel
 Old implementation:
 
 ```dart
-showSBBModalPopup
-(
-context: context,
-title: 'My Title',
-backgroundColor: SBBColors.peach,
-child: Text('Content
-'
-)
-,
+showSBBModalPopup(
+  context: context,
+  title: 'My Title',
+  backgroundColor: SBBColors.peach,
+  child: Text('Content'),
 );
 ```
 
 New implementation:
 
 ```dart
-showSBBPopup
-(
-context: context,
-titleText: 'My Title',
-style: SBBPopupStyle(backgroundColor: SBBColors.peach),
-body: Text('Content'),
+showSBBPopup(
+  context: context,
+  titleText: 'My Title',
+  style: SBBPopupStyle(backgroundColor: SBBColors.peach),
+  body: Text('Content'),
 );
 ```
 
