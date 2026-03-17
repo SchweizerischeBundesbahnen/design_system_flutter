@@ -110,7 +110,7 @@ class DecoratedTextPage extends StatelessWidget {
                         SBBDecoratedText(
                           decoration: SBBInputDecoration(labelText: 'Disabled', leadingIconData: SBBIcons.dog_small),
                           value: 'Value',
-                          onTap: null,
+                          enabled: false,
                         ),
                       ],
                     ).toList(growable: false),
@@ -172,8 +172,8 @@ class DecoratedTextPage extends StatelessWidget {
                       ),
                     ),
                     SBBDecoratedTextBoxed(
-                      onTap: null,
                       value: 'Disabled',
+                      enabled: false,
                       decoration: SBBInputDecoration(leadingIconData: SBBIcons.unicorn_small, labelText: 'Disabled'),
                     ),
                   ],

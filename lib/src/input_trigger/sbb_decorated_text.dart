@@ -42,9 +42,10 @@ import '../input/decoration/sbb_input_decorator.dart';
 /// * [Figma design guidelines](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=309-2236) (internal only)
 class SBBDecoratedText extends StatefulWidget {
   const SBBDecoratedText({
-    required this.onTap,
     required this.value,
     super.key,
+    this.onTap,
+    this.enabled = true,
     this.decoration,
     this.focusNode,
     this.autofocus = false,
@@ -93,6 +94,11 @@ class SBBDecoratedText extends StatefulWidget {
 
   final GestureTapCallback? onTap;
 
+  /// Whether the text field is interactive.
+  ///
+  /// When false, the field is disabled and its children are also disabled.
+  final bool enabled;
+
   /// The text style for the [value] text.
   ///
   /// If null, the value from [SBBTextInputThemeData.inputTextStyle] is used. // TODO: move to own theme data
@@ -116,13 +122,11 @@ class _SBBDecoratedTextState extends State<SBBDecoratedText> {
 
   late WidgetStatesController _statesController;
 
-  bool get enabled => widget.onTap != null;
-
   @override
   void initState() {
     super.initState();
 
-    _effectiveFocusNode.canRequestFocus = enabled;
+    _effectiveFocusNode.canRequestFocus = widget.enabled;
     _effectiveFocusNode.addListener(_handleFocusChanged);
 
     _statesController = WidgetStatesController();
@@ -137,7 +141,7 @@ class _SBBDecoratedTextState extends State<SBBDecoratedText> {
       (oldWidget.focusNode ?? _focusNode)?.removeListener(_handleFocusChanged);
       (widget.focusNode ?? _focusNode)?.addListener(_handleFocusChanged);
     }
-    _effectiveFocusNode.canRequestFocus = enabled;
+    _effectiveFocusNode.canRequestFocus = widget.enabled;
 
     _updateStates();
   }
@@ -153,7 +157,7 @@ class _SBBDecoratedTextState extends State<SBBDecoratedText> {
   bool get _hasError => widget.decoration?.errorText != null || widget.decoration?.error != null;
 
   void _updateStates() {
-    _statesController.update(WidgetState.disabled, !enabled);
+    _statesController.update(WidgetState.disabled, !widget.enabled);
     _statesController.update(WidgetState.focused, _effectiveFocusNode.hasFocus);
     _statesController.update(WidgetState.error, _hasError);
   }
@@ -169,13 +173,13 @@ class _SBBDecoratedTextState extends State<SBBDecoratedText> {
     final child = Text(widget.value, maxLines: widget.maxLines, style: effectiveInputTextStyle);
 
     return InkWell(
-      onTap: enabled ? widget.onTap : null,
+      onTap: widget.enabled ? widget.onTap : null,
       focusNode: _effectiveFocusNode,
       excludeFromSemantics: true,
       autofocus: widget.autofocus,
       statesController: _statesController,
       child: Semantics(
-        enabled: enabled,
+        enabled: widget.enabled,
         currentValueLength: widget.value.length,
         child: ListenableBuilder(
           listenable: _effectiveFocusNode,
@@ -233,8 +237,9 @@ class _SBBDecoratedTextState extends State<SBBDecoratedText> {
 class SBBDecoratedTextBoxed extends SBBDecoratedText {
   SBBDecoratedTextBoxed({
     super.key,
-    required super.onTap,
     required super.value,
+    super.onTap,
+    super.enabled,
     SBBInputDecoration? decoration,
     super.focusNode,
     super.autofocus,
