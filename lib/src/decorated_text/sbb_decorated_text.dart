@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../sbb_design_system_mobile.dart';
 import '../input/decoration/sbb_input_decorator.dart';
 
-// TODO: theming / styling v5 (also add possibility for overriding ink well colors?)
 // TODO: tests
 // TODO: add example for expands
 // TODO: documentation / migration guide
@@ -49,8 +48,7 @@ class SBBDecoratedText extends StatefulWidget {
     this.maxLines = 1,
     this.minLines,
     this.expands = false,
-    this.valueTextStyle,
-    this.valueForegroundColor,
+    this.style,
   }) : assert(maxLines == null || maxLines > 0),
        assert(minLines == null || minLines > 0),
        assert(
@@ -65,9 +63,6 @@ class SBBDecoratedText extends StatefulWidget {
   final String value;
 
   /// The decoration surrounding the underlying [Text] field.
-  ///
-  /// The values given for colors and text styles will override the values given in
-  /// [SBBInputDecorationThemeData].
   final SBBInputDecoration? decoration;
 
   /// {@macro flutter.widgets.Focus.focusNode}
@@ -77,13 +72,9 @@ class SBBDecoratedText extends StatefulWidget {
   final bool autofocus;
 
   /// {@macro flutter.widgets.editableText.maxLines}
-  ///  * [expands], which determines whether the field should fill the height of
-  ///    its parent.
   final int? maxLines;
 
   /// {@macro flutter.widgets.editableText.minLines}
-  ///  * [expands], which determines whether the field should fill the height of
-  ///    its parent.
   final int? minLines;
 
   /// {@macro flutter.widgets.editableText.expands}
@@ -92,21 +83,13 @@ class SBBDecoratedText extends StatefulWidget {
   final GestureTapCallback? onTap;
 
   /// Whether the text field is interactive.
-  ///
-  /// When false, the field is disabled and its children are also disabled.
   final bool enabled;
 
-  /// The text style for the [value] text.
+  /// Customizes this decorated text appearance.
   ///
-  /// If null, the value from [SBBTextInputThemeData.inputTextStyle] is used. // TODO: move to own theme data
-  /// If that is also null, the default text style is used.
-  final TextStyle? valueTextStyle;
-
-  /// The color of the [value] text.
-  ///
-  /// If null, the value from [SBBTextInputThemeData.inputForegroundColor] is used. // TODO: move to own theme data
-  /// If that is also null, the default color is used.
-  final WidgetStateProperty<Color?>? valueForegroundColor;
+  /// Non-null properties of this style override the corresponding
+  /// properties in [SBBDecoratedTextThemeData.style] of the theme found in [context].
+  final SBBDecoratedTextStyle? style;
 
   @override
   State<StatefulWidget> createState() => _SBBDecoratedTextState();
@@ -177,8 +160,10 @@ class _SBBDecoratedTextState extends State<SBBDecoratedText> {
 
     final bool isMultiline = (widget.maxLines ?? 0) != 1;
 
-    final effectiveInputTextStyle = _effectiveInputTextStyle(context);
+    final themeData = Theme.of(context).sbbDecoratedTextTheme;
+    final effectiveStyle = themeData?.style?.merge(widget.style) ?? widget.style;
 
+    final effectiveInputTextStyle = _effectiveInputTextStyle(effectiveStyle);
     final child = Text(widget.value, maxLines: widget.maxLines, style: effectiveInputTextStyle);
 
     return InkWell(
@@ -187,6 +172,7 @@ class _SBBDecoratedTextState extends State<SBBDecoratedText> {
       excludeFromSemantics: true,
       autofocus: widget.autofocus,
       statesController: _statesController,
+      overlayColor: effectiveStyle?.overlayColor,
       child: Semantics(
         enabled: widget.enabled,
         currentValueLength: widget.value.length,
@@ -211,19 +197,11 @@ class _SBBDecoratedTextState extends State<SBBDecoratedText> {
     );
   }
 
-  TextStyle _effectiveInputTextStyle(BuildContext context) {
-    final themeData = Theme.of(context).sbbTextInputTheme; // TODO: move this to own theme data
-    final states = _statesController.value;
+  TextStyle _effectiveInputTextStyle(SBBDecoratedTextStyle? style) {
+    final textStyle = style?.valueTextStyle;
+    final color = style?.valueForegroundColor?.resolve(_statesController.value);
 
-    if (widget.valueTextStyle != null) {
-      final textStyle = widget.valueTextStyle;
-      final color = widget.valueForegroundColor?.resolve(states);
-      return color != null ? textStyle!.copyWith(color: color) : textStyle!;
-    }
-
-    final textStyle = themeData!.inputTextStyle;
-    final color = widget.valueForegroundColor?.resolve(states) ?? themeData.inputForegroundColor?.resolve(states);
-    return color != null ? textStyle!.copyWith(color: color) : textStyle!;
+    return (color != null ? textStyle?.copyWith(color: color) : textStyle) ?? TextStyle(color: color);
   }
 
   bool get isBoxed => false;
@@ -254,8 +232,7 @@ class SBBDecoratedTextBoxed extends SBBDecoratedText {
     super.maxLines,
     super.minLines,
     super.expands,
-    super.valueTextStyle,
-    super.valueForegroundColor,
+    super.style,
   }) : super(
          decoration: decoration?.contentPadding != null
              ? decoration
