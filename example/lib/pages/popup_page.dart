@@ -20,7 +20,6 @@ class _PopupPageState extends State<PopupPage> {
       slivers: [
         SBBSliverHeaderbox.custom(
           child: Column(
-            spacing: SBBSpacing.medium,
             children: [
               ThemeModeSegmentedButton(),
               const SBBListHeader('Settings'),
