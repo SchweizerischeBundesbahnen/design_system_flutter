@@ -43,7 +43,6 @@ class DecoratedTextPage extends StatelessWidget {
                           decoration: SBBInputDecoration(
                             labelText: 'With Placeholder',
                             placeholderText: 'Placeholder',
-                            floatingLabelBehavior: .always,
                           ),
                           onTap: () {
                             sbbToast.show(titleText: 'Empty');
@@ -144,7 +143,6 @@ class DecoratedTextPage extends StatelessWidget {
                       decoration: SBBInputDecoration(
                         labelText: 'With Placeholder',
                         placeholderText: 'Placeholder',
-                        floatingLabelBehavior: .always,
                         leadingIconData: SBBIcons.unicorn_small,
                       ),
                     ),

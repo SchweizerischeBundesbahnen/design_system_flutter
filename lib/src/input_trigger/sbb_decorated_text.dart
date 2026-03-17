@@ -4,7 +4,6 @@ import '../../sbb_design_system_mobile.dart';
 import '../input/decoration/sbb_input_decorator.dart';
 
 // TODO: theming / styling v5 (also add possibility for overriding ink well colors?)
-// TODO: floatingLabelBehavior override
 // TODO: tests
 // TODO: add example for expands
 // TODO: documentation / migration guide
@@ -31,6 +30,7 @@ import '../input/decoration/sbb_input_decorator.dart';
 ///   Use [readOnly] and [enableInteractiveSelection] if you need to keep trailing widgets
 ///   interactive while disabling the text field.
 /// * [ignorePointers]: Determines whether the widget ignores pointer events (taps, etc.).
+/// * [floatingLabelBehavior]: if no value is set and a placeholder is given, the floatingLabelBehavior of the [decoration] is set to always if it is null
 ///
 /// See also:
 /// * [SBBTextInputThemeData] for customizing the style across the current theme // TODO: change this
@@ -159,6 +159,18 @@ class _SBBDecoratedTextState extends State<SBBDecoratedText> {
     _statesController.update(WidgetState.error, _hasError);
   }
 
+  /// Returns the effective decoration, automatically setting [SBBFloatingLabelBehavior.always]
+  /// if no [floatingLabelBehavior] is provided, the value is empty, and a placeholder is present.
+  SBBInputDecoration get _effectiveDecoration {
+    final decoration = widget.decoration ?? SBBInputDecoration();
+    if (decoration.floatingLabelBehavior == null &&
+        widget.value.isEmpty &&
+        (decoration.placeholder != null || decoration.placeholderText != null)) {
+      return decoration.copyWith(floatingLabelBehavior: SBBFloatingLabelBehavior.always);
+    }
+    return decoration;
+  }
+
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMaterial(context));
@@ -182,8 +194,7 @@ class _SBBDecoratedTextState extends State<SBBDecoratedText> {
           listenable: _effectiveFocusNode,
           builder: (context, Widget? child) {
             return SBBInputDecorator(
-              decoration: widget.decoration ?? SBBInputDecoration(),
-              // TODO: think about setting floating label behavior in case placeholder not null
+              decoration: _effectiveDecoration,
               expands: widget.expands,
               minInputHeight:
                   effectiveInputTextStyle.height! * effectiveInputTextStyle.fontSize! * (widget.minLines ?? 1),
