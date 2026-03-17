@@ -3,36 +3,48 @@ import 'package:flutter/material.dart';
 import '../../sbb_design_system_mobile.dart';
 import '../input/decoration/sbb_input_decorator.dart';
 
-// TODO: documentation / migration guide
+// TODO: migration guide
 
-/// The SBB Static Input.
+/// The SBB Decorated Text.
 ///
-/// This Widget mimics the appearance of a [SBBTextInput] without the underlying [EditableText] field.
-/// It is mainly used displaying selected values in the same style as a [SBBTextInput], e.g. in the triggering
-/// field of a [SBBDatePicker] or [SBBSelect].
+/// A static text display widget that mimics the appearance of [SBBTextInput] without
+/// the underlying [EditableText] editing capability. Use this widget to display
+/// selected or pre-determined values in the same visual style as a text input field.
+///
+/// This widget is commonly used in non-editable contexts where you want a consistent
+/// look with text inputs, such as:
+/// * Displaying selected values in [SBBDatePicker] or [SBBSelect] trigger fields
+/// * Showing read-only information that matches text input styling
+/// * Creating interactive display fields that respond to taps via [onTap]
+///
+/// ## Interaction Model
+///
+/// Unlike [SBBTextInput], which manages text editing, [SBBDecoratedText] uses
+/// [InkWell] for tap interaction. This provides visual feedback (ripple/highlight)
+/// when tapped without any text editing capability. Use [onTap] to handle
+/// interactions, such as opening a picker or dialog.
 ///
 /// ## Multiline Mode
 ///
-/// When the text field is configured as multiline (either by setting [maxLines] to null
+/// When configured for multiline display (either by setting [maxLines] to null
 /// with [expands] set to true, or by setting [maxLines] to a value greater than 1),
 /// the leading and trailing icons become top-aligned instead of center-aligned.
-/// The leadingIconData and trailingIconData will have a default padding added to the top.
 ///
 /// ## Key Properties
 ///
-/// * [onTap]: Called when the text field is tapped. Use [onTapAlwaysCalled] to receive
-///   this callback for every tap, including consecutive taps.
-/// * [enabled]: Controls whether the text field is interactive. When false, the field
-///   is disabled and its children (including trailing icons) are also disabled.
-///   Use [readOnly] and [enableInteractiveSelection] if you need to keep trailing widgets
-///   interactive while disabling the text field.
-/// * [ignorePointers]: Determines whether the widget ignores pointer events (taps, etc.).
-/// * [floatingLabelBehavior]: if no value is set and a placeholder is given, the floatingLabelBehavior of the [decoration] is set to always if it is null
+/// * [value]: The static text to display (cannot be edited)
+/// * [onTap]: Called when the widget is tapped. Provides visual feedback via InkWell
+/// * [enabled]: Controls interactivity. When false, taps are ignored and disabled
+///   styling is applied
+/// * [decoration]: Customizes the decoration surrounding the value, including icons,
+///   labels, and error states
+/// * [maxLines], [minLines], [expands]: Control text layout similar to [SBBTextInput]
 ///
 /// See also:
-/// * [SBBTextInputThemeData] for customizing the style across the current theme // TODO: change this
-/// * [SBBInputDecoration] for customizing the decoration surrounding the raw input field
-/// * [digital.sbb.ch documenation](https://digital.sbb.ch/de/design-system/mobile/components/text-input/)
+/// * [SBBTextInput] for an editable text field with similar styling
+/// * [SBBInputDecoration] for customizing the decoration surrounding the text
+/// * [SBBDecoratedTextStyle] for customizing the visual appearance
+/// * [digital.sbb.ch documentation](https://digital.sbb.ch/de/design-system/mobile/components/text-input/)
 /// * [Figma design guidelines](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=309-2236) (internal only)
 class SBBDecoratedText extends StatefulWidget {
   const SBBDecoratedText({
@@ -58,9 +70,16 @@ class SBBDecoratedText extends StatefulWidget {
          'minLines and maxLines must be null when expands is true.',
        );
 
+  /// The static text value to display.
+  ///
+  /// This value is not editable. To display dynamic content, rebuild the widget
+  /// with a new value.
   final String value;
 
-  /// The decoration surrounding the underlying [Text] field.
+  /// The decoration surrounding the displayed text field.
+  ///
+  /// Includes styling for labels, icons, error states, and other visual elements.
+  /// See [SBBInputDecoration] for customization options.
   final SBBInputDecoration? decoration;
 
   /// {@macro flutter.widgets.Focus.focusNode}
@@ -69,24 +88,36 @@ class SBBDecoratedText extends StatefulWidget {
   /// {@macro flutter.widgets.Focus.autofocus}
   final bool autofocus;
 
-  /// {@macro flutter.widgets.editableText.maxLines}
+  /// The maximum number of lines for the text display.
+  ///
+  /// Defaults to 1 (single-line). Set to null with [expands] = true for expanding
+  /// multiline display, or to a specific number > 1 for fixed multiline height.
   final int? maxLines;
 
-  /// {@macro flutter.widgets.editableText.minLines}
+  /// The minimum number of lines reserved for text display.
   final int? minLines;
 
-  /// {@macro flutter.widgets.editableText.expands}
+  /// Whether the text field should expand to fill available vertical space.
+  ///
+  /// When true, both [maxLines] and [minLines] must be null.
   final bool expands;
 
+  /// Called when the widget is tapped.
+  ///
+  /// The tap triggers [InkWell] visual feedback (ripple/highlight). This callback
+  /// is only invoked if [enabled] is true.
   final GestureTapCallback? onTap;
 
-  /// Whether the text field is interactive.
+  /// Whether the widget responds to taps and displays interactive styling.
+  ///
+  /// When false, the widget is disabled, taps are ignored, and disabled visual
+  /// states are applied to the decoration.
   final bool enabled;
 
-  /// Customizes this decorated text appearance.
+  /// Customizes the visual appearance of the decorated text.
   ///
-  /// Non-null properties of this style override the corresponding
-  /// properties in [SBBDecoratedTextThemeData.style] of the theme found in [context].
+  /// Non-null properties override the corresponding properties in
+  /// [SBBDecoratedTextThemeData.style] from the current theme.
   final SBBDecoratedTextStyle? style;
 
   @override
@@ -214,10 +245,13 @@ class _SBBDecoratedTextState extends State<SBBDecoratedText> {
 
 /// The boxed variant of [SBBDecoratedText].
 ///
-/// This has mainly two effects:
-/// * if no [decoration.contentPadding] is given, a default padding of
-/// [EdgeInsets.symmetric(horizontal: SBBSpacing.medium)] will be applied.
-/// * the border of the input decoration will only show if it has an error and in a surrounding manner.
+/// This variant applies default padding and special border styling for a contained
+/// appearance. Specifically:
+/// * If no [decoration.contentPadding] is provided, applies symmetric horizontal padding
+///   of [SBBSpacing.medium]
+/// * The border only displays when in an error state, showing a surrounding box
+///
+/// This is useful for creating grouped form-like layouts with consistent spacing.
 class SBBDecoratedTextBoxed extends SBBDecoratedText {
   SBBDecoratedTextBoxed({
     super.key,

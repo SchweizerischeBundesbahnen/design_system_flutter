@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 
 import '../../../sbb_design_system_mobile.dart';
 
-/// The ThemeData for the [SBBDecoratedText].
+/// The theme data for [SBBDecoratedText].
 ///
-/// Use this to customize the appearance of all [SBBDecoratedText] widgets
-/// within the current [SBBTheme].
+/// Defines the default visual properties for all [SBBDecoratedText] widgets
+/// within the current theme. Individual widget instances can override these
+/// defaults using [SBBDecoratedText.style].
 ///
-/// To access this in your application, use `Theme.of(context).sbbDecoratedTextTheme`.
+/// Access this theme using `Theme.of(context).sbbDecoratedTextTheme`.
 @immutable
 class SBBDecoratedTextThemeData extends ThemeExtension<SBBDecoratedTextThemeData> with Diagnosticable {
   const SBBDecoratedTextThemeData({
@@ -16,9 +17,6 @@ class SBBDecoratedTextThemeData extends ThemeExtension<SBBDecoratedTextThemeData
   });
 
   /// Defines the visual properties of [SBBDecoratedText].
-  ///
-  /// Non-null properties of [SBBDecoratedText.style] override the corresponding
-  /// properties in this style.
   final SBBDecoratedTextStyle? style;
 
   @override

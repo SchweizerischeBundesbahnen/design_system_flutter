@@ -2,12 +2,15 @@ import 'package:flutter/widgets.dart';
 
 /// Defines the visual properties of [SBBDecoratedText].
 ///
-/// Use this class in combination with [SBBDecoratedTextThemeData] to customize
-/// the appearance of decorated text fields throughout your app or for specific widget subtrees.
+/// Use this class to customize how the decorated text appears, including text styling,
+/// text color based on widget state, and interaction feedback colors.
+///
+/// Typically applied theme-wide via [SBBDecoratedTextThemeData], but can be overridden
+/// per-widget using [SBBDecoratedText.style].
 ///
 /// See also:
-/// * [SBBDecoratedText], the widget that uses this style.
-/// * [SBBDecoratedTextThemeData], which applies this style theme-wide.
+/// * [SBBDecoratedText], the widget that uses this style
+/// * [SBBDecoratedTextThemeData], for applying styles theme-wide
 class SBBDecoratedTextStyle {
   const SBBDecoratedTextStyle({
     this.valueTextStyle,
@@ -15,18 +18,21 @@ class SBBDecoratedTextStyle {
     this.overlayColor,
   });
 
-  /// The text style for the value text.
+  /// The base text style for the value text.
   ///
-  /// The color of the [valueTextStyle] is typically not used directly, the
-  /// [valueForegroundColor] is used instead.
+  /// Provides font family, size, weight, and line height. The text color is
+  /// typically overridden by [valueForegroundColor] for state-aware styling.
   final TextStyle? valueTextStyle;
 
-  /// The color of the value text.
+  /// The text color, resolved based on widget state.
+  ///
+  /// When set, this color overrides any color in [valueTextStyle].
   final WidgetStateProperty<Color?>? valueForegroundColor;
 
-  /// The overlay color shown on interaction.
+  /// The overlay color for tap interaction feedback.
   ///
-  /// This creates the visual feedback when the field is interacted with.
+  /// Shown when the user taps the widget, providing visual feedback via the
+  /// [InkWell].
   final WidgetStateProperty<Color?>? overlayColor;
 
   SBBDecoratedTextStyle copyWith({
