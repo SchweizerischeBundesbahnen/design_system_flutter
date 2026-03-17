@@ -24,6 +24,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - BREAKING: overhauled `SBBCheckbox` - see [v5 migration guide]
 - BREAKING: overhauled `SBBChip` - see [v5 migration guide]
 - BREAKING: different theming / styling for `SBBContentBox` - see [v5 migration guide]
+- BREAKING: overhauled `SBBInputTrigger` and renamed it to `SBBDecoratedText` - see [v5 migration guide]
 - BREAKING: overhauled `SBBListHeader` - see [v5 migration guide]
 - BREAKING: overhauled `SBBListItem` - see [v5 migration guide]
 - BREAKING: overhauled `SBBMessage` component - see [v5 migration guide]
@@ -52,7 +53,6 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Removed deprecated `SBBOnboarding`
 - Removed deprecated `sbbDefaultSpacing`
 - Removed `SBBTextField` - replaced by `SBBTextInput`
-
 
 ## [4.8.0] - 2026-03-05
 
@@ -144,7 +144,8 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ### Deprecated
 
-- Deprecated `SBBAccordion`, `SBBAccordionItem`, `AccordionCallback`, and `SingleAccordionCallback` as they are no longer part of the design specifications
+- Deprecated `SBBAccordion`, `SBBAccordionItem`, `AccordionCallback`, and `SingleAccordionCallback` as they are no longer part of
+  the design specifications
 
 ## [4.2.0] - 2025-10-03
 
@@ -286,28 +287,28 @@ It is expected that you keep this format strictly, since we depend on it in our 
 ### Changed
 
 - changed behavior of the trailing widget and icon of the following widgets:
-  - `SBBCheckboxListItem`
-  - `SBBRadioButtonListItem`
-  - `SBBRadioListItem`
+    - `SBBCheckboxListItem`
+    - `SBBRadioButtonListItem`
+    - `SBBRadioListItem`
 - updated the SBB Icons version to 1.2.0
 
 ### Added
 
 - added the `SBBHeaderBox` and `SBBSliverHeaderbox`
 - added an animated bottom loading indicator with a `isLoading` parameter to these widgets:
-  - `SBBCheckboxListItem`
-  - `SBBRadioButtonListItem`
-  - `SBBRadioListItem`
-  - `SBBSwitchListItem`
+    - `SBBCheckboxListItem`
+    - `SBBRadioButtonListItem`
+    - `SBBRadioListItem`
+    - `SBBSwitchListItem`
 - added `boxed` variant via redirecting constructor to these widgets:
-  - `SBBCheckboxListItem`
-  - `SBBRadioButtonListItem`
-  - `SBBRadioListItem`
-  - `SBBSwitchListItem`
+    - `SBBCheckboxListItem`
+    - `SBBRadioButtonListItem`
+    - `SBBRadioListItem`
+    - `SBBSwitchListItem`
 - added Semantics to the following widgets:
-  - `SBBCheckboxListItem`
-  - `SBBRadioButtonListItem`
-  - `SBBRadioListItem`
+    - `SBBCheckboxListItem`
+    - `SBBRadioButtonListItem`
+    - `SBBRadioListItem`
 - added animation to `SBBPagination`
 - added the `SBBIconsIndex` allowing String to IconData mapping
 
@@ -349,10 +350,10 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 - correct height for `SBBTertiaryButtonSmall` (40px => 32px)
 - coloring of:
-  - `SBBSecondaryButton` (onHighlighted)
-  - `SBBTertiaryButton` (darkMode)
-  - `SBBIconButtonSmall`
-  - `SBBIconButtonLarge`
+    - `SBBSecondaryButton` (onHighlighted)
+    - `SBBTertiaryButton` (darkMode)
+    - `SBBIconButtonSmall`
+    - `SBBIconButtonLarge`
 - `iconColor` in `SBBButtonStyle` is correctly overriden to support Flutter SDK >=3.27.0
 
 ## [2.0.0] - 2024-09-06
@@ -368,42 +369,42 @@ It is expected that you keep this format strictly, since we depend on it in our 
 ### Removed
 
 - Removed web widgets:
-  - `SBBBreadcrumb`
-  - `SBBCard`
-  - `SBBDropdown`
-  - `SBBGhostButton`
-  - `SBBMenu`
-  - `SBBResponsive`
-  - `SBBSidebar`
-  - `SBBStatus` (is now mobile default)
-  - `SBBUserMenu`
-  - `SBBWebHeader`
-  - `SBBWebNotification`
+    - `SBBBreadcrumb`
+    - `SBBCard`
+    - `SBBDropdown`
+    - `SBBGhostButton`
+    - `SBBMenu`
+    - `SBBResponsive`
+    - `SBBSidebar`
+    - `SBBStatus` (is now mobile default)
+    - `SBBUserMenu`
+    - `SBBWebHeader`
+    - `SBBWebNotification`
 
 - Remove deprecated `SBBBaseTextStyles`
 
 - Removed web typography:
-  - `SBBLeanTextStyles`
-  - `SBBWebText`
-  - `SBBWebTextStyles`
+    - `SBBLeanTextStyles`
+    - `SBBWebText`
+    - `SBBWebTextStyles`
 
 - Removed web mode from the following widgets:
-  - `SBBAccordion`
-  - `SBBAutocompletion`
-  - `SBBCheckbox`
-  - `SBBCheckboxListItem`
-  - `SBBIconButton` (all variants)
-  - `SBBLinkText` (including refactoring)
-  - `SBBListItem`
-  - `SBBLoadingIndicator`
-  - `SBBPrimaryButton`
-  - `SBBRadioButton`
-  - `SBBRadioButtonListItem`
-  - `SBBSelect`
-  - `SBBSecondaryButton`
-  - `SBBTextField`
-  - `SBBTextFormField`
-  - `SBBToast`
+    - `SBBAccordion`
+    - `SBBAutocompletion`
+    - `SBBCheckbox`
+    - `SBBCheckboxListItem`
+    - `SBBIconButton` (all variants)
+    - `SBBLinkText` (including refactoring)
+    - `SBBListItem`
+    - `SBBLoadingIndicator`
+    - `SBBPrimaryButton`
+    - `SBBRadioButton`
+    - `SBBRadioButtonListItem`
+    - `SBBSelect`
+    - `SBBSecondaryButton`
+    - `SBBTextField`
+    - `SBBTextFormField`
+    - `SBBToast`
 
 - Removed `HostPlatform` from `SBBTheme`
 
@@ -426,12 +427,12 @@ It is expected that you keep this format strictly, since we depend on it in our 
 ### Deprecated
 
 - (#162) Deprecated Web Widgets:
-  - `SBBResponsive`
-  - `SBBWebHeader`
-  - `SBBMenu`
-  - `SBBUserMenu`
-  - `SBBCard`
-  - `SBBSidebar`
+    - `SBBResponsive`
+    - `SBBWebHeader`
+    - `SBBMenu`
+    - `SBBUserMenu`
+    - `SBBCard`
+    - `SBBSidebar`
 
 ## [1.5.0] - 2024-08-15
 
@@ -453,12 +454,12 @@ It is expected that you keep this format strictly, since we depend on it in our 
 ### Deprecated
 
 - (#142) Deprecated Web Components:
-  - `SBBStatus`
-  - `SBBWebLogo`
-  - `SBBLeanTextStyles`
-  - `SBBWebText`
-  - `SBBWebTextStyles`
-  - `SBBBreadcrumb`
+    - `SBBStatus`
+    - `SBBWebLogo`
+    - `SBBLeanTextStyles`
+    - `SBBWebText`
+    - `SBBWebTextStyles`
+    - `SBBBreadcrumb`
 
 ### Fixed
 
@@ -528,12 +529,12 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - `SBBListItemStyle`: Changed color values to match current specifications
 - `SBBListItem`: Default constructor builds (trailing) icon variant instead of button variant when `trailingIcon` is not
   `null`
-  - For backwards compatibility default constructor still builds button variant if `onCallToAction` is not `null`
+    - For backwards compatibility default constructor still builds button variant if `onCallToAction` is not `null`
 
 ### Deprecated
 
 - `SBBListItem`: Parameter `onCallToAction` is now `deprecated`
-  - Use the newly added constructor `custom` for the button variant
+    - Use the newly added constructor `custom` for the button variant
 
 ### Fixed
 
@@ -565,12 +566,12 @@ It is expected that you keep this format strictly, since we depend on it in our 
 ### Added
 
 - `SBBTabBar`: Added functionality to show warnings
-  - `SBBTabBar`: Added field `showWarning` (with default value `false`)
-  - `SBBTabBar`: Added field `warningIndex`
-  - `TabItemWidget`: Added field `warning` (with default value `false`)
+    - `SBBTabBar`: Added field `showWarning` (with default value `false`)
+    - `SBBTabBar`: Added field `warningIndex`
+    - `TabItemWidget`: Added field `warning` (with default value `false`)
 - `SBBSegmentedButton`: Added more fields to customise
-  - `SBBSegmentedButton`: Added field `borderColor`
-  - `SBBSegmentedButton`: Added field `boxShadow`
+    - `SBBSegmentedButton`: Added field `borderColor`
+    - `SBBSegmentedButton`: Added field `boxShadow`
 - Added `SBBRadioButton` (for web)
 - Added `SBBAutocompletion` (for web)
 - Added `SBBCard` (for web)
@@ -677,7 +678,10 @@ It is expected that you keep this format strictly, since we depend on it in our 
 ### Added
 
 - Added actual content to CHANGELOG.md
-- Added [TEXTSTYLES-MIGRATION-GUIDE.md](https://code.sbb.ch/projects/KD_FLUTTER/repos/design_system_flutter/browse/TEXTSTYLES-MIGRATION-GUIDE.md)
+-
+
+Added [TEXTSTYLES-MIGRATION-GUIDE.md](https://code.sbb.ch/projects/KD_FLUTTER/repos/design_system_flutter/browse/TEXTSTYLES-MIGRATION-GUIDE.md)
+
 - Added `SBBToast`
 - Added `SBBAccordion`
 - Added `SBBMultiSelect`
