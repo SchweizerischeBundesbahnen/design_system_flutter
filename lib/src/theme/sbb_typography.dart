@@ -7,12 +7,12 @@ import 'package:flutter/material.dart';
 /// * [SBBFontFamily], which contains the constants for all SBB font families.
 const String sbbFont = SBBFontFamily.sbbFontLight;
 
-/// Global constant for default SBB text style for easier use of extension methods defined in [TextStylesExtensions].
+/// Global constant for default SBB text style for easier use of extension methods defined in [SBBTextStyleExtensions].
 const TextStyle sbbTextStyle = SBBTextStyles.mediumLight;
 
 /// Provides constants for all text styles defined in the SBB design system mobile.
 ///
-/// When in need of a more custom text style, consider using the extension methods defined in [TextStylesExtensions].
+/// When in need of a more custom text style, consider using the extension methods defined in [SBBTextStyleExtensions].
 /// The intended way to use this is to start with [sbbTextStyle] and use the corresponding methods to achieve the
 /// desired [TextStyle]:
 /// ```dart
@@ -185,7 +185,7 @@ class SBBFontFamily {
   static const String sbbFontCondensedHeavy = 'packages/sbb_design_system_mobile/SBBWebCondensedHeavy';
 }
 
-extension TextStylesExtensions on TextStyle {
+extension SBBTextStyleExtensions on TextStyle {
   // Font families
 
   /// Returns an ultra light ([fontFamily]) copy of this text style

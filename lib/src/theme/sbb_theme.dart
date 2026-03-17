@@ -15,6 +15,7 @@ import 'package:sbb_design_system_mobile/src/radio/theme/default_sbb_radio_theme
 import 'package:sbb_design_system_mobile/src/slider/theme/default_sbb_slider_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/stepper/theme/default_sbb_stepper_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/switch/theme/default_sbb_switch_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/theme/styles/base_style_x.dart';
 import 'package:sbb_design_system_mobile/src/toast/theme/default_sbb_toast_theme_data.dart';
 
 import '../button/theme/default_button_themes.dart';
