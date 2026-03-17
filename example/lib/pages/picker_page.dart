@@ -39,39 +39,41 @@ class _PickerPageState extends State<PickerPage> {
           const SBBListHeader('Picker input fields'),
           SBBContentBox(
             child: Column(
-              children: [
-                SBBDateInput(
-                  value: _selectedDate,
-                  labelText: 'Date only',
-                  onDateChanged: (date) {
-                    debugPrint('selected date: $date');
-                    setState(() {
-                      _selectedDate = date;
-                    });
-                  },
-                ),
-                SBBDateTimeInput(
-                  value: _selectedDateTime,
-                  labelText: 'Date and time',
-                  onDateTimeChanged: (dateTime) {
-                    debugPrint('selected date time: $dateTime');
-                    setState(() {
-                      _selectedDateTime = dateTime;
-                    });
-                  },
-                ),
-                SBBTimeInput(
-                  value: _selectedTime,
-                  labelText: 'Time only',
-                  onTimeChanged: (time) {
-                    debugPrint('selected time: $time');
-                    setState(() {
-                      _selectedTime = time;
-                    });
-                  },
-                  isLastElement: true,
-                ),
-              ],
+              children: SBBListItem.divideListItems(
+                context: context,
+                items: [
+                  SBBDateInput(
+                    value: _selectedDate,
+                    labelText: 'Date only',
+                    onDateChanged: (date) {
+                      debugPrint('selected date: $date');
+                      setState(() {
+                        _selectedDate = date;
+                      });
+                    },
+                  ),
+                  SBBDateTimeInput(
+                    value: _selectedDateTime,
+                    labelText: 'Date and time',
+                    onDateTimeChanged: (dateTime) {
+                      debugPrint('selected date time: $dateTime');
+                      setState(() {
+                        _selectedDateTime = dateTime;
+                      });
+                    },
+                  ),
+                  SBBTimeInput(
+                    value: _selectedTime,
+                    labelText: 'Time only',
+                    onTimeChanged: (time) {
+                      debugPrint('selected time: $time');
+                      setState(() {
+                        _selectedTime = time;
+                      });
+                    },
+                  ),
+                ],
+              ).toList(growable: false),
             ),
           ),
           const SizedBox(height: SBBSpacing.medium),
