@@ -3,10 +3,7 @@ import 'package:flutter/material.dart';
 import '../../sbb_design_system_mobile.dart';
 import '../input/decoration/sbb_input_decorator.dart';
 
-// TODO: add enabled bool flag parameter instead of null check onTap
 // TODO: theming / styling v5 (also add possibility for overriding ink well colors?)
-// TODO: ancestor override of value field
-// TODO: rename fields for childText / child
 // TODO: floatingLabelBehavior override
 // TODO: tests
 // TODO: add example for expands
