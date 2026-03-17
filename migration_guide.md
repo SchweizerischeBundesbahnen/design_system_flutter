@@ -76,6 +76,37 @@ Use the `foregroundBuilder` of the `SBBButtonStyle` as a replacement
 * customize a chip by setting its `style` parameter in the constructor
 
 
+## Decorated Text (before SBBInputTrigger)
+
+### Basic Migration Example
+
+**Before (SBBInputTrigger):**
+```dart
+SBBInputTrigger(
+  value: selectedDate,
+  labelText: 'Date',
+  hintText: 'Select a date',
+  prefixIcon: Icons.calendar,
+  onPressed: () => _showDatePicker(),
+  enabled: true,
+)
+```
+
+**After (SBBDecoratedText):**
+```dart
+SBBDecoratedText(
+  value: selectedDate,
+  onTap: () => _showDatePicker(),
+  enabled: true,
+  decoration: SBBInputDecoration(
+    labelText: 'Date',
+    placeholderText: 'Select a date',
+    leadingIconData: Icons.calendar,
+  ),
+)
+```
+
+
 ## Header
 
 ### Added SBBHeaderSmall
