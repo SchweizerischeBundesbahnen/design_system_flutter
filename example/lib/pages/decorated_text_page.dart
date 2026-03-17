@@ -111,6 +111,23 @@ class DecoratedTextPage extends StatelessWidget {
                           value: 'Value',
                           enabled: false,
                         ),
+                        SizedBox(
+                          height: 120.0,
+                          child: SBBDecoratedText(
+                            expands: true,
+                            maxLines: null,
+                            decoration: SBBInputDecoration(
+                              contentPadding: EdgeInsets.only(
+                                left: SBBSpacing.medium,
+                                top: SBBSpacing.xSmall,
+                              ),
+                              leadingIconData: SBBIcons.dog_small,
+                              labelText: 'Expands',
+                            ),
+                            value: 'I expand to fill\nthe available\nheight',
+                            onTap: () => sbbToast.show(titleText: 'Expands'),
+                          ),
+                        ),
                       ],
                     ).toList(growable: false),
                   ),
@@ -173,6 +190,23 @@ class DecoratedTextPage extends StatelessWidget {
                       value: 'Disabled',
                       enabled: false,
                       decoration: SBBInputDecoration(leadingIconData: SBBIcons.unicorn_small, labelText: 'Disabled'),
+                    ),
+                    SizedBox(
+                      height: 120.0,
+                      child: SBBDecoratedTextBoxed(
+                        expands: true,
+                        maxLines: null,
+                        value: 'I expand to fill\nthe available\nheight',
+                        onTap: () => sbbToast.show(titleText: 'Expands'),
+                        decoration: SBBInputDecoration(
+                          contentPadding: EdgeInsets.only(
+                            left: SBBSpacing.medium,
+                            top: SBBSpacing.xSmall,
+                          ),
+                          leadingIconData: SBBIcons.unicorn_small,
+                          labelText: 'Expands',
+                        ),
+                      ),
                     ),
                   ],
                 ),
