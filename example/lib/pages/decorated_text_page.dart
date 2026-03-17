@@ -3,8 +3,8 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import '../native_app.dart';
 
-class StaticInputPage extends StatelessWidget {
-  const StaticInputPage({super.key});
+class DecoratedTextPage extends StatelessWidget {
+  const DecoratedTextPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -31,13 +31,15 @@ class StaticInputPage extends StatelessWidget {
                     children: SBBListItem.divideListItems(
                       context: context,
                       items: [
-                        SBBStaticInput(
+                        SBBDecoratedText(
+                          value: '',
                           decoration: SBBInputDecoration(
                             labelText: 'Empty',
                           ),
                           onTap: () => sbbToast.show(titleText: 'Empty'),
                         ),
-                        SBBStaticInput(
+                        SBBDecoratedText(
+                          value: '',
                           decoration: SBBInputDecoration(
                             labelText: 'With Placeholder',
                             placeholderText: 'Placeholder',
@@ -48,25 +50,25 @@ class StaticInputPage extends StatelessWidget {
                           },
                         ),
 
-                        SBBStaticInput(
+                        SBBDecoratedText(
                           decoration: SBBInputDecoration(labelText: 'Label', leadingIconData: SBBIcons.dog_small),
-                          childText: 'Value',
+                          value: 'Value',
                           onTap: () {
                             sbbToast.show(titleText: 'With Leading Icon');
                           },
                         ),
-                        SBBStaticInput(
+                        SBBDecoratedText(
                           decoration: SBBInputDecoration(
                             labelText: 'Label',
                             leadingIconData: SBBIcons.dog_small,
                             trailingIconData: SBBIcons.chevron_small_right_circle_small,
                           ),
-                          childText: 'Value',
+                          value: 'Value',
                           onTap: () {
                             sbbToast.show(titleText: 'With Trailing Icon');
                           },
                         ),
-                        SBBStaticInput(
+                        SBBDecoratedText(
                           decoration: SBBInputDecoration(
                             contentPadding: .only(left: SBBSpacing.medium, right: SBBSpacing.xxSmall),
                             labelText: 'Label',
@@ -78,23 +80,23 @@ class StaticInputPage extends StatelessWidget {
                               iconData: SBBIcons.dog_small,
                             ),
                           ),
-                          childText: 'Value',
+                          value: 'Value',
                           onTap: () {
                             sbbToast.show(titleText: 'With Button');
                           },
                         ),
-                        SBBStaticInput(
+                        SBBDecoratedText(
                           decoration: SBBInputDecoration(
                             labelText: 'Error',
                             errorText: 'This is an error!',
                             leadingIconData: SBBIcons.dog_small,
                           ),
-                          childText: 'Value',
+                          value: 'Value',
                           onTap: () {
                             sbbToast.show(titleText: 'Error');
                           },
                         ),
-                        SBBStaticInput(
+                        SBBDecoratedText(
                           onTap: () {},
                           maxLines: 4,
                           minLines: 4,
@@ -103,11 +105,11 @@ class StaticInputPage extends StatelessWidget {
                             leadingIconData: SBBIcons.dog_small,
                             labelText: 'Multiple Lines',
                           ),
-                          childText: 'I am \nmulti \nline',
+                          value: 'I am \nmulti \nline',
                         ),
-                        SBBStaticInput(
+                        SBBDecoratedText(
                           decoration: SBBInputDecoration(labelText: 'Disabled', leadingIconData: SBBIcons.dog_small),
-                          childText: 'Value',
+                          value: 'Value',
                           onTap: null,
                         ),
                       ],
@@ -119,23 +121,25 @@ class StaticInputPage extends StatelessWidget {
                 Column(
                   spacing: SBBSpacing.xSmall,
                   children: [
-                    SBBStaticInputBoxed(
+                    SBBDecoratedTextBoxed(
+                      value: '',
                       onTap: () => sbbToast.show(titleText: 'Empty'),
                       decoration: SBBInputDecoration(
                         labelText: 'Empty',
                         leadingIconData: SBBIcons.unicorn_small,
                       ),
                     ),
-                    SBBStaticInputBoxed(
+                    SBBDecoratedTextBoxed(
                       onTap: () => sbbToast.show(titleText: 'Trailing Icon'),
-                      childText: 'Value',
+                      value: 'Value',
                       decoration: SBBInputDecoration(
                         labelText: 'With Trailing Icon',
                         leadingIconData: SBBIcons.unicorn_small,
                         trailingIconData: SBBIcons.circle_information_small_small,
                       ),
                     ),
-                    SBBStaticInputBoxed(
+                    SBBDecoratedTextBoxed(
+                      value: '',
                       onTap: () => sbbToast.show(titleText: 'Placeholder'),
                       decoration: SBBInputDecoration(
                         labelText: 'With Placeholder',
@@ -144,9 +148,9 @@ class StaticInputPage extends StatelessWidget {
                         leadingIconData: SBBIcons.unicorn_small,
                       ),
                     ),
-                    SBBStaticInputBoxed(
+                    SBBDecoratedTextBoxed(
                       onTap: () => sbbToast.show(titleText: 'Button'),
-                      childText: 'Value',
+                      value: 'Value',
                       decoration: SBBInputDecoration(
                         contentPadding: .only(left: SBBSpacing.medium, right: SBBSpacing.xxSmall),
                         labelText: 'With Custom Button',
@@ -158,16 +162,18 @@ class StaticInputPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SBBStaticInputBoxed(
+                    SBBDecoratedTextBoxed(
                       onTap: () => sbbToast.show(titleText: 'Error'),
-                      childText: 'With Error',
+                      value: 'With Error',
                       decoration: SBBInputDecoration(
                         labelText: 'With Error',
                         errorText: 'Error Text',
                         leadingIconData: SBBIcons.unicorn_small,
                       ),
                     ),
-                    SBBStaticInputBoxed(
+                    SBBDecoratedTextBoxed(
+                      onTap: null,
+                      value: 'Disabled',
                       decoration: SBBInputDecoration(leadingIconData: SBBIcons.unicorn_small, labelText: 'Disabled'),
                     ),
                   ],

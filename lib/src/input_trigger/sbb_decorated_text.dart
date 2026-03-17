@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../sbb_design_system_mobile.dart';
 import '../input/decoration/sbb_input_decorator.dart';
 
+// TODO: add enabled bool flag parameter instead of null check onTap
 // TODO: theming / styling v5 (also add possibility for overriding ink well colors?)
 // TODO: ancestor override of value field
 // TODO: rename fields for childText / child
@@ -39,12 +40,11 @@ import '../input/decoration/sbb_input_decorator.dart';
 /// * [SBBInputDecoration] for customizing the decoration surrounding the raw input field
 /// * [digital.sbb.ch documenation](https://digital.sbb.ch/de/design-system/mobile/components/text-input/)
 /// * [Figma design guidelines](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=309-2236) (internal only)
-class SBBStaticInput extends StatefulWidget {
-  const SBBStaticInput({
+class SBBDecoratedText extends StatefulWidget {
+  const SBBDecoratedText({
     required this.onTap,
+    required this.value,
     super.key,
-    this.child,
-    this.childText,
     this.decoration,
     this.focusNode,
     this.autofocus = false,
@@ -53,8 +53,7 @@ class SBBStaticInput extends StatefulWidget {
     this.expands = false,
     this.valueTextStyle,
     this.valueForegroundColor,
-  }) : assert(child == null || childText == null, 'Only one of child or childText can be set!'),
-       assert(maxLines == null || maxLines > 0),
+  }) : assert(maxLines == null || maxLines > 0),
        assert(minLines == null || minLines > 0),
        assert(
          (maxLines == null) || (minLines == null) || (maxLines >= minLines),
@@ -65,9 +64,7 @@ class SBBStaticInput extends StatefulWidget {
          'minLines and maxLines must be null when expands is true.',
        );
 
-  final Widget? child;
-
-  final String? childText;
+  final String value;
 
   /// The decoration surrounding the underlying [Text] field.
   ///
@@ -96,23 +93,23 @@ class SBBStaticInput extends StatefulWidget {
 
   final GestureTapCallback? onTap;
 
-  /// The text style for the [childText] text.
+  /// The text style for the [value] text.
   ///
   /// If null, the value from [SBBTextInputThemeData.inputTextStyle] is used. // TODO: move to own theme data
   /// If that is also null, the default text style is used.
   final TextStyle? valueTextStyle;
 
-  /// The color of the [childText] text.
+  /// The color of the [value] text.
   ///
   /// If null, the value from [SBBTextInputThemeData.inputForegroundColor] is used. // TODO: move to own theme data
   /// If that is also null, the default color is used.
   final WidgetStateProperty<Color?>? valueForegroundColor;
 
   @override
-  State<StatefulWidget> createState() => _SBBStaticInputState();
+  State<StatefulWidget> createState() => _SBBDecoratedTextState();
 }
 
-class _SBBStaticInputState extends State<SBBStaticInput> {
+class _SBBDecoratedTextState extends State<SBBDecoratedText> {
   FocusNode? _focusNode;
 
   FocusNode get _effectiveFocusNode => widget.focusNode ?? (_focusNode ??= FocusNode());
@@ -133,7 +130,7 @@ class _SBBStaticInputState extends State<SBBStaticInput> {
   }
 
   @override
-  void didUpdateWidget(covariant SBBStaticInput oldWidget) {
+  void didUpdateWidget(covariant SBBDecoratedText oldWidget) {
     super.didUpdateWidget(oldWidget);
 
     if (widget.focusNode != oldWidget.focusNode) {
@@ -169,8 +166,7 @@ class _SBBStaticInputState extends State<SBBStaticInput> {
 
     final effectiveInputTextStyle = _effectiveInputTextStyle(context);
 
-    final staticText =
-        widget.child ?? Text(widget.childText ?? '', maxLines: widget.maxLines, style: effectiveInputTextStyle);
+    final child = Text(widget.value, maxLines: widget.maxLines, style: effectiveInputTextStyle);
 
     return InkWell(
       onTap: enabled ? widget.onTap : null,
@@ -180,7 +176,7 @@ class _SBBStaticInputState extends State<SBBStaticInput> {
       statesController: _statesController,
       child: Semantics(
         enabled: enabled,
-        currentValueLength: widget.childText?.length,
+        currentValueLength: widget.value.length,
         child: ListenableBuilder(
           listenable: _effectiveFocusNode,
           builder: (context, Widget? child) {
@@ -191,13 +187,13 @@ class _SBBStaticInputState extends State<SBBStaticInput> {
               minInputHeight:
                   effectiveInputTextStyle.height! * effectiveInputTextStyle.fontSize! * (widget.minLines ?? 1),
               isMultiline: isMultiline,
-              isEmpty: widget.childText?.isEmpty ?? true,
+              isEmpty: widget.value.isEmpty,
               isBoxed: isBoxed,
               states: Set<WidgetState>.from(_statesController.value),
               child: child,
             );
           },
-          child: staticText,
+          child: child,
         ),
       ),
     );
@@ -228,24 +224,23 @@ class _SBBStaticInputState extends State<SBBStaticInput> {
   }
 }
 
-/// The boxed variant of [SBBStaticInput].
+/// The boxed variant of [SBBDecoratedText].
 ///
 /// This has mainly two effects:
 /// * if no [decoration.contentPadding] is given, a default padding of
 /// [EdgeInsets.symmetric(horizontal: SBBSpacing.medium)] will be applied.
 /// * the border of the input decoration will only show if it has an error and in a surrounding manner.
-class SBBStaticInputBoxed extends SBBStaticInput {
-  SBBStaticInputBoxed({
+class SBBDecoratedTextBoxed extends SBBDecoratedText {
+  SBBDecoratedTextBoxed({
     super.key,
-    super.child,
-    super.childText,
+    required super.onTap,
+    required super.value,
     SBBInputDecoration? decoration,
     super.focusNode,
     super.autofocus,
     super.maxLines,
     super.minLines,
     super.expands,
-    super.onTap,
     super.valueTextStyle,
     super.valueForegroundColor,
   }) : super(
@@ -257,10 +252,10 @@ class SBBStaticInputBoxed extends SBBStaticInput {
        );
 
   @override
-  State<SBBStaticInput> createState() => _SBBTextInputStateBoxed();
+  State<SBBDecoratedText> createState() => _SBBTextInputStateBoxed();
 }
 
-class _SBBTextInputStateBoxed extends _SBBStaticInputState {
+class _SBBTextInputStateBoxed extends _SBBDecoratedTextState {
   @override
   bool get isBoxed => true;
 

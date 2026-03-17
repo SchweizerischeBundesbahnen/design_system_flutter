@@ -13,6 +13,7 @@ import 'pages/checkbox_page.dart';
 import 'pages/chip_page.dart';
 import 'pages/color_page.dart';
 import 'pages/container_page.dart';
+import 'pages/decorated_text_page.dart';
 import 'pages/header_box_page.dart';
 import 'pages/header_page.dart';
 import 'pages/icon_page.dart';
@@ -28,7 +29,6 @@ import 'pages/radio_page.dart';
 import 'pages/segmented_button_page.dart';
 import 'pages/select_page.dart';
 import 'pages/slider_page.dart';
-import 'pages/static_input_page.dart';
 import 'pages/status_page.dart';
 import 'pages/stepper_page.dart';
 import 'pages/switch_page.dart';
@@ -134,6 +134,7 @@ class MyApp extends StatelessWidget {
             _DemoEntry('Button', ButtonPage()),
             _DemoEntry('Checkbox', CheckboxPage()),
             _DemoEntry('Chip', ChipPage()),
+            _DemoEntry('Decorated Text', DecoratedTextPage()),
             _DemoEntry('Link', LinkPage()),
             _DemoEntry('List Item', ListItemPage()),
             _DemoEntry('Loading Indicator', LoadingIndicatorPage()),
@@ -150,7 +151,6 @@ class MyApp extends StatelessWidget {
             _DemoEntry('Promotion Box', PromotionBoxPage()),
             _DemoEntry('Notification Box', NotificationBoxPage()),
             _DemoEntry('Status', StatusPage()),
-            _DemoEntry('Static Input', StaticInputPage()),
           ],
         ).toList(growable: false),
       ),
