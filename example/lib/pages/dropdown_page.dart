@@ -14,21 +14,15 @@ class _DropdownPageState extends State<DropdownPage> {
   int? _selectedValue1;
   int? _selectedValue2 = 1;
   int? _selectedValue3;
-  int? _selectedValue4;
-  int? _selectedValue5;
-  final _items = [
-    const SBBDropdownItem(value: 1, label: 'Item 1'),
-    const SBBDropdownItem(value: 2, label: 'Item 2'),
-    const SBBDropdownItem(value: 3, label: 'Item 3'),
-    const SBBDropdownItem(value: 4, label: 'Item 4'),
-    const SBBDropdownItem(value: 5, label: 'Item 5'),
-  ];
+
+  int _itemCount = 5;
+
+  List<SBBDropdownItem<int>> get _items =>
+      List.generate(_itemCount, (idx) => SBBDropdownItem(value: idx, label: 'Item ${idx + 1}'));
 
   List<int> _multiSelectValues1 = [];
   List<int> _multiSelectValues2 = [1];
   List<int> _multiSelectValues3 = [];
-  List<int> _multiSelectValues4 = [];
-  List<int> _multiSelectValues5 = [];
   final _multiSelectItems = [
     const SBBDropdownItem(value: 1, label: 'Item 1'),
     const SBBDropdownItem(value: 2, label: 'Item 2'),
@@ -37,150 +31,203 @@ class _DropdownPageState extends State<DropdownPage> {
     const SBBDropdownItem(value: 5, label: 'Item 5'),
   ];
 
+  String _sheetTitle = 'Default Title';
+  bool _showLeadingIcon = false;
+  bool _showCloseButton = true;
+
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: const .all(SBBSpacing.medium),
-      children: [
-        const ThemeModeSegmentedButton(),
-        const SizedBox(height: SBBSpacing.medium),
-        const SBBListHeader('Single value'),
-        SBBContentBox(
+    return CustomScrollView(
+      slivers: [
+        SBBSliverHeaderbox.custom(
           child: Column(
-            children: [
-              SBBDropdown<int>(
-                triggerDecoration: SBBInputDecoration(labelText: 'Label'),
-                selectedItem: _selectedValue1,
-                items: _items,
-                onChanged: (value) {
-                  debugPrint('Selected: $value');
-                  setState(() => _selectedValue1 = value);
-                },
-              ),
-              SBBDropdown<int>(
-                triggerDecoration: SBBInputDecoration(labelText: 'Default Value'),
-                selectedItem: _selectedValue2,
-                items: _items,
-                onChanged: (value) {
-                  debugPrint('Selected: $value');
-                  setState(() => _selectedValue2 = value);
-                },
-              ),
-              SBBDropdown<int>(
-                triggerDecoration: SBBInputDecoration(labelText: 'Default Value'),
-                // label: 'Custom Menu Title',
-                // title: 'This is the custom menu title',
-                selectedItem: _selectedValue3,
-                items: _items,
-                onChanged: (value) {
-                  debugPrint('Selected: $value');
-                  setState(() => _selectedValue3 = value);
-                },
-              ),
-              SBBDropdown<int>(
-                triggerDecoration: SBBInputDecoration(leadingIconData: SBBIcons.route_circle_start_small),
-                selectedItem: _selectedValue4,
-                items: _items,
-                onChanged: (value) {
-                  debugPrint('Selected: $value');
-                  setState(() => _selectedValue4 = value);
-                },
-              ),
-              SBBDropdown<int>(
-                triggerDecoration: SBBInputDecoration(
-                  labelText: 'Disabled',
-                  leadingIconData: SBBIcons.route_circle_start_small,
+            mainAxisSize: .min,
+            children: SBBListItem.divideListItems(
+              context: context,
+              items: [
+                const ThemeModeSegmentedButton(),
+                SizedBox(height: SBBSpacing.small),
+                Padding(
+                  padding: const EdgeInsets.only(left: SBBSpacing.medium),
+                  child: Column(
+                    crossAxisAlignment: .start,
+                    mainAxisSize: .min,
+                    spacing: SBBSpacing.xxSmall,
+                    children: [
+                      Flexible(
+                        child: Row(
+                          children: [
+                            Container(
+                              alignment: .center,
+                              constraints: BoxConstraints(minWidth: 64.0),
+                              padding: .symmetric(horizontal: SBBSpacing.medium),
+                              child: Text('$_itemCount', style: SBBTextStyles.mediumBold),
+                            ),
+                            Expanded(
+                              child: SBBSlider(
+                                value: _itemCount.toDouble(),
+                                min: 1,
+                                max: 100,
+                                divisions: 99,
+                                onChanged: (value) {
+                                  setState(() {
+                                    _itemCount = value.round();
+                                    // Reset selections that are out of range
+                                    if (_selectedValue1 != null && _selectedValue1! >= _itemCount)
+                                      _selectedValue1 = null;
+                                    if (_selectedValue2 != null && _selectedValue2! >= _itemCount)
+                                      _selectedValue2 = null;
+                                    if (_selectedValue3 != null && _selectedValue3! >= _itemCount)
+                                      _selectedValue3 = null;
+                                  });
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Text(
+                        'Number of Items',
+                        style: sbbTextStyle.xSmall,
+                      ),
+                    ],
+                  ),
                 ),
-                selectedItem: _selectedValue4,
-                items: _items,
-                onChanged: null,
-              ),
-              const SizedBox(height: SBBSpacing.medium),
-              SBBTertiaryButton(
-                labelText: 'Call showMenu() without building Widget',
-                onPressed: () {
-                  SBBDropdown.showMenu<int>(
-                    context: context,
-                    title: 'Title',
-                    value: _selectedValue5,
-                    items: _items,
-                    onChanged: (value) {
-                      setState(() {
-                        _selectedValue5 = value;
-                      });
-                    },
-                  );
-                },
-              ),
-              const SizedBox(height: SBBSpacing.medium),
-            ],
+                Padding(
+                  padding: const EdgeInsets.only(left: SBBSpacing.medium),
+                  child: SBBTextInput(
+                    decoration: SBBInputDecoration(
+                      labelText: 'Bottom Sheet Title',
+                    ),
+                    autofocus: false,
+                    controller: TextEditingController.fromValue(TextEditingValue(text: _sheetTitle)),
+                    onChanged: (value) => setState(() => _sheetTitle = value),
+                  ),
+                ),
+                Material(
+                  child: SBBSwitchListItem(
+                    titleText: 'Show Leading Icon',
+                    value: _showLeadingIcon,
+                    onChanged: (value) => setState(() => _showLeadingIcon = value),
+                  ),
+                ),
+                SBBSwitchListItem(
+                  titleText: 'Show Close Button',
+                  value: _showCloseButton,
+                  onChanged: (value) => setState(() => _showCloseButton = value),
+                ),
+              ],
+            ).toList(growable: false),
           ),
         ),
-        const SizedBox(height: SBBSpacing.medium),
-        const SBBListHeader('Multiple values'),
-        SBBContentBox(
-          child: Column(
+        SliverPadding(
+          padding: .symmetric(horizontal: SBBSpacing.xSmall),
+          sliver: SliverList.list(
             children: [
-              SBBMultiDropdown<int>(
-                label: 'Label',
-                selectedItems: _multiSelectValues1,
-                items: _multiSelectItems,
-                onChanged: (value) {
-                  debugPrint('Selected: $value');
-                  setState(() => _multiSelectValues1 = value);
-                },
-              ),
-              SBBMultiDropdown<int>(
-                label: 'Default Value',
-                selectedItems: _multiSelectValues2,
-                items: _multiSelectItems,
-                onChanged: (value) {
-                  setState(() => _multiSelectValues2 = value);
-                },
-              ),
-              SBBMultiDropdown<int>(
-                label: 'Custom Menu Title',
-                title: 'This is the custom menu title',
-                selectedItems: _multiSelectValues3,
-                items: _multiSelectItems,
-                onChanged: (value) {
-                  setState(() => _multiSelectValues3 = value);
-                },
-              ),
-              SBBMultiDropdown<int>(
-                label: 'Icon',
-                icon: SBBIcons.route_circle_start_small,
-                selectedItems: _multiSelectValues4,
-                items: _multiSelectItems,
-                onChanged: (value) {
-                  setState(() => _multiSelectValues4 = value);
-                },
-              ),
-              SBBMultiDropdown<int>(
-                label: 'Disabled',
-                icon: SBBIcons.route_circle_start_small,
-                selectedItems: _multiSelectValues4,
-                items: _multiSelectItems,
-                onChanged: null,
+              const SizedBox(height: SBBSpacing.medium),
+              const SBBListHeader('Single Choice'),
+              SBBContentBox(
+                child: Column(
+                  children: [
+                    SBBDropdown<int>(
+                      triggerDecoration: const SBBInputDecoration(labelText: 'Label'),
+                      sheetTitleText: _sheetTitle,
+                      sheetLeadingIconData: _showLeadingIcon ? SBBIcons.dog_small : null,
+                      sheetShowCloseButton: _showCloseButton,
+                      selectedItem: _selectedValue1,
+                      items: _items,
+                      onChanged: (value) {
+                        debugPrint('Selected: $value');
+                        setState(() => _selectedValue1 = value);
+                      },
+                    ),
+                    SBBDropdown<int>(
+                      triggerDecoration: const SBBInputDecoration(labelText: 'Default Value'),
+                      sheetTitleText: _sheetTitle,
+                      sheetLeadingIconData: _showLeadingIcon ? SBBIcons.dog_small : null,
+                      sheetShowCloseButton: _showCloseButton,
+                      selectedItem: _selectedValue2,
+                      items: _items,
+                      onChanged: (value) {
+                        debugPrint('Selected: $value');
+                        setState(() => _selectedValue2 = value);
+                      },
+                    ),
+                    SBBDropdown<int>(
+                      triggerDecoration: const SBBInputDecoration(leadingIconData: SBBIcons.route_circle_start_small),
+                      sheetTitleText: _sheetTitle,
+                      sheetLeadingIconData: _showLeadingIcon ? SBBIcons.dog_small : null,
+                      sheetShowCloseButton: _showCloseButton,
+                      selectedItem: _selectedValue3,
+                      items: _items,
+                      onChanged: (value) {
+                        debugPrint('Selected: $value');
+                        setState(() => _selectedValue3 = value);
+                      },
+                    ),
+                    SBBDropdown<int>(
+                      triggerDecoration: const SBBInputDecoration(
+                        labelText: 'Disabled',
+                        leadingIconData: SBBIcons.route_circle_start_small,
+                      ),
+                      selectedItem: _selectedValue3,
+                      items: _items,
+                      onChanged: null,
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(height: SBBSpacing.medium),
-              SBBTertiaryButton(
-                labelText: 'Call showMenu() without building Widget',
-                onPressed: () {
-                  SBBMultiDropdown.showMenu<int>(
-                    context: context,
-                    title: 'Title',
-                    selectedItems: _multiSelectValues5,
-                    items: _multiSelectItems,
-                    onChanged: (value) {
-                      setState(() {
-                        setState(() => _multiSelectValues5 = value);
-                      });
-                    },
-                  );
-                },
+              const SBBListHeader('Multiple choice'),
+              SBBContentBox(
+                child: Column(
+                  children: [
+                    SBBMultiDropdown<int>(
+                      triggerDecoration: const SBBInputDecoration(labelText: 'Label'),
+                      sheetTitleText: _sheetTitle,
+                      sheetLeadingIconData: _showLeadingIcon ? SBBIcons.dog_small : null,
+                      sheetShowCloseButton: _showCloseButton,
+                      selectedItems: _multiSelectValues1,
+                      items: _multiSelectItems,
+                      onChanged: (value) {
+                        debugPrint('Selected: $value');
+                        setState(() => _multiSelectValues1 = value);
+                      },
+                    ),
+                    SBBMultiDropdown<int>(
+                      triggerDecoration: const SBBInputDecoration(labelText: 'Default Value'),
+                      sheetTitleText: _sheetTitle,
+                      sheetLeadingIconData: _showLeadingIcon ? SBBIcons.dog_small : null,
+                      sheetShowCloseButton: _showCloseButton,
+                      selectedItems: _multiSelectValues2,
+                      items: _multiSelectItems,
+                      onChanged: (value) {
+                        setState(() => _multiSelectValues2 = value);
+                      },
+                    ),
+                    SBBMultiDropdown<int>(
+                      triggerDecoration: const SBBInputDecoration(leadingIconData: SBBIcons.route_circle_start_small),
+                      sheetTitleText: _sheetTitle,
+                      sheetLeadingIconData: _showLeadingIcon ? SBBIcons.dog_small : null,
+                      sheetShowCloseButton: _showCloseButton,
+                      selectedItems: _multiSelectValues3,
+                      items: _multiSelectItems,
+                      onChanged: (value) {
+                        setState(() => _multiSelectValues3 = value);
+                      },
+                    ),
+                    SBBMultiDropdown<int>(
+                      triggerDecoration: const SBBInputDecoration(
+                        labelText: 'Disabled',
+                        leadingIconData: SBBIcons.route_circle_start_small,
+                      ),
+                      selectedItems: _multiSelectValues3,
+                      items: _multiSelectItems,
+                      onChanged: null,
+                    ),
+                  ],
+                ),
               ),
-              const SizedBox(height: SBBSpacing.medium),
             ],
           ),
         ),
