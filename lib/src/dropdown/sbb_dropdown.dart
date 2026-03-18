@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../sbb_design_system_mobile.dart';
 
 // ALL TODOS apply to both SBBDropdown as well as SBBMultiDropdown
-// TODO: make possible style customisation of both SBBDecoratedText widget as well as bottomSheet widget
 // TODO: make possible customisation of the items in the bottom sheet list
 // TODO: follow v5 theming / styling (like e.g. SBBChip with SBBChipStyle, SBBChipThemeData, etc. - think about the necessary / obvious fields for the corresponding ThemeData)
 // TODO: documentation (write precise, clear documentation following the style found in e.g. SBBChip)

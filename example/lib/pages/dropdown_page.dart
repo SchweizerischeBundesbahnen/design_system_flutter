@@ -23,13 +23,9 @@ class _DropdownPageState extends State<DropdownPage> {
   List<int> _multiSelectValues1 = [];
   List<int> _multiSelectValues2 = [1];
   List<int> _multiSelectValues3 = [];
-  final _multiSelectItems = [
-    const SBBDropdownItem(value: 1, label: 'Item 1'),
-    const SBBDropdownItem(value: 2, label: 'Item 2'),
-    const SBBDropdownItem(value: 3, label: 'Item 3'),
-    const SBBDropdownItem(value: 4, label: 'Item 4'),
-    const SBBDropdownItem(value: 5, label: 'Item 5'),
-  ];
+
+  List<SBBDropdownItem<int>> get _multiSelectItems =>
+      List.generate(_itemCount, (idx) => SBBDropdownItem(value: idx, label: 'Item ${idx + 1}'));
 
   String _sheetTitle = 'Default Title';
   bool _showLeadingIcon = false;

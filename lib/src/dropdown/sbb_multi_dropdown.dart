@@ -235,7 +235,6 @@ class SBBMultiDropdown<T> extends StatelessWidget {
               SBBContentBox(
                 child: ListView.separated(
                   shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
                   itemCount: items.length,
                   separatorBuilder: (context, index) => const SBBDivider(),
                   itemBuilder: (context, index) {
@@ -257,12 +256,7 @@ class SBBMultiDropdown<T> extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: const EdgeInsetsDirectional.fromSTEB(
-                  SBBSpacing.medium,
-                  SBBSpacing.small,
-                  SBBSpacing.medium,
-                  SBBSpacing.medium,
-                ),
+                padding: const .only(top: SBBSpacing.small),
                 child: SBBPrimaryButton(
                   labelText: confirmButtonLabelText ?? MaterialLocalizations.of(context).okButtonLabel,
                   onPressed: isSelectionValid(selectedItems, selectedValues)
