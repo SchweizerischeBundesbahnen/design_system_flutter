@@ -122,7 +122,7 @@ class CheckboxTest extends StatelessWidget {
                 trailing: Text('CHF 0.99'),
               ),
             ],
-          ).toList(growable: false),
+          ),
         ),
       ),
       const SizedBox(height: SBBSpacing.medium),

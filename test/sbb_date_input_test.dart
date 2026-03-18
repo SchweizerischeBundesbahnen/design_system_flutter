@@ -79,7 +79,7 @@ class DatePickerTest extends StatelessWidget {
               isLastElement: true,
             ),
           ],
-        ).toList(growable: false),
+        ),
       ),
     );
   }

@@ -87,7 +87,7 @@ class TimePickerTest extends StatelessWidget {
               isLastElement: true,
             ),
           ],
-        ).toList(growable: false),
+        ),
       ),
     );
   }
