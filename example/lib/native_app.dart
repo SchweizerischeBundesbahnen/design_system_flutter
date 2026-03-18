@@ -119,7 +119,7 @@ class MyApp extends StatelessWidget {
             _DemoEntry('Typography', TypographyPage()),
             _DemoEntry('Color', ColorPage()),
           ],
-        ).toList(growable: false),
+        ),
       ),
     );
   }
@@ -154,7 +154,7 @@ class MyApp extends StatelessWidget {
             _DemoEntry('Notification Box', NotificationBoxPage()),
             _DemoEntry('Status', StatusPage()),
           ],
-        ).toList(growable: false),
+        ),
       ),
     );
   }
