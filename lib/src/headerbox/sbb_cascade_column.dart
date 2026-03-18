@@ -97,14 +97,14 @@ class _SBBCascadeColumn extends MultiChildRenderObjectWidget {
   }
 }
 
-class CascadeColumnParentData extends ContainerBoxParentData<RenderBox> {
-  ValueNotifier<ContractibleState>? stateNotifier;
+class _CascadeColumnParentData extends ContainerBoxParentData<RenderBox> {
+  ValueNotifier<SBBContractibleState>? stateNotifier;
 }
 
 /// Stores the current state of expansion (and contraction).
 @immutable
-final class ContractionState {
-  const ContractionState({
+final class SBBContractionState {
+  const SBBContractionState({
     required this.expansionValue,
   });
 
@@ -115,7 +115,7 @@ final class ContractionState {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is ContractionState && runtimeType == other.runtimeType && expansionValue == other.expansionValue;
+      other is SBBContractionState && runtimeType == other.runtimeType && expansionValue == other.expansionValue;
 
   @override
   int get hashCode => expansionValue.hashCode;
@@ -123,13 +123,14 @@ final class ContractionState {
 
 /// Stores the current state of expansion (and contraction).
 @immutable
-final class ContractibleState {
-  const ContractibleState({
+final class SBBContractibleState {
+  const SBBContractibleState({
     required this.expansionValue,
     required this.globalExpansionValue,
   });
 
-  const ContractibleState.of(double local, double global) : this(expansionValue: local, globalExpansionValue: global);
+  const SBBContractibleState.of(double local, double global)
+    : this(expansionValue: local, globalExpansionValue: global);
 
   final double expansionValue;
   final double globalExpansionValue;
@@ -141,7 +142,7 @@ final class ContractibleState {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is ContractibleState &&
+      other is SBBContractibleState &&
           runtimeType == other.runtimeType &&
           expansionValue == other.expansionValue &&
           globalExpansionValue == other.globalExpansionValue;
@@ -151,9 +152,9 @@ final class ContractibleState {
 }
 
 /// Controller that holds the current (global) expansion state of the column.
-class _ContractionController extends ValueNotifier<ContractionState> {
+class _ContractionController extends ValueNotifier<SBBContractionState> {
   _ContractionController([
-    super.initial = const ContractionState(expansionValue: 1.0),
+    super.initial = const SBBContractionState(expansionValue: 1.0),
   ]);
 }
 
