@@ -59,29 +59,31 @@ class _SBBTimeInputState extends State<SBBTimeInput> {
 
   @override
   Widget build(BuildContext context) {
-    return SBBInputTrigger(
+    return SBBDecoratedText(
       key: widget.key,
       value: _valueText,
-      labelText: widget.labelText,
-      hintText: widget.hintText,
-      errorText: widget.errorText,
-      prefixIcon: widget.prefixIcon,
-      suffixIcon: widget.suffixIcon,
-      onSuffixPressed: widget.onSuffixPressed,
       maxLines: widget.maxLines,
       enabled: widget.onTimeChanged != null,
-      isLastElement: widget.isLastElement,
-      onPressed: () {
-        SBBTimePicker.showModal(
-          context: context,
-          title: widget.labelText,
-          initialTime: widget.value,
-          minimumTime: widget.minimumTime,
-          maximumTime: widget.maximumTime,
-          minuteInterval: widget.minuteInterval,
-          onTimeChanged: widget.onTimeChanged,
-        );
-      },
+      decoration: SBBInputDecoration(
+        labelText: widget.labelText,
+        placeholderText: widget.hintText,
+        errorText: widget.errorText,
+        leadingIconData: widget.prefixIcon,
+        trailingIconData: widget.suffixIcon,
+      ),
+      onTap: widget.onTimeChanged != null
+          ? () {
+              SBBTimePicker.showModal(
+                context: context,
+                title: widget.labelText,
+                initialTime: widget.value,
+                minimumTime: widget.minimumTime,
+                maximumTime: widget.maximumTime,
+                minuteInterval: widget.minuteInterval,
+                onTimeChanged: widget.onTimeChanged,
+              );
+            }
+          : null,
     );
   }
 }

@@ -13,11 +13,11 @@ import 'pages/checkbox_page.dart';
 import 'pages/chip_page.dart';
 import 'pages/color_page.dart';
 import 'pages/container_page.dart';
+import 'pages/decorated_text_page.dart';
 import 'pages/dropdown_page.dart';
 import 'pages/header_box_page.dart';
 import 'pages/header_page.dart';
 import 'pages/icon_page.dart';
-import 'pages/input_trigger_page.dart';
 import 'pages/link_page.dart';
 import 'pages/list_item_page.dart';
 import 'pages/loading_indicator_page.dart';
@@ -25,6 +25,7 @@ import 'pages/message_page.dart';
 import 'pages/notification_box_page.dart';
 import 'pages/paginator_page.dart';
 import 'pages/picker_page.dart';
+import 'pages/popup_page.dart';
 import 'pages/promotion_box_page.dart';
 import 'pages/radio_page.dart';
 import 'pages/segmented_button_page.dart';
@@ -134,11 +135,12 @@ class MyApp extends StatelessWidget {
             _DemoEntry('Button', ButtonPage()),
             _DemoEntry('Checkbox', CheckboxPage()),
             _DemoEntry('Chip', ChipPage()),
-            _DemoEntry('Illustrations', IllustrationPage()),
+            _DemoEntry('Decorated Text', DecoratedTextPage()),
             _DemoEntry('Link', LinkPage()),
             _DemoEntry('List Item', ListItemPage()),
             _DemoEntry('Loading Indicator', LoadingIndicatorPage()),
             _DemoEntry('Picker', PickerPage()),
+            _DemoEntry('Popup', PopupPage()),
             _DemoEntry('Radio', RadioPage()),
             _DemoEntry('Segmented Button', SegmentedButtonPage()),
             _DemoEntry('Switch', SwitchPage()),
@@ -150,7 +152,6 @@ class MyApp extends StatelessWidget {
             _DemoEntry('Promotion Box', PromotionBoxPage()),
             _DemoEntry('Notification Box', NotificationBoxPage()),
             _DemoEntry('Status', StatusPage()),
-            _DemoEntry('Input Trigger', InputTriggerPage()),
           ],
         ).toList(growable: false),
       ),
@@ -170,6 +171,7 @@ class MyApp extends StatelessWidget {
             _DemoEntry('Forms', FormPage()),
             _DemoEntry('Header', HeaderPage()),
             _DemoEntry('Headerbox', HeaderBoxPage()),
+            _DemoEntry('Illustrations', IllustrationPage()),
             _DemoEntry('Message', MessagePage()),
             _DemoEntry('Stepper', StepperPage()),
             _DemoEntry('Tab Bar', TabBarPage()),

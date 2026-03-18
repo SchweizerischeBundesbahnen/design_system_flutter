@@ -5,16 +5,19 @@ import 'package:sbb_design_system_mobile/src/button/theme/sbb_button_style_x.dar
 import 'package:sbb_design_system_mobile/src/checkbox/theme/default_sbb_checkbox_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/chip/theme/default_sbb_chip_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/container/container.dart';
+import 'package:sbb_design_system_mobile/src/decorated_text/theme/default_sbb_decorated_text_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/header/theme/default_sbb_header_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_input_decoration_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_text_input_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/list_header/theme/default_sbb_list_header_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/message/theme/default_sbb_message_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/paginator/theme/default_sbb_paginator_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/popup/theme/default_sbb_popup_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/radio/theme/default_sbb_radio_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/slider/theme/default_sbb_slider_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/stepper/theme/default_sbb_stepper_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/switch/theme/default_sbb_switch_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/theme/styles/base_style_x.dart';
 import 'package:sbb_design_system_mobile/src/toast/theme/default_sbb_toast_theme_data.dart';
 
 import '../button/theme/default_button_themes.dart';
@@ -37,8 +40,8 @@ class SBBTheme {
     SBBCheckboxThemeData? checkboxTheme,
     SBBChipThemeData? chipTheme,
     SBBContentBoxThemeData? contentBoxTheme,
-    SBBStepperThemeData? stepperTheme,
     SBBControlStyles? controlStyles,
+    SBBDecoratedTextThemeData? decoratedTextTheme,
     SBBHeaderThemeData? headerTheme,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBInputDecorationThemeData? inputDecorationTheme,
@@ -46,10 +49,12 @@ class SBBTheme {
     SBBListItemThemeData? listItemTheme,
     SBBMessageThemeData? messageTheme,
     SBBPaginatorThemeData? paginatorTheme,
+    SBBPopupThemeData? popupTheme,
     SBBRadioThemeData? radioTheme,
     SBBStatusThemeData? statusTheme,
     SBBSegmentedButtonThemeData? segmentedButtonTheme,
     SBBSliderThemeData? sliderTheme,
+    SBBStepperThemeData? stepperTheme,
     SBBSwitchThemeData? switchTheme,
     SBBTextTheme? textTheme,
     SBBTextInputThemeData? textInputTheme,
@@ -66,19 +71,21 @@ class SBBTheme {
     checkboxTheme: checkboxTheme,
     chipTheme: chipTheme,
     contentBoxTheme: contentBoxTheme,
-    radioTheme: radioTheme,
-    stepperTheme: stepperTheme,
     controlStyles: controlStyles,
+    decoratedTextTheme: decoratedTextTheme,
     headerTheme: headerTheme,
     headerBoxStyle: headerBoxStyle,
     inputDecorationTheme: inputDecorationTheme,
     listHeaderTheme: listHeaderTheme,
-    messageTheme: messageTheme,
     listItemTheme: listItemTheme,
+    messageTheme: messageTheme,
     paginatorTheme: paginatorTheme,
+    radioTheme: radioTheme,
+    popupTheme: popupTheme,
     statusTheme: statusTheme,
     segmentedButtonTheme: segmentedButtonTheme,
     sliderTheme: sliderTheme,
+    stepperTheme: stepperTheme,
     switchTheme: switchTheme,
     textTheme: textTheme,
     textInputTheme: textInputTheme,
@@ -96,18 +103,20 @@ class SBBTheme {
     SBBCheckboxThemeData? checkboxTheme,
     SBBChipThemeData? chipTheme,
     SBBContentBoxThemeData? contentBoxTheme,
-    SBBRadioThemeData? radioTheme,
-    SBBStepperThemeData? stepperTheme,
     SBBControlStyles? controlStyles,
+    SBBDecoratedTextThemeData? decoratedTextTheme,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBInputDecorationThemeData? inputDecorationTheme,
     SBBListHeaderThemeData? listHeaderTheme,
     SBBListItemThemeData? listItemTheme,
     SBBMessageThemeData? messageTheme,
     SBBPaginatorThemeData? paginatorTheme,
+    SBBPopupThemeData? popupTheme,
+    SBBRadioThemeData? radioTheme,
     SBBStatusThemeData? statusTheme,
     SBBSegmentedButtonThemeData? segmentedButtonTheme,
     SBBSliderThemeData? sliderTheme,
+    SBBStepperThemeData? stepperTheme,
     SBBSwitchThemeData? switchTheme,
     SBBTextTheme? textTheme,
     SBBTextInputThemeData? textInputTheme,
@@ -124,16 +133,18 @@ class SBBTheme {
     checkboxTheme: checkboxTheme,
     chipTheme: chipTheme,
     contentBoxTheme: contentBoxTheme,
-    radioTheme: radioTheme,
-    stepperTheme: stepperTheme,
     controlStyles: controlStyles,
+    decoratedTextTheme: decoratedTextTheme,
     headerBoxStyle: headerBoxStyle,
     inputDecorationTheme: inputDecorationTheme,
     listHeaderTheme: listHeaderTheme,
     listItemTheme: listItemTheme,
     messageTheme: messageTheme,
     paginatorTheme: paginatorTheme,
+    popupTheme: popupTheme,
+    radioTheme: radioTheme,
     statusTheme: statusTheme,
+    stepperTheme: stepperTheme,
     segmentedButtonTheme: segmentedButtonTheme,
     sliderTheme: sliderTheme,
     switchTheme: switchTheme,
@@ -156,6 +167,7 @@ class SBBTheme {
     SBBStepperThemeData? stepperTheme,
     SBBControlStyles? controlStyles,
     SBBContentBoxThemeData? contentBoxTheme,
+    SBBDecoratedTextThemeData? decoratedTextTheme,
     SBBHeaderThemeData? headerTheme,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBInputDecorationThemeData? inputDecorationTheme,
@@ -163,10 +175,11 @@ class SBBTheme {
     SBBListItemThemeData? listItemTheme,
     SBBMessageThemeData? messageTheme,
     SBBPaginatorThemeData? paginatorTheme,
+    SBBPopupThemeData? popupTheme,
     SBBRadioThemeData? radioTheme,
-    SBBStatusThemeData? statusTheme,
     SBBSegmentedButtonThemeData? segmentedButtonTheme,
     SBBSliderThemeData? sliderTheme,
+    SBBStatusThemeData? statusTheme,
     SBBSwitchThemeData? switchTheme,
     SBBTextTheme? textTheme,
     SBBTextInputThemeData? textInputTheme,
@@ -197,11 +210,11 @@ class SBBTheme {
     final defaultChipTheme = DefaultSBBChipThemeData(mergedBaseStyle);
     final mergedChipTheme = defaultChipTheme.merge(chipTheme);
 
-    final defaultStepperTheme = DefaultSBBStepperThemeData(mergedBaseStyle);
-    final mergedStepperTheme = defaultStepperTheme.merge(stepperTheme);
-
     final defaultControlStyles = SBBControlStyles.$default(baseStyle: mergedBaseStyle);
     final mergedControlStyles = controlStyles.merge(defaultControlStyles);
+
+    final defaultDecoratedTextTheme = DefaultSBBDecoratedTextThemeData(mergedBaseStyle);
+    final mergedDecoratedTextTheme = defaultDecoratedTextTheme.merge(decoratedTextTheme);
 
     final defaultContentBoxTheme = DefaultSBBContentBoxThemeData(baseStyle: mergedBaseStyle);
     final mergedContentBoxTheme = defaultContentBoxTheme.merge(contentBoxTheme);
@@ -224,11 +237,17 @@ class SBBTheme {
     final defaultPaginatorTheme = DefaultSBBPaginatorThemeData(mergedBaseStyle);
     final mergedPaginatorTheme = defaultPaginatorTheme.merge(paginatorTheme);
 
+    final defaultPopupTheme = DefaultSBBPopupThemeData(mergedBaseStyle);
+    final mergedPopupTheme = defaultPopupTheme.merge(popupTheme);
+
     final defaultRadioTheme = DefaultSBBRadioThemeData(mergedBaseStyle);
     final mergedRadioTheme = defaultRadioTheme.merge(radioTheme);
 
     final defaultStatusTheme = DefaultSBBStatusThemeData(baseStyle: mergedBaseStyle);
     final mergedStatusTheme = defaultStatusTheme.merge(statusTheme);
+
+    final defaultStepperTheme = DefaultSBBStepperThemeData(mergedBaseStyle);
+    final mergedStepperTheme = defaultStepperTheme.merge(stepperTheme);
 
     final defaultSegmentedButtonTheme = DefaultSBBSegmentedButtonThemeData(mergedBaseStyle);
     final mergedSegmentedButtonTheme = defaultSegmentedButtonTheme.merge(segmentedButtonTheme);
@@ -261,24 +280,26 @@ class SBBTheme {
       accentButtonTheme: mergedAccentButtonTheme,
       checkboxTheme: mergedCheckboxTheme,
       chipTheme: mergedChipTheme,
-      stepperTheme: mergedStepperTheme,
       controlStyles: mergedControlStyles,
       contentBoxTheme: mergedContentBoxTheme,
+      decoratedTextTheme: mergedDecoratedTextTheme,
       headerTheme: mergedHeaderTheme,
       headerBoxStyle: mergedHeaderBoxStyle,
+      inputDecorationTheme: mergedInputDecorationTheme,
       listHeaderTheme: mergedListHeaderTheme,
       listItemTheme: mergedListItemTheme,
       messageTheme: mergedMessageTheme,
       paginatorTheme: mergedPaginatorTheme,
+      popupTheme: mergedPopupTheme,
       radioTheme: mergedRadioTheme,
       statusTheme: mergedStatusTheme,
       segmentedButtonTheme: mergedSegmentedButtonTheme,
       sliderTheme: mergedSliderTheme,
+      stepperTheme: mergedStepperTheme,
       switchTheme: mergedSwitchTheme,
       textTheme: mergedTextTheme,
       textInputTheme: mergedTextInputTheme,
       toastTheme: mergedToastTheme,
-      inputDecorationTheme: mergedInputDecorationTheme,
     );
   }
 
@@ -293,8 +314,8 @@ class SBBTheme {
     required SBBCheckboxThemeData checkboxTheme,
     required SBBChipThemeData chipTheme,
     required SBBContentBoxThemeData contentBoxTheme,
-    required SBBStepperThemeData stepperTheme,
     required SBBControlStyles controlStyles,
+    required SBBDecoratedTextThemeData decoratedTextTheme,
     required SBBHeaderThemeData headerTheme,
     required SBBHeaderBoxStyle headerBoxStyle,
     required SBBInputDecorationThemeData inputDecorationTheme,
@@ -302,10 +323,12 @@ class SBBTheme {
     required SBBListItemThemeData listItemTheme,
     required SBBMessageThemeData messageTheme,
     required SBBPaginatorThemeData paginatorTheme,
+    required SBBPopupThemeData popupTheme,
     required SBBRadioThemeData radioTheme,
     required SBBStatusThemeData statusTheme,
     required SBBSegmentedButtonThemeData segmentedButtonTheme,
     required SBBSliderThemeData sliderTheme,
+    required SBBStepperThemeData stepperTheme,
     required SBBSwitchThemeData switchTheme,
     required SBBTextTheme textTheme,
     required SBBTextInputThemeData textInputTheme,
@@ -342,6 +365,7 @@ class SBBTheme {
         contentBoxTheme,
         chipTheme,
         controlStyles,
+        decoratedTextTheme,
         headerTheme,
         headerBoxStyle,
         inputDecorationTheme,
@@ -349,6 +373,7 @@ class SBBTheme {
         listItemTheme,
         messageTheme,
         paginatorTheme,
+        popupTheme,
         radioTheme,
         statusTheme,
         segmentedButtonTheme,

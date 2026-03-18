@@ -24,11 +24,13 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - BREAKING: overhauled `SBBCheckbox` - see [v5 migration guide]
 - BREAKING: overhauled `SBBChip` - see [v5 migration guide]
 - BREAKING: different theming / styling for `SBBContentBox` - see [v5 migration guide]
+- BREAKING: overhauled `SBBInputTrigger` and renamed it to `SBBDecoratedText` - see [v5 migration guide]
 - BREAKING: overhauled `SBBListHeader` - see [v5 migration guide]
 - BREAKING: overhauled `SBBListItem` - see [v5 migration guide]
 - BREAKING: overhauled `SBBMessage` component - see [v5 migration guide]
 - BREAKING: overhauled `SBBModal` component and renamed to `SBBBottomSheet` - see [v5 migration guide]
 - BREAKING: overhauled `SBBPagination` and renamed to `SBBPaginator` - see [v5 migration guide]
+- BREAKING: overhauled `SBBModalPopup` and renamed to `SBBPopup` - see [v5 migration guide]
 - BREAKING: overhauled `SBBRadio` with `SBBRadioGroup` ancestor - see [v5 migration guide]
 - BREAKING: overhauled `SBBSegmentedButton` component - see [v5 migration guide]
 - BREAKING: overhauled `SBBSlider` component - see [v5 migration guide]
@@ -38,6 +40,9 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - BREAKING: different theming / styling for `SBBSwitch` - see [v5 migration guide]
 - BREAKING: overhauled `SBBTextField` and renamed to `SBBTextInput` - see [v5 migration guide]
 - BREAKING: removed default left margin on component `SBBTextInput` (#402)
+- renamed TextStylesExtensions to SBBTextStyleExtensions
+- BREAKING: renamed `ContractionState` to `SBBContractionState`
+- BREAKING: renamed `ContractibleState` to `SBBContractibleState`
 
 ### Removed
 
@@ -51,8 +56,9 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Removed deprecated `SBBGroup`
 - Removed deprecated `SBBOnboarding`
 - Removed deprecated `sbbDefaultSpacing`
+- Removed `CascadeColumnParentData` as it is not directly used by clients
 - Removed `SBBTextField` - replaced by `SBBTextInput`
-
+- Removed `merge` extension on `SBBBaseStyle`
 
 ## [4.8.0] - 2026-03-05
 
