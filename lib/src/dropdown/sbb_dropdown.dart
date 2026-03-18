@@ -2,22 +2,15 @@ import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
-// TODO:
-// change value to selected (of type SBBDropdownItem?)
-// change to use SBBInputDecoration
-// remove isLastElement stuff
-// make possible style customisation of both input as well as bottomSheet
-// make possible customisation of the items in the bottom sheet list
-// follow v5 theming / styling
-// migration / documentation
-// tests
-
-/// Signature for custom selection validation to be used in [SBBMultiDropdown] to
-/// determine whether the submit button is enabled or not.
-///
-/// The type `T` is the type of the value the entry represents. All the entries
-/// in a given menu must represent values with consistent types.
-typedef SBBMultiDropdownValidation<T> = bool Function(List<T> oldSelection, List<T> newSelection);
+// ALL TODOS apply to both SBBDropdown as well as SBBMultiDropdown
+// TODO: change to use SBBDecoratedText
+// TODO: remove isLastElement stuff
+// TODO: make possible style customisation of both SBBDecoratedText widget as well as bottomSheet widget
+// TODO: make possible customisation of the items in the bottom sheet list
+// TODO: follow v5 theming / styling (like e.g. SBBChip with SBBChipStyle, SBBChipThemeData, etc. - think about the necessary / obvious fields for the corresponding ThemeData)
+// TODO: documentation (write precise, clear documentation following the style found in e.g. SBBChip)
+// TODO: migration (write a short, precise migration section in the correct alphabetical order in migration_guide_v5.md)
+// TODO: tests
 
 /// SBB Select (single value). Use according to documentation.
 ///
@@ -40,7 +33,7 @@ class SBBDropdown<T> extends StatelessWidget {
     this.inputTextStyle,
     this.inputForegroundColor,
     // dropdown parameters
-    required this.value,
+    required this.selectedItem,
     required this.items,
     required this.onChanged,
   });
@@ -61,7 +54,7 @@ class SBBDropdown<T> extends StatelessWidget {
 
   final WidgetStateProperty<Color?>? inputForegroundColor;
 
-  final T? value;
+  final T? selectedItem;
   final List<SBBDropdownItem<T>> items;
   final ValueChanged<T?>? onChanged;
 
@@ -78,7 +71,7 @@ class SBBDropdown<T> extends StatelessWidget {
           ? () => showMenu(
               context: context,
               title: 'some title',
-              value: value,
+              value: selectedItem,
               items: items,
               onChanged: onChanged!,
             )
@@ -97,7 +90,7 @@ class SBBDropdown<T> extends StatelessWidget {
     );
   }
 
-  static showMenu<T>({
+  static void showMenu<T>({
     required BuildContext context,
     required String title,
     required T? value,

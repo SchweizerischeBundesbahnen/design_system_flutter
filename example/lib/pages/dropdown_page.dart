@@ -50,7 +50,7 @@ class _DropdownPageState extends State<DropdownPage> {
             children: [
               SBBDropdown<int>(
                 inputDecoration: SBBInputDecoration(labelText: 'Label'),
-                value: _selectedValue1,
+                selectedItem: _selectedValue1,
                 items: _items,
                 onChanged: (value) {
                   debugPrint('Selected: $value');
@@ -59,7 +59,7 @@ class _DropdownPageState extends State<DropdownPage> {
               ),
               SBBDropdown<int>(
                 inputDecoration: SBBInputDecoration(labelText: 'Default Value'),
-                value: _selectedValue2,
+                selectedItem: _selectedValue2,
                 items: _items,
                 onChanged: (value) {
                   debugPrint('Selected: $value');
@@ -70,7 +70,7 @@ class _DropdownPageState extends State<DropdownPage> {
                 inputDecoration: SBBInputDecoration(labelText: 'Default Value'),
                 // label: 'Custom Menu Title',
                 // title: 'This is the custom menu title',
-                value: _selectedValue3,
+                selectedItem: _selectedValue3,
                 items: _items,
                 onChanged: (value) {
                   debugPrint('Selected: $value');
@@ -79,7 +79,7 @@ class _DropdownPageState extends State<DropdownPage> {
               ),
               SBBDropdown<int>(
                 inputDecoration: SBBInputDecoration(leadingIconData: SBBIcons.route_circle_start_small),
-                value: _selectedValue4,
+                selectedItem: _selectedValue4,
                 items: _items,
                 onChanged: (value) {
                   debugPrint('Selected: $value');
@@ -91,7 +91,7 @@ class _DropdownPageState extends State<DropdownPage> {
                   labelText: 'Disabled',
                   leadingIconData: SBBIcons.route_circle_start_small,
                 ),
-                value: _selectedValue4,
+                selectedItem: _selectedValue4,
                 items: _items,
                 onChanged: null,
               ),
@@ -123,7 +123,7 @@ class _DropdownPageState extends State<DropdownPage> {
             children: [
               SBBMultiDropdown<int>(
                 label: 'Label',
-                values: _multiSelectValues1,
+                selectedItems: _multiSelectValues1,
                 items: _multiSelectItems,
                 onChanged: (value) {
                   debugPrint('Selected: $value');
@@ -132,7 +132,7 @@ class _DropdownPageState extends State<DropdownPage> {
               ),
               SBBMultiDropdown<int>(
                 label: 'Default Value',
-                values: _multiSelectValues2,
+                selectedItems: _multiSelectValues2,
                 items: _multiSelectItems,
                 onChanged: (value) {
                   setState(() => _multiSelectValues2 = value);
@@ -141,7 +141,7 @@ class _DropdownPageState extends State<DropdownPage> {
               SBBMultiDropdown<int>(
                 label: 'Custom Menu Title',
                 title: 'This is the custom menu title',
-                values: _multiSelectValues3,
+                selectedItems: _multiSelectValues3,
                 items: _multiSelectItems,
                 onChanged: (value) {
                   setState(() => _multiSelectValues3 = value);
@@ -150,7 +150,7 @@ class _DropdownPageState extends State<DropdownPage> {
               SBBMultiDropdown<int>(
                 label: 'Icon',
                 icon: SBBIcons.route_circle_start_small,
-                values: _multiSelectValues4,
+                selectedItems: _multiSelectValues4,
                 items: _multiSelectItems,
                 onChanged: (value) {
                   setState(() => _multiSelectValues4 = value);
@@ -159,7 +159,7 @@ class _DropdownPageState extends State<DropdownPage> {
               SBBMultiDropdown<int>(
                 label: 'Disabled',
                 icon: SBBIcons.route_circle_start_small,
-                values: _multiSelectValues4,
+                selectedItems: _multiSelectValues4,
                 items: _multiSelectItems,
                 onChanged: null,
               ),
@@ -170,7 +170,7 @@ class _DropdownPageState extends State<DropdownPage> {
                   SBBMultiDropdown.showMenu<int>(
                     context: context,
                     title: 'Title',
-                    values: _multiSelectValues5,
+                    selectedItems: _multiSelectValues5,
                     items: _multiSelectItems,
                     onChanged: (value) {
                       setState(() {

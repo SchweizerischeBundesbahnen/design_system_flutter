@@ -2,6 +2,13 @@ import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
+/// Signature for custom selection validation to be used in [SBBMultiDropdown] to
+/// determine whether the submit button is enabled or not.
+///
+/// The type `T` is the type of the value the entry represents. All the entries
+/// in a given menu must represent values with consistent types.
+typedef SBBMultiDropdownValidation<T> = bool Function(List<T> oldSelection, List<T> newSelection);
+
 /// SBB Select (multiple values). Use according to documentation.
 ///
 /// See also:
@@ -16,7 +23,7 @@ class SBBMultiDropdown<T> extends StatefulWidget {
     this.title,
     this.confirmButtonLabel,
     this.isLastElement = false,
-    required this.values,
+    required this.selectedItems,
     required this.items,
     required this.onChanged,
     this.selectionValidation,
@@ -27,7 +34,7 @@ class SBBMultiDropdown<T> extends StatefulWidget {
   final String? title;
   final String? confirmButtonLabel;
   final bool isLastElement;
-  final List<T> values;
+  final List<T> selectedItems;
   final List<SBBDropdownItem<T>> items;
   final ValueChanged<List<T>>? onChanged;
   final SBBMultiDropdownValidation? selectionValidation;
@@ -35,17 +42,17 @@ class SBBMultiDropdown<T> extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _SBBMultiDropdownState<T>();
 
-  static showMenu<T>({
+  static void showMenu<T>({
     required BuildContext context,
     required String title,
     String? confirmButtonLabelText,
-    required List<T> values,
+    required List<T> selectedItems,
     required List<SBBDropdownItem<T>> items,
     required ValueChanged<List<T>> onChanged,
     SBBMultiDropdownValidation<T>? selectionValidation,
   }) {
     final isSelectionValid = selectionValidation ?? defaultSelectionValidation;
-    var selectedValues = values;
+    var selectedValues = List<T>.from(selectedItems);
     showSBBBottomSheet(
       context: context,
       titleText: title,
@@ -93,7 +100,7 @@ class SBBMultiDropdown<T> extends StatefulWidget {
                   ),
                   child: SBBPrimaryButton(
                     labelText: confirmButtonLabelText ?? MaterialLocalizations.of(context).okButtonLabel,
-                    onPressed: isSelectionValid(values, selectedValues)
+                    onPressed: isSelectionValid(selectedItems, selectedValues)
                         ? () {
                             Navigator.of(context).pop();
                             onChanged(selectedValues);
@@ -133,7 +140,7 @@ class _SBBMultiDropdownState<T> extends State<SBBMultiDropdown<T>> {
               SBBMultiDropdown.showMenu<T>(
                 context: context,
                 title: widget.title ?? widget.label,
-                values: widget.values,
+                selectedItems: widget.selectedItems,
                 items: widget.items,
                 onChanged: widget.onChanged!,
                 selectionValidation: widget.selectionValidation,
@@ -157,7 +164,7 @@ class _SBBMultiDropdownState<T> extends State<SBBMultiDropdown<T>> {
                     ),
                   ),
                 Expanded(
-                  child: widget.values.isEmpty
+                  child: widget.selectedItems.isEmpty
                       ? Text(
                           widget.label,
                           style: enabled
@@ -179,7 +186,7 @@ class _SBBMultiDropdownState<T> extends State<SBBMultiDropdown<T>> {
                             const SizedBox(height: 3.0),
                             Text(
                               widget.items
-                                  .where((element) => widget.values.contains(element.value))
+                                  .where((element) => widget.selectedItems.contains(element.value))
                                   .map((element) => element.label)
                                   .join(', '),
                               style: enabled ? style.textField?.textStyle : style.textField?.textStyleDisabled,
