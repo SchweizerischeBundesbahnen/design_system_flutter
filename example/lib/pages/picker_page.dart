@@ -32,7 +32,7 @@ class _PickerPageState extends State<PickerPage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final textInputDecorationTheme = theme.sbbInputDecorationTheme;
-    final withVerticalPadding = textInputDecorationTheme?.copyWith(
+    final withHorizontalPadding = textInputDecorationTheme?.copyWith(
       contentPadding: EdgeInsets.symmetric(horizontal: SBBSpacing.medium),
     );
 
@@ -44,7 +44,7 @@ class _PickerPageState extends State<PickerPage> {
           const SizedBox(height: SBBSpacing.medium),
           const SBBListHeader('Picker input fields'),
           ExtendedTheme(
-            themeData: withVerticalPadding!,
+            themeData: withHorizontalPadding!,
             child: SBBContentBox(
               child: Column(
                 children: SBBListItem.divideListItems(
