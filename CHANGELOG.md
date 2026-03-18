@@ -24,6 +24,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - BREAKING: overhauled `SBBCheckbox` - see [v5 migration guide]
 - BREAKING: overhauled `SBBChip` - see [v5 migration guide]
 - BREAKING: different theming / styling for `SBBContentBox` - see [v5 migration guide]
+- BREAKING: overhauled `SBBInputTrigger` and renamed it to `SBBDecoratedText` - see [v5 migration guide]
 - BREAKING: overhauled `SBBListHeader` - see [v5 migration guide]
 - BREAKING: overhauled `SBBListItem` - see [v5 migration guide]
 - BREAKING: overhauled `SBBMessage` component - see [v5 migration guide]
