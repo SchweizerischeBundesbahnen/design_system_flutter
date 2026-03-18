@@ -89,7 +89,7 @@ class _TextAreaPageState extends State<TextAreaPage> {
                         minLines: 1,
                       ),
                     ],
-                  ).toList(growable: false),
+                  ),
                 ),
               ),
               SizedBox(height: SBBSpacing.medium),

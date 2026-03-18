@@ -176,7 +176,7 @@ class MyApp extends StatelessWidget {
             _DemoEntry('Stepper', StepperPage()),
             _DemoEntry('Tab Bar', TabBarPage()),
           ],
-        ).toList(growable: false),
+        ),
       ),
     );
   }

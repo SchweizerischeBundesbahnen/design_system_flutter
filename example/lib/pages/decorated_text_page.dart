@@ -129,7 +129,7 @@ class DecoratedTextPage extends StatelessWidget {
                           ),
                         ),
                       ],
-                    ).toList(growable: false),
+                    ),
                   ),
                 ),
                 SizedBox(height: SBBSpacing.medium),

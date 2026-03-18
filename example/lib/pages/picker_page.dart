@@ -81,7 +81,7 @@ class _PickerPageState extends State<PickerPage> {
                       },
                     ),
                   ],
-                ).toList(growable: false),
+                ),
               ),
             ),
           ),
