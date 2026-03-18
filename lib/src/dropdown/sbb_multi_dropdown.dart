@@ -15,32 +15,76 @@ typedef SBBMultiDropdownValidation<T> = bool Function(List<T> oldSelection, List
 ///
 /// * [SBBDropdown], variant for single value
 /// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/select>
-class SBBMultiDropdown<T> extends StatefulWidget {
+class SBBMultiDropdown<T> extends StatelessWidget {
   const SBBMultiDropdown({
     super.key,
-    required this.label,
-    this.icon,
+    // decorated text parameters
+    this.triggerDecoration,
+    this.triggerStyle,
+    this.triggerMaxLines = 1,
+    this.triggerMinLines,
+    this.triggerExpands = false,
+    this.triggerFocusNode,
+    this.triggerAutofocus = false,
+    // dropdown parameters
     this.title,
     this.confirmButtonLabel,
-    this.isLastElement = false,
     required this.selectedItems,
     required this.items,
     required this.onChanged,
     this.selectionValidation,
   });
 
-  final String label;
-  final IconData? icon;
+  final SBBInputDecoration? triggerDecoration;
+
+  final int? triggerMaxLines;
+
+  final int? triggerMinLines;
+
+  final bool triggerExpands;
+
+  final FocusNode? triggerFocusNode;
+
+  final bool triggerAutofocus;
+
+  final SBBDecoratedTextStyle? triggerStyle;
+
   final String? title;
   final String? confirmButtonLabel;
-  final bool isLastElement;
   final List<T> selectedItems;
   final List<SBBDropdownItem<T>> items;
   final ValueChanged<List<T>>? onChanged;
-  final SBBMultiDropdownValidation? selectionValidation;
+  final SBBMultiDropdownValidation<T>? selectionValidation;
 
   @override
-  State<StatefulWidget> createState() => _SBBMultiDropdownState<T>();
+  Widget build(BuildContext context) {
+    final displayValue = selectedItems.isEmpty
+        ? ''
+        : items.where((element) => selectedItems.contains(element.value)).map((element) => element.label).join(', ');
+
+    return SBBDecoratedText(
+      enabled: onChanged != null,
+      onTap: () => SBBMultiDropdown.showMenu<T>(
+        context: context,
+        title: title ?? '',
+        confirmButtonLabelText: confirmButtonLabel,
+        selectedItems: selectedItems,
+        items: items,
+        onChanged: onChanged!,
+        selectionValidation: selectionValidation,
+      ),
+      value: displayValue,
+      // pass through parameters
+      decoration: triggerDecoration,
+      // TODO: copy with trailing arrow down
+      maxLines: triggerMaxLines,
+      minLines: triggerMinLines,
+      expands: triggerExpands,
+      focusNode: triggerFocusNode,
+      autofocus: triggerAutofocus,
+      style: triggerStyle,
+    );
+  }
 
   static void showMenu<T>({
     required BuildContext context,
@@ -121,92 +165,5 @@ class SBBMultiDropdown<T> extends StatefulWidget {
       return true;
     }
     return oldSelection.map((e) => newSelection.contains(e)).contains(false);
-  }
-}
-
-class _SBBMultiDropdownState<T> extends State<SBBMultiDropdown<T>> {
-  SBBControlStyles get style => Theme.of(context).extension()!;
-
-  @override
-  Widget build(BuildContext context) {
-    final enabled = widget.onChanged != null;
-    final baseStyle = SBBBaseStyle.of(context);
-    return InkWell(
-      /// TODO: smallTrogdor - rm and move to own style
-      focusColor: baseStyle.themeValue(SBBColors.platinum, SBBColors.midnight),
-      hoverColor: baseStyle.themeValue(SBBColors.platinum, SBBColors.midnight),
-      onTap: enabled
-          ? () {
-              SBBMultiDropdown.showMenu<T>(
-                context: context,
-                title: widget.title ?? widget.label,
-                selectedItems: widget.selectedItems,
-                items: widget.items,
-                onChanged: widget.onChanged!,
-                selectionValidation: widget.selectionValidation,
-              );
-            }
-          : null,
-      child: Column(
-        children: [
-          Container(
-            constraints: const BoxConstraints(minHeight: 48.0),
-            color: SBBColors.transparent,
-            child: Row(
-              children: [
-                const SizedBox(width: SBBSpacing.medium),
-                if (widget.icon != null)
-                  Padding(
-                    padding: const EdgeInsetsDirectional.only(end: SBBSpacing.xSmall),
-                    child: Icon(
-                      widget.icon,
-                      color: enabled ? style.textField?.iconColor : style.textField?.iconColorDisabled,
-                    ),
-                  ),
-                Expanded(
-                  child: widget.selectedItems.isEmpty
-                      ? Text(
-                          widget.label,
-                          style: enabled
-                              ? style.textField?.placeholderTextStyle
-                              : style.textField?.placeholderTextStyleDisabled,
-                          maxLines: 1,
-                          overflow: .ellipsis,
-                        )
-                      : Column(
-                          crossAxisAlignment: .start,
-                          children: [
-                            const SizedBox(height: 5.0),
-                            Text(
-                              widget.label,
-                              style: enabled ? style.selectLabel?.textStyle : style.selectLabel?.textStyleDisabled,
-                              maxLines: 1,
-                              overflow: .ellipsis,
-                            ),
-                            const SizedBox(height: 3.0),
-                            Text(
-                              widget.items
-                                  .where((element) => widget.selectedItems.contains(element.value))
-                                  .map((element) => element.label)
-                                  .join(', '),
-                              style: enabled ? style.textField?.textStyle : style.textField?.textStyleDisabled,
-                              maxLines: 1,
-                              overflow: .ellipsis,
-                            ),
-                          ],
-                        ),
-                ),
-                Icon(
-                  SBBIcons.chevron_small_down_small,
-                  color: enabled ? style.textField?.iconColor : style.textField?.iconColorDisabled,
-                ),
-                const SizedBox(width: SBBSpacing.xSmall),
-              ],
-            ),
-          ),
-          if (!widget.isLastElement) Divider(indent: widget.icon == null ? SBBSpacing.medium : 48.0),
-        ],
-      ),
-    );
   }
 }

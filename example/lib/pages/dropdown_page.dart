@@ -49,7 +49,7 @@ class _DropdownPageState extends State<DropdownPage> {
           child: Column(
             children: [
               SBBDropdown<int>(
-                inputDecoration: SBBInputDecoration(labelText: 'Label'),
+                triggerDecoration: SBBInputDecoration(labelText: 'Label'),
                 selectedItem: _selectedValue1,
                 items: _items,
                 onChanged: (value) {
@@ -58,7 +58,7 @@ class _DropdownPageState extends State<DropdownPage> {
                 },
               ),
               SBBDropdown<int>(
-                inputDecoration: SBBInputDecoration(labelText: 'Default Value'),
+                triggerDecoration: SBBInputDecoration(labelText: 'Default Value'),
                 selectedItem: _selectedValue2,
                 items: _items,
                 onChanged: (value) {
@@ -67,7 +67,7 @@ class _DropdownPageState extends State<DropdownPage> {
                 },
               ),
               SBBDropdown<int>(
-                inputDecoration: SBBInputDecoration(labelText: 'Default Value'),
+                triggerDecoration: SBBInputDecoration(labelText: 'Default Value'),
                 // label: 'Custom Menu Title',
                 // title: 'This is the custom menu title',
                 selectedItem: _selectedValue3,
@@ -78,7 +78,7 @@ class _DropdownPageState extends State<DropdownPage> {
                 },
               ),
               SBBDropdown<int>(
-                inputDecoration: SBBInputDecoration(leadingIconData: SBBIcons.route_circle_start_small),
+                triggerDecoration: SBBInputDecoration(leadingIconData: SBBIcons.route_circle_start_small),
                 selectedItem: _selectedValue4,
                 items: _items,
                 onChanged: (value) {
@@ -87,7 +87,7 @@ class _DropdownPageState extends State<DropdownPage> {
                 },
               ),
               SBBDropdown<int>(
-                inputDecoration: SBBInputDecoration(
+                triggerDecoration: SBBInputDecoration(
                   labelText: 'Disabled',
                   leadingIconData: SBBIcons.route_circle_start_small,
                 ),
