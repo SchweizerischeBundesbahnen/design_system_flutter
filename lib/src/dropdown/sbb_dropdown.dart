@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import '../../sbb_design_system_mobile.dart';
 
 // TODO:
+// change value to selected (of type SBBDropdownItem?)
 // change to use SBBInputDecoration
 // remove isLastElement stuff
-// make possible customisation of both input as well as bottomSheet
-// make possible to customise stringification method of the values (including buildcontext in callback and expecting string)
+// make possible style customisation of both input as well as bottomSheet
+// make possible customisation of the items in the bottom sheet list
 // follow v5 theming / styling
 // migration / documentation
 // tests
@@ -16,18 +17,7 @@ import '../../sbb_design_system_mobile.dart';
 ///
 /// The type `T` is the type of the value the entry represents. All the entries
 /// in a given menu must represent values with consistent types.
-typedef SelectionValidation<T> = bool Function(List<T> oldSelection, List<T> newSelection);
-
-/// An item in a menu created by a [SBBDropdown] or [SBBMultiDropdown].
-///
-/// The type `T` is the type of the value the entry represents. All the entries
-/// in a given menu must represent values with consistent types.
-class SelectMenuItem<T> {
-  const SelectMenuItem({required this.value, required this.label});
-
-  final T value;
-  final String label;
-}
+typedef SBBMultiDropdownValidation<T> = bool Function(List<T> oldSelection, List<T> newSelection);
 
 /// SBB Select (single value). Use according to documentation.
 ///
@@ -72,7 +62,7 @@ class SBBDropdown<T> extends StatelessWidget {
   final WidgetStateProperty<Color?>? inputForegroundColor;
 
   final T? value;
-  final List<SelectMenuItem<T>> items;
+  final List<SBBDropdownItem<T>> items;
   final ValueChanged<T?>? onChanged;
 
   @override
@@ -111,7 +101,7 @@ class SBBDropdown<T> extends StatelessWidget {
     required BuildContext context,
     required String title,
     required T? value,
-    required List<SelectMenuItem<T>> items,
+    required List<SBBDropdownItem<T>> items,
     required ValueChanged<T?> onChanged,
   }) {
     var selectedValue = value;

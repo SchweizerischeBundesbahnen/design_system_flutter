@@ -28,9 +28,9 @@ class SBBMultiDropdown<T> extends StatefulWidget {
   final String? confirmButtonLabel;
   final bool isLastElement;
   final List<T> values;
-  final List<SelectMenuItem<T>> items;
+  final List<SBBDropdownItem<T>> items;
   final ValueChanged<List<T>>? onChanged;
-  final SelectionValidation? selectionValidation;
+  final SBBMultiDropdownValidation? selectionValidation;
 
   @override
   State<StatefulWidget> createState() => _SBBMultiDropdownState<T>();
@@ -40,9 +40,9 @@ class SBBMultiDropdown<T> extends StatefulWidget {
     required String title,
     String? confirmButtonLabelText,
     required List<T> values,
-    required List<SelectMenuItem<T>> items,
+    required List<SBBDropdownItem<T>> items,
     required ValueChanged<List<T>> onChanged,
-    SelectionValidation<T>? selectionValidation,
+    SBBMultiDropdownValidation<T>? selectionValidation,
   }) {
     final isSelectionValid = selectionValidation ?? defaultSelectionValidation;
     var selectedValues = values;

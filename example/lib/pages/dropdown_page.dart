@@ -17,11 +17,11 @@ class _DropdownPageState extends State<DropdownPage> {
   int? _selectedValue4;
   int? _selectedValue5;
   final _items = [
-    const SelectMenuItem(value: 1, label: 'Item 1'),
-    const SelectMenuItem(value: 2, label: 'Item 2'),
-    const SelectMenuItem(value: 3, label: 'Item 3'),
-    const SelectMenuItem(value: 4, label: 'Item 4'),
-    const SelectMenuItem(value: 5, label: 'Item 5'),
+    const SBBDropdownItem(value: 1, label: 'Item 1'),
+    const SBBDropdownItem(value: 2, label: 'Item 2'),
+    const SBBDropdownItem(value: 3, label: 'Item 3'),
+    const SBBDropdownItem(value: 4, label: 'Item 4'),
+    const SBBDropdownItem(value: 5, label: 'Item 5'),
   ];
 
   List<int> _multiSelectValues1 = [];
@@ -30,11 +30,11 @@ class _DropdownPageState extends State<DropdownPage> {
   List<int> _multiSelectValues4 = [];
   List<int> _multiSelectValues5 = [];
   final _multiSelectItems = [
-    const SelectMenuItem(value: 1, label: 'Item 1'),
-    const SelectMenuItem(value: 2, label: 'Item 2'),
-    const SelectMenuItem(value: 3, label: 'Item 3'),
-    const SelectMenuItem(value: 4, label: 'Item 4'),
-    const SelectMenuItem(value: 5, label: 'Item 5'),
+    const SBBDropdownItem(value: 1, label: 'Item 1'),
+    const SBBDropdownItem(value: 2, label: 'Item 2'),
+    const SBBDropdownItem(value: 3, label: 'Item 3'),
+    const SBBDropdownItem(value: 4, label: 'Item 4'),
+    const SBBDropdownItem(value: 5, label: 'Item 5'),
   ];
 
   @override
