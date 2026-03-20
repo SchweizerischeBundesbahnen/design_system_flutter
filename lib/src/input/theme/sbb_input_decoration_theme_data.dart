@@ -91,7 +91,7 @@ class SBBInputDecorationThemeData extends ThemeExtension<SBBInputDecorationTheme
 
   /// The padding surrounding all decoration content.
   ///
-  /// If null, defaults to [EdgeInsets.zero].
+  /// If null, defaults to `EdgeInsets.symmetric(horizontal: SBBSpacing.medium)`.
   final EdgeInsetsGeometry? contentPadding;
 
   @override
