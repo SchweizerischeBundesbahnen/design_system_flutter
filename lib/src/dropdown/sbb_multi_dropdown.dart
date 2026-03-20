@@ -231,7 +231,7 @@ class SBBMultiDropdown<T> extends StatelessWidget {
       body = StatefulBuilder(
         builder: (context, setModalState) {
           return Column(
-            mainAxisAlignment: .spaceBetween,
+            mainAxisSize: .min,
             children: [
               Flexible(
                 child: SBBContentBox(

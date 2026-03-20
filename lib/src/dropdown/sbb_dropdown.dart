@@ -257,7 +257,7 @@ class SBBDropdown<T> extends StatelessWidget {
       transitionAnimationController: sheetTransitionAnimationController,
       sheetAnimationStyle: sheetAnimationStyle,
       showCloseButton: sheetShowCloseButton,
-      isScrollControlled: hasCustomBody ? sheetIsScrollControlled : true,
+      isScrollControlled: hasCustomBody ? sheetIsScrollControlled : false,
       scrollControlDisabledMaxHeightRatio: hasCustomBody ? sheetScrollControlDisabledMaxHeightRatio : 9.0 / 16.0,
       body: body,
     );
