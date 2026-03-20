@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
+const _defaultScrollControlDisabledMaxHeightRatio = 9.0 / 16.0;
+
 /// Signature for custom selection validation to be used in [SBBMultiDropdown] to
 /// determine whether the submit button is enabled or not.
 ///
@@ -48,10 +50,8 @@ class SBBMultiDropdown<T> extends StatelessWidget {
     this.sheetUseSafeArea = true,
     this.sheetTransitionAnimationController,
     this.sheetAnimationStyle,
+    this.scrollControlDisabledMaxHeightRatio,
     this.sheetShowCloseButton = true,
-    this.sheetBody,
-    this.sheetIsScrollControlled = false,
-    this.sheetScrollControlDisabledMaxHeightRatio = 9.0 / 16.0,
   });
 
   // Trigger parameters
@@ -124,29 +124,11 @@ class SBBMultiDropdown<T> extends StatelessWidget {
   /// An optional animation style for the sheet.
   final AnimationStyle? sheetAnimationStyle;
 
+  final double? scrollControlDisabledMaxHeightRatio;
+
   /// Whether to show a close button in the sheet header.
   /// Defaults to true.
   final bool sheetShowCloseButton;
-
-  /// A custom body widget for the bottom sheet.
-  ///
-  /// When null, the sheet will display a scroll-controlled [ListView] of
-  /// [SBBCheckboxListItem]s followed by a confirm button. In that case,
-  /// [sheetIsScrollControlled] and [sheetScrollControlDisabledMaxHeightRatio]
-  /// are ignored and `isScrollControlled` is set to `true`.
-  final Widget? sheetBody;
-
-  /// Whether the bottom sheet can expand to full screen height.
-  ///
-  /// Only respected when a custom [sheetBody] is given. Otherwise `true` is used.
-  /// Defaults to false.
-  final bool sheetIsScrollControlled;
-
-  /// The max height ratio when [sheetIsScrollControlled] is false.
-  ///
-  /// Only respected when a custom [sheetBody] is given. Otherwise ignored.
-  /// Defaults to 9.0 / 16.0.
-  final double sheetScrollControlDisabledMaxHeightRatio;
 
   @override
   Widget build(BuildContext context) {
@@ -178,9 +160,8 @@ class SBBMultiDropdown<T> extends StatelessWidget {
         sheetTransitionAnimationController: sheetTransitionAnimationController,
         sheetAnimationStyle: sheetAnimationStyle,
         sheetShowCloseButton: sheetShowCloseButton,
-        sheetBody: sheetBody,
-        sheetIsScrollControlled: sheetIsScrollControlled,
-        sheetScrollControlDisabledMaxHeightRatio: sheetScrollControlDisabledMaxHeightRatio,
+        scrollControlDisabledMaxHeightRatio:
+            scrollControlDisabledMaxHeightRatio ?? _defaultScrollControlDisabledMaxHeightRatio,
       ),
       value: displayValue,
       decoration: _triggerDecorationWithDefaultTrailingIcon,
@@ -215,19 +196,31 @@ class SBBMultiDropdown<T> extends StatelessWidget {
     AnimationController? sheetTransitionAnimationController,
     AnimationStyle? sheetAnimationStyle,
     bool sheetShowCloseButton = true,
-    Widget? sheetBody,
-    bool sheetIsScrollControlled = false,
-    double sheetScrollControlDisabledMaxHeightRatio = 9.0 / 16.0,
+    double scrollControlDisabledMaxHeightRatio = _defaultScrollControlDisabledMaxHeightRatio,
   }) {
     final isSelectionValid = selectionValidation ?? _defaultSelectionValidation;
-    final hasCustomBody = sheetBody != null;
     var selectedValues = List<T>.from(selectedItems);
 
-    final Widget body;
-    if (hasCustomBody) {
-      body = sheetBody;
-    } else {
-      body = StatefulBuilder(
+    showSBBBottomSheet(
+      context: context,
+      title: sheetTitle,
+      titleText: sheetTitleText,
+      leading: sheetLeading,
+      leadingIconData: sheetLeadingIconData,
+      trailing: sheetTrailing,
+      trailingIconData: sheetTrailingIconData,
+      style: sheetStyle,
+      barrierLabel: sheetBarrierLabel,
+      useRootNavigator: sheetUseRootNavigator,
+      isDismissible: sheetIsDismissible,
+      enableDrag: sheetEnableDrag,
+      useSafeArea: sheetUseSafeArea,
+      transitionAnimationController: sheetTransitionAnimationController,
+      sheetAnimationStyle: sheetAnimationStyle,
+      showCloseButton: sheetShowCloseButton,
+      isScrollControlled: false,
+      scrollControlDisabledMaxHeightRatio: scrollControlDisabledMaxHeightRatio,
+      body: StatefulBuilder(
         builder: (context, setModalState) {
           return Column(
             mainAxisSize: .min,
@@ -272,29 +265,7 @@ class SBBMultiDropdown<T> extends StatelessWidget {
             ],
           );
         },
-      );
-    }
-
-    showSBBBottomSheet(
-      context: context,
-      title: sheetTitle,
-      titleText: sheetTitleText,
-      leading: sheetLeading,
-      leadingIconData: sheetLeadingIconData,
-      trailing: sheetTrailing,
-      trailingIconData: sheetTrailingIconData,
-      style: sheetStyle,
-      barrierLabel: sheetBarrierLabel,
-      useRootNavigator: sheetUseRootNavigator,
-      isDismissible: sheetIsDismissible,
-      enableDrag: sheetEnableDrag,
-      useSafeArea: sheetUseSafeArea,
-      transitionAnimationController: sheetTransitionAnimationController,
-      sheetAnimationStyle: sheetAnimationStyle,
-      showCloseButton: sheetShowCloseButton,
-      isScrollControlled: hasCustomBody ? sheetIsScrollControlled : false,
-      scrollControlDisabledMaxHeightRatio: hasCustomBody ? 9.0 / 16.0 : sheetScrollControlDisabledMaxHeightRatio,
-      body: body,
+      ),
     );
   }
 

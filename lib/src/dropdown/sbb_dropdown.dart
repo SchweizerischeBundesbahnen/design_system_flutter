@@ -3,11 +3,12 @@ import 'package:flutter/material.dart';
 import '../../sbb_design_system_mobile.dart';
 
 // ALL TODOS apply to both SBBDropdown as well as SBBMultiDropdown
-// TODO: make possible customisation of the items in the bottom sheet list
 // TODO: follow v5 theming / styling (like e.g. SBBChip with SBBChipStyle, SBBChipThemeData, etc. - think about the necessary / obvious fields for the corresponding ThemeData)
 // TODO: documentation (write precise, clear documentation following the style found in e.g. SBBChip)
 // TODO: migration (write a short, precise migration section in the correct alphabetical order in migration_guide_v5.md)
 // TODO: tests
+
+const _defaultScrollControlDisabledMaxHeightRatio = 9.0 / 16.0;
 
 /// SBB Select (single value). Use according to documentation.
 ///
@@ -45,10 +46,8 @@ class SBBDropdown<T> extends StatelessWidget {
     this.sheetUseSafeArea = true,
     this.sheetTransitionAnimationController,
     this.sheetAnimationStyle,
+    this.scrollControlDisabledMaxHeightRatio,
     this.sheetShowCloseButton = true,
-    this.sheetBody,
-    this.sheetIsScrollControlled = false,
-    this.sheetScrollControlDisabledMaxHeightRatio = 9.0 / 16.0,
   });
 
   // Trigger parameters
@@ -119,29 +118,11 @@ class SBBDropdown<T> extends StatelessWidget {
   /// An optional animation style for the sheet.
   final AnimationStyle? sheetAnimationStyle;
 
+  final double? scrollControlDisabledMaxHeightRatio;
+
   /// Whether to show a close button in the sheet header.
   /// Defaults to true.
   final bool sheetShowCloseButton;
-
-  /// A custom body widget for the bottom sheet.
-  ///
-  /// When null, the sheet will display a scroll-controlled [ListView] of
-  /// [SBBRadioListItem]s. In that case, [sheetIsScrollControlled] and
-  /// [sheetScrollControlDisabledMaxHeightRatio] are ignored and `isScrollControlled`
-  /// is set to `true`.
-  final Widget? sheetBody;
-
-  /// Whether the bottom sheet can expand to full screen height.
-  ///
-  /// Only respected when a custom [sheetBody] is given. Otherwise `true` is used.
-  /// Defaults to false.
-  final bool sheetIsScrollControlled;
-
-  /// The max height ratio when [sheetIsScrollControlled] is false.
-  ///
-  /// Only respected when a custom [sheetBody] is given. Otherwise ignored.
-  /// Defaults to 9.0 / 16.0.
-  final double sheetScrollControlDisabledMaxHeightRatio;
 
   @override
   Widget build(BuildContext context) {
@@ -167,10 +148,9 @@ class SBBDropdown<T> extends StatelessWidget {
         sheetUseSafeArea: sheetUseSafeArea,
         sheetTransitionAnimationController: sheetTransitionAnimationController,
         sheetAnimationStyle: sheetAnimationStyle,
+        scrollControlDisabledMaxHeightRatio:
+            scrollControlDisabledMaxHeightRatio ?? _defaultScrollControlDisabledMaxHeightRatio,
         sheetShowCloseButton: sheetShowCloseButton,
-        sheetBody: sheetBody,
-        sheetIsScrollControlled: sheetIsScrollControlled,
-        sheetScrollControlDisabledMaxHeightRatio: sheetScrollControlDisabledMaxHeightRatio,
       ),
       value: displayValue,
       decoration: _triggerDecorationWithDefaultTrailingIcon,
@@ -209,42 +189,10 @@ class SBBDropdown<T> extends StatelessWidget {
     bool sheetUseSafeArea = true,
     AnimationController? sheetTransitionAnimationController,
     AnimationStyle? sheetAnimationStyle,
+    double scrollControlDisabledMaxHeightRatio = _defaultScrollControlDisabledMaxHeightRatio,
     bool sheetShowCloseButton = true,
-    Widget? sheetBody,
-    bool sheetIsScrollControlled = false,
-    double sheetScrollControlDisabledMaxHeightRatio = 9.0 / 16.0,
   }) {
-    final hasCustomBody = sheetBody != null;
     var selectedValue = value;
-
-    final Widget body;
-    if (hasCustomBody) {
-      body = sheetBody;
-    } else {
-      body = StatefulBuilder(
-        builder: (context, setState) {
-          return SBBRadioGroup<T>(
-            onChanged: (val) {
-              setState(() => selectedValue = val);
-              Navigator.of(context, rootNavigator: sheetUseRootNavigator).pop();
-              onChanged(val);
-            },
-            groupValue: selectedValue,
-            child: SBBContentBox(
-              child: ListView.separated(
-                shrinkWrap: true,
-                itemCount: items.length,
-                separatorBuilder: (context, index) => const SBBDivider(),
-                itemBuilder: (context, index) => SBBRadioListItem<T>(
-                  value: items[index].value,
-                  titleText: items[index].label,
-                ),
-              ),
-            ),
-          );
-        },
-      );
-    }
 
     showSBBBottomSheet(
       context: context,
@@ -263,9 +211,34 @@ class SBBDropdown<T> extends StatelessWidget {
       transitionAnimationController: sheetTransitionAnimationController,
       sheetAnimationStyle: sheetAnimationStyle,
       showCloseButton: sheetShowCloseButton,
-      isScrollControlled: hasCustomBody ? sheetIsScrollControlled : false,
-      scrollControlDisabledMaxHeightRatio: hasCustomBody ? sheetScrollControlDisabledMaxHeightRatio : 9.0 / 16.0,
-      body: body,
+      scrollControlDisabledMaxHeightRatio: scrollControlDisabledMaxHeightRatio,
+      isScrollControlled: false,
+      body: StatefulBuilder(
+        builder: (context, setState) {
+          return SBBRadioGroup<T>(
+            onChanged: (val) {
+              setState(() => selectedValue = val);
+              Navigator.of(context, rootNavigator: sheetUseRootNavigator).pop();
+              onChanged(val);
+            },
+            groupValue: selectedValue,
+            child: SBBContentBox(
+              child: ListView.separated(
+                shrinkWrap: true,
+                itemCount: items.length,
+                separatorBuilder: (context, index) => const SBBDivider(),
+                itemBuilder: (context, index) {
+                  final item = items[index];
+                  return SBBRadioListItem<T>(
+                    value: item.value,
+                    titleText: item.label,
+                  );
+                },
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 }
