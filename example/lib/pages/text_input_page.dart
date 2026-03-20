@@ -101,7 +101,7 @@ class _TextInputPageState extends State<TextInputPage> {
                             enabled: false,
                           ),
                         ],
-                      )
+                      ),
                     ),
                   ),
                 ),
