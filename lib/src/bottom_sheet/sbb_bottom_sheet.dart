@@ -189,61 +189,84 @@ class SBBBottomSheet extends StatelessWidget {
     this.style,
   });
 
+  /// {@template sbb_design_system.bottom_sheet.title}
   /// A custom widget displayed as the sheet's title.
   ///
   /// For simple text titles, use [titleText] instead.
   ///
   /// Cannot be used together with [titleText].
+  /// {@endtemplate}
   final Widget? title;
 
+  /// {@template sbb_design_system.bottom_sheet.titleText}
   /// Text string to display as the sheet's title.
   ///
   /// Cannot be used together with [title].
+  /// {@endtemplate}
   final String? titleText;
 
-  /// A custom widget displayed at the leading edge of the header.
+  /// {@template sbb_design_system.bottom_sheet.leading}
+  /// A custom widget displayed at the leading edge of the sheet header.
   ///
   /// For icon-only leading content, use [leadingIconData] instead.
   ///
   /// Cannot be used together with [leadingIconData].
+  /// {@endtemplate}
   final Widget? leading;
 
-  /// Icon data for an icon displayed at the leading edge of the header.
+  /// {@template sbb_design_system.bottom_sheet.leadingIconData}
+  /// Icon data for an icon displayed at the leading edge of the sheet header.
   ///
   /// Cannot be used together with [leading].
+  /// {@endtemplate}
   final IconData? leadingIconData;
 
-  /// A custom widget displayed at the trailing edge of the header.
+  /// {@template sbb_design_system.bottom_sheet.trailing}
+  /// A custom widget displayed at the trailing edge of the sheet header.
   ///
   /// For icon-only trailing content, use [trailingIconData] instead.
   ///
   /// Cannot be used together with [trailingIconData].
+  /// {@endtemplate}
   final Widget? trailing;
 
-  /// Icon data for an icon displayed at the trailing edge of the header.
+  /// {@template sbb_design_system.bottom_sheet.trailingIconData}
+  /// Icon data for an icon displayed at the trailing edge of the sheet header.
   ///
   /// Cannot be used together with [trailing].
+  /// {@endtemplate}
   final IconData? trailingIconData;
 
   /// The main content widget of the bottom sheet.
   final Widget body;
 
-  /// Whether to show a close button in the header.
+  /// {@template sbb_design_system.bottom_sheet.showCloseButton}
+  /// Whether to show a close button in the sheet header.
+  ///
+  /// The close button dismisses the sheet when tapped. It is only shown when
+  /// [isDismissible] is also true (enforced by [showSBBBottomSheet]).
+  ///
+  /// Defaults to true.
+  /// {@endtemplate}
   final bool showCloseButton;
 
-  /// Whether to use the root navigator when popping the sheet.
+  /// {@template sbb_design_system.bottom_sheet.useRootNavigator}
+  /// Whether to use the root navigator when showing or dismissing the sheet.
   ///
-  /// When true, [Navigator.of] will use [rootNavigator: true] to dismiss
-  /// the sheet. This is useful when the sheet needs to be dismissed from
-  /// a context that is not the direct parent of the sheet.
+  /// When true, [Navigator.of] is called with `rootNavigator: true`. This is
+  /// useful when the sheet needs to be dismissed from a context that is not the
+  /// direct parent of the sheet.
   ///
-  /// Defaults to false.
+  /// Defaults to true in [showSBBBottomSheet], false in [SBBBottomSheet].
+  /// {@endtemplate}
   final bool useRootNavigator;
 
-  /// Customizes this sheet's appearance.
+  /// {@template sbb_design_system.bottom_sheet.style}
+  /// Customizes the bottom sheet's appearance.
   ///
   /// Non-null properties of this style override the corresponding
   /// properties from the theme's default [SBBBottomSheetStyle].
+  /// {@endtemplate}
   final SBBBottomSheetStyle? style;
 
   @override

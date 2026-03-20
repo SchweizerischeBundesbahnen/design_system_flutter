@@ -5,20 +5,68 @@ import '../../sbb_design_system_mobile.dart';
 
 const _defaultScrollControlDisabledMaxHeightRatio = 9.0 / 16.0;
 
-/// Signature for custom selection validation to be used in [SBBMultiDropdown] to
-/// determine whether the submit button is enabled or not.
+/// Signature for custom selection validation used in [SBBMultiDropdown] to
+/// determine whether the confirm button is enabled.
 ///
-/// The type `T` is the type of the value the entry represents. All the entries
-/// in a given menu must represent values with consistent types.
+/// Receives the original [oldSelection] that was active when the sheet opened
+/// and the current [newSelection] reflecting the user's latest choices. Return
+/// true to enable the confirm button, false to disable it.
+///
+/// The type `T` is the type of the value each entry represents. All entries in
+/// a given menu must have consistent types.
 typedef SBBMultiDropdownValidation<T> = bool Function(List<T> oldSelection, List<T> newSelection);
 
-/// SBB Select (multiple values). Use according to documentation.
+/// The SBB Dropdown (multiple values).
+///
+/// Displays a trigger field that, when tapped, opens an [SBBBottomSheet] with a
+/// scrollable list of checkbox items. The user may select any combination of
+/// items and confirms the selection with a primary button.
+///
+/// The trigger widget itself does not hold selection state: when the user confirms the
+/// selection it calls [onChanged] with the new list and relies on its parent to
+/// rebuild it with an updated [selectedItems] value. The selection in the bottom sheet
+/// is updated by the widget itself.
+///
+/// If [onChanged] is null the trigger is displayed as disabled and will not
+/// respond to input gestures.
+///
+/// Use [triggerDecoration] to customise the trigger's label, icons, error text,
+/// and other decoration properties. By default a [SBBIcons.chevron_small_down_small]
+/// trailing icon is added automatically unless a custom trailing widget is provided.
+///
+/// Use [selectionValidation] to control when the confirm button is enabled. The
+/// default validation disables the button when the new selection is identical
+/// to the original selection.
+///
+/// Requires one of its ancestors to be a [Material] widget.
+///
+/// For documentation of trigger parameters, see [SBBDecoratedText].
+///
+/// For documentation of sheet parameters, see [SBBBottomSheet].
 ///
 /// See also:
 ///
-/// * [SBBDropdown], variant for single value
-/// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/select>
+/// * [SBBDropdown], variant for selecting a single value.
+/// * [SBBMultiDropdown.showMenu], which opens the selection sheet imperatively.
+/// * [SBBDropdownItem], the model for each selectable entry.
+/// * [SBBMultiDropdownValidation], the signature for custom validation callbacks.
+/// * [SBBDecoratedText], the widget used as a trigger.
+/// * [SBBBottomSheet], the widget used to display the possible items.
+/// * [Figma design specs](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=326-8495&) (internal)
+/// * <https://digital.sbb.ch/de/design-system/mobile/components/dropdown>
 class SBBMultiDropdown<T> extends StatelessWidget {
+  /// Creates an SBB Dropdown (multiple values).
+  ///
+  /// The following arguments are required:
+  ///
+  /// * [selectedItems], which is the list of currently selected values.
+  /// * [items], which is the list of [SBBDropdownItem]s shown in the sheet.
+  /// * [onChanged], which is called when the user confirms a new selection. If
+  ///   null, the trigger is disabled.
+  ///
+  /// For documentation of trigger parameters, see [SBBDecoratedText].
+  ///
+  /// For documentation of sheet parameters, see [SBBBottomSheet].
   const SBBMultiDropdown({
     super.key,
     // decorated text / trigger parameters
@@ -50,84 +98,85 @@ class SBBMultiDropdown<T> extends StatelessWidget {
     this.sheetUseSafeArea = true,
     this.sheetTransitionAnimationController,
     this.sheetAnimationStyle,
-    this.scrollControlDisabledMaxHeightRatio,
+    this.sheetScrollControlDisabledMaxHeightRatio,
     this.sheetShowCloseButton = true,
   });
 
-  // Trigger parameters
+  /// Decoration applied to the trigger field.
+  ///
+  /// Customises the label, placeholder, icons, error text, and other visual
+  /// elements of the trigger. See [SBBInputDecoration] for available options.
+  ///
+  /// When neither [SBBInputDecoration.trailing] nor
+  /// [SBBInputDecoration.trailingIconData] is set, a
+  /// [SBBIcons.chevron_small_down_small] icon is added automatically.
+  ///
+  /// Theme defaults are applied from [SBBDropdownThemeData.triggerDecorationTheme].
   final SBBInputDecoration? triggerDecoration;
   final int? triggerMaxLines;
   final int? triggerMinLines;
   final bool triggerExpands;
   final FocusNode? triggerFocusNode;
   final bool triggerAutofocus;
+
+  /// Customizes the visual appearance of the trigger field.
+  ///
+  /// Non-null properties override the corresponding properties in
+  /// [SBBDropdownThemeData.triggerStyle] from the current theme.
   final SBBDecoratedTextStyle? triggerStyle;
 
-  // Dropdown parameters
+  /// Allows a custom label for the confirmation button at the bottom of the sheet.
+  ///
+  /// Defaults to `MaterialLocalizations.of(context).okButtonLabel`.
   final String? confirmButtonLabel;
+
+  /// The currently selected values, or empty when nothing is selected.
+  ///
+  /// The trigger displays the [SBBDropdownItem.label] of the matching item.
   final List<T> selectedItems;
+
+  /// The list of items displayed in the selection sheet.
+  ///
+  /// Each entry must have a unique [SBBDropdownItem.value]. All entries must
+  /// represent values of the same type `T`.
   final List<SBBDropdownItem<T>> items;
+
+  /// Called when the user selects an item from the sheet.
+  ///
+  /// The dropdown calls this callback with the chosen value but does not update
+  /// its own internal state. The parent should update [selectedItem] and rebuild
+  /// the widget accordingly.
+  ///
+  /// If this callback is null, the trigger is displayed as disabled and will not
+  /// respond to taps.
   final ValueChanged<List<T>>? onChanged;
+
+  /// Receives the original [oldSelection] that was active when the sheet opened
+  /// and the current [newSelection] reflecting the user's latest choices. Return
+  /// true to enable the confirm button, false to disable it.
+  ///
+  /// Defaults to `!ListEquality().equals(oldSelection, newSelection)`.
   final SBBMultiDropdownValidation<T>? selectionValidation;
 
-  // Bottom sheet parameters
-
-  /// A custom widget displayed as the sheet's title.
-  /// Cannot be used together with [sheetTitleText].
   final Widget? sheetTitle;
-
-  /// Text string to display as the sheet's title.
-  /// Cannot be used together with [sheetTitle].
   final String? sheetTitleText;
-
-  /// A custom widget displayed at the leading edge of the sheet header.
-  /// Cannot be used together with [sheetLeadingIconData].
   final Widget? sheetLeading;
-
-  /// Icon data for an icon displayed at the leading edge of the sheet header.
-  /// Cannot be used together with [sheetLeading].
   final IconData? sheetLeadingIconData;
-
-  /// A custom widget displayed at the trailing edge of the sheet header.
-  /// Cannot be used together with [sheetTrailingIconData].
   final Widget? sheetTrailing;
-
-  /// Icon data for an icon displayed at the trailing edge of the sheet header.
-  /// Cannot be used together with [sheetTrailing].
   final IconData? sheetTrailingIconData;
 
-  /// Customizes the bottom sheet's appearance.
+  /// Customizes the bottom sheet appearance.
+  ///
+  /// Theme defaults are applied from [SBBDropdownThemeData.sheetStyle].
   final SBBBottomSheetStyle? sheetStyle;
-
-  /// The semantic label of the dialog used by accessibility frameworks.
   final String? sheetBarrierLabel;
-
-  /// Whether to use the root navigator when showing/popping the sheet.
-  /// Defaults to true.
   final bool sheetUseRootNavigator;
-
-  /// Whether the sheet can be dismissed by tapping outside.
-  /// Defaults to true.
   final bool sheetIsDismissible;
-
-  /// Whether the sheet can be dismissed by dragging downward.
-  /// Defaults to true.
   final bool sheetEnableDrag;
-
-  /// Whether to wrap the sheet in a [SafeArea].
-  /// Defaults to true.
   final bool sheetUseSafeArea;
-
-  /// An optional animation controller for the sheet's transition.
   final AnimationController? sheetTransitionAnimationController;
-
-  /// An optional animation style for the sheet.
   final AnimationStyle? sheetAnimationStyle;
-
-  final double? scrollControlDisabledMaxHeightRatio;
-
-  /// Whether to show a close button in the sheet header.
-  /// Defaults to true.
+  final double? sheetScrollControlDisabledMaxHeightRatio;
   final bool sheetShowCloseButton;
 
   @override
@@ -161,7 +210,7 @@ class SBBMultiDropdown<T> extends StatelessWidget {
         sheetAnimationStyle: sheetAnimationStyle,
         sheetShowCloseButton: sheetShowCloseButton,
         scrollControlDisabledMaxHeightRatio:
-            scrollControlDisabledMaxHeightRatio ?? _defaultScrollControlDisabledMaxHeightRatio,
+            sheetScrollControlDisabledMaxHeightRatio ?? _defaultScrollControlDisabledMaxHeightRatio,
       ),
       value: displayValue,
       decoration: _effectiveTriggerDecoration(context),
