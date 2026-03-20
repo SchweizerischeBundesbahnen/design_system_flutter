@@ -297,7 +297,7 @@ class SBBListItem extends StatefulWidget {
   ///
   /// See also [SBBDivider] for using the same underlying widget
   /// in indexed builder methods (e.g. [ListView.separated]).
-  static Iterable<Widget> divideListItems({
+  static List<Widget> divideListItems({
     BuildContext? context,
     required Iterable<Widget> items,
     Color? color,
@@ -306,7 +306,7 @@ class SBBListItem extends StatefulWidget {
     items = items.toList();
 
     if (items.isEmpty || items.length == 1) {
-      return items;
+      return items.toList();
     }
 
     final resolvedColor = color ?? Theme.of(context!).dividerColor;

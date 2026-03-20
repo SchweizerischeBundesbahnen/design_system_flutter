@@ -41,7 +41,6 @@ class DecoratedTextPage extends StatelessWidget {
                           sbbToast.show(titleText: 'Empty');
                         },
                       ),
-
                       SBBDecoratedText(
                         decoration: SBBInputDecoration(labelText: 'Label', leadingIconData: SBBIcons.dog_small),
                         value: 'Value',
@@ -122,7 +121,7 @@ class DecoratedTextPage extends StatelessWidget {
                         ),
                       ),
                     ],
-                  ).toList(growable: false),
+                  ),
                 ),
               ),
               SizedBox(height: SBBSpacing.medium),
@@ -207,28 +206,6 @@ class DecoratedTextPage extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class ExtendedTheme<T extends ThemeExtension<T>> extends StatelessWidget {
-  const ExtendedTheme({
-    super.key,
-    required this.style,
-    required this.child,
-  });
-
-  final ThemeExtension<T> style;
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return AnimatedTheme(
-      data: theme.copyWith(
-        extensions: {...theme.extensions, T: style}.values,
-      ),
-      child: child,
     );
   }
 }

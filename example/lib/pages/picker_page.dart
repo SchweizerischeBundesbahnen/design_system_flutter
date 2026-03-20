@@ -73,10 +73,9 @@ class _PickerPageState extends State<PickerPage> {
                     },
                   ),
                 ],
-              ).toList(growable: false),
+              ),
             ),
           ),
-
           const SizedBox(height: SBBSpacing.medium),
           const SBBListHeader('Date Time Picker (date & time)'),
           SBBContentBox(
@@ -130,30 +129,6 @@ class _PickerPageState extends State<PickerPage> {
           ),
         ],
       ),
-    );
-  }
-}
-
-/// Overrides and/or extends the current theme with a [ThemeExtension] for
-/// the given [child]. The theme change is animated.
-class ExtendedTheme<T extends ThemeExtension<T>> extends StatelessWidget {
-  const ExtendedTheme({
-    super.key,
-    required this.themeData,
-    required this.child,
-  });
-
-  final ThemeExtension<T> themeData;
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return AnimatedTheme(
-      data: theme.copyWith(
-        extensions: {...theme.extensions, T: themeData}.values,
-      ),
-      child: child,
     );
   }
 }

@@ -157,7 +157,7 @@ class RadioPageState extends State<RadioPage> {
                           isLoading: _listItemGroupValue != 8,
                         ),
                       ],
-                    ).toList(growable: false),
+                    ),
                   ),
                 ),
               ),

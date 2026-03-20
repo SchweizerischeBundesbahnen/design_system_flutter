@@ -84,7 +84,7 @@ class ListItemPage extends StatelessWidget {
                         isLoading: true,
                       ),
                     ],
-                  ).toList(),
+                  ),
                 ),
               ),
               SizedBox(height: SBBSpacing.medium),
