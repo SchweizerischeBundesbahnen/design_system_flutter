@@ -30,12 +30,6 @@ class _PickerPageState extends State<PickerPage> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final textInputDecorationTheme = theme.sbbInputDecorationTheme;
-    final withHorizontalPadding = textInputDecorationTheme?.copyWith(
-      contentPadding: EdgeInsets.symmetric(horizontal: SBBSpacing.medium),
-    );
-
     return SingleChildScrollView(
       padding: const .symmetric(vertical: SBBSpacing.medium, horizontal: SBBSpacing.xSmall),
       child: Column(
@@ -43,45 +37,42 @@ class _PickerPageState extends State<PickerPage> {
           const ThemeModeSegmentedButton(),
           const SizedBox(height: SBBSpacing.medium),
           const SBBListHeader('Picker input fields'),
-          ExtendedTheme(
-            themeData: withHorizontalPadding!,
-            child: SBBContentBox(
-              child: Column(
-                children: SBBListItem.divideListItems(
-                  context: context,
-                  items: [
-                    SBBDateInput(
-                      value: _selectedDate,
-                      labelText: 'Date only',
-                      onDateChanged: (date) {
-                        debugPrint('selected date: $date');
-                        setState(() {
-                          _selectedDate = date;
-                        });
-                      },
-                    ),
-                    SBBDateTimeInput(
-                      value: _selectedDateTime,
-                      labelText: 'Date and time',
-                      onDateTimeChanged: (dateTime) {
-                        debugPrint('selected date time: $dateTime');
-                        setState(() {
-                          _selectedDateTime = dateTime;
-                        });
-                      },
-                    ),
-                    SBBTimeInput(
-                      value: _selectedTime,
-                      labelText: 'Time only',
-                      onTimeChanged: (time) {
-                        debugPrint('selected time: $time');
-                        setState(() {
-                          _selectedTime = time;
-                        });
-                      },
-                    ),
-                  ],
-                ),
+          SBBContentBox(
+            child: Column(
+              children: SBBListItem.divideListItems(
+                context: context,
+                items: [
+                  SBBDateInput(
+                    value: _selectedDate,
+                    labelText: 'Date only',
+                    onDateChanged: (date) {
+                      debugPrint('selected date: $date');
+                      setState(() {
+                        _selectedDate = date;
+                      });
+                    },
+                  ),
+                  SBBDateTimeInput(
+                    value: _selectedDateTime,
+                    labelText: 'Date and time',
+                    onDateTimeChanged: (dateTime) {
+                      debugPrint('selected date time: $dateTime');
+                      setState(() {
+                        _selectedDateTime = dateTime;
+                      });
+                    },
+                  ),
+                  SBBTimeInput(
+                    value: _selectedTime,
+                    labelText: 'Time only',
+                    onTimeChanged: (time) {
+                      debugPrint('selected time: $time');
+                      setState(() {
+                        _selectedTime = time;
+                      });
+                    },
+                  ),
+                ],
               ),
             ),
           ),
@@ -138,30 +129,6 @@ class _PickerPageState extends State<PickerPage> {
           ),
         ],
       ),
-    );
-  }
-}
-
-/// Overrides and/or extends the current theme with a [ThemeExtension] for
-/// the given [child]. The theme change is animated.
-class ExtendedTheme<T extends ThemeExtension<T>> extends StatelessWidget {
-  const ExtendedTheme({
-    super.key,
-    required this.themeData,
-    required this.child,
-  });
-
-  final ThemeExtension<T> themeData;
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    return AnimatedTheme(
-      data: theme.copyWith(
-        extensions: {...theme.extensions, T: themeData}.values,
-      ),
-      child: child,
     );
   }
 }
