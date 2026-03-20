@@ -183,8 +183,7 @@ class SBBMultiDropdown<T> extends StatelessWidget {
         sheetScrollControlDisabledMaxHeightRatio: sheetScrollControlDisabledMaxHeightRatio,
       ),
       value: displayValue,
-      decoration: triggerDecoration,
-      // TODO: copy with trailing arrow down
+      decoration: _triggerDecorationWithDefaultTrailingIcon,
       maxLines: triggerMaxLines,
       minLines: triggerMinLines,
       expands: triggerExpands,
@@ -220,7 +219,7 @@ class SBBMultiDropdown<T> extends StatelessWidget {
     bool sheetIsScrollControlled = false,
     double sheetScrollControlDisabledMaxHeightRatio = 9.0 / 16.0,
   }) {
-    final isSelectionValid = selectionValidation ?? defaultSelectionValidation;
+    final isSelectionValid = selectionValidation ?? _defaultSelectionValidation;
     final hasCustomBody = sheetBody != null;
     var selectedValues = List<T>.from(selectedItems);
 
@@ -299,7 +298,14 @@ class SBBMultiDropdown<T> extends StatelessWidget {
     );
   }
 
-  static bool defaultSelectionValidation<T>(List<T> oldSelection, List<T> newSelection) {
+  SBBInputDecoration? get _triggerDecorationWithDefaultTrailingIcon {
+    final baseDecoration = triggerDecoration ?? SBBInputDecoration();
+    if (baseDecoration.trailing != null || baseDecoration.trailingIconData != null) return baseDecoration;
+
+    return baseDecoration.copyWith(trailingIconData: SBBIcons.chevron_small_down_small);
+  }
+
+  static bool _defaultSelectionValidation<T>(List<T> oldSelection, List<T> newSelection) {
     return !ListEquality().equals(oldSelection, newSelection);
   }
 }

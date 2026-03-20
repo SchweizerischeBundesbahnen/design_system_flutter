@@ -173,8 +173,7 @@ class SBBDropdown<T> extends StatelessWidget {
         sheetScrollControlDisabledMaxHeightRatio: sheetScrollControlDisabledMaxHeightRatio,
       ),
       value: displayValue,
-      decoration: triggerDecoration,
-      // TODO: copy with trailing arrow down
+      decoration: _triggerDecorationWithDefaultTrailingIcon,
       maxLines: triggerMaxLines,
       minLines: triggerMinLines,
       expands: triggerExpands,
@@ -182,6 +181,13 @@ class SBBDropdown<T> extends StatelessWidget {
       autofocus: triggerAutofocus,
       style: triggerStyle,
     );
+  }
+
+  SBBInputDecoration? get _triggerDecorationWithDefaultTrailingIcon {
+    final baseDecoration = triggerDecoration ?? SBBInputDecoration();
+    if (baseDecoration.trailing != null || baseDecoration.trailingIconData != null) return baseDecoration;
+
+    return baseDecoration.copyWith(trailingIconData: SBBIcons.chevron_small_down_small);
   }
 
   static void showMenu<T>({
