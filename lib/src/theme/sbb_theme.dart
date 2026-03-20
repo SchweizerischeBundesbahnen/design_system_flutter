@@ -42,6 +42,7 @@ class SBBTheme {
     SBBContentBoxThemeData? contentBoxTheme,
     SBBControlStyles? controlStyles,
     SBBDecoratedTextThemeData? decoratedTextTheme,
+    SBBDropdownThemeData? dropdownTheme,
     SBBHeaderThemeData? headerTheme,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBInputDecorationThemeData? inputDecorationTheme,
@@ -73,6 +74,7 @@ class SBBTheme {
     contentBoxTheme: contentBoxTheme,
     controlStyles: controlStyles,
     decoratedTextTheme: decoratedTextTheme,
+    dropdownTheme: dropdownTheme,
     headerTheme: headerTheme,
     headerBoxStyle: headerBoxStyle,
     inputDecorationTheme: inputDecorationTheme,
@@ -105,6 +107,7 @@ class SBBTheme {
     SBBContentBoxThemeData? contentBoxTheme,
     SBBControlStyles? controlStyles,
     SBBDecoratedTextThemeData? decoratedTextTheme,
+    SBBDropdownThemeData? dropdownTheme,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBInputDecorationThemeData? inputDecorationTheme,
     SBBListHeaderThemeData? listHeaderTheme,
@@ -135,6 +138,7 @@ class SBBTheme {
     contentBoxTheme: contentBoxTheme,
     controlStyles: controlStyles,
     decoratedTextTheme: decoratedTextTheme,
+    dropdownTheme: dropdownTheme,
     headerBoxStyle: headerBoxStyle,
     inputDecorationTheme: inputDecorationTheme,
     listHeaderTheme: listHeaderTheme,
@@ -168,6 +172,7 @@ class SBBTheme {
     SBBControlStyles? controlStyles,
     SBBContentBoxThemeData? contentBoxTheme,
     SBBDecoratedTextThemeData? decoratedTextTheme,
+    SBBDropdownThemeData? dropdownTheme,
     SBBHeaderThemeData? headerTheme,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBInputDecorationThemeData? inputDecorationTheme,
@@ -270,6 +275,13 @@ class SBBTheme {
     final defaultInputDecorationTheme = DefaultSBBInputDecorationThemeData(mergedBaseStyle);
     final mergedInputDecorationTheme = defaultInputDecorationTheme.merge(inputDecorationTheme);
 
+    final defaultDropdownTheme = SBBDropdownThemeData(
+      triggerDecorationTheme: defaultInputDecorationTheme,
+      triggerStyle: defaultDecoratedTextTheme.style,
+      sheetStyle: defaultBottomSheetTheme.style,
+    );
+    final mergedDropdownTheme = defaultDropdownTheme.merge(dropdownTheme);
+
     return raw(
       brightness: brightness,
       baseStyle: mergedBaseStyle,
@@ -283,6 +295,7 @@ class SBBTheme {
       controlStyles: mergedControlStyles,
       contentBoxTheme: mergedContentBoxTheme,
       decoratedTextTheme: mergedDecoratedTextTheme,
+      dropdownTheme: mergedDropdownTheme,
       headerTheme: mergedHeaderTheme,
       headerBoxStyle: mergedHeaderBoxStyle,
       inputDecorationTheme: mergedInputDecorationTheme,
@@ -316,6 +329,7 @@ class SBBTheme {
     required SBBContentBoxThemeData contentBoxTheme,
     required SBBControlStyles controlStyles,
     required SBBDecoratedTextThemeData decoratedTextTheme,
+    required SBBDropdownThemeData dropdownTheme,
     required SBBHeaderThemeData headerTheme,
     required SBBHeaderBoxStyle headerBoxStyle,
     required SBBInputDecorationThemeData inputDecorationTheme,
@@ -366,6 +380,7 @@ class SBBTheme {
         chipTheme,
         controlStyles,
         decoratedTextTheme,
+        dropdownTheme,
         headerTheme,
         headerBoxStyle,
         inputDecorationTheme,

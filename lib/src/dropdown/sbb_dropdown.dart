@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../sbb_design_system_mobile.dart';
 
 // ALL TODOS apply to both SBBDropdown as well as SBBMultiDropdown
-// TODO: follow v5 theming / styling (like e.g. SBBChip with SBBChipStyle, SBBChipThemeData, etc. - think about the necessary / obvious fields for the corresponding ThemeData)
 // TODO: documentation (write precise, clear documentation following the style found in e.g. SBBChip)
 // TODO: migration (write a short, precise migration section in the correct alphabetical order in migration_guide_v5.md)
 // TODO: tests
@@ -153,21 +152,28 @@ class SBBDropdown<T> extends StatelessWidget {
         sheetShowCloseButton: sheetShowCloseButton,
       ),
       value: displayValue,
-      decoration: _triggerDecorationWithDefaultTrailingIcon,
+      decoration: _effectiveTriggerDecoration(context),
       maxLines: triggerMaxLines,
       minLines: triggerMinLines,
       expands: triggerExpands,
       focusNode: triggerFocusNode,
       autofocus: triggerAutofocus,
-      style: triggerStyle,
+      style: _effectiveTriggerStyle(context),
     );
   }
 
-  SBBInputDecoration? get _triggerDecorationWithDefaultTrailingIcon {
-    final baseDecoration = triggerDecoration ?? SBBInputDecoration();
-    if (baseDecoration.trailing != null || baseDecoration.trailingIconData != null) return baseDecoration;
+  SBBDecoratedTextStyle? _effectiveTriggerStyle(BuildContext context) {
+    final themeTriggerStyle = Theme.of(context).sbbDropdownTheme?.triggerStyle;
+    return themeTriggerStyle?.merge(triggerStyle) ?? triggerStyle;
+  }
 
-    return baseDecoration.copyWith(trailingIconData: SBBIcons.chevron_small_down_small);
+  SBBInputDecoration _effectiveTriggerDecoration(BuildContext context) {
+    final themeDecoration = Theme.of(context).sbbDropdownTheme?.triggerDecorationTheme;
+    final base = (triggerDecoration ?? const SBBInputDecoration()).applyThemeValues(themeDecoration);
+
+    if (base.trailing != null || base.trailingIconData != null) return base;
+
+    return base.copyWith(trailingIconData: SBBIcons.chevron_small_down_small);
   }
 
   static void showMenu<T>({
@@ -202,7 +208,7 @@ class SBBDropdown<T> extends StatelessWidget {
       leadingIconData: sheetLeadingIconData,
       trailing: sheetTrailing,
       trailingIconData: sheetTrailingIconData,
-      style: sheetStyle,
+      style: _effectiveSheetStyle(sheetStyle, context),
       barrierLabel: sheetBarrierLabel,
       useRootNavigator: sheetUseRootNavigator,
       isDismissible: sheetIsDismissible,
@@ -240,5 +246,10 @@ class SBBDropdown<T> extends StatelessWidget {
         },
       ),
     );
+  }
+
+  static SBBBottomSheetStyle? _effectiveSheetStyle(SBBBottomSheetStyle? sheetStyle, BuildContext context) {
+    final themeDropdownSheetStyle = Theme.of(context).sbbDropdownTheme?.sheetStyle;
+    return themeDropdownSheetStyle?.merge(sheetStyle) ?? sheetStyle;
   }
 }

@@ -164,14 +164,28 @@ class SBBMultiDropdown<T> extends StatelessWidget {
             scrollControlDisabledMaxHeightRatio ?? _defaultScrollControlDisabledMaxHeightRatio,
       ),
       value: displayValue,
-      decoration: _triggerDecorationWithDefaultTrailingIcon,
+      decoration: _effectiveTriggerDecoration(context),
       maxLines: triggerMaxLines,
       minLines: triggerMinLines,
       expands: triggerExpands,
       focusNode: triggerFocusNode,
       autofocus: triggerAutofocus,
-      style: triggerStyle,
+      style: _effectiveTriggerStyle(context),
     );
+  }
+
+  SBBDecoratedTextStyle? _effectiveTriggerStyle(BuildContext context) {
+    final themeTriggerStyle = Theme.of(context).sbbDropdownTheme?.triggerStyle;
+    return themeTriggerStyle?.merge(triggerStyle) ?? triggerStyle;
+  }
+
+  SBBInputDecoration _effectiveTriggerDecoration(BuildContext context) {
+    final themeDecoration = Theme.of(context).sbbDropdownTheme?.triggerDecorationTheme;
+    final base = (triggerDecoration ?? const SBBInputDecoration()).applyThemeValues(themeDecoration);
+
+    if (base.trailing != null || base.trailingIconData != null) return base;
+
+    return base.copyWith(trailingIconData: SBBIcons.chevron_small_down_small);
   }
 
   static void showMenu<T>({
@@ -209,7 +223,7 @@ class SBBMultiDropdown<T> extends StatelessWidget {
       leadingIconData: sheetLeadingIconData,
       trailing: sheetTrailing,
       trailingIconData: sheetTrailingIconData,
-      style: sheetStyle,
+      style: _effectiveSheetStyle(sheetStyle, context),
       barrierLabel: sheetBarrierLabel,
       useRootNavigator: sheetUseRootNavigator,
       isDismissible: sheetIsDismissible,
@@ -269,14 +283,12 @@ class SBBMultiDropdown<T> extends StatelessWidget {
     );
   }
 
-  SBBInputDecoration? get _triggerDecorationWithDefaultTrailingIcon {
-    final baseDecoration = triggerDecoration ?? SBBInputDecoration();
-    if (baseDecoration.trailing != null || baseDecoration.trailingIconData != null) return baseDecoration;
-
-    return baseDecoration.copyWith(trailingIconData: SBBIcons.chevron_small_down_small);
-  }
-
   static bool _defaultSelectionValidation<T>(List<T> oldSelection, List<T> newSelection) {
     return !ListEquality().equals(oldSelection, newSelection);
+  }
+
+  static SBBBottomSheetStyle? _effectiveSheetStyle(SBBBottomSheetStyle? sheetStyle, BuildContext context) {
+    final themeDropdownSheetStyle = Theme.of(context).sbbDropdownTheme?.sheetStyle;
+    return themeDropdownSheetStyle?.merge(sheetStyle) ?? sheetStyle;
   }
 }
