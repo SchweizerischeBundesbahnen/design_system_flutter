@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
@@ -230,33 +231,35 @@ class SBBMultiDropdown<T> extends StatelessWidget {
       body = StatefulBuilder(
         builder: (context, setModalState) {
           return Column(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: .spaceBetween,
             children: [
-              SBBContentBox(
-                child: ListView.separated(
-                  shrinkWrap: true,
-                  itemCount: items.length,
-                  separatorBuilder: (context, index) => const SBBDivider(),
-                  itemBuilder: (context, index) {
-                    final item = items[index];
-                    return SBBCheckboxListItem(
-                      value: selectedValues.contains(item.value),
-                      titleText: item.label,
-                      onChanged: (checked) {
-                        setModalState(() {
-                          if (checked == true) {
-                            selectedValues = List.from(selectedValues)..add(item.value);
-                          } else {
-                            selectedValues = List.from(selectedValues)..remove(item.value);
-                          }
-                        });
-                      },
-                    );
-                  },
+              Flexible(
+                child: SBBContentBox(
+                  child: ListView.separated(
+                    shrinkWrap: true,
+                    itemCount: items.length,
+                    separatorBuilder: (context, index) => const SBBDivider(),
+                    itemBuilder: (context, index) {
+                      final item = items[index];
+                      return SBBCheckboxListItem(
+                        value: selectedValues.contains(item.value),
+                        titleText: item.label,
+                        onChanged: (checked) {
+                          setModalState(() {
+                            if (checked == true) {
+                              selectedValues = List.from(selectedValues)..add(item.value);
+                            } else {
+                              selectedValues = List.from(selectedValues)..remove(item.value);
+                            }
+                          });
+                        },
+                      );
+                    },
+                  ),
                 ),
               ),
               Padding(
-                padding: const .only(top: SBBSpacing.small),
+                padding: const .only(top: SBBSpacing.medium),
                 child: SBBPrimaryButton(
                   labelText: confirmButtonLabelText ?? MaterialLocalizations.of(context).okButtonLabel,
                   onPressed: isSelectionValid(selectedItems, selectedValues)
@@ -290,16 +293,13 @@ class SBBMultiDropdown<T> extends StatelessWidget {
       transitionAnimationController: sheetTransitionAnimationController,
       sheetAnimationStyle: sheetAnimationStyle,
       showCloseButton: sheetShowCloseButton,
-      isScrollControlled: hasCustomBody ? sheetIsScrollControlled : true,
-      scrollControlDisabledMaxHeightRatio: hasCustomBody ? sheetScrollControlDisabledMaxHeightRatio : 9.0 / 16.0,
+      isScrollControlled: hasCustomBody ? sheetIsScrollControlled : false,
+      scrollControlDisabledMaxHeightRatio: hasCustomBody ? 9.0 / 16.0 : sheetScrollControlDisabledMaxHeightRatio,
       body: body,
     );
   }
 
   static bool defaultSelectionValidation<T>(List<T> oldSelection, List<T> newSelection) {
-    if (oldSelection.length != newSelection.length) {
-      return true;
-    }
-    return oldSelection.map((e) => newSelection.contains(e)).contains(false);
+    return !ListEquality().equals(oldSelection, newSelection);
   }
 }
