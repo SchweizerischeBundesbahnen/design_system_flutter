@@ -22,6 +22,8 @@ class DefaultSBBTabBarThemeData extends SBBTabBarThemeData {
           warningItemIcon: SBBIcons.sign_exclamation_point_small,
           warningItemBackgroundColor: SBBColors.red,
           warningItemForegroundColor: SBBColors.white,
+          badgeForegroundColor: SBBColors.white,
+          badgeBackgroundColor: baseStyle.primaryColor,
         ),
       );
 }
