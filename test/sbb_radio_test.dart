@@ -126,7 +126,7 @@ class RadioTest extends StatelessWidget {
                       subtitleText: 'Test',
                     ),
                   ],
-                ).toList(growable: false),
+                ),
               ),
             ),
           ],

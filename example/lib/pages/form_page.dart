@@ -32,7 +32,6 @@ class _FormPageState extends State<FormPage> {
   @override
   Widget build(BuildContext context) {
     final sbbToast = SBBToast.of(context);
-
     return CustomScrollView(
       slivers: [
         SBBSliverHeaderbox.custom(
@@ -108,7 +107,7 @@ class _FormPageState extends State<FormPage> {
                               enabled: false,
                             ),
                           ],
-                        ).toList(growable: false),
+                        ),
                       ),
                     ),
                   ),

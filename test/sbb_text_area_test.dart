@@ -44,7 +44,7 @@ void main() {
                         maxLines: 2,
                       ),
                     ],
-                  ).toList(growable: false),
+                  ),
                 ),
               ),
               SizedBox(height: SBBSpacing.medium),
