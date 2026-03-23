@@ -92,7 +92,7 @@ class _PickerPageState extends State<PickerPage> {
           const SBBListHeader('Date Time Picker (date & time)'),
           SBBContentBox(
             child: SBBDateTimePicker(
-              visibleItemCount: 3,
+              visibleItemCount: 5,
               onDateTimeChanged: (DateTime dateTime) {
                 debugPrint('selected date time: $dateTime');
               },
@@ -120,7 +120,7 @@ class _PickerPageState extends State<PickerPage> {
           const SBBListHeader('Picker (looping)'),
           SBBContentBox(
             child: SBBPicker.list(
-              visibleItemCount: 3,
+              visibleItemCount: 5,
               initialSelectedIndex: 0,
               onSelectedItemChanged: (int index) {
                 final selectedItemIndex = index % _fruitNames.length;

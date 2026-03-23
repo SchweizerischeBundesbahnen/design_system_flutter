@@ -143,8 +143,44 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
   @override
   void didUpdateWidget(covariant SBBPickerScrollView oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.controller != _controller) {
-      _initController();
+
+    final oldController = oldWidget.controller ?? _fallbackController;
+    final controllerChanged = oldWidget.controller != widget.controller;
+    final visibleItemCountChanged = oldWidget.visibleItemCount != widget.visibleItemCount;
+
+    if (controllerChanged || visibleItemCountChanged) {
+      // Read the current selected item from the old (still-attached) controller
+      // before doing anything that may detach or replace it.
+      final previousSelectedItem = oldController?.selectedItem ?? _selectedItemIndexValueNotifier.value;
+
+      if (controllerChanged) {
+        // Remove the scroll listener from the old controller.
+        oldController?.removeListener(_onScrolling);
+        // Dispose the old fallback controller if the widget previously had none.
+        if (oldWidget.controller == null) {
+          _fallbackController?.dispose();
+          _fallbackController = null;
+        }
+        // Create a new fallback controller seeded at the preserved index if needed.
+        if (widget.controller == null) {
+          _fallbackController = SBBPickerScrollController(initialItem: previousSelectedItem);
+        }
+        _controller.addListener(_onScrolling);
+      }
+
+      if (visibleItemCountChanged) {
+        _itemHeight = _calculateItemHeight();
+      }
+
+      _controller._itemHeight = _itemHeight;
+      _applyIndexOffset();
+
+      final selectedItem = _clampIndex(previousSelectedItem);
+      _firstVisibleItemIndexValueNotifier.value = selectedItem - _visibleCenterItemIndex;
+      _selectedItemIndexValueNotifier.value = selectedItem;
+      // Use initialScrollOffset (safe: no position required) as the scroll
+      // offset baseline; _onScrolling will update it once the view attaches.
+      _scrollOffsetValueNotifier.value = _controller.initialScrollOffset;
     }
   }
 
@@ -397,6 +433,7 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
       return _lastIndex!;
     }
 
+    if (!_controller.hasClients) return index;
     final scrollPosition = _controller.position;
     if (scrollPosition.hasContentDimensions) {
       final minScrollExtent = scrollPosition.minScrollExtent;
