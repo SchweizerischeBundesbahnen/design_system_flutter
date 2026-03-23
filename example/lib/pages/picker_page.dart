@@ -92,6 +92,7 @@ class _PickerPageState extends State<PickerPage> {
           const SBBListHeader('Date Time Picker (date & time)'),
           SBBContentBox(
             child: SBBDateTimePicker(
+              visibleItemCount: 3,
               onDateTimeChanged: (DateTime dateTime) {
                 debugPrint('selected date time: $dateTime');
               },

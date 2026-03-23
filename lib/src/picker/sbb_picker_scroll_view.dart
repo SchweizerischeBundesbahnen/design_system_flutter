@@ -56,10 +56,10 @@ class SBBPickerScrollView extends StatefulWidget {
 }
 
 class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
-  // Transform offsets for the 7-item default; used as a "kernel" that is
-  // extended/clipped for other item counts.
-  static const _defaultTransformValues = [-1.0, -2.5, -3.0, 0.0, 3.0, 2.5, 1.0];
-  static const _defaultHeightAdjustments = [-2.0, -1.0, 0.0, 6.0, 0.0, -1.0, -2.0];
+  // Visual parameters for the scroll wheel effect.
+  static const _transformAmplitude = 3.0; // max vertical translate offset in pixels
+  static const _centerHeightBoost = 6.0; // extra height for the selected item in pixels
+  static const _sideHeightShrink = 1.0; // height reduction for non-selected items in pixels
 
   static const _disabledItemOpacity = 0.35;
 
@@ -68,35 +68,31 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
 
   int get _visibleCenterItemIndex => _visibleItemCount ~/ 2;
 
-  /// Returns the per-item vertical transform offsets for the visible items.
-  /// The default 7-item kernel is reused; items further from the center than
-  /// those covered by the kernel receive the outermost kernel value.
-  List<double> get _visibleItemTransformValues {
-    final half = _defaultTransformValues.length ~/ 2; // 3
+  /// Vertical translate offset for an item [d] positions from the center.
+  /// Uses a sine curve so the offset is 0 at the center.
+  double _transformForDist(int d) {
     final sideCount = _visibleCenterItemIndex;
-    return List.generate(_visibleItemCount, (i) {
-      final distFromCenter = i - sideCount;
-      final kernelIdx = half + distFromCenter;
-      // clamp to kernel bounds
-      final clampedIdx = kernelIdx.clamp(0, _defaultTransformValues.length - 1);
-      return _defaultTransformValues[clampedIdx];
-    });
+    if (sideCount == 0) return 0.0;
+    return _transformAmplitude * sin(d * pi / sideCount);
   }
 
-  /// Returns the per-item height adjustments for the visible items.
-  List<double> get _visibleItemHeightAdjustments {
-    final half = _defaultHeightAdjustments.length ~/ 2; // 3
-    final sideCount = _visibleCenterItemIndex;
-    return List.generate(_visibleItemCount, (i) {
-      final distFromCenter = i - sideCount;
-      final kernelIdx = half + distFromCenter;
-      final clampedIdx = kernelIdx.clamp(0, _defaultHeightAdjustments.length - 1);
-      return _defaultHeightAdjustments[clampedIdx];
-    });
+  /// Height adjustment for an item [d] positions from the center.
+  /// The selected item gets a boost; all others are slightly shrunk.
+  double _heightAdjForDist(int d) {
+    return d == 0 ? _centerHeightBoost : -_sideHeightShrink;
   }
 
-  List<double> get _visibleItemHeights =>
-      _visibleItemHeightAdjustments.map((adjustment) => _itemHeight + adjustment).toList();
+  List<double> get _visibleItemTransformValues => List.generate(
+    _visibleItemCount,
+    (i) => _transformForDist(i - _visibleCenterItemIndex),
+  );
+
+  List<double> get _visibleItemHeightAdjustments => List.generate(
+    _visibleItemCount,
+    (i) => _heightAdjForDist(i - _visibleCenterItemIndex),
+  );
+
+  List<double> get _visibleItemHeights => _visibleItemHeightAdjustments.map((a) => _itemHeight + a).toList();
 
   double get _listPaddingHeight => _visibleCenterItemIndex * _itemHeight;
 
