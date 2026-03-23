@@ -1,0 +1,148 @@
+import 'package:flutter/material.dart';
+
+/// Defines the visual properties of [SBBTabBar].
+///
+/// Use this class in combination with [SBBTabBarThemeData] to customize
+/// the appearance of the tab bar throughout your app or for specific widget
+/// subtrees. Pass a [SBBTabBarStyle] directly to [SBBTabBar] to override the
+/// theme for a single instance.
+///
+/// See also:
+/// * [SBBTabBar], the widget that uses this style.
+/// * [SBBTabBarThemeData], which applies this style theme-wide.
+class SBBTabBarStyle {
+  const SBBTabBarStyle({
+    this.backgroundColor,
+    this.iconColor,
+    this.itemBackgroundColor,
+    this.itemLabelTextStyle,
+    this.itemLabelForegroundColor,
+    this.warningItemIcon,
+    this.warningItemBackgroundColor,
+    this.warningItemForegroundColor,
+  });
+
+  /// The background color of the tab bar container.
+  ///
+  /// Typically white in light theme and charcoal in dark theme.
+  final Color? backgroundColor;
+
+  /// The color of the tab item icon.
+  ///
+  /// When the item is selected, the icon uses the foreground color
+  /// (white in light / black in dark); otherwise the background color
+  /// (black in light / white in dark).
+  final WidgetStateProperty<Color?>? iconColor;
+
+  /// The background color of the circular selection indicator behind a tab item.
+  ///
+  /// When selected, it shows the background color (black in light / white in
+  /// dark); when unselected it is transparent.
+  final WidgetStateProperty<Color?>? itemBackgroundColor;
+
+  /// The text style for the tab item label shown below the selected icon.
+  ///
+  /// Corresponds to [SBBTextStyles.smallLight].
+  final TextStyle? itemLabelTextStyle;
+
+  /// The foreground color for the tab item label text.
+  ///
+  /// Typically black in light theme and white in dark theme.
+  final Color? itemLabelForegroundColor;
+
+  /// The icon shown on a tab item when a warning is active and not yet seen.
+  ///
+  /// Defaults to [SBBIcons.sign_exclamation_point_small].
+  final IconData? warningItemIcon;
+
+  /// The background color of the circular badge shown for a warning item.
+  ///
+  /// Defaults to [SBBColors.red].
+  final Color? warningItemBackgroundColor;
+
+  /// The icon/text color shown inside the warning badge.
+  ///
+  /// Defaults to [SBBColors.white].
+  final Color? warningItemForegroundColor;
+
+  SBBTabBarStyle copyWith({
+    Color? backgroundColor,
+    WidgetStateProperty<Color?>? iconColor,
+    WidgetStateProperty<Color?>? itemBackgroundColor,
+    TextStyle? itemLabelTextStyle,
+    Color? itemLabelForegroundColor,
+    IconData? warningItemIcon,
+    Color? warningItemBackgroundColor,
+    Color? warningItemForegroundColor,
+  }) {
+    return SBBTabBarStyle(
+      backgroundColor: backgroundColor ?? this.backgroundColor,
+      iconColor: iconColor ?? this.iconColor,
+      itemBackgroundColor: itemBackgroundColor ?? this.itemBackgroundColor,
+      itemLabelTextStyle: itemLabelTextStyle ?? this.itemLabelTextStyle,
+      itemLabelForegroundColor: itemLabelForegroundColor ?? this.itemLabelForegroundColor,
+      warningItemIcon: warningItemIcon ?? this.warningItemIcon,
+      warningItemBackgroundColor: warningItemBackgroundColor ?? this.warningItemBackgroundColor,
+      warningItemForegroundColor: warningItemForegroundColor ?? this.warningItemForegroundColor,
+    );
+  }
+
+  /// Returns a new [SBBTabBarStyle] that is the result of merging [other] into
+  /// this style. Properties in [other] take precedence over this style's
+  /// properties if they are non-null.
+  SBBTabBarStyle merge(SBBTabBarStyle? other) {
+    if (other == null) return this;
+    return copyWith(
+      backgroundColor: other.backgroundColor,
+      iconColor: other.iconColor,
+      itemBackgroundColor: other.itemBackgroundColor,
+      itemLabelTextStyle: other.itemLabelTextStyle,
+      itemLabelForegroundColor: other.itemLabelForegroundColor,
+      warningItemIcon: other.warningItemIcon,
+      warningItemBackgroundColor: other.warningItemBackgroundColor,
+      warningItemForegroundColor: other.warningItemForegroundColor,
+    );
+  }
+
+  static SBBTabBarStyle? lerp(SBBTabBarStyle? a, SBBTabBarStyle? b, double t) {
+    if (identical(a, b)) return a;
+    return SBBTabBarStyle(
+      backgroundColor: Color.lerp(a?.backgroundColor, b?.backgroundColor, t),
+      iconColor: WidgetStateProperty.lerp<Color?>(a?.iconColor, b?.iconColor, t, Color.lerp),
+      itemBackgroundColor:
+          WidgetStateProperty.lerp<Color?>(a?.itemBackgroundColor, b?.itemBackgroundColor, t, Color.lerp),
+      itemLabelTextStyle: TextStyle.lerp(a?.itemLabelTextStyle, b?.itemLabelTextStyle, t),
+      itemLabelForegroundColor: Color.lerp(a?.itemLabelForegroundColor, b?.itemLabelForegroundColor, t),
+      warningItemIcon: t < 0.5 ? a?.warningItemIcon : b?.warningItemIcon,
+      warningItemBackgroundColor: Color.lerp(a?.warningItemBackgroundColor, b?.warningItemBackgroundColor, t),
+      warningItemForegroundColor: Color.lerp(a?.warningItemForegroundColor, b?.warningItemForegroundColor, t),
+    );
+  }
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+    return other is SBBTabBarStyle &&
+        other.backgroundColor == backgroundColor &&
+        other.iconColor == iconColor &&
+        other.itemBackgroundColor == itemBackgroundColor &&
+        other.itemLabelTextStyle == itemLabelTextStyle &&
+        other.itemLabelForegroundColor == itemLabelForegroundColor &&
+        other.warningItemIcon == warningItemIcon &&
+        other.warningItemBackgroundColor == warningItemBackgroundColor &&
+        other.warningItemForegroundColor == warningItemForegroundColor;
+  }
+
+  @override
+  int get hashCode => Object.hash(
+    backgroundColor,
+    iconColor,
+    itemBackgroundColor,
+    itemLabelTextStyle,
+    itemLabelForegroundColor,
+    warningItemIcon,
+    warningItemBackgroundColor,
+    warningItemForegroundColor,
+  );
+}
+
