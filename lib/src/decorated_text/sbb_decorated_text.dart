@@ -68,20 +68,16 @@ class SBBDecoratedText extends StatefulWidget {
          'minLines and maxLines must be null when expands is true.',
        );
 
-  /// {@template sbb_design_system.decorated_text.value}
   /// The static text value to display.
   ///
   /// This value is not editable. To display dynamic content, rebuild the widget
   /// with a new value.
-  /// {@endtemplate}
   final String value;
 
-  /// {@template sbb_design_system.decorated_text.decoration}
   /// The decoration surrounding the displayed text field.
   ///
   /// Includes styling for labels, icons, error states, and other visual elements.
   /// See [SBBInputDecoration] for customization options.
-  /// {@endtemplate}
   final SBBInputDecoration? decoration;
 
   /// {@macro flutter.widgets.Focus.focusNode}
@@ -90,48 +86,36 @@ class SBBDecoratedText extends StatefulWidget {
   /// {@macro flutter.widgets.Focus.autofocus}
   final bool autofocus;
 
-  /// {@template sbb_design_system.decorated_text.maxLines}
   /// The maximum number of lines for the text display.
   ///
   /// Defaults to 1 (single-line). Set to null with [expands] = true for expanding
   /// multiline display, or to a specific number > 1 for fixed multiline height.
-  /// {@endtemplate}
   final int? maxLines;
 
-  /// {@template sbb_design_system.decorated_text.minLines}
   /// The minimum number of lines reserved for text display.
-  /// {@endtemplate}
   final int? minLines;
 
-  /// {@template sbb_design_system.decorated_text.expands}
   /// Whether the text field should expand to fill available vertical space.
   ///
   /// When true, both [maxLines] and [minLines] must be null.
-  /// {@endtemplate}
   final bool expands;
 
-  /// {@template sbb_design_system.decorated_text.onTap}
   /// Called when the widget is tapped.
   ///
   /// The tap triggers [InkWell] visual feedback (ripple/highlight). This callback
   /// is only invoked if [enabled] is true.
-  /// {@endtemplate}
   final GestureTapCallback? onTap;
 
-  /// {@template sbb_design_system.decorated_text.enabled}
   /// Whether the widget responds to taps and displays interactive styling.
   ///
   /// When false, the widget is disabled, taps are ignored, and disabled visual
   /// states are applied to the decoration.
-  /// {@endtemplate}
   final bool enabled;
 
-  /// {@template sbb_design_system.decorated_text.style}
   /// Customizes the visual appearance of the decorated text.
   ///
   /// Non-null properties override the corresponding properties in
   /// [SBBDecoratedTextThemeData.style] from the current theme.
-  /// {@endtemplate}
   final SBBDecoratedTextStyle? style;
 
   @override
