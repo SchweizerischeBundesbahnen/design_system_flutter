@@ -69,13 +69,13 @@ class _ColorShowcaseCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final baseStyle = Theme.of(context).extension<SBBBaseStyle>();
+
     final valueString = colorEntry.color.toARGB32().toRadixString(16).padLeft(8, '0').toUpperCase();
     final hexString = valueString.substring(2);
     final opacityString = valueString.substring(0, 2);
     const colorValueTextStyle = SBBTextStyles.extraExtraSmallLight;
-    final colorValueSecondaryTextStyle = SBBTextStyles.extraExtraSmallLight.copyWith(
-      color: SBBControlStyles.of(context).selectLabel?.textStyleDisabled?.color,
-    );
+    final colorValueSecondaryTextStyle = SBBTextStyles.extraExtraSmallLight.copyWith(color: baseStyle?.labelColor);
     return SBBContentBox(
       margin: const .all(SBBSpacing.xSmall),
       child: Column(
