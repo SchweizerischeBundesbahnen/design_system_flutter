@@ -43,7 +43,11 @@ class SBBDateInput extends StatefulWidget {
     this.triggerExpands = false,
     this.triggerFocusNode,
     this.triggerAutofocus = false,
-  });
+    this.visibleItemCount = _defaultVisibleItemCount,
+  }) : assert(
+         visibleItemCount > 0 && visibleItemCount % 2 == 1,
+         'visibleItemCount must be a positive odd number, but was $visibleItemCount',
+       );
 
   /// The currently selected date. Displayed in the trigger field using
   /// [dateFormat]. When null, the trigger shows an empty value.
@@ -97,6 +101,10 @@ class SBBDateInput extends StatefulWidget {
   /// {@macro flutter.widgets.Focus.autofocus}
   final bool triggerAutofocus;
 
+  /// The number of visible items in the picker. Must be a positive odd number.
+  /// Defaults to 7.
+  final int visibleItemCount;
+
   @override
   State<SBBDateInput> createState() => _SBBDateInputState();
 }
@@ -135,6 +143,7 @@ class _SBBDateInputState extends State<SBBDateInput> {
                 initialDate: widget.value,
                 minimumDate: widget.minimumDate,
                 maximumDate: widget.maximumDate,
+                visibleItemCount: widget.visibleItemCount,
                 onDateChanged: widget.onDateChanged,
               );
             }

@@ -3,7 +3,7 @@ part of 'sbb_picker.dart';
 // layout constants
 const _itemDefaultHeight = 30.0;
 const _longListMinItemCount = 4;
-const _visibleItemCount = 7;
+const _defaultVisibleItemCount = 7;
 const _itemDefaultPadding = 12.0;
 const _itemMinPadding = 4.0;
 const _widgetHorizontalPadding = _itemDefaultPadding;
@@ -20,6 +20,9 @@ const _defaultMinuteInterval = 1;
 /// calculation of the item height.
 abstract class _PickerClassState<T extends StatefulWidget> extends State<T> {
   late double _itemHeight = _calculateItemHeight();
+
+  /// The number of visible items in the picker. Must be a positive odd number.
+  int get _visibleItemCount => _defaultVisibleItemCount;
 
   double get _scrollAreaHeight => _itemHeight * _visibleItemCount;
 

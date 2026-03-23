@@ -54,13 +54,16 @@ class SBBPicker extends StatefulWidget {
     required ValueChanged<int>? onSelectedItemChanged,
     required SBBPickerScrollViewItemBuilder itemBuilder,
     bool looping = true,
+    int visibleItemCount = _defaultVisibleItemCount,
   }) : this.custom(
          key: key,
+         visibleItemCount: visibleItemCount,
          child: SBBPickerScrollView(
            controller: controller ?? SBBPickerScrollController(initialItem: initialSelectedIndex),
            onSelectedItemChanged: onSelectedItemChanged,
            itemBuilder: itemBuilder,
            looping: looping,
+           visibleItemCount: visibleItemCount,
          ),
        );
 
@@ -88,6 +91,7 @@ class SBBPicker extends StatefulWidget {
     required ValueChanged<int>? onSelectedItemChanged,
     required List items,
     bool looping = true,
+    int visibleItemCount = _defaultVisibleItemCount,
   }) : this(
          key: key,
          controller: controller,
@@ -102,6 +106,7 @@ class SBBPicker extends StatefulWidget {
            return SBBPickerItem(itemLabel);
          },
          looping: false,
+         visibleItemCount: visibleItemCount,
        );
 
   /// Constructs a fully customizable [SBBPicker]. This only builds the skeleton
@@ -120,18 +125,29 @@ class SBBPicker extends StatefulWidget {
   /// * [SBBPicker.new], default constructor for SBB Picker with limited
   ///   customization.
   /// * [SBBPicker.list], constructor for basic SBB Picker.
-  const SBBPicker.custom({super.key, required this.child});
-
-  static const _lightThemeGradientColorOpacities = [0.31, 0.61, 0.70];
-  static const _darkThemeGradientColorOpacities = [0.38, 0.61, 0.76];
+  const SBBPicker.custom({
+    super.key,
+    required this.child,
+    this.visibleItemCount = _defaultVisibleItemCount,
+  }) : assert(
+         visibleItemCount > 0 && visibleItemCount % 2 == 1,
+         'visibleItemCount must be a positive odd number, but was $visibleItemCount',
+       );
 
   final Widget child;
+
+  /// The number of visible items in the picker. Must be a positive odd number.
+  /// Defaults to 7.
+  final int visibleItemCount;
 
   @override
   State<SBBPicker> createState() => _SBBPickerState();
 }
 
 class _SBBPickerState extends _PickerClassState<SBBPicker> {
+  @override
+  int get _visibleItemCount => widget.visibleItemCount;
+
   get _widgetHeight => _scrollAreaHeight + SBBSpacing.xLarge;
 
   get _highlightedAreaHeight => _itemHeight + 4.0;
@@ -180,53 +196,63 @@ class _SBBPickerState extends _PickerClassState<SBBPicker> {
     const center = 0.5;
     const end = 1.0;
 
-    // visible picker items
+    final n = _visibleItemCount;
     final itemHeight = _itemHeight / _scrollAreaHeight;
-    final endOfItem0 = itemHeight * 1;
-    final centerOfItem1 = itemHeight * 1.5;
-    final centerOfItem2 = itemHeight * 2.5;
-    final centerOfItem4 = itemHeight * 4.5;
-    final centerOfItem5 = itemHeight * 5.5;
-    final startOfItem6 = itemHeight * 6.0;
+    final sideItemCount = n ~/ 2; // items on each side of the center item
 
     // highlighted area
     final highlightedAreaHeight = _highlightedAreaHeight / _scrollAreaHeight;
     final highlightStart = center - highlightedAreaHeight * 0.5;
     final highlightEnd = highlightStart + highlightedAreaHeight;
 
-    return [
-      start,
-      endOfItem0,
-      centerOfItem1,
-      centerOfItem2,
-      highlightStart,
-      highlightStart,
-      highlightEnd,
-      highlightEnd,
-      centerOfItem4,
-      centerOfItem5,
-      startOfItem6,
-      end,
-    ];
+    // Build stops for the top half: start, then one stop per side item center,
+    // then the highlight boundary.
+    final topStops = <double>[start];
+    for (var i = 0; i < sideItemCount; i++) {
+      topStops.add(itemHeight * (i + 0.5));
+    }
+    topStops.add(highlightStart);
+    topStops.add(highlightStart); // duplicate for hard transition
+
+    // highlighted center
+    final centerStops = <double>[highlightEnd, highlightEnd];
+
+    // bottom half mirrors the top (excluding center duplicates)
+    final bottomStops = topStops.reversed
+        .map((s) => end - s)
+        .toList();
+
+    return [...topStops, ...centerStops, ...bottomStops];
   }
 
   List<Color> _gradientColors(BuildContext context) {
-    // generate list of opacity values to be used in gradient
-    final isLightTheme = Theme.of(context).brightness == .light;
-    final themedOpacities = isLightTheme
-        ? SBBPicker._lightThemeGradientColorOpacities
-        : SBBPicker._darkThemeGradientColorOpacities;
+    final n = _visibleItemCount;
+    final sideItemCount = n ~/ 2; // items on each side of center
 
-    // start with opacity 0
-    var opacities = [0.0];
-    // add base values
-    opacities.addAll(themedOpacities);
-    // duplicate last base value
-    opacities.add(opacities.last);
-    // opacity 1 in highlighted area
-    opacities.add(1.0);
-    // mirrored values for second half
-    opacities.addAll(opacities.reversed.toList());
+    // Build opacity values for top half: linear from 0.0 at the edge to 1.0
+    // at the center (highlighted) item. Each side item gets a linearly
+    // interpolated opacity value. The highlighted area itself gets opacity 1.0.
+    //
+    // stops built in _gradientStops: [start, centerOfItem0, ..., centerOfItem(n/2-1), highlightStart, highlightStart]
+    // corresponding opacities:       [0.0,  opacity1,      ..., opacity(n/2),         1.0,            1.0           ]
+
+    final topOpacities = <double>[0.0];
+    for (var i = 0; i < sideItemCount; i++) {
+      // linear interpolation: item closest to edge gets opacity near 0,
+      // item closest to center gets opacity near 1.
+      final opacity = (i + 1) / (sideItemCount + 1);
+      topOpacities.add(opacity);
+    }
+    topOpacities.add(1.0); // highlightStart
+    topOpacities.add(1.0); // highlightStart duplicate
+
+    // highlighted area is fully opaque
+    final centerOpacities = <double>[1.0, 1.0];
+
+    // bottom half mirrors the top
+    final bottomOpacities = topOpacities.reversed.toList();
+
+    final opacities = [...topOpacities, ...centerOpacities, ...bottomOpacities];
 
     // get base color from theme
     final textColor = SBBControlStyles.of(context).picker!.textStyle!.color!;

@@ -40,9 +40,14 @@ class SBBDateTimePicker extends StatefulWidget {
     DateTime? minimumDateTime,
     DateTime? maximumDateTime,
     this.minuteInterval = _defaultMinuteInterval,
+    this.visibleItemCount = _defaultVisibleItemCount,
   }) : assert(
          minuteInterval > 0 && TimeOfDay.minutesPerHour % minuteInterval == 0,
          'minute interval is not a positive integer factor of 60',
+       ),
+       assert(
+         visibleItemCount > 0 && visibleItemCount % 2 == 1,
+         'visibleItemCount must be a positive odd number, but was $visibleItemCount',
        ),
        initialDateTime = _initialDateTime(initialDateTime, minimumDateTime, maximumDateTime, minuteInterval),
        minimumDateTime = _minimumDateTime(minimumDateTime, minuteInterval),
@@ -60,6 +65,10 @@ class SBBDateTimePicker extends StatefulWidget {
   final DateTime? minimumDateTime;
   final DateTime? maximumDateTime;
   final int minuteInterval;
+
+  /// The number of visible items in the picker. Must be a positive odd number.
+  /// Defaults to 7.
+  final int visibleItemCount;
 
   /// Shows an [SBBBottomSheet] with an [SBBDateTimePicker] to select a
   /// [DateTime].
@@ -79,6 +88,7 @@ class SBBDateTimePicker extends StatefulWidget {
     DateTime? maximumDateTime,
     int minuteInterval = _defaultMinuteInterval,
     ValueChanged<DateTime>? onDateTimeChanged,
+    int visibleItemCount = _defaultVisibleItemCount,
   }) {
     final localizations = MaterialLocalizations.of(context);
 
@@ -106,6 +116,7 @@ class SBBDateTimePicker extends StatefulWidget {
                 minimumDateTime: minimumDateTime,
                 maximumDateTime: maximumDateTime,
                 minuteInterval: minuteInterval,
+                visibleItemCount: visibleItemCount,
                 onDateTimeChanged: (dateTime) {
                   selectedDateTime = dateTime;
                   if (!acceptInitialSelection) {
@@ -165,6 +176,9 @@ class SBBDateTimePicker extends StatefulWidget {
 
 class _SBBDateTimePickerState extends _TimeBasedPickerState<SBBDateTimePicker> {
   static const _horizontalPaddingCount = 6;
+
+  @override
+  int get _visibleItemCount => widget.visibleItemCount;
 
   late DateTime _selectedDateTime;
   late ValueNotifier<DateTime> _selectedDateTimeValueNotifier;
@@ -237,6 +251,7 @@ class _SBBDateTimePickerState extends _TimeBasedPickerState<SBBDateTimePicker> {
         _adjustItemSizes(constraints.maxWidth);
 
         return SBBPicker.custom(
+          visibleItemCount: widget.visibleItemCount,
           child: Row(
             children: [
               Expanded(child: _buildDatePickerScrollView()),
@@ -264,6 +279,7 @@ class _SBBDateTimePickerState extends _TimeBasedPickerState<SBBDateTimePicker> {
       controller: _dateController,
       onSelectedItemChanged: _onSelectedDateItemChanged,
       itemBuilder: (_, index) => _buildDateItem(index),
+      visibleItemCount: widget.visibleItemCount,
     );
   }
 
@@ -275,6 +291,7 @@ class _SBBDateTimePickerState extends _TimeBasedPickerState<SBBDateTimePicker> {
           controller: _hourController,
           onSelectedItemChanged: _onSelectedHourItemChanged,
           itemBuilder: (_, index) => _buildHourItem(index, selectedDate),
+          visibleItemCount: widget.visibleItemCount,
         );
       },
     );
@@ -288,6 +305,7 @@ class _SBBDateTimePickerState extends _TimeBasedPickerState<SBBDateTimePicker> {
           controller: _minuteController,
           onSelectedItemChanged: _onSelectedMinuteItemChanged,
           itemBuilder: (_, index) => _buildMinuteItem(index, selectedDateTime),
+          visibleItemCount: widget.visibleItemCount,
         );
       },
     );

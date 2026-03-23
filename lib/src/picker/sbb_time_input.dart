@@ -44,7 +44,11 @@ class SBBTimeInput extends StatefulWidget {
     this.triggerExpands = false,
     this.triggerFocusNode,
     this.triggerAutofocus = false,
-  });
+    this.visibleItemCount = _defaultVisibleItemCount,
+  }) : assert(
+         visibleItemCount > 0 && visibleItemCount % 2 == 1,
+         'visibleItemCount must be a positive odd number, but was $visibleItemCount',
+       );
 
   /// The currently selected time. Displayed in the trigger field. When null,
   /// the trigger shows an empty value.
@@ -106,6 +110,10 @@ class SBBTimeInput extends StatefulWidget {
   /// {@macro flutter.widgets.Focus.autofocus}
   final bool triggerAutofocus;
 
+  /// The number of visible items in the picker. Must be a positive odd number.
+  /// Defaults to 7.
+  final int visibleItemCount;
+
   @override
   State<SBBTimeInput> createState() => _SBBTimeInputState();
 }
@@ -142,6 +150,7 @@ class _SBBTimeInputState extends State<SBBTimeInput> {
                 minimumTime: widget.minimumTime,
                 maximumTime: widget.maximumTime,
                 minuteInterval: widget.minuteInterval,
+                visibleItemCount: widget.visibleItemCount,
                 onTimeChanged: widget.onTimeChanged,
               );
             }

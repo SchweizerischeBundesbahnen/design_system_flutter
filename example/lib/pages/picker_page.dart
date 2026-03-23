@@ -119,6 +119,8 @@ class _PickerPageState extends State<PickerPage> {
           const SBBListHeader('Picker (looping)'),
           SBBContentBox(
             child: SBBPicker.list(
+              visibleItemCount: 3,
+              initialSelectedIndex: 0,
               onSelectedItemChanged: (int index) {
                 final selectedItemIndex = index % _fruitNames.length;
                 final selectedItem = _fruitNames[selectedItemIndex];

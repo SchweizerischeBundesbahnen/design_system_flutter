@@ -36,25 +36,64 @@ class SBBPickerScrollView extends StatefulWidget {
     required this.itemBuilder,
     this.controller,
     this.looping = true,
-  });
+    this.visibleItemCount = _defaultVisibleItemCount,
+  }) : assert(
+         visibleItemCount > 0 && visibleItemCount % 2 == 1,
+         'visibleItemCount must be a positive odd number, but was $visibleItemCount',
+       );
 
   final ValueChanged<int>? onSelectedItemChanged;
   final SBBPickerScrollViewItemBuilder itemBuilder;
   final SBBPickerScrollController? controller;
   final bool looping;
 
+  /// The number of visible items in the picker. Must be a positive odd number.
+  /// Defaults to 7.
+  final int visibleItemCount;
+
   @override
   State<SBBPickerScrollView> createState() => _SBBPickerScrollViewState();
 }
 
 class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
-  static const _visibleItemTransformValues = [-1.0, -2.5, -3.0, 0.0, 3.0, 2.5, 1.0];
-
-  static const _visibleItemHeightAdjustments = [-2.0, -1.0, 0.0, 6.0, 0.0, -1.0, -2.0];
-
-  static const _visibleCenterItemIndex = 3;
+  // Transform offsets for the 7-item default; used as a "kernel" that is
+  // extended/clipped for other item counts.
+  static const _defaultTransformValues = [-1.0, -2.5, -3.0, 0.0, 3.0, 2.5, 1.0];
+  static const _defaultHeightAdjustments = [-2.0, -1.0, 0.0, 6.0, 0.0, -1.0, -2.0];
 
   static const _disabledItemOpacity = 0.35;
+
+  @override
+  int get _visibleItemCount => widget.visibleItemCount;
+
+  int get _visibleCenterItemIndex => _visibleItemCount ~/ 2;
+
+  /// Returns the per-item vertical transform offsets for the visible items.
+  /// The default 7-item kernel is reused; items further from the center than
+  /// those covered by the kernel receive the outermost kernel value.
+  List<double> get _visibleItemTransformValues {
+    final half = _defaultTransformValues.length ~/ 2; // 3
+    final sideCount = _visibleCenterItemIndex;
+    return List.generate(_visibleItemCount, (i) {
+      final distFromCenter = i - sideCount;
+      final kernelIdx = half + distFromCenter;
+      // clamp to kernel bounds
+      final clampedIdx = kernelIdx.clamp(0, _defaultTransformValues.length - 1);
+      return _defaultTransformValues[clampedIdx];
+    });
+  }
+
+  /// Returns the per-item height adjustments for the visible items.
+  List<double> get _visibleItemHeightAdjustments {
+    final half = _defaultHeightAdjustments.length ~/ 2; // 3
+    final sideCount = _visibleCenterItemIndex;
+    return List.generate(_visibleItemCount, (i) {
+      final distFromCenter = i - sideCount;
+      final kernelIdx = half + distFromCenter;
+      final clampedIdx = kernelIdx.clamp(0, _defaultHeightAdjustments.length - 1);
+      return _defaultHeightAdjustments[clampedIdx];
+    });
+  }
 
   List<double> get _visibleItemHeights =>
       _visibleItemHeightAdjustments.map((adjustment) => _itemHeight + adjustment).toList();

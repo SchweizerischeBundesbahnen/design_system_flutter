@@ -33,7 +33,12 @@ class SBBDatePicker extends StatefulWidget {
     DateTime? initialDate,
     DateTime? minimumDate,
     DateTime? maximumDate,
-  }) : initialDate = _initialDate(initialDate, minimumDate, maximumDate),
+    this.visibleItemCount = _defaultVisibleItemCount,
+  }) : assert(
+         visibleItemCount > 0 && visibleItemCount % 2 == 1,
+         'visibleItemCount must be a positive odd number, but was $visibleItemCount',
+       ),
+       initialDate = _initialDate(initialDate, minimumDate, maximumDate),
        minimumDate = _minimumDate(minimumDate),
        maximumDate = _maximumDate(maximumDate) {
     assert(
@@ -46,6 +51,10 @@ class SBBDatePicker extends StatefulWidget {
   final DateTime initialDate;
   final DateTime? minimumDate;
   final DateTime? maximumDate;
+
+  /// The number of visible items in the picker. Must be a positive odd number.
+  /// Defaults to 7.
+  final int visibleItemCount;
 
   /// Shows an [SBBBottomSheet] with an [SBBDatePicker] to select a [DateTime].
   /// Use according to documentation.
@@ -63,6 +72,7 @@ class SBBDatePicker extends StatefulWidget {
     DateTime? minimumDate,
     DateTime? maximumDate,
     ValueChanged<DateTime>? onDateChanged,
+    int visibleItemCount = _defaultVisibleItemCount,
   }) {
     final localizations = MaterialLocalizations.of(context);
 
@@ -89,6 +99,7 @@ class SBBDatePicker extends StatefulWidget {
                 initialDate: modalDate,
                 minimumDate: minimumDate,
                 maximumDate: maximumDate,
+                visibleItemCount: visibleItemCount,
                 onDateChanged: (date) {
                   selectedDate = date;
                   if (!acceptInitialSelection) {
@@ -139,6 +150,9 @@ class SBBDatePicker extends StatefulWidget {
 }
 
 class _SBBDatePickerState extends _TimeBasedPickerState<SBBDatePicker> {
+  @override
+  int get _visibleItemCount => widget.visibleItemCount;
+
   static const _dayItemTextDefaultWidth = 40.0;
   static const _yearItemTextDefaultWidth = 64.0;
 
@@ -221,6 +235,7 @@ class _SBBDatePickerState extends _TimeBasedPickerState<SBBDatePicker> {
         _adjustItemSizes(constraints.maxWidth);
 
         return SBBPicker.custom(
+          visibleItemCount: widget.visibleItemCount,
           child: Row(
             children: [
               SizedBox(width: _dayItemWidth, child: _buildDayPickerScrollView(context)),
@@ -251,6 +266,7 @@ class _SBBDatePickerState extends _TimeBasedPickerState<SBBDatePicker> {
           controller: _dayController,
           onSelectedItemChanged: _onSelectedDayItemChanged,
           itemBuilder: (_, index) => _buildDayItem(index, selectedMonthYear),
+          visibleItemCount: widget.visibleItemCount,
         );
       },
     );
@@ -264,6 +280,7 @@ class _SBBDatePickerState extends _TimeBasedPickerState<SBBDatePicker> {
           controller: _monthController,
           onSelectedItemChanged: _onSelectedMonthItemChanged,
           itemBuilder: (_, index) => _buildMonthItem(index, selectedYear),
+          visibleItemCount: widget.visibleItemCount,
         );
       },
     );
@@ -275,6 +292,7 @@ class _SBBDatePickerState extends _TimeBasedPickerState<SBBDatePicker> {
       looping: false,
       onSelectedItemChanged: _onSelectedYearItemChanged,
       itemBuilder: (_, index) => _buildYearItem(index),
+      visibleItemCount: widget.visibleItemCount,
     );
   }
 

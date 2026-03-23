@@ -39,9 +39,14 @@ class SBBTimePicker extends StatefulWidget {
     TimeOfDay? minimumTime,
     TimeOfDay? maximumTime,
     this.minuteInterval = _defaultMinuteInterval,
+    this.visibleItemCount = _defaultVisibleItemCount,
   }) : assert(
          minuteInterval > 0 && TimeOfDay.minutesPerHour % minuteInterval == 0,
          'minute interval is not a positive integer factor of 60',
+       ),
+       assert(
+         visibleItemCount > 0 && visibleItemCount % 2 == 1,
+         'visibleItemCount must be a positive odd number, but was $visibleItemCount',
        ),
        initialTime = _initialTime(initialTime, minimumTime, maximumTime, minuteInterval),
        minimumTime = _minimumTime(minimumTime, minuteInterval),
@@ -52,6 +57,10 @@ class SBBTimePicker extends StatefulWidget {
   final TimeOfDay? minimumTime;
   final TimeOfDay? maximumTime;
   final int minuteInterval;
+
+  /// The number of visible items in the picker. Must be a positive odd number.
+  /// Defaults to 7.
+  final int visibleItemCount;
 
   /// Shows an [SBBBottomSheet] with an [SBBTimePicker] to select a [TimeOfDay].
   /// Use according to documentation.
@@ -70,6 +79,7 @@ class SBBTimePicker extends StatefulWidget {
     TimeOfDay? maximumTime,
     int minuteInterval = _defaultMinuteInterval,
     ValueChanged<TimeOfDay>? onTimeChanged,
+    int visibleItemCount = _defaultVisibleItemCount,
   }) {
     final localizations = MaterialLocalizations.of(context);
 
@@ -97,6 +107,7 @@ class SBBTimePicker extends StatefulWidget {
                 minimumTime: minimumTime,
                 maximumTime: maximumTime,
                 minuteInterval: minuteInterval,
+                visibleItemCount: visibleItemCount,
                 onTimeChanged: (time) {
                   selectedTime = time;
                   if (!acceptInitialSelection) {
@@ -157,6 +168,9 @@ class SBBTimePicker extends StatefulWidget {
 class _SBBTimePickerTimeState extends _TimeBasedPickerState<SBBTimePicker> {
   static const _horizontalPaddingCount = 4;
 
+  @override
+  int get _visibleItemCount => widget.visibleItemCount;
+
   late TimeOfDay _selectedTime;
   late ValueNotifier<TimeOfDay> _selectedTimeValueNotifier;
 
@@ -213,6 +227,7 @@ class _SBBTimePickerTimeState extends _TimeBasedPickerState<SBBTimePicker> {
         _adjustItemSizes(constraints.maxWidth);
 
         return SBBPicker.custom(
+          visibleItemCount: widget.visibleItemCount,
           child: Row(
             children: [
               Expanded(child: _buildHourPickerScrollView(context)),
@@ -237,6 +252,7 @@ class _SBBTimePickerTimeState extends _TimeBasedPickerState<SBBTimePicker> {
       controller: _hourController,
       onSelectedItemChanged: _onSelectedHourItemChanged,
       itemBuilder: (_, index) => _buildHourItem(index),
+      visibleItemCount: widget.visibleItemCount,
     );
   }
 
@@ -248,6 +264,7 @@ class _SBBTimePickerTimeState extends _TimeBasedPickerState<SBBTimePicker> {
           controller: _minuteController,
           onSelectedItemChanged: _onSelectedMinuteItemChanged,
           itemBuilder: (_, index) => _buildMinuteItem(index, selectedHour),
+          visibleItemCount: widget.visibleItemCount,
         );
       },
     );
