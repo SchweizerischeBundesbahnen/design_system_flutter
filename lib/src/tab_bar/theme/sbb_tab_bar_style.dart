@@ -22,6 +22,7 @@ class SBBTabBarStyle {
     this.warningItemForegroundColor,
     this.badgeForegroundColor,
     this.badgeBackgroundColor,
+    this.badgeTextStyle,
   });
 
   /// The background color of the tab bar container.
@@ -77,7 +78,7 @@ class SBBTabBarStyle {
   /// Defaults to [SBBColors.white].
   final Color? badgeForegroundColor;
 
-  /// The default background color for [SBBTabBarBadge] widgets displayed on
+  /// The background color for [SBBTabBarBadge] widgets displayed on
   /// tab items.
   ///
   /// This acts as a theme-level default. Individual [SBBTabBarBadgeIcon] or
@@ -86,6 +87,11 @@ class SBBTabBarStyle {
   ///
   /// Defaults to the primary color of the current [SBBBaseStyle].
   final Color? badgeBackgroundColor;
+
+  /// The text style for the [SBBTabBarBadgeText] widget displayed on tab items.
+  ///
+  /// Defaults to [SBBTextStyles.extraExtraSmallBold] with font weight 900.
+  final TextStyle? badgeTextStyle;
 
   SBBTabBarStyle copyWith({
     Color? backgroundColor,
@@ -98,6 +104,7 @@ class SBBTabBarStyle {
     Color? warningItemForegroundColor,
     Color? badgeForegroundColor,
     Color? badgeBackgroundColor,
+    TextStyle? badgeTextStyle,
   }) {
     return SBBTabBarStyle(
       backgroundColor: backgroundColor ?? this.backgroundColor,
@@ -110,6 +117,7 @@ class SBBTabBarStyle {
       warningItemForegroundColor: warningItemForegroundColor ?? this.warningItemForegroundColor,
       badgeForegroundColor: badgeForegroundColor ?? this.badgeForegroundColor,
       badgeBackgroundColor: badgeBackgroundColor ?? this.badgeBackgroundColor,
+      badgeTextStyle: badgeTextStyle ?? this.badgeTextStyle,
     );
   }
 
@@ -129,6 +137,7 @@ class SBBTabBarStyle {
       warningItemForegroundColor: other.warningItemForegroundColor,
       badgeForegroundColor: other.badgeForegroundColor,
       badgeBackgroundColor: other.badgeBackgroundColor,
+      badgeTextStyle: other.badgeTextStyle,
     );
   }
 
@@ -137,8 +146,12 @@ class SBBTabBarStyle {
     return SBBTabBarStyle(
       backgroundColor: Color.lerp(a?.backgroundColor, b?.backgroundColor, t),
       iconColor: WidgetStateProperty.lerp<Color?>(a?.iconColor, b?.iconColor, t, Color.lerp),
-      itemBackgroundColor:
-          WidgetStateProperty.lerp<Color?>(a?.itemBackgroundColor, b?.itemBackgroundColor, t, Color.lerp),
+      itemBackgroundColor: WidgetStateProperty.lerp<Color?>(
+        a?.itemBackgroundColor,
+        b?.itemBackgroundColor,
+        t,
+        Color.lerp,
+      ),
       itemLabelTextStyle: TextStyle.lerp(a?.itemLabelTextStyle, b?.itemLabelTextStyle, t),
       itemLabelForegroundColor: Color.lerp(a?.itemLabelForegroundColor, b?.itemLabelForegroundColor, t),
       warningItemIcon: t < 0.5 ? a?.warningItemIcon : b?.warningItemIcon,
@@ -146,6 +159,7 @@ class SBBTabBarStyle {
       warningItemForegroundColor: Color.lerp(a?.warningItemForegroundColor, b?.warningItemForegroundColor, t),
       badgeForegroundColor: Color.lerp(a?.badgeForegroundColor, b?.badgeForegroundColor, t),
       badgeBackgroundColor: Color.lerp(a?.badgeBackgroundColor, b?.badgeBackgroundColor, t),
+      badgeTextStyle: TextStyle.lerp(a?.badgeTextStyle, b?.badgeTextStyle, t),
     );
   }
 
@@ -162,7 +176,8 @@ class SBBTabBarStyle {
         other.warningItemBackgroundColor == warningItemBackgroundColor &&
         other.warningItemForegroundColor == warningItemForegroundColor &&
         other.badgeForegroundColor == badgeForegroundColor &&
-        other.badgeBackgroundColor == badgeBackgroundColor;
+        other.badgeBackgroundColor == badgeBackgroundColor &&
+        other.badgeTextStyle == badgeTextStyle;
   }
 
   @override
@@ -177,6 +192,6 @@ class SBBTabBarStyle {
     warningItemForegroundColor,
     badgeForegroundColor,
     badgeBackgroundColor,
+    badgeTextStyle,
   );
 }
-

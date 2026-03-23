@@ -120,9 +120,7 @@ class SBBTabBarBadgeText extends SBBTabBarBadge {
 
   /// Custom text style for the label.
   ///
-  /// If null, defaults to [SBBTextStyles.extraExtraSmallBold] with the
-  /// resolved foreground color (see [SBBTabBarBadge] for color resolution order)
-  /// and font weight w900.
+  /// If null, defaults to [SBBTabBarStyle.badgeTextStyle] with the resolved foreground color.
   final TextStyle? textStyle;
 
   @override
@@ -132,6 +130,7 @@ class SBBTabBarBadgeText extends SBBTabBarBadge {
     final resolvedBackgroundColor =
         backgroundColor ?? tabBarStyle?.badgeBackgroundColor ?? primaryColor ?? SBBColors.red;
     final resolvedForegroundColor = foregroundColor ?? tabBarStyle?.badgeForegroundColor ?? SBBColors.white;
+    final resolvedTextStyle = textStyle ?? tabBarStyle?.badgeTextStyle;
 
     return ExcludeSemantics(
       child: Container(
@@ -143,7 +142,7 @@ class SBBTabBarBadgeText extends SBBTabBarBadge {
             child: Text(
               labelText,
               style:
-                  textStyle ??
+                  resolvedTextStyle?.copyWith(color: resolvedForegroundColor) ??
                   SBBTextStyles.extraExtraSmallBold.copyWith(
                     color: resolvedForegroundColor,
                     fontWeight: FontWeight.w900,
