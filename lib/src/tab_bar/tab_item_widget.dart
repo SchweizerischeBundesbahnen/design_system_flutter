@@ -35,8 +35,6 @@ class TabItemWidget extends StatelessWidget {
     final size = portrait ? portraitSize : landscapeSize;
     final topPadding = portrait ? portraitCirclePadding : landscapeCirclePadding;
 
-    // When called from SBBTabBar the style is already the merged effectiveStyle.
-    // When used standalone (e.g. tests), fall back to the theme style.
     final effectiveStyle = style ?? Theme.of(context).sbbTabBarTheme?.style;
 
     final states = <WidgetState>{
