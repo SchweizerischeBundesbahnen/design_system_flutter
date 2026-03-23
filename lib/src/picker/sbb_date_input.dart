@@ -1,13 +1,32 @@
 part of 'sbb_picker.dart';
 
-/// SBB Date Input Field. Use according to documentation.
+/// A trigger field that combines [SBBDecoratedText] with [SBBDatePicker].
+///
+/// Displays the selected date as a read-only [SBBDecoratedText] field. When
+/// tapped, it opens an [SBBDatePicker] in a modal bottom sheet via
+/// [SBBDatePicker.showModal], allowing the user to pick a date.
+///
+/// The visual trigger is fully customizable through the `trigger`-prefixed
+/// parameters, which map directly to the corresponding [SBBDecoratedText]
+/// properties.
+///
+/// ## Example
+///
+/// ```dart
+/// SBBDateInput(
+///   value: _selectedDate,
+///   triggerDecoration: SBBInputDecoration(labelText: 'Departure date'),
+///   onDateChanged: (date) => setState(() => _selectedDate = date),
+/// )
+/// ```
 ///
 /// See also:
 ///
-/// * [SBBDateTimeInput], variant for date time values.
+/// * [SBBDecoratedText], the trigger widget used to display the selected value.
+/// * [SBBDatePicker], the picker opened when the trigger is tapped.
+/// * [SBBDatePicker.showModal], which is used to display the bottom sheet.
+/// * [SBBDateTimeInput], variant for date and time values.
 /// * [SBBTimeInput], variant for time values.
-/// * [SBBDatePicker], picker for date values.
-/// * [SBBDatePicker.showModal], which is used to display the bottom_sheet.
 /// * <https://digital.sbb.ch/en/design-system/mobile/components/picker/>
 class SBBDateInput extends StatefulWidget {
   const SBBDateInput({
@@ -16,30 +35,67 @@ class SBBDateInput extends StatefulWidget {
     this.minimumDate,
     this.maximumDate,
     this.dateFormat,
-    this.labelText,
-    this.hintText,
-    this.errorText,
-    this.prefixIcon,
-    this.suffixIcon,
-    this.onSuffixPressed,
     required this.onDateChanged,
-    this.maxLines = 1,
-    this.isLastElement = false,
+    this.triggerDecoration,
+    this.triggerStyle,
+    this.triggerMaxLines = 1,
+    this.triggerMinLines,
+    this.triggerExpands = false,
+    this.triggerFocusNode,
+    this.triggerAutofocus = false,
   });
 
+  /// The currently selected date. Displayed in the trigger field using
+  /// [dateFormat]. When null, the trigger shows an empty value.
   final DateTime? value;
+
+  /// The earliest selectable date in the picker. Defaults to no lower bound.
   final DateTime? minimumDate;
+
+  /// The latest selectable date in the picker. Defaults to no upper bound.
   final DateTime? maximumDate;
+
+  /// The format used to display [value] in the trigger field.
+  ///
+  /// Defaults to [DateFormat.yMMMMd] for the current locale.
   final DateFormat? dateFormat;
-  final String? labelText;
-  final String? hintText;
-  final String? errorText;
-  final IconData? prefixIcon;
-  final IconData? suffixIcon;
-  final VoidCallback? onSuffixPressed;
+
+  /// Called when the user selects a date in the picker.
+  ///
+  /// When null, the trigger field is disabled and taps are ignored.
   final ValueChanged<DateTime>? onDateChanged;
-  final int? maxLines;
-  final bool isLastElement;
+
+  /// The decoration applied to the [SBBDecoratedText] trigger.
+  ///
+  /// See [SBBInputDecoration] for available options.
+  final SBBInputDecoration? triggerDecoration;
+
+  /// The visual style applied to the [SBBDecoratedText] trigger.
+  ///
+  /// Non-null properties override the corresponding theme values.
+  /// See [SBBDecoratedTextStyle] for available options.
+  final SBBDecoratedTextStyle? triggerStyle;
+
+  /// The maximum number of lines for the trigger field's text display.
+  ///
+  /// Defaults to 1 (single-line). Set to null together with
+  /// [triggerExpands] = true for an expanding multiline trigger.
+  final int? triggerMaxLines;
+
+  /// The minimum number of lines reserved in the trigger field.
+  final int? triggerMinLines;
+
+  /// Whether the trigger field should expand to fill available vertical space.
+  ///
+  /// When true, both [triggerMaxLines] and [triggerMinLines] must be null.
+  /// Defaults to false.
+  final bool triggerExpands;
+
+  /// {@macro flutter.widgets.Focus.focusNode}
+  final FocusNode? triggerFocusNode;
+
+  /// {@macro flutter.widgets.Focus.autofocus}
+  final bool triggerAutofocus;
 
   @override
   State<SBBDateInput> createState() => _SBBDateInputState();
@@ -63,20 +119,19 @@ class _SBBDateInputState extends State<SBBDateInput> {
     return SBBDecoratedText(
       key: widget.key,
       value: _valueText,
-      maxLines: widget.maxLines,
       enabled: widget.onDateChanged != null,
-      decoration: SBBInputDecoration(
-        labelText: widget.labelText,
-        placeholderText: widget.hintText,
-        errorText: widget.errorText,
-        leadingIconData: widget.prefixIcon,
-        trailingIconData: widget.suffixIcon,
-      ),
+      decoration: widget.triggerDecoration,
+      style: widget.triggerStyle,
+      maxLines: widget.triggerMaxLines,
+      minLines: widget.triggerMinLines,
+      expands: widget.triggerExpands,
+      focusNode: widget.triggerFocusNode,
+      autofocus: widget.triggerAutofocus,
       onTap: widget.onDateChanged != null
           ? () {
               SBBDatePicker.showModal(
                 context: context,
-                title: widget.labelText,
+                title: widget.triggerDecoration?.labelText,
                 initialDate: widget.value,
                 minimumDate: widget.minimumDate,
                 maximumDate: widget.maximumDate,

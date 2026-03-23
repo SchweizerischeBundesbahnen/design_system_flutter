@@ -44,7 +44,7 @@ class _PickerPageState extends State<PickerPage> {
                 items: [
                   SBBDateInput(
                     value: _selectedDate,
-                    labelText: 'Date only',
+                    triggerDecoration: const SBBInputDecoration(labelText: 'Date only'),
                     onDateChanged: (date) {
                       debugPrint('selected date: $date');
                       setState(() {
@@ -54,7 +54,7 @@ class _PickerPageState extends State<PickerPage> {
                   ),
                   SBBDateTimeInput(
                     value: _selectedDateTime,
-                    labelText: 'Date and time',
+                    triggerDecoration: const SBBInputDecoration(labelText: 'Date and time'),
                     onDateTimeChanged: (dateTime) {
                       debugPrint('selected date time: $dateTime');
                       setState(() {
@@ -64,7 +64,7 @@ class _PickerPageState extends State<PickerPage> {
                   ),
                   SBBTimeInput(
                     value: _selectedTime,
-                    labelText: 'Time only',
+                    triggerDecoration: const SBBInputDecoration(labelText: 'Time only'),
                     onTimeChanged: (time) {
                       debugPrint('selected time: $time');
                       setState(() {
