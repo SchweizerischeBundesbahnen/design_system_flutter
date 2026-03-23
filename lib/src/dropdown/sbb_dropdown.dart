@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../sbb_design_system_mobile.dart';
 
 // ALL TODOS apply to both SBBDropdown as well as SBBMultiDropdown
-// TODO: allow customisation of label aggregation in SBBMultiDropdown
 // TODO: migration (write a short, precise migration section in the correct alphabetical order in migration_guide_v5.md)
 // TODO: tests
 

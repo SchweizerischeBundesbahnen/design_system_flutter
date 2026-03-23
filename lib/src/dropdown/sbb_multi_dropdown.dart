@@ -16,6 +16,15 @@ const _defaultScrollControlDisabledMaxHeightRatio = 9.0 / 16.0;
 /// a given menu must have consistent types.
 typedef SBBMultiDropdownValidation<T> = bool Function(List<T> oldSelection, List<T> newSelection);
 
+/// Signature for custom label aggregation used in [SBBMultiDropdown] to
+/// produce the display string shown in the trigger field.
+///
+/// Receives [selectedItems] (the currently selected values). Returns the string to display in the
+/// trigger.
+///
+/// The default behaviour joins the labels of selected items with `", "`.
+typedef SBBMultiDropdownLabelAggregation<T> = String Function(List<SBBDropdownItem<T>> selectedItems);
+
 /// The SBB Dropdown (multiple values).
 ///
 /// Displays a trigger field that, when tapped, opens an [SBBBottomSheet] with a
@@ -50,6 +59,7 @@ typedef SBBMultiDropdownValidation<T> = bool Function(List<T> oldSelection, List
 /// * [SBBMultiDropdown.showMenu], which opens the selection sheet imperatively.
 /// * [SBBDropdownItem], the model for each selectable entry.
 /// * [SBBMultiDropdownValidation], the signature for custom validation callbacks.
+/// * [SBBMultiDropdownLabelAggregation], the signature for custom label aggregation.
 /// * [SBBDecoratedText], the widget used as a trigger.
 /// * [SBBBottomSheet], the widget used to display the possible items.
 /// * [Figma design specs](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=326-8495&) (internal)
@@ -83,6 +93,7 @@ class SBBMultiDropdown<T> extends StatelessWidget {
     required this.items,
     required this.onChanged,
     this.selectionValidation,
+    this.labelAggregation,
     // bottom sheet parameters
     this.sheetTitle,
     this.sheetTitleText,
@@ -158,6 +169,15 @@ class SBBMultiDropdown<T> extends StatelessWidget {
   /// Defaults to `!ListEquality().equals(oldSelection, newSelection)`.
   final SBBMultiDropdownValidation<T>? selectionValidation;
 
+  /// Produces the display string shown in the trigger field from the current
+  /// selection.
+  ///
+  /// Receives the [SBBDropdownItem]s that are currently inside [selectedItems].
+  /// Returns the string to display in the trigger widget.
+  ///
+  /// Defaults to joining the labels of the selected items with `", "`.
+  final SBBMultiDropdownLabelAggregation<T>? labelAggregation;
+
   final Widget? sheetTitle;
   final String? sheetTitleText;
   final Widget? sheetLeading;
@@ -181,9 +201,8 @@ class SBBMultiDropdown<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final displayValue = selectedItems.isEmpty
-        ? ''
-        : items.where((element) => selectedItems.contains(element.value)).map((element) => element.label).join(', ');
+    final selected = List<SBBDropdownItem<T>>.from(items.where((i) => selectedItems.contains(i.value)));
+    final displayValue = labelAggregation != null ? labelAggregation!(selected) : _defaultLabelAggregation(selected);
 
     return SBBDecoratedText(
       enabled: onChanged != null,
@@ -262,7 +281,7 @@ class SBBMultiDropdown<T> extends StatelessWidget {
     double scrollControlDisabledMaxHeightRatio = _defaultScrollControlDisabledMaxHeightRatio,
   }) {
     final isSelectionValid = selectionValidation ?? _defaultSelectionValidation;
-    var selectedValues = List<T>.from(selectedItems);
+    List<T> selectedValues = List.from(selectedItems);
 
     showSBBBottomSheet(
       context: context,
@@ -330,6 +349,11 @@ class SBBMultiDropdown<T> extends StatelessWidget {
         },
       ),
     );
+  }
+
+  static String _defaultLabelAggregation<T>(List<SBBDropdownItem<T>> selectedItems) {
+    if (selectedItems.isEmpty) return '';
+    return selectedItems.map((e) => e.label).join(', ');
   }
 
   static bool _defaultSelectionValidation<T>(List<T> oldSelection, List<T> newSelection) {
