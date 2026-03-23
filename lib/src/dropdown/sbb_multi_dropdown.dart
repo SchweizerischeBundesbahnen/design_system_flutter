@@ -27,8 +27,10 @@ typedef SBBMultiDropdownLabelAggregation<T> = String Function(List<SBBDropdownIt
 
 /// The SBB Dropdown (multiple values).
 ///
-/// Displays a trigger field that, when tapped, opens an [SBBBottomSheet] with a
-/// scrollable list of checkbox items. The user may select any combination of
+/// This is basically a convenience combination of a [SBBDecoratedText] and a [SBBBottomSheet].
+///
+/// When the user taps on the [SBBDecoratedText] field, an [SBBBottomSheet] is opened with a
+/// scrollable list of [SBBCheckboxListItem]s. The user may select any combination of
 /// items and confirms the selection with a primary button.
 ///
 /// The trigger widget itself does not hold selection state: when the user confirms the

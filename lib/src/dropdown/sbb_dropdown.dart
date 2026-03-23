@@ -10,8 +10,10 @@ const _defaultScrollControlDisabledMaxHeightRatio = 9.0 / 16.0;
 
 /// The SBB Dropdown.
 ///
-/// Displays a trigger field that, when tapped, opens an [SBBBottomSheet] with a
-/// scrollable list of radio items. The user selects one item and the sheet closes
+/// This is basically a convenience combination of a [SBBDecoratedText] and a [SBBBottomSheet].
+///
+/// When the user taps on the [SBBDecoratedText] field, an [SBBBottomSheet] is opened with a
+/// scrollable list of [SBBRadioListItem]s. The user selects one item and the sheet closes
 /// automatically.
 ///
 /// When an item is selected it calls [onChanged] with the chosen value and also pops the bottomSheet.
