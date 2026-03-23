@@ -60,6 +60,12 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Removed `SBBTextField` - replaced by `SBBTextInput`
 - Removed `merge` extension on `SBBBaseStyle`
 
+## [4.9.0] - 2026-03-23
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.17
+
 ## [4.8.0] - 2026-03-05
 
 ### Changed
@@ -791,7 +797,9 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 [v5 migration guide]: migration_guide.md
 
-[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.8.0...HEAD
+[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.9.0...HEAD
+
+[4.9.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.8.0...4.9.0
 
 [4.8.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.7.0...4.8.0
 
