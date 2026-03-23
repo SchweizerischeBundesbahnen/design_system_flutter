@@ -11,7 +11,7 @@ import '../input/decoration/sbb_input_decorator.dart';
 ///
 /// This widget is commonly used in non-editable contexts where you want a consistent
 /// look with text inputs, such as:
-/// * Displaying selected values in [SBBDatePicker] or [SBBSelect] trigger fields
+/// * Displaying selected values in [SBBDatePicker] or [SBBDropdown] trigger fields
 /// * Showing read-only information that matches text input styling
 /// * Creating interactive display fields that respond to taps via [onTap]
 ///

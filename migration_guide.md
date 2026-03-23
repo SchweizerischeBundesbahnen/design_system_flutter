@@ -107,6 +107,23 @@ SBBDecoratedText(
 ```
 
 
+## Dropdown (previously SBBSelect) / MultiDropdown (previously SBBMultiSelect)
+
+* replace `SelectMenuItem<T>` with `SBBDropdownItem<T>`
+* replace `label` with `labelText` (within `triggerDecoration`)
+* replace `hint` with `hintText` (within `triggerDecoration`)
+* replace `title` with `titleText` (within `triggerDecoration`)
+* `isLastElement` was removed — use `SBBListItem.divideListItems` to separate items with a divider
+* `allowMultilineLabel` was removed (use `triggerMaxLines` / `triggerMinLines` / `triggerExpands` instead)
+* `confirmButtonLabel` is replaced by `confirmButtonLabelText`
+
+### Theming & Styling
+
+* customize the theme with `SBBDropdownThemeData` as input to `SBBTheme`
+* access the theme using `Theme.of(context).sbbDropdownTheme`
+* customize an individual dropdown by setting the trigger or sheet style parameters
+
+
 ## Header
 
 ### Added SBBHeaderSmall

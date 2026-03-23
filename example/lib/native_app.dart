@@ -14,6 +14,7 @@ import 'pages/chip_page.dart';
 import 'pages/color_page.dart';
 import 'pages/container_page.dart';
 import 'pages/decorated_text_page.dart';
+import 'pages/dropdown_page.dart';
 import 'pages/header_box_page.dart';
 import 'pages/header_page.dart';
 import 'pages/icon_page.dart';
@@ -28,7 +29,6 @@ import 'pages/popup_page.dart';
 import 'pages/promotion_box_page.dart';
 import 'pages/radio_page.dart';
 import 'pages/segmented_button_page.dart';
-import 'pages/select_page.dart';
 import 'pages/slider_page.dart';
 import 'pages/status_page.dart';
 import 'pages/stepper_page.dart';
@@ -143,7 +143,6 @@ class MyApp extends StatelessWidget {
             _DemoEntry('Popup', PopupPage()),
             _DemoEntry('Radio', RadioPage()),
             _DemoEntry('Segmented Button', SegmentedButtonPage()),
-            _DemoEntry('Select', SelectPage()),
             _DemoEntry('Switch', SwitchPage()),
             _DemoEntry('Text Input', TextInputPage()),
             _DemoEntry('Text Area', TextAreaPage()),
@@ -168,6 +167,7 @@ class MyApp extends StatelessWidget {
           items: [
             _DemoEntry('Autocompletion', AutocompletionPage()),
             _DemoEntry('Container', ContainerPage()),
+            _DemoEntry('Dropdown', DropdownPage()),
             _DemoEntry('Forms', FormPage()),
             _DemoEntry('Header', HeaderPage()),
             _DemoEntry('Headerbox', HeaderBoxPage()),

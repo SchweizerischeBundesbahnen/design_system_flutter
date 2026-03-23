@@ -1,6 +1,5 @@
 # Whitelisted public type names that don't follow the SBB prefix convention
 # Add one name per line. Lines starting with # or // are treated as comments.
 
-SelectMenuItem
 ClosableBoxController
 PromotionBoxStyle

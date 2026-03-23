@@ -311,3 +311,35 @@ class SBBInputDecoration {
     contentPadding,
   ]);
 }
+
+/// Extension on [SBBInputDecoration] that allows applying default values from
+/// [SBBInputDecorationThemeData].
+///
+/// Fields that are already set on the decoration are preserved; only `null`
+/// fields are filled in from the theme.
+extension SBBInputDecorationThemeX on SBBInputDecoration {
+  /// Returns a new [SBBInputDecoration] where every `null` field is replaced
+  /// with the corresponding value from [theme].
+  SBBInputDecoration applyThemeValues(SBBInputDecorationThemeData? theme) {
+    if (theme == null) return this;
+    return copyWith(
+      leadingForegroundColor: leadingForegroundColor ?? theme.leadingForegroundColor,
+      leadingInputGap: leadingInputGap ?? theme.leadingInputGap,
+      labelTextStyle: labelTextStyle ?? theme.labelTextStyle,
+      labelForegroundColor: labelForegroundColor ?? theme.labelForegroundColor,
+      floatingLabelTextStyle: floatingLabelTextStyle ?? theme.floatingLabelTextStyle,
+      floatingLabelInputGap: floatingLabelInputGap ?? theme.floatingLabelInputGap,
+      floatingLabelBehavior: floatingLabelBehavior ?? theme.floatingLabelBehavior,
+      trailingForegroundColor: trailingForegroundColor ?? theme.trailingForegroundColor,
+      inputTrailingGap: inputTrailingGap ?? theme.inputTrailingGap,
+      placeholderTextStyle: placeholderTextStyle ?? theme.placeholderTextStyle,
+      placeholderForegroundColor: placeholderForegroundColor ?? theme.placeholderForegroundColor,
+      errorTextStyle: errorTextStyle ?? theme.errorTextStyle,
+      errorForegroundColor: errorForegroundColor ?? theme.errorForegroundColor,
+      titleRowErrorGap: titleRowErrorGap ?? theme.titleRowErrorGap,
+      errorBottomPadding: errorBottomPadding ?? theme.errorBottomPadding,
+      borderColor: borderColor ?? theme.borderColor,
+      contentPadding: contentPadding ?? theme.contentPadding,
+    );
+  }
+}
