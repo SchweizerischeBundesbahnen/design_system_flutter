@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
-// ALL TODOS apply to both SBBDropdown as well as SBBMultiDropdown
-// TODO: migration (write a short, precise migration section in the correct alphabetical order in migration_guide_v5.md)
-// TODO: tests
-
 const _defaultScrollControlDisabledMaxHeightRatio = 9.0 / 16.0;
 
 /// The SBB Dropdown.
