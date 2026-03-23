@@ -8,7 +8,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     this.selectLabel,
     this.linkTextStyle,
     this.linkTextStyleHighlighted,
-    this.tabBarTextStyle,
     this.promotionBox,
     this.picker,
   });
@@ -26,7 +25,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     linkTextStyleHighlighted: baseStyle.defaultTextStyle?.copyWith(
       color: baseStyle.themeValue(baseStyle.primaryColorDark, SBBColors.white),
     ),
-    tabBarTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallLight),
     promotionBox: PromotionBoxStyle.$default(baseStyle: baseStyle),
     picker: SBBPickerStyle.$default(baseStyle: baseStyle),
   );
@@ -36,7 +34,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
 
   final TextStyle? linkTextStyle;
   final TextStyle? linkTextStyleHighlighted;
-  final TextStyle? tabBarTextStyle;
   final PromotionBoxStyle? promotionBox;
   final SBBPickerStyle? picker;
 
@@ -60,7 +57,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     TextStyle? linkTextStyleHighlighted,
     Color? modalBackgroundColor,
     TextStyle? modalTitleTextStyle,
-    TextStyle? tabBarTextStyle,
     PromotionBoxStyle? promotionBox,
     SBBPickerStyle? picker,
   }) => SBBControlStyles(
@@ -68,7 +64,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
     selectLabel: selectLabel ?? this.selectLabel,
     linkTextStyle: linkTextStyle ?? this.linkTextStyle,
     linkTextStyleHighlighted: linkTextStyleHighlighted ?? this.linkTextStyleHighlighted,
-    tabBarTextStyle: tabBarTextStyle ?? this.tabBarTextStyle,
     promotionBox: promotionBox ?? this.promotionBox,
     picker: picker ?? this.picker,
   );
@@ -81,7 +76,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
       selectLabel: selectLabel?.lerp(other.selectLabel, t),
       linkTextStyle: TextStyle.lerp(linkTextStyle, other.linkTextStyle, t),
       linkTextStyleHighlighted: TextStyle.lerp(linkTextStyleHighlighted, other.linkTextStyleHighlighted, t),
-      tabBarTextStyle: TextStyle.lerp(tabBarTextStyle, other.tabBarTextStyle, t),
       promotionBox: PromotionBoxStyle.lerp(promotionBox, other.promotionBox, t),
       picker: picker?.lerp(other.picker, t),
     );
@@ -97,7 +91,6 @@ extension SBBControlStylesExtension on SBBControlStyles? {
           picker: this!.picker.merge(other?.picker),
           linkTextStyle: this!.linkTextStyle ?? other?.linkTextStyle,
           linkTextStyleHighlighted: this!.linkTextStyleHighlighted ?? other?.linkTextStyleHighlighted,
-          tabBarTextStyle: this!.tabBarTextStyle ?? other?.tabBarTextStyle,
           promotionBox: this!.promotionBox ?? other?.promotionBox,
         )
         as SBBControlStyles;
