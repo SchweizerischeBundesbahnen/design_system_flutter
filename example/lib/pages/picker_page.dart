@@ -24,8 +24,11 @@ class _PickerPageState extends State<PickerPage> {
     'Orange',
   ];
 
-  DateTime _selectedDate = DateTime.now();
-  DateTime _selectedDateTime = DateTime.now();
+  // 🚂 Hogwarts
+  DateTime _selectedDate = DateTime(1991, 9, 1);
+
+  // 💣 Back to the Future
+  DateTime _selectedDateTime = DateTime(1985, 10, 26, 1, 21);
   TimeOfDay _selectedTime = TimeOfDay.now();
 
   @override
@@ -44,7 +47,10 @@ class _PickerPageState extends State<PickerPage> {
                 items: [
                   SBBDateInput(
                     value: _selectedDate,
-                    triggerDecoration: const SBBInputDecoration(labelText: 'Date only'),
+                    triggerDecoration: const SBBInputDecoration(
+                      labelText: 'Date only',
+                      leadingIconData: SBBIcons.calendar_one_day_small,
+                    ),
                     onDateChanged: (date) {
                       debugPrint('selected date: $date');
                       setState(() {
@@ -54,7 +60,10 @@ class _PickerPageState extends State<PickerPage> {
                   ),
                   SBBDateTimeInput(
                     value: _selectedDateTime,
-                    triggerDecoration: const SBBInputDecoration(labelText: 'Date and time'),
+                    triggerDecoration: const SBBInputDecoration(
+                      labelText: 'Date and time',
+                      leadingIconData: SBBIcons.calendar_weekday_small,
+                    ),
                     onDateTimeChanged: (dateTime) {
                       debugPrint('selected date time: $dateTime');
                       setState(() {
@@ -64,7 +73,10 @@ class _PickerPageState extends State<PickerPage> {
                   ),
                   SBBTimeInput(
                     value: _selectedTime,
-                    triggerDecoration: const SBBInputDecoration(labelText: 'Time only'),
+                    triggerDecoration: const SBBInputDecoration(
+                      labelText: 'Time only',
+                      leadingIconData: SBBIcons.clock_small,
+                    ),
                     onTimeChanged: (time) {
                       debugPrint('selected time: $time');
                       setState(() {
