@@ -133,7 +133,7 @@ class _DropdownPageState extends State<DropdownPage> {
                     items: [
                       SBBDropdown<int>(
                         triggerDecoration: const SBBInputDecoration(labelText: 'Label', placeholderText: 'Placeholder'),
-                        sheetTitleText: _sheetTitle,
+                        sheetTitleText: _sheetTitle.isNotEmpty ? _sheetTitle : null,
                         sheetLeadingIconData: _showLeadingIcon ? SBBIcons.dog_small : null,
                         sheetShowCloseButton: _showCloseButton,
                         selectedItem: _selectedValue1,
@@ -148,7 +148,7 @@ class _DropdownPageState extends State<DropdownPage> {
                           labelText: 'Default Value',
                           leadingIconData: SBBIcons.dog_small,
                         ),
-                        sheetTitleText: _sheetTitle,
+                        sheetTitleText: _sheetTitle.isNotEmpty ? _sheetTitle : null,
                         sheetLeadingIconData: _showLeadingIcon ? SBBIcons.dog_small : null,
                         sheetShowCloseButton: _showCloseButton,
                         selectedItem: _selectedValue2,
@@ -180,7 +180,7 @@ class _DropdownPageState extends State<DropdownPage> {
                     items: [
                       SBBMultiDropdown<int>(
                         triggerDecoration: const SBBInputDecoration(labelText: 'Label', placeholderText: 'Placeholder'),
-                        sheetTitleText: _sheetTitle,
+                        sheetTitleText: _sheetTitle.isNotEmpty ? _sheetTitle : null,
                         sheetLeadingIconData: _showLeadingIcon ? SBBIcons.dog_small : null,
                         sheetShowCloseButton: _showCloseButton,
                         selectedItems: _multiSelectValues1,
@@ -195,7 +195,7 @@ class _DropdownPageState extends State<DropdownPage> {
                           labelText: 'Default Value',
                           leadingIconData: SBBIcons.dog_small,
                         ),
-                        sheetTitleText: _sheetTitle,
+                        sheetTitleText: _sheetTitle.isNotEmpty ? _sheetTitle : null,
                         sheetLeadingIconData: _showLeadingIcon ? SBBIcons.dog_small : null,
                         sheetShowCloseButton: _showCloseButton,
                         selectedItems: _multiSelectValues2,
