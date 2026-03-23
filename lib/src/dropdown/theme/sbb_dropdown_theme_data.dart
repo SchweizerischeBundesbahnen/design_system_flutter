@@ -40,12 +40,12 @@ class SBBDropdownThemeData extends ThemeExtension<SBBDropdownThemeData> with Dia
 
   @override
   SBBDropdownThemeData copyWith({
-    SBBInputDecorationThemeData? triggerInputDecorationStyle,
+    SBBInputDecorationThemeData? triggerDecorationTheme,
     SBBDecoratedTextStyle? triggerStyle,
     SBBBottomSheetStyle? sheetStyle,
   }) {
     return SBBDropdownThemeData(
-      triggerDecorationTheme: triggerInputDecorationStyle ?? this.triggerDecorationTheme,
+      triggerDecorationTheme: triggerDecorationTheme ?? this.triggerDecorationTheme,
       triggerStyle: triggerStyle ?? this.triggerStyle,
       sheetStyle: sheetStyle ?? this.sheetStyle,
     );
@@ -79,7 +79,7 @@ extension SBBDropdownThemeDataX on SBBDropdownThemeData {
   SBBDropdownThemeData merge(SBBDropdownThemeData? other) {
     if (other == null) return this;
     return copyWith(
-      triggerInputDecorationStyle:
+      triggerDecorationTheme:
           triggerDecorationTheme?.merge(other.triggerDecorationTheme) ?? other.triggerDecorationTheme,
       triggerStyle: triggerStyle?.merge(other.triggerStyle) ?? other.triggerStyle,
       sheetStyle: sheetStyle?.merge(other.sheetStyle) ?? other.sheetStyle,

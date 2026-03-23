@@ -22,7 +22,7 @@ class _DropdownPageState extends State<DropdownPage> {
 
   List<int> _multiSelectValues1 = [];
   List<int> _multiSelectValues2 = [1];
-  List<int> _multiSelectValues3 = [];
+  final List<int> _multiSelectValues3 = [];
 
   List<SBBDropdownItem<int>> get _multiSelectItems =>
       List.generate(_itemCount, (idx) => SBBDropdownItem(value: idx, label: 'Item ${idx + 1}'));
@@ -80,12 +80,15 @@ class _DropdownPageState extends State<DropdownPage> {
                                         setState(() {
                                           _itemCount = value.round();
                                           // Reset selections that are out of range
-                                          if (_selectedValue1 != null && _selectedValue1! >= _itemCount)
+                                          if (_selectedValue1 != null && _selectedValue1! >= _itemCount) {
                                             _selectedValue1 = null;
-                                          if (_selectedValue2 != null && _selectedValue2! >= _itemCount)
+                                          }
+                                          if (_selectedValue2 != null && _selectedValue2! >= _itemCount) {
                                             _selectedValue2 = null;
-                                          if (_selectedValue3 != null && _selectedValue3! >= _itemCount)
+                                          }
+                                          if (_selectedValue3 != null && _selectedValue3! >= _itemCount) {
                                             _selectedValue3 = null;
+                                          }
                                         });
                                       },
                                     ),
@@ -115,7 +118,7 @@ class _DropdownPageState extends State<DropdownPage> {
                         onChanged: (value) => setState(() => _showCloseButton = value),
                       ),
                     ],
-                  ).toList(growable: false),
+                  ),
                 ),
               ),
             ],
@@ -168,7 +171,7 @@ class _DropdownPageState extends State<DropdownPage> {
                         onChanged: null,
                       ),
                     ],
-                  ).toList(growable: false),
+                  ),
                 ),
               ),
               const SizedBox(height: SBBSpacing.medium),
@@ -214,7 +217,7 @@ class _DropdownPageState extends State<DropdownPage> {
                         onChanged: null,
                       ),
                     ],
-                  ).toList(growable: false),
+                  ),
                 ),
               ),
             ],
