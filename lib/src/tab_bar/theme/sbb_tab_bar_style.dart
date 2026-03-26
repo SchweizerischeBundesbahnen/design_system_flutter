@@ -26,46 +26,27 @@ class SBBTabBarStyle {
   });
 
   /// The background color of the tab bar container.
-  ///
-  /// Typically white in light theme and charcoal in dark theme.
   final Color? backgroundColor;
 
   /// The color of the tab item icon.
-  ///
-  /// When the item is selected, the icon uses the foreground color
-  /// (white in light / black in dark); otherwise the background color
-  /// (black in light / white in dark).
   final WidgetStateProperty<Color?>? iconColor;
 
   /// The background color of the circular selection indicator behind a tab item.
-  ///
-  /// When selected, it shows the background color (black in light / white in
-  /// dark); when unselected it is transparent.
   final WidgetStateProperty<Color?>? itemBackgroundColor;
 
   /// The text style for the tab item label shown below the selected icon.
-  ///
-  /// Corresponds to [SBBTextStyles.smallLight].
   final TextStyle? itemLabelTextStyle;
 
   /// The foreground color for the tab item label text.
-  ///
-  /// Typically black in light theme and white in dark theme.
   final Color? itemLabelForegroundColor;
 
   /// The icon shown on a tab item when a warning is active and not yet seen.
-  ///
-  /// Defaults to [SBBIcons.sign_exclamation_point_small].
   final IconData? warningItemIcon;
 
   /// The background color of the circular badge shown for a warning item.
-  ///
-  /// Defaults to [SBBColors.red].
   final Color? warningItemBackgroundColor;
 
   /// The icon/text color shown inside the warning badge.
-  ///
-  /// Defaults to [SBBColors.white].
   final Color? warningItemForegroundColor;
 
   /// The default foreground color (icon or text) for [SBBTabBarBadge] widgets
@@ -74,8 +55,6 @@ class SBBTabBarStyle {
   /// This acts as a theme-level default. Individual [SBBTabBarBadgeIcon] or
   /// [SBBTabBarBadgeText] instances can override this by setting their own
   /// [SBBTabBarBadge.foregroundColor] property.
-  ///
-  /// Defaults to [SBBColors.white].
   final Color? badgeForegroundColor;
 
   /// The background color for [SBBTabBarBadge] widgets displayed on
@@ -84,13 +63,9 @@ class SBBTabBarStyle {
   /// This acts as a theme-level default. Individual [SBBTabBarBadgeIcon] or
   /// [SBBTabBarBadgeText] instances can override this by setting their own
   /// [SBBTabBarBadge.backgroundColor] property.
-  ///
-  /// Defaults to the primary color of the current [SBBBaseStyle].
   final Color? badgeBackgroundColor;
 
   /// The text style for the [SBBTabBarBadgeText] widget displayed on tab items.
-  ///
-  /// Defaults to [SBBTextStyles.extraExtraSmallBold] with font weight 900.
   final TextStyle? badgeTextStyle;
 
   SBBTabBarStyle copyWith({
@@ -121,9 +96,6 @@ class SBBTabBarStyle {
     );
   }
 
-  /// Returns a new [SBBTabBarStyle] that is the result of merging [other] into
-  /// this style. Properties in [other] take precedence over this style's
-  /// properties if they are non-null.
   SBBTabBarStyle merge(SBBTabBarStyle? other) {
     if (other == null) return this;
     return copyWith(
@@ -181,17 +153,18 @@ class SBBTabBarStyle {
   }
 
   @override
-  int get hashCode => Object.hash(
-    backgroundColor,
-    iconColor,
-    itemBackgroundColor,
-    itemLabelTextStyle,
-    itemLabelForegroundColor,
-    warningItemIcon,
-    warningItemBackgroundColor,
-    warningItemForegroundColor,
-    badgeForegroundColor,
-    badgeBackgroundColor,
-    badgeTextStyle,
-  );
+  int get hashCode =>
+      Object.hash(
+        backgroundColor,
+        iconColor,
+        itemBackgroundColor,
+        itemLabelTextStyle,
+        itemLabelForegroundColor,
+        warningItemIcon,
+        warningItemBackgroundColor,
+        warningItemForegroundColor,
+        badgeForegroundColor,
+        badgeBackgroundColor,
+        badgeTextStyle,
+      );
 }
