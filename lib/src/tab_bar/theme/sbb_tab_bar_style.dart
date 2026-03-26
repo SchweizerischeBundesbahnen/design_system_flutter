@@ -153,18 +153,17 @@ class SBBTabBarStyle {
   }
 
   @override
-  int get hashCode =>
-      Object.hash(
-        backgroundColor,
-        iconColor,
-        itemBackgroundColor,
-        itemLabelTextStyle,
-        itemLabelForegroundColor,
-        warningItemIcon,
-        warningItemBackgroundColor,
-        warningItemForegroundColor,
-        badgeForegroundColor,
-        badgeBackgroundColor,
-        badgeTextStyle,
-      );
+  int get hashCode => Object.hash(
+    backgroundColor,
+    iconColor,
+    itemBackgroundColor,
+    itemLabelTextStyle,
+    itemLabelForegroundColor,
+    warningItemIcon,
+    warningItemBackgroundColor,
+    warningItemForegroundColor,
+    badgeForegroundColor,
+    badgeBackgroundColor,
+    badgeTextStyle,
+  );
 }
