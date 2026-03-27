@@ -100,7 +100,6 @@ class SBBListItem extends StatefulWidget {
     this.trailingIconData,
     this.onTap,
     this.onLongPress,
-    this.enabled = true,
     this.isLoading = false,
     this.links,
     this.focusNode,
@@ -210,16 +209,6 @@ class SBBListItem extends StatefulWidget {
   /// Ignored when [enabled] is false.
   /// {@endtemplate}
   final GestureLongPressCallback? onLongPress;
-
-  /// {@template sbb_design_system.list_item.enabled}
-  /// Whether the list item is enabled for interaction.
-  ///
-  /// When false, [onTap] and [onLongPress] are ignored and the item
-  /// is styled as disabled.
-  ///
-  /// Defaults to true.
-  /// {@endtemplate}
-  final bool enabled;
 
   /// {@template sbb_design_system.list_item.isLoading}
   /// Whether to show a loading indicator at the bottom of the item.
@@ -333,16 +322,6 @@ class SBBListItem extends StatefulWidget {
     super.debugFillProperties(properties);
     properties.add(
       FlagProperty(
-        'enabled',
-        value: enabled,
-        ifTrue: 'true',
-        ifFalse: 'false',
-        showName: true,
-        defaultValue: true,
-      ),
-    );
-    properties.add(
-      FlagProperty(
         'isLoading',
         value: isLoading,
         ifTrue: 'true',
@@ -393,7 +372,7 @@ class SBBListItem extends StatefulWidget {
 class _SBBListItemState extends State<SBBListItem> {
   late WidgetStatesController _statesController;
 
-  bool get _isInteractive => widget.enabled && (widget.onTap != null || widget.onLongPress != null);
+  bool get _isInteractive => widget.onTap != null || widget.onLongPress != null;
 
   @override
   void initState() {
@@ -405,9 +384,7 @@ class _SBBListItemState extends State<SBBListItem> {
   @override
   void didUpdateWidget(SBBListItem oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.enabled != oldWidget.enabled ||
-        widget.onTap != oldWidget.onTap ||
-        widget.onLongPress != oldWidget.onLongPress) {
+    if (widget.onTap != oldWidget.onTap || widget.onLongPress != oldWidget.onLongPress) {
       _updateStatesController();
     }
   }
@@ -535,8 +512,8 @@ class _SBBListItemState extends State<SBBListItem> {
     }
 
     child = InkWell(
-      onTap: widget.enabled ? widget.onTap : null,
-      onLongPress: widget.enabled ? widget.onLongPress : null,
+      onTap: widget.onTap,
+      onLongPress: widget.onLongPress,
       autofocus: widget.autofocus,
       focusNode: widget.focusNode,
       enableFeedback: widget.enableFeedback,
@@ -646,7 +623,6 @@ class SBBListItemBoxed extends SBBListItem {
     super.trailingIconData,
     super.onTap,
     super.onLongPress,
-    super.enabled,
     super.isLoading,
     super.links,
     super.focusNode,
