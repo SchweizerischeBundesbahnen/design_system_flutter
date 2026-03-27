@@ -2,7 +2,6 @@ import 'dart:math';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/src/container/container.dart';
 
 import '../../sbb_design_system_mobile.dart';
 import 'tab_curve_clipper.dart';
@@ -26,6 +25,7 @@ class SBBTabBar extends StatefulWidget {
     this.initialItem,
     required this.onTabChanged,
     required this.onTap,
+    this.style,
     super.key,
   });
 
@@ -35,20 +35,28 @@ class SBBTabBar extends StatefulWidget {
     required void Function(SBBTabBarItem tab) onTap,
     Key? key,
     SBBTabBarItem? initialItem,
-  }) : this._(key: key, items: items, initialItem: initialItem, onTabChanged: onTabChanged, onTap: onTap);
+    SBBTabBarStyle? style,
+  }) : this._(key: key, items: items, initialItem: initialItem, onTabChanged: onTabChanged, onTap: onTap, style: style);
 
   const SBBTabBar.controller({
     required SBBTabBarController controller,
     required Future<void> Function(Future<SBBTabBarItem> tabTask) onTabChanged,
     required void Function(SBBTabBarItem tab) onTap,
     Key? key,
-  }) : this._(key: key, controller: controller, onTabChanged: onTabChanged, onTap: onTap);
+    SBBTabBarStyle? style,
+  }) : this._(key: key, controller: controller, onTabChanged: onTabChanged, onTap: onTap, style: style);
 
   final Future<void> Function(Future<SBBTabBarItem> tabTask) onTabChanged;
   final void Function(SBBTabBarItem tab) onTap;
   final SBBTabBarController? controller;
   final List<SBBTabBarItem>? items;
   final SBBTabBarItem? initialItem;
+
+  /// Customizes this tab bar's appearance.
+  ///
+  /// Non-null properties override the corresponding values from [SBBTabBarThemeData]
+  /// found in the ambient [Theme].
+  final SBBTabBarStyle? style;
 
   @override
   State<SBBTabBar> createState() => _SBBTabBarState();
@@ -128,6 +136,8 @@ class _SBBTabBarState extends State<SBBTabBar> with TickerProviderStateMixin, Wi
                     final warnings = snapshot.requireData;
                     final theme = Theme.of(context);
                     final cardColor = theme.sbbContentBoxTheme?.style?.color ?? theme.scaffoldBackgroundColor;
+                    final themeStyle = theme.sbbTabBarTheme?.style;
+                    final effectiveStyle = themeStyle?.merge(widget.style) ?? widget.style;
                     _controller.changeOrientation(portrait);
                     _controller.updateCurveAnimation();
                     return Container(
@@ -148,6 +158,7 @@ class _SBBTabBarState extends State<SBBTabBar> with TickerProviderStateMixin, Wi
                                 e.icon,
                                 selected: true,
                                 badge: badges.firstWhereOrNull((badge) => badge.id == e.id),
+                                style: effectiveStyle,
                                 interactions: TabItemInteractions(
                                   focusNode: _focusNodes[e]!,
                                   onTap: () => _onTap(e, navData),
@@ -167,6 +178,7 @@ class _SBBTabBarState extends State<SBBTabBar> with TickerProviderStateMixin, Wi
                                 warnings: warnings,
                                 badges: badges,
                                 portrait: portrait,
+                                style: effectiveStyle,
                                 onPositioned: _controller.onLayout,
                                 interactionsBuilder: (e) => TabItemInteractions(
                                   focusNode: _focusNodes[e]!,

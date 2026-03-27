@@ -434,6 +434,15 @@ SBBSegmentedButton<String>(
 * customize an individual switch by setting its `style` parameter in the constructor
 
 
+## Tab Bar
+
+The theming / styling of the `SBBTabBar` has been adapted:
+
+* Use `SBBTabBarStyle` in the `style` parameter to customize the appearance
+* Override the `tabBarTheme` in the `SBBTheme.light` / `SBBTheme.dark` constructor
+* Access the theme data by calling `Theme.of(context).sbbTabBarTheme`
+
+
 ## Text Input
 
 ### From SBBTextField to SBBTextInput
