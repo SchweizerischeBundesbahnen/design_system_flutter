@@ -54,7 +54,7 @@ void main() {
           SBBDecoratedText(
             value: 'Value',
             decoration: SBBInputDecoration(labelText: 'Disabled'),
-            enabled: false,
+            onTap: null,
           ),
           SBBDecoratedText(
             value: 'I am \nmulti \nline',
@@ -136,7 +136,7 @@ void main() {
           ),
           SBBDecoratedTextBoxed(
             value: 'Disabled',
-            enabled: false,
+            onTap: null,
             decoration: SBBInputDecoration(
               labelText: 'Disabled',
               leadingIconData: SBBIcons.unicorn_small,

@@ -71,7 +71,6 @@ class _SBBDateTimeInputState extends State<SBBDateTimeInput> {
       key: widget.key,
       value: _valueText,
       maxLines: widget.maxLines,
-      enabled: widget.onDateTimeChanged != null,
       decoration: SBBInputDecoration(
         labelText: widget.labelText,
         placeholderText: widget.hintText,
