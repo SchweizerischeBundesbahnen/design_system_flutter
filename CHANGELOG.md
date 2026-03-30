@@ -13,6 +13,10 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 - (auto): updated icon lib to version 1.8.18
 
+### Fixed
+
+- `SBBHeaderbox`: Remove `MergeSemantics` allowing accessibility
+
 ## [4.9.0] - 2026-03-23
 
 ### Changed
