@@ -133,7 +133,6 @@ class _SBBTimeInputState extends State<SBBTimeInput> {
     return SBBDecoratedText(
       key: widget.key,
       value: _valueText,
-      enabled: widget.onTimeChanged != null,
       decoration: widget.triggerDecoration,
       style: widget.triggerStyle,
       maxLines: widget.triggerMaxLines,

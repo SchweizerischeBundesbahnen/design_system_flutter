@@ -127,7 +127,6 @@ class _SBBDateInputState extends State<SBBDateInput> {
     return SBBDecoratedText(
       key: widget.key,
       value: _valueText,
-      enabled: widget.onDateChanged != null,
       decoration: widget.triggerDecoration,
       style: widget.triggerStyle,
       maxLines: widget.triggerMaxLines,

@@ -78,8 +78,7 @@ class CheckboxTest extends StatelessWidget {
               SBBCheckboxListItem(
                 value: false,
                 titleText: 'Leading and Trailing Icon (Disabled)',
-                enabled: false,
-                onChanged: (_) {},
+                onChanged: null,
                 leadingIconData: SBBIcons.alarm_clock_small,
                 trailingIconData: SBBIcons.dog_small,
               ),

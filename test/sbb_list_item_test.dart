@@ -26,7 +26,7 @@ void main() {
                   leadingIconData: SBBIcons.dog_small,
                   onTap: () {},
                 ),
-                SBBListItem(titleText: 'Disabled', leadingIconData: SBBIcons.dog_small, enabled: false),
+                SBBListItem(titleText: 'Disabled', leadingIconData: SBBIcons.dog_small),
                 SBBListItem(titleText: 'With trailing', trailingIconData: SBBIcons.dog_small, onTap: () {}),
                 SBBListItem(titleText: 'With subtitle', subtitleText: _loremIpsum, onTap: () {}),
                 SBBListItem(
