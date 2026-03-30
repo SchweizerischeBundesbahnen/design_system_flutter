@@ -9,6 +9,8 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+## [4.10.0] - 2026-03-30
+
 ### Changed
 
 - (auto): updated icon lib to version 1.8.18
@@ -752,7 +754,9 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Initial project setup
 - Added some widgets
 
-[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.9.0...HEAD
+[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.10.0...HEAD
+
+[4.10.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.9.0...4.10.0
 
 [4.9.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.8.0...4.9.0
 
