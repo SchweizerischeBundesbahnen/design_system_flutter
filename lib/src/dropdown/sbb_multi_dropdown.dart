@@ -62,7 +62,7 @@ typedef SBBMultiDropdownLabelAggregation<T> = String Function(List<SBBDropdownIt
 /// See also:
 ///
 /// * [SBBDropdown], variant for selecting a single value.
-/// * [SBBMultiDropdown.showMenu], which opens the selection sheet imperatively.
+/// * [SBBMultiDropdown._showMenu], which opens the selection sheet imperatively.
 /// * [SBBDropdownItem], the model for each selectable entry.
 /// * [SBBDecoratedTextConfig], the configuration object for the trigger field.
 /// * [SBBMultiDropdownValidation], the signature for custom validation callbacks.
@@ -101,23 +101,10 @@ class SBBMultiDropdown<T> extends StatelessWidget {
     this.selectionValidation,
     this.labelAggregation,
     // bottom sheet parameters
-    this.sheetTitle,
+    this.sheetConfig,
     this.sheetTitleText,
-    this.sheetLeading,
-    this.sheetLeadingIconData,
-    this.sheetTrailing,
-    this.sheetTrailingIconData,
     this.sheetStyle,
-    this.sheetBarrierLabel,
-    this.sheetUseRootNavigator = true,
-    this.sheetIsDismissible = true,
-    this.sheetEnableDrag = true,
-    this.sheetUseSafeArea = true,
-    this.sheetTransitionAnimationController,
-    this.sheetAnimationStyle,
-    this.sheetScrollControlDisabledMaxHeightRatio,
-    this.sheetShowCloseButton = true,
-  });
+  }) : assert(sheetConfig == null || sheetTitleText == null, 'sheetTitleText cannot be set while sheetConfig is set!');
 
   /// Decoration applied to the trigger field.
   ///
@@ -184,57 +171,37 @@ class SBBMultiDropdown<T> extends StatelessWidget {
   /// Defaults to joining the labels of the selected items with `", "`.
   final SBBMultiDropdownLabelAggregation<T>? labelAggregation;
 
-  final Widget? sheetTitle;
+  /// Configuration for the bottom sheet parameters.
+  ///
+  /// Defaults to [SBBBottomSheetConfig] with its default values.
+  final SBBBottomSheetConfig? sheetConfig;
+
+  /// This is a flat convenience parameter. If you need more control, use [sheetConfig] instead.
+  /// Cannot be used together with [sheetConfig].
   final String? sheetTitleText;
-  final Widget? sheetLeading;
-  final IconData? sheetLeadingIconData;
-  final Widget? sheetTrailing;
-  final IconData? sheetTrailingIconData;
 
   /// Customizes the bottom sheet appearance.
   ///
   /// Theme defaults are applied from [SBBDropdownThemeData.sheetStyle].
   final SBBBottomSheetStyle? sheetStyle;
-  final String? sheetBarrierLabel;
-  final bool sheetUseRootNavigator;
-  final bool sheetIsDismissible;
-  final bool sheetEnableDrag;
-  final bool sheetUseSafeArea;
-  final AnimationController? sheetTransitionAnimationController;
-  final AnimationStyle? sheetAnimationStyle;
-  final double? sheetScrollControlDisabledMaxHeightRatio;
-  final bool sheetShowCloseButton;
 
   @override
   Widget build(BuildContext context) {
     final selected = List<SBBDropdownItem<T>>.from(items.where((i) => selectedItems.contains(i.value)));
     final displayValue = labelAggregation != null ? labelAggregation!(selected) : _defaultLabelAggregation(selected);
+    final effectiveConfig = sheetConfig ?? const SBBBottomSheetConfig();
 
     return SBBDecoratedText(
-      onTap: () => SBBMultiDropdown.showMenu<T>(
+      onTap: () => _showMenu<T>(
         context: context,
         confirmButtonLabelText: confirmButtonLabel,
         selectedItems: selectedItems,
         items: items,
         onChanged: onChanged!,
         selectionValidation: selectionValidation,
-        sheetTitle: sheetTitle,
+        sheetConfig: effectiveConfig,
         sheetTitleText: sheetTitleText,
-        sheetLeading: sheetLeading,
-        sheetLeadingIconData: sheetLeadingIconData,
-        sheetTrailing: sheetTrailing,
-        sheetTrailingIconData: sheetTrailingIconData,
         sheetStyle: sheetStyle,
-        sheetBarrierLabel: sheetBarrierLabel,
-        sheetUseRootNavigator: sheetUseRootNavigator,
-        sheetIsDismissible: sheetIsDismissible,
-        sheetEnableDrag: sheetEnableDrag,
-        sheetUseSafeArea: sheetUseSafeArea,
-        sheetTransitionAnimationController: sheetTransitionAnimationController,
-        sheetAnimationStyle: sheetAnimationStyle,
-        sheetShowCloseButton: sheetShowCloseButton,
-        scrollControlDisabledMaxHeightRatio:
-            sheetScrollControlDisabledMaxHeightRatio ?? _defaultScrollControlDisabledMaxHeightRatio,
       ),
       value: displayValue,
       decoration: _effectiveTriggerDecoration(context),
@@ -261,52 +228,41 @@ class SBBMultiDropdown<T> extends StatelessWidget {
     return base.copyWith(trailingIconData: SBBIcons.chevron_small_down_small);
   }
 
-  static void showMenu<T>({
+  static void _showMenu<T>({
     required BuildContext context,
     String? confirmButtonLabelText,
     required List<T> selectedItems,
     required List<SBBDropdownItem<T>> items,
     required ValueChanged<List<T>> onChanged,
     SBBMultiDropdownValidation<T>? selectionValidation,
-    Widget? sheetTitle,
+    SBBBottomSheetConfig? sheetConfig,
     String? sheetTitleText,
-    Widget? sheetLeading,
-    IconData? sheetLeadingIconData,
-    Widget? sheetTrailing,
-    IconData? sheetTrailingIconData,
     SBBBottomSheetStyle? sheetStyle,
-    String? sheetBarrierLabel,
-    bool sheetUseRootNavigator = true,
-    bool sheetIsDismissible = true,
-    bool sheetEnableDrag = true,
-    bool sheetUseSafeArea = true,
-    AnimationController? sheetTransitionAnimationController,
-    AnimationStyle? sheetAnimationStyle,
-    bool sheetShowCloseButton = true,
-    double scrollControlDisabledMaxHeightRatio = _defaultScrollControlDisabledMaxHeightRatio,
   }) {
     final isSelectionValid = selectionValidation ?? _defaultSelectionValidation;
     List<T> selectedValues = List.from(selectedItems);
+    final effectiveConfig = sheetConfig ?? const SBBBottomSheetConfig();
 
     showSBBBottomSheet(
       context: context,
-      title: sheetTitle,
-      titleText: sheetTitleText,
-      leading: sheetLeading,
-      leadingIconData: sheetLeadingIconData,
-      trailing: sheetTrailing,
-      trailingIconData: sheetTrailingIconData,
+      title: effectiveConfig.title,
+      titleText: sheetTitleText ?? effectiveConfig.titleText,
+      leading: effectiveConfig.leading,
+      leadingIconData: effectiveConfig.leadingIconData,
+      trailing: effectiveConfig.trailing,
+      trailingIconData: effectiveConfig.trailingIconData,
       style: _effectiveSheetStyle(sheetStyle, context),
-      barrierLabel: sheetBarrierLabel,
-      useRootNavigator: sheetUseRootNavigator,
-      isDismissible: sheetIsDismissible,
-      enableDrag: sheetEnableDrag,
-      useSafeArea: sheetUseSafeArea,
-      transitionAnimationController: sheetTransitionAnimationController,
-      sheetAnimationStyle: sheetAnimationStyle,
-      showCloseButton: sheetShowCloseButton,
+      barrierLabel: effectiveConfig.barrierLabel,
+      useRootNavigator: effectiveConfig.useRootNavigator,
+      isDismissible: effectiveConfig.isDismissible,
+      enableDrag: effectiveConfig.enableDrag,
+      useSafeArea: effectiveConfig.useSafeArea,
+      transitionAnimationController: effectiveConfig.transitionAnimationController,
+      sheetAnimationStyle: effectiveConfig.animationStyle,
+      showCloseButton: effectiveConfig.showCloseButton,
       isScrollControlled: false,
-      scrollControlDisabledMaxHeightRatio: scrollControlDisabledMaxHeightRatio,
+      scrollControlDisabledMaxHeightRatio:
+          effectiveConfig.scrollControlDisabledMaxHeightRatio ?? _defaultScrollControlDisabledMaxHeightRatio,
       body: StatefulBuilder(
         builder: (context, setModalState) {
           return Column(
@@ -343,7 +299,7 @@ class SBBMultiDropdown<T> extends StatelessWidget {
                   labelText: confirmButtonLabelText ?? MaterialLocalizations.of(context).okButtonLabel,
                   onPressed: isSelectionValid(selectedItems, selectedValues)
                       ? () {
-                          Navigator.of(context, rootNavigator: sheetUseRootNavigator).pop();
+                          Navigator.of(context, rootNavigator: effectiveConfig.useRootNavigator).pop();
                           onChanged(selectedValues);
                         }
                       : null,
