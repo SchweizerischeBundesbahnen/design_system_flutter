@@ -138,15 +138,17 @@ class SBBDropdown<T> extends StatelessWidget {
     final displayValue = items.where((item) => item.value == selectedItem).map((item) => item.label).firstOrNull ?? '';
     final effectiveConfig = sheetConfig ?? const SBBBottomSheetConfig();
     return SBBDecoratedText(
-      onTap: () => _showMenu(
-        context: context,
-        value: selectedItem,
-        items: items,
-        onChanged: onChanged!,
-        sheetConfig: effectiveConfig,
-        sheetTitleText: sheetTitleText,
-        sheetStyle: sheetStyle,
-      ),
+      onTap: onChanged != null
+          ? () => _showMenu(
+              context: context,
+              value: selectedItem,
+              items: items,
+              onChanged: onChanged!,
+              sheetConfig: effectiveConfig,
+              sheetTitleText: sheetTitleText,
+              sheetStyle: sheetStyle,
+            )
+          : null,
       value: displayValue,
       decoration: _effectiveTriggerDecoration(context),
       maxLines: triggerConfig.maxLines,

@@ -192,17 +192,19 @@ class SBBMultiDropdown<T> extends StatelessWidget {
     final effectiveConfig = sheetConfig ?? const SBBBottomSheetConfig();
 
     return SBBDecoratedText(
-      onTap: () => _showMenu<T>(
-        context: context,
-        confirmButtonLabelText: confirmButtonLabel,
-        selectedItems: selectedItems,
-        items: items,
-        onChanged: onChanged!,
-        selectionValidation: selectionValidation,
-        sheetConfig: effectiveConfig,
-        sheetTitleText: sheetTitleText,
-        sheetStyle: sheetStyle,
-      ),
+      onTap: onChanged != null
+          ? () => _showMenu<T>(
+              context: context,
+              confirmButtonLabelText: confirmButtonLabel,
+              selectedItems: selectedItems,
+              items: items,
+              onChanged: onChanged!,
+              selectionValidation: selectionValidation,
+              sheetConfig: effectiveConfig,
+              sheetTitleText: sheetTitleText,
+              sheetStyle: sheetStyle,
+            )
+          : null,
       value: displayValue,
       decoration: _effectiveTriggerDecoration(context),
       maxLines: triggerConfig.maxLines,
