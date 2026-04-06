@@ -85,18 +85,24 @@ class SBBDecoratedText extends StatefulWidget {
   /// {@macro flutter.widgets.Focus.autofocus}
   final bool autofocus;
 
+  /// {@template sbb_design_system.sbb_decorated_text.maxLines}
   /// The maximum number of lines for the text display.
   ///
   /// Defaults to 1 (single-line). Set to null with [expands] = true for expanding
   /// multiline display, or to a specific number > 1 for fixed multiline height.
+  /// {@endtemplate}
   final int? maxLines;
 
+  /// {@template sbb_design_system.sbb_decorated_text.minLines}
   /// The minimum number of lines reserved for text display.
+  /// {@endtemplate}
   final int? minLines;
 
+  /// {@template sbb_design_system.sbb_decorated_text.expands}
   /// Whether the text field should expand to fill available vertical space.
   ///
   /// When true, both [maxLines] and [minLines] must be null.
+  /// {@endtemplate}
   final bool expands;
 
   /// Called when the widget is tapped.

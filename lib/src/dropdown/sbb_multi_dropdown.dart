@@ -45,6 +45,10 @@ typedef SBBMultiDropdownLabelAggregation<T> = String Function(List<SBBDropdownIt
 /// and other decoration properties. By default a [SBBIcons.chevron_small_down_small]
 /// trailing icon is added automatically unless a custom trailing widget is provided.
 ///
+/// Use [triggerConfig] to configure the trigger field's layout and focus
+/// behaviour (max/min lines, expands, focus node, autofocus). When omitted,
+/// the defaults from [SBBDecoratedTextConfig] are used.
+///
 /// Use [selectionValidation] to control when the confirm button is enabled. The
 /// default validation disables the button when the new selection is identical
 /// to the original selection.
@@ -60,6 +64,7 @@ typedef SBBMultiDropdownLabelAggregation<T> = String Function(List<SBBDropdownIt
 /// * [SBBDropdown], variant for selecting a single value.
 /// * [SBBMultiDropdown.showMenu], which opens the selection sheet imperatively.
 /// * [SBBDropdownItem], the model for each selectable entry.
+/// * [SBBDecoratedTextConfig], the configuration object for the trigger field.
 /// * [SBBMultiDropdownValidation], the signature for custom validation callbacks.
 /// * [SBBMultiDropdownLabelAggregation], the signature for custom label aggregation.
 /// * [SBBDecoratedText], the widget used as a trigger.
@@ -76,7 +81,10 @@ class SBBMultiDropdown<T> extends StatelessWidget {
   /// * [onChanged], which is called when the user confirms a new selection. If
   ///   null, the trigger is disabled.
   ///
-  /// For documentation of trigger parameters, see [SBBDecoratedText].
+  /// Use [triggerConfig] to configure layout and focus behaviour of the trigger
+  /// field. See [SBBDecoratedTextConfig] for available options.
+  ///
+  /// For documentation of trigger decoration parameters, see [SBBDecoratedText].
   ///
   /// For documentation of sheet parameters, see [SBBBottomSheet].
   const SBBMultiDropdown({
@@ -84,11 +92,7 @@ class SBBMultiDropdown<T> extends StatelessWidget {
     // decorated text / trigger parameters
     this.triggerDecoration,
     this.triggerStyle,
-    this.triggerMaxLines = 1,
-    this.triggerMinLines,
-    this.triggerExpands = false,
-    this.triggerFocusNode,
-    this.triggerAutofocus = false,
+    this.triggerConfig = const SBBDecoratedTextConfig(),
     // dropdown parameters
     this.confirmButtonLabel,
     required this.selectedItems,
@@ -126,17 +130,17 @@ class SBBMultiDropdown<T> extends StatelessWidget {
   ///
   /// Theme defaults are applied from [SBBDropdownThemeData.triggerDecorationTheme].
   final SBBInputDecoration? triggerDecoration;
-  final int? triggerMaxLines;
-  final int? triggerMinLines;
-  final bool triggerExpands;
-  final FocusNode? triggerFocusNode;
-  final bool triggerAutofocus;
 
   /// Customizes the visual appearance of the trigger field.
   ///
   /// Non-null properties override the corresponding properties in
   /// [SBBDropdownThemeData.triggerStyle] from the current theme.
   final SBBDecoratedTextStyle? triggerStyle;
+
+  /// Configuration for the trigger field's layout and focus behaviour.
+  ///
+  ///  Defaults to [SBBDecoratedTextConfig] with its default values.
+  final SBBDecoratedTextConfig triggerConfig;
 
   /// Allows a custom label for the confirmation button at the bottom of the sheet.
   ///
@@ -234,11 +238,11 @@ class SBBMultiDropdown<T> extends StatelessWidget {
       ),
       value: displayValue,
       decoration: _effectiveTriggerDecoration(context),
-      maxLines: triggerMaxLines,
-      minLines: triggerMinLines,
-      expands: triggerExpands,
-      focusNode: triggerFocusNode,
-      autofocus: triggerAutofocus,
+      maxLines: triggerConfig.maxLines,
+      minLines: triggerConfig.minLines,
+      expands: triggerConfig.expands,
+      focusNode: triggerConfig.focusNode,
+      autofocus: triggerConfig.autofocus,
       style: _effectiveTriggerStyle(context),
     );
   }
