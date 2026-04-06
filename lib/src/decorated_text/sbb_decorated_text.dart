@@ -49,7 +49,6 @@ class SBBDecoratedText extends StatefulWidget {
     required this.value,
     super.key,
     this.onTap,
-    this.enabled = true,
     this.decoration,
     this.focusNode,
     this.autofocus = false,
@@ -106,12 +105,6 @@ class SBBDecoratedText extends StatefulWidget {
   /// is only invoked if [enabled] is true.
   final GestureTapCallback? onTap;
 
-  /// Whether the widget responds to taps and displays interactive styling.
-  ///
-  /// When false, the widget is disabled, taps are ignored, and disabled visual
-  /// states are applied to the decoration.
-  final bool enabled;
-
   /// Customizes the visual appearance of the decorated text.
   ///
   /// Non-null properties override the corresponding properties in
@@ -129,11 +122,13 @@ class _SBBDecoratedTextState extends State<SBBDecoratedText> {
 
   late WidgetStatesController _statesController;
 
+  bool get _enabled => widget.onTap != null;
+
   @override
   void initState() {
     super.initState();
 
-    _effectiveFocusNode.canRequestFocus = widget.enabled;
+    _effectiveFocusNode.canRequestFocus = _enabled;
     _effectiveFocusNode.addListener(_handleFocusChanged);
 
     _statesController = WidgetStatesController();
@@ -148,7 +143,7 @@ class _SBBDecoratedTextState extends State<SBBDecoratedText> {
       (oldWidget.focusNode ?? _focusNode)?.removeListener(_handleFocusChanged);
       (widget.focusNode ?? _focusNode)?.addListener(_handleFocusChanged);
     }
-    _effectiveFocusNode.canRequestFocus = widget.enabled;
+    _effectiveFocusNode.canRequestFocus = _enabled;
 
     _updateStates();
   }
@@ -164,7 +159,7 @@ class _SBBDecoratedTextState extends State<SBBDecoratedText> {
   bool get _hasError => widget.decoration?.errorText != null || widget.decoration?.error != null;
 
   void _updateStates() {
-    _statesController.update(WidgetState.disabled, !widget.enabled);
+    _statesController.update(WidgetState.disabled, !_enabled);
     _statesController.update(WidgetState.focused, _effectiveFocusNode.hasFocus);
     _statesController.update(WidgetState.error, _hasError);
   }
@@ -194,14 +189,14 @@ class _SBBDecoratedTextState extends State<SBBDecoratedText> {
     final child = Text(widget.value, maxLines: widget.maxLines, style: effectiveInputTextStyle);
 
     return InkWell(
-      onTap: widget.enabled ? widget.onTap : null,
+      onTap: _enabled ? widget.onTap : null,
       focusNode: _effectiveFocusNode,
       excludeFromSemantics: true,
       autofocus: widget.autofocus,
       statesController: _statesController,
       overlayColor: effectiveStyle?.overlayColor,
       child: Semantics(
-        enabled: widget.enabled,
+        enabled: _enabled,
         currentValueLength: widget.value.length,
         child: ListenableBuilder(
           listenable: _effectiveFocusNode,
@@ -255,7 +250,6 @@ class SBBDecoratedTextBoxed extends SBBDecoratedText {
     super.key,
     required super.value,
     super.onTap,
-    super.enabled,
     SBBInputDecoration? decoration,
     super.focusNode,
     super.autofocus,

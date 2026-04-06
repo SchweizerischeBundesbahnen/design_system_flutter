@@ -40,7 +40,6 @@ class SBBSwitchListItem extends StatelessWidget {
     this.subtitle,
     this.subtitleText,
     this.onLongPress,
-    this.enabled = true,
     this.isLoading = false,
     this.links,
     this.focusNode,
@@ -80,9 +79,6 @@ class SBBSwitchListItem extends StatelessWidget {
   /// Within the [SBBSwitchListItem], the [SBBListItem.onTap] calls the [onChanged] callback with the
   /// updated value.
   final GestureLongPressCallback? onLongPress;
-
-  /// {@macro sbb_design_system.list_item.enabled}
-  final bool enabled;
 
   /// {@macro sbb_design_system.list_item.isLoading}
   final bool isLoading;
@@ -133,7 +129,7 @@ class SBBSwitchListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final trailing = SBBSwitch(
       value: value,
-      onChanged: enabled ? onChanged : null,
+      onChanged: onChanged,
       style: (switchStyle ?? const SBBSwitchStyle()).copyWith(tapTargetPadding: .zero),
       semanticLabel: switchSemanticLabel,
     );
@@ -146,9 +142,8 @@ class SBBSwitchListItem extends StatelessWidget {
       subtitle: subtitle,
       subtitleText: subtitleText,
       trailing: trailing,
-      onTap: onChanged != null && enabled ? () => onChanged!(!value) : null,
+      onTap: onChanged != null ? () => onChanged!(!value) : null,
       onLongPress: onLongPress,
-      enabled: enabled,
       isLoading: isLoading,
       links: links,
       focusNode: focusNode,
@@ -199,7 +194,6 @@ class SBBSwitchListItemBoxed extends SBBSwitchListItem {
     super.subtitle,
     super.subtitleText,
     super.onLongPress,
-    super.enabled,
     super.isLoading,
     super.links,
     super.focusNode,

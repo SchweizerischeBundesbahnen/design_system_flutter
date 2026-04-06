@@ -10,6 +10,7 @@ class _TabIcon extends StatelessWidget {
     required this.tabIndex,
     required this.tabCount,
     required this.interactions,
+    this.style,
   });
 
   final SBBTabBarItem item;
@@ -20,6 +21,7 @@ class _TabIcon extends StatelessWidget {
   final int tabIndex;
   final int tabCount;
   final TabItemInteractions interactions;
+  final SBBTabBarStyle? style;
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +32,9 @@ class _TabIcon extends StatelessWidget {
     ).tabLabel(tabIndex: tabIndex + 1, tabCount: tabCount);
     final viewPaddingBottom = MediaQuery.of(context).viewPadding.bottom;
     final bottomPadding = portrait ? 0.0 : max(viewPaddingBottom + 8.0, 8.0);
+    final labelTextStyle = style?.itemLabelTextStyle?.copyWith(
+      color: style?.itemLabelForegroundColor,
+    );
     return LayoutId(
       id: '${item.id}_tab',
       child: Semantics(
@@ -56,11 +61,12 @@ class _TabIcon extends StatelessWidget {
                     selected: false,
                     warning: warning,
                     badge: badge,
+                    style: style,
                   ),
                   if (!portrait)
                     Text(
                       item.translate(context),
-                      style: SBBControlStyles.of(context).tabBarTextStyle,
+                      style: labelTextStyle,
                       textAlign: .center,
                     ),
                 ],

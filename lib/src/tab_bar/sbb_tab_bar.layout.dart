@@ -9,6 +9,7 @@ class _TabLayout extends StatelessWidget {
     required this.portrait,
     required this.onPositioned,
     required this.interactionsBuilder,
+    this.style,
   });
 
   final List<SBBTabBarItem> items;
@@ -18,6 +19,7 @@ class _TabLayout extends StatelessWidget {
   final bool portrait;
   final Function(List<Offset> positions, double height) onPositioned;
   final TabItemInteractionsBuilder interactionsBuilder;
+  final SBBTabBarStyle? style;
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +37,11 @@ class _TabLayout extends StatelessWidget {
               tabIndex: i,
               tabCount: items.length,
               interactions: interactionsBuilder(e),
+              style: style,
             ),
           )
           .cast<Widget>()
-          .followedBy(items.map((e) => _TabLabel(item: e, visible: e == selectedTab && portrait)))
+          .followedBy(items.map((e) => _TabLabel(item: e, visible: e == selectedTab && portrait, style: style)))
           .toList(),
     );
   }

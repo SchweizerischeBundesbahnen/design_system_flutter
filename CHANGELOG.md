@@ -39,6 +39,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - BREAKING: overhauled `SBBStepper` component - see [v5 migration guide]
 - BREAKING: overhauled `SBBHeader` component - see [v5 migration guide]
 - BREAKING: different theming / styling for `SBBSwitch` - see [v5 migration guide]
+- BREAKING: use `SBBTabBarStyle` / `SBBTabBarThemeData` to style `SBBTabBar` - see [v5 migration guide]
 - BREAKING: overhauled `SBBTextField` and renamed to `SBBTextInput` - see [v5 migration guide]
 - BREAKING: removed default left margin on component `SBBTextInput` (#402)
 - renamed `TextStylesExtensions` to `SBBTextStyleExtensions`
@@ -60,6 +61,16 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Removed `CascadeColumnParentData` as it is not directly used by clients
 - Removed `SBBTextField` - replaced by `SBBTextInput`
 - Removed `merge` extension on `SBBBaseStyle`
+
+## [4.10.0] - 2026-03-30
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.18
+
+### Fixed
+
+- `SBBHeaderbox`: Remove `MergeSemantics` allowing accessibility
 
 ## [4.9.0] - 2026-03-23
 
@@ -798,7 +809,9 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 [v5 migration guide]: migration_guide.md
 
-[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.9.0...HEAD
+[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.10.0...HEAD
+
+[4.10.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.9.0...4.10.0
 
 [4.9.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.8.0...4.9.0
 

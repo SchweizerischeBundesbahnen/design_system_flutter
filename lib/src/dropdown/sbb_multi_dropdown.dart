@@ -207,7 +207,6 @@ class SBBMultiDropdown<T> extends StatelessWidget {
     final displayValue = labelAggregation != null ? labelAggregation!(selected) : _defaultLabelAggregation(selected);
 
     return SBBDecoratedText(
-      enabled: onChanged != null,
       onTap: () => SBBMultiDropdown.showMenu<T>(
         context: context,
         confirmButtonLabelText: confirmButtonLabel,

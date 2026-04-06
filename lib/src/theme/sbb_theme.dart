@@ -25,6 +25,7 @@ import '../container/theme/default_sbb_content_box_theme_data.dart';
 import '../list_item/theme/default_sbb_list_item_theme_data.dart';
 import '../segmented_button/theme/default_sbb_segmented_button_theme_data.dart';
 import '../status/theme/default_sbb_status_theme_data.dart';
+import '../tab_bar/theme/default_sbb_tab_bar_theme_data.dart';
 
 class SBBTheme {
   SBBTheme._();
@@ -57,6 +58,7 @@ class SBBTheme {
     SBBSliderThemeData? sliderTheme,
     SBBStepperThemeData? stepperTheme,
     SBBSwitchThemeData? switchTheme,
+    SBBTabBarThemeData? tabBarTheme,
     SBBTextTheme? textTheme,
     SBBTextInputThemeData? textInputTheme,
     SBBToastThemeData? toastTheme,
@@ -89,6 +91,7 @@ class SBBTheme {
     sliderTheme: sliderTheme,
     stepperTheme: stepperTheme,
     switchTheme: switchTheme,
+    tabBarTheme: tabBarTheme,
     textTheme: textTheme,
     textInputTheme: textInputTheme,
     toastTheme: toastTheme,
@@ -121,6 +124,7 @@ class SBBTheme {
     SBBSliderThemeData? sliderTheme,
     SBBStepperThemeData? stepperTheme,
     SBBSwitchThemeData? switchTheme,
+    SBBTabBarThemeData? tabBarTheme,
     SBBTextTheme? textTheme,
     SBBTextInputThemeData? textInputTheme,
     SBBToastThemeData? toastTheme,
@@ -152,6 +156,7 @@ class SBBTheme {
     segmentedButtonTheme: segmentedButtonTheme,
     sliderTheme: sliderTheme,
     switchTheme: switchTheme,
+    tabBarTheme: tabBarTheme,
     textTheme: textTheme,
     textInputTheme: textInputTheme,
     toastTheme: toastTheme,
@@ -186,6 +191,7 @@ class SBBTheme {
     SBBSliderThemeData? sliderTheme,
     SBBStatusThemeData? statusTheme,
     SBBSwitchThemeData? switchTheme,
+    SBBTabBarThemeData? tabBarTheme,
     SBBTextTheme? textTheme,
     SBBTextInputThemeData? textInputTheme,
     SBBToastThemeData? toastTheme,
@@ -275,6 +281,9 @@ class SBBTheme {
     final defaultInputDecorationTheme = DefaultSBBInputDecorationThemeData(mergedBaseStyle);
     final mergedInputDecorationTheme = defaultInputDecorationTheme.merge(inputDecorationTheme);
 
+    final defaultTabBarTheme = DefaultSBBTabBarThemeData(mergedBaseStyle);
+    final mergedTabBarTheme = defaultTabBarTheme.merge(tabBarTheme);
+
     final defaultDropdownTheme = SBBDropdownThemeData(
       triggerDecorationTheme: defaultInputDecorationTheme,
       triggerStyle: defaultDecoratedTextTheme.style,
@@ -310,6 +319,7 @@ class SBBTheme {
       sliderTheme: mergedSliderTheme,
       stepperTheme: mergedStepperTheme,
       switchTheme: mergedSwitchTheme,
+      tabBarTheme: mergedTabBarTheme,
       textTheme: mergedTextTheme,
       textInputTheme: mergedTextInputTheme,
       toastTheme: mergedToastTheme,
@@ -344,6 +354,7 @@ class SBBTheme {
     required SBBSliderThemeData sliderTheme,
     required SBBStepperThemeData stepperTheme,
     required SBBSwitchThemeData switchTheme,
+    required SBBTabBarThemeData tabBarTheme,
     required SBBTextTheme textTheme,
     required SBBTextInputThemeData textInputTheme,
     required SBBToastThemeData toastTheme,
@@ -395,6 +406,7 @@ class SBBTheme {
         sliderTheme,
         stepperTheme,
         switchTheme,
+        tabBarTheme,
         textTheme,
         textInputTheme,
         toastTheme,

@@ -155,7 +155,6 @@ class SBBDropdown<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     final displayValue = items.where((item) => item.value == selectedItem).map((item) => item.label).firstOrNull ?? '';
     return SBBDecoratedText(
-      enabled: onChanged != null,
       onTap: () => showMenu(
         context: context,
         value: selectedItem,
