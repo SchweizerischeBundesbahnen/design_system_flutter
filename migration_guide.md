@@ -116,6 +116,7 @@ SBBDecoratedText(
 * `isLastElement` was removed — use `SBBListItem.divideListItems` to separate items with a divider
 * `allowMultilineLabel` was removed (use `triggerMaxLines` / `triggerMinLines` / `triggerExpands` instead)
 * `confirmButtonLabel` is replaced by `confirmButtonLabelText`
+* use `triggerConfig` and `sheetConfig` for configuring the underlying `SBBDecoratedText` and `SBBBottomSheet` widgets
 
 ### Theming & Styling
 
