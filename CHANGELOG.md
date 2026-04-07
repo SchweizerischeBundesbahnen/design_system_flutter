@@ -58,6 +58,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Removed deprecated `SBBGroup`
 - Removed deprecated `SBBOnboarding`
 - Removed deprecated `sbbDefaultSpacing`
+- Removed deprecated `SBBLinkText`
 - Removed `CascadeColumnParentData` as it is not directly used by clients
 - Removed `SBBTextField` - replaced by `SBBTextInput`
 - Removed `merge` extension on `SBBBaseStyle`
