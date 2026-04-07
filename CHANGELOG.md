@@ -9,6 +9,10 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## [Unreleased]
 
+### Changed
+
+- Marked `SBBLinkText` as deprecated and will be removed in the next major release
+
 ## [4.10.0] - 2026-03-30
 
 ### Changed

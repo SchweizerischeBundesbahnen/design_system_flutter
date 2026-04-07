@@ -12,6 +12,9 @@ typedef OnLaunchCallback = void Function(String link);
 /// See also:
 ///
 /// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/link>
+@Deprecated(
+  'SBBLinkText is no longer part of the design specifications and will be removed in the next major version.',
+)
 class SBBLinkText extends StatefulWidget {
   const SBBLinkText({
     super.key,
