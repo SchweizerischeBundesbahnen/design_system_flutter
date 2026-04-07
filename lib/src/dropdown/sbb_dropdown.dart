@@ -61,15 +61,12 @@ class SBBDropdown<T> extends StatelessWidget {
   /// For documentation of sheet parameters, see [SBBBottomSheet].
   const SBBDropdown({
     super.key,
-    // decorated text / trigger parameters
     this.triggerDecoration,
     this.triggerStyle,
     this.triggerConfig = const SBBDecoratedTextConfig(),
-    // dropdown parameters
     required this.selectedItem,
     required this.items,
     required this.onChanged,
-    // bottom sheet parameters
     this.sheetConfig,
     this.sheetTitleText,
     this.sheetStyle,

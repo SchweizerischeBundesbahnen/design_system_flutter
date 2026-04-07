@@ -89,18 +89,15 @@ class SBBMultiDropdown<T> extends StatelessWidget {
   /// For documentation of sheet parameters, see [SBBBottomSheet].
   const SBBMultiDropdown({
     super.key,
-    // decorated text / trigger parameters
     this.triggerDecoration,
     this.triggerStyle,
     this.triggerConfig = const SBBDecoratedTextConfig(),
-    // dropdown parameters
     this.confirmButtonLabel,
     required this.selectedItems,
     required this.items,
     required this.onChanged,
     this.selectionValidation,
     this.labelAggregation,
-    // bottom sheet parameters
     this.sheetConfig,
     this.sheetTitleText,
     this.sheetStyle,
@@ -126,7 +123,7 @@ class SBBMultiDropdown<T> extends StatelessWidget {
 
   /// Configuration for the trigger field's layout and focus behaviour.
   ///
-  ///  Defaults to [SBBDecoratedTextConfig] with its default values.
+  /// Defaults to [SBBDecoratedTextConfig] with its default values.
   final SBBDecoratedTextConfig triggerConfig;
 
   /// Allows a custom label for the confirmation button at the bottom of the sheet.
