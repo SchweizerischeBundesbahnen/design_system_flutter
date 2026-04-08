@@ -62,16 +62,14 @@ class SBBTimePicker extends StatefulWidget {
   /// Defaults to 7.
   final int visibleItemCount;
 
-  /// Shows an [SBBBottomSheet] with an [SBBTimePicker] to select a [TimeOfDay].
-  /// Use according to documentation.
+  /// Shows a [SBBBottomSheet] with an [SBBTimePicker] to select a [TimeOfDay].
   ///
   /// See also:
   ///
   /// * [SBBTimePicker], which will be displayed.
-  /// * [showSBBBottomSheet], which is used to display the bottom_sheet.
+  /// * [showSBBBottomSheet], which is used to display the [SBBBottomSheet] with the picker.
   /// * <https://digital.sbb.ch/en/design-system/mobile/components/picker/>
-  /// * <https://digital.sbb.ch/en/design-system/mobile/components/modal-view/>
-  static void showModal({
+  static void showInsideBottomSheet({
     required BuildContext context,
     SBBBottomSheetConfig? sheetConfig,
     String? sheetTitleText,
@@ -86,7 +84,8 @@ class SBBTimePicker extends StatefulWidget {
     final localizations = MaterialLocalizations.of(context);
     final effectiveConfig = sheetConfig ?? const SBBBottomSheetConfig();
 
-    final effectiveTitleText = sheetTitleText ??
+    final effectiveTitleText =
+        sheetTitleText ??
         effectiveConfig.titleText ??
         (effectiveConfig.title == null ? localizations.timePickerInputHelpText : null);
 

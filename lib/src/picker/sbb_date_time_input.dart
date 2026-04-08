@@ -4,7 +4,7 @@ part of 'sbb_picker.dart';
 ///
 /// Displays the selected date and time as a read-only [SBBDecoratedText] field.
 /// When tapped, it opens an [SBBDateTimePicker] in a modal bottom sheet via
-/// [SBBDateTimePicker.showModal], allowing the user to pick a date and time.
+/// [SBBDateTimePicker.showBottomSheet], allowing the user to pick a date and time.
 ///
 /// Use [triggerDecoration] to customise the trigger's label, icons, error text,
 /// and other decoration properties. By default a [SBBIcons.chevron_small_down_small]
@@ -36,7 +36,7 @@ part of 'sbb_picker.dart';
 /// * [SBBDecoratedText], the trigger widget used to display the selected value.
 /// * [SBBDecoratedTextConfig], the configuration object for the trigger field.
 /// * [SBBDateTimePicker], the picker opened when the trigger is tapped.
-/// * [SBBDateTimePicker.showModal], which is used to display the bottom sheet.
+/// * [SBBDateTimePicker.showBottomSheet], which is used to display the bottom sheet.
 /// * [SBBBottomSheetConfig], the configuration object for the bottom sheet.
 /// * [SBBDateInput], variant for date values.
 /// * [SBBTimeInput], variant for time values.
@@ -170,7 +170,7 @@ class _SBBDateTimeInputState extends State<SBBDateTimeInput> {
       autofocus: widget.triggerConfig.autofocus,
       onTap: widget.onDateTimeChanged != null
           ? () {
-              SBBDateTimePicker.showModal(
+              SBBDateTimePicker.showBottomSheet(
                 context: context,
                 sheetConfig: widget.sheetConfig,
                 sheetTitleText: widget.sheetTitleText,

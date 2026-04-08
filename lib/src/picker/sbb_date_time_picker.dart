@@ -70,17 +70,14 @@ class SBBDateTimePicker extends StatefulWidget {
   /// Defaults to 7.
   final int visibleItemCount;
 
-  /// Shows an [SBBBottomSheet] with an [SBBDateTimePicker] to select a
-  /// [DateTime].
-  /// Use according to documentation.
+  /// Shows a [SBBBottomSheet] with an [SBBDateTimePicker] to select a [DateTime].
   ///
   /// See also:
   ///
   /// * [SBBDateTimePicker], which will be displayed.
-  /// * [showSBBBottomSheet], which is used to display the bottom_sheet.
+  /// * [showSBBBottomSheet], which is used to display the [SBBBottomSheet] with the picker.
   /// * <https://digital.sbb.ch/en/design-system/mobile/components/picker/>
-  /// * <https://digital.sbb.ch/en/design-system/mobile/components/modal-view/>
-  static void showModal({
+  static void showInsideBottomSheet({
     required BuildContext context,
     SBBBottomSheetConfig? sheetConfig,
     String? sheetTitleText,
@@ -95,7 +92,8 @@ class SBBDateTimePicker extends StatefulWidget {
     final localizations = MaterialLocalizations.of(context);
     final effectiveConfig = sheetConfig ?? const SBBBottomSheetConfig();
 
-    final effectiveTitleText = sheetTitleText ??
+    final effectiveTitleText =
+        sheetTitleText ??
         effectiveConfig.titleText ??
         (effectiveConfig.title == null ? localizations.dateInputLabel : null);
 
@@ -103,7 +101,7 @@ class SBBDateTimePicker extends StatefulWidget {
 
     final acceptInitialSelection = initialDateTime == null;
     final selectedButtonEnabled = ValueNotifier(acceptInitialSelection);
-    final selectedButtonLabelText = sheetButtonLabelText ?? localizations.datePickerHelpText;
+    final effectiveButtonLabelText = sheetButtonLabelText ?? localizations.datePickerHelpText;
 
     var selectedDateTime = modalDateTime;
 
@@ -155,7 +153,7 @@ class SBBDateTimePicker extends StatefulWidget {
                         onDateTimeChanged?.call(selectedDateTime);
                       }
                     : null;
-                return SBBPrimaryButton(labelText: selectedButtonLabelText, onPressed: onPressed);
+                return SBBPrimaryButton(labelText: effectiveButtonLabelText, onPressed: onPressed);
               },
             ),
           ),
@@ -165,9 +163,7 @@ class SBBDateTimePicker extends StatefulWidget {
   }
 
   @override
-  State<SBBDateTimePicker> createState() {
-    return _SBBDateTimePickerState();
-  }
+  State<SBBDateTimePicker> createState() => _SBBDateTimePickerState();
 
   static DateTime _initialDateTime(
     DateTime? initialDateTime,
