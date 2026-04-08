@@ -1,6 +1,6 @@
 part of 'sbb_picker.dart';
 
-/// This is basically a convenience combination of a [SBBDecoratedText] and [SBBTimePicker.showInsideBottomSheet].
+/// This is basically a convenience combination of a [SBBDecoratedText] and a [SBBTimePicker].
 ///
 /// Displays the selected time as a read-only [SBBDecoratedText] field. When tapped, it opens an [SBBTimePicker]
 /// in a [SBBBottomSheet] via [SBBTimePicker.showInsideBottomSheet], allowing the user to pick a time.

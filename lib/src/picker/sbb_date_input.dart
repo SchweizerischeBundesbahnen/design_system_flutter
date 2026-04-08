@@ -1,6 +1,6 @@
 part of 'sbb_picker.dart';
 
-/// This is basically a convenience combination of a [SBBDecoratedText] and [SBBDatePicker.showInsideBottomSheet].
+/// This is basically a convenience combination of a [SBBDecoratedText] and a [SBBDatePicker].
 ///
 /// Displays the selected time as a read-only [SBBDecoratedText] field. When tapped, it opens an [SBBDatePicker]
 /// in a [SBBBottomSheet] via [SBBDatePicker.showInsideBottomSheet], allowing the user to pick a time.
@@ -10,10 +10,9 @@ part of 'sbb_picker.dart';
 /// Use [triggerConfig] to configure the trigger field's layout and focus behaviour (max/min lines, expands,
 /// focus node, autofocus). When omitted, the defaults from [SBBDecoratedTextConfig] are used.
 ///
-/// Use [sheetConfig] to customise the bottom sheet's appearance and behaviour.
-/// Use [sheetTitleText] as a flat convenience parameter to set only the sheet
-/// title. Cannot be used together with [sheetConfig]. When neither is set, the
-/// sheet title defaults to the localised date input label from
+/// Use [sheetConfig] to customise the bottom sheet's appearance and behavior. Use [sheetTitleText] as a flat
+/// convenience parameter to set only the sheet title. Cannot be used together with [sheetConfig].
+/// When neither is set, the sheet title defaults to the localised time picker label from
 /// [MaterialLocalizations.dateInputLabel].
 ///
 /// ## Example
@@ -161,11 +160,11 @@ class SBBDateInput extends StatelessWidget {
     final DateFormat effectiveDateFormat =
         dateFormat ?? DateFormat.yMMMMd(Localizations.maybeLocaleOf(context).toString());
 
-    final rawDateTime = SBBDatePicker._clampedDate(
+    final rawDate = SBBDatePicker._clampedDateOnly(
       value!,
       minimumDate,
       maximumDate,
     );
-    return effectiveDateFormat.format(rawDateTime);
+    return effectiveDateFormat.format(rawDate);
   }
 }
