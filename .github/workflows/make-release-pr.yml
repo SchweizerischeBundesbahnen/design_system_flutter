@@ -39,7 +39,6 @@ jobs:
         with:
           command: bump
           version: ${{ inputs.semantic-versioning }}
-          keep-unreleased-section: true
           tag-prefix: ""
 
       - name: Update root pubspec
