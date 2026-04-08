@@ -6,9 +6,13 @@ part of 'sbb_picker.dart';
 /// When tapped, it opens an [SBBDateTimePicker] in a modal bottom sheet via
 /// [SBBDateTimePicker.showModal], allowing the user to pick a date and time.
 ///
-/// The visual trigger is fully customizable through the `trigger`-prefixed
-/// parameters, which map directly to the corresponding [SBBDecoratedText]
-/// properties.
+/// Use [triggerDecoration] to customise the trigger's label, icons, error text,
+/// and other decoration properties. By default a [SBBIcons.chevron_small_down_small]
+/// trailing icon is added automatically unless a custom trailing widget or trailingIconData is provided.
+///
+/// Use [triggerConfig] to configure the trigger field's layout and focus
+/// behaviour (max/min lines, expands, focus node, autofocus). When omitted,
+/// the defaults from [SBBDecoratedTextConfig] are used.
 ///
 /// ## Example
 ///
@@ -23,6 +27,7 @@ part of 'sbb_picker.dart';
 /// See also:
 ///
 /// * [SBBDecoratedText], the trigger widget used to display the selected value.
+/// * [SBBDecoratedTextConfig], the configuration object for the trigger field.
 /// * [SBBDateTimePicker], the picker opened when the trigger is tapped.
 /// * [SBBDateTimePicker.showModal], which is used to display the bottom sheet.
 /// * [SBBDateInput], variant for date values.
@@ -39,11 +44,7 @@ class SBBDateTimeInput extends StatefulWidget {
     required this.onDateTimeChanged,
     this.triggerDecoration,
     this.triggerStyle,
-    this.triggerMaxLines = 1,
-    this.triggerMinLines,
-    this.triggerExpands = false,
-    this.triggerFocusNode,
-    this.triggerAutofocus = false,
+    this.triggerConfig = const SBBDecoratedTextConfig(),
     this.visibleItemCount = _defaultVisibleItemCount,
   }) : assert(
          visibleItemCount > 0 && visibleItemCount % 2 == 1,
@@ -78,9 +79,6 @@ class SBBDateTimeInput extends StatefulWidget {
 
   /// The decoration applied to the [SBBDecoratedText] trigger.
   ///
-  /// Use this to configure the label, placeholder, error text, leading/trailing
-  /// icons, and other visual properties of the trigger field.
-  ///
   /// See [SBBInputDecoration] for available options.
   final SBBInputDecoration? triggerDecoration;
 
@@ -90,26 +88,10 @@ class SBBDateTimeInput extends StatefulWidget {
   /// See [SBBDecoratedTextStyle] for available options.
   final SBBDecoratedTextStyle? triggerStyle;
 
-  /// The maximum number of lines for the trigger field's text display.
+  /// Configuration for the trigger field's layout and focus behaviour.
   ///
-  /// Defaults to 1 (single-line). Set to null together with
-  /// [triggerExpands] = true for an expanding multiline trigger.
-  final int? triggerMaxLines;
-
-  /// The minimum number of lines reserved in the trigger field.
-  final int? triggerMinLines;
-
-  /// Whether the trigger field should expand to fill available vertical space.
-  ///
-  /// When true, both [triggerMaxLines] and [triggerMinLines] must be null.
-  /// Defaults to false.
-  final bool triggerExpands;
-
-  /// {@macro flutter.widgets.Focus.focusNode}
-  final FocusNode? triggerFocusNode;
-
-  /// {@macro flutter.widgets.Focus.autofocus}
-  final bool triggerAutofocus;
+  /// Defaults to [SBBDecoratedTextConfig] with its default values.
+  final SBBDecoratedTextConfig triggerConfig;
 
   /// The number of visible items in the picker. Must be a positive odd number.
   /// Defaults to 7.
@@ -144,11 +126,11 @@ class _SBBDateTimeInputState extends State<SBBDateTimeInput> {
       value: _valueText,
       decoration: widget.triggerDecoration,
       style: widget.triggerStyle,
-      maxLines: widget.triggerMaxLines,
-      minLines: widget.triggerMinLines,
-      expands: widget.triggerExpands,
-      focusNode: widget.triggerFocusNode,
-      autofocus: widget.triggerAutofocus,
+      maxLines: widget.triggerConfig.maxLines,
+      minLines: widget.triggerConfig.minLines,
+      expands: widget.triggerConfig.expands,
+      focusNode: widget.triggerConfig.focusNode,
+      autofocus: widget.triggerConfig.autofocus,
       onTap: widget.onDateTimeChanged != null
           ? () {
               SBBDateTimePicker.showModal(
