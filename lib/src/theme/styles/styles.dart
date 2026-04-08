@@ -6,4 +6,3 @@ export 'src/sbb_control_styles.dart';
 export 'src/sbb_headerbox_style.dart';
 export 'src/sbb_picker_style.dart';
 export 'src/sbb_text_field_style.dart';
-export 'src/sbb_text_style.dart';

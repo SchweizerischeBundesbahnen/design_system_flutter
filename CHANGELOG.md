@@ -25,6 +25,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - BREAKING: overhauled `SBBChip` - see [v5 migration guide]
 - BREAKING: different theming / styling for `SBBContentBox` - see [v5 migration guide]
 - BREAKING: overhauled `SBBInputTrigger` and renamed it to `SBBDecoratedText` - see [v5 migration guide]
+- BREAKING: overhauled `SBBSelect` and renamed to `SBBDropdown` - see [v5 migration guide]
 - BREAKING: overhauled `SBBListHeader` - see [v5 migration guide]
 - BREAKING: overhauled `SBBListItem` - see [v5 migration guide]
 - BREAKING: overhauled `SBBMessage` component - see [v5 migration guide]
@@ -41,7 +42,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - BREAKING: use `SBBTabBarStyle` / `SBBTabBarThemeData` to style `SBBTabBar` - see [v5 migration guide]
 - BREAKING: overhauled `SBBTextField` and renamed to `SBBTextInput` - see [v5 migration guide]
 - BREAKING: removed default left margin on component `SBBTextInput` (#402)
-- renamed TextStylesExtensions to SBBTextStyleExtensions
+- renamed `TextStylesExtensions` to `SBBTextStyleExtensions`
 - BREAKING: renamed `ContractionState` to `SBBContractionState`
 - BREAKING: renamed `ContractibleState` to `SBBContractibleState`
 
