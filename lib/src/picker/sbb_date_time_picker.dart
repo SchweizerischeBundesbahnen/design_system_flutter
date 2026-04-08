@@ -435,19 +435,14 @@ class _SBBDateTimePickerState extends _TimeBasedPickerState<SBBDateTimePicker> {
     final hourIndex = _hourToIndex(validDateTime.hour);
     final minuteIndex = _minuteToIndex(validDateTime.minute);
 
-    // check if any date time values needs to be corrected
-    final dateIncorrect = _hourController.selectedItem != dateIndex;
-    final hourIncorrect = _hourController.selectedItem != hourIndex;
-    final minuteIncorrect = _minuteController.selectedItem != minuteIndex;
-
     // correct incorrect date time values
-    if (dateIncorrect) {
+    if (_dateController.selectedItem != dateIndex) {
       _dateController.animateToItem(dateIndex);
     }
-    if (hourIncorrect) {
+    if (_hourController.selectedItem != hourIndex) {
       _hourController.animateToItem(hourIndex);
     }
-    if (minuteIncorrect) {
+    if (_minuteController.selectedItem != minuteIndex) {
       _minuteController.animateToItem(minuteIndex);
     }
   }
