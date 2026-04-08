@@ -3,7 +3,7 @@ part of 'sbb_cascade_column.dart';
 typedef ContractibleBuilder =
     Widget Function(
       BuildContext context,
-      ContractibleState state,
+      SBBContractibleState state,
       Widget? child,
     );
 
@@ -141,7 +141,7 @@ class SBBContractible extends StatelessWidget {
   /// of padding issues.
   final Clip clipBehavior;
 
-  final notifier = ValueNotifier<ContractibleState>(ContractibleState.of(1.0, 1.0));
+  final notifier = ValueNotifier<SBBContractibleState>(SBBContractibleState.of(1.0, 1.0));
 
   @override
   Widget build(BuildContext context) {
@@ -151,7 +151,7 @@ class SBBContractible extends StatelessWidget {
         child: OverrideIntrinsics(
           minHeight: minHeight,
           maxHeight: maxHeight,
-          child: ValueListenableBuilder<ContractibleState>(
+          child: ValueListenableBuilder<SBBContractibleState>(
             valueListenable: notifier,
             builder: _builder(builder!),
             child: child == null ? null : _child(child!, builder),
@@ -216,17 +216,17 @@ class SBBContractible extends StatelessWidget {
   }
 }
 
-class _SBBContractible extends ParentDataWidget<CascadeColumnParentData> {
+class _SBBContractible extends ParentDataWidget<_CascadeColumnParentData> {
   const _SBBContractible({
     required super.child,
     this.stateNotifier,
   });
 
-  final ValueNotifier<ContractibleState>? stateNotifier;
+  final ValueNotifier<SBBContractibleState>? stateNotifier;
 
   @override
   void applyParentData(RenderObject renderObject) {
-    final parentData = renderObject.parentData as CascadeColumnParentData;
+    final parentData = renderObject.parentData as _CascadeColumnParentData;
 
     if (parentData.stateNotifier != stateNotifier && parentData.stateNotifier != null) {
       // Make sure that a new notifier retains the previous state to prevent flickering.
@@ -251,7 +251,7 @@ class _Crossfade extends StatelessWidget {
   });
 
   final AlignmentGeometry alignment;
-  final ContractibleState state;
+  final SBBContractibleState state;
   final Widget contractedChild;
   final Widget expandedChild;
 

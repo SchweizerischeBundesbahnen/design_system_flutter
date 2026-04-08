@@ -141,7 +141,7 @@ class _SwitchPageState extends State<SwitchPage> {
                         isLoading: !_value8,
                       ),
                     ],
-                  ).toList(growable: false),
+                  ),
                 ),
               ),
               const SizedBox(height: SBBSpacing.xLarge),

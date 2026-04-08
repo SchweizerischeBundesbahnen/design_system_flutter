@@ -1,114 +1,8 @@
 import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
-import '../sbb_internal.dart';
 
 const double _defaultScrollControlDisabledMaxHeightRatio = 9.0 / 16.0;
-
-/// Shows a SBB Modal Popup. Use according to documentation.
-///
-/// If you try to close the popup but the underlying page is navigated back
-/// instead, try using the `rootNavigator` parameter of the `Navigator`:
-/// ```dart
-/// Navigator.of(context, rootNavigator: true).pop(result)
-/// ```
-///
-/// See also:
-///
-/// * [SBBModalPopup], which will be displayed.
-/// * [showDialog], which is used to display the bottom_sheet.
-/// * <https://digital.sbb.ch/en/design-system/mobile/components/modal-view/>
-Future<T?> showSBBModalPopup<T>({
-  required BuildContext context,
-  required String title,
-  required Widget child,
-  Clip clipBehavior = .none,
-  bool useRootNavigator = true,
-  bool showCloseButton = true,
-  Color? backgroundColor,
-}) {
-  return showDialog<T>(
-    context: context,
-    useRootNavigator: useRootNavigator,
-    builder: (_) {
-      return SBBModalPopup(
-        title: title,
-        clipBehavior: clipBehavior,
-        useRootNavigator: useRootNavigator,
-        showCloseButton: showCloseButton,
-        backgroundColor: backgroundColor,
-        child: child,
-      );
-    },
-    barrierColor: SBBInternal.barrierColor,
-  );
-}
-
-/// The SBB Modal Popup. Use according to documentation.
-///
-/// See also:
-///
-/// * [showSBBModalPopup], which is typically used to display this Widget.
-/// * <https://digital.sbb.ch/en/design-system/mobile/components/modal-view/>
-class SBBModalPopup extends StatelessWidget {
-  const SBBModalPopup({
-    super.key,
-    required this.title,
-    required this.child,
-    this.clipBehavior = .none,
-    this.showCloseButton = true,
-    this.useRootNavigator = true,
-    this.backgroundColor,
-  });
-
-  final String title;
-  final Widget child;
-  final Clip clipBehavior;
-  final bool showCloseButton;
-  final bool useRootNavigator;
-  final Color? backgroundColor;
-
-  @override
-  Widget build(BuildContext context) {
-    final style = Theme.of(context).sbbBottomSheetTheme?.style;
-    final resolvedTitlePadding = _resolvedTitlePadding(style);
-    final resolvedBodyPadding = _resolvedBodyPadding(style);
-    return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(SBBSpacing.medium)),
-      clipBehavior: clipBehavior,
-      backgroundColor: backgroundColor ?? style?.backgroundColor,
-      child: Semantics(
-        explicitChildNodes: true,
-        child: Column(
-          mainAxisSize: .min,
-          children: [
-            Padding(
-              padding: resolvedTitlePadding,
-              child: _ModalHeader(title, showCloseButton: showCloseButton, useRootNavigator: useRootNavigator),
-            ),
-            Flexible(
-              child: Padding(
-                padding: resolvedBodyPadding,
-                child: child,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  EdgeInsets _resolvedBodyPadding(SBBBottomSheetStyle? style) =>
-      (style?.padding ?? EdgeInsets.zero).copyWith(top: style?.titleBodyGap ?? 0.0, bottom: SBBSpacing.medium);
-
-  // need to adjust this in case showCloseButton is displayed
-  EdgeInsets _resolvedTitlePadding(SBBBottomSheetStyle? style) {
-    return (style?.padding ?? EdgeInsets.zero).copyWith(
-      right: showCloseButton ? SBBSpacing.xSmall : (style?.padding ?? EdgeInsets.zero).right,
-      bottom: 0.0,
-    );
-  }
-}
 
 /// Shows an SBB Bottom Sheet.
 ///
@@ -295,46 +189,62 @@ class SBBBottomSheet extends StatelessWidget {
     this.style,
   });
 
+  /// {@template sbb_design_system.sbb_bottom_sheet.title}
   /// A custom widget displayed as the sheet's title.
   ///
   /// For simple text titles, use [titleText] instead.
   ///
   /// Cannot be used together with [titleText].
+  /// {@endtemplate}
   final Widget? title;
 
+  /// {@template sbb_design_system.sbb_bottom_sheet.title_text}
   /// Text string to display as the sheet's title.
   ///
   /// Cannot be used together with [title].
+  /// {@endtemplate}
   final String? titleText;
 
+  /// {@template sbb_design_system.sbb_bottom_sheet.leading}
   /// A custom widget displayed at the leading edge of the header.
   ///
   /// For icon-only leading content, use [leadingIconData] instead.
   ///
   /// Cannot be used together with [leadingIconData].
+  /// {@endtemplate}
   final Widget? leading;
 
+  /// {@template sbb_design_system.sbb_bottom_sheet.leadingIconData}
   /// Icon data for an icon displayed at the leading edge of the header.
   ///
   /// Cannot be used together with [leading].
+  /// {@endtemplate}
   final IconData? leadingIconData;
 
+  /// {@template sbb_design_system.sbb_bottom_sheet.trailing}
   /// A custom widget displayed at the trailing edge of the header.
   ///
   /// For icon-only trailing content, use [trailingIconData] instead.
   ///
   /// Cannot be used together with [trailingIconData].
+  /// {@endtemplate}
   final Widget? trailing;
 
+  /// {@template sbb_design_system.sbb_bottom_sheet.trailingIconData}
   /// Icon data for an icon displayed at the trailing edge of the header.
   ///
   /// Cannot be used together with [trailing].
+  /// {@endtemplate}
   final IconData? trailingIconData;
 
   /// The main content widget of the bottom sheet.
   final Widget body;
 
+  /// {@template sbb_design_system.sbb_bottom_sheet.showCloseButton}
   /// Whether to show a close button in the header.
+  ///
+  /// Defaults to true.
+  /// {@endtemplate}
   final bool showCloseButton;
 
   /// Whether to use the root navigator when popping the sheet.
@@ -509,27 +419,6 @@ class _BottomSheetTitleRow extends StatelessWidget {
     return ConstrainedBox(
       constraints: BoxConstraints(minHeight: style.titleMinHeight ?? SBBSpacing.xLarge),
       child: child,
-    );
-  }
-}
-
-class _ModalHeader extends StatelessWidget {
-  const _ModalHeader(this.title, {this.showCloseButton = true, this.useRootNavigator = true});
-
-  final String title;
-  final bool showCloseButton;
-  final bool useRootNavigator;
-
-  @override
-  Widget build(BuildContext context) {
-    final style = Theme.of(context).sbbBottomSheetTheme?.style;
-    return Row(
-      children: [
-        Expanded(
-          child: Semantics(header: true, child: Text(title, style: style?.titleTextStyle)),
-        ),
-        if (showCloseButton) _CloseButton(useRootNavigator: useRootNavigator),
-      ],
     );
   }
 }

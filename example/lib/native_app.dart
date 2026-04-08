@@ -13,21 +13,21 @@ import 'pages/checkbox_page.dart';
 import 'pages/chip_page.dart';
 import 'pages/color_page.dart';
 import 'pages/container_page.dart';
+import 'pages/decorated_text_page.dart';
+import 'pages/dropdown_page.dart';
 import 'pages/header_box_page.dart';
 import 'pages/header_page.dart';
 import 'pages/icon_page.dart';
-import 'pages/input_trigger_page.dart';
-import 'pages/link_page.dart';
 import 'pages/list_item_page.dart';
 import 'pages/loading_indicator_page.dart';
 import 'pages/message_page.dart';
 import 'pages/notification_box_page.dart';
 import 'pages/paginator_page.dart';
 import 'pages/picker_page.dart';
+import 'pages/popup_page.dart';
 import 'pages/promotion_box_page.dart';
 import 'pages/radio_page.dart';
 import 'pages/segmented_button_page.dart';
-import 'pages/select_page.dart';
 import 'pages/slider_page.dart';
 import 'pages/status_page.dart';
 import 'pages/stepper_page.dart';
@@ -118,7 +118,7 @@ class MyApp extends StatelessWidget {
             _DemoEntry('Typography', TypographyPage()),
             _DemoEntry('Color', ColorPage()),
           ],
-        ).toList(growable: false),
+        ),
       ),
     );
   }
@@ -134,13 +134,13 @@ class MyApp extends StatelessWidget {
             _DemoEntry('Button', ButtonPage()),
             _DemoEntry('Checkbox', CheckboxPage()),
             _DemoEntry('Chip', ChipPage()),
-            _DemoEntry('Link', LinkPage()),
+            _DemoEntry('Decorated Text', DecoratedTextPage()),
             _DemoEntry('List Item', ListItemPage()),
             _DemoEntry('Loading Indicator', LoadingIndicatorPage()),
             _DemoEntry('Picker', PickerPage()),
+            _DemoEntry('Popup', PopupPage()),
             _DemoEntry('Radio', RadioPage()),
             _DemoEntry('Segmented Button', SegmentedButtonPage()),
-            _DemoEntry('Select', SelectPage()),
             _DemoEntry('Switch', SwitchPage()),
             _DemoEntry('Text Input', TextInputPage()),
             _DemoEntry('Text Area', TextAreaPage()),
@@ -150,9 +150,8 @@ class MyApp extends StatelessWidget {
             _DemoEntry('Promotion Box', PromotionBoxPage()),
             _DemoEntry('Notification Box', NotificationBoxPage()),
             _DemoEntry('Status', StatusPage()),
-            _DemoEntry('Input Trigger', InputTriggerPage()),
           ],
-        ).toList(growable: false),
+        ),
       ),
     );
   }
@@ -166,6 +165,7 @@ class MyApp extends StatelessWidget {
           items: [
             _DemoEntry('Autocompletion', AutocompletionPage()),
             _DemoEntry('Container', ContainerPage()),
+            _DemoEntry('Dropdown', DropdownPage()),
             _DemoEntry('Forms', FormPage()),
             _DemoEntry('Header', HeaderPage()),
             _DemoEntry('Headerbox', HeaderBoxPage()),
@@ -174,7 +174,7 @@ class MyApp extends StatelessWidget {
             _DemoEntry('Stepper', StepperPage()),
             _DemoEntry('Tab Bar', TabBarPage()),
           ],
-        ).toList(growable: false),
+        ),
       ),
     );
   }

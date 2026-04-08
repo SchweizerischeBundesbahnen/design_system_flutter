@@ -667,10 +667,7 @@ class _SBBTextInputState extends State<SBBTextInput>
 
 /// The boxed variant of [SBBTextInput].
 ///
-/// This has mainly two effects:
-/// * if no [decoration.contentPadding] is given, a default padding of
-/// [EdgeInsets.symmetric(horizontal: SBBSpacing.medium)] will be applied.
-/// * the border of the input decoration will only show if it has an error and in a surrounding manner.
+/// The border of the input decoration will only show if it has an error and in a surrounding manner.
 class SBBTextInputBoxed extends SBBTextInput {
   SBBTextInputBoxed({
     super.key,

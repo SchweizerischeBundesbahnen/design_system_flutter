@@ -50,7 +50,7 @@ class _MessagePageState extends State<MessagePage> {
                       onChanged: (value) => setState(() => _showIllustrations = value),
                     ),
                   ],
-                ).toList(growable: false),
+                ),
               ),
             ],
           ),

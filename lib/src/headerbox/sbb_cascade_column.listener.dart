@@ -3,7 +3,7 @@ part of 'sbb_cascade_column.dart';
 typedef ContractionListenerBuilder =
     Widget Function(
       BuildContext context,
-      ContractionState state,
+      SBBContractionState state,
       Widget? child,
     );
 
@@ -37,7 +37,7 @@ class SBBContractionListener extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = _ContractionScope.of(context);
-    return ValueListenableBuilder<ContractionState>(
+    return ValueListenableBuilder<SBBContractionState>(
       valueListenable: controller,
       builder: (context, state, _) => builder(context, state, child),
     );

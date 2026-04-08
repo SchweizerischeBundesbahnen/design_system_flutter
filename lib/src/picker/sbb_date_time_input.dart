@@ -67,29 +67,30 @@ class _SBBDateTimeInputState extends State<SBBDateTimeInput> {
 
   @override
   Widget build(BuildContext context) {
-    return SBBInputTrigger(
+    return SBBDecoratedText(
       key: widget.key,
       value: _valueText,
-      labelText: widget.labelText,
-      hintText: widget.hintText,
-      errorText: widget.errorText,
-      prefixIcon: widget.prefixIcon,
-      suffixIcon: widget.suffixIcon,
-      onSuffixPressed: widget.onSuffixPressed,
       maxLines: widget.maxLines,
-      enabled: widget.onDateTimeChanged != null,
-      isLastElement: widget.isLastElement,
-      onPressed: () {
-        SBBDateTimePicker.showModal(
-          context: context,
-          title: widget.labelText,
-          initialDateTime: widget.value,
-          minimumDateTime: widget.minimumDateTime,
-          maximumDateTime: widget.maximumDateTime,
-          minuteInterval: widget.minuteInterval,
-          onDateTimeChanged: widget.onDateTimeChanged,
-        );
-      },
+      decoration: SBBInputDecoration(
+        labelText: widget.labelText,
+        placeholderText: widget.hintText,
+        errorText: widget.errorText,
+        leadingIconData: widget.prefixIcon,
+        trailingIconData: widget.suffixIcon,
+      ),
+      onTap: widget.onDateTimeChanged != null
+          ? () {
+              SBBDateTimePicker.showModal(
+                context: context,
+                title: widget.labelText,
+                initialDateTime: widget.value,
+                minimumDateTime: widget.minimumDateTime,
+                maximumDateTime: widget.maximumDateTime,
+                minuteInterval: widget.minuteInterval,
+                onDateTimeChanged: widget.onDateTimeChanged,
+              );
+            }
+          : null,
     );
   }
 }

@@ -78,12 +78,10 @@ class _HeaderBoxForeground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MergeSemantics(
-      child: Semantics(
-        header: true,
-        label: semanticsLabel,
-        child: flap != null ? _flappedHeaderBox(context) : _headerBox(context),
-      ),
+    return Semantics(
+      header: true,
+      label: semanticsLabel,
+      child: flap != null ? _flappedHeaderBox(context) : _headerBox(context),
     );
   }
 
