@@ -32,7 +32,7 @@ jobs:
 
       - uses: actions/setup-node@v6
         with:
-          version: lts/Krypton
+          node-version: lts/Krypton
 
       - name: Install Dart dependencies
         run: dart pub get
