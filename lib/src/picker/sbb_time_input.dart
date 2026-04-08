@@ -44,26 +44,26 @@ part of 'sbb_picker.dart';
 class SBBTimeInput extends StatefulWidget {
   const SBBTimeInput({
     super.key,
+    required this.onTimeChanged,
     this.value,
     this.minimumTime,
     this.maximumTime,
     this.minuteInterval = _defaultMinuteInterval,
-    required this.onTimeChanged,
+    this.visibleItemCount = _defaultVisibleItemCount,
     this.triggerDecoration,
     this.triggerStyle,
     this.triggerConfig = const SBBDecoratedTextConfig(),
-    this.visibleItemCount = _defaultVisibleItemCount,
     this.sheetConfig,
     this.sheetTitleText,
     this.sheetButtonLabelText,
-  })  : assert(
-          visibleItemCount > 0 && visibleItemCount % 2 == 1,
-          'visibleItemCount must be a positive odd number, but was $visibleItemCount',
-        ),
-        assert(
-          sheetConfig == null || sheetTitleText == null,
-          'sheetTitleText cannot be set while sheetConfig is set!',
-        );
+  }) : assert(
+         visibleItemCount > 0 && visibleItemCount % 2 == 1,
+         'visibleItemCount must be a positive odd number, but was $visibleItemCount',
+       ),
+       assert(
+         sheetConfig == null || sheetTitleText == null,
+         'sheetTitleText cannot be set while sheetConfig is set!',
+       );
 
   /// The currently selected time. Displayed in the trigger field. When null,
   /// the trigger shows an empty value.

@@ -44,27 +44,27 @@ part of 'sbb_picker.dart';
 class SBBDateTimeInput extends StatefulWidget {
   const SBBDateTimeInput({
     super.key,
+    required this.onDateTimeChanged,
     this.value,
     this.minimumDateTime,
     this.maximumDateTime,
     this.minuteInterval = _defaultMinuteInterval,
     this.dateFormat,
-    required this.onDateTimeChanged,
+    this.visibleItemCount = _defaultVisibleItemCount,
     this.triggerDecoration,
     this.triggerStyle,
     this.triggerConfig = const SBBDecoratedTextConfig(),
-    this.visibleItemCount = _defaultVisibleItemCount,
     this.sheetConfig,
     this.sheetTitleText,
     this.sheetButtonLabelText,
-  })  : assert(
-          visibleItemCount > 0 && visibleItemCount % 2 == 1,
-          'visibleItemCount must be a positive odd number, but was $visibleItemCount',
-        ),
-        assert(
-          sheetConfig == null || sheetTitleText == null,
-          'sheetTitleText cannot be set while sheetConfig is set!',
-        );
+  }) : assert(
+         visibleItemCount > 0 && visibleItemCount % 2 == 1,
+         'visibleItemCount must be a positive odd number, but was $visibleItemCount',
+       ),
+       assert(
+         sheetConfig == null || sheetTitleText == null,
+         'sheetTitleText cannot be set while sheetConfig is set!',
+       );
 
   /// The currently selected date and time. Displayed in the trigger field using
   /// [dateFormat]. When null, the trigger shows an empty value.
