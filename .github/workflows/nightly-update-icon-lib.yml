@@ -28,7 +28,11 @@ jobs:
 
       - uses: dart-lang/setup-dart@v1
         with:
-          sdk: 3.9
+          sdk: 3.10
+
+      - uses: actions/setup-node@v6
+        with:
+          version: lts/Krypton
 
       - name: Install Dart dependencies
         run: dart pub get
