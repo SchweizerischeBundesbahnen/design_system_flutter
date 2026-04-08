@@ -82,7 +82,9 @@ class SBBDateTimePicker extends StatefulWidget {
   /// * <https://digital.sbb.ch/en/design-system/mobile/components/modal-view/>
   static void showModal({
     required BuildContext context,
-    String? title,
+    SBBBottomSheetConfig? sheetConfig,
+    String? sheetTitleText,
+    String? sheetButtonLabelText,
     DateTime? initialDateTime,
     DateTime? minimumDateTime,
     DateTime? maximumDateTime,
@@ -91,20 +93,36 @@ class SBBDateTimePicker extends StatefulWidget {
     int visibleItemCount = _defaultVisibleItemCount,
   }) {
     final localizations = MaterialLocalizations.of(context);
+    final effectiveConfig = sheetConfig ?? const SBBBottomSheetConfig();
 
-    final modalTitle = title ?? localizations.dateInputLabel;
+    final effectiveTitleText = sheetTitleText ??
+        effectiveConfig.titleText ??
+        (effectiveConfig.title == null ? localizations.dateInputLabel : null);
 
     final modalDateTime = _initialDateTime(initialDateTime, minimumDateTime, maximumDateTime, minuteInterval);
 
     final acceptInitialSelection = initialDateTime == null;
     final selectedButtonEnabled = ValueNotifier(acceptInitialSelection);
-    final selectedButtonLabelText = localizations.datePickerHelpText;
+    final selectedButtonLabelText = sheetButtonLabelText ?? localizations.datePickerHelpText;
 
     var selectedDateTime = modalDateTime;
 
     showSBBBottomSheet(
       context: context,
-      titleText: modalTitle,
+      title: effectiveConfig.title,
+      titleText: effectiveTitleText,
+      leading: effectiveConfig.leading,
+      leadingIconData: effectiveConfig.leadingIconData,
+      trailing: effectiveConfig.trailing,
+      trailingIconData: effectiveConfig.trailingIconData,
+      barrierLabel: effectiveConfig.barrierLabel,
+      useRootNavigator: effectiveConfig.useRootNavigator,
+      isDismissible: effectiveConfig.isDismissible,
+      enableDrag: effectiveConfig.enableDrag,
+      useSafeArea: effectiveConfig.useSafeArea,
+      transitionAnimationController: effectiveConfig.transitionAnimationController,
+      sheetAnimationStyle: effectiveConfig.animationStyle,
+      showCloseButton: effectiveConfig.showCloseButton,
       body: Column(
         mainAxisSize: .min,
         children: [

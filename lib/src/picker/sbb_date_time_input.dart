@@ -14,12 +14,19 @@ part of 'sbb_picker.dart';
 /// behaviour (max/min lines, expands, focus node, autofocus). When omitted,
 /// the defaults from [SBBDecoratedTextConfig] are used.
 ///
+/// Use [sheetConfig] to customise the bottom sheet's appearance and behaviour.
+/// Use [sheetTitleText] as a flat convenience parameter to set only the sheet
+/// title. Cannot be used together with [sheetConfig]. When neither is set, the
+/// sheet title defaults to the localised date input label from
+/// [MaterialLocalizations.dateInputLabel].
+///
 /// ## Example
 ///
 /// ```dart
 /// SBBDateTimeInput(
 ///   value: _selectedDateTime,
 ///   triggerDecoration: SBBInputDecoration(labelText: 'Departure'),
+///   sheetTitleText: 'Select departure',
 ///   onDateTimeChanged: (dt) => setState(() => _selectedDateTime = dt),
 /// )
 /// ```
@@ -30,6 +37,7 @@ part of 'sbb_picker.dart';
 /// * [SBBDecoratedTextConfig], the configuration object for the trigger field.
 /// * [SBBDateTimePicker], the picker opened when the trigger is tapped.
 /// * [SBBDateTimePicker.showModal], which is used to display the bottom sheet.
+/// * [SBBBottomSheetConfig], the configuration object for the bottom sheet.
 /// * [SBBDateInput], variant for date values.
 /// * [SBBTimeInput], variant for time values.
 /// * <https://digital.sbb.ch/en/design-system/mobile/components/picker/>
@@ -46,10 +54,17 @@ class SBBDateTimeInput extends StatefulWidget {
     this.triggerStyle,
     this.triggerConfig = const SBBDecoratedTextConfig(),
     this.visibleItemCount = _defaultVisibleItemCount,
-  }) : assert(
-         visibleItemCount > 0 && visibleItemCount % 2 == 1,
-         'visibleItemCount must be a positive odd number, but was $visibleItemCount',
-       );
+    this.sheetConfig,
+    this.sheetTitleText,
+    this.sheetButtonLabelText,
+  })  : assert(
+          visibleItemCount > 0 && visibleItemCount % 2 == 1,
+          'visibleItemCount must be a positive odd number, but was $visibleItemCount',
+        ),
+        assert(
+          sheetConfig == null || sheetTitleText == null,
+          'sheetTitleText cannot be set while sheetConfig is set!',
+        );
 
   /// The currently selected date and time. Displayed in the trigger field using
   /// [dateFormat]. When null, the trigger shows an empty value.
@@ -97,6 +112,28 @@ class SBBDateTimeInput extends StatefulWidget {
   /// Defaults to 7.
   final int visibleItemCount;
 
+  /// Configuration for the bottom sheet's appearance and behaviour.
+  ///
+  /// Use this to customise the sheet title, icons, dismiss behaviour, and other
+  /// properties. See [SBBBottomSheetConfig] for available options.
+  ///
+  /// Cannot be used together with [sheetTitleText].
+  final SBBBottomSheetConfig? sheetConfig;
+
+  /// This is a flat convenience parameter for setting the sheet title only.
+  /// If you need more control, use [sheetConfig] instead.
+  ///
+  /// When neither [sheetConfig] nor [sheetTitleText] is provided, the sheet
+  /// title defaults to [MaterialLocalizations.dateInputLabel].
+  ///
+  /// Cannot be used together with [sheetConfig].
+  final String? sheetTitleText;
+
+  /// The label text for the confirm button in the bottom sheet.
+  ///
+  /// When not provided, defaults to [MaterialLocalizations.datePickerHelpText].
+  final String? sheetButtonLabelText;
+
   @override
   State<SBBDateTimeInput> createState() => _SBBDateTimeInputState();
 }
@@ -135,7 +172,9 @@ class _SBBDateTimeInputState extends State<SBBDateTimeInput> {
           ? () {
               SBBDateTimePicker.showModal(
                 context: context,
-                title: widget.triggerDecoration?.labelText,
+                sheetConfig: widget.sheetConfig,
+                sheetTitleText: widget.sheetTitleText,
+                sheetButtonLabelText: widget.sheetButtonLabelText,
                 initialDateTime: widget.value,
                 minimumDateTime: widget.minimumDateTime,
                 maximumDateTime: widget.maximumDateTime,
