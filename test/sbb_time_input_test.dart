@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:intl/intl.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import 'test_app.dart';
@@ -53,7 +52,6 @@ class TimePickerTest extends StatelessWidget {
             SBBTimeInput(
               value: initialTime,
               triggerDecoration: SBBInputDecoration(labelText: 'Custom date format'),
-              dateFormat: DateFormat('dd.MM.yy, H:m'),
               onTimeChanged: (_) {},
             ),
             SBBTimeInput(

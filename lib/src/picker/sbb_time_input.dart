@@ -40,7 +40,6 @@ class SBBTimeInput extends StatefulWidget {
     this.minimumTime,
     this.maximumTime,
     this.minuteInterval = _defaultMinuteInterval,
-    this.dateFormat,
     required this.onTimeChanged,
     this.triggerDecoration,
     this.triggerStyle,
@@ -65,11 +64,6 @@ class SBBTimeInput extends StatefulWidget {
   ///
   /// Defaults to 1. Must be a divisor of 60.
   final int minuteInterval;
-
-  /// The format used to display [value] in the trigger field.
-  ///
-  /// When null, [TimeOfDay.format] is used for the current locale.
-  final DateFormat? dateFormat;
 
   /// Called when the user selects a time in the picker.
   ///
