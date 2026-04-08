@@ -24,11 +24,14 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - BREAKING: overhauled `SBBCheckbox` - see [v5 migration guide]
 - BREAKING: overhauled `SBBChip` - see [v5 migration guide]
 - BREAKING: different theming / styling for `SBBContentBox` - see [v5 migration guide]
+- BREAKING: overhauled `SBBInputTrigger` and renamed it to `SBBDecoratedText` - see [v5 migration guide]
+- BREAKING: overhauled `SBBSelect` and renamed to `SBBDropdown` - see [v5 migration guide]
 - BREAKING: overhauled `SBBListHeader` - see [v5 migration guide]
 - BREAKING: overhauled `SBBListItem` - see [v5 migration guide]
 - BREAKING: overhauled `SBBMessage` component - see [v5 migration guide]
 - BREAKING: overhauled `SBBModal` component and renamed to `SBBBottomSheet` - see [v5 migration guide]
 - BREAKING: overhauled `SBBPagination` and renamed to `SBBPaginator` - see [v5 migration guide]
+- BREAKING: overhauled `SBBModalPopup` and renamed to `SBBPopup` - see [v5 migration guide]
 - BREAKING: overhauled `SBBRadio` with `SBBRadioGroup` ancestor - see [v5 migration guide]
 - BREAKING: overhauled `SBBSegmentedButton` component - see [v5 migration guide]
 - BREAKING: overhauled `SBBSlider` component - see [v5 migration guide]
@@ -36,8 +39,12 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - BREAKING: overhauled `SBBStepper` component - see [v5 migration guide]
 - BREAKING: overhauled `SBBHeader` component - see [v5 migration guide]
 - BREAKING: different theming / styling for `SBBSwitch` - see [v5 migration guide]
+- BREAKING: use `SBBTabBarStyle` / `SBBTabBarThemeData` to style `SBBTabBar` - see [v5 migration guide]
 - BREAKING: overhauled `SBBTextField` and renamed to `SBBTextInput` - see [v5 migration guide]
 - BREAKING: removed default left margin on component `SBBTextInput` (#402)
+- renamed `TextStylesExtensions` to `SBBTextStyleExtensions`
+- BREAKING: renamed `ContractionState` to `SBBContractionState`
+- BREAKING: renamed `ContractibleState` to `SBBContractibleState`
 
 ### Removed
 
@@ -49,9 +56,28 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Removed `SBBAccordion`, `SBBAccordionItem`, `AccordionCallback` and `SingleAccordionCallback`
 - Removed deprecated `SBBGroupStyle`, use `SBBContentBoxThemeData` instead
 - Removed deprecated `SBBGroup`
+- Removed deprecated `SBBOnboarding`
 - Removed deprecated `sbbDefaultSpacing`
+- Removed deprecated `SBBLinkText`
+- Removed `CascadeColumnParentData` as it is not directly used by clients
 - Removed `SBBTextField` - replaced by `SBBTextInput`
+- Removed `merge` extension on `SBBBaseStyle`
 
+## [4.10.0] - 2026-03-30
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.18
+
+### Fixed
+
+- `SBBHeaderbox`: Remove `MergeSemantics` allowing accessibility
+
+## [4.9.0] - 2026-03-23
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.17
 
 ## [4.8.0] - 2026-03-05
 
@@ -784,7 +810,11 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 [v5 migration guide]: migration_guide.md
 
-[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.8.0...HEAD
+[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.10.0...HEAD
+
+[4.10.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.9.0...4.10.0
+
+[4.9.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.8.0...4.9.0
 
 [4.8.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.7.0...4.8.0
 

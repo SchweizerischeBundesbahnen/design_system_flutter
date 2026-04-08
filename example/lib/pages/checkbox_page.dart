@@ -140,7 +140,7 @@ class CheckboxPageState extends State<CheckboxPage> {
                         isLoading: !_listItemValue8,
                       ),
                     ],
-                  ).toList(growable: false),
+                  ),
                 ),
               ),
               const SizedBox(height: SBBSpacing.medium),

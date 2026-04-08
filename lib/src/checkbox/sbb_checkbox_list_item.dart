@@ -42,7 +42,6 @@ class SBBCheckboxListItem extends StatelessWidget {
     this.trailing,
     this.trailingIconData,
     this.onLongPress,
-    this.enabled = true,
     this.isLoading = false,
     this.links,
     this.focusNode,
@@ -90,11 +89,6 @@ class SBBCheckboxListItem extends StatelessWidget {
   /// Within the [SBBCheckboxListItem], the [SBBListItem.onTap] calls the [onChanged] callback with the
   /// updated value.
   final GestureLongPressCallback? onLongPress;
-
-  /// {@macro sbb_design_system.list_item.enabled}
-  ///
-  /// If this is false, the checkbox will also appear disabled.
-  final bool enabled;
 
   /// {@macro sbb_design_system.list_item.isLoading}
   final bool isLoading;
@@ -159,7 +153,7 @@ class SBBCheckboxListItem extends StatelessWidget {
     Widget resolvedLeading = SBBCheckbox(
       value: value,
       tristate: tristate,
-      onChanged: enabled ? onChanged : null,
+      onChanged: onChanged,
       style: (checkboxStyle ?? const SBBCheckboxStyle()).copyWith(tapTargetPadding: .zero),
       semanticLabel: checkboxSemanticLabel,
     );
@@ -180,9 +174,8 @@ class SBBCheckboxListItem extends StatelessWidget {
       subtitleText: subtitleText,
       trailing: trailing,
       trailingIconData: trailingIconData,
-      onTap: onChanged != null && enabled ? () => _callOnChanged(onChanged!) : null,
+      onTap: onChanged != null ? () => _callOnChanged(onChanged!) : null,
       onLongPress: onLongPress,
-      enabled: enabled,
       isLoading: isLoading,
       links: links,
       focusNode: focusNode,
@@ -230,7 +223,6 @@ class SBBCheckboxListItemBoxed extends SBBCheckboxListItem {
     super.trailing,
     super.trailingIconData,
     super.onLongPress,
-    super.enabled,
     super.isLoading,
     super.links,
     super.focusNode,

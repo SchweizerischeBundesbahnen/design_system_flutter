@@ -13,7 +13,6 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
     this.defaultTextColor,
     this.defaultTextStyle,
     this.dividerColor,
-    this.defaultRootContainerPadding,
     this.iconColor,
     this.brightness,
     this.boldFont = false,
@@ -36,7 +35,6 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
       backgroundColor: resolve(isLight, SBBColors.milk, SBBColors.black),
       errorColor: resolve(isLight, SBBColors.error, SBBColors.errorDark),
       dividerColor: resolve(isLight, SBBColors.cloud, SBBColors.iron),
-      defaultRootContainerPadding: SBBSpacing.medium,
       iconColor: resolve(isLight, SBBColors.black, SBBColors.white),
       brightness: brightness,
       boldFont: boldFont,
@@ -70,7 +68,6 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
   final Color? defaultTextColor;
   final TextStyle? defaultTextStyle;
   final Color? dividerColor;
-  final double? defaultRootContainerPadding;
   final Color? iconColor;
   final Brightness? brightness;
   final bool boldFont;
@@ -88,7 +85,6 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
     Color? defaultTextColor,
     TextStyle? defaultTextStyle,
     Color? dividerColor,
-    double? defaultRootContainerPadding,
     Color? iconColor,
     Brightness? brightness,
     bool? boldFont,
@@ -104,7 +100,6 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
     defaultTextColor: defaultTextColor ?? this.defaultTextColor,
     defaultTextStyle: defaultTextStyle ?? this.defaultTextStyle,
     dividerColor: dividerColor ?? this.dividerColor,
-    defaultRootContainerPadding: defaultRootContainerPadding ?? this.defaultRootContainerPadding,
     iconColor: iconColor ?? this.iconColor,
     brightness: brightness ?? this.brightness,
     boldFont: boldFont ?? this.boldFont,
@@ -127,7 +122,6 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
       defaultFontFamily: other.defaultFontFamily,
       brightness: other.brightness,
       primarySwatch: other.primarySwatch,
-      defaultRootContainerPadding: other.defaultRootContainerPadding,
       boldFont: other.boldFont,
       labelColor: Color.lerp(labelColor, other.labelColor, t),
       redTextTheme: TextTheme.lerp(redTextTheme, other.redTextTheme, t),
@@ -176,27 +170,5 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
         fontFamily: SBBFontFamily.sbbFontBold,
       ),
     );
-  }
-}
-
-extension StyleExtension on SBBBaseStyle? {
-  SBBBaseStyle merge(SBBBaseStyle? other) {
-    if (this == null) return other ?? SBBBaseStyle();
-    return this!.copyWith(
-          primaryColor: this!.primaryColor ?? other?.primaryColor,
-          primaryColorDark: this!.primaryColorDark ?? other?.primaryColorDark,
-          primarySwatch: this!.primarySwatch ?? other?.primarySwatch,
-          backgroundColor: this!.backgroundColor ?? other?.backgroundColor,
-          errorColor: this!.errorColor ?? other?.errorColor,
-          fontFamily: this!.defaultFontFamily ?? other?.defaultFontFamily,
-          defaultTextColor: this!.defaultTextColor ?? other?.defaultTextColor,
-          defaultTextStyle: this!.defaultTextStyle ?? other?.defaultTextStyle,
-          dividerColor: this!.dividerColor ?? other?.dividerColor,
-          defaultRootContainerPadding: this!.defaultRootContainerPadding ?? other?.defaultRootContainerPadding,
-          iconColor: this!.iconColor ?? other?.iconColor,
-          brightness: this!.brightness ?? other?.brightness,
-          redTextTheme: this?.redTextTheme ?? other?.redTextTheme,
-        )
-        as SBBBaseStyle;
   }
 }

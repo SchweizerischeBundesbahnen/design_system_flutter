@@ -4,8 +4,8 @@ const _kSmallValue = 1.0;
 
 class _RenderCascadeColumn extends RenderBox
     with
-        ContainerRenderObjectMixin<RenderBox, CascadeColumnParentData>,
-        RenderBoxContainerDefaultsMixin<RenderBox, CascadeColumnParentData>,
+        ContainerRenderObjectMixin<RenderBox, _CascadeColumnParentData>,
+        RenderBoxContainerDefaultsMixin<RenderBox, _CascadeColumnParentData>,
         DebugOverflowIndicatorMixin {
   _RenderCascadeColumn(this.controller);
 
@@ -26,7 +26,7 @@ class _RenderCascadeColumn extends RenderBox
 
     while (child != null) {
       accumulatedHeight += child.getMinIntrinsicHeight(width);
-      child = (child.parentData as CascadeColumnParentData).nextSibling;
+      child = (child.parentData as _CascadeColumnParentData).nextSibling;
     }
 
     return max(0.0, accumulatedHeight);
@@ -39,7 +39,7 @@ class _RenderCascadeColumn extends RenderBox
 
     while (child != null) {
       accumulatedHeight += child.getMaxIntrinsicHeight(width);
-      child = (child.parentData as CascadeColumnParentData).nextSibling;
+      child = (child.parentData as _CascadeColumnParentData).nextSibling;
     }
 
     return max(0.0, accumulatedHeight);
@@ -63,7 +63,7 @@ class _RenderCascadeColumn extends RenderBox
 
     // First pass to determine sizes
     while (child != null) {
-      final parentData = child.parentData! as CascadeColumnParentData;
+      final parentData = child.parentData! as _CascadeColumnParentData;
       final isFirst = parentData.previousSibling == null;
 
       var (minHeight, maxHeight) = _getMinMaxHeights(child);
@@ -114,7 +114,7 @@ class _RenderCascadeColumn extends RenderBox
     child = firstChild;
     var offset = 0.0;
     while (child != null) {
-      final parentData = child.parentData! as CascadeColumnParentData;
+      final parentData = child.parentData! as _CascadeColumnParentData;
 
       parentData.offset = Offset(0.0, offset);
       offset += child.size.height;
@@ -130,7 +130,7 @@ class _RenderCascadeColumn extends RenderBox
     );
 
     // Notify controller
-    final contractionState = ContractionState(expansionValue: totalProgress);
+    final contractionState = SBBContractionState(expansionValue: totalProgress);
     SchedulerBinding.instance.addPostFrameCallback((_) {
       controller.value = contractionState;
     });
@@ -164,7 +164,7 @@ class _RenderCascadeColumn extends RenderBox
   void _reversePaint(PaintingContext context, Offset offset) {
     RenderObject? child = lastChild;
     while (child != null) {
-      final childParentData = child.parentData! as CascadeColumnParentData;
+      final childParentData = child.parentData! as _CascadeColumnParentData;
 
       context.paintChild(child, childParentData.offset + offset);
 
@@ -174,12 +174,12 @@ class _RenderCascadeColumn extends RenderBox
 
   @override
   void setupParentData(covariant RenderObject child) {
-    if (child.parentData is! CascadeColumnParentData) {
-      child.parentData = CascadeColumnParentData();
+    if (child.parentData is! _CascadeColumnParentData) {
+      child.parentData = _CascadeColumnParentData();
     }
   }
 
-  ContractibleState _computeState(RenderBox child, double minHeight, double maxHeight, double totalProgress) {
+  SBBContractibleState _computeState(RenderBox child, double minHeight, double maxHeight, double totalProgress) {
     final range = (maxHeight - minHeight);
     final current = child.size.height.clamp(minHeight, maxHeight);
     var progress = range > 0 ? (current - minHeight) / range : 1.0;
@@ -188,13 +188,13 @@ class _RenderCascadeColumn extends RenderBox
       progress = 0.0;
     }
 
-    return ContractibleState(
+    return SBBContractibleState(
       expansionValue: progress,
       globalExpansionValue: totalProgress,
     );
   }
 
-  void _queueStateUpdate(CascadeColumnParentData pd, ContractibleState state) {
+  void _queueStateUpdate(_CascadeColumnParentData pd, SBBContractibleState state) {
     final n = pd.stateNotifier;
 
     if (n == null || n.value == state) return;
@@ -223,8 +223,8 @@ class _RenderCascadeColumn extends RenderBox
 class _ProgressUpdate {
   const _ProgressUpdate(this.notifier, this.value);
 
-  final ValueNotifier<ContractibleState> notifier;
-  final ContractibleState value;
+  final ValueNotifier<SBBContractibleState> notifier;
+  final SBBContractibleState value;
 
   @override
   bool operator ==(Object other) => other is _ProgressUpdate && other.notifier == notifier;

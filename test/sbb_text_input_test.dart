@@ -74,7 +74,7 @@ void main() {
                         enabled: false,
                       ),
                     ],
-                  ).toList(growable: false),
+                  ),
                 ),
               ),
               SizedBox(height: SBBSpacing.medium),

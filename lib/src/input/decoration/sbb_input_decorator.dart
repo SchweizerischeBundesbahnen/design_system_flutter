@@ -58,9 +58,11 @@ class SBBInputDecorator extends StatefulWidget {
 
   /// Whether the label needs to move above the input and seem to start floating.
   ///
-  /// Will float when not empty or when focused while enabled.
+  /// Will float when not empty, has a placeholder or when focused while enabled.
   bool get _labelShouldFloat =>
-      !isEmpty || (states.contains(WidgetState.focused) && !states.contains(WidgetState.disabled));
+      !isEmpty ||
+      (decoration.placeholder != null || decoration.placeholderText != null) ||
+      (states.contains(WidgetState.focused) && !states.contains(WidgetState.disabled));
 
   @override
   State<SBBInputDecorator> createState() => _SBBInputDecoratorState();
@@ -109,9 +111,6 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
   SBBFloatingLabelBehavior get _effectiveFloatingLabelBehavior {
     return widget.decoration.floatingLabelBehavior ?? _inheritedFloatingLabelBehavior;
   }
-
-  bool get _shouldShowPlaceholder =>
-      widget.isEmpty && (widget.states.contains(WidgetState.focused) || _effectiveFloatingLabelBehavior == .always);
 
   @override
   void didUpdateWidget(SBBInputDecorator oldWidget) {
@@ -301,7 +300,7 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
     if (placeholder == null && widget.decoration.placeholderText != null) {
       placeholder = AnimatedOpacity(
         duration: _kTransitionDuration * 1.25,
-        opacity: _shouldShowPlaceholder ? 1 : 0,
+        opacity: widget.isEmpty ? 1 : 0,
         child: Text(widget.decoration.placeholderText!),
       );
     }
