@@ -10,23 +10,6 @@ part of 'sbb_picker.dart';
 /// * <https://digital.sbb.ch/en/design-system/mobile/components/picker/>
 class SBBDatePicker extends StatefulWidget {
   /// Constructs an [SBBDatePicker].
-  ///
-  /// [onDateChanged] is the callback called when the selected date changes.
-  ///
-  /// [initialDate] is the initially selected date of the picker. Defaults to
-  /// `DateTime.now()`. If the initial date is outside the range defined by
-  /// [minimumDate] and [maximumDate], it will be automatically adjusted to the
-  /// closest valid date within the range.
-  ///
-  /// [minimumDate] is the minimum selectable date of the picker. If provided,
-  /// dates before this minimum date will be disabled. If not provided, there
-  /// will be no restriction on the minimum date that can be picked.
-  ///
-  /// [maximumDate] is the maximum selectable date of the picker. If provided,
-  /// dates after this maximum date will be disabled. If not provided, there
-  /// will be no restriction on the maximum date that can be picked.
-  ///
-  /// [minimumDate] must be before [maximumDate] if both are set.
   SBBDatePicker({
     super.key,
     required this.onDateChanged,
@@ -47,9 +30,32 @@ class SBBDatePicker extends StatefulWidget {
     );
   }
 
+  /// Called when the selected date changes.
   final ValueChanged<DateTime>? onDateChanged;
+
+  /// The initially selected date of the picker.
+  ///
+  /// Defaults to `DateTime.now()`. If the initial date is outside the range
+  /// defined by [minimumDate] and [maximumDate], it will be automatically
+  /// adjusted to the closest valid date within the range.
   final DateTime initialDate;
+
+  /// The minimum selectable date of the picker.
+  ///
+  /// If provided, dates before this minimum date will be disabled. If not
+  /// provided, there will be no restriction on the minimum date that can be
+  /// picked.
+  ///
+  /// Must be before [maximumDate] if both are set.
   final DateTime? minimumDate;
+
+  /// The maximum selectable date of the picker.
+  ///
+  /// If provided, dates after this maximum date will be disabled. If not
+  /// provided, there will be no restriction on the maximum date that can be
+  /// picked.
+  ///
+  /// Must be after [minimumDate] if both are set.
   final DateTime? maximumDate;
 
   /// The number of visible items in the picker.

@@ -9,29 +9,7 @@ part of 'sbb_picker.dart';
 /// * [SBBDateTimePicker], variant for date time values.
 /// * <https://digital.sbb.ch/en/design-system/mobile/components/picker/>
 class SBBTimePicker extends StatefulWidget {
-  /// Constructs an [SBBDateTimePicker].
-  ///
-  /// [onTimeChanged] is the callback called when the selected time changes.
-  ///
-  /// [initialTime] is the initially selected time of the picker. Defaults to
-  /// the present time. Will be rounded to conform [minuteInterval]. If the
-  /// initial time is outside the range defined by [minimumTime] and
-  /// [maximumTime], it will be automatically adjusted to the closest valid time
-  /// within the range.
-  ///
-  /// [minimumTime] is the minimum selectable time of the picker. If provided,
-  /// times before this minimum time will be disabled. If not provided, there
-  /// will be no restriction on the minimum time that can be picked.
-  ///
-  /// [maximumTime] is the maximum selectable time of the picker. If provided,
-  /// times after this maximum time will be disabled. If not provided, there
-  /// will be no restriction on the maximum time that can be picked.
-  ///
-  /// [minuteInterval] is the granularity of the minute spinner. Must be a
-  /// positive integer factor of 60. Defaults to 1.
-  ///
-  /// [maximumTime] can be before [minimumTime] to represent a time range over
-  /// midnight, such as 22:00-02:00.
+  /// Constructs an [SBBTimePicker].
   SBBTimePicker({
     super.key,
     required this.onTimeChanged,
@@ -57,10 +35,42 @@ class SBBTimePicker extends StatefulWidget {
        minimumTime = _minimumTime(minimumTime, minuteInterval),
        maximumTime = _maximumTime(maximumTime, minuteInterval);
 
+  /// Called when the selected time changes.
   final ValueChanged<TimeOfDay>? onTimeChanged;
+
+  /// The initially selected time of the picker.
+  ///
+  /// Defaults to `TimeOfDay.now()`. Will be rounded to conform [minuteInterval].
+  /// If the initial time is outside the range defined by [minimumTime] and
+  /// [maximumTime], it will be automatically adjusted to the closest valid time
+  /// within the range.
   final TimeOfDay initialTime;
+
+  /// The minimum selectable time of the picker.
+  ///
+  /// If provided, times before this minimum time will be disabled. If not
+  /// provided, there will be no restriction on the minimum time that can be
+  /// picked.
+  ///
+  /// Can be after [maximumTime] to represent a time range over midnight, such
+  /// as 22:00-02:00.
   final TimeOfDay? minimumTime;
+
+  /// The maximum selectable time of the picker.
+  ///
+  /// If provided, times after this maximum time will be disabled. If not
+  /// provided, there will be no restriction on the maximum time that can be
+  /// picked.
+  ///
+  /// Can be before [minimumTime] to represent a time range over midnight, such
+  /// as 22:00-02:00.
   final TimeOfDay? maximumTime;
+
+  /// The granularity of the minute spinner.
+  ///
+  /// Must be a positive integer factor of 60.
+  ///
+  /// Defaults to 1.
   final int minuteInterval;
 
   /// The number of visible items in the picker.

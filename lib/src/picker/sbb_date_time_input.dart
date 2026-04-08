@@ -61,6 +61,11 @@ class SBBDateTimeInput extends StatelessWidget {
          'sheetTitleText cannot be set while sheetConfig is set!',
        );
 
+  /// Called when the user selects a date and time in the picker.
+  ///
+  /// When null, the trigger field is disabled and taps are ignored.
+  final ValueChanged<DateTime>? onDateTimeChanged;
+
   /// The currently selected date and time. Displayed in the trigger field formatted by
   /// [dateFormat]. When null, the trigger shows an empty value.
   final DateTime? value;
@@ -81,11 +86,6 @@ class SBBDateTimeInput extends StatelessWidget {
   /// Defaults to [DateFormat.yMMMMd] combined with [DateFormat.Hm] for the
   /// current locale.
   final DateFormat? dateFormat;
-
-  /// Called when the user selects a date and time in the picker.
-  ///
-  /// When null, the trigger field is disabled and taps are ignored.
-  final ValueChanged<DateTime>? onDateTimeChanged;
 
   /// The decoration applied to the [SBBDecoratedText] trigger.
   ///

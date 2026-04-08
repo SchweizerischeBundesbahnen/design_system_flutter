@@ -10,29 +10,6 @@ part of 'sbb_picker.dart';
 /// * <https://digital.sbb.ch/en/design-system/mobile/components/picker/>
 class SBBDateTimePicker extends StatefulWidget {
   /// Constructs an [SBBDateTimePicker].
-  ///
-  /// [onDateTimeChanged] is the callback called when the selected date time
-  /// changes.
-  ///
-  /// [initialDateTime] is the initially selected date time of the picker.
-  /// Defaults to `DateTime.now()`. If the initial date time is outside the
-  /// range defined by [minimumDateTime] and [maximumDateTime], it will be
-  /// automatically adjusted to the closest valid date time within the range.
-  ///
-  /// [minimumDateTime] is the minimum selectable date time of the picker. If
-  /// provided, date times before this minimum date time will be disabled. If
-  /// not provided, there will be no restriction on the minimum date time that
-  /// can be picked.
-  ///
-  /// [maximumDateTime] is the maximum selectable date time of the picker. If
-  /// provided, date times after this maximum date time will be disabled. If not
-  /// provided, there will be no restriction on the maximum date time that can
-  /// be picked.
-  ///
-  /// [minuteInterval] is the granularity of the minute spinner. Must be a
-  /// positive integer factor of 60. Defaults to 1.
-  ///
-  /// [minimumDateTime] must be before [maximumDateTime] if both are set.
   SBBDateTimePicker({
     super.key,
     required this.onDateTimeChanged,
@@ -65,10 +42,39 @@ class SBBDateTimePicker extends StatefulWidget {
     );
   }
 
+  /// Called when the selected date time changes.
   final ValueChanged<DateTime>? onDateTimeChanged;
+
+  /// The initially selected date time of the picker.
+  ///
+  /// Defaults to `DateTime.now()`. If the initial date time is outside the
+  /// range defined by [minimumDateTime] and [maximumDateTime], it will be
+  /// automatically adjusted to the closest valid date time within the range.
   final DateTime initialDateTime;
+
+  /// The minimum selectable date time of the picker.
+  ///
+  /// If provided, date times before this minimum date time will be disabled. If
+  /// not provided, there will be no restriction on the minimum date time that
+  /// can be picked.
+  ///
+  /// Must be before [maximumDateTime] if both are set.
   final DateTime? minimumDateTime;
+
+  /// The maximum selectable date time of the picker.
+  ///
+  /// If provided, date times after this maximum date time will be disabled. If
+  /// not provided, there will be no restriction on the maximum date time that
+  /// can be picked.
+  ///
+  /// Must be after [minimumDateTime] if both are set.
   final DateTime? maximumDateTime;
+
+  /// The granularity of the minute spinner.
+  ///
+  /// Must be a positive integer factor of 60.
+  ///
+  /// Defaults to 1.
   final int minuteInterval;
 
   /// The number of visible items in the picker.
