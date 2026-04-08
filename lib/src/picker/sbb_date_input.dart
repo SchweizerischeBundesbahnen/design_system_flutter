@@ -1,18 +1,14 @@
 part of 'sbb_picker.dart';
 
-/// A trigger field that combines [SBBDecoratedText] with [SBBDatePicker].
+/// This is basically a convenience combination of a [SBBDecoratedText] and [SBBDatePicker.showInsideBottomSheet].
 ///
-/// Displays the selected date as a read-only [SBBDecoratedText] field. When
-/// tapped, it opens an [SBBDatePicker] in a modal bottom sheet via
-/// [SBBDatePicker.showBottomSheet], allowing the user to pick a date.
+/// Displays the selected time as a read-only [SBBDecoratedText] field. When tapped, it opens an [SBBDatePicker]
+/// in a [SBBBottomSheet] via [SBBDatePicker.showInsideBottomSheet], allowing the user to pick a time.
 ///
-/// Use [triggerDecoration] to customise the trigger's label, icons, error text,
-/// and other decoration properties. By default a [SBBIcons.chevron_small_down_small]
-/// trailing icon is added automatically unless a custom trailing widget or trailingIconData is provided.
+/// Use [triggerDecoration] to customise the trigger's label, icons, error text, and other decoration properties.
 ///
-/// Use [triggerConfig] to configure the trigger field's layout and focus
-/// behaviour (max/min lines, expands, focus node, autofocus). When omitted,
-/// the defaults from [SBBDecoratedTextConfig] are used.
+/// Use [triggerConfig] to configure the trigger field's layout and focus behaviour (max/min lines, expands,
+/// focus node, autofocus). When omitted, the defaults from [SBBDecoratedTextConfig] are used.
 ///
 /// Use [sheetConfig] to customise the bottom sheet's appearance and behaviour.
 /// Use [sheetTitleText] as a flat convenience parameter to set only the sheet
@@ -36,12 +32,12 @@ part of 'sbb_picker.dart';
 /// * [SBBDecoratedText], the trigger widget used to display the selected value.
 /// * [SBBDecoratedTextConfig], the configuration object for the trigger field.
 /// * [SBBDatePicker], the picker opened when the trigger is tapped.
-/// * [SBBDatePicker.showBottomSheet], which is used to display the bottom sheet.
+/// * [SBBDatePicker.showInsideBottomSheet], which is used to display the bottom sheet.
 /// * [SBBBottomSheetConfig], the configuration object for the bottom sheet.
 /// * [SBBDateTimeInput], variant for date and time values.
 /// * [SBBTimeInput], variant for time values.
 /// * <https://digital.sbb.ch/en/design-system/mobile/components/picker/>
-class SBBDateInput extends StatefulWidget {
+class SBBDateInput extends StatelessWidget {
   const SBBDateInput({
     super.key,
     required this.onDateChanged,
@@ -65,7 +61,7 @@ class SBBDateInput extends StatefulWidget {
          'sheetTitleText cannot be set while sheetConfig is set!',
        );
 
-  /// The currently selected date. Displayed in the trigger field using
+  /// The currently selected date. Displayed in the trigger field formatted by
   /// [dateFormat]. When null, the trigger shows an empty value.
   final DateTime? value;
 
@@ -101,7 +97,10 @@ class SBBDateInput extends StatefulWidget {
   /// Defaults to [SBBDecoratedTextConfig] with its default values.
   final SBBDecoratedTextConfig triggerConfig;
 
-  /// The number of visible items in the picker. Must be a positive odd number.
+  /// The number of visible items in the picker.
+  ///
+  /// Must be a positive odd number.
+  ///
   /// Defaults to 7.
   final int visibleItemCount;
 
@@ -128,51 +127,45 @@ class SBBDateInput extends StatefulWidget {
   final String? sheetButtonLabelText;
 
   @override
-  State<SBBDateInput> createState() => _SBBDateInputState();
-}
-
-class _SBBDateInputState extends State<SBBDateInput> {
-  late final DateFormat _dateFormat =
-      widget.dateFormat ?? DateFormat.yMMMMd(Localizations.maybeLocaleOf(context).toString());
-
-  String get _valueText {
-    if (widget.value == null) return '';
-
-    final rawDateTime = SBBDatePicker._clampedDate(
-      widget.value!,
-      widget.minimumDate,
-      widget.maximumDate,
-    );
-    return _dateFormat.format(rawDateTime);
-  }
-
-  @override
   Widget build(BuildContext context) {
     return SBBDecoratedText(
-      key: widget.key,
-      value: _valueText,
-      decoration: widget.triggerDecoration,
-      style: widget.triggerStyle,
-      maxLines: widget.triggerConfig.maxLines,
-      minLines: widget.triggerConfig.minLines,
-      expands: widget.triggerConfig.expands,
-      focusNode: widget.triggerConfig.focusNode,
-      autofocus: widget.triggerConfig.autofocus,
-      onTap: widget.onDateChanged != null
+      value: _formattedValue(context),
+      decoration: triggerDecoration,
+      style: triggerStyle,
+      maxLines: triggerConfig.maxLines,
+      minLines: triggerConfig.minLines,
+      expands: triggerConfig.expands,
+      focusNode: triggerConfig.focusNode,
+      autofocus: triggerConfig.autofocus,
+      onTap: onDateChanged != null
           ? () {
               SBBDatePicker.showInsideBottomSheet(
                 context: context,
-                sheetConfig: widget.sheetConfig,
-                sheetTitleText: widget.sheetTitleText,
-                sheetButtonLabelText: widget.sheetButtonLabelText,
-                initialDate: widget.value,
-                minimumDate: widget.minimumDate,
-                maximumDate: widget.maximumDate,
-                visibleItemCount: widget.visibleItemCount,
-                onDateChanged: widget.onDateChanged,
+                sheetConfig: sheetConfig,
+                sheetTitleText: sheetTitleText,
+                sheetButtonLabelText: sheetButtonLabelText,
+                initialDate: value,
+                minimumDate: minimumDate,
+                maximumDate: maximumDate,
+                visibleItemCount: visibleItemCount,
+                onDateChanged: onDateChanged,
               );
             }
           : null,
     );
+  }
+
+  String _formattedValue(BuildContext context) {
+    if (value == null) return '';
+
+    final DateFormat effectiveDateFormat =
+        dateFormat ?? DateFormat.yMMMMd(Localizations.maybeLocaleOf(context).toString());
+
+    final rawDateTime = SBBDatePicker._clampedDate(
+      value!,
+      minimumDate,
+      maximumDate,
+    );
+    return effectiveDateFormat.format(rawDateTime);
   }
 }
