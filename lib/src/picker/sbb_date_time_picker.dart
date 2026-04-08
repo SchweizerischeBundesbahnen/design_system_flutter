@@ -49,7 +49,7 @@ class SBBDateTimePicker extends StatefulWidget {
          visibleItemCount > 0 && visibleItemCount % 2 == 1,
          'visibleItemCount must be a positive odd number, but was $visibleItemCount',
        ),
-       initialDateTime = _clampedAndTimeIntervaledDate(
+       initialDateTime = _clampedAndTimeIntervaledDateTime(
          initialDateTime ?? DateTime.now(),
          minimumDateTime,
          maximumDateTime,
@@ -71,7 +71,10 @@ class SBBDateTimePicker extends StatefulWidget {
   final DateTime? maximumDateTime;
   final int minuteInterval;
 
-  /// The number of visible items in the picker. Must be a positive odd number.
+  /// The number of visible items in the picker.
+  ///
+  /// Must be a positive odd number.
+  ///
   /// Defaults to 7.
   final int visibleItemCount;
 
@@ -102,7 +105,7 @@ class SBBDateTimePicker extends StatefulWidget {
         effectiveConfig.titleText ??
         (effectiveConfig.title == null ? localizations.dateInputLabel : null);
 
-    final effectiveInitialDateTime = _clampedAndTimeIntervaledDate(
+    final effectiveInitialDateTime = _clampedAndTimeIntervaledDateTime(
       initialDateTime ?? DateTime.now(),
       minimumDateTime,
       maximumDateTime,
@@ -175,7 +178,7 @@ class SBBDateTimePicker extends StatefulWidget {
   @override
   State<SBBDateTimePicker> createState() => _SBBDateTimePickerState();
 
-  static DateTime _clampedAndTimeIntervaledDate(
+  static DateTime _clampedAndTimeIntervaledDateTime(
     DateTime value,
     DateTime? minimumDateTime,
     DateTime? maximumDateTime,
@@ -570,27 +573,15 @@ class _SBBDateTimePickerState extends _TimeBasedPickerState<SBBDateTimePicker> {
     return dateTextWidth;
   }
 
-  DateTime _indexToDate(int dateIndex) {
-    return widget.initialDateTime.date.add(Duration(days: dateIndex));
-  }
+  DateTime _indexToDate(int dateIndex) => widget.initialDateTime.date.add(Duration(days: dateIndex));
 
-  int _dateToIndex(DateTime date) {
-    return date.date.difference(widget.initialDateTime.date).inDays;
-  }
+  int _dateToIndex(DateTime date) => date.date.difference(widget.initialDateTime.date).inDays;
 
-  int _indexToMinute(int minuteIndex) {
-    return minuteIndex * widget.minuteInterval % TimeOfDay.minutesPerHour;
-  }
+  int _indexToMinute(int minuteIndex) => minuteIndex * widget.minuteInterval % TimeOfDay.minutesPerHour;
 
-  int _minuteToIndex(int minute) {
-    return minute ~/ widget.minuteInterval;
-  }
+  int _minuteToIndex(int minute) => minute ~/ widget.minuteInterval;
 
-  int _indexToHour(int hourIndex) {
-    return hourIndex % TimeOfDay.hoursPerDay;
-  }
+  int _indexToHour(int hourIndex) => hourIndex % TimeOfDay.hoursPerDay;
 
-  int _hourToIndex(int hour) {
-    return hour;
-  }
+  int _hourToIndex(int hour) => hour;
 }

@@ -38,7 +38,7 @@ class SBBDatePicker extends StatefulWidget {
          visibleItemCount > 0 && visibleItemCount % 2 == 1,
          'visibleItemCount must be a positive odd number, but was $visibleItemCount',
        ),
-       initialDate = _clampedDate(initialDate ?? DateTime.now(), minimumDate, maximumDate),
+       initialDate = _clampedDateOnly(initialDate ?? DateTime.now(), minimumDate, maximumDate),
        minimumDate = _minimumDate(minimumDate),
        maximumDate = _maximumDate(maximumDate) {
     assert(
@@ -52,7 +52,10 @@ class SBBDatePicker extends StatefulWidget {
   final DateTime? minimumDate;
   final DateTime? maximumDate;
 
-  /// The number of visible items in the picker. Must be a positive odd number.
+  /// The number of visible items in the picker.
+  ///
+  /// Must be a positive odd number.
+  ///
   /// Defaults to 7.
   final int visibleItemCount;
 
@@ -82,7 +85,7 @@ class SBBDatePicker extends StatefulWidget {
         effectiveConfig.titleText ??
         (effectiveConfig.title == null ? localizations.dateInputLabel : null);
 
-    final effectiveInitialDate = _clampedDate(initialDate ?? DateTime.now(), minimumDate, maximumDate);
+    final effectiveInitialDate = _clampedDateOnly(initialDate ?? DateTime.now(), minimumDate, maximumDate);
 
     final acceptInitialSelection = initialDate == null;
     final selectedButtonEnabled = ValueNotifier(acceptInitialSelection);
@@ -149,7 +152,7 @@ class SBBDatePicker extends StatefulWidget {
   @override
   State<SBBDatePicker> createState() => _SBBDatePickerState();
 
-  static DateTime _clampedDate(DateTime value, DateTime? minimumDate, DateTime? maximumDate) =>
+  static DateTime _clampedDateOnly(DateTime value, DateTime? minimumDate, DateTime? maximumDate) =>
       value.clamp(minimumDate, maximumDate).date;
 
   static DateTime? _minimumDate(DateTime? minimumDate) => minimumDate?.date;

@@ -47,7 +47,10 @@ class SBBPickerScrollView extends StatefulWidget {
   final SBBPickerScrollController? controller;
   final bool looping;
 
-  /// The number of visible items in the picker. Must be a positive odd number.
+  /// The number of visible items in the picker.
+  ///
+  /// Must be a positive odd number.
+  ///
   /// Defaults to 7.
   final int visibleItemCount;
 

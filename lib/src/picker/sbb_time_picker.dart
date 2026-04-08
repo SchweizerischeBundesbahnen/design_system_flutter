@@ -63,7 +63,10 @@ class SBBTimePicker extends StatefulWidget {
   final TimeOfDay? maximumTime;
   final int minuteInterval;
 
-  /// The number of visible items in the picker. Must be a positive odd number.
+  /// The number of visible items in the picker.
+  ///
+  /// Must be a positive odd number.
+  ///
   /// Defaults to 7.
   final int visibleItemCount;
 

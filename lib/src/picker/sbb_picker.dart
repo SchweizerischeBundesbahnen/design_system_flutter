@@ -136,7 +136,10 @@ class SBBPicker extends StatefulWidget {
 
   final Widget child;
 
-  /// The number of visible items in the picker. Must be a positive odd number.
+  /// The number of visible items in the picker.
+  ///
+  /// Must be a positive odd number.
+  ///
   /// Defaults to 7.
   final int visibleItemCount;
 
@@ -218,9 +221,7 @@ class _SBBPickerState extends _PickerClassState<SBBPicker> {
     final centerStops = <double>[highlightEnd, highlightEnd];
 
     // bottom half mirrors the top (excluding center duplicates)
-    final bottomStops = topStops.reversed
-        .map((s) => end - s)
-        .toList();
+    final bottomStops = topStops.reversed.map((s) => end - s).toList();
 
     return [...topStops, ...centerStops, ...bottomStops];
   }
