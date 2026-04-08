@@ -15,7 +15,7 @@ class SBBDateTimePicker extends StatefulWidget {
   /// changes.
   ///
   /// [initialDateTime] is the initially selected date time of the picker.
-  /// Defaults to the present date time. If the initial date time is outside the
+  /// Defaults to `DateTime.now()`. If the initial date time is outside the
   /// range defined by [minimumDateTime] and [maximumDateTime], it will be
   /// automatically adjusted to the closest valid date time within the range.
   ///
@@ -49,7 +49,12 @@ class SBBDateTimePicker extends StatefulWidget {
          visibleItemCount > 0 && visibleItemCount % 2 == 1,
          'visibleItemCount must be a positive odd number, but was $visibleItemCount',
        ),
-       initialDateTime = _initialDateTime(initialDateTime, minimumDateTime, maximumDateTime, minuteInterval),
+       initialDateTime = _clampedAndTimeIntervaledDate(
+         initialDateTime ?? DateTime.now(),
+         minimumDateTime,
+         maximumDateTime,
+         minuteInterval,
+       ),
        minimumDateTime = _minimumDateTime(minimumDateTime, minuteInterval),
        maximumDateTime = _maximumDateTime(maximumDateTime, minuteInterval) {
     assert(
@@ -97,13 +102,18 @@ class SBBDateTimePicker extends StatefulWidget {
         effectiveConfig.titleText ??
         (effectiveConfig.title == null ? localizations.dateInputLabel : null);
 
-    final modalDateTime = _initialDateTime(initialDateTime, minimumDateTime, maximumDateTime, minuteInterval);
+    final effectiveInitialDateTime = _clampedAndTimeIntervaledDate(
+      initialDateTime ?? DateTime.now(),
+      minimumDateTime,
+      maximumDateTime,
+      minuteInterval,
+    );
 
     final acceptInitialSelection = initialDateTime == null;
     final selectedButtonEnabled = ValueNotifier(acceptInitialSelection);
     final effectiveButtonLabelText = sheetButtonLabelText ?? localizations.datePickerHelpText;
 
-    var selectedDateTime = modalDateTime;
+    var selectedDateTime = effectiveInitialDateTime;
 
     showSBBBottomSheet(
       context: context,
@@ -136,7 +146,7 @@ class SBBDateTimePicker extends StatefulWidget {
                 onDateTimeChanged: (dateTime) {
                   selectedDateTime = dateTime;
                   if (!acceptInitialSelection) {
-                    selectedButtonEnabled.value = dateTime != modalDateTime;
+                    selectedButtonEnabled.value = dateTime != effectiveInitialDateTime;
                   }
                 },
               ),
@@ -165,27 +175,24 @@ class SBBDateTimePicker extends StatefulWidget {
   @override
   State<SBBDateTimePicker> createState() => _SBBDateTimePickerState();
 
-  static DateTime _initialDateTime(
-    DateTime? initialDateTime,
+  static DateTime _clampedAndTimeIntervaledDate(
+    DateTime value,
     DateTime? minimumDateTime,
     DateTime? maximumDateTime,
     int minuteInterval,
   ) {
     final minDateTime = _minimumDateTime(minimumDateTime, minuteInterval);
     final maxDateTime = _maximumDateTime(maximumDateTime, minuteInterval);
-    var dateTime = initialDateTime ?? DateTime.now();
-    dateTime = dateTime.roundToInterval(minuteInterval);
-    dateTime = dateTime.clamp(minDateTime, maxDateTime);
-    return dateTime;
+    DateTime result = value.roundToInterval(minuteInterval);
+    result = result.clamp(minDateTime, maxDateTime);
+    return result;
   }
 
-  static DateTime? _minimumDateTime(DateTime? minimumDateTime, int minuteInterval) {
-    return minimumDateTime?.ceilToInterval(minuteInterval);
-  }
+  static DateTime? _minimumDateTime(DateTime? minimumDateTime, int minuteInterval) =>
+      minimumDateTime?.ceilToInterval(minuteInterval);
 
-  static DateTime? _maximumDateTime(DateTime? maximumDateTime, int minuteInterval) {
-    return maximumDateTime?.floorToInterval(minuteInterval);
-  }
+  static DateTime? _maximumDateTime(DateTime? maximumDateTime, int minuteInterval) =>
+      maximumDateTime?.floorToInterval(minuteInterval);
 }
 
 class _SBBDateTimePickerState extends _TimeBasedPickerState<SBBDateTimePicker> {

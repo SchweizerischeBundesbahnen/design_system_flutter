@@ -143,17 +143,15 @@ class _SBBDateTimeInputState extends State<SBBDateTimeInput> {
       widget.dateFormat ?? DateFormat.yMMMMd(Localizations.maybeLocaleOf(context).toString()).add_Hm();
 
   String get _valueText {
-    var value = widget.value;
-    if (value == null) {
-      return '';
-    }
-    value = SBBDateTimePicker._initialDateTime(
-      widget.value,
+    if (widget.value == null) return '';
+
+    final rawDateTime = SBBDateTimePicker._clampedAndTimeIntervaledDate(
+      widget.value!,
       widget.minimumDateTime,
       widget.maximumDateTime,
       widget.minuteInterval,
     );
-    return _dateFormat.format(value);
+    return _dateFormat.format(rawDateTime);
   }
 
   @override
@@ -170,7 +168,7 @@ class _SBBDateTimeInputState extends State<SBBDateTimeInput> {
       autofocus: widget.triggerConfig.autofocus,
       onTap: widget.onDateTimeChanged != null
           ? () {
-              SBBDateTimePicker.showBottomSheet(
+              SBBDateTimePicker.showInsideBottomSheet(
                 context: context,
                 sheetConfig: widget.sheetConfig,
                 sheetTitleText: widget.sheetTitleText,

@@ -133,12 +133,15 @@ class SBBTimeInput extends StatefulWidget {
 
 class _SBBTimeInputState extends State<SBBTimeInput> {
   String get _valueText {
-    var value = widget.value;
-    if (value == null) {
-      return '';
-    }
-    value = SBBTimePicker._initialTime(widget.value, widget.minimumTime, widget.maximumTime, widget.minuteInterval);
-    return value.format(context);
+    if (widget.value == null) return '';
+
+    final rawTimeOfDay = SBBTimePicker._clampedAndIntervaledTime(
+      widget.value!,
+      widget.minimumTime,
+      widget.maximumTime,
+      widget.minuteInterval,
+    );
+    return rawTimeOfDay.format(context);
   }
 
   @override
@@ -155,7 +158,7 @@ class _SBBTimeInputState extends State<SBBTimeInput> {
       autofocus: widget.triggerConfig.autofocus,
       onTap: widget.onTimeChanged != null
           ? () {
-              SBBTimePicker.showBottomSheet(
+              SBBTimePicker.showInsideBottomSheet(
                 context: context,
                 sheetConfig: widget.sheetConfig,
                 sheetTitleText: widget.sheetTitleText,

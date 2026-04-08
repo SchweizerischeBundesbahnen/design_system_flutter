@@ -14,7 +14,7 @@ class SBBDatePicker extends StatefulWidget {
   /// [onDateChanged] is the callback called when the selected date changes.
   ///
   /// [initialDate] is the initially selected date of the picker. Defaults to
-  /// the present date. If the initial date is outside the range defined by
+  /// `DateTime.now()`. If the initial date is outside the range defined by
   /// [minimumDate] and [maximumDate], it will be automatically adjusted to the
   /// closest valid date within the range.
   ///
@@ -38,7 +38,7 @@ class SBBDatePicker extends StatefulWidget {
          visibleItemCount > 0 && visibleItemCount % 2 == 1,
          'visibleItemCount must be a positive odd number, but was $visibleItemCount',
        ),
-       initialDate = _initialDate(initialDate, minimumDate, maximumDate),
+       initialDate = _clampedDate(initialDate ?? DateTime.now(), minimumDate, maximumDate),
        minimumDate = _minimumDate(minimumDate),
        maximumDate = _maximumDate(maximumDate) {
     assert(
@@ -82,13 +82,13 @@ class SBBDatePicker extends StatefulWidget {
         effectiveConfig.titleText ??
         (effectiveConfig.title == null ? localizations.dateInputLabel : null);
 
-    final sheetDate = _initialDate(initialDate, minimumDate, maximumDate);
+    final effectiveInitialDate = _clampedDate(initialDate ?? DateTime.now(), minimumDate, maximumDate);
 
     final acceptInitialSelection = initialDate == null;
     final selectedButtonEnabled = ValueNotifier(acceptInitialSelection);
     final selectedButtonLabelText = sheetButtonLabelText ?? localizations.datePickerHelpText;
 
-    var selectedDate = sheetDate;
+    var selectedDate = effectiveInitialDate;
 
     showSBBBottomSheet(
       context: context,
@@ -113,14 +113,14 @@ class SBBDatePicker extends StatefulWidget {
             padding: const .symmetric(horizontal: SBBSpacing.medium),
             child: SBBContentBox(
               child: SBBDatePicker(
-                initialDate: sheetDate,
+                initialDate: effectiveInitialDate,
                 minimumDate: minimumDate,
                 maximumDate: maximumDate,
                 visibleItemCount: visibleItemCount,
                 onDateChanged: (date) {
                   selectedDate = date;
                   if (!acceptInitialSelection) {
-                    selectedButtonEnabled.value = date != sheetDate;
+                    selectedButtonEnabled.value = date != effectiveInitialDate;
                   }
                 },
               ),
@@ -147,23 +147,14 @@ class SBBDatePicker extends StatefulWidget {
   }
 
   @override
-  State<SBBDatePicker> createState() {
-    return _SBBDatePickerState();
-  }
+  State<SBBDatePicker> createState() => _SBBDatePickerState();
 
-  static DateTime _initialDate(DateTime? initialDate, DateTime? minimumDate, DateTime? maximumDate) {
-    var date = initialDate ?? DateTime.now();
-    date = date.clamp(minimumDate, maximumDate);
-    return date.date;
-  }
+  static DateTime _clampedDate(DateTime value, DateTime? minimumDate, DateTime? maximumDate) =>
+      value.clamp(minimumDate, maximumDate).date;
 
-  static DateTime? _minimumDate(DateTime? minimumDate) {
-    return minimumDate?.date;
-  }
+  static DateTime? _minimumDate(DateTime? minimumDate) => minimumDate?.date;
 
-  static DateTime? _maximumDate(DateTime? maximumDate) {
-    return maximumDate?.date;
-  }
+  static DateTime? _maximumDate(DateTime? maximumDate) => maximumDate?.date;
 }
 
 class _SBBDatePickerState extends _TimeBasedPickerState<SBBDatePicker> {

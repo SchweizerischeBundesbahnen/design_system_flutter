@@ -48,7 +48,12 @@ class SBBTimePicker extends StatefulWidget {
          visibleItemCount > 0 && visibleItemCount % 2 == 1,
          'visibleItemCount must be a positive odd number, but was $visibleItemCount',
        ),
-       initialTime = _initialTime(initialTime, minimumTime, maximumTime, minuteInterval),
+       initialTime = _clampedAndIntervaledTime(
+         initialTime ?? TimeOfDay.now(),
+         minimumTime,
+         maximumTime,
+         minuteInterval,
+       ),
        minimumTime = _minimumTime(minimumTime, minuteInterval),
        maximumTime = _maximumTime(maximumTime, minuteInterval);
 
@@ -89,13 +94,18 @@ class SBBTimePicker extends StatefulWidget {
         effectiveConfig.titleText ??
         (effectiveConfig.title == null ? localizations.timePickerInputHelpText : null);
 
-    final modalTime = _initialTime(initialTime, minimumTime, maximumTime, minuteInterval);
+    final effectiveInitialTime = _clampedAndIntervaledTime(
+      initialTime ?? TimeOfDay.now(),
+      minimumTime,
+      maximumTime,
+      minuteInterval,
+    );
 
     final acceptInitialSelection = initialTime == null;
     final selectedButtonEnabled = ValueNotifier(acceptInitialSelection);
     final selectedButtonLabelText = sheetButtonLabelText ?? localizations.timePickerDialHelpText;
 
-    var selectedTime = modalTime;
+    var selectedTime = effectiveInitialTime;
 
     showSBBBottomSheet(
       context: context,
@@ -128,7 +138,7 @@ class SBBTimePicker extends StatefulWidget {
                 onTimeChanged: (time) {
                   selectedTime = time;
                   if (!acceptInitialSelection) {
-                    selectedButtonEnabled.value = time != modalTime;
+                    selectedButtonEnabled.value = time != effectiveInitialTime;
                   }
                 },
               ),
@@ -159,18 +169,17 @@ class SBBTimePicker extends StatefulWidget {
     return _SBBTimePickerTimeState();
   }
 
-  static TimeOfDay _initialTime(
-    TimeOfDay? initialTime,
+  static TimeOfDay _clampedAndIntervaledTime(
+    TimeOfDay value,
     TimeOfDay? minimumTime,
     TimeOfDay? maximumTime,
     int minuteInterval,
   ) {
     final minTime = _minimumTime(minimumTime, minuteInterval);
     final maxTime = _maximumTime(maximumTime, minuteInterval);
-    var time = initialTime ?? TimeOfDay.now();
-    time = time.roundToInterval(minuteInterval);
-    time = time.clamp(minTime, maxTime);
-    return time;
+    TimeOfDay result = value.roundToInterval(minuteInterval);
+    result = result.clamp(minTime, maxTime);
+    return result;
   }
 
   static TimeOfDay? _minimumTime(TimeOfDay? minimumTime, int minuteInterval) {
