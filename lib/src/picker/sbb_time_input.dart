@@ -1,23 +1,18 @@
 part of 'sbb_picker.dart';
 
-/// A trigger field that combines [SBBDecoratedText] with [SBBTimePicker].
+/// This is basically a convenience combination of a [SBBDecoratedText] and [SBBTimePicker.showInsideBottomSheet].
 ///
-/// Displays the selected time as a read-only [SBBDecoratedText] field. When
-/// tapped, it opens an [SBBTimePicker] in a modal bottom sheet via
-/// [SBBTimePicker.showBottomSheet], allowing the user to pick a time.
+/// Displays the selected time as a read-only [SBBDecoratedText] field. When tapped, it opens an [SBBTimePicker]
+/// in a [SBBBottomSheet] via [SBBTimePicker.showInsideBottomSheet], allowing the user to pick a time.
 ///
-/// Use [triggerDecoration] to customise the trigger's label, icons, error text,
-/// and other decoration properties. By default a [SBBIcons.chevron_small_down_small]
-/// trailing icon is added automatically unless a custom trailing widget or trailingIconData is provided.
+/// Use [triggerDecoration] to customise the trigger's label, icons, error text, and other decoration properties.
 ///
-/// Use [triggerConfig] to configure the trigger field's layout and focus
-/// behaviour (max/min lines, expands, focus node, autofocus). When omitted,
-/// the defaults from [SBBDecoratedTextConfig] are used.
+/// Use [triggerConfig] to configure the trigger field's layout and focus behaviour (max/min lines, expands,
+/// focus node, autofocus). When omitted, the defaults from [SBBDecoratedTextConfig] are used.
 ///
-/// Use [sheetConfig] to customise the bottom sheet's appearance and behaviour.
-/// Use [sheetTitleText] as a flat convenience parameter to set only the sheet
-/// title. Cannot be used together with [sheetConfig]. When neither is set, the
-/// sheet title defaults to the localised time picker label from
+/// Use [sheetConfig] to customise the bottom sheet's appearance and behavior. Use [sheetTitleText] as a flat
+/// convenience parameter to set only the sheet title. Cannot be used together with [sheetConfig].
+/// When neither is set, the sheet title defaults to the localised time picker label from
 /// [MaterialLocalizations.timePickerInputHelpText].
 ///
 /// ## Example
@@ -36,12 +31,12 @@ part of 'sbb_picker.dart';
 /// * [SBBDecoratedText], the trigger widget used to display the selected value.
 /// * [SBBDecoratedTextConfig], the configuration object for the trigger field.
 /// * [SBBTimePicker], the picker opened when the trigger is tapped.
-/// * [SBBTimePicker.showBottomSheet], which is used to display the bottom sheet.
+/// * [SBBTimePicker.showInsideBottomSheet], which is used to display the bottom sheet.
 /// * [SBBBottomSheetConfig], the configuration object for the bottom sheet.
 /// * [SBBDateTimeInput], variant for date and time values.
 /// * [SBBDateInput], variant for date values.
 /// * <https://digital.sbb.ch/en/design-system/mobile/components/picker/>
-class SBBTimeInput extends StatefulWidget {
+class SBBTimeInput extends StatelessWidget {
   const SBBTimeInput({
     super.key,
     required this.onTimeChanged,
@@ -101,7 +96,10 @@ class SBBTimeInput extends StatefulWidget {
   /// Defaults to [SBBDecoratedTextConfig] with its default values.
   final SBBDecoratedTextConfig triggerConfig;
 
-  /// The number of visible items in the picker. Must be a positive odd number.
+  /// The number of visible items in the picker.
+  ///
+  /// Must be a positive odd number.
+  ///
   /// Defaults to 7.
   final int visibleItemCount;
 
@@ -128,50 +126,44 @@ class SBBTimeInput extends StatefulWidget {
   final String? sheetButtonLabelText;
 
   @override
-  State<SBBTimeInput> createState() => _SBBTimeInputState();
-}
-
-class _SBBTimeInputState extends State<SBBTimeInput> {
-  String get _valueText {
-    if (widget.value == null) return '';
-
-    final rawTimeOfDay = SBBTimePicker._clampedAndIntervaledTime(
-      widget.value!,
-      widget.minimumTime,
-      widget.maximumTime,
-      widget.minuteInterval,
-    );
-    return rawTimeOfDay.format(context);
-  }
-
-  @override
   Widget build(BuildContext context) {
     return SBBDecoratedText(
-      key: widget.key,
-      value: _valueText,
-      decoration: widget.triggerDecoration,
-      style: widget.triggerStyle,
-      maxLines: widget.triggerConfig.maxLines,
-      minLines: widget.triggerConfig.minLines,
-      expands: widget.triggerConfig.expands,
-      focusNode: widget.triggerConfig.focusNode,
-      autofocus: widget.triggerConfig.autofocus,
-      onTap: widget.onTimeChanged != null
+      value: _formattedValue(context),
+      decoration: triggerDecoration,
+      style: triggerStyle,
+      maxLines: triggerConfig.maxLines,
+      minLines: triggerConfig.minLines,
+      expands: triggerConfig.expands,
+      focusNode: triggerConfig.focusNode,
+      autofocus: triggerConfig.autofocus,
+      onTap: onTimeChanged != null
           ? () {
               SBBTimePicker.showInsideBottomSheet(
                 context: context,
-                sheetConfig: widget.sheetConfig,
-                sheetTitleText: widget.sheetTitleText,
-                sheetButtonLabelText: widget.sheetButtonLabelText,
-                initialTime: widget.value,
-                minimumTime: widget.minimumTime,
-                maximumTime: widget.maximumTime,
-                minuteInterval: widget.minuteInterval,
-                visibleItemCount: widget.visibleItemCount,
-                onTimeChanged: widget.onTimeChanged,
+                sheetConfig: sheetConfig,
+                sheetTitleText: sheetTitleText,
+                sheetButtonLabelText: sheetButtonLabelText,
+                initialTime: value,
+                minimumTime: minimumTime,
+                maximumTime: maximumTime,
+                minuteInterval: minuteInterval,
+                visibleItemCount: visibleItemCount,
+                onTimeChanged: onTimeChanged,
               );
             }
           : null,
     );
+  }
+
+  String _formattedValue(BuildContext context) {
+    if (value == null) return '';
+
+    final rawTimeOfDay = SBBTimePicker._clampedAndIntervaledTime(
+      value!,
+      minimumTime,
+      maximumTime,
+      minuteInterval,
+    );
+    return rawTimeOfDay.format(context);
   }
 }
