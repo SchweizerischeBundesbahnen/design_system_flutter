@@ -189,46 +189,62 @@ class SBBBottomSheet extends StatelessWidget {
     this.style,
   });
 
+  /// {@template sbb_design_system.sbb_bottom_sheet.title}
   /// A custom widget displayed as the sheet's title.
   ///
   /// For simple text titles, use [titleText] instead.
   ///
   /// Cannot be used together with [titleText].
+  /// {@endtemplate}
   final Widget? title;
 
+  /// {@template sbb_design_system.sbb_bottom_sheet.title_text}
   /// Text string to display as the sheet's title.
   ///
   /// Cannot be used together with [title].
+  /// {@endtemplate}
   final String? titleText;
 
+  /// {@template sbb_design_system.sbb_bottom_sheet.leading}
   /// A custom widget displayed at the leading edge of the header.
   ///
   /// For icon-only leading content, use [leadingIconData] instead.
   ///
   /// Cannot be used together with [leadingIconData].
+  /// {@endtemplate}
   final Widget? leading;
 
+  /// {@template sbb_design_system.sbb_bottom_sheet.leadingIconData}
   /// Icon data for an icon displayed at the leading edge of the header.
   ///
   /// Cannot be used together with [leading].
+  /// {@endtemplate}
   final IconData? leadingIconData;
 
+  /// {@template sbb_design_system.sbb_bottom_sheet.trailing}
   /// A custom widget displayed at the trailing edge of the header.
   ///
   /// For icon-only trailing content, use [trailingIconData] instead.
   ///
   /// Cannot be used together with [trailingIconData].
+  /// {@endtemplate}
   final Widget? trailing;
 
+  /// {@template sbb_design_system.sbb_bottom_sheet.trailingIconData}
   /// Icon data for an icon displayed at the trailing edge of the header.
   ///
   /// Cannot be used together with [trailing].
+  /// {@endtemplate}
   final IconData? trailingIconData;
 
   /// The main content widget of the bottom sheet.
   final Widget body;
 
+  /// {@template sbb_design_system.sbb_bottom_sheet.showCloseButton}
   /// Whether to show a close button in the header.
+  ///
+  /// Defaults to true.
+  /// {@endtemplate}
   final bool showCloseButton;
 
   /// Whether to use the root navigator when popping the sheet.

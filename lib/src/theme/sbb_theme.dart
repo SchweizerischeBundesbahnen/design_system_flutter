@@ -4,7 +4,6 @@ import 'package:sbb_design_system_mobile/src/bottom_sheet/theme/default_sbb_bott
 import 'package:sbb_design_system_mobile/src/button/theme/sbb_button_style_x.dart';
 import 'package:sbb_design_system_mobile/src/checkbox/theme/default_sbb_checkbox_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/chip/theme/default_sbb_chip_theme_data.dart';
-import 'package:sbb_design_system_mobile/src/container/container.dart';
 import 'package:sbb_design_system_mobile/src/decorated_text/theme/default_sbb_decorated_text_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/header/theme/default_sbb_header_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_input_decoration_theme_data.dart';
@@ -43,6 +42,7 @@ class SBBTheme {
     SBBContentBoxThemeData? contentBoxTheme,
     SBBControlStyles? controlStyles,
     SBBDecoratedTextThemeData? decoratedTextTheme,
+    SBBDropdownThemeData? dropdownTheme,
     SBBHeaderThemeData? headerTheme,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBInputDecorationThemeData? inputDecorationTheme,
@@ -75,6 +75,7 @@ class SBBTheme {
     contentBoxTheme: contentBoxTheme,
     controlStyles: controlStyles,
     decoratedTextTheme: decoratedTextTheme,
+    dropdownTheme: dropdownTheme,
     headerTheme: headerTheme,
     headerBoxStyle: headerBoxStyle,
     inputDecorationTheme: inputDecorationTheme,
@@ -108,6 +109,7 @@ class SBBTheme {
     SBBContentBoxThemeData? contentBoxTheme,
     SBBControlStyles? controlStyles,
     SBBDecoratedTextThemeData? decoratedTextTheme,
+    SBBDropdownThemeData? dropdownTheme,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBInputDecorationThemeData? inputDecorationTheme,
     SBBListHeaderThemeData? listHeaderTheme,
@@ -139,6 +141,7 @@ class SBBTheme {
     contentBoxTheme: contentBoxTheme,
     controlStyles: controlStyles,
     decoratedTextTheme: decoratedTextTheme,
+    dropdownTheme: dropdownTheme,
     headerBoxStyle: headerBoxStyle,
     inputDecorationTheme: inputDecorationTheme,
     listHeaderTheme: listHeaderTheme,
@@ -173,6 +176,7 @@ class SBBTheme {
     SBBControlStyles? controlStyles,
     SBBContentBoxThemeData? contentBoxTheme,
     SBBDecoratedTextThemeData? decoratedTextTheme,
+    SBBDropdownThemeData? dropdownTheme,
     SBBHeaderThemeData? headerTheme,
     SBBHeaderBoxStyle? headerBoxStyle,
     SBBInputDecorationThemeData? inputDecorationTheme,
@@ -279,6 +283,13 @@ class SBBTheme {
     final defaultTabBarTheme = DefaultSBBTabBarThemeData(mergedBaseStyle);
     final mergedTabBarTheme = defaultTabBarTheme.merge(tabBarTheme);
 
+    final defaultDropdownTheme = SBBDropdownThemeData(
+      triggerDecorationTheme: defaultInputDecorationTheme,
+      triggerStyle: defaultDecoratedTextTheme.style,
+      sheetStyle: defaultBottomSheetTheme.style,
+    );
+    final mergedDropdownTheme = defaultDropdownTheme.merge(dropdownTheme);
+
     return raw(
       brightness: brightness,
       baseStyle: mergedBaseStyle,
@@ -292,6 +303,7 @@ class SBBTheme {
       controlStyles: mergedControlStyles,
       contentBoxTheme: mergedContentBoxTheme,
       decoratedTextTheme: mergedDecoratedTextTheme,
+      dropdownTheme: mergedDropdownTheme,
       headerTheme: mergedHeaderTheme,
       headerBoxStyle: mergedHeaderBoxStyle,
       inputDecorationTheme: mergedInputDecorationTheme,
@@ -326,6 +338,7 @@ class SBBTheme {
     required SBBContentBoxThemeData contentBoxTheme,
     required SBBControlStyles controlStyles,
     required SBBDecoratedTextThemeData decoratedTextTheme,
+    required SBBDropdownThemeData dropdownTheme,
     required SBBHeaderThemeData headerTheme,
     required SBBHeaderBoxStyle headerBoxStyle,
     required SBBInputDecorationThemeData inputDecorationTheme,
@@ -377,6 +390,7 @@ class SBBTheme {
         chipTheme,
         controlStyles,
         decoratedTextTheme,
+        dropdownTheme,
         headerTheme,
         headerBoxStyle,
         inputDecorationTheme,
