@@ -62,6 +62,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Removed `CascadeColumnParentData` as it is not directly used by clients
 - Removed `SBBTextField` - replaced by `SBBTextInput`
 - Removed `merge` extension on `SBBBaseStyle`
+- Removed unused argument `snapMode` from `SBBSliverFloatingHeaderbox`
 
 ## [4.10.0] - 2026-03-30
 

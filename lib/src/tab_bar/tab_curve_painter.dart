@@ -26,7 +26,7 @@ class TabCurvePainter extends CustomPainter {
   }
 
   @override
-  bool? hitTest(Offset position) {
+  bool? hitTest(_) {
     // Prevent the paint from stopping pointer events from reaching the icons underneath.
     // Hit tests still reach the children of the paint.
     return false;

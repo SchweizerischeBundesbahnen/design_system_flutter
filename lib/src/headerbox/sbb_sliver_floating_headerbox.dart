@@ -206,7 +206,6 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
     this.resizing = true,
     this.floating = true,
     this.snapStyle,
-    this.snapMode = .scroll,
     Widget? preceding,
     required List<Widget> children,
   }) : child = preceding != null
@@ -238,9 +237,6 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
   /// Defaults to [defaultSnapStyle].
   final AnimationStyle? snapStyle;
 
-  /// Controls the way the headerbox snaps, i.e. if it scrolls the content or expands / contracts independently.
-  /// Defaults to [FloatingHeaderSnapMode.scroll].
-  final FloatingHeaderSnapMode snapMode;
   final bool resizing;
   final bool floating;
 
