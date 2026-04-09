@@ -10,19 +10,19 @@ void main() {
     testWidgets(name, (WidgetTester tester) async {
       await TestSpecs.run(
         TestSpecs.themedSpecs,
-        const DatePickerTest(),
+        const DateInputTest(),
         tester,
         name,
-        find.byType(DatePickerTest),
+        find.byType(DateInputTest),
       );
     });
   }
 
-  generateTest('date_input_test_1');
+  generateTest('date_input_test');
 }
 
-class DatePickerTest extends StatelessWidget {
-  const DatePickerTest({super.key});
+class DateInputTest extends StatelessWidget {
+  const DateInputTest({super.key});
 
   @override
   Widget build(BuildContext context) {

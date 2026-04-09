@@ -9,19 +9,19 @@ void main() {
     testWidgets(name, (WidgetTester tester) async {
       await TestSpecs.run(
         TestSpecs.themedSpecs,
-        const TimePickerTest(),
+        const TimeInputTest(),
         tester,
         name,
-        find.byType(TimePickerTest),
+        find.byType(TimeInputTest),
       );
     });
   }
 
-  generateTest('time_input_test_1');
+  generateTest('time_input_test');
 }
 
-class TimePickerTest extends StatelessWidget {
-  const TimePickerTest({super.key});
+class TimeInputTest extends StatelessWidget {
+  const TimeInputTest({super.key});
 
   @override
   Widget build(BuildContext context) {
