@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -18,7 +17,6 @@ part 'sbb_picker_utils.dart';
 part 'sbb_time_input.dart';
 part 'sbb_time_picker.dart';
 
-// TODO: improve gradient and effect of scrolling
 // TODO: add themeData & style for more customization
 // TODO: disabled color
 // TODO: revise tests
@@ -252,7 +250,7 @@ class _SBBPickerState extends _PickerClassState<SBBPicker> {
     final topOpacities = <double>[0.0];
     for (var i = 0; i < sideItemCount; i++) {
       final x = (i + 1) / (sideItemCount + 1);
-      final opacity = (exp(2 * x) - 1) / (exp(2) - 1) + .1;
+      final opacity = (exp(2 * x) - 1) / (exp(2) - 1);
       topOpacities.add(opacity);
     }
     topOpacities.add(1.0); // highlightStart
