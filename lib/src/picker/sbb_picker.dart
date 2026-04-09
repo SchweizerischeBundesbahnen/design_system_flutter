@@ -20,7 +20,6 @@ part 'sbb_time_picker.dart';
 
 // TODO: add themeData & style for more customization
 // TODO: disabled color
-// TODO: revise tests
 // TODO: documentation and migration guide
 
 /// SBB Picker. Use according to documentation.
