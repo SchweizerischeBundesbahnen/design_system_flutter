@@ -63,7 +63,8 @@ class SBBPicker extends StatefulWidget {
          key: key,
          visibleItemCount: visibleItemCount,
          child: SBBPickerScrollView(
-           controller: controller ?? SBBPickerScrollController(initialItem: initialSelectedIndex),
+           controller: controller,
+           initialItem: initialSelectedIndex,
            onSelectedItemChanged: onSelectedItemChanged,
            itemBuilder: itemBuilder,
            looping: looping,

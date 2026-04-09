@@ -35,6 +35,7 @@ class SBBPickerScrollView extends StatefulWidget {
     required this.onSelectedItemChanged,
     required this.itemBuilder,
     this.controller,
+    this.initialItem = 0,
     this.looping = true,
     this.visibleItemCount = _defaultVisibleItemCount,
   }) : assert(
@@ -45,6 +46,15 @@ class SBBPickerScrollView extends StatefulWidget {
   final ValueChanged<int>? onSelectedItemChanged;
   final SBBPickerScrollViewItemBuilder itemBuilder;
   final SBBPickerScrollController? controller;
+
+  /// The index of the item to select initially when no [controller] is provided.
+  ///
+  /// Ignored when a [controller] is passed, since the controller already carries
+  /// its own [SBBPickerScrollController.initialItem].
+  ///
+  /// Defaults to 0.
+  final int initialItem;
+
   final bool looping;
 
   /// The number of visible items in the picker.
@@ -102,7 +112,7 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
 
   void _initController() {
     if (widget.controller == null) {
-      _fallbackController = SBBPickerScrollController();
+      _fallbackController = SBBPickerScrollController(initialItem: widget.initialItem);
     }
     _controller.addListener(_onScrolling);
     _applyIndexOffset();
