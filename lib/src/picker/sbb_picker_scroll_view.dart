@@ -9,7 +9,7 @@ part of 'sbb_picker.dart';
 /// is out of range.
 typedef SBBPickerScrollViewItemBuilder = SBBPickerItem? Function(BuildContext context, int index);
 
-/// A box in which children on a wheel can be scrolled. Should only be used in
+/// A box in which children on a wheel can be scrolled. This is typically only used in a
 /// combination with [SBBPicker.custom].
 ///
 /// When the list is at the zero scroll offset, the first child is aligned with
@@ -44,9 +44,9 @@ class SBBPickerScrollView extends StatefulWidget {
     this.visibleItemCount = _defaultVisibleItemCount,
     this.pickerStyle,
   }) : assert(
-  visibleItemCount > 0 && visibleItemCount % 2 == 1,
-  'visibleItemCount must be a positive odd number, but was $visibleItemCount',
-  );
+         visibleItemCount > 0 && visibleItemCount % 2 == 1,
+         'visibleItemCount must be a positive odd number, but was $visibleItemCount',
+       );
 
   final ValueChanged<int>? onSelectedItemChanged;
   final SBBPickerScrollViewItemBuilder itemBuilder;
@@ -60,6 +60,9 @@ class SBBPickerScrollView extends StatefulWidget {
   /// Defaults to 0.
   final int initialItem;
 
+  /// Decides whether the list loops and can be scrolled infinitely.
+  ///
+  /// Defaults to true.
   final bool looping;
 
   /// The number of visible items in the picker.
@@ -250,8 +253,8 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
     final itemIndex = index + _initialIndexOffset - _visibleCenterItemIndex;
     final item = widget.itemBuilder(context, itemIndex);
     assert(
-    !widget.looping || item != null,
-    'Item builder returned null for index $itemIndex but looping was set to true',
+      !widget.looping || item != null,
+      'Item builder returned null for index $itemIndex but looping was set to true',
     );
 
     if (!widget.looping && item == null) {

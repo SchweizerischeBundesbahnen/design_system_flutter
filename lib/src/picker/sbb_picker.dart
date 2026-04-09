@@ -20,18 +20,47 @@ part 'sbb_time_picker.dart';
 
 // TODO: documentation and migration guide
 
-/// SBB Picker. Use according to documentation.
+/// The SBB Picker.
+///
+/// A picker widget that displays a scrollable list of items in a wheel-like
+/// interface where users can select one item. The selected item is highlighted
+/// in the center of the picker with a visual fade effect applied to items
+/// further away.
+///
+/// The picker does not hold selection state itself. When an item is selected,
+/// it calls [onSelectedItemChanged] with the new index and relies on its parent
+/// to rebuild it with an updated selected value.
+///
+/// The picker supports looping mode where scrolling past the end of the list
+/// wraps back to the beginning, or non-looping mode where scrolling stops at
+/// the edges.
+///
+/// ## Setup with Scroll View
+///
+/// A typical [SBBPicker] is composed of two main parts:
+/// * The outer [SBBPicker] widget which renders the highlight area and
+///   applies the fade gradient effect
+/// * An inner [SBBPickerScrollView] which manages the scrollable list of items
+///
+/// When using the default constructor or [SBBPicker.list], the scroll view is
+/// created automatically. For advanced customization like multiple columns,
+/// use [SBBPicker.custom] and provide your own [SBBPickerScrollView] as the
+/// child widget.
+///
+/// Requires one of its ancestors to be a [Material] widget.
 ///
 /// See also:
 ///
 /// * [SBBDatePicker], variant for date values.
 /// * [SBBDateTimePicker], variant for date time values.
 /// * [SBBTimePicker], variant for time values.
+/// * [SBBPickerScrollView], the scrollable list widget used internally.
+/// * [SBBPickerScrollController], for programmatic control of the picker.
 /// * <https://digital.sbb.ch/en/design-system/mobile/components/picker/>
 class SBBPicker extends StatefulWidget {
   /// Constructs an [SBBPicker] where the picker items can be customized.
   ///
-  /// [controller] cas be used for programmatically reading or changing the
+  /// [controller] can be used for programmatically reading or changing the
   /// current picker index.
   ///
   /// [initialSelectedIndex] defaults to 0.
@@ -46,13 +75,10 @@ class SBBPicker extends StatefulWidget {
   /// to the beginning. If set to false, the list will stop scrolling when you
   /// reach the end or the beginning. Defaults to true.
   ///
-  /// [pickerStyle] can be used to customize the visual appearance of the picker.
-  /// Non-null properties override the corresponding properties in
-  /// [SBBPickerThemeData.pickerStyle] from the current theme.
-  ///
   /// See also:
   ///
-  /// * [SBBPicker.list], constructor for basic SBB Picker.
+  /// * [SBBPicker.list], constructor for basic SBB Picker with a list of items.
+  /// * [SBBPicker.custom], constructor for fully customizable picker.
   SBBPicker({
     Key? key,
     SBBPickerScrollController? controller,
@@ -77,9 +103,9 @@ class SBBPicker extends StatefulWidget {
          ),
        );
 
-  /// Constructs a basic [SBBPicker].
+  /// Constructs a basic [SBBPicker] with a list of items.
   ///
-  /// [controller] cas be used for programmatically reading or changing the
+  /// [controller] can be used for programmatically reading or changing the
   /// current picker index.
   ///
   /// [initialSelectedIndex] defaults to 0.
@@ -95,9 +121,10 @@ class SBBPicker extends StatefulWidget {
   /// to the beginning. If set to false, the list will stop scrolling when you
   /// reach the end or the beginning. Defaults to true.
   ///
-  /// [pickerStyle] can be used to customize the visual appearance of the picker.
-  /// Non-null properties override the corresponding properties in
-  /// [SBBPickerThemeData.pickerStyle] from the current theme.
+  /// See also:
+  ///
+  /// * [SBBPicker.new], default constructor for custom item building.
+  /// * [SBBPicker.custom], constructor for fully customizable picker.
   SBBPicker.list({
     Key? key,
     SBBPickerScrollController? controller,
@@ -125,26 +152,13 @@ class SBBPicker extends StatefulWidget {
          pickerStyle: pickerStyle,
        );
 
-  /// Constructs a fully customizable [SBBPicker]. This only builds the skeleton
-  /// of the Picker where the [SBBPickerScrollView] is not included.
-  /// This constructor should only be used when there is an absolute need for so
-  /// much customization that the default constructor cannot provide like
-  /// multiple columns of values.
-  /// Otherwise it is highly recommended to check out the default constructor
-  /// first where the picker items are customizable.
+  /// Constructs a fully customizable [SBBPicker].
   ///
-  /// [child] is the widget containing the actual contents. Make sure to include
-  /// [SBBPickerScrollView] in the widget tree.
-  ///
-  /// [pickerStyle] can be used to customize the visual appearance of the picker.
-  /// Non-null properties override the corresponding properties in
-  /// [SBBPickerThemeData.pickerStyle] from the current theme.
-  ///
-  /// See also:
-  ///
-  /// * [SBBPicker.new], default constructor for SBB Picker with limited
-  ///   customization.
-  /// * [SBBPicker.list], constructor for basic SBB Picker.
+  /// This constructor only builds the skeleton of the picker and should only
+  /// be used when there is an absolute need for customization that the other
+  /// constructors cannot provide, such as multiple columns of values.
+  /// Otherwise, it is highly recommended to use the default constructor or
+  /// [SBBPicker.list].
   const SBBPicker.custom({
     super.key,
     required this.child,
@@ -155,11 +169,16 @@ class SBBPicker extends StatefulWidget {
          'visibleItemCount must be a positive odd number, but was $visibleItemCount',
        );
 
+  /// The widget containing the actual picker contents.
+  ///
+  /// Make sure to include an [SBBPickerScrollView] in the widget tree of this
+  /// child to provide the scrollable list of items.
   final Widget child;
 
   /// The number of visible items in the picker.
   ///
-  /// Must be a positive odd number.
+  /// Must be a positive odd number to ensure the center item is properly
+  /// highlighted and items are symmetrically distributed on both sides.
   ///
   /// Defaults to 7.
   final int visibleItemCount;
