@@ -245,7 +245,7 @@ class SBBMultiDropdown<T> extends StatelessWidget {
     showSBBBottomSheet(
       context: context,
       title: effectiveConfig.title,
-      titleText: sheetTitleText ?? effectiveConfig.titleText,
+      titleText: effectiveConfig.titleText ?? (sheetTitleText?.isEmpty ?? false ? null : sheetTitleText),
       leading: effectiveConfig.leading,
       leadingIconData: effectiveConfig.leadingIconData,
       trailing: effectiveConfig.trailing,
