@@ -106,7 +106,7 @@ extension DateTimeExtensions on DateTime {
   /// [DateTime.millisecond] and [DateTime.microsecond], provided by
   /// similarly named arguments, or 0 if no argument is provided, or using the
   /// existing value of the property if `null` is provided.
-  DateTime clearTime({hour = 0, minute = 0, second = 0, millisecond = 0, microsecond = 0}) {
+  DateTime clearTime({int? hour = 0, int? minute = 0, int? second = 0, int? millisecond = 0, int? microsecond = 0}) {
     return copyWith(hour: hour, minute: minute, second: second, millisecond: millisecond, microsecond: microsecond);
   }
 
