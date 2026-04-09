@@ -1,4 +1,11 @@
-part of 'sbb_picker.dart';
+import 'dart:math';
+
+import 'package:flutter/material.dart';
+
+import '../../sbb_design_system_mobile.dart';
+import 'sbb_picker_constants.dart';
+import 'sbb_picker_time_based_mixin.dart';
+import 'sbb_picker_utils.dart';
 
 /// SBB Time Picker. Use according to documentation.
 ///
@@ -16,8 +23,8 @@ class SBBTimePicker extends StatefulWidget {
     TimeOfDay? initialTime,
     TimeOfDay? minimumTime,
     TimeOfDay? maximumTime,
-    this.minuteInterval = _defaultMinuteInterval,
-    this.visibleItemCount = _defaultVisibleItemCount,
+    this.minuteInterval = pickerDefaultMinuteInterval,
+    this.visibleItemCount = pickerDefaultVisibleItemCount,
     this.pickerStyle,
   }) : assert(
          minuteInterval > 0 && TimeOfDay.minutesPerHour % minuteInterval == 0,
@@ -27,14 +34,14 @@ class SBBTimePicker extends StatefulWidget {
          visibleItemCount > 0 && visibleItemCount % 2 == 1,
          'visibleItemCount must be a positive odd number, but was $visibleItemCount',
        ),
-       initialTime = _clampedAndIntervaledTime(
+       initialTime = PickerUtils.clampedAndIntervaledTime(
          initialTime ?? TimeOfDay.now(),
          minimumTime,
          maximumTime,
          minuteInterval,
        ),
-       minimumTime = _minimumTime(minimumTime, minuteInterval),
-       maximumTime = _maximumTime(maximumTime, minuteInterval);
+       minimumTime = PickerUtils.minimumTime(minimumTime, minuteInterval),
+       maximumTime = PickerUtils.maximumTime(maximumTime, minuteInterval);
 
   /// Called when the selected time changes.
   final ValueChanged<TimeOfDay>? onTimeChanged;
@@ -102,9 +109,9 @@ class SBBTimePicker extends StatefulWidget {
     TimeOfDay? initialTime,
     TimeOfDay? minimumTime,
     TimeOfDay? maximumTime,
-    int minuteInterval = _defaultMinuteInterval,
+    int minuteInterval = pickerDefaultMinuteInterval,
     ValueChanged<TimeOfDay>? onTimeChanged,
-    int visibleItemCount = _defaultVisibleItemCount,
+    int visibleItemCount = pickerDefaultVisibleItemCount,
     SBBPickerStyle? pickerStyle,
   }) {
     final localizations = MaterialLocalizations.of(context);
@@ -115,7 +122,7 @@ class SBBTimePicker extends StatefulWidget {
         effectiveConfig.titleText ??
         (effectiveConfig.title == null ? localizations.timePickerInputHelpText : null);
 
-    final effectiveInitialTime = _clampedAndIntervaledTime(
+    final effectiveInitialTime = PickerUtils.clampedAndIntervaledTime(
       initialTime ?? TimeOfDay.now(),
       minimumTime,
       maximumTime,
@@ -188,37 +195,11 @@ class SBBTimePicker extends StatefulWidget {
   }
 
   @override
-  State<SBBTimePicker> createState() {
-    return _SBBTimePickerTimeState();
-  }
-
-  static TimeOfDay _clampedAndIntervaledTime(
-    TimeOfDay value,
-    TimeOfDay? minimumTime,
-    TimeOfDay? maximumTime,
-    int minuteInterval,
-  ) {
-    final minTime = _minimumTime(minimumTime, minuteInterval);
-    final maxTime = _maximumTime(maximumTime, minuteInterval);
-    TimeOfDay result = value.roundToInterval(minuteInterval);
-    result = result.clamp(minTime, maxTime);
-    return result;
-  }
-
-  static TimeOfDay? _minimumTime(TimeOfDay? minimumTime, int minuteInterval) {
-    return minimumTime?.ceilToInterval(minuteInterval);
-  }
-
-  static TimeOfDay? _maximumTime(TimeOfDay? maximumTime, int minuteInterval) {
-    return maximumTime?.floorToInterval(minuteInterval);
-  }
+  State<SBBTimePicker> createState() => _SBBTimePickerState();
 }
 
-class _SBBTimePickerTimeState extends _TimeBasedPickerState<SBBTimePicker> {
+class _SBBTimePickerState extends State<SBBTimePicker> with TimeBasedPickerMixin<SBBTimePicker> {
   static const _horizontalPaddingCount = 4;
-
-  @override
-  int get _visibleItemCount => widget.visibleItemCount;
 
   late TimeOfDay _selectedTime;
   late ValueNotifier<TimeOfDay> _selectedTimeValueNotifier;
@@ -230,15 +211,16 @@ class _SBBTimePickerTimeState extends _TimeBasedPickerState<SBBTimePicker> {
 
   late double _timeItemTextWidth;
 
-  TimeOfDay get _safeMinTime => widget.minimumTime ?? _startOfDay;
+  TimeOfDay get _safeMinTime => widget.minimumTime ?? pickerStartOfDay;
 
-  TimeOfDay get _safeMaxTime => widget.maximumTime ?? _endOfDay;
+  TimeOfDay get _safeMaxTime => widget.maximumTime ?? pickerEndOfDay;
 
-  double get _timeItemWidth => _itemPadding + _timeItemTextWidth + _itemPadding + _widgetHorizontalPadding;
+  double get _timeItemWidth => itemPadding + _timeItemTextWidth + itemPadding + pickerWidgetHorizontalPadding;
 
   @override
   void initState() {
     super.initState();
+    itemPadding = pickerItemDefaultPadding;
     _selectedTime = widget.initialTime;
     _selectedTimeValueNotifier = ValueNotifier(_selectedTime);
     final onTimeChanged = widget.onTimeChanged;
@@ -297,12 +279,6 @@ class _SBBTimePickerTimeState extends _TimeBasedPickerState<SBBTimePicker> {
     super.dispose();
   }
 
-  @override
-  SBBPickerStyle? _getEffectivePickerStyle(BuildContext context) {
-    final themePickerStyle = Theme.of(context).sbbPickerTheme?.pickerStyle;
-    return themePickerStyle?.merge(widget.pickerStyle) ?? widget.pickerStyle;
-  }
-
   Widget _buildHourPickerScrollView(BuildContext context) {
     return SBBPickerScrollView(
       controller: _hourController,
@@ -329,13 +305,11 @@ class _SBBTimePickerTimeState extends _TimeBasedPickerState<SBBTimePicker> {
   }
 
   void _onSelectedHourItemChanged(int index) {
-    final selectedHour = _indexToHour(index);
-    _onTimeSelected(hour: selectedHour);
+    _onTimeSelected(hour: _indexToHour(index));
   }
 
   void _onSelectedMinuteItemChanged(int index) {
-    final selectedMinute = _indexToMinute(index);
-    _onTimeSelected(minute: selectedMinute);
+    _onTimeSelected(minute: _indexToMinute(index));
   }
 
   SBBPickerItem _buildHourItem(int index) {
@@ -344,12 +318,12 @@ class _SBBTimePickerTimeState extends _TimeBasedPickerState<SBBTimePicker> {
     final minTime = _safeMinTime.floor();
     final maxTime = _safeMaxTime.ceil();
     final isEnabled = itemTime.isInRange(minTime, maxTime);
-    final label = _twoDigits(itemHour);
+    final label = twoDigits(itemHour);
 
-    return _buildPickerItem(
+    return buildPickerItem(
       isEnabled: isEnabled,
       label: label,
-      alignment: .centerRight,
+      alignment: Alignment.centerRight,
       textWidth: _timeItemTextWidth,
       isFirstColumn: true,
     );
@@ -358,15 +332,13 @@ class _SBBTimePickerTimeState extends _TimeBasedPickerState<SBBTimePicker> {
   SBBPickerItem _buildMinuteItem(int index, int selectedHour) {
     final itemMinute = _indexToMinute(index);
     final itemTime = TimeOfDay(hour: selectedHour, minute: itemMinute);
-    final minTime = _safeMinTime;
-    final maxTime = _safeMaxTime;
-    final isEnabled = itemTime.isInRange(minTime, maxTime);
-    final label = _twoDigits(itemMinute);
+    final isEnabled = itemTime.isInRange(_safeMinTime, _safeMaxTime);
+    final label = twoDigits(itemMinute);
 
-    return _buildPickerItem(
+    return buildPickerItem(
       isEnabled: isEnabled,
       label: label,
-      alignment: .centerLeft,
+      alignment: Alignment.centerLeft,
       textWidth: _timeItemTextWidth,
       isLastColumn: true,
     );
@@ -377,17 +349,11 @@ class _SBBTimePickerTimeState extends _TimeBasedPickerState<SBBTimePicker> {
     final selectedMinute = minute ?? _selectedTime.minute;
 
     _selectedTime = TimeOfDay(hour: selectedHour, minute: selectedMinute);
-
     _selectedTimeValueNotifier.value = _getClosestValidTime(hourIndex: selectedHour);
   }
 
   void _onScrollingStateChanged() {
-    if (_hourController.isScrolling() || _minuteController.isScrolling()) {
-      // do nothing if any controller still scrolling
-      return;
-    }
-
-    // ensure valid time
+    if (_hourController.isScrolling() || _minuteController.isScrolling()) return;
     _ensureValidTime();
   }
 
@@ -395,41 +361,24 @@ class _SBBTimePickerTimeState extends _TimeBasedPickerState<SBBTimePicker> {
     final minTime = _safeMinTime;
     final maxTime = _safeMaxTime;
     final isTimeInRange = _selectedTime.isInRange(minTime, maxTime);
-    if (isTimeInRange) {
-      // no correction needed
-      return;
-    }
+    if (isTimeInRange) return;
 
-    // optimize scroll positions to prevent scrolling over multiple rounds
     _ensureOptimizedScrollPosition();
 
     final correctToMinTime = _hourValueNotifier.value == minTime.hour;
     final correctedTime = correctToMinTime ? minTime : maxTime;
 
-    // check if scroll position needs to be optimized for scroll over midnight
     if (correctToMinTime && _selectedTime.hour > minTime.hour) {
-      // set index dayOffset to scroll over midnight
       _ensureOptimizedScrollPosition(offset: -TimeOfDay.hoursPerDay);
     } else if (!correctToMinTime && _selectedTime.hour < maxTime.hour) {
-      // set index dayOffset to scroll over midnight
       _ensureOptimizedScrollPosition(offset: TimeOfDay.hoursPerDay);
     }
 
-    // get index values of time values
     final hourIndex = _hourToIndex(correctedTime.hour);
     final minuteIndex = _minuteToIndex(correctedTime.minute);
 
-    // check if any time values needs to be corrected
-    final hourIncorrect = _hourController.selectedItem != hourIndex;
-    final minuteIncorrect = _minuteController.selectedItem != minuteIndex;
-
-    // correct incorrect time values
-    if (hourIncorrect) {
-      _hourController.animateToItem(hourIndex);
-    }
-    if (minuteIncorrect) {
-      _minuteController.animateToItem(minuteIndex);
-    }
+    if (_hourController.selectedItem != hourIndex) _hourController.animateToItem(hourIndex);
+    if (_minuteController.selectedItem != minuteIndex) _minuteController.animateToItem(minuteIndex);
   }
 
   void _ensureOptimizedScrollPosition({int offset = 0}) {
@@ -442,69 +391,48 @@ class _SBBTimePickerTimeState extends _TimeBasedPickerState<SBBTimePicker> {
   TimeOfDay _getClosestValidTime({required int hourIndex}) {
     final hour = _indexToHour(hourIndex);
     final time = _selectedTime.replacing(hour: hour);
-    final closestValidTime = time.clamp(_safeMinTime, _safeMaxTime);
-    return closestValidTime;
+    return time.clamp(_safeMinTime, _safeMaxTime);
   }
 
   void _adjustItemSizes(double width) {
-    // reset sizes to default values
-    _itemPadding = _itemDefaultPadding;
-    _timeItemTextWidth = max(_timeItemTextDefaultWidth, _timeItemTextMinWidth);
+    itemPadding = pickerItemDefaultPadding;
+    _timeItemTextWidth = max(pickerTimeItemTextDefaultWidth, timeItemTextMinWidth);
 
-    // check if enough space to display all texts by calculating width overflow
-    final timeItemWidths = _timeItemWidth * _timeItemCount;
+    final timeItemWidths = _timeItemWidth * pickerTimeItemCount;
     var widthOverflow = timeItemWidths - width;
 
-    // check if time items text width needs to be reduced
     if (widthOverflow > 0) {
-      // calculate time items text widths based on width overflow
-      final minWidths = _timeItemTextMinWidth * _timeItemCount;
-      const defaultWidths = _timeItemTextDefaultWidth * _timeItemCount;
+      final minWidths = timeItemTextMinWidth * pickerTimeItemCount;
+      const defaultWidths = pickerTimeItemTextDefaultWidth * pickerTimeItemCount;
       final flexibleWidths = defaultWidths - minWidths;
       final widthReductions = min(flexibleWidths, widthOverflow);
-      final reducedWidths = defaultWidths - widthReductions;
-      final reducedWidth = reducedWidths / _timeItemCount;
-
-      // set reduced time item text widths
+      final reducedWidth = (defaultWidths - widthReductions) / pickerTimeItemCount;
       _timeItemTextWidth = reducedWidth;
 
-      // recalculate width overflow
       final availableTimeItemTextWidths = _availableTimeItemTextWidths(width);
       widthOverflow = minWidths - availableTimeItemTextWidths;
     }
 
     // check if item paddings need to be reduced
     if (widthOverflow > 0) {
-      // calculate item paddings based on width overflow
-      const minPaddings = _itemMinPadding * _horizontalPaddingCount;
-      const defaultPaddings = _itemDefaultPadding * _horizontalPaddingCount;
+      const minPaddings = pickerItemMinPadding * _horizontalPaddingCount;
+      const defaultPaddings = pickerItemDefaultPadding * _horizontalPaddingCount;
       const flexiblePaddings = defaultPaddings - minPaddings;
       final paddingReductions = min(flexiblePaddings, widthOverflow);
-      final reducedPaddings = defaultPaddings - paddingReductions;
-      final reducedPadding = reducedPaddings / _horizontalPaddingCount;
-
-      // set reduced paddings
-      _itemPadding = reducedPadding;
+      final reducedPadding = (defaultPaddings - paddingReductions) / _horizontalPaddingCount;
+      itemPadding = reducedPadding;
     }
   }
 
   double _availableTimeItemTextWidths(double widgetWidth) {
-    return widgetWidth - _widgetHorizontalPadding * 2 - _itemPadding * _horizontalPaddingCount;
+    return widgetWidth - pickerWidgetHorizontalPadding * 2 - itemPadding * _horizontalPaddingCount;
   }
 
-  int _indexToMinute(int minuteIndex) {
-    return minuteIndex * widget.minuteInterval % TimeOfDay.minutesPerHour;
-  }
+  int _indexToMinute(int minuteIndex) => minuteIndex * widget.minuteInterval % TimeOfDay.minutesPerHour;
 
-  int _minuteToIndex(int minute) {
-    return minute ~/ widget.minuteInterval;
-  }
+  int _minuteToIndex(int minute) => minute ~/ widget.minuteInterval;
 
-  int _indexToHour(int hourIndex) {
-    return hourIndex % TimeOfDay.hoursPerDay;
-  }
+  int _indexToHour(int hourIndex) => hourIndex % TimeOfDay.hoursPerDay;
 
-  int _hourToIndex(int hour) {
-    return hour;
-  }
+  int _hourToIndex(int hour) => hour;
 }

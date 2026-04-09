@@ -1,4 +1,9 @@
-part of '../sbb_picker.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+import '../../../sbb_design_system_mobile.dart';
+import '../sbb_picker_constants.dart';
+import '../sbb_picker_utils.dart';
 
 /// This is basically a convenience combination of a [SBBDecoratedText] and a [SBBDateTimePicker].
 ///
@@ -43,9 +48,9 @@ class SBBDateTimeInput extends StatelessWidget {
     this.value,
     this.minimumDateTime,
     this.maximumDateTime,
-    this.minuteInterval = _defaultMinuteInterval,
+    this.minuteInterval = pickerDefaultMinuteInterval,
     this.dateFormat,
-    this.visibleItemCount = _defaultVisibleItemCount,
+    this.visibleItemCount = pickerDefaultVisibleItemCount,
     this.triggerDecoration,
     this.triggerStyle,
     this.triggerConfig = const SBBDecoratedTextConfig(),
@@ -175,7 +180,7 @@ class SBBDateTimeInput extends StatelessWidget {
     final DateFormat effectiveDateFormat =
         dateFormat ?? DateFormat.yMMMMd(Localizations.maybeLocaleOf(context).toString()).add_Hm();
 
-    final rawDateTime = SBBDateTimePicker._clampedAndTimeIntervaledDateTime(
+    final rawDateTime = PickerUtils.clampedAndTimeIntervaledDateTime(
       value!,
       minimumDateTime,
       maximumDateTime,

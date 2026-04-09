@@ -1,22 +1,10 @@
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:intl/intl.dart';
 
 import '../../sbb_design_system_mobile.dart';
-
-part 'input/sbb_date_input.dart';
-part 'input/sbb_date_time_input.dart';
-part 'input/sbb_time_input.dart';
-part 'sbb_date_picker.dart';
-part 'sbb_date_time_picker.dart';
-part 'sbb_picker_item.dart';
-part 'sbb_picker_scroll_controller.dart';
-part 'sbb_picker_scroll_view.dart';
-part 'sbb_picker_utils.dart';
-part 'sbb_time_picker.dart';
+import 'sbb_picker_constants.dart';
+import 'sbb_picker_scope.dart';
 
 // TODO: documentation and migration guide
 
@@ -86,7 +74,7 @@ class SBBPicker extends StatefulWidget {
     required ValueChanged<int>? onSelectedItemChanged,
     required SBBPickerScrollViewItemBuilder itemBuilder,
     bool looping = true,
-    int visibleItemCount = _defaultVisibleItemCount,
+    int visibleItemCount = pickerDefaultVisibleItemCount,
     SBBPickerStyle? pickerStyle,
   }) : this.custom(
          key: key,
@@ -132,7 +120,7 @@ class SBBPicker extends StatefulWidget {
     required ValueChanged<int>? onSelectedItemChanged,
     required List items,
     bool looping = true,
-    int visibleItemCount = _defaultVisibleItemCount,
+    int visibleItemCount = pickerDefaultVisibleItemCount,
     SBBPickerStyle? pickerStyle,
   }) : this(
          key: key,
@@ -154,6 +142,9 @@ class SBBPicker extends StatefulWidget {
 
   /// Constructs a fully customizable [SBBPicker].
   ///
+  /// [child] is the widget containing the actual picker contents. Make sure to
+  /// include an [SBBPickerScrollView] in the widget tree of this child.
+  ///
   /// This constructor only builds the skeleton of the picker and should only
   /// be used when there is an absolute need for customization that the other
   /// constructors cannot provide, such as multiple columns of values.
@@ -162,7 +153,7 @@ class SBBPicker extends StatefulWidget {
   const SBBPicker.custom({
     super.key,
     required this.child,
-    this.visibleItemCount = _defaultVisibleItemCount,
+    this.visibleItemCount = pickerDefaultVisibleItemCount,
     this.pickerStyle,
   }) : assert(
          visibleItemCount > 0 && visibleItemCount % 2 == 1,
@@ -193,43 +184,56 @@ class SBBPicker extends StatefulWidget {
   State<SBBPicker> createState() => _SBBPickerState();
 }
 
-class _SBBPickerState extends _PickerClassState<SBBPicker> {
-  @override
+class _SBBPickerState extends State<SBBPicker> {
   int get _visibleItemCount => widget.visibleItemCount;
 
-  @override
-  SBBPickerStyle? _getEffectivePickerStyle(BuildContext context) {
+  SBBPickerStyle? _effectivePickerStyle(BuildContext context) {
     final themePickerStyle = Theme.of(context).sbbPickerTheme?.pickerStyle;
     return themePickerStyle?.merge(widget.pickerStyle) ?? widget.pickerStyle;
   }
 
-  double get _widgetHeight => _scrollAreaHeight + SBBSpacing.medium;
+  // These depend on itemHeight which comes from SBBPickerScope — read inside build.
+  double _widgetHeight(double itemHeight) => itemHeight * _visibleItemCount + SBBSpacing.medium;
 
-  double get _highlightedAreaHeight => _itemHeight + SBBSpacing.xxSmall;
+  double _highlightedAreaHeight(double itemHeight) => itemHeight + SBBSpacing.xxSmall;
+
+  double _scrollAreaHeight(double itemHeight) => itemHeight * _visibleItemCount;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: _widgetHeight,
-      child: Stack(
-        alignment: .center,
-        children: [
-          _buildHighlightedArea(context),
-          // widget.child,
-          ShaderMask(
-            shaderCallback: (bounds) => _shaderCallback(context, bounds),
-            child: SizedBox(height: _scrollAreaHeight, child: widget.child),
-          ),
-        ],
+    return SBBPickerScopeHost(
+      pickerStyle: _effectivePickerStyle(context),
+      child: Builder(
+        builder: (context) {
+          // Read itemHeight from the scope just established above.
+          final itemHeight = SBBPickerScope.of(context).itemHeight;
+          final widgetHeight = _widgetHeight(itemHeight);
+          final highlightedAreaHeight = _highlightedAreaHeight(itemHeight);
+          final scrollAreaHeight = _scrollAreaHeight(itemHeight);
+
+          return SizedBox(
+            height: widgetHeight,
+            child: Stack(
+              alignment: Alignment.center,
+              children: [
+                _buildHighlightedArea(context, highlightedAreaHeight),
+                ShaderMask(
+                  shaderCallback: (bounds) => _shaderCallback(context, bounds, itemHeight, scrollAreaHeight),
+                  child: SizedBox(height: scrollAreaHeight, child: widget.child),
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
 
-  Widget _buildHighlightedArea(BuildContext context) {
-    final highlightColor = _getEffectivePickerStyle(context)?.highlightBackgroundColor;
+  Widget _buildHighlightedArea(BuildContext context, double highlightedAreaHeight) {
+    final highlightColor = SBBPickerScope.of(context).pickerStyle?.highlightBackgroundColor;
     return Container(
-      height: _highlightedAreaHeight,
-      margin: const .symmetric(horizontal: SBBSpacing.xSmall),
+      height: highlightedAreaHeight,
+      margin: const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
       decoration: BoxDecoration(
         color: highlightColor,
         borderRadius: const BorderRadius.all(Radius.circular(SBBSpacing.xSmall)),
@@ -237,28 +241,29 @@ class _SBBPickerState extends _PickerClassState<SBBPicker> {
     );
   }
 
-  Shader _shaderCallback(BuildContext context, Rect bounds) {
+  Shader _shaderCallback(BuildContext context, Rect bounds, double itemHeight, double scrollAreaHeight) {
     return LinearGradient(
-      begin: .topCenter,
-      end: .bottomCenter,
-      stops: _gradientStops(),
+      begin: Alignment.topCenter,
+      end: Alignment.bottomCenter,
+      stops: _gradientStops(itemHeight, scrollAreaHeight),
       colors: _gradientColors(context),
     ).createShader(bounds);
   }
 
-  List<double> _gradientStops() {
+  List<double> _gradientStops(double itemHeight, double scrollAreaHeight) {
     // Stops are built for upper half of the scrollable area and mirrored for the bottom half.
-    // All sizes are relative to the _scrollAreaHeight for gradient stop calculation
+    // All sizes are relative to the scrollAreaHeight for gradient stop calculation
     const start = 0.0;
     const center = 0.5;
     const end = 1.0;
 
-    final relativeItemHeight = _itemHeight / _scrollAreaHeight;
+    final relativeItemHeight = itemHeight / scrollAreaHeight;
     // number of items on each side of the center item
     final sideItemCount = _visibleItemCount ~/ 2;
 
     // highlighted area
-    final relativeHighlightedAreaHeight = _highlightedAreaHeight / _scrollAreaHeight;
+    final highlightedAreaHeight = _highlightedAreaHeight(itemHeight);
+    final relativeHighlightedAreaHeight = highlightedAreaHeight / scrollAreaHeight;
     final highlightStart = center - relativeHighlightedAreaHeight * 0.5;
 
     // Build stops for the top half: start, then one stop per side item center,
@@ -311,7 +316,7 @@ class _SBBPickerState extends _PickerClassState<SBBPicker> {
     final opacities = [...topOpacities, ...bottomOpacities];
 
     // get base color from theme
-    final pickerForegroundColor = _getEffectivePickerStyle(context)!.foregroundColor!;
+    final pickerForegroundColor = SBBPickerScope.of(context).pickerStyle!.foregroundColor!;
 
     // return generated list of gradient color values
     return opacities.map((opacity) => pickerForegroundColor.withValues(alpha: opacity)).toList();

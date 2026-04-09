@@ -1,4 +1,6 @@
-part of 'sbb_picker.dart';
+import 'package:flutter/material.dart';
+
+import 'sbb_picker_constants.dart';
 
 /// Represents an item in the [SBBPickerScrollView] that is used by [SBBPicker].
 class SBBPickerItem {
@@ -12,7 +14,9 @@ class SBBPickerItem {
     : this.custom(
         isEnabled: isEnabled,
         widget: Padding(
-          padding: const .symmetric(horizontal: _widgetHorizontalPadding + _itemMinPadding),
+          padding: const EdgeInsets.symmetric(
+            horizontal: pickerWidgetHorizontalPadding + pickerItemMinPadding,
+          ),
           child: Text(label, softWrap: false),
         ),
       );

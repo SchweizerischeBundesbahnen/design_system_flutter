@@ -1,4 +1,8 @@
-part of '../sbb_picker.dart';
+import 'package:flutter/material.dart';
+
+import '../../../sbb_design_system_mobile.dart';
+import '../sbb_picker_constants.dart';
+import '../sbb_picker_utils.dart';
 
 /// This is basically a convenience combination of a [SBBDecoratedText] and a [SBBTimePicker].
 ///
@@ -43,8 +47,8 @@ class SBBTimeInput extends StatelessWidget {
     this.value,
     this.minimumTime,
     this.maximumTime,
-    this.minuteInterval = _defaultMinuteInterval,
-    this.visibleItemCount = _defaultVisibleItemCount,
+    this.minuteInterval = pickerDefaultMinuteInterval,
+    this.visibleItemCount = pickerDefaultVisibleItemCount,
     this.triggerDecoration,
     this.triggerStyle,
     this.triggerConfig = const SBBDecoratedTextConfig(),
@@ -166,7 +170,7 @@ class SBBTimeInput extends StatelessWidget {
   String _formattedValue(BuildContext context) {
     if (value == null) return '';
 
-    final rawTimeOfDay = SBBTimePicker._clampedAndIntervaledTime(
+    final rawTimeOfDay = PickerUtils.clampedAndIntervaledTime(
       value!,
       minimumTime,
       maximumTime,

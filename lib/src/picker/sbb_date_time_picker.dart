@@ -1,4 +1,12 @@
-part of 'sbb_picker.dart';
+import 'dart:math';
+
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+import '../../sbb_design_system_mobile.dart';
+import 'sbb_picker_constants.dart';
+import 'sbb_picker_time_based_mixin.dart';
+import 'sbb_picker_utils.dart';
 
 /// SBB Date Time Picker. Use according to documentation.
 ///
@@ -16,8 +24,8 @@ class SBBDateTimePicker extends StatefulWidget {
     DateTime? initialDateTime,
     DateTime? minimumDateTime,
     DateTime? maximumDateTime,
-    this.minuteInterval = _defaultMinuteInterval,
-    this.visibleItemCount = _defaultVisibleItemCount,
+    this.minuteInterval = pickerDefaultMinuteInterval,
+    this.visibleItemCount = pickerDefaultVisibleItemCount,
     this.pickerStyle,
   }) : assert(
          minuteInterval > 0 && TimeOfDay.minutesPerHour % minuteInterval == 0,
@@ -27,14 +35,14 @@ class SBBDateTimePicker extends StatefulWidget {
          visibleItemCount > 0 && visibleItemCount % 2 == 1,
          'visibleItemCount must be a positive odd number, but was $visibleItemCount',
        ),
-       initialDateTime = _clampedAndTimeIntervaledDateTime(
+       initialDateTime = PickerUtils.clampedAndTimeIntervaledDateTime(
          initialDateTime ?? DateTime.now(),
          minimumDateTime,
          maximumDateTime,
          minuteInterval,
        ),
-       minimumDateTime = _minimumDateTime(minimumDateTime, minuteInterval),
-       maximumDateTime = _maximumDateTime(maximumDateTime, minuteInterval) {
+       minimumDateTime = minimumDateTime?.ceilToInterval(minuteInterval),
+       maximumDateTime = maximumDateTime?.floorToInterval(minuteInterval) {
     assert(
       this.minimumDateTime == null ||
           this.maximumDateTime == null ||
@@ -106,9 +114,9 @@ class SBBDateTimePicker extends StatefulWidget {
     DateTime? initialDateTime,
     DateTime? minimumDateTime,
     DateTime? maximumDateTime,
-    int minuteInterval = _defaultMinuteInterval,
+    int minuteInterval = pickerDefaultMinuteInterval,
     ValueChanged<DateTime>? onDateTimeChanged,
-    int visibleItemCount = _defaultVisibleItemCount,
+    int visibleItemCount = pickerDefaultVisibleItemCount,
     SBBPickerStyle? pickerStyle,
   }) {
     final localizations = MaterialLocalizations.of(context);
@@ -119,7 +127,7 @@ class SBBDateTimePicker extends StatefulWidget {
         effectiveConfig.titleText ??
         (effectiveConfig.title == null ? localizations.dateInputLabel : null);
 
-    final effectiveInitialDateTime = _clampedAndTimeIntervaledDateTime(
+    final effectiveInitialDateTime = PickerUtils.clampedAndTimeIntervaledDateTime(
       initialDateTime ?? DateTime.now(),
       minimumDateTime,
       maximumDateTime,
@@ -150,29 +158,29 @@ class SBBDateTimePicker extends StatefulWidget {
       sheetAnimationStyle: effectiveConfig.animationStyle,
       showCloseButton: effectiveConfig.showCloseButton,
       body: Column(
-        mainAxisSize: .min,
+        mainAxisSize: MainAxisSize.min,
         children: [
           Padding(
-            padding: const .symmetric(horizontal: SBBSpacing.medium),
-             child: SBBContentBox(
-               child: SBBDateTimePicker(
-                 initialDateTime: initialDateTime,
-                 minimumDateTime: minimumDateTime,
-                 maximumDateTime: maximumDateTime,
-                 minuteInterval: minuteInterval,
-                 visibleItemCount: visibleItemCount,
-                 pickerStyle: pickerStyle,
-                 onDateTimeChanged: (dateTime) {
-                   selectedDateTime = dateTime;
-                   if (!acceptInitialSelection) {
-                     selectedButtonEnabled.value = dateTime != effectiveInitialDateTime;
-                   }
-                 },
-               ),
-             ),
+            padding: const EdgeInsets.symmetric(horizontal: SBBSpacing.medium),
+            child: SBBContentBox(
+              child: SBBDateTimePicker(
+                initialDateTime: initialDateTime,
+                minimumDateTime: minimumDateTime,
+                maximumDateTime: maximumDateTime,
+                minuteInterval: minuteInterval,
+                visibleItemCount: visibleItemCount,
+                pickerStyle: pickerStyle,
+                onDateTimeChanged: (dateTime) {
+                  selectedDateTime = dateTime;
+                  if (!acceptInitialSelection) {
+                    selectedButtonEnabled.value = dateTime != effectiveInitialDateTime;
+                  }
+                },
+              ),
+            ),
           ),
           Padding(
-            padding: const .all(SBBSpacing.medium),
+            padding: const EdgeInsets.all(SBBSpacing.medium),
             child: ListenableBuilder(
               listenable: selectedButtonEnabled,
               builder: (context, _) {
@@ -193,32 +201,10 @@ class SBBDateTimePicker extends StatefulWidget {
 
   @override
   State<SBBDateTimePicker> createState() => _SBBDateTimePickerState();
-
-  static DateTime _clampedAndTimeIntervaledDateTime(
-    DateTime value,
-    DateTime? minimumDateTime,
-    DateTime? maximumDateTime,
-    int minuteInterval,
-  ) {
-    final minDateTime = _minimumDateTime(minimumDateTime, minuteInterval);
-    final maxDateTime = _maximumDateTime(maximumDateTime, minuteInterval);
-    DateTime result = value.roundToInterval(minuteInterval);
-    result = result.clamp(minDateTime, maxDateTime);
-    return result;
-  }
-
-  static DateTime? _minimumDateTime(DateTime? minimumDateTime, int minuteInterval) =>
-      minimumDateTime?.ceilToInterval(minuteInterval);
-
-  static DateTime? _maximumDateTime(DateTime? maximumDateTime, int minuteInterval) =>
-      maximumDateTime?.floorToInterval(minuteInterval);
 }
 
-class _SBBDateTimePickerState extends _TimeBasedPickerState<SBBDateTimePicker> {
+class _SBBDateTimePickerState extends State<SBBDateTimePicker> with TimeBasedPickerMixin<SBBDateTimePicker> {
   static const _horizontalPaddingCount = 6;
-
-  @override
-  int get _visibleItemCount => widget.visibleItemCount;
 
   late DateTime _selectedDateTime;
   late ValueNotifier<DateTime> _selectedDateTimeValueNotifier;
@@ -233,13 +219,14 @@ class _SBBDateTimePickerState extends _TimeBasedPickerState<SBBDateTimePicker> {
   late DateFormat _dateFormat;
   late double _timeItemTextWidth;
 
-  double get _hourItemWidth => _itemPadding + _timeItemTextWidth + _itemPadding;
+  double get _hourItemWidth => itemPadding + _timeItemTextWidth + itemPadding;
 
-  double get _minuteItemWidth => _hourItemWidth + _widgetHorizontalPadding;
+  double get _minuteItemWidth => _hourItemWidth + pickerWidgetHorizontalPadding;
 
   @override
   void initState() {
     super.initState();
+    itemPadding = pickerItemDefaultPadding;
     _selectedDateTime = widget.initialDateTime;
     _selectedDateTimeValueNotifier = ValueNotifier(_selectedDateTime);
     final onDateTimeChanged = widget.onDateTimeChanged;
@@ -315,12 +302,6 @@ class _SBBDateTimePickerState extends _TimeBasedPickerState<SBBDateTimePicker> {
     super.dispose();
   }
 
-  @override
-  SBBPickerStyle? _getEffectivePickerStyle(BuildContext context) {
-    final themePickerStyle = Theme.of(context).sbbPickerTheme?.pickerStyle;
-    return themePickerStyle?.merge(widget.pickerStyle) ?? widget.pickerStyle;
-  }
-
   Widget _buildDatePickerScrollView() {
     return SBBPickerScrollView(
       controller: _dateController,
@@ -380,12 +361,7 @@ class _SBBDateTimePickerState extends _TimeBasedPickerState<SBBDateTimePicker> {
     final isEnabled = itemDate.isInRange(minDate, maxDate);
     final label = _dateFormat.format(itemDate);
 
-    return _buildPickerItem(
-      isEnabled: isEnabled,
-      label: label,
-      alignment: .centerRight,
-      isFirstColumn: true,
-    );
+    return buildPickerItem(isEnabled: isEnabled, label: label, alignment: Alignment.centerRight, isFirstColumn: true);
   }
 
   SBBPickerItem _buildHourItem(int index, DateTime selectedDate) {
@@ -394,20 +370,18 @@ class _SBBDateTimePickerState extends _TimeBasedPickerState<SBBDateTimePicker> {
     final minDateTime = widget.minimumDateTime?.copyWith(minute: 0);
     final maxDateTime = widget.maximumDateTime?.copyWith(minute: 2);
     final isEnabled = itemDateTime.isInRange(minDateTime, maxDateTime);
-    final label = _twoDigits(itemHour);
+    final label = twoDigits(itemHour);
 
-    return _buildPickerItem(isEnabled: isEnabled, label: label);
+    return buildPickerItem(isEnabled: isEnabled, label: label);
   }
 
   SBBPickerItem _buildMinuteItem(int index, DateTime selectedDateTime) {
     final itemMinute = _indexToMinute(index);
     final itemDateTime = selectedDateTime.copyWith(minute: itemMinute);
-    final minDateTime = widget.minimumDateTime;
-    final maxDateTime = widget.maximumDateTime;
-    final isEnabled = itemDateTime.isInRange(minDateTime, maxDateTime);
-    final label = _twoDigits(itemMinute);
+    final isEnabled = itemDateTime.isInRange(widget.minimumDateTime, widget.maximumDateTime);
+    final label = twoDigits(itemMinute);
 
-    return _buildPickerItem(isEnabled: isEnabled, label: label, isLastColumn: true);
+    return buildPickerItem(isEnabled: isEnabled, label: label, isLastColumn: true);
   }
 
   void _onDateTimeSelected({DateTime? date, int? hour, int? minute}) {
@@ -417,54 +391,31 @@ class _SBBDateTimePickerState extends _TimeBasedPickerState<SBBDateTimePicker> {
     final selectedHour = hour ?? _selectedDateTime.hour;
     final selectedMinute = minute ?? _selectedDateTime.minute;
 
-    _selectedDateTime = DateTime(
-      selectedYear,
-      selectedMonth,
-      selectedDay,
-      selectedHour,
-      selectedMinute,
-    );
+    _selectedDateTime = DateTime(selectedYear, selectedMonth, selectedDay, selectedHour, selectedMinute);
 
     final validDateTime = _selectedDateTime.clamp(widget.minimumDateTime, widget.maximumDateTime);
     _selectedDateTimeValueNotifier.value = validDateTime;
   }
 
   void _onScrollingStateChanged() {
-    if (_dateController.isScrolling() || _hourController.isScrolling() || _minuteController.isScrolling()) {
-      // do nothing if any controller still scrolling
-      return;
-    }
-
-    // ensure valid date time
+    if (_dateController.isScrolling() || _hourController.isScrolling() || _minuteController.isScrolling()) return;
     _ensureValidDateTime();
   }
 
   void _ensureValidDateTime() {
     final validDateTime = _selectedDateTime.clamp(widget.minimumDateTime, widget.maximumDateTime);
 
-    if (_selectedDateTime == validDateTime) {
-      // no correction needed
-      return;
-    }
+    if (_selectedDateTime == validDateTime) return;
 
-    // optimize scroll positions to prevent scrolling over multiple rounds
     _ensureOptimizedScrollPosition();
 
-    // get index values of valid date time values
     final dateIndex = _dateToIndex(validDateTime);
     final hourIndex = _hourToIndex(validDateTime.hour);
     final minuteIndex = _minuteToIndex(validDateTime.minute);
 
-    // correct incorrect date time values
-    if (_dateController.selectedItem != dateIndex) {
-      _dateController.animateToItem(dateIndex);
-    }
-    if (_hourController.selectedItem != hourIndex) {
-      _hourController.animateToItem(hourIndex);
-    }
-    if (_minuteController.selectedItem != minuteIndex) {
-      _minuteController.animateToItem(minuteIndex);
-    }
+    if (_dateController.selectedItem != dateIndex) _dateController.animateToItem(dateIndex);
+    if (_hourController.selectedItem != hourIndex) _hourController.animateToItem(hourIndex);
+    if (_minuteController.selectedItem != minuteIndex) _minuteController.animateToItem(minuteIndex);
   }
 
   void _ensureOptimizedScrollPosition() {
@@ -482,86 +433,55 @@ class _SBBDateTimePickerState extends _TimeBasedPickerState<SBBDateTimePicker> {
     final dateTime = date.copyWith(hour: hour, minute: minute);
 
     final minDateTime = widget.minimumDateTime;
-    if (minDateTime != null && minDateTime.isAfter(dateTime)) {
-      return minDateTime;
-    }
+    if (minDateTime != null && minDateTime.isAfter(dateTime)) return minDateTime;
 
     final maxDateTime = widget.maximumDateTime;
-    if (maxDateTime != null && maxDateTime.isBefore(dateTime)) {
-      return maxDateTime;
-    }
+    if (maxDateTime != null && maxDateTime.isBefore(dateTime)) return maxDateTime;
 
     return dateTime;
   }
 
   void _adjustItemSizes(double width) {
-    // reset sizes to default values
-    _itemPadding = _itemDefaultPadding;
-    _timeItemTextWidth = max(_timeItemTextDefaultWidth, _timeItemTextMinWidth);
+    itemPadding = pickerItemDefaultPadding;
+    _timeItemTextWidth = max(pickerTimeItemTextDefaultWidth, timeItemTextMinWidth);
 
-    // validate locale
     final localeObject = Localizations.maybeLocaleOf(context);
     final localeExists = DateFormat.localeExists(localeObject.toString());
     final locale = localeExists ? localeObject.toString() : null;
 
-    // use localized long date format by default
     _dateFormat = DateFormat.MMMEd(locale);
-
-    // adjust pattern for german to conform to design specifications
     if (localeObject?.languageCode == 'de') {
       final pattern = _dateFormat.pattern?.replaceFirst(',', '');
       _dateFormat = DateFormat(pattern, locale);
     }
 
-    // check if enough space to display all texts by calculating width overflow
     final availableDateItemTextWidth = _availableDateItemTextWidth(width);
     final longDateTextMinWidth = _dateItemTextMinWidth(_dateFormat);
     var widthOverflow = longDateTextMinWidth - availableDateItemTextWidth;
 
-    // check if time items text width needs to be reduced
     if (widthOverflow > 0) {
-      // calculate time items text widths based on width overflow
-      final minWidths = _timeItemTextMinWidth * _timeItemCount;
-      const defaultWidths = _timeItemTextDefaultWidth * _timeItemCount;
+      final minWidths = timeItemTextMinWidth * pickerTimeItemCount;
+      const defaultWidths = pickerTimeItemTextDefaultWidth * pickerTimeItemCount;
       final flexibleWidths = defaultWidths - minWidths;
       final widthReductions = min(flexibleWidths, widthOverflow);
-      final reducedWidths = defaultWidths - widthReductions;
-      final reducedWidth = reducedWidths / _timeItemCount;
-
-      // set reduced time item text widths
-      _timeItemTextWidth = reducedWidth;
-
-      // recalculate width overflow
+      _timeItemTextWidth = (defaultWidths - widthReductions) / pickerTimeItemCount;
       widthOverflow -= widthReductions;
     }
 
-    // check if item paddings need to be reduced
     if (widthOverflow > 0) {
-      // calculate item paddings based on width overflow
-      const minPaddings = _itemMinPadding * _horizontalPaddingCount;
-      const defaultPaddings = _itemDefaultPadding * _horizontalPaddingCount;
+      const minPaddings = pickerItemMinPadding * _horizontalPaddingCount;
+      const defaultPaddings = pickerItemDefaultPadding * _horizontalPaddingCount;
       const flexiblePaddings = defaultPaddings - minPaddings;
       final paddingReductions = min(flexiblePaddings, widthOverflow);
-      final reducedPaddings = defaultPaddings - paddingReductions;
-      final reducedPadding = reducedPaddings / _horizontalPaddingCount;
-
-      // set reduced paddings
-      _itemPadding = reducedPadding;
-
-      // recalculate width overflow
+      itemPadding = (defaultPaddings - paddingReductions) / _horizontalPaddingCount;
       widthOverflow -= paddingReductions;
     }
 
-    // check if medium date format needs to be used
     if (widthOverflow > 0) {
-      // use localized medium date format
       _dateFormat = DateFormat.MMMd(locale);
-
-      // check if short date format needs to be used
       final availableDateItemTextWidth = _availableDateItemTextWidth(width);
       final mediumDateTextWidth = _dateItemTextMinWidth(_dateFormat);
       if (availableDateItemTextWidth < mediumDateTextWidth) {
-        // use localized short date format
         _dateFormat = DateFormat.Md(locale);
       }
     }
@@ -569,9 +489,9 @@ class _SBBDateTimePickerState extends _TimeBasedPickerState<SBBDateTimePicker> {
 
   double _availableDateItemTextWidth(double widgetWidth) {
     return widgetWidth -
-        _widgetHorizontalPadding * 2 -
-        _itemPadding * _horizontalPaddingCount -
-        _timeItemTextWidth * _timeItemCount;
+        pickerWidgetHorizontalPadding * 2 -
+        itemPadding * _horizontalPaddingCount -
+        _timeItemTextWidth * pickerTimeItemCount;
   }
 
   double _dateItemTextMinWidth(DateFormat dateFormat) {
@@ -584,11 +504,8 @@ class _SBBDateTimePickerState extends _TimeBasedPickerState<SBBDateTimePicker> {
         final day = daysInMonth - j;
         final date = DateTime(year, month, day);
         final itemLabel = dateFormat.format(date);
-        final itemTextSize = _textSize(itemLabel);
-        final itemTextWidth = itemTextSize.width;
-        if (itemTextWidth > dateTextWidth) {
-          dateTextWidth = itemTextWidth;
-        }
+        final itemTextWidth = measureText(itemLabel).width;
+        if (itemTextWidth > dateTextWidth) dateTextWidth = itemTextWidth;
       }
     }
     return dateTextWidth;

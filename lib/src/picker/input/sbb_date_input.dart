@@ -1,4 +1,9 @@
-part of '../sbb_picker.dart';
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+import '../../../sbb_design_system_mobile.dart';
+import '../sbb_picker_constants.dart';
+import '../sbb_picker_utils.dart';
 
 /// This is basically a convenience combination of a [SBBDecoratedText] and a [SBBDatePicker].
 ///
@@ -44,7 +49,7 @@ class SBBDateInput extends StatelessWidget {
     this.minimumDate,
     this.maximumDate,
     this.dateFormat,
-    this.visibleItemCount = _defaultVisibleItemCount,
+    this.visibleItemCount = pickerDefaultVisibleItemCount,
     this.triggerDecoration,
     this.triggerStyle,
     this.triggerConfig = const SBBDecoratedTextConfig(),
@@ -168,7 +173,7 @@ class SBBDateInput extends StatelessWidget {
     final DateFormat effectiveDateFormat =
         dateFormat ?? DateFormat.yMMMMd(Localizations.maybeLocaleOf(context).toString());
 
-    final rawDate = SBBDatePicker._clampedDateOnly(
+    final rawDate = PickerUtils.clampedDateOnly(
       value!,
       minimumDate,
       maximumDate,

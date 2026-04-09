@@ -1,4 +1,14 @@
-part of 'sbb_picker.dart';
+import 'dart:math';
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+
+import 'sbb_picker_constants.dart';
+import 'sbb_picker_item.dart';
+import 'sbb_picker_scope.dart';
+import 'sbb_picker_scroll_controller.dart';
+import 'theme/sbb_picker_style.dart';
 
 /// Signature for a function that creates a [SBBPickerItem] for a given index,
 /// but may return null.
@@ -9,7 +19,7 @@ part of 'sbb_picker.dart';
 /// is out of range.
 typedef SBBPickerScrollViewItemBuilder = SBBPickerItem? Function(BuildContext context, int index);
 
-/// A box in which children on a wheel can be scrolled. This is typically only used in a
+/// A box in which children on a wheel can be scrolled. Should only be used in
 /// combination with [SBBPicker.custom].
 ///
 /// When the list is at the zero scroll offset, the first child is aligned with
@@ -23,7 +33,7 @@ class SBBPickerScrollView extends StatefulWidget {
   ///
   /// [itemBuilder] is the callback called when a picker item needs to be built.
   ///
-  /// [controller] cas be used for programmatically reading or changing the
+  /// [controller] can be used for programmatically reading or changing the
   /// current picker index.
   ///
   /// [looping] decides whether the list loops and can be scrolled infinitely.
@@ -41,15 +51,26 @@ class SBBPickerScrollView extends StatefulWidget {
     this.controller,
     this.initialItem = 0,
     this.looping = true,
-    this.visibleItemCount = _defaultVisibleItemCount,
+    this.visibleItemCount = pickerDefaultVisibleItemCount,
     this.pickerStyle,
   }) : assert(
          visibleItemCount > 0 && visibleItemCount % 2 == 1,
          'visibleItemCount must be a positive odd number, but was $visibleItemCount',
        );
 
+  /// Called when the selected item index changes.
   final ValueChanged<int>? onSelectedItemChanged;
+
+  /// Called when a picker item needs to be built.
+  ///
+  /// May return null to indicate the index is out of range (only valid when
+  /// [looping] is false).
   final SBBPickerScrollViewItemBuilder itemBuilder;
+
+  /// Can be used for programmatically reading or changing the current picker
+  /// index.
+  ///
+  /// If not provided, an internal controller is created automatically.
   final SBBPickerScrollController? controller;
 
   /// The index of the item to select initially when no [controller] is provided.
@@ -60,7 +81,11 @@ class SBBPickerScrollView extends StatefulWidget {
   /// Defaults to 0.
   final int initialItem;
 
-  /// Decides whether the list loops and can be scrolled infinitely.
+  /// Whether the list loops and can be scrolled infinitely.
+  ///
+  /// If set to true, scrolling past the end of the list will loop the list back
+  /// to the beginning. If set to false, the list will stop scrolling when you
+  /// reach the end or the beginning.
   ///
   /// Defaults to true.
   final bool looping;
@@ -82,22 +107,24 @@ class SBBPickerScrollView extends StatefulWidget {
   State<SBBPickerScrollView> createState() => _SBBPickerScrollViewState();
 }
 
-class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
+class _SBBPickerScrollViewState extends State<SBBPickerScrollView> {
   // Visual parameters for the scroll wheel effect.
   static const _transformAmplitude = 2.5; // max vertical translate offset in pixels
 
-  @override
   int get _visibleItemCount => widget.visibleItemCount;
-
-  @override
-  SBBPickerStyle? _getEffectivePickerStyle(BuildContext context) {
-    final themePickerStyle = Theme.of(context).sbbPickerTheme?.pickerStyle;
-    return themePickerStyle?.merge(widget.pickerStyle) ?? widget.pickerStyle;
-  }
 
   int get _visibleCenterItemIndex => _visibleItemCount ~/ 2;
 
+  // Item height is read from the ambient SBBPickerScope.
+  double get _itemHeight => SBBPickerScope.of(context).itemHeight;
+
+  double get _scrollAreaHeight => _itemHeight * _visibleItemCount;
+
   double get _listPaddingHeight => _visibleCenterItemIndex * _itemHeight;
+
+  SBBPickerStyle? _getEffectivePickerStyle(BuildContext context) {
+    return SBBPickerScope.maybeOf(context)?.pickerStyle;
+  }
 
   late ValueNotifier<double> _scrollOffsetValueNotifier;
   late ValueNotifier<int> _firstVisibleItemIndexValueNotifier;
@@ -139,7 +166,8 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _controller._itemHeight = _itemHeight;
+    // Update controller item height whenever the scope's itemHeight changes.
+    _controller.itemHeight = _itemHeight;
   }
 
   @override
@@ -151,37 +179,26 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
     final visibleItemCountChanged = oldWidget.visibleItemCount != widget.visibleItemCount;
 
     if (controllerChanged || visibleItemCountChanged) {
-      // Read the current selected item from the old (still-attached) controller
-      // before doing anything that may detach or replace it.
       final previousSelectedItem = oldController?.selectedItem ?? _selectedItemIndexValueNotifier.value;
 
       if (controllerChanged) {
-        // Remove the scroll listener from the old controller.
         oldController?.removeListener(_onScrolling);
-        // Dispose the old fallback controller if the widget previously had none.
         if (oldWidget.controller == null) {
           _fallbackController?.dispose();
           _fallbackController = null;
         }
-        // Create a new fallback controller seeded at the preserved index if needed.
         if (widget.controller == null) {
           _fallbackController = SBBPickerScrollController(initialItem: previousSelectedItem);
         }
         _controller.addListener(_onScrolling);
       }
 
-      if (visibleItemCountChanged) {
-        _itemHeight = _calculateItemHeight();
-      }
-
-      _controller._itemHeight = _itemHeight;
+      _controller.itemHeight = _itemHeight;
       _applyIndexOffset();
 
       final selectedItem = _clampIndex(previousSelectedItem);
       _firstVisibleItemIndexValueNotifier.value = selectedItem - _visibleCenterItemIndex;
       _selectedItemIndexValueNotifier.value = selectedItem;
-      // Use initialScrollOffset (safe: no position required) as the scroll
-      // offset baseline; _onScrolling will update it once the view attaches.
       _scrollOffsetValueNotifier.value = _controller.initialScrollOffset;
     }
   }
@@ -296,14 +313,8 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
     return ValueListenableBuilder(
       valueListenable: _scrollOffsetValueNotifier,
       builder: (_, double offset, Widget? child) {
-        // calculate the current item index of the visible items, this also
-        // includes items that are only partly visible when scrolling
         final visibleItemIndex = itemIndex - firstVisibleItemIndex;
-
-        // calculate transform translation offset based on scroll offset
         final translationOffset = _itemOffset(visibleItemIndex, offset);
-
-        // text style based on whether item is enabled or not
         final textStyle = _itemTextStyle(itemEnabled);
 
         return SizedBox(
@@ -322,28 +333,23 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
 
   void _onScrolling() {
     final offset = _controller.offset;
-    final firstVisibleItemIndex = _controller._offsetToIndex(offset).floor() - _visibleCenterItemIndex;
+    final firstVisibleItemIndex = _controller.offsetToIndex(offset).floor() - _visibleCenterItemIndex;
     var selectedItemIndex = _controller.selectedItem;
 
-    // make sure calculated index is within list range
     selectedItemIndex = _clampIndex(selectedItemIndex);
 
-    // update value notifiers
     _scrollOffsetValueNotifier.value = offset;
     _selectedItemIndexValueNotifier.value = selectedItemIndex;
     _firstVisibleItemIndexValueNotifier.value = firstVisibleItemIndex;
   }
 
   void _onTapUp(TapUpDetails details) {
-    // determine which of the visible items has been tapped via integer division
     final tapPosition = details.localPosition.dy;
     final tappedVisibleItemIndex = (tapPosition / _itemHeight).floor().clamp(0, _visibleItemCount - 1);
 
-    // convert to position index of the item in the list
     final firstVisibleItemIndex = _firstVisibleItemIndexValueNotifier.value;
     var itemIndex = firstVisibleItemIndex + tappedVisibleItemIndex;
 
-    // clamp index to prevent scrolling to an item out of range
     itemIndex = _clampIndex(itemIndex);
     _onTapItem(itemIndex);
   }
@@ -358,22 +364,16 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
   /// around the initial item is insufficient, it calculates and applies an
   /// index offset to maintain proper functionality.
   void _applyIndexOffset() {
-    // reset values
     final initialIndex = _controller.initialItem;
     _initialIndexOffset = initialIndex;
     _firstIndex = null;
     _lastIndex = null;
 
-    if (widget.looping) {
-      // no need to check for looping lists
-      return;
-    }
+    if (widget.looping) return;
 
-    // check if item at initial item index is available
     final initialIndexItem = widget.itemBuilder(context, initialIndex);
     assert(initialIndexItem != null, 'Item builder returned null for initial item index $initialIndex.');
 
-    // check if list edges available
     final preInitialCount = _countItemsInDirection(-1);
     final postInitialCount = _countItemsInDirection(1);
     final preInitialDeficit = preInitialCount < _visibleCenterItemIndex;
@@ -386,15 +386,12 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
     }
     if (preInitialDeficit || postInitialDeficit) {
       final itemIndexOffset = _visibleCenterItemIndex - preInitialCount;
-      _controller._indexOffset = itemIndexOffset;
+      _controller.indexOffset = itemIndexOffset;
       _initialIndexOffset = initialIndex + itemIndexOffset;
 
-      // When the total number of items is too small to fill the negative scroll
-      // region, shift the index offset by an additional _visibleCenterItemIndex
-      // so the viewport center key can be moved to the top padding sliver.
       final totalCount = preInitialCount + 1 + postInitialCount;
       if (totalCount <= _visibleCenterItemIndex) {
-        _controller._indexOffset = itemIndexOffset - _visibleCenterItemIndex;
+        _controller.indexOffset = itemIndexOffset - _visibleCenterItemIndex;
       }
     }
   }
@@ -427,7 +424,7 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
     if (scrollPosition.hasContentDimensions) {
       final minScrollExtent = scrollPosition.minScrollExtent;
       if (minScrollExtent.isFinite) {
-        final firstIndex = _controller._offsetToIndex(minScrollExtent).toInt();
+        final firstIndex = _controller.offsetToIndex(minScrollExtent).toInt();
         _firstIndex = firstIndex;
         if (index < firstIndex) {
           return firstIndex;
@@ -435,7 +432,7 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
       }
       final maxScrollExtent = scrollPosition.maxScrollExtent;
       if (maxScrollExtent.isFinite) {
-        final lastIndex = _controller._offsetToIndex(maxScrollExtent).toInt();
+        final lastIndex = _controller.offsetToIndex(maxScrollExtent).toInt();
         _lastIndex = lastIndex;
         if (index > lastIndex) {
           return lastIndex;
