@@ -2,7 +2,6 @@ part of 'sbb_picker.dart';
 
 // layout constants
 const _itemDefaultHeight = 30.0;
-const _longListMinItemCount = 4;
 const _defaultVisibleItemCount = 7;
 const _itemDefaultPadding = 12.0;
 const _itemMinPadding = 4.0;

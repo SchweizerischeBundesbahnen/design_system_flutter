@@ -69,21 +69,6 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
 
   int get _visibleCenterItemIndex => _visibleItemCount ~/ 2;
 
-  /// Vertical translate offset for an item [d] positions from the center.
-  /// Uses a sine curve so the offset is 0 at the center.
-  double _transformForDist(int d) {
-    final sideItemCount = _visibleCenterItemIndex;
-    if (sideItemCount == 0) return 0.0;
-    return _transformAmplitude * sin(d * pi / sideItemCount);
-  }
-
-  List<double> get _visibleItemTransformValues => List.generate(
-    _visibleItemCount,
-    (i) => _transformForDist(i - _visibleCenterItemIndex),
-  );
-
-  List<double> get _visibleItemHeights => List.generate(_visibleItemCount, (_) => _itemHeight);
-
   double get _listPaddingHeight => _visibleCenterItemIndex * _itemHeight;
 
   late ValueNotifier<double> _scrollOffsetValueNotifier;
@@ -91,7 +76,6 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
   late ValueNotifier<int> _selectedItemIndexValueNotifier;
 
   late int _initialIndexOffset = _controller.initialItem;
-  bool _isShortList = false;
   int? _firstIndex;
   int? _lastIndex;
 
@@ -177,6 +161,7 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
   @override
   void dispose() {
     _scrollOffsetValueNotifier.dispose();
+    _firstVisibleItemIndexValueNotifier.dispose();
     _selectedItemIndexValueNotifier.dispose();
     _fallbackController?.dispose();
     super.dispose();
@@ -201,43 +186,37 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
   }
 
   Widget _buildViewPort(ViewportOffset offset) {
-    // set list center key based on whether there is an item count deficit
+    // When the total item count is smaller than the number of items on one side
+    // of the center, the positive-index list cannot fill the negative scroll
+    // region on its own. In that case the center key is placed on the top
+    // padding sliver so the viewport origin lands in the right position.
+    final isShortList =
+        _firstIndex != null && _lastIndex != null && (_lastIndex! - _firstIndex! + 1) <= _visibleCenterItemIndex;
+
     final listCenterKey = UniqueKey();
-    final topPaddingListCenterKey = _isShortList ? listCenterKey : null;
-    final positiveIndexListCenterKey = !_isShortList ? listCenterKey : null;
+    final topPaddingListCenterKey = isShortList ? listCenterKey : null;
+    final positiveIndexListCenterKey = !isShortList ? listCenterKey : null;
+
+    final topEndFiller = SizedBox(height: _listPaddingHeight);
 
     return Viewport(
       offset: offset,
       center: listCenterKey,
       slivers: [
-        if (!widget.looping)
-          SliverToBoxAdapter(
-            key: topPaddingListCenterKey,
-            child: SizedBox(height: _listPaddingHeight),
-          ),
-        _buildNegativeIndexList(),
-        _buildPositiveIndexList(positiveIndexListCenterKey),
-        if (!widget.looping) SliverToBoxAdapter(child: SizedBox(height: _listPaddingHeight)),
+        if (!widget.looping) SliverToBoxAdapter(key: topPaddingListCenterKey, child: topEndFiller),
+        _buildIndexList(negative: true),
+        _buildIndexList(centerKey: positiveIndexListCenterKey),
+        if (!widget.looping) SliverToBoxAdapter(child: topEndFiller),
       ],
     );
   }
 
-  Widget _buildNegativeIndexList() {
+  Widget _buildIndexList({bool negative = false, Key? centerKey}) {
     return SliverList(
+      key: centerKey,
       delegate: SliverChildBuilderDelegate((_, index) {
-        // adjust index so it goes negative from -1 instead of
-        // positive from 0
-        final adjustedIndex = -1 - index;
-        return _buildItem(adjustedIndex);
-      }),
-    );
-  }
-
-  Widget _buildPositiveIndexList(Key? listCenterKey) {
-    return SliverList(
-      key: listCenterKey,
-      delegate: SliverChildBuilderDelegate((_, index) {
-        return _buildItem(index);
+        // adjust index so it goes negative from -1 instead of positive from 0
+        return _buildItem(negative ? -1 - index : index);
       }),
     );
   }
@@ -246,7 +225,7 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
     final itemIndex = index + _initialIndexOffset - _visibleCenterItemIndex;
     final item = widget.itemBuilder(context, itemIndex);
     assert(
-      !widget.looping || widget.looping && item != null,
+      !widget.looping || item != null,
       'Item builder returned null for index $itemIndex but looping was set to true',
     );
 
@@ -257,10 +236,10 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
     final itemEnabled = item?.isEnabled ?? false;
     final itemWidget = item?.widget ?? const SizedBox.shrink();
 
-    return _firstVisibleItemIndexBasedItem(itemIndex, itemEnabled, itemWidget);
+    return _buildVisibleItem(itemIndex, itemEnabled, itemWidget);
   }
 
-  Widget _firstVisibleItemIndexBasedItem(int itemIndex, bool itemEnabled, Widget itemWidget) {
+  Widget _buildVisibleItem(int itemIndex, bool itemEnabled, Widget itemWidget) {
     // placeholder item used for items that are currently not visible
     final placeholderItem = SizedBox(height: _itemHeight);
 
@@ -285,7 +264,7 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
   }
 
   Widget _buildScrollOffsetBasedItem(int firstVisibleItemIndex, int itemIndex, bool itemEnabled, Widget itemWidget) {
-    // item style values are calculated based on the current scroll offset
+    // item translation values are calculated based on the current scroll offset
     return ValueListenableBuilder(
       valueListenable: _scrollOffsetValueNotifier,
       builder: (_, double offset, Widget? child) {
@@ -328,22 +307,11 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
   }
 
   void _onTapUp(TapUpDetails details) {
-    // calculate item index based on tap position
+    // determine which of the visible items has been tapped via integer division
     final tapPosition = details.localPosition.dy;
+    final tappedVisibleItemIndex = (tapPosition / _itemHeight).floor().clamp(0, _visibleItemCount - 1);
 
-    // determine which of the rendered items has been tapped
-    var tappedVisibleItemIndex = 0;
-    var totalVisibleItemHeightSoFar = 0.0;
-    for (final visibleItemHeight in _visibleItemHeights) {
-      totalVisibleItemHeightSoFar += visibleItemHeight;
-      if (totalVisibleItemHeightSoFar > tapPosition) {
-        break;
-      }
-      tappedVisibleItemIndex++;
-    }
-
-    // convert calculated index of the tapped item of the visible items to the
-    // position index of the item in the list
+    // convert to position index of the item in the list
     final firstVisibleItemIndex = _firstVisibleItemIndexValueNotifier.value;
     var itemIndex = firstVisibleItemIndex + tappedVisibleItemIndex;
 
@@ -365,7 +333,6 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
     // reset values
     final initialIndex = _controller.initialItem;
     _initialIndexOffset = initialIndex;
-    _isShortList = false;
     _firstIndex = null;
     _lastIndex = null;
 
@@ -379,8 +346,8 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
     assert(initialIndexItem != null, 'Item builder returned null for initial item index $initialIndex.');
 
     // check if list edges available
-    final preInitialCount = _itemsAroundInitialItem(true);
-    final postInitialCount = _itemsAroundInitialItem(false);
+    final preInitialCount = _countItemsInDirection(-1);
+    final postInitialCount = _countItemsInDirection(1);
     final preInitialDeficit = preInitialCount < _visibleCenterItemIndex;
     final postInitialDeficit = postInitialCount < _visibleCenterItemIndex;
     if (preInitialDeficit) {
@@ -394,19 +361,23 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
       _controller._indexOffset = itemIndexOffset;
       _initialIndexOffset = initialIndex + itemIndexOffset;
 
+      // When the total number of items is too small to fill the negative scroll
+      // region, shift the index offset by an additional _visibleCenterItemIndex
+      // so the viewport center key can be moved to the top padding sliver.
       final totalCount = preInitialCount + 1 + postInitialCount;
-      if (totalCount < _longListMinItemCount) {
+      if (totalCount <= _visibleCenterItemIndex) {
         _controller._indexOffset = itemIndexOffset - _visibleCenterItemIndex;
-        _isShortList = true;
       }
     }
   }
 
-  int _itemsAroundInitialItem(bool checkPrevious) {
-    final directionFactor = checkPrevious ? -1 : 1;
+  /// Returns the number of consecutive non-null items starting from
+  /// [_controller.initialItem] in [direction] (+1 for forward, -1 for backward),
+  /// up to [_visibleCenterItemIndex].
+  int _countItemsInDirection(int direction) {
     final initialIndex = _controller.initialItem;
     for (var i = 0; i < _visibleCenterItemIndex; i++) {
-      final indexToCheck = initialIndex + (i + 1) * directionFactor;
+      final indexToCheck = initialIndex + (i + 1) * direction;
       final itemToCheck = widget.itemBuilder(context, indexToCheck);
       if (itemToCheck == null) {
         return i;
@@ -450,10 +421,18 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
     final indexA = max(visibleItemIndex - 1, 0);
     final indexB = min(visibleItemIndex, _visibleItemCount - 1);
     final lerpFactor = 1 - offset % _itemHeight / _itemHeight;
-    final transformA = _visibleItemTransformValues[indexA];
-    final transformB = _visibleItemTransformValues[indexB];
+    final transformA = _transformForDist(indexA - _visibleCenterItemIndex);
+    final transformB = _transformForDist(indexB - _visibleCenterItemIndex);
     final transformY = lerpDouble(transformA, transformB, lerpFactor)!;
     return Offset(0, transformY);
+  }
+
+  /// Vertical translate offset for an item [d] positions from the center.
+  /// Uses a sine curve so the offset is 0 at the center.
+  double _transformForDist(int d) {
+    final sideItemCount = _visibleCenterItemIndex;
+    if (sideItemCount == 0) return 0.0;
+    return _transformAmplitude * sin(d * pi / sideItemCount);
   }
 
   TextStyle _itemTextStyle(bool itemEnabled) {
