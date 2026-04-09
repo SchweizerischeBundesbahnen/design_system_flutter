@@ -109,6 +109,7 @@ class SBBDatePicker extends StatefulWidget {
       trailingIconData: effectiveConfig.trailingIconData,
       barrierLabel: effectiveConfig.barrierLabel,
       useRootNavigator: effectiveConfig.useRootNavigator,
+      isScrollControlled: true,
       isDismissible: effectiveConfig.isDismissible,
       enableDrag: effectiveConfig.enableDrag,
       useSafeArea: effectiveConfig.useSafeArea,

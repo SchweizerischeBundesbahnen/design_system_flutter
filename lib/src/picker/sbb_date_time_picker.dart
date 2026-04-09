@@ -135,6 +135,7 @@ class SBBDateTimePicker extends StatefulWidget {
       barrierLabel: effectiveConfig.barrierLabel,
       useRootNavigator: effectiveConfig.useRootNavigator,
       isDismissible: effectiveConfig.isDismissible,
+      isScrollControlled: true,
       enableDrag: effectiveConfig.enableDrag,
       useSafeArea: effectiveConfig.useSafeArea,
       transitionAnimationController: effectiveConfig.transitionAnimationController,
