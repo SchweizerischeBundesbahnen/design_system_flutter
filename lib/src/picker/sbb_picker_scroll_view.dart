@@ -59,16 +59,32 @@ class SBBPickerScrollView extends StatefulWidget {
 }
 
 class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
+  // Visual parameters for the scroll wheel effect.
+  static const _transformAmplitude = 2.5; // max vertical translate offset in pixels
+
   static const _disabledItemOpacity = 0.35;
 
   @override
   int get _visibleItemCount => widget.visibleItemCount;
 
-  int get _sideItemCount => _visibleItemCount ~/ 2;
+  int get _visibleCenterItemIndex => _visibleItemCount ~/ 2;
+
+  /// Vertical translate offset for an item [d] positions from the center.
+  /// Uses a sine curve so the offset is 0 at the center.
+  double _transformForDist(int d) {
+    final sideItemCount = _visibleCenterItemIndex;
+    if (sideItemCount == 0) return 0.0;
+    return _transformAmplitude * sin(d * pi / sideItemCount);
+  }
+
+  List<double> get _visibleItemTransformValues => List.generate(
+    _visibleItemCount,
+    (i) => _transformForDist(i - _visibleCenterItemIndex),
+  );
 
   List<double> get _visibleItemHeights => List.generate(_visibleItemCount, (_) => _itemHeight);
 
-  double get _listPaddingHeight => _sideItemCount * _itemHeight;
+  double get _listPaddingHeight => _visibleCenterItemIndex * _itemHeight;
 
   late ValueNotifier<double> _scrollOffsetValueNotifier;
   late ValueNotifier<int> _firstVisibleItemIndexValueNotifier;
@@ -90,7 +106,7 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
     super.initState();
     _initController();
     _scrollOffsetValueNotifier = ValueNotifier(_controller.initialScrollOffset);
-    _firstVisibleItemIndexValueNotifier = ValueNotifier(_controller.selectedItem - _sideItemCount);
+    _firstVisibleItemIndexValueNotifier = ValueNotifier(_controller.selectedItem - _visibleCenterItemIndex);
     _selectedItemIndexValueNotifier = ValueNotifier(_controller.selectedItem);
     final onSelectedItemChanged = widget.onSelectedItemChanged;
     if (onSelectedItemChanged != null) {
@@ -150,7 +166,7 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
       _applyIndexOffset();
 
       final selectedItem = _clampIndex(previousSelectedItem);
-      _firstVisibleItemIndexValueNotifier.value = selectedItem - _sideItemCount;
+      _firstVisibleItemIndexValueNotifier.value = selectedItem - _visibleCenterItemIndex;
       _selectedItemIndexValueNotifier.value = selectedItem;
       // Use initialScrollOffset (safe: no position required) as the scroll
       // offset baseline; _onScrolling will update it once the view attaches.
@@ -227,7 +243,7 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
   }
 
   Widget? _buildItem(int index) {
-    final itemIndex = index + _initialIndexOffset - _sideItemCount;
+    final itemIndex = index + _initialIndexOffset - _visibleCenterItemIndex;
     final item = widget.itemBuilder(context, itemIndex);
     assert(
       !widget.looping || widget.looping && item != null,
@@ -272,7 +288,14 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
     // item style values are calculated based on the current scroll offset
     return ValueListenableBuilder(
       valueListenable: _scrollOffsetValueNotifier,
-      builder: (_, double offset, _) {
+      builder: (_, double offset, Widget? child) {
+        // calculate the current item index of the visible items, this also
+        // includes items that are only partly visible when scrolling
+        final visibleItemIndex = itemIndex - firstVisibleItemIndex;
+
+        // calculate transform translation offset based on scroll offset
+        final translationOffset = _itemOffset(visibleItemIndex, offset);
+
         // text style based on whether item is enabled or not
         final textStyle = _itemTextStyle(itemEnabled);
 
@@ -281,17 +304,18 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
           child: Center(
             child: DefaultTextStyle(
               style: textStyle,
-              child: itemWidget,
+              child: Transform.translate(offset: translationOffset, child: child),
             ),
           ),
         );
       },
+      child: itemWidget,
     );
   }
 
   void _onScrolling() {
     final offset = _controller.offset;
-    final firstVisibleItemIndex = _controller._offsetToIndex(offset).floor() - _sideItemCount;
+    final firstVisibleItemIndex = _controller._offsetToIndex(offset).floor() - _visibleCenterItemIndex;
     var selectedItemIndex = _controller.selectedItem;
 
     // make sure calculated index is within list range
@@ -357,8 +381,8 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
     // check if list edges available
     final preInitialCount = _itemsAroundInitialItem(true);
     final postInitialCount = _itemsAroundInitialItem(false);
-    final preInitialDeficit = preInitialCount < _sideItemCount;
-    final postInitialDeficit = postInitialCount < _sideItemCount;
+    final preInitialDeficit = preInitialCount < _visibleCenterItemIndex;
+    final postInitialDeficit = postInitialCount < _visibleCenterItemIndex;
     if (preInitialDeficit) {
       _firstIndex = initialIndex - preInitialCount;
     }
@@ -366,13 +390,13 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
       _lastIndex = initialIndex + postInitialCount;
     }
     if (preInitialDeficit || postInitialDeficit) {
-      final itemIndexOffset = _sideItemCount - preInitialCount;
+      final itemIndexOffset = _visibleCenterItemIndex - preInitialCount;
       _controller._indexOffset = itemIndexOffset;
       _initialIndexOffset = initialIndex + itemIndexOffset;
 
       final totalCount = preInitialCount + 1 + postInitialCount;
       if (totalCount < _longListMinItemCount) {
-        _controller._indexOffset = itemIndexOffset - _sideItemCount;
+        _controller._indexOffset = itemIndexOffset - _visibleCenterItemIndex;
         _isShortList = true;
       }
     }
@@ -381,14 +405,14 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
   int _itemsAroundInitialItem(bool checkPrevious) {
     final directionFactor = checkPrevious ? -1 : 1;
     final initialIndex = _controller.initialItem;
-    for (var i = 0; i < _sideItemCount; i++) {
+    for (var i = 0; i < _visibleCenterItemIndex; i++) {
       final indexToCheck = initialIndex + (i + 1) * directionFactor;
       final itemToCheck = widget.itemBuilder(context, indexToCheck);
       if (itemToCheck == null) {
         return i;
       }
     }
-    return _sideItemCount;
+    return _visibleCenterItemIndex;
   }
 
   int _clampIndex(int index) {
@@ -420,6 +444,16 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
       }
     }
     return index;
+  }
+
+  Offset _itemOffset(int visibleItemIndex, double offset) {
+    final indexA = max(visibleItemIndex - 1, 0);
+    final indexB = min(visibleItemIndex, _visibleItemCount - 1);
+    final lerpFactor = 1 - offset % _itemHeight / _itemHeight;
+    final transformA = _visibleItemTransformValues[indexA];
+    final transformB = _visibleItemTransformValues[indexB];
+    final transformY = lerpDouble(transformA, transformB, lerpFactor)!;
+    return Offset(0, transformY);
   }
 
   TextStyle _itemTextStyle(bool itemEnabled) {
