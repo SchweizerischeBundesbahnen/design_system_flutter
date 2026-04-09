@@ -1,9 +1,9 @@
-part of 'sbb_picker.dart';
+part of '../sbb_picker.dart';
 
-/// This is basically a convenience combination of a [SBBDecoratedText] and a [SBBDateTimePicker].
+/// This is basically a convenience combination of a [SBBDecoratedText] and a [SBBTimePicker].
 ///
-/// Displays the selected time as a read-only [SBBDecoratedText] field. When tapped, it opens an [SBBDateTimePicker]
-/// in a [SBBBottomSheet] via [SBBDateTimePicker.showInsideBottomSheet], allowing the user to pick a time.
+/// Displays the selected time as a read-only [SBBDecoratedText] field. When tapped, it opens an [SBBTimePicker]
+/// in a [SBBBottomSheet] via [SBBTimePicker.showInsideBottomSheet], allowing the user to pick a time.
 ///
 /// Use [triggerDecoration] to customise the trigger's label, icons, error text, and other decoration properties.
 ///
@@ -13,16 +13,16 @@ part of 'sbb_picker.dart';
 /// Use [sheetConfig] to customise the bottom sheet's appearance and behavior. Use [sheetTitleText] as a flat
 /// convenience parameter to set only the sheet title. Cannot be used together with [sheetConfig].
 /// When neither is set, the sheet title defaults to the localised time picker label from
-/// [MaterialLocalizations.dateInputLabel].
+/// [MaterialLocalizations.timePickerInputHelpText].
 ///
 /// ## Example
 ///
 /// ```dart
-/// SBBDateTimeInput(
-///   value: _selectedDateTime,
-///   triggerDecoration: SBBInputDecoration(labelText: 'Departure'),
-///   sheetTitleText: 'Select departure',
-///   onDateTimeChanged: (dt) => setState(() => _selectedDateTime = dt),
+/// SBBTimeInput(
+///   value: _selectedTime,
+///   triggerDecoration: SBBInputDecoration(labelText: 'Departure time'),
+///   sheetTitleText: 'Select departure time',
+///   onTimeChanged: (time) => setState(() => _selectedTime = time),
 /// )
 /// ```
 ///
@@ -30,21 +30,20 @@ part of 'sbb_picker.dart';
 ///
 /// * [SBBDecoratedText], the trigger widget used to display the selected value.
 /// * [SBBDecoratedTextConfig], the configuration object for the trigger field.
-/// * [SBBDateTimePicker], the picker opened when the trigger is tapped.
-/// * [SBBDateTimePicker.showInsideBottomSheet], which is used to display the bottom sheet.
+/// * [SBBTimePicker], the picker opened when the trigger is tapped.
+/// * [SBBTimePicker.showInsideBottomSheet], which is used to display the bottom sheet.
 /// * [SBBBottomSheetConfig], the configuration object for the bottom sheet.
+/// * [SBBDateTimeInput], variant for date and time values.
 /// * [SBBDateInput], variant for date values.
-/// * [SBBTimeInput], variant for time values.
 /// * <https://digital.sbb.ch/en/design-system/mobile/components/picker/>
-class SBBDateTimeInput extends StatelessWidget {
-  const SBBDateTimeInput({
+class SBBTimeInput extends StatelessWidget {
+  const SBBTimeInput({
     super.key,
-    required this.onDateTimeChanged,
+    required this.onTimeChanged,
     this.value,
-    this.minimumDateTime,
-    this.maximumDateTime,
+    this.minimumTime,
+    this.maximumTime,
     this.minuteInterval = _defaultMinuteInterval,
-    this.dateFormat,
     this.visibleItemCount = _defaultVisibleItemCount,
     this.triggerDecoration,
     this.triggerStyle,
@@ -62,31 +61,25 @@ class SBBDateTimeInput extends StatelessWidget {
          'sheetTitleText cannot be set while sheetConfig is set!',
        );
 
-  /// Called when the user selects a date and time in the picker.
-  ///
-  /// When null, the trigger field is disabled and taps are ignored.
-  final ValueChanged<DateTime>? onDateTimeChanged;
+  /// The currently selected time. Displayed in the trigger field. When null,
+  /// the trigger shows an empty value.
+  final TimeOfDay? value;
 
-  /// The currently selected date and time. Displayed in the trigger field formatted by
-  /// [dateFormat]. When null, the trigger shows an empty value.
-  final DateTime? value;
+  /// The earliest selectable time in the picker. Defaults to no lower bound.
+  final TimeOfDay? minimumTime;
 
-  /// The earliest selectable date and time in the picker. Defaults to no lower bound.
-  final DateTime? minimumDateTime;
-
-  /// The latest selectable date and time in the picker. Defaults to no upper bound.
-  final DateTime? maximumDateTime;
+  /// The latest selectable time in the picker. Defaults to no upper bound.
+  final TimeOfDay? maximumTime;
 
   /// The interval between minutes shown in the picker.
   ///
   /// Defaults to 1. Must be a divisor of 60.
   final int minuteInterval;
 
-  /// The format used to display [value] in the trigger field.
+  /// Called when the user selects a time in the picker.
   ///
-  /// Defaults to [DateFormat.yMMMMd] combined with [DateFormat.Hm] for the
-  /// current locale.
-  final DateFormat? dateFormat;
+  /// When null, the trigger field is disabled and taps are ignored.
+  final ValueChanged<TimeOfDay>? onTimeChanged;
 
   /// The decoration applied to the [SBBDecoratedText] trigger.
   ///
@@ -123,14 +116,14 @@ class SBBDateTimeInput extends StatelessWidget {
   /// If you need more control, use [sheetConfig] instead.
   ///
   /// When neither [sheetConfig] nor [sheetTitleText] is provided, the sheet
-  /// title defaults to [MaterialLocalizations.dateInputLabel].
+  /// title defaults to [MaterialLocalizations.timePickerInputHelpText].
   ///
   /// Cannot be used together with [sheetConfig].
   final String? sheetTitleText;
 
   /// The label text for the confirm button in the bottom sheet.
   ///
-  /// When not provided, defaults to [MaterialLocalizations.datePickerHelpText].
+  /// When not provided, defaults to [MaterialLocalizations.timePickerDialHelpText].
   final String? sheetButtonLabelText;
 
   /// Customizes the visual appearance of the picker.
@@ -150,37 +143,35 @@ class SBBDateTimeInput extends StatelessWidget {
       expands: triggerConfig.expands,
       focusNode: triggerConfig.focusNode,
       autofocus: triggerConfig.autofocus,
-       onTap: onDateTimeChanged != null
-           ? () {
-               SBBDateTimePicker.showInsideBottomSheet(
-                 context: context,
-                 sheetConfig: sheetConfig,
-                 sheetTitleText: sheetTitleText,
-                 sheetButtonLabelText: sheetButtonLabelText,
-                 initialDateTime: value,
-                 minimumDateTime: minimumDateTime,
-                 maximumDateTime: maximumDateTime,
-                 minuteInterval: minuteInterval,
-                 visibleItemCount: visibleItemCount,
-                 pickerStyle: pickerStyle,
-                 onDateTimeChanged: onDateTimeChanged,
-               );
-             }
-           : null,
+      onTap: onTimeChanged != null
+          ? () {
+              SBBTimePicker.showInsideBottomSheet(
+                context: context,
+                sheetConfig: sheetConfig,
+                sheetTitleText: sheetTitleText,
+                sheetButtonLabelText: sheetButtonLabelText,
+                initialTime: value,
+                minimumTime: minimumTime,
+                maximumTime: maximumTime,
+                minuteInterval: minuteInterval,
+                visibleItemCount: visibleItemCount,
+                pickerStyle: pickerStyle,
+                onTimeChanged: onTimeChanged,
+              );
+            }
+          : null,
     );
   }
 
   String _formattedValue(BuildContext context) {
     if (value == null) return '';
-    final DateFormat effectiveDateFormat =
-        dateFormat ?? DateFormat.yMMMMd(Localizations.maybeLocaleOf(context).toString()).add_Hm();
 
-    final rawDateTime = SBBDateTimePicker._clampedAndTimeIntervaledDateTime(
+    final rawTimeOfDay = SBBTimePicker._clampedAndIntervaledTime(
       value!,
-      minimumDateTime,
-      maximumDateTime,
+      minimumTime,
+      maximumTime,
       minuteInterval,
     );
-    return effectiveDateFormat.format(rawDateTime);
+    return rawTimeOfDay.format(context);
   }
 }

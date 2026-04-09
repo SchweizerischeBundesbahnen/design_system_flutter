@@ -1,9 +1,9 @@
-part of 'sbb_picker.dart';
+part of '../sbb_picker.dart';
 
-/// This is basically a convenience combination of a [SBBDecoratedText] and a [SBBDatePicker].
+/// This is basically a convenience combination of a [SBBDecoratedText] and a [SBBDateTimePicker].
 ///
-/// Displays the selected time as a read-only [SBBDecoratedText] field. When tapped, it opens an [SBBDatePicker]
-/// in a [SBBBottomSheet] via [SBBDatePicker.showInsideBottomSheet], allowing the user to pick a time.
+/// Displays the selected time as a read-only [SBBDecoratedText] field. When tapped, it opens an [SBBDateTimePicker]
+/// in a [SBBBottomSheet] via [SBBDateTimePicker.showInsideBottomSheet], allowing the user to pick a time.
 ///
 /// Use [triggerDecoration] to customise the trigger's label, icons, error text, and other decoration properties.
 ///
@@ -18,11 +18,11 @@ part of 'sbb_picker.dart';
 /// ## Example
 ///
 /// ```dart
-/// SBBDateInput(
-///   value: _selectedDate,
-///   triggerDecoration: SBBInputDecoration(labelText: 'Departure date'),
-///   sheetTitleText: 'Select departure date',
-///   onDateChanged: (date) => setState(() => _selectedDate = date),
+/// SBBDateTimeInput(
+///   value: _selectedDateTime,
+///   triggerDecoration: SBBInputDecoration(labelText: 'Departure'),
+///   sheetTitleText: 'Select departure',
+///   onDateTimeChanged: (dt) => setState(() => _selectedDateTime = dt),
 /// )
 /// ```
 ///
@@ -30,19 +30,20 @@ part of 'sbb_picker.dart';
 ///
 /// * [SBBDecoratedText], the trigger widget used to display the selected value.
 /// * [SBBDecoratedTextConfig], the configuration object for the trigger field.
-/// * [SBBDatePicker], the picker opened when the trigger is tapped.
-/// * [SBBDatePicker.showInsideBottomSheet], which is used to display the bottom sheet.
+/// * [SBBDateTimePicker], the picker opened when the trigger is tapped.
+/// * [SBBDateTimePicker.showInsideBottomSheet], which is used to display the bottom sheet.
 /// * [SBBBottomSheetConfig], the configuration object for the bottom sheet.
-/// * [SBBDateTimeInput], variant for date and time values.
+/// * [SBBDateInput], variant for date values.
 /// * [SBBTimeInput], variant for time values.
 /// * <https://digital.sbb.ch/en/design-system/mobile/components/picker/>
-class SBBDateInput extends StatelessWidget {
-  const SBBDateInput({
+class SBBDateTimeInput extends StatelessWidget {
+  const SBBDateTimeInput({
     super.key,
-    required this.onDateChanged,
+    required this.onDateTimeChanged,
     this.value,
-    this.minimumDate,
-    this.maximumDate,
+    this.minimumDateTime,
+    this.maximumDateTime,
+    this.minuteInterval = _defaultMinuteInterval,
     this.dateFormat,
     this.visibleItemCount = _defaultVisibleItemCount,
     this.triggerDecoration,
@@ -61,25 +62,31 @@ class SBBDateInput extends StatelessWidget {
          'sheetTitleText cannot be set while sheetConfig is set!',
        );
 
-  /// The currently selected date. Displayed in the trigger field formatted by
+  /// Called when the user selects a date and time in the picker.
+  ///
+  /// When null, the trigger field is disabled and taps are ignored.
+  final ValueChanged<DateTime>? onDateTimeChanged;
+
+  /// The currently selected date and time. Displayed in the trigger field formatted by
   /// [dateFormat]. When null, the trigger shows an empty value.
   final DateTime? value;
 
-  /// The earliest selectable date in the picker. Defaults to no lower bound.
-  final DateTime? minimumDate;
+  /// The earliest selectable date and time in the picker. Defaults to no lower bound.
+  final DateTime? minimumDateTime;
 
-  /// The latest selectable date in the picker. Defaults to no upper bound.
-  final DateTime? maximumDate;
+  /// The latest selectable date and time in the picker. Defaults to no upper bound.
+  final DateTime? maximumDateTime;
+
+  /// The interval between minutes shown in the picker.
+  ///
+  /// Defaults to 1. Must be a divisor of 60.
+  final int minuteInterval;
 
   /// The format used to display [value] in the trigger field.
   ///
-  /// Defaults to [DateFormat.yMMMMd] for the current locale.
+  /// Defaults to [DateFormat.yMMMMd] combined with [DateFormat.Hm] for the
+  /// current locale.
   final DateFormat? dateFormat;
-
-  /// Called when the user selects a date in the picker.
-  ///
-  /// When null, the trigger field is disabled and taps are ignored.
-  final ValueChanged<DateTime>? onDateChanged;
 
   /// The decoration applied to the [SBBDecoratedText] trigger.
   ///
@@ -143,19 +150,20 @@ class SBBDateInput extends StatelessWidget {
       expands: triggerConfig.expands,
       focusNode: triggerConfig.focusNode,
       autofocus: triggerConfig.autofocus,
-      onTap: onDateChanged != null
+      onTap: onDateTimeChanged != null
           ? () {
-              SBBDatePicker.showInsideBottomSheet(
+              SBBDateTimePicker.showInsideBottomSheet(
                 context: context,
-                onDateChanged: onDateChanged,
                 sheetConfig: sheetConfig,
                 sheetTitleText: sheetTitleText,
                 sheetButtonLabelText: sheetButtonLabelText,
-                initialDate: value,
-                minimumDate: minimumDate,
-                maximumDate: maximumDate,
+                initialDateTime: value,
+                minimumDateTime: minimumDateTime,
+                maximumDateTime: maximumDateTime,
+                minuteInterval: minuteInterval,
                 visibleItemCount: visibleItemCount,
                 pickerStyle: pickerStyle,
+                onDateTimeChanged: onDateTimeChanged,
               );
             }
           : null,
@@ -164,15 +172,15 @@ class SBBDateInput extends StatelessWidget {
 
   String _formattedValue(BuildContext context) {
     if (value == null) return '';
-
     final DateFormat effectiveDateFormat =
-        dateFormat ?? DateFormat.yMMMMd(Localizations.maybeLocaleOf(context).toString());
+        dateFormat ?? DateFormat.yMMMMd(Localizations.maybeLocaleOf(context).toString()).add_Hm();
 
-    final rawDate = SBBDatePicker._clampedDateOnly(
+    final rawDateTime = SBBDateTimePicker._clampedAndTimeIntervaledDateTime(
       value!,
-      minimumDate,
-      maximumDate,
+      minimumDateTime,
+      maximumDateTime,
+      minuteInterval,
     );
-    return effectiveDateFormat.format(rawDate);
+    return effectiveDateFormat.format(rawDateTime);
   }
 }

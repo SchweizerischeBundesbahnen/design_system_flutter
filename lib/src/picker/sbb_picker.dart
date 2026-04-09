@@ -7,15 +7,15 @@ import 'package:intl/intl.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
-part 'sbb_date_input.dart';
+part 'input/sbb_date_input.dart';
+part 'input/sbb_date_time_input.dart';
+part 'input/sbb_time_input.dart';
 part 'sbb_date_picker.dart';
-part 'sbb_date_time_input.dart';
 part 'sbb_date_time_picker.dart';
 part 'sbb_picker_item.dart';
 part 'sbb_picker_scroll_controller.dart';
 part 'sbb_picker_scroll_view.dart';
 part 'sbb_picker_utils.dart';
-part 'sbb_time_input.dart';
 part 'sbb_time_picker.dart';
 
 // TODO: documentation and migration guide
