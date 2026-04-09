@@ -52,6 +52,7 @@ class SBBDateTimeInput extends StatelessWidget {
     this.sheetConfig,
     this.sheetTitleText,
     this.sheetButtonLabelText,
+    this.pickerStyle,
   }) : assert(
          visibleItemCount > 0 && visibleItemCount % 2 == 1,
          'visibleItemCount must be a positive odd number, but was $visibleItemCount',
@@ -132,6 +133,12 @@ class SBBDateTimeInput extends StatelessWidget {
   /// When not provided, defaults to [MaterialLocalizations.datePickerHelpText].
   final String? sheetButtonLabelText;
 
+  /// Customizes the visual appearance of the picker.
+  ///
+  /// Non-null properties override the corresponding properties in
+  /// [SBBPickerThemeData.pickerStyle] from the current theme.
+  final SBBPickerStyle? pickerStyle;
+
   @override
   Widget build(BuildContext context) {
     return SBBDecoratedText(
@@ -143,22 +150,23 @@ class SBBDateTimeInput extends StatelessWidget {
       expands: triggerConfig.expands,
       focusNode: triggerConfig.focusNode,
       autofocus: triggerConfig.autofocus,
-      onTap: onDateTimeChanged != null
-          ? () {
-              SBBDateTimePicker.showInsideBottomSheet(
-                context: context,
-                sheetConfig: sheetConfig,
-                sheetTitleText: sheetTitleText,
-                sheetButtonLabelText: sheetButtonLabelText,
-                initialDateTime: value,
-                minimumDateTime: minimumDateTime,
-                maximumDateTime: maximumDateTime,
-                minuteInterval: minuteInterval,
-                visibleItemCount: visibleItemCount,
-                onDateTimeChanged: onDateTimeChanged,
-              );
-            }
-          : null,
+       onTap: onDateTimeChanged != null
+           ? () {
+               SBBDateTimePicker.showInsideBottomSheet(
+                 context: context,
+                 sheetConfig: sheetConfig,
+                 sheetTitleText: sheetTitleText,
+                 sheetButtonLabelText: sheetButtonLabelText,
+                 initialDateTime: value,
+                 minimumDateTime: minimumDateTime,
+                 maximumDateTime: maximumDateTime,
+                 minuteInterval: minuteInterval,
+                 visibleItemCount: visibleItemCount,
+                 pickerStyle: pickerStyle,
+                 onDateTimeChanged: onDateTimeChanged,
+               );
+             }
+           : null,
     );
   }
 

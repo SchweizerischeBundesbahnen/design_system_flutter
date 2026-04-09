@@ -17,6 +17,7 @@ class SBBDatePicker extends StatefulWidget {
     DateTime? minimumDate,
     DateTime? maximumDate,
     this.visibleItemCount = _defaultVisibleItemCount,
+    this.pickerStyle,
   }) : assert(
          visibleItemCount > 0 && visibleItemCount % 2 == 1,
          'visibleItemCount must be a positive odd number, but was $visibleItemCount',
@@ -65,6 +66,12 @@ class SBBDatePicker extends StatefulWidget {
   /// Defaults to 7.
   final int visibleItemCount;
 
+  /// Customizes the visual appearance of the picker.
+  ///
+  /// Non-null properties override the corresponding properties in
+  /// [SBBPickerThemeData.pickerStyle] from the current theme.
+  final SBBPickerStyle? pickerStyle;
+
   /// Shows a [SBBBottomSheet] with an [SBBDatePicker] to select a [DateTime].
   ///
   /// See also:
@@ -82,6 +89,7 @@ class SBBDatePicker extends StatefulWidget {
     DateTime? maximumDate,
     ValueChanged<DateTime>? onDateChanged,
     int visibleItemCount = _defaultVisibleItemCount,
+    SBBPickerStyle? pickerStyle,
   }) {
     final localizations = MaterialLocalizations.of(context);
     final effectiveConfig = sheetConfig ?? const SBBBottomSheetConfig();
@@ -119,23 +127,24 @@ class SBBDatePicker extends StatefulWidget {
       body: Column(
         mainAxisSize: .min,
         children: [
-          Padding(
-            padding: const .symmetric(horizontal: SBBSpacing.medium),
-            child: SBBContentBox(
-              child: SBBDatePicker(
-                initialDate: effectiveInitialDate,
-                minimumDate: minimumDate,
-                maximumDate: maximumDate,
-                visibleItemCount: visibleItemCount,
-                onDateChanged: (date) {
-                  selectedDate = date;
-                  if (!acceptInitialSelection) {
-                    selectedButtonEnabled.value = date != effectiveInitialDate;
-                  }
-                },
-              ),
-            ),
-          ),
+           Padding(
+             padding: const .symmetric(horizontal: SBBSpacing.medium),
+             child: SBBContentBox(
+               child: SBBDatePicker(
+                 initialDate: effectiveInitialDate,
+                 minimumDate: minimumDate,
+                 maximumDate: maximumDate,
+                 visibleItemCount: visibleItemCount,
+                 pickerStyle: pickerStyle,
+                 onDateChanged: (date) {
+                   selectedDate = date;
+                   if (!acceptInitialSelection) {
+                     selectedButtonEnabled.value = date != effectiveInitialDate;
+                   }
+                 },
+               ),
+             ),
+           ),
           Padding(
             padding: const .all(SBBSpacing.medium),
             child: ListenableBuilder(
@@ -254,6 +263,7 @@ class _SBBDatePickerState extends _TimeBasedPickerState<SBBDatePicker> {
 
         return SBBPicker.custom(
           visibleItemCount: widget.visibleItemCount,
+          pickerStyle: widget.pickerStyle,
           child: Row(
             children: [
               SizedBox(width: _dayItemWidth, child: _buildDayPickerScrollView(context)),
@@ -266,15 +276,21 @@ class _SBBDatePickerState extends _TimeBasedPickerState<SBBDatePicker> {
     );
   }
 
-  @override
-  void dispose() {
-    _dayController.dispose();
-    _monthController.dispose();
-    _yearController.dispose();
-    _monthYearValueNotifier.dispose();
-    _yearValueNotifier.dispose();
-    super.dispose();
-  }
+   @override
+   void dispose() {
+     _dayController.dispose();
+     _monthController.dispose();
+     _yearController.dispose();
+     _monthYearValueNotifier.dispose();
+     _yearValueNotifier.dispose();
+     super.dispose();
+   }
+
+   @override
+   SBBPickerStyle? _getEffectivePickerStyle(BuildContext context) {
+     final themePickerStyle = Theme.of(context).sbbPickerTheme?.pickerStyle;
+     return themePickerStyle?.merge(widget.pickerStyle) ?? widget.pickerStyle;
+   }
 
   Widget _buildDayPickerScrollView(BuildContext context) {
     return ValueListenableBuilder(
@@ -285,6 +301,7 @@ class _SBBDatePickerState extends _TimeBasedPickerState<SBBDatePicker> {
           onSelectedItemChanged: _onSelectedDayItemChanged,
           itemBuilder: (_, index) => _buildDayItem(index, selectedMonthYear),
           visibleItemCount: widget.visibleItemCount,
+          pickerStyle: widget.pickerStyle,
         );
       },
     );
@@ -299,6 +316,7 @@ class _SBBDatePickerState extends _TimeBasedPickerState<SBBDatePicker> {
           onSelectedItemChanged: _onSelectedMonthItemChanged,
           itemBuilder: (_, index) => _buildMonthItem(index, selectedYear),
           visibleItemCount: widget.visibleItemCount,
+          pickerStyle: widget.pickerStyle,
         );
       },
     );
@@ -311,6 +329,7 @@ class _SBBDatePickerState extends _TimeBasedPickerState<SBBDatePicker> {
       onSelectedItemChanged: _onSelectedYearItemChanged,
       itemBuilder: (_, index) => _buildYearItem(index),
       visibleItemCount: widget.visibleItemCount,
+      pickerStyle: widget.pickerStyle,
     );
   }
 

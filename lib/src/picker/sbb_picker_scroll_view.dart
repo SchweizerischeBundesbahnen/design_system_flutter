@@ -30,6 +30,10 @@ class SBBPickerScrollView extends StatefulWidget {
   /// If set to true, scrolling past the end of the list will loop the list back
   /// to the beginning. If set to false, the list will stop scrolling when you
   /// reach the end or the beginning. Defaults to true.
+  ///
+  /// [pickerStyle] can be used to customize the visual appearance of the picker.
+  /// Non-null properties override the corresponding properties in
+  /// [SBBPickerThemeData.pickerStyle] from the current theme.
   const SBBPickerScrollView({
     super.key,
     required this.onSelectedItemChanged,
@@ -38,10 +42,11 @@ class SBBPickerScrollView extends StatefulWidget {
     this.initialItem = 0,
     this.looping = true,
     this.visibleItemCount = _defaultVisibleItemCount,
+    this.pickerStyle,
   }) : assert(
-         visibleItemCount > 0 && visibleItemCount % 2 == 1,
-         'visibleItemCount must be a positive odd number, but was $visibleItemCount',
-       );
+  visibleItemCount > 0 && visibleItemCount % 2 == 1,
+  'visibleItemCount must be a positive odd number, but was $visibleItemCount',
+  );
 
   final ValueChanged<int>? onSelectedItemChanged;
   final SBBPickerScrollViewItemBuilder itemBuilder;
@@ -64,6 +69,12 @@ class SBBPickerScrollView extends StatefulWidget {
   /// Defaults to 7.
   final int visibleItemCount;
 
+  /// Customizes the visual appearance of the picker.
+  ///
+  /// Non-null properties override the corresponding properties in
+  /// [SBBPickerThemeData.pickerStyle] from the current theme.
+  final SBBPickerStyle? pickerStyle;
+
   @override
   State<SBBPickerScrollView> createState() => _SBBPickerScrollViewState();
 }
@@ -72,10 +83,14 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
   // Visual parameters for the scroll wheel effect.
   static const _transformAmplitude = 2.5; // max vertical translate offset in pixels
 
-  static const _disabledItemOpacity = 0.35;
-
   @override
   int get _visibleItemCount => widget.visibleItemCount;
+
+  @override
+  SBBPickerStyle? _getEffectivePickerStyle(BuildContext context) {
+    final themePickerStyle = Theme.of(context).sbbPickerTheme?.pickerStyle;
+    return themePickerStyle?.merge(widget.pickerStyle) ?? widget.pickerStyle;
+  }
 
   int get _visibleCenterItemIndex => _visibleItemCount ~/ 2;
 
@@ -235,8 +250,8 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
     final itemIndex = index + _initialIndexOffset - _visibleCenterItemIndex;
     final item = widget.itemBuilder(context, itemIndex);
     assert(
-      !widget.looping || item != null,
-      'Item builder returned null for index $itemIndex but looping was set to true',
+    !widget.looping || item != null,
+    'Item builder returned null for index $itemIndex but looping was set to true',
     );
 
     if (!widget.looping && item == null) {
@@ -446,10 +461,7 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
   }
 
   TextStyle _itemTextStyle(bool itemEnabled) {
-    final style = SBBControlStyles.of(context).picker!;
-    final colorOpacity = itemEnabled ? 1.0 : _disabledItemOpacity;
-    final textColor = SBBColors.white.withValues(alpha: colorOpacity);
-    final textStyle = style.textStyle!.copyWith(color: textColor);
-    return textStyle;
+    final style = _getEffectivePickerStyle(context)!;
+    return style.textStyle!.copyWith(color: itemEnabled ? style.foregroundColor : style.disabledForegroundColor);
   }
 }

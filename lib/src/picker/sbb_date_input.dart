@@ -51,6 +51,7 @@ class SBBDateInput extends StatelessWidget {
     this.sheetConfig,
     this.sheetTitleText,
     this.sheetButtonLabelText,
+    this.pickerStyle,
   }) : assert(
          visibleItemCount > 0 && visibleItemCount % 2 == 1,
          'visibleItemCount must be a positive odd number, but was $visibleItemCount',
@@ -125,6 +126,12 @@ class SBBDateInput extends StatelessWidget {
   /// When not provided, defaults to [MaterialLocalizations.datePickerHelpText].
   final String? sheetButtonLabelText;
 
+  /// Customizes the visual appearance of the picker.
+  ///
+  /// Non-null properties override the corresponding properties in
+  /// [SBBPickerThemeData.pickerStyle] from the current theme.
+  final SBBPickerStyle? pickerStyle;
+
   @override
   Widget build(BuildContext context) {
     return SBBDecoratedText(
@@ -140,6 +147,7 @@ class SBBDateInput extends StatelessWidget {
           ? () {
               SBBDatePicker.showInsideBottomSheet(
                 context: context,
+                onDateChanged: onDateChanged,
                 sheetConfig: sheetConfig,
                 sheetTitleText: sheetTitleText,
                 sheetButtonLabelText: sheetButtonLabelText,
@@ -147,7 +155,7 @@ class SBBDateInput extends StatelessWidget {
                 minimumDate: minimumDate,
                 maximumDate: maximumDate,
                 visibleItemCount: visibleItemCount,
-                onDateChanged: onDateChanged,
+                pickerStyle: pickerStyle,
               );
             }
           : null,

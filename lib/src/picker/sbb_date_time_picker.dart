@@ -18,6 +18,7 @@ class SBBDateTimePicker extends StatefulWidget {
     DateTime? maximumDateTime,
     this.minuteInterval = _defaultMinuteInterval,
     this.visibleItemCount = _defaultVisibleItemCount,
+    this.pickerStyle,
   }) : assert(
          minuteInterval > 0 && TimeOfDay.minutesPerHour % minuteInterval == 0,
          'minute interval is not a positive integer factor of 60',
@@ -84,6 +85,12 @@ class SBBDateTimePicker extends StatefulWidget {
   /// Defaults to 7.
   final int visibleItemCount;
 
+  /// Customizes the visual appearance of the picker.
+  ///
+  /// Non-null properties override the corresponding properties in
+  /// [SBBPickerThemeData.pickerStyle] from the current theme.
+  final SBBPickerStyle? pickerStyle;
+
   /// Shows a [SBBBottomSheet] with an [SBBDateTimePicker] to select a [DateTime].
   ///
   /// See also:
@@ -102,6 +109,7 @@ class SBBDateTimePicker extends StatefulWidget {
     int minuteInterval = _defaultMinuteInterval,
     ValueChanged<DateTime>? onDateTimeChanged,
     int visibleItemCount = _defaultVisibleItemCount,
+    SBBPickerStyle? pickerStyle,
   }) {
     final localizations = MaterialLocalizations.of(context);
     final effectiveConfig = sheetConfig ?? const SBBBottomSheetConfig();
@@ -146,21 +154,22 @@ class SBBDateTimePicker extends StatefulWidget {
         children: [
           Padding(
             padding: const .symmetric(horizontal: SBBSpacing.medium),
-            child: SBBContentBox(
-              child: SBBDateTimePicker(
-                initialDateTime: initialDateTime,
-                minimumDateTime: minimumDateTime,
-                maximumDateTime: maximumDateTime,
-                minuteInterval: minuteInterval,
-                visibleItemCount: visibleItemCount,
-                onDateTimeChanged: (dateTime) {
-                  selectedDateTime = dateTime;
-                  if (!acceptInitialSelection) {
-                    selectedButtonEnabled.value = dateTime != effectiveInitialDateTime;
-                  }
-                },
-              ),
-            ),
+             child: SBBContentBox(
+               child: SBBDateTimePicker(
+                 initialDateTime: initialDateTime,
+                 minimumDateTime: minimumDateTime,
+                 maximumDateTime: maximumDateTime,
+                 minuteInterval: minuteInterval,
+                 visibleItemCount: visibleItemCount,
+                 pickerStyle: pickerStyle,
+                 onDateTimeChanged: (dateTime) {
+                   selectedDateTime = dateTime;
+                   if (!acceptInitialSelection) {
+                     selectedButtonEnabled.value = dateTime != effectiveInitialDateTime;
+                   }
+                 },
+               ),
+             ),
           ),
           Padding(
             padding: const .all(SBBSpacing.medium),
@@ -283,6 +292,7 @@ class _SBBDateTimePickerState extends _TimeBasedPickerState<SBBDateTimePicker> {
 
         return SBBPicker.custom(
           visibleItemCount: widget.visibleItemCount,
+          pickerStyle: widget.pickerStyle,
           child: Row(
             children: [
               Expanded(child: _buildDatePickerScrollView()),
@@ -305,12 +315,19 @@ class _SBBDateTimePickerState extends _TimeBasedPickerState<SBBDateTimePicker> {
     super.dispose();
   }
 
+  @override
+  SBBPickerStyle? _getEffectivePickerStyle(BuildContext context) {
+    final themePickerStyle = Theme.of(context).sbbPickerTheme?.pickerStyle;
+    return themePickerStyle?.merge(widget.pickerStyle) ?? widget.pickerStyle;
+  }
+
   Widget _buildDatePickerScrollView() {
     return SBBPickerScrollView(
       controller: _dateController,
       onSelectedItemChanged: _onSelectedDateItemChanged,
       itemBuilder: (_, index) => _buildDateItem(index),
       visibleItemCount: widget.visibleItemCount,
+      pickerStyle: widget.pickerStyle,
     );
   }
 
@@ -323,6 +340,7 @@ class _SBBDateTimePickerState extends _TimeBasedPickerState<SBBDateTimePicker> {
           onSelectedItemChanged: _onSelectedHourItemChanged,
           itemBuilder: (_, index) => _buildHourItem(index, selectedDate),
           visibleItemCount: widget.visibleItemCount,
+          pickerStyle: widget.pickerStyle,
         );
       },
     );
@@ -337,6 +355,7 @@ class _SBBDateTimePickerState extends _TimeBasedPickerState<SBBDateTimePicker> {
           onSelectedItemChanged: _onSelectedMinuteItemChanged,
           itemBuilder: (_, index) => _buildMinuteItem(index, selectedDateTime),
           visibleItemCount: widget.visibleItemCount,
+          pickerStyle: widget.pickerStyle,
         );
       },
     );

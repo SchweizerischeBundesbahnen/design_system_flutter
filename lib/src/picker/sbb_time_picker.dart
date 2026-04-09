@@ -18,6 +18,7 @@ class SBBTimePicker extends StatefulWidget {
     TimeOfDay? maximumTime,
     this.minuteInterval = _defaultMinuteInterval,
     this.visibleItemCount = _defaultVisibleItemCount,
+    this.pickerStyle,
   }) : assert(
          minuteInterval > 0 && TimeOfDay.minutesPerHour % minuteInterval == 0,
          'minute interval is not a positive integer factor of 60',
@@ -80,6 +81,12 @@ class SBBTimePicker extends StatefulWidget {
   /// Defaults to 7.
   final int visibleItemCount;
 
+  /// Customizes the visual appearance of the picker.
+  ///
+  /// Non-null properties override the corresponding properties in
+  /// [SBBPickerThemeData.pickerStyle] from the current theme.
+  final SBBPickerStyle? pickerStyle;
+
   /// Shows a [SBBBottomSheet] with an [SBBTimePicker] to select a [TimeOfDay].
   ///
   /// See also:
@@ -98,6 +105,7 @@ class SBBTimePicker extends StatefulWidget {
     int minuteInterval = _defaultMinuteInterval,
     ValueChanged<TimeOfDay>? onTimeChanged,
     int visibleItemCount = _defaultVisibleItemCount,
+    SBBPickerStyle? pickerStyle,
   }) {
     final localizations = MaterialLocalizations.of(context);
     final effectiveConfig = sheetConfig ?? const SBBBottomSheetConfig();
@@ -149,6 +157,7 @@ class SBBTimePicker extends StatefulWidget {
                 maximumTime: maximumTime,
                 minuteInterval: minuteInterval,
                 visibleItemCount: visibleItemCount,
+                pickerStyle: pickerStyle,
                 onTimeChanged: (time) {
                   selectedTime = time;
                   if (!acceptInitialSelection) {
@@ -268,6 +277,7 @@ class _SBBTimePickerTimeState extends _TimeBasedPickerState<SBBTimePicker> {
 
         return SBBPicker.custom(
           visibleItemCount: widget.visibleItemCount,
+          pickerStyle: widget.pickerStyle,
           child: Row(
             children: [
               Expanded(child: _buildHourPickerScrollView(context)),
@@ -287,12 +297,19 @@ class _SBBTimePickerTimeState extends _TimeBasedPickerState<SBBTimePicker> {
     super.dispose();
   }
 
+  @override
+  SBBPickerStyle? _getEffectivePickerStyle(BuildContext context) {
+    final themePickerStyle = Theme.of(context).sbbPickerTheme?.pickerStyle;
+    return themePickerStyle?.merge(widget.pickerStyle) ?? widget.pickerStyle;
+  }
+
   Widget _buildHourPickerScrollView(BuildContext context) {
     return SBBPickerScrollView(
       controller: _hourController,
       onSelectedItemChanged: _onSelectedHourItemChanged,
       itemBuilder: (_, index) => _buildHourItem(index),
       visibleItemCount: widget.visibleItemCount,
+      pickerStyle: widget.pickerStyle,
     );
   }
 
@@ -305,6 +322,7 @@ class _SBBTimePickerTimeState extends _TimeBasedPickerState<SBBTimePicker> {
           onSelectedItemChanged: _onSelectedMinuteItemChanged,
           itemBuilder: (_, index) => _buildMinuteItem(index, selectedHour),
           visibleItemCount: widget.visibleItemCount,
+          pickerStyle: widget.pickerStyle,
         );
       },
     );

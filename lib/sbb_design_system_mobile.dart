@@ -15,7 +15,7 @@ export 'src/logo/sbb_logo.dart';
 export 'src/message/message.dart';
 export 'src/notification_box/notification_box.dart';
 export 'src/paginator/paginator.dart';
-export 'src/picker/sbb_picker.dart';
+export 'src/picker/picker.dart';
 export 'src/popup/popup.dart';
 export 'src/promotion_box/promotion_box.dart';
 export 'src/radio/radio.dart';

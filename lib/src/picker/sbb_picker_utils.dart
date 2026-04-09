@@ -38,7 +38,7 @@ abstract class _PickerClassState<T extends StatefulWidget> extends State<T> {
   }
 
   Size _textSize(String text) {
-    final textStyle = SBBControlStyles.of(context).picker!.textStyle;
+    final textStyle = _getEffectivePickerStyle(context)?.textStyle;
     final textSpan = TextSpan(text: text, style: textStyle);
     final textDirection = Directionality.of(context);
     final textPainter = TextPainter(
@@ -50,6 +50,10 @@ abstract class _PickerClassState<T extends StatefulWidget> extends State<T> {
     textPainter.layout();
     final textSize = textPainter.size;
     return textSize;
+  }
+
+  SBBPickerStyle? _getEffectivePickerStyle(BuildContext context) {
+    return Theme.of(context).sbbPickerTheme?.pickerStyle;
   }
 }
 

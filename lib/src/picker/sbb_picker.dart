@@ -18,8 +18,6 @@ part 'sbb_picker_utils.dart';
 part 'sbb_time_input.dart';
 part 'sbb_time_picker.dart';
 
-// TODO: add themeData & style for more customization
-// TODO: disabled color
 // TODO: documentation and migration guide
 
 /// SBB Picker. Use according to documentation.
@@ -48,6 +46,10 @@ class SBBPicker extends StatefulWidget {
   /// to the beginning. If set to false, the list will stop scrolling when you
   /// reach the end or the beginning. Defaults to true.
   ///
+  /// [pickerStyle] can be used to customize the visual appearance of the picker.
+  /// Non-null properties override the corresponding properties in
+  /// [SBBPickerThemeData.pickerStyle] from the current theme.
+  ///
   /// See also:
   ///
   /// * [SBBPicker.list], constructor for basic SBB Picker.
@@ -59,9 +61,11 @@ class SBBPicker extends StatefulWidget {
     required SBBPickerScrollViewItemBuilder itemBuilder,
     bool looping = true,
     int visibleItemCount = _defaultVisibleItemCount,
+    SBBPickerStyle? pickerStyle,
   }) : this.custom(
          key: key,
          visibleItemCount: visibleItemCount,
+         pickerStyle: pickerStyle,
          child: SBBPickerScrollView(
            controller: controller,
            initialItem: initialSelectedIndex,
@@ -69,6 +73,7 @@ class SBBPicker extends StatefulWidget {
            itemBuilder: itemBuilder,
            looping: looping,
            visibleItemCount: visibleItemCount,
+           pickerStyle: pickerStyle,
          ),
        );
 
@@ -89,6 +94,10 @@ class SBBPicker extends StatefulWidget {
   /// If set to true, scrolling past the end of the list will loop the list back
   /// to the beginning. If set to false, the list will stop scrolling when you
   /// reach the end or the beginning. Defaults to true.
+  ///
+  /// [pickerStyle] can be used to customize the visual appearance of the picker.
+  /// Non-null properties override the corresponding properties in
+  /// [SBBPickerThemeData.pickerStyle] from the current theme.
   SBBPicker.list({
     Key? key,
     SBBPickerScrollController? controller,
@@ -97,6 +106,7 @@ class SBBPicker extends StatefulWidget {
     required List items,
     bool looping = true,
     int visibleItemCount = _defaultVisibleItemCount,
+    SBBPickerStyle? pickerStyle,
   }) : this(
          key: key,
          controller: controller,
@@ -112,6 +122,7 @@ class SBBPicker extends StatefulWidget {
          },
          looping: false,
          visibleItemCount: visibleItemCount,
+         pickerStyle: pickerStyle,
        );
 
   /// Constructs a fully customizable [SBBPicker]. This only builds the skeleton
@@ -125,6 +136,10 @@ class SBBPicker extends StatefulWidget {
   /// [child] is the widget containing the actual contents. Make sure to include
   /// [SBBPickerScrollView] in the widget tree.
   ///
+  /// [pickerStyle] can be used to customize the visual appearance of the picker.
+  /// Non-null properties override the corresponding properties in
+  /// [SBBPickerThemeData.pickerStyle] from the current theme.
+  ///
   /// See also:
   ///
   /// * [SBBPicker.new], default constructor for SBB Picker with limited
@@ -134,6 +149,7 @@ class SBBPicker extends StatefulWidget {
     super.key,
     required this.child,
     this.visibleItemCount = _defaultVisibleItemCount,
+    this.pickerStyle,
   }) : assert(
          visibleItemCount > 0 && visibleItemCount % 2 == 1,
          'visibleItemCount must be a positive odd number, but was $visibleItemCount',
@@ -148,6 +164,12 @@ class SBBPicker extends StatefulWidget {
   /// Defaults to 7.
   final int visibleItemCount;
 
+  /// Customizes the visual appearance of the picker.
+  ///
+  /// Non-null properties override the corresponding properties in
+  /// [SBBPickerThemeData.pickerStyle] from the current theme.
+  final SBBPickerStyle? pickerStyle;
+
   @override
   State<SBBPicker> createState() => _SBBPickerState();
 }
@@ -155,6 +177,12 @@ class SBBPicker extends StatefulWidget {
 class _SBBPickerState extends _PickerClassState<SBBPicker> {
   @override
   int get _visibleItemCount => widget.visibleItemCount;
+
+  @override
+  SBBPickerStyle? _getEffectivePickerStyle(BuildContext context) {
+    final themePickerStyle = Theme.of(context).sbbPickerTheme?.pickerStyle;
+    return themePickerStyle?.merge(widget.pickerStyle) ?? widget.pickerStyle;
+  }
 
   double get _widgetHeight => _scrollAreaHeight + SBBSpacing.medium;
 
@@ -168,6 +196,7 @@ class _SBBPickerState extends _PickerClassState<SBBPicker> {
         alignment: .center,
         children: [
           _buildHighlightedArea(context),
+          // widget.child,
           ShaderMask(
             shaderCallback: (bounds) => _shaderCallback(context, bounds),
             child: SizedBox(height: _scrollAreaHeight, child: widget.child),
@@ -178,7 +207,7 @@ class _SBBPickerState extends _PickerClassState<SBBPicker> {
   }
 
   Widget _buildHighlightedArea(BuildContext context) {
-    final highlightColor = SBBControlStyles.of(context).picker!.highlightColor;
+    final highlightColor = _getEffectivePickerStyle(context)?.highlightBackgroundColor;
     return Container(
       height: _highlightedAreaHeight,
       margin: const .symmetric(horizontal: SBBSpacing.xSmall),
@@ -263,9 +292,9 @@ class _SBBPickerState extends _PickerClassState<SBBPicker> {
     final opacities = [...topOpacities, ...bottomOpacities];
 
     // get base color from theme
-    final textColor = SBBControlStyles.of(context).picker!.textStyle!.color!;
+    final pickerForegroundColor = _getEffectivePickerStyle(context)!.foregroundColor!;
 
     // return generated list of gradient color values
-    return opacities.map((opacity) => textColor.withValues(alpha: opacity)).toList();
+    return opacities.map((opacity) => pickerForegroundColor.withValues(alpha: opacity)).toList();
   }
 }

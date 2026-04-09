@@ -51,6 +51,7 @@ class SBBTimeInput extends StatelessWidget {
     this.sheetConfig,
     this.sheetTitleText,
     this.sheetButtonLabelText,
+    this.pickerStyle,
   }) : assert(
          visibleItemCount > 0 && visibleItemCount % 2 == 1,
          'visibleItemCount must be a positive odd number, but was $visibleItemCount',
@@ -125,6 +126,12 @@ class SBBTimeInput extends StatelessWidget {
   /// When not provided, defaults to [MaterialLocalizations.timePickerDialHelpText].
   final String? sheetButtonLabelText;
 
+  /// Customizes the visual appearance of the picker.
+  ///
+  /// Non-null properties override the corresponding properties in
+  /// [SBBPickerThemeData.pickerStyle] from the current theme.
+  final SBBPickerStyle? pickerStyle;
+
   @override
   Widget build(BuildContext context) {
     return SBBDecoratedText(
@@ -136,22 +143,23 @@ class SBBTimeInput extends StatelessWidget {
       expands: triggerConfig.expands,
       focusNode: triggerConfig.focusNode,
       autofocus: triggerConfig.autofocus,
-      onTap: onTimeChanged != null
-          ? () {
-              SBBTimePicker.showInsideBottomSheet(
-                context: context,
-                sheetConfig: sheetConfig,
-                sheetTitleText: sheetTitleText,
-                sheetButtonLabelText: sheetButtonLabelText,
-                initialTime: value,
-                minimumTime: minimumTime,
-                maximumTime: maximumTime,
-                minuteInterval: minuteInterval,
-                visibleItemCount: visibleItemCount,
-                onTimeChanged: onTimeChanged,
-              );
-            }
-          : null,
+       onTap: onTimeChanged != null
+           ? () {
+               SBBTimePicker.showInsideBottomSheet(
+                 context: context,
+                 sheetConfig: sheetConfig,
+                 sheetTitleText: sheetTitleText,
+                 sheetButtonLabelText: sheetButtonLabelText,
+                 initialTime: value,
+                 minimumTime: minimumTime,
+                 maximumTime: maximumTime,
+                 minuteInterval: minuteInterval,
+                 visibleItemCount: visibleItemCount,
+                 pickerStyle: pickerStyle,
+                 onTimeChanged: onTimeChanged,
+               );
+             }
+           : null,
     );
   }
 
