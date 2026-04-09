@@ -18,6 +18,12 @@ part 'sbb_picker_utils.dart';
 part 'sbb_time_input.dart';
 part 'sbb_time_picker.dart';
 
+// TODO: improve gradient and effect of scrolling
+// TODO: add themeData & style for more customization
+// TODO: disabled color
+// TODO: revise tests
+// TODO: documentation and migration guide
+
 /// SBB Picker. Use according to documentation.
 ///
 /// See also:
@@ -151,9 +157,9 @@ class _SBBPickerState extends _PickerClassState<SBBPicker> {
   @override
   int get _visibleItemCount => widget.visibleItemCount;
 
-  get _widgetHeight => _scrollAreaHeight + SBBSpacing.xLarge;
+  double get _widgetHeight => _scrollAreaHeight + SBBSpacing.medium;
 
-  get _highlightedAreaHeight => _itemHeight + 4.0;
+  double get _highlightedAreaHeight => _itemHeight + SBBSpacing.xxSmall;
 
   @override
   Widget build(BuildContext context) {
@@ -194,66 +200,68 @@ class _SBBPickerState extends _PickerClassState<SBBPicker> {
   }
 
   List<double> _gradientStops() {
-    // stops are values from 0.0 to 1.0 (fractions along the gradient)
+    // Stops are built for upper half of the scrollable area and mirrored for the bottom half.
+    // All sizes are relative to the _scrollAreaHeight for gradient stop calculation
     const start = 0.0;
     const center = 0.5;
     const end = 1.0;
 
-    final n = _visibleItemCount;
-    final itemHeight = _itemHeight / _scrollAreaHeight;
-    final sideItemCount = n ~/ 2; // items on each side of the center item
+    final relativeItemHeight = _itemHeight / _scrollAreaHeight;
+    // number of items on each side of the center item
+    final sideItemCount = _visibleItemCount ~/ 2;
 
     // highlighted area
-    final highlightedAreaHeight = _highlightedAreaHeight / _scrollAreaHeight;
-    final highlightStart = center - highlightedAreaHeight * 0.5;
-    final highlightEnd = highlightStart + highlightedAreaHeight;
+    final relativeHighlightedAreaHeight = _highlightedAreaHeight / _scrollAreaHeight;
+    final highlightStart = center - relativeHighlightedAreaHeight * 0.5;
 
     // Build stops for the top half: start, then one stop per side item center,
     // then the highlight boundary.
-    final topStops = <double>[start];
+    final List<double> topStops = [start];
     for (var i = 0; i < sideItemCount; i++) {
-      topStops.add(itemHeight * (i + 0.5));
+      topStops.add(relativeItemHeight * (i + 0.5));
     }
+
+    // duplicate for hard transition
     topStops.add(highlightStart);
-    topStops.add(highlightStart); // duplicate for hard transition
+    topStops.add(highlightStart);
 
-    // highlighted center
-    final centerStops = <double>[highlightEnd, highlightEnd];
-
-    // bottom half mirrors the top (excluding center duplicates)
+    // bottom half mirrors the top
     final bottomStops = topStops.reversed.map((s) => end - s).toList();
 
-    return [...topStops, ...centerStops, ...bottomStops];
+    return [...topStops, ...bottomStops];
   }
 
   List<Color> _gradientColors(BuildContext context) {
-    final n = _visibleItemCount;
-    final sideItemCount = n ~/ 2; // items on each side of center
+    /*
+    Colors are based on the picker text style color with opacity values applied.
 
-    // Build opacity values for top half: linear from 0.0 at the edge to 1.0
-    // at the center (highlighted) item. Each side item gets a linearly
-    // interpolated opacity value. The highlighted area itself gets opacity 1.0.
-    //
-    // stops built in _gradientStops: [start, centerOfItem0, ..., centerOfItem(n/2-1), highlightStart, highlightStart]
-    // corresponding opacities:       [0.0,  opacity1,      ..., opacity(n/2),         1.0,            1.0           ]
+    Opacities are built for upper half of the scrollable area and mirrored for the bottom half.
+    All sizes are relative to the _scrollAreaHeight for gradient stop calculation.
+
+    The opacities exponentially decay from the highlighted area outward,
+    meaning opacity drops very fast just outside the center and then
+    stays nearly flat toward the edges. The highlighted area itself gets opacity 1.0.
+
+    Built in _gradientStops: [start, centerOfItem0, ..., centerOfItem(n/2-1), highlightStart, highlightStart]
+    Corresponding opacities: [0.0,   opacity1,      ..., opacity(n/2),        1.0,            1.0           ]
+     */
+
+    // number of items on each side of the center item
+    final sideItemCount = _visibleItemCount ~/ 2;
 
     final topOpacities = <double>[0.0];
     for (var i = 0; i < sideItemCount; i++) {
-      // linear interpolation: item closest to edge gets opacity near 0,
-      // item closest to center gets opacity near 1.
-      final opacity = (i + 1) / (sideItemCount + 1);
+      final x = (i + 1) / (sideItemCount + 1);
+      final opacity = (exp(2 * x) - 1) / (exp(2) - 1) + .1;
       topOpacities.add(opacity);
     }
     topOpacities.add(1.0); // highlightStart
     topOpacities.add(1.0); // highlightStart duplicate
 
-    // highlighted area is fully opaque
-    final centerOpacities = <double>[1.0, 1.0];
-
     // bottom half mirrors the top
     final bottomOpacities = topOpacities.reversed.toList();
 
-    final opacities = [...topOpacities, ...centerOpacities, ...bottomOpacities];
+    final opacities = [...topOpacities, ...bottomOpacities];
 
     // get base color from theme
     final textColor = SBBControlStyles.of(context).picker!.textStyle!.color!;
