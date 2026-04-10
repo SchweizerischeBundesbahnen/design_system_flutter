@@ -49,7 +49,8 @@ class SBBHeaderBoxFlap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final Color? flapColor = SBBHeaderBoxStyle.of(context).flapBackgroundColor;
+    final style = Theme.of(context).sbbHeaderBoxTheme!.style!;
+    final Color? flapColor = style.flapBackgroundColor;
     return Container(
       padding: padding,
       decoration: BoxDecoration(color: flapColor, borderRadius: _flapBorderRadius),

@@ -163,31 +163,32 @@ class _HeaderBoxForeground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final style = Theme.of(context).sbbHeaderBoxTheme!.style!;
+
     return Semantics(
       header: true,
       label: semanticsLabel,
-      child: flap != null ? _flappedHeaderBox(context) : _headerBox(context),
+      child: flap != null ? _flappedHeaderBox(context, style) : _headerBox(context, style),
     );
   }
 
-  Widget _flappedHeaderBox(BuildContext context) {
+  Widget _flappedHeaderBox(BuildContext context, SBBHeaderBoxStyle style) {
     final flap = this.flap!;
 
     return Container(
-      decoration: _flappedBackgroundDecoration(context),
+      decoration: _flappedBackgroundDecoration(context, style),
       child: Column(
         mainAxisSize: .min,
         spacing: _headerBoxFlapTopMargin,
         children: [
-          _headerBox(context),
+          _headerBox(context, style),
           flap,
         ],
       ),
     );
   }
 
-  Widget _headerBox(BuildContext context) {
-    final SBBHeaderBoxStyle style = SBBHeaderBoxStyle.of(context);
+  Widget _headerBox(BuildContext context, SBBHeaderBoxStyle style) {
     return Container(
       clipBehavior: .hardEdge,
       decoration: BoxDecoration(
@@ -201,8 +202,8 @@ class _HeaderBoxForeground extends StatelessWidget {
     );
   }
 
-  BoxDecoration _flappedBackgroundDecoration(BuildContext context) {
-    final Color flapBackgroundColor = SBBHeaderBoxStyle.of(context).flapBackgroundColor!;
+  BoxDecoration _flappedBackgroundDecoration(BuildContext context, SBBHeaderBoxStyle style) {
+    final Color flapBackgroundColor = style.flapBackgroundColor!;
     return BoxDecoration(
       boxShadow: SBBInternal.defaultBoxShadow,
       borderRadius: BorderRadius.only(bottomLeft: _headerBoxRadius, bottomRight: _headerBoxRadius),

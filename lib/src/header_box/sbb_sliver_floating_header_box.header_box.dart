@@ -127,7 +127,8 @@ class _HeaderBoxForeground extends StatelessWidget {
   }
 
   Widget _headerBox(BuildContext context) {
-    final SBBHeaderBoxStyle style = SBBHeaderBoxStyle.of(context);
+    final style = Theme.of(context).sbbHeaderBoxTheme!.style!;
+
     return Container(
       clipBehavior: .hardEdge,
       decoration: BoxDecoration(
@@ -142,7 +143,9 @@ class _HeaderBoxForeground extends StatelessWidget {
   }
 
   BoxDecoration _flappedBackgroundDecoration(BuildContext context) {
-    final Color flapBackgroundColor = SBBHeaderBoxStyle.of(context).flapBackgroundColor!;
+    final style = Theme.of(context).sbbHeaderBoxTheme!.style!;
+    final Color flapBackgroundColor = style.flapBackgroundColor!;
+
     return BoxDecoration(
       boxShadow: SBBInternal.defaultBoxShadow,
       borderRadius: BorderRadius.only(bottomLeft: _headerBoxRadius, bottomRight: _headerBoxRadius),

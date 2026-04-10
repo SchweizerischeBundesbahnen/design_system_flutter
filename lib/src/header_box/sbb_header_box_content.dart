@@ -18,7 +18,7 @@ class DefaultHeaderBoxContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final style = SBBHeaderBoxStyle.of(context);
+    final style = Theme.of(context).sbbHeaderBoxTheme!.style!;
     final secondaryTextStyle = SBBTextStyles.smallLight.copyWith(color: style.secondaryLabelColor);
 
     return Row(
@@ -63,7 +63,7 @@ class LargeHeaderBoxContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final style = SBBHeaderBoxStyle.of(context);
+    final style = Theme.of(context).sbbHeaderBoxTheme!.style!;
     final secondaryTextStyle = SBBTextStyles.mediumLight.copyWith(color: style.largeSecondaryLabelColor);
 
     return Row(
