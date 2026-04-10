@@ -30,10 +30,6 @@ class SBBTimePicker extends StatefulWidget {
          minuteInterval > 0 && TimeOfDay.minutesPerHour % minuteInterval == 0,
          'minute interval is not a positive integer factor of 60',
        ),
-       assert(
-         visibleItemCount > 0 && visibleItemCount % 2 == 1,
-         'visibleItemCount must be a positive odd number, but was $visibleItemCount',
-       ),
        initialTime = PickerUtils.clampedAndIntervaledTime(
          initialTime ?? TimeOfDay.now(),
          minimumTime,

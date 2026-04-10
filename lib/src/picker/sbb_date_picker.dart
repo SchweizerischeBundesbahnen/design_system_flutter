@@ -26,11 +26,7 @@ class SBBDatePicker extends StatefulWidget {
     DateTime? maximumDate,
     this.visibleItemCount = pickerDefaultVisibleItemCount,
     this.pickerStyle,
-  }) : assert(
-         visibleItemCount > 0 && visibleItemCount % 2 == 1,
-         'visibleItemCount must be a positive odd number, but was $visibleItemCount',
-       ),
-       initialDate = PickerUtils.clampedDateOnly(initialDate ?? DateTime.now(), minimumDate, maximumDate),
+  }) : initialDate = PickerUtils.clampedDateOnly(initialDate ?? DateTime.now(), minimumDate, maximumDate),
        minimumDate = minimumDate?.date,
        maximumDate = maximumDate?.date {
     assert(
