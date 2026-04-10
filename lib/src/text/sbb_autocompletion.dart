@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../../sbb_design_system_mobile.dart';
+import 'autocompletion_link.dart';
+import 'autocompletion_overlay.dart';
+import 'autocompletion_target.dart';
 
 typedef StringCallback = Function(String data);
 
@@ -13,15 +16,10 @@ typedef AutoCompleteOverlayItemBuilder<T> = Widget Function(BuildContext context
 
 /// SBB Autocompletion, BETA!
 ///
-/// This widget still has some layout problems and is best used on top of a
-/// page. Does not yet work in the middle of a form, as the calculation of the
-/// height of the suggestions overlay is based on the position of the text field.
-/// Unfortunately [MediaQuery.of] does not provide valid data (always 0) to get
-/// the size of the system keyboard. Therefore a [WidgetsBindingObserver] is
-/// necessary and this makes the handling somewhat more complex (flags for
-/// visibility).
-///
-/// Will revise the whole thing when there is more time... (famous last words)
+/// Displays a list of suggestions below the text field using an
+/// [OverlayPortal]. The available height of the suggestion list automatically
+/// accounts for the on-screen keyboard so the overlay never overlaps the
+/// keyboard.
 ///
 /// See also:
 ///
@@ -140,26 +138,20 @@ class SBBAutocompletion<T> extends StatefulWidget {
   SBBAutocompletionState createState() => SBBAutocompletionState<T>();
 }
 
-class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>> with WidgetsBindingObserver {
-  final LayerLink _layerLink = LayerLink();
+class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>> {
+  final AutocompletionLink _link = AutocompletionLink();
 
   late FocusNode _effectiveFocusNode;
   late TextEditingController _effectiveController;
 
-  StringCallback? _textChanged;
   String _currentText = '';
 
-  OverlayEntry? listSuggestionsEntry;
   List<T> filteredSuggestions = [];
-
-  double _bottomInset = 0.0;
-  bool _metricsChanged = false;
-  bool showOverlay = false;
+  bool _showOverlay = false;
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
 
     _effectiveFocusNode = widget.focusNode ?? FocusNode();
     _effectiveController = widget.controller ?? TextEditingController();
@@ -169,28 +161,28 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>> with Widgets
     if (_effectiveController.text.isNotEmpty) {
       _currentText = _effectiveController.text;
     }
-
-    _textChanged = (value) => widget.onChanged?.call(value);
   }
 
   void _handleFocusChanged() {
     widget.onFocusChanged?.call(_effectiveFocusNode.hasFocus);
 
     if (!_effectiveFocusNode.hasFocus) {
-      filteredSuggestions = [];
-      showOverlay = false;
-      _updateOverlay();
+      setState(() {
+        filteredSuggestions = [];
+        _showOverlay = false;
+      });
     } else if (_currentText.isNotEmpty) {
-      showOverlay = true;
-      _updateOverlay(query: _currentText);
+      setState(() {
+        _showOverlay = true;
+        filteredSuggestions = getSuggestions(
+          widget.suggestions,
+          widget.itemSorter,
+          widget.itemFilter,
+          widget.suggestionsAmount,
+          _currentText,
+        );
+      });
     }
-  }
-
-  @override
-  void didChangeMetrics() {
-    _bottomInset = View.of(context).viewInsets.bottom / MediaQuery.of(context).devicePixelRatio;
-    _metricsChanged = true;
-    _updateOverlay(query: _currentText);
   }
 
   void triggerSubmitted(String submittedText) {
@@ -203,171 +195,37 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>> with Widgets
 
   void clear() {
     _effectiveController.clear();
-    _currentText = '';
-    _updateOverlay();
+    setState(() {
+      _currentText = '';
+      filteredSuggestions = [];
+      _showOverlay = false;
+    });
   }
 
   void addFavorite(T favorite) {
     if (!widget.favorites.contains(favorite)) {
       widget.favorites.add(favorite);
       widget.favorites.sort(widget.itemSorter);
-      _updateOverlay(query: _currentText);
+      setState(() {});
     }
   }
 
   void removeFavorite(T favorite) {
     widget.favorites.remove(favorite);
     widget.favorites.sort(widget.itemSorter);
-    _updateOverlay(query: _currentText);
+    setState(() {});
   }
 
-  void _updateOverlay({String? query}) {
-    if (showOverlay) {
-      if (listSuggestionsEntry == null || _metricsChanged) {
-        if (listSuggestionsEntry != null) {
-          listSuggestionsEntry!.remove();
-          listSuggestionsEntry = null;
-        }
-        if (_metricsChanged) {
-          _metricsChanged = false;
-        }
-        final Size textFieldSize = (context.findRenderObject() as RenderBox).size;
-        final height = textFieldSize.height;
-
-        /// to get the size of the suggestions area between the text field and
-        /// the keyboard, do some calculations...
-        final Offset textFieldGlobalPosition = (context.findRenderObject() as RenderBox).localToGlobal(
-          Offset(0.0, height),
-        );
-
-        /// screen size - textfield bottom y - keyboard height = area height
-        final overlayHeight = MediaQuery.of(context).size.height - textFieldGlobalPosition.dy - _bottomInset;
-
-        final style = SBBBaseStyle.of(context);
-
-        listSuggestionsEntry = OverlayEntry(
-          builder: (context) {
-            final backgroundColor = style.themeValue(SBBColors.milk, SBBColors.black);
-            final optionColor = style.themeValue(SBBColors.white, SBBColors.charcoal);
-            return Positioned(
-              width: MediaQuery.of(context).size.width,
-              height: overlayHeight,
-              child: CompositedTransformFollower(
-                link: _layerLink,
-                showWhenUnlinked: false,
-                offset: Offset(-textFieldGlobalPosition.dx, height),
-                child: Material(
-                  child: Container(
-                    padding: .symmetric(horizontal: textFieldGlobalPosition.dx),
-                    color: backgroundColor,
-                    child: ListView(
-                      padding: .zero,
-                      shrinkWrap: true,
-                      children: [
-                        if (widget.favorites.isNotEmpty && widget.enableFavorites)
-                          Container(color: backgroundColor, height: 16.0),
-                        if (widget.favorites.isNotEmpty && widget.enableFavorites) const Divider(),
-                        if (widget.favorites.isNotEmpty && widget.enableFavorites)
-                          ...widget.favorites.map((T favorite) {
-                            return Container(
-                              color: optionColor,
-                              child: _createListItem(
-                                isFavorite: true,
-                                item: favorite,
-                                onPressed: () {
-                                  setState(() {
-                                    final String newText = favorite.toString();
-                                    _effectiveController.text = newText;
-                                    _textChanged?.call(newText);
-                                    if (widget.submitOnSuggestionTap) {
-                                      _effectiveFocusNode.unfocus();
-                                      widget.itemSubmitted(favorite);
-                                      if (widget.clearOnSubmit) {
-                                        clear();
-                                      }
-                                    }
-                                  });
-                                },
-                                onCallToAction: () {
-                                  widget.itemRemovedFromFavorites(favorite);
-                                },
-                              ),
-                            );
-                          }),
-                        Container(color: backgroundColor, height: 16.0),
-                        if (filteredSuggestions.isNotEmpty) const Divider(),
-                        ...filteredSuggestions.map((T suggestion) {
-                          return Container(
-                            color: optionColor,
-                            child: _createListItem(
-                              item: suggestion,
-                              onPressed: () {
-                                setState(() {
-                                  final String newText = suggestion.toString();
-                                  _effectiveController.text = newText;
-                                  _textChanged?.call(newText);
-                                  if (widget.submitOnSuggestionTap) {
-                                    _effectiveFocusNode.unfocus();
-                                    widget.itemSubmitted(suggestion);
-                                    if (widget.clearOnSubmit) {
-                                      clear();
-                                    }
-                                  }
-                                });
-                              },
-                              onCallToAction: () {
-                                widget.itemAddedToFavorites(suggestion);
-                              },
-                            ),
-                          );
-                        }),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            );
-          },
-        );
-
-        if (listSuggestionsEntry != null) {
-          Overlay.of(context).insert(listSuggestionsEntry!);
-        }
-      }
-    } else {
-      if (listSuggestionsEntry != null) {
-        listSuggestionsEntry!.remove();
-        listSuggestionsEntry = null;
-      }
-    }
-
-    filteredSuggestions = getSuggestions(
-      widget.suggestions,
-      widget.itemSorter,
-      widget.itemFilter,
-      widget.suggestionsAmount,
-      query,
-    );
-
-    listSuggestionsEntry?.markNeedsBuild();
-  }
-
-  Widget _createListItem({
-    required T item,
-    required VoidCallback onPressed,
-    required VoidCallback onCallToAction,
-    bool isFavorite = false,
-  }) {
-    return SBBListItem(
-      titleText: item.toString(),
-      onTap: onPressed,
-      leadingIconData: widget.suggestionIcon,
-      padding: SBBListItemStyle.defaultPadding.copyWith(right: 8.0),
-      trailing: SBBTertiaryButtonSmall(
-        onPressed: onCallToAction,
-        iconData: isFavorite ? SBBIcons.star_filled_small : SBBIcons.star_small,
-      ),
-    );
+  void _updateSuggestions(String query) {
+    setState(() {
+      filteredSuggestions = getSuggestions(
+        widget.suggestions,
+        widget.itemSorter,
+        widget.itemFilter,
+        widget.suggestionsAmount,
+        query,
+      );
+    });
   }
 
   List<T> getSuggestions(
@@ -381,27 +239,43 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>> with Widgets
       return [];
     }
 
-    final List<T> filteredSuggestions = suggestions.where((item) => filter(item, query)).toList();
-    filteredSuggestions.sort(sorter);
-    if (filteredSuggestions.length > maxAmount) {
-      return filteredSuggestions.sublist(0, maxAmount);
+    final List<T> result = suggestions.where((item) => filter(item, query)).toList();
+    result.sort(sorter);
+    if (result.length > maxAmount) {
+      return result.sublist(0, maxAmount);
     }
-    return filteredSuggestions;
+    return result;
+  }
+
+  Widget _createListItem({
+    required T item,
+    required VoidCallback onPressed,
+    required VoidCallback onCallToAction,
+    bool isFavorite = false,
+  }) {
+    return SBBListItem(
+      titleText: item.toString(),
+      onTap: onPressed,
+      leadingIconData: widget.suggestionIcon,
+      padding: .only(left: SBBSpacing.medium, right: SBBSpacing.xSmall),
+      trailing: SBBTertiaryButtonSmall(
+        onPressed: onCallToAction,
+        iconData: isFavorite ? SBBIcons.star_filled_small : SBBIcons.star_small,
+      ),
+    );
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
     _effectiveFocusNode.removeListener(_handleFocusChanged);
-    // if we created our own focus node and controller, dispose of them
-    // otherwise, let the caller dispose of their own instances
+    // Dispose only what we created ourselves.
     if (widget.focusNode == null) {
       _effectiveFocusNode.dispose();
     }
     if (widget.controller == null) {
       _effectiveController.dispose();
     }
-    listSuggestionsEntry?.remove();
+    _link.dispose();
     super.dispose();
   }
 
@@ -414,30 +288,84 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>> with Widgets
     );
   }
 
+  List<Widget> get _favoritesWidgets {
+    if (!widget.enableFavorites || widget.favorites.isEmpty) return const [];
+    return widget.favorites.map((T favorite) {
+      return _createListItem(
+        isFavorite: true,
+        item: favorite,
+        onPressed: () {
+          setState(() {
+            final String newText = favorite.toString();
+            _effectiveController.text = newText;
+            widget.onChanged?.call(newText);
+            if (widget.submitOnSuggestionTap) {
+              _effectiveFocusNode.unfocus();
+              widget.itemSubmitted(favorite);
+              if (widget.clearOnSubmit) clear();
+            }
+          });
+        },
+        onCallToAction: () => widget.itemRemovedFromFavorites(favorite),
+      );
+    }).toList();
+  }
+
+  List<Widget> get _suggestionsWidgets {
+    return filteredSuggestions.map((T suggestion) {
+      return _createListItem(
+        item: suggestion,
+        onPressed: () {
+          setState(() {
+            final String newText = suggestion.toString();
+            _effectiveController.text = newText;
+            widget.onChanged?.call(newText);
+            if (widget.submitOnSuggestionTap) {
+              _effectiveFocusNode.unfocus();
+              widget.itemSubmitted(suggestion);
+              if (widget.clearOnSubmit) clear();
+            }
+          });
+        },
+        onCallToAction: () => widget.itemAddedToFavorites(suggestion),
+      );
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return CompositedTransformTarget(
-      link: _layerLink,
-      child: SBBTextInput(
-        controller: _effectiveController,
-        focusNode: _effectiveFocusNode,
-        enabled: widget.enabled,
-        enableInteractiveSelection: widget.enableInteractiveSelection,
-        decoration: _effectiveDecoration,
-        inputFormatters: widget.inputFormatters,
-        keyboardType: widget.keyboardType,
-        onChanged: (newText) {
-          _currentText = newText;
-          showOverlay = true;
-          _updateOverlay(query: newText);
-          _textChanged?.call(newText);
-        },
-        onTap: () {
-          showOverlay = true;
-          _updateOverlay(query: _currentText);
-        },
-        onSubmitted: triggerSubmitted,
-        textCapitalization: widget.textCapitalization,
+    final textField = SBBTextInput(
+      controller: _effectiveController,
+      focusNode: _effectiveFocusNode,
+      enabled: widget.enabled,
+      enableInteractiveSelection: widget.enableInteractiveSelection,
+      decoration: _effectiveDecoration,
+      inputFormatters: widget.inputFormatters,
+      keyboardType: widget.keyboardType,
+      onChanged: (newText) {
+        _currentText = newText;
+        _showOverlay = true;
+        _updateSuggestions(newText);
+        widget.onChanged?.call(newText);
+      },
+      onTap: () {
+        setState(() {
+          _showOverlay = true;
+        });
+        _updateSuggestions(_currentText);
+      },
+      onSubmitted: triggerSubmitted,
+      textCapitalization: widget.textCapitalization,
+    );
+
+    return AutocompletionTarget(
+      link: _link,
+      child: AutocompletionOverlay(
+        link: _link,
+        visible: _showOverlay,
+        favoritesSection: _favoritesWidgets,
+        suggestionsSection: _suggestionsWidgets,
+        child: textField,
       ),
     );
   }
