@@ -425,14 +425,12 @@ class _SBBDateTimePickerState extends State<SBBDateTimePicker> with TimeBasedPic
     final minute = _indexToMinute(_minuteController.selectedItem);
 
     final dateTime = date.copyWith(hour: hour, minute: minute);
-
-    final minDateTime = widget.minimumDateTime;
-    if (minDateTime != null && minDateTime.isAfter(dateTime)) return minDateTime;
-
-    final maxDateTime = widget.maximumDateTime;
-    if (maxDateTime != null && maxDateTime.isBefore(dateTime)) return maxDateTime;
-
-    return dateTime;
+    return PickerUtils.clampedAndTimeIntervaledDateTime(
+      dateTime,
+      widget.minimumDateTime,
+      widget.maximumDateTime,
+      widget.minuteInterval,
+    );
   }
 
   void _adjustItemSizes(double width) {

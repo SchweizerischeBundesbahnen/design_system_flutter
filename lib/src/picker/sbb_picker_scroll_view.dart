@@ -129,6 +129,8 @@ class _SBBPickerScrollViewState extends State<SBBPickerScrollView> {
     return widget.controller ?? _fallbackController!;
   }
 
+  final _listCenterKey = UniqueKey();
+
   @override
   void initState() {
     super.initState();
@@ -237,15 +239,14 @@ class _SBBPickerScrollViewState extends State<SBBPickerScrollView> {
     final isShortList =
         _firstIndex != null && _lastIndex != null && (_lastIndex! - _firstIndex! + 1) <= _visibleCenterItemIndex;
 
-    final listCenterKey = UniqueKey();
-    final topPaddingListCenterKey = isShortList ? listCenterKey : null;
-    final positiveIndexListCenterKey = !isShortList ? listCenterKey : null;
+    final topPaddingListCenterKey = isShortList ? _listCenterKey : null;
+    final positiveIndexListCenterKey = !isShortList ? _listCenterKey : null;
 
     final topEndFiller = SizedBox(height: _listPaddingHeight);
 
     return Viewport(
       offset: offset,
-      center: listCenterKey,
+      center: _listCenterKey,
       slivers: [
         if (!widget.looping) SliverToBoxAdapter(key: topPaddingListCenterKey, child: topEndFiller),
         _buildIndexList(negative: true),

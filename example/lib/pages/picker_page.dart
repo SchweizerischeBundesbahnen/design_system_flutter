@@ -116,6 +116,7 @@ class _PickerPageState extends State<PickerPage> {
           const SBBListHeader('Time Picker (time only)'),
           SBBContentBox(
             child: SBBTimePicker(
+              minuteInterval: 10,
               initialTime: TimeOfDay(hour: 20, minute: 15),
               onTimeChanged: (TimeOfDay time) {
                 debugPrint('selected time: $time');
