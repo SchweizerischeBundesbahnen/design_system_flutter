@@ -85,7 +85,7 @@ class _SBBPickerScopeHostState extends State<SBBPickerScopeHost> {
   @override
   void didUpdateWidget(SBBPickerScopeHost oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.pickerStyle != widget.pickerStyle) {
+    if (oldWidget.pickerStyle != widget.pickerStyle || oldWidget.visibleItemCount != widget.visibleItemCount) {
       _itemHeight = _calculateItemHeight();
     }
   }

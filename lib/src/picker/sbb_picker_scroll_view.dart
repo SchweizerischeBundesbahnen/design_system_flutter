@@ -182,17 +182,15 @@ class _SBBPickerScrollViewState extends State<SBBPickerScrollView> {
     if (controllerChanged) {
       final previousSelectedItem = oldController?.selectedItem ?? _selectedItemIndexValueNotifier.value;
 
-      if (controllerChanged) {
-        oldController?.removeListener(_onScrolling);
-        if (oldWidget.controller == null) {
-          _fallbackController?.dispose();
-          _fallbackController = null;
-        }
-        if (widget.controller == null) {
-          _fallbackController = SBBPickerScrollController(initialItem: previousSelectedItem);
-        }
-        _controller.addListener(_onScrolling);
+      oldController?.removeListener(_onScrolling);
+      if (oldWidget.controller == null) {
+        _fallbackController?.dispose();
+        _fallbackController = null;
       }
+      if (widget.controller == null) {
+        _fallbackController = SBBPickerScrollController(initialItem: previousSelectedItem);
+      }
+      _controller.addListener(_onScrolling);
 
       _controller.itemHeight = _itemHeight;
       _applyIndexOffset();
