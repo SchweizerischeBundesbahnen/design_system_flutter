@@ -276,6 +276,7 @@ class _SBBTimePickerState extends State<SBBTimePicker> with TimeBasedPickerMixin
     _hourController.dispose();
     _minuteController.dispose();
     _hourValueNotifier.dispose();
+    _selectedTimeValueNotifier.dispose();
     super.dispose();
   }
 

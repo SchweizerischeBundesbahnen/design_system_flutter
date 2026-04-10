@@ -299,6 +299,7 @@ class _SBBDateTimePickerState extends State<SBBDateTimePicker> with TimeBasedPic
     _minuteController.dispose();
     _dateValueNotifier.dispose();
     _dateHourValueNotifier.dispose();
+    _selectedDateTimeValueNotifier.dispose();
     super.dispose();
   }
 

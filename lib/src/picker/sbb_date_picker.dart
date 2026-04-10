@@ -280,6 +280,7 @@ class _SBBDatePickerState extends State<SBBDatePicker> with TimeBasedPickerMixin
     _dayController.dispose();
     _monthController.dispose();
     _yearController.dispose();
+    _selectedDateValueNotifier.dispose();
     _monthYearValueNotifier.dispose();
     _yearValueNotifier.dispose();
     super.dispose();
