@@ -118,6 +118,7 @@ class _SBBPickerScrollViewState extends State<SBBPickerScrollView> {
   late ValueNotifier<double> _scrollOffsetValueNotifier;
   late ValueNotifier<int> _firstVisibleItemIndexValueNotifier;
   late ValueNotifier<int> _selectedItemIndexValueNotifier;
+  late VoidCallback _selectedItemChangedListener;
 
   late int _initialIndexOffset = _controller.initialItem;
   int? _firstIndex;
@@ -138,12 +139,8 @@ class _SBBPickerScrollViewState extends State<SBBPickerScrollView> {
     _scrollOffsetValueNotifier = ValueNotifier(_controller.initialScrollOffset);
     _firstVisibleItemIndexValueNotifier = ValueNotifier(_controller.selectedItem - _visibleCenterItemIndex);
     _selectedItemIndexValueNotifier = ValueNotifier(_controller.selectedItem);
-    final onSelectedItemChanged = widget.onSelectedItemChanged;
-    if (onSelectedItemChanged != null) {
-      _selectedItemIndexValueNotifier.addListener(() {
-        onSelectedItemChanged(_selectedItemIndexValueNotifier.value);
-      });
-    }
+    _selectedItemChangedListener = _notifySelectedItemChanged;
+    _attachOnSelectedItemChangedListener();
   }
 
   void _initController() {
@@ -202,13 +199,20 @@ class _SBBPickerScrollViewState extends State<SBBPickerScrollView> {
       _selectedItemIndexValueNotifier.value = selectedItem;
       _scrollOffsetValueNotifier.value = _controller.initialScrollOffset;
     }
+
+    if (oldWidget.onSelectedItemChanged != widget.onSelectedItemChanged) {
+      _detachOnSelectedItemChangedListener();
+      _attachOnSelectedItemChangedListener();
+    }
   }
 
   @override
   void dispose() {
+    _detachOnSelectedItemChangedListener();
     _scrollOffsetValueNotifier.dispose();
     _firstVisibleItemIndexValueNotifier.dispose();
     _selectedItemIndexValueNotifier.dispose();
+    _controller.removeListener(_onScrolling);
     _fallbackController?.dispose();
     super.dispose();
   }
@@ -357,6 +361,20 @@ class _SBBPickerScrollViewState extends State<SBBPickerScrollView> {
   void _onTapItem(int index) {
     _controller.onTargetItemSelected?.call(index);
     _controller.animateToItem(index);
+  }
+
+  void _notifySelectedItemChanged() {
+    widget.onSelectedItemChanged?.call(_selectedItemIndexValueNotifier.value);
+  }
+
+  void _attachOnSelectedItemChangedListener() {
+    if (widget.onSelectedItemChanged != null) {
+      _selectedItemIndexValueNotifier.addListener(_selectedItemChangedListener);
+    }
+  }
+
+  void _detachOnSelectedItemChangedListener() {
+    _selectedItemIndexValueNotifier.removeListener(_selectedItemChangedListener);
   }
 
   /// Ensures proper display and scrolling behavior of the list by checking item
