@@ -102,7 +102,7 @@ class SBBPicker extends StatefulWidget {
   /// changes.
   ///
   /// [items] is the list of items representing the picker items to be shown
-  /// with [toString()].
+  /// with `toString()`. Cannot be empty.
   ///
   /// [looping] decides whether the list loops and can be scrolled infinitely.
   /// If set to true, scrolling past the end of the list will loop the list back
@@ -128,12 +128,12 @@ class SBBPicker extends StatefulWidget {
          initialSelectedIndex: initialSelectedIndex,
          onSelectedItemChanged: onSelectedItemChanged,
          itemBuilder: (context, index) {
-           if (!looping && (index < 0 || index >= items.length)) {
+           assert(items.isNotEmpty, 'Items cannot be empty');
+           if ((!looping && (index < 0 || index >= items.length))) {
              return null;
            }
            final item = items[index % items.length];
-           final itemLabel = item.toString();
-           return SBBPickerItem(itemLabel);
+           return SBBPickerItem(item.toString());
          },
          looping: false,
          visibleItemCount: visibleItemCount,
