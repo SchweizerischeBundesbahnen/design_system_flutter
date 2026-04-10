@@ -86,7 +86,6 @@ class SBBPicker extends StatefulWidget {
            onSelectedItemChanged: onSelectedItemChanged,
            itemBuilder: itemBuilder,
            looping: looping,
-           visibleItemCount: visibleItemCount,
            pickerStyle: pickerStyle,
          ),
        );
@@ -185,23 +184,22 @@ class SBBPicker extends StatefulWidget {
 }
 
 class _SBBPickerState extends State<SBBPicker> {
-  int get _visibleItemCount => widget.visibleItemCount;
-
   SBBPickerStyle? _effectivePickerStyle(BuildContext context) {
     final themePickerStyle = Theme.of(context).sbbPickerTheme?.pickerStyle;
     return themePickerStyle?.merge(widget.pickerStyle) ?? widget.pickerStyle;
   }
 
   // These depend on itemHeight which comes from SBBPickerScope — read inside build.
-  double _widgetHeight(double itemHeight) => itemHeight * _visibleItemCount + SBBSpacing.medium;
+  double _widgetHeight(double itemHeight) => itemHeight * widget.visibleItemCount + SBBSpacing.medium;
 
   double _highlightedAreaHeight(double itemHeight) => itemHeight + SBBSpacing.xxSmall;
 
-  double _scrollAreaHeight(double itemHeight) => itemHeight * _visibleItemCount;
+  double _scrollAreaHeight(double itemHeight) => itemHeight * widget.visibleItemCount;
 
   @override
   Widget build(BuildContext context) {
     return SBBPickerScopeHost(
+      visibleItemCount: widget.visibleItemCount,
       pickerStyle: _effectivePickerStyle(context),
       child: Builder(
         builder: (context) {
@@ -259,7 +257,7 @@ class _SBBPickerState extends State<SBBPicker> {
 
     final relativeItemHeight = itemHeight / scrollAreaHeight;
     // number of items on each side of the center item
-    final sideItemCount = _visibleItemCount ~/ 2;
+    final sideItemCount = widget.visibleItemCount ~/ 2;
 
     // highlighted area
     final highlightedAreaHeight = _highlightedAreaHeight(itemHeight);
@@ -299,7 +297,7 @@ class _SBBPickerState extends State<SBBPicker> {
      */
 
     // number of items on each side of the center item
-    final sideItemCount = _visibleItemCount ~/ 2;
+    final sideItemCount = widget.visibleItemCount ~/ 2;
 
     final topOpacities = <double>[0.0];
     for (var i = 0; i < sideItemCount; i++) {

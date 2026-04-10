@@ -285,7 +285,6 @@ class _SBBTimePickerState extends State<SBBTimePicker> with TimeBasedPickerMixin
       controller: _hourController,
       onSelectedItemChanged: _onSelectedHourItemChanged,
       itemBuilder: (_, index) => _buildHourItem(index),
-      visibleItemCount: widget.visibleItemCount,
       pickerStyle: widget.pickerStyle,
     );
   }
@@ -298,7 +297,6 @@ class _SBBTimePickerState extends State<SBBTimePicker> with TimeBasedPickerMixin
           controller: _minuteController,
           onSelectedItemChanged: _onSelectedMinuteItemChanged,
           itemBuilder: (_, index) => _buildMinuteItem(index, selectedHour),
-          visibleItemCount: widget.visibleItemCount,
           pickerStyle: widget.pickerStyle,
         );
       },

@@ -308,7 +308,6 @@ class _SBBDateTimePickerState extends State<SBBDateTimePicker> with TimeBasedPic
       controller: _dateController,
       onSelectedItemChanged: _onSelectedDateItemChanged,
       itemBuilder: (_, index) => _buildDateItem(index),
-      visibleItemCount: widget.visibleItemCount,
       pickerStyle: widget.pickerStyle,
     );
   }
@@ -321,7 +320,6 @@ class _SBBDateTimePickerState extends State<SBBDateTimePicker> with TimeBasedPic
           controller: _hourController,
           onSelectedItemChanged: _onSelectedHourItemChanged,
           itemBuilder: (_, index) => _buildHourItem(index, selectedDate),
-          visibleItemCount: widget.visibleItemCount,
           pickerStyle: widget.pickerStyle,
         );
       },
@@ -336,7 +334,6 @@ class _SBBDateTimePickerState extends State<SBBDateTimePicker> with TimeBasedPic
           controller: _minuteController,
           onSelectedItemChanged: _onSelectedMinuteItemChanged,
           itemBuilder: (_, index) => _buildMinuteItem(index, selectedDateTime),
-          visibleItemCount: widget.visibleItemCount,
           pickerStyle: widget.pickerStyle,
         );
       },

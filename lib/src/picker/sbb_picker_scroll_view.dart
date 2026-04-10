@@ -51,12 +51,8 @@ class SBBPickerScrollView extends StatefulWidget {
     this.controller,
     this.initialItem = 0,
     this.looping = true,
-    this.visibleItemCount = pickerDefaultVisibleItemCount,
     this.pickerStyle,
-  }) : assert(
-         visibleItemCount > 0 && visibleItemCount % 2 == 1,
-         'visibleItemCount must be a positive odd number, but was $visibleItemCount',
-       );
+  });
 
   /// Called when the selected item index changes.
   final ValueChanged<int>? onSelectedItemChanged;
@@ -90,13 +86,6 @@ class SBBPickerScrollView extends StatefulWidget {
   /// Defaults to true.
   final bool looping;
 
-  /// The number of visible items in the picker.
-  ///
-  /// Must be a positive odd number.
-  ///
-  /// Defaults to 7.
-  final int visibleItemCount;
-
   /// Customizes the visual appearance of the picker.
   ///
   /// Non-null properties override the corresponding properties in
@@ -111,7 +100,7 @@ class _SBBPickerScrollViewState extends State<SBBPickerScrollView> {
   // Visual parameters for the scroll wheel effect.
   static const _transformAmplitude = 2.5; // max vertical translate offset in pixels
 
-  int get _visibleItemCount => widget.visibleItemCount;
+  int _visibleItemCount = pickerDefaultVisibleItemCount;
 
   int get _visibleCenterItemIndex => _visibleItemCount ~/ 2;
 
@@ -166,8 +155,21 @@ class _SBBPickerScrollViewState extends State<SBBPickerScrollView> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+
+    final scope = SBBPickerScope.of(context);
+    final visibleItemCountChanged = _visibleItemCount != scope.visibleItemCount;
+    _visibleItemCount = scope.visibleItemCount;
+
     // Update controller item height whenever the scope's itemHeight changes.
-    _controller.itemHeight = _itemHeight;
+    _controller.itemHeight = scope.itemHeight;
+
+    if (visibleItemCountChanged) {
+      final selectedItem = _clampIndex(_selectedItemIndexValueNotifier.value);
+      _applyIndexOffset();
+      _firstVisibleItemIndexValueNotifier.value = selectedItem - _visibleCenterItemIndex;
+      _selectedItemIndexValueNotifier.value = selectedItem;
+      _scrollOffsetValueNotifier.value = _controller.initialScrollOffset;
+    }
   }
 
   @override
@@ -176,9 +178,8 @@ class _SBBPickerScrollViewState extends State<SBBPickerScrollView> {
 
     final oldController = oldWidget.controller ?? _fallbackController;
     final controllerChanged = oldWidget.controller != widget.controller;
-    final visibleItemCountChanged = oldWidget.visibleItemCount != widget.visibleItemCount;
 
-    if (controllerChanged || visibleItemCountChanged) {
+    if (controllerChanged) {
       final previousSelectedItem = oldController?.selectedItem ?? _selectedItemIndexValueNotifier.value;
 
       if (controllerChanged) {

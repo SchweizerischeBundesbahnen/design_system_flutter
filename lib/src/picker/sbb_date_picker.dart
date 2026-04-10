@@ -294,7 +294,6 @@ class _SBBDatePickerState extends State<SBBDatePicker> with TimeBasedPickerMixin
           controller: _dayController,
           onSelectedItemChanged: _onSelectedDayItemChanged,
           itemBuilder: (_, index) => _buildDayItem(index, selectedMonthYear),
-          visibleItemCount: widget.visibleItemCount,
           pickerStyle: widget.pickerStyle,
         );
       },
@@ -309,7 +308,6 @@ class _SBBDatePickerState extends State<SBBDatePicker> with TimeBasedPickerMixin
           controller: _monthController,
           onSelectedItemChanged: _onSelectedMonthItemChanged,
           itemBuilder: (_, index) => _buildMonthItem(index, selectedYear),
-          visibleItemCount: widget.visibleItemCount,
           pickerStyle: widget.pickerStyle,
         );
       },
@@ -322,7 +320,6 @@ class _SBBDatePickerState extends State<SBBDatePicker> with TimeBasedPickerMixin
       looping: false,
       onSelectedItemChanged: _onSelectedYearItemChanged,
       itemBuilder: (_, index) => _buildYearItem(index),
-      visibleItemCount: widget.visibleItemCount,
       pickerStyle: widget.pickerStyle,
     );
   }

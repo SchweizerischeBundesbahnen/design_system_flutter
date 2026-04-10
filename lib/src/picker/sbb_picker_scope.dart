@@ -12,18 +12,22 @@ import 'sbb_picker_constants.dart';
 /// and the time-based picker states can read the shared item height without
 /// inheriting from a common abstract state class.
 ///
-/// Rebuilds its subtree whenever [itemHeight], [pickerStyle], or the ambient
-/// [MediaQuery.textScaler] changes.
+/// Rebuilds its subtree whenever [itemHeight], [visibleItemCount],
+/// [pickerStyle], or the ambient [MediaQuery.textScaler] changes.
 class SBBPickerScope extends InheritedWidget {
   const SBBPickerScope({
     super.key,
     required this.itemHeight,
+    required this.visibleItemCount,
     required this.pickerStyle,
     required super.child,
   });
 
   /// The computed height of a single picker item in logical pixels.
   final double itemHeight;
+
+  /// The number of visible items shared by all picker columns in this scope.
+  final int visibleItemCount;
 
   /// The effective resolved [SBBPickerStyle] for this picker subtree.
   final SBBPickerStyle? pickerStyle;
@@ -42,7 +46,9 @@ class SBBPickerScope extends InheritedWidget {
 
   @override
   bool updateShouldNotify(SBBPickerScope oldWidget) {
-    return itemHeight != oldWidget.itemHeight || pickerStyle != oldWidget.pickerStyle;
+    return itemHeight != oldWidget.itemHeight ||
+        visibleItemCount != oldWidget.visibleItemCount ||
+        pickerStyle != oldWidget.pickerStyle;
   }
 }
 
@@ -54,10 +60,12 @@ class SBBPickerScope extends InheritedWidget {
 class SBBPickerScopeHost extends StatefulWidget {
   const SBBPickerScopeHost({
     super.key,
+    required this.visibleItemCount,
     required this.pickerStyle,
     required this.child,
   });
 
+  final int visibleItemCount;
   final SBBPickerStyle? pickerStyle;
   final Widget child;
 
@@ -111,6 +119,7 @@ class _SBBPickerScopeHostState extends State<SBBPickerScopeHost> {
   Widget build(BuildContext context) {
     return SBBPickerScope(
       itemHeight: _itemHeight,
+      visibleItemCount: widget.visibleItemCount,
       pickerStyle: widget.pickerStyle,
       child: widget.child,
     );
