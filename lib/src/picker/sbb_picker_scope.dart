@@ -116,4 +116,3 @@ class _SBBPickerScopeHostState extends State<SBBPickerScopeHost> {
     );
   }
 }
-

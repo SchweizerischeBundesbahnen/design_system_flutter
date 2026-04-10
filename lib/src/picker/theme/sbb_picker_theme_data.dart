@@ -106,4 +106,3 @@ extension SBBPickerThemeDataThemeDataX on ThemeData {
     return extension<SBBPickerThemeData>();
   }
 }
-

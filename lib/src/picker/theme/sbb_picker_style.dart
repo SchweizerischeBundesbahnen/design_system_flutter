@@ -58,4 +58,27 @@ class SBBPickerStyle {
       highlightBackgroundColor: other.highlightBackgroundColor,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is SBBPickerStyle &&
+          runtimeType == other.runtimeType &&
+          highlightBackgroundColor == other.highlightBackgroundColor &&
+          foregroundColor == other.foregroundColor &&
+          disabledForegroundColor == other.disabledForegroundColor &&
+          textStyle == other.textStyle;
+
+  @override
+  int get hashCode => Object.hash(highlightBackgroundColor, foregroundColor, disabledForegroundColor, textStyle);
+
+  @override
+  String toString() {
+    return 'SBBPickerStyle{'
+        'highlightBackgroundColor: $highlightBackgroundColor'
+        ', foregroundColor: $foregroundColor'
+        ', disabledForegroundColor: $disabledForegroundColor'
+        ', textStyle: $textStyle'
+        '}';
+  }
 }
