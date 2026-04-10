@@ -49,13 +49,13 @@ class SBBAutocompletion<T> extends StatefulWidget {
     this.enableInteractiveSelection = false,
     this.hintText,
     this.inputFormatters,
-    this.isLastElement = false,
     this.keyboardType,
     this.labelText,
     this.onChanged,
     this.onTextSubmitted,
     this.textCapitalization = .none,
     this.icon,
+    this.decoration,
   }) : super(key: key);
 
   /// GlobalKey used to enable addSuggestion etc
@@ -109,15 +109,26 @@ class SBBAutocompletion<T> extends StatefulWidget {
   final TextEditingController? controller;
   final bool enabled;
   final bool enableInteractiveSelection;
+
+  /// Placeholder text shown when the input is empty. Maps to [SBBInputDecoration.placeholderText].
   final String? hintText;
   final List<TextInputFormatter>? inputFormatters;
-  final bool isLastElement;
   final TextInputType? keyboardType;
+
+  /// Label text shown above the input field. Maps to [SBBInputDecoration.labelText].
   final String? labelText;
   final ValueChanged<String>? onChanged;
   final ValueChanged<String>? onTextSubmitted;
   final TextCapitalization textCapitalization;
+
+  /// Leading icon shown before the input field. Maps to [SBBInputDecoration.leadingIconData].
   final IconData? icon;
+
+  /// Additional decoration applied to the trigger [SBBTextInput].
+  ///
+  /// When provided, [labelText], [hintText], and [icon] are ignored in favour
+  /// of the values set in [decoration].
+  final SBBInputDecoration? decoration;
 
   /// Call this method to add a favorite to the list
   void addFavorite(T favorite) => key.currentState?.addFavorite(favorite);
@@ -131,7 +142,9 @@ class SBBAutocompletion<T> extends StatefulWidget {
 
 class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>> with WidgetsBindingObserver {
   final LayerLink _layerLink = LayerLink();
-  late SBBTextField _textField;
+
+  late FocusNode _effectiveFocusNode;
+  late TextEditingController _effectiveController;
 
   StringCallback? _textChanged;
   String _currentText = '';
@@ -147,52 +160,30 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>> with Widgets
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
-    _textField = SBBTextField(
-      controller: widget.controller ?? TextEditingController(),
-      enabled: widget.enabled,
-      enableInteractiveSelection: widget.enableInteractiveSelection,
-      hintText: widget.hintText,
-      inputFormatters: widget.inputFormatters,
-      isLastElement: widget.isLastElement,
-      keyboardType: widget.keyboardType,
-      labelText: widget.labelText,
-      onChanged: (newText) {
-        _currentText = newText;
-        showOverlay = true;
-        _updateOverlay(query: newText);
 
-        _textChanged?.call(newText);
-      },
-      onTap: () {
-        showOverlay = true;
-        _updateOverlay(query: _currentText);
-      },
-      onSubmitted: (submittedText) {
-        triggerSubmitted(submittedText);
-      },
-      textCapitalization: widget.textCapitalization,
-      icon: widget.icon,
-      focusNode: widget.focusNode ?? FocusNode(),
-    );
+    _effectiveFocusNode = widget.focusNode ?? FocusNode();
+    _effectiveController = widget.controller ?? TextEditingController();
 
-    _textField.focusNode?.addListener(() {
-      widget.onFocusChanged?.call(_textField.focusNode!.hasFocus);
+    _effectiveFocusNode.addListener(_handleFocusChanged);
 
-      if (!_textField.focusNode!.hasFocus) {
-        filteredSuggestions = [];
-        showOverlay = false;
-        _updateOverlay();
-      } else if (_currentText.isNotEmpty) {
-        showOverlay = true;
-        _updateOverlay(query: _currentText);
-      }
-    });
-
-    if (widget.controller?.text != null) {
-      _currentText = widget.controller!.text;
+    if (_effectiveController.text.isNotEmpty) {
+      _currentText = _effectiveController.text;
     }
 
     _textChanged = (value) => widget.onChanged?.call(value);
+  }
+
+  void _handleFocusChanged() {
+    widget.onFocusChanged?.call(_effectiveFocusNode.hasFocus);
+
+    if (!_effectiveFocusNode.hasFocus) {
+      filteredSuggestions = [];
+      showOverlay = false;
+      _updateOverlay();
+    } else if (_currentText.isNotEmpty) {
+      showOverlay = true;
+      _updateOverlay(query: _currentText);
+    }
   }
 
   @override
@@ -211,7 +202,7 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>> with Widgets
   }
 
   void clear() {
-    _textField.controller?.clear();
+    _effectiveController.clear();
     _currentText = '';
     _updateOverlay();
   }
@@ -286,10 +277,10 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>> with Widgets
                                 onPressed: () {
                                   setState(() {
                                     final String newText = favorite.toString();
-                                    _textField.controller?.text = newText;
+                                    _effectiveController.text = newText;
                                     _textChanged?.call(newText);
                                     if (widget.submitOnSuggestionTap) {
-                                      _textField.focusNode?.unfocus();
+                                      _effectiveFocusNode.unfocus();
                                       widget.itemSubmitted(favorite);
                                       if (widget.clearOnSubmit) {
                                         clear();
@@ -313,10 +304,10 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>> with Widgets
                               onPressed: () {
                                 setState(() {
                                   final String newText = suggestion.toString();
-                                  _textField.controller?.text = newText;
+                                  _effectiveController.text = newText;
                                   _textChanged?.call(newText);
                                   if (widget.submitOnSuggestionTap) {
-                                    _textField.focusNode?.unfocus();
+                                    _effectiveFocusNode.unfocus();
                                     widget.itemSubmitted(suggestion);
                                     if (widget.clearOnSubmit) {
                                       clear();
@@ -401,20 +392,53 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>> with Widgets
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
+    _effectiveFocusNode.removeListener(_handleFocusChanged);
     // if we created our own focus node and controller, dispose of them
     // otherwise, let the caller dispose of their own instances
     if (widget.focusNode == null) {
-      _textField.focusNode?.dispose();
+      _effectiveFocusNode.dispose();
     }
     if (widget.controller == null) {
-      _textField.controller?.dispose();
+      _effectiveController.dispose();
     }
     listSuggestionsEntry?.remove();
     super.dispose();
   }
 
+  SBBInputDecoration get _effectiveDecoration {
+    if (widget.decoration != null) return widget.decoration!;
+    return SBBInputDecoration(
+      labelText: widget.labelText,
+      placeholderText: widget.hintText,
+      leadingIconData: widget.icon,
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return CompositedTransformTarget(link: _layerLink, child: _textField);
+    return CompositedTransformTarget(
+      link: _layerLink,
+      child: SBBTextInput(
+        controller: _effectiveController,
+        focusNode: _effectiveFocusNode,
+        enabled: widget.enabled,
+        enableInteractiveSelection: widget.enableInteractiveSelection,
+        decoration: _effectiveDecoration,
+        inputFormatters: widget.inputFormatters,
+        keyboardType: widget.keyboardType,
+        onChanged: (newText) {
+          _currentText = newText;
+          showOverlay = true;
+          _updateOverlay(query: newText);
+          _textChanged?.call(newText);
+        },
+        onTap: () {
+          showOverlay = true;
+          _updateOverlay(query: _currentText);
+        },
+        onSubmitted: triggerSubmitted,
+        textCapitalization: widget.textCapitalization,
+      ),
+    );
   }
 }
