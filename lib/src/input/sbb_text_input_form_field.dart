@@ -53,8 +53,8 @@ class SBBTextInputFormField extends FormField<String> {
   SBBTextInputFormField({
     super.key,
     // FIELDS FROM SBBTextInput
-    this.groupId = EditableText,
     this.controller,
+    Object groupId = EditableText,
     SBBInputDecoration? decoration,
     FocusNode? focusNode,
     TextInputType? keyboardType,
@@ -164,9 +164,6 @@ class SBBTextInputFormField extends FormField<String> {
                );
              },
        );
-
-  /// {@macro flutter.widgets.editableText.groupId}
-  final Object groupId;
 
   /// Controls the text being edited.
   ///

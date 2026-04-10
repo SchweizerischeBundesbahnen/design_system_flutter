@@ -12,36 +12,30 @@ part of 'sbb_picker.dart';
 class SBBTimeInput extends StatefulWidget {
   const SBBTimeInput({
     super.key,
+    required this.onTimeChanged,
     this.value,
     this.minimumTime,
     this.maximumTime,
     this.minuteInterval = _defaultMinuteInterval,
-    this.dateFormat,
     this.labelText,
     this.hintText,
     this.errorText,
     this.prefixIcon,
     this.suffixIcon,
-    this.onSuffixPressed,
-    required this.onTimeChanged,
     this.maxLines = 1,
-    this.isLastElement = false,
   });
 
   final TimeOfDay? value;
   final TimeOfDay? minimumTime;
   final TimeOfDay? maximumTime;
   final int minuteInterval;
-  final DateFormat? dateFormat;
   final String? labelText;
   final String? hintText;
   final String? errorText;
   final IconData? prefixIcon;
   final IconData? suffixIcon;
-  final VoidCallback? onSuffixPressed;
   final ValueChanged<TimeOfDay>? onTimeChanged;
   final int? maxLines;
-  final bool isLastElement;
 
   @override
   State<SBBTimeInput> createState() => _SBBTimeInputState();

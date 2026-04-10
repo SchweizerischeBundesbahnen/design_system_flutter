@@ -81,7 +81,6 @@ class SBBStepperItemStyle {
     Color? badgeIconColor,
     Color? badgeBackgroundColor,
     Color? badgeBorderColor,
-    IconData? badgeIconData,
     WidgetStateProperty<TextStyle?>? textStyle,
     TextStyle? labelTextStyle,
   }) {

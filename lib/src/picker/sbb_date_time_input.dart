@@ -22,10 +22,8 @@ class SBBDateTimeInput extends StatefulWidget {
     this.errorText,
     this.prefixIcon,
     this.suffixIcon,
-    this.onSuffixPressed,
     required this.onDateTimeChanged,
     this.maxLines = 1,
-    this.isLastElement = false,
   });
 
   final DateTime? value;
@@ -38,10 +36,8 @@ class SBBDateTimeInput extends StatefulWidget {
   final String? errorText;
   final IconData? prefixIcon;
   final IconData? suffixIcon;
-  final VoidCallback? onSuffixPressed;
   final ValueChanged<DateTime>? onDateTimeChanged;
   final int? maxLines;
-  final bool isLastElement;
 
   @override
   State<SBBDateTimeInput> createState() => _SBBDateTimeInputState();

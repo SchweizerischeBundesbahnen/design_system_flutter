@@ -92,8 +92,8 @@ class _Painter extends CustomPainter {
   final Path path;
 
   @override
-  void paint(Canvas canvas, Size size) => canvas.drawPath(path, paintObject);
+  void paint(Canvas canvas, _) => canvas.drawPath(path, paintObject);
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+  bool shouldRepaint(_) => false;
 }

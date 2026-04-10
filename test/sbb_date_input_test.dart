@@ -76,7 +76,6 @@ class DatePickerTest extends StatelessWidget {
               prefixIcon: SBBIcons.calendar_small,
               suffixIcon: SBBIcons.arrow_circle_reset_small,
               onDateChanged: (_) {},
-              isLastElement: true,
             ),
           ],
         ),

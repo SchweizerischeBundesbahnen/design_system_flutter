@@ -13,7 +13,6 @@ class TextInputPage extends StatefulWidget {
 class _TextInputPageState extends State<TextInputPage> {
   String? errorText;
 
-  final emptyTextEditingController = TextEditingController();
   final defaultTextEditingController = TextEditingController.fromValue(TextEditingValue(text: 'Default'));
   final errorTextEditingController = TextEditingController.fromValue(TextEditingValue(text: 'Type...'));
 

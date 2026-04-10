@@ -28,7 +28,5 @@ class RenderSliverPinHeader extends RenderSliverSingleBoxAdapter {
   }
 
   @override
-  double childMainAxisPosition(RenderBox child) {
-    return 0;
-  }
+  double childMainAxisPosition(_) => 0;
 }
