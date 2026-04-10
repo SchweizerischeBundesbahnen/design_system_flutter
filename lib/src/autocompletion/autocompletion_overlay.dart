@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
@@ -17,11 +15,7 @@ typedef AutocompletionItemBuilder =
 /// [SBBAutocompletion].
 ///
 /// The overlay positions itself directly below the text field tracked by
-/// [link] and constrains its height to the available space above the
-/// on-screen keyboard.
-///
-/// This widget is internal to the `text` module and is not exported from the
-/// library.
+/// [link].
 class AutocompletionOverlay extends StatefulWidget {
   const AutocompletionOverlay({
     super.key,
@@ -111,17 +105,6 @@ class _AutocompletionOverlayState extends State<AutocompletionOverlay> {
     final backgroundColor = style.themeValue(SBBColors.milk, SBBColors.black);
     final optionColor = style.themeValue(SBBColors.white, SBBColors.charcoal);
 
-    // -----------------------------------------------------------------------
-    // Compute available height between the bottom of the text field and the
-    // top of the on-screen keyboard (or the screen bottom if no keyboard).
-    // -----------------------------------------------------------------------
-    final mediaQuery = MediaQuery.of(context);
-    final keyboardHeight = mediaQuery.viewInsets.bottom;
-    final screenHeight = mediaQuery.size.height;
-
-    final targetBottom = widget.link.value.offset.dy + widget.link.value.size.height;
-    final availableHeight = max(0.0, screenHeight - targetBottom - keyboardHeight);
-
     final hasFavorites = widget.favoritesSection.isNotEmpty;
     final hasSuggestions = widget.suggestionsSection.isNotEmpty;
 
@@ -139,7 +122,6 @@ class _AutocompletionOverlayState extends State<AutocompletionOverlay> {
         child: ConstrainedBox(
           constraints: BoxConstraints(
             maxWidth: widget.link.value.size.width,
-            maxHeight: availableHeight,
           ),
           child: Material(
             color: backgroundColor,

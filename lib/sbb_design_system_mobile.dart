@@ -1,4 +1,4 @@
-export 'src/autocompletion/autocompletion.dart';
+export 'src/autocompletion/sbb_autocompletion.dart';
 export 'src/bottom_sheet/bottom_sheet.dart';
 export 'src/button/button.dart';
 export 'src/checkbox/checkbox.dart';

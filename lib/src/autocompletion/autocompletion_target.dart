@@ -31,10 +31,6 @@ class AutocompletionTarget extends StatelessWidget {
   }
 }
 
-// ---------------------------------------------------------------------------
-// Internal render-object widget
-// ---------------------------------------------------------------------------
-
 class _RenderAutocompletionTargetWidget extends SingleChildRenderObjectWidget {
   const _RenderAutocompletionTargetWidget({
     required this.link,
@@ -54,10 +50,6 @@ class _RenderAutocompletionTargetWidget extends SingleChildRenderObjectWidget {
     renderObject.link = link;
   }
 }
-
-// ---------------------------------------------------------------------------
-// Custom RenderProxyBox — tracks size and offset
-// ---------------------------------------------------------------------------
 
 class _RenderAutocompletionTarget extends RenderProxyBox {
   _RenderAutocompletionTarget({required AutocompletionLink link}) : _link = link;

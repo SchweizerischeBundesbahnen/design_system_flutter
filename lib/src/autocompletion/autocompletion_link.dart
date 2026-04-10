@@ -8,8 +8,6 @@ typedef AutocompletionInfo = ({
 });
 
 /// Connects a [_AutocompletionTarget] with a [_AutocompletionOverlay].
-///
-/// Internal to `sbb_autocompletion`. Not exported from the library.
 class AutocompletionLink extends ValueNotifier<AutocompletionInfo> {
   AutocompletionLink()
     : super(
