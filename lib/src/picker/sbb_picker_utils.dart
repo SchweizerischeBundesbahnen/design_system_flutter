@@ -257,10 +257,11 @@ extension TimeOfDayExtensions on TimeOfDay {
   /// 17:16 -> 17:30
   /// 17:01 -> 17:15
   /// 17:46 -> 18:00 (hour value also affected)
+  /// 23:59 -> 00:00 (wraps to the next day)
   /// ```
   TimeOfDay ceilToInterval(int minuteInterval) {
     var roundedMinute = ((minute / minuteInterval).ceil() * minuteInterval);
-    final roundedHour = hour + roundedMinute ~/ TimeOfDay.minutesPerHour;
+    final roundedHour = (hour + roundedMinute ~/ TimeOfDay.minutesPerHour) % TimeOfDay.hoursPerDay;
     roundedMinute %= TimeOfDay.minutesPerHour;
     return replacing(hour: roundedHour, minute: roundedMinute);
   }
