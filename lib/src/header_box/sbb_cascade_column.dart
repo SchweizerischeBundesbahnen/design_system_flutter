@@ -12,13 +12,13 @@ part 'sbb_cascade_column.contractible.dart';
 part 'sbb_cascade_column.listener.dart';
 part 'sbb_cascade_column.renderbox.dart';
 
-/// A widget that accomplishes the cascading shrink effect of the [SBBSliverFloatingHeaderbox].
+/// A widget that accomplishes the cascading shrink effect of the [SBBSliverFloatingHeaderBox].
 ///
 /// It lays out its children the same way as a [Column] with [MainAxisSize.min],
 /// but contracts them one by one from the bottom to the top as it shrinks in size.
 ///
 /// Only use this widget for sophisticated effects or when dealing with a contractible flap.
-/// In all other cases, it is easier to use one of the constructors in [SBBSliverFloatingHeaderbox].
+/// In all other cases, it is easier to use one of the constructors in [SBBSliverFloatingHeaderBox].
 ///
 /// Example:
 ///
@@ -44,7 +44,7 @@ part 'sbb_cascade_column.renderbox.dart';
 ///
 /// See also:
 ///
-///  * [SBBSliverFloatingHeaderbox], which is most likely the context in which you want to use this.
+///  * [SBBSliverFloatingHeaderBox], which is most likely the context in which you want to use this.
 ///  * [SBBContractible], which makes its child shrinkable.
 ///  * [SBBContractionListener], which allows you to get updates on the expansion rate.
 class SBBCascadeColumn extends StatefulWidget {
@@ -172,7 +172,7 @@ class _ContractionScope extends InheritedNotifier<_ContractionController> {
 
   static _ContractionController of(BuildContext context) {
     final ctrl = maybeOf(context);
-    assert(ctrl != null, 'No SBBCascadeColumn or SBBSliverFloatingHeaderbox found in context.');
+    assert(ctrl != null, 'No SBBCascadeColumn or SBBSliverFloatingHeaderBox found in context.');
     return ctrl!;
   }
 }

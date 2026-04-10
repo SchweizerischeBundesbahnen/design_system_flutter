@@ -82,11 +82,11 @@ class DesignGuidelinePage extends StatelessWidget {
       body: Column(
         children: [
           const SBBListHeader('Default'),
-          SBBHeaderbox(
+          SBBHeaderBox(
             title: 'Title',
             leadingIcon: SBBIcons.dog_small,
             secondaryLabel: 'Subtext',
-            flap: SBBHeaderboxFlap(
+            flap: SBBHeaderBoxFlap(
               title: 'Additional text or information',
               leadingIcon: SBBIcons.sign_exclamation_point_small,
               trailingIcon: SBBIcons.circle_information_small_small,
@@ -99,7 +99,7 @@ class DesignGuidelinePage extends StatelessWidget {
           ),
           const SizedBox(height: SBBSpacing.medium),
           const SBBListHeader('Large'),
-          SBBHeaderbox.large(
+          SBBHeaderBox.large(
             title: 'Title',
             leadingIcon: SBBIcons.dog_medium,
             secondaryLabel: 'Subtext',
@@ -110,9 +110,9 @@ class DesignGuidelinePage extends StatelessWidget {
           ),
           const SizedBox(height: SBBSpacing.medium),
           const SBBListHeader('Custom'),
-          const SBBHeaderbox.custom(
+          const SBBHeaderBox.custom(
             padding: .zero,
-            flap: SBBHeaderboxFlap.custom(
+            flap: SBBHeaderBoxFlap.custom(
               child: Center(child: Text('Choooooo!', style: SBBTextStyles.extraSmallBold)),
             ),
             child: Center(child: Text('🚂｡🚋｡🚋｡🚋｡🚋˙⊹⁺.')),
@@ -141,7 +141,7 @@ class _StaticPageState extends State<StaticPage> {
     return Stack(
       children: [
         _body(),
-        SBBHeaderbox.custom(
+        SBBHeaderBox.custom(
           child: Column(
             mainAxisSize: .min,
             children: [
@@ -206,7 +206,7 @@ class _ScrollablePageState extends State<ScrollablePage> {
     final isDark = Theme.of(context).brightness == .dark;
     return CustomScrollView(
       slivers: [
-        SBBSliverHeaderbox.custom(
+        SBBSliverHeaderBox.custom(
           child: Column(
             mainAxisSize: .min,
             children: [

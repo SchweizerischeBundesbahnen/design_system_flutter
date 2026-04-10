@@ -1,19 +1,19 @@
-part of 'sbb_sliver_floating_headerbox.dart';
+part of 'sbb_sliver_floating_header_box.dart';
 
 const _headerBoxMinHeight = 56.0;
 const _headerBoxNavBarExtensionHeight = 24.0;
 const _headerBoxRadius = Radius.circular(SBBSpacing.medium);
 const _headerBoxFlapTopMargin = 8.0;
 
-enum SBBHeaderboxFlapMode { static, resizable, hideable }
+enum SBBHeaderBoxFlapMode { static, resizable, hideable }
 
-/// This is an adapted version of SBBHeaderbox.
+/// This is an adapted version of SBBHeaderBox.
 /// The primary changes are:
 ///
 /// - Wraps content in Flexible
 /// - Supports special flap behavior
-class _Headerbox extends StatelessWidget {
-  const _Headerbox({
+class _HeaderBox extends StatelessWidget {
+  const _HeaderBox({
     required this.child,
     this.margin = const .symmetric(horizontal: SBBSpacing.xSmall),
     this.padding = const .all(SBBSpacing.medium),
@@ -30,11 +30,11 @@ class _Headerbox extends StatelessWidget {
   /// The space around [child].
   final EdgeInsets padding;
 
-  final SBBHeaderboxFlap? flap;
+  final SBBHeaderBoxFlap? flap;
 
-  final SBBHeaderboxFlapMode flapMode;
+  final SBBHeaderBoxFlapMode flapMode;
 
-  /// The semantic label for the Headerbox that will be announced by screen readers.
+  /// The semantic label for the header box that will be announced by screen readers.
   ///
   /// This is announced by assistive technologies (e.g TalkBack/VoiceOver).
   ///
@@ -73,8 +73,8 @@ class _HeaderBoxForeground extends StatelessWidget {
   final EdgeInsets padding;
   final Widget child;
   final String? semanticsLabel;
-  final SBBHeaderboxFlap? flap;
-  final SBBHeaderboxFlapMode flapMode;
+  final SBBHeaderBoxFlap? flap;
+  final SBBHeaderBoxFlapMode flapMode;
 
   @override
   Widget build(BuildContext context) {

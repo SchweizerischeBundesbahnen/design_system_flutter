@@ -8,13 +8,13 @@ const _flapBorderRadius = BorderRadius.only(
 
 const _flapIconSize = 24.0;
 
-/// Use in combination with the [SBBHeaderbox] for the [flap] argument.
+/// Use in combination with the [SBBHeaderBox] for the [flap] argument.
 ///
 /// See [HeaderBox in documentation](https://digital.sbb.ch/de/design-system/mobile/components/container/).
 ///
 /// For a complete custom variant, use the [custom] constructor.
-class SBBHeaderboxFlap extends StatelessWidget {
-  SBBHeaderboxFlap({
+class SBBHeaderBoxFlap extends StatelessWidget {
+  SBBHeaderBoxFlap({
     Key? key,
     required String title,
     bool allowMultilineLabel = true,
@@ -30,8 +30,8 @@ class SBBHeaderboxFlap extends StatelessWidget {
          ),
        );
 
-  /// Allows complete customization of the content of the [SBBHeaderboxFlap].
-  const SBBHeaderboxFlap.custom({
+  /// Allows complete customization of the content of the [SBBHeaderBoxFlap].
+  const SBBHeaderBoxFlap.custom({
     super.key,
     required this.child,
     this.padding = const .fromLTRB(
@@ -42,7 +42,7 @@ class SBBHeaderboxFlap extends StatelessWidget {
     ),
   });
 
-  /// The padding for the content of the [SBBHeaderboxFlap].
+  /// The padding for the content of the [SBBHeaderBoxFlap].
   final EdgeInsets padding;
 
   final Widget child;

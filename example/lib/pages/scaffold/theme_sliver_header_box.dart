@@ -8,7 +8,7 @@ class ThemeSliverHeaderbox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SBBSliverHeaderbox.custom(
+    return SBBSliverHeaderBox.custom(
       padding: .all(SBBSpacing.xSmall),
       child: Row(
         children: [

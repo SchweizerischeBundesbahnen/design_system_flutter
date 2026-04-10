@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
 import '../sbb_internal.dart';
-import 'sbb_headerbox_content.dart';
+import 'sbb_header_box_content.dart';
 
 const _headerBoxMinHeight = 56.0;
 const _headerBoxNavBarExtensionHeight = 24.0;
 const _headerBoxRadius = Radius.circular(SBBSpacing.medium);
 const _headerBoxFlapTopMargin = 8.0;
 
-/// The SBB Headerbox.
+/// The SBB Header-Box.
 /// Use according to [documentation](https://digital.sbb.ch/de/design-system/mobile/components/container/)
 ///
 /// To place over non scrollable screen content, place this Widget in a [Stack] with the content underneath.
@@ -20,7 +20,7 @@ const _headerBoxFlapTopMargin = 8.0;
 ///   return Stack(
 ///     children: [
 ///       _PageContentWidget(),
-///       SBBHeaderbox(
+///       SBBHeaderBox(
 ///         title: 'Awesome Headerbox'
 ///       ),
 ///     ],
@@ -28,12 +28,12 @@ const _headerBoxFlapTopMargin = 8.0;
 /// }
 /// ```
 ///
-/// This will lead to the expected behavior of the Headerbox.
+/// This will lead to the expected behavior of the header box.
 ///
-/// See [SBBSliverHeaderbox] for a headerbox that behaves as expected in scrollable content,
-/// or [SBBSliverFloatingHeaderbox] for a fully dynamic version in scrolling contexts.
-class SBBHeaderbox extends StatelessWidget {
-  /// The default [SBBHeaderbox].
+/// See [SBBSliverHeaderBox] for a headerbox that behaves as expected in scrollable content,
+/// or [SBBSliverFloatingHeaderBox] for a fully dynamic version in scrolling contexts.
+class SBBHeaderBox extends StatelessWidget {
+  /// The default [SBBHeaderBox].
   ///
   /// The required argument [title] will be ellipsed if too long. The [secondaryLabel] is the subtext
   /// displayed below and will wrap to multiple lines.
@@ -41,16 +41,16 @@ class SBBHeaderbox extends StatelessWidget {
   /// The design guidelines specify an action button for the [trailingWidget],
   /// i.e. a [SBBTertiaryButtonSmall] with a label and an icon.
   ///
-  /// Use the [margin] to adjust space around the Headerbox - the default is horizontal margin of 8px.
+  /// Use the [margin] to adjust space around the header box - the default is horizontal margin of 8px.
   ///
-  /// For a complete customization of the Headerbox, see the [SBBHeaderbox.custom] constructor.
-  SBBHeaderbox({
+  /// For a complete customization of the header box, see the [SBBHeaderBox.custom] constructor.
+  SBBHeaderBox({
     Key? key,
     required String title,
     IconData? leadingIcon,
     String? secondaryLabel,
     Widget? trailingWidget,
-    SBBHeaderboxFlap? flap,
+    SBBHeaderBoxFlap? flap,
     EdgeInsets margin = const .symmetric(horizontal: SBBSpacing.xSmall),
     String? semanticsLabel,
   }) : this.custom(
@@ -66,7 +66,7 @@ class SBBHeaderbox extends StatelessWidget {
          semanticsLabel: semanticsLabel,
        );
 
-  /// The large [SBBHeaderbox].
+  /// The large [SBBHeaderBox].
   ///
   /// The required argument [title] will be ellipsed if too long. The [secondaryLabel] is the subtext
   /// displayed below and will wrap to multiple lines.
@@ -74,16 +74,16 @@ class SBBHeaderbox extends StatelessWidget {
   /// The design guidelines specify an action button for the [trailingWidget],
   /// i.e. a [SBBIconButtonLarge].
   ///
-  /// Use the [margin] to adjust space around the Headerbox - the default is horizontal margin of 8px.
+  /// Use the [margin] to adjust space around the header box - the default is horizontal margin of 8px.
   ///
-  /// For a complete customization of the Headerbox, see the [SBBHeaderbox.custom] constructor.
-  SBBHeaderbox.large({
+  /// For a complete customization of the header box, see the [SBBHeaderBox.custom] constructor.
+  SBBHeaderBox.large({
     Key? key,
     required String title,
     IconData? leadingIcon,
     String? secondaryLabel,
     Widget? trailingWidget,
-    SBBHeaderboxFlap? flap,
+    SBBHeaderBoxFlap? flap,
     EdgeInsets margin = const .symmetric(horizontal: SBBSpacing.xSmall),
     String? semanticsLabel,
   }) : this.custom(
@@ -99,8 +99,8 @@ class SBBHeaderbox extends StatelessWidget {
          semanticsLabel: semanticsLabel,
        );
 
-  /// Allows complete customization of the [SBBHeaderbox].
-  const SBBHeaderbox.custom({
+  /// Allows complete customization of the [SBBHeaderBox].
+  const SBBHeaderBox.custom({
     super.key,
     required this.child,
     this.margin = const .symmetric(horizontal: SBBSpacing.xSmall),
@@ -109,7 +109,7 @@ class SBBHeaderbox extends StatelessWidget {
     this.semanticsLabel,
   });
 
-  /// The margin around the [SBBHeaderbox].
+  /// The margin around the [SBBHeaderBox].
   ///
   /// Defaults to EdgeInsets.symmetric(horizonal: 8.0).
   final EdgeInsets margin;
@@ -119,10 +119,10 @@ class SBBHeaderbox extends StatelessWidget {
   /// The space around [child].
   final EdgeInsets padding;
 
-  /// The flap to display below the [SBBHeaderbox].
-  final SBBHeaderboxFlap? flap;
+  /// The flap to display below the [SBBHeaderBox].
+  final SBBHeaderBoxFlap? flap;
 
-  /// The semantic label for the Headerbox that will be announced by screen readers.
+  /// The semantic label for the header box that will be announced by screen readers.
   ///
   /// This is announced by assistive technologies (e.g TalkBack/VoiceOver).
   ///

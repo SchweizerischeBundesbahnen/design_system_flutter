@@ -1,14 +1,15 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:sbb_design_system_mobile/src/headerbox/sbb_headerbox_content.dart';
+import 'package:sbb_design_system_mobile/src/header_box/sbb_header_box_content.dart';
 
 import '../../sbb_design_system_mobile.dart';
 import '../sbb_internal.dart';
 import 'sliver_pinned_floating_widget.dart';
 
-part 'sbb_sliver_floating_headerbox.headerbox.dart';
-part 'sbb_sliver_floating_headerbox.spacer.dart';
+part 'sbb_sliver_floating_header_box.header_box.dart';
+
+part 'sbb_sliver_floating_header_box.spacer.dart';
 
 final defaultSnapStyle = const AnimationStyle(
   duration: Durations.short2,
@@ -17,9 +18,9 @@ final defaultSnapStyle = const AnimationStyle(
   reverseCurve: Curves.linear,
 );
 
-/// A floating, expanding, and contracting version of the SBB Sliver Headerbox.
+/// A floating, expanding, and contracting version of the SBB Sliver Header-Box.
 ///
-/// This widget behaves the same as [SBBSliverHeaderbox] but allows you to include contracting children.
+/// This widget behaves the same as [SBBSliverHeaderBox] but allows you to include contracting children.
 /// To achieve this effect, the widget transitions between the minimum and maximum intrinsic heights.
 ///
 /// A minimal example would be:
@@ -27,13 +28,13 @@ final defaultSnapStyle = const AnimationStyle(
 /// ```dart
 /// CustomScrollView(
 ///   slivers: [
-///     SBBSliverFloatingHeaderbox(
+///     SBBSliverFloatingHeaderBox(
 ///       title: 'Title',
 ///       secondaryLabel: 'Subtitle',
 ///       collapsibleChild: Text('Collapsible'),
 ///     ),
 ///     // ...
-///     const SBBSliverFloatingHeaderboxSpacer(),
+///     const SBBSliverFloatingHeaderBoxSpacer(),
 ///   ]
 /// )
 /// ```
@@ -41,7 +42,7 @@ final defaultSnapStyle = const AnimationStyle(
 /// See also:
 ///
 ///  * [SBBCascadeColumn] and [SBBContractible], for ways to build contracting items.
-///  * [SBBSliverFloatingHeaderboxSpacer], for a widget that should always come last in the list of slivers.
+///  * [SBBSliverFloatingHeaderBoxSpacer], for a widget that should always come last in the list of slivers.
 ///
 /// ## Limitations & Considerations
 ///
@@ -50,8 +51,8 @@ final defaultSnapStyle = const AnimationStyle(
 /// - It is relatively expensive, see [IntrinsicHeight].
 /// - You cannot use [LayoutBuilder].
 ///
-class SBBSliverFloatingHeaderbox extends StatefulWidget {
-  /// The default [SBBSliverFloatingHeaderbox].
+class SBBSliverFloatingHeaderBox extends StatefulWidget {
+  /// The default [SBBSliverFloatingHeaderBox].
   ///
   /// The required argument [title] will be ellipsed if too long. The [secondaryLabel] is the subtext
   /// displayed below and will wrap to multiple lines.
@@ -59,7 +60,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
   /// The design guidelines specify an action button for the [trailingWidget],
   /// i.e. a [SBBTertiaryButtonSmall] with a label and an icon.
   ///
-  /// Use the [margin] to adjust space around the Headerbox - the default is horizontal margin of 8px.
+  /// Use the [margin] to adjust space around the header box - the default is horizontal margin of 8px.
   ///
   /// Additionally, you can set [contractibleChild] for some content that will be obscured (and reappears) as the
   /// user scrolls the containing viewport. You can also temporarily disable this behavior by setting [resizing]
@@ -72,15 +73,15 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
   /// You can also use [preceding] to set a widget above the headerbox that will go along with the scroll behavior of
   /// the headerbox.
   ///
-  /// For a complete customization of the Headerbox, see the [SBBSliverFloatingHeaderbox.custom] constructor.
-  SBBSliverFloatingHeaderbox({
+  /// For a complete customization of the header box, see the [SBBSliverFloatingHeaderBox.custom] constructor.
+  SBBSliverFloatingHeaderBox({
     Key? key,
     required String title,
     IconData? leadingIcon,
     String? secondaryLabel,
     Widget? trailingWidget,
-    SBBHeaderboxFlap? flap,
-    SBBHeaderboxFlapMode flapMode = .static,
+    SBBHeaderBoxFlap? flap,
+    SBBHeaderBoxFlapMode flapMode = .static,
     EdgeInsets margin = const .symmetric(horizontal: SBBSpacing.xSmall),
     String? semanticsLabel,
     Widget? preceding,
@@ -112,7 +113,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
          ],
        );
 
-  /// The large [SBBSliverFloatingHeaderbox].
+  /// The large [SBBSliverFloatingHeaderBox].
   ///
   /// The required argument [title] will be ellipsed if too long. The [secondaryLabel] is the subtext
   /// displayed below and will wrap to multiple lines.
@@ -120,7 +121,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
   /// The design guidelines specify an action button for the [trailingWidget],
   /// i.e. a [SBBIconButtonLarge].
   ///
-  /// Use the [margin] to adjust space around the Headerbox - the default is horizontal margin of 8px.
+  /// Use the [margin] to adjust space around the header box - the default is horizontal margin of 8px.
   ///
   /// Additionally, you can set [collapsibleChild] for some content that will be obscured (and reappears) as the
   /// user scrolls the containing viewport. You can also temporarily disable this behavior by setting [resizing]
@@ -133,15 +134,15 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
   /// You can also use [preceding] to set a widget above the headerbox that will go along with the scroll behavior of
   /// the headerbox.
   ///
-  /// For a complete customization of the Headerbox, see the [SBBSliverFloatingHeaderbox.custom] constructor.
-  SBBSliverFloatingHeaderbox.large({
+  /// For a complete customization of the header box, see the [SBBSliverFloatingHeaderBox.custom] constructor.
+  SBBSliverFloatingHeaderBox.large({
     Key? key,
     required String title,
     IconData? leadingIcon,
     String? secondaryLabel,
     Widget? trailingWidget,
-    SBBHeaderboxFlap? flap,
-    SBBHeaderboxFlapMode flapMode = .static,
+    SBBHeaderBoxFlap? flap,
+    SBBHeaderBoxFlapMode flapMode = .static,
     EdgeInsets margin = const .symmetric(horizontal: SBBSpacing.xSmall),
     String? semanticsLabel,
     Widget? preceding,
@@ -171,7 +172,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
          ],
        );
 
-  /// Allows complete customization of the [SBBSliverFloatingHeaderbox].
+  /// Allows complete customization of the [SBBSliverFloatingHeaderBox].
   ///
   /// Note that the [children] can -- and should -- make use of [SBBContractible] to customize the way they collapse.
   /// You will normally have one or more static widgets, followed by one or more contractible widgets like so:
@@ -179,7 +180,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
   /// ```dart
   /// CustomScrollView(
   ///   slivers: [
-  ///     SBBSliverFloatingHeaderbox.custom(
+  ///     SBBSliverFloatingHeaderBox.custom(
   ///       children: [
   ///         _StaticHeader(),
   ///         SBBContractible(
@@ -187,7 +188,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
   ///         ),
   ///       ],
   ///     ),
-  ///     const SBBSliverFloatingHeaderboxSpacer(),
+  ///     const SBBSliverFloatingHeaderBoxSpacer(),
   ///   ]
   /// )
   /// ```
@@ -196,12 +197,12 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
   ///
   ///  * [SBBContractible], which shrinkable children should be wrapped in.
   ///  * [SBBContractionListener], which allows you to get updates on the expansion rate.
-  SBBSliverFloatingHeaderbox.custom({
+  SBBSliverFloatingHeaderBox.custom({
     super.key,
     EdgeInsets margin = const .symmetric(horizontal: SBBSpacing.xSmall),
     EdgeInsets padding = const .all(SBBSpacing.medium),
-    SBBHeaderboxFlap? flap,
-    SBBHeaderboxFlapMode flapMode = .static,
+    SBBHeaderBoxFlap? flap,
+    SBBHeaderBoxFlapMode flapMode = .static,
     String? semanticsLabel,
     this.resizing = true,
     this.floating = true,
@@ -213,7 +214,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
            ? SBBCascadeColumn(
                children: [
                  _Preceding(child: preceding),
-                 _Headerbox(
+                 _HeaderBox(
                    margin: margin,
                    padding: padding,
                    flap: flap,
@@ -223,7 +224,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
                  ),
                ],
              )
-           : _Headerbox(
+           : _HeaderBox(
                margin: margin,
                padding: padding,
                flap: flap,
@@ -245,7 +246,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
   final bool floating;
 
   @override
-  State<SBBSliverFloatingHeaderbox> createState() => _SBBSliverFloatingHeaderboxState();
+  State<SBBSliverFloatingHeaderBox> createState() => _SBBSliverFloatingHeaderBoxState();
 
   /// Allows you to expand the header box.
   /// [context] is expected to be a descendant of the header box.
@@ -260,7 +261,7 @@ class SBBSliverFloatingHeaderbox extends StatefulWidget {
   }
 }
 
-class _SBBSliverFloatingHeaderboxState extends State<SBBSliverFloatingHeaderbox> with TickerProviderStateMixin {
+class _SBBSliverFloatingHeaderBoxState extends State<SBBSliverFloatingHeaderBox> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return SliverPinnedFloatingWidget(

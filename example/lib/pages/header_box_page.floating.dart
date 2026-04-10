@@ -22,7 +22,7 @@ class _FloatingPageState extends State<FloatingPage> {
         onTap: () => FocusScope.of(context).unfocus(),
         child: CustomScrollView(
           slivers: [
-            SBBSliverFloatingHeaderbox.custom(
+            SBBSliverFloatingHeaderBox.custom(
               resizing: resizing,
               padding: .zero,
               flap: _flap(),
@@ -43,15 +43,15 @@ class _FloatingPageState extends State<FloatingPage> {
                 },
               ),
             ),
-            const SBBSliverFloatingHeaderboxSpacer(),
+            const SBBSliverFloatingHeaderBoxSpacer(),
           ],
         ),
       ),
     );
   }
 
-  SBBHeaderboxFlap _flap() {
-    return SBBHeaderboxFlap.custom(
+  SBBHeaderBoxFlap _flap() {
+    return SBBHeaderBoxFlap.custom(
       child: Row(
         children: [
           Text('Thursday, 01/31/2025', style: SBBTextStyles.smallLight),
@@ -86,7 +86,7 @@ class _FloatingPageState extends State<FloatingPage> {
             // Expand the headerbox on tap.
             // For this to work, we need a context that is a descendant of the headerbox.
             // In this case, we capture it using a key.
-            SBBSliverFloatingHeaderbox.expand(key.currentContext!);
+            SBBSliverFloatingHeaderBox.expand(key.currentContext!);
           },
           child: Container(
             constraints: BoxConstraints(minWidth: .infinity),

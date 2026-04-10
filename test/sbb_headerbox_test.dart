@@ -5,10 +5,10 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'test_app.dart';
 
 void main() {
-  generateTest('headerbox_1', HeaderboxTest());
-  generateTest('headerbox_sliver_expanded', FloatingHeaderboxTest());
-  generateTest('headerbox_sliver_contracted', FloatingHeaderboxTest(scrollOffset: 500.0));
-  generateTest('headerbox_sliver_contracted_after_update', FloatingHeaderboxWithUpdateTest());
+  generateTest('header_box_1', HeaderBoxTest());
+  generateTest('header_box_sliver_expanded', FloatingHeaderboxTest());
+  generateTest('header_box_sliver_contracted', FloatingHeaderboxTest(scrollOffset: 500.0));
+  generateTest('header_box_sliver_contracted_after_update', FloatingHeaderboxWithUpdateTest());
 }
 
 void generateTest(String name, Widget widget) {
@@ -17,8 +17,8 @@ void generateTest(String name, Widget widget) {
   });
 }
 
-class HeaderboxTest extends StatelessWidget {
-  const HeaderboxTest({
+class HeaderBoxTest extends StatelessWidget {
+  const HeaderBoxTest({
     super.key,
   });
 
@@ -28,11 +28,11 @@ class HeaderboxTest extends StatelessWidget {
       children: [
         const SizedBox(height: SBBSpacing.medium),
         const SBBListHeader('Default'),
-        SBBHeaderbox(
+        SBBHeaderBox(
           title: 'Title',
           leadingIcon: SBBIcons.dog_small,
           secondaryLabel: 'Subtext',
-          flap: SBBHeaderboxFlap(
+          flap: SBBHeaderBoxFlap(
             title: 'Additional text or information',
             leadingIcon: SBBIcons.sign_exclamation_point_small,
             trailingIcon: SBBIcons.circle_information_small_small,
@@ -41,7 +41,7 @@ class HeaderboxTest extends StatelessWidget {
         ),
         const SizedBox(height: SBBSpacing.medium),
         const SBBListHeader('Large'),
-        SBBHeaderbox.large(
+        SBBHeaderBox.large(
           title: 'Title',
           leadingIcon: SBBIcons.dog_medium,
           secondaryLabel: 'Subtext',
@@ -49,9 +49,9 @@ class HeaderboxTest extends StatelessWidget {
         ),
         const SizedBox(height: SBBSpacing.medium),
         const SBBListHeader('Custom'),
-        SBBHeaderbox.custom(
+        SBBHeaderBox.custom(
           padding: .zero,
-          flap: SBBHeaderboxFlap.custom(
+          flap: SBBHeaderBoxFlap.custom(
             child: Center(child: Text('Custom Flappy!', style: SBBTextStyles.extraSmallBold)),
           ),
           child: Row(
@@ -84,11 +84,11 @@ class FloatingHeaderboxTest extends StatelessWidget {
           child: CustomScrollView(
             controller: ScrollController(initialScrollOffset: scrollOffset),
             slivers: [
-              SBBSliverFloatingHeaderbox(
+              SBBSliverFloatingHeaderBox(
                 title: 'Title',
                 leadingIcon: SBBIcons.dog_small,
                 secondaryLabel: 'Subtext',
-                flap: SBBHeaderboxFlap(
+                flap: SBBHeaderBoxFlap(
                   title: 'Additional text or information',
                   leadingIcon: SBBIcons.sign_exclamation_point_small,
                   trailingIcon: SBBIcons.circle_information_small_small,
@@ -114,8 +114,8 @@ class FloatingHeaderboxTest extends StatelessWidget {
           child: CustomScrollView(
             controller: ScrollController(initialScrollOffset: scrollOffset),
             slivers: [
-              SBBSliverFloatingHeaderbox.custom(
-                flap: SBBHeaderboxFlap(
+              SBBSliverFloatingHeaderBox.custom(
+                flap: SBBHeaderBoxFlap(
                   title: 'Additional text or information',
                   leadingIcon: SBBIcons.sign_exclamation_point_small,
                   trailingIcon: SBBIcons.circle_information_small_small,
@@ -165,8 +165,8 @@ class FloatingHeaderboxWithUpdateTest extends StatelessWidget {
               child: CustomScrollView(
                 controller: ScrollController(initialScrollOffset: 500),
                 slivers: [
-                  SBBSliverFloatingHeaderbox.custom(
-                    flapMode: SBBHeaderboxFlapMode.hideable,
+                  SBBSliverFloatingHeaderBox.custom(
+                    flapMode: SBBHeaderBoxFlapMode.hideable,
                     children: [
                       SBBContractible.crossfade(
                         contractedChild: SizedBox(height: 50, child: Text("Contracted")),
