@@ -265,30 +265,59 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>> with Widgets
                 link: _layerLink,
                 showWhenUnlinked: false,
                 offset: Offset(-textFieldGlobalPosition.dx, height),
-                child: Container(
-                  padding: .symmetric(horizontal: textFieldGlobalPosition.dx),
-                  color: backgroundColor,
-                  child: ListView(
-                    padding: .zero,
-                    shrinkWrap: true,
-                    children: [
-                      if (widget.favorites.isNotEmpty && widget.enableFavorites)
+                child: Material(
+                  child: Container(
+                    padding: .symmetric(horizontal: textFieldGlobalPosition.dx),
+                    color: backgroundColor,
+                    child: ListView(
+                      padding: .zero,
+                      shrinkWrap: true,
+                      children: [
+                        if (widget.favorites.isNotEmpty && widget.enableFavorites)
+                          Container(color: backgroundColor, height: 16.0),
+                        if (widget.favorites.isNotEmpty && widget.enableFavorites) const Divider(),
+                        if (widget.favorites.isNotEmpty && widget.enableFavorites)
+                          ...widget.favorites.map((T favorite) {
+                            return Container(
+                              color: optionColor,
+                              child: _createListItem(
+                                isFavorite: true,
+                                item: favorite,
+                                onPressed: () {
+                                  setState(() {
+                                    final String newText = favorite.toString();
+                                    _textField.controller?.text = newText;
+                                    _textChanged?.call(newText);
+                                    if (widget.submitOnSuggestionTap) {
+                                      _textField.focusNode?.unfocus();
+                                      widget.itemSubmitted(favorite);
+                                      if (widget.clearOnSubmit) {
+                                        clear();
+                                      }
+                                    }
+                                  });
+                                },
+                                onCallToAction: () {
+                                  widget.itemRemovedFromFavorites(favorite);
+                                },
+                              ),
+                            );
+                          }),
                         Container(color: backgroundColor, height: 16.0),
-                      if (widget.favorites.isNotEmpty && widget.enableFavorites) const Divider(),
-                      if (widget.favorites.isNotEmpty && widget.enableFavorites)
-                        ...widget.favorites.map((T favorite) {
+                        if (filteredSuggestions.isNotEmpty) const Divider(),
+                        ...filteredSuggestions.map((T suggestion) {
                           return Container(
                             color: optionColor,
                             child: _createListItem(
-                              item: favorite,
+                              item: suggestion,
                               onPressed: () {
                                 setState(() {
-                                  final String newText = favorite.toString();
+                                  final String newText = suggestion.toString();
                                   _textField.controller?.text = newText;
                                   _textChanged?.call(newText);
                                   if (widget.submitOnSuggestionTap) {
                                     _textField.focusNode?.unfocus();
-                                    widget.itemSubmitted(favorite);
+                                    widget.itemSubmitted(suggestion);
                                     if (widget.clearOnSubmit) {
                                       clear();
                                     }
@@ -296,39 +325,13 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>> with Widgets
                                 });
                               },
                               onCallToAction: () {
-                                widget.itemRemovedFromFavorites(favorite);
+                                widget.itemAddedToFavorites(suggestion);
                               },
                             ),
                           );
                         }),
-                      Container(color: backgroundColor, height: 16.0),
-                      if (filteredSuggestions.isNotEmpty) const Divider(),
-                      ...filteredSuggestions.map((T suggestion) {
-                        return Container(
-                          color: optionColor,
-                          child: _createListItem(
-                            item: suggestion,
-                            onPressed: () {
-                              setState(() {
-                                final String newText = suggestion.toString();
-                                _textField.controller?.text = newText;
-                                _textChanged?.call(newText);
-                                if (widget.submitOnSuggestionTap) {
-                                  _textField.focusNode?.unfocus();
-                                  widget.itemSubmitted(suggestion);
-                                  if (widget.clearOnSubmit) {
-                                    clear();
-                                  }
-                                }
-                              });
-                            },
-                            onCallToAction: () {
-                              widget.itemAddedToFavorites(suggestion);
-                            },
-                          ),
-                        );
-                      }),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -358,13 +361,21 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>> with Widgets
     listSuggestionsEntry?.markNeedsBuild();
   }
 
-  Widget _createListItem({required T item, required VoidCallback onPressed, required VoidCallback onCallToAction}) {
+  Widget _createListItem({
+    required T item,
+    required VoidCallback onPressed,
+    required VoidCallback onCallToAction,
+    bool isFavorite = false,
+  }) {
     return SBBListItem(
       titleText: item.toString(),
       onTap: onPressed,
       leadingIconData: widget.suggestionIcon,
       padding: SBBListItemStyle.defaultPadding.copyWith(right: 8.0),
-      trailing: SBBTertiaryButtonSmall(onPressed: onPressed),
+      trailing: SBBTertiaryButtonSmall(
+        onPressed: onCallToAction,
+        iconData: isFavorite ? SBBIcons.star_filled_small : SBBIcons.star_small,
+      ),
     );
   }
 
