@@ -189,7 +189,7 @@ class _IconPainter extends CustomPainter {
   final double strokeWidth;
 
   @override
-  void paint(Canvas canvas, Size size) {
+  void paint(Canvas canvas, _) {
     final paint = Paint()
       ..style = style
       ..strokeWidth = strokeWidth

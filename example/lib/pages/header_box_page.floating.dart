@@ -31,7 +31,7 @@ class _FloatingPageState extends State<FloatingPage> {
               children: [
                 _crossfadeExample(context, style),
                 _additionalRowsSwitcher(context),
-                _contractibleExample(sbbToast, style),
+                _contractibleExample(sbbToast),
               ],
             ),
             SliverList.builder(
@@ -165,7 +165,7 @@ class _FloatingPageState extends State<FloatingPage> {
     );
   }
 
-  SBBContractible _contractibleExample(SBBToast sbbToast, SBBBaseStyle style) {
+  SBBContractible _contractibleExample(SBBToast sbbToast) {
     return SBBContractible(
       behavior: pushMode ? .displace : .clip,
       builder:
@@ -180,7 +180,6 @@ class _FloatingPageState extends State<FloatingPage> {
           Center(child: pushMode ? Text('Footer that gets displaced') : Text('Footer that gets clipped')),
           Spacer(),
           ControlsButton(
-            pushMode: pushMode,
             onTap: () {
               setState(() {
                 pushMode = !pushMode;
@@ -260,11 +259,9 @@ class _FloatingPageState extends State<FloatingPage> {
 class ControlsButton extends StatelessWidget {
   const ControlsButton({
     super.key,
-    required this.pushMode,
     required this.onTap,
   });
 
-  final bool pushMode;
   final Function() onTap;
 
   @override

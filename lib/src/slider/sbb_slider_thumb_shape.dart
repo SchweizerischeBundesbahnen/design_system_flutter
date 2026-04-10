@@ -22,9 +22,7 @@ class CircleBorderThumbShape extends SliderComponentShape {
   final Color disabledBorderColor;
 
   @override
-  Size getPreferredSize(bool isEnabled, bool isDiscrete) {
-    return Size.fromRadius(radius);
-  }
+  Size getPreferredSize(_, _) => Size.fromRadius(radius);
 
   @override
   void paint(

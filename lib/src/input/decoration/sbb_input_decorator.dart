@@ -490,9 +490,6 @@ class _SBBDecorator extends SlottedMultiChildRenderObjectWidget<_SBBDecorationSl
   }
 }
 
-// Type definitions for layout helpers
-typedef _ChildBaselineGetter = double Function(RenderBox child, BoxConstraints constraints);
-
 // Container for layout values computed by _RenderSBBDecoration._layout.
 class _RenderSBBDecorationLayout {
   const _RenderSBBDecorationLayout({
@@ -687,22 +684,9 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
 
   static double _minHeight(RenderBox? box, double width) => box?.getMinIntrinsicHeight(width) ?? 0.0;
 
-  static double _getBaseline(RenderBox box, BoxConstraints boxConstraints) {
-    return ChildLayoutHelper.getBaseline(box, boxConstraints, .alphabetic) ?? box.size.height;
-  }
-
-  static double _getDryBaseline(RenderBox box, BoxConstraints boxConstraints) {
-    return ChildLayoutHelper.getDryBaseline(box, boxConstraints, .alphabetic) ??
-        ChildLayoutHelper.dryLayoutChild(box, boxConstraints).height;
-  }
-
   BoxParentData _boxParentData(RenderBox box) => box.parentData! as BoxParentData;
 
-  _RenderSBBDecorationLayout _layout(
-    BoxConstraints constraints, {
-    required ChildLayouter layoutChild,
-    required _ChildBaselineGetter getBaseline,
-  }) {
+  _RenderSBBDecorationLayout _layout(BoxConstraints constraints, {required ChildLayouter layoutChild}) {
     _assertHasBoundedWidth(constraints);
 
     final EdgeInsets resolvedContentPadding = contentPadding.resolve(.ltr);
@@ -873,11 +857,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
 
   @override
   void performLayout() {
-    final _RenderSBBDecorationLayout layout = _layout(
-      constraints,
-      layoutChild: ChildLayoutHelper.layoutChild,
-      getBaseline: _getBaseline,
-    );
+    final _RenderSBBDecorationLayout layout = _layout(constraints, layoutChild: ChildLayoutHelper.layoutChild);
 
     size = constraints.constrain(layout.size);
     assert(size.width == constraints.constrainWidth(layout.size.width));
@@ -909,11 +889,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
       return 0.0;
     }
 
-    final _RenderSBBDecorationLayout layout = _layout(
-      constraints,
-      layoutChild: ChildLayoutHelper.dryLayoutChild,
-      getBaseline: _getDryBaseline,
-    );
+    final _RenderSBBDecorationLayout layout = _layout(constraints, layoutChild: ChildLayoutHelper.dryLayoutChild);
 
     final EdgeInsets resolvedContentPadding = contentPadding.resolve(.ltr);
     final double leadingWidth = leading?.getMinIntrinsicWidth(.infinity) ?? 0.0;
@@ -932,11 +908,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
 
   @override
   Size computeDryLayout(BoxConstraints constraints) {
-    final _RenderSBBDecorationLayout layout = _layout(
-      constraints,
-      layoutChild: ChildLayoutHelper.dryLayoutChild,
-      getBaseline: _getDryBaseline,
-    );
+    final _RenderSBBDecorationLayout layout = _layout(constraints, layoutChild: ChildLayoutHelper.dryLayoutChild);
     return constraints.constrain(layout.size);
   }
 

@@ -158,7 +158,7 @@ class _SBBSwitchState extends State<SBBSwitch> with TickerProviderStateMixin, To
       ..reverseCurve = Curves.easeOut;
   }
 
-  void _handleDragStart(DragStartDetails details) {
+  void _handleDragStart() {
     if (isInteractive) {
       reactionController.forward();
     }
@@ -174,7 +174,7 @@ class _SBBSwitchState extends State<SBBSwitch> with TickerProviderStateMixin, To
     }
   }
 
-  void _handleDragEnd(DragEndDetails details) {
+  void _handleDragEnd() {
     if (position.value >= 0.5 != widget.value) {
       widget.onChanged?.call(!widget.value);
       setState(() {
@@ -227,9 +227,9 @@ class _SBBSwitchState extends State<SBBSwitch> with TickerProviderStateMixin, To
       focusable: isInteractive,
       child: GestureDetector(
         excludeFromSemantics: true,
-        onHorizontalDragStart: _handleDragStart,
+        onHorizontalDragStart: (_) => _handleDragStart(),
         onHorizontalDragUpdate: _handleDragUpdate,
-        onHorizontalDragEnd: _handleDragEnd,
+        onHorizontalDragEnd: (_) => _handleDragEnd(),
         onTap: isInteractive ? () => widget.onChanged?.call(!widget.value) : null,
         child: buildToggleable(
           size: effectiveSwitchSize,
@@ -425,10 +425,10 @@ class _SBBSwitchPainter extends ToggleablePainter {
     canvas.drawRRect(thumbRRect, thumbStrokePaint);
 
     // Draw tick icon
-    _drawTick(canvas, thumbRRect, currentKnobForegroundColor, _colorAnimation!.value);
+    _drawTick(canvas, thumbRRect, currentKnobForegroundColor);
   }
 
-  void _drawTick(Canvas canvas, RRect thumbRRect, Color color, double value) {
+  void _drawTick(Canvas canvas, RRect thumbRRect, Color color) {
     final icon = SBBIcons.tick_small;
     final iconSize = Size.square(sbbIconSizeSmall);
     final iconPosition = thumbRRect.center - iconSize.center(Offset.zero);
