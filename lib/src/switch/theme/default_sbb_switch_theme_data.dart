@@ -8,21 +8,21 @@ class DefaultSBBSwitchThemeData extends SBBSwitchThemeData {
     : super(
         style: SBBSwitchStyle(
           trackColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
-            WidgetState.selected & WidgetState.disabled: baseStyle.primaryColor?.withValues(alpha: 0.4),
-            WidgetState.selected: baseStyle.primaryColor,
+            WidgetState.selected & WidgetState.disabled: baseStyle.colorScheme.primaryColor?.withValues(alpha: 0.4),
+            WidgetState.selected: baseStyle.colorScheme.primaryColor,
             WidgetState.disabled: baseStyle.themeValue(SBBColors.graphite, SBBColors.granite).withValues(alpha: 0.5),
             WidgetState.any: baseStyle.themeValue(SBBColors.graphite, SBBColors.granite),
           }),
           knobBackgroundColor: WidgetStateProperty.all(SBBColors.white),
           knobBorderColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
-            WidgetState.selected & WidgetState.disabled: baseStyle.primaryColor?.withValues(alpha: 0.4),
-            WidgetState.selected: baseStyle.primaryColor,
+            WidgetState.selected & WidgetState.disabled: baseStyle.colorScheme.primaryColor?.withValues(alpha: 0.4),
+            WidgetState.selected: baseStyle.colorScheme.primaryColor,
             WidgetState.disabled: baseStyle.themeValue(SBBColors.graphite, SBBColors.granite).withValues(alpha: 0.5),
             WidgetState.any: baseStyle.themeValue(SBBColors.graphite, SBBColors.granite),
           }),
           knobForegroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
-            WidgetState.selected & WidgetState.disabled: baseStyle.primaryColor?.withValues(alpha: 0.4),
-            WidgetState.selected: baseStyle.primaryColor,
+            WidgetState.selected & WidgetState.disabled: baseStyle.colorScheme.primaryColor?.withValues(alpha: 0.4),
+            WidgetState.selected: baseStyle.colorScheme.primaryColor,
             WidgetState.any: SBBColors.white,
           }),
         ),

@@ -201,7 +201,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
 
   @override
   Widget build(BuildContext context) {
-    final baseStyle = SBBBaseStyle.of(context);
+    final baseStyle = Theme.of(context).sbbBaseStyle;
     final paddingTop = _badgeSize.height / 2.0;
 
     final style = SBBControlStyles.of(context).promotionBox!;
@@ -308,8 +308,7 @@ class _DefaultContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final crossColor = SBBBaseStyle.of(context).iconColor;
-
+    final crossColor = Theme.of(context).sbbBaseStyle.colorScheme.iconColor;
     return Column(
       crossAxisAlignment: .stretch,
       children: [

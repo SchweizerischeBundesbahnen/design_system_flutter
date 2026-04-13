@@ -10,7 +10,7 @@ class DefaultSBBCheckboxThemeData extends SBBCheckboxThemeData {
           fillColor: WidgetStatePropertyAll(baseStyle.themeValue(SBBColors.white, SBBColors.charcoal)),
           checkColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.disabled: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
-            WidgetState.any: baseStyle.primaryColor,
+            WidgetState.any: baseStyle.colorScheme.primaryColor,
           }),
           borderColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.disabled: baseStyle.themeValue(SBBColors.cloud, SBBColors.iron),

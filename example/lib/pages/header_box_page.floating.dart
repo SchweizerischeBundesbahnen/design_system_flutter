@@ -15,7 +15,6 @@ class _FloatingPageState extends State<FloatingPage> {
   @override
   Widget build(BuildContext context) {
     final sbbToast = SBBToast.of(context);
-    final style = SBBBaseStyle.of(context);
     return FocusScope(
       // This prevents the headerbox from shrinking when something is focused
       onFocusChange: (focused) => setState(() => resizing = !focused),
@@ -29,9 +28,9 @@ class _FloatingPageState extends State<FloatingPage> {
               flap: _flap(),
               flapMode: .hideable,
               children: [
-                _crossfadeExample(context, style),
+                _crossfadeExample(context),
                 _additionalRowsSwitcher(context),
-                _contractibleExample(sbbToast, style),
+                _contractibleExample(sbbToast),
               ],
             ),
             SliverList.builder(
@@ -74,8 +73,9 @@ class _FloatingPageState extends State<FloatingPage> {
     );
   }
 
-  Widget _crossfadeExample(BuildContext context, SBBBaseStyle style) {
+  Widget _crossfadeExample(BuildContext context) {
     final key = GlobalKey();
+    final colorScheme = Theme.of(context).sbbBaseStyle.colorScheme;
     return SBBContractible.crossfade(
       // The contracted child is simply a summarized version of the origin and destination.
       contractedChild: Material(
@@ -118,7 +118,7 @@ class _FloatingPageState extends State<FloatingPage> {
                   bottom: SBBSpacing.xLarge,
                   left: SBBSpacing.xSmall - 0.5,
                   child: Container(
-                    color: style.labelColor,
+                    color: colorScheme.labelColor,
                     width: 1,
                   ),
                 ),
@@ -165,7 +165,7 @@ class _FloatingPageState extends State<FloatingPage> {
     );
   }
 
-  SBBContractible _contractibleExample(SBBToast sbbToast, SBBBaseStyle style) {
+  SBBContractible _contractibleExample(SBBToast sbbToast) {
     return SBBContractible(
       behavior: pushMode ? .displace : .clip,
       builder:

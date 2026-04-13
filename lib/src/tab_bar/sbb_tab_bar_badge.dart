@@ -75,7 +75,7 @@ class SBBTabBarBadgeIcon extends SBBTabBarBadge {
   @override
   Widget build(BuildContext context) {
     final tabBarStyle = Theme.of(context).sbbTabBarTheme?.style;
-    final primaryColor = Theme.of(context).extension<SBBBaseStyle>()?.primaryColor;
+    final primaryColor = Theme.of(context).sbbBaseStyle.colorScheme.primaryColor;
     final resolvedForegroundColor = foregroundColor ?? tabBarStyle?.badgeForegroundColor ?? SBBColors.white;
     final resolvedBackgroundColor =
         backgroundColor ?? tabBarStyle?.badgeBackgroundColor ?? primaryColor ?? SBBColors.red;
@@ -126,7 +126,7 @@ class SBBTabBarBadgeText extends SBBTabBarBadge {
   @override
   Widget build(BuildContext context) {
     final tabBarStyle = Theme.of(context).sbbTabBarTheme?.style;
-    final primaryColor = Theme.of(context).extension<SBBBaseStyle>()?.primaryColor;
+    final primaryColor = Theme.of(context).sbbBaseStyle.colorScheme.primaryColor;
     final resolvedBackgroundColor =
         backgroundColor ?? tabBarStyle?.badgeBackgroundColor ?? primaryColor ?? SBBColors.red;
     final resolvedForegroundColor = foregroundColor ?? tabBarStyle?.badgeForegroundColor ?? SBBColors.white;

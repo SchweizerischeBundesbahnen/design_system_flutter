@@ -23,7 +23,7 @@ class DefaultSBBTabBarThemeData extends SBBTabBarThemeData {
           warningItemBackgroundColor: SBBColors.red,
           warningItemForegroundColor: SBBColors.white,
           badgeForegroundColor: SBBColors.white,
-          badgeBackgroundColor: baseStyle.primaryColor,
+          badgeBackgroundColor: baseStyle.colorScheme.primaryColor,
           badgeTextStyle: SBBTextStyles.extraExtraSmallBold.copyWith(fontWeight: FontWeight.w900),
         ),
       );

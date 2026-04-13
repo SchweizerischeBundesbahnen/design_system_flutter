@@ -8,7 +8,6 @@ class TypographyPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = SBBBaseStyle.of(context).redTextTheme;
     return ListView(
       padding: const .all(SBBSpacing.medium),
       children: [
@@ -43,18 +42,6 @@ class TypographyPage extends StatelessWidget {
             ],
           ),
         ),
-        const SizedBox(height: SBBSpacing.medium),
-        SBBListHeader('Red Text Theme'),
-        SBBContentBox(
-          child: Column(
-            crossAxisAlignment: .start,
-            children: [
-              _TypographyShowcase('SBBBaseStyle.redTextTheme.bodyLarge', textTheme.bodyLarge!),
-              _TypographyShowcase('SBBBaseStyle.redTextTheme.bodyMedium', textTheme.bodyMedium!),
-              _TypographyShowcase('SBBBaseStyle.redTextTheme.bodySmall', textTheme.bodySmall!, isLastElement: true),
-            ],
-          ),
-        ),
       ],
     );
   }
@@ -69,7 +56,7 @@ class _TypographyShowcase extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final labelColor = SBBBaseStyle.of(context).labelColor;
+    final labelColor = Theme.of(context).sbbBaseStyle.colorScheme.labelColor;
     return Column(
       crossAxisAlignment: .start,
       children: [

@@ -299,7 +299,7 @@ class _BaseTertiaryButton extends StatelessWidget {
 
   Widget? _resolvedLoading(BuildContext context) {
     if (!isLoading) return null;
-    final sbbBaseStyle = SBBBaseStyle.of(context);
+    final sbbBaseStyle = Theme.of(context).sbbBaseStyle;
     return sbbBaseStyle.themeValue(const SBBLoadingIndicator.tinySmoke(), const SBBLoadingIndicator.tinyCement());
   }
 

@@ -124,7 +124,7 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
 }
 
 PromotionBoxStyle _customBoxStyle(BuildContext context) =>
-    PromotionBoxStyle.$default(baseStyle: SBBBaseStyle.of(context)).copyWith(
+    PromotionBoxStyle.$default(baseStyle: Theme.of(context).sbbBaseStyle).copyWith(
       badgeColor: SBBColors.royal,
       badgeShadowColor: SBBColors.royal.withAlpha((255.0 * 0.2).round()),
       gradientColors: [SBBColors.cloud, SBBColors.milk, SBBColors.milk, SBBColors.cloud],

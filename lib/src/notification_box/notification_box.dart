@@ -206,8 +206,8 @@ class _SBBNotificationBoxState extends State<SBBNotificationBox> with SingleTick
   }
 
   Color _resolvedIconColor(BuildContext context) =>
-      SBBBaseStyle.of(context).themeValue(widget.state.iconColor, widget.state.iconColorDark);
+      Theme.of(context).sbbBaseStyle.themeValue(widget.state.iconColor, widget.state.iconColorDark);
 
   Color _resolvedBackgroundColor(BuildContext context) =>
-      SBBBaseStyle.of(context).themeValue(widget.state.backgroundColor, widget.state.backgroundColorDark);
+      Theme.of(context).sbbBaseStyle.themeValue(widget.state.backgroundColor, widget.state.backgroundColorDark);
 }

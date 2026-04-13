@@ -59,8 +59,7 @@ class _BottomLoadingIndicatorState extends State<BottomLoadingIndicator> with Si
 
   @override
   Widget build(BuildContext context) {
-    final color = SBBBaseStyle.of(context).primaryColor!;
-
+    final color = Theme.of(context).sbbBaseStyle.colorScheme.primaryColor!;
     return ClipRRect(
       borderRadius: _resolveBorderRadius(),
       child: SlideTransition(

@@ -32,7 +32,7 @@ class DefaultSBBChipThemeData extends SBBChipThemeData {
             WidgetState.selected & WidgetState.disabled: baseStyle.themeValue(SBBColors.milk, SBBColors.iron),
             WidgetState.disabled: baseStyle.themeValue(SBBColors.graphite, SBBColors.iron),
             WidgetState.selected: baseStyle.themeValue(SBBColors.cloud, SBBColors.granite),
-            WidgetState.any: baseStyle.primaryColor,
+            WidgetState.any: baseStyle.colorScheme.primaryColor,
           }),
           overlayColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.any: baseStyle.themeValue(SBBColors.platinum, SBBColors.midnight),

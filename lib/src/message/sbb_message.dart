@@ -169,7 +169,7 @@ class SBBMessage extends StatelessWidget {
     if (illustration != null || isLoading) {
       final Widget illustrationChild;
       if (isLoading) {
-        final loadingIndicatorColor = isDark ? SBBColors.redDark : SBBColors.red;
+        final loadingIndicatorColor = isDark ? SBBColors.red85 : SBBColors.red;
         illustrationChild = SBBLoadingIndicator.medium(color: loadingIndicatorColor);
       } else {
         illustrationChild = illustration!;

@@ -6,8 +6,8 @@ class DefaultSBBStatusThemeData extends SBBStatusThemeData {
         alert: SBBStatusStyle(
           textStyle: SBBTextStyles.smallLight,
           foregroundColor: baseStyle.themeValue(SBBColors.black, SBBColors.white),
-          backgroundColor: baseStyle.themeValue(SBBColors.red, SBBColors.redDark),
-          borderColor: baseStyle.themeValue(SBBColors.red, SBBColors.redDark),
+          backgroundColor: baseStyle.themeValue(SBBColors.red, SBBColors.red85),
+          borderColor: baseStyle.themeValue(SBBColors.red, SBBColors.red85),
           iconColor: SBBColors.white,
         ),
         warning: SBBStatusStyle(

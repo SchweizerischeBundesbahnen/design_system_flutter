@@ -252,8 +252,7 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>> with Widgets
         /// screen size - textfield bottom y - keyboard height = area height
         final overlayHeight = MediaQuery.of(context).size.height - textFieldGlobalPosition.dy - _bottomInset;
 
-        final style = SBBBaseStyle.of(context);
-
+        final style = Theme.of(context).sbbBaseStyle;
         listSuggestionsEntry = OverlayEntry(
           builder: (context) {
             final backgroundColor = style.themeValue(SBBColors.milk, SBBColors.black);

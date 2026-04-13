@@ -17,24 +17,24 @@ class DefaultSBBSegmentedButtonThemeData extends SBBSegmentedButtonThemeData {
             WidgetState.any: baseStyle.themeValue(SBBColors.cloud, SBBColors.iron),
           }),
           segmentStyle: SBBButtonSegmentStyle(
-            foregroundColor: WidgetStatePropertyAll(baseStyle.defaultTextColor),
-            textStyle: WidgetStatePropertyAll(baseStyle.defaultTextStyle),
+            foregroundColor: WidgetStatePropertyAll(baseStyle.colorScheme.defaultTextColor),
+            textStyle: WidgetStatePropertyAll(baseStyle.textTheme.defaultTextStyle),
           ),
         ),
         filledStyle: SBBSegmentedButtonStyle(
           backgroundColor: WidgetStateProperty<Color?>.fromMap({
-            WidgetState.selected: baseStyle.primaryColor,
-            WidgetState.any: SBBColors.red125,
+            WidgetState.selected: baseStyle.colorScheme.primaryColor,
+            WidgetState.any: baseStyle.colorScheme.primary125Color,
           }),
           borderColor: WidgetStateProperty<Color?>.fromMap({
-            WidgetState.selected: SBBColors.red150,
-            WidgetState.any: SBBColors.red125,
+            WidgetState.selected: baseStyle.colorScheme.primary150Color,
+            WidgetState.any: baseStyle.colorScheme.primary125Color,
           }),
           segmentStyle: SBBButtonSegmentStyle(
             foregroundColor: WidgetStatePropertyAll(SBBColors.white),
             textStyle: WidgetStateProperty<TextStyle?>.fromMap({
-              WidgetState.selected: baseStyle.defaultTextStyle?.boldStyle,
-              WidgetState.any: baseStyle.defaultTextStyle,
+              WidgetState.selected: baseStyle.textTheme.defaultTextStyle?.boldStyle,
+              WidgetState.any: baseStyle.textTheme.defaultTextStyle,
             }),
           ),
         ),

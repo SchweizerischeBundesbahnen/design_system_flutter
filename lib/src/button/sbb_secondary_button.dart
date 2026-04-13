@@ -126,7 +126,7 @@ class SBBSecondaryButton extends StatelessWidget {
   }
 
   Widget _defaultLabel(BuildContext context) {
-    final style = SBBBaseStyle.of(context);
+    final style = Theme.of(context).sbbBaseStyle;
     final themedLoadingIndicator = style.themeValue(
       const SBBLoadingIndicator.tinySmoke(),
       const SBBLoadingIndicator.tinyCement(),

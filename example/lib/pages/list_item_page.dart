@@ -13,7 +13,6 @@ class ListItemPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final sbbToast = SBBToast.of(context);
-    final baseStyle = SBBBaseStyle.of(context);
     return CustomScrollView(
       slivers: [
         SBBSliverHeaderbox.custom(child: ThemeModeSegmentedButton()),

@@ -10,7 +10,7 @@ class SBBCloseButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final crossColor = SBBBaseStyle.of(context).iconColor;
+    final crossColor = Theme.of(context).sbbBaseStyle.colorScheme.iconColor;
     return Semantics(
       label: MaterialLocalizations.of(context).closeButtonTooltip,
       button: true,
