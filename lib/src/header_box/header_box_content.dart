@@ -44,7 +44,14 @@ class DefaultHeaderBoxContent extends StatelessWidget {
       child: _resolveLeading(),
     );
 
-    Widget child = titleWidget!;
+    if (titleWidget == null) {
+      return SizedBox.shrink();
+    }
+
+    Widget child = Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2.0),
+      child: titleWidget,
+    );
     if (leadingWidget != null) {
       child = Row(
         spacing: SBBSpacing.xSmall,
@@ -61,9 +68,8 @@ class DefaultHeaderBoxContent extends StatelessWidget {
         spacing: style.titleSubtitleGap ?? 0.0,
         children: [
           child,
-          Container(
-            constraints: BoxConstraints(minHeight: sbbIconSizeSmall),
-            alignment: Alignment.centerLeft,
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 2.0),
             child: subtitleWidget,
           ),
         ],
@@ -149,7 +155,11 @@ class LargeHeaderBoxContent extends StatelessWidget {
       child: _resolveLeading(),
     );
 
-    Widget child = titleWidget!;
+    if (titleWidget == null) {
+      return SizedBox.shrink();
+    }
+
+    Widget child = titleWidget;
     if (subtitleWidget != null) {
       child = Column(
         crossAxisAlignment: .start,

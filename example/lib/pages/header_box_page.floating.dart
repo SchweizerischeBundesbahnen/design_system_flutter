@@ -22,16 +22,18 @@ class _FloatingPageState extends State<FloatingPage> {
         onTap: () => FocusScope.of(context).unfocus(),
         child: CustomScrollView(
           slivers: [
-            SBBSliverFloatingHeaderBox.custom(
+            SBBSliverHeaderBox(
               resizing: resizing,
               padding: .zero,
               flap: _flap(),
               flapMode: .hideable,
-              children: [
-                _crossfadeExample(context),
-                _additionalRowsSwitcher(context),
-                _contractibleExample(sbbToast),
-              ],
+              body: SBBCascadeColumn(
+                children: [
+                  _crossfadeExample(context),
+                  _additionalRowsSwitcher(context),
+                  _contractibleExample(sbbToast),
+                ],
+              ),
             ),
             SliverList.builder(
               itemCount: 60,
@@ -86,7 +88,7 @@ class _FloatingPageState extends State<FloatingPage> {
             // Expand the headerbox on tap.
             // For this to work, we need a context that is a descendant of the headerbox.
             // In this case, we capture it using a key.
-            SBBSliverFloatingHeaderBox.expand(key.currentContext!);
+            SBBSliverHeaderBox.expand(key.currentContext!);
           },
           child: Container(
             constraints: BoxConstraints(minWidth: .infinity),

@@ -12,13 +12,13 @@ part 'sbb_cascade_column.contractible.dart';
 part 'sbb_cascade_column.listener.dart';
 part 'sbb_cascade_column.renderbox.dart';
 
-/// A widget that accomplishes the cascading shrink effect of the [SBBSliverFloatingHeaderBox].
+/// A widget that accomplishes the cascading shrink effect of the [SBBSliverHeaderBox].
 ///
 /// It lays out its children the same way as a [Column] with [MainAxisSize.min],
 /// but contracts them one by one from the bottom to the top as it shrinks in size.
 ///
 /// Only use this widget for sophisticated effects or when dealing with a contractible flap.
-/// In all other cases, it is easier to use one of the constructors in [SBBSliverFloatingHeaderBox].
+/// In all other cases, it is easier to use one of the constructors in [SBBSliverHeaderBox].
 ///
 /// Example:
 ///
@@ -44,7 +44,7 @@ part 'sbb_cascade_column.renderbox.dart';
 ///
 /// See also:
 ///
-///  * [SBBSliverFloatingHeaderBox], which is most likely the context in which you want to use this.
+///  * [SBBSliverHeaderBox], which is most likely the context in which you want to use this.
 ///  * [SBBContractible], which makes its child shrinkable.
 ///  * [SBBContractionListener], which allows you to get updates on the expansion rate.
 class SBBCascadeColumn extends StatefulWidget {

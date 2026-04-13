@@ -84,23 +84,25 @@ class FloatingHeaderboxTest extends StatelessWidget {
           child: CustomScrollView(
             controller: ScrollController(initialScrollOffset: scrollOffset),
             slivers: [
-              SBBSliverFloatingHeaderBox(
-                title: 'Title',
-                leadingIcon: SBBIcons.dog_small,
-                secondaryLabel: 'Subtext',
+              SBBSliverHeaderBox(
+                titleText: 'Title',
+                leadingIconData: SBBIcons.dog_small,
+                subtitleText: 'Subtext',
                 flap: SBBHeaderBoxFlap(
                   labelText: 'Additional text or information',
                   leadingIconData: SBBIcons.sign_exclamation_point_small,
                   trailingIconData: SBBIcons.circle_information_small,
                 ),
-                trailingWidget: SBBTertiaryButtonSmall(
+                trailing: SBBTertiaryButtonSmall(
                   labelText: 'Label',
                   iconData: SBBIcons.dog_small,
                   onPressed: () => {},
                 ),
-                contractibleChild: Container(
-                  height: 50,
-                  color: Colors.black,
+                body: SBBContractible(
+                  child: Container(
+                    height: 50,
+                    color: Colors.black,
+                  ),
                 ),
               ),
               SliverList.separated(
@@ -114,26 +116,28 @@ class FloatingHeaderboxTest extends StatelessWidget {
           child: CustomScrollView(
             controller: ScrollController(initialScrollOffset: scrollOffset),
             slivers: [
-              SBBSliverFloatingHeaderBox.custom(
+              SBBSliverHeaderBox(
                 flap: SBBHeaderBoxFlap(
                   labelText: 'Additional text or information',
                   leadingIconData: SBBIcons.sign_exclamation_point_small,
                   trailingIconData: SBBIcons.circle_information_small,
                 ),
                 flapMode: .hideable,
-                children: [
-                  Text('Static'),
-                  SBBContractionListener(
-                    builder: (context, state, _) => Opacity(
-                      opacity: state.expansionValue,
-                      child: Text('Opacity: ${state.expansionValue.toStringAsFixed(1)}'),
+                title: SBBCascadeColumn(
+                  children: [
+                    Text('Static'),
+                    SBBContractionListener(
+                      builder: (context, state, _) => Opacity(
+                        opacity: state.expansionValue,
+                        child: Text('Opacity: ${state.expansionValue.toStringAsFixed(1)}'),
+                      ),
                     ),
-                  ),
-                  SBBContractible.crossfade(
-                    contractedChild: Text("Contracted"),
-                    expandedChild: Text("Expanded", style: SBBTextStyles.extraExtraLargeBold),
-                  ),
-                ],
+                    SBBContractible.crossfade(
+                      contractedChild: Text("Contracted"),
+                      expandedChild: Text("Expanded", style: SBBTextStyles.extraExtraLargeBold),
+                    ),
+                  ],
+                ),
               ),
               SliverList.separated(
                 itemBuilder: (context, i) => ListTile(key: ValueKey(i), title: Text(i.toString())),
@@ -165,17 +169,19 @@ class FloatingHeaderboxWithUpdateTest extends StatelessWidget {
               child: CustomScrollView(
                 controller: ScrollController(initialScrollOffset: 500),
                 slivers: [
-                  SBBSliverFloatingHeaderBox.custom(
+                  SBBSliverHeaderBox(
                     flapMode: SBBHeaderBoxFlapMode.hideable,
-                    children: [
-                      SBBContractible.crossfade(
-                        contractedChild: SizedBox(height: 50, child: Text("Contracted")),
-                        expandedChild: SizedBox(
-                          height: 100,
-                          child: Text("Expanded", style: SBBTextStyles.extraExtraLargeBold),
+                    title: SBBCascadeColumn(
+                      children: [
+                        SBBContractible.crossfade(
+                          contractedChild: SizedBox(height: 50, child: Text("Contracted")),
+                          expandedChild: SizedBox(
+                            height: 100,
+                            child: Text("Expanded", style: SBBTextStyles.extraExtraLargeBold),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   SliverList.separated(
                     itemBuilder: (context, i) => ListTile(key: ValueKey(i), title: Text(i.toString())),

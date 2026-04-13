@@ -1,32 +1,45 @@
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/src/header_box/sbb_header_box_content.dart';
 import 'package:sbb_design_system_mobile/src/shared/bottom_loading_indicator.dart';
 
 import '../../sbb_design_system_mobile.dart';
+import 'header_box_content.dart';
+import 'header_box_foreground.dart';
+import 'header_box_inset.dart';
 
-/// The default [SBBHeaderBox].
-/// Use according to [documentation](https://digital.sbb.ch/de/design-system/mobile/components/container/)
+/// The SBB Header-Box.
 ///
-/// To place over non scrollable screen content, place this Widget in a [Stack] with the content underneath.
+/// Provides a flexible layout with optional leading, title, subtitle, trailing, and body widgets.
+/// The title and leading widgets are center-aligned vertically, with the subtitle positioned
+/// below them. The body can be used for additional content shown below the titles.
+///
+/// Provide either [title] for custom content or [titleText] for text-only content with
+/// standard styling. These parameters are mutually exclusive.
+///
+///
+///
+/// ## Customization
+///
+/// Use [style] to customize appearance for a specific header box, or
+/// [SBBHeaderBoxThemeData] to apply consistent styling across your app:
 ///
 /// ```dart
-/// @override
-/// Widget build(BuildContext context) {
-///   return Stack(
-///     children: [
-///       _PageContentWidget(),
-///       SBBHeaderBox(
-///         title: 'Awesome Headerbox'
-///       ),
-///     ],
-///   );
-/// }
+/// SBBHeaderBox(
+///   leadingIconData: SBBIcons.unicorn_small,
+///   titleText: 'Title',
+///   style: SBBHeaderBoxStyle(
+///     titleForegroundColor: Colors.white,
+///   ),
+/// )
 /// ```
 ///
-/// This will lead to the expected behavior of the header box.
+/// See also:
 ///
-/// See [SBBSliverHeaderBox] for a headerbox that behaves as expected in scrollable content,
-/// or [SBBSliverFloatingHeaderBox] for a fully dynamic version in scrolling contexts.
+///  * [SBBHeaderBoxLarge], for a larger variant.
+///  * [SBBSliverHeaderBox], for a sliver variant that can be used inside scroll views.
+///  * [SBBHeaderBoxStyle], for customizing the appearance.
+///  * [SBBHeaderBoxThemeData], for setting header box theme properties across your app.
+///  * [Design Guidelines](https://digital.sbb.ch/de/design-system/mobile/components/header-box)
+///  * [Figma design specs](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?m=auto&node-id=192-861&t=rQTLXnChqHrpKLB4-1) (internal only)
 class SBBHeaderBox extends StatelessWidget {
   const SBBHeaderBox({
     super.key,
@@ -38,12 +51,13 @@ class SBBHeaderBox extends StatelessWidget {
     this.subtitleText,
     this.trailing,
     this.flap,
+    this.body,
     this.isLoading = false,
     this.margin,
     this.padding,
     this.style,
     this.semanticsLabel,
-  }) : assert(title != null || titleText != null, 'Either title or titleText must be provided'),
+  }) : assert(title != null || titleText != null || body != null, 'Either title or titleText or body must be provided'),
        assert(title == null || titleText == null, 'Only one of title or titleText can be set'),
        assert(subtitle == null || subtitleText == null, 'Only one of subtitle or subtitleText can be set'),
        assert(leading == null || leadingIconData == null, 'Only one of leading or leadingIconData can be set');
@@ -116,6 +130,13 @@ class SBBHeaderBox extends StatelessWidget {
   /// {@endtemplate}
   final Widget? trailing;
 
+  /// {@template sbb_design_system.header_box.body}
+  /// A custom widget displayed as the body of the header box.
+  ///
+  /// This will be displayed below the title and subtitle, if any are set.
+  /// {@endtemplate}
+  final Widget? body;
+
   /// {@template sbb_design_system.header_box.flap}
   /// The content to display inside the flap below the header box.
   ///
@@ -165,221 +186,101 @@ class SBBHeaderBox extends StatelessWidget {
   /// {@endtemplate}
   final String? semanticsLabel;
 
+  SBBHeaderBoxStyle _resolveStyle(BuildContext context) {
+    return (Theme.of(context).sbbHeaderBoxTheme?.style ?? SBBHeaderBoxStyle())
+        .merge(style)
+        .copyWith(margin: margin, padding: padding);
+  }
+
+  Widget? _resolveContent(BuildContext context) {
+    if (title == null && titleText == null) {
+      return null;
+    }
+
+    return DefaultHeaderBoxContent(
+      leading: leading,
+      leadingIconData: leadingIconData,
+      title: title,
+      titleText: titleText,
+      subtitle: subtitle,
+      subtitleText: subtitleText,
+      trailing: trailing,
+      style: _resolveStyle(context),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    final themeData = Theme.of(context).sbbHeaderBoxTheme;
-    final effectiveStyle = (themeData?.style ?? SBBHeaderBoxStyle())
-        .merge(style)
-        .merge(
-          SBBHeaderBoxStyle(
-            margin: margin,
-            padding: padding,
-          ),
-        );
+    final effectiveStyle = _resolveStyle(context);
+    Widget? contentWidget = _resolveContent(context);
 
-    return _HeaderBoxAppBarInset(
+    if (body != null) {
+      if (contentWidget != null) {
+        contentWidget = Column(
+          children: [
+            contentWidget,
+            body!,
+          ],
+        );
+      } else {
+        contentWidget = body;
+      }
+    }
+
+    return HeaderBoxAppBarInset(
       style: effectiveStyle,
-      child: _HeaderBoxForeground(
+      child: HeaderBoxForeground(
         style: effectiveStyle,
         flap: flap,
         semanticsLabel: semanticsLabel,
         isLoading: isLoading,
-        child: DefaultHeaderBoxContent(
-          leading: leading,
-          leadingIconData: leadingIconData,
-          title: title,
-          titleText: titleText,
-          subtitle: subtitle,
-          subtitleText: subtitleText,
-          trailing: trailing,
-          style: effectiveStyle,
-        ),
+        child: contentWidget!,
       ),
     );
   }
 }
 
-class SBBHeaderBoxLarge extends StatelessWidget {
+class SBBHeaderBoxLarge extends SBBHeaderBox {
   const SBBHeaderBoxLarge({
     super.key,
-    this.leading,
-    this.leadingIconData,
-    this.title,
-    this.titleText,
-    this.subtitle,
-    this.subtitleText,
-    this.trailing,
-    this.flap,
-    this.isLoading = false,
-    this.margin,
-    this.padding,
-    this.style,
-    this.semanticsLabel,
-  }) : assert(title != null || titleText != null, 'Either title or titleText must be provided'),
-       assert(title == null || titleText == null, 'Only one of title or titleText can be set'),
-       assert(subtitle == null || subtitleText == null, 'Only one of subtitle or subtitleText can be set'),
-       assert(leading == null || leadingIconData == null, 'Only one of leading or leadingIconData can be set');
-
-  /// {@macro sbb_design_system.header_box.leading}
-  final Widget? leading;
-
-  /// {@macro sbb_design_system.header_box.leadingIconData}
-  final IconData? leadingIconData;
-
-  /// {@macro sbb_design_system.header_box.title}
-  final Widget? title;
-
-  /// {@macro sbb_design_system.header_box.titleText}
-  final String? titleText;
-
-  /// {@macro sbb_design_system.header_box.subtitle}
-  final Widget? subtitle;
-
-  /// {@macro sbb_design_system.header_box.subtitleText}
-  final String? subtitleText;
-
-  /// {@macro sbb_design_system.header_box.trailing}
-  final Widget? trailing;
-
-  /// {@macro sbb_design_system.header_box.flap}
-  final Widget? flap;
-
-  /// {@macro sbb_design_system.header_box.isLoading}
-  final bool isLoading;
-
-  /// {@macro sbb_design_system.header_box.margin}
-  final EdgeInsetsGeometry? margin;
-
-  /// {@macro sbb_design_system.header_box.padding}
-  final EdgeInsetsGeometry? padding;
-
-  /// {@macro sbb_design_system.header_box.style}
-  final SBBHeaderBoxStyle? style;
-
-  /// {@macro sbb_design_system.header_box.semanticsLabel}
-  final String? semanticsLabel;
-
-  @override
-  Widget build(BuildContext context) {
-    final themeData = Theme.of(context).sbbHeaderBoxTheme;
-    final effectiveStyle = (themeData?.largeStyle ?? SBBHeaderBoxStyle()).merge(style);
-
-    return _HeaderBoxAppBarInset(
-      style: effectiveStyle,
-      child: _HeaderBoxForeground(
-        style: effectiveStyle,
-        flap: flap,
-        semanticsLabel: semanticsLabel,
-        isLoading: isLoading,
-        child: LargeHeaderBoxContent(
-          leading: leading,
-          leadingIconData: leadingIconData,
-          title: title,
-          titleText: titleText,
-          subtitle: subtitle,
-          subtitleText: subtitleText,
-          trailing: trailing,
-          style: effectiveStyle,
-        ),
-      ),
-    );
-  }
-}
-
-class _HeaderBoxForeground extends StatelessWidget {
-  const _HeaderBoxForeground({
-    required this.child,
-    required this.style,
-    this.semanticsLabel,
-    this.flap,
-    this.isLoading = false,
+    super.leading,
+    super.leadingIconData,
+    super.title,
+    super.titleText,
+    super.subtitle,
+    super.subtitleText,
+    super.trailing,
+    super.body,
+    super.flap,
+    super.isLoading = false,
+    super.margin,
+    super.padding,
+    super.style,
+    super.semanticsLabel,
   });
 
-  final SBBHeaderBoxStyle style;
-  final Widget child;
-  final String? semanticsLabel;
-  final Widget? flap;
-  final bool isLoading;
-
   @override
-  Widget build(BuildContext context) {
-    return Semantics(
-      header: true,
-      label: semanticsLabel,
-      child: Container(
-        clipBehavior: .hardEdge,
-        decoration: BoxDecoration(
-          boxShadow: style.headerBoxShadow,
-          borderRadius: SBBHeaderBoxStyle.radius,
-          color: style.flapBackgroundColor,
-        ),
-        child: Column(
-          mainAxisSize: .min,
-          children: [
-            _headerBox(context, style),
-            ?flap,
-          ],
-        ),
-      ),
-    );
+  SBBHeaderBoxStyle _resolveStyle(BuildContext context) {
+    return (Theme.of(context).sbbHeaderBoxTheme?.largeStyle ?? SBBHeaderBoxStyle())
+        .merge(style)
+        .copyWith(margin: margin, padding: padding);
   }
 
-  Widget _headerBox(BuildContext context, SBBHeaderBoxStyle style) {
-    return Container(
-      clipBehavior: .hardEdge,
-      decoration: BoxDecoration(
-        color: style.backgroundColor,
-        borderRadius: SBBHeaderBoxStyle.radius,
-        boxShadow: flap != null ? style.shadowOverFlap : null,
-      ),
-      child: Stack(
-        children: [
-          Container(
-            padding: style.padding ?? EdgeInsets.zero,
-            constraints: BoxConstraints(minHeight: SBBHeaderBoxStyle.minHeight, minWidth: .infinity),
-            child: child,
-          ),
-          if (isLoading)
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: BottomLoadingIndicator(),
-            ),
-        ],
-      ),
-    );
-  }
-}
-
-class _HeaderBoxAppBarInset extends StatelessWidget {
-  const _HeaderBoxAppBarInset({
-    super.key,
-    required this.style,
-    required this.child,
-  });
-
-  final SBBHeaderBoxStyle style;
-  final Widget child;
-
   @override
-  Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+  Widget? _resolveContent(BuildContext context) {
+    if (title == null && titleText == null) {
+      return null;
+    }
 
-    return Stack(
-      children: [
-        Align(
-          alignment: .topCenter,
-          child: Container(
-            color: theme.appBarTheme.backgroundColor,
-            height: style.appBarOverlap,
-          ),
-        ),
-        Padding(
-          padding: style.margin ?? EdgeInsets.zero,
-          child: child,
-        ),
-      ],
+    return LargeHeaderBoxContent(
+      leading: leading,
+      leadingIconData: leadingIconData,
+      title: title,
+      titleText: titleText,
+      subtitle: subtitle,
+      subtitleText: subtitleText,
+      trailing: trailing,
+      style: _resolveStyle(context),
     );
   }
 }

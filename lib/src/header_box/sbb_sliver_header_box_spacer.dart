@@ -1,6 +1,9 @@
-part of 'sbb_sliver_floating_header_box.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
-/// This spacer should be placed at the very bottom of a scroll view that has a [SBBSliverFloatingHeaderBox].
+import 'sliver/sliver_pinned_floating_widget.dart';
+
+/// This spacer should be placed at the very bottom of a scroll view that has a [SBBSliverHeaderBox].
 ///
 /// It will make sure that the scroll view has enough space to fully expand and contract the headerbox. Otherwise, you
 /// may face issues with the headerbox stopping halfway.

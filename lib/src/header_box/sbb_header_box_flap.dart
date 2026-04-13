@@ -15,6 +15,7 @@ class SBBHeaderBoxFlap extends StatelessWidget {
     this.leadingIconData,
     this.trailing,
     this.trailingIconData,
+    this.padding,
     this.style,
   }) : assert(label != null || labelText != null, 'Either title or titleText must be provided'),
        assert(label == null || labelText == null, 'Only one of title or titleText can be set'),
@@ -30,11 +31,15 @@ class SBBHeaderBoxFlap extends StatelessWidget {
   final Widget? trailing;
   final IconData? trailingIconData;
 
+  final EdgeInsetsGeometry? padding;
+
   final SBBHeaderBoxFlapStyle? style;
 
   @override
   Widget build(BuildContext context) {
-    final effectiveStyle = (Theme.of(context).sbbHeaderBoxTheme!.flapStyle ?? SBBHeaderBoxFlapStyle()).merge(style);
+    final effectiveStyle = (Theme.of(context).sbbHeaderBoxTheme!.flapStyle ?? SBBHeaderBoxFlapStyle())
+        .merge(style)
+        .copyWith(padding: padding);
 
     final leadingWidget = _addDefaultAncestorWithResolved(
       foregroundColor: effectiveStyle.leadingForegroundColor,

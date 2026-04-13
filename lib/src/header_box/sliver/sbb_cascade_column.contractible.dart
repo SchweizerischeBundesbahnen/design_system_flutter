@@ -25,7 +25,7 @@ enum SBBContractionBehavior {
 
 /// A widget that contracts as the user scrolls.
 ///
-/// It must be a direct child of either [SBBSliverFloatingHeaderBox] or [SBBCascadeColumn].
+/// It must be a direct child of either [SBBSliverHeaderBox] or [SBBCascadeColumn].
 ///
 /// By default, it will clip as its parent shrinks, but you can pass in a [behavior] to change this effect, e.g. to
 /// achieve a displacement effect.

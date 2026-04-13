@@ -206,37 +206,17 @@ class _ScrollablePageState extends State<ScrollablePage> {
     final isDark = Theme.of(context).brightness == .dark;
     return CustomScrollView(
       slivers: [
-        SBBSliverHeaderBox.custom(
-          child: Column(
-            mainAxisSize: .min,
-            children: [
-              Row(
-                mainAxisAlignment: .spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: .start,
-                    children: [
-                      Text('Scrollable Screen', style: SBBTextStyles.mediumBold),
-                      Text(
-                        'Click to expand Headerbox.',
-                        style: SBBTextStyles.smallLight.copyWith(
-                          color: isDark ? SBBColors.graphite : SBBColors.granite,
-                        ),
-                      ),
-                    ],
-                  ),
-                  SBBTertiaryButtonSmall(
-                    labelText: 'Expand',
-                    onPressed: () => setState(() => _headerBoxExpanded = !_headerBoxExpanded),
-                  ),
-                ],
-              ),
-              AnimatedContainer(
-                curve: Curves.easeInOut,
-                height: _headerBoxExpanded ? _expandedHeight : _collapsedHeight,
-                duration: Durations.long4,
-              ),
-            ],
+        SBBSliverHeaderBox(
+          titleText: 'Scrollable Screen',
+          subtitleText: 'Click to expand the header box',
+          trailing: SBBTertiaryButtonSmall(
+            labelText: 'Expand',
+            onPressed: () => setState(() => _headerBoxExpanded = !_headerBoxExpanded),
+          ),
+          body: AnimatedContainer(
+            curve: Curves.easeInOut,
+            height: _headerBoxExpanded ? _expandedHeight : _collapsedHeight,
+            duration: Durations.long4,
           ),
         ),
         SliverList.builder(
