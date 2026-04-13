@@ -5,86 +5,218 @@ import '../../sbb_design_system_mobile.dart';
 class DefaultHeaderBoxContent extends StatelessWidget {
   const DefaultHeaderBoxContent({
     super.key,
-    required this.title,
-    this.leadingIcon,
-    this.secondaryLabel,
-    this.trailingWidget,
+    this.leading,
+    this.leadingIconData,
+    this.title,
+    this.titleText,
+    this.subtitle,
+    this.subtitleText,
+    this.trailing,
+    this.style = const SBBHeaderBoxStyle(),
   });
 
-  final String title;
-  final IconData? leadingIcon;
-  final String? secondaryLabel;
-  final Widget? trailingWidget;
+  final Widget? leading;
+  final IconData? leadingIconData;
+  final Widget? title;
+  final String? titleText;
+  final Widget? subtitle;
+  final String? subtitleText;
+  final Widget? trailing;
+  final SBBHeaderBoxStyle style;
 
   @override
   Widget build(BuildContext context) {
-    final style = Theme.of(context).sbbHeaderBoxTheme!.style!;
-    final secondaryTextStyle = SBBTextStyles.smallLight.copyWith(color: style.secondaryLabelColor);
-
-    return Row(
-      children: [
-        Expanded(
-          child: Column(
-            crossAxisAlignment: .start,
-            children: [
-              Row(
-                children: [
-                  if (leadingIcon != null) ...[
-                    Icon(leadingIcon, size: sbbIconSizeSmall),
-                    SizedBox(width: SBBSpacing.xSmall),
-                  ],
-                  Expanded(child: Text(title, style: style.titleTextStyle)),
-                ],
-              ),
-              if (secondaryLabel != null) Text(secondaryLabel!, style: secondaryTextStyle),
-            ],
-          ),
-        ),
-        SizedBox(width: SBBSpacing.xSmall),
-        if (trailingWidget != null) trailingWidget!,
-      ],
+    final titleWidget = _addDefaultAncestorWithResolved(
+      textStyle: style.titleTextStyle,
+      foregroundColor: style.titleForegroundColor,
+      child: _resolveTitle(),
     );
+
+    final subtitleWidget = _addDefaultAncestorWithResolved(
+      textStyle: style.subtitleTextStyle,
+      foregroundColor: style.subtitleForegroundColor,
+      child: _resolveSubtitle(),
+    );
+
+    final leadingWidget = _addDefaultAncestorWithResolved(
+      textStyle: style.leadingTextStyle,
+      foregroundColor: style.leadingForegroundColor,
+      child: _resolveLeading(),
+    );
+
+    Widget child = titleWidget!;
+    if (leadingWidget != null) {
+      child = Row(
+        spacing: SBBSpacing.xSmall,
+        children: [
+          leadingWidget,
+          child,
+        ],
+      );
+    }
+
+    if (subtitleWidget != null) {
+      child = Column(
+        crossAxisAlignment: .start,
+        spacing: style.titleSubtitleGap ?? 0.0,
+        children: [
+          child,
+          Container(
+            constraints: BoxConstraints(minHeight: sbbIconSizeSmall),
+            alignment: Alignment.centerLeft,
+            child: subtitleWidget,
+          ),
+        ],
+      );
+    }
+
+    if (trailing != null) {
+      child = Row(
+        spacing: SBBSpacing.xSmall,
+        children: [
+          Expanded(child: child),
+          trailing!,
+        ],
+      );
+    }
+
+    return child;
+  }
+
+  Widget? _resolveLeading() {
+    if (leadingIconData != null) {
+      return Icon(leadingIconData);
+    }
+
+    return leading;
+  }
+
+  Widget? _resolveTitle() {
+    if (titleText != null) {
+      return Text(titleText!);
+    }
+
+    return title;
+  }
+
+  Widget? _resolveSubtitle() {
+    if (subtitleText != null) {
+      return Text(subtitleText!);
+    }
+
+    return subtitle;
   }
 }
 
 class LargeHeaderBoxContent extends StatelessWidget {
   const LargeHeaderBoxContent({
     super.key,
-    required this.title,
-    this.leadingIcon,
-    this.secondaryLabel,
-    this.trailingWidget,
+    this.leading,
+    this.leadingIconData,
+    this.title,
+    this.titleText,
+    this.subtitle,
+    this.subtitleText,
+    this.trailing,
+    this.style = const SBBHeaderBoxStyle(),
   });
 
-  final String title;
-  final IconData? leadingIcon;
-  final String? secondaryLabel;
-  final Widget? trailingWidget;
+  final Widget? leading;
+  final IconData? leadingIconData;
+  final Widget? title;
+  final String? titleText;
+  final Widget? subtitle;
+  final String? subtitleText;
+  final Widget? trailing;
+  final SBBHeaderBoxStyle style;
 
   @override
   Widget build(BuildContext context) {
-    final style = Theme.of(context).sbbHeaderBoxTheme!.style!;
-    final secondaryTextStyle = SBBTextStyles.mediumLight.copyWith(color: style.largeSecondaryLabelColor);
-
-    return Row(
-      children: [
-        if (leadingIcon != null) ...[
-          Icon(leadingIcon, size: sbbIconSizeMedium),
-          SizedBox(width: SBBSpacing.xSmall),
-        ],
-        Expanded(
-          child: Column(
-            crossAxisAlignment: .start,
-            spacing: SBBSpacing.xxSmall,
-            children: [
-              Text(title, style: style.titleTextStyle),
-              if (secondaryLabel != null) Text(secondaryLabel!, style: secondaryTextStyle),
-            ],
-          ),
-        ),
-        SizedBox(width: SBBSpacing.xSmall),
-        if (trailingWidget != null) trailingWidget!,
-      ],
+    final titleWidget = _addDefaultAncestorWithResolved(
+      textStyle: style.titleTextStyle,
+      foregroundColor: style.titleForegroundColor,
+      child: _resolveTitle(),
     );
+    final subtitleWidget = _addDefaultAncestorWithResolved(
+      textStyle: style.subtitleTextStyle,
+      foregroundColor: style.subtitleForegroundColor,
+      child: _resolveSubtitle(),
+    );
+
+    final leadingWidget = _addDefaultAncestorWithResolved(
+      textStyle: style.leadingTextStyle,
+      foregroundColor: style.leadingForegroundColor,
+      child: _resolveLeading(),
+    );
+
+    Widget child = titleWidget!;
+    if (subtitleWidget != null) {
+      child = Column(
+        crossAxisAlignment: .start,
+        spacing: style.titleSubtitleGap ?? 0.0,
+        children: [
+          child,
+          subtitleWidget,
+        ],
+      );
+    }
+
+    if (leadingWidget != null || trailing != null) {
+      child = Row(
+        spacing: SBBSpacing.xSmall,
+        children: [
+          ?leadingWidget,
+          Expanded(child: child),
+          ?trailing,
+        ],
+      );
+    }
+
+    return child;
   }
+
+  Widget? _resolveLeading() {
+    if (leadingIconData != null) {
+      return Icon(leadingIconData, size: sbbIconSizeMedium);
+    }
+
+    return leading;
+  }
+
+  Widget? _resolveTitle() {
+    if (titleText != null) {
+      return Text(titleText!);
+    }
+
+    return title;
+  }
+
+  Widget? _resolveSubtitle() {
+    if (subtitleText != null) {
+      return Text(subtitleText!);
+    }
+
+    return subtitle;
+  }
+}
+
+Widget? _addDefaultAncestorWithResolved({
+  Widget? child,
+  Color? foregroundColor,
+  TextStyle? textStyle,
+}) {
+  if (child == null) {
+    return null;
+  }
+
+  final resolvedTextStyle = textStyle?.copyWith(color: foregroundColor) ?? TextStyle(color: foregroundColor);
+
+  child = DefaultTextStyle.merge(
+    style: resolvedTextStyle,
+    child: IconTheme.merge(
+      data: IconThemeData(color: foregroundColor),
+      child: child,
+    ),
+  );
+  return child;
 }

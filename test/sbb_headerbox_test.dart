@@ -29,32 +29,32 @@ class HeaderBoxTest extends StatelessWidget {
         const SizedBox(height: SBBSpacing.medium),
         const SBBListHeader('Default'),
         SBBHeaderBox(
-          title: 'Title',
-          leadingIcon: SBBIcons.dog_small,
-          secondaryLabel: 'Subtext',
+          titleText: 'Title',
+          leadingIconData: SBBIcons.dog_small,
+          subtitleText: 'Subtext',
           flap: SBBHeaderBoxFlap(
-            title: 'Additional text or information',
-            leadingIcon: SBBIcons.sign_exclamation_point_small,
-            trailingIcon: SBBIcons.circle_information_small_small,
+            labelText: 'Additional text or information',
+            leadingIconData: SBBIcons.sign_exclamation_point_small,
+            trailingIconData: SBBIcons.circle_information_small,
           ),
-          trailingWidget: SBBTertiaryButtonSmall(labelText: 'Label', iconData: SBBIcons.dog_small, onPressed: () => {}),
+          trailing: SBBTertiaryButtonSmall(labelText: 'Label', iconData: SBBIcons.dog_small, onPressed: () => {}),
         ),
         const SizedBox(height: SBBSpacing.medium),
         const SBBListHeader('Large'),
-        SBBHeaderBox.large(
-          title: 'Title',
-          leadingIcon: SBBIcons.dog_medium,
-          secondaryLabel: 'Subtext',
-          trailingWidget: SBBTertiaryButton(iconData: SBBIcons.dog_small, onPressed: () => {}),
+        SBBHeaderBoxLarge(
+          titleText: 'Title',
+          leadingIconData: SBBIcons.dog_medium,
+          subtitleText: 'Subtext',
+          trailing: SBBTertiaryButton(iconData: SBBIcons.dog_small, onPressed: () => {}),
         ),
         const SizedBox(height: SBBSpacing.medium),
         const SBBListHeader('Custom'),
-        SBBHeaderBox.custom(
+        SBBHeaderBox(
           padding: .zero,
-          flap: SBBHeaderBoxFlap.custom(
-            child: Center(child: Text('Custom Flappy!', style: SBBTextStyles.extraSmallBold)),
+          flap: SBBHeaderBoxFlap(
+            label: Center(child: Text('Custom Flappy!', style: SBBTextStyles.extraSmallBold)),
           ),
-          child: Row(
+          title: Row(
             mainAxisAlignment: .spaceEvenly,
             children: [
               Container(color: SBBColors.red, width: 25, height: 25),
@@ -89,9 +89,9 @@ class FloatingHeaderboxTest extends StatelessWidget {
                 leadingIcon: SBBIcons.dog_small,
                 secondaryLabel: 'Subtext',
                 flap: SBBHeaderBoxFlap(
-                  title: 'Additional text or information',
-                  leadingIcon: SBBIcons.sign_exclamation_point_small,
-                  trailingIcon: SBBIcons.circle_information_small_small,
+                  labelText: 'Additional text or information',
+                  leadingIconData: SBBIcons.sign_exclamation_point_small,
+                  trailingIconData: SBBIcons.circle_information_small,
                 ),
                 trailingWidget: SBBTertiaryButtonSmall(
                   labelText: 'Label',
@@ -116,9 +116,9 @@ class FloatingHeaderboxTest extends StatelessWidget {
             slivers: [
               SBBSliverFloatingHeaderBox.custom(
                 flap: SBBHeaderBoxFlap(
-                  title: 'Additional text or information',
-                  leadingIcon: SBBIcons.sign_exclamation_point_small,
-                  trailingIcon: SBBIcons.circle_information_small_small,
+                  labelText: 'Additional text or information',
+                  leadingIconData: SBBIcons.sign_exclamation_point_small,
+                  trailingIconData: SBBIcons.circle_information_small,
                 ),
                 flapMode: .hideable,
                 children: [

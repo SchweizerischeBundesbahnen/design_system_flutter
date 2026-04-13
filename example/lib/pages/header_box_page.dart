@@ -83,15 +83,15 @@ class DesignGuidelinePage extends StatelessWidget {
         children: [
           const SBBListHeader('Default'),
           SBBHeaderBox(
-            title: 'Title',
-            leadingIcon: SBBIcons.dog_small,
-            secondaryLabel: 'Subtext',
+            titleText: 'Title',
+            leadingIconData: SBBIcons.dog_small,
+            subtitleText: 'Subtext',
             flap: SBBHeaderBoxFlap(
-              title: 'Additional text or information',
-              leadingIcon: SBBIcons.sign_exclamation_point_small,
-              trailingIcon: SBBIcons.circle_information_small_small,
+              labelText: 'Additional text or information',
+              leadingIconData: SBBIcons.sign_exclamation_point_small,
+              trailingIconData: SBBIcons.circle_information_small_small,
             ),
-            trailingWidget: SBBTertiaryButtonSmall(
+            trailing: SBBTertiaryButtonSmall(
               labelText: 'Label',
               iconData: SBBIcons.dog_small,
               onPressed: () => sbbToast.show(titleText: 'Default pressed', bottom: 96.0),
@@ -99,23 +99,23 @@ class DesignGuidelinePage extends StatelessWidget {
           ),
           const SizedBox(height: SBBSpacing.medium),
           const SBBListHeader('Large'),
-          SBBHeaderBox.large(
-            title: 'Title',
-            leadingIcon: SBBIcons.dog_medium,
-            secondaryLabel: 'Subtext',
-            trailingWidget: SBBTertiaryButton(
+          SBBHeaderBoxLarge(
+            titleText: 'Title',
+            leadingIconData: SBBIcons.dog_medium,
+            subtitleText: 'Subtext',
+            trailing: SBBTertiaryButton(
               iconData: SBBIcons.dog_small,
               onPressed: () => sbbToast.show(titleText: 'Large pressed', bottom: 96.0),
             ),
           ),
           const SizedBox(height: SBBSpacing.medium),
           const SBBListHeader('Custom'),
-          const SBBHeaderBox.custom(
+          const SBBHeaderBox(
             padding: .zero,
-            flap: SBBHeaderBoxFlap.custom(
-              child: Center(child: Text('Choooooo!', style: SBBTextStyles.extraSmallBold)),
+            flap: SBBHeaderBoxFlap(
+              label: Center(child: Text('Choooooo!', style: SBBTextStyles.extraSmallBold)),
             ),
-            child: Center(child: Text('🚂｡🚋｡🚋｡🚋｡🚋˙⊹⁺.')),
+            title: Center(child: Text('🚂｡🚋｡🚋｡🚋｡🚋˙⊹⁺.')),
           ),
         ],
       ),
@@ -141,8 +141,8 @@ class _StaticPageState extends State<StaticPage> {
     return Stack(
       children: [
         _body(),
-        SBBHeaderBox.custom(
-          child: Column(
+        SBBHeaderBox(
+          title: Column(
             mainAxisSize: .min,
             children: [
               Row(

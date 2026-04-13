@@ -101,10 +101,10 @@ class SBBSliverFloatingHeaderBox extends StatefulWidget {
          floating: floating,
          children: [
            DefaultHeaderBoxContent(
-             title: title,
-             leadingIcon: leadingIcon,
-             secondaryLabel: secondaryLabel,
-             trailingWidget: trailingWidget,
+             titleText: title,
+             leadingIconData: leadingIcon,
+             subtitleText: secondaryLabel,
+             trailing: trailingWidget,
            ),
            if (contractibleChild != null)
              _CollapsibleContent(
@@ -162,10 +162,10 @@ class SBBSliverFloatingHeaderBox extends StatefulWidget {
          floating: floating,
          children: [
            LargeHeaderBoxContent(
-             title: title,
-             leadingIcon: leadingIcon,
-             secondaryLabel: secondaryLabel,
-             trailingWidget: trailingWidget,
+             titleText: title,
+             leadingIconData: leadingIcon,
+             subtitleText: secondaryLabel,
+             trailing: trailingWidget,
            ),
            if (collapsibleChild != null) SBBContractible(child: SizedBox(height: SBBSpacing.medium)),
            if (collapsibleChild != null) _CollapsibleContent(child: collapsibleChild),

@@ -54,7 +54,7 @@ class SBBTabBarStyle {
   ///
   /// This acts as a theme-level default. Individual [SBBTabBarBadgeIcon] or
   /// [SBBTabBarBadgeText] instances can override this by setting their own
-  /// [SBBTabBarBadge.foregroundColor] property.
+  /// [SBBTabBarBadge.labelForegroundColor] property.
   final Color? badgeForegroundColor;
 
   /// The background color for [SBBTabBarBadge] widgets displayed on

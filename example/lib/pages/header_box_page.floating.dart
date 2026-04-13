@@ -51,8 +51,8 @@ class _FloatingPageState extends State<FloatingPage> {
   }
 
   SBBHeaderBoxFlap _flap() {
-    return SBBHeaderBoxFlap.custom(
-      child: Row(
+    return SBBHeaderBoxFlap(
+      label: Row(
         children: [
           Text('Thursday, 01/31/2025', style: SBBTextStyles.smallLight),
           Spacer(),
