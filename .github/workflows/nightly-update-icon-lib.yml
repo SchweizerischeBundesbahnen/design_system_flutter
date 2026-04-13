@@ -28,7 +28,7 @@ jobs:
 
       - uses: dart-lang/setup-dart@v1
         with:
-          sdk: 3.10
+          sdk: '3.11'
 
       - uses: actions/setup-node@v6
         with:
