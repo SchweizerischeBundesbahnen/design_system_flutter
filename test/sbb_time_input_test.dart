@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:intl/intl.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import 'test_app.dart';
@@ -42,12 +41,6 @@ class TimePickerTest extends StatelessWidget {
             SBBTimeInput(labelText: 'Label and Value', value: initialTime, onTimeChanged: (_) {}),
             SBBTimeInput(
               value: initialTime,
-              labelText: 'Custom date format',
-              dateFormat: DateFormat('dd.MM.yy, H:m'),
-              onTimeChanged: (_) {},
-            ),
-            SBBTimeInput(
-              value: initialTime,
               labelText: 'Error',
               errorText: 'Error',
               prefixIcon: SBBIcons.calendar_small,
@@ -84,7 +77,6 @@ class TimePickerTest extends StatelessWidget {
               prefixIcon: SBBIcons.calendar_small,
               suffixIcon: SBBIcons.arrow_circle_reset_small,
               onTimeChanged: (_) {},
-              isLastElement: true,
             ),
           ],
         ),

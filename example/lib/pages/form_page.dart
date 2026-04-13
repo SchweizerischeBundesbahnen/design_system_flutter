@@ -11,7 +11,6 @@ class FormPage extends StatefulWidget {
 }
 
 class _FormPageState extends State<FormPage> {
-  String? errorText;
   final _listedFormKey = GlobalKey<FormState>();
   final _boxedFormKey = GlobalKey<FormState>();
 

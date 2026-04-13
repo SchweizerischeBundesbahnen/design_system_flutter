@@ -33,7 +33,6 @@ class SBBTabBarController {
 
   final List<SBBTabBarItem> tabs;
   late SBBTabBarItem selectedTab;
-  late TickerProvider vsync;
   late SBBTabBarItem _nextTab;
   late AnimationController _animationController;
   late Animation<double> _animation;
@@ -64,7 +63,7 @@ class SBBTabBarController {
 
   /// Current tabStates for the animation
   List<double> get tabStates {
-    return currentLayoutData.positions.mapIndexed((i, p) {
+    return currentLayoutData.positions.mapIndexed((i, _) {
       if (i == from) return 1 - (hover ? 0.0 : _animation.value);
       if (i == to) return _animation.value;
       return 0.0;
