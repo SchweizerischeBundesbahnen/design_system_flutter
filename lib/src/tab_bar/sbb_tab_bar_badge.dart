@@ -77,8 +77,7 @@ class SBBTabBarBadgeIcon extends SBBTabBarBadge {
     final tabBarStyle = Theme.of(context).sbbTabBarTheme?.style;
     final primaryColor = Theme.of(context).sbbBaseStyle.colorScheme.primaryColor;
     final resolvedForegroundColor = foregroundColor ?? tabBarStyle?.badgeForegroundColor ?? SBBColors.white;
-    final resolvedBackgroundColor =
-        backgroundColor ?? tabBarStyle?.badgeBackgroundColor ?? primaryColor ?? SBBColors.red;
+    final resolvedBackgroundColor = backgroundColor ?? tabBarStyle?.badgeBackgroundColor ?? primaryColor;
 
     return ExcludeSemantics(
       child: CustomPaint(
@@ -127,8 +126,7 @@ class SBBTabBarBadgeText extends SBBTabBarBadge {
   Widget build(BuildContext context) {
     final tabBarStyle = Theme.of(context).sbbTabBarTheme?.style;
     final primaryColor = Theme.of(context).sbbBaseStyle.colorScheme.primaryColor;
-    final resolvedBackgroundColor =
-        backgroundColor ?? tabBarStyle?.badgeBackgroundColor ?? primaryColor ?? SBBColors.red;
+    final resolvedBackgroundColor = backgroundColor ?? tabBarStyle?.badgeBackgroundColor ?? primaryColor;
     final resolvedForegroundColor = foregroundColor ?? tabBarStyle?.badgeForegroundColor ?? SBBColors.white;
     final resolvedTextStyle = textStyle ?? tabBarStyle?.badgeTextStyle;
 
@@ -156,13 +154,11 @@ class SBBTabBarBadgeText extends SBBTabBarBadge {
 }
 
 class _BadgeIconPainter extends CustomPainter {
-  final SBBBadgeIconData badgeIcon;
-
-  final Color foregroundColor;
-
-  final Color backgroundColor;
-
   const _BadgeIconPainter({required this.badgeIcon, required this.foregroundColor, required this.backgroundColor});
+
+  final SBBBadgeIconData badgeIcon;
+  final Color foregroundColor;
+  final Color backgroundColor;
 
   @override
   void paint(Canvas canvas, Size size) {

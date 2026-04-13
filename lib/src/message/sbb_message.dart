@@ -161,7 +161,6 @@ class SBBMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.brightnessOf(context) == Brightness.dark;
     final themeData = Theme.of(context).sbbMessageTheme;
     final effectiveStyle = _getEffectiveStyle(themeData);
 
@@ -169,8 +168,7 @@ class SBBMessage extends StatelessWidget {
     if (illustration != null || isLoading) {
       final Widget illustrationChild;
       if (isLoading) {
-        final loadingIndicatorColor = isDark ? SBBColors.red85 : SBBColors.red;
-        illustrationChild = SBBLoadingIndicator.medium(color: loadingIndicatorColor);
+        illustrationChild = SBBLoadingIndicator.medium();
       } else {
         illustrationChild = illustration!;
       }

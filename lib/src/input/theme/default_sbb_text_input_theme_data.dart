@@ -10,7 +10,7 @@ class DefaultSBBTextInputThemeData extends SBBTextInputThemeData {
         inputTextStyle: baseStyle.textTheme.defaultTextStyle,
         inputForegroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
           WidgetState.disabled: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
-          WidgetState.error: baseStyle.themeValue(SBBColors.error, SBBColors.errorDark),
+          WidgetState.error: baseStyle.colorScheme.errorColor,
           WidgetState.any: baseStyle.colorScheme.defaultTextColor,
         }),
         enableClearButton: true,

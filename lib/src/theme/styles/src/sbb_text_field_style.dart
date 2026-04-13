@@ -25,7 +25,7 @@ class SBBTextFieldStyle {
   factory SBBTextFieldStyle.$default({required SBBBaseStyle baseStyle}) => SBBTextFieldStyle(
     textStyle: baseStyle.themedTextStyle(),
     textStyleDisabled: baseStyle.themedTextStyle(color: baseStyle.colorScheme.labelColor),
-    textStyleError: baseStyle.themedTextStyle(color: baseStyle.themeValue(SBBColors.red, SBBColors.red85)),
+    textStyleError: baseStyle.themedTextStyle(color: baseStyle.colorScheme.errorColor),
     labelTextStyle: baseStyle.themedTextStyle(
       textStyle: SBBTextStyles.mediumLight.copyWith(height: 12.0 / 10.0, fontSize: 10.0),
       color: baseStyle.colorScheme.labelColor,
@@ -34,17 +34,17 @@ class SBBTextFieldStyle {
     placeholderTextStyleDisabled: baseStyle.themedTextStyle(color: baseStyle.colorScheme.labelColor),
     errorTextStyle: baseStyle.themedTextStyle(
       textStyle: SBBTextStyles.helpersLabel,
-      color: baseStyle.themeValue(SBBColors.red, SBBColors.red85),
+      color: baseStyle.colorScheme.errorColor,
     ),
     dividerColor: baseStyle.themeValue(SBBColors.cloud, SBBColors.iron),
     dividerColorHighlighted: baseStyle.themeValue(SBBColors.black, SBBColors.white),
-    dividerColorError: SBBColors.red,
-    cursorColor: SBBColors.sky,
-    selectionColor: SBBColors.sky.withValues(alpha: 0.5),
-    selectionHandleColor: SBBColors.sky,
+    dividerColorError: baseStyle.colorScheme.errorColor,
+    cursorColor: baseStyle.colorScheme.selectionColor,
+    selectionColor: baseStyle.colorScheme.selectionColor?.withValues(alpha: 0.5),
+    selectionHandleColor: baseStyle.colorScheme.selectionColor,
     iconColor: baseStyle.colorScheme.iconColor,
     iconColorDisabled: baseStyle.colorScheme.labelColor,
-    prefixIconColorError: SBBColors.red,
+    prefixIconColorError: baseStyle.colorScheme.errorColor,
   );
 
   final TextStyle? textStyle;

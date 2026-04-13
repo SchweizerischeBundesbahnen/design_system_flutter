@@ -20,7 +20,7 @@ class DefaultSBBTabBarThemeData extends SBBTabBarThemeData {
           itemLabelTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallLight),
           itemLabelForegroundColor: baseStyle.themeValue(SBBColors.black, SBBColors.white),
           warningItemIcon: SBBIcons.sign_exclamation_point_small,
-          warningItemBackgroundColor: SBBColors.red,
+          warningItemBackgroundColor: baseStyle.colorScheme.errorColor,
           warningItemForegroundColor: SBBColors.white,
           badgeForegroundColor: SBBColors.white,
           badgeBackgroundColor: baseStyle.colorScheme.primaryColor,

@@ -212,6 +212,7 @@ class _FloatingPageState extends State<FloatingPage> {
   }
 
   List<Widget> _additionalRows(BuildContext context) {
+    final primaryColor = Theme.of(context).sbbBaseStyle.colorScheme.primaryColor;
     return [
       SBBListItem(titleText: 'Static with progress bar', onTap: null),
       SBBContractionListener(
@@ -220,7 +221,7 @@ class _FloatingPageState extends State<FloatingPage> {
           alignment: .topLeft,
           child: Container(
             height: 5,
-            color: SBBColors.red,
+            color: primaryColor,
           ),
         ),
       ),

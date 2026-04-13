@@ -26,7 +26,7 @@ class DefaultSBBInputDecorationThemeData extends SBBInputDecorationThemeData {
         }),
         inputTrailingGap: defaultInputTrailingGap,
         errorTextStyle: SBBTextStyles.extraExtraSmallBold,
-        errorForegroundColor: WidgetStatePropertyAll(baseStyle.themeValue(SBBColors.error, SBBColors.errorDark)),
+        errorForegroundColor: WidgetStatePropertyAll(baseStyle.colorScheme.errorColor),
         titleRowErrorGap: defaultTitleRowErrorGap,
         errorBottomPadding: defaultErrorBottomPadding,
         labelTextStyle: baseStyle.textTheme.defaultTextStyle,
@@ -40,7 +40,7 @@ class DefaultSBBInputDecorationThemeData extends SBBInputDecorationThemeData {
         placeholderTextStyle: baseStyle.textTheme.defaultTextStyle,
         placeholderForegroundColor: WidgetStatePropertyAll(baseStyle.themeValue(SBBColors.granite, SBBColors.graphite)),
         borderColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
-          WidgetState.error: baseStyle.themeValue(SBBColors.error, SBBColors.errorDark),
+          WidgetState.error: baseStyle.colorScheme.errorColor,
           WidgetState.focused: baseStyle.themeValue(SBBColors.black, SBBColors.white),
           WidgetState.any: SBBColors.transparent,
         }),

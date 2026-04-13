@@ -236,6 +236,7 @@ class _SBBTextField extends State<SBBTextField> {
   );
 
   TextField _buildTextField() {
+    final colorScheme = Theme.of(context).sbbBaseStyle.colorScheme;
     final textScaler = MediaQuery.of(context).textScaler;
     final style = SBBControlStyles.of(context).textField!;
     final hasError = widget.errorText?.isNotEmpty ?? false;
@@ -263,7 +264,7 @@ class _SBBTextField extends State<SBBTextField> {
       onSubmitted: widget.onSubmitted,
       enabled: widget.enabled,
       decoration: _decoration(textScaler, labelStyle, floatingLabelStyle),
-      style: hasError ? textStyle.copyWith(color: SBBColors.red) : textStyle,
+      style: hasError ? textStyle.copyWith(color: colorScheme.errorColor) : textStyle,
       inputFormatters: widget.inputFormatters,
       textCapitalization: widget.textCapitalization,
       textInputAction: widget.textInputAction,

@@ -4,7 +4,7 @@ import '../../theme.dart';
 
 class SBBColorScheme {
   SBBColorScheme({
-    this.primaryColor,
+    required this.primaryColor,
     this.primary85Color,
     this.primary125Color,
     this.primary150Color,
@@ -76,7 +76,7 @@ class SBBColorScheme {
     brandColor: SBBColors.metal,
   );
 
-  final Color? primaryColor;
+  final Color primaryColor;
   final Color? primary85Color;
   final Color? primary125Color;
   final Color? primary150Color;
@@ -89,21 +89,18 @@ class SBBColorScheme {
   final Color? selectionColor;
   final Color? labelColor;
 
-  MaterialColor get primarySwatch {
-    var color = primaryColor ?? SBBColors.red;
-    return MaterialColor(color.toARGB32(), <int, Color>{
-      50: color,
-      100: color,
-      200: color,
-      300: color,
-      400: color,
-      500: color,
-      600: color,
-      700: color,
-      800: color,
-      900: color,
-    });
-  }
+  MaterialColor get primarySwatch => MaterialColor(primaryColor.toARGB32(), <int, Color>{
+    50: primaryColor,
+    100: primaryColor,
+    200: primaryColor,
+    300: primaryColor,
+    400: primaryColor,
+    500: primaryColor,
+    600: primaryColor,
+    700: primaryColor,
+    800: primaryColor,
+    900: primaryColor,
+  });
 
   SBBColorScheme copyWith({
     Color? primaryColor,
@@ -136,7 +133,7 @@ class SBBColorScheme {
   SBBColorScheme lerp(SBBColorScheme? other, double t) {
     if (other is! SBBColorScheme) return this;
     return SBBColorScheme(
-      primaryColor: Color.lerp(primaryColor, other.primaryColor, t),
+      primaryColor: Color.lerp(primaryColor, other.primaryColor, t)!,
       primary85Color: Color.lerp(primary85Color, other.primary85Color, t),
       primary125Color: Color.lerp(primary125Color, other.primary125Color, t),
       primary150Color: Color.lerp(primary150Color, other.primary150Color, t),
