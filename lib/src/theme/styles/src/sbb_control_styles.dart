@@ -22,12 +22,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
 
   static SBBControlStyles of(BuildContext context) => Theme.of(context).extension<SBBControlStyles>()!;
 
-  TextSelectionThemeData get textSelectionTheme => TextSelectionThemeData(
-    selectionColor: textField!.selectionColor,
-    cursorColor: textField!.cursorColor,
-    selectionHandleColor: textField!.selectionHandleColor,
-  );
-
   @override
   ThemeExtension<SBBControlStyles> copyWith({
     SBBTextFieldStyle? textField,
