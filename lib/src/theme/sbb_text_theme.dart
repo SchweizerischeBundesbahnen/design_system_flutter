@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-import 'package:sbb_design_system_mobile/src/theme/styles/src/sbb_color_scheme.dart';
+import 'package:sbb_design_system_mobile/src/theme/sbb_color_scheme.dart';
 
 /// SBB Design System Mobile text theme.
 ///
-/// Definitions for the various typographical styles found in SBB Design System Mobile. To obtain the current SBB text
-/// theme, call [SBBTextTheme.of] with the current [BuildContext]. This is equivalent to calling [Theme.of] and reading
-/// the [ThemeData.sbbTextTheme] property.
+/// Definitions for the various typographical styles found in SBB Design System Mobile.
 ///
-/// See all text theme definitions in
-/// [Figma](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=0-1&p=f&t=8PFFztTe9RBMbOpq-0).
+/// Access by using `Theme.of(context).sbbTextTheme`.
+///
+/// See also:
+///
+/// * [SBBBaseStyle], theme extension where this theme is attached to.
+/// * [Figma](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=0-1&p=f&t=8PFFztTe9RBMbOpq-0).
 class SBBTextTheme extends ThemeExtension<SBBTextTheme> {
   const SBBTextTheme({
     this.xxSmallLight,
@@ -66,7 +68,6 @@ class SBBTextTheme extends ThemeExtension<SBBTextTheme> {
   TextStyle? get defaultTextStyle => mediumLight;
 
   TextTheme toTextTheme({Color? labelColor}) {
-    // TODO: What about font family etc.
     return TextTheme(
       bodySmall: smallLight,
       bodyMedium: mediumLight,

@@ -1,8 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/src/theme/styles/src/sbb_color_scheme.dart';
+import 'package:sbb_design_system_mobile/src/theme/sbb_color_scheme.dart';
 
-import '../../theme.dart';
+import 'theme.dart';
 
+/// Base style used in [SBBTheme].
+///
+/// Provides the shared visual defaults (brightness, color scheme, text and
+/// icon styles, dividers and text selection) that SBB components use.
+///
+/// Access the base style by using `Theme.of(context).sbbBaseStyle`.
+///
+/// See also:
+///
+/// * [SBBColorScheme], the color values used by this base style.
+/// * [SBBTheme], helpers to create full ThemeData from an SBB base style.
 class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
   SBBBaseStyle({
     required this.brightness,
@@ -15,17 +26,18 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
 
   factory SBBBaseStyle.$default({required Brightness brightness}) => SBBBaseStyle.sbb(brightness: brightness);
 
+  /// Create the base style for the given [brightness] using the SBB theming.
   factory SBBBaseStyle.sbb({required Brightness brightness}) => SBBBaseStyle.fromColorScheme(
     brightness: brightness,
     colorScheme: brightness == .light ? SBBColorScheme.sbb() : SBBColorScheme.sbbDark(),
   );
 
+  /// Creates the base style from the provided [SBBColorScheme]
   factory SBBBaseStyle.fromColorScheme({required Brightness brightness, required SBBColorScheme colorScheme}) {
-    final defaultTextTheme = SBBTextTheme.$default(colorScheme: colorScheme);
     return SBBBaseStyle(
       brightness: brightness,
       colorScheme: colorScheme,
-      textTheme: defaultTextTheme,
+      textTheme: SBBTextTheme.$default(colorScheme: colorScheme),
       dividerTheme: DividerThemeData(thickness: 1.0, space: 0.0, color: colorScheme.dividerColor),
       iconTheme: IconThemeData(color: colorScheme.iconColor, size: sbbIconSizeSmall),
       textSelectionTheme: TextSelectionThemeData(
@@ -36,11 +48,22 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
     );
   }
 
+  /// The brightness (light or dark) of the theme.
   final Brightness brightness;
+
+  /// The color scheme that provides the default colors for the theme and components.
   final SBBColorScheme colorScheme;
+
+  /// The SBB text theme used to derive text styles.
   final SBBTextTheme textTheme;
+
+  /// Icon theme providing default icon color and size. If null, default of [ThemeData] is used.
   final IconThemeData? iconTheme;
+
+  /// Divider theme used for default divider appearance. If null, default of [ThemeData] is used.
   final DividerThemeData? dividerTheme;
+
+  /// Text selection theme (cursor, selection, handles). If null, default of [ThemeData] is used.
   final TextSelectionThemeData? textSelectionTheme;
 
   static T resolve<T>(bool isLight, T lightThemeValue, T darkThemeValue) => isLight ? lightThemeValue : darkThemeValue;

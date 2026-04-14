@@ -25,6 +25,26 @@ import '../segmented_button/theme/default_sbb_segmented_button_theme_data.dart';
 import '../status/theme/default_sbb_status_theme_data.dart';
 import '../tab_bar/theme/default_sbb_tab_bar_theme_data.dart';
 
+/// Base SBB theme builder.
+///
+/// Provides factory helpers to build full [ThemeData] for light and dark
+/// based on the theming of the SBB design system.
+///
+/// ```dart
+/// MaterialApp(
+///     theme: SBBTheme.light(),
+///     darkTheme: SBBTheme.dark(),
+///     ...
+/// );
+/// ```
+///
+/// Access created [ThemeData] by using `Theme.of(context)` and the theme
+/// extensions f.ex. with `Theme.of(context).extension<SBBBaseStyle>()` or
+/// the provided helper methods `Theme.of(context).sbbBaseStyle`.
+///
+/// See also:
+///
+/// * [ThemeData], theme for a [MaterialApp]
 class SBBTheme {
   SBBTheme._();
 
