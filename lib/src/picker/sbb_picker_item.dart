@@ -1,4 +1,6 @@
-part of 'sbb_picker.dart';
+import 'package:flutter/material.dart';
+
+import 'sbb_picker_constants.dart';
 
 /// Represents an item in the [SBBPickerScrollView] that is used by [SBBPicker].
 class SBBPickerItem {
@@ -12,7 +14,9 @@ class SBBPickerItem {
     : this.custom(
         isEnabled: isEnabled,
         widget: Padding(
-          padding: const .symmetric(horizontal: _widgetHorizontalPadding + _itemMinPadding),
+          padding: const EdgeInsets.symmetric(
+            horizontal: pickerWidgetHorizontalPadding + pickerItemMinPadding,
+          ),
           child: Text(label, softWrap: false),
         ),
       );
@@ -20,7 +24,6 @@ class SBBPickerItem {
   /// Constructs a custom [SBBPickerItem] with a widget.
   ///
   /// The [isEnabled] flag determines whether the item is enabled or disabled.
-  /// Defaults to true.
   ///
   /// The [widget] is the custom widget to be displayed for the item. The
   /// default TextStyle is defined by [SBBPickerStyle.textStyle].

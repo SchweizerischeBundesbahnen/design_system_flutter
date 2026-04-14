@@ -1,4 +1,14 @@
-part of 'sbb_picker.dart';
+import 'dart:math';
+import 'dart:ui';
+
+import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+
+import 'sbb_picker_constants.dart';
+import 'sbb_picker_item.dart';
+import 'sbb_picker_scope.dart';
+import 'sbb_picker_scroll_controller.dart';
+import 'theme/sbb_picker_style.dart';
 
 /// Signature for a function that creates a [SBBPickerItem] for a given index,
 /// but may return null.
@@ -23,50 +33,90 @@ class SBBPickerScrollView extends StatefulWidget {
   ///
   /// [itemBuilder] is the callback called when a picker item needs to be built.
   ///
-  /// [controller] cas be used for programmatically reading or changing the
+  /// [controller] can be used for programmatically reading or changing the
   /// current picker index.
   ///
   /// [looping] decides whether the list loops and can be scrolled infinitely.
   /// If set to true, scrolling past the end of the list will loop the list back
   /// to the beginning. If set to false, the list will stop scrolling when you
   /// reach the end or the beginning. Defaults to true.
+  ///
+  /// [pickerStyle] can be used to customize the visual appearance of the picker.
+  /// Non-null properties override the corresponding properties in
+  /// [SBBPickerThemeData.pickerStyle] from the current theme.
   const SBBPickerScrollView({
     super.key,
     required this.onSelectedItemChanged,
     required this.itemBuilder,
     this.controller,
+    this.initialItem = 0,
     this.looping = true,
+    this.pickerStyle,
   });
 
+  /// Called when the selected item index changes.
   final ValueChanged<int>? onSelectedItemChanged;
+
+  /// Called when a picker item needs to be built.
+  ///
+  /// May return null to indicate the index is out of range (only valid when
+  /// [looping] is false).
   final SBBPickerScrollViewItemBuilder itemBuilder;
+
+  /// Can be used for programmatically reading or changing the current picker
+  /// index.
+  ///
+  /// If not provided, an internal controller is created automatically.
   final SBBPickerScrollController? controller;
+
+  /// The index of the item to select initially when no [controller] is provided.
+  ///
+  /// Ignored when a [controller] is passed, since the controller already carries
+  /// its own [SBBPickerScrollController.initialItem].
+  final int initialItem;
+
+  /// Whether the list loops and can be scrolled infinitely.
+  ///
+  /// If set to true, scrolling past the end of the list will loop the list back
+  /// to the beginning. If set to false, the list will stop scrolling when you
+  /// reach the end or the beginning.
   final bool looping;
+
+  /// Customizes the visual appearance of the picker.
+  ///
+  /// Non-null properties override the corresponding properties in
+  /// [SBBPickerThemeData.pickerStyle] from the current theme.
+  final SBBPickerStyle? pickerStyle;
 
   @override
   State<SBBPickerScrollView> createState() => _SBBPickerScrollViewState();
 }
 
-class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
-  static const _visibleItemTransformValues = [-1.0, -2.5, -3.0, 0.0, 3.0, 2.5, 1.0];
+class _SBBPickerScrollViewState extends State<SBBPickerScrollView> {
+  // Visual parameters for the scroll wheel effect.
+  static const _transformAmplitude = 2.5; // max vertical translate offset in pixels
 
-  static const _visibleItemHeightAdjustments = [-2.0, -1.0, 0.0, 6.0, 0.0, -1.0, -2.0];
+  int _visibleItemCount = pickerDefaultVisibleItemCount;
 
-  static const _visibleCenterItemIndex = 3;
+  int get _visibleCenterItemIndex => _visibleItemCount ~/ 2;
 
-  static const _disabledItemOpacity = 0.35;
+  // Item height is read from the ambient SBBPickerScope.
+  double get _itemHeight => SBBPickerScope.of(context).itemHeight;
 
-  List<double> get _visibleItemHeights =>
-      _visibleItemHeightAdjustments.map((adjustment) => _itemHeight + adjustment).toList();
+  double get _scrollAreaHeight => _itemHeight * _visibleItemCount;
 
   double get _listPaddingHeight => _visibleCenterItemIndex * _itemHeight;
+
+  SBBPickerStyle? _getEffectivePickerStyle(BuildContext context) {
+    return SBBPickerScope.maybeOf(context)?.pickerStyle;
+  }
 
   late ValueNotifier<double> _scrollOffsetValueNotifier;
   late ValueNotifier<int> _firstVisibleItemIndexValueNotifier;
   late ValueNotifier<int> _selectedItemIndexValueNotifier;
+  late VoidCallback _selectedItemChangedListener;
 
   late int _initialIndexOffset = _controller.initialItem;
-  bool _isShortList = false;
   int? _firstIndex;
   int? _lastIndex;
 
@@ -76,6 +126,8 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
     return widget.controller ?? _fallbackController!;
   }
 
+  final _listCenterKey = UniqueKey();
+
   @override
   void initState() {
     super.initState();
@@ -83,17 +135,13 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
     _scrollOffsetValueNotifier = ValueNotifier(_controller.initialScrollOffset);
     _firstVisibleItemIndexValueNotifier = ValueNotifier(_controller.selectedItem - _visibleCenterItemIndex);
     _selectedItemIndexValueNotifier = ValueNotifier(_controller.selectedItem);
-    final onSelectedItemChanged = widget.onSelectedItemChanged;
-    if (onSelectedItemChanged != null) {
-      _selectedItemIndexValueNotifier.addListener(() {
-        onSelectedItemChanged(_selectedItemIndexValueNotifier.value);
-      });
-    }
+    _selectedItemChangedListener = _notifySelectedItemChanged;
+    _attachOnSelectedItemChangedListener();
   }
 
   void _initController() {
     if (widget.controller == null) {
-      _fallbackController = SBBPickerScrollController();
+      _fallbackController = SBBPickerScrollController(initialItem: widget.initialItem);
     }
     _controller.addListener(_onScrolling);
     _applyIndexOffset();
@@ -102,21 +150,65 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _controller._itemHeight = _itemHeight;
+
+    final scope = SBBPickerScope.of(context);
+    final visibleItemCountChanged = _visibleItemCount != scope.visibleItemCount;
+    _visibleItemCount = scope.visibleItemCount;
+
+    // Update controller item height whenever the scope's itemHeight changes.
+    _controller.itemHeight = scope.itemHeight;
+
+    if (visibleItemCountChanged) {
+      final selectedItem = _clampIndex(_selectedItemIndexValueNotifier.value);
+      _applyIndexOffset();
+      _firstVisibleItemIndexValueNotifier.value = selectedItem - _visibleCenterItemIndex;
+      _selectedItemIndexValueNotifier.value = selectedItem;
+      _scrollOffsetValueNotifier.value = _controller.initialScrollOffset;
+    }
   }
 
   @override
   void didUpdateWidget(covariant SBBPickerScrollView oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.controller != _controller) {
-      _initController();
+
+    final oldController = oldWidget.controller ?? _fallbackController;
+    final controllerChanged = oldWidget.controller != widget.controller;
+
+    if (controllerChanged) {
+      final previousSelectedItem = oldController?.selectedItem ?? _selectedItemIndexValueNotifier.value;
+
+      oldController?.removeListener(_onScrolling);
+      if (oldWidget.controller == null) {
+        _fallbackController?.dispose();
+        _fallbackController = null;
+      }
+      if (widget.controller == null) {
+        _fallbackController = SBBPickerScrollController(initialItem: previousSelectedItem);
+      }
+      _controller.addListener(_onScrolling);
+
+      _controller.itemHeight = _itemHeight;
+      _applyIndexOffset();
+
+      final selectedItem = _clampIndex(previousSelectedItem);
+      _firstVisibleItemIndexValueNotifier.value = selectedItem - _visibleCenterItemIndex;
+      _selectedItemIndexValueNotifier.value = selectedItem;
+      _scrollOffsetValueNotifier.value = _controller.initialScrollOffset;
+    }
+
+    if (oldWidget.onSelectedItemChanged != widget.onSelectedItemChanged) {
+      _detachOnSelectedItemChangedListener();
+      _attachOnSelectedItemChangedListener();
     }
   }
 
   @override
   void dispose() {
+    _detachOnSelectedItemChangedListener();
     _scrollOffsetValueNotifier.dispose();
+    _firstVisibleItemIndexValueNotifier.dispose();
     _selectedItemIndexValueNotifier.dispose();
+    _controller.removeListener(_onScrolling);
     _fallbackController?.dispose();
     super.dispose();
   }
@@ -140,43 +232,36 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
   }
 
   Widget _buildViewPort(ViewportOffset offset) {
-    // set list center key based on whether there is an item count deficit
-    final listCenterKey = UniqueKey();
-    final topPaddingListCenterKey = _isShortList ? listCenterKey : null;
-    final positiveIndexListCenterKey = !_isShortList ? listCenterKey : null;
+    // When the total item count is smaller than the number of items on one side
+    // of the center, the positive-index list cannot fill the negative scroll
+    // region on its own. In that case the center key is placed on the top
+    // padding sliver so the viewport origin lands in the right position.
+    final isShortList =
+        _firstIndex != null && _lastIndex != null && (_lastIndex! - _firstIndex! + 1) <= _visibleCenterItemIndex;
+
+    final topPaddingListCenterKey = isShortList ? _listCenterKey : null;
+    final positiveIndexListCenterKey = !isShortList ? _listCenterKey : null;
+
+    final topEndFiller = SizedBox(height: _listPaddingHeight);
 
     return Viewport(
       offset: offset,
-      center: listCenterKey,
+      center: _listCenterKey,
       slivers: [
-        if (!widget.looping)
-          SliverToBoxAdapter(
-            key: topPaddingListCenterKey,
-            child: SizedBox(height: _listPaddingHeight),
-          ),
-        _buildNegativeIndexList(),
-        _buildPositiveIndexList(positiveIndexListCenterKey),
-        if (!widget.looping) SliverToBoxAdapter(child: SizedBox(height: _listPaddingHeight)),
+        if (!widget.looping) SliverToBoxAdapter(key: topPaddingListCenterKey, child: topEndFiller),
+        _buildIndexList(negative: true),
+        _buildIndexList(centerKey: positiveIndexListCenterKey),
+        if (!widget.looping) SliverToBoxAdapter(child: topEndFiller),
       ],
     );
   }
 
-  Widget _buildNegativeIndexList() {
+  Widget _buildIndexList({bool negative = false, Key? centerKey}) {
     return SliverList(
+      key: centerKey,
       delegate: SliverChildBuilderDelegate((_, index) {
-        // adjust index so it goes negative from -1 instead of
-        // positive from 0
-        final adjustedIndex = -1 - index;
-        return _buildItem(adjustedIndex);
-      }),
-    );
-  }
-
-  Widget _buildPositiveIndexList(Key? listCenterKey) {
-    return SliverList(
-      key: listCenterKey,
-      delegate: SliverChildBuilderDelegate((_, index) {
-        return _buildItem(index);
+        // adjust index so it goes negative from -1 instead of positive from 0
+        return _buildItem(negative ? -1 - index : index);
       }),
     );
   }
@@ -185,7 +270,7 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
     final itemIndex = index + _initialIndexOffset - _visibleCenterItemIndex;
     final item = widget.itemBuilder(context, itemIndex);
     assert(
-      !widget.looping || widget.looping && item != null,
+      !widget.looping || item != null,
       'Item builder returned null for index $itemIndex but looping was set to true',
     );
 
@@ -196,10 +281,10 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
     final itemEnabled = item?.isEnabled ?? false;
     final itemWidget = item?.widget ?? const SizedBox.shrink();
 
-    return _firstVisibleItemIndexBasedItem(itemIndex, itemEnabled, itemWidget);
+    return _buildVisibleItem(itemIndex, itemEnabled, itemWidget);
   }
 
-  Widget _firstVisibleItemIndexBasedItem(int itemIndex, bool itemEnabled, Widget itemWidget) {
+  Widget _buildVisibleItem(int itemIndex, bool itemEnabled, Widget itemWidget) {
     // placeholder item used for items that are currently not visible
     final placeholderItem = SizedBox(height: _itemHeight);
 
@@ -224,18 +309,12 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
   }
 
   Widget _buildScrollOffsetBasedItem(int firstVisibleItemIndex, int itemIndex, bool itemEnabled, Widget itemWidget) {
-    // item style values are calculated based on the current scroll offset
+    // item translation values are calculated based on the current scroll offset
     return ValueListenableBuilder(
       valueListenable: _scrollOffsetValueNotifier,
       builder: (_, double offset, Widget? child) {
-        // calculate the current item index of the visible items, this also
-        // includes items that are only partly visible when scrolling
         final visibleItemIndex = itemIndex - firstVisibleItemIndex;
-
-        // calculate transform translation offset based on scroll offset
         final translationOffset = _itemOffset(visibleItemIndex, offset);
-
-        // text style based on whether item is enabled or not
         final textStyle = _itemTextStyle(itemEnabled);
 
         return SizedBox(
@@ -254,39 +333,23 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
 
   void _onScrolling() {
     final offset = _controller.offset;
-    final firstVisibleItemIndex = _controller._offsetToIndex(offset).floor() - _visibleCenterItemIndex;
+    final firstVisibleItemIndex = _controller.offsetToIndex(offset).floor() - _visibleCenterItemIndex;
     var selectedItemIndex = _controller.selectedItem;
 
-    // make sure calculated index is within list range
     selectedItemIndex = _clampIndex(selectedItemIndex);
 
-    // update value notifiers
     _scrollOffsetValueNotifier.value = offset;
     _selectedItemIndexValueNotifier.value = selectedItemIndex;
     _firstVisibleItemIndexValueNotifier.value = firstVisibleItemIndex;
   }
 
   void _onTapUp(TapUpDetails details) {
-    // calculate item index based on tap position
     final tapPosition = details.localPosition.dy;
+    final tappedVisibleItemIndex = (tapPosition / _itemHeight).floor().clamp(0, _visibleItemCount - 1);
 
-    // determine which of the rendered items has been tapped
-    var tappedVisibleItemIndex = 0;
-    var totalVisibleItemHeightSoFar = 0.0;
-    for (final visibleItemHeight in _visibleItemHeights) {
-      totalVisibleItemHeightSoFar += visibleItemHeight;
-      if (totalVisibleItemHeightSoFar > tapPosition) {
-        break;
-      }
-      tappedVisibleItemIndex++;
-    }
-
-    // convert calculated index of the tapped item of the visible items to the
-    // position index of the item in the list
     final firstVisibleItemIndex = _firstVisibleItemIndexValueNotifier.value;
     var itemIndex = firstVisibleItemIndex + tappedVisibleItemIndex;
 
-    // clamp index to prevent scrolling to an item out of range
     itemIndex = _clampIndex(itemIndex);
     _onTapItem(itemIndex);
   }
@@ -296,30 +359,37 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
     _controller.animateToItem(index);
   }
 
+  void _notifySelectedItemChanged() {
+    widget.onSelectedItemChanged?.call(_selectedItemIndexValueNotifier.value);
+  }
+
+  void _attachOnSelectedItemChangedListener() {
+    if (widget.onSelectedItemChanged != null) {
+      _selectedItemIndexValueNotifier.addListener(_selectedItemChangedListener);
+    }
+  }
+
+  void _detachOnSelectedItemChangedListener() {
+    _selectedItemIndexValueNotifier.removeListener(_selectedItemChangedListener);
+  }
+
   /// Ensures proper display and scrolling behavior of the list by checking item
   /// widgets around the initial item. If the number of non-null items before or
   /// around the initial item is insufficient, it calculates and applies an
   /// index offset to maintain proper functionality.
   void _applyIndexOffset() {
-    // reset values
     final initialIndex = _controller.initialItem;
     _initialIndexOffset = initialIndex;
-    _isShortList = false;
     _firstIndex = null;
     _lastIndex = null;
 
-    if (widget.looping) {
-      // no need to check for looping lists
-      return;
-    }
+    if (widget.looping) return;
 
-    // check if item at initial item index is available
     final initialIndexItem = widget.itemBuilder(context, initialIndex);
     assert(initialIndexItem != null, 'Item builder returned null for initial item index $initialIndex.');
 
-    // check if list edges available
-    final preInitialCount = _itemsAroundInitialItem(true);
-    final postInitialCount = _itemsAroundInitialItem(false);
+    final preInitialCount = _countItemsInDirection(-1);
+    final postInitialCount = _countItemsInDirection(1);
     final preInitialDeficit = preInitialCount < _visibleCenterItemIndex;
     final postInitialDeficit = postInitialCount < _visibleCenterItemIndex;
     if (preInitialDeficit) {
@@ -330,22 +400,23 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
     }
     if (preInitialDeficit || postInitialDeficit) {
       final itemIndexOffset = _visibleCenterItemIndex - preInitialCount;
-      _controller._indexOffset = itemIndexOffset;
+      _controller.indexOffset = itemIndexOffset;
       _initialIndexOffset = initialIndex + itemIndexOffset;
 
       final totalCount = preInitialCount + 1 + postInitialCount;
-      if (totalCount < _longListMinItemCount) {
-        _controller._indexOffset = itemIndexOffset - _visibleCenterItemIndex;
-        _isShortList = true;
+      if (totalCount <= _visibleCenterItemIndex) {
+        _controller.indexOffset = itemIndexOffset - _visibleCenterItemIndex;
       }
     }
   }
 
-  int _itemsAroundInitialItem(bool checkPrevious) {
-    final directionFactor = checkPrevious ? -1 : 1;
+  /// Returns the number of consecutive non-null items starting from
+  /// [_controller.initialItem] in [direction] (+1 for forward, -1 for backward),
+  /// up to [_visibleCenterItemIndex].
+  int _countItemsInDirection(int direction) {
     final initialIndex = _controller.initialItem;
     for (var i = 0; i < _visibleCenterItemIndex; i++) {
-      final indexToCheck = initialIndex + (i + 1) * directionFactor;
+      final indexToCheck = initialIndex + (i + 1) * direction;
       final itemToCheck = widget.itemBuilder(context, indexToCheck);
       if (itemToCheck == null) {
         return i;
@@ -362,11 +433,12 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
       return _lastIndex!;
     }
 
+    if (!_controller.hasClients) return index;
     final scrollPosition = _controller.position;
     if (scrollPosition.hasContentDimensions) {
       final minScrollExtent = scrollPosition.minScrollExtent;
       if (minScrollExtent.isFinite) {
-        final firstIndex = _controller._offsetToIndex(minScrollExtent).toInt();
+        final firstIndex = _controller.offsetToIndex(minScrollExtent).toInt();
         _firstIndex = firstIndex;
         if (index < firstIndex) {
           return firstIndex;
@@ -374,7 +446,7 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
       }
       final maxScrollExtent = scrollPosition.maxScrollExtent;
       if (maxScrollExtent.isFinite) {
-        final lastIndex = _controller._offsetToIndex(maxScrollExtent).toInt();
+        final lastIndex = _controller.offsetToIndex(maxScrollExtent).toInt();
         _lastIndex = lastIndex;
         if (index > lastIndex) {
           return lastIndex;
@@ -388,17 +460,22 @@ class _SBBPickerScrollViewState extends _PickerClassState<SBBPickerScrollView> {
     final indexA = max(visibleItemIndex - 1, 0);
     final indexB = min(visibleItemIndex, _visibleItemCount - 1);
     final lerpFactor = 1 - offset % _itemHeight / _itemHeight;
-    final transformA = _visibleItemTransformValues[indexA];
-    final transformB = _visibleItemTransformValues[indexB];
+    final transformA = _transformForDist(indexA - _visibleCenterItemIndex);
+    final transformB = _transformForDist(indexB - _visibleCenterItemIndex);
     final transformY = lerpDouble(transformA, transformB, lerpFactor)!;
     return Offset(0, transformY);
   }
 
+  /// Vertical translate offset for an item [d] positions from the center.
+  /// Uses a sine curve so the offset is 0 at the center.
+  double _transformForDist(int d) {
+    final sideItemCount = _visibleCenterItemIndex;
+    if (sideItemCount == 0) return 0.0;
+    return _transformAmplitude * sin(d * pi / sideItemCount);
+  }
+
   TextStyle _itemTextStyle(bool itemEnabled) {
-    final style = SBBControlStyles.of(context).picker!;
-    final colorOpacity = itemEnabled ? 1.0 : _disabledItemOpacity;
-    final textColor = SBBColors.white.withValues(alpha: colorOpacity);
-    final textStyle = style.textStyle!.copyWith(color: textColor);
-    return textStyle;
+    final style = _getEffectivePickerStyle(context)!;
+    return style.textStyle!.copyWith(color: itemEnabled ? style.foregroundColor : style.disabledForegroundColor);
   }
 }
