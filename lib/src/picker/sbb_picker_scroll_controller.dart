@@ -19,8 +19,6 @@ class SBBPickerScrollController extends ScrollController {
   double itemHeight = pickerItemDefaultHeight;
 
   /// The index of the initial item to be selected.
-  ///
-  /// Defaults to 0.
   final int initialItem;
 
   /// Listener to be called as soon as the selected item is determined without

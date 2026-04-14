@@ -73,15 +73,11 @@ class SBBTimePicker extends StatefulWidget {
   /// The granularity of the minute spinner.
   ///
   /// Must be a positive integer factor of 60.
-  ///
-  /// Defaults to 1.
   final int minuteInterval;
 
   /// The number of visible items in the picker.
   ///
   /// Must be a positive odd number.
-  ///
-  /// Defaults to 7.
   final int visibleItemCount;
 
   /// Customizes the visual appearance of the picker.

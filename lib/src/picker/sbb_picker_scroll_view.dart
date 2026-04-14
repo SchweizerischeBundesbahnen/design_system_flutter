@@ -73,8 +73,6 @@ class SBBPickerScrollView extends StatefulWidget {
   ///
   /// Ignored when a [controller] is passed, since the controller already carries
   /// its own [SBBPickerScrollController.initialItem].
-  ///
-  /// Defaults to 0.
   final int initialItem;
 
   /// Whether the list loops and can be scrolled infinitely.
@@ -82,8 +80,6 @@ class SBBPickerScrollView extends StatefulWidget {
   /// If set to true, scrolling past the end of the list will loop the list back
   /// to the beginning. If set to false, the list will stop scrolling when you
   /// reach the end or the beginning.
-  ///
-  /// Defaults to true.
   final bool looping;
 
   /// Customizes the visual appearance of the picker.

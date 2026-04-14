@@ -17,7 +17,7 @@ import '../sbb_picker_utils.dart';
 ///
 /// Use [sheetConfig] to customise the bottom sheet's appearance and behavior. Use [sheetTitleText] as a flat
 /// convenience parameter to set only the sheet title. Cannot be used together with [sheetConfig].
-/// When neither is set, the sheet title defaults to the localised time picker label from
+/// When neither is set, the sheet title falls back to the localised time picker label from
 /// [MaterialLocalizations.dateInputLabel].
 ///
 /// ## Example
@@ -76,15 +76,15 @@ class SBBDateTimeInput extends StatelessWidget {
   /// [dateFormat]. When null, the trigger shows an empty value.
   final DateTime? value;
 
-  /// The earliest selectable date and time in the picker. Defaults to no lower bound.
+  /// The earliest selectable date and time in the picker.
   final DateTime? minimumDateTime;
 
-  /// The latest selectable date and time in the picker. Defaults to no upper bound.
+  /// The latest selectable date and time in the picker.
   final DateTime? maximumDateTime;
 
   /// The interval between minutes shown in the picker.
   ///
-  /// Defaults to 1. Must be a divisor of 60.
+  /// Must be a divisor of 60.
   final int minuteInterval;
 
   /// The format used to display [value] in the trigger field.
@@ -105,15 +105,11 @@ class SBBDateTimeInput extends StatelessWidget {
   final SBBDecoratedTextStyle? triggerStyle;
 
   /// Configuration for the trigger field's layout and focus behaviour.
-  ///
-  /// Defaults to [SBBDecoratedTextConfig] with its default values.
   final SBBDecoratedTextConfig triggerConfig;
 
   /// The number of visible items in the picker.
   ///
   /// Must be a positive odd number.
-  ///
-  /// Defaults to 7.
   final int visibleItemCount;
 
   /// Configuration for the bottom sheet's appearance and behaviour.
@@ -128,14 +124,14 @@ class SBBDateTimeInput extends StatelessWidget {
   /// If you need more control, use [sheetConfig] instead.
   ///
   /// When neither [sheetConfig] nor [sheetTitleText] is provided, the sheet
-  /// title defaults to [MaterialLocalizations.dateInputLabel].
+  /// title falls back to [MaterialLocalizations.dateInputLabel].
   ///
   /// Cannot be used together with [sheetConfig].
   final String? sheetTitleText;
 
   /// The label text for the confirm button in the bottom sheet.
   ///
-  /// When not provided, defaults to [MaterialLocalizations.datePickerHelpText].
+  /// When not provided, falls back to [MaterialLocalizations.datePickerHelpText].
   final String? sheetButtonLabelText;
 
   /// Customizes the visual appearance of the picker.

@@ -66,8 +66,6 @@ class SBBDatePicker extends StatefulWidget {
   /// The number of visible items in the picker.
   ///
   /// Must be a positive odd number.
-  ///
-  /// Defaults to 7.
   final int visibleItemCount;
 
   /// Customizes the visual appearance of the picker.

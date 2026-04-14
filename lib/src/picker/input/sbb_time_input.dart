@@ -12,11 +12,11 @@ import '../sbb_picker_utils.dart';
 /// Use [triggerDecoration] to customise the trigger's label, icons, error text, and other decoration properties.
 ///
 /// Use [triggerConfig] to configure the trigger field's layout and focus behaviour (max/min lines, expands,
-/// focus node, autofocus). When omitted, the defaults from [SBBDecoratedTextConfig] are used.
+/// focus node, autofocus).
 ///
 /// Use [sheetConfig] to customise the bottom sheet's appearance and behavior. Use [sheetTitleText] as a flat
 /// convenience parameter to set only the sheet title. Cannot be used together with [sheetConfig].
-/// When neither is set, the sheet title defaults to the localised time picker label from
+/// When neither is set, the sheet title falls back to the localised time picker label from
 /// [MaterialLocalizations.timePickerInputHelpText].
 ///
 /// ## Example
@@ -69,15 +69,15 @@ class SBBTimeInput extends StatelessWidget {
   /// the trigger shows an empty value.
   final TimeOfDay? value;
 
-  /// The earliest selectable time in the picker. Defaults to no lower bound.
+  /// The earliest selectable time in the picker.
   final TimeOfDay? minimumTime;
 
-  /// The latest selectable time in the picker. Defaults to no upper bound.
+  /// The latest selectable time in the picker.
   final TimeOfDay? maximumTime;
 
   /// The interval between minutes shown in the picker.
   ///
-  /// Defaults to 1. Must be a divisor of 60.
+  /// Must be a divisor of 60.
   final int minuteInterval;
 
   /// Called when the user selects a time in the picker.
@@ -97,15 +97,11 @@ class SBBTimeInput extends StatelessWidget {
   final SBBDecoratedTextStyle? triggerStyle;
 
   /// Configuration for the trigger field's layout and focus behaviour.
-  ///
-  /// Defaults to [SBBDecoratedTextConfig] with its default values.
   final SBBDecoratedTextConfig triggerConfig;
 
   /// The number of visible items in the picker.
   ///
   /// Must be a positive odd number.
-  ///
-  /// Defaults to 7.
   final int visibleItemCount;
 
   /// Configuration for the bottom sheet's appearance and behaviour.
@@ -120,14 +116,14 @@ class SBBTimeInput extends StatelessWidget {
   /// If you need more control, use [sheetConfig] instead.
   ///
   /// When neither [sheetConfig] nor [sheetTitleText] is provided, the sheet
-  /// title defaults to [MaterialLocalizations.timePickerInputHelpText].
+  /// title falls back to [MaterialLocalizations.timePickerInputHelpText].
   ///
   /// Cannot be used together with [sheetConfig].
   final String? sheetTitleText;
 
   /// The label text for the confirm button in the bottom sheet.
   ///
-  /// When not provided, defaults to [MaterialLocalizations.timePickerDialHelpText].
+  /// When not provided, falls back to [MaterialLocalizations.timePickerDialHelpText].
   final String? sheetButtonLabelText;
 
   /// Customizes the visual appearance of the picker.

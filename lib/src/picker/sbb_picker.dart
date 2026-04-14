@@ -51,8 +51,6 @@ class SBBPicker extends StatefulWidget {
   /// [controller] can be used for programmatically reading or changing the
   /// current picker index.
   ///
-  /// [initialSelectedIndex] defaults to 0.
-  ///
   /// [onSelectedItemChanged] is the callback called when the selected value
   /// changes.
   ///
@@ -94,8 +92,6 @@ class SBBPicker extends StatefulWidget {
   ///
   /// [controller] can be used for programmatically reading or changing the
   /// current picker index.
-  ///
-  /// [initialSelectedIndex] defaults to 0.
   ///
   /// [onSelectedItemChanged] is the callback called when the selected value
   /// changes.
@@ -169,8 +165,6 @@ class SBBPicker extends StatefulWidget {
   ///
   /// Must be a positive odd number to ensure the center item is properly
   /// highlighted and items are symmetrically distributed on both sides.
-  ///
-  /// Defaults to 7.
   final int visibleItemCount;
 
   /// Customizes the visual appearance of the picker.

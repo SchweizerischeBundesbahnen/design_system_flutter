@@ -24,7 +24,6 @@ class SBBPickerItem {
   /// Constructs a custom [SBBPickerItem] with a widget.
   ///
   /// The [isEnabled] flag determines whether the item is enabled or disabled.
-  /// Defaults to true.
   ///
   /// The [widget] is the custom widget to be displayed for the item. The
   /// default TextStyle is defined by [SBBPickerStyle.textStyle].
