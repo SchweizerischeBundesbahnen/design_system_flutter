@@ -101,7 +101,7 @@ class _AutocompletionOverlayState extends State<AutocompletionOverlay> {
   }
 
   Widget _buildOverlay(BuildContext context) {
-    final style = SBBBaseStyle.of(context);
+    final style = Theme.of(context).sbbBaseStyle;
     final backgroundColor = style.themeValue(SBBColors.milk, SBBColors.black);
     final optionColor = style.themeValue(SBBColors.white, SBBColors.charcoal);
 
