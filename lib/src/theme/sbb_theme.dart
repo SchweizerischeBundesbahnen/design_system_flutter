@@ -25,6 +25,24 @@ import '../segmented_button/theme/default_sbb_segmented_button_theme_data.dart';
 import '../status/theme/default_sbb_status_theme_data.dart';
 import '../tab_bar/theme/default_sbb_tab_bar_theme_data.dart';
 
+/// Defines the context in which the Theme is used.
+/// This currently only affects the used colors.
+///
+/// See also:
+///
+/// * [SBBColorScheme], defined colors for the theme context
+enum SBBThemeContext {
+  /// Default theme context for SBB apps.
+  sbb,
+
+  /// Theme context for apps using off-brand colors and not the standard SBB red theming.
+  offBrand,
+
+  /// Theme context for apps that are safety-relevant.
+  /// In this context, the color red can only be used to communicate errors.
+  safety,
+}
+
 /// Base SBB theme builder.
 ///
 /// Provides factory helpers to build full [ThemeData] for light and dark
@@ -49,6 +67,7 @@ class SBBTheme {
   SBBTheme._();
 
   static ThemeData light({
+    SBBThemeContext themeContext = SBBThemeContext.sbb,
     SBBBaseStyle? baseStyle,
     SBBBottomSheetThemeData? bottomSheetTheme,
     SBBPrimaryButtonThemeData? primaryButtonTheme,
@@ -80,6 +99,7 @@ class SBBTheme {
     SBBToastThemeData? toastTheme,
   }) => createTheme(
     brightness: .light,
+    themeContext: themeContext,
     baseStyle: baseStyle,
     bottomSheetTheme: bottomSheetTheme,
     primaryButtonTheme: primaryButtonTheme,
@@ -112,6 +132,7 @@ class SBBTheme {
   );
 
   static ThemeData dark({
+    SBBThemeContext themeContext = SBBThemeContext.sbb,
     SBBBaseStyle? baseStyle,
     SBBBottomSheetThemeData? bottomSheetTheme,
     SBBPrimaryButtonThemeData? primaryButtonTheme,
@@ -142,6 +163,7 @@ class SBBTheme {
     SBBToastThemeData? toastTheme,
   }) => createTheme(
     brightness: .dark,
+    themeContext: themeContext,
     baseStyle: baseStyle,
     bottomSheetTheme: bottomSheetTheme,
     primaryButtonTheme: primaryButtonTheme,
@@ -174,6 +196,7 @@ class SBBTheme {
 
   static ThemeData createTheme({
     required Brightness brightness,
+    SBBThemeContext themeContext = SBBThemeContext.sbb,
     SBBBaseStyle? baseStyle,
     SBBBottomSheetThemeData? bottomSheetTheme,
     SBBPrimaryButtonThemeData? primaryButtonTheme,
@@ -205,7 +228,7 @@ class SBBTheme {
     SBBToastThemeData? toastTheme,
   }) {
     // default values are set here and merged with given styles
-    final defaultBaseStyle = SBBBaseStyle.$default(brightness: brightness);
+    final defaultBaseStyle = SBBBaseStyle.$default(brightness: brightness, themeContext: themeContext);
     final mergedBaseStyle = defaultBaseStyle.merge(baseStyle);
 
     final defaultBottomSheetTheme = DefaultSBBBottomSheetThemeData(mergedBaseStyle);

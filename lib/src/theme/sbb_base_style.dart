@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/src/theme/sbb_color_scheme.dart';
 
 import 'theme.dart';
 
@@ -24,13 +23,24 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
     this.textSelectionTheme,
   });
 
-  factory SBBBaseStyle.$default({required Brightness brightness}) => SBBBaseStyle.sbb(brightness: brightness);
+  factory SBBBaseStyle.$default({required Brightness brightness, required SBBThemeContext themeContext}) =>
+      SBBBaseStyle.fromThemeContext(brightness: brightness, context: themeContext);
 
   /// Create the base style for the given [brightness] using the SBB theming.
-  factory SBBBaseStyle.sbb({required Brightness brightness}) => SBBBaseStyle.fromColorScheme(
-    brightness: brightness,
-    colorScheme: brightness == .light ? SBBColorScheme.sbb() : SBBColorScheme.sbbDark(),
-  );
+  factory SBBBaseStyle.sbb({required Brightness brightness}) =>
+      SBBBaseStyle.fromThemeContext(brightness: brightness, context: .sbb);
+
+  factory SBBBaseStyle.offBrand({required Brightness brightness}) =>
+      SBBBaseStyle.fromThemeContext(brightness: brightness, context: .offBrand);
+
+  factory SBBBaseStyle.safety({required Brightness brightness}) =>
+      SBBBaseStyle.fromThemeContext(brightness: brightness, context: .safety);
+
+  factory SBBBaseStyle.fromThemeContext({required Brightness brightness, required SBBThemeContext context}) =>
+      SBBBaseStyle.fromColorScheme(
+        brightness: brightness,
+        colorScheme: context.colorScheme(brightness: brightness),
+      );
 
   /// Creates the base style from the provided [SBBColorScheme]
   factory SBBBaseStyle.fromColorScheme({required Brightness brightness, required SBBColorScheme colorScheme}) {
@@ -121,4 +131,12 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
 
 extension SBBBaseStyleThemeDataX on ThemeData {
   SBBBaseStyle get sbbBaseStyle => extension<SBBBaseStyle>()!;
+}
+
+extension SBBThemeContextX on SBBThemeContext {
+  SBBColorScheme colorScheme({required Brightness brightness}) => switch (this) {
+    .sbb => brightness == .light ? SBBColorScheme.sbb() : SBBColorScheme.sbbDark(),
+    .offBrand => brightness == .light ? SBBColorScheme.offBrand() : SBBColorScheme.offBrandDark(),
+    .safety => brightness == .light ? SBBColorScheme.safety() : SBBColorScheme.safetyDark(),
+  };
 }
