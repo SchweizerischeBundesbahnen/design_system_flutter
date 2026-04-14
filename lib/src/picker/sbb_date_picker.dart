@@ -1,4 +1,12 @@
-part of 'sbb_picker.dart';
+import 'dart:math';
+
+import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
+import '../../sbb_design_system_mobile.dart';
+import 'sbb_picker_constants.dart';
+import 'sbb_picker_time_based_mixin.dart';
+import 'sbb_picker_utils.dart';
 
 /// SBB Date Picker. Use according to documentation.
 ///
@@ -10,75 +18,114 @@ part of 'sbb_picker.dart';
 /// * <https://digital.sbb.ch/en/design-system/mobile/components/picker/>
 class SBBDatePicker extends StatefulWidget {
   /// Constructs an [SBBDatePicker].
-  ///
-  /// [onDateChanged] is the callback called when the selected date changes.
-  ///
-  /// [initialDate] is the initially selected date of the picker. Defaults to
-  /// the present date. If the initial date is outside the range defined by
-  /// [minimumDate] and [maximumDate], it will be automatically adjusted to the
-  /// closest valid date within the range.
-  ///
-  /// [minimumDate] is the minimum selectable date of the picker. If provided,
-  /// dates before this minimum date will be disabled. If not provided, there
-  /// will be no restriction on the minimum date that can be picked.
-  ///
-  /// [maximumDate] is the maximum selectable date of the picker. If provided,
-  /// dates after this maximum date will be disabled. If not provided, there
-  /// will be no restriction on the maximum date that can be picked.
-  ///
-  /// [minimumDate] must be before [maximumDate] if both are set.
   SBBDatePicker({
     super.key,
     required this.onDateChanged,
     DateTime? initialDate,
     DateTime? minimumDate,
     DateTime? maximumDate,
-  }) : initialDate = _initialDate(initialDate, minimumDate, maximumDate),
-       minimumDate = _minimumDate(minimumDate),
-       maximumDate = _maximumDate(maximumDate) {
+    this.visibleItemCount = pickerDefaultVisibleItemCount,
+    this.pickerStyle,
+  }) : initialDate = PickerUtils.clampedDateOnly(initialDate ?? DateTime.now(), minimumDate, maximumDate),
+       minimumDate = minimumDate?.date,
+       maximumDate = maximumDate?.date {
     assert(
       this.minimumDate == null || this.maximumDate == null || this.minimumDate!.isBefore(this.maximumDate!),
       'minimum date (${this.minimumDate}) is not before maximum date (${this.maximumDate})',
     );
   }
 
+  /// Called when the selected date changes.
   final ValueChanged<DateTime>? onDateChanged;
+
+  /// The initially selected date of the picker.
+  ///
+  /// Defaults to `DateTime.now()`. If the initial date is outside the range
+  /// defined by [minimumDate] and [maximumDate], it will be automatically
+  /// adjusted to the closest valid date within the range.
   final DateTime initialDate;
+
+  /// The minimum selectable date of the picker.
+  ///
+  /// If provided, dates before this minimum date will be disabled. If not
+  /// provided, there will be no restriction on the minimum date that can be
+  /// picked.
+  ///
+  /// Must be before [maximumDate] if both are set.
   final DateTime? minimumDate;
+
+  /// The maximum selectable date of the picker.
+  ///
+  /// If provided, dates after this maximum date will be disabled. If not
+  /// provided, there will be no restriction on the maximum date that can be
+  /// picked.
+  ///
+  /// Must be after [minimumDate] if both are set.
   final DateTime? maximumDate;
 
-  /// Shows an [SBBBottomSheet] with an [SBBDatePicker] to select a [DateTime].
-  /// Use according to documentation.
+  /// The number of visible items in the picker.
+  ///
+  /// Must be a positive odd number.
+  final int visibleItemCount;
+
+  /// Customizes the visual appearance of the picker.
+  ///
+  /// Non-null properties override the corresponding properties in
+  /// [SBBPickerThemeData.pickerStyle] from the current theme.
+  final SBBPickerStyle? pickerStyle;
+
+  /// Shows a [SBBBottomSheet] with an [SBBDatePicker] to select a [DateTime].
   ///
   /// See also:
   ///
   /// * [SBBDatePicker], which will be displayed.
-  /// * [showSBBBottomSheet], which is used to display the bottom_sheet.
+  /// * [showSBBBottomSheet], which is used to display the [SBBBottomSheet] with the picker.
   /// * <https://digital.sbb.ch/en/design-system/mobile/components/picker/>
-  /// * <https://digital.sbb.ch/en/design-system/mobile/components/modal-view/>
-  static void showModal({
+  static void showInsideBottomSheet({
     required BuildContext context,
-    String? title,
+    SBBBottomSheetConfig? sheetConfig,
+    String? sheetTitleText,
+    String? sheetButtonLabelText,
     DateTime? initialDate,
     DateTime? minimumDate,
     DateTime? maximumDate,
     ValueChanged<DateTime>? onDateChanged,
+    int visibleItemCount = pickerDefaultVisibleItemCount,
+    SBBPickerStyle? pickerStyle,
   }) {
     final localizations = MaterialLocalizations.of(context);
+    final effectiveConfig = sheetConfig ?? const SBBBottomSheetConfig();
 
-    final modalTitle = title ?? localizations.dateInputLabel;
+    final effectiveTitleText =
+        sheetTitleText ??
+        effectiveConfig.titleText ??
+        (effectiveConfig.title == null ? localizations.dateInputLabel : null);
 
-    final modalDate = _initialDate(initialDate, minimumDate, maximumDate);
+    final effectiveInitialDate = PickerUtils.clampedDateOnly(initialDate ?? DateTime.now(), minimumDate, maximumDate);
 
     final acceptInitialSelection = initialDate == null;
     final selectedButtonEnabled = ValueNotifier(acceptInitialSelection);
-    final selectedButtonLabelText = localizations.datePickerHelpText;
+    final selectedButtonLabelText = sheetButtonLabelText ?? localizations.datePickerHelpText;
 
-    var selectedDate = modalDate;
+    var selectedDate = effectiveInitialDate;
 
     showSBBBottomSheet(
       context: context,
-      titleText: modalTitle,
+      title: effectiveConfig.title,
+      titleText: effectiveTitleText,
+      leading: effectiveConfig.leading,
+      leadingIconData: effectiveConfig.leadingIconData,
+      trailing: effectiveConfig.trailing,
+      trailingIconData: effectiveConfig.trailingIconData,
+      barrierLabel: effectiveConfig.barrierLabel,
+      useRootNavigator: effectiveConfig.useRootNavigator,
+      isScrollControlled: true,
+      isDismissible: effectiveConfig.isDismissible,
+      enableDrag: effectiveConfig.enableDrag,
+      useSafeArea: effectiveConfig.useSafeArea,
+      transitionAnimationController: effectiveConfig.transitionAnimationController,
+      sheetAnimationStyle: effectiveConfig.animationStyle,
+      showCloseButton: effectiveConfig.showCloseButton,
       body: Column(
         mainAxisSize: .min,
         children: [
@@ -86,13 +133,15 @@ class SBBDatePicker extends StatefulWidget {
             padding: const .symmetric(horizontal: SBBSpacing.medium),
             child: SBBContentBox(
               child: SBBDatePicker(
-                initialDate: modalDate,
+                initialDate: effectiveInitialDate,
                 minimumDate: minimumDate,
                 maximumDate: maximumDate,
+                visibleItemCount: visibleItemCount,
+                pickerStyle: pickerStyle,
                 onDateChanged: (date) {
                   selectedDate = date;
                   if (!acceptInitialSelection) {
-                    selectedButtonEnabled.value = date != modalDate;
+                    selectedButtonEnabled.value = date != effectiveInitialDate;
                   }
                 },
               ),
@@ -119,26 +168,10 @@ class SBBDatePicker extends StatefulWidget {
   }
 
   @override
-  State<SBBDatePicker> createState() {
-    return _SBBDatePickerState();
-  }
-
-  static DateTime _initialDate(DateTime? initialDate, DateTime? minimumDate, DateTime? maximumDate) {
-    var date = initialDate ?? DateTime.now();
-    date = date.clamp(minimumDate, maximumDate);
-    return date.date;
-  }
-
-  static DateTime? _minimumDate(DateTime? minimumDate) {
-    return minimumDate?.date;
-  }
-
-  static DateTime? _maximumDate(DateTime? maximumDate) {
-    return maximumDate?.date;
-  }
+  State<SBBDatePicker> createState() => _SBBDatePickerState();
 }
 
-class _SBBDatePickerState extends _TimeBasedPickerState<SBBDatePicker> {
+class _SBBDatePickerState extends State<SBBDatePicker> with TimeBasedPickerMixin<SBBDatePicker> {
   static const _dayItemTextDefaultWidth = 40.0;
   static const _yearItemTextDefaultWidth = 64.0;
 
@@ -159,17 +192,18 @@ class _SBBDatePickerState extends _TimeBasedPickerState<SBBDatePicker> {
   late double _dayItemTextWidth;
   late double _yearItemTextWidth;
 
-  double get _dayItemWidth => _widgetHorizontalPadding + _itemPadding + _dayItemTextWidth + _itemPadding;
+  double get _dayItemWidth => pickerWidgetHorizontalPadding + itemPadding + _dayItemTextWidth + itemPadding;
 
-  double get _yearItemWidth => _itemPadding + _yearItemTextWidth + _itemPadding + _widgetHorizontalPadding;
+  double get _yearItemWidth => itemPadding + _yearItemTextWidth + itemPadding + pickerWidgetHorizontalPadding;
 
-  double get _dayItemTextMinWidth => _textSize('33.').width;
+  double get _dayItemTextMinWidth => measureText('33.').width;
 
-  double get _yearItemTextMinWidth => _textSize('9999').width;
+  double get _yearItemTextMinWidth => measureText('9999').width;
 
   @override
   void initState() {
     super.initState();
+    itemPadding = pickerItemDefaultPadding;
     _selectedDate = widget.initialDate;
     _selectedDateValueNotifier = ValueNotifier(_selectedDate);
     final onDateChanged = widget.onDateChanged;
@@ -221,6 +255,8 @@ class _SBBDatePickerState extends _TimeBasedPickerState<SBBDatePicker> {
         _adjustItemSizes(constraints.maxWidth);
 
         return SBBPicker.custom(
+          visibleItemCount: widget.visibleItemCount,
+          pickerStyle: widget.pickerStyle,
           child: Row(
             children: [
               SizedBox(width: _dayItemWidth, child: _buildDayPickerScrollView(context)),
@@ -238,6 +274,7 @@ class _SBBDatePickerState extends _TimeBasedPickerState<SBBDatePicker> {
     _dayController.dispose();
     _monthController.dispose();
     _yearController.dispose();
+    _selectedDateValueNotifier.dispose();
     _monthYearValueNotifier.dispose();
     _yearValueNotifier.dispose();
     super.dispose();
@@ -251,6 +288,7 @@ class _SBBDatePickerState extends _TimeBasedPickerState<SBBDatePicker> {
           controller: _dayController,
           onSelectedItemChanged: _onSelectedDayItemChanged,
           itemBuilder: (_, index) => _buildDayItem(index, selectedMonthYear),
+          pickerStyle: widget.pickerStyle,
         );
       },
     );
@@ -264,6 +302,7 @@ class _SBBDatePickerState extends _TimeBasedPickerState<SBBDatePicker> {
           controller: _monthController,
           onSelectedItemChanged: _onSelectedMonthItemChanged,
           itemBuilder: (_, index) => _buildMonthItem(index, selectedYear),
+          pickerStyle: widget.pickerStyle,
         );
       },
     );
@@ -275,6 +314,7 @@ class _SBBDatePickerState extends _TimeBasedPickerState<SBBDatePicker> {
       looping: false,
       onSelectedItemChanged: _onSelectedYearItemChanged,
       itemBuilder: (_, index) => _buildYearItem(index),
+      pickerStyle: widget.pickerStyle,
     );
   }
 
@@ -297,12 +337,11 @@ class _SBBDatePickerState extends _TimeBasedPickerState<SBBDatePicker> {
 
     final itemDate = selectedMonthYear.copyWith(day: itemDay);
     final minDate = widget.minimumDate;
-    // set max date to last valid day in month if current day value too high
     final maxDate = dayOverflow ? selectedMonthYear.copyWith(day: daysInMonth) : widget.maximumDate;
     final isEnabled = itemDate.isInRange(minDate, maxDate);
     final label = '$itemDay.';
 
-    return _buildPickerItem(isEnabled: isEnabled, label: label, alignment: .centerRight, isFirstColumn: true);
+    return buildPickerItem(isEnabled: isEnabled, label: label, alignment: Alignment.centerRight, isFirstColumn: true);
   }
 
   SBBPickerItem _buildMonthItem(int index, int selectedYear) {
@@ -313,7 +352,7 @@ class _SBBDatePickerState extends _TimeBasedPickerState<SBBDatePicker> {
     final isEnabled = itemDate.isInRange(minDate, maxDate);
     final label = _dateFormat.format(itemDate);
 
-    return _buildPickerItem(isEnabled: isEnabled, label: label, alignment: .centerLeft);
+    return buildPickerItem(isEnabled: isEnabled, label: label, alignment: Alignment.centerLeft);
   }
 
   SBBPickerItem _buildYearItem(int index) {
@@ -324,7 +363,7 @@ class _SBBDatePickerState extends _TimeBasedPickerState<SBBDatePicker> {
     final isEnabled = itemDate.isInRange(minDate, maxDate);
     final label = itemYear.toString();
 
-    return _buildPickerItem(isEnabled: isEnabled, label: label, isLastColumn: true);
+    return buildPickerItem(isEnabled: isEnabled, label: label, isLastColumn: true);
   }
 
   void _onDateSelected({int? year, int? month, int? day}) {
@@ -332,74 +371,45 @@ class _SBBDatePickerState extends _TimeBasedPickerState<SBBDatePicker> {
     final selectedMonth = month ?? _selectedDate.month;
     var selectedDay = day ?? _selectedDate.day;
 
-    // correct day value to max month day value if necessary
     final daysInMonth = DateUtils.getDaysInMonth(selectedYear, selectedMonth);
     if (selectedDay > daysInMonth) {
       selectedDay = daysInMonth;
     }
 
     _selectedDate = DateTime(selectedYear, selectedMonth, selectedDay);
-
     _selectedDateValueNotifier.value = _selectedDate.clamp(widget.minimumDate, widget.maximumDate);
   }
 
   void _onScrollingStateChanged() {
     if (_yearController.isScrolling() || _monthController.isScrolling() || _dayController.isScrolling()) {
-      // do nothing if any controller still scrolling
       return;
     }
-
-    // ensure valid date
     _ensureValidDate();
   }
 
   void _ensureValidDate() {
-    // optimize scroll positions to prevent scrolling over multiple rounds
     _ensureOptimizedScrollPosition();
 
     final validDate = _selectedDate.clamp(widget.minimumDate, widget.maximumDate);
 
     if (_selectedDate == validDate) {
-      // check if selected day value is higher than valid for current month
       final selectedDay = _indexToDay(_dayController.selectedItem);
-
-      // get max day value for currently selected month
       final daysInMonth = DateUtils.getDaysInMonth(validDate.year, validDate.month);
-
-      // check if day value needs to be corrected
       final dayOverflow = selectedDay > daysInMonth;
       if (dayOverflow) {
-        final correctedDayIndex = _dayToIndex(daysInMonth);
-
-        // correct incorrect date value
-        _dayController.animateToItem(correctedDayIndex);
+        _dayController.animateToItem(_dayToIndex(daysInMonth));
         return;
       }
-
-      // no correction needed
       return;
     }
 
-    // get index values of valid date values
     final dayIndex = _dayToIndex(validDate.day);
     final monthIndex = _monthToIndex(validDate.month);
     final yearIndex = _yearToIndex(validDate.year);
 
-    // check if any date values needs to be corrected
-    final dayIncorrect = _dayController.selectedItem != dayIndex;
-    final monthIncorrect = _monthController.selectedItem != monthIndex;
-    final yearIncorrect = _yearController.selectedItem != yearIndex;
-
-    // correct incorrect date values
-    if (dayIncorrect) {
-      _dayController.animateToItem(dayIndex);
-    }
-    if (monthIncorrect) {
-      _monthController.animateToItem(monthIndex);
-    }
-    if (yearIncorrect) {
-      _yearController.animateToItem(yearIndex);
-    }
+    if (_dayController.selectedItem != dayIndex) _dayController.animateToItem(dayIndex);
+    if (_monthController.selectedItem != monthIndex) _monthController.animateToItem(monthIndex);
+    if (_yearController.selectedItem != yearIndex) _yearController.animateToItem(yearIndex);
   }
 
   void _ensureOptimizedScrollPosition() {
@@ -415,9 +425,7 @@ class _SBBDatePickerState extends _TimeBasedPickerState<SBBDatePicker> {
     var day = _indexToDay(_dayController.selectedItem);
 
     final daysInMonth = DateUtils.getDaysInMonth(year, month);
-    if (day > daysInMonth) {
-      day = daysInMonth;
-    }
+    if (day > daysInMonth) day = daysInMonth;
 
     var date = DateTime(year, month, day);
     date = date.clamp(widget.minimumDate, widget.maximumDate);
@@ -425,76 +433,53 @@ class _SBBDatePickerState extends _TimeBasedPickerState<SBBDatePicker> {
   }
 
   void _adjustItemSizes(double width) {
-    // reset sizes to default
-    _itemPadding = _itemDefaultPadding;
+    itemPadding = pickerItemDefaultPadding;
     _dayItemTextWidth = max(_dayItemTextDefaultWidth, _dayItemTextMinWidth);
     _yearItemTextWidth = max(_yearItemTextDefaultWidth, _yearItemTextMinWidth);
 
-    // validate locale
     final localeObject = Localizations.maybeLocaleOf(context);
     final localeExists = DateFormat.localeExists(localeObject.toString());
     final locale = localeExists ? localeObject.toString() : null;
 
-    // use localized long month format by default
     _dateFormat = DateFormat.MMMM(locale);
 
-    // check if enough space to display all texts by calculating width overflow
     final availableMonthItemTextWidth = _availableMonthItemTextWidth(width);
     final longMonthTextMinWidth = _monthItemTextMinWidth(_dateFormat);
     var widthOverflow = longMonthTextMinWidth - availableMonthItemTextWidth;
 
-    // check if medium month format needs to be used
     if (widthOverflow > 0) {
-      // use localized medium month format
       _dateFormat = DateFormat.MMM(locale);
-
-      // recalculate width overflow
       final shortMonthTextMinWidth = _monthItemTextMinWidth(_dateFormat);
       final widthReduction = longMonthTextMinWidth - shortMonthTextMinWidth;
       widthOverflow -= widthReduction;
     }
 
-    // check if items text width needs to be reduced
     if (widthOverflow > 0) {
-      // calculate items text widths based on width overflow
       final dayItemFlexibleWidth = _dayItemTextDefaultWidth - _dayItemTextMinWidth;
       final yearItemFlexibleWidth = _yearItemTextDefaultWidth - _yearItemTextMinWidth;
       final flexibleWidths = dayItemFlexibleWidth + yearItemFlexibleWidth;
       final widthReductions = min(flexibleWidths, widthOverflow);
       final widthReductionRatio = widthReductions / flexibleWidths;
-      final dayItemReducedWidth = _dayItemTextDefaultWidth - dayItemFlexibleWidth * widthReductionRatio;
-      final yearItemReducedWidth = _yearItemTextDefaultWidth - yearItemFlexibleWidth * widthReductionRatio;
-
-      // set reduced item text widths
-      _dayItemTextWidth = dayItemReducedWidth;
-      _yearItemTextWidth = yearItemReducedWidth;
-
-      // recalculate width overflow
+      _dayItemTextWidth = _dayItemTextDefaultWidth - dayItemFlexibleWidth * widthReductionRatio;
+      _yearItemTextWidth = _yearItemTextDefaultWidth - yearItemFlexibleWidth * widthReductionRatio;
       widthOverflow -= widthReductions;
     }
 
     // check if item paddings need to be reduced
     if (widthOverflow > 0) {
-      // calculate item paddings based on width overflow
-      const minPaddings = _itemMinPadding * _horizontalPaddingCount;
-      const defaultPaddings = _itemDefaultPadding * _horizontalPaddingCount;
+      const minPaddings = pickerItemMinPadding * _horizontalPaddingCount;
+      const defaultPaddings = pickerItemDefaultPadding * _horizontalPaddingCount;
       const flexiblePaddings = defaultPaddings - minPaddings;
       final paddingReductions = min(flexiblePaddings, widthOverflow);
-      final reducedPaddings = defaultPaddings - paddingReductions;
-      final reducedPadding = reducedPaddings / _horizontalPaddingCount;
-
-      // set reduced paddings
-      _itemPadding = reducedPadding;
-
-      // recalculate width overflow
-      widthOverflow -= paddingReductions;
+      final reducedPadding = (defaultPaddings - paddingReductions) / _horizontalPaddingCount;
+      itemPadding = reducedPadding;
     }
   }
 
   double _availableMonthItemTextWidth(double widgetWidth) {
     return widgetWidth -
-        _widgetHorizontalPadding * 2 -
-        _itemPadding * _horizontalPaddingCount -
+        pickerWidgetHorizontalPadding * 2 -
+        itemPadding * _horizontalPaddingCount -
         _dayItemTextWidth -
         _yearItemTextWidth;
   }
@@ -506,36 +491,21 @@ class _SBBDatePickerState extends _TimeBasedPickerState<SBBDatePicker> {
       final month = i + 1;
       final date = DateTime(year, month);
       final itemLabel = dateFormat.format(date);
-      final itemTextSize = _textSize(itemLabel);
-      final itemTextWidth = itemTextSize.width;
-      if (itemTextWidth > dateTextWidth) {
-        dateTextWidth = itemTextWidth;
-      }
+      final itemTextWidth = measureText(itemLabel).width;
+      if (itemTextWidth > dateTextWidth) dateTextWidth = itemTextWidth;
     }
     return dateTextWidth;
   }
 
-  int _indexToDay(int dayIndex) {
-    return dayIndex % _dayItemCount + 1;
-  }
+  int _indexToDay(int dayIndex) => dayIndex % _dayItemCount + 1;
 
-  int _dayToIndex(int day) {
-    return day - 1;
-  }
+  int _dayToIndex(int day) => day - 1;
 
-  int _indexToMonth(int monthIndex) {
-    return monthIndex % DateTime.monthsPerYear + 1;
-  }
+  int _indexToMonth(int monthIndex) => monthIndex % DateTime.monthsPerYear + 1;
 
-  int _monthToIndex(int month) {
-    return month - 1;
-  }
+  int _monthToIndex(int month) => month - 1;
 
-  int _indexToYear(int yearIndex) {
-    return widget.initialDate.year + yearIndex;
-  }
+  int _indexToYear(int yearIndex) => widget.initialDate.year + yearIndex;
 
-  int _yearToIndex(int year) {
-    return year - widget.initialDate.year;
-  }
+  int _yearToIndex(int year) => year - widget.initialDate.year;
 }

@@ -703,6 +703,48 @@ SBBTextInputFormField(
 | `suffixIcon` | `decoration.trailing` or `decoration.trailingIconData` |
 
 
+## Picker
+
+### Summary
+
+The picker family of widgets has been significantly overhauled. The input trigger widgets
+(`SBBDateInput`, `SBBTimeInput`, `SBBDateTimeInput`) have been refactored into standalone
+`StatelessWidget`s with a richer configuration API. The bottom sheet show methods have been
+renamed and extended. A proper theming system has been introduced.
+
+### SBBDateInput / SBBTimeInput / SBBDateTimeInput
+
+The input widgets have been rewritten. The flat decoration parameters are replaced with
+`SBBInputDecoration` passed via `triggerDecoration`. Trigger layout/focus options are now
+grouped into `triggerConfig`. The bottom sheet is configured via `sheetConfig` or the
+convenience `sheetTitleText` parameter. `isLastElement` has been removed, use the static `SBBListItem.divideListItems` method.
+
+#### New parameters
+
+* `sheetTitleText` – convenience parameter to set the bottom sheet title
+* `sheetConfig` – full control over the bottom sheet via `SBBBottomSheetConfig` (cannot be used together with `sheetTitleText`)
+* `sheetButtonLabelText` – label for the confirm button in the bottom sheet
+* `triggerConfig` – groups `maxLines`, `minLines`, `expands`, `focusNode` and `autofocus` for the trigger field
+* `triggerStyle` – overrides the visual style of the `SBBDecoratedText` trigger
+* `visibleItemCount` – number of visible items in the picker (must be a positive odd number, defaults to 7)
+* `pickerStyle` – overrides the visual style of the picker itself
+
+### SBBDatePicker / SBBTimePicker / SBBDateTimePicker
+
+#### showModal → showInsideBottomSheet
+
+The static helper method for showing the picker in a bottom sheet has been renamed to `showInsideBottomSheet` and
+extended:
+
+* replace `title` (String) with `sheetTitleText`, or supply a full `sheetConfig` via `SBBBottomSheetConfig`
+
+### Theming & Styling
+
+* use `SBBPickerThemeData` to override the style of all toast within your application
+* access the theme using `Theme.of(context).sbbPickerTheme`
+* individual change of style via the `pickerStyle` constructor parameter as noted above
+
+
 ## Toast
 
 * removed the static field `defaultBottom`

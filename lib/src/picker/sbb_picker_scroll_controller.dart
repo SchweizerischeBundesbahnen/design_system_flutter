@@ -1,4 +1,6 @@
-part of 'sbb_picker.dart';
+import 'package:flutter/material.dart';
+
+import 'sbb_picker_constants.dart';
 
 /// A scroll controller for [SBBPickerScrollView] that is used by [SBBPicker].
 ///
@@ -13,12 +15,10 @@ class SBBPickerScrollController extends ScrollController {
 
   final ValueNotifier<bool> _scrollingStateNotifier = ValueNotifier(false);
   late VoidCallback _isScrollingListener;
-  int _indexOffset = 0;
-  double _itemHeight = _itemDefaultHeight;
+  int indexOffset = 0;
+  double itemHeight = pickerItemDefaultHeight;
 
   /// The index of the initial item to be selected.
-  ///
-  /// Defaults to 0.
   final int initialItem;
 
   /// Listener to be called as soon as the selected item is determined without
@@ -27,13 +27,13 @@ class SBBPickerScrollController extends ScrollController {
 
   /// The index of the currently selected item.
   int get selectedItem {
-    final selectedItemIndex = _offsetToIndex(offset).round();
+    final selectedItemIndex = offsetToIndex(offset).round();
     return selectedItemIndex;
   }
 
   @override
   double get initialScrollOffset {
-    return _targetOffset(initialItem * _itemHeight);
+    return targetOffset(initialItem * itemHeight);
   }
 
   /// The current scroll offset of the scrollable widget.
@@ -52,13 +52,13 @@ class SBBPickerScrollController extends ScrollController {
   /// The returned [Future] resolves when the animation completes.
   ///
   /// The duration must not be zero. To jump to a particular value without an
-  /// animation, use [jumpToItem
+  /// animation, use [jumpToItem].
   Future<void> animateToItem(
     int itemIndex, {
     Duration duration = kThemeAnimationDuration,
     Curve curve = Curves.fastOutSlowIn,
   }) async {
-    await animateTo(itemIndex * _itemHeight, duration: duration, curve: curve);
+    await animateTo(itemIndex * itemHeight, duration: duration, curve: curve);
   }
 
   /// Animates the position from its current offset to the given offset.
@@ -89,8 +89,8 @@ class SBBPickerScrollController extends ScrollController {
     Duration duration = kThemeAnimationDuration,
     Curve curve = Curves.fastOutSlowIn,
   }) async {
-    final targetOffset = _targetOffset(offset);
-    return super.animateTo(targetOffset, duration: duration, curve: curve);
+    final target = targetOffset(offset);
+    return super.animateTo(target, duration: duration, curve: curve);
   }
 
   /// Jumps the scroll position from the current item to the item at the given
@@ -99,13 +99,13 @@ class SBBPickerScrollController extends ScrollController {
   /// Any active animation is canceled. If the user is currently scrolling, that
   /// action is canceled.
   void jumpToItem(int itemIndex) {
-    jumpTo(itemIndex * _itemHeight);
+    jumpTo(itemIndex * itemHeight);
   }
 
   @override
   void jumpTo(double value) {
-    final targetOffset = _targetOffset(value);
-    super.jumpTo(targetOffset);
+    final target = targetOffset(value);
+    super.jumpTo(target);
   }
 
   /// Register a listener to be called when the scrolling state changes.
@@ -149,7 +149,7 @@ class SBBPickerScrollController extends ScrollController {
         // ensure scroll position snaps to the nearest item after controller is
         // done scrolling
         final currentScrollPosition = position.pixels;
-        final targetScrollPosition = _snappedScrollPosition(currentScrollPosition);
+        final targetScrollPosition = snappedScrollPosition(currentScrollPosition);
 
         // Due to the workaround in the target scroll position calculation, the
         // calculated position may be slightly inaccurate. As a result, if the
@@ -182,16 +182,16 @@ class SBBPickerScrollController extends ScrollController {
     super.dispose();
   }
 
-  double _targetOffset(double offset) {
-    final indexBasedPositionOffset = (0 - initialItem - _indexOffset) * _itemHeight;
+  double targetOffset(double offset) {
+    final indexBasedPositionOffset = (0 - initialItem - indexOffset) * itemHeight;
     return offset + indexBasedPositionOffset;
   }
 
-  double _offsetToIndex(double offset) {
-    return offset / _itemHeight + initialItem + _indexOffset;
+  double offsetToIndex(double offset) {
+    return offset / itemHeight + initialItem + indexOffset;
   }
 
-  double _snappedScrollPosition(double offset) {
-    return (offset / _itemHeight).round() * _itemHeight;
+  double snappedScrollPosition(double offset) {
+    return (offset / itemHeight).round() * itemHeight;
   }
 }
