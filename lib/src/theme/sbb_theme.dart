@@ -369,6 +369,7 @@ class SBBTheme {
         errorColor: baseStyle.colorScheme.errorColor,
         brightness: baseStyle.brightness,
       ).copyWith(surfaceTint: SBBColors.transparent),
+      scaffoldBackgroundColor: baseStyle.colorScheme.backgroundColor,
       iconTheme: baseStyle.iconTheme,
       dividerColor: baseStyle.dividerTheme?.color,
       dividerTheme: baseStyle.dividerTheme,
