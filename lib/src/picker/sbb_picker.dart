@@ -6,8 +6,6 @@ import '../../sbb_design_system_mobile.dart';
 import 'sbb_picker_constants.dart';
 import 'sbb_picker_scope.dart';
 
-// TODO: documentation and migration guide
-
 /// The SBB Picker.
 ///
 /// A picker widget that displays a scrollable list of items in a wheel-like
@@ -206,7 +204,7 @@ class _SBBPickerState extends State<SBBPicker> {
           return SizedBox(
             height: widgetHeight,
             child: Stack(
-              alignment: Alignment.center,
+              alignment: .center,
               children: [
                 _buildHighlightedArea(context, highlightedAreaHeight),
                 ShaderMask(
@@ -228,15 +226,15 @@ class _SBBPickerState extends State<SBBPicker> {
       margin: const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
       decoration: BoxDecoration(
         color: highlightColor,
-        borderRadius: const BorderRadius.all(Radius.circular(SBBSpacing.xSmall)),
+        borderRadius: const BorderRadius.all(.circular(SBBSpacing.xSmall)),
       ),
     );
   }
 
   Shader _shaderCallback(BuildContext context, Rect bounds, double itemHeight, double scrollAreaHeight) {
     return LinearGradient(
-      begin: Alignment.topCenter,
-      end: Alignment.bottomCenter,
+      begin: .topCenter,
+      end: .bottomCenter,
       stops: _gradientStops(itemHeight, scrollAreaHeight),
       colors: _gradientColors(context),
     ).createShader(bounds);
