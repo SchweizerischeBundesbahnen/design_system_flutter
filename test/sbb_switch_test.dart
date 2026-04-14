@@ -33,137 +33,139 @@ class SwitchTest extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const .symmetric(horizontal: SBBSpacing.xSmall),
-      child: Column(
-        mainAxisSize: .min,
-        children: [
-          const SBBListHeader('SBBSwitch'),
-          Padding(
-            padding: const .all(SBBSpacing.xSmall),
-            child: Row(
-              spacing: SBBSpacing.xxSmall,
-              children: [
-                SBBSwitch(onChanged: (_) {}, value: value1),
-                SBBSwitch(onChanged: null, value: value1),
-              ],
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const .symmetric(horizontal: SBBSpacing.xSmall),
+        child: Column(
+          mainAxisSize: .min,
+          children: [
+            const SBBListHeader('SBBSwitch'),
+            Padding(
+              padding: const .all(SBBSpacing.xSmall),
+              child: Row(
+                spacing: SBBSpacing.xxSmall,
+                children: [
+                  SBBSwitch(onChanged: (_) {}, value: value1),
+                  SBBSwitch(onChanged: null, value: value1),
+                ],
+              ),
             ),
-          ),
-          Padding(
-            padding: const .all(SBBSpacing.xSmall),
-            child: Row(
-              spacing: SBBSpacing.xxSmall,
+            Padding(
+              padding: const .all(SBBSpacing.xSmall),
+              child: Row(
+                spacing: SBBSpacing.xxSmall,
+                children: [
+                  SBBSwitch(
+                    onChanged: (_) {},
+                    value: value1,
+                    style: SBBSwitchStyle(trackColor: WidgetStatePropertyAll(SBBColors.blue)),
+                  ),
+                  SBBSwitch(
+                    onChanged: null,
+                    value: value1,
+                    style: SBBSwitchStyle(trackColor: WidgetStatePropertyAll(SBBColors.green)),
+                  ),
+                ],
+              ),
+            ),
+            const SBBListHeader('SBBSwitchItem - Boxed'),
+            Column(
+              mainAxisSize: .min,
+              spacing: SBBSpacing.xSmall,
               children: [
-                SBBSwitch(
-                  onChanged: (_) {},
-                  value: value1,
-                  style: SBBSwitchStyle(trackColor: WidgetStatePropertyAll(SBBColors.blue)),
+                SBBSwitchListItemBoxed(value: value1, titleText: 'Default', onChanged: (value) {}),
+                SBBSwitchListItemBoxed(
+                  value: value2,
+                  titleText: 'Leading Icon',
+                  leadingIconData: SBBIcons.dog_small,
+                  onChanged: (value) {},
                 ),
-                SBBSwitch(
+                SBBSwitchListItemBoxed(
+                  value: value3,
+                  title: Text(
+                    'Very Loooooooooooooooooooooooooooooooooooooooooong Multiline Label With SubtitleText',
+                  ),
+                  subtitleText: 'SubtitleText',
+                  onChanged: (value) {},
+                ),
+                SBBSwitchListItemBoxed(
+                  value: false,
+                  titleText: 'With Link',
+                  onChanged: (value) {},
+                  links: [
+                    SBBListItem(
+                      titleText: 'Link Text',
+                      onTap: () => {},
+                      trailingIconData: SBBIcons.chevron_small_right_small,
+                    ),
+                  ],
+                ),
+                SBBSwitchListItemBoxed(
+                  value: false,
+                  titleText: 'With 2 Links',
+                  onChanged: (value) {},
+                  links: [
+                    SBBListItem(
+                      titleText: 'Link Text 1',
+                      onTap: () => {},
+                      trailingIconData: SBBIcons.chevron_small_right_small,
+                    ),
+                    SBBListItem(
+                      titleText: 'Link Text 2',
+                      onTap: () => {},
+                      trailingIconData: SBBIcons.chevron_small_right_small,
+                    ),
+                  ],
+                ),
+                SBBSwitchListItemBoxed(
+                  value: false,
+                  titleText: 'Disabled, Link enabled',
                   onChanged: null,
-                  value: value1,
-                  style: SBBSwitchStyle(trackColor: WidgetStatePropertyAll(SBBColors.green)),
+                  links: [
+                    SBBListItem(
+                      titleText: 'Link Text',
+                      onTap: () => {},
+                      trailingIconData: SBBIcons.chevron_small_right_small,
+                    ),
+                  ],
+                ),
+                SBBSwitchListItemBoxed(
+                  value: false,
+                  titleText: 'Only Link disabled',
+                  onChanged: (value) {},
+                  links: [
+                    SBBListItem(
+                      titleText: 'Link Text',
+                      trailingIconData: SBBIcons.chevron_small_right_small,
+                    ),
+                  ],
+                ),
+                SBBSwitchListItemBoxed(
+                  value: false,
+                  titleText: 'All disabled',
+                  onChanged: null,
+                  links: [
+                    SBBListItem(
+                      titleText: 'Link Text',
+                      trailingIconData: SBBIcons.chevron_small_right_small,
+                    ),
+                  ],
+                ),
+                SBBSwitchListItemBoxed(
+                  value: false,
+                  titleText: 'Custom LinkWidget',
+                  onChanged: (value) {},
+                  links: [
+                    Padding(
+                      padding: const .all(SBBSpacing.medium),
+                      child: Container(color: SBBColors.green, child: Text('My custom Link Widget')),
+                    ),
+                  ],
                 ),
               ],
             ),
-          ),
-          const SBBListHeader('SBBSwitchItem - Boxed'),
-          Column(
-            mainAxisSize: .min,
-            spacing: SBBSpacing.xSmall,
-            children: [
-              SBBSwitchListItemBoxed(value: value1, titleText: 'Default', onChanged: (value) {}),
-              SBBSwitchListItemBoxed(
-                value: value2,
-                titleText: 'Leading Icon',
-                leadingIconData: SBBIcons.dog_small,
-                onChanged: (value) {},
-              ),
-              SBBSwitchListItemBoxed(
-                value: value3,
-                title: Text(
-                  'Very Looooooooooooooooooooooooooooooooooooooooooooooong Multiline Label With SubtitleText',
-                ),
-                subtitleText: 'SubtitleText',
-                onChanged: (value) {},
-              ),
-              SBBSwitchListItemBoxed(
-                value: false,
-                titleText: 'With Link',
-                onChanged: (value) {},
-                links: [
-                  SBBListItem(
-                    titleText: 'Link Text',
-                    onTap: () => {},
-                    trailingIconData: SBBIcons.chevron_small_right_small,
-                  ),
-                ],
-              ),
-              SBBSwitchListItemBoxed(
-                value: false,
-                titleText: 'With 2 Links',
-                onChanged: (value) {},
-                links: [
-                  SBBListItem(
-                    titleText: 'Link Text 1',
-                    onTap: () => {},
-                    trailingIconData: SBBIcons.chevron_small_right_small,
-                  ),
-                  SBBListItem(
-                    titleText: 'Link Text 2',
-                    onTap: () => {},
-                    trailingIconData: SBBIcons.chevron_small_right_small,
-                  ),
-                ],
-              ),
-              SBBSwitchListItemBoxed(
-                value: false,
-                titleText: 'Disabled, Link enabled',
-                onChanged: null,
-                links: [
-                  SBBListItem(
-                    titleText: 'Link Text',
-                    onTap: () => {},
-                    trailingIconData: SBBIcons.chevron_small_right_small,
-                  ),
-                ],
-              ),
-              SBBSwitchListItemBoxed(
-                value: false,
-                titleText: 'Only Link disabled',
-                onChanged: (value) {},
-                links: [
-                  SBBListItem(
-                    titleText: 'Link Text',
-                    trailingIconData: SBBIcons.chevron_small_right_small,
-                  ),
-                ],
-              ),
-              SBBSwitchListItemBoxed(
-                value: false,
-                titleText: 'All disabled',
-                onChanged: null,
-                links: [
-                  SBBListItem(
-                    titleText: 'Link Text',
-                    trailingIconData: SBBIcons.chevron_small_right_small,
-                  ),
-                ],
-              ),
-              SBBSwitchListItemBoxed(
-                value: false,
-                titleText: 'Custom LinkWidget',
-                onChanged: (value) {},
-                links: [
-                  Padding(
-                    padding: const .all(SBBSpacing.medium),
-                    child: Container(color: SBBColors.green, child: Text('My custom Link Widget')),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
