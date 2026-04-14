@@ -1,9 +1,9 @@
-name: scripts
-description: "Util scripts."
+name: font_script
+description: "Script to update SBB icon fonts from CDN"
 version: 0.0.1
 
 environment:
-  sdk: ">=3.8.0 <4.0.0"
+  sdk: ">=3.10.0 <4.0.0"
 
 dependencies:
   # https://pub.dev/packages/http
