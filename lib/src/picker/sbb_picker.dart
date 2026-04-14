@@ -221,7 +221,7 @@ class _SBBPickerState extends State<SBBPicker> {
     final highlightColor = SBBPickerScope.of(context).pickerStyle?.highlightBackgroundColor;
     return Container(
       height: highlightedAreaHeight,
-      margin: const EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall),
+      margin: const .symmetric(horizontal: SBBSpacing.xSmall),
       decoration: BoxDecoration(
         color: highlightColor,
         borderRadius: const BorderRadius.all(.circular(SBBSpacing.xSmall)),

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'theme.dart';
 
 /// Defines the base color scheme used by the SBB design system.
-/// Is used by the components to set default color values
+/// Used by components to set their default color values.
 ///
 /// Access the color scheme by using `Theme.of(context).sbbBaseStyle.colorScheme`.
 ///

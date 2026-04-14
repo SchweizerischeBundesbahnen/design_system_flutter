@@ -31,7 +31,7 @@ class DefaultSBBStepperThemeData extends SBBStepperThemeData {
         badgeIconColor: SBBColors.white,
         foregroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
           WidgetState.selected: SBBColors.white,
-          WidgetState.any: baseStyle.themeValue(SBBColors.black, SBBColors.white),
+          WidgetState.any: baseStyle.colorScheme.defaultTextColor,
         }),
         textStyle: WidgetStateProperty.fromMap(<WidgetStatesConstraint, TextStyle?>{
           WidgetState.selected: baseStyle.themedTextStyle(textStyle: SBBTextStyles.mediumBold),

@@ -67,20 +67,6 @@ class SBBTextTheme extends ThemeExtension<SBBTextTheme> {
 
   TextStyle? get defaultTextStyle => mediumLight;
 
-  TextTheme toTextTheme({Color? labelColor}) {
-    return TextTheme(
-      bodySmall: smallLight,
-      bodyMedium: mediumLight,
-      bodyLarge: largeLight,
-      labelSmall: smallLight?.copyWith(color: labelColor),
-      labelMedium: mediumLight?.copyWith(color: labelColor),
-      labelLarge: largeLight?.copyWith(color: labelColor),
-      titleSmall: smallBold,
-      titleMedium: mediumBold,
-      titleLarge: largeBold,
-    );
-  }
-
   @override
   SBBTextTheme copyWith({
     TextStyle? xxSmallLight,
