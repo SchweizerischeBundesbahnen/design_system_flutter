@@ -63,6 +63,16 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Removed `SBBTextField` - replaced by `SBBTextInput`
 - Removed `merge` extension on `SBBBaseStyle`
 
+## [4.11.0] - 2026-04-13
+
+### Deprecated
+
+- deprecated `SBBLinkText` as it is not part of the official design system and will be removed in v5
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.20
+
 ## [4.10.0] - 2026-03-30
 
 ### Changed
@@ -810,7 +820,9 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 [v5 migration guide]: migration_guide.md
 
-[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.10.0...HEAD
+[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.11.0...HEAD
+
+[4.11.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.10.0...4.11.0
 
 [4.10.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.9.0...4.10.0
 
