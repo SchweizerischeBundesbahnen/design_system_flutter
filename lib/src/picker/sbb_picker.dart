@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
@@ -248,24 +246,13 @@ class _SBBPickerState extends State<SBBPicker> {
     const end = 1.0;
 
     final relativeItemHeight = itemHeight / scrollAreaHeight;
-    // number of items on each side of the center item
-    final sideItemCount = widget.visibleItemCount ~/ 2;
 
     // highlighted area
     final highlightedAreaHeight = _highlightedAreaHeight(itemHeight);
     final relativeHighlightedAreaHeight = highlightedAreaHeight / scrollAreaHeight;
     final highlightStart = center - relativeHighlightedAreaHeight * 0.5;
 
-    // Build stops for the top half: start, then one stop per side item center,
-    // then the highlight boundary.
-    final List<double> topStops = [start];
-    for (var i = 0; i < sideItemCount; i++) {
-      topStops.add(relativeItemHeight * (i + 0.5));
-    }
-
-    // duplicate for hard transition
-    topStops.add(highlightStart);
-    topStops.add(highlightStart);
+    final List<double> topStops = [start, relativeItemHeight, ...List.filled(3, highlightStart)];
 
     // bottom half mirrors the top
     final bottomStops = topStops.reversed.map((s) => end - s).toList();
@@ -280,25 +267,23 @@ class _SBBPickerState extends State<SBBPicker> {
     Opacities are built for upper half of the scrollable area and mirrored for the bottom half.
     All sizes are relative to the _scrollAreaHeight for gradient stop calculation.
 
-    The opacities exponentially decay from the highlighted area outward,
-    meaning opacity drops very fast just outside the center and then
-    stays nearly flat toward the edges. The highlighted area itself gets opacity 1.0.
+    Build stops for the top half:
+    -----
+    | 0th ITEM    <--- 0 to 0.5
+    |
+    | 1st ITEM    <--- 0.7 (soft transition)
+    |
+    | 2nd ITEM    <--- 0.7
+    | ...
+    | nth ITEM    <--- 0.7
+    |
+    | CENTER ITEM <--- 1.0 (hard transition)
 
-    Built in _gradientStops: [start, centerOfItem0, ..., centerOfItem(n/2-1), highlightStart, highlightStart]
-    Corresponding opacities: [0.0,   opacity1,      ..., opacity(n/2),        1.0,            1.0           ]
      */
+    final topOpacities = <double>[0.0, 0.5, .7];
 
-    // number of items on each side of the center item
-    final sideItemCount = widget.visibleItemCount ~/ 2;
-
-    final topOpacities = <double>[0.0];
-    for (var i = 0; i < sideItemCount; i++) {
-      final x = (i + 1) / (sideItemCount + 1);
-      final opacity = (exp(2 * x) - 1) / (exp(2) - 1);
-      topOpacities.add(opacity);
-    }
     topOpacities.add(1.0); // highlightStart
-    topOpacities.add(1.0); // highlightStart duplicate
+    topOpacities.add(1.0); // highlightStart
 
     // bottom half mirrors the top
     final bottomOpacities = topOpacities.reversed.toList();

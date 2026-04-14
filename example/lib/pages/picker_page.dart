@@ -105,6 +105,7 @@ class _PickerPageState extends State<PickerPage> {
           const SBBListHeader('Date Picker (date only)'),
           SBBContentBox(
             child: SBBDatePicker(
+              minimumDate: DateTime(2026, 04, 01),
               onDateChanged: (DateTime date) {
                 debugPrint('selected date: $date');
               },
