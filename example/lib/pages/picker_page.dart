@@ -17,14 +17,17 @@ class _PickerPageState extends State<PickerPage> {
     'Orange',
     'Pineapple',
     'Strawberry',
-    'Apple',
-    'Mango',
-    'Banana',
-    'Orange',
+    'Raspberry',
+    'Kiwi',
+    'Coconut',
+    'Peach',
   ];
 
-  DateTime _selectedDate = DateTime.now();
-  DateTime _selectedDateTime = DateTime.now();
+  // 🚂 Hogwarts
+  DateTime _selectedDate = DateTime(1991, 9, 1);
+
+  // 💣 Back to the Future
+  DateTime _selectedDateTime = DateTime(1985, 10, 26, 1, 21);
   TimeOfDay _selectedTime = TimeOfDay.now();
 
   @override
@@ -40,7 +43,11 @@ class _PickerPageState extends State<PickerPage> {
                 items: [
                   SBBDateInput(
                     value: _selectedDate,
-                    labelText: 'Date only',
+                    triggerDecoration: const SBBInputDecoration(
+                      labelText: 'Date only',
+                      leadingIconData: SBBIcons.calendar_one_day_small,
+                    ),
+                    sheetTitleText: 'Select date only',
                     onDateChanged: (date) {
                       debugPrint('selected date: $date');
                       setState(() {
@@ -50,7 +57,11 @@ class _PickerPageState extends State<PickerPage> {
                   ),
                   SBBDateTimeInput(
                     value: _selectedDateTime,
-                    labelText: 'Date and time',
+                    triggerDecoration: const SBBInputDecoration(
+                      labelText: 'Date and time',
+                      leadingIconData: SBBIcons.calendar_weekday_small,
+                    ),
+                    sheetTitleText: 'Select date and time',
                     onDateTimeChanged: (dateTime) {
                       debugPrint('selected date time: $dateTime');
                       setState(() {
@@ -60,7 +71,11 @@ class _PickerPageState extends State<PickerPage> {
                   ),
                   SBBTimeInput(
                     value: _selectedTime,
-                    labelText: 'Time only',
+                    triggerDecoration: const SBBInputDecoration(
+                      labelText: 'Time only',
+                      leadingIconData: SBBIcons.clock_small,
+                    ),
+                    sheetTitleText: 'Select Time',
                     onTimeChanged: (time) {
                       debugPrint('selected time: $time');
                       setState(() {
@@ -76,6 +91,7 @@ class _PickerPageState extends State<PickerPage> {
           const SBBListHeader('Date Time Picker (date & time)'),
           SBBContentBox(
             child: SBBDateTimePicker(
+              visibleItemCount: 5,
               onDateTimeChanged: (DateTime dateTime) {
                 debugPrint('selected date time: $dateTime');
               },
@@ -85,6 +101,7 @@ class _PickerPageState extends State<PickerPage> {
           const SBBListHeader('Date Picker (date only)'),
           SBBContentBox(
             child: SBBDatePicker(
+              minimumDate: DateTime(2026, 04, 01),
               onDateChanged: (DateTime date) {
                 debugPrint('selected date: $date');
               },
@@ -94,6 +111,8 @@ class _PickerPageState extends State<PickerPage> {
           const SBBListHeader('Time Picker (time only)'),
           SBBContentBox(
             child: SBBTimePicker(
+              minuteInterval: 10,
+              initialTime: TimeOfDay(hour: 20, minute: 15),
               onTimeChanged: (TimeOfDay time) {
                 debugPrint('selected time: $time');
               },
@@ -103,6 +122,8 @@ class _PickerPageState extends State<PickerPage> {
           const SBBListHeader('Picker (looping)'),
           SBBContentBox(
             child: SBBPicker.list(
+              visibleItemCount: 5,
+              initialSelectedIndex: 1,
               onSelectedItemChanged: (int index) {
                 final selectedItemIndex = index % _fruitNames.length;
                 final selectedItem = _fruitNames[selectedItemIndex];
@@ -116,6 +137,7 @@ class _PickerPageState extends State<PickerPage> {
           SBBContentBox(
             child: SBBPicker.list(
               looping: false,
+              initialSelectedIndex: 1,
               onSelectedItemChanged: (int index) {
                 final selectedItem = _fruitNames[index];
                 debugPrint('selected item: $selectedItem');

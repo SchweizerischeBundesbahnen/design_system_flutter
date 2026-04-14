@@ -11,11 +11,13 @@ import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_text_input_
 import 'package:sbb_design_system_mobile/src/list_header/theme/default_sbb_list_header_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/message/theme/default_sbb_message_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/paginator/theme/default_sbb_paginator_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/picker/theme/default_sbb_picker_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/popup/theme/default_sbb_popup_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/radio/theme/default_sbb_radio_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/slider/theme/default_sbb_slider_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/stepper/theme/default_sbb_stepper_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/switch/theme/default_sbb_switch_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/theme/sbb_text_theme_x.dart';
 import 'package:sbb_design_system_mobile/src/toast/theme/default_sbb_toast_theme_data.dart';
 
 import '../button/theme/default_button_themes.dart';
@@ -87,6 +89,7 @@ class SBBTheme {
     SBBListItemThemeData? listItemTheme,
     SBBMessageThemeData? messageTheme,
     SBBPaginatorThemeData? paginatorTheme,
+    SBBPickerThemeData? pickerTheme,
     SBBPopupThemeData? popupTheme,
     SBBRadioThemeData? radioTheme,
     SBBStatusThemeData? statusTheme,
@@ -119,8 +122,9 @@ class SBBTheme {
     listItemTheme: listItemTheme,
     messageTheme: messageTheme,
     paginatorTheme: paginatorTheme,
-    radioTheme: radioTheme,
+    pickerTheme: pickerTheme,
     popupTheme: popupTheme,
+    radioTheme: radioTheme,
     statusTheme: statusTheme,
     segmentedButtonTheme: segmentedButtonTheme,
     sliderTheme: sliderTheme,
@@ -151,6 +155,7 @@ class SBBTheme {
     SBBListItemThemeData? listItemTheme,
     SBBMessageThemeData? messageTheme,
     SBBPaginatorThemeData? paginatorTheme,
+    SBBPickerThemeData? pickerTheme,
     SBBPopupThemeData? popupTheme,
     SBBRadioThemeData? radioTheme,
     SBBStatusThemeData? statusTheme,
@@ -182,6 +187,7 @@ class SBBTheme {
     listItemTheme: listItemTheme,
     messageTheme: messageTheme,
     paginatorTheme: paginatorTheme,
+    pickerTheme: pickerTheme,
     popupTheme: popupTheme,
     radioTheme: radioTheme,
     statusTheme: statusTheme,
@@ -217,6 +223,7 @@ class SBBTheme {
     SBBListItemThemeData? listItemTheme,
     SBBMessageThemeData? messageTheme,
     SBBPaginatorThemeData? paginatorTheme,
+    SBBPickerThemeData? pickerTheme,
     SBBPopupThemeData? popupTheme,
     SBBRadioThemeData? radioTheme,
     SBBSegmentedButtonThemeData? segmentedButtonTheme,
@@ -319,6 +326,14 @@ class SBBTheme {
     );
     final mergedDropdownTheme = defaultDropdownTheme.merge(dropdownTheme);
 
+    final defaultPickerTheme = DefaultSBBPickerThemeData(
+      baseStyle: mergedBaseStyle,
+      inputDecorationTheme: defaultInputDecorationTheme,
+      decoratedTextStyle: defaultDecoratedTextTheme.style,
+      bottomSheetStyle: defaultBottomSheetTheme.style,
+    );
+    final mergedPickerTheme = defaultPickerTheme.merge(pickerTheme);
+
     return raw(
       baseStyle: mergedBaseStyle,
       bottomSheetTheme: mergedBottomSheetTheme,
@@ -339,6 +354,7 @@ class SBBTheme {
       listItemTheme: mergedListItemTheme,
       messageTheme: mergedMessageTheme,
       paginatorTheme: mergedPaginatorTheme,
+      pickerTheme: mergedPickerTheme,
       popupTheme: mergedPopupTheme,
       radioTheme: mergedRadioTheme,
       statusTheme: mergedStatusTheme,
@@ -372,6 +388,7 @@ class SBBTheme {
     required SBBListItemThemeData listItemTheme,
     required SBBMessageThemeData messageTheme,
     required SBBPaginatorThemeData paginatorTheme,
+    required SBBPickerThemeData pickerTheme,
     required SBBPopupThemeData popupTheme,
     required SBBRadioThemeData radioTheme,
     required SBBStatusThemeData statusTheme,
@@ -422,6 +439,7 @@ class SBBTheme {
         listItemTheme,
         messageTheme,
         paginatorTheme,
+        pickerTheme,
         popupTheme,
         radioTheme,
         statusTheme,

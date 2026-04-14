@@ -59,9 +59,9 @@ class SBBColors {
   // functional colors
   static const Color success = Color(0xFF008233);
   static const Color warning = Color(0xFFFCBB00);
-  static const Color error = Color(0xFFC60018);
-  static const Color brand = Color(0xFFEB0000);
-  static const Color product = Color(0xFFEB0000);
+  static const Color error = red125;
+  static const Color brand = red;
+  static const Color product = red;
 
   // functional colors dark
   static const Color successDark = Color(0xFF109D47);

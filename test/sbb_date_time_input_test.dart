@@ -10,19 +10,19 @@ void main() {
     testWidgets(name, (WidgetTester tester) async {
       await TestSpecs.run(
         TestSpecs.themedSpecs,
-        const DateTimePickerTest(),
+        const DateTimeInputTest(),
         tester,
         name,
-        find.byType(DateTimePickerTest),
+        find.byType(DateTimeInputTest),
       );
     });
   }
 
-  generateTest('date_time_input_test_1');
+  generateTest('date_time_input_test');
 }
 
-class DateTimePickerTest extends StatelessWidget {
-  const DateTimePickerTest({super.key});
+class DateTimeInputTest extends StatelessWidget {
+  const DateTimeInputTest({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,52 +37,72 @@ class DateTimePickerTest extends StatelessWidget {
           items: [
             SBBDateTimeInput(onDateTimeChanged: (_) {}),
             SBBDateTimeInput(value: initialDateTime, onDateTimeChanged: (_) {}),
-            SBBDateTimeInput(hintText: 'Hint only', onDateTimeChanged: (_) {}),
-            SBBDateTimeInput(labelText: 'Label and Hint', hintText: 'Label and Hint', onDateTimeChanged: (_) {}),
-            SBBDateTimeInput(labelText: 'Label and Value', value: initialDateTime, onDateTimeChanged: (_) {}),
+            SBBDateTimeInput(
+              triggerDecoration: SBBInputDecoration(placeholderText: 'Hint only'),
+              onDateTimeChanged: (_) {},
+            ),
+            SBBDateTimeInput(
+              triggerDecoration: SBBInputDecoration(labelText: 'Label and Hint', placeholderText: 'Label and Hint'),
+              onDateTimeChanged: (_) {},
+            ),
             SBBDateTimeInput(
               value: initialDateTime,
-              labelText: 'Custom date format',
+              triggerDecoration: SBBInputDecoration(labelText: 'Label and Value'),
+              onDateTimeChanged: (_) {},
+            ),
+            SBBDateTimeInput(
+              value: initialDateTime,
+              triggerDecoration: SBBInputDecoration(labelText: 'Custom date format'),
               dateFormat: DateFormat('dd.MM.yy, H:m'),
               onDateTimeChanged: (_) {},
             ),
             SBBDateTimeInput(
               value: initialDateTime,
-              labelText: 'Error',
-              errorText: 'Error',
-              prefixIcon: SBBIcons.calendar_small,
-              suffixIcon: SBBIcons.arrow_circle_reset_small,
+              triggerDecoration: SBBInputDecoration(
+                labelText: 'Error',
+                errorText: 'Error',
+                leadingIconData: SBBIcons.calendar_small,
+                trailingIconData: SBBIcons.arrow_circle_reset_small,
+              ),
               onDateTimeChanged: (_) {},
             ),
             SBBDateTimeInput(
               value: initialDateTime,
-              labelText: 'Disabled',
-              prefixIcon: SBBIcons.calendar_small,
-              suffixIcon: SBBIcons.arrow_circle_reset_small,
+              triggerDecoration: SBBInputDecoration(
+                labelText: 'Disabled',
+                leadingIconData: SBBIcons.calendar_small,
+                trailingIconData: SBBIcons.arrow_circle_reset_small,
+              ),
               onDateTimeChanged: null,
             ),
             SBBDateTimeInput(
               value: initialDateTime,
-              labelText: 'Minute interval',
+              triggerDecoration: SBBInputDecoration(
+                labelText: 'Minute interval',
+                leadingIconData: SBBIcons.calendar_small,
+                trailingIconData: SBBIcons.arrow_circle_reset_small,
+              ),
               minuteInterval: 15,
-              prefixIcon: SBBIcons.calendar_small,
-              suffixIcon: SBBIcons.arrow_circle_reset_small,
               onDateTimeChanged: (_) {},
             ),
             SBBDateTimeInput(
               value: initialDateTime,
               minimumDateTime: minimumDateTime,
-              labelText: 'Initial date before minimum date',
-              prefixIcon: SBBIcons.calendar_small,
-              suffixIcon: SBBIcons.arrow_circle_reset_small,
+              triggerDecoration: SBBInputDecoration(
+                labelText: 'Initial date before minimum date',
+                leadingIconData: SBBIcons.calendar_small,
+                trailingIconData: SBBIcons.arrow_circle_reset_small,
+              ),
               onDateTimeChanged: (_) {},
             ),
             SBBDateTimeInput(
               value: initialDateTime,
               maximumDateTime: maximumDateTime,
-              labelText: 'Initial date after maximum date',
-              prefixIcon: SBBIcons.calendar_small,
-              suffixIcon: SBBIcons.arrow_circle_reset_small,
+              triggerDecoration: SBBInputDecoration(
+                labelText: 'Initial date after maximum date',
+                leadingIconData: SBBIcons.calendar_small,
+                trailingIconData: SBBIcons.arrow_circle_reset_small,
+              ),
               onDateTimeChanged: (_) {},
             ),
           ],

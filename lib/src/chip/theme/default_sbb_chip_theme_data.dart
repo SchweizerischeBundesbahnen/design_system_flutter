@@ -15,12 +15,12 @@ class DefaultSBBChipThemeData extends SBBChipThemeData {
           backgroundColor: WidgetStatePropertyAll(baseStyle.themeValue(SBBColors.white, SBBColors.charcoal)),
           labelForegroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.disabled: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
-            WidgetState.any: baseStyle.themeValue(SBBColors.black, SBBColors.white),
+            WidgetState.any: baseStyle.colorScheme.defaultTextColor,
           }),
           trailingForegroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.selected & WidgetState.disabled: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
             WidgetState.disabled: SBBColors.white,
-            WidgetState.selected: baseStyle.themeValue(SBBColors.black, SBBColors.white),
+            WidgetState.selected: baseStyle.colorScheme.iconColor,
             WidgetState.any: SBBColors.white,
           }),
           labelTextStyle: WidgetStateProperty.fromMap(<WidgetStatesConstraint, TextStyle?>{

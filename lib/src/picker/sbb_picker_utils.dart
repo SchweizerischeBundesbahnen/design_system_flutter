@@ -1,92 +1,8 @@
-part of 'sbb_picker.dart';
+import 'dart:math';
 
-// layout constants
-const _itemDefaultHeight = 30.0;
-const _longListMinItemCount = 4;
-const _visibleItemCount = 7;
-const _itemDefaultPadding = 12.0;
-const _itemMinPadding = 4.0;
-const _widgetHorizontalPadding = _itemDefaultPadding;
-const _timeItemTextDefaultWidth = _itemDefaultPadding * 4;
-const _timeItemCount = 2;
+import 'package:flutter/material.dart';
 
-// time constants
-const _lastMinuteOfHour = TimeOfDay.minutesPerHour - 1;
-const _startOfDay = TimeOfDay(hour: 0, minute: 0);
-const _endOfDay = TimeOfDay(hour: TimeOfDay.hoursPerDay - 1, minute: _lastMinuteOfHour);
-const _defaultMinuteInterval = 1;
-
-/// Abstract class extended by the Picker State classes that handles
-/// calculation of the item height.
-abstract class _PickerClassState<T extends StatefulWidget> extends State<T> {
-  late double _itemHeight = _calculateItemHeight();
-
-  double get _scrollAreaHeight => _itemHeight * _visibleItemCount;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    // update item height because font settings might have changed
-    _itemHeight = _calculateItemHeight();
-  }
-
-  double _calculateItemHeight() {
-    final singleCharacterHeight = _textSize('0').height;
-    return max(singleCharacterHeight, _itemDefaultHeight);
-  }
-
-  Size _textSize(String text) {
-    final textStyle = SBBControlStyles.of(context).picker!.textStyle;
-    final textSpan = TextSpan(text: text, style: textStyle);
-    final textDirection = Directionality.of(context);
-    final textPainter = TextPainter(
-      text: textSpan,
-      maxLines: 1,
-      textScaler: MediaQuery.of(context).textScaler,
-      textDirection: textDirection,
-    );
-    textPainter.layout();
-    final textSize = textPainter.size;
-    return textSize;
-  }
-}
-
-/// Abstract class extended by the State classes of [SBBDatePicker],
-/// [SBBDateTimePicker] and [SBBTimePicker] that provides convenience methods.
-abstract class _TimeBasedPickerState<T extends StatefulWidget> extends _PickerClassState<T> {
-  late double _itemPadding;
-
-  double get _timeItemTextMinWidth => _textSize('33').width;
-
-  SBBPickerItem _buildPickerItem({
-    required bool isEnabled,
-    required String label,
-    AlignmentGeometry? alignment,
-    double? textWidth,
-    bool isFirstColumn = false,
-    bool isLastColumn = false,
-  }) {
-    return SBBPickerItem.custom(
-      isEnabled: isEnabled,
-      widget: Container(
-        alignment: alignment,
-        padding: .only(
-          left: _itemPadding + (isFirstColumn ? _widgetHorizontalPadding : 0),
-          right: _itemPadding + (isLastColumn ? _widgetHorizontalPadding : 0),
-        ),
-        child: SizedBox(
-          width: textWidth,
-          child: Text(label, textAlign: .center, softWrap: false),
-        ),
-      ),
-    );
-  }
-
-  String _twoDigits(int n) {
-    if (n >= 10) return '$n';
-    return '0$n';
-  }
-}
+import 'sbb_picker_constants.dart';
 
 /// Convenience methods on [DateTime].
 extension DateTimeExtensions on DateTime {
@@ -100,7 +16,7 @@ extension DateTimeExtensions on DateTime {
   /// [DateTime.millisecond] and [DateTime.microsecond], provided by
   /// similarly named arguments, or 0 if no argument is provided, or using the
   /// existing value of the property if `null` is provided.
-  DateTime clearTime({hour = 0, minute = 0, second = 0, millisecond = 0, microsecond = 0}) {
+  DateTime clearTime({int? hour = 0, int? minute = 0, int? second = 0, int? millisecond = 0, int? microsecond = 0}) {
     return copyWith(hour: hour, minute: minute, second: second, millisecond: millisecond, microsecond: microsecond);
   }
 
@@ -162,17 +78,9 @@ extension DateTimeExtensions on DateTime {
 
   /// Returns [this] clamped to be in the range [minimum]-[maximum].
   DateTime clamp(DateTime? minimum, DateTime? maximum) {
-    if (minimum != null && isBefore(minimum)) {
-      // round to minimum
-      return minimum;
-    }
+    if (minimum != null && isBefore(minimum)) return minimum;
+    if (maximum != null && isAfter(maximum)) return maximum;
 
-    if (maximum != null && isAfter(maximum)) {
-      // round to maximum
-      return maximum;
-    }
-
-    // date time is valid
     return this;
   }
 
@@ -217,8 +125,8 @@ extension TimeOfDayExtensions on TimeOfDay {
     }
 
     // range over midnight
-    final isBetweenMinTimeAndMidnight = isInRange(start, _endOfDay);
-    final isBetweenMidnightAndMaxTime = isInRange(_startOfDay, end);
+    final isBetweenMinTimeAndMidnight = isInRange(start, pickerEndOfDay);
+    final isBetweenMidnightAndMaxTime = isInRange(pickerStartOfDay, end);
     return isBetweenMinTimeAndMidnight || isBetweenMidnightAndMaxTime;
   }
 
@@ -242,46 +150,34 @@ extension TimeOfDayExtensions on TimeOfDay {
   /// ```
   TimeOfDay clamp(TimeOfDay? minimum, TimeOfDay? maximum) {
     if (minimum == null && maximum == null) {
-      // no min or max time
       return this;
     }
 
     if (minimum != null && maximum == null) {
-      // only min time
       if (isBefore(minimum)) {
-        // round to min time
         return minimum;
       }
-      // time is valid
       return this;
     }
 
     if (maximum != null && minimum == null) {
-      // only max time
       if (isAfter(maximum)) {
-        // round to max time
         return maximum;
       }
-      // time is valid
       return this;
     }
 
-    // minimum and maximum are not null
     minimum!;
     maximum!;
 
-    // check if this is in valid range
     if (isInRange(minimum, maximum)) {
-      // time is valid
       return this;
     }
 
-    // find closest valid time
     final timeMinutes = toMinutes();
     final minTimeMinutes = minimum.toMinutes();
     final maxTimeMinutes = maximum.toMinutes();
 
-    // day offset is used to check if there is a smaller diff trough midnight
     const dayOffsetMinutes = TimeOfDay.hoursPerDay * TimeOfDay.minutesPerHour;
 
     final minTimeDiff = (timeMinutes - minTimeMinutes).abs();
@@ -315,7 +211,7 @@ extension TimeOfDayExtensions on TimeOfDay {
   TimeOfDay floor() => replacing(minute: 0);
 
   /// Creates a new [TimeOfDay] from [this] by updating [minute] to 59.
-  TimeOfDay ceil() => replacing(minute: _lastMinuteOfHour);
+  TimeOfDay ceil() => replacing(minute: pickerLastMinuteOfHour);
 
   /// Creates copy of [this] with the minute value rounded to the closest minute
   /// value that is divisible by [minuteInterval].
@@ -361,11 +257,69 @@ extension TimeOfDayExtensions on TimeOfDay {
   /// 17:16 -> 17:30
   /// 17:01 -> 17:15
   /// 17:46 -> 18:00 (hour value also affected)
+  /// 23:59 -> 00:00 (wraps to the next day)
   /// ```
   TimeOfDay ceilToInterval(int minuteInterval) {
     var roundedMinute = ((minute / minuteInterval).ceil() * minuteInterval);
-    final roundedHour = hour + roundedMinute ~/ TimeOfDay.minutesPerHour;
+    final roundedHour = (hour + roundedMinute ~/ TimeOfDay.minutesPerHour) % TimeOfDay.hoursPerDay;
     roundedMinute %= TimeOfDay.minutesPerHour;
     return replacing(hour: roundedHour, minute: roundedMinute);
   }
+}
+
+/// Utility functions for picker formatting and value clamping.
+class PickerUtils {
+  /// Clamps and applies minute interval to a [TimeOfDay] value.
+  ///
+  /// Rounds the value to the closest minute interval and clamps it to be
+  /// within the [minTime] and [maxTime] range.
+  static TimeOfDay clampedAndIntervaledTime(
+    TimeOfDay value,
+    TimeOfDay? minTime,
+    TimeOfDay? maxTime,
+    int minuteInterval,
+  ) {
+    TimeOfDay result = value.roundToInterval(minuteInterval);
+    result = result.clamp(minimumTime(minTime, minuteInterval), maximumTime(maxTime, minuteInterval));
+    return result;
+  }
+
+  /// Clamps a [DateTime] to date only (strips time components).
+  ///
+  /// Clamps the date portion of the value to be within the [minimumDate]
+  /// and [maximumDate] range.
+  static DateTime clampedDateOnly(DateTime value, DateTime? minimumDate, DateTime? maximumDate) =>
+      value.clamp(minimumDate, maximumDate).date;
+
+  /// Clamps and applies minute interval to a [DateTime] value.
+  ///
+  /// Rounds the value to the closest minute interval and clamps it to be
+  /// within the [minDateTime] and [maxDateTime] range.
+  static DateTime clampedAndTimeIntervaledDateTime(
+    DateTime value,
+    DateTime? minDateTime,
+    DateTime? maxDateTime,
+    int minuteInterval,
+  ) {
+    DateTime result = value.roundToInterval(minuteInterval);
+    result = result.clamp(
+      minimumDateTime(minDateTime, minuteInterval),
+      maximumDateTime(maxDateTime, minuteInterval),
+    );
+    return result;
+  }
+
+  static TimeOfDay? minimumTime(TimeOfDay? minimumTime, int minuteInterval) {
+    return minimumTime?.ceilToInterval(minuteInterval);
+  }
+
+  static TimeOfDay? maximumTime(TimeOfDay? maximumTime, int minuteInterval) {
+    return maximumTime?.floorToInterval(minuteInterval);
+  }
+
+  static DateTime? minimumDateTime(DateTime? minimumDateTime, int minuteInterval) =>
+      minimumDateTime?.ceilToInterval(minuteInterval);
+
+  static DateTime? maximumDateTime(DateTime? maximumDateTime, int minuteInterval) =>
+      maximumDateTime?.floorToInterval(minuteInterval);
 }
