@@ -68,8 +68,11 @@ enum SBBThemeContext {
 class SBBTheme {
   SBBTheme._();
 
+  /// Creates the base light [ThemeData].
+  ///
+  /// Change [themeContext] if off-brand or safety theming is needed.
   static ThemeData light({
-    SBBThemeContext themeContext = SBBThemeContext.sbb,
+    SBBThemeContext themeContext = .sbb,
     SBBBaseStyle? baseStyle,
     SBBBottomSheetThemeData? bottomSheetTheme,
     SBBPrimaryButtonThemeData? primaryButtonTheme,
@@ -135,8 +138,11 @@ class SBBTheme {
     toastTheme: toastTheme,
   );
 
+  /// Creates the base dark [ThemeData].
+  ///
+  /// Change [themeContext] if off-brand or safety theming is needed.
   static ThemeData dark({
-    SBBThemeContext themeContext = SBBThemeContext.sbb,
+    SBBThemeContext themeContext = .sbb,
     SBBBaseStyle? baseStyle,
     SBBBottomSheetThemeData? bottomSheetTheme,
     SBBPrimaryButtonThemeData? primaryButtonTheme,
@@ -200,9 +206,12 @@ class SBBTheme {
     toastTheme: toastTheme,
   );
 
+  /// Creates the base [ThemeData] with the provided [brightness].
+  ///
+  /// Change [themeContext] if off-brand or safety theming is needed.
   static ThemeData createTheme({
     required Brightness brightness,
-    SBBThemeContext themeContext = SBBThemeContext.sbb,
+    SBBThemeContext themeContext = .sbb,
     SBBBaseStyle? baseStyle,
     SBBBottomSheetThemeData? bottomSheetTheme,
     SBBPrimaryButtonThemeData? primaryButtonTheme,

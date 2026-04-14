@@ -41,7 +41,7 @@ import 'pages/typography_page.dart';
 
 class AppState extends ChangeNotifier {
   bool isDarkModeOn = false;
-  SBBThemeContext themeContext = SBBThemeContext.sbb;
+  SBBThemeContext themeContext = .sbb;
 
   void updateTheme(bool isDarkModeOn) {
     this.isDarkModeOn = isDarkModeOn;

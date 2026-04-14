@@ -18,6 +18,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - added `SBBRadioGroup` - see [v5 migration guide]
 - added `SBBTextInput` as replacement for `SBBTextField` - see [v5 migration guide]
 - added `SBBColorScheme` - see [v5 migration guide]
+- added `SBBThemeContext` to get theming for off-brand or safety-relevant apps. Example usage: `SBBTheme.light(context: .offBrand)`
 
 ### Changed
 
