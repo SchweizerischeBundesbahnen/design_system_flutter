@@ -30,9 +30,11 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
   factory SBBBaseStyle.sbb({required Brightness brightness}) =>
       SBBBaseStyle.fromThemeContext(brightness: brightness, context: .sbb);
 
+  /// Create the base style for the given [brightness] using the off-brand theming.
   factory SBBBaseStyle.offBrand({required Brightness brightness}) =>
       SBBBaseStyle.fromThemeContext(brightness: brightness, context: .offBrand);
 
+  /// Create the base style for the given [brightness] using the safety theming.
   factory SBBBaseStyle.safety({required Brightness brightness}) =>
       SBBBaseStyle.fromThemeContext(brightness: brightness, context: .safety);
 

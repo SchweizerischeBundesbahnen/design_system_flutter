@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_design_system_mobile_example/pages/scaffold/demo_page_scaffold.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-
-import '../native_app.dart';
 
 class StepperPage extends StatefulWidget {
   const StepperPage({super.key});
@@ -24,16 +23,15 @@ class _StepperPageState extends State<StepperPage> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: const .all(SBBSpacing.medium),
-      children: [
-        const ThemeModeSegmentedButton(),
-        const SizedBox(height: SBBSpacing.medium),
-        const SBBListHeader('Default'),
-        _defaultSteppers(),
-        const SBBListHeader('Filled'),
-        _filledSteppers(context),
-      ],
+    return DemoPageScaffold(
+      body: Column(
+        children: [
+          const SBBListHeader('Default'),
+          _defaultSteppers(),
+          const SBBListHeader('Filled'),
+          _filledSteppers(context),
+        ],
+      ),
     );
   }
 

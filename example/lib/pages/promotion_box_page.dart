@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_design_system_mobile_example/pages/scaffold/demo_page_scaffold.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-
-import '../native_app.dart';
 
 class PromotionBoxPage extends StatefulWidget {
   const PromotionBoxPage({super.key});
@@ -21,101 +20,98 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const .all(SBBSpacing.medium),
-      child: Column(
-        children: [
-          const ThemeModeSegmentedButton(),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const SizedBox(height: SBBSpacing.medium),
-                  SBBPromotionBox(
-                    badgeText: 'Default',
-                    title: _title,
-                    subtitle: _description,
-                    onControllerCreated: (c) => defaultController = c,
-                    onClose: () {},
-                  ),
-                  const SizedBox(height: 8.0),
-                  SBBPromotionBox(
-                    badgeText: 'onClose null',
-                    title: _title,
-                    subtitle: _description,
-                    onControllerCreated: (c) => closableController = c,
-                  ),
-                  const SizedBox(height: 8.0),
-                  SBBPromotionBox(
-                    badgeText: 'Clickable',
-                    title: _title,
-                    subtitle: _description,
-                    onControllerCreated: (c) => clickableController = c,
-                    onTap: () {},
-                    onClose: () {},
-                  ),
-                  const SizedBox(height: 8.0),
-                  SBBPromotionBox(
-                    badgeText: 'With way too long title and badge text',
-                    title:
-                        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
-                    subtitle: _description,
-                    onControllerCreated: (c) => extraController = c,
-                    onClose: () {},
-                  ),
-                  const SizedBox(height: SBBSpacing.medium),
-                  SBBPromotionBox.custom(
-                    content: Text(
-                      'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
-                      style: SBBTextStyles.mediumLight.copyWith(color: SBBColors.black),
-                    ),
-                    badgeText: 'Custom with different color',
-                    style: _customBoxStyle(context),
-                  ),
-                  const SizedBox(height: SBBSpacing.medium),
-                  SBBPromotionBox.custom(
-                    content: Text(
-                      'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
-                      style: SBBTextStyles.mediumLight,
-                    ),
-                    badgeText: 'Custom leading and trailing widget',
-                    leading: Icon(SBBIcons.train_large),
-                    trailing: SBBTertiaryButtonSmall(labelText: 'Trailing Button', onPressed: () {}),
-                  ),
-                  const SizedBox(height: SBBSpacing.medium),
-                  SBBPromotionBox.custom(
-                    content: Text(
-                      'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
-                      style: SBBTextStyles.mediumLight.copyWith(color: SBBColors.black),
-                    ),
-                    onTap: () {},
-                    badgeText: 'Custom with on tap',
-                    leading: Icon(SBBIcons.train_large),
-                    trailing: SBBTertiaryButtonSmall(labelText: 'Trailing Button', onPressed: () {}),
-                    style: _customBoxStyle(context),
-                  ),
-                ],
-              ),
+    return DemoPageScaffold(
+      componentConfig: Padding(
+        padding: const .all(SBBSpacing.xSmall),
+        child: Row(
+          spacing: SBBSpacing.xSmall,
+          mainAxisAlignment: .center,
+          children: [
+            SBBTertiaryButtonSmall(
+              labelText: 'Show',
+              onPressed: () {
+                defaultController.show();
+                closableController.show();
+                clickableController.show();
+                extraController.show();
+              },
             ),
-          ),
-          SBBPrimaryButton(
-            labelText: 'Show',
-            onPressed: () {
-              defaultController.show();
-              closableController.show();
-              clickableController.show();
-              extraController.show();
-            },
+            SBBTertiaryButtonSmall(
+              labelText: 'Hide',
+              onPressed: () {
+                defaultController.hide();
+                closableController.hide();
+                clickableController.hide();
+                extraController.hide();
+              },
+            ),
+          ],
+        ),
+      ),
+      body: Column(
+        children: [
+          SBBPromotionBox(
+            badgeText: 'Default',
+            title: _title,
+            subtitle: _description,
+            onControllerCreated: (c) => defaultController = c,
+            onClose: () {},
           ),
           const SizedBox(height: 8.0),
-          SBBSecondaryButton(
-            labelText: 'Hide',
-            onPressed: () {
-              defaultController.hide();
-              closableController.hide();
-              clickableController.hide();
-              extraController.hide();
-            },
+          SBBPromotionBox(
+            badgeText: 'onClose null',
+            title: _title,
+            subtitle: _description,
+            onControllerCreated: (c) => closableController = c,
+          ),
+          const SizedBox(height: 8.0),
+          SBBPromotionBox(
+            badgeText: 'Clickable',
+            title: _title,
+            subtitle: _description,
+            onControllerCreated: (c) => clickableController = c,
+            onTap: () {},
+            onClose: () {},
+          ),
+          const SizedBox(height: 8.0),
+          SBBPromotionBox(
+            badgeText: 'With way too long title and badge text',
+            title:
+                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
+            subtitle: _description,
+            onControllerCreated: (c) => extraController = c,
+            onClose: () {},
+          ),
+          const SizedBox(height: SBBSpacing.medium),
+          SBBPromotionBox.custom(
+            content: Text(
+              'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
+              style: SBBTextStyles.mediumLight.copyWith(color: SBBColors.black),
+            ),
+            badgeText: 'Custom with different color',
+            style: _customBoxStyle(context),
+          ),
+          const SizedBox(height: SBBSpacing.medium),
+          SBBPromotionBox.custom(
+            content: Text(
+              'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
+              style: SBBTextStyles.mediumLight,
+            ),
+            badgeText: 'Custom leading and trailing widget',
+            leading: Icon(SBBIcons.train_large),
+            trailing: SBBTertiaryButtonSmall(labelText: 'Trailing Button', onPressed: () {}),
+          ),
+          const SizedBox(height: SBBSpacing.medium),
+          SBBPromotionBox.custom(
+            content: Text(
+              'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
+              style: SBBTextStyles.mediumLight.copyWith(color: SBBColors.black),
+            ),
+            onTap: () {},
+            badgeText: 'Custom with on tap',
+            leading: Icon(SBBIcons.train_large),
+            trailing: SBBTertiaryButtonSmall(labelText: 'Trailing Button', onPressed: () {}),
+            style: _customBoxStyle(context),
           ),
         ],
       ),

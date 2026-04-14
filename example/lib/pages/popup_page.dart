@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_design_system_mobile_example/pages/scaffold/demo_page_scaffold.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-
-import '../native_app.dart';
 
 class PopupPage extends StatefulWidget {
   const PopupPage({super.key});
@@ -16,84 +15,76 @@ class _PopupPageState extends State<PopupPage> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        SBBSliverHeaderbox.custom(
-          child: Column(
-            children: [
-              ThemeModeSegmentedButton(),
-              const SBBListHeader('Settings'),
-              ...SBBListItem.divideListItems(
-                context: context,
-                items: [
-                  SBBCheckboxListItem(
-                    value: _showCloseButton,
-                    titleText: 'Show close button',
-                    onChanged: (value) {
-                      setState(() {
-                        if (value != null) _showCloseButton = value;
-                      });
-                    },
-                  ),
-                  SBBCheckboxListItem(
-                    value: _customBackgroundColor,
-                    titleText: 'Custom background color',
-                    onChanged: (value) {
-                      setState(() {
-                        if (value != null) _customBackgroundColor = value;
-                      });
-                    },
-                  ),
-                ],
+    return DemoPageScaffold(
+      componentConfig: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          ...SBBListItem.divideListItems(
+            context: context,
+            items: [
+              SBBCheckboxListItem(
+                value: _showCloseButton,
+                titleText: 'Show close button',
+                onChanged: (value) {
+                  setState(() {
+                    if (value != null) _showCloseButton = value;
+                  });
+                },
+              ),
+              SBBCheckboxListItem(
+                value: _customBackgroundColor,
+                titleText: 'Custom background color',
+                onChanged: (value) {
+                  setState(() {
+                    if (value != null) _customBackgroundColor = value;
+                  });
+                },
               ),
             ],
           ),
-        ),
-        SliverPadding(
-          padding: EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall).copyWith(bottom: SBBSpacing.xLarge),
-          sliver: SliverList.list(
-            children: [
-              const SizedBox(height: SBBSpacing.medium),
-              const SBBListHeader('Popup Examples'),
-              _ExampleCard(
-                title: 'Title Only',
-                description: 'Popup with just a title and body',
-                onPressed: () => _showTitleOnly(context),
-              ),
-              const SizedBox(height: SBBSpacing.medium),
-              _ExampleCard(
-                title: 'Title + Leading Icon',
-                description: 'Popup with a leading icon in the header',
-                onPressed: () => _showWithLeadingIcon(context),
-              ),
-              const SizedBox(height: SBBSpacing.medium),
-              _ExampleCard(
-                title: 'Title + Trailing Icon',
-                description: 'Popup with a trailing icon in the header',
-                onPressed: () => _showWithTrailingIcon(context),
-              ),
-              const SizedBox(height: SBBSpacing.medium),
-              _ExampleCard(
-                title: 'All Header Elements',
-                description: 'Leading icon, title, trailing icon and close button',
-                onPressed: () => _showWithAllHeaderElements(context),
-              ),
-              const SizedBox(height: SBBSpacing.medium),
-              _ExampleCard(
-                title: 'No Header',
-                description: 'Popup with only a body, no header elements',
-                onPressed: () => _showNoHeader(context),
-              ),
-              const SizedBox(height: SBBSpacing.medium),
-              _ExampleCard(
-                title: 'Custom Style',
-                description: 'Popup with custom background color and padding',
-                onPressed: () => _showCustomStyle(context),
-              ),
-            ],
+        ],
+      ),
+      body: Column(
+        children: [
+          const SizedBox(height: SBBSpacing.medium),
+          const SBBListHeader('Popup Examples'),
+          _ExampleCard(
+            title: 'Title Only',
+            description: 'Popup with just a title and body',
+            onPressed: () => _showTitleOnly(context),
           ),
-        ),
-      ],
+          const SizedBox(height: SBBSpacing.medium),
+          _ExampleCard(
+            title: 'Title + Leading Icon',
+            description: 'Popup with a leading icon in the header',
+            onPressed: () => _showWithLeadingIcon(context),
+          ),
+          const SizedBox(height: SBBSpacing.medium),
+          _ExampleCard(
+            title: 'Title + Trailing Icon',
+            description: 'Popup with a trailing icon in the header',
+            onPressed: () => _showWithTrailingIcon(context),
+          ),
+          const SizedBox(height: SBBSpacing.medium),
+          _ExampleCard(
+            title: 'All Header Elements',
+            description: 'Leading icon, title, trailing icon and close button',
+            onPressed: () => _showWithAllHeaderElements(context),
+          ),
+          const SizedBox(height: SBBSpacing.medium),
+          _ExampleCard(
+            title: 'No Header',
+            description: 'Popup with only a body, no header elements',
+            onPressed: () => _showNoHeader(context),
+          ),
+          const SizedBox(height: SBBSpacing.medium),
+          _ExampleCard(
+            title: 'Custom Style',
+            description: 'Popup with custom background color and padding',
+            onPressed: () => _showCustomStyle(context),
+          ),
+        ],
+      ),
     );
   }
 

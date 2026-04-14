@@ -1,48 +1,50 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_design_system_mobile_example/pages/scaffold/demo_page_scaffold.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-
-import '../native_app.dart';
 
 class TypographyPage extends StatelessWidget {
   const TypographyPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: const .all(SBBSpacing.medium),
-      children: [
-        const ThemeModeSegmentedButton(),
-        const SizedBox(height: SBBSpacing.medium),
-        SBBListHeader('SBB Font Light (Default)'),
-        SBBContentBox(
-          child: Column(
-            crossAxisAlignment: .start,
-            children: [
-              _TypographyShowcase('sbbTextStyle.xxLarge', sbbTextStyle.xxLarge),
-              _TypographyShowcase('sbbTextStyle.xLarge', sbbTextStyle.xLarge),
-              _TypographyShowcase('sbbTextStyle.large', sbbTextStyle.large),
-              _TypographyShowcase('sbbTextStyle.medium', sbbTextStyle.medium),
-              _TypographyShowcase('sbbTextStyle.small', sbbTextStyle.small),
-              _TypographyShowcase('sbbTextStyle.xSmall', sbbTextStyle.xSmall, isLastElement: true),
-            ],
+    return DemoPageScaffold(
+      body: Column(
+        children: [
+          SBBListHeader('SBB Font Light (Default)'),
+          SBBContentBox(
+            child: Column(
+              crossAxisAlignment: .start,
+              children: [
+                _TypographyShowcase('sbbTextStyle.xxLarge', sbbTextStyle.xxLarge),
+                _TypographyShowcase('sbbTextStyle.xLarge', sbbTextStyle.xLarge),
+                _TypographyShowcase('sbbTextStyle.large', sbbTextStyle.large),
+                _TypographyShowcase('sbbTextStyle.medium', sbbTextStyle.medium),
+                _TypographyShowcase('sbbTextStyle.small', sbbTextStyle.small),
+                _TypographyShowcase('sbbTextStyle.xSmall', sbbTextStyle.xSmall, isLastElement: true),
+              ],
+            ),
           ),
-        ),
-        const SizedBox(height: SBBSpacing.medium),
-        SBBListHeader('SBB Font Bold'),
-        SBBContentBox(
-          child: Column(
-            crossAxisAlignment: .start,
-            children: [
-              _TypographyShowcase('sbbTextStyle.xxLarge.boldStyle', sbbTextStyle.xxLarge.boldStyle),
-              _TypographyShowcase('sbbTextStyle.xLarge.boldStyle', sbbTextStyle.xLarge.boldStyle),
-              _TypographyShowcase('sbbTextStyle.large.boldStyle', sbbTextStyle.large.boldStyle),
-              _TypographyShowcase('sbbTextStyle.medium.boldStyle', sbbTextStyle.medium.boldStyle),
-              _TypographyShowcase('sbbTextStyle.small.boldStyle', sbbTextStyle.small.boldStyle),
-              _TypographyShowcase('sbbTextStyle.xSmall.boldStyle', sbbTextStyle.xSmall.boldStyle, isLastElement: true),
-            ],
+          const SizedBox(height: SBBSpacing.medium),
+          SBBListHeader('SBB Font Bold'),
+          SBBContentBox(
+            child: Column(
+              crossAxisAlignment: .start,
+              children: [
+                _TypographyShowcase('sbbTextStyle.xxLarge.boldStyle', sbbTextStyle.xxLarge.boldStyle),
+                _TypographyShowcase('sbbTextStyle.xLarge.boldStyle', sbbTextStyle.xLarge.boldStyle),
+                _TypographyShowcase('sbbTextStyle.large.boldStyle', sbbTextStyle.large.boldStyle),
+                _TypographyShowcase('sbbTextStyle.medium.boldStyle', sbbTextStyle.medium.boldStyle),
+                _TypographyShowcase('sbbTextStyle.small.boldStyle', sbbTextStyle.small.boldStyle),
+                _TypographyShowcase(
+                  'sbbTextStyle.xSmall.boldStyle',
+                  sbbTextStyle.xSmall.boldStyle,
+                  isLastElement: true,
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

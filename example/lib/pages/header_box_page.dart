@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_design_system_mobile_example/pages/scaffold/demo_page_scaffold.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 part 'header_box_page.floating.dart';
@@ -77,46 +78,47 @@ class DesignGuidelinePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final sbbToast = SBBToast.of(context);
-    return Column(
-      children: [
-        const SizedBox(height: SBBSpacing.medium),
-        const SBBListHeader('Default'),
-        SBBHeaderbox(
-          title: 'Title',
-          leadingIcon: SBBIcons.dog_small,
-          secondaryLabel: 'Subtext',
-          flap: SBBHeaderboxFlap(
-            title: 'Additional text or information',
-            leadingIcon: SBBIcons.sign_exclamation_point_small,
-            trailingIcon: SBBIcons.circle_information_small_small,
+    return DemoPageScaffold(
+      body: Column(
+        children: [
+          const SBBListHeader('Default'),
+          SBBHeaderbox(
+            title: 'Title',
+            leadingIcon: SBBIcons.dog_small,
+            secondaryLabel: 'Subtext',
+            flap: SBBHeaderboxFlap(
+              title: 'Additional text or information',
+              leadingIcon: SBBIcons.sign_exclamation_point_small,
+              trailingIcon: SBBIcons.circle_information_small_small,
+            ),
+            trailingWidget: SBBTertiaryButtonSmall(
+              labelText: 'Label',
+              iconData: SBBIcons.dog_small,
+              onPressed: () => sbbToast.show(titleText: 'Default pressed', bottom: 96.0),
+            ),
           ),
-          trailingWidget: SBBTertiaryButtonSmall(
-            labelText: 'Label',
-            iconData: SBBIcons.dog_small,
-            onPressed: () => sbbToast.show(titleText: 'Default pressed', bottom: 96.0),
+          const SizedBox(height: SBBSpacing.medium),
+          const SBBListHeader('Large'),
+          SBBHeaderbox.large(
+            title: 'Title',
+            leadingIcon: SBBIcons.dog_medium,
+            secondaryLabel: 'Subtext',
+            trailingWidget: SBBTertiaryButton(
+              iconData: SBBIcons.dog_small,
+              onPressed: () => sbbToast.show(titleText: 'Large pressed', bottom: 96.0),
+            ),
           ),
-        ),
-        const SizedBox(height: SBBSpacing.medium),
-        const SBBListHeader('Large'),
-        SBBHeaderbox.large(
-          title: 'Title',
-          leadingIcon: SBBIcons.dog_medium,
-          secondaryLabel: 'Subtext',
-          trailingWidget: SBBTertiaryButton(
-            iconData: SBBIcons.dog_small,
-            onPressed: () => sbbToast.show(titleText: 'Large pressed', bottom: 96.0),
+          const SizedBox(height: SBBSpacing.medium),
+          const SBBListHeader('Custom'),
+          const SBBHeaderbox.custom(
+            padding: .zero,
+            flap: SBBHeaderboxFlap.custom(
+              child: Center(child: Text('Choooooo!', style: SBBTextStyles.extraSmallBold)),
+            ),
+            child: Center(child: Text('🚂｡🚋｡🚋｡🚋｡🚋˙⊹⁺.')),
           ),
-        ),
-        const SizedBox(height: SBBSpacing.medium),
-        const SBBListHeader('Custom'),
-        const SBBHeaderbox.custom(
-          padding: .zero,
-          flap: SBBHeaderboxFlap.custom(
-            child: Center(child: Text('Choooooo!', style: SBBTextStyles.extraSmallBold)),
-          ),
-          child: Center(child: Text('🚂｡🚋｡🚋｡🚋｡🚋˙⊹⁺.')),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

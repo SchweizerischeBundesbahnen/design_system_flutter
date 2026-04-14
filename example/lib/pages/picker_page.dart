@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_design_system_mobile_example/pages/scaffold/demo_page_scaffold.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-
-import '../native_app.dart';
 
 class PickerPage extends StatefulWidget {
   const PickerPage({super.key});
@@ -30,12 +29,9 @@ class _PickerPageState extends State<PickerPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const .symmetric(vertical: SBBSpacing.medium, horizontal: SBBSpacing.xSmall),
-      child: Column(
+    return DemoPageScaffold(
+      body: Column(
         children: [
-          const ThemeModeSegmentedButton(),
-          const SizedBox(height: SBBSpacing.medium),
           const SBBListHeader('Picker input fields'),
           SBBContentBox(
             child: Column(

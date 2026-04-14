@@ -2,6 +2,7 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_design_system_mobile_example/pages/form_page.dart';
 import 'package:flutter_design_system_mobile_example/pages/illustration_page.dart';
+import 'package:flutter_design_system_mobile_example/pages/scaffold/theme_sliver_header_box.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
@@ -40,9 +41,15 @@ import 'pages/typography_page.dart';
 
 class AppState extends ChangeNotifier {
   bool isDarkModeOn = false;
+  SBBThemeContext themeContext = SBBThemeContext.sbb;
 
   void updateTheme(bool isDarkModeOn) {
     this.isDarkModeOn = isDarkModeOn;
+    notifyListeners();
+  }
+
+  void updateThemeContext(SBBThemeContext themeContext) {
+    this.themeContext = themeContext;
     notifyListeners();
   }
 }
@@ -58,8 +65,8 @@ class MyApp extends StatelessWidget {
         builder: (context, appState, _) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            theme: SBBTheme.light(),
-            darkTheme: SBBTheme.dark(),
+            theme: SBBTheme.light(themeContext: appState.themeContext),
+            darkTheme: SBBTheme.dark(themeContext: appState.themeContext),
             themeMode: appState.isDarkModeOn ? ThemeMode.dark : ThemeMode.light,
             localizationsDelegates: const [
               GlobalMaterialLocalizations.delegate,
@@ -81,27 +88,26 @@ class MyApp extends StatelessWidget {
   Widget _content() {
     return Builder(
       builder: (context) {
-        return SingleChildScrollView(
-          child: Padding(
-            padding: const .symmetric(horizontal: SBBSpacing.medium),
-            child: Column(
-              children: [
-                const Padding(
-                  padding: .symmetric(vertical: SBBSpacing.medium),
-                  child: ThemeModeSegmentedButton(),
-                ),
-                const SBBListHeader('Basics'),
-                _basics(context),
-                const SizedBox(height: SBBSpacing.medium),
-                const SBBListHeader('Elements'),
-                _elements(context),
-                const SizedBox(height: SBBSpacing.medium),
-                const SBBListHeader('Modules'),
-                _modules(context),
-                const SizedBox(height: SBBSpacing.xLarge),
-              ],
+        return CustomScrollView(
+          slivers: [
+            ThemeSliverHeaderbox(),
+            SliverPadding(
+              padding: const .symmetric(horizontal: SBBSpacing.medium),
+              sliver: SliverList.list(
+                children: [
+                  const SBBListHeader('Basics'),
+                  _basics(context),
+                  const SizedBox(height: SBBSpacing.medium),
+                  const SBBListHeader('Elements'),
+                  _elements(context),
+                  const SizedBox(height: SBBSpacing.medium),
+                  const SBBListHeader('Modules'),
+                  _modules(context),
+                  const SizedBox(height: SBBSpacing.xLarge),
+                ],
+              ),
             ),
-          ),
+          ],
         );
       },
     );
@@ -216,24 +222,6 @@ class _DemoPage extends StatelessWidget {
     return Scaffold(
       appBar: SBBHeaderSmall(titleText: title),
       body: child,
-    );
-  }
-}
-
-class ThemeModeSegmentedButton extends StatelessWidget {
-  const ThemeModeSegmentedButton({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return SBBSegmentedButton<bool>(
-      segments: [
-        SBBButtonSegment(value: false, leadingIconData: SBBIcons.sunshine_small),
-        SBBButtonSegment(value: true, leadingIconData: SBBIcons.moon_small),
-      ],
-      onSelectionChanged: (value) {
-        Provider.of<AppState>(context, listen: false).updateTheme(value);
-      },
-      selected: Provider.of<AppState>(context).isDarkModeOn,
     );
   }
 }

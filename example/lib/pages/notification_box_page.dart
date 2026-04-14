@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_design_system_mobile_example/pages/scaffold/demo_page_scaffold.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-
-import '../native_app.dart';
 
 const title = 'Title';
 const text =
@@ -17,125 +16,124 @@ class NotificationBoxPage extends StatefulWidget {
 class _NotificationBoxPage extends State<NotificationBoxPage> {
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: const .all(SBBSpacing.medium),
-      children: [
-        const ThemeModeSegmentedButton(),
-        const SizedBox(height: SBBSpacing.medium),
-        const SBBListHeader('Alert'),
-        SBBContentBox(
-          padding: const .all(SBBSpacing.medium),
-          child: Column(
-            children: [
-              SBBNotificationBox.alert(title: title, text: text, onTap: () {}),
-              const SizedBox(height: SBBSpacing.medium),
-              SBBNotificationBox.alert(text: text),
-              const SizedBox(height: SBBSpacing.medium),
-              SBBNotificationBox.alert(
-                title: title,
-                text: text,
-                onTap: () {},
-                hasIcon: false,
-                isCloseable: false,
-                detailsIcon: SBBIcons.arrows_circle_small,
-              ),
-              const SizedBox(height: SBBSpacing.medium),
-              SBBNotificationBox.alert(
-                text: text,
-                onTap: () {},
-                hasIcon: false,
-                isCloseable: false,
-                detailsIcon: SBBIcons.arrows_circle_small,
-              ),
-              const SizedBox(height: SBBSpacing.medium),
-            ],
+    return DemoPageScaffold(
+      body: Column(
+        children: [
+          const SBBListHeader('Alert'),
+          SBBContentBox(
+            padding: const .all(SBBSpacing.medium),
+            child: Column(
+              children: [
+                SBBNotificationBox.alert(title: title, text: text, onTap: () {}),
+                const SizedBox(height: SBBSpacing.medium),
+                SBBNotificationBox.alert(text: text),
+                const SizedBox(height: SBBSpacing.medium),
+                SBBNotificationBox.alert(
+                  title: title,
+                  text: text,
+                  onTap: () {},
+                  hasIcon: false,
+                  isCloseable: false,
+                  detailsIcon: SBBIcons.arrows_circle_small,
+                ),
+                const SizedBox(height: SBBSpacing.medium),
+                SBBNotificationBox.alert(
+                  text: text,
+                  onTap: () {},
+                  hasIcon: false,
+                  isCloseable: false,
+                  detailsIcon: SBBIcons.arrows_circle_small,
+                ),
+                const SizedBox(height: SBBSpacing.medium),
+              ],
+            ),
           ),
-        ),
-        const SBBListHeader('Warning'),
-        SBBContentBox(
-          padding: const .all(SBBSpacing.medium),
-          child: Column(
-            children: [
-              SBBNotificationBox.warning(title: title, text: text, onTap: () {}),
-              const SizedBox(height: SBBSpacing.medium),
-              SBBNotificationBox.warning(text: text),
-              const SizedBox(height: SBBSpacing.medium),
-              SBBNotificationBox.warning(
-                title: title,
-                text: text,
-                onTap: () {},
-                hasIcon: false,
-                isCloseable: false,
-                detailsIcon: SBBIcons.arrows_circle_small,
-              ),
-              const SizedBox(height: SBBSpacing.medium),
-              SBBNotificationBox.warning(
-                text: text,
-                onTap: () {},
-                hasIcon: false,
-                isCloseable: false,
-                detailsIcon: SBBIcons.arrows_circle_small,
-              ),
-            ],
+          const SBBListHeader('Warning'),
+          SBBContentBox(
+            padding: const .all(SBBSpacing.medium),
+            child: Column(
+              children: [
+                SBBNotificationBox.warning(title: title, text: text, onTap: () {}),
+                const SizedBox(height: SBBSpacing.medium),
+                SBBNotificationBox.warning(text: text),
+                const SizedBox(height: SBBSpacing.medium),
+                SBBNotificationBox.warning(
+                  title: title,
+                  text: text,
+                  onTap: () {},
+                  hasIcon: false,
+                  isCloseable: false,
+                  detailsIcon: SBBIcons.arrows_circle_small,
+                ),
+                const SizedBox(height: SBBSpacing.medium),
+                SBBNotificationBox.warning(
+                  text: text,
+                  onTap: () {},
+                  hasIcon: false,
+                  isCloseable: false,
+                  detailsIcon: SBBIcons.arrows_circle_small,
+                ),
+              ],
+            ),
           ),
-        ),
-        const SBBListHeader('Success'),
-        SBBContentBox(
-          padding: const .all(SBBSpacing.medium),
-          child: Column(
-            children: [
-              SBBNotificationBox.success(title: title, text: text, onTap: () {}),
-              const SizedBox(height: SBBSpacing.medium),
-              SBBNotificationBox.success(text: text),
-              const SizedBox(height: SBBSpacing.medium),
-              SBBNotificationBox.success(
-                title: title,
-                text: text,
-                onTap: () {},
-                hasIcon: false,
-                isCloseable: false,
-                detailsIcon: SBBIcons.arrows_circle_small,
-              ),
-              const SizedBox(height: SBBSpacing.medium),
-              SBBNotificationBox.success(
-                text: text,
-                onTap: () {},
-                hasIcon: false,
-                isCloseable: false,
-                detailsIcon: SBBIcons.arrows_circle_small,
-              ),
-            ],
+          const SBBListHeader('Success'),
+          SBBContentBox(
+            padding: const .all(SBBSpacing.medium),
+            child: Column(
+              children: [
+                SBBNotificationBox.success(title: title, text: text, onTap: () {}),
+                const SizedBox(height: SBBSpacing.medium),
+                SBBNotificationBox.success(text: text),
+                const SizedBox(height: SBBSpacing.medium),
+                SBBNotificationBox.success(
+                  title: title,
+                  text: text,
+                  onTap: () {},
+                  hasIcon: false,
+                  isCloseable: false,
+                  detailsIcon: SBBIcons.arrows_circle_small,
+                ),
+                const SizedBox(height: SBBSpacing.medium),
+                SBBNotificationBox.success(
+                  text: text,
+                  onTap: () {},
+                  hasIcon: false,
+                  isCloseable: false,
+                  detailsIcon: SBBIcons.arrows_circle_small,
+                ),
+              ],
+            ),
           ),
-        ),
-        const SBBListHeader('Information'),
-        SBBContentBox(
-          padding: const .all(SBBSpacing.medium),
-          child: Column(
-            children: [
-              SBBNotificationBox.information(title: title, onTap: () {}, text: text),
-              const SizedBox(height: SBBSpacing.medium),
-              SBBNotificationBox.information(text: text),
-              const SizedBox(height: SBBSpacing.medium),
-              SBBNotificationBox.information(
-                title: title,
-                text: text,
-                onTap: () {},
-                hasIcon: false,
-                isCloseable: false,
-                detailsIcon: SBBIcons.arrows_circle_small,
-              ),
-              const SizedBox(height: SBBSpacing.medium),
-              SBBNotificationBox.information(
-                text: text,
-                onTap: () {},
-                hasIcon: false,
-                isCloseable: false,
-                detailsIcon: SBBIcons.arrows_circle_small,
-              ),
-            ],
+          const SBBListHeader('Information'),
+          SBBContentBox(
+            padding: const .all(SBBSpacing.medium),
+            child: Column(
+              children: [
+                SBBNotificationBox.information(title: title, onTap: () {}, text: text),
+                const SizedBox(height: SBBSpacing.medium),
+                SBBNotificationBox.information(text: text),
+                const SizedBox(height: SBBSpacing.medium),
+                SBBNotificationBox.information(
+                  title: title,
+                  text: text,
+                  onTap: () {},
+                  hasIcon: false,
+                  isCloseable: false,
+                  detailsIcon: SBBIcons.arrows_circle_small,
+                ),
+                const SizedBox(height: SBBSpacing.medium),
+                SBBNotificationBox.information(
+                  text: text,
+                  onTap: () {},
+                  hasIcon: false,
+                  isCloseable: false,
+                  detailsIcon: SBBIcons.arrows_circle_small,
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
