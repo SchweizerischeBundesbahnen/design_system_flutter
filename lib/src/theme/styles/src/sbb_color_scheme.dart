@@ -46,36 +46,6 @@ class SBBColorScheme {
     labelColor: SBBColors.graphite,
   );
 
-  factory SBBColorScheme.offBrand() => SBBColorScheme.$default(brightness: .light).copyWith(
-    primaryColor: SBBColors.royal,
-    primary85Color: SBBColors.royal85,
-    primary125Color: SBBColors.royal125,
-    primary150Color: SBBColors.royal150,
-  );
-
-  factory SBBColorScheme.offBrandDark() => SBBColorScheme.$default(brightness: .dark).copyWith(
-    primaryColor: SBBColors.royalDark,
-    primary85Color: SBBColors.royal85Dark,
-    primary125Color: SBBColors.royal125Dark,
-    primary150Color: SBBColors.royal150Dark,
-  );
-
-  factory SBBColorScheme.safety() => SBBColorScheme.$default(brightness: .light).copyWith(
-    primaryColor: SBBColors.royal,
-    primary85Color: SBBColors.royal85,
-    primary125Color: SBBColors.royal125,
-    primary150Color: SBBColors.royal150,
-    brandColor: SBBColors.metal,
-  );
-
-  factory SBBColorScheme.safetyDark() => SBBColorScheme.$default(brightness: .dark).copyWith(
-    primaryColor: SBBColors.royalDark,
-    primary85Color: SBBColors.royal85Dark,
-    primary125Color: SBBColors.royal125Dark,
-    primary150Color: SBBColors.royal150Dark,
-    brandColor: SBBColors.metal,
-  );
-
   final Color primaryColor;
   final Color? primary85Color;
   final Color? primary125Color;

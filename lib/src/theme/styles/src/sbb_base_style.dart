@@ -20,16 +20,6 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
     colorScheme: brightness == .light ? SBBColorScheme.sbb() : SBBColorScheme.sbbDark(),
   );
 
-  factory SBBBaseStyle.offBrand({required Brightness brightness}) => SBBBaseStyle.fromColorScheme(
-    brightness: brightness,
-    colorScheme: brightness == .light ? SBBColorScheme.offBrand() : SBBColorScheme.offBrandDark(),
-  );
-
-  factory SBBBaseStyle.safety({required Brightness brightness}) => SBBBaseStyle.fromColorScheme(
-    brightness: brightness,
-    colorScheme: brightness == .light ? SBBColorScheme.safety() : SBBColorScheme.safetyDark(),
-  );
-
   factory SBBBaseStyle.fromColorScheme({required Brightness brightness, required SBBColorScheme colorScheme}) {
     final defaultTextTheme = SBBTextTheme.$default(colorScheme: colorScheme);
     return SBBBaseStyle(
