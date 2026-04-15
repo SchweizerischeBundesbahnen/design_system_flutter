@@ -7,16 +7,16 @@ import 'sliver/sliver_pinned_floating_widget.dart';
 ///
 /// It will make sure that the scroll view has enough space to fully expand and contract the headerbox. Otherwise, you
 /// may face issues with the headerbox stopping halfway.
-class SBBSliverFloatingHeaderBoxSpacer extends LeafRenderObjectWidget {
-  const SBBSliverFloatingHeaderBoxSpacer({super.key});
+class SBBSliverHeaderBoxSpacer extends LeafRenderObjectWidget {
+  const SBBSliverHeaderBoxSpacer({super.key});
 
   @override
   RenderObject createRenderObject(BuildContext context) {
-    return _RenderSBBSliverFloatingHeaderBoxSpacer();
+    return _RenderSBBSliverHeaderBoxSpacer();
   }
 }
 
-class _RenderSBBSliverFloatingHeaderBoxSpacer extends RenderSliver {
+class _RenderSBBSliverHeaderBoxSpacer extends RenderSliver {
   @override
   void performLayout() {
     final firstSibling = _header();

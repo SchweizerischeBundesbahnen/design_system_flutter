@@ -61,7 +61,7 @@ import 'sliver/sliver_pinned_floating_widget.dart';
 ///  * [SBBHeaderBoxStyle], for customizing the appearance.
 ///  * [SBBHeaderBoxThemeData], for setting header box theme properties across your app.
 ///  * [SBBCascadeColumn] and [SBBContractible], for ways to build contracting items.
-///  * [SBBSliverFloatingHeaderBoxSpacer], for a widget that should always come last in the list of slivers.
+///  * [SBBSliverHeaderBoxSpacer], for a widget that should always come last in the list of slivers.
 ///  * [Design Guidelines](https://digital.sbb.ch/de/design-system/mobile/components/header-box)
 ///  * [Figma design specs](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?m=auto&node-id=192-861&t=rQTLXnChqHrpKLB4-1) (internal only)
 ///
@@ -245,7 +245,7 @@ class SBBSliverHeaderBox extends StatelessWidget {
 ///  * [SBBHeaderBoxStyle], for customizing the appearance.
 ///  * [SBBHeaderBoxThemeData], for setting header box theme properties across your app.
 ///  * [SBBCascadeColumn] and [SBBContractible], for ways to build contracting items.
-///  * [SBBSliverFloatingHeaderBoxSpacer], for a widget that should always come last in the list of slivers.
+///  * [SBBSliverHeaderBoxSpacer], for a widget that should always come last in the list of slivers.
 ///  * [Design Guidelines](https://digital.sbb.ch/de/design-system/mobile/components/header-box)
 ///  * [Figma design specs](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?m=auto&node-id=192-861&t=rQTLXnChqHrpKLB4-1) (internal only)
 ///

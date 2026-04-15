@@ -47,7 +47,7 @@ class _FloatingPageState extends State<FloatingPage> {
                 },
               ),
             ),
-            const SBBSliverFloatingHeaderBoxSpacer(),
+            const SBBSliverHeaderBoxSpacer(),
           ],
         ),
       ),

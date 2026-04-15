@@ -6,15 +6,15 @@ class DefaultSBBHeaderBoxThemeData extends SBBHeaderBoxThemeData {
     : super(
         style: SBBHeaderBoxStyle.$default(baseStyle: baseStyle),
         largeStyle: SBBHeaderBoxStyle.$default(baseStyle: baseStyle).copyWith(
-            titleSubtitleGap: SBBSpacing.xxSmall,
-            padding: .all(SBBSpacing.medium),
+          titleSubtitleGap: SBBSpacing.xxSmall,
+          padding: .all(SBBSpacing.medium),
         ),
         flapStyle: SBBHeaderBoxFlapStyle(
           iconSize: 20,
           labelForegroundColor: baseStyle.themeValue(SBBColors.black, SBBColors.white),
           leadingForegroundColor: baseStyle.themeValue(SBBColors.black, SBBColors.white),
           trailingForegroundColor: baseStyle.themeValue(SBBColors.black, SBBColors.white),
-          labelTextStyle: SBBTextStyles.smallLight,
+          labelTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallLight),
           padding: EdgeInsets.fromLTRB(SBBSpacing.medium, SBBSpacing.xSmall, SBBSpacing.medium, SBBSpacing.xSmall),
         ),
       );

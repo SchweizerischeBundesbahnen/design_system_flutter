@@ -116,6 +116,7 @@ class DesignGuidelinePage extends StatelessWidget {
               label: Center(child: Text('Choooooo!', style: SBBTextStyles.extraSmallBold)),
             ),
             title: Center(child: Text('🚂｡🚋｡🚋｡🚋｡🚋˙⊹⁺.')),
+            isLoading: true,
           ),
         ],
       ),

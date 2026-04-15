@@ -162,7 +162,7 @@ class SBBTheme {
     SBBControlStyles? controlStyles,
     SBBDecoratedTextThemeData? decoratedTextTheme,
     SBBDropdownThemeData? dropdownTheme,
-    SBBHeaderBoxThemeData? headerBoxStyle,
+    SBBHeaderBoxThemeData? headerBoxTheme,
     SBBInputDecorationThemeData? inputDecorationTheme,
     SBBListHeaderThemeData? listHeaderTheme,
     SBBListItemThemeData? listItemTheme,
@@ -194,7 +194,7 @@ class SBBTheme {
     controlStyles: controlStyles,
     decoratedTextTheme: decoratedTextTheme,
     dropdownTheme: dropdownTheme,
-    headerBoxTheme: headerBoxStyle,
+    headerBoxTheme: headerBoxTheme,
     inputDecorationTheme: inputDecorationTheme,
     listHeaderTheme: listHeaderTheme,
     listItemTheme: listItemTheme,
@@ -290,8 +290,8 @@ class SBBTheme {
     final defaultHeaderTheme = DefaultSBBHeaderThemeData(baseStyle: mergedBaseStyle);
     final mergedHeaderTheme = defaultHeaderTheme.merge(headerTheme);
 
-    final defaultHeaderBoxStyle = DefaultSBBHeaderBoxThemeData(baseStyle: mergedBaseStyle);
-    final mergedHeaderBoxTheme = defaultHeaderBoxStyle.merge(headerBoxTheme);
+    final defaultHeaderBoxTheme = DefaultSBBHeaderBoxThemeData(baseStyle: mergedBaseStyle);
+    final mergedHeaderBoxTheme = defaultHeaderBoxTheme.merge(headerBoxTheme);
 
     final defaultListHeaderTheme = DefaultSBBListHeaderThemeData(mergedBaseStyle);
     final mergedListHeaderTheme = defaultListHeaderTheme.merge(listHeaderTheme);
