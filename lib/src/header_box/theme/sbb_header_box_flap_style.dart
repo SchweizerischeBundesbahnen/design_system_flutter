@@ -1,11 +1,17 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
-/// Defines the visual properties of the "flap" area of the header box.
+/// Defines the visual properties of [SBBHeaderBoxFlap].
 ///
-/// This can be used to theme the leading / trailing icons and text that
-/// appear on the flap.
+/// Use this class in combination with [SBBHeaderBoxThemeData] to customize
+/// the appearance of header box flaps throughout your app or for specific
+/// widget subtrees.
+///
+/// See also:
+/// * [SBBHeaderBoxFlap], the widget that uses this style.
+/// * [SBBHeaderBoxThemeData], which applies this style theme-wide.
 @immutable
 class SBBHeaderBoxFlapStyle {
   const SBBHeaderBoxFlapStyle({
@@ -19,28 +25,43 @@ class SBBHeaderBoxFlapStyle {
     this.padding,
   });
 
-  /// Color used for the leading element on the flap (e.g. icon).
+  /// The color of the leading flap content.
+  ///
+  /// This affects the icon or text color of [SBBHeaderBoxFlap.leading].
   final Color? leadingForegroundColor;
 
-  /// Color used for the trailing element on the flap (e.g. icon / text).
+  /// The color of the trailing flap content.
+  ///
+  /// This affects the icon or text color of [SBBHeaderBoxFlap.trailing].
   final Color? trailingForegroundColor;
 
-  /// General foreground color for the flap (e.g. default icon / text color).
+  /// The color of the flap label.
+  ///
+  /// This color is typically used instead of the color of the [labelTextStyle].
   final Color? labelForegroundColor;
 
-  /// Text style used for the common flap label.
+  /// The text style for the flap label.
+  ///
+  /// Applies to text descendants of [SBBHeaderBoxFlap.label].
+  ///
+  /// The color of the [labelTextStyle] is typically not used directly, the
+  /// [labelForegroundColor] is used instead.
   final TextStyle? labelTextStyle;
 
-  /// Text style used for the leading text on the flap.
+  /// The text style for the leading flap content.
+  ///
+  /// Applies to text descendants of [SBBHeaderBoxFlap.leading].
   final TextStyle? leadingTextStyle;
 
-  /// Text style used for the trailing text on the flap.
+  /// The text style for the trailing flap content.
+  ///
+  /// Applies to text descendants of [SBBHeaderBoxFlap.trailing].
   final TextStyle? trailingTextStyle;
 
-  /// Icon size for leading / trailing icons on the flap.
+  /// The icon size used for leading and trailing flap icons.
   final double? iconSize;
 
-  /// Padding around the flap content.
+  /// The padding around the flap content.
   final EdgeInsetsGeometry? padding;
 
   SBBHeaderBoxFlapStyle copyWith({

@@ -29,6 +29,11 @@ class SBBHeaderBoxThemeData extends ThemeExtension<SBBHeaderBoxThemeData> with D
   /// If [largeStyle] is null, then this theme doesn't override the style.
   final SBBHeaderBoxStyle? largeStyle;
 
+  /// Overrides for the header box's flap style.
+  ///
+  /// Non-null values override the default values.
+  ///
+  /// If [style] is null, then this theme doesn't override the style.
   final SBBHeaderBoxFlapStyle? flapStyle;
 
   @override

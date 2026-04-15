@@ -80,7 +80,7 @@ class _FloatingPageState extends State<FloatingPage> {
   Widget _crossfadeExample(BuildContext context) {
     final key = GlobalKey();
     final colorScheme = Theme.of(context).sbbBaseStyle.colorScheme;
-    return SBBContractible.crossfade(
+    return SBBContractibleCrossfade(
       // The contracted child is simply a summarized version of the origin and destination.
       contractedChild: Material(
         color: SBBColors.transparent,
@@ -171,6 +171,7 @@ class _FloatingPageState extends State<FloatingPage> {
 
   SBBContractible _contractibleExample(SBBToast sbbToast) {
     return SBBContractible(
+      clipBehavior: .none,
       behavior: pushMode ? .displace : .clip,
       builder:
           // We can react to the current state of expansion and set an opacity accordingly.
@@ -229,7 +230,7 @@ class _FloatingPageState extends State<FloatingPage> {
           ),
         ),
       ),
-      SBBContractible.custom(
+      SBBContractible(
         behavior: .center,
         child: Center(child: SBBListItem(titleText: 'Stay center', onTap: null)),
       ),

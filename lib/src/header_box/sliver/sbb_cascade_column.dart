@@ -17,8 +17,11 @@ part 'sbb_cascade_column.renderbox.dart';
 /// It lays out its children the same way as a [Column] with [MainAxisSize.min],
 /// but contracts them one by one from the bottom to the top as it shrinks in size.
 ///
-/// Only use this widget for sophisticated effects or when dealing with a contractible flap.
-/// In all other cases, it is easier to use one of the constructors in [SBBSliverHeaderBox].
+/// Children are resized within the bounds of their reported intrinsic sizes. This means that
+/// this widget will behave the same as a [Column] unless [SBBContractible] is used.
+///
+/// Only use this widget for sophisticated effects.
+/// In many cases it is enough to set a contractible body in [SBBSliverHeaderBox].
 ///
 /// Example:
 ///
@@ -35,7 +38,7 @@ part 'sbb_cascade_column.renderbox.dart';
 ///       child: Text('This one will go away'),
 ///     ),
 ///     SBBContractible(
-///       behavior: SBBContractionBehavior.displace,
+///       behavior: .displace,
 ///       child: Text('This one will too, but in a different way!'),
 ///     )
 ///   ],
@@ -52,6 +55,10 @@ class SBBCascadeColumn extends StatefulWidget {
     super.key,
     required this.children,
   });
+
+  /// The child widgets of this cascade.
+  ///
+  /// Children can make use of [SBBContractible], but don't have to.
 
   final List<Widget> children;
 
