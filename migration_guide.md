@@ -4,6 +4,7 @@ V5 introduces a lot of breaking changes to allow for a more flexible and modern 
 
 ## SBBTheme
 
+* added `themeContext` to get theming for off-brand or safety-relevant apps. Example usage: `SBBTheme.light(context: .offBrand)`
 * removed `brightness` from `createTheme` and `raw`. Use `SBBBaseStyle.brightness`
 * removed unused field `boldFont`
 * moved `SBBTextTheme` to `SBBBaseStyle`. Can still be accessed with helper method `Theme.of(context).sbbTextTheme`

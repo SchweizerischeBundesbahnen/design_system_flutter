@@ -70,7 +70,10 @@ class SBBTheme {
 
   /// Creates the base light [ThemeData].
   ///
-  /// Change [themeContext] if off-brand or safety theming is needed.
+  /// Use [themeContext] if your application is set in an off-brand or safety related context.
+  ///
+  /// Use optional parameters (e.g. [primaryButtonTheme]) to override individual component theme data.
+  /// The non null fields will overwrite default values.
   static ThemeData light({
     SBBThemeContext themeContext = .sbb,
     SBBBaseStyle? baseStyle,
@@ -140,7 +143,10 @@ class SBBTheme {
 
   /// Creates the base dark [ThemeData].
   ///
-  /// Change [themeContext] if off-brand or safety theming is needed.
+  /// Use [themeContext] if your application is set in an off-brand or safety related context.
+  ///
+  /// Use optional parameters (e.g. [primaryButtonTheme]) to override individual component theme data.
+  /// The non null fields will overwrite default values.
   static ThemeData dark({
     SBBThemeContext themeContext = .sbb,
     SBBBaseStyle? baseStyle,
@@ -208,7 +214,10 @@ class SBBTheme {
 
   /// Creates the base [ThemeData] with the provided [brightness].
   ///
-  /// Change [themeContext] if off-brand or safety theming is needed.
+  /// Use [themeContext] if your application is set in an off-brand or safety related context.
+  ///
+  /// Use optional parameters (e.g. [primaryButtonTheme]) to override individual component theme data.
+  /// The non null fields will overwrite default values.
   static ThemeData createTheme({
     required Brightness brightness,
     SBBThemeContext themeContext = .sbb,
