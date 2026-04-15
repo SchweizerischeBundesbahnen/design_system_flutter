@@ -54,7 +54,7 @@ class HeaderBoxTest extends StatelessWidget {
           flap: SBBHeaderBoxFlap(
             label: Center(child: Text('Custom Flappy!', style: SBBTextStyles.extraSmallBold)),
           ),
-          title: Row(
+          body: Row(
             mainAxisAlignment: .spaceEvenly,
             children: [
               Container(color: SBBColors.red, width: 25, height: 25),
@@ -123,7 +123,7 @@ class FloatingHeaderboxTest extends StatelessWidget {
                   trailingIconData: SBBIcons.circle_information_small,
                 ),
                 config: SBBSliverHeaderBoxConfig(flapMode: .hideable),
-                title: SBBCascadeColumn(
+                body: SBBCascadeColumn(
                   children: [
                     Text('Static'),
                     SBBContractionListener(
@@ -173,7 +173,7 @@ class FloatingHeaderboxWithUpdateTest extends StatelessWidget {
                     config: SBBSliverHeaderBoxConfig(
                       flapMode: .hideable,
                     ),
-                    title: SBBCascadeColumn(
+                    body: SBBCascadeColumn(
                       children: [
                         SBBContractibleCrossfade(
                           contractedChild: SizedBox(height: 50, child: Text("Contracted")),
