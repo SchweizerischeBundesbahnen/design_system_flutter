@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_design_system_mobile_example/pages/scaffold/demo_page_scaffold.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 class AutocompletionPage extends StatefulWidget {
@@ -38,8 +39,9 @@ class AutocompletionPageState extends State<AutocompletionPage> {
   @override
   Widget build(BuildContext context) {
     final style = Theme.of(context).sbbBaseStyle;
-    return SingleChildScrollView(
-      child: Container(
+    return DemoPageScaffold(
+      body: Container(
+        margin: .only(top: SBBSpacing.large),
         color: style.themeValue(SBBColors.white, SBBColors.charcoal),
         child: _autocompletion,
       ),

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_design_system_mobile_example/pages/scaffold/demo_page_scaffold.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-
-import '../native_app.dart';
 
 class ColorPage extends StatelessWidget {
   const ColorPage({super.key});
@@ -9,22 +8,21 @@ class ColorPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final isLight = Theme.of(context).brightness == .light;
-    return ListView(
-      children: [
-        Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(
-            SBBSpacing.medium,
-            SBBSpacing.medium,
-            SBBSpacing.medium,
-            SBBSpacing.xSmall,
+    return DemoPageScaffold(
+      body: Column(
+        children: [
+          _ColorShowcase(title: 'Colors', colorEntries: _colors),
+          _ColorShowcase(
+            title: 'Additional colors${isLight ? '' : ' [dark]'}',
+            colorEntries: _additionalColors(context),
           ),
-          child: ThemeModeSegmentedButton(),
-        ),
-        _ColorShowcase(title: 'Colors', colorEntries: _colors),
-        _ColorShowcase(title: 'Additional colors${isLight ? '' : ' [dark]'}', colorEntries: _additionalColors(context)),
-        _ColorShowcase(title: 'Functional colors${isLight ? '' : ' [dark]'}', colorEntries: _functionalColors(context)),
-        _ColorShowcase(title: 'Off brand / Safety colors', colorEntries: _offBrandColors),
-      ],
+          _ColorShowcase(
+            title: 'Functional colors${isLight ? '' : ' [dark]'}',
+            colorEntries: _functionalColors(context),
+          ),
+          _ColorShowcase(title: 'Off brand / Safety colors', colorEntries: _offBrandColors),
+        ],
+      ),
     );
   }
 
@@ -50,7 +48,7 @@ class _ColorShowcase extends StatelessWidget {
         GridView.builder(
           physics: const NeverScrollableScrollPhysics(),
           shrinkWrap: true,
-          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 160.0),
+          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 150.0),
           itemCount: colorEntries.length,
           itemBuilder: (BuildContext context, index) {
             final colorEntry = colorEntries[index];

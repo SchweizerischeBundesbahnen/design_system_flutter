@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_design_system_mobile_example/pages/scaffold/demo_page_scaffold.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-
-import '../native_app.dart';
 
 class IconPage extends StatelessWidget {
   const IconPage({super.key});
@@ -9,12 +8,9 @@ class IconPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final sbbToast = SBBToast.of(context);
-    return SingleChildScrollView(
-      padding: const .all(SBBSpacing.medium),
-      child: Column(
+    return DemoPageScaffold(
+      body: Column(
         children: [
-          const ThemeModeSegmentedButton(),
-          const SizedBox(height: SBBSpacing.medium),
           const SBBListHeader('Small Icons'),
           _IconShowCase(icons: SBBIconsIndex.iconsSmall, iconSize: sbbIconSizeSmall, sbbToast: sbbToast),
           const SizedBox(height: SBBSpacing.medium),

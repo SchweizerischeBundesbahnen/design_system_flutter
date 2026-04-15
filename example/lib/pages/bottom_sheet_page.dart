@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_design_system_mobile_example/pages/scaffold/demo_page_scaffold.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-
-import '../native_app.dart';
 
 class BottomSheetPage extends StatefulWidget {
   const BottomSheetPage({super.key});
@@ -16,86 +15,74 @@ class _BottomSheetPageState extends State<BottomSheetPage> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        SBBSliverHeaderbox.custom(
-          child: Column(
-            spacing: SBBSpacing.medium,
-            children: [
-              ThemeModeSegmentedButton(),
-              const SBBListHeader('Settings'),
-              ...SBBListItem.divideListItems(
-                context: context,
-                items: [
-                  SBBCheckboxListItem(
-                    value: _showCloseButton,
-                    titleText: 'Show close button',
-                    onChanged: (value) {
-                      setState(() {
-                        if (value != null) {
-                          _showCloseButton = value;
-                        }
-                      });
-                    },
-                  ),
-                  SBBCheckboxListItem(
-                    value: _customBackgroundColor,
-                    titleText: 'Custom background color',
-                    onChanged: (value) {
-                      setState(() {
-                        if (value != null) {
-                          _customBackgroundColor = value;
-                        }
-                      });
-                    },
-                  ),
-                ],
+    return DemoPageScaffold(
+      componentConfig: Column(
+        children: [
+          ...SBBListItem.divideListItems(
+            context: context,
+            items: [
+              SBBCheckboxListItem(
+                value: _showCloseButton,
+                titleText: 'Show close button',
+                onChanged: (value) {
+                  setState(() {
+                    if (value != null) {
+                      _showCloseButton = value;
+                    }
+                  });
+                },
+              ),
+              SBBCheckboxListItem(
+                value: _customBackgroundColor,
+                titleText: 'Custom background color',
+                onChanged: (value) {
+                  setState(() {
+                    if (value != null) {
+                      _customBackgroundColor = value;
+                    }
+                  });
+                },
               ),
             ],
           ),
-        ),
-        SliverPadding(
-          padding: EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall).copyWith(bottom: SBBSpacing.xLarge),
-          sliver: SliverList.list(
-            children: [
-              const SizedBox(height: SBBSpacing.medium),
-              const SBBListHeader('Modal Examples'),
-              _ExampleCard(
-                title: 'Simple (Content Size)',
-                description: 'Does not fill height, only the size of the bottom sheet itself',
-                onPressed: () => _showSimpleExample(context),
-              ),
-              const SizedBox(height: SBBSpacing.medium),
-              _ExampleCard(
-                title: 'Half Height',
-                description: 'Expand to fill half of the screen height',
-                onPressed: () => _showHalfHeightExample(context),
-              ),
-              const SizedBox(height: SBBSpacing.medium),
-              _ExampleCard(
-                title: 'With Text Input',
-                description: 'Expand to 9/16 with SBBTextInput to test keyboard interaction',
-                onPressed: () => _showTextInputExample(context),
-              ),
-              const SizedBox(height: SBBSpacing.medium),
-              _ExampleCard(
-                title: 'Custom Sliver (Scroll Controlled)',
-                description: 'Expand with CustomScrollView and isScrollControlled: true',
-                onPressed: () => _showCustomSliverExample(context),
-              ),
-            ],
+        ],
+      ),
+      body: Column(
+        children: [
+          const SizedBox(height: SBBSpacing.medium),
+          const SBBListHeader('Modal Examples'),
+          _ExampleCard(
+            title: 'Simple (Content Size)',
+            description: 'Does not fill height, only the size of the bottom sheet itself',
+            onPressed: () => _showSimpleExample(context),
           ),
-        ),
-      ],
+          const SizedBox(height: SBBSpacing.medium),
+          _ExampleCard(
+            title: 'Half Height',
+            description: 'Expand to fill half of the screen height',
+            onPressed: () => _showHalfHeightExample(context),
+          ),
+          const SizedBox(height: SBBSpacing.medium),
+          _ExampleCard(
+            title: 'With Text Input',
+            description: 'Expand to 9/16 with SBBTextInput to test keyboard interaction',
+            onPressed: () => _showTextInputExample(context),
+          ),
+          const SizedBox(height: SBBSpacing.medium),
+          _ExampleCard(
+            title: 'Custom Sliver (Scroll Controlled)',
+            description: 'Expand with CustomScrollView and isScrollControlled: true',
+            onPressed: () => _showCustomSliverExample(context),
+          ),
+        ],
+      ),
     );
   }
 
   void _showSimpleExample(BuildContext context) {
     showSBBBottomSheet(
       context: context,
-      // leadingIconData: SBBIcons.three_adults_small,
       trailingIconData: SBBIcons.chevron_small_up_circle_small,
-      // titleText: 'Simple Bottom Sheet',
       showCloseButton: _showCloseButton,
       style: SBBBottomSheetStyle(
         backgroundColor: _customBackgroundColor ? SBBColors.peach : null,

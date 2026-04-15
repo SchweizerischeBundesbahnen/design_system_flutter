@@ -1,34 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_design_system_mobile_example/pages/scaffold/demo_page_scaffold.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-
-import '../native_app.dart';
 
 const int _kNumberPages = 5;
 
-class PaginatorPage extends StatelessWidget {
+class PaginatorPage extends StatefulWidget {
   const PaginatorPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SBBHeaderbox.custom(child: ThemeModeSegmentedButton()),
-        Expanded(
-          child: PaginatorView(),
-        ),
-      ],
-    );
-  }
+  State<PaginatorPage> createState() => _PaginatorPageState();
 }
 
-class PaginatorView extends StatefulWidget {
-  const PaginatorView({super.key});
-
-  @override
-  State<PaginatorView> createState() => _PaginatorViewState();
-}
-
-class _PaginatorViewState extends State<PaginatorView> {
+class _PaginatorPageState extends State<PaginatorPage> {
   late int currentPage;
 
   @override
@@ -39,31 +22,42 @@ class _PaginatorViewState extends State<PaginatorView> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const .symmetric(vertical: 48.0, horizontal: SBBSpacing.medium),
-      child: Column(
+    return DemoPageScaffold(
+      componentConfig: Padding(
+        padding: const .all(SBBSpacing.xSmall),
+        child: Row(
+          mainAxisAlignment: .center,
+          spacing: SBBSpacing.medium,
+          children: [
+            SBBTertiaryButtonSmall(
+              iconData: SBBIcons.arrow_left_small,
+              labelText: 'Previous',
+              onPressed: () {
+                if (currentPage > 0) {
+                  setState(() => currentPage--);
+                }
+              },
+            ),
+            SBBTertiaryButtonSmall(
+              iconData: SBBIcons.arrow_right_small,
+              labelText: 'Next',
+              onPressed: () {
+                if (currentPage < _kNumberPages - 1) {
+                  setState(() => currentPage++);
+                }
+              },
+            ),
+          ],
+        ),
+      ),
+      body: Column(
         children: [
           _LabeledSBBPaginator(label: 'Default', currentPage: currentPage),
-          Expanded(
-            child: Stack(
-              alignment: .bottomCenter,
-              children: [
-                PageView(
-                  onPageChanged: _changeCurrentPage,
-                  children: List<Widget>.generate(_kNumberPages, (int index) => _IndexedTextPage(pageIndex: index)),
-                ),
-                _LabeledSBBPaginator(label: 'Floating', currentPage: currentPage, isFloating: true),
-              ],
-            ),
-          ),
+          _LabeledSBBPaginator(label: 'Floating', currentPage: currentPage, isFloating: true),
         ],
       ),
     );
   }
-
-  void _changeCurrentPage(int page) => setState(() {
-    currentPage = page;
-  });
 }
 
 class _LabeledSBBPaginator extends StatelessWidget {
@@ -87,20 +81,6 @@ class _LabeledSBBPaginator extends StatelessWidget {
               : SBBPaginator(currentPage: currentPage, numberPages: _kNumberPages),
         ],
       ),
-    );
-  }
-}
-
-class _IndexedTextPage extends StatelessWidget {
-  const _IndexedTextPage({required this.pageIndex});
-
-  final int pageIndex;
-
-  @override
-  Widget build(BuildContext context) {
-    return SBBContentBox(
-      margin: .symmetric(horizontal: SBBSpacing.xSmall),
-      child: Center(child: Text('Page #${pageIndex + 1}')),
     );
   }
 }

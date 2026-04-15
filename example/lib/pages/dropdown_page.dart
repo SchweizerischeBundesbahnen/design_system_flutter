@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_design_system_mobile_example/pages/scaffold/demo_page_scaffold.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-
-import '../native_app.dart';
 
 class DropdownPage extends StatefulWidget {
   const DropdownPage({super.key});
@@ -33,111 +32,95 @@ class _DropdownPageState extends State<DropdownPage> {
 
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        _controlPanelHeaderBox(context),
-        SliverPadding(
-          padding: .symmetric(horizontal: SBBSpacing.xSmall),
-          sliver: SliverList.list(
-            children: [
-              const SBBListHeader('Single Choice'),
-              _singleChoices(context),
-              const SizedBox(height: SBBSpacing.medium),
-              const SBBListHeader('Multiple choice'),
-              _multipleChoices(context),
-            ],
-          ),
-        ),
-      ],
+    return DemoPageScaffold(
+      componentConfig: _componentConfig(context),
+      body: Column(
+        children: [
+          const SBBListHeader('Single Choice'),
+          _singleChoices(context),
+          const SizedBox(height: SBBSpacing.medium),
+          const SBBListHeader('Multiple choice'),
+          _multipleChoices(context),
+        ],
+      ),
     );
   }
 
-  SBBSliverHeaderbox _controlPanelHeaderBox(BuildContext context) {
+  Widget _componentConfig(BuildContext context) {
     final inputLabelTextStyle = Theme.of(context).sbbInputDecorationTheme?.floatingLabelTextStyle;
     final inputLabelColor = Theme.of(context).sbbInputDecorationTheme?.labelForegroundColor;
-    return SBBSliverHeaderbox.custom(
-      child: Column(
-        mainAxisSize: .min,
-        spacing: SBBSpacing.xSmall,
-        children: [
-          const ThemeModeSegmentedButton(),
-          Flexible(
+    return Column(
+      mainAxisSize: .min,
+      children: SBBListItem.divideListItems(
+        context: context,
+        items: [
+          Padding(
+            padding: const EdgeInsets.symmetric(
+              vertical: SBBSpacing.xSmall,
+            ).copyWith(left: SBBSpacing.medium),
             child: Column(
+              crossAxisAlignment: .start,
               mainAxisSize: .min,
-              children: SBBListItem.divideListItems(
-                context: context,
-                items: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: SBBSpacing.xSmall,
-                    ).copyWith(left: SBBSpacing.medium),
-                    child: Column(
-                      crossAxisAlignment: .start,
-                      mainAxisSize: .min,
-                      children: [
-                        Text(
-                          'Number of Items',
-                          style: inputLabelTextStyle?.copyWith(color: inputLabelColor?.resolve({})),
+              children: [
+                Text(
+                  'Number of Items',
+                  style: inputLabelTextStyle?.copyWith(color: inputLabelColor?.resolve({})),
+                ),
+                Flexible(
+                  child: Row(
+                    children: [
+                      Container(
+                        alignment: .center,
+                        constraints: BoxConstraints(minWidth: 72.0),
+                        padding: .symmetric(horizontal: SBBSpacing.medium),
+                        child: Text('$_itemCount', style: SBBTextStyles.mediumBold),
+                      ),
+                      Expanded(
+                        child: SBBSlider(
+                          value: _itemCount.toDouble(),
+                          min: 1,
+                          max: 100,
+                          divisions: 99,
+                          onChanged: (value) {
+                            setState(() {
+                              _itemCount = value.round();
+                              // Reset selections that are out of range
+                              if (_selectedValue1 != null && _selectedValue1! >= _itemCount) {
+                                _selectedValue1 = null;
+                              }
+                              if (_selectedValue2 != null && _selectedValue2! >= _itemCount) {
+                                _selectedValue2 = null;
+                              }
+                              if (_selectedValue3 != null && _selectedValue3! >= _itemCount) {
+                                _selectedValue3 = null;
+                              }
+                            });
+                          },
                         ),
-                        Flexible(
-                          child: Row(
-                            children: [
-                              Container(
-                                alignment: .center,
-                                constraints: BoxConstraints(minWidth: 72.0),
-                                padding: .symmetric(horizontal: SBBSpacing.medium),
-                                child: Text('$_itemCount', style: SBBTextStyles.mediumBold),
-                              ),
-                              Expanded(
-                                child: SBBSlider(
-                                  value: _itemCount.toDouble(),
-                                  min: 1,
-                                  max: 100,
-                                  divisions: 99,
-                                  onChanged: (value) {
-                                    setState(() {
-                                      _itemCount = value.round();
-                                      // Reset selections that are out of range
-                                      if (_selectedValue1 != null && _selectedValue1! >= _itemCount) {
-                                        _selectedValue1 = null;
-                                      }
-                                      if (_selectedValue2 != null && _selectedValue2! >= _itemCount) {
-                                        _selectedValue2 = null;
-                                      }
-                                      if (_selectedValue3 != null && _selectedValue3! >= _itemCount) {
-                                        _selectedValue3 = null;
-                                      }
-                                    });
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                  SBBTextInput(
-                    decoration: SBBInputDecoration(
-                      labelText: 'Bottom Sheet Title',
-                    ),
-                    autofocus: false,
-                    controller: TextEditingController.fromValue(TextEditingValue(text: _sheetTitle)),
-                    onChanged: (value) => setState(() => _sheetTitle = value),
-                  ),
-                  SBBSwitchListItem(
-                    titleText: 'Show Leading Icon in Sheet',
-                    value: _showLeadingIcon,
-                    onChanged: (value) => setState(() => _showLeadingIcon = value),
-                  ),
-                  SBBSwitchListItem(
-                    titleText: 'Show Close Button in Sheet',
-                    value: _showCloseButton,
-                    onChanged: (value) => setState(() => _showCloseButton = value),
-                  ),
-                ],
-              ),
+                ),
+              ],
             ),
+          ),
+          SBBTextInput(
+            decoration: SBBInputDecoration(
+              labelText: 'Bottom Sheet Title',
+            ),
+            autofocus: false,
+            controller: TextEditingController.fromValue(TextEditingValue(text: _sheetTitle)),
+            onChanged: (value) => setState(() => _sheetTitle = value),
+          ),
+          SBBSwitchListItem(
+            titleText: 'Show Leading Icon in Sheet',
+            value: _showLeadingIcon,
+            onChanged: (value) => setState(() => _showLeadingIcon = value),
+          ),
+          SBBSwitchListItem(
+            titleText: 'Show Close Button in Sheet',
+            value: _showCloseButton,
+            onChanged: (value) => setState(() => _showCloseButton = value),
           ),
         ],
       ),
