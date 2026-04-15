@@ -116,16 +116,12 @@ class SBBHeaderBox extends StatelessWidget {
   ///
   /// For simple icons, use [leadingIconData] instead.
   ///
-  /// The widget is vertically centered with [titleText] or [title].
-  ///
   /// Cannot be used together with [leadingIconData].
   /// {@endtemplate}
   final Widget? leading;
 
   /// {@template sbb_design_system.header_box.leadingIconData}
   /// Icon data for the leading icon.
-  ///
-  /// The icon is vertically centered with [titleText] or [title].
   ///
   /// Cannot be used together with [leading].
   /// {@endtemplate}
@@ -136,8 +132,6 @@ class SBBHeaderBox extends StatelessWidget {
   ///
   /// For simple text labels, use [titleText] instead.
   ///
-  /// The title is vertically centered with [leading] or [leadingIconData].
-  ///
   /// Cannot be used together with [titleText].
   /// {@endtemplate}
   final Widget? title;
@@ -146,7 +140,6 @@ class SBBHeaderBox extends StatelessWidget {
   /// Text string to display as the header box's title using standard styling.
   ///
   /// The text is clamped to a single line with ellipsis overflow.
-  /// The title is vertically centered with [leading] or [leadingIconData].
   ///
   /// Cannot be used together with [title].
   /// {@endtemplate}
@@ -164,7 +157,7 @@ class SBBHeaderBox extends StatelessWidget {
   /// {@template sbb_design_system.header_box.subtitleText}
   /// Text string to display as the header box's subtitle using standard styling.
   ///
-  /// The subtitle is positioned below the title and leading widget.
+  /// The subtitle is positioned below the title.
   ///
   /// Cannot be used together with [subtitle].
   /// {@endtemplate}
