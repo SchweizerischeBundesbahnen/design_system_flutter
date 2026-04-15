@@ -7,9 +7,9 @@ class SBBColors {
 
   // standard SBB colors
   static const Color red = Color(0xFFEB0000);
+  static const Color red85 = Color(0xFFFF3838);
   static const Color red125 = Color(0xFFC60018);
   static const Color red150 = Color(0xFFA20013);
-  static const Color redDark = Color(0xFFFF3838); // red85
   static const Color white = Color(0xFFFFFFFF);
   static const Color milk = Color(0xFFF6F6F6);
   static const Color cloud = Color(0xFFE5E5E5);
@@ -59,14 +59,14 @@ class SBBColors {
   // functional colors
   static const Color success = Color(0xFF008233);
   static const Color warning = Color(0xFFFCBB00);
-  static const Color error = Color(0xFFC60018);
-  static const Color brand = Color(0xFFEB0000);
-  static const Color product = Color(0xFFEB0000);
+  static const Color error = red125;
+  static const Color brand = red;
+  static const Color product = red;
 
   // functional colors dark
   static const Color successDark = Color(0xFF109D47);
   static const Color warningDark = Color(0xFFFFC727);
-  static const Color errorDark = Color(0xFFFF3838);
+  static const Color errorDark = red85;
   static const Color brandDark = brand;
   static const Color productDark = product;
 

@@ -15,20 +15,20 @@ class DefaultSBBSliderThemeData extends SBBSliderThemeData {
           }),
           activeTrackColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.disabled: baseStyle.themeValue(SBBColors.graphite, SBBColors.granite),
-            WidgetState.any: baseStyle.primaryColor,
+            WidgetState.any: baseStyle.colorScheme.primaryColor,
           }),
           thumbBackgroundColor: WidgetStatePropertyAll(baseStyle.themeValue(SBBColors.white, SBBColors.midnight)),
           thumbBorderColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.disabled: baseStyle.themeValue(SBBColors.smoke, SBBColors.smoke),
-            WidgetState.any: baseStyle.primaryColor,
+            WidgetState.any: baseStyle.colorScheme.primaryColor,
           }),
           leadingForegroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.disabled: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
-            WidgetState.any: baseStyle.iconColor,
+            WidgetState.any: baseStyle.colorScheme.iconColor,
           }),
           trailingForegroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.disabled: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
-            WidgetState.any: baseStyle.iconColor,
+            WidgetState.any: baseStyle.colorScheme.iconColor,
           }),
           padding: .symmetric(horizontal: SBBSpacing.medium),
         ),

@@ -6,7 +6,7 @@ class DefaultSBBMessageThemeData extends SBBMessageThemeData {
     : super(
         style: SBBMessageStyle(
           titleTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.mediumLight),
-          titleForegroundColor: baseStyle.defaultTextColor,
+          titleForegroundColor: baseStyle.colorScheme.defaultTextColor,
           subtitleTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallLight),
           subtitleForegroundColor: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
           errorTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.extraSmallLight),

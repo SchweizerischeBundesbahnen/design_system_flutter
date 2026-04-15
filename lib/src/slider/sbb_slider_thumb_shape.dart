@@ -39,7 +39,7 @@ class CircleBorderThumbShape extends SliderComponentShape {
     required double textScaleFactor,
     required Size sizeWithOverflow,
   }) {
-    final Canvas canvas = context.canvas;
+    final canvas = context.canvas;
 
     // drop shadows
     if (enableAnimation.value > 0.5) _paintShadow(center, canvas);
@@ -49,7 +49,7 @@ class CircleBorderThumbShape extends SliderComponentShape {
 
     final backgroundColor =
         Color.lerp(disabledBackgroundColor, enabledBackgroundColor, enableAnimation.value) ?? SBBColors.white;
-    final borderColor = Color.lerp(disabledBorderColor, enabledBorderColor, enableAnimation.value) ?? SBBColors.red;
+    final borderColor = Color.lerp(disabledBorderColor, enabledBorderColor, enableAnimation.value)!;
 
     // thumb background
     final fillPaint = Paint()

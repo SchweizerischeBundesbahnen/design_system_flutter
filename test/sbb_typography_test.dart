@@ -146,8 +146,6 @@ void main() {
     sbbTextStyle.condensedHeavyStyle.small.italic,
     sbbTextStyle.condensedHeavyStyle.xSmall.italic,
   ]);
-
-  testWidget('typography_red_text_theme', TypographyRedThemeTest());
 }
 
 class TypographyTest extends StatelessWidget {
@@ -175,19 +173,6 @@ class TypographyTest extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class TypographyRedThemeTest extends StatelessWidget {
-  const TypographyRedThemeTest({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final textTheme = SBBBaseStyle.of(context).redTextTheme;
-    return TypographyTest(
-      name: 'typography_red_text_theme',
-      textStyles: [textTheme.bodyLarge, textTheme.bodyMedium, textTheme.bodySmall],
     );
   }
 }

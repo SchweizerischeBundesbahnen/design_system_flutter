@@ -8,11 +8,11 @@ class DefaultSBBPaginatorThemeData extends SBBPaginatorThemeData {
     : super(
         style: SBBPaginatorStyle(
           circleBorderColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
-            WidgetState.selected: baseStyle.themeValue(baseStyle.primaryColor, SBBColors.white),
+            WidgetState.selected: baseStyle.themeValue(baseStyle.colorScheme.primaryColor, SBBColors.white),
             WidgetState.any: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
           }),
           circleFillColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
-            WidgetState.selected: baseStyle.themeValue(baseStyle.primaryColor, SBBColors.white),
+            WidgetState.selected: baseStyle.themeValue(baseStyle.colorScheme.primaryColor, SBBColors.white),
             WidgetState.any: null,
           }),
           floatingBackgroundColor: baseStyle.themeValue(SBBColors.white, SBBColors.iron),

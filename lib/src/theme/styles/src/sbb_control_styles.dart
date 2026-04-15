@@ -15,13 +15,6 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
 
   static SBBControlStyles of(BuildContext context) => Theme.of(context).extension<SBBControlStyles>()!;
 
-  /// TODO: smallTrogdor - make these configurable
-  TextSelectionThemeData get textSelectionTheme => TextSelectionThemeData(
-    selectionColor: SBBColors.sky.withValues(alpha: 0.5),
-    cursorColor: SBBColors.sky,
-    selectionHandleColor: SBBColors.sky,
-  );
-
   @override
   ThemeExtension<SBBControlStyles> copyWith({
     PromotionBoxStyle? promotionBox,

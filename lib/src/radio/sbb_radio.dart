@@ -191,47 +191,48 @@ class _SBBRadioPaintState extends State<_SBBRadioPaint> {
 
   @override
   Widget build(BuildContext context) {
-    final SBBRadioStyle? themeStyle = Theme.of(context).sbbRadioTheme?.style;
+    final themeStyle = Theme.of(context).sbbRadioTheme?.style;
 
     // Compute active and inactive state so that colors can be determined and painter can lerp between them
     final Set<WidgetState> activeStates = {...widget.toggleableState.states, WidgetState.selected};
     final Set<WidgetState> inactiveStates = {...widget.toggleableState.states}..remove(WidgetState.selected);
 
-    final Color activeFillColor = _resolveColor(
+    final activeFillColor = _resolveColor(
       widget.style?.fillColor,
       themeStyle?.fillColor,
       activeStates,
     );
-    final Color inactiveFillColor = _resolveColor(
+    final inactiveFillColor = _resolveColor(
       widget.style?.fillColor,
       themeStyle?.fillColor,
       inactiveStates,
     );
 
-    final Color activeBorderColor = _resolveColor(
+    final activeBorderColor = _resolveColor(
       widget.style?.borderColor,
       themeStyle?.borderColor,
       activeStates,
     );
-    final Color inactiveBorderColor = _resolveColor(
+    final inactiveBorderColor = _resolveColor(
       widget.style?.borderColor,
       themeStyle?.borderColor,
       inactiveStates,
     );
 
-    final Color activeInnerCircleColor = _resolveColor(
+    final activeInnerCircleColor = _resolveColor(
       widget.style?.innerCircleColor,
       themeStyle?.innerCircleColor,
       activeStates,
     );
-    final Color inactiveInnerCircleColor = _resolveColor(
+    final inactiveInnerCircleColor = _resolveColor(
       widget.style?.innerCircleColor,
       themeStyle?.innerCircleColor,
       inactiveStates,
     );
 
-    final Size effectiveSize = widget.padding.inflateSize(const Size.square(SBBRadioStyle.radioRadius * 2));
+    final effectiveSize = widget.padding.inflateSize(const Size.square(SBBRadioStyle.radioRadius * 2));
 
+    final primaryColor = Theme.of(context).sbbBaseStyle.colorScheme.primaryColor;
     return CustomPaint(
       size: effectiveSize,
       painter: _painter
@@ -239,22 +240,22 @@ class _SBBRadioPaintState extends State<_SBBRadioPaint> {
         ..reaction = widget.toggleableState.reaction
         ..isFocused = widget.toggleableState.states.contains(WidgetState.focused)
         ..isHovered = widget.toggleableState.states.contains(WidgetState.hovered)
-        ..activeColor = activeInnerCircleColor
-        ..inactiveColor = inactiveInnerCircleColor
-        ..activeFillColor = activeFillColor
-        ..inactiveFillColor = inactiveFillColor
-        ..activeBorderColor = activeBorderColor
-        ..inactiveBorderColor = inactiveBorderColor,
+        ..activeColor = activeInnerCircleColor ?? primaryColor
+        ..inactiveColor = inactiveInnerCircleColor ?? primaryColor
+        ..activeFillColor = activeFillColor ?? primaryColor
+        ..inactiveFillColor = inactiveFillColor ?? primaryColor
+        ..activeBorderColor = activeBorderColor ?? primaryColor
+        ..inactiveBorderColor = inactiveBorderColor ?? primaryColor,
     );
   }
 
-  Color _resolveColor(
+  Color? _resolveColor(
     WidgetStateProperty<Color?>? widgetColor,
     WidgetStateProperty<Color?>? themeColor,
     Set<WidgetState> states,
   ) {
     final WidgetStateProperty<Color?>? effectiveProperty = widgetColor ?? themeColor;
-    return effectiveProperty?.resolve(states) ?? SBBColors.red;
+    return effectiveProperty?.resolve(states);
   }
 }
 

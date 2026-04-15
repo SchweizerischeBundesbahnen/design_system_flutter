@@ -2,6 +2,32 @@
 
 V5 introduces a lot of breaking changes to allow for a more flexible and modern Design System.
 
+## SBBTheme
+
+* removed `brightness` from `createTheme` and `raw`. Use `SBBBaseStyle.brightness`
+* removed unused field `boldFont`
+* moved `SBBTextTheme` to `SBBBaseStyle`. Can still be accessed with helper method `Theme.of(context).sbbTextTheme`
+
+## SBBBaseStyle
+
+* removed `createTextTheme`, use `SBBTextTheme.toTextTheme` instead
+* removed `SBBBaseStyle.of(context)`, use `Theme.of(context).sbbBaseStyle` instead
+* removed unused field `boldFont`
+* removed `redTextTheme`
+* removed `primaryDarkColor`
+* removed `primarySwatch`. Is now created from `primaryColor` over `SBBColorScheme`
+* removed `defaultFontFamily`
+* moved `defaultTextStyle` to `SBBTextTheme`
+* added `textTheme`, `iconTheme`, `dividerTheme` and `textSelectionTheme`
+
+### SBBColorScheme
+SBBColorScheme is introduced to define the base color scheme and is used by SBBBaseStyle.
+
+* moved colors from `SBBBaseStyle` to `SBBColorScheme`
+* added primary color variants `primary85Color`, `primary125Color`, `primary150Color`
+* added `selectionColor` which is used for `TextSelectionThemeData`
+* added `brandColor`
+
 
 ## BottomSheet (previously Modal) 
 

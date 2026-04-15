@@ -17,7 +17,7 @@ import 'package:sbb_design_system_mobile/src/radio/theme/default_sbb_radio_theme
 import 'package:sbb_design_system_mobile/src/slider/theme/default_sbb_slider_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/stepper/theme/default_sbb_stepper_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/switch/theme/default_sbb_switch_theme_data.dart';
-import 'package:sbb_design_system_mobile/src/theme/styles/base_style_x.dart';
+import 'package:sbb_design_system_mobile/src/theme/sbb_text_theme_x.dart';
 import 'package:sbb_design_system_mobile/src/toast/theme/default_sbb_toast_theme_data.dart';
 
 import '../button/theme/default_button_themes.dart';
@@ -27,11 +27,30 @@ import '../segmented_button/theme/default_sbb_segmented_button_theme_data.dart';
 import '../status/theme/default_sbb_status_theme_data.dart';
 import '../tab_bar/theme/default_sbb_tab_bar_theme_data.dart';
 
+/// Base SBB theme builder.
+///
+/// Provides factory helpers to build full [ThemeData] for light and dark
+/// based on the theming of the SBB design system.
+///
+/// ```dart
+/// MaterialApp(
+///     theme: SBBTheme.light(),
+///     darkTheme: SBBTheme.dark(),
+///     ...
+/// );
+/// ```
+///
+/// Access created [ThemeData] by using `Theme.of(context)` and the theme
+/// extensions f.ex. with `Theme.of(context).extension<SBBBaseStyle>()` or
+/// the provided helper methods `Theme.of(context).sbbBaseStyle`.
+///
+/// See also:
+///
+/// * [ThemeData], theme for a [MaterialApp]
 class SBBTheme {
   SBBTheme._();
 
   static ThemeData light({
-    bool boldFont = false,
     SBBBaseStyle? baseStyle,
     SBBBottomSheetThemeData? bottomSheetTheme,
     SBBPrimaryButtonThemeData? primaryButtonTheme,
@@ -60,12 +79,10 @@ class SBBTheme {
     SBBStepperThemeData? stepperTheme,
     SBBSwitchThemeData? switchTheme,
     SBBTabBarThemeData? tabBarTheme,
-    SBBTextTheme? textTheme,
     SBBTextInputThemeData? textInputTheme,
     SBBToastThemeData? toastTheme,
   }) => createTheme(
     brightness: .light,
-    boldFont: boldFont,
     baseStyle: baseStyle,
     bottomSheetTheme: bottomSheetTheme,
     primaryButtonTheme: primaryButtonTheme,
@@ -94,13 +111,11 @@ class SBBTheme {
     stepperTheme: stepperTheme,
     switchTheme: switchTheme,
     tabBarTheme: tabBarTheme,
-    textTheme: textTheme,
     textInputTheme: textInputTheme,
     toastTheme: toastTheme,
   );
 
   static ThemeData dark({
-    bool boldFont = false,
     SBBBaseStyle? baseStyle,
     SBBBottomSheetThemeData? bottomSheetTheme,
     SBBPrimaryButtonThemeData? primaryButtonTheme,
@@ -128,12 +143,10 @@ class SBBTheme {
     SBBStepperThemeData? stepperTheme,
     SBBSwitchThemeData? switchTheme,
     SBBTabBarThemeData? tabBarTheme,
-    SBBTextTheme? textTheme,
     SBBTextInputThemeData? textInputTheme,
     SBBToastThemeData? toastTheme,
   }) => createTheme(
     brightness: .dark,
-    boldFont: boldFont,
     baseStyle: baseStyle,
     bottomSheetTheme: bottomSheetTheme,
     primaryButtonTheme: primaryButtonTheme,
@@ -161,14 +174,12 @@ class SBBTheme {
     sliderTheme: sliderTheme,
     switchTheme: switchTheme,
     tabBarTheme: tabBarTheme,
-    textTheme: textTheme,
     textInputTheme: textInputTheme,
     toastTheme: toastTheme,
   );
 
   static ThemeData createTheme({
     required Brightness brightness,
-    bool boldFont = false,
     SBBBaseStyle? baseStyle,
     SBBBottomSheetThemeData? bottomSheetTheme,
     SBBPrimaryButtonThemeData? primaryButtonTheme,
@@ -197,13 +208,12 @@ class SBBTheme {
     SBBStatusThemeData? statusTheme,
     SBBSwitchThemeData? switchTheme,
     SBBTabBarThemeData? tabBarTheme,
-    SBBTextTheme? textTheme,
     SBBTextInputThemeData? textInputTheme,
     SBBToastThemeData? toastTheme,
   }) {
     // default values are set here and merged with given styles
-    final defaultBaseStyle = SBBBaseStyle.$default(brightness: brightness, boldFont: boldFont);
-    final mergedBaseStyle = baseStyle.merge(defaultBaseStyle);
+    final defaultBaseStyle = SBBBaseStyle.$default(brightness: brightness);
+    final mergedBaseStyle = defaultBaseStyle.merge(baseStyle);
 
     final defaultBottomSheetTheme = DefaultSBBBottomSheetThemeData(mergedBaseStyle);
     final mergedBottomSheetTheme = defaultBottomSheetTheme.merge(bottomSheetTheme);
@@ -274,9 +284,6 @@ class SBBTheme {
     final defaultSwitchTheme = DefaultSBBSwitchThemeData(mergedBaseStyle);
     final mergedSwitchTheme = defaultSwitchTheme.merge(switchTheme);
 
-    final defaultTextTheme = SBBTextTheme.$default(baseStyle: mergedBaseStyle);
-    final mergedTextTheme = defaultTextTheme.merge(textTheme);
-
     final defaultTextInputTheme = DefaultSBBTextInputThemeData(mergedBaseStyle);
     final mergedTextInputTheme = defaultTextInputTheme.merge(textInputTheme);
 
@@ -305,7 +312,6 @@ class SBBTheme {
     final mergedPickerTheme = defaultPickerTheme.merge(pickerTheme);
 
     return raw(
-      brightness: brightness,
       baseStyle: mergedBaseStyle,
       bottomSheetTheme: mergedBottomSheetTheme,
       primaryButtonTheme: mergedPrimaryButtonTheme,
@@ -334,14 +340,12 @@ class SBBTheme {
       stepperTheme: mergedStepperTheme,
       switchTheme: mergedSwitchTheme,
       tabBarTheme: mergedTabBarTheme,
-      textTheme: mergedTextTheme,
       textInputTheme: mergedTextInputTheme,
       toastTheme: mergedToastTheme,
     );
   }
 
   static ThemeData raw({
-    required Brightness brightness,
     required SBBBaseStyle baseStyle,
     required SBBBottomSheetThemeData bottomSheetTheme,
     required SBBPrimaryButtonThemeData primaryButtonTheme,
@@ -370,30 +374,28 @@ class SBBTheme {
     required SBBStepperThemeData stepperTheme,
     required SBBSwitchThemeData switchTheme,
     required SBBTabBarThemeData tabBarTheme,
-    required SBBTextTheme textTheme,
     required SBBTextInputThemeData textInputTheme,
     required SBBToastThemeData toastTheme,
   }) {
     return ThemeData(
       colorScheme: ColorScheme.fromSwatch(
-        primarySwatch: baseStyle.primarySwatch!,
-        accentColor: baseStyle.primaryColor,
-        backgroundColor: baseStyle.backgroundColor,
-        errorColor: baseStyle.errorColor,
-        brightness: brightness,
+        primarySwatch: baseStyle.colorScheme.primarySwatch,
+        accentColor: baseStyle.colorScheme.primaryColor,
+        cardColor: baseStyle.colorScheme.backgroundColor,
+        backgroundColor: baseStyle.colorScheme.backgroundColor,
+        errorColor: baseStyle.colorScheme.errorColor,
+        brightness: baseStyle.brightness,
       ).copyWith(surfaceTint: SBBColors.transparent),
-      scaffoldBackgroundColor: baseStyle.backgroundColor,
-      iconTheme: IconThemeData(color: baseStyle.iconColor, size: sbbIconSizeSmall),
-      dividerTheme: DividerThemeData(thickness: 1.0, space: 0.0, color: baseStyle.dividerColor),
-      dividerColor: baseStyle.dividerColor,
-      fontFamily: baseStyle.defaultFontFamily,
-      textTheme: baseStyle.createTextTheme(),
+      scaffoldBackgroundColor: baseStyle.colorScheme.backgroundColor,
+      iconTheme: baseStyle.iconTheme,
+      dividerColor: baseStyle.dividerTheme?.color,
+      dividerTheme: baseStyle.dividerTheme,
+      textTheme: baseStyle.textTheme.toTextTheme(labelColor: baseStyle.colorScheme.labelColor),
       appBarTheme: headerTheme.appBarTheme,
       filledButtonTheme: FilledButtonThemeData(style: primaryButtonTheme.style?.toButtonStyle()),
       outlinedButtonTheme: OutlinedButtonThemeData(style: secondaryButtonTheme.style?.toButtonStyle()),
       textButtonTheme: TextButtonThemeData(style: tertiaryButtonTheme.style?.toButtonStyle()),
-      materialTapTargetSize: .padded,
-      textSelectionTheme: controlStyles.textSelectionTheme,
+      textSelectionTheme: baseStyle.textSelectionTheme,
       extensions: [
         baseStyle,
         bottomSheetTheme,
@@ -423,7 +425,6 @@ class SBBTheme {
         stepperTheme,
         switchTheme,
         tabBarTheme,
-        textTheme,
         textInputTheme,
         toastTheme,
       ],

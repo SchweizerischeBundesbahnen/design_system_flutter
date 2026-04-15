@@ -7,7 +7,7 @@ class DefaultSBBHeaderThemeData extends SBBHeaderThemeData {
   DefaultSBBHeaderThemeData({required SBBBaseStyle baseStyle})
     : super(
         style: SBBHeaderStyle(
-          backgroundColor: baseStyle.primaryColor,
+          backgroundColor: baseStyle.colorScheme.primaryColor,
           foregroundColor: SBBColors.white,
           titleTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.largeLight, color: SBBColors.white),
           centerTitle: true,

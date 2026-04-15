@@ -20,18 +20,18 @@ class DefaultSBBListItemThemeData extends SBBListItemThemeData {
           }),
           titleForegroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.disabled: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
-            WidgetState.any: baseStyle.defaultTextColor,
+            WidgetState.any: baseStyle.colorScheme.defaultTextColor,
           }),
           subtitleForegroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.any: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
           }),
           leadingForegroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.disabled: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
-            WidgetState.any: baseStyle.iconColor,
+            WidgetState.any: baseStyle.colorScheme.iconColor,
           }),
           trailingForegroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.disabled: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
-            WidgetState.any: baseStyle.iconColor,
+            WidgetState.any: baseStyle.colorScheme.iconColor,
           }),
           overlayColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.any: baseStyle.themeValue(SBBColors.platinum, SBBColors.midnight),

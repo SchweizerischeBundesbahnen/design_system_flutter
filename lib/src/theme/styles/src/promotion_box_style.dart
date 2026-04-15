@@ -19,10 +19,10 @@ class PromotionBoxStyle {
     return PromotionBoxStyle(
       borderColor: baseStyle.themeValue(SBBColors.white, SBBColors.charcoal),
       badgeShadowColor: baseStyle.themeValue(
-        SBBColors.red.withValues(alpha: 0.2),
-        SBBColors.redDark.withValues(alpha: 0.6),
+        baseStyle.colorScheme.primaryColor.withValues(alpha: 0.2),
+        baseStyle.colorScheme.primary85Color?.withValues(alpha: 0.6),
       ),
-      badgeColor: SBBColors.red,
+      badgeColor: baseStyle.colorScheme.primaryColor,
       badgeBorderColor: baseStyle.themeValue(SBBColors.white, SBBColors.charcoal),
       badgeTextStyle: SBBTextStyles.smallBold.copyWith(color: SBBColors.white),
       gradientColors: baseStyle.themeValue(PromotionBoxStyle.lightGradient, PromotionBoxStyle.darkGradient),

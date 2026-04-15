@@ -287,15 +287,19 @@ class _SBBSliderState extends State<SBBSlider> {
     final Set<WidgetState> enabledStates = {..._statesController.value}..remove(WidgetState.disabled);
     final Set<WidgetState> disabledStates = {..._statesController.value, WidgetState.disabled};
 
+    final sbbColorScheme = Theme.of(context).sbbBaseStyle.colorScheme;
     final inactiveTrackColor = effectiveStyle.trackColor?.resolve(enabledStates) ?? SBBColors.smoke;
     final disabledInactiveTrackColor = effectiveStyle.trackColor?.resolve(disabledStates) ?? SBBColors.smoke;
-    final activeTrackColor = effectiveStyle.activeTrackColor?.resolve(enabledStates) ?? SBBColors.red;
-    final disabledActiveTrackColor = effectiveStyle.activeTrackColor?.resolve(disabledStates) ?? SBBColors.red;
-    final thumbBackgroundColor = effectiveStyle.thumbBackgroundColor?.resolve(enabledStates) ?? SBBColors.green;
+    final activeTrackColor = effectiveStyle.activeTrackColor?.resolve(enabledStates) ?? sbbColorScheme.primaryColor;
+    final disabledActiveTrackColor =
+        effectiveStyle.activeTrackColor?.resolve(disabledStates) ?? sbbColorScheme.primaryColor;
+    final thumbBackgroundColor =
+        effectiveStyle.thumbBackgroundColor?.resolve(enabledStates) ?? sbbColorScheme.backgroundColor;
     final disabledThumbBackgroundColor =
-        effectiveStyle.thumbBackgroundColor?.resolve(disabledStates) ?? SBBColors.green;
-    final thumbBorderColor = effectiveStyle.thumbBorderColor?.resolve(enabledStates) ?? SBBColors.red;
-    final disabledThumbBorderColor = effectiveStyle.thumbBorderColor?.resolve(disabledStates) ?? SBBColors.red;
+        effectiveStyle.thumbBackgroundColor?.resolve(disabledStates) ?? sbbColorScheme.backgroundColor;
+    final thumbBorderColor = effectiveStyle.thumbBorderColor?.resolve(enabledStates) ?? sbbColorScheme.primaryColor;
+    final disabledThumbBorderColor =
+        effectiveStyle.thumbBorderColor?.resolve(disabledStates) ?? sbbColorScheme.primaryColor;
     final padding = effectiveStyle.padding ?? .symmetric(horizontal: SBBSpacing.small);
 
     return SliderTheme(

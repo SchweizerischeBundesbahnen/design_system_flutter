@@ -17,9 +17,11 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - added `SBBIllustration` for adding predefined illustrations to e.g. `SBBMessage`
 - added `SBBRadioGroup` - see [v5 migration guide]
 - added `SBBTextInput` as replacement for `SBBTextField` - see [v5 migration guide]
+- added `SBBColorScheme` - see [v5 migration guide]
 
 ### Changed
 
+- BREAKING: overhauled `SBBBaseStyle` - see [v5 migration guide]
 - BREAKING: overhauled all button variants - see [v5 migration guide]
 - BREAKING: overhauled `SBBCheckbox` - see [v5 migration guide]
 - BREAKING: overhauled `SBBChip` - see [v5 migration guide]
@@ -63,6 +65,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Removed `CascadeColumnParentData` as it is not directly used by clients
 - Removed `SBBTextField` - replaced by `SBBTextInput`
 - Removed `merge` extension on `SBBBaseStyle`
+- Removed `SBBColors.redDark`, use `SBBColors.red85` instead
 
 ## [4.11.0] - 2026-04-13
 

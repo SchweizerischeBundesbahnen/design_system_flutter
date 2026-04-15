@@ -11,19 +11,19 @@ class DefaultSBBTabBarThemeData extends SBBTabBarThemeData {
           backgroundColor: baseStyle.themeValue(SBBColors.white, SBBColors.charcoal),
           iconColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.selected: baseStyle.themeValue(SBBColors.white, SBBColors.black),
-            WidgetState.any: baseStyle.themeValue(SBBColors.black, SBBColors.white),
+            WidgetState.any: baseStyle.colorScheme.iconColor,
           }),
           itemBackgroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.selected: baseStyle.themeValue(SBBColors.black, SBBColors.white),
             WidgetState.any: SBBColors.transparent,
           }),
           itemLabelTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallLight),
-          itemLabelForegroundColor: baseStyle.themeValue(SBBColors.black, SBBColors.white),
+          itemLabelForegroundColor: baseStyle.colorScheme.defaultTextColor,
           warningItemIcon: SBBIcons.sign_exclamation_point_small,
-          warningItemBackgroundColor: SBBColors.red,
+          warningItemBackgroundColor: baseStyle.colorScheme.errorColor,
           warningItemForegroundColor: SBBColors.white,
           badgeForegroundColor: SBBColors.white,
-          badgeBackgroundColor: baseStyle.primaryColor,
+          badgeBackgroundColor: baseStyle.colorScheme.primaryColor,
           badgeTextStyle: SBBTextStyles.extraExtraSmallBold.copyWith(fontWeight: FontWeight.w900),
         ),
       );

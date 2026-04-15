@@ -7,11 +7,11 @@ import '../../../sbb_design_system_mobile.dart';
 class DefaultSBBTextInputThemeData extends SBBTextInputThemeData {
   DefaultSBBTextInputThemeData(SBBBaseStyle baseStyle)
     : super(
-        inputTextStyle: baseStyle.defaultTextStyle,
+        inputTextStyle: baseStyle.textTheme.defaultTextStyle,
         inputForegroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
           WidgetState.disabled: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
-          WidgetState.error: baseStyle.themeValue(SBBColors.error, SBBColors.errorDark),
-          WidgetState.any: baseStyle.defaultTextColor,
+          WidgetState.error: baseStyle.colorScheme.errorColor,
+          WidgetState.any: baseStyle.colorScheme.defaultTextColor,
         }),
         enableClearButton: true,
       );

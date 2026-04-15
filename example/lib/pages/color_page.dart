@@ -69,13 +69,13 @@ class _ColorShowcaseCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final baseStyle = Theme.of(context).extension<SBBBaseStyle>();
+    final colorScheme = Theme.of(context).sbbBaseStyle.colorScheme;
 
     final valueString = colorEntry.color.toARGB32().toRadixString(16).padLeft(8, '0').toUpperCase();
     final hexString = valueString.substring(2);
     final opacityString = valueString.substring(0, 2);
     const colorValueTextStyle = SBBTextStyles.extraExtraSmallLight;
-    final colorValueSecondaryTextStyle = SBBTextStyles.extraExtraSmallLight.copyWith(color: baseStyle?.labelColor);
+    final colorValueSecondaryTextStyle = SBBTextStyles.extraExtraSmallLight.copyWith(color: colorScheme.labelColor);
     return SBBContentBox(
       margin: const .all(SBBSpacing.xSmall),
       child: Column(
@@ -112,9 +112,9 @@ class _ColorEntry {
 
 const _colors = [
   _ColorEntry('red', SBBColors.red),
+  _ColorEntry('red85', SBBColors.red85),
   _ColorEntry('red125', SBBColors.red125),
   _ColorEntry('red150', SBBColors.red150),
-  _ColorEntry('redDark', SBBColors.redDark),
   _ColorEntry('white', SBBColors.white),
   _ColorEntry('milk', SBBColors.milk),
   _ColorEntry('cloud', SBBColors.cloud),

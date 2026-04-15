@@ -29,8 +29,8 @@ class TransparentTapableElement extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final baseStyle = Theme.of(context).extension<SBBBaseStyle>();
-    final highlightedColor = baseStyle?.themeValue(SBBColors.milk, SBBColors.iron);
+    final baseStyle = Theme.of(context).sbbBaseStyle;
+    final highlightedColor = baseStyle.themeValue(SBBColors.milk, SBBColors.iron);
     return Material(
       color: SBBColors.transparent,
       shape: customBorder,
