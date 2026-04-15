@@ -42,6 +42,35 @@ class SBBHeaderBoxStyle {
     this.margin,
   });
 
+  factory SBBHeaderBoxStyle.$default({required SBBBaseStyle baseStyle}) {
+    return SBBHeaderBoxStyle(
+      titleTextStyle: baseStyle.themedTextStyle(
+        textStyle: SBBTextStyles.mediumBold.copyWith(overflow: TextOverflow.ellipsis),
+      ),
+      titleForegroundColor: baseStyle.themeValue(SBBColors.black, SBBColors.white),
+      subtitleTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallLight),
+      subtitleForegroundColor: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
+      leadingForegroundColor: baseStyle.themeValue(SBBColors.black, SBBColors.white),
+      backgroundColor: baseStyle.themeValue(SBBColors.white, SBBColors.charcoal),
+      flapBackgroundColor: baseStyle.themeValue(SBBColors.cloud, SBBColors.midnight),
+      headerBoxShadow: baseStyle.themeValue(
+        [BoxShadow(color: SBBColors.black.withValues(alpha: 0.2), blurRadius: 8.0)],
+        [BoxShadow(color: SBBColors.black.withValues(alpha: 0.4), blurRadius: 8.0)],
+      ),
+      shadowOverFlap: baseStyle.themeValue(
+        [BoxShadow(color: SBBColors.black.withValues(alpha: 0.2), blurRadius: 4.0)],
+        [BoxShadow(color: SBBColors.black.withValues(alpha: 0.4), blurRadius: 4.0)],
+      ),
+      titleSubtitleGap: 0.0,
+      padding: .symmetric(
+        horizontal: SBBSpacing.medium,
+        vertical: 14,
+      ),
+      appBarOverlap: 24.0,
+      margin: .symmetric(horizontal: SBBSpacing.xSmall),
+    );
+  }
+
   /// The text style for the header box title.
   ///
   /// Applies to text descendants of the title in [SBBHeaderBox].
@@ -142,10 +171,10 @@ class SBBHeaderBoxStyle {
     Color? trailingForegroundColor,
     Color? backgroundColor,
     Color? flapBackgroundColor,
-    List<BoxShadow>? contentShadow,
+    List<BoxShadow>? headerBoxShadow,
     List<BoxShadow>? shadowOverFlap,
     EdgeInsetsGeometry? padding,
-    double? gap,
+    double? titleSubtitleGap,
     double? appBarOverlap,
     EdgeInsetsGeometry? margin,
   }) {
@@ -160,10 +189,10 @@ class SBBHeaderBoxStyle {
       trailingForegroundColor: trailingForegroundColor ?? this.trailingForegroundColor,
       backgroundColor: backgroundColor ?? this.backgroundColor,
       flapBackgroundColor: flapBackgroundColor ?? this.flapBackgroundColor,
-      headerBoxShadow: contentShadow ?? headerBoxShadow,
+      headerBoxShadow: headerBoxShadow ?? this.headerBoxShadow,
       shadowOverFlap: shadowOverFlap ?? this.shadowOverFlap,
       padding: padding ?? this.padding,
-      titleSubtitleGap: gap ?? titleSubtitleGap,
+      titleSubtitleGap: titleSubtitleGap ?? this.titleSubtitleGap,
       appBarOverlap: appBarOverlap ?? this.appBarOverlap,
       margin: margin ?? this.margin,
     );
