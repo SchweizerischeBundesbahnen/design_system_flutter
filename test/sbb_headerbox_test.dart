@@ -122,7 +122,7 @@ class FloatingHeaderboxTest extends StatelessWidget {
                   leadingIconData: SBBIcons.sign_exclamation_point_small,
                   trailingIconData: SBBIcons.circle_information_small,
                 ),
-                flapMode: .hideable,
+                config: SBBSliverHeaderBoxConfig(flapMode: .hideable),
                 title: SBBCascadeColumn(
                   children: [
                     Text('Static'),
@@ -170,7 +170,9 @@ class FloatingHeaderboxWithUpdateTest extends StatelessWidget {
                 controller: ScrollController(initialScrollOffset: 500),
                 slivers: [
                   SBBSliverHeaderBox(
-                    flapMode: SBBHeaderBoxFlapMode.hideable,
+                    config: SBBSliverHeaderBoxConfig(
+                      flapMode: .hideable,
+                    ),
                     title: SBBCascadeColumn(
                       children: [
                         SBBContractible.crossfade(

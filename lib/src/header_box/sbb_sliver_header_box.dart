@@ -7,40 +7,63 @@ import 'package:sbb_design_system_mobile/src/header_box/header_box_inset.dart';
 import '../../sbb_design_system_mobile.dart';
 import 'sliver/sliver_pinned_floating_widget.dart';
 
-enum SBBHeaderBoxFlapMode { static, resizable, hideable }
-
-const defaultSnapStyle = AnimationStyle(
-  duration: Durations.short2,
-  curve: Curves.linear,
-  reverseDuration: Durations.short2,
-  reverseCurve: Curves.linear,
-);
-
-/// A floating, expanding, and contracting version of the SBB Sliver Header-Box.
+/// A floating, expanding, and contracting version of [SBBHeaderBox].
 ///
-/// This widget behaves the same as [SBBSliverHeaderBox] but allows you to include contracting children.
-/// To achieve this effect, the widget transitions between the minimum and maximum intrinsic heights.
+/// This widget behaves similarly to [SBBHeaderBox], but is designed for use
+/// inside sliver-based scroll views. It supports floating behavior as well as
+/// animated expansion and contraction while scrolling.
 ///
-/// A minimal example would be:
+/// The title row aligns the [leading] and [title] vertically. If a subtitle is
+/// provided, it is displayed below the title row. Additional [body] content is
+/// rendered below the title/subtitle area.
+///
+/// [body] can be a [SBBContractible] or an [SBBCascadeColumn] and will behave accordingly.
+///
+/// {@macro sbb_design_system.header_box_description}
+///
+/// {@template sbb_design_system.sliver_header_box_description}
+/// To achieve the resizing effect, this widget transitions between the minimum
+/// and maximum intrinsic heights of its content.
+/// {@endtemplate}
+///
+/// ## Sample code with dynamic body
 ///
 /// ```dart
-/// CustomScrollView(
-///   slivers: [
-///     SBBSliverFloatingHeaderBox(
-///       title: 'Title',
-///       secondaryLabel: 'Subtitle',
-///       collapsibleChild: Text('Collapsible'),
-///     ),
-///     // ...
-///     const SBBSliverFloatingHeaderBoxSpacer(),
-///   ]
+/// SBBSliverHeaderBox(
+///   leadingIconData: SBBIcons.train_small,
+///   titleText: 'Journey details',
+///   subtitleText: 'IC 3 to Zürich HB',
+///   body: SBBContractible(
+///     child: Text('Departure: 14:32'),
+///   ),
+/// )
+/// ```
+///
+/// ## Sample code with complete customization
+///
+/// ```dart
+/// SBBSliverHeaderBox(
+///   body: SBBCascadeColumn(
+///     children: [
+///       Text('First line'),
+///       SBBContractible(child: Text('Second line', behavior: .clip)),
+///       SBBContractible(child: Text('Third line', behavior: .displace)),
+///     ],
+///   ),
 /// )
 /// ```
 ///
 /// See also:
 ///
+///  * [SBBHeaderBox], for the normal RenderBox variant.
+///  * [SBBSliverHeaderBoxLarge], for the larger variant.
+///  * [SBBHeaderBoxFlap], for flap content.
+///  * [SBBHeaderBoxStyle], for customizing the appearance.
+///  * [SBBHeaderBoxThemeData], for setting header box theme properties across your app.
 ///  * [SBBCascadeColumn] and [SBBContractible], for ways to build contracting items.
 ///  * [SBBSliverFloatingHeaderBoxSpacer], for a widget that should always come last in the list of slivers.
+///  * [Design Guidelines](https://digital.sbb.ch/de/design-system/mobile/components/header-box)
+///  * [Figma design specs](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?m=auto&node-id=192-861&t=rQTLXnChqHrpKLB4-1) (internal only)
 ///
 /// ## Limitations & Considerations
 ///
@@ -48,30 +71,7 @@ const defaultSnapStyle = AnimationStyle(
 ///
 /// - It is relatively expensive, see [IntrinsicHeight].
 /// - You cannot use [LayoutBuilder].
-///
 class SBBSliverHeaderBox extends StatelessWidget {
-  /// The default [SBBSliverHeaderBox].
-  ///
-  /// The required argument [title] will be ellipsed if too long. The [secondaryLabel] is the subtext
-  /// displayed below and will wrap to multiple lines.
-  ///
-  /// The design guidelines specify an action button for the [trailingWidget],
-  /// i.e. a [SBBTertiaryButtonSmall] with a label and an icon.
-  ///
-  /// Use the [margin] to adjust space around the header box - the default is horizontal margin of 8px.
-  ///
-  /// Additionally, you can set [contractibleChild] for some content that will be obscured (and reappears) as the
-  /// user scrolls the containing viewport. You can also temporarily disable this behavior by setting [resizing]
-  /// to `false`.
-  ///
-  /// By default, this header will *float*, i.e. it will expand immediately as the user scrolls in the opposite
-  /// direction. You can disable this behavior by setting [floating] to `false`. In this case, the headerbox will only
-  /// expand when scrolling back to the top.
-  ///
-  /// You can also use [preceding] to set a widget above the headerbox that will go along with the scroll behavior of
-  /// the headerbox.
-  ///
-  /// For a complete customization of the header box, see the [SBBSliverFloatingHeaderBox.custom] constructor.
   const SBBSliverHeaderBox({
     super.key,
     this.leading,
@@ -87,11 +87,7 @@ class SBBSliverHeaderBox extends StatelessWidget {
     this.padding,
     this.style,
     this.semanticsLabel,
-    this.flapMode = .static,
-    this.snapStyle = defaultSnapStyle,
-    this.snapMode = .scroll,
-    this.resizing = true,
-    this.floating = true,
+    this.config,
     this.body,
     this.top,
   });
@@ -132,50 +128,57 @@ class SBBSliverHeaderBox extends StatelessWidget {
   /// {@macro sbb_design_system.header_box.style}
   final SBBHeaderBoxStyle? style;
 
+  /// A configuration for the sliver-specific behavior of the header box.
+  ///
+  /// Defaults to [SBBHeaderBoxConfig] with its default values.
+  final SBBSliverHeaderBoxConfig? config;
+
   /// {@macro sbb_design_system.header_box.semanticsLabel}
   final String? semanticsLabel;
 
-  final bool floating;
-  final bool resizing;
-
-  /// A widget that appears above the header box and will participate in the resize motion if [resizing] is enabled.
+  /// A widget displayed above the header box that participates in the resize
+  /// motion when [resizing] is enabled.
   ///
-  /// This may typically be a [SBBSegmentedButtonFilled].
+  /// This is useful for content such as a [SBBSegmentedButtonFilled] that
+  /// should visually belong to the header area while scrolling with it.
   final Widget? top;
 
   /// {@macro sbb_design_system.header_box.body}
   ///
-  /// You can use [SBBContractible] to make this part disappear on scroll.
+  /// You can use [SBBContractible] within this content to make parts of the
+  /// body collapse during scroll.
   final Widget? body;
 
-  /// Controls the way the headerbox snaps, i.e. if it scrolls the content or expands / contracts independently.
-  /// Defaults to [FloatingHeaderSnapMode.scroll].
-  final FloatingHeaderSnapMode snapMode;
-
-  /// Controls the speed and curve the headerbox uses when snapping to its contracted or expanded state.
-  /// Defaults to [defaultSnapStyle].
-  final AnimationStyle? snapStyle;
-
-  final SBBHeaderBoxFlapMode flapMode;
-
-  /// Allows you to expand the header box.
-  /// [context] is expected to be a descendant of the header box.
+  /// Expands the nearest ancestor sliver header box.
+  ///
+  /// The provided [context] must be a descendant of an [SBBSliverHeaderBox] or
+  /// [SBBSliverHeaderBoxLarge].
   static Future<void> expand(BuildContext context) async {
     await context.findAncestorStateOfType<_SnapTriggerState>()?.onSnapRequested(true);
   }
 
-  /// Allows you to contract the header box.
-  /// [context] is expected to be a descendant of the header box.
+  /// Contracts the nearest ancestor sliver header box.
+  ///
+  /// The provided [context] must be a descendant of an [SBBSliverHeaderBox] or
+  /// [SBBSliverHeaderBoxLarge].
   static Future<void> contract(BuildContext context) async {
     await context.findAncestorStateOfType<_SnapTriggerState>()?.onSnapRequested(false);
   }
 
+  /// Resolves the effective style for this sliver header box.
+  ///
+  /// The final style is built from the current theme and then overridden by the
+  /// widget-level [style], [margin], and [padding] values if provided.
   SBBHeaderBoxStyle _resolveStyle(BuildContext context) {
     return (Theme.of(context).sbbHeaderBoxTheme?.style ?? SBBHeaderBoxStyle())
         .merge(style)
         .copyWith(margin: margin, padding: padding);
   }
 
+  /// Builds the default content widget shown inside the header box.
+  ///
+  /// This resolves leading, title, subtitle, and trailing content using the
+  /// standard-sized header-box layout.
   Widget _resolveContent(BuildContext context) {
     return DefaultHeaderBoxContent(
       leading: leading,
@@ -198,16 +201,60 @@ class SBBSliverHeaderBox extends StatelessWidget {
       isLoading: isLoading,
       semanticsLabel: semanticsLabel,
       top: top,
-      snapStyle: snapStyle,
       style: _resolveStyle(context),
-      floating: floating,
-      resizing: resizing,
-      snapMode: snapMode,
-      flapMode: flapMode,
+      config: config ?? const SBBSliverHeaderBoxConfig(),
     );
   }
 }
 
+/// The large variant of [SBBSliverHeaderBox].
+///
+/// This widget behaves like [SBBSliverHeaderBox] but uses the large header-box
+/// content layout and the themed [SBBHeaderBoxThemeData.largeStyle].
+///
+/// The title row displays the icon besides the title and subtitle. Additional [body] content is
+/// rendered below this area.
+///
+/// [body] can be a [SBBContractible] or an [SBBCascadeColumn] and will behave accordingly.
+///
+/// {@macro sbb_design_system.header_box_description}
+///
+/// {@macro sbb_design_system.sliver_header_box_description}
+///
+/// ## Sample code
+///
+/// ```dart
+/// SBBSliverHeaderBoxLarge(
+///   leadingIconData: SBBIcons.train_small,
+///   titleText: 'Journey details',
+///   subtitleText: 'IC 3 to Zürich HB',
+///   body: SBBContractible(
+///     child: Padding(
+///       padding: const EdgeInsets.only(top: SBBSpacing.small),
+///       child: Text('Departure: 14:32'),
+///     ),
+///   ),
+/// )
+/// ```
+///
+/// See also:
+///
+///  * [SBBHeaderBoxLarge], for the normal RenderBox variant.
+///  * [SBBSliverHeaderBox], for the default variant.
+///  * [SBBHeaderBoxFlap], for flap content.
+///  * [SBBHeaderBoxStyle], for customizing the appearance.
+///  * [SBBHeaderBoxThemeData], for setting header box theme properties across your app.
+///  * [SBBCascadeColumn] and [SBBContractible], for ways to build contracting items.
+///  * [SBBSliverFloatingHeaderBoxSpacer], for a widget that should always come last in the list of slivers.
+///  * [Design Guidelines](https://digital.sbb.ch/de/design-system/mobile/components/header-box)
+///  * [Figma design specs](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?m=auto&node-id=192-861&t=rQTLXnChqHrpKLB4-1) (internal only)
+///
+/// ## Limitations & Considerations
+///
+/// This widget makes heavy use of intrinsics. This means two things:
+///
+/// - It is relatively expensive, see [IntrinsicHeight].
+/// - You cannot use [LayoutBuilder].
 class SBBSliverHeaderBoxLarge extends SBBSliverHeaderBox {
   const SBBSliverHeaderBoxLarge({
     super.key,
@@ -224,11 +271,6 @@ class SBBSliverHeaderBoxLarge extends SBBSliverHeaderBox {
     super.padding,
     super.style,
     super.semanticsLabel,
-    super.flapMode = .static,
-    super.snapStyle = defaultSnapStyle,
-    super.snapMode = .scroll,
-    super.resizing = true,
-    super.floating = true,
     super.top,
   });
 
@@ -262,12 +304,8 @@ class _BaseHeaderBox extends StatefulWidget {
     this.flap,
     required this.isLoading,
     required this.style,
+    required this.config,
     this.semanticsLabel,
-    required this.floating,
-    required this.resizing,
-    required this.snapMode,
-    this.snapStyle,
-    required this.flapMode,
   });
 
   final Widget? top;
@@ -278,15 +316,9 @@ class _BaseHeaderBox extends StatefulWidget {
   final bool isLoading;
 
   final SBBHeaderBoxStyle style;
+  final SBBSliverHeaderBoxConfig config;
 
   final String? semanticsLabel;
-
-  final bool floating;
-  final bool resizing;
-
-  final FloatingHeaderSnapMode snapMode;
-  final AnimationStyle? snapStyle;
-  final SBBHeaderBoxFlapMode flapMode;
 
   @override
   State<_BaseHeaderBox> createState() => _BaseHeaderBoxState();
@@ -304,7 +336,7 @@ class _BaseHeaderBoxState extends State<_BaseHeaderBox> with TickerProviderState
           semanticsLabel: widget.semanticsLabel,
           flap: widget.flap,
           isLoading: widget.isLoading,
-          flapMode: widget.flapMode,
+          flapMode: widget.config.flapMode,
           child: SBBCascadeColumn(
             children: [
               ?widget.content,
@@ -317,10 +349,10 @@ class _BaseHeaderBoxState extends State<_BaseHeaderBox> with TickerProviderState
 
     return SliverPinnedFloatingWidget(
       vsync: this,
-      animationStyle: widget.snapStyle ?? defaultSnapStyle,
-      snapMode: widget.snapMode,
-      resizing: widget.resizing,
-      floating: widget.floating,
+      animationStyle: widget.config.snapStyle,
+      snapMode: widget.config.snapMode,
+      resizing: widget.config.resizing,
+      floating: widget.config.floating,
       child: _SnapTrigger(
         child: children.singleOrNull ?? SBBCascadeColumn(children: children),
       ),
@@ -328,11 +360,17 @@ class _BaseHeaderBoxState extends State<_BaseHeaderBox> with TickerProviderState
   }
 }
 
+/// Internal widget that exposes imperative expand/contract behavior to
+/// descendants via [BuildContext].
+///
+/// It also listens to scroll activity and forwards updates to the sliver render
+/// object so snapping behavior can stay in sync with user interaction.
 class _SnapTrigger extends StatefulWidget {
   const _SnapTrigger({
     required this.child,
   });
 
+  /// The subtree wrapped by this snap trigger.
   final Widget child;
 
   @override
@@ -345,9 +383,14 @@ class _SnapTriggerState extends State<_SnapTrigger> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
+
+    // Remove the old scroll listener if the surrounding scrollable changed.
     if (position != null) {
       position!.isScrollingNotifier.removeListener(isScrollingListener);
     }
+
+    // Register with the nearest scrollable so we can forward scrolling updates
+    // to the sliver render object.
     position = Scrollable.maybeOf(context)?.position;
     if (position != null) {
       position!.isScrollingNotifier.addListener(isScrollingListener);
@@ -362,9 +405,13 @@ class _SnapTriggerState extends State<_SnapTrigger> {
     super.dispose();
   }
 
-  // Called when the sliver starts or ends scrolling.
+  /// Called whenever the surrounding scrollable starts or stops scrolling.
+  ///
+  /// The sliver render object uses this information to update its snapping
+  /// state. On web this is skipped because scroll notifications are unreliable
+  /// for this use case.
   void isScrollingListener() {
-    // Scrolling events are kind of broken on web
+    // Scrolling events are kind of broken on web.
     if (kIsWeb) return;
 
     assert(position != null);
@@ -385,7 +432,6 @@ class _SnapTriggerState extends State<_SnapTrigger> {
   Widget build(BuildContext context) => widget.child;
 }
 
-/// Widget that can be displayed above the headerbox and that will scroll along.
 class _Top extends StatelessWidget {
   const _Top({
     required this.child,

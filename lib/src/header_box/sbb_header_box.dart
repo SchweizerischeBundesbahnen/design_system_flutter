@@ -8,18 +8,66 @@ import 'header_box_inset.dart';
 
 /// The SBB Header-Box.
 ///
-/// Provides a flexible layout with optional leading, title, subtitle, trailing, and body widgets.
-/// The title and leading widgets are center-aligned vertically, with the subtitle positioned
-/// below them. The body can be used for additional content shown below the titles.
+/// A prominent container used to present page-related information at the top of
+/// a screen. It supports optional leading, title, subtitle, trailing, body, and
+/// flap content.
 ///
-/// Provide either [title] for custom content or [titleText] for text-only content with
-/// standard styling. These parameters are mutually exclusive.
+/// The title row aligns the [leading] and [title] vertically. If a subtitle is
+/// provided, it is displayed below the title row. Additional [body] content is
+/// rendered below the title/subtitle area.
 ///
+/// {@template sbb_design_system.header_box_description}
+/// Provide either [title] for fully custom title content or [titleText] for a
+/// simple text title with standard styling. These parameters are mutually
+/// exclusive.
 ///
+/// Optionally, provide either [subtitle] for fully custom subtitle content or
+/// [subtitleText] for a simple text subtitle with standard styling. These
+/// parameters are mutually exclusive.
+///
+/// Leading content can be supplied either as a custom widget via [leading] or
+/// as an icon via [leadingIconData]. These parameters are mutually exclusive.
+///
+/// When [flap] is provided, it is displayed below the header box as an attached
+/// extension area.
+///
+/// When [isLoading] is true, a loading indicator is displayed at the bottom of
+/// the header box.
+///
+/// Use [semanticsLabel] to provide an additional accessibility label announced
+/// by assistive technologies.
+/// {@endtemplate}
+///
+/// ## Sample code
+///
+/// ```dart
+/// SBBHeaderBox(
+///   leadingIconData: SBBIcons.train_small,
+///   titleText: 'Title',
+///   subtitleText: 'Subtitle',
+///   trailing: SBBTertiaryButtonSmall(
+///     icon: SBBIcons.pencil_small,
+///     onPressed: () {},
+///   ),
+/// )
+/// ```
+///
+/// ## Sample code with body and flap
+///
+/// ```dart
+/// SBBHeaderBox(
+///   titleText: 'Journey details',
+///   subtitleText: 'IC 3 to Zürich HB',
+///   body: Text('Departure: 14:32'),
+///   flap: SBBHeaderBoxFlap(
+///     labelText: 'Additional travel information',
+///   ),
+/// )
+/// ```
 ///
 /// ## Customization
 ///
-/// Use [style] to customize appearance for a specific header box, or
+/// Use [style] to customize the appearance of a single header box, or
 /// [SBBHeaderBoxThemeData] to apply consistent styling across your app:
 ///
 /// ```dart
@@ -36,6 +84,7 @@ import 'header_box_inset.dart';
 ///
 ///  * [SBBHeaderBoxLarge], for a larger variant.
 ///  * [SBBSliverHeaderBox], for a sliver variant that can be used inside scroll views.
+///  * [SBBHeaderBoxFlap], for flap content.
 ///  * [SBBHeaderBoxStyle], for customizing the appearance.
 ///  * [SBBHeaderBoxThemeData], for setting header box theme properties across your app.
 ///  * [Design Guidelines](https://digital.sbb.ch/de/design-system/mobile/components/header-box)
@@ -67,7 +116,7 @@ class SBBHeaderBox extends StatelessWidget {
   ///
   /// For simple icons, use [leadingIconData] instead.
   ///
-  /// The Widget is vertically centered with [titleText] or [title].
+  /// The widget is vertically centered with [titleText] or [title].
   ///
   /// Cannot be used together with [leadingIconData].
   /// {@endtemplate}
@@ -124,16 +173,19 @@ class SBBHeaderBox extends StatelessWidget {
   /// {@template sbb_design_system.header_box.trailing}
   /// A custom widget displayed as the header box's trailing content.
   ///
-  /// This generally is a [SBBTertiaryButtonSmall].
+  /// This is commonly an action widget such as [SBBTertiaryButtonSmall].
   ///
-  /// [trailing] is vertically centered relative to the header box.
+  /// The trailing widget is vertically centered relative to the header box
+  /// title row.
   /// {@endtemplate}
   final Widget? trailing;
 
   /// {@template sbb_design_system.header_box.body}
   /// A custom widget displayed as the body of the header box.
   ///
-  /// This will be displayed below the title and subtitle, if any are set.
+  /// This content is rendered below the title/subtitle section, if present.
+  ///
+  /// The body can also be used on its own when no title is provided.
   /// {@endtemplate}
   final Widget? body;
 
@@ -142,14 +194,15 @@ class SBBHeaderBox extends StatelessWidget {
   ///
   /// You may use [SBBHeaderBoxFlap] to achieve the default look.
   ///
-  /// When not set, no flap will be displayed.
+  /// When not set, no flap is displayed.
   /// {@endtemplate}
   final Widget? flap;
 
   /// {@template sbb_design_system.header_box.isLoading}
   /// Whether to show a loading indicator at the bottom of the header box.
   ///
-  /// When true, a [BottomLoadingIndicator] is displayed at the bottom of the header box.
+  /// When true, a [BottomLoadingIndicator] is displayed at the bottom of the
+  /// header box.
   ///
   /// Defaults to false.
   /// {@endtemplate}
@@ -158,31 +211,32 @@ class SBBHeaderBox extends StatelessWidget {
   /// {@template sbb_design_system.header_box.margin}
   /// The empty space that surrounds the header box.
   ///
-  /// If this property is null then [SBBHeaderBoxStyle.margin] is used.
+  /// If this property is null, [SBBHeaderBoxStyle.margin] is used.
   /// {@endtemplate}
   final EdgeInsetsGeometry? margin;
 
   /// {@template sbb_design_system.header_box.padding}
-  /// The empty space that separates the [child] and the edge of [SBBContentBox].
+  /// The empty space between the header box content and its outer container.
   ///
-  /// If this property is null then [SBBHeaderBoxStyle.padding] is used.
+  /// If this property is null, [SBBHeaderBoxStyle.padding] is used.
   /// {@endtemplate}
   final EdgeInsetsGeometry? padding;
 
   /// {@template sbb_design_system.header_box.style}
-  /// Customizes this header box appearance.
+  /// Customizes this header box's appearance.
   ///
-  /// Non-null properties of this style override the corresponding
-  /// properties in [SBBHeaderBoxThemeData.style] of the theme found in [context].
+  /// Non-null properties of this style override the corresponding properties
+  /// in [SBBHeaderBoxThemeData.style] from the current theme.
   /// {@endtemplate}
   final SBBHeaderBoxStyle? style;
 
   /// {@template sbb_design_system.header_box.semanticsLabel}
-  /// The semantic label for the header box that will be announced by screen readers.
+  /// The semantic label for the header box announced by screen readers.
   ///
-  /// This is announced by assistive technologies (e.g TalkBack/VoiceOver).
+  /// This is exposed to assistive technologies such as TalkBack and
+  /// VoiceOver.
   ///
-  /// This label does not show in the UI.
+  /// This label is not shown in the UI.
   /// {@endtemplate}
   final String? semanticsLabel;
 
@@ -240,6 +294,55 @@ class SBBHeaderBox extends StatelessWidget {
   }
 }
 
+/// The SBB Header-Box in its large variant.
+///
+/// A prominent container used to present page-related information at the top of
+/// a screen. It supports optional leading, title, subtitle, trailing, body, and
+/// flap content.
+///
+/// The title row displays the icon besides the title and subtitle. Additional [body] content is
+/// rendered below this area.
+///
+/// {@macro sbb_design_system.header_box_description}
+///
+/// ## Sample code
+///
+/// ```dart
+/// SBBHeaderBoxLarge(
+///   leadingIconData: SBBIcons.train_small,
+///   titleText: 'Title',
+///   subtitleText: 'Subtitle',
+///   trailing: SBBTertiaryButtonSmall(
+///     icon: SBBIcons.pencil_small,
+///     onPressed: () {},
+///   ),
+/// )
+/// ```
+///
+/// ## Customization
+///
+/// Use [style] to customize the appearance of a single header box, or
+/// [SBBHeaderBoxThemeData.largeStyle] to apply consistent styling across your app:
+///
+/// ```dart
+/// SBBHeaderBoxLarge(
+///   leadingIconData: SBBIcons.unicorn_small,
+///   titleText: 'Title',
+///   style: SBBHeaderBoxStyle(
+///     titleForegroundColor: Colors.white,
+///   ),
+/// )
+/// ```
+///
+/// See also:
+///
+///  * [SBBHeaderBox], for the default-sized variant.
+///  * [SBBSliverHeaderBoxLarge], for a sliver variant that can be used inside scroll views.
+///  * [SBBHeaderBoxFlap], for styled flap content.
+///  * [SBBHeaderBoxStyle], for customizing the appearance.
+///  * [SBBHeaderBoxThemeData], for setting header box theme properties across your app.
+///  * [Design Guidelines](https://digital.sbb.ch/de/design-system/mobile/components/header-box)
+///  * [Figma design specs](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?m=auto&node-id=192-861&t=rQTLXnChqHrpKLB4-1) (internal only)
 class SBBHeaderBoxLarge extends SBBHeaderBox {
   const SBBHeaderBoxLarge({
     super.key,

@@ -23,16 +23,18 @@ class _FloatingPageState extends State<FloatingPage> {
         child: CustomScrollView(
           slivers: [
             SBBSliverHeaderBox(
-              resizing: resizing,
               padding: .zero,
               flap: _flap(),
-              flapMode: .hideable,
               body: SBBCascadeColumn(
                 children: [
                   _crossfadeExample(context),
                   _additionalRowsSwitcher(context),
                   _contractibleExample(sbbToast),
                 ],
+              ),
+              config: SBBSliverHeaderBoxConfig(
+                resizing: resizing,
+                flapMode: .hideable,
               ),
             ),
             SliverList.builder(
