@@ -89,6 +89,7 @@ BEGIN {
   if (!unreleased_found && $0 ~ /^## /) {
     # no unreleased section found
     $0 = "## Unreleased\n\n### Changed\n\n- (auto): updated icon lib to version " version "\n\n" $0
+    entry_added = 1
   }
 
   print $0
