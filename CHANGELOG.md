@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 It is expected that you keep this format strictly, since we depend on it in our release workflow.
 
+## Unreleased
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.21
+
 ## [4.11.0] - 2026-04-13
 
 ### Deprecated
@@ -16,6 +22,12 @@ It is expected that you keep this format strictly, since we depend on it in our 
 ### Changed
 
 - (auto): updated icon lib to version 1.8.20
+
+## Unreleased
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.21
 
 ## [4.10.0] - 2026-03-30
 
@@ -27,11 +39,23 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 - `SBBHeaderbox`: Remove `MergeSemantics` allowing accessibility
 
+## Unreleased
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.21
+
 ## [4.9.0] - 2026-03-23
 
 ### Changed
 
 - (auto): updated icon lib to version 1.8.17
+
+## Unreleased
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.21
 
 ## [4.8.0] - 2026-03-05
 
@@ -43,6 +67,12 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 - deprecated `SBBOnboarding` as it is no part of the official design system and will be removed in v5
 
+## Unreleased
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.21
+
 ## [4.7.0] - 2026-02-17
 
 ### Changed
@@ -52,6 +82,12 @@ It is expected that you keep this format strictly, since we depend on it in our 
 ### Fixed
 
 - `SBBSliverFloatingHeaderbox`: Fixed an issue with the crossfade showing the wrong widget.
+
+## Unreleased
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.21
 
 ## [4.6.0] - 2026-02-10
 
@@ -66,6 +102,12 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 - Corrected color for `royalDark` (0xFF4077DF to 0xFF0053EF)
 
+## Unreleased
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.21
+
 ## [4.5.0] - 2026-01-19
 
 ### Added
@@ -79,6 +121,12 @@ It is expected that you keep this format strictly, since we depend on it in our 
 ### Fixed
 
 - `SBBIconButtonSmall`: `key` parameter is correctly handled in parent class (#473)
+
+## Unreleased
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.21
 
 ## [4.4.0] - 2025-12-18
 
@@ -95,12 +143,24 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - `SBBGroup`: use `SBBContentBox` instead
 - `SBBGroupStyle`: use `SBBContentBoxStyle` instead
 
+## Unreleased
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.21
+
 ## [4.3.1] - 2025-11-21
 
 ### Fixed
 
 - `SBBTextTheme`: Fixed return type of `ThemeData` extension getter
 - drop support for Flutter SDK 3.29.x
+
+## Unreleased
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.21
 
 ## [4.3.0] - 2025-11-14
 
@@ -125,6 +185,12 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 - Deprecated `SBBAccordion`, `SBBAccordionItem`, `AccordionCallback`, and `SingleAccordionCallback` as they are no longer part of the design specifications
 
+## Unreleased
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.21
+
 ## [4.2.0] - 2025-10-03
 
 ### Added
@@ -146,6 +212,12 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - `SBBTabBar`: properly clips icons as they get selected / unselected
 - keyboard focus for `SBBTabBar`
 
+## Unreleased
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.21
+
 ## [4.1.0] - 2025-08-22
 
 ### Changed
@@ -158,6 +230,12 @@ It is expected that you keep this format strictly, since we depend on it in our 
 ### Fixed
 
 - `SBBGroup`: clip behavior is respected - default ClipBehavior.hard
+
+## Unreleased
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.21
 
 ## [4.0.0] - 2025-07-14
 
@@ -186,6 +264,12 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - removed `toastTextStyle` from `SBBControlStyles` in favor of `SBBToastStyle`
 - removed `groupBackgroundColor` from `SBBControlStyles`
 
+## Unreleased
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.21
+
 ## [3.2.0] - 2025-06-23
 
 ### Added
@@ -202,12 +286,24 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - deprecated `badgeColor`, `badgeShadowColor` and `gradientColors` of `SBBPromotionBox.custom` constructor in favor of
   `style`
 
+## Unreleased
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.21
+
 ## [3.1.0] - 2025-05-22
 
 ### Changed
 
 - updated the SBB Icons version to 1.6.2
 - Dropped support for `Flutter SDK 3.24.5`: minimum supported version is 3.27.0
+
+## Unreleased
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.21
 
 ## [3.0.0] - 2025-04-24
 
@@ -238,6 +334,12 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 - fixed `onChanged` of `SBBAutocompletion` (#304)
 
+## Unreleased
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.21
+
 ## [2.3.0] - 2025-03-04
 
 ### Added
@@ -259,6 +361,12 @@ It is expected that you keep this format strictly, since we depend on it in our 
 ### Fixed
 
 - fixed all wrong font weights of existing textStyles in `SBBTextStyles` via switching font family
+
+## Unreleased
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.21
 
 ## [2.2.0] - 2025-01-14
 
@@ -301,11 +409,23 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Deprecated `SBBRadioButton` in favor of `SBBRadio`
 - Deprecated `SBBRadioButtonListItem` in favor of `SBBRadioListItem`
 
+## Unreleased
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.21
+
 ## [2.1.1] - 2024-12-14
 
 ### Fixed
 
 - `SafeArea` is applied to content of `showSBBModalSheet` - not to the sheet itself
+
+## Unreleased
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.21
 
 ## [2.1.0] - 2024-12-13
 
@@ -333,6 +453,12 @@ It is expected that you keep this format strictly, since we depend on it in our 
   - `SBBIconButtonSmall`
   - `SBBIconButtonLarge`
 - `iconColor` in `SBBButtonStyle` is correctly overriden to support Flutter SDK >=3.27.0
+
+## Unreleased
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.21
 
 ## [2.0.0] - 2024-09-06
 
@@ -396,6 +522,12 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 - Removed deprecated `SBBIconTextButton`
 
+## Unreleased
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.21
+
 ## [1.6.0] - 2024-09-04
 
 ### Changed
@@ -411,6 +543,12 @@ It is expected that you keep this format strictly, since we depend on it in our 
   - `SBBUserMenu`
   - `SBBCard`
   - `SBBSidebar`
+
+## Unreleased
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.21
 
 ## [1.5.0] - 2024-08-15
 
@@ -443,6 +581,12 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 - (#113) `SBBTimePicker`: Added support for time ranges that span over midnight
 
+## Unreleased
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.21
+
 ## [1.4.0] - 2024-06-07
 
 ### Added
@@ -456,6 +600,12 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 - (#130) using icons from CDN version `0.1.81`
 - (#137) use [flutter\_lints](https://pub.dev/packages/flutter_lints) instead of outdated dart linter
+
+## Unreleased
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.21
 
 ## [1.3.0] - 2024-05-30
 
@@ -477,6 +627,12 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - (#115) Golden Tests by replacing golden\_toolkit package.
 - (#114) Support Flutter 3.22 by replacing `TextTheme.subtitle` getter.
 
+## Unreleased
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.21
+
 ## [1.2.0] - 2023-12-19
 
 ### Added
@@ -488,6 +644,12 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - (#57) Added `SBBDatePicker`
 - (#57) Added `SBBTimePicker`
 - (#57) Added `SBBDateTimePicker`
+
+## Unreleased
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.21
 
 ## [1.1.0] - 2023-09-01
 
@@ -518,6 +680,12 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 - (#83) `SBBTabBar`: Fixed bug where animations were not symmetric
 
+## Unreleased
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.21
+
 ## [1.0.0] - 2023-05-26
 
 ### Added
@@ -531,6 +699,12 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - (#62) `SBBColors`: Changed color `green` to match current specifications
 - `SBBOnboarding`: Changed screen reader behaviour
 
+## Unreleased
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.21
+
 ## [0.7.1] - 2023-01-19
 
 ### Fixed
@@ -538,6 +712,12 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - `SBBIconTextButton`: Button is not clickable anymore when disabled
 - `SBBSelect`: No pixel overflow when using larger font
 - `SBBAutocompletion`: Corrected colors
+
+## Unreleased
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.21
 
 ## [0.7.0] - 2022-11-25
 
@@ -565,11 +745,23 @@ It is expected that you keep this format strictly, since we depend on it in our 
   introduced in Flutter 3
 - `SBBLeanLogo` renamed to `SBBWebLogo`
 
+## Unreleased
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.21
+
 ## [0.6.0] - 2022-05-19
 
 ### Changed
 
 - Migration to Flutter 3.0.0
+
+## Unreleased
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.21
 
 ## [0.5.0] - 2022-05-19
 
@@ -616,6 +808,12 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 - `SBBCheckboxListItem`: Added missing bottom padding for multiline without secondary label
 
+## Unreleased
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.21
+
 ## [0.4.0] - 2022-05-19
 
 ### Added
@@ -641,6 +839,12 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 - `SBBModalSheet`: Fine line that sometimes was visible below the header is now gone
 
+## Unreleased
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.21
+
 ## [0.3.0] - 2021-07-29
 
 ### Added
@@ -650,6 +854,12 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - `SBBIcons`: Added new small and medium icons
 
 ***
+
+## Unreleased
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.21
 
 ## [0.2.0] - 2021-06-08
 
@@ -731,6 +941,12 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ***
 
+## Unreleased
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.21
+
 ## [0.1.0] - 2021-02-05
 
 ### Added
@@ -743,6 +959,12 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ***
 
+## Unreleased
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.21
+
 ## [0.0.2] - 2021-01-15
 
 ### Added
@@ -754,6 +976,12 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Changed a lot
 
 ***
+
+## Unreleased
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.21
 
 ## [0.0.1] - 2020-05-29
 
