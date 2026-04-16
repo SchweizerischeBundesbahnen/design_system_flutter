@@ -90,7 +90,10 @@ class SBBSliverHeaderBox extends StatelessWidget {
     this.config,
     this.body,
     this.top,
-  });
+  }) : assert(title != null || titleText != null || body != null, 'Either title or titleText or body must be provided'),
+       assert(title == null || titleText == null, 'Only one of title or titleText can be set'),
+       assert(subtitle == null || subtitleText == null, 'Only one of subtitle or subtitleText can be set'),
+       assert(leading == null || leadingIconData == null, 'Only one of leading or leadingIconData can be set');
 
   /// {@macro sbb_design_system.header_box.leading}
   final Widget? leading;
