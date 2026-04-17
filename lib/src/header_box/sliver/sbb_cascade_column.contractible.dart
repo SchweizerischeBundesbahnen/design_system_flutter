@@ -98,6 +98,9 @@ class SBBContractible extends StatefulWidget {
   /// become.
   ///
   /// If null, the minimum intrinsic height is not overridden.
+  /// This allows for custom transitions like [SBBContractibleCrossfade].
+  ///
+  /// Defaults to 0, meaning that the widget will contract fully.
   final double? minHeight;
 
   /// The maximum intrinsic height reported by this widget.
@@ -233,14 +236,18 @@ class _SBBContractibleState extends State<SBBContractible> {
 /// [contractedChild]. This enables more fluid transitions, but also means that
 /// [expandedChild] must be able to handle reduced vertical space.
 ///
+/// {@template sbb_design_system.contractible_crossfade.caveat}
 /// If [expandedChild] cannot shrink gracefully, consider wrapping it in an
-/// [OverflowBox] with its height set to [double.infinity].
+/// [OverflowBox] with its max height set to [double.infinity].
 ///
 /// The [expandedChild] is expected to be taller than [contractedChild]. If that
 /// is not the case, the visual result is undefined.
+/// {@endtemplate}
 class SBBContractibleCrossfade extends StatelessWidget {
   /// Creates a widget that crossfades between an expanded and a contracted
   /// child during contraction.
+  ///
+  /// {@macro sbb_design_system.contractible_crossfade.caveat}
   const SBBContractibleCrossfade({
     super.key,
     required this.contractedChild,

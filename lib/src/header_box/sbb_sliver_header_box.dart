@@ -336,7 +336,7 @@ class _BaseHeaderBoxState extends State<_BaseHeaderBox> with TickerProviderState
   @override
   Widget build(BuildContext context) {
     final children = [
-      if (widget.top != null) _Top(child: widget.top!),
+      if (widget.top != null) _Top(mode: widget.config.topMode, child: widget.top!),
       HeaderBoxAppBarInset(
         style: widget.style,
         child: HeaderBoxForeground(
@@ -443,19 +443,33 @@ class _SnapTriggerState extends State<_SnapTrigger> {
 class _Top extends StatelessWidget {
   const _Top({
     required this.child,
+    required this.mode,
   });
 
   final Widget child;
+  final SBBHeaderBoxTopMode mode;
 
   @override
   Widget build(BuildContext context) {
     final appBarTheme = Theme.of(context).appBarTheme;
-    return SBBContractible(
-      behavior: .displace,
-      child: Container(
-        color: appBarTheme.backgroundColor,
-        child: child,
-      ),
+
+    Widget widget = child;
+
+    if (mode == .contractible) {
+      widget = SBBCascadeColumn(children: [child]);
+    }
+
+    widget = Container(
+      color: appBarTheme.backgroundColor,
+      child: widget,
     );
+
+    return switch (mode) {
+      .static || .contractible => widget,
+      .hideable => SBBContractible(
+        behavior: .displace,
+        child: widget,
+      ),
+    };
   }
 }

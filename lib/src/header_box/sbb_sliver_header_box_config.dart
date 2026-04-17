@@ -1,11 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// Defines how the flap attached to a sliver header box behaves during scroll.
 ///
 /// * [static] keeps the flap visible without changing its size.
-/// * [resizable] lets the flap participate in the resize motion.
+/// * [contractible] lets the flap participate in the resize motion, i.e. it can be wrapped in a [SBBContractible].
 /// * [hideable] allows the flap to be hidden during contraction, i.e. slide under the header box.
-enum SBBHeaderBoxFlapMode { static, resizable, hideable }
+enum SBBHeaderBoxFlapMode { static, contractible, hideable }
+
+/// Defines how the top widget above a sliver header box behaves during scroll.
+///
+/// * [static] keeps the top widget visible without changing its size.
+/// * [contractible] lets the top widget participate in the resize motion, i.e. it can be wrapped in a [SBBContractible].
+/// * [hideable] allows the top widget to be hidden during contraction, i.e. slide under the app bar.
+enum SBBHeaderBoxTopMode { static, contractible, hideable }
 
 /// A config for the sliver-specific behavior of [SBBSliverHeaderBox].
 @immutable
@@ -21,6 +29,7 @@ class SBBSliverHeaderBoxConfig {
       reverseCurve: Curves.linear,
     ),
     this.flapMode = .static,
+    this.topMode = .hideable,
   });
 
   /// Whether this header box should float into view when the user scrolls up.
@@ -57,4 +66,9 @@ class SBBSliverHeaderBoxConfig {
   ///
   /// Defaults to [SBBHeaderBoxFlapMode.static].
   final SBBHeaderBoxFlapMode flapMode;
+
+  /// Defines how the optional widget on top of the header box behaves while the sliver header box resizes.
+  ///
+  /// Defaults to [SBBHeaderBoxTopMode.hideable].
+  final SBBHeaderBoxTopMode topMode;
 }
