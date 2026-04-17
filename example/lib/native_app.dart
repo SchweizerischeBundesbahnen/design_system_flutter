@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_design_system_mobile_example/pages/form_page.dart';
 import 'package:flutter_design_system_mobile_example/pages/illustration_page.dart';
 import 'package:flutter_design_system_mobile_example/pages/scaffold/theme_sliver_header_box.dart';
+import 'package:flutter_design_system_mobile_example/pages/slide_to_toggle_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
@@ -147,6 +148,7 @@ class MyApp extends StatelessWidget {
             _DemoEntry('Popup', PopupPage()),
             _DemoEntry('Radio', RadioPage()),
             _DemoEntry('Segmented Button', SegmentedButtonPage()),
+            _DemoEntry('Slide-To-Toggle', SlideToTogglePage()),
             _DemoEntry('Switch', SwitchPage()),
             _DemoEntry('Text Input', TextInputPage()),
             _DemoEntry('Text Area', TextAreaPage()),

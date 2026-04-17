@@ -14,6 +14,7 @@ import 'package:sbb_design_system_mobile/src/paginator/theme/default_sbb_paginat
 import 'package:sbb_design_system_mobile/src/picker/theme/default_sbb_picker_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/popup/theme/default_sbb_popup_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/radio/theme/default_sbb_radio_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/slide_to_toggle/theme/default_sbb_slide_to_toggle_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/slider/theme/default_sbb_slider_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/stepper/theme/default_sbb_stepper_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/switch/theme/default_sbb_switch_theme_data.dart';
@@ -101,6 +102,7 @@ class SBBTheme {
     SBBStatusThemeData? statusTheme,
     SBBSegmentedButtonThemeData? segmentedButtonTheme,
     SBBSliderThemeData? sliderTheme,
+    SBBSlideToToggleThemeData? slideToToggleTheme,
     SBBStepperThemeData? stepperTheme,
     SBBSwitchThemeData? switchTheme,
     SBBTabBarThemeData? tabBarTheme,
@@ -173,6 +175,7 @@ class SBBTheme {
     SBBStatusThemeData? statusTheme,
     SBBSegmentedButtonThemeData? segmentedButtonTheme,
     SBBSliderThemeData? sliderTheme,
+    SBBSlideToToggleThemeData? slideToToggleTheme,
     SBBStepperThemeData? stepperTheme,
     SBBSwitchThemeData? switchTheme,
     SBBTabBarThemeData? tabBarTheme,
@@ -246,6 +249,7 @@ class SBBTheme {
     SBBRadioThemeData? radioTheme,
     SBBSegmentedButtonThemeData? segmentedButtonTheme,
     SBBSliderThemeData? sliderTheme,
+    SBBSlideToToggleThemeData? slideToToggleTheme,
     SBBStatusThemeData? statusTheme,
     SBBSwitchThemeData? switchTheme,
     SBBTabBarThemeData? tabBarTheme,
@@ -322,6 +326,9 @@ class SBBTheme {
     final defaultSliderTheme = DefaultSBBSliderThemeData(mergedBaseStyle);
     final mergedSliderTheme = defaultSliderTheme.merge(sliderTheme);
 
+    final defaultSlideToToggleTheme = DefaultSBBSlideToToggleThemeData(mergedBaseStyle);
+    final mergedSlideToToggleTheme = defaultSlideToToggleTheme.merge(slideToToggleTheme);
+
     final defaultSwitchTheme = DefaultSBBSwitchThemeData(mergedBaseStyle);
     final mergedSwitchTheme = defaultSwitchTheme.merge(switchTheme);
 
@@ -378,6 +385,7 @@ class SBBTheme {
       statusTheme: mergedStatusTheme,
       segmentedButtonTheme: mergedSegmentedButtonTheme,
       sliderTheme: mergedSliderTheme,
+      slideToToggleTheme: mergedSlideToToggleTheme,
       stepperTheme: mergedStepperTheme,
       switchTheme: mergedSwitchTheme,
       tabBarTheme: mergedTabBarTheme,
@@ -412,6 +420,7 @@ class SBBTheme {
     required SBBStatusThemeData statusTheme,
     required SBBSegmentedButtonThemeData segmentedButtonTheme,
     required SBBSliderThemeData sliderTheme,
+    required SBBSlideToToggleThemeData slideToToggleTheme,
     required SBBStepperThemeData stepperTheme,
     required SBBSwitchThemeData switchTheme,
     required SBBTabBarThemeData tabBarTheme,
@@ -463,6 +472,7 @@ class SBBTheme {
         statusTheme,
         segmentedButtonTheme,
         sliderTheme,
+        slideToToggleTheme,
         stepperTheme,
         switchTheme,
         tabBarTheme,
