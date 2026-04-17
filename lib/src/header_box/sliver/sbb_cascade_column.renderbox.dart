@@ -59,13 +59,11 @@ class _RenderCascadeColumn extends RenderBox
     final totalRange = _maxExtent - _minExtent;
     final totalProgress = totalRange > 0 ? (currentExtent - _minExtent) / totalRange : 1.0;
 
-    var usedHeight = 0.0;
-
     // First pass to determine sizes
     while (child != null) {
       final parentData = child.parentData! as _CascadeColumnParentData;
 
-      var (minHeight, maxHeight) = _getMinMaxHeights(child);
+      final (minHeight, maxHeight) = _getMinMaxHeights(child);
       if (pixelsToShrink > 0 && minHeight < maxHeight) {
         // Child can be shrunk
         final height = math.max(minHeight, maxHeight - pixelsToShrink);
@@ -91,8 +89,6 @@ class _RenderCascadeColumn extends RenderBox
           parentUsesSize: true,
         );
       }
-
-      usedHeight += child.size.height;
 
       _queueStateUpdate(
         parentData,

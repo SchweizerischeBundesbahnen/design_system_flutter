@@ -10,7 +10,7 @@ class HeaderBoxForeground extends StatelessWidget {
     required this.style,
     this.semanticsLabel,
     this.flap,
-    this.flapMode = SBBHeaderBoxFlapMode.static,
+    this.flapMode = .static,
     this.isLoading = false,
   });
 
@@ -55,7 +55,7 @@ class HeaderBoxForeground extends StatelessWidget {
             flap,
           ],
         );
-      case .resizable:
+      case .contractible:
         return SBBCascadeColumn(
           children: [
             content,
