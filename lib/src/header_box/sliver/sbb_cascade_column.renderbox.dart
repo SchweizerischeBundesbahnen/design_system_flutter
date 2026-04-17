@@ -64,16 +64,8 @@ class _RenderCascadeColumn extends RenderBox
     // First pass to determine sizes
     while (child != null) {
       final parentData = child.parentData! as _CascadeColumnParentData;
-      final isFirst = parentData.previousSibling == null;
 
       var (minHeight, maxHeight) = _getMinMaxHeights(child);
-      if (isFirst) {
-        // Compensate for the case when the minHeight constraint is smaller than
-        // our desired minHeight.
-        minHeight = math.max(minHeight, constraints.minHeight - usedHeight);
-        maxHeight = math.max(maxHeight, minHeight);
-      }
-
       if (pixelsToShrink > 0 && minHeight < maxHeight) {
         // Child can be shrunk
         final height = math.max(minHeight, maxHeight - pixelsToShrink);
@@ -150,7 +142,7 @@ class _RenderCascadeColumn extends RenderBox
     final width = constraints.maxWidth > _kSmallValue ? constraints.maxWidth : double.infinity;
 
     _maxExtent = getMaxIntrinsicHeight(width);
-    _minExtent = max(getMinIntrinsicHeight(width), constraints.minHeight);
+    _minExtent = getMinIntrinsicHeight(width);
   }
 
   (double, double) _getMinMaxHeights(RenderBox child) {

@@ -7,7 +7,7 @@ export 'src/container/container.dart';
 export 'src/decorated_text/decorated_text.dart';
 export 'src/dropdown/dropdown.dart';
 export 'src/header/header.dart';
-export 'src/headerbox/headerbox.dart';
+export 'src/header_box/header_box.dart';
 export 'src/illustration/sbb_illustration.dart';
 export 'src/input/input.dart';
 export 'src/list_header/list_header.dart';

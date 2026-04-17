@@ -22,6 +22,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ### Changed
 
+- BREAKING: overhauled `SBBHeaderBox` - see [v5 migration guide]
 - BREAKING: overhauled `SBBBaseStyle` - see [v5 migration guide]
 - BREAKING: overhauled all button variants - see [v5 migration guide]
 - BREAKING: overhauled `SBBCheckbox` - see [v5 migration guide]
