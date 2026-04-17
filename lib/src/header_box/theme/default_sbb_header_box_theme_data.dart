@@ -11,9 +11,9 @@ class DefaultSBBHeaderBoxThemeData extends SBBHeaderBoxThemeData {
         ),
         flapStyle: SBBHeaderBoxFlapStyle(
           iconSize: 20,
-          labelForegroundColor: baseStyle.themeValue(SBBColors.black, SBBColors.white),
-          leadingForegroundColor: baseStyle.themeValue(SBBColors.black, SBBColors.white),
-          trailingForegroundColor: baseStyle.themeValue(SBBColors.black, SBBColors.white),
+          labelForegroundColor: baseStyle.colorScheme.defaultTextColor,
+          leadingForegroundColor: baseStyle.colorScheme.iconColor,
+          trailingForegroundColor: baseStyle.colorScheme.iconColor,
           labelTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallLight),
           padding: EdgeInsets.fromLTRB(SBBSpacing.medium, SBBSpacing.xSmall, SBBSpacing.medium, SBBSpacing.xSmall),
         ),

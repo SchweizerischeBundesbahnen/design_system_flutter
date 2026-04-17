@@ -2,31 +2,30 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/src/header_box/header_box_content.dart';
 import 'package:sbb_design_system_mobile/src/header_box/header_box_foreground.dart';
-import 'package:sbb_design_system_mobile/src/header_box/header_box_inset.dart';
 
 import '../../sbb_design_system_mobile.dart';
+import 'header_box_app_bar_inset.dart';
 import 'sliver/sliver_pinned_floating_widget.dart';
 
-/// A floating, expanding, and contracting version of [SBBHeaderBox].
+/// A floating version of [SBBHeaderBox].
 ///
-/// This widget behaves similarly to [SBBHeaderBox], but is designed for use
-/// inside sliver-based scroll views. It supports floating behavior as well as
-/// animated expansion and contraction while scrolling.
+/// This widget behaves similarly to [SBBHeaderBox], but is designed for use inside custom scroll views.
+/// It supports floating behavior as well as transitioning its own size depending on scrolling and its [body] argument.
 ///
-/// The title row aligns the [leading] and [title] vertically. If a subtitle is
-/// provided, it is displayed below the title row. Additional [body] content is
-/// rendered below the title/subtitle area.
+/// The title row aligns the [leading] and [title] vertically. If a subtitle is provided, it is displayed below the
+/// title row. Additional [body] content is rendered below the title/subtitle area.
 ///
 /// [body] can be a [SBBContractible] or an [SBBCascadeColumn] and will behave accordingly.
+/// When using a contractible widget, make sure to add [SBBSliverHeaderBoxSpacer] at the end of your list of slivers.
 ///
 /// {@macro sbb_design_system.header_box_description}
 ///
 /// {@template sbb_design_system.sliver_header_box_description}
-/// To achieve the resizing effect, this widget transitions between the minimum
-/// and maximum intrinsic heights of its content.
+/// To achieve the resizing effect, this widget transitions between the minimum and maximum intrinsic heights of its
+/// subtree.
 /// {@endtemplate}
 ///
-/// ## Sample code with dynamic body
+/// ## Sample code with a dynamic body
 ///
 /// ```dart
 /// SBBSliverHeaderBox(
@@ -42,14 +41,20 @@ import 'sliver/sliver_pinned_floating_widget.dart';
 /// ## Sample code with complete customization
 ///
 /// ```dart
-/// SBBSliverHeaderBox(
-///   body: SBBCascadeColumn(
-///     children: [
-///       Text('First line'),
-///       SBBContractible(child: Text('Second line', behavior: .clip)),
-///       SBBContractible(child: Text('Third line', behavior: .displace)),
-///     ],
-///   ),
+/// CustomScrollView(
+///   slivers: [
+///     SBBSliverHeaderBox(
+///       body: SBBCascadeColumn(
+///         children: [
+///           Text('First line'),
+///           SBBContractible(child: Text('Second line', behavior: .clip)),
+///           SBBContractible(child: Text('Third line', behavior: .displace)),
+///         ],
+///       ),
+///     ),
+///     // ...
+///     const SBBSliverHeaderBoxSpacer(),
+///   ]
 /// )
 /// ```
 ///
@@ -140,7 +145,7 @@ class SBBSliverHeaderBox extends StatelessWidget {
   final String? semanticsLabel;
 
   /// A widget displayed above the header box that participates in the resize
-  /// motion when [resizing] is enabled.
+  /// motion when [config.resizing] is enabled.
   ///
   /// This is useful for content such as a [SBBSegmentedButtonFilled] that
   /// should visually belong to the header area while scrolling with it.
@@ -183,7 +188,7 @@ class SBBSliverHeaderBox extends StatelessWidget {
   /// This resolves leading, title, subtitle, and trailing content using the
   /// standard-sized header-box layout.
   Widget _resolveContent(BuildContext context) {
-    return DefaultHeaderBoxContent(
+    return HeaderBoxContent(
       leading: leading,
       leadingIconData: leadingIconData,
       title: title,
@@ -343,7 +348,7 @@ class _BaseHeaderBoxState extends State<_BaseHeaderBox> with TickerProviderState
           child: SBBCascadeColumn(
             children: [
               ?widget.content,
-              if (widget.body != null) widget.body!,
+              ?widget.body,
             ],
           ),
         ),

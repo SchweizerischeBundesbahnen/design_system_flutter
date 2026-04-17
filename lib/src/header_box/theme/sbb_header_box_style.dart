@@ -47,10 +47,10 @@ class SBBHeaderBoxStyle {
       titleTextStyle: baseStyle.themedTextStyle(
         textStyle: SBBTextStyles.mediumBold.copyWith(overflow: TextOverflow.ellipsis),
       ),
-      titleForegroundColor: baseStyle.themeValue(SBBColors.black, SBBColors.white),
+      titleForegroundColor: baseStyle.colorScheme.defaultTextColor,
       subtitleTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallLight),
-      subtitleForegroundColor: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
-      leadingForegroundColor: baseStyle.themeValue(SBBColors.black, SBBColors.white),
+      subtitleForegroundColor: baseStyle.colorScheme.labelColor,
+      leadingForegroundColor: baseStyle.colorScheme.iconColor,
       backgroundColor: baseStyle.themeValue(SBBColors.white, SBBColors.charcoal),
       flapBackgroundColor: baseStyle.themeValue(SBBColors.cloud, SBBColors.midnight),
       headerBoxShadow: baseStyle.themeValue(

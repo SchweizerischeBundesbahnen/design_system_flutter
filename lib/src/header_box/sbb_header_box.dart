@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/src/shared/bottom_loading_indicator.dart';
 
 import '../../sbb_design_system_mobile.dart';
+import 'header_box_app_bar_inset.dart';
 import 'header_box_content.dart';
 import 'header_box_foreground.dart';
-import 'header_box_inset.dart';
 
 /// The SBB Header-Box.
 ///
@@ -27,6 +27,8 @@ import 'header_box_inset.dart';
 ///
 /// Leading content can be supplied either as a custom widget via [leading] or
 /// as an icon via [leadingIconData]. These parameters are mutually exclusive.
+///
+/// Trailing content can be supplied via [trailing].
 ///
 /// When [flap] is provided, it is displayed below the header box as an attached
 /// extension area.
@@ -187,7 +189,7 @@ class SBBHeaderBox extends StatelessWidget {
   ///
   /// You may use [SBBHeaderBoxFlap] to achieve the default look.
   ///
-  /// When not set, no flap is displayed.
+  /// If null, no flap is displayed.
   /// {@endtemplate}
   final Widget? flap;
 
@@ -204,14 +206,14 @@ class SBBHeaderBox extends StatelessWidget {
   /// {@template sbb_design_system.header_box.margin}
   /// The empty space that surrounds the header box.
   ///
-  /// If this property is null, [SBBHeaderBoxStyle.margin] is used.
+  /// If null, [SBBHeaderBoxStyle.margin] is used.
   /// {@endtemplate}
   final EdgeInsetsGeometry? margin;
 
   /// {@template sbb_design_system.header_box.padding}
   /// The empty space between the header box content and its outer container.
   ///
-  /// If this property is null, [SBBHeaderBoxStyle.padding] is used.
+  /// If null, [SBBHeaderBoxStyle.padding] is used.
   /// {@endtemplate}
   final EdgeInsetsGeometry? padding;
 
@@ -239,12 +241,12 @@ class SBBHeaderBox extends StatelessWidget {
         .copyWith(margin: margin, padding: padding);
   }
 
-  Widget? _resolveContent(BuildContext context) {
+  Widget? _defaultContent(BuildContext context) {
     if (title == null && titleText == null) {
       return null;
     }
 
-    return DefaultHeaderBoxContent(
+    return HeaderBoxContent(
       leading: leading,
       leadingIconData: leadingIconData,
       title: title,
@@ -259,19 +261,18 @@ class SBBHeaderBox extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final effectiveStyle = _resolveStyle(context);
-    Widget? contentWidget = _resolveContent(context);
+    Widget? contentWidget = _defaultContent(context);
 
-    if (body != null) {
-      if (contentWidget != null) {
-        contentWidget = Column(
-          children: [
-            contentWidget,
-            body!,
-          ],
-        );
-      } else {
-        contentWidget = body;
-      }
+    if (body != null && contentWidget != null) {
+      contentWidget = Column(
+        mainAxisSize: .min,
+        children: [
+          contentWidget,
+          body!,
+        ],
+      );
+    } else if (body != null) {
+      contentWidget = body;
     }
 
     return HeaderBoxAppBarInset(
@@ -363,7 +364,7 @@ class SBBHeaderBoxLarge extends SBBHeaderBox {
   }
 
   @override
-  Widget? _resolveContent(BuildContext context) {
+  Widget? _defaultContent(BuildContext context) {
     if (title == null && titleText == null) {
       return null;
     }

@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
-class DefaultHeaderBoxContent extends StatelessWidget {
-  const DefaultHeaderBoxContent({
+class HeaderBoxContent extends StatelessWidget {
+  const HeaderBoxContent({
     super.key,
     this.leading,
     this.leadingIconData,
@@ -99,7 +99,11 @@ class DefaultHeaderBoxContent extends StatelessWidget {
 
   Widget? _resolveTitle() {
     if (titleText != null) {
-      return Text(titleText!);
+      return Text(
+        titleText!,
+        maxLines: 1,
+        overflow: .ellipsis,
+      );
     }
 
     return title;

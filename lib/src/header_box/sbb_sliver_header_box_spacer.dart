@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import 'sliver/sliver_pinned_floating_widget.dart';
 
+/// A widget that adds space for a floating [SBBSliverHeaderBox].
+///
 /// This spacer should be placed at the very bottom of a scroll view that has a [SBBSliverHeaderBox].
 ///
 /// It will make sure that the scroll view has enough space to fully expand and contract the headerbox. Otherwise, you
-/// may face issues with the headerbox stopping halfway.
+/// may face issues with the header box stopping halfway.
 class SBBSliverHeaderBoxSpacer extends LeafRenderObjectWidget {
   const SBBSliverHeaderBoxSpacer({super.key});
 
