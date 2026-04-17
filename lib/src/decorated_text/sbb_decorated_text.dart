@@ -31,9 +31,8 @@ import '../input/decoration/sbb_input_decorator.dart';
 /// ## Key Properties
 ///
 /// * [value]: The static text to display (cannot be edited)
-/// * [onTap]: Called when the widget is tapped. Provides visual feedback via InkWell
-/// * [enabled]: Controls interactivity. When false, taps are ignored and disabled
-///   styling is applied
+/// * [onTap]: Called when the widget is tapped. Provides visual feedback via InkWell.
+///   Component is disabled if onTap is null.
 /// * [decoration]: Customizes the decoration surrounding the value, including icons,
 ///   labels, and error states
 /// * [maxLines], [minLines], [expands]: Control text layout similar to [SBBTextInput]
@@ -106,9 +105,9 @@ class SBBDecoratedText extends StatefulWidget {
   final bool expands;
 
   /// Called when the widget is tapped.
+  /// If null, the component is disabled.
   ///
-  /// The tap triggers [InkWell] visual feedback (ripple/highlight). This callback
-  /// is only invoked if [enabled] is true.
+  /// The tap triggers [InkWell] visual feedback (ripple/highlight).
   final GestureTapCallback? onTap;
 
   /// Customizes the visual appearance of the decorated text.

@@ -23,6 +23,7 @@ export 'src/promotion_box/promotion_box.dart';
 export 'src/radio/radio.dart';
 export 'src/segmented_button/segmented_button.dart';
 export 'src/shared/shared.dart';
+export 'src/slide_to_toggle/slide_to_toggle.dart';
 export 'src/slider/slider.dart';
 export 'src/status/status.dart';
 export 'src/stepper/stepper.dart';
