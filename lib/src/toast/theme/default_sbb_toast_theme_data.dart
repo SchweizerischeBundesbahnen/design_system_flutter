@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 import '../../../sbb_design_system_mobile.dart';
 
 /// The default toast theme is specified using the design system values.
@@ -7,10 +5,10 @@ class DefaultSBBToastThemeData extends SBBToastThemeData {
   DefaultSBBToastThemeData(SBBBaseStyle baseStyle)
     : super(
         style: SBBToastStyle(
-          titleTextStyle: baseStyle.textTheme.smallLight?.copyWith(decoration: TextDecoration.none),
+          titleTextStyle: baseStyle.textTheme.smallLight,
           titleMaxLines: 2,
           titleForegroundColor: SBBColors.white,
-          actionTextStyle: baseStyle.textTheme.smallBold?.copyWith(decoration: TextDecoration.none),
+          actionTextStyle: baseStyle.textTheme.smallBold,
           actionForegroundColor: SBBColors.white,
           titleActionHorizontalGap: SBBSpacing.large,
           titleActionVerticalGap: SBBSpacing.xSmall,
