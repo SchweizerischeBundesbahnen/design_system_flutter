@@ -140,7 +140,7 @@ extension SBBBaseStyleThemeDataX on ThemeData {
   SBBBaseStyle get sbbBaseStyle => extension<SBBBaseStyle>()!;
 }
 
-extension DividerThemeDataMergeX on DividerThemeData {
+extension SBBDividerThemeDataMergeX on DividerThemeData {
   DividerThemeData merge(DividerThemeData? other) {
     if (other == null) return this;
     return copyWith(
@@ -154,7 +154,7 @@ extension DividerThemeDataMergeX on DividerThemeData {
   }
 }
 
-extension TextSelectionThemeDataMergeX on TextSelectionThemeData {
+extension SBBTextSelectionThemeDataMergeX on TextSelectionThemeData {
   TextSelectionThemeData merge(TextSelectionThemeData? other) {
     if (other == null) return this;
     return copyWith(
