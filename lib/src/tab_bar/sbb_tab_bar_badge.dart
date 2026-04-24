@@ -141,7 +141,7 @@ class SBBTabBarBadgeText extends SBBTabBarBadge {
               labelText,
               style:
                   resolvedTextStyle?.copyWith(color: resolvedForegroundColor) ??
-                  SBBTextStyles.extraExtraSmallBold.copyWith(
+                  SBBTextStyles.xxSmallBold.copyWith(
                     color: resolvedForegroundColor,
                     fontWeight: FontWeight.w900,
                   ),

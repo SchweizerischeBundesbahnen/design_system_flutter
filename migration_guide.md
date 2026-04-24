@@ -704,6 +704,15 @@ SBBTextInputFormField(
 | `suffixIcon` | `decoration.trailing` or `decoration.trailingIconData` |
 
 
+## TextStyles
+
+For consistency, `extra` has been replaced in all static methods to `x`. Therefore, migrate:
+- `SBBTextStyles.extraExtraLargeBold` to `SBBTextStyles.xxLargeBold`
+- `SBBTextStyles.extraExtraSmallLight` to `SBBTextStyles.xxSmallLight`
+- ...
+
+In general, consider using `SBBTextTheme` instead of static const text styles in your app.
+
 ## Picker
 
 ### Summary
