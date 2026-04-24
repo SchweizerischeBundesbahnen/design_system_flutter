@@ -5,10 +5,10 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'test_app.dart';
 
 void main() {
-  generateTest('headerbox_1', HeaderboxTest());
-  generateTest('headerbox_sliver_expanded', FloatingHeaderboxTest());
-  generateTest('headerbox_sliver_contracted', FloatingHeaderboxTest(scrollOffset: 500.0));
-  generateTest('headerbox_sliver_contracted_after_update', FloatingHeaderboxWithUpdateTest());
+  generateTest('header_box_1', HeaderBoxTest());
+  generateTest('header_box_sliver_expanded', FloatingHeaderboxTest());
+  generateTest('header_box_sliver_contracted', FloatingHeaderboxTest(scrollOffset: 500.0));
+  generateTest('header_box_sliver_contracted_after_update', FloatingHeaderboxWithUpdateTest());
 }
 
 void generateTest(String name, Widget widget) {
@@ -17,8 +17,8 @@ void generateTest(String name, Widget widget) {
   });
 }
 
-class HeaderboxTest extends StatelessWidget {
-  const HeaderboxTest({
+class HeaderBoxTest extends StatelessWidget {
+  const HeaderBoxTest({
     super.key,
   });
 
@@ -28,33 +28,33 @@ class HeaderboxTest extends StatelessWidget {
       children: [
         const SizedBox(height: SBBSpacing.medium),
         const SBBListHeader('Default'),
-        SBBHeaderbox(
-          title: 'Title',
-          leadingIcon: SBBIcons.dog_small,
-          secondaryLabel: 'Subtext',
-          flap: SBBHeaderboxFlap(
-            title: 'Additional text or information',
-            leadingIcon: SBBIcons.sign_exclamation_point_small,
-            trailingIcon: SBBIcons.circle_information_small_small,
+        SBBHeaderBox(
+          titleText: 'Title',
+          leadingIconData: SBBIcons.dog_small,
+          subtitleText: 'Subtext',
+          flap: SBBHeaderBoxFlap(
+            labelText: 'Additional text or information',
+            leadingIconData: SBBIcons.sign_exclamation_point_small,
+            trailingIconData: SBBIcons.circle_information_small,
           ),
-          trailingWidget: SBBTertiaryButtonSmall(labelText: 'Label', iconData: SBBIcons.dog_small, onPressed: () => {}),
+          trailing: SBBTertiaryButtonSmall(labelText: 'Label', iconData: SBBIcons.dog_small, onPressed: () => {}),
         ),
         const SizedBox(height: SBBSpacing.medium),
         const SBBListHeader('Large'),
-        SBBHeaderbox.large(
-          title: 'Title',
-          leadingIcon: SBBIcons.dog_medium,
-          secondaryLabel: 'Subtext',
-          trailingWidget: SBBTertiaryButton(iconData: SBBIcons.dog_small, onPressed: () => {}),
+        SBBHeaderBoxLarge(
+          titleText: 'Title',
+          leadingIconData: SBBIcons.dog_medium,
+          subtitleText: 'Subtext',
+          trailing: SBBTertiaryButton(iconData: SBBIcons.dog_small, onPressed: () => {}),
         ),
         const SizedBox(height: SBBSpacing.medium),
         const SBBListHeader('Custom'),
-        SBBHeaderbox.custom(
+        SBBHeaderBox(
           padding: .zero,
-          flap: SBBHeaderboxFlap.custom(
-            child: Center(child: Text('Custom Flappy!', style: SBBTextStyles.extraSmallBold)),
+          flap: SBBHeaderBoxFlap(
+            label: Center(child: Text('Custom Flappy!', style: SBBTextStyles.extraSmallBold)),
           ),
-          child: Row(
+          body: Row(
             mainAxisAlignment: .spaceEvenly,
             children: [
               Container(color: SBBColors.red, width: 25, height: 25),
@@ -84,23 +84,25 @@ class FloatingHeaderboxTest extends StatelessWidget {
           child: CustomScrollView(
             controller: ScrollController(initialScrollOffset: scrollOffset),
             slivers: [
-              SBBSliverFloatingHeaderbox(
-                title: 'Title',
-                leadingIcon: SBBIcons.dog_small,
-                secondaryLabel: 'Subtext',
-                flap: SBBHeaderboxFlap(
-                  title: 'Additional text or information',
-                  leadingIcon: SBBIcons.sign_exclamation_point_small,
-                  trailingIcon: SBBIcons.circle_information_small_small,
+              SBBSliverHeaderBox(
+                titleText: 'Title',
+                leadingIconData: SBBIcons.dog_small,
+                subtitleText: 'Subtext',
+                flap: SBBHeaderBoxFlap(
+                  labelText: 'Additional text or information',
+                  leadingIconData: SBBIcons.sign_exclamation_point_small,
+                  trailingIconData: SBBIcons.circle_information_small,
                 ),
-                trailingWidget: SBBTertiaryButtonSmall(
+                trailing: SBBTertiaryButtonSmall(
                   labelText: 'Label',
                   iconData: SBBIcons.dog_small,
                   onPressed: () => {},
                 ),
-                contractibleChild: Container(
-                  height: 50,
-                  color: Colors.black,
+                body: SBBContractible(
+                  child: Container(
+                    height: 50,
+                    color: Colors.black,
+                  ),
                 ),
               ),
               SliverList.separated(
@@ -114,26 +116,28 @@ class FloatingHeaderboxTest extends StatelessWidget {
           child: CustomScrollView(
             controller: ScrollController(initialScrollOffset: scrollOffset),
             slivers: [
-              SBBSliverFloatingHeaderbox.custom(
-                flap: SBBHeaderboxFlap(
-                  title: 'Additional text or information',
-                  leadingIcon: SBBIcons.sign_exclamation_point_small,
-                  trailingIcon: SBBIcons.circle_information_small_small,
+              SBBSliverHeaderBox(
+                flap: SBBHeaderBoxFlap(
+                  labelText: 'Additional text or information',
+                  leadingIconData: SBBIcons.sign_exclamation_point_small,
+                  trailingIconData: SBBIcons.circle_information_small,
                 ),
-                flapMode: .hideable,
-                children: [
-                  Text('Static'),
-                  SBBContractionListener(
-                    builder: (context, state, _) => Opacity(
-                      opacity: state.expansionValue,
-                      child: Text('Opacity: ${state.expansionValue.toStringAsFixed(1)}'),
+                config: SBBSliverHeaderBoxConfig(flapMode: .hideable),
+                body: SBBCascadeColumn(
+                  children: [
+                    Text('Static'),
+                    SBBContractionListener(
+                      builder: (context, state, _) => Opacity(
+                        opacity: state.expansionValue,
+                        child: Text('Opacity: ${state.expansionValue.toStringAsFixed(1)}'),
+                      ),
                     ),
-                  ),
-                  SBBContractible.crossfade(
-                    contractedChild: Text("Contracted"),
-                    expandedChild: Text("Expanded", style: SBBTextStyles.extraExtraLargeBold),
-                  ),
-                ],
+                    SBBContractibleCrossfade(
+                      contractedChild: Text("Contracted"),
+                      expandedChild: Text("Expanded", style: SBBTextStyles.extraExtraLargeBold),
+                    ),
+                  ],
+                ),
               ),
               SliverList.separated(
                 itemBuilder: (context, i) => ListTile(key: ValueKey(i), title: Text(i.toString())),
@@ -165,17 +169,21 @@ class FloatingHeaderboxWithUpdateTest extends StatelessWidget {
               child: CustomScrollView(
                 controller: ScrollController(initialScrollOffset: 500),
                 slivers: [
-                  SBBSliverFloatingHeaderbox.custom(
-                    flapMode: SBBHeaderboxFlapMode.hideable,
-                    children: [
-                      SBBContractible.crossfade(
-                        contractedChild: SizedBox(height: 50, child: Text("Contracted")),
-                        expandedChild: SizedBox(
-                          height: 100,
-                          child: Text("Expanded", style: SBBTextStyles.extraExtraLargeBold),
+                  SBBSliverHeaderBox(
+                    config: SBBSliverHeaderBoxConfig(
+                      flapMode: .hideable,
+                    ),
+                    body: SBBCascadeColumn(
+                      children: [
+                        SBBContractibleCrossfade(
+                          contractedChild: SizedBox(height: 50, child: Text("Contracted")),
+                          expandedChild: SizedBox(
+                            height: 100,
+                            child: Text("Expanded", style: SBBTextStyles.extraExtraLargeBold),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                   SliverList.separated(
                     itemBuilder: (context, i) => ListTile(key: ValueKey(i), title: Text(i.toString())),
