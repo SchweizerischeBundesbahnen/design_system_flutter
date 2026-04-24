@@ -7,10 +7,11 @@ class DefaultSBBToastThemeData extends SBBToastThemeData {
   DefaultSBBToastThemeData(SBBBaseStyle baseStyle)
     : super(
         style: SBBToastStyle(
-          titleTextStyle: SBBTextStyles.smallLight.copyWith(decoration: TextDecoration.none),
+          titleTextStyle: baseStyle.textTheme.smallLight?.copyWith(decoration: TextDecoration.none),
+          // TODO: is it still necessary to copyWith the decoration?
           titleMaxLines: 2,
           titleForegroundColor: SBBColors.white,
-          actionTextStyle: SBBTextStyles.smallBold.copyWith(decoration: TextDecoration.none),
+          actionTextStyle: baseStyle.textTheme.smallBold?.copyWith(decoration: TextDecoration.none),
           actionForegroundColor: SBBColors.white,
           titleActionHorizontalGap: SBBSpacing.large,
           titleActionVerticalGap: SBBSpacing.xSmall,
