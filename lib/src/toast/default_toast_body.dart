@@ -21,9 +21,9 @@ class DefaultToastBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeStyle = Theme.of(context).sbbToastTheme?.style;
+    final themeStyle = Theme.of(context).sbbToastTheme!.style!;
     final toastScope = ToastScope.of(context);
-    final resolvedStyle = (themeStyle ?? SBBToastStyle()).merge(toastScope.style);
+    final resolvedStyle = themeStyle.merge(toastScope.widgetStyle);
 
     return StreamBuilder<bool>(
       stream: toastScope.stream,
@@ -63,8 +63,7 @@ class DefaultToastBody extends StatelessWidget {
   }
 
   Widget? _resolvedTitle(SBBToastStyle resolvedStyle) {
-    final resolvedTitle =
-        title ?? Text(titleText!, style: resolvedStyle.titleTextStyle, maxLines: resolvedStyle.titleMaxLines);
+    final resolvedTitle = title ?? Text(titleText!, maxLines: resolvedStyle.titleMaxLines);
 
     return _addDefaultAncestorWithResolved(
       textStyle: resolvedStyle.titleTextStyle?.copyWith(color: resolvedStyle.titleForegroundColor),
