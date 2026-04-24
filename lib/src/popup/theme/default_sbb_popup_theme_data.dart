@@ -12,11 +12,13 @@ class DefaultSBBPopupThemeData extends SBBPopupThemeData {
           backgroundColor: baseStyle.themeValue(SBBColors.milk, SBBColors.midnight),
           clipBehavior: .hardEdge,
           constraints: BoxConstraints(maxWidth: 640.0),
-          barrierColor: const Color(0x80000000),
+          barrierColor: defaultBarrierColor,
           titleBodyGap: SBBSpacing.small,
           padding: const .symmetric(horizontal: SBBSpacing.medium, vertical: SBBSpacing.small),
           alignment: .center,
           margin: const .symmetric(horizontal: SBBSpacing.xLarge, vertical: SBBSpacing.large),
         ),
       );
+
+  static const defaultBarrierColor = Color(0x80000000);
 }

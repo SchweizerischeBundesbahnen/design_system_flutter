@@ -39,4 +39,6 @@ class DefaultSBBSegmentedButtonThemeData extends SBBSegmentedButtonThemeData {
           ),
         ),
       );
+
+  static const defaultButtonHeight = 44.0;
 }
