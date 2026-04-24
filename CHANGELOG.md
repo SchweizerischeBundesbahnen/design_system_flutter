@@ -46,6 +46,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - BREAKING: use `SBBTabBarStyle` / `SBBTabBarThemeData` to style `SBBTabBar` - see [v5 migration guide]
 - BREAKING: overhauled `SBBTextField` and renamed to `SBBTextInput` - see [v5 migration guide]
 - BREAKING: removed default left margin on component `SBBTextInput` (#402)
+- BREAKING: renamed static methods containing `extra` on `SBBTextStyles` to containing `x` - see [v5 migration guide]
 - renamed `TextStylesExtensions` to `SBBTextStyleExtensions`
 - BREAKING: renamed `ContractionState` to `SBBContractionState`
 - BREAKING: renamed `ContractibleState` to `SBBContractibleState`
@@ -63,6 +64,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Removed deprecated `SBBOnboarding`
 - Removed deprecated `sbbDefaultSpacing`
 - Removed deprecated `SBBLinkText`
+- Removed deprecated `SBBTextStyles.helpersLabel`
 - Removed `CascadeColumnParentData` as it is not directly used by clients
 - Removed `SBBTextField` - replaced by `SBBTextInput`
 - Removed `merge` extension on `SBBBaseStyle`

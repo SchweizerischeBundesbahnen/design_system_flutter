@@ -113,7 +113,7 @@ class DesignGuidelinePage extends StatelessWidget {
           const SBBHeaderbox.custom(
             padding: .zero,
             flap: SBBHeaderboxFlap.custom(
-              child: Center(child: Text('Choooooo!', style: SBBTextStyles.extraSmallBold)),
+              child: Center(child: Text('Choooooo!', style: SBBTextStyles.xSmallBold)),
             ),
             child: Center(child: Text('🚂｡🚋｡🚋｡🚋｡🚋˙⊹⁺.')),
           ),

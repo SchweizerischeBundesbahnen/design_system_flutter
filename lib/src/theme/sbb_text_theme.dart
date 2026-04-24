@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-import 'package:sbb_design_system_mobile/src/theme/sbb_color_scheme.dart';
 
 /// SBB Design System Mobile text theme.
 ///
@@ -33,20 +32,20 @@ class SBBTextTheme extends ThemeExtension<SBBTextTheme> {
   factory SBBTextTheme.$default({required SBBColorScheme colorScheme}) {
     final textColor = colorScheme.defaultTextColor;
     return SBBTextTheme(
-      xxSmallLight: SBBTextStyles.extraExtraSmallLight.copyWith(color: textColor),
-      xxSmallBold: SBBTextStyles.extraExtraSmallBold.copyWith(color: textColor),
-      xSmallLight: SBBTextStyles.extraSmallLight.copyWith(color: textColor),
-      xSmallBold: SBBTextStyles.extraSmallBold.copyWith(color: textColor),
+      xxSmallLight: SBBTextStyles.xxSmallLight.copyWith(color: textColor),
+      xxSmallBold: SBBTextStyles.xxSmallBold.copyWith(color: textColor),
+      xSmallLight: SBBTextStyles.xSmallLight.copyWith(color: textColor),
+      xSmallBold: SBBTextStyles.xSmallBold.copyWith(color: textColor),
       smallLight: SBBTextStyles.smallLight.copyWith(color: textColor),
       smallBold: SBBTextStyles.smallBold.copyWith(color: textColor),
       mediumLight: SBBTextStyles.mediumLight.copyWith(color: textColor),
       mediumBold: SBBTextStyles.mediumBold.copyWith(color: textColor),
       largeLight: SBBTextStyles.largeLight.copyWith(color: textColor),
       largeBold: SBBTextStyles.largeBold.copyWith(color: textColor),
-      xLargeLight: SBBTextStyles.extraLargeLight.copyWith(color: textColor),
-      xLargeBold: SBBTextStyles.extraLargeBold.copyWith(color: textColor),
-      xxLargeLight: SBBTextStyles.extraExtraLargeLight.copyWith(color: textColor),
-      xxLargeBold: SBBTextStyles.extraExtraLargeBold.copyWith(color: textColor),
+      xLargeLight: SBBTextStyles.xLargeLight.copyWith(color: textColor),
+      xLargeBold: SBBTextStyles.xLargeBold.copyWith(color: textColor),
+      xxLargeLight: SBBTextStyles.xxLargeLight.copyWith(color: textColor),
+      xxLargeBold: SBBTextStyles.xxLargeBold.copyWith(color: textColor),
     );
   }
 

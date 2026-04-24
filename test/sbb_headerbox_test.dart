@@ -52,7 +52,7 @@ class HeaderboxTest extends StatelessWidget {
         SBBHeaderbox.custom(
           padding: .zero,
           flap: SBBHeaderboxFlap.custom(
-            child: Center(child: Text('Custom Flappy!', style: SBBTextStyles.extraSmallBold)),
+            child: Center(child: Text('Custom Flappy!', style: SBBTextStyles.xSmallBold)),
           ),
           child: Row(
             mainAxisAlignment: .spaceEvenly,
@@ -131,7 +131,7 @@ class FloatingHeaderboxTest extends StatelessWidget {
                   ),
                   SBBContractible.crossfade(
                     contractedChild: Text("Contracted"),
-                    expandedChild: Text("Expanded", style: SBBTextStyles.extraExtraLargeBold),
+                    expandedChild: Text("Expanded", style: SBBTextStyles.xxLargeBold),
                   ),
                 ],
               ),
@@ -172,7 +172,7 @@ class FloatingHeaderboxWithUpdateTest extends StatelessWidget {
                         contractedChild: SizedBox(height: 50, child: Text("Contracted")),
                         expandedChild: SizedBox(
                           height: 100,
-                          child: Text("Expanded", style: SBBTextStyles.extraExtraLargeBold),
+                          child: Text("Expanded", style: SBBTextStyles.xxLargeBold),
                         ),
                       ),
                     ],
