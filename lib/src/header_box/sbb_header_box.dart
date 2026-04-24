@@ -12,9 +12,10 @@ import 'header_box_foreground.dart';
 /// a screen. It supports optional leading, title, subtitle, trailing, body, and
 /// flap content.
 ///
-/// The title row aligns the [leading] and [title] vertically. If a subtitle is
-/// provided, it is displayed below the title row. Additional [body] content is
-/// rendered below the title/subtitle area.
+/// The title row aligns the [leading] and [title] vertically. If a [subtitle]
+/// is provided, it is displayed below the title row. A [trailing] and a [body]
+/// widget can be provided, which are displayed to the right of and below the
+/// title / subtitle area respectively.
 ///
 /// {@template sbb_design_system.header_box_description}
 /// Provide either [title] for fully custom title content or [titleText] for a
@@ -31,7 +32,7 @@ import 'header_box_foreground.dart';
 /// Trailing content can be supplied via [trailing].
 ///
 /// When [flap] is provided, it is displayed below the header box as an attached
-/// extension area.
+/// extension area, appearing to be underneath the header box.
 ///
 /// When [isLoading] is true, a loading indicator is displayed at the bottom of
 /// the header box.
@@ -294,8 +295,8 @@ class SBBHeaderBox extends StatelessWidget {
 /// a screen. It supports optional leading, title, subtitle, trailing, body, and
 /// flap content.
 ///
-/// The title row displays the icon besides the title and subtitle. Additional [body] content is
-/// rendered below this area.
+/// The title row displays the icon besides the title and subtitle and a trailing
+/// widget. Additional [body] content is rendered below this area.
 ///
 /// {@macro sbb_design_system.header_box_description}
 ///

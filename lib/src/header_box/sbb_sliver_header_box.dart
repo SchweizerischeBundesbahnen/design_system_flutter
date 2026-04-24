@@ -12,8 +12,9 @@ import 'sliver/sliver_pinned_floating_widget.dart';
 /// This widget behaves similarly to [SBBHeaderBox], but is designed for use inside custom scroll views.
 /// It supports floating behavior as well as transitioning its own size depending on scrolling and its [body] argument.
 ///
-/// The title row aligns the [leading] and [title] vertically. If a subtitle is provided, it is displayed below the
-/// title row. Additional [body] content is rendered below the title/subtitle area.
+/// The title row aligns the [leading] and [title] vertically. If a [subtitle] is provided, it is displayed below the
+/// title row. A [trailing] and a [body] widget can be provided, which are displayed to the right of and below the
+/// title / subtitle area respectively.
 ///
 /// [body] can be a [SBBContractible] or an [SBBCascadeColumn] and will behave accordingly.
 /// When using a contractible widget, make sure to add [SBBSliverHeaderBoxSpacer] at the end of your list of slivers.
@@ -217,10 +218,10 @@ class SBBSliverHeaderBox extends StatelessWidget {
 
 /// The large variant of [SBBSliverHeaderBox].
 ///
-/// This widget behaves like [SBBSliverHeaderBox] but uses the large header-box
-/// content layout and the themed [SBBHeaderBoxThemeData.largeStyle].
+/// This widget behaves like [SBBSliverHeaderBox] but uses the large header-box content layout and the themed
+/// [SBBHeaderBoxThemeData.largeStyle].
 ///
-/// The title row displays the icon besides the title and subtitle. Additional [body] content is
+/// The title row displays the icon besides the title and subtitle and a trailing widget. Additional [body] content is
 /// rendered below this area.
 ///
 /// [body] can be a [SBBContractible] or an [SBBCascadeColumn] and will behave accordingly.
