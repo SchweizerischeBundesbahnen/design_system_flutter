@@ -13,10 +13,10 @@ class DefaultSBBListItemThemeData extends SBBListItemThemeData {
         subtitleVerticalGapHeight: 4.0,
         style: SBBListItemStyle(
           titleTextStyle: WidgetStateProperty.fromMap(<WidgetStatesConstraint, TextStyle?>{
-            WidgetState.any: baseStyle.themedTextStyle(textStyle: SBBTextStyles.mediumLight),
+            WidgetState.any: baseStyle.themedTextStyle(textStyle: baseStyle.textTheme.mediumLight),
           }),
           subtitleTextStyle: WidgetStateProperty.fromMap(<WidgetStatesConstraint, TextStyle?>{
-            WidgetState.any: baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallLight),
+            WidgetState.any: baseStyle.themedTextStyle(textStyle: baseStyle.textTheme.smallLight),
           }),
           titleForegroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.disabled: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
