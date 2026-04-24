@@ -108,13 +108,29 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
     );
   }
 
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is SBBBaseStyle &&
+          runtimeType == other.runtimeType &&
+          brightness == other.brightness &&
+          colorScheme == other.colorScheme &&
+          textTheme == other.textTheme &&
+          iconTheme == other.iconTheme &&
+          dividerTheme == other.dividerTheme &&
+          textSelectionTheme == other.textSelectionTheme;
+
+  @override
+  int get hashCode => Object.hash(brightness, colorScheme, textTheme, iconTheme, dividerTheme, textSelectionTheme);
+
   SBBBaseStyle merge(SBBBaseStyle? other) {
     return copyWith(
           brightness: other?.brightness,
           colorScheme: other?.colorScheme,
-          iconTheme: other?.iconTheme,
-          dividerTheme: other?.dividerTheme,
-          textSelectionTheme: other?.textSelectionTheme,
+          textTheme: textTheme.merge(other?.textTheme),
+          iconTheme: iconTheme?.merge(other?.iconTheme) ?? other?.iconTheme,
+          dividerTheme: dividerTheme?.merge(other?.dividerTheme) ?? other?.dividerTheme,
+          textSelectionTheme: textSelectionTheme?.merge(other?.textSelectionTheme) ?? other?.textSelectionTheme,
         )
         as SBBBaseStyle;
   }
@@ -122,6 +138,31 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
 
 extension SBBBaseStyleThemeDataX on ThemeData {
   SBBBaseStyle get sbbBaseStyle => extension<SBBBaseStyle>()!;
+}
+
+extension SBBDividerThemeDataMergeX on DividerThemeData {
+  DividerThemeData merge(DividerThemeData? other) {
+    if (other == null) return this;
+    return copyWith(
+      color: other.color,
+      space: other.space,
+      thickness: other.thickness,
+      indent: other.indent,
+      endIndent: other.endIndent,
+      radius: other.radius,
+    );
+  }
+}
+
+extension SBBTextSelectionThemeDataMergeX on TextSelectionThemeData {
+  TextSelectionThemeData merge(TextSelectionThemeData? other) {
+    if (other == null) return this;
+    return copyWith(
+      cursorColor: other.cursorColor,
+      selectionColor: other.selectionColor,
+      selectionHandleColor: other.selectionHandleColor,
+    );
+  }
 }
 
 extension SBBThemeContextX on SBBThemeContext {
