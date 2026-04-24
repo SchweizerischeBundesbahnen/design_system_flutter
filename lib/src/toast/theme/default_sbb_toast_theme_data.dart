@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// The default toast theme is specified using the design system values.
 class DefaultSBBToastThemeData extends SBBToastThemeData {

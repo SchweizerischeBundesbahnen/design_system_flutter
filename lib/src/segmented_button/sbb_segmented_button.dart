@@ -1,8 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-
-import '../../sbb_design_system_mobile.dart';
-import '../sbb_internal.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/sbb_internal.dart';
 
 /// The SBB Segmented Button.
 ///

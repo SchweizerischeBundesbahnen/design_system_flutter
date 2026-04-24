@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../../sbb_design_system_mobile.dart';
-import 'autocompletion_link.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/autocompletion/autocompletion_link.dart';
 
 /// Signature for a function that builds a single suggestion list item.
 typedef AutocompletionItemBuilder =

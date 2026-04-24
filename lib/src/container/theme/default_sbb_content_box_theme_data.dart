@@ -1,5 +1,4 @@
-import '../../../sbb_design_system_mobile.dart';
-import '../container.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// The default [SBBContentBoxThemeData] for the SBB design system.
 ///

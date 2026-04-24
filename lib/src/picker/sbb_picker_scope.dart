@@ -1,9 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-
-import '../../sbb_design_system_mobile.dart';
-import 'sbb_picker_constants.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/picker/sbb_picker_constants.dart';
 
 /// An [InheritedWidget] that propagates the computed picker item height and
 /// text-measurement helpers to all descendant picker widgets.

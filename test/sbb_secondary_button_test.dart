@@ -12,8 +12,8 @@ void main() {
       child: Column(
         spacing: SBBSpacing.medium,
         children: [
-          SBBSecondaryButton(key: pressableKey, labelText: "Default", onPressed: () {}),
-          SBBSecondaryButton(labelText: "Disabled", onPressed: null),
+          SBBSecondaryButton(key: pressableKey, labelText: 'Default', onPressed: () {}),
+          SBBSecondaryButton(labelText: 'Disabled', onPressed: null),
           SBBSecondaryButton(
             label: Container(color: SBBColors.platinum, child: Text('Custom!')),
             onPressed: () {},

@@ -98,10 +98,10 @@ void main() {
 }
 
 class MessageTest extends StatelessWidget {
+  const MessageTest({super.key, required this.sbbMessage});
+
   static const String _parent = 'lib/assets/illustrations';
   static const String _package = 'sbb_design_system_mobile';
-
-  const MessageTest({super.key, required this.sbbMessage});
 
   final SBBMessage sbbMessage;
 

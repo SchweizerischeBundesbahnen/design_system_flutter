@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../../sbb_design_system_mobile.dart';
-import 'render_sliver_pin_header.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/headerbox/render_sliver_pin_header.dart';
 
 /// The SBB Sliver Headerbox.
 /// Use according to [documentation](https://digital.sbb.ch/de/design-system/mobile/components/container/)

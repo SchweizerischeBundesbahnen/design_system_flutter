@@ -130,8 +130,8 @@ class FloatingHeaderboxTest extends StatelessWidget {
                     ),
                   ),
                   SBBContractible.crossfade(
-                    contractedChild: Text("Contracted"),
-                    expandedChild: Text("Expanded", style: SBBTextStyles.extraExtraLargeBold),
+                    contractedChild: Text('Contracted'),
+                    expandedChild: Text('Expanded', style: SBBTextStyles.extraExtraLargeBold),
                   ),
                 ],
               ),
@@ -169,10 +169,10 @@ class FloatingHeaderboxWithUpdateTest extends StatelessWidget {
                     flapMode: SBBHeaderboxFlapMode.hideable,
                     children: [
                       SBBContractible.crossfade(
-                        contractedChild: SizedBox(height: 50, child: Text("Contracted")),
+                        contractedChild: SizedBox(height: 50, child: Text('Contracted')),
                         expandedChild: SizedBox(
                           height: 100,
-                          child: Text("Expanded", style: SBBTextStyles.extraExtraLargeBold),
+                          child: Text('Expanded', style: SBBTextStyles.extraExtraLargeBold),
                         ),
                       ),
                     ],

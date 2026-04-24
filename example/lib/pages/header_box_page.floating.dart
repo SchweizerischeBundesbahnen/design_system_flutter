@@ -194,7 +194,7 @@ class _FloatingPageState extends State<FloatingPage> {
   }
 
   Container _circle(BuildContext context) {
-    var decoration = BoxDecoration(
+    final decoration = BoxDecoration(
       shape: .circle,
       border: Border.all(
         color: Theme.of(context).colorScheme.onSurface,

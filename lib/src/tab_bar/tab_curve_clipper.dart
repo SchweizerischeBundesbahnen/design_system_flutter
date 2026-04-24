@@ -1,7 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-
-import 'tab_curves.dart';
+import 'package:sbb_design_system_mobile/src/tab_bar/tab_curves.dart';
 
 class TabCurveClipper extends CustomClipper<Path> {
   TabCurveClipper({

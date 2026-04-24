@@ -149,9 +149,9 @@ void main() {
 }
 
 class TypographyTest extends StatelessWidget {
-  static const exampleText = 'The quick brown fox jumps over the lazy dog';
-
   const TypographyTest({super.key, required this.name, required this.textStyles});
+
+  static const exampleText = 'The quick brown fox jumps over the lazy dog';
 
   final String name;
   final List<TextStyle?> textStyles;

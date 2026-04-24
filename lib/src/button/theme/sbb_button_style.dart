@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../../sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// Style for SBB Buttons. Use this in combination with [SBBButtonThemeData]
 /// to override all button variants within the current [SBBTheme].

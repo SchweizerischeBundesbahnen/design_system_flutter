@@ -5,8 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-
-import 'override_intrinsics.dart';
+import 'package:sbb_design_system_mobile/src/headerbox/override_intrinsics.dart';
 
 part 'sbb_cascade_column.contractible.dart';
 part 'sbb_cascade_column.listener.dart';

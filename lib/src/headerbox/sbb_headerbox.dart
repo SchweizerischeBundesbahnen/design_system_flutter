@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-
-import '../../sbb_design_system_mobile.dart';
-import '../sbb_internal.dart';
-import 'sbb_headerbox_content.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/headerbox/sbb_headerbox_content.dart';
+import 'package:sbb_design_system_mobile/src/sbb_internal.dart';
 
 const _headerBoxMinHeight = 56.0;
 const _headerBoxNavBarExtensionHeight = 24.0;

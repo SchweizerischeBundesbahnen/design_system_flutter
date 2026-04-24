@@ -1,11 +1,10 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/headerbox/sbb_headerbox_content.dart';
-
-import '../../sbb_design_system_mobile.dart';
-import '../sbb_internal.dart';
-import 'sliver_pinned_floating_widget.dart';
+import 'package:sbb_design_system_mobile/src/headerbox/sliver_pinned_floating_widget.dart';
+import 'package:sbb_design_system_mobile/src/sbb_internal.dart';
 
 part 'sbb_sliver_floating_headerbox.headerbox.dart';
 part 'sbb_sliver_floating_headerbox.spacer.dart';

@@ -304,7 +304,7 @@ class _StepCircleState extends State<_StepCircle> {
   }
 
   Widget _circleContent() {
-    var item = widget.item;
+    final item = widget.item;
     Widget content;
     if (item is SBBStepperItemIcon) {
       content = Icon(item.icon, size: SBBStepperItemStyle.stepIconSize);
