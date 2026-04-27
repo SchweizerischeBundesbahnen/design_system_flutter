@@ -89,7 +89,6 @@ extension SBBTextInputThemeDataX on SBBTextInputThemeData {
 }
 
 extension SBBTextInputThemeDataThemeDataX on ThemeData {
-  SBBTextInputThemeData? get sbbTextInputTheme {
-    return extension<SBBTextInputThemeData>();
-  }
+  /// Access the [SBBHeaderThemeData] from the current theme.
+  SBBTextInputThemeData? get sbbTextInputTheme => extension<SBBTextInputThemeData>();
 }

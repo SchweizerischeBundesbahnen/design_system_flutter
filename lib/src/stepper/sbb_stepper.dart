@@ -425,6 +425,6 @@ class _RenderEdgeClampedCenterX extends RenderShiftedBox {
   }
 }
 
-extension _WidgetExtension on Iterable<Widget> {
+extension _WidgetIterableX on Iterable<Widget> {
   Iterable<Widget> dividedBy(Widget divider) => expand((x) => [divider, x]).skip(1);
 }

@@ -136,6 +136,7 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
 }
 
 extension SBBBaseStyleThemeDataX on ThemeData {
+  /// Access the [SBBBaseStyle] from the current theme.
   SBBBaseStyle get sbbBaseStyle => extension<SBBBaseStyle>()!;
 }
 

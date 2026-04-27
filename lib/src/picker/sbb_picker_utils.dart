@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/src/picker/sbb_picker_constants.dart';
 
 /// Convenience methods on [DateTime].
-extension DateTimeExtensions on DateTime {
+extension DateTimeX on DateTime {
   /// Creates a new [DateTime] from [this] with all time properties set to 0.
   DateTime get date => clearTime();
 
@@ -96,7 +96,7 @@ extension DateTimeExtensions on DateTime {
 }
 
 /// Convenience methods on [TimeOfDay].
-extension TimeOfDayExtensions on TimeOfDay {
+extension TimeOfDayX on TimeOfDay {
   /// Returns true if [this] occurs before [other].
   bool isBefore(TimeOfDay other) {
     if (hour == other.hour) {

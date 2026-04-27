@@ -53,7 +53,6 @@ extension SBBListHeaderThemeDataX on SBBListHeaderThemeData {
 }
 
 extension SBBListHeaderThemeDataThemeDataX on ThemeData {
-  SBBListHeaderThemeData? get sbbListHeaderTheme {
-    return extension<SBBListHeaderThemeData>();
-  }
+  /// Access the [SBBListHeaderThemeData] from the current theme.
+  SBBListHeaderThemeData? get sbbListHeaderTheme => extension<SBBListHeaderThemeData>();
 }

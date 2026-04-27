@@ -60,7 +60,6 @@ extension SBBToastThemeDataX on SBBToastThemeData {
 }
 
 extension SBBToastThemeDataThemeDataX on ThemeData {
-  SBBToastThemeData? get sbbToastTheme {
-    return extension<SBBToastThemeData>();
-  }
+  /// Access the [SBBToastThemeData] from the current theme.
+  SBBToastThemeData? get sbbToastTheme => extension<SBBToastThemeData>();
 }

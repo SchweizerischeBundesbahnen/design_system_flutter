@@ -87,7 +87,6 @@ extension SBBDropdownThemeDataX on SBBDropdownThemeData {
 }
 
 extension SBBDropdownThemeDataThemeDataX on ThemeData {
-  SBBDropdownThemeData? get sbbDropdownTheme {
-    return extension<SBBDropdownThemeData>();
-  }
+  /// Access the [SBBDropdownThemeData] from the current theme.
+  SBBDropdownThemeData? get sbbDropdownTheme => extension<SBBDropdownThemeData>();
 }
