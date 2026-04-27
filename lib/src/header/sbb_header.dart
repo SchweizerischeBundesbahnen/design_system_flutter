@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/header/sbb_header_style_scope.dart';
 import 'package:sbb_design_system_mobile/src/shared/debug.dart';
-
-import '../../sbb_design_system_mobile.dart';
 
 /// The SBB Header.
 ///

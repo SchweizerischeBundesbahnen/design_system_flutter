@@ -1,8 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/shared/debug.dart';
-
-import '../../sbb_design_system_mobile.dart';
 
 const _defaultScrollControlDisabledMaxHeightRatio = 9.0 / 16.0;
 

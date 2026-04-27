@@ -2,9 +2,8 @@ import 'dart:math' as math;
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/shared/debug.dart';
-
-import '../../sbb_design_system_mobile.dart';
 
 const _innerWidthLength = SBBCheckboxStyle.width - 2 * SBBCheckboxStyle.borderWidth;
 const _checkboxSize = Size.square(SBBCheckboxStyle.width);

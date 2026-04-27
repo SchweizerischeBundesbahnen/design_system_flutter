@@ -1,4 +1,4 @@
-import '../../../sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// The default message theme is specified using the design system values.
 class DefaultSBBMessageThemeData extends SBBMessageThemeData {

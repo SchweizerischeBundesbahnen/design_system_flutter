@@ -2,12 +2,11 @@ import 'dart:math';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/shared/debug.dart';
-
-import '../../sbb_design_system_mobile.dart';
-import 'tab_curve_clipper.dart';
-import 'tab_curve_painter.dart';
-import 'tab_item_widget.dart';
+import 'package:sbb_design_system_mobile/src/tab_bar/tab_curve_clipper.dart';
+import 'package:sbb_design_system_mobile/src/tab_bar/tab_curve_painter.dart';
+import 'package:sbb_design_system_mobile/src/tab_bar/tab_item_widget.dart';
 
 part 'sbb_tab_bar.icon.dart';
 part 'sbb_tab_bar.icon_delegate.dart';
@@ -87,8 +86,8 @@ class _SBBTabBarState extends State<SBBTabBar> with TickerProviderStateMixin, Wi
     if (oldWidget.controller != widget.controller || oldWidget.items != widget.items) {
       // Clean up
       _controller.dispose();
-      for (var it in _focusNodes.values) {
-        it.dispose();
+      for (final focusNode in _focusNodes.values) {
+        focusNode.dispose();
       }
 
       // Rebind
@@ -222,9 +221,9 @@ class _SBBTabBarState extends State<SBBTabBar> with TickerProviderStateMixin, Wi
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    for (var n in _focusNodes.values) {
-      n.removeListener(_focusUpdated);
-      n.dispose();
+    for (final focusNode in _focusNodes.values) {
+      focusNode.removeListener(_focusUpdated);
+      focusNode.dispose();
     }
     super.dispose();
   }

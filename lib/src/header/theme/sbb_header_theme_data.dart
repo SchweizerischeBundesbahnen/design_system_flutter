@@ -73,7 +73,5 @@ extension SBBHeaderThemeDataX on SBBHeaderThemeData {
 
 extension SBBHeaderThemeDataThemeDataX on ThemeData {
   /// Access the [SBBHeaderThemeData] from the current theme.
-  SBBHeaderThemeData? get sbbHeaderTheme {
-    return extension<SBBHeaderThemeData>();
-  }
+  SBBHeaderThemeData? get sbbHeaderTheme => extension<SBBHeaderThemeData>();
 }

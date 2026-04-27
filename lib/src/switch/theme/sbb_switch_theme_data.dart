@@ -54,7 +54,6 @@ extension SBBSwitchThemeDataX on SBBSwitchThemeData {
 }
 
 extension SBBSwitchThemeDataThemeDataX on ThemeData {
-  SBBSwitchThemeData? get sbbSwitchTheme {
-    return extension<SBBSwitchThemeData>();
-  }
+  /// Access the [SBBSwitchThemeData] from the current theme.
+  SBBSwitchThemeData? get sbbSwitchTheme => extension<SBBSwitchThemeData>();
 }

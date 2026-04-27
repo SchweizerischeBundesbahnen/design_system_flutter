@@ -44,6 +44,11 @@ jobs:
       - name: Format check
         run: dart format --page-width 120 --trailing-commas=preserve -o none --set-exit-if-changed .
 
+      - name: Linter check
+        run: | 
+          flutter analyze example
+          flutter analyze lib 
+
       - name: Run Flutter test
         id: test
         run: flutter test

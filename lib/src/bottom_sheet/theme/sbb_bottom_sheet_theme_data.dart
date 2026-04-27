@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
-import '../../../sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// The ThemeData for [SBBBottomSheet].
 ///
@@ -59,7 +58,6 @@ extension SBBBottomSheetThemeDataX on SBBBottomSheetThemeData {
 }
 
 extension SBBBottomSheetThemeDataThemeDataX on ThemeData {
-  SBBBottomSheetThemeData? get sbbBottomSheetTheme {
-    return extension<SBBBottomSheetThemeData>();
-  }
+  /// Access the [SBBBottomSheetThemeData] from the current theme.
+  SBBBottomSheetThemeData? get sbbBottomSheetTheme => extension<SBBBottomSheetThemeData>();
 }

@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-
-import '../shared/debug.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 class SBBIllustration extends StatelessWidget {
-  static const String _parent = 'lib/assets/illustrations';
-  static const String _package = 'sbb_design_system_mobile';
-
   const SBBIllustration._({
     required this.assetName,
     this.semanticLabel,
@@ -138,6 +134,9 @@ class SBBIllustration extends StatelessWidget {
     excludeFromSemantics: excludeFromSemantics,
     constraints: constraints,
   );
+
+  static const String _parent = 'lib/assets/illustrations';
+  static const String _package = 'sbb_design_system_mobile';
 
   final String assetName;
 

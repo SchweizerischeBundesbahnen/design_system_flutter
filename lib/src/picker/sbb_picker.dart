@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/picker/picker_constants.dart';
 import 'package:sbb_design_system_mobile/src/picker/picker_scope.dart';
-
-import '../../sbb_design_system_mobile.dart';
-import '../shared/debug.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 /// The SBB Picker.
 ///

@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../../../sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// The ThemeData for the [SBBChip].
 ///
@@ -55,7 +55,6 @@ extension SBBChipThemeDataX on SBBChipThemeData {
 }
 
 extension SBBChipThemeDataThemeDataX on ThemeData {
-  SBBChipThemeData? get sbbChipTheme {
-    return extension<SBBChipThemeData>();
-  }
+  /// Access the [SBBChipThemeData] from the current theme.
+  SBBChipThemeData? get sbbChipTheme => extension<SBBChipThemeData>();
 }

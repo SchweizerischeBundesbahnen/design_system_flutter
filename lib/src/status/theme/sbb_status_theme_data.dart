@@ -109,7 +109,5 @@ extension SBBStatusThemeDataX on SBBStatusThemeData {
 
 extension SBBStatusThemeDataThemeDataX on ThemeData {
   /// Access the [SBBStatusThemeData] from the current theme.
-  SBBStatusThemeData? get sbbStatusTheme {
-    return extension<SBBStatusThemeData>();
-  }
+  SBBStatusThemeData? get sbbStatusTheme => extension<SBBStatusThemeData>();
 }
