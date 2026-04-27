@@ -5,6 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:sbb_design_system_mobile/src/button/default_button_label.dart';
 import 'package:sbb_design_system_mobile/src/button/theme/default_button_themes.dart';
 import 'package:sbb_design_system_mobile/src/button/theme/sbb_button_style_x.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 import '../../sbb_design_system_mobile.dart';
 import '../sbb_internal.dart';
@@ -245,6 +246,8 @@ class _BaseTertiaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasSBBBaseStyle(context));
+
     final leading = _resolvedLeading();
     final label = _resolvedLabel();
     final loading = _resolvedLoading(context);

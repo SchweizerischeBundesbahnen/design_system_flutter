@@ -2,6 +2,7 @@ import 'dart:math' as math;
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
@@ -177,6 +178,7 @@ class _SBBCheckboxState extends State<SBBCheckbox> with TickerProviderStateMixin
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMaterial(context));
+    assert(debugCheckHasSBBBaseStyle(context));
 
     final style = Theme.of(context).sbbCheckboxTheme?.style;
 

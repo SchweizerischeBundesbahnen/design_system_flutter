@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
@@ -184,6 +185,8 @@ class SBBMultiDropdown<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasSBBBaseStyle(context));
+
     final selected = List<SBBDropdownItem<T>>.from(items.where((i) => selectedItems.contains(i.value)));
     final displayValue = labelAggregation != null ? labelAggregation!(selected) : _defaultLabelAggregation(selected);
     final effectiveConfig = sheetConfig ?? const SBBBottomSheetConfig();

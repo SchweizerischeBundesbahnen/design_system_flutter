@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 import '../../sbb_design_system_mobile.dart';
 import '../input/decoration/sbb_input_decorator.dart';
@@ -185,6 +186,7 @@ class _SBBDecoratedTextState extends State<SBBDecoratedText> {
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMaterial(context));
+    assert(debugCheckHasSBBBaseStyle(context));
 
     final bool isMultiline = (widget.maxLines ?? 0) != 1;
 

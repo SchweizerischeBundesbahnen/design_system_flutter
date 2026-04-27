@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
@@ -132,6 +133,8 @@ class SBBDropdown<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasSBBBaseStyle(context));
+
     final displayValue = items.where((item) => item.value == selectedItem).map((item) => item.label).firstOrNull ?? '';
     final effectiveConfig = sheetConfig ?? const SBBBottomSheetConfig();
     return SBBDecoratedText(

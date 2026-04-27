@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
@@ -140,7 +141,8 @@ class _SBBChipState extends State<SBBChip> {
 
   @override
   Widget build(BuildContext context) {
-    debugCheckHasMaterial(context);
+    assert(debugCheckHasMaterial(context));
+    assert(debugCheckHasSBBBaseStyle(context));
 
     final themeStyle = Theme.of(context).sbbChipTheme!.style!;
     final effectiveStyle = themeStyle.merge(widget.style);

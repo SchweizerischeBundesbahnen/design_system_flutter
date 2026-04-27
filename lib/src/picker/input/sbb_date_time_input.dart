@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
-import '../../../sbb_design_system_mobile.dart';
-import '../sbb_picker_constants.dart';
-import '../sbb_picker_utils.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/picker/picker_constants.dart';
+import 'package:sbb_design_system_mobile/src/picker/picker_utils.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 /// This is basically a convenience combination of a [SBBDecoratedText] and a [SBBDateTimePicker].
 ///
@@ -142,6 +142,8 @@ class SBBDateTimeInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasSBBBaseStyle(context));
+
     return SBBDecoratedText(
       value: _formattedValue(context),
       decoration: triggerDecoration,

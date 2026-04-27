@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 /// The SBB Radio Group.
 ///
@@ -49,6 +50,8 @@ class SBBRadioGroup<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasSBBBaseStyle(context));
+
     return RadioGroup<T>(
       groupValue: groupValue,
       onChanged: onChanged,

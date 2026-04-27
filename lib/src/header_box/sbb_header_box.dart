@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/src/shared/bottom_loading_indicator.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 import '../../sbb_design_system_mobile.dart';
 import 'header_box_app_bar_inset.dart';
@@ -261,6 +262,8 @@ class SBBHeaderBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasSBBBaseStyle(context));
+
     final effectiveStyle = _resolveStyle(context);
     Widget? contentWidget = _defaultContent(context);
 

@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/src/header_box/header_box_content.dart';
 import 'package:sbb_design_system_mobile/src/header_box/header_box_foreground.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 import '../../sbb_design_system_mobile.dart';
 import 'header_box_app_bar_inset.dart';
@@ -203,6 +204,8 @@ class SBBSliverHeaderBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasSBBBaseStyle(context));
+
     return _BaseHeaderBox(
       flap: flap,
       content: _resolveContent(context),

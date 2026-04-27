@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../shared/debug.dart';
+
 class SBBIllustration extends StatelessWidget {
   static const String _parent = 'lib/assets/illustrations';
   static const String _package = 'sbb_design_system_mobile';
@@ -158,6 +160,8 @@ class SBBIllustration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasSBBBaseStyle(context));
+
     return ConstrainedBox(
       constraints: constraints,
       child: Image(

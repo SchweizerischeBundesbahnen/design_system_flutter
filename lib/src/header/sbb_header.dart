@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/src/header/sbb_header_style_scope.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
@@ -143,6 +144,8 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasSBBBaseStyle(context));
+
     return _BaseHeader(
       title: title,
       titleText: titleText,

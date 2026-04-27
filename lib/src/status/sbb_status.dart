@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 import '../../sbb_design_system_mobile.dart';
 
@@ -149,6 +150,8 @@ sealed class SBBStatus extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasSBBBaseStyle(context));
+
     final SBBStatusStyle themedStyle = _getThemedStyle(context)!;
     final SBBStatusStyle effectiveStyle = themedStyle.merge(style);
 

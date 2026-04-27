@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_input_decoration_theme_data.dart';
 
 import '../../sbb_design_system_mobile.dart';
+import '../shared/debug.dart';
 import 'decoration/sbb_input_decorator.dart';
 
 /// The SBB TextInput.
@@ -365,6 +366,7 @@ class _SBBTextInputState extends State<SBBTextInput>
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMaterial(context));
+    assert(debugCheckHasSBBBaseStyle(context));
 
     final theme = Theme.of(context);
     final DefaultSelectionStyle selectionStyle = DefaultSelectionStyle.of(context);

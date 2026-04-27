@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/src/paginator/paginator_circle.dart';
 
 import '../../sbb_design_system_mobile.dart';
+import '../shared/debug.dart';
 
 /// The SBB paginator to display page navigation information
 ///
@@ -52,6 +53,8 @@ class SBBPaginator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasSBBBaseStyle(context));
+
     if (numberPages <= 1) {
       return const SizedBox.shrink();
     }
@@ -132,6 +135,8 @@ class SBBPaginatorFloating extends SBBPaginator {
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasSBBBaseStyle(context));
+
     if (numberPages <= 1) {
       return const SizedBox.shrink();
     }

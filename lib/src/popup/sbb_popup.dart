@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 import '../../sbb_design_system_mobile.dart';
 import '../sbb_internal.dart';
@@ -61,6 +62,8 @@ Future<T?> showSBBPopup<T>({
   assert(title == null || titleText == null, 'Only title or titleText can be set!');
   assert(leading == null || leadingIconData == null, 'Only leading or leadingIconData can be set!');
   assert(trailing == null || trailingIconData == null, 'Only trailing or trailingIconData can be set!');
+
+  assert(debugCheckHasSBBBaseStyle(context));
 
   final themeStyle = Theme.of(context).sbbPopupTheme?.style;
   final SBBPopupStyle resolvedStyle = (themeStyle ?? const SBBPopupStyle()).merge(style);
@@ -188,6 +191,8 @@ class SBBPopup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasSBBBaseStyle(context));
+
     final themeStyle = Theme.of(context).sbbPopupTheme?.style;
     final SBBPopupStyle resolvedStyle = (themeStyle ?? const SBBPopupStyle()).merge(style);
 

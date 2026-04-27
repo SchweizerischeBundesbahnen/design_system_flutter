@@ -3,6 +3,7 @@ import 'package:flutter/rendering.dart';
 import 'package:sbb_design_system_mobile/src/shared/bottom_loading_indicator.dart';
 
 import '../../sbb_design_system_mobile.dart';
+import '../shared/debug.dart';
 import '../shared/divider/divider_painter.dart';
 
 /// A customizable list item component following the SBB design system.
@@ -402,6 +403,7 @@ class _SBBListItemState extends State<SBBListItem> {
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMaterial(context));
+    assert(debugCheckHasSBBBaseStyle(context));
 
     final themeData = Theme.of(context).sbbListItemTheme;
     final effectiveStyle = (themeData?.style ?? SBBListItemStyle()).merge(widget.style);

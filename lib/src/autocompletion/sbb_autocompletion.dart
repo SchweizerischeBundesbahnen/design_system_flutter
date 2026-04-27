@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 import '../../sbb_design_system_mobile.dart';
 import 'autocompletion_link.dart';
@@ -334,6 +335,8 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>> {
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasSBBBaseStyle(context));
+
     final textField = SBBTextInput(
       controller: _effectiveController,
       focusNode: _effectiveFocusNode,

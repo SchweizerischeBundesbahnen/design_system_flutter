@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 import 'package:sbb_design_system_mobile/src/toast/default_toast_body.dart';
 import 'package:sbb_design_system_mobile/src/toast/toast_scope.dart';
 
@@ -100,6 +101,7 @@ class SBBToast {
   }) {
     assert(titleText == null || title == null, 'Cannot provide both titleText and title!');
     assert(titleText != null || title != null, 'One of titleText or title must be set!');
+
     _builder(
       duration: duration,
       bottom: bottom,
@@ -209,6 +211,8 @@ class SBBToast {
     SBBToastStyle? widgetStyle,
   ) => OverlayEntry(
     builder: (context) {
+      assert(debugCheckHasSBBBaseStyle(context));
+
       return ToastScope(
         stream: stream,
         widgetStyle: widgetStyle,

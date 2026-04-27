@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../sbb_design_system_mobile.dart';
+import '../shared/debug.dart';
 
 /// The SBB List Header.
 ///
@@ -37,6 +38,8 @@ class SBBListHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasSBBBaseStyle(context));
+
     final themeStyle = Theme.of(context).sbbListHeaderTheme?.style;
     final effectiveStyle = themeStyle?.merge(style);
 
