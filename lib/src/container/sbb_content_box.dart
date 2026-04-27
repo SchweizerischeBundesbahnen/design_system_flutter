@@ -6,7 +6,7 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 /// May be placed anywhere in the screen to structure other components.
 ///
 /// See also:
-/// - [SBBHeaderbox]: A variant of this component fixed below the [SBBHeader].
+/// - [SBBHeaderBox]: A variant of this component fixed below the [SBBHeader].
 /// - [Figma Design Specification](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=141-2024)
 class SBBContentBox extends StatelessWidget {
   const SBBContentBox({

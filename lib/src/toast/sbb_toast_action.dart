@@ -74,7 +74,7 @@ class _SBBToastActionState extends State<SBBToastAction> {
   @override
   Widget build(BuildContext context) {
     final toastScope = ToastScope.of(context);
-    final resolvedStyle = toastScope.style;
+    final resolvedStyle = toastScope.widgetStyle;
 
     return GestureDetector(
       onTap: _isActionBeenTriggered ? null : () => _handlePressed(toastScope.toast?.hide),

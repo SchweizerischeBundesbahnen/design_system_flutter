@@ -8,6 +8,7 @@ import 'package:sbb_design_system_mobile/src/chip/theme/default_sbb_chip_theme_d
 import 'package:sbb_design_system_mobile/src/container/theme/default_sbb_content_box_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/decorated_text/theme/default_sbb_decorated_text_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/header/theme/default_sbb_header_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/header_box/theme/default_sbb_header_box_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_input_decoration_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_text_input_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/list_header/theme/default_sbb_list_header_theme_data.dart';
@@ -88,7 +89,7 @@ class SBBTheme {
     SBBDecoratedTextThemeData? decoratedTextTheme,
     SBBDropdownThemeData? dropdownTheme,
     SBBHeaderThemeData? headerTheme,
-    SBBHeaderBoxStyle? headerBoxStyle,
+    SBBHeaderBoxThemeData? headerBoxTheme,
     SBBInputDecorationThemeData? inputDecorationTheme,
     SBBListHeaderThemeData? listHeaderTheme,
     SBBListItemThemeData? listItemTheme,
@@ -121,7 +122,7 @@ class SBBTheme {
     decoratedTextTheme: decoratedTextTheme,
     dropdownTheme: dropdownTheme,
     headerTheme: headerTheme,
-    headerBoxStyle: headerBoxStyle,
+    headerBoxTheme: headerBoxTheme,
     inputDecorationTheme: inputDecorationTheme,
     listHeaderTheme: listHeaderTheme,
     listItemTheme: listItemTheme,
@@ -160,7 +161,7 @@ class SBBTheme {
     SBBControlStyles? controlStyles,
     SBBDecoratedTextThemeData? decoratedTextTheme,
     SBBDropdownThemeData? dropdownTheme,
-    SBBHeaderBoxStyle? headerBoxStyle,
+    SBBHeaderBoxThemeData? headerBoxTheme,
     SBBInputDecorationThemeData? inputDecorationTheme,
     SBBListHeaderThemeData? listHeaderTheme,
     SBBListItemThemeData? listItemTheme,
@@ -192,7 +193,7 @@ class SBBTheme {
     controlStyles: controlStyles,
     decoratedTextTheme: decoratedTextTheme,
     dropdownTheme: dropdownTheme,
-    headerBoxStyle: headerBoxStyle,
+    headerBoxTheme: headerBoxTheme,
     inputDecorationTheme: inputDecorationTheme,
     listHeaderTheme: listHeaderTheme,
     listItemTheme: listItemTheme,
@@ -234,7 +235,7 @@ class SBBTheme {
     SBBDecoratedTextThemeData? decoratedTextTheme,
     SBBDropdownThemeData? dropdownTheme,
     SBBHeaderThemeData? headerTheme,
-    SBBHeaderBoxStyle? headerBoxStyle,
+    SBBHeaderBoxThemeData? headerBoxTheme,
     SBBInputDecorationThemeData? inputDecorationTheme,
     SBBListHeaderThemeData? listHeaderTheme,
     SBBListItemThemeData? listItemTheme,
@@ -288,8 +289,8 @@ class SBBTheme {
     final defaultHeaderTheme = DefaultSBBHeaderThemeData(baseStyle: mergedBaseStyle);
     final mergedHeaderTheme = defaultHeaderTheme.merge(headerTheme);
 
-    final defaultHeaderBoxStyle = SBBHeaderBoxStyle.$default(baseStyle: mergedBaseStyle);
-    final mergedHeaderBoxStyle = headerBoxStyle.merge(defaultHeaderBoxStyle);
+    final defaultHeaderBoxTheme = DefaultSBBHeaderBoxThemeData(baseStyle: mergedBaseStyle);
+    final mergedHeaderBoxTheme = defaultHeaderBoxTheme.merge(headerBoxTheme);
 
     final defaultListHeaderTheme = DefaultSBBListHeaderThemeData(mergedBaseStyle);
     final mergedListHeaderTheme = defaultListHeaderTheme.merge(listHeaderTheme);
@@ -365,7 +366,7 @@ class SBBTheme {
       decoratedTextTheme: mergedDecoratedTextTheme,
       dropdownTheme: mergedDropdownTheme,
       headerTheme: mergedHeaderTheme,
-      headerBoxStyle: mergedHeaderBoxStyle,
+      headerBoxTheme: mergedHeaderBoxTheme,
       inputDecorationTheme: mergedInputDecorationTheme,
       listHeaderTheme: mergedListHeaderTheme,
       listItemTheme: mergedListItemTheme,
@@ -399,7 +400,7 @@ class SBBTheme {
     required SBBDecoratedTextThemeData decoratedTextTheme,
     required SBBDropdownThemeData dropdownTheme,
     required SBBHeaderThemeData headerTheme,
-    required SBBHeaderBoxStyle headerBoxStyle,
+    required SBBHeaderBoxThemeData headerBoxTheme,
     required SBBInputDecorationThemeData inputDecorationTheme,
     required SBBListHeaderThemeData listHeaderTheme,
     required SBBListItemThemeData listItemTheme,
@@ -450,7 +451,7 @@ class SBBTheme {
         decoratedTextTheme,
         dropdownTheme,
         headerTheme,
-        headerBoxStyle,
+        headerBoxTheme,
         inputDecorationTheme,
         listHeaderTheme,
         listItemTheme,

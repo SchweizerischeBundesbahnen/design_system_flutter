@@ -22,16 +22,20 @@ class _FloatingPageState extends State<FloatingPage> {
         onTap: () => FocusScope.of(context).unfocus(),
         child: CustomScrollView(
           slivers: [
-            SBBSliverFloatingHeaderbox.custom(
-              resizing: resizing,
+            SBBSliverHeaderBox(
               padding: .zero,
               flap: _flap(),
-              flapMode: .hideable,
-              children: [
-                _crossfadeExample(context),
-                _additionalRowsSwitcher(context),
-                _contractibleExample(sbbToast),
-              ],
+              body: SBBCascadeColumn(
+                children: [
+                  _crossfadeExample(context),
+                  _additionalRowsSwitcher(context),
+                  _contractibleExample(sbbToast),
+                ],
+              ),
+              config: SBBSliverHeaderBoxConfig(
+                resizing: resizing,
+                flapMode: .hideable,
+              ),
             ),
             SliverList.builder(
               itemCount: 60,
@@ -43,16 +47,16 @@ class _FloatingPageState extends State<FloatingPage> {
                 },
               ),
             ),
-            const SBBSliverFloatingHeaderboxSpacer(),
+            const SBBSliverHeaderBoxSpacer(),
           ],
         ),
       ),
     );
   }
 
-  SBBHeaderboxFlap _flap() {
-    return SBBHeaderboxFlap.custom(
-      child: Row(
+  SBBHeaderBoxFlap _flap() {
+    return SBBHeaderBoxFlap(
+      label: Row(
         children: [
           Text('Thursday, 01/31/2025', style: SBBTextStyles.smallLight),
           Spacer(),
@@ -76,7 +80,7 @@ class _FloatingPageState extends State<FloatingPage> {
   Widget _crossfadeExample(BuildContext context) {
     final key = GlobalKey();
     final colorScheme = Theme.of(context).sbbBaseStyle.colorScheme;
-    return SBBContractible.crossfade(
+    return SBBContractibleCrossfade(
       // The contracted child is simply a summarized version of the origin and destination.
       contractedChild: Material(
         color: SBBColors.transparent,
@@ -86,7 +90,7 @@ class _FloatingPageState extends State<FloatingPage> {
             // Expand the headerbox on tap.
             // For this to work, we need a context that is a descendant of the headerbox.
             // In this case, we capture it using a key.
-            SBBSliverFloatingHeaderbox.expand(key.currentContext!);
+            SBBSliverHeaderBox.expand(key.currentContext!);
           },
           child: Container(
             constraints: BoxConstraints(minWidth: .infinity),
@@ -167,6 +171,7 @@ class _FloatingPageState extends State<FloatingPage> {
 
   SBBContractible _contractibleExample(SBBToast sbbToast) {
     return SBBContractible(
+      clipBehavior: .none,
       behavior: pushMode ? .displace : .clip,
       builder:
           // We can react to the current state of expansion and set an opacity accordingly.
@@ -225,7 +230,7 @@ class _FloatingPageState extends State<FloatingPage> {
           ),
         ),
       ),
-      SBBContractible.custom(
+      SBBContractible(
         behavior: .center,
         child: Center(child: SBBListItem(titleText: 'Stay center', onTap: null)),
       ),

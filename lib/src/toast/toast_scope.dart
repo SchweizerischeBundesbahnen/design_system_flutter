@@ -11,12 +11,12 @@ class ToastScope extends InheritedWidget {
     required super.child,
     required this.stream,
     this.toast,
-    this.style,
+    this.widgetStyle,
   });
 
   final Stream<bool> stream;
   final SBBToast? toast;
-  final SBBToastStyle? style;
+  final SBBToastStyle? widgetStyle;
 
   static ToastScope? maybeOf(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<ToastScope>();

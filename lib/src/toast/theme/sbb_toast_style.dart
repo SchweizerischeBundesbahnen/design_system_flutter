@@ -24,8 +24,6 @@ class SBBToastStyle {
   });
 
   /// The text style for the title.
-  ///
-  /// Default: [SBBTextStyles.smallLight] with [TextDecoration.none] and [SBBColors.white].
   final TextStyle? titleTextStyle;
 
   /// The maximum number of lines for the title.
@@ -39,8 +37,6 @@ class SBBToastStyle {
   final Color? titleForegroundColor;
 
   /// The text style for the action.
-  ///
-  /// Default: [SBBTextStyles.smallBold] with [TextDecoration.none] and [SBBColors.white].
   final TextStyle? actionTextStyle;
 
   /// The color of the action text.

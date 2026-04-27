@@ -82,16 +82,16 @@ class DesignGuidelinePage extends StatelessWidget {
       body: Column(
         children: [
           const SBBListHeader('Default'),
-          SBBHeaderbox(
-            title: 'Title',
-            leadingIcon: SBBIcons.dog_small,
-            secondaryLabel: 'Subtext',
-            flap: SBBHeaderboxFlap(
-              title: 'Additional text or information',
-              leadingIcon: SBBIcons.sign_exclamation_point_small,
-              trailingIcon: SBBIcons.circle_information_small_small,
+          SBBHeaderBox(
+            titleText: 'Title',
+            leadingIconData: SBBIcons.dog_small,
+            subtitleText: 'Subtext',
+            flap: SBBHeaderBoxFlap(
+              labelText: 'Additional text or information',
+              leadingIconData: SBBIcons.sign_exclamation_point_small,
+              trailingIconData: SBBIcons.circle_information_small_small,
             ),
-            trailingWidget: SBBTertiaryButtonSmall(
+            trailing: SBBTertiaryButtonSmall(
               labelText: 'Label',
               iconData: SBBIcons.dog_small,
               onPressed: () => sbbToast.show(titleText: 'Default pressed', bottom: 96.0),
@@ -99,23 +99,24 @@ class DesignGuidelinePage extends StatelessWidget {
           ),
           const SizedBox(height: SBBSpacing.medium),
           const SBBListHeader('Large'),
-          SBBHeaderbox.large(
-            title: 'Title',
-            leadingIcon: SBBIcons.dog_medium,
-            secondaryLabel: 'Subtext',
-            trailingWidget: SBBTertiaryButton(
+          SBBHeaderBoxLarge(
+            titleText: 'Title',
+            leadingIconData: SBBIcons.dog_medium,
+            subtitleText: 'Subtext',
+            trailing: SBBTertiaryButton(
               iconData: SBBIcons.dog_small,
               onPressed: () => sbbToast.show(titleText: 'Large pressed', bottom: 96.0),
             ),
           ),
           const SizedBox(height: SBBSpacing.medium),
           const SBBListHeader('Custom'),
-          const SBBHeaderbox.custom(
+          const SBBHeaderBox(
             padding: .zero,
-            flap: SBBHeaderboxFlap.custom(
-              child: Center(child: Text('Choooooo!', style: SBBTextStyles.extraSmallBold)),
+            flap: SBBHeaderBoxFlap(
+              label: Center(child: Text('Choooooo!', style: SBBTextStyles.xSmallBold)),
             ),
-            child: Center(child: Text('🚂｡🚋｡🚋｡🚋｡🚋˙⊹⁺.')),
+            title: Center(child: Text('🚂｡🚋｡🚋｡🚋｡🚋˙⊹⁺.')),
+            isLoading: true,
           ),
         ],
       ),
@@ -141,8 +142,8 @@ class _StaticPageState extends State<StaticPage> {
     return Stack(
       children: [
         _body(),
-        SBBHeaderbox.custom(
-          child: Column(
+        SBBHeaderBox(
+          title: Column(
             mainAxisSize: .min,
             children: [
               Row(
@@ -206,37 +207,17 @@ class _ScrollablePageState extends State<ScrollablePage> {
     final isDark = Theme.of(context).brightness == .dark;
     return CustomScrollView(
       slivers: [
-        SBBSliverHeaderbox.custom(
-          child: Column(
-            mainAxisSize: .min,
-            children: [
-              Row(
-                mainAxisAlignment: .spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: .start,
-                    children: [
-                      Text('Scrollable Screen', style: SBBTextStyles.mediumBold),
-                      Text(
-                        'Click to expand Headerbox.',
-                        style: SBBTextStyles.smallLight.copyWith(
-                          color: isDark ? SBBColors.graphite : SBBColors.granite,
-                        ),
-                      ),
-                    ],
-                  ),
-                  SBBTertiaryButtonSmall(
-                    labelText: 'Expand',
-                    onPressed: () => setState(() => _headerBoxExpanded = !_headerBoxExpanded),
-                  ),
-                ],
-              ),
-              AnimatedContainer(
-                curve: Curves.easeInOut,
-                height: _headerBoxExpanded ? _expandedHeight : _collapsedHeight,
-                duration: Durations.long4,
-              ),
-            ],
+        SBBSliverHeaderBox(
+          titleText: 'Scrollable Screen',
+          subtitleText: 'Click to expand the header box',
+          trailing: SBBTertiaryButtonSmall(
+            labelText: 'Expand',
+            onPressed: () => setState(() => _headerBoxExpanded = !_headerBoxExpanded),
+          ),
+          body: AnimatedContainer(
+            curve: Curves.easeInOut,
+            height: _headerBoxExpanded ? _expandedHeight : _collapsedHeight,
+            duration: Durations.long4,
           ),
         ),
         SliverList.builder(

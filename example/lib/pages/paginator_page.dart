@@ -75,7 +75,7 @@ class _LabeledSBBPaginator extends StatelessWidget {
         mainAxisSize: .min,
         spacing: SBBSpacing.small,
         children: [
-          Text(label, style: SBBTextStyles.extraSmallLight),
+          Text(label, style: SBBTextStyles.xSmallLight),
           isFloating
               ? SBBPaginatorFloating(numberPages: _kNumberPages, currentPage: currentPage)
               : SBBPaginator(currentPage: currentPage, numberPages: _kNumberPages),
