@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-import 'package:sbb_design_system_mobile/src/sbb_internal.dart';
+import 'package:sbb_design_system_mobile/src/popup/theme/default_sbb_popup_theme_data.dart';
 
 /// Shows an SBB Popup dialog.
 ///
@@ -69,7 +69,7 @@ Future<T?> showSBBPopup<T>({
     useRootNavigator: useRootNavigator,
     barrierDismissible: isDismissible,
     barrierLabel: barrierLabel,
-    barrierColor: resolvedStyle.barrierColor ?? SBBInternal.barrierColor,
+    barrierColor: resolvedStyle.barrierColor ?? DefaultSBBPopupThemeData.defaultBarrierColor,
     useSafeArea: useSafeArea,
     fullscreenDialog: fullscreenDialog,
     requestFocus: requestFocus,
