@@ -2,12 +2,11 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/button/default_button_label.dart';
 import 'package:sbb_design_system_mobile/src/button/theme/default_button_themes.dart';
 import 'package:sbb_design_system_mobile/src/button/theme/sbb_button_style_x.dart';
-
-import '../../sbb_design_system_mobile.dart';
-import '../sbb_internal.dart';
+import 'package:sbb_design_system_mobile/src/sbb_internal.dart';
 
 /// The tertiary variant of the SBB Button.
 ///

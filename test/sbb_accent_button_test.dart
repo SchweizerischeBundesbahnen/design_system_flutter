@@ -12,8 +12,8 @@ void main() {
       child: Column(
         spacing: SBBSpacing.medium,
         children: [
-          SBBAccentButton(key: pressableKey, labelText: "Default", onPressed: () {}),
-          SBBAccentButton(labelText: "Disabled", onPressed: null),
+          SBBAccentButton(key: pressableKey, labelText: 'Default', onPressed: () {}),
+          SBBAccentButton(labelText: 'Disabled', onPressed: null),
           SBBAccentButton(
             label: Container(color: SBBColors.platinum, child: Text('Custom!')),
             onPressed: () {},

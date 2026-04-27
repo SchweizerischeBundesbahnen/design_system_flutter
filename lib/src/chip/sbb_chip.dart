@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 const EdgeInsets _badgeMargin = .only(right: 4.0);
 const Size _badgeSize = Size(24.0, 24.0);

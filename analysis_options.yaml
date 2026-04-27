@@ -3,3 +3,14 @@ include: package:flutter_lints/flutter.yaml
 formatter:
   page_width: 120
   trailing_commas: preserve
+
+linter:
+  rules:
+    always_use_package_imports: true
+    prefer_single_quotes: true
+    prefer_final_in_for_each: true
+    prefer_final_locals: true
+    prefer_final_fields: true
+    always_declare_return_types: true
+    sort_constructors_first: true
+    use_null_aware_elements: false

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../../sbb_design_system_mobile.dart';
-import '../input/decoration/sbb_input_decorator.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/input/decoration/sbb_input_decorator.dart';
 
 /// The SBB Decorated Text.
 ///

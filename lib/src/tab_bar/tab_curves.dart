@@ -11,6 +11,42 @@ import 'package:flutter/material.dart';
 /// The curves dynamically adjust based on the animation progress and
 /// the proximity of neighboring tabs.
 class TabCurves {
+  /// Creates a [TabCurves] instance.
+  ///
+  /// - [midX]: The x-coordinate of the center of the tab.
+  /// - [waveRadius]: The radius that defines the maximum extent of the wave
+  ///   deformation.
+  TabCurves({required this.midX, required this.waveRadius})
+    : _circleWaveRadius = 0.552284749831 * waveRadius,
+      _twoWaveRadius = waveRadius.toDouble() * 2 {
+    // Define the relative starting positions for the anchor points.
+    final startPos = [
+      const Offset(-2.0, 0.0),
+      const Offset(-1.0, 0.0),
+      const Offset(0.0, 0.0),
+      const Offset(1.0, 0.0),
+      const Offset(2.0, 0.0),
+    ];
+
+    // Calculate the absolute starting positions for the anchor points
+    // based on `midX` and `waveRadius`.
+    _startP = List.generate(
+      5,
+      (index) => Offset(midX + startPos[index].dx * waveRadius, startPos[index].dy * waveRadius),
+    );
+
+    final endPos = [
+      const Offset(-2.0, 0.0),
+      const Offset(-1.0, 1.0),
+      const Offset(0.0, 2.0),
+      const Offset(1.0, 1.0),
+      const Offset(2.0, 0.0),
+    ];
+
+    // Calculate the absolute ending positions for the anchor points.
+    _endP = List.generate(5, (index) => Offset(midX + endPos[index].dx * waveRadius, endPos[index].dy * waveRadius));
+  }
+
   /// The horizontal center of the tab's animation space.
   final double midX;
 
@@ -62,43 +98,7 @@ class TabCurves {
   ///
   /// When `true`, the curves will adjust to avoid overlapping or
   /// creating undesirable visual artifacts with adjacent tabs.
-  bool get tight => _tight; // Getter for tight
-
-  /// Creates a [TabCurves] instance.
-  ///
-  /// - [midX]: The x-coordinate of the center of the tab.
-  /// - [waveRadius]: The radius that defines the maximum extent of the wave
-  ///   deformation.
-  TabCurves({required this.midX, required this.waveRadius})
-    : _circleWaveRadius = 0.552284749831 * waveRadius,
-      _twoWaveRadius = waveRadius.toDouble() * 2 {
-    // Define the relative starting positions for the anchor points.
-    final startPos = [
-      const Offset(-2.0, 0.0),
-      const Offset(-1.0, 0.0),
-      const Offset(0.0, 0.0),
-      const Offset(1.0, 0.0),
-      const Offset(2.0, 0.0),
-    ];
-
-    // Calculate the absolute starting positions for the anchor points
-    // based on `midX` and `waveRadius`.
-    _startP = List.generate(
-      5,
-      (index) => Offset(midX + startPos[index].dx * waveRadius, startPos[index].dy * waveRadius),
-    );
-
-    final endPos = [
-      const Offset(-2.0, 0.0),
-      const Offset(-1.0, 1.0),
-      const Offset(0.0, 2.0),
-      const Offset(1.0, 1.0),
-      const Offset(2.0, 0.0),
-    ];
-
-    // Calculate the absolute ending positions for the anchor points.
-    _endP = List.generate(5, (index) => Offset(midX + endPos[index].dx * waveRadius, endPos[index].dy * waveRadius));
-  }
+  bool get tight => _tight;
 
   /// Updates the position of the curve's control points based on the
   /// current animation progress and the state of neighboring tabs.

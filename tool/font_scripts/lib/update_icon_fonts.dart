@@ -109,7 +109,7 @@ Future<void> createFlutterFontMap() async {
   final small = await getMap('small');
   final medium = await getMap('medium');
   final large = await getMap('large');
-  mapFont(String name, String value) => sb.writeln('  static const $name = $value;');
+  void mapFont(String name, String value) => sb.writeln('  static const $name = $value;');
 
   sb.writeln('import \'package:flutter/material.dart\';');
   sb.writeln();
@@ -133,7 +133,7 @@ Future<void> createFlutterFontMap() async {
 
   await File('icons/sbb_icons.dart').writeAsString(sb.toString());
 
-  mapFont2(String name) => sb.writeln('    {\'icon\': SBBIcons.$name, \'name\': \'$name\'},');
+  void mapFont2(String name) => sb.writeln('    {\'icon\': SBBIcons.$name, \'name\': \'$name\'},');
 
   sb.clear();
   sb.writeln('import \'package:sbb_design_system_mobile/sbb_design_system_mobile.dart\';');

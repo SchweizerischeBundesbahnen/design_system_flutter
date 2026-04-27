@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-
-import '../../sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 // TODO: replace this element with separate implementations
-class TransparentTapableElement extends StatelessWidget {
-  factory TransparentTapableElement.roundedBox({Key? key, GestureTapCallback? onTap, Widget? child}) {
-    return TransparentTapableElement(
+class TransparentTappableElement extends StatelessWidget {
+  factory TransparentTappableElement.roundedBox({Key? key, GestureTapCallback? onTap, Widget? child}) {
+    return TransparentTappableElement(
       key: key,
       customBorder: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(SBBSpacing.medium))),
       onTap: onTap,
@@ -13,15 +12,15 @@ class TransparentTapableElement extends StatelessWidget {
     );
   }
 
-  factory TransparentTapableElement.circle({Key? key, GestureTapCallback? onTap, Widget? child}) =>
-      TransparentTapableElement(
+  factory TransparentTappableElement.circle({Key? key, GestureTapCallback? onTap, Widget? child}) =>
+      TransparentTappableElement(
         key: key,
         customBorder: const CircleBorder(),
         onTap: onTap,
         child: child,
       );
 
-  const TransparentTapableElement({super.key, this.customBorder, this.onTap, this.child});
+  const TransparentTappableElement({super.key, this.customBorder, this.onTap, this.child});
 
   final ShapeBorder? customBorder;
   final GestureTapCallback? onTap;

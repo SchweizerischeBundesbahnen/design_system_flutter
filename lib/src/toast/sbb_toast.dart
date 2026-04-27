@@ -1,10 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/toast/default_toast_body.dart';
 import 'package:sbb_design_system_mobile/src/toast/toast_scope.dart';
-
-import '../../sbb_design_system_mobile.dart';
 
 /// A dismissible message overlay that appears at the bottom of the screen, typically for transient notifications.
 ///
@@ -156,7 +155,7 @@ class SBBToast {
     SBBToastStyle? widgetStyle,
     Duration duration = durationShort,
   }) {
-    showToastMessage() {
+    void showToastMessage() {
       remove();
       _streamController = StreamController<bool>();
       _streamController!.add(true);

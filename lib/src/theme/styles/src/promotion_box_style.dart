@@ -1,8 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-
-import '../../theme.dart';
+import 'package:sbb_design_system_mobile/src/theme/theme.dart';
 
 class PromotionBoxStyle {
   const PromotionBoxStyle({

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// A convenience wrapper that combines [SBBListItem] with [SBBSwitch] as the trailing widget.
 ///

@@ -204,7 +204,6 @@ class _ScrollablePageState extends State<ScrollablePage> {
   @override
   Widget build(BuildContext context) {
     final sbbToast = SBBToast.of(context);
-    final isDark = Theme.of(context).brightness == .dark;
     return CustomScrollView(
       slivers: [
         SBBSliverHeaderBox(
