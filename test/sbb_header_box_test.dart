@@ -133,8 +133,8 @@ class FloatingHeaderboxTest extends StatelessWidget {
                       ),
                     ),
                     SBBContractibleCrossfade(
-                      contractedChild: Text("Contracted"),
-                      expandedChild: Text("Expanded", style: SBBTextStyles.xxLargeBold),
+                      contractedChild: Text('Contracted'),
+                      expandedChild: Text('Expanded', style: SBBTextStyles.xxLargeBold),
                     ),
                   ],
                 ),
@@ -176,10 +176,10 @@ class FloatingHeaderboxWithUpdateTest extends StatelessWidget {
                     body: SBBCascadeColumn(
                       children: [
                         SBBContractibleCrossfade(
-                          contractedChild: SizedBox(height: 50, child: Text("Contracted")),
+                          contractedChild: SizedBox(height: 50, child: Text('Contracted')),
                           expandedChild: SizedBox(
                             height: 100,
-                            child: Text("Expanded", style: SBBTextStyles.xxLargeBold),
+                            child: Text('Expanded', style: SBBTextStyles.xxLargeBold),
                           ),
                         ),
                       ],
