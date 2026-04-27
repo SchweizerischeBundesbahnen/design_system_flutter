@@ -57,7 +57,6 @@ extension SBBDecoratedTextThemeDataX on SBBDecoratedTextThemeData {
 }
 
 extension SBBDecoratedTextThemeDataThemeDataX on ThemeData {
-  SBBDecoratedTextThemeData? get sbbDecoratedTextTheme {
-    return extension<SBBDecoratedTextThemeData>();
-  }
+  /// Access the [SBBDecoratedTextThemeData] from the current theme.
+  SBBDecoratedTextThemeData? get sbbDecoratedTextTheme => extension<SBBDecoratedTextThemeData>();
 }

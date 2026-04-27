@@ -215,19 +215,15 @@ extension SBBAccentButtonThemeDataX on SBBAccentButtonThemeData {
 }
 
 extension SBBButtonThemeDataThemeDataX on ThemeData {
-  SBBPrimaryButtonThemeData? get sbbPrimaryButtonTheme {
-    return extension<SBBPrimaryButtonThemeData>();
-  }
+  /// Access the [SBBPrimaryButtonThemeData] from the current theme.
+  SBBPrimaryButtonThemeData? get sbbPrimaryButtonTheme => extension<SBBPrimaryButtonThemeData>();
 
-  SBBSecondaryButtonThemeData? get sbbSecondaryButtonTheme {
-    return extension<SBBSecondaryButtonThemeData>();
-  }
+  /// Access the [SBBSecondaryButtonThemeData] from the current theme.
+  SBBSecondaryButtonThemeData? get sbbSecondaryButtonTheme => extension<SBBSecondaryButtonThemeData>();
 
-  SBBTertiaryButtonThemeData? get sbbTertiaryButtonTheme {
-    return extension<SBBTertiaryButtonThemeData>();
-  }
+  /// Access the [SBBTertiaryButtonThemeData] from the current theme.
+  SBBTertiaryButtonThemeData? get sbbTertiaryButtonTheme => extension<SBBTertiaryButtonThemeData>();
 
-  SBBAccentButtonThemeData? get sbbAccentButtonTheme {
-    return extension<SBBAccentButtonThemeData>();
-  }
+  /// Access the [SBBAccentButtonThemeData] from the current theme.
+  SBBAccentButtonThemeData? get sbbAccentButtonTheme => extension<SBBAccentButtonThemeData>();
 }

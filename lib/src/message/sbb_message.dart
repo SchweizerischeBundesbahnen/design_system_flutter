@@ -258,7 +258,7 @@ class SBBMessage extends StatelessWidget {
   }
 }
 
-extension _IntersperseOnIterable on Iterable<Widget> {
+extension _IntersperseOnIterableX on Iterable<Widget> {
   Iterable<Widget> intersperseWith(Widget widget) {
     return map((e) => [widget, e]).expand((e) => e).skip(1);
   }

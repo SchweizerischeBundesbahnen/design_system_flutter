@@ -55,7 +55,6 @@ extension SBBChipThemeDataX on SBBChipThemeData {
 }
 
 extension SBBChipThemeDataThemeDataX on ThemeData {
-  SBBChipThemeData? get sbbChipTheme {
-    return extension<SBBChipThemeData>();
-  }
+  /// Access the [SBBChipThemeData] from the current theme.
+  SBBChipThemeData? get sbbChipTheme => extension<SBBChipThemeData>();
 }

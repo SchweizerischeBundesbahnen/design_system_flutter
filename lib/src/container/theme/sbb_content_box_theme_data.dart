@@ -56,7 +56,6 @@ extension SBBContentBoxThemeDataX on SBBContentBoxThemeData {
 }
 
 extension SBBContentBoxThemeDataThemeDataX on ThemeData {
-  SBBContentBoxThemeData? get sbbContentBoxTheme {
-    return extension<SBBContentBoxThemeData>();
-  }
+  /// Access the [SBBContentBoxThemeData] from the current theme.
+  SBBContentBoxThemeData? get sbbContentBoxTheme => extension<SBBContentBoxThemeData>();
 }

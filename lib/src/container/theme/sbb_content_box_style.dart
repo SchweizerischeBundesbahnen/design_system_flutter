@@ -79,7 +79,7 @@ class SBBContentBoxStyle extends ThemeExtension<SBBContentBoxStyle> {
   }
 }
 
-extension SBBContentBoxStyleExtension on SBBContentBoxStyle? {
+extension SBBContentBoxStyleX on SBBContentBoxStyle? {
   SBBContentBoxStyle merge(SBBContentBoxStyle? other) {
     if (this == null) return other ?? SBBContentBoxStyle();
     return this!.copyWith(

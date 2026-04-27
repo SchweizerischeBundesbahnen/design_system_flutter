@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-import 'package:sbb_design_system_mobile/src/header_box/theme/sbb_header_box_flap_style.dart';
 
 /// Theme data for the [SBBHeaderBox].
 ///
@@ -92,9 +91,7 @@ extension SBBHeaderBoxThemeDataX on SBBHeaderBoxThemeData {
   }
 }
 
-extension SBBHeaderBoxThemeOnThemeData on ThemeData {
+extension SBBHeaderBoxThemeOnThemeDataX on ThemeData {
   /// Access the [SBBHeaderBoxThemeData] from the current theme.
-  SBBHeaderBoxThemeData? get sbbHeaderBoxTheme {
-    return extension<SBBHeaderBoxThemeData>();
-  }
+  SBBHeaderBoxThemeData? get sbbHeaderBoxTheme => extension<SBBHeaderBoxThemeData>();
 }

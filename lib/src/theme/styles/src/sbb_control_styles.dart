@@ -31,12 +31,9 @@ class SBBControlStyles extends ThemeExtension<SBBControlStyles> {
   }
 }
 
-extension SBBControlStylesExtension on SBBControlStyles? {
+extension SBBControlStylesX on SBBControlStyles? {
   SBBControlStyles merge(SBBControlStyles? other) {
     if (this == null) return other ?? SBBControlStyles();
-    return this!.copyWith(
-          promotionBox: this!.promotionBox ?? other?.promotionBox,
-        )
-        as SBBControlStyles;
+    return this!.copyWith(promotionBox: this!.promotionBox ?? other?.promotionBox) as SBBControlStyles;
   }
 }

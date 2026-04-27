@@ -56,7 +56,6 @@ extension SBBTabBarThemeDataX on SBBTabBarThemeData {
 }
 
 extension SBBTabBarThemeDataThemeDataX on ThemeData {
-  SBBTabBarThemeData? get sbbTabBarTheme {
-    return extension<SBBTabBarThemeData>();
-  }
+  /// Access the [SBBTabBarThemeData] from the current theme.
+  SBBTabBarThemeData? get sbbTabBarTheme => extension<SBBTabBarThemeData>();
 }

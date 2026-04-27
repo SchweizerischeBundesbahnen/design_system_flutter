@@ -60,7 +60,6 @@ extension SBBMessageThemeDataX on SBBMessageThemeData {
 }
 
 extension SBBMessageThemeDataThemeDataX on ThemeData {
-  SBBMessageThemeData? get sbbMessageTheme {
-    return extension<SBBMessageThemeData>();
-  }
+  /// Access the [SBBMessageThemeData] from the current theme.
+  SBBMessageThemeData? get sbbMessageTheme => extension<SBBMessageThemeData>();
 }
