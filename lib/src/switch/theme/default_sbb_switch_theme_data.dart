@@ -25,6 +25,7 @@ class DefaultSBBSwitchThemeData extends SBBSwitchThemeData {
             WidgetState.selected: baseStyle.colorScheme.primaryColor,
             WidgetState.any: SBBColors.white,
           }),
+          tapTargetPadding: EdgeInsets.symmetric(vertical: SBBSpacing.xxSmall),
         ),
       );
 }

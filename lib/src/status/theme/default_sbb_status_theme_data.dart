@@ -9,6 +9,7 @@ class DefaultSBBStatusThemeData extends SBBStatusThemeData {
           backgroundColor: baseStyle.colorScheme.errorColor,
           borderColor: baseStyle.colorScheme.errorColor,
           iconColor: SBBColors.white,
+          alphaValue: .25,
         ),
         warning: SBBStatusStyle(
           textStyle: baseStyle.textTheme.smallLight,
@@ -16,6 +17,7 @@ class DefaultSBBStatusThemeData extends SBBStatusThemeData {
           backgroundColor: baseStyle.themeValue(SBBColors.peach, SBBColors.peachDark),
           borderColor: baseStyle.themeValue(SBBColors.peach, SBBColors.peachDark),
           iconColor: SBBColors.white,
+          alphaValue: .25,
         ),
         success: SBBStatusStyle(
           textStyle: baseStyle.textTheme.smallLight,
@@ -23,6 +25,7 @@ class DefaultSBBStatusThemeData extends SBBStatusThemeData {
           backgroundColor: baseStyle.themeValue(SBBColors.green, SBBColors.greenDark),
           borderColor: baseStyle.themeValue(SBBColors.green, SBBColors.greenDark),
           iconColor: SBBColors.white,
+          alphaValue: .25,
         ),
         information: SBBStatusStyle(
           textStyle: baseStyle.textTheme.smallLight,
@@ -30,6 +33,7 @@ class DefaultSBBStatusThemeData extends SBBStatusThemeData {
           backgroundColor: SBBColors.smoke,
           borderColor: SBBColors.smoke,
           iconColor: SBBColors.white,
+          alphaValue: .25,
         ),
       );
 }
