@@ -179,26 +179,26 @@ class _SBBCheckboxState extends State<SBBCheckbox> with TickerProviderStateMixin
     assert(debugCheckHasMaterial(context));
     assert(debugCheckHasSBBBaseStyle(context));
 
-    final style = Theme.of(context).sbbCheckboxTheme?.style;
+    final style = Theme.of(context).sbbCheckboxTheme!.style!;
 
-    final effectiveMargin = widget.style?.tapTargetPadding ?? style?.tapTargetPadding ?? .zero;
+    final effectiveMargin = widget.style?.tapTargetPadding ?? style.tapTargetPadding!;
     final effectiveSize = effectiveMargin.inflateSize(_checkboxSize);
 
     // provide both active and inactive variants to the painter so it can lerp
     final activeStates = {...states, WidgetState.selected};
     final inactiveStates = {...states}..remove(WidgetState.selected);
 
-    final fillProp = _effectiveValue<WidgetStateProperty<Color?>>(widget.style?.fillColor, style?.fillColor);
-    final checkProp = _effectiveValue<WidgetStateProperty<Color?>>(widget.style?.checkColor, style?.checkColor);
-    final borderProp = _effectiveValue<WidgetStateProperty<Color?>>(widget.style?.borderColor, style?.borderColor);
+    final fillProp = _effectiveValue<WidgetStateProperty<Color?>>(widget.style?.fillColor, style.fillColor!);
+    final checkProp = _effectiveValue<WidgetStateProperty<Color?>>(widget.style?.checkColor, style.checkColor!);
+    final borderProp = _effectiveValue<WidgetStateProperty<Color?>>(widget.style?.borderColor, style.borderColor!);
 
     final sbbColorScheme = Theme.of(context).sbbBaseStyle.colorScheme;
-    final activeFillColor = fillProp?.resolve(activeStates) ?? sbbColorScheme.primaryColor;
-    final inactiveFillColor = fillProp?.resolve(inactiveStates) ?? sbbColorScheme.primaryColor;
-    final activeCheckColor = checkProp?.resolve(activeStates) ?? sbbColorScheme.primaryColor;
-    final inactiveCheckColor = checkProp?.resolve(inactiveStates) ?? sbbColorScheme.primaryColor;
-    final activeBorderColor = borderProp?.resolve(activeStates) ?? sbbColorScheme.primaryColor;
-    final inactiveBorderColor = borderProp?.resolve(inactiveStates) ?? sbbColorScheme.primaryColor;
+    final activeFillColor = fillProp.resolve(activeStates) ?? sbbColorScheme.primaryColor;
+    final inactiveFillColor = fillProp.resolve(inactiveStates) ?? sbbColorScheme.primaryColor;
+    final activeCheckColor = checkProp.resolve(activeStates) ?? sbbColorScheme.primaryColor;
+    final inactiveCheckColor = checkProp.resolve(inactiveStates) ?? sbbColorScheme.primaryColor;
+    final activeBorderColor = borderProp.resolve(activeStates) ?? sbbColorScheme.primaryColor;
+    final inactiveBorderColor = borderProp.resolve(inactiveStates) ?? sbbColorScheme.primaryColor;
 
     return Semantics(
       label: widget.semanticLabel,
@@ -235,7 +235,7 @@ class _SBBCheckboxState extends State<SBBCheckbox> with TickerProviderStateMixin
   @override
   bool? get value => widget.value;
 
-  T? _effectiveValue<T>(T? widgetValue, T? themeValue) {
+  T _effectiveValue<T>(T? widgetValue, T themeValue) {
     return widgetValue ?? themeValue;
   }
 }

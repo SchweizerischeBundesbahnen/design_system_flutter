@@ -353,8 +353,8 @@ class _BaseTertiaryButton extends StatelessWidget {
 
   ButtonStyle? _effectiveIconButtonStyle(BuildContext context) {
     final sideLength = isSmall ? SBBInternal.defaultButtonHeightSmall : SBBInternal.defaultButtonHeight;
-    final baseStyle = Theme.of(context).textButtonTheme.style;
-    final iconStyle = baseStyle?.copyWith(
+    final baseStyle = Theme.of(context).textButtonTheme.style!;
+    final iconStyle = baseStyle.copyWith(
       padding: WidgetStatePropertyAll<EdgeInsets>(.zero),
       minimumSize: WidgetStatePropertyAll<Size>(Size.square(sideLength)),
       fixedSize: WidgetStatePropertyAll<Size>(Size.square(sideLength)),

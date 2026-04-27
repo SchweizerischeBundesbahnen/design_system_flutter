@@ -29,7 +29,7 @@ class PickerScope extends InheritedWidget {
   final int visibleItemCount;
 
   /// The effective resolved [SBBPickerStyle] for this picker subtree.
-  final SBBPickerStyle? pickerStyle;
+  final SBBPickerStyle pickerStyle;
 
   /// Returns the nearest [PickerScope] ancestor or throws if none is found.
   static PickerScope of(BuildContext context) {
@@ -56,8 +56,8 @@ class PickerScope extends InheritedWidget {
 ///
 /// Insert this widget immediately inside the [SBBPicker] build so that the
 /// scope is available to all descendant [SBBPickerScrollView]s.
-class SBBPickerScopeHost extends StatefulWidget {
-  const SBBPickerScopeHost({
+class PickerScopeHost extends StatefulWidget {
+  const PickerScopeHost({
     super.key,
     required this.visibleItemCount,
     required this.pickerStyle,
@@ -65,14 +65,14 @@ class SBBPickerScopeHost extends StatefulWidget {
   });
 
   final int visibleItemCount;
-  final SBBPickerStyle? pickerStyle;
+  final SBBPickerStyle pickerStyle;
   final Widget child;
 
   @override
-  State<SBBPickerScopeHost> createState() => _SBBPickerScopeHostState();
+  State<PickerScopeHost> createState() => _PickerScopeHostState();
 }
 
-class _SBBPickerScopeHostState extends State<SBBPickerScopeHost> {
+class _PickerScopeHostState extends State<PickerScopeHost> {
   late double _itemHeight;
 
   @override
@@ -82,7 +82,7 @@ class _SBBPickerScopeHostState extends State<SBBPickerScopeHost> {
   }
 
   @override
-  void didUpdateWidget(SBBPickerScopeHost oldWidget) {
+  void didUpdateWidget(PickerScopeHost oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.pickerStyle != widget.pickerStyle || oldWidget.visibleItemCount != widget.visibleItemCount) {
       _itemHeight = _calculateItemHeight();
@@ -95,7 +95,7 @@ class _SBBPickerScopeHostState extends State<SBBPickerScopeHost> {
   }
 
   Size _textSize(String text) {
-    final textStyle = widget.pickerStyle?.textStyle;
+    final textStyle = widget.pickerStyle.textStyle;
     final textSpan = TextSpan(text: text, style: textStyle);
     final textDirection = Directionality.of(context);
     final painter = TextPainter(

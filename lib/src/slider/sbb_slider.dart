@@ -222,8 +222,8 @@ class _SBBSliderState extends State<SBBSlider> {
   Widget build(BuildContext context) {
     assert(debugCheckHasSBBBaseStyle(context));
 
-    final themeStyle = Theme.of(context).sbbSliderTheme?.style;
-    final effectiveStyle = themeStyle?.merge(widget.style) ?? widget.style ?? const SBBSliderStyle();
+    final themeStyle = Theme.of(context).sbbSliderTheme!.style!;
+    final effectiveStyle = themeStyle.merge(widget.style);
 
     final slider = _slider(effectiveStyle);
 
@@ -233,8 +233,8 @@ class _SBBSliderState extends State<SBBSlider> {
         widget.trailingIconData == null) {
       return slider;
     } else {
-      final leadingForegroundColor = effectiveStyle.leadingForegroundColor?.resolve(_statesController.value);
-      final trailingForegroundColor = effectiveStyle.trailingForegroundColor?.resolve(_statesController.value);
+      final leadingForegroundColor = effectiveStyle.leadingForegroundColor!.resolve(_statesController.value);
+      final trailingForegroundColor = effectiveStyle.trailingForegroundColor!.resolve(_statesController.value);
 
       // Build actual widgets from convenience parameters
       Widget? leadingWidget = widget.leading;
@@ -302,7 +302,7 @@ class _SBBSliderState extends State<SBBSlider> {
     final thumbBorderColor = effectiveStyle.thumbBorderColor?.resolve(enabledStates) ?? sbbColorScheme.primaryColor;
     final disabledThumbBorderColor =
         effectiveStyle.thumbBorderColor?.resolve(disabledStates) ?? sbbColorScheme.primaryColor;
-    final padding = effectiveStyle.padding ?? .symmetric(horizontal: SBBSpacing.small);
+    final padding = effectiveStyle.padding!;
 
     return SliderTheme(
       data: SliderThemeData(

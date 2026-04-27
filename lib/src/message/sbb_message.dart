@@ -163,7 +163,7 @@ class SBBMessage extends StatelessWidget {
   Widget build(BuildContext context) {
     assert(debugCheckHasSBBBaseStyle(context));
 
-    final themeData = Theme.of(context).sbbMessageTheme;
+    final themeData = Theme.of(context).sbbMessageTheme!;
     final effectiveStyle = _getEffectiveStyle(themeData);
 
     Widget? resolvedIllustration;
@@ -216,10 +216,7 @@ class SBBMessage extends StatelessWidget {
     );
   }
 
-  SBBMessageStyle _getEffectiveStyle(SBBMessageThemeData? themeData) {
-    final themeStyle = themeData?.style;
-    return style?.merge(themeStyle) ?? themeStyle ?? const SBBMessageStyle();
-  }
+  SBBMessageStyle _getEffectiveStyle(SBBMessageThemeData themeData) => themeData.style!.merge(style);
 
   Widget? _addDefaultAncestorWithResolved({
     required TextStyle? textStyle,

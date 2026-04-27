@@ -46,9 +46,9 @@ class DefaultToastBody extends StatelessWidget {
   }
 
   Widget body(SBBToastStyle resolvedStyle, BuildContext context) {
-    final horizontalGap = resolvedStyle.titleActionHorizontalGap ?? SBBSpacing.xLarge;
-    final verticalGap = resolvedStyle.titleActionVerticalGap ?? SBBSpacing.xSmall;
-    final overflowThreshold = resolvedStyle.actionOverflowThreshold ?? .25;
+    final horizontalGap = resolvedStyle.titleActionHorizontalGap!;
+    final verticalGap = resolvedStyle.titleActionVerticalGap!;
+    final overflowThreshold = resolvedStyle.actionOverflowThreshold!;
 
     return _SBBDefaultToast(
       title: _resolvedTitle(resolvedStyle)!,

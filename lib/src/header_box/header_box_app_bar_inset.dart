@@ -14,14 +14,14 @@ class HeaderBoxAppBarInset extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
+    final appBarThemeBackgroundColor = Theme.of(context).appBarTheme.backgroundColor;
 
     return Stack(
       children: [
         Align(
           alignment: .topCenter,
           child: Container(
-            color: theme.appBarTheme.backgroundColor,
+            color: appBarThemeBackgroundColor,
             height: style.appBarOverlap,
           ),
         ),

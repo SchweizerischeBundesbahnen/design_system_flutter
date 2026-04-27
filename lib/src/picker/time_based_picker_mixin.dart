@@ -13,7 +13,7 @@ mixin TimeBasedPickerMixin<T extends StatefulWidget> on State<T> {
   /// text scaler from the ambient [SBBPickerScope].
   Size measureText(String text) {
     final scope = PickerScope.maybeOf(context);
-    final textStyle = scope?.pickerStyle?.textStyle;
+    final textStyle = scope?.pickerStyle.textStyle;
     final textSpan = TextSpan(text: text, style: textStyle);
     final textDirection = Directionality.of(context);
     final painter = TextPainter(

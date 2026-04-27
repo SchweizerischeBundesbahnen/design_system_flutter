@@ -404,19 +404,18 @@ class _SBBListItemState extends State<SBBListItem> {
     assert(debugCheckHasMaterial(context));
     assert(debugCheckHasSBBBaseStyle(context));
 
-    final themeData = Theme.of(context).sbbListItemTheme;
-    final effectiveStyle = (themeData?.style ?? SBBListItemStyle()).merge(widget.style);
+    final themeData = Theme.of(context).sbbListItemTheme!;
+    final effectiveStyle = themeData.style!.merge(widget.style);
     final states = _statesController.value;
 
-    final effectivePadding = widget.padding ?? themeData?.padding ?? SBBListItemStyle.defaultPadding;
-    final effectiveTrailingGapWidth =
-        widget.trailingHorizontalGapWidth ?? themeData?.trailingHorizontalGapWidth ?? 16.0;
-    final effectiveLeadingGapWidth = widget.leadingHorizontalGapWidth ?? themeData?.leadingHorizontalGapWidth ?? 8.0;
-    final effectiveSubtitleGapHeight = widget.subtitleVerticalGapHeight ?? themeData?.subtitleVerticalGapHeight ?? 4.0;
+    final effectivePadding = widget.padding ?? themeData.padding!;
+    final effectiveTrailingGapWidth = widget.trailingHorizontalGapWidth ?? themeData.trailingHorizontalGapWidth!;
+    final effectiveLeadingGapWidth = widget.leadingHorizontalGapWidth ?? themeData.leadingHorizontalGapWidth!;
+    final effectiveSubtitleGapHeight = widget.subtitleVerticalGapHeight ?? themeData.subtitleVerticalGapHeight!;
     final effectiveOverlayColor = effectiveStyle.overlayColor;
 
-    final resolvedTitleTextStyle = effectiveStyle.titleTextStyle?.resolve(states) ?? SBBTextStyles.mediumLight;
-    final resolvedSubtitleTextStyle = effectiveStyle.subtitleTextStyle?.resolve(states) ?? SBBTextStyles.smallLight;
+    final resolvedTitleTextStyle = effectiveStyle.titleTextStyle?.resolve(states);
+    final resolvedSubtitleTextStyle = effectiveStyle.subtitleTextStyle?.resolve(states);
     final resolvedTitleForegroundColor = effectiveStyle.titleForegroundColor?.resolve(states);
     final resolvedSubtitleForegroundColor = effectiveStyle.subtitleForegroundColor?.resolve(states);
     final resolvedLeadingForegroundColor = effectiveStyle.leadingForegroundColor?.resolve(states);

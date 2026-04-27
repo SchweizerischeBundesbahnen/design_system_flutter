@@ -140,14 +140,14 @@ class SBBPaginatorFloating extends SBBPaginator {
       return const SizedBox.shrink();
     }
 
-    final themeStyle = Theme.of(context).sbbPaginatorTheme?.style;
-    final effectiveStyle = themeStyle?.merge(style);
+    final themeStyle = Theme.of(context).sbbPaginatorTheme!.style!;
+    final effectiveStyle = themeStyle.merge(style);
 
     return Container(
       decoration: ShapeDecoration(
         shape: StadiumBorder(),
-        color: effectiveStyle?.floatingBackgroundColor,
-        shadows: effectiveStyle?.floatingBoxShadow,
+        color: effectiveStyle.floatingBackgroundColor,
+        shadows: effectiveStyle.floatingBoxShadow,
       ),
       padding: SBBPaginatorStyle.floatingPadding,
       child: super.build(context),

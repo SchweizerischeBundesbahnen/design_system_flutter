@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/src/shared/debug.dart';
-
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 const EdgeInsets _badgeMargin = .only(right: 4.0);
 const Size _badgeSize = Size(24.0, 24.0);
@@ -148,14 +147,14 @@ class _SBBChipState extends State<SBBChip> {
     final effectiveStyle = themeStyle.merge(widget.style);
     final states = _statesController.value;
 
-    final borderColor = effectiveStyle.borderColor?.resolve(states) ?? SBBColors.granite;
-    final backgroundColor = effectiveStyle.backgroundColor?.resolve(states) ?? SBBColors.white;
-    final labelForegroundColor = effectiveStyle.labelForegroundColor?.resolve(states) ?? SBBColors.black;
-    final trailingForegroundColor = effectiveStyle.trailingForegroundColor?.resolve(states) ?? SBBColors.white;
-    final labelTextStyle = effectiveStyle.labelTextStyle?.resolve(states);
-    final trailingTextStyle = effectiveStyle.trailingTextStyle?.resolve(states);
+    final borderColor = effectiveStyle.borderColor!.resolve(states) ?? SBBColors.granite;
+    final backgroundColor = effectiveStyle.backgroundColor!.resolve(states) ?? SBBColors.white;
+    final labelForegroundColor = effectiveStyle.labelForegroundColor!.resolve(states) ?? SBBColors.black;
+    final trailingForegroundColor = effectiveStyle.trailingForegroundColor!.resolve(states) ?? SBBColors.white;
+    final labelTextStyle = effectiveStyle.labelTextStyle!.resolve(states);
+    final trailingTextStyle = effectiveStyle.trailingTextStyle!.resolve(states);
     final trailingBackgroundColor =
-        effectiveStyle.trailingBackgroundColor?.resolve(states) ??
+        effectiveStyle.trailingBackgroundColor!.resolve(states) ??
         Theme.of(context).sbbBaseStyle.colorScheme.primaryColor;
 
     return ClipPath(

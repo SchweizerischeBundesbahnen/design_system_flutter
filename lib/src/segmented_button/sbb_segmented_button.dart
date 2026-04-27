@@ -73,9 +73,8 @@ class _SBBSegmentedButtonState<T> extends State<SBBSegmentedButton<T>> {
   int get _selectedIndex => widget.segments.indexWhere((segment) => segment.value == widget.selected);
 
   SBBSegmentedButtonStyle get effectiveStyle {
-    final themeData = Theme.of(context).sbbSegmentedButtonTheme;
-    final themeStyle = themeData?.style;
-    return widget.style?.merge(themeStyle) ?? themeStyle ?? const SBBSegmentedButtonStyle();
+    final themeStyle = Theme.of(context).sbbSegmentedButtonTheme!.style!;
+    return themeStyle.merge(widget.style);
   }
 
   Set<WidgetState> get _states => {};
@@ -204,14 +203,13 @@ class _SBBSegmentedButtonState<T> extends State<SBBSegmentedButton<T>> {
     }
 
     // add styling and foregroundColor
-    final themeData = Theme.of(context).sbbSegmentedButtonTheme;
+    final themeData = Theme.of(context).sbbSegmentedButtonTheme!;
     final style = effectiveStyle;
     final effectiveSegmentStyle = style.segmentStyle?.merge(segment.style) ?? segment.style;
     final states = {..._states, if (selected) WidgetState.selected};
     final foregroundColor = effectiveSegmentStyle?.foregroundColor?.resolve(states) ?? SBBColors.green;
     final resolvedTextStyle = effectiveSegmentStyle?.textStyle?.resolve(states);
-    final effectiveLeadingGapWidth =
-        widget.leadingHorizontalGapWidth ?? themeData?.leadingHorizontalGapWidth ?? SBBSpacing.xxSmall;
+    final effectiveLeadingGapWidth = widget.leadingHorizontalGapWidth ?? themeData.leadingHorizontalGapWidth!;
 
     leading = _addDefaultAncestorWithResolved(
       child: leading,

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/input/decoration/sbb_input_decorator.dart';
-import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_input_decoration_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 /// The SBB TextInput.
@@ -518,7 +517,7 @@ class _SBBTextInputState extends State<SBBTextInput>
   }
 
   TextStyle _effectiveInputTextStyle(BuildContext context) {
-    final themeData = Theme.of(context).sbbTextInputTheme;
+    final themeData = Theme.of(context).sbbTextInputTheme!;
     final states = _statesController.value;
 
     if (widget.inputTextStyle != null) {
@@ -527,14 +526,14 @@ class _SBBTextInputState extends State<SBBTextInput>
       return color != null ? textStyle!.copyWith(color: color) : textStyle!;
     }
 
-    final textStyle = themeData!.inputTextStyle;
+    final textStyle = themeData.inputTextStyle!;
     final color = widget.inputForegroundColor?.resolve(states) ?? themeData.inputForegroundColor?.resolve(states);
-    return color != null ? textStyle!.copyWith(color: color) : textStyle!;
+    return color != null ? textStyle.copyWith(color: color) : textStyle;
   }
 
   SBBInputDecoration _getEffectiveDecorationWithClearButton(BuildContext context) {
-    final themeData = Theme.of(context).sbbTextInputTheme;
-    final effectiveShowClearButton = widget.enableClearButton ?? themeData?.enableClearButton ?? true;
+    final themeData = Theme.of(context).sbbTextInputTheme!;
+    final effectiveShowClearButton = widget.enableClearButton ?? themeData.enableClearButton!;
 
     final baseDecoration = widget.decoration ?? SBBInputDecoration();
 
@@ -542,7 +541,7 @@ class _SBBTextInputState extends State<SBBTextInput>
 
     final shouldReplaceTrailingWithClearButton = _effectiveFocusNode.hasFocus && _effectiveController.text.isNotEmpty;
 
-    final inputDecorationTheme = Theme.of(context).sbbInputDecorationTheme;
+    final inputDecorationTheme = Theme.of(context).sbbInputDecorationTheme!;
     final Widget trailing = widget.decoration?.trailingIconData == null
         ? SizedBox.shrink()
         : Padding(
@@ -661,8 +660,8 @@ class _SBBTextInputState extends State<SBBTextInput>
     return AdaptiveTextSelectionToolbar.editableText(editableTextState: editableTextState);
   }
 
-  double _effectiveTrailingInputGap(SBBInputDecorationThemeData? inputDecorationTheme) {
-    return widget.decoration?.inputTrailingGap ?? inputDecorationTheme?.inputTrailingGap ?? defaultInputTrailingGap;
+  double _effectiveTrailingInputGap(SBBInputDecorationThemeData inputDecorationTheme) {
+    return widget.decoration?.inputTrailingGap ?? inputDecorationTheme.inputTrailingGap!;
   }
 }
 

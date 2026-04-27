@@ -63,8 +63,8 @@ Future<T?> showSBBPopup<T>({
   assert(trailing == null || trailingIconData == null, 'Only trailing or trailingIconData can be set!');
   assert(debugCheckHasSBBBaseStyle(context));
 
-  final themeStyle = Theme.of(context).sbbPopupTheme?.style;
-  final SBBPopupStyle resolvedStyle = (themeStyle ?? const SBBPopupStyle()).merge(style);
+  final themeStyle = Theme.of(context).sbbPopupTheme!.style!;
+  final SBBPopupStyle resolvedStyle = themeStyle.merge(style);
 
   return showDialog<T>(
     context: context,
@@ -191,8 +191,8 @@ class SBBPopup extends StatelessWidget {
   Widget build(BuildContext context) {
     assert(debugCheckHasSBBBaseStyle(context));
 
-    final themeStyle = Theme.of(context).sbbPopupTheme?.style;
-    final SBBPopupStyle resolvedStyle = (themeStyle ?? const SBBPopupStyle()).merge(style);
+    final themeStyle = Theme.of(context).sbbPopupTheme!.style!;
+    final SBBPopupStyle resolvedStyle = themeStyle.merge(style);
 
     // Build actual widgets from convenience parameters
     Widget? leadingWidget = leading;

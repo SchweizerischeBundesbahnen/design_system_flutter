@@ -174,9 +174,9 @@ class SBBPicker extends StatefulWidget {
 }
 
 class _SBBPickerState extends State<SBBPicker> {
-  SBBPickerStyle? _effectivePickerStyle(BuildContext context) {
-    final themePickerStyle = Theme.of(context).sbbPickerTheme?.pickerStyle;
-    return themePickerStyle?.merge(widget.pickerStyle) ?? widget.pickerStyle;
+  SBBPickerStyle _effectivePickerStyle(BuildContext context) {
+    final themePickerStyle = Theme.of(context).sbbPickerTheme!.pickerStyle!;
+    return themePickerStyle.merge(widget.pickerStyle);
   }
 
   // These depend on itemHeight which comes from SBBPickerScope — read inside build.
@@ -190,7 +190,7 @@ class _SBBPickerState extends State<SBBPicker> {
   Widget build(BuildContext context) {
     assert(debugCheckHasSBBBaseStyle(context));
 
-    return SBBPickerScopeHost(
+    return PickerScopeHost(
       visibleItemCount: widget.visibleItemCount,
       pickerStyle: _effectivePickerStyle(context),
       child: Builder(
@@ -220,7 +220,7 @@ class _SBBPickerState extends State<SBBPicker> {
   }
 
   Widget _buildHighlightedArea(BuildContext context, double highlightedAreaHeight) {
-    final highlightColor = PickerScope.of(context).pickerStyle?.highlightBackgroundColor;
+    final highlightColor = PickerScope.of(context).pickerStyle.highlightBackgroundColor;
     return Container(
       height: highlightedAreaHeight,
       margin: const .symmetric(horizontal: SBBSpacing.xSmall),
@@ -293,7 +293,7 @@ class _SBBPickerState extends State<SBBPicker> {
     final opacities = [...topOpacities, ...bottomOpacities];
 
     // get base color from theme
-    final pickerForegroundColor = PickerScope.of(context).pickerStyle!.foregroundColor!;
+    final pickerForegroundColor = PickerScope.of(context).pickerStyle.foregroundColor!;
 
     // return generated list of gradient color values
     return opacities.map((opacity) => pickerForegroundColor.withValues(alpha: opacity)).toList();
