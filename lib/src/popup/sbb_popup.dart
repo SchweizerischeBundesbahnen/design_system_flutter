@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/popup/theme/default_sbb_popup_theme_data.dart';
-
-import '../../sbb_design_system_mobile.dart';
 
 /// Shows an SBB Popup dialog.
 ///

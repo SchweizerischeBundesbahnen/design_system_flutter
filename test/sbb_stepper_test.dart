@@ -32,27 +32,27 @@ void main() {
     });
   }
 
-  var numberedSteps = [
+  final numberedSteps = [
     const SBBStepperItem.numbered(labelText: 'Step 1'),
     const SBBStepperItem.numbered(labelText: 'Step 2'),
     const SBBStepperItem.numbered(labelText: 'Step 3'),
     const SBBStepperItem.numbered(labelText: 'Step 4'),
     const SBBStepperItem.numbered(labelText: 'Step 5'),
   ];
-  var textSteps = [
+  final textSteps = [
     const SBBStepperItem.text(text: 'A'),
     const SBBStepperItem.text(text: 'BC'),
     const SBBStepperItem.text(text: 'DEF'),
     const SBBStepperItem.text(text: 'GHIJ'),
     const SBBStepperItem.text(text: 'KLMNO'),
   ];
-  var iconSteps = [
+  final iconSteps = [
     const SBBStepperItem.icon(labelText: 'Step 1', icon: SBBIcons.unicorn_small),
     const SBBStepperItem.icon(labelText: 'Step 2', icon: SBBIcons.train_small),
     const SBBStepperItem.icon(labelText: 'Step 3', icon: SBBIcons.unicorn_small),
     const SBBStepperItem.icon(labelText: 'Step 4', icon: SBBIcons.unicorn_small),
   ];
-  var customSteps = [
+  final customSteps = [
     SBBStepperItem.icon(
       label: SBBChip(trailingText: '1', labelText: 'Label', onChanged: null),
       icon: SBBIcons.unicorn_small,

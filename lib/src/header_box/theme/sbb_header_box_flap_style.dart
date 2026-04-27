@@ -67,8 +67,8 @@ class SBBHeaderBoxFlapStyle {
   SBBHeaderBoxFlapStyle copyWith({
     Color? leadingForegroundColor,
     Color? trailingForegroundColor,
-    Color? foregroundColor,
-    TextStyle? textStyle,
+    Color? labelForegroundColor,
+    TextStyle? labelTextStyle,
     TextStyle? leadingTextStyle,
     TextStyle? trailingTextStyle,
     double? iconSize,
@@ -77,8 +77,8 @@ class SBBHeaderBoxFlapStyle {
     return SBBHeaderBoxFlapStyle(
       leadingForegroundColor: leadingForegroundColor ?? this.leadingForegroundColor,
       trailingForegroundColor: trailingForegroundColor ?? this.trailingForegroundColor,
-      labelForegroundColor: foregroundColor ?? this.labelForegroundColor,
-      labelTextStyle: textStyle ?? this.labelTextStyle,
+      labelForegroundColor: labelForegroundColor ?? this.labelForegroundColor,
+      labelTextStyle: labelTextStyle ?? this.labelTextStyle,
       leadingTextStyle: leadingTextStyle ?? this.leadingTextStyle,
       trailingTextStyle: trailingTextStyle ?? this.trailingTextStyle,
       iconSize: iconSize ?? this.iconSize,

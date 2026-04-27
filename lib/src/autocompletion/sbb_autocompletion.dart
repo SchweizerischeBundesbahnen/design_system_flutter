@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import '../../sbb_design_system_mobile.dart';
-import 'autocompletion_link.dart';
-import 'autocompletion_overlay.dart';
-import 'autocompletion_target.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/autocompletion/autocompletion_link.dart';
+import 'package:sbb_design_system_mobile/src/autocompletion/autocompletion_overlay.dart';
+import 'package:sbb_design_system_mobile/src/autocompletion/autocompletion_target.dart';
 
 typedef StringCallback = Function(String data);
 
@@ -61,7 +60,7 @@ class SBBAutocompletion<T> extends StatefulWidget {
   // ignore: overridden_fields
   final GlobalKey<SBBAutocompletionState<T>> key;
 
-  /// Callback on item selected, this is the item selected of type <T>
+  /// Callback on item selected, this is the item selected of type T
   final InputEventCallback<T> itemSubmitted;
 
   /// Suggestions that will be displayed
@@ -69,7 +68,7 @@ class SBBAutocompletion<T> extends StatefulWidget {
 
   final List<T> favorites;
 
-  /// Callback to sort items in the form (a of type <T>, b of type <T>)
+  /// Callback to sort items in the form (a of type T, b of type T)
   final Comparator<T> itemSorter;
 
   /// Callback to filter item: return true or false depending on input text

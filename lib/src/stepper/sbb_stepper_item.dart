@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
-
-import '../../sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// Represents a single step in an [SBBStepper].
 ///
@@ -18,12 +17,6 @@ sealed class SBBStepperItem {
     this.showBadgeWhenPassed = true,
     this.badgeIcon = SBBIcons.tick_small,
   }) : assert(labelText == null || label == null, 'Cannot provide both labelText and label!');
-
-  final String? labelText;
-  final Widget? label;
-  final SBBStepperItemStyle? style;
-  final bool showBadgeWhenPassed;
-  final IconData? badgeIcon;
 
   /// Creates an icon step with the given [icon].
   const factory SBBStepperItem.icon({
@@ -53,6 +46,12 @@ sealed class SBBStepperItem {
     IconData? badgeIcon,
     SBBStepperItemStyle? style,
   }) = SBBStepperItemNumbered;
+
+  final String? labelText;
+  final Widget? label;
+  final SBBStepperItemStyle? style;
+  final bool showBadgeWhenPassed;
+  final IconData? badgeIcon;
 
   @override
   bool operator ==(Object other) => identical(this, other) || runtimeType == other.runtimeType;

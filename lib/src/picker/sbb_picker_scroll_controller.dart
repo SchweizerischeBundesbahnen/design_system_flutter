@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'sbb_picker_constants.dart';
+import 'package:sbb_design_system_mobile/src/picker/sbb_picker_constants.dart';
 
 /// A scroll controller for [SBBPickerScrollView] that is used by [SBBPicker].
 ///

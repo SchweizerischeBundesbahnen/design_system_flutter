@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/shared/bottom_loading_indicator.dart';
-
-import '../../sbb_design_system_mobile.dart';
-import '../shared/divider/divider_painter.dart';
+import 'package:sbb_design_system_mobile/src/shared/divider/divider_painter.dart';
 
 /// A customizable list item component following the SBB design system.
 ///

@@ -1,8 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/container/theme/default_sbb_content_box_theme_data.dart';
-
-import '../../../sbb_design_system_mobile.dart';
 
 /// The ThemeData for the [SBBContentBox].
 ///

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../../sbb_design_system_mobile.dart';
-import 'transparent_tapable_element.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/shared/transparent_tappable_element.dart';
 
 class SBBCloseButton extends StatelessWidget {
   const SBBCloseButton({super.key, this.onTap});
@@ -14,7 +13,7 @@ class SBBCloseButton extends StatelessWidget {
     return Semantics(
       label: MaterialLocalizations.of(context).closeButtonTooltip,
       button: true,
-      child: TransparentTapableElement.circle(
+      child: TransparentTappableElement.circle(
         onTap: onTap,
         child: Padding(
           padding: const .all(12.0),
