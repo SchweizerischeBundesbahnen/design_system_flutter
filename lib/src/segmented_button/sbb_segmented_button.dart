@@ -97,7 +97,7 @@ class _SBBSegmentedButtonState<T> extends State<SBBSegmentedButton<T>> {
 
   Widget _backgroundLayer() {
     final style = effectiveStyle;
-    final backgroundColor = style.backgroundColor?.resolve(_states) ?? SBBColors.milk;
+    final backgroundColor = style.backgroundColor?.resolve(_states);
     final borderColor = style.borderColor?.resolve(_states);
 
     final List<Widget> children = [];
@@ -130,7 +130,7 @@ class _SBBSegmentedButtonState<T> extends State<SBBSegmentedButton<T>> {
   Widget _indicatorLayer() {
     final style = effectiveStyle;
     final selectedStates = {..._states, WidgetState.selected};
-    final backgroundColor = style.backgroundColor?.resolve(selectedStates) ?? SBBColors.milk;
+    final backgroundColor = style.backgroundColor?.resolve(selectedStates);
     final borderColor = style.borderColor?.resolve(selectedStates);
 
     final buttonCount = widget.segments.length;
@@ -206,7 +206,7 @@ class _SBBSegmentedButtonState<T> extends State<SBBSegmentedButton<T>> {
     final style = effectiveStyle;
     final effectiveSegmentStyle = style.segmentStyle?.merge(segment.style) ?? segment.style;
     final states = {..._states, if (selected) WidgetState.selected};
-    final foregroundColor = effectiveSegmentStyle?.foregroundColor?.resolve(states) ?? SBBColors.green;
+    final foregroundColor = effectiveSegmentStyle?.foregroundColor?.resolve(states);
     final resolvedTextStyle = effectiveSegmentStyle?.textStyle?.resolve(states);
 
     final themeData = Theme.of(context).sbbSegmentedButtonTheme;

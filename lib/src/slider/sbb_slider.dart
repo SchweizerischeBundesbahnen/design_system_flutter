@@ -289,19 +289,14 @@ class _SBBSliderState extends State<SBBSlider> {
     final Set<WidgetState> enabledStates = {..._statesController.value}..remove(WidgetState.disabled);
     final Set<WidgetState> disabledStates = {..._statesController.value, WidgetState.disabled};
 
-    final sbbColorScheme = Theme.of(context).sbbBaseStyle.colorScheme;
-    final inactiveTrackColor = effectiveStyle.trackColor?.resolve(enabledStates) ?? SBBColors.smoke;
-    final disabledInactiveTrackColor = effectiveStyle.trackColor?.resolve(disabledStates) ?? SBBColors.smoke;
-    final activeTrackColor = effectiveStyle.activeTrackColor?.resolve(enabledStates) ?? sbbColorScheme.primaryColor;
-    final disabledActiveTrackColor =
-        effectiveStyle.activeTrackColor?.resolve(disabledStates) ?? sbbColorScheme.primaryColor;
-    final thumbBackgroundColor =
-        effectiveStyle.thumbBackgroundColor?.resolve(enabledStates) ?? sbbColorScheme.backgroundColor;
-    final disabledThumbBackgroundColor =
-        effectiveStyle.thumbBackgroundColor?.resolve(disabledStates) ?? sbbColorScheme.backgroundColor;
-    final thumbBorderColor = effectiveStyle.thumbBorderColor?.resolve(enabledStates) ?? sbbColorScheme.primaryColor;
-    final disabledThumbBorderColor =
-        effectiveStyle.thumbBorderColor?.resolve(disabledStates) ?? sbbColorScheme.primaryColor;
+    final inactiveTrackColor = effectiveStyle.trackColor?.resolve(enabledStates);
+    final disabledInactiveTrackColor = effectiveStyle.trackColor?.resolve(disabledStates);
+    final activeTrackColor = effectiveStyle.activeTrackColor?.resolve(enabledStates);
+    final disabledActiveTrackColor = effectiveStyle.activeTrackColor?.resolve(disabledStates);
+    final thumbBackgroundColor = effectiveStyle.thumbBackgroundColor?.resolve(enabledStates);
+    final disabledThumbBackgroundColor = effectiveStyle.thumbBackgroundColor?.resolve(disabledStates);
+    final thumbBorderColor = effectiveStyle.thumbBorderColor?.resolve(enabledStates);
+    final disabledThumbBorderColor = effectiveStyle.thumbBorderColor?.resolve(disabledStates);
     final padding = effectiveStyle.padding!;
 
     return SliderTheme(

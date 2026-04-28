@@ -41,7 +41,7 @@ class TabItemWidget extends StatelessWidget {
     };
 
     final iconColor = effectiveStyle?.iconColor?.resolve(states);
-    final itemBgColor = effectiveStyle?.itemBackgroundColor?.resolve(states) ?? SBBColors.transparent;
+    final itemBgColor = effectiveStyle?.itemBackgroundColor?.resolve(states);
     final warningIcon = effectiveStyle?.warningItemIcon ?? SBBIcons.sign_exclamation_point_small;
     final warningBgColor = effectiveStyle?.warningItemBackgroundColor ?? SBBColors.red;
     final warningFgColor = effectiveStyle?.warningItemForegroundColor ?? SBBColors.white;
@@ -54,7 +54,7 @@ class TabItemWidget extends StatelessWidget {
       color = warningBgColor;
       resolvedIconColor = warningFgColor;
       resolvedIcon = warningIcon;
-    } else if (selected) {
+    } else if (selected && itemBgColor != null) {
       color = itemBgColor;
     }
 

@@ -192,13 +192,17 @@ class _SBBCheckboxState extends State<SBBCheckbox> with TickerProviderStateMixin
     final checkProp = _effectiveValue<WidgetStateProperty<Color?>>(widget.style?.checkColor, style.checkColor!);
     final borderProp = _effectiveValue<WidgetStateProperty<Color?>>(widget.style?.borderColor, style.borderColor!);
 
-    final sbbColorScheme = Theme.of(context).sbbBaseStyle.colorScheme;
-    final activeFillColor = fillProp.resolve(activeStates) ?? sbbColorScheme.primaryColor;
-    final inactiveFillColor = fillProp.resolve(inactiveStates) ?? sbbColorScheme.primaryColor;
+    final baseStyle = Theme.of(context).sbbBaseStyle;
+    final sbbColorScheme = baseStyle.colorScheme;
+    final fallbackFillColor = baseStyle.themeValue(SBBColors.white, SBBColors.charcoal);
+    final fallBackBorderColor = baseStyle.themeValue(SBBColors.granite, SBBColors.graphite);
+
+    final activeFillColor = fillProp.resolve(activeStates) ?? fallbackFillColor;
+    final inactiveFillColor = fillProp.resolve(inactiveStates) ?? fallbackFillColor;
     final activeCheckColor = checkProp.resolve(activeStates) ?? sbbColorScheme.primaryColor;
     final inactiveCheckColor = checkProp.resolve(inactiveStates) ?? sbbColorScheme.primaryColor;
-    final activeBorderColor = borderProp.resolve(activeStates) ?? sbbColorScheme.primaryColor;
-    final inactiveBorderColor = borderProp.resolve(inactiveStates) ?? sbbColorScheme.primaryColor;
+    final activeBorderColor = borderProp.resolve(activeStates) ?? fallBackBorderColor;
+    final inactiveBorderColor = borderProp.resolve(inactiveStates) ?? fallBackBorderColor;
 
     return Semantics(
       label: widget.semanticLabel,
