@@ -34,7 +34,7 @@ class TabItemWidget extends StatelessWidget {
     final size = portrait ? portraitSize : landscapeSize;
     final topPadding = portrait ? portraitCirclePadding : landscapeCirclePadding;
 
-    final effectiveStyle = style ?? Theme.of(context).sbbTabBarTheme?.style;
+    final effectiveStyle = style ?? Theme.of(context).sbbTabBarTheme.style;
 
     final states = <WidgetState>{
       if (selected) WidgetState.selected,

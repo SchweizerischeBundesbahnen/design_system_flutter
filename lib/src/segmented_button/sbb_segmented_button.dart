@@ -285,7 +285,7 @@ class _SBBSegmentedButtonStateBoxed<T> extends _SBBSegmentedButtonState<T> {
   @override
   SBBSegmentedButtonStyle get effectiveStyle {
     final themeData = Theme.of(context).sbbSegmentedButtonTheme;
-    final themeStyle = themeData?.filledStyle;
+    final themeStyle = themeData.filledStyle;
     return widget.style?.merge(themeStyle) ?? themeStyle ?? const SBBSegmentedButtonStyle();
   }
 }
