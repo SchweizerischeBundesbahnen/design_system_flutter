@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 const _defaultScrollControlDisabledMaxHeightRatio = 9.0 / 16.0;
 
@@ -183,6 +184,8 @@ class SBBMultiDropdown<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasSBBBaseStyle(context));
+
     final selected = List<SBBDropdownItem<T>>.from(items.where((i) => selectedItems.contains(i.value)));
     final displayValue = labelAggregation != null ? labelAggregation!(selected) : _defaultLabelAggregation(selected);
     final effectiveConfig = sheetConfig ?? const SBBBottomSheetConfig();
@@ -213,12 +216,12 @@ class SBBMultiDropdown<T> extends StatelessWidget {
   }
 
   SBBDecoratedTextStyle? _effectiveTriggerStyle(BuildContext context) {
-    final themeTriggerStyle = Theme.of(context).sbbDropdownTheme?.triggerStyle;
-    return themeTriggerStyle?.merge(triggerStyle) ?? triggerStyle;
+    final themeTriggerStyle = Theme.of(context).sbbDropdownTheme.triggerStyle!;
+    return themeTriggerStyle.merge(triggerStyle);
   }
 
   SBBInputDecoration _effectiveTriggerDecoration(BuildContext context) {
-    final themeDecoration = Theme.of(context).sbbDropdownTheme?.triggerDecorationTheme;
+    final themeDecoration = Theme.of(context).sbbDropdownTheme.triggerDecorationTheme!;
     final base = (triggerDecoration ?? const SBBInputDecoration()).applyThemeValues(themeDecoration);
 
     if (base.trailing != null || base.trailingIconData != null) return base;
@@ -319,8 +322,8 @@ class SBBMultiDropdown<T> extends StatelessWidget {
     return !ListEquality().equals(oldSelection, newSelection);
   }
 
-  static SBBBottomSheetStyle? _effectiveSheetStyle(SBBBottomSheetStyle? sheetStyle, BuildContext context) {
-    final themeDropdownSheetStyle = Theme.of(context).sbbDropdownTheme?.sheetStyle;
-    return themeDropdownSheetStyle?.merge(sheetStyle) ?? sheetStyle;
+  static SBBBottomSheetStyle _effectiveSheetStyle(SBBBottomSheetStyle? sheetStyle, BuildContext context) {
+    final themeDropdownSheetStyle = Theme.of(context).sbbDropdownTheme.sheetStyle!;
+    return themeDropdownSheetStyle.merge(sheetStyle);
   }
 }

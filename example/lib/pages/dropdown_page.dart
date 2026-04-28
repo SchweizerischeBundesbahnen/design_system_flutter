@@ -47,8 +47,8 @@ class _DropdownPageState extends State<DropdownPage> {
   }
 
   Widget _componentConfig(BuildContext context) {
-    final inputLabelTextStyle = Theme.of(context).sbbInputDecorationTheme?.floatingLabelTextStyle;
-    final inputLabelColor = Theme.of(context).sbbInputDecorationTheme?.labelForegroundColor;
+    final inputLabelTextStyle = Theme.of(context).sbbInputDecorationTheme.floatingLabelTextStyle;
+    final inputLabelColor = Theme.of(context).sbbInputDecorationTheme.labelForegroundColor;
     return Column(
       mainAxisSize: .min,
       children: SBBListItem.divideListItems(

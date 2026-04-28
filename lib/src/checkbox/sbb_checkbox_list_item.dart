@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 /// A convenience wrapper that combines [SBBListItem] with [SBBCheckbox] as the leading widget.
 ///
@@ -145,6 +146,8 @@ class SBBCheckboxListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasSBBBaseStyle(context));
+
     Widget? leadingWidget = leading;
     if (leadingWidget == null && leadingIconData != null) {
       leadingWidget = Icon(leadingIconData);

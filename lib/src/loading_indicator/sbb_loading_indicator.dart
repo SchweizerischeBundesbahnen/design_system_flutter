@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 /// The SBB LoadingIndicator. Use according to documentation.
 ///
@@ -89,6 +90,8 @@ class SBBLoadingIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasSBBBaseStyle(context));
+
     final primaryColor = Theme.of(context).sbbBaseStyle.colorScheme.primaryColor;
     return Padding(
       padding: .only(top: padding, bottom: padding),

@@ -102,5 +102,5 @@ extension SBBPickerThemeDataX on SBBPickerThemeData {
 
 extension SBBPickerThemeDataThemeDataX on ThemeData {
   /// Access the [SBBPickerThemeData] from the current theme.
-  SBBPickerThemeData? get sbbPickerTheme => extension<SBBPickerThemeData>();
+  SBBPickerThemeData get sbbPickerTheme => extension<SBBPickerThemeData>()!;
 }

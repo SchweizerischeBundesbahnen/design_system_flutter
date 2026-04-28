@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 const _defaultScrollControlDisabledMaxHeightRatio = 9.0 / 16.0;
 
@@ -131,6 +132,8 @@ class SBBDropdown<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasSBBBaseStyle(context));
+
     final displayValue = items.where((item) => item.value == selectedItem).map((item) => item.label).firstOrNull ?? '';
     final effectiveConfig = sheetConfig ?? const SBBBottomSheetConfig();
     return SBBDecoratedText(
@@ -157,12 +160,12 @@ class SBBDropdown<T> extends StatelessWidget {
   }
 
   SBBDecoratedTextStyle? _effectiveTriggerStyle(BuildContext context) {
-    final themeTriggerStyle = Theme.of(context).sbbDropdownTheme?.triggerStyle;
-    return themeTriggerStyle?.merge(triggerStyle) ?? triggerStyle;
+    final themeTriggerStyle = Theme.of(context).sbbDropdownTheme.triggerStyle!;
+    return themeTriggerStyle.merge(triggerStyle);
   }
 
   SBBInputDecoration _effectiveTriggerDecoration(BuildContext context) {
-    final themeDecoration = Theme.of(context).sbbDropdownTheme?.triggerDecorationTheme;
+    final themeDecoration = Theme.of(context).sbbDropdownTheme.triggerDecorationTheme!;
     final base = (triggerDecoration ?? const SBBInputDecoration()).applyThemeValues(themeDecoration);
 
     if (base.trailing != null || base.trailingIconData != null) return base;
@@ -231,8 +234,8 @@ class SBBDropdown<T> extends StatelessWidget {
     );
   }
 
-  static SBBBottomSheetStyle? _effectiveSheetStyle(SBBBottomSheetStyle? sheetStyle, BuildContext context) {
-    final themeDropdownSheetStyle = Theme.of(context).sbbDropdownTheme?.sheetStyle;
-    return themeDropdownSheetStyle?.merge(sheetStyle) ?? sheetStyle;
+  static SBBBottomSheetStyle _effectiveSheetStyle(SBBBottomSheetStyle? sheetStyle, BuildContext context) {
+    final themeDropdownSheetStyle = Theme.of(context).sbbDropdownTheme.sheetStyle!;
+    return themeDropdownSheetStyle.merge(sheetStyle);
   }
 }

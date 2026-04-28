@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 /// The SBB List Header.
 ///
@@ -36,12 +37,14 @@ class SBBListHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeStyle = Theme.of(context).sbbListHeaderTheme?.style;
-    final effectiveStyle = themeStyle?.merge(style);
+    assert(debugCheckHasSBBBaseStyle(context));
 
-    final foregroundColor = effectiveStyle?.foregroundColor;
-    final maxLines = effectiveStyle?.maxLines;
-    final padding = effectiveStyle?.padding ?? SBBListHeaderStyle.defaultPadding;
+    final themeStyle = Theme.of(context).sbbListHeaderTheme.style!;
+    final effectiveStyle = themeStyle.merge(style);
+
+    final foregroundColor = effectiveStyle.foregroundColor;
+    final maxLines = effectiveStyle.maxLines;
+    final padding = effectiveStyle.padding!;
 
     return Padding(
       padding: padding,
@@ -50,8 +53,8 @@ class SBBListHeader extends StatelessWidget {
         child: Text(
           titleText,
           maxLines: maxLines,
-          overflow: maxLines == null ? null : effectiveStyle?.textOverflow,
-          style: effectiveStyle?.textStyle?.copyWith(color: foregroundColor) ?? TextStyle(color: foregroundColor),
+          overflow: maxLines == null ? null : effectiveStyle.textOverflow,
+          style: effectiveStyle.textStyle!.copyWith(color: foregroundColor),
         ),
       ),
     );

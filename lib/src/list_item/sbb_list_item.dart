@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/shared/bottom_loading_indicator.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 import 'package:sbb_design_system_mobile/src/shared/divider/divider_painter.dart';
 
 /// A customizable list item component following the SBB design system.
@@ -401,20 +402,20 @@ class _SBBListItemState extends State<SBBListItem> {
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMaterial(context));
+    assert(debugCheckHasSBBBaseStyle(context));
 
     final themeData = Theme.of(context).sbbListItemTheme;
-    final effectiveStyle = (themeData?.style ?? SBBListItemStyle()).merge(widget.style);
+    final effectiveStyle = themeData.style!.merge(widget.style);
     final states = _statesController.value;
 
-    final effectivePadding = widget.padding ?? themeData?.padding ?? SBBListItemStyle.defaultPadding;
-    final effectiveTrailingGapWidth =
-        widget.trailingHorizontalGapWidth ?? themeData?.trailingHorizontalGapWidth ?? 16.0;
-    final effectiveLeadingGapWidth = widget.leadingHorizontalGapWidth ?? themeData?.leadingHorizontalGapWidth ?? 8.0;
-    final effectiveSubtitleGapHeight = widget.subtitleVerticalGapHeight ?? themeData?.subtitleVerticalGapHeight ?? 4.0;
+    final effectivePadding = widget.padding ?? themeData.padding!;
+    final effectiveTrailingGapWidth = widget.trailingHorizontalGapWidth ?? themeData.trailingHorizontalGapWidth!;
+    final effectiveLeadingGapWidth = widget.leadingHorizontalGapWidth ?? themeData.leadingHorizontalGapWidth!;
+    final effectiveSubtitleGapHeight = widget.subtitleVerticalGapHeight ?? themeData.subtitleVerticalGapHeight!;
     final effectiveOverlayColor = effectiveStyle.overlayColor;
 
-    final resolvedTitleTextStyle = effectiveStyle.titleTextStyle?.resolve(states) ?? SBBTextStyles.mediumLight;
-    final resolvedSubtitleTextStyle = effectiveStyle.subtitleTextStyle?.resolve(states) ?? SBBTextStyles.smallLight;
+    final resolvedTitleTextStyle = effectiveStyle.titleTextStyle?.resolve(states);
+    final resolvedSubtitleTextStyle = effectiveStyle.subtitleTextStyle?.resolve(states);
     final resolvedTitleForegroundColor = effectiveStyle.titleForegroundColor?.resolve(states);
     final resolvedSubtitleForegroundColor = effectiveStyle.subtitleForegroundColor?.resolve(states);
     final resolvedLeadingForegroundColor = effectiveStyle.leadingForegroundColor?.resolve(states);

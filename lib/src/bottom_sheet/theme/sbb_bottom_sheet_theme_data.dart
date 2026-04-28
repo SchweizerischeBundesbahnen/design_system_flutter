@@ -59,5 +59,5 @@ extension SBBBottomSheetThemeDataX on SBBBottomSheetThemeData {
 
 extension SBBBottomSheetThemeDataThemeDataX on ThemeData {
   /// Access the [SBBBottomSheetThemeData] from the current theme.
-  SBBBottomSheetThemeData? get sbbBottomSheetTheme => extension<SBBBottomSheetThemeData>();
+  SBBBottomSheetThemeData get sbbBottomSheetTheme => extension<SBBBottomSheetThemeData>()!;
 }

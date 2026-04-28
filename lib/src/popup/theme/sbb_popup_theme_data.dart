@@ -59,5 +59,5 @@ extension SBBPopupThemeDataX on SBBPopupThemeData {
 
 extension SBBPopupThemeDataThemeDataX on ThemeData {
   /// Access the [SBBPopupThemeData] from the current theme.
-  SBBPopupThemeData? get sbbPopupTheme => extension<SBBPopupThemeData>();
+  SBBPopupThemeData get sbbPopupTheme => extension<SBBPopupThemeData>()!;
 }

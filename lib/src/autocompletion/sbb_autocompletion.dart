@@ -4,6 +4,7 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/autocompletion/autocompletion_link.dart';
 import 'package:sbb_design_system_mobile/src/autocompletion/autocompletion_overlay.dart';
 import 'package:sbb_design_system_mobile/src/autocompletion/autocompletion_target.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 typedef StringCallback = Function(String data);
 
@@ -333,6 +334,8 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>> {
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasSBBBaseStyle(context));
+
     final textField = SBBTextInput(
       controller: _effectiveController,
       focusNode: _effectiveFocusNode,

@@ -4,6 +4,7 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/button/default_button_label.dart';
 import 'package:sbb_design_system_mobile/src/button/theme/default_button_themes.dart';
 import 'package:sbb_design_system_mobile/src/button/theme/sbb_button_style_x.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 /// The accent variant of the SBB Button.
 ///
@@ -98,8 +99,10 @@ class SBBAccentButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final accentButtonStyle = Theme.of(context).sbbAccentButtonTheme?.style;
-    final effectiveStyle = accentButtonStyle?.merge(style).toButtonStyle();
+    assert(debugCheckHasSBBBaseStyle(context));
+
+    final accentButtonStyle = Theme.of(context).sbbAccentButtonTheme.style!;
+    final effectiveStyle = accentButtonStyle.merge(style).toButtonStyle();
 
     return Semantics(
       enabled: !isLoading && (onPressed != null || onLongPress != null),

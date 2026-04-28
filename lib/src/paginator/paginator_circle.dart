@@ -17,9 +17,9 @@ class PaginatorCircle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final style = Theme.of(context).sbbPaginatorTheme?.style;
-    final effectiveBorderColor = borderColor ?? style?.circleBorderColor;
-    final effectiveFillColor = fillColor ?? style?.circleFillColor;
+    final style = Theme.of(context).sbbPaginatorTheme.style!;
+    final effectiveBorderColor = borderColor ?? style.circleBorderColor;
+    final effectiveFillColor = fillColor ?? style.circleFillColor;
 
     final resolvedBorderColor = effectiveBorderColor?.resolve({if (isSelected) WidgetState.selected});
     final resolvedFillColor = effectiveFillColor?.resolve({if (isSelected) WidgetState.selected});

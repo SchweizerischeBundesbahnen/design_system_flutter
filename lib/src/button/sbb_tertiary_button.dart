@@ -6,6 +6,7 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/button/default_button_label.dart';
 import 'package:sbb_design_system_mobile/src/button/theme/default_button_themes.dart';
 import 'package:sbb_design_system_mobile/src/button/theme/sbb_button_style_x.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 /// The tertiary variant of the SBB Button.
 ///
@@ -243,6 +244,8 @@ class _BaseTertiaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasSBBBaseStyle(context));
+
     final leading = _resolvedLeading();
     final label = _resolvedLabel();
     final loading = _resolvedLoading(context);
@@ -349,8 +352,8 @@ class _BaseTertiaryButton extends StatelessWidget {
 
   ButtonStyle? _effectiveIconButtonStyle(BuildContext context) {
     final sideLength = isSmall ? defaultSBBButtonHeightSmall : defaultSBBButtonHeight;
-    final baseStyle = Theme.of(context).textButtonTheme.style;
-    final iconStyle = baseStyle?.copyWith(
+    final baseStyle = Theme.of(context).textButtonTheme.style!;
+    final iconStyle = baseStyle.copyWith(
       padding: WidgetStatePropertyAll<EdgeInsets>(.zero),
       minimumSize: WidgetStatePropertyAll<Size>(Size.square(sideLength)),
       fixedSize: WidgetStatePropertyAll<Size>(Size.square(sideLength)),
