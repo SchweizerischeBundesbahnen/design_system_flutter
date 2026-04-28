@@ -175,7 +175,7 @@ class SBBPicker extends StatefulWidget {
 
 class _SBBPickerState extends State<SBBPicker> {
   SBBPickerStyle _effectivePickerStyle(BuildContext context) {
-    final themePickerStyle = Theme.of(context).sbbPickerTheme!.pickerStyle!;
+    final themePickerStyle = Theme.of(context).sbbPickerTheme.pickerStyle!;
     return themePickerStyle.merge(widget.pickerStyle);
   }
 

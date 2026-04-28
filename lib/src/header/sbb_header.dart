@@ -247,7 +247,7 @@ class _BaseHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeStyle = Theme.of(context).sbbHeaderTheme!.style!;
+    final themeStyle = Theme.of(context).sbbHeaderTheme.style!;
     final effectiveStyle = themeStyle.merge(style);
 
     final resolvedLeading = _resolveLeading(context);

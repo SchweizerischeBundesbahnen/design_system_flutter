@@ -73,7 +73,7 @@ class _SBBSegmentedButtonState<T> extends State<SBBSegmentedButton<T>> {
   int get _selectedIndex => widget.segments.indexWhere((segment) => segment.value == widget.selected);
 
   SBBSegmentedButtonStyle get effectiveStyle {
-    final themeStyle = Theme.of(context).sbbSegmentedButtonTheme!.style!;
+    final themeStyle = Theme.of(context).sbbSegmentedButtonTheme.style!;
     return themeStyle.merge(widget.style);
   }
 
@@ -209,7 +209,7 @@ class _SBBSegmentedButtonState<T> extends State<SBBSegmentedButton<T>> {
     final foregroundColor = effectiveSegmentStyle?.foregroundColor?.resolve(states) ?? SBBColors.green;
     final resolvedTextStyle = effectiveSegmentStyle?.textStyle?.resolve(states);
 
-    final themeData = Theme.of(context).sbbSegmentedButtonTheme!;
+    final themeData = Theme.of(context).sbbSegmentedButtonTheme;
     final effectiveLeadingGapWidth = widget.leadingHorizontalGapWidth ?? themeData.leadingHorizontalGapWidth!;
 
     leading = _addDefaultAncestorWithResolved(

@@ -20,7 +20,7 @@ class DefaultToastBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeStyle = Theme.of(context).sbbToastTheme!.style!;
+    final themeStyle = Theme.of(context).sbbToastTheme.style!;
     final toastScope = ToastScope.of(context);
     final resolvedStyle = themeStyle.merge(toastScope.widgetStyle);
 

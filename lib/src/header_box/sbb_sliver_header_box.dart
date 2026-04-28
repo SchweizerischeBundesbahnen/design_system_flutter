@@ -179,7 +179,7 @@ class SBBSliverHeaderBox extends StatelessWidget {
   /// The final style is built from the current theme and then overridden by the
   /// widget-level [style], [margin], and [padding] values if provided.
   SBBHeaderBoxStyle _resolveStyle(BuildContext context) {
-    return Theme.of(context).sbbHeaderBoxTheme!.style!.merge(style).copyWith(margin: margin, padding: padding);
+    return Theme.of(context).sbbHeaderBoxTheme.style!.merge(style).copyWith(margin: margin, padding: padding);
   }
 
   /// Builds the default content widget shown inside the header box.
@@ -285,7 +285,7 @@ class SBBSliverHeaderBoxLarge extends SBBSliverHeaderBox {
 
   @override
   SBBHeaderBoxStyle _resolveStyle(BuildContext context) {
-    return Theme.of(context).sbbHeaderBoxTheme!.largeStyle!.merge(style).copyWith(margin: margin, padding: padding);
+    return Theme.of(context).sbbHeaderBoxTheme.largeStyle!.merge(style).copyWith(margin: margin, padding: padding);
   }
 
   @override

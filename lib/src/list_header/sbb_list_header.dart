@@ -39,7 +39,7 @@ class SBBListHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     assert(debugCheckHasSBBBaseStyle(context));
 
-    final themeStyle = Theme.of(context).sbbListHeaderTheme!.style!;
+    final themeStyle = Theme.of(context).sbbListHeaderTheme.style!;
     final effectiveStyle = themeStyle.merge(style);
 
     final foregroundColor = effectiveStyle.foregroundColor;

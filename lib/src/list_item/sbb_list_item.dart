@@ -404,7 +404,7 @@ class _SBBListItemState extends State<SBBListItem> {
     assert(debugCheckHasMaterial(context));
     assert(debugCheckHasSBBBaseStyle(context));
 
-    final themeData = Theme.of(context).sbbListItemTheme!;
+    final themeData = Theme.of(context).sbbListItemTheme;
     final effectiveStyle = themeData.style!.merge(widget.style);
     final states = _statesController.value;
 

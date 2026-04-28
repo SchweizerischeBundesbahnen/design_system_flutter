@@ -216,12 +216,12 @@ class SBBMultiDropdown<T> extends StatelessWidget {
   }
 
   SBBDecoratedTextStyle? _effectiveTriggerStyle(BuildContext context) {
-    final themeTriggerStyle = Theme.of(context).sbbDropdownTheme!.triggerStyle!;
+    final themeTriggerStyle = Theme.of(context).sbbDropdownTheme.triggerStyle!;
     return themeTriggerStyle.merge(triggerStyle);
   }
 
   SBBInputDecoration _effectiveTriggerDecoration(BuildContext context) {
-    final themeDecoration = Theme.of(context).sbbDropdownTheme!.triggerDecorationTheme!;
+    final themeDecoration = Theme.of(context).sbbDropdownTheme.triggerDecorationTheme!;
     final base = (triggerDecoration ?? const SBBInputDecoration()).applyThemeValues(themeDecoration);
 
     if (base.trailing != null || base.trailingIconData != null) return base;
@@ -323,7 +323,7 @@ class SBBMultiDropdown<T> extends StatelessWidget {
   }
 
   static SBBBottomSheetStyle _effectiveSheetStyle(SBBBottomSheetStyle? sheetStyle, BuildContext context) {
-    final themeDropdownSheetStyle = Theme.of(context).sbbDropdownTheme!.sheetStyle!;
+    final themeDropdownSheetStyle = Theme.of(context).sbbDropdownTheme.sheetStyle!;
     return themeDropdownSheetStyle.merge(sheetStyle);
   }
 }

@@ -105,7 +105,7 @@ class SBBStepper extends StatelessWidget {
   Widget build(BuildContext context) {
     assert(debugCheckHasSBBBaseStyle(context));
 
-    final theme = Theme.of(context).sbbStepperTheme!;
+    final theme = Theme.of(context).sbbStepperTheme;
     final themeStyle = _isFilledStyle ? theme.filledStyle! : theme.style!;
     final effectiveStyle = themeStyle.merge(style);
 

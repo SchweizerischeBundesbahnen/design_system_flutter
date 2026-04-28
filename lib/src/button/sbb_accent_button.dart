@@ -101,7 +101,7 @@ class SBBAccentButton extends StatelessWidget {
   Widget build(BuildContext context) {
     assert(debugCheckHasSBBBaseStyle(context));
 
-    final accentButtonStyle = Theme.of(context).sbbAccentButtonTheme!.style!;
+    final accentButtonStyle = Theme.of(context).sbbAccentButtonTheme.style!;
     final effectiveStyle = accentButtonStyle.merge(style).toButtonStyle();
 
     return Semantics(

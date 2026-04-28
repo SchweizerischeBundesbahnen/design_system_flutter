@@ -163,7 +163,7 @@ class SBBMessage extends StatelessWidget {
   Widget build(BuildContext context) {
     assert(debugCheckHasSBBBaseStyle(context));
 
-    final themeData = Theme.of(context).sbbMessageTheme!;
+    final themeData = Theme.of(context).sbbMessageTheme;
     final effectiveStyle = _getEffectiveStyle(themeData);
 
     Widget? resolvedIllustration;

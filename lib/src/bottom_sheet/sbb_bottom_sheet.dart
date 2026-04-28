@@ -120,7 +120,7 @@ Future<T?> showSBBBottomSheet<T>({
   );
   assert(debugCheckHasSBBBaseStyle(context));
 
-  final themeStyle = Theme.of(context).sbbBottomSheetTheme!.style!;
+  final themeStyle = Theme.of(context).sbbBottomSheetTheme.style!;
   final SBBBottomSheetStyle resolvedStyle = themeStyle.merge(style);
 
   return showModalBottomSheet<T>(
@@ -267,7 +267,7 @@ class SBBBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     assert(debugCheckHasSBBBaseStyle(context));
 
-    final themeStyle = Theme.of(context).sbbBottomSheetTheme!.style!;
+    final themeStyle = Theme.of(context).sbbBottomSheetTheme.style!;
     final SBBBottomSheetStyle resolvedStyle = themeStyle.merge(style);
 
     // Build actual widgets from convenience parameters

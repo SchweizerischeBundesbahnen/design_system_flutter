@@ -179,7 +179,7 @@ class _SBBCheckboxState extends State<SBBCheckbox> with TickerProviderStateMixin
     assert(debugCheckHasMaterial(context));
     assert(debugCheckHasSBBBaseStyle(context));
 
-    final style = Theme.of(context).sbbCheckboxTheme!.style!;
+    final style = Theme.of(context).sbbCheckboxTheme.style!;
 
     final effectiveMargin = widget.style?.tapTargetPadding ?? style.tapTargetPadding!;
     final effectiveSize = effectiveMargin.inflateSize(_checkboxSize);

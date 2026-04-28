@@ -134,7 +134,7 @@ class _SBBRadioState<T> extends State<SBBRadio<T>> {
     assert(debugCheckHasSBBBaseStyle(context));
 
     final bool effectiveEnabled = widget.enabled ?? (_registry?.onChanged != null);
-    final SBBRadioStyle themeStyle = Theme.of(context).sbbRadioTheme!.style!;
+    final SBBRadioStyle themeStyle = Theme.of(context).sbbRadioTheme.style!;
     final EdgeInsetsGeometry effectivePadding = widget.style?.tapTargetPadding ?? themeStyle.tapTargetPadding!;
 
     return Semantics(
@@ -189,7 +189,7 @@ class _SBBRadioPaintState extends State<_SBBRadioPaint> {
 
   @override
   Widget build(BuildContext context) {
-    final themeStyle = Theme.of(context).sbbRadioTheme!.style!;
+    final themeStyle = Theme.of(context).sbbRadioTheme.style!;
 
     // Compute active and inactive state so that colors can be determined and painter can lerp between them
     final Set<WidgetState> activeStates = {...widget.toggleableState.states, WidgetState.selected};

@@ -189,7 +189,7 @@ class _SBBDecoratedTextState extends State<SBBDecoratedText> {
 
     final bool isMultiline = (widget.maxLines ?? 0) != 1;
 
-    final themeStyle = Theme.of(context).sbbDecoratedTextTheme!.style!;
+    final themeStyle = Theme.of(context).sbbDecoratedTextTheme.style!;
     final effectiveStyle = themeStyle.merge(widget.style);
 
     final effectiveInputTextStyle = _effectiveInputTextStyle(effectiveStyle);

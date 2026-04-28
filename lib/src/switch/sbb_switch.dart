@@ -254,7 +254,7 @@ class _SBBSwitchState extends State<SBBSwitch> with TickerProviderStateMixin, To
   }
 
   SBBSwitchStyle _getEffectiveStyle(BuildContext context) {
-    final SBBSwitchStyle themeStyle = Theme.of(context).sbbSwitchTheme!.style!;
+    final SBBSwitchStyle themeStyle = Theme.of(context).sbbSwitchTheme.style!;
     return themeStyle.merge(widget.style);
   }
 

@@ -140,7 +140,7 @@ class SBBPaginatorFloating extends SBBPaginator {
       return const SizedBox.shrink();
     }
 
-    final themeStyle = Theme.of(context).sbbPaginatorTheme!.style!;
+    final themeStyle = Theme.of(context).sbbPaginatorTheme.style!;
     final effectiveStyle = themeStyle.merge(style);
 
     return Container(

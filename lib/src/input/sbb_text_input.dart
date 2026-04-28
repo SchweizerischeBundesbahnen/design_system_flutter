@@ -517,7 +517,7 @@ class _SBBTextInputState extends State<SBBTextInput>
   }
 
   TextStyle _effectiveInputTextStyle(BuildContext context) {
-    final themeData = Theme.of(context).sbbTextInputTheme!;
+    final themeData = Theme.of(context).sbbTextInputTheme;
     final states = _statesController.value;
 
     if (widget.inputTextStyle != null) {
@@ -532,7 +532,7 @@ class _SBBTextInputState extends State<SBBTextInput>
   }
 
   SBBInputDecoration _getEffectiveDecorationWithClearButton(BuildContext context) {
-    final themeData = Theme.of(context).sbbTextInputTheme!;
+    final themeData = Theme.of(context).sbbTextInputTheme;
     final effectiveShowClearButton = widget.enableClearButton ?? themeData.enableClearButton!;
 
     final baseDecoration = widget.decoration ?? SBBInputDecoration();
@@ -541,7 +541,7 @@ class _SBBTextInputState extends State<SBBTextInput>
 
     final shouldReplaceTrailingWithClearButton = _effectiveFocusNode.hasFocus && _effectiveController.text.isNotEmpty;
 
-    final inputDecorationTheme = Theme.of(context).sbbInputDecorationTheme!;
+    final inputDecorationTheme = Theme.of(context).sbbInputDecorationTheme;
     final Widget trailing = widget.decoration?.trailingIconData == null
         ? SizedBox.shrink()
         : Padding(

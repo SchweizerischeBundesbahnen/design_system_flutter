@@ -237,7 +237,7 @@ class SBBHeaderBox extends StatelessWidget {
   final String? semanticsLabel;
 
   SBBHeaderBoxStyle _resolveStyle(BuildContext context) {
-    return Theme.of(context).sbbHeaderBoxTheme!.style!.merge(style).copyWith(margin: margin, padding: padding);
+    return Theme.of(context).sbbHeaderBoxTheme.style!.merge(style).copyWith(margin: margin, padding: padding);
   }
 
   Widget? _defaultContent(BuildContext context) {
@@ -359,7 +359,7 @@ class SBBHeaderBoxLarge extends SBBHeaderBox {
 
   @override
   SBBHeaderBoxStyle _resolveStyle(BuildContext context) {
-    return Theme.of(context).sbbHeaderBoxTheme!.largeStyle!.merge(style).copyWith(margin: margin, padding: padding);
+    return Theme.of(context).sbbHeaderBoxTheme.largeStyle!.merge(style).copyWith(margin: margin, padding: padding);
   }
 
   @override

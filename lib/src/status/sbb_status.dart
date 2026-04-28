@@ -240,7 +240,7 @@ final class _SBBStatusAlert extends SBBStatus {
 
   @override
   SBBStatusStyle _getThemedStyle(BuildContext context) {
-    return Theme.of(context).sbbStatusTheme!.alert!;
+    return Theme.of(context).sbbStatusTheme.alert!;
   }
 }
 
@@ -257,7 +257,7 @@ final class _SBBStatusWarning extends SBBStatus {
 
   @override
   SBBStatusStyle _getThemedStyle(BuildContext context) {
-    return Theme.of(context).sbbStatusTheme!.warning!;
+    return Theme.of(context).sbbStatusTheme.warning!;
   }
 }
 
@@ -274,7 +274,7 @@ final class _SBBStatusSuccess extends SBBStatus {
 
   @override
   SBBStatusStyle _getThemedStyle(BuildContext context) {
-    return Theme.of(context).sbbStatusTheme!.success!;
+    return Theme.of(context).sbbStatusTheme.success!;
   }
 }
 
@@ -291,6 +291,6 @@ final class _SBBStatusInformation extends SBBStatus {
 
   @override
   SBBStatusStyle _getThemedStyle(BuildContext context) {
-    return Theme.of(context).sbbStatusTheme!.information!;
+    return Theme.of(context).sbbStatusTheme.information!;
   }
 }

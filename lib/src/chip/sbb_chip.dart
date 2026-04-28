@@ -143,7 +143,7 @@ class _SBBChipState extends State<SBBChip> {
     assert(debugCheckHasMaterial(context));
     assert(debugCheckHasSBBBaseStyle(context));
 
-    final themeStyle = Theme.of(context).sbbChipTheme!.style!;
+    final themeStyle = Theme.of(context).sbbChipTheme.style!;
     final effectiveStyle = themeStyle.merge(widget.style);
     final states = _statesController.value;
 

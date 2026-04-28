@@ -105,7 +105,7 @@ class SBBHeaderBoxFlap extends StatelessWidget {
   Widget build(BuildContext context) {
     assert(debugCheckHasSBBBaseStyle(context));
 
-    final effectiveStyle = Theme.of(context).sbbHeaderBoxTheme!.flapStyle!.merge(style).copyWith(padding: padding);
+    final effectiveStyle = Theme.of(context).sbbHeaderBoxTheme.flapStyle!.merge(style).copyWith(padding: padding);
 
     final leadingWidget = _addDefaultAncestorWithResolved(
       foregroundColor: effectiveStyle.leadingForegroundColor,

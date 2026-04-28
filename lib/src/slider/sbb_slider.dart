@@ -222,7 +222,7 @@ class _SBBSliderState extends State<SBBSlider> {
   Widget build(BuildContext context) {
     assert(debugCheckHasSBBBaseStyle(context));
 
-    final themeStyle = Theme.of(context).sbbSliderTheme!.style!;
+    final themeStyle = Theme.of(context).sbbSliderTheme.style!;
     final effectiveStyle = themeStyle.merge(widget.style);
 
     final slider = _slider(effectiveStyle);

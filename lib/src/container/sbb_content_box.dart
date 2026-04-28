@@ -67,7 +67,7 @@ class SBBContentBox extends StatelessWidget {
   Widget build(BuildContext context) {
     assert(debugCheckHasSBBBaseStyle(context));
 
-    final SBBContentBoxStyle style = Theme.of(context).sbbContentBoxTheme!.style!;
+    final SBBContentBoxStyle style = Theme.of(context).sbbContentBoxTheme.style!;
 
     return Semantics(
       container: isSemanticContainer ?? style.isSemanticContainer!,
