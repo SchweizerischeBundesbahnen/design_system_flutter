@@ -11,6 +11,12 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ### Changed
 
+- (auto): updated icon lib to version 1.8.23
+
+## Unreleased
+
+### Changed
+
 - (auto): updated icon lib to version 1.8.21
 
 ## [4.11.0] - 2026-04-13
