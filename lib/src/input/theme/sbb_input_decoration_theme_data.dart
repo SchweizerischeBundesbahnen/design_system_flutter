@@ -261,5 +261,5 @@ extension SBBInputDecorationThemeDataX on SBBInputDecorationThemeData {
 
 extension SBBInputDecorationThemeDataThemeDataX on ThemeData {
   /// Access the [SBBInputDecorationThemeData] from the current theme.
-  SBBInputDecorationThemeData? get sbbInputDecorationTheme => extension<SBBInputDecorationThemeData>();
+  SBBInputDecorationThemeData get sbbInputDecorationTheme => extension<SBBInputDecorationThemeData>()!;
 }

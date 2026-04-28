@@ -82,5 +82,5 @@ extension SBBSegmentedButtonThemeDataX on SBBSegmentedButtonThemeData {
 
 extension SBBSegmentedButtonThemeDataThemeDataX on ThemeData {
   /// Access the [SBBSegmentedButtonThemeData] from the current theme.
-  SBBSegmentedButtonThemeData? get sbbSegmentedButtonTheme => extension<SBBSegmentedButtonThemeData>();
+  SBBSegmentedButtonThemeData get sbbSegmentedButtonTheme => extension<SBBSegmentedButtonThemeData>()!;
 }

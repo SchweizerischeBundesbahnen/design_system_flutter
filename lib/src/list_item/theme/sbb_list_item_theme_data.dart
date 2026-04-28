@@ -118,5 +118,5 @@ extension SBBListItemThemeDataX on SBBListItemThemeData {
 
 extension SBBListItemThemeDataThemeDataX on ThemeData {
   /// Access the [SBBListItemThemeData] from the current theme.
-  SBBListItemThemeData? get sbbListItemTheme => extension<SBBListItemThemeData>();
+  SBBListItemThemeData get sbbListItemTheme => extension<SBBListItemThemeData>()!;
 }
