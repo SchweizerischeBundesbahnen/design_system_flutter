@@ -286,33 +286,13 @@ class SBBListItem extends StatefulWidget {
   ///
   /// See also [SBBDivider] for using the same underlying widget
   /// in indexed builder methods (e.g. [ListView.separated]).
+  ///
+  /// Consider using [SBBDivider.divideItems] instead of this.
   static List<Widget> divideListItems({
     BuildContext? context,
     required Iterable<Widget> items,
     Color? color,
-  }) {
-    assert(color != null || context != null);
-    items = items.toList();
-
-    if (items.isEmpty || items.length == 1) {
-      return items.toList();
-    }
-
-    final resolvedColor = color ?? Theme.of(context!).dividerColor;
-
-    Widget wrapListItem(Widget link) {
-      return CustomPaint(
-        foregroundPainter: DividerPainter(
-          paintAtTop: false,
-          color: resolvedColor,
-          indent: 0.0,
-        ),
-        child: link,
-      );
-    }
-
-    return <Widget>[...items.take(items.length - 1).map(wrapListItem), items.last];
-  }
+  }) => SBBDivider.divideItems(items: items, context: context, color: color);
 
   @override
   State<SBBListItem> createState() => _SBBListItemState();
