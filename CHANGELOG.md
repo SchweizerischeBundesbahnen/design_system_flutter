@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 It is expected that you keep this format strictly, since we depend on it in our release workflow.
 
+## [5.0.0-dev.2] - 2026-04-28
+
+### Changed
+
+- BREAKING: overhauled `SBBHeaderBox` - see [v5 migration guide]
+- BREAKING: renamed static methods containing `extra` on `SBBTextStyles` to containing `x` - see [v5 migration guide]
+- Use `SBBTextTheme` in default theme data of components
+
+### Fixed
+
+- `merge` of `SBBBaseStyle` behaves consistently with other merges
+- docs: correct migration guide link
+
+### Removed
+
+- Removed deprecated `SBBTextStyles.helpersLabel`
+
+
 ## [5.0.0-dev.1] - 2026-04-15
 
 ### Added
@@ -22,7 +40,6 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ### Changed
 
-- BREAKING: overhauled `SBBHeaderBox` - see [v5 migration guide]
 - BREAKING: overhauled `SBBBaseStyle` - see [v5 migration guide]
 - BREAKING: overhauled all button variants - see [v5 migration guide]
 - BREAKING: overhauled `SBBCheckbox` - see [v5 migration guide]
@@ -47,7 +64,6 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - BREAKING: use `SBBTabBarStyle` / `SBBTabBarThemeData` to style `SBBTabBar` - see [v5 migration guide]
 - BREAKING: overhauled `SBBTextField` and renamed to `SBBTextInput` - see [v5 migration guide]
 - BREAKING: removed default left margin on component `SBBTextInput` (#402)
-- BREAKING: renamed static methods containing `extra` on `SBBTextStyles` to containing `x` - see [v5 migration guide]
 - renamed `TextStylesExtensions` to `SBBTextStyleExtensions`
 - BREAKING: renamed `ContractionState` to `SBBContractionState`
 - BREAKING: renamed `ContractibleState` to `SBBContractibleState`
@@ -65,7 +81,6 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Removed deprecated `SBBOnboarding`
 - Removed deprecated `sbbDefaultSpacing`
 - Removed deprecated `SBBLinkText`
-- Removed deprecated `SBBTextStyles.helpersLabel`
 - Removed `CascadeColumnParentData` as it is not directly used by clients
 - Removed `SBBTextField` - replaced by `SBBTextInput`
 - Removed `merge` extension on `SBBBaseStyle`
@@ -826,7 +841,9 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Initial project setup
 - Added some widgets
 
-[v5 migration guide]: migration_guide.md
+[v5 migration guide]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/blob/31052a871aed02bd8e31baf63739a2fcd349a225/migration_guide.md
+
+[5.0.0-dev.2]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/5.0.0-dev.1...5.0.0-dev.2
 
 [5.0.0-dev.1]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.11.0...5.0.0-dev.1
 
