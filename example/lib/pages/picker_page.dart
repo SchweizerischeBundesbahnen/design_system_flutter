@@ -38,7 +38,7 @@ class _PickerPageState extends State<PickerPage> {
           const SBBListHeader('Picker input fields'),
           SBBContentBox(
             child: Column(
-              children: SBBListItem.divideListItems(
+              children: SBBDivider.divideItems(
                 context: context,
                 items: [
                   SBBDateInput(

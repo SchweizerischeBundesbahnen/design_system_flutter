@@ -27,7 +27,7 @@ import 'package:sbb_design_system_mobile/src/shared/divider/divider_painter.dart
 ///
 /// The list item is disabled when both [onTap] and [onLongPress] are null or [enabled] is false.
 ///
-/// Use [SBBListItem.divideListItems] to automatically add dividers between multiple list items.
+/// Use [SBBDivider.divideItems] to automatically add dividers between multiple list items.
 ///
 ///
 /// ## Sample code
@@ -44,7 +44,7 @@ import 'package:sbb_design_system_mobile/src/shared/divider/divider_painter.dart
 ///
 /// ```dart
 /// Column(
-///   children: SBBListItem.divideListItems(
+///   children: SBBDivider.divideItems(
 ///     context: context,
 ///     items: [
 ///       SBBListItem(

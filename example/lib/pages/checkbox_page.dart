@@ -73,7 +73,7 @@ class CheckboxPageState extends State<CheckboxPage> {
           const SBBListHeader('Checkbox Item - List'),
           SBBContentBox(
             child: Column(
-              children: SBBListItem.divideListItems(
+              children: SBBDivider.divideItems(
                 context: context,
                 items: [
                   SBBCheckboxListItem(

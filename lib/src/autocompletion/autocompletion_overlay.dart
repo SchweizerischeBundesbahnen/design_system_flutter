@@ -130,7 +130,7 @@ class _AutocompletionOverlayState extends State<AutocompletionOverlay> {
               children: [
                 if (hasFavorites) ...[
                   Container(color: backgroundColor, height: SBBSpacing.xxSmall),
-                  ...SBBListItem.divideListItems(
+                  ...SBBDivider.divideItems(
                     context: context,
                     items: widget.favoritesSection.map(
                       (item) => Container(color: optionColor, child: item),
@@ -139,7 +139,7 @@ class _AutocompletionOverlayState extends State<AutocompletionOverlay> {
                 ],
                 if (hasSuggestions) ...[
                   Container(color: backgroundColor, height: SBBSpacing.xxSmall),
-                  ...SBBListItem.divideListItems(
+                  ...SBBDivider.divideItems(
                     context: context,
                     items: widget.suggestionsSection.map(
                       (item) => Container(color: optionColor, child: item),

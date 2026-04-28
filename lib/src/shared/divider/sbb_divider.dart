@@ -6,7 +6,7 @@ import 'package:sbb_design_system_mobile/src/shared/divider/divider_painter.dart
 /// A one-pixel divider line using the SBB design system styling.
 ///
 /// See also:
-///  * [SBBListItem.divideListItems], for automatically adding dividers between list items.
+///  * [SBBDivider.divideItems], for automatically adding dividers between list items.
 class SBBDivider extends StatelessWidget {
   const SBBDivider({super.key, this.color});
 

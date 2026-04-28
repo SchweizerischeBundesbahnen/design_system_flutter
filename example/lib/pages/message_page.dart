@@ -28,7 +28,7 @@ class _MessagePageState extends State<MessagePage> {
     return DemoPageScaffold(
       componentConfig: Column(
         mainAxisSize: MainAxisSize.min,
-        children: SBBListItem.divideListItems(
+        children: SBBDivider.divideItems(
           context: context,
           items: [
             SBBSwitchListItem(
