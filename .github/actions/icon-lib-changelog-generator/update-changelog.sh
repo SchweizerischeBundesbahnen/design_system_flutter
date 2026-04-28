@@ -51,7 +51,7 @@ BEGIN {
     next
   }
 
-  if ($0 ~ /^## \[Unreleased\]/) {
+  if ($0 ~ /^## (\[Unreleased\]|Unreleased)/) {
     unreleased_found = 1
     print $0
     next

@@ -7,11 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 It is expected that you keep this format strictly, since we depend on it in our release workflow.
 
+
 ## Unreleased
 
 ### Changed
 
-- (auto): updated icon lib to version 1.8.21
+- (auto): updated icon lib to version 1.8.23
 
 ## [4.11.0] - 2026-04-13
 
