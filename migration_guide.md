@@ -704,6 +704,15 @@ SBBTextInputFormField(
 | `suffixIcon` | `decoration.trailing` or `decoration.trailingIconData` |
 
 
+## TextStyles
+
+For consistency, `extra` has been replaced in all static methods to `x`. Therefore, migrate:
+- `SBBTextStyles.extraExtraLargeBold` to `SBBTextStyles.xxLargeBold`
+- `SBBTextStyles.extraExtraSmallLight` to `SBBTextStyles.xxSmallLight`
+- ...
+
+In general, consider using `SBBTextTheme` instead of static const text styles in your app.
+
 ## Picker
 
 ### Summary
@@ -767,3 +776,103 @@ extended:
 * use `SBBToastThemeData` to override the style of all toast within your application
 * access the theme using `Theme.of(context).sbbToastTheme`
 * individual change of style via the `style` constructor parameter
+
+
+## Header-Box
+
+* added `isLoading` as a way to control the loading state of the header box
+
+### API rename
+
+* replace `SBBHeaderbox` with `SBBHeaderBox`
+* replace `SBBSliverHeaderbox` with `SBBSliverHeaderBox`
+* replace `SBBHeaderboxFlap` with `SBBHeaderBoxFlap`
+* replace `SBBSliverFloatingHeaderbox` with `SBBSliverHeaderBox`
+* replace `SBBSliverFloatingHeaderboxSpacer` with `SBBSliverHeaderBoxSpacer`
+
+### Constructor arguments
+
+* replace `title` with `titleText` (or use `title` for a custom widget)
+* replace `secondaryLabel` with `subtitleText` (or use `subtitle` for a custom widget)
+* replace `leadingIcon` with `leadingIconData` (or use `leading` for a custom widget)
+* replace `trailingWidget` with `trailing`
+* replace `.large(...)` constructors with `SBBHeaderBoxLarge` and `SBBSliverHeaderBoxLarge`
+* replace `.custom(child: ...)` usage with the regular constructor and pass custom content through `title`,
+  `subtitle`, `leading`, `trailing`, and `body`
+* use `body` for additional content below the title/subtitle area
+* use `style`, `padding`, `margin`, `isLoading`, and `semanticsLabel` directly on the widget
+
+Old implementation:
+```dart
+SBBHeaderbox(
+  title: 'Journey details',
+  secondaryLabel: 'IC 3 to Zürich HB',
+  leadingIcon: SBBIcons.train_small,
+  trailingWidget: SBBTertiaryButtonSmall(
+    icon: SBBIcons.pencil_small,
+    onPressed: () {},
+  ),
+)
+```
+
+New implementation:
+```dart
+SBBHeaderBox(
+  titleText: 'Journey details',
+  subtitleText: 'IC 3 to Zürich HB',
+  leadingIconData: SBBIcons.train_small,
+  trailing: SBBTertiaryButtonSmall(
+    icon: SBBIcons.pencil_small,
+    onPressed: () {},
+  ),
+)
+```
+
+### Sliver HeaderBox
+
+* use `SBBSliverHeaderBox` for both the old pinned and floating variants
+* move floating, resizing, snapping, and flap behavior to `config: SBBSliverHeaderBoxConfig(...)`
+* replace `preceding` with `top`
+* replace `contractibleChild` / `collapsibleChild` with `body`, typically wrapped in `SBBContractible`
+* move `flapMode` from the widget constructor to `SBBSliverHeaderBoxConfig.flapMode`
+
+Old implementation:
+```dart
+SBBSliverFloatingHeaderbox(
+  title: 'Journey details',
+  secondaryLabel: 'IC 3 to Zürich HB',
+  contractibleChild: Text('Departure: 14:32'),
+  flap: SBBHeaderboxFlap(title: 'Additional travel information'),
+  flapMode: SBBHeaderboxFlapMode.hideable,
+)
+```
+
+New implementation:
+```dart
+SBBSliverHeaderBox(
+  titleText: 'Journey details',
+  subtitleText: 'IC 3 to Zürich HB',
+  body: SBBContractible(
+    child: Text('Departure: 14:32'),
+  ),
+  flap: SBBHeaderBoxFlap(labelText: 'Additional travel information'),
+  config: SBBSliverHeaderBoxConfig(
+    flapMode: SBBHeaderBoxFlapMode.hideable,
+  ),
+)
+```
+
+### Flap
+
+* replace `title` with `labelText` (or use `label` for a custom widget)
+* replace `leadingIcon` with `leadingIconData` (or use `leading` for a custom widget)
+* replace `trailingIcon` with `trailingIconData` (or use `trailing` for a custom widget)
+* `allowMultilineLabel` was removed, use a custom `label` widget if you need different wrapping behavior
+* use `style` and `padding` directly on `SBBHeaderBoxFlap`
+
+### Theming & Styling
+
+* use `SBBHeaderBoxThemeData(style: ..., largeStyle: ..., flapStyle: ...)` to theme the default, large, and flap
+  variants separately
+* access the theme using `Theme.of(context).sbbHeaderBoxTheme`
+* customize an individual header box or flap by setting its `style` parameter in the constructor

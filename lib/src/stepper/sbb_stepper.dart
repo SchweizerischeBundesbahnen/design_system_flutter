@@ -304,7 +304,7 @@ class _StepCircleState extends State<_StepCircle> {
   }
 
   Widget _circleContent() {
-    var item = widget.item;
+    final item = widget.item;
     Widget content;
     if (item is SBBStepperItemIcon) {
       content = Icon(item.icon, size: SBBStepperItemStyle.stepIconSize);
@@ -425,6 +425,6 @@ class _RenderEdgeClampedCenterX extends RenderShiftedBox {
   }
 }
 
-extension _WidgetExtension on Iterable<Widget> {
+extension _WidgetIterableX on Iterable<Widget> {
   Iterable<Widget> dividedBy(Widget divider) => expand((x) => [divider, x]).skip(1);
 }

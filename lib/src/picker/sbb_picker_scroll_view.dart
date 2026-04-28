@@ -3,12 +3,11 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-
-import 'sbb_picker_constants.dart';
-import 'sbb_picker_item.dart';
-import 'sbb_picker_scope.dart';
-import 'sbb_picker_scroll_controller.dart';
-import 'theme/sbb_picker_style.dart';
+import 'package:sbb_design_system_mobile/src/picker/sbb_picker_constants.dart';
+import 'package:sbb_design_system_mobile/src/picker/sbb_picker_item.dart';
+import 'package:sbb_design_system_mobile/src/picker/sbb_picker_scope.dart';
+import 'package:sbb_design_system_mobile/src/picker/sbb_picker_scroll_controller.dart';
+import 'package:sbb_design_system_mobile/src/picker/theme/sbb_picker_style.dart';
 
 /// Signature for a function that creates a [SBBPickerItem] for a given index,
 /// but may return null.

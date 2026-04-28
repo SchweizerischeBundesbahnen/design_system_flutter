@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
-
-import '../../../sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// The default list item theme is specified using the
 /// * [Figma design specs](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=129-3181)
@@ -13,10 +12,10 @@ class DefaultSBBListItemThemeData extends SBBListItemThemeData {
         subtitleVerticalGapHeight: 4.0,
         style: SBBListItemStyle(
           titleTextStyle: WidgetStateProperty.fromMap(<WidgetStatesConstraint, TextStyle?>{
-            WidgetState.any: baseStyle.themedTextStyle(textStyle: SBBTextStyles.mediumLight),
+            WidgetState.any: baseStyle.themedTextStyle(textStyle: baseStyle.textTheme.mediumLight),
           }),
           subtitleTextStyle: WidgetStateProperty.fromMap(<WidgetStatesConstraint, TextStyle?>{
-            WidgetState.any: baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallLight),
+            WidgetState.any: baseStyle.themedTextStyle(textStyle: baseStyle.textTheme.smallLight),
           }),
           titleForegroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.disabled: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),

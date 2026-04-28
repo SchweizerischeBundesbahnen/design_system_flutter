@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'sbb_picker_constants.dart';
+import 'package:sbb_design_system_mobile/src/picker/sbb_picker_constants.dart';
 
 /// Represents an item in the [SBBPickerScrollView] that is used by [SBBPicker].
 class SBBPickerItem {

@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../../../sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// The ThemeData for the [SBBToast].
 ///
@@ -60,7 +60,6 @@ extension SBBToastThemeDataX on SBBToastThemeData {
 }
 
 extension SBBToastThemeDataThemeDataX on ThemeData {
-  SBBToastThemeData? get sbbToastTheme {
-    return extension<SBBToastThemeData>();
-  }
+  /// Access the [SBBToastThemeData] from the current theme.
+  SBBToastThemeData? get sbbToastTheme => extension<SBBToastThemeData>();
 }

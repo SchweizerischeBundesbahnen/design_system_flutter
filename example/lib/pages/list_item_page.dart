@@ -60,12 +60,12 @@ class ListItemPage extends StatelessWidget {
                     onTap: () => sbbToast.show(titleText: 'Mit Links'),
                     links: [
                       SBBListItem(
-                        titleText: "Link",
+                        titleText: 'Link',
                         trailingIconData: SBBIcons.chevron_small_right_small,
                         onTap: () => sbbToast.show(titleText: 'Link'),
                       ),
                       SBBListItem(
-                        titleText: "Link 2",
+                        titleText: 'Link 2',
                         trailingIconData: SBBIcons.chevron_small_right_small,
                         onTap: () => sbbToast.show(titleText: 'Link 2'),
                       ),

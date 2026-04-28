@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// Icon options available for the badge icon type.
 enum SBBBadgeIconData { checkmark, exclamationMark, info, live }
@@ -141,7 +141,7 @@ class SBBTabBarBadgeText extends SBBTabBarBadge {
               labelText,
               style:
                   resolvedTextStyle?.copyWith(color: resolvedForegroundColor) ??
-                  SBBTextStyles.extraExtraSmallBold.copyWith(
+                  SBBTextStyles.xxSmallBold.copyWith(
                     color: resolvedForegroundColor,
                     fontWeight: FontWeight.w900,
                   ),

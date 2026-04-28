@@ -2,9 +2,8 @@ import 'dart:async';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-
-import 'tab_bar.dart';
-import 'tab_curves.dart';
+import 'package:sbb_design_system_mobile/src/tab_bar/tab_bar.dart';
+import 'package:sbb_design_system_mobile/src/tab_bar/tab_curves.dart';
 
 /// With this Controller, the [SBBTabBar] can be controlled externally.
 class SBBTabBarController {

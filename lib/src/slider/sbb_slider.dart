@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-
-import '../../sbb_design_system_mobile.dart';
-import 'sbb_slider_thumb_shape.dart';
-import 'sbb_slider_track_shape.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/slider/sbb_slider_thumb_shape.dart';
+import 'package:sbb_design_system_mobile/src/slider/sbb_slider_track_shape.dart';
 
 /// A slider component following the SBB design system.
 ///

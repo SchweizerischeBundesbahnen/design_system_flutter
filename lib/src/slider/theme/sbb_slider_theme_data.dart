@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
-import '../../../sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// The ThemeData for the [SBBSlider].
 ///
@@ -55,7 +54,6 @@ extension SBBSliderThemeDataX on SBBSliderThemeData {
 }
 
 extension SBBSliderThemeDataThemeDataX on ThemeData {
-  SBBSliderThemeData? get sbbSliderTheme {
-    return extension<SBBSliderThemeData>();
-  }
+  /// Access the [SBBSliderThemeData] from the current theme.
+  SBBSliderThemeData? get sbbSliderTheme => extension<SBBSliderThemeData>();
 }

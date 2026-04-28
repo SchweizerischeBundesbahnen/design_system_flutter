@@ -6,7 +6,7 @@ import 'package:flutter/widgets.dart';
 /// text color based on widget state, and interaction feedback colors.
 ///
 /// Typically applied theme-wide via [SBBDecoratedTextThemeData], but can be overridden
-/// per-widget using [SBBDecoratedText.style].
+/// per-widget using [SBBDecoratedText.widgetStyle].
 ///
 /// See also:
 /// * [SBBDecoratedText], the widget that uses this style

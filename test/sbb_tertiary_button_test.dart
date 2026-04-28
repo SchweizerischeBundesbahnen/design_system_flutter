@@ -15,18 +15,18 @@ void main() {
       child: Column(
         spacing: SBBSpacing.medium,
         children: [
-          SBBTertiaryButton(key: pressableKey, labelText: "Default", onPressed: () {}),
-          SBBTertiaryButton(labelText: "Disabled", onPressed: null),
-          SBBTertiaryButton(labelText: "Icon", onPressed: () {}, iconData: SBBIcons.dog_small),
+          SBBTertiaryButton(key: pressableKey, labelText: 'Default', onPressed: () {}),
+          SBBTertiaryButton(labelText: 'Disabled', onPressed: null),
+          SBBTertiaryButton(labelText: 'Icon', onPressed: () {}, iconData: SBBIcons.dog_small),
           ConstrainedBox(
             constraints: BoxConstraints(maxWidth: 165),
             child: SBBTertiaryButton(
-              labelText: "Constrained That should fade",
+              labelText: 'Constrained That should fade',
               onPressed: () {},
               iconData: SBBIcons.dog_small,
             ),
           ),
-          SBBTertiaryButton(labelText: "Icon Disabled", onPressed: null, iconData: SBBIcons.dog_small),
+          SBBTertiaryButton(labelText: 'Icon Disabled', onPressed: null, iconData: SBBIcons.dog_small),
           SBBTertiaryButton(key: pressableIconKey, onPressed: () {}, iconData: SBBIcons.dog_small),
           SBBTertiaryButton(
             label: Container(color: SBBColors.platinum, child: Text('Custom Label!')),
@@ -45,10 +45,10 @@ void main() {
               iconColor: WidgetStatePropertyAll(SBBColors.turquoise),
             ),
           ),
-          SBBTertiaryButtonSmall(key: pressableSmallKey, labelText: "Default", onPressed: () {}),
-          SBBTertiaryButtonSmall(labelText: "Disabled", onPressed: null),
-          SBBTertiaryButtonSmall(labelText: "Icon", onPressed: () {}, iconData: SBBIcons.dog_small),
-          SBBTertiaryButtonSmall(labelText: "Icon Disabled", onPressed: null, iconData: SBBIcons.dog_small),
+          SBBTertiaryButtonSmall(key: pressableSmallKey, labelText: 'Default', onPressed: () {}),
+          SBBTertiaryButtonSmall(labelText: 'Disabled', onPressed: null),
+          SBBTertiaryButtonSmall(labelText: 'Icon', onPressed: () {}, iconData: SBBIcons.dog_small),
+          SBBTertiaryButtonSmall(labelText: 'Icon Disabled', onPressed: null, iconData: SBBIcons.dog_small),
           SBBTertiaryButtonSmall(key: pressableSmallIconKey, onPressed: () {}, iconData: SBBIcons.dog_small),
           SBBTertiaryButtonSmall(
             label: Container(color: SBBColors.platinum, child: Text('Custom label!')),

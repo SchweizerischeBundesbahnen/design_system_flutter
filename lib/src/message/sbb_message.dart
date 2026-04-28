@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// The SBB Message widget displays messages to the user, typically for errors, loading states, or informational content.
 ///
@@ -199,7 +198,7 @@ class SBBMessage extends StatelessWidget {
       child: resolvedError,
     );
 
-    Widget child = _buildSingleChildOrColumn(
+    final child = _buildSingleChildOrColumn(
       resolvedIllustration,
       resolvedTitle,
       resolvedSubtitle,
@@ -258,7 +257,7 @@ class SBBMessage extends StatelessWidget {
   }
 }
 
-extension _IntersperseOnIterable on Iterable<Widget> {
+extension _IntersperseOnIterableX on Iterable<Widget> {
   Iterable<Widget> intersperseWith(Widget widget) {
     return map((e) => [widget, e]).expand((e) => e).skip(1);
   }

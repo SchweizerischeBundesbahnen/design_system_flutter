@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
-
-import '../../../sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// The default chip theme is specified using the
 /// * [Figma design specs](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=129-3181)
@@ -24,10 +23,12 @@ class DefaultSBBChipThemeData extends SBBChipThemeData {
             WidgetState.any: SBBColors.white,
           }),
           labelTextStyle: WidgetStateProperty.fromMap(<WidgetStatesConstraint, TextStyle?>{
-            WidgetState.disabled: baseStyle.themedTextStyle(textStyle: SBBTextStyles.mediumLight),
-            WidgetState.any: baseStyle.themedTextStyle(textStyle: SBBTextStyles.mediumLight),
+            WidgetState.disabled: baseStyle.themedTextStyle(textStyle: baseStyle.textTheme.mediumLight),
+            WidgetState.any: baseStyle.themedTextStyle(textStyle: baseStyle.textTheme.mediumLight),
           }),
-          trailingTextStyle: WidgetStatePropertyAll(baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallBold)),
+          trailingTextStyle: WidgetStatePropertyAll(
+            baseStyle.themedTextStyle(textStyle: baseStyle.textTheme.smallBold),
+          ),
           trailingBackgroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.selected & WidgetState.disabled: baseStyle.themeValue(SBBColors.milk, SBBColors.iron),
             WidgetState.disabled: baseStyle.themeValue(SBBColors.graphite, SBBColors.iron),

@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
-import '../../../sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// The ThemeData for the [SBBTextInput].
 ///
@@ -90,7 +89,6 @@ extension SBBTextInputThemeDataX on SBBTextInputThemeData {
 }
 
 extension SBBTextInputThemeDataThemeDataX on ThemeData {
-  SBBTextInputThemeData? get sbbTextInputTheme {
-    return extension<SBBTextInputThemeData>();
-  }
+  /// Access the [SBBHeaderThemeData] from the current theme.
+  SBBTextInputThemeData? get sbbTextInputTheme => extension<SBBTextInputThemeData>();
 }

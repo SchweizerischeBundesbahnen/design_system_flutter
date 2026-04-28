@@ -57,7 +57,7 @@ void main() {
         ),
         ToastScope(
           stream: stream6,
-          style: SBBToastStyle(
+          widgetStyle: SBBToastStyle(
             backgroundColor: SBBColors.sky,
             padding: .all(48.0),
           ),
@@ -68,7 +68,7 @@ void main() {
         ),
         ToastScope(
           stream: stream7,
-          style: SBBToastStyle(actionOverflowThreshold: 1.0),
+          widgetStyle: SBBToastStyle(actionOverflowThreshold: 1.0),
           child: DefaultToastBody(
             titleText: 'Toast with action',
             action: SBBToastAction(onTap: () {}, title: 'Long Action still on same line'),
@@ -76,7 +76,7 @@ void main() {
         ),
         ToastScope(
           stream: stream8,
-          style: SBBToastStyle(actionOverflowThreshold: 0),
+          widgetStyle: SBBToastStyle(actionOverflowThreshold: 0),
           child: DefaultToastBody(
             titleText: 'Toast with action always on next line',
             action: SBBToastAction(onTap: () {}, title: 'Short'),

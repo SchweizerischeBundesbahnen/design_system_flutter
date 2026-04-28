@@ -54,7 +54,6 @@ extension SBBCheckboxThemeDataX on SBBCheckboxThemeData {
 }
 
 extension SBBCheckboxThemeDataThemeDataX on ThemeData {
-  SBBCheckboxThemeData? get sbbCheckboxTheme {
-    return extension<SBBCheckboxThemeData>();
-  }
+  /// Access the [SBBCheckboxThemeData] from the current theme.
+  SBBCheckboxThemeData? get sbbCheckboxTheme => extension<SBBCheckboxThemeData>();
 }

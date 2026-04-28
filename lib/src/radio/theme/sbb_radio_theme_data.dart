@@ -54,7 +54,6 @@ extension SBBRadioThemeDataX on SBBRadioThemeData {
 }
 
 extension SBBRadioThemeDataThemeDataX on ThemeData {
-  SBBRadioThemeData? get sbbRadioTheme {
-    return extension<SBBRadioThemeData>();
-  }
+  /// Access the [SBBRadioThemeData] from the current theme.
+  SBBRadioThemeData? get sbbRadioTheme => extension<SBBRadioThemeData>();
 }

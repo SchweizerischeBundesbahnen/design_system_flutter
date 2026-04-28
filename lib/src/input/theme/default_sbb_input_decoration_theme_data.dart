@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
-
-import '../../../sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 // Default gap values
 const double defaultLeadingInputGap = 8.0;
@@ -25,7 +24,7 @@ class DefaultSBBInputDecorationThemeData extends SBBInputDecorationThemeData {
           WidgetState.any: baseStyle.colorScheme.iconColor,
         }),
         inputTrailingGap: defaultInputTrailingGap,
-        errorTextStyle: SBBTextStyles.extraExtraSmallBold,
+        errorTextStyle: baseStyle.textTheme.xxSmallBold,
         errorForegroundColor: WidgetStatePropertyAll(baseStyle.colorScheme.errorColor),
         titleRowErrorGap: defaultTitleRowErrorGap,
         errorBottomPadding: defaultErrorBottomPadding,
@@ -34,7 +33,7 @@ class DefaultSBBInputDecorationThemeData extends SBBInputDecorationThemeData {
           WidgetState.disabled: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
           WidgetState.any: baseStyle.colorScheme.labelColor,
         }),
-        floatingLabelTextStyle: SBBTextStyles.extraExtraSmallLight,
+        floatingLabelTextStyle: baseStyle.textTheme.xxSmallLight,
         floatingLabelInputGap: defaultFloatingLabelInputGap,
         floatingLabelBehavior: .auto,
         placeholderTextStyle: baseStyle.textTheme.defaultTextStyle,

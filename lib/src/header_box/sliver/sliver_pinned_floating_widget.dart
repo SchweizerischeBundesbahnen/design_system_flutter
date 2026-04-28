@@ -274,7 +274,7 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
 
   void onScrollingUpdate(ScrollPosition position) {
     // This is only relevant for snapping.
-    // It lets the widget know how much it can scroll and how much it must extract / contract without scrolling.
+    // It lets the widget know how much it can scroll and how much it must expand / contract without scrolling.
     _maxScrollExtent = position.maxScrollExtent;
 
     final now = DateTime.now();

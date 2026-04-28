@@ -2,10 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/input/decoration/sbb_input_decorator.dart';
 import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_input_decoration_theme_data.dart';
-
-import '../../sbb_design_system_mobile.dart';
-import 'decoration/sbb_input_decorator.dart';
 
 /// The SBB TextInput.
 ///
@@ -49,7 +48,7 @@ class SBBTextInput extends StatefulWidget {
     this.readOnly = false,
     this.showCursor = true,
     this.autofocus = false,
-    this.obscuringCharacter = "•",
+    this.obscuringCharacter = '•',
     this.obscureText = false,
     this.autocorrect,
     this.enableSuggestions = true,
@@ -404,7 +403,7 @@ class _SBBTextInputState extends State<SBBTextInput>
 
     final effectiveInputTextStyle = _effectiveInputTextStyle(context);
 
-    Widget editableText = EditableText(
+    final editableText = EditableText(
       key: editableTextKey,
       readOnly: widget.readOnly || !widget.enabled,
       showCursor: widget.showCursor,

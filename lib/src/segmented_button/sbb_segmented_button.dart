@@ -1,8 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-
-import '../../sbb_design_system_mobile.dart';
-import '../sbb_internal.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/segmented_button/theme/default_sbb_segmented_button_theme_data.dart';
 
 /// The SBB Segmented Button.
 ///
@@ -83,7 +82,7 @@ class _SBBSegmentedButtonState<T> extends State<SBBSegmentedButton<T>> {
   @override
   Widget build(BuildContext context) {
     return ConstrainedBox(
-      constraints: BoxConstraints.tightFor(height: SBBInternal.defaultSegmentedButtonHeight),
+      constraints: BoxConstraints.tightFor(height: DefaultSBBSegmentedButtonThemeData.defaultButtonHeight),
       child: Stack(
         children: [
           _backgroundLayer(),

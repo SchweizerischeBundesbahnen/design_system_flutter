@@ -25,21 +25,20 @@ void main() {
   generateTest('typography_defaults', [
     // misc
     null, // default text style
-    SBBTextStyles.helpersLabel,
     // light font constants
-    SBBTextStyles.extraExtraLargeLight,
-    SBBTextStyles.extraLargeLight,
+    SBBTextStyles.xxLargeLight,
+    SBBTextStyles.xLargeLight,
     SBBTextStyles.largeLight,
     SBBTextStyles.mediumLight,
     SBBTextStyles.smallLight,
-    SBBTextStyles.extraSmallLight,
+    SBBTextStyles.xSmallLight,
     // bold font constants
-    SBBTextStyles.extraExtraLargeBold,
-    SBBTextStyles.extraLargeBold,
+    SBBTextStyles.xxLargeBold,
+    SBBTextStyles.xLargeBold,
     SBBTextStyles.largeBold,
     SBBTextStyles.mediumBold,
     SBBTextStyles.smallBold,
-    SBBTextStyles.extraSmallBold,
+    SBBTextStyles.xSmallBold,
   ]);
 
   generateTest('typography_ultra_light', [
@@ -149,9 +148,9 @@ void main() {
 }
 
 class TypographyTest extends StatelessWidget {
-  static const exampleText = 'The quick brown fox jumps over the lazy dog';
-
   const TypographyTest({super.key, required this.name, required this.textStyles});
+
+  static const exampleText = 'The quick brown fox jumps over the lazy dog';
 
   final String name;
   final List<TextStyle?> textStyles;

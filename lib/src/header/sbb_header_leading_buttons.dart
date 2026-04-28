@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../../sbb_design_system_mobile.dart';
-import 'sbb_header_style_scope.dart';
-import 'theme/default_sbb_header_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/header/sbb_header_style_scope.dart';
+import 'package:sbb_design_system_mobile/src/header/theme/default_sbb_header_theme_data.dart';
 
 /// An SBB-styled "menu" leading button for use in [SBBHeader].
 ///

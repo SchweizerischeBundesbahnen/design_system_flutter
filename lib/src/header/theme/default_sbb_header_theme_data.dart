@@ -9,9 +9,12 @@ class DefaultSBBHeaderThemeData extends SBBHeaderThemeData {
         style: SBBHeaderStyle(
           backgroundColor: baseStyle.colorScheme.primaryColor,
           foregroundColor: SBBColors.white,
-          titleTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.largeLight, color: SBBColors.white),
+          titleTextStyle: baseStyle.themedTextStyle(textStyle: baseStyle.textTheme.largeLight, color: SBBColors.white),
           centerTitle: true,
-          toolbarTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallLight, color: SBBColors.white),
+          toolbarTextStyle: baseStyle.themedTextStyle(
+            textStyle: baseStyle.textTheme.smallLight,
+            color: SBBColors.white,
+          ),
           clipBehavior: null,
           titleSpacing: null,
           actionsPadding: null,

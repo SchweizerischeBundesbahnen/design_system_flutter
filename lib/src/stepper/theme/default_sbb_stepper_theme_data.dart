@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
-
-import '../../../sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// The default stepper theme is specified using the
 /// * [Figma design specs](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=330-12838)
@@ -34,10 +33,10 @@ class DefaultSBBStepperThemeData extends SBBStepperThemeData {
           WidgetState.any: baseStyle.colorScheme.defaultTextColor,
         }),
         textStyle: WidgetStateProperty.fromMap(<WidgetStatesConstraint, TextStyle?>{
-          WidgetState.selected: baseStyle.themedTextStyle(textStyle: SBBTextStyles.mediumBold),
-          WidgetState.any: baseStyle.themedTextStyle(textStyle: SBBTextStyles.mediumLight),
+          WidgetState.selected: baseStyle.themedTextStyle(textStyle: baseStyle.textTheme.mediumBold),
+          WidgetState.any: baseStyle.themedTextStyle(textStyle: baseStyle.textTheme.mediumLight),
         }),
-        labelTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallLight),
+        labelTextStyle: baseStyle.themedTextStyle(textStyle: baseStyle.textTheme.smallLight),
       ),
     );
   }
@@ -63,10 +62,10 @@ class DefaultSBBStepperThemeData extends SBBStepperThemeData {
           WidgetState.any: SBBColors.white,
         }),
         textStyle: WidgetStateProperty.fromMap(<WidgetStatesConstraint, TextStyle?>{
-          WidgetState.selected: baseStyle.themedTextStyle(textStyle: SBBTextStyles.mediumBold),
-          WidgetState.any: baseStyle.themedTextStyle(textStyle: SBBTextStyles.mediumLight),
+          WidgetState.selected: baseStyle.themedTextStyle(textStyle: baseStyle.textTheme.mediumBold),
+          WidgetState.any: baseStyle.themedTextStyle(textStyle: baseStyle.textTheme.mediumLight),
         }),
-        labelTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallLight, color: SBBColors.white),
+        labelTextStyle: baseStyle.themedTextStyle(textStyle: baseStyle.textTheme.smallLight, color: SBBColors.white),
       ),
     );
   }
