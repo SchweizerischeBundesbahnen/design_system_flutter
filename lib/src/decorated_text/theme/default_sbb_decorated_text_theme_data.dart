@@ -9,9 +9,9 @@ class DefaultSBBDecoratedTextThemeData extends SBBDecoratedTextThemeData {
         style: SBBDecoratedTextStyle(
           valueTextStyle: baseStyle.textTheme.defaultTextStyle,
           valueForegroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
-            WidgetState.disabled: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
-            WidgetState.error: baseStyle.colorScheme.errorColor,
-            WidgetState.any: baseStyle.colorScheme.defaultTextColor,
+            WidgetState.disabled: baseStyle.colorScheme.textSecondary,
+            WidgetState.error: baseStyle.colorScheme.error,
+            WidgetState.any: baseStyle.colorScheme.textPrimary,
           }),
           overlayColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.any: baseStyle.themeValue(SBBColors.platinum, SBBColors.midnight),

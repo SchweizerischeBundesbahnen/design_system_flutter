@@ -204,17 +204,17 @@ class _SBBSwitchState extends State<SBBSwitch> with TickerProviderStateMixin, To
     final activeStates = {...states, WidgetState.selected};
     final inactiveStates = Set<WidgetState>.from(states)..remove(WidgetState.selected);
 
-    final activeTrackColor = effectiveStyle.trackColor!.resolve(activeStates) ?? colorScheme.primaryColor;
+    final activeTrackColor = effectiveStyle.trackColor!.resolve(activeStates) ?? colorScheme.primary;
     final inactiveTrackColor = effectiveStyle.trackColor!.resolve(inactiveStates) ?? SBBColors.granite;
 
     final activeKnobBackgroundColor = effectiveStyle.knobBackgroundColor!.resolve(activeStates) ?? SBBColors.white;
     final inactiveKnobBackgroundColor = effectiveStyle.knobBackgroundColor!.resolve(inactiveStates) ?? SBBColors.white;
 
-    final activeKnobBorderColor = effectiveStyle.knobBorderColor!.resolve(activeStates) ?? colorScheme.primaryColor;
+    final activeKnobBorderColor = effectiveStyle.knobBorderColor!.resolve(activeStates) ?? colorScheme.primary;
     final inactiveKnobBorderColor = effectiveStyle.knobBorderColor!.resolve(inactiveStates) ?? SBBColors.granite;
 
     final activeKnobForegroundColor =
-        effectiveStyle.knobForegroundColor!.resolve(activeStates) ?? colorScheme.primaryColor;
+        effectiveStyle.knobForegroundColor!.resolve(activeStates) ?? colorScheme.primary;
     final inactiveKnobForegroundColor = effectiveStyle.knobForegroundColor!.resolve(inactiveStates) ?? SBBColors.white;
 
     final effectiveMargin = effectiveStyle.tapTargetPadding!;

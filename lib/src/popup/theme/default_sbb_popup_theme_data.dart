@@ -7,7 +7,7 @@ class DefaultSBBPopupThemeData extends SBBPopupThemeData {
     : super(
         style: SBBPopupStyle(
           titleTextStyle: baseStyle.themedTextStyle(textStyle: baseStyle.textTheme.largeLight),
-          titleForegroundColor: baseStyle.colorScheme.defaultTextColor,
+          titleForegroundColor: baseStyle.colorScheme.textPrimary,
           backgroundColor: baseStyle.themeValue(SBBColors.milk, SBBColors.midnight),
           clipBehavior: .hardEdge,
           constraints: BoxConstraints(maxWidth: 640.0),

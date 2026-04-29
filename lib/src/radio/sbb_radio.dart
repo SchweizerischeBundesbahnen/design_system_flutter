@@ -230,7 +230,7 @@ class _SBBRadioPaintState extends State<_SBBRadioPaint> {
 
     final effectiveSize = widget.padding.inflateSize(const Size.square(SBBRadioStyle.radioRadius * 2));
 
-    final primaryColor = Theme.of(context).sbbBaseStyle.colorScheme.primaryColor;
+    final primaryColor = Theme.of(context).sbbBaseStyle.colorScheme.primary;
     return CustomPaint(
       size: effectiveSize,
       painter: _painter

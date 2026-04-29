@@ -18,19 +18,19 @@ class DefaultSBBListItemThemeData extends SBBListItemThemeData {
             WidgetState.any: baseStyle.themedTextStyle(textStyle: baseStyle.textTheme.smallLight),
           }),
           titleForegroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
-            WidgetState.disabled: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
-            WidgetState.any: baseStyle.colorScheme.defaultTextColor,
+            WidgetState.disabled: baseStyle.colorScheme.textSecondary,
+            WidgetState.any: baseStyle.colorScheme.textPrimary,
           }),
           subtitleForegroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
-            WidgetState.any: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
+            WidgetState.any: baseStyle.colorScheme.textSecondary,
           }),
           leadingForegroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
-            WidgetState.disabled: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
-            WidgetState.any: baseStyle.colorScheme.iconColor,
+            WidgetState.disabled: baseStyle.colorScheme.iconSecondary,
+            WidgetState.any: baseStyle.colorScheme.iconPrimary,
           }),
           trailingForegroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
-            WidgetState.disabled: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
-            WidgetState.any: baseStyle.colorScheme.iconColor,
+            WidgetState.disabled: baseStyle.colorScheme.iconSecondary,
+            WidgetState.any: baseStyle.colorScheme.iconPrimary,
           }),
           overlayColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.any: baseStyle.themeValue(SBBColors.platinum, SBBColors.midnight),

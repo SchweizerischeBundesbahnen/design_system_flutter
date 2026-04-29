@@ -8,21 +8,21 @@ class DefaultSBBSwitchThemeData extends SBBSwitchThemeData {
     : super(
         style: SBBSwitchStyle(
           trackColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
-            WidgetState.selected & WidgetState.disabled: baseStyle.colorScheme.primaryColor.withValues(alpha: 0.4),
-            WidgetState.selected: baseStyle.colorScheme.primaryColor,
+            WidgetState.selected & WidgetState.disabled: baseStyle.colorScheme.primary.withValues(alpha: 0.4),
+            WidgetState.selected: baseStyle.colorScheme.primary,
             WidgetState.disabled: baseStyle.themeValue(SBBColors.graphite, SBBColors.granite).withValues(alpha: 0.5),
             WidgetState.any: baseStyle.themeValue(SBBColors.graphite, SBBColors.granite),
           }),
           knobBackgroundColor: WidgetStateProperty.all(SBBColors.white),
           knobBorderColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
-            WidgetState.selected & WidgetState.disabled: baseStyle.colorScheme.primaryColor.withValues(alpha: 0.4),
-            WidgetState.selected: baseStyle.colorScheme.primaryColor,
+            WidgetState.selected & WidgetState.disabled: baseStyle.colorScheme.primary.withValues(alpha: 0.4),
+            WidgetState.selected: baseStyle.colorScheme.primary,
             WidgetState.disabled: baseStyle.themeValue(SBBColors.graphite, SBBColors.granite).withValues(alpha: 0.5),
             WidgetState.any: baseStyle.themeValue(SBBColors.graphite, SBBColors.granite),
           }),
           knobForegroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
-            WidgetState.selected & WidgetState.disabled: baseStyle.colorScheme.primaryColor.withValues(alpha: 0.4),
-            WidgetState.selected: baseStyle.colorScheme.primaryColor,
+            WidgetState.selected & WidgetState.disabled: baseStyle.colorScheme.primary.withValues(alpha: 0.4),
+            WidgetState.selected: baseStyle.colorScheme.primary,
             WidgetState.any: SBBColors.white,
           }),
           tapTargetPadding: EdgeInsets.symmetric(vertical: SBBSpacing.xxSmall),

@@ -7,11 +7,11 @@ class DefaultSBBBottomSheetThemeData extends SBBBottomSheetThemeData {
     : super(
         style: SBBBottomSheetStyle(
           titleTextStyle: baseStyle.themedTextStyle(textStyle: baseStyle.textTheme.largeLight),
-          titleForegroundColor: baseStyle.colorScheme.defaultTextColor,
+          titleForegroundColor: baseStyle.colorScheme.textPrimary,
           leadingTextStyle: baseStyle.textTheme.defaultTextStyle,
-          leadingForegroundColor: baseStyle.colorScheme.iconColor,
+          leadingForegroundColor: baseStyle.colorScheme.iconPrimary,
           trailingTextStyle: baseStyle.textTheme.defaultTextStyle,
-          trailingForegroundColor: baseStyle.colorScheme.iconColor,
+          trailingForegroundColor: baseStyle.colorScheme.iconPrimary,
           backgroundColor: baseStyle.themeValue(SBBColors.milk, SBBColors.midnight),
           clipBehavior: .hardEdge,
           constraints: null,

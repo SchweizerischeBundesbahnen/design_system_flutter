@@ -24,11 +24,15 @@ V5 introduces a lot of breaking changes to allow for a more flexible and modern 
 ### SBBColorScheme
 SBBColorScheme is introduced to define the base color scheme and is used by SBBBaseStyle.
 
-* moved colors from `SBBBaseStyle` to `SBBColorScheme`
-* added primary color variants `primary85Color`, `primary125Color`, `primary150Color`
-* added `selectionColor` which is used for `TextSelectionThemeData`
-* added `brandColor`
-
+* moved colors from `SBBBaseStyle` to `SBBColorScheme` without suffix color.
+* added primary color variants `primary85`, `primary125`, `primary150`
+* added `selection` which is used for `TextSelectionThemeData`
+* added `brand`, `strokePrimary`, `strokeSecondary`, `iconSecondary`, `backgroundContent`
+* renamed `backgroundColor` to `backgroundBase`
+* renamed `labelColor` to `textSecondary`
+* renamed `textDefaultColor` to `textPrimary`
+* renamed `iconColor` to `iconPrimary`
+* renamed `dividerColor` to `strokeSeparator`
 
 ## BottomSheet (previously Modal) 
 

@@ -11,7 +11,7 @@ class DefaultSBBContentBoxThemeData extends SBBContentBoxThemeData {
         style: SBBContentBoxStyle(
           margin: .zero,
           padding: .zero,
-          color: baseStyle.themeValue(SBBColors.white, SBBColors.charcoal),
+          color: baseStyle.colorScheme.backgroundContent,
           clipBehavior: .hardEdge,
           isSemanticContainer: true,
         ),

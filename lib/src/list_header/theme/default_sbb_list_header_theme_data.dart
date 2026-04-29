@@ -6,7 +6,7 @@ class DefaultSBBListHeaderThemeData extends SBBListHeaderThemeData {
   DefaultSBBListHeaderThemeData(SBBBaseStyle baseStyle)
     : super(
         style: SBBListHeaderStyle(
-          foregroundColor: baseStyle.colorScheme.defaultTextColor,
+          foregroundColor: baseStyle.colorScheme.textPrimary,
           textStyle: baseStyle.themedTextStyle(textStyle: baseStyle.textTheme.smallLight),
           maxLines: null,
           textOverflow: .ellipsis,
