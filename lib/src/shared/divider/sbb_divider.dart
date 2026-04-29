@@ -6,7 +6,7 @@ import 'package:sbb_design_system_mobile/src/shared/divider/divider_painter.dart
 /// A one-pixel divider line using the SBB design system styling.
 ///
 /// See also:
-///  * [SBBListItem.divideListItems], for automatically adding dividers between list items.
+///  * [SBBDivider.divideItems], for automatically adding dividers between list items.
 class SBBDivider extends StatelessWidget {
   const SBBDivider({super.key, this.color});
 
@@ -14,6 +14,37 @@ class SBBDivider extends StatelessWidget {
   ///
   /// If null, defaults to [ThemeData.dividerTheme.color].
   final Color? color;
+
+  /// Add a one pixel border in between each item. If color isn't specified the
+  /// [ThemeData.dividerColor] of the context's [Theme] is used, which defaults to
+  /// [SBBBaseStyle.dividerColor].
+  static List<Widget> divideItems({
+    BuildContext? context,
+    required Iterable<Widget> items,
+    Color? color,
+  }) {
+    assert(color != null || context != null);
+    items = items.toList();
+
+    if (items.isEmpty || items.length == 1) {
+      return items.toList();
+    }
+
+    final resolvedColor = color ?? Theme.of(context!).dividerColor;
+
+    Widget wrapListItem(Widget link) {
+      return CustomPaint(
+        foregroundPainter: DividerPainter(
+          paintAtTop: false,
+          color: resolvedColor,
+          indent: 0.0,
+        ),
+        child: link,
+      );
+    }
+
+    return <Widget>[...items.take(items.length - 1).map(wrapListItem), items.last];
+  }
 
   @override
   Widget build(BuildContext context) {

@@ -18,7 +18,7 @@ class _BottomSheetPageState extends State<BottomSheetPage> {
     return DemoPageScaffold(
       componentConfig: Column(
         children: [
-          ...SBBListItem.divideListItems(
+          ...SBBDivider.divideItems(
             context: context,
             items: [
               SBBCheckboxListItem(

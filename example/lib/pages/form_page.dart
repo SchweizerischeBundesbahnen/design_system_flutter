@@ -52,7 +52,7 @@ class _FormPageState extends State<FormPage> {
                 alignment: .topCenter,
                 child: SBBContentBox(
                   child: Column(
-                    children: SBBListItem.divideListItems(
+                    children: SBBDivider.divideItems(
                       context: context,
                       items: [
                         SBBTextInputFormField(

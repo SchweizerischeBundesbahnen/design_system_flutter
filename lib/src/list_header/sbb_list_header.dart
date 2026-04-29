@@ -10,7 +10,7 @@ import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 /// See also:
 ///
 /// * [SBBListItem]: generic item to be used within the list
-/// * [SBBListItem.divideListItems]: to separate items in a list with the SBB specific divider
+/// * [SBBDivider.divideItems]: to separate items in a list with the SBB specific divider
 /// * [digital.sbb.ch/listView](https://digital.sbb.ch/de/design-system/mobile/components/list-view/)
 class SBBListHeader extends StatelessWidget {
   /// Creates an SBB List Header.

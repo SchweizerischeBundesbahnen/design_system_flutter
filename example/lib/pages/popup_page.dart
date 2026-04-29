@@ -19,7 +19,7 @@ class _PopupPageState extends State<PopupPage> {
       componentConfig: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          ...SBBListItem.divideListItems(
+          ...SBBDivider.divideItems(
             context: context,
             items: [
               SBBCheckboxListItem(

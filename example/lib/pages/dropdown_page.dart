@@ -51,7 +51,7 @@ class _DropdownPageState extends State<DropdownPage> {
     final inputLabelColor = Theme.of(context).sbbInputDecorationTheme.labelForegroundColor;
     return Column(
       mainAxisSize: .min,
-      children: SBBListItem.divideListItems(
+      children: SBBDivider.divideItems(
         context: context,
         items: [
           Padding(
@@ -130,7 +130,7 @@ class _DropdownPageState extends State<DropdownPage> {
   SBBContentBox _singleChoices(BuildContext context) {
     return SBBContentBox(
       child: Column(
-        children: SBBListItem.divideListItems(
+        children: SBBDivider.divideItems(
           context: context,
           items: [
             SBBDropdown<int>(
@@ -182,7 +182,7 @@ class _DropdownPageState extends State<DropdownPage> {
   Widget _multipleChoices(BuildContext context) {
     return SBBContentBox(
       child: Column(
-        children: SBBListItem.divideListItems(
+        children: SBBDivider.divideItems(
           context: context,
           items: [
             SBBMultiDropdown<int>(

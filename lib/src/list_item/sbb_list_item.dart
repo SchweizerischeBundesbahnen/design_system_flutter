@@ -27,7 +27,7 @@ import 'package:sbb_design_system_mobile/src/shared/divider/divider_painter.dart
 ///
 /// The list item is disabled when both [onTap] and [onLongPress] are null or [enabled] is false.
 ///
-/// Use [SBBListItem.divideListItems] to automatically add dividers between multiple list items.
+/// Use [SBBDivider.divideItems] to automatically add dividers between multiple list items.
 ///
 ///
 /// ## Sample code
@@ -44,7 +44,7 @@ import 'package:sbb_design_system_mobile/src/shared/divider/divider_painter.dart
 ///
 /// ```dart
 /// Column(
-///   children: SBBListItem.divideListItems(
+///   children: SBBDivider.divideItems(
 ///     context: context,
 ///     items: [
 ///       SBBListItem(
@@ -286,33 +286,14 @@ class SBBListItem extends StatefulWidget {
   ///
   /// See also [SBBDivider] for using the same underlying widget
   /// in indexed builder methods (e.g. [ListView.separated]).
+  ///
+  /// Consider using [SBBDivider.divideItems] instead of this.
+  @Deprecated('Use SBBDivider.divideItems instead of this method.')
   static List<Widget> divideListItems({
     BuildContext? context,
     required Iterable<Widget> items,
     Color? color,
-  }) {
-    assert(color != null || context != null);
-    items = items.toList();
-
-    if (items.isEmpty || items.length == 1) {
-      return items.toList();
-    }
-
-    final resolvedColor = color ?? Theme.of(context!).dividerColor;
-
-    Widget wrapListItem(Widget link) {
-      return CustomPaint(
-        foregroundPainter: DividerPainter(
-          paintAtTop: false,
-          color: resolvedColor,
-          indent: 0.0,
-        ),
-        child: link,
-      );
-    }
-
-    return <Widget>[...items.take(items.length - 1).map(wrapListItem), items.last];
-  }
+  }) => SBBDivider.divideItems(items: items, context: context, color: color);
 
   @override
   State<SBBListItem> createState() => _SBBListItemState();
