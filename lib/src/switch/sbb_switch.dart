@@ -196,13 +196,17 @@ class _SBBSwitchState extends State<SBBSwitch> with TickerProviderStateMixin, To
       animateToValue();
     }
 
-    final colorScheme = Theme.of(context).sbbBaseStyle.colorScheme;
+    final colorScheme = Theme
+        .of(context)
+        .sbbBaseStyle
+        .colorScheme;
     final SBBSwitchStyle effectiveStyle = _getEffectiveStyle(context);
 
     // Colors need to be resolved in selected and non selected states separately
     // so that they can be lerped between.
     final activeStates = {...states, WidgetState.selected};
-    final inactiveStates = Set<WidgetState>.from(states)..remove(WidgetState.selected);
+    final inactiveStates = Set<WidgetState>.from(states)
+      ..remove(WidgetState.selected);
 
     final activeTrackColor = effectiveStyle.trackColor!.resolve(activeStates) ?? colorScheme.primary;
     final inactiveTrackColor = effectiveStyle.trackColor!.resolve(inactiveStates) ?? SBBColors.granite;
@@ -254,7 +258,10 @@ class _SBBSwitchState extends State<SBBSwitch> with TickerProviderStateMixin, To
   }
 
   SBBSwitchStyle _getEffectiveStyle(BuildContext context) {
-    final SBBSwitchStyle themeStyle = Theme.of(context).sbbSwitchTheme.style!;
+    final SBBSwitchStyle themeStyle = Theme
+        .of(context)
+        .sbbSwitchTheme
+        .style!;
     return themeStyle.merge(widget.style);
   }
 
@@ -349,11 +356,12 @@ class _SBBSwitchPainter extends ToggleablePainter {
     notifyListeners();
   }
 
-  Color get currentKnobBackgroundColor => Color.lerp(
-    inactiveKnobBackgroundColor,
-    activeKnobBackgroundColor,
-    _colorAnimation!.value,
-  )!;
+  Color get currentKnobBackgroundColor =>
+      Color.lerp(
+        inactiveKnobBackgroundColor,
+        activeKnobBackgroundColor,
+        _colorAnimation!.value,
+      )!;
 
   Color get currentTrackColor => Color.lerp(inactiveColor, activeColor, _colorAnimation!.value)!;
 
@@ -376,25 +384,26 @@ class _SBBSwitchPainter extends ToggleablePainter {
       height: SBBSwitchStyle.trackHeight,
     );
     final trackRRect = RRect.fromRectAndRadius(trackRect, .circular(trackRect.shortestSide / 2));
-    final trackPaint = Paint()..color = currentTrackColor;
+    final trackPaint = Paint()
+      ..color = currentTrackColor;
     canvas.drawRRect(trackRRect, trackPaint);
 
     // Calculate knob position and size
     final currentKnobExtensions = SBBSwitchStyle.knobPressedExtension * currentReactionValue;
     final knobLeft =
         trackRRect.left +
-        lerpDouble(
-          SBBSwitchStyle.trackInnerStart - SBBSwitchStyle.knobRadius,
-          SBBSwitchStyle.trackInnerEnd - SBBSwitchStyle.knobRadius - currentKnobExtensions,
-          currentValue,
-        )!;
+            lerpDouble(
+              SBBSwitchStyle.trackInnerStart - SBBSwitchStyle.knobRadius,
+              SBBSwitchStyle.trackInnerEnd - SBBSwitchStyle.knobRadius - currentKnobExtensions,
+              currentValue,
+            )!;
     final knobRight =
         trackRRect.left +
-        lerpDouble(
-          SBBSwitchStyle.trackInnerStart + SBBSwitchStyle.knobRadius + currentKnobExtensions,
-          SBBSwitchStyle.trackInnerEnd + SBBSwitchStyle.knobRadius,
-          currentValue,
-        )!;
+            lerpDouble(
+              SBBSwitchStyle.trackInnerStart + SBBSwitchStyle.knobRadius + currentKnobExtensions,
+              SBBSwitchStyle.trackInnerEnd + SBBSwitchStyle.knobRadius,
+              currentValue,
+            )!;
     final knobTop = trackRRect.center.dy - SBBSwitchStyle.knobRadius;
     final knobBottom = trackRRect.center.dy + SBBSwitchStyle.knobRadius;
 
@@ -403,7 +412,7 @@ class _SBBSwitchPainter extends ToggleablePainter {
       knobTop,
       knobRight,
       knobBottom,
-      .circular(SBBSwitchStyle.knobRadius),
+          .circular(SBBSwitchStyle.knobRadius),
     );
 
     // Draw shadows
@@ -414,7 +423,8 @@ class _SBBSwitchPainter extends ToggleablePainter {
     }
 
     // Draw thumb background
-    final thumbPaint = Paint()..color = currentKnobBackgroundColor;
+    final thumbPaint = Paint()
+      ..color = currentKnobBackgroundColor;
     canvas.drawRRect(thumbRRect, thumbPaint);
 
     // Draw thumb border
