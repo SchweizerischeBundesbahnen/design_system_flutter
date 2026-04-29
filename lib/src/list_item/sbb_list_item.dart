@@ -288,6 +288,7 @@ class SBBListItem extends StatefulWidget {
   /// in indexed builder methods (e.g. [ListView.separated]).
   ///
   /// Consider using [SBBDivider.divideItems] instead of this.
+  @Deprecated('Use SBBDivider.divideItems instead of this method.')
   static List<Widget> divideListItems({
     BuildContext? context,
     required Iterable<Widget> items,
