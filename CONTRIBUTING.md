@@ -21,7 +21,7 @@ Use the issue tracker to find ways to contribute. Find a bug or a feature, menti
 
 Generally speaking, you should *fork* this repository, make changes in your own fork, and then submit a pull request. Refer to the official git documentation on [Contributing to a Project] for details.
 
-### Expectations from a pull request
+### Expectations for a pull request
 
 All new code should have associated unit tests ([Golden Tests] for UI elements) that validate implemented features and the presence or lack of defects. Take a look at existing golden tests (e.g. [sbb_chip_test.dart](test/sbb_chip_test.dart)) as reference.
 
