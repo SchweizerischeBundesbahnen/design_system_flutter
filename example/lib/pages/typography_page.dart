@@ -58,7 +58,7 @@ class _TypographyShowcase extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final labelColor = Theme.of(context).sbbBaseStyle.colorScheme.labelColor;
+    final labelColor = Theme.of(context).sbbBaseStyle.colorScheme.textSecondary;
     return Column(
       crossAxisAlignment: .start,
       children: [

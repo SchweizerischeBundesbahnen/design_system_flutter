@@ -73,7 +73,7 @@ class _ColorShowcaseCard extends StatelessWidget {
     final hexString = valueString.substring(2);
     final opacityString = valueString.substring(0, 2);
     const colorValueTextStyle = SBBTextStyles.xxSmallLight;
-    final colorValueSecondaryTextStyle = SBBTextStyles.xxSmallLight.copyWith(color: colorScheme.labelColor);
+    final colorValueSecondaryTextStyle = SBBTextStyles.xxSmallLight.copyWith(color: colorScheme.textSecondary);
     return SBBContentBox(
       margin: const .all(SBBSpacing.xSmall),
       child: Column(

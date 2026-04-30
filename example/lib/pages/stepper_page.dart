@@ -37,7 +37,7 @@ class _StepperPageState extends State<StepperPage> {
 
   Widget _filledSteppers(BuildContext context) {
     return SBBContentBox(
-      color: Theme.of(context).sbbBaseStyle.colorScheme.primaryColor,
+      color: Theme.of(context).sbbBaseStyle.colorScheme.primary,
       padding: const .symmetric(vertical: SBBSpacing.medium),
       child: Column(
         spacing: SBBSpacing.medium,

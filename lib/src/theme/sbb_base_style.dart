@@ -38,12 +38,12 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
       brightness: brightness,
       colorScheme: colorScheme,
       textTheme: SBBTextTheme.$default(colorScheme: colorScheme),
-      dividerTheme: DividerThemeData(thickness: 1.0, space: 0.0, color: colorScheme.dividerColor),
-      iconTheme: IconThemeData(color: colorScheme.iconColor, size: sbbIconSizeSmall),
+      dividerTheme: DividerThemeData(thickness: 1.0, space: 0.0, color: colorScheme.strokeSeparator),
+      iconTheme: IconThemeData(color: colorScheme.iconPrimary, size: sbbIconSizeSmall),
       textSelectionTheme: TextSelectionThemeData(
-        cursorColor: colorScheme.selectionColor,
-        selectionColor: colorScheme.selectionColor?.withValues(alpha: 0.5),
-        selectionHandleColor: colorScheme.selectionColor,
+        cursorColor: colorScheme.selection,
+        selectionColor: colorScheme.selection?.withValues(alpha: 0.5),
+        selectionHandleColor: colorScheme.selection,
       ),
     );
   }
@@ -74,7 +74,7 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
   TextStyle themedTextStyle({TextStyle? textStyle, Color? color, String? fontFamily}) =>
       (textStyle ?? textTheme.defaultTextStyle)!.copyWith(
         fontFamily: fontFamily ?? textStyle?.fontFamily ?? sbbFont,
-        color: color ?? colorScheme.defaultTextColor,
+        color: color ?? colorScheme.textPrimary,
       );
 
   @override

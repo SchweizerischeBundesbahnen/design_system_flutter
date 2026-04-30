@@ -18,21 +18,21 @@ class DefaultSBBPrimaryButtonThemeData extends SBBPrimaryButtonThemeData {
         style: SBBButtonStyle(
           textStyle: baseStyle.textTheme.defaultTextStyle,
           backgroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
-            WidgetState.focused | WidgetState.pressed: baseStyle.colorScheme.primaryColor,
+            WidgetState.focused | WidgetState.pressed: baseStyle.colorScheme.primary,
             WidgetState.disabled: baseStyle.themeValue(SBBColors.cement, SBBColors.iron),
-            WidgetState.any: baseStyle.colorScheme.primaryColor,
+            WidgetState.any: baseStyle.colorScheme.primary,
           }),
           foregroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.any: SBBColors.white,
           }),
           overlayColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
-            WidgetState.focused | WidgetState.pressed: baseStyle.colorScheme.primary125Color,
-            WidgetState.any: baseStyle.colorScheme.primaryColor,
+            WidgetState.focused | WidgetState.pressed: baseStyle.colorScheme.primary125,
+            WidgetState.any: baseStyle.colorScheme.primary,
           }),
           borderColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
-            WidgetState.focused | WidgetState.pressed: baseStyle.colorScheme.primary125Color,
+            WidgetState.focused | WidgetState.pressed: baseStyle.colorScheme.primary125,
             WidgetState.disabled: baseStyle.themeValue(SBBColors.cement, SBBColors.iron),
-            WidgetState.any: baseStyle.colorScheme.primaryColor,
+            WidgetState.any: baseStyle.colorScheme.primary,
           }),
         ),
       );
@@ -50,11 +50,11 @@ class DefaultSBBSecondaryButtonThemeData extends SBBSecondaryButtonThemeData {
           }),
           foregroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.focused | WidgetState.pressed: baseStyle.themeValue(
-              baseStyle.colorScheme.primary125Color,
+              baseStyle.colorScheme.primary125,
               SBBColors.white,
             ),
             WidgetState.disabled: baseStyle.themeValue(SBBColors.graphite, SBBColors.smoke),
-            WidgetState.any: baseStyle.themeValue(baseStyle.colorScheme.primaryColor, SBBColors.white),
+            WidgetState.any: baseStyle.themeValue(baseStyle.colorScheme.primary, SBBColors.white),
           }),
           overlayColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.focused | WidgetState.pressed: baseStyle.themeValue(SBBColors.graphite, SBBColors.black),
@@ -62,7 +62,7 @@ class DefaultSBBSecondaryButtonThemeData extends SBBSecondaryButtonThemeData {
           }),
           borderColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.disabled: baseStyle.themeValue(SBBColors.graphite, SBBColors.smoke),
-            WidgetState.any: baseStyle.themeValue(baseStyle.colorScheme.primaryColor, SBBColors.smoke),
+            WidgetState.any: baseStyle.themeValue(baseStyle.colorScheme.primary, SBBColors.smoke),
           }),
         ),
       );
@@ -76,11 +76,11 @@ class DefaultSBBTertiaryButtonThemeData extends SBBTertiaryButtonThemeData {
           backgroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.focused | WidgetState.pressed: baseStyle.themeValue(SBBColors.graphite, SBBColors.black),
             WidgetState.disabled: SBBColors.transparent,
-            WidgetState.any: baseStyle.themeValue(SBBColors.white, SBBColors.charcoal),
+            WidgetState.any: baseStyle.colorScheme.backgroundContent,
           }),
           foregroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.disabled: baseStyle.themeValue(SBBColors.graphite, SBBColors.smoke),
-            WidgetState.any: baseStyle.colorScheme.defaultTextColor,
+            WidgetState.any: baseStyle.colorScheme.textPrimary,
           }),
           overlayColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.focused | WidgetState.pressed: baseStyle.themeValue(SBBColors.graphite, SBBColors.black),
@@ -88,7 +88,7 @@ class DefaultSBBTertiaryButtonThemeData extends SBBTertiaryButtonThemeData {
           }),
           iconColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.disabled: baseStyle.themeValue(SBBColors.graphite, SBBColors.smoke),
-            WidgetState.any: baseStyle.colorScheme.iconColor,
+            WidgetState.any: baseStyle.colorScheme.iconPrimary,
           }),
           borderColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.disabled: baseStyle.themeValue(SBBColors.cloud, SBBColors.iron),

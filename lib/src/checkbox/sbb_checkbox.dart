@@ -199,8 +199,8 @@ class _SBBCheckboxState extends State<SBBCheckbox> with TickerProviderStateMixin
 
     final activeFillColor = fillProp.resolve(activeStates) ?? fallbackFillColor;
     final inactiveFillColor = fillProp.resolve(inactiveStates) ?? fallbackFillColor;
-    final activeCheckColor = checkProp.resolve(activeStates) ?? sbbColorScheme.primaryColor;
-    final inactiveCheckColor = checkProp.resolve(inactiveStates) ?? sbbColorScheme.primaryColor;
+    final activeCheckColor = checkProp.resolve(activeStates) ?? sbbColorScheme.primary;
+    final inactiveCheckColor = checkProp.resolve(inactiveStates) ?? sbbColorScheme.primary;
     final activeBorderColor = borderProp.resolve(activeStates) ?? fallBackBorderColor;
     final inactiveBorderColor = borderProp.resolve(inactiveStates) ?? fallBackBorderColor;
 

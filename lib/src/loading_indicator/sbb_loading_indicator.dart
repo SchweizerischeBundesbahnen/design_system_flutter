@@ -92,7 +92,7 @@ class SBBLoadingIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     assert(debugCheckHasSBBBaseStyle(context));
 
-    final primaryColor = Theme.of(context).sbbBaseStyle.colorScheme.primaryColor;
+    final primaryColor = Theme.of(context).sbbBaseStyle.colorScheme.primary;
     return Padding(
       padding: .only(top: padding, bottom: padding),
       child: Transform(

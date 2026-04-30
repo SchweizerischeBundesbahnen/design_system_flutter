@@ -13,18 +13,22 @@ import 'package:sbb_design_system_mobile/src/theme/theme.dart';
 /// * [SBBTheme], the SBB base theme
 class SBBColorScheme {
   SBBColorScheme({
-    required this.primaryColor,
-    this.primary85Color,
-    this.primary125Color,
-    this.primary150Color,
-    this.brandColor,
-    this.backgroundColor,
-    this.errorColor,
-    this.iconColor,
-    this.defaultTextColor,
-    this.dividerColor,
-    this.selectionColor,
-    this.labelColor,
+    required this.primary,
+    this.primary85,
+    this.primary125,
+    this.primary150,
+    this.backgroundBase,
+    this.backgroundContent,
+    this.error,
+    this.iconPrimary,
+    this.iconSecondary,
+    this.textPrimary,
+    this.textSecondary,
+    this.strokePrimary,
+    this.strokeSecondary,
+    this.strokeSeparator,
+    this.selection,
+    this.brand,
   });
 
   factory SBBColorScheme.$default({required Brightness brightness}) =>
@@ -32,158 +36,190 @@ class SBBColorScheme {
 
   /// Create a light ColorScheme based on the SBB theme context colors.
   factory SBBColorScheme.sbb() => SBBColorScheme(
-    primaryColor: SBBColors.red,
-    primary85Color: SBBColors.red85,
-    primary125Color: SBBColors.red125,
-    primary150Color: SBBColors.red150,
-    brandColor: SBBColors.red,
-    backgroundColor: SBBColors.milk,
-    errorColor: SBBColors.error,
-    iconColor: SBBColors.black,
-    defaultTextColor: SBBColors.black,
-    dividerColor: SBBColors.cloud,
-    selectionColor: SBBColors.sky,
-    labelColor: SBBColors.granite,
+    primary: SBBColors.red,
+    primary85: SBBColors.red85,
+    primary125: SBBColors.red125,
+    primary150: SBBColors.red150,
+    brand: SBBColors.red,
+    backgroundBase: SBBColors.milk,
+    backgroundContent: SBBColors.white,
+    error: SBBColors.error,
+    iconPrimary: SBBColors.black,
+    iconSecondary: SBBColors.granite,
+    textPrimary: SBBColors.black,
+    textSecondary: SBBColors.granite,
+    strokePrimary: SBBColors.black,
+    strokeSecondary: SBBColors.granite,
+    strokeSeparator: SBBColors.cloud,
+    selection: SBBColors.sky,
   );
 
   /// Create a dark ColorScheme based on the SBB theme context colors.
   factory SBBColorScheme.sbbDark() => SBBColorScheme.sbb().copyWith(
-    backgroundColor: SBBColors.black,
-    errorColor: SBBColors.errorDark,
-    iconColor: SBBColors.white,
-    defaultTextColor: SBBColors.white,
-    dividerColor: SBBColors.iron,
-    selectionColor: SBBColors.skyDark,
-    labelColor: SBBColors.graphite,
+    backgroundBase: SBBColors.black,
+    backgroundContent: SBBColors.charcoal,
+    error: SBBColors.errorDark,
+    iconPrimary: SBBColors.white,
+    iconSecondary: SBBColors.graphite,
+    textPrimary: SBBColors.white,
+    textSecondary: SBBColors.graphite,
+    strokePrimary: SBBColors.white,
+    strokeSecondary: SBBColors.graphite,
+    strokeSeparator: SBBColors.iron,
+    selection: SBBColors.skyDark,
   );
 
   /// Create a light ColorScheme based on the off-brand theme context colors.
   factory SBBColorScheme.offBrand() => SBBColorScheme.$default(brightness: .light).copyWith(
-    primaryColor: SBBColors.royal,
-    primary85Color: SBBColors.royal85,
-    primary125Color: SBBColors.royal125,
-    primary150Color: SBBColors.royal150,
+    primary: SBBColors.royal,
+    primary85: SBBColors.royal85,
+    primary125: SBBColors.royal125,
+    primary150: SBBColors.royal150,
   );
 
   /// Create a dark ColorScheme based on the off-brand theme context colors.
   factory SBBColorScheme.offBrandDark() => SBBColorScheme.$default(brightness: .dark).copyWith(
-    primaryColor: SBBColors.royalDark,
-    primary85Color: SBBColors.royal85Dark,
-    primary125Color: SBBColors.royal125Dark,
-    primary150Color: SBBColors.royal150Dark,
+    primary: SBBColors.royalDark,
+    primary85: SBBColors.royal85Dark,
+    primary125: SBBColors.royal125Dark,
+    primary150: SBBColors.royal150Dark,
   );
 
   /// Create a light ColorScheme based on the safety theme context colors.
   factory SBBColorScheme.safety() => SBBColorScheme.$default(brightness: .light).copyWith(
-    primaryColor: SBBColors.royal,
-    primary85Color: SBBColors.royal85,
-    primary125Color: SBBColors.royal125,
-    primary150Color: SBBColors.royal150,
-    brandColor: SBBColors.metal,
+    primary: SBBColors.royal,
+    primary85: SBBColors.royal85,
+    primary125: SBBColors.royal125,
+    primary150: SBBColors.royal150,
+    brand: SBBColors.metal,
   );
 
   /// Create a dark ColorScheme based on the safety theme context colors.
   factory SBBColorScheme.safetyDark() => SBBColorScheme.$default(brightness: .dark).copyWith(
-    primaryColor: SBBColors.royalDark,
-    primary85Color: SBBColors.royal85Dark,
-    primary125Color: SBBColors.royal125Dark,
-    primary150Color: SBBColors.royal150Dark,
-    brandColor: SBBColors.metal,
+    primary: SBBColors.royalDark,
+    primary85: SBBColors.royal85Dark,
+    primary125: SBBColors.royal125Dark,
+    primary150: SBBColors.royal150Dark,
+    brand: SBBColors.metal,
   );
 
   /// Required primary color.
-  final Color primaryColor;
+  final Color primary;
 
   /// A lighter/soft variant of the primary color (85%).
-  final Color? primary85Color;
+  final Color? primary85;
 
   /// A stronger variant of the primary color (125%).
-  final Color? primary125Color;
+  final Color? primary125;
 
   /// A stronger variant of the primary color (150%).
-  final Color? primary150Color;
+  final Color? primary150;
 
-  /// The brand color
-  final Color? brandColor;
+  /// The brand color.
+  final Color? brand;
 
   /// Background color used for app surfaces.
-  final Color? backgroundColor;
+  final Color? backgroundBase;
+
+  /// Background color used for content, e.g. the background color of a SBBContentBox.
+  final Color? backgroundContent;
 
   /// Color used for error states.
-  final Color? errorColor;
+  final Color? error;
 
-  /// Default color for icons.
-  final Color? iconColor;
+  /// Primary color for icons.
+  final Color? iconPrimary;
 
-  /// Default divider color used in [DividerThemeData].
-  final Color? dividerColor;
+  /// Secondary color for icons.
+  final Color? iconSecondary;
+
+  /// Primary text color.
+  final Color? textPrimary;
+
+  /// Secondary text color used for label styles in [TextTheme] and some components.
+  final Color? textSecondary;
+
+  /// Primary stroke color used for borders.
+  final Color? strokePrimary;
+
+  /// Secondary stroke color used for borders.
+  final Color? strokeSecondary;
+
+  /// Separator color used in [DividerThemeData].
+  final Color? strokeSeparator;
 
   /// Color used for text selection and cursor in [TextSelectionThemeData].
-  final Color? selectionColor;
+  final Color? selection;
 
-  /// Default text color.
-  final Color? defaultTextColor;
-
-  /// Default label color used for label styles in [TextTheme] and some components.
-  final Color? labelColor;
-
-  /// Returns a MaterialColor based on [primaryColor] for use as a swatch.
-  MaterialColor get primarySwatch => MaterialColor(primaryColor.toARGB32(), <int, Color>{
-    50: primaryColor,
-    100: primaryColor,
-    200: primaryColor,
-    300: primaryColor,
-    400: primaryColor,
-    500: primaryColor,
-    600: primaryColor,
-    700: primaryColor,
-    800: primaryColor,
-    900: primaryColor,
+  /// Returns a MaterialColor based on [primary] for use as a swatch.
+  MaterialColor get primarySwatch => MaterialColor(primary.toARGB32(), <int, Color>{
+    50: primary,
+    100: primary,
+    200: primary,
+    300: primary,
+    400: primary,
+    500: primary,
+    600: primary,
+    700: primary,
+    800: primary,
+    900: primary,
   });
 
   SBBColorScheme copyWith({
-    Color? primaryColor,
-    Color? primary85Color,
-    Color? primary125Color,
-    Color? primary150Color,
-    Color? brandColor,
-    Color? backgroundColor,
-    Color? errorColor,
-    Color? iconColor,
-    Color? defaultTextColor,
-    Color? dividerColor,
-    Color? selectionColor,
-    Color? labelColor,
+    Color? primary,
+    Color? primary85,
+    Color? primary125,
+    Color? primary150,
+    Color? backgroundBase,
+    Color? backgroundContent,
+    Color? error,
+    Color? iconPrimary,
+    Color? iconSecondary,
+    Color? textPrimary,
+    Color? textSecondary,
+    Color? strokePrimary,
+    Color? strokeSecondary,
+    Color? strokeSeparator,
+    Color? selection,
+    Color? brand,
   }) => SBBColorScheme(
-    primaryColor: primaryColor ?? this.primaryColor,
-    primary85Color: primary85Color ?? this.primary85Color,
-    primary125Color: primary125Color ?? this.primary125Color,
-    primary150Color: primary150Color ?? this.primary150Color,
-    brandColor: brandColor ?? this.brandColor,
-    backgroundColor: backgroundColor ?? this.backgroundColor,
-    errorColor: errorColor ?? this.errorColor,
-    iconColor: iconColor ?? this.iconColor,
-    defaultTextColor: defaultTextColor ?? this.defaultTextColor,
-    dividerColor: dividerColor ?? this.dividerColor,
-    selectionColor: selectionColor ?? this.selectionColor,
-    labelColor: labelColor ?? this.labelColor,
+    primary: primary ?? this.primary,
+    primary85: primary85 ?? this.primary85,
+    primary125: primary125 ?? this.primary125,
+    primary150: primary150 ?? this.primary150,
+    backgroundBase: backgroundBase ?? this.backgroundBase,
+    backgroundContent: backgroundContent ?? this.backgroundContent,
+    error: error ?? this.error,
+    iconPrimary: iconPrimary ?? this.iconPrimary,
+    iconSecondary: iconSecondary ?? this.iconSecondary,
+    textPrimary: textPrimary ?? this.textPrimary,
+    textSecondary: textSecondary ?? this.textSecondary,
+    strokePrimary: strokePrimary ?? this.strokePrimary,
+    strokeSecondary: strokeSecondary ?? this.strokeSecondary,
+    strokeSeparator: strokeSeparator ?? this.strokeSeparator,
+    selection: selection ?? this.selection,
+    brand: brand ?? this.brand,
   );
 
   SBBColorScheme lerp(SBBColorScheme? other, double t) {
     if (other is! SBBColorScheme) return this;
     return SBBColorScheme(
-      primaryColor: Color.lerp(primaryColor, other.primaryColor, t)!,
-      primary85Color: Color.lerp(primary85Color, other.primary85Color, t),
-      primary125Color: Color.lerp(primary125Color, other.primary125Color, t),
-      primary150Color: Color.lerp(primary150Color, other.primary150Color, t),
-      brandColor: Color.lerp(brandColor, other.brandColor, t),
-      backgroundColor: Color.lerp(backgroundColor, other.backgroundColor, t),
-      errorColor: Color.lerp(errorColor, other.errorColor, t),
-      iconColor: Color.lerp(iconColor, other.iconColor, t),
-      defaultTextColor: Color.lerp(defaultTextColor, other.defaultTextColor, t),
-      dividerColor: Color.lerp(dividerColor, other.dividerColor, t),
-      selectionColor: Color.lerp(selectionColor, other.selectionColor, t),
-      labelColor: Color.lerp(labelColor, other.labelColor, t),
+      primary: Color.lerp(primary, other.primary, t)!,
+      primary85: Color.lerp(primary85, other.primary85, t),
+      primary125: Color.lerp(primary125, other.primary125, t),
+      primary150: Color.lerp(primary150, other.primary150, t),
+      backgroundBase: Color.lerp(backgroundBase, other.backgroundBase, t),
+      backgroundContent: Color.lerp(backgroundContent, other.backgroundContent, t),
+      error: Color.lerp(error, other.error, t),
+      iconPrimary: Color.lerp(iconPrimary, other.iconPrimary, t),
+      iconSecondary: Color.lerp(iconSecondary, other.iconSecondary, t),
+      textPrimary: Color.lerp(textPrimary, other.textPrimary, t),
+      textSecondary: Color.lerp(textSecondary, other.textSecondary, t),
+      strokePrimary: Color.lerp(strokePrimary, other.strokePrimary, t),
+      strokeSecondary: Color.lerp(strokeSecondary, other.strokeSecondary, t),
+      strokeSeparator: Color.lerp(strokeSeparator, other.strokeSeparator, t),
+      selection: Color.lerp(selection, other.selection, t),
+      brand: Color.lerp(brand, other.brand, t),
     );
   }
 }
