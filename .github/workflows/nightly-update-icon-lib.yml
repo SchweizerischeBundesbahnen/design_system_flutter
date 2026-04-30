@@ -68,8 +68,7 @@ jobs:
             echo "Version update contains relevant updates."
             mkdir "${GITHUB_WORKSPACE}/artifacts"
             cp "${GITHUB_WORKSPACE}"/lib/fonts/sbb_icons_*.ttf "${GITHUB_WORKSPACE}"/artifacts
-            cp "${GITHUB_WORKSPACE}"/lib/src/theme/icons/sbb_icons.dart "${GITHUB_WORKSPACE}"/artifacts
-            cp "${GITHUB_WORKSPACE}"/lib/src/theme/icons/sbb_icons_index.dart "${GITHUB_WORKSPACE}"/artifacts
+            cp "${GITHUB_WORKSPACE}"/lib/src/theme/sbb_icon*.dart "${GITHUB_WORKSPACE}"/artifacts
             cp ./icons/.version "${GITHUB_WORKSPACE}"/artifacts/
           else 
             echo "Version update does not contain relevant updates."
@@ -124,7 +123,7 @@ jobs:
           fonts_dir="${GITHUB_WORKSPACE}/lib/fonts"
           mv -f ./artifacts/.version ./tool/font_scripts/icons
           mv -f ./artifacts/sbb_icons*.ttf "$fonts_dir"
-          mv -f ./artifacts/sbb_*.dart "$icons_dir"
+          mv -f ./artifacts/sbb_icon*.dart "$icons_dir"
 
       - name: Add or update CHANGELOG entry
         uses: ./.github/actions/icon-lib-changelog-generator
