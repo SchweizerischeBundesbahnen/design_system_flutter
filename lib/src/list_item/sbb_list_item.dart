@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/shared/bottom_loading_indicator.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 import 'package:sbb_design_system_mobile/src/shared/divider/divider_painter.dart';
 
 /// A customizable list item component following the SBB design system.
@@ -26,7 +27,7 @@ import 'package:sbb_design_system_mobile/src/shared/divider/divider_painter.dart
 ///
 /// The list item is disabled when both [onTap] and [onLongPress] are null or [enabled] is false.
 ///
-/// Use [SBBListItem.divideListItems] to automatically add dividers between multiple list items.
+/// Use [SBBDivider.divideItems] to automatically add dividers between multiple list items.
 ///
 ///
 /// ## Sample code
@@ -43,7 +44,7 @@ import 'package:sbb_design_system_mobile/src/shared/divider/divider_painter.dart
 ///
 /// ```dart
 /// Column(
-///   children: SBBListItem.divideListItems(
+///   children: SBBDivider.divideItems(
 ///     context: context,
 ///     items: [
 ///       SBBListItem(
@@ -285,33 +286,14 @@ class SBBListItem extends StatefulWidget {
   ///
   /// See also [SBBDivider] for using the same underlying widget
   /// in indexed builder methods (e.g. [ListView.separated]).
+  ///
+  /// Consider using [SBBDivider.divideItems] instead of this.
+  @Deprecated('Use SBBDivider.divideItems instead of this method.')
   static List<Widget> divideListItems({
     BuildContext? context,
     required Iterable<Widget> items,
     Color? color,
-  }) {
-    assert(color != null || context != null);
-    items = items.toList();
-
-    if (items.isEmpty || items.length == 1) {
-      return items.toList();
-    }
-
-    final resolvedColor = color ?? Theme.of(context!).dividerColor;
-
-    Widget wrapListItem(Widget link) {
-      return CustomPaint(
-        foregroundPainter: DividerPainter(
-          paintAtTop: false,
-          color: resolvedColor,
-          indent: 0.0,
-        ),
-        child: link,
-      );
-    }
-
-    return <Widget>[...items.take(items.length - 1).map(wrapListItem), items.last];
-  }
+  }) => SBBDivider.divideItems(items: items, context: context, color: color);
 
   @override
   State<SBBListItem> createState() => _SBBListItemState();
@@ -401,20 +383,20 @@ class _SBBListItemState extends State<SBBListItem> {
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMaterial(context));
+    assert(debugCheckHasSBBBaseStyle(context));
 
     final themeData = Theme.of(context).sbbListItemTheme;
-    final effectiveStyle = (themeData?.style ?? SBBListItemStyle()).merge(widget.style);
+    final effectiveStyle = themeData.style!.merge(widget.style);
     final states = _statesController.value;
 
-    final effectivePadding = widget.padding ?? themeData?.padding ?? SBBListItemStyle.defaultPadding;
-    final effectiveTrailingGapWidth =
-        widget.trailingHorizontalGapWidth ?? themeData?.trailingHorizontalGapWidth ?? 16.0;
-    final effectiveLeadingGapWidth = widget.leadingHorizontalGapWidth ?? themeData?.leadingHorizontalGapWidth ?? 8.0;
-    final effectiveSubtitleGapHeight = widget.subtitleVerticalGapHeight ?? themeData?.subtitleVerticalGapHeight ?? 4.0;
+    final effectivePadding = widget.padding ?? themeData.padding!;
+    final effectiveTrailingGapWidth = widget.trailingHorizontalGapWidth ?? themeData.trailingHorizontalGapWidth!;
+    final effectiveLeadingGapWidth = widget.leadingHorizontalGapWidth ?? themeData.leadingHorizontalGapWidth!;
+    final effectiveSubtitleGapHeight = widget.subtitleVerticalGapHeight ?? themeData.subtitleVerticalGapHeight!;
     final effectiveOverlayColor = effectiveStyle.overlayColor;
 
-    final resolvedTitleTextStyle = effectiveStyle.titleTextStyle?.resolve(states) ?? SBBTextStyles.mediumLight;
-    final resolvedSubtitleTextStyle = effectiveStyle.subtitleTextStyle?.resolve(states) ?? SBBTextStyles.smallLight;
+    final resolvedTitleTextStyle = effectiveStyle.titleTextStyle?.resolve(states);
+    final resolvedSubtitleTextStyle = effectiveStyle.subtitleTextStyle?.resolve(states);
     final resolvedTitleForegroundColor = effectiveStyle.titleForegroundColor?.resolve(states);
     final resolvedSubtitleForegroundColor = effectiveStyle.subtitleForegroundColor?.resolve(states);
     final resolvedLeadingForegroundColor = effectiveStyle.leadingForegroundColor?.resolve(states);

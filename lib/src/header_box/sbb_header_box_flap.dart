@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 /// The default flap content for a SBB Header-Box.
 ///
@@ -102,9 +103,9 @@ class SBBHeaderBoxFlap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final effectiveStyle = (Theme.of(context).sbbHeaderBoxTheme!.flapStyle ?? SBBHeaderBoxFlapStyle())
-        .merge(style)
-        .copyWith(padding: padding);
+    assert(debugCheckHasSBBBaseStyle(context));
+
+    final effectiveStyle = Theme.of(context).sbbHeaderBoxTheme.flapStyle!.merge(style).copyWith(padding: padding);
 
     final leadingWidget = _addDefaultAncestorWithResolved(
       foregroundColor: effectiveStyle.leadingForegroundColor,

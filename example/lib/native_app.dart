@@ -116,7 +116,7 @@ class MyApp extends StatelessWidget {
     return SBBContentBox(
       child: Column(
         mainAxisAlignment: .center,
-        children: SBBListItem.divideListItems(
+        children: SBBDivider.divideItems(
           context: context,
           items: [
             _DemoEntry('Icon', IconPage()),
@@ -132,7 +132,7 @@ class MyApp extends StatelessWidget {
     return SBBContentBox(
       child: Column(
         mainAxisAlignment: .center,
-        children: SBBListItem.divideListItems(
+        children: SBBDivider.divideItems(
           context: context,
           items: [
             _DemoEntry('Bottom Sheet', BottomSheetPage()),
@@ -165,7 +165,7 @@ class MyApp extends StatelessWidget {
     return SBBContentBox(
       child: Column(
         mainAxisAlignment: .center,
-        children: SBBListItem.divideListItems(
+        children: SBBDivider.divideItems(
           context: context,
           items: [
             _DemoEntry('Autocompletion', AutocompletionPage()),

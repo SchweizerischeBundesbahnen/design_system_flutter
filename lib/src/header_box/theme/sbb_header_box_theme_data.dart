@@ -93,5 +93,5 @@ extension SBBHeaderBoxThemeDataX on SBBHeaderBoxThemeData {
 
 extension SBBHeaderBoxThemeOnThemeDataX on ThemeData {
   /// Access the [SBBHeaderBoxThemeData] from the current theme.
-  SBBHeaderBoxThemeData? get sbbHeaderBoxTheme => extension<SBBHeaderBoxThemeData>();
+  SBBHeaderBoxThemeData get sbbHeaderBoxTheme => extension<SBBHeaderBoxThemeData>()!;
 }

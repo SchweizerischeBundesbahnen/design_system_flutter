@@ -55,5 +55,5 @@ extension SBBSliderThemeDataX on SBBSliderThemeData {
 
 extension SBBSliderThemeDataThemeDataX on ThemeData {
   /// Access the [SBBSliderThemeData] from the current theme.
-  SBBSliderThemeData? get sbbSliderTheme => extension<SBBSliderThemeData>();
+  SBBSliderThemeData get sbbSliderTheme => extension<SBBSliderThemeData>()!;
 }

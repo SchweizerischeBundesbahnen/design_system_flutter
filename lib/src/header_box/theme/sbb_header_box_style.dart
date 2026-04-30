@@ -47,11 +47,11 @@ class SBBHeaderBoxStyle {
       titleTextStyle: baseStyle.themedTextStyle(
         textStyle: SBBTextStyles.mediumBold.copyWith(overflow: TextOverflow.ellipsis),
       ),
-      titleForegroundColor: baseStyle.colorScheme.defaultTextColor,
+      titleForegroundColor: baseStyle.colorScheme.textPrimary,
       subtitleTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallLight),
-      subtitleForegroundColor: baseStyle.colorScheme.labelColor,
-      leadingForegroundColor: baseStyle.colorScheme.iconColor,
-      backgroundColor: baseStyle.themeValue(SBBColors.white, SBBColors.charcoal),
+      subtitleForegroundColor: baseStyle.colorScheme.textSecondary,
+      leadingForegroundColor: baseStyle.colorScheme.iconPrimary,
+      backgroundColor: baseStyle.colorScheme.backgroundContent,
       flapBackgroundColor: baseStyle.themeValue(SBBColors.cloud, SBBColors.midnight),
       headerBoxShadow: baseStyle.themeValue(
         [BoxShadow(color: SBBColors.black.withValues(alpha: 0.2), blurRadius: 8.0)],

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 /// The SBB Message widget displays messages to the user, typically for errors, loading states, or informational content.
 ///
@@ -160,6 +161,8 @@ class SBBMessage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasSBBBaseStyle(context));
+
     final themeData = Theme.of(context).sbbMessageTheme;
     final effectiveStyle = _getEffectiveStyle(themeData);
 
@@ -213,10 +216,7 @@ class SBBMessage extends StatelessWidget {
     );
   }
 
-  SBBMessageStyle _getEffectiveStyle(SBBMessageThemeData? themeData) {
-    final themeStyle = themeData?.style;
-    return style?.merge(themeStyle) ?? themeStyle ?? const SBBMessageStyle();
-  }
+  SBBMessageStyle _getEffectiveStyle(SBBMessageThemeData themeData) => themeData.style!.merge(style);
 
   Widget? _addDefaultAncestorWithResolved({
     required TextStyle? textStyle,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 /// A convenience wrapper that combines [SBBListItem] with [SBBSwitch] as the trailing widget.
 ///
@@ -126,6 +127,8 @@ class SBBSwitchListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasSBBBaseStyle(context));
+
     final trailing = SBBSwitch(
       value: value,
       onChanged: onChanged,

@@ -19,18 +19,18 @@ class DefaultSBBStepperThemeData extends SBBStepperThemeData {
       ),
       itemStyle: SBBStepperItemStyle(
         backgroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
-          WidgetState.selected: baseStyle.colorScheme.primaryColor,
+          WidgetState.selected: baseStyle.colorScheme.primary,
           WidgetState.any: baseStyle.themeValue(SBBColors.white, SBBColors.iron),
         }),
         borderColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
           WidgetState.selected: null,
-          WidgetState.any: baseStyle.themeValue(SBBColors.black, SBBColors.white),
+          WidgetState.any: baseStyle.colorScheme.strokePrimary,
         }),
-        badgeBackgroundColor: baseStyle.colorScheme.primaryColor,
+        badgeBackgroundColor: baseStyle.colorScheme.primary,
         badgeIconColor: SBBColors.white,
         foregroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
           WidgetState.selected: SBBColors.white,
-          WidgetState.any: baseStyle.colorScheme.defaultTextColor,
+          WidgetState.any: baseStyle.colorScheme.textPrimary,
         }),
         textStyle: WidgetStateProperty.fromMap(<WidgetStatesConstraint, TextStyle?>{
           WidgetState.selected: baseStyle.themedTextStyle(textStyle: baseStyle.textTheme.mediumBold),
@@ -48,17 +48,17 @@ class DefaultSBBStepperThemeData extends SBBStepperThemeData {
       itemStyle: SBBStepperItemStyle(
         backgroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
           WidgetState.selected: SBBColors.white,
-          WidgetState.any: baseStyle.colorScheme.primaryColor,
+          WidgetState.any: baseStyle.colorScheme.primary,
         }),
         borderColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
           WidgetState.selected: null,
           WidgetState.any: SBBColors.white,
         }),
-        badgeBackgroundColor: baseStyle.colorScheme.primaryColor,
+        badgeBackgroundColor: baseStyle.colorScheme.primary,
         badgeBorderColor: SBBColors.white,
         badgeIconColor: SBBColors.white,
         foregroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
-          WidgetState.selected: baseStyle.colorScheme.primaryColor,
+          WidgetState.selected: baseStyle.colorScheme.primary,
           WidgetState.any: SBBColors.white,
         }),
         textStyle: WidgetStateProperty.fromMap(<WidgetStatesConstraint, TextStyle?>{

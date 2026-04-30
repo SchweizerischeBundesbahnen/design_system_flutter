@@ -16,7 +16,7 @@ class DecoratedTextPage extends StatelessWidget {
           SBBContentBox(
             child: Column(
               mainAxisSize: .min,
-              children: SBBListItem.divideListItems(
+              children: SBBDivider.divideItems(
                 context: context,
                 items: [
                   SBBDecoratedText(

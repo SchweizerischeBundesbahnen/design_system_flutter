@@ -4,6 +4,7 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/button/default_button_label.dart';
 import 'package:sbb_design_system_mobile/src/button/theme/default_button_themes.dart';
 import 'package:sbb_design_system_mobile/src/button/theme/sbb_button_style_x.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 /// The secondary variant of the SBB Button.
 ///
@@ -95,6 +96,8 @@ class SBBSecondaryButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasSBBBaseStyle(context));
+
     return Semantics(
       enabled: !isLoading && (onPressed != null || onLongPress != null),
       button: true,

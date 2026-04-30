@@ -3,9 +3,10 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-import 'package:sbb_design_system_mobile/src/picker/sbb_picker_constants.dart';
-import 'package:sbb_design_system_mobile/src/picker/sbb_picker_time_based_mixin.dart';
-import 'package:sbb_design_system_mobile/src/picker/sbb_picker_utils.dart';
+import 'package:sbb_design_system_mobile/src/picker/picker_constants.dart';
+import 'package:sbb_design_system_mobile/src/picker/picker_utils.dart';
+import 'package:sbb_design_system_mobile/src/picker/time_based_picker_mixin.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 /// SBB Date Time Picker. Use according to documentation.
 ///
@@ -110,6 +111,8 @@ class SBBDateTimePicker extends StatefulWidget {
     int visibleItemCount = pickerDefaultVisibleItemCount,
     SBBPickerStyle? pickerStyle,
   }) {
+    assert(debugCheckHasSBBBaseStyle(context));
+
     final localizations = MaterialLocalizations.of(context);
     final effectiveConfig = sheetConfig ?? const SBBBottomSheetConfig();
 

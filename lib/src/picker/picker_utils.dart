@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/src/picker/sbb_picker_constants.dart';
+import 'package:sbb_design_system_mobile/src/picker/picker_constants.dart';
 
 /// Convenience methods on [DateTime].
 extension DateTimeX on DateTime {

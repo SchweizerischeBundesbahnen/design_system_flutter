@@ -9,17 +9,17 @@ class DefaultSBBChipThemeData extends SBBChipThemeData {
         style: SBBChipStyle(
           borderColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.disabled: baseStyle.themeValue(SBBColors.cloud, SBBColors.iron),
-            WidgetState.any: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
+            WidgetState.any: baseStyle.colorScheme.strokeSecondary,
           }),
-          backgroundColor: WidgetStatePropertyAll(baseStyle.themeValue(SBBColors.white, SBBColors.charcoal)),
+          backgroundColor: WidgetStatePropertyAll(baseStyle.colorScheme.backgroundContent),
           labelForegroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
-            WidgetState.disabled: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
-            WidgetState.any: baseStyle.colorScheme.defaultTextColor,
+            WidgetState.disabled: baseStyle.colorScheme.textSecondary,
+            WidgetState.any: baseStyle.colorScheme.textPrimary,
           }),
           trailingForegroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
-            WidgetState.selected & WidgetState.disabled: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
+            WidgetState.selected & WidgetState.disabled: baseStyle.colorScheme.iconSecondary,
             WidgetState.disabled: SBBColors.white,
-            WidgetState.selected: baseStyle.colorScheme.iconColor,
+            WidgetState.selected: baseStyle.colorScheme.iconPrimary,
             WidgetState.any: SBBColors.white,
           }),
           labelTextStyle: WidgetStateProperty.fromMap(<WidgetStatesConstraint, TextStyle?>{
@@ -33,7 +33,7 @@ class DefaultSBBChipThemeData extends SBBChipThemeData {
             WidgetState.selected & WidgetState.disabled: baseStyle.themeValue(SBBColors.milk, SBBColors.iron),
             WidgetState.disabled: baseStyle.themeValue(SBBColors.graphite, SBBColors.iron),
             WidgetState.selected: baseStyle.themeValue(SBBColors.cloud, SBBColors.granite),
-            WidgetState.any: baseStyle.colorScheme.primaryColor,
+            WidgetState.any: baseStyle.colorScheme.primary,
           }),
           overlayColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.any: baseStyle.themeValue(SBBColors.platinum, SBBColors.midnight),

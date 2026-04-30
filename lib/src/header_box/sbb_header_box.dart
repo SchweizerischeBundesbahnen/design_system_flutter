@@ -4,6 +4,7 @@ import 'package:sbb_design_system_mobile/src/header_box/header_box_app_bar_inset
 import 'package:sbb_design_system_mobile/src/header_box/header_box_content.dart';
 import 'package:sbb_design_system_mobile/src/header_box/header_box_foreground.dart';
 import 'package:sbb_design_system_mobile/src/shared/bottom_loading_indicator.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 /// The SBB Header-Box.
 ///
@@ -236,9 +237,7 @@ class SBBHeaderBox extends StatelessWidget {
   final String? semanticsLabel;
 
   SBBHeaderBoxStyle _resolveStyle(BuildContext context) {
-    return (Theme.of(context).sbbHeaderBoxTheme?.style ?? SBBHeaderBoxStyle())
-        .merge(style)
-        .copyWith(margin: margin, padding: padding);
+    return Theme.of(context).sbbHeaderBoxTheme.style!.merge(style).copyWith(margin: margin, padding: padding);
   }
 
   Widget? _defaultContent(BuildContext context) {
@@ -260,6 +259,8 @@ class SBBHeaderBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasSBBBaseStyle(context));
+
     final effectiveStyle = _resolveStyle(context);
     Widget? contentWidget = _defaultContent(context);
 
@@ -358,9 +359,7 @@ class SBBHeaderBoxLarge extends SBBHeaderBox {
 
   @override
   SBBHeaderBoxStyle _resolveStyle(BuildContext context) {
-    return (Theme.of(context).sbbHeaderBoxTheme?.largeStyle ?? SBBHeaderBoxStyle())
-        .merge(style)
-        .copyWith(margin: margin, padding: padding);
+    return Theme.of(context).sbbHeaderBoxTheme.largeStyle!.merge(style).copyWith(margin: margin, padding: padding);
   }
 
   @override

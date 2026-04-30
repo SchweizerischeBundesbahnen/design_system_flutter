@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-import 'package:sbb_design_system_mobile/src/picker/sbb_picker_constants.dart';
-import 'package:sbb_design_system_mobile/src/picker/sbb_picker_scope.dart';
+import 'package:sbb_design_system_mobile/src/picker/picker_constants.dart';
+import 'package:sbb_design_system_mobile/src/picker/picker_scope.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 /// The SBB Picker.
 ///
@@ -173,9 +174,9 @@ class SBBPicker extends StatefulWidget {
 }
 
 class _SBBPickerState extends State<SBBPicker> {
-  SBBPickerStyle? _effectivePickerStyle(BuildContext context) {
-    final themePickerStyle = Theme.of(context).sbbPickerTheme?.pickerStyle;
-    return themePickerStyle?.merge(widget.pickerStyle) ?? widget.pickerStyle;
+  SBBPickerStyle _effectivePickerStyle(BuildContext context) {
+    final themePickerStyle = Theme.of(context).sbbPickerTheme.pickerStyle!;
+    return themePickerStyle.merge(widget.pickerStyle);
   }
 
   // These depend on itemHeight which comes from SBBPickerScope — read inside build.
@@ -187,13 +188,15 @@ class _SBBPickerState extends State<SBBPicker> {
 
   @override
   Widget build(BuildContext context) {
-    return SBBPickerScopeHost(
+    assert(debugCheckHasSBBBaseStyle(context));
+
+    return PickerScopeHost(
       visibleItemCount: widget.visibleItemCount,
       pickerStyle: _effectivePickerStyle(context),
       child: Builder(
         builder: (context) {
           // Read itemHeight from the scope just established above.
-          final itemHeight = SBBPickerScope.of(context).itemHeight;
+          final itemHeight = PickerScope.of(context).itemHeight;
           final widgetHeight = _widgetHeight(itemHeight);
           final highlightedAreaHeight = _highlightedAreaHeight(itemHeight);
           final scrollAreaHeight = _scrollAreaHeight(itemHeight);
@@ -217,7 +220,7 @@ class _SBBPickerState extends State<SBBPicker> {
   }
 
   Widget _buildHighlightedArea(BuildContext context, double highlightedAreaHeight) {
-    final highlightColor = SBBPickerScope.of(context).pickerStyle?.highlightBackgroundColor;
+    final highlightColor = PickerScope.of(context).pickerStyle.highlightBackgroundColor;
     return Container(
       height: highlightedAreaHeight,
       margin: const .symmetric(horizontal: SBBSpacing.xSmall),
@@ -290,7 +293,7 @@ class _SBBPickerState extends State<SBBPicker> {
     final opacities = [...topOpacities, ...bottomOpacities];
 
     // get base color from theme
-    final pickerForegroundColor = SBBPickerScope.of(context).pickerStyle!.foregroundColor!;
+    final pickerForegroundColor = PickerScope.of(context).pickerStyle.foregroundColor!;
 
     // return generated list of gradient color values
     return opacities.map((opacity) => pickerForegroundColor.withValues(alpha: opacity)).toList();

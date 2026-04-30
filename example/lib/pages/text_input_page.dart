@@ -28,7 +28,7 @@ class _TextInputPageState extends State<TextInputPage> {
               alignment: .topCenter,
               child: SBBContentBox(
                 child: Column(
-                  children: SBBListItem.divideListItems(
+                  children: SBBDivider.divideItems(
                     context: context,
                     items: [
                       SBBTextInput(

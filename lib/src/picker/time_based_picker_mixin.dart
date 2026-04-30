@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/src/picker/sbb_picker_constants.dart';
+import 'package:sbb_design_system_mobile/src/picker/picker_constants.dart';
+import 'package:sbb_design_system_mobile/src/picker/picker_scope.dart';
 import 'package:sbb_design_system_mobile/src/picker/sbb_picker_item.dart';
-import 'package:sbb_design_system_mobile/src/picker/sbb_picker_scope.dart';
 
 /// A mixin providing item-building and text-measurement helpers shared by
 /// [SBBDatePicker], [SBBTimePicker] and [SBBDateTimePicker] state classes.
@@ -12,8 +12,8 @@ mixin TimeBasedPickerMixin<T extends StatefulWidget> on State<T> {
   /// Measures the rendered size of [text] using the current picker style and
   /// text scaler from the ambient [SBBPickerScope].
   Size measureText(String text) {
-    final scope = SBBPickerScope.maybeOf(context);
-    final textStyle = scope?.pickerStyle?.textStyle;
+    final scope = PickerScope.maybeOf(context);
+    final textStyle = scope?.pickerStyle.textStyle;
     final textSpan = TextSpan(text: text, style: textStyle);
     final textDirection = Directionality.of(context);
     final painter = TextPainter(

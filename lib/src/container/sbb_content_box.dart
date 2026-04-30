@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 /// SBBContentBox. Use to structure content.
 ///
@@ -64,7 +65,9 @@ class SBBContentBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final SBBContentBoxStyle style = Theme.of(context).sbbContentBoxTheme!.style!;
+    assert(debugCheckHasSBBBaseStyle(context));
+
+    final SBBContentBoxStyle style = Theme.of(context).sbbContentBoxTheme.style!;
 
     return Semantics(
       container: isSemanticContainer ?? style.isSemanticContainer!,

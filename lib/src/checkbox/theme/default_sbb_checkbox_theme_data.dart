@@ -7,14 +7,14 @@ class DefaultSBBCheckboxThemeData extends SBBCheckboxThemeData {
   DefaultSBBCheckboxThemeData(SBBBaseStyle baseStyle)
     : super(
         style: SBBCheckboxStyle(
-          fillColor: WidgetStatePropertyAll(baseStyle.themeValue(SBBColors.white, SBBColors.charcoal)),
+          fillColor: WidgetStatePropertyAll(baseStyle.colorScheme.backgroundContent),
           checkColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
-            WidgetState.disabled: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
-            WidgetState.any: baseStyle.colorScheme.primaryColor,
+            WidgetState.disabled: baseStyle.colorScheme.iconSecondary,
+            WidgetState.any: baseStyle.colorScheme.primary,
           }),
           borderColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.disabled: baseStyle.themeValue(SBBColors.cloud, SBBColors.iron),
-            WidgetState.any: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
+            WidgetState.any: baseStyle.colorScheme.strokeSecondary,
           }),
           tapTargetPadding: .all(8.0),
         ),

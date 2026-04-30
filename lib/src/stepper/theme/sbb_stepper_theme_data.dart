@@ -59,5 +59,5 @@ extension SBBStepperThemeDataX on SBBStepperThemeData {
 
 extension SBBStepperThemeDataThemeDataX on ThemeData {
   /// Access the [SBBStepperThemeData] from the current theme.
-  SBBStepperThemeData? get sbbStepperTheme => extension<SBBStepperThemeData>();
+  SBBStepperThemeData get sbbStepperTheme => extension<SBBStepperThemeData>()!;
 }

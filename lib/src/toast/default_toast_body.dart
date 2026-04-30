@@ -20,7 +20,7 @@ class DefaultToastBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeStyle = Theme.of(context).sbbToastTheme!.style!;
+    final themeStyle = Theme.of(context).sbbToastTheme.style!;
     final toastScope = ToastScope.of(context);
     final resolvedStyle = themeStyle.merge(toastScope.widgetStyle);
 
@@ -46,9 +46,9 @@ class DefaultToastBody extends StatelessWidget {
   }
 
   Widget body(SBBToastStyle resolvedStyle, BuildContext context) {
-    final horizontalGap = resolvedStyle.titleActionHorizontalGap ?? SBBSpacing.xLarge;
-    final verticalGap = resolvedStyle.titleActionVerticalGap ?? SBBSpacing.xSmall;
-    final overflowThreshold = resolvedStyle.actionOverflowThreshold ?? .25;
+    final horizontalGap = resolvedStyle.titleActionHorizontalGap!;
+    final verticalGap = resolvedStyle.titleActionVerticalGap!;
+    final overflowThreshold = resolvedStyle.actionOverflowThreshold!;
 
     return _SBBDefaultToast(
       title: _resolvedTitle(resolvedStyle)!,

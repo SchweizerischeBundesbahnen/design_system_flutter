@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/header/sbb_header_style_scope.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 /// The SBB Header.
 ///
@@ -142,6 +143,8 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasSBBBaseStyle(context));
+
     return _BaseHeader(
       title: title,
       titleText: titleText,
@@ -244,8 +247,8 @@ class _BaseHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeData = Theme.of(context).sbbHeaderTheme;
-    final effectiveStyle = (themeData?.style ?? SBBHeaderStyle()).merge(style);
+    final themeStyle = Theme.of(context).sbbHeaderTheme.style!;
+    final effectiveStyle = themeStyle.merge(style);
 
     final resolvedLeading = _resolveLeading(context);
     final leadingWithScope = resolvedLeading == null

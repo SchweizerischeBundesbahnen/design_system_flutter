@@ -132,7 +132,7 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
   void didChangeDependencies() {
     super.didChangeDependencies();
     final inputDecorationTheme = Theme.of(context).sbbInputDecorationTheme;
-    final newBehavior = inputDecorationTheme?.floatingLabelBehavior ?? .auto;
+    final newBehavior = inputDecorationTheme.floatingLabelBehavior ?? .auto;
 
     if (_inheritedFloatingLabelBehavior != newBehavior) {
       _inheritedFloatingLabelBehavior = newBehavior;
@@ -174,13 +174,12 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
       label = Text(widget.decoration.labelText!, maxLines: 1, overflow: .ellipsis);
     }
     if (label != null) {
-      final Color? resolvedColor =
-          (widget.decoration.labelForegroundColor ?? inputDecorationTheme?.labelForegroundColor)?.resolve(
+      final Color? resolvedColor = (widget.decoration.labelForegroundColor ?? inputDecorationTheme.labelForegroundColor)
+          ?.resolve(
             widget.states,
           );
-      final textStyle = widget.decoration.labelTextStyle ?? inputDecorationTheme?.labelTextStyle;
-      final floatingTextStyle =
-          widget.decoration.floatingLabelTextStyle ?? inputDecorationTheme?.floatingLabelTextStyle;
+      final textStyle = widget.decoration.labelTextStyle ?? inputDecorationTheme.labelTextStyle;
+      final floatingTextStyle = widget.decoration.floatingLabelTextStyle ?? inputDecorationTheme.floatingLabelTextStyle;
 
       final resolvedTextStyle =
           (_shouldFloat ? floatingTextStyle : textStyle)?.copyWith(color: resolvedColor) ??

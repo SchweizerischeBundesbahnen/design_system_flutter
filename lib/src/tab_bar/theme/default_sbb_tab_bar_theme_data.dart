@@ -7,22 +7,22 @@ class DefaultSBBTabBarThemeData extends SBBTabBarThemeData {
   DefaultSBBTabBarThemeData(SBBBaseStyle baseStyle)
     : super(
         style: SBBTabBarStyle(
-          backgroundColor: baseStyle.themeValue(SBBColors.white, SBBColors.charcoal),
+          backgroundColor: baseStyle.colorScheme.backgroundContent,
           iconColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.selected: baseStyle.themeValue(SBBColors.white, SBBColors.black),
-            WidgetState.any: baseStyle.colorScheme.iconColor,
+            WidgetState.any: baseStyle.colorScheme.iconPrimary,
           }),
           itemBackgroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.selected: baseStyle.themeValue(SBBColors.black, SBBColors.white),
             WidgetState.any: SBBColors.transparent,
           }),
           itemLabelTextStyle: baseStyle.themedTextStyle(textStyle: baseStyle.textTheme.smallLight),
-          itemLabelForegroundColor: baseStyle.colorScheme.defaultTextColor,
+          itemLabelForegroundColor: baseStyle.colorScheme.textPrimary,
           warningItemIcon: SBBIcons.sign_exclamation_point_small,
-          warningItemBackgroundColor: baseStyle.colorScheme.errorColor,
+          warningItemBackgroundColor: baseStyle.colorScheme.error,
           warningItemForegroundColor: SBBColors.white,
           badgeForegroundColor: SBBColors.white,
-          badgeBackgroundColor: baseStyle.colorScheme.primaryColor,
+          badgeBackgroundColor: baseStyle.colorScheme.primary,
           badgeTextStyle: SBBTextStyles.xxSmallBold.copyWith(fontWeight: FontWeight.w900),
         ),
       );

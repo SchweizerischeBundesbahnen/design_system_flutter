@@ -55,5 +55,5 @@ extension SBBPaginatorThemeDataX on SBBPaginatorThemeData {
 
 extension SBBPaginatorThemeDataThemeDataX on ThemeData {
   /// Access the [SBBPaginatorThemeData] from the current theme.
-  SBBPaginatorThemeData? get sbbPaginatorTheme => extension<SBBPaginatorThemeData>();
+  SBBPaginatorThemeData get sbbPaginatorTheme => extension<SBBPaginatorThemeData>()!;
 }

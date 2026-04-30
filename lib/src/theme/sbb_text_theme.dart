@@ -30,7 +30,7 @@ class SBBTextTheme extends ThemeExtension<SBBTextTheme> {
   });
 
   factory SBBTextTheme.$default({required SBBColorScheme colorScheme}) {
-    final textColor = colorScheme.defaultTextColor;
+    final textColor = colorScheme.textPrimary;
     return SBBTextTheme(
       xxSmallLight: SBBTextStyles.xxSmallLight.copyWith(color: textColor),
       xxSmallBold: SBBTextStyles.xxSmallBold.copyWith(color: textColor),

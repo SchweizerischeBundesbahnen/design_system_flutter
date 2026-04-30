@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 /// A convenience wrapper that combines [SBBListItem] with [SBBRadio] as the leading widget.
 ///
@@ -155,6 +156,8 @@ class SBBRadioListItem<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasSBBBaseStyle(context));
+
     final radioRegistry = RadioGroup.maybeOf<T>(context);
     final bool isInteractive = enabled && radioRegistry?.onChanged != null;
 

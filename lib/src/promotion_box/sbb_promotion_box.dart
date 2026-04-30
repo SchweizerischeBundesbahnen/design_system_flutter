@@ -307,7 +307,7 @@ class _DefaultContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    final crossColor = Theme.of(context).sbbBaseStyle.colorScheme.iconColor;
+    final crossColor = Theme.of(context).sbbBaseStyle.colorScheme.iconPrimary;
     return Column(
       crossAxisAlignment: .stretch,
       children: [

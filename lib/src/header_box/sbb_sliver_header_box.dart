@@ -5,6 +5,7 @@ import 'package:sbb_design_system_mobile/src/header_box/header_box_app_bar_inset
 import 'package:sbb_design_system_mobile/src/header_box/header_box_content.dart';
 import 'package:sbb_design_system_mobile/src/header_box/header_box_foreground.dart';
 import 'package:sbb_design_system_mobile/src/header_box/sliver/sliver_pinned_floating_widget.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 /// A floating version of [SBBHeaderBox].
 ///
@@ -178,9 +179,7 @@ class SBBSliverHeaderBox extends StatelessWidget {
   /// The final style is built from the current theme and then overridden by the
   /// widget-level [style], [margin], and [padding] values if provided.
   SBBHeaderBoxStyle _resolveStyle(BuildContext context) {
-    return (Theme.of(context).sbbHeaderBoxTheme?.style ?? SBBHeaderBoxStyle())
-        .merge(style)
-        .copyWith(margin: margin, padding: padding);
+    return Theme.of(context).sbbHeaderBoxTheme.style!.merge(style).copyWith(margin: margin, padding: padding);
   }
 
   /// Builds the default content widget shown inside the header box.
@@ -202,6 +201,8 @@ class SBBSliverHeaderBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasSBBBaseStyle(context));
+
     return _BaseHeaderBox(
       flap: flap,
       content: _resolveContent(context),
@@ -284,9 +285,7 @@ class SBBSliverHeaderBoxLarge extends SBBSliverHeaderBox {
 
   @override
   SBBHeaderBoxStyle _resolveStyle(BuildContext context) {
-    return (Theme.of(context).sbbHeaderBoxTheme?.largeStyle ?? SBBHeaderBoxStyle())
-        .merge(style)
-        .copyWith(margin: margin, padding: padding);
+    return Theme.of(context).sbbHeaderBoxTheme.largeStyle!.merge(style).copyWith(margin: margin, padding: padding);
   }
 
   @override

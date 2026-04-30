@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 class BottomLoadingIndicator extends StatefulWidget {
   const BottomLoadingIndicator({
@@ -58,7 +59,9 @@ class _BottomLoadingIndicatorState extends State<BottomLoadingIndicator> with Si
 
   @override
   Widget build(BuildContext context) {
-    final color = Theme.of(context).sbbBaseStyle.colorScheme.primaryColor;
+    assert(debugCheckHasSBBBaseStyle(context));
+
+    final color = Theme.of(context).sbbBaseStyle.colorScheme.primary;
     return ClipRRect(
       borderRadius: _resolveBorderRadius(),
       child: SlideTransition(

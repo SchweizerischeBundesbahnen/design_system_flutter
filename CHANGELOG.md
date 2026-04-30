@@ -86,6 +86,12 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Removed `merge` extension on `SBBBaseStyle`
 - Removed `SBBColors.redDark`, use `SBBColors.red85` instead
 
+## [4.12.0] - 2026-04-28
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.23
+
 ## [4.11.0] - 2026-04-13
 
 ### Deprecated
@@ -846,6 +852,8 @@ It is expected that you keep this format strictly, since we depend on it in our 
 [5.0.0-dev.2]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/5.0.0-dev.1...5.0.0-dev.2
 
 [5.0.0-dev.1]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.11.0...5.0.0-dev.1
+
+[4.12.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.11.0...4.12.0
 
 [4.11.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.10.0...4.11.0
 
