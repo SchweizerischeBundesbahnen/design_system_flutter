@@ -13,7 +13,7 @@ extension SBBButtonStyleX on SBBButtonStyle {
     }
 
     return baseButtonStyle.copyWith(
-      textStyle: textStyle,
+      textStyle: WidgetStatePropertyAll(textStyle),
       backgroundColor: backgroundColor,
       foregroundColor: foregroundColor,
       overlayColor: overlayColor,
