@@ -115,13 +115,13 @@ class SBBColorScheme {
   /// A stronger variant of the primary color (150%).
   final Color? primary150;
 
-  /// The brand color
+  /// The brand color.
   final Color? brand;
 
   /// Background color used for app surfaces.
   final Color? backgroundBase;
 
-  /// Background color used for content.
+  /// Background color used for content, e.g. the background color of a SBBContentBox.
   final Color? backgroundContent;
 
   /// Color used for error states.
