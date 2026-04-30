@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 It is expected that you keep this format strictly, since we depend on it in our release workflow.
 
+## [5.0.0-dev.3] - 2026-04-30
+
+### Added
+
+- added `SBBDivider.divideItems` as replacement for `SBBListItem.divideListItems`
+- added global colors to 
+
+### Changed
+
+- `SBBButtonStyle`: `textStyle` is of type `TextStyle?` instead of `WidgetStateProperty<TextStyle?>?`
+- `SBBColorScheme`:
+  * renamed `backgroundColor` to `backgroundBase`
+  * renamed `labelColor` to `textSecondary`
+  * renamed `textDefaultColor` to `textPrimary`
+  * renamed `iconColor` to `iconPrimary`
+  * renamed `dividerColor` to `strokeSeparator`
+  * added `strokePrimary`, `strokeSecondary`, `iconSecondary`, `backgroundContent`
+  * these colors are now also used in all component defaults
+
+### Deprecated
+
+- deprecated `SBBListItem.divideListItems` - use `SBBDivider.divideItems`
+
+
 ## [5.0.0-dev.2] - 2026-04-28
 
 ### Changed
@@ -847,7 +871,9 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Initial project setup
 - Added some widgets
 
-[v5 migration guide]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/blob/31052a871aed02bd8e31baf63739a2fcd349a225/migration_guide.md
+[v5 migration guide]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/blob/e9876209743cf2afb272041fef74cb5df5ac8216/migration_guide.md
+
+[5.0.0-dev.3]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/5.0.0-dev.2...5.0.0-dev.3
 
 [5.0.0-dev.2]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/5.0.0-dev.1...5.0.0-dev.2
 
