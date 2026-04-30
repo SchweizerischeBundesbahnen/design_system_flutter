@@ -19,18 +19,25 @@ Use the issue tracker to find ways to contribute. Find a bug or a feature, menti
 
 ## Changing the code-base
 
-Generally speaking, you should *fork* this repository, make changes in your own fork, and then submit a pull request.
+Generally speaking, you should *fork* this repository, make changes in your own fork, and then submit a pull request. Refer to the official git documentation on [Contributing to a Project] for details.
 
-All new code should have associated unit tests ([Golden Tests] for UI elements) that validate implemented features and the presence or lack of defects.
+### Expectations from a pull request
 
-Additionally, the code should follow any stylistic and architectural guidelines prescribed by the project. In the absence of such guidelines, mimic the styles and patterns in the existing code-base.
+All new code should have associated unit tests ([Golden Tests] for UI elements) that validate implemented features and the presence or lack of defects. Take a look at existing golden tests (e.g. [sbb_chip_test.dart](test/sbb_chip_test.dart)) as reference.
 
-Please also update the CHANGELOG.md accordingly respecting the [Keep A Changelog] format. If possible, stick to [Semantic Commit Messages].
+Additionally, the code should follow the patterns and structure found in other components, unless there is a clear reason why not to.
 
-The naming of the Widgets should follow the Material equivalent Widgets. However, the component names within the [Design Specs] and links should be provided to the english [Design Specs] should be findable in the codebase.
+It is mandatory to update the [CHANGELOG.md](CHANGELOG.md) file with clear description of what has changed. Stick to the [Keep a Changelog] format and [Semantic Commit Messages].
+
+Your code will be analyzed and formatted according to the rules defined in [analysis_options.yaml](analysis_options.yaml).
+
+Take a look at the [github test action](.github/workflows/test.yml) that will run on every pull request update to understand which tests are run on our CI.
+
+The naming of the Widgets should follow the naming from the [Design specs].
 
 
 [Golden Tests]: (https://api.flutter.dev/flutter/flutter_test/matchesGoldenFile.html)
 [Keep A Changelog]: (https://keepachangelog.com/en/1.1.0/)
 [Semantic Commit Messages]: (https://sparkbox.com/foundry/semantic_commit_messages)
 [Design Specs]: (https://digital.sbb.ch/de/design-system/mobile/overview/)
+[Contributing to a project]: https://git-scm.com/book/ms/v2/GitHub-Contributing-to-a-Project
