@@ -16,9 +16,7 @@ class DefaultSBBPrimaryButtonThemeData extends SBBPrimaryButtonThemeData {
   DefaultSBBPrimaryButtonThemeData(SBBBaseStyle baseStyle)
     : super(
         style: SBBButtonStyle(
-          textStyle: WidgetStateProperty.fromMap(<WidgetStatesConstraint, TextStyle?>{
-            WidgetState.any: baseStyle.themedTextStyle(),
-          }),
+          textStyle: baseStyle.textTheme.defaultTextStyle,
           backgroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.focused | WidgetState.pressed: baseStyle.colorScheme.primaryColor,
             WidgetState.disabled: baseStyle.themeValue(SBBColors.cement, SBBColors.iron),
@@ -44,9 +42,7 @@ class DefaultSBBSecondaryButtonThemeData extends SBBSecondaryButtonThemeData {
   DefaultSBBSecondaryButtonThemeData(SBBBaseStyle baseStyle)
     : super(
         style: SBBButtonStyle(
-          textStyle: WidgetStateProperty.fromMap(<WidgetStatesConstraint, TextStyle?>{
-            WidgetState.any: baseStyle.themedTextStyle(),
-          }),
+          textStyle: baseStyle.textTheme.defaultTextStyle,
           backgroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.focused | WidgetState.pressed: baseStyle.themeValue(SBBColors.graphite, SBBColors.charcoal),
             WidgetState.disabled: SBBColors.transparent,
@@ -76,9 +72,7 @@ class DefaultSBBTertiaryButtonThemeData extends SBBTertiaryButtonThemeData {
   DefaultSBBTertiaryButtonThemeData(SBBBaseStyle baseStyle)
     : super(
         style: SBBButtonStyle(
-          textStyle: WidgetStateProperty.fromMap(<WidgetStatesConstraint, TextStyle?>{
-            WidgetState.any: baseStyle.themedTextStyle(),
-          }),
+          textStyle: baseStyle.textTheme.defaultTextStyle,
           backgroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.focused | WidgetState.pressed: baseStyle.themeValue(SBBColors.graphite, SBBColors.black),
             WidgetState.disabled: SBBColors.transparent,
@@ -108,9 +102,7 @@ class DefaultSBBAccentButtonThemeData extends SBBAccentButtonThemeData {
   DefaultSBBAccentButtonThemeData(SBBBaseStyle baseStyle)
     : super(
         style: SBBButtonStyle(
-          textStyle: WidgetStateProperty.fromMap(<WidgetStatesConstraint, TextStyle?>{
-            WidgetState.any: baseStyle.themedTextStyle(),
-          }),
+          textStyle: baseStyle.textTheme.defaultTextStyle,
           backgroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.disabled: baseStyle.themeValue(SBBColors.graphite, SBBColors.iron),
             WidgetState.any: baseStyle.themeValue(SBBColors.charcoal, SBBColors.white),
