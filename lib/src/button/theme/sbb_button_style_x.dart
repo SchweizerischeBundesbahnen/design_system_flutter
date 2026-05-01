@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../../../sbb_design_system_mobile.dart';
-import '../../sbb_internal.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/button/theme/default_button_themes.dart';
 
 extension SBBButtonStyleX on SBBButtonStyle {
   ButtonStyle toButtonStyle() {
@@ -14,7 +13,7 @@ extension SBBButtonStyleX on SBBButtonStyle {
     }
 
     return baseButtonStyle.copyWith(
-      textStyle: textStyle,
+      textStyle: WidgetStatePropertyAll(textStyle),
       backgroundColor: backgroundColor,
       foregroundColor: foregroundColor,
       overlayColor: overlayColor,
@@ -26,7 +25,7 @@ extension SBBButtonStyleX on SBBButtonStyle {
 
   ButtonStyle get baseButtonStyle => ButtonStyle(
     overlayColor: WidgetStatePropertyAll<Color>(SBBColors.transparent),
-    fixedSize: WidgetStatePropertyAll<Size>(const Size.fromHeight(SBBInternal.defaultButtonHeight)),
+    fixedSize: WidgetStatePropertyAll<Size>(const Size.fromHeight(defaultSBBButtonHeight)),
     padding: WidgetStatePropertyAll<EdgeInsets>(const .symmetric(horizontal: SBBSpacing.medium)),
     elevation: WidgetStatePropertyAll<double>(0),
     tapTargetSize: .shrinkWrap,

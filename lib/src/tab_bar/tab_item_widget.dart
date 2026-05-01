@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 class TabItemWidget extends StatelessWidget {
   const TabItemWidget(
@@ -35,14 +34,14 @@ class TabItemWidget extends StatelessWidget {
     final size = portrait ? portraitSize : landscapeSize;
     final topPadding = portrait ? portraitCirclePadding : landscapeCirclePadding;
 
-    final effectiveStyle = style ?? Theme.of(context).sbbTabBarTheme?.style;
+    final effectiveStyle = style ?? Theme.of(context).sbbTabBarTheme.style;
 
     final states = <WidgetState>{
       if (selected) WidgetState.selected,
     };
 
     final iconColor = effectiveStyle?.iconColor?.resolve(states);
-    final itemBgColor = effectiveStyle?.itemBackgroundColor?.resolve(states) ?? SBBColors.transparent;
+    final itemBgColor = effectiveStyle?.itemBackgroundColor?.resolve(states);
     final warningIcon = effectiveStyle?.warningItemIcon ?? SBBIcons.sign_exclamation_point_small;
     final warningBgColor = effectiveStyle?.warningItemBackgroundColor ?? SBBColors.red;
     final warningFgColor = effectiveStyle?.warningItemForegroundColor ?? SBBColors.white;
@@ -55,7 +54,7 @@ class TabItemWidget extends StatelessWidget {
       color = warningBgColor;
       resolvedIconColor = warningFgColor;
       resolvedIcon = warningIcon;
-    } else if (selected) {
+    } else if (selected && itemBgColor != null) {
       color = itemBgColor;
     }
 

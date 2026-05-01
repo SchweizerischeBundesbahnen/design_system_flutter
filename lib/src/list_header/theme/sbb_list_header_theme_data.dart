@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
-import '../../../sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// The ThemeData for the [SBBListHeader].
 ///
@@ -54,7 +53,6 @@ extension SBBListHeaderThemeDataX on SBBListHeaderThemeData {
 }
 
 extension SBBListHeaderThemeDataThemeDataX on ThemeData {
-  SBBListHeaderThemeData? get sbbListHeaderTheme {
-    return extension<SBBListHeaderThemeData>();
-  }
+  /// Access the [SBBListHeaderThemeData] from the current theme.
+  SBBListHeaderThemeData get sbbListHeaderTheme => extension<SBBListHeaderThemeData>()!;
 }

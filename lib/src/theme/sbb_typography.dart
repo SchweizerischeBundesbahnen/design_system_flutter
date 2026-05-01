@@ -7,12 +7,12 @@ import 'package:flutter/material.dart';
 /// * [SBBFontFamily], which contains the constants for all SBB font families.
 const String sbbFont = SBBFontFamily.sbbFontLight;
 
-/// Global constant for default SBB text style for easier use of extension methods defined in [SBBTextStyleExtensions].
+/// Global constant for default SBB text style for easier use of extension methods defined in [SBBTextStyleX].
 const TextStyle sbbTextStyle = SBBTextStyles.mediumLight;
 
 /// Provides constants for all text styles defined in the SBB design system mobile.
 ///
-/// When in need of a more custom text style, consider using the extension methods defined in [SBBTextStyleExtensions].
+/// When in need of a more custom text style, consider using the extension methods defined in [SBBTextStyleX].
 /// The intended way to use this is to start with [sbbTextStyle] and use the corresponding methods to achieve the
 /// desired [TextStyle]:
 /// ```dart
@@ -46,7 +46,7 @@ class SBBTextStyles {
   static const double xxSmallFontHeight = 12.0 / xxSmallFontSize;
 
   // Text styles
-  static const TextStyle extraExtraLargeLight = TextStyle(
+  static const TextStyle xxLargeLight = TextStyle(
     fontFamily: SBBFontFamily.sbbFontLight,
     fontSize: xxLargeFontSize,
     height: xxLargeFontHeight,
@@ -55,7 +55,7 @@ class SBBTextStyles {
     leadingDistribution: .even,
   );
 
-  static const TextStyle extraExtraLargeBold = TextStyle(
+  static const TextStyle xxLargeBold = TextStyle(
     fontFamily: SBBFontFamily.sbbFontBold,
     fontSize: xxLargeFontSize,
     height: xxLargeFontHeight,
@@ -64,7 +64,7 @@ class SBBTextStyles {
     leadingDistribution: .even,
   );
 
-  static const TextStyle extraLargeLight = TextStyle(
+  static const TextStyle xLargeLight = TextStyle(
     fontFamily: SBBFontFamily.sbbFontLight,
     fontSize: xLargeFontSize,
     height: xLargeFontHeight,
@@ -73,7 +73,7 @@ class SBBTextStyles {
     leadingDistribution: .even,
   );
 
-  static const TextStyle extraLargeBold = TextStyle(
+  static const TextStyle xLargeBold = TextStyle(
     fontFamily: SBBFontFamily.sbbFontBold,
     fontSize: xLargeFontSize,
     height: xLargeFontHeight,
@@ -136,7 +136,7 @@ class SBBTextStyles {
     leadingDistribution: .even,
   );
 
-  static const TextStyle extraSmallLight = TextStyle(
+  static const TextStyle xSmallLight = TextStyle(
     fontFamily: SBBFontFamily.sbbFontLight,
     fontSize: xSmallFontSize,
     height: xSmallFontHeight,
@@ -145,7 +145,7 @@ class SBBTextStyles {
     leadingDistribution: .even,
   );
 
-  static const TextStyle extraSmallBold = TextStyle(
+  static const TextStyle xSmallBold = TextStyle(
     fontFamily: SBBFontFamily.sbbFontBold,
     fontSize: xSmallFontSize,
     height: xSmallFontHeight,
@@ -154,7 +154,7 @@ class SBBTextStyles {
     leadingDistribution: .even,
   );
 
-  static const TextStyle extraExtraSmallLight = TextStyle(
+  static const TextStyle xxSmallLight = TextStyle(
     fontFamily: SBBFontFamily.sbbFontLight,
     fontSize: xxSmallFontSize,
     height: xxSmallFontHeight,
@@ -163,22 +163,13 @@ class SBBTextStyles {
     leadingDistribution: .even,
   );
 
-  static const TextStyle extraExtraSmallBold = TextStyle(
+  static const TextStyle xxSmallBold = TextStyle(
     fontFamily: SBBFontFamily.sbbFontBold,
     fontSize: xxSmallFontSize,
     height: xxSmallFontHeight,
     fontStyle: .normal,
     fontWeight: .normal,
     leadingDistribution: .even,
-  );
-
-  @Deprecated('Use SBBTextStyles.extraExtraSmallLight instead')
-  static const TextStyle helpersLabel = TextStyle(
-    fontFamily: SBBFontFamily.sbbFontLight,
-    fontSize: 10.0,
-    height: 12.0 / 10.0,
-    fontStyle: .normal,
-    fontWeight: .normal,
   );
 }
 
@@ -199,7 +190,7 @@ class SBBFontFamily {
   static const String sbbFontCondensedHeavy = 'packages/sbb_design_system_mobile/SBBWebCondensedHeavy';
 }
 
-extension SBBTextStyleExtensions on TextStyle {
+extension SBBTextStyleX on TextStyle {
   // Font families
 
   /// Returns an ultra light ([fontFamily]) copy of this text style

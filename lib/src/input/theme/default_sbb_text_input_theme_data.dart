@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
-
-import '../../../sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// The default text input theme is specified using the
 /// * [Figma design specs](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=309-2236)
@@ -9,9 +8,9 @@ class DefaultSBBTextInputThemeData extends SBBTextInputThemeData {
     : super(
         inputTextStyle: baseStyle.textTheme.defaultTextStyle,
         inputForegroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
-          WidgetState.disabled: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
-          WidgetState.error: baseStyle.colorScheme.errorColor,
-          WidgetState.any: baseStyle.colorScheme.defaultTextColor,
+          WidgetState.disabled: baseStyle.colorScheme.textSecondary,
+          WidgetState.error: baseStyle.colorScheme.error,
+          WidgetState.any: baseStyle.colorScheme.textPrimary,
         }),
         enableClearButton: true,
       );

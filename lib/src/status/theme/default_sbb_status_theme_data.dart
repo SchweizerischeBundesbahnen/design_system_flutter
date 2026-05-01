@@ -4,32 +4,36 @@ class DefaultSBBStatusThemeData extends SBBStatusThemeData {
   DefaultSBBStatusThemeData({required SBBBaseStyle baseStyle})
     : super(
         alert: SBBStatusStyle(
-          textStyle: SBBTextStyles.smallLight,
-          foregroundColor: baseStyle.colorScheme.defaultTextColor,
-          backgroundColor: baseStyle.colorScheme.errorColor,
-          borderColor: baseStyle.colorScheme.errorColor,
+          textStyle: baseStyle.textTheme.smallLight,
+          foregroundColor: baseStyle.colorScheme.textPrimary,
+          backgroundColor: baseStyle.colorScheme.error,
+          borderColor: baseStyle.colorScheme.error,
           iconColor: SBBColors.white,
+          alphaValue: .05,
         ),
         warning: SBBStatusStyle(
-          textStyle: SBBTextStyles.smallLight,
-          foregroundColor: baseStyle.colorScheme.defaultTextColor,
+          textStyle: baseStyle.textTheme.smallLight,
+          foregroundColor: baseStyle.colorScheme.textPrimary,
           backgroundColor: baseStyle.themeValue(SBBColors.peach, SBBColors.peachDark),
           borderColor: baseStyle.themeValue(SBBColors.peach, SBBColors.peachDark),
           iconColor: SBBColors.white,
+          alphaValue: .05,
         ),
         success: SBBStatusStyle(
-          textStyle: SBBTextStyles.smallLight,
-          foregroundColor: baseStyle.colorScheme.defaultTextColor,
+          textStyle: baseStyle.textTheme.smallLight,
+          foregroundColor: baseStyle.colorScheme.textPrimary,
           backgroundColor: baseStyle.themeValue(SBBColors.green, SBBColors.greenDark),
           borderColor: baseStyle.themeValue(SBBColors.green, SBBColors.greenDark),
           iconColor: SBBColors.white,
+          alphaValue: .05,
         ),
         information: SBBStatusStyle(
-          textStyle: SBBTextStyles.smallLight,
-          foregroundColor: baseStyle.colorScheme.defaultTextColor,
+          textStyle: baseStyle.textTheme.smallLight,
+          foregroundColor: baseStyle.colorScheme.textPrimary,
           backgroundColor: SBBColors.smoke,
           borderColor: SBBColors.smoke,
           iconColor: SBBColors.white,
+          alphaValue: .05,
         ),
       );
 }

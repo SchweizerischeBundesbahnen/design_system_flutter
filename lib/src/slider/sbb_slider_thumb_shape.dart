@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 const _thumbBoxShadows = <BoxShadow>[
   BoxShadow(color: Color(0x338D8D8D), offset: Offset(0, 1), blurRadius: 8.0),
@@ -18,8 +17,8 @@ class CircleBorderThumbShape extends SliderComponentShape {
 
   final double radius;
   final double borderWidth;
-  final Color enabledBorderColor;
-  final Color disabledBorderColor;
+  final Color? enabledBorderColor;
+  final Color? disabledBorderColor;
 
   @override
   Size getPreferredSize(_, _) => Size.fromRadius(radius);

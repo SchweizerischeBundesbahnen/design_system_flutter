@@ -2,8 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
-import '../../../sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// The ThemeData for the [SBBListItem].
 ///
@@ -118,7 +117,6 @@ extension SBBListItemThemeDataX on SBBListItemThemeData {
 }
 
 extension SBBListItemThemeDataThemeDataX on ThemeData {
-  SBBListItemThemeData? get sbbListItemTheme {
-    return extension<SBBListItemThemeData>();
-  }
+  /// Access the [SBBListItemThemeData] from the current theme.
+  SBBListItemThemeData get sbbListItemTheme => extension<SBBListItemThemeData>()!;
 }

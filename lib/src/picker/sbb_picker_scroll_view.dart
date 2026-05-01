@@ -3,12 +3,11 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-
-import 'sbb_picker_constants.dart';
-import 'sbb_picker_item.dart';
-import 'sbb_picker_scope.dart';
-import 'sbb_picker_scroll_controller.dart';
-import 'theme/sbb_picker_style.dart';
+import 'package:sbb_design_system_mobile/src/picker/picker_constants.dart';
+import 'package:sbb_design_system_mobile/src/picker/picker_scope.dart';
+import 'package:sbb_design_system_mobile/src/picker/sbb_picker_item.dart';
+import 'package:sbb_design_system_mobile/src/picker/sbb_picker_scroll_controller.dart';
+import 'package:sbb_design_system_mobile/src/picker/theme/sbb_picker_style.dart';
 
 /// Signature for a function that creates a [SBBPickerItem] for a given index,
 /// but may return null.
@@ -101,14 +100,14 @@ class _SBBPickerScrollViewState extends State<SBBPickerScrollView> {
   int get _visibleCenterItemIndex => _visibleItemCount ~/ 2;
 
   // Item height is read from the ambient SBBPickerScope.
-  double get _itemHeight => SBBPickerScope.of(context).itemHeight;
+  double get _itemHeight => PickerScope.of(context).itemHeight;
 
   double get _scrollAreaHeight => _itemHeight * _visibleItemCount;
 
   double get _listPaddingHeight => _visibleCenterItemIndex * _itemHeight;
 
   SBBPickerStyle? _getEffectivePickerStyle(BuildContext context) {
-    return SBBPickerScope.maybeOf(context)?.pickerStyle;
+    return PickerScope.maybeOf(context)?.pickerStyle;
   }
 
   late ValueNotifier<double> _scrollOffsetValueNotifier;
@@ -151,7 +150,7 @@ class _SBBPickerScrollViewState extends State<SBBPickerScrollView> {
   void didChangeDependencies() {
     super.didChangeDependencies();
 
-    final scope = SBBPickerScope.of(context);
+    final scope = PickerScope.of(context);
     final visibleItemCountChanged = _visibleItemCount != scope.visibleItemCount;
     _visibleItemCount = scope.visibleItemCount;
 

@@ -1,8 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-
-import '../../theme.dart';
+import 'package:sbb_design_system_mobile/src/theme/theme.dart';
 
 class PromotionBoxStyle {
   const PromotionBoxStyle({
@@ -19,11 +18,11 @@ class PromotionBoxStyle {
     return PromotionBoxStyle(
       borderColor: baseStyle.themeValue(SBBColors.white, SBBColors.charcoal),
       badgeShadowColor: baseStyle.themeValue(
-        baseStyle.colorScheme.primaryColor.withValues(alpha: 0.2),
-        baseStyle.colorScheme.primary85Color?.withValues(alpha: 0.6),
+        baseStyle.colorScheme.primary.withValues(alpha: 0.2),
+        baseStyle.colorScheme.primary85?.withValues(alpha: 0.6),
       ),
-      badgeColor: baseStyle.colorScheme.primaryColor,
-      badgeBorderColor: baseStyle.themeValue(SBBColors.white, SBBColors.charcoal),
+      badgeColor: baseStyle.colorScheme.primary,
+      badgeBorderColor: baseStyle.colorScheme.backgroundContent,
       badgeTextStyle: SBBTextStyles.smallBold.copyWith(color: SBBColors.white),
       gradientColors: baseStyle.themeValue(PromotionBoxStyle.lightGradient, PromotionBoxStyle.darkGradient),
       textureOpacity: baseStyle.themeValue(0.1, 0.5),

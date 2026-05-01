@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
-import '../../../sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// The ThemeData for [SBBPopup].
 ///
@@ -59,7 +58,6 @@ extension SBBPopupThemeDataX on SBBPopupThemeData {
 }
 
 extension SBBPopupThemeDataThemeDataX on ThemeData {
-  SBBPopupThemeData? get sbbPopupTheme {
-    return extension<SBBPopupThemeData>();
-  }
+  /// Access the [SBBPopupThemeData] from the current theme.
+  SBBPopupThemeData get sbbPopupTheme => extension<SBBPopupThemeData>()!;
 }

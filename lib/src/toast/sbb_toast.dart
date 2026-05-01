@@ -1,10 +1,10 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 import 'package:sbb_design_system_mobile/src/toast/default_toast_body.dart';
 import 'package:sbb_design_system_mobile/src/toast/toast_scope.dart';
-
-import '../../sbb_design_system_mobile.dart';
 
 /// A dismissible message overlay that appears at the bottom of the screen, typically for transient notifications.
 ///
@@ -103,7 +103,7 @@ class SBBToast {
     _builder(
       duration: duration,
       bottom: bottom,
-      style: style,
+      widgetStyle: style,
       builder: (_, _) => DefaultToastBody(
         title: title,
         titleText: titleText,
@@ -153,14 +153,14 @@ class SBBToast {
   void _builder({
     required Widget Function(BuildContext context, Stream<bool> stream) builder,
     double bottom = SBBSpacing.xLarge,
-    SBBToastStyle? style,
+    SBBToastStyle? widgetStyle,
     Duration duration = durationShort,
   }) {
-    showToastMessage() {
+    void showToastMessage() {
       remove();
       _streamController = StreamController<bool>();
       _streamController!.add(true);
-      _overlayEntry = _buildToastOverlayEntry(bottom, builder, _streamController!.stream, style);
+      _overlayEntry = _buildToastOverlayEntry(bottom, builder, _streamController!.stream, widgetStyle);
       _overlayState.insert(_overlayEntry!);
       _fadeOutTimer = Timer(duration + kThemeAnimationDuration * 2, () {
         _streamController?.add(false);
@@ -206,13 +206,14 @@ class SBBToast {
     double bottom,
     Widget Function(BuildContext context, Stream<bool> stream) builder,
     Stream<bool> stream,
-    SBBToastStyle? style,
+    SBBToastStyle? widgetStyle,
   ) => OverlayEntry(
     builder: (context) {
-      final resolvedStyle = (Theme.of(context).sbbToastTheme?.style ?? SBBToastStyle()).merge(style);
+      assert(debugCheckHasSBBBaseStyle(context));
+
       return ToastScope(
         stream: stream,
-        style: resolvedStyle,
+        widgetStyle: widgetStyle,
         toast: this,
         child: Positioned(
           left: 0.0,

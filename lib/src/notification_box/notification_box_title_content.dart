@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import 'notification_box_text_content.dart';
+import 'package:sbb_design_system_mobile/src/notification_box/notification_box_text_content.dart';
 
 class SBBNotificationBoxTitleContent extends StatelessWidget {
   const SBBNotificationBoxTitleContent({

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// Description of an Element in the [SBBTabBar]
 abstract class SBBTabBarItem {
@@ -13,7 +12,7 @@ abstract class SBBTabBarItem {
   String translate(BuildContext context);
 
   @override
-  get hashCode => Object.hash(id, icon);
+  int get hashCode => Object.hash(id, icon);
 
   @override
   bool operator ==(Object other) {

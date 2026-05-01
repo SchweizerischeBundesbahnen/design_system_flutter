@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../../sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 const EdgeInsets _badgeMargin = .only(right: 4.0);
 const Size _badgeSize = Size(24.0, 24.0);
@@ -140,21 +140,20 @@ class _SBBChipState extends State<SBBChip> {
 
   @override
   Widget build(BuildContext context) {
-    debugCheckHasMaterial(context);
+    assert(debugCheckHasMaterial(context));
+    assert(debugCheckHasSBBBaseStyle(context));
 
-    final themeStyle = Theme.of(context).sbbChipTheme!.style!;
+    final themeStyle = Theme.of(context).sbbChipTheme.style!;
     final effectiveStyle = themeStyle.merge(widget.style);
     final states = _statesController.value;
 
-    final borderColor = effectiveStyle.borderColor?.resolve(states) ?? SBBColors.granite;
-    final backgroundColor = effectiveStyle.backgroundColor?.resolve(states) ?? SBBColors.white;
-    final labelForegroundColor = effectiveStyle.labelForegroundColor?.resolve(states) ?? SBBColors.black;
-    final trailingForegroundColor = effectiveStyle.trailingForegroundColor?.resolve(states) ?? SBBColors.white;
-    final labelTextStyle = effectiveStyle.labelTextStyle?.resolve(states);
-    final trailingTextStyle = effectiveStyle.trailingTextStyle?.resolve(states);
-    final trailingBackgroundColor =
-        effectiveStyle.trailingBackgroundColor?.resolve(states) ??
-        Theme.of(context).sbbBaseStyle.colorScheme.primaryColor;
+    final borderColor = effectiveStyle.borderColor!.resolve(states) ?? SBBColors.transparent;
+    final backgroundColor = effectiveStyle.backgroundColor!.resolve(states);
+    final labelForegroundColor = effectiveStyle.labelForegroundColor!.resolve(states);
+    final trailingForegroundColor = effectiveStyle.trailingForegroundColor!.resolve(states);
+    final labelTextStyle = effectiveStyle.labelTextStyle!.resolve(states);
+    final trailingTextStyle = effectiveStyle.trailingTextStyle!.resolve(states);
+    final trailingBackgroundColor = effectiveStyle.trailingBackgroundColor!.resolve(states);
 
     return ClipPath(
       clipper: ShapeBorderClipper(
@@ -197,7 +196,7 @@ class _SBBChipState extends State<SBBChip> {
 
   Widget _label(TextStyle? labelTextStyle) => widget.label ?? _defaultLabel(labelTextStyle);
 
-  Widget _trailing(Color trailingBackgroundColor, TextStyle? trailingTextStyle) {
+  Widget _trailing(Color? trailingBackgroundColor, TextStyle? trailingTextStyle) {
     return widget.trailing ??
         (widget.selected
             ? _defaultSelected(trailingBackgroundColor)
@@ -213,7 +212,7 @@ class _SBBChipState extends State<SBBChip> {
     );
   }
 
-  Widget _defaultUnselected(Color trailingBackgroundColor, TextStyle? badgeTextStyle) {
+  Widget _defaultUnselected(Color? trailingBackgroundColor, TextStyle? badgeTextStyle) {
     if (widget.trailingText == null) return SizedBox.shrink();
 
     return _badgeCircle(
@@ -229,7 +228,7 @@ class _SBBChipState extends State<SBBChip> {
     );
   }
 
-  Widget _defaultSelected(Color trailingBackgroundColor) {
+  Widget _defaultSelected(Color? trailingBackgroundColor) {
     return _badgeCircle(
       key: ValueKey(SBBIcons.cross_small),
       child: Icon(SBBIcons.cross_small),
@@ -240,7 +239,7 @@ class _SBBChipState extends State<SBBChip> {
   Widget _badgeCircle({
     required Key key,
     required Widget child,
-    required Color color,
+    required Color? color,
   }) {
     return Container(
       key: key,

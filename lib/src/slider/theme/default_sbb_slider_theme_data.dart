@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../../sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// Default theme data for [SBBSlider].
 /// The default slider theme is specified using the
@@ -15,20 +14,20 @@ class DefaultSBBSliderThemeData extends SBBSliderThemeData {
           }),
           activeTrackColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.disabled: baseStyle.themeValue(SBBColors.graphite, SBBColors.granite),
-            WidgetState.any: baseStyle.colorScheme.primaryColor,
+            WidgetState.any: baseStyle.colorScheme.primary,
           }),
           thumbBackgroundColor: WidgetStatePropertyAll(baseStyle.themeValue(SBBColors.white, SBBColors.midnight)),
           thumbBorderColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.disabled: baseStyle.themeValue(SBBColors.smoke, SBBColors.smoke),
-            WidgetState.any: baseStyle.colorScheme.primaryColor,
+            WidgetState.any: baseStyle.colorScheme.primary,
           }),
           leadingForegroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
-            WidgetState.disabled: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
-            WidgetState.any: baseStyle.colorScheme.iconColor,
+            WidgetState.disabled: baseStyle.colorScheme.iconSecondary,
+            WidgetState.any: baseStyle.colorScheme.iconPrimary,
           }),
           trailingForegroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
-            WidgetState.disabled: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
-            WidgetState.any: baseStyle.colorScheme.iconColor,
+            WidgetState.disabled: baseStyle.colorScheme.iconSecondary,
+            WidgetState.any: baseStyle.colorScheme.iconPrimary,
           }),
           padding: .symmetric(horizontal: SBBSpacing.medium),
         ),

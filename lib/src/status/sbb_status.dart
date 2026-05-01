@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../../sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 /// The SBB Status.
 ///
@@ -145,18 +145,20 @@ sealed class SBBStatus extends StatelessWidget {
   /// If this is non null, semantics of [label] or [labelText] are ignored.
   final String? semanticLabel;
 
-  SBBStatusStyle? _getThemedStyle(BuildContext context);
+  SBBStatusStyle _getThemedStyle(BuildContext context);
 
   @override
   Widget build(BuildContext context) {
-    final SBBStatusStyle themedStyle = _getThemedStyle(context)!;
+    assert(debugCheckHasSBBBaseStyle(context));
+
+    final SBBStatusStyle themedStyle = _getThemedStyle(context);
     final SBBStatusStyle effectiveStyle = themedStyle.merge(style);
 
     final Color resolvedForegroundColor = effectiveStyle.foregroundColor!;
     final Color resolvedBackgroundColor = effectiveStyle.backgroundColor!;
     final Color resolvedIconColor = effectiveStyle.iconColor ?? resolvedForegroundColor;
     final Color resolvedBorderColor = effectiveStyle.borderColor!;
-    final double resolvedAlphaValue = effectiveStyle.alphaValue ?? _defaultAlphaValue;
+    final double resolvedAlphaValue = effectiveStyle.alphaValue!;
     final TextStyle resolvedTextStyle = effectiveStyle.textStyle!;
 
     return DefaultTextStyle.merge(
@@ -214,7 +216,7 @@ sealed class SBBStatus extends StatelessWidget {
 
     return Flexible(
       child: Container(
-        padding: const .symmetric(vertical: 4.0, horizontal: 8.0),
+        padding: const .symmetric(vertical: SBBSpacing.xxSmall, horizontal: SBBSpacing.xSmall),
         child: Text(
           labelText!,
           maxLines: 2,
@@ -223,8 +225,6 @@ sealed class SBBStatus extends StatelessWidget {
       ),
     );
   }
-
-  double get _defaultAlphaValue => 0.05;
 }
 
 final class _SBBStatusAlert extends SBBStatus {
@@ -239,8 +239,8 @@ final class _SBBStatusAlert extends SBBStatus {
   }) : super._(iconData: icon == null && iconData == null ? SBBIcons.circle_cross_small : iconData);
 
   @override
-  SBBStatusStyle? _getThemedStyle(BuildContext context) {
-    return Theme.of(context).sbbStatusTheme?.alert;
+  SBBStatusStyle _getThemedStyle(BuildContext context) {
+    return Theme.of(context).sbbStatusTheme.alert!;
   }
 }
 
@@ -256,8 +256,8 @@ final class _SBBStatusWarning extends SBBStatus {
   }) : super._(iconData: icon == null && iconData == null ? SBBIcons.circle_exclamation_point_small : iconData);
 
   @override
-  SBBStatusStyle? _getThemedStyle(BuildContext context) {
-    return Theme.of(context).sbbStatusTheme?.warning;
+  SBBStatusStyle _getThemedStyle(BuildContext context) {
+    return Theme.of(context).sbbStatusTheme.warning!;
   }
 }
 
@@ -273,8 +273,8 @@ final class _SBBStatusSuccess extends SBBStatus {
   }) : super._(iconData: icon == null && iconData == null ? SBBIcons.circle_tick_small : iconData);
 
   @override
-  SBBStatusStyle? _getThemedStyle(BuildContext context) {
-    return Theme.of(context).sbbStatusTheme?.success;
+  SBBStatusStyle _getThemedStyle(BuildContext context) {
+    return Theme.of(context).sbbStatusTheme.success!;
   }
 }
 
@@ -290,7 +290,7 @@ final class _SBBStatusInformation extends SBBStatus {
   }) : super._(iconData: icon == null && iconData == null ? SBBIcons.circle_information_small : iconData);
 
   @override
-  SBBStatusStyle? _getThemedStyle(BuildContext context) {
-    return Theme.of(context).sbbStatusTheme?.information;
+  SBBStatusStyle _getThemedStyle(BuildContext context) {
+    return Theme.of(context).sbbStatusTheme.information!;
   }
 }

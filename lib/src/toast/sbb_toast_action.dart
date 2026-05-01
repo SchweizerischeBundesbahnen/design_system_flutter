@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:sbb_design_system_mobile/src/toast/toast_scope.dart';
 
-import '../../sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// An action button for use within a [SBBToast].
 ///
@@ -74,7 +74,7 @@ class _SBBToastActionState extends State<SBBToastAction> {
   @override
   Widget build(BuildContext context) {
     final toastScope = ToastScope.of(context);
-    final resolvedStyle = toastScope.style;
+    final resolvedStyle = toastScope.widgetStyle;
 
     return GestureDetector(
       onTap: _isActionBeenTriggered ? null : () => _handlePressed(toastScope.toast?.hide),

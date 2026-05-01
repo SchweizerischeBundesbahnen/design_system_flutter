@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-
-import '../../sbb_design_system_mobile.dart';
-import '../input/decoration/sbb_input_decorator.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/input/decoration/sbb_input_decorator.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 /// The SBB Decorated Text.
 ///
@@ -184,11 +184,12 @@ class _SBBDecoratedTextState extends State<SBBDecoratedText> {
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMaterial(context));
+    assert(debugCheckHasSBBBaseStyle(context));
 
     final bool isMultiline = (widget.maxLines ?? 0) != 1;
 
-    final themeData = Theme.of(context).sbbDecoratedTextTheme;
-    final effectiveStyle = themeData?.style?.merge(widget.style) ?? widget.style;
+    final themeStyle = Theme.of(context).sbbDecoratedTextTheme.style!;
+    final effectiveStyle = themeStyle.merge(widget.style);
 
     final effectiveInputTextStyle = _effectiveInputTextStyle(effectiveStyle);
     final child = Text(widget.value, maxLines: widget.maxLines, style: effectiveInputTextStyle);
@@ -199,7 +200,7 @@ class _SBBDecoratedTextState extends State<SBBDecoratedText> {
       excludeFromSemantics: true,
       autofocus: widget.autofocus,
       statesController: _statesController,
-      overlayColor: effectiveStyle?.overlayColor,
+      overlayColor: effectiveStyle.overlayColor,
       child: Semantics(
         enabled: _enabled,
         currentValueLength: widget.value.length,
@@ -224,9 +225,9 @@ class _SBBDecoratedTextState extends State<SBBDecoratedText> {
     );
   }
 
-  TextStyle _effectiveInputTextStyle(SBBDecoratedTextStyle? style) {
-    final textStyle = style?.valueTextStyle;
-    final color = style?.valueForegroundColor?.resolve(_statesController.value);
+  TextStyle _effectiveInputTextStyle(SBBDecoratedTextStyle style) {
+    final textStyle = style.valueTextStyle;
+    final color = style.valueForegroundColor?.resolve(_statesController.value);
 
     return (color != null ? textStyle?.copyWith(color: color) : textStyle) ?? TextStyle(color: color);
   }

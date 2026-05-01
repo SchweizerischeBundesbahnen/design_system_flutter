@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../../sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// Style for SBB Buttons. Use this in combination with [SBBButtonThemeData]
 /// to override all button variants within the current [SBBTheme].
@@ -25,7 +24,7 @@ class SBBButtonStyle {
   ///
   /// The color of the [textStyle] is typically not used directly, the
   /// [foregroundColor] is used instead.
-  final WidgetStateProperty<TextStyle?>? textStyle;
+  final TextStyle? textStyle;
 
   /// The button's background fill color.
   final WidgetStateProperty<Color?>? backgroundColor;
@@ -56,7 +55,7 @@ class SBBButtonStyle {
   final ButtonLayerBuilder? foregroundBuilder;
 
   SBBButtonStyle copyWith({
-    WidgetStateProperty<TextStyle?>? textStyle,
+    TextStyle? textStyle,
     WidgetStateProperty<Color?>? backgroundColor,
     WidgetStateProperty<Color?>? foregroundColor,
     WidgetStateProperty<Color?>? overlayColor,
@@ -93,7 +92,7 @@ class SBBButtonStyle {
     if (identical(a, b)) return a;
 
     return SBBButtonStyle(
-      textStyle: WidgetStateProperty.lerp<TextStyle?>(a?.textStyle, b?.textStyle, t, TextStyle.lerp),
+      textStyle: TextStyle.lerp(a?.textStyle, b?.textStyle, t),
       foregroundColor: WidgetStateProperty.lerp<Color?>(a?.foregroundColor, b?.foregroundColor, t, Color.lerp),
       backgroundColor: WidgetStateProperty.lerp<Color?>(a?.backgroundColor, b?.backgroundColor, t, Color.lerp),
       overlayColor: WidgetStateProperty.lerp<Color?>(a?.overlayColor, b?.overlayColor, t, Color.lerp),

@@ -71,7 +71,7 @@ class RadioPageState extends State<RadioPage> {
               groupValue: _listItemGroupValue,
               onChanged: (newValue) => setState(() => _listItemGroupValue = newValue),
               child: Column(
-                children: SBBListItem.divideListItems(
+                children: SBBDivider.divideItems(
                   context: context,
                   items: [
                     SBBRadioListItem<int>(

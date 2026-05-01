@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../../sbb_design_system_mobile.dart';
-import 'autocompletion_link.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/autocompletion/autocompletion_link.dart';
 
 /// Signature for a function that builds a single suggestion list item.
 typedef AutocompletionItemBuilder =
@@ -131,7 +130,7 @@ class _AutocompletionOverlayState extends State<AutocompletionOverlay> {
               children: [
                 if (hasFavorites) ...[
                   Container(color: backgroundColor, height: SBBSpacing.xxSmall),
-                  ...SBBListItem.divideListItems(
+                  ...SBBDivider.divideItems(
                     context: context,
                     items: widget.favoritesSection.map(
                       (item) => Container(color: optionColor, child: item),
@@ -140,7 +139,7 @@ class _AutocompletionOverlayState extends State<AutocompletionOverlay> {
                 ],
                 if (hasSuggestions) ...[
                   Container(color: backgroundColor, height: SBBSpacing.xxSmall),
-                  ...SBBListItem.divideListItems(
+                  ...SBBDivider.divideItems(
                     context: context,
                     items: widget.suggestionsSection.map(
                       (item) => Container(color: optionColor, child: item),

@@ -22,6 +22,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ### Changed
 
+- BREAKING: overhauled `SBBHeaderBox` - see [v5 migration guide]
 - BREAKING: overhauled `SBBBaseStyle` - see [v5 migration guide]
 - BREAKING: overhauled all button variants - see [v5 migration guide]
 - BREAKING: overhauled `SBBCheckbox` - see [v5 migration guide]
@@ -46,6 +47,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - BREAKING: use `SBBTabBarStyle` / `SBBTabBarThemeData` to style `SBBTabBar` - see [v5 migration guide]
 - BREAKING: overhauled `SBBTextField` and renamed to `SBBTextInput` - see [v5 migration guide]
 - BREAKING: removed default left margin on component `SBBTextInput` (#402)
+- BREAKING: renamed static methods containing `extra` on `SBBTextStyles` to containing `x` - see [v5 migration guide]
 - renamed `TextStylesExtensions` to `SBBTextStyleExtensions`
 - BREAKING: renamed `ContractionState` to `SBBContractionState`
 - BREAKING: renamed `ContractibleState` to `SBBContractibleState`
@@ -63,10 +65,17 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Removed deprecated `SBBOnboarding`
 - Removed deprecated `sbbDefaultSpacing`
 - Removed deprecated `SBBLinkText`
+- Removed deprecated `SBBTextStyles.helpersLabel`
 - Removed `CascadeColumnParentData` as it is not directly used by clients
 - Removed `SBBTextField` - replaced by `SBBTextInput`
 - Removed `merge` extension on `SBBBaseStyle`
 - Removed `SBBColors.redDark`, use `SBBColors.red85` instead
+
+## [4.12.0] - 2026-04-28
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.23
 
 ## [4.11.0] - 2026-04-13
 
@@ -825,7 +834,9 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 [v5 migration guide]: migration_guide.md
 
-[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.11.0...HEAD
+[Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.12.0...HEAD
+
+[4.12.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.11.0...4.12.0
 
 [4.11.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.10.0...4.11.0
 

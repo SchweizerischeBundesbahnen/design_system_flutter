@@ -1,18 +1,17 @@
 import 'package:flutter/cupertino.dart';
-
-import '../../../sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// The default bottom sheet theme specified using design system values.
 class DefaultSBBBottomSheetThemeData extends SBBBottomSheetThemeData {
   DefaultSBBBottomSheetThemeData(SBBBaseStyle baseStyle)
     : super(
         style: SBBBottomSheetStyle(
-          titleTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.largeLight),
-          titleForegroundColor: baseStyle.colorScheme.defaultTextColor,
+          titleTextStyle: baseStyle.themedTextStyle(textStyle: baseStyle.textTheme.largeLight),
+          titleForegroundColor: baseStyle.colorScheme.textPrimary,
           leadingTextStyle: baseStyle.textTheme.defaultTextStyle,
-          leadingForegroundColor: baseStyle.colorScheme.iconColor,
+          leadingForegroundColor: baseStyle.colorScheme.iconPrimary,
           trailingTextStyle: baseStyle.textTheme.defaultTextStyle,
-          trailingForegroundColor: baseStyle.colorScheme.iconColor,
+          trailingForegroundColor: baseStyle.colorScheme.iconPrimary,
           backgroundColor: baseStyle.themeValue(SBBColors.milk, SBBColors.midnight),
           clipBehavior: .hardEdge,
           constraints: null,

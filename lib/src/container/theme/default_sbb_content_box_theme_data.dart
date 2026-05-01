@@ -1,5 +1,4 @@
-import '../../../sbb_design_system_mobile.dart';
-import '../container.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// The default [SBBContentBoxThemeData] for the SBB design system.
 ///
@@ -12,7 +11,7 @@ class DefaultSBBContentBoxThemeData extends SBBContentBoxThemeData {
         style: SBBContentBoxStyle(
           margin: .zero,
           padding: .zero,
-          color: baseStyle.themeValue(SBBColors.white, SBBColors.charcoal),
+          color: baseStyle.colorScheme.backgroundContent,
           clipBehavior: .hardEdge,
           isSemanticContainer: true,
         ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../../sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 const double _defaultScrollControlDisabledMaxHeightRatio = 9.0 / 16.0;
 
@@ -118,9 +118,10 @@ Future<T?> showSBBBottomSheet<T>({
     scrollControlDisabledMaxHeightRatio >= 0.0 && scrollControlDisabledMaxHeightRatio <= 1.0,
     'scrollControlDisabledMaxHeightRatio must be between 0.0 and 1.0!',
   );
+  assert(debugCheckHasSBBBaseStyle(context));
 
-  final themeStyle = Theme.of(context).sbbBottomSheetTheme?.style;
-  final SBBBottomSheetStyle resolvedStyle = (themeStyle ?? SBBBottomSheetStyle()).merge(style);
+  final themeStyle = Theme.of(context).sbbBottomSheetTheme.style!;
+  final SBBBottomSheetStyle resolvedStyle = themeStyle.merge(style);
 
   return showModalBottomSheet<T>(
     context: context,
@@ -264,8 +265,10 @@ class SBBBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeStyle = Theme.of(context).sbbBottomSheetTheme?.style;
-    final SBBBottomSheetStyle resolvedStyle = (themeStyle ?? SBBBottomSheetStyle()).merge(style);
+    assert(debugCheckHasSBBBaseStyle(context));
+
+    final themeStyle = Theme.of(context).sbbBottomSheetTheme.style!;
+    final SBBBottomSheetStyle resolvedStyle = themeStyle.merge(style);
 
     // Build actual widgets from convenience parameters
     Widget? leadingWidget = leading;

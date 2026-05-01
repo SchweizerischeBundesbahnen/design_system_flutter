@@ -1,7 +1,7 @@
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
-import 'autocompletion_link.dart';
+import 'package:sbb_design_system_mobile/src/autocompletion/autocompletion_link.dart';
 
 /// A widget that wraps the [SBBAutocompletion] text field and continuously
 /// publishes its rendered [Size] and global [Offset] into [link], so that the

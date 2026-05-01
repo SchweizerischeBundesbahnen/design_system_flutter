@@ -1,9 +1,8 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
-
-import '../../sbb_design_system_mobile.dart';
-import 'sbb_picker_constants.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/picker/picker_constants.dart';
 
 /// An [InheritedWidget] that propagates the computed picker item height and
 /// text-measurement helpers to all descendant picker widgets.
@@ -14,8 +13,8 @@ import 'sbb_picker_constants.dart';
 ///
 /// Rebuilds its subtree whenever [itemHeight], [visibleItemCount],
 /// [pickerStyle], or the ambient [MediaQuery.textScaler] changes.
-class SBBPickerScope extends InheritedWidget {
-  const SBBPickerScope({
+class PickerScope extends InheritedWidget {
+  const PickerScope({
     super.key,
     required this.itemHeight,
     required this.visibleItemCount,
@@ -30,22 +29,22 @@ class SBBPickerScope extends InheritedWidget {
   final int visibleItemCount;
 
   /// The effective resolved [SBBPickerStyle] for this picker subtree.
-  final SBBPickerStyle? pickerStyle;
+  final SBBPickerStyle pickerStyle;
 
-  /// Returns the nearest [SBBPickerScope] ancestor or throws if none is found.
-  static SBBPickerScope of(BuildContext context) {
-    final scope = context.dependOnInheritedWidgetOfExactType<SBBPickerScope>();
+  /// Returns the nearest [PickerScope] ancestor or throws if none is found.
+  static PickerScope of(BuildContext context) {
+    final scope = context.dependOnInheritedWidgetOfExactType<PickerScope>();
     assert(scope != null, 'No SBBPickerScope found in context. Make sure SBBPicker wraps the widget tree.');
     return scope!;
   }
 
-  /// Returns the nearest [SBBPickerScope] ancestor or null if none is found.
-  static SBBPickerScope? maybeOf(BuildContext context) {
-    return context.dependOnInheritedWidgetOfExactType<SBBPickerScope>();
+  /// Returns the nearest [PickerScope] ancestor or null if none is found.
+  static PickerScope? maybeOf(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<PickerScope>();
   }
 
   @override
-  bool updateShouldNotify(SBBPickerScope oldWidget) {
+  bool updateShouldNotify(PickerScope oldWidget) {
     return itemHeight != oldWidget.itemHeight ||
         visibleItemCount != oldWidget.visibleItemCount ||
         pickerStyle != oldWidget.pickerStyle;
@@ -53,12 +52,12 @@ class SBBPickerScope extends InheritedWidget {
 }
 
 /// A stateful widget that owns the item-height computation and hosts an
-/// [SBBPickerScope] around its [child].
+/// [PickerScope] around its [child].
 ///
 /// Insert this widget immediately inside the [SBBPicker] build so that the
 /// scope is available to all descendant [SBBPickerScrollView]s.
-class SBBPickerScopeHost extends StatefulWidget {
-  const SBBPickerScopeHost({
+class PickerScopeHost extends StatefulWidget {
+  const PickerScopeHost({
     super.key,
     required this.visibleItemCount,
     required this.pickerStyle,
@@ -66,14 +65,14 @@ class SBBPickerScopeHost extends StatefulWidget {
   });
 
   final int visibleItemCount;
-  final SBBPickerStyle? pickerStyle;
+  final SBBPickerStyle pickerStyle;
   final Widget child;
 
   @override
-  State<SBBPickerScopeHost> createState() => _SBBPickerScopeHostState();
+  State<PickerScopeHost> createState() => _PickerScopeHostState();
 }
 
-class _SBBPickerScopeHostState extends State<SBBPickerScopeHost> {
+class _PickerScopeHostState extends State<PickerScopeHost> {
   late double _itemHeight;
 
   @override
@@ -83,7 +82,7 @@ class _SBBPickerScopeHostState extends State<SBBPickerScopeHost> {
   }
 
   @override
-  void didUpdateWidget(SBBPickerScopeHost oldWidget) {
+  void didUpdateWidget(PickerScopeHost oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (oldWidget.pickerStyle != widget.pickerStyle || oldWidget.visibleItemCount != widget.visibleItemCount) {
       _itemHeight = _calculateItemHeight();
@@ -96,7 +95,7 @@ class _SBBPickerScopeHostState extends State<SBBPickerScopeHost> {
   }
 
   Size _textSize(String text) {
-    final textStyle = widget.pickerStyle?.textStyle;
+    final textStyle = widget.pickerStyle.textStyle;
     final textSpan = TextSpan(text: text, style: textStyle);
     final textDirection = Directionality.of(context);
     final painter = TextPainter(
@@ -117,7 +116,7 @@ class _SBBPickerScopeHostState extends State<SBBPickerScopeHost> {
 
   @override
   Widget build(BuildContext context) {
-    return SBBPickerScope(
+    return PickerScope(
       itemHeight: _itemHeight,
       visibleItemCount: widget.visibleItemCount,
       pickerStyle: widget.pickerStyle,

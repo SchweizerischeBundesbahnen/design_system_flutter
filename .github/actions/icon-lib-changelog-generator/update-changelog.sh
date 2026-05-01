@@ -11,6 +11,7 @@
 #   <changelog_file> The path to the CHANGELOG file to be modified.
 #
 # Behavior:
+# - If there is no "## [Unreleased]" section, one is created
 # - If the "## [Unreleased]" section does not contain a "### Changed" subsection,
 #   it will be created.
 # - If an entry for the icon library update already exists, it will be updated
@@ -50,7 +51,7 @@ BEGIN {
     next
   }
 
-  if ($0 ~ /^## \[Unreleased\]/) {
+  if ($0 ~ /^## (\[Unreleased\]|Unreleased)/) {
     unreleased_found = 1
     print $0
     next
@@ -83,6 +84,11 @@ BEGIN {
   if (unreleased_found && !changed_found && $0 ~ /^## /) {
     # unreleased section is over without changed
     $0 = "### Changed\n\n- (auto): updated icon lib to version " version "\n\n" $0
+    entry_added = 1
+  }
+  if (!unreleased_found && $0 ~ /^## /) {
+    # no unreleased section found
+    $0 = "## Unreleased\n\n### Changed\n\n- (auto): updated icon lib to version " version "\n\n" $0
     entry_added = 1
   }
 

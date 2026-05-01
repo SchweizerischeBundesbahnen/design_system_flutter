@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 class SBBIllustration extends StatelessWidget {
-  static const String _parent = 'lib/assets/illustrations';
-  static const String _package = 'sbb_design_system_mobile';
-
   const SBBIllustration._({
     required this.assetName,
     this.semanticLabel,
@@ -137,6 +135,9 @@ class SBBIllustration extends StatelessWidget {
     constraints: constraints,
   );
 
+  static const String _parent = 'lib/assets/illustrations';
+  static const String _package = 'sbb_design_system_mobile';
+
   final String assetName;
 
   /// The semantic label of the asset.
@@ -158,6 +159,8 @@ class SBBIllustration extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasSBBBaseStyle(context));
+
     return ConstrainedBox(
       constraints: constraints,
       child: Image(

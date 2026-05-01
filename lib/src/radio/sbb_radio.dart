@@ -1,10 +1,8 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-
-import '../../sbb_design_system_mobile.dart';
-
-const EdgeInsets _defaultPadding = .all(8.0);
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 /// The SBB Radio.
 ///
@@ -133,11 +131,11 @@ class _SBBRadioState<T> extends State<SBBRadio<T>> {
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasMaterial(context));
+    assert(debugCheckHasSBBBaseStyle(context));
 
     final bool effectiveEnabled = widget.enabled ?? (_registry?.onChanged != null);
-    final SBBRadioStyle? themeStyle = Theme.of(context).sbbRadioTheme?.style;
-    final EdgeInsetsGeometry effectivePadding =
-        widget.style?.tapTargetPadding ?? themeStyle?.tapTargetPadding ?? _defaultPadding;
+    final SBBRadioStyle themeStyle = Theme.of(context).sbbRadioTheme.style!;
+    final EdgeInsetsGeometry effectivePadding = widget.style?.tapTargetPadding ?? themeStyle.tapTargetPadding!;
 
     return Semantics(
       label: widget.semanticLabel,
@@ -191,7 +189,7 @@ class _SBBRadioPaintState extends State<_SBBRadioPaint> {
 
   @override
   Widget build(BuildContext context) {
-    final themeStyle = Theme.of(context).sbbRadioTheme?.style;
+    final themeStyle = Theme.of(context).sbbRadioTheme.style!;
 
     // Compute active and inactive state so that colors can be determined and painter can lerp between them
     final Set<WidgetState> activeStates = {...widget.toggleableState.states, WidgetState.selected};
@@ -199,40 +197,40 @@ class _SBBRadioPaintState extends State<_SBBRadioPaint> {
 
     final activeFillColor = _resolveColor(
       widget.style?.fillColor,
-      themeStyle?.fillColor,
+      themeStyle.fillColor!,
       activeStates,
     );
     final inactiveFillColor = _resolveColor(
       widget.style?.fillColor,
-      themeStyle?.fillColor,
+      themeStyle.fillColor!,
       inactiveStates,
     );
 
     final activeBorderColor = _resolveColor(
       widget.style?.borderColor,
-      themeStyle?.borderColor,
+      themeStyle.borderColor!,
       activeStates,
     );
     final inactiveBorderColor = _resolveColor(
       widget.style?.borderColor,
-      themeStyle?.borderColor,
+      themeStyle.borderColor!,
       inactiveStates,
     );
 
     final activeInnerCircleColor = _resolveColor(
       widget.style?.innerCircleColor,
-      themeStyle?.innerCircleColor,
+      themeStyle.innerCircleColor!,
       activeStates,
     );
     final inactiveInnerCircleColor = _resolveColor(
       widget.style?.innerCircleColor,
-      themeStyle?.innerCircleColor,
+      themeStyle.innerCircleColor!,
       inactiveStates,
     );
 
     final effectiveSize = widget.padding.inflateSize(const Size.square(SBBRadioStyle.radioRadius * 2));
 
-    final primaryColor = Theme.of(context).sbbBaseStyle.colorScheme.primaryColor;
+    final primaryColor = Theme.of(context).sbbBaseStyle.colorScheme.primary;
     return CustomPaint(
       size: effectiveSize,
       painter: _painter
@@ -251,11 +249,11 @@ class _SBBRadioPaintState extends State<_SBBRadioPaint> {
 
   Color? _resolveColor(
     WidgetStateProperty<Color?>? widgetColor,
-    WidgetStateProperty<Color?>? themeColor,
+    WidgetStateProperty<Color?> themeColor,
     Set<WidgetState> states,
   ) {
-    final WidgetStateProperty<Color?>? effectiveProperty = widgetColor ?? themeColor;
-    return effectiveProperty?.resolve(states);
+    final WidgetStateProperty<Color?> effectiveProperty = widgetColor ?? themeColor;
+    return effectiveProperty.resolve(states);
   }
 }
 

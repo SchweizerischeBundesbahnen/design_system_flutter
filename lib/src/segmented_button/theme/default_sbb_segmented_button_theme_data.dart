@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../../sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// The default [SBBSegmentedButtonThemeData] used by [SBBTheme].
 class DefaultSBBSegmentedButtonThemeData extends SBBSegmentedButtonThemeData {
@@ -13,22 +12,22 @@ class DefaultSBBSegmentedButtonThemeData extends SBBSegmentedButtonThemeData {
             WidgetState.any: baseStyle.themeValue(SBBColors.cloud, SBBColors.charcoal),
           }),
           borderColor: WidgetStateProperty<Color?>.fromMap({
-            WidgetState.selected: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
+            WidgetState.selected: baseStyle.colorScheme.strokeSecondary,
             WidgetState.any: baseStyle.themeValue(SBBColors.cloud, SBBColors.iron),
           }),
           segmentStyle: SBBButtonSegmentStyle(
-            foregroundColor: WidgetStatePropertyAll(baseStyle.colorScheme.defaultTextColor),
+            foregroundColor: WidgetStatePropertyAll(baseStyle.colorScheme.textPrimary),
             textStyle: WidgetStatePropertyAll(baseStyle.textTheme.defaultTextStyle),
           ),
         ),
         filledStyle: SBBSegmentedButtonStyle(
           backgroundColor: WidgetStateProperty<Color?>.fromMap({
-            WidgetState.selected: baseStyle.colorScheme.primaryColor,
-            WidgetState.any: baseStyle.colorScheme.primary125Color,
+            WidgetState.selected: baseStyle.colorScheme.primary,
+            WidgetState.any: baseStyle.colorScheme.primary125,
           }),
           borderColor: WidgetStateProperty<Color?>.fromMap({
-            WidgetState.selected: baseStyle.colorScheme.primary150Color,
-            WidgetState.any: baseStyle.colorScheme.primary125Color,
+            WidgetState.selected: baseStyle.colorScheme.primary150,
+            WidgetState.any: baseStyle.colorScheme.primary125,
           }),
           segmentStyle: SBBButtonSegmentStyle(
             foregroundColor: WidgetStatePropertyAll(SBBColors.white),
@@ -39,4 +38,6 @@ class DefaultSBBSegmentedButtonThemeData extends SBBSegmentedButtonThemeData {
           ),
         ),
       );
+
+  static const defaultButtonHeight = 44.0;
 }

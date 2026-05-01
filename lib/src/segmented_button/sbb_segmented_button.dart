@@ -1,8 +1,8 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-
-import '../../sbb_design_system_mobile.dart';
-import '../sbb_internal.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/segmented_button/theme/default_sbb_segmented_button_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 /// The SBB Segmented Button.
 ///
@@ -73,17 +73,18 @@ class _SBBSegmentedButtonState<T> extends State<SBBSegmentedButton<T>> {
   int get _selectedIndex => widget.segments.indexWhere((segment) => segment.value == widget.selected);
 
   SBBSegmentedButtonStyle get effectiveStyle {
-    final themeData = Theme.of(context).sbbSegmentedButtonTheme;
-    final themeStyle = themeData?.style;
-    return widget.style?.merge(themeStyle) ?? themeStyle ?? const SBBSegmentedButtonStyle();
+    final themeStyle = Theme.of(context).sbbSegmentedButtonTheme.style!;
+    return themeStyle.merge(widget.style);
   }
 
   Set<WidgetState> get _states => {};
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasSBBBaseStyle(context));
+
     return ConstrainedBox(
-      constraints: BoxConstraints.tightFor(height: SBBInternal.defaultSegmentedButtonHeight),
+      constraints: BoxConstraints.tightFor(height: DefaultSBBSegmentedButtonThemeData.defaultButtonHeight),
       child: Stack(
         children: [
           _backgroundLayer(),
@@ -96,7 +97,7 @@ class _SBBSegmentedButtonState<T> extends State<SBBSegmentedButton<T>> {
 
   Widget _backgroundLayer() {
     final style = effectiveStyle;
-    final backgroundColor = style.backgroundColor?.resolve(_states) ?? SBBColors.milk;
+    final backgroundColor = style.backgroundColor?.resolve(_states);
     final borderColor = style.borderColor?.resolve(_states);
 
     final List<Widget> children = [];
@@ -129,7 +130,7 @@ class _SBBSegmentedButtonState<T> extends State<SBBSegmentedButton<T>> {
   Widget _indicatorLayer() {
     final style = effectiveStyle;
     final selectedStates = {..._states, WidgetState.selected};
-    final backgroundColor = style.backgroundColor?.resolve(selectedStates) ?? SBBColors.milk;
+    final backgroundColor = style.backgroundColor?.resolve(selectedStates);
     final borderColor = style.borderColor?.resolve(selectedStates);
 
     final buttonCount = widget.segments.length;
@@ -202,14 +203,14 @@ class _SBBSegmentedButtonState<T> extends State<SBBSegmentedButton<T>> {
     }
 
     // add styling and foregroundColor
-    final themeData = Theme.of(context).sbbSegmentedButtonTheme;
     final style = effectiveStyle;
     final effectiveSegmentStyle = style.segmentStyle?.merge(segment.style) ?? segment.style;
     final states = {..._states, if (selected) WidgetState.selected};
-    final foregroundColor = effectiveSegmentStyle?.foregroundColor?.resolve(states) ?? SBBColors.green;
+    final foregroundColor = effectiveSegmentStyle?.foregroundColor?.resolve(states);
     final resolvedTextStyle = effectiveSegmentStyle?.textStyle?.resolve(states);
-    final effectiveLeadingGapWidth =
-        widget.leadingHorizontalGapWidth ?? themeData?.leadingHorizontalGapWidth ?? SBBSpacing.xxSmall;
+
+    final themeData = Theme.of(context).sbbSegmentedButtonTheme;
+    final effectiveLeadingGapWidth = widget.leadingHorizontalGapWidth ?? themeData.leadingHorizontalGapWidth!;
 
     leading = _addDefaultAncestorWithResolved(
       child: leading,
@@ -284,7 +285,7 @@ class _SBBSegmentedButtonStateBoxed<T> extends _SBBSegmentedButtonState<T> {
   @override
   SBBSegmentedButtonStyle get effectiveStyle {
     final themeData = Theme.of(context).sbbSegmentedButtonTheme;
-    final themeStyle = themeData?.filledStyle;
+    final themeStyle = themeData.filledStyle;
     return widget.style?.merge(themeStyle) ?? themeStyle ?? const SBBSegmentedButtonStyle();
   }
 }

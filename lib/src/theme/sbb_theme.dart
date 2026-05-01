@@ -1,32 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/bottom_sheet/theme/default_sbb_bottom_sheet_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/button/theme/default_button_themes.dart';
 import 'package:sbb_design_system_mobile/src/button/theme/sbb_button_style_x.dart';
 import 'package:sbb_design_system_mobile/src/checkbox/theme/default_sbb_checkbox_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/chip/theme/default_sbb_chip_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/container/theme/default_sbb_content_box_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/decorated_text/theme/default_sbb_decorated_text_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/header/theme/default_sbb_header_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/header_box/theme/default_sbb_header_box_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_input_decoration_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_text_input_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/list_header/theme/default_sbb_list_header_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/list_item/theme/default_sbb_list_item_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/message/theme/default_sbb_message_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/paginator/theme/default_sbb_paginator_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/picker/theme/default_sbb_picker_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/popup/theme/default_sbb_popup_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/radio/theme/default_sbb_radio_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/segmented_button/theme/default_sbb_segmented_button_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/slide_to_toggle/theme/default_sbb_slide_to_toggle_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/slider/theme/default_sbb_slider_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/status/theme/default_sbb_status_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/stepper/theme/default_sbb_stepper_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/switch/theme/default_sbb_switch_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/tab_bar/theme/default_sbb_tab_bar_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/theme/sbb_text_theme_x.dart';
 import 'package:sbb_design_system_mobile/src/toast/theme/default_sbb_toast_theme_data.dart';
-
-import '../button/theme/default_button_themes.dart';
-import '../container/theme/default_sbb_content_box_theme_data.dart';
-import '../list_item/theme/default_sbb_list_item_theme_data.dart';
-import '../segmented_button/theme/default_sbb_segmented_button_theme_data.dart';
-import '../status/theme/default_sbb_status_theme_data.dart';
-import '../tab_bar/theme/default_sbb_tab_bar_theme_data.dart';
 
 /// Defines the context in which the Theme is used.
 /// This currently only affects the used colors.
@@ -90,7 +90,7 @@ class SBBTheme {
     SBBDecoratedTextThemeData? decoratedTextTheme,
     SBBDropdownThemeData? dropdownTheme,
     SBBHeaderThemeData? headerTheme,
-    SBBHeaderBoxStyle? headerBoxStyle,
+    SBBHeaderBoxThemeData? headerBoxTheme,
     SBBInputDecorationThemeData? inputDecorationTheme,
     SBBListHeaderThemeData? listHeaderTheme,
     SBBListItemThemeData? listItemTheme,
@@ -124,7 +124,7 @@ class SBBTheme {
     decoratedTextTheme: decoratedTextTheme,
     dropdownTheme: dropdownTheme,
     headerTheme: headerTheme,
-    headerBoxStyle: headerBoxStyle,
+    headerBoxTheme: headerBoxTheme,
     inputDecorationTheme: inputDecorationTheme,
     listHeaderTheme: listHeaderTheme,
     listItemTheme: listItemTheme,
@@ -163,7 +163,7 @@ class SBBTheme {
     SBBControlStyles? controlStyles,
     SBBDecoratedTextThemeData? decoratedTextTheme,
     SBBDropdownThemeData? dropdownTheme,
-    SBBHeaderBoxStyle? headerBoxStyle,
+    SBBHeaderBoxThemeData? headerBoxTheme,
     SBBInputDecorationThemeData? inputDecorationTheme,
     SBBListHeaderThemeData? listHeaderTheme,
     SBBListItemThemeData? listItemTheme,
@@ -196,7 +196,7 @@ class SBBTheme {
     controlStyles: controlStyles,
     decoratedTextTheme: decoratedTextTheme,
     dropdownTheme: dropdownTheme,
-    headerBoxStyle: headerBoxStyle,
+    headerBoxTheme: headerBoxTheme,
     inputDecorationTheme: inputDecorationTheme,
     listHeaderTheme: listHeaderTheme,
     listItemTheme: listItemTheme,
@@ -238,7 +238,7 @@ class SBBTheme {
     SBBDecoratedTextThemeData? decoratedTextTheme,
     SBBDropdownThemeData? dropdownTheme,
     SBBHeaderThemeData? headerTheme,
-    SBBHeaderBoxStyle? headerBoxStyle,
+    SBBHeaderBoxThemeData? headerBoxTheme,
     SBBInputDecorationThemeData? inputDecorationTheme,
     SBBListHeaderThemeData? listHeaderTheme,
     SBBListItemThemeData? listItemTheme,
@@ -293,8 +293,8 @@ class SBBTheme {
     final defaultHeaderTheme = DefaultSBBHeaderThemeData(baseStyle: mergedBaseStyle);
     final mergedHeaderTheme = defaultHeaderTheme.merge(headerTheme);
 
-    final defaultHeaderBoxStyle = SBBHeaderBoxStyle.$default(baseStyle: mergedBaseStyle);
-    final mergedHeaderBoxStyle = headerBoxStyle.merge(defaultHeaderBoxStyle);
+    final defaultHeaderBoxTheme = DefaultSBBHeaderBoxThemeData(baseStyle: mergedBaseStyle);
+    final mergedHeaderBoxTheme = defaultHeaderBoxTheme.merge(headerBoxTheme);
 
     final defaultListHeaderTheme = DefaultSBBListHeaderThemeData(mergedBaseStyle);
     final mergedListHeaderTheme = defaultListHeaderTheme.merge(listHeaderTheme);
@@ -373,7 +373,7 @@ class SBBTheme {
       decoratedTextTheme: mergedDecoratedTextTheme,
       dropdownTheme: mergedDropdownTheme,
       headerTheme: mergedHeaderTheme,
-      headerBoxStyle: mergedHeaderBoxStyle,
+      headerBoxTheme: mergedHeaderBoxTheme,
       inputDecorationTheme: mergedInputDecorationTheme,
       listHeaderTheme: mergedListHeaderTheme,
       listItemTheme: mergedListItemTheme,
@@ -408,7 +408,7 @@ class SBBTheme {
     required SBBDecoratedTextThemeData decoratedTextTheme,
     required SBBDropdownThemeData dropdownTheme,
     required SBBHeaderThemeData headerTheme,
-    required SBBHeaderBoxStyle headerBoxStyle,
+    required SBBHeaderBoxThemeData headerBoxTheme,
     required SBBInputDecorationThemeData inputDecorationTheme,
     required SBBListHeaderThemeData listHeaderTheme,
     required SBBListItemThemeData listItemTheme,
@@ -430,17 +430,17 @@ class SBBTheme {
     return ThemeData(
       colorScheme: ColorScheme.fromSwatch(
         primarySwatch: baseStyle.colorScheme.primarySwatch,
-        accentColor: baseStyle.colorScheme.primaryColor,
-        cardColor: baseStyle.colorScheme.backgroundColor,
-        backgroundColor: baseStyle.colorScheme.backgroundColor,
-        errorColor: baseStyle.colorScheme.errorColor,
+        accentColor: baseStyle.colorScheme.primary,
+        cardColor: baseStyle.colorScheme.backgroundBase,
+        backgroundColor: baseStyle.colorScheme.backgroundBase,
+        errorColor: baseStyle.colorScheme.error,
         brightness: baseStyle.brightness,
       ).copyWith(surfaceTint: SBBColors.transparent),
-      scaffoldBackgroundColor: baseStyle.colorScheme.backgroundColor,
+      scaffoldBackgroundColor: baseStyle.colorScheme.backgroundBase,
       iconTheme: baseStyle.iconTheme,
       dividerColor: baseStyle.dividerTheme?.color,
       dividerTheme: baseStyle.dividerTheme,
-      textTheme: baseStyle.textTheme.toTextTheme(labelColor: baseStyle.colorScheme.labelColor),
+      textTheme: baseStyle.textTheme.toTextTheme(labelColor: baseStyle.colorScheme.textSecondary),
       appBarTheme: headerTheme.appBarTheme,
       filledButtonTheme: FilledButtonThemeData(style: primaryButtonTheme.style?.toButtonStyle()),
       outlinedButtonTheme: OutlinedButtonThemeData(style: secondaryButtonTheme.style?.toButtonStyle()),
@@ -460,7 +460,7 @@ class SBBTheme {
         decoratedTextTheme,
         dropdownTheme,
         headerTheme,
-        headerBoxStyle,
+        headerBoxTheme,
         inputDecorationTheme,
         listHeaderTheme,
         listItemTheme,

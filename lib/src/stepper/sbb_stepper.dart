@@ -2,6 +2,7 @@ import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 typedef OnStepPressedCallback = void Function(SBBStepperItem item, int index);
 
@@ -102,7 +103,9 @@ class SBBStepper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context).sbbStepperTheme!;
+    assert(debugCheckHasSBBBaseStyle(context));
+
+    final theme = Theme.of(context).sbbStepperTheme;
     final themeStyle = _isFilledStyle ? theme.filledStyle! : theme.style!;
     final effectiveStyle = themeStyle.merge(style);
 
@@ -304,7 +307,7 @@ class _StepCircleState extends State<_StepCircle> {
   }
 
   Widget _circleContent() {
-    var item = widget.item;
+    final item = widget.item;
     Widget content;
     if (item is SBBStepperItemIcon) {
       content = Icon(item.icon, size: SBBStepperItemStyle.stepIconSize);
@@ -425,6 +428,6 @@ class _RenderEdgeClampedCenterX extends RenderShiftedBox {
   }
 }
 
-extension _WidgetExtension on Iterable<Widget> {
+extension _WidgetIterableX on Iterable<Widget> {
   Iterable<Widget> dividedBy(Widget divider) => expand((x) => [divider, x]).skip(1);
 }

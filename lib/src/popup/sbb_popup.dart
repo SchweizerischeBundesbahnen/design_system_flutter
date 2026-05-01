@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-
-import '../../sbb_design_system_mobile.dart';
-import '../sbb_internal.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/popup/theme/default_sbb_popup_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 /// Shows an SBB Popup dialog.
 ///
@@ -61,16 +61,17 @@ Future<T?> showSBBPopup<T>({
   assert(title == null || titleText == null, 'Only title or titleText can be set!');
   assert(leading == null || leadingIconData == null, 'Only leading or leadingIconData can be set!');
   assert(trailing == null || trailingIconData == null, 'Only trailing or trailingIconData can be set!');
+  assert(debugCheckHasSBBBaseStyle(context));
 
-  final themeStyle = Theme.of(context).sbbPopupTheme?.style;
-  final SBBPopupStyle resolvedStyle = (themeStyle ?? const SBBPopupStyle()).merge(style);
+  final themeStyle = Theme.of(context).sbbPopupTheme.style!;
+  final SBBPopupStyle resolvedStyle = themeStyle.merge(style);
 
   return showDialog<T>(
     context: context,
     useRootNavigator: useRootNavigator,
     barrierDismissible: isDismissible,
     barrierLabel: barrierLabel,
-    barrierColor: resolvedStyle.barrierColor ?? SBBInternal.barrierColor,
+    barrierColor: resolvedStyle.barrierColor ?? DefaultSBBPopupThemeData.defaultBarrierColor,
     useSafeArea: useSafeArea,
     fullscreenDialog: fullscreenDialog,
     requestFocus: requestFocus,
@@ -188,8 +189,10 @@ class SBBPopup extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeStyle = Theme.of(context).sbbPopupTheme?.style;
-    final SBBPopupStyle resolvedStyle = (themeStyle ?? const SBBPopupStyle()).merge(style);
+    assert(debugCheckHasSBBBaseStyle(context));
+
+    final themeStyle = Theme.of(context).sbbPopupTheme.style!;
+    final SBBPopupStyle resolvedStyle = themeStyle.merge(style);
 
     // Build actual widgets from convenience parameters
     Widget? leadingWidget = leading;

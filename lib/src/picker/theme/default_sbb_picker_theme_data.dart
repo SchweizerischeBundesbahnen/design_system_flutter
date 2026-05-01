@@ -10,9 +10,9 @@ class DefaultSBBPickerThemeData extends SBBPickerThemeData {
   }) : super(
          pickerStyle: SBBPickerStyle(
            highlightBackgroundColor: baseStyle.themeValue(SBBColors.cloud, SBBColors.iron),
-           foregroundColor: baseStyle.colorScheme.defaultTextColor,
+           foregroundColor: baseStyle.colorScheme.textPrimary,
            disabledForegroundColor: SBBColors.white.withValues(alpha: 0.4),
-           textStyle: SBBTextStyles.extraLargeLight.copyWith(
+           textStyle: SBBTextStyles.xLargeLight.copyWith(
              fontFamily: SBBFontFamily.sbbFontRoman,
              height: 26.0 / SBBTextStyles.xLargeFontSize,
            ),

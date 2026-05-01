@@ -3,10 +3,9 @@ import 'dart:ui' show lerpDouble;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/input/decoration/sbb_decoration.dart';
 import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_input_decoration_theme_data.dart';
-
-import '../../../sbb_design_system_mobile.dart';
 
 const Duration _kTransitionDuration = Duration(milliseconds: 168);
 const Curve _kTransitionCurve = Curves.fastOutSlowIn;
@@ -133,7 +132,7 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
   void didChangeDependencies() {
     super.didChangeDependencies();
     final inputDecorationTheme = Theme.of(context).sbbInputDecorationTheme;
-    final newBehavior = inputDecorationTheme?.floatingLabelBehavior ?? .auto;
+    final newBehavior = inputDecorationTheme.floatingLabelBehavior ?? .auto;
 
     if (_inheritedFloatingLabelBehavior != newBehavior) {
       _inheritedFloatingLabelBehavior = newBehavior;
@@ -175,13 +174,12 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
       label = Text(widget.decoration.labelText!, maxLines: 1, overflow: .ellipsis);
     }
     if (label != null) {
-      final Color? resolvedColor =
-          (widget.decoration.labelForegroundColor ?? inputDecorationTheme?.labelForegroundColor)?.resolve(
+      final Color? resolvedColor = (widget.decoration.labelForegroundColor ?? inputDecorationTheme.labelForegroundColor)
+          ?.resolve(
             widget.states,
           );
-      final TextStyle? textStyle = widget.decoration.labelTextStyle ?? inputDecorationTheme?.labelTextStyle;
-      TextStyle? floatingTextStyle =
-          widget.decoration.floatingLabelTextStyle ?? inputDecorationTheme?.floatingLabelTextStyle;
+      final textStyle = widget.decoration.labelTextStyle ?? inputDecorationTheme.labelTextStyle;
+      final floatingTextStyle = widget.decoration.floatingLabelTextStyle ?? inputDecorationTheme.floatingLabelTextStyle;
 
       final resolvedTextStyle =
           (_shouldFloat ? floatingTextStyle : textStyle)?.copyWith(color: resolvedColor) ??
@@ -202,12 +200,10 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
     }
 
     Widget? trailing = _trailing(textScaler, inputDecorationTheme);
+    final placeholder = _placeholder(inputDecorationTheme);
+    final error = _errorWidget(textScaler, inputDecorationTheme);
 
-    Widget? placeholder = _placeholder(inputDecorationTheme);
-
-    Widget? error = _errorWidget(textScaler, inputDecorationTheme);
-
-    final Widget container = AnimatedContainer(
+    final container = AnimatedContainer(
       duration: _kTransitionDuration,
       decoration: _effectiveBoxDecoration(inputDecorationTheme),
     );

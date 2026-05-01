@@ -1,7 +1,8 @@
+import 'dart:ui';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
-import '../../../sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// The ThemeData for the [SBBSegmentedButton].
 ///
@@ -29,13 +30,19 @@ class SBBSegmentedButtonThemeData extends ThemeExtension<SBBSegmentedButtonTheme
   final SBBSegmentedButtonStyle? filledStyle;
 
   /// Horizontal gap width between the leading widget and the label.
-  ///
-  /// Defaults to 4.0.
   final double? leadingHorizontalGapWidth;
 
   @override
-  SBBSegmentedButtonThemeData copyWith({SBBSegmentedButtonStyle? style, SBBSegmentedButtonStyle? filledStyle}) {
-    return SBBSegmentedButtonThemeData(style: style ?? this.style, filledStyle: filledStyle ?? this.filledStyle);
+  SBBSegmentedButtonThemeData copyWith({
+    SBBSegmentedButtonStyle? style,
+    SBBSegmentedButtonStyle? filledStyle,
+    double? leadingHorizontalGapWidth,
+  }) {
+    return SBBSegmentedButtonThemeData(
+      style: style ?? this.style,
+      filledStyle: filledStyle ?? this.filledStyle,
+      leadingHorizontalGapWidth: leadingHorizontalGapWidth ?? this.leadingHorizontalGapWidth,
+    );
   }
 
   @override
@@ -44,17 +51,21 @@ class SBBSegmentedButtonThemeData extends ThemeExtension<SBBSegmentedButtonTheme
     return SBBSegmentedButtonThemeData(
       style: SBBSegmentedButtonStyle.lerp(style, other.style, t),
       filledStyle: SBBSegmentedButtonStyle.lerp(filledStyle, other.filledStyle, t),
+      leadingHorizontalGapWidth: lerpDouble(leadingHorizontalGapWidth, other.leadingHorizontalGapWidth, t),
     );
   }
 
   @override
-  int get hashCode => style.hashCode ^ filledStyle.hashCode;
+  int get hashCode => style.hashCode ^ filledStyle.hashCode ^ leadingHorizontalGapWidth.hashCode;
 
   @override
   bool operator ==(Object other) {
     if (identical(this, other)) return true;
     if (other.runtimeType != runtimeType) return false;
-    return other is SBBSegmentedButtonThemeData && other.style == style && other.filledStyle == filledStyle;
+    return other is SBBSegmentedButtonThemeData &&
+        other.style == style &&
+        other.filledStyle == filledStyle &&
+        other.leadingHorizontalGapWidth == leadingHorizontalGapWidth;
   }
 }
 
@@ -64,12 +75,12 @@ extension SBBSegmentedButtonThemeDataX on SBBSegmentedButtonThemeData {
     return copyWith(
       style: style?.merge(other.style) ?? other.style,
       filledStyle: filledStyle?.merge(other.filledStyle) ?? other.filledStyle,
+      leadingHorizontalGapWidth: other.leadingHorizontalGapWidth,
     );
   }
 }
 
 extension SBBSegmentedButtonThemeDataThemeDataX on ThemeData {
-  SBBSegmentedButtonThemeData? get sbbSegmentedButtonTheme {
-    return extension<SBBSegmentedButtonThemeData>();
-  }
+  /// Access the [SBBSegmentedButtonThemeData] from the current theme.
+  SBBSegmentedButtonThemeData get sbbSegmentedButtonTheme => extension<SBBSegmentedButtonThemeData>()!;
 }

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-
-import '../../sbb_design_system_mobile.dart';
-import 'sbb_slider_thumb_shape.dart';
-import 'sbb_slider_track_shape.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
+import 'package:sbb_design_system_mobile/src/slider/sbb_slider_thumb_shape.dart';
+import 'package:sbb_design_system_mobile/src/slider/sbb_slider_track_shape.dart';
 
 /// A slider component following the SBB design system.
 ///
@@ -220,8 +220,10 @@ class _SBBSliderState extends State<SBBSlider> {
 
   @override
   Widget build(BuildContext context) {
-    final themeStyle = Theme.of(context).sbbSliderTheme?.style;
-    final effectiveStyle = themeStyle?.merge(widget.style) ?? widget.style ?? const SBBSliderStyle();
+    assert(debugCheckHasSBBBaseStyle(context));
+
+    final themeStyle = Theme.of(context).sbbSliderTheme.style!;
+    final effectiveStyle = themeStyle.merge(widget.style);
 
     final slider = _slider(effectiveStyle);
 
@@ -231,8 +233,8 @@ class _SBBSliderState extends State<SBBSlider> {
         widget.trailingIconData == null) {
       return slider;
     } else {
-      final leadingForegroundColor = effectiveStyle.leadingForegroundColor?.resolve(_statesController.value);
-      final trailingForegroundColor = effectiveStyle.trailingForegroundColor?.resolve(_statesController.value);
+      final leadingForegroundColor = effectiveStyle.leadingForegroundColor!.resolve(_statesController.value);
+      final trailingForegroundColor = effectiveStyle.trailingForegroundColor!.resolve(_statesController.value);
 
       // Build actual widgets from convenience parameters
       Widget? leadingWidget = widget.leading;
@@ -287,20 +289,15 @@ class _SBBSliderState extends State<SBBSlider> {
     final Set<WidgetState> enabledStates = {..._statesController.value}..remove(WidgetState.disabled);
     final Set<WidgetState> disabledStates = {..._statesController.value, WidgetState.disabled};
 
-    final sbbColorScheme = Theme.of(context).sbbBaseStyle.colorScheme;
-    final inactiveTrackColor = effectiveStyle.trackColor?.resolve(enabledStates) ?? SBBColors.smoke;
-    final disabledInactiveTrackColor = effectiveStyle.trackColor?.resolve(disabledStates) ?? SBBColors.smoke;
-    final activeTrackColor = effectiveStyle.activeTrackColor?.resolve(enabledStates) ?? sbbColorScheme.primaryColor;
-    final disabledActiveTrackColor =
-        effectiveStyle.activeTrackColor?.resolve(disabledStates) ?? sbbColorScheme.primaryColor;
-    final thumbBackgroundColor =
-        effectiveStyle.thumbBackgroundColor?.resolve(enabledStates) ?? sbbColorScheme.backgroundColor;
-    final disabledThumbBackgroundColor =
-        effectiveStyle.thumbBackgroundColor?.resolve(disabledStates) ?? sbbColorScheme.backgroundColor;
-    final thumbBorderColor = effectiveStyle.thumbBorderColor?.resolve(enabledStates) ?? sbbColorScheme.primaryColor;
-    final disabledThumbBorderColor =
-        effectiveStyle.thumbBorderColor?.resolve(disabledStates) ?? sbbColorScheme.primaryColor;
-    final padding = effectiveStyle.padding ?? .symmetric(horizontal: SBBSpacing.small);
+    final inactiveTrackColor = effectiveStyle.trackColor?.resolve(enabledStates);
+    final disabledInactiveTrackColor = effectiveStyle.trackColor?.resolve(disabledStates);
+    final activeTrackColor = effectiveStyle.activeTrackColor?.resolve(enabledStates);
+    final disabledActiveTrackColor = effectiveStyle.activeTrackColor?.resolve(disabledStates);
+    final thumbBackgroundColor = effectiveStyle.thumbBackgroundColor?.resolve(enabledStates);
+    final disabledThumbBackgroundColor = effectiveStyle.thumbBackgroundColor?.resolve(disabledStates);
+    final thumbBorderColor = effectiveStyle.thumbBorderColor?.resolve(enabledStates);
+    final disabledThumbBorderColor = effectiveStyle.thumbBorderColor?.resolve(disabledStates);
+    final padding = effectiveStyle.padding!;
 
     return SliderTheme(
       data: SliderThemeData(

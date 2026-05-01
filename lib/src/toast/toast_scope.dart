@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import '../../sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// The [ToastScope] is an [InheritedWidget] that provides the
 /// [stream] and [SBBToast] to the
@@ -11,12 +11,12 @@ class ToastScope extends InheritedWidget {
     required super.child,
     required this.stream,
     this.toast,
-    this.style,
+    this.widgetStyle,
   });
 
   final Stream<bool> stream;
   final SBBToast? toast;
-  final SBBToastStyle? style;
+  final SBBToastStyle? widgetStyle;
 
   static ToastScope? maybeOf(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<ToastScope>();

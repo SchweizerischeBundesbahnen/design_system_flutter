@@ -55,7 +55,7 @@ class _SwitchPageState extends State<SwitchPage> {
           const SBBListHeader('SwitchItem - List'),
           SBBContentBox(
             child: Column(
-              children: SBBListItem.divideListItems(
+              children: SBBDivider.divideItems(
                 context: context,
                 items: [
                   SBBSwitchListItem(

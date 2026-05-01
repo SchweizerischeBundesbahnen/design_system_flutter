@@ -2,9 +2,8 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/toast/toast_scope.dart';
-
-import '../../sbb_design_system_mobile.dart';
 
 class DefaultToastBody extends StatelessWidget {
   const DefaultToastBody({
@@ -21,9 +20,9 @@ class DefaultToastBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeStyle = Theme.of(context).sbbToastTheme?.style;
+    final themeStyle = Theme.of(context).sbbToastTheme.style!;
     final toastScope = ToastScope.of(context);
-    final resolvedStyle = (themeStyle ?? SBBToastStyle()).merge(toastScope.style);
+    final resolvedStyle = themeStyle.merge(toastScope.widgetStyle);
 
     return StreamBuilder<bool>(
       stream: toastScope.stream,
@@ -47,15 +46,13 @@ class DefaultToastBody extends StatelessWidget {
   }
 
   Widget body(SBBToastStyle resolvedStyle, BuildContext context) {
-    Widget resolvedTitle = _resolvedTitle(resolvedStyle)!;
-    Widget? resolvedAction = _resolvedAction(resolvedStyle);
-    final horizontalGap = resolvedStyle.titleActionHorizontalGap ?? SBBSpacing.xLarge;
-    final verticalGap = resolvedStyle.titleActionVerticalGap ?? SBBSpacing.xSmall;
-    final overflowThreshold = resolvedStyle.actionOverflowThreshold ?? .25;
+    final horizontalGap = resolvedStyle.titleActionHorizontalGap!;
+    final verticalGap = resolvedStyle.titleActionVerticalGap!;
+    final overflowThreshold = resolvedStyle.actionOverflowThreshold!;
 
     return _SBBDefaultToast(
-      title: resolvedTitle,
-      action: resolvedAction,
+      title: _resolvedTitle(resolvedStyle)!,
+      action: _resolvedAction(resolvedStyle),
       horizontalGap: horizontalGap,
       verticalGap: verticalGap,
       overflowThreshold: overflowThreshold,
@@ -63,8 +60,7 @@ class DefaultToastBody extends StatelessWidget {
   }
 
   Widget? _resolvedTitle(SBBToastStyle resolvedStyle) {
-    final resolvedTitle =
-        title ?? Text(titleText!, style: resolvedStyle.titleTextStyle, maxLines: resolvedStyle.titleMaxLines);
+    final resolvedTitle = title ?? Text(titleText!, maxLines: resolvedStyle.titleMaxLines);
 
     return _addDefaultAncestorWithResolved(
       textStyle: resolvedStyle.titleTextStyle?.copyWith(color: resolvedStyle.titleForegroundColor),
@@ -104,10 +100,10 @@ enum _ToastSlot { title, action }
 class _SBBDefaultToast extends SlottedMultiChildRenderObjectWidget<_ToastSlot, RenderBox> {
   const _SBBDefaultToast({
     required this.title,
-    this.action,
     required this.horizontalGap,
     required this.verticalGap,
     required this.overflowThreshold,
+    this.action,
   });
 
   final Widget title;

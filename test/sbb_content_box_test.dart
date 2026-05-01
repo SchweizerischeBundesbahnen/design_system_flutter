@@ -6,7 +6,7 @@ import 'test_app.dart';
 
 void main() {
   testWidgets('content_box', (WidgetTester tester) async {
-    content(String text) => SizedBox(
+    Widget content(String text) => SizedBox(
       height: SBBSpacing.xLarge,
       width: .infinity,
       child: Center(child: Text(text)),
