@@ -45,7 +45,7 @@ class SBBListItemStyle {
   ///
   /// The color of the [titleTextStyle] is typically not used directly, the
   /// [titleForegroundColor] is used instead.
-  final WidgetStateProperty<TextStyle?>? titleTextStyle;
+  final TextStyle? titleTextStyle;
 
   /// The text style for the list item subtitle.
   ///
@@ -53,7 +53,7 @@ class SBBListItemStyle {
   ///
   /// The color of the [subtitleTextStyle] is typically not used directly, the
   /// [subtitleForegroundColor] is used instead.
-  final WidgetStateProperty<TextStyle?>? subtitleTextStyle;
+  final TextStyle? subtitleTextStyle;
 
   /// The color of the title text.
   ///
@@ -89,8 +89,8 @@ class SBBListItemStyle {
   static EdgeInsets get defaultPadding => .symmetric(horizontal: 16.0, vertical: 10.0);
 
   SBBListItemStyle copyWith({
-    WidgetStateProperty<TextStyle?>? titleTextStyle,
-    WidgetStateProperty<TextStyle?>? subtitleTextStyle,
+    TextStyle? titleTextStyle,
+    TextStyle? subtitleTextStyle,
     WidgetStateProperty<Color?>? titleForegroundColor,
     WidgetStateProperty<Color?>? subtitleForegroundColor,
     WidgetStateProperty<Color?>? leadingForegroundColor,
@@ -129,13 +129,8 @@ class SBBListItemStyle {
     if (identical(a, b)) return a;
 
     return SBBListItemStyle(
-      titleTextStyle: WidgetStateProperty.lerp<TextStyle?>(a?.titleTextStyle, b?.titleTextStyle, t, TextStyle.lerp),
-      subtitleTextStyle: WidgetStateProperty.lerp<TextStyle?>(
-        a?.subtitleTextStyle,
-        b?.subtitleTextStyle,
-        t,
-        TextStyle.lerp,
-      ),
+      titleTextStyle: TextStyle.lerp(a?.titleTextStyle, b?.titleTextStyle, t),
+      subtitleTextStyle: TextStyle.lerp(a?.subtitleTextStyle, b?.subtitleTextStyle, t),
       titleForegroundColor: WidgetStateProperty.lerp<Color?>(
         a?.titleForegroundColor,
         b?.titleForegroundColor,
