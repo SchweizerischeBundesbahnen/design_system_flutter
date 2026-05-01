@@ -61,7 +61,7 @@ class SBBChipStyle {
   ///
   /// The color of the [labelTextStyle] is typically not used directly, the
   /// [labelForegroundColor] is used instead.
-  final WidgetStateProperty<TextStyle?>? labelTextStyle;
+  final TextStyle? labelTextStyle;
 
   /// The text style for the trailing badge text.
   ///
@@ -69,7 +69,7 @@ class SBBChipStyle {
   ///
   /// The color of the [trailingTextStyle] is typically not used directly, the
   /// [trailingForegroundColor] is used instead.
-  final WidgetStateProperty<TextStyle?>? trailingTextStyle;
+  final TextStyle? trailingTextStyle;
 
   /// The background color of the trailing badge.
   ///
@@ -104,8 +104,8 @@ class SBBChipStyle {
     WidgetStateProperty<Color?>? backgroundColor,
     WidgetStateProperty<Color?>? labelForegroundColor,
     WidgetStateProperty<Color?>? trailingForegroundColor,
-    WidgetStateProperty<TextStyle?>? labelTextStyle,
-    WidgetStateProperty<TextStyle?>? trailingTextStyle,
+    TextStyle? labelTextStyle,
+    TextStyle? trailingTextStyle,
     WidgetStateProperty<Color?>? trailingBackgroundColor,
     WidgetStateProperty<Color?>? overlayColor,
   }) {
@@ -154,13 +154,8 @@ class SBBChipStyle {
         t,
         Color.lerp,
       ),
-      labelTextStyle: WidgetStateProperty.lerp<TextStyle?>(a?.labelTextStyle, b?.labelTextStyle, t, TextStyle.lerp),
-      trailingTextStyle: WidgetStateProperty.lerp<TextStyle?>(
-        a?.trailingTextStyle,
-        b?.trailingTextStyle,
-        t,
-        TextStyle.lerp,
-      ),
+      labelTextStyle: TextStyle.lerp(a?.labelTextStyle, b?.labelTextStyle, t),
+      trailingTextStyle: TextStyle.lerp(a?.trailingTextStyle, b?.trailingTextStyle, t),
       trailingBackgroundColor: WidgetStateProperty.lerp<Color?>(
         a?.trailingBackgroundColor,
         b?.trailingBackgroundColor,
