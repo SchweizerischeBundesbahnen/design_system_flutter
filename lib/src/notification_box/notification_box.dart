@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-import 'package:sbb_design_system_mobile/src/notification_box/notification_box_content.dart';
-import 'package:sbb_design_system_mobile/src/notification_box/notification_box_title_content.dart';
-import 'package:sbb_design_system_mobile/src/shared/close_button.dart';
-import 'package:sbb_design_system_mobile/src/shared/transparent_tappable_element.dart';
+import 'package:sbb_design_system_mobile_v5/sbb_design_system_mobile_v5.dart';
+import 'package:sbb_design_system_mobile_v5/src/notification_box/notification_box_content.dart';
+import 'package:sbb_design_system_mobile_v5/src/notification_box/notification_box_title_content.dart';
+import 'package:sbb_design_system_mobile_v5/src/shared/close_button.dart';
+import 'package:sbb_design_system_mobile_v5/src/shared/transparent_tappable_element.dart';
 
 part 'notification_box.type.dart';
 

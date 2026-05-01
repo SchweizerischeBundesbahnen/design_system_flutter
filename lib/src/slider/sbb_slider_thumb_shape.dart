@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile_v5/sbb_design_system_mobile_v5.dart';
 
 const _thumbBoxShadows = <BoxShadow>[
   BoxShadow(color: Color(0x338D8D8D), offset: Offset(0, 1), blurRadius: 8.0),

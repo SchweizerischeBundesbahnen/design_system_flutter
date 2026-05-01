@@ -1,11 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-import 'package:sbb_design_system_mobile/src/header_box/header_box_app_bar_inset.dart';
-import 'package:sbb_design_system_mobile/src/header_box/header_box_content.dart';
-import 'package:sbb_design_system_mobile/src/header_box/header_box_foreground.dart';
-import 'package:sbb_design_system_mobile/src/header_box/sliver/sliver_pinned_floating_widget.dart';
-import 'package:sbb_design_system_mobile/src/shared/debug.dart';
+import 'package:sbb_design_system_mobile_v5/sbb_design_system_mobile_v5.dart';
+import 'package:sbb_design_system_mobile_v5/src/header_box/header_box_app_bar_inset.dart';
+import 'package:sbb_design_system_mobile_v5/src/header_box/header_box_content.dart';
+import 'package:sbb_design_system_mobile_v5/src/header_box/header_box_foreground.dart';
+import 'package:sbb_design_system_mobile_v5/src/header_box/sliver/sliver_pinned_floating_widget.dart';
+import 'package:sbb_design_system_mobile_v5/src/shared/debug.dart';
 
 /// A floating version of [SBBHeaderBox].
 ///

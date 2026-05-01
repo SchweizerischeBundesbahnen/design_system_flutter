@@ -25,7 +25,7 @@ dependencies:
   # https://pub.dev/packages/intl
   intl: ^0.20.2
 
-  sbb_design_system_mobile:
+  sbb_design_system_mobile_v5:
     path: ../
 
 dev_dependencies:

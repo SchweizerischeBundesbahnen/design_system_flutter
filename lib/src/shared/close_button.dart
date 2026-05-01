@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-import 'package:sbb_design_system_mobile/src/shared/transparent_tappable_element.dart';
+import 'package:sbb_design_system_mobile_v5/sbb_design_system_mobile_v5.dart';
+import 'package:sbb_design_system_mobile_v5/src/shared/transparent_tappable_element.dart';
 
 class SBBCloseButton extends StatelessWidget {
   const SBBCloseButton({super.key, this.onTap});

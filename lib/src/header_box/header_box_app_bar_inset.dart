@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile_v5/sbb_design_system_mobile_v5.dart';
 
 /// Embeds the header box into the app bar by drawing part of the app bar underneath the top edge.
 class HeaderBoxAppBarInset extends StatelessWidget {

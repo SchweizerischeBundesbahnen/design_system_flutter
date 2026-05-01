@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_design_system_mobile_example/pages/scaffold/demo_page_scaffold.dart';
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile_v5/sbb_design_system_mobile_v5.dart';
 
 class AutocompletionPage extends StatefulWidget {
   const AutocompletionPage({super.key});

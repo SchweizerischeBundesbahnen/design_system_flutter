@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-import 'package:sbb_design_system_mobile/src/picker/picker_constants.dart';
-import 'package:sbb_design_system_mobile/src/picker/picker_utils.dart';
-import 'package:sbb_design_system_mobile/src/shared/debug.dart';
+import 'package:sbb_design_system_mobile_v5/sbb_design_system_mobile_v5.dart';
+import 'package:sbb_design_system_mobile_v5/src/picker/picker_constants.dart';
+import 'package:sbb_design_system_mobile_v5/src/picker/picker_utils.dart';
+import 'package:sbb_design_system_mobile_v5/src/shared/debug.dart';
 
 /// This is basically a convenience combination of a [SBBDecoratedText] and a [SBBDatePicker].
 ///

@@ -9,7 +9,7 @@ const path = require('path');
 
 // Constants
 const PROJECT_ROOT = '.';
-const MAIN_BARREL_FILE = path.join(PROJECT_ROOT, 'lib', 'sbb_design_system_mobile.dart');
+const MAIN_BARREL_FILE = path.join(PROJECT_ROOT, 'lib', 'sbb_design_system_mobile_v5.dart');
 const WHITELIST_FILE = path.join(__dirname, 'whitelisted_names.txt');
 
 // Regex patterns

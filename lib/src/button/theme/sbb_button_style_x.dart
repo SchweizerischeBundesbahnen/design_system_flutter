@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-import 'package:sbb_design_system_mobile/src/button/theme/default_button_themes.dart';
+import 'package:sbb_design_system_mobile_v5/sbb_design_system_mobile_v5.dart';
+import 'package:sbb_design_system_mobile_v5/src/button/theme/default_button_themes.dart';
 
 extension SBBButtonStyleX on SBBButtonStyle {
   ButtonStyle toButtonStyle() {

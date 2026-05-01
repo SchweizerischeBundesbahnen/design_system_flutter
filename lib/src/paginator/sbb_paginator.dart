@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-import 'package:sbb_design_system_mobile/src/paginator/paginator_circle.dart';
-import 'package:sbb_design_system_mobile/src/shared/debug.dart';
+import 'package:sbb_design_system_mobile_v5/sbb_design_system_mobile_v5.dart';
+import 'package:sbb_design_system_mobile_v5/src/paginator/paginator_circle.dart';
+import 'package:sbb_design_system_mobile_v5/src/shared/debug.dart';
 
 /// The SBB paginator to display page navigation information
 ///

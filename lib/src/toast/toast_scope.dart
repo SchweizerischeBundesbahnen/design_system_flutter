@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile_v5/sbb_design_system_mobile_v5.dart';
 
 /// The [ToastScope] is an [InheritedWidget] that provides the
 /// [stream] and [SBBToast] to the

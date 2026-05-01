@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sbb_design_system_mobile/src/picker/picker_utils.dart';
+import 'package:sbb_design_system_mobile_v5/src/picker/picker_utils.dart';
 
 void main() {
   group('DateTimeExtensions.ceilToInterval', () {

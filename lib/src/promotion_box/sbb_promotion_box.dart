@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-import 'package:sbb_design_system_mobile/src/promotion_box/sbb_promotion_box_badge.dart';
-import 'package:sbb_design_system_mobile/src/shared/close_button.dart';
+import 'package:sbb_design_system_mobile_v5/sbb_design_system_mobile_v5.dart';
+import 'package:sbb_design_system_mobile_v5/src/promotion_box/sbb_promotion_box_badge.dart';
+import 'package:sbb_design_system_mobile_v5/src/shared/close_button.dart';
 
 part 'promotion_box.assets.dart';
 

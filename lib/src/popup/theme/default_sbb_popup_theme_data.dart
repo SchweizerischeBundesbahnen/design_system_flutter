@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile_v5/sbb_design_system_mobile_v5.dart';
 
 /// The default popup theme specified using design system values.
 class DefaultSBBPopupThemeData extends SBBPopupThemeData {

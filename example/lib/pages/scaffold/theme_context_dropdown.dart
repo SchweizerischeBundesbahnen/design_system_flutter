@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_design_system_mobile_example/native_app.dart';
 import 'package:provider/provider.dart';
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile_v5/sbb_design_system_mobile_v5.dart';
 
 class ThemeContextDropdown extends StatelessWidget {
   const ThemeContextDropdown({super.key});

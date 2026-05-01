@@ -36,7 +36,7 @@ import 'package:flutter_design_system_mobile_example/pages/toast_page.dart';
 import 'package:flutter_design_system_mobile_example/pages/typography_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile_v5/sbb_design_system_mobile_v5.dart';
 
 class AppState extends ChangeNotifier {
   bool isDarkModeOn = false;

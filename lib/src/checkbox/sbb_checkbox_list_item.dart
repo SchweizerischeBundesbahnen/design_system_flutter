@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-import 'package:sbb_design_system_mobile/src/shared/debug.dart';
+import 'package:sbb_design_system_mobile_v5/sbb_design_system_mobile_v5.dart';
+import 'package:sbb_design_system_mobile_v5/src/shared/debug.dart';
 
 /// A convenience wrapper that combines [SBBListItem] with [SBBCheckbox] as the leading widget.
 ///

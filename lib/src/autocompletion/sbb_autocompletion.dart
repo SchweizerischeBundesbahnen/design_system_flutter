@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-import 'package:sbb_design_system_mobile/src/autocompletion/autocompletion_link.dart';
-import 'package:sbb_design_system_mobile/src/autocompletion/autocompletion_overlay.dart';
-import 'package:sbb_design_system_mobile/src/autocompletion/autocompletion_target.dart';
-import 'package:sbb_design_system_mobile/src/shared/debug.dart';
+import 'package:sbb_design_system_mobile_v5/sbb_design_system_mobile_v5.dart';
+import 'package:sbb_design_system_mobile_v5/src/autocompletion/autocompletion_link.dart';
+import 'package:sbb_design_system_mobile_v5/src/autocompletion/autocompletion_overlay.dart';
+import 'package:sbb_design_system_mobile_v5/src/autocompletion/autocompletion_target.dart';
+import 'package:sbb_design_system_mobile_v5/src/shared/debug.dart';
 
 typedef StringCallback = Function(String data);
 

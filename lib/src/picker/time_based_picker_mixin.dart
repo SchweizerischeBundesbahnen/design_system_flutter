@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/src/picker/picker_constants.dart';
-import 'package:sbb_design_system_mobile/src/picker/picker_scope.dart';
-import 'package:sbb_design_system_mobile/src/picker/sbb_picker_item.dart';
+import 'package:sbb_design_system_mobile_v5/src/picker/picker_constants.dart';
+import 'package:sbb_design_system_mobile_v5/src/picker/picker_scope.dart';
+import 'package:sbb_design_system_mobile_v5/src/picker/sbb_picker_item.dart';
 
 /// A mixin providing item-building and text-measurement helpers shared by
 /// [SBBDatePicker], [SBBTimePicker] and [SBBDateTimePicker] state classes.

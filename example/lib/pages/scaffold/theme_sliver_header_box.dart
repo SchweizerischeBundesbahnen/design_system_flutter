@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_design_system_mobile_example/pages/scaffold/theme_context_dropdown.dart';
 import 'package:flutter_design_system_mobile_example/pages/scaffold/theme_mode_segmented_button.dart';
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile_v5/sbb_design_system_mobile_v5.dart';
 
 class ThemeSliverHeaderbox extends StatelessWidget {
   const ThemeSliverHeaderbox({super.key});

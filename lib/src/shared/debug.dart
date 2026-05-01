@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/src/theme/sbb_base_style.dart';
+import 'package:sbb_design_system_mobile_v5/src/theme/sbb_base_style.dart';
 
 /// Asserts that the given context has a [SBBBaseStyle] theme extension registered
 /// in the nearest [Theme].

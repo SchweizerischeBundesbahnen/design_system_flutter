@@ -2,11 +2,11 @@ import 'dart:math';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-import 'package:sbb_design_system_mobile/src/shared/debug.dart';
-import 'package:sbb_design_system_mobile/src/tab_bar/tab_curve_clipper.dart';
-import 'package:sbb_design_system_mobile/src/tab_bar/tab_curve_painter.dart';
-import 'package:sbb_design_system_mobile/src/tab_bar/tab_item_widget.dart';
+import 'package:sbb_design_system_mobile_v5/sbb_design_system_mobile_v5.dart';
+import 'package:sbb_design_system_mobile_v5/src/shared/debug.dart';
+import 'package:sbb_design_system_mobile_v5/src/tab_bar/tab_curve_clipper.dart';
+import 'package:sbb_design_system_mobile_v5/src/tab_bar/tab_curve_painter.dart';
+import 'package:sbb_design_system_mobile_v5/src/tab_bar/tab_item_widget.dart';
 
 part 'sbb_tab_bar.icon.dart';
 part 'sbb_tab_bar.icon_delegate.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/src/radio/theme/sbb_radio_style.dart';
+import 'package:sbb_design_system_mobile_v5/src/radio/theme/sbb_radio_style.dart';
 
 /// The ThemeData for the [SBBRadio].
 ///

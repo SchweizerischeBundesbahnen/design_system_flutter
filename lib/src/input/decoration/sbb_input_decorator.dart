@@ -3,9 +3,9 @@ import 'dart:ui' show lerpDouble;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-import 'package:sbb_design_system_mobile/src/input/decoration/sbb_decoration.dart';
-import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_input_decoration_theme_data.dart';
+import 'package:sbb_design_system_mobile_v5/sbb_design_system_mobile_v5.dart';
+import 'package:sbb_design_system_mobile_v5/src/input/decoration/sbb_decoration.dart';
+import 'package:sbb_design_system_mobile_v5/src/input/theme/default_sbb_input_decoration_theme_data.dart';
 
 const Duration _kTransitionDuration = Duration(milliseconds: 168);
 const Curve _kTransitionCurve = Curves.fastOutSlowIn;

@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-import 'package:sbb_design_system_mobile/src/toast/default_toast_body.dart';
-import 'package:sbb_design_system_mobile/src/toast/toast_scope.dart';
+import 'package:sbb_design_system_mobile_v5/sbb_design_system_mobile_v5.dart';
+import 'package:sbb_design_system_mobile_v5/src/toast/default_toast_body.dart';
+import 'package:sbb_design_system_mobile_v5/src/toast/toast_scope.dart';
 
 import 'test_app.dart';
 

@@ -136,7 +136,7 @@ Future<void> createFlutterFontMap() async {
   void mapFont2(String name) => sb.writeln('    {\'icon\': SBBIcons.$name, \'name\': \'$name\'},');
 
   sb.clear();
-  sb.writeln('import \'package:sbb_design_system_mobile/sbb_design_system_mobile.dart\';');
+  sb.writeln('import \'package:sbb_design_system_mobile_v5/sbb_design_system_mobile_v5.dart\';');
   sb.writeln();
   sb.writeln('// dart format off');
   sb.writeln('sealed class SBBIconsIndex {');

@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/src/checkbox/theme/sbb_checkbox_style.dart';
+import 'package:sbb_design_system_mobile_v5/src/checkbox/theme/sbb_checkbox_style.dart';
 
 /// The ThemeData for the [SBBCheckbox].
 ///

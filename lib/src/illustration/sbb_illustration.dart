@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/src/shared/debug.dart';
+import 'package:sbb_design_system_mobile_v5/src/shared/debug.dart';
 
 class SBBIllustration extends StatelessWidget {
   const SBBIllustration._({

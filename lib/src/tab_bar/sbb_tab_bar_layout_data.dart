@@ -1,8 +1,8 @@
 import 'dart:ui';
 
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-import 'package:sbb_design_system_mobile/src/tab_bar/tab_curves.dart';
-import 'package:sbb_design_system_mobile/src/tab_bar/tab_item_widget.dart';
+import 'package:sbb_design_system_mobile_v5/sbb_design_system_mobile_v5.dart';
+import 'package:sbb_design_system_mobile_v5/src/tab_bar/tab_curves.dart';
+import 'package:sbb_design_system_mobile_v5/src/tab_bar/tab_item_widget.dart';
 
 /// Represents the positions of a [SBBTabBarItem] in [SBBTabBar]
 class SBBTabBarLayoutData {

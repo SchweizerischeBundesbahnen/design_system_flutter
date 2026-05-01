@@ -1,7 +1,7 @@
 Start by including the SBBTheme in your app root.
 
 ```Dart
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile_v5/sbb_design_system_mobile_v5.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,7 +25,7 @@ class MyApp extends StatelessWidget {
 You may then use any widgets, colors and fonts available.
 
 ```Dart
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile_v5/sbb_design_system_mobile_v5.dart';
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key});

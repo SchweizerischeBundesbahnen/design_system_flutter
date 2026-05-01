@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/src/switch/theme/sbb_switch_style.dart';
+import 'package:sbb_design_system_mobile_v5/src/switch/theme/sbb_switch_style.dart';
 
 /// The ThemeData for the [SBBSwitch].
 ///
