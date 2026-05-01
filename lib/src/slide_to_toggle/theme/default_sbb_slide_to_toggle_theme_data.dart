@@ -16,6 +16,9 @@ class DefaultSBBSlideToToggleThemeData extends SBBSlideToToggleThemeData {
           toggleForegroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.any: SBBColors.white,
           }),
+          helpForegroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
+            WidgetState.any: baseStyle.colorScheme.textSecondary,
+          }),
           loadingIndicatorColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.any: SBBColors.white,
           }),

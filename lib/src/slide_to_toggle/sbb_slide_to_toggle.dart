@@ -3,6 +3,9 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
+/// TODO:
+enum SBBSlideToToggleState { off, on }
+
 /// The SBB Slide-To-Toggle.
 ///
 /// TODO
@@ -18,7 +21,17 @@ class SBBSlideToToggle extends StatefulWidget {
     super.key,
     required this.onActivate,
     required this.onDeactivate,
-    this.initialActive = false,
+    this.toggleOffContent,
+    this.toggleOffIcon,
+    this.toggleOffLabelText,
+    this.toggleOnContent,
+    this.toggleOnIcon,
+    this.toggleOnLabelText,
+    this.offHelpText,
+    this.onHelpText,
+    this.offHelpWidget,
+    this.onHelpWidget,
+    this.initialState = .off,
     this.enabled = true,
     this.threshold = 0.9,
     this.style,
@@ -32,11 +45,25 @@ class SBBSlideToToggle extends StatefulWidget {
 
   final bool enabled;
 
+  // TODO: group parameters?
+
+  final Widget? toggleOffContent; // TODO: naming
+  final IconData? toggleOffIcon;
+  final String? toggleOffLabelText;
+  final Widget? offHelpWidget;
+  final String? offHelpText;
+
+  final Widget? toggleOnContent; // TODO: naming
+  final IconData? toggleOnIcon;
+  final String? toggleOnLabelText;
+  final Widget? onHelpWidget;
+  final String? onHelpText;
+
   // TODO:
   final double threshold;
   final Future<void> Function() onActivate;
   final Future<void> Function() onDeactivate;
-  final bool initialActive;
+  final SBBSlideToToggleState initialState;
 
   @override
   State<SBBSlideToToggle> createState() => _SBBSlideToToggleState();
@@ -48,9 +75,9 @@ class _SBBSlideToToggleState extends State<SBBSlideToToggle> with SingleTickerPr
 
   late WidgetStatesController _statesController;
 
-  bool _active = false;
+  late SBBSlideToToggleState _state;
   bool _loading = false;
-  double _position = 0; // 0..1 toggle position
+  double _position = 0;
   double _trackSpan = 0;
 
   late final AnimationController _positionController;
@@ -62,8 +89,8 @@ class _SBBSlideToToggleState extends State<SBBSlideToToggle> with SingleTickerPr
     _statesController = WidgetStatesController();
     _updateStatesController();
 
-    _active = widget.initialActive;
-    _position = _targetPositionFor(_active);
+    _state = widget.initialState;
+    _position = _targetPositionFor(_state);
     _positionController = AnimationController(vsync: this, duration: _snapDuration)
       ..addListener(() {
         final value = _positionAnimation?.value;
@@ -108,7 +135,7 @@ class _SBBSlideToToggleState extends State<SBBSlideToToggle> with SingleTickerPr
       child: LayoutBuilder(
         builder: (context, constraints) {
           _trackSpan = constraints.maxWidth - _toggleSize;
-          final toggleLeft = _trackSpan * _position;
+          final toggleLeft = _trackSpan * _position; // TODO:
 
           return SizedBox(
             height: _toggleSize,
@@ -133,29 +160,47 @@ class _SBBSlideToToggleState extends State<SBBSlideToToggle> with SingleTickerPr
     final states = _statesController.value;
     final backgroundColor = style.backgroundColor?.resolve(states) ?? SBBColors.white;
 
+    final helpOpacity = ((_state == .off ? 1 : 0) - _position).abs();
+
     return Positioned.fill(
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: backgroundColor,
           shape: SBBSlideToToggleStyle.borderShape,
         ),
-        child: Padding(
-          padding: const .symmetric(horizontal: SBBSpacing.medium, vertical: SBBSpacing.xSmall),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Expanded(
-                child: Text(
-                  'Zum Starten nach rechts ziehen. Das ist eine sehr lange Anweisung.',
-                  style: style.helpTextStyle,
-                  textAlign: .end,
+        child: _loading
+            ? SizedBox.shrink()
+            : Padding(
+                padding: const EdgeInsets.symmetric(vertical: SBBSpacing.xSmall).copyWith(
+                  right: SBBSpacing.medium + (_state == .on ? _toggleSize : 0.0),
+                  left: SBBSpacing.medium + (_state == .off ? _toggleSize : 0.0),
+                ),
+                child: Center(
+                  child: Opacity(
+                    opacity: helpOpacity,
+                    child: _addDefaultAncestorWithResolved(
+                      foregroundColor: style.helpForegroundColor?.resolve(_statesController.value),
+                      textStyle: style.helpTextStyle,
+                      child: _resolveHelpWidget(),
+                    ),
+                  ),
                 ),
               ),
-            ],
-          ),
-        ),
       ),
     );
+  }
+
+  Widget _resolveHelpWidget() {
+    final helpText = _state == .on ? widget.onHelpText : widget.offHelpText;
+    if (helpText != null) {
+      return Text(
+        helpText,
+        textAlign: _state == .on ? .start : .end,
+      );
+    }
+
+    final customWidget = _state == .on ? widget.onHelpWidget : widget.offHelpWidget;
+    return customWidget ?? SizedBox.shrink();
   }
 
   Widget _toggle({
@@ -181,22 +226,40 @@ class _SBBSlideToToggleState extends State<SBBSlideToToggle> with SingleTickerPr
             shape: .circle,
           ),
           alignment: .center,
-          child: _loading
+          child:
+              _loading // TODO: add animated switcher?
               ? _loadingIndicator(color: loadingIndicatorColor)
-              : Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 6),
-                  // TODO: fit text to toggle
-                  child: Text(
-                    _active ? 'Stop' : 'Start',
-                    maxLines: 1,
-                    overflow: .ellipsis,
-                    textAlign: .center,
-                    style: style.toggleTextStyle,
-                  ),
+              : _addDefaultAncestorWithResolved(
+                  foregroundColor: style.toggleForegroundColor?.resolve(_statesController.value),
+                  textStyle: style.toggleTextStyle,
+                  child: _resolveToggleWidget(),
                 ),
         ),
       ),
     );
+  }
+
+  Widget _resolveToggleWidget() {
+    final labelText = _state == .on ? widget.toggleOnLabelText : widget.toggleOffLabelText;
+    if (labelText != null) {
+      return Text(
+        labelText,
+        maxLines: 1,
+        overflow: .ellipsis,
+        textAlign: .center,
+      );
+    }
+
+    final iconData = _state == .on ? widget.toggleOnIcon : widget.toggleOffIcon;
+    if (iconData != null) {
+      return Icon(
+        iconData,
+        size: 36.0, // TODO: change to 24.0 for small variant
+      );
+    }
+
+    final customWidget = _state == .on ? widget.toggleOnContent : widget.toggleOffContent;
+    return customWidget ?? SizedBox.shrink();
   }
 
   Widget _loadingIndicator({Color? color}) {
@@ -215,7 +278,7 @@ class _SBBSlideToToggleState extends State<SBBSlideToToggle> with SingleTickerPr
     );
   }
 
-  double _targetPositionFor(bool isActive) => isActive ? 1 : 0;
+  double _targetPositionFor(SBBSlideToToggleState state) => state == .on ? 1 : 0;
 
   void _startAnimation({required Animation<double> animation, required Duration duration}) {
     _positionController.stop();
@@ -230,40 +293,50 @@ class _SBBSlideToToggleState extends State<SBBSlideToToggle> with SingleTickerPr
     _startAnimation(
       duration: duration,
       animation: Tween<double>(begin: _position, end: target).animate(
-        CurvedAnimation(
-          parent: _positionController,
-          curve: curve,
-        ),
+        CurvedAnimation(parent: _positionController, curve: curve),
       ),
     );
   }
 
-  void _animateBounceBack(double target) {
-    _animateTo(target, duration: _bounceDuration, curve: Curves.bounceOut);
+  static Widget _addDefaultAncestorWithResolved({
+    required Widget child,
+    required Color? foregroundColor,
+    TextStyle? textStyle,
+  }) {
+    final resolvedTextStyle = textStyle?.copyWith(color: foregroundColor) ?? TextStyle(color: foregroundColor);
+    return DefaultTextStyle.merge(
+      style: resolvedTextStyle,
+      child: IconTheme.merge(
+        data: IconThemeData(color: foregroundColor),
+        child: child,
+      ),
+    );
   }
 
-  Future<void> _commitActivate() => _commitToggleChange(nextActive: true, action: widget.onActivate);
+  void _animateBounceBack() => _animateTo(_state == .on ? 1 : 0, duration: _bounceDuration, curve: Curves.bounceOut);
 
-  Future<void> _commitDeactivate() => _commitToggleChange(nextActive: false, action: widget.onDeactivate);
+  Future<void> _commitActivate() => _commitToggleChange(nextState: .on, action: widget.onActivate);
 
-  Future<void> _commitToggleChange({required bool nextActive, required Future<void> Function() action}) async {
-    if (_loading) return;
+  Future<void> _commitDeactivate() => _commitToggleChange(nextState: .off, action: widget.onDeactivate);
+
+  Future<void> _commitToggleChange({
+    required SBBSlideToToggleState nextState,
+    required Future<void> Function() action,
+  }) async {
+    if (_loading || nextState == _state) return;
+
     _setLoading(true);
-    _animateTo(_targetPositionFor(nextActive));
+    _animateTo(_targetPositionFor(nextState));
 
     try {
       await action();
       if (!mounted) return;
 
-      setState(() {
-        _active = nextActive;
-        _position = _targetPositionFor(nextActive);
-      });
+      setState(() => _state = nextState);
     } catch (_) {
       if (!mounted) return;
-
-      setState(() => _active = !nextActive);
-      _animateTo(_targetPositionFor(_active));
+      // TODO: rethrow?
+      _animateTo(_targetPositionFor(_state));
     } finally {
       _setLoading(false);
     }
@@ -280,8 +353,7 @@ class _SBBSlideToToggleState extends State<SBBSlideToToggle> with SingleTickerPr
   }
 
   void _onDragUpdate(DragUpdateDetails d) {
-    if (!_isInteractive) return;
-    if (_trackSpan <= 0) return;
+    if (!_isInteractive || _trackSpan <= 0) return;
 
     setState(() {
       _position = (_position + d.delta.dx / _trackSpan).clamp(0.0, 1.0).toDouble();
@@ -291,18 +363,12 @@ class _SBBSlideToToggleState extends State<SBBSlideToToggle> with SingleTickerPr
   void _onDragEnd(DragEndDetails d) {
     if (!_isInteractive) return;
 
-    if (!_active) {
-      if (_position >= widget.threshold) {
-        _commitActivate();
-      } else {
-        _animateBounceBack(0);
-      }
+    if (_state == .off && _position >= widget.threshold) {
+      _commitActivate();
+    } else if (_position <= (1 - widget.threshold)) {
+      _commitDeactivate();
     } else {
-      if (_position <= (1 - widget.threshold)) {
-        _commitDeactivate();
-      } else {
-        _animateBounceBack(1);
-      }
+      _animateBounceBack();
     }
   }
 }

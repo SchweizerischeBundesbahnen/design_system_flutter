@@ -33,12 +33,48 @@ class _SlideToTogglePageState extends State<SlideToTogglePage> {
       body: Column(
         children: [
           const SBBListHeader('Default'),
-          SBBContentBox(
+          Padding(
             padding: const .all(SBBSpacing.medium),
-            child: SBBSlideToToggle(
-              enabled: _isEnabled,
-              onActivate: _simulateWork,
-              onDeactivate: _simulateWork,
+            child: Column(
+              spacing: SBBSpacing.small,
+              children: [
+                SBBSlideToToggle(
+                  enabled: _isEnabled,
+                  onActivate: _simulateWork,
+                  onDeactivate: _simulateWork,
+                  toggleOnLabelText: 'Stop',
+                  toggleOffLabelText: 'Start',
+                  offHelpText: 'Drag to the right to start',
+                  onHelpText: 'Drag to the left to stop',
+                ),
+                SBBSlideToToggle(
+                  enabled: _isEnabled,
+                  onActivate: _simulateWork,
+                  onDeactivate: _simulateWork,
+                  toggleOffIcon: SBBIcons.arrow_right_small,
+                  toggleOnIcon: SBBIcons.arrow_left_small,
+                  offHelpText: 'Drag to the right to start',
+                  onHelpText: 'Drag to the left to stop',
+                ),
+                SBBSlideToToggle(
+                  enabled: _isEnabled,
+                  onActivate: _simulateWork,
+                  onDeactivate: _simulateWork,
+                  toggleOnContent: Container(color: SBBColors.cloud, child: Text('Stop')),
+                  toggleOffContent: Container(color: SBBColors.cloud, child: Text('Start')),
+                  offHelpWidget: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(SBBIcons.unicorn_small),
+                      Text('Check this out'),
+                    ],
+                  ),
+                  onHelpWidget: Container(
+                    color: SBBColors.green,
+                    child: Text('Test'),
+                  ),
+                ),
+              ],
             ),
           ),
 

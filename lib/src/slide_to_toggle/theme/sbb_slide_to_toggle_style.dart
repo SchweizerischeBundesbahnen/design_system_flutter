@@ -22,6 +22,7 @@ class SBBSlideToToggleStyle {
     this.toggleForegroundColor,
     this.toggleBackgroundColor,
     this.loadingIndicatorColor,
+    this.helpForegroundColor,
     this.toggleTextStyle,
     this.helpTextStyle,
   });
@@ -43,6 +44,9 @@ class SBBSlideToToggleStyle {
 
   /// The color of the loading indicator inside of the toggle.
   final WidgetStateProperty<Color?>? loadingIndicatorColor;
+
+  /// The foreground color of the help area in the track.
+  final WidgetStateProperty<Color?>? helpForegroundColor;
 
   /// TODO:
   final TextStyle? toggleTextStyle;
