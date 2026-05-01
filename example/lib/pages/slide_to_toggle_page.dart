@@ -12,6 +12,10 @@ class SlideToTogglePage extends StatefulWidget {
 class _SlideToTogglePageState extends State<SlideToTogglePage> {
   bool _isEnabled = true;
 
+  Future<void> _simulateWork() async {
+    await Future.delayed(const Duration(seconds: 1));
+  }
+
   @override
   Widget build(BuildContext context) {
     return DemoPageScaffold(
@@ -33,16 +37,12 @@ class _SlideToTogglePageState extends State<SlideToTogglePage> {
             padding: const .all(SBBSpacing.medium),
             child: SBBSlideToToggle(
               enabled: _isEnabled,
+              onActivate: _simulateWork,
+              onDeactivate: _simulateWork,
             ),
           ),
 
           const SBBListHeader('Small'),
-          SBBContentBox(
-            padding: const .all(SBBSpacing.medium),
-            child: SBBSlideToToggle(
-              enabled: _isEnabled,
-            ),
-          ),
         ],
       ),
     );

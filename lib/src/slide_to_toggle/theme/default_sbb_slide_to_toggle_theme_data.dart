@@ -14,6 +14,15 @@ class DefaultSBBSlideToToggleThemeData extends SBBSlideToToggleThemeData {
             WidgetState.disabled: baseStyle.themeValue(SBBColors.graphite, SBBColors.iron),
             WidgetState.any: baseStyle.colorScheme.primaryColor,
           }),
+          toggleTextStyle: WidgetStateProperty.all(
+            baseStyle.themedTextStyle(textStyle: SBBTextStyles.largeBold, color: SBBColors.white),
+          ),
+          helpTextStyle: WidgetStateProperty.all(
+            baseStyle.themedTextStyle(
+              textStyle: SBBTextStyles.smallLight,
+              color: baseStyle.themeValue(SBBColors.granite, SBBColors.graphite),
+            ),
+          ),
         ),
       );
 }

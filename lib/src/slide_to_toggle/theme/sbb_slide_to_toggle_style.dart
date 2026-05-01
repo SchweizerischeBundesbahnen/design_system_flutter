@@ -20,6 +20,8 @@ class SBBSlideToToggleStyle {
     this.borderColor,
     this.backgroundColor,
     this.toggleBackgroundColor,
+    this.toggleTextStyle,
+    this.helpTextStyle,
   });
 
   /// The color of the Slide-To-Toggle border.
@@ -28,10 +30,20 @@ class SBBSlideToToggleStyle {
   final WidgetStateProperty<Color?>? borderColor;
 
   /// The background color of the Slide-To-Toggle.
+  /// TODO: background color for container and part between border?
   final WidgetStateProperty<Color?>? backgroundColor;
 
   /// The background color of toggle.
   final WidgetStateProperty<Color?>? toggleBackgroundColor;
+
+  /// TODO: Maybe one for start and stop?
+  final WidgetStateProperty<TextStyle?>? toggleTextStyle;
+
+  /// TODO: Maybe one for start and stop?
+  final WidgetStateProperty<TextStyle?>? helpTextStyle;
+
+  /// TODO:
+  static const double border = 82.0;
 
   /// The thickness of the Slide-To-Toggle border.
   static const double borderWidth = 1.0;
@@ -41,15 +53,22 @@ class SBBSlideToToggleStyle {
   /// This creates the pill-shaped appearance of the Slide-To-Toggle.
   static const ShapeBorder borderShape = StadiumBorder();
 
+  /// TODO:
+  static const double toggleSize = 82.0;
+
   SBBSlideToToggleStyle copyWith({
     WidgetStateProperty<Color?>? borderColor,
     WidgetStateProperty<Color?>? backgroundColor,
     WidgetStateProperty<Color?>? toggleBackgroundColor,
+    WidgetStateProperty<TextStyle?>? toggleTextStyle,
+    WidgetStateProperty<TextStyle?>? helpTextStyle,
   }) {
     return SBBSlideToToggleStyle(
       borderColor: borderColor ?? this.borderColor,
       backgroundColor: backgroundColor ?? this.backgroundColor,
       toggleBackgroundColor: toggleBackgroundColor ?? this.toggleBackgroundColor,
+      toggleTextStyle: toggleTextStyle ?? this.toggleTextStyle,
+      helpTextStyle: helpTextStyle ?? this.helpTextStyle,
     );
   }
 
@@ -60,6 +79,8 @@ class SBBSlideToToggleStyle {
       borderColor: other.borderColor,
       backgroundColor: other.backgroundColor,
       toggleBackgroundColor: other.toggleBackgroundColor,
+      toggleTextStyle: other.toggleTextStyle,
+      helpTextStyle: other.helpTextStyle,
     );
   }
 
@@ -75,22 +96,10 @@ class SBBSlideToToggleStyle {
         t,
         Color.lerp,
       ),
+      toggleTextStyle: WidgetStateProperty.lerp<TextStyle?>(a?.toggleTextStyle, b?.toggleTextStyle, t, TextStyle.lerp),
+      helpTextStyle: WidgetStateProperty.lerp<TextStyle?>(a?.helpTextStyle, b?.helpTextStyle, t, TextStyle.lerp),
     );
   }
 
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    return other is SBBSlideToToggleStyle &&
-        other.borderColor == borderColor &&
-        other.backgroundColor == backgroundColor &&
-        other.toggleBackgroundColor == toggleBackgroundColor;
-  }
-
-  @override
-  int get hashCode => Object.hash(
-    borderColor,
-    backgroundColor,
-    toggleBackgroundColor,
-  );
+  // TODO: Equal & hashcode
 }
