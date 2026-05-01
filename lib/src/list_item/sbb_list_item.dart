@@ -146,7 +146,7 @@ class SBBListItem extends StatefulWidget {
   /// {@template sbb_design_system.list_item.titleText}
   /// Text string to display as the list item's title using standard styling.
   ///
-  /// The text is clamped to a single line with ellipsis overflow.
+  /// The text is by default clamped to a single line with ellipsis overflow.
   /// The title is vertically centered with [leading] or [leadingIconData].
   ///
   /// Cannot be used together with [title].
@@ -413,12 +413,12 @@ class _SBBListItemState extends State<SBBListItem> {
     if (widget.title != null) {
       titleWidget = widget.title!;
     } else {
-      titleWidget = Text(widget.titleText!, maxLines: 1, overflow: .ellipsis);
+      titleWidget = Text(widget.titleText!, maxLines: effectiveStyle.titleTextMaxLines, overflow: .ellipsis);
     }
 
     Widget? subtitleWidget = widget.subtitle;
     if (subtitleWidget == null && widget.subtitleText != null) {
-      subtitleWidget = Text(widget.subtitleText!);
+      subtitleWidget = Text(widget.subtitleText!, maxLines: effectiveStyle.subtitleTextMaxLines);
     }
 
     Widget? trailingWidget = widget.trailing;
