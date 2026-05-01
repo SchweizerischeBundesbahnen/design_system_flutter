@@ -1,4 +1,5 @@
 import 'package:flutter/widgets.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// Defines the visual properties of [SBBListItem].
 ///
@@ -25,7 +26,9 @@ import 'package:flutter/widgets.dart';
 class SBBListItemStyle {
   const SBBListItemStyle({
     this.titleTextStyle,
+    this.titleTextMaxLines,
     this.subtitleTextStyle,
+    this.subtitleTextMaxLines,
     this.titleForegroundColor,
     this.subtitleForegroundColor,
     this.leadingForegroundColor,
@@ -47,6 +50,11 @@ class SBBListItemStyle {
   /// [titleForegroundColor] is used instead.
   final WidgetStateProperty<TextStyle?>? titleTextStyle;
 
+  /// An optional maximum number of lines for the title text to span, wrapping if necessary.
+  ///
+  /// This will only apply if [SBBListItem.titleText] is used.
+  final int? titleTextMaxLines;
+
   /// The text style for the list item subtitle.
   ///
   /// Applies to all text descendants of the subtitle of SBBListItem.
@@ -54,6 +62,11 @@ class SBBListItemStyle {
   /// The color of the [subtitleTextStyle] is typically not used directly, the
   /// [subtitleForegroundColor] is used instead.
   final WidgetStateProperty<TextStyle?>? subtitleTextStyle;
+
+  /// An optional maximum number of lines for the subtitle text to span, wrapping if necessary.
+  ///
+  /// This will only apply if [SBBListItem.subtitleText] is used.
+  final int? subtitleTextMaxLines;
 
   /// The color of the title text.
   ///
@@ -90,7 +103,9 @@ class SBBListItemStyle {
 
   SBBListItemStyle copyWith({
     WidgetStateProperty<TextStyle?>? titleTextStyle,
+    int? titleTextMaxLines,
     WidgetStateProperty<TextStyle?>? subtitleTextStyle,
+    int? subtitleTextMaxLines,
     WidgetStateProperty<Color?>? titleForegroundColor,
     WidgetStateProperty<Color?>? subtitleForegroundColor,
     WidgetStateProperty<Color?>? leadingForegroundColor,
@@ -100,7 +115,9 @@ class SBBListItemStyle {
   }) {
     return SBBListItemStyle(
       titleTextStyle: titleTextStyle ?? this.titleTextStyle,
+      titleTextMaxLines: titleTextMaxLines ?? this.titleTextMaxLines,
       subtitleTextStyle: subtitleTextStyle ?? this.subtitleTextStyle,
+      subtitleTextMaxLines: subtitleTextMaxLines ?? this.subtitleTextMaxLines,
       titleForegroundColor: titleForegroundColor ?? this.titleForegroundColor,
       subtitleForegroundColor: subtitleForegroundColor ?? this.subtitleForegroundColor,
       leadingForegroundColor: leadingForegroundColor ?? this.leadingForegroundColor,
@@ -115,7 +132,9 @@ class SBBListItemStyle {
 
     return copyWith(
       titleTextStyle: other.titleTextStyle,
+      titleTextMaxLines: other.titleTextMaxLines,
       subtitleTextStyle: other.subtitleTextStyle,
+      subtitleTextMaxLines: other.subtitleTextMaxLines,
       titleForegroundColor: other.titleForegroundColor,
       subtitleForegroundColor: other.subtitleForegroundColor,
       leadingForegroundColor: other.leadingForegroundColor,
@@ -130,12 +149,14 @@ class SBBListItemStyle {
 
     return SBBListItemStyle(
       titleTextStyle: WidgetStateProperty.lerp<TextStyle?>(a?.titleTextStyle, b?.titleTextStyle, t, TextStyle.lerp),
+      titleTextMaxLines: t < 0.5 ? a?.titleTextMaxLines : b?.titleTextMaxLines,
       subtitleTextStyle: WidgetStateProperty.lerp<TextStyle?>(
         a?.subtitleTextStyle,
         b?.subtitleTextStyle,
         t,
         TextStyle.lerp,
       ),
+      subtitleTextMaxLines: t < 0.5 ? a?.subtitleTextMaxLines : b?.subtitleTextMaxLines,
       titleForegroundColor: WidgetStateProperty.lerp<Color?>(
         a?.titleForegroundColor,
         b?.titleForegroundColor,
@@ -170,7 +191,9 @@ class SBBListItemStyle {
     if (identical(this, other)) return true;
     return other is SBBListItemStyle &&
         other.titleTextStyle == titleTextStyle &&
+        other.titleTextMaxLines == titleTextMaxLines &&
         other.subtitleTextStyle == subtitleTextStyle &&
+        other.subtitleTextMaxLines == subtitleTextMaxLines &&
         other.titleForegroundColor == titleForegroundColor &&
         other.subtitleForegroundColor == subtitleForegroundColor &&
         other.leadingForegroundColor == leadingForegroundColor &&
@@ -182,7 +205,9 @@ class SBBListItemStyle {
   @override
   int get hashCode => Object.hash(
     titleTextStyle,
+    titleTextMaxLines,
     subtitleTextStyle,
+    subtitleTextMaxLines,
     titleForegroundColor,
     subtitleForegroundColor,
     leadingForegroundColor,

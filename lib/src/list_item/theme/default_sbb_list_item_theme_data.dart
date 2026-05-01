@@ -14,9 +14,11 @@ class DefaultSBBListItemThemeData extends SBBListItemThemeData {
           titleTextStyle: WidgetStateProperty.fromMap(<WidgetStatesConstraint, TextStyle?>{
             WidgetState.any: baseStyle.themedTextStyle(textStyle: baseStyle.textTheme.mediumLight),
           }),
+          titleTextMaxLines: 1,
           subtitleTextStyle: WidgetStateProperty.fromMap(<WidgetStatesConstraint, TextStyle?>{
             WidgetState.any: baseStyle.themedTextStyle(textStyle: baseStyle.textTheme.smallLight),
           }),
+          subtitleTextMaxLines: null,
           titleForegroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.disabled: baseStyle.colorScheme.textSecondary,
             WidgetState.any: baseStyle.colorScheme.textPrimary,
