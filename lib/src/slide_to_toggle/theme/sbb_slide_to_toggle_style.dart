@@ -19,7 +19,9 @@ class SBBSlideToToggleStyle {
   const SBBSlideToToggleStyle({
     this.borderColor,
     this.backgroundColor,
+    this.toggleForegroundColor,
     this.toggleBackgroundColor,
+    this.loadingIndicatorColor,
     this.toggleTextStyle,
     this.helpTextStyle,
   });
@@ -33,14 +35,20 @@ class SBBSlideToToggleStyle {
   /// TODO: background color for container and part between border?
   final WidgetStateProperty<Color?>? backgroundColor;
 
-  /// The background color of toggle.
+  /// The foreground color of the toggle.
+  final WidgetStateProperty<Color?>? toggleForegroundColor;
+
+  /// The background color of the toggle.
   final WidgetStateProperty<Color?>? toggleBackgroundColor;
 
-  /// TODO: Maybe one for start and stop?
-  final WidgetStateProperty<TextStyle?>? toggleTextStyle;
+  /// The color of the loading indicator inside of the toggle.
+  final WidgetStateProperty<Color?>? loadingIndicatorColor;
 
-  /// TODO: Maybe one for start and stop?
-  final WidgetStateProperty<TextStyle?>? helpTextStyle;
+  /// TODO:
+  final TextStyle? toggleTextStyle;
+
+  /// TODO:
+  final TextStyle? helpTextStyle;
 
   /// TODO:
   static const double border = 82.0;
@@ -60,8 +68,8 @@ class SBBSlideToToggleStyle {
     WidgetStateProperty<Color?>? borderColor,
     WidgetStateProperty<Color?>? backgroundColor,
     WidgetStateProperty<Color?>? toggleBackgroundColor,
-    WidgetStateProperty<TextStyle?>? toggleTextStyle,
-    WidgetStateProperty<TextStyle?>? helpTextStyle,
+    TextStyle? toggleTextStyle,
+    TextStyle? helpTextStyle,
   }) {
     return SBBSlideToToggleStyle(
       borderColor: borderColor ?? this.borderColor,
@@ -96,8 +104,8 @@ class SBBSlideToToggleStyle {
         t,
         Color.lerp,
       ),
-      toggleTextStyle: WidgetStateProperty.lerp<TextStyle?>(a?.toggleTextStyle, b?.toggleTextStyle, t, TextStyle.lerp),
-      helpTextStyle: WidgetStateProperty.lerp<TextStyle?>(a?.helpTextStyle, b?.helpTextStyle, t, TextStyle.lerp),
+      toggleTextStyle: TextStyle.lerp(a?.toggleTextStyle, b?.toggleTextStyle, t),
+      helpTextStyle: TextStyle.lerp(a?.helpTextStyle, b?.helpTextStyle, t),
     );
   }
 
