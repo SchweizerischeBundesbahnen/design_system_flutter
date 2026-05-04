@@ -1,42 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
-const _shadowSpreadRadius = 8.0;
-const _borderRadius = 20.0;
-const _padding = EdgeInsets.symmetric(horizontal: 8.0, vertical: 1.0);
-
 /// Only used within the [SBBPromotionBox].
 class SBBPromotionBoxBadge extends StatelessWidget {
   const SBBPromotionBoxBadge({
-    required this.text,
-    required this.badgeColor,
-    required this.badgeBorderColor,
-    required this.badgeTextStyle,
-    required this.shadowColor,
+    this.labelText,
+    this.label,
+    this.style,
     super.key,
-  });
+  }) : assert(labelText != null || label != null, 'One of labelText or label must be non null!'),
+       assert(labelText == null || label == null, 'Cannot set both labelText and label!');
 
-  final String text;
-  final Color badgeColor;
-  final Color badgeBorderColor;
-  final TextStyle badgeTextStyle;
-  final Color shadowColor;
+  final String? labelText;
+  final Widget? label;
+  final SBBPromotionBoxBadgeStyle? style;
 
   @override
   Widget build(BuildContext context) {
+    final themeStyle = Theme.of(context).sbbPromotionBoxTheme.badgeStyle!;
+    final effectiveStyle = themeStyle.merge(style);
+
     return CustomPaint(
       painter: _BadgeHaloPainter(
-        color: shadowColor,
-        spread: _shadowSpreadRadius,
+        color: effectiveStyle.haloColor ?? SBBColors.transparent,
+        spread: SBBPromotionBoxBadgeStyle.haloSpreadRadius,
       ),
       child: Container(
-        padding: _padding,
-        decoration: BoxDecoration(
-          border: Border.all(color: badgeBorderColor),
-          borderRadius: BorderRadius.circular(_borderRadius),
-          color: badgeColor,
+        padding: effectiveStyle.padding!,
+        decoration: ShapeDecoration(
+          shape: StadiumBorder(side: BorderSide(color: effectiveStyle.borderColor!)),
+          color: effectiveStyle.backgroundColor,
         ),
-        child: Text(text, style: badgeTextStyle, maxLines: 1),
+        child: _content(context, effectiveStyle),
+      ),
+    );
+  }
+
+  Widget? _content(BuildContext context, SBBPromotionBoxBadgeStyle effectiveStyle) {
+    final child = label ?? Text(labelText!, maxLines: 1);
+    final resolvedTextStyle = effectiveStyle.textStyle!.copyWith(color: effectiveStyle.foregroundColor);
+
+    return DefaultTextStyle.merge(
+      style: resolvedTextStyle,
+      child: IconTheme.merge(
+        data: IconThemeData(color: effectiveStyle.foregroundColor),
+        child: child,
       ),
     );
   }
