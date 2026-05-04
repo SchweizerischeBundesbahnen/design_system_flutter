@@ -22,7 +22,7 @@ class SBBPromotionBoxBadge extends StatelessWidget {
 
     return CustomPaint(
       painter: _BadgeHaloPainter(
-        color: effectiveStyle.haloColor ?? SBBColors.transparent,
+        color: effectiveStyle.haloColor!,
         spread: SBBPromotionBoxBadgeStyle.haloSpreadRadius,
       ),
       child: Container(
@@ -50,7 +50,7 @@ class SBBPromotionBoxBadge extends StatelessWidget {
   }
 }
 
-/// Paints a solid rounded rectangle expanded by [spread] around the badge, only on the
+/// Paints a solid stadium border with thickness [spread] around the badge, only on the
 /// upper half, acting as a thick halo colored with [color].
 class _BadgeHaloPainter extends CustomPainter {
   _BadgeHaloPainter({
