@@ -52,23 +52,23 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
         children: [
           SBBPromotionBox(
             badgeText: 'Default',
-            title: _title,
-            subtitle: _description,
+            titleText: _title,
+            subtitleText: _description,
             onControllerCreated: (c) => defaultController = c,
             onClose: () {},
           ),
           const SizedBox(height: 8.0),
           SBBPromotionBox(
             badgeText: 'onClose null',
-            title: _title,
-            subtitle: _description,
+            titleText: _title,
+            subtitleText: _description,
             onControllerCreated: (c) => closableController = c,
           ),
           const SizedBox(height: 8.0),
           SBBPromotionBox(
             badgeText: 'Clickable',
-            title: _title,
-            subtitle: _description,
+            titleText: _title,
+            subtitleText: _description,
             onControllerCreated: (c) => clickableController = c,
             onTap: () {},
             onClose: () {},
@@ -76,15 +76,15 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
           const SizedBox(height: 8.0),
           SBBPromotionBox(
             badgeText: 'With way too long title and badge text',
-            title:
+            titleText:
                 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
-            subtitle: _description,
+            subtitleText: _description,
             onControllerCreated: (c) => extraController = c,
             onClose: () {},
           ),
           const SizedBox(height: SBBSpacing.medium),
-          SBBPromotionBox.custom(
-            content: Text(
+          SBBPromotionBox(
+            subtitle: Text(
               'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
               style: SBBTextStyles.mediumLight.copyWith(color: SBBColors.black),
             ),
@@ -92,8 +92,8 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
             style: _customBoxStyle(context),
           ),
           const SizedBox(height: SBBSpacing.medium),
-          SBBPromotionBox.custom(
-            content: Text(
+          SBBPromotionBox(
+            subtitle: Text(
               'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
               style: SBBTextStyles.mediumLight,
             ),
@@ -102,8 +102,8 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
             trailing: SBBTertiaryButtonSmall(labelText: 'Trailing Button', onPressed: () {}),
           ),
           const SizedBox(height: SBBSpacing.medium),
-          SBBPromotionBox.custom(
-            content: Text(
+          SBBPromotionBox(
+            subtitle: Text(
               'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
               style: SBBTextStyles.mediumLight.copyWith(color: SBBColors.black),
             ),

@@ -13,23 +13,29 @@ void main() {
       builder: (context) {
         return Column(
           children: [
-            SBBPromotionBox(badgeText: 'Default', title: title, subtitle: description, onClose: () {}),
+            SBBPromotionBox(badgeText: 'Default', titleText: title, subtitleText: description, onClose: () {}),
             const SizedBox(height: 8.0),
-            SBBPromotionBox(badgeText: 'onClose null', title: title, subtitle: description, onClose: null),
-            const SizedBox(height: 8.0),
-            SBBPromotionBox(badgeText: 'Clickable', title: title, subtitle: description, onTap: () {}, onClose: () {}),
+            SBBPromotionBox(badgeText: 'onClose null', titleText: title, subtitleText: description, onClose: null),
             const SizedBox(height: 8.0),
             SBBPromotionBox(
-              badgeText: 'With way too long title and badge text',
-              title:
-                  'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
-              subtitle: description,
+              badgeText: 'Clickable',
+              titleText: title,
+              subtitleText: description,
               onTap: () {},
               onClose: () {},
             ),
             const SizedBox(height: 8.0),
-            SBBPromotionBox.custom(
-              content: Text(
+            SBBPromotionBox(
+              badgeText: 'With way too long title and badge text',
+              titleText:
+                  'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
+              subtitleText: description,
+              onTap: () {},
+              onClose: () {},
+            ),
+            const SizedBox(height: 8.0),
+            SBBPromotionBox(
+              subtitle: Text(
                 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
                 style: SBBTextStyles.mediumLight.copyWith(color: SBBColors.black),
               ),
@@ -43,8 +49,8 @@ void main() {
               style: _customBoxStyle(context),
             ),
             const SizedBox(height: 8.0),
-            SBBPromotionBox.custom(
-              content: Text(
+            SBBPromotionBox(
+              subtitle: Text(
                 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
                 style: SBBTextStyles.mediumLight,
               ),
@@ -53,8 +59,8 @@ void main() {
               trailing: SBBTertiaryButtonSmall(labelText: 'Trailing Button', onPressed: () {}),
             ),
             const SizedBox(height: 8.0),
-            SBBPromotionBox.custom(
-              content: Text(
+            SBBPromotionBox(
+              subtitle: Text(
                 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
                 style: SBBTextStyles.mediumLight.copyWith(color: SBBColors.black),
               ),

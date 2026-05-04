@@ -10,84 +10,81 @@ const _gradientStops = [0.0, 0.406, 0.672, 1.0];
 /// The SBB Promotion Box.
 /// Use according to [documentation](https://digital.sbb.ch/en/design-system/mobile/components/promotion-box/)
 ///
-/// The default constructor creates the Promotion Box as specified in the design guidelines.
-/// For complete customization, use the `custom` constructor.
+/// Provide either [badge] for a custom badge widget or [badgeText] for the
+/// standard badge design. These parameters are mutually exclusive.
+///
+/// Provide either [title] for a custom title widget or [titleText] for the
+/// standard title design. These parameters are mutually exclusive.
+///
+/// Provide either [subtitle] for a custom subtitle widget or [subtitleText] for
+/// the standard subtitle design. These parameters are mutually exclusive.
 class SBBPromotionBox extends StatefulWidget {
-  /// The default SBBPromotionBox. Use this to create the PromotionBox according to the design guidelines.
+  /// Creates an [SBBPromotionBox].
+  ///
+  /// Exactly one of [badgeText] or [badge] must be provided.
+  /// At most one of [titleText] or [title] may be provided.
+  /// At most one of [subtitleText] or [subtitle] may be provided.
   ///
   /// For programmatic hide and show of the promotion box, use the [onControllerCreated] callback and the
   /// given [ClosableBoxController].
   ///
-  /// If [onTap] is not null, the promotion box is tappable and displays a chevron icon to the right of the [subtitle].
+  /// If [onTap] is not null, the promotion box is tappable and displays a chevron icon to the right of the subtitle.
   ///
   /// If [onClose] is not null, a DismissButton will be displayed to the top right of the [SBBPromotionBox], which the
   /// user can tap to dismiss the promotion box. This triggers the `hide` method in the [ClosableBoxController].
-  SBBPromotionBox({
-    required String title,
-    required String subtitle,
-    required String badgeText,
-    Key? key,
-    Function(ClosableBoxController controller)? onControllerCreated,
-    GestureTapCallback? onTap,
-    GestureTapCallback? onClose,
-    String? onTapSemanticsHint,
-  }) : this._base(
-         content: _DefaultContent(title: title, subtitle: subtitle, onTap: onTap, onClose: onClose),
-         key: key,
-         badge: SBBPromotionBoxBadge(labelText: badgeText),
-         onControllerCreated: onControllerCreated,
-         onTap: onTap,
-         onClose: onClose,
-         onTapSemanticsHint: onTapSemanticsHint,
-       );
-
-  /// Allows for complete customization of the content of the [SBBPromotionBox].
-  const SBBPromotionBox.custom({
-    required Widget content,
-    required Widget badge,
-    Key? key,
-    Function(ClosableBoxController controller)? onControllerCreated,
-    GestureTapCallback? onTap,
-    String? onTapSemanticsHint,
-    Widget? leading,
-    Widget? trailing,
-    @Deprecated('Deprecated. Will be removed in the next major release. Use [style] instead') Color? badgeColor,
-    @Deprecated('Deprecated. Will be removed in the next major release. Use [style] instead') Color? badgeShadowColor,
-    @Deprecated('Deprecated. Will be removed in the next major release. Use [style] instead')
-    List<Color>? gradientColors,
-    PromotionBoxStyle? style,
-  }) : this._base(
-         content: content,
-         badge: badge,
-         key: key,
-         onControllerCreated: onControllerCreated,
-         onTap: onTap,
-         onTapSemanticsHint: onTapSemanticsHint,
-         onClose: null,
-         leading: leading,
-         trailing: trailing,
-         gradientColors: gradientColors,
-         style: style,
-       );
-
-  const SBBPromotionBox._base({
-    required this.content,
-    required this.badge,
+  const SBBPromotionBox({
     super.key,
+    this.badge,
+    this.badgeText,
+    this.title,
+    this.titleText,
+    this.subtitle,
+    this.subtitleText,
     this.onControllerCreated,
     this.onTap,
-    this.onTapSemanticsHint,
     this.onClose,
+    this.onTapSemanticsHint,
     this.leading,
     this.trailing,
     this.gradientColors,
     this.style,
-  });
+    this.badgeStyle,
+  }) : assert(badgeText != null || badge != null, 'One of badgeText or badge must be provided!'),
+       assert(badgeText == null || badge == null, 'Cannot provide both badgeText and badge!'),
+       assert(titleText == null || title == null, 'Cannot provide both titleText and title!'),
+       assert(subtitleText == null || subtitle == null, 'Cannot provide both subtitleText and subtitle!');
 
-  /// The content between the [leading] and [trailing] Widgets.
-  final Widget content;
+  /// A custom badge widget.
+  ///
+  /// Typically, the [SBBPromotionBoxBadge] is used here for custom content and custom styling.
+  ///
+  /// Cannot be used together with [badgeText].
+  final Widget? badge;
 
-  final Widget badge;
+  /// Text string to display as the badge label using the standard design.
+  ///
+  /// Cannot be used together with [badge].
+  final String? badgeText;
+
+  /// A custom widget displayed as the title.
+  ///
+  /// Cannot be used together with [titleText].
+  final Widget? title;
+
+  /// Text string to display as the title using the standard design.
+  ///
+  /// Cannot be used together with [title].
+  final String? titleText;
+
+  /// A custom widget displayed as the subtitle.
+  ///
+  /// Cannot be used together with [subtitleText].
+  final Widget? subtitle;
+
+  /// Text string to display as the subtitle using the standard design.
+  ///
+  /// Cannot be used together with [subtitle].
+  final String? subtitleText;
 
   /// Callback for receiving the [ClosableBoxController] to programmatically hide
   /// and show the SBBPromotionBox.
@@ -97,7 +94,7 @@ class SBBPromotionBox extends StatefulWidget {
   /// in the top right corner.
   ///
   /// If this is non null, the [SBBPromotionBox] will be tappable and a chevron
-  /// will be displayed right of the [subtitle], if the default constructor is used.
+  /// will be displayed right of the subtitle, if [subtitleText] is used.
   final GestureTapCallback? onTap;
 
   /// Callback for once the user taps the DismissButton.
@@ -108,28 +105,27 @@ class SBBPromotionBox extends StatefulWidget {
   /// The semantic hint used if the promotion box is tappable. See [onTap].
   final String? onTapSemanticsHint;
 
-  /// The leading widget is displayed left of the [content] with a padding.
+  /// The leading widget is displayed left of the content with a padding.
   final Widget? leading;
 
-  /// The trailing widget is displayed right of the [content] with a padding.
+  /// The trailing widget is displayed right of the content with a padding.
   final Widget? trailing;
 
   /// The gradient colors of the [SBBPromotionBox] used to override the one defined in the [PromotionBoxStyle].
   ///
   /// If null, the one defined in the style will be taken.
   ///
-  /// Cannot be used if [style] is set.
-  ///
   /// Use this to override the background color of the [SBBPromotionBox].
   @Deprecated('Deprecated. Will be removed in the next major release. Use [style] instead')
   final List<Color>? gradientColors;
 
-  /// Use to override style of single SBBPromotionBox in custom constructor.
+  /// Use to override the style of a single [SBBPromotionBox].
   ///
-  /// Cannot be used if [gradientColors], [badgeShadowColor] or [badgeColor] are set.
-  ///
-  /// This is [PromotionBoxStyle.merge] with the theme's [PromotionBoxStyle] to create the final one.
+  /// This is [PromotionBoxStyle.merge]d with the theme's [PromotionBoxStyle] to create the final one.
   final PromotionBoxStyle? style;
+
+  /// Ignored if a custom [badge] is set.
+  final SBBPromotionBoxBadgeStyle? badgeStyle;
 
   @override
   State<SBBPromotionBox> createState() => _SBBPromotionBoxState();
@@ -152,6 +148,26 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
     );
   }
 
+  Widget _buildBadge() {
+    if (widget.badge != null) return widget.badge!;
+    return SBBPromotionBoxBadge(labelText: widget.badgeText, style: widget.badgeStyle);
+  }
+
+  Widget _buildContent() {
+    if (widget.title != null || widget.subtitle != null || widget.titleText != null || widget.subtitleText != null) {
+      return _DefaultContent(
+        title: widget.title,
+        titleText: widget.titleText,
+        subtitle: widget.subtitle,
+        subtitleText: widget.subtitleText,
+        onTap: widget.onTap,
+        onClose: widget.onClose,
+      );
+    }
+    // No title/subtitle provided: render nothing (custom content via leading/trailing only).
+    return const SizedBox.shrink();
+  }
+
   @override
   Widget build(BuildContext context) {
     final baseStyle = Theme.of(context).sbbBaseStyle;
@@ -159,7 +175,6 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
     final style = SBBControlStyles.of(context).promotionBox!;
     final resolvedStyle = widget.style != null ? style.merge(widget.style!) : style;
 
-    // The box content widget – the decorated container + optional close button.
     final boxContent = Container(
       decoration: BoxDecoration(
         border: Border.all(color: resolvedStyle.borderColor!),
@@ -182,7 +197,6 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
         child: Semantics(
           hint: widget.onTapSemanticsHint,
           child: InkWell(
-            // TODO: replace these with own SBBPromotionBoxThemeData values
             focusColor: baseStyle.themeValue(SBBColors.milk, SBBColors.iron),
             hoverColor: baseStyle.themeValue(SBBColors.milk, SBBColors.iron),
             customBorder: const RoundedRectangleBorder(
@@ -197,7 +211,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
                 children: [
                   if (widget.leading != null)
                     Padding(padding: const EdgeInsets.only(right: 8.0), child: widget.leading!),
-                  Expanded(child: widget.content),
+                  Expanded(child: _buildContent()),
                   if (widget.trailing != null)
                     Padding(padding: const EdgeInsets.symmetric(horizontal: 8.0), child: widget.trailing!),
                 ],
@@ -208,8 +222,6 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
       ),
     );
 
-    // Stack the close button over the box if needed, so it can be positioned
-    // relative to the box (not the overall layout that includes badge space).
     final boxWithOptionalClose = widget.onClose != null
         ? Stack(
             children: [
@@ -231,7 +243,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
     return _animationBuilder(
       animation: _controller.animation,
       child: PromotionBoxLayout(
-        badge: widget.badge,
+        badge: _buildBadge(),
         content: boxWithOptionalClose,
       ),
     );
@@ -239,10 +251,19 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
 }
 
 class _DefaultContent extends StatelessWidget {
-  const _DefaultContent({required this.title, required this.subtitle, this.onTap, this.onClose});
+  const _DefaultContent({
+    this.title,
+    this.titleText,
+    this.subtitle,
+    this.subtitleText,
+    this.onTap,
+    this.onClose,
+  });
 
-  final String title;
-  final String subtitle;
+  final Widget? title;
+  final String? titleText;
+  final Widget? subtitle;
+  final String? subtitleText;
   final GestureTapCallback? onTap;
   final GestureTapCallback? onClose;
 
@@ -250,26 +271,32 @@ class _DefaultContent extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     final crossColor = Theme.of(context).sbbBaseStyle.colorScheme.iconPrimary;
+
+    final titleWidget = title ?? (titleText != null ? Text(titleText!, style: textTheme.titleMedium) : null);
+    final subtitleWidget = subtitle ?? (subtitleText != null ? Text(subtitleText!, style: textTheme.bodyMedium) : null);
+
     return Column(
-      crossAxisAlignment: .stretch,
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Row(
-          crossAxisAlignment: .start,
-          children: [
-            Expanded(child: Text(title, style: textTheme.titleMedium)),
-            if (onClose != null) const SizedBox(width: sbbIconSizeSmall),
-            const SizedBox(width: SBBSpacing.xSmall),
-          ],
-        ),
-        const SizedBox(height: SBBSpacing.xSmall),
-        Row(
-          children: [
-            Expanded(child: Text(subtitle, style: textTheme.bodyMedium)),
-            onTap != null
-                ? Icon(SBBIcons.chevron_small_right_small, color: crossColor, size: sbbIconSizeSmall)
-                : const SizedBox(width: SBBSpacing.xSmall),
-          ],
-        ),
+        if (titleWidget != null)
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Expanded(child: titleWidget),
+              if (onClose != null) const SizedBox(width: sbbIconSizeSmall),
+              const SizedBox(width: SBBSpacing.xSmall),
+            ],
+          ),
+        if (titleWidget != null && subtitleWidget != null) const SizedBox(height: SBBSpacing.xSmall),
+        if (subtitleWidget != null)
+          Row(
+            children: [
+              Expanded(child: subtitleWidget),
+              onTap != null
+                  ? Icon(SBBIcons.chevron_small_right_small, color: crossColor, size: sbbIconSizeSmall)
+                  : const SizedBox(width: SBBSpacing.xSmall),
+            ],
+          ),
       ],
     );
   }
