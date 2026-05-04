@@ -60,7 +60,13 @@ void main() {
               ),
               onTap: () {},
               badge: SBBPromotionBoxBadge(
-                labelText: 'Custom with on tap',
+                label: SizedBox(
+                  width: 160,
+                  height: 32,
+                  child: Center(
+                    child: Text('Custom 160×32 badge', maxLines: 1),
+                  ),
+                ),
                 style: SBBPromotionBoxBadgeStyle(
                   backgroundColor: SBBColors.peach,
                   haloColor: SBBColors.peach.withValues(alpha: 0.2),
