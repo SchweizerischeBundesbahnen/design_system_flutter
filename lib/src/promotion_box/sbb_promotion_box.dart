@@ -160,34 +160,12 @@ class SBBPromotionBox extends StatefulWidget {
 }
 
 class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProviderStateMixin {
-  final _badgeKey = GlobalKey();
   late final ClosableBoxController _controller = ClosableBoxController(this);
-
-  Size _badgeSize = Size.zero;
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) => _repaint());
     widget.onControllerCreated?.call(_controller);
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    _repaint();
-  }
-
-  void _repaint() {
-    _recalculateBadgeSize();
-  }
-
-  void _recalculateBadgeSize() {
-    final renderObject = _badgeKey.currentContext?.findRenderObject();
-    if (renderObject != null) {
-      final renderBox = renderObject as RenderBox;
-      setState(() => _badgeSize = renderBox.size);
-    }
   }
 
   Widget _animationBuilder({required Animation<double> animation, required Widget child}) {
@@ -201,7 +179,6 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
   @override
   Widget build(BuildContext context) {
     final baseStyle = Theme.of(context).sbbBaseStyle;
-    final paddingTop = _badgeSize.height / 2.0;
 
     final style = SBBControlStyles.of(context).promotionBox!;
     final resolvedStyle = widget.style != null ? style.merge(widget.style!) : style;
@@ -212,15 +189,8 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
         padding: const .only(top: 10.0),
         child: Stack(
           children: [
-            Align(
-              alignment: .topCenter,
-              child: SBBPromotionBoxBadgeShadow(
-                badgeSize: _badgeSize,
-                shadowColor: widget.badgeShadowColor ?? resolvedStyle.badgeShadowColor!,
-              ),
-            ),
             Container(
-              margin: .only(top: paddingTop),
+              margin: const EdgeInsets.only(top: 12.0),
               decoration: BoxDecoration(
                 border: Border.all(color: resolvedStyle.borderColor!),
                 borderRadius: const BorderRadius.all(Radius.circular(SBBSpacing.medium)),
@@ -269,11 +239,11 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
             Align(
               alignment: .topCenter,
               child: SBBPromotionBoxBadge(
-                key: _badgeKey,
                 text: widget.badgeText,
                 badgeColor: widget.badgeColor ?? resolvedStyle.badgeColor!,
                 badgeBorderColor: resolvedStyle.badgeBorderColor!,
                 badgeTextStyle: resolvedStyle.badgeTextStyle!,
+                shadowColor: widget.badgeShadowColor ?? resolvedStyle.badgeShadowColor!,
               ),
             ),
             if (widget.onClose != null)

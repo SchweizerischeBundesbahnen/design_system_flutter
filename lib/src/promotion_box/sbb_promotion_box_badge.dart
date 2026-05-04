@@ -12,6 +12,7 @@ class SBBPromotionBoxBadge extends StatelessWidget {
     required this.badgeColor,
     required this.badgeBorderColor,
     required this.badgeTextStyle,
+    required this.shadowColor,
     super.key,
   });
 
@@ -19,36 +20,57 @@ class SBBPromotionBoxBadge extends StatelessWidget {
   final Color badgeColor;
   final Color badgeBorderColor;
   final TextStyle badgeTextStyle;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: _padding,
-      decoration: BoxDecoration(
-        border: Border.all(color: badgeBorderColor),
-        borderRadius: BorderRadius.circular(_borderRadius),
-        color: badgeColor,
-      ),
-      child: Text(text, style: badgeTextStyle, maxLines: 1),
-    );
-  }
-}
-
-class SBBPromotionBoxBadgeShadow extends StatelessWidget {
-  const SBBPromotionBoxBadgeShadow({super.key, required this.badgeSize, required this.shadowColor});
-
-  final Size badgeSize;
   final Color shadowColor;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(width: 0.0, color: SBBColors.transparent),
-        borderRadius: BorderRadius.circular(_borderRadius),
-        boxShadow: [BoxShadow(color: shadowColor, spreadRadius: _shadowSpreadRadius)],
+    return CustomPaint(
+      painter: _BadgeHaloPainter(
+        color: shadowColor,
+        spread: _shadowSpreadRadius,
       ),
-      child: SizedBox.fromSize(size: badgeSize),
+      child: Container(
+        padding: _padding,
+        decoration: BoxDecoration(
+          border: Border.all(color: badgeBorderColor),
+          borderRadius: BorderRadius.circular(_borderRadius),
+          color: badgeColor,
+        ),
+        child: Text(text, style: badgeTextStyle, maxLines: 1),
+      ),
     );
   }
+}
+
+/// Paints a solid rounded rectangle expanded by [spread] around the badge, only on the
+/// upper half, acting as a thick halo colored with [color].
+class _BadgeHaloPainter extends CustomPainter {
+  _BadgeHaloPainter({
+    required this.color,
+    required this.spread,
+  });
+
+  final Color color;
+  final double spread;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final origin = Offset.zero;
+
+    // The halo is a larger rounded rect expanded by [spread] on all sides, rounded like a stadium border.
+    final shadowRect = Rect.fromPoints(Offset.zero, size.bottomRight(origin)).inflate(spread);
+    final shadowRRect = RRect.fromRectAndRadius(shadowRect, Radius.circular(shadowRect.shortestSide / 2.0));
+
+    // Clip it to the upper half so it only appears above the badge centre line.
+    canvas.clipRect(Rect.fromPoints(shadowRect.topLeft, shadowRect.centerRight));
+
+    final paint = Paint()
+      ..color = color
+      ..style = PaintingStyle.fill;
+
+    canvas.drawRRect(shadowRRect, paint);
+  }
+
+  @override
+  bool shouldRepaint(_BadgeHaloPainter oldDelegate) => oldDelegate.color != color || oldDelegate.spread != spread;
 }
