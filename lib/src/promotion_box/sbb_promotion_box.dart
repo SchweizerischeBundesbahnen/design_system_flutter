@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-import 'package:sbb_design_system_mobile/src/promotion_box/sbb_promotion_box_badge.dart';
 import 'package:sbb_design_system_mobile/src/shared/close_button.dart';
 
 part 'promotion_box.assets.dart';
@@ -34,7 +33,7 @@ class SBBPromotionBox extends StatefulWidget {
   }) : this._base(
          content: _DefaultContent(title: title, subtitle: subtitle, onTap: onTap, onClose: onClose),
          key: key,
-         badgeText: badgeText,
+         badge: SBBPromotionBoxBadge(labelText: badgeText),
          onControllerCreated: onControllerCreated,
          onTap: onTap,
          onClose: onClose,
@@ -44,7 +43,7 @@ class SBBPromotionBox extends StatefulWidget {
   /// Allows for complete customization of the content of the [SBBPromotionBox].
   const SBBPromotionBox.custom({
     required Widget content,
-    required String badgeText,
+    required Widget badge,
     Key? key,
     Function(ClosableBoxController controller)? onControllerCreated,
     GestureTapCallback? onTap,
@@ -58,7 +57,7 @@ class SBBPromotionBox extends StatefulWidget {
     PromotionBoxStyle? style,
   }) : this._base(
          content: content,
-         badgeText: badgeText,
+         badge: badge,
          key: key,
          onControllerCreated: onControllerCreated,
          onTap: onTap,
@@ -66,15 +65,13 @@ class SBBPromotionBox extends StatefulWidget {
          onClose: null,
          leading: leading,
          trailing: trailing,
-         badgeColor: badgeColor,
-         badgeShadowColor: badgeShadowColor,
          gradientColors: gradientColors,
          style: style,
        );
 
   const SBBPromotionBox._base({
     required this.content,
-    required this.badgeText,
+    required this.badge,
     super.key,
     this.onControllerCreated,
     this.onTap,
@@ -82,20 +79,14 @@ class SBBPromotionBox extends StatefulWidget {
     this.onClose,
     this.leading,
     this.trailing,
-    this.badgeColor,
-    this.badgeShadowColor,
     this.gradientColors,
     this.style,
-  }) : assert(
-         !(style != null && (badgeColor != null || badgeShadowColor != null || gradientColors != null)),
-         'Cannot set PromotionBoxStyle in combination with badgeColor, badgeShadowColor or gradientColors.',
-       );
+  });
 
   /// The content between the [leading] and [trailing] Widgets.
   final Widget content;
 
-  /// The text shown on the top badge of the [SBBPromotionBox].
-  final String badgeText;
+  final Widget badge;
 
   /// Callback for receiving the [ClosableBoxController] to programmatically hide
   /// and show the SBBPromotionBox.
@@ -121,22 +112,6 @@ class SBBPromotionBox extends StatefulWidget {
 
   /// The trailing widget is displayed right of the [content] with a padding.
   final Widget? trailing;
-
-  /// The color of the badge used to override the one defined in the [PromotionBoxStyle].
-  ///
-  /// Cannot be used if [style] is set.
-  ///
-  /// If null, the one defined in the style will be taken.
-  @Deprecated('Deprecated. Will be removed in the next major release. Use [style] instead')
-  final Color? badgeColor;
-
-  /// The shadow color of the badge used to override the one defined in the [PromotionBoxStyle].
-  ///
-  /// Cannot be used if [style] is set.
-  ///
-  /// If null, the one defined in the style will be taken.
-  @Deprecated('Deprecated. Will be removed in the next major release. Use [style] instead')
-  final Color? badgeShadowColor;
 
   /// The gradient colors of the [SBBPromotionBox] used to override the one defined in the [PromotionBoxStyle].
   ///
@@ -238,13 +213,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
             ),
             Align(
               alignment: .topCenter,
-              child: SBBPromotionBoxBadge(
-                text: widget.badgeText,
-                badgeColor: widget.badgeColor ?? resolvedStyle.badgeColor!,
-                badgeBorderColor: resolvedStyle.badgeBorderColor!,
-                badgeTextStyle: resolvedStyle.badgeTextStyle!,
-                shadowColor: widget.badgeShadowColor ?? resolvedStyle.badgeShadowColor!,
-              ),
+              child: widget.badge,
             ),
             if (widget.onClose != null)
               Align(

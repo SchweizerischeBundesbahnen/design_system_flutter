@@ -33,7 +33,13 @@ void main() {
                 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
                 style: SBBTextStyles.mediumLight.copyWith(color: SBBColors.black),
               ),
-              badgeText: 'Custom with different color',
+              badge: SBBPromotionBoxBadge(
+                labelText: 'Custom with different color',
+                style: SBBPromotionBoxBadgeStyle(
+                  backgroundColor: SBBColors.peach,
+                  haloColor: SBBColors.peach.withValues(alpha: 0.2),
+                ),
+              ),
               style: _customBoxStyle(context),
             ),
             const SizedBox(height: 8.0),
@@ -42,7 +48,7 @@ void main() {
                 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
                 style: SBBTextStyles.mediumLight,
               ),
-              badgeText: 'Custom leading and trailing widget',
+              badge: SBBPromotionBoxBadge(labelText: 'Custom leading and trailing widget'),
               leading: Icon(SBBIcons.train_large),
               trailing: SBBTertiaryButtonSmall(labelText: 'Trailing Button', onPressed: () {}),
             ),
@@ -53,7 +59,13 @@ void main() {
                 style: SBBTextStyles.mediumLight.copyWith(color: SBBColors.black),
               ),
               onTap: () {},
-              badgeText: 'Custom with on tap',
+              badge: SBBPromotionBoxBadge(
+                labelText: 'Custom with on tap',
+                style: SBBPromotionBoxBadgeStyle(
+                  backgroundColor: SBBColors.peach,
+                  haloColor: SBBColors.peach.withValues(alpha: 0.2),
+                ),
+              ),
               leading: Icon(SBBIcons.train_large),
               trailing: SBBTertiaryButtonSmall(labelText: 'Trailing Button', onPressed: () {}),
               style: _customBoxStyle(context),
