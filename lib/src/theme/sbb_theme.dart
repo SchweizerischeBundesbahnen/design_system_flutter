@@ -17,6 +17,7 @@ import 'package:sbb_design_system_mobile/src/message/theme/default_sbb_message_t
 import 'package:sbb_design_system_mobile/src/paginator/theme/default_sbb_paginator_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/picker/theme/default_sbb_picker_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/popup/theme/default_sbb_popup_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/promotion_box/theme/default_sbb_promotion_box_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/radio/theme/default_sbb_radio_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/segmented_button/theme/default_sbb_segmented_button_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/slider/theme/default_sbb_slider_theme_data.dart';
@@ -97,6 +98,7 @@ class SBBTheme {
     SBBPaginatorThemeData? paginatorTheme,
     SBBPickerThemeData? pickerTheme,
     SBBPopupThemeData? popupTheme,
+    SBBPromotionBoxThemeData? promotionBoxTheme,
     SBBRadioThemeData? radioTheme,
     SBBStatusThemeData? statusTheme,
     SBBSegmentedButtonThemeData? segmentedButtonTheme,
@@ -130,6 +132,7 @@ class SBBTheme {
     paginatorTheme: paginatorTheme,
     pickerTheme: pickerTheme,
     popupTheme: popupTheme,
+    promotionBoxTheme: promotionBoxTheme,
     radioTheme: radioTheme,
     statusTheme: statusTheme,
     segmentedButtonTheme: segmentedButtonTheme,
@@ -169,6 +172,7 @@ class SBBTheme {
     SBBPaginatorThemeData? paginatorTheme,
     SBBPickerThemeData? pickerTheme,
     SBBPopupThemeData? popupTheme,
+    SBBPromotionBoxThemeData? promotionBoxTheme,
     SBBRadioThemeData? radioTheme,
     SBBStatusThemeData? statusTheme,
     SBBSegmentedButtonThemeData? segmentedButtonTheme,
@@ -201,6 +205,7 @@ class SBBTheme {
     paginatorTheme: paginatorTheme,
     pickerTheme: pickerTheme,
     popupTheme: popupTheme,
+    promotionBoxTheme: promotionBoxTheme,
     radioTheme: radioTheme,
     statusTheme: statusTheme,
     stepperTheme: stepperTheme,
@@ -243,6 +248,7 @@ class SBBTheme {
     SBBPaginatorThemeData? paginatorTheme,
     SBBPickerThemeData? pickerTheme,
     SBBPopupThemeData? popupTheme,
+    SBBPromotionBoxThemeData? promotionBoxTheme,
     SBBRadioThemeData? radioTheme,
     SBBSegmentedButtonThemeData? segmentedButtonTheme,
     SBBSliderThemeData? sliderTheme,
@@ -306,6 +312,9 @@ class SBBTheme {
 
     final defaultPopupTheme = DefaultSBBPopupThemeData(mergedBaseStyle);
     final mergedPopupTheme = defaultPopupTheme.merge(popupTheme);
+
+    final defaultPromotionBoxTheme = DefaultSBBPromotionBoxThemeData(mergedBaseStyle);
+    final mergedPromotionBoxTheme = defaultPromotionBoxTheme.merge(promotionBoxTheme);
 
     final defaultRadioTheme = DefaultSBBRadioThemeData(mergedBaseStyle);
     final mergedRadioTheme = defaultRadioTheme.merge(radioTheme);
@@ -374,6 +383,7 @@ class SBBTheme {
       paginatorTheme: mergedPaginatorTheme,
       pickerTheme: mergedPickerTheme,
       popupTheme: mergedPopupTheme,
+      promotionBoxTheme: mergedPromotionBoxTheme,
       radioTheme: mergedRadioTheme,
       statusTheme: mergedStatusTheme,
       segmentedButtonTheme: mergedSegmentedButtonTheme,
@@ -408,6 +418,7 @@ class SBBTheme {
     required SBBPaginatorThemeData paginatorTheme,
     required SBBPickerThemeData pickerTheme,
     required SBBPopupThemeData popupTheme,
+    required SBBPromotionBoxThemeData promotionBoxTheme,
     required SBBRadioThemeData radioTheme,
     required SBBStatusThemeData statusTheme,
     required SBBSegmentedButtonThemeData segmentedButtonTheme,
@@ -459,6 +470,7 @@ class SBBTheme {
         paginatorTheme,
         pickerTheme,
         popupTheme,
+        promotionBoxTheme,
         radioTheme,
         statusTheme,
         segmentedButtonTheme,
