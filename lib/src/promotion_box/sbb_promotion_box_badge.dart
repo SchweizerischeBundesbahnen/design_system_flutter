@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// Only used within the [SBBPromotionBox].
@@ -20,11 +21,9 @@ class SBBPromotionBoxBadge extends StatelessWidget {
     final themeStyle = Theme.of(context).sbbPromotionBoxTheme.badgeStyle!;
     final effectiveStyle = themeStyle.merge(style);
 
-    return CustomPaint(
-      painter: _BadgeHaloPainter(
-        color: effectiveStyle.haloColor!,
-        spread: SBBPromotionBoxBadgeStyle.haloSpreadRadius,
-      ),
+    return _PromotionBoxBadgeRenderObjectWidget(
+      color: effectiveStyle.haloColor!,
+      spread: SBBPromotionBoxBadgeStyle.haloSpreadRadius,
       child: Container(
         padding: effectiveStyle.padding!,
         decoration: ShapeDecoration(
@@ -50,35 +49,122 @@ class SBBPromotionBoxBadge extends StatelessWidget {
   }
 }
 
-/// Paints a solid stadium border with thickness [spread] around the badge, only on the
-/// upper half, acting as a thick halo colored with [color].
-class _BadgeHaloPainter extends CustomPainter {
-  _BadgeHaloPainter({
+/// A [SingleChildRenderObjectWidget] that expands its layout size by [spread]
+/// on all sides to account for the halo painted around the child, and paints
+/// the halo behind the child ONLY ON THE UPPER HALF.
+class _PromotionBoxBadgeRenderObjectWidget extends SingleChildRenderObjectWidget {
+  const _PromotionBoxBadgeRenderObjectWidget({
     required this.color,
     required this.spread,
+    super.child,
   });
 
   final Color color;
   final double spread;
 
   @override
-  void paint(Canvas canvas, Size size) {
-    final origin = Offset.zero;
+  RenderObject createRenderObject(BuildContext context) => _RenderPromotionBoxBadge(color: color, spread: spread);
 
-    // The halo is a larger rounded rect expanded by [spread] on all sides, rounded like a stadium border.
-    final shadowRect = Rect.fromPoints(Offset.zero, size.bottomRight(origin)).inflate(spread);
-    final shadowRRect = RRect.fromRectAndRadius(shadowRect, Radius.circular(shadowRect.shortestSide / 2.0));
-
-    // Clip it to the upper half so it only appears above the badge centre line.
-    canvas.clipRect(Rect.fromPoints(shadowRect.topLeft, shadowRect.centerRight));
-
-    final paint = Paint()
+  @override
+  void updateRenderObject(BuildContext context, RenderObject renderObject) {
+    (renderObject as _RenderPromotionBoxBadge)
       ..color = color
-      ..style = PaintingStyle.fill;
+      ..spread = spread;
+  }
+}
 
-    canvas.drawRRect(shadowRRect, paint);
+class _RenderPromotionBoxBadge extends RenderBox with RenderObjectWithChildMixin<RenderBox> {
+  _RenderPromotionBoxBadge({required Color color, required double spread}) : _color = color, _spread = spread;
+
+  Color _color;
+
+  Color get color => _color;
+
+  set color(Color value) {
+    if (_color == value) return;
+    _color = value;
+    markNeedsPaint();
+  }
+
+  double _spread;
+
+  double get spread => _spread;
+
+  set spread(double value) {
+    if (_spread == value) return;
+    _spread = value;
+    markNeedsLayout();
   }
 
   @override
-  bool shouldRepaint(_BadgeHaloPainter oldDelegate) => oldDelegate.color != color || oldDelegate.spread != spread;
+  void setupParentData(RenderObject child) {
+    if (child.parentData is! BoxParentData) {
+      child.parentData = BoxParentData();
+    }
+  }
+
+  @override
+  void performLayout() {
+    final child = this.child;
+    if (child == null) {
+      size = constraints.smallest;
+      return;
+    }
+
+    // Let the child lay itself out without the halo inflation.
+    final innerConstraints = constraints.deflate(EdgeInsets.all(_spread));
+    child.layout(innerConstraints, parentUsesSize: true);
+
+    // Offset the child so it sits centered inside inflated box.
+    final childParentData = child.parentData! as BoxParentData;
+    childParentData.offset = Offset(_spread, _spread);
+
+    size = constraints.constrain(
+      Size(
+        child.size.width + _spread * 2,
+        child.size.height + _spread * 2,
+      ),
+    );
+  }
+
+  @override
+  void paint(PaintingContext context, Offset offset) {
+    final child = this.child;
+    if (child == null) return;
+
+    final childParentData = child.parentData! as BoxParentData;
+    // The child's rect in local coordinates.
+    final childRect = childParentData.offset & child.size;
+
+    // The halo is the child rect inflated by spread on all sides.
+    final haloRect = childRect.inflate(_spread);
+    final haloRRect = RRect.fromRectAndRadius(haloRect, Radius.circular(haloRect.shortestSide / 2.0));
+
+    final canvas = context.canvas;
+    canvas.save();
+    // Clip to the upper half of the halo rect so the halo only shows above the badge center line.
+    canvas.clipRect(Rect.fromPoints(haloRect.topLeft, haloRect.centerRight).shift(offset));
+    canvas.drawRRect(
+      haloRRect.shift(offset),
+      Paint()
+        ..color = _color
+        ..style = PaintingStyle.fill,
+    );
+    canvas.restore();
+
+    // Paint the child on top.
+    context.paintChild(child, offset + childParentData.offset);
+  }
+
+  @override
+  bool hitTestChildren(BoxHitTestResult result, {required Offset position}) {
+    final child = this.child;
+    if (child == null) return false;
+    final childParentData = child.parentData! as BoxParentData;
+    return result.addWithPaintOffset(
+      offset: childParentData.offset,
+      position: position,
+      hitTest: (result, transformed) => child.hitTest(result, position: transformed),
+    );
+  }
 }
