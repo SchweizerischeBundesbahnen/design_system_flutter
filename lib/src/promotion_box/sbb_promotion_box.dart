@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/promotion_box/promotion_box_layout.dart';
 import 'package:sbb_design_system_mobile/src/shared/close_button.dart';
 
 part 'promotion_box.assets.dart';
@@ -158,78 +159,80 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
     final style = SBBControlStyles.of(context).promotionBox!;
     final resolvedStyle = widget.style != null ? style.merge(widget.style!) : style;
 
+    // The box content widget – the decorated container + optional close button.
+    final boxContent = Container(
+      decoration: BoxDecoration(
+        border: Border.all(color: resolvedStyle.borderColor!),
+        borderRadius: const BorderRadius.all(Radius.circular(SBBSpacing.medium)),
+        image: DecorationImage(
+          image: const AssetImage(_PromotionBoxAssets.noise),
+          repeat: ImageRepeat.repeat,
+          fit: BoxFit.none,
+          opacity: resolvedStyle.textureOpacity!,
+        ),
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: widget.gradientColors ?? resolvedStyle.gradientColors!,
+          stops: _gradientStops,
+        ),
+      ),
+      child: Material(
+        color: SBBColors.transparent,
+        child: Semantics(
+          hint: widget.onTapSemanticsHint,
+          child: InkWell(
+            // TODO: replace these with own SBBPromotionBoxThemeData values
+            focusColor: baseStyle.themeValue(SBBColors.milk, SBBColors.iron),
+            hoverColor: baseStyle.themeValue(SBBColors.milk, SBBColors.iron),
+            customBorder: const RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(SBBSpacing.medium)),
+            ),
+            onTap: widget.onTap,
+            child: Padding(
+              padding: const EdgeInsets.all(SBBSpacing.medium).copyWith(right: SBBSpacing.xSmall),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  if (widget.leading != null)
+                    Padding(padding: const EdgeInsets.only(right: 8.0), child: widget.leading!),
+                  Expanded(child: widget.content),
+                  if (widget.trailing != null)
+                    Padding(padding: const EdgeInsets.symmetric(horizontal: 8.0), child: widget.trailing!),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    // Stack the close button over the box if needed, so it can be positioned
+    // relative to the box (not the overall layout that includes badge space).
+    final boxWithOptionalClose = widget.onClose != null
+        ? Stack(
+            children: [
+              boxContent,
+              Positioned(
+                top: 2.0,
+                right: 0.0,
+                child: SBBCloseButton(
+                  onTap: () async {
+                    await _controller.hide();
+                    widget.onClose!.call();
+                  },
+                ),
+              ),
+            ],
+          )
+        : boxContent;
+
     return _animationBuilder(
       animation: _controller.animation,
-      child: Padding(
-        padding: const .only(top: 10.0),
-        child: Stack(
-          children: [
-            Container(
-              margin: const EdgeInsets.only(top: 12.0),
-              decoration: BoxDecoration(
-                border: Border.all(color: resolvedStyle.borderColor!),
-                borderRadius: const BorderRadius.all(Radius.circular(SBBSpacing.medium)),
-                image: DecorationImage(
-                  image: const AssetImage(_PromotionBoxAssets.noise),
-                  repeat: .repeat,
-                  fit: .none,
-                  opacity: resolvedStyle.textureOpacity!,
-                ),
-                gradient: LinearGradient(
-                  begin: .topCenter,
-                  end: .bottomCenter,
-                  colors: widget.gradientColors ?? resolvedStyle.gradientColors!,
-                  stops: _gradientStops,
-                ),
-              ),
-              child: Material(
-                color: SBBColors.transparent,
-                child: Semantics(
-                  hint: widget.onTapSemanticsHint,
-                  child: InkWell(
-                    // TODO: replace these with own SBBPromotionBoxThemeData values
-                    focusColor: baseStyle.themeValue(SBBColors.milk, SBBColors.iron),
-                    hoverColor: baseStyle.themeValue(SBBColors.milk, SBBColors.iron),
-                    customBorder: const RoundedRectangleBorder(
-                      borderRadius: BorderRadius.all(Radius.circular(SBBSpacing.medium)),
-                    ),
-                    onTap: widget.onTap,
-                    child: Padding(
-                      padding: const EdgeInsets.all(SBBSpacing.medium).copyWith(right: SBBSpacing.xSmall),
-                      child: Row(
-                        mainAxisAlignment: .start,
-                        crossAxisAlignment: .center,
-                        children: [
-                          if (widget.leading != null) Padding(padding: const .only(right: 8.0), child: widget.leading!),
-                          Expanded(child: widget.content),
-                          if (widget.trailing != null)
-                            Padding(padding: const .symmetric(horizontal: 8.0), child: widget.trailing!),
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-            ),
-            Align(
-              alignment: .topCenter,
-              child: widget.badge,
-            ),
-            if (widget.onClose != null)
-              Align(
-                alignment: .topRight,
-                child: Padding(
-                  padding: const .only(top: 14.0),
-                  child: SBBCloseButton(
-                    onTap: () async {
-                      await _controller.hide();
-                      widget.onClose!.call();
-                    },
-                  ),
-                ),
-              ),
-          ],
-        ),
+      child: PromotionBoxLayout(
+        badge: widget.badge,
+        content: boxWithOptionalClose,
       ),
     );
   }
