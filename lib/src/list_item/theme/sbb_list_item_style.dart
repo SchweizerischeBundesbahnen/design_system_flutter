@@ -48,7 +48,7 @@ class SBBListItemStyle {
   ///
   /// The color of the [titleTextStyle] is typically not used directly, the
   /// [titleForegroundColor] is used instead.
-  final WidgetStateProperty<TextStyle?>? titleTextStyle;
+  final TextStyle? titleTextStyle;
 
   /// An optional maximum number of lines for the title text to span, wrapping if necessary.
   ///
@@ -61,7 +61,7 @@ class SBBListItemStyle {
   ///
   /// The color of the [subtitleTextStyle] is typically not used directly, the
   /// [subtitleForegroundColor] is used instead.
-  final WidgetStateProperty<TextStyle?>? subtitleTextStyle;
+  final TextStyle? subtitleTextStyle;
 
   /// An optional maximum number of lines for the subtitle text to span, wrapping if necessary.
   ///
@@ -102,9 +102,9 @@ class SBBListItemStyle {
   static EdgeInsets get defaultPadding => .symmetric(horizontal: 16.0, vertical: 10.0);
 
   SBBListItemStyle copyWith({
-    WidgetStateProperty<TextStyle?>? titleTextStyle,
+    TextStyle? titleTextStyle,
     int? titleTextMaxLines,
-    WidgetStateProperty<TextStyle?>? subtitleTextStyle,
+    TextStyle? subtitleTextStyle,
     int? subtitleTextMaxLines,
     WidgetStateProperty<Color?>? titleForegroundColor,
     WidgetStateProperty<Color?>? subtitleForegroundColor,
@@ -148,14 +148,9 @@ class SBBListItemStyle {
     if (identical(a, b)) return a;
 
     return SBBListItemStyle(
-      titleTextStyle: WidgetStateProperty.lerp<TextStyle?>(a?.titleTextStyle, b?.titleTextStyle, t, TextStyle.lerp),
+      titleTextStyle: TextStyle.lerp(a?.titleTextStyle, b?.titleTextStyle, t),
       titleTextMaxLines: t < 0.5 ? a?.titleTextMaxLines : b?.titleTextMaxLines,
-      subtitleTextStyle: WidgetStateProperty.lerp<TextStyle?>(
-        a?.subtitleTextStyle,
-        b?.subtitleTextStyle,
-        t,
-        TextStyle.lerp,
-      ),
+      subtitleTextStyle: TextStyle.lerp(a?.subtitleTextStyle, b?.subtitleTextStyle, t),
       subtitleTextMaxLines: t < 0.5 ? a?.subtitleTextMaxLines : b?.subtitleTextMaxLines,
       titleForegroundColor: WidgetStateProperty.lerp<Color?>(
         a?.titleForegroundColor,

@@ -151,8 +151,8 @@ class _SBBChipState extends State<SBBChip> {
     final backgroundColor = effectiveStyle.backgroundColor!.resolve(states);
     final labelForegroundColor = effectiveStyle.labelForegroundColor!.resolve(states);
     final trailingForegroundColor = effectiveStyle.trailingForegroundColor!.resolve(states);
-    final labelTextStyle = effectiveStyle.labelTextStyle!.resolve(states);
-    final trailingTextStyle = effectiveStyle.trailingTextStyle!.resolve(states);
+    final labelTextStyle = effectiveStyle.labelTextStyle;
+    final trailingTextStyle = effectiveStyle.trailingTextStyle;
     final trailingBackgroundColor = effectiveStyle.trailingBackgroundColor!.resolve(states);
 
     return ClipPath(
