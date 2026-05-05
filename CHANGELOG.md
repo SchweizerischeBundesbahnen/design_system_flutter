@@ -19,6 +19,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - added `SBBTextInput` as replacement for `SBBTextField` - see [v5 migration guide]
 - added `SBBColorScheme` - see [v5 migration guide]
 - added `SBBThemeContext` - see [v5 migration guide]
+- added `SBBHeaderBoxPreferredSize` and `SBBHeaderBoxFlapPreferredSize` for use in headers
 
 ### Changed
 

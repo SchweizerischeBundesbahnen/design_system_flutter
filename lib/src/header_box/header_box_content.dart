@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
@@ -22,6 +24,8 @@ class HeaderBoxContent extends StatelessWidget {
   final String? subtitleText;
   final Widget? trailing;
   final SBBHeaderBoxStyle style;
+
+  static const double _textPadding = 2.0;
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +52,7 @@ class HeaderBoxContent extends StatelessWidget {
     }
 
     Widget child = Padding(
-      padding: const EdgeInsets.symmetric(vertical: 2.0),
+      padding: const EdgeInsets.symmetric(vertical: _textPadding),
       child: titleWidget,
     );
     if (leadingWidget != null) {
@@ -56,7 +60,7 @@ class HeaderBoxContent extends StatelessWidget {
         spacing: SBBSpacing.xSmall,
         children: [
           leadingWidget,
-          child,
+          Expanded(child: child),
         ],
       );
     }
@@ -68,7 +72,7 @@ class HeaderBoxContent extends StatelessWidget {
         children: [
           child,
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 2.0),
+            padding: const EdgeInsets.symmetric(vertical: _textPadding),
             child: subtitleWidget,
           ),
         ],
@@ -114,6 +118,34 @@ class HeaderBoxContent extends StatelessWidget {
     }
 
     return subtitle;
+  }
+
+  static double calculateHeight({
+    required SBBHeaderBoxStyle style,
+    PreferredSizeWidget? title,
+    String? titleText,
+    PreferredSizeWidget? subtitle,
+    String? subtitleText,
+    PreferredSizeWidget? leading,
+    IconData? leadingIconData,
+    TextScaler textScaler = TextScaler.noScaling,
+  }) {
+    if (title == null && titleText == null) {
+      return 0.0;
+    }
+
+    final iconSize = IconThemeData.fallback().size!;
+    final titleHeight = _calculateHeight(title, titleText, style.titleTextStyle, textScaler) + _textPadding * 2;
+    final leadingHeight = leading?.preferredSize.height ?? (leadingIconData != null ? iconSize : 0.0);
+    final subtitleHeight = _calculateHeight(subtitle, subtitleText, style.subtitleTextStyle, textScaler);
+
+    final titleRowHeight = math.max(titleHeight, leadingHeight);
+
+    if (subtitleHeight > 0) {
+      return titleRowHeight + style.titleSubtitleGap! + subtitleHeight + _textPadding * 2;
+    } else {
+      return titleRowHeight;
+    }
   }
 }
 
@@ -232,4 +264,16 @@ Widget? _addDefaultAncestorWithResolved({
     ),
   );
   return child;
+}
+
+double _calculateHeight<T>(PreferredSizeWidget? lhs, T rhs, TextStyle? textStyle, TextScaler textScaler) {
+  if (lhs != null) {
+    return lhs.preferredSize.height;
+  }
+
+  if (rhs != null && textStyle != null) {
+    return textStyle.height! * textScaler.scale(textStyle.fontSize!);
+  }
+
+  return 0.0;
 }

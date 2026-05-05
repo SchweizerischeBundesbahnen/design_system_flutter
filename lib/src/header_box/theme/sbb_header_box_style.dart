@@ -158,7 +158,7 @@ class SBBHeaderBoxStyle {
   static const BorderRadius radius = BorderRadius.all(Radius.circular(SBBSpacing.medium));
 
   /// The minimum height of the header box without external margin applied.
-  static const minHeight = 56.0;
+  static const double minHeight = 56.0;
 
   SBBHeaderBoxStyle copyWith({
     TextStyle? titleTextStyle,
