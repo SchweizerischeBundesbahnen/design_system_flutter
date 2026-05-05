@@ -2,7 +2,46 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
-/// Only used within the [SBBPromotionBox].
+/// The default badge content for a SBB Promotion Box.
+///
+/// Use this widget in conjunction with the [SBBPromotionBox].
+///
+/// Provide either [label] for custom content or [labelText] for text-only content with
+/// standard styling. These parameters are mutually exclusive.
+///
+/// The badge features a pill-shaped design with a halo effect on the upper half,
+/// designed to be positioned centered at the top edge of the promotion box.
+///
+/// ## Sample code
+///
+/// ```dart
+/// SBBPromotionBox(
+///   badge: SBBPromotionBoxBadge(
+///     labelText: 'NEW',
+///   ),
+///   titleText: 'Special Offer',
+/// )
+/// ```
+///
+/// ## Customization
+///
+/// Use [style] to customize appearance of the badge:
+///
+/// ```dart
+/// SBBPromotionBoxBadge(
+///   labelText: 'PREMIUM',
+///   style: SBBPromotionBoxBadgeStyle(
+///     foregroundColor: Colors.white,
+///     backgroundColor: Colors.blue,
+///   ),
+/// )
+/// ```
+///
+/// See also:
+///
+///  * [SBBPromotionBox], for a way to use this widget.
+///  * [SBBPromotionBoxBadgeStyle], for customizing the appearance.
+///  * [Design Guidelines](https://digital.sbb.ch/en/design-system/mobile/components/promotion-box/)
 class SBBPromotionBoxBadge extends StatelessWidget {
   const SBBPromotionBoxBadge({
     this.labelText,
@@ -12,8 +51,24 @@ class SBBPromotionBoxBadge extends StatelessWidget {
   }) : assert(labelText != null || label != null, 'One of labelText or label must be non null!'),
        assert(labelText == null || label == null, 'Cannot set both labelText and label!');
 
+  /// Text string to display as the badge's label using the standard design.
+  ///
+  /// The text is clamped to a single line with ellipsis overflow.
+  ///
+  /// Cannot be used together with [label].
   final String? labelText;
+
+  /// A custom widget displayed as the badge's label.
+  ///
+  /// For simple text labels, use [labelText] instead.
+  ///
+  /// Cannot be used together with [labelText].
   final Widget? label;
+
+  /// Customizes this badge's appearance.
+  ///
+  /// Non-null properties of this style override the corresponding
+  /// properties in [SBBPromotionBoxThemeData.badgeStyle] of the theme found in [context].
   final SBBPromotionBoxBadgeStyle? style;
 
   @override
