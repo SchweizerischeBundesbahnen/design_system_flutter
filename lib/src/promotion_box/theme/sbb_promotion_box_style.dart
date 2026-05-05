@@ -3,6 +3,15 @@ import 'dart:ui';
 import 'package:flutter/widgets.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
+/// A builder that creates a custom background for [SBBPromotionBox].
+///
+/// The [context] is the build context of the promotion box and [style] is
+/// the fully resolved [SBBPromotionBoxStyle]. The [child] is the inner
+/// content (already wrapped in an [InkWell]) and must be included in the
+/// returned widget tree.
+typedef SBBPromotionBoxBackgroundBuilder =
+    Widget Function(BuildContext context, SBBPromotionBoxStyle style, Widget child);
+
 /// Defines the visual properties of [SBBPromotionBox].
 ///
 /// Use this class in combination with [SBBPromotionBoxThemeData] to customize
@@ -24,6 +33,7 @@ class SBBPromotionBoxStyle {
     this.overlayColor,
     this.backgroundGradientColors,
     this.backgroundTextureOpacity,
+    this.backgroundBuilder,
   }) : assert(
          backgroundGradientColors == null || backgroundGradientColors.length == 4,
          'Must provide exactly four colors for the background gradient, given: $backgroundGradientColors',
@@ -95,6 +105,17 @@ class SBBPromotionBoxStyle {
   /// it is fully opaque.
   final double? backgroundTextureOpacity;
 
+  /// A builder for a fully custom background of the [SBBPromotionBox].
+  ///
+  /// When provided, this replaces the default noise texture and linear gradient
+  /// background. The [child] passed to the builder is the inner content already
+  /// wrapped in an [InkWell] and must be included in the returned widget tree.
+  ///
+  /// The [SBBPromotionBoxStyle.borderColor] is not applied automatically when
+  /// using a custom builder — it is the responsibility of the builder to apply
+  /// any desired border.
+  final SBBPromotionBoxBackgroundBuilder? backgroundBuilder;
+
   static const backgroundGradientStops = <double>[0.0, 0.406, 0.672, 1.0];
 
   static const borderRadius = BorderRadius.all(Radius.circular(SBBSpacing.medium));
@@ -111,6 +132,7 @@ class SBBPromotionBoxStyle {
     WidgetStateProperty<Color?>? overlayColor,
     List<Color>? backgroundGradientColors,
     double? backgroundTextureOpacity,
+    SBBPromotionBoxBackgroundBuilder? backgroundBuilder,
   }) {
     return SBBPromotionBoxStyle(
       titleForegroundColor: titleForegroundColor ?? this.titleForegroundColor,
@@ -124,6 +146,7 @@ class SBBPromotionBoxStyle {
       overlayColor: overlayColor ?? this.overlayColor,
       backgroundGradientColors: backgroundGradientColors ?? this.backgroundGradientColors,
       backgroundTextureOpacity: backgroundTextureOpacity ?? this.backgroundTextureOpacity,
+      backgroundBuilder: backgroundBuilder ?? this.backgroundBuilder,
     );
   }
 
@@ -142,6 +165,7 @@ class SBBPromotionBoxStyle {
       overlayColor: WidgetStateProperty.lerp<Color?>(a?.overlayColor, b?.overlayColor, t, Color.lerp),
       backgroundGradientColors: b?.backgroundGradientColors,
       backgroundTextureOpacity: lerpDouble(a?.backgroundTextureOpacity, b?.backgroundTextureOpacity, t),
+      backgroundBuilder: t < 0.5 ? a?.backgroundBuilder : b?.backgroundBuilder,
     );
   }
 
@@ -160,6 +184,7 @@ class SBBPromotionBoxStyle {
       overlayColor: other.overlayColor,
       backgroundGradientColors: other.backgroundGradientColors,
       backgroundTextureOpacity: other.backgroundTextureOpacity,
+      backgroundBuilder: other.backgroundBuilder,
     );
   }
 
@@ -177,7 +202,8 @@ class SBBPromotionBoxStyle {
         other.borderColor == borderColor &&
         other.overlayColor == overlayColor &&
         other.backgroundGradientColors == backgroundGradientColors &&
-        other.backgroundTextureOpacity == backgroundTextureOpacity;
+        other.backgroundTextureOpacity == backgroundTextureOpacity &&
+        other.backgroundBuilder == backgroundBuilder;
   }
 
   @override
@@ -193,5 +219,6 @@ class SBBPromotionBoxStyle {
     overlayColor,
     backgroundGradientColors,
     backgroundTextureOpacity,
+    backgroundBuilder,
   );
 }

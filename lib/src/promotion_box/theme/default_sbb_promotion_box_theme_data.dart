@@ -16,7 +16,7 @@ class DefaultSBBPromotionBoxThemeData extends SBBPromotionBoxThemeData {
           subtitleTextMaxLines: 3,
           trailingForegroundColor: baseStyle.colorScheme.iconPrimary,
           borderColor: baseStyle.themeValue(SBBColors.white, SBBColors.iron),
-          overlayColor: WidgetStatePropertyAll<Color?>(baseStyle.themeValue(SBBColors.milk, SBBColors.iron)),
+          overlayColor: WidgetStatePropertyAll<Color?>(baseStyle.themeValue(SBBColors.platinum, SBBColors.midnight)),
           backgroundGradientColors: baseStyle.themeValue(lightGradient, darkGradient),
           backgroundTextureOpacity: baseStyle.themeValue(.1, .5),
         ),

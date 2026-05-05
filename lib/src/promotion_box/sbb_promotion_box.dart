@@ -218,7 +218,50 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
           )
         : titleRow;
 
-    final decoratedContent = Container(
+    final decoratedContent = ClipRRect(
+      borderRadius: SBBPromotionBoxStyle.borderRadius,
+      child: effectiveStyle.backgroundBuilder != null
+          ? effectiveStyle.backgroundBuilder!(
+              context,
+              effectiveStyle,
+              _inkWellContent(context, effectiveStyle, content),
+            )
+          : _defaultBackgroundDecoration(context, effectiveStyle, content),
+    );
+
+    return _animationBuilder(
+      animation: _effectiveController.animation,
+      child: PromotionBoxLayout(
+        badge: _buildBadge(),
+        content: decoratedContent,
+      ),
+    );
+  }
+
+  Widget _inkWellContent(BuildContext context, SBBPromotionBoxStyle effectiveStyle, Widget content) {
+    return Material(
+      color: SBBColors.transparent,
+      child: Semantics(
+        onTapHint: widget.onTap != null ? widget.onTapSemanticsHint : null,
+        child: InkWell(
+          overlayColor: effectiveStyle.overlayColor,
+          customBorder: const RoundedRectangleBorder(borderRadius: SBBPromotionBoxStyle.borderRadius),
+          onTap: widget.onTap,
+          child: Padding(
+            padding: const EdgeInsets.all(SBBSpacing.medium),
+            child: content,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _defaultBackgroundDecoration(
+    BuildContext context,
+    SBBPromotionBoxStyle effectiveStyle,
+    Widget content,
+  ) {
+    return Container(
       decoration: BoxDecoration(
         border: Border.all(color: effectiveStyle.borderColor!),
         borderRadius: SBBPromotionBoxStyle.borderRadius,
@@ -235,29 +278,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
           stops: SBBPromotionBoxStyle.backgroundGradientStops,
         ),
       ),
-      child: Material(
-        color: SBBColors.transparent,
-        child: Semantics(
-          onTapHint: widget.onTap != null ? widget.onTapSemanticsHint : null,
-          child: InkWell(
-            overlayColor: effectiveStyle.overlayColor,
-            customBorder: const RoundedRectangleBorder(borderRadius: SBBPromotionBoxStyle.borderRadius),
-            onTap: widget.onTap,
-            child: Padding(
-              padding: const .all(SBBSpacing.medium),
-              child: content,
-            ),
-          ),
-        ),
-      ),
-    );
-
-    return _animationBuilder(
-      animation: _effectiveController.animation,
-      child: PromotionBoxLayout(
-        badge: _buildBadge(),
-        content: decoratedContent,
-      ),
+      child: _inkWellContent(context, effectiveStyle, content),
     );
   }
 
