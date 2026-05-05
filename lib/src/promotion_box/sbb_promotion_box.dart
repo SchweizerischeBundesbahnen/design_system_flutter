@@ -28,22 +28,22 @@ class SBBPromotionBox extends StatefulWidget {
   /// At most one of [titleText] or [title] may be provided.
   /// At most one of [subtitleText] or [subtitle] may be provided.
   ///
-  /// For programmatic hide and show of the promotion box, use the [onControllerCreated] callback and the
-  /// given [ClosableBoxController].
+  /// For programmatic hide and show of the promotion box, provide a [controller].
+  /// If no controller is given, an internal one is created automatically.
   ///
   /// If [onTap] is not null, the promotion box is tappable and displays a chevron icon to the right of the subtitle.
   ///
   /// If [onClose] is not null, a DismissButton will be displayed to the top right of the [SBBPromotionBox], which the
-  /// user can tap to dismiss the promotion box. This triggers the `hide` method in the [ClosableBoxController].
+  /// user can tap to dismiss the promotion box. This triggers the `hide` method in the [SBBPromotionBoxController].
   const SBBPromotionBox({
     super.key,
+    this.controller,
     this.badge,
     this.badgeText,
     this.title,
     this.titleText,
     this.subtitle,
     this.subtitleText,
-    this.onControllerCreated,
     this.onTap,
     this.onClose,
     this.onTapSemanticsHint,
@@ -54,6 +54,11 @@ class SBBPromotionBox extends StatefulWidget {
        assert(badgeText == null || badge == null, 'Cannot provide both badgeText and badge!'),
        assert(titleText == null || title == null, 'Cannot provide both titleText and title!'),
        assert(subtitleText == null || subtitle == null, 'Cannot provide both subtitleText and subtitle!');
+
+  /// An optional controller to programmatically show and hide the [SBBPromotionBox].
+  ///
+  /// If not provided, an internal controller is created automatically.
+  final SBBPromotionBoxController? controller;
 
   /// A custom badge widget.
   ///
@@ -90,10 +95,6 @@ class SBBPromotionBox extends StatefulWidget {
   /// Cannot be used together with [subtitle].
   final String? subtitleText;
 
-  /// Callback for receiving the [ClosableBoxController] to programmatically hide
-  /// and show the SBBPromotionBox.
-  final Function(ClosableBoxController controller)? onControllerCreated;
-
   /// Callback when the user taps the promotion box except on the dismiss button
   /// in the top right corner.
   ///
@@ -125,12 +126,32 @@ class SBBPromotionBox extends StatefulWidget {
 }
 
 class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProviderStateMixin {
-  late final ClosableBoxController _controller = ClosableBoxController(this);
+  SBBPromotionBoxController? _internalController;
+
+  SBBPromotionBoxController get _effectiveController =>
+      widget.controller ?? (_internalController ??= SBBPromotionBoxController());
 
   @override
   void initState() {
     super.initState();
-    widget.onControllerCreated?.call(_controller);
+    _effectiveController.attach(this);
+  }
+
+  @override
+  void didUpdateWidget(covariant SBBPromotionBox oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.controller != oldWidget.controller) {
+      // Detach old external controller (it manages its own lifecycle).
+      // Internal controller is re-created lazily via _effectiveController getter.
+      oldWidget.controller?.detach();
+      _effectiveController.attach(this);
+    }
+  }
+
+  @override
+  void dispose() {
+    _effectiveController.detach();
+    super.dispose();
   }
 
   Widget _animationBuilder({required Animation<double> animation, required Widget child}) {
@@ -222,7 +243,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
                 right: 0.0,
                 child: SBBCloseButton(
                   onTap: () async {
-                    await _controller.hide();
+                    await _effectiveController.hide();
                     widget.onClose!.call();
                   },
                 ),
@@ -232,7 +253,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
         : boxContent;
 
     return _animationBuilder(
-      animation: _controller.animation,
+      animation: _effectiveController.animation,
       child: PromotionBoxLayout(
         badge: _buildBadge(),
         content: boxWithOptionalClose,

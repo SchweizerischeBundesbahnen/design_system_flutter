@@ -10,10 +10,10 @@ class PromotionBoxPage extends StatefulWidget {
 }
 
 class _PromotionBoxPageState extends State<PromotionBoxPage> {
-  late ClosableBoxController defaultController;
-  late ClosableBoxController closableController;
-  late ClosableBoxController clickableController;
-  late ClosableBoxController extraController;
+  final defaultController = SBBPromotionBoxController();
+  final closableController = SBBPromotionBoxController();
+  final clickableController = SBBPromotionBoxController();
+  final extraController = SBBPromotionBoxController();
 
   static const _title = 'Bessere Übersicht.';
   static const _description = 'Erkennen Sie nun schneller, auf welchen Perrons Durchsagen vorhanden sind.';
@@ -54,7 +54,7 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
             badgeText: 'Default',
             titleText: _title,
             subtitleText: _description,
-            onControllerCreated: (c) => defaultController = c,
+            controller: defaultController,
             onClose: () {},
           ),
           const SizedBox(height: 8.0),
@@ -62,14 +62,14 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
             badgeText: 'onClose null',
             titleText: _title,
             subtitleText: _description,
-            onControllerCreated: (c) => closableController = c,
+            controller: closableController,
           ),
           const SizedBox(height: 8.0),
           SBBPromotionBox(
             badgeText: 'Clickable',
             titleText: _title,
             subtitleText: _description,
-            onControllerCreated: (c) => clickableController = c,
+            controller: clickableController,
             onTap: () {},
             onClose: () {},
           ),
@@ -79,7 +79,7 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
             titleText:
                 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
             subtitleText: _description,
-            onControllerCreated: (c) => extraController = c,
+            controller: extraController,
             onClose: () {},
           ),
           const SizedBox(height: SBBSpacing.medium),
