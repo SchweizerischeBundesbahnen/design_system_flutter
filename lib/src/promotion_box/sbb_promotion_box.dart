@@ -313,19 +313,22 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
 
   Widget? _dismissButton(BuildContext context, SBBPromotionBoxStyle effectiveStyle) {
     if (!_isDismissible) return null;
-
-    return Semantics(
-      label: MaterialLocalizations.of(context).closeButtonTooltip,
-      button: true,
-      child: InkWell(
-        borderRadius: .circular(sbbIconSizeSmall),
-        onTap: () {
-          _effectiveController.hide();
-          widget.onDismissed?.call();
-        },
-        child: _addDefaultAncestorWithResolved(
-          child: const Icon(SBBIcons.cross_tiny_small, size: sbbIconSizeSmall),
-          foregroundColor: effectiveStyle.dismissButtonForegroundColor,
+    return Material(
+      borderRadius: .circular(sbbIconSizeSmall),
+      color: SBBColors.transparent,
+      child: Semantics(
+        label: MaterialLocalizations.of(context).closeButtonTooltip,
+        button: true,
+        child: InkWell(
+          borderRadius: .circular(sbbIconSizeSmall),
+          onTap: () {
+            _effectiveController.hide();
+            widget.onDismissed?.call();
+          },
+          child: _addDefaultAncestorWithResolved(
+            child: const Icon(SBBIcons.cross_tiny_small, size: sbbIconSizeSmall),
+            foregroundColor: effectiveStyle.dismissButtonForegroundColor,
+          ),
         ),
       ),
     );

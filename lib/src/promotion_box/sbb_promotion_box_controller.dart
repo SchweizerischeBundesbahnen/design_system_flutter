@@ -8,7 +8,7 @@ class SBBPromotionBoxController extends ValueNotifier<bool> {
   SBBPromotionBoxController({bool initialValue = true}) : super(initialValue);
 
   /// Shows the promotion box with an animation.
-  void show() async => value = true;
+  void show() => value = true;
 
   /// Hides the promotion box with an animation.
   void hide() => value = false;

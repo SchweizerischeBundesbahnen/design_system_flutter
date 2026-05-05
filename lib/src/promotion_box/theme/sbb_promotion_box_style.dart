@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:collection/collection.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
@@ -175,7 +176,7 @@ class SBBPromotionBoxStyle {
       dismissButtonForegroundColor: Color.lerp(a?.dismissButtonForegroundColor, b?.dismissButtonForegroundColor, t),
       borderColor: Color.lerp(a?.borderColor, b?.borderColor, t),
       overlayColor: WidgetStateProperty.lerp<Color?>(a?.overlayColor, b?.overlayColor, t, Color.lerp),
-      backgroundGradientColors: b?.backgroundGradientColors,
+      backgroundGradientColors: t < 0.5 ? a?.backgroundGradientColors : b?.backgroundGradientColors,
       backgroundTextureOpacity: lerpDouble(a?.backgroundTextureOpacity, b?.backgroundTextureOpacity, t),
       padding: EdgeInsets.lerp(a?.padding, b?.padding, t),
       backgroundBuilder: t < 0.5 ? a?.backgroundBuilder : b?.backgroundBuilder,
@@ -217,7 +218,7 @@ class SBBPromotionBoxStyle {
         other.dismissButtonForegroundColor == dismissButtonForegroundColor &&
         other.borderColor == borderColor &&
         other.overlayColor == overlayColor &&
-        other.backgroundGradientColors == backgroundGradientColors &&
+        ListEquality().equals(other.backgroundGradientColors, backgroundGradientColors) &&
         other.backgroundTextureOpacity == backgroundTextureOpacity &&
         other.padding == padding &&
         other.backgroundBuilder == backgroundBuilder;
@@ -235,7 +236,7 @@ class SBBPromotionBoxStyle {
     dismissButtonForegroundColor,
     borderColor,
     overlayColor,
-    backgroundGradientColors,
+    ListEquality().hash(backgroundGradientColors),
     backgroundTextureOpacity,
     padding,
     backgroundBuilder,
