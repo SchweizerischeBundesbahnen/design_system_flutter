@@ -395,8 +395,8 @@ class _SBBListItemState extends State<SBBListItem> {
     final effectiveSubtitleGapHeight = widget.subtitleVerticalGapHeight ?? themeData.subtitleVerticalGapHeight!;
     final effectiveOverlayColor = effectiveStyle.overlayColor;
 
-    final resolvedTitleTextStyle = effectiveStyle.titleTextStyle?.resolve(states);
-    final resolvedSubtitleTextStyle = effectiveStyle.subtitleTextStyle?.resolve(states);
+    final resolvedTitleTextStyle = effectiveStyle.titleTextStyle;
+    final resolvedSubtitleTextStyle = effectiveStyle.subtitleTextStyle;
     final resolvedTitleForegroundColor = effectiveStyle.titleForegroundColor?.resolve(states);
     final resolvedSubtitleForegroundColor = effectiveStyle.subtitleForegroundColor?.resolve(states);
     final resolvedLeadingForegroundColor = effectiveStyle.leadingForegroundColor?.resolve(states);
