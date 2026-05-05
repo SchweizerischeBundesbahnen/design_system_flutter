@@ -1,5 +1,4 @@
 import 'package:flutter/foundation.dart';
-import 'package:flutter/material.dart';
 
 /// Controller for programmatically showing and hiding a [SBBPromotionBox].
 ///

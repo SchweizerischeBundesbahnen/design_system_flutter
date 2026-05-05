@@ -382,8 +382,6 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
     );
   }
 
-  /// Applies [foregroundColor] and optional [textStyle] to [child] using
-  /// [DefaultTextStyle] and [IconTheme], similarly to how [SBBListItem] works.
   Widget? _addDefaultAncestorWithResolved({
     required Widget? child,
     required Color? foregroundColor,
@@ -400,7 +398,5 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
     );
   }
 
-  void _animate() {
-    _animationController.animateTo(_effectiveController.value ? 1.0 : 0.0);
-  }
+  void _animate() => _animationController.animateTo(_effectiveController.value ? 1.0 : 0.0);
 }
