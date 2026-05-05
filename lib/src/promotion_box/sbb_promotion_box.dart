@@ -11,6 +11,11 @@ const _promotionBoxNoiseAsset = 'packages/sbb_design_system_mobile/lib/assets/no
 /// Provide either [badge] for a custom badge widget or [badgeText] for the
 /// standard badge design. These parameters are mutually exclusive.
 ///
+/// When using a custom [badge] widget, it will be positioned centered at the
+/// top edge of the promotion box content, with half of the badge appearing above
+/// the box border. The badge is rendered on top of the content. For the default
+/// styling, use [SBBPromotionBoxBadge].
+///
 /// Provide either [title] for a custom title widget or [titleText] for the
 /// standard title design. These parameters are mutually exclusive.
 ///
@@ -52,12 +57,15 @@ class SBBPromotionBox extends StatefulWidget {
 
   /// A custom badge widget.
   ///
-  /// Typically, the [SBBPromotionBoxBadge] is used here for custom content and custom styling.
+  /// Typically, the [SBBPromotionBoxBadge] is used, which allows for custom content and custom styling.
+  ///
+  /// The badge is positioned centered at the top edge of the promotion box, with half of
+  /// its height appearing above the box border. The badge is rendered on top of the content.
   ///
   /// Cannot be used together with [badgeText].
   final Widget? badge;
 
-  /// Text string to display as the badge label using the standard design.
+  /// Text string to display as the badge label using a standard [SBBPromotionBoxBadge].
   ///
   /// Cannot be used together with [badge].
   final String? badgeText;
