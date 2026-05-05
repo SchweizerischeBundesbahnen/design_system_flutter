@@ -55,7 +55,6 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
             titleText: _title,
             subtitleText: _description,
             controller: defaultController,
-            isDismissable: true,
             onDismissed: () {},
           ),
           const SizedBox(height: 8.0),
@@ -72,7 +71,6 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
             subtitleText: _description,
             controller: clickableController,
             onTap: () {},
-            isDismissable: true,
             onDismissed: () {},
           ),
           const SizedBox(height: 8.0),
@@ -82,11 +80,11 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
                 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
             subtitleText: _description,
             controller: extraController,
-            isDismissable: true,
             onDismissed: () {},
           ),
           const SizedBox(height: SBBSpacing.medium),
           SBBPromotionBox(
+            titleText: _title,
             subtitle: Text(
               'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
               style: SBBTextStyles.mediumLight.copyWith(color: SBBColors.black),
@@ -96,6 +94,7 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
           ),
           const SizedBox(height: SBBSpacing.medium),
           SBBPromotionBox(
+            titleText: _title,
             subtitle: Text(
               'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
               style: SBBTextStyles.mediumLight,
@@ -105,6 +104,7 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
           ),
           const SizedBox(height: SBBSpacing.medium),
           SBBPromotionBox(
+            titleText: _title,
             subtitle: Text(
               'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
               style: SBBTextStyles.mediumLight.copyWith(color: SBBColors.black),
