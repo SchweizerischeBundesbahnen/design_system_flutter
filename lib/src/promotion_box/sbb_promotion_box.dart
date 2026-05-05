@@ -5,7 +5,12 @@ import 'package:sbb_design_system_mobile/src/promotion_box/promotion_box_layout.
 const _promotionBoxNoiseAsset = 'packages/sbb_design_system_mobile/lib/assets/noise.png';
 
 /// The SBB Promotion Box.
-/// Use according to [documentation](https://digital.sbb.ch/en/design-system/mobile/components/promotion-box/)
+///
+/// A title is required: provide either [title] for a custom title widget or
+/// [titleText] for the standard title design. These parameters are mutually exclusive.
+///
+/// Provide either [subtitle] for a custom subtitle widget or [subtitleText] for
+/// the standard subtitle design. These parameters are mutually exclusive.
 ///
 /// Provide either [badge] for a custom badge widget or [badgeText] for the
 /// standard badge design. These parameters are mutually exclusive.
@@ -15,15 +20,10 @@ const _promotionBoxNoiseAsset = 'packages/sbb_design_system_mobile/lib/assets/no
 /// the box border. The badge is rendered on top of the content. For the default
 /// styling, use [SBBPromotionBoxBadge].
 ///
-/// A title is required: provide either [title] for a custom title widget or
-/// [titleText] for the standard title design. These parameters are mutually exclusive.
-///
-/// Provide either [subtitle] for a custom subtitle widget or [subtitleText] for
-/// the standard subtitle design. These parameters are mutually exclusive.
 ///
 /// ## Layout rules
 ///
-/// The dismiss button (shown when [isDismissable] is true) is a simple [InkWell]
+/// The dismiss button (shown when [onDismissed] is non null) is a simple [InkWell]
 /// and is always aligned in the title row.
 ///
 /// **When no subtitle is set:**
@@ -36,7 +36,7 @@ const _promotionBoxNoiseAsset = 'packages/sbb_design_system_mobile/lib/assets/no
 /// If [trailing] is provided, that widget is used. Otherwise, only if [onTap]
 /// is set, a chevron icon is shown.
 class SBBPromotionBox extends StatefulWidget {
-  /// Creates an [SBBPromotionBox].
+  /// Creates a [SBBPromotionBox].
   ///
   /// Exactly one of [badgeText] or [badge] must be provided.
   /// Exactly one of [titleText] or [title] must be provided.
@@ -48,7 +48,7 @@ class SBBPromotionBox extends StatefulWidget {
   /// If [onTap] is not null and no [trailing] is provided, a chevron icon is
   /// displayed as the trailing indicator.
   ///
-  /// If [onDismissed] is not null or [isDismissable] is true, an inline dismiss
+  /// If [onDismissed] is not null, an inline dismiss
   /// button is displayed aligned with the title row.
   const SBBPromotionBox({
     super.key,
@@ -61,7 +61,6 @@ class SBBPromotionBox extends StatefulWidget {
     this.subtitleText,
     this.onTap,
     this.onDismissed,
-    this.isDismissable = true,
     this.trailing,
     this.onTapSemanticsHint,
     this.style,
@@ -130,18 +129,12 @@ class SBBPromotionBox extends StatefulWidget {
 
   /// Callback invoked once the user taps the dismiss button.
   ///
-  /// Only relevant if [isDismissable] is true.
-  /// This will not be invoked if the hiding is done through the [SBBPromotionBoxController].
-  final GestureTapCallback? onDismissed;
-
-  /// Whether a dismiss button is shown aligned with the title row of the [SBBPromotionBox].
-  ///
-  /// If true, an inline [InkWell] close button is displayed in the title row.
+  /// If non null, an inline [InkWell] close button is displayed in the title row.
   /// Tapping it will hide the promotion box via the [SBBPromotionBoxController]
   /// and invoke [onDismissed].
   ///
-  /// Defaults to true.
-  final bool isDismissable;
+  /// This will not be invoked if the hiding is done through the [SBBPromotionBoxController].
+  final GestureTapCallback? onDismissed;
 
   /// The semantic hint used if the promotion box is tappable. See [onTap].
   final String? onTapSemanticsHint;
@@ -175,6 +168,8 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
   SBBPromotionBoxController get _effectiveController =>
       widget.controller ?? (_internalController ??= SBBPromotionBoxController());
 
+  bool get _isDismissible => widget.onDismissed != null;
+
   @override
   void initState() {
     super.initState();
@@ -198,8 +193,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
 
   @override
   Widget build(BuildContext context) {
-    final themeData = Theme.of(context).sbbPromotionBoxTheme;
-    final effectiveStyle = themeData.style!.merge(widget.style);
+    final SBBPromotionBoxStyle effectiveStyle = _effectiveStyle(context);
 
     final Widget titleWidget = _titleWidget(effectiveStyle);
     final Widget? subtitleWidget = _subtitleWidget(effectiveStyle);
@@ -218,24 +212,23 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
           )
         : titleRow;
 
-    final decoratedContent = ClipRRect(
-      borderRadius: SBBPromotionBoxStyle.borderRadius,
-      child: effectiveStyle.backgroundBuilder != null
-          ? effectiveStyle.backgroundBuilder!(
-              context,
-              effectiveStyle,
-              _inkWellContent(context, effectiveStyle, content),
-            )
-          : _defaultBackgroundDecoration(context, effectiveStyle, content),
-    );
+    final contentWithBackground = effectiveStyle.backgroundBuilder != null
+        ? effectiveStyle.backgroundBuilder!(context, effectiveStyle, _inkWellContent(context, effectiveStyle, content))
+        : _defaultDecoratedContent(context, effectiveStyle, _inkWellContent(context, effectiveStyle, content));
 
     return _animationBuilder(
       animation: _effectiveController.animation,
       child: PromotionBoxLayout(
-        badge: _buildBadge(),
-        content: decoratedContent,
+        badge: widget.badge ?? SBBPromotionBoxBadge(labelText: widget.badgeText, style: widget.badgeStyle),
+        content: ClipRRect(borderRadius: SBBPromotionBoxStyle.borderRadius, child: contentWithBackground),
       ),
     );
+  }
+
+  SBBPromotionBoxStyle _effectiveStyle(BuildContext context) {
+    final themeData = Theme.of(context).sbbPromotionBoxTheme;
+    final effectiveStyle = themeData.style!.merge(widget.style);
+    return effectiveStyle;
   }
 
   Widget _inkWellContent(BuildContext context, SBBPromotionBoxStyle effectiveStyle, Widget content) {
@@ -245,93 +238,72 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
         onTapHint: widget.onTap != null ? widget.onTapSemanticsHint : null,
         child: InkWell(
           overlayColor: effectiveStyle.overlayColor,
-          customBorder: const RoundedRectangleBorder(borderRadius: SBBPromotionBoxStyle.borderRadius),
+          borderRadius: SBBPromotionBoxStyle.borderRadius,
           onTap: widget.onTap,
-          child: Padding(
-            padding: const EdgeInsets.all(SBBSpacing.medium),
-            child: content,
-          ),
+          child: Padding(padding: effectiveStyle.padding!, child: content),
         ),
       ),
     );
   }
 
-  Widget _defaultBackgroundDecoration(
-    BuildContext context,
-    SBBPromotionBoxStyle effectiveStyle,
-    Widget content,
-  ) {
-    return Container(
+  Widget _defaultDecoratedContent(BuildContext context, SBBPromotionBoxStyle effectiveStyle, Widget content) {
+    return DecoratedBox(
       decoration: BoxDecoration(
-        border: Border.all(color: effectiveStyle.borderColor!),
+        border: .all(color: effectiveStyle.borderColor!),
         borderRadius: SBBPromotionBoxStyle.borderRadius,
         image: DecorationImage(
           image: const AssetImage(_promotionBoxNoiseAsset),
-          repeat: ImageRepeat.repeat,
-          fit: BoxFit.none,
+          repeat: .repeat,
+          fit: .none,
           opacity: effectiveStyle.backgroundTextureOpacity!,
         ),
         gradient: LinearGradient(
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
+          begin: .topCenter,
+          end: .bottomCenter,
           colors: effectiveStyle.backgroundGradientColors!,
           stops: SBBPromotionBoxStyle.backgroundGradientStops,
         ),
       ),
-      child: _inkWellContent(context, effectiveStyle, content),
+      child: content,
     );
   }
 
   // Build subtitle row with trailing aligned center-vertically
   Widget? _subtitleRow(Widget? subtitleWidget, Widget? trailingWidget) {
-    Widget? subtitleRow;
-    if (subtitleWidget != null) {
-      subtitleRow = Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Expanded(child: subtitleWidget),
-          if (trailingWidget != null) ...[
-            const SizedBox(width: SBBSpacing.xSmall),
-            trailingWidget,
-          ],
-        ],
-      );
-    }
-    return subtitleRow;
+    if (subtitleWidget == null) return null;
+
+    return Row(
+      crossAxisAlignment: .center,
+      spacing: SBBSpacing.xSmall,
+      children: [
+        Expanded(child: subtitleWidget),
+        ?trailingWidget,
+      ],
+    );
   }
 
-  // Build title row:
-  // When no subtitle: trailing (+ gap) and dismiss button are in the title row.
-  // When subtitle present: only dismiss button is in title row; trailing goes with subtitle.
   Widget _titleRow(Widget titleWidget, Widget? trailingWidget, Widget? dismissButton) {
     final hasSubtitle = widget.subtitle != null || widget.subtitleText != null;
     Widget titleRow;
     if (!hasSubtitle) {
-      // No subtitle: [title] [trailing gap trailing] [xSmall gap dismiss]
+      // No subtitle: [title] [trailing] [dismissButton]
       titleRow = Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: .center,
+        spacing: SBBSpacing.xSmall,
         children: [
           Expanded(child: titleWidget),
-          if (trailingWidget != null) ...[
-            const SizedBox(width: SBBSpacing.xSmall),
-            trailingWidget,
-          ],
-          if (dismissButton != null) ...[
-            const SizedBox(width: SBBSpacing.xSmall),
-            dismissButton,
-          ],
+          ?trailingWidget,
+          ?dismissButton,
         ],
       );
     } else {
-      // Subtitle present: dismiss button aligned with title row only
+      // Has subtitle: [title] [dismissButton]
       titleRow = Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
+        crossAxisAlignment: .center,
+        spacing: SBBSpacing.xSmall,
         children: [
           Expanded(child: titleWidget),
-          if (dismissButton != null) ...[
-            const SizedBox(width: SBBSpacing.xSmall),
-            dismissButton,
-          ],
+          ?dismissButton,
         ],
       );
     }
@@ -339,25 +311,23 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
   }
 
   Widget? _dismissButton(BuildContext context, SBBPromotionBoxStyle effectiveStyle) {
-    Widget? dismissButton;
-    if (widget.isDismissable) {
-      dismissButton = Semantics(
-        label: MaterialLocalizations.of(context).closeButtonTooltip,
-        button: true,
-        child: InkWell(
-          borderRadius: BorderRadius.circular(sbbIconSizeSmall),
-          onTap: () async {
-            await _effectiveController.hide();
-            widget.onDismissed?.call();
-          },
-          child: _addDefaultAncestorWithResolved(
-            child: const Icon(SBBIcons.cross_small, size: sbbIconSizeSmall),
-            foregroundColor: effectiveStyle.titleForegroundColor,
-          ),
+    if (!_isDismissible) return null;
+
+    return Semantics(
+      label: MaterialLocalizations.of(context).closeButtonTooltip,
+      button: true,
+      child: InkWell(
+        borderRadius: .circular(sbbIconSizeSmall),
+        onTap: () async {
+          await _effectiveController.hide();
+          widget.onDismissed?.call();
+        },
+        child: _addDefaultAncestorWithResolved(
+          child: const Icon(SBBIcons.cross_tiny_small, size: sbbIconSizeSmall),
+          foregroundColor: effectiveStyle.dismissButtonForegroundColor,
         ),
-      );
-    }
-    return dismissButton;
+      ),
+    );
   }
 
   Widget? _trailingWidget(SBBPromotionBoxStyle effectiveStyle) {
@@ -365,45 +335,33 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
     if (trailingWidget == null && widget.onTap != null) {
       trailingWidget = const Icon(SBBIcons.chevron_small_right_small, size: sbbIconSizeSmall);
     }
-    if (trailingWidget != null) {
-      trailingWidget = _addDefaultAncestorWithResolved(
-        child: trailingWidget,
-        foregroundColor: effectiveStyle.trailingForegroundColor,
-      );
-    }
-    return trailingWidget;
+    return _addDefaultAncestorWithResolved(
+      child: trailingWidget,
+      foregroundColor: effectiveStyle.trailingForegroundColor,
+    );
   }
 
   Widget? _subtitleWidget(SBBPromotionBoxStyle effectiveStyle) {
-    Widget? subtitleWidget =
-        widget.subtitle ??
-        (widget.subtitleText != null
-            ? Text(widget.subtitleText!, maxLines: effectiveStyle.subtitleTextMaxLines)
-            : null);
-    if (subtitleWidget != null) {
-      subtitleWidget = _addDefaultAncestorWithResolved(
-        child: subtitleWidget,
-        foregroundColor: effectiveStyle.subtitleForegroundColor,
-        textStyle: effectiveStyle.subtitleTextStyle,
-      );
+    Widget? subtitleWidget = widget.subtitle;
+    if (subtitleWidget == null && widget.subtitleText != null) {
+      subtitleWidget = Text(widget.subtitleText!, maxLines: effectiveStyle.subtitleTextMaxLines, overflow: .ellipsis);
     }
-    return subtitleWidget;
+
+    return _addDefaultAncestorWithResolved(
+      child: subtitleWidget,
+      foregroundColor: effectiveStyle.subtitleForegroundColor,
+      textStyle: effectiveStyle.subtitleTextStyle,
+    );
   }
 
   Widget _titleWidget(SBBPromotionBoxStyle effectiveStyle) {
-    Widget titleWidget =
-        widget.title ??
-        Text(
-          widget.titleText!,
-          maxLines: effectiveStyle.titleTextMaxLines,
-          overflow: TextOverflow.ellipsis,
-        );
-    titleWidget = _addDefaultAncestorWithResolved(
+    final Widget titleWidget = widget.title ?? Text(widget.titleText!, maxLines: effectiveStyle.titleTextMaxLines);
+
+    return _addDefaultAncestorWithResolved(
       child: titleWidget,
       foregroundColor: effectiveStyle.titleForegroundColor,
       textStyle: effectiveStyle.titleTextStyle,
-    );
-    return titleWidget;
+    )!;
   }
 
   Widget _animationBuilder({required Animation<double> animation, required Widget child}) {
@@ -414,18 +372,14 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
     );
   }
 
-  Widget _buildBadge() {
-    if (widget.badge != null) return widget.badge!;
-    return SBBPromotionBoxBadge(labelText: widget.badgeText, style: widget.badgeStyle);
-  }
-
   /// Applies [foregroundColor] and optional [textStyle] to [child] using
   /// [DefaultTextStyle] and [IconTheme], similarly to how [SBBListItem] works.
-  Widget _addDefaultAncestorWithResolved({
-    required Widget child,
+  Widget? _addDefaultAncestorWithResolved({
+    required Widget? child,
     required Color? foregroundColor,
     TextStyle? textStyle,
   }) {
+    if (child == null) return null;
     final resolvedTextStyle = textStyle?.copyWith(color: foregroundColor) ?? TextStyle(color: foregroundColor);
     return DefaultTextStyle.merge(
       style: resolvedTextStyle,

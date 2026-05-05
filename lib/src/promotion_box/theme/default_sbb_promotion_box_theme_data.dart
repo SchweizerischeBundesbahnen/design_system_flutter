@@ -15,9 +15,11 @@ class DefaultSBBPromotionBoxThemeData extends SBBPromotionBoxThemeData {
           subtitleTextStyle: baseStyle.textTheme.mediumLight,
           subtitleTextMaxLines: 3,
           trailingForegroundColor: baseStyle.colorScheme.iconPrimary,
+          dismissButtonForegroundColor: baseStyle.colorScheme.iconPrimary,
           borderColor: baseStyle.themeValue(SBBColors.white, SBBColors.iron),
           overlayColor: WidgetStatePropertyAll<Color?>(baseStyle.themeValue(SBBColors.platinum, SBBColors.midnight)),
           backgroundGradientColors: baseStyle.themeValue(lightGradient, darkGradient),
+          padding: .all(SBBSpacing.medium).copyWith(right: SBBSpacing.xSmall),
           backgroundTextureOpacity: baseStyle.themeValue(.1, .5),
         ),
         badgeStyle: SBBPromotionBoxBadgeStyle(

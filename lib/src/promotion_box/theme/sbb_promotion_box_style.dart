@@ -5,10 +5,9 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// A builder that creates a custom background for [SBBPromotionBox].
 ///
-/// The [context] is the build context of the promotion box and [style] is
-/// the fully resolved [SBBPromotionBoxStyle]. The [child] is the inner
-/// content (already wrapped in an [InkWell]) and must be included in the
-/// returned widget tree.
+/// The [context] is the build context of the promotion box and [style] is the fully resolved [SBBPromotionBoxStyle].
+/// The [child] is typically a descendant of the returned widget
+/// and will be wrapped in an InkWell for the [SBBPromotionBox.onTap] handling.
 typedef SBBPromotionBoxBackgroundBuilder =
     Widget Function(BuildContext context, SBBPromotionBoxStyle style, Widget child);
 
@@ -29,10 +28,12 @@ class SBBPromotionBoxStyle {
     this.subtitleTextStyle,
     this.subtitleTextMaxLines,
     this.trailingForegroundColor,
+    this.dismissButtonForegroundColor,
     this.borderColor,
     this.overlayColor,
     this.backgroundGradientColors,
     this.backgroundTextureOpacity,
+    this.padding,
     this.backgroundBuilder,
   }) : assert(
          backgroundGradientColors == null || backgroundGradientColors.length == 4,
@@ -82,6 +83,9 @@ class SBBPromotionBoxStyle {
   /// This affects the icon or text color within the trailing widget of the promotion box.
   final Color? trailingForegroundColor;
 
+  /// The color of the dismiss button.
+  final Color? dismissButtonForegroundColor;
+
   /// The color of the promotion box border.
   ///
   /// This is the outline color of the promotion box container.
@@ -104,6 +108,9 @@ class SBBPromotionBoxStyle {
   /// A value of 0.0 means the texture is fully transparent (invisible), while 1.0 means
   /// it is fully opaque.
   final double? backgroundTextureOpacity;
+
+  /// The padding of the content of the promotion box.
+  final EdgeInsets? padding;
 
   /// A builder for a fully custom background of the [SBBPromotionBox].
   ///
@@ -128,10 +135,12 @@ class SBBPromotionBoxStyle {
     TextStyle? subtitleTextStyle,
     int? subtitleTextMaxLines,
     Color? trailingForegroundColor,
+    Color? dismissButtonForegroundColor,
     Color? borderColor,
     WidgetStateProperty<Color?>? overlayColor,
     List<Color>? backgroundGradientColors,
     double? backgroundTextureOpacity,
+    EdgeInsets? padding,
     SBBPromotionBoxBackgroundBuilder? backgroundBuilder,
   }) {
     return SBBPromotionBoxStyle(
@@ -142,10 +151,12 @@ class SBBPromotionBoxStyle {
       subtitleTextStyle: subtitleTextStyle ?? this.subtitleTextStyle,
       subtitleTextMaxLines: subtitleTextMaxLines ?? this.subtitleTextMaxLines,
       trailingForegroundColor: trailingForegroundColor ?? this.trailingForegroundColor,
+      dismissButtonForegroundColor: dismissButtonForegroundColor ?? this.dismissButtonForegroundColor,
       borderColor: borderColor ?? this.borderColor,
       overlayColor: overlayColor ?? this.overlayColor,
       backgroundGradientColors: backgroundGradientColors ?? this.backgroundGradientColors,
       backgroundTextureOpacity: backgroundTextureOpacity ?? this.backgroundTextureOpacity,
+      padding: padding ?? this.padding,
       backgroundBuilder: backgroundBuilder ?? this.backgroundBuilder,
     );
   }
@@ -161,10 +172,12 @@ class SBBPromotionBoxStyle {
       subtitleTextStyle: TextStyle.lerp(a?.subtitleTextStyle, b?.subtitleTextStyle, t),
       subtitleTextMaxLines: a?.subtitleTextMaxLines ?? b?.subtitleTextMaxLines,
       trailingForegroundColor: Color.lerp(a?.trailingForegroundColor, b?.trailingForegroundColor, t),
+      dismissButtonForegroundColor: Color.lerp(a?.dismissButtonForegroundColor, b?.dismissButtonForegroundColor, t),
       borderColor: Color.lerp(a?.borderColor, b?.borderColor, t),
       overlayColor: WidgetStateProperty.lerp<Color?>(a?.overlayColor, b?.overlayColor, t, Color.lerp),
       backgroundGradientColors: b?.backgroundGradientColors,
       backgroundTextureOpacity: lerpDouble(a?.backgroundTextureOpacity, b?.backgroundTextureOpacity, t),
+      padding: EdgeInsets.lerp(a?.padding, b?.padding, t),
       backgroundBuilder: t < 0.5 ? a?.backgroundBuilder : b?.backgroundBuilder,
     );
   }
@@ -180,10 +193,12 @@ class SBBPromotionBoxStyle {
       subtitleTextStyle: other.subtitleTextStyle,
       subtitleTextMaxLines: other.subtitleTextMaxLines,
       trailingForegroundColor: other.trailingForegroundColor,
+      dismissButtonForegroundColor: other.dismissButtonForegroundColor,
       borderColor: other.borderColor,
       overlayColor: other.overlayColor,
       backgroundGradientColors: other.backgroundGradientColors,
       backgroundTextureOpacity: other.backgroundTextureOpacity,
+      padding: other.padding,
       backgroundBuilder: other.backgroundBuilder,
     );
   }
@@ -199,10 +214,12 @@ class SBBPromotionBoxStyle {
         other.subtitleTextStyle == subtitleTextStyle &&
         other.subtitleTextMaxLines == subtitleTextMaxLines &&
         other.trailingForegroundColor == trailingForegroundColor &&
+        other.dismissButtonForegroundColor == dismissButtonForegroundColor &&
         other.borderColor == borderColor &&
         other.overlayColor == overlayColor &&
         other.backgroundGradientColors == backgroundGradientColors &&
         other.backgroundTextureOpacity == backgroundTextureOpacity &&
+        other.padding == padding &&
         other.backgroundBuilder == backgroundBuilder;
   }
 
@@ -215,10 +232,12 @@ class SBBPromotionBoxStyle {
     subtitleTextStyle,
     subtitleTextMaxLines,
     trailingForegroundColor,
+    dismissButtonForegroundColor,
     borderColor,
     overlayColor,
     backgroundGradientColors,
     backgroundTextureOpacity,
+    padding,
     backgroundBuilder,
   );
 }

@@ -19,7 +19,6 @@ void main() {
               badgeText: 'onClose null',
               titleText: title,
               subtitleText: description,
-              isDismissable: false,
             ),
             const SizedBox(height: 8.0),
             SBBPromotionBox(

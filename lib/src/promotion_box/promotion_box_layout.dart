@@ -70,7 +70,7 @@ class RenderPromotionBoxLayout extends RenderBox with SlottedContainerRenderObje
       (content.parentData as BoxParentData).offset = Offset(0, halfBadgeHeight);
     }
 
-    // Center the badge horizontally at the very top.
+    // Center the badge horizontally at the top.
     if (badge != null) {
       (badge.parentData as BoxParentData).offset = Offset(
         (totalWidth - badgeSize.width) / 2.0,
