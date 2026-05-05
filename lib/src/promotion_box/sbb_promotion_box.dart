@@ -45,9 +45,10 @@ class SBBPromotionBox extends StatefulWidget {
     this.subtitle,
     this.subtitleText,
     this.onTap,
-    this.onClose,
-    this.onTapSemanticsHint,
+    this.onDismissed,
+    this.isDismissable = false,
     this.trailing,
+    this.onTapSemanticsHint,
     this.style,
     this.badgeStyle,
   }) : assert(badgeText != null || badge != null, 'One of badgeText or badge must be provided!'),
@@ -102,10 +103,19 @@ class SBBPromotionBox extends StatefulWidget {
   /// will be displayed right of the subtitle, if [subtitleText] is used.
   final GestureTapCallback? onTap;
 
-  /// Callback for once the user taps the DismissButton.
+  /// Callback invoked once the user taps the dismiss button.
   ///
-  /// This will not be invoked, if the hiding is done through the [ClosableBoxController].
-  final GestureTapCallback? onClose;
+  /// Only relevant if [isDismissable] is true.
+  /// This will not be invoked if the hiding is done through the [SBBPromotionBoxController].
+  final GestureTapCallback? onDismissed;
+
+  /// Whether a dismiss button is shown in the top right corner of the [SBBPromotionBox].
+  ///
+  /// If true, a close button will be displayed. Tapping it will hide the promotion box
+  /// via the [SBBPromotionBoxController] and invoke [onDismissed].
+  ///
+  /// Defaults to false.
+  final bool isDismissable;
 
   /// The semantic hint used if the promotion box is tappable. See [onTap].
   final String? onTapSemanticsHint;
@@ -175,7 +185,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
         subtitle: widget.subtitle,
         subtitleText: widget.subtitleText,
         onTap: widget.onTap,
-        onClose: widget.onClose,
+        isDismissable: widget.isDismissable,
       );
     }
     // No title/subtitle provided: render nothing (custom content via leading/trailing only).
@@ -234,7 +244,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
       ),
     );
 
-    final boxWithOptionalClose = widget.onClose != null
+    final boxWithOptionalClose = widget.isDismissable
         ? Stack(
             children: [
               boxContent,
@@ -244,7 +254,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
                 child: SBBCloseButton(
                   onTap: () async {
                     await _effectiveController.hide();
-                    widget.onClose!.call();
+                    widget.onDismissed?.call();
                   },
                 ),
               ),
@@ -269,7 +279,7 @@ class _DefaultContent extends StatelessWidget {
     this.subtitle,
     this.subtitleText,
     this.onTap,
-    this.onClose,
+    this.isDismissable = false,
   });
 
   final Widget? title;
@@ -277,7 +287,7 @@ class _DefaultContent extends StatelessWidget {
   final Widget? subtitle;
   final String? subtitleText;
   final GestureTapCallback? onTap;
-  final GestureTapCallback? onClose;
+  final bool isDismissable;
 
   @override
   Widget build(BuildContext context) {
@@ -295,7 +305,7 @@ class _DefaultContent extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(child: titleWidget),
-              if (onClose != null) const SizedBox(width: sbbIconSizeSmall),
+              if (isDismissable) const SizedBox(width: sbbIconSizeSmall),
               const SizedBox(width: SBBSpacing.xSmall),
             ],
           ),

@@ -55,7 +55,8 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
             titleText: _title,
             subtitleText: _description,
             controller: defaultController,
-            onClose: () {},
+            isDismissable: true,
+            onDismissed: () {},
           ),
           const SizedBox(height: 8.0),
           SBBPromotionBox(
@@ -71,7 +72,8 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
             subtitleText: _description,
             controller: clickableController,
             onTap: () {},
-            onClose: () {},
+            isDismissable: true,
+            onDismissed: () {},
           ),
           const SizedBox(height: 8.0),
           SBBPromotionBox(
@@ -80,7 +82,8 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
                 'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
             subtitleText: _description,
             controller: extraController,
-            onClose: () {},
+            isDismissable: true,
+            onDismissed: () {},
           ),
           const SizedBox(height: SBBSpacing.medium),
           SBBPromotionBox(
@@ -89,7 +92,7 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
               style: SBBTextStyles.mediumLight.copyWith(color: SBBColors.black),
             ),
             badge: SBBPromotionBoxBadge(labelText: 'Custom with different color'),
-            style: _customBoxStyle(context),
+            style: SBBPromotionBoxStyle(titleForegroundColor: SBBColors.peach),
           ),
           const SizedBox(height: SBBSpacing.medium),
           SBBPromotionBox(
@@ -98,7 +101,6 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
               style: SBBTextStyles.mediumLight,
             ),
             badge: SBBPromotionBoxBadge(labelText: 'Custom leading and trailing widget'),
-            leading: Icon(SBBIcons.train_large),
             trailing: SBBTertiaryButtonSmall(labelText: 'Trailing Button', onPressed: () {}),
           ),
           const SizedBox(height: SBBSpacing.medium),
@@ -109,19 +111,11 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
             ),
             onTap: () {},
             badge: SBBPromotionBoxBadge(labelText: 'Custom with on tap'),
-            leading: Icon(SBBIcons.train_large),
             trailing: SBBTertiaryButtonSmall(labelText: 'Trailing Button', onPressed: () {}),
-            style: _customBoxStyle(context),
+            style: SBBPromotionBoxStyle(titleForegroundColor: SBBColors.peach),
           ),
         ],
       ),
     );
   }
 }
-
-PromotionBoxStyle _customBoxStyle(BuildContext context) =>
-    PromotionBoxStyle.$default(baseStyle: Theme.of(context).sbbBaseStyle).copyWith(
-      badgeColor: SBBColors.royal,
-      badgeShadowColor: SBBColors.royal.withAlpha((255.0 * 0.2).round()),
-      backgroundGradientColors: [SBBColors.cloud, SBBColors.milk, SBBColors.milk, SBBColors.cloud],
-    );
