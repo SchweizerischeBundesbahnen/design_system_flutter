@@ -122,7 +122,7 @@ class SBBPromotionBox extends StatefulWidget {
   /// Use to override the style of a single [SBBPromotionBox].
   ///
   /// This is [PromotionBoxStyle.merge]d with the theme's [PromotionBoxStyle] to create the final one.
-  final PromotionBoxStyle? style;
+  final SBBPromotionBoxStyle? style;
 
   /// Ignored if a custom [badge] is set.
   final SBBPromotionBoxBadgeStyle? badgeStyle;
@@ -172,7 +172,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
   Widget build(BuildContext context) {
     final baseStyle = Theme.of(context).sbbBaseStyle;
 
-    final style = SBBControlStyles.of(context).promotionBox!;
+    final style = Theme.of(context).sbbPromotionBoxTheme.style!;
     final resolvedStyle = widget.style != null ? style.merge(widget.style!) : style;
 
     final boxContent = Container(
@@ -183,12 +183,12 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
           image: const AssetImage(_PromotionBoxAssets.noise),
           repeat: ImageRepeat.repeat,
           fit: BoxFit.none,
-          opacity: resolvedStyle.textureOpacity!,
+          opacity: resolvedStyle.backgroundTextureOpacity!,
         ),
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: widget.gradientColors ?? resolvedStyle.gradientColors!,
+          colors: widget.gradientColors ?? resolvedStyle.backgroundGradientColors!,
           stops: _gradientStops,
         ),
       ),
