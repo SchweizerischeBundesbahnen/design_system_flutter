@@ -170,24 +170,34 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
 
   bool get _isDismissible => widget.onDismissed != null;
 
+  late final AnimationController _animationController;
+
   @override
   void initState() {
     super.initState();
-    _effectiveController.attach(this);
+    _animationController = AnimationController(
+      vsync: this,
+      value: _effectiveController.value ? 1.0 : 0.0,
+      duration: kThemeAnimationDuration,
+    );
+    _effectiveController.addListener(_animate);
   }
 
   @override
   void didUpdateWidget(covariant SBBPromotionBox oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.controller != oldWidget.controller) {
-      oldWidget.controller?.detach();
-      _effectiveController.attach(this);
+      oldWidget.controller?.removeListener(_animate);
+      _effectiveController.addListener(_animate);
+      if (widget.controller?.value != oldWidget.controller?.value) _animate();
     }
   }
 
   @override
   void dispose() {
-    _effectiveController.detach();
+    _effectiveController.removeListener(_animate);
+    _animationController.dispose();
+    _internalController?.dispose();
     super.dispose();
   }
 
@@ -217,7 +227,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
         : _defaultDecoratedContent(context, effectiveStyle, _inkWellContent(context, effectiveStyle, content));
 
     return _animationBuilder(
-      animation: _effectiveController.animation,
+      animation: _animationController,
       child: PromotionBoxLayout(
         badge: widget.badge ?? SBBPromotionBoxBadge(labelText: widget.badgeText, style: widget.badgeStyle),
         content: ClipRRect(borderRadius: SBBPromotionBoxStyle.borderRadius, child: contentWithBackground),
@@ -318,8 +328,8 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
       button: true,
       child: InkWell(
         borderRadius: .circular(sbbIconSizeSmall),
-        onTap: () async {
-          await _effectiveController.hide();
+        onTap: () {
+          _effectiveController.hide();
           widget.onDismissed?.call();
         },
         child: _addDefaultAncestorWithResolved(
@@ -388,5 +398,9 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
         child: child,
       ),
     );
+  }
+
+  void _animate() {
+    _animationController.animateTo(_effectiveController.value ? 1.0 : 0.0);
   }
 }

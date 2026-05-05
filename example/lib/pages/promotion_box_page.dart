@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_design_system_mobile_example/pages/scaffold/demo_page_scaffold.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
+const _longSubtitleText =
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus. ';
+
 class PromotionBoxPage extends StatefulWidget {
   const PromotionBoxPage({super.key});
 
@@ -13,10 +16,7 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
   final defaultController = SBBPromotionBoxController();
   final closableController = SBBPromotionBoxController();
   final clickableController = SBBPromotionBoxController();
-  final extraController = SBBPromotionBoxController();
-
-  static const _title = 'Bessere Übersicht.';
-  static const _description = 'Erkennen Sie nun schneller, auf welchen Perrons Durchsagen vorhanden sind.';
+  final tooLongTextController = SBBPromotionBoxController();
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
                 defaultController.show();
                 closableController.show();
                 clickableController.show();
-                extraController.show();
+                tooLongTextController.show();
               },
             ),
             SBBTertiaryButtonSmall(
@@ -42,77 +42,46 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
                 defaultController.hide();
                 closableController.hide();
                 clickableController.hide();
-                extraController.hide();
+                tooLongTextController.hide();
               },
             ),
           ],
         ),
       ),
       body: Column(
+        spacing: SBBSpacing.xSmall,
         children: [
           SBBPromotionBox(
             badgeText: 'Default',
-            titleText: _title,
-            subtitleText: _description,
+            titleText: 'Default Promotion Box',
+            subtitleText: 'The default promotion box.',
             controller: defaultController,
             onDismissed: () {},
           ),
-          const SizedBox(height: 8.0),
           SBBPromotionBox(
-            badgeText: 'onClose null',
-            titleText: _title,
-            subtitleText: _description,
+            badgeText: 'Non Dismissable',
+            titleText: 'Non Dismissable Promotion Box',
+            subtitleText: 'Promotion Box that cannot be dismissed.',
             controller: closableController,
           ),
-          const SizedBox(height: 8.0),
           SBBPromotionBox(
-            badgeText: 'Clickable',
-            titleText: _title,
-            subtitleText: _description,
+            badgeText: 'Tappable',
+            titleText: 'Tappable Promotion Box',
+            subtitleText: 'This Promotion Box will react to taps and display a bottom sheet.',
             controller: clickableController,
-            onTap: () {},
+            onTap: () => showSBBBottomSheet(
+              context: context,
+              titleText: 'Promotion Box Information',
+              body: Text('Some more information'),
+            ),
             onDismissed: () {},
           ),
-          const SizedBox(height: 8.0),
           SBBPromotionBox(
             badgeText: 'With way too long title and badge text',
-            titleText:
-                'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
-            subtitleText: _description,
-            controller: extraController,
+            titleText: _longSubtitleText,
+            subtitleText: _longSubtitleText * 3,
+            controller: tooLongTextController,
             onDismissed: () {},
-          ),
-          const SizedBox(height: SBBSpacing.medium),
-          SBBPromotionBox(
-            titleText: _title,
-            subtitle: Text(
-              'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
-              style: SBBTextStyles.mediumLight.copyWith(color: SBBColors.black),
-            ),
-            badge: SBBPromotionBoxBadge(labelText: 'Custom with different color'),
-            style: SBBPromotionBoxStyle(titleForegroundColor: SBBColors.peach),
-          ),
-          const SizedBox(height: SBBSpacing.medium),
-          SBBPromotionBox(
-            titleText: _title,
-            subtitle: Text(
-              'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
-              style: SBBTextStyles.mediumLight,
-            ),
-            badge: SBBPromotionBoxBadge(labelText: 'Custom leading and trailing widget'),
-            trailing: SBBTertiaryButtonSmall(labelText: 'Trailing Button', onPressed: () {}),
-          ),
-          const SizedBox(height: SBBSpacing.medium),
-          SBBPromotionBox(
-            titleText: _title,
-            subtitle: Text(
-              'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
-              style: SBBTextStyles.mediumLight.copyWith(color: SBBColors.black),
-            ),
-            onTap: () {},
-            badge: SBBPromotionBoxBadge(labelText: 'Custom with on tap'),
-            trailing: SBBTertiaryButtonSmall(labelText: 'Trailing Button', onPressed: () {}),
-            style: SBBPromotionBoxStyle(titleForegroundColor: SBBColors.peach),
           ),
         ],
       ),
