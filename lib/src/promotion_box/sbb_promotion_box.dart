@@ -6,20 +6,20 @@ const _promotionBoxNoiseAsset = 'packages/sbb_design_system_mobile/lib/assets/no
 
 /// The SBB Promotion Box.
 ///
-/// A title is required: provide either [title] for a custom title widget or
+/// Typically used to introduce new features or considerable changes within an application.
+///
+/// The promotion box consists of a badge, a title row, an optional subtitle and a trailing part.
+///
+/// * The title is required: provide either [title] for a custom title widget or
 /// [titleText] for the standard title design. These parameters are mutually exclusive.
-///
-/// Provide either [subtitle] for a custom subtitle widget or [subtitleText] for
+/// * Provide either [subtitle] for a custom subtitle widget or [subtitleText] for
 /// the standard subtitle design. These parameters are mutually exclusive.
-///
-/// Provide either [badge] for a custom badge widget or [badgeText] for the
+/// * Provide either [badge] for a custom badge widget or [badgeText] for the
 /// standard badge design. These parameters are mutually exclusive.
-///
 /// When using a custom [badge] widget, it will be positioned centered at the
 /// top edge of the promotion box content, with half of the badge appearing above
 /// the box border. The badge is rendered on top of the content. For the default
-/// styling, use [SBBPromotionBoxBadge].
-///
+/// badge with pill shape look and halo, use [SBBPromotionBoxBadge].
 ///
 /// ## Layout rules
 ///
@@ -36,20 +36,6 @@ const _promotionBoxNoiseAsset = 'packages/sbb_design_system_mobile/lib/assets/no
 /// If [trailing] is provided, that widget is used. Otherwise, only if [onTap]
 /// is set, a chevron icon is shown.
 class SBBPromotionBox extends StatefulWidget {
-  /// Creates a [SBBPromotionBox].
-  ///
-  /// Exactly one of [badgeText] or [badge] must be provided.
-  /// Exactly one of [titleText] or [title] must be provided.
-  /// At most one of [subtitleText] or [subtitle] may be provided.
-  ///
-  /// For programmatic hide and show of the promotion box, provide a [controller].
-  /// If no controller is given, an internal one is created automatically.
-  ///
-  /// If [onTap] is not null and no [trailing] is provided, a chevron icon is
-  /// displayed as the trailing indicator.
-  ///
-  /// If [onDismissed] is not null, an inline dismiss
-  /// button is displayed aligned with the title row.
   const SBBPromotionBox({
     super.key,
     this.controller,
@@ -155,7 +141,12 @@ class SBBPromotionBox extends StatefulWidget {
   /// to create the effective style used during rendering.
   final SBBPromotionBoxStyle? style;
 
+  /// Use this to style the standard badge built by using [badgeText].
+  ///
   /// Ignored if a custom [badge] is set.
+  ///
+  /// This is [SBBPromotionBoxStyle.merge]d with the theme's [SBBPromotionBoxStyle]
+  /// to create the effective style used during rendering.
   final SBBPromotionBoxBadgeStyle? badgeStyle;
 
   @override
