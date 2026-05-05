@@ -3,7 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 
-/// Slots for [_PromotionBoxLayout].
+/// Slots for [PromotionBoxLayout].
 enum PromotionBoxSlot { badge, content }
 
 /// A [SlottedMultiChildRenderObjectWidget] that positions the [badge] centered

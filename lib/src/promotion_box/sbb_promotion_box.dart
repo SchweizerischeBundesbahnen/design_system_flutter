@@ -3,9 +3,7 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/promotion_box/promotion_box_layout.dart';
 import 'package:sbb_design_system_mobile/src/shared/close_button.dart';
 
-part 'promotion_box.assets.dart';
-
-const _gradientStops = [0.0, 0.406, 0.672, 1.0];
+const _promotionBoxNoiseAsset = 'packages/sbb_design_system_mobile/lib/assets/noise.png';
 
 /// The SBB Promotion Box.
 /// Use according to [documentation](https://digital.sbb.ch/en/design-system/mobile/components/promotion-box/)
@@ -44,9 +42,7 @@ class SBBPromotionBox extends StatefulWidget {
     this.onTap,
     this.onClose,
     this.onTapSemanticsHint,
-    this.leading,
     this.trailing,
-    this.gradientColors,
     this.style,
     this.badgeStyle,
   }) : assert(badgeText != null || badge != null, 'One of badgeText or badge must be provided!'),
@@ -105,19 +101,8 @@ class SBBPromotionBox extends StatefulWidget {
   /// The semantic hint used if the promotion box is tappable. See [onTap].
   final String? onTapSemanticsHint;
 
-  /// The leading widget is displayed left of the content with a padding.
-  final Widget? leading;
-
   /// The trailing widget is displayed right of the content with a padding.
   final Widget? trailing;
-
-  /// The gradient colors of the [SBBPromotionBox] used to override the one defined in the [PromotionBoxStyle].
-  ///
-  /// If null, the one defined in the style will be taken.
-  ///
-  /// Use this to override the background color of the [SBBPromotionBox].
-  @Deprecated('Deprecated. Will be removed in the next major release. Use [style] instead')
-  final List<Color>? gradientColors;
 
   /// Use to override the style of a single [SBBPromotionBox].
   ///
@@ -178,9 +163,9 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
     final boxContent = Container(
       decoration: BoxDecoration(
         border: Border.all(color: resolvedStyle.borderColor!),
-        borderRadius: const BorderRadius.all(Radius.circular(SBBSpacing.medium)),
+        borderRadius: SBBPromotionBoxStyle.borderRadius,
         image: DecorationImage(
-          image: const AssetImage(_PromotionBoxAssets.noise),
+          image: const AssetImage(_promotionBoxNoiseAsset),
           repeat: ImageRepeat.repeat,
           fit: BoxFit.none,
           opacity: resolvedStyle.backgroundTextureOpacity!,
@@ -188,8 +173,8 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: widget.gradientColors ?? resolvedStyle.backgroundGradientColors!,
-          stops: _gradientStops,
+          colors: resolvedStyle.backgroundGradientColors!,
+          stops: SBBPromotionBoxStyle.backgroundGradientStops,
         ),
       ),
       child: Material(
@@ -209,8 +194,6 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  if (widget.leading != null)
-                    Padding(padding: const EdgeInsets.only(right: 8.0), child: widget.leading!),
                   Expanded(child: _buildContent()),
                   if (widget.trailing != null)
                     Padding(padding: const EdgeInsets.symmetric(horizontal: 8.0), child: widget.trailing!),
