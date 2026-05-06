@@ -2,4 +2,3 @@
 # Add one name per line. Lines starting with # or // are treated as comments.
 
 ClosableBoxController
-PromotionBoxStyle

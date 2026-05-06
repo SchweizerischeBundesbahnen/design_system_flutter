@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// Defines the visual properties of [SBBPaginator].
@@ -39,10 +38,10 @@ class SBBPaginatorStyle {
   final List<BoxShadow>? floatingBoxShadow;
 
   /// The padding between the circles and the floating container.
-  static EdgeInsets get floatingPadding => .symmetric(horizontal: SBBSpacing.xLarge, vertical: SBBSpacing.xxSmall);
+  static const EdgeInsets floatingPadding = .symmetric(horizontal: SBBSpacing.xLarge, vertical: SBBSpacing.xxSmall);
 
   /// The size of the circles in the paginator.
-  static Size get circleSize => Size.fromRadius(3.0);
+  static const Size circleSize = Size.fromRadius(3.0);
 
   SBBPaginatorStyle copyWith({
     WidgetStateProperty<Color?>? circleBorderColor,

@@ -86,7 +86,9 @@ class SBBPopupStyle {
   final EdgeInsets? margin;
 
   /// The default shape for the popup.
-  static ShapeBorder shape = RoundedRectangleBorder(borderRadius: BorderRadius.circular(SBBSpacing.medium));
+  static const ShapeBorder shape = RoundedRectangleBorder(
+    borderRadius: BorderRadius.all(Radius.circular(SBBSpacing.medium)),
+  );
 
   SBBPopupStyle copyWith({
     TextStyle? titleTextStyle,

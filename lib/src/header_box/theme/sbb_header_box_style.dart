@@ -152,13 +152,13 @@ class SBBHeaderBoxStyle {
   final EdgeInsetsGeometry? margin;
 
   /// The shape of the header box.
-  static ShapeBorder get border => RoundedRectangleBorder(borderRadius: radius);
+  static const ShapeBorder border = RoundedRectangleBorder(borderRadius: radius);
 
   /// The radius of the header box.
-  static BorderRadius get radius => const BorderRadius.all(Radius.circular(SBBSpacing.medium));
+  static const BorderRadius radius = BorderRadius.all(Radius.circular(SBBSpacing.medium));
 
   /// The minimum height of the header box without external margin applied.
-  static double get minHeight => 56.0;
+  static const minHeight = 56.0;
 
   SBBHeaderBoxStyle copyWith({
     TextStyle? titleTextStyle,
