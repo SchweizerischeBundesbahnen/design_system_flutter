@@ -48,7 +48,7 @@ class SBBSegmentedButtonStyle {
   /// The shape of the segmented button.
   ///
   /// The height will be the default sbb button height of 44 logical pixels.
-  static StadiumBorder get shape => StadiumBorder();
+  static const StadiumBorder shape = StadiumBorder();
 
   SBBSegmentedButtonStyle copyWith({
     WidgetStateProperty<Color?>? backgroundColor,
