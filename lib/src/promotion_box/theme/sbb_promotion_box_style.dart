@@ -33,12 +33,17 @@ class SBBPromotionBoxStyle {
     this.borderColor,
     this.overlayColor,
     this.backgroundGradientColors,
+    this.backgroundGradientStops,
     this.backgroundTextureOpacity,
     this.padding,
     this.backgroundBuilder,
   }) : assert(
-         backgroundGradientColors == null || backgroundGradientColors.length == 4,
-         'Must provide exactly four colors for the background gradient, given: $backgroundGradientColors',
+         backgroundGradientColors == null ||
+             backgroundGradientStops == null ||
+             backgroundGradientColors.length == backgroundGradientStops.length,
+         'Length must be equal:'
+         ' backgroundGradientColors.length == ${backgroundGradientColors.length}'
+         ' != backgroundGradientStops.length == ${backgroundGradientStops.length}',
        );
 
   /// The color of the title text.
@@ -100,8 +105,14 @@ class SBBPromotionBoxStyle {
   /// The gradient colors for the promotion box background.
   ///
   /// This list of colors is used to create a linear gradient background.
-  /// The gradient stops are defined by [SBBPromotionBoxStyle.backgroundGradientStops].
+  ///
+  /// The length of this must match the effective length of [backgroundGradientStops].
   final List<Color>? backgroundGradientColors;
+
+  /// The linear gradient stops for the promotion box background.
+  ///
+  /// The length of this must match the effective length of [backgroundGradientColors].
+  final List<double>? backgroundGradientStops;
 
   /// The opacity of the background texture overlay.
   ///
@@ -123,8 +134,6 @@ class SBBPromotionBoxStyle {
   /// using a custom builder — it is the responsibility of the builder to apply
   /// any desired border.
   final SBBPromotionBoxBackgroundBuilder? backgroundBuilder;
-
-  static const backgroundGradientStops = <double>[0.0, 0.406, 0.672, 1.0];
 
   static const borderRadius = BorderRadius.all(Radius.circular(SBBSpacing.medium));
 

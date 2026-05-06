@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/promotion_box/promotion_box_layout.dart';
+import 'package:sbb_design_system_mobile/src/promotion_box/theme/default_sbb_promotion_box_theme_data.dart';
 
 const _promotionBoxNoiseAsset = 'packages/sbb_design_system_mobile/lib/assets/noise.png';
 
@@ -196,13 +197,13 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
   Widget build(BuildContext context) {
     final SBBPromotionBoxStyle effectiveStyle = _effectiveStyle(context);
 
-    final Widget titleWidget = _titleWidget(effectiveStyle);
-    final Widget? subtitleWidget = _subtitleWidget(effectiveStyle);
-    final Widget? trailingWidget = _trailingWidget(effectiveStyle);
-    final Widget? dismissButton = _dismissButton(context, effectiveStyle);
+    final titleWidget = _titleWidget(effectiveStyle);
+    final subtitleWidget = _subtitleWidget(effectiveStyle);
+    final trailingWidget = _trailingWidget(effectiveStyle);
+    final dismissButton = _dismissButton(context, effectiveStyle);
 
-    final Widget titleRow = _titleRow(titleWidget, trailingWidget, dismissButton);
-    final Widget? subtitleRow = _subtitleRow(subtitleWidget, trailingWidget);
+    final titleRow = _titleRow(titleWidget, trailingWidget, dismissButton);
+    final subtitleRow = _subtitleRow(subtitleWidget, trailingWidget);
 
     final Widget content = subtitleRow != null
         ? Column(
@@ -262,7 +263,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
           begin: .topCenter,
           end: .bottomCenter,
           colors: effectiveStyle.backgroundGradientColors!,
-          stops: SBBPromotionBoxStyle.backgroundGradientStops,
+          stops: effectiveStyle.backgroundGradientStops ?? defaultGradientStops,
         ),
       ),
       child: content,
@@ -285,10 +286,9 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
 
   Widget _titleRow(Widget titleWidget, Widget? trailingWidget, Widget? dismissButton) {
     final hasSubtitle = widget.subtitle != null || widget.subtitleText != null;
-    Widget titleRow;
     if (!hasSubtitle) {
       // No subtitle: [title] [trailing] [dismissButton]
-      titleRow = Row(
+      return Row(
         crossAxisAlignment: .center,
         spacing: SBBSpacing.xSmall,
         children: [
@@ -299,7 +299,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
       );
     } else {
       // Has subtitle: [title] [dismissButton]
-      titleRow = Row(
+      return Row(
         crossAxisAlignment: .center,
         spacing: SBBSpacing.xSmall,
         children: [
@@ -308,7 +308,6 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
         ],
       );
     }
-    return titleRow;
   }
 
   Widget? _dismissButton(BuildContext context, SBBPromotionBoxStyle effectiveStyle) {

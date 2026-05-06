@@ -1,8 +1,9 @@
 import 'package:flutter/widgets.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
-const List<Color> lightGradient = [Color(0xFFD8ECED), Color(0xFFE8F3F7), Color(0xFFE3EFF3), Color(0xFFD6ECED)];
-const List<Color> darkGradient = [Color(0xFF2E3847), Color(0xFF3B4557), Color(0xFF3B4557), Color(0xFF202936)];
+const lightGradient = [Color(0xFFD8ECED), Color(0xFFE8F3F7), Color(0xFFE3EFF3), Color(0xFFD6ECED)];
+const darkGradient = [Color(0xFF2E3847), Color(0xFF3B4557), Color(0xFF3B4557), Color(0xFF202936)];
+const defaultGradientStops = <double>[0.0, 0.406, 0.672, 1.0];
 
 class DefaultSBBPromotionBoxThemeData extends SBBPromotionBoxThemeData {
   DefaultSBBPromotionBoxThemeData(SBBBaseStyle baseStyle)

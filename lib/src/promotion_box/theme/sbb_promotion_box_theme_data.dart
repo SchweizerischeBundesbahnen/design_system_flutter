@@ -13,7 +13,7 @@ class SBBPromotionBoxThemeData extends ThemeExtension<SBBPromotionBoxThemeData> 
     this.badgeStyle,
   });
 
-  /// Overrides for the promotion box' default style.
+  /// Overrides for the promotion box's default style.
   ///
   /// Non-null properties values override the default values.
   ///
