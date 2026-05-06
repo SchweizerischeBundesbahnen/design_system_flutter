@@ -611,10 +611,14 @@ class SBBListItemBoxed extends SBBListItem {
     super.enableFeedback,
     super.style,
     super.padding,
+    this.margin,
     super.trailingHorizontalGapWidth,
     super.leadingHorizontalGapWidth,
     super.subtitleVerticalGapHeight,
   });
+
+  /// The margin of the content box surrounding the [SBBListItem].
+  final EdgeInsetsGeometry? margin;
 
   @override
   State<SBBListItem> createState() => _SBBListItemBoxedState();
@@ -623,6 +627,6 @@ class SBBListItemBoxed extends SBBListItem {
 class _SBBListItemBoxedState extends _SBBListItemState {
   @override
   Widget build(BuildContext context) {
-    return SBBContentBox(child: super.build(context));
+    return SBBContentBox(margin: (widget as SBBListItemBoxed).margin, child: super.build(context));
   }
 }

@@ -703,6 +703,7 @@ class SBBTextInputBoxed extends SBBTextInput {
     super.inputTextStyle,
     super.inputForegroundColor,
     super.enableClearButton,
+    this.margin,
   }) : super(
          decoration: decoration?.contentPadding != null
              ? decoration
@@ -710,6 +711,9 @@ class SBBTextInputBoxed extends SBBTextInput {
                  contentPadding: .symmetric(horizontal: SBBSpacing.medium),
                ),
        );
+
+  /// The margin of the content box surrounding the [SBBTextInput].
+  final EdgeInsetsGeometry? margin;
 
   @override
   State<SBBTextInput> createState() => _SBBTextInputStateBoxed();
@@ -721,7 +725,7 @@ class _SBBTextInputStateBoxed extends _SBBTextInputState {
 
   @override
   Widget build(BuildContext context) {
-    return SBBContentBox(child: super.build(context));
+    return SBBContentBox(margin: (widget as SBBTextInputBoxed).margin, child: super.build(context));
   }
 }
 

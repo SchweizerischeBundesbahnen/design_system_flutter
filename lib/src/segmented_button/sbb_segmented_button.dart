@@ -278,10 +278,10 @@ class SBBSegmentedButtonFilled<T> extends SBBSegmentedButton<T> {
   });
 
   @override
-  State<SBBSegmentedButton<T>> createState() => _SBBSegmentedButtonStateBoxed();
+  State<SBBSegmentedButton<T>> createState() => _SBBSegmentedButtonStateFilled();
 }
 
-class _SBBSegmentedButtonStateBoxed<T> extends _SBBSegmentedButtonState<T> {
+class _SBBSegmentedButtonStateFilled<T> extends _SBBSegmentedButtonState<T> {
   @override
   SBBSegmentedButtonStyle get effectiveStyle {
     final themeData = Theme.of(context).sbbSegmentedButtonTheme;

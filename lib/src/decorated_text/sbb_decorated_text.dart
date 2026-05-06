@@ -264,6 +264,7 @@ class SBBDecoratedTextBoxed extends SBBDecoratedText {
     super.minLines,
     super.expands,
     super.style,
+    this.margin,
   }) : super(
          decoration: decoration?.contentPadding != null
              ? decoration
@@ -271,6 +272,9 @@ class SBBDecoratedTextBoxed extends SBBDecoratedText {
                  contentPadding: .symmetric(horizontal: SBBSpacing.medium),
                ),
        );
+
+  /// The margin of the content box surrounding the [SBBDecoratedText].
+  final EdgeInsetsGeometry? margin;
 
   @override
   State<SBBDecoratedText> createState() => _SBBTextInputStateBoxed();
@@ -282,6 +286,6 @@ class _SBBTextInputStateBoxed extends _SBBDecoratedTextState {
 
   @override
   Widget build(BuildContext context) {
-    return SBBContentBox(child: super.build(context));
+    return SBBContentBox(margin: (widget as SBBDecoratedTextBoxed).margin, child: super.build(context));
   }
 }

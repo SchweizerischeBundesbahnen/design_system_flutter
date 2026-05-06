@@ -314,6 +314,7 @@ class SBBTextInputBoxedFormField extends SBBTextInputFormField {
     super.errorBuilder,
     super.autovalidateMode,
     super.restorationId,
+    EdgeInsetsGeometry? margin,
   }) : super(
          builder: (FormFieldState<String> field) {
            final _SBBTextInputFormFieldState state = field as _SBBTextInputFormFieldState;
@@ -364,6 +365,7 @@ class SBBTextInputBoxedFormField extends SBBTextInputFormField {
              inputTextStyle: inputTextStyle,
              inputForegroundColor: inputForegroundColor,
              enableClearButton: enableClearButton,
+             margin: margin,
            );
          },
        );
