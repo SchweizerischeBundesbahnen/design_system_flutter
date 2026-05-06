@@ -37,11 +37,6 @@ class SBBListItemStyle {
     this.overlayColor,
   });
 
-  /// The minimum vertical height of a list item without [SBBListItem.padding] applied.
-  ///
-  /// This ensures list items meet accessibility standards for touch targets.
-  static double get minInnerHeight => 24.0;
-
   /// The text style for the list item title.
   ///
   /// Applies to all text descendants of the title of SBBListItem.
@@ -99,7 +94,12 @@ class SBBListItemStyle {
   final WidgetStateProperty<Color?>? backgroundColor;
 
   /// The default padding of the list item.
-  static EdgeInsets get defaultPadding => .symmetric(horizontal: 16.0, vertical: 10.0);
+  static const EdgeInsets defaultPadding = .symmetric(horizontal: 16.0, vertical: 10.0);
+
+  /// The minimum vertical height of a list item without [SBBListItem.padding] applied.
+  ///
+  /// This ensures list items meet accessibility standards for touch targets.
+  static const double minInnerHeight = 24.0;
 
   SBBListItemStyle copyWith({
     TextStyle? titleTextStyle,
