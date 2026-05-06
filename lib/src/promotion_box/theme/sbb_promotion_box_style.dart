@@ -149,6 +149,7 @@ class SBBPromotionBoxStyle {
     Color? borderColor,
     WidgetStateProperty<Color?>? overlayColor,
     List<Color>? backgroundGradientColors,
+    List<double>? backgroundGradientStops,
     double? backgroundTextureOpacity,
     EdgeInsets? padding,
     SBBPromotionBoxBackgroundBuilder? backgroundBuilder,
@@ -165,6 +166,7 @@ class SBBPromotionBoxStyle {
       borderColor: borderColor ?? this.borderColor,
       overlayColor: overlayColor ?? this.overlayColor,
       backgroundGradientColors: backgroundGradientColors ?? this.backgroundGradientColors,
+      backgroundGradientStops: backgroundGradientStops ?? this.backgroundGradientStops,
       backgroundTextureOpacity: backgroundTextureOpacity ?? this.backgroundTextureOpacity,
       padding: padding ?? this.padding,
       backgroundBuilder: backgroundBuilder ?? this.backgroundBuilder,
@@ -186,6 +188,7 @@ class SBBPromotionBoxStyle {
       borderColor: Color.lerp(a?.borderColor, b?.borderColor, t),
       overlayColor: WidgetStateProperty.lerp<Color?>(a?.overlayColor, b?.overlayColor, t, Color.lerp),
       backgroundGradientColors: t < 0.5 ? a?.backgroundGradientColors : b?.backgroundGradientColors,
+      backgroundGradientStops: t < 0.5 ? a?.backgroundGradientStops : b?.backgroundGradientStops,
       backgroundTextureOpacity: lerpDouble(a?.backgroundTextureOpacity, b?.backgroundTextureOpacity, t),
       padding: EdgeInsets.lerp(a?.padding, b?.padding, t),
       backgroundBuilder: t < 0.5 ? a?.backgroundBuilder : b?.backgroundBuilder,
@@ -207,6 +210,7 @@ class SBBPromotionBoxStyle {
       borderColor: other.borderColor,
       overlayColor: other.overlayColor,
       backgroundGradientColors: other.backgroundGradientColors,
+      backgroundGradientStops: other.backgroundGradientStops,
       backgroundTextureOpacity: other.backgroundTextureOpacity,
       padding: other.padding,
       backgroundBuilder: other.backgroundBuilder,
@@ -228,6 +232,7 @@ class SBBPromotionBoxStyle {
         other.borderColor == borderColor &&
         other.overlayColor == overlayColor &&
         ListEquality().equals(other.backgroundGradientColors, backgroundGradientColors) &&
+        ListEquality().equals(other.backgroundGradientStops, backgroundGradientStops) &&
         other.backgroundTextureOpacity == backgroundTextureOpacity &&
         other.padding == padding &&
         other.backgroundBuilder == backgroundBuilder;
@@ -246,6 +251,7 @@ class SBBPromotionBoxStyle {
     borderColor,
     overlayColor,
     ListEquality().hash(backgroundGradientColors),
+    ListEquality().hash(backgroundGradientStops),
     backgroundTextureOpacity,
     padding,
     backgroundBuilder,
