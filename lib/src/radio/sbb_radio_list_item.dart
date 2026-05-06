@@ -239,6 +239,7 @@ class SBBRadioListItemBoxed<T> extends SBBRadioListItem<T> {
     super.autofocus,
     super.enableFeedback,
     super.padding,
+    this.margin,
     super.trailingHorizontalGapWidth,
     super.leadingHorizontalGapWidth,
     super.subtitleVerticalGapHeight,
@@ -248,8 +249,11 @@ class SBBRadioListItemBoxed<T> extends SBBRadioListItem<T> {
     super.radioSemanticLabel,
   });
 
+  /// The margin of the content box surrounding the [SBBRadioListItem].
+  final EdgeInsetsGeometry? margin;
+
   @override
   Widget build(BuildContext context) {
-    return SBBContentBox(child: super.build(context));
+    return SBBContentBox(margin: margin, child: super.build(context));
   }
 }
