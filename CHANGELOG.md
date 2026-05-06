@@ -7,6 +7,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 It is expected that you keep this format strictly, since we depend on it in our release workflow.
 
+
+## [5.0.0-dev.4] - 2026-05-06
+
+### Added
+
+- added `titleTextMaxlines` and `subtitleTextMaxLines` to `SBBListItemStyle`
+- added `margin` parameter to all boxed component variants
+
+### Changed
+
+- changed static getters to static const, e.g. `toolbarHeight` in `SBBHeaderStyle`
+- BREAKING: migrate `WidgetStateProperty<TextStyle?>?` to `TextStyle?> in styles
+- BREAKING overhaul `SBBPromotionBox` - see [v5 migration guide]
+
+
 ## [5.0.0-dev.3] - 2026-04-30
 
 ### Added
@@ -872,7 +887,9 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Initial project setup
 - Added some widgets
 
-[v5 migration guide]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/blob/e9876209743cf2afb272041fef74cb5df5ac8216/migration_guide.md
+[v5 migration guide]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/blob/c460cc05b2b28996e82f5a53e7bf39b87a5f5970/migration_guide.md
+
+[5.0.0-dev.4]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/5.0.0-dev.3...5.0.0-dev.4
 
 [5.0.0-dev.3]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/5.0.0-dev.2...5.0.0-dev.3
 
