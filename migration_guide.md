@@ -330,6 +330,59 @@ showSBBPopup(
 * customize an individual popup by setting its `style` parameter
 
 
+## Promotion Box
+
+The `SBBPromotionBox` API has been redesigned for more flexibility and better theming support.
+In general, a custom badge can now be added to the `SBBPromotionBox`. For standard pill like look with a halo,
+check out `SBBPromotionBoxBadge`.
+
+### Constructor
+
+The previous default and `custom` constructors have been replaced by a single `const` constructor:
+
+* replace `title` (String) with `titleText`, or use `title` for a custom widget
+* replace `subtitle` (String) with `subtitleText`, or use `subtitle` for a custom widget
+* `badgeText` is now optional (provide either `badgeText` or a custom `badge` widget)
+* replace `onClose` with `onDismissed`
+* replace `onControllerCreated` callback with a `controller` parameter (`SBBPromotionBoxController`)
+  * `SBBPromotionBoxController` replaces `ClosableBoxController`
+* removed `leading` parameter — use the above layout customization options instead
+* `badgeStyle` (`SBBPromotionBoxBadgeStyle`) replaces the deprecated individual badge color parameters
+
+### Example migration
+
+Old implementation:
+```dart
+SBBPromotionBox(
+  title: 'My Title',
+  subtitle: 'My subtitle',
+  badgeText: 'New',
+  onClose: () => print('closed'),
+  onControllerCreated: (controller) => _controller = controller,
+  onTap: () => print('tapped'),
+)
+```
+
+New implementation:
+```dart
+SBBPromotionBox(
+  titleText: 'My Title',
+  subtitleText: 'My subtitle',
+  badgeText: 'New',
+  onDismissed: () => print('closed'),
+  controller: _controller,
+  onTap: () => print('tapped'),
+)
+```
+
+### Theming & Styling
+
+* customize the theme of all `SBBPromotionBox` with `SBBPromotionBoxThemeData` as input to `SBBTheme`
+* access the theme using `Theme.of(context).sbbPromotionBoxTheme`
+* customize an individual promotion box by setting its `style` parameter in the constructor
+* customize the badge style via the `badgeStyle` parameter using `SBBPromotionBoxBadgeStyle`
+
+
 ## Radio
 
 ### Usage
