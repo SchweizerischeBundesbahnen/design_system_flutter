@@ -205,7 +205,7 @@ The list item has received a lot of changes. In general the content is completel
 * replace `subtitle` with `subtitleText`
 * replace `trailingIcon` with `trailingIconData`
 * use `title`, `subtitle`, `leading` and `trailing` of type Widget? for complete customization
-* If you want a multi line title, use `title` with your own `Text` Widget, the `titleText` will clamp to one line
+* If you want a multi line title, consider setting the `titleTextMaxLines` parameter in the style - it will be clamped by default to a single line
 * replace `buttonIcon` and `onPressedButton` from the `button` constructor with a custom trailing widget. Do not forget
   to adjust the `padding`, since the `SBBTertiaryButtonSmall` has an inherent padding to the right
 * `isLastElement` was removed, use the static method `SBBDivider.divideItems` to separate list 
@@ -241,13 +241,23 @@ The list item has received a lot of changes. In general the content is completel
 
 ## Message
 
+The `SBBMessage` consists of five parts, that can now all be complete custom Widgets: title, subtitle, error, illustration and action.
+Typically, a `SBBIllustration` with a fitting constructor is used for the `illustration` parameter.
+
 ### Constructor arguments
 * Replace required `title` with `titleText` (or use `title` for custom widgets)
 * Replace required `description` with `subtitleText` (or use `subtitle` for custom widgets)
 * Replace `messageCode` with `errorText` (or use `error` for custom widgets)
 * Replace `customIllustration` with `illustration` parameter (accepts `SBBIllustration` or any custom widget)
-* Replace `illustration: MessageIllustration.Display` with `illustration: SBBIllustration.display()` (use SBBIllustration widget or custom)
+* Replace `illustration: MessageIllustration.Display` with `illustration: SBBIllustration.display()`
 * Replace `onInteraction` callback and `interactionIcon` with an `action` widget parameter (typically `SBBTertiaryButton`)
+
+### .error constructor
+
+The `SBBMessage.error` constructor has been removed:
+* Set `SBBIllustration.display()` as `illustration` parameter
+* Set your previous `messageCode` to `errorText`
+* Add a `SBBTertiaryButton` with a fitting `iconData` (e.g. `SBBIcons.arrows_circle_small`) as `action`
 
 ### Theming & Styling
 * customize the theme of all `SBBMessage` with `SBBMessageThemeData` as input to `SBBTheme`
@@ -318,6 +328,59 @@ showSBBPopup(
 * customize the theme of all `SBBPopup` with `SBBPopupThemeData` as input to `SBBTheme`
 * access the theme using `Theme.of(context).sbbPopupTheme`
 * customize an individual popup by setting its `style` parameter
+
+
+## Promotion Box
+
+The `SBBPromotionBox` API has been redesigned for more flexibility and better theming support.
+In general, a custom badge can now be added to the `SBBPromotionBox`. For standard pill like look with a halo,
+check out `SBBPromotionBoxBadge`.
+
+### Constructor
+
+The previous default and `custom` constructors have been replaced by a single `const` constructor:
+
+* replace `title` (String) with `titleText`, or use `title` for a custom widget
+* replace `subtitle` (String) with `subtitleText`, or use `subtitle` for a custom widget
+* `badgeText` is now optional (provide either `badgeText` or a custom `badge` widget)
+* replace `onClose` with `onDismissed`
+* replace `onControllerCreated` callback with a `controller` parameter (`SBBPromotionBoxController`)
+  * `SBBPromotionBoxController` replaces `ClosableBoxController`
+* removed `leading` parameter — use the above layout customization options instead
+* `badgeStyle` (`SBBPromotionBoxBadgeStyle`) replaces the deprecated individual badge color parameters
+
+### Example migration
+
+Old implementation:
+```dart
+SBBPromotionBox(
+  title: 'My Title',
+  subtitle: 'My subtitle',
+  badgeText: 'New',
+  onClose: () => print('closed'),
+  onControllerCreated: (controller) => _controller = controller,
+  onTap: () => print('tapped'),
+)
+```
+
+New implementation:
+```dart
+SBBPromotionBox(
+  titleText: 'My Title',
+  subtitleText: 'My subtitle',
+  badgeText: 'New',
+  onDismissed: () => print('closed'),
+  controller: _controller,
+  onTap: () => print('tapped'),
+)
+```
+
+### Theming & Styling
+
+* customize the theme of all `SBBPromotionBox` with `SBBPromotionBoxThemeData` as input to `SBBTheme`
+* access the theme using `Theme.of(context).sbbPromotionBoxTheme`
+* customize an individual promotion box by setting its `style` parameter in the constructor
+* customize the badge style via the `badgeStyle` parameter using `SBBPromotionBoxBadgeStyle`
 
 
 ## Radio

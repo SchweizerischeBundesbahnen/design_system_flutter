@@ -210,10 +210,14 @@ class SBBSwitchListItemBoxed extends SBBSwitchListItem {
     required super.onChanged,
     super.switchStyle,
     super.switchSemanticLabel,
+    this.margin,
   });
+
+  /// The margin of the content box surrounding the [SBBSwitchListItem].
+  final EdgeInsetsGeometry? margin;
 
   @override
   Widget build(BuildContext context) {
-    return SBBContentBox(child: super.build(context));
+    return SBBContentBox(margin: margin, child: super.build(context));
   }
 }

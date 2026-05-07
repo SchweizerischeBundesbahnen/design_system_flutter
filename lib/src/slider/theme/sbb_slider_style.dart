@@ -49,17 +49,17 @@ class SBBSliderStyle {
   /// The height of the slider track in logical pixels.
   ///
   /// Default value is 4.0 logical pixels.
-  static double get trackHeight => 4.0;
+  static const double trackHeight = 4.0;
 
   /// The radius of the slider thumb in logical pixels.
   ///
   /// Default value is 11.0 logical pixels.
-  static double get thumbRadius => 11.0;
+  static const double thumbRadius = 11.0;
 
   /// The width of the border around the slider thumb in logical pixels.
   ///
   /// Default value is 2.0 logical pixels.
-  static double get thumbBorderWidth => 2.0;
+  static const double thumbBorderWidth = 2.0;
 
   SBBSliderStyle copyWith({
     WidgetStateProperty<Color?>? trackColor,
