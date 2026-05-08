@@ -2,9 +2,14 @@
 
 V5 introduces a lot of breaking changes to allow for a more flexible and modern Design System.
 
+> **️⚠ Disclaimer for apps in maintenance**
+> 
+> Migration can be time-consuming – expect around 1–2 person-days, depending on the size of the app. If your app is only being maintained 
+> or is due to be decommissioned soon, migration may not be necessary. Version 4 meets all the requirements of the Design System.
+
 ## SBBTheme
 
-* added `themeContext` to get theming for off-brand or safety-relevant apps. Example usage: `SBBTheme.light(context: .offBrand)`
+* added `themeContext` to get theming for off-brand or safety-relevant apps. Example usage: `SBBTheme.light(themeContext: .offBrand)`
 * removed `brightness` from `createTheme` and `raw`. Use `SBBBaseStyle.brightness`
 * removed unused field `boldFont`
 * moved `SBBTextTheme` to `SBBBaseStyle`. Can still be accessed with helper method `Theme.of(context).sbbTextTheme`
@@ -142,8 +147,9 @@ SBBDecoratedText(
 
 * replace `SelectMenuItem<T>` with `SBBDropdownItem<T>`
 * replace `label` with `labelText` (within `triggerDecoration`)
-* replace `hint` with `hintText` (within `triggerDecoration`)
-* replace `title` with `titleText` (within `triggerDecoration`)
+* replace `hint` with `placeholderText` (within `triggerDecoration`)
+* replace `title` with `titleText` (within `sheetConfig`)
+* replace `value` with `selectedItem`
 * `isLastElement` was removed — use `SBBDivider.divideItems` to separate items with a divider
 * `allowMultilineLabel` was removed (use `triggerMaxLines` / `triggerMinLines` / `triggerExpands` instead)
 * `confirmButtonLabel` is replaced by `confirmButtonLabelText`
@@ -613,30 +619,30 @@ SBBTextInput(
 
 #### Property Mapping
 
-| SBBTextField                 | SBBTextInput                                                  |
-|------------------------------|---------------------------------------------------------------|
-| `controller`                 | `controller`                                                  |
-| `enabled`                    | `enabled`                                                     |
-| `labelText`                  | `decoration.labelText`                                        |
-| `hintText`                   | `decoration.placeholderText`                                  |
-| `errorText`                  | `decoration.errorText`                                        |
-| `icon`                       | `decoration.leadingIconData`                                  |
-| `suffixIcon`                 | `decoration.trailing` or `decoration.trailingIconData`        |
-| `obscureText`                | `obscureText`                                                 |
-| `obscuringCharacter`         | `obscuringCharacter`                                          |
-| `maxLines`                   | `maxLines`                                                    |
-| `minLines`                   | `minLines`                                                    |
-| `keyboardType`               | `keyboardType`                                                |
-| `textInputAction`            | `textInputAction`                                             |
-| `inputFormatters`            | `inputFormatters`                                             |
-| `onChanged`                  | `onChanged`                                                   |
-| `onSubmitted`                | `onSubmitted`                                                 |
-| `onTap`                      | `onTap`                                                       |
-| `onTapAlwaysCalled`          | `onTapAlwaysCalled`                                           |
-| `focusNode`                  | `focusNode`                                                   |
-| `autofocus`                  | `autofocus`                                                   |
-| `textCapitalization`         | `textCapitalization`                                          |
-| `enableInteractiveSelection` | `enableInteractiveSelection`                                  |
+| SBBTextField                 | SBBTextInput                                             |
+|------------------------------|----------------------------------------------------------|
+| `controller`                 | `controller`                                             |
+| `enabled`                    | `enabled`                                                |
+| `labelText`                  | `decoration.labelText`                                   |
+| `hintText`                   | `decoration.placeholderText`                             |
+| `errorText`                  | `decoration.errorText`                                   |
+| `icon`                       | `decoration.leadingIconData`                             |
+| `suffixIcon`                 | `decoration.trailing` or `decoration.trailingIconData`   |
+| `obscureText`                | `obscureText`                                            |
+| `obscuringCharacter`         | `obscuringCharacter`                                     |
+| `maxLines`                   | `maxLines`                                               |
+| `minLines`                   | `minLines`                                               |
+| `keyboardType`               | `keyboardType`                                           |
+| `textInputAction`            | `textInputAction`                                        |
+| `inputFormatters`            | `inputFormatters`                                        |
+| `onChanged`                  | `onChanged`                                              |
+| `onSubmitted`                | `onSubmitted`                                            |
+| `onTap`                      | `onTap`                                                  |
+| `onTapAlwaysCalled`          | `onTapAlwaysCalled`                                      |
+| `focusNode`                  | `focusNode`                                              |
+| `autofocus`                  | `autofocus`                                              |
+| `textCapitalization`         | `textCapitalization`                                     |
+| `enableInteractiveSelection` | `enableInteractiveSelection`                             |
 | `isLastElement`              | *(removed)* - use `SBBDivider.divideItems()` if in lists |
 
 #### Theming
@@ -763,12 +769,12 @@ SBBTextInputFormField(
 
 #### Key Changes
 
-| SBBTextFormField | SBBTextInputFormField |
-|------------------|----------------------|
-| `labelText` | `decoration.labelText` |
-| `hintText` | `decoration.placeholderText` |
-| `icon` | `decoration.leadingIconData` |
-| `suffixIcon` | `decoration.trailing` or `decoration.trailingIconData` |
+| SBBTextFormField | SBBTextInputFormField                                  |
+|------------------|--------------------------------------------------------|
+| `labelText`      | `decoration.labelText`                                 |
+| `hintText`       | `decoration.placeholderText`                           |
+| `icon`           | `decoration.leadingIconData`                           |
+| `suffixIcon`     | `decoration.trailing` or `decoration.trailingIconData` |
 
 
 ## TextStyles
