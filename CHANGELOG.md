@@ -11,7 +11,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ### Changed
 
-- (auto): updated icon lib to version 1.8.24
+- (auto): updated icon lib to version 1.8.25
 
 ## [4.12.0] - 2026-04-28
 
