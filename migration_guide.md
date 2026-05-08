@@ -2,7 +2,7 @@
 
 V5 introduces a lot of breaking changes to allow for a more flexible and modern Design System.
 
-> **️⚠ Disclaimer for apps in maintenance**
+> **⚠ Disclaimer for apps in maintenance**
 > 
 > Migration can be time-consuming – expect around 1–2 person-days, depending on the size of the app. If your app is only being maintained 
 > or is due to be decommissioned soon, migration may not be necessary. Version 4 meets all the requirements of the Design System.
