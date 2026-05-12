@@ -32,8 +32,6 @@ import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 ///
 /// * [value]: The static text to display (cannot be edited)
 /// * [onTap]: Called when the widget is tapped. Provides visual feedback via InkWell
-/// * [enabled]: Controls interactivity. When false, taps are ignored and disabled
-///   styling is applied
 /// * [decoration]: Customizes the decoration surrounding the value, including icons,
 ///   labels, and error states
 /// * [maxLines], [minLines], [expands]: Control text layout similar to [SBBTextInput]
@@ -107,8 +105,7 @@ class SBBDecoratedText extends StatefulWidget {
 
   /// Called when the widget is tapped.
   ///
-  /// The tap triggers [InkWell] visual feedback (ripple/highlight). This callback
-  /// is only invoked if [enabled] is true.
+  /// The tap triggers [InkWell] visual feedback (ripple/highlight).
   final GestureTapCallback? onTap;
 
   /// Customizes the visual appearance of the decorated text.
