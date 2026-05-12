@@ -7,14 +7,18 @@ V5 introduces a lot of breaking changes to allow for a more flexible and modern 
 > Migration can be time-consuming – expect around 1–2 person-days, depending on the size of the app. If your app is only being maintained 
 > or is due to be decommissioned soon, migration may not be necessary. Version 4 meets all the requirements of the Design System.
 
-## SBBTheme
+## Theming
+The component theming has been overhauled from using the old styles (ex. `PromotionBoxStyle`) as ThemeExtensions to ThemeData classes (ex. `SBBPromotionBoxThemeData`).
+This aligns the DSM theming style with the Flutter approach. Access them using the extension methods on `ThemeData` with `Theme.of(context).sbb[Component]Theme`.
+
+### SBBTheme
 
 * added `themeContext` to get theming for off-brand or safety-relevant apps. Example usage: `SBBTheme.light(themeContext: .offBrand)`
 * removed `brightness` from `createTheme` and `raw`. Use `SBBBaseStyle.brightness`
 * removed unused field `boldFont`
 * moved `SBBTextTheme` to `SBBBaseStyle`. Can still be accessed with helper method `Theme.of(context).sbbTextTheme`
 
-## SBBBaseStyle
+### SBBBaseStyle
 
 * removed `createTextTheme`, use `SBBTextTheme.toTextTheme` instead
 * removed `SBBBaseStyle.of(context)`, use `Theme.of(context).sbbBaseStyle` instead
@@ -26,7 +30,7 @@ V5 introduces a lot of breaking changes to allow for a more flexible and modern 
 * moved `defaultTextStyle` to `SBBTextTheme`
 * added `textTheme`, `iconTheme`, `dividerTheme` and `textSelectionTheme`
 
-### SBBColorScheme
+#### SBBColorScheme
 SBBColorScheme is introduced to define the base color scheme and is used by SBBBaseStyle.
 
 * moved colors from `SBBBaseStyle` to `SBBColorScheme` without suffix color.
@@ -937,6 +941,8 @@ SBBSliverHeaderBox(
 
 ### Flap
 
+* replace `.custom(child: ...)` usage with the regular constructor and pass custom content through `leading`,
+  `label` and `trailing`
 * replace `title` with `labelText` (or use `label` for a custom widget)
 * replace `leadingIcon` with `leadingIconData` (or use `leading` for a custom widget)
 * replace `trailingIcon` with `trailingIconData` (or use `trailing` for a custom widget)
