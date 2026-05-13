@@ -57,7 +57,7 @@ Each component has a `ThemeExtension` which is added to `ThemeData.extensions`. 
 helper methods like `Theme.of(context).sbbSwitchTheme`.
 
 To customize a component, you can override the component's `ThemeExtension` for the `SBBTheme`. If you only want to change the appearance 
-of a single component, use the provided `style` attributes. Only non-null properties or non-null resolved [WidgetStateProperty] values 
+of a single component, use the provided `style` attributes. Only non-null properties or non-null resolved `WidgetStateProperty` values 
 override the default values.
 
 ```Dart
