@@ -19,10 +19,8 @@ class DefaultSBBHeaderBoxThemeData extends SBBHeaderBoxThemeData {
         ),
       );
 
-  /// Default sbb header box theme for SBB apps.
-  ///
-  /// This is used to calculate the preferred size without the build context.
-  static final sbb = DefaultSBBHeaderBoxThemeData(
+  /// Fallback sbb header box theme used to calculate the preferred size without a build context.
+  static final fallback = DefaultSBBHeaderBoxThemeData(
     baseStyle: SBBBaseStyle.$default(brightness: Brightness.light, themeContext: .sbb),
   );
 }

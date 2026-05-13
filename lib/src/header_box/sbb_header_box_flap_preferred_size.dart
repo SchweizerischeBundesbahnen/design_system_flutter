@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/header_box/theme/default_sbb_header_box_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/header_box/utils.dart';
 
 /// The default flap content for a SBB Header-Box with a preferred size.
 ///
@@ -100,14 +101,14 @@ class SBBHeaderBoxFlapPreferredSize extends StatelessWidget implements Preferred
 
   @override
   Size get preferredSize {
-    final style = DefaultSBBHeaderBoxThemeData.sbb.flapStyle!
+    final style = DefaultSBBHeaderBoxThemeData.fallback.flapStyle!
         .merge(this.style)
         .copyWith(
           padding: padding,
         );
     final iconSize = IconThemeData.fallback().size!;
 
-    final labelHeight = _calculateHeight(label, labelText, style.labelTextStyle, textScaler);
+    final labelHeight = calculateHeightWithTextFallback(label, labelText, style.labelTextStyle, textScaler);
     final leadingHeight = leading?.preferredSize.height ?? (leadingIconData != null ? iconSize : 0.0);
     final trailingHeight = trailing?.preferredSize.height ?? (trailingIconData != null ? iconSize : 0.0);
 
@@ -115,16 +116,4 @@ class SBBHeaderBoxFlapPreferredSize extends StatelessWidget implements Preferred
 
     return Size.fromHeight(baseHeight + style.padding!.vertical);
   }
-}
-
-double _calculateHeight<T>(PreferredSizeWidget? lhs, T rhs, TextStyle? textStyle, TextScaler textScaler) {
-  if (lhs != null) {
-    return lhs.preferredSize.height;
-  }
-
-  if (rhs != null && textStyle != null) {
-    return textStyle.height! * textScaler.scale(textStyle.fontSize!);
-  }
-
-  return 0.0;
 }

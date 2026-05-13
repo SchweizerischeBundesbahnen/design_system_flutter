@@ -195,6 +195,8 @@ class SBBHeaderBoxPreferredSize extends StatelessWidget implements PreferredSize
       return null;
     }
 
+    // Since trailing is not a PreferredSizeWidget, we have to make sure that it does not become larger
+    // than the widgets that actually contribute to the height.
     return ConstrainedBox(
       constraints: BoxConstraints(maxHeight: _baseHeight(_resolveStyle(context))),
       child: trailing,
@@ -219,7 +221,7 @@ class SBBHeaderBoxPreferredSize extends StatelessWidget implements PreferredSize
   }
 
   Size _computePreferredSize() {
-    final theme = DefaultSBBHeaderBoxThemeData.sbb;
+    final theme = DefaultSBBHeaderBoxThemeData.fallback;
     final style = theme.style!.merge(this.style).copyWith(padding: padding, margin: margin);
 
     // Base height

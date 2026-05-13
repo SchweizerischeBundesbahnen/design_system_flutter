@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/header_box/utils.dart';
 
 class HeaderBoxContent extends StatelessWidget {
   const HeaderBoxContent({
@@ -135,9 +136,10 @@ class HeaderBoxContent extends StatelessWidget {
     }
 
     final iconSize = IconThemeData.fallback().size!;
-    final titleHeight = _calculateHeight(title, titleText, style.titleTextStyle, textScaler) + _textPadding * 2;
+    final titleHeight =
+        calculateHeightWithTextFallback(title, titleText, style.titleTextStyle, textScaler) + _textPadding * 2;
     final leadingHeight = leading?.preferredSize.height ?? (leadingIconData != null ? iconSize : 0.0);
-    final subtitleHeight = _calculateHeight(subtitle, subtitleText, style.subtitleTextStyle, textScaler);
+    final subtitleHeight = calculateHeightWithTextFallback(subtitle, subtitleText, style.subtitleTextStyle, textScaler);
 
     final titleRowHeight = math.max(titleHeight, leadingHeight);
 
@@ -264,16 +266,4 @@ Widget? _addDefaultAncestorWithResolved({
     ),
   );
   return child;
-}
-
-double _calculateHeight<T>(PreferredSizeWidget? lhs, T rhs, TextStyle? textStyle, TextScaler textScaler) {
-  if (lhs != null) {
-    return lhs.preferredSize.height;
-  }
-
-  if (rhs != null && textStyle != null) {
-    return textStyle.height! * textScaler.scale(textStyle.fontSize!);
-  }
-
-  return 0.0;
 }
