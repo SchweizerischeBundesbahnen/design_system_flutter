@@ -116,37 +116,6 @@ Use the `foregroundBuilder` of the `SBBButtonStyle` as a replacement
 * customize a chip by setting its `style` parameter in the constructor
 
 
-## Decorated Text (before SBBInputTrigger)
-
-### Basic Migration Example
-
-**Before (SBBInputTrigger):**
-```dart
-SBBInputTrigger(
-  value: selectedDate,
-  labelText: 'Date',
-  hintText: 'Select a date',
-  prefixIcon: Icons.calendar,
-  onPressed: () => _showDatePicker(),
-  enabled: true,
-)
-```
-
-**After (SBBDecoratedText):**
-```dart
-SBBDecoratedText(
-  value: selectedDate,
-  onTap: () => _showDatePicker(),
-  enabled: true,
-  decoration: SBBInputDecoration(
-    labelText: 'Date',
-    placeholderText: 'Select a date',
-    leadingIconData: Icons.calendar,
-  ),
-)
-```
-
-
 ## Dropdown (previously SBBSelect) / MultiDropdown (previously SBBMultiSelect)
 
 * replace `SelectMenuItem<T>` with `SBBDropdownItem<T>`
@@ -220,6 +189,8 @@ The list item has received a lot of changes. In general the content is completel
   to adjust the `padding`, since the `SBBTertiaryButtonSmall` has an inherent padding to the right
 * `isLastElement` was removed, use the static method `SBBDivider.divideItems` to separate list 
   items with a SBB themed divider (this is analogous to the Material implementation)
+* removed `enabled`. List item will be disabled when [onTap] and [onLongPress] are null. If component should be enabled without touch feedback, 
+  set [onTap] and wrap the list item in a [IgnorePointer] widget.
 
 ### Theming & Styling
 * customize the theme of the `SBBListItem` with `SBBListThemeData` as input to `SBBTheme`
@@ -727,6 +698,38 @@ A cross small will be displayed instead of the trailingIconData when focused and
 - [ ] Test multiline mode if used (icons should be top-aligned now)
 - [ ] Consider using `readOnly` instead of just `enabled` for readonly fields with interactive trailing widgets
 
+## Decorated Text (before SBBInputTrigger)
+
+* Use `SBBInputDecoration` to customize the widget. Check out migration guide for Text Input above.
+* removed `onSuffixPressed`. Use a tappable widget like `SBBTertiaryButtonSmall` for `decoration.trailing`.
+* removed `enabled`. Will be disabled when [onTap] is null.
+
+### Basic Migration Example
+
+**Before (SBBInputTrigger):**
+```dart
+SBBInputTrigger(
+  value: selectedDate,
+  labelText: 'Date',
+  hintText: 'Select a date',
+  prefixIcon: Icons.calendar,
+  onPressed: () => _showDatePicker(),
+  enabled: true,
+)
+```
+
+**After (SBBDecoratedText):**
+```dart
+SBBDecoratedText(
+  value: selectedDate,
+  onTap: () => _showDatePicker(),
+  decoration: SBBInputDecoration(
+    labelText: 'Date',
+    placeholderText: 'Select a date',
+    leadingIconData: Icons.calendar,
+  ),
+)
+```
 
 ## Text Input Form Field
 

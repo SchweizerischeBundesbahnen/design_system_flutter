@@ -25,7 +25,9 @@ import 'package:sbb_design_system_mobile/src/shared/divider/divider_painter.dart
 ///
 /// When [links] are provided, they are displayed below the list item with top dividers.
 ///
-/// The list item is disabled when both [onTap] and [onLongPress] are null or [enabled] is false.
+/// The list item is disabled when both [onTap] and [onLongPress] are null.
+/// If you want a SBBListItem that is enabled without touch feedback, set [onTap] and wrap the
+/// list item in a [IgnorePointer] widget.
 ///
 /// Use [SBBDivider.divideItems] to automatically add dividers between multiple list items.
 ///
@@ -196,8 +198,6 @@ class SBBListItem extends StatefulWidget {
   /// Called when the list item is tapped.
   ///
   /// The list item is disabled when both this and [onLongPress] are null.
-  ///
-  /// Ignored when [enabled] is false.
   /// {@endtemplate}
   final GestureTapCallback? onTap;
 
@@ -205,8 +205,6 @@ class SBBListItem extends StatefulWidget {
   /// Called when the list item is long-pressed.
   ///
   /// The list item is disabled when both this and [onTap] are null.
-  ///
-  /// Ignored when [enabled] is false.
   /// {@endtemplate}
   final GestureLongPressCallback? onLongPress;
 
