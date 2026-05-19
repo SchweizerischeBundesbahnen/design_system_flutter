@@ -11,30 +11,54 @@ class HeaderPage extends StatelessWidget {
       body: Column(
         children: [
           SBBListHeader('Default'),
-          _toolbarHeightSized(SBBHeader(titleText: 'No leading Widget', automaticallyImplyLeading: false)),
-          SizedBox(height: SBBSpacing.medium),
-          _toolbarHeightSized(SBBHeader(titleText: 'Menu', leading: SBBHeaderLeadingMenuButton())),
-          SizedBox(height: SBBSpacing.medium),
-          _toolbarHeightSized(SBBHeader(titleText: 'Back', leading: SBBHeaderLeadingBackButton())),
-          SizedBox(height: SBBSpacing.medium),
-          _toolbarHeightSized(SBBHeader(titleText: 'Close', leading: SBBHeaderLeadingCloseButton())),
+          Column(
+            spacing: SBBSpacing.medium,
+            children: [
+              _toolbarHeightSized(SBBHeader(titleText: 'No leading Widget', automaticallyImplyLeading: false)),
+              _toolbarHeightSized(SBBHeader(titleText: 'Menu', leading: SBBHeaderLeadingMenuButton())),
+              _toolbarHeightSized(SBBHeader(titleText: 'Back', leading: SBBHeaderLeadingBackButton())),
+              _toolbarHeightSized(SBBHeader(titleText: 'Close', leading: SBBHeaderLeadingCloseButton())),
+            ],
+          ),
+
           SBBListHeader('Small'),
-          SBBHeaderSmall(titleText: 'No leading Widget', automaticallyImplyLeading: false),
-          SizedBox(height: SBBSpacing.medium),
-          SBBHeaderSmall(titleText: 'Menu', leading: SBBHeaderLeadingMenuButton()),
-          SizedBox(height: SBBSpacing.medium),
-          SBBHeaderSmall(titleText: 'Back', leading: SBBHeaderLeadingBackButton()),
-          SizedBox(height: SBBSpacing.medium),
-          SBBHeaderSmall(titleText: 'Close', leading: SBBHeaderLeadingCloseButton()),
+          Column(
+            spacing: SBBSpacing.medium,
+            children: [
+              SBBHeaderSmall(titleText: 'No leading Widget', automaticallyImplyLeading: false),
+              SBBHeaderSmall(titleText: 'Menu', leading: SBBHeaderLeadingMenuButton()),
+              SBBHeaderSmall(titleText: 'Back', leading: SBBHeaderLeadingBackButton()),
+              SBBHeaderSmall(titleText: 'Close', leading: SBBHeaderLeadingCloseButton()),
+              _toolbarHeightSized(
+                SBBHeaderSmall(
+                  titleText: 'With a Header-Box',
+                  automaticallyImplyLeading: false,
+                  bottom: SBBHeaderBoxPreferredSize(
+                    titleText: 'This is a Header-Box',
+                    subtitleText: 'With a subtitle',
+                    trailing: SBBTertiaryButton(
+                      onPressed: () {},
+                      iconData: SBBIcons.child_adult_small,
+                    ),
+                    textScaler: MediaQuery.textScalerOf(context),
+                    flap: SBBHeaderBoxFlapPreferredSize(
+                      labelText: 'And a flap.',
+                      textScaler: MediaQuery.textScalerOf(context),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
   }
 
-  /// needed as [SBBHeader] set's a bottom widget as spacer which leads to unconstrainted height.
+  /// needed as [SBBHeader] sets a bottom widget as spacer which leads to unconstrainted height.
   Widget _toolbarHeightSized(SBBHeader header) {
     return SizedBox(
-      height: SBBHeaderStyle.toolbarHeight,
+      height: header.preferredSize.height,
       child: header,
     );
   }

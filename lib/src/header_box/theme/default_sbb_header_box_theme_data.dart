@@ -18,4 +18,9 @@ class DefaultSBBHeaderBoxThemeData extends SBBHeaderBoxThemeData {
           padding: EdgeInsets.fromLTRB(SBBSpacing.medium, SBBSpacing.xSmall, SBBSpacing.medium, SBBSpacing.xSmall),
         ),
       );
+
+  /// Fallback sbb header box theme used to calculate the preferred size without a build context.
+  static final fallback = DefaultSBBHeaderBoxThemeData(
+    baseStyle: SBBBaseStyle.$default(brightness: Brightness.light, themeContext: .sbb),
+  );
 }

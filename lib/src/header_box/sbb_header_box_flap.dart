@@ -6,12 +6,14 @@ import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 ///
 /// Use this widget in conjunction with the [SBBHeaderBox] or any of its variants.
 ///
+/// {@template sbb_design_system.header_box_flap_description}
 /// Provide either [label] for custom content or [labelText] for text-only content with
 /// standard styling. These parameters are mutually exclusive.
 ///
 /// Leading and trailing icons can be provided either as custom [Widget]s via [leading] and
 /// [trailing], or as [IconData] via [leadingIconData] and [trailingIconData]. These parameter
 /// pairs are mutually exclusive.
+/// {@endtemplate}
 ///
 /// ## Customization
 ///
@@ -47,6 +49,7 @@ class SBBHeaderBoxFlap extends StatelessWidget {
        assert(leading == null || leadingIconData == null, 'Only one of leading or leadingIconData can be set'),
        assert(trailing == null || trailingIconData == null, 'Only one of trailing or trailingIconData can be set');
 
+  /// {@template sbb_design_system.header_box_flap.label}
   /// A custom widget displayed as the flap's label.
   ///
   /// For simple text labels, use [labelText] instead.
@@ -54,16 +57,20 @@ class SBBHeaderBoxFlap extends StatelessWidget {
   /// The label is vertically centered with [leading] or [leadingIconData].
   ///
   /// Cannot be used together with [labelText].
+  /// {@endtemplate}
   final Widget? label;
 
+  /// {@template sbb_design_system.header_box_flap.labelText}
   /// Text string to display as the flap's label using standard styling.
   ///
   /// The text is clamped to a single line with ellipsis overflow.
   /// The label is vertically centered with [leading] or [leadingIconData].
   ///
   /// Cannot be used together with [label].
+  /// {@endtemplate}
   final String? labelText;
 
+  /// {@template sbb_design_system.header_box_flap.leading}
   /// A custom widget displayed as the flap's leading content.
   ///
   /// For simple icons, use [leadingIconData] instead.
@@ -71,34 +78,45 @@ class SBBHeaderBoxFlap extends StatelessWidget {
   /// The Widget is vertically centered with [labelText] or [label].
   ///
   /// Cannot be used together with [leadingIconData].
+  /// {@endtemplate}
   final Widget? leading;
 
+  /// {@template sbb_design_system.header_box_flap.leadingIconData}
   /// Icon data for the leading icon.
   ///
   /// The icon is vertically centered with [labelText] or [label].
   ///
   /// Cannot be used together with [leading].
+  /// {@endtemplate}
   final IconData? leadingIconData;
 
+  /// {@template sbb_design_system.header_box_flap.trailing}
   /// A custom widget displayed as the flap's trailing content.
   ///
   /// For simple icons, use [trailingIconData] instead.
   ///
   /// Cannot be used together with [trailingIconData].
+  /// {@endtemplate}
   final Widget? trailing;
 
+  /// {@template sbb_design_system.header_box_flap.trailingIconData}
   /// Icon data for the trailing icon.
   ///
   /// Cannot be used together with [trailing].
+  /// {@endtemplate}
   final IconData? trailingIconData;
 
+  /// {@template sbb_design_system.header_box_flap.padding}
   /// Padding around the flap's content.
+  /// {@endtemplate}
   final EdgeInsetsGeometry? padding;
 
+  /// {@template sbb_design_system.header_box_flap.style}
   /// Customizes this flap's appearance.
   ///
   /// Non-null properties of this style override the corresponding
   /// properties in [SBBHeaderBoxThemeData.flapStyle] of the theme found in [context].
+  /// {@endtemplate}
   final SBBHeaderBoxFlapStyle? style;
 
   @override
