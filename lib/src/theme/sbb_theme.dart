@@ -420,15 +420,22 @@ class SBBTheme {
     required SBBToastThemeData toastTheme,
   }) {
     return ThemeData(
-      colorScheme: ColorScheme.fromSwatch(
-        primarySwatch: baseStyle.colorScheme.primarySwatch,
-        accentColor: baseStyle.colorScheme.primary,
-        cardColor: baseStyle.colorScheme.backgroundBase,
-        backgroundColor: baseStyle.colorScheme.backgroundBase,
-        errorColor: baseStyle.colorScheme.error,
-        brightness: baseStyle.brightness,
-      ).copyWith(surfaceTint: SBBColors.transparent),
-      scaffoldBackgroundColor: baseStyle.colorScheme.backgroundBase,
+      colorScheme:
+          ColorScheme.fromSwatch(
+            primarySwatch: baseStyle.colorScheme.primarySwatch,
+            accentColor: baseStyle.colorScheme.primary,
+            cardColor: baseStyle.colorScheme.backgroundBase,
+            backgroundColor: baseStyle.colorScheme.backgroundBase,
+            errorColor: baseStyle.colorScheme.error,
+            brightness: baseStyle.brightness,
+          ).copyWith(
+            surfaceTint: SBBColors.transparent,
+            surfaceContainerLowest: baseStyle.colorScheme.backgroundContent,
+            surfaceContainerLow: baseStyle.colorScheme.backgroundContent,
+            surfaceContainer: baseStyle.colorScheme.backgroundContent,
+            surfaceContainerHigh: baseStyle.colorScheme.backgroundContent,
+            surfaceContainerHighest: baseStyle.colorScheme.backgroundContent,
+          ),
       iconTheme: baseStyle.iconTheme,
       dividerColor: baseStyle.dividerTheme?.color,
       dividerTheme: baseStyle.dividerTheme,
