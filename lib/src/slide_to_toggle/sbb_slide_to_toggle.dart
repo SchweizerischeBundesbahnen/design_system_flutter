@@ -21,16 +21,8 @@ class SBBSlideToToggle extends StatefulWidget {
     super.key,
     required this.onActivate,
     required this.onDeactivate,
-    this.toggleOffContent,
-    this.toggleOffIcon,
-    this.toggleOffLabelText,
-    this.toggleOnContent,
-    this.toggleOnIcon,
-    this.toggleOnLabelText,
-    this.offHelpText,
-    this.onHelpText,
-    this.offHelpWidget,
-    this.onHelpWidget,
+    required this.onToggleDecoration,
+    required this.offToggleDecoration,
     this.initialState = .off,
     this.enabled = true,
     this.threshold = 0.9,
@@ -45,19 +37,9 @@ class SBBSlideToToggle extends StatefulWidget {
 
   final bool enabled;
 
-  // TODO: group parameters?
-
-  final Widget? toggleOffContent; // TODO: naming
-  final IconData? toggleOffIcon;
-  final String? toggleOffLabelText;
-  final Widget? offHelpWidget;
-  final String? offHelpText;
-
-  final Widget? toggleOnContent; // TODO: naming
-  final IconData? toggleOnIcon;
-  final String? toggleOnLabelText;
-  final Widget? onHelpWidget;
-  final String? onHelpText;
+  // TODO: Add callback as well?
+  final SBBSlideToggleDecoration onToggleDecoration;
+  final SBBSlideToggleDecoration offToggleDecoration;
 
   // TODO:
   final double threshold;
@@ -153,6 +135,9 @@ class _SBBSlideToToggleState extends State<SBBSlideToToggle> with SingleTickerPr
     );
   }
 
+  SBBSlideToggleDecoration get _toggleDecoration =>
+      _state == .on ? widget.onToggleDecoration : widget.offToggleDecoration;
+
   double get _toggleSize => SBBSlideToToggleStyle.toggleSize;
 
   bool get _isInteractive => widget.enabled && !_loading;
@@ -192,7 +177,7 @@ class _SBBSlideToToggleState extends State<SBBSlideToToggle> with SingleTickerPr
   }
 
   Widget _resolveHelpWidget() {
-    final helpText = _state == .on ? widget.onHelpText : widget.offHelpText;
+    final helpText = _toggleDecoration.helpLabelText;
     if (helpText != null) {
       return Text(
         helpText,
@@ -200,8 +185,7 @@ class _SBBSlideToToggleState extends State<SBBSlideToToggle> with SingleTickerPr
       );
     }
 
-    final customWidget = _state == .on ? widget.onHelpWidget : widget.offHelpWidget;
-    return customWidget ?? SizedBox.shrink();
+    return _toggleDecoration.helpLabel ?? SizedBox.shrink();
   }
 
   Widget _toggle({
@@ -266,7 +250,7 @@ class _SBBSlideToToggleState extends State<SBBSlideToToggle> with SingleTickerPr
   }
 
   Widget _resolveToggleWidget() {
-    final labelText = _state == .on ? widget.toggleOnLabelText : widget.toggleOffLabelText;
+    final labelText = _toggleDecoration.toggleLabelText;
     if (labelText != null) {
       return Text(
         labelText,
@@ -276,7 +260,7 @@ class _SBBSlideToToggleState extends State<SBBSlideToToggle> with SingleTickerPr
       );
     }
 
-    final iconData = _state == .on ? widget.toggleOnIcon : widget.toggleOffIcon;
+    final iconData = _toggleDecoration.toggleIconData;
     if (iconData != null) {
       return Icon(
         iconData,
@@ -284,8 +268,7 @@ class _SBBSlideToToggleState extends State<SBBSlideToToggle> with SingleTickerPr
       );
     }
 
-    final customWidget = _state == .on ? widget.toggleOnContent : widget.toggleOffContent;
-    return customWidget ?? SizedBox.shrink();
+    return _toggleDecoration.toggleLabel ?? SizedBox.shrink();
   }
 
   Widget _loadingIndicator({Color? color}) {

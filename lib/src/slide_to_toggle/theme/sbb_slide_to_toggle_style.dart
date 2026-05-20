@@ -58,9 +58,6 @@ class SBBSlideToToggleStyle {
   /// TODO:
   final TextStyle? helpTextStyle;
 
-  /// TODO:
-  static const double border = 82.0;
-
   /// The thickness of the Slide-To-Toggle border.
   static const double borderWidth = 1.0;
 

@@ -42,36 +42,48 @@ class _SlideToTogglePageState extends State<SlideToTogglePage> {
                   enabled: _isEnabled,
                   onActivate: _simulateWork,
                   onDeactivate: _simulateWork,
-                  toggleOnLabelText: 'Stop',
-                  toggleOffLabelText: 'Start',
-                  offHelpText: 'Drag to the right to start',
-                  onHelpText: 'Drag to the left to stop',
-                ),
-                SBBSlideToToggle(
-                  enabled: _isEnabled,
-                  onActivate: _simulateWork,
-                  onDeactivate: _simulateWork,
-                  toggleOffIcon: SBBIcons.arrow_right_small,
-                  toggleOnIcon: SBBIcons.arrow_left_small,
-                  offHelpText: 'Drag to the right to start',
-                  onHelpText: 'Drag to the left to stop',
-                ),
-                SBBSlideToToggle(
-                  enabled: _isEnabled,
-                  onActivate: _simulateWork,
-                  onDeactivate: _simulateWork,
-                  toggleOnContent: Container(color: SBBColors.cloud, child: Text('Stop')),
-                  toggleOffContent: Container(color: SBBColors.cloud, child: Text('Start')),
-                  offHelpWidget: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(SBBIcons.unicorn_small),
-                      Text('Check this out'),
-                    ],
+                  onToggleDecoration: SBBSlideToggleDecoration(
+                    toggleLabelText: 'Stop',
+                    helpLabelText: 'Drag to the left to stop',
                   ),
-                  onHelpWidget: Container(
-                    color: SBBColors.green,
-                    child: Text('Test'),
+                  offToggleDecoration: SBBSlideToggleDecoration(
+                    toggleLabelText: 'Start',
+                    helpLabelText: 'Drag to the right to start',
+                  ),
+                ),
+                SBBSlideToToggle(
+                  enabled: _isEnabled,
+                  onActivate: _simulateWork,
+                  onDeactivate: _simulateWork,
+                  onToggleDecoration: SBBSlideToggleDecoration(
+                    toggleIconData: SBBIcons.arrow_left_small,
+                    helpLabelText: 'Drag to the left to stop',
+                  ),
+                  offToggleDecoration: SBBSlideToggleDecoration(
+                    toggleIconData: SBBIcons.arrow_right_small,
+                    helpLabelText: 'Drag to the right to start',
+                  ),
+                ),
+                SBBSlideToToggle(
+                  enabled: _isEnabled,
+                  onActivate: _simulateWork,
+                  onDeactivate: _simulateWork,
+                  onToggleDecoration: SBBSlideToggleDecoration(
+                    toggleLabel: Container(color: SBBColors.green, child: Text('Stop')),
+                    helpLabel: Container(
+                      color: SBBColors.green,
+                      child: Text('Test'),
+                    ),
+                  ),
+                  offToggleDecoration: SBBSlideToggleDecoration(
+                    toggleLabel: Container(color: SBBColors.green, child: Text('Start')),
+                    helpLabel: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(SBBIcons.unicorn_small),
+                        Text('Check this out'),
+                      ],
+                    ),
                   ),
                 ),
               ],
