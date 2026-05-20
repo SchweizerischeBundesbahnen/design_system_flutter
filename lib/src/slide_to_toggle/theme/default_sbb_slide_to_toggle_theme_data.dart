@@ -13,6 +13,10 @@ class DefaultSBBSlideToToggleThemeData extends SBBSlideToToggleThemeData {
             WidgetState.disabled: baseStyle.themeValue(SBBColors.graphite, SBBColors.iron),
             WidgetState.any: baseStyle.colorScheme.primary,
           }),
+          toggleOverlayColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
+            WidgetState.focused | WidgetState.pressed: baseStyle.colorScheme.primary125,
+            WidgetState.any: baseStyle.colorScheme.primary,
+          }),
           toggleForegroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.any: SBBColors.white,
           }),

@@ -21,6 +21,7 @@ class SBBSlideToToggleStyle {
     this.backgroundColor,
     this.toggleForegroundColor,
     this.toggleBackgroundColor,
+    this.toggleOverlayColor,
     this.loadingIndicatorColor,
     this.helpForegroundColor,
     this.toggleTextStyle,
@@ -41,6 +42,9 @@ class SBBSlideToToggleStyle {
 
   /// The background color of the toggle.
   final WidgetStateProperty<Color?>? toggleBackgroundColor;
+
+  /// The color used to indicate that the button is focused or pressed.
+  final WidgetStateProperty<Color?>? toggleOverlayColor;
 
   /// The color of the loading indicator inside of the toggle.
   final WidgetStateProperty<Color?>? loadingIndicatorColor;
@@ -72,6 +76,7 @@ class SBBSlideToToggleStyle {
     WidgetStateProperty<Color?>? borderColor,
     WidgetStateProperty<Color?>? backgroundColor,
     WidgetStateProperty<Color?>? toggleBackgroundColor,
+    WidgetStateProperty<Color?>? toggleOverlayColor,
     TextStyle? toggleTextStyle,
     TextStyle? helpTextStyle,
   }) {
@@ -79,6 +84,7 @@ class SBBSlideToToggleStyle {
       borderColor: borderColor ?? this.borderColor,
       backgroundColor: backgroundColor ?? this.backgroundColor,
       toggleBackgroundColor: toggleBackgroundColor ?? this.toggleBackgroundColor,
+      toggleOverlayColor: toggleOverlayColor ?? this.toggleOverlayColor,
       toggleTextStyle: toggleTextStyle ?? this.toggleTextStyle,
       helpTextStyle: helpTextStyle ?? this.helpTextStyle,
     );
@@ -91,6 +97,7 @@ class SBBSlideToToggleStyle {
       borderColor: other.borderColor,
       backgroundColor: other.backgroundColor,
       toggleBackgroundColor: other.toggleBackgroundColor,
+      toggleOverlayColor: other.toggleOverlayColor,
       toggleTextStyle: other.toggleTextStyle,
       helpTextStyle: other.helpTextStyle,
     );
@@ -108,6 +115,7 @@ class SBBSlideToToggleStyle {
         t,
         Color.lerp,
       ),
+      toggleOverlayColor: WidgetStateProperty.lerp<Color?>(a?.toggleOverlayColor, b?.toggleOverlayColor, t, Color.lerp),
       toggleTextStyle: TextStyle.lerp(a?.toggleTextStyle, b?.toggleTextStyle, t),
       helpTextStyle: TextStyle.lerp(a?.helpTextStyle, b?.helpTextStyle, t),
     );

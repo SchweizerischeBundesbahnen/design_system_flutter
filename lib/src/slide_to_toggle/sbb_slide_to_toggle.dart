@@ -77,6 +77,7 @@ class _SBBSlideToToggleState extends State<SBBSlideToToggle> with SingleTickerPr
 
   late SBBSlideToToggleState _state;
   bool _loading = false;
+  bool _isDragging = false;
   double _position = 0;
   double _trackSpan = 0;
 
@@ -210,6 +211,7 @@ class _SBBSlideToToggleState extends State<SBBSlideToToggle> with SingleTickerPr
     final states = _statesController.value;
     final loadingIndicatorColor = style.loadingIndicatorColor?.resolve(states);
     final toggleBackgroundColor = style.toggleBackgroundColor?.resolve(states);
+    final dragOverlayColor = style.toggleOverlayColor?.resolve({...states, WidgetState.pressed});
 
     return Positioned(
       left: toggleLeft,
@@ -218,22 +220,46 @@ class _SBBSlideToToggleState extends State<SBBSlideToToggle> with SingleTickerPr
         onHorizontalDragStart: _onDragStart,
         onHorizontalDragUpdate: _onDragUpdate,
         onHorizontalDragEnd: _onDragEnd,
-        child: Container(
-          width: _toggleSize,
-          height: _toggleSize,
-          decoration: BoxDecoration(
-            color: toggleBackgroundColor,
-            shape: .circle,
+        onHorizontalDragCancel: _onDragCancel,
+        child: Material(
+          color: toggleBackgroundColor,
+          shape: const CircleBorder(),
+          clipBehavior: Clip.antiAlias,
+          child: InkResponse(
+            onTap: _isInteractive ? () {} : null,
+            radius: _toggleSize / 2,
+            overlayColor: style.toggleOverlayColor,
+            child: SizedBox(
+              width: _toggleSize,
+              height: _toggleSize,
+              child: Stack(
+                fit: StackFit.expand,
+                children: [
+                  // background to keep pressed color while dragging
+                  AnimatedOpacity(
+                    duration: const Duration(milliseconds: 200),
+                    opacity: _isDragging ? 1 : 0,
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: dragOverlayColor,
+                      ),
+                    ),
+                  ),
+                  // toggle child
+                  Center(
+                    child: _loading
+                        ? _loadingIndicator(color: loadingIndicatorColor)
+                        : _addDefaultAncestorWithResolved(
+                            foregroundColor: style.toggleForegroundColor?.resolve(_statesController.value),
+                            textStyle: style.toggleTextStyle,
+                            child: _resolveToggleWidget(),
+                          ),
+                  ),
+                ],
+              ),
+            ),
           ),
-          alignment: .center,
-          child:
-              _loading // TODO: add animated switcher?
-              ? _loadingIndicator(color: loadingIndicatorColor)
-              : _addDefaultAncestorWithResolved(
-                  foregroundColor: style.toggleForegroundColor?.resolve(_statesController.value),
-                  textStyle: style.toggleTextStyle,
-                  child: _resolveToggleWidget(),
-                ),
         ),
       ),
     );
@@ -344,12 +370,16 @@ class _SBBSlideToToggleState extends State<SBBSlideToToggle> with SingleTickerPr
 
   void _setLoading(bool loading) {
     _statesController.update(.disabled, loading);
-    setState(() => _loading = loading);
+    setState(() {
+      _loading = loading;
+      if (loading) _isDragging = false;
+    });
   }
 
   void _onDragStart(DragStartDetails d) {
     if (!_isInteractive) return;
     _positionController.stop();
+    setState(() => _isDragging = true);
   }
 
   void _onDragUpdate(DragUpdateDetails d) {
@@ -363,6 +393,8 @@ class _SBBSlideToToggleState extends State<SBBSlideToToggle> with SingleTickerPr
   void _onDragEnd(DragEndDetails d) {
     if (!_isInteractive) return;
 
+    setState(() => _isDragging = false);
+
     if (_state == .off && _position >= widget.threshold) {
       _commitActivate();
     } else if (_position <= (1 - widget.threshold)) {
@@ -370,5 +402,10 @@ class _SBBSlideToToggleState extends State<SBBSlideToToggle> with SingleTickerPr
     } else {
       _animateBounceBack();
     }
+  }
+
+  void _onDragCancel() {
+    if (!_isDragging) return;
+    setState(() => _isDragging = false);
   }
 }
