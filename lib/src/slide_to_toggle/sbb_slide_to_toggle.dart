@@ -13,7 +13,7 @@ enum SBBSlideToToggleState { off, on }
 /// See also:
 ///
 /// * [Figma design specs](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=6666-1023)
-class SBBSlideToToggle extends StatefulWidget {
+class SBBSlideToToggle extends StatelessWidget {
   /// Creates an SBB Slide-To-Toggle.
   ///
   /// TODO: Docs, maybe asserts
@@ -48,10 +48,78 @@ class SBBSlideToToggle extends StatefulWidget {
   final SBBSlideToToggleState initialState;
 
   @override
-  State<SBBSlideToToggle> createState() => _SBBSlideToToggleState();
+  Widget build(BuildContext context) {
+    return _BaseSBBSlideToToggle(
+      onActivate: onActivate,
+      onDeactivate: onDeactivate,
+      onToggleDecoration: onToggleDecoration,
+      offToggleDecoration: offToggleDecoration,
+      initialState: initialState,
+      enabled: enabled,
+      threshold: threshold,
+      style: style,
+    );
+  }
 }
 
-class _SBBSlideToToggleState extends State<SBBSlideToToggle> with SingleTickerProviderStateMixin {
+/// The SBB Slide-To-Toggle with reduced toggle size.
+class SBBSlideToToggleSmall extends SBBSlideToToggle {
+  const SBBSlideToToggleSmall({
+    super.key,
+    required super.onActivate,
+    required super.onDeactivate,
+    required super.onToggleDecoration,
+    required super.offToggleDecoration,
+    super.initialState = .off,
+    super.enabled = true,
+    super.threshold = 0.9,
+    super.style,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return _BaseSBBSlideToToggle(
+      isSmall: true,
+      onActivate: onActivate,
+      onDeactivate: onDeactivate,
+      onToggleDecoration: onToggleDecoration,
+      offToggleDecoration: offToggleDecoration,
+      initialState: initialState,
+      enabled: enabled,
+      threshold: threshold,
+      style: style,
+    );
+  }
+}
+
+class _BaseSBBSlideToToggle extends StatefulWidget {
+  const _BaseSBBSlideToToggle({
+    required this.onActivate,
+    required this.onDeactivate,
+    required this.onToggleDecoration,
+    required this.offToggleDecoration,
+    this.initialState = .off,
+    this.enabled = true,
+    this.threshold = 0.9,
+    this.style,
+    this.isSmall = false,
+  }) : assert(threshold >= 0 && threshold <= 1, 'threshold must be between 0 and 1.');
+
+  final SBBSlideToToggleStyle? style;
+  final bool enabled;
+  final SBBSlideToggleDecoration onToggleDecoration;
+  final SBBSlideToggleDecoration offToggleDecoration;
+  final double threshold;
+  final Future<void> Function() onActivate;
+  final Future<void> Function() onDeactivate;
+  final SBBSlideToToggleState initialState;
+  final bool isSmall;
+
+  @override
+  State<_BaseSBBSlideToToggle> createState() => _SBBSlideToToggleState();
+}
+
+class _SBBSlideToToggleState extends State<_BaseSBBSlideToToggle> with SingleTickerProviderStateMixin {
   static const Duration _snapDuration = Duration(milliseconds: 200);
   static const Duration _bounceDuration = Duration(milliseconds: 320);
 
@@ -83,7 +151,7 @@ class _SBBSlideToToggleState extends State<SBBSlideToToggle> with SingleTickerPr
   }
 
   @override
-  void didUpdateWidget(SBBSlideToToggle oldWidget) {
+  void didUpdateWidget(_BaseSBBSlideToToggle oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.enabled != oldWidget.enabled) {
       _updateStatesController();
@@ -138,7 +206,7 @@ class _SBBSlideToToggleState extends State<SBBSlideToToggle> with SingleTickerPr
   SBBSlideToggleDecoration get _toggleDecoration =>
       _state == .on ? widget.onToggleDecoration : widget.offToggleDecoration;
 
-  double get _toggleSize => SBBSlideToToggleStyle.toggleSize;
+  double get _toggleSize => widget.isSmall ? SBBSlideToToggleStyle.toggleSizeSmall : SBBSlideToToggleStyle.toggleSize;
 
   bool get _isInteractive => widget.enabled && !_loading;
 
@@ -264,7 +332,7 @@ class _SBBSlideToToggleState extends State<SBBSlideToToggle> with SingleTickerPr
     if (iconData != null) {
       return Icon(
         iconData,
-        size: 36.0, // TODO: change to 24.0 for small variant
+        size: widget.isSmall ? 24.0 : 36.0,
       );
     }
 

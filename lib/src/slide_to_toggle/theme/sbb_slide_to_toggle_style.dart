@@ -69,6 +69,9 @@ class SBBSlideToToggleStyle {
   /// TODO:
   static const double toggleSize = 82.0;
 
+  /// TODO:
+  static const double toggleSizeSmall = 40.0;
+
   SBBSlideToToggleStyle copyWith({
     WidgetStateProperty<Color?>? borderColor,
     WidgetStateProperty<Color?>? backgroundColor,

@@ -91,6 +91,40 @@ class _SlideToTogglePageState extends State<SlideToTogglePage> {
           ),
 
           const SBBListHeader('Small'),
+          Padding(
+            padding: const .all(SBBSpacing.medium),
+            child: Column(
+              spacing: SBBSpacing.small,
+              children: [
+                SBBSlideToToggleSmall(
+                  enabled: _isEnabled,
+                  onActivate: _simulateWork,
+                  onDeactivate: _simulateWork,
+                  onToggleDecoration: SBBSlideToggleDecoration(
+                    toggleLabelText: 'Stop',
+                    helpLabelText: 'Drag to the left to stop',
+                  ),
+                  offToggleDecoration: SBBSlideToggleDecoration(
+                    toggleLabelText: 'Start',
+                    helpLabelText: 'Drag to the right to start',
+                  ),
+                ),
+                SBBSlideToToggleSmall(
+                  enabled: _isEnabled,
+                  onActivate: _simulateWork,
+                  onDeactivate: _simulateWork,
+                  onToggleDecoration: SBBSlideToggleDecoration(
+                    toggleIconData: SBBIcons.arrow_left_small,
+                    helpLabelText: 'Drag to the left to stop',
+                  ),
+                  offToggleDecoration: SBBSlideToggleDecoration(
+                    toggleIconData: SBBIcons.arrow_right_small,
+                    helpLabelText: 'Drag to the right to start',
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
