@@ -62,7 +62,7 @@ void main() {
   });
 }
 
-/// needed as [SBBHeader] set's a bottom widget as spacer which leads to unconstrainted height.
+/// needed as [SBBHeader] sets a bottom widget as spacer which leads to unconstrainted height.
 Widget _toolbarHeightSized(SBBHeader header) {
   return SizedBox(
     height: SBBHeaderStyle.toolbarHeight,

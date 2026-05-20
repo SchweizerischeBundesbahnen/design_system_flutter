@@ -110,6 +110,7 @@ Future<T?> showSBBBottomSheet<T>({
   AnimationStyle? sheetAnimationStyle,
   bool showCloseButton = true,
   bool? requestFocus,
+  RouteSettings? routeSettings,
 }) {
   assert(title == null || titleText == null, 'Only title or titleText can be set!');
   assert(leading == null || leadingIconData == null, 'Only leading or leadingIconData can be set!');
@@ -140,6 +141,7 @@ Future<T?> showSBBBottomSheet<T>({
     transitionAnimationController: transitionAnimationController,
     sheetAnimationStyle: sheetAnimationStyle,
     requestFocus: requestFocus,
+    routeSettings: routeSettings,
     builder: (_) => SBBBottomSheet(
       key: key,
       title: title,
