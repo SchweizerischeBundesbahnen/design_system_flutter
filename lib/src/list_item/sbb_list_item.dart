@@ -288,7 +288,7 @@ class SBBListItem extends StatefulWidget {
   /// Consider using [SBBDivider.divideItems] instead of this.
   @Deprecated('Use SBBDivider.divideItems instead of this method.')
   static List<Widget> divideListItems({
-    BuildContext? context,
+    required BuildContext context,
     required Iterable<Widget> items,
     Color? color,
   }) => SBBDivider.divideItems(items: items, context: context, color: color);

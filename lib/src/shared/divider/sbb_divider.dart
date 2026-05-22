@@ -19,18 +19,17 @@ class SBBDivider extends StatelessWidget {
   /// [ThemeData.dividerColor] of the context's [Theme] is used, which defaults to
   /// [SBBBaseStyle.dividerColor].
   static List<Widget> divideItems({
-    BuildContext? context,
+    required BuildContext context,
     required Iterable<Widget> items,
     Color? color,
   }) {
-    assert(color != null || context != null);
-    items = items.toList();
+    final itemList = items.toList();
 
-    if (items.isEmpty || items.length == 1) {
-      return items.toList();
+    if (itemList.isEmpty || itemList.length == 1) {
+      return itemList;
     }
 
-    final resolvedColor = color ?? Theme.of(context!).dividerColor;
+    final resolvedColor = color ?? Theme.of(context).dividerColor;
 
     Widget wrapListItem(Widget link) {
       return CustomPaint(
@@ -43,7 +42,7 @@ class SBBDivider extends StatelessWidget {
       );
     }
 
-    return <Widget>[...items.take(items.length - 1).map(wrapListItem), items.last];
+    return <Widget>[...itemList.take(itemList.length - 1).map(wrapListItem), itemList.last];
   }
 
   @override
