@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/header_box/utils.dart';
+import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 
 class HeaderBoxContent extends StatelessWidget {
   const HeaderBoxContent({
@@ -30,19 +31,19 @@ class HeaderBoxContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final titleWidget = _addDefaultAncestorWithResolved(
+    final titleWidget = addDefaultAncestorWithResolved(
       textStyle: style.titleTextStyle,
       foregroundColor: style.titleForegroundColor,
       child: _resolveTitle(),
     );
 
-    final subtitleWidget = _addDefaultAncestorWithResolved(
+    final subtitleWidget = addDefaultAncestorWithResolved(
       textStyle: style.subtitleTextStyle,
       foregroundColor: style.subtitleForegroundColor,
       child: _resolveSubtitle(),
     );
 
-    final leadingWidget = _addDefaultAncestorWithResolved(
+    final leadingWidget = addDefaultAncestorWithResolved(
       textStyle: style.leadingTextStyle,
       foregroundColor: style.leadingForegroundColor,
       child: _resolveLeading(),
@@ -175,18 +176,18 @@ class LargeHeaderBoxContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final titleWidget = _addDefaultAncestorWithResolved(
+    final titleWidget = addDefaultAncestorWithResolved(
       textStyle: style.titleTextStyle,
       foregroundColor: style.titleForegroundColor,
       child: _resolveTitle(),
     );
-    final subtitleWidget = _addDefaultAncestorWithResolved(
+    final subtitleWidget = addDefaultAncestorWithResolved(
       textStyle: style.subtitleTextStyle,
       foregroundColor: style.subtitleForegroundColor,
       child: _resolveSubtitle(),
     );
 
-    final leadingWidget = _addDefaultAncestorWithResolved(
+    final leadingWidget = addDefaultAncestorWithResolved(
       textStyle: style.leadingTextStyle,
       foregroundColor: style.leadingForegroundColor,
       child: _resolveLeading(),
@@ -245,25 +246,4 @@ class LargeHeaderBoxContent extends StatelessWidget {
 
     return subtitle;
   }
-}
-
-Widget? _addDefaultAncestorWithResolved({
-  Widget? child,
-  Color? foregroundColor,
-  TextStyle? textStyle,
-}) {
-  if (child == null) {
-    return null;
-  }
-
-  final resolvedTextStyle = textStyle?.copyWith(color: foregroundColor) ?? TextStyle(color: foregroundColor);
-
-  child = DefaultTextStyle.merge(
-    style: resolvedTextStyle,
-    child: IconTheme.merge(
-      data: IconThemeData(color: foregroundColor),
-      child: child,
-    ),
-  );
-  return child;
 }

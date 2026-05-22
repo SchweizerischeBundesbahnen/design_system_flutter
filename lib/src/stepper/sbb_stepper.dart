@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/shared/debug.dart';
+import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 
 typedef OnStepPressedCallback = void Function(SBBStepperItem item, int index);
 
@@ -320,13 +321,11 @@ class _StepCircleState extends State<_StepCircle> {
     final resolvedTextStyle = widget.style.textStyle?.resolve(_statesController.value);
     final textStyle =
         resolvedTextStyle?.copyWith(color: resolvedForegroundColor) ?? TextStyle(color: resolvedForegroundColor);
-    return DefaultTextStyle.merge(
-      style: textStyle,
-      child: IconTheme.merge(
-        data: IconThemeData(color: resolvedForegroundColor),
-        child: content,
-      ),
-    );
+    return addDefaultAncestorWithResolved(
+      foregroundColor: resolvedForegroundColor,
+      textStyle: textStyle,
+      child: content,
+    )!;
   }
 
   bool get _passedStep => widget.index < widget.activeStep;

@@ -6,6 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/input/decoration/sbb_decoration.dart';
 import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_input_decoration_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 
 const Duration _kTransitionDuration = Duration(milliseconds: 168);
 const Curve _kTransitionCurve = Curves.fastOutSlowIn;
@@ -73,18 +74,9 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
   SBBFloatingLabelBehavior _inheritedFloatingLabelBehavior = .auto;
 
   // Provide unique sort keys to avoid mixing up sort order with sibling input decorators.
-  late final OrdinalSortKey _leadingSemanticsSortOrder = OrdinalSortKey(
-    0,
-    name: hashCode.toString(),
-  );
-  late final OrdinalSortKey _inputSemanticsSortOrder = OrdinalSortKey(
-    1,
-    name: hashCode.toString(),
-  );
-  late final OrdinalSortKey _trailingSemanticsSortOrder = OrdinalSortKey(
-    2,
-    name: hashCode.toString(),
-  );
+  late final _leadingSemanticsSortOrder = OrdinalSortKey(0, name: hashCode.toString());
+  late final _inputSemanticsSortOrder = OrdinalSortKey(1, name: hashCode.toString());
+  late final _trailingSemanticsSortOrder = OrdinalSortKey(2, name: hashCode.toString());
 
   @override
   void initState() {
@@ -259,7 +251,7 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
           (widget.decoration.leadingForegroundColor ?? inputDecorationTheme?.leadingForegroundColor)?.resolve(
             widget.states,
           );
-      leading = _addDefaultAncestorWithResolved(
+      leading = addDefaultAncestorWithResolved(
         child: leading,
         foregroundColor: resolvedColor,
       );
@@ -283,7 +275,7 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
           (widget.decoration.trailingForegroundColor ?? inputDecorationTheme?.trailingForegroundColor)?.resolve(
             widget.states,
           );
-      trailing = _addDefaultAncestorWithResolved(
+      trailing = addDefaultAncestorWithResolved(
         child: trailing,
         foregroundColor: resolvedColor,
       );
@@ -306,7 +298,7 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
             widget.states,
           );
       final TextStyle? textStyle = widget.decoration.placeholderTextStyle ?? inputDecorationTheme?.placeholderTextStyle;
-      placeholder = _addDefaultAncestorWithResolved(
+      placeholder = addDefaultAncestorWithResolved(
         child: placeholder,
         foregroundColor: resolvedColor,
         textStyle: textStyle,
@@ -332,7 +324,7 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
             widget.states,
           );
       final TextStyle? textStyle = widget.decoration.errorTextStyle ?? inputDecorationTheme?.errorTextStyle;
-      error = _addDefaultAncestorWithResolved(
+      error = addDefaultAncestorWithResolved(
         child: error,
         foregroundColor: resolvedColor,
         textStyle: textStyle,
@@ -359,23 +351,6 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
           );
 
     return BoxDecoration(borderRadius: widget.isBoxed ? SBBContentBoxStyle.radius : null, border: resolvedBorder);
-  }
-
-  Widget _addDefaultAncestorWithResolved({
-    required Widget child,
-    required Color? foregroundColor,
-    TextStyle? textStyle,
-  }) {
-    final resolvedTextStyle = textStyle?.copyWith(color: foregroundColor) ?? TextStyle(color: foregroundColor);
-
-    child = DefaultTextStyle.merge(
-      style: resolvedTextStyle,
-      child: IconTheme.merge(
-        data: IconThemeData(color: foregroundColor),
-        child: child,
-      ),
-    );
-    return child;
   }
 
   // Gap resolution methods

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/segmented_button/theme/default_sbb_segmented_button_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/shared/debug.dart';
+import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 
 /// The SBB Segmented Button.
 ///
@@ -212,13 +213,13 @@ class _SBBSegmentedButtonState<T> extends State<SBBSegmentedButton<T>> {
     final themeData = Theme.of(context).sbbSegmentedButtonTheme;
     final effectiveLeadingGapWidth = widget.leadingHorizontalGapWidth ?? themeData.leadingHorizontalGapWidth!;
 
-    leading = _addDefaultAncestorWithResolved(
+    leading = addDefaultAncestorWithResolved(
       child: leading,
       foregroundColor: foregroundColor,
       textStyle: resolvedTextStyle,
     );
 
-    label = _addDefaultAncestorWithResolved(
+    label = addDefaultAncestorWithResolved(
       child: label,
       foregroundColor: foregroundColor,
       textStyle: resolvedTextStyle,
@@ -238,25 +239,6 @@ class _SBBSegmentedButtonState<T> extends State<SBBSegmentedButton<T>> {
       child = label ?? leading!; // asserted that one of it is non null
     }
 
-    return child;
-  }
-
-  Widget? _addDefaultAncestorWithResolved({
-    Widget? child,
-    required Color? foregroundColor,
-    TextStyle? textStyle,
-  }) {
-    if (child == null) return null;
-
-    final resolvedTextStyle = textStyle?.copyWith(color: foregroundColor) ?? TextStyle(color: foregroundColor);
-
-    child = DefaultTextStyle.merge(
-      style: resolvedTextStyle,
-      child: IconTheme.merge(
-        data: IconThemeData(color: foregroundColor),
-        child: child,
-      ),
-    );
     return child;
   }
 }

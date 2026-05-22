@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/shared/debug.dart';
+import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 
 const EdgeInsets _badgeMargin = .only(right: 4.0);
 const Size _badgeSize = Size(24.0, 24.0);
@@ -155,6 +156,21 @@ class _SBBChipState extends State<SBBChip> {
     final trailingTextStyle = effectiveStyle.trailingTextStyle;
     final trailingBackgroundColor = effectiveStyle.trailingBackgroundColor!.resolve(states);
 
+    final label = addDefaultAncestorWithResolved(
+      textStyle: labelTextStyle,
+      foregroundColor: labelForegroundColor,
+      child: _resolveLabel(),
+    )!;
+
+    final trailing = addDefaultAncestorWithResolved(
+      textStyle: trailingTextStyle,
+      foregroundColor: trailingForegroundColor,
+      child: AnimatedSwitcher(
+        duration: Durations.short4,
+        child: _resolveTrailing(trailingBackgroundColor, trailingTextStyle),
+      ),
+    )!;
+
     return ClipPath(
       clipper: ShapeBorderClipper(
         shape: StadiumBorder(side: BorderSide(color: borderColor)),
@@ -173,20 +189,8 @@ class _SBBChipState extends State<SBBChip> {
           child: Row(
             mainAxisSize: .min,
             children: [
-              DefaultTextStyle.merge(
-                style: labelTextStyle?.copyWith(color: labelForegroundColor),
-                child: _label(labelTextStyle),
-              ),
-              DefaultTextStyle.merge(
-                style: trailingTextStyle?.copyWith(color: trailingForegroundColor),
-                child: IconTheme.merge(
-                  data: IconThemeData(color: trailingForegroundColor),
-                  child: AnimatedSwitcher(
-                    duration: Durations.short4,
-                    child: _trailing(trailingBackgroundColor, trailingTextStyle),
-                  ),
-                ),
-              ),
+              label,
+              trailing,
             ],
           ),
         ),
@@ -194,22 +198,22 @@ class _SBBChipState extends State<SBBChip> {
     );
   }
 
-  Widget _label(TextStyle? labelTextStyle) => widget.label ?? _defaultLabel(labelTextStyle);
+  Widget _resolveLabel() {
+    if (widget.label != null) return widget.label!;
 
-  Widget _trailing(Color? trailingBackgroundColor, TextStyle? trailingTextStyle) {
+    return Flexible(
+      child: Padding(
+        padding: const .symmetric(vertical: 6.0, horizontal: 12.0),
+        child: Text(widget.labelText!, overflow: .ellipsis, maxLines: 1),
+      ),
+    );
+  }
+
+  Widget _resolveTrailing(Color? trailingBackgroundColor, TextStyle? trailingTextStyle) {
     return widget.trailing ??
         (widget.selected
             ? _defaultSelected(trailingBackgroundColor)
             : _defaultUnselected(trailingBackgroundColor, trailingTextStyle));
-  }
-
-  Widget _defaultLabel(TextStyle? labelTextStyle) {
-    return Flexible(
-      child: Padding(
-        padding: const .symmetric(vertical: 6.0, horizontal: 12.0),
-        child: Text(widget.labelText!, overflow: .ellipsis, style: labelTextStyle, maxLines: 1),
-      ),
-    );
   }
 
   Widget _defaultUnselected(Color? trailingBackgroundColor, TextStyle? badgeTextStyle) {
