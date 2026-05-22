@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:sbb_design_system_mobile/src/headerbox/sbb_headerbox_content.dart';
+import 'package:sbb_design_system_mobile_v4/src/headerbox/sbb_headerbox_content.dart';
 
 import '../../sbb_design_system_mobile.dart';
 import '../sbb_internal.dart';

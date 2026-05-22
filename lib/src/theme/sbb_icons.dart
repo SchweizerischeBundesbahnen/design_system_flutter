@@ -4,9 +4,9 @@ const sbbIconSizeSmall = 24.0;
 const sbbIconSizeMedium = 36.0;
 const sbbIconSizeLarge = 48.0;
 
-const smallFontFamily = 'packages/sbb_design_system_mobile/SBBIconsSmall';
-const mediumFontFamily = 'packages/sbb_design_system_mobile/SBBIconsMedium';
-const largeFontFamily = 'packages/sbb_design_system_mobile/SBBIconsLarge';
+const smallFontFamily = 'packages/sbb_design_system_mobile_v4/SBBIconsSmall';
+const mediumFontFamily = 'packages/sbb_design_system_mobile_v4/SBBIconsMedium';
+const largeFontFamily = 'packages/sbb_design_system_mobile_v4/SBBIconsLarge';
 
 // The names are given by digital.sbb.ch
 // ignore_for_file: constant_identifier_names

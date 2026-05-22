@@ -1,4 +1,4 @@
-name: sbb_design_system_mobile
+name: sbb_design_system_mobile_v4
 description: The official SBB design system mobile for Flutter.
 homepage: https://digital.sbb.ch/de/design-system/mobile/overview/
 repository: https://github.com/SchweizerischeBundesbahnen/design_system_flutter
@@ -43,31 +43,31 @@ flutter:
   fonts:
     - family: SBBWebUltraLight
       fonts:
-        - asset: packages/sbb_design_system_mobile/fonts/SBBWeb-UltraLight.ttf
+        - asset: packages/sbb_design_system_mobile_v4/fonts/SBBWeb-UltraLight.ttf
     - family: SBBWebThin
       fonts:
-        - asset: packages/sbb_design_system_mobile/fonts/SBBWeb-Thin.ttf
+        - asset: packages/sbb_design_system_mobile_v4/fonts/SBBWeb-Thin.ttf
     - family: SBBWebLight
       fonts:
-        - asset: packages/sbb_design_system_mobile/fonts/SBBWeb-Light.ttf
+        - asset: packages/sbb_design_system_mobile_v4/fonts/SBBWeb-Light.ttf
     - family: SBBWebRoman
       fonts:
-        - asset: packages/sbb_design_system_mobile/fonts/SBBWeb-Roman.ttf
+        - asset: packages/sbb_design_system_mobile_v4/fonts/SBBWeb-Roman.ttf
     - family: SBBWebBold
       fonts:
-        - asset: packages/sbb_design_system_mobile/fonts/SBBWeb-Bold.ttf
+        - asset: packages/sbb_design_system_mobile_v4/fonts/SBBWeb-Bold.ttf
     - family: SBBWebCondensedBold
       fonts:
-        - asset: packages/sbb_design_system_mobile/fonts/SBBWeb-Condensed-Bold.ttf
+        - asset: packages/sbb_design_system_mobile_v4/fonts/SBBWeb-Condensed-Bold.ttf
     - family: SBBWebCondensedHeavy
       fonts:
-        - asset: packages/sbb_design_system_mobile/fonts/SBBWeb-Condensed-Heavy.ttf
+        - asset: packages/sbb_design_system_mobile_v4/fonts/SBBWeb-Condensed-Heavy.ttf
     - family: SBBIconsSmall
       fonts:
-        - asset: packages/sbb_design_system_mobile/fonts/sbb_icons_small.ttf
+        - asset: packages/sbb_design_system_mobile_v4/fonts/sbb_icons_small.ttf
     - family: SBBIconsMedium
       fonts:
-        - asset: packages/sbb_design_system_mobile/fonts/sbb_icons_medium.ttf
+        - asset: packages/sbb_design_system_mobile_v4/fonts/sbb_icons_medium.ttf
     - family: SBBIconsLarge
       fonts:
-        - asset: packages/sbb_design_system_mobile/fonts/sbb_icons_large.ttf
+        - asset: packages/sbb_design_system_mobile_v4/fonts/sbb_icons_large.ttf

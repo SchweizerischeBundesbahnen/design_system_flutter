@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile_v4/sbb_design_system_mobile.dart';
 
 class TestSpecs {
   const TestSpecs._({required this.size, required this.brightness});
@@ -57,7 +57,7 @@ class TestApp extends StatelessWidget {
       (s) async => json.decode(s),
     );
     for (final font in fontManifest) {
-      final fontName = 'packages/sbb_design_system_mobile/${font['family']}';
+      final fontName = 'packages/sbb_design_system_mobile_v4/${font['family']}';
       final fontLoader = FontLoader(fontName);
       for (final Map<String, dynamic> fontType in font['fonts']) {
         fontLoader.addFont(rootBundle.load(fontType['asset']));

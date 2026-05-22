@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:sbb_design_system_mobile/src/toast/default_toast_body.dart';
-import 'package:sbb_design_system_mobile/src/toast/toast_action_body.dart';
+import 'package:sbb_design_system_mobile_v4/src/toast/default_toast_body.dart';
+import 'package:sbb_design_system_mobile_v4/src/toast/toast_action_body.dart';
 
 import '../../sbb_design_system_mobile.dart';
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/src/toast/toast_container.dart';
+import 'package:sbb_design_system_mobile_v4/src/toast/toast_container.dart';
 
 import '../../sbb_design_system_mobile.dart';
 

@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/src/tab_bar/tab_curves.dart';
+import 'package:sbb_design_system_mobile_v4/src/tab_bar/tab_curves.dart';
 
 class TabCurvePainter extends CustomPainter {
   TabCurvePainter(this.curves, this.color, this.shadowColor);

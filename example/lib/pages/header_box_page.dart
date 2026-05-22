@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile_v4/sbb_design_system_mobile.dart';
 
 part 'header_box_page.floating.dart';
 

@@ -176,13 +176,13 @@ class SBBFontFamily {
   SBBFontFamily._();
 
   // Font families
-  static const String sbbFontUltraLight = 'packages/sbb_design_system_mobile/SBBWebUltraLight';
-  static const String sbbFontThin = 'packages/sbb_design_system_mobile/SBBWebThin';
-  static const String sbbFontLight = 'packages/sbb_design_system_mobile/SBBWebLight';
-  static const String sbbFontRoman = 'packages/sbb_design_system_mobile/SBBWebRoman';
-  static const String sbbFontBold = 'packages/sbb_design_system_mobile/SBBWebBold';
-  static const String sbbFontCondensedBold = 'packages/sbb_design_system_mobile/SBBWebCondensedBold';
-  static const String sbbFontCondensedHeavy = 'packages/sbb_design_system_mobile/SBBWebCondensedHeavy';
+  static const String sbbFontUltraLight = 'packages/sbb_design_system_mobile_v4/SBBWebUltraLight';
+  static const String sbbFontThin = 'packages/sbb_design_system_mobile_v4/SBBWebThin';
+  static const String sbbFontLight = 'packages/sbb_design_system_mobile_v4/SBBWebLight';
+  static const String sbbFontRoman = 'packages/sbb_design_system_mobile_v4/SBBWebRoman';
+  static const String sbbFontBold = 'packages/sbb_design_system_mobile_v4/SBBWebBold';
+  static const String sbbFontCondensedBold = 'packages/sbb_design_system_mobile_v4/SBBWebCondensedBold';
+  static const String sbbFontCondensedHeavy = 'packages/sbb_design_system_mobile_v4/SBBWebCondensedHeavy';
 }
 
 extension TextStylesExtensions on TextStyle {

@@ -1,6 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/src/container/theme/default_sbb_content_box_theme_data.dart';
+import 'package:sbb_design_system_mobile_v4/src/container/theme/default_sbb_content_box_theme_data.dart';
 
 import '../../../sbb_design_system_mobile.dart';
 

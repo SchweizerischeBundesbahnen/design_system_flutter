@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile_v4/sbb_design_system_mobile.dart';
 
 const _flapBorderRadius = BorderRadius.only(
   bottomLeft: Radius.circular(sbbDefaultSpacing),

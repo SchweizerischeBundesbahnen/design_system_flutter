@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/src/theme/theme.dart';
+import 'package:sbb_design_system_mobile_v4/src/theme/theme.dart';
 
 class SBBPickerStyle {
   SBBPickerStyle({this.highlightColor, this.textStyle});
