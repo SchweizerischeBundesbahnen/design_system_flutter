@@ -124,8 +124,8 @@ class _SBBSlideToToggleState extends State<_BaseSBBSlideToToggle> with SingleTic
   static const Duration _bounceDuration = Duration(milliseconds: 320);
 
   late WidgetStatesController _statesController;
-
   late SBBSlideToToggleState _state;
+
   bool _loading = false;
   bool _isDragging = false;
   double _position = 0;
@@ -186,15 +186,13 @@ class _SBBSlideToToggleState extends State<_BaseSBBSlideToToggle> with SingleTic
       child: LayoutBuilder(
         builder: (context, constraints) {
           _trackSpan = constraints.maxWidth - _toggleSize;
-          final toggleLeft = _trackSpan * _position; // TODO:
-
           return SizedBox(
             height: _toggleSize,
             width: double.infinity,
             child: Stack(
               children: [
                 _slideTrack(effectiveStyle),
-                _toggle(style: effectiveStyle, toggleLeft: toggleLeft),
+                _toggle(style: effectiveStyle),
               ],
             ),
           );
@@ -256,17 +254,14 @@ class _SBBSlideToToggleState extends State<_BaseSBBSlideToToggle> with SingleTic
     return _toggleDecoration.helpLabel ?? SizedBox.shrink();
   }
 
-  Widget _toggle({
-    required SBBSlideToToggleStyle style,
-    required double toggleLeft,
-  }) {
+  Widget _toggle({required SBBSlideToToggleStyle style}) {
     final states = _statesController.value;
     final loadingIndicatorColor = style.loadingIndicatorColor?.resolve(states);
     final toggleBackgroundColor = style.toggleBackgroundColor?.resolve(states);
     final dragOverlayColor = style.toggleOverlayColor?.resolve({...states, WidgetState.pressed});
 
     return Positioned(
-      left: toggleLeft,
+      left: _trackSpan * _position,
       child: GestureDetector(
         behavior: .translucent,
         onHorizontalDragStart: _onDragStart,
@@ -320,11 +315,12 @@ class _SBBSlideToToggleState extends State<_BaseSBBSlideToToggle> with SingleTic
   Widget _resolveToggleWidget() {
     final labelText = _toggleDecoration.toggleLabelText;
     if (labelText != null) {
-      return Text(
-        labelText,
-        maxLines: 1,
-        overflow: .ellipsis,
-        textAlign: .center,
+      return FittedBox(
+        fit: .scaleDown,
+        child: Text(
+          labelText,
+          textAlign: .center,
+        ),
       );
     }
 
@@ -448,7 +444,7 @@ class _SBBSlideToToggleState extends State<_BaseSBBSlideToToggle> with SingleTic
 
     if (_state == .off && _position >= widget.threshold) {
       _commitActivate();
-    } else if (_position <= (1 - widget.threshold)) {
+    } else if (_state == .on && _position <= (1 - widget.threshold)) {
       _commitDeactivate();
     } else {
       _animateBounceBack();

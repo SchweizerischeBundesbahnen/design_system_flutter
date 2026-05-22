@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// TODO: Document, better name? Add asserts
+/// TODO: Document, better name?
 @immutable
 class SBBSlideToggleDecoration {
   const SBBSlideToggleDecoration({
@@ -9,7 +9,11 @@ class SBBSlideToggleDecoration {
     this.toggleIconData,
     this.helpLabel,
     this.helpLabelText,
-  });
+  }) : assert(
+         toggleLabel != null || toggleLabelText != null || toggleIconData != null,
+         'Either toggleLabel or toggleLabelText or toggleIconData must be provided',
+       ),
+       assert(helpLabel == null || helpLabelText == null, 'Only one of helpLabel or helpLabelText can be set');
 
   /// Custom widget to display inside the toggle.
   ///
@@ -26,10 +30,16 @@ class SBBSlideToggleDecoration {
   /// Mutually exclusive with [toggleLabel] and [toggleLabelText]. Only one can be provided.
   final IconData? toggleIconData;
 
-  /// TODO
+  /// Custom widget to be displayed as help text inside track.
+  /// Will be faded out when the toggle is moved.
+  ///
+  /// Mutually exclusive with [helpLabelText]. Only one can be provided.
   final Widget? helpLabel;
 
-  /// TODO
+  /// Help text to be displayed inside track.
+  /// Will be faded out when the toggle is moved.
+  ///
+  /// Mutually exclusive with [helpLabel]. Only one can be provided.
   final String? helpLabelText;
 
   SBBSlideToggleDecoration copyWith({
