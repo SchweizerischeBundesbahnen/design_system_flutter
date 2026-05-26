@@ -18,7 +18,7 @@ class DefaultSBBBottomSheetThemeData extends SBBBottomSheetThemeData {
           barrierColor: const Color(0x80000000),
           titleBodyGap: SBBSpacing.small,
           titleMinHeight: SBBSpacing.xLarge,
-          padding: .symmetric(horizontal: SBBSpacing.medium).copyWith(top: SBBSpacing.small),
+          padding: .symmetric(horizontal: SBBSpacing.medium, vertical: SBBSpacing.small),
         ),
       );
 }
