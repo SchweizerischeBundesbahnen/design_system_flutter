@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 
 /// The default badge content for a SBB Promotion Box.
 ///
@@ -76,6 +77,13 @@ class SBBPromotionBoxBadge extends StatelessWidget {
     final themeStyle = Theme.of(context).sbbPromotionBoxTheme.badgeStyle!;
     final effectiveStyle = themeStyle.merge(style);
 
+    final resolvedTextStyle = effectiveStyle.textStyle!.copyWith(color: effectiveStyle.foregroundColor);
+    final resolvedLabel = addDefaultAncestorWithResolved(
+      foregroundColor: effectiveStyle.foregroundColor,
+      textStyle: resolvedTextStyle,
+      child: label ?? Text(labelText!, maxLines: 1),
+    );
+
     return _PromotionBoxBadgeRenderObjectWidget(
       color: effectiveStyle.haloColor!,
       spread: SBBPromotionBoxBadgeStyle.haloSpreadRadius,
@@ -85,20 +93,7 @@ class SBBPromotionBoxBadge extends StatelessWidget {
           shape: StadiumBorder(side: BorderSide(color: effectiveStyle.borderColor!)),
           color: effectiveStyle.backgroundColor,
         ),
-        child: _content(context, effectiveStyle),
-      ),
-    );
-  }
-
-  Widget? _content(BuildContext context, SBBPromotionBoxBadgeStyle effectiveStyle) {
-    final child = label ?? Text(labelText!, maxLines: 1);
-    final resolvedTextStyle = effectiveStyle.textStyle!.copyWith(color: effectiveStyle.foregroundColor);
-
-    return DefaultTextStyle.merge(
-      style: resolvedTextStyle,
-      child: IconTheme.merge(
-        data: IconThemeData(color: effectiveStyle.foregroundColor),
-        child: child,
+        child: resolvedLabel,
       ),
     );
   }

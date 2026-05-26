@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/shared/debug.dart';
+import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 
 /// The SBB Status.
 ///
@@ -161,36 +162,34 @@ sealed class SBBStatus extends StatelessWidget {
     final double resolvedAlphaValue = effectiveStyle.alphaValue!;
     final TextStyle resolvedTextStyle = effectiveStyle.textStyle!;
 
-    return DefaultTextStyle.merge(
-      style: resolvedTextStyle.copyWith(color: resolvedForegroundColor),
-      child: IconTheme.merge(
-        data: IconThemeData(color: resolvedForegroundColor),
-        child: Semantics(
-          container: true,
-          label: semanticLabel,
-          excludeSemantics: semanticLabel != null,
-          child: ClipRRect(
-            clipBehavior: .hardEdge,
-            borderRadius: BorderRadius.all(SBBStatusStyle.borderRadius),
-            child: DecoratedBox(
-              decoration: ShapeDecoration(
-                color: resolvedBackgroundColor.withValues(alpha: resolvedAlphaValue),
-                shape: SBBStatusStyle.border.copyWith(side: BorderSide(color: resolvedBorderColor)),
-              ),
-              child: IntrinsicHeight(
-                child: Row(
-                  mainAxisSize: .min,
-                  children: [
-                    _icon(resolvedBackgroundColor, resolvedIconColor),
-                    if (label != null || labelText != null) _label(),
-                  ],
-                ),
+    return addDefaultAncestorWithResolved(
+      textStyle: resolvedTextStyle,
+      foregroundColor: resolvedForegroundColor,
+      child: Semantics(
+        container: true,
+        label: semanticLabel,
+        excludeSemantics: semanticLabel != null,
+        child: ClipRRect(
+          clipBehavior: .hardEdge,
+          borderRadius: BorderRadius.all(SBBStatusStyle.borderRadius),
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: resolvedBackgroundColor.withValues(alpha: resolvedAlphaValue),
+              shape: SBBStatusStyle.border.copyWith(side: BorderSide(color: resolvedBorderColor)),
+            ),
+            child: IntrinsicHeight(
+              child: Row(
+                mainAxisSize: .min,
+                children: [
+                  _icon(resolvedBackgroundColor, resolvedIconColor),
+                  if (label != null || labelText != null) _label(),
+                ],
               ),
             ),
           ),
         ),
       ),
-    );
+    )!;
   }
 
   Widget _icon(Color backgroundColor, Color iconColor) {

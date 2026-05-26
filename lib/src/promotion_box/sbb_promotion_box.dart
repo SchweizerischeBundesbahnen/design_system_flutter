@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/promotion_box/promotion_box_layout.dart';
 import 'package:sbb_design_system_mobile/src/promotion_box/theme/default_sbb_promotion_box_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 
 const _promotionBoxNoiseAsset = 'packages/sbb_design_system_mobile/lib/assets/noise.png';
 
@@ -324,7 +325,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
             _effectiveController.hide();
             widget.onDismissed?.call();
           },
-          child: _addDefaultAncestorWithResolved(
+          child: addDefaultAncestorWithResolved(
             child: const Icon(SBBIcons.cross_tiny_small, size: sbbIconSizeSmall),
             foregroundColor: effectiveStyle.dismissButtonForegroundColor,
           ),
@@ -338,7 +339,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
     if (trailingWidget == null && widget.onTap != null) {
       trailingWidget = const Icon(SBBIcons.chevron_small_right_small, size: sbbIconSizeSmall);
     }
-    return _addDefaultAncestorWithResolved(
+    return addDefaultAncestorWithResolved(
       child: trailingWidget,
       foregroundColor: effectiveStyle.trailingForegroundColor,
     );
@@ -350,7 +351,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
       subtitleWidget = Text(widget.subtitleText!, maxLines: effectiveStyle.subtitleTextMaxLines, overflow: .ellipsis);
     }
 
-    return _addDefaultAncestorWithResolved(
+    return addDefaultAncestorWithResolved(
       child: subtitleWidget,
       foregroundColor: effectiveStyle.subtitleForegroundColor,
       textStyle: effectiveStyle.subtitleTextStyle,
@@ -360,7 +361,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
   Widget _titleWidget(SBBPromotionBoxStyle effectiveStyle) {
     final Widget titleWidget = widget.title ?? Text(widget.titleText!, maxLines: effectiveStyle.titleTextMaxLines);
 
-    return _addDefaultAncestorWithResolved(
+    return addDefaultAncestorWithResolved(
       child: titleWidget,
       foregroundColor: effectiveStyle.titleForegroundColor,
       textStyle: effectiveStyle.titleTextStyle,
@@ -372,22 +373,6 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
       axisAlignment: -1.0,
       sizeFactor: animation,
       child: FadeTransition(opacity: animation, child: child),
-    );
-  }
-
-  Widget? _addDefaultAncestorWithResolved({
-    required Widget? child,
-    required Color? foregroundColor,
-    TextStyle? textStyle,
-  }) {
-    if (child == null) return null;
-    final resolvedTextStyle = textStyle?.copyWith(color: foregroundColor) ?? TextStyle(color: foregroundColor);
-    return DefaultTextStyle.merge(
-      style: resolvedTextStyle,
-      child: IconTheme.merge(
-        data: IconThemeData(color: foregroundColor),
-        child: child,
-      ),
     );
   }
 
