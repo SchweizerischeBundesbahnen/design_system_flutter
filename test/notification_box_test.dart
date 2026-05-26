@@ -40,6 +40,12 @@ void main() {
           onTap: () {},
         ),
         SBBNotificationBox.alert(
+          titleText: title,
+          contentText: text,
+          onTap: () {},
+          showLeading: false,
+        ),
+        SBBNotificationBox.alert(
           title: Container(
             color: SBBColors.turquoise,
             child: Text('Custom'),
@@ -82,6 +88,11 @@ void main() {
           trailingIconData: SBBIcons.chevron_small_right_small,
         ),
         SBBNotificationBox.alert(contentText: text, onTap: () {}),
+        SBBNotificationBox.alert(
+          contentText: text,
+          onTap: () {},
+          showLeading: false,
+        ),
         SBBNotificationBox.alert(
           content: Container(
             height: 125,
@@ -133,6 +144,12 @@ void main() {
           onTap: () {},
         ),
         SBBNotificationBox.warning(
+          titleText: title,
+          contentText: text,
+          onTap: () {},
+          showLeading: false,
+        ),
+        SBBNotificationBox.warning(
           title: Container(
             color: SBBColors.turquoise,
             child: Text('Custom'),
@@ -175,6 +192,11 @@ void main() {
           trailingIconData: SBBIcons.chevron_small_right_small,
         ),
         SBBNotificationBox.warning(contentText: text, onTap: () {}),
+        SBBNotificationBox.warning(
+          contentText: text,
+          onTap: () {},
+          showLeading: false,
+        ),
         SBBNotificationBox.warning(
           content: Container(
             height: 125,
@@ -226,6 +248,12 @@ void main() {
           onTap: () {},
         ),
         SBBNotificationBox.information(
+          titleText: title,
+          contentText: text,
+          onTap: () {},
+          showLeading: false,
+        ),
+        SBBNotificationBox.information(
           title: Container(
             color: SBBColors.turquoise,
             child: Text('Custom'),
@@ -268,6 +296,11 @@ void main() {
           trailingIconData: SBBIcons.chevron_small_right_small,
         ),
         SBBNotificationBox.information(contentText: text, onTap: () {}),
+        SBBNotificationBox.information(
+          contentText: text,
+          onTap: () {},
+          showLeading: false,
+        ),
         SBBNotificationBox.information(
           content: Container(
             height: 125,
@@ -319,6 +352,12 @@ void main() {
           onTap: () {},
         ),
         SBBNotificationBox.success(
+          titleText: title,
+          contentText: text,
+          onTap: () {},
+          showLeading: false,
+        ),
+        SBBNotificationBox.success(
           title: Container(
             color: SBBColors.turquoise,
             child: Text('Custom'),
@@ -361,6 +400,11 @@ void main() {
           trailingIconData: SBBIcons.chevron_small_right_small,
         ),
         SBBNotificationBox.success(contentText: text, onTap: () {}),
+        SBBNotificationBox.success(
+          contentText: text,
+          onTap: () {},
+          showLeading: false,
+        ),
         SBBNotificationBox.success(
           content: Container(
             height: 125,

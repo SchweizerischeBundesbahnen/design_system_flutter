@@ -38,6 +38,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - BREAKING: overhauled `SBBPagination` and renamed to `SBBPaginator` - see [v5 migration guide]
 - BREAKING: overhauled `SBBPicker` - see [v5 migration guide]
 - BREAKING: overhauled `SBBPromotionBox` - see [v5 migration guide]
+- BREAKING: overhauled `SBBNotificationBox` - see [v5 migration guide]
 - BREAKING: overhauled `SBBModalPopup` and renamed to `SBBPopup` - see [v5 migration guide]
 - BREAKING: overhauled `SBBRadio` with `SBBRadioGroup` ancestor - see [v5 migration guide]
 - BREAKING: overhauled `SBBSegmentedButton` component - see [v5 migration guide]

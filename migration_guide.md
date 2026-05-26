@@ -358,6 +358,54 @@ showSBBPopup(
 * access the theme using `Theme.of(context).sbbPopupTheme`
 * customize an individual popup by setting its `style` parameter
 
+## Notification Box
+
+The `SBBNotificationBox` API has been redesigned for more flexibility and better theming support.
+
+### Constructor
+
+* replace `title` (String) with `titleText`, or use `title` for a custom widget
+* replace `text` (String) with `contentText`, or use `content` for a custom widget
+* replace `detailsIcon` with `trailingIconData`, or use `trailing` for a custom widget
+* replace `onClose` with `onDismissed`
+* removed `isCloseable` as this is controlled by setting `onDismissed` or not.
+* replace `hasIcon` with `showLeading`
+* customize leading icon with `leadingIconData`, `leading` or use `SBBNotificationBoxStyle`
+* replace `onControllerCreated` callback with a `controller` parameter (`SBBNotificationBoxController`)
+    * `SBBNotificationBoxController` replaces `ClosableBoxController`
+
+The previous default constructor with `state` has been removed.
+
+### Example migration
+
+Old implementation:
+```dart
+SBBNotificationBox.alert(
+  title: 'My Title',
+  text: 'My text',
+  onClose: () => print('closed'),
+  onControllerCreated: (controller) => _controller = controller,
+  onTap: () => print('tapped'),
+)
+```
+
+New implementation:
+```dart
+SBBNotificationBox.alert(
+  titleText: 'My Title',
+  contentText: 'My text',
+  onDismissed: () => print('closed'),
+  controller: _controller,
+  onTap: () => print('tapped'),
+)
+```
+
+### Theming & Styling
+
+* customize the theme of all `SBBNotificationBox` with `SBBNotificationBoxThemeData` as input to `SBBTheme`
+* access the theme using `Theme.of(context).sbbNotificationBoxTheme`
+* customize an individual promotion box by setting its `style` parameter in the constructor
+
 
 ## Promotion Box
 

@@ -50,6 +50,7 @@ sealed class SBBNotificationBox extends StatefulWidget {
     this.titleText,
     this.leading,
     this.leadingIconData,
+    this.showLeading,
     this.trailing,
     this.trailingIconData,
     this.onTap,
@@ -74,6 +75,7 @@ sealed class SBBNotificationBox extends StatefulWidget {
     String? titleText,
     Widget? leading,
     IconData? leadingIconData,
+    bool? showLeading,
     Widget? trailing,
     IconData? trailingIconData,
     GestureTapCallback? onTap,
@@ -95,6 +97,7 @@ sealed class SBBNotificationBox extends StatefulWidget {
     String? titleText,
     Widget? leading,
     IconData? leadingIconData,
+    bool? showLeading,
     Widget? trailing,
     IconData? trailingIconData,
     GestureTapCallback? onTap,
@@ -116,6 +119,7 @@ sealed class SBBNotificationBox extends StatefulWidget {
     String? titleText,
     Widget? leading,
     IconData? leadingIconData,
+    bool? showLeading,
     Widget? trailing,
     IconData? trailingIconData,
     GestureTapCallback? onTap,
@@ -137,6 +141,7 @@ sealed class SBBNotificationBox extends StatefulWidget {
     String? titleText,
     Widget? leading,
     IconData? leadingIconData,
+    bool? showLeading,
     Widget? trailing,
     IconData? trailingIconData,
     GestureTapCallback? onTap,
@@ -180,14 +185,23 @@ sealed class SBBNotificationBox extends StatefulWidget {
   /// For simple icon changes, use [leadingIconData] instead.
   /// If this and [leadingIconData] is null, [SBBNotificationBoxStyle.leadingIconData] is used.
   ///
+  /// Can be hidden by using [showLeading].
+  ///
   /// Cannot be used together with [leadingIconData].
   final Widget? leading;
 
   /// Icon to display in the leading position.
   /// If this and [leading] is null, [SBBNotificationBoxStyle.leadingIconData] is used.
   ///
+  /// Can be hidden by using [showLeading].
+  ///
   /// Cannot be used together with [leading].
   final IconData? leadingIconData;
+
+  /// Whether the [leading] or [leadingIconData] is shown.
+  ///
+  /// Defaults to true.
+  final bool? showLeading;
 
   /// A custom widget displayed in the trailing position.
   ///
@@ -243,6 +257,7 @@ final class _SBBNotificationBoxAlert extends SBBNotificationBox {
     super.titleText,
     super.leading,
     super.leadingIconData,
+    bool? showLeading,
     super.trailing,
     super.trailingIconData,
     super.onTap,
@@ -250,7 +265,7 @@ final class _SBBNotificationBoxAlert extends SBBNotificationBox {
     super.onDismissed,
     super.style,
     super.semanticLabel,
-  }) : super._();
+  }) : super._(showLeading: showLeading ?? true);
 
   @override
   SBBNotificationBoxStyle? _getThemedStyle(BuildContext context) {
@@ -268,6 +283,7 @@ final class _SBBNotificationBoxWarning extends SBBNotificationBox {
     super.titleText,
     super.leading,
     super.leadingIconData,
+    bool? showLeading,
     super.trailing,
     super.trailingIconData,
     super.onTap,
@@ -275,7 +291,7 @@ final class _SBBNotificationBoxWarning extends SBBNotificationBox {
     super.onDismissed,
     super.style,
     super.semanticLabel,
-  }) : super._();
+  }) : super._(showLeading: showLeading ?? true);
 
   @override
   SBBNotificationBoxStyle? _getThemedStyle(BuildContext context) {
@@ -293,6 +309,7 @@ final class _SBBNotificationBoxSuccess extends SBBNotificationBox {
     super.titleText,
     super.leading,
     super.leadingIconData,
+    bool? showLeading,
     super.trailing,
     super.trailingIconData,
     super.onTap,
@@ -300,7 +317,7 @@ final class _SBBNotificationBoxSuccess extends SBBNotificationBox {
     super.onDismissed,
     super.style,
     super.semanticLabel,
-  }) : super._();
+  }) : super._(showLeading: showLeading ?? true);
 
   @override
   SBBNotificationBoxStyle? _getThemedStyle(BuildContext context) {
@@ -318,6 +335,7 @@ final class _SBBNotificationBoxInformation extends SBBNotificationBox {
     super.titleText,
     super.leading,
     super.leadingIconData,
+    bool? showLeading,
     super.trailing,
     super.trailingIconData,
     super.onTap,
@@ -325,7 +343,7 @@ final class _SBBNotificationBoxInformation extends SBBNotificationBox {
     super.onDismissed,
     super.style,
     super.semanticLabel,
-  }) : super._();
+  }) : super._(showLeading: showLeading ?? true);
 
   @override
   SBBNotificationBoxStyle? _getThemedStyle(BuildContext context) {
@@ -439,7 +457,7 @@ class _SBBNotificationBoxState extends State<SBBNotificationBox> with SingleTick
         crossAxisAlignment: CrossAxisAlignment.start,
         spacing: SBBSpacing.xSmall,
         children: [
-          _resolveLeading(effectiveStyle),
+          ?_resolveLeading(effectiveStyle),
           Expanded(child: _resolveContent(effectiveStyle)),
           if (resolvedTrailing != null || _isDismissible)
             Column(
@@ -465,7 +483,7 @@ class _SBBNotificationBoxState extends State<SBBNotificationBox> with SingleTick
         Row(
           spacing: SBBSpacing.xSmall,
           children: [
-            _resolveLeading(effectiveStyle),
+            ?_resolveLeading(effectiveStyle),
             Expanded(child: _resolveTitle(effectiveStyle)!),
             ?_dismissButton(context, effectiveStyle),
           ],
@@ -480,7 +498,9 @@ class _SBBNotificationBoxState extends State<SBBNotificationBox> with SingleTick
     );
   }
 
-  Widget _resolveLeading(SBBNotificationBoxStyle effectiveStyle) {
+  Widget? _resolveLeading(SBBNotificationBoxStyle effectiveStyle) {
+    if (widget.showLeading == false) return null;
+
     return addDefaultAncestorWithResolved(
       foregroundColor: effectiveStyle.iconColor,
       child: widget.leading ?? Icon(widget.leadingIconData ?? effectiveStyle.leadingIconData),
