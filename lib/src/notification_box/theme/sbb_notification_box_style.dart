@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 
 /// Defines the visual properties of [SBBNotificationBox].
@@ -16,15 +14,16 @@ import 'package:flutter/material.dart';
 class SBBNotificationBoxStyle {
   const SBBNotificationBoxStyle({
     this.contentTextStyle,
+    this.contentMaxLines,
     this.titleTextStyle,
     this.foregroundColor,
     this.backgroundColor,
     this.iconColor,
     this.borderColor,
-    this.alphaValue,
     this.leadingIconData,
     this.dismissButtonForegroundColor,
     this.overlayColor,
+    this.padding,
   });
 
   /// The text style for the notification content text.
@@ -32,6 +31,9 @@ class SBBNotificationBoxStyle {
   /// The color of the [contentTextStyle] is typically not used directly, the
   /// [foregroundColor] is used instead.
   final TextStyle? contentTextStyle;
+
+  /// The max lines of [SBBNotificationBox.contentText].
+  final int? contentMaxLines;
 
   /// The text style for the notification title.
   ///
@@ -46,12 +48,7 @@ class SBBNotificationBoxStyle {
   /// This color is typically used instead of the color of the [textStyle].
   final Color? foregroundColor;
 
-  /// The accent color of the notification box.
-  ///
-  /// This color is used for:
-  /// * The left border strip
-  /// * The box border
-  /// * The tinted background (with [alphaValue] applied)
+  /// The background color of the notification box.
   final Color? backgroundColor;
 
   /// The color of the leading icon.
@@ -63,14 +60,6 @@ class SBBNotificationBoxStyle {
   ///
   /// If null, defaults to [backgroundColor].
   final Color? borderColor;
-
-  /// The opacity value applied to the notification box background.
-  ///
-  /// This value (between 0.0 and 1.0) controls how transparent the
-  /// tinted background appears.
-  ///
-  /// Defaults to `0.05` if not specified.
-  final double? alphaValue;
 
   /// The default leading icon for this notification box type.
   ///
@@ -85,6 +74,9 @@ class SBBNotificationBoxStyle {
   ///
   /// This creates the visual feedback when the notification box is interacted with.
   final WidgetStateProperty<Color?>? overlayColor;
+
+  /// The inner padding inside the notification box.
+  final EdgeInsetsGeometry? padding;
 
   /// The outer border radius of the notification box.
   static const BorderRadius outerBorderRadius = BorderRadius.all(Radius.circular(16.0));
@@ -102,6 +94,7 @@ class SBBNotificationBoxStyle {
 
   SBBNotificationBoxStyle copyWith({
     TextStyle? contentTextStyle,
+    int? contentMaxLines,
     TextStyle? titleTextStyle,
     Color? foregroundColor,
     Color? backgroundColor,
@@ -111,9 +104,11 @@ class SBBNotificationBoxStyle {
     WidgetStateProperty<Color?>? overlayColor,
     double? alphaValue,
     IconData? leadingIconData,
+    EdgeInsetsGeometry? padding,
   }) {
     return SBBNotificationBoxStyle(
       contentTextStyle: contentTextStyle ?? this.contentTextStyle,
+      contentMaxLines: contentMaxLines ?? this.contentMaxLines,
       titleTextStyle: titleTextStyle ?? this.titleTextStyle,
       foregroundColor: foregroundColor ?? this.foregroundColor,
       backgroundColor: backgroundColor ?? this.backgroundColor,
@@ -121,8 +116,8 @@ class SBBNotificationBoxStyle {
       borderColor: borderColor ?? this.borderColor,
       dismissButtonForegroundColor: dismissButtonForegroundColor ?? this.dismissButtonForegroundColor,
       overlayColor: overlayColor ?? this.overlayColor,
-      alphaValue: alphaValue ?? this.alphaValue,
       leadingIconData: leadingIconData ?? this.leadingIconData,
+      padding: padding ?? this.padding,
     );
   }
 
@@ -131,15 +126,16 @@ class SBBNotificationBoxStyle {
 
     return copyWith(
       contentTextStyle: other.contentTextStyle,
+      contentMaxLines: other.contentMaxLines,
       titleTextStyle: other.titleTextStyle,
       foregroundColor: other.foregroundColor,
       backgroundColor: other.backgroundColor,
       iconColor: other.iconColor,
       borderColor: other.borderColor,
-      alphaValue: other.alphaValue,
       dismissButtonForegroundColor: other.dismissButtonForegroundColor,
       overlayColor: other.overlayColor,
       leadingIconData: other.leadingIconData,
+      padding: other.padding,
     );
   }
 
@@ -152,6 +148,7 @@ class SBBNotificationBoxStyle {
 
     return SBBNotificationBoxStyle(
       contentTextStyle: TextStyle.lerp(a?.contentTextStyle, b?.contentTextStyle, t),
+      contentMaxLines: t < 0.5 ? a?.contentMaxLines : b?.contentMaxLines,
       titleTextStyle: TextStyle.lerp(a?.titleTextStyle, b?.titleTextStyle, t),
       foregroundColor: Color.lerp(a?.foregroundColor, b?.foregroundColor, t),
       backgroundColor: Color.lerp(a?.backgroundColor, b?.backgroundColor, t),
@@ -159,7 +156,7 @@ class SBBNotificationBoxStyle {
       borderColor: Color.lerp(a?.borderColor, b?.borderColor, t),
       dismissButtonForegroundColor: Color.lerp(a?.dismissButtonForegroundColor, b?.dismissButtonForegroundColor, t),
       overlayColor: WidgetStateProperty.lerp<Color?>(a?.overlayColor, b?.overlayColor, t, Color.lerp),
-      alphaValue: lerpDouble(a?.alphaValue, b?.alphaValue, t),
+      padding: EdgeInsetsGeometry.lerp(a?.padding, b?.padding, t),
       leadingIconData: t < 0.5 ? a?.leadingIconData : b?.leadingIconData,
     );
   }
@@ -170,27 +167,29 @@ class SBBNotificationBoxStyle {
       other is SBBNotificationBoxStyle &&
           runtimeType == other.runtimeType &&
           contentTextStyle == other.contentTextStyle &&
+          contentMaxLines == other.contentMaxLines &&
           titleTextStyle == other.titleTextStyle &&
           foregroundColor == other.foregroundColor &&
           backgroundColor == other.backgroundColor &&
           iconColor == other.iconColor &&
           borderColor == other.borderColor &&
-          alphaValue == other.alphaValue &&
           leadingIconData == other.leadingIconData &&
           dismissButtonForegroundColor == other.dismissButtonForegroundColor &&
-          overlayColor == other.overlayColor;
+          overlayColor == other.overlayColor &&
+          padding == other.padding;
 
   @override
   int get hashCode => Object.hash(
     contentTextStyle,
+    contentMaxLines,
     titleTextStyle,
     foregroundColor,
     backgroundColor,
     iconColor,
     borderColor,
-    alphaValue,
     leadingIconData,
     dismissButtonForegroundColor,
     overlayColor,
+    padding,
   );
 }

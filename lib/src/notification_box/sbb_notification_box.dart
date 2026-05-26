@@ -243,7 +243,7 @@ final class _SBBNotificationBoxAlert extends SBBNotificationBox {
     super.title,
     super.titleText,
     super.leading,
-    IconData? leadingIconData,
+    super.leadingIconData,
     super.trailing,
     super.trailingIconData,
     super.onTap,
@@ -251,9 +251,7 @@ final class _SBBNotificationBoxAlert extends SBBNotificationBox {
     super.onDismissed,
     super.style,
     super.semanticLabel,
-  }) : super._(
-         leadingIconData: leading == null && leadingIconData == null ? SBBIcons.circle_cross_small : leadingIconData,
-       );
+  }) : super._();
 
   @override
   SBBNotificationBoxStyle? _getThemedStyle(BuildContext context) {
@@ -270,7 +268,7 @@ final class _SBBNotificationBoxWarning extends SBBNotificationBox {
     super.title,
     super.titleText,
     super.leading,
-    IconData? leadingIconData,
+    super.leadingIconData,
     super.trailing,
     super.trailingIconData,
     super.onTap,
@@ -278,11 +276,7 @@ final class _SBBNotificationBoxWarning extends SBBNotificationBox {
     super.onDismissed,
     super.style,
     super.semanticLabel,
-  }) : super._(
-         leadingIconData: leading == null && leadingIconData == null
-             ? SBBIcons.circle_exclamation_point_small
-             : leadingIconData,
-       );
+  }) : super._();
 
   @override
   SBBNotificationBoxStyle? _getThemedStyle(BuildContext context) {
@@ -299,7 +293,7 @@ final class _SBBNotificationBoxSuccess extends SBBNotificationBox {
     super.title,
     super.titleText,
     super.leading,
-    IconData? leadingIconData,
+    super.leadingIconData,
     super.trailing,
     super.trailingIconData,
     super.onTap,
@@ -307,9 +301,7 @@ final class _SBBNotificationBoxSuccess extends SBBNotificationBox {
     super.onDismissed,
     super.style,
     super.semanticLabel,
-  }) : super._(
-         leadingIconData: leading == null && leadingIconData == null ? SBBIcons.circle_tick_small : leadingIconData,
-       );
+  }) : super._();
 
   @override
   SBBNotificationBoxStyle? _getThemedStyle(BuildContext context) {
@@ -326,7 +318,7 @@ final class _SBBNotificationBoxInformation extends SBBNotificationBox {
     super.title,
     super.titleText,
     super.leading,
-    IconData? leadingIconData,
+    super.leadingIconData,
     super.trailing,
     super.trailingIconData,
     super.onTap,
@@ -334,11 +326,7 @@ final class _SBBNotificationBoxInformation extends SBBNotificationBox {
     super.onDismissed,
     super.style,
     super.semanticLabel,
-  }) : super._(
-         leadingIconData: leading == null && leadingIconData == null
-             ? SBBIcons.circle_information_small
-             : leadingIconData,
-       );
+  }) : super._();
 
   @override
   SBBNotificationBoxStyle? _getThemedStyle(BuildContext context) {
@@ -424,7 +412,7 @@ class _SBBNotificationBoxState extends State<SBBNotificationBox> with SingleTick
             decoration: BoxDecoration(
               border: Border(
                 left: BorderSide(
-                  color: style.backgroundColor!,
+                  color: style.borderColor!,
                   width: SBBNotificationBoxStyle.leftBorderWidth,
                 ),
               ),
@@ -434,9 +422,9 @@ class _SBBNotificationBoxState extends State<SBBNotificationBox> with SingleTick
               decoration: BoxDecoration(
                 border: Border.all(color: style.borderColor!),
                 borderRadius: SBBNotificationBoxStyle.innerBorderRadius,
-                color: style.backgroundColor!.withValues(alpha: style.alphaValue),
+                color: style.backgroundColor,
               ),
-              padding: const EdgeInsets.all(SBBSpacing.medium), // TODO: add paddings to style
+              padding: style.padding,
               child: child,
             ),
           ),
@@ -496,7 +484,7 @@ class _SBBNotificationBoxState extends State<SBBNotificationBox> with SingleTick
   Widget _resolveLeading(SBBNotificationBoxStyle effectiveStyle) {
     return addDefaultAncestorWithResolved(
       foregroundColor: effectiveStyle.iconColor,
-      child: widget.leading ?? Icon(widget.leadingIconData),
+      child: widget.leading ?? Icon(widget.leadingIconData ?? effectiveStyle.leadingIconData),
     )!;
   }
 
@@ -518,7 +506,7 @@ class _SBBNotificationBoxState extends State<SBBNotificationBox> with SingleTick
     if (widget.contentText != null) {
       content = Text(
         widget.contentText!,
-        maxLines: 3, // TODO: Add to style
+        maxLines: effectiveStyle.contentMaxLines,
         overflow: TextOverflow.ellipsis,
       );
     }

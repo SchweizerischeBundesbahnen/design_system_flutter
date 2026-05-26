@@ -62,6 +62,30 @@ class _NotificationBoxPage extends State<NotificationBoxPage> {
                   trailingIconData: SBBIcons.chevron_small_right_small,
                 ),
                 SBBNotificationBox.alert(contentText: text, onTap: () {}),
+                SBBNotificationBox.alert(
+                  title: Container(
+                    color: SBBColors.turquoise,
+                    child: Text('Custom'),
+                  ),
+                  content: Container(
+                    height: 100,
+                    color: SBBColors.turquoise,
+                    child: Center(child: Text('Content')),
+                  ),
+                  trailing: SBBTertiaryButtonSmall(iconData: SBBIcons.unicorn_small, onPressed: () {}),
+                  onTap: () {},
+                  onDismissed: () {},
+                ),
+                SBBNotificationBox.alert(
+                  content: Container(
+                    height: 100,
+                    color: SBBColors.turquoise,
+                    child: Center(child: Text('Content')),
+                  ),
+                  onTap: () {},
+                  onDismissed: () {},
+                  trailing: SBBTertiaryButtonSmall(iconData: SBBIcons.unicorn_small, onPressed: () {}),
+                ),
               ],
             ),
           ),
