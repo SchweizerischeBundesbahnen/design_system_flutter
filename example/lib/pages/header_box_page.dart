@@ -219,12 +219,13 @@ class _ScrollablePageState extends State<ScrollablePage> {
             duration: Durations.long4,
           ),
         ),
-        SliverList.builder(
+        SliverList.separated(
           itemCount: 60,
           itemBuilder: (context, index) => SBBListItem(
             titleText: 'Item $index',
             onTap: () => sbbToast.show(titleText: 'Pressed Item $index', bottom: 96.0),
           ),
+          separatorBuilder: SBBDivider.separatorBuilder,
         ),
       ],
     );
