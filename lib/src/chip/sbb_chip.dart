@@ -159,7 +159,7 @@ class _SBBChipState extends State<SBBChip> {
     final label = addDefaultAncestorWithResolved(
       textStyle: labelTextStyle,
       foregroundColor: labelForegroundColor,
-      child: _resolveLabel(),
+      child: _resolveLabel(labelTextStyle),
     )!;
 
     final trailing = addDefaultAncestorWithResolved(
@@ -198,13 +198,13 @@ class _SBBChipState extends State<SBBChip> {
     );
   }
 
-  Widget _resolveLabel() {
+  Widget _resolveLabel(TextStyle? labelTextStyle) {
     if (widget.label != null) return widget.label!;
 
     return Flexible(
       child: Padding(
         padding: const .symmetric(vertical: 6.0, horizontal: 12.0),
-        child: Text(widget.labelText!, overflow: .ellipsis, maxLines: 1),
+        child: Text(widget.labelText!, overflow: .ellipsis, style: labelTextStyle, maxLines: 1),
       ),
     );
   }
