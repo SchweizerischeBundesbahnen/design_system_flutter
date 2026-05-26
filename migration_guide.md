@@ -7,6 +7,54 @@ V5 introduces a lot of breaking changes to allow for a more flexible and modern 
 > Migration can be time-consuming – expect around 1–2 person-days, depending on the size of the app. If your app is only being maintained 
 > or is due to be decommissioned soon, migration may not be necessary. Version 4 meets all the requirements of the Design System.
 
+## Partial Migrations
+
+In order to make the process of migrating smoother, we provide a way to use both DSM versions (v4 and v5)
+simultaneously.
+
+This is completely **optional** and may help if you want to migrate in steps, since there are a lot of breaking changes.
+
+1. Add both versions to your `pubspec.yaml`:
+     ```yaml
+     sbb_design_system_mobile: ^5.0.0  # or latest release
+     sbb_design_system_mobile_v4:
+       git:
+         url: git@github.com:SchweizerischeBundesbahnen/design_system_flutter.git
+         ref: migration/v4
+     ```
+2. Do a find & replace over your code base to point your existing code to the v4 branch. After this point, your project should compile again.
+     ```diff
+     - import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart'
+     + import 'package:sbb_design_system_mobile_v4/sbb_design_system_mobile.dart'
+     ```
+3. Add together both themes:
+     ```dart
+     import 'package:sbb_design_system_mobile_v4/sbb_design_system_mobile.dart' as dsm4;
+     import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+     
+     // ...
+     
+     MaterialApp.router(
+       theme: SBBTheme.light().copyWith(
+         extensions: [
+           ...SBBTheme.light().extensions.values,
+           ...dsm4.SBBTheme.light().extensions.values,
+         ],
+       ),
+       darkTheme: SBBTheme.dark().copyWith(
+         extensions: [
+           ...SBBTheme.dark().extensions.values,
+           ...dsm4.SBBTheme.dark().extensions.values,
+         ],
+       ),
+       // ...
+     )
+     ```
+
+After these steps, you can begin converting your files to use `package:sbb_design_system_mobile` according to the details provided by this guide.
+
+Once you are done, remove the reference to v4 from your `pubspec.yaml` and your theme configuration.
+
 ## Theming
 The component theming has been overhauled from using the old styles (ex. `PromotionBoxStyle`) as ThemeExtensions to ThemeData classes (ex. `SBBPromotionBoxThemeData`).
 This aligns the DSM theming style with the Flutter approach. Access them using the extension methods on `ThemeData` with `Theme.of(context).sbb[Component]Theme`.
