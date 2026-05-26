@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/header/sbb_header_style_scope.dart';
 import 'package:sbb_design_system_mobile/src/shared/debug.dart';
+import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 
 /// The SBB Header.
 ///
@@ -251,14 +252,12 @@ class _BaseHeader extends StatelessWidget {
     final effectiveStyle = themeStyle.merge(style);
 
     final resolvedLeading = _resolveLeading(context);
-    final leadingWithScope = resolvedLeading == null
-        ? null
-        : SBBHeaderStyleScope(style: effectiveStyle, child: resolvedLeading);
+    final leadingWithScope = _applyDefaultsAndStyleScope(resolvedLeading, effectiveStyle);
 
     return AppBar(
       leading: leadingWithScope,
       leadingWidth: _resolveLeadingWidth(context, resolvedLeading),
-      title: _resolveTitle(),
+      title: _resolveTitle(effectiveStyle),
       bottom: bottom,
       foregroundColor: effectiveStyle.foregroundColor,
       backgroundColor: effectiveStyle.backgroundColor,
@@ -274,6 +273,18 @@ class _BaseHeader extends StatelessWidget {
       useDefaultSemanticsOrder: useDefaultSemanticsOrder,
       excludeHeaderSemantics: excludeHeaderSemantics,
       actions: actions ?? [_sbbLogo()],
+    );
+  }
+
+  Widget? _applyDefaultsAndStyleScope(Widget? resolvedLeading, SBBHeaderStyle effectiveStyle) {
+    if (resolvedLeading == null) return null;
+
+    return addDefaultAncestorWithResolved(
+      foregroundColor: effectiveStyle.foregroundColor,
+      child: SBBHeaderStyleScope(
+        style: effectiveStyle,
+        child: resolvedLeading,
+      ),
     );
   }
 
@@ -316,11 +327,14 @@ class _BaseHeader extends StatelessWidget {
     return null;
   }
 
-  Widget? _resolveTitle() {
-    if (title == null && titleText != null) {
-      return Text(titleText!);
-    }
-    return title;
+  Widget? _resolveTitle(SBBHeaderStyle effectiveStyle) {
+    final resolvedTitle = title ?? Text(titleText!);
+
+    return addDefaultAncestorWithResolved(
+      foregroundColor: effectiveStyle.foregroundColor,
+      textStyle: effectiveStyle.titleTextStyle,
+      child: resolvedTitle,
+    );
   }
 }
 

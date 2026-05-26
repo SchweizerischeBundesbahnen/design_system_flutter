@@ -75,6 +75,7 @@ This aligns the DSM theming style with the Flutter approach. Access them using t
 * removed `primaryDarkColor`
 * removed `primarySwatch`. Is now created from `primaryColor` over `SBBColorScheme`
 * removed `defaultFontFamily`
+* removed `themedTextStyle` method. Use `baseStyle.textTheme` for text themes and `SBBColorScheme` for themed colors or 
 * moved `defaultTextStyle` to `SBBTextTheme`
 * added `textTheme`, `iconTheme`, `dividerTheme` and `textSelectionTheme`
 
