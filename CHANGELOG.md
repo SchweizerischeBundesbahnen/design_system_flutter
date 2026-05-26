@@ -7,6 +7,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 It is expected that you keep this format strictly, since we depend on it in our release workflow.
 
+## [5.0.0-dev.5] - 2026-05-26
+
+### Added
+
+- added `SBBHeaderBoxPreferredSize` and `SBBHeaderBoxFlapPreferredSize` for use in headers
+- added default bottom padding to `SBBBottomSheet`
+- added `SBBDivider.separatorBuilder`
+
+### Changed
+
+- BREAKING: removed `themedTextStyle` method from `SBBBaseStyle`
+- BREAKING: made `context` mandatory in `SBBDivider.divideItems`
+
+### Fixed
+
+- added default bottom padding to `SBBBottomSheet`
+- missing material properties on `SBBToast`
+- use correct container color for material components like Drawer
+
 
 ## [5.0.0-dev.4] - 2026-05-06
 
@@ -889,7 +908,9 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Initial project setup
 - Added some widgets
 
-[v5 migration guide]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/blob/c460cc05b2b28996e82f5a53e7bf39b87a5f5970/migration_guide.md
+[v5 migration guide]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/blob/cc71220e3153b605b502f9428fe50abf9cf7fdf1/migration_guide.md
+
+[5.0.0-dev.4]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/5.0.0-dev.4...5.0.0-dev.5
 
 [5.0.0-dev.4]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/5.0.0-dev.3...5.0.0-dev.4
 
