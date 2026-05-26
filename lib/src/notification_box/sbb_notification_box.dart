@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 
 /// The SBB Notification Box.
@@ -48,7 +49,8 @@ import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 sealed class SBBNotificationBox extends StatefulWidget {
   const SBBNotificationBox._({
     super.key,
-    required this.text,
+    this.content,
+    this.contentText,
     this.controller,
     this.title,
     this.titleText,
@@ -56,7 +58,6 @@ sealed class SBBNotificationBox extends StatefulWidget {
     this.leadingIconData,
     this.trailing,
     this.trailingIconData,
-    this.isVisible = true,
     this.onTap,
     this.onTapSemanticsHint,
     this.onDismissed,
@@ -66,12 +67,15 @@ sealed class SBBNotificationBox extends StatefulWidget {
        assert(leading == null || leadingIconData == null, 'Cannot provide both leading and leadingIconData.'),
        assert(trailing == null || trailingIconData == null, 'Cannot provide both trailing and trailingIconData.');
 
+  // TODO: assert content is given!
+
   /// Creates an alert notification box.
   ///
   /// The default leading icon is [SBBIcons.circle_cross_small].
   const factory SBBNotificationBox.alert({
     Key? key,
-    required String text,
+    Widget? content,
+    String? contentText,
     SBBNotificationBoxController? controller,
     Widget? title,
     String? titleText,
@@ -79,7 +83,6 @@ sealed class SBBNotificationBox extends StatefulWidget {
     IconData? leadingIconData,
     Widget? trailing,
     IconData? trailingIconData,
-    bool isVisible,
     GestureTapCallback? onTap,
     String? onTapSemanticsHint,
     GestureTapCallback? onDismissed,
@@ -92,7 +95,8 @@ sealed class SBBNotificationBox extends StatefulWidget {
   /// The default leading icon is [SBBIcons.circle_exclamation_point_small].
   const factory SBBNotificationBox.warning({
     Key? key,
-    required String text,
+    Widget? content,
+    String? contentText,
     SBBNotificationBoxController? controller,
     Widget? title,
     String? titleText,
@@ -100,7 +104,6 @@ sealed class SBBNotificationBox extends StatefulWidget {
     IconData? leadingIconData,
     Widget? trailing,
     IconData? trailingIconData,
-    bool isVisible,
     GestureTapCallback? onTap,
     String? onTapSemanticsHint,
     GestureTapCallback? onDismissed,
@@ -113,7 +116,8 @@ sealed class SBBNotificationBox extends StatefulWidget {
   /// The default leading icon is [SBBIcons.circle_tick_small].
   const factory SBBNotificationBox.success({
     Key? key,
-    required String text,
+    Widget? content,
+    String? contentText,
     SBBNotificationBoxController? controller,
     Widget? title,
     String? titleText,
@@ -121,7 +125,6 @@ sealed class SBBNotificationBox extends StatefulWidget {
     IconData? leadingIconData,
     Widget? trailing,
     IconData? trailingIconData,
-    bool isVisible,
     GestureTapCallback? onTap,
     String? onTapSemanticsHint,
     GestureTapCallback? onDismissed,
@@ -134,7 +137,8 @@ sealed class SBBNotificationBox extends StatefulWidget {
   /// The default leading icon is [SBBIcons.circle_information_small].
   const factory SBBNotificationBox.information({
     Key? key,
-    required String text,
+    Widget? content,
+    String? contentText,
     SBBNotificationBoxController? controller,
     Widget? title,
     String? titleText,
@@ -142,7 +146,6 @@ sealed class SBBNotificationBox extends StatefulWidget {
     IconData? leadingIconData,
     Widget? trailing,
     IconData? trailingIconData,
-    bool isVisible,
     GestureTapCallback? onTap,
     String? onTapSemanticsHint,
     GestureTapCallback? onDismissed,
@@ -155,8 +158,11 @@ sealed class SBBNotificationBox extends StatefulWidget {
   /// If not provided, an internal controller is created automatically.
   final SBBNotificationBoxController? controller;
 
+  /// TODO:
+  final Widget? content;
+
   /// The body text of the notification.
-  final String text;
+  final String? contentText;
 
   /// A custom widget displayed as the notification title.
   ///
@@ -196,14 +202,6 @@ sealed class SBBNotificationBox extends StatefulWidget {
   /// Cannot be used together with [trailing].
   final IconData? trailingIconData;
 
-  /// Whether the notification box is visible.
-  ///
-  /// When this value changes, the widget animates between shown and
-  /// dismissed states. Set to `false` to dismiss with animation.
-  ///
-  /// Defaults to `true`.
-  final bool isVisible;
-
   /// The semantic hint used if the notification box is tappable. See [onTap].
   final String? onTapSemanticsHint;
 
@@ -239,7 +237,8 @@ sealed class SBBNotificationBox extends StatefulWidget {
 final class _SBBNotificationBoxAlert extends SBBNotificationBox {
   const _SBBNotificationBoxAlert({
     super.key,
-    required super.text,
+    super.content,
+    super.contentText,
     super.controller,
     super.title,
     super.titleText,
@@ -247,7 +246,6 @@ final class _SBBNotificationBoxAlert extends SBBNotificationBox {
     IconData? leadingIconData,
     super.trailing,
     super.trailingIconData,
-    super.isVisible,
     super.onTap,
     super.onTapSemanticsHint,
     super.onDismissed,
@@ -266,7 +264,8 @@ final class _SBBNotificationBoxAlert extends SBBNotificationBox {
 final class _SBBNotificationBoxWarning extends SBBNotificationBox {
   const _SBBNotificationBoxWarning({
     super.key,
-    required super.text,
+    super.content,
+    super.contentText,
     super.controller,
     super.title,
     super.titleText,
@@ -274,7 +273,6 @@ final class _SBBNotificationBoxWarning extends SBBNotificationBox {
     IconData? leadingIconData,
     super.trailing,
     super.trailingIconData,
-    super.isVisible,
     super.onTap,
     super.onTapSemanticsHint,
     super.onDismissed,
@@ -295,7 +293,8 @@ final class _SBBNotificationBoxWarning extends SBBNotificationBox {
 final class _SBBNotificationBoxSuccess extends SBBNotificationBox {
   const _SBBNotificationBoxSuccess({
     super.key,
-    required super.text,
+    super.content,
+    super.contentText,
     super.controller,
     super.title,
     super.titleText,
@@ -303,7 +302,6 @@ final class _SBBNotificationBoxSuccess extends SBBNotificationBox {
     IconData? leadingIconData,
     super.trailing,
     super.trailingIconData,
-    super.isVisible,
     super.onTap,
     super.onTapSemanticsHint,
     super.onDismissed,
@@ -322,7 +320,8 @@ final class _SBBNotificationBoxSuccess extends SBBNotificationBox {
 final class _SBBNotificationBoxInformation extends SBBNotificationBox {
   const _SBBNotificationBoxInformation({
     super.key,
-    required super.text,
+    super.content,
+    super.contentText,
     super.controller,
     super.title,
     super.titleText,
@@ -330,7 +329,6 @@ final class _SBBNotificationBoxInformation extends SBBNotificationBox {
     IconData? leadingIconData,
     super.trailing,
     super.trailingIconData,
-    super.isVisible,
     super.onTap,
     super.onTapSemanticsHint,
     super.onDismissed,
@@ -387,164 +385,154 @@ class _SBBNotificationBoxState extends State<SBBNotificationBox> with SingleTick
     super.dispose();
   }
 
-  bool get _hasTitle => widget.title != null || widget.titleText != null;
-
-  bool get _hasTrailing => widget.trailing != null || widget.trailingIconData != null;
-
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasSBBBaseStyle(context));
+
     final themedStyle = widget._getThemedStyle(context)!;
     final effectiveStyle = themedStyle.merge(widget.style);
 
-    final resolvedBackgroundColor = effectiveStyle.backgroundColor!;
-    final resolvedBorderColor = effectiveStyle.borderColor!;
-    final resolvedForegroundColor = effectiveStyle.foregroundColor!;
-    final resolvedIconColor = effectiveStyle.iconColor!;
-    final resolvedAlphaValue = effectiveStyle.alphaValue!;
-    final resolvedTextStyle = effectiveStyle.textStyle!;
-    final resolvedTitleTextStyle = effectiveStyle.titleTextStyle!;
+    final content = addDefaultAncestorWithResolved(
+      foregroundColor: effectiveStyle.foregroundColor,
+      child: _hasTitle ? _defaultLayout(effectiveStyle) : _titlelessLayout(effectiveStyle),
+    )!;
 
-    return _animationBuilder(
-      animation: _animationController,
+    return Semantics(
+      container: true,
+      label: widget.semanticLabel,
+      excludeSemantics: widget.semanticLabel != null,
+      child: _animationBuilder(
+        animation: _animationController,
+        child: _tappableBackground(style: effectiveStyle, child: content),
+      ),
+    );
+  }
+
+  Material _tappableBackground({
+    required SBBNotificationBoxStyle style,
+    required Widget child,
+  }) {
+    return Material(
+      color: SBBColors.transparent,
       child: Semantics(
-        container: true,
-        label: widget.semanticLabel,
-        excludeSemantics: widget.semanticLabel != null,
-        child: Stack(
-          children: [
-            Material(
-              color: SBBColors.transparent,
-              child: Semantics(
-                onTapHint: widget.onTap != null ? widget.onTapSemanticsHint : null,
-                child: InkWell(
-                  overlayColor: effectiveStyle.overlayColor,
-                  borderRadius: SBBNotificationBoxStyle.outerBorderRadius,
-                  onTap: widget.onTap,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      border: Border(
-                        left: BorderSide(
-                          color: resolvedBackgroundColor,
-                          width: SBBNotificationBoxStyle.leftBorderWidth,
-                        ),
-                      ),
-                      borderRadius: SBBNotificationBoxStyle.outerBorderRadius,
-                    ),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(color: resolvedBorderColor),
-                        borderRadius: SBBNotificationBoxStyle.innerBorderRadius,
-                        color: resolvedBackgroundColor.withValues(alpha: resolvedAlphaValue),
-                      ),
-                      padding: const EdgeInsets.all(SBBSpacing.medium),
-                      child: DefaultTextStyle.merge(
-                        style: resolvedTextStyle.copyWith(color: resolvedForegroundColor),
-                        child: IconTheme.merge(
-                          data: IconThemeData(color: resolvedForegroundColor),
-                          child: _hasTitle
-                              ? _buildTitleLayout(
-                                  resolvedIconColor: resolvedIconColor,
-                                  resolvedTitleTextStyle: resolvedTitleTextStyle,
-                                  resolvedForegroundColor: resolvedForegroundColor,
-                                )
-                              : _buildFlatLayout(
-                                  resolvedIconColor: resolvedIconColor,
-                                ),
-                        ),
-                      ),
-                    ),
-                  ),
+        onTapHint: widget.onTap != null ? widget.onTapSemanticsHint : null,
+        child: InkWell(
+          overlayColor: style.overlayColor,
+          borderRadius: SBBNotificationBoxStyle.outerBorderRadius,
+          onTap: widget.onTap,
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border(
+                left: BorderSide(
+                  color: style.backgroundColor!,
+                  width: SBBNotificationBoxStyle.leftBorderWidth,
                 ),
               ),
+              borderRadius: SBBNotificationBoxStyle.outerBorderRadius,
             ),
-            if (_isDismissible)
-              Align(
-                alignment: Alignment.topRight,
-                child: Padding(
-                  padding: const EdgeInsets.only(top: SBBSpacing.medium, right: SBBSpacing.medium),
-                  child: _dismissButton(context, effectiveStyle),
-                ),
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: style.borderColor!),
+                borderRadius: SBBNotificationBoxStyle.innerBorderRadius,
+                color: style.backgroundColor!.withValues(alpha: style.alphaValue),
               ),
-          ],
+              padding: const EdgeInsets.all(SBBSpacing.medium), // TODO: add paddings to style
+              child: child,
+            ),
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildFlatLayout({
-    required Color resolvedIconColor,
-  }) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        _buildLeading(resolvedIconColor),
-        const SizedBox(width: 8.0),
-        Expanded(child: _buildTextContent()),
-        if (_isDismissible) const SizedBox(width: sbbIconSizeSmall),
-      ],
+  Widget _titlelessLayout(SBBNotificationBoxStyle effectiveStyle) {
+    final resolvedTrailing = _resolveTrailing();
+    return IntrinsicHeight(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        spacing: SBBSpacing.xSmall,
+        children: [
+          _resolveLeading(effectiveStyle),
+          Expanded(child: _resolveContent(effectiveStyle)),
+          if (resolvedTrailing != null || _isDismissible)
+            Column(
+              children: [
+                ?_dismissButton(context, effectiveStyle),
+                if (resolvedTrailing != null)
+                  Expanded(
+                    child: Center(child: resolvedTrailing),
+                  ),
+              ],
+            ),
+        ],
+      ),
     );
   }
 
-  Widget _buildTitleLayout({
-    required Color resolvedIconColor,
-    required TextStyle resolvedTitleTextStyle,
-    required Color resolvedForegroundColor,
-  }) {
+  Widget _defaultLayout(SBBNotificationBoxStyle effectiveStyle) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
+      spacing: SBBSpacing.xSmall,
       children: [
         Row(
+          spacing: SBBSpacing.xSmall,
           children: [
-            _buildLeading(resolvedIconColor),
-            const SizedBox(width: 8.0),
-            Expanded(child: _buildTitle(resolvedTitleTextStyle, resolvedForegroundColor)),
+            _resolveLeading(effectiveStyle),
+            Expanded(child: _resolveTitle(effectiveStyle)!),
+            ?_dismissButton(context, effectiveStyle),
           ],
         ),
-        const SizedBox(height: 8.0),
-        _buildTextContent(),
-      ],
-    );
-  }
-
-  Widget _buildLeading(Color iconColor) {
-    if (widget.leading != null) return widget.leading!;
-
-    if (widget.leadingIconData == null) return const SizedBox.shrink();
-
-    return Icon(widget.leadingIconData, color: iconColor);
-  }
-
-  Widget _buildTitle(TextStyle titleTextStyle, Color foregroundColor) {
-    if (widget.title != null) return widget.title!;
-
-    return Text(
-      widget.titleText!,
-      style: titleTextStyle.copyWith(color: foregroundColor),
-    );
-  }
-
-  Widget _buildTextContent() {
-    return Row(
-      children: [
-        Expanded(
-          child: Text(
-            widget.text,
-            maxLines: 3,
-            overflow: TextOverflow.ellipsis,
-          ),
+        Row(
+          children: [
+            Expanded(child: _resolveContent(effectiveStyle)),
+            ?_resolveTrailing(),
+          ],
         ),
-        if (_hasTrailing) ...[
-          const SizedBox(width: 8.0),
-          _buildTrailing(),
-        ],
       ],
     );
   }
 
-  Widget _buildTrailing() {
-    if (widget.trailing != null) return widget.trailing!;
-    return Icon(widget.trailingIconData);
+  Widget _resolveLeading(SBBNotificationBoxStyle effectiveStyle) {
+    return addDefaultAncestorWithResolved(
+      foregroundColor: effectiveStyle.iconColor,
+      child: widget.leading ?? Icon(widget.leadingIconData),
+    )!;
+  }
+
+  Widget? _resolveTitle(SBBNotificationBoxStyle effectiveStyle) {
+    var title = widget.title;
+    if (widget.titleText != null) {
+      title = Text(widget.titleText!);
+    }
+
+    return addDefaultAncestorWithResolved(
+      foregroundColor: effectiveStyle.foregroundColor,
+      textStyle: effectiveStyle.titleTextStyle,
+      child: title,
+    );
+  }
+
+  Widget _resolveContent(SBBNotificationBoxStyle effectiveStyle) {
+    var content = widget.content;
+    if (widget.contentText != null) {
+      content = Text(
+        widget.contentText!,
+        maxLines: 3, // TODO: Add to style
+        overflow: TextOverflow.ellipsis,
+      );
+    }
+
+    return addDefaultAncestorWithResolved(
+      foregroundColor: effectiveStyle.foregroundColor,
+      textStyle: effectiveStyle.contentTextStyle,
+      child: content,
+    )!;
+  }
+
+  Widget? _resolveTrailing() {
+    if (widget.trailingIconData != null) return Icon(widget.trailingIconData);
+    return widget.trailing;
   }
 
   Widget? _dismissButton(BuildContext context, SBBNotificationBoxStyle effectiveStyle) {
@@ -579,4 +567,6 @@ class _SBBNotificationBoxState extends State<SBBNotificationBox> with SingleTick
   }
 
   void _animate() => _animationController.animateTo(_effectiveController.value ? 1.0 : 0.0);
+
+  bool get _hasTitle => widget.title != null || widget.titleText != null;
 }

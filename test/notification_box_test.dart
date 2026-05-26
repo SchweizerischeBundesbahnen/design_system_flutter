@@ -12,9 +12,9 @@ void main() {
   testWidgets('alert notification box test', (WidgetTester tester) async {
     final widget = Column(
       children: [
-        SBBNotificationBox.alert(titleText: title, text: text, onTap: () {}),
+        SBBNotificationBox.alert(titleText: title, contentText: text, onTap: () {}),
         const SizedBox(height: SBBSpacing.medium),
-        SBBNotificationBox.alert(text: text),
+        SBBNotificationBox.alert(contentText: text),
       ],
     );
 
@@ -30,9 +30,9 @@ void main() {
   testWidgets('warning notification box test', (WidgetTester tester) async {
     final widget = Column(
       children: [
-        SBBNotificationBox.warning(titleText: title, text: text, onTap: () {}),
+        SBBNotificationBox.warning(titleText: title, contentText: text, onTap: () {}),
         const SizedBox(height: SBBSpacing.medium),
-        SBBNotificationBox.warning(text: text),
+        SBBNotificationBox.warning(contentText: text),
       ],
     );
 
@@ -48,9 +48,9 @@ void main() {
   testWidgets('success notification box test', (WidgetTester tester) async {
     final widget = Column(
       children: [
-        SBBNotificationBox.success(titleText: title, text: text, onTap: () {}),
+        SBBNotificationBox.success(titleText: title, contentText: text, onTap: () {}),
         const SizedBox(height: SBBSpacing.medium),
-        SBBNotificationBox.success(text: text),
+        SBBNotificationBox.success(contentText: text),
       ],
     );
 
@@ -66,9 +66,9 @@ void main() {
   testWidgets('information notification box test', (WidgetTester tester) async {
     final widget = Column(
       children: [
-        SBBNotificationBox.information(titleText: title, text: text, onTap: () {}),
+        SBBNotificationBox.information(titleText: title, contentText: text, onTap: () {}),
         const SizedBox(height: SBBSpacing.medium),
-        SBBNotificationBox.information(text: text),
+        SBBNotificationBox.information(contentText: text),
       ],
     );
 

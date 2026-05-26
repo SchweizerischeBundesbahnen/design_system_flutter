@@ -15,7 +15,7 @@ import 'package:flutter/material.dart';
 /// * [SBBNotificationBoxThemeData], which applies this style theme-wide.
 class SBBNotificationBoxStyle {
   const SBBNotificationBoxStyle({
-    this.textStyle,
+    this.contentTextStyle,
     this.titleTextStyle,
     this.foregroundColor,
     this.backgroundColor,
@@ -27,11 +27,11 @@ class SBBNotificationBoxStyle {
     this.overlayColor,
   });
 
-  /// The text style for the notification body text.
+  /// The text style for the notification content text.
   ///
-  /// The color of the [textStyle] is typically not used directly, the
+  /// The color of the [contentTextStyle] is typically not used directly, the
   /// [foregroundColor] is used instead.
-  final TextStyle? textStyle;
+  final TextStyle? contentTextStyle;
 
   /// The text style for the notification title.
   ///
@@ -101,7 +101,7 @@ class SBBNotificationBoxStyle {
   static const double leftBorderWidth = 8.0;
 
   SBBNotificationBoxStyle copyWith({
-    TextStyle? textStyle,
+    TextStyle? contentTextStyle,
     TextStyle? titleTextStyle,
     Color? foregroundColor,
     Color? backgroundColor,
@@ -113,7 +113,7 @@ class SBBNotificationBoxStyle {
     IconData? leadingIconData,
   }) {
     return SBBNotificationBoxStyle(
-      textStyle: textStyle ?? this.textStyle,
+      contentTextStyle: contentTextStyle ?? this.contentTextStyle,
       titleTextStyle: titleTextStyle ?? this.titleTextStyle,
       foregroundColor: foregroundColor ?? this.foregroundColor,
       backgroundColor: backgroundColor ?? this.backgroundColor,
@@ -130,7 +130,7 @@ class SBBNotificationBoxStyle {
     if (other == null) return this;
 
     return copyWith(
-      textStyle: other.textStyle,
+      contentTextStyle: other.contentTextStyle,
       titleTextStyle: other.titleTextStyle,
       foregroundColor: other.foregroundColor,
       backgroundColor: other.backgroundColor,
@@ -151,7 +151,7 @@ class SBBNotificationBoxStyle {
     if (identical(a, b)) return a;
 
     return SBBNotificationBoxStyle(
-      textStyle: TextStyle.lerp(a?.textStyle, b?.textStyle, t),
+      contentTextStyle: TextStyle.lerp(a?.contentTextStyle, b?.contentTextStyle, t),
       titleTextStyle: TextStyle.lerp(a?.titleTextStyle, b?.titleTextStyle, t),
       foregroundColor: Color.lerp(a?.foregroundColor, b?.foregroundColor, t),
       backgroundColor: Color.lerp(a?.backgroundColor, b?.backgroundColor, t),
@@ -169,7 +169,7 @@ class SBBNotificationBoxStyle {
       identical(this, other) ||
       other is SBBNotificationBoxStyle &&
           runtimeType == other.runtimeType &&
-          textStyle == other.textStyle &&
+          contentTextStyle == other.contentTextStyle &&
           titleTextStyle == other.titleTextStyle &&
           foregroundColor == other.foregroundColor &&
           backgroundColor == other.backgroundColor &&
@@ -182,7 +182,7 @@ class SBBNotificationBoxStyle {
 
   @override
   int get hashCode => Object.hash(
-    textStyle,
+    contentTextStyle,
     titleTextStyle,
     foregroundColor,
     backgroundColor,
