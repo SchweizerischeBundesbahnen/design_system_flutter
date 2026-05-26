@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-import 'package:sbb_design_system_mobile/src/shared/close_button.dart';
-import 'package:sbb_design_system_mobile/src/shared/transparent_tappable_element.dart';
+import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 
 /// The SBB Notification Box.
 ///
@@ -50,6 +49,7 @@ sealed class SBBNotificationBox extends StatefulWidget {
   const SBBNotificationBox._({
     super.key,
     required this.text,
+    this.controller,
     this.title,
     this.titleText,
     this.leading,
@@ -58,9 +58,8 @@ sealed class SBBNotificationBox extends StatefulWidget {
     this.trailingIconData,
     this.isVisible = true,
     this.onTap,
-    this.isDismissible = true,
-    this.onDismissRequested,
-    this.onDismissCompleted,
+    this.onTapSemanticsHint,
+    this.onDismissed,
     this.style,
     this.semanticLabel,
   }) : assert(title == null || titleText == null, 'Cannot provide both title and titleText.'),
@@ -73,6 +72,7 @@ sealed class SBBNotificationBox extends StatefulWidget {
   const factory SBBNotificationBox.alert({
     Key? key,
     required String text,
+    SBBNotificationBoxController? controller,
     Widget? title,
     String? titleText,
     Widget? leading,
@@ -81,9 +81,8 @@ sealed class SBBNotificationBox extends StatefulWidget {
     IconData? trailingIconData,
     bool isVisible,
     GestureTapCallback? onTap,
-    bool isDismissible,
-    VoidCallback? onDismissRequested,
-    VoidCallback? onDismissCompleted,
+    String? onTapSemanticsHint,
+    GestureTapCallback? onDismissed,
     SBBNotificationBoxStyle? style,
     String? semanticLabel,
   }) = _SBBNotificationBoxAlert;
@@ -94,6 +93,7 @@ sealed class SBBNotificationBox extends StatefulWidget {
   const factory SBBNotificationBox.warning({
     Key? key,
     required String text,
+    SBBNotificationBoxController? controller,
     Widget? title,
     String? titleText,
     Widget? leading,
@@ -102,9 +102,8 @@ sealed class SBBNotificationBox extends StatefulWidget {
     IconData? trailingIconData,
     bool isVisible,
     GestureTapCallback? onTap,
-    bool isDismissible,
-    VoidCallback? onDismissRequested,
-    VoidCallback? onDismissCompleted,
+    String? onTapSemanticsHint,
+    GestureTapCallback? onDismissed,
     SBBNotificationBoxStyle? style,
     String? semanticLabel,
   }) = _SBBNotificationBoxWarning;
@@ -115,6 +114,7 @@ sealed class SBBNotificationBox extends StatefulWidget {
   const factory SBBNotificationBox.success({
     Key? key,
     required String text,
+    SBBNotificationBoxController? controller,
     Widget? title,
     String? titleText,
     Widget? leading,
@@ -123,9 +123,8 @@ sealed class SBBNotificationBox extends StatefulWidget {
     IconData? trailingIconData,
     bool isVisible,
     GestureTapCallback? onTap,
-    bool isDismissible,
-    VoidCallback? onDismissRequested,
-    VoidCallback? onDismissCompleted,
+    String? onTapSemanticsHint,
+    GestureTapCallback? onDismissed,
     SBBNotificationBoxStyle? style,
     String? semanticLabel,
   }) = _SBBNotificationBoxSuccess;
@@ -136,6 +135,7 @@ sealed class SBBNotificationBox extends StatefulWidget {
   const factory SBBNotificationBox.information({
     Key? key,
     required String text,
+    SBBNotificationBoxController? controller,
     Widget? title,
     String? titleText,
     Widget? leading,
@@ -144,12 +144,16 @@ sealed class SBBNotificationBox extends StatefulWidget {
     IconData? trailingIconData,
     bool isVisible,
     GestureTapCallback? onTap,
-    bool isDismissible,
-    VoidCallback? onDismissRequested,
-    VoidCallback? onDismissCompleted,
+    String? onTapSemanticsHint,
+    GestureTapCallback? onDismissed,
     SBBNotificationBoxStyle? style,
     String? semanticLabel,
   }) = _SBBNotificationBoxInformation;
+
+  /// An optional controller to programmatically show and hide the [SBBNotificationBox].
+  ///
+  /// If not provided, an internal controller is created automatically.
+  final SBBNotificationBoxController? controller;
 
   /// The body text of the notification.
   final String text;
@@ -200,36 +204,20 @@ sealed class SBBNotificationBox extends StatefulWidget {
   /// Defaults to `true`.
   final bool isVisible;
 
-  /// Called when the notification box is tapped.
+  /// The semantic hint used if the notification box is tappable. See [onTap].
+  final String? onTapSemanticsHint;
+
+  /// Callback when the user taps the notification box except on the dismiss button.
   final GestureTapCallback? onTap;
 
-  /// Whether the notification box can be dismissed by the user.
+  /// Callback invoked once the user taps the dismiss button.
   ///
-  /// When `true`, a close button is displayed in the top-right corner.
+  /// If non null, an inline [InkWell] close button is displayed in the title row.
+  /// Tapping it will hide the promotion box via the [SBBNotificationBoxController]
+  /// and invoke [onDismissed].
   ///
-  /// Defaults to `true`.
-  final bool isDismissible;
-
-  /// Called when the user taps the close button.
-  ///
-  /// The parent widget is responsible for setting [isVisible] to `false`
-  /// in response to this callback in order to trigger the dismiss animation.
-  ///
-  /// Typical usage:
-  /// ```dart
-  /// SBBNotificationBox.alert(
-  ///   text: 'Error occurred',
-  ///   isVisible: _showError,
-  ///   onDismissRequested: () => setState(() => _showError = false),
-  /// )
-  /// ```
-  final VoidCallback? onDismissRequested;
-
-  /// Called after the dismiss animation completes.
-  ///
-  /// This can be used to remove the widget from the tree entirely or
-  /// perform cleanup after the notification has been dismissed.
-  final VoidCallback? onDismissCompleted;
+  /// This will not be invoked if the hiding is done through the [SBBNotificationBoxController].
+  final GestureTapCallback? onDismissed;
 
   /// Customizes the appearance of this notification box.
   ///
@@ -252,6 +240,7 @@ final class _SBBNotificationBoxAlert extends SBBNotificationBox {
   const _SBBNotificationBoxAlert({
     super.key,
     required super.text,
+    super.controller,
     super.title,
     super.titleText,
     super.leading,
@@ -260,9 +249,8 @@ final class _SBBNotificationBoxAlert extends SBBNotificationBox {
     super.trailingIconData,
     super.isVisible,
     super.onTap,
-    super.isDismissible,
-    super.onDismissRequested,
-    super.onDismissCompleted,
+    super.onTapSemanticsHint,
+    super.onDismissed,
     super.style,
     super.semanticLabel,
   }) : super._(
@@ -279,6 +267,7 @@ final class _SBBNotificationBoxWarning extends SBBNotificationBox {
   const _SBBNotificationBoxWarning({
     super.key,
     required super.text,
+    super.controller,
     super.title,
     super.titleText,
     super.leading,
@@ -287,9 +276,8 @@ final class _SBBNotificationBoxWarning extends SBBNotificationBox {
     super.trailingIconData,
     super.isVisible,
     super.onTap,
-    super.isDismissible,
-    super.onDismissRequested,
-    super.onDismissCompleted,
+    super.onTapSemanticsHint,
+    super.onDismissed,
     super.style,
     super.semanticLabel,
   }) : super._(
@@ -308,6 +296,7 @@ final class _SBBNotificationBoxSuccess extends SBBNotificationBox {
   const _SBBNotificationBoxSuccess({
     super.key,
     required super.text,
+    super.controller,
     super.title,
     super.titleText,
     super.leading,
@@ -316,9 +305,8 @@ final class _SBBNotificationBoxSuccess extends SBBNotificationBox {
     super.trailingIconData,
     super.isVisible,
     super.onTap,
-    super.isDismissible,
-    super.onDismissRequested,
-    super.onDismissCompleted,
+    super.onTapSemanticsHint,
+    super.onDismissed,
     super.style,
     super.semanticLabel,
   }) : super._(
@@ -335,6 +323,7 @@ final class _SBBNotificationBoxInformation extends SBBNotificationBox {
   const _SBBNotificationBoxInformation({
     super.key,
     required super.text,
+    super.controller,
     super.title,
     super.titleText,
     super.leading,
@@ -343,9 +332,8 @@ final class _SBBNotificationBoxInformation extends SBBNotificationBox {
     super.trailingIconData,
     super.isVisible,
     super.onTap,
-    super.isDismissible,
-    super.onDismissRequested,
-    super.onDismissCompleted,
+    super.onTapSemanticsHint,
+    super.onDismissed,
     super.style,
     super.semanticLabel,
   }) : super._(
@@ -361,37 +349,41 @@ final class _SBBNotificationBoxInformation extends SBBNotificationBox {
 }
 
 class _SBBNotificationBoxState extends State<SBBNotificationBox> with SingleTickerProviderStateMixin {
-  late final AnimationController _animationController;
+  SBBNotificationBoxController? _internalController;
 
-  static const _animationDuration = Duration(milliseconds: 300);
+  SBBNotificationBoxController get _effectiveController =>
+      widget.controller ?? (_internalController ??= SBBNotificationBoxController());
+
+  bool get _isDismissible => widget.onDismissed != null;
+
+  late final AnimationController _animationController;
 
   @override
   void initState() {
     super.initState();
     _animationController = AnimationController(
       vsync: this,
-      duration: _animationDuration,
-      value: widget.isVisible ? 1.0 : 0.0,
+      value: _effectiveController.value ? 1.0 : 0.0,
+      duration: kThemeAnimationDuration,
     );
+    _effectiveController.addListener(_animate);
   }
 
   @override
   void didUpdateWidget(covariant SBBNotificationBox oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.isVisible != oldWidget.isVisible) {
-      if (widget.isVisible) {
-        _animationController.forward();
-      } else {
-        _animationController.reverse().then((_) {
-          widget.onDismissCompleted?.call();
-        });
-      }
+    if (widget.controller != oldWidget.controller) {
+      oldWidget.controller?.removeListener(_animate);
+      _effectiveController.addListener(_animate);
+      if (widget.controller?.value != oldWidget.controller?.value) _animate();
     }
   }
 
   @override
   void dispose() {
+    _effectiveController.removeListener(_animate);
     _animationController.dispose();
+    _internalController?.dispose();
     super.dispose();
   }
 
@@ -401,79 +393,79 @@ class _SBBNotificationBoxState extends State<SBBNotificationBox> with SingleTick
 
   @override
   Widget build(BuildContext context) {
-    final SBBNotificationBoxStyle themedStyle = widget._getThemedStyle(context)!;
-    final SBBNotificationBoxStyle effectiveStyle = themedStyle.merge(widget.style);
+    final themedStyle = widget._getThemedStyle(context)!;
+    final effectiveStyle = themedStyle.merge(widget.style);
 
-    final Color resolvedBackgroundColor = effectiveStyle.backgroundColor!;
-    final Color resolvedBorderColor = effectiveStyle.borderColor!;
-    final Color resolvedForegroundColor = effectiveStyle.foregroundColor!;
-    final Color resolvedIconColor = effectiveStyle.iconColor!;
-    final double resolvedAlphaValue = effectiveStyle.alphaValue!;
-    final TextStyle resolvedTextStyle = effectiveStyle.textStyle!;
-    final TextStyle resolvedTitleTextStyle = effectiveStyle.titleTextStyle!;
+    final resolvedBackgroundColor = effectiveStyle.backgroundColor!;
+    final resolvedBorderColor = effectiveStyle.borderColor!;
+    final resolvedForegroundColor = effectiveStyle.foregroundColor!;
+    final resolvedIconColor = effectiveStyle.iconColor!;
+    final resolvedAlphaValue = effectiveStyle.alphaValue!;
+    final resolvedTextStyle = effectiveStyle.textStyle!;
+    final resolvedTitleTextStyle = effectiveStyle.titleTextStyle!;
 
-    return SizeTransition(
-      axisAlignment: -1.0,
-      sizeFactor: _animationController,
-      child: FadeTransition(
-        opacity: _animationController,
-        child: Semantics(
-          container: true,
-          label: widget.semanticLabel,
-          excludeSemantics: widget.semanticLabel != null,
-          child: Stack(
-            children: [
-              TransparentTappableElement.roundedBox(
-                onTap: widget.onTap,
-                child: Container(
-                  decoration: BoxDecoration(
-                    border: Border(
-                      left: BorderSide(
-                        color: resolvedBackgroundColor,
-                        width: SBBNotificationBoxStyle.leftBorderWidth,
-                      ),
-                    ),
-                    borderRadius: SBBNotificationBoxStyle.outerBorderRadius,
-                  ),
+    return _animationBuilder(
+      animation: _animationController,
+      child: Semantics(
+        container: true,
+        label: widget.semanticLabel,
+        excludeSemantics: widget.semanticLabel != null,
+        child: Stack(
+          children: [
+            Material(
+              color: SBBColors.transparent,
+              child: Semantics(
+                onTapHint: widget.onTap != null ? widget.onTapSemanticsHint : null,
+                child: InkWell(
+                  overlayColor: effectiveStyle.overlayColor,
+                  borderRadius: SBBNotificationBoxStyle.outerBorderRadius,
+                  onTap: widget.onTap,
                   child: Container(
                     decoration: BoxDecoration(
-                      border: Border.all(color: resolvedBorderColor),
-                      borderRadius: SBBNotificationBoxStyle.innerBorderRadius,
-                      color: resolvedBackgroundColor.withValues(alpha: resolvedAlphaValue),
+                      border: Border(
+                        left: BorderSide(
+                          color: resolvedBackgroundColor,
+                          width: SBBNotificationBoxStyle.leftBorderWidth,
+                        ),
+                      ),
+                      borderRadius: SBBNotificationBoxStyle.outerBorderRadius,
                     ),
-                    padding: const EdgeInsets.all(SBBSpacing.medium),
-                    child: DefaultTextStyle.merge(
-                      style: resolvedTextStyle.copyWith(color: resolvedForegroundColor),
-                      child: IconTheme.merge(
-                        data: IconThemeData(color: resolvedForegroundColor),
-                        child: _hasTitle
-                            ? _buildTitleLayout(
-                                resolvedIconColor: resolvedIconColor,
-                                resolvedTitleTextStyle: resolvedTitleTextStyle,
-                                resolvedForegroundColor: resolvedForegroundColor,
-                              )
-                            : _buildFlatLayout(
-                                resolvedIconColor: resolvedIconColor,
-                              ),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: resolvedBorderColor),
+                        borderRadius: SBBNotificationBoxStyle.innerBorderRadius,
+                        color: resolvedBackgroundColor.withValues(alpha: resolvedAlphaValue),
+                      ),
+                      padding: const EdgeInsets.all(SBBSpacing.medium),
+                      child: DefaultTextStyle.merge(
+                        style: resolvedTextStyle.copyWith(color: resolvedForegroundColor),
+                        child: IconTheme.merge(
+                          data: IconThemeData(color: resolvedForegroundColor),
+                          child: _hasTitle
+                              ? _buildTitleLayout(
+                                  resolvedIconColor: resolvedIconColor,
+                                  resolvedTitleTextStyle: resolvedTitleTextStyle,
+                                  resolvedForegroundColor: resolvedForegroundColor,
+                                )
+                              : _buildFlatLayout(
+                                  resolvedIconColor: resolvedIconColor,
+                                ),
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-              if (widget.isDismissible)
-                Align(
-                  alignment: Alignment.topRight,
-                  child: Padding(
-                    padding: const EdgeInsets.only(top: 4.0, right: 4.0),
-                    child: SBBCloseButton(
-                      onTap: () {
-                        widget.onDismissRequested?.call();
-                      },
-                    ),
-                  ),
+            ),
+            if (_isDismissible)
+              Align(
+                alignment: Alignment.topRight,
+                child: Padding(
+                  padding: const EdgeInsets.only(top: SBBSpacing.medium, right: SBBSpacing.medium),
+                  child: _dismissButton(context, effectiveStyle),
                 ),
-            ],
-          ),
+              ),
+          ],
         ),
       ),
     );
@@ -488,7 +480,7 @@ class _SBBNotificationBoxState extends State<SBBNotificationBox> with SingleTick
         _buildLeading(resolvedIconColor),
         const SizedBox(width: 8.0),
         Expanded(child: _buildTextContent()),
-        if (widget.isDismissible) const SizedBox(width: sbbIconSizeSmall),
+        if (_isDismissible) const SizedBox(width: sbbIconSizeSmall),
       ],
     );
   }
@@ -554,4 +546,37 @@ class _SBBNotificationBoxState extends State<SBBNotificationBox> with SingleTick
     if (widget.trailing != null) return widget.trailing!;
     return Icon(widget.trailingIconData);
   }
+
+  Widget? _dismissButton(BuildContext context, SBBNotificationBoxStyle effectiveStyle) {
+    if (!_isDismissible) return null;
+    return Material(
+      borderRadius: .circular(sbbIconSizeSmall),
+      color: SBBColors.transparent,
+      child: Semantics(
+        label: MaterialLocalizations.of(context).closeButtonTooltip,
+        button: true,
+        child: InkWell(
+          borderRadius: .circular(sbbIconSizeSmall),
+          onTap: () {
+            _effectiveController.hide();
+            widget.onDismissed?.call();
+          },
+          child: addDefaultAncestorWithResolved(
+            child: const Icon(SBBIcons.cross_tiny_small, size: sbbIconSizeSmall),
+            foregroundColor: effectiveStyle.dismissButtonForegroundColor,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _animationBuilder({required Animation<double> animation, required Widget child}) {
+    return SizeTransition(
+      axisAlignment: -1.0,
+      sizeFactor: animation,
+      child: FadeTransition(opacity: animation, child: child),
+    );
+  }
+
+  void _animate() => _animationController.animateTo(_effectiveController.value ? 1.0 : 0.0);
 }

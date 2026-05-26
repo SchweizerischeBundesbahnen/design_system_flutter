@@ -23,26 +23,26 @@ class _NotificationBoxPage extends State<NotificationBoxPage> {
           SBBContentBox(
             padding: const .all(SBBSpacing.medium),
             child: Column(
+              spacing: SBBSpacing.medium,
               children: [
-                SBBNotificationBox.alert(titleText: title, text: text, onTap: () {}),
-                const SizedBox(height: SBBSpacing.medium),
-                SBBNotificationBox.alert(text: text),
-                const SizedBox(height: SBBSpacing.medium),
                 SBBNotificationBox.alert(
                   titleText: title,
                   text: text,
                   onTap: () {},
-                  isDismissible: false,
+                  onDismissed: () {},
+                ),
+                SBBNotificationBox.alert(text: text, onDismissed: () {}),
+                SBBNotificationBox.alert(
+                  titleText: title,
+                  text: text,
+                  onTap: () {},
                   trailingIconData: SBBIcons.arrows_circle_small,
                 ),
-                const SizedBox(height: SBBSpacing.medium),
                 SBBNotificationBox.alert(
                   text: text,
                   onTap: () {},
-                  isDismissible: false,
                   trailingIconData: SBBIcons.arrows_circle_small,
                 ),
-                const SizedBox(height: SBBSpacing.medium),
               ],
             ),
           ),
@@ -50,23 +50,19 @@ class _NotificationBoxPage extends State<NotificationBoxPage> {
           SBBContentBox(
             padding: const .all(SBBSpacing.medium),
             child: Column(
+              spacing: SBBSpacing.medium,
               children: [
-                SBBNotificationBox.warning(titleText: title, text: text, onTap: () {}),
-                const SizedBox(height: SBBSpacing.medium),
-                SBBNotificationBox.warning(text: text),
-                const SizedBox(height: SBBSpacing.medium),
+                SBBNotificationBox.warning(titleText: title, text: text, onTap: () {}, onDismissed: () {}),
+                SBBNotificationBox.warning(text: text, onDismissed: () {}),
                 SBBNotificationBox.warning(
                   titleText: title,
                   text: text,
                   onTap: () {},
-                  isDismissible: false,
                   trailingIconData: SBBIcons.arrows_circle_small,
                 ),
-                const SizedBox(height: SBBSpacing.medium),
                 SBBNotificationBox.warning(
                   text: text,
                   onTap: () {},
-                  isDismissible: false,
                   trailingIconData: SBBIcons.arrows_circle_small,
                 ),
               ],
@@ -76,23 +72,19 @@ class _NotificationBoxPage extends State<NotificationBoxPage> {
           SBBContentBox(
             padding: const .all(SBBSpacing.medium),
             child: Column(
+              spacing: SBBSpacing.medium,
               children: [
-                SBBNotificationBox.success(titleText: title, text: text, onTap: () {}),
-                const SizedBox(height: SBBSpacing.medium),
-                SBBNotificationBox.success(text: text),
-                const SizedBox(height: SBBSpacing.medium),
+                SBBNotificationBox.success(titleText: title, text: text, onTap: () {}, onDismissed: () {}),
+                SBBNotificationBox.success(text: text, onDismissed: () {}),
                 SBBNotificationBox.success(
                   titleText: title,
                   text: text,
                   onTap: () {},
-                  isDismissible: false,
                   trailingIconData: SBBIcons.arrows_circle_small,
                 ),
-                const SizedBox(height: SBBSpacing.medium),
                 SBBNotificationBox.success(
                   text: text,
                   onTap: () {},
-                  isDismissible: false,
                   trailingIconData: SBBIcons.arrows_circle_small,
                 ),
               ],
@@ -102,23 +94,19 @@ class _NotificationBoxPage extends State<NotificationBoxPage> {
           SBBContentBox(
             padding: const .all(SBBSpacing.medium),
             child: Column(
+              spacing: SBBSpacing.medium,
               children: [
-                SBBNotificationBox.information(titleText: title, onTap: () {}, text: text),
-                const SizedBox(height: SBBSpacing.medium),
-                SBBNotificationBox.information(text: text),
-                const SizedBox(height: SBBSpacing.medium),
+                SBBNotificationBox.information(titleText: title, onTap: () {}, text: text, onDismissed: () {}),
+                SBBNotificationBox.information(text: text, onDismissed: () {}),
                 SBBNotificationBox.information(
                   titleText: title,
                   text: text,
                   onTap: () {},
-                  isDismissible: false,
                   trailingIconData: SBBIcons.arrows_circle_small,
                 ),
-                const SizedBox(height: SBBSpacing.medium),
                 SBBNotificationBox.information(
                   text: text,
                   onTap: () {},
-                  isDismissible: false,
                   trailingIconData: SBBIcons.arrows_circle_small,
                 ),
               ],

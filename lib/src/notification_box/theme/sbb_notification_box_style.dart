@@ -23,6 +23,8 @@ class SBBNotificationBoxStyle {
     this.borderColor,
     this.alphaValue,
     this.leadingIconData,
+    this.dismissButtonForegroundColor,
+    this.overlayColor,
   });
 
   /// The text style for the notification body text.
@@ -76,12 +78,19 @@ class SBBNotificationBoxStyle {
   /// [SBBNotificationBox.leadingIconData] are provided.
   final IconData? leadingIconData;
 
+  /// The color of the dismiss button.
+  final Color? dismissButtonForegroundColor;
+
+  /// The overlay color shown on interaction.
+  ///
+  /// This creates the visual feedback when the notification box is interacted with.
+  final WidgetStateProperty<Color?>? overlayColor;
+
   /// The outer border radius of the notification box.
-  static BorderRadius get outerBorderRadius =>
-      const BorderRadius.all(Radius.circular(16.0));
+  static const BorderRadius outerBorderRadius = BorderRadius.all(Radius.circular(16.0));
 
   /// The inner border radius of the notification box content area.
-  static BorderRadius get innerBorderRadius => const BorderRadius.only(
+  static const BorderRadius innerBorderRadius = BorderRadius.only(
     topLeft: Radius.circular(8.0),
     bottomLeft: Radius.circular(8.0),
     topRight: Radius.circular(15.0),
@@ -89,7 +98,7 @@ class SBBNotificationBoxStyle {
   );
 
   /// The width of the left accent border.
-  static double get leftBorderWidth => 8.0;
+  static const double leftBorderWidth = 8.0;
 
   SBBNotificationBoxStyle copyWith({
     TextStyle? textStyle,
@@ -98,6 +107,8 @@ class SBBNotificationBoxStyle {
     Color? backgroundColor,
     Color? iconColor,
     Color? borderColor,
+    Color? dismissButtonForegroundColor,
+    WidgetStateProperty<Color?>? overlayColor,
     double? alphaValue,
     IconData? leadingIconData,
   }) {
@@ -108,6 +119,8 @@ class SBBNotificationBoxStyle {
       backgroundColor: backgroundColor ?? this.backgroundColor,
       iconColor: iconColor ?? this.iconColor,
       borderColor: borderColor ?? this.borderColor,
+      dismissButtonForegroundColor: dismissButtonForegroundColor ?? this.dismissButtonForegroundColor,
+      overlayColor: overlayColor ?? this.overlayColor,
       alphaValue: alphaValue ?? this.alphaValue,
       leadingIconData: leadingIconData ?? this.leadingIconData,
     );
@@ -124,15 +137,17 @@ class SBBNotificationBoxStyle {
       iconColor: other.iconColor,
       borderColor: other.borderColor,
       alphaValue: other.alphaValue,
+      dismissButtonForegroundColor: other.dismissButtonForegroundColor,
+      overlayColor: other.overlayColor,
       leadingIconData: other.leadingIconData,
     );
   }
 
   static SBBNotificationBoxStyle? lerp(
-      SBBNotificationBoxStyle? a,
-      SBBNotificationBoxStyle? b,
-      double t,
-      ) {
+    SBBNotificationBoxStyle? a,
+    SBBNotificationBoxStyle? b,
+    double t,
+  ) {
     if (identical(a, b)) return a;
 
     return SBBNotificationBoxStyle(
@@ -142,24 +157,28 @@ class SBBNotificationBoxStyle {
       backgroundColor: Color.lerp(a?.backgroundColor, b?.backgroundColor, t),
       iconColor: Color.lerp(a?.iconColor, b?.iconColor, t),
       borderColor: Color.lerp(a?.borderColor, b?.borderColor, t),
+      dismissButtonForegroundColor: Color.lerp(a?.dismissButtonForegroundColor, b?.dismissButtonForegroundColor, t),
+      overlayColor: WidgetStateProperty.lerp<Color?>(a?.overlayColor, b?.overlayColor, t, Color.lerp),
       alphaValue: lerpDouble(a?.alphaValue, b?.alphaValue, t),
       leadingIconData: t < 0.5 ? a?.leadingIconData : b?.leadingIconData,
     );
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    return other is SBBNotificationBoxStyle &&
-        other.textStyle == textStyle &&
-        other.titleTextStyle == titleTextStyle &&
-        other.foregroundColor == foregroundColor &&
-        other.backgroundColor == backgroundColor &&
-        other.iconColor == iconColor &&
-        other.borderColor == borderColor &&
-        other.alphaValue == alphaValue &&
-        other.leadingIconData == leadingIconData;
-  }
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is SBBNotificationBoxStyle &&
+          runtimeType == other.runtimeType &&
+          textStyle == other.textStyle &&
+          titleTextStyle == other.titleTextStyle &&
+          foregroundColor == other.foregroundColor &&
+          backgroundColor == other.backgroundColor &&
+          iconColor == other.iconColor &&
+          borderColor == other.borderColor &&
+          alphaValue == other.alphaValue &&
+          leadingIconData == other.leadingIconData &&
+          dismissButtonForegroundColor == other.dismissButtonForegroundColor &&
+          overlayColor == other.overlayColor;
 
   @override
   int get hashCode => Object.hash(
@@ -171,5 +190,7 @@ class SBBNotificationBoxStyle {
     borderColor,
     alphaValue,
     leadingIconData,
+    dismissButtonForegroundColor,
+    overlayColor,
   );
 }
