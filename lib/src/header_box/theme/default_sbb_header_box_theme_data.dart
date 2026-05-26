@@ -14,7 +14,7 @@ class DefaultSBBHeaderBoxThemeData extends SBBHeaderBoxThemeData {
           labelForegroundColor: baseStyle.colorScheme.textPrimary,
           leadingForegroundColor: baseStyle.colorScheme.iconPrimary,
           trailingForegroundColor: baseStyle.colorScheme.iconPrimary,
-          labelTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.smallLight),
+          labelTextStyle: baseStyle.textTheme.smallLight,
           padding: EdgeInsets.fromLTRB(SBBSpacing.medium, SBBSpacing.xSmall, SBBSpacing.medium, SBBSpacing.xSmall),
         ),
       );

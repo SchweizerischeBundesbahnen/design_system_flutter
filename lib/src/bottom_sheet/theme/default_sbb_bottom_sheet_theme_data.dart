@@ -6,7 +6,7 @@ class DefaultSBBBottomSheetThemeData extends SBBBottomSheetThemeData {
   DefaultSBBBottomSheetThemeData(SBBBaseStyle baseStyle)
     : super(
         style: SBBBottomSheetStyle(
-          titleTextStyle: baseStyle.themedTextStyle(textStyle: baseStyle.textTheme.largeLight),
+          titleTextStyle: baseStyle.textTheme.largeLight,
           titleForegroundColor: baseStyle.colorScheme.textPrimary,
           leadingTextStyle: baseStyle.textTheme.defaultTextStyle,
           leadingForegroundColor: baseStyle.colorScheme.iconPrimary,

@@ -32,6 +32,7 @@ class SBBStepperItemStyle {
     this.badgeIconColor,
     this.foregroundColor,
     this.textStyle,
+    this.labelForegroundColor,
     this.labelTextStyle,
   });
 
@@ -58,6 +59,9 @@ class SBBStepperItemStyle {
   /// The color of the [textStyle] is typically not used directly, the
   /// [foregroundColor] is used instead.
   final WidgetStateProperty<TextStyle?>? textStyle;
+
+  /// Color of label text
+  final Color? labelForegroundColor;
 
   /// TextStyle of the label shown below the active step.
   final TextStyle? labelTextStyle;
