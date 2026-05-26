@@ -43,9 +43,7 @@ class SBBNotificationBoxStyle {
   /// [foregroundColor] is used instead.
   final TextStyle? titleTextStyle;
 
-  /// The color for notification [Text] and [Icon] widget descendants.
-  ///
-  /// This color is typically used instead of the color of the [textStyle].
+  /// The foreground color for notification [Text] and [Icon] widget descendants.
   final Color? foregroundColor;
 
   /// The background color of the notification box.
@@ -57,8 +55,6 @@ class SBBNotificationBoxStyle {
   final Color? iconColor;
 
   /// The color of the border around the notification box.
-  ///
-  /// If null, defaults to [backgroundColor].
   final Color? borderColor;
 
   /// The default leading icon for this notification box type.

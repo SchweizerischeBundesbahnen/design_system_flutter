@@ -90,7 +90,7 @@ void main() {
           ),
           onTap: () {},
           onDismissed: () {},
-          trailingIconData: SBBIcons.chevron_small_right_small,
+          trailing: SBBTertiaryButtonSmall(iconData: SBBIcons.unicorn_small, onPressed: () {}),
         ),
       ],
     );
@@ -183,7 +183,7 @@ void main() {
           ),
           onTap: () {},
           onDismissed: () {},
-          trailingIconData: SBBIcons.chevron_small_right_small,
+          trailing: SBBTertiaryButtonSmall(iconData: SBBIcons.unicorn_small, onPressed: () {}),
         ),
       ],
     );
@@ -276,7 +276,7 @@ void main() {
           ),
           onTap: () {},
           onDismissed: () {},
-          trailingIconData: SBBIcons.chevron_small_right_small,
+          trailing: SBBTertiaryButtonSmall(iconData: SBBIcons.unicorn_small, onPressed: () {}),
         ),
       ],
     );
@@ -369,7 +369,7 @@ void main() {
           ),
           onTap: () {},
           onDismissed: () {},
-          trailingIconData: SBBIcons.chevron_small_right_small,
+          trailing: SBBTertiaryButtonSmall(iconData: SBBIcons.unicorn_small, onPressed: () {}),
         ),
       ],
     );

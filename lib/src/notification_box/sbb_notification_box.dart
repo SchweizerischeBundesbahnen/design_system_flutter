@@ -10,7 +10,8 @@ import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 /// Provide either [title] for a custom title widget or [titleText] for a text-only
 /// title with standard styling. For a custom leading widget, use [leading] instead of
 /// [leadingIconData]. For a custom trailing widget, use [trailing] instead of
-/// [trailingIconData]. These parameter pairs are mutually exclusive.
+/// [trailingIconData]. The content can either be provided with [content] or [contentText]
+/// and is required. These parameter pairs are mutually exclusive.
 ///
 /// Use the factory constructors to create specific notification types:
 /// * [SBBNotificationBox.alert] for error or alert states
@@ -22,21 +23,14 @@ import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 ///
 /// ```dart
 /// // Simple text notification
-/// SBBNotificationBox.alert(text: 'Connection lost')
+/// SBBNotificationBox.alert(contentText: 'Connection lost')
 ///
 /// // Notification with title and tap handler
 /// SBBNotificationBox.warning(
 ///   titleText: 'Maintenance',
-///   text: 'The server will be unavailable tonight.',
+///   contentText: 'The server will be unavailable tonight.',
 ///   trailingIconData: SBBIcons.chevron_small_right_small,
 ///   onTap: () => navigateToDetails(),
-/// )
-///
-/// // Toggling visibility via parent state
-/// SBBNotificationBox.success(
-///   text: 'Upload complete',
-///   isVisible: _showSuccess,
-///   onDismissRequested: () => setState(() => _showSuccess = false),
 /// )
 /// ```
 ///
@@ -44,7 +38,7 @@ import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 ///
 /// * [SBBNotificationBoxStyle], for customizing the appearance.
 /// * [SBBNotificationBoxThemeData], for setting the style for all notification boxes within the current Theme.
-/// * [SBBStatus] for a non-dismissable, compact way to display information to the user.
+/// * [SBBNotificationBoxController] for programmatically showing and hiding a promotion box.
 /// * [Figma design specs](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=290-4135&p=f&t=YnIgdoYSNPGm5rTt-0)
 sealed class SBBNotificationBox extends StatefulWidget {
   const SBBNotificationBox._({
@@ -65,9 +59,8 @@ sealed class SBBNotificationBox extends StatefulWidget {
     this.semanticLabel,
   }) : assert(title == null || titleText == null, 'Cannot provide both title and titleText.'),
        assert(leading == null || leadingIconData == null, 'Cannot provide both leading and leadingIconData.'),
-       assert(trailing == null || trailingIconData == null, 'Cannot provide both trailing and trailingIconData.');
-
-  // TODO: assert content is given!
+       assert(trailing == null || trailingIconData == null, 'Cannot provide both trailing and trailingIconData.'),
+       assert(content != null || contentText != null, 'Either content or contentText must be provided');
 
   /// Creates an alert notification box.
   ///
@@ -158,10 +151,16 @@ sealed class SBBNotificationBox extends StatefulWidget {
   /// If not provided, an internal controller is created automatically.
   final SBBNotificationBoxController? controller;
 
-  /// TODO:
+  /// A custom widget displayed as the content.
+  ///
+  /// For simple text content, use [contentText] instead.
+  ///
+  /// Cannot be used together with [contentText].
   final Widget? content;
 
-  /// The body text of the notification.
+  /// Text displayed as content of the notification box.
+  ///
+  /// Cannot be used together with [content].
   final String? contentText;
 
   /// A custom widget displayed as the notification title.
@@ -171,7 +170,7 @@ sealed class SBBNotificationBox extends StatefulWidget {
   /// Cannot be used together with [titleText].
   final Widget? title;
 
-  /// Text string to display as the notification title using the standard design.
+  /// Text displayed as title of the notification box.
   ///
   /// Cannot be used together with [title].
   final String? titleText;
@@ -179,13 +178,13 @@ sealed class SBBNotificationBox extends StatefulWidget {
   /// A custom widget displayed in the leading position.
   ///
   /// For simple icon changes, use [leadingIconData] instead.
-  /// If neither [leading] nor [leadingIconData] are provided, the default icon
-  /// for this notification type is used from the current theme.
+  /// If this and [leadingIconData] is null, [SBBNotificationBoxStyle.leadingIconData] is used.
   ///
   /// Cannot be used together with [leadingIconData].
   final Widget? leading;
 
-  /// Icon to display in the leading position instead of the default icon.
+  /// Icon to display in the leading position.
+  /// If this and [leading] is null, [SBBNotificationBoxStyle.leadingIconData] is used.
   ///
   /// Cannot be used together with [leading].
   final IconData? leadingIconData;
@@ -537,9 +536,10 @@ class _SBBNotificationBoxState extends State<SBBNotificationBox> with SingleTick
             _effectiveController.hide();
             widget.onDismissed?.call();
           },
-          child: addDefaultAncestorWithResolved(
-            child: const Icon(SBBIcons.cross_tiny_small, size: sbbIconSizeSmall),
-            foregroundColor: effectiveStyle.dismissButtonForegroundColor,
+          child: Icon(
+            SBBIcons.cross_tiny_small,
+            size: sbbIconSizeSmall,
+            color: effectiveStyle.dismissButtonForegroundColor,
           ),
         ),
       ),
