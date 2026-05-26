@@ -71,12 +71,6 @@ class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
   T themeValue<T>(T lightThemeValue, T darkThemeValue) =>
       resolve(brightness == .light, lightThemeValue, darkThemeValue);
 
-  TextStyle themedTextStyle({TextStyle? textStyle, Color? color, String? fontFamily}) =>
-      (textStyle ?? textTheme.defaultTextStyle)!.copyWith(
-        fontFamily: fontFamily ?? textStyle?.fontFamily ?? sbbFont,
-        color: color ?? colorScheme.textPrimary,
-      );
-
   @override
   ThemeExtension<SBBBaseStyle> copyWith({
     Brightness? brightness,

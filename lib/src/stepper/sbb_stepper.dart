@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/shared/debug.dart';
+import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 
 typedef OnStepPressedCallback = void Function(SBBStepperItem item, int index);
 
@@ -109,15 +110,13 @@ class SBBStepper extends StatelessWidget {
     final themeStyle = _isFilledStyle ? theme.filledStyle! : theme.style!;
     final effectiveStyle = themeStyle.merge(style);
 
-    final resolvedLabelTextStyle = effectiveStyle.itemStyle!.labelTextStyle?.merge(_activeItem.style?.labelTextStyle);
-
     return Padding(
       padding: themeStyle.padding ?? .zero,
       child: Column(
         mainAxisSize: .min,
         children: [
           _steps(effectiveStyle),
-          _label(resolvedLabelTextStyle),
+          _label(effectiveStyle),
         ],
       ),
     );
@@ -133,29 +132,35 @@ class SBBStepper extends StatelessWidget {
     );
   }
 
-  Widget _label(TextStyle? labelTextStyle) {
+  Widget _label(SBBStepperStyle effectiveStyle) {
     if (!_hasAnyLabel) return const SizedBox.shrink();
 
+    final selectedStep = steps[activeStep];
     final labelWidget =
-        steps[activeStep].label ??
+        selectedStep.label ??
         Text(
-          steps[activeStep].labelText!,
+          selectedStep.labelText!,
           maxLines: 1,
           overflow: .ellipsis,
           softWrap: false,
           textAlign: .center,
-          style: labelTextStyle,
         );
 
-    return Padding(
-      padding: const .only(top: SBBSpacing.xxSmall),
-      child: _EdgeClampedCentered(
-        stepCircleSize: SBBStepperItemStyle.stepCircleSize,
-        activeStep: activeStep,
-        stepCount: steps.length,
-        child: labelWidget,
+    final effectiveItemStyle = effectiveStyle.itemStyle?.merge(selectedStep.style);
+    final resolvedLabelTextStyle = effectiveStyle.itemStyle!.labelTextStyle?.merge(_activeItem.style?.labelTextStyle);
+    return addDefaultAncestorWithResolved(
+      textStyle: resolvedLabelTextStyle,
+      foregroundColor: effectiveItemStyle?.labelForegroundColor,
+      child: Padding(
+        padding: const .only(top: SBBSpacing.xxSmall),
+        child: _EdgeClampedCentered(
+          stepCircleSize: SBBStepperItemStyle.stepCircleSize,
+          activeStep: activeStep,
+          stepCount: steps.length,
+          child: labelWidget,
+        ),
       ),
-    );
+    )!;
   }
 
   Widget _circle(int i, SBBStepperStyle style, SBBStepperItem step) {
@@ -318,15 +323,11 @@ class _StepCircleState extends State<_StepCircle> {
 
     final resolvedForegroundColor = widget.style.foregroundColor?.resolve(_statesController.value);
     final resolvedTextStyle = widget.style.textStyle?.resolve(_statesController.value);
-    final textStyle =
-        resolvedTextStyle?.copyWith(color: resolvedForegroundColor) ?? TextStyle(color: resolvedForegroundColor);
-    return DefaultTextStyle.merge(
-      style: textStyle,
-      child: IconTheme.merge(
-        data: IconThemeData(color: resolvedForegroundColor),
-        child: content,
-      ),
-    );
+    return addDefaultAncestorWithResolved(
+      foregroundColor: resolvedForegroundColor,
+      textStyle: resolvedTextStyle,
+      child: content,
+    )!;
   }
 
   bool get _passedStep => widget.index < widget.activeStep;

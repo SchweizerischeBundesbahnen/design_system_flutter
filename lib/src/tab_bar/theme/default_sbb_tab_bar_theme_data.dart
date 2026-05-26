@@ -16,7 +16,7 @@ class DefaultSBBTabBarThemeData extends SBBTabBarThemeData {
             WidgetState.selected: baseStyle.themeValue(SBBColors.black, SBBColors.white),
             WidgetState.any: SBBColors.transparent,
           }),
-          itemLabelTextStyle: baseStyle.themedTextStyle(textStyle: baseStyle.textTheme.smallLight),
+          itemLabelTextStyle: baseStyle.textTheme.smallLight,
           itemLabelForegroundColor: baseStyle.colorScheme.textPrimary,
           warningItemIcon: SBBIcons.sign_exclamation_point_small,
           warningItemBackgroundColor: baseStyle.colorScheme.error,

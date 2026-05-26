@@ -4,6 +4,7 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/shared/bottom_loading_indicator.dart';
 import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 import 'package:sbb_design_system_mobile/src/shared/divider/divider_painter.dart';
+import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 
 /// A customizable list item component following the SBB design system.
 ///
@@ -25,7 +26,9 @@ import 'package:sbb_design_system_mobile/src/shared/divider/divider_painter.dart
 ///
 /// When [links] are provided, they are displayed below the list item with top dividers.
 ///
-/// The list item is disabled when both [onTap] and [onLongPress] are null or [enabled] is false.
+/// The list item is disabled when both [onTap] and [onLongPress] are null.
+/// If you want a SBBListItem that is enabled without touch feedback, set [onTap] and wrap the
+/// list item in a [IgnorePointer] widget.
 ///
 /// Use [SBBDivider.divideItems] to automatically add dividers between multiple list items.
 ///
@@ -196,8 +199,6 @@ class SBBListItem extends StatefulWidget {
   /// Called when the list item is tapped.
   ///
   /// The list item is disabled when both this and [onLongPress] are null.
-  ///
-  /// Ignored when [enabled] is false.
   /// {@endtemplate}
   final GestureTapCallback? onTap;
 
@@ -205,8 +206,6 @@ class SBBListItem extends StatefulWidget {
   /// Called when the list item is long-pressed.
   ///
   /// The list item is disabled when both this and [onTap] are null.
-  ///
-  /// Ignored when [enabled] is false.
   /// {@endtemplate}
   final GestureLongPressCallback? onLongPress;
 
@@ -290,7 +289,7 @@ class SBBListItem extends StatefulWidget {
   /// Consider using [SBBDivider.divideItems] instead of this.
   @Deprecated('Use SBBDivider.divideItems instead of this method.')
   static List<Widget> divideListItems({
-    BuildContext? context,
+    required BuildContext context,
     required Iterable<Widget> items,
     Color? color,
   }) => SBBDivider.divideItems(items: items, context: context, color: color);
@@ -427,21 +426,21 @@ class _SBBListItemState extends State<SBBListItem> {
     }
 
     // Apply theming to all widgets
-    titleWidget = _addDefaultAncestorWithResolved(
+    titleWidget = addDefaultAncestorWithResolved(
       child: titleWidget,
       foregroundColor: resolvedTitleForegroundColor,
       textStyle: resolvedTitleTextStyle,
-    );
+    )!;
 
     if (leadingWidget != null) {
-      leadingWidget = _addDefaultAncestorWithResolved(
+      leadingWidget = addDefaultAncestorWithResolved(
         child: leadingWidget,
         foregroundColor: resolvedLeadingForegroundColor,
       );
     }
 
     if (subtitleWidget != null) {
-      subtitleWidget = _addDefaultAncestorWithResolved(
+      subtitleWidget = addDefaultAncestorWithResolved(
         child: subtitleWidget,
         foregroundColor: resolvedSubtitleForegroundColor,
         textStyle: resolvedSubtitleTextStyle,
@@ -449,7 +448,7 @@ class _SBBListItemState extends State<SBBListItem> {
     }
 
     if (trailingWidget != null) {
-      trailingWidget = _addDefaultAncestorWithResolved(
+      trailingWidget = addDefaultAncestorWithResolved(
         child: trailingWidget,
         foregroundColor: resolvedTrailingForegroundColor,
       );
@@ -542,23 +541,6 @@ class _SBBListItemState extends State<SBBListItem> {
     return child;
   }
 
-  Widget _addDefaultAncestorWithResolved({
-    required Widget child,
-    required Color? foregroundColor,
-    TextStyle? textStyle,
-  }) {
-    final resolvedTextStyle = textStyle?.copyWith(color: foregroundColor) ?? TextStyle(color: foregroundColor);
-
-    child = DefaultTextStyle.merge(
-      style: resolvedTextStyle,
-      child: IconTheme.merge(
-        data: IconThemeData(color: foregroundColor),
-        child: child,
-      ),
-    );
-    return child;
-  }
-
   Iterable<Widget> _divideLinks({
     BuildContext? context,
     required Iterable<Widget> links,
@@ -611,10 +593,14 @@ class SBBListItemBoxed extends SBBListItem {
     super.enableFeedback,
     super.style,
     super.padding,
+    this.margin,
     super.trailingHorizontalGapWidth,
     super.leadingHorizontalGapWidth,
     super.subtitleVerticalGapHeight,
   });
+
+  /// The margin of the content box surrounding the [SBBListItem].
+  final EdgeInsetsGeometry? margin;
 
   @override
   State<SBBListItem> createState() => _SBBListItemBoxedState();
@@ -623,6 +609,6 @@ class SBBListItemBoxed extends SBBListItem {
 class _SBBListItemBoxedState extends _SBBListItemState {
   @override
   Widget build(BuildContext context) {
-    return SBBContentBox(child: super.build(context));
+    return SBBContentBox(margin: (widget as SBBListItemBoxed).margin, child: super.build(context));
   }
 }

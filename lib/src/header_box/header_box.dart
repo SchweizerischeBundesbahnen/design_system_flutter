@@ -1,5 +1,7 @@
 export 'sbb_header_box.dart';
 export 'sbb_header_box_flap.dart';
+export 'sbb_header_box_flap_preferred_size.dart';
+export 'sbb_header_box_preferred_size.dart';
 export 'sbb_sliver_header_box.dart';
 export 'sbb_sliver_header_box_config.dart';
 export 'sbb_sliver_header_box_spacer.dart';

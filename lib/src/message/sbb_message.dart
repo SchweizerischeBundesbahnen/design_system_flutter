@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/shared/debug.dart';
+import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 
 /// The SBB Message widget displays messages to the user, typically for errors, loading states, or informational content.
 ///
@@ -184,20 +185,23 @@ class SBBMessage extends StatelessWidget {
     }
 
     Widget resolvedTitle = title ?? Text(titleText!, textAlign: .center);
-    resolvedTitle = _addDefaultAncestorWithResolved(
-      textStyle: effectiveStyle.titleTextStyle?.copyWith(color: effectiveStyle.titleForegroundColor),
+    resolvedTitle = addDefaultAncestorWithResolved(
+      foregroundColor: effectiveStyle.titleForegroundColor,
+      textStyle: effectiveStyle.titleTextStyle,
       child: resolvedTitle,
     )!;
 
     Widget? resolvedSubtitle = subtitle ?? (subtitleText != null ? Text(subtitleText!, textAlign: .center) : null);
-    resolvedSubtitle = _addDefaultAncestorWithResolved(
-      textStyle: effectiveStyle.subtitleTextStyle?.copyWith(color: effectiveStyle.subtitleForegroundColor),
+    resolvedSubtitle = addDefaultAncestorWithResolved(
+      foregroundColor: effectiveStyle.subtitleForegroundColor,
+      textStyle: effectiveStyle.subtitleTextStyle,
       child: resolvedSubtitle,
     );
 
     Widget? resolvedError = error ?? (errorText != null ? Text(errorText!, textAlign: .center) : null);
-    resolvedError = _addDefaultAncestorWithResolved(
-      textStyle: effectiveStyle.errorTextStyle?.copyWith(color: effectiveStyle.errorForegroundColor),
+    resolvedError = addDefaultAncestorWithResolved(
+      foregroundColor: effectiveStyle.errorForegroundColor,
+      textStyle: effectiveStyle.errorTextStyle,
       child: resolvedError,
     );
 
@@ -217,20 +221,6 @@ class SBBMessage extends StatelessWidget {
   }
 
   SBBMessageStyle _getEffectiveStyle(SBBMessageThemeData themeData) => themeData.style!.merge(style);
-
-  Widget? _addDefaultAncestorWithResolved({
-    required TextStyle? textStyle,
-    required Widget? child,
-  }) {
-    if (child == null) return null;
-    return DefaultTextStyle.merge(
-      style: textStyle,
-      child: IconTheme.merge(
-        data: IconThemeData(color: textStyle?.color),
-        child: child,
-      ),
-    );
-  }
 
   Widget _buildSingleChildOrColumn(
     Widget? resolvedIllustration,

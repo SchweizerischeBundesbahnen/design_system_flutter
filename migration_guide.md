@@ -2,14 +2,71 @@
 
 V5 introduces a lot of breaking changes to allow for a more flexible and modern Design System.
 
-## SBBTheme
+> **⚠ Disclaimer for apps in maintenance**
+> 
+> Migration can be time-consuming – expect around 1–2 person-days, depending on the size of the app. If your app is only being maintained 
+> or is due to be decommissioned soon, migration may not be necessary. Version 4 meets all the requirements of the Design System.
 
-* added `themeContext` to get theming for off-brand or safety-relevant apps. Example usage: `SBBTheme.light(context: .offBrand)`
+## Partial Migrations
+
+In order to make the process of migrating smoother, we provide a way to use both DSM versions (v4 and v5)
+simultaneously.
+
+This is completely **optional** and may help if you want to migrate in steps, since there are a lot of breaking changes.
+
+1. Add both versions to your `pubspec.yaml`:
+     ```yaml
+     sbb_design_system_mobile: ^5.0.0  # or latest release
+     sbb_design_system_mobile_v4:
+       git:
+         url: git@github.com:SchweizerischeBundesbahnen/design_system_flutter.git
+         ref: migration/v4
+     ```
+2. Do a find & replace over your code base to point your existing code to the v4 branch. After this point, your project should compile again.
+     ```diff
+     - import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart'
+     + import 'package:sbb_design_system_mobile_v4/sbb_design_system_mobile.dart'
+     ```
+3. Add together both themes:
+     ```dart
+     import 'package:sbb_design_system_mobile_v4/sbb_design_system_mobile.dart' as dsm4;
+     import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+     
+     // ...
+     
+     MaterialApp.router(
+       theme: SBBTheme.light().copyWith(
+         extensions: [
+           ...SBBTheme.light().extensions.values,
+           ...dsm4.SBBTheme.light().extensions.values,
+         ],
+       ),
+       darkTheme: SBBTheme.dark().copyWith(
+         extensions: [
+           ...SBBTheme.dark().extensions.values,
+           ...dsm4.SBBTheme.dark().extensions.values,
+         ],
+       ),
+       // ...
+     )
+     ```
+
+After these steps, you can begin converting your files to use `package:sbb_design_system_mobile` according to the details provided by this guide.
+
+Once you are done, remove the reference to v4 from your `pubspec.yaml` and your theme configuration.
+
+## Theming
+The component theming has been overhauled from using the old styles (ex. `PromotionBoxStyle`) as ThemeExtensions to ThemeData classes (ex. `SBBPromotionBoxThemeData`).
+This aligns the DSM theming style with the Flutter approach. Access them using the extension methods on `ThemeData` with `Theme.of(context).sbb[Component]Theme`.
+
+### SBBTheme
+
+* added `themeContext` to get theming for off-brand or safety-relevant apps. Example usage: `SBBTheme.light(themeContext: .offBrand)`
 * removed `brightness` from `createTheme` and `raw`. Use `SBBBaseStyle.brightness`
 * removed unused field `boldFont`
 * moved `SBBTextTheme` to `SBBBaseStyle`. Can still be accessed with helper method `Theme.of(context).sbbTextTheme`
 
-## SBBBaseStyle
+### SBBBaseStyle
 
 * removed `createTextTheme`, use `SBBTextTheme.toTextTheme` instead
 * removed `SBBBaseStyle.of(context)`, use `Theme.of(context).sbbBaseStyle` instead
@@ -18,10 +75,11 @@ V5 introduces a lot of breaking changes to allow for a more flexible and modern 
 * removed `primaryDarkColor`
 * removed `primarySwatch`. Is now created from `primaryColor` over `SBBColorScheme`
 * removed `defaultFontFamily`
+* removed `themedTextStyle` method. Use `baseStyle.textTheme` for text themes and `SBBColorScheme` for themed colors or 
 * moved `defaultTextStyle` to `SBBTextTheme`
 * added `textTheme`, `iconTheme`, `dividerTheme` and `textSelectionTheme`
 
-### SBBColorScheme
+#### SBBColorScheme
 SBBColorScheme is introduced to define the base color scheme and is used by SBBBaseStyle.
 
 * moved colors from `SBBBaseStyle` to `SBBColorScheme` without suffix color.
@@ -107,43 +165,13 @@ Use the `foregroundBuilder` of the `SBBButtonStyle` as a replacement
 * customize a chip by setting its `style` parameter in the constructor
 
 
-## Decorated Text (before SBBInputTrigger)
-
-### Basic Migration Example
-
-**Before (SBBInputTrigger):**
-```dart
-SBBInputTrigger(
-  value: selectedDate,
-  labelText: 'Date',
-  hintText: 'Select a date',
-  prefixIcon: Icons.calendar,
-  onPressed: () => _showDatePicker(),
-  enabled: true,
-)
-```
-
-**After (SBBDecoratedText):**
-```dart
-SBBDecoratedText(
-  value: selectedDate,
-  onTap: () => _showDatePicker(),
-  enabled: true,
-  decoration: SBBInputDecoration(
-    labelText: 'Date',
-    placeholderText: 'Select a date',
-    leadingIconData: Icons.calendar,
-  ),
-)
-```
-
-
 ## Dropdown (previously SBBSelect) / MultiDropdown (previously SBBMultiSelect)
 
 * replace `SelectMenuItem<T>` with `SBBDropdownItem<T>`
 * replace `label` with `labelText` (within `triggerDecoration`)
-* replace `hint` with `hintText` (within `triggerDecoration`)
-* replace `title` with `titleText` (within `triggerDecoration`)
+* replace `hint` with `placeholderText` (within `triggerDecoration`)
+* replace `title` with `titleText` (within `sheetConfig`)
+* replace `value` with `selectedItem`
 * `isLastElement` was removed — use `SBBDivider.divideItems` to separate items with a divider
 * `allowMultilineLabel` was removed (use `triggerMaxLines` / `triggerMinLines` / `triggerExpands` instead)
 * `confirmButtonLabel` is replaced by `confirmButtonLabelText`
@@ -210,6 +238,8 @@ The list item has received a lot of changes. In general the content is completel
   to adjust the `padding`, since the `SBBTertiaryButtonSmall` has an inherent padding to the right
 * `isLastElement` was removed, use the static method `SBBDivider.divideItems` to separate list 
   items with a SBB themed divider (this is analogous to the Material implementation)
+* removed `enabled`. List item will be disabled when [onTap] and [onLongPress] are null. If component should be enabled without touch feedback, 
+  set [onTap] and wrap the list item in a [IgnorePointer] widget.
 
 ### Theming & Styling
 * customize the theme of the `SBBListItem` with `SBBListThemeData` as input to `SBBTheme`
@@ -613,30 +643,30 @@ SBBTextInput(
 
 #### Property Mapping
 
-| SBBTextField                 | SBBTextInput                                                  |
-|------------------------------|---------------------------------------------------------------|
-| `controller`                 | `controller`                                                  |
-| `enabled`                    | `enabled`                                                     |
-| `labelText`                  | `decoration.labelText`                                        |
-| `hintText`                   | `decoration.placeholderText`                                  |
-| `errorText`                  | `decoration.errorText`                                        |
-| `icon`                       | `decoration.leadingIconData`                                  |
-| `suffixIcon`                 | `decoration.trailing` or `decoration.trailingIconData`        |
-| `obscureText`                | `obscureText`                                                 |
-| `obscuringCharacter`         | `obscuringCharacter`                                          |
-| `maxLines`                   | `maxLines`                                                    |
-| `minLines`                   | `minLines`                                                    |
-| `keyboardType`               | `keyboardType`                                                |
-| `textInputAction`            | `textInputAction`                                             |
-| `inputFormatters`            | `inputFormatters`                                             |
-| `onChanged`                  | `onChanged`                                                   |
-| `onSubmitted`                | `onSubmitted`                                                 |
-| `onTap`                      | `onTap`                                                       |
-| `onTapAlwaysCalled`          | `onTapAlwaysCalled`                                           |
-| `focusNode`                  | `focusNode`                                                   |
-| `autofocus`                  | `autofocus`                                                   |
-| `textCapitalization`         | `textCapitalization`                                          |
-| `enableInteractiveSelection` | `enableInteractiveSelection`                                  |
+| SBBTextField                 | SBBTextInput                                             |
+|------------------------------|----------------------------------------------------------|
+| `controller`                 | `controller`                                             |
+| `enabled`                    | `enabled`                                                |
+| `labelText`                  | `decoration.labelText`                                   |
+| `hintText`                   | `decoration.placeholderText`                             |
+| `errorText`                  | `decoration.errorText`                                   |
+| `icon`                       | `decoration.leadingIconData`                             |
+| `suffixIcon`                 | `decoration.trailing` or `decoration.trailingIconData`   |
+| `obscureText`                | `obscureText`                                            |
+| `obscuringCharacter`         | `obscuringCharacter`                                     |
+| `maxLines`                   | `maxLines`                                               |
+| `minLines`                   | `minLines`                                               |
+| `keyboardType`               | `keyboardType`                                           |
+| `textInputAction`            | `textInputAction`                                        |
+| `inputFormatters`            | `inputFormatters`                                        |
+| `onChanged`                  | `onChanged`                                              |
+| `onSubmitted`                | `onSubmitted`                                            |
+| `onTap`                      | `onTap`                                                  |
+| `onTapAlwaysCalled`          | `onTapAlwaysCalled`                                      |
+| `focusNode`                  | `focusNode`                                              |
+| `autofocus`                  | `autofocus`                                              |
+| `textCapitalization`         | `textCapitalization`                                     |
+| `enableInteractiveSelection` | `enableInteractiveSelection`                             |
 | `isLastElement`              | *(removed)* - use `SBBDivider.divideItems()` if in lists |
 
 #### Theming
@@ -717,6 +747,38 @@ A cross small will be displayed instead of the trailingIconData when focused and
 - [ ] Test multiline mode if used (icons should be top-aligned now)
 - [ ] Consider using `readOnly` instead of just `enabled` for readonly fields with interactive trailing widgets
 
+## Decorated Text (before SBBInputTrigger)
+
+* Use `SBBInputDecoration` to customize the widget. Check out migration guide for Text Input above.
+* removed `onSuffixPressed`. Use a tappable widget like `SBBTertiaryButtonSmall` for `decoration.trailing`.
+* removed `enabled`. Will be disabled when [onTap] is null.
+
+### Basic Migration Example
+
+**Before (SBBInputTrigger):**
+```dart
+SBBInputTrigger(
+  value: selectedDate,
+  labelText: 'Date',
+  hintText: 'Select a date',
+  prefixIcon: Icons.calendar,
+  onPressed: () => _showDatePicker(),
+  enabled: true,
+)
+```
+
+**After (SBBDecoratedText):**
+```dart
+SBBDecoratedText(
+  value: selectedDate,
+  onTap: () => _showDatePicker(),
+  decoration: SBBInputDecoration(
+    labelText: 'Date',
+    placeholderText: 'Select a date',
+    leadingIconData: Icons.calendar,
+  ),
+)
+```
 
 ## Text Input Form Field
 
@@ -763,12 +825,12 @@ SBBTextInputFormField(
 
 #### Key Changes
 
-| SBBTextFormField | SBBTextInputFormField |
-|------------------|----------------------|
-| `labelText` | `decoration.labelText` |
-| `hintText` | `decoration.placeholderText` |
-| `icon` | `decoration.leadingIconData` |
-| `suffixIcon` | `decoration.trailing` or `decoration.trailingIconData` |
+| SBBTextFormField | SBBTextInputFormField                                  |
+|------------------|--------------------------------------------------------|
+| `labelText`      | `decoration.labelText`                                 |
+| `hintText`       | `decoration.placeholderText`                           |
+| `icon`           | `decoration.leadingIconData`                           |
+| `suffixIcon`     | `decoration.trailing` or `decoration.trailingIconData` |
 
 
 ## TextStyles
@@ -931,6 +993,8 @@ SBBSliverHeaderBox(
 
 ### Flap
 
+* replace `.custom(child: ...)` usage with the regular constructor and pass custom content through `leading`,
+  `label` and `trailing`
 * replace `title` with `labelText` (or use `label` for a custom widget)
 * replace `leadingIcon` with `leadingIconData` (or use `leading` for a custom widget)
 * replace `trailingIcon` with `trailingIconData` (or use `trailing` for a custom widget)

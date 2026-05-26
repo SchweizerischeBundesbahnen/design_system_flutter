@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/shared/debug.dart';
+import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 
 const double _defaultScrollControlDisabledMaxHeightRatio = 9.0 / 16.0;
 
@@ -110,6 +111,7 @@ Future<T?> showSBBBottomSheet<T>({
   AnimationStyle? sheetAnimationStyle,
   bool showCloseButton = true,
   bool? requestFocus,
+  RouteSettings? routeSettings,
 }) {
   assert(title == null || titleText == null, 'Only title or titleText can be set!');
   assert(leading == null || leadingIconData == null, 'Only leading or leadingIconData can be set!');
@@ -140,6 +142,7 @@ Future<T?> showSBBBottomSheet<T>({
     transitionAnimationController: transitionAnimationController,
     sheetAnimationStyle: sheetAnimationStyle,
     requestFocus: requestFocus,
+    routeSettings: routeSettings,
     builder: (_) => SBBBottomSheet(
       key: key,
       title: title,
@@ -288,7 +291,7 @@ class SBBBottomSheet extends StatelessWidget {
 
     // Apply theming to all widgets
     if (titleWidget != null) {
-      titleWidget = _addDefaultAncestorWithResolved(
+      titleWidget = addDefaultAncestorWithResolved(
         child: titleWidget,
         foregroundColor: resolvedStyle.titleForegroundColor,
         textStyle: resolvedStyle.titleTextStyle,
@@ -296,7 +299,7 @@ class SBBBottomSheet extends StatelessWidget {
     }
 
     if (leadingWidget != null) {
-      leadingWidget = _addDefaultAncestorWithResolved(
+      leadingWidget = addDefaultAncestorWithResolved(
         child: leadingWidget,
         textStyle: resolvedStyle.leadingTextStyle,
         foregroundColor: resolvedStyle.leadingForegroundColor,
@@ -304,7 +307,7 @@ class SBBBottomSheet extends StatelessWidget {
     }
 
     if (trailingWidget != null) {
-      trailingWidget = _addDefaultAncestorWithResolved(
+      trailingWidget = addDefaultAncestorWithResolved(
         child: trailingWidget,
         foregroundColor: resolvedStyle.trailingForegroundColor,
         textStyle: resolvedStyle.trailingTextStyle,
@@ -357,23 +360,6 @@ class SBBBottomSheet extends StatelessWidget {
       right: showCloseButton ? SBBSpacing.xSmall : style.padding?.right ?? 0.0,
       bottom: 0.0,
     );
-  }
-
-  static Widget _addDefaultAncestorWithResolved({
-    required Widget child,
-    required Color? foregroundColor,
-    TextStyle? textStyle,
-  }) {
-    final resolvedTextStyle = textStyle?.copyWith(color: foregroundColor) ?? TextStyle(color: foregroundColor);
-
-    child = DefaultTextStyle.merge(
-      style: resolvedTextStyle,
-      child: IconTheme.merge(
-        data: IconThemeData(color: foregroundColor),
-        child: child,
-      ),
-    );
-    return child;
   }
 }
 

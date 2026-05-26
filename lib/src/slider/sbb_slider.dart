@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/shared/debug.dart';
+import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 import 'package:sbb_design_system_mobile/src/slider/sbb_slider_thumb_shape.dart';
 import 'package:sbb_design_system_mobile/src/slider/sbb_slider_track_shape.dart';
 
@@ -236,7 +237,6 @@ class _SBBSliderState extends State<SBBSlider> {
       final leadingForegroundColor = effectiveStyle.leadingForegroundColor!.resolve(_statesController.value);
       final trailingForegroundColor = effectiveStyle.trailingForegroundColor!.resolve(_statesController.value);
 
-      // Build actual widgets from convenience parameters
       Widget? leadingWidget = widget.leading;
       if (leadingWidget == null && widget.leadingIconData != null) {
         leadingWidget = Icon(widget.leadingIconData);
@@ -247,16 +247,15 @@ class _SBBSliderState extends State<SBBSlider> {
         trailingWidget = Icon(widget.trailingIconData);
       }
 
-      // Apply theming
       if (leadingWidget != null) {
-        leadingWidget = _applyForegroundColor(
+        leadingWidget = addDefaultAncestorWithResolved(
           child: leadingWidget,
           foregroundColor: leadingForegroundColor,
         );
       }
 
       if (trailingWidget != null) {
-        trailingWidget = _applyForegroundColor(
+        trailingWidget = addDefaultAncestorWithResolved(
           child: trailingWidget,
           foregroundColor: trailingForegroundColor,
         );
@@ -270,19 +269,6 @@ class _SBBSliderState extends State<SBBSlider> {
         ],
       );
     }
-  }
-
-  Widget _applyForegroundColor({
-    required Widget child,
-    required Color? foregroundColor,
-  }) {
-    return DefaultTextStyle.merge(
-      style: TextStyle(color: foregroundColor),
-      child: IconTheme.merge(
-        data: IconThemeData(color: foregroundColor),
-        child: child,
-      ),
-    );
   }
 
   Widget _slider(SBBSliderStyle effectiveStyle) {

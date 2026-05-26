@@ -13,9 +13,8 @@ void main() {
         const SBBHeaderSmall(titleText: 'Menu', leading: SBBHeaderLeadingMenuButton()),
         const SBBHeaderSmall(titleText: 'Back', leading: SBBHeaderLeadingBackButton()),
         const SBBHeaderSmall(titleText: 'Close', leading: SBBHeaderLeadingCloseButton()),
-        SizedBox(
-          height: SBBHeaderStyle.smallToolbarHeight + 48.0,
-          child: SBBHeaderSmall(
+        _toolbarHeightSized(
+          SBBHeaderSmall(
             leading: Container(
               color: SBBColors.turquoise,
               child: Center(child: Text('Custom')),
@@ -49,6 +48,43 @@ void main() {
             ),
           ),
         ),
+        _toolbarHeightSized(
+          SBBHeaderSmall(
+            titleText: 'Close',
+            bottom: SBBHeaderBoxPreferredSize(
+              textScaler: TextScaler.noScaling,
+              titleText: 'Title',
+              subtitleText: 'Subtitle',
+              leadingIconData: SBBIcons.unicorn_small,
+              trailing: SBBTertiaryButton(
+                onPressed: () {},
+                iconData: SBBIcons.lighthouse_small,
+              ),
+              flap: SBBHeaderBoxFlapPreferredSize(
+                labelText: 'Flap',
+                textScaler: TextScaler.noScaling,
+              ),
+            ),
+          ),
+        ),
+        _toolbarHeightSized(
+          SBBHeaderSmall(
+            titleText: 'Close',
+            bottom: SBBHeaderBoxPreferredSize(
+              textScaler: TextScaler.noScaling,
+              title: _box(50, Colors.red),
+              subtitle: _box(20, Colors.green),
+              leading: _box(60, Colors.blue),
+              body: _box(30, Colors.yellow),
+              flap: SBBHeaderBoxFlapPreferredSize(
+                leading: _box(30, Colors.green),
+                label: _box(20, Colors.yellow),
+                trailing: _box(10, Colors.red),
+                textScaler: TextScaler.noScaling,
+              ),
+            ),
+          ),
+        ),
       ],
     );
 
@@ -60,4 +96,23 @@ void main() {
       find.byType(Column).first,
     );
   });
+}
+
+PreferredSizeWidget _box(double height, Color color) {
+  return PreferredSize(
+    preferredSize: Size.fromHeight(height),
+    child: Container(
+      constraints: BoxConstraints(minWidth: 50),
+      height: height,
+      color: color,
+    ),
+  );
+}
+
+/// needed as [SBBHeader] sets a bottom widget as spacer which leads to unconstrainted height.
+Widget _toolbarHeightSized(SBBHeader header) {
+  return SizedBox(
+    height: header.preferredSize.height,
+    child: header,
+  );
 }
