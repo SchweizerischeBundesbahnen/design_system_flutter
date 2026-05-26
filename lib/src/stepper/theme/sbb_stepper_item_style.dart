@@ -85,6 +85,7 @@ class SBBStepperItemStyle {
     Color? badgeIconColor,
     Color? badgeBackgroundColor,
     Color? badgeBorderColor,
+    Color? labelForegroundColor,
     WidgetStateProperty<TextStyle?>? textStyle,
     TextStyle? labelTextStyle,
   }) {
@@ -95,6 +96,7 @@ class SBBStepperItemStyle {
       badgeIconColor: badgeIconColor ?? this.badgeIconColor,
       badgeBackgroundColor: badgeBackgroundColor ?? this.badgeBackgroundColor,
       badgeBorderColor: badgeBorderColor ?? this.badgeBorderColor,
+      labelForegroundColor: labelForegroundColor ?? this.labelForegroundColor,
       textStyle: textStyle ?? this.textStyle,
       labelTextStyle: labelTextStyle ?? this.labelTextStyle,
     );
@@ -110,6 +112,7 @@ class SBBStepperItemStyle {
       badgeIconColor: other.badgeIconColor,
       badgeBackgroundColor: other.badgeBackgroundColor,
       badgeBorderColor: other.badgeBorderColor,
+      labelForegroundColor: other.labelForegroundColor,
       textStyle: other.textStyle,
       labelTextStyle: other.labelTextStyle,
     );
@@ -125,6 +128,7 @@ class SBBStepperItemStyle {
       badgeBorderColor: Color.lerp(a?.badgeBorderColor, b?.badgeBorderColor, t),
       badgeBackgroundColor: Color.lerp(a?.badgeBackgroundColor, b?.badgeBackgroundColor, t),
       badgeIconColor: Color.lerp(a?.badgeIconColor, b?.badgeIconColor, t),
+      labelForegroundColor: Color.lerp(a?.labelForegroundColor, b?.labelForegroundColor, t),
       textStyle: WidgetStateProperty.lerp<TextStyle?>(a?.textStyle, b?.textStyle, t, TextStyle.lerp),
       labelTextStyle: TextStyle.lerp(a?.labelTextStyle, b?.labelTextStyle, t),
     );
