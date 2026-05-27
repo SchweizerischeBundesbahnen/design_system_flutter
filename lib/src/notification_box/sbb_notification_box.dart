@@ -454,7 +454,7 @@ class _SBBNotificationBoxState extends State<SBBNotificationBox> with SingleTick
     final resolvedTrailing = _resolveTrailing();
     return IntrinsicHeight(
       child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         spacing: SBBSpacing.xSmall,
         children: [
           ?_resolveLeading(effectiveStyle),
@@ -476,8 +476,8 @@ class _SBBNotificationBoxState extends State<SBBNotificationBox> with SingleTick
 
   Widget _defaultLayout(SBBNotificationBoxStyle effectiveStyle) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      mainAxisSize: MainAxisSize.min,
+      crossAxisAlignment: .start,
+      mainAxisSize: .min,
       spacing: SBBSpacing.xSmall,
       children: [
         Row(

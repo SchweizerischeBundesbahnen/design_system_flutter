@@ -27,30 +27,14 @@ class _NotificationBoxPage extends State<NotificationBoxPage> {
               children: [
                 SBBNotificationBox.alert(
                   titleText: title,
-                  contentText: text,
                   onTap: () {},
-                  onDismissed: () {},
-                ),
-                SBBNotificationBox.alert(
-                  titleText: title,
                   contentText: text,
-                  onTap: () {},
-                  trailingIconData: SBBIcons.chevron_small_right_small,
-                ),
-                SBBNotificationBox.alert(
-                  titleText: title,
-                  contentText: text,
-                  onTap: () {},
                   onDismissed: () {},
                   trailingIconData: SBBIcons.chevron_small_right_small,
-                ),
-                SBBNotificationBox.alert(
-                  titleText: title,
-                  contentText: text,
-                  onTap: () {},
                 ),
                 SBBNotificationBox.alert(contentText: text, onDismissed: () {}),
                 SBBNotificationBox.alert(
+                  titleText: title,
                   contentText: text,
                   onTap: () {},
                   trailingIconData: SBBIcons.chevron_small_right_small,
@@ -58,33 +42,7 @@ class _NotificationBoxPage extends State<NotificationBoxPage> {
                 SBBNotificationBox.alert(
                   contentText: text,
                   onTap: () {},
-                  onDismissed: () {},
                   trailingIconData: SBBIcons.chevron_small_right_small,
-                ),
-                SBBNotificationBox.alert(contentText: text, onTap: () {}),
-                SBBNotificationBox.alert(
-                  title: Container(
-                    color: SBBColors.turquoise,
-                    child: Text('Custom'),
-                  ),
-                  content: Container(
-                    height: 100,
-                    color: SBBColors.turquoise,
-                    child: Center(child: Text('Content')),
-                  ),
-                  trailing: SBBTertiaryButtonSmall(iconData: SBBIcons.unicorn_small, onPressed: () {}),
-                  onTap: () {},
-                  onDismissed: () {},
-                ),
-                SBBNotificationBox.alert(
-                  content: Container(
-                    height: 100,
-                    color: SBBColors.turquoise,
-                    child: Center(child: Text('Content')),
-                  ),
-                  onTap: () {},
-                  onDismissed: () {},
-                  trailing: SBBTertiaryButtonSmall(iconData: SBBIcons.unicorn_small, onPressed: () {}),
                 ),
               ],
             ),
@@ -95,7 +53,13 @@ class _NotificationBoxPage extends State<NotificationBoxPage> {
             child: Column(
               spacing: SBBSpacing.medium,
               children: [
-                SBBNotificationBox.warning(titleText: title, contentText: text, onTap: () {}, onDismissed: () {}),
+                SBBNotificationBox.warning(
+                  titleText: title,
+                  contentText: text,
+                  onTap: () {},
+                  onDismissed: () {},
+                  trailingIconData: SBBIcons.chevron_small_right_small,
+                ),
                 SBBNotificationBox.warning(contentText: text, onDismissed: () {}),
                 SBBNotificationBox.warning(
                   titleText: title,
@@ -117,7 +81,13 @@ class _NotificationBoxPage extends State<NotificationBoxPage> {
             child: Column(
               spacing: SBBSpacing.medium,
               children: [
-                SBBNotificationBox.success(titleText: title, contentText: text, onTap: () {}, onDismissed: () {}),
+                SBBNotificationBox.success(
+                  titleText: title,
+                  contentText: text,
+                  onTap: () {},
+                  onDismissed: () {},
+                  trailingIconData: SBBIcons.chevron_small_right_small,
+                ),
                 SBBNotificationBox.success(contentText: text, onDismissed: () {}),
                 SBBNotificationBox.success(
                   titleText: title,
@@ -139,7 +109,13 @@ class _NotificationBoxPage extends State<NotificationBoxPage> {
             child: Column(
               spacing: SBBSpacing.medium,
               children: [
-                SBBNotificationBox.information(titleText: title, onTap: () {}, contentText: text, onDismissed: () {}),
+                SBBNotificationBox.information(
+                  titleText: title,
+                  onTap: () {},
+                  contentText: text,
+                  onDismissed: () {},
+                  trailingIconData: SBBIcons.chevron_small_right_small,
+                ),
                 SBBNotificationBox.information(contentText: text, onDismissed: () {}),
                 SBBNotificationBox.information(
                   titleText: title,

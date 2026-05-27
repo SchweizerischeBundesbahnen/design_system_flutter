@@ -247,8 +247,8 @@ class SBBPopup extends StatelessWidget {
       final bodyPadding = padding.copyWith(top: resolvedStyle.titleBodyGap ?? SBBSpacing.small);
 
       child = Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: .min,
+        crossAxisAlignment: .start,
         children: [
           Padding(
             padding: titleRowPadding,
