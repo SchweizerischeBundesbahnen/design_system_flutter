@@ -91,7 +91,7 @@ class MyApp extends StatelessWidget {
           slivers: [
             ThemeSliverHeaderbox(),
             SliverPadding(
-              padding: const .symmetric(horizontal: SBBSpacing.medium),
+              padding: const .symmetric(horizontal: SBBSpacing.xSmall),
               sliver: SliverList.list(
                 children: [
                   const SBBListHeader('Basics'),
