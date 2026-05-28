@@ -7,11 +7,15 @@ import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 ///
 /// A dismissable widget to display important information to the user.
 ///
-/// Provide either [title] for a custom title widget or [titleText] for a text-only
-/// title with standard styling. For a custom leading widget, use [leading] instead of
-/// [leadingIconData]. For a custom trailing widget, use [trailing] instead of
-/// [trailingIconData]. The content can either be provided with [content] or [contentText]
-/// and is required. These parameter pairs are mutually exclusive.
+/// Provide [content] for a custom widget or [contentText] for text-only content.
+///
+/// Optionally, provide either [title] or [titleText] for a title shown above the content. Provide [leading] or
+/// [leadingIconData] to override the default icon determined by the type of notification, and [trailing] or
+/// [trailingIconData] to show a trailing widget.
+///
+/// These parameter pairs are mutually exclusive.
+///
+/// Use [showLeading] to disable the leading icon altogether.
 ///
 /// Use the factory constructors to create specific notification types:
 /// * [SBBNotificationBox.alert] for error or alert states
@@ -375,10 +379,17 @@ class _SBBNotificationBoxState extends State<SBBNotificationBox> with SingleTick
   @override
   void didUpdateWidget(covariant SBBNotificationBox oldWidget) {
     super.didUpdateWidget(oldWidget);
+
     if (widget.controller != oldWidget.controller) {
+      final oldValue = (oldWidget.controller ?? _internalController)?.value;
+
       oldWidget.controller?.removeListener(_animate);
+      _internalController?.dispose();
+      _internalController = null;
+
       _effectiveController.addListener(_animate);
-      if (widget.controller?.value != oldWidget.controller?.value) _animate();
+
+      if (oldValue != _effectiveController.value) _animate();
     }
   }
 
