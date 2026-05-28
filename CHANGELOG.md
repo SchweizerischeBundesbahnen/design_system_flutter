@@ -12,6 +12,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 ### Changed
 
 - (auto): updated icon lib to version 1.8.25
+- drop support for Flutter SDK 3.35.x (minimum required dart sdk version 3.10.0)
 
 ## [4.12.0] - 2026-04-28
 
