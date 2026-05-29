@@ -17,7 +17,7 @@ import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 ///
 /// Use [showLeading] to disable the leading icon altogether.
 ///
-/// Use the factory constructors to create specific notification types:
+/// Use the default constructor with [state] or factory constructors to create specific notification types:
 /// * [SBBNotificationBox.alert] for error or alert states
 /// * [SBBNotificationBox.warning] for warning states
 /// * [SBBNotificationBox.success] for success states
@@ -43,10 +43,12 @@ import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 /// * [SBBNotificationBoxStyle], for customizing the appearance.
 /// * [SBBNotificationBoxThemeData], for setting the style for all notification boxes within the current Theme.
 /// * [SBBNotificationBoxController] for programmatically showing and hiding a promotion box.
+/// * [SBBNotificationBoxState], defines the visual state of the notification box.
 /// * [Figma design specs](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=290-4135&p=f&t=YnIgdoYSNPGm5rTt-0)
-sealed class SBBNotificationBox extends StatefulWidget {
-  const SBBNotificationBox._({
+class SBBNotificationBox extends StatefulWidget {
+  const SBBNotificationBox({
     super.key,
+    required this.state,
     this.content,
     this.contentText,
     this.controller,
@@ -54,11 +56,12 @@ sealed class SBBNotificationBox extends StatefulWidget {
     this.titleText,
     this.leading,
     this.leadingIconData,
-    this.showLeading,
+    this.showLeading = true,
     this.trailing,
     this.trailingIconData,
     this.onTap,
     this.onTapSemanticsHint,
+    this.isDismissable = false,
     this.onDismissed,
     this.style,
     this.semanticLabel,
@@ -70,7 +73,7 @@ sealed class SBBNotificationBox extends StatefulWidget {
   /// Creates an alert notification box.
   ///
   /// The default leading icon is [SBBIcons.circle_cross_small].
-  const factory SBBNotificationBox.alert({
+  factory SBBNotificationBox.alert({
     Key? key,
     Widget? content,
     String? contentText,
@@ -79,20 +82,40 @@ sealed class SBBNotificationBox extends StatefulWidget {
     String? titleText,
     Widget? leading,
     IconData? leadingIconData,
-    bool? showLeading,
+    bool showLeading = true,
     Widget? trailing,
     IconData? trailingIconData,
     GestureTapCallback? onTap,
     String? onTapSemanticsHint,
+    bool isDismissable = false,
     GestureTapCallback? onDismissed,
     SBBNotificationBoxStyle? style,
     String? semanticLabel,
-  }) = _SBBNotificationBoxAlert;
+  }) => SBBNotificationBox(
+    key: key,
+    state: .alert,
+    content: content,
+    contentText: contentText,
+    controller: controller,
+    title: title,
+    titleText: titleText,
+    leading: leading,
+    leadingIconData: leadingIconData,
+    showLeading: showLeading,
+    trailing: trailing,
+    trailingIconData: trailingIconData,
+    onTap: onTap,
+    onTapSemanticsHint: onTapSemanticsHint,
+    isDismissable: isDismissable,
+    onDismissed: onDismissed,
+    style: style,
+    semanticLabel: semanticLabel,
+  );
 
   /// Creates a warning notification box.
   ///
   /// The default leading icon is [SBBIcons.circle_exclamation_point_small].
-  const factory SBBNotificationBox.warning({
+  factory SBBNotificationBox.warning({
     Key? key,
     Widget? content,
     String? contentText,
@@ -101,20 +124,40 @@ sealed class SBBNotificationBox extends StatefulWidget {
     String? titleText,
     Widget? leading,
     IconData? leadingIconData,
-    bool? showLeading,
+    bool showLeading = true,
     Widget? trailing,
     IconData? trailingIconData,
     GestureTapCallback? onTap,
     String? onTapSemanticsHint,
+    bool isDismissable = false,
     GestureTapCallback? onDismissed,
     SBBNotificationBoxStyle? style,
     String? semanticLabel,
-  }) = _SBBNotificationBoxWarning;
+  }) => SBBNotificationBox(
+    key: key,
+    state: .warning,
+    content: content,
+    contentText: contentText,
+    controller: controller,
+    title: title,
+    titleText: titleText,
+    leading: leading,
+    leadingIconData: leadingIconData,
+    showLeading: showLeading,
+    trailing: trailing,
+    trailingIconData: trailingIconData,
+    onTap: onTap,
+    onTapSemanticsHint: onTapSemanticsHint,
+    isDismissable: isDismissable,
+    onDismissed: onDismissed,
+    style: style,
+    semanticLabel: semanticLabel,
+  );
 
   /// Creates a success notification box.
   ///
   /// The default leading icon is [SBBIcons.circle_tick_small].
-  const factory SBBNotificationBox.success({
+  factory SBBNotificationBox.success({
     Key? key,
     Widget? content,
     String? contentText,
@@ -123,20 +166,40 @@ sealed class SBBNotificationBox extends StatefulWidget {
     String? titleText,
     Widget? leading,
     IconData? leadingIconData,
-    bool? showLeading,
+    bool showLeading = true,
     Widget? trailing,
     IconData? trailingIconData,
     GestureTapCallback? onTap,
     String? onTapSemanticsHint,
+    bool isDismissable = false,
     GestureTapCallback? onDismissed,
     SBBNotificationBoxStyle? style,
     String? semanticLabel,
-  }) = _SBBNotificationBoxSuccess;
+  }) => SBBNotificationBox(
+    key: key,
+    state: .success,
+    content: content,
+    contentText: contentText,
+    controller: controller,
+    title: title,
+    titleText: titleText,
+    leading: leading,
+    leadingIconData: leadingIconData,
+    showLeading: showLeading,
+    trailing: trailing,
+    trailingIconData: trailingIconData,
+    onTap: onTap,
+    onTapSemanticsHint: onTapSemanticsHint,
+    isDismissable: isDismissable,
+    onDismissed: onDismissed,
+    style: style,
+    semanticLabel: semanticLabel,
+  );
 
   /// Creates an information notification box.
   ///
   /// The default leading icon is [SBBIcons.circle_information_small].
-  const factory SBBNotificationBox.information({
+  factory SBBNotificationBox.information({
     Key? key,
     Widget? content,
     String? contentText,
@@ -145,15 +208,38 @@ sealed class SBBNotificationBox extends StatefulWidget {
     String? titleText,
     Widget? leading,
     IconData? leadingIconData,
-    bool? showLeading,
+    bool showLeading = true,
     Widget? trailing,
     IconData? trailingIconData,
     GestureTapCallback? onTap,
     String? onTapSemanticsHint,
+    bool isDismissable = false,
     GestureTapCallback? onDismissed,
     SBBNotificationBoxStyle? style,
     String? semanticLabel,
-  }) = _SBBNotificationBoxInformation;
+  }) => SBBNotificationBox(
+    key: key,
+    state: .information,
+    content: content,
+    contentText: contentText,
+    controller: controller,
+    title: title,
+    titleText: titleText,
+    leading: leading,
+    leadingIconData: leadingIconData,
+    showLeading: showLeading,
+    trailing: trailing,
+    trailingIconData: trailingIconData,
+    onTap: onTap,
+    onTapSemanticsHint: onTapSemanticsHint,
+    isDismissable: isDismissable,
+    onDismissed: onDismissed,
+    style: style,
+    semanticLabel: semanticLabel,
+  );
+
+  /// Defines which notification variant is shown.
+  final SBBNotificationBoxState state;
 
   /// An optional controller to programmatically show and hide the [SBBNotificationBox].
   ///
@@ -203,9 +289,7 @@ sealed class SBBNotificationBox extends StatefulWidget {
   final IconData? leadingIconData;
 
   /// Whether the [leading] or [leadingIconData] is shown.
-  ///
-  /// Defaults to true.
-  final bool? showLeading;
+  final bool showLeading;
 
   /// A custom widget displayed in the trailing position.
   ///
@@ -225,11 +309,12 @@ sealed class SBBNotificationBox extends StatefulWidget {
   /// Callback when the user taps the notification box except on the dismiss button.
   final GestureTapCallback? onTap;
 
-  /// Callback invoked once the user taps the dismiss button.
-  ///
-  /// If non null, an inline [InkWell] close button is displayed in the title row.
+  /// If true, an inline [InkWell] close button is displayed in the title row.
   /// Tapping it will hide the promotion box via the [SBBNotificationBoxController]
   /// and invoke [onDismissed].
+  final bool isDismissable;
+
+  /// Callback invoked once the user taps the dismiss button.
   ///
   /// This will not be invoked if the hiding is done through the [SBBNotificationBoxController].
   final GestureTapCallback? onDismissed;
@@ -245,114 +330,8 @@ sealed class SBBNotificationBox extends StatefulWidget {
   /// If non-null, semantics of child widgets are excluded.
   final String? semanticLabel;
 
-  SBBNotificationBoxStyle? _getThemedStyle(BuildContext context);
-
   @override
   State<SBBNotificationBox> createState() => _SBBNotificationBoxState();
-}
-
-final class _SBBNotificationBoxAlert extends SBBNotificationBox {
-  const _SBBNotificationBoxAlert({
-    super.key,
-    super.content,
-    super.contentText,
-    super.controller,
-    super.title,
-    super.titleText,
-    super.leading,
-    super.leadingIconData,
-    bool? showLeading,
-    super.trailing,
-    super.trailingIconData,
-    super.onTap,
-    super.onTapSemanticsHint,
-    super.onDismissed,
-    super.style,
-    super.semanticLabel,
-  }) : super._(showLeading: showLeading ?? true);
-
-  @override
-  SBBNotificationBoxStyle? _getThemedStyle(BuildContext context) {
-    return Theme.of(context).sbbNotificationBoxTheme?.alert;
-  }
-}
-
-final class _SBBNotificationBoxWarning extends SBBNotificationBox {
-  const _SBBNotificationBoxWarning({
-    super.key,
-    super.content,
-    super.contentText,
-    super.controller,
-    super.title,
-    super.titleText,
-    super.leading,
-    super.leadingIconData,
-    bool? showLeading,
-    super.trailing,
-    super.trailingIconData,
-    super.onTap,
-    super.onTapSemanticsHint,
-    super.onDismissed,
-    super.style,
-    super.semanticLabel,
-  }) : super._(showLeading: showLeading ?? true);
-
-  @override
-  SBBNotificationBoxStyle? _getThemedStyle(BuildContext context) {
-    return Theme.of(context).sbbNotificationBoxTheme?.warning;
-  }
-}
-
-final class _SBBNotificationBoxSuccess extends SBBNotificationBox {
-  const _SBBNotificationBoxSuccess({
-    super.key,
-    super.content,
-    super.contentText,
-    super.controller,
-    super.title,
-    super.titleText,
-    super.leading,
-    super.leadingIconData,
-    bool? showLeading,
-    super.trailing,
-    super.trailingIconData,
-    super.onTap,
-    super.onTapSemanticsHint,
-    super.onDismissed,
-    super.style,
-    super.semanticLabel,
-  }) : super._(showLeading: showLeading ?? true);
-
-  @override
-  SBBNotificationBoxStyle? _getThemedStyle(BuildContext context) {
-    return Theme.of(context).sbbNotificationBoxTheme?.success;
-  }
-}
-
-final class _SBBNotificationBoxInformation extends SBBNotificationBox {
-  const _SBBNotificationBoxInformation({
-    super.key,
-    super.content,
-    super.contentText,
-    super.controller,
-    super.title,
-    super.titleText,
-    super.leading,
-    super.leadingIconData,
-    bool? showLeading,
-    super.trailing,
-    super.trailingIconData,
-    super.onTap,
-    super.onTapSemanticsHint,
-    super.onDismissed,
-    super.style,
-    super.semanticLabel,
-  }) : super._(showLeading: showLeading ?? true);
-
-  @override
-  SBBNotificationBoxStyle? _getThemedStyle(BuildContext context) {
-    return Theme.of(context).sbbNotificationBoxTheme?.information;
-  }
 }
 
 class _SBBNotificationBoxState extends State<SBBNotificationBox> with SingleTickerProviderStateMixin {
@@ -360,8 +339,6 @@ class _SBBNotificationBoxState extends State<SBBNotificationBox> with SingleTick
 
   SBBNotificationBoxController get _effectiveController =>
       widget.controller ?? (_internalController ??= SBBNotificationBoxController());
-
-  bool get _isDismissible => widget.onDismissed != null;
 
   late final AnimationController _animationController;
 
@@ -405,7 +382,7 @@ class _SBBNotificationBoxState extends State<SBBNotificationBox> with SingleTick
   Widget build(BuildContext context) {
     assert(debugCheckHasSBBBaseStyle(context));
 
-    final themedStyle = widget._getThemedStyle(context)!;
+    final themedStyle = _getThemedStyle(context)!;
     final effectiveStyle = themedStyle.merge(widget.style);
 
     final content = addDefaultAncestorWithResolved(
@@ -470,7 +447,7 @@ class _SBBNotificationBoxState extends State<SBBNotificationBox> with SingleTick
         children: [
           ?_resolveLeading(effectiveStyle),
           Expanded(child: _resolveContent(effectiveStyle)),
-          if (resolvedTrailing != null || _isDismissible)
+          if (resolvedTrailing != null || widget.isDismissable)
             Column(
               children: [
                 ?_dismissButton(context, effectiveStyle),
@@ -554,7 +531,8 @@ class _SBBNotificationBoxState extends State<SBBNotificationBox> with SingleTick
   }
 
   Widget? _dismissButton(BuildContext context, SBBNotificationBoxStyle effectiveStyle) {
-    if (!_isDismissible) return null;
+    if (!widget.isDismissable) return null;
+
     return Material(
       borderRadius: .circular(sbbIconSizeSmall),
       color: SBBColors.transparent,
@@ -583,6 +561,16 @@ class _SBBNotificationBoxState extends State<SBBNotificationBox> with SingleTick
       sizeFactor: animation,
       child: FadeTransition(opacity: animation, child: child),
     );
+  }
+
+  SBBNotificationBoxStyle? _getThemedStyle(BuildContext context) {
+    final theme = Theme.of(context).sbbNotificationBoxTheme;
+    return switch (widget.state) {
+      .alert => theme?.alert,
+      .warning => theme?.warning,
+      .success => theme?.success,
+      .information => theme?.information,
+    };
   }
 
   void _animate() => _animationController.animateTo(_effectiveController.value ? 1.0 : 0.0);
