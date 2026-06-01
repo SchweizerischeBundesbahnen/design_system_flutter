@@ -37,6 +37,13 @@ const _promotionBoxNoiseAsset = 'packages/sbb_design_system_mobile/lib/assets/no
 /// The trailing widget is placed to the right of the subtitle, vertically centered.
 /// If [trailing] is provided, that widget is used. Otherwise, only if [onTap]
 /// is set, a chevron icon is shown.
+///
+/// See also:
+///
+/// * [SBBPromotionBoxStyle], for customizing the appearance.
+/// * [SBBPrimaryButtonThemeData], for setting the style for all promotion boxes within the current Theme.
+/// * [SBBPromotionBoxController] for programmatically showing and hiding a promotion box.
+/// * [Figma design specs](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=299-6175&p=f&t=qb3K1kp5fgtZxom4-0)
 class SBBPromotionBox extends StatefulWidget {
   const SBBPromotionBox({
     super.key,
@@ -325,9 +332,10 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
             _effectiveController.hide();
             widget.onDismissed?.call();
           },
-          child: addDefaultAncestorWithResolved(
-            child: const Icon(SBBIcons.cross_tiny_small, size: sbbIconSizeSmall),
-            foregroundColor: effectiveStyle.dismissButtonForegroundColor,
+          child: Icon(
+            SBBIcons.cross_tiny_small,
+            size: sbbIconSizeSmall,
+            color: effectiveStyle.dismissButtonForegroundColor,
           ),
         ),
       ),

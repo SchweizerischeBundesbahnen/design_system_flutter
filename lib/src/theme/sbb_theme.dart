@@ -14,6 +14,7 @@ import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_text_input_
 import 'package:sbb_design_system_mobile/src/list_header/theme/default_sbb_list_header_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/list_item/theme/default_sbb_list_item_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/message/theme/default_sbb_message_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/notification_box/theme/default_sbb_notification_box_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/paginator/theme/default_sbb_paginator_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/picker/theme/default_sbb_picker_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/popup/theme/default_sbb_popup_theme_data.dart';
@@ -83,6 +84,7 @@ class SBBTheme {
     SBBSecondaryButtonThemeData? secondaryButtonTheme,
     SBBTertiaryButtonThemeData? tertiaryButtonTheme,
     SBBAccentButtonThemeData? accentButtonTheme,
+    SBBNotificationBoxThemeData? notificationBoxTheme,
     SBBCheckboxThemeData? checkboxTheme,
     SBBChipThemeData? chipTheme,
     SBBContentBoxThemeData? contentBoxTheme,
@@ -156,6 +158,7 @@ class SBBTheme {
     SBBSecondaryButtonThemeData? secondaryButtonTheme,
     SBBTertiaryButtonThemeData? tertiaryButtonTheme,
     SBBAccentButtonThemeData? accentButtonTheme,
+    SBBNotificationBoxThemeData? notificationBoxTheme,
     SBBCheckboxThemeData? checkboxTheme,
     SBBChipThemeData? chipTheme,
     SBBContentBoxThemeData? contentBoxTheme,
@@ -225,6 +228,7 @@ class SBBTheme {
     SBBBaseStyle? baseStyle,
     SBBBottomSheetThemeData? bottomSheetTheme,
     SBBPrimaryButtonThemeData? primaryButtonTheme,
+    SBBNotificationBoxThemeData? notificationBoxTheme,
     SBBSecondaryButtonThemeData? secondaryButtonTheme,
     SBBTertiaryButtonThemeData? tertiaryButtonTheme,
     SBBAccentButtonThemeData? accentButtonTheme,
@@ -302,6 +306,9 @@ class SBBTheme {
     final defaultPaginatorTheme = DefaultSBBPaginatorThemeData(mergedBaseStyle);
     final mergedPaginatorTheme = defaultPaginatorTheme.merge(paginatorTheme);
 
+    final defaultNotificationBoxTheme = DefaultSBBNotificationBoxThemeData(baseStyle: mergedBaseStyle);
+    final mergedNotificationBoxTheme = defaultNotificationBoxTheme.merge(notificationBoxTheme);
+
     final defaultPopupTheme = DefaultSBBPopupThemeData(mergedBaseStyle);
     final mergedPopupTheme = defaultPopupTheme.merge(popupTheme);
 
@@ -371,6 +378,7 @@ class SBBTheme {
       listHeaderTheme: mergedListHeaderTheme,
       listItemTheme: mergedListItemTheme,
       messageTheme: mergedMessageTheme,
+      notificationBoxTheme: mergedNotificationBoxTheme,
       paginatorTheme: mergedPaginatorTheme,
       pickerTheme: mergedPickerTheme,
       popupTheme: mergedPopupTheme,
@@ -405,6 +413,7 @@ class SBBTheme {
     required SBBListHeaderThemeData listHeaderTheme,
     required SBBListItemThemeData listItemTheme,
     required SBBMessageThemeData messageTheme,
+    required SBBNotificationBoxThemeData notificationBoxTheme,
     required SBBPaginatorThemeData paginatorTheme,
     required SBBPickerThemeData pickerTheme,
     required SBBPopupThemeData popupTheme,
@@ -463,6 +472,7 @@ class SBBTheme {
         listHeaderTheme,
         listItemTheme,
         messageTheme,
+        notificationBoxTheme,
         paginatorTheme,
         pickerTheme,
         popupTheme,

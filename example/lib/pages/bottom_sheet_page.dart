@@ -221,7 +221,7 @@ class _ExampleCard extends StatelessWidget {
     return SBBContentBox(
       padding: EdgeInsets.all(SBBSpacing.medium),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         spacing: SBBSpacing.small,
         children: [
           Text(
