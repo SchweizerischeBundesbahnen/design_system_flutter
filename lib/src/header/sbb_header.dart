@@ -76,9 +76,9 @@ import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 /// - [SBBHeaderStyle], for customizing the header’s appearance.
 /// - [SBBHeaderThemeData], to provide theme-wide defaults for headers.
 /// - [AppBar], which is used by this widget under the hood.
-/// - [Design Specification](https://digital.sbb.ch/de/design-system-mobile-new/module/header)
 /// {@endtemplate}
 /// - [SBBHeaderSmall], small variant of the SBB header
+/// - [Design Specification](https://digital.sbb.ch/de/design-system-mobile-new/module/header)
 class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
   const SBBHeader({
     super.key,
@@ -172,6 +172,9 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
 ///
 /// {@macro sbb_design_system.header_description}
 ///
+/// Unlike the normal SBB Header, the small header can accommodate a header-box by setting [bottom] to
+/// [SBBHeaderBoxPreferredSize].
+///
 /// Sample code:
 ///
 /// ```dart
@@ -197,7 +200,9 @@ class SBBHeader extends StatelessWidget implements PreferredSizeWidget {
 /// ```
 ///
 /// {@macro sbb_design_system.header_see_also}
-/// - [SBBHeader], default variant of the SBB header
+/// - [SBBHeader], for a default variant of the SBB header
+/// - [SBBHeaderBoxPreferredSize], for a variant of the header-box that can be integrated into the SBB header
+/// - [Design Specification](https://digital.sbb.ch/de/design-system-mobile-new/module/header)
 class SBBHeaderSmall extends SBBHeader {
   const SBBHeaderSmall({
     super.key,
