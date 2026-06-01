@@ -121,7 +121,7 @@ class SBBPromotionBox extends StatefulWidget {
   /// This will not be invoked if the hiding is done through the [SBBPromotionBoxController].
   final GestureTapCallback? onDismissed;
 
-  /// If non null, an inline [InkWell] close button is displayed in the title row.
+  /// If true, an inline [InkWell] close button is displayed in the title row.
   /// Tapping it will hide the promotion box via the [SBBPromotionBoxController]
   /// and invoke [onDismissed].
   final bool isDismissable;
