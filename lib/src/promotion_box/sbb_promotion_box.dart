@@ -25,7 +25,7 @@ const _promotionBoxNoiseAsset = 'packages/sbb_design_system_mobile/lib/assets/no
 ///
 /// ## Layout rules
 ///
-/// The dismiss button (shown when [onDismissed] is non null) is a simple [InkWell]
+/// The dismiss button (shown when [isDismissable] is true) is a simple [InkWell]
 /// and is always aligned in the title row.
 ///
 /// **When no subtitle is set:**
@@ -56,6 +56,7 @@ class SBBPromotionBox extends StatefulWidget {
     this.subtitleText,
     this.onTap,
     this.onDismissed,
+    this.isDismissable = false,
     this.trailing,
     this.onTapSemanticsHint,
     this.style,
@@ -124,12 +125,13 @@ class SBBPromotionBox extends StatefulWidget {
 
   /// Callback invoked once the user taps the dismiss button.
   ///
-  /// If non null, an inline [InkWell] close button is displayed in the title row.
-  /// Tapping it will hide the promotion box via the [SBBPromotionBoxController]
-  /// and invoke [onDismissed].
-  ///
   /// This will not be invoked if the hiding is done through the [SBBPromotionBoxController].
   final GestureTapCallback? onDismissed;
+
+  /// If true, an inline [InkWell] close button is displayed in the title row.
+  /// Tapping it will hide the promotion box via the [SBBPromotionBoxController]
+  /// and invoke [onDismissed].
+  final bool isDismissable;
 
   /// The semantic hint used if the promotion box is tappable. See [onTap].
   final String? onTapSemanticsHint;
@@ -167,8 +169,6 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
 
   SBBPromotionBoxController get _effectiveController =>
       widget.controller ?? (_internalController ??= SBBPromotionBoxController());
-
-  bool get _isDismissible => widget.onDismissed != null;
 
   late final AnimationController _animationController;
 
@@ -319,7 +319,8 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
   }
 
   Widget? _dismissButton(BuildContext context, SBBPromotionBoxStyle effectiveStyle) {
-    if (!_isDismissible) return null;
+    if (!widget.isDismissable) return null;
+
     return Material(
       borderRadius: .circular(sbbIconSizeSmall),
       color: SBBColors.transparent,

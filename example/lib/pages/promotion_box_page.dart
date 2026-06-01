@@ -14,7 +14,7 @@ class PromotionBoxPage extends StatefulWidget {
 
 class _PromotionBoxPageState extends State<PromotionBoxPage> {
   final defaultController = SBBPromotionBoxController();
-  final closableController = SBBPromotionBoxController();
+  final dismissableController = SBBPromotionBoxController();
   final clickableController = SBBPromotionBoxController();
   final tooLongTextController = SBBPromotionBoxController();
 
@@ -31,7 +31,7 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
               labelText: 'Show',
               onPressed: () {
                 defaultController.show();
-                closableController.show();
+                dismissableController.show();
                 clickableController.show();
                 tooLongTextController.show();
               },
@@ -40,7 +40,7 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
               labelText: 'Hide',
               onPressed: () {
                 defaultController.hide();
-                closableController.hide();
+                dismissableController.hide();
                 clickableController.hide();
                 tooLongTextController.hide();
               },
@@ -56,13 +56,13 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
             titleText: 'Default Promotion Box',
             subtitleText: 'The default promotion box.',
             controller: defaultController,
-            onDismissed: () {},
           ),
           SBBPromotionBox(
-            badgeText: 'Non Dismissable',
-            titleText: 'Non Dismissable Promotion Box',
+            badgeText: 'Dismissable',
+            titleText: 'Dismissable Promotion Box',
             subtitleText: 'Promotion Box that cannot be dismissed.',
-            controller: closableController,
+            isDismissable: true,
+            controller: dismissableController,
           ),
           SBBPromotionBox(
             badgeText: 'Tappable',
@@ -74,14 +74,14 @@ class _PromotionBoxPageState extends State<PromotionBoxPage> {
               titleText: 'Promotion Box Information',
               body: Text('Some more information'),
             ),
-            onDismissed: () {},
+            isDismissable: true,
           ),
           SBBPromotionBox(
             badgeText: 'With way too long title and badge text',
             titleText: _longSubtitleText,
             subtitleText: _longSubtitleText * 3,
             controller: tooLongTextController,
-            onDismissed: () {},
+            isDismissable: true,
           ),
         ],
       ),
