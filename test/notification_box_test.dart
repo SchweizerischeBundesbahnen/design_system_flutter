@@ -19,7 +19,13 @@ void main() {
           titleText: title,
           contentText: text,
           onTap: () {},
-          isDismissable: true,
+        ),
+        SBBNotificationBox.alert(
+          titleText: title,
+          contentText: text,
+          onTap: () {},
+          trailingIconData: SBBIcons.chevron_small_right_small,
+          isDismissable: false,
         ),
         SBBNotificationBox.alert(
           titleText: title,
@@ -31,19 +37,14 @@ void main() {
           titleText: title,
           contentText: text,
           onTap: () {},
-          isDismissable: true,
-          trailingIconData: SBBIcons.chevron_small_right_small,
-        ),
-        SBBNotificationBox.alert(
-          titleText: title,
-          contentText: text,
-          onTap: () {},
+          isDismissable: false,
         ),
         SBBNotificationBox.alert(
           titleText: title,
           contentText: text,
           onTap: () {},
           showLeading: false,
+          isDismissable: false,
         ),
         SBBNotificationBox.alert(
           title: Container(
@@ -57,7 +58,6 @@ void main() {
           ),
           trailing: SBBTertiaryButtonSmall(iconData: SBBIcons.unicorn_small, onPressed: () {}),
           onTap: () {},
-          isDismissable: true,
         ),
       ],
     );
@@ -75,23 +75,24 @@ void main() {
     final widget = Column(
       spacing: SBBSpacing.medium,
       children: [
-        SBBNotificationBox.alert(contentText: text, isDismissable: true),
+        SBBNotificationBox.alert(contentText: text),
+        SBBNotificationBox.alert(
+          contentText: text,
+          onTap: () {},
+          trailingIconData: SBBIcons.chevron_small_right_small,
+          isDismissable: false,
+        ),
         SBBNotificationBox.alert(
           contentText: text,
           onTap: () {},
           trailingIconData: SBBIcons.chevron_small_right_small,
         ),
-        SBBNotificationBox.alert(
-          contentText: text,
-          onTap: () {},
-          isDismissable: true,
-          trailingIconData: SBBIcons.chevron_small_right_small,
-        ),
-        SBBNotificationBox.alert(contentText: text, onTap: () {}),
+        SBBNotificationBox.alert(contentText: text, onTap: () {}, isDismissable: false),
         SBBNotificationBox.alert(
           contentText: text,
           onTap: () {},
           showLeading: false,
+          isDismissable: false,
         ),
         SBBNotificationBox.alert(
           content: Container(
@@ -100,7 +101,6 @@ void main() {
             child: Center(child: Text('Content')),
           ),
           onTap: () {},
-          isDismissable: true,
           trailing: SBBTertiaryButtonSmall(iconData: SBBIcons.unicorn_small, onPressed: () {}),
         ),
       ],
@@ -123,7 +123,13 @@ void main() {
           titleText: title,
           contentText: text,
           onTap: () {},
-          isDismissable: true,
+        ),
+        SBBNotificationBox.warning(
+          titleText: title,
+          contentText: text,
+          onTap: () {},
+          isDismissable: false,
+          trailingIconData: SBBIcons.chevron_small_right_small,
         ),
         SBBNotificationBox.warning(
           titleText: title,
@@ -135,19 +141,14 @@ void main() {
           titleText: title,
           contentText: text,
           onTap: () {},
-          isDismissable: true,
-          trailingIconData: SBBIcons.chevron_small_right_small,
-        ),
-        SBBNotificationBox.warning(
-          titleText: title,
-          contentText: text,
-          onTap: () {},
+          isDismissable: false,
         ),
         SBBNotificationBox.warning(
           titleText: title,
           contentText: text,
           onTap: () {},
           showLeading: false,
+          isDismissable: false,
         ),
         SBBNotificationBox.warning(
           title: Container(
@@ -161,7 +162,6 @@ void main() {
           ),
           trailing: SBBTertiaryButtonSmall(iconData: SBBIcons.unicorn_small, onPressed: () {}),
           onTap: () {},
-          isDismissable: true,
         ),
       ],
     );
@@ -179,23 +179,24 @@ void main() {
     final widget = Column(
       spacing: SBBSpacing.medium,
       children: [
-        SBBNotificationBox.warning(contentText: text, isDismissable: true),
+        SBBNotificationBox.warning(contentText: text),
+        SBBNotificationBox.warning(
+          contentText: text,
+          onTap: () {},
+          trailingIconData: SBBIcons.chevron_small_right_small,
+          isDismissable: false,
+        ),
         SBBNotificationBox.warning(
           contentText: text,
           onTap: () {},
           trailingIconData: SBBIcons.chevron_small_right_small,
         ),
-        SBBNotificationBox.warning(
-          contentText: text,
-          onTap: () {},
-          isDismissable: true,
-          trailingIconData: SBBIcons.chevron_small_right_small,
-        ),
-        SBBNotificationBox.warning(contentText: text, onTap: () {}),
+        SBBNotificationBox.warning(contentText: text, onTap: () {}, isDismissable: false),
         SBBNotificationBox.warning(
           contentText: text,
           onTap: () {},
           showLeading: false,
+          isDismissable: false,
         ),
         SBBNotificationBox.warning(
           content: Container(
@@ -204,7 +205,6 @@ void main() {
             child: Center(child: Text('Content')),
           ),
           onTap: () {},
-          isDismissable: true,
           trailing: SBBTertiaryButtonSmall(iconData: SBBIcons.unicorn_small, onPressed: () {}),
         ),
       ],
@@ -227,7 +227,13 @@ void main() {
           titleText: title,
           contentText: text,
           onTap: () {},
-          isDismissable: true,
+        ),
+        SBBNotificationBox.information(
+          titleText: title,
+          contentText: text,
+          onTap: () {},
+          trailingIconData: SBBIcons.chevron_small_right_small,
+          isDismissable: false,
         ),
         SBBNotificationBox.information(
           titleText: title,
@@ -239,19 +245,14 @@ void main() {
           titleText: title,
           contentText: text,
           onTap: () {},
-          isDismissable: true,
-          trailingIconData: SBBIcons.chevron_small_right_small,
-        ),
-        SBBNotificationBox.information(
-          titleText: title,
-          contentText: text,
-          onTap: () {},
+          isDismissable: false,
         ),
         SBBNotificationBox.information(
           titleText: title,
           contentText: text,
           onTap: () {},
           showLeading: false,
+          isDismissable: false,
         ),
         SBBNotificationBox.information(
           title: Container(
@@ -265,7 +266,6 @@ void main() {
           ),
           trailing: SBBTertiaryButtonSmall(iconData: SBBIcons.unicorn_small, onPressed: () {}),
           onTap: () {},
-          isDismissable: true,
         ),
       ],
     );
@@ -283,23 +283,24 @@ void main() {
     final widget = Column(
       spacing: SBBSpacing.medium,
       children: [
-        SBBNotificationBox.information(contentText: text, isDismissable: true),
+        SBBNotificationBox.information(contentText: text),
+        SBBNotificationBox.information(
+          contentText: text,
+          onTap: () {},
+          trailingIconData: SBBIcons.chevron_small_right_small,
+          isDismissable: false,
+        ),
         SBBNotificationBox.information(
           contentText: text,
           onTap: () {},
           trailingIconData: SBBIcons.chevron_small_right_small,
         ),
-        SBBNotificationBox.information(
-          contentText: text,
-          onTap: () {},
-          isDismissable: true,
-          trailingIconData: SBBIcons.chevron_small_right_small,
-        ),
-        SBBNotificationBox.information(contentText: text, onTap: () {}),
+        SBBNotificationBox.information(contentText: text, onTap: () {}, isDismissable: false),
         SBBNotificationBox.information(
           contentText: text,
           onTap: () {},
           showLeading: false,
+          isDismissable: false,
         ),
         SBBNotificationBox.information(
           content: Container(
@@ -308,7 +309,6 @@ void main() {
             child: Center(child: Text('Content')),
           ),
           onTap: () {},
-          isDismissable: true,
           trailing: SBBTertiaryButtonSmall(iconData: SBBIcons.unicorn_small, onPressed: () {}),
         ),
       ],
@@ -331,7 +331,13 @@ void main() {
           titleText: title,
           contentText: text,
           onTap: () {},
-          isDismissable: true,
+        ),
+        SBBNotificationBox.success(
+          titleText: title,
+          contentText: text,
+          onTap: () {},
+          trailingIconData: SBBIcons.chevron_small_right_small,
+          isDismissable: false,
         ),
         SBBNotificationBox.success(
           titleText: title,
@@ -343,19 +349,14 @@ void main() {
           titleText: title,
           contentText: text,
           onTap: () {},
-          isDismissable: true,
-          trailingIconData: SBBIcons.chevron_small_right_small,
-        ),
-        SBBNotificationBox.success(
-          titleText: title,
-          contentText: text,
-          onTap: () {},
+          isDismissable: false,
         ),
         SBBNotificationBox.success(
           titleText: title,
           contentText: text,
           onTap: () {},
           showLeading: false,
+          isDismissable: false,
         ),
         SBBNotificationBox.success(
           title: Container(
@@ -369,7 +370,6 @@ void main() {
           ),
           trailing: SBBTertiaryButtonSmall(iconData: SBBIcons.unicorn_small, onPressed: () {}),
           onTap: () {},
-          isDismissable: true,
         ),
       ],
     );
@@ -387,23 +387,24 @@ void main() {
     final widget = Column(
       spacing: SBBSpacing.medium,
       children: [
-        SBBNotificationBox.success(contentText: text, isDismissable: true),
+        SBBNotificationBox.success(contentText: text),
+        SBBNotificationBox.success(
+          contentText: text,
+          onTap: () {},
+          trailingIconData: SBBIcons.chevron_small_right_small,
+          isDismissable: false,
+        ),
         SBBNotificationBox.success(
           contentText: text,
           onTap: () {},
           trailingIconData: SBBIcons.chevron_small_right_small,
         ),
-        SBBNotificationBox.success(
-          contentText: text,
-          onTap: () {},
-          isDismissable: true,
-          trailingIconData: SBBIcons.chevron_small_right_small,
-        ),
-        SBBNotificationBox.success(contentText: text, onTap: () {}),
+        SBBNotificationBox.success(contentText: text, onTap: () {}, isDismissable: false),
         SBBNotificationBox.success(
           contentText: text,
           onTap: () {},
           showLeading: false,
+          isDismissable: false,
         ),
         SBBNotificationBox.success(
           content: Container(
@@ -412,7 +413,6 @@ void main() {
             child: Center(child: Text('Content')),
           ),
           onTap: () {},
-          isDismissable: true,
           trailing: SBBTertiaryButtonSmall(iconData: SBBIcons.unicorn_small, onPressed: () {}),
         ),
       ],

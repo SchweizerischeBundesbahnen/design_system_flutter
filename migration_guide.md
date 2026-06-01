@@ -368,13 +368,11 @@ The `SBBNotificationBox` API has been redesigned for more flexibility and better
 * replace `text` (String) with `contentText`, or use `content` for a custom widget
 * replace `detailsIcon` with `trailingIconData`, or use `trailing` for a custom widget
 * replace `onClose` with `onDismissed`
-* removed `isCloseable` as this is controlled by setting `onDismissed` or not.
+* replace `isCloseable` with `isDismissable`
 * replace `hasIcon` with `showLeading`
 * customize leading icon with `leadingIconData`, `leading` or use `SBBNotificationBoxStyle`
 * replace `onControllerCreated` callback with a `controller` parameter (`SBBNotificationBoxController`)
     * `SBBNotificationBoxController` replaces `ClosableBoxController`
-
-The previous default constructor with `state` has been removed.
 
 ### Example migration
 

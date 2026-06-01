@@ -17,7 +17,7 @@ import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 ///
 /// Use [showLeading] to disable the leading icon altogether.
 ///
-/// Use the default constructor with [state] or factory constructors to create specific notification types:
+/// Use [state] to specify the status type, or use the factory constructors:
 /// * [SBBNotificationBox.alert] for error or alert states
 /// * [SBBNotificationBox.warning] for warning states
 /// * [SBBNotificationBox.success] for success states
@@ -28,6 +28,9 @@ import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 /// ```dart
 /// // Simple text notification
 /// SBBNotificationBox.alert(contentText: 'Connection lost')
+///
+/// // Using dynamic state
+/// SBBNotificationBox(state: SBBNotificationBoxState.alert, contentText: 'Connection lost')
 ///
 /// // Notification with title and tap handler
 /// SBBNotificationBox.warning(
@@ -61,7 +64,7 @@ class SBBNotificationBox extends StatefulWidget {
     this.trailingIconData,
     this.onTap,
     this.onTapSemanticsHint,
-    this.isDismissable = false,
+    this.isDismissable = true,
     this.onDismissed,
     this.style,
     this.semanticLabel,
@@ -87,7 +90,7 @@ class SBBNotificationBox extends StatefulWidget {
     IconData? trailingIconData,
     GestureTapCallback? onTap,
     String? onTapSemanticsHint,
-    bool isDismissable = false,
+    bool isDismissable = true,
     GestureTapCallback? onDismissed,
     SBBNotificationBoxStyle? style,
     String? semanticLabel,
@@ -129,7 +132,7 @@ class SBBNotificationBox extends StatefulWidget {
     IconData? trailingIconData,
     GestureTapCallback? onTap,
     String? onTapSemanticsHint,
-    bool isDismissable = false,
+    bool isDismissable = true,
     GestureTapCallback? onDismissed,
     SBBNotificationBoxStyle? style,
     String? semanticLabel,
@@ -171,7 +174,7 @@ class SBBNotificationBox extends StatefulWidget {
     IconData? trailingIconData,
     GestureTapCallback? onTap,
     String? onTapSemanticsHint,
-    bool isDismissable = false,
+    bool isDismissable = true,
     GestureTapCallback? onDismissed,
     SBBNotificationBoxStyle? style,
     String? semanticLabel,
@@ -213,7 +216,7 @@ class SBBNotificationBox extends StatefulWidget {
     IconData? trailingIconData,
     GestureTapCallback? onTap,
     String? onTapSemanticsHint,
-    bool isDismissable = false,
+    bool isDismissable = true,
     GestureTapCallback? onDismissed,
     SBBNotificationBoxStyle? style,
     String? semanticLabel,
