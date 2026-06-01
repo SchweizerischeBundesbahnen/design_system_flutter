@@ -374,6 +374,7 @@ The previous default and `custom` constructors have been replaced by a single `c
 * replace `subtitle` (String) with `subtitleText`, or use `subtitle` for a custom widget
 * `badgeText` is now optional (provide either `badgeText` or a custom `badge` widget)
 * replace `onClose` with `onDismissed`
+* added `isDismissable` flag
 * replace `onControllerCreated` callback with a `controller` parameter (`SBBPromotionBoxController`)
   * `SBBPromotionBoxController` replaces `ClosableBoxController`
 * removed `leading` parameter — use the above layout customization options instead
@@ -399,6 +400,7 @@ SBBPromotionBox(
   titleText: 'My Title',
   subtitleText: 'My subtitle',
   badgeText: 'New',
+  isDismissable: true,
   onDismissed: () => print('closed'),
   controller: _controller,
   onTap: () => print('tapped'),

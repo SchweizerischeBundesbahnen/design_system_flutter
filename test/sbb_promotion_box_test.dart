@@ -16,21 +16,21 @@ void main() {
         return Column(
           spacing: SBBSpacing.xSmall,
           children: [
-            SBBPromotionBox(badgeText: 'Default', titleText: title, subtitleText: description, onDismissed: () {}),
-            SBBPromotionBox(badgeText: 'onDismissed null', titleText: title, subtitleText: description),
+            SBBPromotionBox(badgeText: 'Default', titleText: title, subtitleText: description),
+            SBBPromotionBox(badgeText: 'Dismissable', titleText: title, subtitleText: description, isDismissable: true),
             SBBPromotionBox(
               badgeText: 'Clickable',
               titleText: title,
               subtitleText: description,
               onTap: () {},
-              onDismissed: () {},
+              isDismissable: true,
             ),
             SBBPromotionBox(
               badgeText: 'With way too long title and badge text',
               titleText: longSubtitle,
               subtitleText: description,
               onTap: () {},
-              onDismissed: () {},
+              isDismissable: true,
             ),
             SBBPromotionBox(
               titleText: title,
