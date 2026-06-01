@@ -77,7 +77,7 @@ class SBBDivider extends StatelessWidget {
     return <Widget>[...itemList.take(itemList.length - 1).map(wrapListItem), itemList.last];
   }
 
-  /// A convenience function to for use in separated item builders.
+  /// A convenience function for use in separated item builders.
   ///
   /// {@macro sbb_design_system.divider.sample_builder}
   static Widget separatorBuilder(BuildContext _, int _) {
