@@ -503,8 +503,9 @@ All of the above also affects the `SBBRadioListItem`.
 ## Status
 
 ### Constructor arguments
-* replace `text` with `labelText`
 * complete customization using `label` and `icon` parameters
+* replace `text` with `labelText`
+* replace `type` (`SBBStatusType`) with `state` (`SBBStatusState`) if not using the factory methods.
 
 ### Theming & Styling
 * customize the theme of all `SBBStatus` with `SBBStatusThemeData` as input parameter to `SBBTheme`.
