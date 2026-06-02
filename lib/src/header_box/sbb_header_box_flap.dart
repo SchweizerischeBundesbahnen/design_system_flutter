@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/shared/debug.dart';
+import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 
 /// The default flap content for a SBB Header-Box.
 ///
@@ -125,17 +126,17 @@ class SBBHeaderBoxFlap extends StatelessWidget {
 
     final effectiveStyle = Theme.of(context).sbbHeaderBoxTheme.flapStyle!.merge(style).copyWith(padding: padding);
 
-    final leadingWidget = _addDefaultAncestorWithResolved(
+    final leadingWidget = addDefaultAncestorWithResolved(
       foregroundColor: effectiveStyle.leadingForegroundColor,
       textStyle: effectiveStyle.leadingTextStyle,
       child: _resolveLeading(effectiveStyle),
     );
-    final labelWidget = _addDefaultAncestorWithResolved(
+    final labelWidget = addDefaultAncestorWithResolved(
       foregroundColor: effectiveStyle.labelForegroundColor,
       textStyle: effectiveStyle.labelTextStyle,
       child: _resolveTitle(),
     );
-    final trailingWidget = _addDefaultAncestorWithResolved(
+    final trailingWidget = addDefaultAncestorWithResolved(
       foregroundColor: effectiveStyle.trailingForegroundColor,
       textStyle: effectiveStyle.trailingTextStyle,
       child: _resolveTrailing(effectiveStyle),
@@ -182,26 +183,5 @@ class SBBHeaderBoxFlap extends StatelessWidget {
     }
 
     return trailing;
-  }
-
-  Widget? _addDefaultAncestorWithResolved({
-    Widget? child,
-    Color? foregroundColor,
-    TextStyle? textStyle,
-  }) {
-    if (child == null) {
-      return null;
-    }
-
-    final resolvedTextStyle = textStyle?.copyWith(color: foregroundColor) ?? TextStyle(color: foregroundColor);
-
-    child = DefaultTextStyle.merge(
-      style: resolvedTextStyle,
-      child: IconTheme.merge(
-        data: IconThemeData(color: foregroundColor),
-        child: child,
-      ),
-    );
-    return child;
   }
 }

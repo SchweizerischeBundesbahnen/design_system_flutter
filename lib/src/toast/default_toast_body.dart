@@ -3,6 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 import 'package:sbb_design_system_mobile/src/toast/toast_scope.dart';
 
 class DefaultToastBody extends StatelessWidget {
@@ -62,30 +63,18 @@ class DefaultToastBody extends StatelessWidget {
   Widget? _resolvedTitle(SBBToastStyle resolvedStyle) {
     final resolvedTitle = title ?? Text(titleText!, maxLines: resolvedStyle.titleMaxLines);
 
-    return _addDefaultAncestorWithResolved(
-      textStyle: resolvedStyle.titleTextStyle?.copyWith(color: resolvedStyle.titleForegroundColor),
+    return addDefaultAncestorWithResolved(
+      foregroundColor: resolvedStyle.titleForegroundColor,
+      textStyle: resolvedStyle.titleTextStyle,
       child: resolvedTitle,
     );
   }
 
   Widget? _resolvedAction(SBBToastStyle resolvedStyle) {
-    return _addDefaultAncestorWithResolved(
-      textStyle: resolvedStyle.actionTextStyle?.copyWith(color: resolvedStyle.actionForegroundColor),
+    return addDefaultAncestorWithResolved(
+      foregroundColor: resolvedStyle.actionForegroundColor,
+      textStyle: resolvedStyle.actionTextStyle,
       child: action,
-    );
-  }
-
-  Widget? _addDefaultAncestorWithResolved({
-    required TextStyle? textStyle,
-    required Widget? child,
-  }) {
-    if (child == null) return null;
-    return DefaultTextStyle.merge(
-      style: textStyle,
-      child: IconTheme.merge(
-        data: IconThemeData(color: textStyle?.color),
-        child: child,
-      ),
     );
   }
 }

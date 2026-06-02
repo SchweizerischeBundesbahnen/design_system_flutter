@@ -87,23 +87,20 @@ class _BottomSheetPageState extends State<BottomSheetPage> {
       style: SBBBottomSheetStyle(
         backgroundColor: _customBackgroundColor ? SBBColors.peach : null,
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(bottom: SBBSpacing.small),
-        child: Column(
-          mainAxisSize: .min,
-          crossAxisAlignment: .start,
-          spacing: SBBSpacing.medium,
-          children: [
-            Text(
-              'This sheet only takes up the space it needs.',
-              style: sbbTextStyle.small.lightStyle,
-            ),
-            SBBPrimaryButton(
-              labelText: 'Close',
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-          ],
-        ),
+      body: Column(
+        mainAxisSize: .min,
+        crossAxisAlignment: .start,
+        spacing: SBBSpacing.medium,
+        children: [
+          Text(
+            'This sheet only takes up the space it needs.',
+            style: sbbTextStyle.small.lightStyle,
+          ),
+          SBBPrimaryButton(
+            labelText: 'Close',
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ],
       ),
     );
   }
@@ -118,24 +115,21 @@ class _BottomSheetPageState extends State<BottomSheetPage> {
       style: SBBBottomSheetStyle(
         backgroundColor: _customBackgroundColor ? SBBColors.peach : null,
       ),
-      body: Padding(
-        padding: const EdgeInsets.only(bottom: SBBSpacing.small),
-        child: Column(
-          crossAxisAlignment: .start,
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: .spaceBetween,
-          spacing: SBBSpacing.medium,
-          children: [
-            Text(
-              'This sheet fills 50% of the screen height.',
-              style: sbbTextStyle.small.lightStyle,
-            ),
-            SBBPrimaryButton(
-              labelText: 'Close',
-              onPressed: () => Navigator.of(context).pop(),
-            ),
-          ],
-        ),
+      body: Column(
+        crossAxisAlignment: .start,
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: .spaceBetween,
+        spacing: SBBSpacing.medium,
+        children: [
+          Text(
+            'This sheet fills 50% of the screen height.',
+            style: sbbTextStyle.small.lightStyle,
+          ),
+          SBBPrimaryButton(
+            labelText: 'Close',
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ],
       ),
     );
   }
@@ -165,13 +159,10 @@ class _BottomSheetPageState extends State<BottomSheetPage> {
       body: CustomScrollView(
         slivers: [
           SliverToBoxAdapter(
-            child: Padding(
-              padding: EdgeInsets.only(bottom: SBBSpacing.medium),
-              child: Text(
-                'This sheet uses CustomScrollView with isScrollControlled: true. '
-                'It expands to fill available space and becomes draggable.',
-                style: sbbTextStyle.small.lightStyle,
-              ),
+            child: Text(
+              'This sheet uses CustomScrollView with isScrollControlled: true. '
+              'It expands to fill available space and becomes draggable.',
+              style: sbbTextStyle.small.lightStyle,
             ),
           ),
           SliverGrid.count(
@@ -230,7 +221,7 @@ class _ExampleCard extends StatelessWidget {
     return SBBContentBox(
       padding: EdgeInsets.all(SBBSpacing.medium),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         spacing: SBBSpacing.small,
         children: [
           Text(

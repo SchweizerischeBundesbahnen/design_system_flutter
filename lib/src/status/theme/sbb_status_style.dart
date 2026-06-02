@@ -16,6 +16,7 @@ class SBBStatusStyle {
     this.foregroundColor,
     this.backgroundColor,
     this.iconColor,
+    this.iconData,
     this.borderColor,
     this.alphaValue,
   });
@@ -46,6 +47,12 @@ class SBBStatusStyle {
   /// If null, defaults to [foregroundColor].
   final Color? iconColor;
 
+  /// The default icon for this status state.
+  ///
+  /// Used when neither [SBBStatus.icon] nor [SBBStatus.iconData]
+  /// are provided.
+  final IconData? iconData;
+
   /// The color of the border around the status text container.
   ///
   /// This border separates the icon container from the text container.
@@ -73,6 +80,7 @@ class SBBStatusStyle {
     Color? foregroundColor,
     Color? backgroundColor,
     Color? iconColor,
+    IconData? iconData,
     Color? borderColor,
     double? alphaValue,
   }) {
@@ -81,6 +89,7 @@ class SBBStatusStyle {
       foregroundColor: foregroundColor ?? this.foregroundColor,
       backgroundColor: backgroundColor ?? this.backgroundColor,
       iconColor: iconColor ?? this.iconColor,
+      iconData: iconData ?? this.iconData,
       borderColor: borderColor ?? this.borderColor,
       alphaValue: alphaValue ?? this.alphaValue,
     );
@@ -94,6 +103,7 @@ class SBBStatusStyle {
       foregroundColor: other.foregroundColor,
       backgroundColor: other.backgroundColor,
       iconColor: other.iconColor,
+      iconData: other.iconData,
       borderColor: other.borderColor,
       alphaValue: other.alphaValue,
     );
@@ -107,22 +117,24 @@ class SBBStatusStyle {
       foregroundColor: Color.lerp(a?.foregroundColor, b?.foregroundColor, t),
       backgroundColor: Color.lerp(a?.backgroundColor, b?.backgroundColor, t),
       iconColor: Color.lerp(a?.iconColor, b?.iconColor, t),
+      iconData: t < 0.5 ? a?.iconData : b?.iconData,
       borderColor: Color.lerp(a?.borderColor, b?.borderColor, t),
       alphaValue: lerpDouble(a?.alphaValue, b?.alphaValue, t),
     );
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    return other is SBBStatusStyle &&
-        other.textStyle == textStyle &&
-        other.foregroundColor == foregroundColor &&
-        other.backgroundColor == backgroundColor &&
-        other.iconColor == iconColor &&
-        other.borderColor == borderColor &&
-        other.alphaValue == alphaValue;
-  }
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is SBBStatusStyle &&
+          runtimeType == other.runtimeType &&
+          textStyle == other.textStyle &&
+          foregroundColor == other.foregroundColor &&
+          backgroundColor == other.backgroundColor &&
+          iconColor == other.iconColor &&
+          iconData == other.iconData &&
+          borderColor == other.borderColor &&
+          alphaValue == other.alphaValue;
 
   @override
   int get hashCode => Object.hash(
@@ -130,6 +142,7 @@ class SBBStatusStyle {
     foregroundColor,
     backgroundColor,
     iconColor,
+    iconData,
     borderColor,
     alphaValue,
   );

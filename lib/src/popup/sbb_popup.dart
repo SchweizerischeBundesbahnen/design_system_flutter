@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/popup/theme/default_sbb_popup_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/shared/debug.dart';
+import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 
 /// Shows an SBB Popup dialog.
 ///
@@ -212,7 +213,7 @@ class SBBPopup extends StatelessWidget {
 
     // Apply theming to all widgets
     if (titleWidget != null) {
-      titleWidget = _addDefaultAncestorWithResolved(
+      titleWidget = addDefaultAncestorWithResolved(
         child: titleWidget,
         foregroundColor: resolvedStyle.titleForegroundColor,
         textStyle: resolvedStyle.titleTextStyle,
@@ -220,7 +221,7 @@ class SBBPopup extends StatelessWidget {
     }
 
     if (leadingWidget != null) {
-      leadingWidget = _addDefaultAncestorWithResolved(
+      leadingWidget = addDefaultAncestorWithResolved(
         child: leadingWidget,
         foregroundColor: resolvedStyle.leadingForegroundColor,
         textStyle: resolvedStyle.leadingTextStyle,
@@ -228,7 +229,7 @@ class SBBPopup extends StatelessWidget {
     }
 
     if (trailingWidget != null) {
-      trailingWidget = _addDefaultAncestorWithResolved(
+      trailingWidget = addDefaultAncestorWithResolved(
         child: trailingWidget,
         foregroundColor: resolvedStyle.trailingForegroundColor,
         textStyle: resolvedStyle.trailingTextStyle,
@@ -246,8 +247,8 @@ class SBBPopup extends StatelessWidget {
       final bodyPadding = padding.copyWith(top: resolvedStyle.titleBodyGap ?? SBBSpacing.small);
 
       child = Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: .min,
+        crossAxisAlignment: .start,
         children: [
           Padding(
             padding: titleRowPadding,
@@ -286,21 +287,6 @@ class SBBPopup extends StatelessWidget {
           explicitChildNodes: true,
           child: child,
         ),
-      ),
-    );
-  }
-
-  static Widget _addDefaultAncestorWithResolved({
-    required Widget child,
-    required Color? foregroundColor,
-    TextStyle? textStyle,
-  }) {
-    final resolvedTextStyle = textStyle?.copyWith(color: foregroundColor) ?? TextStyle(color: foregroundColor);
-    return DefaultTextStyle.merge(
-      style: resolvedTextStyle,
-      child: IconTheme.merge(
-        data: IconThemeData(color: foregroundColor),
-        child: child,
       ),
     );
   }

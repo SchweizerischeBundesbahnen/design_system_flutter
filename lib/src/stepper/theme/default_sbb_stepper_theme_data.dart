@@ -33,10 +33,11 @@ class DefaultSBBStepperThemeData extends SBBStepperThemeData {
           WidgetState.any: baseStyle.colorScheme.textPrimary,
         }),
         textStyle: WidgetStateProperty.fromMap(<WidgetStatesConstraint, TextStyle?>{
-          WidgetState.selected: baseStyle.themedTextStyle(textStyle: baseStyle.textTheme.mediumBold),
-          WidgetState.any: baseStyle.themedTextStyle(textStyle: baseStyle.textTheme.mediumLight),
+          WidgetState.selected: baseStyle.textTheme.mediumBold,
+          WidgetState.any: baseStyle.textTheme.mediumLight,
         }),
-        labelTextStyle: baseStyle.themedTextStyle(textStyle: baseStyle.textTheme.smallLight),
+        labelForegroundColor: baseStyle.colorScheme.textPrimary,
+        labelTextStyle: baseStyle.textTheme.smallLight,
       ),
     );
   }
@@ -62,10 +63,11 @@ class DefaultSBBStepperThemeData extends SBBStepperThemeData {
           WidgetState.any: SBBColors.white,
         }),
         textStyle: WidgetStateProperty.fromMap(<WidgetStatesConstraint, TextStyle?>{
-          WidgetState.selected: baseStyle.themedTextStyle(textStyle: baseStyle.textTheme.mediumBold),
-          WidgetState.any: baseStyle.themedTextStyle(textStyle: baseStyle.textTheme.mediumLight),
+          WidgetState.selected: baseStyle.textTheme.mediumBold,
+          WidgetState.any: baseStyle.textTheme.mediumLight,
         }),
-        labelTextStyle: baseStyle.themedTextStyle(textStyle: baseStyle.textTheme.smallLight, color: SBBColors.white),
+        labelForegroundColor: SBBColors.white,
+        labelTextStyle: baseStyle.textTheme.smallLight,
       ),
     );
   }

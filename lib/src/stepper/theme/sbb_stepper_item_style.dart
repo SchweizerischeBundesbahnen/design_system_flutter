@@ -32,6 +32,7 @@ class SBBStepperItemStyle {
     this.badgeIconColor,
     this.foregroundColor,
     this.textStyle,
+    this.labelForegroundColor,
     this.labelTextStyle,
   });
 
@@ -59,6 +60,9 @@ class SBBStepperItemStyle {
   /// [foregroundColor] is used instead.
   final WidgetStateProperty<TextStyle?>? textStyle;
 
+  /// Color of label text
+  final Color? labelForegroundColor;
+
   /// TextStyle of the label shown below the active step.
   final TextStyle? labelTextStyle;
 
@@ -81,6 +85,7 @@ class SBBStepperItemStyle {
     Color? badgeIconColor,
     Color? badgeBackgroundColor,
     Color? badgeBorderColor,
+    Color? labelForegroundColor,
     WidgetStateProperty<TextStyle?>? textStyle,
     TextStyle? labelTextStyle,
   }) {
@@ -91,6 +96,7 @@ class SBBStepperItemStyle {
       badgeIconColor: badgeIconColor ?? this.badgeIconColor,
       badgeBackgroundColor: badgeBackgroundColor ?? this.badgeBackgroundColor,
       badgeBorderColor: badgeBorderColor ?? this.badgeBorderColor,
+      labelForegroundColor: labelForegroundColor ?? this.labelForegroundColor,
       textStyle: textStyle ?? this.textStyle,
       labelTextStyle: labelTextStyle ?? this.labelTextStyle,
     );
@@ -106,6 +112,7 @@ class SBBStepperItemStyle {
       badgeIconColor: other.badgeIconColor,
       badgeBackgroundColor: other.badgeBackgroundColor,
       badgeBorderColor: other.badgeBorderColor,
+      labelForegroundColor: other.labelForegroundColor,
       textStyle: other.textStyle,
       labelTextStyle: other.labelTextStyle,
     );
@@ -121,6 +128,7 @@ class SBBStepperItemStyle {
       badgeBorderColor: Color.lerp(a?.badgeBorderColor, b?.badgeBorderColor, t),
       badgeBackgroundColor: Color.lerp(a?.badgeBackgroundColor, b?.badgeBackgroundColor, t),
       badgeIconColor: Color.lerp(a?.badgeIconColor, b?.badgeIconColor, t),
+      labelForegroundColor: Color.lerp(a?.labelForegroundColor, b?.labelForegroundColor, t),
       textStyle: WidgetStateProperty.lerp<TextStyle?>(a?.textStyle, b?.textStyle, t, TextStyle.lerp),
       labelTextStyle: TextStyle.lerp(a?.labelTextStyle, b?.labelTextStyle, t),
     );

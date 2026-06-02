@@ -84,12 +84,12 @@ class DesignGuidelinePage extends StatelessWidget {
           const SBBListHeader('Default'),
           SBBHeaderBox(
             titleText: 'Title',
-            leadingIconData: SBBIcons.dog_small,
+            leadingIconData: SBBIcons.unicorn_small,
             subtitleText: 'Subtext',
             flap: SBBHeaderBoxFlap(
               labelText: 'Additional text or information',
               leadingIconData: SBBIcons.sign_exclamation_point_small,
-              trailingIconData: SBBIcons.circle_information_small_small,
+              trailingIconData: SBBIcons.circle_information_small,
             ),
             trailing: SBBTertiaryButtonSmall(
               labelText: 'Label',
@@ -101,7 +101,7 @@ class DesignGuidelinePage extends StatelessWidget {
           const SBBListHeader('Large'),
           SBBHeaderBoxLarge(
             titleText: 'Title',
-            leadingIconData: SBBIcons.dog_medium,
+            leadingIconData: SBBIcons.unicorn_small,
             subtitleText: 'Subtext',
             trailing: SBBTertiaryButton(
               iconData: SBBIcons.dog_small,
@@ -154,7 +154,7 @@ class _StaticPageState extends State<StaticPage> {
                     children: [
                       Text('Static Screen', style: SBBTextStyles.mediumBold),
                       Text(
-                        'Click to expand Headerbox.',
+                        'Click to expand Header-Box.',
                         style: SBBTextStyles.smallLight.copyWith(
                           color: isDark ? SBBColors.graphite : SBBColors.granite,
                         ),
@@ -168,9 +168,9 @@ class _StaticPageState extends State<StaticPage> {
                 ],
               ),
               AnimatedContainer(
-                curve: Curves.easeInOut,
+                curve: Curves.easeInOutCubic,
                 height: _headerBoxExpanded ? _expandedHeight : _collapsedHeight,
-                duration: Durations.long4,
+                duration: Durations.medium4,
               ),
             ],
           ),
@@ -183,7 +183,7 @@ class _StaticPageState extends State<StaticPage> {
     return Center(
       child: SBBMessage(
         titleText: 'Cover me!',
-        subtitleText: 'This screen is non scrollable.\nUsing a Stack, the Headerbox will simply lay on top of it.',
+        subtitleText: 'This screen is non scrollable.\nUsing a Stack, the Header-Box will simply lay on top of it.',
       ),
     );
   }
@@ -197,9 +197,13 @@ class ScrollablePage extends StatefulWidget {
 }
 
 class _ScrollablePageState extends State<ScrollablePage> {
-  bool _headerBoxExpanded = false;
-  final _expandedHeight = 300.0;
-  final _collapsedHeight = 0.0;
+  int _option = 0;
+
+  bool _floating = true;
+  bool _resizing = true;
+  FloatingHeaderSnapMode _snapMode = .scroll;
+  SBBHeaderBoxTopMode _topMode = .hideable;
+  SBBHeaderBoxFlapMode _flapMode = .static;
 
   @override
   Widget build(BuildContext context) {
@@ -207,24 +211,133 @@ class _ScrollablePageState extends State<ScrollablePage> {
     return CustomScrollView(
       slivers: [
         SBBSliverHeaderBox(
-          titleText: 'Scrollable Screen',
-          subtitleText: 'Click to expand the header box',
-          trailing: SBBTertiaryButtonSmall(
-            labelText: 'Expand',
-            onPressed: () => setState(() => _headerBoxExpanded = !_headerBoxExpanded),
+          top: Padding(
+            padding: EdgeInsets.all(SBBSpacing.medium),
+            child: SBBSegmentedButtonFilled(
+              segments: [
+                SBBButtonSegment(value: 0, labelText: 'Option 1'),
+                SBBButtonSegment(value: 1, labelText: 'Option 2'),
+              ],
+              selected: _option,
+              onSelectionChanged: (value) {
+                setState(() {
+                  _option = value;
+                });
+              },
+            ),
           ),
-          body: AnimatedContainer(
-            curve: Curves.easeInOut,
-            height: _headerBoxExpanded ? _expandedHeight : _collapsedHeight,
-            duration: Durations.long4,
+          titleText: 'Sliver Usage',
+          subtitleText: 'Try scrolling with the different options.',
+          config: SBBSliverHeaderBoxConfig(
+            floating: _floating,
+            resizing: _resizing,
+            snapMode: _snapMode,
+            topMode: _topMode,
+            flapMode: _flapMode,
+          ),
+          flap: SBBHeaderBoxFlap(
+            labelText: 'This is a flap',
+          ),
+          body: SBBContractible(
+            child: Column(
+              children: SBBDivider.divideItems(
+                context: context,
+                items: [
+                  SBBDropdown(
+                    triggerDecoration: SBBInputDecoration(
+                      labelText: 'Snap Mode',
+                      contentPadding: EdgeInsets.zero,
+                    ),
+                    selectedItem: _snapMode,
+                    items: [
+                      SBBDropdownItem(value: FloatingHeaderSnapMode.scroll, label: 'Scroll'),
+                      SBBDropdownItem(value: FloatingHeaderSnapMode.overlay, label: 'Overlay'),
+                    ],
+                    onChanged: (value) {
+                      setState(() {
+                        _snapMode = value!;
+                      });
+                    },
+                  ),
+                  SBBDropdown(
+                    triggerDecoration: SBBInputDecoration(
+                      labelText: 'Top Mode',
+                      contentPadding: EdgeInsets.zero,
+                    ),
+                    selectedItem: _topMode,
+                    items: [
+                      SBBDropdownItem(value: SBBHeaderBoxTopMode.static, label: 'Static'),
+                      SBBDropdownItem(value: SBBHeaderBoxTopMode.hideable, label: 'Hideable'),
+                    ],
+                    onChanged: (value) {
+                      setState(() {
+                        _topMode = value!;
+                      });
+                    },
+                  ),
+                  SBBDropdown(
+                    triggerDecoration: SBBInputDecoration(
+                      labelText: 'Flap Mode',
+                      contentPadding: EdgeInsets.zero,
+                    ),
+                    selectedItem: _flapMode,
+                    items: [
+                      SBBDropdownItem(value: SBBHeaderBoxFlapMode.static, label: 'Static'),
+                      SBBDropdownItem(value: SBBHeaderBoxFlapMode.hideable, label: 'Hideable'),
+                    ],
+                    onChanged: (value) {
+                      setState(() {
+                        _flapMode = value!;
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
-        SliverList.builder(
+        SliverToBoxAdapter(
+          child: SBBContentBox(
+            margin: EdgeInsets.symmetric(
+              horizontal: SBBSpacing.xSmall,
+              vertical: SBBSpacing.medium,
+            ),
+            child: Column(
+              children: SBBDivider.divideItems(
+                context: context,
+                items: [
+                  SBBCheckboxListItem(
+                    value: _resizing,
+                    titleText: 'Resizing',
+                    subtitleText: 'Header will expand and contract on scroll',
+                    onChanged: (resizing) {
+                      setState(() {
+                        _resizing = resizing!;
+                      });
+                    },
+                  ),
+                  SBBCheckboxListItem(
+                    value: _floating,
+                    titleText: 'Floating',
+                    subtitleText: 'Header will appear first when scrolling back',
+                    onChanged: (floating) {
+                      setState(() {
+                        _floating = floating!;
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        SliverList.separated(
           itemCount: 60,
           itemBuilder: (context, index) => SBBListItem(
             titleText: 'Item $index',
             onTap: () => sbbToast.show(titleText: 'Pressed Item $index', bottom: 96.0),
           ),
+          separatorBuilder: SBBDivider.separatorBuilder,
         ),
       ],
     );

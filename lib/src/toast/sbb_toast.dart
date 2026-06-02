@@ -221,7 +221,14 @@ class SBBToast {
           bottom: bottom,
           child: Align(
             alignment: .center,
-            child: Semantics(container: true, liveRegion: true, child: builder(context, stream)),
+            child: Material(
+              type: .transparency,
+              child: Semantics(
+                container: true,
+                liveRegion: true,
+                child: builder(context, stream),
+              ),
+            ),
           ),
         ),
       );

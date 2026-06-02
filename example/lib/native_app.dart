@@ -92,7 +92,7 @@ class MyApp extends StatelessWidget {
           slivers: [
             ThemeSliverHeaderbox(),
             SliverPadding(
-              padding: const .symmetric(horizontal: SBBSpacing.medium),
+              padding: const .symmetric(horizontal: SBBSpacing.xSmall),
               sliver: SliverList.list(
                 children: [
                   const SBBListHeader('Basics'),
@@ -175,7 +175,7 @@ class MyApp extends StatelessWidget {
             _DemoEntry('Dropdown', DropdownPage()),
             _DemoEntry('Forms', FormPage()),
             _DemoEntry('Header', HeaderPage()),
-            _DemoEntry('Headerbox', HeaderBoxPage()),
+            _DemoEntry('Header-Box', HeaderBoxPage()),
             _DemoEntry('Illustrations', IllustrationPage()),
             _DemoEntry('Message', MessagePage()),
             _DemoEntry('Stepper', StepperPage()),

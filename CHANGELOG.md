@@ -38,6 +38,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - BREAKING: overhauled `SBBPagination` and renamed to `SBBPaginator` - see [v5 migration guide]
 - BREAKING: overhauled `SBBPicker` - see [v5 migration guide]
 - BREAKING: overhauled `SBBPromotionBox` - see [v5 migration guide]
+- BREAKING: overhauled `SBBNotificationBox` - see [v5 migration guide]
 - BREAKING: overhauled `SBBModalPopup` and renamed to `SBBPopup` - see [v5 migration guide]
 - BREAKING: overhauled `SBBRadio` with `SBBRadioGroup` ancestor - see [v5 migration guide]
 - BREAKING: overhauled `SBBSegmentedButton` component - see [v5 migration guide]
@@ -71,7 +72,10 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Removed `CascadeColumnParentData` as it is not directly used by clients
 - Removed `SBBTextField` - replaced by `SBBTextInput`
 - Removed `merge` extension on `SBBBaseStyle`
+- Removed `themedTextStyle` method from `SBBBaseStyle`
 - Removed `SBBColors.redDark`, use `SBBColors.red85` instead
+- Removed `TransparentTappableElement`
+- Removed `ClosableBoxController`, use the component specific controller like `SBBNotificationBoxController`
 
 ## [4.12.0] - 2026-04-28
 

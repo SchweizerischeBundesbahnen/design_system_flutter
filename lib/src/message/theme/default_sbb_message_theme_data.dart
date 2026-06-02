@@ -5,11 +5,11 @@ class DefaultSBBMessageThemeData extends SBBMessageThemeData {
   DefaultSBBMessageThemeData(SBBBaseStyle baseStyle)
     : super(
         style: SBBMessageStyle(
-          titleTextStyle: baseStyle.themedTextStyle(textStyle: baseStyle.textTheme.mediumLight),
+          titleTextStyle: baseStyle.textTheme.mediumLight,
           titleForegroundColor: baseStyle.colorScheme.textPrimary,
-          subtitleTextStyle: baseStyle.themedTextStyle(textStyle: baseStyle.textTheme.smallLight),
+          subtitleTextStyle: baseStyle.textTheme.smallLight,
           subtitleForegroundColor: baseStyle.colorScheme.textSecondary,
-          errorTextStyle: baseStyle.themedTextStyle(textStyle: baseStyle.textTheme.xSmallLight),
+          errorTextStyle: baseStyle.textTheme.xSmallLight,
           errorForegroundColor: baseStyle.colorScheme.textSecondary,
           padding: const .all(SBBSpacing.medium),
           illustrationTitleGap: SBBSpacing.large,

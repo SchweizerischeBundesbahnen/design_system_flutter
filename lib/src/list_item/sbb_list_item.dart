@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/divider/divider_painter.dart';
 import 'package:sbb_design_system_mobile/src/shared/bottom_loading_indicator.dart';
 import 'package:sbb_design_system_mobile/src/shared/debug.dart';
-import 'package:sbb_design_system_mobile/src/shared/divider/divider_painter.dart';
+import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 
 /// A customizable list item component following the SBB design system.
 ///
@@ -288,7 +289,7 @@ class SBBListItem extends StatefulWidget {
   /// Consider using [SBBDivider.divideItems] instead of this.
   @Deprecated('Use SBBDivider.divideItems instead of this method.')
   static List<Widget> divideListItems({
-    BuildContext? context,
+    required BuildContext context,
     required Iterable<Widget> items,
     Color? color,
   }) => SBBDivider.divideItems(items: items, context: context, color: color);
@@ -425,21 +426,21 @@ class _SBBListItemState extends State<SBBListItem> {
     }
 
     // Apply theming to all widgets
-    titleWidget = _addDefaultAncestorWithResolved(
+    titleWidget = addDefaultAncestorWithResolved(
       child: titleWidget,
       foregroundColor: resolvedTitleForegroundColor,
       textStyle: resolvedTitleTextStyle,
-    );
+    )!;
 
     if (leadingWidget != null) {
-      leadingWidget = _addDefaultAncestorWithResolved(
+      leadingWidget = addDefaultAncestorWithResolved(
         child: leadingWidget,
         foregroundColor: resolvedLeadingForegroundColor,
       );
     }
 
     if (subtitleWidget != null) {
-      subtitleWidget = _addDefaultAncestorWithResolved(
+      subtitleWidget = addDefaultAncestorWithResolved(
         child: subtitleWidget,
         foregroundColor: resolvedSubtitleForegroundColor,
         textStyle: resolvedSubtitleTextStyle,
@@ -447,7 +448,7 @@ class _SBBListItemState extends State<SBBListItem> {
     }
 
     if (trailingWidget != null) {
-      trailingWidget = _addDefaultAncestorWithResolved(
+      trailingWidget = addDefaultAncestorWithResolved(
         child: trailingWidget,
         foregroundColor: resolvedTrailingForegroundColor,
       );
@@ -537,23 +538,6 @@ class _SBBListItemState extends State<SBBListItem> {
       );
     }
 
-    return child;
-  }
-
-  Widget _addDefaultAncestorWithResolved({
-    required Widget child,
-    required Color? foregroundColor,
-    TextStyle? textStyle,
-  }) {
-    final resolvedTextStyle = textStyle?.copyWith(color: foregroundColor) ?? TextStyle(color: foregroundColor);
-
-    child = DefaultTextStyle.merge(
-      style: resolvedTextStyle,
-      child: IconTheme.merge(
-        data: IconThemeData(color: foregroundColor),
-        child: child,
-      ),
-    );
     return child;
   }
 

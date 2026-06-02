@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/promotion_box/promotion_box_layout.dart';
 import 'package:sbb_design_system_mobile/src/promotion_box/theme/default_sbb_promotion_box_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 
 const _promotionBoxNoiseAsset = 'packages/sbb_design_system_mobile/lib/assets/noise.png';
 
@@ -24,7 +25,7 @@ const _promotionBoxNoiseAsset = 'packages/sbb_design_system_mobile/lib/assets/no
 ///
 /// ## Layout rules
 ///
-/// The dismiss button (shown when [onDismissed] is non null) is a simple [InkWell]
+/// The dismiss button (shown when [isDismissable] is true) is a simple [InkWell]
 /// and is always aligned in the title row.
 ///
 /// **When no subtitle is set:**
@@ -36,6 +37,13 @@ const _promotionBoxNoiseAsset = 'packages/sbb_design_system_mobile/lib/assets/no
 /// The trailing widget is placed to the right of the subtitle, vertically centered.
 /// If [trailing] is provided, that widget is used. Otherwise, only if [onTap]
 /// is set, a chevron icon is shown.
+///
+/// See also:
+///
+/// * [SBBPromotionBoxStyle], for customizing the appearance.
+/// * [SBBPrimaryButtonThemeData], for setting the style for all promotion boxes within the current Theme.
+/// * [SBBPromotionBoxController] for programmatically showing and hiding a promotion box.
+/// * [Figma design specs](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=299-6175&p=f&t=qb3K1kp5fgtZxom4-0)
 class SBBPromotionBox extends StatefulWidget {
   const SBBPromotionBox({
     super.key,
@@ -48,6 +56,7 @@ class SBBPromotionBox extends StatefulWidget {
     this.subtitleText,
     this.onTap,
     this.onDismissed,
+    this.isDismissable = false,
     this.trailing,
     this.onTapSemanticsHint,
     this.style,
@@ -116,12 +125,13 @@ class SBBPromotionBox extends StatefulWidget {
 
   /// Callback invoked once the user taps the dismiss button.
   ///
-  /// If non null, an inline [InkWell] close button is displayed in the title row.
-  /// Tapping it will hide the promotion box via the [SBBPromotionBoxController]
-  /// and invoke [onDismissed].
-  ///
   /// This will not be invoked if the hiding is done through the [SBBPromotionBoxController].
   final GestureTapCallback? onDismissed;
+
+  /// If true, an inline [InkWell] close button is displayed in the title row.
+  /// Tapping it will hide the promotion box via the [SBBPromotionBoxController]
+  /// and invoke [onDismissed].
+  final bool isDismissable;
 
   /// The semantic hint used if the promotion box is tappable. See [onTap].
   final String? onTapSemanticsHint;
@@ -159,8 +169,6 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
 
   SBBPromotionBoxController get _effectiveController =>
       widget.controller ?? (_internalController ??= SBBPromotionBoxController());
-
-  bool get _isDismissible => widget.onDismissed != null;
 
   late final AnimationController _animationController;
 
@@ -311,7 +319,8 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
   }
 
   Widget? _dismissButton(BuildContext context, SBBPromotionBoxStyle effectiveStyle) {
-    if (!_isDismissible) return null;
+    if (!widget.isDismissable) return null;
+
     return Material(
       borderRadius: .circular(sbbIconSizeSmall),
       color: SBBColors.transparent,
@@ -324,9 +333,10 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
             _effectiveController.hide();
             widget.onDismissed?.call();
           },
-          child: _addDefaultAncestorWithResolved(
-            child: const Icon(SBBIcons.cross_tiny_small, size: sbbIconSizeSmall),
-            foregroundColor: effectiveStyle.dismissButtonForegroundColor,
+          child: Icon(
+            SBBIcons.cross_tiny_small,
+            size: sbbIconSizeSmall,
+            color: effectiveStyle.dismissButtonForegroundColor,
           ),
         ),
       ),
@@ -338,7 +348,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
     if (trailingWidget == null && widget.onTap != null) {
       trailingWidget = const Icon(SBBIcons.chevron_small_right_small, size: sbbIconSizeSmall);
     }
-    return _addDefaultAncestorWithResolved(
+    return addDefaultAncestorWithResolved(
       child: trailingWidget,
       foregroundColor: effectiveStyle.trailingForegroundColor,
     );
@@ -350,7 +360,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
       subtitleWidget = Text(widget.subtitleText!, maxLines: effectiveStyle.subtitleTextMaxLines, overflow: .ellipsis);
     }
 
-    return _addDefaultAncestorWithResolved(
+    return addDefaultAncestorWithResolved(
       child: subtitleWidget,
       foregroundColor: effectiveStyle.subtitleForegroundColor,
       textStyle: effectiveStyle.subtitleTextStyle,
@@ -360,7 +370,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
   Widget _titleWidget(SBBPromotionBoxStyle effectiveStyle) {
     final Widget titleWidget = widget.title ?? Text(widget.titleText!, maxLines: effectiveStyle.titleTextMaxLines);
 
-    return _addDefaultAncestorWithResolved(
+    return addDefaultAncestorWithResolved(
       child: titleWidget,
       foregroundColor: effectiveStyle.titleForegroundColor,
       textStyle: effectiveStyle.titleTextStyle,
@@ -372,22 +382,6 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
       axisAlignment: -1.0,
       sizeFactor: animation,
       child: FadeTransition(opacity: animation, child: child),
-    );
-  }
-
-  Widget? _addDefaultAncestorWithResolved({
-    required Widget? child,
-    required Color? foregroundColor,
-    TextStyle? textStyle,
-  }) {
-    if (child == null) return null;
-    final resolvedTextStyle = textStyle?.copyWith(color: foregroundColor) ?? TextStyle(color: foregroundColor);
-    return DefaultTextStyle.merge(
-      style: resolvedTextStyle,
-      child: IconTheme.merge(
-        data: IconThemeData(color: foregroundColor),
-        child: child,
-      ),
     );
   }
 

@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/shared/debug.dart';
+import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 
 /// The SBB Status.
 ///
 /// A Widget to display important, non-dismissible information to the user.
 ///
 /// Provide either [label] for custom content or [labelText] for text-only
-/// content with standard styling. For a custom trailing widget, use [icon] instead of the
+/// content with standard styling. For a custom leading widget, use [icon] instead of the
 /// default [iconData]. These parameters are mutually exclusive.
 ///
-/// Use the factory constructors to create specific status types:
+/// Use [state] to specify the status type, or use the factory constructors:
 /// * [SBBStatus.alert] for error or alert states
 /// * [SBBStatus.warning] for warning states
 /// * [SBBStatus.success] for success states
@@ -20,6 +21,9 @@ import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 ///
 /// ```dart
 /// // Simple text status
+/// SBBStatus(state: SBBStatusState.alert, labelText: 'Connection failed')
+///
+/// // Using factory constructor
 /// SBBStatus.alert(labelText: 'Connection failed')
 ///
 /// // Custom styled status with custom content
@@ -41,11 +45,13 @@ import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 ///
 /// * [SBBStatusStyle], for customizing the appearance.
 /// * [SBBStatusThemeData], for setting the style for all status indicators within the current Theme.
+/// * [SBBStatusState], defines the visual state of the status.
 /// * [SBBNotificationBox] for a dismissible way to display information to the user.
 /// * [Figma design specs](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=321-7778)
-sealed class SBBStatus extends StatelessWidget {
-  const SBBStatus._({
+class SBBStatus extends StatelessWidget {
+  const SBBStatus({
     super.key,
+    required this.state,
     this.label,
     this.labelText,
     this.icon,
@@ -58,7 +64,7 @@ sealed class SBBStatus extends StatelessWidget {
   /// Creates an alert status indicator.
   ///
   /// The default icon is [SBBIcons.circle_cross_small].
-  const factory SBBStatus.alert({
+  factory SBBStatus.alert({
     Key? key,
     Widget? label,
     String? labelText,
@@ -66,12 +72,21 @@ sealed class SBBStatus extends StatelessWidget {
     IconData? iconData,
     SBBStatusStyle? style,
     String? semanticLabel,
-  }) = _SBBStatusAlert;
+  }) => SBBStatus(
+    key: key,
+    state: SBBStatusState.alert,
+    label: label,
+    labelText: labelText,
+    icon: icon,
+    iconData: iconData,
+    style: style,
+    semanticLabel: semanticLabel,
+  );
 
   /// Creates a warning status indicator.
   ///
   /// The default icon is [SBBIcons.circle_exclamation_point_small].
-  const factory SBBStatus.warning({
+  factory SBBStatus.warning({
     Key? key,
     Widget? label,
     String? labelText,
@@ -79,12 +94,21 @@ sealed class SBBStatus extends StatelessWidget {
     IconData? iconData,
     SBBStatusStyle? style,
     String? semanticLabel,
-  }) = _SBBStatusWarning;
+  }) => SBBStatus(
+    key: key,
+    state: SBBStatusState.warning,
+    label: label,
+    labelText: labelText,
+    icon: icon,
+    iconData: iconData,
+    style: style,
+    semanticLabel: semanticLabel,
+  );
 
   /// Creates a success status indicator.
   ///
   /// The default icon is [SBBIcons.circle_tick_small].
-  const factory SBBStatus.success({
+  factory SBBStatus.success({
     Key? key,
     Widget? label,
     String? labelText,
@@ -92,12 +116,21 @@ sealed class SBBStatus extends StatelessWidget {
     IconData? iconData,
     SBBStatusStyle? style,
     String? semanticLabel,
-  }) = _SBBStatusSuccess;
+  }) => SBBStatus(
+    key: key,
+    state: SBBStatusState.success,
+    label: label,
+    labelText: labelText,
+    icon: icon,
+    iconData: iconData,
+    style: style,
+    semanticLabel: semanticLabel,
+  );
 
   /// Creates an information status indicator.
   ///
   /// The default icon is [SBBIcons.circle_information_small].
-  const factory SBBStatus.information({
+  factory SBBStatus.information({
     Key? key,
     Widget? label,
     String? labelText,
@@ -105,7 +138,19 @@ sealed class SBBStatus extends StatelessWidget {
     IconData? iconData,
     SBBStatusStyle? style,
     String? semanticLabel,
-  }) = _SBBStatusInformation;
+  }) => SBBStatus(
+    key: key,
+    state: SBBStatusState.information,
+    label: label,
+    labelText: labelText,
+    icon: icon,
+    iconData: iconData,
+    style: style,
+    semanticLabel: semanticLabel,
+  );
+
+  /// The state/type of this status indicator.
+  final SBBStatusState state;
 
   /// A custom widget displayed as the status label content.
   ///
@@ -124,12 +169,15 @@ sealed class SBBStatus extends StatelessWidget {
 
   /// A custom widget displayed as the status icon.
   ///
+  /// If this and [iconData] is null, [SBBStatusStyle.iconData] is used.
   /// For simple icon changes, use [iconData] instead.
   ///
   /// Cannot be used together with [iconData].
   final Widget? icon;
 
   /// Icon to display instead of the default icon for this status type.
+  ///
+  /// If this and [icon] is null, [SBBStatusStyle.iconData] is used.
   ///
   /// Cannot be used together with [icon].
   final IconData? iconData;
@@ -145,152 +193,104 @@ sealed class SBBStatus extends StatelessWidget {
   /// If this is non null, semantics of [label] or [labelText] are ignored.
   final String? semanticLabel;
 
-  SBBStatusStyle _getThemedStyle(BuildContext context);
-
   @override
   Widget build(BuildContext context) {
     assert(debugCheckHasSBBBaseStyle(context));
 
-    final SBBStatusStyle themedStyle = _getThemedStyle(context);
-    final SBBStatusStyle effectiveStyle = themedStyle.merge(style);
+    final themedStyle = _getThemedStyle(context);
+    final effectiveStyle = themedStyle.merge(style);
 
-    final Color resolvedForegroundColor = effectiveStyle.foregroundColor!;
-    final Color resolvedBackgroundColor = effectiveStyle.backgroundColor!;
-    final Color resolvedIconColor = effectiveStyle.iconColor ?? resolvedForegroundColor;
-    final Color resolvedBorderColor = effectiveStyle.borderColor!;
-    final double resolvedAlphaValue = effectiveStyle.alphaValue!;
-    final TextStyle resolvedTextStyle = effectiveStyle.textStyle!;
+    final resolvedForegroundColor = effectiveStyle.foregroundColor!;
+    final resolvedBackgroundColor = effectiveStyle.backgroundColor!;
+    final resolvedIconColor = effectiveStyle.iconColor ?? resolvedForegroundColor;
+    final resolvedBorderColor = effectiveStyle.borderColor!;
+    final resolvedAlphaValue = effectiveStyle.alphaValue!;
+    final resolvedTextStyle = effectiveStyle.textStyle!;
 
-    return DefaultTextStyle.merge(
-      style: resolvedTextStyle.copyWith(color: resolvedForegroundColor),
-      child: IconTheme.merge(
-        data: IconThemeData(color: resolvedForegroundColor),
-        child: Semantics(
-          container: true,
-          label: semanticLabel,
-          excludeSemantics: semanticLabel != null,
-          child: ClipRRect(
-            clipBehavior: .hardEdge,
-            borderRadius: BorderRadius.all(SBBStatusStyle.borderRadius),
-            child: DecoratedBox(
-              decoration: ShapeDecoration(
-                color: resolvedBackgroundColor.withValues(alpha: resolvedAlphaValue),
-                shape: SBBStatusStyle.border.copyWith(side: BorderSide(color: resolvedBorderColor)),
-              ),
-              child: IntrinsicHeight(
-                child: Row(
-                  mainAxisSize: .min,
-                  children: [
-                    _icon(resolvedBackgroundColor, resolvedIconColor),
-                    if (label != null || labelText != null) _label(),
-                  ],
-                ),
+    final resolvedIcon = addDefaultAncestorWithResolved(
+      foregroundColor: resolvedIconColor,
+      child: _resolveIcon(effectiveStyle),
+    )!;
+
+    final resolvedLabel = addDefaultAncestorWithResolved(
+      foregroundColor: resolvedForegroundColor,
+      child: _resolveLabel(),
+    );
+
+    return addDefaultAncestorWithResolved(
+      textStyle: resolvedTextStyle,
+      foregroundColor: resolvedForegroundColor,
+      child: Semantics(
+        container: true,
+        label: semanticLabel,
+        excludeSemantics: semanticLabel != null,
+        child: ClipRRect(
+          clipBehavior: .hardEdge,
+          borderRadius: BorderRadius.all(SBBStatusStyle.borderRadius),
+          child: DecoratedBox(
+            decoration: ShapeDecoration(
+              color: resolvedBackgroundColor.withValues(alpha: resolvedAlphaValue),
+              shape: SBBStatusStyle.border.copyWith(side: BorderSide(color: resolvedBorderColor)),
+            ),
+            child: IntrinsicHeight(
+              child: Row(
+                mainAxisSize: .min,
+                children: [
+                  resolvedIcon,
+                  ?resolvedLabel,
+                ],
               ),
             ),
           ),
         ),
       ),
-    );
+    )!;
   }
 
-  Widget _icon(Color backgroundColor, Color iconColor) {
+  Widget _resolveIcon(SBBStatusStyle effectiveStyle) {
     if (icon != null) {
       return Container(
-        color: backgroundColor,
+        color: effectiveStyle.backgroundColor,
         child: icon!,
       );
     }
 
     return Container(
       padding: const .all(4.0),
-      color: backgroundColor,
+      color: effectiveStyle.backgroundColor,
       child: ConstrainedBox(
         constraints: BoxConstraints.tightFor(height: .infinity),
-        child: Icon(iconData, color: iconColor),
+        child: Icon(iconData ?? effectiveStyle.iconData),
       ),
     );
   }
 
-  Widget _label() {
+  Widget? _resolveLabel() {
     if (label != null) return label!;
 
-    return Flexible(
-      child: Container(
-        padding: const .symmetric(vertical: SBBSpacing.xxSmall, horizontal: SBBSpacing.xSmall),
-        child: Text(
-          labelText!,
-          maxLines: 2,
-          overflow: .ellipsis,
+    if (labelText != null) {
+      return Flexible(
+        child: Container(
+          padding: const .symmetric(vertical: SBBSpacing.xxSmall, horizontal: SBBSpacing.xSmall),
+          child: Text(
+            labelText!,
+            maxLines: 2,
+            overflow: .ellipsis,
+          ),
         ),
-      ),
-    );
+      );
+    }
+
+    return null;
   }
-}
 
-final class _SBBStatusAlert extends SBBStatus {
-  const _SBBStatusAlert({
-    super.key,
-    super.label,
-    super.labelText,
-    super.icon,
-    IconData? iconData,
-    super.style,
-    super.semanticLabel,
-  }) : super._(iconData: icon == null && iconData == null ? SBBIcons.circle_cross_small : iconData);
-
-  @override
   SBBStatusStyle _getThemedStyle(BuildContext context) {
-    return Theme.of(context).sbbStatusTheme.alert!;
-  }
-}
-
-final class _SBBStatusWarning extends SBBStatus {
-  const _SBBStatusWarning({
-    super.key,
-    super.label,
-    super.labelText,
-    super.icon,
-    IconData? iconData,
-    super.style,
-    super.semanticLabel,
-  }) : super._(iconData: icon == null && iconData == null ? SBBIcons.circle_exclamation_point_small : iconData);
-
-  @override
-  SBBStatusStyle _getThemedStyle(BuildContext context) {
-    return Theme.of(context).sbbStatusTheme.warning!;
-  }
-}
-
-final class _SBBStatusSuccess extends SBBStatus {
-  const _SBBStatusSuccess({
-    super.key,
-    super.label,
-    super.labelText,
-    super.icon,
-    IconData? iconData,
-    super.style,
-    super.semanticLabel,
-  }) : super._(iconData: icon == null && iconData == null ? SBBIcons.circle_tick_small : iconData);
-
-  @override
-  SBBStatusStyle _getThemedStyle(BuildContext context) {
-    return Theme.of(context).sbbStatusTheme.success!;
-  }
-}
-
-final class _SBBStatusInformation extends SBBStatus {
-  const _SBBStatusInformation({
-    super.key,
-    super.label,
-    super.labelText,
-    super.icon,
-    IconData? iconData,
-    super.style,
-    super.semanticLabel,
-  }) : super._(iconData: icon == null && iconData == null ? SBBIcons.circle_information_small : iconData);
-
-  @override
-  SBBStatusStyle _getThemedStyle(BuildContext context) {
-    return Theme.of(context).sbbStatusTheme.information!;
+    final theme = Theme.of(context).sbbStatusTheme;
+    return switch (state) {
+      .alert => theme.alert!,
+      .warning => theme.warning!,
+      .success => theme.success!,
+      .information => theme.information!,
+    };
   }
 }

@@ -129,7 +129,7 @@ class ListItemPage extends StatelessWidget {
                 onTap: () {},
                 titleText: 'Index ${idx + 1}',
               ),
-              separatorBuilder: (_, _) => SBBDivider(),
+              separatorBuilder: SBBDivider.separatorBuilder,
             ),
           ),
         ],

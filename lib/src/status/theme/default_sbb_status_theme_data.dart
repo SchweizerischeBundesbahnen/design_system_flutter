@@ -9,6 +9,7 @@ class DefaultSBBStatusThemeData extends SBBStatusThemeData {
           backgroundColor: baseStyle.colorScheme.error,
           borderColor: baseStyle.colorScheme.error,
           iconColor: SBBColors.white,
+          iconData: SBBIcons.circle_cross_small,
           alphaValue: .05,
         ),
         warning: SBBStatusStyle(
@@ -17,6 +18,7 @@ class DefaultSBBStatusThemeData extends SBBStatusThemeData {
           backgroundColor: baseStyle.themeValue(SBBColors.peach, SBBColors.peachDark),
           borderColor: baseStyle.themeValue(SBBColors.peach, SBBColors.peachDark),
           iconColor: SBBColors.white,
+          iconData: SBBIcons.circle_exclamation_point_small,
           alphaValue: .05,
         ),
         success: SBBStatusStyle(
@@ -25,6 +27,7 @@ class DefaultSBBStatusThemeData extends SBBStatusThemeData {
           backgroundColor: baseStyle.themeValue(SBBColors.green, SBBColors.greenDark),
           borderColor: baseStyle.themeValue(SBBColors.green, SBBColors.greenDark),
           iconColor: SBBColors.white,
+          iconData: SBBIcons.circle_tick_small,
           alphaValue: .05,
         ),
         information: SBBStatusStyle(
@@ -33,6 +36,7 @@ class DefaultSBBStatusThemeData extends SBBStatusThemeData {
           backgroundColor: SBBColors.smoke,
           borderColor: SBBColors.smoke,
           iconColor: SBBColors.white,
+          iconData: SBBIcons.circle_information_small,
           alphaValue: .05,
         ),
       );
