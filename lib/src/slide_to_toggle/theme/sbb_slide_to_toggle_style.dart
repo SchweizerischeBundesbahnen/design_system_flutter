@@ -6,12 +6,6 @@ import 'package:sbb_design_system_mobile/src/slide_to_toggle/slide_to_toggle.dar
 /// Use this class in combination with [SBBSlideToToggleThemeData] to customize
 /// the appearance of Slide-To-Toggles throughout your app or for specific widget subtrees.
 ///
-/// ## Sample code
-///
-/// ```dart
-/// TODO:
-/// ```
-///
 /// See also:
 /// * [SBBSlideToToggle], the widget that uses this style.
 /// * [SBBSlideToToggleThemeData], which applies this style theme-wide.
@@ -34,7 +28,6 @@ class SBBSlideToToggleStyle {
   final WidgetStateProperty<Color?>? borderColor;
 
   /// The background color of the Slide-To-Toggle.
-  /// TODO: background color for container and part between border?
   final WidgetStateProperty<Color?>? backgroundColor;
 
   /// The foreground color of the toggle.
@@ -52,10 +45,20 @@ class SBBSlideToToggleStyle {
   /// The foreground color of the help area in the track.
   final WidgetStateProperty<Color?>? helpForegroundColor;
 
-  /// TODO:
+  /// The text style for the text label used inside the toggle.
+  ///
+  /// Applies to all text descendants of the toggle of SBBSlideToToggle.
+  ///
+  /// The color of the [toggleTextStyle] is typically not used directly, the
+  /// [toggleForegroundColor] is used instead.
   final TextStyle? toggleTextStyle;
 
-  /// TODO:
+  /// The text style for the help label used inside the slide track.
+  ///
+  /// Applies to all text descendants of the track of SBBSlideToToggle.
+  ///
+  /// The color of the [helpTextStyle] is typically not used directly, the
+  /// [helpForegroundColor] is used instead.
   final TextStyle? helpTextStyle;
 
   /// The thickness of the Slide-To-Toggle border.
@@ -66,10 +69,10 @@ class SBBSlideToToggleStyle {
   /// This creates the pill-shaped appearance of the Slide-To-Toggle.
   static const ShapeBorder borderShape = StadiumBorder();
 
-  /// TODO:
+  /// Toggle size of the default variant.
   static const double toggleSize = 82.0;
 
-  /// TODO:
+  /// Toggle size of the small variant.
   static const double toggleSizeSmall = 40.0;
 
   SBBSlideToToggleStyle copyWith({
@@ -121,5 +124,31 @@ class SBBSlideToToggleStyle {
     );
   }
 
-  // TODO: Equal & hashcode
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is SBBSlideToToggleStyle &&
+          runtimeType == other.runtimeType &&
+          borderColor == other.borderColor &&
+          backgroundColor == other.backgroundColor &&
+          toggleForegroundColor == other.toggleForegroundColor &&
+          toggleBackgroundColor == other.toggleBackgroundColor &&
+          toggleOverlayColor == other.toggleOverlayColor &&
+          loadingIndicatorColor == other.loadingIndicatorColor &&
+          helpForegroundColor == other.helpForegroundColor &&
+          toggleTextStyle == other.toggleTextStyle &&
+          helpTextStyle == other.helpTextStyle;
+
+  @override
+  int get hashCode => Object.hash(
+    borderColor,
+    backgroundColor,
+    toggleForegroundColor,
+    toggleBackgroundColor,
+    toggleOverlayColor,
+    loadingIndicatorColor,
+    helpForegroundColor,
+    toggleTextStyle,
+    helpTextStyle,
+  );
 }

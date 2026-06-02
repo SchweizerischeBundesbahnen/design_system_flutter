@@ -54,7 +54,5 @@ extension SBBSlideToToggleThemeDataX on SBBSlideToToggleThemeData {
 }
 
 extension SBBSlideToToggleThemeDataThemeDataX on ThemeData {
-  SBBSlideToToggleThemeData? get sbbSlideToToggleTheme {
-    return extension<SBBSlideToToggleThemeData>();
-  }
+  SBBSlideToToggleThemeData? get sbbSlideToToggleTheme => extension<SBBSlideToToggleThemeData>();
 }

@@ -1,14 +1,17 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 
 /// TODO:
 enum SBBSlideToToggleState { off, on }
 
 /// The SBB Slide-To-Toggle.
 ///
-/// TODO
+/// TODO: Documentation
+/// TODO: Maybe controller needed to change state from outside
 ///
 /// See also:
 ///
@@ -16,11 +19,9 @@ enum SBBSlideToToggleState { off, on }
 class SBBSlideToToggle extends StatelessWidget {
   /// Creates an SBB Slide-To-Toggle.
   ///
-  /// TODO: Docs, maybe asserts
+  /// TODO: Docs
   const SBBSlideToToggle({
     super.key,
-    required this.onActivate,
-    required this.onDeactivate,
     required this.onToggleDecoration,
     required this.offToggleDecoration,
     this.initialState = .off,
@@ -37,21 +38,16 @@ class SBBSlideToToggle extends StatelessWidget {
 
   final bool enabled;
 
-  // TODO: Add callback as well?
   final SBBSlideToggleDecoration onToggleDecoration;
   final SBBSlideToggleDecoration offToggleDecoration;
 
   // TODO:
   final double threshold;
-  final Future<void> Function() onActivate;
-  final Future<void> Function() onDeactivate;
   final SBBSlideToToggleState initialState;
 
   @override
   Widget build(BuildContext context) {
     return _BaseSBBSlideToToggle(
-      onActivate: onActivate,
-      onDeactivate: onDeactivate,
       onToggleDecoration: onToggleDecoration,
       offToggleDecoration: offToggleDecoration,
       initialState: initialState,
@@ -66,8 +62,6 @@ class SBBSlideToToggle extends StatelessWidget {
 class SBBSlideToToggleSmall extends SBBSlideToToggle {
   const SBBSlideToToggleSmall({
     super.key,
-    required super.onActivate,
-    required super.onDeactivate,
     required super.onToggleDecoration,
     required super.offToggleDecoration,
     super.initialState = .off,
@@ -80,8 +74,6 @@ class SBBSlideToToggleSmall extends SBBSlideToToggle {
   Widget build(BuildContext context) {
     return _BaseSBBSlideToToggle(
       isSmall: true,
-      onActivate: onActivate,
-      onDeactivate: onDeactivate,
       onToggleDecoration: onToggleDecoration,
       offToggleDecoration: offToggleDecoration,
       initialState: initialState,
@@ -94,8 +86,6 @@ class SBBSlideToToggleSmall extends SBBSlideToToggle {
 
 class _BaseSBBSlideToToggle extends StatefulWidget {
   const _BaseSBBSlideToToggle({
-    required this.onActivate,
-    required this.onDeactivate,
     required this.onToggleDecoration,
     required this.offToggleDecoration,
     this.initialState = .off,
@@ -103,15 +93,13 @@ class _BaseSBBSlideToToggle extends StatefulWidget {
     this.threshold = 0.9,
     this.style,
     this.isSmall = false,
-  }) : assert(threshold >= 0 && threshold <= 1, 'threshold must be between 0 and 1.');
+  });
 
   final SBBSlideToToggleStyle? style;
   final bool enabled;
   final SBBSlideToggleDecoration onToggleDecoration;
   final SBBSlideToggleDecoration offToggleDecoration;
   final double threshold;
-  final Future<void> Function() onActivate;
-  final Future<void> Function() onDeactivate;
   final SBBSlideToToggleState initialState;
   final bool isSmall;
 
@@ -230,7 +218,7 @@ class _SBBSlideToToggleState extends State<_BaseSBBSlideToToggle> with SingleTic
                 child: Center(
                   child: Opacity(
                     opacity: helpOpacity,
-                    child: _addDefaultAncestorWithResolved(
+                    child: addDefaultAncestorWithResolved(
                       foregroundColor: style.helpForegroundColor?.resolve(_statesController.value),
                       textStyle: style.helpTextStyle,
                       child: _resolveHelpWidget(),
@@ -248,6 +236,8 @@ class _SBBSlideToToggleState extends State<_BaseSBBSlideToToggle> with SingleTic
       return Text(
         helpText,
         textAlign: _state == .on ? .start : .end,
+        overflow: .ellipsis,
+        maxLines: widget.isSmall ? 1 : 3,
       );
     }
 
@@ -297,7 +287,7 @@ class _SBBSlideToToggleState extends State<_BaseSBBSlideToToggle> with SingleTic
                   Center(
                     child: _loading
                         ? _loadingIndicator(color: loadingIndicatorColor)
-                        : _addDefaultAncestorWithResolved(
+                        : addDefaultAncestorWithResolved(
                             foregroundColor: style.toggleForegroundColor?.resolve(_statesController.value),
                             textStyle: style.toggleTextStyle,
                             child: _resolveToggleWidget(),
@@ -315,11 +305,14 @@ class _SBBSlideToToggleState extends State<_BaseSBBSlideToToggle> with SingleTic
   Widget _resolveToggleWidget() {
     final labelText = _toggleDecoration.toggleLabelText;
     if (labelText != null) {
-      return FittedBox(
-        fit: .scaleDown,
-        child: Text(
-          labelText,
-          textAlign: .center,
+      return Padding(
+        padding: const .all(SBBSpacing.xxSmall),
+        child: FittedBox(
+          fit: .scaleDown,
+          child: Text(
+            labelText,
+            textAlign: .center,
+          ),
         ),
       );
     }
@@ -337,7 +330,7 @@ class _SBBSlideToToggleState extends State<_BaseSBBSlideToToggle> with SingleTic
 
   Widget _loadingIndicator({Color? color}) {
     if (Platform.isIOS) {
-      //return CupertinoActivityIndicator(color: color);
+      return CupertinoActivityIndicator(color: color);
     }
     return Padding(
       padding: const .all(10.0),
@@ -371,26 +364,11 @@ class _SBBSlideToToggleState extends State<_BaseSBBSlideToToggle> with SingleTic
     );
   }
 
-  static Widget _addDefaultAncestorWithResolved({
-    required Widget child,
-    required Color? foregroundColor,
-    TextStyle? textStyle,
-  }) {
-    final resolvedTextStyle = textStyle?.copyWith(color: foregroundColor) ?? TextStyle(color: foregroundColor);
-    return DefaultTextStyle.merge(
-      style: resolvedTextStyle,
-      child: IconTheme.merge(
-        data: IconThemeData(color: foregroundColor),
-        child: child,
-      ),
-    );
-  }
-
   void _animateBounceBack() => _animateTo(_state == .on ? 1 : 0, duration: _bounceDuration, curve: Curves.bounceOut);
 
-  Future<void> _commitActivate() => _commitToggleChange(nextState: .on, action: widget.onActivate);
+  Future<void> _commitActivate() => _commitToggleChange(nextState: .on, action: widget.onToggleDecoration.onToggle);
 
-  Future<void> _commitDeactivate() => _commitToggleChange(nextState: .off, action: widget.onDeactivate);
+  Future<void> _commitDeactivate() => _commitToggleChange(nextState: .off, action: widget.offToggleDecoration.onToggle);
 
   Future<void> _commitToggleChange({
     required SBBSlideToToggleState nextState,

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 @immutable
 class SBBSlideToggleDecoration {
   const SBBSlideToggleDecoration({
+    required this.onToggle,
     this.toggleLabel,
     this.toggleLabelText,
     this.toggleIconData,
@@ -14,6 +15,10 @@ class SBBSlideToggleDecoration {
          'Either toggleLabel or toggleLabelText or toggleIconData must be provided',
        ),
        assert(helpLabel == null || helpLabelText == null, 'Only one of helpLabel or helpLabelText can be set');
+
+  /// Callback when the slider is pulled to the other side
+  /// TODO: Describe what happens with errors
+  final Future<void> Function() onToggle;
 
   /// Custom widget to display inside the toggle.
   ///
@@ -43,6 +48,7 @@ class SBBSlideToggleDecoration {
   final String? helpLabelText;
 
   SBBSlideToggleDecoration copyWith({
+    Future<void> Function()? onToggle,
     Widget? toggleLabel,
     String? toggleLabelText,
     IconData? toggleIconData,
@@ -50,6 +56,7 @@ class SBBSlideToggleDecoration {
     String? helpLabelText,
   }) {
     return SBBSlideToggleDecoration(
+      onToggle: onToggle ?? this.onToggle,
       toggleLabel: toggleLabel ?? this.toggleLabel,
       toggleLabelText: toggleLabelText ?? this.toggleLabelText,
       toggleIconData: toggleIconData ?? this.toggleIconData,

@@ -26,11 +26,8 @@ class DefaultSBBSlideToToggleThemeData extends SBBSlideToToggleThemeData {
           loadingIndicatorColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
             WidgetState.any: SBBColors.white,
           }),
-          toggleTextStyle: baseStyle.themedTextStyle(textStyle: SBBTextStyles.largeBold, color: SBBColors.white),
-          helpTextStyle: baseStyle.themedTextStyle(
-            textStyle: SBBTextStyles.smallLight,
-            color: baseStyle.colorScheme.textSecondary,
-          ),
+          toggleTextStyle: baseStyle.textTheme.largeBold,
+          helpTextStyle: baseStyle.textTheme.smallLight,
         ),
       );
 }
