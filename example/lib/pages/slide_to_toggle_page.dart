@@ -14,7 +14,7 @@ class _SlideToTogglePageState extends State<SlideToTogglePage> {
   final defaultIconController = SBBSlideToToggleController();
   final smallTextController = SBBSlideToToggleController();
   final smallIconController = SBBSlideToToggleController();
-  
+
   bool isEnabled = true;
 
   Future<void> _simulateWork() async {
@@ -60,7 +60,7 @@ class _SlideToTogglePageState extends State<SlideToTogglePage> {
                   },
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),
