@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/widgets.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
@@ -35,6 +37,10 @@ class SBBListItemStyle {
     this.trailingForegroundColor,
     this.backgroundColor,
     this.overlayColor,
+    this.padding,
+    this.leadingHorizontalGapWidth,
+    this.subtitleVerticalGapHeight,
+    this.trailingHorizontalGapWidth,
   });
 
   /// The text style for the list item title.
@@ -93,6 +99,26 @@ class SBBListItemStyle {
   /// This fills the entire list item.
   final WidgetStateProperty<Color?>? backgroundColor;
 
+  /// The padding around the list item's content.
+  ///
+  /// If null, the default padding is used.
+  final EdgeInsetsGeometry? padding;
+
+  /// The horizontal gap width between the leading widget and the title/subtitle.
+  ///
+  /// Defaults to 8.0.
+  final double? leadingHorizontalGapWidth;
+
+  /// The vertical gap height between the title and subtitle.
+  ///
+  /// Defaults to 4.0.
+  final double? subtitleVerticalGapHeight;
+
+  /// The horizontal gap height between the title and trailing.
+  ///
+  /// Defaults to 16.0.
+  final double? trailingHorizontalGapWidth;
+
   /// The default padding of the list item.
   static const EdgeInsets defaultPadding = .symmetric(horizontal: 16.0, vertical: 10.0);
 
@@ -112,6 +138,10 @@ class SBBListItemStyle {
     WidgetStateProperty<Color?>? trailingForegroundColor,
     WidgetStateProperty<Color?>? overlayColor,
     WidgetStateProperty<Color?>? backgroundColor,
+    EdgeInsetsGeometry? padding,
+    double? trailingHorizontalGapWidth,
+    double? leadingHorizontalGapWidth,
+    double? subtitleVerticalGapHeight,
   }) {
     return SBBListItemStyle(
       titleTextStyle: titleTextStyle ?? this.titleTextStyle,
@@ -124,6 +154,10 @@ class SBBListItemStyle {
       trailingForegroundColor: trailingForegroundColor ?? this.trailingForegroundColor,
       overlayColor: overlayColor ?? this.overlayColor,
       backgroundColor: backgroundColor ?? this.backgroundColor,
+      padding: padding ?? this.padding,
+      leadingHorizontalGapWidth: leadingHorizontalGapWidth ?? this.leadingHorizontalGapWidth,
+      subtitleVerticalGapHeight: subtitleVerticalGapHeight ?? this.subtitleVerticalGapHeight,
+      trailingHorizontalGapWidth: trailingHorizontalGapWidth ?? this.trailingHorizontalGapWidth,
     );
   }
 
@@ -141,6 +175,10 @@ class SBBListItemStyle {
       trailingForegroundColor: other.trailingForegroundColor,
       overlayColor: other.overlayColor,
       backgroundColor: other.backgroundColor,
+      padding: other.padding,
+      leadingHorizontalGapWidth: other.leadingHorizontalGapWidth,
+      subtitleVerticalGapHeight: other.subtitleVerticalGapHeight,
+      trailingHorizontalGapWidth: other.trailingHorizontalGapWidth,
     );
   }
 
@@ -178,24 +216,32 @@ class SBBListItemStyle {
       ),
       overlayColor: WidgetStateProperty.lerp<Color?>(a?.overlayColor, b?.overlayColor, t, Color.lerp),
       backgroundColor: WidgetStateProperty.lerp<Color?>(a?.backgroundColor, b?.backgroundColor, t, Color.lerp),
+      padding: EdgeInsetsGeometry.lerp(a?.padding, b?.padding, t),
+      leadingHorizontalGapWidth: lerpDouble(a?.leadingHorizontalGapWidth, b?.leadingHorizontalGapWidth, t),
+      subtitleVerticalGapHeight: lerpDouble(a?.subtitleVerticalGapHeight, b?.subtitleVerticalGapHeight, t),
+      trailingHorizontalGapWidth: lerpDouble(a?.trailingHorizontalGapWidth, b?.trailingHorizontalGapWidth, t),
     );
   }
 
   @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) return true;
-    return other is SBBListItemStyle &&
-        other.titleTextStyle == titleTextStyle &&
-        other.titleTextMaxLines == titleTextMaxLines &&
-        other.subtitleTextStyle == subtitleTextStyle &&
-        other.subtitleTextMaxLines == subtitleTextMaxLines &&
-        other.titleForegroundColor == titleForegroundColor &&
-        other.subtitleForegroundColor == subtitleForegroundColor &&
-        other.leadingForegroundColor == leadingForegroundColor &&
-        other.trailingForegroundColor == trailingForegroundColor &&
-        other.overlayColor == overlayColor &&
-        other.backgroundColor == backgroundColor;
-  }
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is SBBListItemStyle &&
+          runtimeType == other.runtimeType &&
+          titleTextStyle == other.titleTextStyle &&
+          titleTextMaxLines == other.titleTextMaxLines &&
+          subtitleTextStyle == other.subtitleTextStyle &&
+          subtitleTextMaxLines == other.subtitleTextMaxLines &&
+          titleForegroundColor == other.titleForegroundColor &&
+          subtitleForegroundColor == other.subtitleForegroundColor &&
+          leadingForegroundColor == other.leadingForegroundColor &&
+          trailingForegroundColor == other.trailingForegroundColor &&
+          overlayColor == other.overlayColor &&
+          backgroundColor == other.backgroundColor &&
+          padding == other.padding &&
+          leadingHorizontalGapWidth == other.leadingHorizontalGapWidth &&
+          subtitleVerticalGapHeight == other.subtitleVerticalGapHeight &&
+          trailingHorizontalGapWidth == other.trailingHorizontalGapWidth;
 
   @override
   int get hashCode => Object.hash(
@@ -209,5 +255,9 @@ class SBBListItemStyle {
     trailingForegroundColor,
     overlayColor,
     backgroundColor,
+    padding,
+    leadingHorizontalGapWidth,
+    subtitleVerticalGapHeight,
+    trailingHorizontalGapWidth,
   );
 }

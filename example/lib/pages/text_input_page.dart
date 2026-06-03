@@ -128,6 +128,7 @@ class _TextInputPageState extends State<TextInputPage> {
                   labelText: 'With Custom Button',
                   placeholderText: 'Press the Button!',
                   leadingIconData: SBBIcons.unicorn_small,
+                  contentPadding: EdgeInsets.only(left: SBBSpacing.medium, right: SBBSpacing.xSmall),
                   trailing: SBBTertiaryButtonSmall(
                     iconData: SBBIcons.dog_small,
                     onPressed: () => sbbToast.show(titleText: 'Button pressed'),

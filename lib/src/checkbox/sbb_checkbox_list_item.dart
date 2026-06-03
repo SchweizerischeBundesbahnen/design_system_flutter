@@ -42,6 +42,7 @@ class SBBCheckboxListItem extends StatelessWidget {
     this.subtitleText,
     this.trailing,
     this.trailingIconData,
+    this.trailingIconButton,
     this.onLongPress,
     this.isLoading = false,
     this.links,
@@ -49,9 +50,6 @@ class SBBCheckboxListItem extends StatelessWidget {
     this.autofocus = false,
     this.enableFeedback = true,
     this.padding,
-    this.trailingHorizontalGapWidth,
-    this.leadingHorizontalGapWidth,
-    this.subtitleVerticalGapHeight,
     this.leadingCheckboxGapWidth = 8.0,
     this.listItemStyle,
     required this.value,
@@ -85,6 +83,9 @@ class SBBCheckboxListItem extends StatelessWidget {
   /// {@macro sbb_design_system.list_item.trailingIconData}
   final IconData? trailingIconData;
 
+  /// {@macro sbb_design_system.list_item.trailingIconButton}
+  final Widget? trailingIconButton;
+
   /// {@macro sbb_design_system.list_item.onLongPress}
   ///
   /// Within the [SBBCheckboxListItem], the [SBBListItem.onTap] calls the [onChanged] callback with the
@@ -108,15 +109,6 @@ class SBBCheckboxListItem extends StatelessWidget {
 
   /// {@macro sbb_design_system.list_item.padding}
   final EdgeInsetsGeometry? padding;
-
-  /// {@macro sbb_design_system.list_item.trailingHorizontalGapWidth}
-  final double? trailingHorizontalGapWidth;
-
-  /// {@macro sbb_design_system.list_item.leadingHorizontalGapWidth}
-  final double? leadingHorizontalGapWidth;
-
-  /// {@macro sbb_design_system.list_item.subtitleVerticalGapHeight}
-  final double? subtitleVerticalGapHeight;
 
   /// Horizontal gap width between the checkbox and additional leading content.
   ///
@@ -177,6 +169,7 @@ class SBBCheckboxListItem extends StatelessWidget {
       subtitleText: subtitleText,
       trailing: trailing,
       trailingIconData: trailingIconData,
+      trailingIconButton: trailingIconButton,
       onTap: onChanged != null ? () => _callOnChanged(onChanged!) : null,
       onLongPress: onLongPress,
       isLoading: isLoading,
@@ -185,9 +178,6 @@ class SBBCheckboxListItem extends StatelessWidget {
       autofocus: autofocus,
       enableFeedback: enableFeedback,
       padding: padding,
-      trailingHorizontalGapWidth: trailingHorizontalGapWidth,
-      leadingHorizontalGapWidth: leadingHorizontalGapWidth,
-      subtitleVerticalGapHeight: subtitleVerticalGapHeight,
       style: listItemStyle,
     );
   }
@@ -225,6 +215,7 @@ class SBBCheckboxListItemBoxed extends SBBCheckboxListItem {
     super.subtitleText,
     super.trailing,
     super.trailingIconData,
+    super.trailingIconButton,
     super.onLongPress,
     super.isLoading,
     super.links,
@@ -232,9 +223,6 @@ class SBBCheckboxListItemBoxed extends SBBCheckboxListItem {
     super.autofocus,
     super.enableFeedback,
     super.padding,
-    super.trailingHorizontalGapWidth,
-    super.leadingHorizontalGapWidth,
-    super.subtitleVerticalGapHeight,
     super.leadingCheckboxGapWidth,
     super.listItemStyle,
     required super.value,

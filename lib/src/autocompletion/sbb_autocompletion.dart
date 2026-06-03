@@ -257,8 +257,7 @@ class SBBAutocompletionState<T> extends State<SBBAutocompletion<T>> {
       titleText: item.toString(),
       onTap: onPressed,
       leadingIconData: widget.suggestionIcon,
-      padding: .only(left: SBBSpacing.medium, right: SBBSpacing.xSmall),
-      trailing: SBBTertiaryButtonSmall(
+      trailingIconButton: SBBTertiaryButtonSmall(
         onPressed: onCallToAction,
         iconData: isFavorite ? SBBIcons.star_filled_small : SBBIcons.star_small,
       ),
