@@ -5,26 +5,72 @@ import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 
-/// TODO:
-enum SBBSlideToToggleState { off, on }
-
 /// The SBB Slide-To-Toggle.
 ///
-/// TODO: Documentation
-/// TODO: Maybe controller needed to change state from outside
+/// A gesture-controlled toggle widget that requires the user to swipe across a track
+/// to change its state.
+///
+/// The widget transitions between [SBBSlideToToggleState.off] and [SBBSlideToToggleState.on]
+/// states based on user interaction. Use [onToggleDecoration] to configure the appearance
+/// and behavior when in the on state, and [offToggleDecoration] for the off state.
+///
+/// The [threshold] parameter determines how far the user must drag the toggle to
+/// complete the state change. A threshold of 0.9 means the toggle must be dragged
+/// 90% across the track to change state.
+///
+/// Use [SBBSlideToToggle] for the standard size, or [SBBSlideToToggleSmall] for a
+/// reduced-size variant.
+///
+/// ## Sample code
+///
+/// ```dart
+/// // Basic slide-to-toggle
+/// SBBSlideToToggle(
+///   onToggleDecoration: SBBSlideToggleDecoration(
+///     toggleLabelText: 'Stop',
+///     helpLabelText: 'Drag to the left to stop',
+///     onToggle: () async {
+///       // Handle state change to off
+///     },
+///   ),
+///   offToggleDecoration: SBBSlideToggleDecoration(
+///     toggleLabelText: 'Start',
+///     helpLabelText: 'Drag to the right to start',
+///     onToggle: () async {
+///       // Handle state change to on
+///     },
+///   ),
+/// )
+///
+/// // Small variant with icons
+/// SBBSlideToToggleSmall(
+///   onToggleDecoration: SBBSlideToggleDecoration(
+///     toggleIconData: SBBIcons.arrow_left_small,
+///     helpLabelText: 'Drag to the left to stop',
+///     onToggle: () async {},
+///   ),
+///   offToggleDecoration: SBBSlideToggleDecoration(
+///     toggleIconData: SBBIcons.arrow_right_small,
+///     helpLabelText: 'Drag to the right to start',
+///     onToggle: () async {},
+///   ),
+/// )
+/// ```
 ///
 /// See also:
 ///
+/// * [SBBSlideToToggleStyle], for customizing the appearance.
+/// * [SBBSlideToggleDecoration], for configuring toggle and track content.
+/// * [SBBSlideToToggleSmall], for a reduced-size variant.
+/// * [SBBSlideToToggleController], to controll the components state programmatically.
 /// * [Figma design specs](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=6666-1023)
 class SBBSlideToToggle extends StatelessWidget {
   /// Creates an SBB Slide-To-Toggle.
-  ///
-  /// TODO: Docs
   const SBBSlideToToggle({
     super.key,
     required this.onToggleDecoration,
     required this.offToggleDecoration,
-    this.initialState = .off,
+    this.controller,
     this.enabled = true,
     this.threshold = 0.9,
     this.style,
@@ -36,21 +82,44 @@ class SBBSlideToToggle extends StatelessWidget {
   /// properties in [SBBSlideToToggleThemeData.style] of the theme found in [context].
   final SBBSlideToToggleStyle? style;
 
+  /// Whether this Slide-To-Toggle is interactive.
+  ///
+  /// When disabled, the toggle cannot be dragged and appears grayed out.
   final bool enabled;
 
+  /// Configuration for the toggle and track when in the on state.
+  ///
+  /// This includes the toggle content (label text, icon, or custom widget),
+  /// help text displayed in the track, and the callback invoked when
+  /// transitioning to the on state.
   final SBBSlideToggleDecoration onToggleDecoration;
+
+  /// Configuration for the toggle and track when in the off state.
+  ///
+  /// This includes the toggle content (label text, icon, or custom widget),
+  /// help text displayed in the track, and the callback invoked when
+  /// transitioning to the off state.
   final SBBSlideToggleDecoration offToggleDecoration;
 
-  // TODO:
+  /// The normalized drag threshold for state changes, between 0.0 and 1.0.
+  ///
+  /// Determines how far across the track (0.0 to 1.0) the user must drag
+  /// the toggle to complete a state change. A value of 0.9 means 90% drag distance.
   final double threshold;
-  final SBBSlideToToggleState initialState;
+
+  /// An optional controller to programmatically change state of the [SBBSlideToToggle].
+  ///
+  /// The controller also controls the initial state with defaults to [SBBSlideToToggleState.off].
+  ///
+  /// If not provided, an internal controller is created automatically.
+  final SBBSlideToToggleController? controller;
 
   @override
   Widget build(BuildContext context) {
     return _BaseSBBSlideToToggle(
       onToggleDecoration: onToggleDecoration,
       offToggleDecoration: offToggleDecoration,
-      initialState: initialState,
+      controller: controller,
       enabled: enabled,
       threshold: threshold,
       style: style,
@@ -59,12 +128,17 @@ class SBBSlideToToggle extends StatelessWidget {
 }
 
 /// The SBB Slide-To-Toggle with reduced toggle size.
+///
+/// This variant displays a smaller toggle button and is suitable for compact layouts
+/// or when space is limited. It supports the same functionality and customization
+/// options as [SBBSlideToToggle].
 class SBBSlideToToggleSmall extends SBBSlideToToggle {
+  /// Creates a small SBB Slide-To-Toggle.
   const SBBSlideToToggleSmall({
     super.key,
     required super.onToggleDecoration,
     required super.offToggleDecoration,
-    super.initialState = .off,
+    super.controller,
     super.enabled = true,
     super.threshold = 0.9,
     super.style,
@@ -76,7 +150,7 @@ class SBBSlideToToggleSmall extends SBBSlideToToggle {
       isSmall: true,
       onToggleDecoration: onToggleDecoration,
       offToggleDecoration: offToggleDecoration,
-      initialState: initialState,
+      controller: controller,
       enabled: enabled,
       threshold: threshold,
       style: style,
@@ -88,7 +162,7 @@ class _BaseSBBSlideToToggle extends StatefulWidget {
   const _BaseSBBSlideToToggle({
     required this.onToggleDecoration,
     required this.offToggleDecoration,
-    this.initialState = .off,
+    this.controller,
     this.enabled = true,
     this.threshold = 0.9,
     this.style,
@@ -100,7 +174,7 @@ class _BaseSBBSlideToToggle extends StatefulWidget {
   final SBBSlideToggleDecoration onToggleDecoration;
   final SBBSlideToggleDecoration offToggleDecoration;
   final double threshold;
-  final SBBSlideToToggleState initialState;
+  final SBBSlideToToggleController? controller;
   final bool isSmall;
 
   @override
@@ -111,8 +185,12 @@ class _SBBSlideToToggleState extends State<_BaseSBBSlideToToggle> with SingleTic
   static const Duration _snapDuration = Duration(milliseconds: 200);
   static const Duration _bounceDuration = Duration(milliseconds: 320);
 
+  SBBSlideToToggleController? _internalController;
+
+  SBBSlideToToggleController get _effectiveController =>
+      widget.controller ?? (_internalController ??= SBBSlideToToggleController());
+
   late WidgetStatesController _statesController;
-  late SBBSlideToToggleState _state;
 
   bool _loading = false;
   bool _isDragging = false;
@@ -128,7 +206,7 @@ class _SBBSlideToToggleState extends State<_BaseSBBSlideToToggle> with SingleTic
     _statesController = WidgetStatesController();
     _updateStatesController();
 
-    _state = widget.initialState;
+    _effectiveController.addListener(_onControllerChanged);
     _position = _targetPositionFor(_state);
     _positionController = AnimationController(vsync: this, duration: _snapDuration)
       ..addListener(() {
@@ -144,14 +222,28 @@ class _SBBSlideToToggleState extends State<_BaseSBBSlideToToggle> with SingleTic
     if (widget.enabled != oldWidget.enabled) {
       _updateStatesController();
     }
+
+    if (widget.controller != oldWidget.controller) {
+      final oldValue = (oldWidget.controller ?? _internalController)?.value;
+
+      oldWidget.controller?.removeListener(_onControllerChanged);
+      _internalController?.dispose();
+      _internalController = null;
+
+      _effectiveController.addListener(_onControllerChanged);
+
+      if (oldValue != _effectiveController.value) _onControllerChanged();
+    }
   }
 
   void _updateStatesController() {
-    _statesController.update(WidgetState.disabled, !widget.enabled);
+    _statesController.update(WidgetState.disabled, !widget.enabled || _loading);
   }
 
   @override
   void dispose() {
+    _effectiveController.removeListener(_onControllerChanged);
+    _internalController?.dispose();
     _statesController.dispose();
     _positionController.dispose();
     super.dispose();
@@ -188,13 +280,6 @@ class _SBBSlideToToggleState extends State<_BaseSBBSlideToToggle> with SingleTic
       ),
     );
   }
-
-  SBBSlideToggleDecoration get _toggleDecoration =>
-      _state == .on ? widget.onToggleDecoration : widget.offToggleDecoration;
-
-  double get _toggleSize => widget.isSmall ? SBBSlideToToggleStyle.toggleSizeSmall : SBBSlideToToggleStyle.toggleSize;
-
-  bool get _isInteractive => widget.enabled && !_loading;
 
   Widget _slideTrack(SBBSlideToToggleStyle style) {
     final states = _statesController.value;
@@ -344,6 +429,15 @@ class _SBBSlideToToggleState extends State<_BaseSBBSlideToToggle> with SingleTic
     );
   }
 
+  SBBSlideToggleDecoration get _toggleDecoration =>
+      _state == .on ? widget.onToggleDecoration : widget.offToggleDecoration;
+
+  SBBSlideToToggleState get _state => _effectiveController.value;
+
+  double get _toggleSize => widget.isSmall ? SBBSlideToToggleStyle.toggleSizeSmall : SBBSlideToToggleStyle.toggleSize;
+
+  bool get _isInteractive => widget.enabled && !_loading;
+
   double _targetPositionFor(SBBSlideToToggleState state) => state == .on ? 1 : 0;
 
   void _startAnimation({required Animation<double> animation, required Duration duration}) {
@@ -383,10 +477,9 @@ class _SBBSlideToToggleState extends State<_BaseSBBSlideToToggle> with SingleTic
       await action();
       if (!mounted) return;
 
-      setState(() => _state = nextState);
+      _effectiveController.changeTo(state: nextState);
     } catch (_) {
       if (!mounted) return;
-      // TODO: rethrow?
       _animateTo(_targetPositionFor(_state));
     } finally {
       _setLoading(false);
@@ -394,11 +487,23 @@ class _SBBSlideToToggleState extends State<_BaseSBBSlideToToggle> with SingleTic
   }
 
   void _setLoading(bool loading) {
-    _statesController.update(.disabled, loading);
     setState(() {
       _loading = loading;
       if (loading) _isDragging = false;
     });
+    _updateStatesController();
+  }
+
+  void _onControllerChanged() {
+    if (!mounted || _loading || _isDragging) return;
+
+    final target = _targetPositionFor(_state);
+    if ((_position - target).abs() < 0.0001) {
+      setState(() {});
+      return;
+    }
+
+    _animateTo(target);
   }
 
   void _onDragStart(DragStartDetails d) {

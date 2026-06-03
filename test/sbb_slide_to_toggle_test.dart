@@ -129,15 +129,17 @@ class SlideToToggleTest extends StatelessWidget {
     required SBBSlideToggleDecoration onDecoration,
     required SBBSlideToggleDecoration offDecoration,
   }) {
+    final controller = SBBSlideToToggleController(initialValue: initialState);
+
     return isSmall
         ? SBBSlideToToggleSmall(
-            initialState: initialState,
+            controller: controller,
             enabled: enabled,
             onToggleDecoration: onDecoration,
             offToggleDecoration: offDecoration,
           )
         : SBBSlideToToggle(
-            initialState: initialState,
+            controller: controller,
             enabled: enabled,
             onToggleDecoration: onDecoration,
             offToggleDecoration: offDecoration,

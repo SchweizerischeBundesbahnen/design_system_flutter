@@ -10,7 +10,12 @@ class SlideToTogglePage extends StatefulWidget {
 }
 
 class _SlideToTogglePageState extends State<SlideToTogglePage> {
-  bool _isEnabled = true;
+  final defaultTextController = SBBSlideToToggleController();
+  final defaultIconController = SBBSlideToToggleController();
+  final smallTextController = SBBSlideToToggleController();
+  final smallIconController = SBBSlideToToggleController();
+  
+  bool isEnabled = true;
 
   Future<void> _simulateWork() async {
     await Future.delayed(const Duration(seconds: 1));
@@ -21,13 +26,42 @@ class _SlideToTogglePageState extends State<SlideToTogglePage> {
     return DemoPageScaffold(
       componentConfig: Padding(
         padding: const .all(SBBSpacing.xSmall),
-        child: SBBSegmentedButton(
-          segments: [
-            SBBButtonSegment(value: true, labelText: 'All enabled'),
-            SBBButtonSegment(value: false, labelText: 'All Disabled'),
+        child: Column(
+          mainAxisSize: .min,
+          children: [
+            SBBSegmentedButton(
+              segments: [
+                SBBButtonSegment(value: true, labelText: 'All enabled'),
+                SBBButtonSegment(value: false, labelText: 'All Disabled'),
+              ],
+              selected: isEnabled,
+              onSelectionChanged: (update) => setState(() => isEnabled = update),
+            ),
+            const SBBListHeader('Controller'),
+            Row(
+              spacing: SBBSpacing.xSmall,
+              children: [
+                SBBTertiaryButtonSmall(
+                  labelText: 'Change to On',
+                  onPressed: () {
+                    defaultTextController.changeTo(state: .on);
+                    defaultIconController.changeTo(state: .on);
+                    smallTextController.changeTo(state: .on);
+                    smallIconController.changeTo(state: .on);
+                  },
+                ),
+                SBBTertiaryButtonSmall(
+                  labelText: 'Change to Off',
+                  onPressed: () {
+                    defaultTextController.changeTo(state: .off);
+                    defaultIconController.changeTo(state: .off);
+                    smallTextController.changeTo(state: .off);
+                    smallIconController.changeTo(state: .off);
+                  },
+                ),
+              ],
+            )
           ],
-          selected: _isEnabled,
-          onSelectionChanged: (update) => setState(() => _isEnabled = update),
         ),
       ),
       body: Column(
@@ -39,7 +73,8 @@ class _SlideToTogglePageState extends State<SlideToTogglePage> {
               spacing: SBBSpacing.small,
               children: [
                 SBBSlideToToggle(
-                  enabled: _isEnabled,
+                  enabled: isEnabled,
+                  controller: defaultTextController,
                   onToggleDecoration: SBBSlideToggleDecoration(
                     onToggle: _simulateWork,
                     toggleLabelText: 'Stop',
@@ -52,7 +87,8 @@ class _SlideToTogglePageState extends State<SlideToTogglePage> {
                   ),
                 ),
                 SBBSlideToToggle(
-                  enabled: _isEnabled,
+                  enabled: isEnabled,
+                  controller: defaultIconController,
                   onToggleDecoration: SBBSlideToggleDecoration(
                     onToggle: _simulateWork,
                     toggleIconData: SBBIcons.arrow_left_small,
@@ -62,28 +98,6 @@ class _SlideToTogglePageState extends State<SlideToTogglePage> {
                     onToggle: _simulateWork,
                     toggleIconData: SBBIcons.arrow_right_small,
                     helpLabelText: 'Drag to the right to start',
-                  ),
-                ),
-                SBBSlideToToggle(
-                  enabled: _isEnabled,
-                  onToggleDecoration: SBBSlideToggleDecoration(
-                    onToggle: _simulateWork,
-                    toggleLabel: Container(color: SBBColors.green, child: Text('Stop')),
-                    helpLabel: Container(
-                      color: SBBColors.green,
-                      child: Text('Test'),
-                    ),
-                  ),
-                  offToggleDecoration: SBBSlideToggleDecoration(
-                    onToggle: _simulateWork,
-                    toggleLabel: Container(color: SBBColors.green, child: Text('Start')),
-                    helpLabel: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Icon(SBBIcons.unicorn_small),
-                        Text('Check this out'),
-                      ],
-                    ),
                   ),
                 ),
               ],
@@ -97,7 +111,8 @@ class _SlideToTogglePageState extends State<SlideToTogglePage> {
               spacing: SBBSpacing.small,
               children: [
                 SBBSlideToToggleSmall(
-                  enabled: _isEnabled,
+                  enabled: isEnabled,
+                  controller: smallTextController,
                   onToggleDecoration: SBBSlideToggleDecoration(
                     onToggle: _simulateWork,
                     toggleLabelText: 'Stop',
@@ -110,7 +125,8 @@ class _SlideToTogglePageState extends State<SlideToTogglePage> {
                   ),
                 ),
                 SBBSlideToToggleSmall(
-                  enabled: _isEnabled,
+                  enabled: isEnabled,
+                  controller: smallIconController,
                   onToggleDecoration: SBBSlideToggleDecoration(
                     onToggle: _simulateWork,
                     toggleIconData: SBBIcons.arrow_left_small,
