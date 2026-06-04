@@ -72,8 +72,15 @@ class _HeaderBoxPageState extends State<HeaderBoxPage> {
   }
 }
 
-class DesignGuidelinePage extends StatelessWidget {
+class DesignGuidelinePage extends StatefulWidget {
   const DesignGuidelinePage({super.key});
+
+  @override
+  State<DesignGuidelinePage> createState() => _DesignGuidelinePageState();
+}
+
+class _DesignGuidelinePageState extends State<DesignGuidelinePage> {
+  bool flapEnabled = true;
 
   @override
   Widget build(BuildContext context) {
@@ -81,16 +88,26 @@ class DesignGuidelinePage extends StatelessWidget {
     return DemoPageScaffold(
       body: Column(
         children: [
+          SBBCheckboxListItemBoxed(
+            titleText: 'Show flap',
+            value: flapEnabled,
+            onChanged: (value) => setState(() {
+              flapEnabled = value!;
+            }),
+          ),
+          const SizedBox(height: SBBSpacing.medium),
           const SBBListHeader('Default'),
           SBBHeaderBox(
             titleText: 'Title',
             leadingIconData: SBBIcons.unicorn_small,
             subtitleText: 'Subtext',
-            flap: SBBHeaderBoxFlap(
-              labelText: 'Additional text or information',
-              leadingIconData: SBBIcons.sign_exclamation_point_small,
-              trailingIconData: SBBIcons.circle_information_small,
-            ),
+            flap: flapEnabled
+                ? SBBHeaderBoxFlap(
+                    labelText: 'Additional text or information',
+                    leadingIconData: SBBIcons.sign_exclamation_point_small,
+                    trailingIconData: SBBIcons.circle_information_small,
+                  )
+                : null,
             trailing: SBBTertiaryButtonSmall(
               labelText: 'Label',
               iconData: SBBIcons.dog_small,
@@ -107,14 +124,23 @@ class DesignGuidelinePage extends StatelessWidget {
               iconData: SBBIcons.dog_small,
               onPressed: () => sbbToast.show(titleText: 'Large pressed', bottom: 96.0),
             ),
+            flap: flapEnabled
+                ? SBBHeaderBoxFlap(
+                    labelText: 'Additional text or information',
+                    leadingIconData: SBBIcons.sign_exclamation_point_small,
+                    trailingIconData: SBBIcons.circle_information_small,
+                  )
+                : null,
           ),
           const SizedBox(height: SBBSpacing.medium),
           const SBBListHeader('Custom'),
-          const SBBHeaderBox(
+          SBBHeaderBox(
             padding: .zero,
-            flap: SBBHeaderBoxFlap(
-              label: Center(child: Text('Choooooo!', style: SBBTextStyles.xSmallBold)),
-            ),
+            flap: flapEnabled
+                ? SBBHeaderBoxFlap(
+                    label: Center(child: Text('Choooooo!', style: SBBTextStyles.xSmallBold)),
+                  )
+                : null,
             title: Center(child: Text('🚂｡🚋｡🚋｡🚋｡🚋˙⊹⁺.')),
             isLoading: true,
           ),
