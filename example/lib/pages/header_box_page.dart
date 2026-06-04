@@ -81,71 +81,130 @@ class DesignGuidelinePage extends StatefulWidget {
 
 class _DesignGuidelinePageState extends State<DesignGuidelinePage> {
   bool flapEnabled = true;
+  bool colorful = false;
 
   @override
   Widget build(BuildContext context) {
     final sbbToast = SBBToast.of(context);
-    return DemoPageScaffold(
-      body: Column(
-        children: [
-          SBBCheckboxListItemBoxed(
-            titleText: 'Show flap',
-            value: flapEnabled,
-            onChanged: (value) => setState(() {
-              flapEnabled = value!;
-            }),
-          ),
-          const SizedBox(height: SBBSpacing.medium),
-          const SBBListHeader('Default'),
-          SBBHeaderBox(
-            titleText: 'Title',
-            leadingIconData: SBBIcons.unicorn_small,
-            subtitleText: 'Subtext',
-            flap: flapEnabled
-                ? SBBHeaderBoxFlap(
-                    labelText: 'Additional text or information',
-                    leadingIconData: SBBIcons.sign_exclamation_point_small,
-                    trailingIconData: SBBIcons.circle_information_small,
-                  )
-                : null,
-            trailing: SBBTertiaryButtonSmall(
-              labelText: 'Label',
-              iconData: SBBIcons.dog_small,
-              onPressed: () => sbbToast.show(titleText: 'Default pressed', bottom: 96.0),
+    return AnimatedTheme(
+      data: _theme(context),
+      child: DemoPageScaffold(
+        body: Column(
+          children: [
+            SBBContentBox(
+              child: Column(
+                children: [
+                  SBBCheckboxListItem(
+                    titleText: 'Show flap',
+                    value: flapEnabled,
+                    onChanged: (value) => setState(() {
+                      flapEnabled = value!;
+                    }),
+                  ),
+                  SBBCheckboxListItem(
+                    titleText: 'Colorful',
+                    value: colorful,
+                    onChanged: !flapEnabled
+                        ? null
+                        : (value) => setState(() {
+                            colorful = value!;
+                          }),
+                  ),
+                ],
+              ),
             ),
-          ),
-          const SizedBox(height: SBBSpacing.medium),
-          const SBBListHeader('Large'),
-          SBBHeaderBoxLarge(
-            titleText: 'Title',
-            leadingIconData: SBBIcons.unicorn_small,
-            subtitleText: 'Subtext',
-            trailing: SBBTertiaryButton(
-              iconData: SBBIcons.dog_small,
-              onPressed: () => sbbToast.show(titleText: 'Large pressed', bottom: 96.0),
+
+            const SizedBox(height: SBBSpacing.medium),
+            const SBBListHeader('Default'),
+            SBBHeaderBox(
+              titleText: 'Title',
+              leadingIconData: SBBIcons.unicorn_small,
+              subtitleText: 'Subtext',
+              flap: flapEnabled
+                  ? SBBHeaderBoxFlap(
+                      labelText: 'Additional text or information',
+                      leadingIconData: SBBIcons.sign_exclamation_point_small,
+                      trailingIconData: SBBIcons.circle_information_small,
+                    )
+                  : null,
+              trailing: SBBTertiaryButtonSmall(
+                labelText: 'Label',
+                iconData: SBBIcons.dog_small,
+                onPressed: () => sbbToast.show(titleText: 'Default pressed', bottom: 96.0),
+              ),
             ),
-            flap: flapEnabled
-                ? SBBHeaderBoxFlap(
-                    labelText: 'Additional text or information',
-                    leadingIconData: SBBIcons.sign_exclamation_point_small,
-                    trailingIconData: SBBIcons.circle_information_small,
-                  )
-                : null,
-          ),
-          const SizedBox(height: SBBSpacing.medium),
-          const SBBListHeader('Custom'),
-          SBBHeaderBox(
-            padding: .zero,
-            flap: flapEnabled
-                ? SBBHeaderBoxFlap(
-                    label: Center(child: Text('Choooooo!', style: SBBTextStyles.xSmallBold)),
-                  )
-                : null,
-            title: Center(child: Text('🚂｡🚋｡🚋｡🚋｡🚋˙⊹⁺.')),
-            isLoading: true,
-          ),
-        ],
+            const SizedBox(height: SBBSpacing.medium),
+            const SBBListHeader('Large'),
+            SBBHeaderBoxLarge(
+              titleText: 'Title',
+              leadingIconData: SBBIcons.unicorn_small,
+              subtitleText: 'Subtext',
+              trailing: SBBTertiaryButton(
+                iconData: SBBIcons.dog_small,
+                onPressed: () => sbbToast.show(titleText: 'Large pressed', bottom: 96.0),
+              ),
+              flap: flapEnabled
+                  ? SBBHeaderBoxFlap(
+                      labelText: 'Additional text or information',
+                      leadingIconData: SBBIcons.sign_exclamation_point_small,
+                      trailingIconData: SBBIcons.circle_information_small,
+                    )
+                  : null,
+            ),
+            const SizedBox(height: SBBSpacing.medium),
+            const SBBListHeader('Custom'),
+            SBBHeaderBox(
+              padding: .zero,
+              flap: flapEnabled
+                  ? SBBHeaderBoxFlap(
+                      label: Center(child: Text('Choooooo!', style: SBBTextStyles.xSmallBold)),
+                    )
+                  : null,
+              title: Center(child: Text('🚂｡🚋｡🚋｡🚋｡🚋˙⊹⁺.')),
+              isLoading: true,
+            ),
+          ],
+        ),
       ),
+    );
+  }
+
+  ThemeData _theme(BuildContext context) {
+    final theme = Theme.of(context);
+    final decoration = colorful
+        ? BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                SBBColors.red,
+                SBBColors.blue,
+              ],
+            ),
+          )
+        : null;
+
+    final flapStyle = colorful
+        ? SBBHeaderBoxFlapStyle(
+            labelForegroundColor: SBBColors.white,
+            leadingForegroundColor: SBBColors.white,
+            trailingForegroundColor: SBBColors.white,
+          )
+        : null;
+
+    return theme.copyWith(
+      extensions: [
+        ...theme.extensions.values,
+        theme.sbbHeaderBoxTheme.merge(
+          SBBHeaderBoxThemeData(
+            flapStyle: flapStyle,
+            style: SBBHeaderBoxStyle(
+              flapDecoration: decoration,
+            ),
+            largeStyle: SBBHeaderBoxStyle(
+              flapDecoration: decoration,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
