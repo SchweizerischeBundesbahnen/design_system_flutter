@@ -94,14 +94,47 @@ class MyApp extends StatelessWidget {
               padding: const .symmetric(horizontal: SBBSpacing.xSmall),
               sliver: SliverList.list(
                 children: [
-                  const SBBListHeader('Basics'),
-                  _basics(context),
+                  _group(context, 'Basics', [
+                    _DemoEntry('Icon', IconPage()),
+                    _DemoEntry('Typography', TypographyPage()),
+                    _DemoEntry('Color', ColorPage()),
+                  ]),
                   const SizedBox(height: SBBSpacing.medium),
-                  const SBBListHeader('Elements'),
-                  _elements(context),
+                  _group(context, 'Elements', [
+                    _DemoEntry('Bottom Sheet', BottomSheetPage()),
+                    _DemoEntry('Button', ButtonPage()),
+                    _DemoEntry('Checkbox', CheckboxPage()),
+                    _DemoEntry('Chip', ChipPage()),
+                    _DemoEntry('Decorated Text', DecoratedTextPage()),
+                    _DemoEntry('List Item', ListItemPage()),
+                    _DemoEntry('Loading Indicator', LoadingIndicatorPage()),
+                    _DemoEntry('Picker', PickerPage()),
+                    _DemoEntry('Popup', PopupPage()),
+                    _DemoEntry('Radio', RadioPage()),
+                    _DemoEntry('Segmented Button', SegmentedButtonPage()),
+                    _DemoEntry('Switch', SwitchPage()),
+                    _DemoEntry('Text Input', TextInputPage()),
+                    _DemoEntry('Text Area', TextAreaPage()),
+                    _DemoEntry('Toast', ToastPage()),
+                    _DemoEntry('Paginator', PaginatorPage()),
+                    _DemoEntry('Slider', SliderPage()),
+                    _DemoEntry('Promotion Box', PromotionBoxPage()),
+                    _DemoEntry('Notification Box', NotificationBoxPage()),
+                    _DemoEntry('Status', StatusPage()),
+                  ]),
                   const SizedBox(height: SBBSpacing.medium),
-                  const SBBListHeader('Modules'),
-                  _modules(context),
+                  _group(context, 'Modules', [
+                    _DemoEntry('Autocompletion', AutocompletionPage()),
+                    _DemoEntry('Container', ContainerPage()),
+                    _DemoEntry('Dropdown', DropdownPage()),
+                    _DemoEntry('Forms', FormPage()),
+                    _DemoEntry('Header', HeaderPage()),
+                    _DemoEntry('Header-Box', HeaderBoxPage()),
+                    _DemoEntry('Illustrations', IllustrationPage()),
+                    _DemoEntry('Message', MessagePage()),
+                    _DemoEntry('Stepper', StepperPage()),
+                    _DemoEntry('Tab Bar', TabBarPage()),
+                  ]),
                   const SizedBox(height: SBBSpacing.xLarge),
                 ],
               ),
@@ -112,75 +145,20 @@ class MyApp extends StatelessWidget {
     );
   }
 
-  Widget _basics(BuildContext context) {
-    return SBBContentBox(
-      child: Column(
-        mainAxisAlignment: .center,
-        children: SBBDivider.divideItems(
-          context: context,
-          items: [
-            _DemoEntry('Icon', IconPage()),
-            _DemoEntry('Typography', TypographyPage()),
-            _DemoEntry('Color', ColorPage()),
-          ],
+  Widget _group(BuildContext context, String title, List<Widget> items) {
+    return Column(
+      children: [
+        const SBBListHeader('Basics'),
+        SBBContentBox(
+          child: Column(
+            mainAxisAlignment: .center,
+            children: SBBDivider.divideItems(
+              context: context,
+              items: items,
+            ),
+          ),
         ),
-      ),
-    );
-  }
-
-  Widget _elements(BuildContext context) {
-    return SBBContentBox(
-      child: Column(
-        mainAxisAlignment: .center,
-        children: SBBDivider.divideItems(
-          context: context,
-          items: [
-            _DemoEntry('Bottom Sheet', BottomSheetPage()),
-            _DemoEntry('Button', ButtonPage()),
-            _DemoEntry('Checkbox', CheckboxPage()),
-            _DemoEntry('Chip', ChipPage()),
-            _DemoEntry('Decorated Text', DecoratedTextPage()),
-            _DemoEntry('List Item', ListItemPage()),
-            _DemoEntry('Loading Indicator', LoadingIndicatorPage()),
-            _DemoEntry('Picker', PickerPage()),
-            _DemoEntry('Popup', PopupPage()),
-            _DemoEntry('Radio', RadioPage()),
-            _DemoEntry('Segmented Button', SegmentedButtonPage()),
-            _DemoEntry('Switch', SwitchPage()),
-            _DemoEntry('Text Input', TextInputPage()),
-            _DemoEntry('Text Area', TextAreaPage()),
-            _DemoEntry('Toast', ToastPage()),
-            _DemoEntry('Paginator', PaginatorPage()),
-            _DemoEntry('Slider', SliderPage()),
-            _DemoEntry('Promotion Box', PromotionBoxPage()),
-            _DemoEntry('Notification Box', NotificationBoxPage()),
-            _DemoEntry('Status', StatusPage()),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _modules(BuildContext context) {
-    return SBBContentBox(
-      child: Column(
-        mainAxisAlignment: .center,
-        children: SBBDivider.divideItems(
-          context: context,
-          items: [
-            _DemoEntry('Autocompletion', AutocompletionPage()),
-            _DemoEntry('Container', ContainerPage()),
-            _DemoEntry('Dropdown', DropdownPage()),
-            _DemoEntry('Forms', FormPage()),
-            _DemoEntry('Header', HeaderPage()),
-            _DemoEntry('Header-Box', HeaderBoxPage()),
-            _DemoEntry('Illustrations', IllustrationPage()),
-            _DemoEntry('Message', MessagePage()),
-            _DemoEntry('Stepper', StepperPage()),
-            _DemoEntry('Tab Bar', TabBarPage()),
-          ],
-        ),
-      ),
+      ],
     );
   }
 }
