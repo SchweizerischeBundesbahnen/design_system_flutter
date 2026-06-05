@@ -94,47 +94,68 @@ class MyApp extends StatelessWidget {
               padding: const .symmetric(horizontal: SBBSpacing.xSmall),
               sliver: SliverList.list(
                 children: [
-                  _group(context, 'Basics', [
-                    _DemoEntry('Icon', IconPage()),
-                    _DemoEntry('Typography', TypographyPage()),
-                    _DemoEntry('Color', ColorPage()),
-                  ]),
+                  _DemoGroup(
+                    title: 'Basics',
+                    children: [
+                      _DemoEntry('Icon', IconPage()),
+                      _DemoEntry('Typography', TypographyPage()),
+                      _DemoEntry('Color', ColorPage()),
+                      _DemoEntry('Container', ContainerPage()),
+                    ],
+                  ),
                   const SizedBox(height: SBBSpacing.medium),
-                  _group(context, 'Elements', [
-                    _DemoEntry('Bottom Sheet', BottomSheetPage()),
-                    _DemoEntry('Button', ButtonPage()),
-                    _DemoEntry('Checkbox', CheckboxPage()),
-                    _DemoEntry('Chip', ChipPage()),
-                    _DemoEntry('Decorated Text', DecoratedTextPage()),
-                    _DemoEntry('List Item', ListItemPage()),
-                    _DemoEntry('Loading Indicator', LoadingIndicatorPage()),
-                    _DemoEntry('Picker', PickerPage()),
-                    _DemoEntry('Popup', PopupPage()),
-                    _DemoEntry('Radio', RadioPage()),
-                    _DemoEntry('Segmented Button', SegmentedButtonPage()),
-                    _DemoEntry('Switch', SwitchPage()),
-                    _DemoEntry('Text Input', TextInputPage()),
-                    _DemoEntry('Text Area', TextAreaPage()),
-                    _DemoEntry('Toast', ToastPage()),
-                    _DemoEntry('Paginator', PaginatorPage()),
-                    _DemoEntry('Slider', SliderPage()),
-                    _DemoEntry('Promotion Box', PromotionBoxPage()),
-                    _DemoEntry('Notification Box', NotificationBoxPage()),
-                    _DemoEntry('Status', StatusPage()),
-                  ]),
+                  _DemoGroup(
+                    title: 'Action',
+                    children: [
+                      _DemoEntry('Button', ButtonPage()),
+                      _DemoEntry('List Item', ListItemPage()),
+                    ],
+                  ),
                   const SizedBox(height: SBBSpacing.medium),
-                  _group(context, 'Modules', [
-                    _DemoEntry('Autocompletion', AutocompletionPage()),
-                    _DemoEntry('Container', ContainerPage()),
-                    _DemoEntry('Dropdown', DropdownPage()),
-                    _DemoEntry('Forms', FormPage()),
-                    _DemoEntry('Header', HeaderPage()),
-                    _DemoEntry('Header-Box', HeaderBoxPage()),
-                    _DemoEntry('Illustrations', IllustrationPage()),
-                    _DemoEntry('Message', MessagePage()),
-                    _DemoEntry('Stepper', StepperPage()),
-                    _DemoEntry('Tab Bar', TabBarPage()),
-                  ]),
+                  _DemoGroup(
+                    title: 'Indicator',
+                    children: [
+                      _DemoEntry('Illustrations', IllustrationPage()),
+                      _DemoEntry('Loading Indicator', LoadingIndicatorPage()),
+                      _DemoEntry('Message', MessagePage()),
+                      _DemoEntry('Notification Box', NotificationBoxPage()),
+                      _DemoEntry('Paginator', PaginatorPage()),
+                      _DemoEntry('Promotion Box', PromotionBoxPage()),
+                      _DemoEntry('Status', StatusPage()),
+                      _DemoEntry('Toast', ToastPage()),
+                    ],
+                  ),
+                  const SizedBox(height: SBBSpacing.medium),
+                  _DemoGroup(
+                    title: 'Form',
+                    children: [
+                      _DemoEntry('Autocompletion', AutocompletionPage()),
+                      _DemoEntry('Checkbox', CheckboxPage()),
+                      _DemoEntry('Chip', ChipPage()),
+                      _DemoEntry('Decorated Text', DecoratedTextPage()),
+                      _DemoEntry('Dropdown', DropdownPage()),
+                      _DemoEntry('Form Fields', FormPage()),
+                      _DemoEntry('Picker', PickerPage()),
+                      _DemoEntry('Radio', RadioPage()),
+                      _DemoEntry('Slider', SliderPage()),
+                      _DemoEntry('Switch', SwitchPage()),
+                      _DemoEntry('Text Input', TextInputPage()),
+                      _DemoEntry('Text Area', TextAreaPage()),
+                    ],
+                  ),
+                  const SizedBox(height: SBBSpacing.medium),
+                  _DemoGroup(
+                    title: 'Navigation',
+                    children: [
+                      _DemoEntry('Bottom Sheet', BottomSheetPage()),
+                      _DemoEntry('Header', HeaderPage()),
+                      _DemoEntry('Header-Box', HeaderBoxPage()),
+                      _DemoEntry('Popup', PopupPage()),
+                      _DemoEntry('Segmented Button', SegmentedButtonPage()),
+                      _DemoEntry('Stepper', StepperPage()),
+                      _DemoEntry('Tab Bar', TabBarPage()),
+                    ],
+                  ),
                   const SizedBox(height: SBBSpacing.xLarge),
                 ],
               ),
@@ -144,17 +165,25 @@ class MyApp extends StatelessWidget {
       },
     );
   }
+}
 
-  Widget _group(BuildContext context, String title, List<Widget> items) {
+class _DemoGroup extends StatelessWidget {
+  const _DemoGroup({required this.title, required this.children});
+
+  final String title;
+  final List<Widget> children;
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       children: [
-        const SBBListHeader('Basics'),
+        SBBListHeader(title),
         SBBContentBox(
           child: Column(
             mainAxisAlignment: .center,
             children: SBBDivider.divideItems(
               context: context,
-              items: items,
+              items: children,
             ),
           ),
         ),
