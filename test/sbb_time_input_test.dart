@@ -8,14 +8,9 @@ void main() {
   testWidgets('time_input', (WidgetTester tester) async {
     final widget = Builder(
       builder: (context) {
-        return SBBContentBox(
-          child: Column(
-            mainAxisSize: .min,
-            children: SBBListItem.divideListItems(
-              context: context,
-              items: _timeInputItems(borderType: .standalone),
-            ),
-          ),
+        return Column(
+          mainAxisSize: .min,
+          children: _timeInputItems(borderType: .standalone),
         );
       },
     );

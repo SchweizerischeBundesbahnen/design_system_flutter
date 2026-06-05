@@ -6,7 +6,7 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'test_app.dart';
 
 void main() {
-  testWidgets('date_input', (WidgetTester tester) async {
+  testWidgets('date_time_input', (WidgetTester tester) async {
     final widget = Column(
       mainAxisSize: .min,
       children: _dateTimeInputItems(borderType: .standalone),
@@ -16,12 +16,12 @@ void main() {
       TestSpecs.themedSpecs,
       widget,
       tester,
-      'time_input',
+      'date_time_input',
       find.byType(Column).first,
     );
   });
 
-  testWidgets('date_input_listed', (WidgetTester tester) async {
+  testWidgets('date_time_input_listed', (WidgetTester tester) async {
     final widget = Builder(
       builder: (context) {
         return SBBContentBox(
@@ -40,7 +40,7 @@ void main() {
       TestSpecs.themedSpecs,
       widget,
       tester,
-      'time_input_listed',
+      'date_time_input_listed',
       find.byType(Column).first,
     );
   });
