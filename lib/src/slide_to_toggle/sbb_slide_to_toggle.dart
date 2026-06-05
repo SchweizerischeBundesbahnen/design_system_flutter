@@ -72,7 +72,7 @@ class SBBSlideToToggle extends StatelessWidget {
     required this.offToggleDecoration,
     this.controller,
     this.enabled = true,
-    this.threshold = 0.9,
+    this.threshold = 0.8,
     this.style,
   }) : assert(threshold >= 0 && threshold <= 1, 'threshold must be between 0 and 1.');
 
@@ -140,7 +140,7 @@ class SBBSlideToToggleSmall extends SBBSlideToToggle {
     required super.offToggleDecoration,
     super.controller,
     super.enabled = true,
-    super.threshold = 0.9,
+    super.threshold = 0.8,
     super.style,
   });
 
@@ -164,7 +164,7 @@ class _BaseSBBSlideToToggle extends StatefulWidget {
     required this.offToggleDecoration,
     this.controller,
     this.enabled = true,
-    this.threshold = 0.9,
+    this.threshold = 0.8,
     this.style,
     this.isSmall = false,
   });
@@ -207,7 +207,7 @@ class _SBBSlideToToggleState extends State<_BaseSBBSlideToToggle> with SingleTic
     _updateStatesController();
 
     _effectiveController.addListener(_onControllerChanged);
-    _position = _targetPositionFor(_state);
+    _position = _targetPositionFor(_currentState);
     _positionController = AnimationController(vsync: this, duration: _snapDuration)
       ..addListener(() {
         final value = _positionAnimation?.value;
@@ -256,6 +256,7 @@ class _SBBSlideToToggleState extends State<_BaseSBBSlideToToggle> with SingleTic
 
     final states = _statesController.value;
     final borderColor = effectiveStyle.borderColor?.resolve(states) ?? SBBColors.granite;
+    final backgroundColor = effectiveStyle.backgroundColor?.resolve(states) ?? SBBColors.white;
 
     return Container(
       decoration: BoxDecoration(
@@ -263,73 +264,67 @@ class _SBBSlideToToggleState extends State<_BaseSBBSlideToToggle> with SingleTic
         borderRadius: .circular(_toggleSize),
       ),
       padding: const EdgeInsets.all(4.0),
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          _trackSpan = constraints.maxWidth - _toggleSize;
-          return SizedBox(
-            height: _toggleSize,
-            width: double.infinity,
-            child: Stack(
-              children: [
-                _slideTrack(effectiveStyle),
-                _toggle(style: effectiveStyle),
-              ],
-            ),
-          );
-        },
-      ),
-    );
-  }
-
-  Widget _slideTrack(SBBSlideToToggleStyle style) {
-    final states = _statesController.value;
-    final backgroundColor = style.backgroundColor?.resolve(states) ?? SBBColors.white;
-
-    final helpOpacity = ((_state == .off ? 1 : 0) - _position).abs();
-
-    return Positioned.fill(
       child: DecoratedBox(
         decoration: ShapeDecoration(
           color: backgroundColor,
           shape: SBBSlideToToggleStyle.borderShape,
         ),
-        child: _loading
-            ? SizedBox.shrink()
-            : Padding(
-                padding: const EdgeInsets.symmetric(vertical: SBBSpacing.xSmall).copyWith(
-                  right: SBBSpacing.medium + (_state == .on ? _toggleSize : 0.0),
-                  left: SBBSpacing.medium + (_state == .off ? _toggleSize : 0.0),
-                ),
-                child: Center(
-                  child: Opacity(
-                    opacity: helpOpacity,
-                    child: addDefaultAncestorWithResolved(
-                      foregroundColor: style.helpForegroundColor?.resolve(_statesController.value),
-                      textStyle: style.helpTextStyle,
-                      child: _resolveHelpWidget(),
-                    ),
-                  ),
-                ),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            _trackSpan = constraints.maxWidth - _toggleSize;
+            return SizedBox(
+              height: _toggleSize,
+              width: double.infinity,
+              child: Stack(
+                children: [
+                  _helpWidget(state: .on, style: effectiveStyle),
+                  _helpWidget(state: .off, style: effectiveStyle),
+                  _toggle(effectiveStyle),
+                ],
               ),
+            );
+          },
+        ),
       ),
     );
   }
 
-  Widget _resolveHelpWidget() {
-    final helpText = _toggleDecoration.helpLabelText;
+  Widget _helpWidget({required SBBSlideToToggleState state, required SBBSlideToToggleStyle style}) {
+    return Align(
+      alignment: state == .off ? Alignment.centerRight : Alignment.centerLeft,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: SBBSpacing.xSmall).copyWith(
+          right: SBBSpacing.medium + (state == .on ? _toggleSize : 0.0),
+          left: SBBSpacing.medium + (state == .off ? _toggleSize : 0.0),
+        ),
+        child: Opacity(
+          opacity: ((state == .off ? 1 : 0) - _position).abs(),
+          child: addDefaultAncestorWithResolved(
+            foregroundColor: style.helpForegroundColor?.resolve(_statesController.value),
+            textStyle: style.helpTextStyle,
+            child: _resolveHelpWidget(state: state),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _resolveHelpWidget({required SBBSlideToToggleState state}) {
+    final decoration = state == .on ? widget.onToggleDecoration : widget.offToggleDecoration;
+    final helpText = decoration.helpLabelText;
     if (helpText != null) {
       return Text(
         helpText,
-        textAlign: _state == .on ? .start : .end,
+        textAlign: state == .on ? .start : .end,
         overflow: .ellipsis,
         maxLines: widget.isSmall ? 1 : 3,
       );
     }
 
-    return _toggleDecoration.helpLabel ?? SizedBox.shrink();
+    return decoration.helpLabel ?? SizedBox.shrink();
   }
 
-  Widget _toggle({required SBBSlideToToggleStyle style}) {
+  Widget _toggle(SBBSlideToToggleStyle style) {
     final states = _statesController.value;
     final loadingIndicatorColor = style.loadingIndicatorColor?.resolve(states);
     final toggleBackgroundColor = style.toggleBackgroundColor?.resolve(states);
@@ -430,9 +425,9 @@ class _SBBSlideToToggleState extends State<_BaseSBBSlideToToggle> with SingleTic
   }
 
   SBBSlideToggleDecoration get _toggleDecoration =>
-      _state == .on ? widget.onToggleDecoration : widget.offToggleDecoration;
+      _currentState == .on ? widget.onToggleDecoration : widget.offToggleDecoration;
 
-  SBBSlideToToggleState get _state => _effectiveController.value;
+  SBBSlideToToggleState get _currentState => _effectiveController.value;
 
   double get _toggleSize => widget.isSmall ? SBBSlideToToggleStyle.toggleSizeSmall : SBBSlideToToggleStyle.toggleSize;
 
@@ -458,7 +453,8 @@ class _SBBSlideToToggleState extends State<_BaseSBBSlideToToggle> with SingleTic
     );
   }
 
-  void _animateBounceBack() => _animateTo(_state == .on ? 1 : 0, duration: _bounceDuration, curve: Curves.bounceOut);
+  void _animateBounceBack() =>
+      _animateTo(_currentState == .on ? 1 : 0, duration: _bounceDuration, curve: Curves.bounceOut);
 
   Future<void> _commitActivate() => _commitToggleChange(nextState: .on, action: widget.onToggleDecoration.onToggle);
 
@@ -468,7 +464,7 @@ class _SBBSlideToToggleState extends State<_BaseSBBSlideToToggle> with SingleTic
     required SBBSlideToToggleState nextState,
     required Future<void> Function() action,
   }) async {
-    if (_loading || nextState == _state) return;
+    if (_loading || nextState == _currentState) return;
 
     _setLoading(true);
     _animateTo(_targetPositionFor(nextState));
@@ -480,7 +476,7 @@ class _SBBSlideToToggleState extends State<_BaseSBBSlideToToggle> with SingleTic
       _effectiveController.changeTo(state: nextState);
     } catch (_) {
       if (!mounted) return;
-      _animateTo(_targetPositionFor(_state));
+      _animateTo(_targetPositionFor(_currentState));
     } finally {
       _setLoading(false);
     }
@@ -497,7 +493,7 @@ class _SBBSlideToToggleState extends State<_BaseSBBSlideToToggle> with SingleTic
   void _onControllerChanged() {
     if (!mounted || _loading || _isDragging) return;
 
-    final target = _targetPositionFor(_state);
+    final target = _targetPositionFor(_currentState);
     if ((_position - target).abs() < 0.0001) {
       setState(() {});
       return;
@@ -525,9 +521,9 @@ class _SBBSlideToToggleState extends State<_BaseSBBSlideToToggle> with SingleTic
 
     setState(() => _isDragging = false);
 
-    if (_state == .off && _position >= widget.threshold) {
+    if (_currentState == .off && _position >= widget.threshold) {
       _commitActivate();
-    } else if (_state == .on && _position <= (1 - widget.threshold)) {
+    } else if (_currentState == .on && _position <= (1 - widget.threshold)) {
       _commitDeactivate();
     } else {
       _animateBounceBack();

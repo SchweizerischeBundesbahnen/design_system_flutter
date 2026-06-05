@@ -31,7 +31,7 @@ class _SlideToTogglePageState extends State<SlideToTogglePage> {
           children: [
             SBBSegmentedButton(
               segments: [
-                SBBButtonSegment(value: true, labelText: 'All enabled'),
+                SBBButtonSegment(value: true, labelText: 'All Enabled'),
                 SBBButtonSegment(value: false, labelText: 'All Disabled'),
               ],
               selected: isEnabled,
@@ -42,21 +42,21 @@ class _SlideToTogglePageState extends State<SlideToTogglePage> {
               spacing: SBBSpacing.xSmall,
               children: [
                 SBBTertiaryButtonSmall(
-                  labelText: 'Change to On',
-                  onPressed: () {
-                    defaultTextController.changeTo(state: .on);
-                    defaultIconController.changeTo(state: .on);
-                    smallTextController.changeTo(state: .on);
-                    smallIconController.changeTo(state: .on);
-                  },
-                ),
-                SBBTertiaryButtonSmall(
                   labelText: 'Change to Off',
                   onPressed: () {
                     defaultTextController.changeTo(state: .off);
                     defaultIconController.changeTo(state: .off);
                     smallTextController.changeTo(state: .off);
                     smallIconController.changeTo(state: .off);
+                  },
+                ),
+                SBBTertiaryButtonSmall(
+                  labelText: 'Change to On',
+                  onPressed: () {
+                    defaultTextController.changeTo(state: .on);
+                    defaultIconController.changeTo(state: .on);
+                    smallTextController.changeTo(state: .on);
+                    smallIconController.changeTo(state: .on);
                   },
                 ),
               ],
