@@ -97,8 +97,7 @@ class RadioPageState extends State<RadioPage> {
                       value: 4,
                       titleText: 'Button',
                       enabled: _pageEnabled,
-                      padding: .fromLTRB(16.0, 0.0, 8.0, 0.0),
-                      trailing: SBBTertiaryButtonSmall(
+                      trailingIconButton: SBBTertiaryButtonSmall(
                         iconData: SBBIcons.circle_information_small_small,
                         onPressed: _pageEnabled ? () => sbbToast.show(titleText: 'Button pressed') : null,
                       ),

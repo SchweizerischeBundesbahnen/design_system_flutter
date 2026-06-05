@@ -234,8 +234,7 @@ The list item has received a lot of changes. In general the content is completel
 * replace `trailingIcon` with `trailingIconData`
 * use `title`, `subtitle`, `leading` and `trailing` of type Widget? for complete customization
 * If you want a multi line title, consider setting the `titleTextMaxLines` parameter in the style - it will be clamped by default to a single line
-* replace `buttonIcon` and `onPressedButton` from the `button` constructor with a custom trailing widget. Do not forget
-  to adjust the `padding`, since the `SBBTertiaryButtonSmall` has an inherent padding to the right
+* replace `buttonIcon` and `onPressedButton` from the `button` constructor with a `SBBTertiaryButtonSmall` in `trailingIconButton`.
 * `isLastElement` was removed, use the static method `SBBDivider.divideItems` to separate list 
   items with a SBB themed divider (this is analogous to the Material implementation)
 * removed `enabled`. List item will be disabled when [onTap] and [onLongPress] are null. If component should be enabled without touch feedback, 

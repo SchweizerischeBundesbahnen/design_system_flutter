@@ -56,7 +56,7 @@ class DecoratedTextPage extends StatelessWidget {
                   ),
                   SBBDecoratedText(
                     decoration: SBBInputDecoration(
-                      contentPadding: .only(left: SBBSpacing.medium, right: SBBSpacing.xxSmall),
+                      contentPadding: .only(left: SBBSpacing.medium, right: SBBSpacing.xSmall),
                       labelText: 'Label',
                       leadingIconData: SBBIcons.dog_small,
                       trailing: SBBTertiaryButtonSmall(
@@ -154,7 +154,7 @@ class DecoratedTextPage extends StatelessWidget {
                 onTap: () => sbbToast.show(titleText: 'Button'),
                 value: 'Value',
                 decoration: SBBInputDecoration(
-                  contentPadding: .only(left: SBBSpacing.medium, right: SBBSpacing.xxSmall),
+                  contentPadding: .only(left: SBBSpacing.medium, right: SBBSpacing.xSmall),
                   labelText: 'With Custom Button',
                   placeholderText: 'Press the Button!',
                   leadingIconData: SBBIcons.unicorn_small,
