@@ -1,4 +1,5 @@
 export 'decoration/sbb_floating_label_behavior.dart';
+export 'decoration/sbb_input_border_type.dart';
 export 'decoration/sbb_input_decoration.dart';
 export 'sbb_text_input.dart';
 export 'sbb_text_input_form_field.dart';

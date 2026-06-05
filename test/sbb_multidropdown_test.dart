@@ -16,32 +16,60 @@ void main() {
 
     final widget = Builder(
       builder: (context) {
-        return SBBContentBox(
-          margin: EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall).copyWith(top: SBBSpacing.xSmall),
-          child: Column(
-            mainAxisSize: .min,
-            children: SBBListItem.divideListItems(
-              context: context,
-              items: [
-                SBBMultiDropdown<int>(selectedItems: [], items: items, onChanged: (_) {}),
-                SBBMultiDropdown<int>(
-                  selectedItems: [1, 2],
-                  items: items,
-                  onChanged: (_) {},
-                  triggerDecoration: SBBInputDecoration(
-                    labelText: 'Default Value',
-                    leadingIconData: SBBIcons.dog_small,
-                  ),
-                ),
-                SBBMultiDropdown<int>(
-                  selectedItems: [1],
-                  items: items,
-                  onChanged: null,
-                  triggerDecoration: SBBInputDecoration(labelText: 'Disabled'),
-                ),
-              ],
+        return Column(
+          children: [
+            SBBListHeader('Standalone'),
+            SBBMultiDropdown<int>(
+              selectedItems: [],
+              items: items,
+              onChanged: (_) {},
+              triggerDecoration: SBBInputDecoration(borderType: .standalone),
             ),
-          ),
+            SBBMultiDropdown<int>(
+              selectedItems: [1, 2],
+              items: items,
+              onChanged: (_) {},
+              triggerDecoration: SBBInputDecoration(
+                labelText: 'Default Value',
+                leadingIconData: SBBIcons.dog_small,
+                borderType: .standalone,
+              ),
+            ),
+            SBBMultiDropdown<int>(
+              selectedItems: [1],
+              items: items,
+              onChanged: null,
+              triggerDecoration: SBBInputDecoration(labelText: 'Disabled', borderType: .standalone),
+            ),
+            SBBListHeader('Listed'),
+            SBBContentBox(
+              margin: EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall).copyWith(top: SBBSpacing.xSmall),
+              child: Column(
+                mainAxisSize: .min,
+                children: SBBListItem.divideListItems(
+                  context: context,
+                  items: [
+                    SBBMultiDropdown<int>(selectedItems: [], items: items, onChanged: (_) {}),
+                    SBBMultiDropdown<int>(
+                      selectedItems: [1, 2],
+                      items: items,
+                      onChanged: (_) {},
+                      triggerDecoration: SBBInputDecoration(
+                        labelText: 'Default Value',
+                        leadingIconData: SBBIcons.dog_small,
+                      ),
+                    ),
+                    SBBMultiDropdown<int>(
+                      selectedItems: [1],
+                      items: items,
+                      onChanged: null,
+                      triggerDecoration: SBBInputDecoration(labelText: 'Disabled'),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
         );
       },
     );

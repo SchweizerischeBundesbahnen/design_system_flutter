@@ -43,6 +43,7 @@ class DefaultSBBInputDecorationThemeData extends SBBInputDecorationThemeData {
           WidgetState.focused: baseStyle.colorScheme.strokePrimary,
           WidgetState.any: SBBColors.transparent,
         }),
+        borderType: .boxedOrListed,
         contentPadding: defaultContentPadding,
       );
 }
