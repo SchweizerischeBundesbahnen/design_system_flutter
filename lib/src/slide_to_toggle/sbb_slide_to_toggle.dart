@@ -184,6 +184,7 @@ class _BaseSBBSlideToToggle extends StatefulWidget {
 class _SBBSlideToToggleState extends State<_BaseSBBSlideToToggle> with SingleTickerProviderStateMixin {
   static const Duration _snapDuration = Duration(milliseconds: 200);
   static const Duration _bounceDuration = Duration(milliseconds: 320);
+  static const EdgeInsets _containerPadding = EdgeInsets.all(4.0);
 
   SBBSlideToToggleController? _internalController;
 
@@ -195,7 +196,6 @@ class _SBBSlideToToggleState extends State<_BaseSBBSlideToToggle> with SingleTic
   bool _loading = false;
   bool _isDragging = false;
   double _position = 0;
-  double _trackSpan = 0;
 
   late final AnimationController _positionController;
   Animation<double>? _positionAnimation;
@@ -262,21 +262,16 @@ class _SBBSlideToToggleState extends State<_BaseSBBSlideToToggle> with SingleTic
         border: Border.all(color: borderColor, width: SBBSlideToToggleStyle.borderWidth),
         borderRadius: .circular(_toggleSize),
       ),
-      padding: const EdgeInsets.all(4.0),
-      child: LayoutBuilder(
-        builder: (context, constraints) {
-          _trackSpan = constraints.maxWidth - _toggleSize;
-          return SizedBox(
-            height: _toggleSize,
-            width: double.infinity,
-            child: Stack(
-              children: [
-                _slideTrack(effectiveStyle),
-                _toggle(style: effectiveStyle),
-              ],
-            ),
-          );
-        },
+      padding: _containerPadding,
+      child: SizedBox(
+        height: _toggleSize,
+        width: double.infinity,
+        child: Stack(
+          children: [
+            _slideTrack(effectiveStyle),
+            _toggle(style: effectiveStyle),
+          ],
+        ),
       ),
     );
   }
@@ -335,8 +330,8 @@ class _SBBSlideToToggleState extends State<_BaseSBBSlideToToggle> with SingleTic
     final toggleBackgroundColor = style.toggleBackgroundColor?.resolve(states);
     final dragOverlayColor = style.toggleOverlayColor?.resolve({...states, WidgetState.pressed});
 
-    return Positioned(
-      left: _trackSpan * _position,
+    return Align(
+      alignment: AlignmentGeometry.xy(_position * 2 - 1, 0.5),
       child: GestureDetector(
         behavior: .translucent,
         onHorizontalDragStart: _onDragStart,
@@ -513,10 +508,13 @@ class _SBBSlideToToggleState extends State<_BaseSBBSlideToToggle> with SingleTic
   }
 
   void _onDragUpdate(DragUpdateDetails d) {
-    if (!_isInteractive || _trackSpan <= 0) return;
+    final size = context.size;
 
+    if (!_isInteractive || size == null) return;
+
+    final width = size.width - _toggleSize - _containerPadding.horizontal;
     setState(() {
-      _position = (_position + d.delta.dx / _trackSpan).clamp(0.0, 1.0).toDouble();
+      _position = (_position + d.delta.dx / width).clamp(0.0, 1.0).toDouble();
     });
   }
 
