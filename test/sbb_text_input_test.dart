@@ -26,7 +26,7 @@ void main() {
       TestSpecs.themedSpecs,
       widget,
       tester,
-      'text_input_boxed',
+      'text_input',
       find.byType(Column).first,
     );
 
@@ -37,7 +37,7 @@ void main() {
       TestSpecs.themedSpecs,
       widget,
       tester,
-      'text_input_boxed_focused',
+      'text_input_focused',
       find.byType(Column).first,
     );
   });
@@ -71,7 +71,7 @@ void main() {
       TestSpecs.themedSpecs,
       widget,
       tester,
-      'text_input',
+      'text_input_listed',
       find.byType(Column).first,
     );
     await tester.tap(find.byKey(pressableKey));
@@ -81,7 +81,7 @@ void main() {
       TestSpecs.themedSpecs,
       widget,
       tester,
-      'text_input_focused',
+      'text_input_listed_focused',
       find.byType(Column).first,
     );
   });
@@ -168,14 +168,14 @@ void main() {
 
 List<Widget> _textInputItems({required ValueKey<String> pressableItemKey, required SBBInputBorderType borderType}) {
   return [
-    SBBTextInputBoxed(
+    SBBTextInput(
       decoration: SBBInputDecoration(
         labelText: 'Default',
         leadingIconData: SBBIcons.unicorn_small,
         borderType: borderType,
       ),
     ),
-    SBBTextInputBoxed(
+    SBBTextInput(
       decoration: SBBInputDecoration(
         labelText: 'With Trailing Icon',
         leadingIconData: SBBIcons.unicorn_small,
@@ -183,7 +183,7 @@ List<Widget> _textInputItems({required ValueKey<String> pressableItemKey, requir
         borderType: borderType,
       ),
     ),
-    SBBTextInputBoxed(
+    SBBTextInput(
       key: pressableItemKey,
       decoration: SBBInputDecoration(
         labelText: 'With Placeholder',
@@ -192,7 +192,7 @@ List<Widget> _textInputItems({required ValueKey<String> pressableItemKey, requir
         borderType: borderType,
       ),
     ),
-    SBBTextInputBoxed(
+    SBBTextInput(
       decoration: SBBInputDecoration(
         labelText: 'With Custom Button',
         placeholderText: 'Press the Button!',
@@ -204,7 +204,7 @@ List<Widget> _textInputItems({required ValueKey<String> pressableItemKey, requir
         borderType: borderType,
       ),
     ),
-    SBBTextInputBoxed(
+    SBBTextInput(
       decoration: SBBInputDecoration(
         labelText: 'Error message',
         errorText: 'This is an error!',
@@ -212,7 +212,7 @@ List<Widget> _textInputItems({required ValueKey<String> pressableItemKey, requir
         borderType: borderType,
       ),
     ),
-    SBBTextInputBoxed(
+    SBBTextInput(
       decoration: SBBInputDecoration(
         leadingIconData: SBBIcons.unicorn_small,
         labelText: 'Disabled',
