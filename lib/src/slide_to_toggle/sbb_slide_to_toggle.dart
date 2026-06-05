@@ -287,17 +287,24 @@ class _SBBSlideToToggleState extends State<_BaseSBBSlideToToggle> with SingleTic
   Widget _helpWidget({required SBBSlideToToggleState state, required SBBSlideToToggleStyle style}) {
     return Align(
       alignment: state == .off ? Alignment.centerRight : Alignment.centerLeft,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: SBBSpacing.xSmall).copyWith(
-          right: SBBSpacing.medium + (state == .on ? _toggleSize : 0.0),
-          left: SBBSpacing.medium + (state == .off ? _toggleSize : 0.0),
+      child: ClipRect(
+        clipper: _HelpWidgetClipper(
+          position: _position,
+          toggleSize: _toggleSize,
+          state: state,
         ),
-        child: Opacity(
-          opacity: ((state == .off ? 1 : 0) - _position).abs(),
-          child: addDefaultAncestorWithResolved(
-            foregroundColor: style.helpForegroundColor?.resolve(_statesController.value),
-            textStyle: style.helpTextStyle,
-            child: _resolveHelpWidget(state: state),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: SBBSpacing.xSmall).copyWith(
+            right: SBBSpacing.medium + (state == .on ? _toggleSize : 0.0),
+            left: SBBSpacing.medium + (state == .off ? _toggleSize : 0.0),
+          ),
+          child: Opacity(
+            opacity: ((state == .off ? 1 : 0) - _position).abs(),
+            child: addDefaultAncestorWithResolved(
+              foregroundColor: style.helpForegroundColor?.resolve(_statesController.value),
+              textStyle: style.helpTextStyle,
+              child: _resolveHelpWidget(state: state),
+            ),
           ),
         ),
       ),
@@ -532,4 +539,28 @@ class _SBBSlideToToggleState extends State<_BaseSBBSlideToToggle> with SingleTic
     if (!_isDragging) return;
     setState(() => _isDragging = false);
   }
+}
+
+/// Used to clip help widget so it doesn't go over toggle. Long help widgets would otherwise overlap while sliding.
+class _HelpWidgetClipper extends CustomClipper<Rect> {
+  const _HelpWidgetClipper({required this.position, required this.toggleSize, required this.state});
+
+  final SBBSlideToToggleState state;
+  final double position;
+  final double toggleSize;
+
+  @override
+  Rect getClip(Size size) {
+    final clampedPosition = position.clamp(0.0, 1.0);
+    final centerX = (clampedPosition * (size.width - toggleSize)) + (toggleSize / 2);
+
+    if (state == .on) {
+      return Rect.fromLTWH(0, 0, centerX, size.height);
+    }
+    return Rect.fromLTWH(centerX, 0, size.width - centerX, size.height);
+  }
+
+  @override
+  bool shouldReclip(covariant _HelpWidgetClipper oldClipper) =>
+      oldClipper.position != position || oldClipper.toggleSize != toggleSize || oldClipper.state != state;
 }
