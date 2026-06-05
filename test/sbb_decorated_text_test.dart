@@ -52,7 +52,7 @@ void main() {
                 context: context,
                 items: _decoratedTextItems(
                   tappableItemKey: tappableKey,
-                  borderType: .standalone,
+                  borderType: .boxedOrListed,
                 ),
               ),
             ),
