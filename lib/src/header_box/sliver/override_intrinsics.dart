@@ -6,6 +6,8 @@ import 'package:flutter/rendering.dart';
 /// Basically, it lets you change the "ideal" size (or just the width / height) of [child].
 /// Leave unset to use the real value.
 ///
+/// It behaves like a [ConstrainedBox] in that the min and max values are passed down the widget tree as constraints.
+///
 /// See also:
 ///
 ///  * [IntrinsicHeight] and [IntrinsicWidth], for more detailed information on this topic.
@@ -48,26 +50,53 @@ class OverrideIntrinsics extends SingleChildRenderObjectWidget {
     BuildContext context,
     RenderOverrideIntrinsics renderObject,
   ) {
-    renderObject
-      ..minHeight = minHeight
-      ..maxHeight = maxHeight
-      ..minWidth = minWidth
-      ..maxWidth = maxWidth;
+    renderObject.updateConstraints(
+      minHeight: minHeight,
+      maxHeight: maxHeight,
+      minWidth: minWidth,
+      maxWidth: maxWidth,
+    );
   }
 }
 
-class RenderOverrideIntrinsics extends RenderProxyBox {
+class RenderOverrideIntrinsics extends RenderConstrainedBox {
   RenderOverrideIntrinsics({
     this.minHeight,
     this.maxHeight,
     this.minWidth,
     this.maxWidth,
-  });
+  }) : super(
+         additionalConstraints: BoxConstraints(
+           minHeight: minHeight ?? 0.0,
+           maxHeight: maxHeight ?? double.infinity,
+           minWidth: minWidth ?? 0.0,
+           maxWidth: maxWidth ?? double.infinity,
+         ),
+       );
 
   double? minHeight;
   double? maxHeight;
   double? minWidth;
   double? maxWidth;
+
+  void updateConstraints({
+    double? minHeight,
+    double? maxHeight,
+    double? minWidth,
+    double? maxWidth,
+  }) {
+    this.minHeight = minHeight;
+    this.maxHeight = maxHeight;
+    this.minWidth = minWidth;
+    this.maxWidth = maxWidth;
+
+    additionalConstraints = BoxConstraints(
+      minHeight: minHeight ?? 0.0,
+      maxHeight: maxHeight ?? double.infinity,
+      minWidth: minWidth ?? 0.0,
+      maxWidth: maxWidth ?? double.infinity,
+    );
+  }
 
   @override
   double computeMinIntrinsicHeight(double width) => minHeight ?? super.computeMinIntrinsicHeight(width);

@@ -8,7 +8,9 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/header_box/sliver/override_intrinsics.dart';
 
 part 'sbb_cascade_column.contractible.dart';
+
 part 'sbb_cascade_column.listener.dart';
+
 part 'sbb_cascade_column.renderbox.dart';
 
 /// A widget that accomplishes the cascading shrink effect of the [SBBSliverHeaderBox].
@@ -107,15 +109,27 @@ class _CascadeColumnParentData extends ContainerBoxParentData<RenderBox> {
   ValueNotifier<SBBContractibleState>? stateNotifier;
 }
 
-/// Stores the current state of expansion (and contraction).
+/// Represents the current state of expansion (and contraction) of a [SBBCascadeColumn].
 @immutable
 final class SBBContractionState {
   const SBBContractionState({
     required this.expansionValue,
   });
 
+  /// The amount the [SBBCascadeColumn] has expanded, in a range of `0..1`.
+  ///
+  /// | Value       | Meaning          |
+  /// | ----------- | -----------      |
+  /// | 0.0         | Fully contracted |
+  /// | 1.0         | Fully expanded   |
   final double expansionValue;
 
+  /// The amount the [SBBCascadeColumn] has contracted, in a range of `0..1`.
+  ///
+  /// | Value       | Meaning          |
+  /// | ----------- | -----------      |
+  /// | 0.0         | Fully expanded   |
+  /// | 1.0         | Fully contracted |
   double get contractionValue => 1.0 - expansionValue;
 
   @override
@@ -127,7 +141,8 @@ final class SBBContractionState {
   int get hashCode => expansionValue.hashCode;
 }
 
-/// Stores the current state of expansion (and contraction).
+/// Represents the current state of expansion (and contraction) in the context of a [SBBContractible] and its parent
+/// [SBBCascadeColumn].
 @immutable
 final class SBBContractibleState {
   const SBBContractibleState({
@@ -138,11 +153,36 @@ final class SBBContractibleState {
   const SBBContractibleState.of(double local, double global)
     : this(expansionValue: local, globalExpansionValue: global);
 
+  /// The amount the [SBBContractible] has expanded, in a range of `0..1`.
+  ///
+  /// | Value       | Meaning          |
+  /// | ----------- | -----------      |
+  /// | 0.0         | Fully contracted |
+  /// | 1.0         | Fully expanded   |
   final double expansionValue;
+
+  /// The amount the parent [SBBCascadeColumn] has expanded, in a range of `0..1`.
+  ///
+  /// | Value       | Meaning          |
+  /// | ----------- | -----------      |
+  /// | 0.0         | Fully contracted |
+  /// | 1.0         | Fully expanded   |
   final double globalExpansionValue;
 
+  /// The amount the [SBBContractible] has contracted, in a range of `0..1`.
+  ///
+  /// | Value       | Meaning          |
+  /// | ----------- | -----------      |
+  /// | 0.0         | Fully expanded   |
+  /// | 1.0         | Fully contracted |
   double get contractionValue => 1.0 - expansionValue;
 
+  /// The amount the parent [SBBCascadeColumn] has contracted, in a range of `0..1`.
+  ///
+  /// | Value       | Meaning          |
+  /// | ----------- | -----------      |
+  /// | 0.0         | Fully expanded   |
+  /// | 1.0         | Fully contracted |
   double get globalContractionValue => 1.0 - globalExpansionValue;
 
   @override

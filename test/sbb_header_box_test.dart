@@ -117,12 +117,16 @@ class FloatingHeaderboxTest extends StatelessWidget {
             controller: ScrollController(initialScrollOffset: scrollOffset),
             slivers: [
               SBBSliverHeaderBox(
+                top: Container(
+                  height: 50,
+                  color: SBBColors.green,
+                ),
                 flap: SBBHeaderBoxFlap(
                   labelText: 'Additional text or information',
                   leadingIconData: SBBIcons.sign_exclamation_point_small,
                   trailingIconData: SBBIcons.circle_information_small,
                 ),
-                config: SBBSliverHeaderBoxConfig(flapMode: .hideable),
+                config: SBBSliverHeaderBoxConfig(flapMode: .hideable, topMode: .hideable),
                 body: SBBCascadeColumn(
                   children: [
                     Text('Static'),
@@ -135,6 +139,24 @@ class FloatingHeaderboxTest extends StatelessWidget {
                     SBBContractibleCrossfade(
                       contractedChild: Text('Contracted'),
                       expandedChild: Text('Expanded', style: SBBTextStyles.xxLargeBold),
+                    ),
+                    SBBContractible(
+                      minHeight: null,
+                      maxHeight: 100,
+                      behavior: .shrink,
+                      child: Container(
+                        color: SBBColors.blue,
+                        child: Center(child: Text('Centered (Intrinsic → 100)')),
+                      ),
+                    ),
+                    SBBContractible(
+                      minHeight: 50,
+                      maxHeight: 100,
+                      behavior: .shrink,
+                      child: Container(
+                        color: SBBColors.green,
+                        child: Center(child: Text('Centered (50 → 100)')),
+                      ),
                     ),
                   ],
                 ),
