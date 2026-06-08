@@ -84,6 +84,9 @@ class SBBSlideToToggleStyle {
     WidgetStateProperty<Color?>? backgroundColor,
     WidgetStateProperty<Color?>? toggleBackgroundColor,
     WidgetStateProperty<Color?>? toggleOverlayColor,
+    WidgetStateProperty<Color?>? loadingIndicatorColor,
+    WidgetStateProperty<Color?>? helpForegroundColor,
+    WidgetStateProperty<Color?>? toggleForegroundColor,
     TextStyle? toggleTextStyle,
     TextStyle? helpTextStyle,
     EdgeInsetsGeometry? helpWidgetPadding,
@@ -96,6 +99,9 @@ class SBBSlideToToggleStyle {
       toggleTextStyle: toggleTextStyle ?? this.toggleTextStyle,
       helpTextStyle: helpTextStyle ?? this.helpTextStyle,
       helpWidgetPadding: helpWidgetPadding ?? this.helpWidgetPadding,
+      loadingIndicatorColor: loadingIndicatorColor ?? this.loadingIndicatorColor,
+      helpForegroundColor: helpForegroundColor ?? this.helpForegroundColor,
+      toggleForegroundColor: toggleForegroundColor ?? this.toggleForegroundColor,
     );
   }
 
@@ -110,6 +116,9 @@ class SBBSlideToToggleStyle {
       toggleTextStyle: other.toggleTextStyle,
       helpTextStyle: other.helpTextStyle,
       helpWidgetPadding: other.helpWidgetPadding,
+      loadingIndicatorColor: other.loadingIndicatorColor,
+      toggleForegroundColor: other.toggleForegroundColor,
+      helpForegroundColor: other.helpForegroundColor,
     );
   }
 
@@ -129,6 +138,24 @@ class SBBSlideToToggleStyle {
       toggleTextStyle: TextStyle.lerp(a?.toggleTextStyle, b?.toggleTextStyle, t),
       helpTextStyle: TextStyle.lerp(a?.helpTextStyle, b?.helpTextStyle, t),
       helpWidgetPadding: EdgeInsetsGeometry.lerp(a?.helpWidgetPadding, b?.helpWidgetPadding, t),
+      helpForegroundColor: WidgetStateProperty.lerp<Color?>(
+        a?.helpForegroundColor,
+        b?.helpForegroundColor,
+        t,
+        Color.lerp,
+      ),
+      loadingIndicatorColor: WidgetStateProperty.lerp<Color?>(
+        a?.loadingIndicatorColor,
+        b?.loadingIndicatorColor,
+        t,
+        Color.lerp,
+      ),
+      toggleForegroundColor: WidgetStateProperty.lerp<Color?>(
+        a?.toggleForegroundColor,
+        b?.toggleForegroundColor,
+        t,
+        Color.lerp,
+      ),
     );
   }
 
