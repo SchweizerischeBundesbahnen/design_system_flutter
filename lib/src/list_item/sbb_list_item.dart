@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
@@ -19,8 +21,9 @@ import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 /// These parameters are mutually exclusive.
 ///
 /// Leading and trailing icons can be provided either as custom [Widget]s via [leading] and
-/// [trailing], or as [IconData] via [leadingIconData] and [trailingIconData]. These parameter
-/// pairs are mutually exclusive.
+/// [trailing], or as [IconData] via [leadingIconData] and [trailingIconData], or as [trailingIconButton]
+/// for a small icon button.
+/// These parameter pairs / triples are mutually exclusive.
 ///
 /// When [isLoading] is true, a loading indicator is displayed at the bottom of the item.
 ///
@@ -101,6 +104,7 @@ class SBBListItem extends StatefulWidget {
     this.subtitleText,
     this.trailing,
     this.trailingIconData,
+    this.trailingIconButton,
     this.onTap,
     this.onLongPress,
     this.isLoading = false,
@@ -109,15 +113,17 @@ class SBBListItem extends StatefulWidget {
     this.autofocus = false,
     this.enableFeedback = true,
     this.padding,
-    this.trailingHorizontalGapWidth,
-    this.leadingHorizontalGapWidth,
-    this.subtitleVerticalGapHeight,
     this.style,
   }) : assert(title != null || titleText != null, 'Either title or titleText must be provided'),
        assert(title == null || titleText == null, 'Only one of title or titleText can be set'),
        assert(subtitle == null || subtitleText == null, 'Only one of subtitle or subtitleText can be set'),
        assert(leading == null || leadingIconData == null, 'Only one of leading or leadingIconData can be set'),
-       assert(trailing == null || trailingIconData == null, 'Only one of trailing or trailingIconData can be set');
+       assert(
+         (trailing == null && trailingIconData == null) ||
+             (trailing == null && trailingIconButton == null) ||
+             (trailingIconData == null && trailingIconButton == null),
+         'Only one of trailing, trailingIconData, or trailingIconButton can be set',
+       );
 
   /// A custom widget displayed as the list item's leading content.
   ///
@@ -181,19 +187,26 @@ class SBBListItem extends StatefulWidget {
   ///
   /// [trailing] is vertically centered relative to the list item.
   ///
-  /// Note that when adding for example a button, the [padding] might have to be adapted
-  /// for the button to be aligned with other trailing icons due to the button's inherent padding.
-  ///
-  /// Cannot be used together with [trailingIconData].
+  /// Cannot be used together with [trailingIconData] and [trailingIconButton].
   /// {@endtemplate}
   final Widget? trailing;
 
   /// {@template sbb_design_system.list_item.trailingIconData}
   /// Icon data for the trailing icon.
   ///
-  /// Cannot be used together with [trailing].
+  /// Cannot be used together with [trailing] and [trailingIconButton].
   /// {@endtemplate}
   final IconData? trailingIconData;
+
+  /// {@template sbb_design_system.list_item.trailingIconButton}
+  /// An icon button that uses [SBBTertiaryButtonSmall].
+  ///
+  /// The only difference to [trailing] is that the padding around it will be reduced by [8, 10, 8, 10] because the
+  /// icon button inherently has some padding for usability reasons.
+  ///
+  /// Cannot be used together with [trailing] and [trailingIconData].
+  /// {@endtemplate}
+  final Widget? trailingIconButton;
 
   /// {@template sbb_design_system.list_item.onTap}
   /// Called when the list item is tapped.
@@ -243,33 +256,6 @@ class SBBListItem extends StatefulWidget {
   /// Defaults to symmetric padding of 16.0 horizontal and 10.0 vertical.
   /// {@endtemplate}
   final EdgeInsetsGeometry? padding;
-
-  /// {@template sbb_design_system.list_item.trailingHorizontalGapWidth}
-  /// Horizontal gap width between the trailing widget and the [title].
-  ///
-  /// Overrides the value in [SBBListItemThemeData.trailingHorizontalGapWidth].
-  ///
-  /// Defaults to 16.0.
-  /// {@endtemplate}
-  final double? trailingHorizontalGapWidth;
-
-  /// {@template sbb_design_system.list_item.leadingHorizontalGapWidth}
-  /// Horizontal gap width between the leading widget and the title.
-  ///
-  /// Overrides the value in [SBBListItemThemeData.leadingHorizontalGapWidth].
-  ///
-  /// Defaults to 8.0.
-  /// {@endtemplate}
-  final double? leadingHorizontalGapWidth;
-
-  /// {@template sbb_design_system.list_item.subtitleVerticalGapHeight}
-  /// Vertical gap height between the title or leading (depending which is larger) and subtitle.
-  ///
-  /// Overrides the value in [SBBListItemThemeData.subtitleVerticalGapHeight].
-  ///
-  /// Defaults to 4.0.
-  /// {@endtemplate}
-  final double? subtitleVerticalGapHeight;
 
   /// {@template sbb_design_system.list_item.style}
   /// Customizes this list item appearance.
@@ -336,15 +322,6 @@ class SBBListItem extends StatefulWidget {
     properties.add(
       DiagnosticsProperty<EdgeInsetsGeometry>('padding', padding, defaultValue: null),
     );
-    properties.add(
-      DoubleProperty('trailingHorizontalGapWidth', trailingHorizontalGapWidth, defaultValue: null),
-    );
-    properties.add(
-      DoubleProperty('leadingHorizontalGapWidth', leadingHorizontalGapWidth, defaultValue: null),
-    );
-    properties.add(
-      DoubleProperty('subtitleVerticalGapHeight', subtitleVerticalGapHeight, defaultValue: null),
-    );
     properties.add(DiagnosticsProperty<SBBListItemStyle>('style', style, defaultValue: null));
   }
 }
@@ -384,14 +361,14 @@ class _SBBListItemState extends State<SBBListItem> {
     assert(debugCheckHasMaterial(context));
     assert(debugCheckHasSBBBaseStyle(context));
 
-    final themeData = Theme.of(context).sbbListItemTheme;
-    final effectiveStyle = themeData.style!.merge(widget.style);
+    final effectiveStyle = _resolveStyle(context);
     final states = _statesController.value;
 
-    final effectivePadding = widget.padding ?? themeData.padding!;
-    final effectiveTrailingGapWidth = widget.trailingHorizontalGapWidth ?? themeData.trailingHorizontalGapWidth!;
-    final effectiveLeadingGapWidth = widget.leadingHorizontalGapWidth ?? themeData.leadingHorizontalGapWidth!;
-    final effectiveSubtitleGapHeight = widget.subtitleVerticalGapHeight ?? themeData.subtitleVerticalGapHeight!;
+    final direction = Directionality.of(context);
+    final effectiveContentPadding = _resolveContentPadding(effectiveStyle, direction);
+    final effectiveTrailingPadding = _resolveTrailingPadding(effectiveStyle, direction);
+    final effectiveLeadingGapWidth = effectiveStyle.leadingHorizontalGapWidth!;
+    final effectiveSubtitleGapHeight = effectiveStyle.subtitleVerticalGapHeight!;
     final effectiveOverlayColor = effectiveStyle.overlayColor;
 
     final resolvedTitleTextStyle = effectiveStyle.titleTextStyle;
@@ -420,7 +397,7 @@ class _SBBListItemState extends State<SBBListItem> {
       subtitleWidget = Text(widget.subtitleText!, maxLines: effectiveStyle.subtitleTextMaxLines);
     }
 
-    Widget? trailingWidget = widget.trailing;
+    Widget? trailingWidget = widget.trailing ?? widget.trailingIconButton;
     if (trailingWidget == null && widget.trailingIconData != null) {
       trailingWidget = Icon(widget.trailingIconData);
     }
@@ -458,9 +435,9 @@ class _SBBListItemState extends State<SBBListItem> {
     Widget child = titleWidget;
     if (leadingWidget != null) {
       child = Row(
+        spacing: effectiveLeadingGapWidth,
         children: [
           leadingWidget,
-          SizedBox(width: effectiveLeadingGapWidth),
           Expanded(child: titleWidget),
         ],
       );
@@ -473,20 +450,28 @@ class _SBBListItemState extends State<SBBListItem> {
         mainAxisSize: .min,
         mainAxisAlignment: .start,
         crossAxisAlignment: .stretch,
+        spacing: effectiveSubtitleGapHeight,
         children: [
           child,
-          SizedBox(height: effectiveSubtitleGapHeight),
           subtitleWidget,
         ],
       );
     }
 
+    child = Padding(
+      padding: effectiveContentPadding,
+      child: child,
+    );
+
     if (trailingWidget != null) {
+      // The trailing padding already includes the gap
       child = Row(
         children: [
           Expanded(child: child),
-          SizedBox(width: effectiveTrailingGapWidth),
-          trailingWidget,
+          Padding(
+            padding: effectiveTrailingPadding,
+            child: trailingWidget,
+          ),
         ],
       );
     }
@@ -505,10 +490,7 @@ class _SBBListItemState extends State<SBBListItem> {
         focused: widget.focusNode?.hasFocus,
         child: Ink(
           color: resolvedBackgroundColor,
-          child: Padding(
-            padding: effectivePadding,
-            child: child,
-          ),
+          child: child,
         ),
       ),
     );
@@ -539,6 +521,28 @@ class _SBBListItemState extends State<SBBListItem> {
     }
 
     return child;
+  }
+
+  SBBListItemStyle _resolveStyle(BuildContext context) =>
+      Theme.of(context).sbbListItemTheme.style!.merge(widget.style).copyWith(padding: widget.padding);
+
+  EdgeInsets _resolveContentPadding(SBBListItemStyle effectiveStyle, TextDirection direction) {
+    final hasTrailing = widget.trailing != null || widget.trailingIconData != null || widget.trailingIconButton != null;
+    final padding = effectiveStyle.padding!.resolve(direction);
+    return hasTrailing ? padding.copyWith(right: 0) : padding;
+  }
+
+  EdgeInsets _resolveTrailingPadding(SBBListItemStyle effectiveStyle, TextDirection direction) {
+    final padding = effectiveStyle.padding!.resolve(direction);
+
+    EdgeInsets trailingPadding = padding.copyWith(left: effectiveStyle.trailingHorizontalGapWidth!);
+
+    // Adjust padding depending on the presence of a trailing button
+    if (widget.trailingIconButton != null) {
+      trailingPadding = (trailingPadding - .symmetric(horizontal: SBBSpacing.xSmall, vertical: 10.0)).nonNegative;
+    }
+
+    return trailingPadding;
   }
 
   Iterable<Widget> _divideLinks({
@@ -584,6 +588,7 @@ class SBBListItemBoxed extends SBBListItem {
     super.subtitleText,
     super.trailing,
     super.trailingIconData,
+    super.trailingIconButton,
     super.onTap,
     super.onLongPress,
     super.isLoading,
@@ -594,9 +599,6 @@ class SBBListItemBoxed extends SBBListItem {
     super.style,
     super.padding,
     this.margin,
-    super.trailingHorizontalGapWidth,
-    super.leadingHorizontalGapWidth,
-    super.subtitleVerticalGapHeight,
   });
 
   /// The margin of the content box surrounding the [SBBListItem].
@@ -610,5 +612,16 @@ class _SBBListItemBoxedState extends _SBBListItemState {
   @override
   Widget build(BuildContext context) {
     return SBBContentBox(margin: (widget as SBBListItemBoxed).margin, child: super.build(context));
+  }
+}
+
+extension _EdgeInsetsX on EdgeInsets {
+  EdgeInsets get nonNegative {
+    return EdgeInsets.fromLTRB(
+      math.max(0.0, left),
+      math.max(0.0, top),
+      math.max(0.0, right),
+      math.max(0.0, bottom),
+    );
   }
 }

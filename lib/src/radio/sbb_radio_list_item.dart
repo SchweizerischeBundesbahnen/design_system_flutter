@@ -53,6 +53,7 @@ class SBBRadioListItem<T> extends StatelessWidget {
     this.subtitleText,
     this.trailing,
     this.trailingIconData,
+    this.trailingIconButton,
     this.onLongPress,
     this.enabled = true,
     this.isLoading = false,
@@ -61,9 +62,6 @@ class SBBRadioListItem<T> extends StatelessWidget {
     this.autofocus = false,
     this.enableFeedback = true,
     this.padding,
-    this.trailingHorizontalGapWidth,
-    this.leadingHorizontalGapWidth,
-    this.subtitleVerticalGapHeight,
     this.leadingRadioGapWidth = 8.0,
     this.listItemStyle,
     required this.value,
@@ -96,6 +94,9 @@ class SBBRadioListItem<T> extends StatelessWidget {
   /// {@macro sbb_design_system.list_item.trailingIconData}
   final IconData? trailingIconData;
 
+  /// {@macro sbb_design_system.list_item.trailingIconData}
+  final Widget? trailingIconButton;
+
   /// {@macro sbb_design_system.list_item.onLongPress}
   ///
   /// Within the [SBBRadioListItem], the [SBBListItem.onTap] calls the radio group's
@@ -124,15 +125,6 @@ class SBBRadioListItem<T> extends StatelessWidget {
 
   /// {@macro sbb_design_system.list_item.padding}
   final EdgeInsetsGeometry? padding;
-
-  /// {@macro sbb_design_system.list_item.trailingHorizontalGapWidth}
-  final double? trailingHorizontalGapWidth;
-
-  /// {@macro sbb_design_system.list_item.leadingHorizontalGapWidth}
-  final double? leadingHorizontalGapWidth;
-
-  /// {@macro sbb_design_system.list_item.subtitleVerticalGapHeight}
-  final double? subtitleVerticalGapHeight;
 
   /// Horizontal gap width between the radio button and additional leading content.
   ///
@@ -192,6 +184,7 @@ class SBBRadioListItem<T> extends StatelessWidget {
       subtitleText: subtitleText,
       trailing: trailing,
       trailingIconData: trailingIconData,
+      trailingIconButton: trailingIconButton,
       onTap: isInteractive ? () => radioRegistry!.onChanged(value) : null,
       onLongPress: isInteractive ? onLongPress : null,
       isLoading: isLoading,
@@ -200,9 +193,6 @@ class SBBRadioListItem<T> extends StatelessWidget {
       autofocus: autofocus,
       enableFeedback: enableFeedback,
       padding: padding,
-      trailingHorizontalGapWidth: trailingHorizontalGapWidth,
-      leadingHorizontalGapWidth: leadingHorizontalGapWidth,
-      subtitleVerticalGapHeight: subtitleVerticalGapHeight,
       style: listItemStyle,
     );
   }
@@ -231,6 +221,7 @@ class SBBRadioListItemBoxed<T> extends SBBRadioListItem<T> {
     super.subtitleText,
     super.trailing,
     super.trailingIconData,
+    super.trailingIconButton,
     super.onLongPress,
     super.enabled,
     super.isLoading,
@@ -240,9 +231,6 @@ class SBBRadioListItemBoxed<T> extends SBBRadioListItem<T> {
     super.enableFeedback,
     super.padding,
     this.margin,
-    super.trailingHorizontalGapWidth,
-    super.leadingHorizontalGapWidth,
-    super.subtitleVerticalGapHeight,
     super.leadingRadioGapWidth,
     super.listItemStyle,
     super.radioStyle,

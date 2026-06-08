@@ -94,7 +94,8 @@ class _FloatingPageState extends State<FloatingPage> {
             SBBSliverHeaderBox.expand(key.currentContext!);
           },
           child: Container(
-            constraints: BoxConstraints(minWidth: .infinity),
+            constraints: BoxConstraints(minWidth: .infinity, minHeight: SBBHeaderBoxStyle.minHeight),
+            alignment: .centerLeft,
             padding: const .all(SBBSpacing.medium),
             child: Text(
               'Bern → Bern Wankdorf',
@@ -146,6 +147,7 @@ class _FloatingPageState extends State<FloatingPage> {
                       maxHeight: .infinity,
                       child: SBBTextInput(
                         decoration: SBBInputDecoration(
+                          borderType: .standalone,
                           labelText: 'Origin',
                         ),
                       ),
@@ -156,6 +158,7 @@ class _FloatingPageState extends State<FloatingPage> {
                       maxHeight: .infinity,
                       child: SBBTextInput(
                         decoration: SBBInputDecoration(
+                          borderType: .standalone,
                           labelText: 'Destination',
                         ),
                       ),
@@ -172,7 +175,6 @@ class _FloatingPageState extends State<FloatingPage> {
 
   SBBContractible _contractibleExample(SBBToast sbbToast) {
     return SBBContractible(
-      clipBehavior: .none,
       behavior: pushMode ? .displace : .clip,
       builder:
           // We can react to the current state of expansion and set an opacity accordingly.

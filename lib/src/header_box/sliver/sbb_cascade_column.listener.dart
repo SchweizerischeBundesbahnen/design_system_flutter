@@ -9,10 +9,11 @@ typedef ContractionListenerBuilder =
 
 /// A widget that listens to expansion state changes.
 ///
-/// It allows you to react to changes in the nearest [SBBCascadeColumn] or [SBBSliverHeaderBox] and thus must
-/// must be a descendant of either of them.
+/// It allows you to react to changes in the nearest [SBBCascadeColumn] or [SBBSliverHeaderBox] up the tree
+/// and therefore must be a descendant of either of them.
 ///
-/// You can provide a [child] which will be passed into [builder] which can be beneficial for performance.
+/// Consider providing content that does not depend on the [SBBContractionState] as [child] in order to
+/// prevent unnecessary rebuilds.
 ///
 /// Example:
 ///

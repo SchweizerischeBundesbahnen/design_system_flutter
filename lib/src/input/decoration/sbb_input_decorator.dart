@@ -197,7 +197,7 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
 
     final container = AnimatedContainer(
       duration: _kTransitionDuration,
-      decoration: _effectiveBoxDecoration(inputDecorationTheme),
+      decoration: _effectiveBoxDecoration(context, inputDecorationTheme),
     );
 
     Widget? input = widget.child;
@@ -337,13 +337,20 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
     return error;
   }
 
-  BoxDecoration _effectiveBoxDecoration(SBBInputDecorationThemeData? inputDecorationTheme) {
+  BoxDecoration _effectiveBoxDecoration(BuildContext context, SBBInputDecorationThemeData? inputDecorationTheme) {
     final effectiveStates = Set<WidgetState>.from(widget.states);
     if (widget.isBoxed) effectiveStates.remove(WidgetState.focused);
 
-    final Color resolvedBorderColor =
+    var resolvedBorderColor =
         (widget.decoration.borderColor ?? inputDecorationTheme?.borderColor)?.resolve(effectiveStates) ??
         SBBColors.transparent;
+
+    // add default border if not set for standalone as boxed/listed border is handled outside.
+    if (widget.decoration.borderType == .standalone && resolvedBorderColor == SBBColors.transparent) {
+      final colorScheme = Theme.of(context).sbbBaseStyle.colorScheme;
+      resolvedBorderColor = colorScheme.strokeSeparator ?? SBBColors.transparent;
+    }
+
     final resolvedBorder = widget.isBoxed
         ? Border.all(color: resolvedBorderColor)
         : Border(

@@ -74,8 +74,16 @@ class TestApp extends StatelessWidget {
       theme: SBBTheme.light(),
       darkTheme: SBBTheme.dark(),
       debugShowCheckedModeBanner: false,
-      builder: (_, _) => Overlay(
-        initialEntries: [OverlayEntry(builder: (context) => Scaffold(body: child))],
+      locale: const Locale('en'),
+      builder: (_, _) => MediaQuery(
+        data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
+        child: Overlay(
+          initialEntries: [
+            OverlayEntry(
+              builder: (context) => Scaffold(body: child),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -86,8 +86,7 @@ class CheckboxTest extends StatelessWidget {
                 value: false,
                 titleText: 'Button',
                 onChanged: (_) {},
-                padding: .fromLTRB(16.0, 0.0, 8.0, 0.0),
-                trailing: SBBTertiaryButtonSmall(
+                trailingIconButton: SBBTertiaryButtonSmall(
                   iconData: SBBIcons.circle_information_small_small,
                   onPressed: () {},
                 ),
@@ -96,8 +95,7 @@ class CheckboxTest extends StatelessWidget {
                 value: value3,
                 titleText: 'Leading Icon and Button',
                 onChanged: (_) {},
-                padding: .fromLTRB(16.0, 0.0, 8.0, 0.0),
-                trailing: SBBTertiaryButtonSmall(
+                trailingIconButton: SBBTertiaryButtonSmall(
                   iconData: SBBIcons.circle_information_small_small,
                   onPressed: () {},
                 ),
@@ -107,8 +105,7 @@ class CheckboxTest extends StatelessWidget {
                 value: value3,
                 onChanged: null,
                 titleText: 'Leading Icon and Button (Disabled)',
-                padding: .fromLTRB(16.0, 0.0, 8.0, 0.0),
-                trailing: SBBTertiaryButtonSmall(
+                trailingIconButton: SBBTertiaryButtonSmall(
                   iconData: SBBIcons.circle_information_small_small,
                   onPressed: null,
                 ),
@@ -140,8 +137,7 @@ class CheckboxTest extends StatelessWidget {
             value: value3,
             titleText: 'Leading Icon and Button (Disabled)',
             onChanged: null,
-            padding: .fromLTRB(16.0, 0.0, 8.0, 0.0),
-            trailing: SBBTertiaryButtonSmall(
+            trailingIconButton: SBBTertiaryButtonSmall(
               iconData: SBBIcons.circle_information_small_small,
               onPressed: null,
             ),

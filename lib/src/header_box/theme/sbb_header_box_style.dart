@@ -34,6 +34,7 @@ class SBBHeaderBoxStyle {
     // Container / box
     this.backgroundColor,
     this.flapBackgroundColor,
+    this.flapDecoration,
     this.headerBoxShadow,
     this.shadowOverFlap,
     this.padding,
@@ -125,6 +126,13 @@ class SBBHeaderBoxStyle {
   /// This is used for the area below the main header box when a flap is shown.
   final Color? flapBackgroundColor;
 
+  /// The background decoration of a flap.
+  ///
+  /// This is used for the area below the main header box when a flap is shown.
+  ///
+  /// If the decoration is a [BoxDecoration], it will receive default values (color, radius, and shadow).
+  final Decoration? flapDecoration;
+
   /// The shadows painted around the main header box container.
   final List<BoxShadow>? headerBoxShadow;
 
@@ -169,6 +177,7 @@ class SBBHeaderBoxStyle {
     Color? trailingForegroundColor,
     Color? backgroundColor,
     Color? flapBackgroundColor,
+    Decoration? flapDecoration,
     List<BoxShadow>? headerBoxShadow,
     List<BoxShadow>? shadowOverFlap,
     EdgeInsetsGeometry? padding,
@@ -187,6 +196,7 @@ class SBBHeaderBoxStyle {
       trailingForegroundColor: trailingForegroundColor ?? this.trailingForegroundColor,
       backgroundColor: backgroundColor ?? this.backgroundColor,
       flapBackgroundColor: flapBackgroundColor ?? this.flapBackgroundColor,
+      flapDecoration: flapDecoration ?? this.flapDecoration,
       headerBoxShadow: headerBoxShadow ?? this.headerBoxShadow,
       shadowOverFlap: shadowOverFlap ?? this.shadowOverFlap,
       padding: padding ?? this.padding,
@@ -212,6 +222,7 @@ class SBBHeaderBoxStyle {
       trailingForegroundColor: other.trailingForegroundColor ?? trailingForegroundColor,
       backgroundColor: other.backgroundColor ?? backgroundColor,
       flapBackgroundColor: other.flapBackgroundColor ?? flapBackgroundColor,
+      flapDecoration: other.flapDecoration ?? flapDecoration,
       headerBoxShadow: other.headerBoxShadow ?? headerBoxShadow,
       shadowOverFlap: other.shadowOverFlap ?? shadowOverFlap,
       padding: other.padding ?? padding,
@@ -240,6 +251,7 @@ class SBBHeaderBoxStyle {
       trailingForegroundColor: Color.lerp(a?.trailingForegroundColor, b?.trailingForegroundColor, t),
       backgroundColor: Color.lerp(a?.backgroundColor, b?.backgroundColor, t),
       flapBackgroundColor: Color.lerp(a?.flapBackgroundColor, b?.flapBackgroundColor, t),
+      flapDecoration: Decoration.lerp(a?.flapDecoration, b?.flapDecoration, t),
       headerBoxShadow: BoxShadow.lerpList(a?.headerBoxShadow, b?.headerBoxShadow, t),
       shadowOverFlap: BoxShadow.lerpList(a?.shadowOverFlap, b?.shadowOverFlap, t),
       padding: EdgeInsetsGeometry.lerp(a?.padding, b?.padding, t),
@@ -264,6 +276,7 @@ class SBBHeaderBoxStyle {
           trailingForegroundColor == other.trailingForegroundColor &&
           backgroundColor == other.backgroundColor &&
           flapBackgroundColor == other.flapBackgroundColor &&
+          flapDecoration == other.flapDecoration &&
           headerBoxShadow == other.headerBoxShadow &&
           shadowOverFlap == other.shadowOverFlap &&
           padding == other.padding &&
@@ -283,6 +296,7 @@ class SBBHeaderBoxStyle {
     trailingForegroundColor,
     backgroundColor,
     flapBackgroundColor,
+    flapDecoration,
     headerBoxShadow,
     shadowOverFlap,
     padding,

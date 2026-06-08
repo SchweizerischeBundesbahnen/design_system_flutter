@@ -172,7 +172,7 @@ Use the `foregroundBuilder` of the `SBBButtonStyle` as a replacement
 * replace `hint` with `placeholderText` (within `triggerDecoration`)
 * replace `title` with `titleText` (within `sheetConfig`)
 * replace `value` with `selectedItem`
-* `isLastElement` was removed — use `SBBDivider.divideItems` to separate items with a divider
+* `isLastElement` was removed — use `SBBDivider.divideItems` to separate items with a divider. Use `SBBInputBorderType.standalone` when not listed/boxed variant.
 * `allowMultilineLabel` was removed (use `triggerMaxLines` / `triggerMinLines` / `triggerExpands` instead)
 * `confirmButtonLabel` is replaced by `confirmButtonLabelText`
 * use `triggerConfig` and `sheetConfig` for configuring the underlying `SBBDecoratedText` and `SBBBottomSheet` widgets
@@ -234,8 +234,7 @@ The list item has received a lot of changes. In general the content is completel
 * replace `trailingIcon` with `trailingIconData`
 * use `title`, `subtitle`, `leading` and `trailing` of type Widget? for complete customization
 * If you want a multi line title, consider setting the `titleTextMaxLines` parameter in the style - it will be clamped by default to a single line
-* replace `buttonIcon` and `onPressedButton` from the `button` constructor with a custom trailing widget. Do not forget
-  to adjust the `padding`, since the `SBBTertiaryButtonSmall` has an inherent padding to the right
+* replace `buttonIcon` and `onPressedButton` from the `button` constructor with a `SBBTertiaryButtonSmall` in `trailingIconButton`.
 * `isLastElement` was removed, use the static method `SBBDivider.divideItems` to separate list 
   items with a SBB themed divider (this is analogous to the Material implementation)
 * removed `enabled`. List item will be disabled when [onTap] and [onLongPress] are null. If component should be enabled without touch feedback, 
@@ -692,31 +691,31 @@ SBBTextInput(
 
 #### Property Mapping
 
-| SBBTextField                 | SBBTextInput                                             |
-|------------------------------|----------------------------------------------------------|
-| `controller`                 | `controller`                                             |
-| `enabled`                    | `enabled`                                                |
-| `labelText`                  | `decoration.labelText`                                   |
-| `hintText`                   | `decoration.placeholderText`                             |
-| `errorText`                  | `decoration.errorText`                                   |
-| `icon`                       | `decoration.leadingIconData`                             |
-| `suffixIcon`                 | `decoration.trailing` or `decoration.trailingIconData`   |
-| `obscureText`                | `obscureText`                                            |
-| `obscuringCharacter`         | `obscuringCharacter`                                     |
-| `maxLines`                   | `maxLines`                                               |
-| `minLines`                   | `minLines`                                               |
-| `keyboardType`               | `keyboardType`                                           |
-| `textInputAction`            | `textInputAction`                                        |
-| `inputFormatters`            | `inputFormatters`                                        |
-| `onChanged`                  | `onChanged`                                              |
-| `onSubmitted`                | `onSubmitted`                                            |
-| `onTap`                      | `onTap`                                                  |
-| `onTapAlwaysCalled`          | `onTapAlwaysCalled`                                      |
-| `focusNode`                  | `focusNode`                                              |
-| `autofocus`                  | `autofocus`                                              |
-| `textCapitalization`         | `textCapitalization`                                     |
-| `enableInteractiveSelection` | `enableInteractiveSelection`                             |
-| `isLastElement`              | *(removed)* - use `SBBDivider.divideItems()` if in lists |
+| SBBTextField                 | SBBTextInput                                                                                                                 |
+|------------------------------|------------------------------------------------------------------------------------------------------------------------------|
+| `controller`                 | `controller`                                                                                                                 |
+| `enabled`                    | `enabled`                                                                                                                    |
+| `labelText`                  | `decoration.labelText`                                                                                                       |
+| `hintText`                   | `decoration.placeholderText`                                                                                                 |
+| `errorText`                  | `decoration.errorText`                                                                                                       |
+| `icon`                       | `decoration.leadingIconData`                                                                                                 |
+| `suffixIcon`                 | `decoration.trailing` or `decoration.trailingIconData`                                                                       |
+| `obscureText`                | `obscureText`                                                                                                                |
+| `obscuringCharacter`         | `obscuringCharacter`                                                                                                         |
+| `maxLines`                   | `maxLines`                                                                                                                   |
+| `minLines`                   | `minLines`                                                                                                                   |
+| `keyboardType`               | `keyboardType`                                                                                                               |
+| `textInputAction`            | `textInputAction`                                                                                                            |
+| `inputFormatters`            | `inputFormatters`                                                                                                            |
+| `onChanged`                  | `onChanged`                                                                                                                  |
+| `onSubmitted`                | `onSubmitted`                                                                                                                |
+| `onTap`                      | `onTap`                                                                                                                      |
+| `onTapAlwaysCalled`          | `onTapAlwaysCalled`                                                                                                          |
+| `focusNode`                  | `focusNode`                                                                                                                  |
+| `autofocus`                  | `autofocus`                                                                                                                  |
+| `textCapitalization`         | `textCapitalization`                                                                                                         |
+| `enableInteractiveSelection` | `enableInteractiveSelection`                                                                                                 |
+| `isLastElement`              | *(removed)* - use `SBBDivider.divideItems()` if in lists. Use `SBBInputBorderType.standalone` when not listed/boxed variant. |
 
 #### Theming
 
@@ -791,7 +790,7 @@ A cross small will be displayed instead of the trailingIconData when focused and
 - [ ] Move `hintText` → `decoration.placeholderText`
 - [ ] Move `errorText` → `decoration.errorText`
 - [ ] Move `suffixIcon` → `decoration.trailing` or `decoration.trailingIconData`
-- [ ] Update `isLastElement` usage (remove parameter, use `SBBDivider.divideItems` instead)
+- [ ] Update `isLastElement` usage (remove parameter, use `SBBDivider.divideItems` instead. Use `SBBInputBorderType.standalone` when not listed/boxed variant.)
 - [ ] Set up theme data if applying custom styles globally
 - [ ] Test multiline mode if used (icons should be top-aligned now)
 - [ ] Consider using `readOnly` instead of just `enabled` for readonly fields with interactive trailing widgets
@@ -906,6 +905,7 @@ The input widgets have been rewritten. The flat decoration parameters are replac
 `SBBInputDecoration` passed via `triggerDecoration`. Trigger layout/focus options are now
 grouped into `triggerConfig`. The bottom sheet is configured via `sheetConfig` or the
 convenience `sheetTitleText` parameter. `isLastElement` has been removed, use the static `SBBDivider.divideItems` method.
+Use `SBBInputBorderType.standalone` when not listed/boxed variant.
 
 #### New parameters
 

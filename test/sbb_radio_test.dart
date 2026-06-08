@@ -75,8 +75,7 @@ class RadioTest extends StatelessWidget {
                     SBBRadioListItem<int>(
                       value: 3,
                       titleText: 'Leading and Button',
-                      padding: .fromLTRB(16.0, 0.0, 8.0, 0.0),
-                      trailing: SBBTertiaryButtonSmall(
+                      trailingIconButton: SBBTertiaryButtonSmall(
                         iconData: SBBIcons.circle_information_small_small,
                         onPressed: () {},
                       ),
@@ -85,8 +84,7 @@ class RadioTest extends StatelessWidget {
                       value: 4,
                       enabled: false,
                       titleText: 'Leading Icon, Button (Disabled)',
-                      padding: .fromLTRB(16.0, 0.0, 8.0, 0.0),
-                      trailing: SBBTertiaryButtonSmall(
+                      trailingIconButton: SBBTertiaryButtonSmall(
                         iconData: SBBIcons.circle_information_small_small,
                         onPressed: null,
                       ),

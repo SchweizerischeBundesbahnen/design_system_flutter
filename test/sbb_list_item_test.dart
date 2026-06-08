@@ -30,6 +30,10 @@ void main() {
                 SBBListItem(titleText: 'With trailing', trailingIconData: SBBIcons.dog_small, onTap: () {}),
                 SBBListItem(titleText: 'With subtitle', subtitleText: _loremIpsum, onTap: () {}),
                 SBBListItem(
+                  titleText: 'With a trailing button',
+                  trailingIconButton: SBBTertiaryButtonSmall(iconData: SBBIcons.trash_small, onPressed: () {}),
+                ),
+                SBBListItem(
                   titleText: 'Ellipse! ' * 20,
                   subtitleText: 'The title will be clamped to one line',
                   onTap: () {},
@@ -53,6 +57,29 @@ void main() {
                   onTap: null,
                   titleText: 'Custom Style',
                   style: SBBListItemStyle(backgroundColor: WidgetStatePropertyAll(SBBColors.silver)),
+                ),
+                SBBListItem(
+                  leadingIconData: SBBIcons.trash_small,
+                  titleText: 'With custom padding',
+                  subtitle: Container(
+                    color: SBBColors.green,
+                    height: 20,
+                  ),
+                  trailing: Container(
+                    width: 50,
+                    height: 50,
+                    color: SBBColors.red,
+                  ),
+                  padding: .all(SBBSpacing.xLarge),
+                ),
+                SBBListItem(
+                  leadingIconData: SBBIcons.trash_small,
+                  titleText: 'With custom padding without trailing',
+                  subtitle: Container(
+                    color: SBBColors.green,
+                    height: 20,
+                  ),
+                  padding: .all(SBBSpacing.xLarge),
                 ),
               ],
             ).toList(),

@@ -46,9 +46,6 @@ class SBBSwitchListItem extends StatelessWidget {
     this.autofocus = false,
     this.enableFeedback = true,
     this.padding = const .symmetric(vertical: 8, horizontal: 16.0),
-    this.trailingHorizontalGapWidth,
-    this.leadingHorizontalGapWidth,
-    this.subtitleVerticalGapHeight,
     this.listItemStyle,
     required this.value,
     required this.onChanged,
@@ -98,15 +95,6 @@ class SBBSwitchListItem extends StatelessWidget {
   /// {@macro sbb_design_system.list_item.padding}
   final EdgeInsetsGeometry? padding;
 
-  /// {@macro sbb_design_system.list_item.trailingHorizontalGapWidth}
-  final double? trailingHorizontalGapWidth;
-
-  /// {@macro sbb_design_system.list_item.leadingHorizontalGapWidth}
-  final double? leadingHorizontalGapWidth;
-
-  /// {@macro sbb_design_system.list_item.subtitleVerticalGapHeight}
-  final double? subtitleVerticalGapHeight;
-
   /// {@macro sbb_design_system.list_item.style}
   final SBBListItemStyle? listItemStyle;
 
@@ -152,9 +140,6 @@ class SBBSwitchListItem extends StatelessWidget {
       autofocus: autofocus,
       enableFeedback: enableFeedback,
       padding: padding,
-      trailingHorizontalGapWidth: trailingHorizontalGapWidth,
-      leadingHorizontalGapWidth: leadingHorizontalGapWidth,
-      subtitleVerticalGapHeight: subtitleVerticalGapHeight,
       style: listItemStyle,
     );
   }
@@ -202,9 +187,6 @@ class SBBSwitchListItemBoxed extends SBBSwitchListItem {
     super.autofocus,
     super.enableFeedback,
     super.padding,
-    super.trailingHorizontalGapWidth,
-    super.leadingHorizontalGapWidth,
-    super.subtitleVerticalGapHeight,
     super.listItemStyle,
     required super.value,
     required super.onChanged,

@@ -23,19 +23,28 @@ class HeaderBoxForeground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final baseDecoration = BoxDecoration(
+      boxShadow: style.headerBoxShadow,
+      borderRadius: SBBHeaderBoxStyle.radius,
+      color: style.flapBackgroundColor,
+    );
     return Semantics(
       header: true,
       label: semanticsLabel,
       child: Container(
         clipBehavior: .hardEdge,
-        decoration: BoxDecoration(
-          boxShadow: style.headerBoxShadow,
-          borderRadius: SBBHeaderBoxStyle.radius,
-          color: style.flapBackgroundColor,
-        ),
+        decoration: switch (style.flapDecoration) {
+          final BoxDecoration decoration => decoration.copyWith(
+            boxShadow: decoration.boxShadow ?? baseDecoration.boxShadow,
+            borderRadius: decoration.borderRadius ?? baseDecoration.borderRadius,
+            color: decoration.color ?? baseDecoration.color,
+          ),
+          final Decoration decoration => decoration,
+          null => baseDecoration,
+        },
         child: _column(
           _headerBox(context, style),
-          flap,
+          _animatedFlap(),
         ),
       ),
     );
@@ -73,6 +82,23 @@ class HeaderBoxForeground extends StatelessWidget {
           ],
         );
     }
+  }
+
+  Widget _animatedFlap() {
+    return AnimatedSwitcher(
+      duration: kThemeAnimationDuration,
+      switchInCurve: Curves.easeInOutCubic,
+      switchOutCurve: Curves.easeInOutCubic,
+      transitionBuilder: (child, animation) {
+        return SizeTransition(
+          sizeFactor: animation,
+          axis: .vertical,
+          axisAlignment: 1.0,
+          child: child,
+        );
+      },
+      child: flap,
+    );
   }
 
   Widget _headerBox(BuildContext context, SBBHeaderBoxStyle style) {
