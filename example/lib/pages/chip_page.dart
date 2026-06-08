@@ -23,7 +23,7 @@ class _ChipPageState extends State<ChipPage> {
         padding: const .all(SBBSpacing.xSmall),
         child: SBBSegmentedButton(
           segments: [
-            SBBButtonSegment(value: true, labelText: 'All enabled'),
+            SBBButtonSegment(value: true, labelText: 'All Enabled'),
             SBBButtonSegment(value: false, labelText: 'All Disabled'),
           ],
           selected: _isEnabled,

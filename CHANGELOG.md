@@ -12,6 +12,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 ### Added
 
 - added `SBBAccentButton`
+- added `SBBSlideToToggle`
 - added `SBBButtonSegment` for adding segments to `SBBSegmentedButton`
 - added `SBBDivider` for separating listed items within an indexed builder (e.g. `ListView.separated`)
 - added `SBBIllustration` for adding predefined illustrations to e.g. `SBBMessage`

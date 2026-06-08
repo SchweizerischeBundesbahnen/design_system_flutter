@@ -25,6 +25,7 @@ import 'package:flutter_design_system_mobile_example/pages/promotion_box_page.da
 import 'package:flutter_design_system_mobile_example/pages/radio_page.dart';
 import 'package:flutter_design_system_mobile_example/pages/scaffold/theme_sliver_header_box.dart';
 import 'package:flutter_design_system_mobile_example/pages/segmented_button_page.dart';
+import 'package:flutter_design_system_mobile_example/pages/slide_to_toggle_page.dart';
 import 'package:flutter_design_system_mobile_example/pages/slider_page.dart';
 import 'package:flutter_design_system_mobile_example/pages/status_page.dart';
 import 'package:flutter_design_system_mobile_example/pages/stepper_page.dart';
@@ -109,6 +110,7 @@ class MyApp extends StatelessWidget {
                     children: [
                       _DemoEntry('Button', ButtonPage()),
                       _DemoEntry('List Item', ListItemPage()),
+                      _DemoEntry('Slide-To-Toggle', SlideToTogglePage()),
                     ],
                   ),
                   const SizedBox(height: SBBSpacing.medium),
