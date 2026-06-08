@@ -16,6 +16,8 @@ class _SlideToTogglePageState extends State<SlideToTogglePage> {
   final smallIconController = SBBSlideToToggleController();
 
   bool isEnabled = true;
+  bool useThresholdReachedMode = true;
+  bool isStateOff = false;
 
   Future<void> _simulateWork() async {
     await Future.delayed(const Duration(seconds: 1));
@@ -24,42 +26,33 @@ class _SlideToTogglePageState extends State<SlideToTogglePage> {
   @override
   Widget build(BuildContext context) {
     return DemoPageScaffold(
-      componentConfig: Padding(
-        padding: const .all(SBBSpacing.xSmall),
-        child: Column(
-          mainAxisSize: .min,
-          children: [
-            SBBSegmentedButton(
-              segments: [
-                SBBButtonSegment(value: true, labelText: 'All Enabled'),
-                SBBButtonSegment(value: false, labelText: 'All Disabled'),
-              ],
-              selected: isEnabled,
-              onSelectionChanged: (update) => setState(() => isEnabled = update),
+      componentConfig: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: SBBDivider.divideItems(
+          context: context,
+          items: [
+            SBBSwitchListItem(
+              value: isEnabled,
+              titleText: 'Is enabled',
+              onChanged: (value) => setState(() => isEnabled = value),
             ),
-            const SBBListHeader('Controller'),
-            Row(
-              spacing: SBBSpacing.xSmall,
-              children: [
-                SBBTertiaryButtonSmall(
-                  labelText: 'Change to Off',
-                  onPressed: () {
-                    defaultTextController.changeTo(state: .off);
-                    defaultIconController.changeTo(state: .off);
-                    smallTextController.changeTo(state: .off);
-                    smallIconController.changeTo(state: .off);
-                  },
-                ),
-                SBBTertiaryButtonSmall(
-                  labelText: 'Change to On',
-                  onPressed: () {
-                    defaultTextController.changeTo(state: .on);
-                    defaultIconController.changeTo(state: .on);
-                    smallTextController.changeTo(state: .on);
-                    smallIconController.changeTo(state: .on);
-                  },
-                ),
-              ],
+            SBBSwitchListItem(
+              value: useThresholdReachedMode,
+              titleText: 'Use thresholdReached trigger mode',
+              onChanged: (value) => setState(() => useThresholdReachedMode = value),
+            ),
+            SBBSwitchListItem(
+              value: isStateOff,
+              titleText: 'Toggle state programmatically',
+              onChanged: (value) {
+                setState(() => isStateOff = value);
+                final SBBSlideToToggleState state = isStateOff ? .on : .off;
+
+                defaultTextController.changeTo(state: state);
+                defaultIconController.changeTo(state: state);
+                smallTextController.changeTo(state: state);
+                smallIconController.changeTo(state: state);
+              },
             ),
           ],
         ),
@@ -75,6 +68,7 @@ class _SlideToTogglePageState extends State<SlideToTogglePage> {
                 SBBSlideToToggle(
                   enabled: isEnabled,
                   controller: defaultTextController,
+                  triggerMode: triggerMode,
                   onToggleDecoration: SBBSlideToggleDecoration(
                     onToggle: _simulateWork,
                     toggleLabelText: 'Stop',
@@ -89,6 +83,7 @@ class _SlideToTogglePageState extends State<SlideToTogglePage> {
                 SBBSlideToToggle(
                   enabled: isEnabled,
                   controller: defaultIconController,
+                  triggerMode: triggerMode,
                   onToggleDecoration: SBBSlideToggleDecoration(
                     onToggle: _simulateWork,
                     toggleIconData: SBBIcons.arrow_left_small,
@@ -113,6 +108,7 @@ class _SlideToTogglePageState extends State<SlideToTogglePage> {
                 SBBSlideToToggleSmall(
                   enabled: isEnabled,
                   controller: smallTextController,
+                  triggerMode: triggerMode,
                   onToggleDecoration: SBBSlideToggleDecoration(
                     onToggle: _simulateWork,
                     toggleLabelText: 'Stop',
@@ -127,6 +123,7 @@ class _SlideToTogglePageState extends State<SlideToTogglePage> {
                 SBBSlideToToggleSmall(
                   enabled: isEnabled,
                   controller: smallIconController,
+                  triggerMode: triggerMode,
                   onToggleDecoration: SBBSlideToggleDecoration(
                     onToggle: _simulateWork,
                     toggleIconData: SBBIcons.arrow_left_small,
@@ -145,4 +142,6 @@ class _SlideToTogglePageState extends State<SlideToTogglePage> {
       ),
     );
   }
+
+  SBBSlideToToggleTriggerMode get triggerMode => useThresholdReachedMode ? .onThresholdReached : .onTapReleased;
 }

@@ -15,8 +15,10 @@ import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 /// and behavior when in the on state, and [offToggleDecoration] for the off state.
 ///
 /// The [threshold] parameter determines how far the user must drag the toggle to
-/// complete the state change. A threshold of 0.9 means the toggle must be dragged
-/// 90% across the track to change state.
+/// complete the state change. A threshold of 0.8 means the toggle must be dragged
+/// 80% across the track to change state.
+///
+/// Use [triggerMode] to define when the [onToggle] callback is triggered.
 ///
 /// Use [SBBSlideToToggle] for the standard size, or [SBBSlideToToggleSmall] for a
 /// reduced-size variant.
@@ -72,6 +74,7 @@ class SBBSlideToToggle extends StatelessWidget {
     required this.offToggleDecoration,
     this.controller,
     this.enabled = true,
+    this.triggerMode = .onThresholdReached,
     this.threshold = 0.8,
     this.style,
   }) : assert(threshold >= 0 && threshold <= 1, 'threshold must be between 0 and 1.');
@@ -114,6 +117,9 @@ class SBBSlideToToggle extends StatelessWidget {
   /// If not provided, an internal controller is created automatically.
   final SBBSlideToToggleController? controller;
 
+  /// Defines when the toggle callback is triggered.
+  final SBBSlideToToggleTriggerMode triggerMode;
+
   @override
   Widget build(BuildContext context) {
     return _BaseSBBSlideToToggle(
@@ -122,6 +128,7 @@ class SBBSlideToToggle extends StatelessWidget {
       controller: controller,
       enabled: enabled,
       threshold: threshold,
+      triggerMode: triggerMode,
       style: style,
     );
   }
@@ -139,8 +146,9 @@ class SBBSlideToToggleSmall extends SBBSlideToToggle {
     required super.onToggleDecoration,
     required super.offToggleDecoration,
     super.controller,
-    super.enabled = true,
-    super.threshold = 0.8,
+    super.triggerMode,
+    super.enabled,
+    super.threshold,
     super.style,
   });
 
@@ -153,6 +161,7 @@ class SBBSlideToToggleSmall extends SBBSlideToToggle {
       controller: controller,
       enabled: enabled,
       threshold: threshold,
+      triggerMode: triggerMode,
       style: style,
     );
   }
@@ -163,8 +172,9 @@ class _BaseSBBSlideToToggle extends StatefulWidget {
     required this.onToggleDecoration,
     required this.offToggleDecoration,
     this.controller,
-    this.enabled = true,
-    this.threshold = 0.8,
+    required this.enabled,
+    required this.threshold,
+    required this.triggerMode,
     this.style,
     this.isSmall = false,
   });
@@ -175,6 +185,7 @@ class _BaseSBBSlideToToggle extends StatefulWidget {
   final SBBSlideToggleDecoration offToggleDecoration;
   final double threshold;
   final SBBSlideToToggleController? controller;
+  final SBBSlideToToggleTriggerMode? triggerMode;
   final bool isSmall;
 
   @override
@@ -234,10 +245,6 @@ class _SBBSlideToToggleState extends State<_BaseSBBSlideToToggle> with SingleTic
 
       if (oldValue != _effectiveController.value) _onControllerChanged();
     }
-  }
-
-  void _updateStatesController() {
-    _statesController.update(WidgetState.disabled, !widget.enabled || _loading);
   }
 
   @override
@@ -435,6 +442,10 @@ class _SBBSlideToToggleState extends State<_BaseSBBSlideToToggle> with SingleTic
 
   bool get _isInteractive => widget.enabled && !_loading;
 
+  void _updateStatesController() {
+    _statesController.update(WidgetState.disabled, !widget.enabled || _loading);
+  }
+
   double _helpOpacityFor(SBBSlideToToggleState state) {
     final transition = (_position * 2).clamp(0.0, 1.0);
     return state == .off ? 1 - transition : transition;
@@ -463,9 +474,9 @@ class _SBBSlideToToggleState extends State<_BaseSBBSlideToToggle> with SingleTic
   void _animateBounceBack() =>
       _animateTo(_currentState == .on ? 1 : 0, duration: _bounceDuration, curve: Curves.bounceOut);
 
-  Future<void> _commitActivate() => _commitToggleChange(nextState: .on, action: widget.onToggleDecoration.onToggle);
+  Future<void> _commitOnState() => _commitToggleChange(nextState: .on, action: widget.onToggleDecoration.onToggle);
 
-  Future<void> _commitDeactivate() => _commitToggleChange(nextState: .off, action: widget.offToggleDecoration.onToggle);
+  Future<void> _commitOffState() => _commitToggleChange(nextState: .off, action: widget.offToggleDecoration.onToggle);
 
   Future<void> _commitToggleChange({
     required SBBSlideToToggleState nextState,
@@ -524,17 +535,19 @@ class _SBBSlideToToggleState extends State<_BaseSBBSlideToToggle> with SingleTic
     setState(() {
       _position = (_position + d.delta.dx / width).clamp(0.0, 1.0).toDouble();
     });
+
+    if (widget.triggerMode == .onThresholdReached && thresholdReached) {
+      setState(() => _isDragging = false);
+      _currentState == .off ? _commitOnState() : _commitOffState();
+    }
   }
 
   void _onDragEnd(DragEndDetails d) {
     if (!_isInteractive) return;
 
     setState(() => _isDragging = false);
-
-    if (_currentState == .off && _position >= widget.threshold) {
-      _commitActivate();
-    } else if (_currentState == .on && _position <= (1 - widget.threshold)) {
-      _commitDeactivate();
+    if (thresholdReached) {
+      _currentState == .off ? _commitOnState() : _commitOffState();
     } else {
       _animateBounceBack();
     }
@@ -543,6 +556,12 @@ class _SBBSlideToToggleState extends State<_BaseSBBSlideToToggle> with SingleTic
   void _onDragCancel() {
     if (!_isDragging) return;
     setState(() => _isDragging = false);
+  }
+
+  bool get thresholdReached {
+    if (_currentState == .off && _position >= widget.threshold) return true;
+    if (_currentState == .on && _position <= (1 - widget.threshold)) return true;
+    return false;
   }
 }
 
