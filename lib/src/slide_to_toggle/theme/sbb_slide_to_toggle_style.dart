@@ -20,6 +20,7 @@ class SBBSlideToToggleStyle {
     this.helpForegroundColor,
     this.toggleTextStyle,
     this.helpTextStyle,
+    this.helpWidgetPadding,
   });
 
   /// The color of the Slide-To-Toggle border.
@@ -61,6 +62,9 @@ class SBBSlideToToggleStyle {
   /// [helpForegroundColor] is used instead.
   final TextStyle? helpTextStyle;
 
+  /// Padding around help widget in slide track.
+  final EdgeInsetsGeometry? helpWidgetPadding;
+
   /// The thickness of the Slide-To-Toggle border.
   static const double borderWidth = 1.0;
 
@@ -82,6 +86,7 @@ class SBBSlideToToggleStyle {
     WidgetStateProperty<Color?>? toggleOverlayColor,
     TextStyle? toggleTextStyle,
     TextStyle? helpTextStyle,
+    EdgeInsetsGeometry? helpWidgetPadding,
   }) {
     return SBBSlideToToggleStyle(
       borderColor: borderColor ?? this.borderColor,
@@ -90,6 +95,7 @@ class SBBSlideToToggleStyle {
       toggleOverlayColor: toggleOverlayColor ?? this.toggleOverlayColor,
       toggleTextStyle: toggleTextStyle ?? this.toggleTextStyle,
       helpTextStyle: helpTextStyle ?? this.helpTextStyle,
+      helpWidgetPadding: helpWidgetPadding ?? this.helpWidgetPadding,
     );
   }
 
@@ -103,6 +109,7 @@ class SBBSlideToToggleStyle {
       toggleOverlayColor: other.toggleOverlayColor,
       toggleTextStyle: other.toggleTextStyle,
       helpTextStyle: other.helpTextStyle,
+      helpWidgetPadding: other.helpWidgetPadding,
     );
   }
 
@@ -121,6 +128,7 @@ class SBBSlideToToggleStyle {
       toggleOverlayColor: WidgetStateProperty.lerp<Color?>(a?.toggleOverlayColor, b?.toggleOverlayColor, t, Color.lerp),
       toggleTextStyle: TextStyle.lerp(a?.toggleTextStyle, b?.toggleTextStyle, t),
       helpTextStyle: TextStyle.lerp(a?.helpTextStyle, b?.helpTextStyle, t),
+      helpWidgetPadding: EdgeInsetsGeometry.lerp(a?.helpWidgetPadding, b?.helpWidgetPadding, t),
     );
   }
 
@@ -137,7 +145,8 @@ class SBBSlideToToggleStyle {
           loadingIndicatorColor == other.loadingIndicatorColor &&
           helpForegroundColor == other.helpForegroundColor &&
           toggleTextStyle == other.toggleTextStyle &&
-          helpTextStyle == other.helpTextStyle;
+          helpTextStyle == other.helpTextStyle &&
+          helpWidgetPadding == other.helpWidgetPadding;
 
   @override
   int get hashCode => Object.hash(
@@ -150,5 +159,6 @@ class SBBSlideToToggleStyle {
     helpForegroundColor,
     toggleTextStyle,
     helpTextStyle,
+    helpWidgetPadding,
   );
 }

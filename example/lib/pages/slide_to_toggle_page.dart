@@ -10,14 +10,21 @@ class SlideToTogglePage extends StatefulWidget {
 }
 
 class _SlideToTogglePageState extends State<SlideToTogglePage> {
-  final defaultTextController = SBBSlideToToggleController();
-  final defaultIconController = SBBSlideToToggleController();
-  final smallTextController = SBBSlideToToggleController();
-  final smallIconController = SBBSlideToToggleController();
-
   bool isEnabled = true;
   bool useThresholdReachedMode = true;
   bool isStateOff = false;
+
+  SBBSlideToToggleState defaultValue = .off;
+  bool defaultIsLoading = false;
+
+  SBBSlideToToggleState defaultIconValue = .off;
+  bool defaultIconIsLoading = false;
+
+  SBBSlideToToggleState smallTextValue = .off;
+  bool smallTextIsLoading = false;
+
+  SBBSlideToToggleState smallIconValue = .off;
+  bool smallIconIsLoading = false;
 
   Future<void> _simulateWork() async {
     await Future.delayed(const Duration(seconds: 1));
@@ -46,12 +53,12 @@ class _SlideToTogglePageState extends State<SlideToTogglePage> {
               titleText: 'Toggle state programmatically',
               onChanged: (value) {
                 setState(() => isStateOff = value);
-                final SBBSlideToToggleState state = isStateOff ? .on : .off;
+                final SBBSlideToToggleState newState = isStateOff ? .on : .off;
 
-                defaultTextController.changeTo(state: state);
-                defaultIconController.changeTo(state: state);
-                smallTextController.changeTo(state: state);
-                smallIconController.changeTo(state: state);
+                defaultValue = newState;
+                defaultIconValue = newState;
+                smallTextValue = newState;
+                smallIconValue = newState;
               },
             ),
           ],
@@ -66,31 +73,39 @@ class _SlideToTogglePageState extends State<SlideToTogglePage> {
               spacing: SBBSpacing.small,
               children: [
                 SBBSlideToToggle(
-                  enabled: isEnabled,
-                  controller: defaultTextController,
+                  value: defaultValue,
+                  onChanged: isEnabled
+                      ? (state) {
+                          setState(() => defaultValue = state);
+                          _simulateWorkWithLoadingChange(isLoadingUpdate: (value) => defaultIsLoading = value);
+                        }
+                      : null,
                   triggerMode: triggerMode,
+                  isLoading: defaultIsLoading,
                   onToggleDecoration: SBBSlideToggleDecoration(
-                    onToggle: _simulateWork,
                     toggleLabelText: 'Stop',
                     helpLabelText: 'Drag to the left to stop',
                   ),
                   offToggleDecoration: SBBSlideToggleDecoration(
-                    onToggle: _simulateWork,
                     toggleLabelText: 'Start',
                     helpLabelText: 'Drag to the right to start',
                   ),
                 ),
                 SBBSlideToToggle(
-                  enabled: isEnabled,
-                  controller: defaultIconController,
+                  value: defaultIconValue,
+                  onChanged: isEnabled
+                      ? (state) {
+                          setState(() => defaultIconValue = state);
+                          _simulateWorkWithLoadingChange(isLoadingUpdate: (value) => defaultIconIsLoading = value);
+                        }
+                      : null,
                   triggerMode: triggerMode,
+                  isLoading: defaultIconIsLoading,
                   onToggleDecoration: SBBSlideToggleDecoration(
-                    onToggle: _simulateWork,
                     toggleIconData: SBBIcons.arrow_left_small,
                     helpLabelText: 'Drag to the left to stop',
                   ),
                   offToggleDecoration: SBBSlideToggleDecoration(
-                    onToggle: _simulateWork,
                     toggleIconData: SBBIcons.arrow_right_small,
                     helpLabelText: 'Drag to the right to start',
                   ),
@@ -106,31 +121,39 @@ class _SlideToTogglePageState extends State<SlideToTogglePage> {
               spacing: SBBSpacing.small,
               children: [
                 SBBSlideToToggleSmall(
-                  enabled: isEnabled,
-                  controller: smallTextController,
+                  value: smallTextValue,
+                  onChanged: isEnabled
+                      ? (state) {
+                          setState(() => smallTextValue = state);
+                          _simulateWorkWithLoadingChange(isLoadingUpdate: (value) => smallTextIsLoading = value);
+                        }
+                      : null,
                   triggerMode: triggerMode,
+                  isLoading: smallTextIsLoading,
                   onToggleDecoration: SBBSlideToggleDecoration(
-                    onToggle: _simulateWork,
                     toggleLabelText: 'Stop',
                     helpLabelText: 'Drag to the left to stop',
                   ),
                   offToggleDecoration: SBBSlideToggleDecoration(
-                    onToggle: _simulateWork,
                     toggleLabelText: 'Start',
                     helpLabelText: 'Drag to the right to start',
                   ),
                 ),
                 SBBSlideToToggleSmall(
-                  enabled: isEnabled,
-                  controller: smallIconController,
+                  value: smallIconValue,
+                  onChanged: isEnabled
+                      ? (state) {
+                          setState(() => smallIconValue = state);
+                          _simulateWorkWithLoadingChange(isLoadingUpdate: (value) => smallIconIsLoading = value);
+                        }
+                      : null,
                   triggerMode: triggerMode,
+                  isLoading: smallIconIsLoading,
                   onToggleDecoration: SBBSlideToggleDecoration(
-                    onToggle: _simulateWork,
                     toggleIconData: SBBIcons.arrow_left_small,
                     helpLabelText: 'Drag to the left to stop',
                   ),
                   offToggleDecoration: SBBSlideToggleDecoration(
-                    onToggle: _simulateWork,
                     toggleIconData: SBBIcons.arrow_right_small,
                     helpLabelText: 'Drag to the right to start',
                   ),
@@ -141,6 +164,14 @@ class _SlideToTogglePageState extends State<SlideToTogglePage> {
         ],
       ),
     );
+  }
+
+  Future<void> _simulateWorkWithLoadingChange({required void Function(bool value) isLoadingUpdate}) async {
+    setState(() => isLoadingUpdate.call(true));
+    await _simulateWork();
+    if (mounted) {
+      setState(() => isLoadingUpdate.call(false));
+    }
   }
 
   SBBSlideToToggleTriggerMode get triggerMode => useThresholdReachedMode ? .onThresholdReached : .onTapReleased;

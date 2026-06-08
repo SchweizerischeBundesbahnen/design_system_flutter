@@ -70,12 +70,10 @@ class SlideToToggleTest extends StatelessWidget {
         _slideToToggle(
           enabled: enabled,
           onDecoration: SBBSlideToggleDecoration(
-            onToggle: () async {},
             toggleIconData: SBBIcons.arrow_right_small,
             helpLabelText: 'Drag to the left to start',
           ),
           offDecoration: SBBSlideToggleDecoration(
-            onToggle: () async {},
             toggleIconData: SBBIcons.arrow_left_small,
             helpLabelText: 'Drag to the right to stop',
           ),
@@ -84,12 +82,10 @@ class SlideToToggleTest extends StatelessWidget {
         _slideToToggle(
           enabled: enabled,
           onDecoration: SBBSlideToggleDecoration(
-            onToggle: () async {},
             toggleLabelText: 'Start',
             helpLabelText: 'Drag to the left to start. This is also a very l${"o" * 300}ng text.',
           ),
           offDecoration: SBBSlideToggleDecoration(
-            onToggle: () async {},
             toggleLabelText: 'Stop',
             helpLabelText: 'Drag to the right to stop',
           ),
@@ -98,7 +94,6 @@ class SlideToToggleTest extends StatelessWidget {
         _slideToToggle(
           enabled: enabled,
           onDecoration: SBBSlideToggleDecoration(
-            onToggle: () async {},
             toggleLabel: Container(
               color: SBBColors.turquoise,
               child: Icon(SBBIcons.unicorn_small),
@@ -109,7 +104,6 @@ class SlideToToggleTest extends StatelessWidget {
             ),
           ),
           offDecoration: SBBSlideToggleDecoration(
-            onToggle: () async {},
             toggleLabel: Container(
               color: SBBColors.turquoise,
               child: Icon(SBBIcons.unicorn_small),
@@ -129,18 +123,16 @@ class SlideToToggleTest extends StatelessWidget {
     required SBBSlideToggleDecoration onDecoration,
     required SBBSlideToggleDecoration offDecoration,
   }) {
-    final controller = SBBSlideToToggleController(initialValue: initialState);
-
     return isSmall
         ? SBBSlideToToggleSmall(
-            controller: controller,
-            enabled: enabled,
+            value: initialState,
+            onChanged: enabled ? (_) {} : null,
             onToggleDecoration: onDecoration,
             offToggleDecoration: offDecoration,
           )
         : SBBSlideToToggle(
-            controller: controller,
-            enabled: enabled,
+            value: initialState,
+            onChanged: enabled ? (_) {} : null,
             onToggleDecoration: onDecoration,
             offToggleDecoration: offDecoration,
           );

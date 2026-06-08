@@ -28,6 +28,7 @@ class DefaultSBBSlideToToggleThemeData extends SBBSlideToToggleThemeData {
           }),
           toggleTextStyle: baseStyle.textTheme.largeBold,
           helpTextStyle: baseStyle.textTheme.smallLight,
+          helpWidgetPadding: .symmetric(vertical: SBBSpacing.xSmall, horizontal: SBBSpacing.medium),
         ),
       );
 }
