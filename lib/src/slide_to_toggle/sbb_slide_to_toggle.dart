@@ -285,21 +285,21 @@ class _SBBSlideToToggleState extends State<_BaseSBBSlideToToggle> with SingleTic
   }
 
   Widget _helpWidget({required SBBSlideToToggleState state, required SBBSlideToToggleStyle style}) {
-    return Align(
-      alignment: state == .off ? Alignment.centerRight : Alignment.centerLeft,
-      child: ClipRect(
-        clipper: _HelpWidgetClipper(
-          position: _position,
-          toggleSize: _toggleSize,
-          state: state,
-        ),
+    return ClipRect(
+      clipper: _HelpWidgetClipper(
+        position: _position,
+        toggleSize: _toggleSize,
+        state: state,
+      ),
+      child: Align(
+        alignment: state == .off ? Alignment.centerRight : Alignment.centerLeft,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: SBBSpacing.xSmall).copyWith(
             right: SBBSpacing.medium + (state == .on ? _toggleSize : 0.0),
             left: SBBSpacing.medium + (state == .off ? _toggleSize : 0.0),
           ),
           child: Opacity(
-            opacity: ((state == .off ? 1 : 0) - _position).abs(),
+            opacity: _helpOpacityFor(state),
             child: addDefaultAncestorWithResolved(
               foregroundColor: style.helpForegroundColor?.resolve(_statesController.value),
               textStyle: style.helpTextStyle,
@@ -435,6 +435,11 @@ class _SBBSlideToToggleState extends State<_BaseSBBSlideToToggle> with SingleTic
 
   bool get _isInteractive => widget.enabled && !_loading;
 
+  double _helpOpacityFor(SBBSlideToToggleState state) {
+    final transition = (_position * 2).clamp(0.0, 1.0);
+    return state == .off ? 1 - transition : transition;
+  }
+
   double _targetPositionFor(SBBSlideToToggleState state) => state == .on ? 1 : 0;
 
   void _startAnimation({required Animation<double> animation, required Duration duration}) {
@@ -543,7 +548,11 @@ class _SBBSlideToToggleState extends State<_BaseSBBSlideToToggle> with SingleTic
 
 /// Used to clip help widget so it doesn't go over toggle. Long help widgets would otherwise overlap while sliding.
 class _HelpWidgetClipper extends CustomClipper<Rect> {
-  const _HelpWidgetClipper({required this.position, required this.toggleSize, required this.state});
+  const _HelpWidgetClipper({
+    required this.state,
+    required this.position,
+    required this.toggleSize,
+  });
 
   final SBBSlideToToggleState state;
   final double position;
