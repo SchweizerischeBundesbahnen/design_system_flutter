@@ -71,8 +71,8 @@ class _RenderCascadeColumn extends RenderBox
           constraints.copyWith(
             maxHeight: height,
             minHeight: min(
-              constraints.minHeight,
               height,
+              minHeight,
             ),
           ),
           parentUsesSize: true,
