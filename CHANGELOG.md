@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 It is expected that you keep this format strictly, since we depend on it in our release workflow.
 
+## [5.0.0-dev.6] - 2026-06-08
+
+### Added
+
+- added `SBBSlideToToggle`
+- added `state` (`SBBStatusState`) to `SBBStatus` for default constructor.
+- added `flapDecoration` on `SBBHeaderBoxStyle`
+- added `SBBInputBorderType`. Use `SBBInputBorderType.standalone` on components with `SBBInputDecoration` when not listed/boxed to show bottom border.
+- added `isDismissable` flag on `SBBPromotionBox` instead of need to provide `onDismissed`
+- added `trailingIconButton` to list item components to respect tappable padding of `SBBTertiaryButtonSmall`
+
+### Changed
+
+- BREAKING: overhauled `SBBNotificationBox` - see [v5 migration guide]
+- Removed `TransparentTappableElement`
+- Removed `ClosableBoxController`, use the component specific controller like `SBBNotificationBoxController`
+
 ## [5.0.0-dev.6] - 2026-05-26
 
 ### Added
@@ -912,7 +929,9 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Initial project setup
 - Added some widgets
 
-[v5 migration guide]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/blob/cc71220e3153b605b502f9428fe50abf9cf7fdf1/migration_guide.md
+[v5 migration guide]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/blob/dfa6643198e4c2a94d3060dbc57a64f03dc0c3a3/migration_guide.md
+
+[5.0.0-dev.6]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/5.0.0-dev.6...5.0.0-dev.7
 
 [5.0.0-dev.6]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/5.0.0-dev.4...5.0.0-dev.6
 
