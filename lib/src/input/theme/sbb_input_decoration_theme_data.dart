@@ -29,6 +29,7 @@ class SBBInputDecorationThemeData extends ThemeExtension<SBBInputDecorationTheme
     this.placeholderTextStyle,
     this.placeholderForegroundColor,
     this.borderColor,
+    this.borderType,
     this.contentPadding,
   });
 
@@ -88,6 +89,9 @@ class SBBInputDecorationThemeData extends ThemeExtension<SBBInputDecorationTheme
   /// The color of the border around the input field.
   final WidgetStateProperty<Color?>? borderColor;
 
+  /// The type of border handling for the input decoration.
+  final SBBInputBorderType? borderType;
+
   /// The padding surrounding all decoration content.
   ///
   /// If null, defaults to `EdgeInsets.symmetric(horizontal: SBBSpacing.medium)`.
@@ -111,6 +115,7 @@ class SBBInputDecorationThemeData extends ThemeExtension<SBBInputDecorationTheme
     double? titleRowErrorGap,
     double? errorBottomPadding,
     WidgetStateProperty<Color?>? borderColor,
+    SBBInputBorderType? borderType,
     EdgeInsetsGeometry? contentPadding,
   }) {
     return SBBInputDecorationThemeData(
@@ -130,6 +135,7 @@ class SBBInputDecorationThemeData extends ThemeExtension<SBBInputDecorationTheme
       titleRowErrorGap: titleRowErrorGap ?? this.titleRowErrorGap,
       errorBottomPadding: errorBottomPadding ?? this.errorBottomPadding,
       borderColor: borderColor ?? this.borderColor,
+      borderType: borderType ?? this.borderType,
       contentPadding: contentPadding ?? this.contentPadding,
     );
   }
@@ -184,6 +190,7 @@ class SBBInputDecorationThemeData extends ThemeExtension<SBBInputDecorationTheme
         t,
         Color.lerp,
       ),
+      borderType: t < 0.5 ? borderType : other.borderType,
       contentPadding: EdgeInsetsGeometry.lerp(contentPadding, other.contentPadding, t),
     );
   }
@@ -206,6 +213,7 @@ class SBBInputDecorationThemeData extends ThemeExtension<SBBInputDecorationTheme
     titleRowErrorGap,
     errorBottomPadding,
     borderColor,
+    borderType,
     contentPadding,
   );
 
@@ -230,6 +238,7 @@ class SBBInputDecorationThemeData extends ThemeExtension<SBBInputDecorationTheme
         other.titleRowErrorGap == titleRowErrorGap &&
         other.errorBottomPadding == errorBottomPadding &&
         other.borderColor == borderColor &&
+        other.borderType == borderType &&
         other.contentPadding == contentPadding;
   }
 }
@@ -254,6 +263,7 @@ extension SBBInputDecorationThemeDataX on SBBInputDecorationThemeData {
       titleRowErrorGap: other.titleRowErrorGap,
       errorBottomPadding: other.errorBottomPadding,
       borderColor: other.borderColor,
+      borderType: other.borderType,
       contentPadding: other.contentPadding,
     );
   }

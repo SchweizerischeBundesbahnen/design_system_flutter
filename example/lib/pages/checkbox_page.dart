@@ -31,7 +31,7 @@ class CheckboxPageState extends State<CheckboxPage> {
         padding: .all(SBBSpacing.xSmall),
         child: SBBSegmentedButton(
           segments: [
-            SBBButtonSegment(value: true, labelText: 'All enabled'),
+            SBBButtonSegment(value: true, labelText: 'All Enabled'),
             SBBButtonSegment(value: false, labelText: 'All Disabled'),
           ],
           selected: _isEnabled,
@@ -169,8 +169,7 @@ class CheckboxPageState extends State<CheckboxPage> {
                   value: _listItemValue3,
                   titleText: 'Button',
                   onChanged: _isEnabled ? (value) => setState(() => _listItemValue3 = value) : null,
-                  padding: .fromLTRB(16.0, 0.0, 8.0, 0.0),
-                  trailing: SBBTertiaryButtonSmall(
+                  trailingIconButton: SBBTertiaryButtonSmall(
                     iconData: SBBIcons.circle_information_small_small,
                     onPressed: _isEnabled ? () => sbbToast.show(titleText: 'Button pressed') : null,
                   ),

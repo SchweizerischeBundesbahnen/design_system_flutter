@@ -28,5 +28,5 @@ the CI will fail. We run this step:
 
 ```yml
 - name: Format check
-  run: dart format --page-width 120 --trailing-comas=preserve -o none --set-exit-if-changed .
+  run: dart format --page-width 120 --trailing-commas=preserve -o none --set-exit-if-changed .
 ```

@@ -27,7 +27,7 @@ enum SBBContractionBehavior {
   /// vertically within the space that is left.
   center,
 
-  /// Resizes the child to match the shrinking available height.
+  /// Resizes the child to match the available height.
   ///
   /// Use this when the child can adapt gracefully to smaller vertical
   /// constraints.
@@ -90,24 +90,28 @@ class SBBContractible extends StatefulWidget {
     this.behavior = .clip,
     this.child,
     this.builder,
-  });
+  }) : assert(
+         minHeight == null || maxHeight == null || maxHeight >= minHeight,
+         'maxHeight must be greater than or equal to minHeight.',
+       );
 
-  /// The minimum intrinsic height reported by this widget.
+  /// The minimum height of this widget.
   ///
-  /// This can be used to control how small the contractible is allowed to
-  /// become.
+  /// This controls how small the widget is in its contracted state.
   ///
-  /// If null, the minimum intrinsic height is not overridden.
-  /// This allows for custom transitions like [SBBContractibleCrossfade].
+  /// If null, the (minimum) intrinsic height of [child] / [builder] is used, which allows for custom transitions
+  /// like [SBBContractibleCrossfade].
   ///
   /// Defaults to 0, meaning that the widget will contract fully.
   final double? minHeight;
 
-  /// The maximum intrinsic height reported by this widget.
+  /// The maximum height of this widget.
   ///
-  /// This can be used to control the expanded height.
+  /// This controls how big the widget is in its expanded state.
   ///
-  /// If null, the maximum intrinsic height is not overridden.
+  /// If null, the (maximum) intrinsic height of [child] / [builder] is used.
+  ///
+  /// Defaults to null.
   final double? maxHeight;
 
   /// Builds this widget based on the current [SBBContractibleState].
@@ -195,7 +199,8 @@ class _SBBContractibleState extends State<SBBContractible> {
       return ClipRect(
         clipBehavior: widget.clipBehavior,
         child: OverflowBox(
-          maxHeight: .infinity,
+          minHeight: widget.minHeight ?? 0,
+          maxHeight: widget.maxHeight ?? .infinity,
           alignment: alignment,
           child: builder(context, progress, child),
         ),
@@ -218,7 +223,8 @@ class _SBBContractibleState extends State<SBBContractible> {
     return ClipRect(
       clipBehavior: widget.clipBehavior,
       child: OverflowBox(
-        maxHeight: .infinity,
+        minHeight: widget.minHeight ?? 0,
+        maxHeight: widget.maxHeight ?? .infinity,
         alignment: alignment,
         child: child,
       ),

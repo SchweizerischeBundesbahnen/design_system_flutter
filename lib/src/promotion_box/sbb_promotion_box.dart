@@ -25,7 +25,7 @@ const _promotionBoxNoiseAsset = 'packages/sbb_design_system_mobile/lib/assets/no
 ///
 /// ## Layout rules
 ///
-/// The dismiss button (shown when [onDismissed] is non null) is a simple [InkWell]
+/// The dismiss button (shown when [isDismissable] is true) is a simple [InkWell]
 /// and is always aligned in the title row.
 ///
 /// **When no subtitle is set:**
@@ -37,6 +37,13 @@ const _promotionBoxNoiseAsset = 'packages/sbb_design_system_mobile/lib/assets/no
 /// The trailing widget is placed to the right of the subtitle, vertically centered.
 /// If [trailing] is provided, that widget is used. Otherwise, only if [onTap]
 /// is set, a chevron icon is shown.
+///
+/// See also:
+///
+/// * [SBBPromotionBoxStyle], for customizing the appearance.
+/// * [SBBPrimaryButtonThemeData], for setting the style for all promotion boxes within the current Theme.
+/// * [SBBPromotionBoxController] for programmatically showing and hiding a promotion box.
+/// * [Figma design specs](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=299-6175&p=f&t=qb3K1kp5fgtZxom4-0)
 class SBBPromotionBox extends StatefulWidget {
   const SBBPromotionBox({
     super.key,
@@ -49,6 +56,7 @@ class SBBPromotionBox extends StatefulWidget {
     this.subtitleText,
     this.onTap,
     this.onDismissed,
+    this.isDismissable = false,
     this.trailing,
     this.onTapSemanticsHint,
     this.style,
@@ -117,12 +125,13 @@ class SBBPromotionBox extends StatefulWidget {
 
   /// Callback invoked once the user taps the dismiss button.
   ///
-  /// If non null, an inline [InkWell] close button is displayed in the title row.
-  /// Tapping it will hide the promotion box via the [SBBPromotionBoxController]
-  /// and invoke [onDismissed].
-  ///
   /// This will not be invoked if the hiding is done through the [SBBPromotionBoxController].
   final GestureTapCallback? onDismissed;
+
+  /// If true, an inline [InkWell] close button is displayed in the title row.
+  /// Tapping it will hide the promotion box via the [SBBPromotionBoxController]
+  /// and invoke [onDismissed].
+  final bool isDismissable;
 
   /// The semantic hint used if the promotion box is tappable. See [onTap].
   final String? onTapSemanticsHint;
@@ -160,8 +169,6 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
 
   SBBPromotionBoxController get _effectiveController =>
       widget.controller ?? (_internalController ??= SBBPromotionBoxController());
-
-  bool get _isDismissible => widget.onDismissed != null;
 
   late final AnimationController _animationController;
 
@@ -312,7 +319,8 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
   }
 
   Widget? _dismissButton(BuildContext context, SBBPromotionBoxStyle effectiveStyle) {
-    if (!_isDismissible) return null;
+    if (!widget.isDismissable) return null;
+
     return Material(
       borderRadius: .circular(sbbIconSizeSmall),
       color: SBBColors.transparent,
@@ -325,9 +333,10 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
             _effectiveController.hide();
             widget.onDismissed?.call();
           },
-          child: addDefaultAncestorWithResolved(
-            child: const Icon(SBBIcons.cross_tiny_small, size: sbbIconSizeSmall),
-            foregroundColor: effectiveStyle.dismissButtonForegroundColor,
+          child: Icon(
+            SBBIcons.cross_tiny_small,
+            size: sbbIconSizeSmall,
+            color: effectiveStyle.dismissButtonForegroundColor,
           ),
         ),
       ),

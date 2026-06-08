@@ -27,7 +27,7 @@ class RadioPageState extends State<RadioPage> {
         padding: const .all(SBBSpacing.xSmall),
         child: SBBSegmentedButton(
           segments: [
-            SBBButtonSegment(value: true, labelText: 'All enabled'),
+            SBBButtonSegment(value: true, labelText: 'All Enabled'),
             SBBButtonSegment(value: false, labelText: 'All Disabled'),
           ],
           selected: _pageEnabled,
@@ -97,8 +97,7 @@ class RadioPageState extends State<RadioPage> {
                       value: 4,
                       titleText: 'Button',
                       enabled: _pageEnabled,
-                      padding: .fromLTRB(16.0, 0.0, 8.0, 0.0),
-                      trailing: SBBTertiaryButtonSmall(
+                      trailingIconButton: SBBTertiaryButtonSmall(
                         iconData: SBBIcons.circle_information_small_small,
                         onPressed: _pageEnabled ? () => sbbToast.show(titleText: 'Button pressed') : null,
                       ),

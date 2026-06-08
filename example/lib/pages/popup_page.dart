@@ -148,8 +148,8 @@ class _PopupPageState extends State<PopupPage> {
         backgroundColor: _customBackgroundColor ? SBBColors.peach : null,
       ),
       body: Column(
-        mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: .min,
+        crossAxisAlignment: .start,
         spacing: SBBSpacing.medium,
         children: [
           Text(
@@ -182,8 +182,8 @@ class _PopupPageState extends State<PopupPage> {
 
   Widget _popupContent(BuildContext context) {
     return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: .min,
+      crossAxisAlignment: .start,
       spacing: SBBSpacing.medium,
       children: [
         Text(
@@ -216,7 +216,7 @@ class _ExampleCard extends StatelessWidget {
     return SBBContentBox(
       padding: EdgeInsets.all(SBBSpacing.medium),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         spacing: SBBSpacing.small,
         children: [
           Text(title, style: sbbTextStyle.large.boldStyle),

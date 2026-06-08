@@ -1,0 +1,34 @@
+import 'package:flutter/widgets.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+
+/// The default Slide-To-Toggle theme is specified using the
+/// * [Figma design specs](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=6666-552)
+class DefaultSBBSlideToToggleThemeData extends SBBSlideToToggleThemeData {
+  DefaultSBBSlideToToggleThemeData(SBBBaseStyle baseStyle)
+    : super(
+        style: SBBSlideToToggleStyle(
+          borderColor: WidgetStateProperty.all(baseStyle.themeValue(SBBColors.cement, SBBColors.iron)),
+          backgroundColor: WidgetStatePropertyAll(baseStyle.colorScheme.backgroundContent),
+          toggleBackgroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
+            WidgetState.disabled: baseStyle.themeValue(SBBColors.graphite, SBBColors.iron),
+            WidgetState.any: baseStyle.colorScheme.primary,
+          }),
+          toggleOverlayColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
+            WidgetState.focused | WidgetState.pressed: baseStyle.colorScheme.primary125,
+            WidgetState.any: baseStyle.colorScheme.primary,
+          }),
+          toggleForegroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
+            WidgetState.any: SBBColors.white,
+          }),
+          helpForegroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
+            WidgetState.any: baseStyle.colorScheme.textSecondary,
+          }),
+          loadingIndicatorColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
+            WidgetState.any: SBBColors.white,
+          }),
+          toggleTextStyle: baseStyle.textTheme.largeBold,
+          helpTextStyle: baseStyle.textTheme.smallLight,
+          helpWidgetPadding: .symmetric(vertical: SBBSpacing.xSmall, horizontal: SBBSpacing.medium),
+        ),
+      );
+}

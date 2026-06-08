@@ -33,7 +33,7 @@ import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 /// See also:
 /// * [SBBTextInputThemeData] for customizing the style across the current theme
 /// * [SBBInputDecoration] for customizing the decoration surrounding the raw input field
-/// * [digital.sbb.ch documenation](https://digital.sbb.ch/de/design-system/mobile/components/text-input/)
+/// * [digital.sbb.ch documentation](https://digital.sbb.ch/de/design-system/mobile/components/text-input/)
 /// * [Figma design guidelines](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=309-2236) (internal only)
 class SBBTextInput extends StatefulWidget {
   const SBBTextInput({

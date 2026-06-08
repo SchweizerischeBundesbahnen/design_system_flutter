@@ -35,6 +35,7 @@ class SBBInputDecoration {
     this.titleRowErrorGap,
     this.errorBottomPadding,
     this.borderColor,
+    this.borderType,
     this.contentPadding,
   }) : assert(
          leading == null || leadingIconData == null,
@@ -172,7 +173,18 @@ class SBBInputDecoration {
   ///
   /// This will be applied to a bottom border for e.g. a simple input field
   /// and to a surrounding border for a boxed input field.
+  ///
+  /// If [borderType] is [SBBInputBorderType.standalone], [SBBColorScheme.strokeSeparator]
+  /// is used as default color when color is null or transparent.
   final WidgetStateProperty<Color?>? borderColor;
+
+  /// The type of border handling for the input decoration.
+  ///
+  /// The default border type is [SBBInputBorderType.boxedOrListed], where part
+  /// of the border decoration is handled from outside i.e [SBBDivider.divideItems]
+  /// or boxed variants like [SBBTextInputBoxed]. If the widget is standalone and
+  /// expects a default border, use [SBBInputBorderType.standalone].
+  final SBBInputBorderType? borderType;
 
   /// The padding around all decoration content.
   ///
@@ -212,6 +224,7 @@ class SBBInputDecoration {
     double? titleRowErrorGap,
     double? errorBottomPadding,
     WidgetStateProperty<Color?>? borderColor,
+    SBBInputBorderType? borderType,
     EdgeInsetsGeometry? contentPadding,
   }) {
     return SBBInputDecoration(
@@ -241,6 +254,7 @@ class SBBInputDecoration {
       titleRowErrorGap: titleRowErrorGap ?? this.titleRowErrorGap,
       errorBottomPadding: errorBottomPadding ?? this.errorBottomPadding,
       borderColor: borderColor ?? this.borderColor,
+      borderType: borderType ?? this.borderType,
       contentPadding: contentPadding ?? this.contentPadding,
     );
   }
@@ -276,6 +290,7 @@ class SBBInputDecoration {
         other.titleRowErrorGap == titleRowErrorGap &&
         other.errorBottomPadding == errorBottomPadding &&
         other.borderColor == borderColor &&
+        other.borderType == borderType &&
         other.contentPadding == contentPadding;
   }
 
@@ -307,6 +322,7 @@ class SBBInputDecoration {
     titleRowErrorGap,
     errorBottomPadding,
     borderColor,
+    borderType,
     contentPadding,
   ]);
 }
@@ -338,6 +354,7 @@ extension SBBInputDecorationThemeX on SBBInputDecoration {
       titleRowErrorGap: titleRowErrorGap ?? theme.titleRowErrorGap,
       errorBottomPadding: errorBottomPadding ?? theme.errorBottomPadding,
       borderColor: borderColor ?? theme.borderColor,
+      borderType: borderType ?? theme.borderType,
       contentPadding: contentPadding ?? theme.contentPadding,
     );
   }

@@ -6,11 +6,11 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 class DefaultSBBListItemThemeData extends SBBListItemThemeData {
   DefaultSBBListItemThemeData({required SBBBaseStyle baseStyle})
     : super(
-        padding: const .symmetric(horizontal: 16.0, vertical: 10.0),
-        trailingHorizontalGapWidth: 16.0,
-        leadingHorizontalGapWidth: 8.0,
-        subtitleVerticalGapHeight: 4.0,
         style: SBBListItemStyle(
+          padding: const .symmetric(horizontal: 16.0, vertical: 10.0),
+          leadingHorizontalGapWidth: 8.0,
+          subtitleVerticalGapHeight: 4.0,
+          trailingHorizontalGapWidth: 16.0,
           titleTextStyle: baseStyle.textTheme.mediumLight,
           titleTextMaxLines: 1,
           subtitleTextStyle: baseStyle.textTheme.smallLight,

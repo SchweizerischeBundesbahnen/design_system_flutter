@@ -14,12 +14,14 @@ import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_text_input_
 import 'package:sbb_design_system_mobile/src/list_header/theme/default_sbb_list_header_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/list_item/theme/default_sbb_list_item_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/message/theme/default_sbb_message_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/notification_box/theme/default_sbb_notification_box_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/paginator/theme/default_sbb_paginator_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/picker/theme/default_sbb_picker_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/popup/theme/default_sbb_popup_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/promotion_box/theme/default_sbb_promotion_box_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/radio/theme/default_sbb_radio_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/segmented_button/theme/default_sbb_segmented_button_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/slide_to_toggle/theme/default_sbb_slide_to_toggle_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/slider/theme/default_sbb_slider_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/status/theme/default_sbb_status_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/stepper/theme/default_sbb_stepper_theme_data.dart';
@@ -83,6 +85,7 @@ class SBBTheme {
     SBBSecondaryButtonThemeData? secondaryButtonTheme,
     SBBTertiaryButtonThemeData? tertiaryButtonTheme,
     SBBAccentButtonThemeData? accentButtonTheme,
+    SBBNotificationBoxThemeData? notificationBoxTheme,
     SBBCheckboxThemeData? checkboxTheme,
     SBBChipThemeData? chipTheme,
     SBBContentBoxThemeData? contentBoxTheme,
@@ -102,6 +105,7 @@ class SBBTheme {
     SBBStatusThemeData? statusTheme,
     SBBSegmentedButtonThemeData? segmentedButtonTheme,
     SBBSliderThemeData? sliderTheme,
+    SBBSlideToToggleThemeData? slideToToggleTheme,
     SBBStepperThemeData? stepperTheme,
     SBBSwitchThemeData? switchTheme,
     SBBTabBarThemeData? tabBarTheme,
@@ -156,6 +160,7 @@ class SBBTheme {
     SBBSecondaryButtonThemeData? secondaryButtonTheme,
     SBBTertiaryButtonThemeData? tertiaryButtonTheme,
     SBBAccentButtonThemeData? accentButtonTheme,
+    SBBNotificationBoxThemeData? notificationBoxTheme,
     SBBCheckboxThemeData? checkboxTheme,
     SBBChipThemeData? chipTheme,
     SBBContentBoxThemeData? contentBoxTheme,
@@ -174,6 +179,7 @@ class SBBTheme {
     SBBStatusThemeData? statusTheme,
     SBBSegmentedButtonThemeData? segmentedButtonTheme,
     SBBSliderThemeData? sliderTheme,
+    SBBSlideToToggleThemeData? slideToToggleTheme,
     SBBStepperThemeData? stepperTheme,
     SBBSwitchThemeData? switchTheme,
     SBBTabBarThemeData? tabBarTheme,
@@ -225,6 +231,7 @@ class SBBTheme {
     SBBBaseStyle? baseStyle,
     SBBBottomSheetThemeData? bottomSheetTheme,
     SBBPrimaryButtonThemeData? primaryButtonTheme,
+    SBBNotificationBoxThemeData? notificationBoxTheme,
     SBBSecondaryButtonThemeData? secondaryButtonTheme,
     SBBTertiaryButtonThemeData? tertiaryButtonTheme,
     SBBAccentButtonThemeData? accentButtonTheme,
@@ -247,6 +254,7 @@ class SBBTheme {
     SBBRadioThemeData? radioTheme,
     SBBSegmentedButtonThemeData? segmentedButtonTheme,
     SBBSliderThemeData? sliderTheme,
+    SBBSlideToToggleThemeData? slideToToggleTheme,
     SBBStatusThemeData? statusTheme,
     SBBSwitchThemeData? switchTheme,
     SBBTabBarThemeData? tabBarTheme,
@@ -302,6 +310,9 @@ class SBBTheme {
     final defaultPaginatorTheme = DefaultSBBPaginatorThemeData(mergedBaseStyle);
     final mergedPaginatorTheme = defaultPaginatorTheme.merge(paginatorTheme);
 
+    final defaultNotificationBoxTheme = DefaultSBBNotificationBoxThemeData(baseStyle: mergedBaseStyle);
+    final mergedNotificationBoxTheme = defaultNotificationBoxTheme.merge(notificationBoxTheme);
+
     final defaultPopupTheme = DefaultSBBPopupThemeData(mergedBaseStyle);
     final mergedPopupTheme = defaultPopupTheme.merge(popupTheme);
 
@@ -322,6 +333,9 @@ class SBBTheme {
 
     final defaultSliderTheme = DefaultSBBSliderThemeData(mergedBaseStyle);
     final mergedSliderTheme = defaultSliderTheme.merge(sliderTheme);
+
+    final defaultSlideToToggleTheme = DefaultSBBSlideToToggleThemeData(mergedBaseStyle);
+    final mergedSlideToToggleTheme = defaultSlideToToggleTheme.merge(slideToToggleTheme);
 
     final defaultSwitchTheme = DefaultSBBSwitchThemeData(mergedBaseStyle);
     final mergedSwitchTheme = defaultSwitchTheme.merge(switchTheme);
@@ -371,6 +385,7 @@ class SBBTheme {
       listHeaderTheme: mergedListHeaderTheme,
       listItemTheme: mergedListItemTheme,
       messageTheme: mergedMessageTheme,
+      notificationBoxTheme: mergedNotificationBoxTheme,
       paginatorTheme: mergedPaginatorTheme,
       pickerTheme: mergedPickerTheme,
       popupTheme: mergedPopupTheme,
@@ -379,6 +394,7 @@ class SBBTheme {
       statusTheme: mergedStatusTheme,
       segmentedButtonTheme: mergedSegmentedButtonTheme,
       sliderTheme: mergedSliderTheme,
+      slideToToggleTheme: mergedSlideToToggleTheme,
       stepperTheme: mergedStepperTheme,
       switchTheme: mergedSwitchTheme,
       tabBarTheme: mergedTabBarTheme,
@@ -405,6 +421,7 @@ class SBBTheme {
     required SBBListHeaderThemeData listHeaderTheme,
     required SBBListItemThemeData listItemTheme,
     required SBBMessageThemeData messageTheme,
+    required SBBNotificationBoxThemeData notificationBoxTheme,
     required SBBPaginatorThemeData paginatorTheme,
     required SBBPickerThemeData pickerTheme,
     required SBBPopupThemeData popupTheme,
@@ -413,6 +430,7 @@ class SBBTheme {
     required SBBStatusThemeData statusTheme,
     required SBBSegmentedButtonThemeData segmentedButtonTheme,
     required SBBSliderThemeData sliderTheme,
+    required SBBSlideToToggleThemeData slideToToggleTheme,
     required SBBStepperThemeData stepperTheme,
     required SBBSwitchThemeData switchTheme,
     required SBBTabBarThemeData tabBarTheme,
@@ -463,6 +481,7 @@ class SBBTheme {
         listHeaderTheme,
         listItemTheme,
         messageTheme,
+        notificationBoxTheme,
         paginatorTheme,
         pickerTheme,
         popupTheme,
@@ -471,6 +490,7 @@ class SBBTheme {
         statusTheme,
         segmentedButtonTheme,
         sliderTheme,
+        slideToToggleTheme,
         stepperTheme,
         switchTheme,
         tabBarTheme,
