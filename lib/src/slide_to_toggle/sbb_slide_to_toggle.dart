@@ -155,6 +155,8 @@ class _SBBSlideToToggleState extends State<SBBSlideToToggle> with SingleTickerPr
 
   bool _isDragging = false;
   double _position = 0;
+  bool _hasEmittedChangeInCurrentDrag = false;
+  SBBSlideToToggleState? _pendingState;
 
   late final AnimationController _positionController;
   Animation<double>? _positionAnimation;
@@ -177,12 +179,22 @@ class _SBBSlideToToggleState extends State<SBBSlideToToggle> with SingleTickerPr
   @override
   void didUpdateWidget(SBBSlideToToggle oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.onChanged != oldWidget.onChanged) {
+    if (widget.onChanged != oldWidget.onChanged || widget.isLoading != oldWidget.isLoading) {
       _updateStatesController();
     }
 
-    if (oldWidget.value != widget.value) {
-      _animateTo(_targetPositionFor(widget.value));
+    final targetPosition = _targetPositionFor(widget.value);
+    final hasPositionDrift = (_position - targetPosition).abs() > 0.001;
+
+    // handle very short state reverts
+    final stateReverted = _pendingState != null && widget.value != _pendingState && hasPositionDrift;
+
+    if ((oldWidget.value != widget.value || stateReverted) && !_isDragging) {
+      _animateTo(targetPosition);
+    }
+
+    if (_pendingState != null && widget.value != oldWidget.value) {
+      _pendingState = null;
     }
   }
 
@@ -408,7 +420,10 @@ class _SBBSlideToToggleState extends State<SBBSlideToToggle> with SingleTickerPr
   void _onDragStart(DragStartDetails d) {
     if (!_isInteractive) return;
     _positionController.stop();
-    setState(() => _isDragging = true);
+    setState(() {
+      _isDragging = true;
+      _hasEmittedChangeInCurrentDrag = false;
+    });
   }
 
   void _onDragUpdate(DragUpdateDetails d) {
@@ -421,9 +436,12 @@ class _SBBSlideToToggleState extends State<SBBSlideToToggle> with SingleTickerPr
       _position = (_position + d.delta.dx / width).clamp(0.0, 1.0).toDouble();
     });
 
-    if (widget.triggerMode == .onThresholdReached && thresholdReached) {
-      setState(() => _isDragging = false);
-      widget.onChanged?.call(widget.value == .off ? .on : .off);
+    if (widget.triggerMode == .onThresholdReached && _thresholdReached) {
+      _emitOnChanged();
+      setState(() {
+        _isDragging = false;
+        _hasEmittedChangeInCurrentDrag = true;
+      });
     }
   }
 
@@ -431,8 +449,8 @@ class _SBBSlideToToggleState extends State<SBBSlideToToggle> with SingleTickerPr
     if (!_isInteractive) return;
 
     setState(() => _isDragging = false);
-    if (thresholdReached) {
-      widget.onChanged?.call(widget.value == .off ? .on : .off);
+    if (_thresholdReached) {
+      _emitOnChanged();
     } else {
       _animateBounceBack();
     }
@@ -440,14 +458,29 @@ class _SBBSlideToToggleState extends State<SBBSlideToToggle> with SingleTickerPr
 
   void _onDragCancel() {
     if (!_isDragging) return;
-    setState(() => _isDragging = false);
+    setState(() {
+      _isDragging = false;
+      _hasEmittedChangeInCurrentDrag = false;
+    });
   }
 
-  bool get thresholdReached {
-    if (widget.value == .off && _position >= widget.threshold) return true;
-    if (widget.value == .on && _position <= (1 - widget.threshold)) return true;
-    return false;
+  void _emitOnChanged() {
+    if (_hasEmittedChangeInCurrentDrag && widget.triggerMode == .onThresholdReached) return;
+
+    if (_onThresholdReached) {
+      _pendingState = .on;
+      widget.onChanged?.call(.on);
+    } else if (_offThresholdReached) {
+      _pendingState = .off;
+      widget.onChanged?.call(.off);
+    }
   }
+
+  bool get _thresholdReached => _onThresholdReached || _offThresholdReached;
+
+  bool get _offThresholdReached => widget.value == .on && _position <= (1 - widget.threshold);
+
+  bool get _onThresholdReached => widget.value == .off && _position >= widget.threshold;
 }
 
 /// Used to clip help widget so it doesn't go over toggle. Long help widgets would otherwise overlap while sliding.
