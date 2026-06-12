@@ -177,11 +177,13 @@ class _SBBSlideToToggleState extends State<SBBSlideToToggle> with SingleTickerPr
   @override
   void didUpdateWidget(SBBSlideToToggle oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (widget.onChanged != oldWidget.onChanged) {
+    if (widget.onChanged != oldWidget.onChanged || widget.isLoading != oldWidget.isLoading) {
       _updateStatesController();
     }
 
-    if (oldWidget.value != widget.value) {
+    final targetPosition = _targetPositionFor(widget.value);
+    final hasPositionDrift = (_position - targetPosition).abs() > 0.001;
+    if ((oldWidget.value != widget.value || hasPositionDrift) && !_isDragging) {
       _animateTo(_targetPositionFor(widget.value));
     }
   }
@@ -414,7 +416,7 @@ class _SBBSlideToToggleState extends State<SBBSlideToToggle> with SingleTickerPr
   void _onDragUpdate(DragUpdateDetails d) {
     final size = context.size;
 
-    if (!_isInteractive || size == null) return;
+    if (!_isInteractive || size == null || !_isDragging) return;
 
     final width = size.width - _toggleSize - _containerPadding.horizontal;
     setState(() {
@@ -428,7 +430,7 @@ class _SBBSlideToToggleState extends State<SBBSlideToToggle> with SingleTickerPr
   }
 
   void _onDragEnd(DragEndDetails d) {
-    if (!_isInteractive) return;
+    if (!_isInteractive || !_isDragging) return;
 
     setState(() => _isDragging = false);
     if (thresholdReached) {
