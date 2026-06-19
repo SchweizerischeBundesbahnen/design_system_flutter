@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 It is expected that you keep this format strictly, since we depend on it in our release workflow.
 
+## Unreleased
+
+### Fixed
+
+- set Dart SDK contraint to ^3.9.0
+
 ## [4.13.0] - 2026-06-19
 
 ### Changed
