@@ -92,7 +92,8 @@ class HeaderBoxForeground extends StatelessWidget {
       transitionBuilder: (child, animation) {
         return SizeTransition(
           sizeFactor: animation,
-          axis: .vertical,
+          // TODO: Discuss and fix in https://github.com/SchweizerischeBundesbahnen/design_system_flutter/issues/702
+          // ignore: deprecated_member_use
           axisAlignment: 1.0,
           child: child,
         );
