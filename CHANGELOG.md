@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 It is expected that you keep this format strictly, since we depend on it in our release workflow.
 
-## Unreleased
+## [4.12.1] - 2026-06-19
 
 ### Changed
 
@@ -773,6 +773,8 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 - Initial project setup
 - Added some widgets
+
+[4.12.1]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.12.0...4.12.1
 
 [4.12.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.11.0...4.12.0
 
