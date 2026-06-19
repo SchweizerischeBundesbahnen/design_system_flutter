@@ -6,20 +6,20 @@ issue_tracker: https://github.com/SchweizerischeBundesbahnen/design_system_flutt
 topics: [ icons, theme, design, design-system ]
 
 # set by Github Action
-version: 4.12.0 # automatically set by GH Action
+version: 4.13.1 # automatically set by GH Action
 
 environment:
-  sdk: ^3.10.0
-  flutter: ">=3.38.1"
+  sdk: '^3.10.0'
+  flutter: '>=3.38.1'
 
 dependencies:
   flutter:
     sdk: flutter
 
   # https://pub.dev/packages/intl
-  intl: ^0.20.0
+  intl: ^0.20.2
   # https://pub.dev/packages/collection
-  collection: ^1.18.0
+  collection: ^1.19.1
 
 dev_dependencies:
   flutter_test:
@@ -27,8 +27,6 @@ dev_dependencies:
 
   # https://pub.dev/packages/flutter_lints
   flutter_lints: ^6.0.0
-  # https://pub.dev/packages/flutter_prunekit
-  flutter_prunekit: ^2.4.0
 
 # https://dart.dev/tools/pub/pubspec#platforms
 platforms:

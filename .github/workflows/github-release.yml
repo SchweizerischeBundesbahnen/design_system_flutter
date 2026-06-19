@@ -25,14 +25,14 @@ jobs:
           private-key: ${{ secrets.APPBAKERYGITHUBAPP_PRIVATEKEY }}
 
       - name: Clone Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
         with:
           token: ${{ steps.app-token.outputs.token }}
           persist-credentials: false
 
       - name: Changelog Reader
         id: read-changelog
-        uses: mindsers/changelog-reader-action@v2.2.3
+        uses: mindsers/changelog-reader-action@v2.4.0
 
       - name: Create release tag
         uses: rickstaa/action-create-tag@v1.7.2

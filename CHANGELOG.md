@@ -78,6 +78,18 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Removed `TransparentTappableElement`
 - Removed `ClosableBoxController`, use the component specific controller like `SBBNotificationBoxController`
 
+## [4.13.1] - 2026-06-19
+
+### Fixed
+
+- set Dart SDK contraint to ^3.9.0
+
+## [4.13.0] - 2026-06-19
+
+### Changed
+
+- (auto): updated icon lib to version 1.8.25
+
 ## [4.12.0] - 2026-04-28
 
 ### Changed
@@ -842,6 +854,10 @@ It is expected that you keep this format strictly, since we depend on it in our 
 [v5 migration guide]: migration_guide.md
 
 [Unreleased]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.12.0...HEAD
+
+[4.13.1]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.13.0...4.13.1
+
+[4.13.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.12.0...4.13.0
 
 [4.12.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.11.0...4.12.0
 

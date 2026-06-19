@@ -20,7 +20,7 @@ jobs:
           app-id: ${{ vars.APPBAKERYGITHUBAPP_APPID }}
           private-key: ${{ secrets.APPBAKERYGITHUBAPP_PRIVATEKEY }}
 
-      - uses: actions/checkout@v6
+      - uses: actions/checkout@v7
         with:
           token: ${{ steps.app-token.outputs.token }}
           persist-credentials: false
@@ -33,7 +33,7 @@ jobs:
 
       - name: Write keystore from base64 encoded secret 🤫
         id: write_keystore
-        uses: timheuer/base64-to-file@v1.2
+        uses: timheuer/base64-to-file@v2.0
         with:
           fileName: "fdsm_keystore.jks"
           fileDir: "./example/android/app/keys"
@@ -42,7 +42,7 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
-          flutter-version: 3.41.x
+          flutter-version: 3.44.x
           cache: true
 
       - name: Run flutter doctor
@@ -72,7 +72,7 @@ jobs:
 
       - name: Write Google SA json from base64 encoded secret
         id: write_google_sa
-        uses: timheuer/base64-to-file@v1.2
+        uses: timheuer/base64-to-file@v2.0
         with:
           fileName: "gp_service_account.json"
           fileDir: "./example/android/app/keys"

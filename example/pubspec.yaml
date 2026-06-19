@@ -1,11 +1,11 @@
 name: "flutter_design_system_mobile_example"
 description: A showcase app for the flutter design system mobile from SBB.
-version: 4.12.0+20010419 # automatically set by GH Action
+version: 4.13.1+20010421 # automatically set by GH Action
 publish_to: "none"
 
 environment:
-  sdk: ^3.10.0
-  flutter: ">=3.38.1"
+  sdk: '^3.10.0'
+  flutter: '>=3.38.1'
 
 dependencies:
   flutter:
@@ -14,13 +14,13 @@ dependencies:
     sdk: flutter
 
   # https://pub.dev/packages/provider
-  provider: ^6.1.5
+  provider: ^6.1.5+1
 
   # https://pub.dev/packages/animations
-  animations: ^2.1.0
+  animations: ^2.2.0
 
   # https://pub.dev/packages/flutter_svg
-  flutter_svg: ^2.1.0
+  flutter_svg: ^2.3.0
 
   # https://pub.dev/packages/intl
   intl: ^0.20.2
@@ -33,8 +33,6 @@ dev_dependencies:
     sdk: flutter
   # https://pub.dev/packages/flutter_lints
   flutter_lints: ^6.0.0
-  # https://pub.dev/packages/flutter_prunekit
-  flutter_prunekit: ^2.4.0
 
 flutter:
   uses-material-design: true
