@@ -560,7 +560,7 @@ class _SBBNotificationBoxState extends State<SBBNotificationBox> with SingleTick
 
   Widget _animationBuilder({required Animation<double> animation, required Widget child}) {
     return SizeTransition(
-      axisAlignment: -1.0,
+      alignment: Alignment(-1.0, -1.0),
       sizeFactor: animation,
       child: FadeTransition(opacity: animation, child: child),
     );

@@ -93,7 +93,7 @@ class HeaderBoxForeground extends StatelessWidget {
         return SizeTransition(
           sizeFactor: animation,
           axis: .vertical,
-          axisAlignment: 1.0,
+          alignment: Alignment(-1.0, 1.0),
           child: child,
         );
       },
