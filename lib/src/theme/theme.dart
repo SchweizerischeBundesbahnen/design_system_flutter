@@ -1,8 +1,8 @@
+export 'icons/icons.dart';
+export 'sbb_base_style.dart';
+export 'sbb_color_scheme.dart';
 export 'sbb_colors.dart';
-export 'sbb_icons.dart';
-export 'sbb_icons_index.dart';
 export 'sbb_spacing.dart';
 export 'sbb_text_theme.dart';
 export 'sbb_theme.dart';
 export 'sbb_typography.dart';
-export 'styles/styles.dart';

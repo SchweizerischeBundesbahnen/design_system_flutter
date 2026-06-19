@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_design_system_mobile_example/pages/scaffold/demo_page_scaffold.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-
-import '../native_app.dart';
 
 const String text = 'Lorem ipsum sit dolor';
 
@@ -10,61 +9,51 @@ class StatusPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.all(sbbDefaultSpacing),
-      children: [
-        const ThemeModeSegmentedButton(),
-        const SizedBox(height: sbbDefaultSpacing),
-        const SBBListHeader('Default'),
-        SBBContentBox(
-          padding: const EdgeInsets.all(sbbDefaultSpacing),
-          child: Column(
-            children: [
-              SBBStatus.alert(text: text),
-              const SizedBox(height: sbbDefaultSpacing),
-              SBBStatus.warning(text: text),
-              const SizedBox(height: sbbDefaultSpacing),
-              SBBStatus.success(text: text),
-              const SizedBox(height: sbbDefaultSpacing),
-              SBBStatus.information(text: text),
-              const SizedBox(height: sbbDefaultSpacing),
-            ],
+    return DemoPageScaffold(
+      body: Column(
+        children: [
+          const SBBListHeader('Default'),
+          SBBContentBox(
+            padding: const .all(SBBSpacing.medium),
+            child: Column(
+              spacing: SBBSpacing.medium,
+              children: [
+                SBBStatus.alert(labelText: text),
+                SBBStatus.warning(labelText: text),
+                SBBStatus.success(labelText: text),
+                SBBStatus.information(labelText: text),
+              ],
+            ),
           ),
-        ),
-        const SBBListHeader('Without text'),
-        SBBContentBox(
-          padding: const EdgeInsets.all(sbbDefaultSpacing),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SBBStatus.alert(),
-              const SizedBox(width: sbbDefaultSpacing),
-              SBBStatus.warning(),
-              const SizedBox(width: sbbDefaultSpacing),
-              SBBStatus.success(),
-              const SizedBox(width: sbbDefaultSpacing),
-              SBBStatus.information(),
-              const SizedBox(width: sbbDefaultSpacing),
-            ],
+          const SBBListHeader('Without text'),
+          SBBContentBox(
+            padding: const .all(SBBSpacing.medium),
+            child: Row(
+              spacing: SBBSpacing.medium,
+              mainAxisAlignment: .center,
+              children: [
+                SBBStatus.alert(),
+                SBBStatus.warning(),
+                SBBStatus.success(),
+                SBBStatus.information(),
+              ],
+            ),
           ),
-        ),
-        const SBBListHeader('Long text'),
-        SBBContentBox(
-          padding: const EdgeInsets.all(sbbDefaultSpacing),
-          child: Column(
-            children: [
-              SBBStatus.alert(text: '$text $text $text $text'),
-              const SizedBox(height: sbbDefaultSpacing),
-              SBBStatus.warning(text: '$text $text $text $text'),
-              const SizedBox(height: sbbDefaultSpacing),
-              SBBStatus.success(text: '$text $text $text $text'),
-              const SizedBox(height: sbbDefaultSpacing),
-              SBBStatus.information(text: '$text $text $text $text'),
-              const SizedBox(height: sbbDefaultSpacing),
-            ],
+          const SBBListHeader('Long text'),
+          SBBContentBox(
+            padding: const .all(SBBSpacing.medium),
+            child: Column(
+              spacing: SBBSpacing.medium,
+              children: [
+                SBBStatus.alert(labelText: text * 10),
+                SBBStatus.warning(labelText: text * 10),
+                SBBStatus.success(labelText: text * 10),
+                SBBStatus.information(labelText: text * 10),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

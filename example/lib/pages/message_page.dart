@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_design_system_mobile_example/pages/scaffold/demo_page_scaffold.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-
-import '../native_app.dart';
 
 const _description =
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.';
@@ -14,7 +13,6 @@ class MessagePage extends StatefulWidget {
 }
 
 class _MessagePageState extends State<MessagePage> {
-  bool _showInteractionButton = true;
   bool _isLoading = false;
   bool _showIllustrations = true;
   late SBBToast _toast;
@@ -27,75 +25,63 @@ class _MessagePageState extends State<MessagePage> {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.all(sbbDefaultSpacing),
-      children: [
-        const ThemeModeSegmentedButton(),
-        const SizedBox(height: sbbDefaultSpacing),
-        const SBBListHeader('Settings'),
-        SBBContentBox(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              SBBCheckboxListItem(
-                value: _showInteractionButton,
-                label: 'Show interaction button',
-                onChanged: (value) => setState(() => _showInteractionButton = value ?? false),
-              ),
-              SBBCheckboxListItem(
-                value: _isLoading,
-                label: 'Is loading',
-                onChanged: (value) => setState(() => _isLoading = value ?? false),
-              ),
-              SBBCheckboxListItem(
-                value: _showIllustrations,
-                label: 'Show Illustrations',
-                isLastElement: true,
-                onChanged: (value) => setState(() => _showIllustrations = value ?? false),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: sbbDefaultSpacing),
-        const SBBListHeader('Default'),
-        SBBContentBox(
-          child: SBBMessage(
-            title: 'Title, single line if possible',
-            description: _description,
-            isLoading: _isLoading,
-            illustration: _showIllustrations ? MessageIllustration.Woman : null,
-            onInteraction: _onInteractionCallback(),
-          ),
-        ),
-        const SBBListHeader('Error'),
-        SBBContentBox(
-          child: SBBMessage.error(
-            title: 'Title, single line if possible',
-            description: _description,
-            messageCode: 'Error Code: XYZ-999',
-            isLoading: _isLoading,
-            illustration: _showIllustrations ? MessageIllustration.Display : null,
-            onInteraction: _onInteractionCallback(),
-          ),
-        ),
-        const SBBListHeader('Custom'),
-        SBBContentBox(
-          child: SBBMessage(
-            isLoading: _isLoading,
-            title: 'Custom',
-            description: _description,
-            customIllustration: Container(
-              alignment: Alignment.center,
-              width: 100,
-              height: 100,
-              color: SBBColors.red,
+    return DemoPageScaffold(
+      componentConfig: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: SBBDivider.divideItems(
+          context: context,
+          items: [
+            SBBSwitchListItem(
+              value: _isLoading,
+              titleText: 'Is Loading',
+              onChanged: (value) => setState(() => _isLoading = value),
             ),
-            onInteraction: _onInteractionCallback(),
-          ),
+            SBBSwitchListItem(
+              value: _showIllustrations,
+              titleText: 'Show Illustrations',
+              onChanged: (value) => setState(() => _showIllustrations = value),
+            ),
+          ],
         ),
-      ],
+      ),
+      body: Column(
+        children: [
+          const SizedBox(height: SBBSpacing.medium),
+          const SBBListHeader('Default'),
+          SBBContentBox(
+            child: SBBMessage(
+              titleText: 'Title, single line if possible',
+              subtitleText: _description,
+              isLoading: _isLoading,
+              illustration: _showIllustrations ? SBBIllustration.staffMale() : null,
+            ),
+          ),
+          const SizedBox(height: SBBSpacing.medium),
+          SBBContentBox(
+            child: SBBMessage(
+              titleText: 'Telescope',
+              isLoading: _isLoading,
+              illustration: _showIllustrations ? SBBIllustration.telescope() : null,
+            ),
+          ),
+          const SBBListHeader('Error'),
+          SBBContentBox(
+            child: SBBMessage(
+              titleText: 'Title, single line if possible',
+              subtitleText: _description,
+              errorText: 'Error Code: XYZ-999',
+              isLoading: _isLoading,
+              illustration: _showIllustrations ? SBBIllustration.display() : null,
+              action: SBBTertiaryButton(
+                onPressed: () {
+                  _toast.show(titleText: 'Error');
+                },
+                iconData: SBBIcons.arrows_circle_small,
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
-
-  VoidCallback? _onInteractionCallback() => _showInteractionButton ? () => _toast.show(title: 'Tapped') : null;
 }

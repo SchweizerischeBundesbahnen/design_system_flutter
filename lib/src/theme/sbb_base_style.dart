@@ -1,0 +1,168 @@
+import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+
+/// Base style used in [SBBTheme].
+///
+/// Provides the shared visual defaults (brightness, color scheme, text and
+/// icon styles, dividers and text selection) that SBB components use.
+///
+/// Access the base style by using `Theme.of(context).sbbBaseStyle`.
+///
+/// See also:
+///
+/// * [SBBColorScheme], the color values used by this base style.
+/// * [SBBTheme], helpers to create full ThemeData from an SBB base style.
+class SBBBaseStyle extends ThemeExtension<SBBBaseStyle> {
+  SBBBaseStyle({
+    required this.brightness,
+    required this.colorScheme,
+    required this.textTheme,
+    this.iconTheme,
+    this.dividerTheme,
+    this.textSelectionTheme,
+  });
+
+  factory SBBBaseStyle.$default({required Brightness brightness, required SBBThemeContext themeContext}) =>
+      SBBBaseStyle.fromThemeContext(brightness: brightness, context: themeContext);
+
+  /// Creates the base style from the provided [SBBThemeContext]
+  factory SBBBaseStyle.fromThemeContext({required Brightness brightness, required SBBThemeContext context}) =>
+      SBBBaseStyle.fromColorScheme(
+        brightness: brightness,
+        colorScheme: context.colorScheme(brightness: brightness),
+      );
+
+  /// Creates the base style from the provided [SBBColorScheme]
+  factory SBBBaseStyle.fromColorScheme({required Brightness brightness, required SBBColorScheme colorScheme}) {
+    return SBBBaseStyle(
+      brightness: brightness,
+      colorScheme: colorScheme,
+      textTheme: SBBTextTheme.$default(colorScheme: colorScheme),
+      dividerTheme: DividerThemeData(thickness: 1.0, space: 0.0, color: colorScheme.strokeSeparator),
+      iconTheme: IconThemeData(color: colorScheme.iconPrimary, size: sbbIconSizeSmall),
+      textSelectionTheme: TextSelectionThemeData(
+        cursorColor: colorScheme.selection,
+        selectionColor: colorScheme.selection?.withValues(alpha: 0.5),
+        selectionHandleColor: colorScheme.selection,
+      ),
+    );
+  }
+
+  /// The brightness (light or dark) of the theme.
+  final Brightness brightness;
+
+  /// The color scheme that provides the default colors for the theme and components.
+  final SBBColorScheme colorScheme;
+
+  /// The SBB text theme used to derive text styles.
+  final SBBTextTheme textTheme;
+
+  /// Icon theme providing default icon color and size. If null, default of [ThemeData] is used.
+  final IconThemeData? iconTheme;
+
+  /// Divider theme used for default divider appearance. If null, default of [ThemeData] is used.
+  final DividerThemeData? dividerTheme;
+
+  /// Text selection theme (cursor, selection, handles). If null, default of [ThemeData] is used.
+  final TextSelectionThemeData? textSelectionTheme;
+
+  static T resolve<T>(bool isLight, T lightThemeValue, T darkThemeValue) => isLight ? lightThemeValue : darkThemeValue;
+
+  T themeValue<T>(T lightThemeValue, T darkThemeValue) =>
+      resolve(brightness == .light, lightThemeValue, darkThemeValue);
+
+  @override
+  ThemeExtension<SBBBaseStyle> copyWith({
+    Brightness? brightness,
+    SBBColorScheme? colorScheme,
+    SBBTextTheme? textTheme,
+    IconThemeData? iconTheme,
+    DividerThemeData? dividerTheme,
+    TextSelectionThemeData? textSelectionTheme,
+  }) => SBBBaseStyle(
+    brightness: brightness ?? this.brightness,
+    colorScheme: colorScheme ?? this.colorScheme,
+    textTheme: textTheme ?? this.textTheme,
+    iconTheme: iconTheme ?? this.iconTheme,
+    dividerTheme: dividerTheme ?? this.dividerTheme,
+    textSelectionTheme: textSelectionTheme ?? this.textSelectionTheme,
+  );
+
+  @override
+  ThemeExtension<SBBBaseStyle> lerp(ThemeExtension<SBBBaseStyle>? other, double t) {
+    if (other is! SBBBaseStyle) return this;
+    return SBBBaseStyle(
+      brightness: other.brightness,
+      colorScheme: colorScheme.lerp(other.colorScheme, t),
+      textTheme: textTheme.lerp(other.textTheme, t),
+      iconTheme: IconThemeData.lerp(iconTheme, other.iconTheme, t),
+      dividerTheme: DividerThemeData.lerp(dividerTheme, other.dividerTheme, t),
+      textSelectionTheme: TextSelectionThemeData.lerp(textSelectionTheme, other.textSelectionTheme, t),
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is SBBBaseStyle &&
+          runtimeType == other.runtimeType &&
+          brightness == other.brightness &&
+          colorScheme == other.colorScheme &&
+          textTheme == other.textTheme &&
+          iconTheme == other.iconTheme &&
+          dividerTheme == other.dividerTheme &&
+          textSelectionTheme == other.textSelectionTheme;
+
+  @override
+  int get hashCode => Object.hash(brightness, colorScheme, textTheme, iconTheme, dividerTheme, textSelectionTheme);
+
+  SBBBaseStyle merge(SBBBaseStyle? other) {
+    return copyWith(
+          brightness: other?.brightness,
+          colorScheme: other?.colorScheme,
+          textTheme: textTheme.merge(other?.textTheme),
+          iconTheme: iconTheme?.merge(other?.iconTheme) ?? other?.iconTheme,
+          dividerTheme: dividerTheme?.merge(other?.dividerTheme) ?? other?.dividerTheme,
+          textSelectionTheme: textSelectionTheme?.merge(other?.textSelectionTheme) ?? other?.textSelectionTheme,
+        )
+        as SBBBaseStyle;
+  }
+}
+
+extension SBBBaseStyleThemeDataX on ThemeData {
+  /// Access the [SBBBaseStyle] from the current theme.
+  SBBBaseStyle get sbbBaseStyle => extension<SBBBaseStyle>()!;
+}
+
+extension SBBDividerThemeDataMergeX on DividerThemeData {
+  DividerThemeData merge(DividerThemeData? other) {
+    if (other == null) return this;
+    return copyWith(
+      color: other.color,
+      space: other.space,
+      thickness: other.thickness,
+      indent: other.indent,
+      endIndent: other.endIndent,
+      radius: other.radius,
+    );
+  }
+}
+
+extension SBBTextSelectionThemeDataMergeX on TextSelectionThemeData {
+  TextSelectionThemeData merge(TextSelectionThemeData? other) {
+    if (other == null) return this;
+    return copyWith(
+      cursorColor: other.cursorColor,
+      selectionColor: other.selectionColor,
+      selectionHandleColor: other.selectionHandleColor,
+    );
+  }
+}
+
+extension SBBThemeContextX on SBBThemeContext {
+  SBBColorScheme colorScheme({required Brightness brightness}) => switch (this) {
+    .sbb => brightness == .light ? SBBColorScheme.sbb() : SBBColorScheme.sbbDark(),
+    .offBrand => brightness == .light ? SBBColorScheme.offBrand() : SBBColorScheme.offBrandDark(),
+    .safety => brightness == .light ? SBBColorScheme.safety() : SBBColorScheme.safetyDark(),
+  };
+}

@@ -25,21 +25,20 @@ void main() {
   generateTest('typography_defaults', [
     // misc
     null, // default text style
-    SBBTextStyles.helpersLabel,
     // light font constants
-    SBBTextStyles.extraExtraLargeLight,
-    SBBTextStyles.extraLargeLight,
+    SBBTextStyles.xxLargeLight,
+    SBBTextStyles.xLargeLight,
     SBBTextStyles.largeLight,
     SBBTextStyles.mediumLight,
     SBBTextStyles.smallLight,
-    SBBTextStyles.extraSmallLight,
+    SBBTextStyles.xSmallLight,
     // bold font constants
-    SBBTextStyles.extraExtraLargeBold,
-    SBBTextStyles.extraLargeBold,
+    SBBTextStyles.xxLargeBold,
+    SBBTextStyles.xLargeBold,
     SBBTextStyles.largeBold,
     SBBTextStyles.mediumBold,
     SBBTextStyles.smallBold,
-    SBBTextStyles.extraSmallBold,
+    SBBTextStyles.xSmallBold,
   ]);
 
   generateTest('typography_ultra_light', [
@@ -146,14 +145,12 @@ void main() {
     sbbTextStyle.condensedHeavyStyle.small.italic,
     sbbTextStyle.condensedHeavyStyle.xSmall.italic,
   ]);
-
-  testWidget('typography_red_text_theme', TypographyRedThemeTest());
 }
 
 class TypographyTest extends StatelessWidget {
-  static const exampleText = 'The quick brown fox jumps over the lazy dog';
-
   const TypographyTest({super.key, required this.name, required this.textStyles});
+
+  static const exampleText = 'The quick brown fox jumps over the lazy dog';
 
   final String name;
   final List<TextStyle?> textStyles;
@@ -164,30 +161,17 @@ class TypographyTest extends StatelessWidget {
       children: [
         SBBListHeader(name),
         SizedBox(
-          width: double.infinity,
+          width: .infinity,
           child: SBBContentBox(
-            padding: EdgeInsets.all(sbbDefaultSpacing),
+            padding: .all(SBBSpacing.medium),
             child: Column(
-              spacing: sbbDefaultSpacing * 0.5,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: SBBSpacing.xSmall,
+              crossAxisAlignment: .start,
               children: textStyles.map((e) => Text(exampleText, style: e)).toList(),
             ),
           ),
         ),
       ],
-    );
-  }
-}
-
-class TypographyRedThemeTest extends StatelessWidget {
-  const TypographyRedThemeTest({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    final textTheme = SBBBaseStyle.of(context).redTextTheme;
-    return TypographyTest(
-      name: 'typography_red_text_theme',
-      textStyles: [textTheme.bodyLarge, textTheme.bodyMedium, textTheme.bodySmall],
     );
   }
 }

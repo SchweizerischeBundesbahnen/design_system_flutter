@@ -1,6 +1,5 @@
 import 'package:flutter/widgets.dart';
-
-import '../../sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// The SBB Logo also known as the SBB Signet. Use according to documentation.
 ///
@@ -20,7 +19,7 @@ class SBBLogo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final paint = Paint()
-      ..style = PaintingStyle.fill
+      ..style = .fill
       ..color = color;
 
     return LayoutBuilder(
@@ -28,14 +27,14 @@ class SBBLogo extends StatelessWidget {
         var targetHeight = 0.0;
         var targetWidth = 0.0;
         if (height != null) {
-          if (height == double.infinity) {
+          if (height == .infinity) {
             targetHeight = constraints.maxHeight;
           } else {
             targetHeight = height!;
           }
         }
         if (width != null) {
-          if (width == double.infinity) {
+          if (width == .infinity) {
             targetWidth = constraints.maxWidth;
           } else {
             targetWidth = width!;
@@ -92,8 +91,8 @@ class _Painter extends CustomPainter {
   final Path path;
 
   @override
-  void paint(Canvas canvas, Size size) => canvas.drawPath(path, paintObject);
+  void paint(Canvas canvas, _) => canvas.drawPath(path, paintObject);
 
   @override
-  bool shouldRepaint(covariant CustomPainter oldDelegate) => false;
+  bool shouldRepaint(_) => false;
 }

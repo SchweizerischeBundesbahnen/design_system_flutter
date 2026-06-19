@@ -1,48 +1,55 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_design_system_mobile_example/pages/autocompletion_page.dart';
+import 'package:flutter_design_system_mobile_example/pages/bottom_sheet_page.dart';
+import 'package:flutter_design_system_mobile_example/pages/button_page.dart';
+import 'package:flutter_design_system_mobile_example/pages/checkbox_page.dart';
+import 'package:flutter_design_system_mobile_example/pages/chip_page.dart';
+import 'package:flutter_design_system_mobile_example/pages/color_page.dart';
+import 'package:flutter_design_system_mobile_example/pages/container_page.dart';
+import 'package:flutter_design_system_mobile_example/pages/decorated_text_page.dart';
+import 'package:flutter_design_system_mobile_example/pages/dropdown_page.dart';
+import 'package:flutter_design_system_mobile_example/pages/form_page.dart';
+import 'package:flutter_design_system_mobile_example/pages/header_box_page.dart';
+import 'package:flutter_design_system_mobile_example/pages/header_page.dart';
+import 'package:flutter_design_system_mobile_example/pages/icon_page.dart';
+import 'package:flutter_design_system_mobile_example/pages/illustration_page.dart';
+import 'package:flutter_design_system_mobile_example/pages/list_item_page.dart';
+import 'package:flutter_design_system_mobile_example/pages/loading_indicator_page.dart';
+import 'package:flutter_design_system_mobile_example/pages/message_page.dart';
+import 'package:flutter_design_system_mobile_example/pages/notification_box_page.dart';
+import 'package:flutter_design_system_mobile_example/pages/paginator_page.dart';
+import 'package:flutter_design_system_mobile_example/pages/picker_page.dart';
+import 'package:flutter_design_system_mobile_example/pages/popup_page.dart';
+import 'package:flutter_design_system_mobile_example/pages/promotion_box_page.dart';
+import 'package:flutter_design_system_mobile_example/pages/radio_page.dart';
+import 'package:flutter_design_system_mobile_example/pages/scaffold/theme_sliver_header_box.dart';
+import 'package:flutter_design_system_mobile_example/pages/segmented_button_page.dart';
+import 'package:flutter_design_system_mobile_example/pages/slide_to_toggle_page.dart';
+import 'package:flutter_design_system_mobile_example/pages/slider_page.dart';
+import 'package:flutter_design_system_mobile_example/pages/status_page.dart';
+import 'package:flutter_design_system_mobile_example/pages/stepper_page.dart';
+import 'package:flutter_design_system_mobile_example/pages/switch_page.dart';
+import 'package:flutter_design_system_mobile_example/pages/tab_bar_page.dart';
+import 'package:flutter_design_system_mobile_example/pages/text_area_page.dart';
+import 'package:flutter_design_system_mobile_example/pages/text_input_page.dart';
+import 'package:flutter_design_system_mobile_example/pages/toast_page.dart';
+import 'package:flutter_design_system_mobile_example/pages/typography_page.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
-import 'pages/autocompletion_page.dart';
-import 'pages/button_page.dart';
-import 'pages/checkbox_page.dart';
-import 'pages/chip_page.dart';
-import 'pages/color_page.dart';
-import 'pages/container_page.dart';
-import 'pages/header_box_page.dart';
-import 'pages/header_page.dart';
-import 'pages/icon_page.dart';
-import 'pages/input_trigger_page.dart';
-import 'pages/link_page.dart';
-import 'pages/list_header_page.dart';
-import 'pages/list_item_page.dart';
-import 'pages/loading_indicator_page.dart';
-import 'pages/message_page.dart';
-import 'pages/modal_page.dart';
-import 'pages/notification_box_page.dart';
-import 'pages/onboarding_page.dart';
-import 'pages/pagination_page.dart';
-import 'pages/picker_page.dart';
-import 'pages/promotion_box_page.dart';
-import 'pages/radio_button_page.dart';
-import 'pages/segmented_button_page.dart';
-import 'pages/select_page.dart';
-import 'pages/slider_page.dart';
-import 'pages/status_page.dart';
-import 'pages/stepper_page.dart';
-import 'pages/switch_page.dart';
-import 'pages/tab_bar_page.dart';
-import 'pages/text_field_page.dart';
-import 'pages/toast_page.dart';
-import 'pages/typography_page.dart';
-
 class AppState extends ChangeNotifier {
   bool isDarkModeOn = false;
+  SBBThemeContext themeContext = .sbb;
 
   void updateTheme(bool isDarkModeOn) {
     this.isDarkModeOn = isDarkModeOn;
+    notifyListeners();
+  }
+
+  void updateThemeContext(SBBThemeContext themeContext) {
+    this.themeContext = themeContext;
     notifyListeners();
   }
 }
@@ -55,11 +62,11 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => AppState(),
       child: Consumer<AppState>(
-        builder: (BuildContext context, AppState appState, _) {
+        builder: (context, appState, _) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            theme: SBBTheme.light(),
-            darkTheme: SBBTheme.dark(),
+            theme: SBBTheme.light(themeContext: appState.themeContext),
+            darkTheme: SBBTheme.dark(themeContext: appState.themeContext),
             themeMode: appState.isDarkModeOn ? ThemeMode.dark : ThemeMode.light,
             localizationsDelegates: const [
               GlobalMaterialLocalizations.delegate,
@@ -69,101 +76,132 @@ class MyApp extends StatelessWidget {
             supportedLocales: const [Locale('en'), Locale('de'), Locale('fr'), Locale('it')],
             locale: const Locale('de'),
             home: Scaffold(
-              appBar: const SBBHeader(
-                title: 'Design System Mobile',
-                systemOverlayStyle: SystemUiOverlayStyle.light,
-              ),
-              body: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
-                  child: Column(
-                    children: [
-                      const Padding(
-                        padding: EdgeInsets.symmetric(vertical: sbbDefaultSpacing),
-                        child: ThemeModeSegmentedButton(),
-                      ),
-                      const SBBListHeader('Basics'),
-                      SBBContentBox(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            _DemoEntry('Icon', IconPage()),
-                            _DemoEntry('Typography', TypographyPage()),
-                            _DemoEntry('Color', ColorPage(), isLastElement: true),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: sbbDefaultSpacing),
-                      const SBBListHeader('Elements'),
-                      SBBContentBox(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const <Widget>[
-                            _DemoEntry('Button', ButtonPage()),
-                            _DemoEntry('Checkbox', CheckboxPage()),
-                            _DemoEntry('Link', LinkPage()),
-                            _DemoEntry('List Header', ListHeaderPage()),
-                            _DemoEntry('List Item', ListItemPage()),
-                            _DemoEntry('Loading Indicator', LoadingIndicatorPage()),
-                            _DemoEntry('Picker', PickerPage()),
-                            _DemoEntry('Radio Button', RadiobuttonPage()),
-                            _DemoEntry('Segmented Button', SegmentedButtonPage()),
-                            _DemoEntry('Select', SelectPage()),
-                            _DemoEntry('Switch', SwitchPage()),
-                            _DemoEntry('Textfield / Textarea', TextFieldPage()),
-                            _DemoEntry('Chip', ChipPage()),
-                            _DemoEntry('Pagination', PaginationPage()),
-                            _DemoEntry('Slider', SliderPage()),
-                            _DemoEntry('Promotion Box', PromotionBoxPage()),
-                            _DemoEntry('Notification Box', NotificationBoxPage()),
-                            _DemoEntry('Status', StatusPage()),
-                            _DemoEntry('Input Trigger', InputTriggerPage(), isLastElement: true),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: sbbDefaultSpacing),
-                      const SBBListHeader('Modules'),
-                      SBBContentBox(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const <Widget>[
-                            _DemoEntry('Autocompletion', AutocompletionPage()),
-                            _DemoEntry('Group', ContainerPage()),
-                            _DemoEntry('Header', HeaderPage()),
-                            _DemoEntry('Headerbox', HeaderBoxPage()),
-                            _DemoEntry('Modal', ModalPage()),
-                            _DemoEntry('Toast', ToastPage()),
-                            _DemoEntry('Onboarding', OnboardingPage()),
-                            _DemoEntry('Message', MessagePage()),
-                            _DemoEntry('Stepper', StepperPage()),
-                            _DemoEntry('Tab Bar', TabBarPage(), isLastElement: true),
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: sbbDefaultSpacing),
-                    ],
-                  ),
-                ),
-              ),
+              appBar: const SBBHeaderSmall(titleText: 'Design System Mobile'),
+              body: _content(),
             ),
           );
         },
       ),
     );
   }
+
+  Widget _content() {
+    return Builder(
+      builder: (context) {
+        return CustomScrollView(
+          slivers: [
+            ThemeSliverHeaderbox(),
+            SliverPadding(
+              padding: const .symmetric(horizontal: SBBSpacing.xSmall),
+              sliver: SliverList.list(
+                children: [
+                  _DemoGroup(
+                    title: 'Basics',
+                    children: [
+                      _DemoEntry('Icon', IconPage()),
+                      _DemoEntry('Typography', TypographyPage()),
+                      _DemoEntry('Color', ColorPage()),
+                      _DemoEntry('Container', ContainerPage()),
+                    ],
+                  ),
+                  const SizedBox(height: SBBSpacing.medium),
+                  _DemoGroup(
+                    title: 'Action',
+                    children: [
+                      _DemoEntry('Button', ButtonPage()),
+                      _DemoEntry('List Item', ListItemPage()),
+                      _DemoEntry('Slide-To-Toggle', SlideToTogglePage()),
+                    ],
+                  ),
+                  const SizedBox(height: SBBSpacing.medium),
+                  _DemoGroup(
+                    title: 'Indicator',
+                    children: [
+                      _DemoEntry('Illustrations', IllustrationPage()),
+                      _DemoEntry('Loading Indicator', LoadingIndicatorPage()),
+                      _DemoEntry('Message', MessagePage()),
+                      _DemoEntry('Notification Box', NotificationBoxPage()),
+                      _DemoEntry('Paginator', PaginatorPage()),
+                      _DemoEntry('Promotion Box', PromotionBoxPage()),
+                      _DemoEntry('Status', StatusPage()),
+                      _DemoEntry('Toast', ToastPage()),
+                    ],
+                  ),
+                  const SizedBox(height: SBBSpacing.medium),
+                  _DemoGroup(
+                    title: 'Form',
+                    children: [
+                      _DemoEntry('Autocompletion', AutocompletionPage()),
+                      _DemoEntry('Checkbox', CheckboxPage()),
+                      _DemoEntry('Chip', ChipPage()),
+                      _DemoEntry('Decorated Text', DecoratedTextPage()),
+                      _DemoEntry('Dropdown', DropdownPage()),
+                      _DemoEntry('Form Fields', FormPage()),
+                      _DemoEntry('Picker', PickerPage()),
+                      _DemoEntry('Radio', RadioPage()),
+                      _DemoEntry('Slider', SliderPage()),
+                      _DemoEntry('Switch', SwitchPage()),
+                      _DemoEntry('Text Input', TextInputPage()),
+                      _DemoEntry('Text Area', TextAreaPage()),
+                    ],
+                  ),
+                  const SizedBox(height: SBBSpacing.medium),
+                  _DemoGroup(
+                    title: 'Navigation',
+                    children: [
+                      _DemoEntry('Bottom Sheet', BottomSheetPage()),
+                      _DemoEntry('Header', HeaderPage()),
+                      _DemoEntry('Header-Box', HeaderBoxPage()),
+                      _DemoEntry('Popup', PopupPage()),
+                      _DemoEntry('Segmented Button', SegmentedButtonPage()),
+                      _DemoEntry('Stepper', StepperPage()),
+                      _DemoEntry('Tab Bar', TabBarPage()),
+                    ],
+                  ),
+                  const SizedBox(height: SBBSpacing.xLarge),
+                ],
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
 }
 
-class _DemoEntry extends StatelessWidget {
-  const _DemoEntry(this.title, this.page, {this.isLastElement = false});
+class _DemoGroup extends StatelessWidget {
+  const _DemoGroup({required this.title, required this.children});
 
   final String title;
-  final Widget page;
-  final bool isLastElement;
+  final List<Widget> children;
 
   @override
   Widget build(BuildContext context) {
-    final isLight = Theme.of(context).brightness == Brightness.light;
-    final color = SBBBaseStyle.resolve(isLight, SBBColors.white, SBBColors.charcoal);
+    return Column(
+      children: [
+        SBBListHeader(title),
+        SBBContentBox(
+          child: Column(
+            mainAxisAlignment: .center,
+            children: SBBDivider.divideItems(
+              context: context,
+              items: children,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _DemoEntry extends StatelessWidget {
+  const _DemoEntry(this.title, this.page);
+
+  final String title;
+  final Widget page;
+
+  @override
+  Widget build(BuildContext context) {
     return OpenContainer(
       closedElevation: 0.0,
       openElevation: 0.0,
@@ -171,20 +209,12 @@ class _DemoEntry extends StatelessWidget {
       closedColor: SBBColors.transparent,
       closedShape: const RoundedRectangleBorder(),
       openShape: const RoundedRectangleBorder(),
-      closedBuilder: (context, action) {
-        return Container(
-          color: color,
-          child: SBBListItem(
-            title: title,
-            trailingIcon: SBBIcons.chevron_small_right_small,
-            onPressed: action,
-            isLastElement: isLastElement,
-          ),
-        );
-      },
-      openBuilder: (context, action) {
-        return _DemoPage(title, page);
-      },
+      closedBuilder: (_, action) => SBBListItem(
+        titleText: title,
+        trailingIconData: SBBIcons.chevron_small_right_small,
+        onTap: action,
+      ),
+      openBuilder: (context, action) => _DemoPage(title, page),
     );
   }
 }
@@ -198,23 +228,8 @@ class _DemoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SBBHeader(title: title, onPressedLogo: () => Navigator.maybePop(context), logoTooltip: 'Back to home'),
+      appBar: SBBHeaderSmall(titleText: title),
       body: child,
-    );
-  }
-}
-
-class ThemeModeSegmentedButton extends StatelessWidget {
-  const ThemeModeSegmentedButton({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return SBBSegmentedButton.icon(
-      icons: {SBBIcons.sunshine_small: 'Light theme', SBBIcons.moon_small: 'Dark theme'},
-      selectedIndexChanged: (value) {
-        Provider.of<AppState>(context, listen: false).updateTheme(value == 1);
-      },
-      selectedStateIndex: Provider.of<AppState>(context).isDarkModeOn ? 1 : 0,
     );
   }
 }

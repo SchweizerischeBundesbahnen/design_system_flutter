@@ -1,0 +1,263 @@
+import 'dart:ui';
+
+import 'package:flutter/widgets.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+
+/// Defines the visual properties of [SBBListItem].
+///
+/// Use this class in combination with [SBBListItemThemeData] to customize
+/// the appearance of list items throughout your app or for specific widget subtrees.
+///
+/// ## Sample code
+///
+/// ```dart
+/// SBBListItem(
+///   titleText: 'Title',
+///   subtitleText: 'Subtitle',
+///   onTap: () {},
+///   style: SBBListItemStyle(
+///     backgroundColor: WidgetStateProperty.all(Colors.white),
+///     titleForegroundColor: WidgetStateProperty.all(Colors.black),
+///   ),
+/// )
+/// ```
+///
+/// See also:
+/// * [SBBListItem], the widget that uses this style.
+/// * [SBBListItemThemeData], which applies this style theme-wide.
+class SBBListItemStyle {
+  const SBBListItemStyle({
+    this.titleTextStyle,
+    this.titleTextMaxLines,
+    this.subtitleTextStyle,
+    this.subtitleTextMaxLines,
+    this.titleForegroundColor,
+    this.subtitleForegroundColor,
+    this.leadingForegroundColor,
+    this.trailingForegroundColor,
+    this.backgroundColor,
+    this.overlayColor,
+    this.padding,
+    this.leadingHorizontalGapWidth,
+    this.subtitleVerticalGapHeight,
+    this.trailingHorizontalGapWidth,
+  });
+
+  /// The text style for the list item title.
+  ///
+  /// Applies to all text descendants of the title of SBBListItem.
+  ///
+  /// The color of the [titleTextStyle] is typically not used directly, the
+  /// [titleForegroundColor] is used instead.
+  final TextStyle? titleTextStyle;
+
+  /// An optional maximum number of lines for the title text to span, wrapping if necessary.
+  ///
+  /// This will only apply if [SBBListItem.titleText] is used.
+  final int? titleTextMaxLines;
+
+  /// The text style for the list item subtitle.
+  ///
+  /// Applies to all text descendants of the subtitle of SBBListItem.
+  ///
+  /// The color of the [subtitleTextStyle] is typically not used directly, the
+  /// [subtitleForegroundColor] is used instead.
+  final TextStyle? subtitleTextStyle;
+
+  /// An optional maximum number of lines for the subtitle text to span, wrapping if necessary.
+  ///
+  /// This will only apply if [SBBListItem.subtitleText] is used.
+  final int? subtitleTextMaxLines;
+
+  /// The color of the title text.
+  ///
+  /// This color is typically used instead of the color of the [titleTextStyle].
+  final WidgetStateProperty<Color?>? titleForegroundColor;
+
+  /// The color of the subtitle text.
+  ///
+  /// This color is typically used instead of the color of the [subtitleTextStyle].
+  final WidgetStateProperty<Color?>? subtitleForegroundColor;
+
+  /// The color of the leading widget content.
+  ///
+  /// This affects the icon or content color of the leading widget.
+  final WidgetStateProperty<Color?>? leadingForegroundColor;
+
+  /// The color of the trailing widget content.
+  ///
+  /// This affects the icon or content color of the trailing widget.
+  final WidgetStateProperty<Color?>? trailingForegroundColor;
+
+  /// The overlay color shown on interaction.
+  ///
+  /// This creates the visual feedback when the list item is interacted with.
+  final WidgetStateProperty<Color?>? overlayColor;
+
+  /// The background color of the list item.
+  ///
+  /// This fills the entire list item.
+  final WidgetStateProperty<Color?>? backgroundColor;
+
+  /// The padding around the list item's content.
+  ///
+  /// If null, the default padding is used.
+  final EdgeInsetsGeometry? padding;
+
+  /// The horizontal gap width between the leading widget and the title/subtitle.
+  ///
+  /// Defaults to 8.0.
+  final double? leadingHorizontalGapWidth;
+
+  /// The vertical gap height between the title and subtitle.
+  ///
+  /// Defaults to 4.0.
+  final double? subtitleVerticalGapHeight;
+
+  /// The horizontal gap height between the title and trailing.
+  ///
+  /// Defaults to 16.0.
+  final double? trailingHorizontalGapWidth;
+
+  /// The default padding of the list item.
+  static const EdgeInsets defaultPadding = .symmetric(horizontal: 16.0, vertical: 10.0);
+
+  /// The minimum vertical height of a list item without [SBBListItem.padding] applied.
+  ///
+  /// This ensures list items meet accessibility standards for touch targets.
+  static const double minInnerHeight = 24.0;
+
+  SBBListItemStyle copyWith({
+    TextStyle? titleTextStyle,
+    int? titleTextMaxLines,
+    TextStyle? subtitleTextStyle,
+    int? subtitleTextMaxLines,
+    WidgetStateProperty<Color?>? titleForegroundColor,
+    WidgetStateProperty<Color?>? subtitleForegroundColor,
+    WidgetStateProperty<Color?>? leadingForegroundColor,
+    WidgetStateProperty<Color?>? trailingForegroundColor,
+    WidgetStateProperty<Color?>? overlayColor,
+    WidgetStateProperty<Color?>? backgroundColor,
+    EdgeInsetsGeometry? padding,
+    double? trailingHorizontalGapWidth,
+    double? leadingHorizontalGapWidth,
+    double? subtitleVerticalGapHeight,
+  }) {
+    return SBBListItemStyle(
+      titleTextStyle: titleTextStyle ?? this.titleTextStyle,
+      titleTextMaxLines: titleTextMaxLines ?? this.titleTextMaxLines,
+      subtitleTextStyle: subtitleTextStyle ?? this.subtitleTextStyle,
+      subtitleTextMaxLines: subtitleTextMaxLines ?? this.subtitleTextMaxLines,
+      titleForegroundColor: titleForegroundColor ?? this.titleForegroundColor,
+      subtitleForegroundColor: subtitleForegroundColor ?? this.subtitleForegroundColor,
+      leadingForegroundColor: leadingForegroundColor ?? this.leadingForegroundColor,
+      trailingForegroundColor: trailingForegroundColor ?? this.trailingForegroundColor,
+      overlayColor: overlayColor ?? this.overlayColor,
+      backgroundColor: backgroundColor ?? this.backgroundColor,
+      padding: padding ?? this.padding,
+      leadingHorizontalGapWidth: leadingHorizontalGapWidth ?? this.leadingHorizontalGapWidth,
+      subtitleVerticalGapHeight: subtitleVerticalGapHeight ?? this.subtitleVerticalGapHeight,
+      trailingHorizontalGapWidth: trailingHorizontalGapWidth ?? this.trailingHorizontalGapWidth,
+    );
+  }
+
+  SBBListItemStyle merge(SBBListItemStyle? other) {
+    if (other == null) return this;
+
+    return copyWith(
+      titleTextStyle: other.titleTextStyle,
+      titleTextMaxLines: other.titleTextMaxLines,
+      subtitleTextStyle: other.subtitleTextStyle,
+      subtitleTextMaxLines: other.subtitleTextMaxLines,
+      titleForegroundColor: other.titleForegroundColor,
+      subtitleForegroundColor: other.subtitleForegroundColor,
+      leadingForegroundColor: other.leadingForegroundColor,
+      trailingForegroundColor: other.trailingForegroundColor,
+      overlayColor: other.overlayColor,
+      backgroundColor: other.backgroundColor,
+      padding: other.padding,
+      leadingHorizontalGapWidth: other.leadingHorizontalGapWidth,
+      subtitleVerticalGapHeight: other.subtitleVerticalGapHeight,
+      trailingHorizontalGapWidth: other.trailingHorizontalGapWidth,
+    );
+  }
+
+  static SBBListItemStyle? lerp(SBBListItemStyle? a, SBBListItemStyle? b, double t) {
+    if (identical(a, b)) return a;
+
+    return SBBListItemStyle(
+      titleTextStyle: TextStyle.lerp(a?.titleTextStyle, b?.titleTextStyle, t),
+      titleTextMaxLines: t < 0.5 ? a?.titleTextMaxLines : b?.titleTextMaxLines,
+      subtitleTextStyle: TextStyle.lerp(a?.subtitleTextStyle, b?.subtitleTextStyle, t),
+      subtitleTextMaxLines: t < 0.5 ? a?.subtitleTextMaxLines : b?.subtitleTextMaxLines,
+      titleForegroundColor: WidgetStateProperty.lerp<Color?>(
+        a?.titleForegroundColor,
+        b?.titleForegroundColor,
+        t,
+        Color.lerp,
+      ),
+      subtitleForegroundColor: WidgetStateProperty.lerp<Color?>(
+        a?.subtitleForegroundColor,
+        b?.subtitleForegroundColor,
+        t,
+        Color.lerp,
+      ),
+      leadingForegroundColor: WidgetStateProperty.lerp<Color?>(
+        a?.leadingForegroundColor,
+        b?.leadingForegroundColor,
+        t,
+        Color.lerp,
+      ),
+      trailingForegroundColor: WidgetStateProperty.lerp<Color?>(
+        a?.trailingForegroundColor,
+        b?.trailingForegroundColor,
+        t,
+        Color.lerp,
+      ),
+      overlayColor: WidgetStateProperty.lerp<Color?>(a?.overlayColor, b?.overlayColor, t, Color.lerp),
+      backgroundColor: WidgetStateProperty.lerp<Color?>(a?.backgroundColor, b?.backgroundColor, t, Color.lerp),
+      padding: EdgeInsetsGeometry.lerp(a?.padding, b?.padding, t),
+      leadingHorizontalGapWidth: lerpDouble(a?.leadingHorizontalGapWidth, b?.leadingHorizontalGapWidth, t),
+      subtitleVerticalGapHeight: lerpDouble(a?.subtitleVerticalGapHeight, b?.subtitleVerticalGapHeight, t),
+      trailingHorizontalGapWidth: lerpDouble(a?.trailingHorizontalGapWidth, b?.trailingHorizontalGapWidth, t),
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is SBBListItemStyle &&
+          runtimeType == other.runtimeType &&
+          titleTextStyle == other.titleTextStyle &&
+          titleTextMaxLines == other.titleTextMaxLines &&
+          subtitleTextStyle == other.subtitleTextStyle &&
+          subtitleTextMaxLines == other.subtitleTextMaxLines &&
+          titleForegroundColor == other.titleForegroundColor &&
+          subtitleForegroundColor == other.subtitleForegroundColor &&
+          leadingForegroundColor == other.leadingForegroundColor &&
+          trailingForegroundColor == other.trailingForegroundColor &&
+          overlayColor == other.overlayColor &&
+          backgroundColor == other.backgroundColor &&
+          padding == other.padding &&
+          leadingHorizontalGapWidth == other.leadingHorizontalGapWidth &&
+          subtitleVerticalGapHeight == other.subtitleVerticalGapHeight &&
+          trailingHorizontalGapWidth == other.trailingHorizontalGapWidth;
+
+  @override
+  int get hashCode => Object.hash(
+    titleTextStyle,
+    titleTextMaxLines,
+    subtitleTextStyle,
+    subtitleTextMaxLines,
+    titleForegroundColor,
+    subtitleForegroundColor,
+    leadingForegroundColor,
+    trailingForegroundColor,
+    overlayColor,
+    backgroundColor,
+    padding,
+    leadingHorizontalGapWidth,
+    subtitleVerticalGapHeight,
+    trailingHorizontalGapWidth,
+  );
+}

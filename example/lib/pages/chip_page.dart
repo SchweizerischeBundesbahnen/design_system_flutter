@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_design_system_mobile_example/pages/scaffold/demo_page_scaffold.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-
-import '../native_app.dart';
 
 class ChipPage extends StatefulWidget {
   const ChipPage({super.key});
@@ -12,69 +11,62 @@ class ChipPage extends StatefulWidget {
 
 class _ChipPageState extends State<ChipPage> {
   bool _selected1 = false;
-  bool _selected2 = false;
-  bool _selected3 = true;
+  bool _selected2 = true;
+  bool _selected3 = false;
+
+  bool _isEnabled = true;
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: const EdgeInsets.all(sbbDefaultSpacing),
-      children: [
-        const ThemeModeSegmentedButton(),
-        const SizedBox(height: sbbDefaultSpacing),
-        const SBBListHeader('Default'),
-        SBBContentBox(
-          margin: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
-          padding: const EdgeInsets.all(sbbDefaultSpacing),
-          child: Column(
-            children: [
-              SBBChip(
-                label: 'Default',
-                badgeLabel: 9.toString(),
-                selected: _selected1,
-                onSelection: (selected) => {
-                  setState(() {
-                    _selected1 = selected;
-                  }),
-                },
-              ),
-              const SizedBox(height: sbbDefaultSpacing),
-              SBBChip(
-                label: 'No badge label',
-                selected: _selected2,
-                onSelection: (selected) => {
-                  setState(() {
-                    _selected2 = selected;
-                  }),
-                },
-              ),
-              const SizedBox(height: sbbDefaultSpacing),
-              SBBChip(
-                label: 'Selected',
-                badgeLabel: 'Label',
-                selected: _selected3,
-                onSelection: (selected) => {
-                  setState(() {
-                    _selected3 = selected;
-                  }),
-                },
-              ),
-            ],
-          ),
+    return DemoPageScaffold(
+      componentConfig: Padding(
+        padding: const .all(SBBSpacing.xSmall),
+        child: SBBSegmentedButton(
+          segments: [
+            SBBButtonSegment(value: true, labelText: 'All Enabled'),
+            SBBButtonSegment(value: false, labelText: 'All Disabled'),
+          ],
+          selected: _isEnabled,
+          onSelectionChanged: (update) => setState(() => _isEnabled = update),
         ),
-        const SBBListHeader('Disabled'),
-        SBBContentBox(
-          margin: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
-          padding: const EdgeInsets.all(sbbDefaultSpacing),
-          child: Column(
-            children: [
-              SBBChip(label: 'Default', badgeLabel: 3.toString(), onSelection: null),
-              const SizedBox(height: sbbDefaultSpacing),
-              const SBBChip(label: 'Selected', onSelection: null, selected: true),
-            ],
+      ),
+      body: Column(
+        children: [
+          const SBBListHeader('Default'),
+          SBBContentBox(
+            padding: const .all(SBBSpacing.medium),
+            child: Row(
+              mainAxisAlignment: .center,
+              spacing: SBBSpacing.medium,
+              children: [
+                SBBChip(
+                  labelText: 'Chip Label',
+                  trailingText: 99.toString(),
+                  selected: _selected1,
+                  onChanged: _isEnabled ? (selected) => setState(() => _selected1 = selected) : null,
+                ),
+                SBBChip(
+                  labelText: 'Chip Label',
+                  trailingText: 99.toString(),
+                  selected: _selected2,
+                  onChanged: _isEnabled ? (selected) => setState(() => _selected2 = selected) : null,
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+
+          const SBBListHeader('Long Text'),
+          SBBContentBox(
+            padding: const .all(SBBSpacing.medium),
+            child: SBBChip(
+              labelText: 'L${"o" * 100}ng Text',
+              trailingText: 99.toString(),
+              selected: _selected3,
+              onChanged: _isEnabled ? (selected) => setState(() => _selected3 = selected) : null,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

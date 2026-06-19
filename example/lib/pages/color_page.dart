@@ -1,38 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_design_system_mobile_example/pages/scaffold/demo_page_scaffold.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-
-import '../native_app.dart';
 
 class ColorPage extends StatelessWidget {
   const ColorPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final isLight = Theme.of(context).brightness == Brightness.light;
-    return ListView(
-      children: <Widget>[
-        Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(
-            sbbDefaultSpacing,
-            sbbDefaultSpacing,
-            sbbDefaultSpacing,
-            sbbDefaultSpacing * 0.5,
+    final isLight = Theme.of(context).brightness == .light;
+    return DemoPageScaffold(
+      body: Column(
+        children: [
+          _ColorShowcase(title: 'Colors', colorEntries: _colors),
+          _ColorShowcase(
+            title: 'Additional colors${isLight ? '' : ' [dark]'}',
+            colorEntries: _additionalColors(context),
           ),
-          child: ThemeModeSegmentedButton(),
-        ),
-        _ColorShowcase(title: 'Colors', colorEntries: _colors),
-        _ColorShowcase(title: 'Additional colors${isLight ? '' : ' [dark]'}', colorEntries: _additionalColors(context)),
-        _ColorShowcase(title: 'Functional colors${isLight ? '' : ' [dark]'}', colorEntries: _functionalColors(context)),
-        _ColorShowcase(title: 'Off brand / Safety colors', colorEntries: _offBrandColors),
-      ],
+          _ColorShowcase(
+            title: 'Functional colors${isLight ? '' : ' [dark]'}',
+            colorEntries: _functionalColors(context),
+          ),
+          _ColorShowcase(title: 'Off brand / Safety colors', colorEntries: _offBrandColors),
+        ],
+      ),
     );
   }
 
   List<_ColorEntry> _additionalColors(BuildContext context) =>
-      Theme.of(context).brightness == Brightness.light ? _additionalColorsLight : _additionalColorsDark;
+      Theme.of(context).brightness == .light ? _additionalColorsLight : _additionalColorsDark;
 
   List<_ColorEntry> _functionalColors(BuildContext context) =>
-      Theme.of(context).brightness == Brightness.light ? _functionalColorsLight : _functionalColorsDark;
+      Theme.of(context).brightness == .light ? _functionalColorsLight : _functionalColorsDark;
 }
 
 class _ColorShowcase extends StatelessWidget {
@@ -43,28 +41,21 @@ class _ColorShowcase extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(sbbDefaultSpacing * 0.5),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsetsDirectional.symmetric(horizontal: sbbDefaultSpacing * 0.5),
-            child: Text(title, style: SBBControlStyles.of(context).listHeaderTextStyle),
-          ),
-          // const SBBListHeader('Small Icons'),
-          GridView.builder(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: sbbDefaultSpacing * 10),
-            itemCount: colorEntries.length,
-            itemBuilder: (BuildContext context, index) {
-              final colorEntry = colorEntries[index];
-              return _ColorShowcaseCard(colorEntry: colorEntry);
-            },
-          ),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: .start,
+      children: [
+        SBBListHeader(title),
+        GridView.builder(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: 150.0),
+          itemCount: colorEntries.length,
+          itemBuilder: (BuildContext context, index) {
+            final colorEntry = colorEntries[index];
+            return _ColorShowcaseCard(colorEntry: colorEntry);
+          },
+        ),
+      ],
     );
   }
 }
@@ -76,24 +67,23 @@ class _ColorShowcaseCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).sbbBaseStyle.colorScheme;
+
     final valueString = colorEntry.color.toARGB32().toRadixString(16).padLeft(8, '0').toUpperCase();
     final hexString = valueString.substring(2);
     final opacityString = valueString.substring(0, 2);
-    const colorValueTextStyle = SBBTextStyles.helpersLabel;
-    final colorValueSecondaryTextStyle = SBBTextStyles.helpersLabel.copyWith(
-      color: SBBControlStyles.of(context).selectLabel?.textStyleDisabled?.color,
-    );
+    const colorValueTextStyle = SBBTextStyles.xxSmallLight;
+    final colorValueSecondaryTextStyle = SBBTextStyles.xxSmallLight.copyWith(color: colorScheme.textSecondary);
     return SBBContentBox(
-      margin: const EdgeInsets.all(sbbDefaultSpacing * 0.5),
+      margin: const .all(SBBSpacing.xSmall),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: .start,
         children: [
           Expanded(child: Container(color: colorEntry.color)),
-          // Divider(),
           Container(
-            padding: const EdgeInsets.all(sbbDefaultSpacing * 0.5),
+            padding: const .all(SBBSpacing.xSmall),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: .start,
               children: [
                 Text(colorEntry.name),
                 Row(
@@ -102,7 +92,6 @@ class _ColorShowcaseCard extends StatelessWidget {
                     Expanded(child: Text(hexString, style: colorValueTextStyle)),
                   ],
                 ),
-                // Text(alphaString),
               ],
             ),
           ),
@@ -121,9 +110,9 @@ class _ColorEntry {
 
 const _colors = [
   _ColorEntry('red', SBBColors.red),
+  _ColorEntry('red85', SBBColors.red85),
   _ColorEntry('red125', SBBColors.red125),
   _ColorEntry('red150', SBBColors.red150),
-  _ColorEntry('redDark', SBBColors.redDark),
   _ColorEntry('white', SBBColors.white),
   _ColorEntry('milk', SBBColors.milk),
   _ColorEntry('cloud', SBBColors.cloud),

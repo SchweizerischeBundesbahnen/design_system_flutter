@@ -1,0 +1,21 @@
+import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+
+/// The default [SBBDecoratedTextThemeData] as specified in the
+/// [Figma design specs](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=309-2236).
+class DefaultSBBDecoratedTextThemeData extends SBBDecoratedTextThemeData {
+  DefaultSBBDecoratedTextThemeData(SBBBaseStyle baseStyle)
+    : super(
+        style: SBBDecoratedTextStyle(
+          valueTextStyle: baseStyle.textTheme.defaultTextStyle,
+          valueForegroundColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
+            WidgetState.disabled: baseStyle.colorScheme.textSecondary,
+            WidgetState.error: baseStyle.colorScheme.error,
+            WidgetState.any: baseStyle.colorScheme.textPrimary,
+          }),
+          overlayColor: WidgetStateProperty.fromMap(<WidgetStatesConstraint, Color?>{
+            WidgetState.any: baseStyle.themeValue(SBBColors.platinum, SBBColors.midnight),
+          }),
+        ),
+      );
+}

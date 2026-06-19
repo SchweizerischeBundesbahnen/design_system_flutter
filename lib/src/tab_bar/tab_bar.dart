@@ -6,3 +6,5 @@ export 'sbb_tab_bar_layout_data.dart';
 export 'sbb_tab_bar_warning_setting.dart';
 export 'sbb_tab_bar_item_badge.dart';
 export 'sbb_tab_bar_badge.dart';
+export 'theme/sbb_tab_bar_style.dart';
+export 'theme/sbb_tab_bar_theme_data.dart';

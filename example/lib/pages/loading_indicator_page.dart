@@ -1,20 +1,38 @@
-import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:flutter/material.dart';
-
-import '../native_app.dart';
+import 'package:flutter_design_system_mobile_example/pages/scaffold/demo_page_scaffold.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 class LoadingIndicatorPage extends StatelessWidget {
   const LoadingIndicatorPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const SingleChildScrollView(
-      child: Column(
-        children: <Widget>[
-          Padding(padding: EdgeInsets.all(sbbDefaultSpacing), child: ThemeModeSegmentedButton()),
-          SBBLoadingIndicator.tiny(),
-          SBBLoadingIndicator.tinyCloud(),
-          SBBLoadingIndicator.medium(),
+    return DemoPageScaffold(
+      body: Column(
+        children: [
+          SBBListHeader('Tiny'),
+          SBBContentBox(
+            padding: const .all(SBBSpacing.xSmall),
+            child: Column(
+              children: [
+                SizedBox(width: double.infinity),
+                SBBLoadingIndicator.tiny(),
+                SBBLoadingIndicator.tinyCloud(),
+                SBBLoadingIndicator.tinyCement(),
+              ],
+            ),
+          ),
+          SBBListHeader('Medium'),
+          SBBContentBox(
+            padding: const .all(SBBSpacing.xSmall),
+            child: Column(
+              children: [
+                SizedBox(width: double.infinity),
+                SBBLoadingIndicator.medium(),
+                SBBLoadingIndicator.mediumCloud(),
+              ],
+            ),
+          ),
         ],
       ),
     );

@@ -1,8 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/container/theme/default_sbb_content_box_theme_data.dart';
-
-import '../../../sbb_design_system_mobile.dart';
 
 /// The ThemeData for the [SBBContentBox].
 ///
@@ -23,7 +22,7 @@ class SBBContentBoxThemeData extends ThemeExtension<SBBContentBoxThemeData> with
   /// [SBBContentBox] widgets.
   ///
   /// If [style] is null, then this theme doesn't override anything and the default
-  /// [DefaultSBBContentBoxTheme] will be used.
+  /// [DefaultSBBContentBoxThemeData] will be used.
   final SBBContentBoxStyle? style;
 
   @override
@@ -56,7 +55,6 @@ extension SBBContentBoxThemeDataX on SBBContentBoxThemeData {
 }
 
 extension SBBContentBoxThemeDataThemeDataX on ThemeData {
-  SBBContentBoxThemeData? get sbbContentBoxTheme {
-    return extension<SBBContentBoxThemeData>();
-  }
+  /// Access the [SBBContentBoxThemeData] from the current theme.
+  SBBContentBoxThemeData get sbbContentBoxTheme => extension<SBBContentBoxThemeData>()!;
 }

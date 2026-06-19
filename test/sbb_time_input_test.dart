@@ -1,91 +1,143 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:intl/intl.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 import 'test_app.dart';
 
 void main() {
-  void generateTest(String name) {
-    testWidgets(name, (WidgetTester tester) async {
-      await TestSpecs.run(
-        TestSpecs.themedSpecs,
-        const TimePickerTest(),
-        tester,
-        name,
-        find.byType(TimePickerTest),
-      );
-    });
-  }
+  testWidgets('time_input', (WidgetTester tester) async {
+    final widget = Builder(
+      builder: (context) {
+        return Column(
+          mainAxisSize: .min,
+          children: _timeInputItems(borderType: .standalone),
+        );
+      },
+    );
 
-  generateTest('time_input_test_1');
+    await TestSpecs.run(
+      TestSpecs.themedSpecs,
+      widget,
+      tester,
+      'time_input',
+      find.byType(Column).first,
+    );
+  });
+
+  testWidgets('time_input_listed', (WidgetTester tester) async {
+    final widget = Builder(
+      builder: (context) {
+        return SBBContentBox(
+          child: Column(
+            mainAxisSize: .min,
+            children: SBBListItem.divideListItems(
+              context: context,
+              items: _timeInputItems(borderType: .boxedOrListed),
+            ),
+          ),
+        );
+      },
+    );
+
+    await TestSpecs.run(
+      TestSpecs.themedSpecs,
+      widget,
+      tester,
+      'time_input_listed',
+      find.byType(Column).first,
+    );
+  });
 }
 
-class TimePickerTest extends StatelessWidget {
-  const TimePickerTest({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    const initialTime = TimeOfDay(hour: 12, minute: 33);
-    const minimumTime = TimeOfDay(hour: 16, minute: 12);
-    const maximumTime = TimeOfDay(hour: 08, minute: 43);
-    return SBBContentBox(
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          SBBTimeInput(onTimeChanged: (_) {}),
-          SBBTimeInput(value: initialTime, onTimeChanged: (_) {}),
-          SBBTimeInput(hintText: 'Hint only', onTimeChanged: (_) {}),
-          SBBTimeInput(labelText: 'Label and Hint', hintText: 'Label and Hint', onTimeChanged: (_) {}),
-          SBBTimeInput(labelText: 'Label and Value', value: initialTime, onTimeChanged: (_) {}),
-          SBBTimeInput(
-            value: initialTime,
-            labelText: 'Custom date format',
-            dateFormat: DateFormat('dd.MM.yy, H:m'),
-            onTimeChanged: (_) {},
-          ),
-          SBBTimeInput(
-            value: initialTime,
-            labelText: 'Error',
-            errorText: 'Error',
-            prefixIcon: SBBIcons.calendar_small,
-            suffixIcon: SBBIcons.arrow_circle_reset_small,
-            onTimeChanged: (_) {},
-          ),
-          const SBBTimeInput(
-            value: initialTime,
-            labelText: 'Disabled',
-            prefixIcon: SBBIcons.calendar_small,
-            suffixIcon: SBBIcons.arrow_circle_reset_small,
-            onTimeChanged: null,
-          ),
-          SBBTimeInput(
-            value: initialTime,
-            labelText: 'Minute interval',
-            minuteInterval: 15,
-            prefixIcon: SBBIcons.calendar_small,
-            suffixIcon: SBBIcons.arrow_circle_reset_small,
-            onTimeChanged: (_) {},
-          ),
-          SBBTimeInput(
-            value: initialTime,
-            minimumTime: minimumTime,
-            labelText: 'Initial date before minimum date',
-            prefixIcon: SBBIcons.calendar_small,
-            suffixIcon: SBBIcons.arrow_circle_reset_small,
-            onTimeChanged: (_) {},
-          ),
-          SBBTimeInput(
-            value: initialTime,
-            maximumTime: maximumTime,
-            labelText: 'Initial date after maximum date',
-            prefixIcon: SBBIcons.calendar_small,
-            suffixIcon: SBBIcons.arrow_circle_reset_small,
-            onTimeChanged: (_) {},
-            isLastElement: true,
-          ),
-        ],
+List<Widget> _timeInputItems({required SBBInputBorderType borderType}) {
+  const initialTime = TimeOfDay(hour: 12, minute: 33);
+  const minimumTime = TimeOfDay(hour: 16, minute: 12);
+  const maximumTime = TimeOfDay(hour: 08, minute: 43);
+  return [
+    SBBTimeInput(
+      onTimeChanged: (_) {},
+      triggerDecoration: SBBInputDecoration(borderType: borderType),
+    ),
+    SBBTimeInput(
+      value: initialTime,
+      onTimeChanged: (_) {},
+      triggerDecoration: SBBInputDecoration(borderType: borderType),
+    ),
+    SBBTimeInput(
+      triggerDecoration: SBBInputDecoration(placeholderText: 'Hint only', borderType: borderType),
+      onTimeChanged: (_) {},
+    ),
+    SBBTimeInput(
+      triggerDecoration: SBBInputDecoration(
+        labelText: 'Label and Hint',
+        placeholderText: 'Label and Hint',
+        borderType: borderType,
       ),
-    );
-  }
+      onTimeChanged: (_) {},
+    ),
+    SBBTimeInput(
+      value: initialTime,
+      triggerDecoration: SBBInputDecoration(labelText: 'Label and Value', borderType: borderType),
+      onTimeChanged: (_) {},
+    ),
+    SBBTimeInput(
+      value: initialTime,
+      triggerDecoration: SBBInputDecoration(labelText: 'Custom date format', borderType: borderType),
+      onTimeChanged: (_) {},
+    ),
+    SBBTimeInput(
+      value: initialTime,
+      triggerDecoration: SBBInputDecoration(
+        labelText: 'Error',
+        errorText: 'Error',
+        leadingIconData: SBBIcons.calendar_small,
+        trailingIconData: SBBIcons.arrow_circle_reset_small,
+        borderType: borderType,
+      ),
+      onTimeChanged: (_) {},
+    ),
+    SBBTimeInput(
+      value: initialTime,
+      triggerDecoration: SBBInputDecoration(
+        labelText: 'Disabled',
+        leadingIconData: SBBIcons.calendar_small,
+        trailingIconData: SBBIcons.arrow_circle_reset_small,
+        borderType: borderType,
+      ),
+      onTimeChanged: null,
+    ),
+    SBBTimeInput(
+      value: initialTime,
+      triggerDecoration: SBBInputDecoration(
+        labelText: 'Minute interval',
+        leadingIconData: SBBIcons.calendar_small,
+        trailingIconData: SBBIcons.arrow_circle_reset_small,
+        borderType: borderType,
+      ),
+      minuteInterval: 15,
+      onTimeChanged: (_) {},
+    ),
+    SBBTimeInput(
+      value: initialTime,
+      minimumTime: minimumTime,
+      triggerDecoration: SBBInputDecoration(
+        labelText: 'Initial date before minimum date',
+        leadingIconData: SBBIcons.calendar_small,
+        trailingIconData: SBBIcons.arrow_circle_reset_small,
+        borderType: borderType,
+      ),
+      onTimeChanged: (_) {},
+    ),
+    SBBTimeInput(
+      value: initialTime,
+      maximumTime: maximumTime,
+      triggerDecoration: SBBInputDecoration(
+        labelText: 'Initial date after maximum date',
+        leadingIconData: SBBIcons.calendar_small,
+        trailingIconData: SBBIcons.arrow_circle_reset_small,
+        borderType: borderType,
+      ),
+      onTimeChanged: (_) {},
+    ),
+  ];
 }

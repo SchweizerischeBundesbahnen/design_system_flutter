@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// Icon options available for the badge icon type.
 enum SBBBadgeIconData { checkmark, exclamationMark, info, live }
@@ -25,17 +25,31 @@ const double _badgeIconSize = 18.0;
 ///   badge: SBBTabBarBadgeIcon(badgeIcon: SBBBadgeIconData.info),
 /// )
 /// ```
+///
+/// To change the default badge colors for all badges in the app, set
+/// [SBBTabBarStyle.badgeForegroundColor] and
+/// [SBBTabBarStyle.badgeBackgroundColor] in your [SBBTabBarThemeData]:
+/// ```dart
+/// SBBTabBarThemeData(
+///   style: SBBTabBarStyle(
+///     badgeForegroundColor: Colors.black,
+///     badgeBackgroundColor: Colors.amber,
+///   ),
+/// )
+/// ```
 sealed class SBBTabBarBadge extends StatelessWidget {
   const SBBTabBarBadge({super.key, this.foregroundColor, this.backgroundColor});
 
   /// The color of the badge foreground (e.g., icon or text).
   ///
-  /// If null, defaults to white for icon badges or white for text badges.
+  /// If null, falls back to [SBBTabBarStyle.badgeForegroundColor] from the
+  /// theme.
   final Color? foregroundColor;
 
   /// The background color of the badge.
   ///
-  /// If null, defaults to the theme's primary color.
+  /// If null, falls back to [SBBTabBarStyle.badgeBackgroundColor] from the
+  /// theme, and ultimately defaults to the primary color of [SBBBaseStyle].
   final Color? backgroundColor;
 }
 
@@ -60,9 +74,10 @@ class SBBTabBarBadgeIcon extends SBBTabBarBadge {
 
   @override
   Widget build(BuildContext context) {
-    final primaryColor = Theme.of(context).extension<SBBBaseStyle>()?.primaryColor;
-    final resolvedForegroundColor = foregroundColor ?? SBBColors.white;
-    final resolvedBackgroundColor = backgroundColor ?? primaryColor ?? SBBColors.red;
+    final tabBarStyle = Theme.of(context).sbbTabBarTheme.style;
+    final primaryColor = Theme.of(context).sbbBaseStyle.colorScheme.primary;
+    final resolvedForegroundColor = foregroundColor ?? tabBarStyle?.badgeForegroundColor ?? SBBColors.white;
+    final resolvedBackgroundColor = backgroundColor ?? tabBarStyle?.badgeBackgroundColor ?? primaryColor;
 
     return ExcludeSemantics(
       child: CustomPaint(
@@ -86,25 +101,34 @@ class SBBTabBarBadgeIcon extends SBBTabBarBadge {
 /// ```dart
 /// SBBTabBarBadgeText(
 ///   labelText: '5',
-///   backgroundColor: Colors.red,
+///   foregroundColor: Colors.black,
+///   backgroundColor: Colors.amber,
 /// )
 /// ```
 class SBBTabBarBadgeText extends SBBTabBarBadge {
-  const SBBTabBarBadgeText({super.key, required this.labelText, this.textStyle, super.backgroundColor});
+  const SBBTabBarBadgeText({
+    super.key,
+    required this.labelText,
+    this.textStyle,
+    super.foregroundColor,
+    super.backgroundColor,
+  });
 
   /// The text content to display in the badge.
   final String labelText;
 
   /// Custom text style for the label.
   ///
-  /// If null, defaults to [SBBTextStyles.extraExtraSmallBold] with white color
-  /// and font weight w900.
+  /// If null, defaults to [SBBTabBarStyle.badgeTextStyle] with the resolved foreground color.
   final TextStyle? textStyle;
 
   @override
   Widget build(BuildContext context) {
-    final primaryColor = Theme.of(context).extension<SBBBaseStyle>()?.primaryColor;
-    final resolvedBackgroundColor = backgroundColor ?? primaryColor ?? SBBColors.red;
+    final tabBarStyle = Theme.of(context).sbbTabBarTheme.style;
+    final primaryColor = Theme.of(context).sbbBaseStyle.colorScheme.primary;
+    final resolvedBackgroundColor = backgroundColor ?? tabBarStyle?.badgeBackgroundColor ?? primaryColor;
+    final resolvedForegroundColor = foregroundColor ?? tabBarStyle?.badgeForegroundColor ?? SBBColors.white;
+    final resolvedTextStyle = textStyle ?? tabBarStyle?.badgeTextStyle;
 
     return ExcludeSemantics(
       child: Container(
@@ -116,8 +140,11 @@ class SBBTabBarBadgeText extends SBBTabBarBadge {
             child: Text(
               labelText,
               style:
-                  textStyle ??
-                  SBBTextStyles.extraExtraSmallBold.copyWith(color: SBBColors.white, fontWeight: FontWeight.w900),
+                  resolvedTextStyle?.copyWith(color: resolvedForegroundColor) ??
+                  SBBTextStyles.xxSmallBold.copyWith(
+                    color: resolvedForegroundColor,
+                    fontWeight: FontWeight.w900,
+                  ),
             ),
           ),
         ),
@@ -127,13 +154,11 @@ class SBBTabBarBadgeText extends SBBTabBarBadge {
 }
 
 class _BadgeIconPainter extends CustomPainter {
-  final SBBBadgeIconData badgeIcon;
-
-  final Color foregroundColor;
-
-  final Color backgroundColor;
-
   const _BadgeIconPainter({required this.badgeIcon, required this.foregroundColor, required this.backgroundColor});
+
+  final SBBBadgeIconData badgeIcon;
+  final Color foregroundColor;
+  final Color backgroundColor;
 
   @override
   void paint(Canvas canvas, Size size) {

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../theme/sbb_colors.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 const _thumbBoxShadows = <BoxShadow>[
   BoxShadow(color: Color(0x338D8D8D), offset: Offset(0, 1), blurRadius: 8.0),
@@ -9,17 +8,20 @@ const _thumbBoxShadows = <BoxShadow>[
 
 /// Custom circle thumb shape with border for the [SBBSlider].
 class CircleBorderThumbShape extends SliderComponentShape {
-  const CircleBorderThumbShape({this.radius = 14.0, this.borderWidth = 2.0, this.color, this.borderColor});
+  const CircleBorderThumbShape({
+    required this.radius,
+    required this.borderWidth,
+    required this.disabledBorderColor,
+    required this.enabledBorderColor,
+  });
 
   final double radius;
   final double borderWidth;
-  final Color? color;
-  final Color? borderColor;
+  final Color? enabledBorderColor;
+  final Color? disabledBorderColor;
 
   @override
-  Size getPreferredSize(bool isEnabled, bool isDiscrete) {
-    return Size.fromRadius(radius);
-  }
+  Size getPreferredSize(_, _) => Size.fromRadius(radius);
 
   @override
   void paint(
@@ -36,27 +38,38 @@ class CircleBorderThumbShape extends SliderComponentShape {
     required double textScaleFactor,
     required Size sizeWithOverflow,
   }) {
-    final Canvas canvas = context.canvas;
+    final canvas = context.canvas;
 
     // drop shadows
+    if (enableAnimation.value > 0.5) _paintShadow(center, canvas);
+
+    final disabledBackgroundColor = sliderTheme.disabledThumbColor;
+    final enabledBackgroundColor = sliderTheme.thumbColor;
+
+    final backgroundColor =
+        Color.lerp(disabledBackgroundColor, enabledBackgroundColor, enableAnimation.value) ?? SBBColors.white;
+    final borderColor = Color.lerp(disabledBorderColor, enabledBorderColor, enableAnimation.value)!;
+
+    // thumb background
+    final fillPaint = Paint()
+      ..color = backgroundColor
+      ..style = .fill;
+    canvas.drawCircle(center, radius, fillPaint);
+
+    // thumb border
+    final borderPaint = Paint()
+      ..color = borderColor
+      ..strokeWidth = borderWidth
+      ..style = .stroke;
+    canvas.drawCircle(center, radius, borderPaint);
+  }
+
+  void _paintShadow(Offset center, Canvas canvas) {
     final thumbRect = Rect.fromCircle(center: center, radius: radius);
     for (final BoxShadow shadow in _thumbBoxShadows) {
       final shadowRect = thumbRect.shift(shadow.offset);
       final shadowPaint = shadow.toPaint();
       canvas.drawOval(shadowRect, shadowPaint);
     }
-
-    // thumb background
-    final fillPaint = Paint()
-      ..color = color ?? sliderTheme.thumbColor ?? Colors.white
-      ..style = PaintingStyle.fill;
-    canvas.drawCircle(center, radius, fillPaint);
-
-    // thumb border
-    final borderPaint = Paint()
-      ..color = borderColor ?? sliderTheme.activeTrackColor ?? SBBColors.red
-      ..strokeWidth = borderWidth
-      ..style = PaintingStyle.stroke;
-    canvas.drawCircle(center, radius - (borderWidth / 2), borderPaint);
   }
 }

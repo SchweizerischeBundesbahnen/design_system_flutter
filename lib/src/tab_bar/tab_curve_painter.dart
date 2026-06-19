@@ -16,17 +16,17 @@ class TabCurvePainter extends CustomPainter {
     // Additional shadow
     final waveShadow = Paint()
       ..color = shadowColor.withAlpha(64)
-      ..maskFilter = MaskFilter.blur(BlurStyle.normal, 3.0);
+      ..maskFilter = MaskFilter.blur(.normal, 3.0);
     canvas.drawPath(wavePath, waveShadow);
 
     final wavePaint = Paint()
       ..color = color
-      ..style = PaintingStyle.fill;
+      ..style = .fill;
     canvas.drawPath(wavePath, wavePaint);
   }
 
   @override
-  bool? hitTest(Offset position) {
+  bool? hitTest(_) {
     // Prevent the paint from stopping pointer events from reaching the icons underneath.
     // Hit tests still reach the children of the paint.
     return false;

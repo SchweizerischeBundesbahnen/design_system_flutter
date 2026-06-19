@@ -1,24 +1,18 @@
-import 'package:flutter/material.dart';
-
-import '../../../sbb_design_system_mobile.dart';
-import '../container.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// The default [SBBContentBoxThemeData] for the SBB design system.
 ///
 /// This class provides the standard styling for [SBBContentBox] widgets based on the current
 /// [SBBBaseStyle].
-class DefaultSBBContentBoxTheme extends SBBContentBoxThemeData {
-  /// Creates a [DefaultSBBContentBoxTheme] with standard SBB styling.
-  DefaultSBBContentBoxTheme({required SBBBaseStyle baseStyle})
+class DefaultSBBContentBoxThemeData extends SBBContentBoxThemeData {
+  /// Creates a [DefaultSBBContentBoxThemeData] with standard SBB styling.
+  DefaultSBBContentBoxThemeData({required SBBBaseStyle baseStyle})
     : super(
         style: SBBContentBoxStyle(
-          margin: EdgeInsets.zero,
-          padding: EdgeInsets.zero,
-          color: baseStyle.themeValue(SBBColors.white, SBBColors.charcoal),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(sbbDefaultSpacing)),
-          ),
-          clipBehavior: Clip.hardEdge,
+          margin: .zero,
+          padding: .zero,
+          color: baseStyle.colorScheme.backgroundContent,
+          clipBehavior: .hardEdge,
           isSemanticContainer: true,
         ),
       );

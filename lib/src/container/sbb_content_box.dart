@@ -1,17 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/src/container/container.dart';
-
-import '../../sbb_design_system_mobile.dart';
-
-@Deprecated('Use SBBContentBox.')
-typedef SBBGroup = SBBContentBox;
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 /// SBBContentBox. Use to structure content.
 ///
 /// May be placed anywhere in the screen to structure other components.
 ///
 /// See also:
-/// - [SBBHeaderbox]: A variant of this component fixed below the [SBBHeader].
+/// - [SBBHeaderBox]: A variant of this component fixed below the [SBBHeader].
 /// - [Figma Design Specification](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=141-2024)
 class SBBContentBox extends StatelessWidget {
   const SBBContentBox({
@@ -69,11 +65,9 @@ class SBBContentBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO (@smallTrogdor): remove this with version 5.0.0
-    final SBBContentBoxStyle legacyStyle = SBBContentBoxStyle.of(context);
-    final SBBContentBoxStyle newStyle = Theme.of(context).sbbContentBoxTheme!.style!;
+    assert(debugCheckHasSBBBaseStyle(context));
 
-    final style = legacyStyle.merge(newStyle);
+    final SBBContentBoxStyle style = Theme.of(context).sbbContentBoxTheme.style!;
 
     return Semantics(
       container: isSemanticContainer ?? style.isSemanticContainer!,
@@ -81,9 +75,9 @@ class SBBContentBox extends StatelessWidget {
         padding: margin ?? style.margin!,
         child: Material(
           key: key,
-          type: MaterialType.card,
+          type: .card,
           color: color ?? style.color,
-          shape: style.shape!,
+          shape: SBBContentBoxStyle.shape,
           clipBehavior: clipBehavior ?? style.clipBehavior!,
           child: Padding(
             padding: padding ?? style.padding!,

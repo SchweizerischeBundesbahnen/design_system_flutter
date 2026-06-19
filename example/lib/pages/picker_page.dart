@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_design_system_mobile_example/pages/scaffold/demo_page_scaffold.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-
-import '../native_app.dart';
 
 class PickerPage extends StatefulWidget {
   const PickerPage({super.key});
@@ -18,93 +17,113 @@ class _PickerPageState extends State<PickerPage> {
     'Orange',
     'Pineapple',
     'Strawberry',
-    'Apple',
-    'Mango',
-    'Banana',
-    'Orange',
+    'Raspberry',
+    'Kiwi',
+    'Coconut',
+    'Peach',
   ];
 
-  DateTime _selectedDate = DateTime.now();
-  DateTime _selectedDateTime = DateTime.now();
+  // 🚂 Hogwarts
+  DateTime _selectedDate = DateTime(1991, 9, 1);
+
+  // 💣 Back to the Future
+  DateTime _selectedDateTime = DateTime(1985, 10, 26, 1, 21);
   TimeOfDay _selectedTime = TimeOfDay.now();
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      padding: const EdgeInsets.symmetric(vertical: sbbDefaultSpacing, horizontal: sbbDefaultSpacing * 0.5),
-      child: Column(
-        children: <Widget>[
-          const ThemeModeSegmentedButton(),
-          const SizedBox(height: sbbDefaultSpacing),
+    return DemoPageScaffold(
+      body: Column(
+        children: [
           const SBBListHeader('Picker input fields'),
           SBBContentBox(
             child: Column(
-              children: [
-                SBBDateInput(
-                  value: _selectedDate,
-                  labelText: 'Date only',
-                  onDateChanged: (date) {
-                    debugPrint('selected date: $date');
-                    setState(() {
-                      _selectedDate = date;
-                    });
-                  },
-                ),
-                SBBDateTimeInput(
-                  value: _selectedDateTime,
-                  labelText: 'Date and time',
-                  onDateTimeChanged: (dateTime) {
-                    debugPrint('selected date time: $dateTime');
-                    setState(() {
-                      _selectedDateTime = dateTime;
-                    });
-                  },
-                ),
-                SBBTimeInput(
-                  value: _selectedTime,
-                  labelText: 'Time only',
-                  onTimeChanged: (time) {
-                    debugPrint('selected time: $time');
-                    setState(() {
-                      _selectedTime = time;
-                    });
-                  },
-                  isLastElement: true,
-                ),
-              ],
+              children: SBBDivider.divideItems(
+                context: context,
+                items: [
+                  SBBDateInput(
+                    value: _selectedDate,
+                    triggerDecoration: const SBBInputDecoration(
+                      labelText: 'Date only',
+                      leadingIconData: SBBIcons.calendar_one_day_small,
+                    ),
+                    sheetTitleText: 'Select date only',
+                    onDateChanged: (date) {
+                      debugPrint('selected date: $date');
+                      setState(() {
+                        _selectedDate = date;
+                      });
+                    },
+                  ),
+                  SBBDateTimeInput(
+                    value: _selectedDateTime,
+                    triggerDecoration: const SBBInputDecoration(
+                      labelText: 'Date and time',
+                      leadingIconData: SBBIcons.calendar_weekday_small,
+                    ),
+                    sheetTitleText: 'Select date and time',
+                    onDateTimeChanged: (dateTime) {
+                      debugPrint('selected date time: $dateTime');
+                      setState(() {
+                        _selectedDateTime = dateTime;
+                      });
+                    },
+                  ),
+                  SBBTimeInput(
+                    value: _selectedTime,
+                    triggerDecoration: const SBBInputDecoration(
+                      labelText: 'Time only',
+                      leadingIconData: SBBIcons.clock_small,
+                    ),
+                    sheetTitleText: 'Select Time',
+                    onTimeChanged: (time) {
+                      debugPrint('selected time: $time');
+                      setState(() {
+                        _selectedTime = time;
+                      });
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
-          const SizedBox(height: sbbDefaultSpacing),
+          const SizedBox(height: SBBSpacing.medium),
           const SBBListHeader('Date Time Picker (date & time)'),
           SBBContentBox(
             child: SBBDateTimePicker(
+              visibleItemCount: 5,
               onDateTimeChanged: (DateTime dateTime) {
                 debugPrint('selected date time: $dateTime');
               },
             ),
           ),
-          const SizedBox(height: sbbDefaultSpacing),
+          const SizedBox(height: SBBSpacing.medium),
           const SBBListHeader('Date Picker (date only)'),
           SBBContentBox(
             child: SBBDatePicker(
+              minimumDate: DateTime(2026, 04, 01),
               onDateChanged: (DateTime date) {
                 debugPrint('selected date: $date');
               },
             ),
           ),
-          const SizedBox(height: sbbDefaultSpacing),
+          const SizedBox(height: SBBSpacing.medium),
           const SBBListHeader('Time Picker (time only)'),
           SBBContentBox(
             child: SBBTimePicker(
+              minuteInterval: 10,
+              initialTime: TimeOfDay(hour: 20, minute: 15),
               onTimeChanged: (TimeOfDay time) {
                 debugPrint('selected time: $time');
               },
             ),
           ),
-          const SizedBox(height: sbbDefaultSpacing),
+          const SizedBox(height: SBBSpacing.medium),
           const SBBListHeader('Picker (looping)'),
           SBBContentBox(
             child: SBBPicker.list(
+              visibleItemCount: 5,
+              initialSelectedIndex: 1,
               onSelectedItemChanged: (int index) {
                 final selectedItemIndex = index % _fruitNames.length;
                 final selectedItem = _fruitNames[selectedItemIndex];
@@ -113,11 +132,12 @@ class _PickerPageState extends State<PickerPage> {
               items: _fruitNames,
             ),
           ),
-          const SizedBox(height: sbbDefaultSpacing),
+          const SizedBox(height: SBBSpacing.medium),
           const SBBListHeader('Picker (non looping)'),
           SBBContentBox(
             child: SBBPicker.list(
               looping: false,
+              initialSelectedIndex: 1,
               onSelectedItemChanged: (int index) {
                 final selectedItem = _fruitNames[index];
                 debugPrint('selected item: $selectedItem');

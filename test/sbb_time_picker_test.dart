@@ -48,8 +48,8 @@ class TimePickerTest extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => Column(
-    mainAxisSize: MainAxisSize.min,
-    children: <Widget>[
+    mainAxisSize: .min,
+    children: [
       Row(
         children: [
           Expanded(
@@ -57,7 +57,7 @@ class TimePickerTest extends StatelessWidget {
               child: SBBTimePicker(onTimeChanged: (_) {}, initialTime: initialTime),
             ),
           ),
-          const SizedBox(width: sbbDefaultSpacing),
+          const SizedBox(width: SBBSpacing.medium),
           Expanded(
             child: SBBContentBox(
               child: SBBTimePicker(onTimeChanged: (_) {}, initialTime: initialTime, minuteInterval: 15),
@@ -65,7 +65,7 @@ class TimePickerTest extends StatelessWidget {
           ),
         ],
       ),
-      const SizedBox(height: sbbDefaultSpacing),
+      const SizedBox(height: SBBSpacing.medium),
       Row(
         children: [
           Expanded(
@@ -78,7 +78,7 @@ class TimePickerTest extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: sbbDefaultSpacing),
+          const SizedBox(width: SBBSpacing.medium),
           Expanded(
             child: SBBContentBox(
               child: SBBTimePicker(
@@ -92,7 +92,7 @@ class TimePickerTest extends StatelessWidget {
           ),
         ],
       ),
-      const SizedBox(height: sbbDefaultSpacing),
+      const SizedBox(height: SBBSpacing.medium),
       Row(
         children: [
           Expanded(
@@ -105,7 +105,7 @@ class TimePickerTest extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: sbbDefaultSpacing),
+          const SizedBox(width: SBBSpacing.medium),
           SizedBox(
             width: 150,
             child: SBBContentBox(
@@ -118,7 +118,7 @@ class TimePickerTest extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: sbbDefaultSpacing),
+          const SizedBox(width: SBBSpacing.medium),
           SizedBox(
             width: 120,
             child: SBBContentBox(
@@ -131,7 +131,7 @@ class TimePickerTest extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(width: sbbDefaultSpacing),
+          const SizedBox(width: SBBSpacing.medium),
           SizedBox(
             width: 100,
             child: SBBContentBox(

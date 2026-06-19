@@ -8,9 +8,9 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 class TestSpecs {
   const TestSpecs._({required this.size, required this.brightness});
 
-  factory TestSpecs.light() => const TestSpecs._(size: _size, brightness: Brightness.light);
+  factory TestSpecs.light() => const TestSpecs._(size: _size, brightness: .light);
 
-  factory TestSpecs.dark() => const TestSpecs._(size: _size, brightness: Brightness.dark);
+  factory TestSpecs.dark() => const TestSpecs._(size: _size, brightness: .dark);
 
   static const _size = Size(600, 1000);
 
@@ -74,8 +74,16 @@ class TestApp extends StatelessWidget {
       theme: SBBTheme.light(),
       darkTheme: SBBTheme.dark(),
       debugShowCheckedModeBanner: false,
-      builder: (_, __) => Overlay(
-        initialEntries: [OverlayEntry(builder: (context) => Scaffold(body: child))],
+      locale: const Locale('en'),
+      builder: (_, _) => MediaQuery(
+        data: MediaQuery.of(context).copyWith(alwaysUse24HourFormat: true),
+        child: Overlay(
+          initialEntries: [
+            OverlayEntry(
+              builder: (context) => Scaffold(body: child),
+            ),
+          ],
+        ),
       ),
     );
   }

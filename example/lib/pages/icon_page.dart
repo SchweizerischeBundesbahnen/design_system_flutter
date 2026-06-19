@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_design_system_mobile_example/pages/scaffold/demo_page_scaffold.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-
-import '../native_app.dart';
 
 class IconPage extends StatelessWidget {
   const IconPage({super.key});
@@ -9,18 +8,15 @@ class IconPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final sbbToast = SBBToast.of(context);
-    return SingleChildScrollView(
-      padding: const EdgeInsets.all(sbbDefaultSpacing),
-      child: Column(
+    return DemoPageScaffold(
+      body: Column(
         children: [
-          const ThemeModeSegmentedButton(),
-          const SizedBox(height: sbbDefaultSpacing),
           const SBBListHeader('Small Icons'),
           _IconShowCase(icons: SBBIconsIndex.iconsSmall, iconSize: sbbIconSizeSmall, sbbToast: sbbToast),
-          const SizedBox(height: sbbDefaultSpacing),
+          const SizedBox(height: SBBSpacing.medium),
           const SBBListHeader('Medium Icons'),
           _IconShowCase(icons: SBBIconsIndex.iconsMedium, iconSize: sbbIconSizeMedium, sbbToast: sbbToast),
-          const SizedBox(height: sbbDefaultSpacing),
+          const SizedBox(height: SBBSpacing.medium),
           const SBBListHeader('Large Icons'),
           _IconShowCase(icons: SBBIconsIndex.iconsLarge, iconSize: sbbIconSizeLarge, sbbToast: sbbToast),
         ],
@@ -39,19 +35,19 @@ class _IconShowCase extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SBBContentBox(
-      padding: const EdgeInsets.all(sbbDefaultSpacing / 2),
+      padding: const .all(SBBSpacing.xSmall),
       child: GridView.builder(
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: iconSize + sbbDefaultSpacing),
+        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(maxCrossAxisExtent: iconSize + SBBSpacing.medium),
         itemCount: icons.length,
-        itemBuilder: (BuildContext context, index) {
+        itemBuilder: (context, index) {
           final icon = icons[index];
           return IconButton(
-            padding: EdgeInsets.zero,
+            padding: .zero,
             icon: Icon(icon['icon'] as IconData, size: iconSize),
             onPressed: () {
-              sbbToast.show(title: icon['name'] as String);
+              sbbToast.show(titleText: icon['name'] as String);
             },
           );
         },

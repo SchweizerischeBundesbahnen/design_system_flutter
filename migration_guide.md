@@ -1,0 +1,1058 @@
+# V5 Migration guide
+
+V5 introduces a lot of breaking changes to allow for a more flexible and modern Design System.
+
+> **⚠ Disclaimer for apps in maintenance**
+> 
+> Migration can be time-consuming – expect around 1–2 person-days, depending on the size of the app. If your app is only being maintained 
+> or is due to be decommissioned soon, migration may not be necessary. Version 4 meets all the requirements of the Design System.
+
+## Partial Migrations
+
+In order to make the process of migrating smoother, we provide a way to use both DSM versions (v4 and v5)
+simultaneously.
+
+This is completely **optional** and may help if you want to migrate in steps, since there are a lot of breaking changes.
+
+1. Add both versions to your `pubspec.yaml`:
+     ```yaml
+     sbb_design_system_mobile: ^5.0.0  # or latest release
+     sbb_design_system_mobile_v4:
+       git:
+         url: git@github.com:SchweizerischeBundesbahnen/design_system_flutter.git
+         ref: migration/v4
+     ```
+2. Do a find & replace over your code base to point your existing code to the v4 branch. After this point, your project should compile again.
+     ```diff
+     - import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart'
+     + import 'package:sbb_design_system_mobile_v4/sbb_design_system_mobile.dart'
+     ```
+3. Add together both themes:
+     ```dart
+     import 'package:sbb_design_system_mobile_v4/sbb_design_system_mobile.dart' as dsm4;
+     import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+     
+     // ...
+     
+     MaterialApp.router(
+       theme: SBBTheme.light().copyWith(
+         extensions: [
+           ...SBBTheme.light().extensions.values,
+           ...dsm4.SBBTheme.light().extensions.values,
+         ],
+       ),
+       darkTheme: SBBTheme.dark().copyWith(
+         extensions: [
+           ...SBBTheme.dark().extensions.values,
+           ...dsm4.SBBTheme.dark().extensions.values,
+         ],
+       ),
+       // ...
+     )
+     ```
+
+After these steps, you can begin converting your files to use `package:sbb_design_system_mobile` according to the details provided by this guide.
+
+Once you are done, remove the reference to v4 from your `pubspec.yaml` and your theme configuration.
+
+## Theming
+The component theming has been overhauled from using the old styles (ex. `PromotionBoxStyle`) as ThemeExtensions to ThemeData classes (ex. `SBBPromotionBoxThemeData`).
+This aligns the DSM theming style with the Flutter approach. Access them using the extension methods on `ThemeData` with `Theme.of(context).sbb[Component]Theme`.
+
+### SBBTheme
+
+* added `themeContext` to get theming for off-brand or safety-relevant apps. Example usage: `SBBTheme.light(themeContext: .offBrand)`
+* removed `brightness` from `createTheme` and `raw`. Use `SBBBaseStyle.brightness`
+* removed unused field `boldFont`
+* moved `SBBTextTheme` to `SBBBaseStyle`. Can still be accessed with helper method `Theme.of(context).sbbTextTheme`
+
+### SBBBaseStyle
+
+* removed `createTextTheme`, use `SBBTextTheme.toTextTheme` instead
+* removed `SBBBaseStyle.of(context)`, use `Theme.of(context).sbbBaseStyle` instead
+* removed unused field `boldFont`
+* removed `redTextTheme`
+* removed `primaryDarkColor`
+* removed `primarySwatch`. Is now created from `primaryColor` over `SBBColorScheme`
+* removed `defaultFontFamily`
+* removed `themedTextStyle` method. Use `baseStyle.textTheme` for text themes and `SBBColorScheme` for themed colors or 
+* moved `defaultTextStyle` to `SBBTextTheme`
+* added `textTheme`, `iconTheme`, `dividerTheme` and `textSelectionTheme`
+
+#### SBBColorScheme
+SBBColorScheme is introduced to define the base color scheme and is used by SBBBaseStyle.
+
+* moved colors from `SBBBaseStyle` to `SBBColorScheme` without suffix color.
+* added primary color variants `primary85`, `primary125`, `primary150`
+* added `selection` which is used for `TextSelectionThemeData`
+* added `brand`, `strokePrimary`, `strokeSecondary`, `iconSecondary`, `backgroundContent`
+* renamed `backgroundColor` to `backgroundBase`
+* renamed `labelColor` to `textSecondary`
+* renamed `textDefaultColor` to `textPrimary`
+* renamed `iconColor` to `iconPrimary`
+* renamed `dividerColor` to `strokeSeparator`
+
+## BottomSheet (previously Modal) 
+
+* `isScrollControlled` is by default false (previously true) - see below
+* replace `showSBBModalSheet` with `showSBBBottomSheet`
+* replace `title` with `titleText` (or use `title` for complete custom titles)
+* replace `child` with `body`
+* removed `showCustomSBBModalSheet` - do not set title in `showSBBBottomSheet`
+* moved `background` and `constraints` to `SBBBottomSheetStyle` with other parameters
+
+### isScrollControlled
+
+* set to `true` only when using a `ListView` or other scrollable view inside the bottom sheet
+* otherwise, use `scrollControlDisabledMaxHeightRatio` for determining the max height of the bottom sheet
+
+See documentation for further guidance.
+
+### Theming
+
+* customize the theme of the `showSBBBottomSheet` with `SBBBottomSheetThemeData`
+* access the theme using `Theme.of(context).sbbBottomSheetTheme`
+* customize an individual bottom sheet by setting its `style` parameter in the constructor
+
+
+## Buttons
+
+### Constructor arguments
+* replace `label` with `labelText` (or custom Widget for `label` parameter)
+* `SBBTertiaryButton`: replace `icon` with `iconData` (or custom Widget for `icon` parameter)
+* customize appearance of a single button via the `style` parameter
+* added `onLongPress`, `semanticLabel` and `autofocus` to all button variants
+
+### Icon Buttons
+* `SBBIconButtonLarge` / `SBBIconButtonSmall` are replaced by `SBBTertiaryButton` / `SBBTertiaryButtonSmall`
+  with only `iconData` or `icon` set
+
+### Theming
+Buttons can now be themed ap wide using `SBBButtonThemeData` as input parameters to `SBBTheme`.
+To access this data within your app, use:
+
+* `Theme.of(context).sbbPrimaryButtonTheme` for the `SBBPrimaryButton` theme data
+* `Theme.of(context).sbbSecondaryButtonTheme` for the `SBBSecondaryButton` theme data
+* `Theme.of(context).sbbTertiaryButtonTheme` for the `SBBTertiaryButton` theme data
+
+### ButtonLabelBuilder
+Use the `foregroundBuilder` of the `SBBButtonStyle` as a replacement
+
+
+## Checkbox
+
+### Constructor
+* added `focusNode` and `autofocus`
+
+### Theming & Styling
+* `padding`: replace the checkbox `padding` parameter with the `SBBCheckboxStyle.tapTargetPadding` to increase tappable area
+* customize the theme of the `SBBCheckbox` with `SBBCheckboxThemeData`
+* access the theme using `Theme.of(context).sbbCheckboxTheme`
+* customize an individual checkbox by setting its `style` parameter in the constructor 
+
+
+## Chip
+
+### Constructor arguments
+* replace `onSelection` with `onChanged`
+* replace `label` with `labelText` (complete custom content with `label`)
+* replace `badgeLabel` with `trailingText` (complete custom content with `label`)
+* added the ability to control the Focus with a custom `focusNode`
+
+### Theming & Styling
+* customize the theme of the `SBBChip` with `SBBChipThemeData` as input to `SBBTheme`
+* access the theme using `Theme.of(context).sbbChipTheme`
+* customize a chip by setting its `style` parameter in the constructor
+
+
+## Dropdown (previously SBBSelect) / MultiDropdown (previously SBBMultiSelect)
+
+* replace `SelectMenuItem<T>` with `SBBDropdownItem<T>`
+* replace `label` with `labelText` (within `triggerDecoration`)
+* replace `hint` with `placeholderText` (within `triggerDecoration`)
+* replace `title` with `titleText` (within `sheetConfig`)
+* replace `value` with `selectedItem`
+* `isLastElement` was removed — use `SBBDivider.divideItems` to separate items with a divider. Use `SBBInputBorderType.standalone` when not listed/boxed variant.
+* `allowMultilineLabel` was removed (use `triggerMaxLines` / `triggerMinLines` / `triggerExpands` instead)
+* `confirmButtonLabel` is replaced by `confirmButtonLabelText`
+* use `triggerConfig` and `sheetConfig` for configuring the underlying `SBBDecoratedText` and `SBBBottomSheet` widgets
+
+### Theming & Styling
+
+* customize the theme with `SBBDropdownThemeData` as input to `SBBTheme`
+* access the theme using `Theme.of(context).sbbDropdownTheme`
+* customize an individual dropdown by setting the trigger or sheet style parameters
+
+
+## Header
+
+### Added SBBHeaderSmall
+* replace `SBBHeader` with `SBBHeaderSmall` to keep the same size
+* `SBBHeader` now has an added spacing matching the design spec.
+
+### Constructor arguments
+* replace `title` with `titleText` (complete custom content with `title`)
+* replace `leadingWidget` with `leading`
+* removed `blockSemantics`, check out `excludeHeaderSemantics`
+* removed `systemOverlayStyle`, moved to style `SBBHeaderStyle.systemOverlayStyle`
+* removed `onPressedLogo` and `logoTooltip`. To customize trailing content, provide actions yourself.
+* added `useDefaultSemanticsOrder`, `excludeHeaderSemantics`, `bottom` and `style`
+
+### Leading buttons
+* removed factory methods `SBBHeader.back()`, `SBBHeader.close()` and `SBBHeader.menu()`.
+* exposed new widgets `SBBHeaderLeadingBackButton`, `SBBHeaderLeadingCloseButton` and `SBBHeaderLeadingMenuButton`.
+* If you previously used default `automaticallyImplyLeading: true`, the header will pick one of the above widgets automatically.
+
+Old implementation:
+```dart
+SBBHeader.back(title: 'SBB Header')
+```
+
+New implementation:
+```dart
+SBBHeader(
+   titleText: 'SBB Header',
+   leading: SBBHeaderLeadingBackButton(),
+)
+```
+
+### Theming & Styling
+* customize the theme of the `SBBHeader` and `SBBHeaderSmall` with `SBBHeaderThemeData` as input to `SBBTheme`
+* access the theme using `Theme.of(context).sbbHeaderTheme`
+* customize a header by setting its `style` parameter in the constructor
+
+
+## ListItem
+
+The list item has received a lot of changes. In general the content is completely customizable now.
+
+### Usage
+* replace `onPressed` with `onTap`
+* replace `title` with `titleText`
+* replace `leadingIcon` with `leadingIconData`
+* replace `subtitle` with `subtitleText`
+* replace `trailingIcon` with `trailingIconData`
+* use `title`, `subtitle`, `leading` and `trailing` of type Widget? for complete customization
+* If you want a multi line title, consider setting the `titleTextMaxLines` parameter in the style - it will be clamped by default to a single line
+* replace `buttonIcon` and `onPressedButton` from the `button` constructor with a `SBBTertiaryButtonSmall` in `trailingIconButton`.
+* `isLastElement` was removed, use the static method `SBBDivider.divideItems` to separate list 
+  items with a SBB themed divider (this is analogous to the Material implementation)
+* removed `enabled`. List item will be disabled when [onTap] and [onLongPress] are null. If component should be enabled without touch feedback, 
+  set [onTap] and wrap the list item in a [IgnorePointer] widget.
+
+### Theming & Styling
+* customize the theme of the `SBBListItem` with `SBBListThemeData` as input to `SBBTheme`
+* access the theme using `Theme.of(context).sbbListTheme`
+* customize a list item by setting its `style` parameter in the constructor
+
+### Convenience wrappers SBBRadioListItem, SBBCheckboxListItem and SBBSwitchListItem
+* basically, all of these have an underlying `SBBListItem` with either a custom trailing or leading widget
+* the `onTap` callback is overridden to call the `onChanged` callbacks of the contents
+* the parameters are a union between the individual trailing content and a standard `SBBListItem`
+
+### Boxed Variant
+* use `SBBListItemBoxed`, `SBBRadioListItemBoxed`, `SBBCheckboxListItemBoxed` and `SBBSwitchListItemBoxed`
+* You do NOT need to wrap this in a `SBBContentBox` anymore
+
+
+## ListHeader
+
+### Constructor arguments
+* Replace `title` with `titleText`
+* Remove `maxLines`, `padding`, and `textStyle` parameters from constructor
+* Use the `style` parameter with `SBBListHeaderStyle` for customization
+
+### Theming & Styling
+* customize the theme of all `SBBListHeader` with `SBBListHeaderThemeData` as input to `SBBTheme`
+* access the theme using `Theme.of(context).sbbListHeaderTheme`
+* customize an individual list header by setting its `style` parameter in the constructor
+
+
+## Message
+
+The `SBBMessage` consists of five parts, that can now all be complete custom Widgets: title, subtitle, error, illustration and action.
+Typically, a `SBBIllustration` with a fitting constructor is used for the `illustration` parameter.
+
+### Constructor arguments
+* Replace required `title` with `titleText` (or use `title` for custom widgets)
+* Replace required `description` with `subtitleText` (or use `subtitle` for custom widgets)
+* Replace `messageCode` with `errorText` (or use `error` for custom widgets)
+* Replace `customIllustration` with `illustration` parameter (accepts `SBBIllustration` or any custom widget)
+* Replace `illustration: MessageIllustration.Display` with `illustration: SBBIllustration.display()`
+* Replace `onInteraction` callback and `interactionIcon` with an `action` widget parameter (typically `SBBTertiaryButton`)
+
+### .error constructor
+
+The `SBBMessage.error` constructor has been removed:
+* Set `SBBIllustration.display()` as `illustration` parameter
+* Set your previous `messageCode` to `errorText`
+* Add a `SBBTertiaryButton` with a fitting `iconData` (e.g. `SBBIcons.arrows_circle_small`) as `action`
+
+### Theming & Styling
+* customize the theme of all `SBBMessage` with `SBBMessageThemeData` as input to `SBBTheme`
+* access the theme using `Theme.of(context).sbbMessageTheme`
+* customize an individual message by setting its `style` parameter in the constructor
+
+
+## Paginator
+
+### Class Changes
+* `SBBPagination` is now split into two separate widgets:
+  * `SBBPaginator`: the standard paginator
+  * `SBBPaginatorFloating`: the floating variant (inherits from `SBBPaginator`)
+* Replace `isFloating: true` with `SBBPaginatorFloating` instead of `SBBPaginator`
+
+### Theming & Styling
+* customize the theme of all `SBBPaginator` with `SBBPaginatorThemeData` as input to `SBBTheme`
+* access the theme using `Theme.of(context).sbbPaginatorTheme`
+* customize an individual paginator by setting its `style` parameter in the constructor
+* Old style access via `SBBControlStyles.of(context).pagination!` is replaced with theme extension pattern
+
+
+## Popup (previously Modal Popup)
+
+### Drop In Replacement
+
+* replace `showSBBModalPopup` with `showSBBPopup`
+* replace `SBBModalPopup` widget with `SBBPopup`
+* replace `title` (String) with `titleText`, or use `title` for a custom widget
+* replace `child` with `body`
+* removed `backgroundColor` and `clipBehavior` direct parameters – move them to `SBBPopupStyle` via
+  the `style` parameter
+
+### New capabilities
+
+* added optional `leading` / `leadingIconData` and `trailing` / `trailingIconData` header elements
+* `isDismissible` controls whether tapping the barrier closes the popup (previously always
+  dismissible)
+* `showCloseButton` is now `false` when `isDismissible` is `false`
+* customise appearance via `SBBPopupStyle` and `SBBPopupThemeData`
+
+### Example migration
+
+Old implementation:
+
+```dart
+showSBBModalPopup(
+  context: context,
+  title: 'My Title',
+  backgroundColor: SBBColors.peach,
+  child: Text('Content'),
+);
+```
+
+New implementation:
+
+```dart
+showSBBPopup(
+  context: context,
+  titleText: 'My Title',
+  style: SBBPopupStyle(backgroundColor: SBBColors.peach),
+  body: Text('Content'),
+);
+```
+
+### Theming & Styling
+
+* customize the theme of all `SBBPopup` with `SBBPopupThemeData` as input to `SBBTheme`
+* access the theme using `Theme.of(context).sbbPopupTheme`
+* customize an individual popup by setting its `style` parameter
+
+## Notification Box
+
+The `SBBNotificationBox` API has been redesigned for more flexibility and better theming support.
+
+### Constructor
+
+* replace `title` (String) with `titleText`, or use `title` for a custom widget
+* replace `text` (String) with `contentText`, or use `content` for a custom widget
+* replace `detailsIcon` with `trailingIconData`, or use `trailing` for a custom widget
+* replace `onClose` with `onDismissed`
+* replace `isCloseable` with `isDismissable`
+* replace `hasIcon` with `showLeading`
+* customize leading icon with `leadingIconData`, `leading` or use `SBBNotificationBoxStyle`
+* replace `onControllerCreated` callback with a `controller` parameter (`SBBNotificationBoxController`)
+    * `SBBNotificationBoxController` replaces `ClosableBoxController`
+
+### Example migration
+
+Old implementation:
+```dart
+SBBNotificationBox.alert(
+  title: 'My Title',
+  text: 'My text',
+  onClose: () => print('closed'),
+  onControllerCreated: (controller) => _controller = controller,
+  onTap: () => print('tapped'),
+)
+```
+
+New implementation:
+```dart
+SBBNotificationBox.alert(
+  titleText: 'My Title',
+  contentText: 'My text',
+  onDismissed: () => print('closed'),
+  controller: _controller,
+  onTap: () => print('tapped'),
+)
+```
+
+### Theming & Styling
+
+* customize the theme of all `SBBNotificationBox` with `SBBNotificationBoxThemeData` as input to `SBBTheme`
+* access the theme using `Theme.of(context).sbbNotificationBoxTheme`
+* customize an individual promotion box by setting its `style` parameter in the constructor
+
+
+## Promotion Box
+
+The `SBBPromotionBox` API has been redesigned for more flexibility and better theming support.
+In general, a custom badge can now be added to the `SBBPromotionBox`. For standard pill like look with a halo,
+check out `SBBPromotionBoxBadge`.
+
+### Constructor
+
+The previous default and `custom` constructors have been replaced by a single `const` constructor:
+
+* replace `title` (String) with `titleText`, or use `title` for a custom widget
+* replace `subtitle` (String) with `subtitleText`, or use `subtitle` for a custom widget
+* `badgeText` is now optional (provide either `badgeText` or a custom `badge` widget)
+* replace `onClose` with `onDismissed`
+* added `isDismissable` flag
+* replace `onControllerCreated` callback with a `controller` parameter (`SBBPromotionBoxController`)
+  * `SBBPromotionBoxController` replaces `ClosableBoxController`
+* removed `leading` parameter — use the above layout customization options instead
+* `badgeStyle` (`SBBPromotionBoxBadgeStyle`) replaces the deprecated individual badge color parameters
+
+### Example migration
+
+Old implementation:
+```dart
+SBBPromotionBox(
+  title: 'My Title',
+  subtitle: 'My subtitle',
+  badgeText: 'New',
+  onClose: () => print('closed'),
+  onControllerCreated: (controller) => _controller = controller,
+  onTap: () => print('tapped'),
+)
+```
+
+New implementation:
+```dart
+SBBPromotionBox(
+  titleText: 'My Title',
+  subtitleText: 'My subtitle',
+  badgeText: 'New',
+  isDismissable: true,
+  onDismissed: () => print('closed'),
+  controller: _controller,
+  onTap: () => print('tapped'),
+)
+```
+
+### Theming & Styling
+
+* customize the theme of all `SBBPromotionBox` with `SBBPromotionBoxThemeData` as input to `SBBTheme`
+* access the theme using `Theme.of(context).sbbPromotionBoxTheme`
+* customize an individual promotion box by setting its `style` parameter in the constructor
+* customize the badge style via the `badgeStyle` parameter using `SBBPromotionBoxBadgeStyle`
+
+
+## Radio
+
+### Usage
+* the `onChanged` and `groupValue` in `SBBRadio<T>` parameters are moved to the `SBBRadioGroup<T>` ancestor
+* see the [official Flutter guide](https://docs.flutter.dev/release/breaking-changes/radio-api-redesign) for usage of the new radio group concept
+  * instead of a `RadioGroup<T>`, use a `SBBRadioGroup<T>`
+* added: use `toggleable` for allowing a radio to return to unselected state without
+  selecting a different radio in its group
+* added `focusNode` & `autofocus`
+
+All of the above also affects the `SBBRadioListItem`.
+
+### Theming & Styling
+* `padding`: replace the checkbox `padding` parameter with the `SBBRadioStyle.tapTargetPadding` to increase tappable area
+* customize the theme of all `SBBRadio` with `SBBRadioThemeData`
+* access the theme using `Theme.of(context).sbbRadioTheme`
+* customize an individual radio by setting its `style` parameter in the constructor
+
+
+## Slider
+
+### Constructor arguments
+* `startIcon` and `endIcon` are replaced with `leading`/`leadingIconData` and `trailing`/`trailingIconData`
+  * for simple icons use `leadingIconData` and `trailingIconData`
+  * for custom widgets use `leading` and `trailing`
+
+### Styling Changes
+* `SBBSliderStyle` properties now use `WidgetStateProperty<Color?>` instead of simple `Color` values
+  * this allows different colors for enabled/disabled/pressed states
+  * replace simple color assignments with state-aware properties
+* icon styling changed:
+  * old: `style.iconColor` and `style.disabledIconColor`
+  * new: `leadingForegroundColor` and `trailingForegroundColor` using `WidgetStateProperty<Color?>`
+* `padding` parameter replaces the hardcoded icon padding logic
+
+### Theming & Styling
+* customize the theme of all `SBBSlider` with `SBBSliderThemeData` as input to `SBBTheme`
+* access the theme using `Theme.of(context).sbbSliderTheme`
+* customize an individual slider by setting its `style` parameter in the constructor
+
+
+## Status
+
+### Constructor arguments
+* complete customization using `label` and `icon` parameters
+* replace `text` with `labelText`
+* replace `type` (`SBBStatusType`) with `state` (`SBBStatusState`) if not using the factory methods.
+
+### Theming & Styling
+* customize the theme of all `SBBStatus` with `SBBStatusThemeData` as input parameter to `SBBTheme`.
+* access the theme using `Theme.of(context).sbbStatusTheme`
+* customize individual status by setting its `style` parameter in the constructor
+
+
+## Segmented Button
+
+### Filled Variant
+use `SBBSegmentedButtonFilled` for the filled style variant (replaces `SBBSegmentedButton.redText` and `SBBSegmentedButton.redIcon`)
+
+### Constructor arguments
+* The new implementation uses `SBBButtonSegment` to describe each segment instead of widget builders
+* Replace index-based selection (`selectedStateIndex`) with value-based selection (`selected`)
+* Replace `selectedIndexChanged` callback with `onSelectionChanged` that provides the selected value instead of index
+* For text segments: use `SBBButtonSegment(value: value, labelText: 'Text')`
+* For icon segments: use `SBBButtonSegment(value: value, leadingIconData: iconData)`
+* For icon with text: use `SBBButtonSegment(value: value, leadingIconData: iconData, labelText: 'Text')`
+* Complete customization is possible using `label` and `leading` parameters in `SBBButtonSegment`
+
+### Example Migration
+
+Old implementation:
+```dart
+SBBSegmentedButton.text(
+  values: ['Option 1', 'Option 2', 'Option 3'],
+  selectedStateIndex: selectedIndex,
+  selectedIndexChanged: (index) => setState(() => selectedIndex = index),
+)
+```
+
+New implementation:
+```dart
+SBBSegmentedButton<int>(
+  segments: [
+    SBBButtonSegment(value: 0, labelText: 'Option 1'),
+    SBBButtonSegment(value: 1, labelText: 'Option 2'),
+    SBBButtonSegment(value: 2, labelText: 'Option 3'),
+  ],
+  selected: selectedValue,
+  onSelectionChanged: (value) => setState(() => selectedValue = value),
+)
+```
+
+Old icon implementation:
+```dart
+SBBSegmentedButton.icon(
+  icons: {
+    SBBIcons.train_medium: 'Train',
+    SBBIcons.bus_medium: 'Bus',
+  },
+  selectedStateIndex: selectedIndex,
+  selectedIndexChanged: (index) => setState(() => selectedIndex = index),
+  withText: true,
+)
+```
+
+New implementation:
+```dart
+SBBSegmentedButton<String>(
+  segments: [
+    SBBButtonSegment(value: 'train', leadingIconData: SBBIcons.train_medium, labelText: 'Train'),
+    SBBButtonSegment(value: 'bus', leadingIconData: SBBIcons.bus_medium, labelText: 'Bus'),
+  ],
+  selected: selectedValue,
+  onSelectionChanged: (value) => setState(() => selectedValue = value),
+)
+```
+### Theming & Styling
+* customize the theme of all `SBBSegmentedButton` with `SBBSegmentedButtonThemeData` as input to `SBBTheme`
+* access the theme using `Theme.of(context).sbbSegmentedButtonTheme`
+* customize an individual segmented button by setting its `style` parameter in the constructor
+* customize individual segments by setting the `style` parameter in `SBBButtonSegment`
+* `SBBSegmentedButtonStyle` and `SBBButtonSegmentStyle` use `WidgetStateProperty<T?>` for state-aware styling
+
+
+## Stepper
+
+### Constructor arguments
+
+#### Changes to `SBBStepper`
+
+* Renamed factory `SBBStepper.red` to `SBBStepper.filled` as theme's primary color is used
+
+#### Changes to `SBBStepperItem`
+
+* Use provided factories to create `SBBStepperItem`. They can also be combined.
+    * `SBBStepperItem.icon`: Shows the provided `icon` in the step
+    * `SBBStepperItem.text`: Shows the provided `text` in the step. Text will be scaled down if to big.
+    * `SBBStepperItem.numbered`: Shows the number/position of the step
+* Use `labelText` instead of `label` for text label. Use `label` for custom widget.
+* `labelText` and `label` are now optional
+* set `showBadgeWhenPassed` to `false` if badge should not be shown when passed
+* added `badgeIcon` to customize badge icon of step
+
+### Styling Changes
+* `SBBStepperItemStyle` added to allow customizing each step on its own.
+* `SBBStepperStyle` and `SBBStepperItemStyle` properties use `WidgetStateProperty<T?>` for state aware styles
+    * this allows different colors for enabled/disabled states
+    * replace simple color assignments with state-aware properties where needed
+* `padding` parameter replaces the hardcoded padding logic
+
+### Theming & Styling
+* customize the theme of all `SBBStepper` with `SBBStepperThemeData` as input to `SBBTheme`
+* access the theme using `Theme.of(context).sbbStepperTheme`
+* customize an individual stepper by setting its `style` parameter in the constructor
+* customize an individual step by setting the `SBBStepperItem`'s `style` parameter in the constructor
+
+## Switch
+* added `focusNode` & `autofocus`
+* increase the tappable area of the switch by setting the `SBBSwitchStyle.tapTargetPadding` value
+* customize the theme of all `SBBSwitch` with `SBBSwitchThemeData`
+* access the theme using `Theme.of(context).sbbSwitchTheme`
+* customize an individual switch by setting its `style` parameter in the constructor
+
+
+## Tab Bar
+
+The theming / styling of the `SBBTabBar` has been adapted:
+
+* Use `SBBTabBarStyle` in the `style` parameter to customize the appearance
+* Override the `tabBarTheme` in the `SBBTheme.light` / `SBBTheme.dark` constructor
+* Access the theme data by calling `Theme.of(context).sbbTabBarTheme`
+
+
+## Text Input
+
+### From SBBTextField to SBBTextInput
+
+The `SBBTextField` has been replaced by the more flexible `SBBTextInput`. 
+This migration introduces a new decoration system (`SBBInputDecoration`) 
+and theme support (`SBBInputDecorationThemeData` and `SBBTextInputThemeData`).
+
+It allows to truly build expandable and multiline text input fields (Text Area).
+
+A boxed variant is added: `SBBTextInputBoxed`
+
+#### Key Differences
+
+| Aspect               | SBBTextField            | SBBTextInput                                             |
+|----------------------|-------------------------|----------------------------------------------------------|
+| **Leading widget**   | `icon` (IconData only)  | `decoration.leading` or `decoration.leadingIconData`     |
+| **Trailing widget**  | `suffixIcon` (Widget)   | `decoration.trailing` or `decoration.trailingIconData`   |
+| **Label**            | `labelText`             | `decoration.labelText` or `decoration.label`             |
+| **Placeholder**      | `hintText`              | `decoration.placeholderText` or `decoration.placeholder` |
+| **Error handling**   | `errorText` only        | `decoration.errorText` or `decoration.error` (as Widget) |
+| **Theming**          | No theme support        | `SBBInputDecorationThemeData` + `SBBTextInputThemeData`  |
+| **Disabled state**   | `enabled` only          | `enabled` + `readOnly` (more granular control)           |
+| **State management** | Custom underline widget | `SBBInputDecorator` with flexible styling                |
+| **Multiline icons**  | Always center-aligned   | Automatically top-aligned in multiline mode              |
+
+#### Basic Migration Example
+
+**Before (SBBTextField):**
+```dart
+SBBTextField(
+  controller: _controller,
+  labelText: 'Username',
+  hintText: 'Enter your username',
+  errorText: _error,
+  icon: Icons.person,
+  suffixIcon: Icon(Icons.clear),
+  onChanged: (value) => setState(() {}),
+)
+```
+
+**After (SBBTextInput):**
+```dart
+SBBTextInput(
+  controller: _controller,
+  decoration: SBBInputDecoration(
+    labelText: 'Username',
+    placeholderText: 'Enter your username',
+    errorText: _error,
+    leadingIconData: Icons.person,
+    trailingIconData: Icons.clear,
+  ),
+  onChanged: (value) => setState(() {}),
+)
+```
+
+#### Property Mapping
+
+| SBBTextField                 | SBBTextInput                                                                                                                 |
+|------------------------------|------------------------------------------------------------------------------------------------------------------------------|
+| `controller`                 | `controller`                                                                                                                 |
+| `enabled`                    | `enabled`                                                                                                                    |
+| `labelText`                  | `decoration.labelText`                                                                                                       |
+| `hintText`                   | `decoration.placeholderText`                                                                                                 |
+| `errorText`                  | `decoration.errorText`                                                                                                       |
+| `icon`                       | `decoration.leadingIconData`                                                                                                 |
+| `suffixIcon`                 | `decoration.trailing` or `decoration.trailingIconData`                                                                       |
+| `obscureText`                | `obscureText`                                                                                                                |
+| `obscuringCharacter`         | `obscuringCharacter`                                                                                                         |
+| `maxLines`                   | `maxLines`                                                                                                                   |
+| `minLines`                   | `minLines`                                                                                                                   |
+| `keyboardType`               | `keyboardType`                                                                                                               |
+| `textInputAction`            | `textInputAction`                                                                                                            |
+| `inputFormatters`            | `inputFormatters`                                                                                                            |
+| `onChanged`                  | `onChanged`                                                                                                                  |
+| `onSubmitted`                | `onSubmitted`                                                                                                                |
+| `onTap`                      | `onTap`                                                                                                                      |
+| `onTapAlwaysCalled`          | `onTapAlwaysCalled`                                                                                                          |
+| `focusNode`                  | `focusNode`                                                                                                                  |
+| `autofocus`                  | `autofocus`                                                                                                                  |
+| `textCapitalization`         | `textCapitalization`                                                                                                         |
+| `enableInteractiveSelection` | `enableInteractiveSelection`                                                                                                 |
+| `isLastElement`              | *(removed)* - use `SBBDivider.divideItems()` if in lists. Use `SBBInputBorderType.standalone` when not listed/boxed variant. |
+
+#### Theming
+
+**SBBTextField** had no theme support. **SBBTextInput** uses two theme classes:
+
+1. **`SBBInputDecorationThemeData`**: Controls decoration-level styling
+   - Access via `Theme.of(context).sbbInputDecorationTheme`
+   - Configure default colors, gaps, text styles for labels, errors, placeholders
+
+2. **`SBBTextInputThemeData`**: Controls input-specific styling
+   - Access via `Theme.of(context).sbbTextInputTheme`
+   - Configure input text style, foreground color, clear button behavior
+   - Example:
+   ```dart
+   SBBTextInputThemeData(
+     inputTextStyle: TextStyle(fontSize: 16),
+     enableClearButton: true,
+   )
+   ```
+
+#### Advanced Features
+
+**SBBTextInput** provides features not available in **SBBTextField**:
+
+1. **Custom Widgets instead of just text**:
+   ```dart
+   SBBTextInput(
+     decoration: SBBInputDecoration(
+       label: CustomLabelWidget(),  // Instead of just labelText
+       error: CustomErrorWidget(),  // Instead of just errorText
+       leading: CustomLeadingWidget(),  // Instead of just icon
+     ),
+   )
+   ```
+
+2. **More granular disabled state control**:
+   ```dart
+   SBBTextInput(
+     enabled: false,  // Disables everything including trailing widgets
+     // OR
+     readOnly: true,  // Text can't be edited but trailing widgets stay interactive
+     enableInteractiveSelection: false,
+   )
+   ```
+
+3. **Clear button automation**:
+A cross small will be displayed instead of the trailingIconData when focused and has non empty input.
+   ```dart
+   SBBTextInput(
+     enableClearButton: true,  // Replaces trailing icon with clear button on focus + content (defaults to true)
+     decoration: SBBInputDecoration(
+       trailingIconData: Icons.search,
+     ),
+   )
+   ```
+
+4. **Floating label behavior control**:
+   ```dart
+   SBBTextInput(
+     decoration: SBBInputDecoration(
+       labelText: 'Email',
+       floatingLabelBehavior: SBBFloatingLabelBehavior.always,
+       // Label always floats, placeholder shows when empty
+     ),
+   )
+   ```
+
+#### Migration Checklist
+
+- [ ] Replace `SBBTextField` with `SBBTextInput`
+- [ ] Move `icon` → `decoration.leadingIconData`
+- [ ] Move `hintText` → `decoration.placeholderText`
+- [ ] Move `errorText` → `decoration.errorText`
+- [ ] Move `suffixIcon` → `decoration.trailing` or `decoration.trailingIconData`
+- [ ] Update `isLastElement` usage (remove parameter, use `SBBDivider.divideItems` instead. Use `SBBInputBorderType.standalone` when not listed/boxed variant.)
+- [ ] Set up theme data if applying custom styles globally
+- [ ] Test multiline mode if used (icons should be top-aligned now)
+- [ ] Consider using `readOnly` instead of just `enabled` for readonly fields with interactive trailing widgets
+
+## Decorated Text (before SBBInputTrigger)
+
+* Use `SBBInputDecoration` to customize the widget. Check out migration guide for Text Input above.
+* removed `onSuffixPressed`. Use a tappable widget like `SBBTertiaryButtonSmall` for `decoration.trailing`.
+* removed `enabled`. Will be disabled when [onTap] is null.
+
+### Basic Migration Example
+
+**Before (SBBInputTrigger):**
+```dart
+SBBInputTrigger(
+  value: selectedDate,
+  labelText: 'Date',
+  hintText: 'Select a date',
+  prefixIcon: Icons.calendar,
+  onPressed: () => _showDatePicker(),
+  enabled: true,
+)
+```
+
+**After (SBBDecoratedText):**
+```dart
+SBBDecoratedText(
+  value: selectedDate,
+  onTap: () => _showDatePicker(),
+  decoration: SBBInputDecoration(
+    labelText: 'Date',
+    placeholderText: 'Select a date',
+    leadingIconData: Icons.calendar,
+  ),
+)
+```
+
+## Text Input Form Field
+
+### From SBBTextFormField to SBBTextInputFormField
+
+The `SBBTextFormField` has been replaced by `SBBTextInputFormField`, which simply wraps `SBBTextInput` 
+with form field functionality.
+
+Use `SBBTextInputBoxedFormField` for the boxed style.
+
+#### Migration
+
+Replace `SBBTextFormField` with `SBBTextInputFormField`:
+
+**Before:**
+```dart
+SBBTextFormField(
+  controller: _controller,
+  labelText: 'Username',
+  hintText: 'Enter username',
+  icon: SBBIcons.unicorn_small,
+  validator: (value) {
+    if (value?.isEmpty ?? true) return 'Required';
+    return null;
+  },
+)
+```
+
+**After:**
+```dart
+SBBTextInputFormField(
+  controller: _controller,
+  decoration: SBBInputDecoration(
+    labelText: 'Username',
+    placeholderText: 'Enter username',
+    leadingIconData: SBBIcons.unicorn_small,
+  ),
+  validator: (value) {
+    if (value?.isEmpty ?? true) return 'Required';
+    return null;
+  },
+)
+```
+
+#### Key Changes
+
+| SBBTextFormField | SBBTextInputFormField                                  |
+|------------------|--------------------------------------------------------|
+| `labelText`      | `decoration.labelText`                                 |
+| `hintText`       | `decoration.placeholderText`                           |
+| `icon`           | `decoration.leadingIconData`                           |
+| `suffixIcon`     | `decoration.trailing` or `decoration.trailingIconData` |
+
+
+## TextStyles
+
+For consistency, `extra` has been replaced in all static methods to `x`. Therefore, migrate:
+- `SBBTextStyles.extraExtraLargeBold` to `SBBTextStyles.xxLargeBold`
+- `SBBTextStyles.extraExtraSmallLight` to `SBBTextStyles.xxSmallLight`
+- ...
+
+In general, consider using `SBBTextTheme` instead of static const text styles in your app.
+
+## Picker
+
+### Summary
+
+The picker family of widgets has been significantly overhauled. The input trigger widgets
+(`SBBDateInput`, `SBBTimeInput`, `SBBDateTimeInput`) have been refactored into standalone
+`StatelessWidget`s with a richer configuration API. The bottom sheet show methods have been
+renamed and extended. A proper theming system has been introduced.
+
+### SBBDateInput / SBBTimeInput / SBBDateTimeInput
+
+The input widgets have been rewritten. The flat decoration parameters are replaced with
+`SBBInputDecoration` passed via `triggerDecoration`. Trigger layout/focus options are now
+grouped into `triggerConfig`. The bottom sheet is configured via `sheetConfig` or the
+convenience `sheetTitleText` parameter. `isLastElement` has been removed, use the static `SBBDivider.divideItems` method.
+Use `SBBInputBorderType.standalone` when not listed/boxed variant.
+
+#### New parameters
+
+* `sheetTitleText` – convenience parameter to set the bottom sheet title
+* `sheetConfig` – full control over the bottom sheet via `SBBBottomSheetConfig` (cannot be used together with `sheetTitleText`)
+* `sheetButtonLabelText` – label for the confirm button in the bottom sheet
+* `triggerConfig` – groups `maxLines`, `minLines`, `expands`, `focusNode` and `autofocus` for the trigger field
+* `triggerStyle` – overrides the visual style of the `SBBDecoratedText` trigger
+* `visibleItemCount` – number of visible items in the picker (must be a positive odd number, defaults to 7)
+* `pickerStyle` – overrides the visual style of the picker itself
+
+### SBBDatePicker / SBBTimePicker / SBBDateTimePicker
+
+#### showModal → showInsideBottomSheet
+
+The static helper method for showing the picker in a bottom sheet has been renamed to `showInsideBottomSheet` and
+extended:
+
+* replace `title` (String) with `sheetTitleText`, or supply a full `sheetConfig` via `SBBBottomSheetConfig`
+
+### Theming & Styling
+
+* use `SBBPickerThemeData` to override the style of all toast within your application
+* access the theme using `Theme.of(context).sbbPickerTheme`
+* individual change of style via the `pickerStyle` constructor parameter as noted above
+
+
+## Toast
+
+* removed the static field `defaultBottom`
+* the layouting has slightly changed, use `SBBToastStyle.actionOverflowThreshold` to adjust the layout mechanism
+  of the action and title to each other (see API docs for specifics)
+
+### show
+
+* replace `title` with `titleText` (or use `title` for completely custom title Widget)
+* replace `onPressed` with `onTap` in `SBBToastAction` (or use completely custom Widget for `action`)
+
+### builder
+
+* the builder now also adds the `BuildContext` in its parameters
+
+### styling / theming
+
+* NOTE: the `SBBToastStyle` API has completely changed
+* use `SBBToastThemeData` to override the style of all toast within your application
+* access the theme using `Theme.of(context).sbbToastTheme`
+* individual change of style via the `style` constructor parameter
+
+
+## Header-Box
+
+* added `isLoading` as a way to control the loading state of the header box
+
+### API rename
+
+* replace `SBBHeaderbox` with `SBBHeaderBox`
+* replace `SBBSliverHeaderbox` with `SBBSliverHeaderBox`
+* replace `SBBHeaderboxFlap` with `SBBHeaderBoxFlap`
+* replace `SBBSliverFloatingHeaderbox` with `SBBSliverHeaderBox`
+* replace `SBBSliverFloatingHeaderboxSpacer` with `SBBSliverHeaderBoxSpacer`
+
+### Constructor arguments
+
+* replace `title` with `titleText` (or use `title` for a custom widget)
+* replace `secondaryLabel` with `subtitleText` (or use `subtitle` for a custom widget)
+* replace `leadingIcon` with `leadingIconData` (or use `leading` for a custom widget)
+* replace `trailingWidget` with `trailing`
+* replace `.large(...)` constructors with `SBBHeaderBoxLarge` and `SBBSliverHeaderBoxLarge`
+* replace `.custom(child: ...)` usage with the regular constructor and pass custom content through `title`,
+  `subtitle`, `leading`, `trailing`, and `body`
+* use `body` for additional content below the title/subtitle area
+* use `style`, `padding`, `margin`, `isLoading`, and `semanticsLabel` directly on the widget
+
+Old implementation:
+```dart
+SBBHeaderbox(
+  title: 'Journey details',
+  secondaryLabel: 'IC 3 to Zürich HB',
+  leadingIcon: SBBIcons.train_small,
+  trailingWidget: SBBTertiaryButtonSmall(
+    icon: SBBIcons.pencil_small,
+    onPressed: () {},
+  ),
+)
+```
+
+New implementation:
+```dart
+SBBHeaderBox(
+  titleText: 'Journey details',
+  subtitleText: 'IC 3 to Zürich HB',
+  leadingIconData: SBBIcons.train_small,
+  trailing: SBBTertiaryButtonSmall(
+    icon: SBBIcons.pencil_small,
+    onPressed: () {},
+  ),
+)
+```
+
+### Sliver HeaderBox
+
+* use `SBBSliverHeaderBox` for both the old pinned and floating variants
+* move floating, resizing, snapping, and flap behavior to `config: SBBSliverHeaderBoxConfig(...)`
+* replace `preceding` with `top`
+* replace `contractibleChild` / `collapsibleChild` with `body`, typically wrapped in `SBBContractible`
+* move `flapMode` from the widget constructor to `SBBSliverHeaderBoxConfig.flapMode`
+
+Old implementation:
+```dart
+SBBSliverFloatingHeaderbox(
+  title: 'Journey details',
+  secondaryLabel: 'IC 3 to Zürich HB',
+  contractibleChild: Text('Departure: 14:32'),
+  flap: SBBHeaderboxFlap(title: 'Additional travel information'),
+  flapMode: SBBHeaderboxFlapMode.hideable,
+)
+```
+
+New implementation:
+```dart
+SBBSliverHeaderBox(
+  titleText: 'Journey details',
+  subtitleText: 'IC 3 to Zürich HB',
+  body: SBBContractible(
+    child: Text('Departure: 14:32'),
+  ),
+  flap: SBBHeaderBoxFlap(labelText: 'Additional travel information'),
+  config: SBBSliverHeaderBoxConfig(
+    flapMode: SBBHeaderBoxFlapMode.hideable,
+  ),
+)
+```
+
+### Flap
+
+* replace `.custom(child: ...)` usage with the regular constructor and pass custom content through `leading`,
+  `label` and `trailing`
+* replace `title` with `labelText` (or use `label` for a custom widget)
+* replace `leadingIcon` with `leadingIconData` (or use `leading` for a custom widget)
+* replace `trailingIcon` with `trailingIconData` (or use `trailing` for a custom widget)
+* `allowMultilineLabel` was removed, use a custom `label` widget if you need different wrapping behavior
+* use `style` and `padding` directly on `SBBHeaderBoxFlap`
+
+### Theming & Styling
+
+* use `SBBHeaderBoxThemeData(style: ..., largeStyle: ..., flapStyle: ...)` to theme the default, large, and flap
+  variants separately
+* access the theme using `Theme.of(context).sbbHeaderBoxTheme`
+* customize an individual header box or flap by setting its `style` parameter in the constructor

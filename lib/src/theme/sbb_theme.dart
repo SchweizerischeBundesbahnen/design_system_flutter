@@ -1,187 +1,502 @@
 import 'package:flutter/material.dart';
-import 'package:sbb_design_system_mobile/src/container/container.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/bottom_sheet/theme/default_sbb_bottom_sheet_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/button/theme/default_button_themes.dart';
+import 'package:sbb_design_system_mobile/src/button/theme/sbb_button_style_x.dart';
+import 'package:sbb_design_system_mobile/src/checkbox/theme/default_sbb_checkbox_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/chip/theme/default_sbb_chip_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/container/theme/default_sbb_content_box_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/decorated_text/theme/default_sbb_decorated_text_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/header/theme/default_sbb_header_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/header_box/theme/default_sbb_header_box_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_input_decoration_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_text_input_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/list_header/theme/default_sbb_list_header_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/list_item/theme/default_sbb_list_item_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/message/theme/default_sbb_message_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/notification_box/theme/default_sbb_notification_box_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/paginator/theme/default_sbb_paginator_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/picker/theme/default_sbb_picker_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/popup/theme/default_sbb_popup_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/promotion_box/theme/default_sbb_promotion_box_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/radio/theme/default_sbb_radio_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/segmented_button/theme/default_sbb_segmented_button_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/slide_to_toggle/theme/default_sbb_slide_to_toggle_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/slider/theme/default_sbb_slider_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/status/theme/default_sbb_status_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/stepper/theme/default_sbb_stepper_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/switch/theme/default_sbb_switch_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/tab_bar/theme/default_sbb_tab_bar_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/theme/sbb_text_theme_x.dart';
+import 'package:sbb_design_system_mobile/src/toast/theme/default_sbb_toast_theme_data.dart';
 
-import 'theme.dart';
+/// Defines the context in which the Theme is used.
+/// This currently only affects the used colors.
+///
+/// See also:
+///
+/// * [SBBColorScheme], defined colors for the theme context
+enum SBBThemeContext {
+  /// Default theme context for SBB apps.
+  sbb,
 
-@Deprecated('Use SBBSpacing.medium and others instead.')
-const sbbDefaultSpacing = SBBSpacing.medium;
+  /// Theme context for apps using off-brand colors and not the standard SBB red theming.
+  offBrand,
 
+  /// Theme context for apps that are safety-relevant.
+  /// In this context, the color red can only be used to communicate errors.
+  safety,
+}
+
+/// Base SBB theme builder.
+///
+/// Provides factory helpers to build full [ThemeData] for light and dark
+/// based on the theming of the SBB design system.
+///
+/// ```dart
+/// MaterialApp(
+///     theme: SBBTheme.light(),
+///     darkTheme: SBBTheme.dark(),
+///     ...
+/// );
+/// ```
+///
+/// Access created [ThemeData] by using `Theme.of(context)` and the theme
+/// extensions f.ex. with `Theme.of(context).extension<SBBBaseStyle>()` or
+/// the provided helper methods `Theme.of(context).sbbBaseStyle`.
+///
+/// See also:
+///
+/// * [ThemeData], theme for a [MaterialApp]
 class SBBTheme {
   SBBTheme._();
 
+  /// Creates the base light [ThemeData].
+  ///
+  /// Use [themeContext] if your application is set in an off-brand or safety related context.
+  ///
+  /// Use optional parameters (e.g. [primaryButtonTheme]) to override individual component theme data.
+  /// The non null fields will overwrite default values.
   static ThemeData light({
-    bool boldFont = false,
+    SBBThemeContext themeContext = .sbb,
     SBBBaseStyle? baseStyle,
-    SBBButtonStyles? buttonStyles,
-    SBBControlStyles? controlStyles,
-    SBBHeaderBoxStyle? headerBoxStyle,
-    @Deprecated('Use contentBoxTheme instead') SBBContentBoxStyle? groupStyle,
+    SBBBottomSheetThemeData? bottomSheetTheme,
+    SBBPrimaryButtonThemeData? primaryButtonTheme,
+    SBBSecondaryButtonThemeData? secondaryButtonTheme,
+    SBBTertiaryButtonThemeData? tertiaryButtonTheme,
+    SBBAccentButtonThemeData? accentButtonTheme,
+    SBBNotificationBoxThemeData? notificationBoxTheme,
+    SBBCheckboxThemeData? checkboxTheme,
+    SBBChipThemeData? chipTheme,
     SBBContentBoxThemeData? contentBoxTheme,
-    SBBTextTheme? textTheme,
-    SBBToastStyle? toastStyle,
+    SBBDecoratedTextThemeData? decoratedTextTheme,
+    SBBDropdownThemeData? dropdownTheme,
+    SBBHeaderThemeData? headerTheme,
+    SBBHeaderBoxThemeData? headerBoxTheme,
+    SBBInputDecorationThemeData? inputDecorationTheme,
+    SBBListHeaderThemeData? listHeaderTheme,
+    SBBListItemThemeData? listItemTheme,
+    SBBMessageThemeData? messageTheme,
+    SBBPaginatorThemeData? paginatorTheme,
+    SBBPickerThemeData? pickerTheme,
+    SBBPopupThemeData? popupTheme,
+    SBBPromotionBoxThemeData? promotionBoxTheme,
+    SBBRadioThemeData? radioTheme,
+    SBBStatusThemeData? statusTheme,
+    SBBSegmentedButtonThemeData? segmentedButtonTheme,
+    SBBSliderThemeData? sliderTheme,
+    SBBSlideToToggleThemeData? slideToToggleTheme,
+    SBBStepperThemeData? stepperTheme,
+    SBBSwitchThemeData? switchTheme,
+    SBBTabBarThemeData? tabBarTheme,
+    SBBTextInputThemeData? textInputTheme,
+    SBBToastThemeData? toastTheme,
   }) => createTheme(
-    brightness: Brightness.light,
-    boldFont: boldFont,
+    brightness: .light,
+    themeContext: themeContext,
     baseStyle: baseStyle,
-    buttonStyles: buttonStyles,
-    controlStyles: controlStyles,
-    headerBoxStyle: headerBoxStyle,
-    groupStyle: groupStyle,
+    bottomSheetTheme: bottomSheetTheme,
+    primaryButtonTheme: primaryButtonTheme,
+    secondaryButtonTheme: secondaryButtonTheme,
+    tertiaryButtonTheme: tertiaryButtonTheme,
+    accentButtonTheme: accentButtonTheme,
+    checkboxTheme: checkboxTheme,
+    chipTheme: chipTheme,
     contentBoxTheme: contentBoxTheme,
-    textTheme: textTheme,
-    toastStyle: toastStyle,
+    decoratedTextTheme: decoratedTextTheme,
+    dropdownTheme: dropdownTheme,
+    headerTheme: headerTheme,
+    headerBoxTheme: headerBoxTheme,
+    inputDecorationTheme: inputDecorationTheme,
+    listHeaderTheme: listHeaderTheme,
+    listItemTheme: listItemTheme,
+    messageTheme: messageTheme,
+    paginatorTheme: paginatorTheme,
+    pickerTheme: pickerTheme,
+    popupTheme: popupTheme,
+    promotionBoxTheme: promotionBoxTheme,
+    radioTheme: radioTheme,
+    statusTheme: statusTheme,
+    segmentedButtonTheme: segmentedButtonTheme,
+    sliderTheme: sliderTheme,
+    stepperTheme: stepperTheme,
+    switchTheme: switchTheme,
+    tabBarTheme: tabBarTheme,
+    textInputTheme: textInputTheme,
+    toastTheme: toastTheme,
   );
 
+  /// Creates the base dark [ThemeData].
+  ///
+  /// Use [themeContext] if your application is set in an off-brand or safety related context.
+  ///
+  /// Use optional parameters (e.g. [primaryButtonTheme]) to override individual component theme data.
+  /// The non null fields will overwrite default values.
   static ThemeData dark({
-    bool boldFont = false,
+    SBBThemeContext themeContext = .sbb,
     SBBBaseStyle? baseStyle,
-    SBBButtonStyles? buttonStyles,
-    SBBControlStyles? controlStyles,
-    SBBHeaderBoxStyle? headerBoxStyle,
-    @Deprecated('Use contentBoxTheme instead') SBBContentBoxStyle? groupStyle,
+    SBBBottomSheetThemeData? bottomSheetTheme,
+    SBBPrimaryButtonThemeData? primaryButtonTheme,
+    SBBSecondaryButtonThemeData? secondaryButtonTheme,
+    SBBTertiaryButtonThemeData? tertiaryButtonTheme,
+    SBBAccentButtonThemeData? accentButtonTheme,
+    SBBNotificationBoxThemeData? notificationBoxTheme,
+    SBBCheckboxThemeData? checkboxTheme,
+    SBBChipThemeData? chipTheme,
     SBBContentBoxThemeData? contentBoxTheme,
-    SBBTextTheme? textTheme,
-    SBBToastStyle? toastStyle,
+    SBBDecoratedTextThemeData? decoratedTextTheme,
+    SBBDropdownThemeData? dropdownTheme,
+    SBBHeaderBoxThemeData? headerBoxTheme,
+    SBBInputDecorationThemeData? inputDecorationTheme,
+    SBBListHeaderThemeData? listHeaderTheme,
+    SBBListItemThemeData? listItemTheme,
+    SBBMessageThemeData? messageTheme,
+    SBBPaginatorThemeData? paginatorTheme,
+    SBBPickerThemeData? pickerTheme,
+    SBBPopupThemeData? popupTheme,
+    SBBPromotionBoxThemeData? promotionBoxTheme,
+    SBBRadioThemeData? radioTheme,
+    SBBStatusThemeData? statusTheme,
+    SBBSegmentedButtonThemeData? segmentedButtonTheme,
+    SBBSliderThemeData? sliderTheme,
+    SBBSlideToToggleThemeData? slideToToggleTheme,
+    SBBStepperThemeData? stepperTheme,
+    SBBSwitchThemeData? switchTheme,
+    SBBTabBarThemeData? tabBarTheme,
+    SBBTextInputThemeData? textInputTheme,
+    SBBToastThemeData? toastTheme,
   }) => createTheme(
-    brightness: Brightness.dark,
-    boldFont: boldFont,
+    brightness: .dark,
+    themeContext: themeContext,
     baseStyle: baseStyle,
-    buttonStyles: buttonStyles,
-    controlStyles: controlStyles,
-    headerBoxStyle: headerBoxStyle,
-    groupStyle: groupStyle,
+    bottomSheetTheme: bottomSheetTheme,
+    primaryButtonTheme: primaryButtonTheme,
+    secondaryButtonTheme: secondaryButtonTheme,
+    tertiaryButtonTheme: tertiaryButtonTheme,
+    accentButtonTheme: accentButtonTheme,
+    checkboxTheme: checkboxTheme,
+    chipTheme: chipTheme,
     contentBoxTheme: contentBoxTheme,
-    textTheme: textTheme,
-    toastStyle: toastStyle,
+    decoratedTextTheme: decoratedTextTheme,
+    dropdownTheme: dropdownTheme,
+    headerBoxTheme: headerBoxTheme,
+    inputDecorationTheme: inputDecorationTheme,
+    listHeaderTheme: listHeaderTheme,
+    listItemTheme: listItemTheme,
+    messageTheme: messageTheme,
+    paginatorTheme: paginatorTheme,
+    pickerTheme: pickerTheme,
+    popupTheme: popupTheme,
+    promotionBoxTheme: promotionBoxTheme,
+    radioTheme: radioTheme,
+    statusTheme: statusTheme,
+    stepperTheme: stepperTheme,
+    segmentedButtonTheme: segmentedButtonTheme,
+    sliderTheme: sliderTheme,
+    switchTheme: switchTheme,
+    tabBarTheme: tabBarTheme,
+    textInputTheme: textInputTheme,
+    toastTheme: toastTheme,
   );
 
+  /// Creates the base [ThemeData] with the provided [brightness].
+  ///
+  /// Use [themeContext] if your application is set in an off-brand or safety related context.
+  ///
+  /// Use optional parameters (e.g. [primaryButtonTheme]) to override individual component theme data.
+  /// The non null fields will overwrite default values.
   static ThemeData createTheme({
     required Brightness brightness,
-    bool boldFont = false,
+    SBBThemeContext themeContext = .sbb,
     SBBBaseStyle? baseStyle,
-    SBBButtonStyles? buttonStyles,
-    SBBControlStyles? controlStyles,
-    SBBHeaderBoxStyle? headerBoxStyle,
-    @Deprecated('Use contentBoxTheme instead') SBBContentBoxStyle? groupStyle,
+    SBBBottomSheetThemeData? bottomSheetTheme,
+    SBBPrimaryButtonThemeData? primaryButtonTheme,
+    SBBNotificationBoxThemeData? notificationBoxTheme,
+    SBBSecondaryButtonThemeData? secondaryButtonTheme,
+    SBBTertiaryButtonThemeData? tertiaryButtonTheme,
+    SBBAccentButtonThemeData? accentButtonTheme,
+    SBBCheckboxThemeData? checkboxTheme,
+    SBBChipThemeData? chipTheme,
+    SBBStepperThemeData? stepperTheme,
     SBBContentBoxThemeData? contentBoxTheme,
-    SBBTextTheme? textTheme,
-    SBBToastStyle? toastStyle,
+    SBBDecoratedTextThemeData? decoratedTextTheme,
+    SBBDropdownThemeData? dropdownTheme,
+    SBBHeaderThemeData? headerTheme,
+    SBBHeaderBoxThemeData? headerBoxTheme,
+    SBBInputDecorationThemeData? inputDecorationTheme,
+    SBBListHeaderThemeData? listHeaderTheme,
+    SBBListItemThemeData? listItemTheme,
+    SBBMessageThemeData? messageTheme,
+    SBBPaginatorThemeData? paginatorTheme,
+    SBBPickerThemeData? pickerTheme,
+    SBBPopupThemeData? popupTheme,
+    SBBPromotionBoxThemeData? promotionBoxTheme,
+    SBBRadioThemeData? radioTheme,
+    SBBSegmentedButtonThemeData? segmentedButtonTheme,
+    SBBSliderThemeData? sliderTheme,
+    SBBSlideToToggleThemeData? slideToToggleTheme,
+    SBBStatusThemeData? statusTheme,
+    SBBSwitchThemeData? switchTheme,
+    SBBTabBarThemeData? tabBarTheme,
+    SBBTextInputThemeData? textInputTheme,
+    SBBToastThemeData? toastTheme,
   }) {
     // default values are set here and merged with given styles
-    final defaultBaseStyle = SBBBaseStyle.$default(brightness: brightness, boldFont: boldFont);
-    final mergedBaseStyle = baseStyle.merge(defaultBaseStyle);
+    final defaultBaseStyle = SBBBaseStyle.$default(brightness: brightness, themeContext: themeContext);
+    final mergedBaseStyle = defaultBaseStyle.merge(baseStyle);
 
-    final defaultButtonStyles = SBBButtonStyles.$default(baseStyle: mergedBaseStyle);
-    final mergedButtonStyles = buttonStyles.merge(defaultButtonStyles);
+    final defaultBottomSheetTheme = DefaultSBBBottomSheetThemeData(mergedBaseStyle);
+    final mergedBottomSheetTheme = defaultBottomSheetTheme.merge(bottomSheetTheme);
 
-    final defaultControlStyles = SBBControlStyles.$default(baseStyle: mergedBaseStyle);
-    final mergedControlStyles = controlStyles.merge(defaultControlStyles);
+    final defaultPrimaryButtonTheme = DefaultSBBPrimaryButtonThemeData(mergedBaseStyle);
+    final mergedPrimaryButtonTheme = defaultPrimaryButtonTheme.merge(primaryButtonTheme);
 
-    final defaultHeaderBoxStyle = SBBHeaderBoxStyle.$default(baseStyle: mergedBaseStyle);
-    final mergedHeaderBoxStyle = headerBoxStyle.merge(defaultHeaderBoxStyle);
+    final defaultSecondaryButtonTheme = DefaultSBBSecondaryButtonThemeData(mergedBaseStyle);
+    final mergedSecondaryButtonTheme = defaultSecondaryButtonTheme.merge(secondaryButtonTheme);
 
-    final defaultGroupStyle = SBBContentBoxStyle.$default(baseStyle: mergedBaseStyle);
-    final mergedGroupStyle = groupStyle.merge(defaultGroupStyle);
+    final defaultTertiaryButtonTheme = DefaultSBBTertiaryButtonThemeData(mergedBaseStyle);
+    final mergedTertiaryButtonTheme = defaultTertiaryButtonTheme.merge(tertiaryButtonTheme);
 
-    final defaultContentBoxTheme = DefaultSBBContentBoxTheme(baseStyle: mergedBaseStyle);
+    final defaultAccentButtonTheme = DefaultSBBAccentButtonThemeData(mergedBaseStyle);
+    final mergedAccentButtonTheme = defaultAccentButtonTheme.merge(accentButtonTheme);
+
+    final defaultCheckboxTheme = DefaultSBBCheckboxThemeData(mergedBaseStyle);
+    final mergedCheckboxTheme = defaultCheckboxTheme.merge(checkboxTheme);
+
+    final defaultChipTheme = DefaultSBBChipThemeData(mergedBaseStyle);
+    final mergedChipTheme = defaultChipTheme.merge(chipTheme);
+
+    final defaultDecoratedTextTheme = DefaultSBBDecoratedTextThemeData(mergedBaseStyle);
+    final mergedDecoratedTextTheme = defaultDecoratedTextTheme.merge(decoratedTextTheme);
+
+    final defaultContentBoxTheme = DefaultSBBContentBoxThemeData(baseStyle: mergedBaseStyle);
     final mergedContentBoxTheme = defaultContentBoxTheme.merge(contentBoxTheme);
 
-    final defaultTextTheme = SBBTextTheme.$default(baseStyle: mergedBaseStyle);
-    final mergedTextTheme = defaultTextTheme.merge(textTheme);
+    final defaultHeaderTheme = DefaultSBBHeaderThemeData(baseStyle: mergedBaseStyle);
+    final mergedHeaderTheme = defaultHeaderTheme.merge(headerTheme);
 
-    final defaultToastStyle = SBBToastStyle.$default(baseStyle: mergedBaseStyle);
-    final mergedToastStyle = defaultToastStyle.merge(defaultToastStyle);
+    final defaultHeaderBoxTheme = DefaultSBBHeaderBoxThemeData(baseStyle: mergedBaseStyle);
+    final mergedHeaderBoxTheme = defaultHeaderBoxTheme.merge(headerBoxTheme);
+
+    final defaultListHeaderTheme = DefaultSBBListHeaderThemeData(mergedBaseStyle);
+    final mergedListHeaderTheme = defaultListHeaderTheme.merge(listHeaderTheme);
+
+    final defaultListItemTheme = DefaultSBBListItemThemeData(baseStyle: mergedBaseStyle);
+    final mergedListItemTheme = defaultListItemTheme.merge(listItemTheme);
+
+    final defaultMessageTheme = DefaultSBBMessageThemeData(mergedBaseStyle);
+    final mergedMessageTheme = defaultMessageTheme.merge(messageTheme);
+
+    final defaultPaginatorTheme = DefaultSBBPaginatorThemeData(mergedBaseStyle);
+    final mergedPaginatorTheme = defaultPaginatorTheme.merge(paginatorTheme);
+
+    final defaultNotificationBoxTheme = DefaultSBBNotificationBoxThemeData(baseStyle: mergedBaseStyle);
+    final mergedNotificationBoxTheme = defaultNotificationBoxTheme.merge(notificationBoxTheme);
+
+    final defaultPopupTheme = DefaultSBBPopupThemeData(mergedBaseStyle);
+    final mergedPopupTheme = defaultPopupTheme.merge(popupTheme);
+
+    final defaultPromotionBoxTheme = DefaultSBBPromotionBoxThemeData(mergedBaseStyle);
+    final mergedPromotionBoxTheme = defaultPromotionBoxTheme.merge(promotionBoxTheme);
+
+    final defaultRadioTheme = DefaultSBBRadioThemeData(mergedBaseStyle);
+    final mergedRadioTheme = defaultRadioTheme.merge(radioTheme);
+
+    final defaultStatusTheme = DefaultSBBStatusThemeData(baseStyle: mergedBaseStyle);
+    final mergedStatusTheme = defaultStatusTheme.merge(statusTheme);
+
+    final defaultStepperTheme = DefaultSBBStepperThemeData(mergedBaseStyle);
+    final mergedStepperTheme = defaultStepperTheme.merge(stepperTheme);
+
+    final defaultSegmentedButtonTheme = DefaultSBBSegmentedButtonThemeData(mergedBaseStyle);
+    final mergedSegmentedButtonTheme = defaultSegmentedButtonTheme.merge(segmentedButtonTheme);
+
+    final defaultSliderTheme = DefaultSBBSliderThemeData(mergedBaseStyle);
+    final mergedSliderTheme = defaultSliderTheme.merge(sliderTheme);
+
+    final defaultSlideToToggleTheme = DefaultSBBSlideToToggleThemeData(mergedBaseStyle);
+    final mergedSlideToToggleTheme = defaultSlideToToggleTheme.merge(slideToToggleTheme);
+
+    final defaultSwitchTheme = DefaultSBBSwitchThemeData(mergedBaseStyle);
+    final mergedSwitchTheme = defaultSwitchTheme.merge(switchTheme);
+
+    final defaultTextInputTheme = DefaultSBBTextInputThemeData(mergedBaseStyle);
+    final mergedTextInputTheme = defaultTextInputTheme.merge(textInputTheme);
+
+    final defaultToastTheme = DefaultSBBToastThemeData(mergedBaseStyle);
+    final mergedToastTheme = defaultToastTheme.merge(toastTheme);
+
+    final defaultInputDecorationTheme = DefaultSBBInputDecorationThemeData(mergedBaseStyle);
+    final mergedInputDecorationTheme = defaultInputDecorationTheme.merge(inputDecorationTheme);
+
+    final defaultTabBarTheme = DefaultSBBTabBarThemeData(mergedBaseStyle);
+    final mergedTabBarTheme = defaultTabBarTheme.merge(tabBarTheme);
+
+    final defaultDropdownTheme = SBBDropdownThemeData(
+      triggerDecorationTheme: defaultInputDecorationTheme,
+      triggerStyle: defaultDecoratedTextTheme.style,
+      sheetStyle: defaultBottomSheetTheme.style,
+    );
+    final mergedDropdownTheme = defaultDropdownTheme.merge(dropdownTheme);
+
+    final defaultPickerTheme = DefaultSBBPickerThemeData(
+      baseStyle: mergedBaseStyle,
+      inputDecorationTheme: defaultInputDecorationTheme,
+      decoratedTextStyle: defaultDecoratedTextTheme.style,
+      bottomSheetStyle: defaultBottomSheetTheme.style,
+    );
+    final mergedPickerTheme = defaultPickerTheme.merge(pickerTheme);
 
     return raw(
-      brightness: brightness,
       baseStyle: mergedBaseStyle,
-      buttonStyles: mergedButtonStyles,
-      controlStyles: mergedControlStyles,
-      headerBoxStyle: mergedHeaderBoxStyle,
-      groupStyle: mergedGroupStyle,
+      bottomSheetTheme: mergedBottomSheetTheme,
+      primaryButtonTheme: mergedPrimaryButtonTheme,
+      secondaryButtonTheme: mergedSecondaryButtonTheme,
+      tertiaryButtonTheme: mergedTertiaryButtonTheme,
+      accentButtonTheme: mergedAccentButtonTheme,
+      checkboxTheme: mergedCheckboxTheme,
+      chipTheme: mergedChipTheme,
       contentBoxTheme: mergedContentBoxTheme,
-      textTheme: mergedTextTheme,
-      toastStyle: mergedToastStyle,
+      decoratedTextTheme: mergedDecoratedTextTheme,
+      dropdownTheme: mergedDropdownTheme,
+      headerTheme: mergedHeaderTheme,
+      headerBoxTheme: mergedHeaderBoxTheme,
+      inputDecorationTheme: mergedInputDecorationTheme,
+      listHeaderTheme: mergedListHeaderTheme,
+      listItemTheme: mergedListItemTheme,
+      messageTheme: mergedMessageTheme,
+      notificationBoxTheme: mergedNotificationBoxTheme,
+      paginatorTheme: mergedPaginatorTheme,
+      pickerTheme: mergedPickerTheme,
+      popupTheme: mergedPopupTheme,
+      promotionBoxTheme: mergedPromotionBoxTheme,
+      radioTheme: mergedRadioTheme,
+      statusTheme: mergedStatusTheme,
+      segmentedButtonTheme: mergedSegmentedButtonTheme,
+      sliderTheme: mergedSliderTheme,
+      slideToToggleTheme: mergedSlideToToggleTheme,
+      stepperTheme: mergedStepperTheme,
+      switchTheme: mergedSwitchTheme,
+      tabBarTheme: mergedTabBarTheme,
+      textInputTheme: mergedTextInputTheme,
+      toastTheme: mergedToastTheme,
     );
   }
 
   static ThemeData raw({
-    required Brightness brightness,
     required SBBBaseStyle baseStyle,
-    required SBBButtonStyles buttonStyles,
-    required SBBControlStyles controlStyles,
-    required SBBHeaderBoxStyle headerBoxStyle,
-    @Deprecated('Use contentBoxTheme instead.') required SBBContentBoxStyle groupStyle,
+    required SBBBottomSheetThemeData bottomSheetTheme,
+    required SBBPrimaryButtonThemeData primaryButtonTheme,
+    required SBBSecondaryButtonThemeData secondaryButtonTheme,
+    required SBBTertiaryButtonThemeData tertiaryButtonTheme,
+    required SBBAccentButtonThemeData accentButtonTheme,
+    required SBBCheckboxThemeData checkboxTheme,
+    required SBBChipThemeData chipTheme,
     required SBBContentBoxThemeData contentBoxTheme,
-    required SBBTextTheme textTheme,
-    required SBBToastStyle toastStyle,
-  }) => ThemeData(
-    colorScheme: ColorScheme.fromSwatch(
-      primarySwatch: baseStyle.primarySwatch!,
-      accentColor: baseStyle.primaryColor,
-      backgroundColor: baseStyle.backgroundColor,
-      errorColor: baseStyle.errorColor,
-      brightness: brightness,
-    ).copyWith(surfaceTint: SBBColors.transparent),
-    scaffoldBackgroundColor: baseStyle.backgroundColor,
-    iconTheme: IconThemeData(color: baseStyle.iconColor, size: sbbIconSizeSmall),
-    dividerTheme: DividerThemeData(thickness: 1.0, space: 0.0, color: baseStyle.dividerColor),
-    fontFamily: baseStyle.defaultFontFamily,
-    textTheme: baseStyle.createTextTheme(),
-    appBarTheme: controlStyles.appBarTheme,
-    filledButtonTheme: buttonStyles.filledButtonTheme,
-    outlinedButtonTheme: buttonStyles.outlinedButtonTheme,
-    textButtonTheme: buttonStyles.textButtonTheme,
-    materialTapTargetSize: MaterialTapTargetSize.padded,
-    textSelectionTheme: controlStyles.textSelectionTheme,
-    extensions: [
-      baseStyle,
-      buttonStyles,
-      controlStyles,
-      headerBoxStyle,
-      groupStyle,
-      contentBoxTheme,
-      textTheme,
-      toastStyle,
-    ],
-  );
-
-  /// Convenience method for easier use of [WidgetStateProperty.all].
-  static WidgetStateProperty<T> allStates<T>(T value) {
-    return WidgetStateProperty.all(value);
-  }
-
-  /// Convenience method for easier use of [WidgetStateProperty.resolveWith].
-  static WidgetStateProperty<T?> resolveStatesWith<T>({
-    required T defaultValue,
-    T? pressedValue,
-    T? disabledValue,
-    T? hoveredValue,
-    String? parent,
-    T? selectedValue,
+    required SBBDecoratedTextThemeData decoratedTextTheme,
+    required SBBDropdownThemeData dropdownTheme,
+    required SBBHeaderThemeData headerTheme,
+    required SBBHeaderBoxThemeData headerBoxTheme,
+    required SBBInputDecorationThemeData inputDecorationTheme,
+    required SBBListHeaderThemeData listHeaderTheme,
+    required SBBListItemThemeData listItemTheme,
+    required SBBMessageThemeData messageTheme,
+    required SBBNotificationBoxThemeData notificationBoxTheme,
+    required SBBPaginatorThemeData paginatorTheme,
+    required SBBPickerThemeData pickerTheme,
+    required SBBPopupThemeData popupTheme,
+    required SBBPromotionBoxThemeData promotionBoxTheme,
+    required SBBRadioThemeData radioTheme,
+    required SBBStatusThemeData statusTheme,
+    required SBBSegmentedButtonThemeData segmentedButtonTheme,
+    required SBBSliderThemeData sliderTheme,
+    required SBBSlideToToggleThemeData slideToToggleTheme,
+    required SBBStepperThemeData stepperTheme,
+    required SBBSwitchThemeData switchTheme,
+    required SBBTabBarThemeData tabBarTheme,
+    required SBBTextInputThemeData textInputTheme,
+    required SBBToastThemeData toastTheme,
   }) {
-    return WidgetStateProperty.resolveWith((states) {
-      // disabled
-      if (states.contains(WidgetState.disabled) && disabledValue != null) {
-        return disabledValue;
-      }
-
-      // pressed / focused
-      if (states.any({WidgetState.pressed, WidgetState.focused}.contains) && pressedValue != null) {
-        return pressedValue;
-      }
-      // hovered
-      if (states.contains(WidgetState.hovered) && hoveredValue != null) {
-        return hoveredValue;
-      }
-
-      // selected
-      if (states.contains(WidgetState.selected) && selectedValue != null) {
-        return selectedValue;
-      }
-      // default
-      return defaultValue;
-    });
+    return ThemeData(
+      colorScheme:
+          ColorScheme.fromSwatch(
+            primarySwatch: baseStyle.colorScheme.primarySwatch,
+            accentColor: baseStyle.colorScheme.primary,
+            cardColor: baseStyle.colorScheme.backgroundBase,
+            backgroundColor: baseStyle.colorScheme.backgroundBase,
+            errorColor: baseStyle.colorScheme.error,
+            brightness: baseStyle.brightness,
+          ).copyWith(
+            surfaceTint: SBBColors.transparent,
+            surfaceContainerLowest: baseStyle.colorScheme.backgroundContent,
+            surfaceContainerLow: baseStyle.colorScheme.backgroundContent,
+            surfaceContainer: baseStyle.colorScheme.backgroundContent,
+            surfaceContainerHigh: baseStyle.colorScheme.backgroundContent,
+            surfaceContainerHighest: baseStyle.colorScheme.backgroundContent,
+          ),
+      iconTheme: baseStyle.iconTheme,
+      dividerColor: baseStyle.dividerTheme?.color,
+      dividerTheme: baseStyle.dividerTheme,
+      textTheme: baseStyle.textTheme.toTextTheme(labelColor: baseStyle.colorScheme.textSecondary),
+      appBarTheme: headerTheme.appBarTheme,
+      filledButtonTheme: FilledButtonThemeData(style: primaryButtonTheme.style?.toButtonStyle()),
+      outlinedButtonTheme: OutlinedButtonThemeData(style: secondaryButtonTheme.style?.toButtonStyle()),
+      textButtonTheme: TextButtonThemeData(style: tertiaryButtonTheme.style?.toButtonStyle()),
+      textSelectionTheme: baseStyle.textSelectionTheme,
+      extensions: [
+        baseStyle,
+        bottomSheetTheme,
+        primaryButtonTheme,
+        secondaryButtonTheme,
+        tertiaryButtonTheme,
+        accentButtonTheme,
+        checkboxTheme,
+        contentBoxTheme,
+        chipTheme,
+        decoratedTextTheme,
+        dropdownTheme,
+        headerTheme,
+        headerBoxTheme,
+        inputDecorationTheme,
+        listHeaderTheme,
+        listItemTheme,
+        messageTheme,
+        notificationBoxTheme,
+        paginatorTheme,
+        pickerTheme,
+        popupTheme,
+        promotionBoxTheme,
+        radioTheme,
+        statusTheme,
+        segmentedButtonTheme,
+        sliderTheme,
+        slideToToggleTheme,
+        stepperTheme,
+        switchTheme,
+        tabBarTheme,
+        textInputTheme,
+        toastTheme,
+      ],
+    );
   }
 }

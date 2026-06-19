@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_design_system_mobile_example/pages/scaffold/demo_page_scaffold.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 part 'header_box_page.floating.dart';
@@ -42,7 +43,7 @@ class _HeaderBoxPageState extends State<HeaderBoxPage> {
           child: PageView(
             physics: NeverScrollableScrollPhysics(),
             controller: _pageViewController,
-            children: <Widget>[
+            children: [
               DesignGuidelinePage(),
               StaticPage(),
               ScrollablePage(),
@@ -71,50 +72,137 @@ class _HeaderBoxPageState extends State<HeaderBoxPage> {
   }
 }
 
-class DesignGuidelinePage extends StatelessWidget {
+class DesignGuidelinePage extends StatefulWidget {
   const DesignGuidelinePage({super.key});
+
+  @override
+  State<DesignGuidelinePage> createState() => _DesignGuidelinePageState();
+}
+
+class _DesignGuidelinePageState extends State<DesignGuidelinePage> {
+  bool flapEnabled = true;
+  bool colorful = false;
 
   @override
   Widget build(BuildContext context) {
     final sbbToast = SBBToast.of(context);
-    return Column(
-      children: [
-        const SizedBox(height: sbbDefaultSpacing),
-        const SBBListHeader('Default'),
-        SBBHeaderbox(
-          title: 'Title',
-          leadingIcon: SBBIcons.dog_small,
-          secondaryLabel: 'Subtext',
-          flap: SBBHeaderboxFlap(
-            title: 'Additional text or information',
-            leadingIcon: SBBIcons.sign_exclamation_point_small,
-            trailingIcon: SBBIcons.circle_information_small_small,
-          ),
-          trailingWidget: SBBTertiaryButtonSmall(
-            label: 'Label',
-            icon: SBBIcons.dog_small,
-            onPressed: () => sbbToast.show(title: 'Default pressed', bottom: sbbDefaultSpacing * 6),
-          ),
+    return AnimatedTheme(
+      data: _theme(context),
+      child: DemoPageScaffold(
+        body: Column(
+          children: [
+            SBBContentBox(
+              child: Column(
+                children: [
+                  SBBCheckboxListItem(
+                    titleText: 'Show flap',
+                    value: flapEnabled,
+                    onChanged: (value) => setState(() {
+                      flapEnabled = value!;
+                    }),
+                  ),
+                  SBBCheckboxListItem(
+                    titleText: 'Colorful',
+                    value: colorful,
+                    onChanged: !flapEnabled
+                        ? null
+                        : (value) => setState(() {
+                            colorful = value!;
+                          }),
+                  ),
+                ],
+              ),
+            ),
+
+            const SizedBox(height: SBBSpacing.medium),
+            const SBBListHeader('Default'),
+            SBBHeaderBox(
+              titleText: 'Title',
+              leadingIconData: SBBIcons.unicorn_small,
+              subtitleText: 'Subtext',
+              flap: flapEnabled
+                  ? SBBHeaderBoxFlap(
+                      labelText: 'Additional text or information',
+                      leadingIconData: SBBIcons.sign_exclamation_point_small,
+                      trailingIconData: SBBIcons.circle_information_small,
+                    )
+                  : null,
+              trailing: SBBTertiaryButtonSmall(
+                labelText: 'Label',
+                iconData: SBBIcons.dog_small,
+                onPressed: () => sbbToast.show(titleText: 'Default pressed', bottom: 96.0),
+              ),
+            ),
+            const SizedBox(height: SBBSpacing.medium),
+            const SBBListHeader('Large'),
+            SBBHeaderBoxLarge(
+              titleText: 'Title',
+              leadingIconData: SBBIcons.unicorn_small,
+              subtitleText: 'Subtext',
+              trailing: SBBTertiaryButton(
+                iconData: SBBIcons.dog_small,
+                onPressed: () => sbbToast.show(titleText: 'Large pressed', bottom: 96.0),
+              ),
+              flap: flapEnabled
+                  ? SBBHeaderBoxFlap(
+                      labelText: 'Additional text or information',
+                      leadingIconData: SBBIcons.sign_exclamation_point_small,
+                      trailingIconData: SBBIcons.circle_information_small,
+                    )
+                  : null,
+            ),
+            const SizedBox(height: SBBSpacing.medium),
+            const SBBListHeader('Custom'),
+            SBBHeaderBox(
+              padding: .zero,
+              flap: flapEnabled
+                  ? SBBHeaderBoxFlap(
+                      label: Center(child: Text('Choooooo!', style: SBBTextStyles.xSmallBold)),
+                    )
+                  : null,
+              title: Center(child: Text('🚂｡🚋｡🚋｡🚋｡🚋˙⊹⁺.')),
+              isLoading: true,
+            ),
+          ],
         ),
-        const SizedBox(height: sbbDefaultSpacing),
-        const SBBListHeader('Large'),
-        SBBHeaderbox.large(
-          title: 'Title',
-          leadingIcon: SBBIcons.dog_medium,
-          secondaryLabel: 'Subtext',
-          trailingWidget: SBBIconButtonLarge(
-            icon: SBBIcons.dog_small,
-            onPressed: () => sbbToast.show(title: 'Large pressed', bottom: sbbDefaultSpacing * 6),
+      ),
+    );
+  }
+
+  ThemeData _theme(BuildContext context) {
+    final theme = Theme.of(context);
+    final decoration = colorful
+        ? BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                SBBColors.red,
+                SBBColors.blue,
+              ],
+            ),
+          )
+        : null;
+
+    final flapStyle = colorful
+        ? SBBHeaderBoxFlapStyle(
+            labelForegroundColor: SBBColors.white,
+            leadingForegroundColor: SBBColors.white,
+            trailingForegroundColor: SBBColors.white,
+          )
+        : null;
+
+    return theme.copyWith(
+      extensions: [
+        ...theme.extensions.values,
+        theme.sbbHeaderBoxTheme.merge(
+          SBBHeaderBoxThemeData(
+            flapStyle: flapStyle,
+            style: SBBHeaderBoxStyle(
+              flapDecoration: decoration,
+            ),
+            largeStyle: SBBHeaderBoxStyle(
+              flapDecoration: decoration,
+            ),
           ),
-        ),
-        const SizedBox(height: sbbDefaultSpacing),
-        const SBBListHeader('Custom'),
-        const SBBHeaderbox.custom(
-          padding: EdgeInsets.zero,
-          flap: SBBHeaderboxFlap.custom(
-            child: Center(child: Text('Choooooo!', style: SBBTextStyles.extraSmallBold)),
-          ),
-          child: Center(child: Text('🚂｡🚋｡🚋｡🚋｡🚋˙⊹⁺.')),
         ),
       ],
     );
@@ -135,23 +223,23 @@ class _StaticPageState extends State<StaticPage> {
 
   @override
   Widget build(BuildContext context) {
-    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final isDark = Theme.of(context).brightness == .dark;
     return Stack(
       children: [
         _body(),
-        SBBHeaderbox.custom(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
+        SBBHeaderBox(
+          title: Column(
+            mainAxisSize: .min,
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: .spaceBetween,
                 children: [
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: .start,
                     children: [
                       Text('Static Screen', style: SBBTextStyles.mediumBold),
                       Text(
-                        'Click to expand Headerbox.',
+                        'Click to expand Header-Box.',
                         style: SBBTextStyles.smallLight.copyWith(
                           color: isDark ? SBBColors.graphite : SBBColors.granite,
                         ),
@@ -159,15 +247,15 @@ class _StaticPageState extends State<StaticPage> {
                     ],
                   ),
                   SBBTertiaryButtonSmall(
-                    label: 'Expand',
+                    labelText: 'Expand',
                     onPressed: () => setState(() => _headerBoxExpanded = !_headerBoxExpanded),
                   ),
                 ],
               ),
               AnimatedContainer(
-                curve: Curves.easeInOut,
+                curve: Curves.easeInOutCubic,
                 height: _headerBoxExpanded ? _expandedHeight : _collapsedHeight,
-                duration: Durations.long4,
+                duration: Durations.medium4,
               ),
             ],
           ),
@@ -179,8 +267,8 @@ class _StaticPageState extends State<StaticPage> {
   Center _body() {
     return Center(
       child: SBBMessage(
-        title: 'Cover me!',
-        description: 'This screen is non scrollable.\nUsing a Stack, the Headerbox will simply lay on top of it.',
+        titleText: 'Cover me!',
+        subtitleText: 'This screen is non scrollable.\nUsing a Stack, the Header-Box will simply lay on top of it.',
       ),
     );
   }
@@ -194,55 +282,147 @@ class ScrollablePage extends StatefulWidget {
 }
 
 class _ScrollablePageState extends State<ScrollablePage> {
-  bool _headerBoxExpanded = false;
-  final _expandedHeight = 300.0;
-  final _collapsedHeight = 0.0;
+  int _option = 0;
+
+  bool _floating = true;
+  bool _resizing = true;
+  FloatingHeaderSnapMode _snapMode = .scroll;
+  SBBHeaderBoxTopMode _topMode = .hideable;
+  SBBHeaderBoxFlapMode _flapMode = .static;
 
   @override
   Widget build(BuildContext context) {
     final sbbToast = SBBToast.of(context);
-    final isDark = Theme.of(context).brightness == Brightness.dark;
     return CustomScrollView(
       slivers: [
-        SBBSliverHeaderbox.custom(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Scrollable Screen', style: SBBTextStyles.mediumBold),
-                      Text(
-                        'Click to expand Headerbox.',
-                        style: SBBTextStyles.smallLight.copyWith(
-                          color: isDark ? SBBColors.graphite : SBBColors.granite,
-                        ),
-                      ),
+        SBBSliverHeaderBox(
+          top: Padding(
+            padding: EdgeInsets.all(SBBSpacing.medium),
+            child: SBBSegmentedButtonFilled(
+              segments: [
+                SBBButtonSegment(value: 0, labelText: 'Option 1'),
+                SBBButtonSegment(value: 1, labelText: 'Option 2'),
+              ],
+              selected: _option,
+              onSelectionChanged: (value) {
+                setState(() {
+                  _option = value;
+                });
+              },
+            ),
+          ),
+          titleText: 'Sliver Usage',
+          subtitleText: 'Try scrolling with the different options.',
+          config: SBBSliverHeaderBoxConfig(
+            floating: _floating,
+            resizing: _resizing,
+            snapMode: _snapMode,
+            topMode: _topMode,
+            flapMode: _flapMode,
+          ),
+          flap: SBBHeaderBoxFlap(
+            labelText: 'This is a flap',
+          ),
+          body: SBBContractible(
+            child: Column(
+              children: SBBDivider.divideItems(
+                context: context,
+                items: [
+                  SBBDropdown(
+                    triggerDecoration: SBBInputDecoration(
+                      labelText: 'Snap Mode',
+                      contentPadding: EdgeInsets.zero,
+                    ),
+                    selectedItem: _snapMode,
+                    items: [
+                      SBBDropdownItem(value: FloatingHeaderSnapMode.scroll, label: 'Scroll'),
+                      SBBDropdownItem(value: FloatingHeaderSnapMode.overlay, label: 'Overlay'),
                     ],
+                    onChanged: (value) {
+                      setState(() {
+                        _snapMode = value!;
+                      });
+                    },
                   ),
-                  SBBTertiaryButtonSmall(
-                    label: 'Expand',
-                    onPressed: () => setState(() => _headerBoxExpanded = !_headerBoxExpanded),
+                  SBBDropdown(
+                    triggerDecoration: SBBInputDecoration(
+                      labelText: 'Top Mode',
+                      contentPadding: EdgeInsets.zero,
+                    ),
+                    selectedItem: _topMode,
+                    items: [
+                      SBBDropdownItem(value: SBBHeaderBoxTopMode.static, label: 'Static'),
+                      SBBDropdownItem(value: SBBHeaderBoxTopMode.hideable, label: 'Hideable'),
+                    ],
+                    onChanged: (value) {
+                      setState(() {
+                        _topMode = value!;
+                      });
+                    },
+                  ),
+                  SBBDropdown(
+                    triggerDecoration: SBBInputDecoration(
+                      labelText: 'Flap Mode',
+                      contentPadding: EdgeInsets.zero,
+                    ),
+                    selectedItem: _flapMode,
+                    items: [
+                      SBBDropdownItem(value: SBBHeaderBoxFlapMode.static, label: 'Static'),
+                      SBBDropdownItem(value: SBBHeaderBoxFlapMode.hideable, label: 'Hideable'),
+                    ],
+                    onChanged: (value) {
+                      setState(() {
+                        _flapMode = value!;
+                      });
+                    },
                   ),
                 ],
               ),
-              AnimatedContainer(
-                curve: Curves.easeInOut,
-                height: _headerBoxExpanded ? _expandedHeight : _collapsedHeight,
-                duration: Durations.long4,
-              ),
-            ],
+            ),
           ),
         ),
-        SliverList.builder(
+        SliverToBoxAdapter(
+          child: SBBContentBox(
+            margin: EdgeInsets.symmetric(
+              horizontal: SBBSpacing.xSmall,
+              vertical: SBBSpacing.medium,
+            ),
+            child: Column(
+              children: SBBDivider.divideItems(
+                context: context,
+                items: [
+                  SBBCheckboxListItem(
+                    value: _resizing,
+                    titleText: 'Resizing',
+                    subtitleText: 'Header will expand and contract on scroll',
+                    onChanged: (resizing) {
+                      setState(() {
+                        _resizing = resizing!;
+                      });
+                    },
+                  ),
+                  SBBCheckboxListItem(
+                    value: _floating,
+                    titleText: 'Floating',
+                    subtitleText: 'Header will appear first when scrolling back',
+                    onChanged: (floating) {
+                      setState(() {
+                        _floating = floating!;
+                      });
+                    },
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+        SliverList.separated(
           itemCount: 60,
           itemBuilder: (context, index) => SBBListItem(
-            title: 'Item $index',
-            onPressed: () => sbbToast.show(title: 'Pressed Item $index', bottom: sbbDefaultSpacing * 6),
+            titleText: 'Item $index',
+            onTap: () => sbbToast.show(titleText: 'Pressed Item $index', bottom: 96.0),
           ),
+          separatorBuilder: SBBDivider.separatorBuilder,
         ),
       ],
     );

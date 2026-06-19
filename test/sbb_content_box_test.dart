@@ -6,24 +6,24 @@ import 'test_app.dart';
 
 void main() {
   testWidgets('content_box', (WidgetTester tester) async {
-    content(String text) => SizedBox(
-      height: sbbDefaultSpacing * 2,
-      width: double.infinity,
+    Widget content(String text) => SizedBox(
+      height: SBBSpacing.xLarge,
+      width: .infinity,
       child: Center(child: Text(text)),
     );
 
     final widget = Padding(
-      padding: const EdgeInsets.symmetric(horizontal: sbbDefaultSpacing),
+      padding: const .symmetric(horizontal: SBBSpacing.medium),
       child: Column(
-        spacing: sbbDefaultSpacing,
+        spacing: SBBSpacing.medium,
         children: [
           SBBContentBox(child: content('Default')),
           SBBContentBox(color: SBBColors.royal, child: content('Different Color')),
           SBBContentBox(
-            padding: EdgeInsets.symmetric(vertical: sbbDefaultSpacing),
+            padding: .symmetric(vertical: SBBSpacing.medium),
             child: content('Extra padding'),
           ),
-          SBBContentBox(margin: EdgeInsets.all(sbbDefaultSpacing * 4), child: content('Extra margin')),
+          SBBContentBox(margin: .all(64.0), child: content('Extra margin')),
         ],
       ),
     );

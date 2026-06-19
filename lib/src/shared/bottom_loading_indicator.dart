@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../../sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 class BottomLoadingIndicator extends StatefulWidget {
   const BottomLoadingIndicator({
@@ -59,8 +59,9 @@ class _BottomLoadingIndicatorState extends State<BottomLoadingIndicator> with Si
 
   @override
   Widget build(BuildContext context) {
-    final color = SBBBaseStyle.of(context).primaryColor!;
+    assert(debugCheckHasSBBBaseStyle(context));
 
+    final color = Theme.of(context).sbbBaseStyle.colorScheme.primary;
     return ClipRRect(
       borderRadius: _resolveBorderRadius(),
       child: SlideTransition(
@@ -70,12 +71,12 @@ class _BottomLoadingIndicatorState extends State<BottomLoadingIndicator> with Si
         // add a SizedBox with the height of the borderRadius to stop the ClipRRect from
         // clamping the values in borderRadius
         child: SizedBox(
-          width: double.infinity,
+          width: .infinity,
           height: widget.circularBorderRadius > 0 ? widget.circularBorderRadius : widget.height,
           child: Align(
-            alignment: Alignment.bottomCenter,
+            alignment: .bottomCenter,
             child: SizedBox(
-              width: double.infinity,
+              width: .infinity,
               height: widget.height,
               child: DecoratedBox(
                 decoration: BoxDecoration(
@@ -95,8 +96,8 @@ class _BottomLoadingIndicatorState extends State<BottomLoadingIndicator> with Si
   BorderRadius _resolveBorderRadius() {
     return widget.circularBorderRadius > 0
         ? BorderRadius.only(
-            bottomLeft: Radius.circular(widget.circularBorderRadius),
-            bottomRight: Radius.circular(widget.circularBorderRadius),
+            bottomLeft: .circular(widget.circularBorderRadius),
+            bottomRight: .circular(widget.circularBorderRadius),
           )
         : BorderRadius.zero;
   }

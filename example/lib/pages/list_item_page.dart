@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_design_system_mobile_example/pages/scaffold/demo_page_scaffold.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
-import '../native_app.dart';
+const loremIpsum =
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit.'
+    ' Curabitur finibus, nulla nec tempor ornare, purus orci dictum tortor, non tristique velit tellus eu ligula.';
 
 class ListItemPage extends StatelessWidget {
   const ListItemPage({super.key});
@@ -9,80 +12,127 @@ class ListItemPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final sbbToast = SBBToast.of(context);
-    return ListView(
-      padding: const EdgeInsets.all(sbbDefaultSpacing),
-      children: [
-        const ThemeModeSegmentedButton(),
-        const SizedBox(height: sbbDefaultSpacing),
-        SBBContentBox(
-          child: Column(
-            children: <Widget>[
-              SBBListItem(
-                title: 'Default',
-                onPressed: () => sbbToast.show(title: 'ListItem Default'),
+    return DemoPageScaffold(
+      body: Column(
+        children: [
+          SBBListHeader('Listed'),
+          SBBContentBox(
+            child: Column(
+              children: SBBDivider.divideItems(
+                context: context,
+                items: [
+                  SBBListItem(
+                    titleText: 'Default',
+                    leadingIconData: SBBIcons.dog_small,
+                    onTap: () => sbbToast.show(titleText: 'Default'),
+                  ),
+                  SBBListItem(
+                    titleText: 'Without Icon',
+                    onTap: () => sbbToast.show(titleText: 'Without Icon'),
+                  ),
+                  SBBListItem(
+                    titleText: 'With Subtext',
+                    subtitleText: loremIpsum,
+                    leadingIconData: SBBIcons.dog_small,
+                    onTap: () => sbbToast.show(titleText: 'With Subtext'),
+                  ),
+                  SBBListItem(
+                    titleText: 'With Trailing Icon',
+                    leadingIconData: SBBIcons.dog_small,
+                    trailingIconData: SBBIcons.chevron_small_right_small,
+                    onTap: () => sbbToast.show(titleText: 'With Trailing Icon'),
+                  ),
+                  SBBListItem(
+                    titleText: 'With Button',
+                    leadingIconData: SBBIcons.dog_small,
+                    trailingIconButton: SBBTertiaryButtonSmall(onPressed: () {}, iconData: SBBIcons.dog_small),
+                    onTap: () => sbbToast.show(titleText: 'Mit Button'),
+                  ),
+                  SBBListItem(
+                    titleText: 'With Status Message',
+                    subtitle: SBBStatus.information(labelText: 'Lorem ipsum sit dolor amet unt.'),
+                    onTap: () => sbbToast.show(titleText: 'With Status Message'),
+                  ),
+                  SBBListItem(
+                    title: Text('With Links'),
+                    leadingIconData: SBBIcons.globe_small,
+                    onTap: () => sbbToast.show(titleText: 'With Links'),
+                    links: [
+                      SBBListItem(
+                        titleText: 'Link',
+                        trailingIconData: SBBIcons.chevron_small_right_small,
+                        onTap: () => sbbToast.show(titleText: 'Link'),
+                      ),
+                      SBBListItem(
+                        titleText: 'Link 2',
+                        trailingIconData: SBBIcons.chevron_small_right_small,
+                        onTap: () => sbbToast.show(titleText: 'Link 2'),
+                      ),
+                    ],
+                  ),
+                  SBBListItem(
+                    titleText: 'Loading',
+                    leadingIconData: SBBIcons.dog_small,
+                    onTap: () => sbbToast.show(titleText: 'Loading'),
+                    isLoading: true,
+                  ),
+                ],
               ),
-              SBBListItem(
-                title: 'Subtitle',
-                subtitle: 'This is the Subtitle',
-                onPressed: () => sbbToast.show(title: 'ListItem with Subtitle'),
+            ),
+          ),
+          SizedBox(height: SBBSpacing.medium),
+          SBBListHeader('Boxed'),
+          Column(
+            spacing: SBBSpacing.xSmall,
+            children: [
+              SBBListItemBoxed(
+                titleText: 'Default',
+                leadingIconData: SBBIcons.dog_small,
+                onTap: () => sbbToast.show(titleText: 'Default'),
               ),
-              SBBListItem(
-                title: 'Icon',
-                leadingIcon: SBBIcons.clock_small,
-                onPressed: () => sbbToast.show(title: 'ListItem with Icon'),
+              SBBListItemBoxed(
+                titleText: 'Without Icon',
+                onTap: () => sbbToast.show(titleText: 'Without Icon'),
               ),
-              SBBListItem(
-                title: 'Trailing Icon',
-                trailingIcon: SBBIcons.chevron_small_right_small,
-                onPressed: () => sbbToast.show(title: 'ListItem with Icon'),
+              SBBListItemBoxed(
+                titleText: 'With Subtext',
+                subtitleText: loremIpsum,
+                leadingIconData: SBBIcons.dog_small,
+                onTap: () => sbbToast.show(titleText: 'With Subtext'),
               ),
-              SBBListItem.button(
-                title: 'Button',
-                onPressed: () => sbbToast.show(title: 'ListItem with Button'),
-                buttonIcon: SBBIcons.chevron_small_right_small,
-                onPressedButton: () => sbbToast.show(title: 'Button'),
+              SBBListItemBoxed(
+                titleText: 'With Trailing Icon',
+                leadingIconData: SBBIcons.dog_small,
+                trailingIconData: SBBIcons.chevron_small_right_small,
+                onTap: () => sbbToast.show(titleText: 'With Trailing Icon'),
               ),
-              SBBListItem.button(
-                title: 'Subtitle, Button',
-                subtitle: 'This is the Subtitle',
-                buttonIcon: SBBIcons.chevron_small_right_small,
-                onPressedButton: () => sbbToast.show(title: 'Button'),
-                onPressed: () => sbbToast.show(title: 'ListItem with Subtitle and Button'),
-              ),
-              SBBListItem.button(
-                title: 'Icon, Button',
-                leadingIcon: SBBIcons.clock_small,
-                buttonIcon: SBBIcons.chevron_small_right_small,
-                onPressedButton: () => sbbToast.show(title: 'Button'),
-                onPressed: () => sbbToast.show(title: 'ListItem with Icon and Button'),
-              ),
-              SBBListItem(
-                title: 'Icon, Subtitle',
-                leadingIcon: SBBIcons.clock_small,
-                subtitle: 'This is the Subtitle',
-                onPressed: () => sbbToast.show(title: 'ListItem with Icon and Subtitle'),
-              ),
-              SBBListItem.button(
-                title: 'Icon, Subtitle, Button',
-                subtitle: 'This is the Subtitle',
-                leadingIcon: SBBIcons.clock_small,
-                buttonIcon: SBBIcons.chevron_small_right_small,
-                onPressedButton: () => sbbToast.show(title: 'Button'),
-                onPressed: () => sbbToast.show(title: 'ListItem with Icon, Subtitle and Button'),
-              ),
-              SBBListItem.button(
-                title: 'Disabled, Icon, Subtitle, Button',
-                subtitle: 'This is the Subtitle',
-                isLastElement: true,
-                leadingIcon: SBBIcons.clock_small,
-                onPressed: null,
-                buttonIcon: SBBIcons.chevron_small_right_small,
-                onPressedButton: () => sbbToast.show(title: 'Button'),
+              SBBListItemBoxed(
+                titleText: 'Loading',
+                leadingIconData: SBBIcons.dog_small,
+                onTap: () => sbbToast.show(titleText: 'Loading'),
+                isLoading: true,
               ),
             ],
           ),
-        ),
-      ],
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: SBBSpacing.xSmall),
+            child: SBBListHeader('Dynamically generated'),
+          ),
+          Padding(
+            padding: EdgeInsets.all(SBBSpacing.xSmall).copyWith(bottom: SBBSpacing.xLarge),
+            child: ListView.separated(
+              physics: NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              itemCount: 50,
+              itemBuilder: (context, idx) => SBBListItem(
+                onTap: () {},
+                titleText: 'Index ${idx + 1}',
+              ),
+              separatorBuilder: SBBDivider.separatorBuilder,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

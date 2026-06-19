@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_design_system_mobile_example/pages/scaffold/demo_page_scaffold.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
-import '../native_app.dart';
+const _longSubtitleText =
+    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus. ';
 
 class PromotionBoxPage extends StatefulWidget {
   const PromotionBoxPage({super.key});
@@ -11,121 +13,78 @@ class PromotionBoxPage extends StatefulWidget {
 }
 
 class _PromotionBoxPageState extends State<PromotionBoxPage> {
-  late ClosableBoxController defaultController;
-  late ClosableBoxController closableController;
-  late ClosableBoxController clickableController;
-  late ClosableBoxController extraController;
-
-  static const _title = 'Bessere Übersicht.';
-  static const _description = 'Erkennen Sie nun schneller, auf welchen Perrons Durchsagen vorhanden sind.';
+  final defaultController = SBBPromotionBoxController();
+  final dismissableController = SBBPromotionBoxController();
+  final clickableController = SBBPromotionBoxController();
+  final tooLongTextController = SBBPromotionBoxController();
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(sbbDefaultSpacing),
-      child: Column(
-        children: [
-          const ThemeModeSegmentedButton(),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const SizedBox(height: sbbDefaultSpacing),
-                  SBBPromotionBox(
-                    badgeText: 'Default',
-                    title: _title,
-                    subtitle: _description,
-                    onControllerCreated: (c) => defaultController = c,
-                    onClose: () {},
-                  ),
-                  const SizedBox(height: 8.0),
-                  SBBPromotionBox(
-                    badgeText: 'onClose null',
-                    title: _title,
-                    subtitle: _description,
-                    onControllerCreated: (c) => closableController = c,
-                  ),
-                  const SizedBox(height: 8.0),
-                  SBBPromotionBox(
-                    badgeText: 'Clickable',
-                    title: _title,
-                    subtitle: _description,
-                    onControllerCreated: (c) => clickableController = c,
-                    onTap: () {},
-                    onClose: () {},
-                  ),
-                  const SizedBox(height: 8.0),
-                  SBBPromotionBox(
-                    badgeText: 'With way too long title and badge text',
-                    title:
-                        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
-                    subtitle: _description,
-                    onControllerCreated: (c) => extraController = c,
-                    onClose: () {},
-                  ),
-                  const SizedBox(height: sbbDefaultSpacing),
-                  SBBPromotionBox.custom(
-                    content: Text(
-                      'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
-                      style: SBBTextStyles.mediumLight.copyWith(color: SBBColors.black),
-                    ),
-                    badgeText: 'Custom with different color',
-                    style: _customBoxStyle(context),
-                  ),
-                  const SizedBox(height: sbbDefaultSpacing),
-                  SBBPromotionBox.custom(
-                    content: Text(
-                      'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
-                      style: SBBTextStyles.mediumLight,
-                    ),
-                    badgeText: 'Custom leading and trailing widget',
-                    leading: Icon(SBBIcons.train_large),
-                    trailing: SBBTertiaryButtonSmall(label: 'Trailing Button', onPressed: () {}),
-                  ),
-                  const SizedBox(height: sbbDefaultSpacing),
-                  SBBPromotionBox.custom(
-                    content: Text(
-                      'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore.',
-                      style: SBBTextStyles.mediumLight.copyWith(color: SBBColors.black),
-                    ),
-                    onTap: () {},
-                    badgeText: 'Custom with on tap',
-                    leading: Icon(SBBIcons.train_large),
-                    trailing: SBBTertiaryButtonSmall(label: 'Trailing Button', onPressed: () {}),
-                    style: _customBoxStyle(context),
-                  ),
-                ],
-              ),
+    return DemoPageScaffold(
+      componentConfig: Padding(
+        padding: const .all(SBBSpacing.xSmall),
+        child: Row(
+          spacing: SBBSpacing.xSmall,
+          mainAxisAlignment: .center,
+          children: [
+            SBBTertiaryButtonSmall(
+              labelText: 'Show',
+              onPressed: () {
+                defaultController.show();
+                dismissableController.show();
+                clickableController.show();
+                tooLongTextController.show();
+              },
             ),
+            SBBTertiaryButtonSmall(
+              labelText: 'Hide',
+              onPressed: () {
+                defaultController.hide();
+                dismissableController.hide();
+                clickableController.hide();
+                tooLongTextController.hide();
+              },
+            ),
+          ],
+        ),
+      ),
+      body: Column(
+        spacing: SBBSpacing.xSmall,
+        children: [
+          SBBPromotionBox(
+            badgeText: 'Default',
+            titleText: 'Default Promotion Box',
+            subtitleText: 'The default promotion box.',
+            controller: defaultController,
           ),
-          SBBPrimaryButton(
-            label: 'Show',
-            onPressed: () {
-              defaultController.show();
-              closableController.show();
-              clickableController.show();
-              extraController.show();
-            },
+          SBBPromotionBox(
+            badgeText: 'Dismissable',
+            titleText: 'Dismissable Promotion Box',
+            subtitleText: 'Promotion Box that cannot be dismissed.',
+            isDismissable: true,
+            controller: dismissableController,
           ),
-          const SizedBox(height: 8.0),
-          SBBSecondaryButton(
-            label: 'Hide',
-            onPressed: () {
-              defaultController.hide();
-              closableController.hide();
-              clickableController.hide();
-              extraController.hide();
-            },
+          SBBPromotionBox(
+            badgeText: 'Tappable',
+            titleText: 'Tappable Promotion Box',
+            subtitleText: 'This Promotion Box will react to taps and display a bottom sheet.',
+            controller: clickableController,
+            onTap: () => showSBBBottomSheet(
+              context: context,
+              titleText: 'Promotion Box Information',
+              body: Text('Some more information'),
+            ),
+            isDismissable: true,
+          ),
+          SBBPromotionBox(
+            badgeText: 'With way too long title and badge text',
+            titleText: _longSubtitleText,
+            subtitleText: _longSubtitleText * 3,
+            controller: tooLongTextController,
+            isDismissable: true,
           ),
         ],
       ),
     );
   }
 }
-
-PromotionBoxStyle _customBoxStyle(BuildContext context) =>
-    PromotionBoxStyle.$default(baseStyle: SBBBaseStyle.of(context)).copyWith(
-      badgeColor: SBBColors.royal,
-      badgeShadowColor: SBBColors.royal.withAlpha((255.0 * 0.2).round()),
-      gradientColors: [SBBColors.cloud, SBBColors.milk, SBBColors.milk, SBBColors.cloud],
-    );

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
-import '../../sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 
 /// The SBB LoadingIndicator. Use according to documentation.
 ///
@@ -8,7 +8,7 @@ import '../../sbb_design_system_mobile.dart';
 ///
 /// * <https://digital.sbb.ch/de/design-system-mobile-new/elemente/loading_indicator>
 class SBBLoadingIndicator extends StatelessWidget {
-  /// Creates a 'default' sized loading indicator in [SBBColors.red].
+  /// Creates a 'default' sized loading indicator in theme's primary color.
   const SBBLoadingIndicator({Key? key}) : this.medium(key: key);
 
   /// Creates a custom loading indicator.
@@ -20,11 +20,12 @@ class SBBLoadingIndicator extends StatelessWidget {
     required this.translationZ,
     required this.rotationY,
     required this.padding,
-    required this.color,
+    this.color,
   });
 
   /// A tiny loading indicator.
-  const SBBLoadingIndicator.tiny({Key? key, Color color = SBBColors.red})
+  /// If [color] is not set, the theme's primary color is used.
+  const SBBLoadingIndicator.tiny({Key? key, Color? color})
     : this.custom(
         key: key,
         squareWidth: 8,
@@ -45,8 +46,9 @@ class SBBLoadingIndicator extends StatelessWidget {
   /// A tiny loading indicator in [SBBColors.cement].
   const SBBLoadingIndicator.tinyCement({Key? key}) : this.tiny(key: key, color: SBBColors.cement);
 
-  /// A medium loading indicator in [SBBColors.red].
-  const SBBLoadingIndicator.medium({Key? key, Color color = SBBColors.red})
+  /// A medium loading indicator.
+  /// If [color] is not set, the theme's primary color is used.
+  const SBBLoadingIndicator.medium({Key? key, Color? color})
     : this.custom(
         key: key,
         squareWidth: 29.0,
@@ -67,46 +69,50 @@ class SBBLoadingIndicator extends StatelessWidget {
   /// The height of a 'window' before transformation.
   final double squareHeight;
 
-  // The distance between two 'windows' before transformation.
+  /// The distance between two 'windows' before transformation.
   final double squareSpacing;
 
-  // Translation of z axis. Scales the loading indicator (in combination with
-  // rotation).
+  /// Translation of z axis. Scales the loading indicator (in combination with
+  /// rotation).
   final double translationZ;
 
-  // Rotation around (center right, see [FractionalOffset]) y axis. Gives the
-  // impression of perspective.
+  /// Rotation around (center right, see [FractionalOffset]) y axis. Gives the
+  /// impression of perspective.
   final double rotationY;
 
   /// The top/bottom padding of the whole loading indicator.
   final double padding;
 
   /// The color of the loading indicator, before alpha is applied.
-  final Color color;
+  ///
+  /// If not set, the primary color of the theme is used
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {
+    assert(debugCheckHasSBBBaseStyle(context));
+
+    final primaryColor = Theme.of(context).sbbBaseStyle.colorScheme.primary;
     return Padding(
-      padding: EdgeInsets.only(top: padding, bottom: padding),
+      padding: .only(top: padding, bottom: padding),
       child: Transform(
         transform: Matrix4.identity()
           ..setEntry(3, 2, translationZ)
           ..rotateY(rotationY),
         alignment: FractionalOffset.centerRight,
-        child: LoadingAnimation(
+        child: _LoadingAnimation(
           squareWidth: squareWidth,
           squareHeight: squareHeight,
           squareSpacing: squareSpacing,
-          color: color,
+          color: color ?? primaryColor,
         ),
       ),
     );
   }
 }
 
-class LoadingAnimation extends StatefulWidget {
-  const LoadingAnimation({
-    super.key,
+class _LoadingAnimation extends StatefulWidget {
+  const _LoadingAnimation({
     required this.squareWidth,
     required this.squareHeight,
     required this.squareSpacing,
@@ -119,10 +125,10 @@ class LoadingAnimation extends StatefulWidget {
   final Color color;
 
   @override
-  LoadingAnimationState createState() => LoadingAnimationState();
+  _LoadingAnimationState createState() => _LoadingAnimationState();
 }
 
-class LoadingAnimationState extends State<LoadingAnimation> with SingleTickerProviderStateMixin {
+class _LoadingAnimationState extends State<_LoadingAnimation> with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _loadingSquareOne;
   late Animation<double> _loadingSquareTwo;
@@ -173,9 +179,9 @@ class LoadingAnimationState extends State<LoadingAnimation> with SingleTickerPro
       position: _container,
       child: AnimatedBuilder(
         animation: _animationController,
-        builder: (BuildContext context, Widget? child) {
+        builder: (_, _) {
           return Row(
-            mainAxisSize: MainAxisSize.min,
+            mainAxisSize: .min,
             children: [
               _Square(
                 opacity: _loadingSquareOne.value,
@@ -226,13 +232,13 @@ class _Square extends StatelessWidget {
     this.height = 18,
     this.spacing = 4.5,
     this.opacity = 1,
-    this.color = SBBColors.red,
+    this.color,
   });
 
   final double width;
   final double height;
   final double spacing;
-  final Color color;
+  final Color? color;
   final double opacity;
 
   @override

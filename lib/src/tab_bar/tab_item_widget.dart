@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../../sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 class TabItemWidget extends StatelessWidget {
   const TabItemWidget(
@@ -10,6 +9,7 @@ class TabItemWidget extends StatelessWidget {
     this.selected = false,
     this.warning,
     this.badge,
+    this.style,
   });
 
   static const portraitSize = 44.0;
@@ -25,26 +25,37 @@ class TabItemWidget extends StatelessWidget {
   final SBBTabBarWarningSetting? warning;
   final SBBTabBarItemBadge? badge;
 
+  /// Style to use for this item. If null, resolves from [SBBTabBarThemeData].
+  final SBBTabBarStyle? style;
+
   @override
   Widget build(BuildContext context) {
-    final style = SBBBaseStyle.of(context);
     final portrait = MediaQuery.of(context).orientation == Orientation.portrait;
     final size = portrait ? portraitSize : landscapeSize;
     final topPadding = portrait ? portraitCirclePadding : landscapeCirclePadding;
 
-    final foregroundColor = style.themeValue(SBBColors.white, SBBColors.black);
-    final backgroundColor = style.themeValue(SBBColors.black, SBBColors.white);
-    Color iconColor = selected ? foregroundColor : backgroundColor;
+    final effectiveStyle = style ?? Theme.of(context).sbbTabBarTheme.style;
+
+    final states = <WidgetState>{
+      if (selected) WidgetState.selected,
+    };
+
+    final iconColor = effectiveStyle?.iconColor?.resolve(states);
+    final itemBgColor = effectiveStyle?.itemBackgroundColor?.resolve(states);
+    final warningIcon = effectiveStyle?.warningItemIcon ?? SBBIcons.sign_exclamation_point_small;
+    final warningBgColor = effectiveStyle?.warningItemBackgroundColor ?? SBBColors.red;
+    final warningFgColor = effectiveStyle?.warningItemForegroundColor ?? SBBColors.white;
 
     Color color = SBBColors.transparent;
     IconData resolvedIcon = icon;
+    Color resolvedIconColor = iconColor ?? SBBColors.transparent;
 
     if (warning != null && !warning!.shown) {
-      color = SBBColors.red;
-      iconColor = SBBColors.white;
-      resolvedIcon = SBBIcons.sign_exclamation_point_small;
-    } else if (selected) {
-      color = backgroundColor;
+      color = warningBgColor;
+      resolvedIconColor = warningFgColor;
+      resolvedIcon = warningIcon;
+    } else if (selected && itemBgColor != null) {
+      color = itemBgColor;
     }
 
     Widget child = SizedBox.square(
@@ -62,14 +73,14 @@ class TabItemWidget extends StatelessWidget {
         child: Material(
           shape: const CircleBorder(),
           color: color,
-          child: Icon(resolvedIcon, color: iconColor),
+          child: Icon(resolvedIcon, color: resolvedIconColor),
         ),
       ),
     );
 
     if (_shouldShowBadge) {
       child = Stack(
-        clipBehavior: Clip.none,
+        clipBehavior: .none,
         children: [
           child,
           Positioned(
@@ -84,7 +95,7 @@ class TabItemWidget extends StatelessWidget {
     return ExcludeSemantics(
       excluding: selected,
       child: Padding(
-        padding: EdgeInsets.only(
+        padding: .only(
           top: topPadding,
           left: horizontalCirclePadding,
           right: horizontalCirclePadding,

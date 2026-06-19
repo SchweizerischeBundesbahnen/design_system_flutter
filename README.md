@@ -5,37 +5,9 @@
 
 <img src="https://custom-icon-badges.demolab.com/badge/baked%20by%20appbakery-212121?style=for-the-badge&logo=app_bakery_logo_white" alt="Baked by AppBakery Badge"/>
 
-This Flutter package contains official UI elements of the SBB (Swiss Federal Railways) [Design System Mobile].
-It allows an easy integration of SBB theming to your Flutter app (with the possibility of a custom color theming).
-Elements are optimized for dynamic TextSizes, VoiceOver, light & dark mode.
-
-## Table of Contents
-
-<details>
-<summary>Click to expand</summary>
-
-- [Table of Contents](#table-of-contents)
-- [Getting Started](#getting-started)
-    - [Supported platforms](#supported-platforms)
-    - [In code usage](#in-code-usage)
-  - [Example App](#example-app)
-- [Documentation](#documentation)
-    - [Design System Mobile specification](#design-system-mobile-specification)
-    - [SBB internal documentation](#sbb-internal-documentation)
-  - [Read on](#read-on)
-- [License](#license)
-- [Contributing](#contributing)
-  - [Testing](#testing)
-  - [Coding Standards](#coding-standards)
-  - [Code of Conduct](#code-of-conduct)
-  - [Releasing](#releasing)
-- [Maintainer](#maintainer)
-- [Credits](#credits)
-
-
-</details>
-
-<a id="Getting-Started"></a>
+This Flutter package contains the official UI components of the SBB (Swiss Federal Railways) [Design System Mobile].
+The design system enables a consistent digital presence for SBB but also provides a flexible approach to theming and 
+component structure to support a wide range of design requirements.
 
 ## Getting Started
 
@@ -46,9 +18,11 @@ Elements are optimized for dynamic TextSizes, VoiceOver, light & dark mode.
   <img src="https://img.shields.io/badge/iOS-000000?style=for-the-badge&logo=apple&logoColor=white" alt="iOS">
 </div>
 
-#### In code usage
+#### Setup theming
 
-In order for the Theming to work, you need to add the `SBBTheme.light` / `SBBTheme.dark` to your app root. For a `MaterialApp`:
+In order for the theming to work, you need to add the `SBBTheme.light` / `SBBTheme.dark` to your app root.
+
+For a `MaterialApp`:
 
 ```Dart
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
@@ -70,16 +44,45 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+```
 
+To get theming for off-brand or safety-relevant apps, use `SBBThemeContext`. Example usage: `SBBTheme.light(themeContext: .offBrand)`.
+
+`SBBColorScheme` is used to define most default colors used by the components, which can be accessed by `Theme.of(context).sbbBaseStyle.colorScheme`.
+You can also provide a custom `SBBColorScheme` for your app by passing it to `SBBTheme` over `SBBBaseStyle`.
+
+#### Component theming
+
+Each component has a `ThemeExtension` which is added to `ThemeData.extensions`. You can access them by using the provided 
+helper methods like `Theme.of(context).sbbSwitchTheme`.
+
+To customize a component, you can override the component's `ThemeExtension` for the `SBBTheme`. If you only want to change the appearance 
+of a single component, use the provided `style` attributes. Only non-null properties or non-null resolved `WidgetStateProperty` values 
+override the default values.
+
+```Dart
+// theme wide styling
+SBBTheme.light(
+  headerTheme: SBBHeaderThemeData(
+    style: SBBHeaderStyle(
+      backgroundColor: SBBColors.green,
+    ),
+  ),
+)
+
+// single component styling
+SBBHeader(
+  titleText: 'Design System Mobile',
+  style: SBBHeaderStyle(backgroundColor: SBBColors.green),
+)
 ```
 
 ### Example App
 
-The **Flutter DSM** demo application is currently only available in the SBB Enterprise Playstore (Android).
+The **Flutter DSM** example app is currently only available in the SBB Enterprise Stores.
+Build the example app in `example` to try it yourself.
 
 <p align="left"><img src="https://raw.githubusercontent.com/SchweizerischeBundesbahnen/design_system_flutter/main/example/gallery/example_app_icon.webp" alt="Icon of the example app" width="5%"></p>
-
-<a id="Documentation"></a>
 
 ## Documentation
 
@@ -91,26 +94,19 @@ The pixel exact specifications can be found in the [Figma](https://www.figma.com
 
 #### SBB internal documentation
 
-A the moment, the following documents are only available to people internal to SBB:
+At the moment, the following documents are only available to people internal to SBB:
 * [AppBakery libraries](https://sbb.sharepoint.com/sites/app-bakery/SitePages/Mobile-Libraries.aspx "AppBakery libraries")
 
 ### Read on
 
-- [CODING_STANDARDS.md](CODING_STANDARDS.md)
-- [CONTRIBUTING.md](CONTRIBUTING.md)
-- [LICENSE](LICENSE)
 - [Getting Started SBB Design System](https://digital.sbb.ch/de/design-system/getting-started/designing/)
 - [Accessibility](https://digital.sbb.ch/de/accessibility/introduction/about-this-guide/)
 - [Colors](https://digital.sbb.ch/de/foundation/colors/base-colors/)
 - [Principles](https://digital.sbb.ch/de/principles/ux-principles/overview/)
 
-<a id="License"></a>
-
 ## License
 
 This project is licensed under [MIT](LICENSE).
-
-<a id="Contributing"></a>
 
 ## Contributing
 
@@ -130,8 +126,6 @@ This project is built and tested using [Github Actions](https://docs.github.com/
 
 See [CODING_STANDARDS.md](CODING_STANDARDS.md).
 
-<a id="code-of-conduct"></a>
-
 ### Code of Conduct
 
 See [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
@@ -139,8 +133,6 @@ See [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
 ### Releasing
 
 See [RELEASE.md](RELEASE.md).
-
-<a id="Contributing"></a>
 
 ## Maintainer
 
@@ -153,6 +145,5 @@ See [RELEASE.md](RELEASE.md).
 In addition to the contributors on GitHub, we thank the following authors for their previous work:
 *  Patrice Müller
 *  Dominik Schmucki
-
 
 [Design System Mobile]: https://digital.sbb.ch/en/design-system/mobile/overview/

@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_design_system_mobile_example/pages/scaffold/demo_page_scaffold.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-
-import '../native_app.dart';
 
 class SwitchPage extends StatefulWidget {
   const SwitchPage({super.key});
@@ -18,263 +17,206 @@ class _SwitchPageState extends State<SwitchPage> {
   bool _value4 = false;
   bool _value5 = false;
   bool _value6 = false;
-  final bool _value7 = false;
+  bool _value7 = false;
   bool _value8 = false;
-  final bool _value9 = false;
-  bool _value10 = false;
-  bool _value11 = false;
 
   bool? _listItemValue = false;
+
+  bool _isEnabled = true;
 
   @override
   Widget build(BuildContext context) {
     final sbbToast = SBBToast.of(context);
-    return ListView(
-      padding: const EdgeInsets.all(sbbDefaultSpacing),
-      children: [
-        const ThemeModeSegmentedButton(),
-        const SizedBox(height: sbbDefaultSpacing),
-        const SBBListHeader('Switch'),
-        Padding(
-          padding: const EdgeInsets.all(sbbDefaultSpacing),
-          child: Row(
-            children: [
-              SBBSwitch(value: _value1, onChanged: (value) => setState(() => _value1 = value)),
-              const SizedBox(width: sbbDefaultSpacing),
-              SBBSwitch(value: _value1, onChanged: null),
-            ],
-          ),
+    return DemoPageScaffold(
+      componentConfig: Padding(
+        padding: const .all(SBBSpacing.xSmall),
+        child: SBBSegmentedButton(
+          segments: [
+            SBBButtonSegment(value: true, labelText: 'All Enabled'),
+            SBBButtonSegment(value: false, labelText: 'All Disabled'),
+          ],
+          selected: _isEnabled,
+          onSelectionChanged: (update) => setState(() => _isEnabled = update),
         ),
-        const SizedBox(height: sbbDefaultSpacing),
-        const SBBListHeader('SwitchItem - List'),
-        SBBContentBox(
-          child: Column(
+      ),
+      body: Column(
+        children: [
+          const SBBListHeader('Switch'),
+          Align(
+            alignment: .centerLeft,
+            child: Padding(
+              padding: const .only(left: SBBSpacing.xSmall),
+              child: SBBSwitch(
+                value: _value1,
+                onChanged: _isEnabled ? (value) => setState(() => _value1 = value) : null,
+              ),
+            ),
+          ),
+          const SBBListHeader('SwitchItem - List'),
+          SBBContentBox(
+            child: Column(
+              children: SBBDivider.divideItems(
+                context: context,
+                items: [
+                  SBBSwitchListItem(
+                    value: _value2,
+                    titleText: 'Default',
+                    onChanged: _isEnabled ? (value) => setState(() => _value2 = value) : null,
+                  ),
+                  SBBSwitchListItem(
+                    value: _value3,
+                    titleText: 'Icon',
+                    leadingIconData: SBBIcons.dog_small,
+                    onChanged: _isEnabled ? (value) => setState(() => _value3 = value) : null,
+                  ),
+                  SBBSwitchListItem(
+                    value: _value4,
+                    title: Text('Very Looooooooooooooooooooooong Multiline Label With Subtitle'),
+                    subtitleText: 'Subtitle',
+                    onChanged: _isEnabled ? (value) => setState(() => _value4 = value) : null,
+                  ),
+                  SBBSwitchListItem(
+                    value: _value5,
+                    titleText: 'With Link',
+                    onChanged: _isEnabled ? (value) => setState(() => _value5 = value) : null,
+                    links: [
+                      SBBListItem(
+                        titleText: 'Link Text',
+                        onTap: () => sbbToast.show(titleText: 'Link'),
+                        trailingIconData: SBBIcons.chevron_small_right_small,
+                      ),
+                    ],
+                  ),
+                  SBBSwitchListItem(
+                    value: _value6,
+                    titleText: 'With 3 Links',
+                    onChanged: _isEnabled ? (value) => setState(() => _value6 = value) : null,
+                    links: [
+                      SBBListItem(
+                        titleText: 'Toggleable Link',
+                        onTap: _isEnabled ? () => sbbToast.show(titleText: 'Toggleable Link') : null,
+                        trailingIconData: SBBIcons.chevron_small_right_small,
+                      ),
+                      SBBListItem(
+                        titleText: 'Link Text 2',
+                        onTap: () => sbbToast.show(titleText: 'Link 2'),
+                        trailingIconData: SBBIcons.chevron_small_right_small,
+                      ),
+                      SBBListItem(
+                        titleText: 'Link Text',
+                        onTap: () => sbbToast.show(titleText: 'Link 3'),
+                        trailingIconData: SBBIcons.chevron_small_right_small,
+                      ),
+                    ],
+                  ),
+                  SBBSwitchListItem(
+                    value: _value7,
+                    titleText: 'Custom Link',
+                    onChanged: _isEnabled ? (value) => setState(() => _value7 = value) : null,
+                    links: [
+                      SBBCheckboxListItem(
+                        value: _listItemValue,
+                        titleText: 'Text',
+                        subtitleText:
+                            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
+                            'Quisque vulputate massa ut ex fringilla.',
+                        onChanged: _isEnabled ? (value) => setState(() => _listItemValue = value) : null,
+                      ),
+                    ],
+                  ),
+                  SBBSwitchListItem(
+                    value: _value8,
+                    titleText: 'Loading',
+                    subtitleText: 'This will stop loading if selected',
+                    onChanged: _isEnabled ? (value) => setState(() => _value8 = value) : null,
+                    isLoading: !_value8,
+                  ),
+                ],
+              ),
+            ),
+          ),
+          const SizedBox(height: SBBSpacing.xLarge),
+          const SBBListHeader('SwitchItem - Boxed'),
+          Column(
+            spacing: SBBSpacing.xSmall,
             children: [
-              SBBSwitchListItem(
+              SBBSwitchListItemBoxed(
                 value: _value2,
-                title: 'Default',
-                onChanged: (value) => setState(() => _value2 = value),
+                titleText: 'Default',
+                onChanged: _isEnabled ? (value) => setState(() => _value2 = value) : null,
               ),
-              SBBSwitchListItem(
+              SBBSwitchListItemBoxed(
                 value: _value3,
-                title: 'Icon',
-                leadingIcon: SBBIcons.dog_small,
-                onChanged: (value) => setState(() => _value3 = value),
+                titleText: 'Icon',
+                leadingIconData: SBBIcons.dog_small,
+                onChanged: _isEnabled ? (value) => setState(() => _value3 = value) : null,
               ),
-              SBBSwitchListItem(
+              SBBSwitchListItemBoxed(
                 value: _value4,
-                title: 'Very Looooooooooooooooooooooong Multiline Label With Subtitle',
-                allowMultilineLabel: true,
-                subtitle: 'Subtitle',
-                onChanged: (value) => setState(() => _value4 = value),
+                title: Text('Very Looooooooooooooooooooooong Multiline Label With Subtitle'),
+                subtitleText: 'Subtitle',
+                onChanged: _isEnabled ? (value) => setState(() => _value4 = value) : null,
               ),
-              SBBSwitchListItem(
+              SBBSwitchListItemBoxed(
                 value: _value5,
-                title: 'With Link',
-                onChanged: (value) => setState(() => _value5 = value),
+                titleText: 'With Link',
+                onChanged: _isEnabled ? (value) => setState(() => _value5 = value) : null,
                 links: [
-                  SBBSwitchListItemLink(
-                    text: 'Link Text',
-                    onPressed: () => sbbToast.show(title: 'Link'),
+                  SBBListItem(
+                    titleText: 'Link Text',
+                    onTap: () => sbbToast.show(titleText: 'Link'),
+                    trailingIconData: SBBIcons.chevron_small_right_small,
                   ),
                 ],
               ),
-              SBBSwitchListItem(
+              SBBSwitchListItemBoxed(
                 value: _value6,
-                title: 'With 3 Links',
-                onChanged: (value) => setState(() => _value6 = value),
+                titleText: 'With 3 Links',
+                onChanged: _isEnabled ? (value) => setState(() => _value6 = value) : null,
                 links: [
-                  SBBSwitchListItemLink(
-                    text: 'Link Text 1',
-                    onPressed: () => sbbToast.show(title: 'Link 1'),
+                  SBBListItem(
+                    titleText: 'Toggleable Link',
+                    onTap: _isEnabled ? () => sbbToast.show(titleText: 'Toggleable Link') : null,
+                    trailingIconData: SBBIcons.chevron_small_right_small,
                   ),
-                  SBBSwitchListItemLink(
-                    text: 'Link Text 2',
-                    onPressed: () => sbbToast.show(title: 'Link 2'),
+                  SBBListItem(
+                    titleText: 'Link Text 2',
+                    onTap: () => sbbToast.show(titleText: 'Link 2'),
+                    trailingIconData: SBBIcons.chevron_small_right_small,
                   ),
-                  SBBSwitchListItemLink(
-                    text: 'Link Text 3',
-                    onPressed: () => sbbToast.show(title: 'Link 3'),
+                  SBBListItem(
+                    titleText: 'Link Text',
+                    onTap: () => sbbToast.show(titleText: 'Link 3'),
+                    trailingIconData: SBBIcons.chevron_small_right_small,
                   ),
                 ],
               ),
-              SBBSwitchListItem(
+              SBBSwitchListItemBoxed(
                 value: _value7,
-                title: 'Disabled, Link enabled',
-                onChanged: null,
+                titleText: 'Custom Link',
+                onChanged: _isEnabled ? (value) => setState(() => _value7 = value) : null,
                 links: [
-                  SBBSwitchListItemLink(
-                    text: 'Link still enabled',
-                    onPressed: () => sbbToast.show(title: 'Link still enabled'),
-                  ),
-                ],
-              ),
-              SBBSwitchListItem(
-                value: _value8,
-                title: 'Only Link disabled',
-                onChanged: (value) => setState(() => _value8 = value),
-                links: [SBBSwitchListItemLink(text: 'Link disabled', onPressed: null)],
-              ),
-              SBBSwitchListItem(
-                value: _value9,
-                title: 'All disabled',
-                onChanged: null,
-                links: [SBBSwitchListItemLink(text: 'Link disabled', onPressed: null)],
-              ),
-              SBBSwitchListItem.custom(
-                value: _value10,
-                title: 'Custom LinkWidget',
-                onChanged: (value) => setState(() => _value10 = value),
-                linksWidgets: [
                   SBBCheckboxListItem(
                     value: _listItemValue,
-                    label: 'Text',
-                    allowMultilineLabel: true,
-                    secondaryLabel:
-                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla.',
-                    onChanged: (value) => setState(() => _listItemValue = value),
+                    titleText: 'Text',
+                    subtitleText:
+                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. '
+                        'Quisque vulputate massa ut ex fringilla.',
+                    onChanged: _isEnabled ? (value) => setState(() => _listItemValue = value) : null,
                   ),
                 ],
               ),
-              SBBSwitchListItem(
-                value: _value11,
-                title: 'Loading',
-                subtitle: 'This will stop loading if selected',
-                onChanged: (value) => setState(() => _value11 = value),
-                isLastElement: true,
-                isLoading: !_value11,
+              SBBSwitchListItemBoxed(
+                value: _value8,
+                titleText: 'Loading',
+                subtitleText: 'This will not stop.',
+                onChanged: _isEnabled ? (value) => setState(() => _value8 = value) : null,
+                isLoading: true,
               ),
             ],
           ),
-        ),
-        const SizedBox(height: sbbDefaultSpacing * 2),
-        const SBBListHeader('SwitchItem - Boxed'),
-        SBBContentBox(
-          child: SBBSwitchListItem.boxed(
-            value: _value2,
-            title: 'Default',
-            onChanged: (value) => setState(() => _value2 = value),
-          ),
-        ),
-        const SizedBox(height: sbbDefaultSpacing * .5),
-        SBBContentBox(
-          child: SBBSwitchListItem.boxed(
-            value: _value3,
-            title: 'Icon',
-            leadingIcon: SBBIcons.dog_small,
-            onChanged: (value) => setState(() => _value3 = value),
-          ),
-        ),
-        const SizedBox(height: sbbDefaultSpacing * .5),
-        SBBContentBox(
-          child: SBBSwitchListItem.boxed(
-            value: _value4,
-            title: 'Very Looooooooooooooooooooooong Multiline Label With Subtitle',
-            allowMultilineLabel: true,
-            subtitle: 'Subtitle',
-            onChanged: (value) => setState(() => _value4 = value),
-          ),
-        ),
-        const SizedBox(height: sbbDefaultSpacing * .5),
-        SBBContentBox(
-          child: SBBSwitchListItem.boxed(
-            value: _value5,
-            title: 'With Link',
-            onChanged: (value) => setState(() => _value5 = value),
-            links: [
-              SBBSwitchListItemLink(
-                text: 'Link Text',
-                onPressed: () => sbbToast.show(title: 'Link'),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: sbbDefaultSpacing * .5),
-        SBBContentBox(
-          child: SBBSwitchListItem.boxed(
-            value: _value6,
-            title: 'With 3 Links',
-            onChanged: (value) => setState(() => _value6 = value),
-            links: [
-              SBBSwitchListItemLink(
-                text: 'Link Text 1',
-                onPressed: () => sbbToast.show(title: 'Link 1'),
-              ),
-              SBBSwitchListItemLink(
-                text: 'Link Text 2',
-                onPressed: () => sbbToast.show(title: 'Link 2'),
-              ),
-              SBBSwitchListItemLink(
-                text: 'Link Text 3',
-                onPressed: () => sbbToast.show(title: 'Link 3'),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: sbbDefaultSpacing * .5),
-        SBBContentBox(
-          child: SBBSwitchListItem.boxed(
-            value: _value7,
-            title: 'Disabled, Link enabled',
-            onChanged: null,
-            links: [
-              SBBSwitchListItemLink(
-                text: 'Link still enabled',
-                onPressed: () => sbbToast.show(title: 'Link still enabled'),
-              ),
-            ],
-          ),
-        ),
-        const SizedBox(height: sbbDefaultSpacing * .5),
-        SBBContentBox(
-          child: SBBSwitchListItem.boxed(
-            value: _value8,
-            title: 'Only Link disabled',
-            onChanged: (value) => setState(() => _value8 = value),
-            links: [SBBSwitchListItemLink(text: 'Link disabled', onPressed: null)],
-          ),
-        ),
-        const SizedBox(height: sbbDefaultSpacing * .5),
-        SBBContentBox(
-          child: SBBSwitchListItem.boxed(
-            value: _value9,
-            title: 'All disabled',
-            onChanged: null,
-            links: [SBBSwitchListItemLink(text: 'Link disabled', onPressed: null)],
-          ),
-        ),
-        const SizedBox(height: sbbDefaultSpacing * .5),
-        SBBContentBox(
-          child: SBBSwitchListItem.custom(
-            value: _value10,
-            title: 'Custom LinkWidget',
-            onChanged: (value) => setState(() => _value10 = value),
-            linksWidgets: [
-              SBBCheckboxListItem(
-                value: _listItemValue,
-                label: 'Text',
-                allowMultilineLabel: true,
-                secondaryLabel:
-                    'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla.',
-                isLastElement: true,
-                onChanged: (value) => setState(() => _listItemValue = value),
-              ),
-            ],
-            isLastElement: true,
-          ),
-        ),
-        const SizedBox(height: sbbDefaultSpacing * .5),
-        SBBContentBox(
-          child: SBBSwitchListItem(
-            value: _value11,
-            title: 'Loading',
-            subtitle: 'This will not stop.',
-            onChanged: (value) => setState(() => _value11 = value),
-            isLastElement: true,
-            isLoading: true,
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
