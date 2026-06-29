@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 It is expected that you keep this format strictly, since we depend on it in our release workflow.
 
+## [Unreleased]
+
+### Changed
+
+- `SBBStepper`: animate transitions between steps by cross-fading the active label while keeping each label under its own step.
+
 ## [5.0.0] - 2026-06-19
 
 ### Added

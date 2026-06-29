@@ -7,6 +7,12 @@ import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 
 typedef OnStepPressedCallback = void Function(SBBStepperItem item, int index);
 
+/// Duration of the label transition animation played when the active step changes.
+const Duration _kStepperTransitionDuration = Duration(milliseconds: 200);
+
+/// Curve of the label transition animation played when the active step changes.
+const Curve _kStepperTransitionCurve = Curves.fastOutSlowIn;
+
 /// The SBB Stepper.
 /// Use according to [documentation](https://digital.sbb.ch/de/design-system/mobile/components/stepper/).
 ///
@@ -29,7 +35,7 @@ typedef OnStepPressedCallback = void Function(SBBStepperItem item, int index);
 /// * [SBBStepperStyle], the overall style for the stepper.
 /// * [SBBStepperItemStyle], the style for a step of the stepper.
 /// * [SBBStepperThemeData], which applies the stepper style theme-wide.
-class SBBStepper extends StatelessWidget {
+class SBBStepper extends StatefulWidget {
   const SBBStepper({
     Key? key,
     required List<SBBStepperItem> steps,
@@ -103,12 +109,49 @@ class SBBStepper extends StatelessWidget {
   final SBBStepperStyle? style;
 
   @override
+  State<SBBStepper> createState() => _SBBStepperState();
+}
+
+class _SBBStepperState extends State<SBBStepper> with SingleTickerProviderStateMixin {
+  late final AnimationController _controller;
+  late final CurvedAnimation _animation;
+
+  /// Index of the step the label animates away from during a transition.
+  late int _previousStep;
+
+  @override
+  void initState() {
+    super.initState();
+    _previousStep = widget.activeStep;
+    // Start settled (value 1.0) so the first build shows only the active label
+    // without playing a transition.
+    _controller = AnimationController(duration: _kStepperTransitionDuration, vsync: this, value: 1.0);
+    _animation = CurvedAnimation(parent: _controller, curve: _kStepperTransitionCurve);
+  }
+
+  @override
+  void didUpdateWidget(SBBStepper oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.activeStep != oldWidget.activeStep) {
+      _previousStep = oldWidget.activeStep;
+      _controller.forward(from: 0.0);
+    }
+  }
+
+  @override
+  void dispose() {
+    _animation.dispose();
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     assert(debugCheckHasSBBBaseStyle(context));
 
     final theme = Theme.of(context).sbbStepperTheme;
-    final themeStyle = _isFilledStyle ? theme.filledStyle! : theme.style!;
-    final effectiveStyle = themeStyle.merge(style);
+    final themeStyle = widget._isFilledStyle ? theme.filledStyle! : theme.style!;
+    final effectiveStyle = themeStyle.merge(widget.style);
 
     return Padding(
       padding: themeStyle.padding ?? .zero,
@@ -125,41 +168,84 @@ class SBBStepper extends StatelessWidget {
   Widget _steps(SBBStepperStyle style) {
     return Row(
       spacing: SBBSpacing.xxSmall,
-      children: steps
+      children: widget.steps
           .mapIndexed((i, step) => _circle(i, style, step))
           .dividedBy(Expanded(child: _Divider(color: style.dividerColor)))
           .toList(),
     );
   }
 
+  /// Builds the label area shown below the step circles.
+  ///
+  /// During a step change the outgoing and incoming labels are cross-faded
+  /// while each stays positioned under its own step circle. A single
+  /// [AnimatedSwitcher] cannot be used here because it would fade the outgoing
+  /// label out at the incoming label's position (see issue #502).
   Widget _label(SBBStepperStyle effectiveStyle) {
     if (!_hasAnyLabel) return const SizedBox.shrink();
 
-    final selectedStep = steps[activeStep];
-    final labelWidget =
-        selectedStep.label ??
-        Text(
-          selectedStep.labelText!,
-          maxLines: 1,
-          overflow: .ellipsis,
-          softWrap: false,
-          textAlign: .center,
-        );
+    return Padding(
+      padding: const .only(top: SBBSpacing.xxSmall),
+      child: AnimatedBuilder(
+        animation: _animation,
+        builder: (context, _) {
+          final double t = _animation.value;
+          // The previous step is only valid for a cross-fade while it is still
+          // a valid index (the steps list may shrink between transitions).
+          final bool isTransitioning =
+              _previousStep != widget.activeStep && _previousStep < widget.steps.length && t < 1.0;
+          if (!isTransitioning) {
+            return _positionedLabel(widget.activeStep, effectiveStyle);
+          }
+          return Stack(
+            children: [
+              Opacity(
+                opacity: (1.0 - t).clamp(0.0, 1.0),
+                child: _positionedLabel(_previousStep, effectiveStyle),
+              ),
+              Opacity(
+                opacity: t.clamp(0.0, 1.0),
+                child: _positionedLabel(widget.activeStep, effectiveStyle),
+              ),
+            ],
+          );
+        },
+      ),
+    );
+  }
 
-    final effectiveItemStyle = effectiveStyle.itemStyle?.merge(selectedStep.style);
-    final resolvedLabelTextStyle = effectiveStyle.itemStyle!.labelTextStyle?.merge(_activeItem.style?.labelTextStyle);
+  /// Builds the label for [stepIndex], horizontally positioned under its own
+  /// step circle so that outgoing and incoming labels keep their correct
+  /// spatial context during a transition.
+  Widget _positionedLabel(int stepIndex, SBBStepperStyle effectiveStyle) {
+    return _EdgeClampedCentered(
+      stepCircleSize: SBBStepperItemStyle.stepCircleSize,
+      activeStep: stepIndex,
+      stepCount: widget.steps.length,
+      child: _labelContent(stepIndex, effectiveStyle),
+    );
+  }
+
+  Widget _labelContent(int stepIndex, SBBStepperStyle effectiveStyle) {
+    final step = widget.steps[stepIndex];
+    final Widget labelWidget =
+        step.label ??
+        (step.labelText != null
+            ? Text(
+                step.labelText!,
+                maxLines: 1,
+                overflow: .ellipsis,
+                softWrap: false,
+                textAlign: .center,
+              )
+            : const SizedBox.shrink());
+
+    final effectiveItemStyle = effectiveStyle.itemStyle?.merge(step.style);
+    final resolvedLabelTextStyle = effectiveStyle.itemStyle!.labelTextStyle?.merge(step.style?.labelTextStyle);
     return addDefaultAncestorWithResolved(
       textStyle: resolvedLabelTextStyle,
       foregroundColor: effectiveItemStyle?.labelForegroundColor,
-      child: Padding(
-        padding: const .only(top: SBBSpacing.xxSmall),
-        child: _EdgeClampedCentered(
-          stepCircleSize: SBBStepperItemStyle.stepCircleSize,
-          activeStep: activeStep,
-          stepCount: steps.length,
-          child: labelWidget,
-        ),
-      ),
+      child: labelWidget,
     )!;
   }
 
@@ -167,16 +253,14 @@ class SBBStepper extends StatelessWidget {
     final effectiveItemStyle = style.itemStyle!.merge(step.style);
     return _StepCircle(
       index: i,
-      activeStep: activeStep,
+      activeStep: widget.activeStep,
       style: effectiveItemStyle,
       item: step,
-      onPressed: () => onStepPressed(step, i),
+      onPressed: () => widget.onStepPressed(step, i),
     );
   }
 
-  bool get _hasAnyLabel => steps.any((step) => step.labelText != null || step.label != null);
-
-  SBBStepperItem get _activeItem => steps.elementAt(activeStep);
+  bool get _hasAnyLabel => widget.steps.any((step) => step.labelText != null || step.label != null);
 }
 
 class _Divider extends StatelessWidget {

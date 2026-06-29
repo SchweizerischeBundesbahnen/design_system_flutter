@@ -105,6 +105,59 @@ void main() {
     customSteps: customSteps,
     isFilled: true,
   );
+
+  testWidgets('cross-fades the label between steps keeping each label in its own position', (
+    WidgetTester tester,
+  ) async {
+    const steps = [
+      SBBStepperItem.numbered(labelText: 'Step 1'),
+      SBBStepperItem.numbered(labelText: 'Step 2'),
+      SBBStepperItem.numbered(labelText: 'Step 3'),
+    ];
+
+    var activeStep = 0;
+    late StateSetter setHostState;
+    await tester.pumpWidget(
+      TestApp(
+        child: StatefulBuilder(
+          builder: (context, setState) {
+            setHostState = setState;
+            return SBBStepper(
+              steps: steps,
+              activeStep: activeStep,
+              onStepPressed: (_, _) {},
+            );
+          },
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    // Initially only the active step's label is shown.
+    expect(find.text('Step 1'), findsOneWidget);
+    expect(find.text('Step 3'), findsNothing);
+
+    // Move to the last step to trigger the transition animation.
+    setHostState(() => activeStep = 2);
+    await tester.pump(); // start the animation (t = 0)
+    await tester.pump(const Duration(milliseconds: 100)); // mid-transition
+
+    // Both the outgoing and incoming labels are present during the transition.
+    expect(find.text('Step 1'), findsOneWidget);
+    expect(find.text('Step 3'), findsOneWidget);
+
+    // Each label keeps its own spatial context: the outgoing label stays to the
+    // left (under step 1) while the incoming label appears further right (under
+    // step 3). This is the behavior a naive AnimatedSwitcher would break.
+    final outgoingCenterX = tester.getCenter(find.text('Step 1')).dx;
+    final incomingCenterX = tester.getCenter(find.text('Step 3')).dx;
+    expect(outgoingCenterX, lessThan(incomingCenterX));
+
+    // After the animation settles, only the new label remains.
+    await tester.pumpAndSettle();
+    expect(find.text('Step 1'), findsNothing);
+    expect(find.text('Step 3'), findsOneWidget);
+  });
 }
 
 class StepperTest extends StatelessWidget {
