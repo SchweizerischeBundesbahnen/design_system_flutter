@@ -18,6 +18,44 @@ void main() {
   }
 
   generateTest('bottom_sheet_test_1');
+
+  testWidgets('close button is reachable via SBBBottomSheet.closeButtonKey and dismisses the sheet', (
+    WidgetTester tester,
+  ) async {
+    const bodyText = 'Bottom sheet body';
+    await tester.pumpWidget(
+      MaterialApp(
+        theme: SBBTheme.light(),
+        home: Scaffold(
+          body: Builder(
+            builder: (context) => Center(
+              child: ElevatedButton(
+                onPressed: () => showSBBBottomSheet(
+                  context: context,
+                  titleText: 'Title',
+                  body: const Text(bodyText),
+                ),
+                child: const Text('Open'),
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    // Open the bottom sheet.
+    await tester.tap(find.text('Open'));
+    await tester.pumpAndSettle();
+    expect(find.text(bodyText), findsOneWidget);
+
+    // The close button can be found by its public key.
+    expect(find.byKey(SBBBottomSheet.closeButtonKey), findsOneWidget);
+
+    // Tapping the close button by key dismisses the sheet.
+    await tester.tap(find.byKey(SBBBottomSheet.closeButtonKey));
+    await tester.pumpAndSettle();
+    expect(find.text(bodyText), findsNothing);
+  });
 }
 
 class ModalSheetTest extends StatelessWidget {
