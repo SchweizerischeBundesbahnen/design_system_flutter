@@ -23,6 +23,7 @@ class SBBInputDecorator extends StatefulWidget {
     this.isEmpty = false,
     this.isBoxed = false,
     this.states = const <WidgetState>{},
+    this.onErrorTap,
     this.child,
   });
 
@@ -52,6 +53,12 @@ class SBBInputDecorator extends StatefulWidget {
 
   /// The states of the input field.
   final Set<WidgetState> states;
+
+  /// Called when the visible error message area is tapped.
+  ///
+  /// Used to request focus for the input field so that tapping the error
+  /// message behaves the same as tapping the input itself.
+  final VoidCallback? onErrorTap;
 
   /// The widget below this decorator, usually some sort of [EditableText].
   final Widget? child;
@@ -329,6 +336,13 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
         foregroundColor: resolvedColor,
         textStyle: textStyle,
       );
+      if (widget.onErrorTap != null) {
+        error = GestureDetector(
+          behavior: HitTestBehavior.translucent,
+          onTap: widget.onErrorTap,
+          child: error,
+        );
+      }
     }
     error = AnimatedSwitcher(
       duration: _kTransitionDuration,

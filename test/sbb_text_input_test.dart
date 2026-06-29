@@ -164,6 +164,32 @@ void main() {
       find.byType(Column).first,
     );
   });
+
+  testWidgets('tapping the error message requests focus for the input', (WidgetTester tester) async {
+    final focusNode = FocusNode();
+    addTearDown(focusNode.dispose);
+
+    const errorText = 'This is an error!';
+    await tester.pumpWidget(
+      TestApp(
+        child: SBBTextInput(
+          focusNode: focusNode,
+          decoration: const SBBInputDecoration(
+            labelText: 'Error message',
+            errorText: errorText,
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    expect(focusNode.hasFocus, isFalse);
+
+    await tester.tap(find.text(errorText));
+    await tester.pump();
+
+    expect(focusNode.hasFocus, isTrue);
+  });
 }
 
 List<Widget> _textInputItems({required ValueKey<String> pressableItemKey, required SBBInputBorderType borderType}) {

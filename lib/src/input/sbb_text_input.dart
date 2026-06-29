@@ -499,6 +499,7 @@ class _SBBTextInputState extends State<SBBTextInput>
                       isEmpty: _effectiveController.text.isEmpty,
                       isBoxed: isBoxed,
                       states: Set<WidgetState>.from(_statesController.value),
+                      onErrorTap: _handleErrorTap,
                       child: child,
                     );
                   },
@@ -514,6 +515,18 @@ class _SBBTextInputState extends State<SBBTextInput>
 
   void _requestKeyboard() {
     _editableText?.requestKeyboard();
+  }
+
+  /// Requests focus for the input field when the visible error message is tapped.
+  ///
+  /// This mirrors the focus behavior of tapping the input itself and works for
+  /// both an externally provided and an internally managed [FocusNode].
+  void _handleErrorTap() {
+    if (_effectiveFocusNode.canRequestFocus && !_effectiveFocusNode.hasFocus) {
+      _effectiveFocusNode.requestFocus();
+    } else if (!widget.readOnly) {
+      _requestKeyboard();
+    }
   }
 
   TextStyle _effectiveInputTextStyle(BuildContext context) {
