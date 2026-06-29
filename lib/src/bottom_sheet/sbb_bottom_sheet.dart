@@ -193,6 +193,17 @@ class SBBBottomSheet extends StatelessWidget {
     this.style,
   });
 
+  /// The [Key] applied to the internal close button shown in the header when
+  /// [showCloseButton] is `true`.
+  ///
+  /// Use it to reliably find and tap the close button in widget and integration
+  /// tests without relying on internal implementation details:
+  ///
+  /// ```dart
+  /// await tester.tap(find.byKey(SBBBottomSheet.closeButtonKey));
+  /// ```
+  static const closeButtonKey = Key('sbb_bottom_sheet_close_button');
+
   /// {@template sbb_design_system.sbb_bottom_sheet.title}
   /// A custom widget displayed as the sheet's title.
   ///
@@ -423,6 +434,7 @@ class _CloseButton extends StatelessWidget {
     excludeSemantics: true,
     button: true,
     child: SBBTertiaryButtonSmall(
+      key: SBBBottomSheet.closeButtonKey,
       onPressed: () => Navigator.of(context, rootNavigator: useRootNavigator).pop(),
       iconData: SBBIcons.cross_small,
     ),
