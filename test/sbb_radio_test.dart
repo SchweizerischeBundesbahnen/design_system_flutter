@@ -59,7 +59,7 @@ class RadioTest extends StatelessWidget {
               groupValue: listItemGroupValue,
               onChanged: (_) {},
               child: Column(
-                children: SBBListItem.divideListItems(
+                children: SBBDivider.divideItems(
                   context: context,
                   items: [
                     SBBRadioListItem<int>(value: 1, titleText: 'Label'),

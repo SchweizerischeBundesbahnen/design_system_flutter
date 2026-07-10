@@ -46,7 +46,7 @@ void main() {
               margin: EdgeInsets.symmetric(horizontal: SBBSpacing.xSmall).copyWith(top: SBBSpacing.xSmall),
               child: Column(
                 mainAxisSize: .min,
-                children: SBBListItem.divideListItems(
+                children: SBBDivider.divideItems(
                   context: context,
                   items: [
                     SBBMultiDropdown<int>(selectedItems: [], items: items, onChanged: (_) {}),

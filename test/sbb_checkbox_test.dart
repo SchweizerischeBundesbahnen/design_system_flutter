@@ -51,7 +51,7 @@ class CheckboxTest extends StatelessWidget {
       const SBBListHeader('CheckboxItem - List'),
       SBBContentBox(
         child: Column(
-          children: SBBListItem.divideListItems(
+          children: SBBDivider.divideItems(
             context: context,
             items: [
               SBBCheckboxListItem(value: value1, titleText: 'Default', onChanged: (value) {}),
