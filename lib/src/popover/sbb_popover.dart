@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/popover/sbb_popover_layout_delegate.dart';
 import 'package:sbb_design_system_mobile/src/popover/sbb_popover_layout_result.dart';
 import 'package:sbb_design_system_mobile/src/popover/sbb_popover_scope.dart';
@@ -70,7 +71,7 @@ class _SBBPopoverState extends State<SBBPopover> {
           valueListenable: _layoutState!,
           builder: (context, result, child) {
             return Material(
-              color: Colors.white,
+              color: SBBColors.milk,
               shape: SBBPopoverShapeBorder(
                 direction: result.direction,
               ),

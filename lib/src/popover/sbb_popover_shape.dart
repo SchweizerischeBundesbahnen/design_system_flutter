@@ -29,7 +29,7 @@ class SBBPopoverShapeBorder extends ShapeBorder {
   @override
   Path getOuterPath(Rect rect, {TextDirection? textDirection}) {
     const notchSize = Size(36, 12);
-    const radius = 8.0;
+    const radius = 16.0;
 
     // 1. Deflate the rect to leave room for the notch and build the main body
     final contentRect = dimensions.resolve(textDirection).deflateRect(rect);
