@@ -46,8 +46,8 @@ jobs:
 
       - name: Linter check
         run: | 
-          flutter analyze example --no-pub --no-fatal-info
-          flutter analyze lib --no-pub --no-fatal-info
+          flutter analyze example --no-pub
+          flutter analyze lib --no-pub
 
       - name: Run Flutter test
         id: test
