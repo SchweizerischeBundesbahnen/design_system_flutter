@@ -17,7 +17,7 @@ void main() {
           margin: const .symmetric(horizontal: SBBSpacing.xSmall, vertical: SBBSpacing.medium),
           child: Column(
             mainAxisSize: .min,
-            children: SBBListItem.divideListItems(
+            children: SBBDivider.divideItems(
               context: context,
               items: [
                 SBBListItem(

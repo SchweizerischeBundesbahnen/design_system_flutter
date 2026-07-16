@@ -30,7 +30,7 @@ void main() {
         return SBBContentBox(
           child: Column(
             mainAxisSize: .min,
-            children: SBBListItem.divideListItems(
+            children: SBBDivider.divideItems(
               context: context,
               items: _timeInputItems(borderType: .boxedOrListed),
             ),

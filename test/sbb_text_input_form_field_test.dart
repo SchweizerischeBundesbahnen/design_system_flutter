@@ -19,7 +19,7 @@ void main() {
                 SBBListHeader('Listed'),
                 SBBContentBox(
                   child: Column(
-                    children: SBBListItem.divideListItems(
+                    children: SBBDivider.divideItems(
                       context: context,
                       items: [
                         SBBTextInputFormField(
