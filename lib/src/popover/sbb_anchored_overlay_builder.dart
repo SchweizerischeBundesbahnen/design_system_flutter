@@ -15,7 +15,6 @@ class SBBAnchoredOverlayBuilder extends StatefulWidget {
     required this.targetBuilder,
     required this.followerBuilder,
     this.preferredDirection = .bottom,
-    this.safeAreaInsets = EdgeInsets.zero,
     this.isDismissible = true,
     this.offset = Offset.zero,
   });
@@ -23,7 +22,6 @@ class SBBAnchoredOverlayBuilder extends StatefulWidget {
   final Widget Function(BuildContext context, VoidCallback showOverlay) targetBuilder;
   final Widget Function(BuildContext context, VoidCallback hideOverlay) followerBuilder;
   final SBBPopoverDirection preferredDirection;
-  final EdgeInsets safeAreaInsets;
   final bool isDismissible;
   final Offset offset;
 
@@ -93,7 +91,6 @@ class _SBBAnchoredOverlayBuilderState extends State<SBBAnchoredOverlayBuilder> w
           triggerGlobalPosition: _triggerGlobalPosition,
           triggerSize: _triggerSize,
           preferredDirection: widget.preferredDirection,
-          safeAreaInsets: widget.safeAreaInsets,
           child: Stack(
             children: [
               GestureDetector(

@@ -7,14 +7,12 @@ class SBBPopoverScope extends InheritedWidget {
     required this.triggerGlobalPosition,
     required this.triggerSize,
     required this.preferredDirection,
-    required this.safeAreaInsets,
     required super.child,
   });
 
   final Offset triggerGlobalPosition;
   final Size triggerSize;
   final SBBPopoverDirection preferredDirection;
-  final EdgeInsets safeAreaInsets;
 
   static SBBPopoverScope of(BuildContext context) {
     final SBBPopoverScope? result = context.dependOnInheritedWidgetOfExactType<SBBPopoverScope>();
@@ -29,7 +27,6 @@ class SBBPopoverScope extends InheritedWidget {
   bool updateShouldNotify(SBBPopoverScope oldWidget) {
     return triggerGlobalPosition != oldWidget.triggerGlobalPosition ||
         triggerSize != oldWidget.triggerSize ||
-        preferredDirection != oldWidget.preferredDirection ||
-        safeAreaInsets != oldWidget.safeAreaInsets;
+        preferredDirection != oldWidget.preferredDirection;
   }
 }

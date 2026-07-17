@@ -60,6 +60,8 @@
 // a separate helper, since ShapeBorder.getOuterPath is already just a plain
 // callable method that happens to also satisfy the ShapeBorder interface.
 
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
@@ -74,52 +76,40 @@ class SBBPopoverLayout extends SingleChildRenderObjectWidget {
   const SBBPopoverLayout({
     super.key,
     required this.preferredDirection,
-    required this.safeAreaInsets,
     required this.triggerGlobalPosition,
     required this.triggerSize,
-    required this.screenSize,
     super.child,
   });
 
   final SBBPopoverDirection preferredDirection;
-  final EdgeInsets safeAreaInsets;
   final Offset triggerGlobalPosition;
   final Size triggerSize;
-  final Size screenSize;
 
   @override
   RenderSBBPopover createRenderObject(BuildContext context) => RenderSBBPopover(
     preferredDirection: preferredDirection,
-    safeAreaInsets: safeAreaInsets,
     triggerGlobalPosition: triggerGlobalPosition,
     triggerSize: triggerSize,
-    screenSize: screenSize,
   );
 
   @override
   void updateRenderObject(BuildContext context, RenderSBBPopover renderObject) {
     renderObject
       ..preferredDirection = preferredDirection
-      ..safeAreaInsets = safeAreaInsets
       ..triggerGlobalPosition = triggerGlobalPosition
-      ..triggerSize = triggerSize
-      ..screenSize = screenSize;
+      ..triggerSize = triggerSize;
   }
 }
 
 class RenderSBBPopover extends RenderShiftedBox {
   RenderSBBPopover({
     required SBBPopoverDirection preferredDirection,
-    required EdgeInsets safeAreaInsets,
     required Offset triggerGlobalPosition,
     required Size triggerSize,
-    required Size screenSize,
     RenderBox? child,
   }) : _preferredDirection = preferredDirection,
-       _safeAreaInsets = safeAreaInsets,
        _triggerGlobalPosition = triggerGlobalPosition,
        _triggerSize = triggerSize,
-       _screenSize = screenSize,
        super(child);
 
   // Fixed notch gap reserved on the vertical axis, matching
@@ -136,14 +126,6 @@ class RenderSBBPopover extends RenderShiftedBox {
     markNeedsLayout();
   }
 
-  EdgeInsets _safeAreaInsets;
-
-  set safeAreaInsets(EdgeInsets value) {
-    if (_safeAreaInsets == value) return;
-    _safeAreaInsets = value;
-    markNeedsLayout();
-  }
-
   Offset _triggerGlobalPosition;
 
   set triggerGlobalPosition(Offset value) {
@@ -157,14 +139,6 @@ class RenderSBBPopover extends RenderShiftedBox {
   set triggerSize(Size value) {
     if (_triggerSize == value) return;
     _triggerSize = value;
-    markNeedsLayout();
-  }
-
-  Size _screenSize;
-
-  set screenSize(Size value) {
-    if (_screenSize == value) return;
-    _screenSize = value;
     markNeedsLayout();
   }
 
@@ -188,9 +162,13 @@ class RenderSBBPopover extends RenderShiftedBox {
       return;
     }
 
+    // Bounded by this render object's own incoming constraints (effectively
+    // the screen/overlay size) instead of an explicit screenSize param.
+    // safeAreaInsets is dropped for now (treated as zero) — see tasks/plan.md
+    // for the "reimplement cleanly later" note on both.
     final childConstraints = BoxConstraints(
-      maxWidth: _screenSize.width - _safeAreaInsets.horizontal,
-      maxHeight: _screenSize.height - _safeAreaInsets.vertical - _notchHeight,
+      maxWidth: constraints.maxWidth,
+      maxHeight: constraints.maxHeight - _notchHeight,
     );
     child.layout(childConstraints, parentUsesSize: true);
 
@@ -200,12 +178,11 @@ class RenderSBBPopover extends RenderShiftedBox {
     // SBBPopoverLayoutDelegate.getPositionForChild.
     SBBPopoverDirection finalDirection = _preferredDirection;
     if (_preferredDirection == SBBPopoverDirection.bottom) {
-      if (_triggerGlobalPosition.dy + _triggerSize.height + overallSize.height >
-          _screenSize.height - _safeAreaInsets.bottom) {
+      if (_triggerGlobalPosition.dy + _triggerSize.height + overallSize.height > constraints.maxHeight) {
         finalDirection = SBBPopoverDirection.top;
       }
     } else if (_preferredDirection == SBBPopoverDirection.top) {
-      if (_triggerGlobalPosition.dy - overallSize.height < _safeAreaInsets.top) {
+      if (_triggerGlobalPosition.dy - overallSize.height < 0) {
         finalDirection = SBBPopoverDirection.bottom;
       }
     }
@@ -215,11 +192,7 @@ class RenderSBBPopover extends RenderShiftedBox {
     // CompositedTransformFollower involved anymore), so every coordinate
     // here must be absolute, same as boxY below.
     double x = _triggerGlobalPosition.dx + (_triggerSize.width / 2) - (overallSize.width / 2);
-    if (x < _safeAreaInsets.left) {
-      x += (_safeAreaInsets.left - x);
-    } else if (x + overallSize.width > _screenSize.width - _safeAreaInsets.right) {
-      x -= (x + overallSize.width) - (_screenSize.width - _safeAreaInsets.right);
-    }
+    x = clampDouble(x, 0, constraints.maxWidth - overallSize.width);
 
     final double boxY = finalDirection == SBBPopoverDirection.bottom
         ? _triggerSize.height + _triggerGlobalPosition.dy
@@ -253,17 +226,17 @@ class RenderSBBPopover extends RenderShiftedBox {
   // RenderBox.hitTest()'s default implementation gates on
   // `size.contains(position)` before ever calling hitTestChildren/hitTestSelf.
   // This render object's own `size` starts at local (0,0) and only extends
-  // downward (it's anchored at the trigger's position via
-  // CompositedTransformFollower, which can only apply a fixed paint-time
-  // offset — see the file-level contract above). For `top` direction, the
-  // visible content sits at a *negative* local y, outside that [0,0]-size
-  // box, so the default gate would reject every tap on it before
-  // hitTestChildren/hitTestSelf ever run. Bypass the gate here, mirroring
-  // RenderFollowerLayer's own hitTest() override for the identical problem
-  // (a child positioned outside this render object's nominal box via a
-  // transform/offset it doesn't control). hitTestChildren and hitTestSelf
-  // still correctly bound the hit region themselves, so this doesn't
-  // over-match taps outside the popover.
+  // downward/rightward (Flutter's convention: a RenderBox's own reported
+  // size is always assumed non-negative). For `top` direction, the visible
+  // content sits at a *negative* local y if the trigger is close enough to
+  // the top of the screen, outside that [0,0]-size box, so the default gate
+  // would reject every tap on it before hitTestChildren/hitTestSelf ever
+  // run. Bypass the gate here, mirroring RenderFollowerLayer's own
+  // hitTest() override for the identical problem (a child positioned
+  // outside this render object's nominal box via an offset it doesn't
+  // fully control). hitTestChildren and hitTestSelf still correctly bound
+  // the hit region themselves, so this doesn't over-match taps outside the
+  // popover.
   @override
   bool hitTest(BoxHitTestResult result, {required Offset position}) {
     if (hitTestChildren(result, position: position) || hitTestSelf(position)) {

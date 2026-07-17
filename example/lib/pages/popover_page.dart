@@ -12,7 +12,6 @@ class PopoverPage extends StatefulWidget {
 class _PopoverPageState extends State<PopoverPage> {
   SBBPopoverDirection _preferredDirection = SBBPopoverDirection.bottom;
   String _popoverContentText = 'This is a transient popover view.';
-  bool _useCustomSafeArea = false;
 
   List<SBBDropdownItem<SBBPopoverDirection>> get _directionItems => SBBPopoverDirection.values.map((dir) {
     final label = dir.name.substring(0, 1).toUpperCase() + dir.name.substring(1);
@@ -60,11 +59,6 @@ class _PopoverPageState extends State<PopoverPage> {
             controller: TextEditingController.fromValue(TextEditingValue(text: _popoverContentText)),
             onChanged: (value) => setState(() => _popoverContentText = value),
           ),
-          SBBSwitchListItem(
-            titleText: 'Simulate Heavy Safe Area Insets',
-            value: _useCustomSafeArea,
-            onChanged: (value) => setState(() => _useCustomSafeArea = value),
-          ),
         ],
       ),
     );
@@ -77,7 +71,6 @@ class _PopoverPageState extends State<PopoverPage> {
         child: Center(
           child: SBBAnchoredOverlayBuilder(
             preferredDirection: _preferredDirection,
-            safeAreaInsets: _useCustomSafeArea ? const EdgeInsets.all(40.0) : EdgeInsets.zero,
             targetBuilder: (context, showOverlay) => SBBSecondaryButton(
               labelText: 'Open Center Popover',
               onPressed: showOverlay,

@@ -16,7 +16,6 @@ class SBBPopover extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final mediaQuery = MediaQuery.of(context);
     final scope = SBBPopoverScope.of(context);
 
     return Semantics(
@@ -25,10 +24,8 @@ class SBBPopover extends StatelessWidget {
       explicitChildNodes: true,
       child: SBBPopoverLayout(
         preferredDirection: scope.preferredDirection,
-        safeAreaInsets: scope.safeAreaInsets,
         triggerGlobalPosition: scope.triggerGlobalPosition,
         triggerSize: scope.triggerSize,
-        screenSize: mediaQuery.size,
         child: Material(
           type: MaterialType.transparency,
           child: child,
