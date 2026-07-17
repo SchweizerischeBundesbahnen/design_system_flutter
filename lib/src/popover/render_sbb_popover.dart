@@ -13,6 +13,7 @@ class SBBPopoverLayout extends SingleChildRenderObjectWidget {
     required this.triggerGlobalPosition,
     required this.triggerSize,
     required this.notch,
+    this.offset = Offset.zero,
     super.child,
   });
 
@@ -21,12 +22,22 @@ class SBBPopoverLayout extends SingleChildRenderObjectWidget {
   final Size triggerSize;
   final SBBPopoverNotch notch;
 
+  /// Absolute offset between the trigger and the popover box.
+  ///
+  /// The y component is defined relative to whichever edge ends up facing
+  /// the trigger: a positive value always pushes the box further away from
+  /// the trigger, so it's automatically inverted when a screen-edge
+  /// collision flips the resolved direction. The x component is applied
+  /// as-is and composes with any horizontal shift from edge clamping.
+  final Offset offset;
+
   @override
   RenderSBBPopover createRenderObject(BuildContext context) => RenderSBBPopover(
     preferredDirection: preferredDirection,
     triggerGlobalPosition: triggerGlobalPosition,
     triggerSize: triggerSize,
     notch: notch,
+    offset: offset,
   );
 
   @override
@@ -35,7 +46,8 @@ class SBBPopoverLayout extends SingleChildRenderObjectWidget {
       ..preferredDirection = preferredDirection
       ..triggerGlobalPosition = triggerGlobalPosition
       ..triggerSize = triggerSize
-      ..notch = notch;
+      ..notch = notch
+      ..offset = offset;
   }
 }
 
@@ -45,11 +57,13 @@ class RenderSBBPopover extends RenderShiftedBox {
     required Offset triggerGlobalPosition,
     required Size triggerSize,
     required SBBPopoverNotch notch,
+    required Offset offset,
     RenderBox? child,
   }) : _preferredDirection = preferredDirection,
        _triggerGlobalPosition = triggerGlobalPosition,
        _triggerSize = triggerSize,
        _notch = notch,
+       _offset = offset,
        super(child);
 
   // Fixed notch gap reserved on the vertical axis, matching
@@ -90,6 +104,14 @@ class RenderSBBPopover extends RenderShiftedBox {
     markNeedsLayout();
   }
 
+  Offset _offset;
+
+  set offset(Offset value) {
+    if (_offset == value) return;
+    _offset = value;
+    markNeedsLayout();
+  }
+
   /// The direction resolved during the most recent layout pass (after
   /// collision-driven flipping). Exposed for tests/diagnostics.
   SBBPopoverDirection get resolvedDirection => _direction;
@@ -119,8 +141,11 @@ class RenderSBBPopover extends RenderShiftedBox {
     final overallSize = Size(child.size.width, child.size.height + _reservedNotchHeight);
 
     // Horizontal positioning
-    // Shift to avoid colliding with view port edges
-    double finalX = _triggerGlobalPosition.dx + (_triggerSize.width / 2) - (overallSize.width / 2);
+    // Center on the trigger, nudged by offset.dx, then shift to avoid
+    // colliding with viewport edges — the offset is baked into the ideal
+    // position before clamping, so it's kept (not dropped) when a
+    // horizontal shift happens, it's just clamped along with everything else.
+    double finalX = _triggerGlobalPosition.dx + (_triggerSize.width / 2) - (overallSize.width / 2) + _offset.dx;
     finalX = clampDouble(finalX, 0, constraints.maxWidth - overallSize.width);
 
     // Vertical positioning
@@ -136,9 +161,14 @@ class RenderSBBPopover extends RenderShiftedBox {
       }
     }
 
+    // offset.dy always pushes the box further away from the trigger, on
+    // whichever edge ends up facing it — so it's added in the bottom branch
+    // but subtracted in the top branch. Since the branch is keyed on
+    // finalDirection (not _preferredDirection), this sign automatically
+    // inverts relative to what was authored whenever a collision flips it.
     final double finalY = finalDirection == .bottom
-        ? _triggerSize.height + _triggerGlobalPosition.dy
-        : -overallSize.height + _triggerGlobalPosition.dy;
+        ? _triggerSize.height + _triggerGlobalPosition.dy + _offset.dy
+        : -overallSize.height + _triggerGlobalPosition.dy - _offset.dy;
 
     _popoverRect = Rect.fromLTWH(finalX, finalY, overallSize.width, overallSize.height);
 

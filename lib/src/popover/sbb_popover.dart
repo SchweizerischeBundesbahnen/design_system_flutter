@@ -3,9 +3,10 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/popover/render_sbb_popover.dart';
 import 'package:sbb_design_system_mobile/src/popover/sbb_popover_scope.dart';
 
+// TODO: add controller for programmatic show / hide (post frame callback!)
+// TODO: add reservedPadding
+// TODO: check how everything works with keyboard
 // TODO: add theming & styling
-// TODO: offset inversion with preferred direction / move offset further down and do not handle in composition
-// TODO: check safeAreaInsets & keyboard functionality
 // TODO: docs & clean up
 // TODO: check accessibility
 
@@ -17,6 +18,7 @@ class SBBPopover extends StatefulWidget {
     this.preferredDirection = .bottom,
     this.isDismissible = true,
     this.notch = const .single(),
+    this.offset = Offset.zero,
   });
 
   final Widget Function(BuildContext context, VoidCallback showOverlay) targetBuilder;
@@ -24,6 +26,15 @@ class SBBPopover extends StatefulWidget {
   final SBBPopoverDirection preferredDirection;
   final bool isDismissible;
   final SBBPopoverNotch notch;
+
+  /// Absolute offset between the trigger and the popover box.
+  ///
+  /// The y component is defined relative to whichever edge ends up facing
+  /// the trigger: a positive value always pushes the box further away from
+  /// the trigger, so it's automatically inverted when a screen-edge
+  /// collision flips the resolved direction. The x component is applied
+  /// as-is and composes with any horizontal shift from edge clamping.
+  final Offset offset;
 
   @override
   State<SBBPopover> createState() => _SBBPopoverState();
@@ -107,6 +118,7 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
                     triggerGlobalPosition: _triggerGlobalPosition,
                     triggerSize: _triggerSize,
                     notch: widget.notch,
+                    offset: widget.offset,
                     child: Material(
                       type: MaterialType.transparency,
                       child: widget.builder(context, _hideOverlay),

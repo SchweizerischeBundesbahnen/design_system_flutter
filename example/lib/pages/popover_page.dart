@@ -106,6 +106,7 @@ class _PopoverPageState extends State<PopoverPage> {
           child: SBBPopover(
             preferredDirection: _preferredDirection,
             notch: _effectiveNotch,
+            offset: Offset(0, 8),
             targetBuilder: (context, showOverlay) => SBBSecondaryButton(
               labelText: 'Open Center Popover',
               onPressed: showOverlay,
@@ -115,10 +116,7 @@ class _PopoverPageState extends State<PopoverPage> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Text(
-                    _popoverContentText,
-                    style: SBBTextStyles.mediumLight,
-                  ),
+                  Text(_popoverContentText, style: SBBTextStyles.mediumLight),
                   const SizedBox(height: SBBSpacing.small),
                   SBBTertiaryButtonSmall(
                     iconData: SBBIcons.cross_small,
