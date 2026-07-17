@@ -67,7 +67,7 @@ import 'package:flutter/rendering.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/popover/sbb_popover_shape.dart';
 
-/// Positions and paints an [SBBPopover]'s content relative to its trigger.
+/// Positions and paints an [SBBPopover2]'s content relative to its trigger.
 ///
 /// Replaces `CustomSingleChildLayout` + `SBBPopoverLayoutDelegate`. See the
 /// file-level contract above for why this render object's own size spans

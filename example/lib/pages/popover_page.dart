@@ -69,30 +69,28 @@ class _PopoverPageState extends State<PopoverPage> {
       child: Padding(
         padding: const EdgeInsets.all(SBBSpacing.medium),
         child: Center(
-          child: SBBAnchoredOverlayBuilder(
+          child: SBBPopover(
             preferredDirection: _preferredDirection,
             targetBuilder: (context, showOverlay) => SBBSecondaryButton(
               labelText: 'Open Center Popover',
               onPressed: showOverlay,
             ),
             offset: Offset(0, 10),
-            followerBuilder: (context, hideOverlay) => SBBPopover(
-              child: Padding(
-                padding: const EdgeInsets.all(SBBSpacing.medium),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Text(
-                      _popoverContentText,
-                      style: SBBTextStyles.mediumLight,
-                    ),
-                    const SizedBox(height: SBBSpacing.small),
-                    SBBTertiaryButtonSmall(
-                      iconData: SBBIcons.cross_small,
-                      onPressed: hideOverlay,
-                    ),
-                  ],
-                ),
+            builder: (context, hideOverlay) => Padding(
+              padding: const EdgeInsets.all(SBBSpacing.medium),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    _popoverContentText,
+                    style: SBBTextStyles.mediumLight,
+                  ),
+                  const SizedBox(height: SBBSpacing.small),
+                  SBBTertiaryButtonSmall(
+                    iconData: SBBIcons.cross_small,
+                    onPressed: hideOverlay,
+                  ),
+                ],
               ),
             ),
           ),
@@ -108,35 +106,31 @@ class _PopoverPageState extends State<PopoverPage> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            SBBAnchoredOverlayBuilder(
+            SBBPopover(
               preferredDirection: _preferredDirection,
               targetBuilder: (context, showOverlay) => SBBTertiaryButtonSmall(
                 iconData: SBBIcons.arrow_left_small,
                 onPressed: showOverlay,
               ),
-              followerBuilder: (context, hideOverlay) => SBBPopover(
-                child: Padding(
-                  padding: const EdgeInsets.all(SBBSpacing.medium),
-                  child: Text(
-                    'Left edge layout shift',
-                    style: SBBTextStyles.mediumLight,
-                  ),
+              builder: (context, hideOverlay) => Padding(
+                padding: const EdgeInsets.all(SBBSpacing.medium),
+                child: Text(
+                  'Left edge layout shift',
+                  style: SBBTextStyles.mediumLight,
                 ),
               ),
             ),
-            SBBAnchoredOverlayBuilder(
+            SBBPopover(
               preferredDirection: _preferredDirection,
               targetBuilder: (context, showOverlay) => SBBTertiaryButtonSmall(
                 iconData: SBBIcons.arrow_right_small,
                 onPressed: showOverlay,
               ),
-              followerBuilder: (context, hideOverlay) => SBBPopover(
-                child: Padding(
-                  padding: const EdgeInsets.all(SBBSpacing.medium),
-                  child: Text(
-                    'Right edge layout shift',
-                    style: SBBTextStyles.mediumLight,
-                  ),
+              builder: (context, hideOverlay) => Padding(
+                padding: const EdgeInsets.all(SBBSpacing.medium),
+                child: Text(
+                  'Right edge layout shift',
+                  style: SBBTextStyles.mediumLight,
                 ),
               ),
             ),
