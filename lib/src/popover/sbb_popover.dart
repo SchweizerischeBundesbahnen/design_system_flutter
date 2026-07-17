@@ -49,10 +49,8 @@ class _SBBPopoverState extends State<SBBPopover> {
     final mediaQuery = MediaQuery.of(context);
 
     final scope = SBBPopoverScope.of(context);
-
-    final renderBox = scope.triggerKey.currentContext?.findRenderObject() as RenderBox?;
-    final triggerSize = renderBox?.size ?? Size.zero;
-    final triggerGlobalPosition = renderBox?.localToGlobal(Offset.zero) ?? Offset.zero;
+    final triggerSize = scope.triggerSize;
+    final triggerGlobalPosition = scope.triggerGlobalPosition;
 
     return Semantics(
       label: widget.semanticsLabel,

@@ -42,6 +42,9 @@ class _SBBAnchoredOverlayBuilderState extends State<SBBAnchoredOverlayBuilder> w
 
   final OverlayPortalController _overlayController = OverlayPortalController();
 
+  Offset _triggerGlobalPosition = Offset.zero;
+  Size _triggerSize = Size.zero;
+
   @override
   void initState() {
     super.initState();
@@ -62,6 +65,9 @@ class _SBBAnchoredOverlayBuilderState extends State<SBBAnchoredOverlayBuilder> w
 
   void _showOverlay() {
     if (!_overlayController.isShowing) {
+      final renderBox = _triggerKey.currentContext?.findRenderObject() as RenderBox?;
+      _triggerGlobalPosition = renderBox?.localToGlobal(Offset.zero) ?? Offset.zero;
+      _triggerSize = renderBox?.size ?? Size.zero;
       _overlayController.show();
       _animationController.forward();
     }
@@ -86,7 +92,8 @@ class _SBBAnchoredOverlayBuilderState extends State<SBBAnchoredOverlayBuilder> w
       controller: _overlayController,
       overlayChildBuilder: (BuildContext context) {
         return SBBPopoverScope(
-          triggerKey: _triggerKey,
+          triggerGlobalPosition: _triggerGlobalPosition,
+          triggerSize: _triggerSize,
           preferredDirection: widget.preferredDirection,
           safeAreaInsets: widget.safeAreaInsets,
           child: Stack(
