@@ -5,11 +5,7 @@ import 'package:flutter/rendering.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/popover/sbb_popover_shape.dart';
 
-/// Positions and paints an [SBBPopover2]'s content relative to its trigger.
-///
-/// Replaces `CustomSingleChildLayout` + `SBBPopoverLayoutDelegate`. See the
-/// file-level contract above for why this render object's own size spans
-/// the full available space rather than just the popover's visible size.
+/// Positions and paints an [SBBPopover]'s content relative to its trigger.
 class SBBPopoverLayout extends SingleChildRenderObjectWidget {
   const SBBPopoverLayout({
     super.key,
@@ -114,69 +110,60 @@ class RenderSBBPopover extends RenderShiftedBox {
       return;
     }
 
-    // How much vertical space to reserve for notch bump(s): none for
-    // SBBPopoverNotchNone, one edge for SBBPopoverNotchSingle, both edges
-    // (sandwiching the content) for SBBPopoverNotchBoth.
-    final double reservedNotchHeight = switch (_notch) {
-      SBBPopoverNotchNone() => 0,
-      SBBPopoverNotchSingle() => _notchHeight,
-      SBBPopoverNotchBoth() => _notchHeight * 2,
-    };
-
-    // Bounded by this render object's own incoming constraints (effectively
-    // the screen/overlay size) instead of an explicit screenSize param.
-    // safeAreaInsets is dropped for now (treated as zero) — see tasks/plan.md
-    // for the "reimplement cleanly later" note on both.
     final childConstraints = BoxConstraints(
       maxWidth: constraints.maxWidth,
-      maxHeight: constraints.maxHeight - reservedNotchHeight,
+      maxHeight: constraints.maxHeight - _reservedNotchHeight,
     );
     child.layout(childConstraints, parentUsesSize: true);
 
-    final overallSize = Size(child.size.width, child.size.height + reservedNotchHeight);
+    final overallSize = Size(child.size.width, child.size.height + _reservedNotchHeight);
 
-    // Flip-on-collision, ported verbatim from
-    // SBBPopoverLayoutDelegate.getPositionForChild.
+    // Horizontal positioning
+    // Shift to avoid colliding with view port edges
+    double finalX = _triggerGlobalPosition.dx + (_triggerSize.width / 2) - (overallSize.width / 2);
+    finalX = clampDouble(finalX, 0, constraints.maxWidth - overallSize.width);
+
+    // Vertical positioning
+    // Flip vertically on collision
     SBBPopoverDirection finalDirection = _preferredDirection;
-    if (_preferredDirection == SBBPopoverDirection.bottom) {
+    if (_preferredDirection == .bottom) {
       if (_triggerGlobalPosition.dy + _triggerSize.height + overallSize.height > constraints.maxHeight) {
-        finalDirection = SBBPopoverDirection.top;
+        finalDirection = .top;
       }
-    } else if (_preferredDirection == SBBPopoverDirection.top) {
+    } else if (_preferredDirection == .top) {
       if (_triggerGlobalPosition.dy - overallSize.height < 0) {
-        finalDirection = SBBPopoverDirection.bottom;
+        finalDirection = .bottom;
       }
     }
 
-    // Horizontal centering + edge-shift, in absolute (screen) coordinates:
-    // this render object's own local (0,0) is the overlay's origin (no
-    // CompositedTransformFollower involved anymore), so every coordinate
-    // here must be absolute, same as boxY below.
-    double x = _triggerGlobalPosition.dx + (_triggerSize.width / 2) - (overallSize.width / 2);
-    x = clampDouble(x, 0, constraints.maxWidth - overallSize.width);
-
-    final double boxY = finalDirection == SBBPopoverDirection.bottom
+    final double finalY = finalDirection == .bottom
         ? _triggerSize.height + _triggerGlobalPosition.dy
         : -overallSize.height + _triggerGlobalPosition.dy;
 
-    _popoverRect = Rect.fromLTWH(x, boxY, overallSize.width, overallSize.height);
+    _popoverRect = Rect.fromLTWH(finalX, finalY, overallSize.width, overallSize.height);
 
-    // How far the content is inset from the top of the popover box: room for
-    // a top notch when one tracks the trigger there, or the fixed top notch
-    // of a SBBPopoverNotchBoth sandwich; otherwise no inset.
     final double childTopInset = switch (_notch) {
       SBBPopoverNotchNone() => 0,
-      SBBPopoverNotchSingle() => finalDirection == SBBPopoverDirection.bottom ? _notchHeight : 0,
+      SBBPopoverNotchSingle() => finalDirection == .bottom ? _notchHeight : 0,
       SBBPopoverNotchBoth() => _notchHeight,
     };
 
     final childParentData = child.parentData! as BoxParentData;
-    childParentData.offset = Offset(x, boxY + childTopInset);
+    childParentData.offset = Offset(finalX, finalY + childTopInset);
 
     if (_direction != finalDirection) {
       _direction = finalDirection;
       markNeedsPaint();
     }
+  }
+
+  double get _reservedNotchHeight {
+    final double reservedNotchHeight = switch (_notch) {
+      SBBPopoverNotchNone() => 0,
+      SBBPopoverNotchSingle() => _notchHeight,
+      SBBPopoverNotchBoth() => _notchHeight * 2,
+    };
+    return reservedNotchHeight;
   }
 
   @override

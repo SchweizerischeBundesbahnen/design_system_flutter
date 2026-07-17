@@ -48,7 +48,6 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
       duration: Duration(milliseconds: 300),
       vsync: this,
     );
-
     _opacityAnimation = Tween<double>(
       begin: 0.0,
       end: 1.0,
