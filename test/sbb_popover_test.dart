@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/popover/render_sbb_popover.dart';
@@ -93,5 +94,51 @@ void main() {
 
     final renderObject = tester.renderObject<RenderSBBPopover>(find.byType(SBBPopoverLayout));
     expect(renderObject.resolvedDirection, SBBPopoverDirection.top);
+  });
+
+  testWidgets('popover content is hit-testable when direction is top', (tester) async {
+    late VoidCallback showOverlay;
+
+    // Plenty of room above the trigger, so direction stays `top` (the
+    // preferred direction) without needing to flip.
+    await tester.pumpWidget(
+      TestApp(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 40, top: 400),
+          child: SBBAnchoredOverlayBuilder(
+            preferredDirection: SBBPopoverDirection.top,
+            targetBuilder: (context, show) {
+              showOverlay = show;
+              return SizedBox(key: triggerKey, width: 80, height: 40);
+            },
+            followerBuilder: (context, hideOverlay) => const SBBPopover(
+              child: SizedBox(width: 120, height: 60),
+            ),
+          ),
+        ),
+      ),
+    );
+
+    showOverlay();
+    await tester.pumpAndSettle();
+
+    final renderObject = tester.renderObject<RenderSBBPopover>(find.byType(SBBPopoverLayout));
+    expect(renderObject.resolvedDirection, SBBPopoverDirection.top);
+
+    // A point at the center of the popover's own visible rect. For `top`
+    // direction this rect sits at a negative local y (above this render
+    // object's own local origin, which is pinned to the trigger's position).
+    final centerOfPopover = renderObject.popoverRect.center;
+    final hitResult = BoxHitTestResult();
+    final wasHit = renderObject.hitTest(hitResult, position: centerOfPopover);
+
+    expect(
+      wasHit,
+      isTrue,
+      reason:
+          'RenderSBBPopover.hitTest() must bypass the default RenderBox size.contains(position) '
+          'gate, since top-direction content sits at a negative local y (above this render '
+          'object\'s own [0,0]-anchored box) that gate would otherwise reject.',
+    );
   });
 }

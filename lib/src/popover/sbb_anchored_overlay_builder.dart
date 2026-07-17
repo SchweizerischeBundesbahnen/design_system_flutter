@@ -103,27 +103,19 @@ class _SBBAnchoredOverlayBuilderState extends State<SBBAnchoredOverlayBuilder> w
                 onTap: widget.isDismissible ? _hideOverlay : null,
                 child: Container(color: SBBColors.iron.withAlpha((255.0 * 0.6).round())),
               ),
-              CompositedTransformFollower(
-                link: _layerLink,
-                showWhenUnlinked: false,
-                offset: widget.offset,
-                child: FadeTransition(
-                  opacity: _opacityAnimation,
-                  child: ScaleTransition(
-                    alignment: .topCenter,
-                    scale: _scaleAnimation,
-                    child: widget.followerBuilder(context, _hideOverlay),
-                  ),
+              FadeTransition(
+                opacity: _opacityAnimation,
+                child: ScaleTransition(
+                  alignment: .topCenter,
+                  scale: _scaleAnimation,
+                  child: widget.followerBuilder(context, _hideOverlay),
                 ),
               ),
             ],
           ),
         );
       },
-      child: CompositedTransformTarget(
-        link: _layerLink,
-        child: KeyedSubtree(key: _triggerKey, child: widget.targetBuilder(context, _showOverlay)),
-      ),
+      child: KeyedSubtree(key: _triggerKey, child: widget.targetBuilder(context, _showOverlay)),
     );
   }
 }
