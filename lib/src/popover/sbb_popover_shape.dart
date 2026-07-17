@@ -16,7 +16,10 @@ class SBBPopoverShapeBorder extends ShapeBorder {
   final SBBPopoverDirection direction;
   final SBBPopoverNotch notch;
 
-  // Allows the notch to slide along the edge when the popover collides with screen bounds
+  // Desired horizontal shift (in the popover box's own coordinate space) to
+  // keep the notch pointing at the trigger's center when the box itself has
+  // been shifted sideways to avoid a screen-edge collision. Clamped in
+  // getOuterPath so the notch can never slide into the rounded corners.
   final double notchOffset;
 
   // The edges that should get a notch bump for the current [notch] config,
@@ -50,15 +53,25 @@ class SBBPopoverShapeBorder extends ShapeBorder {
     final contentRect = dimensions.resolve(textDirection).deflateRect(rect);
     var path = Path()..addRRect(RRect.fromRectAndRadius(contentRect, const Radius.circular(radius)));
 
+    // Keep the notch clear of the rounded corners on either side. Floored at
+    // 0 so a content rect narrower than the notch + corners doesn't invert
+    // the clamp range.
+    final maxOffset = math.max(0.0, (contentRect.width / 2) - radius - (notchSize.width / 2));
+    final clampedNotchOffset = notchOffset.clamp(-maxOffset, maxOffset);
+
     // 2. Union in a notch bump for each edge the current config calls for
     for (final edge in _notchEdges) {
-      path = Path.combine(PathOperation.union, path, _buildNotchPath(edge, contentRect, notchSize));
+      path = Path.combine(
+        PathOperation.union,
+        path,
+        _buildNotchPath(edge, contentRect, notchSize, clampedNotchOffset),
+      );
     }
 
     return path;
   }
 
-  Path _buildNotchPath(_NotchEdge edge, Rect contentRect, Size notchSize) {
+  Path _buildNotchPath(_NotchEdge edge, Rect contentRect, Size notchSize, double notchOffset) {
     final w = notchSize.width;
     final h = notchSize.height;
 

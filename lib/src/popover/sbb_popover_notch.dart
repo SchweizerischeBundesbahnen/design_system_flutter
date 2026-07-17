@@ -16,9 +16,10 @@ sealed class SBBPopoverNotch {
   ///
   /// Flips automatically between the top and bottom edge together with the
   /// popover's resolved layout direction (e.g. when a screen-edge collision
-  /// forces the popover to the opposite side of the trigger). This is the
-  /// default.
-  const factory SBBPopoverNotch.single() = SBBPopoverNotchSingle;
+  /// forces the popover to the opposite side of the trigger). The notch can
+  /// be configured to be shifted to align with the target. This behavior is
+  /// enabled by default.
+  const factory SBBPopoverNotch.single({bool alignWithTarget}) = SBBPopoverNotchSingle;
 
   /// Notches on both the top and bottom edges simultaneously.
   ///
@@ -41,7 +42,22 @@ class SBBPopoverNotchNone extends SBBPopoverNotch {
 
 /// See [SBBPopoverNotch.single].
 class SBBPopoverNotchSingle extends SBBPopoverNotch {
-  const SBBPopoverNotchSingle() : super._();
+  const SBBPopoverNotchSingle({this.alignWithTarget = true}) : super._();
+
+  /// Whether the notch shifts horizontally to stay pointed at the trigger's
+  /// center when the popover box itself is shifted sideways to avoid a
+  /// screen-edge collision.
+  ///
+  /// When false, the notch stays centered on the popover box instead,
+  /// regardless of where the trigger is.
+  final bool alignWithTarget;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) || (other is SBBPopoverNotchSingle && alignWithTarget == other.alignWithTarget);
+
+  @override
+  int get hashCode => Object.hash(runtimeType, alignWithTarget);
 }
 
 /// See [SBBPopoverNotch.both].

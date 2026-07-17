@@ -12,6 +12,7 @@ class PopoverPage extends StatefulWidget {
 class _PopoverPageState extends State<PopoverPage> {
   SBBPopoverDirection _preferredDirection = SBBPopoverDirection.bottom;
   SBBPopoverNotch _notch = const SBBPopoverNotch.single();
+  bool _alignNotchWithTarget = true;
   String _popoverContentText = 'This is a transient popover view.';
 
   List<SBBDropdownItem<SBBPopoverDirection>> get _directionItems => SBBPopoverDirection.values.map((dir) {
@@ -24,6 +25,15 @@ class _PopoverPageState extends State<PopoverPage> {
     SBBDropdownItem(value: SBBPopoverNotch.none(), label: 'None'),
     SBBDropdownItem(value: SBBPopoverNotch.both(), label: 'Both'),
   ];
+
+  // alignWithTarget only applies to SBBPopoverNotch.single; the dropdown
+  // above only ever selects between the three bare (default-aligned)
+  // variants, so the toggle's value is layered in here.
+  SBBPopoverNotch get _effectiveNotch {
+    final notch = _notch;
+    if (notch is! SBBPopoverNotchSingle) return notch;
+    return SBBPopoverNotch.single(alignWithTarget: _alignNotchWithTarget);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +78,13 @@ class _PopoverPageState extends State<PopoverPage> {
               }
             },
           ),
+          SBBSwitchListItem(
+            titleText: 'Align Notch With Target',
+            value: _alignNotchWithTarget,
+            onChanged: _notch is SBBPopoverNotchSingle
+                ? (value) => setState(() => _alignNotchWithTarget = value)
+                : null,
+          ),
           SBBTextInput(
             decoration: const SBBInputDecoration(
               labelText: 'Popover Content',
@@ -88,7 +105,7 @@ class _PopoverPageState extends State<PopoverPage> {
         child: Center(
           child: SBBPopover(
             preferredDirection: _preferredDirection,
-            notch: _notch,
+            notch: _effectiveNotch,
             targetBuilder: (context, showOverlay) => SBBSecondaryButton(
               labelText: 'Open Center Popover',
               onPressed: showOverlay,
@@ -125,7 +142,7 @@ class _PopoverPageState extends State<PopoverPage> {
           children: [
             SBBPopover(
               preferredDirection: _preferredDirection,
-              notch: _notch,
+              notch: _effectiveNotch,
               targetBuilder: (context, showOverlay) => SBBTertiaryButtonSmall(
                 iconData: SBBIcons.arrow_left_small,
                 onPressed: showOverlay,
@@ -140,7 +157,7 @@ class _PopoverPageState extends State<PopoverPage> {
             ),
             SBBPopover(
               preferredDirection: _preferredDirection,
-              notch: _notch,
+              notch: _effectiveNotch,
               targetBuilder: (context, showOverlay) => SBBTertiaryButtonSmall(
                 iconData: SBBIcons.arrow_right_small,
                 onPressed: showOverlay,

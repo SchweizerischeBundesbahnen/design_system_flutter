@@ -169,9 +169,26 @@ class RenderSBBPopover extends RenderShiftedBox {
   @override
   void paint(PaintingContext context, Offset offset) {
     final rect = _popoverRect.shift(offset);
-    final path = SBBPopoverShapeBorder(direction: _direction, notch: _notch).getOuterPath(rect);
+    final path = SBBPopoverShapeBorder(
+      direction: _direction,
+      notch: _notch,
+      notchOffset: _notchOffset,
+    ).getOuterPath(rect);
     context.canvas.drawPath(path, Paint()..color = SBBColors.milk);
     super.paint(context, offset);
+  }
+
+  // How far the notch needs to shift horizontally, in the popover box's own
+  // coordinate space, to keep pointing at the trigger's center once the box
+  // has been shifted sideways to avoid a screen-edge collision (see
+  // clampDouble(finalX, ...) above). Only SBBPopoverNotchSingle with
+  // alignWithTarget enabled tracks the trigger this way — SBBPopoverNotchBoth
+  // is always a static, non-tracking shape.
+  double get _notchOffset {
+    final notch = _notch;
+    if (notch is! SBBPopoverNotchSingle || !notch.alignWithTarget) return 0;
+    final double triggerCenterX = _triggerGlobalPosition.dx + (_triggerSize.width / 2);
+    return triggerCenterX - _popoverRect.center.dx;
   }
 
   @override
