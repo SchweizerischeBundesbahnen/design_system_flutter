@@ -75,7 +75,6 @@ class _PopoverPageState extends State<PopoverPage> {
               labelText: 'Open Center Popover',
               onPressed: showOverlay,
             ),
-            offset: Offset(0, 10),
             builder: (context, hideOverlay) => Padding(
               padding: const EdgeInsets.all(SBBSpacing.medium),
               child: Column(

@@ -17,14 +17,12 @@ class SBBPopover extends StatefulWidget {
     required this.builder,
     this.preferredDirection = .bottom,
     this.isDismissible = true,
-    this.offset = Offset.zero,
   });
 
   final Widget Function(BuildContext context, VoidCallback showOverlay) targetBuilder;
   final Widget Function(BuildContext context, VoidCallback hideOverlay) builder;
   final SBBPopoverDirection preferredDirection;
   final bool isDismissible;
-  final Offset offset;
 
   @override
   State<SBBPopover> createState() => _SBBPopoverState();
