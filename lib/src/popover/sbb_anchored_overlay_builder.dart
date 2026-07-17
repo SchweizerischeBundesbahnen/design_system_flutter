@@ -3,7 +3,6 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/popover/sbb_popover_scope.dart';
 
 // TODO: make notch configurable in SBBPopover
-// TODO: clean up layout delegate / simplify with custom SingleChildRenderObject
 // TODO: add theming & styling
 // TODO: offset inversion with preferred direction / move offset further down and do not handle in composition
 // TODO: check safeAreaInsets & keyboard functionality
