@@ -33,7 +33,6 @@ class SBBAnchoredOverlayBuilder extends StatefulWidget {
 }
 
 class _SBBAnchoredOverlayBuilderState extends State<SBBAnchoredOverlayBuilder> with SingleTickerProviderStateMixin {
-  final LayerLink _layerLink = LayerLink();
   final GlobalKey _triggerKey = GlobalKey();
 
   late AnimationController _animationController;

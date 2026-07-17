@@ -41,8 +41,8 @@ void main() {
     expect(popoverFinder, findsOneWidget);
 
     // RenderSBBPopover's own render box spans the full available space (it
-    // has to, to support flipping/shifting under a paint-time-only
-    // CompositedTransformFollower offset). Measure the Material it lays out
+    // has to, since the flip/shift decision depends on the child's measured
+    // size, only known after layout). Measure the Material it lays out
     // instead, which is sized/positioned to the actual visible content.
     final materialFinder = find.descendant(of: popoverFinder, matching: find.byType(Material));
     expect(materialFinder, findsOneWidget);
@@ -126,8 +126,9 @@ void main() {
     expect(renderObject.resolvedDirection, SBBPopoverDirection.top);
 
     // A point at the center of the popover's own visible rect. For `top`
-    // direction this rect sits at a negative local y (above this render
-    // object's own local origin, which is pinned to the trigger's position).
+    // direction this rect can sit at a negative local y relative to this
+    // render object's own [0,0]-anchored box, if the trigger is close
+    // enough to the top of the screen (as it is here).
     final centerOfPopover = renderObject.popoverRect.center;
     final hitResult = BoxHitTestResult();
     final wasHit = renderObject.hitTest(hitResult, position: centerOfPopover);
@@ -141,4 +142,45 @@ void main() {
           'object\'s own [0,0]-anchored box) that gate would otherwise reject.',
     );
   });
+
+  void goldenTest(String name, SBBPopoverDirection direction) {
+    testWidgets('popover golden - $name', (tester) async {
+      tester.view.physicalSize = const Size(300, 300);
+      tester.view.devicePixelRatio = 1.0;
+      addTearDown(tester.view.reset);
+
+      late VoidCallback showOverlay;
+
+      final widget = Center(
+        child: SBBAnchoredOverlayBuilder(
+          preferredDirection: direction,
+          targetBuilder: (context, show) {
+            showOverlay = show;
+            return const SizedBox(width: 60, height: 30);
+          },
+          followerBuilder: (context, hideOverlay) => const SBBPopover(
+            child: Padding(
+              padding: EdgeInsets.all(SBBSpacing.small),
+              child: Text('Popover content'),
+            ),
+          ),
+        ),
+      );
+
+      for (final spec in TestSpecs.themedSpecs) {
+        tester.platformDispatcher.platformBrightnessTestValue = spec.brightness;
+        await tester.pumpWidget(TestApp(child: widget));
+        showOverlay();
+        await tester.pumpAndSettle();
+
+        await expectLater(
+          find.byType(TestApp),
+          matchesGoldenFile('goldens/popover_$name.${spec.name}.png'),
+        );
+      }
+    });
+  }
+
+  goldenTest('bottom', SBBPopoverDirection.bottom);
+  goldenTest('top', SBBPopoverDirection.top);
 }
