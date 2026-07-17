@@ -3,23 +3,38 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
+/// The edge of the popover's content rect a single notch bump attaches to.
+enum _NotchEdge { top, bottom }
+
 class SBBPopoverShapeBorder extends ShapeBorder {
   const SBBPopoverShapeBorder({
     required this.direction,
+    required this.notch,
     this.notchOffset = 0.0,
   });
 
   final SBBPopoverDirection direction;
+  final SBBPopoverNotch notch;
 
   // Allows the notch to slide along the edge when the popover collides with screen bounds
   final double notchOffset;
 
+  // The edges that should get a notch bump for the current [notch] config,
+  // resolved against [direction] for SBBPopoverNotchSingle (which always
+  // tracks whichever edge currently faces the trigger).
+  List<_NotchEdge> get _notchEdges => switch (notch) {
+    SBBPopoverNotchNone() => const [],
+    SBBPopoverNotchSingle() => [direction == SBBPopoverDirection.bottom ? _NotchEdge.top : _NotchEdge.bottom],
+    SBBPopoverNotchBoth() => const [_NotchEdge.top, _NotchEdge.bottom],
+  };
+
   @override
   EdgeInsetsGeometry get dimensions {
     const notchSize = Size(36, 12);
+    final edges = _notchEdges;
     return EdgeInsets.only(
-      top: direction == SBBPopoverDirection.bottom ? notchSize.height : 0,
-      bottom: direction == SBBPopoverDirection.top ? notchSize.height : 0,
+      top: edges.contains(_NotchEdge.top) ? notchSize.height : 0,
+      bottom: edges.contains(_NotchEdge.bottom) ? notchSize.height : 0,
     );
   }
 
@@ -31,18 +46,19 @@ class SBBPopoverShapeBorder extends ShapeBorder {
     const notchSize = Size(36, 12);
     const radius = 16.0;
 
-    // 1. Deflate the rect to leave room for the notch and build the main body
+    // 1. Deflate the rect to leave room for the notch(es) and build the main body
     final contentRect = dimensions.resolve(textDirection).deflateRect(rect);
-    final rectPath = Path()..addRRect(RRect.fromRectAndRadius(contentRect, const Radius.circular(radius)));
+    var path = Path()..addRRect(RRect.fromRectAndRadius(contentRect, const Radius.circular(radius)));
 
-    // 2. Build the notch in a normalized local coordinate space pointing UP
-    final notchPath = _buildNotchPath(direction, contentRect, notchSize);
+    // 2. Union in a notch bump for each edge the current config calls for
+    for (final edge in _notchEdges) {
+      path = Path.combine(PathOperation.union, path, _buildNotchPath(edge, contentRect, notchSize));
+    }
 
-    // 3. Union the two paths together to create a single clean boundary for shadows
-    return Path.combine(PathOperation.union, rectPath, notchPath);
+    return path;
   }
 
-  Path _buildNotchPath(SBBPopoverDirection direction, Rect contentRect, Size notchSize) {
+  Path _buildNotchPath(_NotchEdge edge, Rect contentRect, Size notchSize) {
     final w = notchSize.width;
     final h = notchSize.height;
 
@@ -68,12 +84,12 @@ class SBBPopoverShapeBorder extends ShapeBorder {
     double angle = 0;
     Offset target = Offset.zero;
 
-    switch (direction) {
-      case SBBPopoverDirection.bottom: // Popover is below, notch on TOP pointing UP
+    switch (edge) {
+      case _NotchEdge.top: // Notch on TOP edge, pointing UP
         target = Offset(contentRect.center.dx + notchOffset, contentRect.top);
         angle = 0;
         break;
-      case SBBPopoverDirection.top: // Popover is above, notch on BOTTOM pointing DOWN
+      case _NotchEdge.bottom: // Notch on BOTTOM edge, pointing DOWN
         target = Offset(contentRect.center.dx + notchOffset, contentRect.bottom);
         angle = math.pi; // 180 degrees
         break;

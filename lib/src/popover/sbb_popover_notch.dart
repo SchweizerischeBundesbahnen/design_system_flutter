@@ -1,5 +1,5 @@
-/// Configures whether and where the decorative notch (the small triangular
-/// tail pointing at the trigger) is drawn on an [SBBPopover]'s content box.
+/// Configures whether and where the decorative notch is drawn on an
+/// [SBBPopover]'s content box.
 ///
 /// Provide one of the concrete variants: [SBBPopoverNotch.none] to suppress
 /// the notch entirely, [SBBPopoverNotch.single] (the default) for a single

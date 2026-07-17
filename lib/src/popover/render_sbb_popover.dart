@@ -16,18 +16,21 @@ class SBBPopoverLayout extends SingleChildRenderObjectWidget {
     required this.preferredDirection,
     required this.triggerGlobalPosition,
     required this.triggerSize,
+    required this.notch,
     super.child,
   });
 
   final SBBPopoverDirection preferredDirection;
   final Offset triggerGlobalPosition;
   final Size triggerSize;
+  final SBBPopoverNotch notch;
 
   @override
   RenderSBBPopover createRenderObject(BuildContext context) => RenderSBBPopover(
     preferredDirection: preferredDirection,
     triggerGlobalPosition: triggerGlobalPosition,
     triggerSize: triggerSize,
+    notch: notch,
   );
 
   @override
@@ -35,7 +38,8 @@ class SBBPopoverLayout extends SingleChildRenderObjectWidget {
     renderObject
       ..preferredDirection = preferredDirection
       ..triggerGlobalPosition = triggerGlobalPosition
-      ..triggerSize = triggerSize;
+      ..triggerSize = triggerSize
+      ..notch = notch;
   }
 }
 
@@ -44,10 +48,12 @@ class RenderSBBPopover extends RenderShiftedBox {
     required SBBPopoverDirection preferredDirection,
     required Offset triggerGlobalPosition,
     required Size triggerSize,
+    required SBBPopoverNotch notch,
     RenderBox? child,
   }) : _preferredDirection = preferredDirection,
        _triggerGlobalPosition = triggerGlobalPosition,
        _triggerSize = triggerSize,
+       _notch = notch,
        super(child);
 
   // Fixed notch gap reserved on the vertical axis, matching
@@ -80,6 +86,14 @@ class RenderSBBPopover extends RenderShiftedBox {
     markNeedsLayout();
   }
 
+  SBBPopoverNotch _notch;
+
+  set notch(SBBPopoverNotch value) {
+    if (_notch == value) return;
+    _notch = value;
+    markNeedsLayout();
+  }
+
   /// The direction resolved during the most recent layout pass (after
   /// collision-driven flipping). Exposed for tests/diagnostics.
   SBBPopoverDirection get resolvedDirection => _direction;
@@ -100,17 +114,26 @@ class RenderSBBPopover extends RenderShiftedBox {
       return;
     }
 
+    // How much vertical space to reserve for notch bump(s): none for
+    // SBBPopoverNotchNone, one edge for SBBPopoverNotchSingle, both edges
+    // (sandwiching the content) for SBBPopoverNotchBoth.
+    final double reservedNotchHeight = switch (_notch) {
+      SBBPopoverNotchNone() => 0,
+      SBBPopoverNotchSingle() => _notchHeight,
+      SBBPopoverNotchBoth() => _notchHeight * 2,
+    };
+
     // Bounded by this render object's own incoming constraints (effectively
     // the screen/overlay size) instead of an explicit screenSize param.
     // safeAreaInsets is dropped for now (treated as zero) — see tasks/plan.md
     // for the "reimplement cleanly later" note on both.
     final childConstraints = BoxConstraints(
       maxWidth: constraints.maxWidth,
-      maxHeight: constraints.maxHeight - _notchHeight,
+      maxHeight: constraints.maxHeight - reservedNotchHeight,
     );
     child.layout(childConstraints, parentUsesSize: true);
 
-    final overallSize = Size(child.size.width, child.size.height + _notchHeight);
+    final overallSize = Size(child.size.width, child.size.height + reservedNotchHeight);
 
     // Flip-on-collision, ported verbatim from
     // SBBPopoverLayoutDelegate.getPositionForChild.
@@ -138,11 +161,17 @@ class RenderSBBPopover extends RenderShiftedBox {
 
     _popoverRect = Rect.fromLTWH(x, boxY, overallSize.width, overallSize.height);
 
+    // How far the content is inset from the top of the popover box: room for
+    // a top notch when one tracks the trigger there, or the fixed top notch
+    // of a SBBPopoverNotchBoth sandwich; otherwise no inset.
+    final double childTopInset = switch (_notch) {
+      SBBPopoverNotchNone() => 0,
+      SBBPopoverNotchSingle() => finalDirection == SBBPopoverDirection.bottom ? _notchHeight : 0,
+      SBBPopoverNotchBoth() => _notchHeight,
+    };
+
     final childParentData = child.parentData! as BoxParentData;
-    childParentData.offset = Offset(
-      x,
-      boxY + (finalDirection == SBBPopoverDirection.bottom ? _notchHeight : 0),
-    );
+    childParentData.offset = Offset(x, boxY + childTopInset);
 
     if (_direction != finalDirection) {
       _direction = finalDirection;
@@ -153,7 +182,7 @@ class RenderSBBPopover extends RenderShiftedBox {
   @override
   void paint(PaintingContext context, Offset offset) {
     final rect = _popoverRect.shift(offset);
-    final path = SBBPopoverShapeBorder(direction: _direction).getOuterPath(rect);
+    final path = SBBPopoverShapeBorder(direction: _direction, notch: _notch).getOuterPath(rect);
     context.canvas.drawPath(path, Paint()..color = SBBColors.milk);
     super.paint(context, offset);
   }

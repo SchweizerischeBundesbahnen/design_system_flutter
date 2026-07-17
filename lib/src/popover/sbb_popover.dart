@@ -3,7 +3,6 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/popover/render_sbb_popover.dart';
 import 'package:sbb_design_system_mobile/src/popover/sbb_popover_scope.dart';
 
-// TODO: make notch configurable in SBBPopover
 // TODO: add theming & styling
 // TODO: offset inversion with preferred direction / move offset further down and do not handle in composition
 // TODO: check safeAreaInsets & keyboard functionality
@@ -17,12 +16,14 @@ class SBBPopover extends StatefulWidget {
     required this.builder,
     this.preferredDirection = .bottom,
     this.isDismissible = true,
+    this.notch = const .single(),
   });
 
   final Widget Function(BuildContext context, VoidCallback showOverlay) targetBuilder;
   final Widget Function(BuildContext context, VoidCallback hideOverlay) builder;
   final SBBPopoverDirection preferredDirection;
   final bool isDismissible;
+  final SBBPopoverNotch notch;
 
   @override
   State<SBBPopover> createState() => _SBBPopoverState();
@@ -106,6 +107,7 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
                     preferredDirection: widget.preferredDirection,
                     triggerGlobalPosition: _triggerGlobalPosition,
                     triggerSize: _triggerSize,
+                    notch: widget.notch,
                     child: Material(
                       type: MaterialType.transparency,
                       child: widget.builder(context, _hideOverlay),
