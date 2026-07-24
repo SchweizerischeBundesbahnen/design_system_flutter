@@ -160,4 +160,31 @@ void main() {
       find.byType(Align).first,
     );
   });
+
+  testWidgets('icon-only segments expose semanticLabel as their accessible name', (WidgetTester tester) async {
+    final handle = tester.ensureSemantics();
+    final widget = SBBSegmentedButton<String>(
+      segments: const [
+        SBBButtonSegment(
+          value: 'bicycle',
+          leadingIconData: SBBIcons.bicycle_small,
+          semanticLabel: 'Bicycle',
+        ),
+        SBBButtonSegment(
+          value: 'scooter',
+          leadingIconData: SBBIcons.scooter_profile_small,
+          semanticLabel: 'Scooter',
+        ),
+      ],
+      selected: 'bicycle',
+      onSelectionChanged: (_) {},
+    );
+
+    await tester.pumpWidget(TestApp(child: widget));
+
+    expect(find.bySemanticsLabel('Bicycle'), findsOneWidget);
+    expect(find.bySemanticsLabel('Scooter'), findsOneWidget);
+
+    handle.dispose();
+  });
 }
