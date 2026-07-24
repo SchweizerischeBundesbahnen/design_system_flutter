@@ -19,6 +19,7 @@ class SBBButtonSegment<T> with Diagnosticable {
     this.labelText,
     this.leading,
     this.leadingIconData,
+    this.semanticLabel,
     this.style,
   }) : assert(
          label == null || labelText == null,
@@ -62,6 +63,16 @@ class SBBButtonSegment<T> with Diagnosticable {
   /// Cannot be used together with [leading].
   final IconData? leadingIconData;
 
+  /// Overrides the accessible name announced by screen readers for this segment.
+  ///
+  /// Use this when the visible content doesn't convey the segment's meaning on its
+  /// own, e.g. an icon-only segment provided via [leading] or [leadingIconData]
+  /// without [label] or [labelText].
+  ///
+  /// When provided, this becomes the segment's sole accessible name and the
+  /// semantics of [label]/[leading] are suppressed.
+  final String? semanticLabel;
+
   /// Customizes this segment's appearance.
   final SBBButtonSegmentStyle? style;
 
@@ -72,6 +83,7 @@ class SBBButtonSegment<T> with Diagnosticable {
     properties.add(StringProperty('labelText', labelText, defaultValue: null));
     properties.add(DiagnosticsProperty<Widget>('leading', leading));
     properties.add(DiagnosticsProperty<IconData>('leadingIconData', leadingIconData, defaultValue: null));
+    properties.add(StringProperty('semanticLabel', semanticLabel, defaultValue: null));
     properties.add(DiagnosticsProperty<SBBButtonSegmentStyle>('style', style, defaultValue: null));
     super.debugFillProperties(properties);
   }
@@ -86,8 +98,9 @@ class SBBButtonSegment<T> with Diagnosticable {
           labelText == other.labelText &&
           leading == other.leading &&
           leadingIconData == other.leadingIconData &&
+          semanticLabel == other.semanticLabel &&
           style == other.style;
 
   @override
-  int get hashCode => Object.hash(value, label, labelText, leading, leadingIconData, style);
+  int get hashCode => Object.hash(value, label, labelText, leading, leadingIconData, semanticLabel, style);
 }
