@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// Describes the data for a segment in an [SBBSegmentedButton].
@@ -20,6 +21,7 @@ class SBBButtonSegment<T> with Diagnosticable {
     this.leading,
     this.leadingIconData,
     this.semanticLabel,
+    this.semanticHint,
     this.style,
   }) : assert(
          label == null || labelText == null,
@@ -71,7 +73,13 @@ class SBBButtonSegment<T> with Diagnosticable {
   ///
   /// When provided, this becomes the segment's sole accessible name and the
   /// semantics of [label]/[leading] are suppressed.
-  final String? semanticLabel;
+  final AttributedString? semanticLabel;
+
+  /// Overrides the accessible hint announced by screen readers for this segment.
+  ///
+  /// This overrides the semantic hint whether the [SBBSegmentedButton.semanticIsTabBar] is
+  /// set or not.
+  final AttributedString? semanticHint;
 
   /// Customizes this segment's appearance.
   final SBBButtonSegmentStyle? style;
@@ -83,7 +91,8 @@ class SBBButtonSegment<T> with Diagnosticable {
     properties.add(StringProperty('labelText', labelText, defaultValue: null));
     properties.add(DiagnosticsProperty<Widget>('leading', leading));
     properties.add(DiagnosticsProperty<IconData>('leadingIconData', leadingIconData, defaultValue: null));
-    properties.add(StringProperty('semanticLabel', semanticLabel, defaultValue: null));
+    properties.add(AttributedStringProperty('semanticLabel', semanticLabel, defaultValue: null));
+    properties.add(AttributedStringProperty('semanticHint', semanticHint, defaultValue: null));
     properties.add(DiagnosticsProperty<SBBButtonSegmentStyle>('style', style, defaultValue: null));
     super.debugFillProperties(properties);
   }
@@ -99,8 +108,10 @@ class SBBButtonSegment<T> with Diagnosticable {
           leading == other.leading &&
           leadingIconData == other.leadingIconData &&
           semanticLabel == other.semanticLabel &&
+          semanticHint == other.semanticHint &&
           style == other.style;
 
   @override
-  int get hashCode => Object.hash(value, label, labelText, leading, leadingIconData, semanticLabel, style);
+  int get hashCode =>
+      Object.hash(value, label, labelText, leading, leadingIconData, semanticHint, semanticLabel, style);
 }

@@ -72,6 +72,8 @@ class SBBSegmentedButton<T> extends StatefulWidget {
   /// Whether this button should be treated semantically as a TabBar.
   ///
   /// If false, the button is treated as a mutually exclusive group.
+  ///
+  /// The tab bar hint is overridden by the individual [SBBButtonSegment.semanticHint] parameter.
   final bool semanticIsTabBar;
 
   /// An optional semantic label for the whole button group.
@@ -195,9 +197,14 @@ class _SBBSegmentedButtonState<T> extends State<SBBSegmentedButton<T>> {
               selected: selected,
               button: !selected,
               inMutuallyExclusiveGroup: !widget.semanticIsTabBar,
-              label: segment.semanticLabel,
+              attributedLabel: segment.semanticLabel,
               excludeSemantics: segment.semanticLabel != null,
-              hint: widget.semanticIsTabBar ? loc.tabLabel(tabIndex: i + 1, tabCount: widget.segments.length) : null,
+              attributedHint: segment.semanticHint,
+              hint: segment.semanticHint != null
+                  ? null
+                  : widget.semanticIsTabBar
+                  ? loc.tabLabel(tabIndex: i + 1, tabCount: widget.segments.length)
+                  : null,
               onTap: selected ? null : () => widget.onSelectionChanged(segment.value),
               child: Container(
                 padding: const .symmetric(horizontal: 4),

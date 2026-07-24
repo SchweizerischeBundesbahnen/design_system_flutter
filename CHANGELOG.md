@@ -12,7 +12,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 ### Added
 
 - added `semanticIsTabBar` and `semanticLabel` to `SBBSegmentedButton`
-- added `semanticLabel` to `SBBButtonSegment`
+- added `semanticLabel` and `semanticHint` to `SBBButtonSegment`
 
 ### Changed
 
