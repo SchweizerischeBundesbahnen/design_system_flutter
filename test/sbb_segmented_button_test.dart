@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
@@ -164,16 +165,16 @@ void main() {
   testWidgets('icon-only segments expose semanticLabel as their accessible name', (WidgetTester tester) async {
     final handle = tester.ensureSemantics();
     final widget = SBBSegmentedButton<String>(
-      segments: const [
+      segments: [
         SBBButtonSegment(
           value: 'bicycle',
           leadingIconData: SBBIcons.bicycle_small,
-          semanticLabel: 'Bicycle',
+          semanticLabel: AttributedString('Bicycle'),
         ),
         SBBButtonSegment(
           value: 'scooter',
           leadingIconData: SBBIcons.scooter_profile_small,
-          semanticLabel: 'Scooter',
+          semanticLabel: AttributedString('Scooter'),
         ),
       ],
       selected: 'bicycle',
