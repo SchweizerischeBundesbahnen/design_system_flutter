@@ -1,5 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/segmented_button/theme/default_sbb_segmented_button_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/shared/debug.dart';
@@ -34,6 +35,8 @@ class SBBSegmentedButton<T> extends StatefulWidget {
     required this.onSelectionChanged,
     this.style,
     this.leadingHorizontalGapWidth,
+    this.semanticIsTabBar = true,
+    this.semanticLabel,
   }) : assert(segments.isNotEmpty, 'At least one segment must be provided.'),
        assert(segments.any((s) => s.value == selected), 'Selected must match one of the values of segments!');
 
@@ -66,6 +69,16 @@ class SBBSegmentedButton<T> extends StatefulWidget {
   /// Defaults to 4.0.
   final double? leadingHorizontalGapWidth;
 
+  /// Whether this button should be treated semantically as a TabBar.
+  ///
+  /// If false, the button is treated as a mutually exclusive group.
+  ///
+  /// The tab bar hint is overridden by the individual [SBBButtonSegment.semanticHint] parameter.
+  final bool semanticIsTabBar;
+
+  /// An optional semantic label for the whole button group.
+  final AttributedString? semanticLabel;
+
   @override
   State<SBBSegmentedButton<T>> createState() => _SBBSegmentedButtonState<T>();
 }
@@ -86,12 +99,16 @@ class _SBBSegmentedButtonState<T> extends State<SBBSegmentedButton<T>> {
 
     return ConstrainedBox(
       constraints: BoxConstraints.tightFor(height: DefaultSBBSegmentedButtonThemeData.defaultButtonHeight),
-      child: Stack(
-        children: [
-          _backgroundLayer(),
-          _indicatorLayer(),
-          _foregroundLayer(),
-        ],
+      child: Semantics(
+        container: true,
+        attributedLabel: widget.semanticLabel,
+        child: Stack(
+          children: [
+            _backgroundLayer(),
+            _indicatorLayer(),
+            _foregroundLayer(),
+          ],
+        ),
       ),
     );
   }
@@ -179,7 +196,16 @@ class _SBBSegmentedButtonState<T> extends State<SBBSegmentedButton<T>> {
               focusable: true,
               selected: selected,
               button: !selected,
-              hint: loc.tabLabel(tabIndex: i + 1, tabCount: widget.segments.length),
+              inMutuallyExclusiveGroup: !widget.semanticIsTabBar,
+              attributedLabel: segment.semanticLabel,
+              excludeSemantics: segment.semanticLabel != null,
+              attributedHint: segment.semanticHint,
+              hint: segment.semanticHint != null
+                  ? null
+                  : widget.semanticIsTabBar
+                  ? loc.tabLabel(tabIndex: i + 1, tabCount: widget.segments.length)
+                  : null,
+              onTap: selected ? null : () => widget.onSelectionChanged(segment.value),
               child: Container(
                 padding: const .symmetric(horizontal: 4),
                 alignment: .center,

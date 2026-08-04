@@ -1,3 +1,4 @@
+import 'package:flutter/semantics.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_design_system_mobile_example/pages/scaffold/demo_page_scaffold.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
@@ -28,30 +29,47 @@ class SegmentedButtonPageState extends State<SegmentedButtonPage> {
             children: [
               SBBSegmentedButton<String>(
                 segments: [
-                  SBBButtonSegment(value: 'Option 1', labelText: 'Option 1'),
-                  SBBButtonSegment(value: 'Option 2', labelText: 'Option 2'),
-                  SBBButtonSegment(value: 'Option 3', labelText: 'Option 3'),
+                  SBBButtonSegment(
+                    value: 'Option 1',
+                    labelText: 'Option 1',
+                    semanticHint: AttributedString('Option 1 of 3'),
+                  ),
+                  SBBButtonSegment(
+                    value: 'Option 2',
+                    labelText: 'Option 2',
+                    semanticHint: AttributedString('Option 2 of 3'),
+                  ),
+                  SBBButtonSegment(
+                    value: 'Option 3',
+                    labelText: 'Option 3',
+                    semanticHint: AttributedString('Option 3 of 3'),
+                  ),
                 ],
                 selected: _selectedOption1,
                 onSelectionChanged: (value) => setState(() => _selectedOption1 = value),
+                semanticLabel: AttributedString('Selection Button for Options'),
               ),
               SBBSegmentedButton<IconData>(
                 segments: [
                   SBBButtonSegment(
                     value: SBBIcons.microscooter_profile_small,
                     leadingIconData: SBBIcons.microscooter_profile_small,
+                    semanticLabel: AttributedString('Microscooter'),
                   ),
                   SBBButtonSegment(
                     value: SBBIcons.bicycle_small,
                     leadingIconData: SBBIcons.bicycle_small,
+                    semanticLabel: AttributedString('Bicycle'),
                   ),
                   SBBButtonSegment(
                     value: SBBIcons.scooter_profile_small,
                     leadingIconData: SBBIcons.scooter_profile_small,
+                    semanticLabel: AttributedString('Motorized Scooter'),
                   ),
                 ],
                 selected: _selectedVehicle1,
                 onSelectionChanged: (value) => setState(() => _selectedVehicle1 = value),
+                semanticLabel: AttributedString('Selection Button for Transport Modes'),
               ),
               SBBSegmentedButton<IconData>(
                 segments: [

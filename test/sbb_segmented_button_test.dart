@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/semantics.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
@@ -159,5 +160,32 @@ void main() {
       'segmented_button_custom_label',
       find.byType(Align).first,
     );
+  });
+
+  testWidgets('icon-only segments expose semanticLabel as their accessible name', (WidgetTester tester) async {
+    final handle = tester.ensureSemantics();
+    final widget = SBBSegmentedButton<String>(
+      segments: [
+        SBBButtonSegment(
+          value: 'bicycle',
+          leadingIconData: SBBIcons.bicycle_small,
+          semanticLabel: AttributedString('Bicycle'),
+        ),
+        SBBButtonSegment(
+          value: 'scooter',
+          leadingIconData: SBBIcons.scooter_profile_small,
+          semanticLabel: AttributedString('Scooter'),
+        ),
+      ],
+      selected: 'bicycle',
+      onSelectionChanged: (_) {},
+    );
+
+    await tester.pumpWidget(TestApp(child: widget));
+
+    expect(find.bySemanticsLabel('Bicycle'), findsOneWidget);
+    expect(find.bySemanticsLabel('Scooter'), findsOneWidget);
+
+    handle.dispose();
   });
 }

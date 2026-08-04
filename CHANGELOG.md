@@ -9,6 +9,11 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## Unreleased
 
+### Added
+
+- added `semanticIsTabBar` and `semanticLabel` to `SBBSegmentedButton`
+- added `semanticLabel` and `semanticHint` to `SBBButtonSegment`
+
 ### Changed
 
 - (auto): updated icon lib to version 1.8.27
