@@ -16,13 +16,6 @@ import 'package:sbb_design_system_mobile/src/popover/sbb_popover_scope.dart';
 //
 // ---- RENDERING ----
 //
-// TODO: fix or remove the half-implemented ShapeBorder parts.
-//  SBBPopoverShapeBorder.getInnerPath returns the outer path, paint() is
-//  empty, scale() is identity. Nothing calls them today (the ShapeDecoration
-//  surface painting only uses getOuterPath + dimensions), but getInnerPath
-//  should return the deflated content path before the border is exposed
-//  anywhere more public.
-//
 // TODO: fix stale assert message in SBBPopoverScope ('SBBAnchoredOverlayBuilder'
 //  does not exist) and decide what the scope is actually for — it duplicates
 //  data the layout already receives via constructor.

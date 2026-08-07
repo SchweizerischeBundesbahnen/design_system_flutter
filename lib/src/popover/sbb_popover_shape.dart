@@ -19,6 +19,9 @@ class SBBPopoverShapeBorder extends ShapeBorder {
   /// from this value.
   static const Size notchSize = Size(36, 12);
 
+  // Corner radius of the rounded content body, from the design spec.
+  static const double _cornerRadius = 16.0;
+
   final SBBPopoverDirection direction;
   final SBBPopoverNotch notch;
 
@@ -49,21 +52,24 @@ class SBBPopoverShapeBorder extends ShapeBorder {
     );
   }
 
+  // The content area: the rounded body without the notch bump(s). The bumps
+  // are decoration outside the content box, so anything laid out against the
+  // inner path (e.g. a clipped image/gradient fill or an ink customBorder)
+  // stays clear of them.
   @override
-  Path getInnerPath(Rect rect, {TextDirection? textDirection}) => getOuterPath(rect, textDirection: textDirection);
+  Path getInnerPath(Rect rect, {TextDirection? textDirection}) => Path()
+    ..addRRect(RRect.fromRectAndRadius(dimensions.deflateRect(rect), const Radius.circular(_cornerRadius)));
 
   @override
   Path getOuterPath(Rect rect, {TextDirection? textDirection}) {
-    const radius = 16.0;
-
     // 1. Deflate the rect to leave room for the notch(es) and build the main body
     final contentRect = dimensions.deflateRect(rect);
-    var path = Path()..addRRect(RRect.fromRectAndRadius(contentRect, const Radius.circular(radius)));
+    var path = Path()..addRRect(RRect.fromRectAndRadius(contentRect, const Radius.circular(_cornerRadius)));
 
     // Keep the notch clear of the rounded corners on either side. Floored at
     // 0 so a content rect narrower than the notch + corners doesn't invert
     // the clamp range.
-    final maxOffset = math.max(0.0, (contentRect.width / 2) - radius - (notchSize.width / 2));
+    final maxOffset = math.max(0.0, (contentRect.width / 2) - _cornerRadius - (notchSize.width / 2));
     final clampedNotchOffset = notchOffset.clamp(-maxOffset, maxOffset);
 
     // 2. Union in a notch bump for each edge the current config calls for
@@ -123,11 +129,18 @@ class SBBPopoverShapeBorder extends ShapeBorder {
     return localNotch.transform(matrix.storage);
   }
 
+  // Intentionally empty: this shape has no stroked border — it only defines
+  // geometry. The surface fill happens through ShapeDecoration (which uses
+  // getOuterPath), not through the border painting itself.
   @override
   void paint(Canvas canvas, Rect rect, {TextDirection? textDirection}) {}
 
+  // Intentionally identity: the geometry is fixed by design-spec constants
+  // (corner radius, notch size), so there is nothing meaningful to scale.
+  // scale() only matters for ShapeBorder.lerp fallbacks, which never run for
+  // this shape — the popover doesn't lerp between borders.
   @override
-  ShapeBorder scale(double t) => this; // Assuming no scale mutation needed right now
+  ShapeBorder scale(double t) => this;
 
   @override
   bool operator ==(Object other) =>
