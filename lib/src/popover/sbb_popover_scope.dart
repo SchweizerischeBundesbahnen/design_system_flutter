@@ -4,13 +4,13 @@ import 'package:sbb_design_system_mobile/src/popover/sbb_popover_direction.dart'
 class SBBPopoverScope extends InheritedWidget {
   const SBBPopoverScope({
     super.key,
-    required this.triggerGlobalPosition,
+    required this.triggerPosition,
     required this.triggerSize,
     required this.preferredDirection,
     required super.child,
   });
 
-  final Offset triggerGlobalPosition;
+  final Offset triggerPosition;
   final Size triggerSize;
   final SBBPopoverDirection preferredDirection;
 
@@ -25,7 +25,7 @@ class SBBPopoverScope extends InheritedWidget {
 
   @override
   bool updateShouldNotify(SBBPopoverScope oldWidget) {
-    return triggerGlobalPosition != oldWidget.triggerGlobalPosition ||
+    return triggerPosition != oldWidget.triggerPosition ||
         triggerSize != oldWidget.triggerSize ||
         preferredDirection != oldWidget.preferredDirection;
   }

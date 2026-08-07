@@ -16,19 +16,6 @@ import 'package:sbb_design_system_mobile/src/popover/sbb_popover_scope.dart';
 //
 // ---- RENDERING ----
 //
-// TODO: re-anchor the popover while open. _showOverlay captures
-//  localToGlobal(Offset.zero) once — scrolling, keyboard insets, rotation, or
-//  window resize leave the popover floating at a stale position. Consider
-//  CompositedTransformTarget/Follower (Leader/Follower layers re-anchor every
-//  frame for free; RenderSBBPopover's hitTest override already mirrors
-//  RenderFollowerLayer), or recompute the trigger rect per frame.
-//
-// TODO: convert trigger coordinates into the overlay's space, not global
-//  space. performLayout positions against constraints as if the overlay's
-//  origin were global (0,0) — true for a full-screen root overlay, wrong under
-//  a nested Overlay/Navigator or any transform above it. Fix:
-//  localToGlobal(Offset.zero, ancestor: Overlay.of(context).context.findRenderObject()).
-//
 // TODO: move surface painting out of the render object. paint() fills the
 //  shape with hardcoded SBBColors.milk below the widget tree, so there is no
 //  dark-mode resolution, no elevation/shadow, no ink.
@@ -108,7 +95,9 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
 
   final OverlayPortalController _overlayController = OverlayPortalController();
 
-  Offset _triggerGlobalPosition = Offset.zero;
+  /// The trigger's top-left corner in the enclosing [Overlay]'s coordinate
+  /// space, captured when the popover is shown.
+  Offset _triggerPosition = Offset.zero;
   Size _triggerSize = Size.zero;
 
   @override
@@ -131,7 +120,9 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
   void _showOverlay() {
     if (!_overlayController.isShowing) {
       final renderBox = _triggerKey.currentContext?.findRenderObject() as RenderBox?;
-      _triggerGlobalPosition = renderBox?.localToGlobal(Offset.zero) ?? Offset.zero;
+      // Use renderBox overlay as ancestor for multiple navigator positioning
+      final RenderObject? overlay = Overlay.of(context).context.findRenderObject();
+      _triggerPosition = renderBox?.localToGlobal(Offset.zero, ancestor: overlay) ?? Offset.zero;
       _triggerSize = renderBox?.size ?? Size.zero;
       _overlayController.show();
       _animationController.forward();
@@ -157,7 +148,7 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
       controller: _overlayController,
       overlayChildBuilder: (BuildContext context) {
         return SBBPopoverScope(
-          triggerGlobalPosition: _triggerGlobalPosition,
+          triggerPosition: _triggerPosition,
           triggerSize: _triggerSize,
           preferredDirection: widget.preferredDirection,
           child: Stack(
@@ -171,7 +162,7 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
                 opacity: _opacityAnimation,
                 child: SBBPopoverLayout(
                   preferredDirection: widget.preferredDirection,
-                  triggerGlobalPosition: _triggerGlobalPosition,
+                  triggerPosition: _triggerPosition,
                   triggerSize: _triggerSize,
                   notch: widget.notch,
                   offset: widget.offset,
