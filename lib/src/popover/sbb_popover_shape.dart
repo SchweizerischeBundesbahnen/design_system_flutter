@@ -22,6 +22,12 @@ class SBBPopoverShapeBorder extends ShapeBorder {
   // Corner radius of the rounded content body, from the design spec.
   static const double _cornerRadius = 16.0;
 
+  /// The minimum width a popover box needs for the notch bump to sit on the
+  /// straight edge segment between the two rounded corners. Below this, a
+  /// notch cannot be built without deforming into the corner curves, so no
+  /// notch should be requested at all.
+  static double get minWidthForNotch => notchSize.width + 2 * _cornerRadius;
+
   final SBBPopoverDirection direction;
   final SBBPopoverNotch notch;
 

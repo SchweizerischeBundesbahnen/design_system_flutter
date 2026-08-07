@@ -216,7 +216,17 @@ class RenderSBBPopover extends RenderShiftedBox {
     );
     child.layout(childConstraints, parentUsesSize: true);
 
-    final overallSize = Size(child.size.width, child.size.height + _reservedNotchHeight);
+    // A box too narrow to host the notch bump between its rounded corners
+    // would deform the silhouette — drop the notch entirely instead. Decided
+    // only after child layout because the width isn't known before; the
+    // child was therefore constrained with the configured notch's reserved
+    // height, which is merely conservative (up to 24px less max height),
+    // never too large.
+    final SBBPopoverNotch effectiveNotch = child.size.width < SBBPopoverShapeBorder.minWidthForNotch
+        ? const SBBPopoverNotchNone()
+        : _notch;
+
+    final overallSize = Size(child.size.width, child.size.height + _reservedHeightFor(effectiveNotch));
 
     // Horizontal positioning
     // Center on the target, nudged by offset.dx, then shift to avoid
@@ -256,7 +266,7 @@ class RenderSBBPopover extends RenderShiftedBox {
 
     final shapeBorder = SBBPopoverShapeBorder(
       direction: finalDirection,
-      notch: _notch,
+      notch: effectiveNotch,
       notchOffset: _notchOffset,
     );
 
@@ -281,8 +291,10 @@ class RenderSBBPopover extends RenderShiftedBox {
   // before child layout (and thus before the direction is resolved). The
   // top+bottom sum of the shape's dimensions is the same for either
   // direction, so querying with the preferred one is safe.
-  double get _reservedNotchHeight =>
-      SBBPopoverShapeBorder(direction: _preferredDirection, notch: _notch).dimensions.vertical;
+  double get _reservedNotchHeight => _reservedHeightFor(_notch);
+
+  double _reservedHeightFor(SBBPopoverNotch notch) =>
+      SBBPopoverShapeBorder(direction: _preferredDirection, notch: notch).dimensions.vertical;
 
   final LayerHandle<TransformLayer> _transformLayer = LayerHandle<TransformLayer>();
 
