@@ -14,6 +14,7 @@ class SBBPopoverLayout extends SingleChildRenderObjectWidget {
     required this.targetPosition,
     required this.targetSize,
     required this.notch,
+    required this.color,
     this.offset = Offset.zero,
     this.scaleAnimation,
     super.child,
@@ -29,6 +30,9 @@ class SBBPopoverLayout extends SingleChildRenderObjectWidget {
 
   final Size targetSize;
   final SBBPopoverNotch notch;
+
+  /// The fill color of the popover surface.
+  final Color color;
 
   /// Scales the popover box around the center of its target-facing edge.
   ///
@@ -54,6 +58,7 @@ class SBBPopoverLayout extends SingleChildRenderObjectWidget {
     targetPosition: targetPosition,
     targetSize: targetSize,
     notch: notch,
+    color: color,
     offset: offset,
     scaleAnimation: scaleAnimation,
   );
@@ -65,6 +70,7 @@ class SBBPopoverLayout extends SingleChildRenderObjectWidget {
       ..targetPosition = targetPosition
       ..targetSize = targetSize
       ..notch = notch
+      ..color = color
       ..offset = offset
       ..scaleAnimation = scaleAnimation;
   }
@@ -76,6 +82,7 @@ class RenderSBBPopover extends RenderShiftedBox {
     required Offset targetPosition,
     required Size targetSize,
     required SBBPopoverNotch notch,
+    required Color color,
     required Offset offset,
     Animation<double>? scaleAnimation,
     RenderBox? child,
@@ -83,6 +90,7 @@ class RenderSBBPopover extends RenderShiftedBox {
        _targetPosition = targetPosition,
        _targetSize = targetSize,
        _notch = notch,
+       _color = color,
        _offset = offset,
        _scaleAnimation = scaleAnimation,
        super(child);
@@ -125,6 +133,15 @@ class RenderSBBPopover extends RenderShiftedBox {
     markNeedsLayout();
   }
 
+  Color _color;
+
+  set color(Color value) {
+    if (_color == value) return;
+    _color = value;
+    _invalidateDecoration();
+    markNeedsPaint();
+  }
+
   Offset _offset;
 
   set offset(Offset value) {
@@ -154,9 +171,25 @@ class RenderSBBPopover extends RenderShiftedBox {
   Rect _popoverRect = Rect.zero;
 
   // The popover's painted outline in local coordinates. Built once per layout
-  // pass (getOuterPath's Path.combine unions are not cheap) and shared by
-  // paint() and hitTestSelf().
+  // pass (getOuterPath's Path.combine unions are not cheap) and used by
+  // hitTestSelf(). The background painter caches its own copy of the same
+  // path internally.
   Path _shapePath = Path();
+
+  // The shape border resolved during the most recent layout pass — the
+  // resolved direction and notch offset that feed it only exist post-layout,
+  // which is why the surface can't simply be a ShapeDecoration on the child
+  // in the widget layer. Decoration and painter are derived lazily in paint
+  // and invalidated whenever the border, color or shadows change.
+  SBBPopoverShapeBorder? _shapeBorder;
+  ShapeDecoration? _decoration;
+  BoxPainter? _backgroundPainter;
+
+  void _invalidateDecoration() {
+    _decoration = null;
+    _backgroundPainter?.dispose();
+    _backgroundPainter = null;
+  }
 
   @override
   void performLayout() {
@@ -166,6 +199,8 @@ class RenderSBBPopover extends RenderShiftedBox {
     if (child == null) {
       _popoverRect = Rect.zero;
       _shapePath = Path();
+      _shapeBorder = null;
+      _invalidateDecoration();
       return;
     }
 
@@ -239,11 +274,16 @@ class RenderSBBPopover extends RenderShiftedBox {
       markNeedsPaint();
     }
 
-    _shapePath = SBBPopoverShapeBorder(
+    final shapeBorder = SBBPopoverShapeBorder(
       direction: finalDirection,
       notch: _notch,
       notchOffset: _notchOffset,
-    ).getOuterPath(_popoverRect);
+    );
+    if (shapeBorder != _shapeBorder) {
+      _shapeBorder = shapeBorder;
+      _invalidateDecoration();
+    }
+    _shapePath = shapeBorder.getOuterPath(_popoverRect);
   }
 
   double get _reservedNotchHeight {
@@ -266,11 +306,18 @@ class RenderSBBPopover extends RenderShiftedBox {
   @override
   void detach() {
     _scaleAnimation?.removeListener(markNeedsPaint);
+    // Mirror RenderDecoratedBox: a disposed painter no longer forwards its
+    // onChanged notifications, so repaint with a fresh one on reattach.
+    _backgroundPainter?.dispose();
+    _backgroundPainter = null;
     super.detach();
+    markNeedsPaint();
   }
 
   @override
   void dispose() {
+    _backgroundPainter?.dispose();
+    _backgroundPainter = null;
     _transformLayer.layer = null;
     super.dispose();
   }
@@ -304,7 +351,16 @@ class RenderSBBPopover extends RenderShiftedBox {
   }
 
   void _paintPopover(PaintingContext context, Offset offset) {
-    context.canvas.drawPath(_shapePath.shift(offset), Paint()..color = SBBColors.milk);
+    final SBBPopoverShapeBorder? shapeBorder = _shapeBorder;
+    if (shapeBorder != null) {
+      _decoration ??= ShapeDecoration(color: _color, shape: shapeBorder);
+      _backgroundPainter ??= _decoration!.createBoxPainter(markNeedsPaint);
+      _backgroundPainter!.paint(
+        context.canvas,
+        offset + _popoverRect.topLeft,
+        ImageConfiguration(size: _popoverRect.size),
+      );
+    }
     super.paint(context, offset);
   }
 

@@ -121,4 +121,15 @@ class SBBPopoverShapeBorder extends ShapeBorder {
 
   @override
   ShapeBorder scale(double t) => this; // Assuming no scale mutation needed right now
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is SBBPopoverShapeBorder &&
+          direction == other.direction &&
+          notch == other.notch &&
+          notchOffset == other.notchOffset);
+
+  @override
+  int get hashCode => Object.hash(direction, notch, notchOffset);
 }

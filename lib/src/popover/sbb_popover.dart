@@ -16,15 +16,6 @@ import 'package:sbb_design_system_mobile/src/popover/sbb_popover_scope.dart';
 //
 // ---- RENDERING ----
 //
-// TODO: move surface painting out of the render object. paint() fills the
-//  shape with hardcoded SBBColors.milk below the widget tree, so there is no
-//  dark-mode resolution, no elevation/shadow, no ink.
-//  Fix: let RenderSBBPopover do positioning only and give the child a
-//  ShapeDecoration(shape: SBBPopoverShapeBorder(...), color/shadows from
-//  theme) in the widget layer — ShapeDecoration already fills getOuterPath and
-//  respects theme rebuilds. (Requires getInnerPath to return the properly
-//  deflated content path first.)
-//
 // TODO: single source of truth for the notch height. The 12px value lives in
 //  three places: RenderSBBPopover._notchHeight, SBBPopoverShapeBorder.dimensions,
 //  and getOuterPath's local notchSize. Fix: derive _reservedNotchHeight and
@@ -45,9 +36,10 @@ import 'package:sbb_design_system_mobile/src/popover/sbb_popover_scope.dart';
 //
 // TODO: fix or remove the half-implemented ShapeBorder parts.
 //  SBBPopoverShapeBorder.getInnerPath returns the outer path, paint() is
-//  empty, scale() is identity — fine as an internal path factory, but
-//  getInnerPath must return the deflated content path before the
-//  ShapeDecoration migration above.
+//  empty, scale() is identity. Nothing calls them today (the ShapeDecoration
+//  surface painting only uses getOuterPath + dimensions), but getInnerPath
+//  should return the deflated content path before the border is exposed
+//  anywhere more public.
 //
 // TODO: fix stale assert message in SBBPopoverScope ('SBBAnchoredOverlayBuilder'
 //  does not exist) and decide what the scope is actually for — it duplicates
@@ -165,6 +157,7 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
                   targetPosition: _targetPosition,
                   targetSize: _targetSize,
                   notch: widget.notch,
+                  color: Theme.of(context).sbbBaseStyle.themeValue(SBBColors.milk, SBBColors.midnight),
                   offset: widget.offset,
                   scaleAnimation: _scaleAnimation,
                   child: Material(
