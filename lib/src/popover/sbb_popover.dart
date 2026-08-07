@@ -4,11 +4,99 @@ import 'package:sbb_design_system_mobile/src/popover/render_sbb_popover.dart';
 import 'package:sbb_design_system_mobile/src/popover/sbb_popover_scope.dart';
 
 // TODO: add controller for programmatic show / hide (post frame callback!)
+// TODO: change targetBuilder and builder to Widget and rename to child and target
+// TODO: change notch to bool
+// TODO: add title, titleText, leading, leadingIconData, trailing, trailingIconData showCloseButton (same as SBBBottomSheet)
+// TODO: add barrierLabel
 // TODO: add reservedPadding
 // TODO: check how everything works with keyboard
 // TODO: add theming & styling
 // TODO: docs & clean up
 // TODO: check accessibility
+//
+// ---- RENDERING ----
+//
+// TODO: fix scale animation pivot. ScaleTransition(alignment: .topCenter) wraps
+//  SBBPopoverLayout, but RenderSBBPopover reports size = constraints.biggest
+//  (the full overlay), so the scale is anchored at the SCREEN's top center —
+//  a popover near the bottom edge visibly slides in from the top of the screen.
+//  The resolved popover rect only exists inside the render object, so the
+//  widget layer can't know the correct pivot. Fix: apply the scale inside
+//  RenderSBBPopover.paint() via context.pushTransform around _popoverRect
+//  (drive it with an Animation passed into the render object), or restructure
+//  so the transition wraps something that is actually popover-sized.
+//
+// TODO: handle vertical fit beyond the binary flip. performLayout flips
+//  bottom<->top on collision but never verifies the flipped side actually
+//  fits, and finalY is never clamped (only finalX is). The child is laid out
+//  with maxHeight = full overlay height minus notch, not the space available
+//  on the resolved side — so tall (e.g. scrollable) content sizes to full
+//  screen height and draws off-screen at negative y. Fix: pick the side with
+//  more available space, then constrain the child's maxHeight to that side's
+//  space. Also include offset.dy in the fit check — a large offset can push a
+//  "fits" popover off-screen without triggering the flip.
+//
+// TODO: don't swallow barrier taps in transparent notch areas. hitTestSelf
+//  uses _popoverRect.contains(position), but _popoverRect includes the
+//  reserved notch strip — a full-width 12px (24px for .both) transparent band
+//  of which only the ~36px bump is painted. Taps in that band and in the
+//  corners beside the notch are absorbed instead of dismissing. Fix: hit-test
+//  against the shape path (path.contains) or exclude the strip outside the
+//  notch bump.
+//
+// TODO: re-anchor the popover while open. _showOverlay captures
+//  localToGlobal(Offset.zero) once — scrolling, keyboard insets, rotation, or
+//  window resize leave the popover floating at a stale position. Consider
+//  CompositedTransformTarget/Follower (Leader/Follower layers re-anchor every
+//  frame for free; RenderSBBPopover's hitTest override already mirrors
+//  RenderFollowerLayer), or recompute the trigger rect per frame.
+//
+// TODO: convert trigger coordinates into the overlay's space, not global
+//  space. performLayout positions against constraints as if the overlay's
+//  origin were global (0,0) — true for a full-screen root overlay, wrong under
+//  a nested Overlay/Navigator or any transform above it. Fix:
+//  localToGlobal(Offset.zero, ancestor: Overlay.of(context).context.findRenderObject()).
+//
+// TODO: move surface painting out of the render object. paint() fills the
+//  shape with hardcoded SBBColors.milk below the widget tree, so there is no
+//  dark-mode resolution, no elevation/shadow, no ink, and the path (incl. an
+//  expensive Path.combine union per notch) is rebuilt on every paint without
+//  caching. Fix: let RenderSBBPopover do positioning only and give the child a
+//  ShapeDecoration(shape: SBBPopoverShapeBorder(...), color/shadows from
+//  theme) in the widget layer — ShapeDecoration already fills getOuterPath and
+//  respects theme rebuilds. (Requires getInnerPath to return the properly
+//  deflated content path first.)
+//
+// TODO: single source of truth for the notch height. The 12px value lives in
+//  three places: RenderSBBPopover._notchHeight, SBBPopoverShapeBorder.dimensions,
+//  and getOuterPath's local notchSize. Fix: derive _reservedNotchHeight and
+//  childTopInset from shape.dimensions, or put the notch size on
+//  SBBPopoverNotch itself.
+//
+// TODO: use a ModalBarrier + route entry instead of the hand-rolled
+//  GestureDetector barrier. Currently the Android back button pops the page
+//  instead of the popover, and the barrier has no dismiss semantics for
+//  screen readers (relates to the barrierLabel / accessibility TODOs above).
+//
+// TODO: guard show/hide races and disposal. _hideOverlay awaits the reverse
+//  animation and then calls _overlayController.hide() — if the widget is
+//  disposed mid-animation (page popped) this resumes on a defunct state; and
+//  rapid show/hide taps race because isShowing stays true during the reverse.
+//  Fix: check mounted after the await and make show() interrupt an in-flight
+//  reverse (animate forward from current value instead of bailing out).
+//
+// TODO: fix or remove the half-implemented ShapeBorder parts.
+//  SBBPopoverShapeBorder.getInnerPath returns the outer path, paint() is
+//  empty, scale() is identity — fine as an internal path factory, but
+//  getInnerPath must return the deflated content path before the
+//  ShapeDecoration migration above.
+//
+// TODO: fix stale assert message in SBBPopoverScope ('SBBAnchoredOverlayBuilder'
+//  does not exist) and decide what the scope is actually for — it duplicates
+//  data the layout already receives via constructor.
+//
+// TODO: override computeDryLayout / intrinsics on RenderSBBPopover. Harmless
+//  today (it always fills the overlay) but will surprise anyone wrapping it.
 
 class SBBPopover extends StatefulWidget {
   const SBBPopover({
