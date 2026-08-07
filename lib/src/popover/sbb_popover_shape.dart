@@ -17,14 +17,14 @@ class SBBPopoverShapeBorder extends ShapeBorder {
   final SBBPopoverNotch notch;
 
   // Desired horizontal shift (in the popover box's own coordinate space) to
-  // keep the notch pointing at the trigger's center when the box itself has
+  // keep the notch pointing at the target's center when the box itself has
   // been shifted sideways to avoid a screen-edge collision. Clamped in
   // getOuterPath so the notch can never slide into the rounded corners.
   final double notchOffset;
 
   // The edges that should get a notch bump for the current [notch] config,
   // resolved against [direction] for SBBPopoverNotchSingle (which always
-  // tracks whichever edge currently faces the trigger).
+  // tracks whichever edge currently faces the target).
   List<_NotchEdge> get _notchEdges => switch (notch) {
     SBBPopoverNotchNone() => const [],
     SBBPopoverNotchSingle() => [direction == SBBPopoverDirection.bottom ? _NotchEdge.top : _NotchEdge.bottom],

@@ -73,11 +73,11 @@ class SBBPopover extends StatefulWidget {
   final bool isDismissible;
   final SBBPopoverNotch notch;
 
-  /// Absolute offset between the trigger and the popover box.
+  /// Absolute offset between the target and the popover box.
   ///
   /// The y component is defined relative to whichever edge ends up facing
-  /// the trigger: a positive value always pushes the box further away from
-  /// the trigger, so it's automatically inverted when a screen-edge
+  /// the target: a positive value always pushes the box further away from
+  /// the target, so it's automatically inverted when a screen-edge
   /// collision flips the resolved direction. The x component is applied
   /// as-is and composes with any horizontal shift from edge clamping.
   final Offset offset;
@@ -87,7 +87,7 @@ class SBBPopover extends StatefulWidget {
 }
 
 class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateMixin {
-  final GlobalKey _triggerKey = GlobalKey();
+  final GlobalKey _targetKey = GlobalKey();
 
   late AnimationController _animationController;
   late Animation<double> _opacityAnimation;
@@ -95,10 +95,10 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
 
   final OverlayPortalController _overlayController = OverlayPortalController();
 
-  /// The trigger's top-left corner in the enclosing [Overlay]'s coordinate
+  /// The target's top-left corner in the enclosing [Overlay]'s coordinate
   /// space, captured when the popover is shown.
-  Offset _triggerPosition = Offset.zero;
-  Size _triggerSize = Size.zero;
+  Offset _targetPosition = Offset.zero;
+  Size _targetSize = Size.zero;
 
   @override
   void initState() {
@@ -119,11 +119,11 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
 
   void _showOverlay() {
     if (!_overlayController.isShowing) {
-      final renderBox = _triggerKey.currentContext?.findRenderObject() as RenderBox?;
+      final renderBox = _targetKey.currentContext?.findRenderObject() as RenderBox?;
       // Use renderBox overlay as ancestor for multiple navigator positioning
       final RenderObject? overlay = Overlay.of(context).context.findRenderObject();
-      _triggerPosition = renderBox?.localToGlobal(Offset.zero, ancestor: overlay) ?? Offset.zero;
-      _triggerSize = renderBox?.size ?? Size.zero;
+      _targetPosition = renderBox?.localToGlobal(Offset.zero, ancestor: overlay) ?? Offset.zero;
+      _targetSize = renderBox?.size ?? Size.zero;
       _overlayController.show();
       _animationController.forward();
     }
@@ -148,8 +148,8 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
       controller: _overlayController,
       overlayChildBuilder: (BuildContext context) {
         return SBBPopoverScope(
-          triggerPosition: _triggerPosition,
-          triggerSize: _triggerSize,
+          targetPosition: _targetPosition,
+          targetSize: _targetSize,
           preferredDirection: widget.preferredDirection,
           child: Stack(
             children: [
@@ -162,8 +162,8 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
                 opacity: _opacityAnimation,
                 child: SBBPopoverLayout(
                   preferredDirection: widget.preferredDirection,
-                  triggerPosition: _triggerPosition,
-                  triggerSize: _triggerSize,
+                  targetPosition: _targetPosition,
+                  targetSize: _targetSize,
                   notch: widget.notch,
                   offset: widget.offset,
                   scaleAnimation: _scaleAnimation,
@@ -177,7 +177,7 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
           ),
         );
       },
-      child: KeyedSubtree(key: _triggerKey, child: widget.targetBuilder(context, _showOverlay)),
+      child: KeyedSubtree(key: _targetKey, child: widget.targetBuilder(context, _showOverlay)),
     );
   }
 }

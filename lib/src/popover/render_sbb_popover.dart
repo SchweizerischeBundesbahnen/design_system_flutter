@@ -6,13 +6,13 @@ import 'package:flutter/rendering.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/popover/sbb_popover_shape.dart';
 
-/// Positions and paints an [SBBPopover]'s content relative to its trigger.
+/// Positions and paints an [SBBPopover]'s content relative to its target.
 class SBBPopoverLayout extends SingleChildRenderObjectWidget {
   const SBBPopoverLayout({
     super.key,
     required this.preferredDirection,
-    required this.triggerPosition,
-    required this.triggerSize,
+    required this.targetPosition,
+    required this.targetSize,
     required this.notch,
     this.offset = Offset.zero,
     this.scaleAnimation,
@@ -21,16 +21,16 @@ class SBBPopoverLayout extends SingleChildRenderObjectWidget {
 
   final SBBPopoverDirection preferredDirection;
 
-  /// The trigger's top-left corner in the enclosing [Overlay]'s coordinate
+  /// The target's top-left corner in the enclosing [Overlay]'s coordinate
   /// space — which is also this layout's own space, since the popover layout
   /// fills the overlay. NOT a global position: under a nested overlay or a
   /// transformed ancestor the two differ.
-  final Offset triggerPosition;
+  final Offset targetPosition;
 
-  final Size triggerSize;
+  final Size targetSize;
   final SBBPopoverNotch notch;
 
-  /// Scales the popover box around the center of its trigger-facing edge.
+  /// Scales the popover box around the center of its target-facing edge.
   ///
   /// Applied at paint time inside the render object rather than with a
   /// [ScaleTransition] above it, because this render object fills the whole
@@ -39,11 +39,11 @@ class SBBPopoverLayout extends SingleChildRenderObjectWidget {
   /// only exists after layout, in here.
   final Animation<double>? scaleAnimation;
 
-  /// Absolute offset between the trigger and the popover box.
+  /// Absolute offset between the target and the popover box.
   ///
   /// The y component is defined relative to whichever edge ends up facing
-  /// the trigger: a positive value always pushes the box further away from
-  /// the trigger, so it's automatically inverted when a screen-edge
+  /// the target: a positive value always pushes the box further away from
+  /// the target, so it's automatically inverted when a screen-edge
   /// collision flips the resolved direction. The x component is applied
   /// as-is and composes with any horizontal shift from edge clamping.
   final Offset offset;
@@ -51,8 +51,8 @@ class SBBPopoverLayout extends SingleChildRenderObjectWidget {
   @override
   RenderSBBPopover createRenderObject(BuildContext context) => RenderSBBPopover(
     preferredDirection: preferredDirection,
-    triggerPosition: triggerPosition,
-    triggerSize: triggerSize,
+    targetPosition: targetPosition,
+    targetSize: targetSize,
     notch: notch,
     offset: offset,
     scaleAnimation: scaleAnimation,
@@ -62,8 +62,8 @@ class SBBPopoverLayout extends SingleChildRenderObjectWidget {
   void updateRenderObject(BuildContext context, RenderSBBPopover renderObject) {
     renderObject
       ..preferredDirection = preferredDirection
-      ..triggerPosition = triggerPosition
-      ..triggerSize = triggerSize
+      ..targetPosition = targetPosition
+      ..targetSize = targetSize
       ..notch = notch
       ..offset = offset
       ..scaleAnimation = scaleAnimation;
@@ -73,15 +73,15 @@ class SBBPopoverLayout extends SingleChildRenderObjectWidget {
 class RenderSBBPopover extends RenderShiftedBox {
   RenderSBBPopover({
     required SBBPopoverDirection preferredDirection,
-    required Offset triggerPosition,
-    required Size triggerSize,
+    required Offset targetPosition,
+    required Size targetSize,
     required SBBPopoverNotch notch,
     required Offset offset,
     Animation<double>? scaleAnimation,
     RenderBox? child,
   }) : _preferredDirection = preferredDirection,
-       _triggerPosition = triggerPosition,
-       _triggerSize = triggerSize,
+       _targetPosition = targetPosition,
+       _targetSize = targetSize,
        _notch = notch,
        _offset = offset,
        _scaleAnimation = scaleAnimation,
@@ -101,19 +101,19 @@ class RenderSBBPopover extends RenderShiftedBox {
     markNeedsLayout();
   }
 
-  Offset _triggerPosition;
+  Offset _targetPosition;
 
-  set triggerPosition(Offset value) {
-    if (_triggerPosition == value) return;
-    _triggerPosition = value;
+  set targetPosition(Offset value) {
+    if (_targetPosition == value) return;
+    _targetPosition = value;
     markNeedsLayout();
   }
 
-  Size _triggerSize;
+  Size _targetSize;
 
-  set triggerSize(Size value) {
-    if (_triggerSize == value) return;
-    _triggerSize = value;
+  set targetSize(Size value) {
+    if (_targetSize == value) return;
+    _targetSize = value;
     markNeedsLayout();
   }
 
@@ -169,17 +169,17 @@ class RenderSBBPopover extends RenderShiftedBox {
       return;
     }
 
-    // Vertical space available on either side of the trigger. offset.dy is
+    // Vertical space available on either side of the target. offset.dy is
     // part of the occupied extent on whichever side gets resolved (a positive
-    // value pushes the box further from the trigger), so it shrinks both
+    // value pushes the box further from the target), so it shrinks both
     // budgets up front — a large offset can force a flip just like a tall
     // child can.
-    final double spaceBelow = constraints.maxHeight - (_triggerPosition.dy + _triggerSize.height) - _offset.dy;
-    final double spaceAbove = _triggerPosition.dy - _offset.dy;
+    final double spaceBelow = constraints.maxHeight - (_targetPosition.dy + _targetSize.height) - _offset.dy;
+    final double spaceAbove = _targetPosition.dy - _offset.dy;
 
     // Constrain the child to the larger of the two sides instead of the full
     // overlay height, so tall (e.g. scrollable) content sizes to the most
-    // space it can possibly get on either side of the trigger rather than
+    // space it can possibly get on either side of the target rather than
     // overflowing the screen.
     final childConstraints = BoxConstraints(
       maxWidth: constraints.maxWidth,
@@ -190,11 +190,11 @@ class RenderSBBPopover extends RenderShiftedBox {
     final overallSize = Size(child.size.width, child.size.height + _reservedNotchHeight);
 
     // Horizontal positioning
-    // Center on the trigger, nudged by offset.dx, then shift to avoid
+    // Center on the target, nudged by offset.dx, then shift to avoid
     // colliding with viewport edges — the offset is baked into the ideal
     // position before clamping, so it's kept (not dropped) when a
     // horizontal shift happens, it's just clamped along with everything else.
-    double finalX = _triggerPosition.dx + (_triggerSize.width / 2) - (overallSize.width / 2) + _offset.dx;
+    double finalX = _targetPosition.dx + (_targetSize.width / 2) - (overallSize.width / 2) + _offset.dx;
     finalX = clampDouble(finalX, 0, constraints.maxWidth - overallSize.width);
 
     // Vertical positioning
@@ -209,18 +209,18 @@ class RenderSBBPopover extends RenderShiftedBox {
       finalDirection = _preferredDirection == .bottom ? .top : .bottom;
     }
 
-    // offset.dy always pushes the box further away from the trigger, on
+    // offset.dy always pushes the box further away from the target, on
     // whichever edge ends up facing it — so it's added in the bottom branch
     // but subtracted in the top branch. Since the branch is keyed on
     // finalDirection (not _preferredDirection), this sign automatically
     // inverts relative to what was authored whenever a collision flips it.
     double finalY = finalDirection == .bottom
-        ? _triggerSize.height + _triggerPosition.dy + _offset.dy
-        : -overallSize.height + _triggerPosition.dy - _offset.dy;
-    // Safety net for the degenerate cases a flip can't solve (trigger partly
+        ? _targetSize.height + _targetPosition.dy + _offset.dy
+        : -overallSize.height + _targetPosition.dy - _offset.dy;
+    // Safety net for the degenerate cases a flip can't solve (target partly
     // off-screen, or a box taller than either side): keep the box inside the
     // overlay, mirroring the horizontal clamp above. The box may then overlap
-    // the trigger, but it never draws off-screen.
+    // the target, but it never draws off-screen.
     finalY = clampDouble(finalY, 0, math.max(0, constraints.maxHeight - overallSize.height));
 
     _popoverRect = Rect.fromLTWH(finalX, finalY, overallSize.width, overallSize.height);
@@ -284,7 +284,7 @@ class RenderSBBPopover extends RenderShiftedBox {
       return;
     }
 
-    // Scale around the center of the popover's trigger-facing edge (in this
+    // Scale around the center of the popover's target-facing edge (in this
     // render object's local space — pushTransform maps it to the canvas via
     // [offset]), so the popover grows out of / shrinks into its anchor point
     // instead of the top center of the full-overlay-sized box this render
@@ -309,16 +309,16 @@ class RenderSBBPopover extends RenderShiftedBox {
   }
 
   // How far the notch needs to shift horizontally, in the popover box's own
-  // coordinate space, to keep pointing at the trigger's center once the box
+  // coordinate space, to keep pointing at the target's center once the box
   // has been shifted sideways to avoid a screen-edge collision (see
   // clampDouble(finalX, ...) above). Only SBBPopoverNotchSingle with
-  // alignWithTarget enabled tracks the trigger this way — SBBPopoverNotchBoth
+  // alignWithTarget enabled tracks the target this way — SBBPopoverNotchBoth
   // is always a static, non-tracking shape.
   double get _notchOffset {
     final notch = _notch;
     if (notch is! SBBPopoverNotchSingle || !notch.alignWithTarget) return 0;
-    final double triggerCenterX = _triggerPosition.dx + (_triggerSize.width / 2);
-    return triggerCenterX - _popoverRect.center.dx;
+    final double targetCenterX = _targetPosition.dx + (_targetSize.width / 2);
+    return targetCenterX - _popoverRect.center.dx;
   }
 
   // Test against the painted shape, not _popoverRect: the rect includes the
@@ -335,7 +335,7 @@ class RenderSBBPopover extends RenderShiftedBox {
   // This render object's own `size` starts at local (0,0) and only extends
   // downward/rightward (Flutter's convention: a RenderBox's own reported
   // size is always assumed non-negative). For `top` direction, the visible
-  // content sits at a *negative* local y if the trigger is close enough to
+  // content sits at a *negative* local y if the target is close enough to
   // the top of the screen, outside that [0,0]-size box, so the default gate
   // would reject every tap on it before hitTestChildren/hitTestSelf ever
   // run. Bypass the gate here, mirroring RenderFollowerLayer's own
