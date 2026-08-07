@@ -16,16 +16,6 @@ import 'package:sbb_design_system_mobile/src/popover/sbb_popover_scope.dart';
 //
 // ---- RENDERING ----
 //
-// TODO: handle vertical fit beyond the binary flip. performLayout flips
-//  bottom<->top on collision but never verifies the flipped side actually
-//  fits, and finalY is never clamped (only finalX is). The child is laid out
-//  with maxHeight = full overlay height minus notch, not the space available
-//  on the resolved side — so tall (e.g. scrollable) content sizes to full
-//  screen height and draws off-screen at negative y. Fix: pick the side with
-//  more available space, then constrain the child's maxHeight to that side's
-//  space. Also include offset.dy in the fit check — a large offset can push a
-//  "fits" popover off-screen without triggering the flip.
-//
 // TODO: don't swallow barrier taps in transparent notch areas. hitTestSelf
 //  uses _popoverRect.contains(position), but _popoverRect includes the
 //  reserved notch strip — a full-width 12px (24px for .both) transparent band

@@ -1,3 +1,4 @@
+import 'dart:math' as math;
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
@@ -156,9 +157,21 @@ class RenderSBBPopover extends RenderShiftedBox {
       return;
     }
 
+    // Vertical space available on either side of the trigger. offset.dy is
+    // part of the occupied extent on whichever side gets resolved (a positive
+    // value pushes the box further from the trigger), so it shrinks both
+    // budgets up front — a large offset can force a flip just like a tall
+    // child can.
+    final double spaceBelow = constraints.maxHeight - (_triggerGlobalPosition.dy + _triggerSize.height) - _offset.dy;
+    final double spaceAbove = _triggerGlobalPosition.dy - _offset.dy;
+
+    // Constrain the child to the larger of the two sides instead of the full
+    // overlay height, so tall (e.g. scrollable) content sizes to the most
+    // space it can possibly get on either side of the trigger rather than
+    // overflowing the screen.
     final childConstraints = BoxConstraints(
       maxWidth: constraints.maxWidth,
-      maxHeight: constraints.maxHeight - _reservedNotchHeight,
+      maxHeight: math.max(0, math.max(spaceBelow, spaceAbove) - _reservedNotchHeight),
     );
     child.layout(childConstraints, parentUsesSize: true);
 
@@ -173,16 +186,15 @@ class RenderSBBPopover extends RenderShiftedBox {
     finalX = clampDouble(finalX, 0, constraints.maxWidth - overallSize.width);
 
     // Vertical positioning
-    // Flip vertically on collision
+    // Keep the preferred side as long as the box fits there; flip only when
+    // it doesn't AND the opposite side is actually bigger — flipping onto a
+    // smaller side can't help. Because the child was constrained to the
+    // larger side's space above, the box is guaranteed to fit after a flip.
+    final double preferredSpace = _preferredDirection == .bottom ? spaceBelow : spaceAbove;
+    final double oppositeSpace = _preferredDirection == .bottom ? spaceAbove : spaceBelow;
     SBBPopoverDirection finalDirection = _preferredDirection;
-    if (_preferredDirection == .bottom) {
-      if (_triggerGlobalPosition.dy + _triggerSize.height + overallSize.height > constraints.maxHeight) {
-        finalDirection = .top;
-      }
-    } else if (_preferredDirection == .top) {
-      if (_triggerGlobalPosition.dy - overallSize.height < 0) {
-        finalDirection = .bottom;
-      }
+    if (overallSize.height > preferredSpace && oppositeSpace > preferredSpace) {
+      finalDirection = _preferredDirection == .bottom ? .top : .bottom;
     }
 
     // offset.dy always pushes the box further away from the trigger, on
@@ -190,9 +202,14 @@ class RenderSBBPopover extends RenderShiftedBox {
     // but subtracted in the top branch. Since the branch is keyed on
     // finalDirection (not _preferredDirection), this sign automatically
     // inverts relative to what was authored whenever a collision flips it.
-    final double finalY = finalDirection == .bottom
+    double finalY = finalDirection == .bottom
         ? _triggerSize.height + _triggerGlobalPosition.dy + _offset.dy
         : -overallSize.height + _triggerGlobalPosition.dy - _offset.dy;
+    // Safety net for the degenerate cases a flip can't solve (trigger partly
+    // off-screen, or a box taller than either side): keep the box inside the
+    // overlay, mirroring the horizontal clamp above. The box may then overlap
+    // the trigger, but it never draws off-screen.
+    finalY = clampDouble(finalY, 0, math.max(0, constraints.maxHeight - overallSize.height));
 
     _popoverRect = Rect.fromLTWH(finalX, finalY, overallSize.width, overallSize.height);
 
