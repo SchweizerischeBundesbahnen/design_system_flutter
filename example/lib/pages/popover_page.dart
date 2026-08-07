@@ -18,6 +18,7 @@ class _PopoverPageState extends State<PopoverPage> {
   SBBPopoverDirection _preferredDirection = SBBPopoverDirection.bottom;
   bool _notch = true;
   bool _alignNotchToTarget = true;
+  bool _showCloseButton = true;
   String _popoverContentText = 'This is a transient popover view.';
 
   List<SBBDropdownItem<SBBPopoverDirection>> get _directionItems => SBBPopoverDirection.values.map((dir) {
@@ -65,7 +66,7 @@ class _PopoverPageState extends State<PopoverPage> {
             },
           ),
           SBBSwitchListItem(
-            titleText: 'Notch',
+            titleText: 'Show Notch',
             value: _notch,
             onChanged: (value) => setState(() => _notch = value),
           ),
@@ -73,6 +74,11 @@ class _PopoverPageState extends State<PopoverPage> {
             titleText: 'Align Notch To Target',
             value: _alignNotchToTarget,
             onChanged: _notch ? (value) => setState(() => _alignNotchToTarget = value) : null,
+          ),
+          SBBSwitchListItem(
+            titleText: 'Show Close Button',
+            value: _showCloseButton,
+            onChanged: (value) => setState(() => _showCloseButton = value),
           ),
           SBBTextInput(
             decoration: const SBBInputDecoration(
@@ -97,25 +103,15 @@ class _PopoverPageState extends State<PopoverPage> {
             preferredDirection: _preferredDirection,
             showNotch: _notch,
             alignNotchToTarget: _alignNotchToTarget,
+            showCloseButton: _showCloseButton,
+            titleText: 'Popover Title',
+            leadingIconData: SBBIcons.circle_information_small,
             offset: Offset(0, 8),
             targetBuilder: (context, showPopover) => SBBSecondaryButton(
               labelText: 'Open Center Popover',
               onPressed: _centerPopoverController.show,
             ),
-            builder: (context, hidePopover) => Padding(
-              padding: const EdgeInsets.all(SBBSpacing.medium),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(_popoverContentText, style: SBBTextStyles.mediumLight),
-                  const SizedBox(height: SBBSpacing.small),
-                  SBBTertiaryButtonSmall(
-                    iconData: SBBIcons.cross_small,
-                    onPressed: _centerPopoverController.hide,
-                  ),
-                ],
-              ),
-            ),
+            builder: (context, hidePopover) => Text(_popoverContentText, style: SBBTextStyles.mediumLight),
           ),
         ),
       ),
@@ -133,32 +129,28 @@ class _PopoverPageState extends State<PopoverPage> {
               preferredDirection: _preferredDirection,
               showNotch: _notch,
               alignNotchToTarget: _alignNotchToTarget,
+              showCloseButton: _showCloseButton,
               targetBuilder: (context, showPopover) => SBBTertiaryButtonSmall(
                 iconData: SBBIcons.arrow_left_small,
                 onPressed: showPopover,
               ),
-              builder: (context, _) => Padding(
-                padding: const EdgeInsets.all(SBBSpacing.medium),
-                child: Text(
-                  'Left edge layout shift',
-                  style: SBBTextStyles.mediumLight,
-                ),
+              builder: (context, _) => Text(
+                'Left edge layout shift',
+                style: SBBTextStyles.mediumLight,
               ),
             ),
             SBBPopover(
               preferredDirection: _preferredDirection,
               showNotch: _notch,
               alignNotchToTarget: _alignNotchToTarget,
+              showCloseButton: _showCloseButton,
               targetBuilder: (context, showPopover) => SBBTertiaryButtonSmall(
                 iconData: SBBIcons.arrow_right_small,
                 onPressed: showPopover,
               ),
-              builder: (context, _) => Padding(
-                padding: const EdgeInsets.all(SBBSpacing.medium),
-                child: Text(
-                  'Right edge layout shift',
-                  style: SBBTextStyles.mediumLight,
-                ),
+              builder: (context, _) => Text(
+                'Right edge layout shift',
+                style: SBBTextStyles.mediumLight,
               ),
             ),
           ],

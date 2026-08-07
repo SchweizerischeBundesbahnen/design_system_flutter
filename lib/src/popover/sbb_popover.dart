@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/popover/render_sbb_popover.dart';
 import 'package:sbb_design_system_mobile/src/popover/sbb_popover_notch.dart';
+import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 
-// TODO: add title, titleText, leading, leadingIconData, trailing, trailingIconData showCloseButton (same as SBBBottomSheet)
 // TODO: add barrierLabel
 // TODO: add reservedPadding
 // TODO: add targetAlignment and alignment
@@ -18,12 +18,21 @@ class SBBPopover extends StatefulWidget {
     required this.targetBuilder,
     required this.builder,
     this.controller,
+    this.title,
+    this.titleText,
+    this.leading,
+    this.leadingIconData,
+    this.trailing,
+    this.trailingIconData,
+    this.showCloseButton = true,
     this.preferredDirection = .bottom,
     this.isDismissible = true,
     this.showNotch = true,
     this.alignNotchToTarget = true,
     this.offset = Offset.zero,
-  });
+  }) : assert(title == null || titleText == null, 'Only title or titleText can be set!'),
+       assert(leading == null || leadingIconData == null, 'Only leading or leadingIconData can be set!'),
+       assert(trailing == null || trailingIconData == null, 'Only trailing or trailingIconData can be set!');
 
   /// Builds the widget the popover is anchored to. Always visible; the
   /// popover positions itself relative to the built widget's on-screen
@@ -43,6 +52,49 @@ class SBBPopover extends StatefulWidget {
   ///
   /// If not provided, an internal controller is created automatically.
   final SBBPopoverController? controller;
+
+  /// A custom widget displayed as the popover's title.
+  ///
+  /// For simple text titles, use [titleText] instead.
+  ///
+  /// Cannot be used together with [titleText].
+  final Widget? title;
+
+  /// Text string to display as the popover's title.
+  ///
+  /// Cannot be used together with [title].
+  final String? titleText;
+
+  /// A custom widget displayed at the leading edge of the header.
+  ///
+  /// For icon-only leading content, use [leadingIconData] instead.
+  ///
+  /// Cannot be used together with [leadingIconData].
+  final Widget? leading;
+
+  /// Icon data for an icon displayed at the leading edge of the header.
+  ///
+  /// Cannot be used together with [leading].
+  final IconData? leadingIconData;
+
+  /// A custom widget displayed at the trailing edge of the header.
+  ///
+  /// For icon-only trailing content, use [trailingIconData] instead.
+  ///
+  /// Cannot be used together with [trailingIconData].
+  final Widget? trailing;
+
+  /// Icon data for an icon displayed at the trailing edge of the header.
+  ///
+  /// Cannot be used together with [trailing].
+  final IconData? trailingIconData;
+
+  /// Whether to show a close button in the header that hides the popover.
+  ///
+  /// Only shown if [isDismissible] is also true.
+  ///
+  /// Defaults to true.
+  final bool showCloseButton;
 
   final SBBPopoverDirection preferredDirection;
   final bool isDismissible;
@@ -168,6 +220,77 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
     super.dispose();
   }
 
+  /// Assembles the popover content: an optional header row (mirroring
+  /// [SBBBottomSheet]'s contract) above the [SBBPopover.builder] body.
+  ///
+  /// Style values are taken from the base style for now — dedicated popover
+  /// theming is a separate TODO.
+  Widget _buildContent(BuildContext context) {
+    final baseStyle = Theme.of(context).sbbBaseStyle;
+    const padding = EdgeInsets.symmetric(horizontal: SBBSpacing.medium, vertical: SBBSpacing.small);
+
+    final body = widget.builder(context, _effectiveController.hide);
+
+    final titleWidget = addDefaultAncestorWithResolved(
+      child: widget.title ?? (widget.titleText != null ? Text(widget.titleText!) : null),
+      foregroundColor: baseStyle.colorScheme.textPrimary,
+      textStyle: baseStyle.textTheme.largeLight,
+    );
+    final leadingWidget = addDefaultAncestorWithResolved(
+      child: widget.leading ?? (widget.leadingIconData != null ? Icon(widget.leadingIconData) : null),
+      foregroundColor: baseStyle.colorScheme.iconPrimary,
+      textStyle: baseStyle.textTheme.defaultTextStyle,
+    );
+    final trailingWidget = addDefaultAncestorWithResolved(
+      child: widget.trailing ?? (widget.trailingIconData != null ? Icon(widget.trailingIconData) : null),
+      foregroundColor: baseStyle.colorScheme.iconPrimary,
+      textStyle: baseStyle.textTheme.defaultTextStyle,
+    );
+    final closeButton = widget.isDismissible && widget.showCloseButton ? _closeButton(context) : null;
+
+    final hasHeader = titleWidget != null || leadingWidget != null || trailingWidget != null || closeButton != null;
+    if (!hasHeader) return Padding(padding: padding, child: body);
+
+    // Adjust for the close button, same as SBBBottomSheet.
+    final titlePadding = padding.copyWith(right: closeButton != null ? SBBSpacing.xSmall : padding.right, bottom: 0);
+    final bodyPadding = padding.copyWith(top: SBBSpacing.small);
+
+    // Unlike the full-width bottom sheet, the popover sizes itself to its
+    // content — but the header row contains flex children (Expanded/Spacer)
+    // that would greedily fill the whole available width. IntrinsicWidth
+    // bounds the column to the widest child's natural width instead.
+    return IntrinsicWidth(
+      child: Column(
+        mainAxisSize: .min,
+        crossAxisAlignment: .start,
+        children: [
+          Padding(
+            padding: titlePadding,
+            child: _PopoverHeaderRow(
+              title: titleWidget,
+              leading: leadingWidget,
+              trailing: trailingWidget,
+              closeButton: closeButton,
+            ),
+          ),
+          Flexible(
+            child: Padding(padding: bodyPadding, child: body),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _closeButton(BuildContext context) => Semantics(
+    label: MaterialLocalizations.of(context).closeButtonTooltip,
+    excludeSemantics: true,
+    button: true,
+    child: SBBTertiaryButtonSmall(
+      onPressed: _effectiveController.hide,
+      iconData: SBBIcons.cross_small,
+    ),
+  );
+
   @override
   Widget build(BuildContext context) {
     return OverlayPortal(
@@ -194,7 +317,7 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
                 scaleAnimation: _scaleAnimation,
                 child: Material(
                   type: MaterialType.transparency,
-                  child: widget.builder(context, _effectiveController.hide),
+                  child: _buildContent(context),
                 ),
               ),
             ),
@@ -202,6 +325,57 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
         );
       },
       child: KeyedSubtree(key: _targetKey, child: widget.targetBuilder(context, _effectiveController.show)),
+    );
+  }
+}
+
+/// The popover's header row. Mirrors SBBBottomSheet's layout contract:
+/// [leading] - [title] (expanded) - [trailing] - [closeButton], with
+/// single-child fallbacks aligning trailing content to the right.
+///
+/// The flex children (Expanded/Spacer) fill whatever width the enclosing
+/// IntrinsicWidth settles on, keeping trailing content and the close button
+/// pinned to the popover's right edge even when the body is wider than the
+/// header's natural width.
+class _PopoverHeaderRow extends StatelessWidget {
+  const _PopoverHeaderRow({
+    this.title,
+    this.leading,
+    this.trailing,
+    this.closeButton,
+  });
+
+  final Widget? title;
+  final Widget? leading;
+  final Widget? trailing;
+  final Widget? closeButton;
+
+  @override
+  Widget build(BuildContext context) {
+    final nonNullChildren = [title, leading, trailing, closeButton].nonNulls.toList(growable: false);
+
+    if (nonNullChildren.isEmpty) return const SizedBox.shrink();
+
+    final Widget child;
+    if (nonNullChildren.length > 1) {
+      child = Row(
+        spacing: SBBSpacing.xSmall,
+        children: [
+          ?leading,
+          if (title != null) Expanded(child: title!) else Spacer(),
+          ?trailing,
+          ?closeButton,
+        ],
+      );
+    } else if (closeButton != null || trailing != null) {
+      child = Align(alignment: .centerRight, child: closeButton ?? trailing);
+    } else {
+      child = nonNullChildren.first;
+    }
+
+    return ConstrainedBox(
+      constraints: const BoxConstraints(minHeight: SBBSpacing.xLarge),
+      child: child,
     );
   }
 }
