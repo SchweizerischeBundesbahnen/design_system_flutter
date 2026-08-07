@@ -2,12 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/popover/render_sbb_popover.dart';
 
-// TODO: add controller for programmatic show / hide (post frame callback!)
-// TODO: change targetBuilder and builder to Widget and rename to child and target
-// TODO: change notch to bool
+// TODO: change notch to bool and alignNotchToTarget to bool top level
 // TODO: add title, titleText, leading, leadingIconData, trailing, trailingIconData showCloseButton (same as SBBBottomSheet)
 // TODO: add barrierLabel
 // TODO: add reservedPadding
+// TODO: add targetAlignment and alignment
 // TODO: check how everything works with keyboard
 // TODO: add theming & styling
 // TODO: docs & clean up
@@ -18,14 +17,32 @@ class SBBPopover extends StatefulWidget {
     super.key,
     required this.targetBuilder,
     required this.builder,
+    this.controller,
     this.preferredDirection = .bottom,
     this.isDismissible = true,
     this.notch = const .single(),
     this.offset = Offset.zero,
   });
 
-  final Widget Function(BuildContext context, VoidCallback showOverlay) targetBuilder;
-  final Widget Function(BuildContext context, VoidCallback hideOverlay) builder;
+  /// Builds the widget the popover is anchored to. Always visible; the
+  /// popover positions itself relative to the built widget's on-screen
+  /// geometry.
+  ///
+  /// Calling `showPopover` shows the popover — equivalent to calling
+  /// [SBBPopoverController.show] on [controller].
+  final Widget Function(BuildContext context, VoidCallback showPopover) targetBuilder;
+
+  /// Builds the content displayed inside the popover.
+  ///
+  /// Calling `hidePopover` hides the popover — equivalent to calling
+  /// [SBBPopoverController.hide] on [controller].
+  final Widget Function(BuildContext context, VoidCallback hidePopover) builder;
+
+  /// An optional controller to programmatically show and hide the popover.
+  ///
+  /// If not provided, an internal controller is created automatically.
+  final SBBPopoverController? controller;
+
   final SBBPopoverDirection preferredDirection;
   final bool isDismissible;
   final SBBPopoverNotch notch;
@@ -45,6 +62,11 @@ class SBBPopover extends StatefulWidget {
 
 class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateMixin {
   final GlobalKey _targetKey = GlobalKey();
+
+  SBBPopoverController? _internalController;
+
+  SBBPopoverController get _effectiveController =>
+      widget.controller ?? (_internalController ??= SBBPopoverController());
 
   late AnimationController _animationController;
   late Animation<double> _opacityAnimation;
@@ -72,6 +94,38 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
       begin: 0.8,
       end: 1.0,
     ).animate(CurvedAnimation(parent: _animationController, curve: Curves.easeInOutCubicEmphasized));
+    _effectiveController.addListener(_handleControllerChange);
+    if (_effectiveController.value) _syncControllerAfterFrame();
+  }
+
+  @override
+  void didUpdateWidget(covariant SBBPopover oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.controller != oldWidget.controller) {
+      (oldWidget.controller ?? _internalController)?.removeListener(_handleControllerChange);
+      _effectiveController.addListener(_handleControllerChange);
+      if (_effectiveController.value != _overlayController.isShowing) _syncControllerAfterFrame();
+    }
+  }
+
+  void _handleControllerChange() {
+    if (_effectiveController.value) {
+      _showOverlay();
+    } else {
+      _hideOverlay();
+    }
+  }
+
+  /// Applies the controller's value at the end of the current frame.
+  ///
+  /// Needed when the value has to be picked up during build (initState /
+  /// didUpdateWidget): OverlayPortalController.show() asserts against being
+  /// called mid-build, and the target's geometry is only valid once this
+  /// frame's layout has run.
+  void _syncControllerAfterFrame() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) _handleControllerChange();
+    });
   }
 
   void _showOverlay() {
@@ -97,7 +151,9 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
 
   @override
   void dispose() {
+    _effectiveController.removeListener(_handleControllerChange);
     _animationController.dispose();
+    _internalController?.dispose();
     super.dispose();
   }
 
@@ -110,7 +166,7 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
           children: [
             GestureDetector(
               behavior: HitTestBehavior.translucent,
-              onTap: widget.isDismissible ? _hideOverlay : null,
+              onTap: widget.isDismissible ? _effectiveController.hide : null,
               child: Container(color: SBBColors.iron.withAlpha((255.0 * 0.6).round())),
             ),
             FadeTransition(
@@ -125,14 +181,14 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
                 scaleAnimation: _scaleAnimation,
                 child: Material(
                   type: MaterialType.transparency,
-                  child: widget.builder(context, _hideOverlay),
+                  child: widget.builder(context, _effectiveController.hide),
                 ),
               ),
             ),
           ],
         );
       },
-      child: KeyedSubtree(key: _targetKey, child: widget.targetBuilder(context, _showOverlay)),
+      child: KeyedSubtree(key: _targetKey, child: widget.targetBuilder(context, _effectiveController.show)),
     );
   }
 }
