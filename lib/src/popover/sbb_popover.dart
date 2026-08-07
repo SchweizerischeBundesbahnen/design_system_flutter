@@ -16,17 +16,6 @@ import 'package:sbb_design_system_mobile/src/popover/sbb_popover_scope.dart';
 //
 // ---- RENDERING ----
 //
-// TODO: single source of truth for the notch height. The 12px value lives in
-//  three places: RenderSBBPopover._notchHeight, SBBPopoverShapeBorder.dimensions,
-//  and getOuterPath's local notchSize. Fix: derive _reservedNotchHeight and
-//  childTopInset from shape.dimensions, or put the notch size on
-//  SBBPopoverNotch itself.
-//
-// TODO: use a ModalBarrier + route entry instead of the hand-rolled
-//  GestureDetector barrier. Currently the Android back button pops the page
-//  instead of the popover, and the barrier has no dismiss semantics for
-//  screen readers (relates to the barrierLabel / accessibility TODOs above).
-//
 // TODO: guard show/hide races and disposal. _hideOverlay awaits the reverse
 //  animation and then calls _overlayController.hide() — if the widget is
 //  disposed mid-animation (page popped) this resumes on a defunct state; and

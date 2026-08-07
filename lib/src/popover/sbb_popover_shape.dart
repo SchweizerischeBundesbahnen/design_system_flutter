@@ -13,6 +13,12 @@ class SBBPopoverShapeBorder extends ShapeBorder {
     this.notchOffset = 0.0,
   });
 
+  /// The size of a single notch bump, from the design spec. Single source of
+  /// truth for the notch geometry: [dimensions] (and through it the reserved
+  /// space and child inset in RenderSBBPopover) and [getOuterPath] all derive
+  /// from this value.
+  static const Size notchSize = Size(36, 12);
+
   final SBBPopoverDirection direction;
   final SBBPopoverNotch notch;
 
@@ -31,9 +37,11 @@ class SBBPopoverShapeBorder extends ShapeBorder {
     SBBPopoverNotchBoth() => const [_NotchEdge.top, _NotchEdge.bottom],
   };
 
+  // Covariantly tightened to EdgeInsets so callers (e.g. RenderSBBPopover)
+  // can read top/bottom/vertical without a resolve(textDirection) round trip
+  // — the insets are direction-agnostic anyway.
   @override
-  EdgeInsetsGeometry get dimensions {
-    const notchSize = Size(36, 12);
+  EdgeInsets get dimensions {
     final edges = _notchEdges;
     return EdgeInsets.only(
       top: edges.contains(_NotchEdge.top) ? notchSize.height : 0,
@@ -46,11 +54,10 @@ class SBBPopoverShapeBorder extends ShapeBorder {
 
   @override
   Path getOuterPath(Rect rect, {TextDirection? textDirection}) {
-    const notchSize = Size(36, 12);
     const radius = 16.0;
 
     // 1. Deflate the rect to leave room for the notch(es) and build the main body
-    final contentRect = dimensions.resolve(textDirection).deflateRect(rect);
+    final contentRect = dimensions.deflateRect(rect);
     var path = Path()..addRRect(RRect.fromRectAndRadius(contentRect, const Radius.circular(radius)));
 
     // Keep the notch clear of the rounded corners on either side. Floored at
@@ -64,14 +71,14 @@ class SBBPopoverShapeBorder extends ShapeBorder {
       path = Path.combine(
         PathOperation.union,
         path,
-        _buildNotchPath(edge, contentRect, notchSize, clampedNotchOffset),
+        _buildNotchPath(edge, contentRect, clampedNotchOffset),
       );
     }
 
     return path;
   }
 
-  Path _buildNotchPath(_NotchEdge edge, Rect contentRect, Size notchSize, double notchOffset) {
+  Path _buildNotchPath(_NotchEdge edge, Rect contentRect, double notchOffset) {
     final w = notchSize.width;
     final h = notchSize.height;
 

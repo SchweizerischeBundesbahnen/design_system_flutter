@@ -95,12 +95,6 @@ class RenderSBBPopover extends RenderShiftedBox {
        _scaleAnimation = scaleAnimation,
        super(child);
 
-  // Fixed notch gap reserved on the vertical axis, matching
-  // SBBPopoverShapeBorder's internal notchSize.height (not exposed as a
-  // public constant there, so duplicated here — the two must stay in sync
-  // if the notch size ever changes).
-  static const double _notchHeight = 12.0;
-
   SBBPopoverDirection _preferredDirection;
 
   set preferredDirection(SBBPopoverDirection value) {
@@ -260,25 +254,22 @@ class RenderSBBPopover extends RenderShiftedBox {
 
     _popoverRect = Rect.fromLTWH(finalX, finalY, overallSize.width, overallSize.height);
 
-    final double childTopInset = switch (_notch) {
-      SBBPopoverNotchNone() => 0,
-      SBBPopoverNotchSingle() => finalDirection == .bottom ? _notchHeight : 0,
-      SBBPopoverNotchBoth() => _notchHeight,
-    };
+    final shapeBorder = SBBPopoverShapeBorder(
+      direction: finalDirection,
+      notch: _notch,
+      notchOffset: _notchOffset,
+    );
 
+    // The child sits below whatever the shape reserves on the top edge — the
+    // shape's dimensions are the single source of truth for the notch size.
     final childParentData = child.parentData! as BoxParentData;
-    childParentData.offset = Offset(finalX, finalY + childTopInset);
+    childParentData.offset = Offset(finalX, finalY + shapeBorder.dimensions.top);
 
     if (_direction != finalDirection) {
       _direction = finalDirection;
       markNeedsPaint();
     }
 
-    final shapeBorder = SBBPopoverShapeBorder(
-      direction: finalDirection,
-      notch: _notch,
-      notchOffset: _notchOffset,
-    );
     if (shapeBorder != _shapeBorder) {
       _shapeBorder = shapeBorder;
       _invalidateDecoration();
@@ -286,14 +277,12 @@ class RenderSBBPopover extends RenderShiftedBox {
     _shapePath = shapeBorder.getOuterPath(_popoverRect);
   }
 
-  double get _reservedNotchHeight {
-    final double reservedNotchHeight = switch (_notch) {
-      SBBPopoverNotchNone() => 0,
-      SBBPopoverNotchSingle() => _notchHeight,
-      SBBPopoverNotchBoth() => _notchHeight * 2,
-    };
-    return reservedNotchHeight;
-  }
+  // Total vertical space the shape reserves for its notch bump(s), needed
+  // before child layout (and thus before the direction is resolved). The
+  // top+bottom sum of the shape's dimensions is the same for either
+  // direction, so querying with the preferred one is safe.
+  double get _reservedNotchHeight =>
+      SBBPopoverShapeBorder(direction: _preferredDirection, notch: _notch).dimensions.vertical;
 
   final LayerHandle<TransformLayer> _transformLayer = LayerHandle<TransformLayer>();
 
