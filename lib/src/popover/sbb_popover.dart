@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/popover/render_sbb_popover.dart';
-import 'package:sbb_design_system_mobile/src/popover/sbb_popover_scope.dart';
 
 // TODO: add controller for programmatic show / hide (post frame callback!)
 // TODO: change targetBuilder and builder to Widget and rename to child and target
@@ -116,35 +115,30 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
     return OverlayPortal(
       controller: _overlayController,
       overlayChildBuilder: (BuildContext context) {
-        return SBBPopoverScope(
-          targetPosition: _targetPosition,
-          targetSize: _targetSize,
-          preferredDirection: widget.preferredDirection,
-          child: Stack(
-            children: [
-              GestureDetector(
-                behavior: HitTestBehavior.translucent,
-                onTap: widget.isDismissible ? _hideOverlay : null,
-                child: Container(color: SBBColors.iron.withAlpha((255.0 * 0.6).round())),
-              ),
-              FadeTransition(
-                opacity: _opacityAnimation,
-                child: SBBPopoverLayout(
-                  preferredDirection: widget.preferredDirection,
-                  targetPosition: _targetPosition,
-                  targetSize: _targetSize,
-                  notch: widget.notch,
-                  color: Theme.of(context).sbbBaseStyle.themeValue(SBBColors.milk, SBBColors.midnight),
-                  offset: widget.offset,
-                  scaleAnimation: _scaleAnimation,
-                  child: Material(
-                    type: MaterialType.transparency,
-                    child: widget.builder(context, _hideOverlay),
-                  ),
+        return Stack(
+          children: [
+            GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onTap: widget.isDismissible ? _hideOverlay : null,
+              child: Container(color: SBBColors.iron.withAlpha((255.0 * 0.6).round())),
+            ),
+            FadeTransition(
+              opacity: _opacityAnimation,
+              child: SBBPopoverLayout(
+                preferredDirection: widget.preferredDirection,
+                targetPosition: _targetPosition,
+                targetSize: _targetSize,
+                notch: widget.notch,
+                color: Theme.of(context).sbbBaseStyle.themeValue(SBBColors.milk, SBBColors.midnight),
+                offset: widget.offset,
+                scaleAnimation: _scaleAnimation,
+                child: Material(
+                  type: MaterialType.transparency,
+                  child: widget.builder(context, _hideOverlay),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         );
       },
       child: KeyedSubtree(key: _targetKey, child: widget.targetBuilder(context, _showOverlay)),
