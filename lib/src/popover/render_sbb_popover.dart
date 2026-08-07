@@ -4,6 +4,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/popover/sbb_popover_notch.dart';
 import 'package:sbb_design_system_mobile/src/popover/sbb_popover_shape.dart';
 
 /// Positions and paints an [SBBPopover]'s content relative to its target.

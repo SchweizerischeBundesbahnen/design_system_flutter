@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/popover/render_sbb_popover.dart';
+import 'package:sbb_design_system_mobile/src/popover/sbb_popover_notch.dart';
 
-// TODO: change notch to bool and alignNotchToTarget to bool top level
 // TODO: add title, titleText, leading, leadingIconData, trailing, trailingIconData showCloseButton (same as SBBBottomSheet)
 // TODO: add barrierLabel
 // TODO: add reservedPadding
@@ -20,7 +20,8 @@ class SBBPopover extends StatefulWidget {
     this.controller,
     this.preferredDirection = .bottom,
     this.isDismissible = true,
-    this.notch = const .single(),
+    this.showNotch = true,
+    this.alignNotchToTarget = true,
     this.offset = Offset.zero,
   });
 
@@ -45,7 +46,17 @@ class SBBPopover extends StatefulWidget {
 
   final SBBPopoverDirection preferredDirection;
   final bool isDismissible;
-  final SBBPopoverNotch notch;
+
+  /// Whether the decorative notch pointing at the target is drawn on the
+  /// edge of the popover facing the target.
+  final bool showNotch;
+
+  /// Whether the notch shifts horizontally to stay pointed at the target's
+  /// center when the popover box is shifted sideways to avoid a screen-edge
+  /// collision. When false, the notch stays centered on the popover box.
+  ///
+  /// Only has an effect when [showNotch] is true.
+  final bool alignNotchToTarget;
 
   /// Absolute offset between the target and the popover box.
   ///
@@ -175,7 +186,9 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
                 preferredDirection: widget.preferredDirection,
                 targetPosition: _targetPosition,
                 targetSize: _targetSize,
-                notch: widget.notch,
+                notch: widget.showNotch
+                    ? SBBPopoverNotch.single(alignWithTarget: widget.alignNotchToTarget)
+                    : const SBBPopoverNotch.none(),
                 color: Theme.of(context).sbbBaseStyle.themeValue(SBBColors.milk, SBBColors.midnight),
                 offset: widget.offset,
                 scaleAnimation: _scaleAnimation,

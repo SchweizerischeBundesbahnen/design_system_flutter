@@ -16,29 +16,14 @@ class _PopoverPageState extends State<PopoverPage> {
   final SBBPopoverController _centerPopoverController = SBBPopoverController();
 
   SBBPopoverDirection _preferredDirection = SBBPopoverDirection.bottom;
-  SBBPopoverNotch _notch = const SBBPopoverNotch.single();
-  bool _alignNotchWithTarget = true;
+  bool _notch = true;
+  bool _alignNotchToTarget = true;
   String _popoverContentText = 'This is a transient popover view.';
 
   List<SBBDropdownItem<SBBPopoverDirection>> get _directionItems => SBBPopoverDirection.values.map((dir) {
     final label = dir.name.substring(0, 1).toUpperCase() + dir.name.substring(1);
     return SBBDropdownItem(value: dir, label: label);
   }).toList();
-
-  List<SBBDropdownItem<SBBPopoverNotch>> get _notchItems => const [
-    SBBDropdownItem(value: SBBPopoverNotch.single(), label: 'Single'),
-    SBBDropdownItem(value: SBBPopoverNotch.none(), label: 'None'),
-    SBBDropdownItem(value: SBBPopoverNotch.both(), label: 'Both'),
-  ];
-
-  // alignWithTarget only applies to SBBPopoverNotch.single; the dropdown
-  // above only ever selects between the three bare (default-aligned)
-  // variants, so the toggle's value is layered in here.
-  SBBPopoverNotch get _effectiveNotch {
-    final notch = _notch;
-    if (notch is! SBBPopoverNotchSingle) return notch;
-    return SBBPopoverNotch.single(alignWithTarget: _alignNotchWithTarget);
-  }
 
   @override
   void dispose() {
@@ -79,22 +64,15 @@ class _PopoverPageState extends State<PopoverPage> {
               }
             },
           ),
-          SBBDropdown<SBBPopoverNotch>(
-            triggerDecoration: const SBBInputDecoration(labelText: 'Notch'),
-            selectedItem: _notch,
-            items: _notchItems,
-            onChanged: (value) {
-              if (value != null) {
-                setState(() => _notch = value);
-              }
-            },
+          SBBSwitchListItem(
+            titleText: 'Notch',
+            value: _notch,
+            onChanged: (value) => setState(() => _notch = value),
           ),
           SBBSwitchListItem(
-            titleText: 'Align Notch With Target',
-            value: _alignNotchWithTarget,
-            onChanged: _notch is SBBPopoverNotchSingle
-                ? (value) => setState(() => _alignNotchWithTarget = value)
-                : null,
+            titleText: 'Align Notch To Target',
+            value: _alignNotchToTarget,
+            onChanged: _notch ? (value) => setState(() => _alignNotchToTarget = value) : null,
           ),
           SBBTextInput(
             decoration: const SBBInputDecoration(
@@ -117,7 +95,8 @@ class _PopoverPageState extends State<PopoverPage> {
           child: SBBPopover(
             controller: _centerPopoverController,
             preferredDirection: _preferredDirection,
-            notch: _effectiveNotch,
+            showNotch: _notch,
+            alignNotchToTarget: _alignNotchToTarget,
             offset: Offset(0, 8),
             targetBuilder: (context, showPopover) => SBBSecondaryButton(
               labelText: 'Open Center Popover',
@@ -152,7 +131,8 @@ class _PopoverPageState extends State<PopoverPage> {
           children: [
             SBBPopover(
               preferredDirection: _preferredDirection,
-              notch: _effectiveNotch,
+              showNotch: _notch,
+              alignNotchToTarget: _alignNotchToTarget,
               targetBuilder: (context, showPopover) => SBBTertiaryButtonSmall(
                 iconData: SBBIcons.arrow_left_small,
                 onPressed: showPopover,
@@ -167,7 +147,8 @@ class _PopoverPageState extends State<PopoverPage> {
             ),
             SBBPopover(
               preferredDirection: _preferredDirection,
-              notch: _effectiveNotch,
+              showNotch: _notch,
+              alignNotchToTarget: _alignNotchToTarget,
               targetBuilder: (context, showPopover) => SBBTertiaryButtonSmall(
                 iconData: SBBIcons.arrow_right_small,
                 onPressed: showPopover,

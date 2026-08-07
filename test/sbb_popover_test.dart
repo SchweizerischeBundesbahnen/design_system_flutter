@@ -55,6 +55,35 @@ void main() {
     expect(popoverTopLeft.dx + popoverSize.width / 2, closeTo(targetRect.center.dx, 0.5));
   });
 
+  testWidgets('SBBPopover with notch false sits flush against the target', (tester) async {
+    final controller = SBBPopoverController();
+    addTearDown(controller.dispose);
+
+    await tester.pumpWidget(
+      TestApp(
+        child: Padding(
+          padding: const EdgeInsets.only(left: 40, top: 100),
+          child: SBBPopover(
+            controller: controller,
+            showNotch: false,
+            targetBuilder: (context, showPopover) => const SizedBox(key: targetKey, width: 80, height: 40),
+            builder: (context, hidePopover) => const SizedBox(width: 120, height: 60),
+          ),
+        ),
+      ),
+    );
+
+    final targetRect = tester.getRect(find.byKey(targetKey));
+
+    controller.show();
+    await tester.pumpAndSettle();
+
+    // Without a notch no vertical space is reserved for it, so the popover
+    // box sits directly against the target's bottom edge.
+    final materialFinder = find.descendant(of: find.byType(SBBPopover), matching: find.byType(Material));
+    expect(tester.getTopLeft(materialFinder).dy, closeTo(targetRect.bottom, 0.5));
+  });
+
   testWidgets('SBBPopover resolves the flipped direction on the very first frame (no flash)', (tester) async {
     final controller = SBBPopoverController();
     addTearDown(controller.dispose);

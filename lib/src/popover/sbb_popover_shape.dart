@@ -2,6 +2,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
+import 'package:sbb_design_system_mobile/src/popover/sbb_popover_notch.dart';
 
 /// The edge of the popover's content rect a single notch bump attaches to.
 enum _NotchEdge { top, bottom }
