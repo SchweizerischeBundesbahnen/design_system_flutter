@@ -4,8 +4,6 @@ import 'package:sbb_design_system_mobile/src/popover/render_sbb_popover.dart';
 import 'package:sbb_design_system_mobile/src/popover/sbb_popover_notch.dart';
 import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 
-// TODO: add barrierLabel
-// TODO: add reservedPadding
 // TODO: add targetAlignment and alignment
 // TODO: check how everything works with keyboard
 // TODO: add theming & styling
@@ -27,9 +25,11 @@ class SBBPopover extends StatefulWidget {
     this.showCloseButton = true,
     this.preferredDirection = .bottom,
     this.isDismissible = true,
+    this.barrierLabel,
     this.showNotch = true,
     this.alignNotchToTarget = true,
     this.offset = Offset.zero,
+    this.viewportMargin = const .all(SBBSpacing.xSmall),
   }) : assert(title == null || titleText == null, 'Only title or titleText can be set!'),
        assert(leading == null || leadingIconData == null, 'Only leading or leadingIconData can be set!'),
        assert(trailing == null || trailingIconData == null, 'Only trailing or trailingIconData can be set!');
@@ -99,6 +99,13 @@ class SBBPopover extends StatefulWidget {
   final SBBPopoverDirection preferredDirection;
   final bool isDismissible;
 
+  /// The semantic label announced by screen readers for the barrier behind
+  /// the popover (read when the barrier receives accessibility focus, with
+  /// a tap dismissing the popover if [isDismissible] is true).
+  ///
+  /// If null, defaults to [MaterialLocalizations.modalBarrierDismissLabel].
+  final String? barrierLabel;
+
   /// Whether the decorative notch pointing at the target is drawn on the
   /// edge of the popover facing the target.
   final bool showNotch;
@@ -118,6 +125,15 @@ class SBBPopover extends StatefulWidget {
   /// collision flips the resolved direction. The x component is applied
   /// as-is and composes with any horizontal shift from edge clamping.
   final Offset offset;
+
+  /// Minimum empty space to keep between the popover box and the enclosing
+  /// viewport's edges, so the box never sits flush against them.
+  ///
+  /// Edge clamping (and the per-side space budgets driving the flip
+  /// decision) treat the viewport shrunk by this margin as the usable area.
+  ///
+  /// Defaults to [SBBSpacing.xSmall] on all sides.
+  final EdgeInsets viewportMargin;
 
   @override
   State<SBBPopover> createState() => _SBBPopoverState();
@@ -298,10 +314,11 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
       overlayChildBuilder: (BuildContext context) {
         return Stack(
           children: [
-            GestureDetector(
-              behavior: HitTestBehavior.translucent,
-              onTap: widget.isDismissible ? _effectiveController.hide : null,
-              child: Container(color: SBBColors.iron.withAlpha((255.0 * 0.6).round())),
+            ModalBarrier(
+              color: SBBColors.iron.withAlpha((255.0 * 0.6).round()),
+              dismissible: widget.isDismissible,
+              semanticsLabel: widget.barrierLabel ?? MaterialLocalizations.of(context).modalBarrierDismissLabel,
+              onDismiss: _effectiveController.hide,
             ),
             FadeTransition(
               opacity: _opacityAnimation,
@@ -314,6 +331,7 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
                     : const SBBPopoverNotch.none(),
                 color: Theme.of(context).sbbBaseStyle.themeValue(SBBColors.milk, SBBColors.midnight),
                 offset: widget.offset,
+                viewportMargin: widget.viewportMargin,
                 scaleAnimation: _scaleAnimation,
                 child: Material(
                   type: MaterialType.transparency,

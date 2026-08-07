@@ -17,6 +17,7 @@ class SBBPopoverLayout extends SingleChildRenderObjectWidget {
     required this.notch,
     required this.color,
     this.offset = Offset.zero,
+    this.viewportMargin = EdgeInsets.zero,
     this.scaleAnimation,
     super.child,
   });
@@ -53,6 +54,11 @@ class SBBPopoverLayout extends SingleChildRenderObjectWidget {
   /// as-is and composes with any horizontal shift from edge clamping.
   final Offset offset;
 
+  /// Minimum empty space to keep between the popover box and the enclosing
+  /// viewport's edges. The layout treats the viewport shrunk by this margin
+  /// as the usable area for clamping and per-side space budgets.
+  final EdgeInsets viewportMargin;
+
   @override
   RenderSBBPopover createRenderObject(BuildContext context) => RenderSBBPopover(
     preferredDirection: preferredDirection,
@@ -61,6 +67,7 @@ class SBBPopoverLayout extends SingleChildRenderObjectWidget {
     notch: notch,
     color: color,
     offset: offset,
+    viewportMargin: viewportMargin,
     scaleAnimation: scaleAnimation,
   );
 
@@ -73,6 +80,7 @@ class SBBPopoverLayout extends SingleChildRenderObjectWidget {
       ..notch = notch
       ..color = color
       ..offset = offset
+      ..viewportMargin = viewportMargin
       ..scaleAnimation = scaleAnimation;
   }
 }
@@ -85,6 +93,7 @@ class RenderSBBPopover extends RenderShiftedBox {
     required SBBPopoverNotch notch,
     required Color color,
     required Offset offset,
+    required EdgeInsets viewportMargin,
     Animation<double>? scaleAnimation,
     RenderBox? child,
   }) : _preferredDirection = preferredDirection,
@@ -93,6 +102,7 @@ class RenderSBBPopover extends RenderShiftedBox {
        _notch = notch,
        _color = color,
        _offset = offset,
+       _viewportMargin = viewportMargin,
        _scaleAnimation = scaleAnimation,
        super(child);
 
@@ -142,6 +152,14 @@ class RenderSBBPopover extends RenderShiftedBox {
   set offset(Offset value) {
     if (_offset == value) return;
     _offset = value;
+    markNeedsLayout();
+  }
+
+  EdgeInsets _viewportMargin;
+
+  set viewportMargin(EdgeInsets value) {
+    if (_viewportMargin == value) return;
+    _viewportMargin = value;
     markNeedsLayout();
   }
 
@@ -217,20 +235,22 @@ class RenderSBBPopover extends RenderShiftedBox {
       return;
     }
 
-    // Vertical space available on either side of the target. offset.dy is
-    // part of the occupied extent on whichever side gets resolved (a positive
-    // value pushes the box further from the target), so it shrinks both
-    // budgets up front — a large offset can force a flip just like a tall
-    // child can.
-    final double spaceBelow = constraints.maxHeight - (_targetPosition.dy + _targetSize.height) - _offset.dy;
-    final double spaceAbove = _targetPosition.dy - _offset.dy;
+    // Vertical space available on either side of the target, inside the
+    // viewport shrunk by the margin (the popover must never sit flush
+    // against an edge). offset.dy is part of the occupied extent on
+    // whichever side gets resolved (a positive value pushes the box further
+    // from the target), so it shrinks both budgets up front — a large
+    // offset can force a flip just like a tall child can.
+    final double spaceBelow =
+        constraints.maxHeight - _viewportMargin.bottom - (_targetPosition.dy + _targetSize.height) - _offset.dy;
+    final double spaceAbove = _targetPosition.dy - _viewportMargin.top - _offset.dy;
 
     // Constrain the child to the larger of the two sides instead of the full
     // overlay height, so tall (e.g. scrollable) content sizes to the most
     // space it can possibly get on either side of the target rather than
     // overflowing the screen.
     final childConstraints = BoxConstraints(
-      maxWidth: constraints.maxWidth,
+      maxWidth: math.max(0, constraints.maxWidth - _viewportMargin.horizontal),
       maxHeight: math.max(0, math.max(spaceBelow, spaceAbove) - _reservedNotchHeight),
     );
     child.layout(childConstraints, parentUsesSize: true);
@@ -253,7 +273,11 @@ class RenderSBBPopover extends RenderShiftedBox {
     // position before clamping, so it's kept (not dropped) when a
     // horizontal shift happens, it's just clamped along with everything else.
     double finalX = _targetPosition.dx + (_targetSize.width / 2) - (overallSize.width / 2) + _offset.dx;
-    finalX = clampDouble(finalX, 0, constraints.maxWidth - overallSize.width);
+    finalX = clampDouble(
+      finalX,
+      _viewportMargin.left,
+      math.max(_viewportMargin.left, constraints.maxWidth - overallSize.width - _viewportMargin.right),
+    );
 
     // Vertical positioning
     // Keep the preferred side as long as the box fits there; flip only when
@@ -277,9 +301,13 @@ class RenderSBBPopover extends RenderShiftedBox {
         : -overallSize.height + _targetPosition.dy - _offset.dy;
     // Safety net for the degenerate cases a flip can't solve (target partly
     // off-screen, or a box taller than either side): keep the box inside the
-    // overlay, mirroring the horizontal clamp above. The box may then overlap
-    // the target, but it never draws off-screen.
-    finalY = clampDouble(finalY, 0, math.max(0, constraints.maxHeight - overallSize.height));
+    // margin-shrunk overlay, mirroring the horizontal clamp above. The box
+    // may then overlap the target, but it never draws off-screen.
+    finalY = clampDouble(
+      finalY,
+      _viewportMargin.top,
+      math.max(_viewportMargin.top, constraints.maxHeight - overallSize.height - _viewportMargin.bottom),
+    );
 
     _popoverRect = Rect.fromLTWH(finalX, finalY, overallSize.width, overallSize.height);
 
