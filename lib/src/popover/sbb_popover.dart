@@ -16,6 +16,9 @@ import 'package:sbb_design_system_mobile/src/popover/sbb_popover_scope.dart';
 //
 // ---- RENDERING ----
 //
+// TODO: what happens when child content of SBBPopover is too small for notch to properly build?
+// --> It should not display a notch at all.
+//
 // TODO: fix stale assert message in SBBPopoverScope ('SBBAnchoredOverlayBuilder'
 //  does not exist) and decide what the scope is actually for — it duplicates
 //  data the layout already receives via constructor.

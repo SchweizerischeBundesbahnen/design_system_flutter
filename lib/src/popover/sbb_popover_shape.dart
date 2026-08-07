@@ -122,9 +122,9 @@ class SBBPopoverShapeBorder extends ShapeBorder {
     }
 
     // Apply the transformation operations
-    matrix.translate(target.dx, target.dy);
+    matrix.translateByDouble(target.dx, target.dy, 0, 1);
     matrix.rotateZ(angle);
-    matrix.translate(-w / 2, -h); // Center the local notch over its base before rotation
+    matrix.translateByDouble(-w / 2, -h, 0, 1); // Center the local notch over its base before rotation
 
     return localNotch.transform(matrix.storage);
   }
