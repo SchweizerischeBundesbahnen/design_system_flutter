@@ -12,15 +12,6 @@ import 'package:sbb_design_system_mobile/src/popover/render_sbb_popover.dart';
 // TODO: add theming & styling
 // TODO: docs & clean up
 // TODO: check accessibility
-//
-// ---- RENDERING ----
-//
-// TODO: fix stale assert message in SBBPopoverScope ('SBBAnchoredOverlayBuilder'
-//  does not exist) and decide what the scope is actually for — it duplicates
-//  data the layout already receives via constructor.
-//
-// TODO: override computeDryLayout / intrinsics on RenderSBBPopover. Harmless
-//  today (it always fills the overlay) but will surprise anyone wrapping it.
 
 class SBBPopover extends StatefulWidget {
   const SBBPopover({

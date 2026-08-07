@@ -185,6 +185,24 @@ class RenderSBBPopover extends RenderShiftedBox {
     _backgroundPainter = null;
   }
 
+  // This render object always fills the incoming constraints (it covers the
+  // whole overlay); its size never depends on the child.
+  @override
+  Size computeDryLayout(BoxConstraints constraints) => constraints.biggest;
+
+  // The preferred size for any given cross extent is unbounded.
+  @override
+  double computeMinIntrinsicWidth(double height) => 0.0;
+
+  @override
+  double computeMaxIntrinsicWidth(double height) => 0.0;
+
+  @override
+  double computeMinIntrinsicHeight(double width) => 0.0;
+
+  @override
+  double computeMaxIntrinsicHeight(double width) => 0.0;
+
   @override
   void performLayout() {
     size = constraints.biggest;
