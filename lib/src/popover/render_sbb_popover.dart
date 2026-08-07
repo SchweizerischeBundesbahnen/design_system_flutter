@@ -14,6 +14,7 @@ class SBBPopoverLayout extends SingleChildRenderObjectWidget {
     required this.triggerSize,
     required this.notch,
     this.offset = Offset.zero,
+    this.scaleAnimation,
     super.child,
   });
 
@@ -21,6 +22,15 @@ class SBBPopoverLayout extends SingleChildRenderObjectWidget {
   final Offset triggerGlobalPosition;
   final Size triggerSize;
   final SBBPopoverNotch notch;
+
+  /// Scales the popover box around the center of its trigger-facing edge.
+  ///
+  /// Applied at paint time inside the render object rather than with a
+  /// [ScaleTransition] above it, because this render object fills the whole
+  /// overlay — a widget-level transition would pivot around the screen, not
+  /// the popover. The resolved popover rect (and thus the correct pivot)
+  /// only exists after layout, in here.
+  final Animation<double>? scaleAnimation;
 
   /// Absolute offset between the trigger and the popover box.
   ///
@@ -38,6 +48,7 @@ class SBBPopoverLayout extends SingleChildRenderObjectWidget {
     triggerSize: triggerSize,
     notch: notch,
     offset: offset,
+    scaleAnimation: scaleAnimation,
   );
 
   @override
@@ -47,7 +58,8 @@ class SBBPopoverLayout extends SingleChildRenderObjectWidget {
       ..triggerGlobalPosition = triggerGlobalPosition
       ..triggerSize = triggerSize
       ..notch = notch
-      ..offset = offset;
+      ..offset = offset
+      ..scaleAnimation = scaleAnimation;
   }
 }
 
@@ -58,12 +70,14 @@ class RenderSBBPopover extends RenderShiftedBox {
     required Size triggerSize,
     required SBBPopoverNotch notch,
     required Offset offset,
+    Animation<double>? scaleAnimation,
     RenderBox? child,
   }) : _preferredDirection = preferredDirection,
        _triggerGlobalPosition = triggerGlobalPosition,
        _triggerSize = triggerSize,
        _notch = notch,
        _offset = offset,
+       _scaleAnimation = scaleAnimation,
        super(child);
 
   // Fixed notch gap reserved on the vertical axis, matching
@@ -110,6 +124,16 @@ class RenderSBBPopover extends RenderShiftedBox {
     if (_offset == value) return;
     _offset = value;
     markNeedsLayout();
+  }
+
+  Animation<double>? _scaleAnimation;
+
+  set scaleAnimation(Animation<double>? value) {
+    if (_scaleAnimation == value) return;
+    if (attached) _scaleAnimation?.removeListener(markNeedsPaint);
+    _scaleAnimation = value;
+    if (attached) _scaleAnimation?.addListener(markNeedsPaint);
+    markNeedsPaint();
   }
 
   /// The direction resolved during the most recent layout pass (after
@@ -196,8 +220,55 @@ class RenderSBBPopover extends RenderShiftedBox {
     return reservedNotchHeight;
   }
 
+  final LayerHandle<TransformLayer> _transformLayer = LayerHandle<TransformLayer>();
+
+  @override
+  void attach(PipelineOwner owner) {
+    super.attach(owner);
+    _scaleAnimation?.addListener(markNeedsPaint);
+  }
+
+  @override
+  void detach() {
+    _scaleAnimation?.removeListener(markNeedsPaint);
+    super.detach();
+  }
+
+  @override
+  void dispose() {
+    _transformLayer.layer = null;
+    super.dispose();
+  }
+
   @override
   void paint(PaintingContext context, Offset offset) {
+    final double scale = _scaleAnimation?.value ?? 1.0;
+    if (scale == 1.0) {
+      _transformLayer.layer = null;
+      _paintPopover(context, offset);
+      return;
+    }
+
+    // Scale around the center of the popover's trigger-facing edge (in this
+    // render object's local space — pushTransform maps it to the canvas via
+    // [offset]), so the popover grows out of / shrinks into its anchor point
+    // instead of the top center of the full-overlay-sized box this render
+    // object reports as its own size.
+    final Offset pivot = _direction == .bottom ? _popoverRect.topCenter : _popoverRect.bottomCenter;
+    final Matrix4 transform = Matrix4.identity()
+      ..translateByDouble(pivot.dx, pivot.dy, 0, 1)
+      ..scaleByDouble(scale, scale, 1, 1)
+      ..translateByDouble(-pivot.dx, -pivot.dy, 0, 1);
+    _transformLayer.layer = context.pushTransform(
+      needsCompositing,
+      offset,
+      transform,
+      _paintPopover,
+      oldLayer: _transformLayer.layer,
+    );
+  }
+
+  void _paintPopover(PaintingContext context, Offset offset) {
     final rect = _popoverRect.shift(offset);
     final path = SBBPopoverShapeBorder(
       direction: _direction,

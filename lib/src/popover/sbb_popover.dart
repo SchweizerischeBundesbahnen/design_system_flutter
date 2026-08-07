@@ -16,16 +16,6 @@ import 'package:sbb_design_system_mobile/src/popover/sbb_popover_scope.dart';
 //
 // ---- RENDERING ----
 //
-// TODO: fix scale animation pivot. ScaleTransition(alignment: .topCenter) wraps
-//  SBBPopoverLayout, but RenderSBBPopover reports size = constraints.biggest
-//  (the full overlay), so the scale is anchored at the SCREEN's top center —
-//  a popover near the bottom edge visibly slides in from the top of the screen.
-//  The resolved popover rect only exists inside the render object, so the
-//  widget layer can't know the correct pivot. Fix: apply the scale inside
-//  RenderSBBPopover.paint() via context.pushTransform around _popoverRect
-//  (drive it with an Animation passed into the render object), or restructure
-//  so the transition wraps something that is actually popover-sized.
-//
 // TODO: handle vertical fit beyond the binary flip. performLayout flips
 //  bottom<->top on collision but never verifies the flipped side actually
 //  fits, and finalY is never clamped (only finalX is). The child is laid out
@@ -198,19 +188,16 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
               ),
               FadeTransition(
                 opacity: _opacityAnimation,
-                child: ScaleTransition(
-                  alignment: .topCenter,
-                  scale: _scaleAnimation,
-                  child: SBBPopoverLayout(
-                    preferredDirection: widget.preferredDirection,
-                    triggerGlobalPosition: _triggerGlobalPosition,
-                    triggerSize: _triggerSize,
-                    notch: widget.notch,
-                    offset: widget.offset,
-                    child: Material(
-                      type: MaterialType.transparency,
-                      child: widget.builder(context, _hideOverlay),
-                    ),
+                child: SBBPopoverLayout(
+                  preferredDirection: widget.preferredDirection,
+                  triggerGlobalPosition: _triggerGlobalPosition,
+                  triggerSize: _triggerSize,
+                  notch: widget.notch,
+                  offset: widget.offset,
+                  scaleAnimation: _scaleAnimation,
+                  child: Material(
+                    type: MaterialType.transparency,
+                    child: widget.builder(context, _hideOverlay),
                   ),
                 ),
               ),
