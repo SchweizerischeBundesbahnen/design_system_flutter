@@ -16,13 +16,6 @@ import 'package:sbb_design_system_mobile/src/popover/sbb_popover_scope.dart';
 //
 // ---- RENDERING ----
 //
-// TODO: guard show/hide races and disposal. _hideOverlay awaits the reverse
-//  animation and then calls _overlayController.hide() — if the widget is
-//  disposed mid-animation (page popped) this resumes on a defunct state; and
-//  rapid show/hide taps race because isShowing stays true during the reverse.
-//  Fix: check mounted after the await and make show() interrupt an in-flight
-//  reverse (animate forward from current value instead of bailing out).
-//
 // TODO: fix or remove the half-implemented ShapeBorder parts.
 //  SBBPopoverShapeBorder.getInnerPath returns the outer path, paint() is
 //  empty, scale() is identity. Nothing calls them today (the ShapeDecoration
@@ -99,20 +92,22 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
   }
 
   void _showOverlay() {
+    final renderBox = _targetKey.currentContext?.findRenderObject() as RenderBox?;
+    // Use renderBox overlay as ancestor for multiple navigator positioning
+    final RenderObject? overlay = Overlay.of(context).context.findRenderObject();
+    _targetPosition = renderBox?.localToGlobal(Offset.zero, ancestor: overlay) ?? Offset.zero;
+    _targetSize = renderBox?.size ?? Size.zero;
     if (!_overlayController.isShowing) {
-      final renderBox = _targetKey.currentContext?.findRenderObject() as RenderBox?;
-      // Use renderBox overlay as ancestor for multiple navigator positioning
-      final RenderObject? overlay = Overlay.of(context).context.findRenderObject();
-      _targetPosition = renderBox?.localToGlobal(Offset.zero, ancestor: overlay) ?? Offset.zero;
-      _targetSize = renderBox?.size ?? Size.zero;
       _overlayController.show();
-      _animationController.forward();
     }
+    _animationController.forward();
   }
 
   Future<void> _hideOverlay() async {
+    if (!_overlayController.isShowing) return;
+    await _animationController.reverse();
+    if (!mounted) return;
     if (_overlayController.isShowing) {
-      await _animationController.reverse();
       _overlayController.hide();
     }
   }
