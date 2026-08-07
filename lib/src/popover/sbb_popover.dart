@@ -16,14 +16,6 @@ import 'package:sbb_design_system_mobile/src/popover/sbb_popover_scope.dart';
 //
 // ---- RENDERING ----
 //
-// TODO: don't swallow barrier taps in transparent notch areas. hitTestSelf
-//  uses _popoverRect.contains(position), but _popoverRect includes the
-//  reserved notch strip — a full-width 12px (24px for .both) transparent band
-//  of which only the ~36px bump is painted. Taps in that band and in the
-//  corners beside the notch are absorbed instead of dismissing. Fix: hit-test
-//  against the shape path (path.contains) or exclude the strip outside the
-//  notch bump.
-//
 // TODO: re-anchor the popover while open. _showOverlay captures
 //  localToGlobal(Offset.zero) once — scrolling, keyboard insets, rotation, or
 //  window resize leave the popover floating at a stale position. Consider
@@ -39,9 +31,8 @@ import 'package:sbb_design_system_mobile/src/popover/sbb_popover_scope.dart';
 //
 // TODO: move surface painting out of the render object. paint() fills the
 //  shape with hardcoded SBBColors.milk below the widget tree, so there is no
-//  dark-mode resolution, no elevation/shadow, no ink, and the path (incl. an
-//  expensive Path.combine union per notch) is rebuilt on every paint without
-//  caching. Fix: let RenderSBBPopover do positioning only and give the child a
+//  dark-mode resolution, no elevation/shadow, no ink.
+//  Fix: let RenderSBBPopover do positioning only and give the child a
 //  ShapeDecoration(shape: SBBPopoverShapeBorder(...), color/shadows from
 //  theme) in the widget layer — ShapeDecoration already fills getOuterPath and
 //  respects theme rebuilds. (Requires getInnerPath to return the properly

@@ -147,6 +147,11 @@ class RenderSBBPopover extends RenderShiftedBox {
   Rect get popoverRect => _popoverRect;
   Rect _popoverRect = Rect.zero;
 
+  // The popover's painted outline in local coordinates. Built once per layout
+  // pass (getOuterPath's Path.combine unions are not cheap) and shared by
+  // paint() and hitTestSelf().
+  Path _shapePath = Path();
+
   @override
   void performLayout() {
     size = constraints.biggest;
@@ -154,6 +159,7 @@ class RenderSBBPopover extends RenderShiftedBox {
     final RenderBox? child = this.child;
     if (child == null) {
       _popoverRect = Rect.zero;
+      _shapePath = Path();
       return;
     }
 
@@ -226,6 +232,12 @@ class RenderSBBPopover extends RenderShiftedBox {
       _direction = finalDirection;
       markNeedsPaint();
     }
+
+    _shapePath = SBBPopoverShapeBorder(
+      direction: finalDirection,
+      notch: _notch,
+      notchOffset: _notchOffset,
+    ).getOuterPath(_popoverRect);
   }
 
   double get _reservedNotchHeight {
@@ -286,13 +298,7 @@ class RenderSBBPopover extends RenderShiftedBox {
   }
 
   void _paintPopover(PaintingContext context, Offset offset) {
-    final rect = _popoverRect.shift(offset);
-    final path = SBBPopoverShapeBorder(
-      direction: _direction,
-      notch: _notch,
-      notchOffset: _notchOffset,
-    ).getOuterPath(rect);
-    context.canvas.drawPath(path, Paint()..color = SBBColors.milk);
+    context.canvas.drawPath(_shapePath.shift(offset), Paint()..color = SBBColors.milk);
     super.paint(context, offset);
   }
 
@@ -309,8 +315,14 @@ class RenderSBBPopover extends RenderShiftedBox {
     return triggerCenterX - _popoverRect.center.dx;
   }
 
+  // Test against the painted shape, not _popoverRect: the rect includes the
+  // reserved notch strip — a full-width transparent band of which only the
+  // notch bump is painted — plus the corner pixels outside the rounded
+  // corners. Taps there should fall through to the dismiss barrier instead
+  // of being swallowed. The rect check is just a cheap pre-filter before the
+  // more expensive path containment test.
   @override
-  bool hitTestSelf(Offset position) => _popoverRect.contains(position);
+  bool hitTestSelf(Offset position) => _popoverRect.contains(position) && _shapePath.contains(position);
 
   // RenderBox.hitTest()'s default implementation gates on
   // `size.contains(position)` before ever calling hitTestChildren/hitTestSelf.
