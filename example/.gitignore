@@ -46,8 +46,7 @@ app.*.map.json
 /android/app/.cxx/
 /android/.gradle/
 /ios/Flutter/flutter_export_environment.sh
-/ios/Flutter/ephemeral/flutter_lldb_helper.py
-/ios/Flutter/ephemeral/flutter_lldbinit
+/ios/Flutter/ephemeral/
 
 # we build for multiple flutter versions, hence we do not check in lock file
 /pubspec.lock

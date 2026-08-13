@@ -15,16 +15,29 @@ class _PopoverPageState extends State<PopoverPage> {
   // both ways of controlling an SBBPopover.
   final SBBPopoverController _centerPopoverController = SBBPopoverController();
 
-  SBBPopoverDirection _preferredDirection = SBBPopoverDirection.bottom;
+  SBBPopoverPlacement _placement = SBBPopoverPlacement.bottom;
   bool _notch = true;
   bool _alignNotchToTarget = true;
   bool _showCloseButton = true;
   String _popoverContentText = 'This is a transient popover view.';
 
-  List<SBBDropdownItem<SBBPopoverDirection>> get _directionItems => SBBPopoverDirection.values.map((dir) {
-    final label = dir.name.substring(0, 1).toUpperCase() + dir.name.substring(1);
-    return SBBDropdownItem(value: dir, label: label);
-  }).toList();
+  static const Map<String, SBBPopoverPlacement> _placements = {
+    'Top': SBBPopoverPlacement.top,
+    'Top Start': SBBPopoverPlacement.topStart,
+    'Top End': SBBPopoverPlacement.topEnd,
+    'Bottom': SBBPopoverPlacement.bottom,
+    'Bottom Start': SBBPopoverPlacement.bottomStart,
+    'Bottom End': SBBPopoverPlacement.bottomEnd,
+    'Left': SBBPopoverPlacement.left,
+    'Left Start': SBBPopoverPlacement.leftStart,
+    'Left End': SBBPopoverPlacement.leftEnd,
+    'Right': SBBPopoverPlacement.right,
+    'Right Start': SBBPopoverPlacement.rightStart,
+    'Right End': SBBPopoverPlacement.rightEnd,
+  };
+
+  List<SBBDropdownItem<SBBPopoverPlacement>> get _placementItems =>
+      _placements.entries.map((entry) => SBBDropdownItem(value: entry.value, label: entry.key)).toList();
 
   @override
   void dispose() {
@@ -55,13 +68,13 @@ class _PopoverPageState extends State<PopoverPage> {
       children: SBBDivider.divideItems(
         context: context,
         items: [
-          SBBDropdown<SBBPopoverDirection>(
-            triggerDecoration: const SBBInputDecoration(labelText: 'Preferred Direction'),
-            selectedItem: _preferredDirection,
-            items: _directionItems,
+          SBBDropdown<SBBPopoverPlacement>(
+            triggerDecoration: const SBBInputDecoration(labelText: 'Preferred Placement'),
+            selectedItem: _placement,
+            items: _placementItems,
             onChanged: (value) {
               if (value != null) {
-                setState(() => _preferredDirection = value);
+                setState(() => _placement = value);
               }
             },
           ),
@@ -100,18 +113,21 @@ class _PopoverPageState extends State<PopoverPage> {
         child: Center(
           child: SBBPopover(
             controller: _centerPopoverController,
-            preferredDirection: _preferredDirection,
+            placement: _placement,
             showNotch: _notch,
             alignNotchToTarget: _alignNotchToTarget,
             showCloseButton: _showCloseButton,
             titleText: 'Popover Title',
             leadingIconData: SBBIcons.circle_information_small,
-            offset: Offset(0, 8),
-            targetBuilder: (context, showPopover) => SBBSecondaryButton(
-              labelText: 'Open Center Popover',
-              onPressed: _centerPopoverController.show,
+            offset: const Offset(0, 8),
+            targetBuilder: (context, showPopover) => ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: 500),
+              child: SBBSecondaryButton(
+                labelText: 'Open Center Popover',
+                onPressed: _centerPopoverController.show,
+              ),
             ),
-            builder: (context, hidePopover) => Text(_popoverContentText, style: SBBTextStyles.mediumLight),
+            builder: (context, hidePopover) => SBBTextInput(),
           ),
         ),
       ),
@@ -126,7 +142,7 @@ class _PopoverPageState extends State<PopoverPage> {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SBBPopover(
-              preferredDirection: _preferredDirection,
+              placement: _placement,
               showNotch: _notch,
               alignNotchToTarget: _alignNotchToTarget,
               showCloseButton: _showCloseButton,
@@ -140,7 +156,7 @@ class _PopoverPageState extends State<PopoverPage> {
               ),
             ),
             SBBPopover(
-              preferredDirection: _preferredDirection,
+              placement: _placement,
               showNotch: _notch,
               alignNotchToTarget: _alignNotchToTarget,
               showCloseButton: _showCloseButton,
