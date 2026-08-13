@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// The default checkbox theme is specified using the

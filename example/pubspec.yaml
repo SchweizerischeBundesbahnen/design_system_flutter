@@ -13,15 +13,16 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
+  # https://pub.dev/packages/material_ui
+  material_ui: ^1.0.0
+  # https://pub.dev/packages/cupertino_ui
+  cupertino_ui: ^1.0.0
   # https://pub.dev/packages/provider
   provider: ^6.1.5+1
-
   # https://pub.dev/packages/animations
   animations: ^2.2.0
-
   # https://pub.dev/packages/flutter_svg
   flutter_svg: ^2.3.0
-
   # https://pub.dev/packages/intl
   intl: ^0.20.2
 

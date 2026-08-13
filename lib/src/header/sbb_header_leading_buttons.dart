@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sbb_design_system_mobile/src/header/sbb_header_style_scope.dart';
 import 'package:sbb_design_system_mobile/src/header/theme/default_sbb_header_theme_data.dart';
 

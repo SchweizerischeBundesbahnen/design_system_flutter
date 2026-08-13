@@ -1,8 +1,8 @@
 import 'dart:math' as math;
 import 'dart:ui' show lerpDouble;
 
-import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/input/decoration/sbb_decoration.dart';
 import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_input_decoration_theme_data.dart';
@@ -492,26 +492,17 @@ class _RenderSBBDecorationLayout {
 // The workhorse
 class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMixin<_SBBDecorationSlot, RenderBox> {
   _RenderSBBDecoration({
-    required SBBDecoration decoration,
-    required bool expands,
-    required bool isMultiline,
-    required bool isEmpty,
-    required double floatingLabelProgress,
-    required double floatingLabelInputGap,
-    required double minInputHeight,
-    required double minTotalHeight,
-    required EdgeInsetsGeometry contentPadding,
-    double? maxLabelHeight,
-  }) : _decoration = decoration,
-       _expands = expands,
-       _isMultiline = isMultiline,
-       _isEmpty = isEmpty,
-       _floatingLabelProgress = floatingLabelProgress,
-       _floatingLabelInputGap = floatingLabelInputGap,
-       _minInputHeight = minInputHeight,
-       _minTotalHeight = minTotalHeight,
-       _maxLabelHeight = maxLabelHeight,
-       _contentPadding = contentPadding;
+    required this._decoration,
+    required this._expands,
+    required this._isMultiline,
+    required this._isEmpty,
+    required this._floatingLabelProgress,
+    required this._floatingLabelInputGap,
+    required this._minInputHeight,
+    required this._minTotalHeight,
+    required this._contentPadding,
+    this._maxLabelHeight,
+  });
 
   RenderBox? get label => childForSlot(.label);
 

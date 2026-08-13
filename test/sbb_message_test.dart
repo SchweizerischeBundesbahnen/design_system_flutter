@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
@@ -17,8 +17,7 @@ void main() {
     'message_test_1',
     const SBBMessage(
       titleText: 'Default',
-      subtitleText:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
+      subtitleText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
     ),
   );
 
@@ -26,8 +25,7 @@ void main() {
     'message_test_2',
     SBBMessage(
       titleText: 'With illustration',
-      subtitleText:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
+      subtitleText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
       illustration: SBBIllustration.staffFemale(),
     ),
   );
@@ -36,8 +34,7 @@ void main() {
     'message_test_3',
     SBBMessage(
       titleText: 'With interaction',
-      subtitleText:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
+      subtitleText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
       action: SBBTertiaryButton(onPressed: () {}, iconData: SBBIcons.arrows_circle_small),
     ),
   );
@@ -46,8 +43,7 @@ void main() {
     'message_test_4',
     SBBMessage(
       titleText: 'With interaction and illustration',
-      subtitleText:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
+      subtitleText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
       illustration: SBBIllustration.staffMale(),
       action: SBBTertiaryButton(onPressed: () {}, iconData: SBBIcons.arrows_circle_small),
     ),
@@ -57,8 +53,7 @@ void main() {
     'message_test_5',
     SBBMessage(
       titleText: 'Default, custom icon',
-      subtitleText:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
+      subtitleText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
       action: SBBTertiaryButton(onPressed: () {}, iconData: SBBIcons.three_adults_small),
     ),
   );
@@ -67,8 +62,7 @@ void main() {
     'message_test_6',
     SBBMessage(
       titleText: 'Error, no interaction',
-      subtitleText:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
+      subtitleText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
       errorText: 'Fehlercode: XYZ-9999',
       illustration: SBBIllustration.display(),
     ),
@@ -78,8 +72,7 @@ void main() {
     'message_test_7',
     SBBMessage(
       titleText: 'Error, with interaction',
-      subtitleText:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
+      subtitleText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
       errorText: 'Fehlercode: XYZ-9999',
       illustration: SBBIllustration.display(),
       action: SBBTertiaryButton(onPressed: () {}, iconData: SBBIcons.arrows_circle_small),
@@ -90,8 +83,7 @@ void main() {
     'message_test_8',
     SBBMessage(
       title: Container(color: SBBColors.turquoise, child: Text('Custom')),
-      subtitleText:
-          'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
+      subtitleText: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque vulputate massa ut ex fringilla, vel rutrum nulla pretium. Vivamus auctor ex sed nunc maximus.',
       illustration: Container(alignment: .center, width: 100, height: 100, color: SBBColors.red),
     ),
   );

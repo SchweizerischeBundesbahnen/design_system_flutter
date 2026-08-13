@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 // Layout constants
 const pickerItemDefaultHeight = 30.0;

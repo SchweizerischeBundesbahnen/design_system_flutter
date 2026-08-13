@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// The default bottom sheet theme specified using design system values.

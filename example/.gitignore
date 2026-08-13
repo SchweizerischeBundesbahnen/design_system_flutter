@@ -58,3 +58,4 @@ app.*.map.json
 /android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java
 /ios/Runner/GeneratedPluginRegistrant.m
 /android/local.properties
+flutter_native_integration.env

@@ -9,8 +9,11 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 /// The [context] is the build context of the promotion box and [style] is the fully resolved [SBBPromotionBoxStyle].
 /// The [child] is typically a descendant of the returned widget
 /// and will be wrapped in an InkWell for the [SBBPromotionBox.onTap] handling.
-typedef SBBPromotionBoxBackgroundBuilder =
-    Widget Function(BuildContext context, SBBPromotionBoxStyle style, Widget child);
+typedef SBBPromotionBoxBackgroundBuilder = Widget Function(
+  BuildContext context,
+  SBBPromotionBoxStyle style,
+  Widget child,
+);
 
 /// Defines the visual properties of [SBBPromotionBox].
 ///

@@ -9,8 +9,8 @@ topics: [ icons, theme, design, design-system ]
 version: 5.0.0 # automatically set by GH Action 
 
 environment:
-  sdk: '^3.10.0'
-  flutter: '>=3.38.1'
+  sdk: '^3.13.0'
+  flutter: '>=3.47.0'
 
 dependencies:
   flutter:
@@ -20,6 +20,10 @@ dependencies:
   intl: ^0.20.2
   # https://pub.dev/packages/collection
   collection: ^1.19.1
+  # https://pub.dev/packages/material_ui
+  material_ui: ^1.0.0
+  # https://pub.dev/packages/cupertino_ui
+  cupertino_ui: ^1.0.0
 
 dev_dependencies:
   flutter_test:

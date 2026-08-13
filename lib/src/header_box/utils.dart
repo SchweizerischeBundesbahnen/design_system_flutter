@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Returns the height of [widget] if it is not null, calculates the height if a [fallbackText] is given, and otherwise
 /// returns 0.0.

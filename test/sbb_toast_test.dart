@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/toast/default_toast_body.dart';
@@ -36,15 +36,13 @@ void main() {
         ToastScope(
           stream: stream3,
           child: DefaultToastBody(
-            titleText:
-                'Toast with multiple lines that should only expand to two lines. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum accumsan sem sit amet diam ornare ornare. Cras a justo neque. Proin enim lacus, hendrerit eu turpis quis, semper aliquet enim. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nam dictum ligula nec risus euismod, vel tincidunt nibh interdum. Donec neque tortor, viverra eget tristique non, cursus quis turpis. Morbi viverra id justo nec blandit. Nunc posuere dapibus mauris, ut sodales arcu dignissim a. Vivamus et orci id turpis ullamcorper varius eu vitae neque. Integer et auctor risus. Aenean vitae tincidunt tellus, nec eleifend ex. Maecenas ut erat eget tellus luctus porttitor et eget nisi.',
+            titleText: 'Toast with multiple lines that should only expand to two lines. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum accumsan sem sit amet diam ornare ornare. Cras a justo neque. Proin enim lacus, hendrerit eu turpis quis, semper aliquet enim. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nam dictum ligula nec risus euismod, vel tincidunt nibh interdum. Donec neque tortor, viverra eget tristique non, cursus quis turpis. Morbi viverra id justo nec blandit. Nunc posuere dapibus mauris, ut sodales arcu dignissim a. Vivamus et orci id turpis ullamcorper varius eu vitae neque. Integer et auctor risus. Aenean vitae tincidunt tellus, nec eleifend ex. Maecenas ut erat eget tellus luctus porttitor et eget nisi.',
           ),
         ),
         ToastScope(
           stream: stream4,
           child: DefaultToastBody(
-            titleText:
-                'Toast with multiple lines that should only expand to two lines with an action. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum accumsan sem sit amet diam ornare ornare. Cras a justo neque. Proin enim lacus, hendrerit eu turpis quis, semper aliquet enim. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nam dictum ligula nec risus euismod, vel tincidunt nibh interdum. Donec neque tortor, viverra eget tristique non, cursus quis turpis. Morbi viverra id justo nec blandit. Nunc posuere dapibus mauris, ut sodales arcu dignissim a. Vivamus et orci id turpis ullamcorper varius eu vitae neque. Integer et auctor risus. Aenean vitae tincidunt tellus, nec eleifend ex. Maecenas ut erat eget tellus luctus porttitor et eget nisi.',
+            titleText: 'Toast with multiple lines that should only expand to two lines with an action. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum accumsan sem sit amet diam ornare ornare. Cras a justo neque. Proin enim lacus, hendrerit eu turpis quis, semper aliquet enim. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Nam dictum ligula nec risus euismod, vel tincidunt nibh interdum. Donec neque tortor, viverra eget tristique non, cursus quis turpis. Morbi viverra id justo nec blandit. Nunc posuere dapibus mauris, ut sodales arcu dignissim a. Vivamus et orci id turpis ullamcorper varius eu vitae neque. Integer et auctor risus. Aenean vitae tincidunt tellus, nec eleifend ex. Maecenas ut erat eget tellus luctus porttitor et eget nisi.',
             action: SBBToastAction(onTap: () {}, title: 'Action'),
           ),
         ),

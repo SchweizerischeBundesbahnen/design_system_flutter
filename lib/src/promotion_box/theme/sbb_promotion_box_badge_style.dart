@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Defines the visual properties of the badge shown on top of [SBBPromotionBox].
 class SBBPromotionBoxBadgeStyle {

@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 import 'package:sbb_design_system_mobile/src/shared/utils.dart';
@@ -69,11 +69,10 @@ class SBBStepper extends StatelessWidget {
     required this.steps,
     required this.activeStep,
     required this.onStepPressed,
-    required bool isFilledStyle,
+    required this._isFilledStyle,
     this.style,
   }) : assert(steps.length >= 2, 'needs at least two steps to work'),
-       assert(activeStep >= 0 && activeStep < steps.length, 'activeStep needs to be in range of steps'),
-       _isFilledStyle = isFilledStyle;
+       assert(activeStep >= 0 && activeStep < steps.length, 'activeStep needs to be in range of steps');
 
   /// The list of steps shown by this stepper.
   ///
@@ -368,19 +367,14 @@ class _EdgeClampedCentered extends SingleChildRenderObjectWidget {
 /// Render object used by [_EdgeClampedCentered].
 class _RenderEdgeClampedCenterX extends RenderShiftedBox {
   _RenderEdgeClampedCenterX({
-    required int activeStep,
-    required int stepsCount,
-    required double stepCircleSize,
+    required this._activeStep,
+    required this._stepsCount,
+    required this._stepCircleSize,
     RenderBox? child,
-  }) : _stepCircleSize = stepCircleSize,
-       _activeStep = activeStep,
-       _stepsCount = stepsCount,
-       super(child);
+  }) : super(child);
 
   double _stepCircleSize;
-
   int _activeStep;
-
   int _stepsCount;
 
   /// Desired horizontal center of the child in the parent's coordinate space.

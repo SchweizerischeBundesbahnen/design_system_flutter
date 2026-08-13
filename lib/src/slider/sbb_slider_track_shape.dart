@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Custom track shape to get even height for active and inactive track on [RoundedRectSliderTrackShape].
 class EvenRoundedRectSliderTrackShape extends RoundedRectSliderTrackShape {

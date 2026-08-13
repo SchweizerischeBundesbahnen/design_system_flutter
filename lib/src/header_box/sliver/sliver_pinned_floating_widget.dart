@@ -1,8 +1,8 @@
 import 'dart:math';
 import 'dart:ui';
 
-import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:material_ui/material_ui.dart';
 
 const _kQuickSnapTime = Duration(milliseconds: 500);
 const _kSmallValue = 1.0;
@@ -55,12 +55,12 @@ class RenderSliverPinnedFloatingWidget extends RenderSliverSingleBoxAdapter {
   /// Creates a [RenderSliverPinnedFloatingWidget] that wraps a [RenderBox].
   RenderSliverPinnedFloatingWidget({
     required this.animationStyle,
-    TickerProvider? vsync,
     this.snapMode = .scroll,
     this.resizing = true,
     this.floating = true,
+    this._vsync,
     super.child,
-  }) : _vsync = vsync;
+  });
 
   // Configured by the widget
   AnimationStyle? animationStyle;

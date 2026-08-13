@@ -1,7 +1,7 @@
 import 'dart:math';
 import 'dart:ui' as ui;
 
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Represents the curves that define the shape of a tab in an animated tab bar,
 /// particularly for a "wave" or "liquid" like animation.
