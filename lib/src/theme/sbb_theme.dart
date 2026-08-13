@@ -17,6 +17,7 @@ import 'package:sbb_design_system_mobile/src/message/theme/default_sbb_message_t
 import 'package:sbb_design_system_mobile/src/notification_box/theme/default_sbb_notification_box_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/paginator/theme/default_sbb_paginator_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/picker/theme/default_sbb_picker_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/popover/theme/default_sbb_popover_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/popup/theme/default_sbb_popup_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/promotion_box/theme/default_sbb_promotion_box_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/radio/theme/default_sbb_radio_theme_data.dart';
@@ -99,6 +100,7 @@ class SBBTheme {
     SBBMessageThemeData? messageTheme,
     SBBPaginatorThemeData? paginatorTheme,
     SBBPickerThemeData? pickerTheme,
+    SBBPopoverThemeData? popoverTheme,
     SBBPopupThemeData? popupTheme,
     SBBPromotionBoxThemeData? promotionBoxTheme,
     SBBRadioThemeData? radioTheme,
@@ -133,6 +135,7 @@ class SBBTheme {
     messageTheme: messageTheme,
     paginatorTheme: paginatorTheme,
     pickerTheme: pickerTheme,
+    popoverTheme: popoverTheme,
     popupTheme: popupTheme,
     promotionBoxTheme: promotionBoxTheme,
     radioTheme: radioTheme,
@@ -173,6 +176,7 @@ class SBBTheme {
     SBBMessageThemeData? messageTheme,
     SBBPaginatorThemeData? paginatorTheme,
     SBBPickerThemeData? pickerTheme,
+    SBBPopoverThemeData? popoverTheme,
     SBBPopupThemeData? popupTheme,
     SBBPromotionBoxThemeData? promotionBoxTheme,
     SBBRadioThemeData? radioTheme,
@@ -206,6 +210,7 @@ class SBBTheme {
     messageTheme: messageTheme,
     paginatorTheme: paginatorTheme,
     pickerTheme: pickerTheme,
+    popoverTheme: popoverTheme,
     popupTheme: popupTheme,
     promotionBoxTheme: promotionBoxTheme,
     radioTheme: radioTheme,
@@ -249,6 +254,7 @@ class SBBTheme {
     SBBMessageThemeData? messageTheme,
     SBBPaginatorThemeData? paginatorTheme,
     SBBPickerThemeData? pickerTheme,
+    SBBPopoverThemeData? popoverTheme,
     SBBPopupThemeData? popupTheme,
     SBBPromotionBoxThemeData? promotionBoxTheme,
     SBBRadioThemeData? radioTheme,
@@ -312,6 +318,9 @@ class SBBTheme {
 
     final defaultNotificationBoxTheme = DefaultSBBNotificationBoxThemeData(baseStyle: mergedBaseStyle);
     final mergedNotificationBoxTheme = defaultNotificationBoxTheme.merge(notificationBoxTheme);
+
+    final defaultPopoverTheme = DefaultSBBPopoverThemeData(mergedBaseStyle);
+    final mergedPopoverTheme = defaultPopoverTheme.merge(popoverTheme);
 
     final defaultPopupTheme = DefaultSBBPopupThemeData(mergedBaseStyle);
     final mergedPopupTheme = defaultPopupTheme.merge(popupTheme);
@@ -388,6 +397,7 @@ class SBBTheme {
       notificationBoxTheme: mergedNotificationBoxTheme,
       paginatorTheme: mergedPaginatorTheme,
       pickerTheme: mergedPickerTheme,
+      popoverTheme: mergedPopoverTheme,
       popupTheme: mergedPopupTheme,
       promotionBoxTheme: mergedPromotionBoxTheme,
       radioTheme: mergedRadioTheme,
@@ -424,6 +434,7 @@ class SBBTheme {
     required SBBNotificationBoxThemeData notificationBoxTheme,
     required SBBPaginatorThemeData paginatorTheme,
     required SBBPickerThemeData pickerTheme,
+    required SBBPopoverThemeData popoverTheme,
     required SBBPopupThemeData popupTheme,
     required SBBPromotionBoxThemeData promotionBoxTheme,
     required SBBRadioThemeData radioTheme,
@@ -484,6 +495,7 @@ class SBBTheme {
         notificationBoxTheme,
         paginatorTheme,
         pickerTheme,
+        popoverTheme,
         popupTheme,
         promotionBoxTheme,
         radioTheme,

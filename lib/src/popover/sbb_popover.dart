@@ -1,15 +1,39 @@
+import 'dart:math' as math;
+import 'dart:ui' show FlutterView;
+
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/popover/render_sbb_popover.dart';
 import 'package:sbb_design_system_mobile/src/popover/sbb_popover_notch.dart';
 import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 
-// TODO: add targetAlignment and alignment
-// TODO: check how everything works with keyboard
-// TODO: add theming & styling
-// TODO: docs & clean up
-// TODO: check accessibility
+// Deferred follow-ups (not v1, see tasks/plan.md "Phase 3"):
+// - Focus trap: Tab/Shift-Tab can still traverse onto the (barrier-obscured)
+//   page behind the popover.
+// - Screen-reader routing: VoiceOver/TalkBack focus doesn't jump into the
+//   popover on open (no route semantics yet).
 
+/// A popover anchored to a target widget, displayed in the enclosing
+/// [Overlay] above a modal barrier.
+///
+/// The popover positions itself on the [placement]'s edge of the target and
+/// handles viewport collisions the same way Floating UI does: if the box
+/// doesn't fit on the preferred edge (and the opposite side offers more
+/// room), it flips to the other side (<https://floating-ui.com/docs/flip>);
+/// along the edge it shifts as far as needed to stay inside the viewport
+/// (<https://floating-ui.com/docs/shift>), with the notch continuing to
+/// point at the target.
+///
+/// The popover is shown via the `showPopover` callback passed to
+/// [targetBuilder], or programmatically through a [controller]. It is
+/// dismissed by tapping the barrier or the close button, pressing Escape
+/// (all only if [isDismissible] allows), or through the controller.
+///
+/// While open, the popover keeps clear of the safe area and the on-screen
+/// keyboard — re-anchoring to the target when a keyboard-driven resize
+/// (e.g. a Scaffold avoiding the keyboard) moves it — and hides itself when
+/// the screen geometry changes (rotation, window resize) since its captured
+/// target position would be stale.
 class SBBPopover extends StatefulWidget {
   const SBBPopover({
     super.key,
@@ -23,13 +47,14 @@ class SBBPopover extends StatefulWidget {
     this.trailing,
     this.trailingIconData,
     this.showCloseButton = true,
-    this.preferredDirection = .bottom,
+    this.placement = .bottom,
     this.isDismissible = true,
     this.barrierLabel,
     this.showNotch = true,
     this.alignNotchToTarget = true,
     this.offset = Offset.zero,
     this.viewportMargin = const .all(SBBSpacing.xSmall),
+    this.style,
   }) : assert(title == null || titleText == null, 'Only title or titleText can be set!'),
        assert(leading == null || leadingIconData == null, 'Only leading or leadingIconData can be set!'),
        assert(trailing == null || trailingIconData == null, 'Only trailing or trailingIconData can be set!');
@@ -96,7 +121,23 @@ class SBBPopover extends StatefulWidget {
   /// Defaults to true.
   final bool showCloseButton;
 
-  final SBBPopoverDirection preferredDirection;
+  /// The preferred placement of the popover relative to the target: an edge
+  /// plus an alignment along that edge, e.g. [SBBPopoverPlacement.bottomStart].
+  ///
+  /// The edge is a preference — when the popover doesn't fit there and the
+  /// opposite side of the target offers more room, it flips
+  /// (<https://floating-ui.com/docs/flip> demonstrates the behavior live).
+  /// The alignment is kept as well as possible: the popover shifts along the
+  /// edge only as far as viewport collisions require
+  /// (<https://floating-ui.com/docs/shift>).
+  ///
+  /// Defaults to [SBBPopoverPlacement.bottom].
+  final SBBPopoverPlacement placement;
+
+  /// Whether the popover can be dismissed by the user — by tapping the
+  /// barrier, pressing Escape, or through the close button.
+  ///
+  /// Defaults to true.
   final bool isDismissible;
 
   /// The semantic label announced by screen readers for the barrier behind
@@ -110,20 +151,24 @@ class SBBPopover extends StatefulWidget {
   /// edge of the popover facing the target.
   final bool showNotch;
 
-  /// Whether the notch shifts horizontally to stay pointed at the target's
-  /// center when the popover box is shifted sideways to avoid a screen-edge
+  /// Whether the notch shifts along its edge to stay pointed at the target's
+  /// center when the popover box is shifted to avoid a viewport-edge
   /// collision. When false, the notch stays centered on the popover box.
   ///
   /// Only has an effect when [showNotch] is true.
   final bool alignNotchToTarget;
 
-  /// Absolute offset between the target and the popover box.
+  /// Nudges the popover away from its default position, in logical pixels.
   ///
-  /// The y component is defined relative to whichever edge ends up facing
-  /// the target: a positive value always pushes the box further away from
-  /// the target, so it's automatically inverted when a screen-edge
-  /// collision flips the resolved direction. The x component is applied
-  /// as-is and composes with any horizontal shift from edge clamping.
+  /// [Offset.dy] is the main-axis gap between the target and the popover
+  /// box: a positive value always pushes the box further away from the
+  /// target, on whichever edge it ends up — so it's automatically inverted
+  /// when a viewport collision flips the resolved edge.
+  ///
+  /// [Offset.dx] is the cross-axis nudge along the aligned edge, applied on
+  /// top of [placement]'s alignment. Composes with any shift from viewport
+  /// clamping. Positive values move toward the cross axis's end: to the
+  /// right for top/bottom placements, downward for left/right ones.
   final Offset offset;
 
   /// Minimum empty space to keep between the popover box and the enclosing
@@ -131,15 +176,22 @@ class SBBPopover extends StatefulWidget {
   ///
   /// Edge clamping (and the per-side space budgets driving the flip
   /// decision) treat the viewport shrunk by this margin as the usable area.
+  /// Where the safe area or the on-screen keyboard inset an edge further
+  /// than this margin, the larger of the two applies.
   ///
   /// Defaults to [SBBSpacing.xSmall] on all sides.
   final EdgeInsets viewportMargin;
+
+  /// Per-instance style overrides.
+  ///
+  /// Non-null properties override the ambient [SBBPopoverThemeData.style].
+  final SBBPopoverStyle? style;
 
   @override
   State<SBBPopover> createState() => _SBBPopoverState();
 }
 
-class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateMixin {
+class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateMixin, WidgetsBindingObserver {
   final GlobalKey _targetKey = GlobalKey();
 
   SBBPopoverController? _internalController;
@@ -158,11 +210,29 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
   Offset _targetPosition = Offset.zero;
   Size _targetSize = Size.zero;
 
+  /// The view (and its size) the popover was shown in — when the view's size
+  /// changes while the popover is open (rotation, window resize), the
+  /// captured target geometry is stale and the popover dismisses itself.
+  FlutterView? _viewAtShow;
+  Size _viewSizeAtShow = Size.zero;
+
+  /// The node focused before the popover opened; focus returns to it when
+  /// the popover closes.
+  FocusNode? _previousFocus;
+
+  /// Takes focus when the popover opens, so hardware-keyboard events (e.g.
+  /// Escape) land inside the popover instead of on the page behind it.
+  /// Requested explicitly rather than via autofocus — autofocus only takes
+  /// effect while nothing else holds focus, which is rarely the case when a
+  /// popover opens from an interactive page.
+  final FocusNode _popoverFocusNode = FocusNode(debugLabel: 'SBBPopover');
+
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _animationController = AnimationController(
-      duration: Duration(milliseconds: 300),
+      duration: const Duration(milliseconds: 300),
       vsync: this,
     );
     _opacityAnimation = Tween<double>(
@@ -187,6 +257,50 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
     }
   }
 
+  // Dismiss on rotation/window resize: the target geometry captured at
+  // show-time is stale the moment the view's size changes, and a popover
+  // floating at a stale position is worse than a closed one (same behavior
+  // as Material menus). Keyboard appearance changes viewInsets, not the
+  // view's size, so typing inside the popover doesn't dismiss it — instead
+  // the popover re-anchors: a resizing ancestor (e.g. a Scaffold avoiding
+  // the keyboard) may move the target during the upcoming frame, so its
+  // geometry is re-captured once that frame's layout has run, and the
+  // rebuild picks up the new insets in [_effectiveViewportMargin].
+  @override
+  void didChangeMetrics() {
+    final view = _viewAtShow;
+    if (view == null || !_overlayController.isShowing) return;
+    if (view.physicalSize != _viewSizeAtShow) {
+      _effectiveController.hide();
+      return;
+    }
+    _scheduleReanchor();
+  }
+
+  bool _reanchorScheduled = false;
+
+  void _scheduleReanchor() {
+    if (_reanchorScheduled) return;
+    _reanchorScheduled = true;
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _reanchorScheduled = false;
+      if (!mounted || !_overlayController.isShowing) return;
+      setState(_captureTargetGeometry);
+    });
+  }
+
+  /// Captures the target's geometry in the enclosing [Overlay]'s coordinate
+  /// space. Keeps the previous values if the target has no laid-out render
+  /// box right now.
+  void _captureTargetGeometry() {
+    final renderBox = _targetKey.currentContext?.findRenderObject() as RenderBox?;
+    if (renderBox == null || !renderBox.attached || !renderBox.hasSize) return;
+    // Use renderBox overlay as ancestor for multiple navigator positioning
+    final RenderObject? overlay = Overlay.of(context).context.findRenderObject();
+    _targetPosition = renderBox.localToGlobal(Offset.zero, ancestor: overlay);
+    _targetSize = renderBox.size;
+  }
+
   void _handleControllerChange() {
     if (_effectiveController.value) {
       _showOverlay();
@@ -208,14 +322,19 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
   }
 
   void _showOverlay() {
-    final renderBox = _targetKey.currentContext?.findRenderObject() as RenderBox?;
-    // Use renderBox overlay as ancestor for multiple navigator positioning
-    final RenderObject? overlay = Overlay.of(context).context.findRenderObject();
-    _targetPosition = renderBox?.localToGlobal(Offset.zero, ancestor: overlay) ?? Offset.zero;
-    _targetSize = renderBox?.size ?? Size.zero;
+    _captureTargetGeometry();
+    final view = View.of(context);
+    _viewAtShow = view;
+    _viewSizeAtShow = view.physicalSize;
+    _previousFocus = FocusManager.instance.primaryFocus;
     if (!_overlayController.isShowing) {
       _overlayController.show();
     }
+    // The overlay child only mounts with the next frame — the focus node has
+    // no context to focus before then.
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted && _overlayController.isShowing) _popoverFocusNode.requestFocus();
+    });
     _animationController.forward();
   }
 
@@ -226,41 +345,48 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
     if (_overlayController.isShowing) {
       _overlayController.hide();
     }
+    _restorePreviousFocus();
+  }
+
+  void _restorePreviousFocus() {
+    final previousFocus = _previousFocus;
+    _previousFocus = null;
+    if (previousFocus != null && previousFocus.context?.mounted == true && previousFocus.canRequestFocus) {
+      previousFocus.requestFocus();
+    }
   }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _effectiveController.removeListener(_handleControllerChange);
     _animationController.dispose();
     _internalController?.dispose();
+    _popoverFocusNode.dispose();
     super.dispose();
   }
 
   /// Assembles the popover content: an optional header row (mirroring
   /// [SBBBottomSheet]'s contract) above the [SBBPopover.builder] body.
-  ///
-  /// Style values are taken from the base style for now — dedicated popover
-  /// theming is a separate TODO.
-  Widget _buildContent(BuildContext context) {
-    final baseStyle = Theme.of(context).sbbBaseStyle;
-    const padding = EdgeInsets.symmetric(horizontal: SBBSpacing.medium, vertical: SBBSpacing.small);
+  Widget _buildContent(BuildContext context, SBBPopoverStyle style) {
+    final padding = style.padding ?? EdgeInsets.zero;
 
     final body = widget.builder(context, _effectiveController.hide);
 
     final titleWidget = addDefaultAncestorWithResolved(
       child: widget.title ?? (widget.titleText != null ? Text(widget.titleText!) : null),
-      foregroundColor: baseStyle.colorScheme.textPrimary,
-      textStyle: baseStyle.textTheme.largeLight,
+      foregroundColor: style.titleForegroundColor,
+      textStyle: style.titleTextStyle,
     );
     final leadingWidget = addDefaultAncestorWithResolved(
       child: widget.leading ?? (widget.leadingIconData != null ? Icon(widget.leadingIconData) : null),
-      foregroundColor: baseStyle.colorScheme.iconPrimary,
-      textStyle: baseStyle.textTheme.defaultTextStyle,
+      foregroundColor: style.leadingForegroundColor,
+      textStyle: style.leadingTextStyle,
     );
     final trailingWidget = addDefaultAncestorWithResolved(
       child: widget.trailing ?? (widget.trailingIconData != null ? Icon(widget.trailingIconData) : null),
-      foregroundColor: baseStyle.colorScheme.iconPrimary,
-      textStyle: baseStyle.textTheme.defaultTextStyle,
+      foregroundColor: style.trailingForegroundColor,
+      textStyle: style.trailingTextStyle,
     );
     final closeButton = widget.isDismissible && widget.showCloseButton ? _closeButton(context) : null;
 
@@ -307,35 +433,86 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
     ),
   );
 
+  /// Hardware-keyboard support: the inner [Focus] takes focus when the
+  /// popover opens (see [_popoverFocusNode]), so key events land inside it;
+  /// Escape then arrives as a [DismissIntent] (via [WidgetsApp]'s default
+  /// shortcuts) and is handled here — only while [SBBPopover.isDismissible]
+  /// allows it.
+  Widget _withKeyboardDismiss(Widget child) {
+    child = Focus(focusNode: _popoverFocusNode, child: child);
+    if (!widget.isDismissible) return child;
+    return Actions(
+      actions: <Type, Action<Intent>>{
+        DismissIntent: CallbackAction<DismissIntent>(
+          onInvoke: (_) {
+            _effectiveController.hide();
+            return null;
+          },
+        ),
+      },
+      child: child,
+    );
+  }
+
+  /// The usable-viewport margin: the configured [SBBPopover.viewportMargin],
+  /// widened per edge wherever the safe area or the on-screen keyboard
+  /// insets further (max per edge, so the two never stack up).
+  ///
+  /// Insets are read from the raw [FlutterView] instead of the inherited
+  /// [MediaQuery]: an ancestor may have consumed them before they reach this
+  /// subtree — most notably a Scaffold with `resizeToAvoidBottomInset`
+  /// removes the keyboard's bottom inset for its body — but the popover lays
+  /// out in the enclosing full-view [Overlay], which the keyboard still
+  /// overlaps. Rebuilds on inset changes are driven by [didChangeMetrics]
+  /// rather than a MediaQuery dependency.
+  EdgeInsets _effectiveViewportMargin(BuildContext context) {
+    final view = View.of(context);
+    final padding = EdgeInsets.fromViewPadding(view.padding, view.devicePixelRatio);
+    final viewInsets = EdgeInsets.fromViewPadding(view.viewInsets, view.devicePixelRatio);
+    final margin = widget.viewportMargin;
+    return EdgeInsets.fromLTRB(
+      math.max(margin.left, math.max(padding.left, viewInsets.left)),
+      math.max(margin.top, math.max(padding.top, viewInsets.top)),
+      math.max(margin.right, math.max(padding.right, viewInsets.right)),
+      math.max(margin.bottom, math.max(padding.bottom, viewInsets.bottom)),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return OverlayPortal(
       controller: _overlayController,
       overlayChildBuilder: (BuildContext context) {
+        final style = Theme.of(context).sbbPopoverTheme.style!.merge(widget.style);
         return Stack(
           children: [
-            ModalBarrier(
-              color: SBBColors.iron.withAlpha((255.0 * 0.6).round()),
-              dismissible: widget.isDismissible,
-              semanticsLabel: widget.barrierLabel ?? MaterialLocalizations.of(context).modalBarrierDismissLabel,
-              onDismiss: _effectiveController.hide,
+            FadeTransition(
+              opacity: _opacityAnimation,
+              child: ModalBarrier(
+                color: style.barrierColor,
+                dismissible: widget.isDismissible,
+                semanticsLabel: widget.barrierLabel ?? MaterialLocalizations.of(context).modalBarrierDismissLabel,
+                onDismiss: _effectiveController.hide,
+              ),
             ),
             FadeTransition(
               opacity: _opacityAnimation,
               child: SBBPopoverLayout(
-                preferredDirection: widget.preferredDirection,
+                placement: widget.placement,
                 targetPosition: _targetPosition,
                 targetSize: _targetSize,
                 notch: widget.showNotch
                     ? SBBPopoverNotch.single(alignWithTarget: widget.alignNotchToTarget)
                     : const SBBPopoverNotch.none(),
-                color: Theme.of(context).sbbBaseStyle.themeValue(SBBColors.milk, SBBColors.midnight),
-                offset: widget.offset,
-                viewportMargin: widget.viewportMargin,
+                color: style.backgroundColor ?? SBBColors.milk,
+                popoverConstraints: style.constraints ?? const BoxConstraints(),
+                sideOffset: widget.offset.dy,
+                alignmentOffset: widget.offset.dx,
+                viewportMargin: _effectiveViewportMargin(context),
                 scaleAnimation: _scaleAnimation,
                 child: Material(
                   type: MaterialType.transparency,
-                  child: _buildContent(context),
+                  child: _withKeyboardDismiss(_buildContent(context, style)),
                 ),
               ),
             ),
