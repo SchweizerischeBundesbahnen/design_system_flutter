@@ -41,7 +41,30 @@ void main() {
     'top',
     (controller) => SBBPopover(
       controller: controller,
-      preferredDirection: SBBPopoverDirection.top,
+      placement: SBBPopoverPlacement.top,
+      titleText: 'Title',
+      targetBuilder: (context, showPopover) => const SizedBox(width: 60, height: 30),
+      builder: (context, hidePopover) => const Text('Popover content'),
+    ),
+  );
+
+  // Horizontal placements: notch sideways on the right/left edge.
+  generateTest(
+    'left',
+    (controller) => SBBPopover(
+      controller: controller,
+      placement: SBBPopoverPlacement.left,
+      titleText: 'Title',
+      targetBuilder: (context, showPopover) => const SizedBox(width: 60, height: 30),
+      builder: (context, hidePopover) => const Text('Popover content'),
+    ),
+  );
+
+  generateTest(
+    'right',
+    (controller) => SBBPopover(
+      controller: controller,
+      placement: SBBPopoverPlacement.right,
       titleText: 'Title',
       targetBuilder: (context, showPopover) => const SizedBox(width: 60, height: 30),
       builder: (context, hidePopover) => const Text('Popover content'),
