@@ -24,61 +24,26 @@ class SBBPopoverLayout extends SingleChildRenderObjectWidget {
     super.child,
   });
 
-  /// The preferred placement of the popover relative to the target. The edge
-  /// is a preference — a viewport collision can flip it to the opposite side.
   final SBBPopoverPlacement placement;
 
-  /// The target's top-left corner in the enclosing [Overlay]'s coordinate
-  /// space — which is also this layout's own space, since the popover layout
-  /// fills the overlay. NOT a global position: under a nested overlay or a
-  /// transformed ancestor the two differ.
   final Offset targetPosition;
 
   final Size targetSize;
 
-  /// Whether the decorative notch is drawn on the target-facing edge.
   final bool showNotch;
 
-  /// Whether the notch shifts along its edge to keep pointing at the
-  /// target's center when the box is shifted by a viewport collision; when
-  /// false it stays centered on the box. Only relevant while [showNotch].
   final bool alignNotchToTarget;
 
-  /// The fill color of the popover surface.
   final Color color;
 
-  /// Additional constraints on the popover box itself (e.g. a maxWidth cap),
-  /// intersected with the space the viewport actually offers.
   final BoxConstraints popoverConstraints;
 
-  /// Scales the popover box around the center of its target-facing edge.
-  ///
-  /// Applied at paint time inside the render object rather than with a
-  /// [ScaleTransition] above it, because this render object fills the whole
-  /// overlay — a widget-level transition would pivot around the screen, not
-  /// the popover. The resolved popover rect (and thus the correct pivot)
-  /// only exists after layout, in here.
   final Animation<double>? scaleAnimation;
 
-  /// Main-axis gap between the target and the popover box.
-  ///
-  /// A positive value always pushes the box further away from the target,
-  /// so it's automatically inverted when a viewport collision flips the
-  /// resolved edge.
   final double sideOffset;
 
-  /// Cross-axis nudge along the aligned edge, applied on top of the
-  /// placement's alignment before viewport clamping (so it's kept, not
-  /// dropped, when a shift happens). Positive values move toward the cross
-  /// axis's end: to the right for top/bottom placements, downward for
-  /// left/right ones.
   final double alignmentOffset;
 
-  /// Minimum empty space to keep between the popover box and the enclosing
-  /// viewport's edges. The layout treats the viewport shrunk by this margin
-  /// as the usable area for clamping and per-side space budgets. Safe-area
-  /// and keyboard insets are expected to already be composed in by the
-  /// widget layer.
   final EdgeInsets viewportMargin;
 
   @override
@@ -231,27 +196,19 @@ class RenderSBBPopover extends RenderShiftedBox {
     markNeedsPaint();
   }
 
-  /// The placement resolved during the most recent layout pass (after
-  /// collision-driven edge flipping). Exposed for tests/diagnostics.
-  SBBPopoverPlacement get resolvedPlacement => SBBPopoverPlacement(_resolvedEdge, _placement.crossAxisAlignment);
   SBBPopoverEdge _resolvedEdge = SBBPopoverEdge.bottom;
 
-  /// The visible popover's rect, in this render object's own local
-  /// coordinate space. Exposed for tests/diagnostics.
-  Rect get popoverRect => _popoverRect;
   Rect _popoverRect = Rect.zero;
 
   // The popover's painted outline in local coordinates. Built once per layout
   // pass (getOuterPath's Path.combine unions are not cheap) and used by
-  // hitTestSelf(). The background painter caches its own copy of the same
-  // path internally.
+  // hitTestSelf().
   Path _shapePath = Path();
 
   // The shape border resolved during the most recent layout pass — the
   // resolved edge and notch offset that feed it only exist post-layout,
   // which is why the surface can't simply be a ShapeDecoration on the child
-  // in the widget layer. Decoration and painter are derived lazily in paint
-  // and invalidated whenever the border, color or shadows change.
+  // in the widget layer.
   SBBPopoverShapeBorder? _shapeBorder;
   ShapeDecoration? _decoration;
   BoxPainter? _backgroundPainter;
@@ -281,9 +238,7 @@ class RenderSBBPopover extends RenderShiftedBox {
   double computeMaxIntrinsicHeight(double width) => 0.0;
 
   // The whole layout runs in main/cross coordinates keyed off the placement
-  // axis (main = the axis the popover is pushed away from the target on,
-  // where flipping happens; cross = the axis alignment and edge clamping
-  // happen on). The algorithm is written once; only the transposition into
+  // axis. The algorithm is written once; only the transposition into
   // and out of x/y depends on the axis.
   @override
   void performLayout() {
@@ -300,9 +255,6 @@ class RenderSBBPopover extends RenderShiftedBox {
 
     final bool vertical = _placement.mainAxis == Axis.vertical;
 
-    // Usable viewport, inside the margin (the popover must never sit flush
-    // against an edge; safe-area/keyboard insets arrive already composed
-    // into the margin).
     final double viewportMainMin = vertical ? _viewportMargin.top : _viewportMargin.left;
     final double viewportMainMax = vertical
         ? constraints.maxHeight - _viewportMargin.bottom
@@ -333,73 +285,64 @@ class RenderSBBPopover extends RenderShiftedBox {
     // reserves. The reserve is queried with the *preferred* edge; a flip
     // stays on the same axis, so the reserved extent is identical either
     // way.
-    final double mainAvail = math.max(0, math.max(spaceAfter, spaceBefore));
-    final double crossAvail = math.max(0, viewportCrossMax - viewportCrossMin);
+    final double maxAvailableSpaceOnMainAxis = math.max(0, math.max(spaceAfter, spaceBefore));
+    final double maxAvailableSpaceOnCrossAxis = math.max(0, viewportCrossMax - viewportCrossMin);
     final BoxConstraints available = BoxConstraints(
-      maxWidth: vertical ? crossAvail : mainAvail,
-      maxHeight: vertical ? mainAvail : crossAvail,
+      maxWidth: vertical ? maxAvailableSpaceOnCrossAxis : maxAvailableSpaceOnMainAxis,
+      maxHeight: vertical ? maxAvailableSpaceOnMainAxis : maxAvailableSpaceOnCrossAxis,
     );
+
+    // constrain child always with hypothetical notch
     final BoxConstraints childConstraints = _popoverConstraints
         .enforce(available)
         .deflate(_shapeFor(_placement.edge, _showNotch).dimensions);
     child.layout(childConstraints, parentUsesSize: true);
+    final double childCrossAxisExtent = vertical ? child.size.width : child.size.height;
 
-    // A box too small to host the notch bump between its rounded corners
-    // would deform the silhouette — drop the notch entirely instead. Decided
-    // only after child layout because the box extent isn't known before; the
-    // child was therefore constrained with the configured notch's reserved
-    // strip, which is merely conservative (up to 12px less), never too
-    // large.
-    final double boxCross = vertical ? child.size.width : child.size.height;
-    final bool effectiveShowNotch = _showNotch && boxCross >= SBBPopoverShapeBorder.minExtentForNotch;
-
-    final double boxMain =
+    // but drop notch entirely if cannot fit because cross side too small
+    // ensures child never overflows
+    final bool effectiveShowNotch = _showNotch && childCrossAxisExtent >= SBBPopoverShapeBorder.minExtentForNotch;
+    final double childMainAxisExtent =
         (vertical ? child.size.height : child.size.width) +
         _shapeFor(_placement.edge, effectiveShowNotch).dimensions.along(_placement.mainAxis);
 
-    // Cross-axis position
+    // Cross-axis position (the shift)
     // The ideal position comes from the placement's alignment (start/end are
     // physical: left/top and right/bottom), nudged by alignmentOffset, then
-    // shifted to avoid colliding with viewport edges — the offset is baked
-    // into the ideal position before clamping, so it's kept (not dropped)
-    // when a shift happens, it's just clamped along with everything else.
-    double crossPos =
+    // shifted to avoid colliding with viewport edges.
+    double childCrossPosition =
         switch (_placement.crossAxisAlignment) {
           SBBPopoverAlignment.start => targetCrossStart,
-          SBBPopoverAlignment.center => (targetCrossStart + targetCrossEnd - boxCross) / 2,
-          SBBPopoverAlignment.end => targetCrossEnd - boxCross,
+          SBBPopoverAlignment.center => (targetCrossStart + targetCrossEnd - childCrossAxisExtent) / 2,
+          SBBPopoverAlignment.end => targetCrossEnd - childCrossAxisExtent,
         } +
         _alignmentOffset;
-    crossPos = clampDouble(crossPos, viewportCrossMin, math.max(viewportCrossMin, viewportCrossMax - boxCross));
+    childCrossPosition = clampDouble(
+      childCrossPosition,
+      viewportCrossMin,
+      math.max(viewportCrossMin, viewportCrossMax - childCrossAxisExtent),
+    );
 
-    // Main-axis position
-    // Keep the preferred edge as long as the box fits there; flip only when
-    // it doesn't AND the opposite side is actually bigger — flipping onto a
-    // smaller side can't help. Because the child was constrained to the
-    // larger side's space above, the box is guaranteed to fit after a flip.
+    // Main-axis position (the flip)
+    // Keep the preferred edge as long as the child fits there; flip only when it doesn't.
+    // Because the child was constrained to the larger side's space above,
+    // the child is guaranteed to fit after a flip.
     final bool preferAfter = _placement.edge == SBBPopoverEdge.bottom || _placement.edge == SBBPopoverEdge.right;
     final double preferredSpace = preferAfter ? spaceAfter : spaceBefore;
     final double oppositeSpace = preferAfter ? spaceBefore : spaceAfter;
     SBBPopoverEdge finalEdge = _placement.edge;
-    if (boxMain > preferredSpace && oppositeSpace > preferredSpace) {
+    if (childMainAxisExtent > preferredSpace && oppositeSpace > preferredSpace) {
       finalEdge = finalEdge.opposite;
     }
 
-    // sideOffset always pushes the box further away from the target, on
-    // whichever side it ends up — the branch is keyed on finalEdge (not the
-    // preferred one), so the direction it pushes in automatically inverts
-    // relative to what was authored whenever a collision flips the edge.
+    // sideOffset always pushes the box further away from the target
     final bool finalAfter = finalEdge == SBBPopoverEdge.bottom || finalEdge == SBBPopoverEdge.right;
-    double mainPos = finalAfter ? targetMainEnd + _sideOffset : targetMainStart - _sideOffset - boxMain;
-    // Safety net for the degenerate cases a flip can't solve (target partly
-    // off-screen, or a box bigger than either side): keep the box inside the
-    // margin-shrunk overlay, mirroring the cross-axis clamp above. The box
-    // may then overlap the target, but it never draws off-screen.
-    mainPos = clampDouble(mainPos, viewportMainMin, math.max(viewportMainMin, viewportMainMax - boxMain));
+    double mainPos = finalAfter ? targetMainEnd + _sideOffset : targetMainStart - _sideOffset - childMainAxisExtent;
+    mainPos = clampDouble(mainPos, viewportMainMin, math.max(viewportMainMin, viewportMainMax - childMainAxisExtent));
 
     _popoverRect = vertical
-        ? Rect.fromLTWH(crossPos, mainPos, boxCross, boxMain)
-        : Rect.fromLTWH(mainPos, crossPos, boxMain, boxCross);
+        ? Rect.fromLTWH(childCrossPosition, mainPos, childCrossAxisExtent, childMainAxisExtent)
+        : Rect.fromLTWH(mainPos, childCrossPosition, childMainAxisExtent, childCrossAxisExtent);
 
     final shapeBorder = SBBPopoverShapeBorder(
       placementEdge: finalEdge,
@@ -438,8 +381,6 @@ class RenderSBBPopover extends RenderShiftedBox {
   @override
   void detach() {
     _scaleAnimation?.removeListener(markNeedsPaint);
-    // Mirror RenderDecoratedBox: a disposed painter no longer forwards its
-    // onChanged notifications, so repaint with a fresh one on reattach.
     _backgroundPainter?.dispose();
     _backgroundPainter = null;
     super.detach();
@@ -463,11 +404,8 @@ class RenderSBBPopover extends RenderShiftedBox {
       return;
     }
 
-    // Scale around the center of the popover's target-facing edge (in this
-    // render object's local space — pushTransform maps it to the canvas via
-    // [offset]), so the popover grows out of / shrinks into its anchor point
-    // instead of the top center of the full-overlay-sized box this render
-    // object reports as its own size.
+    // Scale around the center of the popover's target-facing edge, so the popover
+    // grows out of / shrinks into its anchor point.
     final Offset pivot = switch (_resolvedEdge) {
       SBBPopoverEdge.bottom => _popoverRect.topCenter,
       SBBPopoverEdge.top => _popoverRect.bottomCenter,
@@ -502,39 +440,31 @@ class RenderSBBPopover extends RenderShiftedBox {
   }
 
   // How far the notch needs to shift along its edge, in the popover box's
-  // own coordinate space, to keep pointing at the target's center once the
-  // box has been shifted to avoid a viewport-edge collision (see
-  // clampDouble(crossPos, ...) above). Only a notch with alignNotchToTarget
-  // enabled tracks the target this way.
+  // own coordinate space, to keep pointing at the target. Only once the
+  // center of the popover sits beside the target on the cross axis, the notch will track the target.
   double get _notchOffset {
     if (!_showNotch || !_alignNotchToTarget) return 0;
+
     final bool vertical = _placement.mainAxis == Axis.vertical;
-    final double targetCrossCenter = vertical
-        ? _targetPosition.dx + (_targetSize.width / 2)
-        : _targetPosition.dy + (_targetSize.height / 2);
-    final double boxCrossCenter = vertical ? _popoverRect.center.dx : _popoverRect.center.dy;
-    return targetCrossCenter - boxCrossCenter;
+    final double targetCrossStart = vertical ? _targetPosition.dx : _targetPosition.dy;
+    final double targetCrossEnd = targetCrossStart + (vertical ? _targetSize.width : _targetSize.height);
+    final double popoverCrossStart = vertical ? _popoverRect.left : _popoverRect.top;
+    final double popoverCrossEnd = vertical ? _popoverRect.right : _popoverRect.bottom;
+    final double popoverCrossCenter = (popoverCrossStart + popoverCrossEnd) / 2.0;
+    final bool shouldShiftNotch = popoverCrossCenter > targetCrossEnd || popoverCrossCenter < targetCrossStart;
+    if (!shouldShiftNotch) return 0;
+
+    final double targetCrossCenter = (targetCrossStart + targetCrossEnd) / 2;
+    return targetCrossCenter - popoverCrossCenter;
   }
 
-  // Test against the painted shape, not _popoverRect: the rect includes the
-  // reserved notch strip — a transparent band of which only the notch bump
-  // is painted — plus the corner pixels outside the rounded corners. Taps
-  // there should fall through to the dismiss barrier instead of being
-  // swallowed. The rect check is just a cheap pre-filter before the more
-  // expensive path containment test.
-  //
-  // Known limitation, deliberate: while the open/close scale animation is
-  // running, hit testing still uses the final (unscaled) geometry — the
-  // scale transform is paint-only. The window is 300ms and the mismatch
-  // shrinks to zero as the animation settles.
   @override
   bool hitTestSelf(Offset position) => _popoverRect.contains(position) && _shapePath.contains(position);
 
   // RenderBox.hitTest()'s default implementation gates on
   // `size.contains(position)` before ever calling hitTestChildren/hitTestSelf.
   // This render object's own `size` starts at local (0,0) and only extends
-  // downward/rightward (Flutter's convention: a RenderBox's own reported
-  // size is always assumed non-negative). For `top` placement, the visible
+  // downward/rightward. For `top` placement, the visible
   // content sits at a *negative* local y if the target is close enough to
   // the top of the screen, outside that [0,0]-size box, so the default gate
   // would reject every tap on it before hitTestChildren/hitTestSelf ever

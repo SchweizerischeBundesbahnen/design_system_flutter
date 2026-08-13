@@ -20,8 +20,8 @@ import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 /// doesn't fit on the preferred edge (and the opposite side offers more
 /// room), it flips to the other side (<https://floating-ui.com/docs/flip>);
 /// along the edge it shifts as far as needed to stay inside the viewport
-/// (<https://floating-ui.com/docs/shift>), with the notch continuing to
-/// point at the target.
+/// (<https://floating-ui.com/docs/shift>), with the notch shifting toward
+/// the target if the center of the box ends up beside it.
 ///
 /// The popover is shown via the `showPopover` callback passed to
 /// [targetBuilder], or programmatically through a [controller]. It is
@@ -150,9 +150,11 @@ class SBBPopover extends StatefulWidget {
   /// edge of the popover facing the target.
   final bool showNotch;
 
-  /// Whether the notch shifts along its edge to stay pointed at the target's
-  /// center when the popover box is shifted to avoid a viewport-edge
-  /// collision. When false, the notch stays centered on the popover box.
+  /// Whether the notch shifts along its edge to stay pointed at the target
+  /// when the popover center ends up beside the target rect. As long as the
+  /// center stays within the target extent, the notch will not shift.
+  ///
+  /// When false, the notch always stays centered on the popover box.
   ///
   /// Only has an effect when [showNotch] is true.
   final bool alignNotchToTarget;

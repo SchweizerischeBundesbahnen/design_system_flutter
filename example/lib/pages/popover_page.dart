@@ -120,12 +120,9 @@ class _PopoverPageState extends State<PopoverPage> {
             titleText: 'Popover Title',
             leadingIconData: SBBIcons.circle_information_small,
             offset: const Offset(0, 8),
-            targetBuilder: (context, showPopover) => ConstrainedBox(
-              constraints: BoxConstraints(maxWidth: 500),
-              child: SBBSecondaryButton(
-                labelText: 'Open Center Popover',
-                onPressed: _centerPopoverController.show,
-              ),
+            targetBuilder: (context, showPopover) => SBBSecondaryButton(
+              labelText: 'Open Center Popover',
+              onPressed: _centerPopoverController.show,
             ),
             builder: (context, hidePopover) => SBBTextInput(),
           ),
