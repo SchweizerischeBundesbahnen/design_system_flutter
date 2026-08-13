@@ -4,7 +4,6 @@ import 'dart:ui' show FlutterView;
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/popover/render_sbb_popover.dart';
-import 'package:sbb_design_system_mobile/src/popover/sbb_popover_notch.dart';
 import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 
 // Deferred follow-ups (not v1, see tasks/plan.md "Phase 3"):
@@ -501,9 +500,8 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
                 placement: widget.placement,
                 targetPosition: _targetPosition,
                 targetSize: _targetSize,
-                notch: widget.showNotch
-                    ? SBBPopoverNotch.single(alignWithTarget: widget.alignNotchToTarget)
-                    : const SBBPopoverNotch.none(),
+                showNotch: widget.showNotch,
+                alignNotchToTarget: widget.alignNotchToTarget,
                 color: style.backgroundColor ?? SBBColors.milk,
                 popoverConstraints: style.constraints ?? const BoxConstraints(),
                 sideOffset: widget.offset.dy,
