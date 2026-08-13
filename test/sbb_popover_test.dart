@@ -6,11 +6,8 @@ import 'test_app.dart';
 
 void main() {
   // Each popover overlays the whole screen (barrier + positioned content),
-  // so every scenario is its own golden. The whole TestApp is captured to
-  // include the overlay content, which lives outside the test widget's own
-  // subtree. A controller with initialValue true shows the popover without
-  // needing a tap — the deferred initial show settles within TestSpecs.run.
-  void generateTest(String name, SBBPopover Function(SBBPopoverController controller) buildPopover) {
+  // so every scenario is its own golden.
+  void generateTest(String name, Widget Function(SBBPopoverController controller) buildPopover) {
     testWidgets('popover golden - $name', (WidgetTester tester) async {
       final controller = SBBPopoverController(initialValue: true);
       addTearDown(controller.dispose);
@@ -25,7 +22,6 @@ void main() {
     });
   }
 
-  // Default header: title + close button.
   generateTest(
     'bottom',
     (controller) => SBBPopover(
@@ -36,7 +32,6 @@ void main() {
     ),
   );
 
-  // Same header, notch on the bottom edge.
   generateTest(
     'top',
     (controller) => SBBPopover(
@@ -48,7 +43,6 @@ void main() {
     ),
   );
 
-  // Horizontal placements: notch sideways on the right/left edge.
   generateTest(
     'left',
     (controller) => SBBPopover(
@@ -71,7 +65,6 @@ void main() {
     ),
   );
 
-  // Full header: leading icon + title + trailing icon + close button.
   generateTest(
     'header',
     (controller) => SBBPopover(
@@ -84,7 +77,6 @@ void main() {
     ),
   );
 
-  // No header at all: no title and no close button — body only.
   generateTest(
     'plain',
     (controller) => SBBPopover(
@@ -92,6 +84,59 @@ void main() {
       showCloseButton: false,
       targetBuilder: (context, showPopover) => const SizedBox(width: 60, height: 30),
       builder: (context, hidePopover) => const Text('Popover content'),
+    ),
+  );
+
+  generateTest(
+    'left_edge_shift',
+    (controller) => Align(
+      alignment: .centerLeft,
+      child: SBBPopover(
+        controller: controller,
+        showCloseButton: false,
+        targetBuilder: (context, showPopover) => SizedBox(width: 60, height: 30),
+        builder: (context, hidePopover) => const Text('Left edge shifted'),
+      ),
+    ),
+  );
+
+  generateTest(
+    'right_edge_shift',
+    (controller) => Align(
+      alignment: .centerRight,
+      child: SBBPopover(
+        controller: controller,
+        showCloseButton: false,
+        targetBuilder: (context, showPopover) => SizedBox(width: 60, height: 30),
+        builder: (context, hidePopover) => const Text('Right edge shifted'),
+      ),
+    ),
+  );
+
+  generateTest(
+    'bottom_flip',
+    (controller) => Align(
+      alignment: .bottomCenter,
+      child: SBBPopover(
+        controller: controller,
+        showCloseButton: false,
+        targetBuilder: (context, showPopover) => SizedBox(width: 60, height: 30),
+        builder: (context, hidePopover) => const Text('Flipped to top'),
+      ),
+    ),
+  );
+
+  generateTest(
+    'top_flip',
+    (controller) => Align(
+      alignment: .topCenter,
+      child: SBBPopover(
+        placement: .top,
+        controller: controller,
+        showCloseButton: false,
+        targetBuilder: (context, showPopover) => SizedBox(width: 60, height: 30),
+        builder: (context, hidePopover) => const Text('Flipped to bottom'),
+      ),
     ),
   );
 }
