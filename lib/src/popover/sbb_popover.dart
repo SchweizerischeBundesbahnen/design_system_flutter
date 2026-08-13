@@ -9,6 +9,9 @@ import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 /// A popover anchored to a target widget, displayed in the enclosing
 /// [Overlay] above a modal barrier.
 ///
+/// This should be used primarily in tablet screen contexts when using a
+/// [SBBBottomSheet] is undesirable.
+///
 /// The popover positions itself on the [placement]'s edge of the target and
 /// handles viewport collisions the same way Floating UI does: if the popover
 /// doesn't fit on the preferred edge (and the opposite side offers more
@@ -27,6 +30,11 @@ import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 /// (e.g. a Scaffold avoiding the keyboard) moves it — and hides itself when
 /// the screen geometry changes (rotation, window resize) since its captured
 /// target position would be stale.
+///
+/// See also:
+/// * [SBBBottomSheet] for displaying content in mobile screen contexts
+/// * [SBBPopoverStyle], the style used to change the appearance of this
+/// * [SBBPopoverThemeData], for setting the [SBBPopoverStyle] for all popovers within the current Theme
 class SBBPopover extends StatefulWidget {
   const SBBPopover({
     super.key,
@@ -397,8 +405,7 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
   /// subtree — most notably a Scaffold with `resizeToAvoidBottomInset`
   /// removes the keyboard's bottom inset for its body — but the popover lays
   /// out in the enclosing full-view [Overlay], which the keyboard still
-  /// overlaps. Rebuilds on inset changes are driven by [didChangeMetrics]
-  /// rather than a MediaQuery dependency.
+  /// overlaps. Rebuilds on inset changes are driven by [didChangeMetrics].
   EdgeInsets _effectiveViewportMargin(BuildContext context) {
     final view = View.of(context);
     final padding = EdgeInsets.fromViewPadding(view.padding, view.devicePixelRatio);
@@ -442,6 +449,7 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
                 sideOffset: widget.offset.dy,
                 alignmentOffset: widget.offset.dx,
                 viewportMargin: _effectiveViewportMargin(context),
+                // scale animation is passed down to scale around anchor
                 scaleAnimation: _scaleAnimation,
                 child: Material(
                   type: MaterialType.transparency,

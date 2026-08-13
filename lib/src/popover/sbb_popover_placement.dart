@@ -5,8 +5,7 @@ enum SBBPopoverEdge {
   top,
   bottom,
   left,
-  right
-  ;
+  right;
 
   /// The edge on the opposite side of the target — where the popover moves
   /// when a viewport collision flips it.
