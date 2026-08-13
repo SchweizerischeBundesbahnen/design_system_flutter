@@ -19,6 +19,7 @@ class _PopoverPageState extends State<PopoverPage> {
   bool _notch = true;
   bool _alignNotchToTarget = true;
   bool _showCloseButton = true;
+  bool _showKeyboardInteraction = false;
   String _popoverContentText = 'This is a transient popover view.';
 
   static const Map<String, SBBPopoverPlacement> _placements = {
@@ -93,6 +94,11 @@ class _PopoverPageState extends State<PopoverPage> {
             value: _showCloseButton,
             onChanged: (value) => setState(() => _showCloseButton = value),
           ),
+          SBBSwitchListItem(
+            titleText: 'Show Interaction With Keyboard',
+            value: _showKeyboardInteraction,
+            onChanged: (value) => setState(() => _showKeyboardInteraction = value),
+          ),
           SBBTextInput(
             decoration: const SBBInputDecoration(
               labelText: 'Popover Content',
@@ -120,11 +126,16 @@ class _PopoverPageState extends State<PopoverPage> {
             titleText: 'Popover Title',
             leadingIconData: SBBIcons.circle_information_small,
             offset: const Offset(0, 8),
-            targetBuilder: (context, showPopover) => SBBSecondaryButton(
-              labelText: 'Open Center Popover',
-              onPressed: _centerPopoverController.show,
+            targetBuilder: (context, showPopover) => ConstrainedBox(
+              constraints: BoxConstraints(maxWidth: 320),
+              child: SBBSecondaryButton(
+                labelText: 'Open Center Popover',
+                onPressed: _centerPopoverController.show,
+              ),
             ),
-            builder: (context, hidePopover) => SBBTextInput(),
+            builder: (context, hidePopover) => _showKeyboardInteraction
+                ? SBBTextInput(decoration: SBBInputDecoration(placeholderText: 'Tap me!'))
+                : Text(_popoverContentText),
           ),
         ),
       ),
