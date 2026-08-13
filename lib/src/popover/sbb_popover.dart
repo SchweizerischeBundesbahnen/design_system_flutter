@@ -6,27 +6,21 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/popover/render_sbb_popover.dart';
 import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 
-// Deferred follow-ups (not v1, see tasks/plan.md "Phase 3"):
-// - Focus trap: Tab/Shift-Tab can still traverse onto the (barrier-obscured)
-//   page behind the popover.
-// - Screen-reader routing: VoiceOver/TalkBack focus doesn't jump into the
-//   popover on open (no route semantics yet).
-
 /// A popover anchored to a target widget, displayed in the enclosing
 /// [Overlay] above a modal barrier.
 ///
 /// The popover positions itself on the [placement]'s edge of the target and
-/// handles viewport collisions the same way Floating UI does: if the box
+/// handles viewport collisions the same way Floating UI does: if the popover
 /// doesn't fit on the preferred edge (and the opposite side offers more
 /// room), it flips to the other side (<https://floating-ui.com/docs/flip>);
 /// along the edge it shifts as far as needed to stay inside the viewport
 /// (<https://floating-ui.com/docs/shift>), with the notch shifting toward
-/// the target if the center of the box ends up beside it.
+/// the target if the center of the popover ends up beside it.
 ///
 /// The popover is shown via the `showPopover` callback passed to
 /// [targetBuilder], or programmatically through a [controller]. It is
-/// dismissed by tapping the barrier or the close button, pressing Escape
-/// (all only if [isDismissible] allows), or through the controller.
+/// dismissed by tapping the barrier or the close button
+/// (only if [isDismissible] allows), or through the controller.
 ///
 /// While open, the popover keeps clear of the safe area and the on-screen
 /// keyboard — re-anchoring to the target when a keyboard-driven resize
@@ -134,7 +128,7 @@ class SBBPopover extends StatefulWidget {
   final SBBPopoverPlacement placement;
 
   /// Whether the popover can be dismissed by the user — by tapping the
-  /// barrier, pressing Escape, or through the close button.
+  /// barrier or through the close button.
   ///
   /// Defaults to true.
   final bool isDismissible;
@@ -154,15 +148,15 @@ class SBBPopover extends StatefulWidget {
   /// when the popover center ends up beside the target rect. As long as the
   /// center stays within the target extent, the notch will not shift.
   ///
-  /// When false, the notch always stays centered on the popover box.
+  /// When false, the notch always stays centered on the popover.
   ///
   /// Only has an effect when [showNotch] is true.
   final bool alignNotchToTarget;
 
   /// Nudges the popover away from its default position, in logical pixels.
   ///
-  /// [Offset.dy] is the main-axis gap between the target and the popover
-  /// box: a positive value always pushes the box further away from the
+  /// [Offset.dy] is the main-axis gap between the target and the popover:
+  /// a positive value always pushes the popover further away from the
   /// target, on whichever edge it ends up — so it's automatically inverted
   /// when a viewport collision flips the resolved edge.
   ///
@@ -172,8 +166,8 @@ class SBBPopover extends StatefulWidget {
   /// right for top/bottom placements, downward for left/right ones.
   final Offset offset;
 
-  /// Minimum empty space to keep between the popover box and the enclosing
-  /// viewport's edges, so the box never sits flush against them.
+  /// Minimum empty space to keep between the popover and the enclosing
+  /// viewport's edges, so the popover never sits flush against them.
   ///
   /// Edge clamping (and the per-side space budgets driving the flip
   /// decision) treat the viewport shrunk by this margin as the usable area.
@@ -221,13 +215,6 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
   /// the popover closes.
   FocusNode? _previousFocus;
 
-  /// Takes focus when the popover opens, so hardware-keyboard events (e.g.
-  /// Escape) land inside the popover instead of on the page behind it.
-  /// Requested explicitly rather than via autofocus — autofocus only takes
-  /// effect while nothing else holds focus, which is rarely the case when a
-  /// popover opens from an interactive page.
-  final FocusNode _popoverFocusNode = FocusNode(debugLabel: 'SBBPopover');
-
   @override
   void initState() {
     super.initState();
@@ -258,15 +245,6 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
     }
   }
 
-  // Dismiss on rotation/window resize: the target geometry captured at
-  // show-time is stale the moment the view's size changes, and a popover
-  // floating at a stale position is worse than a closed one (same behavior
-  // as Material menus). Keyboard appearance changes viewInsets, not the
-  // view's size, so typing inside the popover doesn't dismiss it — instead
-  // the popover re-anchors: a resizing ancestor (e.g. a Scaffold avoiding
-  // the keyboard) may move the target during the upcoming frame, so its
-  // geometry is re-captured once that frame's layout has run, and the
-  // rebuild picks up the new insets in [_effectiveViewportMargin].
   @override
   void didChangeMetrics() {
     final view = _viewAtShow;
@@ -302,20 +280,8 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
     _targetSize = renderBox.size;
   }
 
-  void _handleControllerChange() {
-    if (_effectiveController.value) {
-      _showOverlay();
-    } else {
-      _hideOverlay();
-    }
-  }
+  void _handleControllerChange() => _effectiveController.value ? _showOverlay() : _hideOverlay();
 
-  /// Applies the controller's value at the end of the current frame.
-  ///
-  /// Needed when the value has to be picked up during build (initState /
-  /// didUpdateWidget): OverlayPortalController.show() asserts against being
-  /// called mid-build, and the target's geometry is only valid once this
-  /// frame's layout has run.
   void _syncControllerAfterFrame() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (mounted) _handleControllerChange();
@@ -331,11 +297,6 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
     if (!_overlayController.isShowing) {
       _overlayController.show();
     }
-    // The overlay child only mounts with the next frame — the focus node has
-    // no context to focus before then.
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted && _overlayController.isShowing) _popoverFocusNode.requestFocus();
-    });
     _animationController.forward();
   }
 
@@ -363,7 +324,6 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
     _effectiveController.removeListener(_handleControllerChange);
     _animationController.dispose();
     _internalController?.dispose();
-    _popoverFocusNode.dispose();
     super.dispose();
   }
 
@@ -398,29 +358,23 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
     final titlePadding = padding.copyWith(right: closeButton != null ? SBBSpacing.xSmall : padding.right, bottom: 0);
     final bodyPadding = padding.copyWith(top: SBBSpacing.small);
 
-    // Unlike the full-width bottom sheet, the popover sizes itself to its
-    // content — but the header row contains flex children (Expanded/Spacer)
-    // that would greedily fill the whole available width. IntrinsicWidth
-    // bounds the column to the widest child's natural width instead.
-    return IntrinsicWidth(
-      child: Column(
-        mainAxisSize: .min,
-        crossAxisAlignment: .start,
-        children: [
-          Padding(
-            padding: titlePadding,
-            child: _PopoverHeaderRow(
-              title: titleWidget,
-              leading: leadingWidget,
-              trailing: trailingWidget,
-              closeButton: closeButton,
-            ),
+    return Column(
+      mainAxisSize: .min,
+      crossAxisAlignment: .start,
+      children: [
+        Padding(
+          padding: titlePadding,
+          child: _PopoverHeaderRow(
+            title: titleWidget,
+            leading: leadingWidget,
+            trailing: trailingWidget,
+            closeButton: closeButton,
           ),
-          Flexible(
-            child: Padding(padding: bodyPadding, child: body),
-          ),
-        ],
-      ),
+        ),
+        Flexible(
+          child: Padding(padding: bodyPadding, child: body),
+        ),
+      ],
     );
   }
 
@@ -433,27 +387,6 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
       iconData: SBBIcons.cross_small,
     ),
   );
-
-  /// Hardware-keyboard support: the inner [Focus] takes focus when the
-  /// popover opens (see [_popoverFocusNode]), so key events land inside it;
-  /// Escape then arrives as a [DismissIntent] (via [WidgetsApp]'s default
-  /// shortcuts) and is handled here — only while [SBBPopover.isDismissible]
-  /// allows it.
-  Widget _withKeyboardDismiss(Widget child) {
-    child = Focus(focusNode: _popoverFocusNode, child: child);
-    if (!widget.isDismissible) return child;
-    return Actions(
-      actions: <Type, Action<Intent>>{
-        DismissIntent: CallbackAction<DismissIntent>(
-          onInvoke: (_) {
-            _effectiveController.hide();
-            return null;
-          },
-        ),
-      },
-      child: child,
-    );
-  }
 
   /// The usable-viewport margin: the configured [SBBPopover.viewportMargin],
   /// widened per edge wherever the safe area or the on-screen keyboard
@@ -512,7 +445,7 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
                 scaleAnimation: _scaleAnimation,
                 child: Material(
                   type: MaterialType.transparency,
-                  child: _withKeyboardDismiss(_buildContent(context, style)),
+                  child: _buildContent(context, style),
                 ),
               ),
             ),
@@ -527,11 +460,6 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
 /// The popover's header row. Mirrors SBBBottomSheet's layout contract:
 /// [leading] - [title] (expanded) - [trailing] - [closeButton], with
 /// single-child fallbacks aligning trailing content to the right.
-///
-/// The flex children (Expanded/Spacer) fill whatever width the enclosing
-/// IntrinsicWidth settles on, keeping trailing content and the close button
-/// pinned to the popover's right edge even when the body is wider than the
-/// header's natural width.
 class _PopoverHeaderRow extends StatelessWidget {
   const _PopoverHeaderRow({
     this.title,
