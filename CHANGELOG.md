@@ -9,6 +9,10 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ## Unreleased
 
+> **⚠ Breaking Change**
+> We migrated the DSM to the new standalone `material_ui` and `cupertino_ui` packages.
+> This version will only work with Flutter >= 3.47.0 and migrated projects using the standalone packages.
+
 ### Added
 
 - added `semanticIsTabBar` and `semanticLabel` to `SBBSegmentedButton`
@@ -16,6 +20,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ### Changed
 
+- BREAKING: migrated to standalone `material_ui` and `cupertino_ui` packages
 - (auto): updated icon lib to version 1.8.27
 
 ## [5.0.0] - 2026-06-19

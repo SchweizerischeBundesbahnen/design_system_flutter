@@ -68,7 +68,13 @@ class MyApp extends StatelessWidget {
             darkTheme: SBBTheme.dark(themeContext: appState.themeContext),
             themeMode: appState.isDarkModeOn ? ThemeMode.dark : ThemeMode.light,
             localizationsDelegates: GlobalMaterialLocalizations.delegates,
-            supportedLocales: const [Locale('en'), Locale('de'), Locale('fr'), Locale('it')],
+            builder: (context, child) => MaterialUiCompatibilityBridge(child: child!),
+            supportedLocales: const [
+              Locale('en'),
+              Locale('de'),
+              Locale('fr'),
+              Locale('it'),
+            ],
             locale: const Locale('de'),
             home: Scaffold(
               appBar: const SBBHeaderSmall(titleText: 'Design System Mobile'),
