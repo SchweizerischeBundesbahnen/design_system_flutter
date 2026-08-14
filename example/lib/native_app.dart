@@ -68,6 +68,8 @@ class MyApp extends StatelessWidget {
             darkTheme: SBBTheme.dark(themeContext: appState.themeContext),
             themeMode: appState.isDarkModeOn ? ThemeMode.dark : ThemeMode.light,
             localizationsDelegates: GlobalMaterialLocalizations.delegates,
+            // TODO: remove when migration done on Flutter side
+            // ignore: deprecated_member_use
             builder: (context, child) => MaterialUiCompatibilityBridge(child: child!),
             supportedLocales: const [
               Locale('en'),
