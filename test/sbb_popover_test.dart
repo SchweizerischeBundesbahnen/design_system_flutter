@@ -36,7 +36,7 @@ void main() {
     'top',
     (controller) => SBBPopover(
       controller: controller,
-      placement: SBBPopoverPlacement.top,
+      placement: .top,
       titleText: 'Title',
       targetBuilder: (context, showPopover) => const SizedBox(width: 60, height: 30),
       builder: (context, hidePopover) => const Text('Popover content'),
@@ -47,7 +47,7 @@ void main() {
     'left',
     (controller) => SBBPopover(
       controller: controller,
-      placement: SBBPopoverPlacement.left,
+      placement: .left,
       titleText: 'Title',
       targetBuilder: (context, showPopover) => const SizedBox(width: 60, height: 30),
       builder: (context, hidePopover) => const Text('Popover content'),
@@ -58,7 +58,7 @@ void main() {
     'right',
     (controller) => SBBPopover(
       controller: controller,
-      placement: SBBPopoverPlacement.right,
+      placement: .right,
       titleText: 'Title',
       targetBuilder: (context, showPopover) => const SizedBox(width: 60, height: 30),
       builder: (context, hidePopover) => const Text('Popover content'),

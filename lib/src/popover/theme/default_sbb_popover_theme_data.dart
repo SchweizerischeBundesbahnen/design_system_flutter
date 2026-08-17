@@ -15,7 +15,7 @@ class DefaultSBBPopoverThemeData extends SBBPopoverThemeData {
           backgroundColor: baseStyle.themeValue(SBBColors.milk, SBBColors.midnight),
           barrierColor: defaultBarrierColor,
           constraints: const BoxConstraints(maxWidth: 430.0),
-          padding: const EdgeInsets.all(SBBSpacing.medium),
+          padding: const .all(SBBSpacing.medium),
         ),
       );
 
