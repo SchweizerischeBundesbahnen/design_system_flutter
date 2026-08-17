@@ -517,7 +517,7 @@ class _SBBNotificationBoxState extends State<SBBNotificationBox> with SingleTick
       content = Text(
         widget.contentText!,
         maxLines: effectiveStyle.contentMaxLines,
-        overflow: TextOverflow.ellipsis,
+        overflow: .ellipsis,
       );
     }
 

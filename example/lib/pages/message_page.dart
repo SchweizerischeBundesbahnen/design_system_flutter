@@ -27,7 +27,7 @@ class _MessagePageState extends State<MessagePage> {
   Widget build(BuildContext context) {
     return DemoPageScaffold(
       componentConfig: Column(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: .min,
         children: SBBDivider.divideItems(
           context: context,
           items: [

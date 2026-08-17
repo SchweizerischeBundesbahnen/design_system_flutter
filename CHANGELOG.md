@@ -11,6 +11,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ### Added
 
+- added `SBBPopover`: a Widget for showing floating content in an Overlay - used primarily for tablet display
 - added `semanticIsTabBar` and `semanticLabel` to `SBBSegmentedButton`
 - added `semanticLabel` and `semanticHint` to `SBBButtonSegment`
 

@@ -117,7 +117,7 @@ class _BottomSheetPageState extends State<BottomSheetPage> {
       ),
       body: Column(
         crossAxisAlignment: .start,
-        mainAxisSize: MainAxisSize.max,
+        mainAxisSize: .max,
         mainAxisAlignment: .spaceBetween,
         spacing: SBBSpacing.medium,
         children: [
@@ -184,7 +184,7 @@ class _BottomSheetPageState extends State<BottomSheetPage> {
                 child: Center(
                   child: Text(
                     'Item ${index + 1}',
-                    style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
+                    style: const TextStyle(color: Colors.white, fontWeight: .bold),
                   ),
                 ),
               ),

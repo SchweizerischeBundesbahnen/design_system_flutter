@@ -34,7 +34,7 @@ class _SlideToTogglePageState extends State<SlideToTogglePage> {
   Widget build(BuildContext context) {
     return DemoPageScaffold(
       componentConfig: Column(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: .min,
         children: SBBDivider.divideItems(
           context: context,
           items: [

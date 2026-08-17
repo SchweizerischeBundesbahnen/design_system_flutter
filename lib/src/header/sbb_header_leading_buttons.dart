@@ -96,14 +96,14 @@ class SBBHeaderLeadingBackButton extends StatelessWidget {
     final bool isAndroid = Theme.of(context).platform == TargetPlatform.android;
 
     // iOS chevron is a stroked path; Android arrow is a filled shape.
-    final paintingStyle = isAndroid ? PaintingStyle.fill : PaintingStyle.stroke;
+    final PaintingStyle style = isAndroid ? .fill : .stroke;
     final strokeWidth = isAndroid ? 0.0 : 2.0;
 
     return CustomPaint(
       painter: _IconPainter(
         path: isAndroid ? _androidIconPath : _iosIconPath,
         color: SBBHeaderStyleScope.of(context).foregroundColor ?? defaultForegroundColor,
-        style: paintingStyle,
+        style: style,
         strokeWidth: strokeWidth,
       ),
       size: Size(
@@ -177,7 +177,7 @@ class _IconPainter extends CustomPainter {
   const _IconPainter({
     required this.path,
     required this.color,
-    this.style = PaintingStyle.stroke,
+    this.style = .stroke,
     this.strokeWidth = 2.0,
   });
 
@@ -191,7 +191,7 @@ class _IconPainter extends CustomPainter {
     final paint = Paint()
       ..style = style
       ..strokeWidth = strokeWidth
-      ..strokeCap = StrokeCap.butt
+      ..strokeCap = .butt
       ..color = color;
 
     canvas.drawPath(path, paint);

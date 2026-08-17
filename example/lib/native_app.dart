@@ -20,6 +20,7 @@ import 'package:flutter_design_system_mobile_example/pages/message_page.dart';
 import 'package:flutter_design_system_mobile_example/pages/notification_box_page.dart';
 import 'package:flutter_design_system_mobile_example/pages/paginator_page.dart';
 import 'package:flutter_design_system_mobile_example/pages/picker_page.dart';
+import 'package:flutter_design_system_mobile_example/pages/popover_page.dart';
 import 'package:flutter_design_system_mobile_example/pages/popup_page.dart';
 import 'package:flutter_design_system_mobile_example/pages/promotion_box_page.dart';
 import 'package:flutter_design_system_mobile_example/pages/radio_page.dart';
@@ -153,6 +154,7 @@ class MyApp extends StatelessWidget {
                       _DemoEntry('Header', HeaderPage()),
                       _DemoEntry('Header-Box', HeaderBoxPage()),
                       _DemoEntry('Popup', PopupPage()),
+                      _DemoEntry('Popover', PopoverPage()),
                       _DemoEntry('Segmented Button', SegmentedButtonPage()),
                       _DemoEntry('Stepper', StepperPage()),
                       _DemoEntry('Tab Bar', TabBarPage()),

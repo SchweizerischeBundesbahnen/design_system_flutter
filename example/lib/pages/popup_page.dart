@@ -17,7 +17,7 @@ class _PopupPageState extends State<PopupPage> {
   Widget build(BuildContext context) {
     return DemoPageScaffold(
       componentConfig: Column(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: .min,
         children: [
           ...SBBDivider.divideItems(
             context: context,

@@ -355,7 +355,7 @@ class _DefaultBottomSpacer extends StatelessWidget implements PreferredSizeWidge
   @override
   Widget build(BuildContext context) {
     return Column(
-      mainAxisSize: MainAxisSize.min,
+      mainAxisSize: .min,
       children: [
         if (bottom != null) bottom!,
         SizedBox(height: extraSpace),
