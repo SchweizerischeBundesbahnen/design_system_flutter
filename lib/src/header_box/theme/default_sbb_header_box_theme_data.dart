@@ -21,6 +21,6 @@ class DefaultSBBHeaderBoxThemeData extends SBBHeaderBoxThemeData {
 
   /// Fallback sbb header box theme used to calculate the preferred size without a build context.
   static final fallback = DefaultSBBHeaderBoxThemeData(
-    baseStyle: SBBBaseStyle.$default(brightness: Brightness.light, themeContext: .sbb),
+    baseStyle: SBBBaseStyle.$default(brightness: .light, themeContext: .sbb),
   );
 }

@@ -19,8 +19,8 @@ enum SBBPopoverEdge {
   /// The main layout axis for this edge: the axis along which the popover is
   /// pushed away from the target (and flipped on collision).
   Axis get mainAxis => switch (this) {
-    top || bottom => Axis.vertical,
-    left || right => Axis.horizontal,
+    top || bottom => .vertical,
+    left || right => .horizontal,
   };
 }
 
@@ -45,7 +45,7 @@ enum SBBPopoverAlignment { start, center, end }
 /// ```
 @immutable
 class SBBPopoverPlacement {
-  const SBBPopoverPlacement(this.edge, [this.crossAxisAlignment = SBBPopoverAlignment.center]);
+  const SBBPopoverPlacement(this.edge, [this.crossAxisAlignment = .center]);
 
   /// The target edge the popover is placed on. This is a preference: a
   /// viewport collision can flip the popover to [SBBPopoverEdge.opposite].
@@ -54,18 +54,18 @@ class SBBPopoverPlacement {
   /// How the popover aligns with the target along [edge].
   final SBBPopoverAlignment crossAxisAlignment;
 
-  static const top = SBBPopoverPlacement(SBBPopoverEdge.top);
-  static const topStart = SBBPopoverPlacement(SBBPopoverEdge.top, SBBPopoverAlignment.start);
-  static const topEnd = SBBPopoverPlacement(SBBPopoverEdge.top, SBBPopoverAlignment.end);
-  static const bottom = SBBPopoverPlacement(SBBPopoverEdge.bottom);
-  static const bottomStart = SBBPopoverPlacement(SBBPopoverEdge.bottom, SBBPopoverAlignment.start);
-  static const bottomEnd = SBBPopoverPlacement(SBBPopoverEdge.bottom, SBBPopoverAlignment.end);
-  static const left = SBBPopoverPlacement(SBBPopoverEdge.left);
-  static const leftStart = SBBPopoverPlacement(SBBPopoverEdge.left, SBBPopoverAlignment.start);
-  static const leftEnd = SBBPopoverPlacement(SBBPopoverEdge.left, SBBPopoverAlignment.end);
-  static const right = SBBPopoverPlacement(SBBPopoverEdge.right);
-  static const rightStart = SBBPopoverPlacement(SBBPopoverEdge.right, SBBPopoverAlignment.start);
-  static const rightEnd = SBBPopoverPlacement(SBBPopoverEdge.right, SBBPopoverAlignment.end);
+  static const top = SBBPopoverPlacement(.top);
+  static const topStart = SBBPopoverPlacement(.top, .start);
+  static const topEnd = SBBPopoverPlacement(.top, .end);
+  static const bottom = SBBPopoverPlacement(.bottom);
+  static const bottomStart = SBBPopoverPlacement(.bottom, .start);
+  static const bottomEnd = SBBPopoverPlacement(.bottom, .end);
+  static const left = SBBPopoverPlacement(.left);
+  static const leftStart = SBBPopoverPlacement(.left, .start);
+  static const leftEnd = SBBPopoverPlacement(.left, .end);
+  static const right = SBBPopoverPlacement(.right);
+  static const rightStart = SBBPopoverPlacement(.right, .start);
+  static const rightEnd = SBBPopoverPlacement(.right, .end);
 
   /// The main layout axis, see [SBBPopoverEdge.mainAxis].
   Axis get mainAxis => edge.mainAxis;

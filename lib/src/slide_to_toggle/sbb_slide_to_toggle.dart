@@ -288,7 +288,7 @@ class _SBBSlideToToggleState extends State<SBBSlideToToggle> with SingleTickerPr
         child: Material(
           color: toggleBackgroundColor,
           shape: const CircleBorder(),
-          clipBehavior: Clip.antiAlias,
+          clipBehavior: .antiAlias,
           child: InkResponse(
             onTap: _isInteractive ? () {} : null,
             radius: _toggleSize / 2,
@@ -297,7 +297,7 @@ class _SBBSlideToToggleState extends State<SBBSlideToToggle> with SingleTickerPr
               width: _toggleSize,
               height: _toggleSize,
               child: Stack(
-                fit: StackFit.expand,
+                fit: .expand,
                 children: [
                   // background to keep pressed color while dragging
                   AnimatedOpacity(
@@ -305,7 +305,7 @@ class _SBBSlideToToggleState extends State<SBBSlideToToggle> with SingleTickerPr
                     opacity: _isDragging ? 1 : 0,
                     child: DecoratedBox(
                       decoration: BoxDecoration(
-                        shape: BoxShape.circle,
+                        shape: .circle,
                         color: dragOverlayColor,
                       ),
                     ),

@@ -143,7 +143,7 @@ class SBBTabBarBadgeText extends SBBTabBarBadge {
                   resolvedTextStyle?.copyWith(color: resolvedForegroundColor) ??
                   SBBTextStyles.xxSmallBold.copyWith(
                     color: resolvedForegroundColor,
-                    fontWeight: FontWeight.w900,
+                    fontWeight: .w900,
                   ),
             ),
           ),
@@ -165,7 +165,7 @@ class _BadgeIconPainter extends CustomPainter {
     final center = size.center(Offset.zero);
 
     final backgroundPaint = Paint()
-      ..style = PaintingStyle.fill
+      ..style = .fill
       ..color = backgroundColor;
     canvas.drawCircle(center, size.shortestSide * .5, backgroundPaint);
 
@@ -222,7 +222,7 @@ void _paintCheckmarkIcon(Canvas canvas, Size size, Color color) {
   path.close();
 
   final paint = Paint()
-    ..style = PaintingStyle.fill
+    ..style = .fill
     ..color = color;
   path = path.shift(Offset(size.width / 2 - 5, size.height / 2 - 4));
   canvas.drawPath(path, paint);
@@ -230,10 +230,10 @@ void _paintCheckmarkIcon(Canvas canvas, Size size, Color color) {
 
 void _paintExclamationIcon(Canvas canvas, Size size, Color color) {
   final paintFill = Paint()
-    ..style = PaintingStyle.fill
+    ..style = .fill
     ..color = color;
   final paintStroke = Paint()
-    ..style = PaintingStyle.stroke
+    ..style = .stroke
     ..strokeWidth = size.width * 0.08333333
     ..color = color;
 
@@ -296,7 +296,7 @@ void _paintExclamationIcon(Canvas canvas, Size size, Color color) {
 
 void _paintInfoIcon(Canvas canvas, Size size, Color color) {
   final paint = Paint()
-    ..style = PaintingStyle.fill
+    ..style = .fill
     ..color = color;
   Path path0 = Path();
   path0.moveTo(0.842318, 1.40386);
@@ -333,7 +333,7 @@ void _paintInfoIcon(Canvas canvas, Size size, Color color) {
 
 void _paintLiveIcon(Canvas canvas, Size size, Color color) {
   final paint = Paint()
-    ..style = PaintingStyle.fill
+    ..style = .fill
     ..color = color;
 
   Path path0 = Path();

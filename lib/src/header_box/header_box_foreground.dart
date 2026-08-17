@@ -58,7 +58,7 @@ class HeaderBoxForeground extends StatelessWidget {
     switch (flapMode) {
       case .static:
         return Column(
-          mainAxisSize: MainAxisSize.min,
+          mainAxisSize: .min,
           children: [
             Flexible(child: content),
             flap,

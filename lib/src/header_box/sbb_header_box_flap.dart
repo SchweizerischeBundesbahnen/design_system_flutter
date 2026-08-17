@@ -170,7 +170,7 @@ class SBBHeaderBoxFlap extends StatelessWidget {
       return Text(
         labelText!,
         maxLines: 1,
-        overflow: TextOverflow.ellipsis,
+        overflow: .ellipsis,
       );
     }
 

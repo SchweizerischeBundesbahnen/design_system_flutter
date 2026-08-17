@@ -45,7 +45,7 @@ class SBBHeaderBoxStyle {
 
   factory SBBHeaderBoxStyle.$default({required SBBBaseStyle baseStyle}) {
     return SBBHeaderBoxStyle(
-      titleTextStyle: baseStyle.textTheme.mediumBold?.copyWith(overflow: TextOverflow.ellipsis),
+      titleTextStyle: baseStyle.textTheme.mediumBold?.copyWith(overflow: .ellipsis),
       titleForegroundColor: baseStyle.colorScheme.textPrimary,
       subtitleTextStyle: baseStyle.textTheme.smallLight,
       subtitleForegroundColor: baseStyle.colorScheme.textSecondary,

@@ -48,7 +48,7 @@ mixin TimeBasedPickerMixin<T extends StatefulWidget> on State<T> {
         ),
         child: SizedBox(
           width: textWidth,
-          child: Text(label, textAlign: TextAlign.center, softWrap: false),
+          child: Text(label, textAlign: .center, softWrap: false),
         ),
       ),
     );

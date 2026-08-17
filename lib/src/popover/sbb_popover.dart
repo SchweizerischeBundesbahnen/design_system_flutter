@@ -452,7 +452,7 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
                 // scale animation is passed down to scale around anchor
                 scaleAnimation: _scaleAnimation,
                 child: Material(
-                  type: MaterialType.transparency,
+                  type: .transparency,
                   child: _buildContent(context, style),
                 ),
               ),

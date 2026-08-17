@@ -51,13 +51,13 @@ class SBBPopoverShapeBorder extends ShapeBorder {
 
   @override
   Path getInnerPath(Rect rect, {TextDirection? textDirection}) =>
-      Path()..addRRect(RRect.fromRectAndRadius(dimensions.deflateRect(rect), const Radius.circular(_cornerRadius)));
+      Path()..addRRect(RRect.fromRectAndRadius(dimensions.deflateRect(rect), const .circular(_cornerRadius)));
 
   @override
   Path getOuterPath(Rect rect, {TextDirection? textDirection}) {
     // deflate the rect to leave room for the notch
     final contentRect = dimensions.deflateRect(rect);
-    final path = Path()..addRRect(RRect.fromRectAndRadius(contentRect, const Radius.circular(_cornerRadius)));
+    final path = Path()..addRRect(RRect.fromRectAndRadius(contentRect, const .circular(_cornerRadius)));
 
     final notchEdge = _notchEdge;
     if (notchEdge == null) return path;
@@ -65,7 +65,7 @@ class SBBPopoverShapeBorder extends ShapeBorder {
     // Keep the notch clear of the rounded corners on either side. Floored at
     // 0 so a content rect smaller than the notch + corners doesn't invert
     // the clamp range.
-    final edgeExtent = notchEdge.mainAxis == Axis.vertical ? contentRect.width : contentRect.height;
+    final edgeExtent = notchEdge.mainAxis == .vertical ? contentRect.width : contentRect.height;
     final maxOffset = math.max(0.0, (edgeExtent / 2) - _cornerRadius - (notchSize.width / 2));
     final clampedNotchOffset = notchOffset.clamp(-maxOffset, maxOffset);
 

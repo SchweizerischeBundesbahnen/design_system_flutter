@@ -253,7 +253,7 @@ class RenderSBBPopover extends RenderShiftedBox {
       return;
     }
 
-    final bool vertical = _placement.mainAxis == Axis.vertical;
+    final bool vertical = _placement.mainAxis == .vertical;
 
     final double viewportMainMin = vertical ? _viewportMargin.top : _viewportMargin.left;
     final double viewportMainMax = vertical
@@ -445,7 +445,7 @@ class RenderSBBPopover extends RenderShiftedBox {
   double get _notchOffset {
     if (!_showNotch || !_alignNotchToTarget) return 0;
 
-    final bool vertical = _placement.mainAxis == Axis.vertical;
+    final bool vertical = _placement.mainAxis == .vertical;
     final double targetCrossStart = vertical ? _targetPosition.dx : _targetPosition.dy;
     final double targetCrossEnd = targetCrossStart + (vertical ? _targetSize.width : _targetSize.height);
     final double popoverCrossStart = vertical ? _popoverRect.left : _popoverRect.top;

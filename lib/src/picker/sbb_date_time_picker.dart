@@ -152,7 +152,7 @@ class SBBDateTimePicker extends StatefulWidget {
       sheetAnimationStyle: effectiveConfig.animationStyle,
       showCloseButton: effectiveConfig.showCloseButton,
       body: Column(
-        mainAxisSize: MainAxisSize.min,
+        mainAxisSize: .min,
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: SBBSpacing.medium),

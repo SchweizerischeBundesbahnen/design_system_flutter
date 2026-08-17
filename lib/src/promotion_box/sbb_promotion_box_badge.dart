@@ -198,7 +198,7 @@ class _RenderPromotionBoxBadge extends RenderBox with RenderObjectWithChildMixin
       haloRRect.shift(offset),
       Paint()
         ..color = _color
-        ..style = PaintingStyle.fill,
+        ..style = .fill,
     );
     canvas.restore();
 
