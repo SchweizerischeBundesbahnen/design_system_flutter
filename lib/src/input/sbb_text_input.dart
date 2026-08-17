@@ -65,6 +65,8 @@ class SBBTextInput extends StatefulWidget {
     bool? enableInteractiveSelection,
     this.onTap,
     this.onTapAlwaysCalled = false,
+    this.onTapOutside,
+    this.onTapUpOutside,
     this.scrollController,
     this.autofillHints,
     this.inputTextStyle,
@@ -219,6 +221,17 @@ class SBBTextInput extends StatefulWidget {
   /// Defaults to false, so [onTap] is only called for each distinct tap. When
   /// enabled, [onTap] is called for every tap including consecutive taps.
   final bool onTapAlwaysCalled;
+
+  /// {@macro flutter.widgets.editableText.onTapOutside}
+  ///
+  /// See also:
+  ///
+  ///  * [groupId], which defines which tap regions are considered part of
+  ///    this text input.
+  final TapRegionCallback? onTapOutside;
+
+  /// {@macro flutter.widgets.editableText.onTapUpOutside}
+  final TapRegionUpCallback? onTapUpOutside;
 
   /// {@macro flutter.widgets.editableText.scrollController}
   final ScrollController? scrollController;
@@ -429,6 +442,8 @@ class _SBBTextInputState extends State<SBBTextInput>
       onSelectionChanged: _handleSelectionChanged,
       onSubmitted: widget.onSubmitted,
       groupId: widget.groupId,
+      onTapOutside: widget.onTapOutside,
+      onTapUpOutside: widget.onTapUpOutside,
       onSelectionHandleTapped: _handleSelectionHandleTapped,
       inputFormatters: widget.inputFormatters,
       rendererIgnoresPointer: true,
@@ -698,6 +713,8 @@ class SBBTextInputBoxed extends SBBTextInput {
     super.enableInteractiveSelection,
     super.onTap,
     super.onTapAlwaysCalled,
+    super.onTapOutside,
+    super.onTapUpOutside,
     super.scrollController,
     super.autofillHints,
     super.inputTextStyle,
