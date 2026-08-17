@@ -15,7 +15,7 @@ class _PopoverPageState extends State<PopoverPage> {
   // both ways of controlling an SBBPopover.
   final SBBPopoverController _centerPopoverController = SBBPopoverController();
 
-  SBBPopoverPlacement _placement = SBBPopoverPlacement.bottom;
+  SBBPopoverPlacement _placement = .bottom;
   bool _notch = true;
   bool _alignNotchToTarget = true;
   bool _showCloseButton = true;
@@ -23,18 +23,18 @@ class _PopoverPageState extends State<PopoverPage> {
   String _popoverContentText = 'This is a transient popover view.';
 
   static const Map<String, SBBPopoverPlacement> _placements = {
-    'Top': SBBPopoverPlacement.top,
-    'Top Start': SBBPopoverPlacement.topStart,
-    'Top End': SBBPopoverPlacement.topEnd,
-    'Bottom': SBBPopoverPlacement.bottom,
-    'Bottom Start': SBBPopoverPlacement.bottomStart,
-    'Bottom End': SBBPopoverPlacement.bottomEnd,
-    'Left': SBBPopoverPlacement.left,
-    'Left Start': SBBPopoverPlacement.leftStart,
-    'Left End': SBBPopoverPlacement.leftEnd,
-    'Right': SBBPopoverPlacement.right,
-    'Right Start': SBBPopoverPlacement.rightStart,
-    'Right End': SBBPopoverPlacement.rightEnd,
+    'Top': .top,
+    'Top Start': .topStart,
+    'Top End': .topEnd,
+    'Bottom': .bottom,
+    'Bottom Start': .bottomStart,
+    'Bottom End': .bottomEnd,
+    'Left': .left,
+    'Left Start': .leftStart,
+    'Left End': .leftEnd,
+    'Right': .right,
+    'Right Start': .rightStart,
+    'Right End': .rightEnd,
   };
 
   List<SBBDropdownItem<SBBPopoverPlacement>> get _placementItems =>
@@ -51,7 +51,7 @@ class _PopoverPageState extends State<PopoverPage> {
     return DemoPageScaffold(
       componentConfig: _componentConfig(context),
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        crossAxisAlignment: .stretch,
         children: [
           const SBBListHeader('Standard Placement'),
           _standardPlacement(context),
@@ -115,7 +115,7 @@ class _PopoverPageState extends State<PopoverPage> {
   Widget _standardPlacement(BuildContext context) {
     return SBBContentBox(
       child: Padding(
-        padding: const EdgeInsets.all(SBBSpacing.medium),
+        padding: const .all(SBBSpacing.medium),
         child: Center(
           child: SBBPopover(
             controller: _centerPopoverController,
@@ -145,9 +145,9 @@ class _PopoverPageState extends State<PopoverPage> {
   Widget _edgePlacement(BuildContext context) {
     return SBBContentBox(
       child: Padding(
-        padding: const EdgeInsets.all(SBBSpacing.medium),
+        padding: const .all(SBBSpacing.medium),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: .spaceBetween,
           children: [
             SBBPopover(
               placement: _placement,
