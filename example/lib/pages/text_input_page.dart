@@ -54,6 +54,14 @@ class _TextInputPageState extends State<TextInputPage> {
                       ),
                       SBBTextInput(
                         decoration: SBBInputDecoration(
+                          labelText: 'Unfocus On Tap Outside',
+                          placeholderText: 'Tap outside to unfocus',
+                          leadingIconData: SBBIcons.unicorn_small,
+                        ),
+                        onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
+                      ),
+                      SBBTextInput(
+                        decoration: SBBInputDecoration(
                           labelText: 'With Custom Button',
                           placeholderText: 'Press the Button!',
                           leadingIconData: SBBIcons.unicorn_small,
