@@ -210,14 +210,14 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
 
   /// The target's top-left corner in the enclosing [Overlay]'s coordinate
   /// space, captured when the popover is shown.
-  Offset _targetPosition = Offset.zero;
-  Size _targetSize = Size.zero;
+  Offset _targetPosition = .zero;
+  Size _targetSize = .zero;
 
   /// The view (and its size) the popover was shown in — when the view's size
   /// changes while the popover is open (rotation, window resize), the
   /// captured target geometry is stale and the popover dismisses itself.
   FlutterView? _viewAtShow;
-  Size _viewSizeAtShow = Size.zero;
+  Size _viewSizeAtShow = .zero;
 
   /// The node focused before the popover opened; focus returns to it when
   /// the popover closes.
@@ -284,7 +284,7 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
     if (renderBox == null || !renderBox.attached || !renderBox.hasSize) return;
     // Use renderBox overlay as ancestor for multiple navigator positioning
     final RenderObject? overlay = Overlay.of(context).context.findRenderObject();
-    _targetPosition = renderBox.localToGlobal(Offset.zero, ancestor: overlay);
+    _targetPosition = renderBox.localToGlobal(.zero, ancestor: overlay);
     _targetSize = renderBox.size;
   }
 
@@ -338,7 +338,7 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
   /// Assembles the popover content: an optional header row (mirroring
   /// [SBBBottomSheet]'s contract) above the [SBBPopover.builder] body.
   Widget _buildContent(BuildContext context, SBBPopoverStyle style) {
-    final padding = style.padding ?? EdgeInsets.zero;
+    final EdgeInsets padding = style.padding ?? .zero;
 
     final body = widget.builder(context, _effectiveController.hide);
 
