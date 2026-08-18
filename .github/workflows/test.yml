@@ -98,7 +98,7 @@ jobs:
         run: flutter pub get
 
       - name: Run integration tests
-        run: flutter --no-color test --machine --start-paused -d ${{ steps.launch_simulator.outputs.udid }} integration_test/app_test.dart
+        run: flutter --no-color test --machine -d ${{ steps.launch_simulator.outputs.udid }} integration_test/app_test.dart
 
 
   changelog-test:
