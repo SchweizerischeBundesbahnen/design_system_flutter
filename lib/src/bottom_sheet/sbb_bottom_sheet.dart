@@ -193,6 +193,9 @@ class SBBBottomSheet extends StatelessWidget {
     this.style,
   });
 
+  /// Key applied to the sheet's internal close button.
+  static const Key closeButtonKey = Key('sbbBottomSheetCloseButtonKey');
+
   /// {@template sbb_design_system.sbb_bottom_sheet.title}
   /// A custom widget displayed as the sheet's title.
   ///
@@ -423,6 +426,7 @@ class _CloseButton extends StatelessWidget {
     excludeSemantics: true,
     button: true,
     child: SBBTertiaryButtonSmall(
+      key: SBBBottomSheet.closeButtonKey,
       onPressed: () => Navigator.of(context, rootNavigator: useRootNavigator).pop(),
       iconData: SBBIcons.cross_small,
     ),

@@ -67,6 +67,19 @@ class SBBPromotionBox extends StatefulWidget {
        assert(titleText == null || title == null, 'Cannot provide both titleText and title!'),
        assert(subtitleText == null || subtitle == null, 'Cannot provide both subtitleText and subtitle!');
 
+  /// Key applied to the internal dismiss button.
+  ///
+  /// When multiple [SBBPromotionBox] are rendered, give the specific [SBBPromotionBox]
+  /// instance its own `key` and locate the dismiss button as its descendant, e.g.:
+  ///
+  /// ```dart
+  /// find.descendant(
+  ///   of: find.byKey(myPromotionBoxKey),
+  ///   matching: find.byKey(SBBPromotionBox.dismissButtonKey),
+  /// )
+  /// ```
+  static const Key dismissButtonKey = Key('sbbPromotionBoxDismissButtonKey');
+
   /// An optional controller to programmatically show and hide the [SBBPromotionBox].
   ///
   /// If not provided, an internal controller is created automatically.
@@ -328,6 +341,7 @@ class _SBBPromotionBoxState extends State<SBBPromotionBox> with SingleTickerProv
         label: MaterialLocalizations.of(context).closeButtonTooltip,
         button: true,
         child: InkWell(
+          key: SBBPromotionBox.dismissButtonKey,
           borderRadius: .circular(sbbIconSizeSmall),
           onTap: () {
             _effectiveController.hide();

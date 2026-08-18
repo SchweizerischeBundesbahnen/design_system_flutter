@@ -23,6 +23,7 @@ class SBBButtonSegment<T> with Diagnosticable {
     this.semanticLabel,
     this.semanticHint,
     this.style,
+    this.key,
   }) : assert(
          label == null || labelText == null,
          'Cannot provide both label and labelText!',
@@ -84,6 +85,11 @@ class SBBButtonSegment<T> with Diagnosticable {
   /// Customizes this segment's appearance.
   final SBBButtonSegmentStyle? style;
 
+  /// Optional key applied to the rendered segment.
+  ///
+  /// Useful in tests to find and tap a specific segment via `find.byKey(key)`.
+  final Key? key;
+
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     properties.add(DiagnosticsProperty<T>('value', value));
@@ -94,6 +100,7 @@ class SBBButtonSegment<T> with Diagnosticable {
     properties.add(AttributedStringProperty('semanticLabel', semanticLabel, defaultValue: null));
     properties.add(AttributedStringProperty('semanticHint', semanticHint, defaultValue: null));
     properties.add(DiagnosticsProperty<SBBButtonSegmentStyle>('style', style, defaultValue: null));
+    properties.add(DiagnosticsProperty<Key>('key', key, defaultValue: null));
     super.debugFillProperties(properties);
   }
 

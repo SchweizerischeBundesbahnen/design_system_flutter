@@ -15,6 +15,9 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - added `semanticIsTabBar` and `semanticLabel` to `SBBSegmentedButton`
 - added `semanticLabel` and `semanticHint` to `SBBButtonSegment`
 - added `onTapOutside` and `onTapUpOutside` to `SBBTextInput` and related components
+- added `SBBBottomSheet.closeButtonKey`, `SBBPopup.closeButtonKey` and `SBBPopover.closeButtonKey` for use in instrumentation tests
+- added `SBBNotificationBox.dismissButtonKey`, `SBBPromotionBox.dismissButtonKey` for use in instrumentation tests
+- added `Key? key` to `SBBTabBarItem`, `SBBButtonSegment` and `SBBDropdownItem` for use in instrumentation tests
 
 ### Changed
 

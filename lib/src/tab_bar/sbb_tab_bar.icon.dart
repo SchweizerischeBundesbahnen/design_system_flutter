@@ -38,6 +38,7 @@ class _TabIcon extends StatelessWidget {
     return LayoutId(
       id: '${item.id}_tab',
       child: Semantics(
+        key: item.key,
         selected: selected,
         label: label,
         hint: warning?.shown == false ? warning?.semantics : null,
