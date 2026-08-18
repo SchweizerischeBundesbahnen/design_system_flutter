@@ -55,14 +55,22 @@ class SBBLinearLoadingIndicator extends StatefulWidget {
 }
 
 class _SBBLinearLoadingIndicatorState extends State<SBBLinearLoadingIndicator> with SingleTickerProviderStateMixin {
-  late final AnimationController _controller = AnimationController(
-    duration: SBBLinearLoadingIndicatorStyle.duration,
-    vsync: this,
-  )..repeat();
-  late final Animation<Offset> _offsetAnimation = Tween<Offset>(
-    begin: const Offset(-1, 0.0),
-    end: const Offset(1, 0.0),
-  ).animate(CurvedAnimation(parent: _controller, curve: Curves.linear));
+  late AnimationController _controller;
+  late Animation<Offset> _offsetAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: SBBLinearLoadingIndicatorStyle.duration,
+      vsync: this,
+    )..repeat();
+
+    _offsetAnimation = Tween<Offset>(
+      begin: const Offset(-1, 0.0),
+      end: const Offset(1, 0.0),
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.linear));
+  }
 
   @override
   void dispose() {
