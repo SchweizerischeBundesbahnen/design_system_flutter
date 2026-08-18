@@ -33,6 +33,11 @@ class LoadingIndicatorPage extends StatelessWidget {
               ],
             ),
           ),
+          SBBListHeader('Linear'),
+          SBBContentBox(
+            padding: const .all(SBBSpacing.xSmall),
+            child: const SBBLinearLoadingIndicator(),
+          ),
         ],
       ),
     );

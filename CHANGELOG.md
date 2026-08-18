@@ -12,6 +12,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 ### Added
 
 - added `SBBPopover`: a Widget for showing floating content in an Overlay - used primarily for tablet display
+- added `SBBLinearLoadingIndicator`: a themable linear loading indicator
 - added `semanticIsTabBar` and `semanticLabel` to `SBBSegmentedButton`
 - added `semanticLabel` and `semanticHint` to `SBBButtonSegment`
 - added `onTapOutside` and `onTapUpOutside` to `SBBTextInput` and related components
@@ -19,6 +20,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 ### Changed
 
 - (auto): updated icon lib to version 1.8.27
+- BREAKING: `SBBTheme.raw` now requires a `linearLoadingIndicatorTheme` parameter
 
 ## [5.0.0] - 2026-06-19
 
