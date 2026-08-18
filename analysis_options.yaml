@@ -14,6 +14,7 @@ linter:
     always_declare_return_types: true
     sort_constructors_first: true
     use_null_aware_elements: false
+
 analyzer:
   exclude:
     - build/**
