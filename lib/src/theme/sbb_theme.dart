@@ -11,6 +11,7 @@ import 'package:sbb_design_system_mobile/src/header/theme/default_sbb_header_the
 import 'package:sbb_design_system_mobile/src/header_box/theme/default_sbb_header_box_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_input_decoration_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/input/theme/default_sbb_text_input_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/linear_loading_indicator/theme/default_sbb_linear_loading_indicator_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/list_header/theme/default_sbb_list_header_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/list_item/theme/default_sbb_list_item_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/message/theme/default_sbb_message_theme_data.dart';
@@ -95,6 +96,7 @@ class SBBTheme {
     SBBHeaderThemeData? headerTheme,
     SBBHeaderBoxThemeData? headerBoxTheme,
     SBBInputDecorationThemeData? inputDecorationTheme,
+    SBBLinearLoadingIndicatorThemeData? linearLoadingIndicatorTheme,
     SBBListHeaderThemeData? listHeaderTheme,
     SBBListItemThemeData? listItemTheme,
     SBBMessageThemeData? messageTheme,
@@ -130,6 +132,7 @@ class SBBTheme {
     headerTheme: headerTheme,
     headerBoxTheme: headerBoxTheme,
     inputDecorationTheme: inputDecorationTheme,
+    linearLoadingIndicatorTheme: linearLoadingIndicatorTheme,
     listHeaderTheme: listHeaderTheme,
     listItemTheme: listItemTheme,
     messageTheme: messageTheme,
@@ -171,6 +174,7 @@ class SBBTheme {
     SBBDropdownThemeData? dropdownTheme,
     SBBHeaderBoxThemeData? headerBoxTheme,
     SBBInputDecorationThemeData? inputDecorationTheme,
+    SBBLinearLoadingIndicatorThemeData? linearLoadingIndicatorTheme,
     SBBListHeaderThemeData? listHeaderTheme,
     SBBListItemThemeData? listItemTheme,
     SBBMessageThemeData? messageTheme,
@@ -205,6 +209,7 @@ class SBBTheme {
     dropdownTheme: dropdownTheme,
     headerBoxTheme: headerBoxTheme,
     inputDecorationTheme: inputDecorationTheme,
+    linearLoadingIndicatorTheme: linearLoadingIndicatorTheme,
     listHeaderTheme: listHeaderTheme,
     listItemTheme: listItemTheme,
     messageTheme: messageTheme,
@@ -249,6 +254,7 @@ class SBBTheme {
     SBBHeaderThemeData? headerTheme,
     SBBHeaderBoxThemeData? headerBoxTheme,
     SBBInputDecorationThemeData? inputDecorationTheme,
+    SBBLinearLoadingIndicatorThemeData? linearLoadingIndicatorTheme,
     SBBListHeaderThemeData? listHeaderTheme,
     SBBListItemThemeData? listItemTheme,
     SBBMessageThemeData? messageTheme,
@@ -306,6 +312,9 @@ class SBBTheme {
 
     final defaultListHeaderTheme = DefaultSBBListHeaderThemeData(mergedBaseStyle);
     final mergedListHeaderTheme = defaultListHeaderTheme.merge(listHeaderTheme);
+
+    final defaultLinearLoadingIndicatorTheme = DefaultSBBLinearLoadingIndicatorThemeData(mergedBaseStyle);
+    final mergedLinearLoadingIndicatorTheme = defaultLinearLoadingIndicatorTheme.merge(linearLoadingIndicatorTheme);
 
     final defaultListItemTheme = DefaultSBBListItemThemeData(baseStyle: mergedBaseStyle);
     final mergedListItemTheme = defaultListItemTheme.merge(listItemTheme);
@@ -391,6 +400,7 @@ class SBBTheme {
       headerTheme: mergedHeaderTheme,
       headerBoxTheme: mergedHeaderBoxTheme,
       inputDecorationTheme: mergedInputDecorationTheme,
+      linearLoadingIndicatorTheme: mergedLinearLoadingIndicatorTheme,
       listHeaderTheme: mergedListHeaderTheme,
       listItemTheme: mergedListItemTheme,
       messageTheme: mergedMessageTheme,
@@ -428,6 +438,7 @@ class SBBTheme {
     required SBBHeaderThemeData headerTheme,
     required SBBHeaderBoxThemeData headerBoxTheme,
     required SBBInputDecorationThemeData inputDecorationTheme,
+    required SBBLinearLoadingIndicatorThemeData linearLoadingIndicatorTheme,
     required SBBListHeaderThemeData listHeaderTheme,
     required SBBListItemThemeData listItemTheme,
     required SBBMessageThemeData messageTheme,
@@ -489,6 +500,7 @@ class SBBTheme {
         headerTheme,
         headerBoxTheme,
         inputDecorationTheme,
+        linearLoadingIndicatorTheme,
         listHeaderTheme,
         listItemTheme,
         messageTheme,
