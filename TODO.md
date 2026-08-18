@@ -76,11 +76,11 @@ on screen (both already render in multiples in the example gallery).
 
 **Status:** ready-for-agent
 
-- [ ] New `Key? dismissButtonKey` constructor parameter added to `SBBNotificationBox`, applied to its internal dismiss button
-- [ ] New `Key? dismissButtonKey` constructor parameter added to `SBBPromotionBox`, applied to its internal dismiss button
-- [ ] Widget test coverage: multiple concurrent instances, each dismissed independently by its own key
-- [ ] Integration test coverage for both under `example/integration_test/`  following previous test implementations in `example/integration_test/`
-- [ ] `CHANGELOG.md` updated
+- [x] New `Key? dismissButtonKey` constructor parameter added to `SBBNotificationBox`, applied to its internal dismiss button
+- [x] New `Key? dismissButtonKey` constructor parameter added to `SBBPromotionBox`, applied to its internal dismiss button
+- [x] Widget test coverage: multiple concurrent instances, each dismissed independently by its own key
+- [x] Integration test coverage for both under `example/integration_test/`  following previous test implementations in `example/integration_test/`
+- [x] `CHANGELOG.md` updated
 
 ---
 
@@ -94,10 +94,10 @@ the widget's whole tap area, so the outer widget key alone isn't sufficient.
 
 **Status:** ready-for-agent
 
-- [ ] New `Key?` parameter added to `SBBSlideToToggle` targeting the internal drag handle specifically (distinct from the outer widget bounds)
-- [ ] Widget test coverage: drag the handle by key past the toggle threshold, verify state change
-- [ ] Integration test coverage under `example/integration_test/`, including multiple concurrent instances (confirmed pattern in the example gallery)  following previous test implementations in `example/integration_test/`
-- [ ] `CHANGELOG.md` updated
+- [x] New `Key?` parameter added to `SBBSlideToToggle` targeting the internal drag handle specifically (distinct from the outer widget bounds)
+- [x] Widget test coverage: drag the handle by key past the toggle threshold, verify state change
+- [x] Integration test coverage under `example/integration_test/`, including multiple concurrent instances (confirmed pattern in the example gallery)  following previous test implementations in `example/integration_test/`
+- [x] `CHANGELOG.md` updated
 
 ---
 
@@ -110,12 +110,12 @@ an identifier they supply, instead of matching on item type/position.
 
 **Status:** ready-for-agent
 
-- [ ] New identifier field added to the `SBBStepperItem` sealed-class hierarchy (`SBBStepperItemIcon`, `SBBStepperItemText`, `SBBStepperItemNumbered`)
-- [ ] Identifier of type `Key?` wired on each step's internal circle widget
-- [ ] `OnStepPressedCallback` behavior unaffected (still reports item + index) — identifier is additive
-- [ ] Widget test coverage: select a specific step by its identifier
-- [ ] Integration test coverage under `example/integration_test/`  following previous test implementations in `example/integration_test/`
-- [ ] `CHANGELOG.md` updated
+- [x] New identifier field added to the `SBBStepperItem` sealed-class hierarchy (`SBBStepperItemIcon`, `SBBStepperItemText`, `SBBStepperItemNumbered`)
+- [x] Identifier of type `Key?` wired on each step's internal circle widget
+- [x] `OnStepPressedCallback` behavior unaffected (still reports item + index) — identifier is additive
+- [x] Widget test coverage: select a specific step by its identifier
+- [x] Integration test coverage under `example/integration_test/`  following previous test implementations in `example/integration_test/`
+- [x] `CHANGELOG.md` updated
 
 ---
 
@@ -128,9 +128,9 @@ tests. No production code changes — `SBBToastAction` already accepts a `key`.
 
 **Status:** ready-for-agent
 
-- [ ] Doc comment on `SBBToastAction`/`SBBToast.show` updated with an example showing a consumer-supplied `key` and `find.byKey(...)` + `tester.tap(...)` usage
-- [ ] Integration test under `example/integration_test/` demonstrating tap-to-dismiss via a consumer-supplied key  following previous test implementations in `example/integration_test/`
-- [ ] No `CHANGELOG.md` entry needed (no API change) — note the doc addition only if the project's changelog convention calls for it
+- [x] Doc comment on `SBBToastAction`/`SBBToast.show` updated with an example showing a consumer-supplied `key` and `find.byKey(...)` + `tester.tap(...)` usage
+- [x] Integration test under `example/integration_test/` demonstrating tap-to-dismiss via a consumer-supplied key  following previous test implementations in `example/integration_test/`
+- [x] No `CHANGELOG.md` entry needed (no API change) — note the doc addition only if the project's changelog convention calls for it
 
 ---
 
@@ -144,14 +144,14 @@ This ticket also settles the general controller pattern reused by tickets 09 and
 
 **Status:** ready-for-agent
 
-- [ ] New `controller: SBBDatePickerController?` constructor parameter added to `SBBDatePicker`
-- [ ] `SBBDatePickerController.setDate(DateTime value, {bool animate = true})` drives the private day/month/year `SBBPickerScrollController`s internally
-- [ ] Existing cross-column validation preserved (e.g. clamping day when month/year changes make it invalid)
-- [ ] Day/month/year column structure stays private — not exposed as public API
-- [ ] `WidgetTester` extension method `tester.selectSbbDate(Finder finder, DateTime value)` added, exported via `package:sbb_design_system_mobile/testing.dart`
-- [ ] Widget test coverage: set a date via the controller, verify `onDateChanged` fires with the expected value
-- [ ] Integration test coverage under `example/integration_test/`, using the new `tester.selectSbbDate` helper  following previous test implementations in `example/integration_test/`
-- [ ] `CHANGELOG.md` updated
+- [x] New `controller: SBBDatePickerController?` constructor parameter added to `SBBDatePicker`
+- [x] `SBBDatePickerController.setDate(DateTime value, {bool animate = true})` drives the private day/month/year `SBBPickerScrollController`s internally
+- [x] Existing cross-column validation preserved (e.g. clamping day when month/year changes make it invalid)
+- [x] Day/month/year column structure stays private — not exposed as public API
+- [x] `WidgetTester` extension method `tester.selectSbbDate(Finder finder, DateTime value)` added, exported via `package:sbb_design_system_mobile/testing.dart`
+- [ ] Widget test coverage: set a date via the controller, verify `onDateChanged` fires with the expected value (skipped for now — controller behavior covered in `example/integration_test/date_picker_test.dart` instead)
+- [x] Integration test coverage under `example/integration_test/`, using the new `tester.selectSbbDate` helper  following previous test implementations in `example/integration_test/`
+- [x] `CHANGELOG.md` updated
 
 ---
 
@@ -219,8 +219,6 @@ reflects what was actually shipped rather than aspirational design.
 **Status:** ready-for-agent
 
 - [ ] New section added to `CONTRIBUTING.md` codifying the recipe used across this set:
-  - Derive a key/semantics-label automatically from an existing business identifier where one already exists
   - Use a `static const Key` for interactive sub-elements on genuinely singleton/overlay widgets (only one instance ever mounted at a time)
-  - Use a new constructor `Key?` parameter for interactive sub-elements on widgets that can appear multiple times concurrently and have no existing identifier
   - Use a dedicated controller class (not raw internal controllers) for widgets whose value is set via complex/gesture-driven interaction, with an accompanying `WidgetTester` extension shipped via `testing.dart`
 - [ ] References the concrete examples from tickets 02–11 as worked precedent
