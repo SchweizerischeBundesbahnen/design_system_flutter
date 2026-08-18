@@ -6,8 +6,16 @@
 /// Not exported as public API.
 library;
 
+import 'package:flutter/material.dart';
+
 /// Implemented by the private state of `SBBDatePicker`.
 abstract interface class SBBDatePickerDriver {
   /// Sets the selected date, see `SBBDatePickerController.setDate`.
   Future<void> setDate(DateTime date, {bool animate = true});
+}
+
+/// Implemented by the private state of `SBBTimePicker`.
+abstract interface class SBBTimePickerDriver {
+  /// Sets the selected time, see `SBBTimePickerController.setTime`.
+  Future<void> setTime(TimeOfDay time, {bool animate = true});
 }
