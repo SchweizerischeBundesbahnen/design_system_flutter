@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/picker/picker_constants.dart';
+import 'package:sbb_design_system_mobile/src/picker/picker_driver.dart';
 import 'package:sbb_design_system_mobile/src/picker/picker_utils.dart';
 import 'package:sbb_design_system_mobile/src/picker/time_based_picker_mixin.dart';
 import 'package:sbb_design_system_mobile/src/shared/debug.dart';
@@ -26,6 +27,7 @@ class SBBDatePicker extends StatefulWidget {
     DateTime? maximumDate,
     this.visibleItemCount = pickerDefaultVisibleItemCount,
     this.pickerStyle,
+    this.controller,
   }) : initialDate = PickerUtils.clampedDateOnly(initialDate ?? DateTime.now(), minimumDate, maximumDate),
        minimumDate = minimumDate?.date,
        maximumDate = maximumDate?.date {
@@ -73,6 +75,10 @@ class SBBDatePicker extends StatefulWidget {
   /// Non-null properties override the corresponding properties in
   /// [SBBPickerThemeData.pickerStyle] from the current theme.
   final SBBPickerStyle? pickerStyle;
+
+  /// Can be used to programmatically set the selected date, e.g. from
+  /// instrumentation tests.
+  final SBBDatePickerController? controller;
 
   /// Shows a [SBBBottomSheet] with an [SBBDatePicker] to select a [DateTime].
   ///
@@ -173,7 +179,67 @@ class SBBDatePicker extends StatefulWidget {
   State<SBBDatePicker> createState() => _SBBDatePickerState();
 }
 
-class _SBBDatePickerState extends State<SBBDatePicker> with TimeBasedPickerMixin<SBBDatePicker> {
+/// A controller for [SBBDatePicker] that allows programmatically setting the
+/// selected date, e.g. from instrumentation tests.
+///
+/// Attach it to a picker via [SBBDatePicker.controller]. A controller can only
+/// be attached to one picker at a time.
+///
+/// See also:
+///
+/// * `package:sbb_design_system_mobile/testing.dart`, which provides the
+///   `WidgetTester.selectSBBDate` helper for driving the picker in tests
+///   without wiring up a controller.
+class SBBDatePickerController {
+  _SBBDatePickerState? _state;
+
+  /// Whether this controller is currently attached to an [SBBDatePicker].
+  bool get isAttached => _state != null;
+
+  /// Sets the selected date of the attached [SBBDatePicker].
+  ///
+  /// [date] is clamped to [SBBDatePicker.minimumDate] and
+  /// [SBBDatePicker.maximumDate]; its time components are ignored.
+  /// [SBBDatePicker.onDateChanged] is called for every selection change caused
+  /// by the resulting scroll, ending with the target date.
+  ///
+  /// If [animate] is true, the picker columns scroll to the target date,
+  /// otherwise they jump there without animation. The returned future
+  /// completes when the scroll animations are done.
+  ///
+  /// Note for widget tests (fake async): animations only advance while frames
+  /// are pumped, so either pass `animate: false` or pump before awaiting the
+  /// returned future:
+  ///
+  /// ```dart
+  /// final done = controller.setDate(DateTime(2026, 3, 31));
+  /// await tester.pumpAndSettle();
+  /// await done;
+  /// ```
+  ///
+  /// Must only be called while attached to a picker that has been laid out:
+  /// calling while not attached asserts in debug mode and does nothing in
+  /// release mode.
+  Future<void> setDate(DateTime date, {bool animate = true}) {
+    final state = _state;
+    assert(state != null, 'SBBDatePickerController.setDate called while not attached to an SBBDatePicker.');
+    if (state == null) return Future<void>.value();
+    return state.setDate(date, animate: animate);
+  }
+
+  void _attach(_SBBDatePickerState state) {
+    assert(_state == null, 'SBBDatePickerController is already attached to an SBBDatePicker.');
+    _state = state;
+  }
+
+  void _detach(_SBBDatePickerState state) {
+    if (_state == state) _state = null;
+  }
+}
+
+class _SBBDatePickerState extends State<SBBDatePicker>
+    with TimeBasedPickerMixin<SBBDatePicker>
+    implements SBBDatePickerDriver {
   static const _dayItemTextDefaultWidth = 40.0;
   static const _yearItemTextDefaultWidth = 64.0;
 
@@ -220,6 +286,17 @@ class _SBBDatePickerState extends State<SBBDatePicker> with TimeBasedPickerMixin
     _initDayController();
     _initMonthController();
     _initYearController();
+
+    widget.controller?._attach(this);
+  }
+
+  @override
+  void didUpdateWidget(SBBDatePicker oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.controller != widget.controller) {
+      oldWidget.controller?._detach(this);
+      widget.controller?._attach(this);
+    }
   }
 
   void _initDayController() {
@@ -273,6 +350,7 @@ class _SBBDatePickerState extends State<SBBDatePicker> with TimeBasedPickerMixin
 
   @override
   void dispose() {
+    widget.controller?._detach(this);
     _dayController.dispose();
     _monthController.dispose();
     _yearController.dispose();
@@ -317,6 +395,50 @@ class _SBBDatePickerState extends State<SBBDatePicker> with TimeBasedPickerMixin
       onSelectedItemChanged: _onSelectedYearItemChanged,
       itemBuilder: (_, index) => _buildYearItem(index),
       pickerStyle: widget.pickerStyle,
+    );
+  }
+
+  @override
+  Future<void> setDate(DateTime date, {bool animate = true}) async {
+    assert(
+      _dayController.hasClients && _monthController.hasClients && _yearController.hasClients,
+      'Cannot set the date of an SBBDatePicker that has not been laid out yet.',
+    );
+
+    final targetDate = PickerUtils.clampedDateOnly(date, widget.minimumDate, widget.maximumDate);
+
+    // normalize looping columns to their canonical index range so the scroll
+    // distance to the target stays minimal
+    _ensureOptimizedScrollPosition();
+
+    final dayIndex = _dayToIndex(targetDate.day);
+    final monthIndex = _monthToIndex(targetDate.month);
+    final yearIndex = _yearToIndex(targetDate.year);
+
+    // keep the day column's month/year dependent rendering in sync, since
+    // programmatic scrolls do not trigger onTargetItemSelected
+    _monthYearValueNotifier.value = targetDate;
+    _yearValueNotifier.value = targetDate.year;
+
+    if (animate) {
+      await Future.wait([
+        if (_dayController.selectedItem != dayIndex) _dayController.animateToItem(dayIndex),
+        if (_monthController.selectedItem != monthIndex) _monthController.animateToItem(monthIndex),
+        if (_yearController.selectedItem != yearIndex) _yearController.animateToItem(yearIndex),
+      ]);
+    } else {
+      _dayController.jumpToItem(dayIndex);
+      _monthController.jumpToItem(monthIndex);
+      _yearController.jumpToItem(yearIndex);
+    }
+
+    // resync the selected date from the column positions: a month/year scroll
+    // passing through a shorter month clamps the day in _selectedDate, which
+    // is never restored when the day column itself did not move
+    _onDateSelected(
+      year: _indexToYear(_yearController.selectedItem),
+      month: _indexToMonth(_monthController.selectedItem),
+      day: _indexToDay(_dayController.selectedItem),
     );
   }
 
