@@ -9,11 +9,21 @@ void main() {
   generateTest('header_box_sliver_expanded', FloatingHeaderboxTest());
   generateTest('header_box_sliver_contracted', FloatingHeaderboxTest(scrollOffset: 500.0));
   generateTest('header_box_sliver_contracted_after_update', FloatingHeaderboxWithUpdateTest());
+  generateLoadingTest(
+    'header_box_loading',
+    const SBBHeaderBox(titleText: 'Title', isLoading: true),
+  );
 }
 
 void generateTest(String name, Widget widget) {
   testWidgets(name, (WidgetTester tester) async {
     await TestSpecs.run(TestSpecs.themedSpecs, widget, tester, name, find.byType(Column).first);
+  });
+}
+
+void generateLoadingTest(String name, Widget widget) {
+  testWidgets(name, (WidgetTester tester) async {
+    await TestSpecs.runFixedFrame(TestSpecs.themedSpecs, widget, tester, name, find.byType(TestApp));
   });
 }
 

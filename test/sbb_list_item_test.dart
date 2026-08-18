@@ -105,4 +105,22 @@ void main() {
       find.byType(SBBContentBox).first,
     );
   });
+
+  testWidgets('list_item_loading', (WidgetTester tester) async {
+    await TestSpecs.runFixedFrame(
+      TestSpecs.themedSpecs,
+      Column(
+        mainAxisSize: .min,
+        children: [
+          SBBContentBox(
+            margin: .symmetric(vertical: SBBSpacing.medium, horizontal: SBBSpacing.xSmall),
+            child: const SBBListItem(titleText: 'Loading', isLoading: true),
+          ),
+        ],
+      ),
+      tester,
+      'list_item_loading',
+      find.byType(SBBContentBox).first,
+    );
+  });
 }
