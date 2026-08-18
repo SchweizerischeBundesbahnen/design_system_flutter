@@ -16,6 +16,7 @@ sealed class SBBStepperItem {
     this.style,
     this.showBadgeWhenPassed = true,
     this.badgeIcon = SBBIcons.tick_small,
+    this.key,
   }) : assert(labelText == null || label == null, 'Cannot provide both labelText and label!');
 
   /// Creates an icon step with the given [icon].
@@ -26,6 +27,7 @@ sealed class SBBStepperItem {
     bool showBadgeWhenPassed,
     IconData? badgeIcon,
     SBBStepperItemStyle? style,
+    Key? key,
   }) = SBBStepperItemIcon;
 
   /// Creates a text step that displays the provided [text] inside the circle.
@@ -36,6 +38,7 @@ sealed class SBBStepperItem {
     bool showBadgeWhenPassed,
     IconData? badgeIcon,
     SBBStepperItemStyle? style,
+    Key? key,
   }) = SBBStepperItemText;
 
   /// Creates a numbered step that displays the step index (1-based) inside the circle.
@@ -45,6 +48,7 @@ sealed class SBBStepperItem {
     bool showBadgeWhenPassed,
     IconData? badgeIcon,
     SBBStepperItemStyle? style,
+    Key? key,
   }) = SBBStepperItemNumbered;
 
   final String? labelText;
@@ -52,6 +56,11 @@ sealed class SBBStepperItem {
   final SBBStepperItemStyle? style;
   final bool showBadgeWhenPassed;
   final IconData? badgeIcon;
+
+  /// Optional key applied to this step's internal circle widget.
+  ///
+  /// Useful in tests to find and tap a specific step via `find.byKey(key)`.
+  final Key? key;
 
   @override
   bool operator ==(Object other) => identical(this, other) || runtimeType == other.runtimeType;
@@ -69,6 +78,7 @@ class SBBStepperItemIcon extends SBBStepperItem {
     super.showBadgeWhenPassed,
     super.badgeIcon,
     super.style,
+    super.key,
   }) : super._();
 
   final IconData icon;
@@ -83,6 +93,7 @@ class SBBStepperItemText extends SBBStepperItem {
     super.showBadgeWhenPassed,
     super.badgeIcon,
     super.style,
+    super.key,
   }) : super._();
 
   final String text;
@@ -96,5 +107,6 @@ class SBBStepperItemNumbered extends SBBStepperItem {
     super.showBadgeWhenPassed,
     super.badgeIcon,
     super.style,
+    super.key,
   }) : super._();
 }

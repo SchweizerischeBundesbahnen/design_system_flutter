@@ -258,6 +258,7 @@ class _StepCircleState extends State<_StepCircle> {
   Widget _circle(BuildContext context) {
     final resolvedBackgroundColor = widget.style.backgroundColor?.resolve(_statesController.value);
     return SizedBox.square(
+      key: widget.item.key,
       dimension: SBBStepperItemStyle.stepCircleSize,
       child: Material(
         clipBehavior: .antiAlias,

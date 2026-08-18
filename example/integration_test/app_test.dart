@@ -10,6 +10,7 @@ import 'popup_test.dart' as popup_test;
 import 'promotion_box_test.dart' as promotion_box_test;
 import 'segmented_button_test.dart' as segmented_button_test;
 import 'slide_to_toggle_test.dart' as slide_to_toggle_test;
+import 'stepper_test.dart' as stepper_test;
 import 'tab_bar_test.dart' as tab_bar_test;
 
 void main() {
@@ -31,4 +32,5 @@ void main() {
   tab_bar_test.main();
   segmented_button_test.main();
   slide_to_toggle_test.main();
+  stepper_test.main();
 }

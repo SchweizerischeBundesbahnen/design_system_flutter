@@ -17,7 +17,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - added `onTapOutside` and `onTapUpOutside` to `SBBTextInput` and related components
 - added `SBBBottomSheet.closeButtonKey`, `SBBPopup.closeButtonKey` and `SBBPopover.closeButtonKey` for use in instrumentation tests
 - added `SBBNotificationBox.dismissButtonKey`, `SBBPromotionBox.dismissButtonKey` for use in instrumentation tests
-- added `Key? key` to `SBBTabBarItem`, `SBBButtonSegment` and `SBBDropdownItem` for use in instrumentation tests
+- added `Key? key` to `SBBTabBarItem`, `SBBButtonSegment`, `SBBStepperItem` and `SBBDropdownItem` for use in instrumentation tests
 - added `SBBSlideToToggle.handleKey` for use in instrumentation tests to use with `WidgetTester.drag`
 
 ### Changed
