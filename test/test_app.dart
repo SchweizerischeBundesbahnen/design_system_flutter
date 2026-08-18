@@ -43,6 +43,29 @@ class TestSpecs {
       await expectLater(finder, matchesGoldenFile('goldens/$name.${spec.name}.png'));
     }
   }
+
+  static Future<void> runFixedFrame(
+    List<TestSpecs> specs,
+    Widget widget,
+    WidgetTester tester,
+    String name,
+    Finder finder, {
+    Duration pumpDuration = const Duration(milliseconds: 500),
+    Function(Widget w)? wrap,
+  }) async {
+    for (final spec in specs) {
+      await tester.binding.setSurfaceSize(spec.size);
+      tester.view.physicalSize = spec.size;
+      tester.view.devicePixelRatio = 1.0;
+      tester.platformDispatcher.platformBrightnessTestValue = spec.brightness;
+
+      await tester.pumpWidget(wrap?.call(widget) ?? TestApp(child: widget));
+      await tester.pump();
+      await tester.pump(pumpDuration);
+
+      await expectLater(finder, matchesGoldenFile('goldens/$name.${spec.name}.png'));
+    }
+  }
 }
 
 class TestApp extends StatelessWidget {

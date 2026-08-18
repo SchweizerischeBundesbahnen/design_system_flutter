@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/divider/divider_painter.dart';
-import 'package:sbb_design_system_mobile/src/shared/bottom_loading_indicator.dart';
 import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 
@@ -225,7 +224,7 @@ class SBBListItem extends StatefulWidget {
   /// {@template sbb_design_system.list_item.isLoading}
   /// Whether to show a loading indicator at the bottom of the item.
   ///
-  /// When true, a [BottomLoadingIndicator] is displayed at the bottom of the list item.
+  /// When true, a [SBBLinearLoadingIndicator] is displayed at the bottom of the list item.
   ///
   /// Defaults to false.
   /// {@endtemplate}
@@ -505,7 +504,7 @@ class _SBBListItemState extends State<SBBListItem> {
         alignment: .bottomCenter,
         children: [
           child,
-          BottomLoadingIndicator(),
+          SBBLinearLoadingIndicator(),
         ],
       );
     }

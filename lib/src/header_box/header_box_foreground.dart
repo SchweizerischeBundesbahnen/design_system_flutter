@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-import 'package:sbb_design_system_mobile/src/shared/bottom_loading_indicator.dart';
 
 /// Draws the actual header box.
 class HeaderBoxForeground extends StatelessWidget {
@@ -122,7 +121,7 @@ class HeaderBoxForeground extends StatelessWidget {
               bottom: 0,
               left: 0,
               right: 0,
-              child: BottomLoadingIndicator(),
+              child: SBBLinearLoadingIndicator(),
             ),
         ],
       ),

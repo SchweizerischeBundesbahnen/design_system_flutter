@@ -11,6 +11,7 @@ export 'src/header/header.dart';
 export 'src/header_box/header_box.dart';
 export 'src/illustration/sbb_illustration.dart';
 export 'src/input/input.dart';
+export 'src/linear_loading_indicator/linear_loading_indicator.dart';
 export 'src/list_header/list_header.dart';
 export 'src/list_item/list_item.dart';
 export 'src/loading_indicator/sbb_loading_indicator.dart';
