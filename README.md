@@ -3,7 +3,7 @@
 [![build](https://github.com/SchweizerischeBundesbahnen/design_system_flutter/actions/workflows/nightly-build.yaml/badge.svg)](https://github.com/SchweizerischeBundesbahnen/design_system_flutter/actions/workflows/nightly-build.yaml)
 [![pub package](https://img.shields.io/pub/v/sbb_design_system_mobile.svg)](https://pub.dev/packages/sbb_design_system_mobile)
 
-<img src="https://custom-icon-badges.demolab.com/badge/baked%20by%20appbakery-212121?style=for-the-badge&logo=app_bakery_logo_white" alt="Baked by AppBakery Badge"/>
+<img src="https://custom-icon-badges.demolab.com/badge/baked%20by%20sbb%20appbakery-212121?style=for-the-badge&logo=app_bakery_logo_white" alt="Baked by SBB AppBakery Badge"/>
 
 This Flutter package contains the official UI components of the SBB (Swiss Federal Railways) [Design System Mobile].
 The design system enables a consistent digital presence for SBB but also provides a flexible approach to theming and 
@@ -95,7 +95,7 @@ The pixel exact specifications can be found in the [Figma](https://www.figma.com
 #### SBB internal documentation
 
 At the moment, the following documents are only available to people internal to SBB:
-* [AppBakery libraries](https://sbb.sharepoint.com/sites/app-bakery/SitePages/Mobile-Libraries.aspx "AppBakery libraries")
+* [SBB AppBakery libraries](https://sbb.sharepoint.com/sites/app-bakery/SitePages/Mobile-Libraries.aspx "AppBakery libraries")
 
 ### Read on
 
