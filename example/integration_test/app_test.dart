@@ -12,6 +12,7 @@ import 'segmented_button_test.dart' as segmented_button_test;
 import 'slide_to_toggle_test.dart' as slide_to_toggle_test;
 import 'stepper_test.dart' as stepper_test;
 import 'tab_bar_test.dart' as tab_bar_test;
+import 'toast_test.dart' as toast_test;
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -33,4 +34,5 @@ void main() {
   segmented_button_test.main();
   slide_to_toggle_test.main();
   stepper_test.main();
+  toast_test.main();
 }
