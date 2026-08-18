@@ -19,3 +19,9 @@ abstract interface class SBBTimePickerDriver {
   /// Sets the selected time, see `SBBTimePickerController.setTime`.
   Future<void> setTime(TimeOfDay time, {bool animate = true});
 }
+
+/// Implemented by the private state of `SBBDateTimePicker`.
+abstract interface class SBBDateTimePickerDriver {
+  /// Sets the selected date time, see `SBBDateTimePickerController.setDateTime`.
+  Future<void> setDateTime(DateTime dateTime, {bool animate = true});
+}

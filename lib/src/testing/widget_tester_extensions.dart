@@ -38,4 +38,21 @@ extension SBBWidgetTesterExtensions on WidgetTester {
     await pumpAndSettle();
     await done;
   }
+
+  /// Selects [dateTime] in the [SBBDateTimePicker] matched by [finder].
+  ///
+  /// [finder] may either match the [SBBDateTimePicker] itself or a widget that
+  /// contains exactly one [SBBDateTimePicker]. The picker does not need an
+  /// [SBBDateTimePickerController] attached for this helper to work.
+  ///
+  /// [dateTime] is rounded to the picker's minute interval and clamped to its
+  /// minimum/maximum date time, see [SBBDateTimePickerController.setDateTime].
+  /// Pumps until the resulting scroll animations have settled.
+  Future<void> selectSBBDateTime(Finder finder, DateTime dateTime) async {
+    final pickerFinder = find.descendant(of: finder, matching: find.byType(SBBDateTimePicker), matchRoot: true);
+    final pickerState = state<State<SBBDateTimePicker>>(pickerFinder) as SBBDateTimePickerDriver;
+    final done = pickerState.setDateTime(dateTime);
+    await pumpAndSettle();
+    await done;
+  }
 }

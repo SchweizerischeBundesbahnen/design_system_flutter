@@ -4,6 +4,7 @@ import 'package:integration_test/integration_test.dart';
 
 import 'bottom_sheet_test.dart' as bottom_sheet_test;
 import 'date_picker_test.dart' as date_picker_test;
+import 'date_time_picker_test.dart' as date_time_picker_test;
 import 'dropdown_test.dart' as dropdown_test;
 import 'notification_box_test.dart' as notification_box_test;
 import 'popover_test.dart' as popover_test;
@@ -28,6 +29,7 @@ void main() {
 
   bottom_sheet_test.main();
   date_picker_test.main();
+  date_time_picker_test.main();
   dropdown_test.main();
   notification_box_test.main();
   popup_test.main();
