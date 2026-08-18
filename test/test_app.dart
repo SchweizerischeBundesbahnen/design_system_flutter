@@ -44,11 +44,6 @@ class TestSpecs {
     }
   }
 
-  /// Like [run], but pumps a single fixed frame per spec instead of settling.
-  ///
-  /// Use this for goldens of widgets with animations that repeat forever
-  /// (e.g. [SBBLinearLoadingIndicator]), where [run]'s `pumpAndSettle` would
-  /// never settle.
   static Future<void> runFixedFrame(
     List<TestSpecs> specs,
     Widget widget,
