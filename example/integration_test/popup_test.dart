@@ -8,7 +8,7 @@ import 'test_app.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('closeButtonKey_whenSearchedForAndPressed_isFoundAndDismissesPopup', (tester) async {
+  testWidgets('showSBBPopup_whenPressedAndDismissed_isOpenedAndDismissed', (tester) async {
     await tester.pumpWidget(
       TestApp(
         child: Builder(

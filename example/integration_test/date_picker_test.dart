@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-import 'package:sbb_design_system_mobile/testing.dart';
 
 import 'test_app.dart';
+import 'widget_tester_extensions.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -12,10 +12,15 @@ void main() {
   testWidgets(
     'selectSbbDate_whenCalledWithTargetDate_thenOnDateChangedReportsTargetDate',
     (tester) async {
-      await tester.pumpWidget(TestApp(child: _DemoDatePicker(initialDate: DateTime(2026, 1, 15))));
+      final controller = SBBDatePickerController();
+      await tester.pumpWidget(
+        TestApp(
+          child: _DemoDatePicker(initialDate: DateTime(2026, 1, 15), controller: controller),
+        ),
+      );
       await tester.pumpAndSettle();
 
-      await tester.selectSBBDate(find.byType(SBBDatePicker), DateTime(2026, 3, 31));
+      await tester.selectSBBDate(controller, DateTime(2026, 3, 31));
 
       expect(find.text('selected: 31.3.2026'), findsOneWidget);
     },
@@ -24,10 +29,15 @@ void main() {
   testWidgets(
     'selectSbbDate_whenMonthScrollPassesThroughShorterMonth_thenUnchangedDayIsPreserved',
     (tester) async {
-      await tester.pumpWidget(TestApp(child: _DemoDatePicker(initialDate: DateTime(2026, 1, 31))));
+      final controller = SBBDatePickerController();
+      await tester.pumpWidget(
+        TestApp(
+          child: _DemoDatePicker(initialDate: DateTime(2026, 1, 31), controller: controller),
+        ),
+      );
       await tester.pumpAndSettle();
 
-      await tester.selectSBBDate(find.byType(SBBDatePicker), DateTime(2026, 3, 31));
+      await tester.selectSBBDate(controller, DateTime(2026, 3, 31));
 
       expect(find.text('selected: 31.3.2026'), findsOneWidget);
     },

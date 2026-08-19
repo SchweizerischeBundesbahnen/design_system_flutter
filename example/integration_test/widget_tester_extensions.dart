@@ -2,57 +2,42 @@ import 'package:flutter/material.dart';
 import 'package:flutter/semantics.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-import 'package:sbb_design_system_mobile/src/picker/picker_driver.dart';
 
 /// Test helpers for driving SBB design system widgets from a [WidgetTester].
+///
+/// These are not part of the published package. Copy the ones you need into
+/// your own test sources.
 extension SBBWidgetTesterExtensions on WidgetTester {
-  /// Selects [date] in the [SBBDatePicker] matched by [finder].
-  ///
-  /// [finder] may either match the [SBBDatePicker] itself or a widget that
-  /// contains exactly one [SBBDatePicker]. The picker does not need an
-  /// [SBBDatePickerController] attached for this helper to work.
+  /// Selects [date] in the [SBBDatePicker] the [controller] is attached to.
   ///
   /// [date] is clamped to the picker's minimum/maximum date and its time
   /// components are ignored, see [SBBDatePickerController.setDate]. Pumps
   /// until the resulting scroll animations have settled.
-  Future<void> selectSBBDate(Finder finder, DateTime date) async {
-    final pickerFinder = find.descendant(of: finder, matching: find.byType(SBBDatePicker), matchRoot: true);
-    final pickerState = state<State<SBBDatePicker>>(pickerFinder) as SBBDatePickerDriver;
-    final done = pickerState.setDate(date);
+  Future<void> selectSBBDate(SBBDatePickerController controller, DateTime date) async {
+    final done = controller.setDate(date);
     await pumpAndSettle();
     await done;
   }
 
-  /// Selects [time] in the [SBBTimePicker] matched by [finder].
-  ///
-  /// [finder] may either match the [SBBTimePicker] itself or a widget that
-  /// contains exactly one [SBBTimePicker]. The picker does not need an
-  /// [SBBTimePickerController] attached for this helper to work.
+  /// Selects [time] in the [SBBTimePicker] the [controller] is attached to.
   ///
   /// [time] is rounded to the picker's minute interval and clamped to its
   /// minimum/maximum time, see [SBBTimePickerController.setTime]. Pumps until
   /// the resulting scroll animations have settled.
-  Future<void> selectSBBTime(Finder finder, TimeOfDay time) async {
-    final pickerFinder = find.descendant(of: finder, matching: find.byType(SBBTimePicker), matchRoot: true);
-    final pickerState = state<State<SBBTimePicker>>(pickerFinder) as SBBTimePickerDriver;
-    final done = pickerState.setTime(time);
+  Future<void> selectSBBTime(SBBTimePickerController controller, TimeOfDay time) async {
+    final done = controller.setTime(time);
     await pumpAndSettle();
     await done;
   }
 
-  /// Selects [dateTime] in the [SBBDateTimePicker] matched by [finder].
-  ///
-  /// [finder] may either match the [SBBDateTimePicker] itself or a widget that
-  /// contains exactly one [SBBDateTimePicker]. The picker does not need an
-  /// [SBBDateTimePickerController] attached for this helper to work.
+  /// Selects [dateTime] in the [SBBDateTimePicker] the [controller] is
+  /// attached to.
   ///
   /// [dateTime] is rounded to the picker's minute interval and clamped to its
   /// minimum/maximum date time, see [SBBDateTimePickerController.setDateTime].
   /// Pumps until the resulting scroll animations have settled.
-  Future<void> selectSBBDateTime(Finder finder, DateTime dateTime) async {
-    final pickerFinder = find.descendant(of: finder, matching: find.byType(SBBDateTimePicker), matchRoot: true);
-    final pickerState = state<State<SBBDateTimePicker>>(pickerFinder) as SBBDateTimePickerDriver;
-    final done = pickerState.setDateTime(dateTime);
+  Future<void> selectSBBDateTime(SBBDateTimePickerController controller, DateTime dateTime) async {
+    final done = controller.setDateTime(dateTime);
     await pumpAndSettle();
     await done;
   }

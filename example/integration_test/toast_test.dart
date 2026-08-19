@@ -8,6 +8,27 @@ import 'test_app.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
+  testWidgets('showToast_whenCalled_thenRendersToast', (tester) async {
+    await tester.pumpWidget(
+      TestApp(
+        child: Builder(
+          builder: (context) => SBBPrimaryButton(
+            labelText: 'Show toast',
+            onPressed: () => SBBToast.of(context).show(
+              titleText: 'Item deleted',
+            ),
+          ),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Show toast'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Item deleted'), findsOneWidget);
+  });
+
   testWidgets('toastActionKey_whenSearchedForAndTapped_isFoundAndDismissesTheToast', (tester) async {
     const actionKey = ValueKey('toast-undo-action');
 

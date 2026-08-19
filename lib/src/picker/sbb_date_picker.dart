@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/picker/picker_constants.dart';
-import 'package:sbb_design_system_mobile/src/picker/picker_driver.dart';
 import 'package:sbb_design_system_mobile/src/picker/picker_utils.dart';
 import 'package:sbb_design_system_mobile/src/picker/time_based_picker_mixin.dart';
 import 'package:sbb_design_system_mobile/src/shared/debug.dart';
@@ -187,9 +186,9 @@ class SBBDatePicker extends StatefulWidget {
 ///
 /// See also:
 ///
-/// * `package:sbb_design_system_mobile/testing.dart`, which provides the
-///   `WidgetTester.selectSBBDate` helper for driving the picker in tests
-///   without wiring up a controller.
+/// * `example/integration_test/widget_tester_extensions.dart`, which wraps
+///   [setDate] in a `WidgetTester.selectSBBDate` helper that takes care of the
+///   pumping needed in widget and integration tests.
 class SBBDatePickerController {
   _SBBDatePickerState? _state;
 
@@ -237,9 +236,7 @@ class SBBDatePickerController {
   }
 }
 
-class _SBBDatePickerState extends State<SBBDatePicker>
-    with TimeBasedPickerMixin<SBBDatePicker>
-    implements SBBDatePickerDriver {
+class _SBBDatePickerState extends State<SBBDatePicker> with TimeBasedPickerMixin<SBBDatePicker> {
   static const _dayItemTextDefaultWidth = 40.0;
   static const _yearItemTextDefaultWidth = 64.0;
 
@@ -398,7 +395,6 @@ class _SBBDatePickerState extends State<SBBDatePicker>
     );
   }
 
-  @override
   Future<void> setDate(DateTime date, {bool animate = true}) async {
     assert(
       _dayController.hasClients && _monthController.hasClients && _yearController.hasClients,

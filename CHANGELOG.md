@@ -20,12 +20,8 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - added `Key? key` to `SBBTabBarItem`, `SBBButtonSegment`, `SBBStepperItem` and `SBBDropdownItem` for use in instrumentation tests
 - added `SBBSlideToToggle.handleKey` for use in instrumentation tests to use with `WidgetTester.drag`
 - added `SBBDatePicker.controller` accepting the new `SBBDatePickerController` for programmatically setting the selected date, e.g. in instrumentation tests
-- added `WidgetTester.selectSBBDate` test helper, exported via the new `package:sbb_design_system_mobile/testing.dart` entry point
 - added `SBBTimePicker.controller` accepting the new `SBBTimePickerController` for programmatically setting the selected time, e.g. in instrumentation tests
-- added `WidgetTester.selectSBBTime` test helper, exported via `package:sbb_design_system_mobile/testing.dart`
 - added `SBBDateTimePicker.controller` accepting the new `SBBDateTimePickerController` for programmatically setting the selected date time, e.g. in instrumentation tests
-- added `WidgetTester.selectSBBDateTime` test helper, exported via `package:sbb_design_system_mobile/testing.dart`
-- added `WidgetTester.setSBBSliderValue` test helper for setting an `SBBSlider` value via its accessibility actions, exported via `package:sbb_design_system_mobile/testing.dart`
 
 ### Changed
 

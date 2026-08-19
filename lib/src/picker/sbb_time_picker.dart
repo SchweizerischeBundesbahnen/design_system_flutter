@@ -3,7 +3,6 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 import 'package:sbb_design_system_mobile/src/picker/picker_constants.dart';
-import 'package:sbb_design_system_mobile/src/picker/picker_driver.dart';
 import 'package:sbb_design_system_mobile/src/picker/picker_utils.dart';
 import 'package:sbb_design_system_mobile/src/picker/time_based_picker_mixin.dart';
 import 'package:sbb_design_system_mobile/src/shared/debug.dart';
@@ -206,9 +205,9 @@ class SBBTimePicker extends StatefulWidget {
 ///
 /// See also:
 ///
-/// * `package:sbb_design_system_mobile/testing.dart`, which provides the
-///   `WidgetTester.selectSBBTime` helper for driving the picker in tests
-///   without wiring up a controller.
+/// * `example/integration_test/widget_tester_extensions.dart`, which wraps
+///   [setTime] in a `WidgetTester.selectSBBTime` helper that takes care of the
+///   pumping needed in widget and integration tests.
 class SBBTimePickerController {
   _SBBTimePickerState? _state;
 
@@ -256,9 +255,7 @@ class SBBTimePickerController {
   }
 }
 
-class _SBBTimePickerState extends State<SBBTimePicker>
-    with TimeBasedPickerMixin<SBBTimePicker>
-    implements SBBTimePickerDriver {
+class _SBBTimePickerState extends State<SBBTimePicker> with TimeBasedPickerMixin<SBBTimePicker> {
   static const _horizontalPaddingCount = 4;
 
   late TimeOfDay _selectedTime;
@@ -375,7 +372,6 @@ class _SBBTimePickerState extends State<SBBTimePicker>
     );
   }
 
-  @override
   Future<void> setTime(TimeOfDay time, {bool animate = true}) async {
     assert(
       _hourController.hasClients && _minuteController.hasClients,

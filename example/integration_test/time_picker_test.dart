@@ -2,36 +2,46 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-import 'package:sbb_design_system_mobile/testing.dart';
 
 import 'test_app.dart';
+import 'widget_tester_extensions.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets(
-    'selectSbbTime_whenCalledWithTargetTime_thenOnTimeChangedReportsTargetTime',
+    'selectSBBTime_whenCalledWithTargetTime_thenOnTimeChangedReportsTargetTime',
     (tester) async {
-      await tester.pumpWidget(TestApp(child: _DemoTimePicker(initialTime: TimeOfDay(hour: 8, minute: 15))));
+      final controller = SBBTimePickerController();
+      await tester.pumpWidget(
+        TestApp(
+          child: _DemoTimePicker(initialTime: TimeOfDay(hour: 8, minute: 15), controller: controller),
+        ),
+      );
       await tester.pumpAndSettle();
 
-      await tester.selectSBBTime(find.byType(SBBTimePicker), TimeOfDay(hour: 14, minute: 45));
+      await tester.selectSBBTime(controller, TimeOfDay(hour: 14, minute: 45));
 
       expect(find.text('selected: 14:45'), findsOneWidget);
     },
   );
 
   testWidgets(
-    'selectSbbTime_whenTimeNotOnMinuteInterval_thenSelectionIsRoundedToInterval',
+    'selectSBBTime_whenTimeNotOnMinuteInterval_thenSelectionIsRoundedToInterval',
     (tester) async {
+      final controller = SBBTimePickerController();
       await tester.pumpWidget(
         TestApp(
-          child: _DemoTimePicker(initialTime: TimeOfDay(hour: 8, minute: 0), minuteInterval: 15),
+          child: _DemoTimePicker(
+            initialTime: TimeOfDay(hour: 8, minute: 0),
+            minuteInterval: 15,
+            controller: controller,
+          ),
         ),
       );
       await tester.pumpAndSettle();
 
-      await tester.selectSBBTime(find.byType(SBBTimePicker), TimeOfDay(hour: 14, minute: 52));
+      await tester.selectSBBTime(controller, TimeOfDay(hour: 14, minute: 52));
 
       expect(find.text('selected: 14:45'), findsOneWidget);
     },

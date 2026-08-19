@@ -72,12 +72,3 @@ dependencies {
     androidTestImplementation("androidx.test:runner:1.7.0")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.7.0")
 }
-
-configurations.configureEach {
-    resolutionStrategy {
-        // Flutter's integration_test plugin pins espresso-core 3.2+ on Flutter <3.47,
-        // where espresso-core and espresso-idling-resource share the
-        // androidx.test.espresso namespace, which AGP 9 rejects during manifest merging.
-        force("androidx.test.espresso:espresso-core:3.7.0")
-    }
-}

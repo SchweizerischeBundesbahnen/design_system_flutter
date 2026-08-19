@@ -8,7 +8,7 @@ import 'test_app.dart';
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
-  testWidgets('closeButtonKey_whenSearchedForAndPressed_isFoundAndDismissesPopover', (tester) async {
+  testWidgets('sbbPopover_whenTargetIsPressedAndPopoverDismissedViaButton_isOpenedAndDismissed', (tester) async {
     final controller = SBBPopoverController();
     addTearDown(controller.dispose);
 

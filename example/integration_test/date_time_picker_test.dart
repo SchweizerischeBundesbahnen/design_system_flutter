@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
-import 'package:sbb_design_system_mobile/testing.dart';
 
 import 'test_app.dart';
+import 'widget_tester_extensions.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
@@ -12,10 +12,15 @@ void main() {
   testWidgets(
     'selectSBBDateTime_whenCalledWithTargetDateTime_thenOnDateTimeChangedReportsTargetDateTime',
     (tester) async {
-      await tester.pumpWidget(TestApp(child: _DemoDateTimePicker(initialDateTime: DateTime(2026, 1, 15, 8, 15))));
+      final controller = SBBDateTimePickerController();
+      await tester.pumpWidget(
+        TestApp(
+          child: _DemoDateTimePicker(initialDateTime: DateTime(2026, 1, 15, 8, 15), controller: controller),
+        ),
+      );
       await tester.pumpAndSettle();
 
-      await tester.selectSBBDateTime(find.byType(SBBDateTimePicker), DateTime(2026, 3, 31, 14, 45));
+      await tester.selectSBBDateTime(controller, DateTime(2026, 3, 31, 14, 45));
 
       expect(find.text('selected: 31.3.2026 14:45'), findsOneWidget);
     },
@@ -24,14 +29,19 @@ void main() {
   testWidgets(
     'selectSBBDateTime_whenTimeNotOnMinuteInterval_thenSelectionIsRoundedToInterval',
     (tester) async {
+      final controller = SBBDateTimePickerController();
       await tester.pumpWidget(
         TestApp(
-          child: _DemoDateTimePicker(initialDateTime: DateTime(2026, 1, 15, 8, 0), minuteInterval: 15),
+          child: _DemoDateTimePicker(
+            initialDateTime: DateTime(2026, 1, 15, 8, 0),
+            minuteInterval: 15,
+            controller: controller,
+          ),
         ),
       );
       await tester.pumpAndSettle();
 
-      await tester.selectSBBDateTime(find.byType(SBBDateTimePicker), DateTime(2026, 2, 20, 14, 52));
+      await tester.selectSBBDateTime(controller, DateTime(2026, 2, 20, 14, 52));
 
       expect(find.text('selected: 20.2.2026 14:45'), findsOneWidget);
     },
