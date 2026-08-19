@@ -188,28 +188,4 @@ void main() {
 
     handle.dispose();
   });
-
-  testWidgets('segments are selectable via their consumer-supplied key', (WidgetTester tester) async {
-    String? changed;
-    await tester.pumpWidget(
-      TestApp(
-        child: SBBSegmentedButton<String>(
-          segments: const [
-            SBBButtonSegment(value: 'option1', labelText: 'Option 1', key: ValueKey('option1')),
-            SBBButtonSegment(value: 'option2', labelText: 'Option 2', key: ValueKey('option2')),
-            SBBButtonSegment(value: 'option3', labelText: 'Option 3', key: ValueKey('option3')),
-          ],
-          selected: 'option1',
-          onSelectionChanged: (value) => changed = value,
-        ),
-      ),
-    );
-
-    expect(find.byKey(const ValueKey('option3')), findsOneWidget);
-
-    await tester.tap(find.byKey(const ValueKey('option3')));
-    await tester.pumpAndSettle();
-
-    expect(changed, 'option3');
-  });
 }

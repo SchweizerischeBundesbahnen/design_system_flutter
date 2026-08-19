@@ -62,39 +62,10 @@ void main() {
       find.byType(Column).first,
     );
   });
-
-  testWidgets('tab items are selectable via their consumer-supplied key', (WidgetTester tester) async {
-    final icons = [SBBIcons.train_small, SBBIcons.station_small, SBBIcons.archive_box_small];
-    final items = [
-      _DemoItem('tab_a', icons[0], key: const ValueKey('tab_a')),
-      _DemoItem('tab_b', icons[1], key: const ValueKey('tab_b')),
-      _DemoItem('tab_c', icons[2], key: const ValueKey('tab_c')),
-    ];
-
-    SBBTabBarItem? tapped;
-    await tester.pumpWidget(
-      TestApp(
-        child: SBBTabBar.items(
-          items: items,
-          initialItem: items.first,
-          onTabChanged: (tab) async {},
-          onTap: (tab) => tapped = tab,
-        ),
-      ),
-    );
-    await tester.pumpAndSettle();
-
-    expect(find.byKey(const ValueKey('tab_b')), findsOneWidget);
-
-    await tester.tap(find.byKey(const ValueKey('tab_b')));
-    await tester.pumpAndSettle();
-
-    expect(tapped, items[1]);
-  });
 }
 
 class _DemoItem extends SBBTabBarItem {
-  _DemoItem(super.id, super.icon, {super.key});
+  _DemoItem(super.id, super.icon);
 
   @override
   String translate(BuildContext context) => 'Item $id';

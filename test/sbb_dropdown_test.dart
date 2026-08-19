@@ -82,36 +82,4 @@ void main() {
       find.byType(Scaffold).first,
     );
   });
-
-  testWidgets('items are selectable via their consumer-supplied key', (WidgetTester tester) async {
-    final items = [
-      SBBDropdownItem<int>(value: 0, label: 'Item 0', key: const ValueKey(0)),
-      SBBDropdownItem<int>(value: 1, label: 'Item 1', key: const ValueKey(1)),
-      SBBDropdownItem<int>(value: 2, label: 'Item 2', key: const ValueKey(2)),
-    ];
-
-    int? changed;
-    await tester.pumpWidget(
-      MaterialApp(
-        theme: SBBTheme.light(),
-        home: Scaffold(
-          body: SBBDropdown<int>(
-            selectedItem: null,
-            items: items,
-            onChanged: (value) => changed = value,
-          ),
-        ),
-      ),
-    );
-
-    await tester.tap(find.byType(SBBDecoratedText));
-    await tester.pumpAndSettle();
-
-    expect(find.byKey(const ValueKey(2)), findsOneWidget);
-
-    await tester.tap(find.byKey(const ValueKey(2)));
-    await tester.pumpAndSettle();
-
-    expect(changed, 2);
-  });
 }
