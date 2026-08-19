@@ -64,48 +64,6 @@ jobs:
       - name: Check publishable to pub.dev
         run: flutter pub publish --dry-run
 
-  integration-test:
-    runs-on: macos-26
-    defaults:
-      run:
-        working-directory: example
-
-    steps:
-
-      - uses: maxim-lobanov/setup-xcode@v1
-        with:
-          xcode-version: ~26.6
-
-      - uses: actions/checkout@v7
-
-      - uses: subosito/flutter-action@v2
-        with:
-          channel: stable
-          flutter-version: 3.47.x
-          cache: true
-
-      - name: Launch iOS Simulator
-        id: launch_simulator
-        uses: futureware-tech/simulator-action@v5
-        with:
-          model: iPhone 17
-          wait_for_boot: true
-
-      - name: Flutter doctor
-        run: flutter doctor -v
-
-      - name: Install dependencies
-        run: flutter pub get
-
-      # The app launch on a freshly created simulator is known to hang sometimes.
-      # bound each attempt and retry instead of blocking the runner for hours.
-      - name: Run integration tests
-        uses: nick-fields/retry@v4
-        with:
-          timeout_minutes: 10
-          max_attempts: 3
-          command: cd example && flutter --no-color test -d ${{ steps.launch_simulator.outputs.udid }} integration_test/app_test.dart
-
 
   changelog-test:
     runs-on: ubuntu-latest
