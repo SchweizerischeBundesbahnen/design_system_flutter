@@ -25,6 +25,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - added `WidgetTester.selectSBBTime` test helper, exported via `package:sbb_design_system_mobile/testing.dart`
 - added `SBBDateTimePicker.controller` accepting the new `SBBDateTimePickerController` for programmatically setting the selected date time, e.g. in instrumentation tests
 - added `WidgetTester.selectSBBDateTime` test helper, exported via `package:sbb_design_system_mobile/testing.dart`
+- added `WidgetTester.setSBBSliderValue` test helper for setting an `SBBSlider` value via its accessibility actions, exported via `package:sbb_design_system_mobile/testing.dart`
 
 ### Changed
 
