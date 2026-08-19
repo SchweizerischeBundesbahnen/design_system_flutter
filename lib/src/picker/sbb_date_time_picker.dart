@@ -423,8 +423,6 @@ class _SBBDateTimePickerState extends State<SBBDateTimePicker>
       'Cannot set the date time of an SBBDateTimePicker that has not been laid out yet.',
     );
 
-    // minimumDateTime/maximumDateTime are already adjusted to the minute
-    // interval by the widget constructor
     final targetDateTime = PickerUtils.clampedAndTimeIntervaledDateTime(
       dateTime,
       widget.minimumDateTime,
@@ -432,16 +430,12 @@ class _SBBDateTimePickerState extends State<SBBDateTimePicker>
       widget.minuteInterval,
     );
 
-    // normalize the looping columns to their canonical index range so the
-    // scroll distance to the target stays minimal
     _ensureOptimizedScrollPosition();
 
     final dateIndex = _dateToIndex(targetDateTime);
     final hourIndex = _hourToIndex(targetDateTime.hour);
     final minuteIndex = _minuteToIndex(targetDateTime.minute);
 
-    // keep the hour/minute columns' date dependent rendering in sync, since
-    // programmatic scrolls do not trigger onTargetItemSelected
     _dateValueNotifier.value = targetDateTime.date;
     _dateHourValueNotifier.value = targetDateTime;
 
@@ -457,8 +451,6 @@ class _SBBDateTimePickerState extends State<SBBDateTimePicker>
       _minuteController.jumpToItem(minuteIndex);
     }
 
-    // resync the selected date time from the column positions in case a column
-    // did not move and therefore did not report a selection change
     _onDateTimeSelected(
       date: _indexToDate(_dateController.selectedItem),
       hour: _indexToHour(_hourController.selectedItem),

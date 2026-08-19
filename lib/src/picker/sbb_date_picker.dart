@@ -407,16 +407,12 @@ class _SBBDatePickerState extends State<SBBDatePicker>
 
     final targetDate = PickerUtils.clampedDateOnly(date, widget.minimumDate, widget.maximumDate);
 
-    // normalize looping columns to their canonical index range so the scroll
-    // distance to the target stays minimal
     _ensureOptimizedScrollPosition();
 
     final dayIndex = _dayToIndex(targetDate.day);
     final monthIndex = _monthToIndex(targetDate.month);
     final yearIndex = _yearToIndex(targetDate.year);
 
-    // keep the day column's month/year dependent rendering in sync, since
-    // programmatic scrolls do not trigger onTargetItemSelected
     _monthYearValueNotifier.value = targetDate;
     _yearValueNotifier.value = targetDate.year;
 
@@ -432,9 +428,6 @@ class _SBBDatePickerState extends State<SBBDatePicker>
       _yearController.jumpToItem(yearIndex);
     }
 
-    // resync the selected date from the column positions: a month/year scroll
-    // passing through a shorter month clamps the day in _selectedDate, which
-    // is never restored when the day column itself did not move
     _onDateSelected(
       year: _indexToYear(_yearController.selectedItem),
       month: _indexToMonth(_monthController.selectedItem),

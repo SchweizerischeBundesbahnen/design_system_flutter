@@ -382,19 +382,13 @@ class _SBBTimePickerState extends State<SBBTimePicker>
       'Cannot set the time of an SBBTimePicker that has not been laid out yet.',
     );
 
-    // minimumTime/maximumTime are already adjusted to the minute interval by
-    // the widget constructor
     final targetTime = time.roundToInterval(widget.minuteInterval).clamp(widget.minimumTime, widget.maximumTime);
 
-    // normalize the looping columns to their canonical index range so the
-    // scroll distance to the target stays minimal
     _ensureOptimizedScrollPosition();
 
     final hourIndex = _hourToIndex(targetTime.hour);
     final minuteIndex = _minuteToIndex(targetTime.minute);
 
-    // keep the minute column's hour dependent rendering in sync, since
-    // programmatic scrolls do not trigger onTargetItemSelected
     _hourValueNotifier.value = targetTime.hour;
 
     if (animate) {
@@ -407,8 +401,6 @@ class _SBBTimePickerState extends State<SBBTimePicker>
       _minuteController.jumpToItem(minuteIndex);
     }
 
-    // resync the selected time from the column positions in case a column did
-    // not move and therefore did not report a selection change
     _onTimeSelected(
       hour: _indexToHour(_hourController.selectedItem),
       minute: _indexToMinute(_minuteController.selectedItem),
