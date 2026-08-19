@@ -97,8 +97,14 @@ jobs:
       - name: Install dependencies
         run: flutter pub get
 
+      # The app launch on a freshly created simulator is known to hang sometimes.
+      # bound each attempt and retry instead of blocking the runner for hours.
       - name: Run integration tests
-        run: flutter --no-color test --machine -d ${{ steps.launch_simulator.outputs.udid }} integration_test/app_test.dart
+        uses: nick-fields/retry@v3
+        with:
+          timeout_minutes: 20
+          max_attempts: 2
+          command: cd example && flutter --no-color test -d ${{ steps.launch_simulator.outputs.udid }} integration_test/app_test.dart
 
 
   changelog-test:
