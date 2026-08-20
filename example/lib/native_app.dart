@@ -36,6 +36,7 @@ import 'package:flutter_design_system_mobile_example/pages/text_area_page.dart';
 import 'package:flutter_design_system_mobile_example/pages/text_input_page.dart';
 import 'package:flutter_design_system_mobile_example/pages/toast_page.dart';
 import 'package:flutter_design_system_mobile_example/pages/typography_page.dart';
+import 'package:flutter_design_system_mobile_example/theme/candy_base_style.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
@@ -64,10 +65,17 @@ class MyApp extends StatelessWidget {
       create: (context) => AppState(),
       child: Consumer<AppState>(
         builder: (context, appState, _) {
+          final isCandyMode = appState.themeContext == .safety;
           return MaterialApp(
             debugShowCheckedModeBanner: false,
-            theme: SBBTheme.light(themeContext: appState.themeContext),
-            darkTheme: SBBTheme.dark(themeContext: appState.themeContext),
+            theme: SBBTheme.light(
+              themeContext: appState.themeContext,
+              baseStyle: isCandyMode ? CandyBaseStyle.light() : null,
+            ),
+            darkTheme: SBBTheme.dark(
+              themeContext: appState.themeContext,
+              baseStyle: isCandyMode ? CandyBaseStyle.dark() : null,
+            ),
             themeMode: appState.isDarkModeOn ? ThemeMode.dark : ThemeMode.light,
             localizationsDelegates: const [
               GlobalMaterialLocalizations.delegate,
