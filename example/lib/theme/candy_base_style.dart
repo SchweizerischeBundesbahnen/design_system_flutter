@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
-/// Playful, colorful [SBBBaseStyle] used by the example app instead of the
-/// real safety style whenever [SBBThemeContext.safety] is selected.
-///
-/// Demo-only "candy mode" — not part of the design system itself.
 class CandyBaseStyle {
   CandyBaseStyle._();
 
