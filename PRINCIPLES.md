@@ -1,28 +1,36 @@
 # Principles
 
-These principles guide us in the development and help clients understand what to expect from this package.
-They are more directly targeted at developers than the principles found in
-[digital.sbb.ch/principles](https://digital.sbb.ch/de/principles/ux-principles/overview/).
+These principles guide our development and help our consumers understand what to expect from this package.
+While aligned with the broader SBB design vision, they focus specifically on developer experience rather
+than the general design principles found at [digital.sbb.ch/principles](https://digital.sbb.ch/de/principles/ux-principles/overview/).
 
 ## Aim for Convenience
 
-The goal of this package is to allow clients to setup an SBB themed app with all components as quickly as possible.
-This implies having convenience parameters like `labelText` or `iconData` to build SBB styled widgets without
-thinking much about theming or styling. This is achieved by delivering accurate and understandable
-**default values**.
+Our goal is to enable consumers to build SBB-themed applications with minimal effort. We provide intuitive parameters—such as
+`labelText` or `iconData`—that let you create SBB styled Widgets without worrying about styling details. We achieve this
+through carefully chosen **default values** that resemble the design specifications.
 
-Clients should be able to build the
+Consumers should be able to implement
 [Figma components](https://www.figma.com/design/ZBotr4yqcEKqqVEJTQfSUa/Design-System-Mobile?node-id=7-12&p=f)
-as easily as possible.
+with minimal effort and thought.
 
 ## Customization
 
-Clients are allowed to customize components to a certain extent. This mostly concerns widgets that contain other
-widgets (e.g. `SBBListItem`). There are three important aspects here:
+Customization is supported to a meaningful extent, particularly for composite widgets like `SBBListItem` that contain other widgets. We
+maintain three key principles:
 
-* **Coloring** and inner padding are easily customizable for all components, meaning good documentation and per individual component
-* Geometric default values should be accessible for reading
-* Geometric values can be customized in edge cases, but there is little documentation or guidance given
+* **Colors and spacing** are easily customizable across all components, backed by clear documentation for each variant.
+* **Default geometric values** are accessible and transparent.
+* **Fine-grained geometric adjustments** can be made for edge cases, though with minimal guidance.
 
-The result of the above is a fine borderline between complete custom widgets, that have little to do with the original intent of the component designers and
-being too rigid for a real world application. We walk this line by listening to community feedback and constant exchange with the UX designers.
+This reflects a careful balance: we avoid forcing consumers into rigid constraints, yet prevent over-customization that deviates from the
+original design intent. We aim to navigate this balance through community feedback and ongoing collaboration with our UX design team.
+
+## Boring API
+
+We deliberately favor predictable, straightforward APIs over clever or feature-rich ones. A "boring" API is one that behaves as you'd
+expect. We embrace the [Principle of Least Surprise](https://en.wikipedia.org/wiki/Principle_of_least_astonishment), ensuring that component
+behavior aligns with consumer expectations.
+
+This principle stems from the understanding that less cognitive overhead means fewer bugs and faster development. When an API is boring,
+consumers can focus on building features rather than deciphering behavior.
