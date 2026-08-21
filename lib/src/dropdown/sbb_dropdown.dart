@@ -222,6 +222,7 @@ class SBBDropdown<T> extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final item = items[index];
                   return SBBRadioListItem<T>(
+                    key: item.key,
                     value: item.value,
                     titleText: item.label,
                   );

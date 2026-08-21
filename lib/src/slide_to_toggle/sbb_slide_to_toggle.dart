@@ -78,6 +78,19 @@ class SBBSlideToToggle extends StatefulWidget {
     this.style,
   }) : assert(threshold >= 0 && threshold <= 1, 'threshold must be between 0 and 1.');
 
+  /// Key applied to the internal draggable handle, distinct from the outer widget bounds.
+  ///
+  /// When multiple [SBBSlideToToggle] are rendered, give the specific [SBBSlideToToggle]
+  /// instance its own `key` and locate its handle as its descendant, e.g.:
+  ///
+  /// ```dart
+  /// find.descendant(
+  ///   of: find.byKey(mySlideToToggleKey),
+  ///   matching: find.byKey(SBBSlideToToggle.handleKey),
+  /// )
+  /// ```
+  static const Key handleKey = Key('sbbSlideToToggleHandleKey');
+
   /// State value of the Slide-To-Toggle
   final SBBSlideToToggleState value;
 
@@ -280,6 +293,7 @@ class _SBBSlideToToggleState extends State<SBBSlideToToggle> with SingleTickerPr
     return Align(
       alignment: AlignmentGeometry.xy(_position * 2 - 1, 0.5),
       child: GestureDetector(
+        key: SBBSlideToToggle.handleKey,
         behavior: .translucent,
         onHorizontalDragStart: _onDragStart,
         onHorizontalDragUpdate: _onDragUpdate,

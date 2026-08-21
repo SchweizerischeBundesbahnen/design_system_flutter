@@ -126,6 +126,7 @@ class _SBBSegmentedButtonState<T> extends State<SBBSegmentedButton<T>> {
           child: Material(
             color: SBBColors.transparent,
             child: InkWell(
+              key: segment.key,
               customBorder: SBBSegmentedButtonStyle.shape,
               onTap: segment.value != widget.selected ? () => widget.onSelectionChanged(segment.value) : null,
             ),

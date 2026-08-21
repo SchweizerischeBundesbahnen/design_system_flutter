@@ -278,6 +278,7 @@ class SBBMultiDropdown<T> extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final item = items[index];
                       return SBBCheckboxListItem(
+                        key: item.key,
                         value: selectedValues.contains(item.value),
                         titleText: item.label,
                         onChanged: (checked) {

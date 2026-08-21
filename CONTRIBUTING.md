@@ -4,9 +4,9 @@
 > Details can be found in our [LICENSE](LICENSE).
 
 There are two primary ways to help:
- - Using the issue tracker, and
- - Changing the code-base.
 
+- Using the issue tracker, and
+- Changing the code-base.
 
 ## Using the issue tracker
 
@@ -16,14 +16,13 @@ Note that we will not accept all feature requests, since the UI elements in SBB 
 
 Use the issue tracker to find ways to contribute. Find a bug or a feature, mention in the issue that you will take on that effort, then follow the _Changing the code-base_ guidance below.
 
-
 ## Changing the code-base
 
 Generally speaking, you should *fork* this repository, make changes in your own fork, and then submit a pull request. Refer to the official git documentation on [Contributing to a Project] for details.
 
 ### Expectations for a pull request
 
-All new code should have associated unit tests ([Golden Tests] for UI elements) that validate implemented features and the presence or lack of defects. Take a look at existing golden tests (e.g. [sbb_chip_test.dart](test/sbb_chip_test.dart)) as reference.
+All new code should be covered by tests that validate the implemented features and the presence or lack of defects. See [Testing](#testing) for which kind of test we expect where.
 
 Additionally, the code should follow the patterns and structure found in other components, unless there is a clear reason why not to.
 
@@ -35,9 +34,45 @@ Take a look at the [github test action](.github/workflows/test.yml) that will ru
 
 The naming of the Widgets should follow the naming from the [Design specs].
 
+### Testing
+
+This is a design system: what a component *looks like* is its contract. **We therefore prefer [Golden Tests] over any other kind of test.**
+A golden test pins down the rendered pixels, which covers layout, spacing, colors, typography, theming and state at once.
+
+#### Golden tests (the default)
+
+Golden tests live in `test/` and are run by `flutter test` on every pull request.
+
+Write one per component and cover its relevant states (default, selected, disabled, long text, custom content, ...) in a single widget, so that one golden captures the whole matrix.
+Use the `TestSpecs.run` helper from [test/test_app.dart](test/test_app.dart) with `TestSpecs.themedSpecs` — it renders the widget in both light and dark theme and writes one golden per brightness.
+[sbb_chip_test.dart](test/sbb_chip_test.dart) is a good reference.
+
+Generate or refresh the reference images with:
+
+```shell
+flutter test --update-goldens
+```
+
+Goldens are pixel-compared on a _macOS_ runner in CI. Failed goldens are uploaded to the job artifacts so you can inspect the diff.
+
+#### Integration tests (only where a golden cannot reach)
+
+Some behaviour cannot be captured visually: gestures, scroll and animation driven selection, overlays and controllers.
+For those, add an integration test to [example/integration_test/](example/integration_test/) and register it in [app_test.dart](example/integration_test/app_test.dart),
+which bundles all of them into the single run performed by CI on an iOS simulator.
+
+**Only add an integration test for non-trivial logic.** A test that merely asserts a callback is wired up — for example that `onItemSelected` is actually called when an item is tapped — is trivial and should not be added.
+Ask yourself whether the test could realistically catch a regression that neither the golden test nor the analyzer would.
+
+Name integration tests `subject_whenCondition_thenExpectation` and reuse the helpers in [widget_tester_extensions.dart](example/integration_test/widget_tester_extensions.dart) where they fit.
+
 
 [Golden Tests]: (https://api.flutter.dev/flutter/flutter_test/matchesGoldenFile.html)
+
 [Keep A Changelog]: (https://keepachangelog.com/en/1.1.0/)
+
 [Semantic Commit Messages]: (https://sparkbox.com/foundry/semantic_commit_messages)
+
 [Design Specs]: (https://digital.sbb.ch/de/design-system/mobile/overview/)
+
 [Contributing to a project]: https://git-scm.com/book/ms/v2/GitHub-Contributing-to-a-Project

@@ -26,6 +26,7 @@ class SBBTimePicker extends StatefulWidget {
     this.minuteInterval = pickerDefaultMinuteInterval,
     this.visibleItemCount = pickerDefaultVisibleItemCount,
     this.pickerStyle,
+    this.controller,
   }) : assert(
          minuteInterval > 0 && TimeOfDay.minutesPerHour % minuteInterval == 0,
          'minute interval is not a positive integer factor of 60',
@@ -85,6 +86,10 @@ class SBBTimePicker extends StatefulWidget {
   /// Non-null properties override the corresponding properties in
   /// [SBBPickerThemeData.pickerStyle] from the current theme.
   final SBBPickerStyle? pickerStyle;
+
+  /// Can be used to programmatically set the selected time, e.g. from
+  /// instrumentation tests.
+  final SBBTimePickerController? controller;
 
   /// Shows a [SBBBottomSheet] with an [SBBTimePicker] to select a [TimeOfDay].
   ///
@@ -192,6 +197,64 @@ class SBBTimePicker extends StatefulWidget {
   State<SBBTimePicker> createState() => _SBBTimePickerState();
 }
 
+/// A controller for [SBBTimePicker] that allows programmatically setting the
+/// selected time, e.g. from instrumentation tests.
+///
+/// Attach it to a picker via [SBBTimePicker.controller]. A controller can only
+/// be attached to one picker at a time.
+///
+/// See also:
+///
+/// * `example/integration_test/widget_tester_extensions.dart`, which wraps
+///   [setTime] in a `WidgetTester.selectSBBTime` helper that takes care of the
+///   pumping needed in widget and integration tests.
+class SBBTimePickerController {
+  _SBBTimePickerState? _state;
+
+  /// Whether this controller is currently attached to an [SBBTimePicker].
+  bool get isAttached => _state != null;
+
+  /// Sets the selected time of the attached [SBBTimePicker].
+  ///
+  /// [time] is rounded to [SBBTimePicker.minuteInterval] and clamped to
+  /// [SBBTimePicker.minimumTime] and [SBBTimePicker.maximumTime].
+  /// [SBBTimePicker.onTimeChanged] is called for every selection change caused
+  /// by the resulting scroll, ending with the target time.
+  ///
+  /// If [animate] is true, the picker columns scroll to the target time,
+  /// otherwise they jump there without animation. The returned future
+  /// completes when the scroll animations are done.
+  ///
+  /// Note for widget tests (fake async): animations only advance while frames
+  /// are pumped, so either pass `animate: false` or pump before awaiting the
+  /// returned future:
+  ///
+  /// ```dart
+  /// final done = controller.setTime(TimeOfDay(hour: 14, minute: 30));
+  /// await tester.pumpAndSettle();
+  /// await done;
+  /// ```
+  ///
+  /// Must only be called while attached to a picker that has been laid out:
+  /// calling while not attached asserts in debug mode and does nothing in
+  /// release mode.
+  Future<void> setTime(TimeOfDay time, {bool animate = true}) {
+    final state = _state;
+    assert(state != null, 'SBBTimePickerController.setTime called while not attached to an SBBTimePicker.');
+    if (state == null) return Future<void>.value();
+    return state.setTime(time, animate: animate);
+  }
+
+  void _attach(_SBBTimePickerState state) {
+    assert(_state == null, 'SBBTimePickerController is already attached to an SBBTimePicker.');
+    _state = state;
+  }
+
+  void _detach(_SBBTimePickerState state) {
+    if (_state == state) _state = null;
+  }
+}
+
 class _SBBTimePickerState extends State<SBBTimePicker> with TimeBasedPickerMixin<SBBTimePicker> {
   static const _horizontalPaddingCount = 4;
 
@@ -227,6 +290,17 @@ class _SBBTimePickerState extends State<SBBTimePicker> with TimeBasedPickerMixin
 
     _initHourController();
     _initMinuteController();
+
+    widget.controller?._attach(this);
+  }
+
+  @override
+  void didUpdateWidget(SBBTimePicker oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.controller != widget.controller) {
+      oldWidget.controller?._detach(this);
+      widget.controller?._attach(this);
+    }
   }
 
   void _initHourController() {
@@ -267,6 +341,7 @@ class _SBBTimePickerState extends State<SBBTimePicker> with TimeBasedPickerMixin
 
   @override
   void dispose() {
+    widget.controller?._detach(this);
     _hourController.dispose();
     _minuteController.dispose();
     _hourValueNotifier.dispose();
@@ -294,6 +369,37 @@ class _SBBTimePickerState extends State<SBBTimePicker> with TimeBasedPickerMixin
           pickerStyle: widget.pickerStyle,
         );
       },
+    );
+  }
+
+  Future<void> setTime(TimeOfDay time, {bool animate = true}) async {
+    assert(
+      _hourController.hasClients && _minuteController.hasClients,
+      'Cannot set the time of an SBBTimePicker that has not been laid out yet.',
+    );
+
+    final targetTime = time.roundToInterval(widget.minuteInterval).clamp(widget.minimumTime, widget.maximumTime);
+
+    _ensureOptimizedScrollPosition();
+
+    final hourIndex = _hourToIndex(targetTime.hour);
+    final minuteIndex = _minuteToIndex(targetTime.minute);
+
+    _hourValueNotifier.value = targetTime.hour;
+
+    if (animate) {
+      await Future.wait([
+        if (_hourController.selectedItem != hourIndex) _hourController.animateToItem(hourIndex),
+        if (_minuteController.selectedItem != minuteIndex) _minuteController.animateToItem(minuteIndex),
+      ]);
+    } else {
+      _hourController.jumpToItem(hourIndex);
+      _minuteController.jumpToItem(minuteIndex);
+    }
+
+    _onTimeSelected(
+      hour: _indexToHour(_hourController.selectedItem),
+      minute: _indexToMinute(_minuteController.selectedItem),
     );
   }
 

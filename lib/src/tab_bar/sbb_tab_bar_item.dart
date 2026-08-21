@@ -3,11 +3,16 @@ import 'package:sbb_design_system_mobile/sbb_design_system_mobile.dart';
 
 /// Description of an Element in the [SBBTabBar]
 abstract class SBBTabBarItem {
-  const SBBTabBarItem(this.id, this.icon);
+  const SBBTabBarItem(this.id, this.icon, {this.key});
 
   /// An unique id. Necessary to properly align the item.
   final String id;
   final IconData icon;
+
+  /// Optional key applied to the rendered tab item.
+  ///
+  /// Useful in tests to find and tap a specific tab via `find.byKey(key)`.
+  final Key? key;
 
   String translate(BuildContext context);
 

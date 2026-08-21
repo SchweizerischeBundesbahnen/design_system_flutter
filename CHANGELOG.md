@@ -16,6 +16,13 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - added `semanticIsTabBar` and `semanticLabel` to `SBBSegmentedButton`
 - added `semanticLabel` and `semanticHint` to `SBBButtonSegment`
 - added `onTapOutside` and `onTapUpOutside` to `SBBTextInput` and related components
+- added `SBBBottomSheet.closeButtonKey`, `SBBPopup.closeButtonKey` and `SBBPopover.closeButtonKey` for use in instrumentation tests
+- added `SBBNotificationBox.dismissButtonKey`, `SBBPromotionBox.dismissButtonKey` for use in instrumentation tests
+- added `Key? key` to `SBBTabBarItem`, `SBBButtonSegment`, `SBBStepperItem` and `SBBDropdownItem` for use in instrumentation tests
+- added `SBBSlideToToggle.handleKey` for use in instrumentation tests to use with `WidgetTester.drag`
+- added `SBBDatePicker.controller` accepting the new `SBBDatePickerController` for programmatically setting the selected date, e.g. in instrumentation tests
+- added `SBBTimePicker.controller` accepting the new `SBBTimePickerController` for programmatically setting the selected time, e.g. in instrumentation tests
+- added `SBBDateTimePicker.controller` accepting the new `SBBDateTimePickerController` for programmatically setting the selected date time, e.g. in instrumentation tests
 
 ### Changed
 

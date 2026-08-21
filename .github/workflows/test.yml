@@ -64,6 +64,7 @@ jobs:
       - name: Check publishable to pub.dev
         run: flutter pub publish --dry-run
 
+
   changelog-test:
     runs-on: ubuntu-latest
     steps:
@@ -125,6 +126,9 @@ jobs:
     name: Build Example App iOS
     runs-on: macos-26
     needs: [ test, changelog-test, naming-analysis ]
+    env:
+      # rm when Flutter 3.44 support is dropped
+      FLUTTER_SWIFT_PACKAGE_MANAGER: "true"
     defaults:
       run:
         working-directory: example

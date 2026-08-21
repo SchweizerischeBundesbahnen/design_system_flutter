@@ -27,6 +27,7 @@ class SBBDateTimePicker extends StatefulWidget {
     this.minuteInterval = pickerDefaultMinuteInterval,
     this.visibleItemCount = pickerDefaultVisibleItemCount,
     this.pickerStyle,
+    this.controller,
   }) : assert(
          minuteInterval > 0 && TimeOfDay.minutesPerHour % minuteInterval == 0,
          'minute interval is not a positive integer factor of 60',
@@ -90,6 +91,10 @@ class SBBDateTimePicker extends StatefulWidget {
   /// Non-null properties override the corresponding properties in
   /// [SBBPickerThemeData.pickerStyle] from the current theme.
   final SBBPickerStyle? pickerStyle;
+
+  /// Can be used to programmatically set the selected date time, e.g. from
+  /// instrumentation tests.
+  final SBBDateTimePickerController? controller;
 
   /// Shows a [SBBBottomSheet] with an [SBBDateTimePicker] to select a [DateTime].
   ///
@@ -197,6 +202,68 @@ class SBBDateTimePicker extends StatefulWidget {
   State<SBBDateTimePicker> createState() => _SBBDateTimePickerState();
 }
 
+/// A controller for [SBBDateTimePicker] that allows programmatically setting
+/// the selected date time, e.g. from instrumentation tests.
+///
+/// Attach it to a picker via [SBBDateTimePicker.controller]. A controller can
+/// only be attached to one picker at a time.
+///
+/// See also:
+///
+/// * `example/integration_test/widget_tester_extensions.dart`, which wraps
+///   [setDateTime] in a `WidgetTester.selectSBBDateTime` helper that takes
+///   care of the pumping needed in widget and integration tests.
+class SBBDateTimePickerController {
+  _SBBDateTimePickerState? _state;
+
+  /// Whether this controller is currently attached to an [SBBDateTimePicker].
+  bool get isAttached => _state != null;
+
+  /// Sets the selected date time of the attached [SBBDateTimePicker].
+  ///
+  /// [dateTime] is rounded to [SBBDateTimePicker.minuteInterval] and clamped
+  /// to [SBBDateTimePicker.minimumDateTime] and
+  /// [SBBDateTimePicker.maximumDateTime].
+  /// [SBBDateTimePicker.onDateTimeChanged] is called for every selection
+  /// change caused by the resulting scroll, ending with the target date time.
+  ///
+  /// If [animate] is true, the picker columns scroll to the target date time,
+  /// otherwise they jump there without animation. The returned future
+  /// completes when the scroll animations are done.
+  ///
+  /// Note for widget tests (fake async): animations only advance while frames
+  /// are pumped, so either pass `animate: false` or pump before awaiting the
+  /// returned future:
+  ///
+  /// ```dart
+  /// final done = controller.setDateTime(DateTime(2026, 3, 31, 14, 30));
+  /// await tester.pumpAndSettle();
+  /// await done;
+  /// ```
+  ///
+  /// Must only be called while attached to a picker that has been laid out:
+  /// calling while not attached asserts in debug mode and does nothing in
+  /// release mode.
+  Future<void> setDateTime(DateTime dateTime, {bool animate = true}) {
+    final state = _state;
+    assert(
+      state != null,
+      'SBBDateTimePickerController.setDateTime called while not attached to an SBBDateTimePicker.',
+    );
+    if (state == null) return Future<void>.value();
+    return state.setDateTime(dateTime, animate: animate);
+  }
+
+  void _attach(_SBBDateTimePickerState state) {
+    assert(_state == null, 'SBBDateTimePickerController is already attached to an SBBDateTimePicker.');
+    _state = state;
+  }
+
+  void _detach(_SBBDateTimePickerState state) {
+    if (_state == state) _state = null;
+  }
+}
+
 class _SBBDateTimePickerState extends State<SBBDateTimePicker> with TimeBasedPickerMixin<SBBDateTimePicker> {
   static const _horizontalPaddingCount = 6;
 
@@ -235,6 +302,17 @@ class _SBBDateTimePickerState extends State<SBBDateTimePicker> with TimeBasedPic
     _initDateController();
     _initHourController();
     _initMinuteController();
+
+    widget.controller?._attach(this);
+  }
+
+  @override
+  void didUpdateWidget(SBBDateTimePicker oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.controller != widget.controller) {
+      oldWidget.controller?._detach(this);
+      widget.controller?._attach(this);
+    }
   }
 
   void _initDateController() {
@@ -288,6 +366,7 @@ class _SBBDateTimePickerState extends State<SBBDateTimePicker> with TimeBasedPic
 
   @override
   void dispose() {
+    widget.controller?._detach(this);
     _dateController.dispose();
     _hourController.dispose();
     _minuteController.dispose();
@@ -331,6 +410,47 @@ class _SBBDateTimePickerState extends State<SBBDateTimePicker> with TimeBasedPic
           pickerStyle: widget.pickerStyle,
         );
       },
+    );
+  }
+
+  Future<void> setDateTime(DateTime dateTime, {bool animate = true}) async {
+    assert(
+      _dateController.hasClients && _hourController.hasClients && _minuteController.hasClients,
+      'Cannot set the date time of an SBBDateTimePicker that has not been laid out yet.',
+    );
+
+    final targetDateTime = PickerUtils.clampedAndTimeIntervaledDateTime(
+      dateTime,
+      widget.minimumDateTime,
+      widget.maximumDateTime,
+      widget.minuteInterval,
+    );
+
+    _ensureOptimizedScrollPosition();
+
+    final dateIndex = _dateToIndex(targetDateTime);
+    final hourIndex = _hourToIndex(targetDateTime.hour);
+    final minuteIndex = _minuteToIndex(targetDateTime.minute);
+
+    _dateValueNotifier.value = targetDateTime.date;
+    _dateHourValueNotifier.value = targetDateTime;
+
+    if (animate) {
+      await Future.wait([
+        if (_dateController.selectedItem != dateIndex) _dateController.animateToItem(dateIndex),
+        if (_hourController.selectedItem != hourIndex) _hourController.animateToItem(hourIndex),
+        if (_minuteController.selectedItem != minuteIndex) _minuteController.animateToItem(minuteIndex),
+      ]);
+    } else {
+      _dateController.jumpToItem(dateIndex);
+      _hourController.jumpToItem(hourIndex);
+      _minuteController.jumpToItem(minuteIndex);
+    }
+
+    _onDateTimeSelected(
+      date: _indexToDate(_dateController.selectedItem),
+      hour: _indexToHour(_hourController.selectedItem),
+      minute: _indexToMinute(_minuteController.selectedItem),
     );
   }
 
@@ -503,7 +623,17 @@ class _SBBDateTimePickerState extends State<SBBDateTimePicker> with TimeBasedPic
 
   DateTime _indexToDate(int dateIndex) => widget.initialDateTime.date.add(Duration(days: dateIndex));
 
-  int _dateToIndex(DateTime date) => date.date.difference(widget.initialDateTime.date).inDays;
+  // calculated in UTC so that daylight saving time transitions between the two
+  // dates cannot shift the difference below a full day count
+  int _dateToIndex(DateTime date) {
+    final initialDate = widget.initialDateTime.date;
+    final targetDate = date.date;
+    return DateTime.utc(
+      targetDate.year,
+      targetDate.month,
+      targetDate.day,
+    ).difference(DateTime.utc(initialDate.year, initialDate.month, initialDate.day)).inDays;
+  }
 
   int _indexToMinute(int minuteIndex) => minuteIndex * widget.minuteInterval % TimeOfDay.minutesPerHour;
 

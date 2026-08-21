@@ -60,6 +60,9 @@ class SBBPopover extends StatefulWidget {
        assert(leading == null || leadingIconData == null, 'Only leading or leadingIconData can be set!'),
        assert(trailing == null || trailingIconData == null, 'Only trailing or trailingIconData can be set!');
 
+  /// Key applied to the popover's internal close button.
+  static const Key closeButtonKey = Key('sbbPopoverCloseButtonKey');
+
   /// Builds the widget the popover is anchored to. Always visible; the
   /// popover positions itself relative to the built widget's on-screen
   /// geometry.
@@ -391,6 +394,7 @@ class _SBBPopoverState extends State<SBBPopover> with SingleTickerProviderStateM
     excludeSemantics: true,
     button: true,
     child: SBBTertiaryButtonSmall(
+      key: SBBPopover.closeButtonKey,
       onPressed: _effectiveController.hide,
       iconData: SBBIcons.cross_small,
     ),

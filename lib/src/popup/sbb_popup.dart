@@ -131,6 +131,9 @@ class SBBPopup extends StatelessWidget {
        assert(leading == null || leadingIconData == null, 'Only leading or leadingIconData can be set!'),
        assert(trailing == null || trailingIconData == null, 'Only trailing or trailingIconData can be set!');
 
+  /// Key applied to the popup's internal close button.
+  static const Key closeButtonKey = Key('sbbPopupCloseButtonKey');
+
   /// A custom widget displayed as the popup's title.
   ///
   /// For simple text titles, use [titleText] instead.
@@ -346,6 +349,7 @@ class _PopupCloseButton extends StatelessWidget {
     excludeSemantics: true,
     button: true,
     child: SBBTertiaryButtonSmall(
+      key: SBBPopup.closeButtonKey,
       onPressed: () => Navigator.of(context, rootNavigator: useRootNavigator).pop(),
       iconData: SBBIcons.cross_small,
     ),

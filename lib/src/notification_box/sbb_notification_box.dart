@@ -241,6 +241,19 @@ class SBBNotificationBox extends StatefulWidget {
     semanticLabel: semanticLabel,
   );
 
+  /// Key applied to the internal dismiss button.
+  ///
+  /// When multiple [SBBNotificationBox] are rendered, give the specific [SBBNotificationBox]
+  /// instance its own `key` and locate the dismiss button as its descendant, e.g.:
+  ///
+  /// ```dart
+  /// find.descendant(
+  ///   of: find.byKey(myNotificationBoxKey),
+  ///   matching: find.byKey(SBBNotificationBox.dismissButtonKey),
+  /// )
+  /// ```
+  static const Key dismissButtonKey = Key('sbbNotificationBoxDismissButtonKey');
+
   /// Defines which notification variant is shown.
   final SBBNotificationBoxState state;
 
@@ -543,6 +556,7 @@ class _SBBNotificationBoxState extends State<SBBNotificationBox> with SingleTick
         label: MaterialLocalizations.of(context).closeButtonTooltip,
         button: true,
         child: InkWell(
+          key: SBBNotificationBox.dismissButtonKey,
           borderRadius: .circular(sbbIconSizeSmall),
           onTap: () {
             _effectiveController.hide();
