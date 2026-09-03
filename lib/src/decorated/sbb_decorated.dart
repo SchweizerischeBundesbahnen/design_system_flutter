@@ -14,8 +14,6 @@ const Duration _kContentFadeDuration = Duration(milliseconds: 210);
 /// leading and trailing widgets, and an error message. Use this widget to display
 /// content that is not text in the same visual style as a text input field.
 ///
-/// Where [SBBDecoratedText] displays a [String] and [SBBTextInput] an editable text,
-/// this widget places whatever you give it in the input slot.
 ///
 /// ## Emptiness
 ///
@@ -23,7 +21,8 @@ const Duration _kContentFadeDuration = Duration(milliseconds: 210);
 /// position, the placeholder appears, and the [child] is hidden — but it keeps its
 /// place in the layout, so the field does not change height once a value arrives.
 /// Build the [child] as it will look when filled, and let [isEmpty] decide whether it
-/// is shown.
+/// is shown. If not possible, reach for [minContentHeight] set to the same value
+/// as the expected child height.
 ///
 /// ## Interaction Model
 ///
@@ -195,9 +194,6 @@ class _SBBDecoratedState extends State<SBBDecorated> {
     final themeStyle = Theme.of(context).sbbDecoratedTheme.style!;
     final effectiveStyle = themeStyle.merge(widget.style);
 
-    // Let the content inherit the resolved color and text style, so that a disabled or
-    // errored field greys out its content along with its label and affixes. Merging
-    // means a style set explicitly on the child still wins.
     final child = addDefaultAncestorWithResolved(
       child: _hiddenWhenEmpty(widget.child),
       foregroundColor: effectiveStyle.contentForegroundColor?.resolve(_statesController.value),
@@ -235,12 +231,6 @@ class _SBBDecoratedState extends State<SBBDecorated> {
 
   bool get isBoxed => false;
 
-  /// Fades [child] out while the field is empty, without taking it out of the layout.
-  ///
-  /// The child keeps reserving its height so that the field does not jump when a value
-  /// arrives, and it is excluded from taps and focus while hidden — an interactive
-  /// child must not steal the tap that belongs to the field, and focus taken by a
-  /// hidden child would float the label.
   Widget _hiddenWhenEmpty(Widget child) {
     return ExcludeFocus(
       excluding: _isEmpty,
