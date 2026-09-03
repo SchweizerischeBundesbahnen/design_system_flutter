@@ -27,7 +27,7 @@ void main() {
   );
 
   testWidgets(
-    'selectSbbDate_whenMonthScrollPassesThroughShorterMonth_thenUnchangedDayIsPreserved',
+    'controllerSetDate_whenTargetMonthReachedThroughShorterIntermediateMonth_thenDayIsPreserved',
     (tester) async {
       final controller = SBBDatePickerController();
       await tester.pumpWidget(
@@ -38,6 +38,29 @@ void main() {
       await tester.pumpAndSettle();
 
       await tester.selectSBBDate(controller, DateTime(2026, 3, 31));
+
+      expect(find.text('selected: 31.3.2026'), findsOneWidget);
+    },
+  );
+
+  testWidgets(
+    'dragMonthColumn_whenPassingThroughShorterIntermediateMonth_thenOnDateChangedReportsDisplayedDate',
+    (tester) async {
+      await tester.pumpWidget(
+        TestApp(
+          child: _DemoDatePicker(initialDate: DateTime(2026, 1, 31)),
+        ),
+      );
+      await tester.pumpAndSettle();
+
+      final monthColumn = find.byType(SBBPickerScrollView).at(1);
+      final gesture = await tester.startGesture(tester.getCenter(monthColumn));
+      for (var i = 0; i < 9; i++) {
+        await gesture.moveBy(const Offset(0, -10));
+        await tester.pump();
+      }
+      await gesture.up();
+      await tester.pumpAndSettle();
 
       expect(find.text('selected: 31.3.2026'), findsOneWidget);
     },
