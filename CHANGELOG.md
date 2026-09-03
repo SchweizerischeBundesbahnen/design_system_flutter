@@ -28,6 +28,10 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 - (auto): updated icon lib to version 1.8.27
 
+### Fixed
+
+- fixed `SBBDatePicker` reporting wrong `onDateChanged` value when the month or year column is dragged through a shorter intermediate month/year
+
 ## [5.0.0] - 2026-06-19
 
 ### Added
