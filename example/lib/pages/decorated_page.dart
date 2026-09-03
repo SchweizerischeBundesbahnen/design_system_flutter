@@ -43,14 +43,18 @@ class _DecoratedPageState extends State<DecoratedPage> {
                 items: [
                   SBBDecorated(
                     decoration: SBBInputDecoration(labelText: 'Empty'),
+                    isEmpty: true,
                     onTap: () => sbbToast.show(titleText: 'Empty'),
+                    child: const _Route(from: 'Bern', to: 'Zürich HB'),
                   ),
                   SBBDecorated(
                     decoration: SBBInputDecoration(
                       labelText: 'With Placeholder',
                       placeholderText: 'Nothing selected',
                     ),
+                    isEmpty: true,
                     onTap: () => sbbToast.show(titleText: 'Empty with placeholder'),
+                    child: const _Route(from: 'Bern', to: 'Zürich HB'),
                   ),
                   SBBDecorated(
                     decoration: SBBInputDecoration(
@@ -58,7 +62,8 @@ class _DecoratedPageState extends State<DecoratedPage> {
                       leadingIconData: SBBIcons.dog_small,
                     ),
                     onTap: () => sbbToast.show(titleText: 'Status'),
-                    child: _showStatus ? SBBStatus(state: .success, labelText: 'On time') : null,
+                    isEmpty: !_showStatus,
+                    child: SBBStatus(state: .success, labelText: 'On time\nsd'),
                   ),
                   SBBDecorated(
                     decoration: SBBInputDecoration(
@@ -131,7 +136,9 @@ class _DecoratedPageState extends State<DecoratedPage> {
                   labelText: 'Empty',
                   leadingIconData: SBBIcons.unicorn_small,
                 ),
+                isEmpty: true,
                 onTap: () => sbbToast.show(titleText: 'Empty'),
+                child: const _Route(from: 'Bern', to: 'Zürich HB'),
               ),
               SBBDecoratedBoxed(
                 decoration: SBBInputDecoration(

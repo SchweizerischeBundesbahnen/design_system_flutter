@@ -4,6 +4,10 @@ import 'package:sbb_design_system_mobile/src/input/decoration/sbb_input_decorato
 import 'package:sbb_design_system_mobile/src/shared/debug.dart';
 import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 
+/// Matches the placeholder cross-fade of the input decorator, so that the content and
+/// the placeholder it replaces trade places rather than overlap.
+const Duration _kContentFadeDuration = Duration(milliseconds: 210);
+
 /// The SBB Decorated.
 ///
 /// Decorates an arbitrary widget with the same look as a text input: a floating label,
@@ -15,10 +19,11 @@ import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 ///
 /// ## Emptiness
 ///
-/// The field is empty when [child] is null, and the label rests in its centered
-/// position. Providing a [child] floats the label. A child that renders nothing,
-/// such as `SizedBox.shrink()`, still counts as content and floats the label — pass
-/// null rather than an empty widget to represent "no value".
+/// Set [isEmpty] when there is no value to show. The label rests in its centered
+/// position, the placeholder appears, and the [child] is hidden — but it keeps its
+/// place in the layout, so the field does not change height once a value arrives.
+/// Build the [child] as it will look when filled, and let [isEmpty] decide whether it
+/// is shown.
 ///
 /// ## Interaction Model
 ///
@@ -33,17 +38,9 @@ import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 /// ## Sizing
 ///
 /// The field is as tall as its content, bounded below by [minContentHeight] and by the
-/// minimum height of an input field. Set [expands] to fill the available vertical
+/// minimum height of an input field. The height does not depend on [isEmpty], since the
+/// hidden child still occupies its space. Set [expands] to fill the available vertical
 /// space instead, which also anchors the error message to the bottom of the field.
-///
-/// ## Key Properties
-///
-/// * [child]: The content to display, or null when there is no value
-/// * [onTap]: Called when the widget is tapped. Provides visual feedback via InkWell
-/// * [decoration]: Customizes the decoration surrounding the content, including icons,
-///   labels, and error states
-/// * [minContentHeight], [expands]: Control the height of the content
-/// * [topAlignAffixes]: Top-aligns the leading and trailing widgets for tall content
 ///
 /// See also:
 /// * [SBBDecoratedText] for displaying a static [String]
@@ -53,7 +50,8 @@ import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 class SBBDecorated extends StatefulWidget {
   const SBBDecorated({
     super.key,
-    this.child,
+    required this.child,
+    this.isEmpty = false,
     this.onTap,
     this.decoration,
     this.focusNode,
@@ -66,10 +64,17 @@ class SBBDecorated extends StatefulWidget {
 
   /// The content displayed in the input slot of the decoration.
   ///
-  /// When null, the field is empty and the label rests in its centered position.
-  /// Any non-null widget counts as content and floats the label, including one that
-  /// renders nothing.
-  final Widget? child;
+  /// Keep this built while [isEmpty] is true as well: the hidden child goes on
+  /// reserving its height, which is what stops the field from resizing when a value
+  /// arrives. Reach for [minContentHeight] when there is no sensible child to build.
+  final Widget child;
+
+  /// Whether the field should appear in its `empty` state.
+  ///
+  /// Defaults to false. When true, the label rests in its centered position, the
+  /// placeholder of the [decoration] is shown, and the [child] is faded out. The hidden
+  /// child holds its place in the layout and takes neither taps nor focus.
+  final bool isEmpty;
 
   /// The decoration surrounding the displayed content.
   ///
@@ -127,7 +132,7 @@ class _SBBDecoratedState extends State<SBBDecorated> {
 
   bool get _enabled => widget.onTap != null;
 
-  bool get _isEmpty => widget.child == null;
+  bool get _isEmpty => widget.isEmpty;
 
   @override
   void initState() {
@@ -194,7 +199,7 @@ class _SBBDecoratedState extends State<SBBDecorated> {
     // errored field greys out its content along with its label and affixes. Merging
     // means a style set explicitly on the child still wins.
     final child = addDefaultAncestorWithResolved(
-      child: widget.child,
+      child: _hiddenWhenEmpty(widget.child),
       foregroundColor: effectiveStyle.contentForegroundColor?.resolve(_statesController.value),
       textStyle: effectiveStyle.contentTextStyle,
     );
@@ -230,6 +235,26 @@ class _SBBDecoratedState extends State<SBBDecorated> {
 
   bool get isBoxed => false;
 
+  /// Fades [child] out while the field is empty, without taking it out of the layout.
+  ///
+  /// The child keeps reserving its height so that the field does not jump when a value
+  /// arrives, and it is excluded from taps and focus while hidden — an interactive
+  /// child must not steal the tap that belongs to the field, and focus taken by a
+  /// hidden child would float the label.
+  Widget _hiddenWhenEmpty(Widget child) {
+    return ExcludeFocus(
+      excluding: _isEmpty,
+      child: IgnorePointer(
+        ignoring: _isEmpty,
+        child: AnimatedOpacity(
+          duration: _kContentFadeDuration,
+          opacity: _isEmpty ? 0.0 : 1.0,
+          child: child,
+        ),
+      ),
+    );
+  }
+
   void _handleFocusChanged() {
     _updateStates();
     setState(() {
@@ -250,7 +275,8 @@ class _SBBDecoratedState extends State<SBBDecorated> {
 class SBBDecoratedBoxed extends SBBDecorated {
   SBBDecoratedBoxed({
     super.key,
-    super.child,
+    required super.child,
+    super.isEmpty,
     super.onTap,
     SBBInputDecoration? decoration,
     super.focusNode,

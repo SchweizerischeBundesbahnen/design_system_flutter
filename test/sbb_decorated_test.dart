@@ -103,7 +103,9 @@ void main() {
               placeholderText: 'Placeholder',
               leadingIconData: SBBIcons.unicorn_small,
             ),
+            isEmpty: true,
             onTap: () {},
+            child: const _Badge('Value'),
           ),
           SBBDecoratedBoxed(
             decoration: SBBInputDecoration(
@@ -192,6 +194,18 @@ void main() {
             onTap: () {},
             child: const _TallContent(),
           ),
+          SBBDecorated(
+            decoration: SBBInputDecoration(
+              labelText: 'Empty With Tall Content',
+              placeholderText: 'Placeholder',
+              leadingIconData: SBBIcons.dog_small,
+              trailingIconData: SBBIcons.circle_information_small_small,
+              borderType: .standalone,
+            ),
+            isEmpty: true,
+            onTap: () {},
+            child: const _TallContent(),
+          ),
           SizedBox(
             height: 140.0,
             child: SBBDecorated(
@@ -232,7 +246,9 @@ List<Widget> _decoratedItems({required ValueKey<String> tappableItemKey, require
     ),
     SBBDecorated(
       decoration: SBBInputDecoration(labelText: 'Empty', borderType: borderType),
+      isEmpty: true,
       onTap: () {},
+      child: const _Badge('Value'),
     ),
     SBBDecorated(
       decoration: SBBInputDecoration(
@@ -240,7 +256,9 @@ List<Widget> _decoratedItems({required ValueKey<String> tappableItemKey, require
         placeholderText: 'Placeholder',
         borderType: borderType,
       ),
+      isEmpty: true,
       onTap: () {},
+      child: const _Badge('Value'),
     ),
     SBBDecorated(
       decoration: SBBInputDecoration(
@@ -248,7 +266,9 @@ List<Widget> _decoratedItems({required ValueKey<String> tappableItemKey, require
         placeholder: const _Badge('Placeholder Widget'),
         borderType: borderType,
       ),
+      isEmpty: true,
       onTap: () {},
+      child: const _Badge('Value'),
     ),
     SBBDecorated(
       decoration: SBBInputDecoration(
