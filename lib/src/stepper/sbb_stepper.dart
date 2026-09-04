@@ -300,16 +300,7 @@ class _StepCircleState extends State<_StepCircle> {
     );
   }
 
-  /// The accessible name of this step, if it has one.
-  ///
-  /// A [SBBStepperItem.semanticLabel] names its step whether or not it is
-  /// active, since it is set deliberately. A [SBBStepperItem.labelText] names
-  /// only the active step, in parity with the visual design where only the
-  /// active step's label is drawn: the remaining steps are told apart by their
-  /// position and the selected state alone, and the stepper invents no
-  /// "completed" or "upcoming" vocabulary of its own.
-  String? get _semanticLabel =>
-      _isActiveStep ? widget.item.semanticLabel ?? widget.item.labelText : widget.item.semanticLabel;
+  String? get _semanticLabel => _isActiveStep ? widget.item.semanticLabel ?? widget.item.labelText : null;
 
   Widget _circle(BuildContext context) {
     final resolvedBackgroundColor = widget.style.backgroundColor?.resolve(_statesController.value);
