@@ -25,6 +25,16 @@ import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 /// Use [SBBSlideToToggle] for the standard size, or [SBBSlideToToggleSmall] for a
 /// reduced-size variant.
 ///
+/// ## Accessibility
+///
+/// This component is **not accessible**. It cannot be operated with a screen reader
+/// and offers no alternative to the horizontal drag gesture.
+///
+/// Do not use this component for functionality that has to be accessible. Prefer an
+/// [SBBPrimaryButton] combined with a confirmation step, for example a dialog or an
+/// [SBBBottomSheet]. That keeps the safeguard against accidental activation while
+/// remaining operable for every user.
+///
 /// ## Sample code
 ///
 /// ```dart
@@ -144,6 +154,9 @@ class SBBSlideToToggle extends StatefulWidget {
 /// This variant displays a smaller toggle button and is suitable for compact layouts
 /// or when space is limited. It supports the same functionality and customization
 /// options as [SBBSlideToToggle].
+///
+/// Like [SBBSlideToToggle], this component is not accessible. See the Accessibility
+/// section of [SBBSlideToToggle] before using it.
 class SBBSlideToToggleSmall extends SBBSlideToToggle {
   /// Creates a small SBB Slide-To-Toggle.
   const SBBSlideToToggleSmall({
