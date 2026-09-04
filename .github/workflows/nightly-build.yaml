@@ -100,7 +100,7 @@ jobs:
           timeout_minutes: 20
           max_attempts: 2
           retry_wait_seconds: 60
-          command: cd example && flutter test -r github --no-pub -d {{ steps.setup-simulator.outputs.udid }} integration_test/app_test.dart
+          command: cd example && flutter test -r github --no-pub -d ${{ steps.setup-simulator.outputs.udid }} integration_test/app_test.dart
 
       - name: Upload Integration Test Results
         uses: actions/upload-artifact@v7
