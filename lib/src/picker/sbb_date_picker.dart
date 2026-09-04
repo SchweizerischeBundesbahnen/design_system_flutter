@@ -482,7 +482,7 @@ class _SBBDatePickerState extends State<SBBDatePicker> with TimeBasedPickerMixin
   void _onDateSelected({int? year, int? month, int? day}) {
     final selectedYear = year ?? _selectedDate.year;
     final selectedMonth = month ?? _selectedDate.month;
-    var selectedDay = day ?? _selectedDate.day;
+    var selectedDay = day ?? _indexToDay(_dayController.selectedItem);
 
     final daysInMonth = DateUtils.getDaysInMonth(selectedYear, selectedMonth);
     if (selectedDay > daysInMonth) {
