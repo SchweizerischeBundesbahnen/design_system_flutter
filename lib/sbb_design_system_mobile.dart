@@ -4,6 +4,7 @@ export 'src/button/button.dart';
 export 'src/checkbox/checkbox.dart';
 export 'src/chip/chip.dart';
 export 'src/container/container.dart';
+export 'src/decorated/decorated.dart';
 export 'src/decorated_text/decorated_text.dart';
 export 'src/divider/divider.dart';
 export 'src/dropdown/dropdown.dart';

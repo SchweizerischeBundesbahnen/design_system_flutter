@@ -730,9 +730,14 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
 
     // To prevent changing height of the decorated field during animation,
     // space is reserved for both floating label and input.
-    // Since this is top aligned in multiline case, we use the maximum label height to prevent it from getting smaller
-    final double stableContentHeight =
-        (isMultiline ? maxLabelHeight ?? labelHeight : labelHeight) + floatingLabelInputGap + maxInputHeight;
+    // The label shrinks as it floats, so the reservation uses its maximum height rather than
+    // its current one: otherwise the field follows the label down whenever this sum, and not
+    // minTotalHeight, is what decides the height.
+    final double stableContentHeight = (maxLabelHeight ?? labelHeight) + floatingLabelInputGap + maxInputHeight;
+
+    // What the label and the input occupy right now. This is centered within the reserved
+    // space, so that a label smaller than its maximum does not leave the content top-heavy.
+    final double currentContentHeight = labelHeight + floatingLabelInputGap + maxInputHeight;
 
     final double titleRowHeight = [
       if (!isMultiline) leadingHeight,
@@ -754,7 +759,7 @@ class _RenderSBBDecoration extends RenderBox with SlottedContainerRenderObjectMi
         : (maxLabelHeight ?? labelHeight) + floatingLabelInputGap + minInputHeight;
 
     final double labelCenteredY = (labelSpaceHeight - labelHeight) / 2.0;
-    final double labelFloatingY = !isMultiline ? (labelSpaceHeight - stableContentHeight) / 2.0 : 0.0;
+    final double labelFloatingY = !isMultiline ? (labelSpaceHeight - currentContentHeight) / 2.0 : 0.0;
 
     //  Interpolate label Y position
     final double labelY =
