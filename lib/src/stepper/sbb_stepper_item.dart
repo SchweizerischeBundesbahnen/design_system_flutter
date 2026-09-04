@@ -110,6 +110,7 @@ sealed class SBBStepperItem {
   /// See also:
   /// * [SBBStepper.semanticValueBuilder], which words the step's position.
   final String? semanticLabel;
+
   /// Customizes this step's appearance.
   ///
   /// Non-null properties of this style override the corresponding properties
@@ -124,6 +125,7 @@ sealed class SBBStepperItem {
   /// active step index, a small badge is displayed on top of the step circle
   /// showing [badgeIcon]. Set to false to hide the badge for this step.
   final bool showBadgeWhenPassed;
+
   /// The icon to display in the badge when this step has been passed.
   ///
   /// Defaults to [SBBIcons.tick_small]. This icon is displayed in a small
@@ -144,6 +146,13 @@ sealed class SBBStepperItem {
 }
 
 /// A step that displays an icon inside the step circle.
+///
+/// Useful for steps that are best represented by a visual icon rather than
+/// a number or text. The icon is centered within the circle and respects
+/// the current styling for size and color.
+///
+/// See also:
+/// * [SBBStepperItem.icon], the factory constructor for this class.
 class SBBStepperItemIcon extends SBBStepperItem {
   const SBBStepperItemIcon({
     required this.icon,
@@ -156,10 +165,19 @@ class SBBStepperItemIcon extends SBBStepperItem {
     super.key,
   }) : super._();
 
+  /// The icon displayed inside the step circle.
   final IconData icon;
 }
 
 /// A step that displays custom text inside the step circle.
+///
+/// Useful for steps that need custom labels beyond numbers, such as letters,
+/// abbreviations, or short descriptive text. The text is centered within the
+/// circle and scaled to fit if necessary. For sequential numbering, prefer
+/// [SBBStepperItemNumbered] instead.
+///
+/// See also:
+/// * [SBBStepperItem.text], the factory constructor for this class.
 class SBBStepperItemText extends SBBStepperItem {
   const SBBStepperItemText({
     required this.text,
@@ -172,10 +190,19 @@ class SBBStepperItemText extends SBBStepperItem {
     super.key,
   }) : super._();
 
+  /// The text displayed inside the step circle.
   final String text;
 }
 
 /// A step that displays its (1-based) index number inside the step circle.
+///
+/// The number is automatically determined based on the step's position within
+/// [SBBStepper.steps] and incremented by 1 (so the first step displays "1",
+/// the second displays "2", etc.). This is the most common step representation
+/// for simple sequential processes.
+///
+/// See also:
+/// * [SBBStepperItem.numbered], the factory constructor for this class.
 class SBBStepperItemNumbered extends SBBStepperItem {
   const SBBStepperItemNumbered({
     super.label,
