@@ -7,6 +7,13 @@ import 'package:sbb_design_system_mobile/src/shared/utils.dart';
 
 typedef OnStepPressedCallback = void Function(SBBStepperItem item, int index);
 
+/// Builds the position announcement of the step at [index] of [stepCount] steps.
+///
+/// [index] is zero-based, consistent with [SBBStepper.activeStep] and
+/// [OnStepPressedCallback]. Add one to it to word a one-based position,
+/// e.g. `(index, stepCount) => 'Schritt ${index + 1} von $stepCount'`.
+typedef SBBStepperSemanticValueBuilder = String Function(int index, int stepCount);
+
 /// The SBB Stepper.
 /// Use according to [documentation](https://digital.sbb.ch/de/design-system/mobile/components/stepper/).
 ///
@@ -24,6 +31,10 @@ typedef OnStepPressedCallback = void Function(SBBStepperItem item, int index);
 /// The widget requires at least two steps and an [activeStep] within the
 /// valid range.
 ///
+/// Each step is announced to a screen reader as a button carrying its position;
+/// name a step with [SBBStepperItem.semanticLabel] and word its position with
+/// [semanticValueBuilder].
+///
 /// See also:
 /// * [SBBStepperItem] to define individual steps.
 /// * [SBBStepperStyle], the overall style for the stepper.
@@ -35,12 +46,14 @@ class SBBStepper extends StatelessWidget {
     required List<SBBStepperItem> steps,
     required int activeStep,
     required OnStepPressedCallback onStepPressed,
+    SBBStepperSemanticValueBuilder? semanticValueBuilder,
     SBBStepperStyle? style,
   }) : this._(
          key: key,
          steps: steps,
          activeStep: activeStep,
          onStepPressed: onStepPressed,
+         semanticValueBuilder: semanticValueBuilder,
          isFilledStyle: false,
          style: style,
        );
@@ -54,12 +67,14 @@ class SBBStepper extends StatelessWidget {
     required List<SBBStepperItem> steps,
     required int activeStep,
     required OnStepPressedCallback onStepPressed,
+    SBBStepperSemanticValueBuilder? semanticValueBuilder,
     SBBStepperStyle? style,
   }) : this._(
          key: key,
          steps: steps,
          activeStep: activeStep,
          onStepPressed: onStepPressed,
+         semanticValueBuilder: semanticValueBuilder,
          isFilledStyle: true,
          style: style,
        );
@@ -69,6 +84,7 @@ class SBBStepper extends StatelessWidget {
     required this.steps,
     required this.activeStep,
     required this.onStepPressed,
+    required this.semanticValueBuilder,
     required bool isFilledStyle,
     this.style,
   }) : assert(steps.length >= 2, 'needs at least two steps to work'),
@@ -93,6 +109,17 @@ class SBBStepper extends StatelessWidget {
   /// The active step is visually indicated and its label (if any) is shown
   /// under the corresponding circle.
   final int activeStep;
+
+  /// Words the position announced for each step by a screen reader.
+  ///
+  /// The builder receives the zero-based index of the step and the total number
+  /// of steps, and returns the full phrase, e.g. `'Schritt 3 von 5'`. Provide it
+  /// in the application's own locale; this library ships no accessibility
+  /// strings of its own.
+  ///
+  /// Defaults to the step's one-based number as a bare string, matching the
+  /// digit drawn in the circle of a [SBBStepperItemNumbered].
+  final SBBStepperSemanticValueBuilder? semanticValueBuilder;
 
   final bool _isFilledStyle;
 
@@ -148,19 +175,23 @@ class SBBStepper extends StatelessWidget {
 
     final effectiveItemStyle = effectiveStyle.itemStyle?.merge(selectedStep.style);
     final resolvedLabelTextStyle = effectiveStyle.itemStyle!.labelTextStyle?.merge(_activeItem.style?.labelTextStyle);
-    return addDefaultAncestorWithResolved(
-      textStyle: resolvedLabelTextStyle,
-      foregroundColor: effectiveItemStyle?.labelForegroundColor,
-      child: Padding(
-        padding: const .only(top: SBBSpacing.xxSmall),
-        child: _EdgeClampedCentered(
-          stepCircleSize: SBBStepperItemStyle.stepCircleSize,
-          activeStep: activeStep,
-          stepCount: steps.length,
-          child: labelWidget,
+    return ExcludeSemantics(
+      // When the active item has no semanticLabel or labelText, the label child keeps its own semantics
+      excluding: _activeLabelIsFoldedIntoStep,
+      child: addDefaultAncestorWithResolved(
+        textStyle: resolvedLabelTextStyle,
+        foregroundColor: effectiveItemStyle?.labelForegroundColor,
+        child: Padding(
+          padding: const .only(top: SBBSpacing.xxSmall),
+          child: _EdgeClampedCentered(
+            stepCircleSize: SBBStepperItemStyle.stepCircleSize,
+            activeStep: activeStep,
+            stepCount: steps.length,
+            child: labelWidget,
+          ),
         ),
-      ),
-    )!;
+      )!,
+    );
   }
 
   Widget _circle(int i, SBBStepperStyle style, SBBStepperItem step) {
@@ -170,9 +201,12 @@ class SBBStepper extends StatelessWidget {
       activeStep: activeStep,
       style: effectiveItemStyle,
       item: step,
+      semanticValue: semanticValueBuilder?.call(i, steps.length) ?? '${i + 1}',
       onPressed: () => onStepPressed(step, i),
     );
   }
+
+  bool get _activeLabelIsFoldedIntoStep => (_activeItem.semanticLabel ?? _activeItem.labelText) != null;
 
   bool get _hasAnyLabel => steps.any((step) => step.labelText != null || step.label != null);
 
@@ -203,11 +237,13 @@ class _StepCircle extends StatefulWidget {
     required this.activeStep,
     required this.style,
     required this.item,
+    required this.semanticValue,
     this.onPressed,
   });
 
   final int index;
   final int activeStep;
+  final String semanticValue;
   final VoidCallback? onPressed;
   final SBBStepperItemStyle style;
   final SBBStepperItem item;
@@ -246,14 +282,25 @@ class _StepCircleState extends State<_StepCircle> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      clipBehavior: .none,
-      children: [
-        _circle(context),
-        if (_passedStep && widget.item.showBadgeWhenPassed) _badge(),
-      ],
+    return Semantics(
+      container: true,
+      button: true,
+      selected: _isActiveStep,
+      label: _semanticLabel,
+      value: widget.semanticValue,
+      onTap: widget.onPressed,
+      excludeSemantics: _isActiveStep ? _semanticLabel != null : true,
+      child: Stack(
+        clipBehavior: .none,
+        children: [
+          _circle(context),
+          if (_passedStep && widget.item.showBadgeWhenPassed) _badge(),
+        ],
+      ),
     );
   }
+
+  String? get _semanticLabel => _isActiveStep ? widget.item.semanticLabel ?? widget.item.labelText : null;
 
   Widget _circle(BuildContext context) {
     final resolvedBackgroundColor = widget.style.backgroundColor?.resolve(_statesController.value);
@@ -332,6 +379,8 @@ class _StepCircleState extends State<_StepCircle> {
   }
 
   bool get _passedStep => widget.index < widget.activeStep;
+
+  bool get _isActiveStep => widget.index == widget.activeStep;
 }
 
 /// A widget that positions its child horizontally so that the child's

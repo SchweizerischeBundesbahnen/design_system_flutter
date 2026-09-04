@@ -15,6 +15,7 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - added `SBBLinearLoadingIndicator`: a themable linear loading indicator
 - added `semanticIsTabBar` and `semanticLabel` to `SBBSegmentedButton`
 - added `semanticLabel` and `semanticHint` to `SBBButtonSegment`
+- added `semanticValueBuilder` to `SBBStepper` and `semanticLabel` to `SBBStepperItem` for screen reader support
 - added `onTapOutside` and `onTapUpOutside` to `SBBTextInput` and related components
 - added `SBBBottomSheet.closeButtonKey`, `SBBPopup.closeButtonKey` and `SBBPopover.closeButtonKey` for use in instrumentation tests
 - added `SBBNotificationBox.dismissButtonKey`, `SBBPromotionBox.dismissButtonKey` for use in instrumentation tests
