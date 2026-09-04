@@ -13,6 +13,7 @@ sealed class SBBStepperItem {
   const SBBStepperItem._({
     this.labelText,
     this.label,
+    this.semanticLabel,
     this.style,
     this.showBadgeWhenPassed = true,
     this.badgeIcon = SBBIcons.tick_small,
@@ -24,6 +25,7 @@ sealed class SBBStepperItem {
     required IconData icon,
     String? labelText,
     Widget? label,
+    String? semanticLabel,
     bool showBadgeWhenPassed,
     IconData? badgeIcon,
     SBBStepperItemStyle? style,
@@ -35,6 +37,7 @@ sealed class SBBStepperItem {
     required String text,
     String? labelText,
     Widget? label,
+    String? semanticLabel,
     bool showBadgeWhenPassed,
     IconData? badgeIcon,
     SBBStepperItemStyle? style,
@@ -45,6 +48,7 @@ sealed class SBBStepperItem {
   const factory SBBStepperItem.numbered({
     String? labelText,
     Widget? label,
+    String? semanticLabel,
     bool showBadgeWhenPassed,
     IconData? badgeIcon,
     SBBStepperItemStyle? style,
@@ -53,6 +57,23 @@ sealed class SBBStepperItem {
 
   final String? labelText;
   final Widget? label;
+
+  /// The accessible name announced for this step.
+  ///
+  /// When provided, this replaces the step's visual content in the semantics
+  /// tree: neither the circle's content (number, text or icon) nor the [label]
+  /// widget is announced. When omitted, the active step falls back to
+  /// [labelText] and, if that is null as well, to its visual content.
+  ///
+  /// See also:
+  /// * [SBBStepper.semanticValueBuilder], which words the step's position.
+  final String? semanticLabel;
+  /// Customizes this step's appearance.
+  ///
+  /// Non-null properties of this style override the corresponding properties
+  /// in [SBBStepperItemStyle] from the theme found in [SBBStepper.style] or
+  /// the default theme. This allows for per-step styling without affecting
+  /// other steps in the same stepper.
   final SBBStepperItemStyle? style;
   final bool showBadgeWhenPassed;
   final IconData? badgeIcon;
@@ -75,6 +96,7 @@ class SBBStepperItemIcon extends SBBStepperItem {
     required this.icon,
     super.label,
     super.labelText,
+    super.semanticLabel,
     super.showBadgeWhenPassed,
     super.badgeIcon,
     super.style,
@@ -90,6 +112,7 @@ class SBBStepperItemText extends SBBStepperItem {
     required this.text,
     super.label,
     super.labelText,
+    super.semanticLabel,
     super.showBadgeWhenPassed,
     super.badgeIcon,
     super.style,
@@ -104,6 +127,7 @@ class SBBStepperItemNumbered extends SBBStepperItem {
   const SBBStepperItemNumbered({
     super.label,
     super.labelText,
+    super.semanticLabel,
     super.showBadgeWhenPassed,
     super.badgeIcon,
     super.style,
