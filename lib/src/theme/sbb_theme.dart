@@ -6,6 +6,7 @@ import 'package:sbb_design_system_mobile/src/button/theme/sbb_button_style_x.dar
 import 'package:sbb_design_system_mobile/src/checkbox/theme/default_sbb_checkbox_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/chip/theme/default_sbb_chip_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/container/theme/default_sbb_content_box_theme_data.dart';
+import 'package:sbb_design_system_mobile/src/decorated/theme/default_sbb_decorated_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/decorated_text/theme/default_sbb_decorated_text_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/header/theme/default_sbb_header_theme_data.dart';
 import 'package:sbb_design_system_mobile/src/header_box/theme/default_sbb_header_box_theme_data.dart';
@@ -91,6 +92,7 @@ class SBBTheme {
     SBBCheckboxThemeData? checkboxTheme,
     SBBChipThemeData? chipTheme,
     SBBContentBoxThemeData? contentBoxTheme,
+    SBBDecoratedThemeData? decoratedTheme,
     SBBDecoratedTextThemeData? decoratedTextTheme,
     SBBDropdownThemeData? dropdownTheme,
     SBBHeaderThemeData? headerTheme,
@@ -127,6 +129,7 @@ class SBBTheme {
     checkboxTheme: checkboxTheme,
     chipTheme: chipTheme,
     contentBoxTheme: contentBoxTheme,
+    decoratedTheme: decoratedTheme,
     decoratedTextTheme: decoratedTextTheme,
     dropdownTheme: dropdownTheme,
     headerTheme: headerTheme,
@@ -170,6 +173,7 @@ class SBBTheme {
     SBBCheckboxThemeData? checkboxTheme,
     SBBChipThemeData? chipTheme,
     SBBContentBoxThemeData? contentBoxTheme,
+    SBBDecoratedThemeData? decoratedTheme,
     SBBDecoratedTextThemeData? decoratedTextTheme,
     SBBDropdownThemeData? dropdownTheme,
     SBBHeaderBoxThemeData? headerBoxTheme,
@@ -205,6 +209,7 @@ class SBBTheme {
     checkboxTheme: checkboxTheme,
     chipTheme: chipTheme,
     contentBoxTheme: contentBoxTheme,
+    decoratedTheme: decoratedTheme,
     decoratedTextTheme: decoratedTextTheme,
     dropdownTheme: dropdownTheme,
     headerBoxTheme: headerBoxTheme,
@@ -249,6 +254,7 @@ class SBBTheme {
     SBBChipThemeData? chipTheme,
     SBBStepperThemeData? stepperTheme,
     SBBContentBoxThemeData? contentBoxTheme,
+    SBBDecoratedThemeData? decoratedTheme,
     SBBDecoratedTextThemeData? decoratedTextTheme,
     SBBDropdownThemeData? dropdownTheme,
     SBBHeaderThemeData? headerTheme,
@@ -297,6 +303,9 @@ class SBBTheme {
 
     final defaultChipTheme = DefaultSBBChipThemeData(mergedBaseStyle);
     final mergedChipTheme = defaultChipTheme.merge(chipTheme);
+
+    final defaultDecoratedTheme = DefaultSBBDecoratedThemeData(mergedBaseStyle);
+    final mergedDecoratedTheme = defaultDecoratedTheme.merge(decoratedTheme);
 
     final defaultDecoratedTextTheme = DefaultSBBDecoratedTextThemeData(mergedBaseStyle);
     final mergedDecoratedTextTheme = defaultDecoratedTextTheme.merge(decoratedTextTheme);
@@ -395,6 +404,7 @@ class SBBTheme {
       checkboxTheme: mergedCheckboxTheme,
       chipTheme: mergedChipTheme,
       contentBoxTheme: mergedContentBoxTheme,
+      decoratedTheme: mergedDecoratedTheme,
       decoratedTextTheme: mergedDecoratedTextTheme,
       dropdownTheme: mergedDropdownTheme,
       headerTheme: mergedHeaderTheme,
@@ -433,6 +443,7 @@ class SBBTheme {
     required SBBCheckboxThemeData checkboxTheme,
     required SBBChipThemeData chipTheme,
     required SBBContentBoxThemeData contentBoxTheme,
+    required SBBDecoratedThemeData decoratedTheme,
     required SBBDecoratedTextThemeData decoratedTextTheme,
     required SBBDropdownThemeData dropdownTheme,
     required SBBHeaderThemeData headerTheme,
@@ -495,6 +506,7 @@ class SBBTheme {
         checkboxTheme,
         contentBoxTheme,
         chipTheme,
+        decoratedTheme,
         decoratedTextTheme,
         dropdownTheme,
         headerTheme,

@@ -11,6 +11,8 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 ### Added
 
+- added `SBBDecorated` and `SBBDecoratedBoxed`: decorate an arbitrary widget with a floating label, leading/trailing widgets and an error message, mirroring `SBBDecoratedText`
+- added `SBBDecoratedStyle` and `SBBDecoratedThemeData` to theme `SBBDecorated`
 - added `SBBPopover`: a Widget for showing floating content in an Overlay - used primarily for tablet display
 - added `SBBLinearLoadingIndicator`: a themable linear loading indicator
 - added `semanticIsTabBar` and `semanticLabel` to `SBBSegmentedButton`

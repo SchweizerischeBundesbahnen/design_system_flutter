@@ -7,6 +7,7 @@ import 'package:flutter_design_system_mobile_example/pages/checkbox_page.dart';
 import 'package:flutter_design_system_mobile_example/pages/chip_page.dart';
 import 'package:flutter_design_system_mobile_example/pages/color_page.dart';
 import 'package:flutter_design_system_mobile_example/pages/container_page.dart';
+import 'package:flutter_design_system_mobile_example/pages/decorated_page.dart';
 import 'package:flutter_design_system_mobile_example/pages/decorated_text_page.dart';
 import 'package:flutter_design_system_mobile_example/pages/dropdown_page.dart';
 import 'package:flutter_design_system_mobile_example/pages/form_page.dart';
@@ -135,6 +136,7 @@ class MyApp extends StatelessWidget {
                       _DemoEntry('Autocompletion', AutocompletionPage()),
                       _DemoEntry('Checkbox', CheckboxPage()),
                       _DemoEntry('Chip', ChipPage()),
+                      _DemoEntry('Decorated', DecoratedPage()),
                       _DemoEntry('Decorated Text', DecoratedTextPage()),
                       _DemoEntry('Dropdown', DropdownPage()),
                       _DemoEntry('Form Fields', FormPage()),
