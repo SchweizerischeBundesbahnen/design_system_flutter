@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 It is expected that you keep this format strictly, since we depend on it in our release workflow.
 
-## Unreleased
+## [5.1.0] - 2026-09-07
 
 ### Added
 
@@ -879,6 +879,8 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Initial project setup
 - Added some widgets
 
+[5.1.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/5.0.0...5.1.0
+
 [5.0.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.13.1...5.0.0
 
 [4.13.1]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/4.13.0...4.13.1
@@ -962,5 +964,3 @@ It is expected that you keep this format strictly, since we depend on it in our 
 [0.0.2]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/0.0.1...0.0.2
 
 [0.0.1]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/releases/tag/0.0.1
-
-[v5 migration guide]: migration_guide.md
