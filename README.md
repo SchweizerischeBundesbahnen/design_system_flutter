@@ -106,7 +106,9 @@ At the moment, the following documents are only available to people internal to 
 
 ## License
 
-This project is licensed under [MIT](LICENSE).
+This project's source code is licensed under [MIT](LICENSE). Some bundled
+assets — notably the SBB Web font — are licensed separately under more
+restrictive terms; see [NOTICE.md](NOTICE.md) for the full breakdown.
 
 ## Contributing
 

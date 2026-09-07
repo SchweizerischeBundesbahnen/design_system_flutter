@@ -1,0 +1,15 @@
+version = 1
+SPDX-PackageName = "sbb_design_system_mobile"
+SPDX-PackageSupplier = "Schweizerische Bundesbahnen AG"
+SPDX-PackageDownloadLocation = "https://github.com/SchweizerischeBundesbahnen/design_system_flutter"
+
+# Source code, unless annotated otherwise below, is MIT-licensed — see LICENSE.
+
+# The bundled SBB Web typeface is licensed to SBB AG by URW++ under a
+# restricted corporate license, not MIT. See NOTICE.md and
+# LICENSES/LicenseRef-SBBFL-1.0.txt for the actual grant and its scope.
+[[annotations]]
+path = "lib/fonts/SBBWeb-*.ttf"
+precedence = "aggregate"
+SPDX-FileCopyrightText = ["2014 URW++ GmbH", "2021 SBB AG"]
+SPDX-License-Identifier = "LicenseRef-SBBFL-1.0"
