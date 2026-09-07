@@ -31,10 +31,6 @@ typedef SBBStepperSemanticValueBuilder = String Function(int index, int stepCoun
 /// The widget requires at least two steps and an [activeStep] within the
 /// valid range.
 ///
-/// Each step is announced to a screen reader as a button carrying its position;
-/// name a step with [SBBStepperItem.semanticLabel] and word its position with
-/// [semanticValueBuilder].
-///
 /// See also:
 /// * [SBBStepperItem] to define individual steps.
 /// * [SBBStepperStyle], the overall style for the stepper.
@@ -110,12 +106,7 @@ class SBBStepper extends StatelessWidget {
   /// under the corresponding circle.
   final int activeStep;
 
-  /// Words the position announced for each step by a screen reader.
-  ///
-  /// The builder receives the zero-based index of the step and the total number
-  /// of steps, and returns the full phrase, e.g. `'Schritt 3 von 5'`. Provide it
-  /// in the application's own locale; this library ships no accessibility
-  /// strings of its own.
+  /// Used to build the String announced for each step by a screen reader.
   ///
   /// Defaults to the step's one-based number as a bare string, matching the
   /// digit drawn in the circle of a [SBBStepperItemNumbered].
