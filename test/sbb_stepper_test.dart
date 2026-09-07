@@ -97,6 +97,26 @@ void main() {
     customSteps: customSteps,
   );
 
+  testWidgets('active step announces its label, position and selected state', (WidgetTester tester) async {
+    final semantics = tester.ensureSemantics();
+
+    await tester.pumpWidget(const TestApp(child: StepperSemanticsTest()));
+
+    expect(
+      tester.getSemantics(find.byKey(StepperSemanticsTest.activeStepKey)),
+      matchesSemantics(
+        label: 'Payment',
+        value: 'Step 3 of 3',
+        hasSelectedState: true,
+        isSelected: true,
+        isButton: true,
+        hasTapAction: true,
+      ),
+    );
+
+    semantics.dispose();
+  });
+
   generateTest(
     'stepper_filled',
     numberedSteps: numberedSteps,
@@ -164,6 +184,30 @@ class StepperTest extends StatelessWidget {
       steps: steps,
       activeStep: activeStep,
       onStepPressed: (_, _) {},
+    );
+  }
+}
+
+/// Regression tripwire for the stepper's semantics wiring.
+///
+/// Guards a class of regression that moves no pixels and is therefore invisible
+/// to the golden tests: a refactor silently dropping the semantics annotations.
+class StepperSemanticsTest extends StatelessWidget {
+  const StepperSemanticsTest({super.key});
+
+  static const activeStepKey = ValueKey('active-step');
+
+  @override
+  Widget build(BuildContext context) {
+    return SBBStepper(
+      steps: const [
+        SBBStepperItem.numbered(labelText: 'Departure'),
+        SBBStepperItem.numbered(labelText: 'Arrival'),
+        SBBStepperItem.numbered(labelText: 'Payment', key: activeStepKey),
+      ],
+      activeStep: 2,
+      onStepPressed: (_, _) {},
+      semanticValueBuilder: (index, stepCount) => 'Step ${index + 1} of $stepCount',
     );
   }
 }

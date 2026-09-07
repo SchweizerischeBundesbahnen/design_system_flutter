@@ -101,6 +101,7 @@ class _StepperPageState extends State<StepperPage> {
             ),
             steps: _customSteps,
             activeStep: activeCustomStep,
+            semanticValueBuilder: (index, stepCount) => 'Step ${index + 1} of $stepCount',
             onStepPressed: (_, i) {
               setState(() => activeCustomStep = i);
             },
@@ -143,7 +144,10 @@ class _StepperPageState extends State<StepperPage> {
         }),
       ),
     ),
-    SBBStepperItem.numbered(label: SBBStatus.information(labelText: 'Custom')),
+    SBBStepperItem.numbered(
+      label: SBBStatus.information(labelText: 'Custom'),
+      semanticLabel: 'Booking information',
+    ),
     SBBStepperItem.icon(
       label: Container(
         padding: .all(8.0),
@@ -152,7 +156,10 @@ class _StepperPageState extends State<StepperPage> {
       ),
       icon: SBBIcons.train_small,
     ),
-    SBBStepperItem.numbered(label: SBBStatus.success(labelText: 'Custom')),
+    SBBStepperItem.numbered(
+      label: SBBStatus.success(labelText: 'Custom'),
+      semanticLabel: 'Booking confirmed',
+    ),
   ];
 
   List<SBBStepperItem> get _iconSteps => [
