@@ -95,7 +95,7 @@ jobs:
           model: iPhone 17
 
       - name: Run Integration Tests
-        uses: nick-fields/retry@v3
+        uses: nick-fields/retry@v4
         with:
           timeout_minutes: 20
           max_attempts: 2
