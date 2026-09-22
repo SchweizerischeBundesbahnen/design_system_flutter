@@ -13,6 +13,11 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 - (auto): updated icon lib to version 1.8.34
 
+### Fixed
+
+- added missing `headerTheme` to `SBBTheme.dark`
+- correctly pass down `notificationBoxTheme` and `slideToToggleTheme` in `SBBTheme`
+
 ## [5.1.0] - 2026-09-07
 
 ### Added
