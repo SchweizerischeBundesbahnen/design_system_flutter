@@ -53,7 +53,7 @@ jobs:
         working-directory: example
 
       - name: Build appbundle
-        run: flutter build appbundle --no-pub
+        run: flutter build appbundle
         working-directory: example
         env:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
