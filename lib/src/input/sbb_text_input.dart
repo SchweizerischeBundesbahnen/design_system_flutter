@@ -395,19 +395,14 @@ class _SBBTextInputState extends State<SBBTextInput>
     final Brightness keyboardAppearance = widget.keyboardAppearance ?? theme.brightness;
 
     switch (theme.platform) {
-      case TargetPlatform.iOS:
-      case TargetPlatform.macOS:
+      case .iOS || .macOS:
         forcePressEnabled = true;
         textSelectionControls = cupertinoTextSelectionHandleControls;
         paintCursorAboveText = true;
         cursorOpacityAnimates = true;
         cursorOffset = Offset(iOSHorizontalOffset / MediaQuery.devicePixelRatioOf(context), 0);
         spellCheckConfiguration = CupertinoTextField.inferIOSSpellCheckConfiguration(null);
-
-      case TargetPlatform.android:
-      case TargetPlatform.fuchsia:
-      case TargetPlatform.linux:
-      case TargetPlatform.windows:
+      case .android || .fuchsia || .linux || .windows:
         forcePressEnabled = false;
         textSelectionControls ??= materialTextSelectionHandleControls;
         paintCursorAboveText = false;
@@ -652,13 +647,9 @@ class _SBBTextInputState extends State<SBBTextInput>
     }
 
     switch (Theme.of(context).platform) {
-      case TargetPlatform.iOS:
-      case TargetPlatform.fuchsia:
-      case TargetPlatform.android:
+      case .iOS || .fuchsia || .android:
         break;
-      case TargetPlatform.macOS:
-      case TargetPlatform.linux:
-      case TargetPlatform.windows:
+      case .macOS || .linux || .windows:
         if (cause == .drag) {
           _editableText?.hideToolbar();
         }
@@ -669,7 +660,7 @@ class _SBBTextInputState extends State<SBBTextInput>
     BuildContext context,
     EditableTextState editableTextState,
   ) {
-    if (defaultTargetPlatform == TargetPlatform.iOS && SystemContextMenu.isSupported(context)) {
+    if (defaultTargetPlatform == .iOS && SystemContextMenu.isSupported(context)) {
       return SystemContextMenu.editableText(editableTextState: editableTextState);
     }
     return AdaptiveTextSelectionToolbar.editableText(editableTextState: editableTextState);
