@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 It is expected that you keep this format strictly, since we depend on it in our release workflow.
 
-## Unreleased
+## [5.2.0] - 2026-09-25
 
 ### Changed
 
@@ -55,42 +55,42 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - added `SBBButtonSegment` for adding segments to `SBBSegmentedButton`
 - added `SBBDivider` for separating listed items within an indexed builder (e.g. `ListView.separated`)
 - added `SBBIllustration` for adding predefined illustrations to e.g. `SBBMessage`
-- added `SBBRadioGroup` - see [v5 migration guide]
-- added `SBBTextInput` as replacement for `SBBTextField` - see [v5 migration guide]
-- added `SBBColorScheme` - see [v5 migration guide]
-- added `SBBThemeContext` - see [v5 migration guide]
+- added `SBBRadioGroup` - see \[v5 migration guide]
+- added `SBBTextInput` as replacement for `SBBTextField` - see \[v5 migration guide]
+- added `SBBColorScheme` - see \[v5 migration guide]
+- added `SBBThemeContext` - see \[v5 migration guide]
 - added `SBBHeaderBoxPreferredSize` and `SBBHeaderBoxFlapPreferredSize` for use in headers
 
 ### Changed
 
-- BREAKING: overhauled `SBBHeaderBox` - see [v5 migration guide]
-- BREAKING: overhauled `SBBBaseStyle` - see [v5 migration guide]
-- BREAKING: overhauled all button variants - see [v5 migration guide]
-- BREAKING: overhauled `SBBCheckbox` - see [v5 migration guide]
-- BREAKING: overhauled `SBBChip` - see [v5 migration guide]
-- BREAKING: different theming / styling for `SBBContentBox` - see [v5 migration guide]
-- BREAKING: overhauled `SBBInputTrigger` and renamed it to `SBBDecoratedText` - see [v5 migration guide]
-- BREAKING: overhauled `SBBSelect` and renamed to `SBBDropdown` - see [v5 migration guide]
-- BREAKING: overhauled `SBBListHeader` - see [v5 migration guide]
-- BREAKING: overhauled `SBBListItem` - see [v5 migration guide]
-- BREAKING: overhauled `SBBMessage` component - see [v5 migration guide]
-- BREAKING: overhauled `SBBModal` component and renamed to `SBBBottomSheet` - see [v5 migration guide]
-- BREAKING: overhauled `SBBPagination` and renamed to `SBBPaginator` - see [v5 migration guide]
-- BREAKING: overhauled `SBBPicker` - see [v5 migration guide]
-- BREAKING: overhauled `SBBPromotionBox` - see [v5 migration guide]
-- BREAKING: overhauled `SBBNotificationBox` - see [v5 migration guide]
-- BREAKING: overhauled `SBBModalPopup` and renamed to `SBBPopup` - see [v5 migration guide]
-- BREAKING: overhauled `SBBRadio` with `SBBRadioGroup` ancestor - see [v5 migration guide]
-- BREAKING: overhauled `SBBSegmentedButton` component - see [v5 migration guide]
-- BREAKING: overhauled `SBBSlider` component - see [v5 migration guide]
-- BREAKING: overhauled `SBBStatus` component - see [v5 migration guide]
-- BREAKING: overhauled `SBBStepper` component - see [v5 migration guide]
-- BREAKING: overhauled `SBBHeader` component - see [v5 migration guide]
-- BREAKING: different theming / styling for `SBBSwitch` - see [v5 migration guide]
-- BREAKING: use `SBBTabBarStyle` / `SBBTabBarThemeData` to style `SBBTabBar` - see [v5 migration guide]
-- BREAKING: overhauled `SBBTextField` and renamed to `SBBTextInput` - see [v5 migration guide]
+- BREAKING: overhauled `SBBHeaderBox` - see \[v5 migration guide]
+- BREAKING: overhauled `SBBBaseStyle` - see \[v5 migration guide]
+- BREAKING: overhauled all button variants - see \[v5 migration guide]
+- BREAKING: overhauled `SBBCheckbox` - see \[v5 migration guide]
+- BREAKING: overhauled `SBBChip` - see \[v5 migration guide]
+- BREAKING: different theming / styling for `SBBContentBox` - see \[v5 migration guide]
+- BREAKING: overhauled `SBBInputTrigger` and renamed it to `SBBDecoratedText` - see \[v5 migration guide]
+- BREAKING: overhauled `SBBSelect` and renamed to `SBBDropdown` - see \[v5 migration guide]
+- BREAKING: overhauled `SBBListHeader` - see \[v5 migration guide]
+- BREAKING: overhauled `SBBListItem` - see \[v5 migration guide]
+- BREAKING: overhauled `SBBMessage` component - see \[v5 migration guide]
+- BREAKING: overhauled `SBBModal` component and renamed to `SBBBottomSheet` - see \[v5 migration guide]
+- BREAKING: overhauled `SBBPagination` and renamed to `SBBPaginator` - see \[v5 migration guide]
+- BREAKING: overhauled `SBBPicker` - see \[v5 migration guide]
+- BREAKING: overhauled `SBBPromotionBox` - see \[v5 migration guide]
+- BREAKING: overhauled `SBBNotificationBox` - see \[v5 migration guide]
+- BREAKING: overhauled `SBBModalPopup` and renamed to `SBBPopup` - see \[v5 migration guide]
+- BREAKING: overhauled `SBBRadio` with `SBBRadioGroup` ancestor - see \[v5 migration guide]
+- BREAKING: overhauled `SBBSegmentedButton` component - see \[v5 migration guide]
+- BREAKING: overhauled `SBBSlider` component - see \[v5 migration guide]
+- BREAKING: overhauled `SBBStatus` component - see \[v5 migration guide]
+- BREAKING: overhauled `SBBStepper` component - see \[v5 migration guide]
+- BREAKING: overhauled `SBBHeader` component - see \[v5 migration guide]
+- BREAKING: different theming / styling for `SBBSwitch` - see \[v5 migration guide]
+- BREAKING: use `SBBTabBarStyle` / `SBBTabBarThemeData` to style `SBBTabBar` - see \[v5 migration guide]
+- BREAKING: overhauled `SBBTextField` and renamed to `SBBTextInput` - see \[v5 migration guide]
 - BREAKING: removed default left margin on component `SBBTextInput` (#402)
-- BREAKING: renamed static methods containing `extra` on `SBBTextStyles` to containing `x` - see [v5 migration guide]
+- BREAKING: renamed static methods containing `extra` on `SBBTextStyles` to containing `x` - see \[v5 migration guide]
 - renamed `TextStylesExtensions` to `SBBTextStyleExtensions`
 - BREAKING: renamed `ContractionState` to `SBBContractionState`
 - BREAKING: renamed `ContractibleState` to `SBBContractibleState`
@@ -98,10 +98,10 @@ It is expected that you keep this format strictly, since we depend on it in our 
 ### Removed
 
 - Removed convenience methods `SBBTheme.allStates` and `SBBTheme.resolveStatesWith` - use methods on `WidgetStateProperty`
-- Removed `SBBIconButtonLarge`: use `SBBTertiaryButton` with only `iconData` or `icon` - see [v5 migration guide]
-- Removed `SBBIconButtonSmall`: use `SBBTertiaryButtonSmall` with only `iconData` or `icon` - see [v5 migration guide]
+- Removed `SBBIconButtonLarge`: use `SBBTertiaryButton` with only `iconData` or `icon` - see \[v5 migration guide]
+- Removed `SBBIconButtonSmall`: use `SBBTertiaryButtonSmall` with only `iconData` or `icon` - see \[v5 migration guide]
 - Removed `buttonStyles` argument in `SBBTheme`: use `primaryButtonTheme`, `secondaryButtonTheme` and
-  `tertiaryButtonTheme` - see [v5 migration guide]
+  `tertiaryButtonTheme` - see \[v5 migration guide]
 - Removed `SBBAccordion`, `SBBAccordionItem`, `AccordionCallback` and `SingleAccordionCallback`
 - Removed deprecated `SBBGroupStyle`, use `SBBContentBoxThemeData` instead
 - Removed deprecated `SBBGroup`
@@ -889,6 +889,8 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 - Initial project setup
 - Added some widgets
+
+[5.2.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/5.1.0...5.2.0
 
 [5.1.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/5.0.0...5.1.0
 
