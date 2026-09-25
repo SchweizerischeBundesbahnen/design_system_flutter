@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 It is expected that you keep this format strictly, since we depend on it in our release workflow.
 
-## Unreleased
+## [5.2.0] - 2026-09-25
 
 ### Changed
 
@@ -116,6 +116,8 @@ It is expected that you keep this format strictly, since we depend on it in our 
 - Removed `SBBColors.redDark`, use `SBBColors.red85` instead
 - Removed `TransparentTappableElement`
 - Removed `ClosableBoxController`, use the component specific controller like `SBBNotificationBoxController`
+
+[v5 migration guide]: migration_guide.md
 
 ## [4.13.1] - 2026-06-19
 
@@ -889,6 +891,8 @@ It is expected that you keep this format strictly, since we depend on it in our 
 
 - Initial project setup
 - Added some widgets
+
+[5.2.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/5.1.0...5.2.0
 
 [5.1.0]: https://github.com/SchweizerischeBundesbahnen/design_system_flutter/compare/5.0.0...5.1.0
 
