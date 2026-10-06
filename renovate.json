@@ -1,11 +1,25 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended"],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 4am on monday"]
+  },
   "packageRules": [
     {
       "matchManagers": ["pub"],
       "groupName": "auto_route",
       "matchPackagePrefixes": ["auto_route", "auto_route_generator"]
+    },
+    {
+      "matchUpdateTypes": ["lockFileMaintenance"],
+      "matchManagers": ["pub"],
+      "enabled": false
+    },
+    {
+      "matchUpdateTypes": ["lockFileMaintenance"],
+      "matchManagers": ["npm"],
+      "automerge": true
     }
   ]
 }
