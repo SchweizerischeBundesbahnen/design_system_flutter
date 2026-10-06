@@ -90,7 +90,7 @@ jobs:
 
       - name: Setup iOS Simulator
         id: setup-simulator
-        uses: futureware-tech/simulator-action@v5
+        uses: futureware-tech/simulator-action@v6
         with:
           model: iPhone 17
 
