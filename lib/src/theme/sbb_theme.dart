@@ -386,17 +386,17 @@ class SBBTheme {
     final mergedTabBarTheme = defaultTabBarTheme.merge(tabBarTheme);
 
     final defaultDropdownTheme = SBBDropdownThemeData(
-      triggerDecorationTheme: defaultInputDecorationTheme,
-      triggerStyle: defaultDecoratedTextTheme.style,
-      sheetStyle: defaultBottomSheetTheme.style,
+      triggerDecorationTheme: mergedInputDecorationTheme,
+      triggerStyle: mergedDecoratedTextTheme.style,
+      sheetStyle: mergedBottomSheetTheme.style,
     );
     final mergedDropdownTheme = defaultDropdownTheme.merge(dropdownTheme);
 
     final defaultPickerTheme = DefaultSBBPickerThemeData(
       baseStyle: mergedBaseStyle,
-      inputDecorationTheme: defaultInputDecorationTheme,
-      decoratedTextStyle: defaultDecoratedTextTheme.style,
-      bottomSheetStyle: defaultBottomSheetTheme.style,
+      inputDecorationTheme: mergedInputDecorationTheme,
+      decoratedTextStyle: mergedDecoratedTextTheme.style,
+      bottomSheetStyle: mergedBottomSheetTheme.style,
     );
     final mergedPickerTheme = defaultPickerTheme.merge(pickerTheme);
 

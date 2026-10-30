@@ -154,30 +154,29 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
 
   @override
   Widget build(BuildContext context) {
-    final inputDecorationTheme = Theme.of(context).sbbInputDecorationTheme;
+    final decoration = widget.decoration.applyThemeValues(Theme.of(context).sbbInputDecorationTheme);
 
     final textScaler = MediaQuery.textScalerOf(context);
 
-    Widget? leading = _leading(textScaler, inputDecorationTheme);
+    Widget? leading = _leading(textScaler, decoration);
 
-    Widget? label = widget.decoration.label;
+    Widget? label = decoration.label;
     double? maxLabelTextHeight;
-    if (label == null && widget.decoration.labelText != null) {
-      label = Text(widget.decoration.labelText!, maxLines: 1, overflow: .ellipsis);
+    if (label == null && decoration.labelText != null) {
+      label = Text(decoration.labelText!, maxLines: 1, overflow: .ellipsis);
     }
     if (label != null) {
-      final Color? resolvedColor = (widget.decoration.labelForegroundColor ?? inputDecorationTheme.labelForegroundColor)
-          ?.resolve(
-            widget.states,
-          );
-      final textStyle = widget.decoration.labelTextStyle ?? inputDecorationTheme.labelTextStyle;
-      final floatingTextStyle = widget.decoration.floatingLabelTextStyle ?? inputDecorationTheme.floatingLabelTextStyle;
+      final Color? resolvedColor = decoration.labelForegroundColor?.resolve(
+        widget.states,
+      );
+      final textStyle = decoration.labelTextStyle;
+      final floatingTextStyle = decoration.floatingLabelTextStyle;
 
       final resolvedTextStyle =
           (_shouldFloat ? floatingTextStyle : textStyle)?.copyWith(color: resolvedColor) ??
           TextStyle(color: resolvedColor);
 
-      if (widget.decoration.labelText != null && textStyle?.fontSize != null && textStyle?.height != null) {
+      if (decoration.labelText != null && textStyle?.fontSize != null && textStyle?.height != null) {
         maxLabelTextHeight = textStyle!.fontSize! * textStyle.height!;
       }
 
@@ -191,13 +190,13 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
       );
     }
 
-    Widget? trailing = _trailing(textScaler, inputDecorationTheme);
-    final placeholder = _placeholder(inputDecorationTheme);
-    final error = _errorWidget(textScaler, inputDecorationTheme);
+    Widget? trailing = _trailing(textScaler, decoration);
+    final placeholder = _placeholder(decoration);
+    final error = _errorWidget(textScaler, decoration);
 
     final container = AnimatedContainer(
       duration: _kTransitionDuration,
-      decoration: _effectiveBoxDecoration(context, inputDecorationTheme),
+      decoration: _effectiveBoxDecoration(context, decoration),
     );
 
     Widget? input = widget.child;
@@ -227,30 +226,29 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
       isMultiline: widget.isMultiline,
       isEmpty: widget.isEmpty,
       floatingLabelProgress: _floatingLabelAnimation.value,
-      floatingLabelInputGap: textScaler.scale(_effectiveFloatingLabelInputGap(inputDecorationTheme)),
+      floatingLabelInputGap: textScaler.scale(_effectiveFloatingLabelInputGap(decoration)),
       minInputHeight: widget.minInputHeight,
       minTotalHeight: textScaler.scale(SBBInputDecoration.minInputFieldHeight),
       maxLabelHeight: maxLabelTextHeight,
-      contentPadding: _effectiveContentPadding(inputDecorationTheme),
+      contentPadding: _effectiveContentPadding(decoration),
     );
   }
 
-  Widget? _leading(TextScaler textScaler, SBBInputDecorationThemeData? inputDecorationTheme) {
-    Widget? leading = widget.decoration.leading;
-    if (leading == null && widget.decoration.leadingIconData != null) {
+  Widget? _leading(TextScaler textScaler, SBBInputDecoration decoration) {
+    Widget? leading = decoration.leading;
+    if (leading == null && decoration.leadingIconData != null) {
       leading = Padding(
         padding: .only(
           top: widget.isMultiline ? textScaler.scale(SBBSpacing.xxSmall) : 0.0,
-          right: _effectiveLeadingInputGap(inputDecorationTheme),
+          right: _effectiveLeadingInputGap(decoration),
         ),
-        child: Icon(widget.decoration.leadingIconData),
+        child: Icon(decoration.leadingIconData),
       );
     }
     if (leading != null) {
-      final Color? resolvedColor =
-          (widget.decoration.leadingForegroundColor ?? inputDecorationTheme?.leadingForegroundColor)?.resolve(
-            widget.states,
-          );
+      final Color? resolvedColor = decoration.leadingForegroundColor?.resolve(
+        widget.states,
+      );
       leading = addDefaultAncestorWithResolved(
         child: leading,
         foregroundColor: resolvedColor,
@@ -259,22 +257,21 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
     return leading;
   }
 
-  Widget? _trailing(TextScaler textScaler, SBBInputDecorationThemeData? inputDecorationTheme) {
-    Widget? trailing = widget.decoration.trailing;
-    if (trailing == null && widget.decoration.trailingIconData != null) {
+  Widget? _trailing(TextScaler textScaler, SBBInputDecoration decoration) {
+    Widget? trailing = decoration.trailing;
+    if (trailing == null && decoration.trailingIconData != null) {
       trailing = Padding(
         padding: .only(
           top: widget.isMultiline ? textScaler.scale(SBBSpacing.xxSmall) : 0.0,
-          left: _effectiveInputTrailingGap(inputDecorationTheme),
+          left: _effectiveInputTrailingGap(decoration),
         ),
-        child: Icon(widget.decoration.trailingIconData),
+        child: Icon(decoration.trailingIconData),
       );
     }
     if (trailing != null) {
-      final Color? resolvedColor =
-          (widget.decoration.trailingForegroundColor ?? inputDecorationTheme?.trailingForegroundColor)?.resolve(
-            widget.states,
-          );
+      final Color? resolvedColor = decoration.trailingForegroundColor?.resolve(
+        widget.states,
+      );
       trailing = addDefaultAncestorWithResolved(
         child: trailing,
         foregroundColor: resolvedColor,
@@ -283,21 +280,20 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
     return trailing;
   }
 
-  Widget? _placeholder(SBBInputDecorationThemeData? inputDecorationTheme) {
-    Widget? placeholder = widget.decoration.placeholder;
-    if (placeholder == null && widget.decoration.placeholderText != null) {
+  Widget? _placeholder(SBBInputDecoration decoration) {
+    Widget? placeholder = decoration.placeholder;
+    if (placeholder == null && decoration.placeholderText != null) {
       placeholder = AnimatedOpacity(
         duration: _kTransitionDuration * 1.25,
         opacity: widget.isEmpty ? 1 : 0,
-        child: Text(widget.decoration.placeholderText!),
+        child: Text(decoration.placeholderText!),
       );
     }
     if (placeholder != null) {
-      final Color? resolvedColor =
-          (widget.decoration.placeholderForegroundColor ?? inputDecorationTheme?.placeholderForegroundColor)?.resolve(
-            widget.states,
-          );
-      final TextStyle? textStyle = widget.decoration.placeholderTextStyle ?? inputDecorationTheme?.placeholderTextStyle;
+      final Color? resolvedColor = decoration.placeholderForegroundColor?.resolve(
+        widget.states,
+      );
+      final TextStyle? textStyle = decoration.placeholderTextStyle;
       placeholder = addDefaultAncestorWithResolved(
         child: placeholder,
         foregroundColor: resolvedColor,
@@ -307,23 +303,22 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
     return placeholder;
   }
 
-  Widget? _errorWidget(TextScaler textScaler, SBBInputDecorationThemeData? inputDecorationTheme) {
-    Widget? error = widget.decoration.error;
-    if (error == null && widget.decoration.errorText != null) {
+  Widget? _errorWidget(TextScaler textScaler, SBBInputDecoration decoration) {
+    Widget? error = decoration.error;
+    if (error == null && decoration.errorText != null) {
       error = Padding(
         padding: .only(
-          top: textScaler.scale(_effectiveTitleRowErrorGap(inputDecorationTheme)),
-          bottom: _effectiveErrorBottomPadding(inputDecorationTheme),
+          top: textScaler.scale(_effectiveTitleRowErrorGap(decoration)),
+          bottom: _effectiveErrorBottomPadding(decoration),
         ),
-        child: Text(widget.decoration.errorText!),
+        child: Text(decoration.errorText!),
       );
     }
     if (error != null) {
-      final Color? resolvedColor =
-          (widget.decoration.errorForegroundColor ?? inputDecorationTheme?.errorForegroundColor)?.resolve(
-            widget.states,
-          );
-      final TextStyle? textStyle = widget.decoration.errorTextStyle ?? inputDecorationTheme?.errorTextStyle;
+      final Color? resolvedColor = decoration.errorForegroundColor?.resolve(
+        widget.states,
+      );
+      final TextStyle? textStyle = decoration.errorTextStyle;
       error = addDefaultAncestorWithResolved(
         child: error,
         foregroundColor: resolvedColor,
@@ -337,16 +332,14 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
     return error;
   }
 
-  BoxDecoration _effectiveBoxDecoration(BuildContext context, SBBInputDecorationThemeData? inputDecorationTheme) {
+  BoxDecoration _effectiveBoxDecoration(BuildContext context, SBBInputDecoration decoration) {
     final effectiveStates = Set<WidgetState>.from(widget.states);
     if (widget.isBoxed) effectiveStates.remove(WidgetState.focused);
 
-    var resolvedBorderColor =
-        (widget.decoration.borderColor ?? inputDecorationTheme?.borderColor)?.resolve(effectiveStates) ??
-        SBBColors.transparent;
+    var resolvedBorderColor = decoration.borderColor?.resolve(effectiveStates) ?? SBBColors.transparent;
 
     // add default border if not set for standalone as boxed/listed border is handled outside.
-    if (widget.decoration.borderType == .standalone && resolvedBorderColor == SBBColors.transparent) {
+    if (decoration.borderType == .standalone && resolvedBorderColor == SBBColors.transparent) {
       final colorScheme = Theme.of(context).sbbBaseStyle.colorScheme;
       resolvedBorderColor = colorScheme.strokeSeparator ?? SBBColors.transparent;
     }
@@ -361,28 +354,28 @@ class _SBBInputDecoratorState extends State<SBBInputDecorator> with SingleTicker
   }
 
   // Gap resolution methods
-  double _effectiveLeadingInputGap(SBBInputDecorationThemeData? theme) {
-    return widget.decoration.leadingInputGap ?? theme?.leadingInputGap ?? defaultLeadingInputGap;
+  double _effectiveLeadingInputGap(SBBInputDecoration decoration) {
+    return decoration.leadingInputGap ?? defaultLeadingInputGap;
   }
 
-  double _effectiveInputTrailingGap(SBBInputDecorationThemeData? theme) {
-    return widget.decoration.inputTrailingGap ?? theme?.inputTrailingGap ?? defaultInputTrailingGap;
+  double _effectiveInputTrailingGap(SBBInputDecoration decoration) {
+    return decoration.inputTrailingGap ?? defaultInputTrailingGap;
   }
 
-  double _effectiveFloatingLabelInputGap(SBBInputDecorationThemeData? theme) {
-    return widget.decoration.floatingLabelInputGap ?? theme?.floatingLabelInputGap ?? defaultFloatingLabelInputGap;
+  double _effectiveFloatingLabelInputGap(SBBInputDecoration decoration) {
+    return decoration.floatingLabelInputGap ?? defaultFloatingLabelInputGap;
   }
 
-  double _effectiveTitleRowErrorGap(SBBInputDecorationThemeData? theme) {
-    return widget.decoration.titleRowErrorGap ?? theme?.titleRowErrorGap ?? defaultTitleRowErrorGap;
+  double _effectiveTitleRowErrorGap(SBBInputDecoration decoration) {
+    return decoration.titleRowErrorGap ?? defaultTitleRowErrorGap;
   }
 
-  double _effectiveErrorBottomPadding(SBBInputDecorationThemeData? theme) {
-    return widget.decoration.errorBottomPadding ?? theme?.errorBottomPadding ?? defaultErrorBottomPadding;
+  double _effectiveErrorBottomPadding(SBBInputDecoration decoration) {
+    return decoration.errorBottomPadding ?? defaultErrorBottomPadding;
   }
 
-  EdgeInsetsGeometry _effectiveContentPadding(SBBInputDecorationThemeData? theme) {
-    return widget.decoration.contentPadding ?? theme?.contentPadding ?? defaultContentPadding;
+  EdgeInsetsGeometry _effectiveContentPadding(SBBInputDecoration decoration) {
+    return decoration.contentPadding ?? defaultContentPadding;
   }
 }
 
