@@ -151,6 +151,7 @@ class SBBTimePicker extends StatefulWidget {
       transitionAnimationController: effectiveConfig.transitionAnimationController,
       sheetAnimationStyle: effectiveConfig.animationStyle,
       showCloseButton: effectiveConfig.showCloseButton,
+      style: Theme.of(context).sbbPickerTheme.sheetStyle,
       body: Column(
         mainAxisSize: .min,
         children: [
